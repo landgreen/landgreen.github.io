@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Conservation of Energy</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+    <script src='../../../lib/matter.min.js'></script>
+    <script src='../../../lib/randomColor.min.js'></script>
+</head>
+
+<body onload="particles();">
+  <header>
+  <h1>Conservation of Energy</h1>
+  </header>
+    <article>
+        <h1 class='underlined'>Conservation of Energy</h1>
+        <br>
+
+        <div class="flex-container">
+            <div class="flex-item">
+                <button id="pause">pause</button>
+                <button id="energy">friction: OFF</button>
+                <br>
+                <canvas id="canvas0" width='300' height='600'> </canvas>
+            </div>
+            <div class="flex-item">
+                <p>Energy, like momentum, is conserved. This means that if we add up the total energy of a system it will always be the same value, unless something enters or leaves the system.</p>
+                <p>As the ball bounces energy transfers form kinetic to gravitational.</p>
+                <p>When is kinetic energy the highest?</p>
+                <p>When is gravitational energy the highest?</p>
+                <p>When is rotational energy the hightest?</p>
+                <p>How is the total energy decreasing? Isn't energy conserved?</p>
+                <br>
+            </div>
+        </div>
+        <p>We can build an equation that sets the total energy at one moment in time equal to the total energy at another moment in time.
+        </p>
+        <div class='definition'>
+            <h1>$$E_{i} = E_{f}$$ </h1> \( E_{i} \) = total initial energy [J] <i>scalar</i>
+            <br>\( E_{f} \) = total final energy [J] <i>scalar</i>
+            <br>\( v \) = velocity[m/s] <i>vector</i>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> A 0.43kg soccer ball starts at rest and rolls down a 30m tall hill.  How fast will the ball be moving at the bottom of the hill?</p>
+        <details>
+            <summary>solution</summary>
+            $$E_{i} = E_{f}$$
+            $$U_{i} + K_{i} = U_{f} + K_{f}$$
+            $$mgh + \frac{1}{2}mv^{2} = mgh +\frac{1}{2}mv^{2}$$
+            <p>mass is in every term.  lets divide y m</p>
+        </details>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <button id="pause1">pause</button>
+        <div>
+        <canvas id="canvas1" width='700' height='200' onclick="spring(this)"> </canvas></div>
+        k =
+        <input id='spring-k' type="number" min="0" max="10" value=0.1 step=0.05>
+        &nbsp;&nbsp;&nbsp; m =
+        <input id='spring-m' type="number"  min="1" max="100" value=0 step=1>
+
+
+    </article>
+    <br>
+<br>
+<br>
+<br>
+<br>
+<div style="text-align:center">
+    <a href="../../../index.html#units">Back</a>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+    <script src="spring.js"></script>
+    <script src="energy.js"></script>
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>

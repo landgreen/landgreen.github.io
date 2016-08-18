@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vectors & Scalors</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../../../style.css">
+</head>
+
+<body>
+
+  <header>
+  <h1>Vectors & Scalors</h1>
+  </header>
+    <body onload="vectorDiagram()">
+
+        <article>
+            <h1 class='underlined'> Scalors</h1>
+            <p>A scalor is a variable that only has a magnitude.</p>
+            <p><b>Examples:</b></p>
+            <table style="width:100%;text-align:left">
+                <tr>
+                    <th>Variable</th>
+                    <th>Magnitude</th>
+                </tr>
+                <tr>
+                    <td>air pressure</td>
+                    <td>101.3kPa</td>
+                </tr>
+                <tr>
+                    <td>temperature</td>
+                    <td>21°C</td>
+                </tr>
+                <tr>
+                    <td>price</td>
+                    <td>$50</td>
+                </tr>
+                <tr>
+                    <td>speed</td>
+                    <td>10m/s <i>(speed & direction is velocity)</i></td>
+                </tr>
+                <tr>
+                    <td>distance</td>
+                    <td>3,000m <i>(distance & direction is displacement)</i></td>
+                </tr>
+            </table>
+            <br>
+            <br>
+            <br>
+            <br>
+            <svg style="float: right;" width="200" height="160" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g id="vector" transform='translate(0 150) rotate(-25)'>
+                    <line x1="0" y1="0" x2="200" y2="0" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(200 0) rotate(-90)' />
+                    <!-- <text x="100" y="-13" fill="black" text-anchor="middle" alignment-baseline="middle">magnitude</text> -->
+                </g>
+                <line x1="0" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#000;stroke-width:2" />
+                <line x1="181" y1="150" x2="181" y2="63" stroke-dasharray="5,5" style="stroke:#000;stroke-width:2" />
+            </svg>
+            <h1 class='underlined'> Vectors</h1>
+
+
+            <p>A vector is a variable that has a magnitude and direction. Temperature is just a scalar. You can't say it is 50° north. Velocity is a vector. You could say the velocity is 50m/s north.</p>
+            <p><b>Examples:</b></p>
+            <table style="width:100%;text-align:left">
+                <tr>
+                    <th>Variable</th>
+                    <th>Magnitude</th>
+                    <th>Direction</th>
+                </tr>
+                <tr>
+                    <td>displacement</td>
+                    <td>10m</td>
+                    <td>West</td>
+                </tr>
+                <tr>
+                    <td>velocity</td>
+                    <td>20m/s</td>
+                    <td>20 degrees above the x-axis</td>
+                </tr>
+                <tr>
+                    <td>acceleration</td>
+                    <td>9.8 m/s²</td>
+                    <td>down</td>
+                </tr>
+                <tr>
+                    <td>displacement</td>
+                    <td>10m</td>
+                    <td>up</td>
+                </tr>
+                <tr>
+                    <td>velocity</td>
+                    <td>3m/s</td>
+                    <td>10 degrees above the horizon</td>
+                </tr>
+            </table>
+
+
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <h1 class='underlined'>Vector Components</h1>
+            <svg style="float: right;" width="220" height="240" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g id="vector" transform='translate(0 150) rotate(-25)'>
+                    <line x1="0" y1="0" x2="200" y2="0" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(200 0) rotate(-90)' />
+                    <text x="100" y="-13" fill="black" text-anchor="middle" alignment-baseline="middle">hyp</text>
+                </g>
+                <line x1="0" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#000;stroke-width:2" />
+                <line x1="181" y1="150" x2="181" y2="63" stroke-dasharray="5,5" style="stroke:#000;stroke-width:2" />
+                <text x="100" y="165" fill="black" text-anchor="middle" alignment-baseline="middle">adj</text>
+                <text x="205" y="105" fill="black" text-anchor="middle" alignment-baseline="middle">opp</text>
+                <text x="46" y="141" fill="black" text-anchor="middle" alignment-baseline="middle">θ</text>
+            </svg>
+            <p>If we think of a vector like the hypotenuse of a right triangle, then we can use SOH-CAH-TOA to find the lengths of the x and y components of the triangle.</p>
+
+            $$ cos \theta = \frac{adjacent}{hypotenuse} $$ $$ (hypotenuse)cos \theta = adjacent$$ $$ (hypotenuse)sin \theta = opposite$$
+            <p>For a velocity vector the hypotenuse is v. The adjacent and opposite sides of the triangle are the x and y part of v.</p>
+
+            <svg style="float: right;" width="220" height="260" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g id="vector" transform='translate(0 150) rotate(-25)'>
+                    <line x1="0" y1="0" x2="200" y2="0" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(200 0) rotate(-90)' />
+                    <text x="100" y="-13" fill="black" text-anchor="middle" alignment-baseline="middle">distance</text>
+                </g>
+                <line x1="0" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#000;stroke-width:2" />
+                <line x1="181" y1="150" x2="181" y2="63" stroke-dasharray="5,5" style="stroke:#000;stroke-width:2" />
+                <text x="100" y="165" fill="black" text-anchor="middle" alignment-baseline="middle">x</text>
+                <text x="205" y="105" fill="black" text-anchor="middle" alignment-baseline="middle">y</text>
+                <text x="46" y="141" fill="black" text-anchor="middle" alignment-baseline="middle">θ</text>
+                <text x="46" y="141" fill="black" text-anchor="middle" alignment-baseline="middle">θ</text>
+            </svg>
+
+            $$ (v)cos \theta = v_{x}$$ $$ (v)sin \theta = v_{y}$$
+            <p>For displacement the equations are the same</p>
+            $$ (dist)cos \theta = x$$ $$ (dist)sin \theta = y$$
+            <br>
+            <br>
+            <br>
+            <p>In the simulation below position the mouse to around magnitude 250 and angle 14°. What are the x and y components of the vector?</p>
+            <p>At what angles are the magnitude and the x-component equal?</p>
+            <p>What does a negative sign mean for a vector? </p>
+            <canvas id="myCanvas" height='400' width='700'> </canvas>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p><b>Example:</b> A plane is taking off at an angle of 14° above the horizon. If the plane is moving at 250m/s how fast is it moving in only the vertical direction?</p>
+            <details>
+                <summary>solution</summary>
+                $$ (v)sin \theta = v_{y}$$ $$ (250)sin(14) = v_{y}$$ $$ 61 \small\frac{m}{s} = \normalsize v_{y}$$
+            </details>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p><b>Example:</b>You want to walk to the closest pokemon gym. The compass on your phone says you have to walk north/west. You arrive at the gym after walking 75 meters. Sadly you find that you need to be level 5, but you are level 3. How far
+                west did you walk?</p>
+            <details>
+                <summary>solution</summary>
+                $$ (v)cos \theta = x$$ $$ (75)cos(45) = x$$ $$ 53m = x$$
+            </details>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p><b>Example:</b>You walk 3 miles north and then 4 miles west. How far away are you from your starting location?</p>
+            <details>
+                <summary>solution</summary>
+                $$a^{2}+b^{2} = c^{2}$$ $$3^{2}+4^{2} = c^{2}$$ $$25 = c^{2}$$ $$5 \ miles = c$$
+
+            </details>
+            <br>
+            <br>
+            <br>
+        </article>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div style="text-align:center">
+            <a href="../../../index.html#units">Back</a>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <script src="vectorDiagram.js"></script>
+        <script>
+            renderMathInElement(document.body);
+        </script>
+    </body>
+
+</html>

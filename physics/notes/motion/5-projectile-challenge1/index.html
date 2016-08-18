@@ -1,0 +1,43 @@
+<!--
+LaTex equations are form the mathjax library
+http://docs.mathjax.org/en/latest/#
+put LaTex between $$  $$      example:   $$v = \lambda f$$
+
+use this to generate LaTex
+http://www.hostmath.com/
+-->
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>2-D Motion Challenge #1</title>
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+    <script src='../../../lib/matter.min.js'></script>
+    <script src='../../../lib/dat.gui.min.js'></script>
+</head>
+
+<body onload="MotionSimulation();MotionSimulationTwo();">
+    <article>
+      <h2  class='underlined'>2-D Motion Challenge #1</h2>
+      <p>Input the distance and click fire in the top right to check your math. Reload the page to start over with new numbers, or if you get an impossible problem.</p>
+      <canvas id="canvas" width='700' height= '600'></canvas>
+      <br>The gap starts at <u id='ypos'></u>m high and <u id='xpos'></u>m away.
+      <br>The ball has a horizontal velocity of <u id='Vx'></u>m/s.
+      <br>Calculate the correct <b>initial vertical velocity</b> to clear the gap!
+    </article>
+    <div style="text-align:center">
+        <a href="../../../index.html#units">Back</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+<script src="fire.js"></script>
+</body>
+
+</html>
