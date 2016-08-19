@@ -135,6 +135,10 @@ details p {
     transform: scale(1.5);
 }
 
+.material-icons.md-18 {
+  font-size: 18px;
+}
+
 /*math tex rendering __________________________*/
 
 .katex {
