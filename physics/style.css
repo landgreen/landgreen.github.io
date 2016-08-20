@@ -164,12 +164,12 @@ details .katex {
 
 header {
     background-color: #222;
+    color: white;
     padding: 1em 0em 0.5em 0em;
     text-align: center;
 }
 
 header h1 {
-    color: white;
     font-size: 5em;
     font-weight: 300;
 }
