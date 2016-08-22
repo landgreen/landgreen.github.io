@@ -55,8 +55,7 @@ button {
     font-size: 100%;
 }
 input {
-    font-family: var(--font);
-    font-size: 100%;
+      font-size: 100%;
 }
 
 article {
@@ -66,11 +65,21 @@ article {
 }
 
 canvas {
-    border: 1px solid black;
+    border: 1px solid #999;
+    /*box-shadow: 2px 2px 5px grey;*/
     /*background-color: #f9f9f9;*/
     /*border-radius: 20px;*/
     /*cursor: crosshair;*/
 }
+
+canvas:hover {
+    border: 1px solid black;
+    box-shadow: 2px 2px 3px grey;
+    /*background-color: #f9f9f9;*/
+    /*border-radius: 20px;*/
+    /*cursor: crosshair;*/
+}
+
 
 a {
     text-decoration: none;
@@ -105,6 +114,22 @@ details p {
 .underlined {
   border-bottom: 1px solid #999;
   font-weight: 400;
+}
+
+.center {
+  padding: 0;
+  margin: auto;
+  display: block;
+}
+
+.highlight {
+  color: #fff;
+  background-color: var(--accent-color);
+  /*color: #000;
+  background-color: #ffcdf0;*/
+  border-radius: 5px;
+  margin: 0px 2px 0px 2px;
+  padding: 0px 2px 0px 2px;
 }
 
 .definition {
