@@ -19,10 +19,9 @@
         <h1>Motion: Review</h1>
     </header>
     <article>
-
         <h1>Essential Questions:</h1>
         <p>What variables shape the motion of an object?</p>
-        <p>How do mathematical descriptions of motion connect to our everyday life?</p>
+        <p>How do equations of motion connect to everyday life?</p>
         <br>
         <br>
         <h1 class='underlined'>Position</h1>
@@ -39,7 +38,7 @@
             <p><b>x</b><sub>i</sub> = initial (starting) position [m, meters]</p>
             <p><b>x</b><sub>f</sub> = final (ending) position [m, meters]</p>
         </div>
-        <canvas class='center' id="canvas1" width='600' height='150' onclick="motion('canvas1', this, true, false, false, false,0,0, false)"> </canvas>
+        <canvas class='center' id="canvas1" width='600' height='150' onclick="motion('canvas1', this, true, false, false, false,300,0,0, false)"> </canvas>
         <br>
         <br>
         <br>
@@ -56,7 +55,7 @@
             <p><b>t</b><sub>i</sub> = initial (starting) time [s, seconds]</p>
             <p><b>t</b><sub>f</sub> = final (ending) time [s, seconds]</p>
         </div>
-        <canvas class='center' id="canvas2" width='600' height='150' onclick="motion('canvas2', this, true, true, false, false,0,0, false)"> </canvas>
+        <canvas class='center' id="canvas2" width='600' height='150' onclick="motion('canvas2', this, true, true, false, false, 300, 0, 0, false)"> </canvas>
         <br>
         <br>
         <br>
@@ -80,7 +79,7 @@
             <p><b>Δt</b> = time period [s, seconds]</p>
             <p><b>v</b> = average velocity [m/s, meters per second]</p>
         </div>
-        <canvas class='center' id="canvas3" width='600' height='150' onclick="motion('canvas3', this, true, true, true, false, 80,0, true)"> </canvas>
+        <canvas class='center' id="canvas3" width='600' height='150' onclick="motion('canvas3', this, true, true, true, false, 300, 80,0, true)"> </canvas>
         <br>
         <br>
 
@@ -88,7 +87,7 @@
         <details>
             <summary>solution</summary>
             $$v = \frac{\Delta x}{\Delta t}$$ $$20\frac{m}{s} = \frac{\Delta x}{80s}$$ $$20\frac{m}{s}80s = \Delta x$$ $$1600m = \Delta x$$
-            <canvas class='center' id="canvas5" width='600' height='150' onclick="motion('canvas5', this, true, true, true, false, 20,0, false)"> </canvas>
+            <canvas class='center' id="canvas5" width='600' height='150' onclick="motion('canvas5', this, true, true, true, false, 0,20,0, false)"> </canvas>
         </details>
         <br>
         <br>
@@ -131,7 +130,7 @@
             <p><b>Δt</b> = time period [s, seconds]</p>
             <p><b>a</b> = acceleration [m/s², meters per second squared]</p>
         </div>
-        <canvas class='center' id="canvas4" width='600' height='150' onclick="motion('canvas4', this, true, true, true, true, 0, 9.8, true)"> </canvas>
+        <canvas class='center' id="canvas4" width='600' height='150' onclick="motion('canvas4', this, true, true, true, true, 300, 0, 9.8, true)"> </canvas>
         <br>
         <br>
         <br>
@@ -156,7 +155,7 @@
             <!-- $$ 60\left(\frac{miles}{hour}\right)\left(\frac{1609 m}{1 mile}\right)\left(\frac{1 hour}{3600s}\right) = 26.8\small\frac{m}{s} $$ -->
             $$ 60\left(\frac{\color{red}{mile}}{\color{blue}{hour}}\right)\left(\frac{1609 m}{1 \color{red}{mile}}\right)\left(\frac{1 \color{blue}{hour}}{3600s}\right) = 26.8\small\frac{m}{s} $$ $$a = \frac{\Delta v}{\Delta t}$$ $$a = \frac{26.8\small\frac{m}{s}}{5.9s}$$
             $$a = 4.5\small\frac{m}{s^{2}}$$
-            <canvas class='center' id="canvas0" width='600' height='150' onclick="motion('canvas0', this, false, true, true, true, 0,4.5, true)"> </canvas>
+            <canvas class='center' id="canvas0" width='600' height='150' onclick="motion('canvas0', this, false, true, true, true, 300, 0,4.5, true)"> </canvas>
         </details>
         <br>
         <br>
