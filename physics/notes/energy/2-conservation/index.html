@@ -4,14 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Conservation of Energy</title>
-    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon'/ >
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../../style.css">
+    <script src='../../../lib/matter.min.js'></script>
     <script src='../../../lib/randomColor.min.js'></script>
-    <link rel="stylesheet" href="../../../lib/font-awesome-4.6.3/css/font-awesome.min.css">
 </head>
 
 <body onload="particles();">
@@ -24,7 +22,7 @@
 
         <div class="flex-container">
             <div class="flex-item">
-                <button id="pause">&nbsp;<i class="fa fa-pause" aria-hidden="true"></i>&nbsp;</button>
+                <button id="pause">pause</button>
                 <button id="energy">friction: OFF</button>
                 <br>
                 <canvas id="canvas0" width='300' height='600'> </canvas>
@@ -64,9 +62,7 @@
         <br>
         <br>
 
-        <button id="pause1">
-          &nbsp;<i class="fa fa-pause" aria-hidden="true"></i>&nbsp;
-        </button>
+        <button id="pause1">pause</button>
         <div>
         <canvas id="canvas1" width='700' height='200' onclick="spring(this)"> </canvas></div>
         k =
