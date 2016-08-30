@@ -133,7 +133,7 @@ Engine.run(engine);
     // ctx.stroke();
     //labels
     ctx.textAlign="center";
-    ctx.font="15px Arial";
+    ctx.font = "300 20px Roboto";
     ctx.fillStyle="#000";
     var px = 0;
     var py = 0;

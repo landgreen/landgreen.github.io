@@ -35,7 +35,7 @@ document.getElementById(canvasID).addEventListener("mousedown", function(){
 });
 spawnList();
 function spawnList(){
-  var Ypos = canvas.height/2;
+  var Ypos = canvas.height*0.7;
   var len1 = 30+Math.ceil(Math.random()*50)
   var len2 = 30+Math.ceil(Math.random()*50)
   var v = Math.ceil((Math.random()-0.5)*60)
@@ -138,21 +138,18 @@ Engine.run(engine);
     // }
     // ctx.stroke();
     //labels
-    ctx.textAlign="center";
-    ctx.font="15px Arial";
-    ctx.fillStyle="#000";
-    var px = 0;
-    var py = 0;
-    for (var k = 0, length = mass.length; k<length; k++){
-      ctx.fillText(mass[k].mass.toFixed(2)+'kg',mass[k].position.x,mass[k].position.y);
-      //ctx.fillText(mass[k].velocity.x.toFixed(2)+'m/s',mass[k].position.x,mass[k].position.y+9);
-      px += mass[k].mass*mass[k].velocity.x;
-      py += mass[k].mass*(-mass[k].velocity.y);
+    ctx.textAlign = "center";
+    ctx.font = "300 20px Roboto";
+    ctx.fillStyle = "#000";
+    var p = 0;
+    for (var k = 0, length = mass.length; k < length; k++) {
+        ctx.fillText(mass[k].mass.toFixed(2) + 'kg', mass[k].position.x, mass[k].position.y);
+        p += mass[k].mass * mass[k].velocity.x;
     }
-    ctx.textAlign="left";
-    ctx.fillText('mv + mv = total horizontal momentum ',5,13);
-    ctx.fillText('(' + mass[0].mass.toFixed(2)+')('+mass[0].velocity.x.toFixed(2) +') + ('
-    +mass[1].mass.toFixed(2)+') ('+mass[1].velocity.x.toFixed(2)+') = '      +px.toFixed(2),5,30);
+    ctx.textAlign = "left";
+    ctx.fillText('mv + mv = total momentum', 5, 15);
+    ctx.fillText('(' + mass[0].mass.toFixed(2) + ')(' + mass[0].velocity.x.toFixed(2) + ') + (' +
+        mass[1].mass.toFixed(2) + ') (' + mass[1].velocity.x.toFixed(2) + ') = ' + p.toFixed(2), 5, 37);
     // ctx.textAlign="right";
     // ctx.fillText('mv + mv = total vertical momentum',canvas.width-5,13);
     // ctx.fillText('(' + mass[0].mass.toFixed(2)+')('+-mass[0].velocity.y.toFixed(2) +') + ('

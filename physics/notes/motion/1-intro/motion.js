@@ -1,3 +1,4 @@
+window.onload = setup;
 function setup() { //writes a message onload
     var canvas;
     var ctx;
@@ -11,7 +12,6 @@ function setup() { //writes a message onload
     }
 }
 
-window.onload = setup;
 // document.addEventListener('DOMContentLoaded', function() {
 //     setup();
 // }, false);
@@ -50,7 +50,6 @@ var motion = function(canvasID, button, showPos, showTime, showVel, showAccel, p
         gravX: 0,
         gravY: 0,
         restitution: 1,
-        airFriction: 1,
         equalibrium: 400,
     }
     if (acceleration) {
@@ -84,8 +83,6 @@ var motion = function(canvasID, button, showPos, showTime, showVel, showAccel, p
             this.t += 1/60;
             this.x += this.Vx / 60;
             this.y += this.Vy / 60;
-            this.Vx *= physics.airFriction;
-            this.Vy *= physics.airFriction;
         };
         this.timeCycle = function() {
             if (showTime) {
@@ -124,7 +121,7 @@ var motion = function(canvasID, button, showPos, showTime, showVel, showAccel, p
             var line = 0;
             if (showPos) {
                 line += lineHeight;
-                ctx.fillText('x = ' + (this.x).toFixed(1) + 'm', 5, line);
+                ctx.fillText('x = ' + (this.x).toFixed(0) + 'm', 5, line);
             }
             if (showTime) {
                 line += lineHeight;
@@ -132,7 +129,7 @@ var motion = function(canvasID, button, showPos, showTime, showVel, showAccel, p
             }
             if (showVel) {
                 line += lineHeight;
-                ctx.fillText('v = ' + (this.Vx).toFixed(1) + 'm/s', 5, line);
+                ctx.fillText('v = ' + (this.Vx).toFixed(0) + 'm/s', 5, line);
             }
             if (showAccel) {
                 line += lineHeight;

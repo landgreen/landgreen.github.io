@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Momentum</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon'/ >
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
@@ -12,7 +14,7 @@
     <script src='../../../lib/randomColor.min.js'></script>
 </head>
 
-<body onload="collisionDemo();collisionDemo2();collisionEx1();collisionEx2();collisionEx3();">
+<body>
 
   <header>
   <h1>Momentum</h1>
@@ -30,11 +32,11 @@
         <br>
         <h1 class='underlined'>conservation of momentum</h1>
         <p>Momentum is useful because the total momentum for a system of objects is <b>conserved</b>. This means the sum of all momentums will be not change even if the objects collide.</p>
-        <canvas id="canvas" width='700' height='170'> </canvas>
+        <canvas id="canvas0" width='700' height='170' onclick="collision0(this)"> </canvas>
         <p>Click the simulation above a few times and note that the total momentum is the same before and after a collision.</p>
 
         <p>Conservation of momentum isn't true if one of the objects in the system interacts with an object outside the system.  For example if an object hits the ground, and the ground isn't part of our system.</p>
-        <canvas id="canvas0" width='700' height='170'> </canvas>
+        <canvas id="canvas1" width='700' height='170' onclick="collision1(this)"> </canvas>
         <br>
         <br>
         <br>
@@ -58,7 +60,7 @@
         <br>
         <br>
         <br>
-        <canvas id="canvas1" width='700' height='160'> </canvas>
+        <canvas id="canvas2" width='700' height='160' onclick="collision2(this)"> </canvas>
         <p><b>Example:</b> A <a style='color: green'>green</a> and <a style='color: white;background-color: lightgrey;'>white</a> box collide. The green box has a mass of 2kg and is moving to the right at 3m/s. The white box is moving to the left at 1m/s and has a mass of 10kg. If the white box has stopped after the collision what is the
             velocity of the green box?</p>
         <details>
@@ -73,7 +75,7 @@
         <br>
         <br>
         <button id="pause">pause</button><br>
-        <canvas id="canvas3" width='700' height='160'> </canvas>
+        <canvas id="canvas3" width='700' height='160' onclick="collision3(this)"> </canvas>
         <p><b>Example:</b> Three boxes collide. Use the table to find the final velocity of the <a style='color: green'>green</a> box</p>
         <table cellspacing="15">
           <tr>
@@ -117,7 +119,7 @@
         <h1 class='underlined'>2-D conservation of momentum</h1>
         <p>Momentum is a vector.  It has a direction and a magnitude. We can solve for the horizontal and vertical components separatly just like how we solved 2-d Motion problems.  Although in this case there isn't a time variable to link up the vertical and horizontal equations.</p>
 
-        <canvas id="canvas2" width='700' height='300'> </canvas>
+        <canvas id="canvas4" width='700' height='300' onclick="collision4(this)"> </canvas>
         <p><b>Horizontal Example:</b> A <a style='color: pink'>pink</a> hexagon and a <a style='color: cyan'>cyan</a> triangle collide. Before the collision the hexagon has a mass of 5.20kg and is moving to the right at 2m/s. The cyan triangle is moving to the left
             at 1m/s and has a mass of 1.17kg. If the triangle bounces off the hexagon at 2.92 m/s to the right what is the horizontal velocity of the hexagon? (ignore the vertical information)</p>
         <details>
