@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Newton's Laws</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../../../style.css">
+</head>
+
+<body>
+
+  <header>
+  <h1>Newton's Laws</h1>
+  </header>
+
+    <article>
+        <h1 class='underlined'>Newton's First Law: Inertia</h1>
+        <p><i>When viewed in an inertial reference frame, an object either remains at rest or continues to move at a constant velocity, unless acted upon by an external force.</i></p>
+
+        <p>Objects keep moving in a straight line at a constant velocity unless they have a force acting on them. Inertia is the resistance of any physical object to any change in speed or direction.</p>
+        <br>
+        <br>
+        <br>
+        <h1 class='underlined'>Newton's Second Law: Force</h1>
+        <p><i>The vector sum of the external forces F on an object is equal to the mass m of that object multiplied by the acceleration vector of the object.</i></p>
+        <div class='definition'>
+
+            <h2><span id="KaTex_1">...</span></h2>
+            <script>
+                katex.render("\\sum F=ma", KaTex_1, {
+                    displayMode: true
+                });
+            </script>
+
+
+            <p><b>Σ = sigma</b> The greek letter Sigma represents a summation of numbers. In this equation it means add up all the forces to get a total force. Sometimes this is called net Force.</p>
+
+            <h2><span id="KaTex_2">...</span></h2>
+            <script>
+                katex.render("\\sum F=F_{1}+F_{2}+F_{3}+... = F_{net}", KaTex_2, {
+                    displayMode: true
+                });
+            </script>
+
+            <p><b>F = force</b> [N, Newtons, kg m/s²] <i>vector</i>
+            <br>Force is a push or a pull.  Force accelerates an object.</p>
+            <p><b>m = mass</b> [kg, kilogram]
+                <br>Mass is a measure of an object's resistance to acceleration.</p>
+            <p><b>a = acceleration</b> [m/s²] <i>vector</i>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> On a corner kick you use the <a href="http://www.youtube.com/watch?v=2OSrvzNW9FE&t=1m39s">Magnus Effect</a> curve the ball into the goal. To approximate the magnus effect assume the ball has a net force of 1N towards the goal.
+            How much acceleration does that produce on a 0.43 kg soccerball? How much does the ball deviate from it's original path after 1.5 seconds?</p>
+        <details>
+            <summary>solution</summary>
+            $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1}{0.43}=a$$ $$2.33\small\frac{m}{s^{2}}=\normalsize a$$
+            <br>
+            <p>\(a=2.33\), \(\Delta t=1.5\), \(\Delta x=?\), \(v_{i}=0\)</p>
+            $$\Delta x = v_{i}\Delta t + \small\frac{1}{2}a \Delta t^{2}$$ $$\Delta x = 0(1.5) + \small\frac{1}{2}(2.33) (1.5)^{2}$$ $$\Delta x = 2.62 m$$
+        </details>
+        <br>
+        <br>
+        <svg class='svgDiagram' width="300" height="120" viewBox="-15 0 285 120" style="outline: 0px solid black;float: right;">
+          <defs>
+              <g id="vector">
+                <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
+                <polygon points="0,50 -5,42 5,42" style="fill:#000;" />
+              </g>
+              <g id="box">
+                <rect x="0" y="0" width="80" height="80" style="stroke:black;stroke-width:2;fill:#e3d1a9" />
+                <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle">10kg</text>
+              </g>
+          </defs>
+            <use x='100' y='20' xlink:href="#box"/>
+            <rect x="0" y="100" width="300" height="110" style="fill:#ccc" />
+            <use xlink:href="#vector" transform='translate(100 60) rotate(90)'/>
+            <text x="10" y="53" fill="black">F=2000N</text>
+            <use xlink:href="#vector" transform='translate(180 60) rotate(-90)'/>
+            <text x="200" y="53" fill="black">F=1900N</text>
+        </svg>
+        <p><b>Example:</b> A 10kg mass is being pulled left with a 2000N force and right with a 1900N force. How will the mass accelerate?</p>
+        <details>
+            <summary>solution</summary>
+            $$\sum F=ma$$ $$-2000+1900=(10)(a)$$ $$-2000+1900=(10)(a)$$ $$-10\small\frac{m}{s^{2}}=\normalsize a$$
+            <p>The mass will accelerate to the left.</p>
+        </details>
+
+        <br>
+        <br>
+        <br>
+        <h1  class='underlined'>Newton's Third Law: Equal and Opposite Forces</h1>
+        <svg class='svgDiagram' width="300" height="150" style="outline: 0px solid black;float: right;">
+            <rect x="60" y="50" width="80" height="80" style="stroke:black;stroke-width:2;fill:#cfe2f6" />
+            <rect x="140" y="50" width="80" height="80" style="stroke:black;stroke-width:2;fill:#cff6d7" />
+            <rect x="0" y="130" width="300" height="110" style="fill:#ccc" />
+            <use xlink:href="#vector" transform='translate(190 90) rotate(90)'/>
+            <use xlink:href="#vector" transform='translate(90 90) rotate(-90)'/>
+        </svg>
+        <p><i>When one body exerts a force on a second body, the second body simultaneously exerts a force equal in magnitude and opposite in direction on the first body.</i></p>
+        <p>If you push on an object that object will push back at you.</p>
+        <br>
+        <br>
+
+        <p><b>Example:</b> You push down on the ground with a 1000N force. Describe the magnitude and direction of the force the ground pushes on you.</p>
+        <details>
+            <summary>solution</summary>
+            <p>The force the ground applies is equal and opposite to the force you apply on the ground.</p>
+            <p>The magnitude is 1000N.</p>
+            <p>The direction is up.</p>
+        </details>
+        <br>
+        <br>
+        <p><b>Example:</b> A boxer's glove applies a 140N force to the face of another boxer. Describe the magnitude of the force the face applies to the glove.</p>
+        <details>
+            <summary>solution</summary>
+            <p>The force is equal and opposite.</p>
+            <p>The magnitude is 140N.</p>
+        </details>
+    </article>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div style="text-align:center">
+        <a href="../../../index.html#units">Back</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <script>renderMathInElement(document.body);</script>
+</body>
+
+</html>
