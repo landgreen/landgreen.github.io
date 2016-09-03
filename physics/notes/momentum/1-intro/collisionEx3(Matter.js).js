@@ -26,16 +26,16 @@ engine.world.gravity.y = 0;
 
 var mass = [];
 
-// document.getElementById("pause").addEventListener("click", function() {
-//     //slow timeScale changes the value of velocity while in slow timeScale so divide by engine.timing.timeScale to set velocity normal
-//     if (engine.timing.timeScale === 1) {
-//       engine.timing.timeScale = 0.00001
-//       document.getElementById("pause").innerHTML = "unpause";
-//     } else {
-//       engine.timing.timeScale = 1;
-//       document.getElementById("pause").innerHTML = "pause";
-//     }
-// });
+document.getElementById("pause").addEventListener("click", function() {
+    //slow timeScale changes the value of velocity while in slow timeScale so divide by engine.timing.timeScale to set velocity normal
+    if (engine.timing.timeScale === 1) {
+      engine.timing.timeScale = 0.00001
+      document.getElementById("pause").innerHTML = "unpause";
+    } else {
+      engine.timing.timeScale = 1;
+      document.getElementById("pause").innerHTML = "pause";
+    }
+});
 
 document.getElementById(el.id).addEventListener("mousedown", function(){
   if (engine.timing.timeScale === 1){
