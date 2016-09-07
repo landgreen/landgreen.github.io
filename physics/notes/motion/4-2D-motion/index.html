@@ -14,9 +14,11 @@
 </head>
 
 <body>
+  <header>
+  <h1>2-D Motion</h1>
+  </header>
     <article>
-      <h1  class='underlined'>2-D motion</h1>
-      <p>Solving for 2-Dimensional motion uses the same techniques as in 1-D, but with twice the complexity. We will organize our information in an x column and y column with time separate.  The vertical and horizontal variables are completely independent of each other, but time is shared.  Lets try an example problem.</p>
+      <p>Solving for 2-Dimensional motion uses the same techniques as in 1-D, but with twice the complexity. We will organize our information in an x column and y column with time separate.  The vertical and horizontal variables are completely independent of each other, but time is shared.  Let's try an example problem.</p>
 
 
       <canvas id="myCanvas" width='700' height= '300'></canvas>
@@ -39,8 +41,8 @@
           <td>u = 0</td>
         </tr>
         <tr>
-          <td>v =  </td>
-          <td>v =  </td>
+          <td>v = 2m/s </td>
+          <td>v = ? </td>
         </tr>
         <tr>
           <td>a = 0</td>
@@ -52,17 +54,17 @@
       $$v^{2} = 0^{2}+2(-9.8)(-1.5)$$
       $$v^{2} = 24.9$$
       $$v = \sqrt{24.9}$$
-      $$v = \pm5.42 $$
-      $$v = -5.42 \small\frac{m}{s}$$
+      $$v = \pm4.98 $$
+      $$v = -4.98 \small\frac{m}{s}$$
       <p>We know the final velocity is down so after the square root we choose the negative value. Lets plug final velocity back in and solve for time.</p>
       <br>
-      $$v = u+a \Delta t$$
-      $$-5.42 = 0+(-9.8)\Delta t$$
-      $$0.55s = \Delta t$$
+      $$v = u + a \Delta t$$
+      $$-4.98 = 0+(-9.8)\Delta t$$
+      $$0.51s = \Delta t$$
       <p> With this new information we can use time to solve on the horizontal side.</p>
       <table style="width:100%;text-align:left;background-color:#eee;">
         <tr>
-          <td colspan="2" style= 'text-align: center;color:#088;'>Δt = 0.55s</td>
+          <td colspan="2" style= 'text-align: center;color:#088;'>Δt = 0.51s</td>
         </tr>
         <tr>
           <th>x: horizontal (left/right)</th>
@@ -78,7 +80,7 @@
         </tr>
         <tr>
           <td>v = </td>
-          <td style="color:#088;">v = 5.42m/s</td>
+          <td style="color:#088;">v = -4.98m/s</td>
         </tr>
         <tr>
           <td>a = 0</td>
@@ -86,10 +88,13 @@
         </tr>
       </table>
       $$\Delta x = u\Delta t + \small\frac{1}{2}a \Delta t^{2}$$
-      $$\Delta x = 2(0.55) + \small\frac{1}{2}(0)(0.55)^{2}$$
-      $$\Delta x = 1.1m$$
+      $$\Delta x = 2(0.51) + \small\frac{1}{2}(0)(0.51)^{2}$$
+      $$\Delta x = 1.02m$$
 <br>
 <hr>
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>

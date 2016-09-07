@@ -1,11 +1,5 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto:300,400,700';
 
-:root {
-    --accent-color: #2793C7;
-    --accent-color-light: #ddeef6;
-    --font: "Roboto", "Helvetica", "Arial", sans-serif;
-    /*--font: "Helvetica", "Arial", sans-serif;*/
-}
 
 /************Reset**************/
 
@@ -43,15 +37,16 @@ svg:not(:root) {
 
 /*global elements____________________________________*/
 body {
-    font-family: var(--font);
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-size: 110%;
     background-color: #fff;
     padding-top: 0;
-    color: #333;
+    color: #444;
     margin: 0;
+   line-height:1.4;
 }
 button {
-    font-family: var(--font);
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-size: 1em
 }
 input {
@@ -82,7 +77,7 @@ canvas:hover {
 
 a {
     text-decoration: none;
-    color: var(--accent-color);
+    color: #2793C7;
 }
 a:hover {
     text-decoration: underline;
@@ -94,7 +89,7 @@ summary {
 }
 hr {
     border: 0;
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid #aaa;
 }
 
 th {
@@ -107,13 +102,13 @@ details p {
 
 ::selection {
     color: white;
-    background: var(--accent-color);
+    background: #2793C7;
 }
 
 /*classes_________________________________________*/
 
 .underlined {
-  border-bottom: 1px solid #999;
+  border-bottom: 1px solid #aaa;
   font-weight: 300;
   font-size: 2.2em;
 }
@@ -126,7 +121,7 @@ details p {
 
 .highlight {
   color: #fff;
-  background-color: var(--accent-color);
+  background-color: #2793C7;
   /*color: #000;
   background-color: #ffcdf0;*/
   border-radius: 5px;
@@ -135,7 +130,7 @@ details p {
 }
 
 .definition {
-    background-color: var(--accent-color-light);
+    background-color: #ddeef6;
     padding: 1.3em;
     margin: 2em 4em 2em 4em;
     border-radius: 1em;
@@ -160,10 +155,6 @@ details p {
     background: #fff;
     border: 1px solid black;
     transform: scale(1.5);
-}
-
-.material-icons.md-18 {
-  font-size: 18px;
 }
 
 /*math tex rendering __________________________*/
@@ -192,11 +183,12 @@ details .katex {
 header {
     background-color: #222;
     color: white;
-    padding: 1em 0em 0.5em 0em;
+    padding: 0.1em 0em 0.1em 0em;
     text-align: center;
 }
 
 header h1 {
+    margin: 0.5em;
     font-size: 5em;
     font-weight: 300;
 }
@@ -213,7 +205,7 @@ header h1 {
 }
 .e-mail-link:hover {
     text-decoration: none;
-    background-color: var(--accent-color);
+    background-color: #2793C7;
     color: white;
 }
 
@@ -232,16 +224,14 @@ header h1 {
     margin: 0 auto;
 }
 .grid h3, .grid h2 {
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid #aaa;
     font-weight: 400;
 }
 .grid a {
     color: #555;
 }
 .grid a:hover {
-    color: var(--accent-color);
-    /*text-decoration: none;
-    border-bottom: 2px solid var(--accent-color);*/
+    color: #2793C7;
 }
 .grid li {
     padding: 0 0.5em 0.5em 0;
