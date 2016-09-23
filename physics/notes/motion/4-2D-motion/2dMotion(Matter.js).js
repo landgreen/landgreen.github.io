@@ -364,26 +364,12 @@ function MotionSimulationTwo() {
                 y: -mass[0].position.y,
                 Vx: mass[0].velocity.x,
                 Vy: -mass[0].velocity.y,
-                Ay: -engine.world.gravity.y,
             });
             var len = data.length - 1
 
             window.requestAnimationFrame(cycle);
             ctx.clearRect(box.x - 1, -1, canvas.width, canvas.height);
             ctx.lineWidth = 1;
-
-            //graph gravity, Ay
-            ctx.fillStyle = box.c2;
-            ctx.beginPath();
-            ctx.arc(len + box.x, canvas.height / 2 - data[len].Ay * scale, 3, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.strokeStyle = box.c2;
-            ctx.beginPath();
-            for (var i = 0; i < len; i++) {
-                ctx.lineTo(i + box.x, canvas.height / 2 - data[i].Ay * scale);
-            }
-            ctx.stroke();
-            ctx.fillText("Ay", canvas.width - 5, 50);
 
             //graph Vx
             ctx.fillStyle = box.c3;
