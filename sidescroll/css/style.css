@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+  background-color: #ddd;
+  cursor: crosshair;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* svg classes */
+
+@keyframes slideinRL {
+  0% {
+    transform: translate(-900px, 0);
+  }
+  100% {
+    transform: translate(0px, 0);
+  }
+}
+
+@keyframes slideinLR {
+  0% {
+    transform: translate(900px, 0);
+  }
+  100% {
+    transform: translate(0px, 0);
+  }
+}
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.intro {
+  background-color: #ddd;
+  z-index: 2;
+}
+
+#title {
+  animation: slideinRL 3s ease-out 1;
+}
+
+#instruct {
+  animation: slideinLR 3s ease-out 1;
+}
+#controls {
+  animation: fadein 3s ease-out 1;
+}
+
+
+
+.background {
+  z-index: -1;
+}
+
+.foreground {
+  z-index: 1;
+}
