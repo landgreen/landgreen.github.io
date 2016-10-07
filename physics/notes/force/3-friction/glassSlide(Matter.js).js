@@ -51,7 +51,7 @@ var glass = {
   document.getElementById(canvasID).addEventListener("mousedown", function(){
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
-    spawnMass(-100, 0, Math.round(400+Math.random()*800), 0, glass.width*glass.size*glass.scaleBodyW, glass.height*glass.size*glass.scaleBodyH);
+    spawnMass(-100, 0, Math.round(800+Math.random()*600), 0, glass.width*glass.size*glass.scaleBodyW, glass.height*glass.size*glass.scaleBodyH);
   });
 
   spawnMass(-100, 0, 600, 0,  glass.width*glass.size*glass.scaleBodyW, glass.height*glass.size*glass.scaleBodyH);
