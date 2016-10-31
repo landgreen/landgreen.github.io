@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Conservation of Energy</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon'/ >
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../../style.css">
-    <script src='../../../lib/matter.min.js'></script>
     <script src='../../../lib/randomColor.min.js'></script>
+    <link rel="stylesheet" href="../../../lib/font-awesome-4.6.3/css/font-awesome.min.css">
 </head>
 
 <body onload="particles();">
@@ -22,7 +24,7 @@
 
         <div class="flex-container">
             <div class="flex-item">
-                <button id="pause">pause</button>
+                <button id="pause">&nbsp;<i class="fa fa-pause" aria-hidden="true"></i>&nbsp;</button>
                 <button id="energy">friction: OFF</button>
                 <br>
                 <canvas id="canvas0" width='300' height='600'> </canvas>
@@ -32,7 +34,6 @@
                 <p>As the ball bounces energy transfers form kinetic to gravitational.</p>
                 <p>When is kinetic energy the highest?</p>
                 <p>When is gravitational energy the highest?</p>
-                <p>When is rotational energy the hightest?</p>
                 <p>How is the total energy decreasing? Isn't energy conserved?</p>
                 <br>
             </div>
@@ -49,20 +50,42 @@
         <br>
         <br>
         <br>
-        <p><b>Example:</b> A 0.43kg soccer ball starts at rest and rolls down a 30m tall hill.  How fast will the ball be moving at the bottom of the hill?</p>
+        <p><b>Example:</b> A roller coaster cart starts at rest 126m high on the top of the first drop on "Superman: Escape from Krypton" at Six Flags Magic Mountain. How fast is the cart going at the bottom of the hill?</p>
         <details>
             <summary>solution</summary>
             $$E_{i} = E_{f}$$
             $$U_{i} + K_{i} = U_{f} + K_{f}$$
-            $$mgh + \frac{1}{2}mv^{2} = mgh +\frac{1}{2}mv^{2}$$
-            <p>mass is in every term.  lets divide y m</p>
+            $$mgh_{i} + \frac{1}{2}mu^{2} = mgh_{f} +\frac{1}{2}mv^{2}$$
+            <p>mass is in every term.  lets divide by m</p>
+            $$gh_{i} + \frac{1}{2}u^{2} = gh_{f} +\frac{1}{2}v^{2}$$
+            $$(9.8)(126) + \frac{1}{2}(0)^{2} = (9.8)(0) +\frac{1}{2}v^{2}$$
+            $$1234.8 = \frac{1}{2}v^{2}$$
+            $$\pm 49.69 \small\frac{m}{s} =\normalsize v$$
+
+        </details>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> A 0.43kg soccer ball kicked at 10m/s rest and rolls down a 30m tall hill.  How fast will the ball be moving at the bottom of the hill?</p>
+        <details>
+            <summary>solution</summary>
+            $$E_{i} = E_{f}$$
+            $$U_{i} + K_{i} = U_{f} + K_{f}$$
+            $$mgh_{i} + \frac{1}{2}mu^{2} = mgh_{f} +\frac{1}{2}mv^{2}$$
+            <p>mass is in every term.  lets divide by m</p>
+            $$gh_{i} + \frac{1}{2}u^{2} = gh_{f} +\frac{1}{2}v^{2}$$
+            $$(9.8)(30) + \frac{1}{2}(10)^{2} = (9.8)(0) + \frac{1}{2}v^{2}$$
+            $$294 + 50 = \frac{1}{2}v^{2}$$
+            $$344 = \frac{1}{2}v^{2}$$
+            $$\pm 26.2 \small\frac{m}{s} =\normalsize v$$
         </details>
         <br>
         <br>
         <br>
         <br>
-
-        <button id="pause1">pause</button>
+        <button id="pause1">
+          &nbsp;<i class="fa fa-pause" aria-hidden="true"></i>&nbsp;
+        </button>
         <div>
         <canvas id="canvas1" width='700' height='200' onclick="spring(this)"> </canvas></div>
         k =

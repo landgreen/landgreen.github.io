@@ -139,6 +139,11 @@ details p {
     color: #888;
     font-weight: 300;
 }
+
+.data th, td {
+    padding: 0.5em;
+}
+
 .derive {
     text-align: center;
     background-color: #e6f9f0;

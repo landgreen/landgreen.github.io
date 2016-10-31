@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Universal Gravitation</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+    <!-- <script src='../../../lib/matter.min.js'></script> -->
+    <!-- <script src='../../../lib/randomColor.min.js'></script> -->
+</head>
+
+<body>
+    <header>
+        <h1>Universal Gravitation</h1>
+    </header>
+    <article>
+    <h2 class = "underlined">Newton's Law of Universal Gravitation</h2>
+    <p>All particles are attracted to each other, but the attraction is divided by the square of the distance between the particles.</p>
+
+    <div class='definition'>
+
+          <svg style="display: block; margin: auto" width="400" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="100" r="50" fill = '#fff' stroke-width="2" stroke="#222"/>
+              <circle cx="300" cy="100" r="50" fill = '#fff' stroke-width="2" stroke="#222"/>
+
+              <text x="100" y="90" fill="black" text-anchor="middle" font-size="25">M</text>
+              <text x="118" y="93" fill="black" text-anchor="middle" font-size="19">1</text>
+              <text x="300" y="90" fill="black" text-anchor="middle" font-size="25">M</text>
+              <text x="318" y="93" fill="black" text-anchor="middle" font-size="19">2</text>
+
+              <line x1="100" y1="100" x2="180" y2="100" style="stroke:#000;stroke-width:2" />
+              <polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
+
+              <line x1="300" y1="100" x2="220" y2="100" style="stroke:#000;stroke-width:2" />
+              <polygon points="0,0 8,5 8,-5" transform="translate(220 100)" style="fill:#000;" />
+
+              <text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
+
+              <line x1="100" y1="30" x2="300" y2="30" style="stroke:#000;stroke-width:2" />
+              <line x1="100" y1="25" x2="100" y2="35" style="stroke:#000;stroke-width:2" />
+              <line x1="300" y1="25" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+              <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
+          </svg>
+
+        $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
+        <p><strong>F</strong> = force of gravity [N, Newtons, kg m/s²] <i>vector</i>
+        <br><strong>G</strong> = universal gravitation constant [N(m/kg)²] <i>scalar</i>
+        <br><strong>M</strong> = mass [kg, kilograms] <i>scalar</i>
+        <br><strong>r</strong> = distance between the center of each mass[m, meters] <i>scalar</i>
+    </div>
+
+    </article>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div style="text-align:center">
+        <a href="../../../index.html#units">Back</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>
