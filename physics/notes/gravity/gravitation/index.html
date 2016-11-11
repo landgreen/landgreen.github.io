@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../../style.css">
-    <!-- <script src='../../../lib/matter.min.js'></script> -->
-    <!-- <script src='../../../lib/randomColor.min.js'></script> -->
+    <script src='../../../lib/randomColor.min.js'></script>
 </head>
 
 <body>
@@ -18,14 +17,13 @@
         <h1>Universal Gravitation</h1>
     </header>
     <article>
-    <h2 class = "underlined">Newton's Law of Universal Gravitation</h2>
-    <p>All particles are attracted to each other, but the attraction is divided by the square of the distance between the particles.</p>
 
-    <div class='definition'>
+        <h2 class="underlined">Newton's Law of Universal Gravitation</h2>
+        <div class='definition'>
 
-          <svg style="display: block; margin: auto" width="400" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="100" cy="100" r="50" fill = '#fff' stroke-width="2" stroke="#222"/>
-              <circle cx="300" cy="100" r="50" fill = '#fff' stroke-width="2" stroke="#222"/>
+            <svg style="display: block; margin: auto" width="400" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="100" r="50" fill = '#f99' stroke-width="2" stroke="#222"/>
+              <circle cx="300" cy="100" r="50" fill = '#99f' stroke-width="2" stroke="#222"/>
 
               <text x="100" y="90" fill="black" text-anchor="middle" font-size="25">M</text>
               <text x="118" y="93" fill="black" text-anchor="middle" font-size="19">1</text>
@@ -45,14 +43,263 @@
               <line x1="300" y1="25" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
               <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
           </svg>
+          <h2>$$ F = \frac{GM_{1}M_{2}}{r^{2}} $$</h2>
+            <p><strong>F</strong> = force of gravity [N, Newtons, kg m/s²] <i>vector</i>
+                <br><strong>G</strong> = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N m²/kg²] <i>scalar</i>
+                <br><strong>M</strong> = mass [kg, kilograms] <i>scalar</i>
+                <br><strong>r</strong> = distance between the center of each mass [m, meters] <i>scalar</i>
+        </div>
+        <p>Each mass feels an equal but opposite force as predicted by Newton's 3rd law.  This means that the same force of gravity you feel towards the Earth the Earth feels towards you.  So why don't we notice the Earth accelerate towards you?</p>
+        <p>All particles are attracted to each other, but the attraction is divided by the distance squared (1/r²). Physical laws that diminish with a <a href='https://en.wikipedia.org/wiki/Inverse-square_law'>1/r² rule</a> are common in physics
+            because of how signals spread out in 3 dimensions.</p>
+        <p>Notice how small G is (6.6x10<sup>-11</sup>). Out of the four fundamental forces gravity is by far the weakest. If gravity is so weak why do we notice it's effects so easily?</p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <center>
+            <h3>Local Massive Objects Data Table</h3>
+            <table border>
+                <tr align=center>
+                    <th align=left>Planet</th>
+                    <th>mass</th>
+                    <th>radius</th>
+                    <th>density</th>
+                    <th>rotation</th>
+                    <th>axis tilt</th>
+                </tr>
+                <tr align=center>
+                    <th><br></th>
+                    <th>(kg) </th>
+                    <th>(km) </th>
+                    <th>(g/cm<sup>3</sup>) </th>
+                    <th></th>
+                    <th>degree °</th>
+                </tr>
+                <tr align=center>
+                    <td align=left>Sun</td>
+                    <td>2.00×10<sup>30</sup></td>
+                    <td>695,700</td>
+                    <td>1.408</td>
+                    <td>~30 d</td>
+                    <td>0</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Mercury</td>
+                    <td>3.301×10<sup>23</sup></td>
+                    <td>2,440</td>
+                    <td>5.427</td>
+                    <td>58.785 d</td>
+                    <td>~0</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Venus</td>
+                    <td>4.867×10<sup>24</sup></td>
+                    <td>6,052</td>
+                    <td>5.243</td>
+                    <td>243.686 d</td>
+                    <td>177.36</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Earth</td>
+                    <td>5.972×10<sup>24</sup></td>
+                    <td>6,371</td>
+                    <td>5.515</td>
+                    <td>23.9345 h</td>
+                    <td>23.45</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Moon</td>
+                    <td>7.346×10<sup>22</sup></td>
+                    <td>1,737</td>
+                    <td>3.344</td>
+                    <td>27.322 d</td>
+                    <td>1.5</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Mars</td>
+                    <td>6.417×10<sup>23</sup></td>
+                    <td>3,390</td>
+                    <td>3.933</td>
+                    <td>24.6229 h</td>
+                    <td>25.19</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Jupiter</td>
+                    <td>1.899×10<sup>27</sup></td>
+                    <td>70,000</td>
+                    <td>1.326</td>
+                    <td>9.9250 h</td>
+                    <td>3.13</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Saturn</td>
+                    <td>5.685×10<sup>26</sup></td>
+                    <td>58,232</td>
+                    <td>0.687</td>
+                    <td>10.656 h</td>
+                    <td>26.73</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Uranus</td>
+                    <td>8.682×10<sup>25</sup></td>
+                    <td>25,362</td>
+                    <td>1.270</td>
+                    <td>17.24 h</td>
+                    <td>97.77</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Neptune</td>
+                    <td>1.024×10<sup>26</sup></td>
+                    <td>24,622</td>
+                    <td>1.638</td>
+                    <td>16.11 h</td>
+                    <td>28.32</td>
+                </tr>
+            </table>
+            <a href="http://exoplanets.org/table">exoplanets data table</a>
+        </center>
+        <br>
+        <br>
+        <p><b>Example:</b> Find the force of gravity between the Earth and the moon.  The distance between them is 384,403 km.</p>
+        <details>
+            <summary>solution</summary>
+            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
+            $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (7.346 \times 10^{22})}{(3.844 \times 10^{8})^{2}}$$
+            $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (7.346 \times 10^{22})}{14.78 \times 10^{16}}$$
+            $$ F = \frac{6.674 \times 5.972 \times 7.346}{14.78} \times \frac{10^{-11}10^{24}10^{22}}{10^{16}}$$
+            $$ F = 292.6 \times 10^{19} N$$
+        </details>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> Find the force of gravity between the Earth and the Sun.  The distance between them is 149.6 billion m.</p>
+        <details>
+            <summary>solution</summary>
+            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
+            $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (2.00 \times 10^{30})}{(149.6 \times 10^{9})^{2}}$$
+            $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (2.00 \times 10^{30})}{22380 \times 10^{18}}$$
+            $$ F =  3.561 \times 10^{22} N$$
+        </details>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> Find the force of gravity from the Earth and a 100kg person 10,000,000m from the center of Earth.</p>
+        <details>
+            <summary>solution</summary>
+            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
+            $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24})(100)}{ 10,000,000^{2}}$$
+            $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24})(100)}{ 10^{14}}$$
+            $$ F = 398.57 N$$
+        </details>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> How massive must an object be in order to feel a force of 100N at a distance of 10,000,000m from the center of the Earth?</p>
+        <details>
+            <summary>solution</summary>
+            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
+            $$ M_{1} = \frac{Fr^{2}}{GM_{2}}$$
+            $$ M_{1} = \frac{(100)(10,000,000)^{2}}{(6.674 \times 10^{-11})(5.972 \times 10^{24})}$$
+            $$ M_{1} = \frac{(100)(10^{14})}{(6.674 \times 10^{-11})(5.972 \times 10^{24})}$$
+            $$ M_{1} = \frac{(100)(10^{14})}{(6.674 \times 10^{-11})(5.972 \times 10^{24})}$$
+            $$ M_{1} = 25.01kg$$
+        </details>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> When it is closest to the sun on it's 75 year orbit <a href = "https://en.wikipedia.org/wiki/Halley%27s_Comet">Halley's Comet</a> feels a force of gravity from the Sun of 3.65×10<sup>12</sup> N.  Calculate its distance from the sun using the comet's mass of 2.2×10<sup>14</sup> kg?</p>
+        <details>
+            <summary>solution</summary>
+            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
+            $$ r^{2} = \frac{GM_{1}M_{2}}{F} $$
+            $$ r^{2} = \frac{(6.674 \times 10^{-11})(2.00 \times 10^{30})(2.2 \times 10^{14})}{3.65 \times 10^{12}} $$
+            $$ \sqrt{r^{2}} = \sqrt{8.04 \times 10^{23}} $$
+            $$ r = 8.97 \times 10^{11} m $$
 
-        $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
-        <p><strong>F</strong> = force of gravity [N, Newtons, kg m/s²] <i>vector</i>
-        <br><strong>G</strong> = universal gravitation constant [N(m/kg)²] <i>scalar</i>
-        <br><strong>M</strong> = mass [kg, kilograms] <i>scalar</i>
-        <br><strong>r</strong> = distance between the center of each mass[m, meters] <i>scalar</i>
-    </div>
+        </details>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h3>Force Field Simulation</h3>
+        <p>This type of diagram is called a force field. Each small line shows the gravitational acceleration vector potentially felt at that location.  These diagrams are helpful for predicting how a particle will move.</p>
+          <p>Can you see the pockets of zero gravity that form between the masses?</p>
+        <canvas class='center' id="gravity" height='600' width='600' onclick="gravityDiagram(this)"> </canvas>
+        <br>
 
+        <h2 class="underlined">Gravitational Acceleration</h2>
+        <p>It is useful to adapt the universal gravitation equation to predict acceleration. To find accleration we just need to divide an object's gravitational force by its mass.</p>
+
+        <details class='derive'>
+            <summary>derivation of universal gravitational acceleration</summary>
+            $$ F = M_{2}a $$ $$ \frac{F}{M_{2}} = a $$
+            <p>Newton's second law tells us we can replace F/M with acceleration.</p>
+            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ \frac{F}{M_{2}} = \frac{GM_{1}}{r^{2}} $$ $$ a = \frac{GM_{1}}{r^{2}} $$
+
+        </details>
+
+
+        <div class='definition'>
+          <svg style="display: block; margin: auto" width="400" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="20" fill = '#f99' stroke-width="2" stroke="#222"/>
+            <circle cx="300" cy="100" r="50" fill = '#99f' stroke-width="2" stroke="#222"/>
+
+            <text x="300" y="105" fill="black" text-anchor="middle" font-size="25">M</text>
+
+
+            <line x1="100" y1="100" x2="180" y2="100" style="stroke:#000;stroke-width:2" />
+            <polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
+
+            <text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">a</text>
+
+            <line x1="100" y1="30" x2="300" y2="30" style="stroke:#000;stroke-width:2" />
+            <line x1="100" y1="25" x2="100" y2="35" style="stroke:#000;stroke-width:2" />
+            <line x1="300" y1="25" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+            <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
+        </svg>
+            <h2>$$ a = \frac{GM}{r^{2}} $$</h2>
+            <p><strong>a</strong> = acceleration of gravity [N, Newtons, kg m/s²] <i>vector</i>
+                <br><strong>G</strong> = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N(m/kg)²] <i>scalar</i>
+                <br><strong>M</strong> = mass of the body pulling [kg, kilograms] <i>scalar</i>
+                <br><strong>r</strong> = distance between the center of each mass [m, meters] <i>scalar</i>
+
+        <p>The acceleration vector is pointed towards the center of the mass producing the accleration.</p>
+        <p>The mass of the body being accelerated isn't used in this equation. Use the mass of the body producing the acceleration.
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> Find the acceleration of gravity for an object on the surface of Earth.
+          <br>Is it really 9.8m/s²?</p>
+        <details>
+            <summary>solution</summary>
+            $$ r = 12,742km / 2 $$
+            $$ r = 6,371,000m $$
+            $$ a = \frac{GM}{r^{2}} $$
+            $$ a = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{(6.371\times10^{6})^{2}} $$
+            $$ a = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{40.590\times10^{12}} $$
+            $$ a = \frac{(6.674)(5.972)}{40.590} \times 10^{-11+24-12}$$
+            $$ a=0.98195 \times 10^{1}$$
+            $$ a=9.8195 \frac{m}{s^{2}}$$
+        </details>
     </article>
     <br>
     <br>
@@ -71,6 +318,7 @@
     <script>
         renderMathInElement(document.body);
     </script>
+    <script src="gravityvectorfield.js"></script>
 </body>
 
 </html>

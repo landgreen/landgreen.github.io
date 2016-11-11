@@ -38,38 +38,31 @@ svg:not(:root) {
 /*global elements____________________________________*/
 body {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-size: 110%;
+    font-size: 105%;
     background-color: #fff;
     padding-top: 0;
     color: #444;
     margin: 0;
-   line-height:1.4;
+    line-height:1.4;
 }
 button {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-size: 1em
+    font-size: 1em;
+    margin: 0.3em;
 }
 input {
       font-size: 1em;
 }
 
 article {
-    padding: 0.6em;
+    padding: 0.1em;
     margin: 0 auto;
-    max-width: 45em;
+    max-width: 600px;
 }
 
 canvas {
     border: 1px solid #999;
     /*box-shadow: 2px 2px 5px grey;*/
-    /*background-color: #f9f9f9;*/
-    /*border-radius: 20px;*/
-    /*cursor: crosshair;*/
-}
-
-canvas:hover {
-    border: 1px solid black;
-    box-shadow: 2px 2px 3px grey;
     /*background-color: #f9f9f9;*/
     /*border-radius: 20px;*/
     /*cursor: crosshair;*/
@@ -103,6 +96,7 @@ details p {
 ::selection {
     color: white;
     background: #2793C7;
+    /*background: #0f0;*/
 }
 
 /*classes_________________________________________*/
@@ -131,8 +125,8 @@ details p {
 
 .definition {
     background-color: #ddeef6;
-    padding: 1.3em;
-    margin: 2em 4em 2em 4em;
+    padding: 1em;
+    margin: 1em 0em 1em 0em;
     border-radius: 1em;
 }
 .definition i {
@@ -153,13 +147,13 @@ details p {
 
 .svgDiagram {
     /*border: 1px solid black;*/
-    transition: all 100ms ease-in;
+    transition: all 200ms ease-in;
 }
 .svgDiagram:hover {
     z-index: 2;
     background: #fff;
     border: 1px solid black;
-    transform: scale(1.5);
+    transform: scale(2);
 }
 
 /*math tex rendering __________________________*/
@@ -183,8 +177,19 @@ details .katex {
     margin: 0.8em
 }
 
-/* Header setup_________________________________*/
 
+/*2 Equal-Width Columns that combine in the article________________*/
+@media screen and (min-width: 43em) {
+  .col-group {
+    overflow: hidden;
+  }
+  .col-group > div {
+    float: left;
+    width: 50%;
+  }
+}
+
+/* Header setup_________________________________*/
 header {
     background-color: #222;
     color: white;
@@ -227,6 +232,7 @@ header h1 {
     padding: 0.5em 0 0 0.5em;
     max-width: 76em;
     margin: 0 auto;
+    line-height:1.6;
 }
 .grid h3, .grid h2 {
     border-bottom: 1px solid #aaa;
