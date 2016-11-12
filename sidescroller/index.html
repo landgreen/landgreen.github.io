@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Canvas based side scrolling video game with the matter.js physics engine.">
+    <meta name="keywords" content="physics, game engine, game, side scroller, side scroll, sidescroller, sidescroll, Landgreen ">
+    <meta name="author" content="Ross Landgreen">
+    <meta property="og:description" content="Canvas based side scrolling video game with the matter.js physics engine.">
+    <meta property="og:title" content="side scroller">
+    <meta name="twitter:title" content="side scroller">
+    <title>side scroller v0.6 (matter.js)</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
+</head>
+
+<body>
+    <div id="keysleft">
+        move: WASD
+        <br>hold/drop: E
+        <br>pause: F
+        <br>gravity: R
+    </div>
+    <div id="keysright">
+        zoom: + -
+        <br>fire: click
+        <br>testing: T
+    </div>
+
+
+    <canvas id="canvas"></canvas>
+
+    <!-- <svg class='background'>
+  <defs>
+    <style type="text/css"><![CDATA[
+      .keyrect {
+        stroke: #333;
+        fill: "#555";
+        rx: 5;
+      }
+    ]]></style>
+  </defs>
+  <g id = 'background'>
+    <circle cx="500" cy="-300" r="100" fill="#d67" opacity='1' stroke-width="0"/>
+    <rect x="-600" y="200" width="400" height="400" fill='#021' opacity="0.1" stroke-width="0"/>
+  </g>
+</svg> -->
+
+    <!-- <svg class='foreground'>
+  <defs>
+    <linearGradient id="vert_shadow" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.1"/>
+    </linearGradient>\
+    <linearGradient id="sunset" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f00" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="darkcircle">
+        <stop offset="0%" stop-color="#000" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="sunsetRad">
+        <stop offset="0%" stop-color="#f00" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <style type="text/css"><![CDATA[
+      .keyrect {
+        stroke: #333;
+        fill: "#555";
+        rx: 5;
+      }
+    ]]></style>
+  </defs>
+  <g id = 'foreground'>
+    <circle cx="500" cy="-300" r="1200" fill='url(#sunsetRad)' stroke-width="0"/>
+    <rect x="450" y="664" width="500" height="237" fill='#000' opacity="0.1" stroke-width="0"/>
+    <rect x="-600" y="794" width="400" height="106" fill='url(#vert_shadow)' stroke-width="0"/>
+  </g>
+</svg> -->
+
+
+    <svg class='intro' onclick="runPlatformer(this)" viewBox="0 0 800 800">
+  <defs>
+    <style type="text/css"><![CDATA[
+      .keyrect {
+        stroke: #333;
+        fill: "#555";
+        rx: 5;
+      }
+      .letter {
+        fill: #ccc;
+        font-family: sans-serif;
+        font-weight: bold;
+	      font-size: 40px;
+      }
+      .instructions {
+        fill: #555;
+        font-family: sans-serif;
+	      font-size: 40px;
+      }
+      .info {
+        fill: #777;
+        font-family: sans-serif;
+	      font-size: 15px;
+      }
+      .title {
+        fill: #333;
+        font-family: sans-serif;
+        font-weight: bold;
+	      font-size: 100px;
+      }
+    ]]></style>
+  </defs>
+  <g id = "controls">
+    <text id = "title" class = "title" text-anchor="middle" x="400" y="200">side scroller</text>
+    <text id = "instruct" class = "instructions" text-anchor="middle" x="400" y="650">click to begin</text>
+<!--     <text class = "info" x="5" y="695">move: WASD</text>
+    <text class = "info" x="5" y="715">fire: click</text>
+    <text class = "info" x="5" y="735">pause: F</text>
+    <text class = "info" x="5" y="755">grab: E</text>
+    <text class = "info" x="5" y="775">zoom: +-</text>
+    <text class = "info" x="5" y="795">testing: T</text> -->
+    <g transform = "translate(130,380)">
+<!--     <rect class = "keyrect" id="q" x="0" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
+    <text class = "letter" text-anchor="middle" x="30" y="45">Q</text> -->
+    <rect class = "keyrect" id="e" x="140" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
+    <text class = "letter" text-anchor="middle" x="170" y="45">E</text>
+    <rect class = "keyrect" id="e" x="210" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
+    <text class = "letter" text-anchor="middle" x="240" y="45">R</text>
+    <rect class = "keyrect" id="w" x="70" y="0" width="60" height="60" fill='#555' stroke-width="0"/>
+    <text class = "letter" text-anchor="middle" x="100" y="45">W</text>
+    <rect class = "keyrect" id="s" x="70" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
+    <text class = "letter" text-anchor="middle" x="100" y="113">S</text>
+    <rect class = "keyrect" id="d" x="140" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
+    <text class = "letter" text-anchor="middle" x="170" y="113">D</text>
+    <rect class = "keyrect" id="d" x="210" y="70" width="60" height="60" fill='#99a' stroke-width="0"/>
+    <text class = "letter" text-anchor="middle" x="240" y="113">F</text>
+    <rect class = "keyrect" id="a" x="0" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
+    <text class = "letter" text-anchor="middle" x="30" y="113">A</text>
+  </g>
+   <g transform = "translate(480,350) scale(0.35)">
+	  <path fill="#555" d="M284.5,182c0,15.74-12.76,28.5-28.5,28.5l0,0c-15.74,0-28.5-12.76-28.5-28.5v-49
+		c0-15.74,12.76-28.5,28.5-28.5l0,0c15.74,0,28.5,12.76,28.5,28.5V182z"/>
+	  <g>
+	    <path fill="#555" d="M274,88.035c15.071,6.217,25.557,19.987,25.557,35.988v67.953c0,16.001-10.485,29.771-25.557,35.988V264.5
+			h147V141.806C421,72.325,362.797,16,291,16h-17V88.035z"/>
+	    <path fill="#555" d="M91,275v95.193C91,439.675,149.203,496,221,496h70c71.797,0,130-56.325,130-125.807V275H91z"/>
+		  <path fill="#222" d="M238,264.5v-36.535c-15.071-6.217-25.557-19.987-25.557-35.988v-67.953
+			c0-16.001,10.485-29.771,25.557-35.988V16h-17C149.203,16,91,72.325,91,141.806V264.5H238z"/>
+	  </g>
+  </g>
+
+  </g>
+</svg>
+    <script src='http://rawgit.com/mrdoob/stats.js/master/build/stats.min.js'></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/matter.min.js'></script>
+
+
+
+    <script src="js/lib/randomColor.min.js"></script>
+    <script src="js/game-object.js"></script>
+    <script src="js/player-object.js"></script>
+    <script src="js/bullet-object.js"></script>
+    <script src="js/mob-object.js"></script>
+    <script src="js/maps.js"></script>
+    <script src="js/index.js"></script>
+
+
+</body>
+
+</html>
