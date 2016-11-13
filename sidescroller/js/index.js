@@ -1,5 +1,6 @@
 "use strict";
-/* TODO:  ******************************************* by lilgreenland
+/* TODO:  *******************************************
+*****************************************************
 make a graphics that looks like the player has a tail
   (loose wires / a tail / a rope)
   to indicate player motion
@@ -63,7 +64,18 @@ give grab a method of interaction with bullets, while paused
 when holding something
 redraw the bodies stroke with the same color as the constaint stroke
   it looks cool!
+
+give mobs vision of player
+  use raytracing to see if a line can be drawn directly to the player
+
+do somethign about blocks and NPCs that fall off the map
+  remove them from the physics engine
+  reset them
+  figure out how to delete them
+
 FIX************************************************************
+***************************************************************
+***************************************************************
 
 holding a body with a constraint pushes on other bodies too easily
   mostly fixed by capping the mass of what player can hold
@@ -200,9 +212,6 @@ const holdConstraint = Constraint.create({
 World.add(engine.world, holdConstraint);
 //spawn map function is in maps.js
 spawn();
-for (let i = 0; i < 5; i++) {
-    spawnNPC(2000*Math.random()-500,500-1000*Math.random());
-}
 
 // matter events *********************************************************
 //************************************************************************
@@ -307,20 +316,27 @@ function mobCollisionCheck(event) {
     for (let i = 0, j = pairs.length; i != j; i++) {
         for (let k = 0; k < mob.length; k++) {
             if (pairs[i].bodyA === mob[k]) {
-                if (pairs[i].bodyB.classType === "bullet"){
-                  Matter.Body.setVelocity(mob[k], {
-                    x: 0,
-                    y: 0
-                  });
-                  //Matter.Body.setPosition(mob[k], {x:0,y:0});
-                  //Matter.Sleeping.set(mob[k], true);
-                  //Matter.World.remove(engine.world, mob[k]);
-                  //mob.splice(k, 1); //doesn't work
-                  //MobSetIndex();
+                if (pairs[i].bodyB.classType === "bullet") {
+                    if (pairs[i].bodyB.speed > 14){
+                      mob[k].health -= 0.1;
+                      if (mob[k].health < 0){
+                        mob[k].health = 1;
+                        Matter.Body.setPosition(mob[k], {x:-400,y:-6000});
+                        Matter.Body.setVelocity(mob[k], {
+                            x: 0,
+                            y: 0
+                        });
+                      }
+                    }
+
+                    //Matter.Sleeping.set(mob[k], true);
+                    //Matter.World.remove(engine.world, mob[k]);
+                    //mob.splice(k, 1); //doesn't work b/c of reference in draw bullet function
+                    //MobSetIndex();
                 }
                 break;
             } else if (pairs[i].bodyB === mob[k]) {
-                if (pairs[i].bodyA.classType === "bullet"){
+                if (pairs[i].bodyA.classType === "bullet") {
 
                 }
                 break;
@@ -517,7 +533,7 @@ function cycle() {
         game.output();
     } else {
         mech.move();
-        game.SpeedZoom();
+        game.speedZoom();
         mech.deathCheck();
         bulletLoop();
         mech.look();

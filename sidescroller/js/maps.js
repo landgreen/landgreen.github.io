@@ -77,7 +77,9 @@ function spawn() { //spawns bodies and map elements
       x: 0,
       y: 600
     };
-
+    for (let i = 0; i < 1; i++) {
+        spawnNPC(2000 * Math.random() - 500, 500 - 1000 * Math.random());
+    }
     //mech.spawnPos = { x: 2205,  y: 803  };
     mech.setPosToSpawn();
     mech.canFire = false;
@@ -109,6 +111,11 @@ function spawn() { //spawns bodies and map elements
     mech.canFire = true;
     //mech.spawnPos = { x: 0,  y: 0  };
     mech.setPosToSpawn();
+
+    for (let i = 0; i < 30; i++) {
+        spawnNPC(2000 * Math.random() - 500, 500 - 1000 * Math.random());
+    }
+
 
 
   bodyRect(1475, 0, 100, 800); //huge tall vertical box
@@ -181,7 +188,7 @@ function spawn() { //spawns bodies and map elements
   mapRect(-600, 0, 400, 200); //left cave roof
   mapRect(-600, 600, 400, 194); //left cave
   mapRect(-50, 700, 100, 200, 'launch'); //left wall
-  mapRect(0, 100, 300, 25); //left high platform
+  mapRect(50, 100, 300, 25); //left high platform
   mapRect(550, 450, 300, 25); //wide platform
   mapRect(650, 250, 100, 25); //wide platform
   mapRect(1000, 450, 400, 25); //platform
@@ -189,6 +196,8 @@ function spawn() { //spawns bodies and map elements
   mapRect(1300, 50, 100, 25); //platform
   mapRect(-350, 885, 20, 20); //ground bump
   mapRect(450,635,500,30); //first platform
+  mapRect(450,500, 30, 150); //small wall on first platform
+  mapRect(185,-50, 30, 170); //small wall on top platform
 }
 
 

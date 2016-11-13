@@ -89,18 +89,17 @@ const gameProto = function() {
   }
   this.keyZoom = function() {
     if (keys[187]) { //plus
-      this.zoom *= 1.01;
+      this.zoom *= 1.02;
     } else if (keys[189]) { //minus
-      this.zoom *= 0.99;
+      this.zoom *= 0.95;
     } else if (keys[48]) {
       this.zoom = 1;
     }
   }
   this.zoomGoal = 1;
-  this.SpeedZoom = function() {
+  this.speedZoom = function() {
     this.zoomGoal = (canvas.height/1000)/(1+player.speed*player.speed*0.005); //calculates zoom goal
-    //this.zoomGoal = (canvas.height/20)/(50+player.speed); //calculates zoom goal
-    this.zoom = 0.01 * this.zoomGoal  + 0.99 * this.zoom; //smooths changes to zoom
+    this.zoom = 0.005 * this.zoomGoal  + 0.995 * this.zoom; //smooths changes to zoom
   }
   this.wipe = function() {
     if (this.isPaused) {
