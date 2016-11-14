@@ -13,7 +13,7 @@ function fireBullet() {
     //spawn as a rectangle
   bullet[len] = Bodies.rectangle(mech.x + dist * Math.cos(mech.angle), mech.y + dist * Math.sin(mech.angle), 10, 3, {
     angle: dir,
-    //density: 0.001,
+    density: 0.002,
     //friction: 0.05,
     frictionAir: 0,
     //frictionStatic: 0.2,
@@ -45,10 +45,10 @@ function fireBullet() {
     y: mech.Vy
   });
   //add force to fire bullets
-  const vel = 0.0025;
+  const impulse = 0.005;
   const f = {
-    x: vel * Math.cos(dir) / game.delta,
-    y: vel * Math.sin(dir) / game.delta
+    x: impulse * Math.cos(dir) / game.delta,
+    y: impulse * Math.sin(dir) / game.delta
   }
   bullet[len].force = f;
   //equal but opposite force on player

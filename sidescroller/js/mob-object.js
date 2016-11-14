@@ -21,14 +21,14 @@ const mob = [];
 function spawnNPC(x, y) {
     let len = mob.length
     mob[len] = Matter.Bodies.polygon(x, y, 3 + Math.floor(Math.random() * 4), Math.random() * 30 + 20, {
-        density: 0.01,
+        density: 0.001,
         //friction: 0,
-        frictionAir: 0.005,
+        frictionAir: 0.002,
         //frictionStatic: 0,
-        restitution: 0.5,
+        restitution: 0.6,
     });
     World.add(engine.world, mob[len]); //add bullet to world
-    mob[len].forceMag = 0.0003 * mob[len].mass;
+    mob[len].forceMag = 0.0004 * mob[len].mass;
     mob[len].index = len; //so it can find it's self later
     mob[len].health = 1;
     mob[len].attraction = function() {

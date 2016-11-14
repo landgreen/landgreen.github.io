@@ -112,8 +112,8 @@ function spawn() { //spawns bodies and map elements
     //mech.spawnPos = { x: 0,  y: 0  };
     mech.setPosToSpawn();
 
-    for (let i = 0; i < 30; i++) {
-        spawnNPC(2000 * Math.random() - 500, 500 - 1000 * Math.random());
+    for (let i = 0; i < 5; i++) {
+        spawnNPC(2000 * Math.random() - 500, - 2000 * Math.random());
     }
 
 
@@ -195,8 +195,8 @@ function spawn() { //spawns bodies and map elements
   mapRect(1200, 250, 200, 25); //platform
   mapRect(1300, 50, 100, 25); //platform
   mapRect(-350, 885, 20, 20); //ground bump
-  mapRect(450,635,500,30); //first platform
-  mapRect(450,500, 30, 150); //small wall on first platform
+  mapRect(350,635,700,30); //first platform
+  mapRect(350,500, 130, 150); //small wall on first platform
   mapRect(185,-50, 30, 170); //small wall on top platform
 }
 

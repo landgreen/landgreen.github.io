@@ -169,7 +169,7 @@ const engine = Engine.create();
 let vector = Vertices.fromPath('0 40  0 115  20 130  30 130  50 115  50 40');
 const playerBody = Matter.Bodies.fromVertices(0, 0, vector);
 //this sensor check if the player is on the ground to enable jumping
-var jumpSensor = Bodies.rectangle(0, 46, 40, 20, {
+var jumpSensor = Bodies.rectangle(0, 46, 36, 6, {
     sleepThreshold: 99999999999,
     isSensor: true
 });
@@ -318,7 +318,7 @@ function mobCollisionCheck(event) {
             if (pairs[i].bodyA === mob[k]) {
                 if (pairs[i].bodyB.classType === "bullet") {
                     if (pairs[i].bodyB.speed > 14){
-                      mob[k].health -= 0.1;
+                      mob[k].health -= 0.2;
                       if (mob[k].health < 0){
                         mob[k].health = 1;
                         Matter.Body.setPosition(mob[k], {x:-400,y:-6000});
@@ -328,7 +328,6 @@ function mobCollisionCheck(event) {
                         });
                       }
                     }
-
                     //Matter.Sleeping.set(mob[k], true);
                     //Matter.World.remove(engine.world, mob[k]);
                     //mob.splice(k, 1); //doesn't work b/c of reference in draw bullet function
