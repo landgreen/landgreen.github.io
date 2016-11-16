@@ -112,6 +112,7 @@ function spawn() { //spawns bodies and map elements
     //mech.spawnPos = { x: 0,  y: 0  };
     mech.setPosToSpawn();
 
+    //spawn NPCs
     for (let i = 0; i < 5; i++) {
         spawnNPC(2000 * Math.random() - 500, - 2000 * Math.random());
     }

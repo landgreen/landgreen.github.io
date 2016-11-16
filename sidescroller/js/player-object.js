@@ -198,11 +198,11 @@ const mechProto = function() {
             //horizontal move on ground
             if (keys[37] || keys[65]) { //left or a
                 if (player.velocity.x > -this.VxMax) {
-                    player.force.x = -this.Fx / game.delta;
+                    player.force.x += -this.Fx / game.delta;
                 }
             } else if (keys[39] || keys[68]) { //right or d
                 if (player.velocity.x < this.VxMax) {
-                    player.force.x = this.Fx / game.delta;
+                    player.force.x += this.Fx / game.delta;
                 }
             }
 
@@ -218,11 +218,11 @@ const mechProto = function() {
             }
             if (keys[37] || keys[65]) { // move player   left / a
                 if (player.velocity.x > -this.VxMax + 2) {
-                    player.force.x = -this.FxAir / game.delta;
+                    player.force.x += -this.FxAir / game.delta;
                 }
             } else if (keys[39] || keys[68]) { //move player  right / d
                 if (player.velocity.x < this.VxMax - 2) {
-                    player.force.x = this.FxAir / game.delta;
+                    player.force.x += this.FxAir / game.delta;
                 }
             }
         }
@@ -234,15 +234,49 @@ const mechProto = function() {
         Matter.Body.setVelocity(player, this.spawnVel);
         this.dropBody();
         game.zoom = 0;
+        this.health = 1;
         //this.testingMoveLook();  //updates mech position
         //this.Sy = mech.y  //moves camera to new position quickly
     }
-
+    this.health = 1;
+    this.regen = function() {
+        if (this.health < 1 && game.cycle % 15 === 0) {
+            this.health += 0.01;
+        }
+    };
+    this.drawHealth = function() {
+        if (this.health < 1) {
+            ctx.fillStyle = "#aaa";
+            ctx.fillRect(this.x - this.radius, this.y - 50, 60, 10);
+            ctx.fillStyle = "#f00";
+            ctx.fillRect(this.x - this.radius, this.y - 50, 60 * this.health, 10);
+        }
+    };
+    this.damage = function(dmg) {
+        this.health -= dmg;
+        if (this.health <= 0) {
+            this.death();
+        }
+    }
     this.deathCheck = function() {
         if (this.y > 4000) { // if player is 4000px deep reset to spawn Position and Velocity
             this.death();
         }
     };
+    this.hitMob = function(i) {
+        this.damage(0.1);
+        //extra kick between player and mob
+        //this section would be better with forces but they don't work...
+        let angle = Math.atan2(player.position.y - mob[i].position.y, player.position.x - mob[i].position.x);
+        Matter.Body.setVelocity(player, {
+          x: player.velocity.x + 10 * Math.cos(angle),
+          y: player.velocity.y + 10 * Math.sin(angle)
+        });
+        Matter.Body.setVelocity(mob[i], {
+          x: mob[i].velocity.x - 10 * Math.cos(angle),
+          y: mob[i].velocity.y - 10 * Math.sin(angle)
+        });
+    }
     this.holdKeyDown = 0;
     this.buttonCD = 0; //cooldown for player buttons
     this.keyHold = function() { //checks for holding/dropping/picking up bodies

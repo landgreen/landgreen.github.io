@@ -171,7 +171,7 @@ const playerBody = Matter.Bodies.fromVertices(0, 0, vector);
 //this sensor check if the player is on the ground to enable jumping
 var jumpSensor = Bodies.rectangle(0, 46, 36, 6, {
     sleepThreshold: 99999999999,
-    isSensor: true
+    isSensor: true,
 });
 //this part of the player lowers on crouch
 vector = Vertices.fromPath('0 -66 18 -82  0 -37 50 -37 50 -66 32 -82');
@@ -312,37 +312,20 @@ function playerHeadCheck(event) { //runs on collisions events
 }
 
 function mobCollisionCheck(event) {
-    var pairs = event.pairs;
+    const pairs = event.pairs;
     for (let i = 0, j = pairs.length; i != j; i++) {
         for (let k = 0; k < mob.length; k++) {
             if (pairs[i].bodyA === mob[k]) {
-                if (pairs[i].bodyB.classType === "bullet") {
-                    if (pairs[i].bodyB.speed > 14){
-                      mob[k].health -= 0.2;
-                      if (mob[k].health < 0){
-                        mob[k].health = 1;
-                        Matter.Body.setPosition(mob[k], {x:-400,y:-6000});
-                        Matter.Body.setVelocity(mob[k], {
-                            x: 0,
-                            y: 0
-                        });
-                      }
-                    }
-                    //Matter.Sleeping.set(mob[k], true);
-                    //Matter.World.remove(engine.world, mob[k]);
-                    //mob.splice(k, 1); //doesn't work b/c of reference in draw bullet function
-                    //MobSetIndex();
-                }
+                if (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead) mech.hitMob(k);
+                if (pairs[i].bodyB.classType === "bullet" && pairs[i].bodyB.speed > 14) mob[k].damage(0.2);
                 break;
             } else if (pairs[i].bodyB === mob[k]) {
-                if (pairs[i].bodyA.classType === "bullet") {
-
-                }
+                if (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead) mech.hitMob(k);
+                if (pairs[i].bodyA.classType === "bullet" && pairs[i].bodyA.speed > 14) mob[k].damage(0.2);
                 break;
             }
         }
     }
-
 }
 
 
@@ -514,6 +497,7 @@ function cycle() {
     game.wipe();
     mech.keyMove();
     mech.standingOnActions();
+    mech.regen();
     mech.keyHold();
     game.keyZoom();
     game.gravityFlip();
@@ -548,6 +532,7 @@ function cycle() {
         //ctx.drawImage(foreground_img, -700, -1500);
         drawMap();
         drawBullet();
+        mech.drawHealth();
         ctx.restore();
     }
     //svg graphics , just here until I convert svg to png in inkscape
