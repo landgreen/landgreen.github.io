@@ -259,7 +259,7 @@ const mechProto = function() {
         }
     }
     this.deathCheck = function() {
-        if (this.y > 4000) { // if player is 4000px deep reset to spawn Position and Velocity
+        if (this.y > game.fallHeight) { // if player is 4000px deep reset to spawn Position and Velocity
             this.death();
         }
     };

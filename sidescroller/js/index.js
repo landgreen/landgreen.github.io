@@ -84,6 +84,8 @@ on testing mode read out mouse postion isn't accurate when zoomed
   not sure how to fix this, need to figure out the math for size changes when zoomed
   try drawing a picture
 
+find a way to delete mobs
+  splice doesn't work for some reason...  ugggg
 */
 
 //set up canvas
@@ -315,14 +317,22 @@ function mobCollisionCheck(event) {
     const pairs = event.pairs;
     for (let i = 0, j = pairs.length; i != j; i++) {
         for (let k = 0; k < mob.length; k++) {
+          if (mob[k].alive){
             if (pairs[i].bodyA === mob[k]) {
                 if (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead) mech.hitMob(k);
-                if (pairs[i].bodyB.classType === "bullet" && pairs[i].bodyB.speed > 14) mob[k].damage(0.2);
+                if (pairs[i].bodyB.classType === "bullet" && pairs[i].bodyB.speed > 14) {
+                    mob[k].locatePlayer();
+                    mob[k].damage(0.1);
+                }
                 break;
             } else if (pairs[i].bodyB === mob[k]) {
                 if (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead) mech.hitMob(k);
-                if (pairs[i].bodyA.classType === "bullet" && pairs[i].bodyA.speed > 14) mob[k].damage(0.2);
+                if (pairs[i].bodyA.classType === "bullet" && pairs[i].bodyA.speed > 14){
+                    mob[k].locatePlayer();
+                    mob[k].damage(0.1);
+                }
                 break;
+            }
             }
         }
     }
@@ -500,7 +510,7 @@ function cycle() {
     mech.regen();
     mech.keyHold();
     game.keyZoom();
-    game.gravityFlip();
+    //game.gravityFlip();
     game.pause();
     if (game.testing) {
         mech.testingMoveLook();
@@ -519,6 +529,7 @@ function cycle() {
         game.speedZoom();
         mech.deathCheck();
         bulletLoop();
+
         mech.look();
         game.wipe();
         ctx.save();
@@ -529,6 +540,7 @@ function cycle() {
         drawBody();
         mech.draw();
         drawNPC();
+        mobLoop();
         //ctx.drawImage(foreground_img, -700, -1500);
         drawMap();
         drawBullet();
@@ -536,14 +548,14 @@ function cycle() {
         ctx.restore();
     }
     //svg graphics , just here until I convert svg to png in inkscape
-    /*   document.getElementById('background').setAttribute('transform',
+        document.getElementById('background').setAttribute('transform',
                                                          'translate(' + (canvas.width/2) + ',' + (canvas.height/2) + ')'
                                                          + 'scale(' + game.zoom + ')'
-                                                         + 'translate(' + (mech.transX - canvas.width/2) + ',' + (mech.transY - canvas.height/2) + ')'); */
-    // document.getElementById('foreground').setAttribute('transform',
-    //                                                    'translate(' + (canvas.width/2) + ',' + (canvas.height/2) + ')'
-    //                                                    + 'scale(' + game.zoom + ')'
-    //                                                    + 'translate(' + (mech.transX - canvas.width/2) + ',' + (mech.transY - canvas.height/2) + ')');
+                                                         + 'translate(' + (mech.transX - canvas.width/2) + ',' + (mech.transY - canvas.height/2) + ')');
+     document.getElementById('foreground').setAttribute('transform',
+                                                        'translate(' + (canvas.width/2) + ',' + (canvas.height/2) + ')'
+                                                        + 'scale(' + game.zoom + ')'
+                                                        + 'translate(' + (mech.transX - canvas.width/2) + ',' + (mech.transY - canvas.height/2) + ')');
 
     stats.end();
     requestAnimationFrame(cycle);
@@ -552,11 +564,11 @@ function cycle() {
 // const bmo_img = new Image(); // Create new img element
 // bmo_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/Bmo.png'; // Set source path
 
-// const foreground_img = new Image(); // Create new img element
-// foreground_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/circle3390.png'; // Set source path
+ // const foreground_img = new Image(); // Create new img element
+ // foreground_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/circle3390.png'; // Set source path
 
-// const background_img = new Image(); // Create new img element
-// background_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/background.png'; // Set source path
+ // const background_img = new Image(); // Create new img element
+ // background_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/background.png'; // Set source path
 
 function runPlatformer(el) {
     el.onclick = null; //removes the onclick effect so the function only runs once

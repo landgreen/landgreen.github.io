@@ -5,6 +5,7 @@ const gameProto = function() {
   //time related vars and methods
   this.cycle = 0; //total cycles, 60 per second
   this.cyclePaused = 0;
+  this.fallHeight = 4000;
   this.lastTimeStamp = 0; //tracks time stamps for measuing delta
   this.delta = 0; //measures how slow the engine is running compared to 60fps
   this.buttonCD = 0
