@@ -29,6 +29,7 @@ var springGravity = function(button) {
         airFriction: 1,
         equalibrium: canvas.height / 2,
         k: 3, //document.getElementById("spring-k").value,
+        turns: 1+5*Math.sqrt(3)
     }
 
     function drawEqualibrium() {
@@ -59,21 +60,25 @@ var springGravity = function(button) {
         this.Ug = 0;
         this.fillColor = fillColor;
         this.draw = function() {
+          ctx.strokeStyle = 'black';
+          ctx.shadowColor = "#ccc";
+          ctx.shadowBlur = 6;
             ctx.fillStyle = this.fillColor;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
             ctx.stroke();
             ctx.fill();
+            ctx.shadowColor = "transparent";
         };
+
         this.drawSpring = function() {
             ctx.strokeStyle = 'black';
-            ctx.shadowColor = "black";
+            ctx.shadowColor = "#999";
+            ctx.shadowBlur = 6;
             ctx.beginPath();
-            ctx.moveTo(box.x, box.y);
-            var turns = 21;
-            var add = 5;
-            for (var i = 1; i < turns + 1; i++) {
-                ctx.lineTo(box.x + ((i % 2 === 0) ? 10 : -10), box.y * (1 - i / turns));
+            ctx.moveTo(box.x, box.y-this.r);
+            for (var i = 1; i < physics.turns + 1; i++) {
+                ctx.lineTo(box.x + ((i % 2 === 0) ? 10 : -10), (box.y-this.r) * (1 - i / physics.turns));
             }
             ctx.stroke();
             ctx.shadowColor = "transparent";
@@ -124,7 +129,7 @@ var springGravity = function(button) {
             ctx.fillText('K = ½mv² = ' + (this.ke).toFixed(0) + 'J', 5, 20);
             ctx.fillText('Us = ½ky² = ' + (this.Us).toFixed(0) + 'J', 5, 44);
             ctx.fillText('Ug = mgh = ' + (this.Ug).toFixed(0) + 'J', 5, 69);
-            ctx.fillText('E = K+Ug+Us = ' + (this.energy).toFixed(0) + 'J', 5, 92); //total energy doesn't stay still, probably because of onyl calculating 60 times a second?
+            ctx.fillText('E = ' + (this.energy).toFixed(0) + 'J', 5, 92); //total energy doesn't stay still, probably because of onyl calculating 60 times a second?
             ctx.fillText('g = ' + (physics.gravY).toFixed(2) + 'm/s²', 5, canvas.height - 5);
             ctx.fillText('h = ' + (height).toFixed(2) + 'm', 5, canvas.height - 30);
             ctx.fillText('y = ' + (this.y - physics.equalibrium).toFixed(2) + 'm', 5, canvas.height - 55);
@@ -200,6 +205,7 @@ var springGravity = function(button) {
     document.getElementById("spring-k2").addEventListener("change", function() {
         physics.k = document.getElementById("spring-k2").value;
         box.Vx = 0;
+        physics.turns = 1+5*Math.sqrt(physics.k);
     });
 
     //gets values for mass
@@ -222,8 +228,8 @@ var springGravity = function(button) {
             }
 
             drawEqualibrium();
-            box.draw();
             box.drawSpring();
+            box.draw();
             box.springInfo();
         }
     }

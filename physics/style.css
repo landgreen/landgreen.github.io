@@ -45,26 +45,29 @@ body {
     margin: 0;
     line-height:1.4;
 }
-button {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-size: 1em;
-    margin: 0.3em;
-}
-input {
-      font-size: 1em;
-}
-
 article {
     padding: 0.1em;
     margin: 0 auto;
     max-width: 600px;
 }
 
+button {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-size: 1em;
+    margin: 0.3em;
+}
+input {
+    font-size: 1em;
+}
+
+
+
 canvas {
-    border: 1px solid #999;
-    /*box-shadow: 2px 2px 5px grey;*/
+    margin: 0.3em;
+    /*border: 1px solid #999;*/
+    box-shadow: 2px 2px 8px #aaa;
     /*background-color: #f9f9f9;*/
-    /*border-radius: 20px;*/
+    border-radius: 5px;
     /*cursor: crosshair;*/
 }
 
@@ -128,6 +131,7 @@ details p {
     padding: 1em;
     margin: 1em 0em 1em 0em;
     border-radius: 1em;
+    line-height:1.6;
 }
 .definition i {
     color: #888;
@@ -149,12 +153,12 @@ details p {
     /*border: 1px solid black;*/
     transition: all 200ms ease-in;
 }
-.svgDiagram:hover {
+/*.svgDiagram:hover {
     z-index: 2;
     background: #fff;
     border: 1px solid black;
     transform: scale(2);
-}
+}*/
 
 /*math tex rendering __________________________*/
 
