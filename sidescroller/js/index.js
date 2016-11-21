@@ -86,6 +86,10 @@ on testing mode read out mouse postion isn't accurate when zoomed
 
 find a way to delete mobs
   splice doesn't work for some reason...  ugggg
+
+mouse look doesn't work with the smooth vertical camera tracking
+  makes firing bullets strange
+
 */
 
 //set up canvas
@@ -322,14 +326,14 @@ function mobCollisionCheck(event) {
                 if (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead) mech.hitMob(k);
                 if (pairs[i].bodyB.classType === "bullet" && pairs[i].bodyB.speed > 14) {
                     mob[k].locatePlayer();
-                    mob[k].damage(0.1);
+                    mob[k].damage(mech.dmg);
                 }
                 break;
             } else if (pairs[i].bodyB === mob[k]) {
                 if (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead) mech.hitMob(k);
                 if (pairs[i].bodyA.classType === "bullet" && pairs[i].bodyA.speed > 14){
                     mob[k].locatePlayer();
-                    mob[k].damage(0.1);
+                    mob[k].damage(mech.dmg);
                 }
                 break;
             }

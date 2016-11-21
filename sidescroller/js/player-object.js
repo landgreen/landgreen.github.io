@@ -3,9 +3,8 @@
 const mechProto = function() {
     this.width = 50;
     this.radius = 30;
-    this.stroke = "#333";
-    this.fill = "#eee";
     this.canFire = true;
+    this.dmg = 0.15;
     this.height = 42;
     this.yOffWhen = {
         crouch: 22,
@@ -120,18 +119,23 @@ const mechProto = function() {
         //set mouse look
         this.canvasX = this.canvasX * 0.94 + (canvas.width - mX) * 0.06;
         this.canvasY = this.canvasY * 0.94 + (canvas.height - mY) * 0.06;
+
         //set translate values
         this.transX = this.canvasX - this.x;
         this.Sy = 0.99 * this.Sy + 0.01 * (this.y);
         //hard caps how behind y position tracking can get.
         if (this.Sy - this.y > canvas.height / 2) {
-            this.Sy = this.y + canvas.height / 2
+            this.Sy = this.y + canvas.height / 2;
         } else if (this.Sy - this.y < -canvas.height / 2) {
-            this.Sy = this.y - canvas.height / 2
+            this.Sy = this.y - canvas.height / 2;
         }
-        this.transY = this.canvasY - this.Sy;
+        this.transY = this.canvasY - this.Sy;   //gradual y camera tracking
+        //this.transY = this.canvasY - this.y;  //normal y camera tracking
+
         //make player head angled towards mouse
         this.angle = Math.atan2(this.mouse.y - this.canvasY, this.mouse.x - this.canvasX);
+        //this.angle = Math.atan2(this.mouse.y - (canvas.height - mY), this.mouse.x - (canvas.width - mX));
+        //this.angle = Math.atan2(this.mouse.y - this.y, this.mouse.x - this.x);
     };
     this.doCrouch = function() {
         if (!this.crouch) {
@@ -233,9 +237,8 @@ const mechProto = function() {
         Matter.Body.setPosition(player, this.spawnPos);
         Matter.Body.setVelocity(player, this.spawnVel);
         this.dropBody();
-        game.zoom = 0;
+        //game.zoom = 0;    //zooms out all the way
         this.health = 1;
-        //this.testingMoveLook();  //updates mech position
         //this.Sy = mech.y  //moves camera to new position quickly
     }
     this.health = 1;
@@ -246,7 +249,7 @@ const mechProto = function() {
     };
     this.drawHealth = function() {
         if (this.health < 1) {
-            ctx.fillStyle = "#aaa";
+            ctx.fillStyle = 'rgba(100, 100, 100, 0.5)';
             ctx.fillRect(this.x - this.radius, this.y - 50, 60, 10);
             ctx.fillStyle = "#f00";
             ctx.fillRect(this.x - this.radius, this.y - 50, 60 * this.health, 10);
@@ -427,8 +430,8 @@ const mechProto = function() {
         ctx.lineTo(this.foot.x + 15, this.foot.y + 5);
         ctx.stroke();
         //hip joint
-        ctx.strokeStyle = this.stroke;
-        ctx.fillStyle = this.fill;
+        ctx.strokeStyle = '#333';
+        ctx.fillStyle = '#fff';
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(this.hip.x, this.hip.y, 11, 0, 2 * Math.PI);
@@ -467,7 +470,7 @@ const mechProto = function() {
         this.knee.y = l / d * (this.foot.y - this.hip.y) + h / d * (this.foot.x - this.hip.x) + this.hip.y;
     };
     this.draw = function() {
-        ctx.fillStyle = this.fill;
+        ctx.fillStyle = '#fff';
         if (this.mouse.x > canvas.width / 2) {
             this.flipLegs = 1;
         } else {
@@ -490,9 +493,9 @@ const mechProto = function() {
         this.calcLeg(0, 0);
         this.drawLeg('#333');
         ctx.rotate(this.angle);
-        ctx.strokeStyle = this.stroke;
+        ctx.strokeStyle = '#333';
         ctx.lineWidth = 2;
-        //ctx.fillStyle = this.fill;
+        //ctx.fillStyle = '#fff';
         let grd = ctx.createLinearGradient(-30, 0, 30, 0);
         grd.addColorStop(0, "#bbb");
         grd.addColorStop(1, "#fff");

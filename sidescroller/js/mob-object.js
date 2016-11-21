@@ -34,7 +34,7 @@ function spawnNPC(x, y) {
     mob[i] = Matter.Bodies.polygon(x, y, 3 + Math.floor(Math.random() * 4), Math.random() * 30 + 20, {
         density: 0.001,
         //friction: 0,
-        frictionAir: 0.01,
+        frictionAir: 0.005,
         //frictionStatic: 0,
         restitution: 0.6,
     });
@@ -97,6 +97,9 @@ function spawnNPC(x, y) {
     mob[i].damage = function(dmg) {
         this.health -= dmg;
         this.fill = 'rgba(0,255,255,' + this.health + ')';
+        //this.fill = 'rgba(255,0,0,' + this.health + ')';
+        //Matter.Body.setDensity(this, 0.001*this.health);
+        //this.restitution = 0.6*this.health;
         if (this.health < 0.1) {
             this.death();
         }
@@ -107,6 +110,8 @@ function spawnNPC(x, y) {
         this.seePlayer.yes = 0;
         this.fill = 'rgba(0,255,255,0)';
         this.stroke = '#999';
+        //Matter.Body.setDensity(this, 0.0001);
+        this.restitution = 0;
         //Matter.Body.setPosition(this, this.spawnPos);
         // Matter.Body.setVelocity(this, {
         //     x: 0,

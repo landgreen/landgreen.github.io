@@ -110,7 +110,7 @@ function spawn() { //spawns bodies and map elements
     //*****************************************************************************
     function testingsMap() {
         mech.spawnPos = {
-            x: 675,
+            x: 725,
             y: 750
         };
         mech.canFire = true;
@@ -118,16 +118,9 @@ function spawn() { //spawns bodies and map elements
         mech.setPosToSpawn();
 
         //spawn NPCs
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 2; i++) {
             spawnNPC(2000 * Math.random() - 500, -2000 * Math.random());
         }
-
-
-        bodyRect(120, -150, 130, 200); //medium block on first platform
-        //bodyRect(360, 450, 130, 150); //medium block on second right platform
-        bodyRect(1475, 0, 100, 800); //huge tall vertical box
-        bodyRect(800, 438, 250, 10); //long skinny box
-        //bodyVertex(-1000, 700, '0 200 -500 200  0 0'); //angeled ceiling
 
         for (let i = 0; i < 5; i++) { //random bouncy circles
             body[body.length] = Bodies.circle(-800 + (0.5 - Math.random()) * 200, 400 + (0.5 - Math.random()) * 200, 7 + Math.ceil(Math.random() * 30), {
@@ -178,29 +171,47 @@ function spawn() { //spawns bodies and map elements
 
         //map statics  **************************************************************
         //***************************************************************************
-        mapRect(-2000, 900, 4000, 200) //ground
-        mapRect(2600, 900, 2000, 200) //far right ground
-            //mapVertex(-1700, 700, '0 0 0 -500 500 -500 1000 -400 1500 0'); //large ramp
-            //mapVertex(1285, 867, '200 0  200 100 0 100'); // ramp
-        mapVertex(1400, 854, '0 100 600 100 600 0 150 0'); // ramp
+        mapRect(-2000, 900, 3200, 100) //ground
+
+
+        mapRect(2600, 900, 2000, 100) //far right ground
+        //mapVertex(-1700, 700, '0 0 0 -500 500 -500 1000 -400 1500 0'); //large ramp
+        //mapVertex(1285, 867, '200 0  200 100 0 100'); // ramp
+        //mapVertex(1400, 854, '0 100 600 100 600 0 150 0'); // ramp
         mapVertex(-1300, 670, '0 0 -500 0 -500 200'); //angeled ceiling
         //mapVertex(-1650, 700, '0 0 500 0 500 200'); //angeled ceiling
         //mapRect(1350, 800, 300, 100) //ground
-        mapRect(650, 890, 50, 10) //ground bump
+        //mapRect(1170, 875, 30, 35) //ground bump wall
+        mapRect(700, 890, 50, 10) //ground bump
         mapRect(-600, 0, 400, 200); //left cave roof
         mapRect(-600, 600, 400, 194); //left cave
         //mapRect(-50, 700, 100, 200, 'launch'); //left wall
         mapRect(-50, 700, 100, 200); //left wall
         //mapRect(50, 100, 300, 25); //left high platform
         mapRect(550, 450, 300, 25); //wide platform
-        mapRect(650, 250, 100, 25); //wide platform
+        mapRect(750, 250, 100, 25); //high platform
         mapRect(1000, 450, 400, 25); //platform
         mapRect(1200, 250, 200, 25); //platform
+        Matter.Body.setAngle(map[map.length-1], -Math.PI*0.05)
         mapRect(1300, 50, 100, 25); //platform
         mapRect(-350, 885, 20, 20); //ground bump
         mapRect(350, 635, 700, 30); //first platform
-        //  mapRect(350,500, 130, 150); //small wall on first platform
-        mapRect(100, 100, 350, 430); //thick wall above launcher
+        //mapRect(350,500, 130, 150); //small wall on first platform
+        mapRect(100, 100, 350, 50); //thick wall above launcher
+        mapRect(100, 400, 350, 130); //thick wall above launcher
+
+        //lower level
+        mapRect(-600, 2000, 3000, 100) // lower ground
+        mapRect(1300, 1990, 100, 25, 'launch') //ground bump wall
+        mapRect(-600, 1300, 400, 200); //left cave roof
+
+        mapRect(-600, 1700, 400, 194); //left cave
+        //bodyRect(120, -150, 130, 200); //medium block on first platform
+        //bodyRect(360, 450, 130, 150); //medium block on second right platform
+        bodyRect(1475, 0, 100, 800); //huge tall vertical box
+        bodyRect(800, 438, 250, 10); //long skinny box
+        bodyRect(250, 250, 200, 150); //block inside the ledge
+        //bodyVertex(-1000, 700, '0 200 -500 200  0 0'); //angeled ceiling
     }
 
 

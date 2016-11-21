@@ -90,16 +90,27 @@ const gameProto = function() {
   }
   this.keyZoom = function() {
     if (keys[187]) { //plus
-      this.zoom *= 1.02;
+      this.showHeight *= 0.99;
+      this.setZoomGoal();
+      this.zoom = this.zoomGoal
     } else if (keys[189]) { //minus
-      this.zoom *= 0.95;
-    } else if (keys[48]) {
-      this.zoom = 1;
+      this.showHeight *= 1.01;
+      this.setZoomGoal();
+      this.zoom = this.zoomGoal
+    } else if (keys[48]) { //zero   reset
+      this.showHeight = canvas.height;
+      this.setZoomGoal();
+      this.zoom = this.zoomGoal
     }
   }
   this.zoomGoal = 1;
+  this.showHeight = 1500;
+  this.setZoomGoal = function(){
+      this.zoomGoal = (canvas.height/this.showHeight)/(1+player.speed*player.speed*0.005); //calculates zoom goal
+  }
   this.speedZoom = function() {
-    this.zoomGoal = (canvas.height/1000)/(1+player.speed*player.speed*0.005); //calculates zoom goal
+    //const showHeight = 1500;
+    this.setZoomGoal();
     this.zoom = 0.005 * this.zoomGoal  + 0.995 * this.zoom; //smooths changes to zoom
   }
   this.wipe = function() {
@@ -155,9 +166,9 @@ const gameProto = function() {
     line += 20;
     ctx.fillText("delta: " + game.delta.toFixed(6), 5, line);
     line += 20;
-    ctx.fillText("mX: " + (mech.mouse.x - mech.transX*game.zoom).toFixed(2), 5, line);
+    ctx.fillText("mX: " + (mech.mouse.x - mech.canvasX + mech.x).toFixed(2), 5, line);
     line += 20;
-    ctx.fillText("mY: " + (mech.mouse.y - mech.transY*game.zoom).toFixed(2), 5, line);
+    ctx.fillText("mY: " + (mech.mouse.y - mech.transY).toFixed(2), 5, line);
     line += 20;
     ctx.fillText("x: " + mech.x.toFixed(0), 5, line);
     line += 20;
