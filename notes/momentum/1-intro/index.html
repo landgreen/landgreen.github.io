@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Momentum</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon'/ >
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../../../style.css">
+    <script src='../../../lib/matter.min.js'></script>
+    <script src='../../../lib/randomColor.min.js'></script>
+</head>
+
+<body>
+
+  <header>
+  <h1>Momentum</h1>
+  </header>
+    <article>
+        <h1 class='underlined'>Momentum</h1>
+        <p>Momentum is defined as the product of mass and velocity. For example, a heavy truck moving rapidly has a large momentum—it takes a large or prolonged force to get the truck up to this speed, and it takes a large or prolonged force to bring it to a stop afterwards. If the truck were lighter, or moving more slowly, then it would have less momentum.</p>
+        <div class='definition'>
+        <h1>$$p = mv$$</h1>
+        <b>p</b> = momentum [kg m/s] <i>vector</i>
+        <br><b>m</b> = mass [kg]
+        <br><b>v</b> = velocity[m/s] <i>vector</i>
+      </div>
+        <br>
+        <br>
+        <h1 class='underlined'>conservation of momentum</h1>
+        <p>Momentum is useful because the total momentum for a system of objects is <b>conserved</b>. This means the sum of all momentums won't change even if the objects collide.</p>
+        <canvas id="canvas0" width='600' height='170' onclick="collision0(this)"> </canvas>
+        <p>Click the simulation above a few times and note that the total momentum is the same before and after a collision.</p>
+
+        <p>Conservation of momentum isn't true if one of the objects in the system interacts with an object outside the system.  For example if an object hits the ground, and the ground isn't part of our system.</p>
+        <canvas id="canvas1" width='600' height='170' onclick="collision1(this)"> </canvas>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <p>Conservation of momentum means we can set the total momentums at two points in time equal to each other. (as long as there are no outside forces)</p>
+        <div class='definition'>
+        <h2>
+          $$p_{initial} = p_{final}$$
+          $$p_{1i}+p_{2i}+...=p_{1f}+p_{2f}+...$$</h2>
+          <h3>
+          $$m_{1}u_{1}+m_{2}u_{2}+...=m_{1}v_{1}+m_{2}v_{2}+...$$
+        </h3>
+<br>
+        <b>u</b> = initial velocity [m/s] <i>vector</i>
+        <br><b>v</b> = final velocity [m/s] <i>vector</i>
+        <br><b>m</b> = mass [kg]
+      </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <canvas id="canvas2" width='600' height='160' onclick="collision2(this)"> </canvas>
+        <p><b>Example:</b> A <a style='color: green'>green</a> and <a style='color: white;background-color: lightgrey;'>white</a> box collide. The green box has a mass of 2kg and is moving to the right at 3m/s. The white box is moving to the left at 1m/s and has a mass of 10kg. If the white box has stopped after the collision what is the
+            velocity of the green box?</p>
+        <details>
+            <summary>solution</summary>
+            <p style='text-align: center;'>initial momentum = final momentum</p>
+            <p style='text-align: center;'>green + white = green + white</p>
+            $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$ $$(2)(3)+(10)(-1)=(2)v_{1}+(1)(0)$$ $$6-10=(2)v_{1}$$ $$-4=(2)v_{1}$$ $$-2 \small\frac{m}{s}=\normalsize v_{1}$$
+        </details>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <button id="pause">pause</button><br>
+        <canvas id="canvas3" width='600' height='160' onclick="collision3(this)"> </canvas>
+        <p><b>Example:</b> Three boxes collide. Use the table to find the final velocity of the <a style='color: green'>green</a> box</p>
+        <table class = 'data'>
+          <tr>
+            <th><a style='color: green'>green box</a></th>
+            <th><a style='color: #419eff'>blue box</a></th>
+            <th><a style='color: orange'>orange box</a></th>
+          </tr>
+          <tr>
+            <td>m = 1.60kg</td>
+            <td>m = 4.90kg</td>
+            <td>m = 3.60kg</td>
+          </tr>
+          <tr>
+            <td>u = 3.0m/s</td>
+            <td>u = 2.0m/s</td>
+            <td>u = -1.0m/s</td>
+          </tr>
+          <tr>
+            <td><b>v = ???</b></td>
+            <td>v = 1.18m/s</td>
+            <td>v = 1.58m/s</td>
+          </tr>
+        </table>
+
+
+
+        <details>
+            <summary>solution</summary>
+            <p style='text-align: center;'>initial momentum = final momentum</p>
+            <p style='text-align: center;'><a style='color: green'>green</a> + <a style='color: #419eff'>blue</a> + <a style='color: orange'>orange</a> = <a style='color: green'>green</a> + <a style='color: #419eff'>blue</a> + <a style='color: orange'>orange</a></p>
+            $$m_{1}u_{1}+m_{2}u_{2}+m_{3}u_{3}=m_{1}v_{1}+m_{2}v_{2}+m_{3}v_{3}$$
+            $$(1.6)(3)+(4.9)(2)+(3.6)(-1)=(1.6)v_{1}+(4.9)(1.18)+(3.6)(1.58)$$
+            $$11=1.6v_{1}+11.47$$
+            $$-0.29\small\frac{m}{s}=\normalsize v_{1}$$
+        </details>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1 class='underlined'>2-D conservation of momentum</h1>
+        <p>Momentum is a vector.  It has a direction and a magnitude. We can solve for the horizontal and vertical components separately just like how we solved 2-d Motion problems.  Although in this case there isn't a time variable to link up the vertical and horizontal equations.</p>
+
+        <canvas id="canvas4" width='600' height='300' onclick="collision4(this)"> </canvas>
+        <p><b>Horizontal Example:</b> A <a style='color: pink'>pink</a> hexagon and a <a style='color: cyan'>cyan</a> triangle collide. Before the collision the hexagon has a mass of 5.20kg and is moving to the right at 2m/s. The cyan triangle is moving to the left
+            at 1m/s and has a mass of 1.17kg. If the triangle bounces off the hexagon at 2.92 m/s to the right what is the horizontal velocity of the hexagon? (ignore the vertical information)</p>
+        <details>
+            <summary>solution</summary>
+            <p style='text-align: center;'>initial momentum = final momentum</p>
+            <p style='text-align: center;'>hexagon + triangle = hexagon + triangle</p>
+            $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$ $$(5.20)(2)+(1.17)(-1)=(5.20)v_{1}+(1.17)(2.92)$$ $$10.40-1.17=(5.20)v_{1}+3.42$$ $$5.81=(5.20)v_{1}$$ $$1.12 \small\frac{m}{s}=\normalsize v_{1}$$
+        </details>
+        <p><b>Vertical Example:</b> Lets take a look at the vertical aspect of the <a style='color: pink'>pink</a> hexagon and <a style='color: cyan'>cyan</a> triangle collide. Before the collision the hexagon has a mass of 5.20kg and is not moving up or down. The final vertical velocity of the hexagon is 0.23 down.  The final vertical velocity of the triangle is 0.67 up.  What is the triangle's initial vertical velocity. </p>
+        <details>
+            <summary>solution</summary>
+            <p style='text-align: center;'>initial momentum = final momentum</p>
+            <p style='text-align: center;'>hexagon + triangle = hexagon + triangle</p>
+            $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$
+            $$(5.20)(0)+(1.17)(u_{2})=(5.20)(-0.23)+(1.17)(0.67)$$
+            $$(1.17)(u_{2})=-0.41$$
+            $$u_{2}=-0.35\small\frac{m}{s}$$
+          </div>
+        </details>
+    </article>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div style="text-align:center">
+        <a href="../../../index.html#units">Back</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <script src="collisionDemo(Matter.js).js"></script>
+    <script src="collisionDemo2(Matter.js).js"></script>
+    <script src="collisionEx1(Matter.js).js"></script>
+    <script src="collisionEx2(Matter.js).js"></script>
+    <script src="collisionEx3(Matter.js).js"></script>
+    <script>renderMathInElement(document.body);</script>
+</body>
+
+</html>

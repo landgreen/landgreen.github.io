@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>More Collisions</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon'/ >
+
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full">
+        MathJax.Hub.Config({
+            CommonHTML: {
+                scale: 150
+            }
+        });
+    </script>
+    <script src='../../../lib/matter.min.js'></script>
+    <script src='../../../lib/randomColor.min.js'></script>
+
+</head>
+
+<body onload="stickyCollision();stickyCollision2();">
+  <header>
+  <h1>More Collisions</h1>
+  </header>
+
+    <article>
+        <h1 class='underlined'>Sticky Collisions</h1>
+        <p>Sticky collisions are called perfectly inelastic collision. The equations for conservation of momentum simplify a bit when the objects start or end stuck together.</p>
+        <br>m<sub>1</sub>u<sub>1</sub> + m<sub>2</sub>u<sub>2</sub> = m<sub>1</sub>v<sub>1</sub> + v<sub>2</sub>m<sub>2</sub> </h3>
+        <br>m<sub>1</sub>u<sub>1</sub> + m<sub>2</sub>u<sub>2</sub> = (m<sub>1</sub> + m<sub>2</sub>)v </h3>
+        <br>
+        <br>
+        <canvas id="canvas"  width='600' height='200'> </canvas>
+        <div id='ex'></div>
+        <br>
+        <br>
+
+        <br>
+        <br>
+        <h2 class='underlined'>Explosions!</h2>
+        <canvas id="canvas2" width='600' height='200'> </canvas>
+        <p>Sticky collisions also work in reverse.
+        <br>The sticky collision equation is just flipped.</p>
+        (m<sub>1</sub> + m<sub>2</sub>)u </h3>= m<sub>1</sub>v<sub>1</sub> + m<sub>2</sub>v<sub>2</sub>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> A 100.0kg goalie throws a 1.1kg soccer ball while jumping forward at 3.2m/s.  If the ball flies out of the goalie's hands at 10.0m/s what speed is the goalie?</p>
+        <details>
+            <summary>solution</summary>
+            <p style='text-align: center;'>initial momentum = final momentum</p>
+            <p style='text-align: center;'>(goalie and ball) = goalie + ball</p>
+            $$(m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}$$
+            $$(100.0+1.1)(3.2)=(100.0)v_{1}+(1.1)(10.0)$$
+            $$323.52=(100.0)v_{1}+11$$
+            $$3.13\small\frac{m}{s}=\normalsize v_{1}$$
+        </details>
+    </div>
+
+  </article>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div style="text-align:center">
+      <a href="../../../index.html#units">Back</a>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+    <script src="stickyCollision(Matter.js).js"></script>
+    <script src="stickyCollision2(Matter.js).js"></script>
+</body>
+
+</html>
