@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Circular Motion</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+    <style>
+        .circle-outline {
+          width: 175px;
+          height: 175px;
+          position: absolute;
+          left: 50px;
+          top: 15px;
+          border: 2px dashed #fff;
+          border-radius: 50%;
+        }
+        .circle {
+            width: 175px;
+            height: 175px;
+            position: absolute;
+            left: 50px;
+            top: 15px;
+            /*background: rgba(50,50,50,0.5);*/
+            border-radius: 50%;
+            animation: rotate 15s linear infinite;
+        }
+        .circle:before {
+            border-radius: 50%;
+            content: '';
+            position: absolute;
+            height: 30px;
+            width: 30px;
+            top: -13px;
+            /*border: 2px solid #000;*/
+            background: #aff;
+        }
+        @keyframes rotate {
+            100% {
+                transform: rotate(-360deg);
+            }
+        }
+        @media screen and (max-width: 65em) {
+            .circle{
+              display: none;
+            }
+            .circle-outline{
+              display: none;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+      <div class = 'circle-outline'></div>
+      <div class = 'circle'></div>
+        <h1>Circular Motion</h1>
+    </header>
+    <article>
+        <p>Any object moving in a circular path has a net force pointed at the center of the circle.  The velocity of the object will always be perpendicular to the force.</p>
+            <svg style="display: block; margin: auto" width="450" height="360" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="200" cy="200" r="150" fill = 'rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999"/>
+            <g transform="translate(53 200)">
+                <line x1="0" y1="0" x2="150" y2="0" style="stroke:#000;stroke-width:2" />
+                <line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
+                <line x1="150" y1="-5" x2="150" y2="5" style="stroke:#000;stroke-width:2" />
+                <text x="75" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
+            </g>
+
+            <g transform="translate(350 200) rotate(0)">
+                <g transform="translate(0 -100) rotate(90)">
+                    <line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+                </g>
+                <text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">v</text>
+
+                <g transform="translate(-75 0) rotate(0)">
+                    <line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+                </g>
+                    <text x="-85" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
+                    <circle cx="0" cy="0" r="20" fill = '#add' stroke-width="2" stroke="#222"/>
+            </g>
+
+            <g transform="translate(306 94) rotate(-45)" opacity = 0.25>
+                <g transform="translate(0 -100) rotate(90)">
+                    <line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+                </g>
+                <g transform="translate(-75 0) rotate(0)">
+                    <line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+                </g>
+                <circle cx="0" cy="0" r="20" fill = '#add' stroke-width="2" stroke="#222"/>
+            </g>
+
+            <g transform="translate(200 50) rotate(-90)" opacity = 0.07>
+                <g transform="translate(0 -100) rotate(90)">
+                    <line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+                </g>
+
+                <g transform="translate(-75 0) rotate(0)">
+                    <line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+                </g>
+                <circle cx="0" cy="0" r="20" fill = '#add' stroke-width="2" stroke="#222"/>
+            </g>
+        </svg>
+
+
+
+            <div class='definition'>
+                <h2>$$F = \frac{mv^{2}}{r}  \quad \quad a = \frac{v^{2}}{r} $$</h2>
+                <p>
+                    <strong>F</strong> = centripetal force [N] <i>vector</i>
+                    <br><strong>a</strong> = centripetal acceleration [m/s²] <i>vector</i>
+                    <br><strong>v</strong> = tangential velocity [m/s] <i>vector</i>
+                    <br><strong>r</strong> = radius of the circlular path [m] <i>vector</i>
+                    <br><strong>m</strong> = mass [kg] <i>scalar</i>
+                </p>
+                <p>
+                    <strong>centripetal</strong>: pointing at the center
+                    <br><strong>tangential</strong>: touching at only one point
+                </p>
+            </div>
+            <p><strong>Nearly circular motion can occur in many situations:</strong>
+                <li>swinging a rope attached to a mass
+                <li>a rotating wheel or sphere
+                <li>some orbits are nearly circular, but technically eliptical
+                <li>some roads have circular curves
+                <li>charged particles in a uniform magnetic field
+            </p>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p><b>Example:</b> A 20kg dog is riding on a carousel 5m away from the center.  If the dog is moving at 3m/s what magnitude and direction force will it have exert to produce the circular motion needed to stay on the ride?</p>
+            <details>
+                <summary>solution</summary>
+            $$F = \frac{mv^{2}}{r}$$
+            $$F = \frac{(20)(3)^{2}}{5}$$
+            $$F = 36N$$
+            <p>pointed towards the center of the carousel</p>
+
+            </details>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p><b>Example:</b> You want to reproduce the feeling of earth's gravity in space.  This can be done by rotating your space station to produce the feeling of acceleration.  Your space station is shaped like a wheel with a diameter of 50.0m.  How fast does the edge have to move to produce earth's gravity?</p>
+            <details>
+                <summary>solution</summary>
+            $$d = 2r \quad \quad r = 25m$$
+            $$a = \frac{v^{2}}{r}$$
+            $$\sqrt{ar} = v$$
+            $$\sqrt{(9.8)(25)} = v$$
+            $$15.7 \small \frac{m}{s} = \normalsize v$$
+            </details>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p><b>Example:</b> The second hand on a clock moves smoothly in a circle, but there is a brave 3 mg ant on the tip of the second hand. How much force must the ant apply to not fall off?  The ant is 21 mm from the center of the clock.  You can't directly measure the velocity, but you do know it takes 60 seconds for the second hand to complete a circle.</p>
+            <details>
+                <summary>solution</summary>
+                <p>Velocity is distance divided by time.
+                  <br>We can use the circumference of the circle divided by 60 seconds</p>
+            $$c = 2 \pi r $$
+            $$v = \frac{2 \pi (0.021)}{60}$$
+            $$v = 0.0035 \small \frac{m}{s}$$
+<br>
+            $$F = \frac{mv^{2}}{r}$$
+            $$F = \frac{0.003(0.0035)^{2}}{0.021}$$
+            $$F = 0.00000175N $$
+            $$F = 1.75 \times 10^{-6}N$$
+            </details>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p>The ball in this simulation always takes one minute to go in a circle.  As you move the mouse you can set the radius of the circular motion. The velocity and acceleration of the ball change to keep the total time the same.</p>
+            <canvas id="canvas-1" class = 'center' width = '600' height = '350'></canvas>
+            <!-- <div id='hud' style="text-shadow: 2px 2px 5px #aaa;"> -->
+            <div id='hud'></div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p class='underlined'>Circular Orbits</p>
+            <p> The orbits of objects in space are elliptical.  They are never perfectly circular, but many orbits come close enough to circular motion to make a rough approximation useful.
+              <details class='derive'>
+                  <summary>derivation of orbital velocity</summary>
+                  <p>We can combine the equations for circular motion with the universal gravitation equations if we assume that the central mass is much larger.
+                    $$F = \frac{M_{1}v^{2}}{r} \quad F = \frac{GM_{1}M_{2}}{r^{2}} $$
+                    <br>set the force of gravity and the centripital force equal
+                    $$\frac{M_{1}v^{2}}{r} = \frac{GM_{1}M_{2}}{r^{2}} $$
+                    <br>cancel terms that show up on both sides
+                    $$v^{2} = \frac{GM_{2}}{r} $$
+                  </p>
+              </details>
+              <div class='definition'>
+                  $$v^{2} = \frac{GM}{r} $$
+                  <br><strong>v</strong> = orbital tangential velocity [m/s] <i>vector</i>
+                  <br><strong>G</strong> = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N m²/kg²] <i>scalar</i>
+                  <br><strong>r</strong> = radius of the circlular orbit [m] <i>vector</i>
+                  <br><strong>m</strong> = mass of the central body being orbited [kg] <i>scalar</i>
+              </div>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <p><b>Example:</b> If a satellite is 800.0 km from the surface of the moon how fast must it move to travel in a circular orbit?
+              </p>
+              <details>
+                  <summary>solution</summary>
+                  $$r = 800,000 + 1,737,000 = 2,537,000m$$
+                  $$v^{2} = \frac{GM}{r}$$
+                  $$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2,537,000}$$
+                  $$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2.537 \times 10^{6}}$$
+                  $$\sqrt{v^{2}} = \sqrt{19.31 \times 10^5}$$
+                  $$v = 1389.6 \small \frac{m}{s}$$
+              </details>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <p><b>Example:</b> A geosynchronous orbit is always above the same point on the earth so it takes one day to orbit. This orbit requires a velocity of 3,070 m/s. Calculate how far away a geosynchronous satellite needs to be from the center of the earth.
+              </p>
+              <details>
+                  <summary>solution</summary>
+                  $$v^{2} = \frac{GM}{r}$$
+                  $$r = \frac{GM}{v^{2}}$$
+                  $$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(3,070)^{2}}$$
+                  $$r = 4.22 \times 10^{7} m = 42,200 km$$
+                  <p>altitude = orbital radius - Earth's surface radius</p>
+                  $$a = 42,200 km - 6,371 km$$
+                  $$a = 35,829 km $$
+
+              </details>
+              <br>
+              <br>
+              <br>
+              <br>
+              <center>
+                  <h3>Local Massive Objects Data Table</h3>
+                  <table border>
+                      <tr align=center>
+                          <th align=left>Planet</th>
+                          <th>mass</th>
+                          <th>radius</th>
+                          <th>density</th>
+                          <th>rotation</th>
+                          <th>axis tilt</th>
+                      </tr>
+                      <tr align=center>
+                          <th><br></th>
+                          <th>(kg) </th>
+                          <th>(km) </th>
+                          <th>(g/cm<sup>3</sup>) </th>
+                          <th></th>
+                          <th>degree °</th>
+                      </tr>
+                      <tr align=center>
+                          <td align=left>Sun</td>
+                          <td>2.00×10<sup>30</sup></td>
+                          <td>695,700</td>
+                          <td>1.408</td>
+                          <td>~30 d</td>
+                          <td>0</td>
+                      </tr>
+                      <tr align=center>
+                          <td align=left>Mercury</td>
+                          <td>3.301×10<sup>23</sup></td>
+                          <td>2,440</td>
+                          <td>5.427</td>
+                          <td>58.785 d</td>
+                          <td>~0</td>
+                      </tr>
+                      <tr align=center>
+                          <td align=left>Venus</td>
+                          <td>4.867×10<sup>24</sup></td>
+                          <td>6,052</td>
+                          <td>5.243</td>
+                          <td>243.686 d</td>
+                          <td>177.36</td>
+                      </tr>
+                      <tr align=center>
+                          <td align=left>Earth</td>
+                          <td>5.972×10<sup>24</sup></td>
+                          <td>6,371</td>
+                          <td>5.515</td>
+                          <td>23.9345 h</td>
+                          <td>23.45</td>
+                      </tr>
+                      <tr align=center>
+                          <td align=left>Moon</td>
+                          <td>7.346×10<sup>22</sup></td>
+                          <td>1,737</td>
+                          <td>3.344</td>
+                          <td>27.322 d</td>
+                          <td>1.5</td>
+                      </tr>
+                      <tr align=center>
+                          <td align=left>Mars</td>
+                          <td>6.417×10<sup>23</sup></td>
+                          <td>3,390</td>
+                          <td>3.933</td>
+                          <td>24.6229 h</td>
+                          <td>25.19</td>
+                      </tr>
+                      <tr align=center>
+                          <td align=left>Jupiter</td>
+                          <td>1.899×10<sup>27</sup></td>
+                          <td>70,000</td>
+                          <td>1.326</td>
+                          <td>9.9250 h</td>
+                          <td>3.13</td>
+                      </tr>
+                      <tr align=center>
+                          <td align=left>Saturn</td>
+                          <td>5.685×10<sup>26</sup></td>
+                          <td>58,232</td>
+                          <td>0.687</td>
+                          <td>10.656 h</td>
+                          <td>26.73</td>
+                      </tr>
+                      <tr align=center>
+                          <td align=left>Uranus</td>
+                          <td>8.682×10<sup>25</sup></td>
+                          <td>25,362</td>
+                          <td>1.270</td>
+                          <td>17.24 h</td>
+                          <td>97.77</td>
+                      </tr>
+                      <tr align=center>
+                          <td align=left>Neptune</td>
+                          <td>1.024×10<sup>26</sup></td>
+                          <td>24,622</td>
+                          <td>1.638</td>
+                          <td>16.11 h</td>
+                          <td>28.32</td>
+                      </tr>
+                  </table>
+                  <a href="http://exoplanets.org/table">exoplanets data table</a>
+              </center>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+
+    </article>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div style="text-align:center">
+        <a href="../../../index.html#units">Back</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <script>
+        renderMathInElement(document.body);
+    </script>
+    <script src="motion.js"></script>
+</body>
+
+</html>

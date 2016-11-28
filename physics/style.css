@@ -60,8 +60,6 @@ input {
     font-size: 1em;
 }
 
-
-
 canvas {
     margin: 0.3em;
     /*border: 1px solid #999;*/
@@ -111,6 +109,7 @@ details p {
 }
 
 .center {
+  text-align: center;
   padding: 0;
   margin: auto;
   display: block;
