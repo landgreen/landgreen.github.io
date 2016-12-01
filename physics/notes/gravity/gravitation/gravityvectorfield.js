@@ -31,6 +31,7 @@ var canvas = document.getElementById("gravity");
 var ctx = canvas.getContext("2d");
 
 (function setupCanvas() {
+  canvas.width = window.innerWidth - 40;
   ctx.font = '15px Arial';
   ctx.lineCap = "round";
   ctx.lineJoin = "miter";
@@ -187,6 +188,7 @@ var bodyProto = function(name, x, y, radius) {
       ctx.beginPath(); //vector line
       ctx.moveTo(0, 0);
       ctx.lineTo(mag, 0);
+      ctx.strokeStyle = "#033";
       ctx.stroke();
 
       ctx.beginPath(); //arrows
@@ -220,14 +222,15 @@ function gravityVectorField() {
 
   ctx.lineWidth = 1;
   ctx.strokeStyle = "#033"
-  var len = Math.floor(canvas.width / settings.fieldSpacing);
+  var lenX = Math.floor(canvas.width / settings.fieldSpacing);
+  var lenY = Math.floor(canvas.height / settings.fieldSpacing);
   var gravity = settings.fieldGravity;
   var x, y, dist, draw;
-  for (var k = 0; k < len; k++) {
-    for (var j = 0; j < len; j++) {
+  for (var k = 0; k < lenY; k++) {
+    for (var j = 0; j < lenX; j++) {
       draw = true;
-      x = canvas.width * (j + 0.5) / len;
-      y = (canvas.height-settings.bar) * (k + 0.5) / len;
+      x = canvas.width * (j + 0.5) / lenX;
+      y = (canvas.height-settings.bar) * (k + 0.5) / lenY;
       //calc Forces
       var dx, dy, f, a;
       var fx = 0;
@@ -292,20 +295,22 @@ function cycle() { //runs each time the mouse moves
   ctx.strokeStyle = "#399";
   //ctx.globalCompositeOperation = 'lighter';
   for (var i = 0; i < body.length; i++) {
-    if (body[i].mouseOverCheck()) {
-      body[i].drawOutline();
-    }
-  }
-  for (var i = 0; i < body.length; i++) {
     body[i].calcForce(i);
     body[i].drawFill();
   }
+  for (var i = 0; i < body.length; i++) {
+    if (body[i].mouseOverCheck()) {
+      body[i].drawOutline();
+      body[i].drawForce();
+    }
+  }
+
   ctx.lineWidth = 2;
   ctx.strokeStyle = "#033";
   //ctx.globalCompositeOperation = 'source-over';
-  for (var i = 0; i < body.length; i++) {
-    body[i].drawForce();
-  }
+  // for (var i = 0; i < body.length; i++) {
+  //   body[i].drawForce();
+  // }
 }
 cycle() //run once at start
 }

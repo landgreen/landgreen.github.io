@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Coulomb's Law</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+    <script src='../../../lib/randomColor.min.js'></script>
+</head>
+
+<body>
+    <header>
+        <h1>Coulomb's Law</h1>
+    </header>
+    <article>
+        <h2 class='underlined'>Electric Charge</h2>
+
+        <h3>Electrical Conduction</h3>
+        <p><strong>Current</strong> is the flow of charge. Some materials let electrons move through them easily and some don’t.</p>
+
+        <p><strong>Conductors</strong> allow electrons to flow with low resistance.
+            <br><em>Example:</em> copper, steel, paper clips, tap water.</p>
+
+        <p><strong>Insulators</strong> have high resistance to electrons.
+            <br><em>Example:</em> wood, rubber, plastics, distilled water.</p>
+
+        <p><strong>Semi-conductors</strong> have a medium amount of resistance.
+            <br><em>Example:</em> Carbon, silicon, computer chips</p>
+
+        <h2 class='underlined'>Coulomb's Law</h2>
+        <div class='definition'>
+            <svg style="display: block; margin: auto" width="400" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <text x="70" y="107" fill="black" text-anchor="middle" font-size="25">q</text>
+            <text x="85" y="115" fill="black" text-anchor="middle" font-size="19">1</text>
+            <text x="320" y="107" fill="black" text-anchor="middle" font-size="25">q</text>
+            <text x="335" y="115" fill="black" text-anchor="middle" font-size="19">2</text>
+
+            <line x1="100" y1="100" x2="177" y2="100" style="stroke:#000;stroke-width:2" />
+            <polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
+
+            <line x1="300" y1="100" x2="223" y2="100" style="stroke:#000;stroke-width:2" />
+            <polygon points="0,0 8,5 8,-5" transform="translate(220 100)" style="fill:#000;" />
+
+            <circle cx="105" cy="100" r="10" fill = '#fff' stroke-width="2" stroke="#222"/>
+            <circle cx="295" cy="100" r="10" fill = '#fff' stroke-width="2" stroke="#222"/>
+
+            <text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
+
+            <g transform = 'translate(100,150)'>
+              <line x1="0" y1="0" x2="200" y2="0" style="stroke:#000;stroke-width:2" />
+              <line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
+              <line x1="200" y1="-5" x2="200" y2="5" style="stroke:#000;stroke-width:2" />
+              <text x="100" y="20" fill="black" text-anchor="middle" font-size="25">r</text>
+            </g>
+        </svg>
+            <h2>$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$</h2>
+            <p><strong>F</strong> = electrostatic force [N, Newtons, kg m/s²] <i>vector</i>
+                <br><strong>k<sub>e</sub></strong> = 8.987 × 10<sup>-9</sup> = Coulomb's constant [N m²/C²] <i>scalar</i>
+                <br><strong>q</strong> = charge [C, Coulomb's] <i>scalar</i>
+                <br><strong>r</strong> = distance between the center of each charge [m, meters] <i>scalar</i>
+                <svg style="display: block; margin: auto" width="400" height="175" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <g transform = 'translate(0,-50)'>
+              <line x1="100" y1="100" x2="177" y2="100" style="stroke:#000;stroke-width:2" />
+              <polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
+              <line x1="300" y1="100" x2="223" y2="100" style="stroke:#000;stroke-width:2" />
+              <polygon points="0,0 8,5 8,-5" transform="translate(220 100)" style="fill:#000;" />
+
+              <circle cx="105" cy="100" r="10" fill = '#fff' stroke-width="2" stroke="#222"/>
+              <text x="105" y="99" fill="black" text-anchor="middle" alignment-baseline="central" font-size="35">-</text>
+              <circle cx="295" cy="100" r="10" fill = '#fff' stroke-width="2" stroke="#222"/>
+              <text x="295" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="20">+</text>
+            </g>
+            <g transform = 'translate(0,0)'>
+              <line x1="100" y1="100" x2="23" y2="100" style="stroke:#000;stroke-width:2" />
+              <polygon points="0,0 -8,5 -8,-5" transform="translate(20 100) rotate(180)" style="fill:#000;" />
+              <line x1="300" y1="100" x2="377" y2="100" style="stroke:#000;stroke-width:2" />
+              <polygon points="0,0 8,5 8,-5" transform="translate(380 100) rotate(180)" style="fill:#000;" />
+
+              <circle cx="105" cy="100" r="10" fill = '#fff' stroke-width="2" stroke="#222"/>
+              <text x="105" y="99" fill="black" text-anchor="middle" alignment-baseline="central" font-size="35">-</text>
+              <circle cx="295" cy="100" r="10" fill = '#fff' stroke-width="2" stroke="#222"/>
+              <text x="295" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="35">-</text>
+            </g>
+            <g transform = 'translate(0,50)'>
+              <line x1="100" y1="100" x2="23" y2="100" style="stroke:#000;stroke-width:2" />
+              <polygon points="0,0 -8,5 -8,-5" transform="translate(20 100) rotate(180)" style="fill:#000;" />
+              <line x1="300" y1="100" x2="377" y2="100" style="stroke:#000;stroke-width:2" />
+              <polygon points="0,0 8,5 8,-5" transform="translate(380 100) rotate(180)" style="fill:#000;" />
+
+              <circle cx="105" cy="100" r="10" fill = '#fff' stroke-width="2" stroke="#222"/>
+              <text x="105" y="99" fill="black" text-anchor="middle" alignment-baseline="central" font-size="20">+</text>
+              <circle cx="295" cy="100" r="10" fill = '#fff' stroke-width="2" stroke="#222"/>
+              <text x="295" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="20">+</text>
+            </g>
+        </svg>
+
+                <p>The direction of the force is attractive if the charges are opposite and repulsive if the charges are the same.</p>
+                <p>The charges need to be stationary point sources.</p>
+        </div>
+
+    </article>
+    <canvas class='center' id="field" height='600' width='600' onclick="diagram(this)"> </canvas>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div style="text-align:center">
+        <a href="../../../index.html#units">Back</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <script>
+        renderMathInElement(document.body);
+    </script>
+    <script src="vectorfield.js"></script>
+</body>
+
+</html>
