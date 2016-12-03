@@ -118,8 +118,8 @@ function spawn() { //spawns bodies and map elements
         mech.setPosToSpawn();
 
         //spawn NPCs
-        for (let i = 0; i < 2; i++) {
-            spawnNPC(2000 * Math.random() - 500, -2000 * Math.random());
+        for (let i = 0; i < 25; i++) {
+            spawnNPC(5000 * Math.random() - 1500, -2000 * Math.random());
         }
 
         for (let i = 0; i < 5; i++) { //random bouncy circles
@@ -174,7 +174,8 @@ function spawn() { //spawns bodies and map elements
         mapRect(-2000, 900, 3200, 100) //ground
 
 
-        mapRect(2600, 900, 2000, 100) //far right ground
+        mapRect(2200, 900, 2000, 100) //far right ground
+        mapRect(2300, 870, 50, 40) //ground bump
         //mapVertex(-1700, 700, '0 0 0 -500 500 -500 1000 -400 1500 0'); //large ramp
         //mapVertex(1285, 867, '200 0  200 100 0 100'); // ramp
         //mapVertex(1400, 854, '0 100 600 100 600 0 150 0'); // ramp
@@ -182,23 +183,29 @@ function spawn() { //spawns bodies and map elements
         //mapVertex(-1650, 700, '0 0 500 0 500 200'); //angeled ceiling
         //mapRect(1350, 800, 300, 100) //ground
         //mapRect(1170, 875, 30, 35) //ground bump wall
-        mapRect(700, 890, 50, 10) //ground bump
+        mapRect(700, 890, 50, 20) //ground bump
         mapRect(-600, 0, 400, 200); //left cave roof
         mapRect(-600, 600, 400, 194); //left cave
         //mapRect(-50, 700, 100, 200, 'launch'); //left wall
         mapRect(-50, 700, 100, 200); //left wall
         //mapRect(50, 100, 300, 25); //left high platform
-        mapRect(550, 450, 300, 25); //wide platform
+        mapRect(650, 450, 200, 25); //wide platform
         mapRect(750, 250, 100, 25); //high platform
         mapRect(1000, 450, 400, 25); //platform
         mapRect(1200, 250, 200, 25); //platform
         Matter.Body.setAngle(map[map.length-1], -Math.PI*0.05)
         mapRect(1300, 50, 100, 25); //platform
+        mapRect(1800, 50, 300, 25); //platform
+        mapRect(1600, 250, 300, 25); //platform
+
+        mapRect(2200, 150, 300, 400); //platform
+
+
         mapRect(-350, 885, 20, 20); //ground bump
         mapRect(350, 635, 700, 30); //first platform
-        //mapRect(350,500, 130, 150); //small wall on first platform
-        mapRect(100, 100, 350, 50); //thick wall above launcher
-        mapRect(100, 400, 350, 130); //thick wall above launcher
+
+        mapRect(50, 150, 400, 50); //thick wall above launcher
+        mapRect(50, 450, 400, 80); //thick wall above launcher
 
         //lower level
         mapRect(-600, 2000, 3000, 100) // lower ground
@@ -208,9 +215,10 @@ function spawn() { //spawns bodies and map elements
         mapRect(-600, 1700, 400, 194); //left cave
         //bodyRect(120, -150, 130, 200); //medium block on first platform
         //bodyRect(360, 450, 130, 150); //medium block on second right platform
-        bodyRect(1475, 0, 100, 800); //huge tall vertical box
+        bodyRect(1700, 0, 100, 1100); //huge tall vertical box
+        Matter.Body.setAngle(body[body.length-1], -Math.PI*0.35)
         bodyRect(800, 438, 250, 10); //long skinny box
-        bodyRect(250, 250, 200, 150); //block inside the ledge
+        bodyRect(250, 250, 150, 200); //block inside the ledge
         //bodyVertex(-1000, 700, '0 200 -500 200  0 0'); //angeled ceiling
     }
 
@@ -225,11 +233,15 @@ function spawn() { //spawns bodies and map elements
 
 
     for (let i = 0; i < body.length; i++) {
-        body[i].collisionFilter.group = 1;
+        body[i].collisionFilter.group = 0;
+        body[i].collisionFilter.category = 0x0001;
+        body[i].collisionFilter.mask = 0x1101;
         World.add(engine.world, body[i]); //add to world
     }
     for (let i = 0; i < map.length; i++) {
-        map[i].collisionFilter.group = -1;
+        map[i].collisionFilter.group = 1;
+        map[i].collisionFilter.category = 0x0001;
+        map[i].collisionFilter.mask = 0x1111;
         Matter.Body.setStatic(map[i], true); //make static
         World.add(engine.world, map[i]); //add to world
     }

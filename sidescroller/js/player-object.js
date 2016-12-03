@@ -4,7 +4,7 @@ const mechProto = function() {
     this.width = 50;
     this.radius = 30;
     this.canFire = true;
-    this.dmg = 0.15;
+    this.dmg = 0.20;
     this.height = 42;
     this.yOffWhen = {
         crouch: 22,
@@ -97,7 +97,6 @@ const mechProto = function() {
 
     this.move = function() {
         this.x = player.position.x;
-        //looking at player body, to ignore the other parts of the player composite
         this.y = playerBody.position.y - this.yOff;
         this.Vx = player.velocity.x;
         this.Vy = player.velocity.y;
@@ -133,9 +132,8 @@ const mechProto = function() {
         //this.transY = this.canvasY - this.y;  //normal y camera tracking
 
         //make player head angled towards mouse
-        this.angle = Math.atan2(this.mouse.y - this.canvasY, this.mouse.x - this.canvasX);
-        //this.angle = Math.atan2(this.mouse.y - (canvas.height - mY), this.mouse.x - (canvas.width - mX));
-        //this.angle = Math.atan2(this.mouse.y - this.y, this.mouse.x - this.x);
+        //this.angle = Math.atan2(this.mouse.y - this.canvasY, this.mouse.x - this.canvasX);
+        this.angle = Math.atan2(this.mouse.y + (this.Sy-this.y)*game.zoom - this.canvasY , this.mouse.x - this.canvasX);
     };
     this.doCrouch = function() {
         if (!this.crouch) {
@@ -312,10 +310,11 @@ const mechProto = function() {
                 this.isHolding = true;
                 this.holdKeyDown = 0;
                 this.buttonCD = game.cycle + 20;
-                body[this.holdingBody].collisionFilter.group = 2; //force old holdingBody to collide with player
                 this.holdingBody = this.closest.index; //set new body to be the holdingBody
                 //body[this.closest.index].isSensor = true; //sensor seems a bit inconsistant
-                body[this.holdingBody].collisionFilter.group = -2; //don't collide with player
+                //body[this.holdingBody].collisionFilter.group = -2; //don't collide with player
+                body[mech.holdingBody].collisionFilter.category = 0x0001;
+                body[mech.holdingBody].collisionFilter.mask = 0x0001;
                 body[this.holdingBody].frictionAir = 0.1; //makes the holding body less jittery
                 holdConstraint.bodyB = body[this.holdingBody];
                 holdConstraint.length = 0;
@@ -333,7 +332,9 @@ const mechProto = function() {
                 const dx = mech.x - body[mech.holdingBody].position.x
                 const dy = mech.y - body[mech.holdingBody].position.y
                 if (dx * dx + dy * dy > 15000) {
-                    body[mech.holdingBody].collisionFilter.group = 2; //can collide with player
+                  body[mech.holdingBody].collisionFilter.category = 0x0001;
+                  body[mech.holdingBody].collisionFilter.mask = 0x1101;
+                  //body[mech.holdingBody].collisionFilter.group = 2; //can collide with player
                 } else {
                     resetPlayerCollision();
                 }

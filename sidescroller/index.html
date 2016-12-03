@@ -41,8 +41,6 @@
   </defs>
   <g id = 'background'>
     <circle cx="500" cy="-300" r="100" fill="#d67" opacity='1' stroke-width="0"/>
-    <rect x="-600" y="200" width="400" height="400" fill='#021' opacity="0.1" stroke-width="0"/>
-
     <g transform = "translate(450,750) scale(0.7)">
 <!--     <rect class = "keyrect" id="q" x="0" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
     <text class = "letter" text-anchor="middle" x="30" y="45">Q</text> -->
@@ -85,14 +83,18 @@
       <stop offset="0%" stop-color="#000" stop-opacity="0.3"/>
       <stop offset="100%" stop-color="#000" stop-opacity="0.1"/>
     </linearGradient>\
+    <linearGradient id="darkened_room" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.02"/>
+      <stop offset="2%" stop-color="#000" stop-opacity="0.05"/>
+      <stop offset="50%" stop-color="#000" stop-opacity="0.1"/>
+      <!-- <stop offset="60%" stop-color="#000" stop-opacity="0.15"/> -->
+      <stop offset="98%" stop-color="#000" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.02"/>
+    </linearGradient>\
     <linearGradient id="sunset" x1="0" x2="0" y1="0" y2="1">
       <stop offset="0%" stop-color="#f00" stop-opacity="0.3"/>
       <stop offset="100%" stop-color="#000" stop-opacity="0"/>
     </linearGradient>
-    <radialGradient id="darkcircle">
-        <stop offset="0%" stop-color="#000" stop-opacity="0.6"/>
-        <stop offset="100%" stop-color="#000" stop-opacity="0"/>
-    </radialGradient>
     <radialGradient id="sunsetRad">
         <stop offset="0%" stop-color="#f00" stop-opacity="0.2"/>
         <stop offset="100%" stop-color="#f00" stop-opacity="0"/>
@@ -108,12 +110,17 @@
   <g id = 'foreground'>
 
     <circle cx="500" cy="-300" r="1200" fill='url(#sunsetRad)' stroke-width="0"/>
-    <rect x="350" y="664" width="700" height="237" fill='#222' opacity="0.1" stroke-width="0"/>
+    <!-- <rect x="350" y="664" width="700" height="237" fill='#222' opacity="0.1" stroke-width="0"/> -->
+    <rect x="-600" y="200" width="400" height="400" fill='url(#darkened_room)' stroke-width="0"/>
+    <rect x="350" y="664" width="700" height="237" fill='url(#darkened_room)' stroke-width="0"/>
+
     <g transform = "translate(-500,795) scale(2)">
-    <path d="M0 0 C 20 20, 60 20, 80 0" stroke="black" fill="transparent"/>
-  </g>
-    <rect x="100" y="150" width="350" height="250" fill='#000' opacity="0.1" stroke-width="0"/>
-    <rect x="-600" y="794" width="400" height="106" fill='url(#vert_shadow)' stroke-width="0"/>
+      <path d="M0 0 C 20 20, 60 20, 80 0" stroke="black" fill="transparent"/>
+    </g>
+    <rect x="50" y="200" width="400" height="250" fill='url(#darkened_room)' stroke-width="0"/>
+
+    <rect x="-600" y="794" width="400" height="106" fill='url(#darkened_room)' stroke-width="0"/>
+    <rect x="-600" y="794" width="400" height="106" fill='url(#darkened_room)' stroke-width="0"/>
   </g>
 </svg>
 

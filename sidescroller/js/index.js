@@ -92,6 +92,21 @@ mouse look doesn't work with the smooth vertical camera tracking
 
 */
 
+/*collision info:
+        category  mask
+player:  0x1000  0x0001
+bullet:  0x0100  0x0101
+ghost:   0x0010  0x0001
+map:     0x0001  0x1111
+body:    0x0001  0x1101
+holding: 0x0001  0x0001
+mob:     0x0001  0x1101
+
+
+mask
+mask: 0x0101
+*/
+
 //set up canvas
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext("2d");
@@ -195,9 +210,7 @@ const player = Body.create({ //combine jumpSensor and playerBody
     //frictionStatic: 0.5,
     restitution: 0.3,
     sleepThreshold: Infinity,
-    collisionFilter: {
-        group: -2
-    },
+    collisionFilter:{ group: 0,   category: 0x1000,  mask: 0x0001},
 });
 //Matter.Body.setPosition(player, mech.spawnPos);
 //Matter.Body.setVelocity(player, mech.spawnVel);
@@ -435,8 +448,8 @@ function drawBullet() {
         }
         ctx.lineTo(vertices[0].x, vertices[0].y);
     }
-    ctx.fillStyle = '#f00';
-    //ctx.fillStyle = '#0cc';
+    //ctx.fillStyle = '#f00';
+    ctx.fillStyle = '#000';
     ctx.fill();
 }
 
@@ -514,6 +527,7 @@ function cycle() {
     mech.regen();
     mech.keyHold();
     game.keyZoom();
+    mobLoop();
     //game.gravityFlip();
     game.pause();
     if (game.testing) {
@@ -522,7 +536,6 @@ function cycle() {
         bulletLoop();
         ctx.save();
         game.scaleZoom();
-        ctx.translate(mech.transX, mech.transY);
         mech.draw();
         drawMatterWireFrames();
         drawPlayerBodyTesting();
@@ -533,21 +546,18 @@ function cycle() {
         game.speedZoom();
         mech.deathCheck();
         bulletLoop();
-
         mech.look();
         game.wipe();
         ctx.save();
         game.scaleZoom();
-        ctx.translate(mech.transX, mech.transY);
         //ctx.drawImage(background_img, -600, -400);
+        drawMob();
         drawCons();
         drawBody();
+        drawBullet();
         mech.draw();
-        drawNPC();
-        mobLoop();
         //ctx.drawImage(foreground_img, -700, -1500);
         drawMap();
-        drawBullet();
         mech.drawHealth();
         ctx.restore();
     }

@@ -1,4 +1,4 @@
-function drawNPC() {
+function drawMob() {
     let i = mob.length
     while (i--) {
         ctx.beginPath();
@@ -17,13 +17,15 @@ function drawNPC() {
 }
 
 function mobLoop() {
-  let i = mob.length
-  while(i--){
-      mob[i].fallCheck();
-      if (mob[i].alive){
-        mob[i].seePlayerCheck();
-        mob[i].attraction();
-      }
+    let i = mob.length
+    while (i--) {
+          if (mob[i].alive) {
+            mob[i].fallCheck();
+            mob[i].seePlayerCheck();
+            mob[i].attraction();
+        } else{
+          mob[i].deadCounting(i); //pass i to know what array index to delete on death
+        }
     }
 }
 
@@ -31,12 +33,17 @@ const mob = [];
 
 function spawnNPC(x, y) {
     let i = mob.length;
-    mob[i] = Matter.Bodies.polygon(x, y, 3 + Math.floor(Math.random() * 4), Math.random() * 30 + 20, {
+    mob[i] = Matter.Bodies.polygon(x, y, 3 + Math.floor(Math.random() * 4), Math.random() * 60 + 20, {
         density: 0.001,
         //friction: 0,
         frictionAir: 0.005,
         //frictionStatic: 0,
         restitution: 0.6,
+        collisionFilter: {
+            group: 0,
+            category: 0x0001,
+            mask: 0x1101,
+        },
     });
     World.add(engine.world, mob[i]); //add bullet to world
     mob[i].spawnPos = {
@@ -57,26 +64,26 @@ function spawnNPC(x, y) {
     mob[i].seePlayerCheck = function() {
         //check if the mob can see the player, but array map blocks view
         this.stroke = '#999'
-        let collisionM = Matter.Query.ray(map, mob[i].position, player.position)
-        let collisionB = Matter.Query.ray(body, mob[i].position, player.position)
+        let collisionM = Matter.Query.ray(map, this.position, player.position)
+        let collisionB = Matter.Query.ray(body, this.position, player.position)
         if (collisionM.length === 0 && collisionB.length === 0) {
-          this.locatePlayer();
+            this.locatePlayer();
         } else if (this.seePlayer.yes) {
             this.seePlayer.yes--;
             this.stroke = '#555'
         }
     }
-    mob[i].locatePlayer = function(){
-      this.seePlayer.yes = 180; //180/60=3seconds before mob falls a sleep
-      this.seePlayer.position.x = player.position.x;
-      this.seePlayer.position.y = player.position.y;
-      this.stroke = '#000'
+    mob[i].locatePlayer = function() {
+        this.seePlayer.yes = 180; //180/60=3seconds before mob falls a sleep
+        this.seePlayer.position.x = player.position.x;
+        this.seePlayer.position.y = player.position.y;
+        this.stroke = '#000'
     }
 
     mob[i].attraction = function() {
         //this.force.y -= 0.0005 * this.mass; //antigravity
-        let dx = this.seePlayer.position.x - mob[i].position.x;
-        let dy = this.seePlayer.position.y - mob[i].position.y;
+        let dx = this.seePlayer.position.x - this.position.x;
+        let dy = this.seePlayer.position.y - this.position.y;
         if (this.seePlayer.yes && dx * dx + dy * dy < 2000000) {
             const forceMag = 0.001 * this.mass;
             let angle = Math.atan2(dy, dx);
@@ -84,18 +91,18 @@ function spawnNPC(x, y) {
             this.force.y += forceMag * Math.sin(angle) - 0.0007 * this.mass; //antigravity
         }
     }
-    mob[i].fallCheck = function(){
-      if (this.position.y > game.fallHeight){
-          Matter.Body.setPosition(this, this.spawnPos);
-          Matter.Body.setVelocity(this, {
-              x: 0,
-              y: 0
-          });
-      }
+    mob[i].fallCheck = function() {
+        if (this.position.y > game.fallHeight) {
+            Matter.Body.setPosition(this, this.spawnPos);
+            Matter.Body.setVelocity(this, {
+                x: 0,
+                y: 0
+            });
+        }
     }
     mob[i].alive = true;
     mob[i].damage = function(dmg) {
-        this.health -= dmg;
+        this.health -= dmg / (Math.sqrt(this.mass));
         this.fill = 'rgba(0,255,255,' + this.health + ')';
         //this.fill = 'rgba(255,0,0,' + this.health + ')';
         //Matter.Body.setDensity(this, 0.001*this.health);
@@ -104,29 +111,29 @@ function spawnNPC(x, y) {
             this.death();
         }
     }
+    mob[i].deadCount = 0.2;
     mob[i].death = function() {
         this.alive = false;
         this.health = 1;
         this.seePlayer.yes = 0;
         this.fill = 'rgba(0,255,255,0)';
-        this.stroke = '#999';
-        //Matter.Body.setDensity(this, 0.0001);
+        //this.stroke = 'rgba(0,0,0,0.1)';
+        Matter.Body.setDensity(this, 0.0002);
         this.restitution = 0;
+        this.collisionFilter.category = 0x0010;
+        this.collisionFilter.mask = 0x0001;
         //Matter.Body.setPosition(this, this.spawnPos);
         // Matter.Body.setVelocity(this, {
         //     x: 0,
         //     y: 0
         // });
-
-        //Matter.Sleeping.set(mob[k], true);
-        //Matter.World.remove(engine.world, mob[k]);
-        //mob.splice(k, 1); //doesn't work b/c of reference in draw bullet function
     }
-    mob[i].deadCheck = function(i) {
-        if (!mob[i].alive) {
-            //Matter.Sleeping.set(this, true);
-            //Matter.World.remove(engine.world, mob[i]);
-            //mob.splice(i,1); //doesn't work b/c of references??
+    mob[i].deadCounting = function(i) {
+        this.deadCount -= 0.001;
+        this.stroke = 'rgba(0,0,0,'+this.deadCount+')';  //fade away
+        if (this.deadCount < 0){
+            Matter.World.remove(engine.world, this);
+            mob.splice(i, 1); //doesn't work b/c of reference in draw bullet function
         }
     }
 

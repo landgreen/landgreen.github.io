@@ -19,9 +19,7 @@ function fireBullet() {
     //frictionStatic: 0.2,
     restitution: 0.25,
     //sleepThreshold: 30, //bullets despawn on sleep after __ cycles
-    collisionFilter: {
-      group: -2 //can't collide with player (at first)
-    }
+    collisionFilter:{ group: 0,   category: 0x0100,  mask: 0x0101, },
   });
   //fire polygons
   // bullet[len] = Bodies.polygon(mech.x + dist*Math.cos(mech.angle), mech.y + dist*Math.sin(mech.angle),5, 5,{
@@ -45,7 +43,7 @@ function fireBullet() {
     y: mech.Vy
   });
   //add force to fire bullets
-  const impulse = 0.005;
+  const impulse = 0.006;
   const f = {
     x: impulse * Math.cos(dir) / game.delta,
     y: impulse * Math.sin(dir) / game.delta
@@ -72,9 +70,9 @@ function bulletLoop() {
   while (i--) {
     //soon after spawn bullets can collide with player
     //this may need to be removed
-    if (bullet[i].collisionFilter.group != 1 && bullet[i].birthCycle + 5 < game.cycle) {
-      bullet[i].collisionFilter.group = 1;
-    }
+    // if (bullet[i].collisionFilter.group != 1 && bullet[i].birthCycle + 5 < game.cycle) {
+    //   bullet[i].collisionFilter.group = 1;
+    // }
 
     //bullet[i].force.y -= engine.world.gravity.scale*0.01; //make bullets have less wieght
 

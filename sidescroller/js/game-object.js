@@ -9,71 +9,6 @@ const gameProto = function() {
   this.lastTimeStamp = 0; //tracks time stamps for measuing delta
   this.delta = 0; //measures how slow the engine is running compared to 60fps
   this.buttonCD = 0
-  this.gravityDir = 0;
-  this.gravityFlip = function() {
-    if (keys[82] && this.buttonCD < this.cycle) {
-      this.buttonCD = this.cycle + 30;
-
-      //engine.world.gravity.scale = -engine.world.gravity.scale
-      if (this.gravityDir) {
-        this.gravityDir = 0;
-      } else {
-        this.gravityDir = 1;
-      }
-
-      Matter.Body.setPosition(player, {
-        x: player.position.x,
-        y: -player.position.y
-      })
-      Matter.Body.setVelocity(player, {
-        x: player.velocity.x,
-        y: -player.velocity.y
-      })
-      mech.testingMoveLook();
-      mech.Sy = mech.y
-      for (let i = 0; i < bullet.length; i++) {
-        Matter.Body.setPosition(bullet[i], {
-          x: bullet[i].position.x,
-          y: -bullet[i].position.y
-        })
-        Matter.Body.setVelocity(bullet[i], {
-          x: bullet[i].velocity.x,
-          y: -bullet[i].velocity.y
-        })
-      }
-      for (let i = 0; i < body.length; i++) {
-        Matter.Body.setPosition(body[i], {
-          x: body[i].position.x,
-          y: -body[i].position.y
-        })
-        Matter.Body.setVelocity(body[i], {
-          x: body[i].velocity.x,
-          y: -body[i].velocity.y
-        })
-      }
-      for (let i = 0; i < map.length; i++) {
-        Matter.Body.setPosition(map[i], {
-            x: map[i].position.x,
-            y: -map[i].position.y
-          })
-          //Matter.Body.rotate(map[i], Math.PI)
-      }
-      for (let i = 0; i < cons.length; i++) {
-        cons[i].pointA = {
-          x: cons[i].pointA.x,
-          y: -cons[i].pointA.y
-        }
-      }
-
-      //ctx.rotate(this.gravityDir);
-
-      //engine.world.gravity.scale = -engine.world.gravity.scale
-      //this.gravityDir = (this.gravityDir + Math.PI)%(Math.PI*2);
-      //Matter.Body.setAngle(player, this.gravityDir)
-
-      //Matter.Body.rotate(player, Math.PI);
-    }
-  };
   this.timing = function() {
     this.cycle++; //tracks game cycles
     //delta is used to adjust forces on game slow down;
@@ -82,11 +17,10 @@ const gameProto = function() {
   }
   this.zoom = 1 / 300;
   this.scaleZoom = function() {
-    if (this.zoom != 1) {
       ctx.translate(canvas.width / 2, canvas.height / 2);
       ctx.scale(this.zoom, this.zoom);
       ctx.translate(-canvas.width / 2, -canvas.height / 2);
-    }
+      ctx.translate(mech.transX, mech.transY);
   }
   this.keyZoom = function() {
     if (keys[187]) { //plus
@@ -165,6 +99,10 @@ const gameProto = function() {
     ctx.fillText("cycle: " + game.cycle, 5, line);
     line += 20;
     ctx.fillText("delta: " + game.delta.toFixed(6), 5, line);
+    line += 20;
+    ctx.fillText("mXr: " + (mech.mouse.x + (mech.mouse.x-canvas.width/2)*game.zoom +mech.transX).toFixed(2), 5, line);
+    line += 20;
+    ctx.fillText("mYr: " + (mech.mouse.y - mech.transY).toFixed(2), 5, line);
     line += 20;
     ctx.fillText("mX: " + (mech.mouse.x - mech.canvasX + mech.x).toFixed(2), 5, line);
     line += 20;
