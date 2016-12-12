@@ -1,4 +1,5 @@
 function drawMob() {
+    ctx.lineWidth = 2;
     let i = mob.length
     while (i--) {
         ctx.beginPath();
@@ -10,7 +11,6 @@ function drawMob() {
         ctx.lineTo(vertices[0].x, vertices[0].y);
         ctx.fillStyle = mob[i].fill;
         ctx.strokeStyle = mob[i].stroke;
-        ctx.lineWidth = 2;
         ctx.fill();
         ctx.stroke();
     }
@@ -19,12 +19,12 @@ function drawMob() {
 function mobLoop() {
     let i = mob.length
     while (i--) {
-          if (mob[i].alive) {
+        if (mob[i].alive) {
             mob[i].fallCheck();
             mob[i].seePlayerCheck();
             mob[i].attraction();
-        } else{
-          mob[i].deadCounting(i); //pass i to know what array index to delete on death
+        } else {
+            mob[i].deadCounting(i); //pass i to know what array index to delete on death
         }
     }
 }
@@ -88,7 +88,7 @@ function spawnNPC(x, y) {
             const forceMag = 0.001 * this.mass;
             let angle = Math.atan2(dy, dx);
             this.force.x += forceMag * Math.cos(angle);
-            this.force.y += forceMag * Math.sin(angle) - 0.0007 * this.mass; //antigravity
+            this.force.y += forceMag * Math.sin(angle); // - 0.0007 * this.mass; //antigravity
         }
     }
     mob[i].fallCheck = function() {
@@ -116,12 +116,15 @@ function spawnNPC(x, y) {
         this.alive = false;
         this.health = 1;
         this.seePlayer.yes = 0;
-        this.fill = 'rgba(0,255,255,0)';
+        this.fill = 'rgba(0,0,0,0)';
         //this.stroke = 'rgba(0,0,0,0.1)';
-        Matter.Body.setDensity(this, 0.0002);
-        this.restitution = 0;
+        //Matter.Body.setDensity(this, 0.0002);
+        //this.restitution = 0;
         this.collisionFilter.category = 0x0010;
         this.collisionFilter.mask = 0x0001;
+        //this.friction= 0;
+        //this.frictionAir= 0.02;
+        //this.frictionStatic= 0;
         //Matter.Body.setPosition(this, this.spawnPos);
         // Matter.Body.setVelocity(this, {
         //     x: 0,
@@ -129,9 +132,9 @@ function spawnNPC(x, y) {
         // });
     }
     mob[i].deadCounting = function(i) {
-        this.deadCount -= 0.001;
-        this.stroke = 'rgba(0,0,0,'+this.deadCount+')';  //fade away
-        if (this.deadCount < 0){
+        this.deadCount -= 0.0002;
+        this.stroke = 'rgba(0,0,0,' + this.deadCount + ')'; //fade away
+        if (this.deadCount < 0) {
             Matter.World.remove(engine.world, this);
             mob.splice(i, 1); //doesn't work b/c of reference in draw bullet function
         }

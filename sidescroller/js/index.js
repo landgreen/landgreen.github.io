@@ -73,6 +73,32 @@ do somethign about blocks and NPCs that fall off the map
   reset them
   figure out how to delete them
 
+bullet type: bomb
+	make a bullet that after a few seconds gets very big and hits mobs to do damage
+		make the bullet go noncollide with map after explode
+
+NPC-mob laser
+	mob does damage by looking at player with the query ray
+		require the mob to hold the player as a target for a couple seconds to fire
+			draw the query targeting ray
+
+NPC-mob jumper
+	jumps in player's direction when it can see player
+		only jumps when mob is moving very slowly
+			make friction very high
+		only jump when touching map
+			is it worth adding a collide event?
+
+regen health by eating things you can pick up
+	use the r button?
+
+make bullet damage linked to each bullet
+
+make bullet damamge scale with relative velocity difference between bullet and mob
+
+make a goal for each map
+	use a map ground property for the end of a map
+		similar to portal
 FIX************************************************************
 ***************************************************************
 ***************************************************************
@@ -90,21 +116,21 @@ find a way to delete mobs
 mouse look doesn't work with the smooth vertical camera tracking
   makes firing bullets strange
 
+sometimes the player falls off a ledge and stays crouched in mid air
+
+the jump height control by holding down jump  can also control any upward motion
 */
 
 /*collision info:
         category  mask
 player:  0x1000  0x0001
-bullet:  0x0100  0x0101
+bullet:  0x0100  0x0001
 ghost:   0x0010  0x0001
 map:     0x0001  0x1111
 body:    0x0001  0x1101
 holding: 0x0001  0x0001
 mob:     0x0001  0x1101
 
-
-mask
-mask: 0x0101
 */
 
 //set up canvas
@@ -182,6 +208,7 @@ const Engine = Matter.Engine,
 
 // create an engine
 const engine = Engine.create();
+engine.world.gravity.scale = 0;
 //engine.enableSleeping = true;  //might want to turn this off to improve accuracy
 
 //define player *************************************************************
@@ -210,7 +237,11 @@ const player = Body.create({ //combine jumpSensor and playerBody
     //frictionStatic: 0.5,
     restitution: 0.3,
     sleepThreshold: Infinity,
-    collisionFilter:{ group: 0,   category: 0x1000,  mask: 0x0001},
+    collisionFilter: {
+        group: 0,
+        category: 0x1000,
+        mask: 0x0001
+    },
 });
 //Matter.Body.setPosition(player, mech.spawnPos);
 //Matter.Body.setVelocity(player, mech.spawnVel);
@@ -334,22 +365,22 @@ function mobCollisionCheck(event) {
     const pairs = event.pairs;
     for (let i = 0, j = pairs.length; i != j; i++) {
         for (let k = 0; k < mob.length; k++) {
-          if (mob[k].alive){
-            if (pairs[i].bodyA === mob[k]) {
-                if (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead) mech.hitMob(k);
-                if (pairs[i].bodyB.classType === "bullet" && pairs[i].bodyB.speed > 14) {
-                    mob[k].locatePlayer();
-                    mob[k].damage(mech.dmg);
+            if (mob[k].alive) {
+                if (pairs[i].bodyA === mob[k]) {
+                    if (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead) mech.hitMob(k);
+                    if (pairs[i].bodyB.classType === "bullet" && pairs[i].bodyB.speed > 10) {
+                        mob[k].locatePlayer();
+                        mob[k].damage(guns[mech.gun].dmg*Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity)));
+                    }
+                    break;
+                } else if (pairs[i].bodyB === mob[k]) {
+                    if (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead) mech.hitMob(k);
+                    if (pairs[i].bodyA.classType === "bullet" && pairs[i].bodyA.speed > 10) {
+                        mob[k].locatePlayer();
+                        mob[k].damage(guns[mech.gun].dmg*Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity)));
+                    }
+                    break;
                 }
-                break;
-            } else if (pairs[i].bodyB === mob[k]) {
-                if (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead) mech.hitMob(k);
-                if (pairs[i].bodyA.classType === "bullet" && pairs[i].bodyA.speed > 14){
-                    mob[k].locatePlayer();
-                    mob[k].damage(mech.dmg);
-                }
-                break;
-            }
             }
         }
     }
@@ -359,10 +390,23 @@ function mobCollisionCheck(event) {
 Events.on(engine, "beforeUpdate", function(event) {
     mech.numTouching = 0;
     mech.onBody = {
-        id: null,
-        index: null,
-        type: "none"
+            id: null,
+            index: null,
+            type: "none"
+        };
+    //gravity
+    function addGravity(bodies, magnitude) {
+        for (var i = 0; i < bodies.length; i++) {
+            //if (body.isStatic || body.isSleeping) continue;
+            bodies[i].force.y += bodies[i].mass * magnitude;
+        }
     }
+    //addGravity(Composite.allBodies(engine.world));
+    addGravity(mob, 0.0005);
+    addGravity(body, 0.001);
+    addGravity(bullet, 0.001);
+    player.force.y += player.mass * 0.001;
+
 });
 
 //determine if player is on the ground
@@ -437,22 +481,6 @@ function drawBody() {
     ctx.stroke();
 }
 
-function drawBullet() {
-    //draw body
-    ctx.beginPath();
-    for (let i = 0; i < bullet.length; i += 1) {
-        let vertices = bullet[i].vertices;
-        ctx.moveTo(vertices[0].x, vertices[0].y);
-        for (let j = 1; j < vertices.length; j += 1) {
-            ctx.lineTo(vertices[j].x, vertices[j].y);
-        }
-        ctx.lineTo(vertices[0].x, vertices[0].y);
-    }
-    //ctx.fillStyle = '#f00';
-    ctx.fillStyle = '#000';
-    ctx.fill();
-}
-
 function drawCons() {
     //draw body
     ctx.beginPath();
@@ -523,13 +551,13 @@ function cycle() {
     game.timing();
     game.wipe();
     mech.keyMove();
+	mech.switchGun();
     mech.standingOnActions();
     mech.regen();
-    mech.keyHold();
+    //mech.keyHold();
     game.keyZoom();
-    mobLoop();
     //game.gravityFlip();
-    game.pause();
+    //game.pause();
     if (game.testing) {
         mech.testingMoveLook();
         mech.deathCheck();
@@ -542,34 +570,34 @@ function cycle() {
         ctx.restore();
         game.output();
     } else {
+        mobLoop();
         mech.move();
         game.speedZoom();
         mech.deathCheck();
-        bulletLoop();
         mech.look();
-        game.wipe();
         ctx.save();
         game.scaleZoom();
-        //ctx.drawImage(background_img, -600, -400);
+        ctx.drawImage(background_img, 400, -400);
         drawMob();
         drawCons();
         drawBody();
-        drawBullet();
         mech.draw();
+		bulletLoop();
+		//mech.eat();
         //ctx.drawImage(foreground_img, -700, -1500);
         drawMap();
         mech.drawHealth();
         ctx.restore();
     }
     //svg graphics , just here until I convert svg to png in inkscape
-        document.getElementById('background').setAttribute('transform',
-                                                         'translate(' + (canvas.width/2) + ',' + (canvas.height/2) + ')'
-                                                         + 'scale(' + game.zoom + ')'
-                                                         + 'translate(' + (mech.transX - canvas.width/2) + ',' + (mech.transY - canvas.height/2) + ')');
-     document.getElementById('foreground').setAttribute('transform',
-                                                        'translate(' + (canvas.width/2) + ',' + (canvas.height/2) + ')'
-                                                        + 'scale(' + game.zoom + ')'
-                                                        + 'translate(' + (mech.transX - canvas.width/2) + ',' + (mech.transY - canvas.height/2) + ')');
+    // document.getElementById('background').setAttribute('transform',
+    //     'translate(' + (canvas.width / 2) + ',' + (canvas.height / 2) + ')' +
+    //     'scale(' + game.zoom + ')' +
+    //     'translate(' + (mech.transX - canvas.width / 2) + ',' + (mech.transY - canvas.height / 2) + ')');
+    document.getElementById('foreground').setAttribute('transform',
+        'translate(' + (canvas.width / 2) + ',' + (canvas.height / 2) + ')' +
+        'scale(' + game.zoom + ')' +
+        'translate(' + (mech.transX - canvas.width / 2) + ',' + (mech.transY - canvas.height / 2) + ')');
 
     stats.end();
     requestAnimationFrame(cycle);
@@ -578,11 +606,11 @@ function cycle() {
 // const bmo_img = new Image(); // Create new img element
 // bmo_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/Bmo.png'; // Set source path
 
- // const foreground_img = new Image(); // Create new img element
- // foreground_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/circle3390.png'; // Set source path
+// const foreground_img = new Image(); // Create new img element
+// foreground_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/circle3390.png'; // Set source path
 
- // const background_img = new Image(); // Create new img element
- // background_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/background.png'; // Set source path
+const background_img = new Image(); // Create new img element
+background_img.src = 'background.png'; // Set source path
 
 function runPlatformer(el) {
     el.onclick = null; //removes the onclick effect so the function only runs once

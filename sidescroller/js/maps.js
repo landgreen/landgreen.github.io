@@ -76,6 +76,17 @@ function spawn() { //spawns bodies and map elements
     //testingsMap******************************************************************
     //*****************************************************************************
     //*****************************************************************************
+	function empty(){
+		mech.spawnPos = {
+            x: 0,
+            y: 0
+        };
+        mech.setPosToSpawn();
+        mech.canFire = false;
+        mapRect(-300, 200, 1000, 200) //ground1
+		bodyRect(-200, 100, 30, 30) //cube on left ledge
+}
+
 
     function mapPuzzler1() {
         mech.spawnPos = {
@@ -116,9 +127,10 @@ function spawn() { //spawns bodies and map elements
         mech.canFire = true;
         //mech.spawnPos = { x: 0,  y: 0  };
         mech.setPosToSpawn();
-
+		//mapRect(1100, 890, 100, 25, 'exit') //ground bump wall
+		mapRect(4000, -200, 100, 25, 'exit') //ground bump wall
         //spawn NPCs
-        for (let i = 0; i < 25; i++) {
+        for (let i = 0; i < 15; i++) {
             spawnNPC(5000 * Math.random() - 1500, -2000 * Math.random());
         }
 
@@ -185,7 +197,7 @@ function spawn() { //spawns bodies and map elements
         //mapRect(1170, 875, 30, 35) //ground bump wall
         mapRect(700, 890, 50, 20) //ground bump
         mapRect(-600, 0, 400, 200); //left cave roof
-        mapRect(-600, 600, 400, 194); //left cave
+        mapRect(-600, 600, 400, 200); //left cave
         //mapRect(-50, 700, 100, 200, 'launch'); //left wall
         mapRect(-50, 700, 100, 200); //left wall
         //mapRect(50, 100, 300, 25); //left high platform
@@ -201,7 +213,7 @@ function spawn() { //spawns bodies and map elements
         mapRect(2200, 150, 300, 400); //platform
 
 
-        mapRect(-350, 885, 20, 20); //ground bump
+        //mapRect(-350, 885, 20, 20); //ground bump
         mapRect(350, 635, 700, 30); //first platform
 
         mapRect(50, 150, 400, 50); //thick wall above launcher
@@ -212,13 +224,13 @@ function spawn() { //spawns bodies and map elements
         mapRect(1300, 1990, 100, 25, 'launch') //ground bump wall
         mapRect(-600, 1300, 400, 200); //left cave roof
 
-        mapRect(-600, 1700, 400, 194); //left cave
+        mapRect(-600, 1700, 400, 200); //left cave
         //bodyRect(120, -150, 130, 200); //medium block on first platform
         //bodyRect(360, 450, 130, 150); //medium block on second right platform
         bodyRect(1700, 0, 100, 1100); //huge tall vertical box
         Matter.Body.setAngle(body[body.length-1], -Math.PI*0.35)
         bodyRect(800, 438, 250, 10); //long skinny box
-        bodyRect(250, 250, 150, 200); //block inside the ledge
+        bodyRect(250, 250, 130, 200); //block inside the ledge
         //bodyVertex(-1000, 700, '0 200 -500 200  0 0'); //angeled ceiling
     }
 
@@ -230,7 +242,7 @@ function spawn() { //spawns bodies and map elements
 
     testingsMap();
     //mapPuzzler1();
-
+	//empty();
 
     for (let i = 0; i < body.length; i++) {
         body[i].collisionFilter.group = 0;

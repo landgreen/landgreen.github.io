@@ -3,8 +3,25 @@
 const mechProto = function() {
     this.width = 50;
     this.radius = 30;
-    this.canFire = true;
-    this.dmg = 0.20;
+	this.fireCDcycle = 0;
+	this.gun = 'machine';
+	this.switchGun = function() {
+        if (keys[49]) { //1
+            this.gun = 'machine';
+        } else if (keys[50]) { //2
+            this.gun = 'needle';
+        } else if (keys[51]) { //3
+            this.gun = 'shot';
+        } else if (keys[52]) { //4
+            this.gun = 'cannon';
+		} else if (keys[53]) { //4
+			this.gun = 'super';
+		} else if (keys[54]) { //4
+			this.gun = 'experimental';
+		} else if (keys[55]) { //4
+			this.gun = 'rail';
+		}
+    }
     this.height = 42;
     this.yOffWhen = {
         crouch: 22,
@@ -31,24 +48,26 @@ const mechProto = function() {
         x: 0,
         y: 0
     };
-    this.x = this.spawnPos.x;
-    this.y = this.spawnPos.y;
+    this.pos = {
+        x: this.spawnPos.x,
+        y: this.spawnPos.y
+    };
     this.setPosToSpawn = function() {
-        this.x = this.spawnPos.x;
-        this.y = this.spawnPos.y;
+        this.pos.x = this.spawnPos.x;
+        this.pos.y = this.spawnPos.y;
         this.Vx = this.spawnVel.x;
         this.Vy = this.spawnVel.y;
         Matter.Body.setPosition(player, this.spawnPos);
         Matter.Body.setVelocity(player, this.spawnVel);
-    }
-    this.Sy = this.y; //adds a smoothing effect to vertical only
+    };
+    this.Sy = this.pos.y; //adds a smoothing effect to vertical only
     this.Vx = 0;
     this.Vy = 0;
     this.VxMax = 7;
     this.mass = 5;
     this.Fx = 0.004 * this.mass; //run Force on ground
     this.FxAir = 0.0006 * this.mass; //run Force in Air
-    this.Fy = -0.04 * this.mass; //jump Force
+    this.Fy = -0.05 * this.mass; //jump Force
     this.angle = 0;
     this.walk_cycle = 0;
     this.stepSize = 0;
@@ -71,8 +90,8 @@ const mechProto = function() {
     this.legLength2 = 45;
     this.canvasX = canvas.width / 2;
     this.canvasY = canvas.height / 2;
-    this.transX = this.canvasX - this.x;
-    this.transY = this.canvasX - this.x;
+    this.transX = this.canvasX - this.pos.x;
+    this.transY = this.canvasX - this.pos.x;
     this.mouse = {
         x: canvas.width / 3,
         y: canvas.height
@@ -83,21 +102,21 @@ const mechProto = function() {
     };
     this.testingMoveLook = function() {
         //move
-        this.x = player.position.x;
-        this.y = playerBody.position.y - this.yOff;
+        this.pos.x = player.position.x;
+        this.pos.y = playerBody.position.y - this.yOff;
         this.Vx = player.velocity.x;
         this.Vy = player.velocity.y;
         //look
         this.canvasX = canvas.width / 2
         this.canvasY = canvas.height / 2
-        this.transX = this.canvasX - this.x;
-        this.transY = this.canvasY - this.y;
+        this.transX = this.canvasX - this.pos.x;
+        this.transY = this.canvasY - this.pos.y;
         this.angle = Math.atan2(this.mouse.y - this.canvasY, this.mouse.x - this.canvasX);
     }
 
     this.move = function() {
-        this.x = player.position.x;
-        this.y = playerBody.position.y - this.yOff;
+        this.pos.x = player.position.x;
+        this.pos.y = playerBody.position.y - this.yOff;
         this.Vx = player.velocity.x;
         this.Vy = player.velocity.y;
     };
@@ -120,20 +139,20 @@ const mechProto = function() {
         this.canvasY = this.canvasY * 0.94 + (canvas.height - mY) * 0.06;
 
         //set translate values
-        this.transX = this.canvasX - this.x;
-        this.Sy = 0.99 * this.Sy + 0.01 * (this.y);
+        this.transX = this.canvasX - this.pos.x;
+        this.Sy = 0.99 * this.Sy + 0.01 * (this.pos.y);
         //hard caps how behind y position tracking can get.
-        if (this.Sy - this.y > canvas.height / 2) {
-            this.Sy = this.y + canvas.height / 2;
-        } else if (this.Sy - this.y < -canvas.height / 2) {
-            this.Sy = this.y - canvas.height / 2;
+        if (this.Sy - this.pos.y > canvas.height / 2) {
+            this.Sy = this.pos.y + canvas.height / 2;
+        } else if (this.Sy - this.pos.y < -canvas.height / 2) {
+            this.Sy = this.pos.y - canvas.height / 2;
         }
-        this.transY = this.canvasY - this.Sy;   //gradual y camera tracking
-        //this.transY = this.canvasY - this.y;  //normal y camera tracking
+        this.transY = this.canvasY - this.Sy; //gradual y camera tracking
+        //this.transY = this.canvasY - this.pos.y;  //normal y camera tracking
 
         //make player head angled towards mouse
         //this.angle = Math.atan2(this.mouse.y - this.canvasY, this.mouse.x - this.canvasX);
-        this.angle = Math.atan2(this.mouse.y + (this.Sy-this.y)*game.zoom - this.canvasY , this.mouse.x - this.canvasX);
+        this.angle = Math.atan2(this.mouse.y + (this.Sy - this.pos.y) * game.zoom - this.canvasY, this.mouse.x - this.canvasX);
     };
     this.doCrouch = function() {
         if (!this.crouch) {
@@ -232,27 +251,31 @@ const mechProto = function() {
         this.yOff = this.yOff * 0.85 + this.yOffGoal * 0.15
     };
     this.death = function() {
-        Matter.Body.setPosition(player, this.spawnPos);
-        Matter.Body.setVelocity(player, this.spawnVel);
-        this.dropBody();
+        location.reload();
+        //Matter.Body.setPosition(player, this.spawnPos);
+        //Matter.Body.setVelocity(player, this.spawnVel);
+        //this.dropBody();
         //game.zoom = 0;    //zooms out all the way
-        this.health = 1;
-        //this.Sy = mech.y  //moves camera to new position quickly
+        //this.health = 1;
     }
     this.health = 1;
     this.regen = function() {
         if (this.health < 1 && game.cycle % 15 === 0) {
-            this.health += 0.01;
+            this.addHealth(0.01);
         }
     };
     this.drawHealth = function() {
         if (this.health < 1) {
             ctx.fillStyle = 'rgba(100, 100, 100, 0.5)';
-            ctx.fillRect(this.x - this.radius, this.y - 50, 60, 10);
+            ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60, 10);
             ctx.fillStyle = "#f00";
-            ctx.fillRect(this.x - this.radius, this.y - 50, 60 * this.health, 10);
+            ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60 * this.health, 10);
         }
     };
+    this.addHealth = function(heal) {
+        this.health += heal;
+        if (this.health > 1) this.health = 1;
+    }
     this.damage = function(dmg) {
         this.health -= dmg;
         if (this.health <= 0) {
@@ -260,7 +283,7 @@ const mechProto = function() {
         }
     }
     this.deathCheck = function() {
-        if (this.y > game.fallHeight) { // if player is 4000px deep reset to spawn Position and Velocity
+        if (this.pos.y > game.fallHeight) { // if player is 4000px deep reset to spawn Position and Velocity
             this.death();
         }
     };
@@ -270,16 +293,94 @@ const mechProto = function() {
         //this section would be better with forces but they don't work...
         let angle = Math.atan2(player.position.y - mob[i].position.y, player.position.x - mob[i].position.x);
         Matter.Body.setVelocity(player, {
-          x: player.velocity.x + 10 * Math.cos(angle),
-          y: player.velocity.y + 10 * Math.sin(angle)
+            x: player.velocity.x + 10 * Math.cos(angle),
+            y: player.velocity.y + 10 * Math.sin(angle)
         });
         Matter.Body.setVelocity(mob[i], {
-          x: mob[i].velocity.x - 10 * Math.cos(angle),
-          y: mob[i].velocity.y - 10 * Math.sin(angle)
+            x: mob[i].velocity.x - 10 * Math.cos(angle),
+            y: mob[i].velocity.y - 10 * Math.sin(angle)
         });
     }
-    this.holdKeyDown = 0;
+
     this.buttonCD = 0; //cooldown for player buttons
+    this.eaten = [];
+    this.eat = function() {
+        if (keys[81] && this.buttonCD < game.cycle) {
+            this.buttonCD = game.cycle + 5;
+            this.findClosestBody();
+            let i = this.closest.index
+            if (this.closest.dist < 150) {
+                //draw eating
+                ctx.lineWidth = 10;
+                ctx.strokeStyle = '#5f9';
+                ctx.beginPath();
+                ctx.moveTo(this.pos.x + 15 * Math.cos(this.angle), this.pos.y + 15 * Math.sin(this.angle));
+                ctx.lineTo(body[i].position.x, body[i].position.y);
+                ctx.stroke();
+                //set to eaten
+                body[i].eaten = true;
+                //drop body
+                body[i].frictionAir = 0;
+                this.isHolding = false;
+                holdConstraint.bodyB = jumpSensor; //set on sensor to get the constraint on somethign else
+                //add to eaten
+                body[i].collisionFilter.category = 0x0000;
+                body[i].collisionFilter.mask = 0x0000;
+                //Matter.Body.setStatic(body[i], true)
+                Matter.Sleeping.set(body[i], true)
+                Matter.Body.scale(body[i], 0.5, 0.5)
+                Matter.Body.setVelocity(body[i], {
+                    x: 0,
+                    y: 0
+                });
+                Matter.Body.setAngularVelocity(body[i], 0.08) //(Math.random()*0.5-1)*0.1)
+                    //Matter.World.remove(engine.world, body[i]);
+                    //body.splice(i, 1);
+                this.eaten[this.eaten.length] = {
+                    index: i,
+                    cycle: game.cycle
+                }
+            }
+        }
+        //control behavior of eaten bodies
+        for (let j = 0; j < this.eaten.length; j++) {
+            const pos = {
+                x: this.pos.x + 60 * Math.cos((game.cycle + this.eaten[j].cycle) * 0.05),
+                y: this.pos.y + 30 * Math.sin((game.cycle + this.eaten[j].cycle) * 0.05),
+            }
+            Matter.Body.setPosition(body[this.eaten[j].index], pos);
+            //Matter.Body.setVelocity(body[this.eaten[j].index],{x:0, y:0});
+
+        }
+
+        if (keys[69] && this.buttonCD < game.cycle && this.eaten.length) {
+            this.buttonCD = game.cycle + 5;
+            let i = this.eaten[this.eaten.length - 1].index;
+            body[i].eaten = false;
+            body[i].collisionFilter.category = 0x0001;
+            body[i].collisionFilter.mask = 0x0101;
+            Matter.Body.setVelocity(body[i], {
+                x: 0,
+                y: 0
+            });
+            //Matter.Body.setStatic(body[i], false)
+            Matter.Sleeping.set(body[i], false)
+            Matter.Body.scale(body[i], 2, 2);
+            Matter.Body.setPosition(body[i], {
+                x: this.pos.x + 20 * Math.cos(this.angle),
+                y: this.pos.y + 20 * Math.sin(this.angle)
+            });
+            const impulse = 0.06 * body[i].mass;
+            const f = {
+                x: impulse * Math.cos(this.angle) / game.delta,
+                y: impulse * Math.sin(this.angle) / game.delta
+            }
+            body[i].force = f;
+            this.eaten.pop();
+        }
+    };
+
+    this.holdKeyDown = 0;
     this.keyHold = function() { //checks for holding/dropping/picking up bodies
         if (this.isHolding) {
             //give the constaint more length and less stiffness if it is pulled out of position
@@ -289,8 +390,8 @@ const mechProto = function() {
             holdConstraint.stiffness = -0.01 * holdConstraint.length + 1;
             if (holdConstraint.length > 90) this.dropBody(); //drop it if the constraint gets too long
             holdConstraint.pointA = { //set constraint position
-                x: this.x + 50 * Math.cos(this.angle), //just in front of player nose
-                y: this.y + 50 * Math.sin(this.angle)
+                x: this.pos.x + 50 * Math.cos(this.angle), //just in front of player nose
+                y: this.pos.y + 50 * Math.sin(this.angle)
             };
             if (keys[81]) { // q = rotate the body
                 body[this.holdingBody].torque = 0.05 * body[this.holdingBody].mass;
@@ -306,7 +407,7 @@ const mechProto = function() {
             }
         } else if (keys[69]) { //when not holding  e = pick up body
             this.findClosestBody();
-            if (this.closest.dist2 < 10000) { //pick up if distance closer then 100*100
+            if (this.closest.dist < 150) { //pick up if distance closer then 100*100
                 this.isHolding = true;
                 this.holdKeyDown = 0;
                 this.buttonCD = game.cycle + 20;
@@ -319,8 +420,8 @@ const mechProto = function() {
                 holdConstraint.bodyB = body[this.holdingBody];
                 holdConstraint.length = 0;
                 holdConstraint.pointA = {
-                    x: this.x + 50 * Math.cos(this.angle),
-                    y: this.y + 50 * Math.sin(this.angle)
+                    x: this.pos.x + 50 * Math.cos(this.angle),
+                    y: this.pos.y + 50 * Math.sin(this.angle)
                 };
             }
         }
@@ -329,12 +430,12 @@ const mechProto = function() {
         let timer; //reset player collision
         function resetPlayerCollision() {
             timer = setTimeout(function() {
-                const dx = mech.x - body[mech.holdingBody].position.x
-                const dy = mech.y - body[mech.holdingBody].position.y
+                const dx = mech.pos.x - body[mech.holdingBody].position.x
+                const dy = mech.pos.y - body[mech.holdingBody].position.y
                 if (dx * dx + dy * dy > 15000) {
-                  body[mech.holdingBody].collisionFilter.category = 0x0001;
-                  body[mech.holdingBody].collisionFilter.mask = 0x1101;
-                  //body[mech.holdingBody].collisionFilter.group = 2; //can collide with player
+                    body[mech.holdingBody].collisionFilter.category = 0x0001;
+                    body[mech.holdingBody].collisionFilter.mask = 0x1101;
+                    //body[mech.holdingBody].collisionFilter.group = 2; //can collide with player
                 } else {
                     resetPlayerCollision();
                 }
@@ -359,26 +460,55 @@ const mechProto = function() {
     this.isHolding = false;
     this.holdingBody = 0;
     this.closest = {
-        dist2: 1000000,
+        dist: 1000,
         index: 0
     };
+    this.lookingAt = function(i) {
+        //calculate a vector from mob to player and make it length 1
+        const diff = Matter.Vector.normalise(Matter.Vector.sub(body[i].position, player.position));
+        const dir = { //make a vector for the player's direction of length 1
+                x: Math.cos(mech.angle),
+                y: Math.sin(mech.angle)
+            }
+            //the dot prodcut of diff and dir will return how much over lap between the vectors
+        const dot = Matter.Vector.dot(dir, diff);
+        //console.log(dot);
+        if (dot > 0.9) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     this.findClosestBody = function() {
-        this.closest.dist2 = 100000;
+        let mag = 100000;
+        let index = 0;
         for (let i = 0; i < body.length; i++) {
-            const Px = body[i].position.x - (this.x + 50 * Math.cos(this.angle));
-            const Py = body[i].position.y - (this.y + 50 * Math.sin(this.angle));
-            if (body[i].mass < player.mass && Px * Px + Py * Py < this.closest.dist2) {
-                this.closest.dist2 = Px * Px + Py * Py;
-                this.closest.index = i;
+            let isLooking = this.lookingAt(i);
+            let collisionM = Matter.Query.ray(map, body[i].position, this.pos)
+                //let collisionB = Matter.Query.ray(body, body[i].position, this.pos)
+            if (collisionM.length) isLooking = false;
+            //magnitude of the distance between the poistion vectors of player and each body
+            const dist = Matter.Vector.magnitude(Matter.Vector.sub(body[i].position, this.pos));
+            if (dist < mag && body[i].mass < player.mass && isLooking && !body[i].eaten) {
+                mag = dist;
+                index = i;
             }
         }
+        this.closest.dist = mag;
+        this.closest.index = index;
     };
+    this.exit = function() {
+        location.reload();
+    }
     this.standingOnActions = function() {
         if (this.onBody.type === 'map') {
             var that = this; //brings the this ness into the deeper object methods
             var actions = {
                 'death': function() {
                     that.death();
+                },
+                'exit': function() {
+                    that.exit();
                 },
                 'slow': function() {
                     Matter.Body.setVelocity(player, { //reduce player velocity every cycle until not true
@@ -399,19 +529,6 @@ const mechProto = function() {
             (actions[map[this.onBody.index].action] || actions['default'])();
         }
     }
-
-    /*   this.forcePoke = function() {
-        for (var i = 0; i < body.length; i++) {
-          var Dx = body[i].position.x - (this.mouse.x - this.transX);
-          var Dy = body[i].position.y - (this.mouse.y - this.transY);
-          var accel = 0.2 / Math.sqrt(Dx * Dx + Dy * Dy);
-          if (accel > 0.01) accel = 0.01; //cap accel
-          accel = accel * body[i].mass //scale with mass
-          var angle = Math.atan2(Dy, Dx);
-          body[i].force.x -= accel * Math.cos(angle);
-          body[i].force.y -= accel * Math.sin(angle);
-        }
-      }; */
     this.drawLeg = function(stroke) {
         ctx.save();
         ctx.scale(this.flipLegs, 1); //leg lines
@@ -481,14 +598,7 @@ const mechProto = function() {
 
         //draw body
         ctx.save();
-        // if(game.gravityDir){
-        //   ctx.scale(1, -1);
-        //   //ctx.translate(0,-1.5*canvas.height)
-        //   ctx.translate(this.x, -this.y-this.yOff-this.height);
-        // } else{
-        //   ctx.translate(this.x, this.y);
-        // }
-        ctx.translate(this.x, this.y);
+        ctx.translate(this.pos.x, this.pos.y);
         this.calcLeg(Math.PI, -3);
         this.drawLeg('#444');
         this.calcLeg(0, 0);
@@ -524,7 +634,7 @@ const mechProto = function() {
             ctx.beginPath();
             ctx.moveTo(holdConstraint.bodyB.position.x + Math.random() * 2,
                 holdConstraint.bodyB.position.y + Math.random() * 2);
-            ctx.lineTo(this.x + 15 * Math.cos(this.angle), this.y + 15 * Math.sin(this.angle));
+            ctx.lineTo(this.pos.x + 15 * Math.cos(this.angle), this.pos.y + 15 * Math.sin(this.angle));
             //ctx.lineTo(holdConstraint.pointA.x,holdConstraint.pointA.y);
             ctx.stroke();
         }
