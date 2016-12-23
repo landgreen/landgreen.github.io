@@ -50,6 +50,7 @@ function spawn() { //spawns bodies and map elements
             stiffness: stiffness,
         })
     }
+
     function bodyRect(x, y, width, height, properties) { //speeds up adding reactangles to map array
         body[body.length] = Bodies.rectangle(x + width / 2, y + height / 2, width, height, properties);
     }
@@ -76,16 +77,32 @@ function spawn() { //spawns bodies and map elements
     //testingsMap******************************************************************
     //*****************************************************************************
     //*****************************************************************************
-	function empty(){
-		mech.spawnPos = {
-            x: 0,
-            y: 0
+    function empty() {
+        mech.spawnPos = {
+            x: 500,
+            y: -100
         };
         mech.setPosToSpawn();
         mech.canFire = false;
-        mapRect(-300, 200, 1000, 200) //ground1
-		bodyRect(-200, 100, 30, 30) //cube on left ledge
-}
+        mapRect(-4000, 200, 10000, 200) //ground1
+        bodyRect(-200, 100, 30, 30) //cube on left ledge
+		let pos = {
+			x:200,
+			y:190
+		}
+		spawnNPC(pos, true, 4,10,'rgba(255,0,255,', ["seePlayerCheck", 'fire']); //nonmoving
+		pos.y -= 200
+		spawnNPC(pos, true, 4,10,'rgba(255,0,255,', ["seePlayerCheck", 'fire']); //nonmoving
+		pos.y -= 200
+		spawnNPC(pos, true, 4,10,'rgba(255,0,255,', ["seePlayerCheck", 'fire']); //nonmoving
+		pos.x += 500
+		spawnNPC(pos, true, 4,10,'rgba(255,0,255,', ["seePlayerCheck", 'fire']); //nonmoving
+		pos.y += 200
+		spawnNPC(pos, true, 4,10,'rgba(255,0,255,', ["seePlayerCheck", 'fire']); //nonmoving
+		pos.y += 200
+		spawnNPC(pos, true, 4,10,'rgba(255,0,255,', ["seePlayerCheck", 'fire']); //nonmoving
+
+    }
 
 
     function mapPuzzler1() {
@@ -127,12 +144,24 @@ function spawn() { //spawns bodies and map elements
         mech.canFire = true;
         //mech.spawnPos = { x: 0,  y: 0  };
         mech.setPosToSpawn();
-		//mapRect(1100, 890, 100, 25, 'exit') //ground bump wall
-		mapRect(4000, -200, 100, 25, 'exit') //ground bump wall
-        //spawn NPCs
-        for (let i = 0; i < 15; i++) {
-            spawnNPC(5000 * Math.random() - 1500, -2000 * Math.random());
+        //mapRect(1100, 890, 100, 25, 'exit') //ground bump wall
+        mapRect(4000, -200, 100, 25, 'exit') //ground bump wall
+            //spawn NPCs
+        for (let i = 0; i < 2; i++) {
+			let pos = {
+				x: 5000 * Math.random() - 1500,
+				y: -1000 * (Math.random()-0.5)
+			}
+			spawnNPC(pos, true, 3 + Math.floor(Math.random() * 4), Math.random() * 60 + 20, 'rgba(255,0,255,', ["seePlayerCheck", 'fire']); //nonmoving
         }
+		for (let i = 0; i < 10; i++) {
+			let pos = {
+				x: 5000 * Math.random() - 1500,
+				y: -2000 * Math.random()
+			}
+		    spawnNPC(pos, false, 3 + Math.floor(Math.random() * 4), Math.random() * 60 + 20, 'rgba(0,255,255,', ["seePlayerCheck","fallCheck","attraction"]); //nonmoving
+        }
+
 
         for (let i = 0; i < 5; i++) { //random bouncy circles
             body[body.length] = Bodies.circle(-800 + (0.5 - Math.random()) * 200, 400 + (0.5 - Math.random()) * 200, 7 + Math.ceil(Math.random() * 30), {
@@ -188,9 +217,9 @@ function spawn() { //spawns bodies and map elements
 
         mapRect(2200, 900, 2000, 100) //far right ground
         mapRect(2300, 870, 50, 40) //ground bump
-        //mapVertex(-1700, 700, '0 0 0 -500 500 -500 1000 -400 1500 0'); //large ramp
-        //mapVertex(1285, 867, '200 0  200 100 0 100'); // ramp
-        //mapVertex(1400, 854, '0 100 600 100 600 0 150 0'); // ramp
+            //mapVertex(-1700, 700, '0 0 0 -500 500 -500 1000 -400 1500 0'); //large ramp
+            //mapVertex(1285, 867, '200 0  200 100 0 100'); // ramp
+            //mapVertex(1400, 854, '0 100 600 100 600 0 150 0'); // ramp
         mapVertex(-1300, 670, '0 0 -500 0 -500 200'); //angeled ceiling
         //mapVertex(-1650, 700, '0 0 500 0 500 200'); //angeled ceiling
         //mapRect(1350, 800, 300, 100) //ground
@@ -205,7 +234,7 @@ function spawn() { //spawns bodies and map elements
         mapRect(750, 250, 100, 25); //high platform
         mapRect(1000, 450, 400, 25); //platform
         mapRect(1200, 250, 200, 25); //platform
-        Matter.Body.setAngle(map[map.length-1], -Math.PI*0.05)
+        Matter.Body.setAngle(map[map.length - 1], -Math.PI * 0.05)
         mapRect(1300, 50, 100, 25); //platform
         mapRect(1800, 50, 300, 25); //platform
         mapRect(1600, 250, 300, 25); //platform
@@ -228,7 +257,7 @@ function spawn() { //spawns bodies and map elements
         //bodyRect(120, -150, 130, 200); //medium block on first platform
         //bodyRect(360, 450, 130, 150); //medium block on second right platform
         bodyRect(1700, 0, 100, 1100); //huge tall vertical box
-        Matter.Body.setAngle(body[body.length-1], -Math.PI*0.35)
+        Matter.Body.setAngle(body[body.length - 1], -Math.PI * 0.35)
         bodyRect(800, 438, 250, 10); //long skinny box
         bodyRect(250, 250, 130, 200); //block inside the ledge
         //bodyVertex(-1000, 700, '0 200 -500 200  0 0'); //angeled ceiling
@@ -242,18 +271,18 @@ function spawn() { //spawns bodies and map elements
 
     testingsMap();
     //mapPuzzler1();
-	//empty();
+    //empty();
 
     for (let i = 0; i < body.length; i++) {
-        body[i].collisionFilter.group = 0;
-        body[i].collisionFilter.category = 0x0001;
-        body[i].collisionFilter.mask = 0x1101;
+        //body[i].collisionFilter.group = 0;
+        body[i].collisionFilter.category = 0x0000001;
+        body[i].collisionFilter.mask = 0x011101;
         World.add(engine.world, body[i]); //add to world
     }
     for (let i = 0; i < map.length; i++) {
-        map[i].collisionFilter.group = 1;
-        map[i].collisionFilter.category = 0x0001;
-        map[i].collisionFilter.mask = 0x1111;
+        //map[i].collisionFilter.group = 0;
+        map[i].collisionFilter.category = 0x000001;
+        map[i].collisionFilter.mask = 0x011111;
         Matter.Body.setStatic(map[i], true); //make static
         World.add(engine.world, map[i]); //add to world
     }

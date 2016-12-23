@@ -122,14 +122,15 @@ the jump height control by holding down jump  can also control any upward motion
 */
 
 /*collision info:
-        category  mask
-player:  0x1000  0x0001
-bullet:  0x0100  0x0001
-ghost:   0x0010  0x0001
-map:     0x0001  0x1111
-body:    0x0001  0x1101
-holding: 0x0001  0x0001
-mob:     0x0001  0x1101
+         category    mask
+player:  0x 001000   0x 010001
+bullet:  0x 000100   0x 000001
+ghost:   0x 000010   0x 000001
+map:     0x 000001   0x 011111
+body:    0x 000001   0x 011101
+holding: 0x 000001   0x 000001
+mob:     0x 000001   0x 001101
+mobBull: 0x 010000   0x 001001
 
 */
 
@@ -169,6 +170,7 @@ document.body.addEventListener("keyup", function(e) {
 });
 document.body.addEventListener("keydown", function(e) {
     keys[e.keyCode] = true;
+	mech.switchGun();
     if (keys[84]) { //t = testing mode
         if (game.testing) {
             game.testing = false;
@@ -239,8 +241,8 @@ const player = Body.create({ //combine jumpSensor and playerBody
     sleepThreshold: Infinity,
     collisionFilter: {
         group: 0,
-        category: 0x1000,
-        mask: 0x0001
+        category: 0x001000,
+        mask: 0x010001
     },
 });
 //Matter.Body.setPosition(player, mech.spawnPos);
@@ -367,22 +369,70 @@ function mobCollisionCheck(event) {
         for (let k = 0; k < mob.length; k++) {
             if (mob[k].alive) {
                 if (pairs[i].bodyA === mob[k]) {
-                    if (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead) mech.hitMob(k);
-                    if (pairs[i].bodyB.classType === "bullet" && pairs[i].bodyB.speed > 10) {
+                    if (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead) {
+						let dmg = mob[k].mass*0.01;
+						if (dmg < 0.05) dmg = 0.05;
+						mech.hitMob(k,dmg);
+						const hit = pairs[i].activeContacts[0].vertex
+						hit.radius = dmg*200
+						hit.color = '#f0f';
+						game.drawList.push(hit);
+//						game.drawList.push(pairs[i].activeContacts[0].vertex);
+					}
+                    if (pairs[i].bodyB.classType === "bullet" && pairs[i].bodyB.speed > pairs[i].bodyB.minDmgSpeed) {
                         mob[k].locatePlayer();
-                        mob[k].damage(guns[mech.gun].dmg*Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity)));
+						const dmg = pairs[i].bodyB.dmg*Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity))
+						mob[k].damage(dmg);
+						pairs[i].bodyB.onDmg();
+						const hit = pairs[i].activeContacts[0].vertex
+						hit.radius = dmg*10;
+						if (hit.radius < 5) hit.radius = 5;
+						//if (hit.radius > 300) hit.radius = 300;
+						hit.color = '#000';
+						game.drawList.push(hit);
                     }
                     break;
                 } else if (pairs[i].bodyB === mob[k]) {
-                    if (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead) mech.hitMob(k);
-                    if (pairs[i].bodyA.classType === "bullet" && pairs[i].bodyA.speed > 10) {
+                    if (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead) {
+						let dmg = mob[k].mass*0.01;
+						if (dmg < 0.05) dmg = 0.05;
+						mech.hitMob(k,dmg);
+						const hit = pairs[i].activeContacts[0].vertex
+						hit.radius = dmg*200
+						hit.color = '#f0f';
+						game.drawList.push(hit);
+					}
+                    if (pairs[i].bodyA.classType === "bullet" && pairs[i].bodyA.speed > pairs[i].bodyA.minDmgSpeed) {
                         mob[k].locatePlayer();
-                        mob[k].damage(guns[mech.gun].dmg*Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity)));
+						const dmg = pairs[i].bodyA.dmg*Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity))
+                        mob[k].damage(dmg);
+						pairs[i].bodyA.onDmg();
+						const hit = pairs[i].activeContacts[0].vertex
+						hit.radius = dmg*10;
+						if (hit.radius < 5) hit.radius = 5;
+						hit.color = '#000';
+						game.drawList.push(hit);
                     }
                     break;
                 }
             }
         }
+    }
+}
+function mobBulletCollisionCheck(event) {
+    const pairs = event.pairs;
+    for (let i = 0, j = pairs.length; i != j; i++) {
+        for (let k = 0; k < mobBullet.length; k++) {
+                if (pairs[i].bodyA === mobBullet[k] && (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead)) {
+                    mech.damage(0.1);
+					mobBullet[k].endCycle = game.cycle;
+                    continue;
+                } else if (pairs[i].bodyB === mobBullet[k] && (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead)) {
+                    mech.damage(0.1);
+					mobBullet[k].endCycle = game.cycle;
+                    continue;
+                }
+            }
     }
 }
 
@@ -402,11 +452,11 @@ Events.on(engine, "beforeUpdate", function(event) {
         }
     }
     //addGravity(Composite.allBodies(engine.world));
-    addGravity(mob, 0.0005);
-    addGravity(body, 0.001);
-    addGravity(bullet, 0.001);
-    player.force.y += player.mass * 0.001;
-
+    addGravity(mob, game.g/2);
+    addGravity(body, game.g);
+    addGravity(bullet, game.g);
+	addGravity(mobBullet, game.g);
+    player.force.y += player.mass * game.g;
 });
 
 //determine if player is on the ground
@@ -414,6 +464,7 @@ Events.on(engine, "collisionStart", function(event) {
     playerOnGroundCheck(event);
     playerHeadCheck(event);
     mobCollisionCheck(event);
+	mobBulletCollisionCheck(event)
 });
 Events.on(engine, "collisionActive", function(event) {
     playerOnGroundCheck(event);
@@ -551,7 +602,6 @@ function cycle() {
     game.timing();
     game.wipe();
     mech.keyMove();
-	mech.switchGun();
     mech.standingOnActions();
     mech.regen();
     //mech.keyHold();
@@ -570,7 +620,7 @@ function cycle() {
         ctx.restore();
         game.output();
     } else {
-        mobLoop();
+        mobs.loop();
         mech.move();
         game.speedZoom();
         mech.deathCheck();
@@ -578,15 +628,17 @@ function cycle() {
         ctx.save();
         game.scaleZoom();
         ctx.drawImage(background_img, 400, -400);
-        drawMob();
+        mobs.draw();
         drawCons();
         drawBody();
         mech.draw();
 		bulletLoop();
+		mobBulletLoop();
 		//mech.eat();
         //ctx.drawImage(foreground_img, -700, -1500);
         drawMap();
-        mech.drawHealth();
+		game.drawCircle();
+        //mech.drawHealth();
         ctx.restore();
     }
     //svg graphics , just here until I convert svg to png in inkscape
