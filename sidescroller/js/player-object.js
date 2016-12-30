@@ -3,28 +3,26 @@
 const mechProto = function() {
     this.width = 50;
     this.radius = 30;
-	this.fireCDcycle = 0;
-	this.gun = 'machine';
-	this.switchGun = function() {
-        if (keys[49]) { //1
-            this.gun = 'machine';
-        } else if (keys[50]) { //2
-            this.gun = 'needle';
-        } else if (keys[51]) { //3
-            this.gun = 'shot';
-        } else if (keys[52]) { //4
-            this.gun = 'cannon';
-		} else if (keys[53]) { //4
-			this.gun = 'super';
-		} else if (keys[54]) { //4
-			this.gun = 'experimental';
-		} else if (keys[55]) { //4
-			this.gun = 'rail';
-		} else if (keys[56]) { //4
-			this.gun = 'spiritBomb';
-		}
+	this.fillColor = '#fff';
+	this.fillColorDark = '#ddd';
+	// const hue = '353';
+	// const sat = '100';
+	// const lit = '90';
+	// this.fillColor = 'hsl('+hue+','+sat+'%,'+lit+'%)';
+	// this.fillColorDark = 'hsl('+hue+','+(sat-10)+'%,'+(lit-10)+'%)';
 
-    }
+	this.fireCDcycle = 0;
+	this.gun = 'machine'; //current gun in use
+	this.gunOptions = { //keeps track of keys that switch guns (used in the onkeypress event)
+		49: 'machine',
+		50: 'needle',
+		51: 'shot',
+		52: 'rail',
+		53: 'cannon',
+		54: 'super',
+		55: 'spiritBomb',
+		56: 'experimental'
+	}
     this.height = 42;
     this.yOffWhen = {
         crouch: 22,
@@ -55,9 +53,11 @@ const mechProto = function() {
         x: this.spawnPos.x,
         y: this.spawnPos.y
     };
-    this.setPosToSpawn = function() {
-        this.pos.x = this.spawnPos.x;
-        this.pos.y = this.spawnPos.y;
+    this.setPosToSpawn = function(xPos,yPos) {
+		this.spawnPos.x = xPos
+		this.spawnPos.y = yPos
+        this.pos.x = xPos;
+        this.pos.y = yPos;
         this.Vx = this.spawnVel.x;
         this.Vy = this.spawnVel.y;
         Matter.Body.setPosition(player, this.spawnPos);
@@ -264,7 +264,7 @@ const mechProto = function() {
     this.health = 1;
     this.regen = function() {
         if (this.health < 1 && game.cycle % 15 === 0) {
-            this.addHealth(0.02);
+            this.addHealth(0.01);
         }
     };
     this.drawHealth = function() {
@@ -290,8 +290,8 @@ const mechProto = function() {
             this.death();
         }
     };
-    this.hitMob = function(i) {
-        this.damage(0.1);
+    this.hitMob = function(i,dmg) {
+        this.damage(dmg);
         //extra kick between player and mob
         //this section would be better with forces but they don't work...
         let angle = Math.atan2(player.position.y - mob[i].position.y, player.position.x - mob[i].position.x);
@@ -466,6 +466,21 @@ const mechProto = function() {
         dist: 1000,
         index: 0
     };
+	this.lookingAtMob = function(mob,threshold) {
+		//calculate a vector from mob to player and make it length 1
+		const diff = Matter.Vector.normalise(Matter.Vector.sub(mob.position, player.position));
+		const dir = { //make a vector for the player's direction of length 1
+				x: Math.cos(mech.angle),
+				y: Math.sin(mech.angle)
+			}
+		//the dot prodcut of diff and dir will return how much over lap between the vectors
+		const dot = Matter.Vector.dot(dir, diff);
+		if (dot > threshold) {
+			return true;
+		} else {
+			return false;
+		}
+	}
     this.lookingAt = function(i) {
         //calculate a vector from mob to player and make it length 1
         const diff = Matter.Vector.normalise(Matter.Vector.sub(body[i].position, player.position));
@@ -552,7 +567,7 @@ const mechProto = function() {
         ctx.stroke();
         //hip joint
         ctx.strokeStyle = '#333';
-        ctx.fillStyle = '#fff';
+        ctx.fillStyle = this.fillColor;
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(this.hip.x, this.hip.y, 11, 0, 2 * Math.PI);
@@ -591,7 +606,7 @@ const mechProto = function() {
         this.knee.y = l / d * (this.foot.y - this.hip.y) + h / d * (this.foot.x - this.hip.x) + this.hip.y;
     };
     this.draw = function() {
-        ctx.fillStyle = '#fff';
+        ctx.fillStyle = this.fillColor;
         if (this.mouse.x > canvas.width / 2) {
             this.flipLegs = 1;
         } else {
@@ -609,10 +624,10 @@ const mechProto = function() {
         ctx.rotate(this.angle);
         ctx.strokeStyle = '#333';
         ctx.lineWidth = 2;
-        //ctx.fillStyle = '#fff';
+        //ctx.fillStyle = this.fillColor;
         let grd = ctx.createLinearGradient(-30, 0, 30, 0);
-        grd.addColorStop(0, "#bbb");
-        grd.addColorStop(1, "#fff");
+        grd.addColorStop(0, this.fillColorDark);
+        grd.addColorStop(1, this.fillColor);
         ctx.fillStyle = grd;
         ctx.beginPath();
         //ctx.moveTo(0, 0);

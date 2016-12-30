@@ -37,7 +37,7 @@ const cFilter = {
 
 const guns = { //prototype for each bullet/gun type
     machine: {
-        fireCD: 2,
+        fireCD: 4,
         fire: function() {
             const len = bullet.length;
             const dir = (Math.random() - 0.5) * 0.1 + mech.angle
@@ -51,7 +51,7 @@ const guns = { //prototype for each bullet/gun type
                 //isSensor: true,
 				dmg: 0.003,
 				minDmgSpeed: 10,
-                endCycle: game.cycle + 70,
+                endCycle: game.cycle + 80,
                 color: '#000',
                 classType: 'bullet',
                 onDmg: function() {},
@@ -106,18 +106,17 @@ const guns = { //prototype for each bullet/gun type
     shot: {
         fireCD: 50,
         fire: function() {
-			mobs.alert(); //this gun is loud!
             for (let i = 0; i < 13; i++) {
                 const len = bullet.length;
                 const dir = (Math.random() - 0.5) * 0.7 + mech.angle
                 bullet[len] = Bodies.polygon(mech.pos.x + 15 * Math.cos(mech.angle), mech.pos.y + 15 * Math.sin(mech.angle), 5, 3, {
                     angle: dir,
                     density: 0.03,
-                    frictionAir: 0.02,
+                    frictionAir: 0.015,
                     restitution: 0,
 					collisionFilter: cFilter,
 					dmg: 0.0035,
-					minDmgSpeed: 12,
+					minDmgSpeed: 10,
                     endCycle: game.cycle + 100,
                     color: '#000',
                     classType: 'bullet',
@@ -129,7 +128,7 @@ const guns = { //prototype for each bullet/gun type
                     x: mech.Vx,
                     y: mech.Vy
                 });
-                const impulse = 0.06 + 0.01 * Math.random()
+                const impulse = 0.07 + 0.01 * Math.random()
                 const f = {
                     x: impulse * Math.cos(dir) / game.delta,
                     y: impulse * Math.sin(dir) / game.delta
@@ -184,7 +183,6 @@ const guns = { //prototype for each bullet/gun type
     cannon: {
         fireCD: 80,
         fire: function() {
-			mobs.startle(0.1); //before alert
 			mobs.alert(); //this gun is loud!
             const len = bullet.length;
             bullet[len] = Bodies.polygon(mech.pos.x + 40 * Math.cos(mech.angle), mech.pos.y + 40 * Math.sin(mech.angle), 0, 30, {
@@ -250,7 +248,6 @@ const guns = { //prototype for each bullet/gun type
     rail: {
         fireCD: 100,
         fire: function() {
-			mobs.startle(0.05); //before alert
 			mobs.alert(); //this gun is loud!
             const len = bullet.length;
             bullet[len] = Bodies.rectangle(mech.pos.x + 60 * Math.cos(mech.angle), mech.pos.y + 60 * Math.sin(mech.angle), 60, 3, {

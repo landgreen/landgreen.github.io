@@ -133,6 +133,7 @@ mob:     0x 000001   0x 001101
 mobBull: 0x 010000   0x 001001
 
 */
+document.firstElementChild.style.zoom = "reset";
 
 //set up canvas
 const canvas = document.getElementById('canvas');
@@ -170,11 +171,12 @@ document.body.addEventListener("keyup", function(e) {
 });
 document.body.addEventListener("keydown", function(e) {
     keys[e.keyCode] = true;
-	mech.switchGun();
+	mech.gun = (mech.gunOptions)[e.keyCode] || mech.gun;  //checks for new gun
     if (keys[84]) { //t = testing mode
         if (game.testing) {
             game.testing = false;
         } else {
+			game.zoomReset();
             game.testing = true;
         }
     }
@@ -247,7 +249,6 @@ const player = Body.create({ //combine jumpSensor and playerBody
 });
 //Matter.Body.setPosition(player, mech.spawnPos);
 //Matter.Body.setVelocity(player, mech.spawnVel);
-mech.setPosToSpawn();
 Matter.Body.setMass(player, mech.mass);
 World.add(engine.world, [player]);
 //holding body constraint
@@ -369,44 +370,48 @@ function mobCollisionCheck(event) {
         for (let k = 0; k < mob.length; k++) {
             if (mob[k].alive) {
                 if (pairs[i].bodyA === mob[k]) {
-                    if (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead) {
-						let dmg = mob[k].mass*0.01;
+                    if (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead) {  //mob hitting player check
+						let dmg = Math.sqrt(mob[k].mass)*game.dmgScale;
 						if (dmg < 0.05) dmg = 0.05;
 						mech.hitMob(k,dmg);
+						//add dmg to draw queue
 						const hit = pairs[i].activeContacts[0].vertex
 						hit.radius = dmg*200
 						hit.color = '#f0f';
 						game.drawList.push(hit);
-//						game.drawList.push(pairs[i].activeContacts[0].vertex);
 					}
+					//mob hitting bullet check
                     if (pairs[i].bodyB.classType === "bullet" && pairs[i].bodyB.speed > pairs[i].bodyB.minDmgSpeed) {
                         mob[k].locatePlayer();
 						const dmg = pairs[i].bodyB.dmg*Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity))
 						mob[k].damage(dmg);
 						pairs[i].bodyB.onDmg();
+						//add dmg to draw queue
 						const hit = pairs[i].activeContacts[0].vertex
 						hit.radius = dmg*10;
 						if (hit.radius < 5) hit.radius = 5;
-						//if (hit.radius > 300) hit.radius = 300;
 						hit.color = '#000';
 						game.drawList.push(hit);
                     }
                     break;
                 } else if (pairs[i].bodyB === mob[k]) {
-                    if (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead) {
-						let dmg = mob[k].mass*0.01;
+                    if (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead) { //mob hitting player check
+						let dmg = Math.sqrt(mob[k].mass)*game.dmgScale;
 						if (dmg < 0.05) dmg = 0.05;
 						mech.hitMob(k,dmg);
+						//add dmg to draw queue
 						const hit = pairs[i].activeContacts[0].vertex
 						hit.radius = dmg*200
 						hit.color = '#f0f';
 						game.drawList.push(hit);
 					}
+					//mob hitting bullet check
                     if (pairs[i].bodyA.classType === "bullet" && pairs[i].bodyA.speed > pairs[i].bodyA.minDmgSpeed) {
                         mob[k].locatePlayer();
 						const dmg = pairs[i].bodyA.dmg*Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity))
                         mob[k].damage(dmg);
 						pairs[i].bodyA.onDmg();
+						//add dmg to draw queue
 						const hit = pairs[i].activeContacts[0].vertex
 						hit.radius = dmg*10;
 						if (hit.radius < 5) hit.radius = 5;
@@ -423,13 +428,23 @@ function mobBulletCollisionCheck(event) {
     const pairs = event.pairs;
     for (let i = 0, j = pairs.length; i != j; i++) {
         for (let k = 0; k < mobBullet.length; k++) {
-                if (pairs[i].bodyA === mobBullet[k] && (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead)) {
-                    mech.damage(0.1);
+                if (pairs[i].bodyA === mobBullet[k] && pairs[i].bodyA.speed>10 && (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead)) {
+                    mech.damage(game.dmgScale*2);
 					mobBullet[k].endCycle = game.cycle;
+					//add dmg to draw queue
+					const hit = pairs[i].activeContacts[0].vertex
+					hit.radius = game.dmgScale*400
+					hit.color = '#f0f';
+					game.drawList.push(hit);
                     continue;
-                } else if (pairs[i].bodyB === mobBullet[k] && (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead)) {
-                    mech.damage(0.1);
+                } else if (pairs[i].bodyB === mobBullet[k] && pairs[i].bodyB.speed>10 && (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead)) {
+                    mech.damage(game.dmgScale*2);
 					mobBullet[k].endCycle = game.cycle;
+					//add dmg to draw queue
+					const hit = pairs[i].activeContacts[0].vertex
+					hit.radius = game.dmgScale*400
+					hit.color = '#f0f';
+					game.drawList.push(hit);
                     continue;
                 }
             }
@@ -452,10 +467,10 @@ Events.on(engine, "beforeUpdate", function(event) {
         }
     }
     //addGravity(Composite.allBodies(engine.world));
-    addGravity(mob, game.g/2);
+    //addGravity(mob, game.g/2);
     addGravity(body, game.g);
     addGravity(bullet, game.g);
-	addGravity(mobBullet, game.g);
+	// addGravity(mobBullet, game.g);
     player.force.y += player.mass * game.g;
 });
 
@@ -606,28 +621,26 @@ function cycle() {
     mech.regen();
     //mech.keyHold();
     game.keyZoom();
-    //game.gravityFlip();
     //game.pause();
     if (game.testing) {
+		ctx.save();
+		game.scaleZoom();
         mech.testingMoveLook();
         mech.deathCheck();
-        bulletLoop();
-        ctx.save();
-        game.scaleZoom();
         mech.draw();
         drawMatterWireFrames();
         drawPlayerBodyTesting();
-        ctx.restore();
+		ctx.restore();
         game.output();
     } else {
-        mobs.loop();
         mech.move();
         game.speedZoom();
         mech.deathCheck();
         mech.look();
         ctx.save();
         game.scaleZoom();
-        ctx.drawImage(background_img, 400, -400);
+        //ctx.drawImage(background_img, 400, -400);
+		mobs.loop();
         mobs.draw();
         drawCons();
         drawBody();
@@ -638,18 +651,19 @@ function cycle() {
         //ctx.drawImage(foreground_img, -700, -1500);
         drawMap();
 		game.drawCircle();
-        //mech.drawHealth();
-        ctx.restore();
+        mech.drawHealth();
+		ctx.restore();
     }
-    //svg graphics , just here until I convert svg to png in inkscape
+
+    //svg graphics , just here until I convert svg to png in inkscape and run as a canvas png
     // document.getElementById('background').setAttribute('transform',
     //     'translate(' + (canvas.width / 2) + ',' + (canvas.height / 2) + ')' +
     //     'scale(' + game.zoom + ')' +
     //     'translate(' + (mech.transX - canvas.width / 2) + ',' + (mech.transY - canvas.height / 2) + ')');
-    document.getElementById('foreground').setAttribute('transform',
-        'translate(' + (canvas.width / 2) + ',' + (canvas.height / 2) + ')' +
-        'scale(' + game.zoom + ')' +
-        'translate(' + (mech.transX - canvas.width / 2) + ',' + (mech.transY - canvas.height / 2) + ')');
+    // document.getElementById('foreground').setAttribute('transform',
+    //     'translate(' + (canvas.width / 2) + ',' + (canvas.height / 2) + ')' +
+    //     'scale(' + game.zoom + ')' +
+    //     'translate(' + (mech.transX - canvas.width / 2) + ',' + (mech.transY - canvas.height / 2) + ')');
 
     stats.end();
     requestAnimationFrame(cycle);

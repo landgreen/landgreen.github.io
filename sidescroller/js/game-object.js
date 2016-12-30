@@ -2,6 +2,7 @@
 //*********************************************************************
 const game = {
 	g: 0.001,
+	dmgScale: 0.05,
     testing: false, //testing mode: shows wireframe and some variables
     //time related vars and methods
     cycle: 0, //total cycles, 60 per second
@@ -38,7 +39,7 @@ const game = {
         this.delta = (engine.timing.timestamp - this.lastTimeStamp) / 16.666666666666;
         this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
     },
-    zoom: 1 / 300,
+    zoom: 1,//1 / 300,
     scaleZoom: function() {
         ctx.translate(canvas.width / 2, canvas.height / 2);
         ctx.scale(this.zoom, this.zoom);
@@ -57,11 +58,14 @@ const game = {
             this.zoom = 0.1 * this.zoomGoal + 0.9 * this.zoom; //smooths changes to zoom
             //this.zoom = this.zoomGoal
         } else if (keys[48]) { //zero   reset
-            this.showHeight = canvas.height;
-            this.setZoomGoal();
-            this.zoom = this.zoomGoal
+			this.zoomReset();
         }
     },
+	zoomReset: function(){
+		this.showHeight = canvas.height;
+		this.setZoomGoal();
+		this.zoom = this.zoomGoal
+	},
     zoomGoal: 1,
     showHeight: 1000, //controls the resting zoomheight set to higher to see more of the map
     setZoomGoal: function() {
@@ -80,8 +84,8 @@ const game = {
         //   ctx.clearRect(0, 0, canvas.width, canvas.height);
         // }
         if (mech.health < 1) {
-            ctx.fillStyle = "rgba(221,221,221," + (0.05 + mech.health * mech.health * mech.health) + ")";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(255,255,255," + (0.05 + mech.health * mech.health) + ")";
+        	ctx.fillRect(0, 0, canvas.width, canvas.height);
         } else {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
@@ -130,10 +134,6 @@ const game = {
         ctx.fillText("cycle: " + game.cycle, 5, line);
         line += 20;
         ctx.fillText("delta: " + game.delta.toFixed(6), 5, line);
-        line += 20;
-        ctx.fillText("mXr: " + (mech.mouse.x + (mech.mouse.x - canvas.width / 2) * game.zoom + mech.transX).toFixed(2), 5, line);
-        line += 20;
-        ctx.fillText("mYr: " + (mech.mouse.y - mech.transY).toFixed(2), 5, line);
         line += 20;
         ctx.fillText("mX: " + (mech.mouse.x - mech.canvasX + mech.pos.x).toFixed(2), 5, line);
         line += 20;
