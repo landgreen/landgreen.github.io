@@ -296,12 +296,12 @@ const mechProto = function() {
         //this section would be better with forces but they don't work...
         let angle = Math.atan2(player.position.y - mob[i].position.y, player.position.x - mob[i].position.x);
         Matter.Body.setVelocity(player, {
-            x: player.velocity.x + 10 * Math.cos(angle),
-            y: player.velocity.y + 10 * Math.sin(angle)
+            x: player.velocity.x + 8 * Math.cos(angle),
+            y: player.velocity.y + 8 * Math.sin(angle)
         });
         Matter.Body.setVelocity(mob[i], {
-            x: mob[i].velocity.x - 10 * Math.cos(angle),
-            y: mob[i].velocity.y - 10 * Math.sin(angle)
+            x: mob[i].velocity.x - 8 * Math.cos(angle),
+            y: mob[i].velocity.y - 8 * Math.sin(angle)
         });
     }
 
@@ -516,11 +516,19 @@ const mechProto = function() {
         this.closest.index = index;
     };
     this.exit = function() {
+		maps = { //remembers level names
+			0: 'buildings',
+			1: 'skyscrapers',
+			2: 'testing',
+		}
+
+
+
         location.reload();
     }
     this.standingOnActions = function() {
         if (this.onBody.type === 'map') {
-            var that = this; //brings the this ness into the deeper object methods
+            var that = this; //brings the thisness of the player deeper into the actions object
             var actions = {
                 'death': function() {
                     that.death();

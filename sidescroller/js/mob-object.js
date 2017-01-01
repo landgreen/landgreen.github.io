@@ -156,7 +156,7 @@ function spawnNPC(xPos, yPos, sides, radius, color, accelMag, methods) {
                         //switch modes to chaser
                     this.do = ['gravity', "seePlayerCheck", "fallCheck", "attraction", 'hide']
                     this.collisionFilter.mask = 0x001101; //make mob hittable by bullets again
-                    this.color = 'rgba(0,0,0,'
+                    this.color = 'rgba(120,190,210,'
                     this.fill = this.color + this.health + ')';
                 } else {
                     this.stroke = 'transparent';

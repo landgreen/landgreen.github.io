@@ -371,6 +371,7 @@ function mobCollisionCheck(event) {
             if (mob[k].alive) {
                 if (pairs[i].bodyA === mob[k]) {
                     if (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead) {  //mob hitting player check
+						mob[k].locatePlayer();
 						let dmg = Math.sqrt(mob[k].mass)*game.dmgScale;
 						if (dmg < 0.05) dmg = 0.05;
 						mech.hitMob(k,dmg);
@@ -396,6 +397,7 @@ function mobCollisionCheck(event) {
                     break;
                 } else if (pairs[i].bodyB === mob[k]) {
                     if (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead) { //mob hitting player check
+						mob[k].locatePlayer();
 						let dmg = Math.sqrt(mob[k].mass)*game.dmgScale;
 						if (dmg < 0.05) dmg = 0.05;
 						mech.hitMob(k,dmg);
@@ -453,6 +455,7 @@ function mobBulletCollisionCheck(event) {
 
 
 Events.on(engine, "beforeUpdate", function(event) {
+	//reset thes values each cycle
     mech.numTouching = 0;
     mech.onBody = {
             id: null,
@@ -623,10 +626,10 @@ function cycle() {
     game.keyZoom();
     //game.pause();
     if (game.testing) {
-		ctx.save();
-		game.scaleZoom();
         mech.testingMoveLook();
         mech.deathCheck();
+		ctx.save();
+		game.scaleZoom();
         mech.draw();
         drawMatterWireFrames();
         drawPlayerBodyTesting();
@@ -656,14 +659,14 @@ function cycle() {
     }
 
     //svg graphics , just here until I convert svg to png in inkscape and run as a canvas png
-    // document.getElementById('background').setAttribute('transform',
-    //     'translate(' + (canvas.width / 2) + ',' + (canvas.height / 2) + ')' +
-    //     'scale(' + game.zoom + ')' +
-    //     'translate(' + (mech.transX - canvas.width / 2) + ',' + (mech.transY - canvas.height / 2) + ')');
-    // document.getElementById('foreground').setAttribute('transform',
-    //     'translate(' + (canvas.width / 2) + ',' + (canvas.height / 2) + ')' +
-    //     'scale(' + game.zoom + ')' +
-    //     'translate(' + (mech.transX - canvas.width / 2) + ',' + (mech.transY - canvas.height / 2) + ')');
+    document.getElementById('background').setAttribute('transform',
+        'translate(' + (canvas.width / 2) + ',' + (canvas.height / 2) + ')' +
+        'scale(' + game.zoom + ')' +
+        'translate(' + (mech.transX - canvas.width / 2) + ',' + (mech.transY - canvas.height / 2) + ')');
+    document.getElementById('foreground').setAttribute('transform',
+        'translate(' + (canvas.width / 2) + ',' + (canvas.height / 2) + ')' +
+        'scale(' + game.zoom + ')' +
+        'translate(' + (mech.transX - canvas.width / 2) + ',' + (mech.transY - canvas.height / 2) + ')');
 
     stats.end();
     requestAnimationFrame(cycle);
@@ -672,17 +675,17 @@ function cycle() {
 // const bmo_img = new Image(); // Create new img element
 // bmo_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/Bmo.png'; // Set source path
 
-// const foreground_img = new Image(); // Create new img element
-// foreground_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/circle3390.png'; // Set source path
+//const foreground_img = new Image(); // Create new img element
+//foreground_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/circle3390.png'; // Set source path
 
-const background_img = new Image(); // Create new img element
-background_img.src = 'background.png'; // Set source path
+//const background_img = new Image(); // Create new img element
+//background_img.src = 'background.png'; // Set source path
 
 function runPlatformer(el) {
     el.onclick = null; //removes the onclick effect so the function only runs once
     el.style.display = 'none'; //hides the element that spawned the function
-    document.getElementById("keysright").innerHTML = ''; //remove html from intro
-    document.getElementById("keysleft").innerHTML = '';
+    //document.getElementById("keysright").innerHTML = ''; //remove html from intro
+    //document.getElementById("keysleft").innerHTML = '';
     document.body.appendChild(stats.dom); //show stats.js FPS tracker
     Engine.run(engine); //starts game engine
     //console.clear(); //gets rid of annoying console message about vertecies not working

@@ -51,7 +51,7 @@ const guns = { //prototype for each bullet/gun type
                 //isSensor: true,
 				dmg: 0.003,
 				minDmgSpeed: 10,
-                endCycle: game.cycle + 80,
+                endCycle: game.cycle + 100,
                 color: '#000',
                 classType: 'bullet',
                 onDmg: function() {},

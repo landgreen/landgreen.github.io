@@ -16,207 +16,288 @@
 </head>
 
 <body>
-	<div id="keysleft">
+	<!-- <div id="keysleft">
 		move: WASD
 		<br>fire: click
-		<!-- <br>hold/drop: E
-        <br>pause: F
-        <br>gravity: R -->
+		<br>hold/drop: E
+    <br>pause: F
+    <br>gravity: R
 	</div>
 	<div id="keysright">
 		testing: T
-	</div>
-
-
+	</div> -->
 	<canvas id="canvas"></canvas>
+	<!-- *****************************************************************************************************
+	*****************************************************************************************************
+	*****************************************************************************************************
+	*****************************************************************************************************
+	*****************************************************************************************************
+	***************************************************************************************************** -->
+	<svg class='background'>
+	<defs>
+	    <style type="text/css"><![CDATA[
+	      .keyrect {
+	        stroke: #333;
+	        fill: "#555";
+	        rx: 5;
+	      }
+		  .letter {
+			fill: #ccc;
+			font-family: sans-serif;
+			font-weight: bold;
+			font-size: 40px;
+		  }
+	    ]]></style>
+	</defs>
+	<!-- buildings1 *********************************************************************
+*****************************************************************************************
+*****************************************************************************************-->
+	<!-- <g id = 'background'>
 
-	<!-- <svg class='background'>
-  <defs>
-    <style type="text/css"><![CDATA[
-      .keyrect {
-        stroke: #333;
-        fill: "#555";
-        rx: 5;
-      }
-	  .letter {
-		fill: #ccc;
-		font-family: sans-serif;
-		font-weight: bold;
-		font-size: 40px;
-	  }
-    ]]></style>
-  </defs>
-  <g id = 'background'>
-    <circle cx="500" cy="-300" r="100" fill="#d67" opacity='1' stroke-width="0"/>
-    <g transform = "translate(450,750) scale(0.7)">
-    <rect class = "keyrect" id="e" x="140" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="170" y="45">E</text>
-    <rect class = "keyrect" id="w" x="70" y="0" width="60" height="60" fill='#555' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="100" y="45">W</text>
-    <rect class = "keyrect" id="s" x="70" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="100" y="113">S</text>
-    <rect class = "keyrect" id="d" x="140" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="170" y="113">D</text>
-    <rect class = "keyrect" id="d" x="210" y="70" width="60" height="60" fill='#99a' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="240" y="113">F</text>
-    <rect class = "keyrect" id="a" x="0" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="30" y="113">A</text>
-  </g>
+		<rect x="2075" y="-160" width="25" height="150" fill='#ddd'/>
+		<rect x="700" y="-160" width="25" height="150" fill='#ddd'/>
 
+		<rect x="3500" y="-475" width="500" height="265" fill='#dff'/>
+		<rect x="3500" y="-360" width="25" height="150" fill='#dee'/>
+		<path d="M3700 -220 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#0ff' stroke='transparent'/>
+	</g> -->
+	<!-- skyscrapers1 ***********************************************************************
+	*****************************************************************************************
+	*****************************************************************************************
+	*****************************************************************************************-->
+<g id = 'background'>
+	<rect x="-500" y="50" width="5600" height="3000" fill='#444'/>
+	<path d="M-100 -10 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#bbb' stroke='transparent'/>
 
-    <g transform = "translate(800,725) scale(0.25)">
- 	  <path fill="#555" d="M284.5,182c0,15.74-12.76,28.5-28.5,28.5l0,0c-15.74,0-28.5-12.76-28.5-28.5v-49
- 		c0-15.74,12.76-28.5,28.5-28.5l0,0c15.74,0,28.5,12.76,28.5,28.5V182z"/>
- 	  <g>
- 	    <path fill="#555" d="M274,88.035c15.071,6.217,25.557,19.987,25.557,35.988v67.953c0,16.001-10.485,29.771-25.557,35.988V264.5
- 			h147V141.806C421,72.325,362.797,16,291,16h-17V88.035z"/>
- 	    <path fill="#555" d="M91,275v95.193C91,439.675,149.203,496,221,496h70c71.797,0,130-56.325,130-125.807V275H91z"/>
- 		  <path fill="#222" d="M238,264.5v-36.535c-15.071-6.217-25.557-19.987-25.557-35.988v-67.953
- 			c0-16.001,10.485-29.771,25.557-35.988V16h-17C149.203,16,91,72.325,91,141.806V264.5H238z"/>
- 	  </g>
-   </g>
+	<rect x="1350" y="-2100" width="400" height="250" fill='#dff'/>
+	<rect x="1725" y="-2100" width="25" height="250" fill='#e5f9f9'/>
+	<path d="M1500 -1860 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#0ff' stroke='transparent'/>
+	<g transform = "translate(1420,-1800)">
+		<path d="M0 25 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100" fill="transparent" stroke="#eee" stroke-width="8"/>
+		<path d="M100 25 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100" fill="transparent" stroke="#eee" stroke-width="8"/>
+		<path d="M0 0 l 0 1800" fill="transparent" stroke="#eee" stroke-width="12"/>
+		<path d="M100 0 l 0 1800" fill="transparent" stroke="#eee" stroke-width="12"/>
+	</g>
+	<g transform = "translate(1830,-1800)">
+		<path d="M0 25 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100" fill="transparent" stroke="#eee" stroke-width="8"/>
+		<path d="M100 25 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100" fill="transparent" stroke="#eee" stroke-width="8"/>
+		<path d="M0 0 l 0 1400" fill="transparent" stroke="#eee" stroke-width="12"/>
+		<path d="M100 0 l 0 1400" fill="transparent" stroke="#eee" stroke-width="12"/>
+	</g>
+	<rect x="1805" y="-425" width="150" height="25" opacity='1' fill='#eee'/>
+	<rect x="1805" y="-1800" width="150" height="25" opacity='1' fill='#eee'/>
 
+	<rect x="1395" y="-25" width="150" height="25" opacity='1' fill='#eee'/>
+	<rect x="1395" y="-1800" width="150" height="25" opacity='1' fill='#eee'/>
 
-  </g>
-</svg> -->
+	<g transform = "translate(3325,-1325)">
+		<path d="M0 25 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100" fill="transparent" stroke="#eee" stroke-width="8"/>
+		<path d="M100 25 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100" fill="transparent" stroke="#eee" stroke-width="8"/>
+		<path d="M0 0 l 0 1300" fill="transparent" stroke="#eee" stroke-width="12"/>
+		<path d="M100 0 l 0 1300" fill="transparent" stroke="#eee" stroke-width="12"/>
+	</g>
+	<rect x="3300" y="-25" width="150" height="25" opacity='1' fill='#eee'/>
+</g>
+	<!-- testingsMap ************************************************************************
+	*****************************************************************************************
+	*****************************************************************************************
+	*****************************************************************************************-->
+	<!-- <g id = 'background'>
+	    <circle cx="500" cy="-300" r="100" fill="#d67" opacity='1' stroke-width="0"/>
+	    <g transform = "translate(450,750) scale(0.7)">
+		    <rect class = "keyrect" id="e" x="140" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
+		    <text class = "letter" text-anchor="middle" x="170" y="45">E</text>
+		    <rect class = "keyrect" id="w" x="70" y="0" width="60" height="60" fill='#555' stroke-width="0"/>
+		    <text class = "letter" text-anchor="middle" x="100" y="45">W</text>
+		    <rect class = "keyrect" id="s" x="70" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
+		    <text class = "letter" text-anchor="middle" x="100" y="113">S</text>
+		    <rect class = "keyrect" id="d" x="140" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
+		    <text class = "letter" text-anchor="middle" x="170" y="113">D</text>
+		    <rect class = "keyrect" id="d" x="210" y="70" width="60" height="60" fill='#99a' stroke-width="0"/>
+		    <text class = "letter" text-anchor="middle" x="240" y="113">F</text>
+		    <rect class = "keyrect" id="a" x="0" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
+		    <text class = "letter" text-anchor="middle" x="30" y="113">A</text>
+		</g>
+	    <g transform = "translate(800,725) scale(0.25)">
+	 		<path fill="#555" d="M284.5,182c0,15.74-12.76,28.5-28.5,28.5l0,0c-15.74,0-28.5-12.76-28.5-28.5v-49 c0-15.74,12.76-28.5,28.5-28.5l0,0c15.74,0,28.5,12.76,28.5,28.5V182z"/>
+	 	  	<g>
+		 	    <path fill="#555" d="M274,88.035c15.071,6.217,25.557,19.987,25.557,35.988v67.953c0,16.001-10.485,29.771-25.557,35.988V264.5 h147V141.806C421,72.325,362.797,16,291,16h-17V88.035z"/>
+		 	    <path fill="#555" d="M91,275v95.193C91,439.675,149.203,496,221,496h70c71.797,0,130-56.325,130-125.807V275H91z"/>
+		 		<path fill="#222" d="M238,264.5v-36.535c-15.071-6.217-25.557-19.987-25.557-35.988v-67.953 c0-16.001,10.485-29.771,25.557-35.988V16h-17C149.203,16,91,72.325,91,141.806V264.5H238z"/>
+			</g>
+		</g>
+  	</g> -->
+</svg>
 
-	<!-- <svg class='foreground'>
-  <defs>
-    <linearGradient id="vert_shadow" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0%" stop-color="#000" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#000" stop-opacity="0.1"/>
-    </linearGradient>\
-    <linearGradient id="darkened_room" x1="0" x2="1" y1="0" y2="0">
-      <stop offset="0%" stop-color="#000" stop-opacity="0.02"/>
-      <stop offset="2%" stop-color="#000" stop-opacity="0.05"/>
-      <stop offset="50%" stop-color="#000" stop-opacity="0.1"/>
-      <stop offset="98%" stop-color="#000" stop-opacity="0.05"/>
-      <stop offset="100%" stop-color="#000" stop-opacity="0.02"/>
-    </linearGradient>\
-    <linearGradient id="very_dark" x1="0" x2="1" y1="0" y2="0">
-      <stop offset="0%" stop-color="#000" stop-opacity="0.02"/>
-      <stop offset="2%" stop-color="#000" stop-opacity="0.35"/>
-      <stop offset="50%" stop-color="#000" stop-opacity="0.40"/>
-      <stop offset="98%" stop-color="#000" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#000" stop-opacity="0.02"/>
-    </linearGradient>\
-    <linearGradient id="sunset" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0%" stop-color="#f00" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="jump_jet" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0%" stop-color="#f0f" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#f0f" stop-opacity="0.1"/>
-    </linearGradient>\
-    <radialGradient id="sunsetRad">
-        <stop offset="0%" stop-color="#f00" stop-opacity="0.2"/>
-        <stop offset="100%" stop-color="#f00" stop-opacity="0"/>
-    </radialGradient>
-
-    <linearGradient id="mask_gradient" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0" stop-color="white" stop-opacity="1" />
-      <stop offset="100%" stop-color="white" stop-opacity="0.4" />
-    </linearGradient>
-    <mask id="mask1">
-      <rect x="-600" y="800" width="400" height="100" fill="url(#mask_gradient)"  />
-    </mask>
-    <style type="text/css"><![CDATA[
-	  .dark {
-		stroke: transparent;
-		fill: "#fff";
-	  }
-    ]]></style>
-  </defs>
-  <g id = 'foreground'>
-    <rect x="1300" y="1890" width="100" height="100" fill='url(#jump_jet)'   stroke-width="0" />
-    <circle cx="500" cy="-300" r="1200" fill='url(#sunsetRad)' stroke-width="0"/>
-    <rect x="-600" y="200" width="400" height="400" opacity='0.05'/>
-    <rect x="350" y="664" width="700" height="237" opacity='0.1'/>
-	<rect x="50" y="200" width="400" height="250" opacity='0.1'/>
-    <rect x="-600" y="800" width="400" height="100" opacity='0.2'/>
-    <g transform = "translate(-500,800) scale(2)">
-      <path d="M0 0 C 20 20, 60 20, 80 0" stroke="black" fill="transparent"/>
+	<!-- *****************************************************************************************************
+*****************************************************************************************************
+*****************************************************************************************************
+*****************************************************************************************************
+*****************************************************************************************************
+***************************************************************************************************** -->
+	<svg class='foreground'>
+	<defs>
+	    <linearGradient id="vert_shadow" x1="0" x2="0" y1="0" y2="1">
+	    	<stop offset="0%" stop-color="#000" stop-opacity="0.3"/>
+	    	<stop offset="100%" stop-color="#000" stop-opacity="0.1"/>
+	    </linearGradient>\
+		<linearGradient id="hor_shadow" x1="0" x2="1" y1="0" y2="0">
+			<stop offset="0%" stop-color="#000" stop-opacity="0.2"/>
+			<stop offset="50%" stop-color="#000" stop-opacity="0.15"/>
+			<stop offset="100%" stop-color="#000" stop-opacity="0"/>
+		</linearGradient>\
+	    <linearGradient id="darkened_room" x1="0" x2="1" y1="0" y2="0">
+	    	<stop offset="0%" stop-color="#000" stop-opacity="0.02"/>
+	    	<stop offset="2%" stop-color="#000" stop-opacity="0.05"/>
+	    	<stop offset="50%" stop-color="#000" stop-opacity="0.1"/>
+	    	<stop offset="98%" stop-color="#000" stop-opacity="0.05"/>
+	    	<stop offset="100%" stop-color="#000" stop-opacity="0.02"/>
+	    </linearGradient>\
+	    <linearGradient id="very_dark" x1="0" x2="1" y1="0" y2="0">
+	    	<stop offset="0%" stop-color="#000" stop-opacity="0.02"/>
+	    	<stop offset="2%" stop-color="#000" stop-opacity="0.35"/>
+	    	<stop offset="50%" stop-color="#000" stop-opacity="0.40"/>
+	    	<stop offset="98%" stop-color="#000" stop-opacity="0.35"/>
+	    	<stop offset="100%" stop-color="#000" stop-opacity="0.02"/>
+	    </linearGradient>\
+	    <linearGradient id="sunset" x1="0" x2="0" y1="0" y2="1">
+	        <stop offset="0%" stop-color="#f00" stop-opacity="0.3"/>
+	        <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+	    </linearGradient>
+	    <linearGradient id="jump_jet" x1="0" x2="0" y1="0" y2="1">
+	        <stop offset="0%" stop-color="#4bb" stop-opacity="0"/>
+	        <stop offset="100%" stop-color="#4bb" stop-opacity="0.3"/>
+	    </linearGradient>\
+	    <radialGradient id="sunsetRad">
+	        <stop offset="0%" stop-color="#f00" stop-opacity="0.2"/>
+	        <stop offset="100%" stop-color="#f00" stop-opacity="0"/>
+	    </radialGradient>
+	    <linearGradient id="mask_gradient" x1="0" x2="0" y1="0" y2="1">
+	        <stop offset="0" stop-color="white" stop-opacity="1" />
+	        <stop offset="100%" stop-color="white" stop-opacity="0.4" />
+	    </linearGradient>
+	    <mask id="mask1">
+	        <rect x="-600" y="800" width="400" height="100" fill="url(#mask_gradient)"  />
+	    </mask>
+	    <style type="text/css"><![CDATA[
+		  .dark {
+			stroke: transparent;
+			fill: "#fff";
+		  }
+	    ]]></style>
+    </defs>
+	<!-- buildings1 -->
+	<!-- <g id = 'foreground'>
+		<rect x="-200" y="-500" width="400" height="240" opacity='0.1'/>
+		<rect x="-300" y="-250" width="600" height="240" opacity='0.1'/>
+		<rect x="700" y="-400" width="1400" height="390" opacity='0.1' fill='#300'/>
+   </g> -->
+	<!-- skyscrapers1 -->
+    <g id = 'foreground'>
+		<rect x="-250" y="-300" width="400" height="290" opacity='0.2'/>
+		<rect x="150" y="-150" width="50" height="140" fill='url(#hor_shadow)'/>
+    	<rect x="475" y="-115" width="100" height="100" fill='url(#jump_jet)' stroke-width="0" />
+		<rect x="700" y="-110" width="400" height="110" opacity='0.25'/>
+		<rect x="2500" y="-1100" width="450" height="250" opacity='0.05'/>
+		<rect x="2400" y="-550" width="600" height="150" opacity='0.15'/>
+		<rect x="2550" y="-1650" width="250" height="200" fill='url(#hor_shadow)' opacity='1'/>
+		<rect x="3600" y="-110" width="400" height="110" opacity='0.25'/>
+		<rect x="4150" y="-115" width="100" height="100" fill='url(#jump_jet)' stroke-width="0" />
     </g>
-  </g>
-</svg> -->
 
+	<!-- testingsMap -->
+    <!-- <g id = 'foreground' visibility = 'hidden'>
+    	<rect x="1300" y="1890" width="100" height="100" fill='url(#jump_jet)'   stroke-width="0" />
+        <circle cx="500" cy="-300" r="1200" fill='url(#sunsetRad)' stroke-width="0"/>
+        <rect x="-600" y="200" width="400" height="400" opacity='0.05'/>
+        <rect x="350" y="664" width="700" height="237" opacity='0.1'/>
+	    <rect x="50" y="200" width="400" height="250" opacity='0.1'/>
+        <rect x="-600" y="800" width="400" height="100" opacity='0.2'/>
+        <g transform = "translate(-500,800) scale(2)">
+            <path d="M0 0 C 20 20, 60 20, 80 0" stroke="black" fill="transparent"/>
+        </g>
+    </g> -->
+</svg>
 
-<!-- **********  intro page ***************************************************
+	<!-- **********  intro page ***************************************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
 *******************************************************************************
 *******************************************************************************
 ******************************************************************************* -->
 	<svg class='intro' onclick="runPlatformer(this)" viewBox="0 0 800 800">
-  <defs>
-    <style type="text/css"><![CDATA[
-      .keyrect {
-        stroke: #333;
-        fill: "#555";
-        rx: 5;
-      }
-      .letter {
-        fill: #ccc;
-        font-family: sans-serif;
-        font-weight: bold;
-	      font-size: 40px;
-      }
-      .instructions {
-        fill: #555;
-        font-family: sans-serif;
-	      font-size: 40px;
-      }
-      .info {
-        fill: #777;
-        font-family: sans-serif;
-	      font-size: 15px;
-      }
-      .title {
-        fill: #333;
-        font-family: sans-serif;
-        font-weight: bold;
-	      font-size: 100px;
-      }
-    ]]></style>
-  </defs>
-  <g id = "controls">
-    <text id = "title" class = "title" text-anchor="middle" x="400" y="200">side scroller</text>
-    <text id = "instruct" class = "instructions" text-anchor="middle" x="400" y="650">click to begin</text>
+    <defs>
+    	<style type="text/css"><![CDATA[
+			.keyrect {
+			stroke: #333;
+			fill: "#555";
+			rx: 5;
+			}
+			.letter {
+			fill: #ccc;
+			font-family: sans-serif;
+			font-weight: bold;
+			  font-size: 40px;
+			}
+			.instructions {
+			fill: #555;
+			font-family: sans-serif;
+			  font-size: 40px;
+			}
+			.info {
+			fill: #777;
+			font-family: sans-serif;
+			  font-size: 15px;
+			}
+			.title {
+			fill: #333;
+			font-family: sans-serif;
+			font-weight: bold;
+			  font-size: 100px;
+			}
+    	]]></style>
+    </defs>
+    <g id = "controls">
+	    <text id = "title" class = "title" text-anchor="middle" x="400" y="200">side scroller</text>
+		<text id = "instruct" class = "instructions" text-anchor="middle" x="400" y="650">click to begin</text>
 <!--     <text class = "info" x="5" y="695">move: WASD</text>
     <text class = "info" x="5" y="715">fire: click</text>
     <text class = "info" x="5" y="735">pause: F</text>
     <text class = "info" x="5" y="755">grab: E</text>
     <text class = "info" x="5" y="775">zoom: +-</text>
     <text class = "info" x="5" y="795">testing: T</text> -->
-    <g transform = "translate(130,380)">
+		<g transform = "translate(130,380)">
 <!--     <rect class = "keyrect" id="q" x="0" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
     <text class = "letter" text-anchor="middle" x="30" y="45">Q</text> -->
     <!-- <rect class = "keyrect" id="e" x="140" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
     <text class = "letter" text-anchor="middle" x="170" y="45">E</text> -->
     <!-- <rect class = "keyrect" id="e" x="210" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
     <text class = "letter" text-anchor="middle" x="240" y="45">R</text> -->
-    <rect class = "keyrect" id="w" x="70" y="0" width="60" height="60" fill='#555' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="100" y="45">W</text>
-    <rect class = "keyrect" id="s" x="70" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="100" y="113">S</text>
-    <rect class = "keyrect" id="d" x="140" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="170" y="113">D</text>
+    	<rect class = "keyrect" id="w" x="70" y="0" width="60" height="60" fill='#555' stroke-width="0"/>
+    	<text class = "letter" text-anchor="middle" x="100" y="45">W</text>
+    	<rect class = "keyrect" id="s" x="70" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
+    	<text class = "letter" text-anchor="middle" x="100" y="113">S</text>
+    	<rect class = "keyrect" id="d" x="140" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
+    	<text class = "letter" text-anchor="middle" x="170" y="113">D</text>
     <!-- <rect class = "keyrect" id="d" x="210" y="70" width="60" height="60" fill='#99a' stroke-width="0"/>
     <text class = "letter" text-anchor="middle" x="240" y="113">F</text> -->
-    <rect class = "keyrect" id="a" x="0" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="30" y="113">A</text>
-  </g>
-   <g transform = "translate(480,350) scale(0.35)">
-	  <path fill="#555" d="M284.5,182c0,15.74-12.76,28.5-28.5,28.5l0,0c-15.74,0-28.5-12.76-28.5-28.5v-49
+    	<rect class = "keyrect" id="a" x="0" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
+    	<text class = "letter" text-anchor="middle" x="30" y="113">A</text>
+	</g>
+    <g transform = "translate(480,350) scale(0.35)">
+	    <path fill="#555" d="M284.5,182c0,15.74-12.76,28.5-28.5,28.5l0,0c-15.74,0-28.5-12.76-28.5-28.5v-49
 		c0-15.74,12.76-28.5,28.5-28.5l0,0c15.74,0,28.5,12.76,28.5,28.5V182z"/>
-	  <g>
-	    <path fill="#555" d="M274,88.035c15.071,6.217,25.557,19.987,25.557,35.988v67.953c0,16.001-10.485,29.771-25.557,35.988V264.5
-			h147V141.806C421,72.325,362.797,16,291,16h-17V88.035z"/>
-	    <path fill="#555" d="M91,275v95.193C91,439.675,149.203,496,221,496h70c71.797,0,130-56.325,130-125.807V275H91z"/>
-		  <path fill="#222" d="M238,264.5v-36.535c-15.071-6.217-25.557-19.987-25.557-35.988v-67.953
-			c0-16.001,10.485-29.771,25.557-35.988V16h-17C149.203,16,91,72.325,91,141.806V264.5H238z"/>
-	  </g>
-  </g>
-
-  </g>
+		<g>
+		    <path fill="#555" d="M274,88.035c15.071,6.217,25.557,19.987,25.557,35.988v67.953c0,16.001-10.485,29.771-25.557,35.988V264.5
+				h147V141.806C421,72.325,362.797,16,291,16h-17V88.035z"/>
+		    <path fill="#555" d="M91,275v95.193C91,439.675,149.203,496,221,496h70c71.797,0,130-56.325,130-125.807V275H91z"/>
+			<path fill="#222" d="M238,264.5v-36.535c-15.071-6.217-25.557-19.987-25.557-35.988v-67.953
+				c0-16.001,10.485-29.771,25.557-35.988V16h-17C149.203,16,91,72.325,91,141.806V264.5H238z"/>
+		</g>
+	</g>
+</g>
 </svg>
 	<script src='js/lib/stats.min.js'></script>
 	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/matter.min.js'></script>
@@ -229,8 +310,6 @@
 	<script src="js/mob-object.js"></script>
 	<script src="js/maps.js"></script>
 	<script src="js/index.js"></script>
-
-
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 //*********************************************************************
 const game = {
 	g: 0.001,
-	dmgScale: 0.05,
+	dmgScale: 0.01,
     testing: false, //testing mode: shows wireframe and some variables
     //time related vars and methods
     cycle: 0, //total cycles, 60 per second
@@ -39,7 +39,7 @@ const game = {
         this.delta = (engine.timing.timestamp - this.lastTimeStamp) / 16.666666666666;
         this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
     },
-    zoom: 1,//1 / 300,
+    zoom: 0.3,//1,
     scaleZoom: function() {
         ctx.translate(canvas.width / 2, canvas.height / 2);
         ctx.scale(this.zoom, this.zoom);
@@ -48,12 +48,12 @@ const game = {
     },
     keyZoom: function() {
         if (keys[187]) { //plus
-            this.showHeight *= 0.99;
+            this.showHeight *= 0.98;
             this.setZoomGoal();
             this.zoom = 0.1 * this.zoomGoal + 0.9 * this.zoom; //smooths changes to zoom
             //this.zoom = this.zoomGoal
         } else if (keys[189]) { //minus
-            this.showHeight *= 1.01;
+            this.showHeight *= 1.02;
             this.setZoomGoal();
             this.zoom = 0.1 * this.zoomGoal + 0.9 * this.zoom; //smooths changes to zoom
             //this.zoom = this.zoomGoal
@@ -67,7 +67,7 @@ const game = {
 		this.zoom = this.zoomGoal
 	},
     zoomGoal: 1,
-    showHeight: 1000, //controls the resting zoomheight set to higher to see more of the map
+    showHeight: 3000, //controls the resting zoomheight set to higher to see more of the map   //1000 seems normal
     setZoomGoal: function() {
         this.zoomGoal = (canvas.height / this.showHeight) / (1 + player.speed * player.speed * 0.005); //calculates zoom goal
     },
