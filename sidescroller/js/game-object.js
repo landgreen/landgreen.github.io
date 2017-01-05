@@ -39,7 +39,7 @@ const game = {
         this.delta = (engine.timing.timestamp - this.lastTimeStamp) / 16.666666666666;
         this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
     },
-    zoom: 0.3,//1,
+    zoom: 0.000001,//1,
     scaleZoom: function() {
         ctx.translate(canvas.width / 2, canvas.height / 2);
         ctx.scale(this.zoom, this.zoom);
@@ -67,7 +67,7 @@ const game = {
 		this.zoom = this.zoomGoal
 	},
     zoomGoal: 1,
-    showHeight: 3000, //controls the resting zoomheight set to higher to see more of the map   //1000 seems normal
+    showHeight: 1500, //controls the resting zoomheight set to higher to see more of the map   //1000 seems normal
     setZoomGoal: function() {
         this.zoomGoal = (canvas.height / this.showHeight) / (1 + player.speed * player.speed * 0.005); //calculates zoom goal
     },
@@ -83,12 +83,13 @@ const game = {
         // } else {
         //   ctx.clearRect(0, 0, canvas.width, canvas.height);
         // }
-        if (mech.health < 1) {
-            ctx.fillStyle = "rgba(255,255,255," + (0.05 + mech.health * mech.health) + ")";
-        	ctx.fillRect(0, 0, canvas.width, canvas.height);
-        } else {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+        // if (mech.health < 1) {
+        //     ctx.fillStyle = "rgba(255,255,255," + (0.05 + mech.health * mech.health) + ")";
+        // 	ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // } else {
+        //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // }
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
     },
     isPaused: false,
     pause: function() {

@@ -49,7 +49,8 @@ const guns = { //prototype for each bullet/gun type
                 restitution: 0,
                 collisionFilter: cFilter,
                 //isSensor: true,
-				dmg: 0.003,
+				//dmg: 0.003,
+				dmg: 0.02,
 				minDmgSpeed: 10,
                 endCycle: game.cycle + 100,
                 color: '#000',
@@ -81,7 +82,7 @@ const guns = { //prototype for each bullet/gun type
                 frictionAir: 0,
                 restitution: 0.25,
 				collisionFilter: cFilter,
-				dmg: 0.024,
+				dmg: 1,
 				minDmgSpeed: 13,
                 endCycle: game.cycle + 400,
                 color: '#000',
@@ -111,11 +112,11 @@ const guns = { //prototype for each bullet/gun type
                 const dir = (Math.random() - 0.5) * 0.7 + mech.angle
                 bullet[len] = Bodies.polygon(mech.pos.x + 15 * Math.cos(mech.angle), mech.pos.y + 15 * Math.sin(mech.angle), 5, 3, {
                     angle: dir,
-                    density: 0.03,
+                    density: 0.004,
                     frictionAir: 0.015,
                     restitution: 0,
 					collisionFilter: cFilter,
-					dmg: 0.0035,
+					dmg: 0.005,
 					minDmgSpeed: 10,
                     endCycle: game.cycle + 100,
                     color: '#000',
@@ -128,7 +129,7 @@ const guns = { //prototype for each bullet/gun type
                     x: mech.Vx,
                     y: mech.Vy
                 });
-                const impulse = 0.07 + 0.01 * Math.random()
+                const impulse = 0.01 + 0.002 * Math.random()
                 const f = {
                     x: impulse * Math.cos(dir) / game.delta,
                     y: impulse * Math.sin(dir) / game.delta
@@ -140,18 +141,86 @@ const guns = { //prototype for each bullet/gun type
             }
         }
     },
+	rail: {
+		fireCD: 100,
+		fire: function() {
+			mobs.alert(); //this gun is loud!
+			const len = bullet.length;
+			bullet[len] = Bodies.rectangle(mech.pos.x + 60 * Math.cos(mech.angle), mech.pos.y + 60 * Math.sin(mech.angle), 60, 3, {
+				angle: mech.angle,
+				density: 0.002,
+				friction: 1,
+				frictionStatic: 1,
+				frictionAir: 0,
+				restitution: 0.1,
+				collisionFilter: cFilter,
+				dmg: 0,
+				minDmgSpeed: 15,
+				endCycle: game.cycle + 600,
+				color: '#000',
+				classType: 'bullet',
+				onDmg: function() {},
+			});
+			Matter.Body.setVelocity(bullet[len], { //bullet velocity includes player's motion plus a force
+				x: mech.Vx,
+				y: mech.Vy
+			});
+			const impulse = 0.09;
+			const f = {
+				x: impulse * Math.cos(mech.angle) / game.delta,
+				y: impulse * Math.sin(mech.angle) / game.delta
+			}
+			bullet[len].force = f //add force to fire bullets
+			player.force.x -= f.x * 0.5;
+			player.force.y -= f.y * 0.1;
+			World.add(engine.world, bullet[len]); //add bullet to world
+		}
+	},
+	cannon: {
+		fireCD: 80,
+		fire: function() {
+			mobs.alert(); //this gun is loud!
+			const len = bullet.length;
+			bullet[len] = Bodies.polygon(mech.pos.x + 40 * Math.cos(mech.angle), mech.pos.y + 40 * Math.sin(mech.angle), 0, 15, {
+				angle: mech.angle,
+				density: 0.001,
+				frictionAir: 0.001,
+				restitution: 0.5,
+				collisionFilter: cFilter,
+				dmg: 0,
+				minDmgSpeed: 10,
+				endCycle: game.cycle + 300,
+				color: '#212',
+				classType: 'bullet',
+				onDmg: function() {},
+			});
+			Matter.Body.setVelocity(bullet[len], { //bullet velocity includes player's motion plus a force
+				x: mech.Vx,
+				y: mech.Vy
+			});
+			const impulse = 0.15;
+			const f = {
+				x: impulse * Math.cos(mech.angle) / game.delta,
+				y: impulse * Math.sin(mech.angle) / game.delta
+			}
+			bullet[len].force = f //add force to fire bullets
+			player.force.x -= f.x * 0.1;
+			player.force.y -= f.y * 0.05;
+			World.add(engine.world, bullet[len]); //add bullet to world
+		}
+	},
     super: {
         fireCD: 10,
         fire: function() {
             const len = bullet.length;
             const dir = (Math.random() - 0.5) * 0.1 + mech.angle
-            bullet[len] = Bodies.polygon(mech.pos.x + 25 * Math.cos(mech.angle), mech.pos.y + 25 * Math.sin(mech.angle), 0, 6, {
+            bullet[len] = Bodies.polygon(mech.pos.x + 25 * Math.cos(mech.angle), mech.pos.y + 25 * Math.sin(mech.angle), 0, 9, {
                 angle: dir,
-                density: 0.002,
+                density: 0.0003,
                 frictionAir: 0,
                 restitution: 1,
 				collisionFilter: cFilter,
-				dmg: 0.01,
+				dmg: 0.03,
 				minDmgSpeed: 8,
                 endCycle: game.cycle + 300,
                 color: randomColor({
@@ -171,7 +240,7 @@ const guns = { //prototype for each bullet/gun type
                 x: mech.Vx,
                 y: mech.Vy
             });
-            const impulse = 0.02;
+            const impulse = 0.009;
             const f = {
                 x: impulse * Math.cos(dir) / game.delta,
                 y: impulse * Math.sin(dir) / game.delta
@@ -180,39 +249,40 @@ const guns = { //prototype for each bullet/gun type
             World.add(engine.world, bullet[len]); //add bullet to world
         }
     },
-    cannon: {
-        fireCD: 80,
-        fire: function() {
-			mobs.alert(); //this gun is loud!
-            const len = bullet.length;
-            bullet[len] = Bodies.polygon(mech.pos.x + 40 * Math.cos(mech.angle), mech.pos.y + 40 * Math.sin(mech.angle), 0, 30, {
-                angle: mech.angle,
-                density: 0.002,
-                frictionAir: 0.001,
-                restitution: 0.5,
+	lob: {
+		fireCD: 40,
+		fire: function() {
+			const len = bullet.length;
+			bullet[len] = Bodies.polygon(mech.pos.x + 15 * Math.cos(mech.angle), mech.pos.y + 15 * Math.sin(mech.angle), 3, 15, {
+				angle: mech.angle,
+				density: 0.0001,
+				friction: 0.5,
+				frictionAir: 0,
+				restitution: 0,
 				collisionFilter: cFilter,
-				dmg: 0.04,
-				minDmgSpeed: 5,
-                endCycle: game.cycle + 300,
-                color: '#212',
-                classType: 'bullet',
-                onDmg: function() {},
-            });
-            Matter.Body.setVelocity(bullet[len], { //bullet velocity includes player's motion plus a force
-                x: mech.Vx,
-                y: mech.Vy
-            });
-            const impulse = 1;
-            const f = {
-                x: impulse * Math.cos(mech.angle) / game.delta,
-                y: impulse * Math.sin(mech.angle) / game.delta
-            }
-            bullet[len].force = f //add force to fire bullets
-            player.force.x -= f.x * 0.1;
-            player.force.y -= f.y * 0.05;
-            World.add(engine.world, bullet[len]); //add bullet to world
-        }
-    },
+				dmg: 1,
+				minDmgSpeed: 1,
+				endCycle: game.cycle + 500,
+				color: '#303',
+				classType: 'bullet',
+				onDmg: function() {
+					this.endCycle = game.cycle;
+				},
+			});
+			Matter.Body.setVelocity(bullet[len], { //bullet velocity includes player's motion plus a force
+				x: mech.Vx,
+				y: mech.Vy
+			});
+			Matter.Body.setAngularVelocity(bullet[len], (Math.random()-0.5)*0.2)
+			const impulse = 0.002;
+			const f = {
+				x: impulse * Math.cos(mech.angle) / game.delta,
+				y: impulse * Math.sin(mech.angle) / game.delta
+			}
+			bullet[len].force = f //add force to fire bullets
+			World.add(engine.world, bullet[len]); //add bullet to world
+		}
+	},
     experimental: {
         fireCD: 10,
         fire: function() {
@@ -242,41 +312,6 @@ const guns = { //prototype for each bullet/gun type
                 y: impulse * Math.sin(mech.angle) / game.delta
             }
             bullet[len].force = f //add force to fire bullets
-            World.add(engine.world, bullet[len]); //add bullet to world
-        }
-    },
-    rail: {
-        fireCD: 100,
-        fire: function() {
-			mobs.alert(); //this gun is loud!
-            const len = bullet.length;
-            bullet[len] = Bodies.rectangle(mech.pos.x + 60 * Math.cos(mech.angle), mech.pos.y + 60 * Math.sin(mech.angle), 60, 3, {
-                angle: mech.angle,
-                density: 0.002,
-                friction: 1,
-                frictionStatic: 1,
-                frictionAir: 0,
-                restitution: 0.1,
-				collisionFilter: cFilter,
-				dmg: 0.04,
-				minDmgSpeed: 15,
-                endCycle: game.cycle + 600,
-                color: '#000',
-                classType: 'bullet',
-                onDmg: function() {},
-            });
-            Matter.Body.setVelocity(bullet[len], { //bullet velocity includes player's motion plus a force
-                x: mech.Vx,
-                y: mech.Vy
-            });
-            const impulse = 0.09;
-            const f = {
-                x: impulse * Math.cos(mech.angle) / game.delta,
-                y: impulse * Math.sin(mech.angle) / game.delta
-            }
-            bullet[len].force = f //add force to fire bullets
-            player.force.x -= f.x * 0.5;
-            player.force.y -= f.y * 0.1;
             World.add(engine.world, bullet[len]); //add bullet to world
         }
     },
@@ -314,4 +349,6 @@ const guns = { //prototype for each bullet/gun type
             World.add(engine.world, bullet[len]); //add bullet to world
         }
     },
+
+
 }

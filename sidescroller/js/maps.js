@@ -24,6 +24,9 @@ function spawn() { //spawns bodies and map elements
         frictionStatic: 0.1,
         restitution: 0.1,
     }
+	const propsLight = {
+		density: 0.001
+	}
     const propsOverBouncy = {
         friction: 0,
         frictionAir: 0,
@@ -192,7 +195,7 @@ function spawn() { //spawns bodies and map elements
 	function skyscrapers() {
         mech.setPosToSpawn(-50, -100); //normal spawn
 		//mech.setPosToSpawn(1550, -1200); //spawn left high
-		//mech.setPosToSpawn(2550, -1900); //spawn near exit
+		//mech.setPosToSpawn(2750, -2100); //spawn near exit
 
 		mapRect(-500, 0, 5600, 100); //***********ground
 		mapRect(-300, -350, 50, 400); //far left starting left wall
@@ -217,6 +220,10 @@ function spawn() { //spawns bodies and map elements
 		spawnHopper(1650, -450, 30); //hiding underplatorm
 		spawnHopper(1750, -450, 40); //hiding underplatorm
 		spawnHopper(1850, -450, 20); //hiding underplatorm
+		bodyRect(2557, -450, 35,55); //wall before chasers
+		bodyRect(2957, -450, 30,15); //wall before chasers
+		bodyRect(2900, -450, 60,45); //wall before chasers
+
 
 		mapRect(1345, -1100, 250, 25); //left platform
 		mapRect(1755, -1100, 250, 25); //right platform
@@ -228,13 +235,23 @@ function spawn() { //spawns bodies and map elements
 		mapRect(1500, -1860, 100, 50, 'exit'); //ground bump wall
 
 		mapRect(2400, -850, 600, 300); //center floating large square
-		spawnChaser(2510, -900, 50);
-		spawnChaser(2725, -910, 60);
-		spawnChaser(2910, -920, 70);
+		spawnChaser(2430, -900, 30);
+		bodyRect(2500, -1100, 25,250); //wall before chasers
+		spawnChaser(2700, -950, 75);
+		spawnChaser(2700, -1060, 40);
+		spawnChaser(2800, -950, 85);
+		bodyRect(2925, -1100, 25,250); //wall next to chasers
 		mapRect(2500, -1450, 450, 350); //higher center floating large square
 		mapRect(2500, -1700, 50, 300); //left wall on higher center floating large square
 		mapRect(2500, -1700, 300, 50); //roof on higher center floating large square
 		spawnStriker(2650,-1500,50); //on higher center floating large square
+		bodyRect(2300, -1720, 400,20); //platform above striker
+
+		bodyRect(2570, -1800, 20,20); //block on platform above striker
+		bodyRect(2590, -1800, 20,20); //block on platform above striker
+		bodyRect(2550, -1800, 20,20); //block on platform above striker
+		bodyRect(2570, -1820, 20,20); //block on platform above striker
+		bodyRect(2590, -1820, 20,20); //block on platform above striker
 
 		spawnHopper(3200, -40, 40); //on ground far right
 		spawnHopper(4450, -20, 20); //on ground far right

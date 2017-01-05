@@ -20,8 +20,9 @@ const mechProto = function() {
 		52: 'rail',
 		53: 'cannon',
 		54: 'super',
-		55: 'spiritBomb',
-		56: 'experimental'
+		55: 'lob',
+		// 55: 'spiritBomb',
+		// 56: 'experimental'
 	}
     this.height = 42;
     this.yOffWhen = {

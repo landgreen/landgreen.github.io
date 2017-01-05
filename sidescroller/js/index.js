@@ -171,7 +171,7 @@ document.body.addEventListener("keyup", function(e) {
 });
 document.body.addEventListener("keydown", function(e) {
     keys[e.keyCode] = true;
-	mech.gun = (mech.gunOptions)[e.keyCode] || mech.gun;  //checks for new gun
+	mech.gun = (mech.gunOptions)[e.keyCode] || mech.gun;  //checks for keypress to get a new gun (1-8)
     if (keys[84]) { //t = testing mode
         if (game.testing) {
             game.testing = false;
@@ -384,13 +384,14 @@ function mobCollisionCheck(event) {
 					//mob hitting bullet check
                     if (pairs[i].bodyB.classType === "bullet" && pairs[i].bodyB.speed > pairs[i].bodyB.minDmgSpeed) {
                         mob[k].locatePlayer();
-						const dmg = pairs[i].bodyB.dmg*Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity))
+						let dmg = pairs[i].bodyB.dmg + 0.05*pairs[i].bodyB.mass*Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity));
+						console.log(dmg)
 						mob[k].damage(dmg);
-						pairs[i].bodyB.onDmg();
+						pairs[i].bodyB.onDmg(); //some bullets do actions when they hits things, like despawn
 						//add dmg to draw queue
 						const hit = pairs[i].activeContacts[0].vertex
-						hit.radius = dmg*10;
-						if (hit.radius < 5) hit.radius = 5;
+						hit.radius = dmg*20;
+						if (hit.radius < 10) hit.radius = 10;
 						hit.color = '#000';
 						game.drawList.push(hit);
                     }
@@ -410,13 +411,14 @@ function mobCollisionCheck(event) {
 					//mob hitting bullet check
                     if (pairs[i].bodyA.classType === "bullet" && pairs[i].bodyA.speed > pairs[i].bodyA.minDmgSpeed) {
                         mob[k].locatePlayer();
-						const dmg = pairs[i].bodyA.dmg*Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity))
+						let dmg = pairs[i].bodyA.dmg*Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity))
+						if (dmg < pairs[i].bodyA.minDmg) dmg = pairs[i].bodyA.minDmg;
                         mob[k].damage(dmg);
-						pairs[i].bodyA.onDmg();
+						pairs[i].bodyA.onDmg();  //some bullets do actions when they hits things, like despawn
 						//add dmg to draw queue
 						const hit = pairs[i].activeContacts[0].vertex
-						hit.radius = dmg*10;
-						if (hit.radius < 5) hit.radius = 5;
+						hit.radius = dmg*20;
+						if (hit.radius < 10) hit.radius = 10;
 						hit.color = '#000';
 						game.drawList.push(hit);
                     }
