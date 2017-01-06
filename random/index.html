@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>pick random student (local storage API)</title>
+  
+  
+  
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+  <center>
+  <button type="button" class="button large" onclick="nextPeriod()">period <span id='period'>1</span></button>
+  <button type="button" class="button blue large" onclick="pickRandom(1)"><span>random</span></button>
+</center>
+<div>
+<ul class="grid" id='grid'></ul>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<center>
+  <button type="button" class="button" onclick="reset()">clear</button>
+  <button type="button" class="button" onclick="add()">add</button>
+  <input type="text" name="FirstName" id = 'name' value = 'name'>
+  <br>
+  <button id="import">Import</button>
+  <button type="button" class="button" onclick="exportToJsonFile(localStorage.getItem('classes'))">export</button>
+  <input type="file" id="selectFiles" value="Import">
+</center>
+  
+    <script src="js/index.js"></script>
+
+</body>
+</html>
