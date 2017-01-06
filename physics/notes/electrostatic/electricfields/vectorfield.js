@@ -13,11 +13,12 @@ red-yellow-white-blue  (adding more blue as mass increases)
 cap force vectorsfields lines at the size of the spacing
 make it so you can only move one body at a time
 make force vectors reduced if one star is inside the radius of another?
+
 */
 "use strict";
 
 (function setup() { //writes a message onload
-    var canvas = document.getElementById('gravity');
+    var canvas = document.getElementById('field');
     var ctx = canvas.getContext("2d");
     ctx.font = "25px Arial";
     ctx.fillStyle = '#aaa';
@@ -25,9 +26,17 @@ make force vectors reduced if one star is inside the radius of another?
     ctx.fillText('click to start simulation', canvas.width / 2, canvas.height / 2);
 })()
 
-function gravityDiagram(button) {
+function diagram(button) {
     button.onclick = null; //stops the function from running after first run
-    var canvas = document.getElementById("gravity");
+    var settings = {
+        size: 15,
+        fieldSpacing: 25,
+        fieldMag: 5,
+        bar: 40,
+    }
+
+
+    var canvas = document.getElementById("field");
     var ctx = canvas.getContext("2d");
 
     (function setupCanvas() {
@@ -67,19 +76,19 @@ function gravityDiagram(button) {
         mouse.down = true;
         var over = false
         for (var i = 0; i < body.length; i++) {
-            if (!over) {
-                body[i].isMouseOver = body[i].mouseOverCheck();
-                if (body[i].isMouseOver) {
-                    over = true;
-                    body[i].setMouseOffset();
-                }
-            } else {
-                body[i].isMouseOver = false;
+          if (!over){
+            body[i].isMouseOver = body[i].mouseOverCheck();
+            if (body[i].isMouseOver){
+                over = true;
+                body[i].setMouseOffset();
             }
+          } else {
+            body[i].isMouseOver = false;
+          }
         }
         if (mouse.pos.y > canvas.height - settings.bar) {
             var len = body.length;
-            body[len] = new bodyProto(len + 1, mouse.pos.x, mouse.pos.y, 5 + Math.random() * 80);
+            body[len] = new bodyProto(len + 1, mouse.pos.x, mouse.pos.y, settings.size, Math.round(Math.random()) * 2 - 1);
             body[len].isMouseOver = true;
         }
         cycle();
@@ -95,24 +104,25 @@ function gravityDiagram(button) {
             }
             cycle();
         }
+
     };
-    var settings = {
-        g: 0.00004,
-        fieldSpacing: 25,
-        fieldGravity: 0.25,
-        bar: 40,
-    }
+
     const body = [];
-    var bodyProto = function(name, x, y, radius) {
+    var bodyProto = function(name, x, y, radius, charge) {
         this.name = name;
-        this.color = randomColor({
+
+        this.color = (charge > 0) ? randomColor({
             hue: 'red'
+        }) : randomColor({
+            hue: 'blue'
         });
+
         this.r = radius; //radius is also used as mass for force calculations
         this.calcMass = function() {
             return 4 / 3 * Math.PI * this.r * this.r * this.r;
         }
         this.mass = this.calcMass();
+        this.charge = charge;
         this.pos = {
             x: x,
             y: y
@@ -172,42 +182,8 @@ function gravityDiagram(button) {
             ctx.beginPath();
             ctx.arc(this.pos.x, this.pos.y, this.r + 5, 0, 2 * Math.PI);
             ctx.stroke();
-            ctx.fillStyle = "#000";
-            var y = this.pos.y - this.r - 15;
-            var x = this.pos.x;
-
-            ctx.fillText("mass: " + this.mass.toFixed(0), x, y);
-            y -= 15;
-            // ctx.fillText("id: " + this.name, x, y);
-            // y -= 15;
-            ctx.fillText("force: " + (Math.sqrt(this.force.x * this.force.x + this.force.y * this.force.y).toFixed(0)), x, y);
-            //
         }
 
-        this.drawForce = function() {
-            var mag = Math.sqrt(this.force.x * this.force.x + this.force.y * this.force.y)
-            if (mag > 1) {
-                var a = Math.atan2(this.force.y, this.force.x);
-                ctx.save();
-                ctx.translate(this.pos.x, this.pos.y);
-                ctx.rotate(a);
-
-                ctx.beginPath(); //vector line
-                ctx.moveTo(0, 0);
-                ctx.lineTo(mag, 0);
-                ctx.strokeStyle = "#033";
-                ctx.stroke();
-
-                ctx.beginPath(); //arrows
-                ctx.moveTo(mag + 8, 0);
-                ctx.lineTo(mag, -5);
-                ctx.lineTo(mag, 5);
-                ctx.fillStyle = "#033";
-                ctx.fill();
-
-                ctx.restore();
-            }
-        };
         this.drawFill = function() {
             ctx.fillStyle = this.color;
             ctx.beginPath();
@@ -229,7 +205,7 @@ function gravityDiagram(button) {
         ctx.strokeStyle = "#033"
         var lenX = Math.floor(canvas.width / settings.fieldSpacing);
         var lenY = Math.floor(canvas.height / settings.fieldSpacing);
-        var gravity = settings.fieldGravity;
+        var gravity = settings.fieldMag;
         var x, y, dist, draw;
         for (var k = 0; k < lenY; k++) {
             for (var j = 0; j < lenX; j++) {
@@ -237,33 +213,44 @@ function gravityDiagram(button) {
                 x = canvas.width * (j + 0.5) / lenX;
                 y = (canvas.height - settings.bar) * (k + 0.5) / lenY;
                 //calc Forces
-                var dx, dy, f, a;
+                var f, a;
                 var fx = 0;
                 var fy = 0;
                 for (var i = 0; i < body.length; i++) {
-                    dx = (body[i].pos.x - x);
-                    dy = (body[i].pos.y - y);
+                    var dx = (body[i].pos.x - x);
+                    var dy = (body[i].pos.y - y);
                     dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < body[i].r) {
                         draw = false; //don't draw in inside a body
                         break; //exit the forloop
                     }
-                    f = gravity * body[i].mass / (dist * dist);
+                    f = body[i].charge * gravity * body[i].mass / (dist * dist);
                     a = Math.atan2(dy, dx);
                     fx += f * Math.cos(a);
                     fy += f * Math.sin(a);
                 }
                 if (draw) {
-                    //make small vectors more transparent
+                    f = Math.sqrt(fx * fx + fy * fy)
+                    if (f > settings.fieldSpacing - 5) f = settings.fieldSpacing - 5;
+                    a = Math.atan2(fy, fx);
                     var alpha = 1;
-                    var fmag = Math.sqrt(fx * fx + fy * fy);
-                    if (fmag < 1) alpha = fmag;
+                    if (f < 3) alpha = f/3;
                     ctx.globalAlpha = alpha;
-                    //draw
-                    ctx.beginPath();
-                    ctx.moveTo(x, y);
-                    ctx.lineTo(x + fx, y + fy);
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.rotate(a);
+                    ctx.beginPath(); //vector line
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(Math.abs(f), 0);
                     ctx.stroke();
+
+                    ctx.beginPath(); //arrows
+                    ctx.moveTo(f + 4, 0);
+                    ctx.lineTo(f, -2);
+                    ctx.lineTo(f, 2);
+                    ctx.fillStyle = "#033";
+                    ctx.fill();
+                    ctx.restore();
                 }
             }
         }
@@ -273,7 +260,7 @@ function gravityDiagram(button) {
     function spawn() {
         for (var i = 0; i < 2; i++) {
             body[i] = new bodyProto(i + 1, canvas.width * 0.1 + Math.random() * canvas.width * 0.8,
-                canvas.height * 0.1 - settings.bar + Math.random() * canvas.height * 0.8, 10 + Math.random() * 50);
+                canvas.height * 0.1 - settings.bar + Math.random() * canvas.height * 0.8, settings.size, Math.round(Math.random()) * 2 - 1);
         }
     }
     spawn();
@@ -294,17 +281,14 @@ function gravityDiagram(button) {
         ctx.strokeStyle = "#399";
         //ctx.globalCompositeOperation = 'lighter';
         for (var i = 0; i < body.length; i++) {
+            if (body[i].mouseOverCheck()) {
+                body[i].drawOutline();
+            }
+        }
+        for (var i = 0; i < body.length; i++) {
             body[i].calcForce(i);
             body[i].drawFill();
         }
-        for (var i = 0; i < body.length; i++) {
-            if (body[i].mouseOverCheck()) {
-                body[i].drawOutline();
-                body[i].drawForce();
-            }
-        }
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "#033";
     }
     cycle() //run once at start
 }

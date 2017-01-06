@@ -249,7 +249,7 @@
         <br>
         <br>
         <h2 class="underlined">Gravitational Acceleration</h2>
-        <p>It is useful to adapt the universal gravitation equation to predict acceleration. To find accleration we just need to divide an object's gravitational force by its mass.</p>
+        <p>It is useful to adapt the universal gravitation equation to predict acceleration. To find acceleration we just need to divide an object's gravitational force by its mass.</p>
 
         <details class='derive'>
             <summary>derivation of universal gravitational acceleration</summary>
@@ -279,12 +279,12 @@
             <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
         </svg>
             <h2>$$ a = \frac{GM}{r^{2}} $$</h2>
-            <p><strong>a</strong> = acceleration of gravity [N, Newtons, kg m/s²] <i>vector</i>
+            <p><strong>a</strong> = acceleration of gravity [m/s²] <i>vector</i>
                 <br><strong>G</strong> = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N(m/kg)²] <i>scalar</i>
                 <br><strong>M</strong> = mass of the body pulling [kg, kilograms] <i>scalar</i>
                 <br><strong>r</strong> = distance between the center of each mass [m, meters] <i>scalar</i>
         </div>
-        <p>The acceleration vector is pointed towards the center of the mass producing the accleration.</p>
+        <p>The acceleration vector is pointed towards the center of the mass producing the acceleration.</p>
         <p>The mass of the body being accelerated isn't used in this equation. Use the mass of the body producing the acceleration.  To find the acceleration of objects on Earth use Earth's mass.
         <br>
         <br>
@@ -306,7 +306,7 @@
         <br>
         <br>
         <br>
-        <p><b>Example:</b> Find the how far away from the earth you need to be to only accelerate at half of 9.8m/s²</p>
+        <p><b>Example:</b> Find how far away from the earth you need to be to only accelerate at half of 9.8m/s²</p>
         <details>
             <summary>solution</summary>
             $$ a = \frac{GM}{r^{2}} $$
@@ -320,8 +320,10 @@
         <br>
         <br>
         <br>
-        <p class='underlined'> Gravitational Potential Energy</p>
-        <p>Gravitational potential energy can made more accurate if we replace 9.8 with a calculated gravitational acceleration.  </p>
+
+        <a id ='gpe'></a>
+		<p class='underlined'> Gravitational Potential Energy</p>
+        <p>Gravitational potential energy can be made more accurate if we replace 9.8 with a calculated gravitational acceleration.  </p>
 
         <details class='derive'>
             <summary>derivation of universal gravitational potential energy</summary>
@@ -338,7 +340,6 @@
                   <svg class='center' style="display: block; margin: auto" width="600" height="240" viewbox="-100 -40 500 240" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="0" cy="100" r="98" fill = '#fff' stroke-width="2" stroke="#222"/>
                     <circle cx="300" cy="100" r="30" fill = '#fff' stroke-width="2" stroke="#222"/>
-
                     <text x="0" y="105" fill="black" text-anchor="middle" font-size="25">M</text>
                     <text x="18" y="108" fill="black" text-anchor="middle" font-size="19">1</text>
                     <text x="298" y="108" fill="black" text-anchor="middle" font-size="25">M</text>
@@ -365,22 +366,16 @@
         <br>
         <br>
         <br>
-        <p><b>Example:</b> A 2000kg space ship starts at rest 20,000km from the surface of Earth.  How much kinetic energy will the ship have after it falls down to 10,000km from the surface of Earth?  How fast will it be moving?
+        <p><b>Example:</b> A 2000kg space ship starts at rest 20,000km from the surface of Earth.  How much kinetic energy will the ship have after it falls down to 10,000km from the surface of Earth?
         <details>
             <summary>solution</summary>
             $$E_{i} = E_{f}$$
             $$U_{gi} = U_{gf} + K$$
             $$U_{gi} - U_{gf} = K$$
             $$-\frac{GM_{1}M_{2}}{r} +\frac{GM_{1}M_{2}}{r} = K$$
-            $$\frac{(6.674\times 10^{-11})(5.972\times 10^{24})(2000)}{20,000,000} -\frac{(6.674\times 10^{-11})(5.972\times 10^{24})(2000)}{10,000,000} = K$$
-            $$-3.9857 \times 10^{10}+7.971 \times 10^{10} = K$$
-            $$3.985 \times 10^{10} J = K$$
-            <br>
-            $$K = (1/2)M_{2}v^2$$
-            $$v = \sqrt{ \frac{2K}{M_{2}} } $$
-            $$v = \sqrt{ \frac{2(3.985 \times 10^{10})}{2000} } $$
-            $$v = \sqrt{39850000} $$
-            $$v = 6312.68 \small \frac{m}{s}$$
+            $$-\frac{(6.674\times 10^{-11})(5.972\times 10^{24})(2000)}{6,371,000 + 20,000,000} +\frac{(6.674\times 10^{-11})(5.972\times 10^{24})(2000)}{6,371,000 + 10,000,000} = K$$
+            $$-3.02 \times 10^{10}+4.86 \times 10^{10} = K$$
+            $$1.85 \times 10^{10} J = K$$
         </details>
         <br>
         <br>

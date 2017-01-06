@@ -143,14 +143,13 @@
             <br>
             <br>
             <br>
-            <p><b>Example:</b> A 20kg dog is riding on a carousel 5m away from the center.  If the dog is moving at 3m/s what magnitude and direction force will it have exert to produce the circular motion needed to stay on the ride?</p>
+            <p><b>Example:</b> A 20kg dog is riding on a carousel 5m away from the center.  If the dog is moving at 3m/s what magnitude and direction force will it have to exert to produce the circular motion needed to stay on the ride?</p>
             <details>
                 <summary>solution</summary>
             $$F = \frac{mv^{2}}{r}$$
             $$F = \frac{(20)(3)^{2}}{5}$$
             $$F = 36N$$
             <p>pointed towards the center of the carousel</p>
-
             </details>
             <br>
             <br>
@@ -158,7 +157,7 @@
             <br>
             <br>
             <br>
-            <p><b>Example:</b> You want to reproduce the feeling of earth's gravity in space.  This can be done by rotating your space station to produce the feeling of acceleration.  Your space station is shaped like a wheel with a diameter of 50.0m.  How fast does the edge have to move to produce earth's gravity?</p>
+            <p><b>Example:</b> You want to reproduce the feeling of Earth's gravity in space.  This can be done by rotating your space station to produce the feeling of acceleration.  Your space station is shaped like a wheel with a diameter of 50.0m.  How fast does the edge have to move to produce Earth's gravity?</p>
             <details>
                 <summary>solution</summary>
             $$d = 2r \quad \quad r = 25m$$
@@ -180,23 +179,13 @@
                   <br>We can use the circumference of the circle divided by 60 seconds</p>
             $$c = 2 \pi r $$
             $$v = \frac{2 \pi (0.021)}{60}$$
-            $$v = 0.0035 \small \frac{m}{s}$$
+            $$v = 0.0022 \small \frac{m}{s}$$
 <br>
             $$F = \frac{mv^{2}}{r}$$
-            $$F = \frac{0.003(0.0035)^{2}}{0.021}$$
+            $$F = \frac{0.000003(0.0022)^{2}}{0.021}$$
             $$F = 0.00000175N $$
-            $$F = 1.75 \times 10^{-6}N$$
+            $$F = 6.914 \times 10^{-10}N$$
             </details>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <p>The ball in this simulation always takes one minute to go in a circle.  As you move the mouse you can set the radius of the circular motion. The velocity and acceleration of the ball change to keep the total time the same.</p>
-            <canvas id="canvas-1" class = 'center' width = '600' height = '350'></canvas>
-            <!-- <div id='hud' style="text-shadow: 2px 2px 5px #aaa;"> -->
-            <div id='hud'></div>
             <br>
             <br>
             <br>
@@ -205,7 +194,7 @@
             <br>
             <br>
             <p class='underlined'>Circular Orbits</p>
-            <p> The orbits of objects in space are elliptical.  They are never perfectly circular, but many orbits come close enough to circular motion to make a rough approximation useful.
+            <p><strong>The orbits of objects in space are elliptical. They are never perfectly circular,</strong> but many orbits come close enough to circular motion to make a rough approximation useful.</p>
               <details class='derive'>
                   <summary>derivation of orbital velocity</summary>
                   <p>We can combine the equations for circular motion with the universal gravitation equations if we assume that the central mass is much larger.
@@ -213,16 +202,28 @@
                     <br>set the force of gravity and the centripital force equal
                     $$\frac{M_{1}v^{2}}{r} = \frac{GM_{1}M_{2}}{r^{2}} $$
                     <br>cancel terms that show up on both sides
+					$$\frac{\color{blue}M_{\color{blue}1}v^{2}}{\color{blue}r} = \frac{G\color{blue}M_{\color{blue}1}M_{2}}{r^{\color{blue}2}}$$
                     $$v^{2} = \frac{GM_{2}}{r} $$
                   </p>
               </details>
               <div class='definition'>
-                  $$v^{2} = \frac{GM}{r} $$
+                  <h1>$$v^{2} = \frac{GM}{r} $$</h1>
                   <br><strong>v</strong> = orbital tangential velocity [m/s] <i>vector</i>
                   <br><strong>G</strong> = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N m²/kg²] <i>scalar</i>
                   <br><strong>r</strong> = radius of the circlular orbit [m] <i>vector</i>
                   <br><strong>m</strong> = mass of the central body being orbited [kg] <i>scalar</i>
+				  <p><strong>Only true for circular orbits!</strong></p>
               </div>
+			  <br>
+			  <p>Click the mouse on the simulation to set the radius for the circular orbit.</p>
+			  <canvas id="canvas-1" class = 'center' width = '600' height = '350'></canvas>
+			  <div class="col-group">
+			  	<div id='hud1' class='center'>
+
+			  	</div>
+			  	<div id='hud2' class='center'>
+
+			  	</div>
               <br>
               <br>
               <br>
@@ -257,7 +258,6 @@
                   <p>altitude = orbital radius - Earth's surface radius</p>
                   $$a = 42,200 km - 6,371 km$$
                   $$a = 35,829 km $$
-
               </details>
               <br>
               <br>

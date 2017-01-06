@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>electric potential</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+</head>
+
+<body>
+    <header>
+        <h1>electric potential</h1>
+    </header>
+    <article>
+        <h2 class='underlined'>Electric Potential Energy</h2>
+		<p>Electric potential energy is similar to <a href='../../gravity/gravitation/index.html#gpe'>gravitational potential energy</a>. We need to calculate the energy to completely separate two charges instead of two masses.</p>
+		<p>The main mathematical difference from Coulomb's law is that the radius is no longer squared and we get a scalar instead of a vector as our result.</p>
+		</p>
+        <div class='definition'>
+            <svg style="display: block; margin: auto" width="400" height="110" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<defs>
+					<linearGradient id="hor_shadow" x1="0" x2="1" y1="0" y2="0">
+						<stop offset="0%" stop-color="#000" stop-opacity="1"/>
+						<stop offset="100%" stop-color="#000" stop-opacity="0"/>
+					</linearGradient>
+				</defs>
+				<g transform = 'translate(23,50)'>
+		            <circle cx="0" cy="0" r="20" fill = '#fff' stroke-width="2" stroke="#222"/>
+					<text x="0" y="-2" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">q</text>
+				</g>
+				<g transform = 'translate(123,50)'>
+		            <circle cx="0" cy="0" r="20" fill = '#fff' stroke-width="2" stroke="#222"/>
+					<text x="0" y="-2" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">q</text>
+				</g>
+				<g transform = 'translate(375,50)'  opacity='0.5'>
+					<circle cx="0" cy="0" r="20" fill = 'transparent' stroke-width="2" stroke="#222" stroke-dasharray="5, 5.5"/>
+					<text x="0" y="-2" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">q</text>
+				</g>
+	            <g transform = 'translate(23,85)'>
+			        <line x1="0" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+			        <line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
+	                <line x1="100" y1="-5" x2="100" y2="5" style="stroke:#000;stroke-width:2"/>
+			        <text x="50" y="20" fill="black" text-anchor="middle" font-size="25">r</text>
+					<rect x="100" y="-1" width="300" height="2" fill='url(#hor_shadow)'/>
+				    <text x="350" y="20" fill="black" text-anchor="middle" font-size="25" opacity='0.3'>∞</text>
+	            </g>
+        	</svg>
+            <h2>$$ U_{e} = \frac{k_{e}q_{1}q_{2}}{r} $$</h2>
+            <p><strong>U<sub>e</sub></strong> = electric potential energy [J, Joules, kg m²/s²] <i>scalar</i>
+                <br><strong>k<sub>e</sub></strong> = 8.987 × 10<sup>9</sup> = Coulomb's constant [N m²/C²] <i>scalar</i>
+                <br><strong>q</strong> = charge [C, Coulomb's] <i>scalar</i>
+                <br><strong>r</strong> = distance between the center of each charge [m, meters] <i>scalar</i>
+        </div>
+      <br>
+      <br>
+      <br>
+	  <p><b>Example:</b> You rub a balloon on a dry erase board and pull 200nC off the board onto the balloon.  How much energy does it take to pull the balloon off a dry erase board if the centers of the charges are 5mm apart?</p>
+	  <details>
+			  <summary>solution</summary>
+			  $$\scriptsize n=nano=10^{-9} \quad \quad m=milli = 10^{-3}$$
+			  $$ U_{e} = \frac{k_{e}q_{1}q_{2}}{r} $$
+			  $$ U_{e} = \frac{(8.987 \times 10^{9}) (200 \times 10^{-9})(-200 \times 10^{-9})}{5 \times 10^{-3}} $$
+			  $$ U_{e} = -0.0719J$$
+			  <p>The system has -0.0719J of energy. To separate the objects we will have to cancel out that energy, so it will take <strong>0.0719J</strong>.</p>
+	  </details>
+	  <br>
+	  <br>
+	  <br>
+	  <br>
+	  <br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<h2 class='underlined'>Electric Potential</h2>
+		<p>Electric potential <s>energy</s> is similar to electric potential energy, with one difference.  We assume one of the charges is a +1C test charge. The potential is the energy needed to bring the +1C test charge from very far away to some distance from the other charge.</p>
+
+		<p>Electric potential has units of volts. Electric potential differences will be very important in the unit on circuits.</p>
+
+
+        <div class='definition'>
+            <svg style="display: block; margin: auto" width="400" height="110" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<defs>
+					<linearGradient id="hor_shadow" x1="0" x2="1" y1="0" y2="0">
+						<stop offset="0%" stop-color="#000" stop-opacity="1"/>
+						<stop offset="100%" stop-color="#000" stop-opacity="0"/>
+					</linearGradient>
+				</defs>
+				<g transform = 'translate(23,50)'>
+		            <circle cx="0" cy="0" r="20" fill = '#fff' stroke-width="2" stroke="#222"/>
+					<text x="0" y="-2" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">q</text>
+				</g>
+				<g transform = 'translate(123,50)'>
+		            <circle cx="0" cy="0" r="3" fill = '#000' stroke-width="2" stroke="transparent"/>
+					<text x="0" y="-20" fill="#888" text-anchor="middle" alignment-baseline="central" font-size="20">+1C</text>
+				</g>
+				<g transform = 'translate(375,50)'  opacity='0.3'>
+					<circle cx="0" cy="0" r="3" fill = '#000' stroke-width="2" stroke="transparent"/>
+					<text x="0" y="-20" fill="#888" text-anchor="middle" alignment-baseline="central" font-size="20">+1C</text>
+				</g>
+	            <g transform = 'translate(23,85)'>
+			        <line x1="0" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+			        <line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
+	                <line x1="100" y1="-5" x2="100" y2="5" style="stroke:#000;stroke-width:2"/>
+			        <text x="50" y="20" fill="black" text-anchor="middle" font-size="25">r</text>
+					<rect x="100" y="-1" width="300" height="2" fill='url(#hor_shadow)'/>
+				    <text x="350" y="20" fill="black" text-anchor="middle" font-size="25" opacity='0.3'>∞</text>
+	            </g>
+        	</svg>
+            <h2>$$ V = \frac{k_{e}q}{r} $$</h2>
+            <p><strong>V</strong> = electric potential energy [v, volts, J/C] <i>scalar</i>
+                <br><strong>k<sub>e</sub></strong> = 8.987 × 10<sup>9</sup> = Coulomb's constant [N m²/C²] <i>scalar</i>
+                <br><strong>q</strong> = charge [C, Coulomb's] <i>scalar</i>
+                <br><strong>r</strong> = distance between the center of each charge [m, meters] <i>scalar</i>
+        </div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<h2 class='underlined'>Chemistry and Coulomb's Law</h2>
+
+		<p>Chemistry is most accurately described by quantum mechanics, but chemical bonds and chemical reactions can be loosely explained with electrostatic forces. Let's see how far classical physics will take us.</p>
+		<br>
+		<p><strong>Example</strong>: Calculate what Coulomb's law predicts for the force that holds together regular table salt, NaCl.</p>
+		<div class="col-group">
+			<div>
+				<p><strong>Na: Sodium</strong>
+				<br>1 valence electron
+				<br>mass = 3.8 x 10<sup>-26</sup> kg
+				<br>ionic radii = 227 x 10<sup>-12</sup> m</p>
+			</div>
+			<div>
+				<p><strong>Cl: Chlorine</strong>
+					<br>7 valence electrons
+					<br>mass = 5.9 x 10<sup>-26</sup> kg
+					<br>ionic radii = 175 x 10<sup>-12</sup> m</p>
+			</div>
+		<p>In nonionic atoms the numbers of electrons and protons are equal so the electrostatic forces are balanced to zero. When NaCl ionically bond one electron leaves Na and joins Cl.  Na becomes Na+1 and Cl becomes Cl-1.  This unbalanced positive and negative charge produces an attractive force.</p>
+		<svg style="display: block; margin: auto" width="210" height="105" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+		<g transform = 'translate(105,52)'>
+		<circle cx="-50" cy="0" r="50" fill = '#fdd' stroke-width="2" stroke="#222"/>
+		<text x="-55" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">Na</text>
+		<text x="-30" y="-5" fill="black" text-anchor="middle" alignment-baseline="central" font-size="15">+1</text>
+		<circle cx="35" cy="0" r="35" fill = '#ddf' stroke-width="2" stroke="#222"/>
+		<text x="35" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">Cl</text>
+		<text x="55" y="-5" fill="black" text-anchor="middle" alignment-baseline="central" font-size="15">-1</text>
+		</g>
+		</svg>
+		$$r = \left(227 \times 10^{-12}\right) + \left(175 \times 10^{-12}\right) = 402 \times 10^{-12}m $$
+
+		$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$
+		$$ F = \frac{(8.987 \times 10^{9})(1.602 \times 10^{-19})(1.602 \times 10^{-19})}{(402 \times 10^{-12})^{2}} $$
+		$$ F = 1.427 \times 10^{-9}N$$
+		<p>That's a small force, but atoms don't have much mass.  Let's calculate the acceleration that Na feels.</p>
+		$$F = ma$$
+		$$a = \frac{F}{m}$$
+		$$a = \frac{1.427 \times 10^{-9}}{3.8 \times 10^{-26}}$$
+		$$a = 3.75 \times 10^{16} {\small \frac{m}{s^{2}}}$$
+		<p>That acceleration is very large! Let's calculate the electric potential energy between the ions.</p>
+		$$ U_{e} = \frac{k_{e}q_{1}q_{2}}{r} $$
+		$$ U_{e} = \frac{(8.987 \times 10^{9})(1.602 \times 10^{-19})(1.602 \times 10^{-19})}{402 \times 10^{-12}} $$
+		$$ U_{e} = 5.737 \times 10^{-19}J$$
+		<p>The internet has the "NaCl Dissociation Energy" slightly higher at 6.82 x 10<sup>-19</sup>J. Not bad Coulomb!</p>
+
+    </article>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div style="text-align:center">
+        <a href="../../../index.html#units">Back</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>

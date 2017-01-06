@@ -18,7 +18,7 @@ function motion() {
         var rect = canvas.getBoundingClientRect();
         mouse.x = e.clientX - rect.left;
         mouse.y = e.clientY - rect.top;
-        ball.r = mouse.x - canvas.width / 2;
+        //ball.r = mouse.x - canvas.width / 2;
     }
     canvas.onmousedown = function() {
         mouse.down = true;
@@ -37,6 +37,10 @@ function motion() {
             x: 0,
             y: 0
         },
+		vel: {
+			x: 0,
+            y: 0
+		},
         r: 200,
         s: 21.221,
         size: 15,
@@ -63,6 +67,17 @@ function motion() {
             this.pos.x = Math.cos(count / 60 / 3 / Math.PI) * this.r + canvas.width / 2;
             this.pos.y = Math.sin(count / 60 / 3 / Math.PI) * this.r + canvas.height / 2;
         },
+		MG: 100,
+		period: 0,
+		orbit: function() {
+            this.speed = Math.sqrt(this.MG/Math.abs(this.r));
+			this.period = Math.sqrt(4*Math.PI*Math.abs(this.r)*this.r*this.r/this.MG)
+			//console.log(time);
+			const time = (count % this.period) /this.period *2*Math.PI//count / 60 / 3 / Math.PI
+            this.pos.x = Math.cos(time) * this.r + canvas.width / 2;
+            this.pos.y = Math.sin(time) * this.r + canvas.height / 2;
+        },
+
         speedCalc: function() {
             var dx = this.pos.x - this.lastPos.x;
             var dy = this.pos.y - this.lastPos.y;
@@ -91,28 +106,34 @@ function motion() {
         ctx.lineWidth = 2;
         ctx.strokeStyle = '#666'
         ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(ball.pos.x,ball.pos.y);
-        ctx.lineTo(ball.pos.x - (ball.pos.x-canvas.width/2)/2,
-                   ball.pos.y - (ball.pos.y-canvas.height/2)/2);
-        ctx.strokeStyle = '#a55'
-        ctx.stroke();
+		//force
+        // ctx.beginPath();
+        // ctx.moveTo(ball.pos.x,ball.pos.y);
+        // ctx.lineTo(ball.pos.x - (ball.pos.x-canvas.width/2)/2,
+        //            ball.pos.y - (ball.pos.y-canvas.height/2)/2);
+        // ctx.strokeStyle = '#a55'
+        // ctx.stroke();
     }
 
     function output() {
-        document.getElementById("hud").innerHTML = 'radius = ' + (ball.r).toFixed(1) + ' m'
+        document.getElementById("hud1").innerHTML =
+		'radius = ' + (ball.r).toFixed(1) + ' m'
         + '<br>velocity = ' + (ball.speed * 60).toFixed(1) + ' m/s'
-        + '<br> acceleration = ' + (ball.speed * 60*ball.speed * 60/ball.r).toFixed(1) + ' m/s²'
-        + '<br> time = ' + (count / 60).toFixed(1);
+        + '<br> acceleration = ' + (ball.speed * 60*ball.speed * 60/Math.abs(ball.r)).toFixed(1) + ' m/s²';
+
+		document.getElementById("hud2").innerHTML =
+		'central mass = ' + (ball.MG / (0.000000000067)).toExponential(2)+' kg'
+		+ '<br> period = ' + (ball.period/60).toFixed(1) +' s'
+		+ '<br> time = ' + (count / 60).toFixed(1) +' s';
     }
 
     //___________________animation loop ___________________
     function cycle() {
         count++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ball.move();
-        ball.speedCalc();
+        //ball.move();
+		ball.orbit();
+        //ball.speedCalc();
         output();
         background();
         ball.draw();
