@@ -1,52 +1,40 @@
-@import 'https://fonts.googleapis.com/css?family=Roboto:300,400,700';
+@import 'https://fonts.googleapis.com/css?family=Roboto:400';
 
 /************Reset**************/
 
 * {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-html,
-body,
-div,
-object,
-iframe,
-fieldset {
-  margin: 0;
-  padding: 0;
-  border: 0;
+html, body, div, object, iframe, fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
 
-ol,
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+ol, ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 table {
-  border-collapse: collapse;
-  border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
-header,
-footer,
-nav,
-section,
-article,
-hgroup,
-figure {
-  display: block;
+header, footer, nav, section, article, hgroup, figure {
+    display: block;
 }
 
 legend {
-  display: none;
+    display: none;
 }
 
 svg:not(:root) {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 
@@ -56,163 +44,175 @@ svg:not(:root) {
 /*global elements____________________________________*/
 
 body {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-size: 100%;
-  background-color: #eee;
-  padding-top: 0;
-  color: #444;
-  margin: 0;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-size: 100%;
+    background-color: #eee;
+    padding-top: 0;
+    color: #444;
+    margin: 0;
 }
 
-a {
-  text-decoration: none;
-  color: #2793C7;
+header {
+	text-align: center;
+	margin: auto;
+	display: block;
+    background-color: #fff;
+    box-shadow: 0 8px 6px -6px #999;
+    padding: 0.5em;
 }
 
-a:hover {
-  text-decoration: underline;
-  color: #000;
+.showhide {
+	position:absolute;
+	top:0.5em;
+	right:0.5em;
+    color: #777;
+    background: transparent;
 }
 
-::selection {
-  color: white;
-  background: #2793C7;
-  /*background: #0f0;*/
-}
-
-
-/*classes_________________________________________*/
-
-.underlined {
-  border-bottom: 1px solid #aaa;
-  font-weight: 300;
-  font-size: 2.2em;
-}
-
-.center {
-  text-align: center;
-  padding: 0;
-  margin: auto;
-  display: block;
-}
-
-/* grid setup ---------------------------- */
-
-.grid {
-  overflow: hidden;
-  padding: 0;
-  max-width: 76em;
-  margin: 0 auto;
-}
-
-.grid li {
-  position: relative;
-  font-size: 1em;
-  margin: 1%;
-  background-color: #fff;
-  box-shadow: 0 8px 6px -6px #999;
-  border-radius: 2px;
-}
-
-.grid li> div {
-  padding: 0.5em 0.75em;
-}
-
-@media all and (min-width: 27em) {
-  .grid li {
-    width: 48%;
-    float: left;
-  }
-}
-
-@media all and (min-width: 40em) {
-  .grid li {
-    width: 30.3333333%;
-  }
-}
-
-@media all and (min-width: 60em) {
-  .grid li {
-    width: 21%;
-  }
-}
 .num {
-  text-align: right;
-  font-size: 1.3em;
-  position: absolute;
-  top: 0.25em;
-  right: 0.25em;
-  opacity: 0.6;
+    text-align: right;
+    font-size: 1.3em;
+    position: absolute;
+    top: 0.25em;
+    right: 0.25em;
+    opacity: 0.6;
 }
 
 .focus {
-  background-color: #4aa;
-  color: #fff;
-/*   font-weight: bold; */
-  box-shadow: 0 25px 25px -3px #aaa;
-  border-radius: 2px;
+    background-color: #4aa;
+    color: #fff;
+    box-shadow: 0 25px 25px -3px #aaa;
+    border-radius: 2px;
 }
 
 button {
-  border-radius: 4px;
-  color: #fff;
-  font-size: 15px;
-  background: #444;
-  padding: 10px 20px 10px 20px;
-  margin: 10px;
-  text-decoration: none;
-  border: none;
+    border-radius: 4px;
+    color: #fff;
+    background: #444;
+    padding: 10px 20px 10px 20px;
+    margin: 10px;
+    text-decoration: none;
+    border: none;
+}
+
+.large {
+	font-size: 1.5em;
 }
 
 button:hover {
-  background: #555;
+    background: #555;
 }
 
 button:active {
-  background: #777;
-}
-.large{
-  font-size: 150%;
+    background: #777;
 }
 
 .red {
-  background: #f20;
+    background: #f20;
 }
+
 .red:hover {
-  background: #f42;
+    background: #f42;
 }
+
 .red:active {
-  background: #f64;
+    background: #f64;
 }
+
 .blue {
-  background: #4aa;
+    background: #4aa;
 }
+
 .blue:hover {
-  background: #5bb;
+    background: #5bb;
 }
+
 .blue:active {
-  background: #6cc;
+    background: #6cc;
 }
+
 .white {
-  background: #ccc;
-  color: #333;
+    background: transparent;
+    color: #333;
 }
+
 .white:hover {
-  background: #5bb;
+    background: #ccc;
 }
+
 .white:active {
-  background: #6cc;
+    background: #aaa;
 }
+
 button:focus {
-  outline: 0;
+    outline: 0;
 }
+
 input {
-  border-radius: 4px;
-  font-size: 15px;
-  color: #333;
-  background: #ddd;
-  padding: 7px 17px 7px 17px;
-/*   margin: 10px; */
-  text-decoration: none;
-  border: 2px solid #888;
+    border-radius: 4px;
+    color: #333;
+    padding: 7px 17px 7px 17px;
+    text-decoration: none;
+    border: 2px solid #888;
+}
+
+input[type=file] {
+    border-radius: 0px;
+    color: #333;
+    background: transparent;
+    padding: 0;
+    text-decoration: none;
+    border: 0px solid #888;
+}
+
+
+/*2 Equal-Width Columns that combine in the article________________*/
+
+@media screen and (min-width: 43em) {
+    .col-group {
+        overflow: hidden;
+    }
+    .col-group>div {
+        float: left;
+        width: 50%;
+    }
+}
+
+.grid {
+    overflow: hidden;
+    padding: 0;
+    max-width: 76em;
+    margin: 0 auto;
+}
+
+.grid li {
+    position: relative;
+    font-size: 1em;
+    margin: 1%;
+    background-color: #fff;
+    box-shadow: 0 8px 6px -6px #999;
+    border-radius: 2px;
+}
+
+.grid li>div {
+    padding: 0.5em 0.75em;
+}
+
+@media all and (min-width: 27em) {
+    .grid li {
+        width: 48%;
+        float: left;
+    }
+}
+
+@media all and (min-width: 40em) {
+    .grid li {
+        width: 30.3333333%;
+    }
+}
+
+@media all and (min-width: 60em) {
+    .grid li {
+        width: 21%;
+    }
 }
