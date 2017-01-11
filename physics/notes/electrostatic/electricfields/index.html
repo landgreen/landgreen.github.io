@@ -19,8 +19,8 @@
 	<article>
 		<p>A field has a value for each point in space and time. For example, on a weather map, the <a href='https://earth.nullschool.net/'>surface wind velocity</a> is described by assigning a vector to each point on the map.</p>
 		    <h2 class='underlined'>Electric Fields</h2>
-			<p>Electric fields predict the electric force of a +1C test charge at a location. This is useful when you only know about one charge instead of the pair. Just remember the test charge doesn't exist.</p>
-			<p>We get the electric field equation by simply setting q to +1C in the electrostatic force equation.</p>
+			<p>Electric fields predict the electric force of a +1C test charge at a location. This is useful when you only know about one charge instead of the pair, but remember the test charge doesn't exist.</p>
+			<p>We get the electric field equation by simply setting one q to +1C in the electrostatic force equation.</p>
 			<div class='definition'>
 				<svg style="display: block; margin: auto" width="400" height="110" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 50 400 110">
 
@@ -48,8 +48,10 @@
 					<br><strong>q</strong> = charge [C, Coulomb] <i>scalar</i>
 					<br><strong>r</strong> = distance between the charge and a location [m] <i>scalar</i>
 			</div>
+			<a id ='efieldsim'></a>
 			<p>It can be useful to visualize the electric field vectors on a 2-D field. This program calculates the electric field at several points and displays them as arrows.</p>
 		</article>
+
 		<canvas class='center' id="field" height='600' width='600' onclick="diagram(this)"> </canvas>
 	    <article>
 			<p>Are blue charges positive or negative?
@@ -65,11 +67,11 @@
 			<p><b>Example:</b> Find the electric field 2.0m away from a negative 3.0μC charge.</p>
 			<details>
 					<summary>solution</summary>
-					$$\mu = 10^{-6}$$
+					$$\mu = micro = 10^{-6}$$
+					<br>
 					$$E = \frac{k_{e}q}{r^{2}}$$
 					$$E = \frac{(8.987 \times 10^{9})(-3 \times 10^{-6})}{(2)^{2}}$$
 					$$E = -6740 {\scriptsize \frac{N}{C}}$$
-					<!-- <p>To decide the direction of the field just remember that opposite charges repel and like charges attract.</p> -->
 					<p>The test charge is always positive and the charge that generates this field is negative. Opposites attract so the field is pointed at the -3.0μC charge</p>
 					<svg style="display: block; margin: auto" width="400" height="400" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
 						<g transform="translate(200 200)">
@@ -185,6 +187,22 @@
 						<line x1="-5" y1="0" x2="5" y2="0" style="stroke:#000;stroke-width:2" />
 					</g>
 					</svg>
+			</details>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<p><b>Example:</b> How far from a 10nC charge is the field strength 10N/C?</p>
+			<details>
+					<summary>solution</summary>
+					$$n = nano = 10^{-9}$$
+					<br>
+					$$E = \frac{k_{e}q}{r^{2}}$$
+					$$r^{2} = \frac{k_{e}q}{E}$$
+					$$r^{2} = \frac{(8.987 \times 10^{9})(10 \times 10^{-9})}{10}$$
+					$$r^{2} = 8.987$$
+					$$r = 2.998m$$
 			</details>
 			<br>
 			<br>

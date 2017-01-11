@@ -68,7 +68,7 @@ function diagram(button) {
             x: e.clientX - rect.left,
             y: e.clientY - rect.top
         };
-        cycle();
+        if (mouse.pos.x > 1 && mouse.pos.y > 1 && mouse.pos.x < canvas.width-1 && mouse.pos.y < canvas.height-1) cycle();
     }, false);
 
     //track if mouse is up or down
@@ -91,7 +91,7 @@ function diagram(button) {
             body[len] = new bodyProto(len + 1, mouse.pos.x, mouse.pos.y, settings.size, Math.round(Math.random()) * 2 - 1);
             body[len].isMouseOver = true;
         }
-        cycle();
+        if (mouse.pos.x > 1 && mouse.pos.y > 1 && mouse.pos.x < canvas.width-1 && mouse.pos.y < canvas.height-1) cycle();
     };
     window.onmouseup = function() {
         mouse.down = false;
@@ -102,7 +102,7 @@ function diagram(button) {
                     break;
                 }
             }
-            cycle();
+            if (mouse.pos.x > 1 && mouse.pos.y > 1 && mouse.pos.x < canvas.width-1 && mouse.pos.y < canvas.height-1) cycle();
         }
 
     };
@@ -112,9 +112,9 @@ function diagram(button) {
         this.name = name;
 
         this.color = (charge > 0) ? randomColor({
-            hue: 'red'
-        }) : randomColor({
             hue: 'blue'
+        }) : randomColor({
+            hue: 'red'
         });
 
         this.r = radius; //radius is also used as mass for force calculations
@@ -292,4 +292,3 @@ function diagram(button) {
     }
     cycle() //run once at start
 }
-gravityDiagram();
