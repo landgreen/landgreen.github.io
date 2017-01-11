@@ -60,13 +60,10 @@ input {
     font-size: 1em;
 }
 
-
-
 canvas {
     margin: 0.3em;
     /*border: 1px solid #999;*/
     box-shadow: 2px 2px 8px #aaa;
-    /*background-color: #f9f9f9;*/
     border-radius: 5px;
     /*cursor: crosshair;*/
 }
@@ -82,6 +79,7 @@ a:hover {
 
 summary {
     cursor: pointer;
+	outline: none;
 }
 hr {
     border: 0;
@@ -94,6 +92,7 @@ th {
 }
 details p {
     text-align: center;
+	font-size: 1.3em;
 }
 
 ::selection {
@@ -111,6 +110,7 @@ details p {
 }
 
 .center {
+  text-align: center;
   padding: 0;
   margin: auto;
   display: block;

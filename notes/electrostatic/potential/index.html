@@ -118,6 +118,15 @@
                 <br><strong>q</strong> = charge [C, Coulomb's] <i>scalar</i>
                 <br><strong>r</strong> = distance between the center of each charge [m, meters] <i>scalar</i>
         </div>
+		<p>Here is a simulation of electric potential as a scalar field. You can think of the charges like mountains and valleys. A similar scalar field for gravity would look like a <a href="http://geodesy.curtin.edu.au/research/models/GGMplus/">topographical map</a>.</p>
+	</article>
+	<canvas class='center' id="field" height='600' width='600' onclick="diagram(this)"> </canvas>
+	<article>
+		<p>How is it different from the <a href="..\electricfields\index.html#efieldsim">electric field simulation</a>?
+			<br>What happens when you put two different charges near each other?
+			<br>What happens when you put two of the same charge near each other?
+			<br>What location requires the most work/energy to bring a positive charge?
+		</p>
 		<br>
 		<br>
 		<br>
@@ -186,6 +195,7 @@
     <script>
         renderMathInElement(document.body);
     </script>
+	<script src="scalarfield.js"></script>
 </body>
 
 </html>
