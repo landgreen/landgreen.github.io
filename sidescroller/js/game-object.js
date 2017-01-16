@@ -1,8 +1,8 @@
-// game Object Prototype *********************************************
+// game Object ********************************************************
 //*********************************************************************
 const game = {
-	g: 0.001,
-	dmgScale: 0.01,
+    g: 0.001,
+    dmgScale: 0.01,
     testing: false, //testing mode: shows wireframe and some variables
     //time related vars and methods
     cycle: 0, //total cycles, 60 per second
@@ -11,35 +11,76 @@ const game = {
     lastTimeStamp: 0, //tracks time stamps for measuing delta
     delta: 0, //measures how slow the engine is running compared to 60fps
     buttonCD: 0,
-	drawList: [], //so you can draw a first frame of explosions.. I know this is bad
-	drawList2: [], //so you can draw a second frame of explosions.. I know this is bad
-	drawCircle: function() {
-		let len = this.drawList.length
-		for (let i = 0; i < len; i++){
-			//draw circle
-			ctx.fillStyle = this.drawList[i].color;
-			ctx.beginPath();
-			ctx.arc(this.drawList[i].x,this.drawList[i].y,this.drawList[i].radius,0,2*Math.PI);
-			ctx.fill();
-		}
-		len = this.drawList2.length
-		for (let i = 0; i < len; i++){ //so you can draw a second frame of explosions.. I know this is bad
-			//draw circle
-			ctx.fillStyle = this.drawList2[i].color;
-			ctx.beginPath();
-			ctx.arc(this.drawList2[i].x,this.drawList2[i].y,this.drawList2[i].radius,0,2*Math.PI);
-			ctx.fill();
-		}
-		this.drawList2 = this.drawList;
-		this.drawList = [];
-	},
+    drawList: [], //so you can draw a first frame of explosions.. I know this is bad
+    drawList2: [], //so you can draw a second frame of explosions.. I know this is bad
+    onLevel: null, //is set later to localStorage.getItem('onLevel'),
+    nextLevel: function() {
+		localStorage.setItem('skipSplash', '1');
+        if (this.onLevel === 'buildings') {
+            localStorage.setItem('onLevel', 'skyscrapers');
+        } else {
+            localStorage.setItem('onLevel', 'buildings');
+        }
+    },
+    levels: {
+        buildings: {
+            name: 'buildings',
+            background: "background_buildings",
+            foreground: "foreground_buildings",
+            ambient: "ambient_crickets",
+        },
+        skyscrapers: {
+            name: 'skyscrapers',
+            background: "background_skyscrapers",
+            foreground: "foreground_skyscrapers",
+            ambient: "ambient_wind",
+        },
+        testing: {
+            name: 'testing',
+            background: "background_testing",
+            foreground: "foreground_testing",
+            ambient: null,
+        },
+
+    },
+    drawCircle: function() {
+        let len = this.drawList.length
+        for (let i = 0; i < len; i++) {
+            //draw circle
+            ctx.fillStyle = this.drawList[i].color;
+            ctx.beginPath();
+            ctx.arc(this.drawList[i].x, this.drawList[i].y, this.drawList[i].radius, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+        len = this.drawList2.length
+        for (let i = 0; i < len; i++) { //so you can draw a second frame of explosions.. I know this is bad
+            //draw circle
+            ctx.fillStyle = this.drawList2[i].color;
+            ctx.beginPath();
+            ctx.arc(this.drawList2[i].x, this.drawList2[i].y, this.drawList2[i].radius, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+        this.drawList2 = this.drawList;
+        this.drawList = [];
+    },
+    volume: function() { //wind backgorund sound on loop gets louder when the player is higher
+        if (!(game.cycle % 3)) { //make for skyscrapers map
+            if (player.position.y > -500) { //100 is min
+                document.getElementById("wind").volume = 0.2; // volume between 0 and 1
+            } else if (player.position.y < -2500) { //2500 is max volume
+                document.getElementById("wind").volume = 1; // volume between 0 and 1
+            } else {
+                document.getElementById("wind").volume = -player.position.y * 0.0004; // volume between 0 and 1
+            }
+        }
+    },
     timing: function() {
         this.cycle++; //tracks game cycles
         //delta is used to adjust forces on game slow down;
         this.delta = (engine.timing.timestamp - this.lastTimeStamp) / 16.666666666666;
         this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
     },
-    zoom: 0.000001,//1,
+    zoom: 0.000001, //1,
     scaleZoom: function() {
         ctx.translate(canvas.width / 2, canvas.height / 2);
         ctx.scale(this.zoom, this.zoom);
@@ -58,14 +99,14 @@ const game = {
             this.zoom = 0.1 * this.zoomGoal + 0.9 * this.zoom; //smooths changes to zoom
             //this.zoom = this.zoomGoal
         } else if (keys[48]) { //zero   reset
-			this.zoomReset();
+            this.zoomReset();
         }
     },
-	zoomReset: function(){
-		this.showHeight = canvas.height;
-		this.setZoomGoal();
-		this.zoom = this.zoomGoal
-	},
+    zoomReset: function() {
+        this.showHeight = canvas.height;
+        this.setZoomGoal();
+        this.zoom = this.zoomGoal
+    },
     zoomGoal: 1,
     showHeight: 1500, //controls the resting zoomheight set to higher to see more of the map   //1000 seems normal
     setZoomGoal: function() {
@@ -89,7 +130,7 @@ const game = {
         // } else {
         //     ctx.clearRect(0, 0, canvas.width, canvas.height);
         // }
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     },
     isPaused: false,
     pause: function() {
@@ -173,5 +214,112 @@ const game = {
         ctx.fillText("on " + mech.onBody.type + " id: " + mech.onBody.id + ", index: " + mech.onBody.index, 5, line);
         line += 20;
         ctx.fillText('action: ' + mech.onBody.action, 5, line);
+    },
+    draw: {
+        map: function() {
+            ctx.beginPath();
+            for (let i = 0; i < map.length; i += 1) {
+                let vertices = map[i].vertices;
+                ctx.moveTo(vertices[0].x, vertices[0].y);
+                for (let j = 1; j < vertices.length; j += 1) {
+                    ctx.lineTo(vertices[j].x, vertices[j].y);
+                }
+                ctx.lineTo(vertices[0].x, vertices[0].y);
+            }
+            ctx.fillStyle = '#444';
+            ctx.fill();
+        },
+        body: function() {
+            ctx.beginPath();
+            for (let i = 0; i < body.length; i += 1) {
+                let vertices = body[i].vertices;
+                ctx.moveTo(vertices[0].x, vertices[0].y);
+                for (let j = 1; j < vertices.length; j += 1) {
+                    ctx.lineTo(vertices[j].x, vertices[j].y);
+                }
+                ctx.lineTo(vertices[0].x, vertices[0].y);
+            }
+            ctx.lineWidth = 1.5;
+            ctx.fillStyle = '#777';
+            ctx.fill();
+            ctx.strokeStyle = '#222';
+            ctx.stroke();
+        },
+        cons: function() {
+            ctx.beginPath();
+            for (let i = 0; i < cons.length; i += 1) {
+                ctx.moveTo(cons[i].pointA.x, cons[i].pointA.y);
+                ctx.lineTo(cons[i].bodyB.position.x, cons[i].bodyB.position.y);
+            }
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#999';
+            ctx.stroke();
+        },
+        wireFrame: function() {
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#999";
+            const bodies = Composite.allBodies(engine.world);
+            ctx.beginPath();
+            for (let i = 0; i < bodies.length; i += 1) {
+                //ctx.fillText(bodies[i].id,bodies[i].position.x,bodies[i].position.y);  //shows the id of every body
+                let vertices = bodies[i].vertices;
+                ctx.moveTo(vertices[0].x, vertices[0].y);
+                for (let j = 1; j < vertices.length; j += 1) {
+                    ctx.lineTo(vertices[j].x, vertices[j].y);
+                }
+                ctx.lineTo(vertices[0].x, vertices[0].y);
+            }
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#000';
+            ctx.stroke();
+        },
+        testing: function() {
+            //jump
+            ctx.beginPath();
+            let bodyDraw = jumpSensor.vertices;
+            ctx.moveTo(bodyDraw[0].x, bodyDraw[0].y);
+            for (let j = 1; j < bodyDraw.length; j += 1) {
+                ctx.lineTo(bodyDraw[j].x, bodyDraw[j].y);
+            }
+            ctx.lineTo(bodyDraw[0].x, bodyDraw[0].y);
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+            ctx.fill();
+            ctx.strokeStyle = '#000';
+            ctx.stroke();
+            //main body
+            ctx.beginPath();
+            bodyDraw = playerBody.vertices;
+            ctx.moveTo(bodyDraw[0].x, bodyDraw[0].y);
+            for (let j = 1; j < bodyDraw.length; j += 1) {
+                ctx.lineTo(bodyDraw[j].x, bodyDraw[j].y);
+            }
+            ctx.lineTo(bodyDraw[0].x, bodyDraw[0].y);
+            ctx.fillStyle = 'rgba(0, 255, 255, 0.3)';
+            ctx.fill();
+            ctx.stroke();
+            //head
+            ctx.beginPath();
+            bodyDraw = playerHead.vertices;
+            ctx.moveTo(bodyDraw[0].x, bodyDraw[0].y);
+            for (let j = 1; j < bodyDraw.length; j += 1) {
+                ctx.lineTo(bodyDraw[j].x, bodyDraw[j].y);
+            }
+            ctx.lineTo(bodyDraw[0].x, bodyDraw[0].y);
+            ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
+            ctx.fill();
+            ctx.stroke();
+            //head sensor
+            ctx.beginPath();
+            bodyDraw = headSensor.vertices;
+            ctx.moveTo(bodyDraw[0].x, bodyDraw[0].y);
+            for (let j = 1; j < bodyDraw.length; j += 1) {
+                ctx.lineTo(bodyDraw[j].x, bodyDraw[j].y);
+            }
+            ctx.lineTo(bodyDraw[0].x, bodyDraw[0].y);
+            ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';
+            ctx.fill();
+            ctx.stroke();
+        },
     },
 }

@@ -1,29 +1,96 @@
-// player Object Prototype *********************************************
+//global player variables
+let player, jumpSensor, playerBody, playerHead, headSensor;
 
+// player Object Prototype *********************************************
 const mechProto = function() {
+    this.spawn = function() {
+        //player as a series of vertices
+        let vector = Vertices.fromPath('0 40  0 115  20 130  30 130  50 115  50 40');
+        playerBody = Matter.Bodies.fromVertices(0, 0, vector);
+        //this sensor check if the player is on the ground to enable jumping
+        jumpSensor = Bodies.rectangle(0, 46, 36, 6, {
+            sleepThreshold: 99999999999,
+            isSensor: true,
+        });
+        //this part of the player lowers on crouch
+        vector = Vertices.fromPath('0 -66 18 -82  0 -37 50 -37 50 -66 32 -82');
+        playerHead = Matter.Bodies.fromVertices(0, -55, vector);
+        //a part of player that senses if the player's head is empty and can return after crouching
+        headSensor = Bodies.rectangle(0, -57, 48, 45, {
+            sleepThreshold: 99999999999,
+            isSensor: true,
+        });
+        player = Body.create({ //combine jumpSensor and playerBody
+            parts: [playerBody, playerHead, jumpSensor, headSensor],
+            inertia: Infinity, //prevents player rotation
+            friction: 0.002,
+            //frictionStatic: 0.5,
+            restitution: 0.3,
+            sleepThreshold: Infinity,
+            collisionFilter: {
+                group: 0,
+                category: 0x001000,
+                mask: 0x010001
+            },
+        });
+        //Matter.Body.setPosition(player, mech.spawnPos);
+        //Matter.Body.setVelocity(player, mech.spawnVel);
+        Matter.Body.setMass(player, mech.mass);
+        World.add(engine.world, [player]);
+        //holding body constraint
+        const holdConstraint = Constraint.create({
+            pointA: {
+                x: 0,
+                y: 0
+            },
+            //setting constaint to jump sensor because it has to be on something until the player picks up things
+            bodyB: jumpSensor,
+            stiffness: 0.4,
+        });
+        World.add(engine.world, holdConstraint);
+    };
     this.width = 50;
     this.radius = 30;
-	this.fillColor = '#fff';
-	this.fillColorDark = '#ddd';
-	// const hue = '353';
-	// const sat = '100';
-	// const lit = '90';
-	// this.fillColor = 'hsl('+hue+','+sat+'%,'+lit+'%)';
-	// this.fillColorDark = 'hsl('+hue+','+(sat-10)+'%,'+(lit-10)+'%)';
-
-	this.fireCDcycle = 0;
-	this.gun = 'machine'; //current gun in use
-	this.gunOptions = { //keeps track of keys that switch guns (used in the onkeypress event)
-		49: 'machine',
-		50: 'needle',
-		51: 'shot',
-		52: 'rail',
-		53: 'cannon',
-		54: 'super',
-		55: 'lob',
-		// 55: 'spiritBomb',
-		// 56: 'experimental'
-	}
+    this.fillColor = '#fff';
+    this.fillColorDark = '#ddd';
+    // const hue = '353';
+    // const sat = '100';
+    // const lit = '90';
+    // this.fillColor = 'hsl('+hue+','+sat+'%,'+lit+'%)';
+    // this.fillColorDark = 'hsl('+hue+','+(sat-10)+'%,'+(lit-10)+'%)';
+    // this.guns = {
+    // 	machine: {
+    // 		key: 49,
+    // 		ammo: infinite,
+    // 		isActive: true,
+    // 		isAvailable: true,
+    // 	},
+    // 	needle: {
+    // 		key: 50,
+    // 		ammo: 10,
+    // 		isActive: false,
+    // 		isAvailable: true,
+    // 	},
+    // 	shot: {
+    // 		key: 51,
+    // 		ammo: 10,
+    // 		isActive: false,
+    // 		isAvailable: true,
+    // 	}
+    // }
+    this.fireCDcycle = 0;
+    this.gun = 'machine'; //current gun in use
+    this.gunOptions = { //keeps track of keys that switch guns (used in the onkeypress event)
+        49: 'machine',
+        50: 'needle',
+        51: 'shot',
+        52: 'rail',
+        53: 'cannon',
+        54: 'super',
+        55: 'lob',
+        // 55: 'spiritBomb',
+        // 56: 'experimental'
+    }
     this.height = 42;
     this.yOffWhen = {
         crouch: 22,
@@ -54,9 +121,9 @@ const mechProto = function() {
         x: this.spawnPos.x,
         y: this.spawnPos.y
     };
-    this.setPosToSpawn = function(xPos,yPos) {
-		this.spawnPos.x = xPos
-		this.spawnPos.y = yPos
+    this.setPosToSpawn = function(xPos, yPos) {
+        this.spawnPos.x = xPos
+        this.spawnPos.y = yPos
         this.pos.x = xPos;
         this.pos.y = yPos;
         this.Vx = this.spawnVel.x;
@@ -291,8 +358,9 @@ const mechProto = function() {
             this.death();
         }
     };
-    this.hitMob = function(i,dmg) {
+    this.hitMob = function(i, dmg) {
         this.damage(dmg);
+        playSound("dmg" + Math.floor(Math.random() * 4));
         //extra kick between player and mob
         //this section would be better with forces but they don't work...
         let angle = Math.atan2(player.position.y - mob[i].position.y, player.position.x - mob[i].position.x);
@@ -467,21 +535,21 @@ const mechProto = function() {
         dist: 1000,
         index: 0
     };
-	this.lookingAtMob = function(mob,threshold) {
-		//calculate a vector from mob to player and make it length 1
-		const diff = Matter.Vector.normalise(Matter.Vector.sub(mob.position, player.position));
-		const dir = { //make a vector for the player's direction of length 1
-				x: Math.cos(mech.angle),
-				y: Math.sin(mech.angle)
-			}
-		//the dot prodcut of diff and dir will return how much over lap between the vectors
-		const dot = Matter.Vector.dot(dir, diff);
-		if (dot > threshold) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    this.lookingAtMob = function(mob, threshold) {
+        //calculate a vector from mob to player and make it length 1
+        const diff = Matter.Vector.normalise(Matter.Vector.sub(mob.position, player.position));
+        const dir = { //make a vector for the player's direction of length 1
+                x: Math.cos(mech.angle),
+                y: Math.sin(mech.angle)
+            }
+            //the dot prodcut of diff and dir will return how much over lap between the vectors
+        const dot = Matter.Vector.dot(dir, diff);
+        if (dot > threshold) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     this.lookingAt = function(i) {
         //calculate a vector from mob to player and make it length 1
         const diff = Matter.Vector.normalise(Matter.Vector.sub(body[i].position, player.position));
@@ -517,15 +585,8 @@ const mechProto = function() {
         this.closest.index = index;
     };
     this.exit = function() {
-		maps = { //remembers level names
-			0: 'buildings',
-			1: 'skyscrapers',
-			2: 'testing',
-		}
-
-
-
-        location.reload();
+		game.nextLevel();
+        window.location.reload(false);
     }
     this.standingOnActions = function() {
         if (this.onBody.type === 'map') {

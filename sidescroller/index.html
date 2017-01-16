@@ -16,6 +16,23 @@
 </head>
 
 <body>
+	<!-- background sounds -->
+	<audio id="ambient_crickets"src="sounds\ambient.mp3" preload="auto" loop></audio>
+	<audio id="ambient_wind" src="sounds\wind.ogg" preload="auto" loop></audio>
+	<!-- guns -->
+	<audio id="snare" src="sounds\guns\snare.ogg" preload="auto"></audio>
+	<audio id="airgun" src="sounds\guns\airgun.ogg" preload="auto"></audio>
+	<audio id="basssnaredrum" src="sounds\guns\basssnaredrum.ogg" preload="auto"></audio>
+	<audio id="sniper" src="sounds\guns\sniper.ogg" preload="auto"></audio>
+	<audio id="glock" src="sounds\guns\glock.ogg" preload="auto"></audio>
+	<audio id="launcher" src="sounds\guns\launcher.ogg" preload="auto"></audio>
+	<!-- player dmg -->
+	<audio id="dmg0" src="sounds\dmg\dmg0.ogg" preload="auto"></audio>
+	<audio id="dmg1" src="sounds\dmg\dmg1.ogg" preload="auto"></audio>
+	<audio id="dmg2" src="sounds\dmg\dmg2.ogg" preload="auto"></audio>
+	<audio id="dmg3" src="sounds\dmg\dmg3.ogg" preload="auto"></audio>
+
+
 	<!-- <div id="keysleft">
 		move: WASD
 		<br>fire: click
@@ -52,57 +69,61 @@
 	<!-- buildings1 *********************************************************************
 *****************************************************************************************
 *****************************************************************************************-->
-	<!-- <g id = 'background'>
-
+	<g id = 'background_buildings' display= "none">
 		<rect x="2075" y="-160" width="25" height="150" fill='#ddd'/>
 		<rect x="700" y="-160" width="25" height="150" fill='#ddd'/>
-
 		<rect x="3500" y="-475" width="500" height="265" fill='#dff'/>
 		<rect x="3500" y="-360" width="25" height="150" fill='#dee'/>
 		<path d="M3700 -220 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#0ff' stroke='transparent'/>
-	</g> -->
+	</g>
 	<!-- skyscrapers1 ***********************************************************************
 	*****************************************************************************************
 	*****************************************************************************************
 	*****************************************************************************************-->
-<g id = 'background'>
+<g id = 'background_skyscrapers' display= "none">
+	<!-- <rect x="3175" y="-530" width="1425" height="530" fill='#f6f8f4'/>
+	<rect x="630" y="-2500" width="1020" height="2500" fill='#f6f8f4'/>
+	<rect x="1200" y="-800" width="1000" height="800" fill='#f6f8f4'/>
+	<rect x="-500" y="-1700" width="813" height="1700" fill='#f6f8f4'/>
+	<rect x="3810" y="-1700" width="820" height="1700" fill='#f6f8f4'/> -->
+
 	<rect x="-500" y="50" width="5600" height="3000" fill='#444'/>
 	<path d="M-100 -10 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#bbb' stroke='transparent'/>
 
 	<rect x="1350" y="-2100" width="400" height="250" fill='#dff'/>
-	<rect x="1725" y="-2100" width="25" height="250" fill='#e5f9f9'/>
+	<rect x="1725" y="-2100" width="25" height="250" fill='#d5d5d5'/>
 	<path d="M1500 -1860 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#0ff' stroke='transparent'/>
 	<g transform = "translate(1420,-1800)">
-		<path d="M0 25 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100" fill="transparent" stroke="#eee" stroke-width="8"/>
-		<path d="M100 25 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100" fill="transparent" stroke="#eee" stroke-width="8"/>
-		<path d="M0 0 l 0 1800" fill="transparent" stroke="#eee" stroke-width="12"/>
-		<path d="M100 0 l 0 1800" fill="transparent" stroke="#eee" stroke-width="12"/>
+		<path d="M0 25 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100" fill="transparent" stroke="#d5d5d5" stroke-width="8"/>
+		<path d="M100 25 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100" fill="transparent" stroke="#d5d5d5" stroke-width="8"/>
+		<path d="M0 0 l 0 1800" fill="transparent" stroke="#d5d5d5" stroke-width="12"/>
+		<path d="M100 0 l 0 1800" fill="transparent" stroke="#d5d5d5" stroke-width="12"/>
 	</g>
 	<g transform = "translate(1830,-1800)">
-		<path d="M0 25 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100" fill="transparent" stroke="#eee" stroke-width="8"/>
-		<path d="M100 25 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100" fill="transparent" stroke="#eee" stroke-width="8"/>
-		<path d="M0 0 l 0 1400" fill="transparent" stroke="#eee" stroke-width="12"/>
-		<path d="M100 0 l 0 1400" fill="transparent" stroke="#eee" stroke-width="12"/>
+		<path d="M0 25 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100" fill="transparent" stroke="#d5d5d5" stroke-width="8"/>
+		<path d="M100 25 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100" fill="transparent" stroke="#d5d5d5" stroke-width="8"/>
+		<path d="M0 0 l 0 1400" fill="transparent" stroke="#d5d5d5" stroke-width="12"/>
+		<path d="M100 0 l 0 1400" fill="transparent" stroke="#d5d5d5" stroke-width="12"/>
 	</g>
-	<rect x="1805" y="-425" width="150" height="25" opacity='1' fill='#eee'/>
-	<rect x="1805" y="-1800" width="150" height="25" opacity='1' fill='#eee'/>
+	<rect x="1805" y="-425" width="150" height="25" opacity='1' fill='#d5d5d5'/>
+	<rect x="1805" y="-1800" width="150" height="25" opacity='1' fill='#d5d5d5'/>
 
-	<rect x="1395" y="-25" width="150" height="25" opacity='1' fill='#eee'/>
-	<rect x="1395" y="-1800" width="150" height="25" opacity='1' fill='#eee'/>
+	<rect x="1395" y="-25" width="150" height="25" opacity='1' fill='#d5d5d5'/>
+	<rect x="1395" y="-1800" width="150" height="25" opacity='1' fill='#d5d5d5'/>
 
 	<g transform = "translate(3325,-1325)">
-		<path d="M0 25 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100" fill="transparent" stroke="#eee" stroke-width="8"/>
-		<path d="M100 25 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100" fill="transparent" stroke="#eee" stroke-width="8"/>
-		<path d="M0 0 l 0 1300" fill="transparent" stroke="#eee" stroke-width="12"/>
-		<path d="M100 0 l 0 1300" fill="transparent" stroke="#eee" stroke-width="12"/>
+		<path d="M0 25 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100" fill="transparent" stroke="#d5d5d5" stroke-width="8"/>
+		<path d="M100 25 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100 l 100 100 l -100 100" fill="transparent" stroke="#d5d5d5" stroke-width="8"/>
+		<path d="M0 0 l 0 1300" fill="transparent" stroke="#d5d5d5" stroke-width="12"/>
+		<path d="M100 0 l 0 1300" fill="transparent" stroke="#d5d5d5" stroke-width="12"/>
 	</g>
-	<rect x="3300" y="-25" width="150" height="25" opacity='1' fill='#eee'/>
+	<rect x="3300" y="-25" width="150" height="25" opacity='1' fill='#d5d5d5'/>
 </g>
 	<!-- testingsMap ************************************************************************
 	*****************************************************************************************
 	*****************************************************************************************
 	*****************************************************************************************-->
-	<!-- <g id = 'background'>
+	<g id = 'background_testing' display= "none">
 	    <circle cx="500" cy="-300" r="100" fill="#d67" opacity='1' stroke-width="0"/>
 	    <g transform = "translate(450,750) scale(0.7)">
 		    <rect class = "keyrect" id="e" x="140" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
@@ -126,7 +147,7 @@
 		 		<path fill="#222" d="M238,264.5v-36.535c-15.071-6.217-25.557-19.987-25.557-35.988v-67.953 c0-16.001,10.485-29.771,25.557-35.988V16h-17C149.203,16,91,72.325,91,141.806V264.5H238z"/>
 			</g>
 		</g>
-  	</g> -->
+  	</g>
 </svg>
 
 	<!-- *****************************************************************************************************
@@ -186,14 +207,14 @@
 		  }
 	    ]]></style>
     </defs>
-	<!-- buildings1 -->
-	<!-- <g id = 'foreground'>
+	<!-- buildings -->
+	<g id = 'foreground_buildings' display= "none">
 		<rect x="-200" y="-500" width="400" height="240" opacity='0.1'/>
 		<rect x="-300" y="-250" width="600" height="240" opacity='0.1'/>
 		<rect x="700" y="-400" width="1400" height="390" opacity='0.1' fill='#300'/>
-   </g> -->
-	<!-- skyscrapers1 -->
-    <g id = 'foreground'>
+   </g>
+	<!-- skyscrapers -->
+    <g id = 'foreground_skyscrapers' display= "none">
 		<rect x="-250" y="-300" width="400" height="290" opacity='0.2'/>
 		<rect x="150" y="-150" width="50" height="140" fill='url(#hor_shadow)'/>
     	<rect x="475" y="-115" width="100" height="100" fill='url(#jump_jet)' stroke-width="0" />
@@ -206,7 +227,7 @@
     </g>
 
 	<!-- testingsMap -->
-    <!-- <g id = 'foreground' visibility = 'hidden'>
+    <g id = 'foreground_testing' display= "none">
     	<rect x="1300" y="1890" width="100" height="100" fill='url(#jump_jet)'   stroke-width="0" />
         <circle cx="500" cy="-300" r="1200" fill='url(#sunsetRad)' stroke-width="0"/>
         <rect x="-600" y="200" width="400" height="400" opacity='0.05'/>
@@ -216,7 +237,7 @@
         <g transform = "translate(-500,800) scale(2)">
             <path d="M0 0 C 20 20, 60 20, 80 0" stroke="black" fill="transparent"/>
         </g>
-    </g> -->
+    </g>
 </svg>
 
 	<!-- **********  intro page ***************************************************
@@ -227,7 +248,7 @@
 *******************************************************************************
 *******************************************************************************
 ******************************************************************************* -->
-	<svg class='intro' onclick="runPlatformer(this)" viewBox="0 0 800 800">
+	<svg id='splash' class='intro' onclick="run(this)" viewBox="0 0 800 800" display= "none">
     <defs>
     	<style type="text/css"><![CDATA[
 			.keyrect {
@@ -308,7 +329,8 @@
 	<script src="js/player-object.js"></script>
 	<script src="js/bullet-object.js"></script>
 	<script src="js/mob-object.js"></script>
-	<script src="js/maps.js"></script>
+	<script src="js/level.js"></script>
+	<script src="js/engine.js"></script>
 	<script src="js/index.js"></script>
 </body>
 

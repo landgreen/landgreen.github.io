@@ -1,44 +1,67 @@
-//bullets**************************************************************
-//*********************************************************************
-//*********************************************************************
-//*********************************************************************
+const mobBullet = [];
+const bullet = [];
 
-const bullet = []; //holds all the bullets
-
-function bulletLoop() {
-    if (game.mouseDown && mech.fireCDcycle < game.cycle && !game.isPaused) {
-        mech.fireCDcycle = game.cycle + guns[mech.gun].fireCD;
-        guns[mech.gun].fire();
-    }
-    let i = bullet.length;
-    while (i--) {
-        ctx.beginPath();
-        ctx.fillStyle = bullet[i].color;
-        let vertices = bullet[i].vertices;
-        ctx.moveTo(vertices[0].x, vertices[0].y);
-        for (let j = 1; j < vertices.length; j += 1) {
-            ctx.lineTo(vertices[j].x, vertices[j].y);
-        }
-        ctx.lineTo(vertices[0].x, vertices[0].y);
-        if (bullet[i].endCycle < game.cycle) {
-            Matter.World.remove(engine.world, bullet[i]);
-            bullet.splice(i, 1);
-        }
-        ctx.fill();
-    }
-
-}
-
-
-const cFilter = {
-	category: 0x000100,
-	mask: 0x000001,
+bullets = {
+	mobLoop: function(){
+		let i = mobBullet.length;
+		ctx.beginPath();
+		while (i--) {
+			let vertices = mobBullet[i].vertices;
+			ctx.moveTo(vertices[0].x, vertices[0].y);
+			for (let j = 1; j < vertices.length; j += 1) {
+				ctx.lineTo(vertices[j].x, vertices[j].y);
+			}
+			ctx.lineTo(vertices[0].x, vertices[0].y);
+			if (mobBullet[i].endCycle < game.cycle) {
+				Matter.World.remove(engine.world, mobBullet[i]);
+				mobBullet.splice(i, 1);
+			}
+		}
+		ctx.fillStyle = '#000';
+		ctx.fill();
+	},
+	loop: function(){
+		if (game.mouseDown && mech.fireCDcycle < game.cycle && !game.isPaused) {
+	        mech.fireCDcycle = game.cycle + guns[mech.gun].fireCD;
+	        guns[mech.gun].fire();
+	    }
+	    let i = bullet.length;
+	    while (i--) {
+	        ctx.beginPath();
+	        ctx.fillStyle = bullet[i].color;
+	        let vertices = bullet[i].vertices;
+	        ctx.moveTo(vertices[0].x, vertices[0].y);
+	        for (let j = 1; j < vertices.length; j += 1) {
+	            ctx.lineTo(vertices[j].x, vertices[j].y);
+	        }
+	        ctx.lineTo(vertices[0].x, vertices[0].y);
+	        if (bullet[i].endCycle < game.cycle) {
+	            Matter.World.remove(engine.world, bullet[i]);
+	            bullet.splice(i, 1);
+	        }
+	        ctx.fill();
+	    }
+	},
+	drawSound: function(range){
+		ctx.fillStyle = "rgba(255,255,0,0.03)";
+		// ctx.lineWidth=300;
+		// ctx.strokeStyle = "rgba(0,0,0,0.05)";
+		ctx.beginPath();
+		ctx.arc(player.position.x, player.position.y,range-300,0,2*Math.PI);
+		ctx.fill();
+		//ctx.stroke();
+	},
+	cFilter:  {
+		category: 0x000100,
+		mask: 0x000001,
+	},
 }
 
 const guns = { //prototype for each bullet/gun type
     machine: {
         fireCD: 4,
         fire: function() {
+			playSound("snare");
             const len = bullet.length;
             const dir = (Math.random() - 0.5) * 0.1 + mech.angle
             bullet[len] = Bodies.rectangle(mech.pos.x + 15 * Math.cos(mech.angle), mech.pos.y + 15 * Math.sin(mech.angle), 7, 3, {
@@ -47,7 +70,7 @@ const guns = { //prototype for each bullet/gun type
                 friction: 0.5,
                 frictionAir: 0,
                 restitution: 0,
-                collisionFilter: cFilter,
+                collisionFilter: bullets.cFilter,
                 //isSensor: true,
 				//dmg: 0.003,
 				dmg: 0.02,
@@ -73,6 +96,7 @@ const guns = { //prototype for each bullet/gun type
     needle: {
         fireCD: 45,
         fire: function() {
+			playSound("airgun");
             const len = bullet.length;
             bullet[len] = Bodies.rectangle(mech.pos.x + 20 * Math.cos(mech.angle), mech.pos.y + 20 * Math.sin(mech.angle), 20, 1, {
                 angle: mech.angle,
@@ -81,7 +105,7 @@ const guns = { //prototype for each bullet/gun type
                 frictionStatic: 1,
                 frictionAir: 0,
                 restitution: 0.25,
-				collisionFilter: cFilter,
+				collisionFilter: bullets.cFilter,
 				dmg: 1,
 				minDmgSpeed: 13,
                 endCycle: game.cycle + 400,
@@ -107,6 +131,8 @@ const guns = { //prototype for each bullet/gun type
     shot: {
         fireCD: 50,
         fire: function() {
+			playSound("basssnaredrum");
+			mobs.alert(1000); //this gun is loud!
             for (let i = 0; i < 13; i++) {
                 const len = bullet.length;
                 const dir = (Math.random() - 0.5) * 0.7 + mech.angle
@@ -115,7 +141,7 @@ const guns = { //prototype for each bullet/gun type
                     density: 0.004,
                     frictionAir: 0.015,
                     restitution: 0,
-					collisionFilter: cFilter,
+					collisionFilter: bullets.cFilter,
 					dmg: 0.005,
 					minDmgSpeed: 10,
                     endCycle: game.cycle + 100,
@@ -144,17 +170,18 @@ const guns = { //prototype for each bullet/gun type
 	rail: {
 		fireCD: 100,
 		fire: function() {
-			mobs.alert(); //this gun is loud!
+			playSound("sniper");
+			mobs.alert(2000); //this gun is loud!
 			const len = bullet.length;
 			bullet[len] = Bodies.rectangle(mech.pos.x + 60 * Math.cos(mech.angle), mech.pos.y + 60 * Math.sin(mech.angle), 60, 3, {
 				angle: mech.angle,
-				density: 0.002,
+				density: 0.003,
 				friction: 1,
 				frictionStatic: 1,
 				frictionAir: 0,
 				restitution: 0.1,
-				collisionFilter: cFilter,
-				dmg: 0,
+				collisionFilter: bullets.cFilter,
+				dmg: 1,
 				minDmgSpeed: 15,
 				endCycle: game.cycle + 600,
 				color: '#000',
@@ -165,7 +192,7 @@ const guns = { //prototype for each bullet/gun type
 				x: mech.Vx,
 				y: mech.Vy
 			});
-			const impulse = 0.09;
+			const impulse = 0.15;
 			const f = {
 				x: impulse * Math.cos(mech.angle) / game.delta,
 				y: impulse * Math.sin(mech.angle) / game.delta
@@ -179,14 +206,15 @@ const guns = { //prototype for each bullet/gun type
 	cannon: {
 		fireCD: 80,
 		fire: function() {
-			mobs.alert(); //this gun is loud!
+			playSound("glock");
+			mobs.alert(2500); //this gun is loud!
 			const len = bullet.length;
 			bullet[len] = Bodies.polygon(mech.pos.x + 40 * Math.cos(mech.angle), mech.pos.y + 40 * Math.sin(mech.angle), 0, 15, {
 				angle: mech.angle,
 				density: 0.001,
 				frictionAir: 0.001,
 				restitution: 0.5,
-				collisionFilter: cFilter,
+				collisionFilter: bullets.cFilter,
 				dmg: 0,
 				minDmgSpeed: 10,
 				endCycle: game.cycle + 300,
@@ -219,7 +247,7 @@ const guns = { //prototype for each bullet/gun type
                 density: 0.0003,
                 frictionAir: 0,
                 restitution: 1,
-				collisionFilter: cFilter,
+				collisionFilter: bullets.cFilter,
 				dmg: 0.03,
 				minDmgSpeed: 8,
                 endCycle: game.cycle + 300,
@@ -252,6 +280,8 @@ const guns = { //prototype for each bullet/gun type
 	lob: {
 		fireCD: 40,
 		fire: function() {
+			playSound("launcher");
+			mobs.alert(1000); //this gun is loud!
 			const len = bullet.length;
 			bullet[len] = Bodies.polygon(mech.pos.x + 15 * Math.cos(mech.angle), mech.pos.y + 15 * Math.sin(mech.angle), 3, 15, {
 				angle: mech.angle,
@@ -259,7 +289,7 @@ const guns = { //prototype for each bullet/gun type
 				friction: 0.5,
 				frictionAir: 0,
 				restitution: 0,
-				collisionFilter: cFilter,
+				collisionFilter: bullets.cFilter,
 				dmg: 1,
 				minDmgSpeed: 1,
 				endCycle: game.cycle + 500,
@@ -294,7 +324,7 @@ const guns = { //prototype for each bullet/gun type
                 friction: -1,
                 frictionStatic: -1,
                 restitution: 0,
-				collisionFilter: cFilter,
+				collisionFilter: bullets.cFilter,
 				dmg: 0.08,
 				minDmgSpeed: 3,
                 endCycle: game.cycle + 240,
@@ -326,7 +356,7 @@ const guns = { //prototype for each bullet/gun type
                 restitution: 0.5,
                 isSensor: true,
 				isStatic: true,
-				collisionFilter: cFilter,
+				collisionFilter: bullets.cFilter,
 				dmg: 1,
 				minDmgSpeed: 0,
                 endCycle: game.cycle + 500,
@@ -349,6 +379,4 @@ const guns = { //prototype for each bullet/gun type
             World.add(engine.world, bullet[len]); //add bullet to world
         }
     },
-
-
 }
