@@ -192,9 +192,9 @@ const level = {
 	//**********************************************************************
 	//**********************************************************************
     skyscrapers: function() {
-        //mech.setPosToSpawn(-50, -100); //normal spawn
+        mech.setPosToSpawn(-50, -100); //normal spawn
         //mech.setPosToSpawn(1550, -1200); //spawn left high
-        mech.setPosToSpawn(1800, -2000); //spawn near exit
+        //mech.setPosToSpawn(1800, -2000); //spawn near exit
 
         this.mapRect(-500, 0, 5600, 100); //***********ground
         this.mapRect(-300, -350, 50, 400); //far left starting left wall
@@ -267,8 +267,8 @@ const level = {
 	//**********************************************************************
 	//**********************************************************************
     buildings: function() {
-        //mech.setPosToSpawn(0, -100);
-        mech.setPosToSpawn(3900,-400); //spawn near exit for testing
+        mech.setPosToSpawn(0, -100);
+        //mech.setPosToSpawn(3900,-400); //spawn near exit for testing
 
         this.mapRect(-1000, 0, 5100, 500); //***********ground
         //mapRect(-1000,-1000, 5100, 100); //ceiling
