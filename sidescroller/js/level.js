@@ -45,14 +45,14 @@ const level = {
         if (action) map[len].action = action;
     },
     //complex map templates
-    spawnBuilding: function(x, y, w, h, noDoors, walledSide) {
+    spawnBuilding: function(x, y, w, h, leftDoor, rightDoor, walledSide) {
         this.mapRect(x, y, w, 25); //roof
-        this.mapRect(x, y + h, w, 20); //ground
+        this.mapRect(x, y + h, w, 35); //ground
         if (walledSide === 'left') {
             this.mapRect(x, y, 25, h); //wall left
         } else {
             this.mapRect(x, y, 25, h - 150); //wall left
-            if (!noDoors) {
+            if (leftDoor) {
                 this.bodyRect(x + 5, y + h - 150, 15, 150, this.propsFriction); //door left
             }
         }
@@ -60,7 +60,7 @@ const level = {
             this.mapRect(x - 25 + w, y, 25, h); //wall right
         } else {
             this.mapRect(x - 25 + w, y, 25, h - 150); //wall right
-            if (!noDoors) {
+            if (rightDoor) {
                 this.bodyRect(x + w - 20, y + h - 150, 15, 150, this.propsFriction); //door right
             }
         }
@@ -247,12 +247,7 @@ const level = {
         this.spawnStriker(2650, -1500, 50); //on higher center floating large square
         this.bodyRect(2300, -1720, 400, 20); //platform above striker
 
-        this.bodyRect(2570, -1800, 20, 20); //block on platform above striker
-        this.bodyRect(2590, -1800, 20, 20); //block on platform above striker
-        this.bodyRect(2550, -1800, 20, 20); //block on platform above striker
-        this.bodyRect(2570, -1820, 20, 20); //block on platform above striker
-        this.bodyRect(2590, -1820, 20, 20); //block on platform above striker
-
+        this.bodyRect(2590, -1780, 80, 80); //block on platform above striker
         this.spawnHopper(3200, -40, 40); //on ground far right
         this.spawnHopper(4450, -20, 20); //on ground far right
         this.mapRect(3300, -850, 150, 25); //ledge by far right building
@@ -271,40 +266,32 @@ const level = {
         //mech.setPosToSpawn(3900,-400); //spawn near exit for testing
 
         this.mapRect(-1000, 0, 5100, 500); //***********ground
-        //mapRect(-1000,-1000, 5100, 100); //ceiling
-        //mapRect(-1000,-1000, 100, 1100); //main left wall
-        //mapRect(4000,-1000, 100, 1100); //main right wall
-
-        this.spawnBuilding(-300, -250, 600, 240) //first floor  player spawns in side
-        this.spawnBuilding(-200, -500, 400, 240) //second floor
-            //mapRect(-1000, -150, 400, 200); //far left block higher ground
+        this.spawnBuilding(-300, -250, 600, 240,true,true) //first floor  player spawns in side
+        this.spawnBuilding(-200, -500, 400, 240,true,true) //second floor
         this.mapVertex(-844, -50, '0 0 0 -150 200 -150 400 0')
         this.bodyRect(50, -600, 50, 100); //block on top of buildings
-
         this.spawnShooter(650, -600, 50) //near entrance high up
-
-        this.spawnBuilding(700, -400, 1400, 390, true) //long building
-        body[body.length] = Bodies.circle(1400, -240, 20);
+        this.spawnBuilding(700, -400, 1400, 390,true,true ) //long building
+        body[body.length] = Bodies.circle(1400, -240, 20); //hanging ball
         this.constraintPB(1400, -375, body.length - 1, 0.9, this.propsNoRotation); //hanging ball
-        this.mapRect(700, -185, 85, 25); //ledge for sneak attackers inside building
+		this.mapRect(700, -185, 85, 25); //ledge for sneak attackers inside building
         this.mapRect(1250, -80, 300, 100); //table inside long building
-        this.spawnSneakAttacker(750, -230, 30) //inside long center building
+        this.spawnSneakAttacker(765, -230, 30) //inside long center building
         this.mapRect(2015, -185, 85, 25); //ledge for sneak attackers inside building
         this.spawnSneakAttacker(2035, -230, 30) //inside long center building
         for (let i = 0; i < 9; i++) { //some random blocks on the roof
             const size = 20 + Math.round(Math.random() * Math.random() * 300);
             this.bodyRect(900 + 100 * i + Math.random() * 100, -600, size + Math.round(Math.random() * 50), size + Math.round(Math.random() * 50));
         }
-
         this.mapRect(2700, -100, 1400, 150); //far right block higher ground
         this.mapRect(3100, -200, 1000, 150); //far right block higher ground
-        this.spawnBuilding(3500, -500, 500, 290, true, 'right') //building around exit at the far right
+        this.spawnBuilding(3500, -500, 500, 290, false,false, 'right') //building around exit at the far right
         this.mapRect(3700, -220, 100, 25, 'exit') //ground bump wall
         this.spawnChaser(-850, -190, 30) //far left on ground
-        //this.spawnHopper(3150, -250, 75) //near exit on ground
-        //this.spawnHopper(3000, -150, 100) //near exit on ground
-        //this.spawnHopper(3700, -300, 50) //near exit on ground
-        this.spawnGhoster(1000, -1800, 100) //near exit high up
+        this.spawnHopper(3150, -250, 75) //near exit on ground
+        this.spawnHopper(3000, -150, 100) //near exit on ground
+        this.spawnHopper(3700, -300, 50) //near exit on ground
+        this.spawnGhoster(1000, -1800, 100) //high up looks like a sun
         this.spawnShooter(3600, -600, 50) //near entrance high up
     },
 	//**********************************************************************

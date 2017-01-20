@@ -1,10 +1,19 @@
 // game Object ********************************************************
 //*********************************************************************
 const game = {
+    mouse: {
+        x: 0,
+        y: 0
+    },
+    mouseInGame: {
+        x: 0,
+        y: 0
+    },
     g: 0.001,
-    dmgScale: 0.01,
+    dmgScale: 1,
+    mobDamage: 0.02,
+    mobBulletDamage: 0.1,
     testing: false, //testing mode: shows wireframe and some variables
-    //time related vars and methods
     cycle: 0, //total cycles, 60 per second
     cyclePaused: 0,
     fallHeight: 4000,
@@ -15,14 +24,14 @@ const game = {
     drawList2: [], //so you can draw a second frame of explosions.. I know this is bad
     onLevel: null, //is set later to localStorage.getItem('onLevel'),
     nextLevel: function() {
-		localStorage.setItem('skipSplash', '1');
+        localStorage.setItem('skipSplash', '1');
         if (this.onLevel === 'buildings') {
             localStorage.setItem('onLevel', 'skyscrapers');
         } else {
             localStorage.setItem('onLevel', 'buildings');
         }
     },
-    levels: {
+    levels: { //lets the game know what sound and graphics to use on each level load
         buildings: {
             name: 'buildings',
             background: "background_buildings",
@@ -41,9 +50,8 @@ const game = {
             foreground: "foreground_testing",
             ambient: null,
         },
-
     },
-    drawCircle: function() {
+    drawCircle: function() { //draws a circle for two cycles, used for showing damage mostly
         let len = this.drawList.length
         for (let i = 0; i < len; i++) {
             //draw circle
@@ -80,43 +88,37 @@ const game = {
         this.delta = (engine.timing.timestamp - this.lastTimeStamp) / 16.666666666666;
         this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
     },
-    zoom: 0.000001, //1,
-    scaleZoom: function() {
-        ctx.translate(canvas.width / 2, canvas.height / 2);
-        ctx.scale(this.zoom, this.zoom);
-        ctx.translate(-canvas.width / 2, -canvas.height / 2);
-        ctx.translate(mech.transX, mech.transY);
+    track: true,
+    keyToggle: function() {  //runs on key press event
+		if (keys[69]) { // 69 = e
+			if (this.track) {
+				this.track = false;
+				this.showHeight = 3000;
+				this.zoom = canvas.height / this.showHeight; //sets starting zoom scale
+			} else {
+				this.track = true;
+				this.showHeight = 1500;
+				this.zoom = canvas.height / this.showHeight; //sets starting zoom scale
+			}
+		};
+		if (keys[84]) { // 84 = t
+			if (this.testing) {
+				this.testing = false;
+			} else {
+				this.testing = true;
+			}
+		}
     },
-    keyZoom: function() {
-        if (keys[187]) { //plus
-            this.showHeight *= 0.98;
-            this.setZoomGoal();
-            this.zoom = 0.1 * this.zoomGoal + 0.9 * this.zoom; //smooths changes to zoom
-            //this.zoom = this.zoomGoal
-        } else if (keys[189]) { //minus
-            this.showHeight *= 1.02;
-            this.setZoomGoal();
-            this.zoom = 0.1 * this.zoomGoal + 0.9 * this.zoom; //smooths changes to zoom
-            //this.zoom = this.zoomGoal
-        } else if (keys[48]) { //zero   reset
-            this.zoomReset();
-        }
+    zoom: 1,
+    camera: function() {
+        ctx.translate(canvas.width2, canvas.height2); //center
+        ctx.scale(this.zoom, this.zoom); //zoom in once centered
+        ctx.translate(-canvas.width2 + mech.transX, -canvas.height2 + mech.transY); //uncenter, translate
+        //calculate in game mouse position by undoing the zoom and translations
+        this.mouseInGame.x = (this.mouse.x - canvas.width2) / this.zoom + canvas.width2 - mech.transX;
+        this.mouseInGame.y = (this.mouse.y - canvas.height2) / this.zoom + canvas.height2 - mech.transY;
     },
-    zoomReset: function() {
-        this.showHeight = canvas.height;
-        this.setZoomGoal();
-        this.zoom = this.zoomGoal
-    },
-    zoomGoal: 1,
-    showHeight: 1500, //controls the resting zoomheight set to higher to see more of the map   //1000 seems normal
-    setZoomGoal: function() {
-        this.zoomGoal = (canvas.height / this.showHeight) / (1 + player.speed * player.speed * 0.005); //calculates zoom goal
-    },
-    speedZoom: function() {
-        //const showHeight = 1500;
-        this.setZoomGoal();
-        this.zoom = 0.005 * this.zoomGoal + 0.995 * this.zoom; //smooths changes to zoom
-    },
+    showHeight: 2000, //controls the resting zoomheight set to higher to see more of the map   //1000 seems normal
     wipe: function() {
         // if (this.isPaused) {
         //   ctx.fillStyle = "rgba(221,221,221,0.1)";
@@ -177,9 +179,9 @@ const game = {
         line += 20;
         ctx.fillText("delta: " + game.delta.toFixed(6), 5, line);
         line += 20;
-        ctx.fillText("mX: " + (mech.mouse.x - mech.canvasX + mech.pos.x).toFixed(2), 5, line);
+        ctx.fillText("mX: " + (this.mouseInGame.x).toFixed(2), 5, line);
         line += 20;
-        ctx.fillText("mY: " + (mech.mouse.y - mech.transY).toFixed(2), 5, line);
+        ctx.fillText("mY: " + (this.mouseInGame.y).toFixed(2), 5, line);
         line += 20;
         ctx.fillText("x: " + mech.pos.x.toFixed(0), 5, line);
         line += 20;

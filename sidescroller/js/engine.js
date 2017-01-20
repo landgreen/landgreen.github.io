@@ -122,7 +122,7 @@ function mobCollisionCheck(event) {
                 if (pairs[i].bodyA === mob[k]) {
                     if (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead) { //mob hitting player check
                         mob[k].locatePlayer();
-                        let dmg = Math.sqrt(mob[k].mass) * game.dmgScale;
+                        let dmg = Math.sqrt(mob[k].mass) * game.dmgScale*game.mobDamage;
                         if (dmg < 0.05) dmg = 0.05;
                         mech.hitMob(k, dmg);
                         //add dmg to draw queue
@@ -148,7 +148,7 @@ function mobCollisionCheck(event) {
                 } else if (pairs[i].bodyB === mob[k]) {
                     if (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead) { //mob hitting player check
                         mob[k].locatePlayer();
-                        let dmg = Math.sqrt(mob[k].mass) * game.dmgScale;
+                        let dmg = Math.sqrt(mob[k].mass) * game.dmgScale*game.mobDamage;
                         if (dmg < 0.05) dmg = 0.05;
                         mech.hitMob(k, dmg);
                         //add dmg to draw queue
@@ -183,21 +183,23 @@ function mobBulletCollisionCheck(event) {
     for (let i = 0, j = pairs.length; i != j; i++) {
         for (let k = 0; k < mobBullet.length; k++) {
             if (pairs[i].bodyA === mobBullet[k] && pairs[i].bodyA.speed > 10 && (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead)) {
-                mech.damage(game.dmgScale * 2);
+				const dmg = game.dmgScale * game.mobBulletDamage;
+                mech.damage(dmg);
                 mobBullet[k].endCycle = game.cycle;
                 //add dmg to draw queue
-                const hit = pairs[i].activeContacts[0].vertex
-                hit.radius = game.dmgScale * 400
-                hit.color = '#f0f';
+                const hit = pairs[i].activeContacts[0].vertex;
+                hit.radius = dmg*200;
+                hit.color = '#f00';
                 game.drawList.push(hit);
                 continue;
             } else if (pairs[i].bodyB === mobBullet[k] && pairs[i].bodyB.speed > 10 && (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead)) {
-                mech.damage(game.dmgScale * 2);
+				const dmg = game.dmgScale * game.mobBulletDamage;
+                mech.damage(dmg);
                 mobBullet[k].endCycle = game.cycle;
                 //add dmg to draw queue
-                const hit = pairs[i].activeContacts[0].vertex
-                hit.radius = game.dmgScale * 400
-                hit.color = '#f0f';
+                const hit = pairs[i].activeContacts[0].vertex;
+                hit.radius = dmg*200;
+                hit.color = '#f00';
                 game.drawList.push(hit);
                 continue;
             }
