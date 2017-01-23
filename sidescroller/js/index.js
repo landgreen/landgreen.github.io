@@ -139,12 +139,12 @@ const ctx = canvas.getContext("2d");
 function setupCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-	canvas.width2 = canvas.width/2;  //precalculated
-	canvas.height2 = canvas.height/2; //precalculated
+    canvas.width2 = canvas.width / 2; //precalculated
+    canvas.height2 = canvas.height / 2; //precalculated
     ctx.font = "15px Arial";
     ctx.lineJoin = 'round';
     ctx.lineCap = "round";
-	game.zoom = canvas.height / game.showHeight; //sets starting zoom scale
+    game.zoom = canvas.height / game.showHeight; //sets starting zoom scale
 }
 setupCanvas();
 window.onresize = function() {
@@ -153,8 +153,8 @@ window.onresize = function() {
 
 //mouse move input
 window.onmousemove = function(e) {
-	game.mouse.x = e.clientX;
-	game.mouse.y = e.clientY;
+    game.mouse.x = e.clientX;
+    game.mouse.y = e.clientY;
 };
 //mouse click events
 window.onmousedown = function(e) {
@@ -172,23 +172,23 @@ document.body.addEventListener("keyup", function(e) {
 document.body.addEventListener("keydown", function(e) {
     keys[e.keyCode] = true;
     mech.gun = (mech.gunOptions)[e.keyCode] || mech.gun; //checks for keypress to get a new gun (1-8)
-	game.keyToggle();  //switches to tracking and testing modes
+    game.keyPress(); //tracking, testings, zoom
 });
 
 function playSound(id) { //play sound
-	if (document.getElementById(id)){
-		var sound = document.getElementById(id); //setup audio
-	    sound.currentTime = 0; //reset position of playback to zero  //sound.load();
-	    sound.play();
-	}
+    if (document.getElementById(id)) {
+        var sound = document.getElementById(id); //setup audio
+        sound.currentTime = 0; //reset position of playback to zero  //sound.load();
+        sound.play();
+    }
 }
 
 //skips splash screen on map switch
-if ( localStorage.getItem('skipSplash') === '1' ){
-	localStorage.setItem('skipSplash', '0');
-	run(document.getElementById('splash'))
+if (localStorage.getItem('skipSplash') === '1') {
+    localStorage.setItem('skipSplash', '0');
+    run(document.getElementById('splash'))
 } else {
-	document.getElementById('splash').style.display = "inline"; //show splash SVG
+    document.getElementById('splash').style.display = "inline"; //show splash SVG
 }
 
 
@@ -199,26 +199,27 @@ if ( localStorage.getItem('skipSplash') === '1' ){
 // background_img.src = 'background.png'; // Set source path
 
 function run(el) { // onclick from the splash screen
-	console.log(el);
+    console.log(el);
     el.onclick = null; //removes the onclick effect so the function only runs once
     el.style.display = 'none'; //hides the element that spawned the function
-	mech.spawn(); //spawns the player
-	if ( localStorage.getItem('onLevel') ){ //uses local storage to goto the stored level
-		game.onLevel = localStorage.getItem('onLevel');
-	} else { //this option onyl occurs on first time running a new session with local storage
-		game.onLevel = 'buildings'
-		localStorage.setItem('onLevel', game.onLevel);
-	}
-	//localStorage.setItem('onLevel', 'buildings')
 
-    level[game.levels[game.onLevel].name]();
+    mech.spawn(); //spawns the player
+
+    if (localStorage.getItem('onLevel')) { //uses local storage to goto the stored level
+        game.onLevel = localStorage.getItem('onLevel');
+    } else { //this option onyl occurs on first time running a new session with local storage
+        game.onLevel = 'buildings'
+        localStorage.setItem('onLevel', game.onLevel);
+    }
+    //level[game.onLevel]();
+    //level.buildings();
+    //level.skyscrapers();
+    //level.testing();
+	level.twoTowers();
     level.addToWorld(); //add map to world
 
-	document.getElementById(game.levels[game.onLevel].background).style.display = "inline"; //show SVGs for level
-	document.getElementById(game.levels[game.onLevel].foreground).style.display = "inline"; //show SVGs for level
-	playSound(game.levels[game.onLevel].ambient);//play ambient audio for level
-	//document.getElementById("keysright").innerHTML = ''; //remove html from intro
-	//document.getElementById("keysleft").innerHTML = '';
+    //document.getElementById("keysright").innerHTML = ''; //remove html from intro
+    //document.getElementById("keysleft").innerHTML = '';
     document.body.appendChild(stats.dom); //show stats.js FPS tracker
     Engine.run(engine); //starts game engine
     requestAnimationFrame(cycle); //starts game loop
@@ -234,69 +235,50 @@ function cycle() {
     mech.keyMove();
     mech.standingOnActions();
     mech.regen();
-    //mech.keyHold();
-    //game.volume();
-    //game.pause();
-    // if (game.testing) {
-    //     mech.move();
-	// 	mech.staticLook();
-    //     mech.deathCheck();
-    //     ctx.save();
-	// 	game.camera();
-    //     mech.draw();
-    //     game.draw.wireFrame();
-    //     game.draw.testing();
-    //     ctx.restore();
-    //     game.output();
-    // } else {
-        mech.move();
-		if (game.track) {
-			mech.look();
-		} else{
-			mech.staticLook();
-		}
-        //game.smoothZoom();
-        mech.deathCheck();
-        //mech.look();
-        ctx.save();
-        game.camera();
-		//ctx.drawImage(background_img, 400, -400);
-		if(game.testing){
-			mech.draw();
-		    game.draw.wireFrame();
-			game.draw.cons();
-		    game.draw.testing();
-			bullets.loop();
-			game.drawCircle();
-			mech.drawHealth();
-			ctx.restore();
-		    game.output();
-		} else {
-			mobs.loop();
-	        mobs.draw();
-	        game.draw.cons();
-	        game.draw.body();
-	        mech.draw();
-	        //mech.eat();
-			//ctx.drawImage(foreground_img, -700, -1500);
-	        game.draw.map();
-	        bullets.loop();
-	        bullets.mobLoop();
-	        game.drawCircle();
-	        mech.drawHealth();
-			ctx.restore();
-		}
-		//svg graphics , just here until I convert svg to png in inkscape and run as a canvas png
-//    }
-	document.getElementById(game.levels[game.onLevel].background).setAttribute('transform',
-		'translate(' + (canvas.width2) + ',' + (canvas.height2) + ')' +
-		'scale(' + game.zoom + ')' +
-		'translate(' + (mech.transX - canvas.width2) + ',' + (mech.transY - canvas.height2) + ')'	);
-	document.getElementById(game.levels[game.onLevel].foreground).setAttribute('transform',
-		'translate(' + (canvas.width2) + ',' + (canvas.height2) + ')' +
-		'scale(' + game.zoom + ')' +
-		'translate(' + (mech.transX - canvas.width2) + ',' + (mech.transY - canvas.height2) + ')');
-
-    stats.end();
+    mech.move();
+    if (game.track) {
+        mech.look();
+    } else {
+        mech.staticLook();
+    }
+    mech.deathCheck();
+    //mech.look();
+    ctx.save();
+    game.camera();
+    //ctx.drawImage(background_img, 400, -400);
+    if (game.testing) {
+        mech.draw();
+        game.draw.wireFrame();
+        game.draw.cons();
+        game.draw.testing();
+        bullets.loop();
+        game.drawCircle();
+        mech.drawHealth();
+        ctx.restore();
+        game.output();
+    } else {
+        mobs.loop();
+        mobs.draw();
+        game.draw.cons();
+        game.draw.body();
+        mech.draw();
+        //ctx.drawImage(foreground_img, -700, -1500);
+        game.draw.map();
+        bullets.loop();
+        bullets.mobLoop();
+        game.drawCircle();
+        mech.drawHealth();
+        ctx.restore();
+    }
+    //svg graphics , just here until I convert svg to png in inkscape and run as a canvas png
+    document.getElementById(game.levels.background).setAttribute('transform',
+        'translate(' + (canvas.width2) + ',' + (canvas.height2) + ')' +
+        'scale(' + game.zoom + ')' +
+        'translate(' + (mech.transX - canvas.width2) + ',' + (mech.transY - canvas.height2) + ')');
+    document.getElementById(game.levels.foreground).setAttribute('transform',
+        'translate(' + (canvas.width2) + ',' + (canvas.height2) + ')' +
+        'scale(' + game.zoom + ')' +
+        'translate(' + (mech.transX - canvas.width2) + ',' + (mech.transY - canvas.height2) + ')');
+    stats.end();  //for fps tracker
     requestAnimationFrame(cycle);
 }

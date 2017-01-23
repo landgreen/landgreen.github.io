@@ -4,7 +4,8 @@ let player, jumpSensor, playerBody, playerHead, headSensor;
 // player Object Prototype *********************************************
 const mech = {
     spawn: function() { //load player in matter.js physic engine
-        let vector = Vertices.fromPath('0 40  0 115  20 130  30 130  50 115  50 40');//player as a series of vertices
+        //let vector = Vertices.fromPath('0 40  0 115  20 130  30 130  50 115  50 40');//player as a series of vertices
+		let vector = Vertices.fromPath('0 40  50 40 50 115 0 115 30 130 20 130');//player as a series of vertices
         playerBody = Matter.Bodies.fromVertices(0, 0, vector);
         jumpSensor = Bodies.rectangle(0, 46, 36, 6, {//this sensor check if the player is on the ground to enable jumping
             sleepThreshold: 99999999999,
@@ -279,7 +280,7 @@ const mech = {
         }
     },
     deathCheck: function() {
-        if (this.pos.y > game.fallHeight) { // if player is 4000px deep reset to spawn Position and Velocity
+        if (this.pos.y > game.fallHeight) { // if player is 4000px deep
             this.death();
         }
     },

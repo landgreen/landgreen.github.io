@@ -25,31 +25,18 @@ const game = {
     onLevel: null, //is set later to localStorage.getItem('onLevel'),
     nextLevel: function() {
         localStorage.setItem('skipSplash', '1');
+		
         if (this.onLevel === 'buildings') {
             localStorage.setItem('onLevel', 'skyscrapers');
-        } else {
-            localStorage.setItem('onLevel', 'buildings');
-        }
+        } else if (this.onLevel === 'skyscrapers') {
+            localStorage.setItem('onLevel', 'twoTowers');
+        } else if  (this.onLevel === 'twoTowers') {
+			localStorage.setItem('onLevel', 'buildings');
+		}
     },
-    levels: { //lets the game know what sound and graphics to use on each level load
-        buildings: {
-            name: 'buildings',
-            background: "background_buildings",
-            foreground: "foreground_buildings",
-            ambient: "ambient_crickets",
-        },
-        skyscrapers: {
-            name: 'skyscrapers',
-            background: "background_skyscrapers",
-            foreground: "foreground_skyscrapers",
-            ambient: "ambient_wind",
-        },
-        testing: {
-            name: 'testing',
-            background: "background_testing",
-            foreground: "foreground_testing",
-            ambient: null,
-        },
+    levels: { //lets the game know what sound and graphics to use
+        background: "background_buildings",
+        foreground: "foreground_buildings",
     },
     drawCircle: function() { //draws a circle for two cycles, used for showing damage mostly
         let len = this.drawList.length
@@ -71,17 +58,6 @@ const game = {
         this.drawList2 = this.drawList;
         this.drawList = [];
     },
-    volume: function() { //wind backgorund sound on loop gets louder when the player is higher
-        if (!(game.cycle % 3)) { //make for skyscrapers map
-            if (player.position.y > -500) { //100 is min
-                document.getElementById("wind").volume = 0.2; // volume between 0 and 1
-            } else if (player.position.y < -2500) { //2500 is max volume
-                document.getElementById("wind").volume = 1; // volume between 0 and 1
-            } else {
-                document.getElementById("wind").volume = -player.position.y * 0.0004; // volume between 0 and 1
-            }
-        }
-    },
     timing: function() {
         this.cycle++; //tracks game cycles
         //delta is used to adjust forces on game slow down;
@@ -89,24 +65,29 @@ const game = {
         this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
     },
     track: true,
-    keyToggle: function() {  //runs on key press event
-		if (keys[69]) { // 69 = e
-			if (this.track) {
-				this.track = false;
-				this.showHeight = 3000;
-				this.zoom = canvas.height / this.showHeight; //sets starting zoom scale
-			} else {
-				this.track = true;
-				this.showHeight = 1500;
-				this.zoom = canvas.height / this.showHeight; //sets starting zoom scale
-			}
-		};
-		if (keys[84]) { // 84 = t
-			if (this.testing) {
-				this.testing = false;
-			} else {
-				this.testing = true;
-			}
+    keyPress: function() { //runs on key press event
+        if (keys[69]) { // 69 = e
+            if (this.track) {
+                this.track = false;
+                this.showHeight = 3000;
+                this.zoom = canvas.height / this.showHeight; //sets starting zoom scale
+            } else {
+                this.track = true;
+                this.showHeight = 1500;
+                this.zoom = canvas.height / this.showHeight; //sets starting zoom scale
+            }
+        } else if (keys[84]) { // 84 = t
+            if (this.testing) {
+                this.testing = false;
+            } else {
+                this.testing = true;
+            }
+        } else if (keys[48]) { // 48 = 0
+			this.zoom = 1;
+		} else if (keys[187]){ // 187 = +
+			this.zoom *= 1.1;
+		} else if (keys[189]){ // 189 = -
+			this.zoom *= 0.9;
 		}
     },
     zoom: 1,
@@ -253,6 +234,10 @@ const game = {
                 ctx.moveTo(cons[i].pointA.x, cons[i].pointA.y);
                 ctx.lineTo(cons[i].bodyB.position.x, cons[i].bodyB.position.y);
             }
+			// for (let i = 0; i < consBB.length; i += 1) {
+			// 	ctx.moveTo(consBB[i].bodyA.position.x + consBB[i].pointA.x, consBB[i].bodyA.position.y + consBB[i].pointA.y);
+			// 	ctx.lineTo(consBB[i].bodyB.position.x, consBB[i].bodyB.position.y);
+			// }
             ctx.lineWidth = 1;
             ctx.strokeStyle = '#999';
             ctx.stroke();

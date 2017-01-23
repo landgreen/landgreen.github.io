@@ -7,6 +7,12 @@ const consBB = []; //all constaints between two bodies
 //main object for spawning levels**************************************************
 //*********************************************************************************
 const level = {
+    addSVG: function(background, foreground) {
+        game.levels.background = background;
+        game.levels.foreground = foreground;
+        document.getElementById(background).style.display = "inline"; //show SVGs for level
+        document.getElementById(foreground).style.display = "inline"; //show SVGs for level
+    },
     //map body templates**************************************************************
     //*********************************************************************************
     constraintPB: function(x, y, bodyIndex, stiffness) {
@@ -65,6 +71,20 @@ const level = {
             }
         }
     },
+    spawnStairs: function(x, y, num, w, h, stepRight) {
+		w +=50;
+        if (stepRight) {
+            for (let i = 0; i < num; i++) {
+                this.mapRect(x - w / num * (1 + i), y - h + i * h / num, w / num + 50, h - i * h / num + 50);
+            }
+        } else {
+            for (let i = 0; i < num; i++) {
+                this.mapRect(x + i * w / num, y - h + i * h / num, w / num + 50, h - i * h / num + 50);
+            }
+        }
+
+
+    },
     //basic mob templates**************************************************************
     //*********************************************************************************
     //*********************************************************************************
@@ -100,7 +120,7 @@ const level = {
         //mob[mob.length - 1].frictionAir = 0.001;
     },
     spawnBlinker: function(x, y, radius) {
-        mobs.spawn(x, y, 0, radius, 'rgba(150,150,255,', 0, ["seePlayerCheck", "fallCheck", 'blink', 'strike']);
+        mobs.spawn(x, y, 6, radius, 'rgba(0,200,255,', 0, ["seePlayerCheck", "fallCheck", 'blink', 'strike']);
         mob[mob.length - 1].collisionFilter.mask = 0x001100; //move through walls
         mob[mob.length - 1].isStatic = true;
         mob[mob.length - 1].memory = 360; //memory+memory*Math.random()
@@ -145,27 +165,34 @@ const level = {
         density: 0.01 //default density is 0.001
     },
     propsNoRotation: {
-        inertia: Infinity, //prevents player rotation
+        inertia: Infinity, //prevents rotation
     },
-	clearLevel: function(){
-		//World.clear(engine.world, );
-		//body = [];
-		let len = map.length
-		for(let i =0; i<len;i++){
-			Matter.World.remove(engine.world, map[i]);
-			map.splice(i, 1);
-		}
-		len = body.length;
-		for(let i =0; i<len;i++){
-			Matter.World.remove(engine.world, body[i]);
-			body.splice(i, 1);
-		}
-		len = mob.length;
-		for(let i =0; i<len;i++){
-			Matter.World.remove(engine.world, mob[i]);
-			mob.splice(i, 1);
-		}
+	propsDoor: {
+		density: 0.001, //default density is 0.001
+		friction: 0,
+		frictionAir: 0.03,
+		frictionStatic: 0,
+		restitution: 0,
 	},
+    clearLevel: function() {
+        //World.clear(engine.world, );
+        //body = [];
+        let len = map.length
+        for (let i = 0; i < len; i++) {
+            Matter.World.remove(engine.world, map[i]);
+            map.splice(i, 1);
+        }
+        len = body.length;
+        for (let i = 0; i < len; i++) {
+            Matter.World.remove(engine.world, body[i]);
+            body.splice(i, 1);
+        }
+        len = mob.length;
+        for (let i = 0; i < len; i++) {
+            Matter.World.remove(engine.world, mob[i]);
+            mob.splice(i, 1);
+        }
+    },
     addToWorld: function(mapName) { //needs to be run to put bodies into the world
         for (let i = 0; i < body.length; i++) {
             //body[i].collisionFilter.group = 0;
@@ -187,16 +214,90 @@ const level = {
             World.add(engine.world, consBB[i]);
         }
     },
-	//maps*****************************************************************
-	//**********************************************************************
-	//**********************************************************************
-	//**********************************************************************
+    //maps*****************************************************************
+    //**********************************************************************
+    //**********************************************************************
+    //**********************************************************************
+    twoTowers: function() {
+        document.body.style.backgroundColor = "#f9f5f3";
+        //playSound("ambient_wind");//play ambient audio for level
+        mech.setPosToSpawn(1000, -1600); //normal spawn
+		//mech.setPosToSpawn(600, -1200); //normal spawn
+		//mech.setPosToSpawn(4500, -1700); //near exit spawn
+
+		this.mapRect(-600, 25, 5600, 300); //ground
+
+        const w = 2000;
+        const h = 2000;
+		let x = -600; //left building
+		this.mapRect(x, 0, w, 50); //ground
+        this.mapRect(x, -h+300, 50, h-300); //left wall
+        this.mapRect(x+w - 50, -h, 50, h - 200); //right wall
+
+		this.mapRect(x, -h+250, w-700, 50); //roof left
+		this.mapRect(x + 1300, -h, 50, 300); //roof right
+		this.mapRect(x + 1300, -h, 700, 50); //center wall
+		map[map.length] = Bodies.polygon(425,-1700,0, 15); //circle above door
+		this.bodyRect(420, -1675, 15, 170, this.propsDoor); // door
+		consBB[consBB.length] = Constraint.create({ //makes door swing
+			bodyA: body[body.length-1],
+			pointA: { x: 0, y: -90 },
+			bodyB: map[map.length-1],
+            stiffness: 1
+		})
+		this.spawnHopper(0, -1550, 80); //on left 3rd floor
+
+
+		//this.bodyRect(x + w*0.5+25, -h+300, 20, 10); //center wall door
+		//body[body.length] = Body.create({			parts: [body[body.length-1], body[body.length-2]]		});
+
+        this.mapRect(x + 300, -h * 0.75, w - 300, 50); //3rd floor
+		this.mapRect(x + w*0.7, -h * 0.74, 50, 375); //center wall
+		this.bodyRect(x + w*0.7, -h * 0.5-106, 50, 106); //center block under wall
+        this.mapRect(x, -h * 0.5, w - 300, 50); //2nd floor
+		this.spawnHopper(-100, -1040, 60); //on left 3rd floor
+		this.spawnHopper(250, -1070, 100); //on left 3rd floor
+		this.spawnStairs(x, -1000, 5, 250, 350); //stairs 2nd
+		this.mapRect(x+ w*0.6, -h * 0.25-150, 200, 200); //center table
+        this.mapRect(x + 300, -h * 0.25, w - 300, 50); //1st floor
+		this.spawnChaser(750, -750, 50); //by right stairs
+		this.spawnChaser(895, -600, 50); //by right stairs
+		this.spawnChaser(955, -650, 50); //by right stairs
+		this.spawnStriker(200, -650, 20); //left side
+		this.spawnStriker(250, -650, 20); //left side
+		this.spawnStairs(x + w-50, -500, 5, 250, 350, true); //stairs 1st
+		this.spawnStairs(x, 0, 5, 250, 350);  //stairs ground
+
+		this.spawnBlinker(2200,-1600,200)
+		this.spawnBlinker(2200,-800,200)
+
+		x = 3000; //right building
+		this.mapRect(x, 0, w, 50); //ground
+        this.mapRect(x, -h, 50, h - 200); //left wall
+        this.mapRect(x+w - 50, -h, 50, h); //right wall
+        this.mapRect(x, -h, w, 50); //roof
+		this.mapRect(x+200, -h*0.75-10, 100, 50, 'exit'); //ground bump wall
+        this.mapRect(x, -h * 0.75, w - 300, 50); //3rd floor
+        this.mapRect(x+300, -h * 0.5, w - 300, 50); //2nd floor
+		this.spawnStairs(x+w-50, -1000, 5, 250, 350,true); //stairs 2nd
+        this.mapRect(x, -h * 0.25, w - 300, 50); //1st floor
+		this.spawnStairs(x, -500, 5, 250, 350); //stairs 1st
+		this.spawnStairs(x+w-50, 0, 5, 250, 350,true);  //stairs ground
+
+		this.spawnStriker(3500, -1300, 50); //
+    },
+
     skyscrapers: function() {
+        document.body.style.backgroundColor = "#f0f0f0";
+		document.body.style.backgroundColor = "#e6e4e4";
+        this.addSVG('background_skyscrapers', 'foreground_skyscrapers');
+        playSound("ambient_wind"); //play ambient audio for level
+
         mech.setPosToSpawn(-50, -100); //normal spawn
         //mech.setPosToSpawn(1550, -1200); //spawn left high
         //mech.setPosToSpawn(1800, -2000); //spawn near exit
 
-        this.mapRect(-500, 0, 5600, 100); //***********ground
+        this.mapRect(-300, 0, 5000, 300); //***********ground
         this.mapRect(-300, -350, 50, 400); //far left starting left wall
         this.mapRect(-300, -10, 500, 50); //far left starting ground
         this.mapRect(-300, -350, 500, 50); //far left starting ceiling
@@ -205,9 +306,9 @@ const level = {
         this.spawnChaser(0, -390, 50); //above starting room
         //spawnSneakAttacker(0, -390, 50);  //above starting room
 
-
         //mapRect(4700, -300, 150, 400); //far right ground wall
-        this.mapVertex(525, 29.5, '-50 -40 50 -40 120 40 -120 40', 'launch');
+		this.mapVertex(525, 29.5, '120 40 -120 40 -50 -40 50 -40', 'launch');
+        //this.mapVertex(525, 29.5, '-50 -40 50 -40 120 40 -120 40', 'launch');
         //mapRect(475, -15, 100, 25, 'launch'); //next to first tall building
         this.spawnHopper(1300, -20, 20); //hiding underplatorm
 
@@ -223,7 +324,6 @@ const level = {
         this.bodyRect(2557, -450, 35, 55); //wall before chasers
         this.bodyRect(2957, -450, 30, 15); //wall before chasers
         this.bodyRect(2900, -450, 60, 45); //wall before chasers
-
 
         this.mapRect(1345, -1100, 250, 25); //left platform
         this.mapRect(1755, -1100, 250, 25); //right platform
@@ -257,24 +357,27 @@ const level = {
         this.mapVertex(4200, 29.5, '-50 -40 50 -40 120 40 -120 40', 'launch');
         //mapRect(4150, -15, 100, 25, 'launch'); //far right
 
-        this.mapRect(4500, -800, 600, 850); //far far right building
+        //this.mapRect(4500, -800, 600, 850); //far far right building
     },
-	//**********************************************************************
-	//**********************************************************************
+    //**********************************************************************
+    //**********************************************************************
     buildings: function() {
+        document.body.style.backgroundColor = "#f9faff";
+        this.addSVG('background_buildings', 'foreground_buildings');
+        playSound("ambient_crickets"); //play ambient audio for level
         mech.setPosToSpawn(0, -100);
         //mech.setPosToSpawn(3900,-400); //spawn near exit for testing
 
         this.mapRect(-1000, 0, 5100, 500); //***********ground
-        this.spawnBuilding(-300, -250, 600, 240,true,true) //first floor  player spawns in side
-        this.spawnBuilding(-200, -500, 400, 240,true,true) //second floor
+        this.spawnBuilding(-300, -250, 600, 240, true, true) //first floor  player spawns in side
+        this.spawnBuilding(-200, -500, 400, 240, true, true) //second floor
         this.mapVertex(-844, -50, '0 0 0 -150 200 -150 400 0')
         this.bodyRect(50, -600, 50, 100); //block on top of buildings
         this.spawnShooter(650, -600, 50) //near entrance high up
-        this.spawnBuilding(700, -400, 1400, 390,true,true ) //long building
+        this.spawnBuilding(700, -400, 1400, 390, true, true) //long building
         body[body.length] = Bodies.circle(1400, -240, 20); //hanging ball
         this.constraintPB(1400, -375, body.length - 1, 0.9, this.propsNoRotation); //hanging ball
-		this.mapRect(700, -185, 85, 25); //ledge for sneak attackers inside building
+        this.mapRect(700, -185, 85, 25); //ledge for sneak attackers inside building
         this.mapRect(1250, -80, 300, 100); //table inside long building
         this.spawnSneakAttacker(765, -230, 30) //inside long center building
         this.mapRect(2015, -185, 85, 25); //ledge for sneak attackers inside building
@@ -285,7 +388,7 @@ const level = {
         }
         this.mapRect(2700, -100, 1400, 150); //far right block higher ground
         this.mapRect(3100, -200, 1000, 150); //far right block higher ground
-        this.spawnBuilding(3500, -500, 500, 290, false,false, 'right') //building around exit at the far right
+        this.spawnBuilding(3500, -500, 500, 290, false, false, 'right') //building around exit at the far right
         this.mapRect(3700, -220, 100, 25, 'exit') //ground bump wall
         this.spawnChaser(-850, -190, 30) //far left on ground
         this.spawnHopper(3150, -250, 75) //near exit on ground
@@ -294,10 +397,13 @@ const level = {
         this.spawnGhoster(1000, -1800, 100) //high up looks like a sun
         this.spawnShooter(3600, -600, 50) //near entrance high up
     },
-	//**********************************************************************
-	//**********************************************************************
+    //**********************************************************************
+    //**********************************************************************
     testing: function() {
+        this.addSVG('background_testing', 'foreground_testing');
+        playSound("ambient_wind"); //play ambient audio for level
         mech.setPosToSpawn(725, 750);
+
         this.mapRect(4000, -200, 100, 25, 'exit') //ground bump wall
         for (let i = 0; i < 4; i++) {
             this.spawnHopper(5000 * Math.random() - 1500, -2000 * Math.random(), 20);
