@@ -66,7 +66,21 @@
 		  }
 	    ]]></style>
 	</defs>
-	<!-- buildings1 *********************************************************************
+	<!-- twoTowers *********************************************************************
+*****************************************************************************************
+*****************************************************************************************-->
+
+	<g id = 'background_twoTowers' display= "none">
+		<path d="M1325 -1490 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#666' stroke='transparent'/>
+		<rect x="3050" y="-950" width="600" height="450" fill='#dff'/>
+		<rect x="3650" y="-650" width="50" height="150" fill='#dee'/>
+		<path d="M3250 -500 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#0ff' stroke='transparent'/>
+		<rect x="1350" y="-200" width="50" height="200" fill='#eee'/>
+		<rect x="3000" y="-200" width="50" height="200" fill='#eee'/>
+
+		<!-- <path d="M 750 -2000 H 1400  V 0  H -550 V-1700 H 750 Z" fill='#e9e5e3' stroke='transparent'/> -->
+	</g>
+	<!-- buildings  *********************************************************************
 *****************************************************************************************
 *****************************************************************************************-->
 	<g id = 'background_buildings' display= "none">
@@ -77,7 +91,7 @@
 		<rect x="3500" y="-360" width="25" height="150" fill='#dee'/>
 		<path d="M3700 -220 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#0ff' stroke='transparent'/>
 	</g>
-	<!-- skyscrapers1 ***********************************************************************
+	<!-- skyscrapers  ***********************************************************************
 	*****************************************************************************************
 	*****************************************************************************************
 	*****************************************************************************************-->
@@ -207,6 +221,26 @@
 		  }
 	    ]]></style>
     </defs>
+	<!-- twoTowers -->
+
+	<g id = 'foreground_twoTowers' display= "none">
+		<path d="M 700 -2000 H 1300 H 1600 V -1450 H 1400 V 0
+		H 1200 L 900 -450 L 600 0
+		H 500 L 200 -450 L -100 0
+		H -600 V-1750 H 700
+		M950 -1950 L 700 -1500 H 1250 L950 -1950
+		M500 -500 L 200 -950 L-100 -500 H -600
+		M3650 -1300 H 5000 V 0 H 3800 L3500 -450 L 3200 0 H 3000 V -1000 H 3650 V-1300
+		M4000 -1250 L 3700 -800 V-650 V-650 L 3625 -500 H 4510 L 4000 -1250"
+		fill='#310' opacity = '0.15' stroke='transparent'/>
+		<rect x="930" y="-1950" width="40" height="10" fill='#ee0'/>
+		<rect x="180" y="-950" width="40" height="10" fill='#ee0'/>
+		<rect x="880" y="-450" width="40" height="10" fill='#ee0'/>
+		<rect x="180" y="-450" width="40" height="10" fill='#ee0'/>
+		<rect x="3480" y="-450" width="40" height="10" fill='#ee0'/>
+		<rect x="3980" y="-1250" width="40" height="10" fill='#ee0'/>
+
+	</g>
 	<!-- buildings -->
 	<g id = 'foreground_buildings' display= "none">
 		<rect x="-200" y="-500" width="400" height="240" opacity='0.1'/>
@@ -325,10 +359,10 @@
 
 	<script src="js/lib/randomColor.min.js"></script>
 
-	<script src="js/game-object.js"></script>
-	<script src="js/player-object.js"></script>
-	<script src="js/bullet-object.js"></script>
-	<script src="js/mob-object.js"></script>
+	<script src="js/game.js"></script>
+	<script src="js/player.js"></script>
+	<script src="js/bullets.js"></script>
+	<script src="js/mobs.js"></script>
 	<script src="js/level.js"></script>
 	<script src="js/engine.js"></script>
 	<script src="js/index.js"></script>

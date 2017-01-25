@@ -62,7 +62,6 @@ function playerOnGroundCheck(event) { //runs on collisions events
         mech.numTouching++;
         if (!mech.onGround) mech.enterLand();
     }
-
     function getGroundInfo(idNum) {
         if (mech.onBody.id != idNum) { //if the id has changed
             var touching = findindexFromID(idNum);
@@ -71,7 +70,6 @@ function playerOnGroundCheck(event) { //runs on collisions events
             }
         }
     }
-
     const pairs = event.pairs;
     for (let i = 0, j = pairs.length; i != j; ++i) {
         let pair = pairs[i];

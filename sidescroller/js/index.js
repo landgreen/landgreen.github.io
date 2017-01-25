@@ -211,11 +211,11 @@ function run(el) { // onclick from the splash screen
         game.onLevel = 'buildings'
         localStorage.setItem('onLevel', game.onLevel);
     }
-    //level[game.onLevel]();
+    level[game.onLevel]();
     //level.buildings();
     //level.skyscrapers();
     //level.testing();
-	level.twoTowers();
+	//level.twoTowers();
     level.addToWorld(); //add map to world
 
     //document.getElementById("keysright").innerHTML = ''; //remove html from intro
@@ -258,6 +258,7 @@ function cycle() {
         game.output();
     } else {
         mobs.loop();
+		bullets.mobLoop();
         mobs.draw();
         game.draw.cons();
         game.draw.body();
@@ -265,7 +266,6 @@ function cycle() {
         //ctx.drawImage(foreground_img, -700, -1500);
         game.draw.map();
         bullets.loop();
-        bullets.mobLoop();
         game.drawCircle();
         mech.drawHealth();
         ctx.restore();

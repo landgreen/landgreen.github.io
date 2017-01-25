@@ -90,43 +90,67 @@ const level = {
     //*********************************************************************************
     //*********************************************************************************
     spawnShooter: function(x, y, radius) { //size 50
-        mobs.spawn(x, y, 3, radius, 'rgba(215,100,215,', 0, ["seePlayerCheck", 'fireAt']);
+        mobs.spawn(x, y, 3, radius, 'rgba(215,100,215,', ["seePlayerCheck", 'fireAt']);
         mob[mob.length - 1].isStatic = true;
         mob[mob.length - 1].memory = 20; //memory+memory*Math.random()
+		mob[mob.length - 1].fireDelay = 20;
     },
     spawnChaser: function(x, y, radius) {
-        mobs.spawn(x, y, 4, radius, 'rgba(110,150,200,', 0.0012, ['gravity', "seePlayerCheck", "fallCheck", "attraction"]);
+        mobs.spawn(x, y, 4, radius, 'rgba(110,150,200,', ['gravity', "seePlayerCheck", "fallCheck", "attraction"]);
         mob[mob.length - 1].g = 0.0005; //required if using 'gravity'
+		mob[mob.length - 1].accelMag = 0.0012;
         mob[mob.length - 1].memory = 240; //memory+memory*Math.random() in cycles
     },
+	spawnChaseShooter: function(x, y, radius) {
+		mobs.spawn(x, y, 3, radius, 'rgba(140,100,250,', ['gravity', "seePlayerCheck", "fallCheck", "attraction", 'fireAt']);
+		mob[mob.length - 1].accelMag = 0.0002;
+		mob[mob.length - 1].g = 0.0001; //required if using 'gravity'
+		mob[mob.length - 1].frictionAir = 0.001;
+		mob[mob.length - 1].memory = 50; //memory+memory*Math.random() in cycles
+		mob[mob.length - 1].fireDelay = 120;
+		mob[mob.length - 1].lookAt = false; //prevents rotation on fire
+	},
     spawnHopper: function(x, y, radius) {
-        mobs.spawn(x, y, 4, radius, 'rgba(0,200,150,', 0.07, ['gravity', "seePlayerCheck", "fallCheck", "hop"]);
+        mobs.spawn(x, y, 4, radius, 'rgba(0,200,150,', ['gravity', "seePlayerCheck", "fallCheck", "hop"]);
+		mob[mob.length - 1].accelMag = 0.07;
         mob[mob.length - 1].g = 0.002; //required if using 'gravity'
         mob[mob.length - 1].frictionAir = 0.04;
-        mob[mob.length - 1].memory = 60; //memory+memory*Math.random()
+        //mob[mob.length - 1].memory = 60; //memory+memory*Math.random()
         mob[mob.length - 1].restitution = 0;
+		mob[mob.length - 1].delay = 80;
     },
+	spawnBurster: function(x, y, radius) {
+		mobs.spawn(x, y, 6, radius, 'rgba(0,200,180,', ["seePlayerCheck", "fallCheck", "hop"]);
+		mob[mob.length - 1].accelMag = 0.1;
+		mob[mob.length - 1].frictionAir = 0.02;
+		//mob[mob.length - 1].memory = 240; //memory+memory*Math.random()
+		mob[mob.length - 1].restitution = 1;
+		mob[mob.length - 1].delay = 140;
+	},
     spawnStriker: function(x, y, radius) {
-        mobs.spawn(x, y, 5, radius, 'rgba(221,102,119,', 0.0004, ["seePlayerCheck", "attraction", 'gravity', "fallCheck", 'strike']);
+        mobs.spawn(x, y, 5, radius, 'rgba(221,102,119,', ["seePlayerCheck", "attraction", 'gravity', "fallCheck", 'strike']);
+		mob[mob.length - 1].accelMag = 0.0004;
         mob[mob.length - 1].g = 0.0002; //required if using 'gravity'
         mob[mob.length - 1].frictionStatic = 0;
         mob[mob.length - 1].friction = 0;
+		mob[mob.length - 1].delay = 60;
         Matter.Body.rotate(mob[mob.length - 1], Math.PI * 0.1)
     },
     spawnGhoster: function(x, y, radius) {
-        mobs.spawn(x, y, 0, radius, 'rgba(255,255,0,', 0.00007, ["seePlayerCheck", "fallCheck", "attraction"]);
+        mobs.spawn(x, y, 0, radius, 'rgba(255,255,0,', ["seePlayerCheck", "fallCheck", "attraction"]);
+		mob[mob.length - 1].accelMag = 0.00007;
         mob[mob.length - 1].collisionFilter.mask = 0x001100; //move through walls
         mob[mob.length - 1].memory = 720; //memory+memory*Math.random()
         //mob[mob.length - 1].frictionAir = 0.001;
     },
     spawnBlinker: function(x, y, radius) {
-        mobs.spawn(x, y, 6, radius, 'rgba(0,200,255,', 0, ["seePlayerCheck", "fallCheck", 'blink', 'strike']);
+        mobs.spawn(x, y, 6, radius, 'rgba(0,200,255,', ["seePlayerCheck", "fallCheck", 'blink']);
         mob[mob.length - 1].collisionFilter.mask = 0x001100; //move through walls
         mob[mob.length - 1].isStatic = true;
         mob[mob.length - 1].memory = 360; //memory+memory*Math.random()
     },
     spawnSneakAttacker: function(x, y, radius) {
-        mobs.spawn(x, y, 6, radius, 'rgba(235,235,235,', 0.001, ['gravity', "fallCheck", 'sneakAttack']);
+        mobs.spawn(x, y, 6, radius, 'rgba(235,235,235,', ['gravity', "fallCheck", 'sneakAttack']);
         mob[mob.length - 1].g = 0.0005; //required if using 'gravity'
         //mob[mob.length - 1].memory = 120; //memory+memory*Math.random()
         mob[mob.length - 1].collisionFilter.mask = 0x001001; //can't be hit by bullets
@@ -219,11 +243,14 @@ const level = {
     //**********************************************************************
     //**********************************************************************
     twoTowers: function() {
-        document.body.style.backgroundColor = "#f9f5f3";
+        //document.body.style.backgroundColor = "#f9f5f3";
+		document.body.style.backgroundColor = "#fff";
+		this.addSVG('background_twoTowers', 'foreground_twoTowers');
         //playSound("ambient_wind");//play ambient audio for level
-        mech.setPosToSpawn(1000, -1600); //normal spawn
+        mech.setPosToSpawn(1375, -1600); //normal spawn
 		//mech.setPosToSpawn(600, -1200); //normal spawn
 		//mech.setPosToSpawn(4500, -1700); //near exit spawn
+		//mech.setPosToSpawn(525, -150); //ground first building
 
 		this.mapRect(-600, 25, 5600, 300); //ground
 
@@ -231,12 +258,13 @@ const level = {
         const h = 2000;
 		let x = -600; //left building
 		this.mapRect(x, 0, w, 50); //ground
-        this.mapRect(x, -h+300, 50, h-300); //left wall
-        this.mapRect(x+w - 50, -h, 50, h - 200); //right wall
+        this.mapRect(x, -h+300, 50, h-100); //left wall
+        this.mapRect(1550, -h, 50, 500); //right wall
+		this.mapRect(1350, -h+505, 50, 1295); //right wall
 
 		this.mapRect(x, -h+250, w-700, 50); //roof left
-		this.mapRect(x + 1300, -h, 50, 300); //roof right
-		this.mapRect(x + 1300, -h, 700, 50); //center wall
+		this.mapRect(x + 1300, -h, 50, 300); //right roof wall
+		this.mapRect(x + 1300, -h, 900, 50); //center wall
 		map[map.length] = Bodies.polygon(425,-1700,0, 15); //circle above door
 		this.bodyRect(420, -1675, 15, 170, this.propsDoor); // door
 		consBB[consBB.length] = Constraint.create({ //makes door swing
@@ -251,40 +279,58 @@ const level = {
 		//this.bodyRect(x + w*0.5+25, -h+300, 20, 10); //center wall door
 		//body[body.length] = Body.create({			parts: [body[body.length-1], body[body.length-2]]		});
 
-        this.mapRect(x + 300, -h * 0.75, w - 300, 50); //3rd floor
+        this.mapRect(x + 300, -h * 0.75, w -100 , 50); //3rd floor
 		this.mapRect(x + w*0.7, -h * 0.74, 50, 375); //center wall
 		this.bodyRect(x + w*0.7, -h * 0.5-106, 50, 106); //center block under wall
         this.mapRect(x, -h * 0.5, w - 300, 50); //2nd floor
 		this.spawnHopper(-100, -1040, 60); //on left 3rd floor
 		this.spawnHopper(250, -1070, 100); //on left 3rd floor
 		this.spawnStairs(x, -1000, 5, 250, 350); //stairs 2nd
-		this.mapRect(x+ w*0.6, -h * 0.25-150, 200, 200); //center table
+		this.mapRect(350, -600, 350, 150); //center table
         this.mapRect(x + 300, -h * 0.25, w - 300, 50); //1st floor
 		this.spawnChaser(750, -750, 50); //by right stairs
 		this.spawnChaser(895, -600, 50); //by right stairs
 		this.spawnChaser(955, -650, 50); //by right stairs
-		this.spawnStriker(200, -650, 20); //left side
-		this.spawnStriker(250, -650, 20); //left side
 		this.spawnStairs(x + w-50, -500, 5, 250, 350, true); //stairs 1st
 		this.spawnStairs(x, 0, 5, 250, 350);  //stairs ground
+		this.spawnStriker(-400, -230, 25); //left side
+		this.spawnStriker(-341, -172, 30); //left side
+		this.spawnStriker(-288, -95, 20); //left side
+		this.bodyRect(700,-200, 100, 100); //center block under wall
+		this.bodyRect(700,-300, 100, 100); //center block under wall
+		this.bodyRect(700,-400, 100, 100); //center block under wall
+		this.spawnChaseShooter(3450,-50,50)
+		this.spawnChaseShooter(4500,-50,50)
+		this.spawnBurster(3016,-1050,50)
+		this.spawnBlinker(2200,-1400,200)
+		//this.spawnBlinker(2200,-400,200)
 
-		this.spawnBlinker(2200,-1600,200)
-		this.spawnBlinker(2200,-800,200)
+		//this.spawnBurster(2200,-400,50)
+		//this.spawnShooter(2200,-1400,50)
+		//this.spawnChaseShooter(2200,-400,50)
+
 
 		x = 3000; //right building
 		this.mapRect(x, 0, w, 50); //ground
-        this.mapRect(x, -h, 50, h - 200); //left wall
-        this.mapRect(x+w - 50, -h, 50, h); //right wall
-        this.mapRect(x, -h, w, 50); //roof
-		this.mapRect(x+200, -h*0.75-10, 100, 50, 'exit'); //ground bump wall
-        this.mapRect(x, -h * 0.75, w - 300, 50); //3rd floor
-        this.mapRect(x+300, -h * 0.5, w - 300, 50); //2nd floor
-		this.spawnStairs(x+w-50, -1000, 5, 250, 350,true); //stairs 2nd
+        this.mapRect(x, -1000, 50, 800); //left wall
+        this.mapRect(x+w - 50, -1300, 50, 1100); //right wall
+		//this.spawnBurster(3016,-1050,50)
+		this.spawnBurster(3850,-1050,30)
+		this.spawnBurster(4400,-1100,45)
+		this.spawnBurster(4800,-1150,60)
+		this.spawnBurster(3450, -625, 50); //by right stairs
+		this.mapRect(4150, -600, 350, 150); //table
+		this.mapRect(3650, -1300, 50, 650); //exit wall
+		this.mapRect(3650, -1300, 1350, 50); //exit wall
+		this.mapRect(x+250, -510, 100, 50, 'exit'); //ground bump wall
+
+        this.mapRect(x, -h * 0.5, 700, 50); //exit roof
+
         this.mapRect(x, -h * 0.25, w - 300, 50); //1st floor
-		this.spawnStairs(x, -500, 5, 250, 350); //stairs 1st
+		//this.spawnStairs(x, -500, 5, 250, 350); //stairs 1st
 		this.spawnStairs(x+w-50, 0, 5, 250, 350,true);  //stairs ground
 
-		this.spawnStriker(3500, -1300, 50); //
+		//this.spawnStriker(3500, -1300, 50); //
     },
 
     skyscrapers: function() {
