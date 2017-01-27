@@ -148,18 +148,30 @@
 		<p>Chemistry is most accurately described by quantum mechanics, but chemical bonds and chemical reactions can be loosely explained with electrostatic forces. Let's see how far classical physics will take us.</p>
 		<br>
 		<p><strong>Example</strong>: Calculate what Coulomb's law predicts for the force that holds together regular table salt, NaCl.</p>
-		<div class="col-group">
+		<div class="col-group center">
 			<div>
+				<svg style="display: block; margin: auto" width="110" height="110" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<g transform = 'translate(55,55)'>
+				<circle cx="0" cy="0" r="50" fill = '#fdd' stroke-width="2" stroke="#222"/>
+				<text x="0" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">Na</text>
+				</g>
+				</svg>
 				<p><strong>Na: Sodium</strong>
 				<br>1 valence electron
 				<br>mass = 3.8 x 10<sup>-26</sup> kg
-				<br>ionic radii = 227 x 10<sup>-12</sup> m</p>
+				<br>ionic radius = 227 x 10<sup>-12</sup> m</p>
 			</div>
 			<div>
+				<svg style="display: block; margin: auto" width="110" height="110" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<g transform = 'translate(55,55)'>
+				<circle cx="0" cy="0" r="35" fill = '#ddf' stroke-width="2" stroke="#222"/>
+				<text x="0" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">Cl</text>
+				</g>
+				</svg>
 				<p><strong>Cl: Chlorine</strong>
 					<br>7 valence electrons
 					<br>mass = 5.9 x 10<sup>-26</sup> kg
-					<br>ionic radii = 175 x 10<sup>-12</sup> m</p>
+					<br>ionic radius = 175 x 10<sup>-12</sup> m</p>
 			</div>
 		</div>
 		<p>In nonionic atoms the numbers of electrons and protons are equal so the electrostatic forces are balanced to zero. When NaCl ionically bond one electron leaves Na and joins Cl.  Na becomes Na+1 and Cl becomes Cl-1.  This unbalanced positive and negative charge produces an attractive force.</p>
@@ -238,7 +250,7 @@
 	            </g>
         	</svg>
             <h2>$$ V = \frac{k_{e}q}{r} $$</h2>
-            <p><strong>V</strong> = electric potential [v, volts, J/C] <i>scalar</i>
+            <p><strong>V</strong> = electric potential [V, volts, J/C] <i>scalar</i>
                 <br><strong>k<sub>e</sub></strong> = 8.987 × 10<sup>9</sup> = Coulomb's constant [N m²/C²] <i>scalar</i>
                 <br><strong>q</strong> = charge [C, Coulomb] <i>scalar</i>
                 <br><strong>r</strong> = distance between the center of each charge [m, meters] <i>scalar</i>
@@ -263,11 +275,11 @@
 		<details>
 				<summary>solution</summary>
 				$$ V = \frac{k_{e}q}{r} $$
-				$$ V = \frac{(8.987 \times 10^{9})(1.6 \times 10^{-19})}{10^{-9}} $$
-				$$ V = 1.440v$$
+				$$ V = \frac{(8.987 \times 10^{9})(-1.6 \times 10^{-19})}{10^{-9}} $$
+				$$ V = -1.440v$$
 				<br>
-				$$ V = \frac{(8.987 \times 10^{9})(100 \times 1.6 \times 10^{-19})}{10^{-11}} $$
-				$$ V = 14,400v$$
+				$$ V = \frac{(8.987 \times 10^{9})(100 \times -1.6 \times 10^{-19})}{10^{-11}} $$
+				$$ V = -14,400v$$
 
 		</details>
 		<br>
@@ -278,7 +290,7 @@
 		<br>
 		<br>
 		<br>
-		<p><b>Example:</b> The electric potential at 0.1m from a charge is 10J/C. If I were to bring a 4μC to 0.1m away from my charge how much energy would that take?</p>
+		<p><b>Example:</b> The electric potential at 0.1m from a charge is 10J/C. If I were to bring another 4μC charge to 0.1m away from the original charge how much energy would that take?</p>
 		<details>
 				<summary>solution</summary>
 				$$ V = \frac{\color{red}{k_{e}q_{1}}}{\color{red}{r}} $$
@@ -299,7 +311,7 @@
 		<br>
 		<br>
 		<h2 class='underlined'>Electric Potential Difference, Voltage</h2>
-		<p>Electric potential difference is simply a change in electric potential.  It can be thought of as the work it would take to move a +1C test charge between two points.</p>
+		<p>Electric potential difference, or more commonly, voltage plays a significant role in electronics.  Voltage is simply a change in electric potential.  It can be thought of as the work it would take to move a +1C test charge between two points.</p>
 		<div class='definition'>
 			<svg style="display: block; margin: auto" width="400" height="150" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
 				<defs>
@@ -308,6 +320,8 @@
 						<stop offset="100%" stop-color="#000" stop-opacity="0"/>
 					</linearGradient>
 				</defs>
+				<line x1="123" y1="50" x2="343" y2="50" stroke = '#999' stroke-width = "2" stroke-dasharray="2, 15" />
+
 				<g transform = 'translate(23,50)'>
 		            <circle cx="0" cy="0" r="20" fill = '#fff' stroke-width="2" stroke="#222"/>
 					<text x="0" y="-2" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">q</text>
@@ -336,9 +350,9 @@
             <h2>$$ \Delta V = V_{f} - V_{i}$$
 				$$ \Delta V = \frac{k_{e}q}{r_{f}} - \frac{k_{e}q}{r_{i}}$$
 			</h2>
-            <p><strong>ΔV</strong> = electric potential difference, voltage [v, Volts, J/C] <i>scalar</i>
-                <br><strong>V<sub>f</sub></strong> = final voltage [v] <i>scalar</i>
-                <br><strong>V<sub>i</sub></strong> = initial voltage [v] <i>scalar</i>
+            <p><strong>ΔV</strong> = electric potential difference, voltage [V, volts, J/C] <i>scalar</i>
+                <br><strong>V<sub>f</sub></strong> = final voltage [V, volts] <i>scalar</i>
+                <br><strong>V<sub>i</sub></strong> = initial voltage [V, volts] <i>scalar</i>
         </div>
 		<p>A voltage applied to a wire will cause the electrons to flow, possibly doing something useful.</p>
 		<p>Voltage increases can be produced by: batteries and electrical sockets.
