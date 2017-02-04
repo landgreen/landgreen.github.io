@@ -211,7 +211,7 @@ function run(el) { // onclick from the splash screen
     }
     //level[game.onLevel]();
     //level.buildings();
-    level.skyscrapers();
+    //level.skyscrapers();
     //level.testing();
 	//level.twoTowers();
 	//level.skyscrapers2();
