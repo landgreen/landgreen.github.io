@@ -25,14 +25,13 @@ const game = {
     onLevel: null, //is set later to localStorage.getItem('onLevel'),
     nextLevel: function() {
         localStorage.setItem('skipSplash', '1');
-		
         if (this.onLevel === 'buildings') {
             localStorage.setItem('onLevel', 'skyscrapers');
         } else if (this.onLevel === 'skyscrapers') {
             localStorage.setItem('onLevel', 'twoTowers');
-        } else if  (this.onLevel === 'twoTowers') {
-			localStorage.setItem('onLevel', 'buildings');
-		}
+        } else if (this.onLevel === 'twoTowers') {
+            localStorage.setItem('onLevel', 'buildings');
+        }
     },
     levels: { //lets the game know what sound and graphics to use
         background: "background_buildings",
@@ -65,16 +64,17 @@ const game = {
         this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
     },
     track: true,
+    setTracking: function() { //use in window resize in index.js
+        this.track = true;
+        this.zoom = canvas.height / 2000; //sets starting zoom scale
+    },
     keyPress: function() { //runs on key press event
         if (keys[69]) { // 69 = e
             if (this.track) {
                 this.track = false;
-                this.showHeight = 3000;
-                this.zoom = canvas.height / this.showHeight; //sets starting zoom scale
+                this.zoom = canvas.height / 3000; //sets starting zoom scale
             } else {
-                this.track = true;
-                this.showHeight = 1500;
-                this.zoom = canvas.height / this.showHeight; //sets starting zoom scale
+                this.setTracking();
             }
         } else if (keys[84]) { // 84 = t
             if (this.testing) {
@@ -83,12 +83,12 @@ const game = {
                 this.testing = true;
             }
         } else if (keys[48]) { // 48 = 0
-			this.zoom = 1;
-		} else if (keys[187]){ // 187 = +
-			this.zoom *= 1.1;
-		} else if (keys[189]){ // 189 = -
-			this.zoom *= 0.9;
-		}
+            this.zoom = 1;
+        } else if (keys[187]) { // 187 = +
+            this.zoom *= 1.1;
+        } else if (keys[189]) { // 189 = -
+            this.zoom *= 0.9;
+        }
     },
     zoom: 1,
     camera: function() {
@@ -99,7 +99,6 @@ const game = {
         this.mouseInGame.x = (this.mouse.x - canvas.width2) / this.zoom + canvas.width2 - mech.transX;
         this.mouseInGame.y = (this.mouse.y - canvas.height2) / this.zoom + canvas.height2 - mech.transY;
     },
-    showHeight: 2000, //controls the resting zoomheight set to higher to see more of the map   //1000 seems normal
     wipe: function() {
         // if (this.isPaused) {
         //   ctx.fillStyle = "rgba(221,221,221,0.1)";
@@ -199,9 +198,24 @@ const game = {
         ctx.fillText('action: ' + mech.onBody.action, 5, line);
     },
     draw: {
+        powerUp: function() {
+
+            for (let i = 0, len = powerUp.length; i < len; ++i) {
+                let vertices = powerUp[i].vertices;
+				ctx.beginPath();
+                ctx.moveTo(vertices[0].x, vertices[0].y);
+                for (let j = 1; j < vertices.length; j += 1) {
+                    ctx.lineTo(vertices[j].x, vertices[j].y);
+                }
+                ctx.lineTo(vertices[0].x, vertices[0].y);
+				ctx.fillStyle = powerUp[i].color;
+				ctx.fill();
+            }
+
+        },
         map: function() {
             ctx.beginPath();
-            for (let i = 0; i < map.length; i += 1) {
+            for (let i = 0, len = map.length; i < len; ++i) {
                 let vertices = map[i].vertices;
                 ctx.moveTo(vertices[0].x, vertices[0].y);
                 for (let j = 1; j < vertices.length; j += 1) {
@@ -214,7 +228,7 @@ const game = {
         },
         body: function() {
             ctx.beginPath();
-            for (let i = 0; i < body.length; i += 1) {
+            for (let i = 0, len = body.length; i < len; ++i) {
                 let vertices = body[i].vertices;
                 ctx.moveTo(vertices[0].x, vertices[0].y);
                 for (let j = 1; j < vertices.length; j += 1) {
@@ -230,14 +244,14 @@ const game = {
         },
         cons: function() {
             ctx.beginPath();
-            for (let i = 0; i < cons.length; i += 1) {
+			for (let i = 0, len = cons.length; i < len; ++i) {
                 ctx.moveTo(cons[i].pointA.x, cons[i].pointA.y);
                 ctx.lineTo(cons[i].bodyB.position.x, cons[i].bodyB.position.y);
             }
-			// for (let i = 0; i < consBB.length; i += 1) {
-			// 	ctx.moveTo(consBB[i].bodyA.position.x + consBB[i].pointA.x, consBB[i].bodyA.position.y + consBB[i].pointA.y);
-			// 	ctx.lineTo(consBB[i].bodyB.position.x, consBB[i].bodyB.position.y);
-			// }
+			for (let i = 0, len = consBB.length; i < len; ++i) {
+                ctx.moveTo(consBB[i].bodyA.position.x, consBB[i].bodyA.position.y);
+                ctx.lineTo(consBB[i].bodyB.position.x, consBB[i].bodyB.position.y);
+            }
             ctx.lineWidth = 1;
             ctx.strokeStyle = '#999';
             ctx.stroke();
@@ -248,7 +262,7 @@ const game = {
             ctx.fillStyle = "#999";
             const bodies = Composite.allBodies(engine.world);
             ctx.beginPath();
-            for (let i = 0; i < bodies.length; i += 1) {
+            for (let i = 0; i < bodies.length; ++i) {
                 //ctx.fillText(bodies[i].id,bodies[i].position.x,bodies[i].position.y);  //shows the id of every body
                 let vertices = bodies[i].vertices;
                 ctx.moveTo(vertices[0].x, vertices[0].y);
@@ -266,7 +280,7 @@ const game = {
             ctx.beginPath();
             let bodyDraw = jumpSensor.vertices;
             ctx.moveTo(bodyDraw[0].x, bodyDraw[0].y);
-            for (let j = 1; j < bodyDraw.length; j += 1) {
+            for (let j = 1; j < bodyDraw.length; ++j) {
                 ctx.lineTo(bodyDraw[j].x, bodyDraw[j].y);
             }
             ctx.lineTo(bodyDraw[0].x, bodyDraw[0].y);
@@ -278,7 +292,7 @@ const game = {
             ctx.beginPath();
             bodyDraw = playerBody.vertices;
             ctx.moveTo(bodyDraw[0].x, bodyDraw[0].y);
-            for (let j = 1; j < bodyDraw.length; j += 1) {
+            for (let j = 1; j < bodyDraw.length; ++j) {
                 ctx.lineTo(bodyDraw[j].x, bodyDraw[j].y);
             }
             ctx.lineTo(bodyDraw[0].x, bodyDraw[0].y);
@@ -289,7 +303,7 @@ const game = {
             ctx.beginPath();
             bodyDraw = playerHead.vertices;
             ctx.moveTo(bodyDraw[0].x, bodyDraw[0].y);
-            for (let j = 1; j < bodyDraw.length; j += 1) {
+            for (let j = 1; j < bodyDraw.length; ++j) {
                 ctx.lineTo(bodyDraw[j].x, bodyDraw[j].y);
             }
             ctx.lineTo(bodyDraw[0].x, bodyDraw[0].y);
@@ -300,7 +314,7 @@ const game = {
             ctx.beginPath();
             bodyDraw = headSensor.vertices;
             ctx.moveTo(bodyDraw[0].x, bodyDraw[0].y);
-            for (let j = 1; j < bodyDraw.length; j += 1) {
+            for (let j = 1; j < bodyDraw.length; ++j) {
                 ctx.lineTo(bodyDraw[j].x, bodyDraw[j].y);
             }
             ctx.lineTo(bodyDraw[0].x, bodyDraw[0].y);

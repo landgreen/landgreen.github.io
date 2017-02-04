@@ -117,15 +117,16 @@ the jump height control by holding down jump  can also control any upward motion
 
 /*collision info:
          category    mask
-player:  0x 001000   0x 010001
+player:  0x 001000   0x 110001
 bullet:  0x 000100   0x 000001
 ghost:   0x 000010   0x 000001
-map:     0x 000001   0x 011111
-body:    0x 000001   0x 011101
-holding: 0x 000001   0x 000001
+map:     0x 000001   0x 111111
+body:    0x 000001   0x 111101
 mob:     0x 000001   0x 001101
 mobBull: 0x 010000   0x 001001
+powerUp: 0x 100000   0x 001001
 
+//holding: 0x 000001   0x 000001
 */
 
 const stats = new Stats(); //setup stats library to show FPS
@@ -144,7 +145,7 @@ function setupCanvas() {
     ctx.font = "15px Arial";
     ctx.lineJoin = 'round';
     ctx.lineCap = "round";
-    game.zoom = canvas.height / game.showHeight; //sets starting zoom scale
+	game.setTracking();
 }
 setupCanvas();
 window.onresize = function() {
@@ -199,23 +200,22 @@ if (localStorage.getItem('skipSplash') === '1') {
 // background_img.src = 'background.png'; // Set source path
 
 function run(el) { // onclick from the splash screen
-    console.log(el);
     el.onclick = null; //removes the onclick effect so the function only runs once
     el.style.display = 'none'; //hides the element that spawned the function
-
     mech.spawn(); //spawns the player
-
     if (localStorage.getItem('onLevel')) { //uses local storage to goto the stored level
         game.onLevel = localStorage.getItem('onLevel');
     } else { //this option onyl occurs on first time running a new session with local storage
-        game.onLevel = 'buildings'
+        game.onLevel = 'twoTowers'
         localStorage.setItem('onLevel', game.onLevel);
     }
-    level[game.onLevel]();
+    //level[game.onLevel]();
     //level.buildings();
-    //level.skyscrapers();
+    level.skyscrapers();
     //level.testing();
 	//level.twoTowers();
+	//level.skyscrapers2();
+	//level.boss();
     level.addToWorld(); //add map to world
 
     //document.getElementById("keysright").innerHTML = ''; //remove html from intro
@@ -232,9 +232,10 @@ function cycle() {
     stats.begin();
     game.timing();
     game.wipe();
+	powerUps.loop();
     mech.keyMove();
     mech.standingOnActions();
-    mech.regen();
+    //mech.regen();
     mech.move();
     if (game.track) {
         mech.look();
@@ -261,6 +262,7 @@ function cycle() {
 		bullets.mobLoop();
         mobs.draw();
         game.draw.cons();
+		game.draw.powerUp();
         game.draw.body();
         mech.draw();
         //ctx.drawImage(foreground_img, -700, -1500);

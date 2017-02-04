@@ -48,15 +48,16 @@ const mech = {
     fillColor: '#fff',
     fillColorDark: '#ddd',
     fireCDcycle: 0,
-    gun: 'machine', //current gun in use
+    gun: 'pistol', //current gun in use
     gunOptions: { //keeps track of keys that switch guns (used in the onkeypress event)
-        49: 'machine',
-        50: 'needle',
+		49: 'pistol',
+        50: 'machine',
         51: 'shot',
-        52: 'rail',
-        53: 'cannon',
-        54: 'super',
-        55: 'lob',
+		52: 'needle',
+        53: 'rail',
+        54: 'cannon',
+        //54: 'super',
+        //55: 'lob',
         // 55: 'spiritBomb',
         // 56: 'experimental'
     },

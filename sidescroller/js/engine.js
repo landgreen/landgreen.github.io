@@ -223,6 +223,7 @@ Events.on(engine, "beforeUpdate", function(event) {
     }
     //addGravity(Composite.allBodies(engine.world));
     //addGravity(mob, game.g/2);
+	addGravity(powerUp, game.g);
     addGravity(body, game.g);
     addGravity(bullet, game.g);
     // addGravity(mobBullet, game.g);
