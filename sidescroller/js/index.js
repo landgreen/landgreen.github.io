@@ -209,7 +209,7 @@ function run(el) { // onclick from the splash screen
         game.onLevel = 'twoTowers'
         localStorage.setItem('onLevel', game.onLevel);
     }
-    //level[game.onLevel]();
+    level[game.onLevel]();
     //level.buildings();
     //level.skyscrapers();
     //level.testing();
