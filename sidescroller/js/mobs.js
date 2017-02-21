@@ -120,8 +120,9 @@ const mobs = {
                 this.stroke = '#000';
             },
 			laser: function() {
-				if (this.seePlayer.yes && this.distanceToPlayer2()<800000) {
-					mech.damage(0.0005*game.dmgScale);
+				if (game.cycle % 7 && this.seePlayer.yes && this.distanceToPlayer2()<800000) {
+				//if (Math.random()>0.2 && this.seePlayer.yes && this.distanceToPlayer2()<800000) {
+					mech.damage(0.0003*game.dmgScale);
 					ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
                     ctx.lineTo(player.position.x, player.position.y);
@@ -134,9 +135,9 @@ const mobs = {
                 //     this.cd = game.cycle + this.delay;
                 if (this.seePlayer.yes) {
                     const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x);
-                    const mag = 0.95 * player.mass * game.g
-                    player.force.x -= mag * Math.cos(angle);
-                    player.force.y -= mag * Math.sin(angle);
+                    const mag = player.mass * game.g
+                    player.force.x -= 1.4 * mag * Math.cos(angle);
+                    player.force.y -= 0.95 * mag * Math.sin(angle);
                     ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
                     ctx.lineTo(player.position.x, player.position.y);
@@ -206,6 +207,7 @@ const mobs = {
                 }
             },
             sneakAttack: function() { //speeds towards player when player isn't looking on CD
+//				this.fill = 'transparent'
                 if (this.cd < game.cycle && !mech.lookingAtMob(this, 0.5)) {
                     this.seePlayerCheck();
                     if (this.seePlayer.yes) {
@@ -214,7 +216,7 @@ const mobs = {
                         const unitVector = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
                         this.force.x += Matter.Vector.mult(unitVector, mag * this.mass).x
                         this.force.y += Matter.Vector.mult(unitVector, mag * this.mass).y
-                            //switch modes to chaser
+                        //switch modes to chaser
                         this.do = ['gravity', "seePlayerCheck", "fallCheck", "attraction", 'hide']
                         this.collisionFilter.mask = 0x001101; //make mob hittable by bullets again
                         this.color = 'rgba(120,190,210,'
@@ -231,9 +233,10 @@ const mobs = {
                 if (!this.seePlayer.recall) {
                     this.seePlayerCheck(); //gets the stroke collor back to normal
                     this.do = ['gravity', "fallCheck", 'sneakAttack']
-                    this.collisionFilter.mask = 0x001001; //make mob unhittable by bullets again
+                    this.collisionFilter.mask = 0x000001; //make mob unhittable by bullets again
                     this.color = 'rgba(235,235,235,'
-                    this.fill = this.color + this.health + ')';
+                    this.fill = 'transparent';
+					this.stroke = 'transparent';
                 }
             },
             fallCheck: function() {
@@ -249,9 +252,7 @@ const mobs = {
             },
             deadCount: 0.2,
             death: function() {
-				for(let i = 0; i<Math.round(Math.sqrt(this.mass)*0.5 +Math.random()*1.5); ++i){ //drop powerUps
-					powerUps.spawn(this.position.x+(Math.random()-0.5)* radius*2,this.position.y+(Math.random()-0.5)* radius*2);
-				}
+				powerUps.spawnRandomPowerUp(this.position.x,this.position.y,this.mass,radius);
                 this.alive = false;
                 this.seePlayer.recall = 0;
                 this.frictionAir = 0.005;

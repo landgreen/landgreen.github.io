@@ -5,11 +5,6 @@ make a graphics that looks like the player has a tail
   (loose wires / a tail / a rope)
   to indicate player motion
 
-draw images on top of bodies
-  make an svg in html, export to png, add to canvas
-  add a background layer
-  add a foreground layer for shadows, lights, stuff in front of player
-
 game mechanics
   mechanics that support the physics engine
     add rope/constraint
@@ -35,62 +30,52 @@ game mechanics
 
 track foot positions with velocity better as the player walks/crouch/runs
 
-track what body the player is standing on
-  get id from jump sensor collisions, find the body with the id.
-  when player jumps/moves apply an opposite force on that body
-  leg animation should be relative to the velocity of the body player is on
-
 brief forced crouch after landing at a high speed
   you could just set the crouch keys[] to true for a few cycles if velocity.y is large
-
-give grab a method of interaction with bullets, while paused
 
  physics puzzle mechanics
   move a block over and jump on it to get over a wall
   drop some weight on a suspended nonrotating block to lower it and remove a blockage
   knock over a very tall plank to clear a wide gap
 
-
-when holding something
-redraw the bodies stroke with the same color as the constaint stroke
-  it looks cool!
-
-give mobs vision of player
-  use raytracing to see if a line can be drawn directly to the player
-
-do somethign about blocks and NPCs that fall off the map
-  remove them from the physics engine
-  reset them
-  figure out how to delete them
-
 bullet type: bomb
 	make a bullet that after a few seconds gets very big and hits mobs to do damage
 		make the bullet go noncollide with map after explode
 
-NPC-mob laser
-	mob does damage by looking at player with the query ray
-		require the mob to hold the player as a target for a couple seconds to fire
-			draw the query targeting ray
 
-NPC-mob jumper
-	jumps in player's direction when it can see player
-		only jumps when mob is moving very slowly
-			make friction very high
-		only jump when touching map
-			is it worth adding a collide event?
+power ups  (rogue-like patterned after binding of issac with mostly stacking power ups)
+	should power ups automaticaly active or should player have to pick them up?
 
-regen health by eating things you can pick up
-	use the r button?
+gun power ups:
+one at a time: shape, restitution, airfriction, sound, gravity??
+	bullet = default bullet shape	zero restitution, medium airfraction
+	needle = long needle 			low restitution, zero air friction
+	square = large	 				high resitituion, high air friction
 
-make bullet damage linked to each bullet
+one at a time: number, accuracy, size, lifespan, collision, gravity
+	'sniper = 1 bullet, perfect accuracy, larger size, long life, can collide with other bullets
+	'multi = 3 bullets, good accuracy in 3 different directions, medium lifespan, medium size, can't collide with other bullets
+	'spray = many bullets, very bad accuracy, small size, short life, can't collide with other bullets
+overlapping and	progressive:
+	`faster = higher starting bullet speed
+	'larger = +increase size and while keeping speed constant
+	`rapid = reduce cooldown to fire
+	'dmg = lower damage threshhold and base dmg is also higher
+	`frictionAir = lower airfriction
+	????bullets can pass through body or map, but hit mobs
 
-make bullet damamge scale with relative velocity difference between bullet and mob
+player power ups:
+	heal: heals player
+	higher jump?
+	higher speed?
+	double jump?
+	shield?
+	reduce dmg?
 
-make a goal for each map
-	use a map ground property for the end of a map
-		similar to portal
 
-toggle between nontracking zoomout, that shows the entire map and tracking with static zoom.
+
+
+
 
 
 FIX************************************************************
@@ -104,15 +89,9 @@ on testing mode read out mouse postion isn't accurate when zoomed
   not sure how to fix this, need to figure out the math for size changes when zoomed
   try drawing a picture
 
-find a way to delete mobs
-  splice doesn't work for some reason...  ugggg
-
-mouse look doesn't work with the smooth vertical camera tracking
-  makes firing bullets strange
-
 sometimes the player falls off a ledge and stays crouched in mid air
 
-the jump height control by holding down jump  can also control any upward motion
+the jump height control by holding down jump  can also control any upward motion (like from a block that throws player up)
 */
 
 /*collision info:
@@ -129,8 +108,8 @@ powerUp: 0x 100000   0x 001001
 //holding: 0x 000001   0x 000001
 */
 
-const stats = new Stats(); //setup stats library to show FPS
-stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+//const stats = new Stats(); //setup stats library to show FPS
+//stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
 //stats.domElement.style.opacity   = '0.5'
 
 //set up canvas
@@ -172,7 +151,6 @@ document.body.addEventListener("keyup", function(e) {
 });
 document.body.addEventListener("keydown", function(e) {
     keys[e.keyCode] = true;
-    mech.gun = (mech.gunOptions)[e.keyCode] || mech.gun; //checks for keypress to get a new gun (1-8)
     game.keyPress(); //tracking, testings, zoom
 });
 
@@ -185,11 +163,14 @@ function playSound(id) { //play sound
 }
 
 //skips splash screen on map switch
-if (localStorage.getItem('skipSplash') === '1') {
-    localStorage.setItem('skipSplash', '0');
-    run(document.getElementById('splash'))
+if (sessionStorage.getItem('skipSplash') === '1') {
+    sessionStorage.setItem('skipSplash', '0');
+	bullets = JSON.parse(sessionStorage.getItem('bullets'))
+    run(document.getElementById('splash')) //calls the run function defined below to start the game
 } else {
     document.getElementById('splash').style.display = "inline"; //show splash SVG
+	//setup gun
+	powerUps.startingPowerUps();
 }
 
 
@@ -203,24 +184,11 @@ function run(el) { // onclick from the splash screen
     el.onclick = null; //removes the onclick effect so the function only runs once
     el.style.display = 'none'; //hides the element that spawned the function
     mech.spawn(); //spawns the player
-    if (localStorage.getItem('onLevel')) { //uses local storage to goto the stored level
-        game.onLevel = localStorage.getItem('onLevel');
-    } else { //this option onyl occurs on first time running a new session with local storage
-        game.onLevel = 'twoTowers'
-        localStorage.setItem('onLevel', game.onLevel);
-    }
-    level[game.onLevel]();
-    //level.buildings();
-    //level.skyscrapers();
-    //level.testing();
-	//level.twoTowers();
-	//level.skyscrapers2();
-	//level.boss();
-    level.addToWorld(); //add map to world
+	level.start();
 
     //document.getElementById("keysright").innerHTML = ''; //remove html from intro
     //document.getElementById("keysleft").innerHTML = '';
-    document.body.appendChild(stats.dom); //show stats.js FPS tracker
+    //document.body.appendChild(stats.dom); //show stats.js FPS tracker
     Engine.run(engine); //starts game engine
     requestAnimationFrame(cycle); //starts game loop
 }
@@ -229,7 +197,7 @@ function run(el) { // onclick from the splash screen
 //main loop ************************************************************
 //**********************************************************************
 function cycle() {
-    stats.begin();
+    //stats.begin();
     game.timing();
     game.wipe();
 	powerUps.loop();
@@ -252,14 +220,14 @@ function cycle() {
         game.draw.wireFrame();
         game.draw.cons();
         game.draw.testing();
-        bullets.loop();
+        bulletLoop();
         game.drawCircle();
         mech.drawHealth();
         ctx.restore();
-        game.output();
+        game.testingOutput();
     } else {
         mobs.loop();
-		bullets.mobLoop();
+		mobBulletLoop();
         mobs.draw();
         game.draw.cons();
 		game.draw.powerUp();
@@ -267,20 +235,22 @@ function cycle() {
         mech.draw();
         //ctx.drawImage(foreground_img, -700, -1500);
         game.draw.map();
-        bullets.loop();
+        bulletLoop();
         game.drawCircle();
         mech.drawHealth();
+		mech.powerUps();
         ctx.restore();
+		//game.output();
     }
     //svg graphics , just here until I convert svg to png in inkscape and run as a canvas png
-    document.getElementById(game.levels.background).setAttribute('transform',
+    document.getElementById(level.background).setAttribute('transform',
         'translate(' + (canvas.width2) + ',' + (canvas.height2) + ')' +
         'scale(' + game.zoom + ')' +
         'translate(' + (mech.transX - canvas.width2) + ',' + (mech.transY - canvas.height2) + ')');
-    document.getElementById(game.levels.foreground).setAttribute('transform',
+    document.getElementById(level.foreground).setAttribute('transform',
         'translate(' + (canvas.width2) + ',' + (canvas.height2) + ')' +
         'scale(' + game.zoom + ')' +
         'translate(' + (mech.transX - canvas.width2) + ',' + (mech.transY - canvas.height2) + ')');
-    stats.end();  //for fps tracker
+    //stats.end();  //for fps tracker
     requestAnimationFrame(cycle);
 }

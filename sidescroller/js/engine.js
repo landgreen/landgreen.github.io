@@ -125,7 +125,7 @@ function mobCollisionCheck(event) {
                         mech.hitMob(k, dmg);
                         //add dmg to draw queue
                         const hit = pairs[i].activeContacts[0].vertex
-                        hit.radius = dmg * 200
+                        hit.radius = dmg * 400
                         hit.color = '#f00';
                         game.drawList.push(hit);
                     }
@@ -137,7 +137,7 @@ function mobCollisionCheck(event) {
                         pairs[i].bodyB.onDmg(); //some bullets do actions when they hits things, like despawn
                         //add dmg to draw queue
                         const hit = pairs[i].activeContacts[0].vertex
-                        hit.radius = dmg * 20;
+                        hit.radius = dmg * 40;
                         if (hit.radius < 10) hit.radius = 10;
                         hit.color = '#000';
                         game.drawList.push(hit);
@@ -151,7 +151,7 @@ function mobCollisionCheck(event) {
                         mech.hitMob(k, dmg);
                         //add dmg to draw queue
                         const hit = pairs[i].activeContacts[0].vertex
-                        hit.radius = dmg * 200
+                        hit.radius = dmg * 400
                         hit.color = '#f00';
                         game.drawList.push(hit);
                     }
@@ -164,7 +164,7 @@ function mobCollisionCheck(event) {
                         pairs[i].bodyA.onDmg(); //some bullets do actions when they hits things, like despawn
                         //add dmg to draw queue
                         const hit = pairs[i].activeContacts[0].vertex
-                        hit.radius = dmg * 20;
+                        hit.radius = dmg * 40;
                         if (hit.radius < 10) hit.radius = 10;
                         hit.color = '#000';
                         game.drawList.push(hit);
@@ -225,7 +225,7 @@ Events.on(engine, "beforeUpdate", function(event) {
     //addGravity(mob, game.g/2);
 	addGravity(powerUp, game.g);
     addGravity(body, game.g);
-    addGravity(bullet, game.g);
+    addGravity(bullet, bullets.gravity);
     // addGravity(mobBullet, game.g);
     player.force.y += player.mass * game.g;
 });

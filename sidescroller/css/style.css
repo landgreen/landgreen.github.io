@@ -43,7 +43,7 @@ svg {
     transform: translate(900px, 0);
   }
   100% {
-    transform: translate(0px, 0);
+    transform: translate(-100px, 0);
   }
 }
 

@@ -9,6 +9,7 @@ const game = {
         x: 0,
         y: 0
     },
+	level: 0,
     g: 0.001,
     dmgScale: 1,
     mobDamage: 0.02,
@@ -22,21 +23,6 @@ const game = {
     buttonCD: 0,
     drawList: [], //so you can draw a first frame of explosions.. I know this is bad
     drawList2: [], //so you can draw a second frame of explosions.. I know this is bad
-    onLevel: null, //is set later to localStorage.getItem('onLevel'),
-    nextLevel: function() {
-        localStorage.setItem('skipSplash', '1');
-        if (this.onLevel === 'buildings') {
-            localStorage.setItem('onLevel', 'skyscrapers');
-        } else if (this.onLevel === 'skyscrapers') {
-            localStorage.setItem('onLevel', 'twoTowers');
-        } else if (this.onLevel === 'twoTowers') {
-            localStorage.setItem('onLevel', 'buildings');
-        }
-    },
-    levels: { //lets the game know what sound and graphics to use
-        background: "background_buildings",
-        foreground: "foreground_buildings",
-    },
     drawCircle: function() { //draws a circle for two cycles, used for showing damage mostly
         let len = this.drawList.length
         for (let i = 0; i < len; i++) {
@@ -69,7 +55,11 @@ const game = {
         this.zoom = canvas.height / 2000; //sets starting zoom scale
     },
     keyPress: function() { //runs on key press event
-        if (keys[69]) { // 69 = e
+		if (keys[57]){
+			powerUps.spawnRandomPowerUp(game.mouseInGame.x,game.mouseInGame.y,0,0);
+		}
+
+        if (keys[90]) { // 69 = e  90 = z
             if (this.track) {
                 this.track = false;
                 this.zoom = canvas.height / 3000; //sets starting zoom scale
@@ -150,18 +140,15 @@ const game = {
             }
         }
     },
-    output: function() {
-        let line = 80;
-        ctx.fillStyle = "#000";
+	testingOutput: function() {
+		ctx.textAlign = 'left';
+		ctx.fillStyle = "#000";
+        let line = 20;
         ctx.fillText("Press T to exit testing mode", 5, line);
         line += 30;
         ctx.fillText("cycle: " + game.cycle, 5, line);
         line += 20;
         ctx.fillText("delta: " + game.delta.toFixed(6), 5, line);
-        line += 20;
-        ctx.fillText("mX: " + (this.mouseInGame.x).toFixed(2), 5, line);
-        line += 20;
-        ctx.fillText("mY: " + (this.mouseInGame.y).toFixed(2), 5, line);
         line += 20;
         ctx.fillText("x: " + mech.pos.x.toFixed(0), 5, line);
         line += 20;
@@ -191,15 +178,38 @@ const game = {
         line += 20;
         ctx.fillText("stepSize: " + mech.stepSize.toFixed(2), 5, line);
         line += 20;
-        ctx.fillText("zoom: " + game.zoom.toFixed(4), 5, line);
+        ctx.fillText("zoom: " + this.zoom.toFixed(4), 5, line);
         line += 20;
         ctx.fillText("on " + mech.onBody.type + " id: " + mech.onBody.id + ", index: " + mech.onBody.index, 5, line);
         line += 20;
         ctx.fillText('action: ' + mech.onBody.action, 5, line);
+		ctx.textAlign = 'center';
+		ctx.fillText(`(${this.mouseInGame.x.toFixed(1)}, ${this.mouseInGame.y.toFixed(1)})`, this.mouse.x, this.mouse.y-20);
+
+    },
+    output: function() {
+        let line = 80;
+        ctx.fillStyle = "#000";
+        ctx.fillText(`fireCD: ${bullets.fireCD}`, 5, line);
+        line += 20;
+		ctx.fillText(`restitution: ${bullets.restitution.toFixed(2)}`, 5, line);
+		line += 20;
+		ctx.fillText(`speed: ${bullets.speed.toFixed(2)}`, 5, line);
+		line += 20;
+		ctx.fillText(`frictionAir: ${bullets.frictionAir.toFixed(4)}`, 5, line);
+		line += 20;
+		ctx.fillText(`size: ${bullets.size.toFixed(4)}`, 5, line);
+		line += 20;
+		ctx.fillText(`dmg: ${bullets.dmg.toFixed(2)}`, 5, line);
+		line += 20;
+		ctx.fillText(`gravity: ${bullets.gravity.toFixed(2)}`, 5, line);
+		line += 20;
+		ctx.fillText(`endCycle: ${bullets.endCycle.toFixed(2)}`, 5, line);
+		line += 20;
     },
     draw: {
         powerUp: function() {
-
+			ctx.lineWidth = 5
             for (let i = 0, len = powerUp.length; i < len; ++i) {
                 let vertices = powerUp[i].vertices;
 				ctx.beginPath();
@@ -208,10 +218,13 @@ const game = {
                     ctx.lineTo(vertices[j].x, vertices[j].y);
                 }
                 ctx.lineTo(vertices[0].x, vertices[0].y);
-				ctx.fillStyle = powerUp[i].color;
-				ctx.fill();
+				ctx.globalAlpha = powerUp[i].alpha;
+				// ctx.fillStyle = powerUp[i].color;
+				// ctx.fill();
+				ctx.strokeStyle = powerUp[i].color;
+				ctx.stroke();
             }
-
+			ctx.globalAlpha = 1;
         },
         map: function() {
             ctx.beginPath();

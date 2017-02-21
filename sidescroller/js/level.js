@@ -5,10 +5,11 @@ const cons = []; //all constaints between a point and a body
 const consBB = []; //all constaints between two bodies
 //main object for spawning levels
 const level = {
+    levels: ['twoTowers', 'skyscrapers'], // name of the level methods that the player runs through
     //********************************************************************************************************************************
     //********************************************************************************************************************************
     boss: function() {
-        document.body.style.backgroundColor = "#fff";
+        document.body.style.backgroundColor = "#fafafa";
         mech.setPosToSpawn(-100, -200); //normal spawn
         spawn.mapRect(-200, 0, 1200, 300); //ground
         spawn.mapVertex(1250, 0, '0 0 0 300 -500 600 -500 300');
@@ -20,18 +21,34 @@ const level = {
         spawn.mapRect(3000, -850, 700, 50); //center platform
         spawn.spawnBuilding(-200, -190, 200, 175, false, true, 'left') //far left; player spawns in side
 
-		//spawn.springer(2500,-2000);
+
+        spawn.ghoster(500, -550);
+        //spawn.randomEasyMob(500,-1000);
+        //spawn.randomEasyMob(1500,-1000);
+        // spawn.randomEasyMob(2000,-1000);
+        // spawn.randomEasyMob(1000,-1000);
+        //
+        //spawn.snake(500,-1500);
+        //spawn.snake(1000,-1500);
+        //		spawn.snake(1500,-1500);
+        //spawn.snake(2000,-1500);
+        //		spawn.snake(2500,-1500);
+        //spawn.snake(3000,-1500);
+        //		spawn.snake(3500,-1500);
+        //spawn.snake(4000,-1500);
+
+        //spawn.springer(2500,-2000);
         //spawn.squid(2500, -4000,20); //very high up
-        spawn.snake(3900, -150,25,60);
+        //spawn.snake(3900, -150,25,60);
         //spawn.puller(2500,-2000,100);
-	        // spawn.laserer(2500, -2000);
-	        // spawn.laserer(2500, -1200);
-	        // spawn.laserer(2500, -1400);
-	        // spawn.laserer(2500, -1800);
-	    //spawn.laserer(2500, -1600);
-        spawn.snake(1000, -1000,25,60);
-        //spawn.nodeBoss(1500,-900,5,20,100,0.05);
-		//spawn.nodeBoss(2500,-2900,70,10,50,0.005,'laserer');
+        // spawn.laserer(2500, -2000);
+        // spawn.laserer(2500, -1200);
+        // spawn.laserer(2500, -1400);
+        // spawn.laserer(2500, -1800);
+        //spawn.laserer(2500, -1600);
+        //spawn.snake(1000, -1000,25,60);
+        //spawn.nodeBoss(1500,-900);
+        //spawn.nodeBoss(2500,-2900,70,10,50,0.005,'laserer');
     },
     //********************************************************************************************************************************
     //********************************************************************************************************************************
@@ -39,10 +56,10 @@ const level = {
         //document.body.style.backgroundColor = "#f9f5f3";
         document.body.style.backgroundColor = "#fff";
         this.addSVG('background_twoTowers', 'foreground_twoTowers');
-        //playSound("ambient_wind");//play ambient audio for level
+        //playSound("ambient_wind");//play ambient audio for a
         mech.setPosToSpawn(1375, -1600); //normal spawn
         //mech.setPosToSpawn(600, -1200); //normal spawn
-        //mech.setPosToSpawn(4500, -1700); //near exit spawn
+        //mech.setPosToSpawn(4000, -700); //near exit spawn
         //mech.setPosToSpawn(525, -150); //ground first building
 
         spawn.mapRect(-600, 25, 5600, 300); //ground
@@ -50,9 +67,9 @@ const level = {
         const h = 2000;
         let x = -600; //left building
         spawn.mapRect(x, 0, w, 50); //ground
-        spawn.mapRect(x, -h + 300, 50, h - 100); //left wall
-        spawn.mapRect(1550, -h, 50, 500); //right wall
-        spawn.mapRect(1350, -h + 505, 50, 1295); //right wall
+        spawn.mapRect(x, -1700, 50, h - 100); //left wall
+        spawn.mapRect(1550, -2000, 50, 550); //right wall
+        spawn.mapRect(1350, -2000 + 505, 50, 1295); //right wall
 
         spawn.mapRect(x, -h + 250, w - 700, 50); //roof left
         spawn.mapRect(x + 1300, -h, 50, 300); //right roof wall
@@ -93,75 +110,36 @@ const level = {
         spawn.mapRect(x, -h * 0.25, w - 300, 50); //1st floor
         spawn.spawnStairs(x + w - 50, 0, 5, 250, 350, true); //stairs ground
 
-		if (Math.random()>0.5){
-			this.twoTowersMobs();
-		} else {
-			this.twoTowersMobs2();
-		}
-    },
-	twoTowersMobs: function(){
-		spawn.hopper(0, -1550, 80); //on left 3rd floor
-		spawn.hopper(-100, -1040, 60); //on left 3rd floor
-		spawn.hopper(250, -1070, 100); //on left 3rd floor
-		spawn.chaser(750, -750, 50); //by right stairs
-		spawn.chaser(895, -600, 50); //by right stairs
-		spawn.chaser(955, -650, 50); //by right stairs
-		spawn.striker(-400, -230, 25); //left side
-		spawn.striker(-341, -172, 30); //left side
-		spawn.striker(-288, -95, 20); //left side
-		spawn.chaseShooter(3450, -50, 50)
-		spawn.chaseShooter(4500, -50, 50)
-		spawn.blinker(2200, -1400, 200)
-		spawn.burster(2500, -75, 50); //by right stairs
-		cons[cons.length] = Constraint.create({ //teatherball
-			pointA: {
-				x: 2500,
-				y: -500
-			},
-			bodyB: mob[mob.length - 1],
-			stiffness: 0.0015
-		})
-		spawn.burster(3850, -1050, 30)
-		spawn.burster(4400, -1100, 45)
-		spawn.burster(4800, -1150, 60)
-		spawn.burster(3450, -625, 50); //by right stairs
-	},
-	twoTowersMobs2: function(){
-		//firstbuilding
-		spawn.nodeBoss(100,-1300,6,15,100,0.05,'chaser');
-		spawn.nodeBoss(100,-800,4,15,100,0.05,'striker');
-		// spawn.nodeBoss(100,-200,	4,40,160,0.01,'hopper');
-			spawn.snake(100,-200);
-		//outside
-		// spawn.laserer(1450, -1400);
-		// spawn.laserer(1450, -900);
-		// spawn.laserer(2975, -900);
-		// spawn.laserer(2975, -600);
 
-		//teatherball
-		spawn.nodeBoss(2500,-1375,5,25,240,0.001,'burster');
-		cons[cons.length] = Constraint.create({
-			pointA: {
-				x: 2500,
-				y: -500
-			},
-			bodyB: mob[mob.length - 3],
-			stiffness: 0.0015
-		})
-		//second building
-		// spawn.nodeBoss(3900,-300,3,25,160,0.01,'puller');
-		// spawn.nodeBoss(4100,-1000,5,10,160,0.001,'laserer');
-		spawn.nodeBoss(4100,-1000,3,25,160,0.01,'puller');
-		spawn.nodeBoss(3900,-300,5,15,160,0.001,'laserer');
-	},
+		//spawn.hunter(0,-1650);
+        spawn.randomSmallMobs(0, -1600, Math.ceil(Math.random() * 3));
+        spawn.randomMob(200, -1200);
+        spawn.randomSmallMobs(850, -750, Math.ceil(Math.random() * 2));
+        spawn.randomMob(-100, -700, Math.ceil(Math.random() * 2));
+        spawn.randomMob(-100, -225, Math.ceil(Math.random() * 2));
+		//spawn.randomBoss(3050, -1400);
+        spawn.randomBoss(1800, -800);
+		spawn.randomMob(2600, -100);
+        cons[cons.length] = Constraint.create({ //teatherball
+            pointA: {
+                x: 2500,
+                y: -500
+            },
+            bodyB: mob[mob.length - 1],
+            stiffness: 0.0015
+        });
+        spawn.randomMob(4100, -225, 3);
+        spawn.randomBoss(4150, -1000);
+		spawn.randomSmallMobs(3550, -550, Math.ceil(Math.random() * 3));
+
+    },
     //********************************************************************************************************************************
     //********************************************************************************************************************************
     skyscrapers: function() {
-        document.body.style.backgroundColor = "#f0f0f0";
+        //document.body.style.backgroundColor = "#f0f0f0";
         document.body.style.backgroundColor = "#e6e4e4";
         this.addSVG('background_skyscrapers', 'foreground_skyscrapers');
         playSound("ambient_wind"); //play ambient audio for level
-
         mech.setPosToSpawn(-50, -100); //normal spawn
         //mech.setPosToSpawn(1550, -1200); //spawn left high
         //mech.setPosToSpawn(1800, -2000); //spawn near exit
@@ -172,63 +150,45 @@ const level = {
         spawn.mapRect(-300, -350, 500, 50); //far left starting ceiling
         spawn.mapRect(150, -350, 50, 200); //far left starting right part of wall
         spawn.bodyRect(170, -130, 14, 140, spawn.propsFriction); //door to starting room
-        spawn.chaser(0, -390, 50); //above starting room
-        //sneakAttacker(0, -390, 50);  //above starting room
-
-        //mapRect(4700, -300, 150, 400); //far right ground wall
         spawn.mapVertex(525, 29.5, '120 40 -120 40 -50 -40 50 -40', 'launch');
-        //spawn.mapVertex(525, 29.5, '-50 -40 50 -40 120 40 -120 40', 'launch');
-        //mapRect(475, -15, 100, 25, 'launch'); //next to first tall building
-        spawn.hopper(1300, -20, 20); //hiding underplatorm
-
         spawn.mapRect(700, -1100, 400, 990); //far left building
-        //bodyRect(900, -1350, 50, 350); //block on far left building
         spawn.bodyRect(1025, -1110, 400, 10); //block on far left building
         spawn.bodyRect(1550, -1110, 250, 10); //block on far left building
-
         spawn.mapRect(1600, -400, 1500, 500); //long center building
-        spawn.hopper(1650, -450, 30); //hiding underplatorm
-        spawn.hopper(1750, -450, 40); //hiding underplatorm
-        spawn.hopper(1850, -450, 20); //hiding underplatorm
-        spawn.bodyRect(2557, -450, 35, 55); //wall before chasers
-        spawn.bodyRect(2957, -450, 30, 15); //wall before chasers
-        spawn.bodyRect(2900, -450, 60, 45); //wall before chasers
-
+        spawn.bodyRect(2557, -450, 35, 55);
+        spawn.bodyRect(2957, -450, 30, 15);
+        spawn.bodyRect(2900, -450, 60, 45);
         spawn.mapRect(1345, -1100, 250, 25); //left platform
         spawn.mapRect(1755, -1100, 250, 25); //right platform
         spawn.bodyRect(1915, -1200, 60, 100); //block on platform
-
         spawn.mapRect(1300, -1850, 750, 50); //left higher platform
         spawn.mapRect(1300, -2150, 50, 350); //left higher platform left edge wall
         spawn.mapRect(1300, -2150, 450, 50); //left higher platform roof
         spawn.mapRect(1500, -1860, 100, 50, 'exit'); //ground bump wall
-
         spawn.mapRect(2400, -850, 600, 300); //center floating large square
-        spawn.chaser(2430, -900, 30);
-        spawn.bodyRect(2500, -1100, 25, 250); //wall before chasers
-        spawn.chaser(2700, -950, 75);
-        spawn.chaser(2700, -1060, 40);
-        spawn.chaser(2800, -950, 85);
+        //spawn.bodyRect(2500, -1100, 25, 250); //wall before chasers
         spawn.bodyRect(2925, -1100, 25, 250); //wall next to chasers
         spawn.mapRect(2500, -1450, 450, 350); //higher center floating large square
         spawn.mapRect(2500, -1700, 50, 300); //left wall on higher center floating large square
         spawn.mapRect(2500, -1700, 300, 50); //roof on higher center floating large square
-        //spawn.striker(2650, -1500, 50); //on higher center floating large square
-        spawn.snake(2840, -1470, 20, 45, 0.05, 6, true);
-
         spawn.bodyRect(2300, -1720, 400, 20); //platform above striker
-
         spawn.bodyRect(2590, -1780, 80, 80); //block on platform above striker
-        spawn.hopper(3200, -40, 40); //on ground far right
-        spawn.hopper(4450, -20, 20); //on ground far right
         spawn.mapRect(3300, -850, 150, 25); //ledge by far right building
         spawn.mapRect(3300, -1350, 150, 25); //higher ledge by far right building
         spawn.mapRect(3600, -1100, 400, 990); //far right building
         spawn.bodyRect(3850, -1250, 130, 170); //block on far right building
         spawn.mapVertex(4200, 29.5, '-50 -40 50 -40 120 40 -120 40', 'launch');
-        //mapRect(4150, -15, 100, 25, 'launch'); //far right
 
-        //spawn.mapRect(4500, -800, 600, 850); //far far right building
+		//spawn.heavyChaser(-100,-450);
+        spawn.randomSmallMobs(1300, -70, Math.ceil(Math.random() * 3));
+        spawn.randomMob(-100, -450);
+        spawn.randomMob(2650, -975, 2);
+        spawn.randomMob(1800, -550, 2);
+        spawn.randomMob(2650, -1550);
+        spawn.randomBoss(3300, -1800);
+        spawn.randomSmallMobs(3200, -100, Math.ceil(Math.random() * 3));
+        spawn.randomSmallMobs(4450, -100, Math.ceil(Math.random() * 2));
+        spawn.randomMob(1850, -1950);
     },
     //********************************************************************************************************************************
     //********************************************************************************************************************************
@@ -411,9 +371,36 @@ const level = {
     },
     //********************************************************************************************************************************
     //********************************************************************************************************************************
+    onLevel: 0,
+    nextLevel: function() {
+        sessionStorage.setItem('skipSplash', '1');
+        sessionStorage.setItem('bullets', JSON.stringify(bullets)); //store info about bullets (changed by power ups)
+        this.onLevel++;
+        if (this.onLevel >= this.levels.length) this.onLevel = 0;
+        sessionStorage.setItem('onLevel', this.onLevel);
+        window.location.reload(false);
+    },
+    start: function() {
+        if (sessionStorage.getItem('onLevel')) { //uses local storage to goto the stored level
+            this.onLevel = sessionStorage.getItem('onLevel');
+        } else { //this option onyl occurs on first time running a new session with local storage
+            this.onLevel = 0
+            sessionStorage.setItem('onLevel', this.onLevel);
+        }
+        this[this.levels[this.onLevel]]();
+        //this.buildings();
+        //this.skyscrapers();
+        //this.testing();
+        //this.twoTowers();
+        //this.skyscrapers2();
+        //this.boss();
+        this.addToWorld(); //add map to world
+    },
+    background: "background_buildings",
+    foreground: "foreground_buildings",
     addSVG: function(background, foreground) {
-        game.levels.background = background;
-        game.levels.foreground = foreground;
+        this.background = background;
+        this.foreground = foreground;
         document.getElementById(background).style.display = "inline"; //show SVGs for level
         document.getElementById(foreground).style.display = "inline"; //show SVGs for level
     },

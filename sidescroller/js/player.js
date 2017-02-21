@@ -3,304 +3,358 @@ let player, jumpSensor, playerBody, playerHead, headSensor;
 
 // player Object Prototype *********************************************
 const mech = {
-    spawn: function() { //load player in matter.js physic engine
-        //let vector = Vertices.fromPath('0 40  0 115  20 130  30 130  50 115  50 40');//player as a series of vertices
-		let vector = Vertices.fromPath('0 40  50 40 50 115 0 115 30 130 20 130');//player as a series of vertices
-        playerBody = Matter.Bodies.fromVertices(0, 0, vector);
-        jumpSensor = Bodies.rectangle(0, 46, 36, 6, {//this sensor check if the player is on the ground to enable jumping
-            sleepThreshold: 99999999999,
-            isSensor: true,
-        });
-        vector = Vertices.fromPath('0 -66 18 -82  0 -37 50 -37 50 -66 32 -82');
-        playerHead = Matter.Bodies.fromVertices(0, -55, vector); //this part of the player lowers on crouch
-        headSensor = Bodies.rectangle(0, -57, 48, 45, {//senses if the player's head is empty and can return after crouching
-            sleepThreshold: 99999999999,
-            isSensor: true,
-        });
-        player = Body.create({ //combine jumpSensor and playerBody
-            parts: [playerBody, playerHead, jumpSensor, headSensor],
-            inertia: Infinity, //prevents player rotation
-            friction: 0.002,
-            //frictionStatic: 0.5,
-            restitution: 0.1,
-            sleepThreshold: Infinity,
-            collisionFilter: {
-                group: 0,
-                category: 0x001000,
-                mask: 0x010001
-            },
-        });
-        Matter.Body.setMass(player, mech.mass);
-        World.add(engine.world, [player]);
+        spawn: function() { //load player in matter.js physic engine
+            //let vector = Vertices.fromPath('0 40  0 115  20 130  30 130  50 115  50 40');//player as a series of vertices
+            let vector = Vertices.fromPath('0 40  50 40 50 115 0 115 30 130 20 130'); //player as a series of vertices
+            playerBody = Matter.Bodies.fromVertices(0, 0, vector);
+            jumpSensor = Bodies.rectangle(0, 46, 36, 6, { //this sensor check if the player is on the ground to enable jumping
+                sleepThreshold: 99999999999,
+                isSensor: true,
+            });
+            vector = Vertices.fromPath('0 -66 18 -82  0 -37 50 -37 50 -66 32 -82');
+            playerHead = Matter.Bodies.fromVertices(0, -55, vector); //this part of the player lowers on crouch
+            headSensor = Bodies.rectangle(0, -57, 48, 45, { //senses if the player's head is empty and can return after crouching
+                sleepThreshold: 99999999999,
+                isSensor: true,
+            });
+            player = Body.create({ //combine jumpSensor and playerBody
+                parts: [playerBody, playerHead, jumpSensor, headSensor],
+                inertia: Infinity, //prevents player rotation
+                friction: 0.002,
+                //frictionStatic: 0.5,
+                restitution: 0.1,
+                sleepThreshold: Infinity,
+                collisionFilter: {
+                    group: 0,
+                    category: 0x001000,
+                    mask: 0x010001
+                },
+            });
+            Matter.Body.setMass(player, mech.mass);
+            World.add(engine.world, [player]);
 
-        const holdConstraint = Constraint.create({ //holding body constraint
-            pointA: {
-                x: 0,
-                y: 0
-            },
-            bodyB: jumpSensor, //setting constraint to jump sensor because it has to be on something until the player picks up things
-            stiffness: 0.4,
-        });
-        World.add(engine.world, holdConstraint);
-    },
-    width: 50,
-    radius: 30,
-    fillColor: '#fff',
-    fillColorDark: '#ddd',
-    fireCDcycle: 0,
-    gun: 'pistol', //current gun in use
-    gunOptions: { //keeps track of keys that switch guns (used in the onkeypress event)
-		49: 'pistol',
-        50: 'machine',
-        51: 'shot',
-		52: 'needle',
-        53: 'rail',
-        54: 'cannon',
-        //54: 'super',
-        //55: 'lob',
-        // 55: 'spiritBomb',
-        // 56: 'experimental'
-    },
-    height: 42,
-    yOffWhen: {
-        crouch: 22,
-        stand: 49,
-        jump: 70
-    },
-    yOff: 70,
-    yOffGoal: 70,
-    onGround: false, //checks if on ground or in air
-    onBody: {
-        id: 0,
-        index: 0,
-        type: "map",
-        action: ''
-    },
-    numTouching: 0,
-    crouch: false,
-    isHeadClear: true,
-    spawnPos: {
-        x: 0,
-        y: 0
-    },
-    spawnVel: {
-        x: 0,
-        y: 0
-    },
-    pos: {
-        x: 0,
-        y: 0
-    },
-    setPosToSpawn: function(xPos, yPos) {
-        this.spawnPos.x = xPos
-        this.spawnPos.y = yPos
-        this.pos.x = xPos;
-        this.pos.y = yPos;
-        this.Vx = this.spawnVel.x;
-        this.Vy = this.spawnVel.y;
-        Matter.Body.setPosition(player, this.spawnPos);
-        Matter.Body.setVelocity(player, this.spawnVel);
-    },
-    Sy: 0, //adds a smoothing effect to vertical only
-    Vx: 0,
-    Vy: 0,
-    VxMax: 7,
-    mass: 5,
-    Fx: 0.025, //run Force on ground
-    FxAir: 0.005, //run Force in Air
-    Fy: -0.25, //jump Force
-	friction: {
-		ground: 0.1,
-		crouch: 0.45,
-		air: 0.002,
-	},
-    angle: 0,
-    walk_cycle: 0,
-    stepSize: 0,
-    flipLegs: -1,
-    hip: {
-        x: 12,
-        y: 24,
-    },
-    knee: {
-        x: 0,
-        y: 0,
-        x2: 0,
-        y2: 0
-    },
-    foot: {
-        x: 0,
-        y: 0
-    },
-    legLength1: 55,
-    legLength2: 45,
-    transX: 0,
-    transY: 0,
-	move: function() {
-		this.pos.x = player.position.x;
-		this.pos.y = playerBody.position.y - this.yOff;
-		this.Vx = player.velocity.x;
-		this.Vy = player.velocity.y;
-	},
-	staticLook: function() {
-        this.transX = -1200;
-        this.transY = 1500;
-        this.angle = Math.atan2(game.mouseInGame.y - this.pos.y, game.mouseInGame.x - this.pos.x);
-    },
-    look: function() {
-        this.transX = canvas.width2 - this.pos.x;
-        this.transY = canvas.height2 - this.pos.y;
-        this.angle = Math.atan2(game.mouse.y - canvas.height2, game.mouse.x - canvas.width2);
-    },
-    doCrouch: function() {
-        if (!this.crouch) {
-            this.crouch = true;
-            this.yOffGoal = this.yOffWhen.crouch;
+            const holdConstraint = Constraint.create({ //holding body constraint
+                pointA: {
+                    x: 0,
+                    y: 0
+                },
+                bodyB: jumpSensor, //setting constraint to jump sensor because it has to be on something until the player picks up things
+                stiffness: 0.4,
+            });
+            World.add(engine.world, holdConstraint);
+        },
+        width: 50,
+        radius: 30,
+        fillColor: '#fff',
+        fillColorDark: '#ddd',
+        fireCDcycle: 0,
+        height: 42,
+        yOffWhen: {
+            crouch: 22,
+            stand: 49,
+            jump: 70
+        },
+        yOff: 70,
+        yOffGoal: 70,
+        onGround: false, //checks if on ground or in air
+        onBody: {
+            id: 0,
+            index: 0,
+            type: "map",
+            action: ''
+        },
+        numTouching: 0,
+        crouch: false,
+        isHeadClear: true,
+        spawnPos: {
+            x: 0,
+            y: 0
+        },
+        spawnVel: {
+            x: 0,
+            y: 0
+        },
+        pos: {
+            x: 0,
+            y: 0
+        },
+        setPosToSpawn: function(xPos, yPos) {
+            this.spawnPos.x = xPos
+            this.spawnPos.y = yPos
+            this.pos.x = xPos;
+            this.pos.y = yPos;
+            this.Vx = this.spawnVel.x;
+            this.Vy = this.spawnVel.y;
+            Matter.Body.setPosition(player, this.spawnPos);
+            Matter.Body.setVelocity(player, this.spawnVel);
+        },
+        Sy: 0, //adds a smoothing effect to vertical only
+        Vx: 0,
+        Vy: 0,
+        VxMax: 7,
+        mass: 5,
+        Fx: 0.025, //run Force on ground
+        FxAir: 0.005, //run Force in Air
+        jumpForce: 0.25,
+        friction: {
+            ground: 0.1,
+            crouch: 0.45,
+            air: 0.002,
+        },
+        angle: 0,
+        walk_cycle: 0,
+        stepSize: 0,
+        flipLegs: -1,
+        hip: {
+            x: 12,
+            y: 24,
+        },
+        knee: {
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 0
+        },
+        foot: {
+            x: 0,
+            y: 0
+        },
+        legLength1: 55,
+        legLength2: 45,
+        transX: 0,
+        transY: 0,
+        move: function() {
+            this.pos.x = player.position.x;
+            this.pos.y = playerBody.position.y - this.yOff;
+            this.Vx = player.velocity.x;
+            this.Vy = player.velocity.y;
+        },
+        staticLook: function() {
+            this.transX = -1200;
+            this.transY = 1500;
+            this.angle = Math.atan2(game.mouseInGame.y - this.pos.y, game.mouseInGame.x - this.pos.x);
+        },
+        look: function() {
+            this.transX = canvas.width2 - this.pos.x;
+            this.transY = canvas.height2 - this.pos.y;
+            this.angle = Math.atan2(game.mouse.y - canvas.height2, game.mouse.x - canvas.width2);
+        },
+        doCrouch: function() {
+            if (!this.crouch) {
+                this.crouch = true;
+                this.yOffGoal = this.yOffWhen.crouch;
+                Matter.Body.translate(playerHead, {
+                    x: 0,
+                    y: 40
+                })
+            }
+        },
+        undoCrouch: function() {
+            this.crouch = false;
+            this.yOffGoal = this.yOffWhen.stand;
             Matter.Body.translate(playerHead, {
                 x: 0,
-                y: 40
+                y: -40
             })
-        }
-    },
-    undoCrouch: function() {
-        this.crouch = false;
-        this.yOffGoal = this.yOffWhen.stand;
-        Matter.Body.translate(playerHead, {
-            x: 0,
-            y: -40
-        })
-    },
-    enterAir: function() {
-        this.onGround = false;
-        player.frictionAir = this.friction.air;
-        if (this.isHeadClear) {
-            if (this.crouch) {
-                this.undoCrouch();
-            }
-            this.yOffGoal = this.yOffWhen.jump;
-        };
-    },
-    enterLand: function() {
-        this.onGround = true;
-        if (this.crouch) {
+        },
+        enterAir: function() {
+            this.onGround = false;
+            player.frictionAir = this.friction.air;
             if (this.isHeadClear) {
-                this.undoCrouch();
-                player.frictionAir = this.friction.ground;
-            } else {
-                this.yOffGoal = this.yOffWhen.crouch;
-                player.frictionAir = this.friction.crouch;
-            }
-        } else {
-            this.yOffGoal = this.yOffWhen.stand;
-            player.frictionAir = this.friction.ground;
-        }
-    },
-    buttonCD_jump: 0, //cooldown for player buttons
-    keyMove: function() {
-        if (this.onGround) { //on ground **********************
-            if (this.crouch) { //crouch
-                if (!(keys[40] || keys[83]) && this.isHeadClear) { //not pressing crouch anymore
+                if (this.crouch) {
+                    this.undoCrouch();
+                }
+                this.yOffGoal = this.yOffWhen.jump;
+            };
+        },
+        enterLand: function() {
+            this.onGround = true;
+            if (this.crouch) {
+                if (this.isHeadClear) {
                     this.undoCrouch();
                     player.frictionAir = this.friction.ground;
+                } else {
+                    this.yOffGoal = this.yOffWhen.crouch;
+                    player.frictionAir = this.friction.crouch;
                 }
-            } else if (keys[40] || keys[83]) { //on ground && not crouched and pressing s or down
-                this.doCrouch();
-                player.frictionAir = this.friction.crouch;
-            } else if ((keys[32] || keys[38] || keys[87]) && this.buttonCD_jump + 20 < game.cycle) { //jump
-                this.buttonCD_jump = game.cycle; //can't jump until 20 cycles pass
-                Matter.Body.setVelocity(player, { //zero player velocity for consistant jumps
-                    x: player.velocity.x,
-                    y: 0
-                });
-                player.force.y = this.Fy / game.delta; //jump force / delta so that force is the same on game slowdowns
+            } else {
+                this.yOffGoal = this.yOffWhen.stand;
+                player.frictionAir = this.friction.ground;
             }
-            //horizontal move on ground
-            if (keys[37] || keys[65]) { //left or a
-                if (player.velocity.x > -this.VxMax) {
-                    player.force.x += -this.Fx / game.delta;
+        },
+        buttonCD_jump: 0, //cooldown for player buttons
+        keyMove: function() {
+            if (this.onGround) { //on ground **********************
+                if (this.crouch) { //crouch
+                    if (!(keys[83]) && this.isHeadClear) { //not pressing crouch anymore
+                        this.undoCrouch();
+                        player.frictionAir = this.friction.ground;
+                    }
+                } else if (keys[83]) { //on ground && not crouched and pressing s or down
+                    this.doCrouch();
+                    player.frictionAir = this.friction.crouch;
+                } else if (keys[87] && this.buttonCD_jump + 20 < game.cycle) { //jump
+                    this.buttonCD_jump = game.cycle; //can't jump until 20 cycles pass
+                    Matter.Body.setVelocity(player, { //zero player velocity for consistant jumps
+                        x: player.velocity.x,
+                        y: 0
+                    });
+                    player.force.y = -this.jumpForce / game.delta; //jump force / delta so that force is the same on game slowdowns
                 }
-            } else if (keys[39] || keys[68]) { //right or d
-                if (player.velocity.x < this.VxMax) {
-                    player.force.x += this.Fx / game.delta;
+                //horizontal move on ground
+                if (keys[65]) { //left or a
+                    if (player.velocity.x > -this.VxMax) {
+                        player.force.x += -this.Fx / game.delta;
+                    }
+                } else if (keys[68]) { //right or d
+                    if (player.velocity.x < this.VxMax) {
+                        player.force.x += this.Fx / game.delta;
+                    }
                 }
-            }
 
-        } else { // in air **********************************
-            //check for short jumps
-            if (this.buttonCD_jump + 60 > game.cycle && //just pressed jump
-                !(keys[32] || keys[38] || keys[87]) && //but not pressing jump key
-                this.Vy < 0) { // and velocity is up
-                Matter.Body.setVelocity(player, { //reduce player velocity every cycle until not true
-                    x: player.velocity.x,
-                    y: player.velocity.y * 0.94
-                });
-            }
-            if (keys[37] || keys[65]) { // move player   left / a
-                if (player.velocity.x > -this.VxMax/2) {
-                    player.force.x += -this.FxAir / game.delta;
+            } else { // in air **********************************
+                //check for short jumps
+                if (this.buttonCD_jump + 60 > game.cycle && //just pressed jump
+                    !(keys[87]) && //but not pressing jump key
+                    this.Vy < 0) { // and velocity is up
+                    Matter.Body.setVelocity(player, { //reduce player velocity every cycle until not true
+                        x: player.velocity.x,
+                        y: player.velocity.y * 0.94
+                    });
                 }
-            } else if (keys[39] || keys[68]) { //move player  right / d
-                if (player.velocity.x < this.VxMax/2) {
-                    player.force.x += this.FxAir / game.delta;
+                if (keys[65]) { // move player   left / a
+                    if (player.velocity.x > -this.VxMax / 2) {
+                        player.force.x += -this.FxAir / game.delta;
+                    }
+                } else if (keys[68]) { //move player  right / d
+                    if (player.velocity.x < this.VxMax / 2) {
+                        player.force.x += this.FxAir / game.delta;
+                    }
                 }
             }
+            //smoothly move height towards height goal ************
+            this.yOff = this.yOff * 0.85 + this.yOffGoal * 0.15
+        },
+        death: function() {
+            location.reload();
+            //Matter.Body.setPosition(player, this.spawnPos);
+            //Matter.Body.setVelocity(player, this.spawnVel);
+            //this.dropBody();
+            //game.zoom = 0;    //zooms out all the way
+            //this.health = 1;
+        },
+        health: 1,
+        regen: function() {
+            if (this.health < 1 && game.cycle % 15 === 0) {
+                this.addHealth(0.01);
+            }
+        },
+        drawHealth: function() {
+            if (this.health < 1) {
+                ctx.fillStyle = 'rgba(100, 100, 100, 0.5)';
+                ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60, 10);
+                ctx.fillStyle = "#f00";
+                ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60 * this.health, 10);
+            }
+        },
+        addHealth: function(heal) {
+            this.health += heal;
+            if (this.health > 1) this.health = 1;
+        },
+        damage: function(dmg) {
+            this.health -= dmg;
+            if (this.health <= 0) {
+                this.death();
+            }
+        },
+        deathCheck: function() {
+            if (this.pos.y > game.fallHeight) { // if player is 4000px deep
+                this.death();
+            }
+        },
+        hitMob: function(i, dmg) {
+            this.damage(dmg);
+            playSound("dmg" + Math.floor(Math.random() * 4));
+            //extra kick between player and mob
+            //this section would be better with forces but they don't work...
+            let angle = Math.atan2(player.position.y - mob[i].position.y, player.position.x - mob[i].position.x);
+            Matter.Body.setVelocity(player, {
+                x: player.velocity.x + 8 * Math.cos(angle),
+                y: player.velocity.y + 8 * Math.sin(angle)
+            });
+            Matter.Body.setVelocity(mob[i], {
+                x: mob[i].velocity.x - 8 * Math.cos(angle),
+                y: mob[i].velocity.y - 8 * Math.sin(angle)
+            });
+        },
+        buttonCD: 0, //cooldown for player buttons
+		usePowerUp: function(i){
+			powerUp[i].effect();
+			playSound('powerup');
+			Matter.World.remove(engine.world, powerUp[i]);
+			powerUp.splice(i, 1);
+		},
+        powerUps: function() { //pickup power ups
+            for (let i = 0, len = powerUp.length; i < len; ++i) {
+                const dxP = player.position.x - powerUp[i].position.x
+                const dyP = player.position.y - powerUp[i].position.y
+                const dist2 = dxP * dxP + dyP * dyP;
+                //gravitation for heal power ups
+                if (powerUp[i].name === 'heal' && dist2 < 200000 && mech.health < 1) {
+                if (dist2 < 1000) { //pick up if close
+					this.usePowerUp(i);
+                    break;
+                } else { //float towards player
+                    Matter.Body.setVelocity(powerUp[i], { //extra friction
+                        x: powerUp[i].velocity.x * 0.95,
+                        y: powerUp[i].velocity.y * 0.95
+                    });
+                    powerUp[i].force.x += dxP / dist2 * powerUp[i].mass * 0.3
+                    powerUp[i].force.y += dyP / dist2 * powerUp[i].mass * 0.3 - powerUp[i].mass * game.g //negate gravity
+                }
+            }
+			//pick up power up
+            const dx = game.mouseInGame.x - powerUp[i].position.x
+            const dy = game.mouseInGame.y - powerUp[i].position.y
+            if (dx * dx + dy * dy < powerUp[i].area) { //if mouse is close to power up
+                ctx.fillStyle = "#000";
+                ctx.textAlign = "center";
+                ctx.font = "35px Arial";
+                ctx.fillText(powerUp[i].name, powerUp[i].position.x, powerUp[i].position.y - powerUp[i].size * 1.3); //display name
+                if (keys[69] && this.buttonCD < game.cycle) { //69 = e  //pick up
+                    this.buttonCD = game.cycle + 5;
+                    if (dist2 < 30000 && (mech.health < 1 || powerUp[i].name !== 'heal')) {
+						this.usePowerUp(i);
+                    }
+                }
+                break;
+            }
         }
-        //smoothly move height towards height goal ************
-        this.yOff = this.yOff * 0.85 + this.yOffGoal * 0.15
     },
-    death: function() {
-        location.reload();
-        //Matter.Body.setPosition(player, this.spawnPos);
-        //Matter.Body.setVelocity(player, this.spawnVel);
-        //this.dropBody();
-        //game.zoom = 0;    //zooms out all the way
-        //this.health = 1;
-    },
-    health: 1,
-    regen: function() {
-        if (this.health < 1 && game.cycle % 15 === 0) {
-            this.addHealth(0.01);
-        }
-    },
-    drawHealth: function() {
-        if (this.health < 1) {
-            ctx.fillStyle = 'rgba(100, 100, 100, 0.5)';
-            ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60, 10);
-            ctx.fillStyle = "#f00";
-            ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60 * this.health, 10);
-        }
-    },
-    addHealth: function(heal) {
-        this.health += heal;
-        if (this.health > 1) this.health = 1;
-    },
-    damage: function(dmg) {
-        this.health -= dmg;
-        if (this.health <= 0) {
-            this.death();
-        }
-    },
-    deathCheck: function() {
-        if (this.pos.y > game.fallHeight) { // if player is 4000px deep
-            this.death();
-        }
-    },
-    hitMob: function(i, dmg) {
-        this.damage(dmg);
-        playSound("dmg" + Math.floor(Math.random() * 4));
-        //extra kick between player and mob
-        //this section would be better with forces but they don't work...
-        let angle = Math.atan2(player.position.y - mob[i].position.y, player.position.x - mob[i].position.x);
-        Matter.Body.setVelocity(player, {
-            x: player.velocity.x + 8 * Math.cos(angle),
-            y: player.velocity.y + 8 * Math.sin(angle)
-        });
-        Matter.Body.setVelocity(mob[i], {
-            x: mob[i].velocity.x - 8 * Math.cos(angle),
-            y: mob[i].velocity.y - 8 * Math.sin(angle)
-        });
-    },
-    buttonCD: 0, //cooldown for player buttons
+    // takePowerUp: function(){ //pickup power ups
+    // 	for(let i=0, len=powerUp.length;i<len;++i){
+    // 		const dx = game.mouseInGame.x-powerUp[i].position.x
+    // 		const dy = game.mouseInGame.y-powerUp[i].position.y
+    // 		if (dx*dx+dy*dy < powerUp[i].area){ //if mouse is close to power up
+    // 			ctx.fillStyle = "#000";
+    // 			ctx.textAlign="center";
+    // 			ctx.font = "35px Arial";
+    // 	        ctx.fillText(powerUp[i].name, powerUp[i].position.x, powerUp[i].position.y-powerUp[i].size*1.3); //display name
+    // 			if (keys[69] && this.buttonCD < game.cycle) {  //69 = e  //pick up
+    // 	            this.buttonCD = game.cycle + 5;
+    // 				const dx = game.mouseInGame.x-player.position.x
+    // 				const dy = game.mouseInGame.y-player.position.y
+    // 				if (dx*dx+dy*dy < 30000 && (mech.health < 1 || powerUp[i].name !== 'heal')){
+    // 					powerUp[i].effect();
+    // 		            playSound('powerup');
+    // 		            Matter.World.remove(engine.world, powerUp[i]);
+    // 		            powerUp.splice(i, 1);
+    // 				}
+    // 			}
+    // 			break;
+    // 		}
+    // 	}
+    // },
     eaten: [],
     eat: function() {
         if (keys[81] && this.buttonCD < game.cycle) {
@@ -509,8 +563,7 @@ const mech = {
         this.closest.index = index;
     },
     exit: function() {
-        game.nextLevel();
-        window.location.reload(false);
+        level.nextLevel();
     },
     standingOnActions: function() {
         if (this.onBody.type === 'map') {
@@ -542,11 +595,11 @@ const mech = {
         }
     },
     drawLeg: function(stroke) {
-		if (game.mouseInGame.x > this.pos.x) {
-			this.flipLegs = 1;
-		} else {
-			this.flipLegs = -1;
-		}
+        if (game.mouseInGame.x > this.pos.x) {
+            this.flipLegs = 1;
+        } else {
+            this.flipLegs = -1;
+        }
         ctx.save();
         ctx.scale(this.flipLegs, 1); //leg lines
         ctx.strokeStyle = stroke;
