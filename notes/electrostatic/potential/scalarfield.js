@@ -6,7 +6,7 @@ http://gka.github.io/palettes/#colors=red,yellow,white,cyan,blue|steps=1000|bez=
 (function setup() { //writes a message onload
     let canvas = document.getElementById('field');
     let ctx = canvas.getContext("2d");
-    ctx.font = "25px Arial";
+	ctx.font = "25px Arial";
     ctx.fillStyle = '#aaa';
     ctx.textAlign = "center";
     ctx.fillText('click to start simulation', canvas.width / 2, canvas.height / 2);
@@ -14,6 +14,7 @@ http://gka.github.io/palettes/#colors=red,yellow,white,cyan,blue|steps=1000|bez=
 
 function diagram(button) {
     button.onclick = null; //stops the function from running after first run
+	//document.getElementById("field").style.filter = "blur(6px)";  //adds a blue to everything to remove pixelation
     let settings = {
         size: 13,
         fieldSpacing: 6, //pixel size,  below 5 is very very slow
@@ -213,24 +214,25 @@ function diagram(button) {
     }
 
 	// function gradientField(){
-	// 	//ctx.globalCompositeOperation='lighter';
-	// 	ctx.globalAlpha=0.2;
+	// 	ctx.globalCompositeOperation='xor';
+	// 	//might work: overlay, multiply,hard-light,soft-light
+	// 	//ctx.globalAlpha=0.2;
 	// 	for(var i=0;i<body.length;i++){
-	// 		var grd=ctx.createRadialGradient(body[i].pos.x,body[i].pos.y,50,body[i].pos.x,body[i].pos.y,700);
+	// 		var grd=ctx.createRadialGradient(body[i].pos.x,body[i].pos.y,50,body[i].pos.x,body[i].pos.y,600);
 	// 		if (body[i].charge>0){
-	// 			grd.addColorStop(0,"#f00");
-	// 			grd.addColorStop(1,"#fff");
+	// 			grd.addColorStop(0,"#fff");
+	// 			grd.addColorStop(1,"#888");
 	// 		} else{
-	// 			grd.addColorStop(0,"#00f");
-	// 			grd.addColorStop(1,"#fff");
+	// 			grd.addColorStop(0,"#000");
+	// 			grd.addColorStop(1,"#888");
 	// 		}
 	// 		ctx.fillStyle=grd;
 	// 		ctx.beginPath();
-	// 		ctx.arc(body[i].pos.x,body[i].pos.y,700,0,2*Math.PI);
+	// 		ctx.arc(body[i].pos.x,body[i].pos.y,600,0,2*Math.PI);
 	// 		ctx.fill();
 	// 	}
-	// 	//ctx.globalCompositeOperation='source-over';
-	// 	ctx.globalAlpha=1;
+	// 	ctx.globalCompositeOperation='source-over';
+	// 	//ctx.globalAlpha=1;
 	// }
 
     function spawn() {
@@ -247,10 +249,11 @@ function diagram(button) {
             body[i].mouseMove();
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-		// ctx.fillStyle = "hsl(220, 100%, 50%)";
+		//ctx.fillStyle = "hsl(220, 100%, 50%)";
 		//ctx.fillStyle = "#888";
 		//ctx.fillRect(0, 0, canvas.width, canvas.height);
         scalarField();
+		//gradientField();
         drawBar();
         ctx.lineWidth = 4;
         ctx.strokeStyle = "#000";

@@ -137,6 +137,9 @@ details p {
     color: #888;
     font-weight: 300;
 }
+.example{
+	margin: 8em 0em 8em 0em;
+}
 
 .data th, td {
     padding: 0.5em;
@@ -148,7 +151,13 @@ details p {
     padding: 1.3em;
     border-radius: 1em;
 }
-
+.history {
+    text-align: left;
+    background-color: #e6f9f0;
+	font-size: 1em;
+    padding: 1.3em;
+    border-radius: 1em;
+}
 .svgDiagram {
     /*border: 1px solid black;*/
     transition: all 200ms ease-in;
