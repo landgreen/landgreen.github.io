@@ -141,36 +141,36 @@ window.onmousemove = function(e) {
     game.mouse.y = e.clientY;
 };
 //mouse click events for building maps:  replace with the normal events below when not building maps
-window.onmousedown = function(e) {
-	if (!game.mouseDown){
-		game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
-		game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
-	}
-    game.mouseDown = true;
-};
-window.onmouseup = function(e) {
-	if (game.mouseDown){
-		game.getCoords.pos2.x = Math.round(game.mouseInGame.x / 25) * 25;
-		game.getCoords.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;
-
-		document.getElementById("copy-this").innerHTML = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x-game.getCoords.pos1.x}, ${game.getCoords.pos2.y-game.getCoords.pos1.y}); //`;
-		window.getSelection().removeAllRanges();
-		var range = document.createRange();
-		range.selectNode(document.getElementById('copy-this'));
-		window.getSelection().addRange(range);
-		document.execCommand('copy')
-		window.getSelection().removeAllRanges();
-	}
-    game.mouseDown = false;
-};
-
-//normal mouse click events
 // window.onmousedown = function(e) {
+// 	if (!game.mouseDown){
+// 		game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
+// 		game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
+// 	}
 //     game.mouseDown = true;
 // };
 // window.onmouseup = function(e) {
+// 	if (game.mouseDown){
+// 		game.getCoords.pos2.x = Math.round(game.mouseInGame.x / 25) * 25;
+// 		game.getCoords.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;
+//
+// 		document.getElementById("copy-this").innerHTML = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x-game.getCoords.pos1.x}, ${game.getCoords.pos2.y-game.getCoords.pos1.y}); //`;
+// 		window.getSelection().removeAllRanges();
+// 		var range = document.createRange();
+// 		range.selectNode(document.getElementById('copy-this'));
+// 		window.getSelection().addRange(range);
+// 		document.execCommand('copy')
+// 		window.getSelection().removeAllRanges();
+// 	}
 //     game.mouseDown = false;
 // };
+
+//normal mouse click events
+window.onmousedown = function(e) {
+    game.mouseDown = true;
+};
+window.onmouseup = function(e) {
+    game.mouseDown = false;
+};
 
 
 
