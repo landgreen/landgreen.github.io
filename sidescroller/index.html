@@ -16,6 +16,8 @@
 </head>
 
 <body>
+	<!-- this is here for building maps only-->
+	<span id = 'copy-this'></span>
 	<!-- background sounds -->
 	<audio id="ambient_crickets"src="sounds\ambient.mp3" preload="auto" loop></audio>
 	<audio id="ambient_wind" src="sounds\wind.ogg" preload="auto" loop></audio>
@@ -80,7 +82,7 @@
 		<rect x="1350" y="-200" width="50" height="200" fill='#eee'/>
 		<rect x="3000" y="-200" width="50" height="200" fill='#eee'/>
 		<rect x="2498" y="-500" width="4" height="550" fill='#ccc'/>
-
+		<rect x="500" y="-1000" width="100" height="50" fill='#eee'/>
 		<!-- <path d="M 750 -2000 H 1400  V 0  H -550 V-1700 H 750 Z" fill='#e9e5e3' stroke='transparent'/> -->
 	</g>
 	<!-- buildings  *********************************************************************
@@ -325,7 +327,7 @@
     <g id = "controls">
 	    <text id = "title" class = "title" text-anchor="middle" x="400" y="200">side scroller</text>
 		<text id = "instruct" class = "instructions" text-anchor="middle" x="500" y="650">click to begin</text>
-		<text class = 'name' x="-355" y="795">by Ross Landgreen</text>
+		<text class = 'name' x="50%" y="99%" text-anchor="middle">by Ross Landgreen</text>
 <!--     <text class = "info" x="5" y="695">move: WASD</text>
     <text class = "info" x="5" y="715">fire: click</text>
     <text class = "info" x="5" y="735">pause: F</text>
@@ -363,10 +365,10 @@
 	</g>
 </g>
 </svg>
-	<script src='js/lib/stats.min.js'></script>
+	<!-- <script src='js/lib/stats.min.js'></script> -->
 	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/matter.min.js'></script>
 
-	<script src="js/lib/randomColor.min.js"></script>
+	<!-- <script src="js/lib/randomColor.min.js"></script> -->
 
 	<script src="js/game.js"></script>
 	<script src="js/player.js"></script>
