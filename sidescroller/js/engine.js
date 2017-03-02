@@ -120,9 +120,11 @@ function mobCollisionCheck(event) {
                 if (pairs[i].bodyA === mob[k]) {
                     if (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead) { //mob hitting player check
                         mob[k].locatePlayer();
-                        let dmg = Math.sqrt(mob[k].mass) * game.dmgScale*game.mobDamage;
-                        if (dmg < 0.05) dmg = 0.05;
+                        let dmg = mob[k].onHitDamage();
                         mech.hitMob(k, dmg);
+						if (typeof mob[k].onHit !== "undefined") {
+    						mob[k].onHit(k);
+						}
                         //add dmg to draw queue
                         const hit = pairs[i].activeContacts[0].vertex
                         hit.radius = dmg * 400
@@ -146,9 +148,11 @@ function mobCollisionCheck(event) {
                 } else if (pairs[i].bodyB === mob[k]) {
                     if (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead) { //mob hitting player check
                         mob[k].locatePlayer();
-                        let dmg = Math.sqrt(mob[k].mass) * game.dmgScale*game.mobDamage;
-                        if (dmg < 0.05) dmg = 0.05;
+						let dmg = mob[k].onHitDamage();
                         mech.hitMob(k, dmg);
+						if (typeof mob[k].onHit !== "undefined") {
+							mob[k].onHit(k);
+						}
                         //add dmg to draw queue
                         const hit = pairs[i].activeContacts[0].vertex
                         hit.radius = dmg * 400
@@ -181,7 +185,7 @@ function mobBulletCollisionCheck(event) {
     for (let i = 0, j = pairs.length; i != j; i++) {
         for (let k = 0; k < mobBullet.length; k++) {
             if (pairs[i].bodyA === mobBullet[k] && pairs[i].bodyA.speed > 10 && (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead)) {
-				const dmg = game.dmgScale * game.mobBulletDamage;
+				const dmg = game.dmgScale * mobBullet[k].dmg;
                 mech.damage(dmg);
                 mobBullet[k].endCycle = game.cycle;
                 //add dmg to draw queue
@@ -191,7 +195,7 @@ function mobBulletCollisionCheck(event) {
                 game.drawList.push(hit);
                 continue;
             } else if (pairs[i].bodyB === mobBullet[k] && pairs[i].bodyB.speed > 10 && (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead)) {
-				const dmg = game.dmgScale * game.mobBulletDamage;
+				const dmg = game.dmgScale * mobBullet[k].dmg;
                 mech.damage(dmg);
                 mobBullet[k].endCycle = game.cycle;
                 //add dmg to draw queue

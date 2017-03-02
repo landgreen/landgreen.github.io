@@ -21,27 +21,20 @@ game mechanics
     water
     low friction ground
     bouncy ground
-  NPC polygons could corrupt normal polygons and make them alive
-    triggers on touch
 
  give each foot a sensor to check for ground collisions
-  feet with not go into the ground even on slanted ground
-  this might be not worth it, but it might look really cool
+  	feet with not go into the ground even on slanted ground
+ 	this might be not worth it, but it might look really cool
 
 track foot positions with velocity better as the player walks/crouch/runs
 
 brief forced crouch after landing at a high speed
-  you could just set the crouch keys[] to true for a few cycles if velocity.y is large
+ 	you could just set the crouch keys[] to true for a few cycles if velocity.y is large
 
- physics puzzle mechanics
-  move a block over and jump on it to get over a wall
-  drop some weight on a suspended nonrotating block to lower it and remove a blockage
-  knock over a very tall plank to clear a wide gap
-
-bullet type: bomb
-	make a bullet that after a few seconds gets very big and hits mobs to do damage
-		make the bullet go noncollide with map after explode
-
+physics puzzle mechanics
+	move a block over and jump on it to get over a wall
+	drop some weight on a suspended nonrotating block to lower it and remove a blockage
+	knock over a very tall plank to clear a wide gap
 
 power ups  (rogue-like patterned after binding of issac with mostly stacking power ups)
 	should power ups automaticaly active or should player have to pick them up?
@@ -70,10 +63,29 @@ player power ups:
 	higher speed?
 	double jump?
 	shield?
+		could regen slowly
 	reduce dmg?
 
-
-
+add bullet on damage effects
+	effects could:
+		add to the array mod.do new mob behaviors
+			add a damage over time
+			add a freeze
+		change mob traits
+			mass
+			friction
+			damage done
+		change things about the bullet
+			bounce the bullet again in a new direction
+			fire several bullets as shrapnel
+			increase the bullet size to do AOE dmg?? (how)
+				just run a for loop over all mobs, and do damage to the one that are close
+			bullets return to player
+				use a constraint? does bullet just start with a constraint or is it added on damage?
+		change the player
+			vampire bullets heal for the damage done
+				or give the player a shield??
+				or only heal if the mob dies (might be tricky)
 
 
 
@@ -81,14 +93,6 @@ player power ups:
 FIX************************************************************
 ***************************************************************
 ***************************************************************
-
-holding a body with a constraint pushes on other bodies too easily
-  mostly fixed by capping the mass of what player can hold
-
-on testing mode read out mouse postion isn't accurate when zoomed
-  not sure how to fix this, need to figure out the math for size changes when zoomed
-  try drawing a picture
-
 sometimes the player falls off a ledge and stays crouched in mid air
 
 the jump height control by holding down jump  can also control any upward motion (like from a block that throws player up)
@@ -136,13 +140,39 @@ window.onmousemove = function(e) {
     game.mouse.x = e.clientX;
     game.mouse.y = e.clientY;
 };
-//mouse click events
+//mouse click events for building maps:  replace with the normal events below when not building maps
 window.onmousedown = function(e) {
+	if (!game.mouseDown){
+		game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
+		game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
+	}
     game.mouseDown = true;
 };
 window.onmouseup = function(e) {
+	if (game.mouseDown){
+		game.getCoords.pos2.x = Math.round(game.mouseInGame.x / 25) * 25;
+		game.getCoords.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;
+
+		document.getElementById("copy-this").innerHTML = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x-game.getCoords.pos1.x}, ${game.getCoords.pos2.y-game.getCoords.pos1.y}); //`;
+		window.getSelection().removeAllRanges();
+		var range = document.createRange();
+		range.selectNode(document.getElementById('copy-this'));
+		window.getSelection().addRange(range);
+		document.execCommand('copy')
+		window.getSelection().removeAllRanges();
+	}
     game.mouseDown = false;
 };
+
+//normal mouse click events
+// window.onmousedown = function(e) {
+//     game.mouseDown = true;
+// };
+// window.onmouseup = function(e) {
+//     game.mouseDown = false;
+// };
+
+
 
 //keyboard input
 const keys = [];
@@ -162,13 +192,18 @@ function playSound(id) { //play sound
     }
 }
 
+
 //skips splash screen on map switch
 if (sessionStorage.getItem('skipSplash') === '1') {
     sessionStorage.setItem('skipSplash', '0');
+	level.onLevel = sessionStorage.getItem('onLevel');
 	bullets = JSON.parse(sessionStorage.getItem('bullets'))
+	game.dmgScale = sessionStorage.getItem('dmgScale')*1;  //*1 makes the string into a number
     run(document.getElementById('splash')) //calls the run function defined below to start the game
 } else {
     document.getElementById('splash').style.display = "inline"; //show splash SVG
+	level.onLevel = 0
+	sessionStorage.setItem('onLevel', level.onLevel);
 	//setup gun
 	powerUps.startingPowerUps();
 }
@@ -220,10 +255,11 @@ function cycle() {
         game.draw.wireFrame();
         game.draw.cons();
         game.draw.testing();
-        bulletLoop();
+        //bulletLoop();
         game.drawCircle();
         mech.drawHealth();
         ctx.restore();
+		game.getCoords.out();
         game.testingOutput();
     } else {
         mobs.loop();

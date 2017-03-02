@@ -9,11 +9,9 @@ const game = {
         x: 0,
         y: 0
     },
-	level: 0,
+    level: 0,
     g: 0.001,
     dmgScale: 1,
-    mobDamage: 0.02,
-    mobBulletDamage: 0.1,
     testing: false, //testing mode: shows wireframe and some variables
     cycle: 0, //total cycles, 60 per second
     cyclePaused: 0,
@@ -55,9 +53,9 @@ const game = {
         this.zoom = canvas.height / 2000; //sets starting zoom scale
     },
     keyPress: function() { //runs on key press event
-		if (keys[57]){
-			powerUps.spawnRandomPowerUp(game.mouseInGame.x,game.mouseInGame.y,0,0);
-		}
+        if (keys[57]) {
+            powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
+        }
 
         if (keys[90]) { // 69 = e  90 = z
             if (this.track) {
@@ -140,9 +138,42 @@ const game = {
             }
         }
     },
-	testingOutput: function() {
-		ctx.textAlign = 'left';
-		ctx.fillStyle = "#000";
+    getCoords: { //used when building maps, outputs a draw rect command to console, only works in testing mode
+        pos1: {
+            x: 0,
+            y: 0
+        },
+        pos2: {
+            x: 0,
+            y: 0
+        },
+        out: function() {
+            if (keys[49]) {
+                this.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
+                this.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
+            }
+
+            if (keys[50]) { //press 1 in the top left; press 2 in the bottom right;copy command from console
+                this.pos2.x = Math.round(game.mouseInGame.x / 25) * 25;
+                this.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;
+
+
+                // Select the email link anchor text
+				window.getSelection().removeAllRanges();
+                var range = document.createRange();
+                range.selectNode(document.getElementById('test'));
+                window.getSelection().addRange(range);
+				document.execCommand('copy')
+                window.getSelection().removeAllRanges();
+
+                console.log(`spawn.mapRect(${this.pos1.x}, ${this.pos1.y}, ${this.pos2.x-this.pos1.x}, ${this.pos2.y-this.pos1.y}); //`);
+
+            }
+        },
+    },
+    testingOutput: function() {
+        ctx.textAlign = 'left';
+        ctx.fillStyle = "#000";
         let line = 20;
         ctx.fillText("Press T to exit testing mode", 5, line);
         line += 30;
@@ -183,8 +214,8 @@ const game = {
         ctx.fillText("on " + mech.onBody.type + " id: " + mech.onBody.id + ", index: " + mech.onBody.index, 5, line);
         line += 20;
         ctx.fillText('action: ' + mech.onBody.action, 5, line);
-		ctx.textAlign = 'center';
-		ctx.fillText(`(${this.mouseInGame.x.toFixed(1)}, ${this.mouseInGame.y.toFixed(1)})`, this.mouse.x, this.mouse.y-20);
+        ctx.textAlign = 'center';
+        ctx.fillText(`(${this.mouseInGame.x.toFixed(1)}, ${this.mouseInGame.y.toFixed(1)})`, this.mouse.x, this.mouse.y - 20);
 
     },
     output: function() {
@@ -192,39 +223,39 @@ const game = {
         ctx.fillStyle = "#000";
         ctx.fillText(`fireCD: ${bullets.fireCD}`, 5, line);
         line += 20;
-		ctx.fillText(`restitution: ${bullets.restitution.toFixed(2)}`, 5, line);
-		line += 20;
-		ctx.fillText(`speed: ${bullets.speed.toFixed(2)}`, 5, line);
-		line += 20;
-		ctx.fillText(`frictionAir: ${bullets.frictionAir.toFixed(4)}`, 5, line);
-		line += 20;
-		ctx.fillText(`size: ${bullets.size.toFixed(4)}`, 5, line);
-		line += 20;
-		ctx.fillText(`dmg: ${bullets.dmg.toFixed(2)}`, 5, line);
-		line += 20;
-		ctx.fillText(`gravity: ${bullets.gravity.toFixed(2)}`, 5, line);
-		line += 20;
-		ctx.fillText(`endCycle: ${bullets.endCycle.toFixed(2)}`, 5, line);
-		line += 20;
+        ctx.fillText(`restitution: ${bullets.restitution.toFixed(2)}`, 5, line);
+        line += 20;
+        ctx.fillText(`speed: ${bullets.speed.toFixed(2)}`, 5, line);
+        line += 20;
+        ctx.fillText(`frictionAir: ${bullets.frictionAir.toFixed(4)}`, 5, line);
+        line += 20;
+        ctx.fillText(`size: ${bullets.size.toFixed(4)}`, 5, line);
+        line += 20;
+        ctx.fillText(`dmg: ${bullets.dmg.toFixed(2)}`, 5, line);
+        line += 20;
+        ctx.fillText(`gravity: ${bullets.gravity.toFixed(2)}`, 5, line);
+        line += 20;
+        ctx.fillText(`endCycle: ${bullets.endCycle.toFixed(2)}`, 5, line);
+        line += 20;
     },
     draw: {
         powerUp: function() {
-			ctx.lineWidth = 5
+            ctx.lineWidth = 5
             for (let i = 0, len = powerUp.length; i < len; ++i) {
                 let vertices = powerUp[i].vertices;
-				ctx.beginPath();
+                ctx.beginPath();
                 ctx.moveTo(vertices[0].x, vertices[0].y);
                 for (let j = 1; j < vertices.length; j += 1) {
                     ctx.lineTo(vertices[j].x, vertices[j].y);
                 }
                 ctx.lineTo(vertices[0].x, vertices[0].y);
-				ctx.globalAlpha = powerUp[i].alpha;
-				// ctx.fillStyle = powerUp[i].color;
-				// ctx.fill();
-				ctx.strokeStyle = powerUp[i].color;
-				ctx.stroke();
+                ctx.globalAlpha = powerUp[i].alpha;
+                // ctx.fillStyle = powerUp[i].color;
+                // ctx.fill();
+                ctx.strokeStyle = powerUp[i].color;
+                ctx.stroke();
             }
-			ctx.globalAlpha = 1;
+            ctx.globalAlpha = 1;
         },
         map: function() {
             ctx.beginPath();
@@ -257,11 +288,11 @@ const game = {
         },
         cons: function() {
             ctx.beginPath();
-			for (let i = 0, len = cons.length; i < len; ++i) {
+            for (let i = 0, len = cons.length; i < len; ++i) {
                 ctx.moveTo(cons[i].pointA.x, cons[i].pointA.y);
                 ctx.lineTo(cons[i].bodyB.position.x, cons[i].bodyB.position.y);
             }
-			for (let i = 0, len = consBB.length; i < len; ++i) {
+            for (let i = 0, len = consBB.length; i < len; ++i) {
                 ctx.moveTo(consBB[i].bodyA.position.x, consBB[i].bodyA.position.y);
                 ctx.lineTo(consBB[i].bodyB.position.x, consBB[i].bodyB.position.y);
             }

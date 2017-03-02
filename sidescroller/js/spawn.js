@@ -1,165 +1,41 @@
 //main object for spawning things in a level
 const spawn = {
-    randomMob: function(x, y, num = 1) {
-        const size = 30 + Math.ceil(Math.random() * 40)
-        switch (Math.ceil(Math.random() * 13)) {
-            case 1:
-                for (let i = 0; i < num; ++i) {
-                    this.shooter(x + size * 3 * i, y, size);
-                }
-                break;
-            case 2:
-                for (let i = 0; i < num; ++i) {
-                    this.springer(x + size * 3 * i, y, size);
-                }
-                break;
-            case 3:
-                for (let i = 0; i < num; ++i) {
-                    this.chaser(x + size * 3 * i, y, size);
-                }
-                break;
-            case 4:
-                for (let i = 0; i < num; ++i) {
-                    this.chaseShooter(x + size * 3 * i, y, size);
-                }
-                break;
-            case 5:
-                for (let i = 0; i < num; ++i) {
-                    this.hopper(x + size * 3 * i, y, size);
-                }
-                break;
-            case 6:
-                for (let i = 0; i < num; ++i) {
-                    this.burster(x + size * 3 * i, y, size);
-                }
-                break;
-            case 7:
-                for (let i = 0; i < num; ++i) {
-                    this.puller(x + size * 3 * i, y, size);
-                }
-                break;
-            case 8:
-                for (let i = 0; i < num; ++i) {
-                    this.laserer(x + size * 3 * i, y, size * 0.4);
-                }
-                break;
-            case 9:
-                for (let i = 0; i < num; ++i) {
-                    this.striker(x + size * 3 * i, y, size * 0.8);
-                }
-                break;
-            case 10:
-                for (let i = 0; i < num; ++i) {
-                    this.ghoster(x + size * 3 * i, y, size * 2.3);
-                }
-                break;
-            case 11:
-                for (let i = 0; i < num; ++i) {
-                    this.blinker(x + size * 3 * i, y, size * 1.8);
-                }
-                break;
-            case 12:
-                for (let i = 0; i < num; ++i) {
-                    this.sneakAttacker(x, y, size * 0.5);
-                }
-                break;
-			case 13:
-				for (let i = 0; i < num; ++i) {
-					this.heavyChaser(x, y, size * 1.3);
-				}
-				break;
+    pickList: [],
+	fullPickList: ['chaser', 'chaser', 'shooter', 'chaseShooter', 'hopper', 'burster', 'burster', 'puller', 'laserer', 'striker','striker','springer','ghoster', 'blinker', 'sneakAttacker', 'pullSploder', 'exploder', 'drifter', 'spawner'],
+	setSpawnList: function(){ //this is run at the start of each new level to give the mobs on each level a flavor
+		this.pickList = [];
+		for(let i = 0; i<1+Math.ceil(Math.random()*Math.random()*3);++i){
+			this.pickList.push(this.fullPickList[Math.floor(Math.random() * this.fullPickList.length)]);
+		}
+	},
+    randomMob: function(x, y) {
+        const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)]
+        this[pick](x, y);
+    },
+    randomSmallMob: function(x, y, num = 1, size = 16 + Math.ceil(Math.random() * 15)) {
+        const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)]
+        for (let i = 0; i < num; ++i) {
+            this[pick](x + i * size * 2.5, y, size);
         }
     },
     randomBoss: function(x, y) {
-        const elasticity = Math.random() * 0.07 + 0.01;
-        const nodes = Math.ceil(Math.random() * 3) + 4;
-        const distance = Math.ceil(Math.random() * 100) + 70
-        const size = Math.ceil(Math.random() * 10) + 17
-        switch (Math.ceil(Math.random() * 5)) {
-            case 1:
-                this.nodeBoss(x, y, nodes - 1, size - 5, distance, elasticity, 'striker');
-                break;
-            case 2:
-                this.nodeBoss(x, y, nodes, size, distance, elasticity, 'chaser');
-                break;
-            case 3:
-                this.nodeBoss(x, y, nodes, size, distance, elasticity, 'burster');
-                break;
-            case 4:
-                this.nodeBoss(x, y, nodes - 1, size * 0.6, distance * 0.6, elasticity, 'laserer');
-                break;
-            case 5:
-                this.nodeBoss(x, y, nodes, size + 15, distance, elasticity, 'ghoster');
-                break;
-        }
+        //const pick = ['springer', 'chaser', 'chaseShooter', 'hopper', 'burster', 'puller', 'laserer', 'striker', 'ghoster', 'pullSploder', 'exploder'];
+		//const pick = ['springer', 'chaser', 'chaseShooter','burster','striker'];
+		//this.nodeBoss(x, y, pick[Math.floor(Math.random() * pick.length)]);
+		const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)]
+		this.nodeBoss(x, y, pick);
     },
-    randomSmallMobs: function(x, y, num = 1) {
-        const size = 10 + Math.ceil(Math.random() * 30)
-        switch (Math.ceil(Math.random() * 10)) {
-            case 1:
-                for (let i = 0; i < num; ++i) {
-                    this.sneakAttacker(x + size * 2.5 * i, y, size * 0.7);
-                }
-                break;
-            case 2:
-                for (let i = 0; i < num; ++i) {
-                    this.springer(x + size * 2.5 * i, y, size);
-                }
-                break;
-            case 3:
-                for (let i = 0; i < num; ++i) {
-                    this.chaser(x + size * 2.5 * i, y, size);
-                }
-                break;
-            case 4:
-                for (let i = 0; i < num; ++i) {
-                    this.chaseShooter(x + size * 2.5 * i, y, size);
-                }
-                break;
-            case 5:
-                for (let i = 0; i < num; ++i) {
-                    this.hopper(x + size * 2.5 * i, y, size);
-                }
-                break;
-            case 6:
-                for (let i = 0; i < num; ++i) {
-                    this.burster(x + size * 2.5 * i, y, size);
-                }
-                break;
-            case 7:
-                for (let i = 0; i < num; ++i) {
-                    this.puller(x + size * 2.5 * i, y, size);
-                }
-                break;
-            case 8:
-                for (let i = 0; i < num; ++i) {
-                    this.laserer(x + size * 2.5 * i, y, size * 0.7);
-                }
-                break;
-            case 9:
-                for (let i = 0; i < num; ++i) {
-                    this.striker(x + size * 2.5 * i, y, size * 0.8);
-                }
-                break;
-			case 10:
-				for (let i = 0; i < num; ++i) {
-					this.heavyChaser(x + size * 2.5 * i, y, size * 1.2);
-				}
-				break;
-        }
-    },
-
-
     //basic mob templates**********************************************************************************************************
     //*****************************************************************************************************************************
-    shooter: function(x, y, radius = 50) { //size 50
+    shooter: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(215,100,215,1)'
         mobs.spawn(x, y, 3, radius, 'rgba(215,100,215,', ["seePlayerCheck", 'fireAt']);
         mob[mob.length - 1].isStatic = true;
-		mob[mob.length - 1].seePlayerFreq = 59;
+        mob[mob.length - 1].seePlayerFreq = 59;
         mob[mob.length - 1].memory = 20; //memory+memory*Math.random()
-        mob[mob.length - 1].fireDelay = 30;
+        //mob[mob.length - 1].fireDelay = 40;
+        mob[mob.length - 1].fireDelay = Math.ceil(10 + 2000 / radius)
     },
-    springer: function(x, y, radius = 50) {
+    springer: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(223,2,58,1)'
         const index = mob.length
         mobs.spawn(x, y, 0, radius, 'rgba(223,2,58,', ['gravity', "seePlayerCheck", "fallCheck"]);
         mob[index].g = 0.0005; //required if using 'gravity'
@@ -174,38 +50,32 @@ const spawn = {
         cons[cons.length - 1].length = 0;
 
     },
-    chaser: function(x, y, radius = 50) {
+    chaser: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(110,150,200,1)'
         mobs.spawn(x, y, 4, radius, 'rgba(110,150,200,', ['gravity', "seePlayerCheck", "fallCheck", "attraction"]);
         mob[mob.length - 1].g = 0.0005; //required if using 'gravity'
         mob[mob.length - 1].accelMag = 0.0012;
         mob[mob.length - 1].memory = 240; //memory+memory*Math.random() in cycles
     },
-	heavyChaser: function(x, y, radius = 70) {
-		mobs.spawn(x, y, 4, radius, 'rgba(55,80,255,', ['gravity', "seePlayerCheck", "fallCheck", "attraction"]);
-		mob[mob.length - 1].g = 0.002; //required if using 'gravity'
-		mob[mob.length - 1].accelMag = 0.00206;
-		mob[mob.length - 1].memory = 140; //memory+memory*Math.random() in cycles
-		//mob[mob.length - 1].seePlayerFreq = 97;
-	},
-    chaseShooter: function(x, y, radius = 50) {
+    chaseShooter: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(140,100,250,1)'
         mobs.spawn(x, y, 3, radius, 'rgba(140,100,250,', ['gravity', "seePlayerCheck", "fallCheck", 'fireAt', "attraction"]);
         mob[mob.length - 1].accelMag = 0.0002;
         mob[mob.length - 1].g = 0.0001; //required if using 'gravity'
         mob[mob.length - 1].frictionAir = 0.0002;
         mob[mob.length - 1].memory = 180; //memory+memory*Math.random() in cycles
-        mob[mob.length - 1].fireDelay = 90;
+        //mob[mob.length - 1].fireDelay = 65;
+		mob[mob.length - 1].fireDelay = Math.ceil(30 + 2000 / radius)
         mob[mob.length - 1].faceOnFire = false; //prevents rotation on fire
     },
-    hopper: function(x, y, radius = 50) {
+    hopper: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(0,200,150,1)'
         mobs.spawn(x, y, 4, radius, 'rgba(0,200,150,', ['gravity', "seePlayerCheck", "fallCheck", "burstAttraction"]);
-        mob[mob.length - 1].accelMag = 0.07;
+        mob[mob.length - 1].accelMag = 0.09;
         mob[mob.length - 1].g = 0.002; //required if using 'gravity'
-        mob[mob.length - 1].frictionAir = 0.04;
+        mob[mob.length - 1].frictionAir = 0.035;
         //mob[mob.length - 1].memory = 60; //memory+memory*Math.random()
         mob[mob.length - 1].restitution = 0;
-        mob[mob.length - 1].delay = 80;
+        mob[mob.length - 1].delay = 90;
     },
-    burster: function(x, y, radius = 50) {
+    burster: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(0,200,180,1)'
         mobs.spawn(x, y, 6, radius, 'rgba(0,200,180,', ["seePlayerCheck", "fallCheck", "burstAttraction"]);
         mob[mob.length - 1].accelMag = 0.1;
         mob[mob.length - 1].frictionAir = 0.02;
@@ -213,22 +83,25 @@ const spawn = {
         mob[mob.length - 1].restitution = 1;
         mob[mob.length - 1].delay = 140;
     },
-    puller: function(x, y, radius = 50) {
+    puller: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(0,10,30,1)'
         mobs.spawn(x, y, 7, radius, 'rgba(0,10,30,', ['gravity', "seePlayerCheck", "fallCheck", "attraction", 'pullPlayer']);
         mob[mob.length - 1].delay = 360;
         mob[mob.length - 1].g = 0.0002; //required if using 'gravity'
         mob[mob.length - 1].accelMag = 0.0003;
         mob[mob.length - 1].memory = 240; //memory+memory*Math.random() in cycles
     },
-    laserer: function(x, y, radius = 15) {
+    laserer: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) { //'rgba(255,0,170,1)'
         mobs.spawn(x, y, 4, radius, 'rgba(255,0,170,', ["seePlayerCheck", "attraction", 'repulsion', "fallCheck", 'laser']);
         mob[mob.length - 1].repulsionRange = 300000; //squared
         mob[mob.length - 1].seePlayerFreq = 3;
         mob[mob.length - 1].accelMag = 0.0006;
         mob[mob.length - 1].frictionStatic = 0;
         mob[mob.length - 1].friction = 0;
+        mob[mob.length - 1].onHit = function(k) { //run this function on hitting player
+            mob[k].death()
+        }
     },
-    striker: function(x, y, radius = 25) {
+    striker: function(x, y, radius = 15 + Math.ceil(Math.random() * 25)) { //'rgba(221,102,119,1)'
         mobs.spawn(x, y, 5, radius, 'rgba(221,102,119,', ["seePlayerCheck", "attraction", 'gravity', "fallCheck", 'strike']);
         mob[mob.length - 1].accelMag = 0.0004;
         mob[mob.length - 1].g = 0.0002; //required if using 'gravity'
@@ -237,36 +110,119 @@ const spawn = {
         mob[mob.length - 1].delay = 60;
         Matter.Body.rotate(mob[mob.length - 1], Math.PI * 0.1)
     },
-    ghoster: function(x, y, radius = 150) {
-		//pulls the background color, converts to rgba without the a
-		let bgColor = 'rgba'+document.body.style.backgroundColor.substr(3, 20).replace(/.$/,",")
+    ghoster: function(x, y, radius = 50 + Math.ceil(Math.random() * 70)) { //'rgba(255,255,255,1)'
+        //pulls the background color, converts to rgba without the a
+        let bgColor = 'rgba' + document.body.style.backgroundColor.substr(3, 20).replace(/.$/, ",")
         mobs.spawn(x, y, 0, radius, bgColor, ["seePlayerCheck", "fallCheck", "attraction"]);
         mob[mob.length - 1].accelMag = 0.00017;
         mob[mob.length - 1].collisionFilter.mask = 0x001100; //move through walls
         mob[mob.length - 1].memory = 720; //memory+memory*Math.random()
-        //mob[mob.length - 1].frictionAir = 0.001;
     },
-    blinker: function(x, y, radius = 200) {
+    blinker: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(0,200,255,1)'
         mobs.spawn(x, y, 6, radius, 'rgba(0,200,255,', ["seePlayerCheck", "fallCheck", 'blink']);
+        mob[mob.length - 1].blinkRate = 40 + Math.round(Math.random() * 60); //required for blink
+        mob[mob.length - 1].blinkLength = 150 + Math.round(Math.random() * 200); //required for blink
         mob[mob.length - 1].collisionFilter.mask = 0x001100; //move through walls
         mob[mob.length - 1].isStatic = true;
         mob[mob.length - 1].memory = 360; //memory+memory*Math.random()
+        mob[mob.length - 1].seePlayerFreq = 47;
     },
-    sneakAttacker: function(x, y, radius = 45) {
+    drifter: function(x, y, radius = 15 + Math.ceil(Math.random() * 40)) { //'rgba(0,200,255,1)'
+        mobs.spawn(x, y, 4.5, radius, 'rgba(0,200,255,', ["seePlayerCheck", "fallCheck", 'drift']);
+        Matter.Body.rotate(mob[mob.length - 1], Math.random() * 2 * Math.PI)
+        mob[mob.length - 1].blinkRate = 20 + Math.round(Math.random() * 10); //required for blink
+        mob[mob.length - 1].collisionFilter.mask = 0x001100; //move through walls
+        mob[mob.length - 1].isStatic = true;
+        mob[mob.length - 1].memory = 360; //memory+memory*Math.random()
+        mob[mob.length - 1].seePlayerFreq = 74;
+    },
+    sneakAttacker: function(x, y, radius = 15 + Math.ceil(Math.random() * 30)) { //'rgba(235,235,235,1)'
         mobs.spawn(x, y, 6, radius, 'rgba(235,235,235,', ['gravity', "fallCheck", 'sneakAttack']);
         mob[mob.length - 1].g = 0.0005; //required if using 'gravity'
-        //mob[mob.length - 1].memory = 120; //memory+memory*Math.random()
         mob[mob.length - 1].collisionFilter.mask = 0x000001; //can't be hit by bullets or player
         Matter.Body.rotate(mob[mob.length - 1], Math.PI * 0.17)
         mob[mob.length - 1].fill = 'transparent'
-            //mob[mob.length - 1].frictionAir = 0.001;
+    },
+    spawner: function(x, y, radius = 55 + Math.ceil(Math.random() * 50)) { //'rgba(110,150,150,1)'
+        mobs.spawn(x, y, 5, radius, 'rgba(110,150,150,', ['gravity', "seePlayerCheck", "fallCheck", "attraction"]);
+        mob[mob.length - 1].g = 0.0004; //required if using 'gravity'
+        mob[mob.length - 1].accelMag = 0.001;
+        mob[mob.length - 1].memory = 240; //memory+memory*Math.random() in cycles
+        mob[mob.length - 1].onDeath = function(that) { //run this function on hitting player
+            for (let i = 0; i < Math.ceil(that.mass * 0.35); ++i) {
+                spawn.spawns(that.position.x + (Math.random() - 0.5) * 20, that.position.y + (Math.random() - 0.5) * 20);
+            }
+        }
+    },
+    spawns: function(x, y, radius = 15 + Math.ceil(Math.random() * 5)) { //'rgba(110,175,175,1)'
+        mobs.spawn(x, y, 4, radius, 'rgba(110,175,175,', ['gravity', "seePlayerCheck", "fallCheck", "attraction"]);
+        mob[mob.length - 1].onHit = function(k) { //run this function on hitting player
+            for (let i = 1; i < 3 + 1; ++i) { //dots
+                setTimeout(function() {
+                    mech.damage(0.05 * Math.sqrt(mob[k].mass) * game.dmgScale);
+                    const hit = mech.pos //draw damage circles
+                    hit.radius = 50;
+                    hit.color = 'rgba(125,100,150,0.5)';
+                    game.drawList.push(hit);
+                }, i * 2000);
+            }
+            const hit = mech.pos //draw damage circle
+            hit.radius = 80;
+            hit.color = 'rgba(125,100,150,0.5)';
+            game.drawList.push(hit);
+            mob[k].death()
+        }
+        mob[mob.length - 1].g = 0.0002; //required if using 'gravity'
+        mob[mob.length - 1].accelMag = 0.0004;
+    },
+    exploder: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(125,100,150,1)'
+        mobs.spawn(x, y, 7, radius, 'rgba(125,100,150,', ['gravity', "seePlayerCheck", "fallCheck", "attraction"]);
+        mob[mob.length - 1].onHit = function(k) { //run this function on hitting player
+            for (let i = 1; i < 7 + 1; ++i) { //dots
+                setTimeout(function() {
+                    mech.damage(0.05 * Math.sqrt(mob[k].mass) * game.dmgScale);
+                    const hit = mech.pos //draw damage circles
+                    hit.radius = 50;
+                    hit.color = 'rgba(125,100,150,0.5)';
+                    game.drawList.push(hit);
+                }, i * 2000);
+            }
+            const hit = mech.pos //draw damage circle
+            hit.radius = 80;
+            hit.color = 'rgba(125,100,150,0.5)';
+            game.drawList.push(hit);
+            mob[k].death()
+        }
+        mob[mob.length - 1].g = 0.0004; //required if using 'gravity'
+        mob[mob.length - 1].accelMag = 0.0014;
+    },
+    pullSploder: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(25,25,45,1)'
+        mobs.spawn(x, y, 4.5, radius, 'rgba(25,25,45,', ['gravity', "seePlayerCheck", "fallCheck", "attraction", 'pullPlayer']);
+        mob[mob.length - 1].onHit = function(k) { //run this function on hitting player
+            for (let i = 1; i < 7 + 1; ++i) { //dots
+                setTimeout(function() {
+                    mech.damage(0.05 * Math.sqrt(mob[k].mass) * game.dmgScale);
+                    const hit = mech.pos //draw damage circles
+                    hit.radius = 50;
+                    hit.color = 'rgba(25,25,45,0.5)';
+                    game.drawList.push(hit);
+                }, i * 2000);
+            }
+            const hit = mech.pos //draw damage circle
+            hit.radius = 80;
+            hit.color = 'rgba(25,25,45,0.5)';
+            game.drawList.push(hit);
+            mob[k].death()
+        }
+        mob[mob.length - 1].g = 0.0004; //required if using 'gravity'
+        mob[mob.length - 1].accelMag = 0.0008;
     },
     //complex constrained mob templates********************************************************************************************
     //*****************************************************************************************************************************
     snake: function(x, y, r = 25, l = 70, stiffness = 0.05, num = 6, faceRight = false) {
         if (faceRight) l *= -1
         mobs.spawn(x - l * 0.4, y, 4, r * 1.6, 'rgba(235,55,55,', ["seePlayerCheck", "fallCheck", "attraction"]);
-        mob[mob.length - 1].accelMag = 0.0003 * mob[mob.length - 1].mass * Math.sqrt(num);
+        mob[mob.length - 1].accelMag = 0.0006 * mob[mob.length - 1].mass * Math.sqrt(num);
         mob[mob.length - 1].friction = 0;
         mob[mob.length - 1].frictionStatic = 0;
         mob[mob.length - 1].memory = 340; //memory+memory*Math.random() in cycles
@@ -315,7 +271,11 @@ const spawn = {
             })
         }
     },
-    nodeBoss: function(x, y, nodes = 5, radius = 20, l = 100, stiffness = 0.05, spawn = 'striker') {
+    nodeBoss: function(x, y, spawn = 'striker',
+        nodes = Math.ceil(Math.random() * 3) + 4,
+        radius = Math.ceil(Math.random() * 10) + 17,
+        l = Math.ceil(Math.random() * 100) + 70,
+        stiffness = Math.random() * 0.07 + 0.01) {
         let px = 0;
         let py = 0;
         let a = 2 * Math.PI / nodes;

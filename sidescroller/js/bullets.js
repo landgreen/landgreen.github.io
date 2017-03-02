@@ -62,9 +62,9 @@ function bulletLoop(){
 		}
 	}
 	let i = bullet.length;
+	ctx.beginPath();
+	ctx.fillStyle = '#000';
 	while (i--) { //draw
-		ctx.beginPath();
-		ctx.fillStyle = bullet[i].color;
 		let vertices = bullet[i].vertices;
 		ctx.moveTo(vertices[0].x, vertices[0].y);
 		for (let j = 1; j < vertices.length; j += 1) {
@@ -75,8 +75,8 @@ function bulletLoop(){
 			Matter.World.remove(engine.world, bullet[i]);
 			bullet.splice(i, 1);
 		}
-		ctx.fill();
 	}
+	ctx.fill();
 }
 
 function mobBulletLoop(){
@@ -94,6 +94,7 @@ function mobBulletLoop(){
 			mobBullet.splice(i, 1);
 		}
 	}
-	ctx.fillStyle = '#000';
+	//ctx.fillStyle = ((game.cycle%2) ? '#000' : '#f00');
+	ctx.fillStyle = '#f00';
 	ctx.fill();
 }
