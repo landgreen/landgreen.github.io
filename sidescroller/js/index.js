@@ -153,7 +153,11 @@ window.onmousemove = function(e) {
 // 		game.getCoords.pos2.x = Math.round(game.mouseInGame.x / 25) * 25;
 // 		game.getCoords.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;
 //
+// 		//body rect mode
 // 		document.getElementById("copy-this").innerHTML = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x-game.getCoords.pos1.x}, ${game.getCoords.pos2.y-game.getCoords.pos1.y}); //`;
+// 		//svg mode
+// 		//document.getElementById("copy-this").innerHTML = 'rect x="'+game.getCoords.pos1.x+'" y="'+ game.getCoords.pos1.y+'" width="'+(game.getCoords.pos2.x-game.getCoords.pos1.x)+'" height="'+(game.getCoords.pos2.y-game.getCoords.pos1.y)+'"';
+//
 // 		window.getSelection().removeAllRanges();
 // 		var range = document.createRange();
 // 		range.selectNode(document.getElementById('copy-this'));
@@ -194,15 +198,16 @@ function playSound(id) { //play sound
 
 
 //skips splash screen on map switch
-if (sessionStorage.getItem('skipSplash') === '1') {
+if (sessionStorage.getItem('skipSplash') === '1') { //set in level.js level.nextLevel() before reset for (same game/new map)
     sessionStorage.setItem('skipSplash', '0');
 	level.onLevel = sessionStorage.getItem('onLevel');
-	bullets = JSON.parse(sessionStorage.getItem('bullets'))
+	mech.health = sessionStorage.getItem('health');
 	game.dmgScale = sessionStorage.getItem('dmgScale')*1;  //*1 makes the string into a number
+	bullets = JSON.parse(sessionStorage.getItem('bullets'))
     run(document.getElementById('splash')) //calls the run function defined below to start the game
-} else {
+} else {  //if new game
     document.getElementById('splash').style.display = "inline"; //show splash SVG
-	level.onLevel = 0
+	level.onLevel = Math.floor(Math.random()*level.levels.length); //picks a rnadom starting level
 	sessionStorage.setItem('onLevel', level.onLevel);
 	//setup gun
 	powerUps.startingPowerUps();
@@ -221,8 +226,8 @@ function run(el) { // onclick from the splash screen
     mech.spawn(); //spawns the player
 	level.start();
 
-    //document.getElementById("keysright").innerHTML = ''; //remove html from intro
-    //document.getElementById("keysleft").innerHTML = '';
+    document.getElementById("keysright").innerHTML = ''; //remove html from intro
+    document.getElementById("keysleft").innerHTML = '';
     //document.body.appendChild(stats.dom); //show stats.js FPS tracker
     Engine.run(engine); //starts game engine
     requestAnimationFrame(cycle); //starts game loop

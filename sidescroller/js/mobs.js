@@ -121,9 +121,9 @@ const mobs = {
                 this.stroke = '#000';
             },
             laser: function() {
-                if (game.cycle % 7 && this.seePlayer.yes && this.distanceToPlayer2() < 800000) {
+                if (game.cycle % 7 && this.seePlayer.yes && this.distanceToPlayer2() < 500000) {
                     //if (Math.random()>0.2 && this.seePlayer.yes && this.distanceToPlayer2()<800000) {
-                    mech.damage(0.0002 * game.dmgScale);
+                    mech.damage(0.0003 * game.dmgScale);
                     ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
                     ctx.lineTo(mech.pos.x, mech.pos.y);

@@ -92,7 +92,7 @@ const spawn = {
     },
     laserer: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) { //'rgba(255,0,170,1)'
         mobs.spawn(x, y, 4, radius, 'rgba(255,0,170,', ["seePlayerCheck", "attraction", 'repulsion', "fallCheck", 'laser']);
-        mob[mob.length - 1].repulsionRange = 300000; //squared
+        mob[mob.length - 1].repulsionRange = 200000; //squared
         mob[mob.length - 1].seePlayerFreq = 3;
         mob[mob.length - 1].accelMag = 0.0006;
         mob[mob.length - 1].frictionStatic = 0;
@@ -157,9 +157,9 @@ const spawn = {
     spawns: function(x, y, radius = 15 + Math.ceil(Math.random() * 5)) { //'rgba(110,175,175,1)'
         mobs.spawn(x, y, 4, radius, 'rgba(110,175,175,', ['gravity', "seePlayerCheck", "fallCheck", "attraction"]);
         mob[mob.length - 1].onHit = function(k) { //run this function on hitting player
-            for (let i = 1; i < 3 + 1; ++i) { //dots
+            for (let i = 1; i < 4; ++i) { //dots
                 setTimeout(function() {
-                    mech.damage(0.05 * Math.sqrt(mob[k].mass) * game.dmgScale);
+                    mech.damage(0.03 * Math.sqrt(mob[k].mass) * game.dmgScale);
                     const hit = mech.pos //draw damage circles
                     hit.radius = 50;
                     hit.color = 'rgba(125,100,150,0.5)';
@@ -172,15 +172,15 @@ const spawn = {
             game.drawList.push(hit);
             mob[k].death()
         }
-        mob[mob.length - 1].g = 0.0002; //required if using 'gravity'
+        mob[mob.length - 1].g = 0.00015; //required if using 'gravity'
         mob[mob.length - 1].accelMag = 0.0004;
     },
     exploder: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(125,100,150,1)'
         mobs.spawn(x, y, 7, radius, 'rgba(125,100,150,', ['gravity', "seePlayerCheck", "fallCheck", "attraction"]);
         mob[mob.length - 1].onHit = function(k) { //run this function on hitting player
-            for (let i = 1; i < 7 + 1; ++i) { //dots
+            for (let i = 1; i < 7; ++i) { //dots
                 setTimeout(function() {
-                    mech.damage(0.05 * Math.sqrt(mob[k].mass) * game.dmgScale);
+                    mech.damage(0.03 * Math.sqrt(mob[k].mass) * game.dmgScale);
                     const hit = mech.pos //draw damage circles
                     hit.radius = 50;
                     hit.color = 'rgba(125,100,150,0.5)';
@@ -199,9 +199,9 @@ const spawn = {
     pullSploder: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(25,25,45,1)'
         mobs.spawn(x, y, 4.5, radius, 'rgba(25,25,45,', ['gravity', "seePlayerCheck", "fallCheck", "attraction", 'pullPlayer']);
         mob[mob.length - 1].onHit = function(k) { //run this function on hitting player
-            for (let i = 1; i < 7 + 1; ++i) { //dots
+            for (let i = 1; i < 7; ++i) { //dots
                 setTimeout(function() {
-                    mech.damage(0.05 * Math.sqrt(mob[k].mass) * game.dmgScale);
+                    mech.damage(0.03 * Math.sqrt(mob[k].mass) * game.dmgScale);
                     const hit = mech.pos //draw damage circles
                     hit.radius = 50;
                     hit.color = 'rgba(25,25,45,0.5)';
@@ -276,6 +276,7 @@ const spawn = {
         radius = Math.ceil(Math.random() * 10) + 17,
         l = Math.ceil(Math.random() * 100) + 70,
         stiffness = Math.random() * 0.07 + 0.01) {
+		if (spawn === 'shooter' ||spawn === 'hopper' ||spawn === 'puller' ||spawn === 'blinker' ||spawn === 'pullSploder' ||spawn === 'drifter') nodes = Math.ceil(Math.random() * 2) + 2  //keeps the bad bosses from having too many nodes
         let px = 0;
         let py = 0;
         let a = 2 * Math.PI / nodes;

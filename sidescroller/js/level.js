@@ -22,51 +22,58 @@ const level = {
 	rooftops: function(){
 		//playSound("ambient_wind"); //play ambient audio for level
 		document.body.style.backgroundColor = "#e6e4e4";
+		this.addSVG('background_rooftops', 'foreground_rooftops');
 
-		mech.setPosToSpawn(-450, -2200); //normal spawn
+		mech.setPosToSpawn(-450, -2050); //normal spawn
 		//mech.setPosToSpawn(4600, -900); //normal spawn
+		//mech.setPosToSpawn(4400, -400); //normal spawn
 
-		spawn.mapRect(-700, -2000, 2300, 100); //Top left ledge
+		spawn.mapRect(-1275, 1100, 7600, 350, 'death'); //ground
+		spawn.mapRect(-700, -2000, 2100, 100); //Top left ledge
+		spawn.mapRect(-700, -1950, 100, 3050); //left building wall
+		spawn.mapRect(1300, -1950, 100, 3050); //
 		spawn.mapRect(-700, -2350, 50, 400); //far left starting left wall
 		spawn.mapRect(-700, -2010, 500, 50); //far left starting ground
 		spawn.mapRect(-700, -2350, 500, 50); //far left starting ceiling
 		spawn.mapRect(-250, -2350, 50, 200); //far left starting right part of wall
 		spawn.bodyRect(-230, -2130, 14, 140, spawn.propsFriction); //door to starting room
-		spawn.bodyRect(0, -2150, 300, 150); //
-		spawn.mapRect(675, -2275, 600, 50); //
-		spawn.bodyRect(675, -2225, 25, 220); //
+		spawn.bodyRect(200, -2150, 200, 220); //
+		spawn.mapRect(700, -2275, 700, 50); //
+		//spawn.bodyRect(675, -2225, 25, 220); //
 		spawn.randomSmallMob(900, -2125, Math.ceil(Math.random() * 3)); //
-		spawn.randomSmallMob(800, -2375, Math.ceil(Math.random() * 3)); //
+		spawn.randomSmallMob(-350, -2400, Math.ceil(Math.random() * 3)); //
 		spawn.bodyRect(1050, -2350, 50, 75); //
 		//spawn.bodyRect(1750, -1125, 125, 125); //
 		spawn.mapVertex(1750, -970, '120 40 -120 40 -50 -40 50 -40', 'launch');
 		//spawn.mapVertex(1700, -1100, '0 0 0 -300 300 0');
 
-		spawn.mapRect(1500, -1000, 2000, 100); //middle ledge
-		spawn.mapRect(2075, -2150, 200, 50); //
-		spawn.bodyRect(2625, -1650, 700, 50); //
+		spawn.mapRect(1600, -1000, 1600, 100); //middle ledge
+		spawn.mapRect(1600, -950, 100, 2050); //left building vertical wall
+		spawn.mapRect(3100, -950, 100, 2050); //right building vertical wall
+		spawn.bodyRect(3500, -1725, 20, 475); //
 		spawn.randomMob(2200, -1775); //
-		spawn.mapRect(1500, -1950, 100, 1050); //
+		spawn.bodyRect(2700, -1125, 125, 125); //
+		spawn.bodyRect(2710, -1250, 125, 125); //
 		spawn.mapRect(3150, -1600, 350, 50); //
 		spawn.mapRect(2075, -1600, 700, 50); //
 		spawn.randomBoss(2225, -1325); //
 		spawn.randomMob(3200, -1150); //
-		//spawn.randomMob(3900, -1675); //
+		spawn.bodyRect(3100, -1015, 375, 15); //
 
 		spawn.mapRect(3500, 0, 2000, 100); //bottom right ledge
-		spawn.bodyRect(4850, -775, 300, 50); //
-		spawn.bodyRect(3925, -1400, 125, 150); //
+		spawn.mapRect(3400, -1000, 100, 2100); //left building wall
+		spawn.mapRect(5450, -775, 100, 1900); //right building wall
+		spawn.bodyRect(4850, -750, 300, 25); //
+		spawn.bodyRect(3925, -1400, 100, 150); //
 		spawn.mapRect(3450, -1250, 1100, 50); //
 		spawn.mapRect(3450, -1225, 50, 75); //
 		spawn.mapRect(4500, -1225, 50, 350); //
 		spawn.mapRect(3450, -725, 1450, 50); //
 		spawn.mapRect(5100, -725, 400, 50); //
-		spawn.mapRect(5450, -775, 50, 825); //
 		spawn.mapRect(4500, -700, 50, 600); //
 		spawn.bodyRect(4500, -100, 50, 100); //
 		spawn.randomMob(4250, -1350); //
 		spawn.randomSmallMob(4000, -825, 3); //
-		spawn.mapRect(3400, -1000, 100, 1100); //
 		spawn.mapVertex(5000, 30, '120 40 -120 40 -50 -40 50 -40', 'launch');
 		spawn.spawnStairs(3800, 0, 4, 150, 225); //stairs top exit
 		spawn.mapRect(3500, -275, 350, 275); //exit platform
@@ -177,11 +184,11 @@ const level = {
 
 		//mobs.spawn(2850, -80, 5, 100, 'rgba(220,50,50,', ["seePlayerCheck", "fallCheck", "burstAttraction", 'gravity']);
 		spawn[spawn.pickList[0]](2850,-80,100)
-		mob[mob.length - 1].g = 0.0002; //required if using 'gravity'
-		mob[mob.length - 1].accelMag = 0.15;
-		mob[mob.length - 1].frictionAir = 0.02;
-		mob[mob.length - 1].restitution = 0.8;
-		mob[mob.length - 1].delay = 120;
+		// mob[mob.length - 1].g = 0.0002; //required if using 'gravity'
+		// mob[mob.length - 1].accelMag = 0.15;
+		// mob[mob.length - 1].frictionAir = 0.02;
+		// mob[mob.length - 1].restitution = 0.8;
+		// mob[mob.length - 1].delay = 120;
         cons[cons.length] = Constraint.create({ //teatherball
             pointA: {
                 x: 2500,
@@ -374,9 +381,10 @@ const level = {
     //*****************************************************************************************************************************
     //*****************************************************************************************************************************
 
-    nextLevel: function() {
+    nextLevel: function() {  //accessed in index.js on load
 		sessionStorage.setItem('skipSplash', '1');
 		sessionStorage.setItem('dmgScale', game.dmgScale + 0.25);
+		sessionStorage.setItem('health', mech.health);
         sessionStorage.setItem('bullets', JSON.stringify(bullets)); //store info about bullets (changed by power ups)
         this.onLevel++;
         if (this.onLevel > this.levels.length-1) this.onLevel = 0;

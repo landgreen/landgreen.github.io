@@ -51,14 +51,14 @@ const powerUps = {
         color: '#04f',
         sides: 3,
         effect: function() {
-            bullets.fireCD = 15;
+            bullets.fireCD = 18;
             bullets.mode = this.name
             bullets.number = 1;
-            bullets.inaccuracy = 0.1;
+            bullets.inaccuracy = 0.05;
             bullets.endCycle = 250;
 			bullets.restitution = 0;
 			bullets.cFilter.mask = 0x000101; //can hit self
-            bullets.sizeMode = 1.05;
+            bullets.sizeMode = 1.35;
 			bullets.size = bullets.sizeSpeed*bullets.sizeMode;
         }
     }, {
@@ -66,14 +66,14 @@ const powerUps = {
         color: '#04f',
         sides: 3,
         effect: function() {
-            bullets.fireCD = 80;
+            bullets.fireCD = 90;
             bullets.mode = this.name
             bullets.number = 1;
             bullets.inaccuracy = 0;
             bullets.endCycle = 400;
 			bullets.restitution = 0.4;
 			bullets.cFilter.mask = 0x000101; //can hit self
-            bullets.sizeMode = 2;
+            bullets.sizeMode = 2.5;
 			bullets.size = bullets.sizeSpeed*bullets.sizeMode;
         }
     }, {

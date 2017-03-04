@@ -53,25 +53,26 @@ const game = {
         this.zoom = canvas.height / 2000; //sets starting zoom scale
     },
     keyPress: function() { //runs on key press event
-        if (keys[57]) {
+        if (keys[57]) {  //9
             powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
         }
-
-        if (keys[90]) { // 69 = e  90 = z
-            if (this.track) {
-                this.track = false;
-                this.zoom = canvas.height / 3000; //sets starting zoom scale
-            } else {
-                this.setTracking();
-            }
-        } else if (keys[84]) { // 84 = t
+        // if (keys[90]) { // 69 = e  90 = z
+		//
+        // } else
+		if (keys[84]) { // 84 = t
             if (this.testing) {
                 this.testing = false;
             } else {
                 this.testing = true;
             }
         } else if (keys[48]) { // 48 = 0
-            this.zoom = 1;
+			if (this.track) {
+				this.track = false;
+				//this.zoom = canvas.height / 3000; //sets starting zoom scale
+			} else {
+				this.track = true;
+			}
+
         } else if (keys[187]) { // 187 = +
             this.zoom *= 1.1;
         } else if (keys[189]) { // 189 = -
