@@ -17,8 +17,8 @@ const level = {
 		this.addToWorld(); //add map to world
 	},
 
-    //*****************************************************************************************************************************
-    //*****************************************************************************************************************************
+    //***********************************************************************************************************************
+    //***********************************************************************************************************************
 	rooftops: function(){
 		//playSound("ambient_wind"); //play ambient audio for level
 		document.body.style.backgroundColor = "#e6e4e4";
@@ -83,11 +83,13 @@ const level = {
 		spawn.randomSmallMob(5200, -100, Math.ceil(Math.random() * 2));
 		//spawn.randomBoss(4850, -1250);
 	},
-	//*****************************************************************************************************************************
-    //*****************************************************************************************************************************
+	//***********************************************************************************************************************
+    //***********************************************************************************************************************
 	boss: function() {
         document.body.style.backgroundColor = "#fafafa";
         mech.setPosToSpawn(-100, -200); //normal spawn
+		spawn.mapRect(3500, -860, 100, 50, 'exit'); //ground bump wall
+
         spawn.mapRect(-200, 0, 1200, 300); //ground
         spawn.mapVertex(1250, 0, '0 0 0 300 -500 600 -500 300');
         spawn.mapRect(1500, -300, 2000, 300); //upper ground
@@ -97,20 +99,20 @@ const level = {
         spawn.mapRect(1300, -850, 700, 50); //center platform
         spawn.mapRect(3000, -850, 700, 50); //center platform
         spawn.spawnBuilding(-200, -190, 200, 175, false, true, 'left') //far left; player spawns in side
-        spawn.spawner(500, -550);
-		spawn.spawner(500, -550);
+        spawn.pullSploder(500, -550);
+		spawn.exploder(500, -550);
     },
-    //*****************************************************************************************************************************
-    //*****************************************************************************************************************************
+    //***********************************************************************************************************************
+    //***********************************************************************************************************************
     twoTowers: function() {
         //document.body.style.backgroundColor = "#f9f5f3";
         document.body.style.backgroundColor = "#fff";
         this.addSVG('background_twoTowers', 'foreground_twoTowers');
         //playSound("ambient_wind");//play ambient audio for a
-        mech.setPosToSpawn(1375, -1600); //normal spawn
+        mech.setPosToSpawn(1375, -1550); //normal spawn
         //mech.setPosToSpawn(600, -1200); //normal spawn
-        //mech.setPosToSpawn(3150, -700); //near exit spawn
         //mech.setPosToSpawn(525, -150); //ground first building
+		//mech.setPosToSpawn(3150, -700); //near exit spawn
 
         spawn.mapRect(-600, 25, 5600, 300); //ground
         const w = 2000;
@@ -147,7 +149,11 @@ const level = {
 		//spawn.bodyRect(450,-1020, 200, 10); //center block under wall
         spawn.spawnStairs(x, -1000, 5, 250, 350); //stairs 2nd
         spawn.mapRect(350, -600, 350, 150); //center table
-		body[body.length] = Bodies.polygon(4650, -535, 0,70);
+		body[body.length] = Bodies.polygon(4650, -535, 0,70,{
+			restitution: 0.7,
+			friction: 0.004,
+			frictionAir: 0.004,
+		});
 
         spawn.mapRect(x + 300, -h * 0.25, w - 300, 50); //1st floor
         spawn.spawnStairs(x + w - 50, -500, 5, 250, 350, true); //stairs 1st
@@ -202,14 +208,14 @@ const level = {
 		spawn.randomSmallMob(3550, -550, Math.ceil(Math.random() * 2));
 
     },
-    //*****************************************************************************************************************************
-    //*****************************************************************************************************************************
+    //***********************************************************************************************************************
+    //***********************************************************************************************************************
     skyscrapers: function() {
         //document.body.style.backgroundColor = "#f0f0f0";
         document.body.style.backgroundColor = "#e6e4e4";
         this.addSVG('background_skyscrapers', 'foreground_skyscrapers');
         playSound("ambient_wind"); //play ambient audio for level
-        mech.setPosToSpawn(-50, -100); //normal spawn
+        mech.setPosToSpawn(-50, -50); //normal spawn
         //mech.setPosToSpawn(1550, -1200); //spawn left high
         //mech.setPosToSpawn(1800, -2000); //spawn near exit
 
@@ -261,8 +267,8 @@ const level = {
         spawn.randomSmallMob(4450, -100, Math.ceil(Math.random() * 2));
         spawn.randomMob(1850, -1950);
     },
-    //*****************************************************************************************************************************
-    //*****************************************************************************************************************************
+    //***********************************************************************************************************************
+    //***********************************************************************************************************************
     buildings: function() {
         document.body.style.backgroundColor = "#f9faff";
         this.addSVG('background_buildings', 'foreground_buildings');
@@ -299,8 +305,8 @@ const level = {
         spawn.ghoster(1000, -1800, 100) //high up looks like a sun
         spawn.shooter(3600, -600, 50) //near entrance high up
     },
-    //*****************************************************************************************************************************
-    //*****************************************************************************************************************************
+    //***********************************************************************************************************************
+    //***********************************************************************************************************************
     testing: function() {
         this.addSVG('background_testing', 'foreground_testing');
         playSound("ambient_wind"); //play ambient audio for level
@@ -378,11 +384,11 @@ const level = {
         spawn.bodyRect(800, 438, 250, 10); //long skinny box
         spawn.bodyRect(250, 250, 130, 200); //block inside the ledge
     },
-    //*****************************************************************************************************************************
-    //*****************************************************************************************************************************
-
+    //*****************************************************************************************************************
+    //*****************************************************************************************************************
     nextLevel: function() {  //accessed in index.js on load
 		sessionStorage.setItem('skipSplash', '1');
+		sessionStorage.setItem('mouse', JSON.stringify(game.mouse));
 		sessionStorage.setItem('dmgScale', game.dmgScale + 0.25);
 		sessionStorage.setItem('health', mech.health);
         sessionStorage.setItem('bullets', JSON.stringify(bullets)); //store info about bullets (changed by power ups)

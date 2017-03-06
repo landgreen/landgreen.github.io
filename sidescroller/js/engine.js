@@ -122,14 +122,15 @@ function mobCollisionCheck(event) {
                         mob[k].locatePlayer();
                         let dmg = mob[k].onHitDamage();
                         mech.hitMob(k, dmg);
-						if (typeof mob[k].onHit !== "undefined") {
-    						mob[k].onHit(k);
-						}
-                        //add dmg to draw queue
-                        const hit = pairs[i].activeContacts[0].vertex
-                        hit.radius = dmg * 400
-                        hit.color = '#f00';
-                        game.drawList.push(hit);
+						//if (typeof mob[k].onHit !== "undefined") {
+						if (mob[k].onHit) mob[k].onHit(k)
+						game.drawList.push({//add dmg to draw queue
+				            x: pairs[i].activeContacts[0].vertex.x,
+				            y: pairs[i].activeContacts[0].vertex.y,
+				            radius: dmg*1000,
+				            color: game.mobDmgColor,
+				            time: game.drawTime
+				        });
                     }
                     //mob hitting bullet check
                     if (pairs[i].bodyB.classType === "bullet" && pairs[i].bodyB.speed > pairs[i].bodyB.minDmgSpeed) {
@@ -137,12 +138,13 @@ function mobCollisionCheck(event) {
                         let dmg = pairs[i].bodyB.dmg + 0.05 * pairs[i].bodyB.mass * Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity));
                         mob[k].damage(dmg);
                         pairs[i].bodyB.onDmg(); //some bullets do actions when they hits things, like despawn
-                        //add dmg to draw queue
-                        const hit = pairs[i].activeContacts[0].vertex
-                        hit.radius = dmg * 40;
-                        if (hit.radius < 10) hit.radius = 10;
-                        hit.color = '#000';
-                        game.drawList.push(hit);
+						game.drawList.push({//add dmg to draw queue
+							x: pairs[i].activeContacts[0].vertex.x,
+							y: pairs[i].activeContacts[0].vertex.y,
+							radius: Math.sqrt(dmg)*40,
+							color: game.playerDmgColor,
+							time: game.drawTime
+						});
                     }
                     break;
                 } else if (pairs[i].bodyB === mob[k]) {
@@ -150,14 +152,14 @@ function mobCollisionCheck(event) {
                         mob[k].locatePlayer();
 						let dmg = mob[k].onHitDamage();
                         mech.hitMob(k, dmg);
-						if (typeof mob[k].onHit !== "undefined") {
-							mob[k].onHit(k);
-						}
-                        //add dmg to draw queue
-                        const hit = pairs[i].activeContacts[0].vertex
-                        hit.radius = dmg * 400
-                        hit.color = '#f00';
-                        game.drawList.push(hit);
+						if (mob[k].onHit) mob[k].onHit(k)
+						game.drawList.push({//add dmg to draw queue
+				            x: pairs[i].activeContacts[0].vertex.x,
+				            y: pairs[i].activeContacts[0].vertex.y,
+				            radius: dmg*1000,
+				            color: game.mobDmgColor,
+				            time: game.drawTime
+				        });
                     }
                     //mob hitting bullet check
                     if (pairs[i].bodyA.classType === "bullet" && pairs[i].bodyA.speed > pairs[i].bodyA.minDmgSpeed) {
@@ -166,12 +168,13 @@ function mobCollisionCheck(event) {
                         if (dmg < pairs[i].bodyA.minDmg) dmg = pairs[i].bodyA.minDmg;
                         mob[k].damage(dmg);
                         pairs[i].bodyA.onDmg(); //some bullets do actions when they hits things, like despawn
-                        //add dmg to draw queue
-                        const hit = pairs[i].activeContacts[0].vertex
-                        hit.radius = dmg * 40;
-                        if (hit.radius < 10) hit.radius = 10;
-                        hit.color = '#000';
-                        game.drawList.push(hit);
+                        game.drawList.push({ //add dmg to draw queue
+							x: pairs[i].activeContacts[0].vertex.x,
+							y: pairs[i].activeContacts[0].vertex.y,
+							radius: Math.sqrt(dmg)*40,
+							color: game.playerDmgColor,
+							time: game.drawTime
+						});
                     }
                     break;
                 }
@@ -188,21 +191,25 @@ function mobBulletCollisionCheck(event) {
 				const dmg = game.dmgScale * mobBullet[k].dmg;
                 mech.damage(dmg);
                 mobBullet[k].endCycle = game.cycle;
-                //add dmg to draw queue
-                const hit = pairs[i].activeContacts[0].vertex;
-                hit.radius = dmg*200;
-                hit.color = '#f00';
-                game.drawList.push(hit);
+				game.drawList.push({//add dmg to draw queue
+					x: pairs[i].activeContacts[0].vertex.x,
+					y: pairs[i].activeContacts[0].vertex.y,
+					radius: dmg*1000,
+					color: game.mobDmgColor,
+					time: game.drawTime
+				});
                 continue;
             } else if (pairs[i].bodyB === mobBullet[k] && pairs[i].bodyB.speed > 10 && (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead)) {
 				const dmg = game.dmgScale * mobBullet[k].dmg;
                 mech.damage(dmg);
                 mobBullet[k].endCycle = game.cycle;
-                //add dmg to draw queue
-                const hit = pairs[i].activeContacts[0].vertex;
-                hit.radius = dmg*200;
-                hit.color = '#f00';
-                game.drawList.push(hit);
+				game.drawList.push({//add dmg to draw queue
+					x: pairs[i].activeContacts[0].vertex.x,
+					y: pairs[i].activeContacts[0].vertex.y,
+					radius: dmg*1000,
+					color: game.mobDmgColor,
+					time: game.drawTime
+				});
                 continue;
             }
         }

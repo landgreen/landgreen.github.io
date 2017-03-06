@@ -5,12 +5,12 @@ const mobs = {
         let i = mob.length
         while (i--) {
             if (mob[i].alive) {
-                for (let j = 0; j < mob[i].do.length; j++) {
+                for (let j = 0; j < mob[i].do.length; j++) { //run all the behaviors for the mob each cycle
                     mob[i][mob[i].do[j]](); //do is an array that list the strings to run
                 }
             } else { //if dead
                 mob[i].force.y += mob[i].mass * game.g / 2; //turn on gravity
-                mob[i].deadCounting(i); //pass i to know what array index to delete on death
+                mob[i].deadCounting(i); //count down to removing mob from array
             }
         }
     },
@@ -307,9 +307,9 @@ const mobs = {
             deadCount: 0.2,
 			onDeath: function(){ // a placeholder for custom effects on mob death
 			},
-            death: function() {
+            death: function(powerUp=true) {
 				this.onDeath(this); //custom death effects
-                powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
+				if (powerUp) powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
                 this.alive = false;
                 this.seePlayer.recall = 0;
                 this.frictionAir = 0.005;

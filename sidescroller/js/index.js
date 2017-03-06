@@ -123,8 +123,9 @@ const ctx = canvas.getContext("2d");
 function setupCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    canvas.width2 = canvas.width / 2; //precalculated
-    canvas.height2 = canvas.height / 2; //precalculated
+    canvas.width2 = canvas.width / 2; //precalculated because I use this often (in mouse look)
+    canvas.height2 = canvas.height / 2;
+	canvas.diagonal = Math.sqrt(canvas.width2*canvas.width2 + canvas.height2*canvas.height2)
     ctx.font = "15px Arial";
     ctx.lineJoin = 'round';
     ctx.lineCap = "round";
@@ -200,6 +201,7 @@ function playSound(id) { //play sound
 //skips splash screen on map switch
 if (sessionStorage.getItem('skipSplash') === '1') { //set in level.js level.nextLevel() before reset for (same game/new map)
     sessionStorage.setItem('skipSplash', '0');
+	game.mouse = JSON.parse(sessionStorage.getItem('mouse'))
 	level.onLevel = sessionStorage.getItem('onLevel');
 	mech.health = sessionStorage.getItem('health');
 	game.dmgScale = sessionStorage.getItem('dmgScale')*1;  //*1 makes the string into a number
@@ -209,10 +211,8 @@ if (sessionStorage.getItem('skipSplash') === '1') { //set in level.js level.next
     document.getElementById('splash').style.display = "inline"; //show splash SVG
 	level.onLevel = Math.floor(Math.random()*level.levels.length); //picks a rnadom starting level
 	sessionStorage.setItem('onLevel', level.onLevel);
-	//setup gun
-	powerUps.startingPowerUps();
+	powerUps.startingPowerUps(); //setup gun
 }
-
 
 // const foreground_img = new Image(); // Create new img element
 // foreground_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/circle3390.png'; // Set source path
@@ -224,10 +224,9 @@ function run(el) { // onclick from the splash screen
     el.onclick = null; //removes the onclick effect so the function only runs once
     el.style.display = 'none'; //hides the element that spawned the function
     mech.spawn(); //spawns the player
-	level.start();
-
-    document.getElementById("keysright").innerHTML = ''; //remove html from intro
-    document.getElementById("keysleft").innerHTML = '';
+	level.start(); //spawns the level
+    // document.getElementById("keysright").innerHTML = ''; //remove html from intro
+    // document.getElementById("keysleft").innerHTML = '';
     //document.body.appendChild(stats.dom); //show stats.js FPS tracker
     Engine.run(engine); //starts game engine
     requestAnimationFrame(cycle); //starts game loop

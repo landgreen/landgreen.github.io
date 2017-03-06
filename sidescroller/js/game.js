@@ -15,31 +15,27 @@ const game = {
     testing: false, //testing mode: shows wireframe and some variables
     cycle: 0, //total cycles, 60 per second
     cyclePaused: 0,
-    fallHeight: 4000,
+    fallHeight: 4000, //below this y position the player dies
     lastTimeStamp: 0, //tracks time stamps for measuing delta
     delta: 0, //measures how slow the engine is running compared to 60fps
     buttonCD: 0,
     drawList: [], //so you can draw a first frame of explosions.. I know this is bad
-    drawList2: [], //so you can draw a second frame of explosions.. I know this is bad
+	drawTime: 8, //how long circles are drawn.  use to push into drawlist.time
+	mobDmgColor: 'rgba(255,0,0,0.7)', //used top push into drawList.color
+	playerDmgColor: 'rgba(0,0,0,0.7)', //used top push into drawList.color
     drawCircle: function() { //draws a circle for two cycles, used for showing damage mostly
-        let len = this.drawList.length
-        for (let i = 0; i < len; i++) {
-            //draw circle
-            ctx.fillStyle = this.drawList[i].color;
-            ctx.beginPath();
+        let i = this.drawList.length
+        while (i--) {
+            ctx.beginPath(); //draw circle
             ctx.arc(this.drawList[i].x, this.drawList[i].y, this.drawList[i].radius, 0, 2 * Math.PI);
+			ctx.fillStyle = this.drawList[i].color;
             ctx.fill();
+			if(this.drawList[i].time){ //remove when timer runs out
+				this.drawList[i].time--
+			} else{
+				this.drawList.splice(i, 1);
+			}
         }
-        len = this.drawList2.length
-        for (let i = 0; i < len; i++) { //so you can draw a second frame of explosions.. I know this is bad
-            //draw circle
-            ctx.fillStyle = this.drawList2[i].color;
-            ctx.beginPath();
-            ctx.arc(this.drawList2[i].x, this.drawList2[i].y, this.drawList2[i].radius, 0, 2 * Math.PI);
-            ctx.fill();
-        }
-        this.drawList2 = this.drawList;
-        this.drawList = [];
     },
     timing: function() {
         this.cycle++; //tracks game cycles
@@ -50,28 +46,28 @@ const game = {
     track: true,
     setTracking: function() { //use in window resize in index.js
         this.track = true;
-        this.zoom = canvas.height / 2000; //sets starting zoom scale
+        this.zoom = canvas.height / 1700; //sets starting zoom scale
     },
     keyPress: function() { //runs on key press event
-        if (keys[57]) {  //9
+        if (keys[57]) { //9
             powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
         }
         // if (keys[90]) { // 69 = e  90 = z
-		//
+        //
         // } else
-		if (keys[84]) { // 84 = t
+        if (keys[84]) { // 84 = t
             if (this.testing) {
                 this.testing = false;
             } else {
                 this.testing = true;
             }
         } else if (keys[48]) { // 48 = 0
-			if (this.track) {
-				this.track = false;
-				//this.zoom = canvas.height / 3000; //sets starting zoom scale
-			} else {
-				this.track = true;
-			}
+            if (this.track) {
+                this.track = false;
+                //this.zoom = canvas.height / 3000; //sets starting zoom scale
+            } else {
+                this.track = true;
+            }
 
         } else if (keys[187]) { // 187 = +
             this.zoom *= 1.1;
@@ -160,11 +156,11 @@ const game = {
 
 
                 // Select the email link anchor text
-				window.getSelection().removeAllRanges();
+                window.getSelection().removeAllRanges();
                 var range = document.createRange();
                 range.selectNode(document.getElementById('test'));
                 window.getSelection().addRange(range);
-				document.execCommand('copy')
+                document.execCommand('copy')
                 window.getSelection().removeAllRanges();
 
                 console.log(`spawn.mapRect(${this.pos1.x}, ${this.pos1.y}, ${this.pos2.x-this.pos1.x}, ${this.pos2.y-this.pos1.y}); //`);

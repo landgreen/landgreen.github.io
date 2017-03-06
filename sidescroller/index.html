@@ -10,16 +10,21 @@
 	<meta property="og:description" content="Canvas based side scrolling video game with the matter.js physics engine.">
 	<meta property="og:title" content="side scroller">
 	<meta name="twitter:title" content="side scroller">
-	<title>side scroller v0.6 (matter.js)</title>
+	<title>isogonal</title>
+	<!-- isogonal
+	isogon towers!
+	isogon invasion!
+	bird robot -->
+
 	<link rel="stylesheet" href="css/style.css">
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
 </head>
 
 <body>
 	<!-- this is here for building maps only-->
-	<span id = 'copy-this'></span>
+	<span id='copy-this'></span>
 	<!-- background sounds -->
-	<audio id="ambient_crickets"src="sounds\ambient.mp3" preload="auto" loop></audio>
+	<audio id="ambient_crickets" src="sounds\ambient.mp3" preload="auto" loop></audio>
 	<audio id="ambient_wind" src="sounds\wind.ogg" preload="auto" loop></audio>
 	<!-- guns -->
 	<audio id="snare2" src="sounds\guns\snare2.ogg" preload="auto"></audio>
@@ -37,16 +42,17 @@
 	<audio id="powerup" src="sounds\powerup2.ogg" preload="auto"></audio>
 
 
-	<div id="keysleft">
+	<!-- <div id="keysleft">
 		move: WASD
 		<br>fire: click
-		<br>use: E
+		<br>jump: W
+		<br>use: S
 	</div>
 	<div id="keysright">
 		testing: T
 		<br>tracking: 0
 		<br>zoom: + -
-	</div>
+	</div> -->
 	<canvas id="canvas"></canvas>
 	<!-- ********************************************************************************************
 	*************************************************************************************************
@@ -75,7 +81,7 @@
 *****************************************************************************************-->
 
 	<g id = 'background_rooftops' display= "none">
-		<path d="M-500 -2000 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#666' stroke='transparent'/>
+		<path d="M-500 -2000 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#bbb' stroke='transparent'/>
 		<rect x="3500" y="-675" width="1000" height="675" fill='#dff' stroke='transparent'/>
 		<path d="M3600 -275 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#0ff' stroke='transparent'/>
 	</g>
@@ -84,7 +90,7 @@
 *****************************************************************************************-->
 
 	<g id = 'background_twoTowers' display= "none">
-		<path d="M1325 -1490 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#666' stroke='transparent'/>
+		<path d="M1325 -1490 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#999' stroke='transparent'/>
 		<rect x="3050" y="-950" width="600" height="450" fill='#dff'/>
 		<rect x="3650" y="-650" width="50" height="150" fill='#dee'/>
 		<path d="M3250 -500 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#0ff' stroke='transparent'/>
@@ -311,7 +317,7 @@
 *******************************************************************************
 *******************************************************************************
 ******************************************************************************* -->
-	<svg id='splash' class='intro' onclick="run(this)" viewBox="0 0 800 800" display= "none">
+	<svg id='splash' class='intro' onclick="run(this)" viewBox="0 0 800 800" display="none">
     <defs>
     	<style type="text/css"><![CDATA[
 			.keyrect {
@@ -349,9 +355,11 @@
     	]]></style>
     </defs>
     <g id = "controls">
-	    <text id = "title" class = "title" text-anchor="middle" x="400" y="200">side scroller</text>
+	    <!-- <text id = "title" class = "title" text-anchor="middle" x="400" y="200">side scroller</text> -->
+		<!-- <text id = "title" class = "title" text-anchor="middle" x="400" y="200">isogon invasion!</text> -->
+		<text id = "title" class = "title" text-anchor="middle" x="400" y="200">isogonal</text>
 		<text id = "instruct" class = "instructions" text-anchor="middle" x="500" y="650">click to begin</text>
-		<text class = 'name' x="50%" y="99%" text-anchor="middle">by Ross Landgreen</text>
+		<text class = 'name' x="50%" y="99%" text-anchor="middle">by Ross Landgreen with the matter.js physics engine</text>
 <!--     <text class = "info" x="5" y="695">move: WASD</text>
     <text class = "info" x="5" y="715">fire: click</text>
     <text class = "info" x="5" y="735">pause: F</text>
@@ -361,8 +369,8 @@
 		<g transform = "translate(130,380)">
 <!--     <rect class = "keyrect" id="q" x="0" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
     <text class = "letter" text-anchor="middle" x="30" y="45">Q</text> -->
-    <rect class = "keyrect" id="e" x="140" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="170" y="45">E</text>
+    <!-- <rect class = "keyrect" id="e" x="140" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
+    <text class = "letter" text-anchor="middle" x="170" y="45">E</text> -->
     <!-- <rect class = "keyrect" id="e" x="210" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
     <text class = "letter" text-anchor="middle" x="240" y="45">R</text> -->
     	<rect class = "keyrect" id="w" x="70" y="0" width="60" height="60" fill='#555' stroke-width="0"/>
@@ -391,9 +399,7 @@
 </svg>
 	<script src='js/lib/matter.min.js'></script>
 	<!-- <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/matter.min.js'></script> -->
-
 	<!-- <script src="js/lib/randomColor.min.js"></script> -->
-
 	<script src="js/game.js"></script>
 	<script src="js/player.js"></script>
 	<script src="js/powerups.js"></script>

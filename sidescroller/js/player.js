@@ -79,10 +79,10 @@ const mech = {
         y: 0
     },
     setPosToSpawn: function(xPos, yPos) {
-        this.spawnPos.x = xPos
-        this.spawnPos.y = yPos
-        this.pos.x = xPos;
-        this.pos.y = yPos;
+        this.spawnPos.x = this.pos.x = xPos
+        this.spawnPos.y = this.pos.y = yPos
+		this.transX = this.transSmoothX = canvas.width2 - this.pos.x;
+        this.transY = this.transSmoothY = canvas.height2 - this.pos.y;
         this.Vx = this.spawnVel.x;
         this.Vy = this.spawnVel.y;
         Matter.Body.setPosition(player, this.spawnPos);
@@ -134,10 +134,51 @@ const mech = {
         this.transY = 1500;
         this.angle = Math.atan2(game.mouseInGame.y - this.pos.y, game.mouseInGame.x - this.pos.x);
     },
+	transSmoothX:0,
+	transSmoothY:0,
     look: function() {
-        this.transX = canvas.width2 - this.pos.x;
-        this.transY = canvas.height2 - this.pos.y;
-        this.angle = Math.atan2(game.mouse.y - canvas.height2, game.mouse.x - canvas.width2);
+		//always on mouse look
+		const mX = game.mouse.x - canvas.width2
+		const mY = game.mouse.y - canvas.height2
+		this.angle = Math.atan2(mY, mX);
+		//smoothed translations
+		const scale = 0.8
+		this.transSmoothX = canvas.width2 - this.pos.x - mX * scale ;
+		this.transSmoothY = canvas.height2 - this.pos.y - mY * scale;
+		this.transX = this.transX*0.9 + this.transSmoothX *0.1
+		this.transY = this.transY*0.9 + this.transSmoothY *0.1
+
+        //mouse look if outside circle
+        // const mX = game.mouse.x - canvas.width2
+        // const mY = game.mouse.y - canvas.height2
+        // this.angle = Math.atan2(mY, mX);
+        // const dist = Math.sqrt(mX*mX + mY*mY);
+        // let dx=dy=0
+        // let threshold = canvas.diagonal/3
+        // if (dist > threshold){
+        // 	dx = (mX-threshold*Math.cos(this.angle))
+        // 	dy = (mY-threshold*Math.sin(this.angle))
+        // }
+        // this.transX = canvas.width2 - this.pos.x - dx*2;
+        // this.transY = canvas.height2 - this.pos.y- dy*2;
+
+        //mouse look if outside a square
+        // const mX = game.mouse.x - canvas.width2
+        // const mY = game.mouse.y - canvas.height2
+		// this.angle = Math.atan2(mY, mX);
+        // let dx = dy = 0
+        // const limitX = canvas.width / 3
+        // const limitY = canvas.height / 3
+        // const scale = 4
+        // if (mX > limitX) dx = (mX - limitX) * scale
+        // if (mY > limitY) dy = (mY - limitY) * scale
+        // if (mX < -limitX) dx = (mX + limitX) * scale
+        // if (mY < -limitY) dy = (mY + limitY) * scale
+		// //smoothed translations
+		// this.transX = this.transX*0.9 + this.transSmoothX *0.1
+		// this.transY = this.transY*0.9 + this.transSmoothY *0.1
+		// this.transSmoothX = canvas.width2 - this.pos.x - dx;
+        // this.transSmoothY = canvas.height2 - this.pos.y - dy;
     },
     doCrouch: function() {
         if (!this.crouch) {
@@ -186,14 +227,14 @@ const mech = {
     keyMove: function() {
         if (this.onGround) { //on ground **********************
             if (this.crouch) { //crouch
-                if (!(keys[83]) && this.isHeadClear) { //not pressing crouch anymore
+                if (!(keys[83] || keys[40]) && this.isHeadClear) { //not pressing crouch anymore
                     this.undoCrouch();
                     player.frictionAir = this.friction.ground;
                 }
-            } else if (keys[83]) { //on ground && not crouched and pressing s or down
+            } else if (keys[83] || keys[40]) { //on ground && not crouched and pressing s or down
                 this.doCrouch();
                 player.frictionAir = this.friction.crouch;
-            } else if (keys[87] && this.buttonCD_jump + 20 < game.cycle) { //jump
+            } else if (keys[87] || keys[38] || keys[32] && this.buttonCD_jump + 20 < game.cycle) { //jump
                 this.buttonCD_jump = game.cycle; //can't jump until 20 cycles pass
                 Matter.Body.setVelocity(player, { //zero player velocity for consistant jumps
                     x: player.velocity.x,
@@ -202,11 +243,11 @@ const mech = {
                 player.force.y = -this.jumpForce / game.delta; //jump force / delta so that force is the same on game slowdowns
             }
             //horizontal move on ground
-            if (keys[65]) { //left or a
+            if (keys[65] || keys[37]) { //left or a
                 if (player.velocity.x > -this.VxMax) {
                     player.force.x += -this.Fx / game.delta;
                 }
-            } else if (keys[68]) { //right or d
+            } else if (keys[68] || keys[39]) { //right or d
                 if (player.velocity.x < this.VxMax) {
                     player.force.x += this.Fx / game.delta;
                 }
@@ -215,18 +256,18 @@ const mech = {
         } else { // in air **********************************
             //check for short jumps
             if (this.buttonCD_jump + 60 > game.cycle && //just pressed jump
-                !(keys[87]) && //but not pressing jump key
+                !(keys[87] || keys[38] || keys[32]) && //but not pressing jump key
                 this.Vy < 0) { // and velocity is up
                 Matter.Body.setVelocity(player, { //reduce player velocity every cycle until not true
                     x: player.velocity.x,
                     y: player.velocity.y * 0.94
                 });
             }
-            if (keys[65]) { // move player   left / a
+            if (keys[65] || keys[37]) { // move player   left / a
                 if (player.velocity.x > -this.VxMax / 2) {
                     player.force.x += -this.FxAir / game.delta;
                 }
-            } else if (keys[68]) { //move player  right / d
+            } else if (keys[68] || keys[39]) { //move player  right / d
                 if (player.velocity.x < this.VxMax / 2) {
                     player.force.x += this.FxAir / game.delta;
                 }
@@ -296,41 +337,77 @@ const mech = {
     },
     powerUps: function() { //pickup power ups
         for (let i = 0, len = powerUp.length; i < len; ++i) {
-            const dxP = player.position.x - powerUp[i].position.x
-            const dyP = player.position.y - powerUp[i].position.y
+            const dxP = mech.pos.x - powerUp[i].position.x
+            const dyP = mech.pos.y - powerUp[i].position.y
             const dist2 = dxP * dxP + dyP * dyP;
             //gravitation for heal power ups
             if (powerUp[i].name === 'heal' && dist2 < 200000 && mech.health < 1) {
-                if (dist2 < 1000) { //pick up if close
+                if (dist2 < 1000) {
                     this.usePowerUp(i);
                     break;
-                } else { //float towards player
-                    Matter.Body.setVelocity(powerUp[i], { //extra friction
-                        x: powerUp[i].velocity.x * 0.95,
-                        y: powerUp[i].velocity.y * 0.95
-                    });
-                    powerUp[i].force.x += dxP / dist2 * powerUp[i].mass * 0.3
-                    powerUp[i].force.y += dyP / dist2 * powerUp[i].mass * 0.3 - powerUp[i].mass * game.g //negate gravity
                 }
+                Matter.Body.setVelocity(powerUp[i], { //extra friction
+                    x: powerUp[i].velocity.x * 0.95,
+                    y: powerUp[i].velocity.y * 0.95
+                });
+                powerUp[i].force.x += dxP / dist2 * powerUp[i].mass * 0.3
+                powerUp[i].force.y += dyP / dist2 * powerUp[i].mass * 0.3 - powerUp[i].mass * game.g //negate gravity
+
+            }
+            //if near power up use it
+            if ((keys[83] || keys[40]) && dist2 < 4000) { //69 = e  //pick up
+                this.usePowerUp(i);
+                break;
             }
             //pick up power up
             const dx = game.mouseInGame.x - powerUp[i].position.x
             const dy = game.mouseInGame.y - powerUp[i].position.y
-            if (dx * dx + dy * dy < powerUp[i].area) { //if mouse is close to power up
+            if (dx * dx + dy * dy < powerUp[i].area) { //if mouse is close to power up display name
                 ctx.fillStyle = "#000";
                 ctx.textAlign = "center";
                 ctx.font = "35px Arial";
-                ctx.fillText(powerUp[i].name, powerUp[i].position.x, powerUp[i].position.y - powerUp[i].size * 1.3); //display name
-                if (keys[69] && this.buttonCD < game.cycle) { //69 = e  //pick up
-                    this.buttonCD = game.cycle + 5;
-                    if (dist2 < 30000 && (mech.health < 1 || powerUp[i].name !== 'heal')) {
-                        this.usePowerUp(i);
-                    }
-                }
+                ctx.fillText(powerUp[i].name, powerUp[i].position.x, powerUp[i].position.y - powerUp[i].size * 1.3);
                 break;
             }
         }
     },
+    // powerUps: function() { //pickup power ups
+    //     for (let i = 0, len = powerUp.length; i < len; ++i) {
+    //         const dxP = player.position.x - powerUp[i].position.x
+    //         const dyP = player.position.y - powerUp[i].position.y
+    //         const dist2 = dxP * dxP + dyP * dyP;
+    //         //gravitation for heal power ups
+    //         if (powerUp[i].name === 'heal' && dist2 < 200000 && mech.health < 1) {
+    //             if (dist2 < 1000) { //pick up if close
+    //                 this.usePowerUp(i);
+    //                 break;
+    //             } else { //float towards player
+    //                 Matter.Body.setVelocity(powerUp[i], { //extra friction
+    //                     x: powerUp[i].velocity.x * 0.95,
+    //                     y: powerUp[i].velocity.y * 0.95
+    //                 });
+    //                 powerUp[i].force.x += dxP / dist2 * powerUp[i].mass * 0.3
+    //                 powerUp[i].force.y += dyP / dist2 * powerUp[i].mass * 0.3 - powerUp[i].mass * game.g //negate gravity
+    //             }
+    //         }
+    //         //pick up power up
+    //         const dx = game.mouseInGame.x - powerUp[i].position.x
+    //         const dy = game.mouseInGame.y - powerUp[i].position.y
+    //         if (dx * dx + dy * dy < powerUp[i].area) { //if mouse is close to power up
+    //             ctx.fillStyle = "#000";
+    //             ctx.textAlign = "center";
+    //             ctx.font = "35px Arial";
+    //             ctx.fillText(powerUp[i].name, powerUp[i].position.x, powerUp[i].position.y - powerUp[i].size * 1.3); //display name
+    //             if (keys[69] && this.buttonCD < game.cycle) { //69 = e  //pick up
+    //                 this.buttonCD = game.cycle + 5;
+    //                 if (dist2 < 30000 && (mech.health < 1 || powerUp[i].name !== 'heal')) {
+    //                     this.usePowerUp(i);
+    //                 }
+    //             }
+    //             break;
+    //         }
+    //     }
+    // },
     // takePowerUp: function(){ //pickup power ups
     // 	for(let i=0, len=powerUp.length;i<len;++i){
     // 		const dx = game.mouseInGame.x-powerUp[i].position.x
