@@ -66,11 +66,11 @@ const mobs = {
             index: i,
             health: 1,
             accelMag: 0.001,
+			cd: 0,	//game cycle when cooldown will be over
+			delay: 60, //static: time between cooldowns
             color: color,
             fill: color + '1)',
             stroke: 'transparent',
-            cd: 0,
-            delay: 60,
             seePlayer: {
                 yes: false,
                 recall: 0,
@@ -120,6 +120,25 @@ const mobs = {
                 this.seePlayer.position.y = player.position.y;
                 this.stroke = '#000';
             },
+			yank: function() { //accelerate towards the player
+				if (this.cd < game.cycle && this.seePlayer.yes) {
+					this.cd = game.cycle + this.delay;
+					const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x);
+					const mag = player.mass * game.g
+					player.force.x -= 85 * mag * Math.cos(angle);
+					player.force.y -= 85 * mag * Math.sin(angle);
+					ctx.beginPath();
+					ctx.moveTo(this.position.x, this.position.y);
+					ctx.lineTo(mech.pos.x, mech.pos.y)
+					ctx.lineWidth = 15;
+					ctx.strokeStyle = 'rgba(0,0,0,0.5)'
+					ctx.stroke();
+					ctx.beginPath();
+					ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
+					ctx.fillStyle = 'rgba(0,0,0,0.3)'
+					ctx.fill();
+				}
+			},
             laser: function() {
                 if (game.cycle % 7 && this.seePlayer.yes && this.distanceToPlayer2() < 500000) {
                     //if (Math.random()>0.2 && this.seePlayer.yes && this.distanceToPlayer2()<800000) {
@@ -161,14 +180,23 @@ const mobs = {
             },
             repelBullets: function() {
                 if (this.seePlayer.yes) {
+					ctx.lineWidth="8";
+					ctx.strokeStyle=this.color+"0.25)";
+					ctx.beginPath();
                     for (let i = 0, len = bullet.length; i < len; ++i) {
                         const dx = bullet[i].position.x - this.position.x;
                         const dy = bullet[i].position.y - this.position.y;
-                        const angle = Math.atan2(dy, dx);
-                        const mag = 500 * bullet[i].mass * game.g / Math.sqrt(dx * dx + dy * dy);
-                        bullet[i].force.x += mag * Math.cos(angle);
-                        bullet[i].force.y += mag * Math.sin(angle);
+						const dist = Math.sqrt(dx * dx + dy * dy);
+						if (dist < 500) {
+							ctx.moveTo(this.position.x, this.position.y);
+							ctx.lineTo(bullet[i].position.x, bullet[i].position.y);
+	                        const angle = Math.atan2(dy, dx);
+	                        const mag = 1500 * bullet[i].mass * game.g / dist
+	                        bullet[i].force.x += mag * Math.cos(angle);
+	                        bullet[i].force.y += mag * Math.sin(angle);
+						}
                     }
+					ctx.stroke();
                 }
             },
             attraction: function() { //accelerate towards the player
