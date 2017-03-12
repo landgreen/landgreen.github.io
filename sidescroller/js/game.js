@@ -20,21 +20,21 @@ const game = {
     delta: 0, //measures how slow the engine is running compared to 60fps
     buttonCD: 0,
     drawList: [], //so you can draw a first frame of explosions.. I know this is bad
-	drawTime: 8, //how long circles are drawn.  use to push into drawlist.time
-	mobDmgColor: 'rgba(255,0,0,0.7)', //used top push into drawList.color
-	playerDmgColor: 'rgba(0,0,0,0.7)', //used top push into drawList.color
+    drawTime: 8, //how long circles are drawn.  use to push into drawlist.time
+    mobDmgColor: 'rgba(255,0,0,0.7)', //used top push into drawList.color
+    playerDmgColor: 'rgba(0,0,0,0.7)', //used top push into drawList.color
     drawCircle: function() { //draws a circle for two cycles, used for showing damage mostly
         let i = this.drawList.length
         while (i--) {
             ctx.beginPath(); //draw circle
             ctx.arc(this.drawList[i].x, this.drawList[i].y, this.drawList[i].radius, 0, 2 * Math.PI);
-			ctx.fillStyle = this.drawList[i].color;
+            ctx.fillStyle = this.drawList[i].color;
             ctx.fill();
-			if(this.drawList[i].time){ //remove when timer runs out
-				this.drawList[i].time--
-			} else{
-				this.drawList.splice(i, 1);
-			}
+            if (this.drawList[i].time) { //remove when timer runs out
+                this.drawList[i].time--
+            } else {
+                this.drawList.splice(i, 1);
+            }
         }
     },
     timing: function() {
@@ -48,6 +48,24 @@ const game = {
         this.track = true;
         this.zoom = canvas.height / 1700; //sets starting zoom scale
     },
+    // keyCodes: {
+    // 		w: 87,
+    // 		s: 83,
+    // 		a: 65,
+    // 		d: 68,
+    // 		up: 38,
+    // 		down: 40,
+    // 		left: 37,
+    // 		right: 39,
+    // },
+    // keyCodesArray: [87, 83, 65, 68, 38, 40, 37, 39],
+    // keysUp: function() { //sets all keys and mouse to not down  //I'm trying to stop keylag
+    //     game.mouseDown = false
+    //     for (let i = 0, len = this.keyCodesArray.length; i < len; ++i) {
+    //         keys[this.keyCodesArray[i]] = false
+    //     }
+	//
+    // },
     keyPress: function() { //runs on key press event
         if (keys[57]) { //9
             powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);

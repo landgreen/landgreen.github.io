@@ -46,140 +46,140 @@ const powerUps = {
 			bullets.density = 0.0015;
         }
     }],
-    mode: [{ //fire rate, number fired, inaccuracy, duration, size, restitution, cFilter
+    mode: [{ //fire rate, number fired, inaccuracy, duration, size, restitution, cFilter   speed
         name: 'balanced',
         color: '#04f',
         sides: 3,
         effect: function() {
+			bullets.mode = this.name
             bullets.fireCD = 18;
-            bullets.mode = this.name
             bullets.number = 1;
+			bullets.speed = 38;
             bullets.inaccuracy = 0.05;
             bullets.endCycle = 200;
 			bullets.restitution = 0;
 			bullets.cFilter.mask = 0x000101; //can hit self
-            bullets.sizeMode = 1.3;
-			bullets.size = bullets.sizeSpeed*bullets.sizeMode;
+			bullets.size = 1.3
         }
     }, {
+		name: 'spread',
+		color: '#04f',
+		sides: 3,
+		effect: function() {
+			bullets.mode = this.name
+			bullets.fireCD = 60;
+			bullets.number = 5;
+			bullets.speed = 44;
+			bullets.inaccuracy = 0.12;
+			bullets.endCycle = 150;
+			bullets.restitution = 0;
+			bullets.cFilter.mask = 0x000001; //can hit self
+			bullets.size = 0.9
+		}
+	}, {
+		name: 'high speed',
+		color: '#04f',
+		sides: 3,
+		effect: function() {
+			bullets.mode = this.name
+			bullets.fireCD = 60;
+			bullets.number = 1;
+			bullets.speed = 60;
+			bullets.inaccuracy = 0;
+			bullets.endCycle = 300;
+			bullets.restitution = 0;
+			bullets.cFilter.mask = 0x000101; //can hit self
+			bullets.size = 1.4
+		}
+	}, {
         name: 'oneshot',
         color: '#04f',
         sides: 3,
         effect: function() {
+			bullets.mode = this.name
             bullets.fireCD = 100;
-            bullets.mode = this.name
             bullets.number = 1;
+			bullets.speed = 35;
             bullets.inaccuracy = 0;
             bullets.endCycle = 400;
 			bullets.restitution = 0.4;
 			bullets.cFilter.mask = 0x000101; //can hit self
-            bullets.sizeMode = 2.5;
-			bullets.size = bullets.sizeSpeed*bullets.sizeMode;
+			bullets.size = 3
         }
     }, {
-        name: 'tri-shot',
-        color: '#04f',
-        sides: 3,
-        effect: function() {
-            bullets.fireCD = 30;
-            bullets.mode = this.name
-            bullets.number = 3;
-            bullets.inaccuracy = 0.25;
-            bullets.endCycle = 200;
-			bullets.restitution = 0.8;
-			bullets.cFilter.mask = 0x000001; //can't hit self
-            bullets.sizeMode = 1;
-			bullets.size = bullets.sizeSpeed*bullets.sizeMode;
-        }
-    }, {
+    //     name: 'bouncy',
+    //     color: '#04f',
+    //     sides: 3,
+    //     effect: function() {
+	// 		bullets.mode = this.name
+    //         bullets.fireCD = 25;
+    //         bullets.number = 3;
+	// 		bullets.speed = 34;
+    //         bullets.inaccuracy = 0.35;
+    //         bullets.endCycle = 200;
+	// 		bullets.restitution = 0.8;
+	// 		bullets.cFilter.mask = 0x000001; //can't hit self
+	// 		bullets.size = 1;
+	// 	}
+    // }, {
         name: 'automatic',
         color: '#04f',
         sides: 3,
         effect: function() {
+			bullets.mode = this.name
             bullets.fireCD = 5;
-            bullets.mode = this.name
             bullets.number = 1;
+			bullets.speed = 38;
             bullets.inaccuracy = 0.2;
-            bullets.endCycle = 90;
+            bullets.endCycle = 80;
 			bullets.restitution = 0;
 			bullets.cFilter.mask = 0x000001; //can't hit self
-            bullets.sizeMode = 0.7;
-			bullets.size = bullets.sizeSpeed*bullets.sizeMode;
+			bullets.size = 0.7;
         }
     }, {
-        name: 'shotgun',
+        name: 'wide spread',
         color: '#04f',
         sides: 3,
         effect: function() {
+			bullets.mode = this.name
             bullets.fireCD = 60;
-            bullets.mode = this.name
             bullets.number = 8;
-            bullets.inaccuracy = 0.8;
+			bullets.speed = 45;
+            bullets.inaccuracy = 1;
             bullets.endCycle = 80;
 			bullets.cFilter.mask = 0x000001; //can't hit self
 			bullets.restitution = 0;
-            bullets.sizeMode = 0.85;
-			bullets.size = bullets.sizeSpeed*bullets.sizeMode;
+			bullets.size = 0.9
         }
-    }],
-    fireSpeed: [{
-        name: 'fast+small', //speed, size
-        color: '#f06',
-        sides: 5,
-        effect: function() {
-            bullets.fireSpeed = this.name;
-            bullets.speed = 45;
-			bullets.sizeSpeed = 0.9;
-			bullets.size = bullets.sizeSpeed*bullets.sizeMode;
-        }
-    }, {
-        name: 'medium speed+size',
-        color: '#f06',
-        sides: 5,
-        effect: function() {
-            bullets.fireSpeed = this.name;
-            bullets.speed = 38;
-			bullets.sizeSpeed = 1;
-			bullets.size = bullets.sizeSpeed*bullets.sizeMode;
-        }
-	}, {
-		name: 'slow+big',
-		color: '#f06',
-		sides: 5,
-		effect: function() {
-			bullets.fireSpeed = this.name;
-			bullets.speed = 25;
-			bullets.sizeSpeed = 1.3;
-			bullets.size = bullets.sizeSpeed*bullets.sizeMode;
-		}
     }],
     startingPowerUps: function() {
         this.shape[Math.floor(Math.random() * this.shape.length)].effect() //gives player random starting shape
         this.mode[Math.floor(Math.random() * this.mode.length)].effect() //gives player random starting fire mode
-        this.fireSpeed[Math.floor(Math.random() * this.fireSpeed.length)].effect() //gives player random starting speed method
+		//this.mode[6].effect()
     },
     spawnRandomPowerUp: function(x, y) { //spawn heal chance is higher at low health
 		let size = 20
-        if ((mech.health<0.9 && Math.random() < 0.1) || (mech.health<0.6 && Math.random() < 0.2) || (mech.health<0.3 && Math.random() < 0.3)) {
+		// if ((mech.health<0.9 && Math.random() < 0.1) || (mech.health<0.6 && Math.random() < 0.2) || (mech.health<0.3 && Math.random() < 0.3)) {
+        if (Math.random()>Math.sqrt(mech.health)+0.1) {
             powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.heal.name, powerUps.heal.color, powerUps.heal.sides, size, powerUps.heal.effect);
 			return;
         }
 		size = 30
         let choose = Math.floor(Math.random() * powerUps.shape.length);
-        if (Math.random() < 0.1 && powerUps.shape[choose].name !== bullets.shape) {
+        if (Math.random() < 0.13 && powerUps.shape[choose].name !== bullets.shape) {
             powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.shape[choose].name, powerUps.shape[choose].color, powerUps.shape[choose].sides, 35, powerUps.shape[choose].effect);
 			return;
         }
         choose = Math.floor(Math.random() * powerUps.mode.length);
-        if (Math.random() < 0.11 && powerUps.mode[choose].name !== bullets.mode) {
+        if (Math.random() < 0.16 && powerUps.mode[choose].name !== bullets.mode) {
             powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.mode[choose].name, powerUps.mode[choose].color, powerUps.mode[choose].sides, size, powerUps.mode[choose].effect);
 			return;
         }
-        choose = Math.floor(Math.random() * powerUps.fireSpeed.length);
-        if (Math.random() < 0.12 && powerUps.fireSpeed[choose].name !== bullets.fireSpeed) {
-            powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.fireSpeed[choose].name, powerUps.fireSpeed[choose].color, powerUps.fireSpeed[choose].sides, size, powerUps.fireSpeed[choose].effect);
-			return;
-        }
+        // choose = Math.floor(Math.random() * powerUps.fireSpeed.length);
+        // if (Math.random() < 0.12 && powerUps.fireSpeed[choose].name !== bullets.fireSpeed) {
+        //     powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.fireSpeed[choose].name, powerUps.fireSpeed[choose].color, powerUps.fireSpeed[choose].sides, size, powerUps.fireSpeed[choose].effect);
+		// 	return;
+        // }
     },
     spawn: function(x, y, name, color, sides, size, effect) {
         let i = powerUp.length;

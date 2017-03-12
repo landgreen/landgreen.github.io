@@ -32,7 +32,8 @@ const level = {
         spawn.mapRect(1300, -850, 700, 50); //center platform
         spawn.mapRect(3000, -850, 700, 50); //center platform
         spawn.spawnBuilding(-200, -190, 200, 175, false, true, 'left') //far left; player spawns in side
-		spawn.burster(900, -550);
+		spawn.bodyRect(900, -550,50,50);
+		spawn.gunner(1200, -550);
 
 
     },
@@ -201,7 +202,7 @@ const level = {
                 y: -500
             },
             bodyB: mob[mob.length - 1],
-            stiffness: 0.0015
+            stiffness: 0.0004
         });
         spawn.randomMob(4100, -225);
         spawn.randomBoss(4150, -1000);

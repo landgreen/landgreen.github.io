@@ -141,6 +141,14 @@ window.onmousemove = function(e) {
     game.mouse.x = e.clientX;
     game.mouse.y = e.clientY;
 };
+
+//normal mouse click events
+window.onmousedown = function(e) {
+    game.mouseDown = true;
+};
+window.onmouseup = function(e) {
+    game.mouseDown = false;
+};
 //mouse click events for building maps:  replace with the normal events below when not building maps
 // window.onmousedown = function(e) {
 // 	if (!game.mouseDown){
@@ -169,31 +177,22 @@ window.onmousemove = function(e) {
 //     game.mouseDown = false;
 // };
 
-//normal mouse click events
-window.onmousedown = function(e) {
-    game.mouseDown = true;
-};
-window.onmouseup = function(e) {
-    game.mouseDown = false;
-};
-
-
 
 //keyboard input
 const keys = [];
 document.body.addEventListener("keyup", function(e) {
-    keys[e.keyCode] = false;
+    keys[e.keyCode] = false
 });
 document.body.addEventListener("keydown", function(e) {
-    keys[e.keyCode] = true;
-    game.keyPress(); //tracking, testings, zoom
+    keys[e.keyCode] = true
+    game.keyPress() //tracking, testing, zoom
 });
 
 function playSound(id) { //play sound
     if (document.getElementById(id)) {
-        var sound = document.getElementById(id); //setup audio
-        sound.currentTime = 0; //reset position of playback to zero  //sound.load();
-        sound.play();
+        var sound = document.getElementById(id) //setup audio
+        sound.currentTime = 0 //reset position of playback to zero  //sound.load();
+        sound.play()
     }
 }
 

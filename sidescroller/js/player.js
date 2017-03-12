@@ -234,7 +234,7 @@ const mech = {
             } else if (keys[83] || keys[40]) { //on ground && not crouched and pressing s or down
                 this.doCrouch();
                 player.frictionAir = this.friction.crouch;
-            } else if (keys[87] || keys[38] || keys[32] && this.buttonCD_jump + 20 < game.cycle) { //jump
+            } else if (keys[87] || keys[38] && this.buttonCD_jump + 20 < game.cycle) { //jump
                 this.buttonCD_jump = game.cycle; //can't jump until 20 cycles pass
                 Matter.Body.setVelocity(player, { //zero player velocity for consistant jumps
                     x: player.velocity.x,
@@ -256,7 +256,7 @@ const mech = {
         } else { // in air **********************************
             //check for short jumps
             if (this.buttonCD_jump + 60 > game.cycle && //just pressed jump
-                !(keys[87] || keys[38] || keys[32]) && //but not pressing jump key
+                !(keys[87] || keys[38]) && //but not pressing jump key
                 this.Vy < 0) { // and velocity is up
                 Matter.Body.setVelocity(player, { //reduce player velocity every cycle until not true
                     x: player.velocity.x,

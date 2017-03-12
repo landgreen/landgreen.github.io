@@ -21,7 +21,6 @@ bullets = {  //data about bullets (this is passed to local storage)
 	endCycle: 180,
 	mode: 'none',
 	shape: 'none',
-	fireSpeed: 'none',
 	cFilter: {
 		category: 0x000100,
 		mask: 0x000101, //mask: 0x000001,
@@ -38,7 +37,7 @@ function bulletLoop(){
 			bullet[len] = Bodies.rectangle(mech.pos.x + (15+bullets.width) * Math.cos(mech.angle), mech.pos.y +(15+bullets.width) * Math.sin(mech.angle), bullets.width * bullets.size, bullets.height * bullets.size, {
 				angle: dir,
 				density: bullets.density,
-				friction: 0.5,
+				//friction: 0.5,
 				frictionAir: bullets.frictionAir,
 				restitution: bullets.restitution,
 				collisionFilter: bullets.cFilter,

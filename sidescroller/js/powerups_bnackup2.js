@@ -159,23 +159,25 @@ const powerUps = {
         this.fireSpeed[Math.floor(Math.random() * this.fireSpeed.length)].effect() //gives player random starting speed method
     },
     spawnRandomPowerUp: function(x, y) { //spawn heal chance is higher at low health
+		let size = 20
         if ((mech.health<0.9 && Math.random() < 0.1) || (mech.health<0.6 && Math.random() < 0.2) || (mech.health<0.3 && Math.random() < 0.3)) {
-            powerUps.spawn(x + (Math.random() - 0.5) * 20, y + (Math.random() - 0.5) * 20, powerUps.heal.name, powerUps.heal.color, powerUps.heal.sides, 20, powerUps.heal.effect);
+            powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.heal.name, powerUps.heal.color, powerUps.heal.sides, size, powerUps.heal.effect);
 			return;
         }
+		size = 30
         let choose = Math.floor(Math.random() * powerUps.shape.length);
         if (Math.random() < 0.1 && powerUps.shape[choose].name !== bullets.shape) {
-            powerUps.spawn(x + (Math.random() - 0.5) * 40, y + (Math.random() - 0.5) * 40, powerUps.shape[choose].name, powerUps.shape[choose].color, powerUps.shape[choose].sides, 40, powerUps.shape[choose].effect);
+            powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.shape[choose].name, powerUps.shape[choose].color, powerUps.shape[choose].sides, 35, powerUps.shape[choose].effect);
 			return;
         }
         choose = Math.floor(Math.random() * powerUps.mode.length);
         if (Math.random() < 0.11 && powerUps.mode[choose].name !== bullets.mode) {
-            powerUps.spawn(x + (Math.random() - 0.5) * 40, y + (Math.random() - 0.5) * 40, powerUps.mode[choose].name, powerUps.mode[choose].color, powerUps.mode[choose].sides, 40, powerUps.mode[choose].effect);
+            powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.mode[choose].name, powerUps.mode[choose].color, powerUps.mode[choose].sides, size, powerUps.mode[choose].effect);
 			return;
         }
         choose = Math.floor(Math.random() * powerUps.fireSpeed.length);
         if (Math.random() < 0.12 && powerUps.fireSpeed[choose].name !== bullets.fireSpeed) {
-            powerUps.spawn(x + (Math.random() - 0.5) * 40, y + (Math.random() - 0.5) * 40, powerUps.fireSpeed[choose].name, powerUps.fireSpeed[choose].color, powerUps.fireSpeed[choose].sides, 40, powerUps.fireSpeed[choose].effect);
+            powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.fireSpeed[choose].name, powerUps.fireSpeed[choose].color, powerUps.fireSpeed[choose].sides, size, powerUps.fireSpeed[choose].effect);
 			return;
         }
     },

@@ -71,6 +71,7 @@ const mobs = {
             color: color,
             fill: color + '1)',
             stroke: 'transparent',
+			// radius: radius,
             seePlayer: {
                 yes: false,
                 recall: 0,
@@ -267,13 +268,18 @@ const mobs = {
 					ctx.moveTo(this.position.x, this.position.y);
 					const dist = Matter.Vector.sub(this.seePlayer.position, this.position);
 					const distMag = Matter.Vector.magnitude(dist);
-					const vector = Matter.Vector.mult(Matter.Vector.normalise(dist), 120)
-					vector.x += (Math.random() - 0.5) * 250;
-					vector.y += (Math.random() - 0.5) * 250;
-					Matter.Body.translate(this, vector);
+					const vector = Matter.Vector.mult(Matter.Vector.normalise(dist), this.blinkLength)
+					if (distMag < this.blinkLength) {
+						Matter.Body.setPosition(this, this.seePlayer.position)
+						Matter.Body.translate(this, {x:(Math.random()-0.5)*50,y:(Math.random()-0.5)*50});
+                    } else {
+						vector.x += (Math.random() - 0.5) * 200;
+						vector.y += (Math.random() - 0.5) * 200;
+						Matter.Body.translate(this, vector);
+                    }
 					ctx.lineTo(this.position.x, this.position.y);
 					ctx.lineWidth = radius * 2;
-					ctx.strokeStyle = this.fill; //"rgba(0,0,0,0.5)"; //'#000'
+					ctx.strokeStyle = this.fill //this.color+'1)'
 					ctx.stroke();
 				}
 			},
