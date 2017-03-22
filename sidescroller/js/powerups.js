@@ -62,14 +62,14 @@ const powerUps = {
 			bullets.size = 1.3
         }
     }, {
-		name: 'spread',
+		name: 'barrage',
 		color: '#04f',
 		sides: 3,
 		effect: function() {
 			bullets.mode = this.name
 			bullets.fireCD = 60;
 			bullets.number = 5;
-			bullets.speed = 44;
+			bullets.speed = 40;
 			bullets.inaccuracy = 0.12;
 			bullets.endCycle = 150;
 			bullets.restitution = 0;
@@ -82,14 +82,14 @@ const powerUps = {
 		sides: 3,
 		effect: function() {
 			bullets.mode = this.name
-			bullets.fireCD = 60;
+			bullets.fireCD = 50;
 			bullets.number = 1;
 			bullets.speed = 60;
 			bullets.inaccuracy = 0;
 			bullets.endCycle = 300;
 			bullets.restitution = 0;
 			bullets.cFilter.mask = 0x000101; //can hit self
-			bullets.size = 1.4
+			bullets.size = 1.5
 		}
 	}, {
         name: 'oneshot',
@@ -97,14 +97,14 @@ const powerUps = {
         sides: 3,
         effect: function() {
 			bullets.mode = this.name
-            bullets.fireCD = 100;
+            bullets.fireCD = 80;
             bullets.number = 1;
 			bullets.speed = 35;
             bullets.inaccuracy = 0;
             bullets.endCycle = 400;
 			bullets.restitution = 0.4;
 			bullets.cFilter.mask = 0x000101; //can hit self
-			bullets.size = 3
+			bullets.size = 3.5
         }
     }, {
     //     name: 'bouncy',
@@ -137,14 +137,14 @@ const powerUps = {
 			bullets.size = 0.7;
         }
     }, {
-        name: 'wide spread',
+        name: 'shower',
         color: '#04f',
         sides: 3,
         effect: function() {
 			bullets.mode = this.name
-            bullets.fireCD = 60;
+            bullets.fireCD = 55;
             bullets.number = 8;
-			bullets.speed = 45;
+			bullets.speed = 40;
             bullets.inaccuracy = 1;
             bullets.endCycle = 80;
 			bullets.cFilter.mask = 0x000001; //can't hit self

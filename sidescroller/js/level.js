@@ -33,8 +33,13 @@ const level = {
         spawn.mapRect(3000, -850, 700, 50); //center platform
         spawn.spawnBuilding(-200, -190, 200, 175, false, true, 'left') //far left; player spawns in side
 		spawn.bodyRect(900, -550,50,50);
-		spawn.gunner(1200, -550);
-
+		//spawn.turret(1200, -550);
+		//spawn.springer(1200, -550);
+		//spawn.laserer(1200, -550);
+		spawn.burster(1300, -550,90);
+		//spawn.hopper(1500, -550,80);
+		//spawn.shield(1300,-550,80*1.7,1);  //spawns a shield around mob
+		//spawn.nodeBoss(1300,-600,'burster')
 
     },
     //******************************************************************************************************************

@@ -78,7 +78,7 @@ function bulletLoop(){
 	ctx.fill();
 }
 
-function mobBulletLoop(){
+function mobBulletLoop(){ //draw and remove at end of lifespan
 	let i = mobBullet.length;
 	ctx.beginPath();
 	while (i--) {

@@ -140,11 +140,11 @@ const mech = {
 		//always on mouse look
 		const mX = game.mouse.x - canvas.width2
 		const mY = game.mouse.y - canvas.height2
-		this.angle = Math.atan2(mY, mX);
+		this.angle = Math.atan2(mY, mX)
 		//smoothed translations
-		const scale = 0.8
-		this.transSmoothX = canvas.width2 - this.pos.x - mX * scale ;
-		this.transSmoothY = canvas.height2 - this.pos.y - mY * scale;
+		const scale = 1.4
+		this.transSmoothX = canvas.width2 - this.pos.x - mX * scale
+		this.transSmoothY = canvas.height2 - this.pos.y - mY * scale
 		this.transX = this.transX*0.9 + this.transSmoothX *0.1
 		this.transY = this.transY*0.9 + this.transSmoothY *0.1
 
@@ -299,18 +299,22 @@ const mech = {
         }
     },
     addHealth: function(heal) {
-        this.health += heal;
+        this.health += heal
         if (this.health > 1) this.health = 1;
     },
     damage: function(dmg) {
-        this.health -= dmg;
-        if (this.health <= 0) {
-            this.death();
+        this.health -= dmg
+        if (this.health < 0) {
+            this.death()
         }
+		if (this.health === 'undefined') {
+			this.health = 1
+			//this.death();
+		}
     },
     deathCheck: function() {
         if (this.pos.y > game.fallHeight) { // if player is 4000px deep
-            this.death();
+            this.death()
         }
     },
     hitMob: function(i, dmg) {

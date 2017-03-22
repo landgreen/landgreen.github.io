@@ -117,11 +117,10 @@ function collisionChecks(event) {
     for (let i = 0, j = pairs.length; i != j; i++) {
 		//player and mobbullet collisions
 		for (let k = 0; k < mobBullet.length; k++) {
-			if ((pairs[i].bodyA === mobBullet[k] && pairs[i].bodyA.speed > 10 &&
-				(pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead)) ||
-				(pairs[i].bodyB === mobBullet[k] && pairs[i].bodyB.speed > 10 &&
-				(pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead))
-			   ) {
+			if ( (pairs[i].bodyA === mobBullet[k] && pairs[i].bodyA.speed > 10 &&
+				 (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead)) ||
+				 (pairs[i].bodyB === mobBullet[k] && pairs[i].bodyB.speed > 10 &&
+				 (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead)) ){
 				   const dmg = game.dmgScale * mobBullet[k].dmg;
 				   mech.damage(dmg);
 				   mobBullet[k].endCycle = game.cycle;
@@ -138,8 +137,10 @@ function collisionChecks(event) {
         for (let k = 0; k < mob.length; k++) {
             if (mob[k].alive) {
 				//player and mob collision
-				if((pairs[i].bodyA === mob[k] && (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead)) ||
-				   (pairs[i].bodyB === mob[k] && (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead)) ){
+				if((pairs[i].bodyA === mob[k] &&
+				   (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead)) ||
+				   (pairs[i].bodyB === mob[k] &&
+				   (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead)) ){
 					mob[k].locatePlayer();
 					let dmg = mob[k].onHitDamage();
 					mech.hitMob(k, dmg);
