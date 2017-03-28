@@ -2,6 +2,7 @@ const mobBullet = [];
 const bullet = [];
 
 bullets = {  //data about bullets (this is passed to local storage)
+	//availabile = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 	width: 14,
 	height: 5,
 	frictionAir: 0.01,
@@ -37,7 +38,7 @@ function bulletLoop(){
 			bullet[len] = Bodies.rectangle(mech.pos.x + (15+bullets.width) * Math.cos(mech.angle), mech.pos.y +(15+bullets.width) * Math.sin(mech.angle), bullets.width * bullets.size, bullets.height * bullets.size, {
 				angle: dir,
 				density: bullets.density,
-				//friction: 0.5,
+				friction: 0.5,
 				frictionAir: bullets.frictionAir,
 				restitution: bullets.restitution,
 				collisionFilter: bullets.cFilter,

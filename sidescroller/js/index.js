@@ -202,8 +202,9 @@ if (sessionStorage.getItem('skipSplash') === '1') { //set in level.js level.next
     sessionStorage.setItem('skipSplash', '0');
 	game.mouse = JSON.parse(sessionStorage.getItem('mouse'))
 	level.onLevel = sessionStorage.getItem('onLevel');
-	mech.health = sessionStorage.getItem('health');
+	mech.health = sessionStorage.getItem('health')*1;  //*1 makes the string into a number
 	game.dmgScale = sessionStorage.getItem('dmgScale')*1;  //*1 makes the string into a number
+	game.levelsCleared = sessionStorage.getItem('levelsCleared')*1;  //*1 makes the string into a number
 	bullets = JSON.parse(sessionStorage.getItem('bullets'))
     run(document.getElementById('splash')) //calls the run function defined below to start the game
 } else {  //if new game
@@ -228,6 +229,21 @@ function run(el) { // onclick from the splash screen
     // document.getElementById("keysleft").innerHTML = '';
     //document.body.appendChild(stats.dom); //show stats.js FPS tracker
     Engine.run(engine); //starts game engine
+
+	game.zoom = canvas.height / 4000
+	function startZoomIn(){
+		document.body.removeEventListener("keydown", startZoomIn);
+		function zoomIn(){
+			const max = canvas.height / 1700
+			game.zoom += max*0.005
+			if (game.zoom < max){
+				requestAnimationFrame(zoomIn);
+			}
+		}
+		requestAnimationFrame(zoomIn);
+	}
+	document.body.addEventListener("keydown", startZoomIn);
+
     requestAnimationFrame(cycle); //starts game loop
 }
 

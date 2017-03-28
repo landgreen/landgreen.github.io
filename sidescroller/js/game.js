@@ -9,7 +9,7 @@ const game = {
         x: 0,
         y: 0
     },
-    level: 0,
+    levelsCleared: 0,
     g: 0.001,
     dmgScale: 1,
     testing: false, //testing mode: shows wireframe and some variables

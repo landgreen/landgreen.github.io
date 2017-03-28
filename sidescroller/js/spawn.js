@@ -1,22 +1,23 @@
 //main object for spawning things in a level
 const spawn = {
     pickList: [],
-    fullPickList: ['chaser', 'chaser', 'shooter', 'chaseShooter', 'hopper', 'burster', 'burster', 'puller', 'laserer', 'striker', 'striker', 'springer', 'ghoster', 'blinker', 'drifter', 'sneakAttacker', 'exploder', 'spawner', 'dotsploder'],
+    fullPickList: ['chaser', 'chaser', 'shooter', 'chaseShooter', 'hopper', 'burster', 'burster', 'puller', 'laserer', 'striker', 'striker', 'springer', 'ghoster', 'blinker', 'drifter', 'sneakAttacker', 'exploder', 'spawner', 'dotsploder','laserTracker'],
     setSpawnList: function() { //this is run at the start of each new level to give the mobs on each level a flavor
         this.pickList = [];
-        for (let i = 0; i < 1 + Math.ceil(Math.random() * Math.random() * 3); ++i) {
+        for (let i = 0, len = 1 + Math.ceil(Math.random() * Math.random() * 3); i < len; ++i) {
             this.pickList.push(this.fullPickList[Math.floor(Math.random() * this.fullPickList.length)]);
         }
     },
     randomMob: function(x, y) {
         const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)]
         this[pick](x, y);
-		if (Math.random()>0.7) spawn.shield(x,y,mob[mob.length-1].radius*2);  //spawns a shield around mob
     },
-    randomSmallMob: function(x, y, num = 1, size = 16 + Math.ceil(Math.random() * 15)) {
+    randomSmallMob: function(x, y,
+			num = Math.min(Math.ceil(Math.random() * game.levelsCleared),4),
+	 		size = 16 + Math.ceil(Math.random() * 15)) {
         const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)]
         for (let i = 0; i < num; ++i) {
-            this[pick](x + i * size * 2.5, y, size);
+            this[pick](x  + Math.round((Math.random()-0.5)*20) + i * size * 2.5, y + Math.round((Math.random()-0.5)*20), size);
         }
     },
     randomBoss: function(x, y) {
@@ -26,38 +27,40 @@ const spawn = {
     //basic mob templates****************************************************************************************
     //***********************************************************************************************************
     shooter: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 3, radius, 'rgb(215,100,215)', ['healthBar',"seePlayerCheck", 'fireAt','healthBar']);
-		let me = mob[mob.length - 1]
+        mobs.spawn(x, y, 3, radius, 'rgb(100,50,255)', ['healthBar', "seePlayerCheck", 'fireAt', 'healthBar']);
+        let me = mob[mob.length - 1]
         me.isStatic = true;
-        me.seePlayerFreq = 59;
+        me.seePlayerFreq = 40 + Math.round(Math.random() * 35);
         me.memory = 20; //memory+memory*Math.random()
         //me.fireDelay = 40;
         me.fireDelay = Math.ceil(10 + 2000 / radius)
+		if (Math.random() > 0.5) spawn.shield(x, y, me.radius * 1.2); //spawns a shield around mob
     },
     springer: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 0, radius, 'rgb(223,2,58)', ['healthBar','gravity', "seePlayerCheck", "fallCheck"]);
-		let me = mob[mob.length - 1]
+        mobs.spawn(x, y, 0, radius, 'rgb(223,2,58)', ['healthBar', 'gravity', "seePlayerCheck", "fallCheck"]);
+        let me = mob[mob.length - 1]
         me.g = 0.0005; //required if using 'gravity'
         me.accelMag = 0.0012;
         me.memory = 240; //memory+memory*Math.random() in cycles
-        me.seePlayerFreq = 120;
+        me.seePlayerFreq = 100 + Math.round(Math.random() * 40);
         cons[cons.length] = Constraint.create({
             pointA: me.seePlayer.position,
             bodyB: me,
             stiffness: 0.001,
         })
         cons[cons.length - 1].length = 0;
+		if (Math.random() > 0.3) spawn.shield(x, y, me.radius * 1.3); //spawns a shield around mob
     },
     chaser: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 4, radius, 'rgb(110,150,200)', ['healthBar','gravity', "seePlayerCheck", "fallCheck", "attraction"]);
-		let me = mob[mob.length - 1]
+        mobs.spawn(x, y, 4, radius, 'rgb(110,150,200)', ['healthBar', 'gravity', "seePlayerCheck", "fallCheck", "attraction"]);
+        let me = mob[mob.length - 1]
         me.g = 0.0005; //required if using 'gravity'
         me.accelMag = 0.0012;
         me.memory = 240; //memory+memory*Math.random() in cycles
     },
     chaseShooter: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 3, radius, 'rgb(140,100,250)', ['healthBar','gravity', "seePlayerCheck", "fallCheck", 'fireAt', "attraction"]);
-		let me = mob[mob.length - 1]
+        mobs.spawn(x, y, 3, radius, 'rgb(155,0,255)', ['healthBar', 'gravity', "seePlayerCheck", "fallCheck", 'fireAt', "attraction"]);
+        let me = mob[mob.length - 1]
         me.accelMag = 0.0002;
         me.g = 0.0001; //required if using 'gravity'
         me.frictionAir = 0.0002;
@@ -65,10 +68,11 @@ const spawn = {
         //me.fireDelay = 65;
         me.fireDelay = Math.ceil(30 + 2000 / radius)
         me.faceOnFire = false; //prevents rotation on fire
+		if (Math.random() > 0.7) spawn.shield(x, y, me.radius * 1.2); //spawns a shield around mob
     },
     hopper: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 4, radius, 'rgb(0,200,150)', ['healthBar','gravity', "seePlayerCheck", "fallCheck", "hop"]);
-		let me = mob[mob.length - 1]
+        mobs.spawn(x, y, 4, radius, 'rgb(0,200,150)', ['healthBar', 'gravity', "seePlayerCheck", "fallCheck", "hop"]);
+        let me = mob[mob.length - 1]
         me.accelMag = 0.12;
         me.g = 0.0025; //required if using 'gravity'
         me.frictionAir = 0.033;
@@ -76,38 +80,54 @@ const spawn = {
         me.delay = 90;
     },
     burster: function(x, y, radius = 45 + Math.ceil(Math.random() * 40)) {
-        mobs.spawn(x, y, 5, radius, 'rgb(0,200,180)', ['healthBar',"seePlayerCheck", "fallCheck", "burstAttraction"]);
-		let me = mob[mob.length - 1]
-		me.cdBurst1 = 0 //must add for burstAttraction
-		me.cdBurst2 = 0 //must add for burstAttraction
+        mobs.spawn(x, y, 5, radius, 'rgb(0,200,180)', ['healthBar', "seePlayerCheck", "fallCheck", "burstAttraction"]);
+        let me = mob[mob.length - 1]
+        me.cdBurst1 = 0 //must add for burstAttraction
+        me.cdBurst2 = 0 //must add for burstAttraction
         me.accelMag = 0.15
         me.frictionAir = 0.02
         me.restitution = 0
         me.delay = 60
     },
     puller: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 7, radius, 'rgb(0,10,30)', ['healthBar','gravity', "seePlayerCheck", "fallCheck", "attraction", 'pullPlayer']);
-		let me = mob[mob.length - 1]
+        mobs.spawn(x, y, 7, radius, 'rgb(0,10,30)', ['healthBar', 'gravity', "seePlayerCheck", "fallCheck", "attraction", 'pullPlayer']);
+        let me = mob[mob.length - 1]
         me.delay = 360;
         me.g = 0.0002; //required if using 'gravity'
         me.accelMag = 0.0003;
         me.memory = 240; //memory+memory*Math.random() in cycles
+		if (Math.random() > 0.5) spawn.shield(x, y, me.radius * 1.5); //spawns a shield around mob
     },
     laserer: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
-        mobs.spawn(x, y, 4, radius, 'rgb(255,0,170)', ['healthBar',"seePlayerCheck", "attraction", 'repulsion', "fallCheck", 'laser']);
-		let me = mob[mob.length - 1]
+        mobs.spawn(x, y, 4, radius, 'rgb(255,0,190)', ['healthBar', "seePlayerCheck", "attraction", 'repulsion', "fallCheck", 'laser']);
+        let me = mob[mob.length - 1]
         me.repulsionRange = 200000; //squared
-        me.seePlayerFreq = 3;
+        me.seePlayerFreq = 2 + Math.round(Math.random() * 5);
         me.accelMag = 0.0006;
         me.frictionStatic = 0;
         me.friction = 0;
         me.onHit = function(k) { //run this function on hitting player
             mob[k].death()
         }
+		if (Math.random() > 0.4) spawn.shield(x, y, me.radius * 1.25); //spawns a shield around mob
     },
-    striker: function(x, y, radius = 15 + Math.ceil(Math.random() * 25)) {
-        mobs.spawn(x, y, 5, radius, 'rgb(221,102,119)', ['healthBar',"seePlayerCheck", "attraction", 'gravity', "fallCheck", 'strike']);
+	laserTracker: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
+		mobs.spawn(x, y, 4, radius, 'rgb(0,255,255)', ['healthBar', "seePlayerCheck", "attraction", 'repulsion', "fallCheck", 'laserTracking']);
 		let me = mob[mob.length - 1]
+		me.laserPos= me.position  //required for laserTracking
+		me.repulsionRange = 400000; //squared
+		me.seePlayerFreq = 2 + Math.round(Math.random() * 5);
+		me.accelMag = 0.0006;
+		me.frictionStatic = 0;
+		me.friction = 0;
+		me.onHit = function(k) { //run this function on hitting player
+			mob[k].death()
+		}
+		if (Math.random() > 0.4) spawn.shield(x, y, me.radius * 1.25); //spawns a shield around mob
+	},
+    striker: function(x, y, radius = 15 + Math.ceil(Math.random() * 25)) {
+        mobs.spawn(x, y, 5, radius, 'rgb(221,102,119)', ['healthBar', "seePlayerCheck", "attraction", 'gravity', "fallCheck", 'strike']);
+        let me = mob[mob.length - 1]
         me.accelMag = 0.0004;
         me.g = 0.0002; //required if using 'gravity'
         me.frictionStatic = 0;
@@ -117,47 +137,43 @@ const spawn = {
     },
     ghoster: function(x, y, radius = 50 + Math.ceil(Math.random() * 70)) {
         let me
-        if (Math.random() > 0.5) { //fast
+        if (Math.random() > 0.25) { //fast
             mobs.spawn(x, y, 0, radius, 'transparent', ["seePlayerCheck", "fallCheck", "attraction"]);
-			me = mob[mob.length - 1]
+            me = mob[mob.length - 1]
             me.accelMag = 0.00025;
         } else { //slow but can yank
             mobs.spawn(x, y, 7, radius, 'transparent', ["seePlayerCheck", "fallCheck", "attraction", 'yank']);
-			me = mob[mob.length - 1]
+            me = mob[mob.length - 1]
             me.delay = 250 + Math.random() * 150;
             me.accelMag = 0.00015;
+			if (Math.random() > 0.7) spawn.shield(x, y, me.radius * 1.5); //spawns a shield around mob
         }
         me.collisionFilter.mask = 0x001100; //move through walls
         me.memory = 720; //memory+memory*Math.random()
     },
     blinker: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 6, radius, 'rgb(0,200,255)', ['healthBar',"seePlayerCheck", "fallCheck", 'blink']);
+        mobs.spawn(x, y, 6, radius, 'rgb(0,200,255)', ['healthBar', "seePlayerCheck", "fallCheck", 'blink']);
         let me = mob[mob.length - 1]
         me.blinkRate = 40 + Math.round(Math.random() * 60); //required for blink
         me.blinkLength = 150 + Math.round(Math.random() * 200); //required for blink
         me.collisionFilter.mask = 0x001100; //move through walls
         me.isStatic = true;
         me.memory = 360; //memory+memory*Math.random()
-        me.seePlayerFreq = 47;
-        // if (Math.random() > 0.5) { //option for slower, but repelling bullets
-        //     me.do.push('repelBullets');
-        //     me.blinkRate = Math.ceil(me.blinkRate*2);
-		// 	me.blinkLength += 100;
-        // }
+        me.seePlayerFreq = 40 + Math.round(Math.random() * 30);
     },
     drifter: function(x, y, radius = 15 + Math.ceil(Math.random() * 40)) {
-        mobs.spawn(x, y, 4.5, radius, 'rgb(0,200,255)', ['healthBar',"seePlayerCheck", "fallCheck", 'drift']);
+        mobs.spawn(x, y, 4.5, radius, 'rgb(0,200,255)', ['healthBar', "seePlayerCheck", "fallCheck", 'drift']);
         Matter.Body.rotate(mob[mob.length - 1], Math.random() * 2 * Math.PI)
         let me = mob[mob.length - 1]
         me.blinkRate = 30 + Math.round(Math.random() * 30); //required for blink/drift
-		me.blinkLength = 150; //required for blink/drift
+        me.blinkLength = 150; //required for blink/drift
         me.collisionFilter.mask = 0x001100; //move through walls
         me.isStatic = true;
         me.memory = 360; //memory+memory*Math.random()
-        me.seePlayerFreq = 74;
+        me.seePlayerFreq = 40 + Math.round(Math.random() * 30)
     },
     sneakAttacker: function(x, y, radius = 15 + Math.ceil(Math.random() * 30)) {
-        mobs.spawn(x, y, 6, radius, 'rgb(235,235,235)', ['healthBar','gravity', "fallCheck", 'sneakAttack']);
+        mobs.spawn(x, y, 6, radius, 'rgb(235,235,235)', ['healthBar', 'gravity', "fallCheck", 'sneakAttack']);
         let me = mob[mob.length - 1]
         me.g = 0.0005 //required if using 'gravity'
         me.collisionFilter.mask = 0x000001 //can't be hit by bullets or player
@@ -165,61 +181,63 @@ const spawn = {
         me.fill = 'transparent'
     },
     spawner: function(x, y, radius = 55 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 5, radius, 'rgb(255,150,0)', ['healthBar','gravity', "seePlayerCheck", "fallCheck", "attraction"]);
+        mobs.spawn(x, y, 5, radius, 'rgb(255,150,0)', ['healthBar', 'gravity', "seePlayerCheck", "fallCheck", "attraction"]);
         let me = mob[mob.length - 1]
         me.g = 0.0004 //required if using 'gravity'
         me.accelMag = 0.001
         me.memory = 240 //memory+memory*Math.random() in cycles
         me.onDeath = function(that) { //run this function on death
             for (let i = 0; i < Math.ceil(that.mass * 0.35); ++i) {
-                spawn.spawns(that.position.x + (Math.random() - 0.5) * radius*2, that.position.y + (Math.random() - 0.5) * radius*2)
-				Matter.Body.setVelocity(mob[mob.length - 1], {
-					x: (Math.random()-0.5)*50,
-					y: (Math.random()-0.5)*50
-				});
+                spawn.spawns(that.position.x + (Math.random() - 0.5) * radius * 2, that.position.y + (Math.random() - 0.5) * radius * 2)
+                Matter.Body.setVelocity(mob[mob.length - 1], {
+                    x: (Math.random() - 0.5) * 50,
+                    y: (Math.random() - 0.5) * 50
+                });
             }
         }
     },
     spawns: function(x, y, radius = 15 + Math.ceil(Math.random() * 5)) {
-        mobs.spawn(x, y, 4, radius, 'rgb(255,0,0)', ['healthBar','gravity', "seePlayerCheck", "fallCheck", "attraction"]);
+        mobs.spawn(x, y, 4, radius, 'rgb(255,0,0)', ['healthBar', 'gravity', "seePlayerCheck", "fallCheck", "attraction"]);
         let me = mob[mob.length - 1]
         me.onHit = function(k) { //run this function on hitting player
-			spawn.explode(k)
+            spawn.explode(k)
         }
         me.g = 0.00015; //required if using 'gravity'
         me.accelMag = 0.0004;
+		me.seePlayerFreq = 75 + Math.round(Math.random() * 50);
+		me.frictionAir = 0.002
     },
     exploder: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 7, radius, 'rgb(255,0,0)', ['healthBar','gravity', "seePlayerCheck", "fallCheck", "attraction"]);
+        mobs.spawn(x, y, 7, radius, 'rgb(255,0,0)', ['healthBar', 'gravity', "seePlayerCheck", "fallCheck", "attraction"]);
         let me = mob[mob.length - 1]
         me.onHit = function(k) { //run this function on hitting player
-			spawn.explode(k)
+            spawn.explode(k)
+        }
+        me.g = 0.0004 //required if using 'gravity'
+        me.accelMag = 0.0014
+    },
+    explode: function(k) {
+        mech.damage(0.1 * Math.sqrt(mob[k].mass) * game.dmgScale)
+        game.drawList.push({ //add dmg to draw queue
+            x: mech.pos.x,
+            y: mech.pos.y,
+            radius: 80 * Math.sqrt(mob[k].mass),
+            color: 'rgba(255,0,0,0.25)',
+            time: 5
+        });
+        mob[k].death(false) //death with no power up
+    },
+    dotsploder: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
+        mobs.spawn(x, y, 7, radius, 'rgb(55,0,165)', ['healthBar', 'gravity', "seePlayerCheck", "fallCheck", "attraction"]);
+        let me = mob[mob.length - 1]
+        me.onHit = function(k) { //run this function on hitting player
+            spawn.dot(k, 7, 1500)
+            mob[k].death(false) //death with no power up
         }
         me.g = 0.0004; //required if using 'gravity'
-        me.accelMag = 0.0014;
     },
-	explode: function(k){
-		mech.damage(0.1 * Math.sqrt(mob[k].mass) * game.dmgScale)
-		game.drawList.push({ //add dmg to draw queue
-			x: mech.pos.x,
-			y: mech.pos.y,
-			radius: 80*Math.sqrt(mob[k].mass),
-			color: 'rgba(255,0,0,0.25)',
-			time: 5
-		});
-		mob[k].death(false) //death with no power up
-	},
-	dotsploder: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-		mobs.spawn(x, y, 7, radius, 'rgb(55,0,165)', ['healthBar','gravity', "seePlayerCheck", "fallCheck", "attraction"]);
-		let me = mob[mob.length - 1]
-		me.onHit = function(k) { //run this function on hitting player
-			spawn.dot(k,7, 1500)
-			mob[k].death(false) //death with no power up
-		}
-		me.g = 0.0004; //required if using 'gravity'
-	},
     dot: function(k, num = 3, delay = 1000) { //adds a damage over time to the mob onHit method
-		//sometimes causes the player to have undefined health (and be unkillable)
+        //sometimes causes the player to have undefined health (and be unkillable)
         for (let i = 0; i < num; ++i) { //dots
             setTimeout(function() {
                 mech.damage(0.01 * Math.sqrt(mob[k].mass) * game.dmgScale)
@@ -241,44 +259,45 @@ const spawn = {
         });
 
     },
-	shield: function(x, y, radius = 50, stiffness = 0.1) {
-		mobs.spawn(x, y, 9, radius, 'transparent', ["fallCheck"]);
-		let me = mob[mob.length - 1]
-		me.density = 0.0001 //very low density to not mess with the original mob's motion
-		me.collisionFilter.mask = 0x001100;
-		consBB[consBB.length] = Constraint.create({ //attach shield to last spawned mob
-			bodyA: me,
-			bodyB: mob[mob.length - 2],
-			stiffness: stiffness
-		})
-		me.onDeath = function(that) { //run this function on death
-			that.deadCount = 0 //don't show a body after death
-		}
-	},
+    shield: function(x, y, radius = 50, stiffness = 0.6) {
+		if (this.allowShields){
+        mobs.spawn(x, y, 9, radius, 'transparent', ["fallCheck"]);
+        let me = mob[mob.length - 1]
+        me.density = 0.0001 //very low density to not mess with the original mob's motion
+        me.collisionFilter.mask = 0x001100;
+        consBB[consBB.length] = Constraint.create({ //attach shield to last spawned mob
+            bodyA: me,
+            bodyB: mob[mob.length - 2],
+            stiffness: stiffness
+        })
+        me.onDeath = function(that) { //run this function on death
+            that.deadCount = 0 //don't show a body after death
+        }}
+    },
     //complex constrained mob templates**********************************************************************
     //*******************************************************************************************************
-	swinger: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(110,150,200,1)'
-		mobs.spawn(x, y, 4, radius, 'rgb(110,150,200)', ['healthBar','gravity', "seePlayerCheck", "fallCheck", "attraction"]);
-		let me = mob[mob.length - 1]
-		me.g = 0.0005; //required if using 'gravity'
-		me.accelMag = 0.0012;
-		me.memory = 240; //memory+memory*Math.random() in cycles
-		spawn.bodyRect(x, y+100, 50, 50); //center platform
-		consBB[consBB.length] = Constraint.create({
-			bodyA: mob[mob.length - 1],
-			bodyB: body[body.length - 1],
-			stiffness: 0.05
-		})
-	},
+    swinger: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) { //'rgba(110,150,200,1)'
+        mobs.spawn(x, y, 4, radius, 'rgb(110,150,200)', ['healthBar', 'gravity', "seePlayerCheck", "fallCheck", "attraction"]);
+        let me = mob[mob.length - 1]
+        me.g = 0.0005; //required if using 'gravity'
+        me.accelMag = 0.0012;
+        me.memory = 240; //memory+memory*Math.random() in cycles
+        spawn.bodyRect(x, y + 100, 50, 50); //center platform
+        consBB[consBB.length] = Constraint.create({
+            bodyA: mob[mob.length - 1],
+            bodyB: body[body.length - 1],
+            stiffness: 0.05
+        })
+    },
     snake: function(x, y, r = 25, l = 70, stiffness = 0.05, num = 6, faceRight = false) {
         if (faceRight) l *= -1
-        mobs.spawn(x - l * 0.4, y, 4, r * 1.6, 'rgb(235,55,55)', ['healthBar',"seePlayerCheck", "fallCheck", "attraction"]);
+        mobs.spawn(x - l * 0.4, y, 4, r * 1.6, 'rgb(235,55,55)', ['healthBar', "seePlayerCheck", "fallCheck", "attraction"]);
         mob[mob.length - 1].accelMag = 0.0006 * mob[mob.length - 1].mass * Math.sqrt(num);
         mob[mob.length - 1].friction = 0;
         mob[mob.length - 1].frictionStatic = 0;
         mob[mob.length - 1].memory = 340; //memory+memory*Math.random() in cycles
         for (let i = 0; i < num; i += 2) {
-            mobs.spawn(x + l * (i + 1), y, 4, r, 'rgb(0,0,0)', ['healthBar','gravity', "fallCheck"]);
+            mobs.spawn(x + l * (i + 1), y, 4, r, 'rgb(0,0,0)', ['healthBar', 'gravity', "fallCheck"]);
             mob[mob.length - 1].g = 0.0001; //required if using 'gravity'
             mob[mob.length - 1].density = 0.00001;
             mob[mob.length - 1].friction = 0;
@@ -288,7 +307,7 @@ const spawn = {
                 bodyB: mob[mob.length - 2],
                 stiffness: stiffness
             })
-            mobs.spawn(x + l * (i + 2), y, 4, r, 'rgb(235,55,55)', ['healthBar','gravity', "fallCheck"]);
+            mobs.spawn(x + l * (i + 2), y, 4, r, 'rgb(235,55,55)', ['healthBar', 'gravity', "fallCheck"]);
             mob[mob.length - 1].g = 0.0001; //required if using 'gravity'
             mob[mob.length - 1].density = 0.00001;
             mob[mob.length - 1].friction = 0;
@@ -309,7 +328,7 @@ const spawn = {
     },
     squid: function(x, y, radius = 30, length = 500, stiffness = 0.001, num = 7) {
         //almost a blinker
-        mobs.spawn(x, y, 6, radius * 6, 'rgb(0,15,30)', ['healthBar',"seePlayerCheck", "fallCheck", 'blink']); //,'pullPlayer','repelBullets']);
+        mobs.spawn(x, y, 6, radius * 6, 'rgb(0,15,30)', ['healthBar', "seePlayerCheck", "fallCheck", 'blink']); //,'pullPlayer','repelBullets']);
         mob[mob.length - 1].collisionFilter.mask = 0x001100; //move through walls
         mob[mob.length - 1].isStatic = true;
         mob[mob.length - 1].memory = 360; //memory+memory*Math.random()
@@ -322,12 +341,15 @@ const spawn = {
             })
         }
     },
+	allowShields: true,
     nodeBoss: function(x, y, spawn = 'striker',
-        nodes = Math.ceil(Math.random() * 3) + 4,
+        nodes = Math.min(3+Math.ceil(Math.random() * game.levelsCleared),7),
+		//Math.ceil(Math.random() * 3) + Math.min(4,Math.ceil(game.levelsCleared/2)),
         radius = Math.ceil(Math.random() * 10) + 17,
         l = Math.ceil(Math.random() * 100) + 70,
         stiffness = Math.random() * 0.07 + 0.01) {
         if (spawn === 'shooter' || spawn === 'hopper' || spawn === 'puller' || spawn === 'blinker' || spawn === 'pullSploder' || spawn === 'drifter') nodes = Math.ceil(Math.random() * 2) + 2 //keeps the bad bosses from having too many nodes
+		this.allowShields=false
         let px = 0;
         let py = 0;
         let a = 2 * Math.PI / nodes;
@@ -336,12 +358,13 @@ const spawn = {
             py += l * Math.sin(a * i);
             this[spawn](x + px, y + py, radius);
         }
-        this.constrainAllMobCombos(nodes, stiffness);
+        this.constrainAllMobCombos(nodes, stiffness)
+		this.allowShields=true
     },
     //constraints ************************************************************************************************
     //*************************************************************************************************************
-    constrainAllMobCombos: function(num, stiffness) { //runs thourgh every combination of last 'num' bodies and constrains them
-        let a = []
+    constrainAllMobCombos: function(num, stiffness) {
+        //runs thourgh every combination of last 'num' bodies and constrains them
         for (let i = 1; i < num + 1; ++i) {
             for (let j = i + 1; j < num + 1; ++j) {
                 consBB[consBB.length] = Constraint.create({
@@ -351,7 +374,6 @@ const spawn = {
                 })
             }
         }
-        return a
     },
     constraintPB: function(x, y, bodyIndex, stiffness) {
         cons[cons.length] = Constraint.create({
@@ -374,7 +396,7 @@ const spawn = {
     //***************************************************************************************************
     bodyRect: function(x, y, width, height, properties) { //speeds up adding reactangles to map array
         body[body.length] = Bodies.rectangle(x + width / 2, y + height / 2, width, height, properties);
-		body[body.length-1].health = 1;
+        body[body.length - 1].health = 1;
     },
     bodyVertex: function(x, y, vector, properties) { //addes shape to body array
         body[body.length] = Matter.Bodies.fromVertices(x, y, Vertices.fromPath(vector), properties);

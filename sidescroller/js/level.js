@@ -22,7 +22,6 @@ const level = {
         document.body.style.backgroundColor = "#fafafa";
         mech.setPosToSpawn(-100, -200); //normal spawn
 		spawn.mapRect(3500, -860, 100, 50, 'exit'); //ground bump wall
-
         spawn.mapRect(-200, 0, 1200, 300); //ground
         spawn.mapVertex(1250, 0, '0 0 0 300 -500 600 -500 300');
         spawn.mapRect(1500, -300, 2000, 300); //upper ground
@@ -35,11 +34,13 @@ const level = {
 		spawn.bodyRect(900, -550,50,50);
 		//spawn.turret(1200, -550);
 		//spawn.springer(1200, -550);
-		//spawn.laserer(1200, -550);
-		spawn.burster(1300, -550,90);
+		spawn.laserTracker(1200, -550);
+		spawn.laserTracker(1300, -550);
+		//spawn.spawner(1300, -550,90);
+		//spawn.spawner(1400, -550,90);
 		//spawn.hopper(1500, -550,80);
 		//spawn.shield(1300,-550,80*1.7,1);  //spawns a shield around mob
-		//spawn.nodeBoss(1300,-600,'burster')
+		//spawn.nodeBoss(1300,-600,'laserTracker')
 
     },
     //******************************************************************************************************************
@@ -65,8 +66,8 @@ const level = {
 		spawn.bodyRect(200, -2150, 200, 220); //
 		spawn.mapRect(700, -2275, 700, 50); //
 		//spawn.bodyRect(675, -2225, 25, 220); //
-		spawn.randomSmallMob(900, -2125, Math.ceil(Math.random() * 3)); //
-		spawn.randomSmallMob(-350, -2400, Math.ceil(Math.random() * 3)); //
+		spawn.randomMob(900, -2125); //
+		spawn.randomSmallMob(-350, -2400); //
 		spawn.bodyRect(1050, -2350, 50, 75); //
 		//spawn.bodyRect(1750, -1125, 125, 125); //
 		spawn.mapVertex(1750, -970, '120 40 -120 40 -50 -40 50 -40', 'launch');
@@ -76,7 +77,7 @@ const level = {
 		spawn.mapRect(1600, -950, 100, 2050); //left building vertical wall
 		spawn.mapRect(3100, -950, 100, 2050); //right building vertical wall
 		spawn.bodyRect(3500, -1725, 20, 475); //
-		spawn.randomMob(2200, -1775); //
+		spawn.randomSmallMob(2200, -1775); //
 		spawn.bodyRect(2700, -1125, 125, 125); //
 		spawn.bodyRect(2710, -1250, 125, 125); //
 		spawn.mapRect(3150, -1600, 350, 50); //
@@ -98,14 +99,14 @@ const level = {
 		spawn.mapRect(4500, -700, 50, 600); //
 		spawn.bodyRect(4500, -100, 50, 100); //
 		spawn.randomMob(4250, -1350); //
-		spawn.randomSmallMob(4000, -825, 3); //
+		spawn.randomSmallMob(4000, -825); //
 		spawn.mapVertex(5000, 30, '120 40 -120 40 -50 -40 50 -40', 'launch');
 		spawn.spawnStairs(3800, 0, 4, 150, 225); //stairs top exit
 		spawn.mapRect(3500, -275, 350, 275); //exit platform
 		spawn.mapRect(3600, -285, 100, 50, 'exit'); //ground bump wall
-		spawn.randomSmallMob(4100, -100, 1 + Math.ceil(Math.random() * 2));
-		spawn.randomSmallMob(4600, -100, 1 + Math.ceil(Math.random() * 2));
-		spawn.randomSmallMob(5200, -100, Math.ceil(Math.random() * 2));
+		spawn.randomSmallMob(4100, -100);
+		spawn.randomSmallMob(4600, -100);
+		spawn.randomMob(5200, -100);
 		//spawn.randomBoss(4850, -1250);
 	},
     //******************************************************************************************************************
@@ -185,9 +186,9 @@ const level = {
 
 
 		//spawn.hunter(0,-1650);
-        spawn.randomSmallMob(0, -1600, Math.ceil(Math.random() * 2));
+        spawn.randomSmallMob(0, -1600);
         spawn.randomMob(200, -1200);
-        spawn.randomSmallMob(1315, -880);
+        spawn.randomSmallMob(1315, -880,1);
         spawn.randomMob(-250, -700);
         spawn.randomMob(-100, -225);
 		//spawn.randomBoss(3050, -1400);
@@ -211,7 +212,7 @@ const level = {
         });
         spawn.randomMob(4100, -225);
         spawn.randomBoss(4150, -1000);
-		spawn.randomSmallMob(3550, -550, Math.ceil(Math.random() * 2));
+		spawn.randomSmallMob(3550, -550);
 
     },
     //******************************************************************************************************************
@@ -261,7 +262,7 @@ const level = {
         spawn.mapVertex(4200, 29.5, '-50 -40 50 -40 120 40 -120 40', 'launch');
 
 		//spawn.heavyChaser(-100,-450);
-        spawn.randomSmallMob(1300, -70, Math.ceil(Math.random() * 3));
+        spawn.randomSmallMob(1300, -70);
         spawn.randomMob(-100, -450);
         spawn.randomMob(2650, -975);
         //spawn.randomMob(1800, -550, 2);
@@ -269,8 +270,8 @@ const level = {
         //spawn.randomBoss(3300, -1800);
 		spawn.randomBoss(3700, -1500);
 		spawn.randomBoss(1700, -900);
-        spawn.randomSmallMob(3200, -100, Math.ceil(Math.random() * 3));
-        spawn.randomSmallMob(4450, -100, Math.ceil(Math.random() * 2));
+        spawn.randomSmallMob(3200, -100);
+        spawn.randomSmallMob(4450, -100);
         spawn.randomMob(1850, -1950);
     },
     //******************************************************************************************************************
@@ -396,6 +397,7 @@ const level = {
 		sessionStorage.setItem('skipSplash', '1');
 		sessionStorage.setItem('mouse', JSON.stringify(game.mouse));
 		sessionStorage.setItem('dmgScale', game.dmgScale + 0.25);
+		sessionStorage.setItem('levelsCleared', game.levelsCleared + 1);
 		sessionStorage.setItem('health', mech.health);
         sessionStorage.setItem('bullets', JSON.stringify(bullets)); //store info about bullets (changed by power ups)
         this.onLevel++;

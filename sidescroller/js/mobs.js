@@ -130,8 +130,8 @@ const mobs = {
                     this.cd = game.cycle + this.delay;
                     const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x);
                     const mag = player.mass * game.g
-                    player.force.x -= 85 * mag * Math.cos(angle);
-                    player.force.y -= 85 * mag * Math.sin(angle);
+                    player.force.x -= 80 * mag * Math.cos(angle);
+                    player.force.y -= 80 * mag * Math.sin(angle);
                     ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
                     ctx.lineTo(mech.pos.x, mech.pos.y)
@@ -159,6 +159,35 @@ const mobs = {
                     ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
                     ctx.fillStyle = "rgba(255,0,170,0.2)";
                     ctx.fill();
+                }
+            },
+            laserTracking: function() {
+                if (game.cycle % 11) {
+                    if (this.seePlayer.yes) {
+						//targeting laser will slowly move from the mob to the player's position
+						this.laserPos = Matter.Vector.add(this.laserPos, Matter.Vector.mult(Matter.Vector.sub(this.seePlayer.position, this.laserPos), 0.05))
+						//if laser is near the player do damage and darken laser color
+                        if (Matter.Vector.magnitude(Matter.Vector.sub(this.laserPos, mech.pos)) < this.radius*2) {
+                            mech.damage(0.002 * game.dmgScale);
+                            ctx.strokeStyle = ctx.fillStyle = "rgb(0,255,255)";
+							ctx.beginPath();
+							ctx.arc(this.laserPos.x, this.laserPos.y, this.radius*2, 0, 2 * Math.PI);
+							ctx.fill();
+							ctx.lineWidth = 2;
+							ctx.beginPath();
+							ctx.moveTo(this.position.x, this.position.y);
+							ctx.lineTo(this.laserPos.x, this.laserPos.y);
+							ctx.stroke();
+                        } else {
+                            ctx.fillStyle = ctx.strokeStyle = "rgba(0,255,255,0.3)";
+							ctx.beginPath();
+							ctx.arc(this.laserPos.x, this.laserPos.y, this.radius, 0, 2 * Math.PI);
+							ctx.fill();
+                        }
+
+                    } else {
+						this.laserPos =	this.position
+					}
                 }
             },
             pullPlayer: function() {
@@ -237,8 +266,8 @@ const mobs = {
                         this.force.y += forceMag * Math.sin(angle) // - 0.0007 * this.mass; //antigravity
                     }
                 } else {
-					this.cdBurst2 = 0
-				}
+                    this.cdBurst2 = 0
+                }
             },
             hop: function() { //accelerate towards the player after a delay
                 if (this.cd < game.cycle && this.seePlayer.recall && this.speed < 1) {

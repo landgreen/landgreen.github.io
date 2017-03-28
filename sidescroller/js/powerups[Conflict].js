@@ -31,7 +31,7 @@ const powerUps = {
             bullets.height = 2;
             bullets.frictionAir = 0;
 			bullets.gravity = 0.0007;
-			bullets.density = 0.0022;
+			bullets.density = 0.002;
         }
     }, {
         name: 'squares',
@@ -39,11 +39,11 @@ const powerUps = {
         sides: 4,
         effect: function() {
             bullets.shape = this.name
-            bullets.width = 16;
-            bullets.height = 16;
-            bullets.frictionAir = 0.05;
-			bullets.gravity = 0.002;
-			bullets.density = 0.0017;
+            bullets.width = 14;
+            bullets.height = 14;
+            bullets.frictionAir = 0.025;
+			bullets.gravity = 0.0017;
+			bullets.density = 0.0015;
         }
     }],
     mode: [{ //fire rate, number fired, inaccuracy, duration, size, restitution, cFilter   speed
@@ -55,26 +55,41 @@ const powerUps = {
             bullets.fireCD = 18;
             bullets.number = 1;
 			bullets.speed = 38;
-            bullets.inaccuracy = 0.07;
+            bullets.inaccuracy = 0.05;
             bullets.endCycle = 200;
 			bullets.restitution = 0;
 			bullets.cFilter.mask = 0x000101; //can hit self
 			bullets.size = 1.3
         }
     }, {
+		name: 'flamethrower',
+		color: '#04f',
+		sides: 3,
+		effect: function() {
+			bullets.mode = this.name
+			bullets.fireCD = 7;
+			bullets.number = 1;
+			bullets.speed = 15;
+			bullets.inaccuracy = 0.6;
+			bullets.endCycle = 30;
+			bullets.restitution = 1;
+			bullets.cFilter.mask = 0x000001; //can hit self
+			bullets.size = 1.8
+		}
+	}, {
 		name: 'barrage',
 		color: '#04f',
 		sides: 3,
 		effect: function() {
 			bullets.mode = this.name
-			bullets.fireCD = 55;
+			bullets.fireCD = 60;
 			bullets.number = 5;
 			bullets.speed = 40;
-			bullets.inaccuracy = 0.13;
+			bullets.inaccuracy = 0.12;
 			bullets.endCycle = 150;
 			bullets.restitution = 0;
 			bullets.cFilter.mask = 0x000001; //can hit self
-			bullets.size = 1
+			bullets.size = 0.9
 		}
 	}, {
 		name: 'high speed',
@@ -82,7 +97,7 @@ const powerUps = {
 		sides: 3,
 		effect: function() {
 			bullets.mode = this.name
-			bullets.fireCD = 40;
+			bullets.fireCD = 50;
 			bullets.number = 1;
 			bullets.speed = 60;
 			bullets.inaccuracy = 0;
@@ -130,7 +145,7 @@ const powerUps = {
             bullets.fireCD = 5;
             bullets.number = 1;
 			bullets.speed = 38;
-            bullets.inaccuracy = 0.25;
+            bullets.inaccuracy = 0.2;
             bullets.endCycle = 80;
 			bullets.restitution = 0;
 			bullets.cFilter.mask = 0x000001; //can't hit self
@@ -155,10 +170,11 @@ const powerUps = {
     startingPowerUps: function() {
         this.shape[Math.floor(Math.random() * this.shape.length)].effect() //gives player random starting shape
         this.mode[Math.floor(Math.random() * this.mode.length)].effect() //gives player random starting fire mode
-		//this.mode[6].effect()
+		this.mode[1].effect()
     },
     spawnRandomPowerUp: function(x, y) { //spawn heal chance is higher at low health
 		let size = 20
+		// if ((mech.health<0.9 && Math.random() < 0.1) || (mech.health<0.6 && Math.random() < 0.2) || (mech.health<0.3 && Math.random() < 0.3)) {
         if (Math.random()>Math.sqrt(mech.health)+0.1) {
             powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.heal.name, powerUps.heal.color, powerUps.heal.sides, size, powerUps.heal.effect);
 			return;
@@ -174,6 +190,11 @@ const powerUps = {
             powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.mode[choose].name, powerUps.mode[choose].color, powerUps.mode[choose].sides, size, powerUps.mode[choose].effect);
 			return;
         }
+        // choose = Math.floor(Math.random() * powerUps.fireSpeed.length);
+        // if (Math.random() < 0.12 && powerUps.fireSpeed[choose].name !== bullets.fireSpeed) {
+        //     powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.fireSpeed[choose].name, powerUps.fireSpeed[choose].color, powerUps.fireSpeed[choose].sides, size, powerUps.fireSpeed[choose].effect);
+		// 	return;
+        // }
     },
     spawn: function(x, y, name, color, sides, size, effect) {
         let i = powerUp.length;
@@ -202,9 +223,12 @@ const powerUps = {
         World.add(engine.world, powerUp[i]); //add to world
     },
     loop: function() {
+        //for (let i = 0, len = powerUp.length; i < len; ++i) {
         let i = powerUp.length;
         while (i--) {
             if (!((powerUp[i].endCycle - game.cycle) % 10)) { //most of the other power up code is in the player object
+                //Matter.Body.scale(powerUp[i], 0.95, 0.95) //shrinks the power up
+                //powerUp[i].color = 'rgba(0,255,0, '+(powerUp[i].endCycle - game.cycle)/720+')'; //fades color to transparent
                 powerUp[i].alpha = (powerUp[i].endCycle - game.cycle) / 720 + 0.1;
                 if (powerUp[i].alpha > 1) powerUp[i].alpha = 1;
                 if (powerUp[i].endCycle < game.cycle) { //removes the power up
@@ -213,6 +237,26 @@ const powerUps = {
                     continue;
                 }
             }
+            //magnetic pick up of items
+            // const dx = player.position.x - powerUp[i].position.x
+            // const dy = player.position.y - powerUp[i].position.y
+            // dist2 = dx * dx + dy * dy;
+            // if (dist2 < 200000 && (mech.health < 1 || powerUp[i].name !== 'heal')) {
+            //     if (dist2 < 1000) { //pick up if close
+            //         powerUp[i].effect();
+            //         playSound('powerup');
+            //         Matter.World.remove(engine.world, powerUp[i]);
+            //         powerUp.splice(i, 1);
+            //         continue;
+            //     } else { //float towards player
+            //         Matter.Body.setVelocity(powerUp[i], { //extra friction
+            //             x: powerUp[i].velocity.x * 0.95,
+            //             y: powerUp[i].velocity.y * 0.95
+            //         });
+            //         powerUp[i].force.x += dx / dist2 * powerUp[i].mass * 0.3
+            //         powerUp[i].force.y += dy / dist2 * powerUp[i].mass * 0.3 - powerUp[i].mass * game.g //negate gravity
+            //     }
+            // }
         }
     }
 }
