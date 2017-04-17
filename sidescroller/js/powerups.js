@@ -1,183 +1,76 @@
-const powerUp = [];
+let powerUp = [];
 
 const powerUps = {
     heal: {
-        name: 'heal',
-        color: '#0f8',
-        sides: 0,
+        name: "heal",
+        color: "156",
+        size: 25,
         effect: function() {
             mech.addHealth(0.4 + Math.random() * 0.2);
         }
     },
-    shape: [{ //shape, density, friction, gravity
-        name: 'bullets',
-        color: '#000',
-        sides: 4,
+    ammo: {
+        name: "ammo",
+        color: "245",
+        size: 17,
         effect: function() {
-            bullets.shape = this.name
-            bullets.width = 19;
-            bullets.height = 6;
-            bullets.frictionAir = 0.01;
-			bullets.gravity = 0.001;
-			bullets.density = 0.0015;
-        }
-    }, {
-        name: 'needles',
-        color: '#000',
-        sides: 4,
-        effect: function() {
-            bullets.shape = this.name
-            bullets.width = 32;
-            bullets.height = 2;
-            bullets.frictionAir = 0;
-			bullets.gravity = 0.0007;
-			bullets.density = 0.0022;
-        }
-    }, {
-        name: 'squares',
-        color: '#000',
-        sides: 4,
-        effect: function() {
-            bullets.shape = this.name
-            bullets.width = 16;
-            bullets.height = 16;
-            bullets.frictionAir = 0.05;
-			bullets.gravity = 0.002;
-			bullets.density = 0.0017;
-        }
-    }],
-    mode: [{ //fire rate, number fired, inaccuracy, duration, size, restitution, cFilter   speed
-        name: 'balanced',
-        color: '#04f',
-        sides: 3,
-        effect: function() {
-			bullets.mode = this.name
-            bullets.fireCD = 18;
-            bullets.number = 1;
-			bullets.speed = 38;
-            bullets.inaccuracy = 0.07;
-            bullets.endCycle = 200;
-			bullets.restitution = 0;
-			bullets.cFilter.mask = 0x000101; //can hit self
-			bullets.size = 1.3
-        }
-    }, {
-		name: 'barrage',
-		color: '#04f',
-		sides: 3,
-		effect: function() {
-			bullets.mode = this.name
-			bullets.fireCD = 55;
-			bullets.number = 5;
-			bullets.speed = 40;
-			bullets.inaccuracy = 0.13;
-			bullets.endCycle = 150;
-			bullets.restitution = 0;
-			bullets.cFilter.mask = 0x000001; //can hit self
-			bullets.size = 1
-		}
-	}, {
-		name: 'high speed',
-		color: '#04f',
-		sides: 3,
-		effect: function() {
-			bullets.mode = this.name
-			bullets.fireCD = 40;
-			bullets.number = 1;
-			bullets.speed = 60;
-			bullets.inaccuracy = 0;
-			bullets.endCycle = 300;
-			bullets.restitution = 0;
-			bullets.cFilter.mask = 0x000101; //can hit self
-			bullets.size = 1.5
-		}
-	}, {
-        name: 'oneshot',
-        color: '#04f',
-        sides: 3,
-        effect: function() {
-			bullets.mode = this.name
-            bullets.fireCD = 80;
-            bullets.number = 1;
-			bullets.speed = 35;
-            bullets.inaccuracy = 0;
-            bullets.endCycle = 400;
-			bullets.restitution = 0.4;
-			bullets.cFilter.mask = 0x000101; //can hit self
-			bullets.size = 3.5
-        }
-    }, {
-    //     name: 'bouncy',
-    //     color: '#04f',
-    //     sides: 3,
-    //     effect: function() {
-	// 		bullets.mode = this.name
-    //         bullets.fireCD = 25;
-    //         bullets.number = 3;
-	// 		bullets.speed = 34;
-    //         bullets.inaccuracy = 0.35;
-    //         bullets.endCycle = 200;
-	// 		bullets.restitution = 0.8;
-	// 		bullets.cFilter.mask = 0x000001; //can't hit self
-	// 		bullets.size = 1;
-	// 	}
-    // }, {
-        name: 'automatic',
-        color: '#04f',
-        sides: 3,
-        effect: function() {
-			bullets.mode = this.name
-            bullets.fireCD = 5;
-            bullets.number = 1;
-			bullets.speed = 38;
-            bullets.inaccuracy = 0.25;
-            bullets.endCycle = 80;
-			bullets.restitution = 0;
-			bullets.cFilter.mask = 0x000001; //can't hit self
-			bullets.size = 0.7;
-        }
-    }, {
-        name: 'shower',
-        color: '#04f',
-        sides: 3,
-        effect: function() {
-			bullets.mode = this.name
-            bullets.fireCD = 55;
-            bullets.number = 8;
-			bullets.speed = 40;
-            bullets.inaccuracy = 1;
-            bullets.endCycle = 80;
-			bullets.cFilter.mask = 0x000001; //can't hit self
-			bullets.restitution = 0;
-			bullets.size = 0.9
-        }
-    }],
-    startingPowerUps: function() {
-        this.shape[Math.floor(Math.random() * this.shape.length)].effect() //gives player random starting shape
-        this.mode[Math.floor(Math.random() * this.mode.length)].effect() //gives player random starting fire mode
-		//this.mode[6].effect()
-    },
-    spawnRandomPowerUp: function(x, y) { //spawn heal chance is higher at low health
-		let size = 20
-        if (Math.random()>Math.sqrt(mech.health)+0.1) {
-            powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.heal.name, powerUps.heal.color, powerUps.heal.sides, size, powerUps.heal.effect);
-			return;
-        }
-		size = 30
-        let choose = Math.floor(Math.random() * powerUps.shape.length);
-        if (Math.random() < 0.13 && powerUps.shape[choose].name !== bullets.shape) {
-            powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.shape[choose].name, powerUps.shape[choose].color, powerUps.shape[choose].sides, 35, powerUps.shape[choose].effect);
-			return;
-        }
-        choose = Math.floor(Math.random() * powerUps.mode.length);
-        if (Math.random() < 0.16 && powerUps.mode[choose].name !== bullets.mode) {
-            powerUps.spawn(x + (Math.random() - 0.5) * size, y + (Math.random() - 0.5) * size, powerUps.mode[choose].name, powerUps.mode[choose].color, powerUps.mode[choose].sides, size, powerUps.mode[choose].effect);
-			return;
+            //only get ammo for guns player has
+			if (b.inventory.length > 1) {
+				const target = b.guns[b.inventory[Math.ceil(Math.random() * (b.inventory.length-1))]];
+				const ammo = Math.ceil(target.ammoPack*(0.5+Math.random()))
+				target.ammo += ammo;
+				b.updateHUD();
+				document.getElementById("text-log").textContent = '+'+ammo+' ammo for: '+target.name
+				game.lastLogTime = game.cycle+180;
+			}
         }
     },
-    spawn: function(x, y, name, color, sides, size, effect) {
+    gun: {
+        name: "gun",
+        color: "180",
+        size: 32,
+        effect: function() {
+            //find what guns I don't have
+            let options = [];
+            for (let i = 1; i < b.guns.length; ++i) {
+                if (!b.guns[i].have) options.push(i);
+            }
+            if (options.length > 0) {
+                //give player a gun they don't already have if possible
+                b.activeGun = options[Math.floor(Math.random() * options.length)];
+                b.guns[b.activeGun].have = true;
+                b.inventory.push(b.activeGun);
+                b.inventory.sort();
+
+				document.getElementById("text-log").textContent = 'new gun: '+b.guns[b.activeGun].name
+				game.lastLogTime = game.cycle+240;
+            }
+            b.guns[b.activeGun].ammo += b.guns[b.activeGun].ammoPack*2;
+            b.updateHUD();
+        }
+    },
+    spawnRandomPowerUp: function(x, y) {
+        //spawn heal chance is higher at low health
+        if (Math.random()*Math.random()+0.17 > Math.sqrt(mech.health)) {
+            powerUps.spawn(x, y, "heal");
+            return;
+        }
+		//ammo chance is higher if using the default gun
+        if (Math.random() < 0.4 || (b.activeGun === 0 && Math.random()<0.2) ) {
+            powerUps.spawn(x, y, "ammo");
+            return;
+        }
+		//only spawns if playe ris missing some guns
+        if (Math.random() < 0.12 && b.inventory.length<b.guns.length) {
+            powerUps.spawn(x, y, "gun");
+            return;
+        }
+    },
+    spawn: function(x, y, target, moving = true) {
+        //name, color, sides, size, effect) {
         let i = powerUp.length;
-        powerUp[i] = Matter.Bodies.polygon(x, y, sides, size, {
+        target = powerUps[target];
+        powerUp[i] = Matter.Bodies.polygon(x, y, 0, target.size, {
             density: 0.001,
             //friction: 0,
             frictionAir: 0.01,
@@ -186,33 +79,44 @@ const powerUps = {
             collisionFilter: {
                 group: 0,
                 category: 0x100000,
-                mask: 0x100001,
+                mask: 0x100001
             },
             endCycle: game.cycle + 1080, //if change time also update color fade out
-            color: color,
-            alpha: 1,
-            effect: effect,
-            name: name,
-            size: size,
-        })
-        Matter.Body.setVelocity(powerUp[i], { //bullet velocity includes player's motion plus a force
-            x: (Math.random() - 0.5) * 10,
-            y: Math.random() * -7 - 3
+            color: target.color,
+            sat: 1,
+            effect: target.effect,
+            name: target.name,
+            size: target.size
         });
+        if (moving) {
+            Matter.Body.setVelocity(powerUp[i], {
+                //bullet velocity includes player's motion plus a force
+                x: (Math.random() - 0.5) * 10,
+                y: Math.random() * -7 - 3
+            });
+        }
         World.add(engine.world, powerUp[i]); //add to world
     },
     loop: function() {
-        let i = powerUp.length;
-        while (i--) {
-            if (!((powerUp[i].endCycle - game.cycle) % 10)) { //most of the other power up code is in the player object
-                powerUp[i].alpha = (powerUp[i].endCycle - game.cycle) / 720 + 0.1;
-                if (powerUp[i].alpha > 1) powerUp[i].alpha = 1;
-                if (powerUp[i].endCycle < game.cycle) { //removes the power up
-                    Matter.World.remove(engine.world, powerUp[i]); //remove from game
-                    powerUp.splice(i, 1); //remove from array
-                    continue;
+        for (let i = 0, len = powerUp.length; i < len; ++i) {
+            const dxP = player.position.x - powerUp[i].position.x;
+            const dyP = player.position.y - powerUp[i].position.y;
+            const dist2 = dxP * dxP + dyP * dyP;
+            //gravitation for heal power ups
+            if (dist2 < 40000) {
+                // && mech.health < 1) { //powerUp[i].name === 'heal' &&
+                if (dist2 < 500) {
+                    mech.usePowerUp(i);
+                    break;
                 }
+                Matter.Body.setVelocity(powerUp[i], {
+                    //extra friction
+                    x: powerUp[i].velocity.x * 0.94,
+                    y: powerUp[i].velocity.y * 0.94
+                });
+                powerUp[i].force.x += dxP / dist2 * powerUp[i].mass * 0.38;
+                powerUp[i].force.y += dyP / dist2 * powerUp[i].mass * 0.38 - powerUp[i].mass * game.g; //negate gravity
             }
         }
     }
-}
+};

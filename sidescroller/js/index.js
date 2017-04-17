@@ -86,8 +86,8 @@ add bullet on damage effects
 			vampire bullets heal for the damage done
 				or give the player a shield??
 				or only heal if the mob dies (might be tricky)
-
-
+		remove standing on player actions
+			replace with check if player feet are in an area.
 
 
 FIX************************************************************
@@ -116,8 +116,29 @@ powerUp: 0x 100000   0x 001001
 //stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
 //stats.domElement.style.opacity   = '0.5'
 
+//setup random title
+const titles = [
+    "physics phobia",
+    "physics frenzy",
+    "impulse city",
+    "velocity city",
+    "isogonal",
+    "isogon impulse",
+    "isogon invasion",
+    "isogon towers!",
+    "isogon invasion!",
+    "bird robot!",
+    "ostrichbot",
+    "pewpew",
+	'shoot the baddies',
+	'get to the door',
+];
+document.getElementById("title").textContent = document.title = titles[Math.floor(titles.length * Math.random())];
+
+
+
 //set up canvas
-const canvas = document.getElementById('canvas');
+const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 function setupCanvas() {
@@ -125,11 +146,11 @@ function setupCanvas() {
     canvas.height = window.innerHeight;
     canvas.width2 = canvas.width / 2; //precalculated because I use this often (in mouse look)
     canvas.height2 = canvas.height / 2;
-	canvas.diagonal = Math.sqrt(canvas.width2*canvas.width2 + canvas.height2*canvas.height2)
+    canvas.diagonal = Math.sqrt(canvas.width2 * canvas.width2 + canvas.height2 * canvas.height2);
     ctx.font = "15px Arial";
-    ctx.lineJoin = 'round';
+    ctx.lineJoin = "round";
     ctx.lineCap = "round";
-	game.setTracking();
+    game.setTracking();
 }
 setupCanvas();
 window.onresize = function() {
@@ -177,41 +198,24 @@ window.onmouseup = function(e) {
 //     game.mouseDown = false;
 // };
 
-
 //keyboard input
 const keys = [];
-document.body.addEventListener("keyup", function(e) {
-    keys[e.keyCode] = false
-});
 document.body.addEventListener("keydown", function(e) {
-    keys[e.keyCode] = true
-    game.keyPress() //tracking, testing, zoom
+    keys[e.keyCode] = true;
+    game.keyPress(); //tracking, testing, zoom
+});
+document.body.addEventListener("keyup", function(e) {
+    keys[e.keyCode] = false;
+    game.keyUp();
 });
 
-function playSound(id) { //play sound
+function playSound(id) {
+    //play sound
     if (document.getElementById(id)) {
-        var sound = document.getElementById(id) //setup audio
-        sound.currentTime = 0 //reset position of playback to zero  //sound.load();
-        sound.play()
+        var sound = document.getElementById(id); //setup audio
+        sound.currentTime = 0; //reset position of playback to zero  //sound.load();
+        sound.play();
     }
-}
-
-
-//skips splash screen on map switch
-if (sessionStorage.getItem('skipSplash') === '1') { //set in level.js level.nextLevel() before reset for (same game/new map)
-    sessionStorage.setItem('skipSplash', '0');
-	game.mouse = JSON.parse(sessionStorage.getItem('mouse'))
-	level.onLevel = sessionStorage.getItem('onLevel');
-	mech.health = sessionStorage.getItem('health')*1;  //*1 makes the string into a number
-	game.dmgScale = sessionStorage.getItem('dmgScale')*1;  //*1 makes the string into a number
-	game.levelsCleared = sessionStorage.getItem('levelsCleared')*1;  //*1 makes the string into a number
-	bullets = JSON.parse(sessionStorage.getItem('bullets'))
-    run(document.getElementById('splash')) //calls the run function defined below to start the game
-} else {  //if new game
-    document.getElementById('splash').style.display = "inline"; //show splash SVG
-	level.onLevel = Math.floor(Math.random()*level.levels.length); //picks a rnadom starting level
-	sessionStorage.setItem('onLevel', level.onLevel);
-	powerUps.startingPowerUps(); //setup gun
 }
 
 // const foreground_img = new Image(); // Create new img element
@@ -220,43 +224,37 @@ if (sessionStorage.getItem('skipSplash') === '1') { //set in level.js level.next
 // const background_img = new Image(); // Create new img element
 // background_img.src = 'background.png'; // Set source path
 
-function run(el) { // onclick from the splash screen
+function run(el) {
+    // onclick from the splash screen
     el.onclick = null; //removes the onclick effect so the function only runs once
-    el.style.display = 'none'; //hides the element that spawned the function
+    el.style.display = "none"; //hides the element that spawned the function
     mech.spawn(); //spawns the player
-	level.start(); //spawns the level
+    // level.onLevel = Math.floor(Math.random()*level.levels.length); //picks a rnadom starting level
+    // powerUps.startingPowerUps(); //setup gun
+    // level.start(); //spawns the level
+    game.reset();
     // document.getElementById("keysright").innerHTML = ''; //remove html from intro
     // document.getElementById("keysleft").innerHTML = '';
-    //document.body.appendChild(stats.dom); //show stats.js FPS tracker
     Engine.run(engine); //starts game engine
-
-	game.zoom = canvas.height / 4000
-	function startZoomIn(){
-		document.body.removeEventListener("keydown", startZoomIn);
-		function zoomIn(){
-			const max = canvas.height / 1700
-			game.zoom += max*0.005
-			if (game.zoom < max){
-				requestAnimationFrame(zoomIn);
-			}
-		}
-		requestAnimationFrame(zoomIn);
-	}
-	document.body.addEventListener("keydown", startZoomIn);
-
+    // game.track = true
+    // game.zoom = canvas.height / 4000
+    // document.body.addEventListener("keydown", game.startZoomIn);
     requestAnimationFrame(cycle); //starts game loop
-}
+	//document.getElementById("text-log").textContent = 'Welcome to ' + document.title
+	game.lastLogTime = game.cycle+360;
 
+}
 
 //main loop ************************************************************
 //**********************************************************************
 function cycle() {
-    //stats.begin();
     game.timing();
     game.wipe();
-	powerUps.loop();
+	game.textLogSVG();
+    //powerUps.loop();
     mech.keyMove();
-    mech.standingOnActions();
+    level.checkZones();
+    //mech.standingOnActions();
     //mech.regen();
     mech.move();
     if (game.track) {
@@ -278,34 +276,62 @@ function cycle() {
         game.drawCircle();
         mech.drawHealth();
         ctx.restore();
-		game.getCoords.out();
+        game.getCoords.out();
         game.testingOutput();
     } else {
         mobs.loop();
-		mobBulletLoop();
+        game.draw.mobBullet();
         mobs.draw();
         game.draw.cons();
-		game.draw.powerUp();
         game.draw.body();
         mech.draw();
         //ctx.drawImage(foreground_img, -700, -1500);
         game.draw.map();
-        bulletLoop();
-        game.drawCircle();
-        mech.drawHealth();
-		mech.powerUps();
+        b.fire(); //fires bullets
+        b.draw(); //draw bullets
+        game.drawCircle(); //draws circles, like explosions
+        game.draw.powerUp();
+        //mech.drawHealth();
+        powerUps.loop();
         ctx.restore();
-		//game.output();
+        //game.output();
     }
     //svg graphics , just here until I convert svg to png in inkscape and run as a canvas png
-    document.getElementById(level.background).setAttribute('transform',
-        'translate(' + (canvas.width2) + ',' + (canvas.height2) + ')' +
-        'scale(' + game.zoom + ')' +
-        'translate(' + (mech.transX - canvas.width2) + ',' + (mech.transY - canvas.height2) + ')');
-    document.getElementById(level.foreground).setAttribute('transform',
-        'translate(' + (canvas.width2) + ',' + (canvas.height2) + ')' +
-        'scale(' + game.zoom + ')' +
-        'translate(' + (mech.transX - canvas.width2) + ',' + (mech.transY - canvas.height2) + ')');
-    //stats.end();  //for fps tracker
+    document
+        .getElementById(level.background)
+        .setAttribute(
+            "transform",
+            "translate(" +
+                canvas.width2 +
+                "," +
+                canvas.height2 +
+                ")" +
+                "scale(" +
+                game.zoom +
+                ")" +
+                "translate(" +
+                (mech.transX - canvas.width2) +
+                "," +
+                (mech.transY - canvas.height2) +
+                ")"
+        );
+    document
+        .getElementById(level.foreground)
+        .setAttribute(
+            "transform",
+            "translate(" +
+                canvas.width2 +
+                "," +
+                canvas.height2 +
+                ")" +
+                "scale(" +
+                game.zoom +
+                ")" +
+                "translate(" +
+                (mech.transX - canvas.width2) +
+                "," +
+                (mech.transY - canvas.height2) +
+                ")"
+        );
     requestAnimationFrame(cycle);
 }

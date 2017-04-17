@@ -10,11 +10,21 @@
 	<meta property="og:description" content="Canvas based side scrolling video game with the matter.js physics engine.">
 	<meta property="og:title" content="side scroller">
 	<meta name="twitter:title" content="side scroller">
-	<title>isogon invasion</title>
-	<!-- isogonal
+	<title>ostrichbot</title>
+	<!--
+	physics phobia
+	physics frenzy
+	impulse city
+	velocity city
+	velo city
+	isogonal
+	isogon impulse
+	isogon invasion
 	isogon towers!
 	isogon invasion!
-	bird robot -->
+	bird robot
+	ostrichbot
+ -->
 
 	<link rel="stylesheet" href="css/style.css">
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
@@ -25,7 +35,7 @@
 	<span id='copy-this'></span>
 	<!-- background sounds -->
 	<audio id="ambient_crickets" src="sounds\ambient.mp3" preload="auto" loop></audio>
-	<audio id="ambient_wind" src="sounds\wind.ogg" preload="auto" loop></audio>
+	<!-- <audio id="ambient_wind" src="sounds\wind.ogg" preload="auto" loop></audio> -->
 	<!-- guns -->
 	<audio id="snare2" src="sounds\guns\snare2.ogg" preload="auto"></audio>
 	<audio id="airgun" src="sounds\guns\airgun.ogg" preload="auto"></audio>
@@ -60,9 +70,65 @@
 	*************************************************************************************************
 	*************************************************************************************************
 	******************************************************************************************** -->
+	<svg class='hud'>
+		<defs>
+	      <filter x="0" y="0" width="1" height="1" id="solid">
+	        <feFlood flood-color="rgba(255,255,255,0.2)"/>
+	        <feComposite in="SourceGraphic" operator="over"/>
+	      </filter>
+	    </defs>
+		<g>
+			<rect x="5" y="5" width=225 height="20" fill='#000' opacity='0.2'/>
+			<rect id = 'health' x="5" y="5" width=225 height="20" fill='#f00' opacity='0.6'/>
+		</g>
+		<!-- <rect x="5" y="25" width=225 height="35" fill='#fff' opacity='0.2'/> -->
+
+		<text id = "gun" x="5" y="50" text-anchor="start" fill='#000' font-size="24" font-family = 'Arial,Helvetica' filter="url(#solid)"></text>
+		<text id = "text-log" x="50%" y="20" text-anchor="middle" fill='#000' font-size="20" font-family = 'Arial,Helvetica' filter="url(#solid)"></text>
+		<!-- <text id = "ammo" x="225" y="54" text-anchor="end" fill='#000' font-size="33" font-family = 'Arial,Helvetica'></text> -->
+
+		<!-- <text id = "previous-gun" x="5" y="42" text-anchor="start" fill='#000'  opacity = '0.4' font-size="14" font-family = 'Arial,Helvetica'></text>
+		<text id = "previous-ammo" x="225" y="44" text-anchor="end" fill='#000' opacity = '0.4' font-size="18" font-family = 'Arial,Helvetica'></text>
+
+		<text id = "gun" x="5" y="70" text-anchor="start" fill='#000'  font-size="24" font-family = 'Arial,Helvetica'>gun</text>
+		<text id = "ammo" x="225" y="75" text-anchor="end" fill='#000' font-size="33" font-family = 'Arial,Helvetica'>ammo</text>
+
+		<text id = "next-gun" x="5" y="95" text-anchor="start" fill='#000'  opacity = '0.4' font-size="14" font-family = 'Arial,Helvetica'></text>
+		<text id = "next-ammo" x="225" y="98" text-anchor="end" fill='#000' opacity = '0.4' font-size="18" font-family = 'Arial,Helvetica'></text> -->
+
+
+		<!-- <g transform=" translate(200,50) scale(0.06)">
+			<path d="M335.738,436.459V184.656c0-4.642-3.752-8.393-8.393-8.393H176.263c-4.642,0-8.393,3.752-8.393,8.393v251.803
+				c0,4.642,3.752,8.393,8.393,8.393v8.393c-4.642,0-8.393,3.752-8.393,8.393v33.574c0,4.642,3.752,8.393,8.393,8.393h151.082
+				c4.642,0,8.393-3.752,8.393-8.393V461.64c0-4.642-3.752-8.393-8.393-8.393v-8.393
+				C331.986,444.853,335.738,441.101,335.738,436.459z"/>
+			<path d="M184.656,159.478h134.295c4.642,0,8.393-3.752,8.393-8.393v-8.393c0-55.178-26.364-107.889-70.505-141.01
+				c-2.988-2.241-7.084-2.241-10.072,0c-44.141,33.121-70.505,85.831-70.505,141.01v8.393
+				C176.263,155.726,180.014,159.478,184.656,159.478z"/>
+		</g> -->
+
+		<!-- <g transform=" translate(200,50) scale(0.06)">
+			<polygon points="285.374,191.068 285.374,151.082 218.227,151.082 218.227,191.068 204.646,218.23 298.955,218.23 			"/>
+			<rect x="201.441" y="235.015" width="100.721" height="184.656"/>
+			<path d="M270.558,41.682L259.84,5.985C258.774,2.434,255.509,0,251.799,0c-3.702,0-6.975,2.434-8.041,5.984l-10.71,35.697
+				c-9.031,30.107-13.765,61.23-14.512,92.613h66.535C284.323,102.912,279.589,71.789,270.558,41.682z"/>
+			<path d="M294.703,458.164c0.26-0.688,0.537-1.368,0.713-2.09l4.902-19.615h-97.037l4.893,19.615
+				c0.185,0.722,0.453,1.402,0.722,2.09c-4.516,3.794-7.453,9.417-7.453,15.763v8.998c0,11.407,9.275,20.681,20.681,20.681h59.358
+				c11.398,0,20.681-9.275,20.681-20.681v-8.998C302.165,467.581,299.228,461.957,294.703,458.164z"/>
+		</g> -->
+	</svg>
+
+
+
+	<!-- ********************************************************************************************
+	*************************************************************************************************
+	*************************************************************************************************
+	*************************************************************************************************
+	*************************************************************************************************
+	******************************************************************************************** -->
 	<svg class='background'>
 	<defs>
-	    <style type="text/css"><![CDATA[
+	    <style type="text/css"> <! [ CDATA [
 	      .keyrect {
 	        stroke: #333;
 	        fill: "#555";
@@ -74,22 +140,20 @@
 			font-weight: bold;
 			font-size: 40px;
 		  }
-	    ]]></style>
+	    ] ] ></style>
 	</defs>
-	<!-- rooftops *********************************************************************
-*****************************************************************************************
-*****************************************************************************************-->
+	<!-- rooftops *********************************************************************-->
 
 	<g id = 'background_rooftops' display= "none">
 		<path d="M-500 -2000 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#bbb' stroke='transparent'/>
 		<rect x="3500" y="-675" width="1000" height="675" fill='#dff' stroke='transparent'/>
 		<path d="M3600 -275 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#0ff' stroke='transparent'/>
 	</g>
-	<!-- twoTowers *********************************************************************
+	<!-- towers *********************************************************************
 *****************************************************************************************
 *****************************************************************************************-->
 
-	<g id = 'background_twoTowers' display= "none">
+	<g id = 'background_towers' display= "none">
 		<path d="M1325 -1490 l 0 -100  c 0 -100 100 -100  100 0 l 0 100 Z" fill='#999' stroke='transparent'/>
 		<rect x="3050" y="-950" width="600" height="450" fill='#dff'/>
 		<rect x="3650" y="-650" width="50" height="150" fill='#dee'/>
@@ -257,8 +321,8 @@
 		<rect x="1675" y="-925" width="1450" height="2050" fill='#444' stroke='transparent'/>
 		<rect x="3475" y="75" width="2000" height="1050" fill='#444' stroke='transparent'/>
    </g>
-	<!-- twoTowers -->
-	<g id = 'foreground_twoTowers' display= "none">
+	<!-- towers -->
+	<g id = 'foreground_towers' display= "none">
 		<path d="M 700 -2000 H 1300 H 1600 V -1450 H 1400 V 0
 		H 1200 L 900 -450 L 600 0
 		H 500 L 200 -450 L -100 0
@@ -317,7 +381,7 @@
 *******************************************************************************
 *******************************************************************************
 ******************************************************************************* -->
-	<svg id='splash' class='intro' onclick="run(this)" viewBox="0 0 800 800" display="none">
+	<svg id='splash' class='intro' onclick="run(this)" viewBox="0 0 800 800" display="inline">
     <defs>
     	<style type="text/css"><![CDATA[
 			.keyrect {
@@ -355,9 +419,8 @@
     	]]></style>
     </defs>
     <g id = "controls">
-	    <!-- <text id = "title" class = "title" text-anchor="middle" x="400" y="200">side scroller</text> -->
-		<!-- <text id = "title" class = "title" text-anchor="middle" x="400" y="200">isogon invasion!</text> -->
-		<text id = "title" class = "title" text-anchor="middle" x="400" y="200">isogon invasion</text>
+		<text id = "title" class = "title" text-anchor="middle" x="400" y="200"> ostrichbot
+		</text>
 		<text id = "instruct" class = "instructions" text-anchor="middle" x="500" y="650">click to begin</text>
 		<text class = 'name' x="50%" y="99%" text-anchor="middle">by Ross Landgreen with the matter.js physics engine</text>
 <!--     <text class = "info" x="5" y="695">move: WASD</text>
@@ -367,11 +430,11 @@
     <text class = "info" x="5" y="775">zoom: +-</text>
     <text class = "info" x="5" y="795">testing: T</text> -->
 		<g transform = "translate(130,380)">
-<!--     <rect class = "keyrect" id="q" x="0" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="30" y="45">Q</text> -->
-    <!-- <rect class = "keyrect" id="e" x="140" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
-    <text class = "letter" text-anchor="middle" x="170" y="45">E</text> -->
-    <!-- <rect class = "keyrect" id="e" x="210" y="0" width="60" height="60" fill='#99a' stroke-width="0"/>
+ 	<rect class = "keyrect" id="q" x="0" y="0" width="60" height="60" fill='#bbb' stroke-width="0"/>
+    <text class = "letter" text-anchor="middle" x="30" y="45">Q</text>
+    <rect class = "keyrect" id="e" x="140" y="0" width="60" height="60" fill='#bbb' stroke-width="0"/>
+    <text class = "letter" text-anchor="middle" x="170" y="45">E</text>
+    <!-- <rect class = "keyrect" id="r" x="210" y="0" width="60" height="60" fill='#bbb' stroke-width="0"/>
     <text class = "letter" text-anchor="middle" x="240" y="45">R</text> -->
     	<rect class = "keyrect" id="w" x="70" y="0" width="60" height="60" fill='#555' stroke-width="0"/>
     	<text class = "letter" text-anchor="middle" x="100" y="45">W</text>
@@ -379,10 +442,12 @@
     	<text class = "letter" text-anchor="middle" x="100" y="113">S</text>
     	<rect class = "keyrect" id="d" x="140" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
     	<text class = "letter" text-anchor="middle" x="170" y="113">D</text>
-    <!-- <rect class = "keyrect" id="d" x="210" y="70" width="60" height="60" fill='#99a' stroke-width="0"/>
+    <!-- <rect class = "keyrect" id="f" x="210" y="70" width="60" height="60" fill='#bbb' stroke-width="0"/>
     <text class = "letter" text-anchor="middle" x="240" y="113">F</text> -->
     	<rect class = "keyrect" id="a" x="0" y="70" width="60" height="60" fill='#555' stroke-width="0"/>
     	<text class = "letter" text-anchor="middle" x="30" y="113">A</text>
+		<!-- <rect class = "keyrect" id="z" x="0" y="140" width="60" height="60" fill='#bbb' stroke-width="0"/>
+		<text class = "letter" text-anchor="middle" x="30" y="185">Z</text> -->
 	</g>
     <g transform = "translate(480,350) scale(0.35)">
 	    <path fill="#666" d="M284.5,182c0,15.74-12.76,28.5-28.5,28.5l0,0c-15.74,0-28.5-12.76-28.5-28.5v-49

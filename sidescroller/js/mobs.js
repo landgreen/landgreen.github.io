@@ -1,4 +1,4 @@
-const mob = [];
+let mob = [];
 
 const mobs = {
     loop: function() {
@@ -338,7 +338,7 @@ const mobs = {
                 }
             },
             sneakAttack: function() { //speeds towards player when player isn't looking on CD
-                if (this.cd < game.cycle && !mech.lookingAtMob(this, 0.5)) {
+                if (this.cd < game.cycle && !mech.lookingAtMob(this, 0.5) && Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position))>100000) {
                     this.seePlayerCheck();
                     if (this.seePlayer.yes) {
                         this.cd = game.cycle + 120;
@@ -393,7 +393,7 @@ const mobs = {
                     const y = this.position.y - w * 0.7
                     ctx.fillStyle = 'rgba(100, 100, 100, 0.3)';
                     ctx.fillRect(x, y, w, h);
-                    ctx.fillStyle = '#f00' //'rgba(255,0,0,0.8)'
+                    ctx.fillStyle = 'rgba(255,0,0,0.7)'
                     ctx.fillRect(x, y, w * this.health, h);
                 }
             },

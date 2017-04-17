@@ -21,22 +21,32 @@ const game = {
     buttonCD: 0,
     drawList: [], //so you can draw a first frame of explosions.. I know this is bad
     drawTime: 8, //how long circles are drawn.  use to push into drawlist.time
-    mobDmgColor: 'rgba(255,0,0,0.7)', //used top push into drawList.color
-    playerDmgColor: 'rgba(0,0,0,0.7)', //used top push into drawList.color
-    drawCircle: function() { //draws a circle for two cycles, used for showing damage mostly
-        let i = this.drawList.length
+    mobDmgColor: "rgba(255,0,0,0.7)", //used top push into drawList.color
+    playerDmgColor: "rgba(0,0,0,0.7)", //used top push into drawList.color
+    drawCircle: function() {
+        //draws a circle for two cycles, used for showing damage mostly
+        let i = this.drawList.length;
         while (i--) {
             ctx.beginPath(); //draw circle
             ctx.arc(this.drawList[i].x, this.drawList[i].y, this.drawList[i].radius, 0, 2 * Math.PI);
             ctx.fillStyle = this.drawList[i].color;
             ctx.fill();
-            if (this.drawList[i].time) { //remove when timer runs out
-                this.drawList[i].time--
+            if (this.drawList[i].time) {
+                //remove when timer runs out
+                this.drawList[i].time--;
             } else {
                 this.drawList.splice(i, 1);
             }
         }
     },
+    textList: [],
+	lastLogTime: 0,
+	textLogSVG: function(){
+		if (game.lastLogTime && game.lastLogTime < game.cycle){
+			game.lastLogTime = 0
+			document.getElementById("text-log").textContent = ' '
+		}
+	},
     timing: function() {
         this.cycle++; //tracks game cycles
         //delta is used to adjust forces on game slow down;
@@ -44,53 +54,59 @@ const game = {
         this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
     },
     track: true,
-    setTracking: function() { //use in window resize in index.js
+    setTracking: function() {
+        //use in window resize in index.js
         this.track = true;
-        this.zoom = canvas.height / 1700; //sets starting zoom scale
+        this.zoom = canvas.height / 1500; //sets starting zoom scale
     },
-    // keyCodes: {
-    // 		w: 87,
-    // 		s: 83,
-    // 		a: 65,
-    // 		d: 68,
-    // 		up: 38,
-    // 		down: 40,
-    // 		left: 37,
-    // 		right: 39,
-    // },
-    // keyCodesArray: [87, 83, 65, 68, 38, 40, 37, 39],
-    // keysUp: function() { //sets all keys and mouse to not down  //I'm trying to stop keylag
-    //     game.mouseDown = false
-    //     for (let i = 0, len = this.keyCodesArray.length; i < len; ++i) {
-    //         keys[this.keyCodesArray[i]] = false
-    //     }
-	//
-    // },
-    keyPress: function() { //runs on key press event
-        if (keys[57]) { //9
-            powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
+    keyUp: function() {
+        if (!keys[90]) {
+            // z
+            this.setTracking();
         }
-        // if (keys[90]) { // 69 = e  90 = z
-        //
-        // } else
-        if (keys[84]) { // 84 = t
+    },
+    keyPress: function() {
+        //runs on key press event
+        if (keys[90]) {
+            // z
+            this.zoom = 0.2;
+        }
+        if (keys[69]) {
+            // e    swap to next active gun
+            const next = function() {
+                b.activeGun++;
+                if (b.activeGun > b.guns.length - 1) b.activeGun = 0;
+                if (b.guns[b.activeGun].have === false || b.guns[b.activeGun].ammo < 1) next();
+            };
+            next();
+            b.updateHUD();
+        } else if (keys[81]) {
+            //q    swap to previous active gun
+            const previous = function() {
+                b.activeGun--;
+                if (b.activeGun < 0) b.activeGun = b.guns.length - 1;
+                if (b.guns[b.activeGun].have === false || b.guns[b.activeGun].ammo < 1) previous();
+            };
+            previous();
+            b.updateHUD();
+        }
+        if (keys[84]) {
+            // 84 = t
             if (this.testing) {
                 this.testing = false;
             } else {
                 this.testing = true;
             }
-        } else if (keys[48]) { // 48 = 0
-            if (this.track) {
-                this.track = false;
-                //this.zoom = canvas.height / 3000; //sets starting zoom scale
-            } else {
-                this.track = true;
+        } else if (this.testing) {
+            if (keys[57]) {
+                //9
+                powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
             }
-
-        } else if (keys[187]) { // 187 = +
-            this.zoom *= 1.1;
-        } else if (keys[189]) { // 189 = -
-            this.zoom *= 0.9;
+            if (keys[80]) {
+                //p
+                Matter.Body.setPosition(player, this.mouseInGame);
+                Matter.Body.setVelocity(player, { x: 0, y: 0 });
+            }
         }
     },
     zoom: 1,
@@ -101,6 +117,23 @@ const game = {
         //calculate in game mouse position by undoing the zoom and translations
         this.mouseInGame.x = (this.mouse.x - canvas.width2) / this.zoom + canvas.width2 - mech.transX;
         this.mouseInGame.y = (this.mouse.y - canvas.height2) / this.zoom + canvas.height2 - mech.transY;
+    },
+    startZoomIn: function() {
+        document.body.removeEventListener("keydown", game.startZoomIn);
+        game.track = true;
+        function zoomIn() {
+            const max = canvas.height / 1500;
+            // if (game.zoom>canvas.height/2900){
+            // 	game.zoom += (max-game.zoom)*0.01+max*0.0002    //end with this
+            // }else{
+            // 	game.zoom += (max-game.zoom)*0.01+max*0.0002  	//first this
+            // }
+            game.zoom += (max - game.zoom) * 0.01 + max * 0.0002;
+            if (game.zoom < max) {
+                requestAnimationFrame(zoomIn);
+            }
+        }
+        requestAnimationFrame(zoomIn);
     },
     wipe: function() {
         // if (this.isPaused) {
@@ -117,43 +150,57 @@ const game = {
         // }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     },
-    isPaused: false,
-    pause: function() {
-        if (keys[70] && mech.buttonCD < this.cycle) {
-            mech.buttonCD = this.cycle + 20;
-            if (!this.isPaused) {
-                this.cyclePaused = this.cycle;
-                this.isPaused = true;
-                for (let i = 0; i < body.length; i++) {
-                    body[i].pausedVelocity = body[i].velocity; //sleep wipes velocity, so we need to keep track
-                    body[i].pausedVelocityA = body[i].angularVelocity; //sleep wipes velocity, so we need to keep track
-                    Matter.Sleeping.set(body[i], true);
-                }
-                for (let i = 0; i < bullet.length; i++) {
-                    bullet[i].pausedVelocity = bullet[i].velocity; //sleep wipes velocity, so we need to keep track
-                    bullet[i].pausedVelocityA = bullet[i].angularVelocity; //sleep wipes velocity, so we need to keep track
-                    Matter.Sleeping.set(bullet[i], true);
-                }
-            } else {
-                this.isPaused = false;
-                for (let i = 0; i < body.length; i++) {
-                    Matter.Sleeping.set(body[i], false);
-                    Matter.Body.setVelocity(body[i], body[i].pausedVelocity); //return old velocity before pause
-                    Matter.Body.setAngularVelocity(body[i], body[i].angularVelocity)
-                }
-                for (let i = 0; i < bullet.length; i++) {
-                    bullet[i].birthCycle += this.cycle - this.cyclePaused; //extends the lifespan of a bullet
-                    Matter.Sleeping.set(bullet[i], false);
-                    if (bullet[i].pausedVelocity) {
-                        Matter.Body.setVelocity(bullet[i], bullet[i].pausedVelocity); //return old velocity before pause
-                        Matter.Body.setAngularVelocity(bullet[i], bullet[i].angularVelocity)
-                    }
-
-                }
-            }
+    reset: function() {
+        b.dmgScale = 1;
+        b.activeGun = 0;
+        //removes guns and ammo
+        b.inventory = [0];
+        for (let i = 1, len = b.guns.length; i < len; ++i) {
+            b.guns[i].ammo = 0;
+            b.guns[i].have = false;
         }
+        b.updateHUD();
+        mech.addHealth(1);
+        game.dmgScale = 1;
+        game.levelsCleared = 0;
+        level.onLevel = Math.floor(Math.random() * level.levels.length); //picks a rnadom starting level
+        //powerUps.startingPowerUps(); //setup gun
+        game.clearMap();
+        level.start(); //spawns the level
     },
-    getCoords: { //used when building maps, outputs a draw rect command to console, only works in testing mode
+    clearMap: function() {
+        //stops sounds, removes bodies from engine and from arrays
+        level.removeSVG();
+        level.zones = [];
+        this.drawList = [];
+        // var sounds = document.getElementsByTagName('audio')
+        // for(i=0; i<sounds.length; i++) sounds[i].pause()  //stops all sound
+        //document.getElementById("ambient_crickets").pause()
+        //document.getElementById("ambient_wind").pause()
+        function removeAll(array) {
+            //generic remove array from engine
+            for (let i = 0; i < array.length; ++i)
+                Matter.World.remove(engine.world, array[i]);
+        }
+        removeAll(map);
+        map = [];
+        removeAll(body);
+        body = [];
+        removeAll(mob);
+        mob = [];
+        removeAll(powerUp);
+        powerUp = [];
+        removeAll(cons);
+        cons = [];
+        removeAll(consBB);
+        consBB = [];
+        removeAll(bullet);
+        bullet = [];
+        removeAll(mobBullet);
+        mobBullet = [];
+    },
+    getCoords: {
+        //used when building maps, outputs a draw rect command to console, only works in testing mode
         pos1: {
             x: 0,
             y: 0
@@ -167,38 +214,35 @@ const game = {
                 this.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
                 this.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
             }
-
-            if (keys[50]) { //press 1 in the top left; press 2 in the bottom right;copy command from console
+            if (keys[50]) {
+                //press 1 in the top left; press 2 in the bottom right;copy command from console
                 this.pos2.x = Math.round(game.mouseInGame.x / 25) * 25;
                 this.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;
-
-
-                // Select the email link anchor text
                 window.getSelection().removeAllRanges();
                 var range = document.createRange();
-                range.selectNode(document.getElementById('test'));
+                range.selectNode(document.getElementById("test"));
                 window.getSelection().addRange(range);
-                document.execCommand('copy')
+                document.execCommand("copy");
                 window.getSelection().removeAllRanges();
-
-                console.log(`spawn.mapRect(${this.pos1.x}, ${this.pos1.y}, ${this.pos2.x-this.pos1.x}, ${this.pos2.y-this.pos1.y}); //`);
-
+                console.log(
+                    `spawn.mapRect(${this.pos1.x}, ${this.pos1.y}, ${this.pos2.x - this.pos1.x}, ${this.pos2.y - this.pos1.y}); //`
+                );
             }
-        },
+        }
     },
     testingOutput: function() {
-        ctx.textAlign = 'left';
+        ctx.textAlign = "left";
         ctx.fillStyle = "#000";
-        let line = 20;
+        let line = 100;
         ctx.fillText("Press T to exit testing mode", 5, line);
         line += 30;
         ctx.fillText("cycle: " + game.cycle, 5, line);
         line += 20;
         ctx.fillText("delta: " + game.delta.toFixed(6), 5, line);
         line += 20;
-        ctx.fillText("x: " + mech.pos.x.toFixed(0), 5, line);
+        ctx.fillText("x: " + player.position.x.toFixed(0), 5, line);
         line += 20;
-        ctx.fillText("y: " + mech.pos.y.toFixed(0), 5, line);
+        ctx.fillText("y: " + player.position.y.toFixed(0), 5, line);
         line += 20;
         ctx.fillText("Vx: " + mech.Vx.toFixed(2), 5, line);
         line += 20;
@@ -228,10 +272,9 @@ const game = {
         line += 20;
         ctx.fillText("on " + mech.onBody.type + " id: " + mech.onBody.id + ", index: " + mech.onBody.index, 5, line);
         line += 20;
-        ctx.fillText('action: ' + mech.onBody.action, 5, line);
-        ctx.textAlign = 'center';
+        ctx.fillText("action: " + mech.onBody.action, 5, line);
+        ctx.textAlign = "center";
         ctx.fillText(`(${this.mouseInGame.x.toFixed(1)}, ${this.mouseInGame.y.toFixed(1)})`, this.mouse.x, this.mouse.y - 20);
-
     },
     output: function() {
         let line = 80;
@@ -255,7 +298,21 @@ const game = {
     },
     draw: {
         powerUp: function() {
-            ctx.lineWidth = 5
+            // ctx.lineWidth = 5
+            // for (let i = 0, len = powerUp.length; i < len; ++i) {
+            //     let vertices = powerUp[i].vertices;
+            //     ctx.beginPath();
+            //     ctx.moveTo(vertices[0].x, vertices[0].y);
+            //     for (let j = 1; j < vertices.length; j += 1) {
+            //         ctx.lineTo(vertices[j].x, vertices[j].y);
+            //     }
+            //     ctx.lineTo(vertices[0].x, vertices[0].y);
+            // 	ctx.globalAlpha = powerUp[i].alpha;
+            //     ctx.strokeStyle = powerUp[i].color
+            //     ctx.stroke()
+            // }
+            // ctx.globalAlpha = 1;
+            const a = 0.3 * Math.sin(game.cycle * 0.25) + 0.7;
             for (let i = 0, len = powerUp.length; i < len; ++i) {
                 let vertices = powerUp[i].vertices;
                 ctx.beginPath();
@@ -264,13 +321,28 @@ const game = {
                     ctx.lineTo(vertices[j].x, vertices[j].y);
                 }
                 ctx.lineTo(vertices[0].x, vertices[0].y);
-                ctx.globalAlpha = powerUp[i].alpha;
-                // ctx.fillStyle = powerUp[i].color;
-                // ctx.fill();
-                ctx.strokeStyle = powerUp[i].color;
-                ctx.stroke();
+                ctx.fillStyle = `hsla(${powerUp[i].color}, 100%, 50%, ${a})`; //powerUp[i].color;
+                ctx.fill();
             }
-            ctx.globalAlpha = 1;
+        },
+        mobBullet: function() {
+            let i = mobBullet.length;
+            ctx.beginPath();
+            while (i--) {
+                let vertices = mobBullet[i].vertices;
+                ctx.moveTo(vertices[0].x, vertices[0].y);
+                for (let j = 1; j < vertices.length; j += 1) {
+                    ctx.lineTo(vertices[j].x, vertices[j].y);
+                }
+                ctx.lineTo(vertices[0].x, vertices[0].y);
+                if (mobBullet[i].endCycle < game.cycle) {
+                    Matter.World.remove(engine.world, mobBullet[i]);
+                    mobBullet.splice(i, 1);
+                }
+            }
+            //ctx.fillStyle = ((game.cycle%2) ? '#000' : '#f00');
+            ctx.fillStyle = "#f00";
+            ctx.fill();
         },
         map: function() {
             ctx.beginPath();
@@ -282,7 +354,7 @@ const game = {
                 }
                 ctx.lineTo(vertices[0].x, vertices[0].y);
             }
-            ctx.fillStyle = '#444';
+            ctx.fillStyle = "#444";
             ctx.fill();
         },
         body: function() {
@@ -296,9 +368,9 @@ const game = {
                 ctx.lineTo(vertices[0].x, vertices[0].y);
             }
             ctx.lineWidth = 1.5;
-            ctx.fillStyle = '#777';
+            ctx.fillStyle = "#777";
             ctx.fill();
-            ctx.strokeStyle = '#222';
+            ctx.strokeStyle = "#222";
             ctx.stroke();
         },
         cons: function() {
@@ -312,7 +384,7 @@ const game = {
                 ctx.lineTo(consBB[i].bodyB.position.x, consBB[i].bodyB.position.y);
             }
             ctx.lineWidth = 1;
-            ctx.strokeStyle = '#999';
+            ctx.strokeStyle = "#999";
             ctx.stroke();
         },
         wireFrame: function() {
@@ -331,10 +403,22 @@ const game = {
                 ctx.lineTo(vertices[0].x, vertices[0].y);
             }
             ctx.lineWidth = 1;
-            ctx.strokeStyle = '#000';
+            ctx.strokeStyle = "#000";
             ctx.stroke();
         },
         testing: function() {
+            //zones
+            ctx.beginPath();
+            for (let i = 0, len = level.zones.length; i < len; ++i) {
+                ctx.rect(
+                    level.zones[i].x1,
+                    level.zones[i].y1 + 70,
+                    level.zones[i].x2 - level.zones[i].x1,
+                    level.zones[i].y2 - level.zones[i].y1
+                );
+            }
+            ctx.fillStyle = "rgba(0, 255, 0, 0.3)";
+            ctx.fill();
             //jump
             ctx.beginPath();
             let bodyDraw = jumpSensor.vertices;
@@ -343,9 +427,9 @@ const game = {
                 ctx.lineTo(bodyDraw[j].x, bodyDraw[j].y);
             }
             ctx.lineTo(bodyDraw[0].x, bodyDraw[0].y);
-            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+            ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
             ctx.fill();
-            ctx.strokeStyle = '#000';
+            ctx.strokeStyle = "#000";
             ctx.stroke();
             //main body
             ctx.beginPath();
@@ -355,7 +439,7 @@ const game = {
                 ctx.lineTo(bodyDraw[j].x, bodyDraw[j].y);
             }
             ctx.lineTo(bodyDraw[0].x, bodyDraw[0].y);
-            ctx.fillStyle = 'rgba(0, 255, 255, 0.3)';
+            ctx.fillStyle = "rgba(0, 255, 255, 0.3)";
             ctx.fill();
             ctx.stroke();
             //head
@@ -366,7 +450,7 @@ const game = {
                 ctx.lineTo(bodyDraw[j].x, bodyDraw[j].y);
             }
             ctx.lineTo(bodyDraw[0].x, bodyDraw[0].y);
-            ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
+            ctx.fillStyle = "rgba(255, 255, 0, 0.3)";
             ctx.fill();
             ctx.stroke();
             //head sensor
@@ -377,9 +461,9 @@ const game = {
                 ctx.lineTo(bodyDraw[j].x, bodyDraw[j].y);
             }
             ctx.lineTo(bodyDraw[0].x, bodyDraw[0].y);
-            ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';
+            ctx.fillStyle = "rgba(0, 0, 255, 0.3)";
             ctx.fill();
             ctx.stroke();
-        },
-    },
-}
+        }
+    }
+};
