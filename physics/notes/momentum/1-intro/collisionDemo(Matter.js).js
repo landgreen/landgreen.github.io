@@ -1,9 +1,34 @@
-function collisionDemo() {
+window.onload = setup;
+function setup() { //writes a message onload
+    var canvas;
+    var ctx;
+    for (var i = 0; i < 6; i++) {
+        canvas = document.getElementById('canvas' + i);
+        ctx = canvas.getContext("2d");
+        ctx.font = "300 30px Roboto";
+        ctx.fillStyle = '#aaa';
+        ctx.textAlign = "center";
+        ctx.fillText('click to start simulation', canvas.width / 2, canvas.height / 2);
+    }
+}
+
+//
+// window.onload = setup0;
+// function setup0() { //writes a message onload
+//     var canvas = document.getElementById('canvas0');
+//     var ctx = canvas.getContext("2d");
+//     ctx.font = "300 30px Roboto";
+//     ctx.fillStyle = '#aaa';
+//     ctx.textAlign = "center";
+//     ctx.fillText('click to start simulation', canvas.width / 2, canvas.height / 2);
+// }
+
+function collision0(el) {
     //set up canvas
-    var canvasID = "canvas"
-    var canvas = document.getElementById(canvasID);
+    el.onclick = null; //stops the function from running on button click
+    var canvas = el
     var ctx = canvas.getContext("2d");
-    var id = document.getElementById(canvasID).parentNode.id;
+
 
     // module aliases
     var Engine = Matter.Engine,
@@ -26,7 +51,7 @@ function collisionDemo() {
 
     var mass = [];
 
-    document.getElementById(canvasID).addEventListener("mousedown", function() {
+    document.getElementById(el.id).addEventListener("mousedown", function() {
         World.clear(engine.world, true); //clear matter engine, leave static
         mass = []; //clear mass array
         spawnMass(0, 110, 120, 0, 20 + Math.round(Math.random() * 70), Math.random());
@@ -151,18 +176,18 @@ function collisionDemo() {
         // ctx.stroke();
         //labels
         ctx.textAlign = "center";
-        ctx.font = "15px Arial";
+        ctx.font = "300 20px Roboto";
         ctx.fillStyle = "#000";
         var p = 0;
         for (var k = 0, length = mass.length; k < length; k++) {
-            ctx.fillText(mass[k].mass.toFixed(2) + 'kg', mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 18);
+            ctx.fillText(mass[k].mass.toFixed(2) + 'kg', mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 22);
             ctx.fillText(mass[k].velocity.x.toFixed(2) + 'm/s', mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 2);
             p += mass[k].mass * mass[k].velocity.x;
         }
         ctx.textAlign = "left";
-        ctx.fillText('mv + mv = total momentum', 5, 13);
+        ctx.fillText('mv + mv = total momentum', 5, 15);
         ctx.fillText('(' + mass[0].mass.toFixed(2) + ')(' + mass[0].velocity.x.toFixed(2) + ') + (' +
-            mass[1].mass.toFixed(2) + ') (' + mass[1].velocity.x.toFixed(2) + ') = ' + p.toFixed(2), 5, 30);
+            mass[1].mass.toFixed(2) + ') (' + mass[1].velocity.x.toFixed(2) + ') = ' + p.toFixed(2), 5, 37);
         //edgeBounce();
     })();
 }

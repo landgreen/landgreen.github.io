@@ -4,87 +4,166 @@
 <head>
     <meta charset="UTF-8">
     <title>Conservation of Energy</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../../style.css">
-    <script src='../../../lib/matter.min.js'></script>
     <script src='../../../lib/randomColor.min.js'></script>
+    <link rel="stylesheet" href="../../../lib/font-awesome-4.6.3/css/font-awesome.min.css">
 </head>
 
 <body onload="particles();">
-  <header>
-  <h1>Conservation of Energy</h1>
-  </header>
+    <header>
+        <h1>Conservation of Energy</h1>
+    </header>
     <article>
-        <h1 class='underlined'>Conservation of Energy</h1>
         <br>
 
-        <div class="flex-container">
-            <div class="flex-item">
-                <button id="pause">pause</button>
+        <div class="col-group">
+            <div>
+                <canvas id="canvas0" width='250' height='400'> </canvas>
+                <br>
+                <button id="pause">&nbsp;<i class="fa fa-pause" aria-hidden="true"></i>&nbsp;</button>
                 <button id="energy">friction: OFF</button>
-                <br>
-                <canvas id="canvas0" width='300' height='600'> </canvas>
             </div>
-            <div class="flex-item">
-                <p>Energy, like momentum, is conserved. This means that if we add up the total energy of a system it will always be the same value, unless something enters or leaves the system.</p>
-                <p>As the ball bounces energy transfers form kinetic to gravitational.</p>
-                <p>When is kinetic energy the highest?</p>
-                <p>When is gravitational energy the highest?</p>
-                <p>When is rotational energy the hightest?</p>
-                <p>How is the total energy decreasing? Isn't energy conserved?</p>
+            <div>
+                <p>Energy is conserved. This means that if we add up the total energy of a system it will always be the same value, unless some energy enters or leaves the system we are tracking.</p>
                 <br>
+                <p>As the ball in the simulation falls energy transfers from gravitational to kinetic. As it rises energy transfers from kinetic to gravitational.</p>
+                <br>
+                <p>When is kinetic energy the highest?</p>
+                <br>
+                <p>When is gravitational energy the highest?</p>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <p>Take a look at the simulated spring and mass system.</p>
+        <p>What types of energy are being traded in this simulation?</p>
+        <p>When is the velocity the highest?</p>
+        <p>What is the effect of a higher spring constant?</p>
+        <p>What is the effect of a lower mass?</p>
+        <canvas id="canvas1" width='600' height='200' onclick="spring(this)"> </canvas>
+        <br> <button id="pause1">
+          &nbsp;<i class="fa fa-pause" aria-hidden="true"></i>&nbsp;
+        </button> &nbsp;k =
+        <input id='spring-k' type="number" min="0" max="10" value=0.1 step=0.05> &nbsp;&nbsp;&nbsp; m =
+        <input id='spring-m' type="number" min="1" max="100" value=0 step=1>
+        <br>
+        <br>
+        <br>
+        <br>
         <p>We can build an equation that sets the total energy at one moment in time equal to the total energy at another moment in time.
         </p>
+        <h1 class='underlined'>Conservation of Energy</h1>
         <div class='definition'>
-            <h1>$$E_{i} = E_{f}$$ </h1> \( E_{i} \) = total initial energy [J] <i>scalar</i>
+            <h1>$$E_{i} = E_{f}$$
+             </h1> \( E_{i} \) = total initial energy [J] <i>scalar</i>
             <br>\( E_{f} \) = total final energy [J] <i>scalar</i>
-            <br>\( v \) = velocity[m/s] <i>vector</i>
         </div>
-
         <br>
         <br>
         <br>
         <br>
-        <p><b>Example:</b> A 0.43kg soccer ball starts at rest and rolls down a 30m tall hill.  How fast will the ball be moving at the bottom of the hill?</p>
+        <p><b>Example:</b> A ball falls off a table from 0.80m high. How fast is the ball going just before it hits the ground?</p>
         <details>
             <summary>solution</summary>
-            $$E_{i} = E_{f}$$
-            $$U_{i} + K_{i} = U_{f} + K_{f}$$
-            $$mgh + \frac{1}{2}mv^{2} = mgh +\frac{1}{2}mv^{2}$$
-            <p>mass is in every term.  lets divide y m</p>
+            $$E_{i} = E_{f}$$ $$U_{i} = K_{f}$$ $$mgh_{i} = \frac{1}{2}mv^{2}$$
+            <p>Mass is in every term. Lets divide by m.</p>
+            $$gh_{i} = \frac{1}{2}v^{2}$$ $$(9.8)(0.80) = \frac{1}{2}v^{2}$$ $$15.68 = v^{2}$$ $$\pm 3.959\small\frac{m}{s} =\normalsize v$$
+        </details>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> If you throw a half-filled water bottle vertically at 10m/s how high will it go?</p>
+        <details>
+            <summary>solution</summary>
+            $$E_{i} = E_{f}$$ $$K_{i} = U_{f}$$ $$\frac{1}{2}mv^{2} = mgh$$
+            <p>Mass is in every term. Lets divide by m.</p>
+            $$\frac{1}{2}v^{2} = gh$$ $$\frac{1}{2}(10)^{2} = (9.8)h$$ $$\frac{1}{2}(100)/9.8 = h$$ $$5.10m = h$$
         </details>
         <br>
         <br>
         <br>
         <br>
-
-        <button id="pause1">pause</button>
-        <div>
-        <canvas id="canvas1" width='700' height='200' onclick="spring(this)"> </canvas></div>
+        <p><b>Example:</b> A roller coaster cart starts at rest 126m high on the top of the first drop on "Superman: Escape from Krypton" at Six Flags Magic Mountain. How fast is the cart going at the bottom of the hill?</p>
+        <details>
+            <summary>solution</summary>
+            $$E_{i} = E_{f}$$ $$U_{i} + K_{i} = U_{f} + K_{f}$$ $$mgh_{i} + \frac{1}{2}mu^{2} = mgh_{f} +\frac{1}{2}mv^{2}$$
+            <p>Mass is in every term. Lets divide by m.</p>
+            $$gh_{i} + \frac{1}{2}u^{2} = gh_{f} +\frac{1}{2}v^{2}$$ $$(9.8)(126) + \frac{1}{2}(0)^{2} = (9.8)(0) +\frac{1}{2}v^{2}$$ $$1234.8 = \frac{1}{2}v^{2}$$ $$\pm 49.69 \small\frac{m}{s} =\normalsize v$$
+        </details>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> A 0.43kg soccer ball kicked at 10m/s rolls down a 30m tall hill. How fast will the ball be moving at the bottom of the hill?</p>
+        <details>
+            <summary>solution</summary>
+            $$E_{i} = E_{f}$$ $$U_{i} + K_{i} = U_{f} + K_{f}$$ $$mgh_{i} + \frac{1}{2}mu^{2} = mgh_{f} +\frac{1}{2}mv^{2}$$
+            <p>Mass is in every term. Lets divide by m.</p>
+            $$gh_{i} + \frac{1}{2}u^{2} = gh_{f} +\frac{1}{2}v^{2}$$ $$(9.8)(30) + \frac{1}{2}(10)^{2} = (9.8)(0) + \frac{1}{2}v^{2}$$ $$294 + 50 = \frac{1}{2}v^{2}$$ $$344 = \frac{1}{2}v^{2}$$ $$\pm 26.2 \small\frac{m}{s} =\normalsize v$$
+        </details>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> A 0.20kg ball is placed on a spring compressed down 0.15m. The internet says that your spring has a spring constant of 200.0kg/s².  How high could the ball go just using the energy stored in the spring?
+        </p>
+        <details>
+            <summary>solution</summary>
+            $$E_{i} = E_{f}$$
+            $$U_{s} = U_{g}$$
+            $$\frac{1}{2}kx^{2} = mgh$$
+            <p>Can't divide by mass this time.</p>
+            $$\frac{1}{2}(200)(0.15)^{2} = (0.2)(9.8)h$$
+            $$1.15m = h$$
+        </details>
+        <br>
+        <br>
+        <br>
+        <p><b>Example:</b> A 0.20kg ball is placed on a spring compressed down 0.15m. The internet says that your spring has a spring constant of 200.0kg/s². How fast should the ball be moving right after it leaves the spring?
+        </p>
+        <details>
+            <summary>solution</summary>
+            $$E_{i} = E_{f}$$
+            $$U_{s} = K$$
+            $$\frac{1}{2}kx^{2} = \frac{1}{2}mv^{2}$$
+            <p>Can't divide by mass this time.</p>
+            $$\frac{1}{2}(200)(0.15)^{2} = \frac{1}{2}(0.2)v^{2}$$
+            $$22.5 = v^{2}$$
+            $$\pm 4.74 \small\frac{m}{s} =\normalsize v$$
+        </details>
+        <br>
+        <br>
+        <br>
+        <div class="col-group">
+          <div>
+            <!-- <button id="friction">friction: OFF</button> -->
+        <br><canvas id="canvas2" width='250' height='400' onclick="springGravity(this)"> </canvas>
+        <br><button id="pause2">
+          &nbsp;<i class="fa fa-pause" aria-hidden="true"></i>&nbsp;
+        </button> &nbsp;
         k =
-        <input id='spring-k' type="number" min="0" max="10" value=0.1 step=0.05>
-        &nbsp;&nbsp;&nbsp; m =
-        <input id='spring-m' type="number"  min="1" max="100" value=0 step=1>
+        <input id='spring-k2' type="number" min="0" max="10" value=3 step=1> m =
+        <input id='spring-m2' type="number" min="1" max="100" value=0 step=1>
 
-
+      </div>
+      <div>
+        <h3>Vertical Spring and Mass</h3>
+      </div>
+      </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
     </article>
-    <br>
-<br>
-<br>
-<br>
-<br>
-<div style="text-align:center">
-    <a href="../../../index.html#units">Back</a>
-</div>
-<br>
-<br>
-<br>
-<br>
-<br>
+	<div class = 'back'>
+		<a href="../../../index.html#units">Back</a>
+	</div>
+    <script src="spring-gravity.js"></script>
     <script src="spring.js"></script>
     <script src="energy.js"></script>
     <script>

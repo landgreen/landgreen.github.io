@@ -214,6 +214,8 @@
                   <br><strong>m</strong> = mass of the central body being orbited [kg] <i>scalar</i>
 				  <p><strong>Only true for circular orbits!</strong></p>
               </div>
+			  <h3 class='center'>radius vs. orbital velocity<br>for a satellite of Earth</h3>
+			  <div id = 'v-vs-r'></div>
 			  <br>
 			  <p>Click the mouse on the simulation to set the radius for the circular orbit.</p>
 			  <canvas id="canvas-1" class = 'center' width = '600' height = '350'></canvas>
@@ -268,19 +270,10 @@
                   <table border>
                       <tr align=center>
                           <th align=left>Planet</th>
-                          <th>mass</th>
-                          <th>radius</th>
-                          <th>density</th>
+                          <th>mass (kg)</th>
+                          <th>radius (km)</th>
+                          <th>density (g/cm<sup>3</sup>)</th>
                           <th>rotation</th>
-                          <th>axis tilt</th>
-                      </tr>
-                      <tr align=center>
-                          <th><br></th>
-                          <th>(kg) </th>
-                          <th>(km) </th>
-                          <th>(g/cm<sup>3</sup>) </th>
-                          <th></th>
-                          <th>degree °</th>
                       </tr>
                       <tr align=center>
                           <td align=left>Sun</td>
@@ -288,79 +281,69 @@
                           <td>695,700</td>
                           <td>1.408</td>
                           <td>~30 d</td>
-                          <td>0</td>
                       </tr>
                       <tr align=center>
                           <td align=left>Mercury</td>
                           <td>3.301×10<sup>23</sup></td>
                           <td>2,440</td>
                           <td>5.427</td>
-                          <td>58.785 d</td>
-                          <td>~0</td>
+                          <td>58.8 d</td>
                       </tr>
                       <tr align=center>
                           <td align=left>Venus</td>
                           <td>4.867×10<sup>24</sup></td>
                           <td>6,052</td>
                           <td>5.243</td>
-                          <td>243.686 d</td>
-                          <td>177.36</td>
+                          <td>243.7 d</td>
                       </tr>
                       <tr align=center>
                           <td align=left>Earth</td>
                           <td>5.972×10<sup>24</sup></td>
                           <td>6,371</td>
                           <td>5.515</td>
-                          <td>23.9345 h</td>
-                          <td>23.45</td>
+                          <td>23.9 h</td>
                       </tr>
                       <tr align=center>
                           <td align=left>Moon</td>
                           <td>7.346×10<sup>22</sup></td>
                           <td>1,737</td>
                           <td>3.344</td>
-                          <td>27.322 d</td>
-                          <td>1.5</td>
+                          <td>27.3 d</td>
                       </tr>
                       <tr align=center>
                           <td align=left>Mars</td>
                           <td>6.417×10<sup>23</sup></td>
                           <td>3,390</td>
                           <td>3.933</td>
-                          <td>24.6229 h</td>
-                          <td>25.19</td>
+                          <td>24.6 h</td>
                       </tr>
                       <tr align=center>
                           <td align=left>Jupiter</td>
                           <td>1.899×10<sup>27</sup></td>
                           <td>70,000</td>
                           <td>1.326</td>
-                          <td>9.9250 h</td>
-                          <td>3.13</td>
+                          <td>9.9 h</td>
                       </tr>
                       <tr align=center>
                           <td align=left>Saturn</td>
                           <td>5.685×10<sup>26</sup></td>
                           <td>58,232</td>
                           <td>0.687</td>
-                          <td>10.656 h</td>
-                          <td>26.73</td>
+                          <td>10.7 h</td>
                       </tr>
                       <tr align=center>
                           <td align=left>Uranus</td>
-                          <td>8.682×10<sup>25</sup></td>
+                          <td>8.68×10<sup>25</sup></td>
                           <td>25,362</td>
                           <td>1.270</td>
-                          <td>17.24 h</td>
-                          <td>97.77</td>
+                          <td>17.2 h</td>
                       </tr>
                       <tr align=center>
                           <td align=left>Neptune</td>
                           <td>1.024×10<sup>26</sup></td>
                           <td>24,622</td>
                           <td>1.638</td>
-                          <td>16.11 h</td>
-                          <td>28.32</td>
+                          <td>16.1 h</td>
                       </tr>
                   </table>
                   <a href="http://exoplanets.org/table">exoplanets data table</a>
@@ -374,24 +357,16 @@
               <br>
 
     </article>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div style="text-align:center">
-        <a href="../../../index.html#units">Back</a>
-    </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
+	<div class = 'back'>
+		<a href="../../../index.html#units">Back</a>
+	</div>
     <script>
         renderMathInElement(document.body);
     </script>
     <script src="motion.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src='../../../lib/function-plot.js'></script>
+	<script src='plot.js'></script>
 </body>
 
 </html>

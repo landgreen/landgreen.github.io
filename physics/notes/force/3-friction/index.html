@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Forces of Friction</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon'/ >
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
@@ -20,12 +22,12 @@
 
     <article>
 
-        <h1 class='underlined'>Friction Forces</h1> Crash Course youtube video on <a href="https://www.youtube.com/watch?v=fo_pmp5rtzo&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV&index=6">Friction</a>
+        <h1 class='underlined'>Friction Forces</h1>
 
         <p>We are going to focus on the two types of dry friction: static and kinetic. Dry friction is a complex interaction, but we have equations that are a good approximation for most situations.</p>
         <br>
         <h1 class='underlined'>Kinetic Friction</h1>
-        <canvas id="canvas" width='700' height='280'></canvas>
+        <canvas id="canvas" width='600' height='280'></canvas>
         <p>Kinetic means motion. Kinetic friction is a force that occurs when two surfaces in contact slide against each other. Kinetic friction is primarily caused by chemical bonding between surfaces, however, in many cases roughness is dominant.</p>
         <div class='definition'>
           <h1>$$F_{k}=\mu_{k} F_{N}$$</h1>
@@ -98,7 +100,7 @@
         <br>
         <br>
         <br>
-        <canvas id="canvasGlass" width='700' height='170'></canvas>
+        <canvas id="canvasGlass" width='600' height='170'></canvas>
         <p><b>Example:</b> You slide the 0.42kg <a href="http://www.ikea.com/us/en/catalog/products/10270478/">POKAL</a> glass cup on a glass table at 3.0 m/s. This time it doesn't fall over.
             <li> Look up the coeffcient on <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&cad=rja&uact=8&ved=0ahUKEwjtkditxILOAhUEKGMKHUn6DoQQygQIPzAF&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FFriction%23Coefficient_of_friction&usg=AFQjCNGO2TSwOa4dIcV4s9smoZGIuXZptA&sig2=rFYYOCz4zKKfafD-t5Yd-Q&bvm=bv.127521224,d.cGc">wikipedia</a>
                 <li>Find the force of kinetic friction.
@@ -107,27 +109,17 @@
         <details>
             <summary>solution</summary>
             $$F_{k}= \mu_{k}F_{N}$$ $$F_{N}=mg$$ $$F_{k}= \mu_{k}mg$$ $$F_{k}= (0.4)(0.42)(9.8)$$ $$F_{k}= 1.64N$$
-            <br> $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1.64}{0.42}=a$$ $$0.69\small\frac{m}{s^{2}}=\normalsize a$$
+            <br> $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1.64}{0.42}=a$$ $$3.90\small\frac{m}{s^{2}}=\normalsize a$$
             <br>
-            <p style='text-align: center;'>\(a=-0.69\), \(\Delta t=?\), \(v_{i}=3.0\), \(v_{f}=0\)</p>
-            $$v_{f} = v_{i}+a \Delta t$$ $$\frac{v_{f} - v_{i}}{a}=\Delta t$$ $$\frac{0 - 3}{-0.69}=\Delta t$$ $$4.35s=\Delta t$$
+            <p style='text-align: center;'>\(a=-3.90\), \(\Delta t=?\), \(v_{i}=3.0\), \(v_{f}=0\)</p>
+            $$v_{f} = v_{i}+a \Delta t$$ $$\frac{v_{f} - v_{i}}{a}=\Delta t$$ $$\frac{0 - 3}{-3.90}=\Delta t$$ $$0.77s=\Delta t$$
         </details>
 
 
     </article>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div style="text-align:center">
-        <a href="../../../index.html#units">Back</a>
-    </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+	<div class = 'back'>
+		<a href="../../../index.html#units">Back</a>
+	</div>
     <script src="friction(Matter.js).js"></script>
     <script src="glassSlide(Matter.js).js"></script>
     <script>renderMathInElement(document.body);</script>

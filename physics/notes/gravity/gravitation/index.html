@@ -22,7 +22,7 @@
 		<details class='history'>
             <summary>Historical Background</summary>
 			<br>
-			<div>In 1687, Isaac Newton published Principia, which hypothesized the inverse-square law of universal gravitation. Newton's theory was used to predict the existence of Neptune based on different motions of Uranus which could not be explained by the actions of the other planets. Isaac Newton had come up with an idea and described it gravitation:"I deduced that the forces which keep the planets in their orbs must be reciprocally as the squares of their distances from the centers about which they revolve; and thereby compared the force requisite to keep the Moon in her orb with the force of gravity at the surface of the Earth; and found them answer pretty nearly." What he means by this, is that the forces that keep the planets in their orbits must be reciprocal to the their distances between their centers squared that they revolve. He then compared this to the force required to keep the Moon in orbit with the force of gravity on Earth, and found that it checked out. Newton’s theory of universal gravitation was added onto an improved by other scientists such as Albert Einstein where he solved for mercury not being able to be accounted for by Newtonian gravity with his new theory of relativity, which then accounted for the discrepancy in Mercury's orbit.</div>
+			<div>In 1687, Isaac Newton published Principia, which hypothesized the inverse-square law of universal gravitation. Newton's theory was used to predict the existence of Neptune based on different motions of Uranus which could not be explained by the actions of the other planets. Isaac Newton had come up with an idea and described it gravitation:"I deduced that the forces which keep the planets in their orbs must be reciprocally as the squares of their distances from the centers about which they revolve; and thereby compared the force requisite to keep the Moon in her orb with the force of gravity at the surface of the Earth; and found them answer pretty nearly." What he means by this, is that the forces that keep the planets in their orbits must be reciprocal to the their distances between their centers squared that they revolve. He then compared this to the force required to keep the Moon in orbit with the force of gravity on Earth, and found that it checked out. Newton’s theory of universal gravitation was added onto an improved by other scientists such as Albert Einstein where he solved for mercury not being able to be accounted for by Newtonian gravity with his new theory of relativity, which then accounted for the discrepancy in Mercury's orbit. <em>-Adam Friedenthal</em></div>
 
         </details>
         <div class='definition'>
@@ -55,9 +55,14 @@
                 <br><strong>r</strong> = distance between the center of each mass [m, meters] <i>scalar</i>
         </div>
         <p>Each mass feels an equal but opposite force as predicted by Newton's 3rd law.  This means that the same force of gravity you feel towards the Earth the Earth feels towards you.  So why don't we notice the Earth accelerate towards you?</p>
-        <p>All particles are attracted to each other, but the attraction is divided by the distance squared (1/r²). Physical laws that diminish with a <a href='https://en.wikipedia.org/wiki/Inverse-square_law'>1/r² rule</a> are common in physics
-            because of how signals spread out in 3 dimensions.</p>
+
         <p>Notice how small G is (6.6x10<sup>-11</sup>). Out of the four fundamental forces gravity is by far the weakest. If gravity is so weak why do we notice its effects so easily?</p>
+
+		<p>All particles are attracted to each other, but the attraction is divided by the distance squared (1/r²). Physical laws that diminish with a <a href='https://en.wikipedia.org/wiki/Inverse-square_law'>1/r² rule</a> are common in physics
+			because of how signals spread out in 3 dimensions.</p>
+		<!-- <h3 class='center'>force = 1/radius<sup>2</sup></h3> -->
+		<div id = 'f-v-r'></div>
+		<p>What happens to the force of gravity as the distance between masses approaches zero?</p>
         <br>
         <br>
         <br>
@@ -69,19 +74,11 @@
             <table border>
                 <tr align=center>
                     <th align=left>name</th>
-                    <th>mass</th>
-                    <th>radius</th>
-                    <th>density</th>
+                    <th>mass (kg)</th>
+                    <th>radius (km)</th>
+                    <th>density (g/cm<sup>3</sup>)</th>
                     <th>rotation</th>
-                    <th>axis tilt</th>
-                </tr>
-                <tr align=center>
-                    <th><br></th>
-                    <th>(kg) </th>
-                    <th>(km) </th>
-                    <th>(g/cm<sup>3</sup>) </th>
-                    <th></th>
-                    <th>degree °</th>
+                    <th>axis tilt (°)</th>
                 </tr>
                 <tr align=center>
                     <td align=left>Sun</td>
@@ -407,24 +404,16 @@
         <br>
         <br>
     </article>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div style="text-align:center">
-        <a href="../../../index.html#units">Back</a>
-    </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
+	<div class = 'back'>
+		<a href="../../../index.html#units">Back</a>
+	</div>
     <script>
         renderMathInElement(document.body);
     </script>
     <script src="gravityvectorfield.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src='../../../lib/function-plot.js'></script>
+	<script src='plot.js'></script>
 </body>
 
 </html>

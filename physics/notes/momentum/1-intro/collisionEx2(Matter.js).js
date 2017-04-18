@@ -1,8 +1,8 @@
-function collisionEx2(){
-//set up canvas
-var canvasID = "canvas2"
-var canvas = document.getElementById(canvasID);
-var ctx = canvas.getContext("2d");
+function collision4(el){
+  //set up canvas
+  el.onclick = null; //stops the function from running on button click
+  var canvas = el
+  var ctx = canvas.getContext("2d");
 
 // module aliases
   var Engine = Matter.Engine,
@@ -25,7 +25,7 @@ engine.world.gravity.y = 0;
 
 var mass = [];
 
-document.getElementById(canvasID).addEventListener("mousedown", function(){
+document.getElementById(el.id).addEventListener("mousedown", function(){
   World.clear(engine.world, true); //clear matter engine, leave static
   mass = []; //clear mass array
   spawnList();
@@ -141,7 +141,7 @@ Engine.run(engine);
     // ctx.stroke();
     //labels
     ctx.textAlign="center";
-    ctx.font="15px Arial";
+    ctx.font = "300 20px Roboto";
     ctx.fillStyle="#000";
     var px = 0;
     var py = 0;
@@ -152,12 +152,12 @@ Engine.run(engine);
       py += mass[k].mass*(-mass[k].velocity.y);
     }
     ctx.textAlign="left";
-    ctx.fillText('mv + mv = total horizontal momentum ',5,13);
+    ctx.fillText('mv + mv = total horizontal momentum ',5,15);
     ctx.fillText('(' + mass[0].mass.toFixed(2)+')('+mass[0].velocity.x.toFixed(2) +') + ('
-    +mass[1].mass.toFixed(2)+') ('+mass[1].velocity.x.toFixed(2)+') = '      +px.toFixed(2),5,30);
-    ctx.textAlign="right";
-    ctx.fillText('mv + mv = total vertical momentum',canvas.width-5,13);
+    +mass[1].mass.toFixed(2)+') ('+mass[1].velocity.x.toFixed(2)+') = '      +px.toFixed(2),5,37);
+
+    ctx.fillText('mv + mv = total vertical momentum',5,canvas.height-33);
     ctx.fillText('(' + mass[0].mass.toFixed(2)+')('+-mass[0].velocity.y.toFixed(2) +') + ('
-    +mass[1].mass.toFixed(2)+') ('+-mass[1].velocity.y.toFixed(2)+') = '      +py.toFixed(2),canvas.width-5,30);
+    +mass[1].mass.toFixed(2)+') ('+-mass[1].velocity.y.toFixed(2)+') = '      +py.toFixed(2),5,canvas.height-10);
   })();
 }

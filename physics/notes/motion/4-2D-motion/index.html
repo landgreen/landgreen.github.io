@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>2D motion</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon'/ >
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
@@ -12,15 +14,17 @@
 </head>
 
 <body>
+  <header>
+  <h1>2-D Motion</h1>
+  </header>
     <article>
-      <h1  class='underlined'>2-D motion</h1>
-      <p>Solving for 2-Dimensional motion uses the same techniques as in 1-D, but with twice the complexity. We will organize our information in an x column and y column with time separate.  The vertical and horizontal variables are completely independent of each other, but time is shared.  Lets try an example problem.</p>
+      <p>Solving for 2-Dimensional motion uses the same techniques as in 1-D, but with twice the complexity. We will organize our information in an x column and y column with time separate.  The vertical and horizontal variables are completely independent of each other, but time is shared.  Let's try an example problem.</p>
 
 
-      <canvas id="myCanvas" width='700' height= '300'></canvas>
+      <canvas id="myCanvas" width='600' height= '300'></canvas>
       <p><b>Example</b>: A ball moving horizontally at 2m/s rolls off a table that is 1.5m high.  Find how far the ball travels horizontally before it hits the ground.  Click to rewatch the simulation above.</p>
       <p>The information given is organized in the chart below.  Vectors directed down or left are negative and vectors directed up or right are positive.</p>
-      <table style="width:100%;text-align:left;background-color:#eee;">
+      <table>
         <tr>
           <td colspan="2" style= 'text-align: center'>Δt = </td>
         </tr>
@@ -37,8 +41,8 @@
           <td>u = 0</td>
         </tr>
         <tr>
-          <td>v =  </td>
-          <td>v =  </td>
+          <td>v = 2m/s </td>
+          <td>v = ? </td>
         </tr>
         <tr>
           <td>a = 0</td>
@@ -50,17 +54,17 @@
       $$v^{2} = 0^{2}+2(-9.8)(-1.5)$$
       $$v^{2} = 24.9$$
       $$v = \sqrt{24.9}$$
-      $$v = \pm5.42 $$
-      $$v = -5.42 \small\frac{m}{s}$$
+      $$v = \pm4.98 $$
+      $$v = -4.98 \small\frac{m}{s}$$
       <p>We know the final velocity is down so after the square root we choose the negative value. Lets plug final velocity back in and solve for time.</p>
       <br>
-      $$v = u+a \Delta t$$
-      $$-5.42 = 0+(-9.8)\Delta t$$
-      $$0.55s = \Delta t$$
+      $$v = u + a \Delta t$$
+      $$-4.98 = 0+(-9.8)\Delta t$$
+      $$0.51s = \Delta t$$
       <p> With this new information we can use time to solve on the horizontal side.</p>
-      <table style="width:100%;text-align:left;background-color:#eee;">
+      <table>
         <tr>
-          <td colspan="2" style= 'text-align: center;color:#088;'>Δt = 0.55s</td>
+          <td colspan="2" style= 'text-align: center;color:#0bb;'>Δt = 0.51s</td>
         </tr>
         <tr>
           <th>x: horizontal (left/right)</th>
@@ -76,7 +80,7 @@
         </tr>
         <tr>
           <td>v = </td>
-          <td style="color:#088;">v = 5.42m/s</td>
+          <td style="color:#0bb;">v = -4.98m/s</td>
         </tr>
         <tr>
           <td>a = 0</td>
@@ -84,19 +88,22 @@
         </tr>
       </table>
       $$\Delta x = u\Delta t + \small\frac{1}{2}a \Delta t^{2}$$
-      $$\Delta x = 2(0.55) + \small\frac{1}{2}(0)(0.55)^{2}$$
-      $$\Delta x = 1.1m$$
+      $$\Delta x = 2(0.51) + \small\frac{1}{2}(0)(0.51)^{2}$$
+      $$\Delta x = 1.02m$$
 <br>
 <hr>
 <br>
 <br>
 <br>
 <br>
-
-      <canvas id="myCanvas2" width='700' height= '300'></canvas>
+<br>
+<br>
+<br>
+      <canvas id="graph2" width='600' height= '200'></canvas>
+      <canvas id="myCanvas2" width='600' height= '300'></canvas>
       <p><b>Example</b>: A pokeball is thrown at an angle of 60° above the horizon and a speed of 10m/s.  If the ball is thrown from 2.0 meters above the ground how far does the ball go before it misses the charmander and hits the ground.<br>
       <a href="../3-vectors-and-scalors/index.html">vector review</a></p>
-      <table style="width:100%;text-align:left;background-color:#eee;">
+      <table>
         <tr>
           <td colspan="2" style= 'text-align: center;'>Δt = ?</td>
         </tr>
@@ -137,15 +144,33 @@
 <br>
 <br>
 <br>
+<hr>
+<br>
+<br>
+<br>
+<svg style="float: right;" width="220" height="260" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g id="vector" transform='translate(0 150) rotate(-25)'>
+        <line x1="0" y1="0" x2="200" y2="0" style="stroke:#000;stroke-width:2" />
+        <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(200 0) rotate(-90)' />
+        <text x="100" y="-13" fill="black" text-anchor="middle" alignment-baseline="middle">V = 150 m/s</text>
+    </g>
+    <line x1="0" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#000;stroke-width:2" />
+    <line x1="181" y1="150" x2="181" y2="63" stroke-dasharray="5,5" style="stroke:#000;stroke-width:2" />
+    <text x="100" y="165" fill="black" text-anchor="middle" alignment-baseline="middle">Vx</text>
+    <text x="205" y="105" fill="black" text-anchor="middle" alignment-baseline="middle">Vy</text>
+    <text x="67" y="141" fill="black" text-anchor="middle" alignment-baseline="middle">θ = 70°</text>
+</svg>
+<p><strong>Solve:</strong>
+<br>A ball is thrown at 70° from the horizon with a speed of 150m/s.
+<br>How high will the ball go?
+<br>How long will the ball be in the air?
+<br>How far will the ball go horizontally?
+</p>
+
     </article>
-    <div style="text-align:center">
-        <a href="../../../index.html#units">Back</a>
-    </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+	<div class = 'back'>
+		<a href="../../../index.html#units">Back</a>
+	</div>
 <script src="2dMotion(Matter.js).js"></script>
 <script>renderMathInElement(document.body);</script>
 </body>
