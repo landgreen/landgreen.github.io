@@ -1,7 +1,7 @@
-function collision2(el){
-el.onclick = null; //stops the function from running on button click
+function collisionEx1(){
 //set up canvas
-var canvas = el;
+var canvasID = "canvas1"
+var canvas = document.getElementById(canvasID);
 var ctx = canvas.getContext("2d");
 
 // module aliases
@@ -25,7 +25,7 @@ engine.world.gravity.y = 0;
 
 var mass = [];
 
-document.getElementById(el.id).addEventListener("mousedown", function(){
+document.getElementById(canvasID).addEventListener("mousedown", function(){
   World.clear(engine.world, true); //clear matter engine, leave static
   mass = []; //clear mass array
   spawnMass(100, 100, 180, 0,44.72135955,'lightgreen');
@@ -136,19 +136,19 @@ Engine.run(engine);
     // }
     // ctx.stroke();
     //labels
-    ctx.textAlign = "center";
-    ctx.font = "300 20px Roboto";
-    ctx.fillStyle = "#000";
+    ctx.textAlign="center";
+    ctx.font="15px Arial";
+    ctx.fillStyle="#000";
     var p = 0;
-    for (var k = 0, length = mass.length; k < length; k++) {
-        ctx.fillText(mass[k].mass.toFixed(2) + 'kg', mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 22);
-        ctx.fillText(mass[k].velocity.x.toFixed(2) + 'm/s', mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 2);
-        p += mass[k].mass * mass[k].velocity.x;
+    for (var k = 0, length = mass.length; k<length; k++){
+      ctx.fillText(mass[k].mass.toFixed(2)+'kg',mass[k].position.x,mass[k].position.y-mass[k].length/2-18);
+      ctx.fillText(mass[k].velocity.x.toFixed(2)+'m/s',mass[k].position.x,mass[k].position.y-mass[k].length/2-2);
+      p += mass[k].mass*mass[k].velocity.x;
     }
-    ctx.textAlign = "left";
-    ctx.fillText('mv + mv = total momentum', 5, 15);
-    ctx.fillText('(' + mass[0].mass.toFixed(2) + ')(' + mass[0].velocity.x.toFixed(2) + ') + (' +
-        mass[1].mass.toFixed(2) + ') (' + mass[1].velocity.x.toFixed(2) + ') = ' + p.toFixed(2), 5, 37);
+    ctx.textAlign="left";
+    ctx.fillText('mv + mv = total momentum',5,13);
+    ctx.fillText('(' + mass[0].mass.toFixed(2)+')('+mass[0].velocity.x.toFixed(2) +') + ('
+    +mass[1].mass.toFixed(2)+') ('+mass[1].velocity.x.toFixed(2)+') = '      +p.toFixed(2),5,30);
     //edgeBounce();
   })();
 }

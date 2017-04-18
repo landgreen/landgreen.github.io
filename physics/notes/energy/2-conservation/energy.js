@@ -3,7 +3,7 @@ var particles = function() {
     var canvasID = "canvas0";
     var canvas = document.getElementById(canvasID);
     var ctx = canvas.getContext("2d");
-    ctx.font = "18px Arial";
+    ctx.font = "15px Arial";
 
     var pause = false;
 
@@ -89,19 +89,19 @@ var particles = function() {
         this.info = function() {
             this.calcEnergy();
             //bars
-            ctx.fillStyle = 'rgba(255, 0, 255, 0.3)';
-            ctx.fillRect(0, 0, canvas.width * (this.ke / (this.energy)), 25)
-            ctx.fillStyle = 'rgba(0, 255, 255, 0.3)';
-            ctx.fillRect(0, 25, canvas.width * (this.pe / (this.energy)), 25)
+            ctx.fillStyle = 'violet';
+            ctx.fillRect(0, 0, canvas.width * (this.ke / (this.energy)), 20)
+            ctx.fillStyle = 'cyan';
+            ctx.fillRect(0, 20, canvas.width * (this.pe / (this.energy)), 20)
             //heat bar
             if (physics.restitution != 1){
                 ctx.fillStyle = 'lightgrey';
-                ctx.fillRect(canvas.width, 0, -canvas.width * (1-(this.pe + this.ke)/this.energy), 50)
+                ctx.fillRect(canvas.width, 0, -canvas.width * (1-(this.pe + this.ke)/this.energy), 40)
             }
             //text
             ctx.fillStyle = '#000';
-            ctx.fillText('KE = ½mv² = ' + (this.ke).toFixed(0) + 'J', 5, 20);
-            ctx.fillText('PE = mgh = ' + (this.pe).toFixed(0) + 'J', 5, 44);
+            ctx.fillText('KE = ½mv² = ' + (this.ke).toFixed(0) + 'J', 5, 15);
+            ctx.fillText('PE = mgh = ' + (this.pe).toFixed(0) + 'J', 5, 35);
             //ctx.fillText('PE + KE = ' + (PE + KE).toFixed(0) + 'J', 5, 55);
             //ctx.fillText('Vx = ' + (this.Vx).toFixed(0) + 'm/s', 5, 30);
             //ctx.fillText('Vy = ' + this.Vy.toFixed(1) + 'm/s', 5, 75);

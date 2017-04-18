@@ -134,7 +134,7 @@ var spring = function(button) {
             //draw energy text
             ctx.fillStyle = '#000';
             ctx.fillText('KE = ½mv² = ' + (this.ke).toFixed(0) + 'J', 5, 20);
-            ctx.fillText('U = ½kx² = ' + (this.u).toFixed(0) + 'J', 5, 46);
+            ctx.fillText('U = ½kx² = ' + (this.u).toFixed(0) + 'J', 5, 45);
             ctx.fillText('F = -kx = ' + (F).toFixed(0) + 'N', 5, canvas.height - 5);
             //ctx.fillText('k = ' + (physics.k), 5, canvas.height - 25);
             ctx.fillText('x = ' + (this.x - physics.equalibrium).toFixed(0)+'m', 5, canvas.height - 25);

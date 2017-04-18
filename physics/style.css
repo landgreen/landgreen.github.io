@@ -1,5 +1,11 @@
-@import 'https://fonts.googleapis.com/css?family=Roboto:300,400,700';
-
+@import 'https://fonts.googleapis.com/css?family=Roboto:300,400';
+:root {
+    /*--accent-color: #207ea7;*/
+    /*--accent-color: #026a99;*/
+    --accent-color: #2793C7;
+    --accent-color-light: #e6f3f9;
+    --font: "Roboto", "Helvetica", "Arial", sans-serif;
+}
 
 /************Reset**************/
 
@@ -37,40 +43,38 @@ svg:not(:root) {
 
 /*global elements____________________________________*/
 body {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-size: 105%;
+    font-family: var(--font);
+    font-size: 110%;
     background-color: #fff;
-    padding-top: 0;
-    color: #444;
+    padding-top: 0px;
+    color: #333;
     margin: 0;
-    line-height:1.4;
 }
-article {
-    padding: 0.1em;
-    margin: 0 auto;
-    max-width: 600px;
-}
-
 button {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-size: 1em;
-    margin: 0.3em;
+    font-family: var(--font);
+    font-size: 100%;
 }
 input {
-    font-size: 1em;
+    font-family: var(--font);
+    font-size: 100%;
+}
+
+article {
+    padding: 10px 10px 10px 10px;
+    margin: 0 auto;
+    max-width: 45em;
 }
 
 canvas {
-    margin: 0.3em;
-    /*border: 1px solid #999;*/
-    box-shadow: 2px 2px 8px #aaa;
-    border-radius: 5px;
+    border: 1px solid black;
+    /*background-color: #f9f9f9;*/
+    /*border-radius: 20px;*/
     /*cursor: crosshair;*/
 }
 
 a {
     text-decoration: none;
-    color: #2793C7;
+    color: var(--accent-color);
 }
 a:hover {
     text-decoration: underline;
@@ -79,95 +83,57 @@ a:hover {
 
 summary {
     cursor: pointer;
-	outline: none;
 }
 hr {
     border: 0;
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid #999;
 }
-
 th {
-    font-weight: bold;
     text-align: left;
 }
 details p {
     text-align: center;
-	font-size: 1.3em;
 }
 
 ::selection {
     color: white;
-    background: #2793C7;
-    /*background: #0f0;*/
+    background: var(--accent-color);
 }
 
 /*classes_________________________________________*/
 
 .underlined {
-  border-bottom: 1px solid #aaa;
-  font-weight: 300;
-  font-size: 2.2em;
-}
-
-.center {
-  text-align: center;
-  padding: 0;
-  margin: auto;
-  display: block;
-}
-
-.highlight {
-  color: #fff;
-  background-color: #2793C7;
-  /*color: #000;
-  background-color: #ffcdf0;*/
-  border-radius: 5px;
-  margin: 0px 2px 0px 2px;
-  padding: 0px 2px 0px 2px;
+  border-bottom: 1px solid #999;
+  font-weight: 400;
 }
 
 .definition {
-    background-color: #ddeef6;
-    padding: 1em;
-    margin: 1em 0em 1em 0em;
-    border-radius: 1em;
-    line-height:1.6;
+    background-color: var(--accent-color-light);
+    padding: 20px;
+    margin: 30px 60px 30px 60px;
+    border-radius: 15px;
 }
 .definition i {
     color: #888;
     font-weight: 300;
 }
-.example{
-	margin: 8em 0em 8em 0em;
-}
-
-.data th, td {
-    padding: 0.5em;
-}
-
 .derive {
     text-align: center;
     background-color: #e6f9f0;
-    padding: 1.3em;
-    border-radius: 1em;
+    padding: 20px;
+    border-radius: 15px;
 }
-.history {
-    text-align: left;
-    background-color: #e6f9f0;
-	font-size: 1em;
-    padding: 1.3em;
-    border-radius: 1em;
-}
+
 .svgDiagram {
     /*border: 1px solid black;*/
-    transition: all 200ms ease-in;
+    transition: all 100ms ease-in;
 }
-/*.svgDiagram:hover {
+.svgDiagram:hover {
     z-index: 2;
     background: #fff;
     border: 1px solid black;
-    transform: scale(2);
-}*/
+    transform: scale(1.5);
+}
 
 /*math tex rendering __________________________*/
 
@@ -187,31 +153,19 @@ details .katex {
     display: flex;
 }
 .flex-item {
-    margin: 0.8em
-}
-
-
-/*2 Equal-Width Columns that combine in the article________________*/
-@media screen and (min-width: 43em) {
-  .col-group {
-    overflow: hidden;
-  }
-  .col-group > div {
-    float: left;
-    width: 50%;
-  }
+    margin: 10px;
 }
 
 /* Header setup_________________________________*/
+
 header {
     background-color: #222;
-    color: white;
-    padding: 0.1em 0em 0.1em 0em;
+    padding: 1em 0em 0.5em 0em;
     text-align: center;
 }
 
 header h1 {
-    margin: 0.5em;
+    color: white;
     font-size: 5em;
     font-weight: 300;
 }
@@ -228,7 +182,7 @@ header h1 {
 }
 .e-mail-link:hover {
     text-decoration: none;
-    background-color: #2793C7;
+    background-color: var(--accent-color);
     color: white;
 }
 
@@ -245,17 +199,17 @@ header h1 {
     padding: 0.5em 0 0 0.5em;
     max-width: 76em;
     margin: 0 auto;
-    line-height:1.6;
 }
 .grid h3, .grid h2 {
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid #999;
     font-weight: 400;
+
 }
 .grid a {
-    color: #555;
+    color: #666;
 }
 .grid a:hover {
-    color: #2793C7;
+    color: var(--accent-color);
 }
 .grid li {
     padding: 0 0.5em 0.5em 0;
