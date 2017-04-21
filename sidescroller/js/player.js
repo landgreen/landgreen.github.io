@@ -272,7 +272,9 @@ const mech = {
         //smoothly move height towards height goal ************
         this.yOff = this.yOff * 0.85 + this.yOffGoal * 0.15;
     },
+	alive: true,
     death: function() {
+		this.alive = false
 		game.reset();
     },
     health: 1,
@@ -299,9 +301,10 @@ const mech = {
         if (this.health > 1) this.health = 1;
 		document.getElementById('health').setAttribute('width',225 * this.health);
     },
-    damage: function(dmg) {
+	damage: function(dmg) {
         this.health -= dmg;
         if (this.health < 0) {
+			this.health = 0
             this.death();
 			return
         }

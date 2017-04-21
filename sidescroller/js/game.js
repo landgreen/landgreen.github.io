@@ -39,12 +39,16 @@ const game = {
             }
         }
     },
-    textList: [],
 	lastLogTime: 0,
+	lastLogTimeBig: 0,
 	textLogSVG: function(){
 		if (game.lastLogTime && game.lastLogTime < game.cycle){
 			game.lastLogTime = 0
 			document.getElementById("text-log").textContent = ' '
+		}
+		if (game.lastLogTimeBig && game.lastLogTimeBig < game.cycle){
+			game.lastLogTimeBig = 0
+			document.getElementById("text-log-big").textContent = ' '
 		}
 	},
     timing: function() {
@@ -276,26 +280,6 @@ const game = {
         ctx.textAlign = "center";
         ctx.fillText(`(${this.mouseInGame.x.toFixed(1)}, ${this.mouseInGame.y.toFixed(1)})`, this.mouse.x, this.mouse.y - 20);
     },
-    output: function() {
-        let line = 80;
-        ctx.fillStyle = "#000";
-        ctx.fillText(`fireCD: ${bullets.fireCD}`, 5, line);
-        line += 20;
-        ctx.fillText(`restitution: ${bullets.restitution.toFixed(2)}`, 5, line);
-        line += 20;
-        ctx.fillText(`speed: ${bullets.speed.toFixed(2)}`, 5, line);
-        line += 20;
-        ctx.fillText(`frictionAir: ${bullets.frictionAir.toFixed(4)}`, 5, line);
-        line += 20;
-        ctx.fillText(`size: ${bullets.size.toFixed(4)}`, 5, line);
-        line += 20;
-        ctx.fillText(`dmg: ${bullets.dmg.toFixed(2)}`, 5, line);
-        line += 20;
-        ctx.fillText(`gravity: ${bullets.gravity.toFixed(2)}`, 5, line);
-        line += 20;
-        ctx.fillText(`endCycle: ${bullets.endCycle.toFixed(2)}`, 5, line);
-        line += 20;
-    },
     draw: {
         powerUp: function() {
             // ctx.lineWidth = 5
@@ -312,7 +296,7 @@ const game = {
             //     ctx.stroke()
             // }
             // ctx.globalAlpha = 1;
-            const a = 0.3 * Math.sin(game.cycle * 0.25) + 0.7;
+            ctx.globalAlpha = 0.3 * Math.sin(game.cycle * 0.15) + 0.7;
             for (let i = 0, len = powerUp.length; i < len; ++i) {
                 let vertices = powerUp[i].vertices;
                 ctx.beginPath();
@@ -321,9 +305,10 @@ const game = {
                     ctx.lineTo(vertices[j].x, vertices[j].y);
                 }
                 ctx.lineTo(vertices[0].x, vertices[0].y);
-                ctx.fillStyle = `hsla(${powerUp[i].color}, 100%, 50%, ${a})`; //powerUp[i].color;
+				ctx.fillStyle = powerUp[i].color
                 ctx.fill();
             }
+			ctx.globalAlpha=1;
         },
         mobBullet: function() {
             let i = mobBullet.length;

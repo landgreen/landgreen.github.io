@@ -191,8 +191,8 @@ const spawn = {
             for (let i = 0; i < Math.ceil(that.mass * 0.35); ++i) {
                 spawn.spawns(that.position.x + (Math.random() - 0.5) * radius * 2, that.position.y + (Math.random() - 0.5) * radius * 2)
                 Matter.Body.setVelocity(mob[mob.length - 1], {
-                    x: (Math.random() - 0.5) * 50,
-                    y: (Math.random() - 0.5) * 50
+                    x: (Math.random() - 0.5) * 25,
+                    y: (Math.random() - 0.5) * 25
                 });
             }
         }

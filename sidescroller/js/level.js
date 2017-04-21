@@ -9,12 +9,18 @@ const level = {
     onLevel: undefined,
     start: function() {
         spawn.setSpawnList(); //picks a couple mobs types for a themed random mob spawns
-        this[this.levels[this.onLevel]]();
+		if (game.testing){
+			this.boss();
+		} else {
+			this[this.levels[this.onLevel]]();
+		}
         //this.buildings();				//this.testing();		//this.towers();
-        //this.boss(); //this.skyscrapers();        //this.rooftops();
+        //this.skyscrapers();        //this.rooftops();
         this.addToWorld(); //add map to world
-		document.getElementById("text-log").textContent = 'level '+(game.levelsCleared+1)+': '+level.levels[level.onLevel]
-		game.lastLogTime = game.cycle+360; //log new map
+		document.getElementById("text-log-big").textContent = document.title = 'level '+(game.levelsCleared+1)+' '+level.levels[level.onLevel]
+		game.lastLogTimeBig = game.cycle+360; //log new map
+		// document.getElementById("text-log").textContent = 'level '+(game.levelsCleared+1)+' '+level.levels[level.onLevel]
+		// game.lastLogTime = game.cycle+360; //log new map
     },
     //******************************************************************************************************************
     //******************************************************************************************************************
@@ -36,6 +42,8 @@ const level = {
         spawn.spawnBuilding(-200, -190, 200, 175, false, true, "left"); //far left; player spawns in side
 
         powerUps.spawn(750, -125, "gun", false);
+		//spawn.spawner(750,-300,100)
+
     },
     //******************************************************************************************************************
     //******************************************************************************************************************
