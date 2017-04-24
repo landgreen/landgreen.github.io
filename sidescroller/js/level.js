@@ -9,12 +9,8 @@ const level = {
     onLevel: undefined,
     start: function() {
         spawn.setSpawnList(); //picks a couple mobs types for a themed random mob spawns
-		if (game.testing){
-			this.boss();
-		} else {
-			this[this.levels[this.onLevel]]();
-		}
-        //this.buildings();				//this.testing();		//this.towers();
+		this[this.levels[this.onLevel]]();
+        //this.buildings();				//this.testing();		//this.towers();  //this.boss();
         //this.skyscrapers();        //this.rooftops();
         this.addToWorld(); //add map to world
 		document.getElementById("text-log-big").textContent = document.title = 'level '+(game.levelsCleared+1)+' '+level.levels[level.onLevel]
@@ -251,6 +247,10 @@ const level = {
         spawn.mapVertex(525, 29.5, "120 40 -120 40 -50 -40 50 -40");
         this.addZone(475, -30, 100, 30, "fling", 3, -30);
         spawn.mapRect(700, -1100, 400, 990); //far left building
+
+		spawn.bodyRect(1400, -75, 200, 75); //block to get up ledge from ground
+		spawn.bodyRect(1525, -125, 50, 50); //block to get up ledge from ground
+
         spawn.bodyRect(1025, -1110, 400, 10); //block on far left building
         spawn.bodyRect(1550, -1110, 250, 10); //block on far left building
         spawn.mapRect(1600, -400, 1500, 500); //long center building
@@ -469,11 +469,12 @@ const level = {
         nextLevel: function() {
             level.onLevel++;
             if (level.onLevel > level.levels.length - 1) level.onLevel = 0;
-            game.clearMap();
-            game.dmgScale += 0.2; //damage done by mobs increases each level
-            b.dmgScale *= 0.85; //damage done by player decreases each level
-            game.levelsCleared++;
-            level.start();
+			game.dmgScale += 0.2; //damage done by mobs increases each level
+			b.dmgScale *= 0.85; //damage done by player decreases each level
+			game.levelsCleared++;
+            // game.clearMap();
+            // level.start();
+			game.clearNow = true;
         },
         death: function() {
             mech.death();

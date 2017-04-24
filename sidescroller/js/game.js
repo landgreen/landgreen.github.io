@@ -169,9 +169,11 @@ const game = {
         game.levelsCleared = 0;
         level.onLevel = Math.floor(Math.random() * level.levels.length); //picks a rnadom starting level
         //powerUps.startingPowerUps(); //setup gun
-        game.clearMap();
-        level.start(); //spawns the level
+		game.clearNow = true;
+        // game.clearMap();
+        // level.start(); //spawns the level
     },
+	clearNow: false,
     clearMap: function() {
         //stops sounds, removes bodies from engine and from arrays
         level.removeSVG();

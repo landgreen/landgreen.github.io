@@ -39,7 +39,7 @@ const powerUps = {
             if (options.length > 0) {
                 //give player a gun they don't already have if possible
                 b.activeGun = options[Math.floor(Math.random() * options.length)];
-                // b.activeGun = 5;
+                // b.activeGun = 7;   //makes every gun you pick up this type  //enable for testing mostly
                 b.guns[b.activeGun].have = true;
                 b.inventory.push(b.activeGun);
                 b.inventory.sort();
@@ -63,17 +63,16 @@ const powerUps = {
         }
         //bonus ammo chance if using the default gun
         if (Math.random() < 0.35 || (b.activeGun === 0 && Math.random() < 0.25)) {
-            powerUps.spawn(x, y, "ammo");
+			if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
             return;
         }
-        //only spawns if player is missing a gun
-        if (Math.random() < 0.09 && b.inventory.length < b.guns.length) {
-            powerUps.spawn(x, y, "gun");
+		//new gun has 2% per unaquired gun to drop
+        if (Math.random() < 0.02*(b.guns.length - b.inventory.length)) {
+ 			powerUps.spawn(x, y, "gun");
             return;
         }
     },
     spawn: function(x, y, target, moving = true) {
-        //name, color, sides, size, effect) {
         let i = powerUp.length;
         target = powerUps[target];
         powerUp[i] = Matter.Bodies.polygon(x, y, 0, target.size, {
