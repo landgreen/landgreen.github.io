@@ -10,8 +10,9 @@ const level = {
     start: function() {
         spawn.setSpawnList(); //picks a couple mobs types for a themed random mob spawns
 		this[this.levels[this.onLevel]]();
-        //this.buildings();				//this.testing();		//this.towers();  //this.boss();
+        //this.buildings();				//this.testing();		//this.towers();
         //this.skyscrapers();        //this.rooftops();
+		//this.boss();
         this.addToWorld(); //add map to world
 		document.getElementById("text-log-big").textContent = document.title = 'level '+(game.levelsCleared+1)+' '+level.levels[level.onLevel]
 		game.lastLogTimeBig = game.cycle+360; //log new map
@@ -37,19 +38,20 @@ const level = {
         spawn.mapRect(3000, -850, 700, 50); //center platform
         spawn.spawnBuilding(-200, -190, 200, 175, false, true, "left"); //far left; player spawns in side
 
-        powerUps.spawn(750, -125, "gun", false);
-		//spawn.spawner(750,-300,100)
+        powerUps.spawn(450, -125, "gun", false);
+		spawn.shooter(1625,-1000,10)
 
     },
     //******************************************************************************************************************
     //******************************************************************************************************************
     rooftops: function() {
         //playSound("ambient_wind"); //play ambient audio for level
-        document.body.style.backgroundColor = "#e6e4e4";
+        // document.body.style.backgroundColor = "#e6e4e4";
+		document.body.style.backgroundColor = "#eee4e4";
         this.addSVG("background_rooftops", "foreground_rooftops");
 
         this.addZone(3600, -300, 100, 30, "nextLevel");
-        this.addZone(-1275, 1080, 7600, 50, "death");
+        this.addZone(-1275, 800, 7000, 500, "death");
 
         if (!game.levelsCleared) powerUps.spawn(2450, -1675, "gun", false);
 
@@ -57,10 +59,12 @@ const level = {
         //mech.setPosToSpawn(4600, -900); //normal spawn
         //mech.setPosToSpawn(4400, -400); //normal spawn
 
-        spawn.mapRect(-1275, 1100, 7600, 350); //ground
+        spawn.mapRect(-1275, 1100, 7000, 350); //ground
         spawn.mapRect(-700, -2000, 2100, 100); //Top left ledge
         spawn.mapRect(-700, -1950, 100, 3050); //left building wall
         spawn.mapRect(1300, -1950, 100, 3050); //
+		spawn.bodyRect(1350, -2125, 50, 125); //
+		spawn.bodyRect(1350, -2225, 50, 100); //
         spawn.mapRect(-700, -2350, 50, 400); //far left starting left wall
         spawn.mapRect(-700, -2010, 500, 50); //far left starting ground
         spawn.mapRect(-700, -2350, 500, 50); //far left starting ceiling
@@ -73,9 +77,12 @@ const level = {
         spawn.randomSmallMob(-350, -2400); //
         spawn.bodyRect(1050, -2350, 50, 75); //
         //spawn.bodyRect(1750, -1125, 125, 125); //
-        spawn.mapVertex(1750, -970, "120 40 -120 40 -50 -40 50 -40");
-        this.addZone(1700, -1030, 100, 30, "fling", 0, -30);
+        spawn.mapVertex(1850, -970, "120 40 -120 40 -50 -40 50 -40");
+        this.addZone(1800, -1030, 100, 30, "fling", 0, -30);
         //spawn.mapVertex(1700, -1100, '0 0 0 -300 300 0');
+		spawn.bodyRect(1625, -1100, 100, 75); //
+		spawn.bodyRect(1400, -1025, 325, 25); //
+
 
         spawn.mapRect(1600, -1000, 1600, 100); //middle ledge
         spawn.mapRect(1600, -950, 100, 2050); //left building vertical wall
@@ -84,11 +91,13 @@ const level = {
         spawn.randomSmallMob(2200, -1775); //
         spawn.bodyRect(2700, -1125, 125, 125); //
         spawn.bodyRect(2710, -1250, 125, 125); //
+		spawn.bodyRect(2705, -1350, 75, 100); //
         spawn.mapRect(3150, -1600, 350, 50); //
         spawn.mapRect(2075, -1600, 700, 50); //
         spawn.randomBoss(2225, -1325); //
         spawn.randomMob(3200, -1150); //
         spawn.bodyRect(3100, -1015, 375, 15); //
+		spawn.bodyRect(3500, -850, 75, 125); //
 
         spawn.mapRect(3500, 0, 2000, 100); //bottom right ledge
         spawn.mapRect(3400, -1000, 100, 2100); //left building wall
@@ -159,6 +168,7 @@ const level = {
         spawn.bodyRect(x + w * 0.7, -h * 0.5 - 106, 50, 106); //center block under wall
         spawn.mapRect(-600, -1000, 1100, 50); //2nd floor
         spawn.mapRect(600, -1000, 500, 50); //2nd floor
+
         //body[body.length] = Bodies.polygon(550, -1100, 0,80);
 
         //spawn.bodyRect(450,-1020, 200, 10); //center block under wall
@@ -169,15 +179,25 @@ const level = {
             friction: 0.004,
             frictionAir: 0.004
         });
-
+		body[body.length] = Bodies.polygon(-50, -560, 0, 60, {
+            restitution: 0.7,
+            friction: 0.004,
+            frictionAir: 0.004
+        });
+		body[body.length] = Bodies.polygon(300, -1055, 0, 50, {
+			restitution: 0.7,
+			friction: 0.004,
+			frictionAir: 0.004
+		})
         spawn.mapRect(x + 300, -h * 0.25, w - 300, 50); //1st floor
+
         spawn.spawnStairs(x + w - 50, -500, 5, 250, 350, true); //stairs 1st
         spawn.spawnStairs(x, 0, 5, 250, 350); //stairs ground
         spawn.bodyRect(700, -200, 100, 100); //center block under wall
         spawn.bodyRect(700, -300, 100, 100); //center block under wall
         spawn.bodyRect(700, -400, 100, 100); //center block under wall
-
         spawn.mapRect(1390, 13, 30, 20); //step left
+		// spawn.bodyRect(2600, -1800, 75, 200); //
         spawn.mapRect(2980, 13, 30, 20); //step right
         spawn.mapRect(3000, 0, w, 50); //ground
 
@@ -254,12 +274,14 @@ const level = {
         spawn.bodyRect(1025, -1110, 400, 10); //block on far left building
         spawn.bodyRect(1550, -1110, 250, 10); //block on far left building
         spawn.mapRect(1600, -400, 1500, 500); //long center building
+		spawn.bodyRect(1700, -575, 250, 150); //
         spawn.bodyRect(2557, -450, 35, 55);
         spawn.bodyRect(2957, -450, 30, 15);
         spawn.bodyRect(2900, -450, 60, 45);
         spawn.mapRect(1345, -1100, 250, 25); //left platform
         spawn.mapRect(1755, -1100, 250, 25); //right platform
         spawn.bodyRect(1915, -1200, 60, 100); //block on platform
+		spawn.bodyRect(1925, -1300, 50, 100); //
         spawn.mapRect(1300, -1850, 750, 50); //left higher platform
         spawn.mapRect(1300, -2150, 50, 350); //left higher platform left edge wall
         spawn.mapRect(1300, -2150, 450, 50); //left higher platform roof
@@ -273,6 +295,7 @@ const level = {
         spawn.mapRect(2500, -1700, 300, 50); //roof on higher center floating large square
         spawn.bodyRect(2300, -1720, 400, 20); //platform above striker
         spawn.bodyRect(2590, -1780, 80, 80); //block on platform above striker
+		spawn.bodyRect(3300, -1550, 75, 200); //
         spawn.mapRect(3300, -850, 150, 25); //ledge by far right building
         spawn.mapRect(3300, -1350, 150, 25); //higher ledge by far right building
         spawn.mapRect(3600, -1100, 400, 990); //far right building

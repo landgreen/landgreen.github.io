@@ -39,7 +39,7 @@ const powerUps = {
             if (options.length > 0) {
                 //give player a gun they don't already have if possible
                 b.activeGun = options[Math.floor(Math.random() * options.length)];
-                // b.activeGun = 7;   //makes every gun you pick up this type  //enable for testing mostly
+                //b.activeGun = 4;   //makes every gun you pick up this type  //enable for testing mostly
                 b.guns[b.activeGun].have = true;
                 b.inventory.push(b.activeGun);
                 b.inventory.sort();

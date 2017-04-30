@@ -36,7 +36,8 @@ const b = {
             onEnd: function() {}
         };
     },
-    explode: function(me) {  //  typically explode is used as some bullets are .onEnd
+    explode: function(me) {
+        //  typically explode is used as some bullets are .onEnd
         game.drawList.push({
             //add dmg to draw queue
             x: bullet[me].position.x,
@@ -46,29 +47,39 @@ const b = {
             time: game.drawTime
         });
         let dist, sub, knock;
-        const dmg = b.dmgScale * bullet[me].explodeRad*0.01;
-		//knock back body in range
-		for (let i = 0, len = body.length; i < len; ++i) {
+        const dmg = b.dmgScale * bullet[me].explodeRad * 0.01;
+        //knock back body in range
+        for (let i = 0, len = body.length; i < len; ++i) {
             sub = Matter.Vector.sub(bullet[me].position, body[i].position);
             dist = Matter.Vector.magnitude(sub);
             if (dist < bullet[me].explodeRad) {
                 //add knockback for mobs
-                knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * body[i].mass/10);
+                knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * body[i].mass / 10);
                 body[i].force.x += knock.x;
                 body[i].force.y += knock.y;
             }
         }
-		//power up knockbacks
-		for (let i = 0, len = powerUp.length; i < len; ++i) {
-			sub = Matter.Vector.sub(bullet[me].position, powerUp[i].position);
-			dist = Matter.Vector.magnitude(sub);
-			if (dist < bullet[me].explodeRad) {
-				//add knockback for mobs
-				knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * powerUp[i].mass/10);
-				powerUp[i].force.x += knock.x;
-				powerUp[i].force.y += knock.y;
-			}
-		}
+        //power up knockbacks
+        for (let i = 0, len = powerUp.length; i < len; ++i) {
+            sub = Matter.Vector.sub(bullet[me].position, powerUp[i].position);
+            dist = Matter.Vector.magnitude(sub);
+            if (dist < bullet[me].explodeRad) {
+                //add knockback for mobs
+                knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * powerUp[i].mass / 10);
+                powerUp[i].force.x += knock.x;
+                powerUp[i].force.y += knock.y;
+            }
+        }
+        //destory all bullets in range
+        for (let i = 0, len = bullet.length; i < len; ++i) {
+            if (me != i) {
+                sub = Matter.Vector.sub(bullet[me].position, bullet[i].position);
+                dist = Matter.Vector.magnitude(sub);
+                if (dist < bullet[me].explodeRad) {
+                    bullet[i].endCycle = game.cycle;
+                }
+            }
+        }
         //damage and knock back mobs in range
         for (let i = 0, len = mob.length; i < len; ++i) {
             if (mob[i].alive) {
@@ -78,7 +89,7 @@ const b = {
                     mob[i].damage(dmg);
                     mob[i].locatePlayer();
                     //add knockback for mobs
-                    knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * mob[i].mass/10);
+                    knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * mob[i].mass / 10);
                     mob[i].force.x += knock.x;
                     mob[i].force.y += knock.y;
                 }
@@ -88,7 +99,7 @@ const b = {
         sub = Matter.Vector.sub(bullet[me].position, player.position);
         dist = Matter.Vector.magnitude(sub);
         if (dist < bullet[me].explodeRad) {
-            mech.damage(dmg * 0.15);
+            mech.damage(bullet[me].explodeRad * 0.001);
             knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * player.mass / 40);
             player.force.x += knock.x;
             player.force.y += knock.y;
@@ -192,7 +203,7 @@ const b = {
         {
             name: "missile",
             ammo: 0,
-            ammoPack: 3,
+            ammoPack: 5,
             have: false,
             fire: function() {
                 let dir = mech.angle;
@@ -204,80 +215,185 @@ const b = {
                     9,
                     b.fireAttributes(dir)
                 );
-				//Matter.Body.setAngularVelocity(bullet[me], (Math.random()-0.5)*0.04)
-                b.fireProps(40, 0, dir, me); //cd , speed
-                bullet[me].frictionAir = 0.001;
-                bullet[me].endCycle = game.cycle + 180;
-                bullet[me].explodeRad = 350;
+                //Matter.Body.setAngularVelocity(bullet[me], (Math.random()-0.5)*0.04)
+                b.fireProps(30, 1, dir, me); //cd , speed
+                bullet[me].collisionFilter.mask = 0x000101; //for self collision
+                bullet[me].frictionAir = 0.05;
+                bullet[me].minDmgSpeed = 0;
+                bullet[me].endCycle = game.cycle + 360;
+                bullet[me].explodeRad = 250;
                 bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
                 bullet[me].onDmg = function() {
                     this.endCycle = 0; //bullet ends cycle after doing damage  //this also triggers explosion
                 };
+                bullet[me].close = undefined;
+                bullet[me].lookFrequency = Math.floor(20 + Math.random() * 10);
                 bullet[me].do = function() {
-                	//accelerate in direction bullet is facing
-					const dir = this.angle + (Math.random()-0.5)
-                    this.force.x += Math.cos(dir) * 0.0019;
-                    this.force.y += Math.sin(dir) * 0.0019;
+                    if (!(game.cycle % this.lookFrequency)) {
+                        this.close = null;
+                        let closeDist = Infinity;
+                        for (let i = 0, len = mob.length; i < len; ++i) {
+                            if (
+                                mob[i].alive &&
+                                Matter.Query.ray(map, this.position, mob[i].position).length === 0 &&
+                                Matter.Query.ray(body, this.position, mob[i].position).length === 0
+                            ) {
+                                const dist = Matter.Vector.magnitude(Matter.Vector.sub(this.position, mob[i].position));
+                                if (dist < closeDist) {
+                                    this.close = mob[i].position;
+                                    closeDist = dist;
+                                }
+                            }
+                        }
+                        if (this.close) {
+                            //just blow up if you get close enough
+                            if (closeDist < this.explodeRad) {
+                                this.endCycle = 0; //bullet ends cycle after doing damage  //this also triggers explosion
+                            }
+                        }
+                    }
+                    //accelerate in direction bullet is facing
+                    const dir = this.angle; // + (Math.random() - 0.5);
+                    this.force.x += Math.cos(dir) * 0.002;
+                    this.force.y += Math.sin(dir) * 0.002;
                     //draw rocket
                     ctx.beginPath();
                     ctx.arc(
-                        this.position.x - Math.cos(this.angle) * 38 + (Math.random()-0.5) * 4,
-                        this.position.y - Math.sin(this.angle) * 38 + (Math.random()-0.5) * 4,
-                        13,
+                        this.position.x - Math.cos(this.angle) * 46 + (Math.random() - 0.5) * 4,
+                        this.position.y - Math.sin(this.angle) * 46 + (Math.random() - 0.5) * 4,
+                        16,
                         0,
                         2 * Math.PI
                     );
                     ctx.fillStyle = "rgba(255,155,0,0.5)";
                     ctx.fill();
+                    if (this.close) {
+                        //show targeting
+                        // ctx.beginPath();
+                        // ctx.moveTo(this.position.x, this.position.y);
+                        // ctx.lineTo(this.close.x, this.close.y);
+                        // ctx.strokeStyle = "#2f6";
+                        // ctx.stroke();
+                        //rotate missile towards the target
+                        const face = {
+                            x: Math.cos(this.angle),
+                            y: Math.sin(this.angle)
+                        };
+                        const target = Matter.Vector.normalise(Matter.Vector.sub(this.position, this.close));
+                        if (Matter.Vector.dot(target, face) > -0.98) {
+                            if (Matter.Vector.cross(target, face) > 0) {
+                                Matter.Body.rotate(this, 0.09);
+                            } else {
+                                Matter.Body.rotate(this, -0.09);
+                            }
+                        }
+                    }
                 };
             }
         },
-		{
+        {
             name: "missiles",
             ammo: 0,
             ammoPack: 5,
             have: false,
             fire: function() {
-				const twist = 0.3+ Math.random()*0.2
-                let dir = mech.angle - twist*2;
-				let rotation = 0.02
+                const twist = 0.05 + Math.random() * 0.05;
+                let dir = mech.angle - twist * 2;
+                //let rotation = 0.02;
                 for (let i = 0; i < 3; i++) {
-                    dir += twist
-					const me = bullet.length;
-	                bullet[me] = Bodies.rectangle(
-	                    mech.pos.x,
-	                    mech.pos.y,
-	                    30,
-	                    4,
-	                    b.fireAttributes(dir)
-	                );
-					rotation -= 0.01
-					Matter.Body.setAngularVelocity(bullet[me], rotation)
-	                b.fireProps(45, -10, dir, me); //cd , speed
-	                bullet[me].frictionAir = 0.001;
-	                bullet[me].endCycle = game.cycle + 100;
-	                bullet[me].explodeRad = 220;
-	                bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
-	                bullet[me].onDmg = function() {
-	                    this.endCycle = 0; //bullet ends cycle after doing damage  //this also triggers explosion
-	                };
-	                bullet[me].do = function() {
-	                	//accelerate in direction bullet is facing
-						const dir = this.angle// + (Math.random()-0.5)
-	                    this.force.x += Math.cos(dir) * 0.0003;
-	                    this.force.y += Math.sin(dir) * 0.0003;
-	                    //draw rocket
-	                    ctx.beginPath();
-	                    ctx.arc(
-	                        this.position.x - Math.cos(this.angle) * 18 + (Math.random()-0.5) * 4,
-	                        this.position.y - Math.sin(this.angle) * 18 + (Math.random()-0.5) * 4,
-	                        7,
-	                        0,
-	                        2 * Math.PI
-	                    );
-	                    ctx.fillStyle = "rgba(255,155,0,0.5)";
-	                    ctx.fill();
-	                };
+                    dir += twist;
+                    const me = bullet.length;
+                    bullet[me] = Bodies.rectangle(mech.pos.x, mech.pos.y, 30, 4, b.fireAttributes(dir));
+                    //rotation -= 0.01;
+                    //Matter.Body.setAngularVelocity(bullet[me], rotation);
+                    b.fireProps(45, -10, dir, me); //cd , speed
+                    //bullet[me].collisionFilter.mask = 0x000101; //for self collision
+                    bullet[me].frictionAir = 0.04;
+                    bullet[me].endCycle = game.cycle + Math.floor(250+Math.random()*100);
+                    bullet[me].explodeRad = 170;
+					bullet[me].lookFrequency = Math.floor(25 + Math.random() * 15);
+                    bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
+                    bullet[me].onDmg = function() {
+                        this.endCycle = 0; //bullet ends cycle after doing damage  //this also triggers explosion
+                    };
+                    bullet[me].do = function() {
+                        if (!(game.cycle % this.lookFrequency)) {
+                            this.close = null;
+                            let closeDist = Infinity;
+                            for (let i = 0, len = mob.length; i < len; ++i) {
+                                if (
+                                    mob[i].alive &&
+                                    Matter.Query.ray(map, this.position, mob[i].position).length === 0 &&
+                                    Matter.Query.ray(body, this.position, mob[i].position).length === 0
+                                ) {
+                                    const dist = Matter.Vector.magnitude(Matter.Vector.sub(this.position, mob[i].position));
+                                    if (dist < closeDist) {
+                                        this.close = mob[i].position;
+                                        closeDist = dist;
+                                    }
+                                }
+                            }
+                            if (this.close) {
+                                //just blow up if you get close enough
+                                if (closeDist < this.explodeRad * 0.7) {
+                                    this.endCycle = 0; //bullet ends cycle after doing damage  //this also triggers explosion
+                                }
+                            }
+                        }
+                        //accelerate in direction bullet is facing
+                        const dir = this.angle; // + (Math.random() - 0.5);
+                        this.force.x += Math.cos(dir) * 0.00045;
+                        this.force.y += Math.sin(dir) * 0.00045;
+                        //draw rocket
+                        ctx.beginPath();
+                        ctx.arc(
+                            this.position.x - Math.cos(this.angle) * 27 + (Math.random() - 0.5) * 4,
+                            this.position.y - Math.sin(this.angle) * 27 + (Math.random() - 0.5) * 4,
+                            11,
+                            0,
+                            2 * Math.PI
+                        );
+                        ctx.fillStyle = "rgba(255,155,0,0.5)";
+                        ctx.fill();
+                        if (this.close) {
+                            //show targeting
+                            // ctx.beginPath();
+                            // ctx.moveTo(this.position.x, this.position.y);
+                            // ctx.lineTo(this.close.x, this.close.y);
+                            // ctx.strokeStyle = "#2f6";
+                            // ctx.stroke();
+                            //rotate missile towards the target
+                            const face = {
+                                x: Math.cos(this.angle),
+                                y: Math.sin(this.angle)
+                            };
+                            const target = Matter.Vector.normalise(Matter.Vector.sub(this.position, this.close));
+                            if (Matter.Vector.dot(target, face) > -0.98) {
+                                if (Matter.Vector.cross(target, face) > 0) {
+                                    Matter.Body.rotate(this, 0.09);
+                                } else {
+                                    Matter.Body.rotate(this, -0.09);
+                                }
+                            }
+                        }
+                    };
+                    // bullet[me].do = function() {
+                    //     //accelerate in direction bullet is facing
+                    //     const dir = this.angle; // + (Math.random()-0.5)
+                    //     this.force.x += Math.cos(dir) * 0.0003;
+                    //     this.force.y += Math.sin(dir) * 0.0003;
+                    //     //draw rocket
+                    //     ctx.beginPath();
+                    //     ctx.arc(
+                    //         this.position.x - Math.cos(this.angle) * 18 + (Math.random() - 0.5) * 4,
+                    //         this.position.y - Math.sin(this.angle) * 18 + (Math.random() - 0.5) * 4,
+                    //         7,
+                    //         0,
+                    //         2 * Math.PI
+                    //     );
+                    //     ctx.fillStyle = "rgba(255,155,0,0.5)";
+                    //     ctx.fill();
+                    // };
                 }
             }
         },
@@ -332,7 +448,7 @@ const b = {
                 bullet[me].endCycle = game.cycle + 140;
                 bullet[me].restitution = 0.4;
                 // bullet[me].frictionAir = 0.01;
-				bullet[me].friction = 0.15;
+                bullet[me].friction = 0.15;
                 bullet[me].explodeRad = 350;
                 bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
                 bullet[me].minDmgSpeed = 1;
@@ -391,43 +507,7 @@ const b = {
                     this.force.y += this.mass * 0.0005;
                 };
             }
-        },
-		// {
-        //     name: "yoyo",
-        //     ammo: 0,
-        //     ammoPack: 9992,
-        //     have: false,
-        //     fire: function() {
-        //         const me = bullet.length;
-        //         const dir = mech.angle;
-		// 		bullet[me] = Bodies.circle(
-		// 			mech.pos.x + 30 * Math.cos(mech.angle),
-		// 			mech.pos.y + 30 * Math.sin(mech.angle),
-		// 			17,
-		// 			b.fireAttributes(dir)
-		// 		);
-        //         b.fireProps(60, 52, dir, me); //cd , speed
-        //         bullet[me].endCycle = game.cycle + 180;
-		//
-        //         bullet[me].do = function() {
-        //             //this.force.y += this.mass * 0.0005;
-        //         };
-		// 		// consBB[consBB.length] = Constraint.create({
-		// 		// 	bodyA: bullet[me],
-		// 		// 	bodyB: player,
-		// 		// 	stiffness: 0.45
-		// 		// })
-		// 		//bullet[me].onEnd = function(){			}
-		// 		// cons[cons.length] = Constraint.create({
-		// 		// 	pointA: {
-		// 		// 		x: player.position.x,
-		// 		// 		y: player.position.y
-		// 		// 	},
-		// 		// 	bodyB: bullet[me],
-		// 		// 	stiffness: 0.4
-		// 		// });
-        //     }
-        // }
+        }
     ],
     fire: function() {
         if (game.mouseDown && mech.fireCDcycle < game.cycle && b.guns[this.activeGun].ammo > 0) {
