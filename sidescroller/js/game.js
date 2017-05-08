@@ -223,6 +223,7 @@ const game = {
     clearNow: false,
     clearMap: function() {
 		level.fill = [];
+		level.fillBG = [];
         level.zones = [];
         this.drawList = [];
         function removeAll(array) {
