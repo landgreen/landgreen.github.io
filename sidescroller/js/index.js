@@ -184,7 +184,13 @@ window.onmouseup = function(e) {
 // 		game.getCoords.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;
 //
 // 		//body rect mode
-// 		document.getElementById("copy-this").innerHTML = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x-game.getCoords.pos1.x}, ${game.getCoords.pos2.y-game.getCoords.pos1.y}); //`;
+// 		//document.getElementById("copy-this").innerHTML = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x-game.getCoords.pos1.x}, ${game.getCoords.pos2.y-game.getCoords.pos1.y}); //`;
+// 		//draw foreground
+// 		//document.getElementById("copy-this").innerHTML = `level.fill.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "rgba(0,0,0,0.1)"});`;
+//
+// 		//draw background fill
+// 		document.getElementById("copy-this").innerHTML = `level.fillBG.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "#ccc"});`;
+//
 // 		//svg mode
 // 		//document.getElementById("copy-this").innerHTML = 'rect x="'+game.getCoords.pos1.x+'" y="'+ game.getCoords.pos1.y+'" width="'+(game.getCoords.pos2.x-game.getCoords.pos1.x)+'" height="'+(game.getCoords.pos2.y-game.getCoords.pos1.y)+'"';
 //
@@ -229,20 +235,10 @@ function run(el) {
     el.onclick = null; //removes the onclick effect so the function only runs once
     el.style.display = "none"; //hides the element that spawned the function
     mech.spawn(); //spawns the player
-    // level.onLevel = Math.floor(Math.random()*level.levels.length); //picks a rnadom starting level
-    // powerUps.startingPowerUps(); //setup gun
-    // level.start(); //spawns the level
     game.reset();
-    // document.getElementById("keysright").innerHTML = ''; //remove html from intro
-    // document.getElementById("keysleft").innerHTML = '';
     Engine.run(engine); //starts game engine
-    // game.track = true
-    // game.zoom = canvas.height / 4000
-    // document.body.addEventListener("keydown", game.startZoomIn);
     requestAnimationFrame(cycle); //starts game loop
-	//document.getElementById("text-log").textContent = 'Welcome to ' + document.title
 	game.lastLogTime = game.cycle+360;
-
 }
 
 //main loop ************************************************************
@@ -250,7 +246,7 @@ function run(el) {
 function cycle() {
     game.timing();
     game.wipe();
-	game.textLogSVG();
+	game.textLog();
     //powerUps.loop();
     mech.keyMove();
     level.checkZones();
@@ -279,12 +275,16 @@ function cycle() {
         game.getCoords.out();
         game.testingOutput();
     } else {
+		level.drawFillBGs()
+		level.exit.draw();
         mobs.loop();
         game.draw.mobBullet();
         mobs.draw();
         game.draw.cons();
         game.draw.body();
         mech.draw();
+		level.drawFills()
+
         //ctx.drawImage(foreground_img, -700, -1500);
         game.draw.map();
         b.fire(); //fires bullets
@@ -296,42 +296,5 @@ function cycle() {
         ctx.restore();
         //game.output();
     }
-    //svg graphics , just here until I convert svg to png in inkscape and run as a canvas png
-    document
-        .getElementById(level.background)
-        .setAttribute(
-            "transform",
-            "translate(" +
-                canvas.width2 +
-                "," +
-                canvas.height2 +
-                ")" +
-                "scale(" +
-                game.zoom +
-                ")" +
-                "translate(" +
-                (mech.transX - canvas.width2) +
-                "," +
-                (mech.transY - canvas.height2) +
-                ")"
-        );
-    document
-        .getElementById(level.foreground)
-        .setAttribute(
-            "transform",
-            "translate(" +
-                canvas.width2 +
-                "," +
-                canvas.height2 +
-                ")" +
-                "scale(" +
-                game.zoom +
-                ")" +
-                "translate(" +
-                (mech.transX - canvas.width2) +
-                "," +
-                (mech.transY - canvas.height2) +
-                ")"
-        );
-    requestAnimationFrame(cycle);
+    if(!game.paused) requestAnimationFrame(cycle);
 }

@@ -2,13 +2,15 @@ let mob = [];
 
 const mobs = {
     loop: function() {
-        let i = mob.length
+        let i = mob.length;
         while (i--) {
             if (mob[i].alive) {
-                for (let j = 0; j < mob[i].do.length; j++) { //run all the behaviors for the mob each cycle
+                for (let j = 0; j < mob[i].do.length; j++) {
+                    //run all the behaviors for the mob each cycle
                     mob[i][mob[i].do[j]](); //do is an array that list the strings to run
                 }
-            } else { //if dead
+            } else {
+                //if dead
                 mob[i].force.y += mob[i].mass * game.g / 2; //turn on gravity
                 mob[i].deadCounting(i); //count down to removing mob from array
             }
@@ -16,7 +18,7 @@ const mobs = {
     },
     draw: function() {
         ctx.lineWidth = 2;
-        let i = mob.length
+        let i = mob.length;
         while (i--) {
             ctx.beginPath();
             let vertices = mob[i].vertices;
@@ -39,14 +41,14 @@ const mobs = {
     startle: function(amount) {
         for (let i = 0; i < mob.length; i++) {
             if (!mob[i].seePlayer.yes) {
-                mob[i].force.x += amount * mob[i].mass * (Math.random() - 0.5)
-                mob[i].force.y += amount * mob[i].mass * (Math.random() - 0.5)
+                mob[i].force.x += amount * mob[i].mass * (Math.random() - 0.5);
+                mob[i].force.y += amount * mob[i].mass * (Math.random() - 0.5);
             }
         }
     },
     //**********************************************************************************************************************
     //**********************************************************************************************************************
-    spawn: function(xPos, yPos, sides, radius, color, methods, name = 'test') {
+    spawn: function(xPos, yPos, sides, radius, color, methods, name = "test") {
         let i = mob.length;
         mob[i] = Matter.Bodies.polygon(xPos, yPos, sides, radius, {
             name: name,
@@ -59,7 +61,7 @@ const mobs = {
             collisionFilter: {
                 group: 0,
                 category: 0x000001,
-                mask: 0x001101,
+                mask: 0x001101
             },
             do: methods,
             onHit: undefined,
@@ -70,8 +72,7 @@ const mobs = {
             cd: 0, //game cycle when cooldown will be over
             delay: 60, //static: time between cooldowns
             fill: color,
-            stroke: 'transparent',
-            // radius: radius,
+            stroke: "transparent",
             seePlayer: {
                 yes: false,
                 recall: 0,
@@ -103,15 +104,18 @@ const mobs = {
             // },
             seePlayerFreq: 20 + Math.round(Math.random() * 30), //how often NPC checks to see where player is, lower numbers have better vision
             seePlayerCheck: function() {
-                if (!(game.cycle % this.seePlayerFreq)) { // && this.distanceToPlayer2() < 2000000) { //view distance = 1414
-                    this.stroke = 'transparent';
+                if (!(game.cycle % this.seePlayerFreq)) {
+                    // && this.distanceToPlayer2() < 2000000) { //view distance = 1414
+                    this.stroke = "transparent";
                     //checks if the mob can see the player, but map and body objects block view
-                    if (Matter.Query.ray(map, this.position, player.position).length === 0 &&
-                        Matter.Query.ray(body, this.position, player.position).length === 0) {
+                    if (
+                        Matter.Query.ray(map, this.position, player.position).length === 0 &&
+                        Matter.Query.ray(body, this.position, player.position).length === 0
+                    ) {
                         this.seePlayer.yes = true;
                         this.locatePlayer();
                     } else if (this.seePlayer.recall) {
-                        this.stroke = '#444'
+                        this.stroke = "#444";
                         this.seePlayer.yes = false;
                         this.seePlayer.recall -= this.seePlayerFreq;
                         if (this.seePlayer.recall < 0) this.seePlayer.recall = 0;
@@ -119,29 +123,37 @@ const mobs = {
                 }
             },
             memory: 120, //default time to remember player's location
-            locatePlayer: function() { // updates mob's memory of player location
+            locatePlayer: function() {
+                // updates mob's memory of player location
                 this.seePlayer.recall = this.memory + Math.round(this.memory * Math.random()); //seconds before mob falls a sleep
                 this.seePlayer.position.x = player.position.x;
                 this.seePlayer.position.y = player.position.y;
-                this.stroke = '#000';
+                this.stroke = "#000";
             },
-            yank: function() { //accelerate towards the player
+            yank: function() {
+                //accelerate towards the player
                 if (this.cd < game.cycle && this.seePlayer.yes) {
-                    this.cd = game.cycle + this.delay;
-                    const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x);
-                    const mag = player.mass * game.g
-                    player.force.x -= 80 * mag * Math.cos(angle);
-                    player.force.y -= 80 * mag * Math.sin(angle);
-                    ctx.beginPath();
-                    ctx.moveTo(this.position.x, this.position.y);
-                    ctx.lineTo(mech.pos.x, mech.pos.y)
-                    ctx.lineWidth = 15;
-                    ctx.strokeStyle = 'rgba(0,0,0,0.5)'
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
-                    ctx.fillStyle = 'rgba(0,0,0,0.3)'
-                    ctx.fill();
+					this.cd = game.cycle + this.delay;
+                    if (Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position)) < 1000000) {
+                        const angle = Math.atan2(
+                            this.seePlayer.position.y - this.position.y,
+                            this.seePlayer.position.x - this.position.x
+                        );
+						const mag = (mech.onGround) ? 90 * player.mass * game.g : 70 * player.mass * game.g
+	                    player.force.x -= mag * Math.cos(angle);
+	                    player.force.y -= mag * Math.sin(angle);
+
+                        ctx.beginPath();
+                        ctx.moveTo(this.position.x, this.position.y);
+                        ctx.lineTo(mech.pos.x, mech.pos.y);
+                        ctx.lineWidth = Math.min(60,this.radius*2);
+                        ctx.strokeStyle = "rgba(0,0,0,0.5)";
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
+                        ctx.fillStyle = "rgba(0,0,0,0.3)";
+                        ctx.fill();
+                    }
                 }
             },
             laser: function() {
@@ -164,58 +176,62 @@ const mobs = {
             laserTracking: function() {
                 if (game.cycle % 11) {
                     if (this.seePlayer.yes) {
-						//targeting laser will slowly move from the mob to the player's position
-						this.laserPos = Matter.Vector.add(this.laserPos, Matter.Vector.mult(Matter.Vector.sub(this.seePlayer.position, this.laserPos), 0.05))
-						//if laser is near the player do damage and darken laser color
-                        if (Matter.Vector.magnitude(Matter.Vector.sub(this.laserPos, mech.pos)) < this.radius*2) {
+                        //targeting laser will slowly move from the mob to the player's position
+                        this.laserPos = Matter.Vector.add(
+                            this.laserPos,
+                            Matter.Vector.mult(Matter.Vector.sub(this.seePlayer.position, this.laserPos), 0.05)
+                        );
+                        //if laser is near the player do damage and darken laser color
+                        const r = 40;
+                        if (Matter.Vector.magnitude(Matter.Vector.sub(this.laserPos, mech.pos)) < r) {
                             mech.damage(0.002 * game.dmgScale);
-                            ctx.strokeStyle = ctx.fillStyle = "rgb(0,255,255)";
-							ctx.beginPath();
-							ctx.arc(this.laserPos.x, this.laserPos.y, this.radius*2, 0, 2 * Math.PI);
-							ctx.fill();
-							ctx.lineWidth = 2;
-							ctx.beginPath();
-							ctx.moveTo(this.position.x, this.position.y);
-							ctx.lineTo(this.laserPos.x, this.laserPos.y);
-							ctx.stroke();
+                            ctx.strokeStyle = (ctx.fillStyle = "rgb(255,50,100)");
+                            ctx.beginPath();
+                            ctx.arc(this.laserPos.x, this.laserPos.y, r * 1.5, 0, 2 * Math.PI);
+                            ctx.fill();
+                            ctx.lineWidth = 2;
+                            ctx.beginPath();
+                            ctx.moveTo(this.position.x, this.position.y);
+                            ctx.lineTo(this.laserPos.x, this.laserPos.y);
+                            ctx.stroke();
                         } else {
-                            ctx.fillStyle = ctx.strokeStyle = "rgba(0,255,255,0.3)";
-							ctx.beginPath();
-							ctx.arc(this.laserPos.x, this.laserPos.y, this.radius, 0, 2 * Math.PI);
-							ctx.fill();
+                            ctx.fillStyle = (ctx.strokeStyle = "rgba(255,50,100,0.3)");
+                            ctx.beginPath();
+                            ctx.arc(this.laserPos.x, this.laserPos.y, r, 0, 2 * Math.PI);
+                            ctx.fill();
                         }
-
                     } else {
-						this.laserPos =	this.position
-					}
+                        this.laserPos = this.position;
+                    }
                 }
             },
             pullPlayer: function() {
                 // if (this.cd < game.cycle && this.seePlayer.yes) {
                 //     this.cd = game.cycle + this.delay;
-                if (this.seePlayer.yes) {
-                    const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x);
-                    const mag = player.mass * game.g
-                    player.force.x -= 1.6 * mag * Math.cos(angle);
-                    player.force.y -= 0.97 * mag * Math.sin(angle);
+                if (this.seePlayer.yes && Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position)) < 1000000) {
+                    const angle = Math.atan2(
+                        this.seePlayer.position.y - this.position.y,
+                        this.seePlayer.position.x - this.position.x
+                    );
+					player.force.x -= 1.3 * Math.cos(angle) * ((mech.onGround) ? 2 * player.mass * game.g : player.mass * game.g);
+                    player.force.y -= 0.97 * player.mass * game.g * Math.sin(angle);
 
                     ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
-                    ctx.lineTo(mech.pos.x, mech.pos.y)
-                    ctx.lineWidth = 15;
-                    ctx.strokeStyle = 'rgba(0,0,0,0.5)'
+                    ctx.lineTo(mech.pos.x, mech.pos.y);
+                    ctx.lineWidth = Math.min(60,this.radius*2);
+                    ctx.strokeStyle = "rgba(0,0,0,0.5)";
                     ctx.stroke();
-
                     ctx.beginPath();
                     ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
-                    ctx.fillStyle = 'rgba(0,0,0,0.3)'
+                    ctx.fillStyle = "rgba(0,0,0,0.3)";
                     ctx.fill();
                 }
             },
             repelBullets: function() {
                 if (this.seePlayer.yes) {
                     ctx.lineWidth = "8";
-                    ctx.strokeStyle = this.fill
+                    ctx.strokeStyle = this.fill;
                     ctx.beginPath();
                     for (let i = 0, len = bullet.length; i < len; ++i) {
                         const dx = bullet[i].position.x - this.position.x;
@@ -225,7 +241,7 @@ const mobs = {
                             ctx.moveTo(this.position.x, this.position.y);
                             ctx.lineTo(bullet[i].position.x, bullet[i].position.y);
                             const angle = Math.atan2(dy, dx);
-                            const mag = 1500 * bullet[i].mass * game.g / dist
+                            const mag = 1500 * bullet[i].mass * game.g / dist;
                             bullet[i].force.x += mag * Math.cos(angle);
                             bullet[i].force.y += mag * Math.sin(angle);
                         }
@@ -233,52 +249,71 @@ const mobs = {
                     ctx.stroke();
                 }
             },
-            attraction: function() { //accelerate towards the player
-                if (this.seePlayer.recall) { // && dx * dx + dy * dy < 2000000) {
+            attraction: function() {
+                //accelerate towards the player
+                if (this.seePlayer.recall) {
+                    // && dx * dx + dy * dy < 2000000) {
                     const forceMag = this.accelMag * this.mass;
-                    const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x);
+                    const angle = Math.atan2(
+                        this.seePlayer.position.y - this.position.y,
+                        this.seePlayer.position.x - this.position.x
+                    );
                     this.force.x += forceMag * Math.cos(angle);
                     this.force.y += forceMag * Math.sin(angle);
                 }
             },
             repulsionRange: 500000,
-            repulsion: function() { //accelerate towards the player
-                if (this.seePlayer.recall && this.distanceToPlayer2() < this.repulsionRange) { // && dx * dx + dy * dy < 2000000) {
+            repulsion: function() {
+                //accelerate towards the player
+                if (this.seePlayer.recall && this.distanceToPlayer2() < this.repulsionRange) {
+                    // && dx * dx + dy * dy < 2000000) {
                     const forceMag = this.accelMag * this.mass;
-                    const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x);
+                    const angle = Math.atan2(
+                        this.seePlayer.position.y - this.position.y,
+                        this.seePlayer.position.x - this.position.x
+                    );
                     this.force.x -= 2 * forceMag * Math.cos(angle);
                     this.force.y -= 2 * forceMag * Math.sin(angle); // - 0.0007 * this.mass; //antigravity
                 }
             },
-            burstAttraction: function() { //accelerate towards the player after a delay
+            burstAttraction: function() {
+                //accelerate towards the player after a delay
                 if (this.seePlayer.recall) {
                     if (this.cdBurst2 < game.cycle && this.angularSpeed < 0.01) {
-                        this.torque += this.mass * this.mass * (Math.round(Math.random()) * 2 - 1)
-                        this.cdBurst2 = Infinity
-                        this.cdBurst1 = game.cycle + 20
+                        this.torque += this.mass * this.mass * (Math.round(Math.random()) * 2 - 1);
+                        this.cdBurst2 = Infinity;
+                        this.cdBurst1 = game.cycle + 20;
                     }
                     if (this.cdBurst1 < game.cycle) {
-                        this.cdBurst2 = game.cycle + this.delay
-                        this.cdBurst1 = Infinity
-                        const forceMag = (this.accelMag + this.accelMag * Math.random()) * this.mass
-                        const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x)
-                        this.force.x += forceMag * Math.cos(angle)
-                        this.force.y += forceMag * Math.sin(angle) // - 0.0007 * this.mass; //antigravity
+                        this.cdBurst2 = game.cycle + this.delay;
+                        this.cdBurst1 = Infinity;
+                        const forceMag = (this.accelMag + this.accelMag * Math.random()) * this.mass;
+                        const angle = Math.atan2(
+                            this.seePlayer.position.y - this.position.y,
+                            this.seePlayer.position.x - this.position.x
+                        );
+                        this.force.x += forceMag * Math.cos(angle);
+                        this.force.y += forceMag * Math.sin(angle); // - 0.0007 * this.mass; //antigravity
                     }
                 } else {
-                    this.cdBurst2 = 0
+                    this.cdBurst2 = 0;
                 }
             },
-            hop: function() { //accelerate towards the player after a delay
+            hop: function() {
+                //accelerate towards the player after a delay
                 if (this.cd < game.cycle && this.seePlayer.recall && this.speed < 1) {
-                    this.cd = game.cycle + this.delay
-                    const forceMag = (this.accelMag + this.accelMag * Math.random()) * this.mass
-                    const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x)
-                    this.force.x += forceMag * Math.cos(angle)
+                    this.cd = game.cycle + this.delay;
+                    const forceMag = (this.accelMag + this.accelMag * Math.random()) * this.mass;
+                    const angle = Math.atan2(
+                        this.seePlayer.position.y - this.position.y,
+                        this.seePlayer.position.x - this.position.x
+                    );
+                    this.force.x += forceMag * Math.cos(angle);
                     this.force.y += forceMag * Math.sin(angle) - 0.04 * this.mass; //antigravity
                 }
             },
-            strike: function() { //teleport to player when close enough on CD
+            strike: function() {
+                //teleport to player when close enough on CD
                 if (this.seePlayer.recall && this.cd < game.cycle) {
                     const dist = Matter.Vector.sub(this.seePlayer.position, this.position);
                     const distMag = Matter.Vector.magnitude(dist);
@@ -286,7 +321,7 @@ const mobs = {
                         this.cd = game.cycle + this.delay;
                         ctx.beginPath();
                         ctx.moveTo(this.position.x, this.position.y);
-                        Matter.Body.translate(this, Matter.Vector.mult(Matter.Vector.normalise(dist), distMag - 20 - radius))
+                        Matter.Body.translate(this, Matter.Vector.mult(Matter.Vector.normalise(dist), distMag - 20 - radius));
                         ctx.lineTo(this.position.x, this.position.y);
                         ctx.lineWidth = radius * 2;
                         ctx.strokeStyle = this.fill; //"rgba(0,0,0,0.5)"; //'#000'
@@ -294,8 +329,10 @@ const mobs = {
                     }
                 }
             },
-            blink: function() { //teleport towards player as a way to move
-                if (this.seePlayer.recall && !(game.cycle % this.blinkRate)) { // && !mech.lookingAtMob(this,0.5)){
+            blink: function() {
+                //teleport towards player as a way to move
+                if (this.seePlayer.recall && !(game.cycle % this.blinkRate)) {
+                    // && !mech.lookingAtMob(this,0.5)){
                     ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
                     const dist = Matter.Vector.sub(this.seePlayer.position, this.position);
@@ -313,15 +350,17 @@ const mobs = {
                     ctx.stroke();
                 }
             },
-            drift: function() { //teleport towards player as a way to move
-                if (this.seePlayer.recall && !(game.cycle % this.blinkRate)) { // && !mech.lookingAtMob(this,0.5)){
+            drift: function() {
+                //teleport towards player as a way to move
+                if (this.seePlayer.recall && !(game.cycle % this.blinkRate)) {
+                    // && !mech.lookingAtMob(this,0.5)){
                     ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
                     const dist = Matter.Vector.sub(this.seePlayer.position, this.position);
                     const distMag = Matter.Vector.magnitude(dist);
-                    const vector = Matter.Vector.mult(Matter.Vector.normalise(dist), this.blinkLength)
+                    const vector = Matter.Vector.mult(Matter.Vector.normalise(dist), this.blinkLength);
                     if (distMag < this.blinkLength) {
-                        Matter.Body.setPosition(this, this.seePlayer.position)
+                        Matter.Body.setPosition(this, this.seePlayer.position);
                         Matter.Body.translate(this, {
                             x: (Math.random() - 0.5) * 50,
                             y: (Math.random() - 0.5) * 50
@@ -333,34 +372,40 @@ const mobs = {
                     }
                     ctx.lineTo(this.position.x, this.position.y);
                     ctx.lineWidth = radius * 2;
-                    ctx.strokeStyle = this.fill
+                    ctx.strokeStyle = this.fill;
                     ctx.stroke();
                 }
             },
-            sneakAttack: function() { //speeds towards player when player isn't looking on CD
-                if (this.cd < game.cycle && !mech.lookingAtMob(this, 0.5) && Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position))>100000) {
+            sneakAttack: function() {
+                //speeds towards player when player isn't looking on CD
+                if (
+                    this.cd < game.cycle &&
+                    !mech.lookingAtMob(this, 0.5) &&
+                    Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position)) > 100000
+                ) {
                     this.seePlayerCheck();
                     if (this.seePlayer.yes) {
                         this.cd = game.cycle + 120;
                         const mag = 0.08;
                         const unitVector = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
-                        this.force.x += Matter.Vector.mult(unitVector, mag * this.mass).x
-                        this.force.y += Matter.Vector.mult(unitVector, mag * this.mass).y
-                        this.do = ['healthBar', 'gravity', "seePlayerCheck", "fallCheck", "attraction", 'hide']
+                        this.force.x += Matter.Vector.mult(unitVector, mag * this.mass).x;
+                        this.force.y += Matter.Vector.mult(unitVector, mag * this.mass).y;
+                        this.do = ["healthBar", "gravity", "seePlayerCheck", "fallCheck", "attraction", "hide"];
                         this.collisionFilter.mask = 0x001101; //make mob hittable by bullets again
-                        this.fill = 'rgb(120,190,210)'
+                        this.fill = "rgb(120,190,210)";
                     } else {
-                        this.stroke = 'transparent';
+                        this.stroke = "transparent";
                     }
                 }
             },
-            hide: function() { //reverts back to sneakattack mode when can't recall the player's position anymore
+            hide: function() {
+                //reverts back to sneakattack mode when can't recall the player's position anymore
                 if (!this.seePlayer.recall) {
                     this.seePlayerCheck(); //gets the stroke collor back to normal
-                    this.do = ['gravity', "fallCheck", 'sneakAttack']
+                    this.do = ["gravity", "fallCheck", "sneakAttack"];
                     this.collisionFilter.mask = 0x000001; //make mob unhittable by bullets again
-                    this.fill = 'transparent';
-                    this.stroke = 'transparent';
+                    this.fill = "transparent";
+                    this.stroke = "transparent";
                 }
             },
             // regen: function() {
@@ -375,30 +420,34 @@ const mobs = {
                     this.deadCount = 0;
                 }
             },
-            onHitDamage: function() { //used in engine.js mob/player collisions
+            onHitDamage: function() {
+                //used in engine.js mob/player collisions
                 let dmg = 0.01 * Math.sqrt(this.mass) * game.dmgScale;
                 if (dmg < 0.01) dmg = 0.01;
-                return dmg
+                return dmg;
             },
             damage: function(dmg) {
-                this.health -= dmg / (Math.sqrt(this.mass));
+                this.health -= dmg / Math.sqrt(this.mass);
                 //this.fill = this.color + this.health + ')';
                 if (this.health < 0.1) this.death();
             },
-            healthBar: function() { //draw health bar
-                if (this.seePlayer.recall) { // && this.health < 1
-                    const h = this.radius * 0.3
-                    const w = this.radius * 2
-                    const x = this.position.x - w / 2
-                    const y = this.position.y - w * 0.7
-                    ctx.fillStyle = 'rgba(100, 100, 100, 0.3)';
+            healthBar: function() {
+                //draw health bar
+                if (this.seePlayer.recall) {
+                    // && this.health < 1
+                    const h = this.radius * 0.3;
+                    const w = this.radius * 2;
+                    const x = this.position.x - w / 2;
+                    const y = this.position.y - w * 0.7;
+                    ctx.fillStyle = "rgba(100, 100, 100, 0.3)";
                     ctx.fillRect(x, y, w, h);
-                    ctx.fillStyle = 'rgba(255,0,0,0.7)'
+                    ctx.fillStyle = "rgba(255,0,0,0.7)";
                     ctx.fillRect(x, y, w * this.health, h);
                 }
             },
             deadCount: 0.2,
-            onDeath: function() { // a placeholder for custom effects on mob death
+            onDeath: function() {
+                // a placeholder for custom effects on mob death
             },
             death: function(powerUp = true) {
                 this.onDeath(this); //custom death effects
@@ -407,7 +456,7 @@ const mobs = {
                 this.seePlayer.recall = 0;
                 this.frictionAir = 0.005;
                 this.restitution = 0;
-                this.fill = 'rgba(0,0,0,0)';
+                this.fill = "rgba(0,0,0,0)";
                 this.collisionFilter.category = 0x000010;
                 if (this.collisionFilter.mask === 0x001100) {
                     this.collisionFilter.mask = 0x000000;
@@ -415,15 +464,15 @@ const mobs = {
                     this.collisionFilter.mask = 0x000001;
                 }
                 if (this.isStatic) {
-                    Matter.Body.setMass(this, 1)
-                    Matter.Body.setStatic(this, false)
+                    Matter.Body.setMass(this, 1);
+                    Matter.Body.setStatic(this, false);
                 }
                 if (this.isSleeping) {
                     Matter.Body.setVelocity(this, {
                         x: 0,
                         y: 0
                     });
-                    Matter.Sleeping.set(this, false)
+                    Matter.Sleeping.set(this, false);
                 }
                 this.removeCons();
             },
@@ -444,7 +493,7 @@ const mobs = {
             },
             deadCounting: function(i) {
                 this.deadCount -= 0.0002;
-                this.stroke = 'rgba(0,0,0,' + this.deadCount + ')'; //fade away
+                this.stroke = "rgba(0,0,0," + this.deadCount + ")"; //fade away
                 if (this.deadCount < 0) {
                     Matter.World.remove(engine.world, this);
                     mob.splice(i, 1);
@@ -457,8 +506,8 @@ const mobs = {
                 if (this.seePlayer.recall && this.fireCD < game.cycle) {
                     this.fireCD = game.cycle + this.fireDelay;
                     const unitVector = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
-                    const angle = Math.atan2(unitVector.y, unitVector.x)
-                    if (this.faceOnFire) Matter.Body.setAngle(this, angle - Math.PI)
+                    const angle = Math.atan2(unitVector.y, unitVector.x);
+                    if (this.faceOnFire) Matter.Body.setAngle(this, angle - Math.PI);
                     const len = mobBullet.length;
                     mobBullet[len] = Bodies.rectangle(this.position.x, this.position.y, 14, 6, {
                         angle: angle,
@@ -469,16 +518,16 @@ const mobs = {
                         restitution: 0,
                         collisionFilter: {
                             category: 0x010000,
-                            mask: 0x001001,
+                            mask: 0x001001
                         },
                         dmg: 0.05,
                         minDmgSpeed: 8,
                         endCycle: game.cycle + 180,
-                        color: '#000',
-                        classType: 'mobBullet',
+                        color: "#000",
+                        classType: "mobBullet",
                         onDmg: function() {
                             this.endCycle = game.cycle;
-                        },
+                        }
                     });
                     const speed = 15;
                     Matter.Body.setVelocity(mobBullet[len], {
@@ -527,9 +576,9 @@ const mobs = {
                             // } else{
                             // 	return Math.atan(((v2 + Math.sqrt(sqrt)) / g / x)*-1)
                             // }
-                            return Math.atan((v2 + Math.sqrt(sqrt)) / g / x) - Math.PI / 2
-                                //return Math.atan2(v2 + Math.sqrt(sqrt), g * x)-Math.PI/2;
-                                //return Math.atan2(g * x, v2 + Math.sqrt(sqrt))
+                            return Math.atan((v2 + Math.sqrt(sqrt)) / g / x) - Math.PI / 2;
+                            //return Math.atan2(v2 + Math.sqrt(sqrt), g * x)-Math.PI/2;
+                            //return Math.atan2(g * x, v2 + Math.sqrt(sqrt))
                         } else {
                             return null;
                         }
@@ -537,7 +586,7 @@ const mobs = {
                     const v = 15;
                     //const angle = angleToHit(0.001*0.06, v * v /60/60,(this.seePlayer.position.x - this.position.x), (this.position.y - this.seePlayer.position.y));
                     const unitVector = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
-                    const angle = Math.atan2(unitVector.y, unitVector.x)
+                    const angle = Math.atan2(unitVector.y, unitVector.x);
                     if (angle !== null) {
                         //const angle = -Math.PI*0.5; //2*Math.PI*Math.random();
                         const len = mobBullet.length;
@@ -550,16 +599,16 @@ const mobs = {
                             restitution: 0,
                             collisionFilter: {
                                 category: 0x010000,
-                                mask: 0x001001,
+                                mask: 0x001001
                             },
                             dmg: 0.04,
                             minDmgSpeed: 8,
                             endCycle: game.cycle + 180,
-                            color: '#000',
-                            classType: 'mobBullet',
+                            color: "#000",
+                            classType: "mobBullet",
                             onDmg: function() {
                                 this.endCycle = game.cycle;
-                            },
+                            }
                         });
                         // Matter.Body.setVelocity(mobBullet[len], { //bullet velocity includes its motion plus a force
                         //     x: v * Math.cos(angle), //this.velocity.x,
@@ -568,13 +617,13 @@ const mobs = {
                         const f = {
                             x: 0.0012 * Math.cos(angle) / game.delta,
                             y: 0.0012 * Math.sin(angle) / game.delta
-                        }
-                        mobBullet[len].force = f //add force to fire bullets
+                        };
+                        mobBullet[len].force = f; //add force to fire bullets
                         World.add(engine.world, mobBullet[len]); //add to world
                     }
                 }
-            },
+            }
         });
         World.add(engine.world, mob[i]); //add to world
     }
-}
+};

@@ -4,15 +4,23 @@ const powerUps = {
     heal: {
         name: "heal",
         color: "#0f9",
-        size: 25,
+        size: function(){
+			return 40 * Math.sqrt(0.1 + Math.random()*0.9)
+		},
         effect: function() {
-            mech.addHealth(0.4 + Math.random() * 0.2);
+			let heal = this.size/40
+			heal = heal*heal
+            mech.addHealth(heal);
+			//game.makeTextLog('heal for '+(heal*100).toFixed(0)+'%',80)
+			playSound("powerup");
         }
     },
     ammo: {
         name: "ammo",
-        color: "#777",
-        size: 17,
+        color: "#023",
+		size: function(){
+			return 17
+		},
         effect: function() {
             //only get ammo for guns player has
             if (b.inventory.length > 1) {
@@ -20,16 +28,18 @@ const powerUps = {
                 //ammo given scales as mobs take more hits to kill
                 const ammo = Math.ceil(target.ammoPack * (0.5 + Math.random()) / b.dmgScale);
                 target.ammo += ammo;
-                b.updateHUD();
-                document.getElementById("text-log").textContent = "+" + ammo + " ammo for: " + target.name;
-                game.lastLogTime = game.cycle + 180;
+                game.updateGunHUD();
+				game.makeTextLog("+" + ammo + " ammo: " + target.name,180)
+				playSound("ammo");
             }
         }
     },
     gun: {
         name: "gun",
         color: "#0ff",
-        size: 32,
+		size: function(){
+			return 38
+		},
         effect: function() {
             //find what guns I don't have
             let options = [];
@@ -43,16 +53,15 @@ const powerUps = {
                 b.guns[b.activeGun].have = true;
                 b.inventory.push(b.activeGun);
                 b.inventory.sort();
-
-                document.getElementById("text-log-big").textContent = "new gun: " + b.guns[b.activeGun].name;
-                game.lastLogTimeBig = game.cycle + 240;
-                // if(b.inventory.length === 2){ //only trigger on first gun pickup
-                // 	document.getElementById("text-log-big").textContent = 'E and Q cycle guns'
-                // 	game.lastLogTimeBig = game.cycle+300; //log new map
-                // }
+                b.guns[b.activeGun].ammo += b.guns[b.activeGun].ammoPack * 2;
+                game.makeGunHUD();
+				game.makeTextLog("new gun: " + b.guns[b.activeGun].name,240)
+				playSound("powerup");
+            } else {
+                b.guns[b.activeGun].ammo += b.guns[b.activeGun].ammoPack * 2;
+                game.updateGunHUD();
+        		playSound("ammo");
             }
-            b.guns[b.activeGun].ammo += b.guns[b.activeGun].ammoPack * 2;
-            b.updateHUD();
         }
     },
     spawnRandomPowerUp: function(x, y) {
@@ -63,19 +72,20 @@ const powerUps = {
         }
         //bonus ammo chance if using the default gun
         if (Math.random() < 0.35 || (b.activeGun === 0 && Math.random() < 0.25)) {
-			if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
+            if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
             return;
         }
-		//new gun has 2% per unaquired gun to drop
-        if (Math.random() < 0.02*(b.guns.length - b.inventory.length)) {
- 			powerUps.spawn(x, y, "gun");
+        //new gun has a chance for each unaquired gun to drop
+        if (Math.random() < 0.012 * (b.guns.length - b.inventory.length)) {
+            powerUps.spawn(x, y, "gun");
             return;
         }
     },
     spawn: function(x, y, target, moving = true) {
         let i = powerUp.length;
         target = powerUps[target];
-        powerUp[i] = Matter.Bodies.polygon(x, y, 0, target.size, {
+		size = target.size()
+        powerUp[i] = Matter.Bodies.polygon(x, y, 0, size, {
             density: 0.001,
             //friction: 0,
             frictionAir: 0.01,
@@ -91,11 +101,10 @@ const powerUps = {
             sat: 1,
             effect: target.effect,
             name: target.name,
-            size: target.size
+            size: size
         });
         if (moving) {
             Matter.Body.setVelocity(powerUp[i], {
-                //bullet velocity includes player's motion plus a force
                 x: (Math.random() - 0.5) * 10,
                 y: Math.random() * -7 - 3
             });
@@ -108,13 +117,13 @@ const powerUps = {
             const dyP = player.position.y - powerUp[i].position.y;
             const dist2 = dxP * dxP + dyP * dyP;
             //gravitation for pickup
-            if (dist2 < 100000) {
+            if (dist2 < 200000) {
                 // && mech.health < 1) { //powerUp[i].name === 'heal' &&
-                if (dist2 < 400) {
+                if (dist2 < 2000) {
                     mech.usePowerUp(i);
                     break;
                 }
-				//power up needs to be able to see player to gravitated
+                //power up needs to be able to see player to gravitated
                 if (
                     Matter.Query.ray(map, powerUp[i].position, player.position).length === 0 &&
                     Matter.Query.ray(body, powerUp[i].position, player.position).length === 0
@@ -124,8 +133,8 @@ const powerUps = {
                         x: powerUp[i].velocity.x * 0.94,
                         y: powerUp[i].velocity.y * 0.94
                     });
-                    powerUp[i].force.x += dxP / dist2 * powerUp[i].mass * 0.38;
-                    powerUp[i].force.y += dyP / dist2 * powerUp[i].mass * 0.38 - powerUp[i].mass * game.g; //negate gravity
+                    powerUp[i].force.x += dxP / dist2 * powerUp[i].mass * 0.7;
+                    powerUp[i].force.y += dyP / dist2 * powerUp[i].mass * 0.7 - powerUp[i].mass * game.g; //negate gravity
                 }
             }
         }

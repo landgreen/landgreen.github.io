@@ -12,6 +12,7 @@ const game = {
     levelsCleared: 0,
     g: 0.001,
     dmgScale: 1,
+	paused: false,
     testing: false, //testing mode: shows wireframe and some variables
     cycle: 0, //total cycles, 60 per second
     cyclePaused: 0,
@@ -39,18 +40,49 @@ const game = {
             }
         }
     },
-	lastLogTime: 0,
-	lastLogTimeBig: 0,
-	textLogSVG: function(){
-		if (game.lastLogTime && game.lastLogTime < game.cycle){
-			game.lastLogTime = 0
-			document.getElementById("text-log").textContent = ' '
+    lastLogTime: 0,
+    lastLogTimeBig: 0,
+	boldActiveGunHUD: function(){
+		for (let i = 0, len = b.inventory.length; i < len; ++i) {
+			// document.getElementById(b.inventory[i]).style.color = '#ccc'
+			document.getElementById(b.inventory[i]).style.opacity = '0.2'
 		}
-		if (game.lastLogTimeBig && game.lastLogTimeBig < game.cycle){
-			game.lastLogTimeBig = 0
-			document.getElementById("text-log-big").textContent = ' '
+		// document.getElementById(b.activeGun).style.color = '#333'
+		document.getElementById(b.activeGun).style.opacity = '1'
+	},
+	updateGunHUD: function() {
+		for (let i = 0, len = b.inventory.length; i < len; ++i) {
+			document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name +' - ' + b.guns[b.inventory[i]].ammo
 		}
 	},
+    makeGunHUD: function() {
+        //remove all nodes
+        const myNode = document.getElementById("guns");
+        while (myNode.firstChild) {
+            myNode.removeChild(myNode.firstChild);
+        }
+        //add nodes
+        for (let i = 0, len = b.inventory.length; i < len; ++i) {
+            const node = document.createElement("div");
+            node.setAttribute("id", b.inventory[i]);
+            const textnode = document.createTextNode(b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo);
+            node.appendChild(textnode);
+            document.getElementById("guns").appendChild(node);
+        }
+		game.boldActiveGunHUD()
+    },
+	makeTextLog: function(text,time=180){
+		document.getElementById("text-log").innerHTML = text
+		document.getElementById("text-log").style.opacity = 1
+		game.lastLogTime = game.cycle + time;
+	},
+    textLog: function() {
+        if (game.lastLogTime && game.lastLogTime < game.cycle) {
+            game.lastLogTime = 0;
+            // document.getElementById("text-log").innerHTML = " ";
+			document.getElementById("text-log").style.opacity = 0;
+        }
+    },
     timing: function() {
         this.cycle++; //tracks game cycles
         //delta is used to adjust forces on game slow down;
@@ -75,6 +107,10 @@ const game = {
             // z
             this.zoom = 0.2;
         }
+		if (keys[90]) {
+            // z
+            this.zoom = 0.2;
+        }
         if (keys[69]) {
             // e    swap to next active gun
             const next = function() {
@@ -83,7 +119,9 @@ const game = {
                 if (b.guns[b.activeGun].have === false || b.guns[b.activeGun].ammo < 1) next();
             };
             next();
-            b.updateHUD();
+            game.updateGunHUD()
+			game.boldActiveGunHUD()
+			playSound('click');
         } else if (keys[81]) {
             //q    swap to previous active gun
             const previous = function() {
@@ -92,7 +130,9 @@ const game = {
                 if (b.guns[b.activeGun].have === false || b.guns[b.activeGun].ammo < 1) previous();
             };
             previous();
-            b.updateHUD();
+            game.updateGunHUD()
+			game.boldActiveGunHUD()
+			playSound('click');
         }
         if (keys[84]) {
             // 84 = t
@@ -106,11 +146,22 @@ const game = {
                 //9
                 powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
             }
-            if (keys[80]) {
-                //p
+            if (keys[79]) {
+                //o
                 Matter.Body.setPosition(player, this.mouseInGame);
                 Matter.Body.setVelocity(player, { x: 0, y: 0 });
             }
+			if (keys[80]) {
+				//p
+				if(game.paused){
+					game.paused = false
+					engine.timing.timeScale = 1
+					requestAnimationFrame(cycle)
+				} else {
+					engine.timing.timeScale = 0.001
+					game.paused = true
+				}
+			}
         }
     },
     zoom: 1,
@@ -140,51 +191,41 @@ const game = {
         requestAnimationFrame(zoomIn);
     },
     wipe: function() {
-        // if (this.isPaused) {
-        //   ctx.fillStyle = "rgba(221,221,221,0.1)";
-        //   ctx.fillRect(0, 0, canvas.width, canvas.height);
-        // } else {
-        //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // }
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
         // if (mech.health < 1) {
-        //     ctx.fillStyle = "rgba(255,255,255," + (0.05 + mech.health * mech.health) + ")";
+        //     ctx.fillStyle = "rgba(255,255,255," + (0.5 + mech.health) + ")";
         // 	ctx.fillRect(0, 0, canvas.width, canvas.height);
         // } else {
         //     ctx.clearRect(0, 0, canvas.width, canvas.height);
         // }
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
     },
     reset: function() {
-        b.dmgScale = 1;
-        b.activeGun = 0;
-        //removes guns and ammo
-        b.inventory = [0];
-        for (let i = 1, len = b.guns.length; i < len; ++i) {
-            b.guns[i].ammo = 0;
-            b.guns[i].have = false;
-        }
-        b.updateHUD();
-        mech.addHealth(1);
-        game.dmgScale = 1;
-        game.levelsCleared = 0;
-        level.onLevel = Math.floor(Math.random() * level.levels.length); //picks a rnadom starting level
-        //powerUps.startingPowerUps(); //setup gun
-		game.clearNow = true;
-        // game.clearMap();
-        // level.start(); //spawns the level
+			b.dmgScale = 1;
+			b.activeGun = 0;
+			//removes guns and ammo
+			b.inventory = [0];
+			for (let i = 1, len = b.guns.length; i < len; ++i) {
+				b.guns[i].ammo = 0;
+				b.guns[i].have = false;
+			}
+			game.makeGunHUD();
+			mech.addHealth(1);
+			mech.alive = true;
+			game.dmgScale = 1;
+			game.levelsCleared = 0;
+			level.onLevel = Math.floor(Math.random() * level.levels.length); //picks a rnadom starting level
+			//powerUps.startingPowerUps(); //setup gun
+			game.clearNow = true;
+			document.getElementById("text-log").style.opacity = 0;
+			// game.clearMap();
+			// level.start(); //spawns the level
     },
-	clearNow: false,
+    clearNow: false,
     clearMap: function() {
-        //stops sounds, removes bodies from engine and from arrays
-        level.removeSVG();
+		level.fill = [];
         level.zones = [];
         this.drawList = [];
-        // var sounds = document.getElementsByTagName('audio')
-        // for(i=0; i<sounds.length; i++) sounds[i].pause()  //stops all sound
-        //document.getElementById("ambient_crickets").pause()
-        //document.getElementById("ambient_wind").pause()
         function removeAll(array) {
-            //generic remove array from engine
             for (let i = 0; i < array.length; ++i)
                 Matter.World.remove(engine.world, array[i]);
         }
@@ -237,48 +278,49 @@ const game = {
         }
     },
     testingOutput: function() {
-        ctx.textAlign = "left";
+        ctx.textAlign = "right";
         ctx.fillStyle = "#000";
         let line = 100;
-        ctx.fillText("Press T to exit testing mode", 5, line);
+		const x = canvas.width-5
+        ctx.fillText("Press T to exit testing mode", x, line);
         line += 30;
-        ctx.fillText("cycle: " + game.cycle, 5, line);
+        ctx.fillText("cycle: " + game.cycle, x, line);
         line += 20;
-        ctx.fillText("delta: " + game.delta.toFixed(6), 5, line);
+        ctx.fillText("delta: " + game.delta.toFixed(6), x, line);
         line += 20;
-        ctx.fillText("x: " + player.position.x.toFixed(0), 5, line);
+        ctx.fillText("x: " + player.position.x.toFixed(0), x, line);
         line += 20;
-        ctx.fillText("y: " + player.position.y.toFixed(0), 5, line);
+        ctx.fillText("y: " + player.position.y.toFixed(0), x, line);
         line += 20;
-        ctx.fillText("Vx: " + mech.Vx.toFixed(2), 5, line);
+        ctx.fillText("Vx: " + mech.Vx.toFixed(2), x, line);
         line += 20;
-        ctx.fillText("Vy: " + mech.Vy.toFixed(2), 5, line);
+        ctx.fillText("Vy: " + mech.Vy.toFixed(2), x, line);
         line += 20;
-        ctx.fillText("Fx: " + player.force.x.toFixed(3), 5, line);
+        ctx.fillText("Fx: " + player.force.x.toFixed(3), x, line);
         line += 20;
-        ctx.fillText("Fy: " + player.force.y.toFixed(3), 5, line);
+        ctx.fillText("Fy: " + player.force.y.toFixed(3), x, line);
         line += 20;
-        ctx.fillText("yOff: " + mech.yOff.toFixed(1), 5, line);
+        ctx.fillText("yOff: " + mech.yOff.toFixed(1), x, line);
         line += 20;
-        ctx.fillText("mass: " + player.mass.toFixed(1), 5, line);
+        ctx.fillText("mass: " + player.mass.toFixed(1), x, line);
         line += 20;
-        ctx.fillText("onGround: " + mech.onGround, 5, line);
+        ctx.fillText("onGround: " + mech.onGround, x, line);
         line += 20;
-        ctx.fillText("crouch: " + mech.crouch, 5, line);
+        ctx.fillText("crouch: " + mech.crouch, x, line);
         line += 20;
-        ctx.fillText("isHeadClear: " + mech.isHeadClear, 5, line);
+        ctx.fillText("isHeadClear: " + mech.isHeadClear, x, line);
         line += 20;
-        ctx.fillText("HeadIsSensor: " + headSensor.isSensor, 5, line);
+        ctx.fillText("HeadIsSensor: " + headSensor.isSensor, x, line);
         line += 20;
-        ctx.fillText("frictionAir: " + player.frictionAir.toFixed(3), 5, line);
+        ctx.fillText("frictionAir: " + player.frictionAir.toFixed(3), x, line);
         line += 20;
-        ctx.fillText("stepSize: " + mech.stepSize.toFixed(2), 5, line);
+        ctx.fillText("stepSize: " + mech.stepSize.toFixed(2), x, line);
         line += 20;
-        ctx.fillText("zoom: " + this.zoom.toFixed(4), 5, line);
+        ctx.fillText("zoom: " + this.zoom.toFixed(4), x, line);
         line += 20;
-        ctx.fillText("on " + mech.onBody.type + " id: " + mech.onBody.id + ", index: " + mech.onBody.index, 5, line);
+        ctx.fillText("on " + mech.onBody.type + " id: " + mech.onBody.id + ", index: " + mech.onBody.index, x, line);
         line += 20;
-        ctx.fillText("action: " + mech.onBody.action, 5, line);
+        ctx.fillText("action: " + mech.onBody.action, x, line);
         ctx.textAlign = "center";
         ctx.fillText(`(${this.mouseInGame.x.toFixed(1)}, ${this.mouseInGame.y.toFixed(1)})`, this.mouse.x, this.mouse.y - 20);
     },
@@ -298,7 +340,7 @@ const game = {
             //     ctx.stroke()
             // }
             // ctx.globalAlpha = 1;
-            ctx.globalAlpha = 0.3 * Math.sin(game.cycle * 0.15) + 0.7;
+            ctx.globalAlpha = 0.4 * Math.sin(game.cycle * 0.15) + 0.6;
             for (let i = 0, len = powerUp.length; i < len; ++i) {
                 let vertices = powerUp[i].vertices;
                 ctx.beginPath();
@@ -307,10 +349,10 @@ const game = {
                     ctx.lineTo(vertices[j].x, vertices[j].y);
                 }
                 ctx.lineTo(vertices[0].x, vertices[0].y);
-				ctx.fillStyle = powerUp[i].color
+                ctx.fillStyle = powerUp[i].color;
                 ctx.fill();
             }
-			ctx.globalAlpha=1;
+            ctx.globalAlpha = 1;
         },
         mobBullet: function() {
             let i = mobBullet.length;
