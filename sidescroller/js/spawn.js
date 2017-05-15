@@ -5,6 +5,7 @@ const spawn = {
         "chaser",
         "chaser",
         "chaser",
+		"chaser",
         "shooter",
         "chaseShooter",
         "hopper",
@@ -95,13 +96,18 @@ const spawn = {
         me.accelMag = 0.0012;
         me.memory = 240; //memory+memory*Math.random() in cycles
         me.seePlayerFreq = 100 + Math.round(Math.random() * 40);
-        cons[cons.length] = Constraint.create({
+		me.cons = cons.length;
+        cons[me.cons] = Constraint.create({
             pointA: me.seePlayer.position,
             bodyB: me,
             stiffness: 0.001
         });
-        cons[cons.length - 1].length = 0;
+        cons[me.cons].length = 0;
+		me.onDeath = function() {
+			this.removeCons();
+        };
         if (Math.random() < Math.min(0.1 + game.levelsCleared * 0.15, 0.9)) spawn.shield(me, x, y);
+
     },
     chaser: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
         mobs.spawn(x, y, 4, radius, "rgb(110,150,200)", ["healthBar", "gravity", "seePlayerCheck", "fallCheck", "attraction"]);
@@ -400,44 +406,73 @@ const spawn = {
             stiffness: 0.05
         });
     },
-    snake: function(x, y, r = 25, l = 70, stiffness = 0.05, num = 6, faceRight = false) {
-        if (faceRight) l *= -1;
-        mobs.spawn(x - l * 0.4, y, 4, r * 1.6, "rgb(235,55,55)", ["healthBar", "seePlayerCheck", "fallCheck", "attraction"]);
-        mob[mob.length - 1].accelMag = 0.0006 * mob[mob.length - 1].mass * Math.sqrt(num);
-        mob[mob.length - 1].friction = 0;
-        mob[mob.length - 1].frictionStatic = 0;
-        mob[mob.length - 1].memory = 340; //memory+memory*Math.random() in cycles
-        for (let i = 0; i < num; i += 2) {
-            mobs.spawn(x + l * (i + 1), y, 4, r, "rgb(0,0,0)", ["healthBar", "gravity", "fallCheck"]);
-            mob[mob.length - 1].g = 0.0001; //required if using 'gravity'
-            mob[mob.length - 1].density = 0.00001;
-            mob[mob.length - 1].friction = 0;
-            mob[mob.length - 1].frictionStatic = 0;
-            consBB[consBB.length] = Constraint.create({
-                bodyA: mob[mob.length - 1],
-                bodyB: mob[mob.length - 2],
-                stiffness: stiffness
-            });
-            mobs.spawn(x + l * (i + 2), y, 4, r, "rgb(235,55,55)", ["healthBar", "gravity", "fallCheck"]);
-            mob[mob.length - 1].g = 0.0001; //required if using 'gravity'
-            mob[mob.length - 1].density = 0.00001;
-            mob[mob.length - 1].friction = 0;
-            mob[mob.length - 1].frictionStatic = 0;
-            consBB[consBB.length] = Constraint.create({
-                bodyA: mob[mob.length - 1],
-                bodyB: mob[mob.length - 2],
-                stiffness: stiffness
-            });
-        }
-        for (let i = 0; i < num - 1; ++i) {
-            //add constraint between mobs that are one apart
-            consBB[consBB.length] = Constraint.create({
-                bodyA: mob[mob.length - 1 - i],
-                bodyB: mob[mob.length - 3 - i],
-                stiffness: stiffness
-            });
-        }
-    },
+	snake: function(x, y, r = 25, l = 70, stiffness = 0.05, num = 6, faceRight = false) {
+		if (faceRight) l *= -1;
+		mobs.spawn(x - l * 0.4, y, 4, r * 1.6, "rgb(235,55,55)", ["healthBar", "seePlayerCheck", "fallCheck", "attraction"]);
+		mob[mob.length - 1].accelMag = 0.0006 * mob[mob.length - 1].mass * Math.sqrt(num);
+		mob[mob.length - 1].friction = 0;
+		mob[mob.length - 1].frictionStatic = 0;
+		mob[mob.length - 1].memory = 340; //memory+memory*Math.random() in cycles
+		for (let i = 0; i < num; i += 2) {
+			mobs.spawn(x + l * (i + 1), y, 4, r, "rgb(0,0,0)", ["healthBar", "gravity", "fallCheck"]);
+			mob[mob.length - 1].g = 0.0001; //required if using 'gravity'
+			mob[mob.length - 1].density = 0.00001;
+			mob[mob.length - 1].friction = 0;
+			mob[mob.length - 1].frictionStatic = 0;
+			consBB[consBB.length] = Constraint.create({
+				bodyA: mob[mob.length - 1],
+				bodyB: mob[mob.length - 2],
+				stiffness: stiffness
+			});
+			mobs.spawn(x + l * (i + 2), y, 4, r, "rgb(235,55,55)", ["healthBar", "gravity", "fallCheck"]);
+			mob[mob.length - 1].g = 0.0001; //required if using 'gravity'
+			mob[mob.length - 1].density = 0.00001;
+			mob[mob.length - 1].friction = 0;
+			mob[mob.length - 1].frictionStatic = 0;
+			consBB[consBB.length] = Constraint.create({
+				bodyA: mob[mob.length - 1],
+				bodyB: mob[mob.length - 2],
+				stiffness: stiffness
+			});
+		}
+		for (let i = 0; i < num - 1; ++i) {
+			//add constraint between mobs that are one apart
+			consBB[consBB.length] = Constraint.create({
+				bodyA: mob[mob.length - 1 - i],
+				bodyB: mob[mob.length - 3 - i],
+				stiffness: stiffness
+			});
+		}
+	},
+    // snake: function(x, y, r = 25, l = 30, stiffness = 0.05, num = 6, faceRight = false) {
+    //     if (faceRight) l *= -1;
+	// 	//head segment
+    //     mobs.spawn(x - l * 0.4, y, 4, r * 1.6, "rgb(235,55,55)", ["healthBar", "seePlayerCheck", "fallCheck", "attraction"]);
+    //     mob[mob.length - 1].accelMag = 0.0006 * mob[mob.length - 1].mass * Math.sqrt(num);
+    //     mob[mob.length - 1].friction = 0;
+    //     mob[mob.length - 1].frictionStatic = 0;
+    //     mob[mob.length - 1].memory = 340; //memory+memory*Math.random() in cycles
+	// 	//2nd segment
+	// 	spawn.bodyRect(x + l,y,r,r,1,spawn.propsSlide)
+	// 	consBB[consBB.length] = Constraint.create({
+	// 		bodyA: body[body.length - 1],
+	// 		bodyB: mob[mob.length - 1],
+	// 		stiffness: stiffness
+	// 	});
+    //     for (let i = 1; i < num; i++) {
+	// 		spawn.bodyRect(x + l * (i + 1),y,r,r,1,spawn.propsSlide)
+    //         consBB[consBB.length] = Constraint.create({
+    //             bodyA: body[body.length - 1],
+    //             bodyB: body[body.length - 2],
+    //             stiffness: stiffness
+    //         });
+    //     }
+	// 	consBB[consBB.length] = Constraint.create({
+	// 		bodyA: body[body.length - num+1],
+	// 		bodyB: mob[mob.length - 1],
+	// 		stiffness: stiffness
+	// 	});
+    // },
     squid: function(x, y, radius = 30, length = 500, stiffness = 0.001, num = 7) {
         //almost a blinker
         mobs.spawn(x, y, 6, radius * 6, "rgb(0,15,30)", ["healthBar", "seePlayerCheck", "fallCheck", "blink"]); //,'pullPlayer','repelBullets']);
@@ -538,12 +573,10 @@ const spawn = {
 	},
     debris: function(x, y, width, number = Math.floor(3 + Math.random() * 11)) {
         for (let i = 0; i < number; ++i) {
-            if (Math.random() < 0.9){
+            if (Math.random() < 0.75){
 				body[body.length] = Bodies.rectangle(x + Math.random() * width, y, 10 + Math.random() * 25, 10 + Math.random() * 25);
-			} else if (Math.random() < 0.8){
-				powerUps.spawn(x + Math.random() * width, y, "ammo", false);
 			} else {
-				powerUps.spawn(x + Math.random() * width, y, "gun", false);
+				powerUps.chooseRandomPowerUp(x + Math.random() * width, y)
 			}
         }
     },
@@ -575,7 +608,7 @@ const spawn = {
         } else {
             this.mapRect(x, y, 25, h - 150); //wall left
             if (leftDoor) {
-                this.bodyRect(x + 5, y + h - 150, 15, 150, this.propsFriction); //door left
+				this.bodyRect(x + 5, y + h - 150, 15, 150, this.propsFriction); //door left
             }
         }
         if (walledSide === "right") {
@@ -614,10 +647,10 @@ const spawn = {
         restitution: 1
     },
     propsSlide: {
-        friction: 0.01,
-        frictionAir: 0.01,
-        frictionStatic: 0.1,
-        restitution: 0.1
+        friction: 0.002,
+        frictionStatic: 0.2,
+        restitution: 0,
+		density: 0.002,
     },
     propsLight: {
         density: 0.001
@@ -634,11 +667,25 @@ const spawn = {
     propsNoRotation: {
         inertia: Infinity //prevents rotation
     },
+	propsHoist: {
+		inertia: Infinity, //prevents rotation
+		frictionAir: 0.01,
+		friction: 0,
+		frictionStatic: 0,
+		restitution: 0,
+		// density: 0.0001
+	},
+
     propsDoor: {
         density: 0.001, //default density is 0.001
         friction: 0,
         frictionAir: 0.03,
         frictionStatic: 0,
         restitution: 0
-    }
+    },
+	sandPaper: {
+		friction: 1,
+		frictionStatic: 1,
+		restitution: 0
+	}
 };

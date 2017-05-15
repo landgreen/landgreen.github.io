@@ -474,23 +474,38 @@ const mobs = {
                     });
                     Matter.Sleeping.set(this, false);
                 }
-                this.removeCons();
+                this.removeConsBB();
             },
-            removeCons: function() {
+            removeConsBB: function() {
                 for (let i = 0, len = consBB.length; i < len; ++i) {
                     if (consBB[i].bodyA === this) {
                         consBB[i].bodyA = consBB[i].bodyB;
                         consBB.splice(i, 1);
-                        this.removeCons();
+                        this.removeConsBB();
                         break;
                     } else if (consBB[i].bodyB === this) {
                         consBB[i].bodyB = consBB[i].bodyA;
                         consBB.splice(i, 1);
-                        this.removeCons();
+                        this.removeConsBB();
                         break;
                     }
                 }
             },
+			removeCons: function() {
+				for (let i = 0, len = cons.length; i < len; ++i) {
+					if (cons[i].bodyA === this) {
+						cons[i].bodyA = cons[i].bodyB;
+						cons.splice(i, 1);
+						this.removeCons();
+						break;
+					} else if (cons[i].bodyB === this) {
+						cons[i].bodyB = cons[i].bodyA;
+						cons.splice(i, 1);
+						this.removeCons();
+						break;
+					}
+				}
+			},
             deadCounting: function(i) {
                 this.deadCount -= 0.0002;
                 this.stroke = "rgba(0,0,0," + this.deadCount + ")"; //fade away

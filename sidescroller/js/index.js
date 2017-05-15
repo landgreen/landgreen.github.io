@@ -112,10 +112,6 @@ powerUp: 0x 100000   0x 001001
 //holding: 0x 000001   0x 000001
 */
 
-//const stats = new Stats(); //setup stats library to show FPS
-//stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-//stats.domElement.style.opacity   = '0.5'
-
 //setup random title
 const titles = [
     "physics phobia",
@@ -135,8 +131,6 @@ const titles = [
 ];
 document.getElementById("title").textContent = document.title = titles[Math.floor(titles.length * Math.random())];
 
-
-
 //set up canvas
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -150,7 +144,7 @@ function setupCanvas() {
     ctx.font = "15px Arial";
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
-    game.setTracking();
+    game.setZoom();
 }
 setupCanvas();
 window.onresize = function() {
@@ -166,6 +160,8 @@ window.onmousemove = function(e) {
 //normal mouse click events
 window.onmousedown = function(e) {
     game.mouseDown = true;
+	game.mouse.x = e.clientX;
+	game.mouse.y = e.clientY;
 };
 window.onmouseup = function(e) {
     game.mouseDown = false;
@@ -184,12 +180,16 @@ window.onmouseup = function(e) {
 // 		game.getCoords.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;
 //
 // 		//body rect mode
-// 		//document.getElementById("copy-this").innerHTML = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x-game.getCoords.pos1.x}, ${game.getCoords.pos2.y-game.getCoords.pos1.y}); //`;
+// 		//document.getElementById("copy-this").innerHTML = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x-game.getCoords.pos1.x}, ${game.getCoords.pos2.y-game.getCoords.pos1.y});`;
+//
+// 		//mob spawn
+// 		document.getElementById("copy-this").innerHTML = `spawn.randomMob(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, 0.3);`
+//
 // 		//draw foreground
 // 		//document.getElementById("copy-this").innerHTML = `level.fill.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "rgba(0,0,0,0.1)"});`;
 //
 // 		//draw background fill
-// 		document.getElementById("copy-this").innerHTML = `level.fillBG.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "#ccc"});`;
+// 		//document.getElementById("copy-this").innerHTML = `level.fillBG.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "#ccc"});`;
 //
 // 		//svg mode
 // 		//document.getElementById("copy-this").innerHTML = 'rect x="'+game.getCoords.pos1.x+'" y="'+ game.getCoords.pos1.y+'" width="'+(game.getCoords.pos2.x-game.getCoords.pos1.x)+'" height="'+(game.getCoords.pos2.y-game.getCoords.pos1.y)+'"';
@@ -208,11 +208,10 @@ window.onmouseup = function(e) {
 const keys = [];
 document.body.addEventListener("keydown", function(e) {
     keys[e.keyCode] = true;
-    game.keyPress(); //tracking, testing, zoom
+    game.keyPress();
 });
 document.body.addEventListener("keyup", function(e) {
     keys[e.keyCode] = false;
-    game.keyUp();
 });
 
 function playSound(id) {
@@ -224,17 +223,15 @@ function playSound(id) {
     }
 }
 
-// const foreground_img = new Image(); // Create new img element
-// foreground_img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/circle3390.png'; // Set source path
-
-// const background_img = new Image(); // Create new img element
-// background_img.src = 'background.png'; // Set source path
-
 function run(el) {
     // onclick from the splash screen
     el.onclick = null; //removes the onclick effect so the function only runs once
     el.style.display = "none"; //hides the element that spawned the function
-    mech.spawn(); //spawns the player
+	//mouse down event can be simplified, we only need to get position from
+	window.onmousedown = function(e) {
+	    game.mouseDown = true;
+	};
+	mech.spawn(); //spawns the player
     game.reset();
     Engine.run(engine); //starts game engine
     requestAnimationFrame(cycle); //starts game loop
@@ -247,36 +244,26 @@ function cycle() {
     game.timing();
     game.wipe();
 	game.textLog();
-    //powerUps.loop();
     mech.keyMove();
     level.checkZones();
-    //mech.standingOnActions();
-    //mech.regen();
     mech.move();
-    if (game.track) {
-        mech.look();
-    } else {
-        mech.staticLook();
-    }
+	mech.look();
     mech.deathCheck();
-    //mech.look();
     ctx.save();
     game.camera();
-    //ctx.drawImage(background_img, 400, -400);
     if (game.testing) {
         mech.draw();
         game.draw.wireFrame();
         game.draw.cons();
         game.draw.testing();
-        //bulletLoop();
         game.drawCircle();
-        mech.drawHealth();
         ctx.restore();
         game.getCoords.out();
         game.testingOutput();
     } else {
 		level.drawFillBGs()
 		level.exit.draw();
+		level.enter.draw();
         mobs.loop();
         game.draw.mobBullet();
         mobs.draw();
@@ -284,17 +271,14 @@ function cycle() {
         game.draw.body();
         mech.draw();
 		level.drawFills()
-
-        //ctx.drawImage(foreground_img, -700, -1500);
         game.draw.map();
-        b.fire(); //fires bullets
-        b.draw(); //draw bullets
-        game.drawCircle(); //draws circles, like explosions
+		// mech.keyHold();
+        b.fire();
+        b.draw();
+        game.drawCircle();
         game.draw.powerUp();
-        //mech.drawHealth();
         powerUps.loop();
         ctx.restore();
-        //game.output();
     }
     if(!game.paused) requestAnimationFrame(cycle);
 }

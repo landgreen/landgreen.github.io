@@ -2,8 +2,8 @@
 //*********************************************************************
 const game = {
     mouse: {
-        x: 0,
-        y: 0
+        x: canvas.width/2,
+        y: canvas.height/2
     },
     mouseInGame: {
         x: 0,
@@ -89,28 +89,17 @@ const game = {
         this.delta = (engine.timing.timestamp - this.lastTimeStamp) / 16.666666666666;
         this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
     },
-    track: true,
-    setTracking: function() {
-        //use in window resize in index.js
-        this.track = true;
-        this.zoom = canvas.height / 1500; //sets starting zoom scale
-    },
-    keyUp: function() {
-        if (!keys[90]) {
-            // z
-            this.setTracking();
-        }
-    },
     keyPress: function() {
         //runs on key press event
-        if (keys[90]) {
-            // z
-            this.zoom = 0.2;
-        }
-		if (keys[90]) {
-            // z
-            this.zoom = 0.2;
-        }
+        if (keys[189]) {
+            // -
+            game.zoomScale /= 0.9
+			game.setZoom()
+        } else if (keys[187]) {
+			// -
+			game.zoomScale *= 0.9
+			game.setZoom()
+		}
         if (keys[69]) {
             // e    swap to next active gun
             const next = function() {
@@ -164,7 +153,12 @@ const game = {
 			}
         }
     },
-    zoom: 1,
+    zoom: null,
+	zoomScale: 1500,
+	setZoom: function() {
+		//use in window resize in index.js
+		this.zoom = canvas.height / game.zoomScale; //sets starting zoom scale
+	},
     camera: function() {
         ctx.translate(canvas.width2, canvas.height2); //center
         ctx.scale(this.zoom, this.zoom); //zoom in once centered
@@ -173,52 +167,49 @@ const game = {
         this.mouseInGame.x = (this.mouse.x - canvas.width2) / this.zoom + canvas.width2 - mech.transX;
         this.mouseInGame.y = (this.mouse.y - canvas.height2) / this.zoom + canvas.height2 - mech.transY;
     },
-    startZoomIn: function() {
-        document.body.removeEventListener("keydown", game.startZoomIn);
-        game.track = true;
-        function zoomIn() {
-            const max = canvas.height / 1500;
-            // if (game.zoom>canvas.height/2900){
-            // 	game.zoom += (max-game.zoom)*0.01+max*0.0002    //end with this
-            // }else{
-            // 	game.zoom += (max-game.zoom)*0.01+max*0.0002  	//first this
-            // }
-            game.zoom += (max - game.zoom) * 0.01 + max * 0.0002;
-            if (game.zoom < max) {
-                requestAnimationFrame(zoomIn);
-            }
-        }
-        requestAnimationFrame(zoomIn);
-    },
+	startZoomIn: function(time = 300){
+		game.zoom = 0
+		let count = 0
+		function zLoop(){
+			game.zoom += canvas.height / game.zoomScale / time;
+			count++
+			if (count<time){
+				requestAnimationFrame(zLoop);
+			}
+		}
+		requestAnimationFrame(zLoop);
+	},
     wipe: function() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // if (mech.health < 1) {
+        // if (mech.health < 0.5) {
         //     ctx.fillStyle = "rgba(255,255,255," + (0.5 + mech.health) + ")";
         // 	ctx.fillRect(0, 0, canvas.width, canvas.height);
         // } else {
         //     ctx.clearRect(0, 0, canvas.width, canvas.height);
         // }
+	    //ctx.fillStyle = "rgba(255,255,255," + (1 - Math.sqrt(player.speed)*0.1) + ")";
+		// ctx.fillStyle = "rgba(255,255,255,0.4)";
+		// ctx.fillRect(0, 0, canvas.width, canvas.height);
     },
     reset: function() {
-			b.dmgScale = 1;
-			b.activeGun = 0;
 			//removes guns and ammo
 			b.inventory = [0];
 			for (let i = 1, len = b.guns.length; i < len; ++i) {
 				b.guns[i].ammo = 0;
 				b.guns[i].have = false;
 			}
+			game.dmgScale = 1;
+			b.dmgScale = 1;
+			b.activeGun = 0;
 			game.makeGunHUD();
 			mech.addHealth(1);
 			mech.alive = true;
-			game.dmgScale = 1;
 			game.levelsCleared = 0;
-			level.onLevel = Math.floor(Math.random() * level.levels.length); //picks a rnadom starting level
-			//powerUps.startingPowerUps(); //setup gun
+			level.onLevel = Math.floor(Math.random() * level.levels.length); //picks a random starting level
 			game.clearNow = true;
 			document.getElementById("text-log").style.opacity = 0;
-			// game.clearMap();
-			// level.start(); //spawns the level
+			document.getElementById("fade-out").style.opacity = 0;
+			game.startZoomIn()
     },
     clearNow: false,
     clearMap: function() {

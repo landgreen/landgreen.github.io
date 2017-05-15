@@ -4,23 +4,23 @@ const powerUps = {
     heal: {
         name: "heal",
         color: "#0f9",
-        size: function(){
-			return 40 * Math.sqrt(0.1 + Math.random()*0.9)
-		},
+        size: function() {
+            return 40 * Math.sqrt(0.1 + Math.random() * 0.9);
+        },
         effect: function() {
-			let heal = this.size/40
-			heal = heal*heal
+            let heal = this.size / 40;
+            heal = heal * heal;
             mech.addHealth(heal);
-			//game.makeTextLog('heal for '+(heal*100).toFixed(0)+'%',80)
-			playSound("powerup");
+            //game.makeTextLog('heal for '+(heal*100).toFixed(0)+'%',80)
+            playSound("powerup");
         }
     },
     ammo: {
         name: "ammo",
         color: "#023",
-		size: function(){
-			return 17
-		},
+        size: function() {
+            return 17;
+        },
         effect: function() {
             //only get ammo for guns player has
             if (b.inventory.length > 1) {
@@ -29,17 +29,17 @@ const powerUps = {
                 const ammo = Math.ceil(target.ammoPack * (0.5 + Math.random()) / b.dmgScale);
                 target.ammo += ammo;
                 game.updateGunHUD();
-				game.makeTextLog("+" + ammo + " ammo: " + target.name,180)
-				playSound("ammo");
+                game.makeTextLog("+" + ammo + " ammo: " + target.name, 180);
+                playSound("ammo");
             }
         }
     },
     gun: {
         name: "gun",
         color: "#0ff",
-		size: function(){
-			return 38
-		},
+        size: function() {
+            return 38;
+        },
         effect: function() {
             //find what guns I don't have
             let options = [];
@@ -55,36 +55,47 @@ const powerUps = {
                 b.inventory.sort();
                 b.guns[b.activeGun].ammo += b.guns[b.activeGun].ammoPack * 2;
                 game.makeGunHUD();
-				game.makeTextLog("new gun: " + b.guns[b.activeGun].name,240)
-				playSound("powerup");
+                game.makeTextLog("new gun: " + b.guns[b.activeGun].name, 240);
+                playSound("powerup");
             } else {
                 b.guns[b.activeGun].ammo += b.guns[b.activeGun].ammoPack * 2;
                 game.updateGunHUD();
-        		playSound("ammo");
+                playSound("ammo");
             }
         }
     },
     spawnRandomPowerUp: function(x, y) {
+        //a chance to drop a power up
         //spawn heal chance is higher at low health
-        if (Math.random() * Math.random() + 0.2 > Math.sqrt(mech.health)) {
+        if (Math.random() * Math.random() + 0.15 > Math.sqrt(mech.health)) {
             powerUps.spawn(x, y, "heal");
             return;
         }
         //bonus ammo chance if using the default gun
-        if (Math.random() < 0.35 || (b.activeGun === 0 && Math.random() < 0.25)) {
+        if (Math.random() < 0.3 || (b.activeGun === 0 && Math.random() < 0.2)) {
             if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
             return;
         }
         //new gun has a chance for each unaquired gun to drop
-        if (Math.random() < 0.012 * (b.guns.length - b.inventory.length)) {
+        if (Math.random() < 0.01 * (b.guns.length - b.inventory.length)) {
             powerUps.spawn(x, y, "gun");
             return;
+        }
+    },
+    chooseRandomPowerUp: function(x, y) {
+        //100% chance to drop a random power up
+        if (Math.random() < 0.3) { //0.333 heal
+            powerUps.spawn(x, y, "heal", false);
+        } else if (Math.random() < 0.9) { // 0.6 ammp
+            powerUps.spawn(x, y, "ammo", false);
+        } else { //0.0666 gun
+            powerUps.spawn(x, y, "gun", false);
         }
     },
     spawn: function(x, y, target, moving = true) {
         let i = powerUp.length;
         target = powerUps[target];
-		size = target.size()
+        size = target.size();
         powerUp[i] = Matter.Bodies.polygon(x, y, 0, size, {
             density: 0.001,
             //friction: 0,
