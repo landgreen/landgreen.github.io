@@ -127,7 +127,7 @@ table th, table td {
   border-collapse: collapse;
 }
 table th {
-  background: #222;
+  background: #444;
   color: #fff;
   text-transform: uppercase;
   font-size: 0.85em;
