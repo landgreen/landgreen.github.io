@@ -20,6 +20,17 @@ const game = {
     lastTimeStamp: 0, //tracks time stamps for measuing delta
     delta: 0, //measures how slow the engine is running compared to 60fps
     buttonCD: 0,
+	drawCursor: function(){
+		const size = 10
+		ctx.beginPath();
+		ctx.moveTo(game.mouse.x-size,game.mouse.y);
+		ctx.lineTo(game.mouse.x+size,game.mouse.y);
+		ctx.moveTo(game.mouse.x,game.mouse.y-size);
+		ctx.lineTo(game.mouse.x,game.mouse.y+size);
+		ctx.lineWidth=2;
+		ctx.strokeStyle= "#000"; //'rgba(0,0,0,0.4)'
+		ctx.stroke(); // Draw it
+	},
     drawList: [], //so you can draw a first frame of explosions.. I know this is bad
     drawTime: 8, //how long circles are drawn.  use to push into drawlist.time
     mobDmgColor: "rgba(255,0,0,0.7)", //used top push into drawList.color
@@ -216,6 +227,7 @@ const game = {
 		level.fill = [];
 		level.fillBG = [];
         level.zones = [];
+		level.queryList = [];
         this.drawList = [];
         function removeAll(array) {
             for (let i = 0; i < array.length; ++i)

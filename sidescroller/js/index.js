@@ -144,6 +144,7 @@ function setupCanvas() {
     ctx.font = "15px Arial";
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
+	// ctx.lineCap='square';
     game.setZoom();
 }
 setupCanvas();
@@ -231,6 +232,7 @@ function run(el) {
 	window.onmousedown = function(e) {
 	    game.mouseDown = true;
 	};
+	document.body.style.cursor = 'none';
 	mech.spawn(); //spawns the player
     game.reset();
     Engine.run(engine); //starts game engine
@@ -246,7 +248,8 @@ function cycle() {
 	game.textLog();
     mech.keyMove();
     level.checkZones();
-    mech.move();
+	level.checkQuery();
+	mech.move();
 	mech.look();
     mech.deathCheck();
     ctx.save();
@@ -280,5 +283,6 @@ function cycle() {
         powerUps.loop();
         ctx.restore();
     }
+	game.drawCursor();
     if(!game.paused) requestAnimationFrame(cycle);
 }

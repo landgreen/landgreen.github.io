@@ -5,13 +5,12 @@ const spawn = {
         "chaser",
         "chaser",
         "chaser",
-		"chaser",
         "shooter",
         "chaseShooter",
         "hopper",
         "burster",
         "burster",
-        "puller",
+		'blackHoler',
         "laserer",
         "striker",
         "striker",
@@ -69,8 +68,10 @@ const spawn = {
     },
     randomBoss: function(x, y, chance = 1) {
         if (Math.random() < chance + game.levelsCleared * 0.05) {
-            if (Math.random() < 0.75) {
+            if (Math.random() < 0.50) {
                 this.nodeBoss(x, y, this.bossPickList[Math.floor(Math.random() * this.bossPickList.length)]);
+            } else if (Math.random() < 0.50) {
+                this.lineBoss(x, y, this.bossPickList[Math.floor(Math.random() * this.bossPickList.length)]);
             } else {
                 const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
                 this[pick](x, y, 80 + Math.random() * 40);
@@ -96,18 +97,17 @@ const spawn = {
         me.accelMag = 0.0012;
         me.memory = 240; //memory+memory*Math.random() in cycles
         me.seePlayerFreq = 100 + Math.round(Math.random() * 40);
-		me.cons = cons.length;
+        me.cons = cons.length;
         cons[me.cons] = Constraint.create({
             pointA: me.seePlayer.position,
             bodyB: me,
             stiffness: 0.001
         });
         cons[me.cons].length = 0;
-		me.onDeath = function() {
-			this.removeCons();
+        me.onDeath = function() {
+            this.removeCons();
         };
         if (Math.random() < Math.min(0.1 + game.levelsCleared * 0.15, 0.9)) spawn.shield(me, x, y);
-
     },
     chaser: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
         mobs.spawn(x, y, 4, radius, "rgb(110,150,200)", ["healthBar", "gravity", "seePlayerCheck", "fallCheck", "attraction"]);
@@ -155,22 +155,27 @@ const spawn = {
         me.restitution = 0;
         me.delay = 60;
     },
-    puller: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 7, radius, "rgb(0,10,30)", [
-            "healthBar",
-            "gravity",
-            "seePlayerCheck",
-            "fallCheck",
-            "attraction",
-            "pullPlayer"
-        ]);
-        let me = mob[mob.length - 1];
-        me.delay = 360;
-        me.g = 0.0002; //required if using 'gravity'
-        me.accelMag = 0.0004;
-        me.memory = 240; //memory+memory*Math.random() in cycles
-        if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.15, 0.9)) spawn.shield(me, x, y);
-    },
+	blackHoler: function(x, y, radius = 30 + Math.ceil(Math.random() * 40)) {
+		radius = 10+radius/4 //extra small
+		mobs.spawn(x, y, 0, radius, "transparent", [
+			"seePlayerCheckByDistance",
+			"fallCheck",
+			"attraction",
+			"darkness",
+			'blackHole',
+			"healthBar",
+		]);
+		let me = mob[mob.length - 1];
+		me.delay = 300;
+		me.eventHorizon = radius*33; //required for blackhole
+		me.seeAtDistance2 = me.eventHorizon*me.eventHorizon //vision limit is event horizon
+		me.accelMag = 0.0002;
+		me.frictionAir = 0.04;
+		me.memory = 1; //memory+memory*Math.random() in cycles
+		Matter.Body.setDensity(me, 0.01);  //extra dense //normal is 0.001
+		me.collisionFilter.mask = 0x001100; //move through walls
+		//if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.16, 0.9)) spawn.shield(me, x, y);
+	},
     laserer: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
         mobs.spawn(x, y, 4, radius, "rgb(255,0,190)", [
             "healthBar",
@@ -286,7 +291,7 @@ const spawn = {
         me.memory = 240; //memory+memory*Math.random() in cycles
         me.onDeath = function(that) {
             //run this function on death
-            for (let i = 0; i < Math.ceil(that.mass * 0.25 + Math.random()*3); ++i) {
+            for (let i = 0; i < Math.ceil(that.mass * 0.25 + Math.random() * 3); ++i) {
                 spawn.spawns(
                     that.position.x + (Math.random() - 0.5) * radius * 2,
                     that.position.y + (Math.random() - 0.5) * radius * 2
@@ -406,72 +411,72 @@ const spawn = {
             stiffness: 0.05
         });
     },
-	snake: function(x, y, r = 25, l = 70, stiffness = 0.05, num = 6, faceRight = false) {
-		if (faceRight) l *= -1;
-		mobs.spawn(x - l * 0.4, y, 4, r * 1.6, "rgb(235,55,55)", ["healthBar", "seePlayerCheck", "fallCheck", "attraction"]);
-		mob[mob.length - 1].accelMag = 0.0006 * mob[mob.length - 1].mass * Math.sqrt(num);
-		mob[mob.length - 1].friction = 0;
-		mob[mob.length - 1].frictionStatic = 0;
-		mob[mob.length - 1].memory = 340; //memory+memory*Math.random() in cycles
-		for (let i = 0; i < num; i += 2) {
-			mobs.spawn(x + l * (i + 1), y, 4, r, "rgb(0,0,0)", ["healthBar", "gravity", "fallCheck"]);
-			mob[mob.length - 1].g = 0.0001; //required if using 'gravity'
-			mob[mob.length - 1].density = 0.00001;
-			mob[mob.length - 1].friction = 0;
-			mob[mob.length - 1].frictionStatic = 0;
-			consBB[consBB.length] = Constraint.create({
-				bodyA: mob[mob.length - 1],
-				bodyB: mob[mob.length - 2],
-				stiffness: stiffness
-			});
-			mobs.spawn(x + l * (i + 2), y, 4, r, "rgb(235,55,55)", ["healthBar", "gravity", "fallCheck"]);
-			mob[mob.length - 1].g = 0.0001; //required if using 'gravity'
-			mob[mob.length - 1].density = 0.00001;
-			mob[mob.length - 1].friction = 0;
-			mob[mob.length - 1].frictionStatic = 0;
-			consBB[consBB.length] = Constraint.create({
-				bodyA: mob[mob.length - 1],
-				bodyB: mob[mob.length - 2],
-				stiffness: stiffness
-			});
-		}
-		for (let i = 0; i < num - 1; ++i) {
-			//add constraint between mobs that are one apart
-			consBB[consBB.length] = Constraint.create({
-				bodyA: mob[mob.length - 1 - i],
-				bodyB: mob[mob.length - 3 - i],
-				stiffness: stiffness
-			});
-		}
-	},
+    snake: function(x, y, r = 25, l = 70, stiffness = 0.05, num = 6, faceRight = false) {
+        if (faceRight) l *= -1;
+        mobs.spawn(x - l * 0.4, y, 4, r * 1.6, "rgb(235,55,55)", ["healthBar", "seePlayerCheck", "fallCheck", "attraction"]);
+        mob[mob.length - 1].accelMag = 0.0006 * mob[mob.length - 1].mass * Math.sqrt(num);
+        mob[mob.length - 1].friction = 0;
+        mob[mob.length - 1].frictionStatic = 0;
+        mob[mob.length - 1].memory = 340; //memory+memory*Math.random() in cycles
+        for (let i = 0; i < num; i += 2) {
+            mobs.spawn(x + l * (i + 1), y, 4, r, "rgb(0,0,0)", ["healthBar", "gravity", "fallCheck"]);
+            mob[mob.length - 1].g = 0.0001; //required if using 'gravity'
+            mob[mob.length - 1].density = 0.00001;
+            mob[mob.length - 1].friction = 0;
+            mob[mob.length - 1].frictionStatic = 0;
+            consBB[consBB.length] = Constraint.create({
+                bodyA: mob[mob.length - 1],
+                bodyB: mob[mob.length - 2],
+                stiffness: stiffness
+            });
+            mobs.spawn(x + l * (i + 2), y, 4, r, "rgb(235,55,55)", ["healthBar", "gravity", "fallCheck"]);
+            mob[mob.length - 1].g = 0.0001; //required if using 'gravity'
+            mob[mob.length - 1].density = 0.00001;
+            mob[mob.length - 1].friction = 0;
+            mob[mob.length - 1].frictionStatic = 0;
+            consBB[consBB.length] = Constraint.create({
+                bodyA: mob[mob.length - 1],
+                bodyB: mob[mob.length - 2],
+                stiffness: stiffness
+            });
+        }
+        for (let i = 0; i < num - 1; ++i) {
+            //add constraint between mobs that are one apart
+            consBB[consBB.length] = Constraint.create({
+                bodyA: mob[mob.length - 1 - i],
+                bodyB: mob[mob.length - 3 - i],
+                stiffness: stiffness
+            });
+        }
+    },
     // snake: function(x, y, r = 25, l = 30, stiffness = 0.05, num = 6, faceRight = false) {
     //     if (faceRight) l *= -1;
-	// 	//head segment
+    // 	//head segment
     //     mobs.spawn(x - l * 0.4, y, 4, r * 1.6, "rgb(235,55,55)", ["healthBar", "seePlayerCheck", "fallCheck", "attraction"]);
     //     mob[mob.length - 1].accelMag = 0.0006 * mob[mob.length - 1].mass * Math.sqrt(num);
     //     mob[mob.length - 1].friction = 0;
     //     mob[mob.length - 1].frictionStatic = 0;
     //     mob[mob.length - 1].memory = 340; //memory+memory*Math.random() in cycles
-	// 	//2nd segment
-	// 	spawn.bodyRect(x + l,y,r,r,1,spawn.propsSlide)
-	// 	consBB[consBB.length] = Constraint.create({
-	// 		bodyA: body[body.length - 1],
-	// 		bodyB: mob[mob.length - 1],
-	// 		stiffness: stiffness
-	// 	});
+    // 	//2nd segment
+    // 	spawn.bodyRect(x + l,y,r,r,1,spawn.propsSlide)
+    // 	consBB[consBB.length] = Constraint.create({
+    // 		bodyA: body[body.length - 1],
+    // 		bodyB: mob[mob.length - 1],
+    // 		stiffness: stiffness
+    // 	});
     //     for (let i = 1; i < num; i++) {
-	// 		spawn.bodyRect(x + l * (i + 1),y,r,r,1,spawn.propsSlide)
+    // 		spawn.bodyRect(x + l * (i + 1),y,r,r,1,spawn.propsSlide)
     //         consBB[consBB.length] = Constraint.create({
     //             bodyA: body[body.length - 1],
     //             bodyB: body[body.length - 2],
     //             stiffness: stiffness
     //         });
     //     }
-	// 	consBB[consBB.length] = Constraint.create({
-	// 		bodyA: body[body.length - num+1],
-	// 		bodyB: mob[mob.length - 1],
-	// 		stiffness: stiffness
-	// 	});
+    // 	consBB[consBB.length] = Constraint.create({
+    // 		bodyA: body[body.length - num+1],
+    // 		bodyB: mob[mob.length - 1],
+    // 		stiffness: stiffness
+    // 	});
     // },
     squid: function(x, y, radius = 30, length = 500, stiffness = 0.001, num = 7) {
         //almost a blinker
@@ -503,18 +508,6 @@ const spawn = {
         l = Math.ceil(Math.random() * 100) + 70,
         stiffness = Math.random() * 0.07 + 0.01
     ) {
-        // if (
-        //     spawn === "shooter" ||
-        //     spawn === "hopper" ||
-        //     spawn === "puller" ||
-        //     spawn === "blinker" ||
-        //     spawn === "pullSploder" ||
-        //     spawn === "drifter" ||
-        // 	spawn === "sneakAttacker"
-        // ) {
-        //     this[spawn](x, y, 100 + Math.random() * 60);
-        //     return;
-        // }
         this.allowShields = false;
         let px = 0;
         let py = 0;
@@ -525,6 +518,37 @@ const spawn = {
             this[spawn](x + px, y + py, radius);
         }
         this.constrainAllMobCombos(nodes, stiffness);
+        this.allowShields = true;
+    },
+    lineBoss: function(
+        x,
+        y,
+        spawn = "striker",
+        nodes = Math.min(3 + Math.round(Math.random() * (game.levelsCleared + 1)), 7),
+        //Math.ceil(Math.random() * 3) + Math.min(4,Math.ceil(game.levelsCleared/2)),
+        radius = Math.ceil(Math.random() * 10) + 17,
+        l = Math.ceil(Math.random() * 80) + 30,
+        stiffness = Math.random() * 0.5 + 0.01
+    ) {
+        this.allowShields = false;
+        for (let i = 0; i < nodes; ++i) {
+            this[spawn](x + i * radius + i * l, y, radius);
+        }
+        for (let i = 0; i < nodes - 1; ++i) {
+            consBB[consBB.length] = Constraint.create({
+                bodyA: mob[mob.length - i - 1],
+                bodyB: mob[mob.length - i - 2],
+                stiffness: stiffness
+            });
+        }
+        for (let i = 0; i < nodes - 2; ++i) {
+            consBB[consBB.length] = Constraint.create({
+                bodyA: mob[mob.length - i - 1],
+                bodyB: mob[mob.length - i - 3],
+                stiffness: stiffness
+            });
+        }
+
         this.allowShields = true;
     },
     //constraints ************************************************************************************************
@@ -560,24 +584,26 @@ const spawn = {
     },
     // body and map spawns ******************************************************************************
     //***************************************************************************************************
-	boost: function(x,y,Vx=0,Vy=-30) {
-		spawn.mapVertex(x+50, y+60, "120 40 -120 40 -50 -40 50 -40");
-        level.addZone(x, y, 100, 30, "fling", Vx, Vy);
-		level.fillBG.push({
-			x: x,
-			y: y+5,
-			width: 100,
-			height: 15,
-			color: 'rgba(255,255,0,0.3)'
-		})
-	},
+    boost: function(x, y, Vx = 0, Vy = -30) {
+        spawn.mapVertex(x + 50, y + 60, "120 40 -120 40 -50 -40 50 -40");
+        // level.addZone(x, y, 100, 30, "fling", {Vx:Vx, Vy: Vy});
+        level.addQueryRegion(x + 10, y, 80, 50, "bounce", [[player],body,mob,powerUp,bullet],{ Vx: Vx, Vy: Vy });
+        level.fillBG.push({ x: x, y: y - 0, width: 100, height: 25, color: "rgba(200,0,255,0.2)" });
+		level.fillBG.push({ x: x, y: y - 30, width: 100, height: 55, color: "rgba(200,0,255,0.1)" });
+		level.fillBG.push({ x: x, y: y - 95, width: 100, height: 120, color: "rgba(200,0,255,0.05)" });
+    },
     debris: function(x, y, width, number = Math.floor(3 + Math.random() * 11)) {
         for (let i = 0; i < number; ++i) {
-            if (Math.random() < 0.75){
-				body[body.length] = Bodies.rectangle(x + Math.random() * width, y, 10 + Math.random() * 25, 10 + Math.random() * 25);
-			} else {
-				powerUps.chooseRandomPowerUp(x + Math.random() * width, y)
-			}
+            if (Math.random() < 0.14) {
+                powerUps.chooseRandomPowerUp(x + Math.random() * width, y);
+            } else {
+                body[body.length] = Bodies.rectangle(
+                    x + Math.random() * width,
+                    y,
+                    10 + Math.random() * 25,
+                    10 + Math.random() * 25
+                );
+            }
         }
     },
     bodyRect: function(x, y, width, height, chance = 1, properties) {
@@ -608,7 +634,7 @@ const spawn = {
         } else {
             this.mapRect(x, y, 25, h - 150); //wall left
             if (leftDoor) {
-				this.bodyRect(x + 5, y + h - 150, 15, 150, this.propsFriction); //door left
+                this.bodyRect(x + 5, y + h - 150, 15, 150, this.propsFriction); //door left
             }
         }
         if (walledSide === "right") {
@@ -650,7 +676,7 @@ const spawn = {
         friction: 0.002,
         frictionStatic: 0.2,
         restitution: 0,
-		density: 0.002,
+        density: 0.002
     },
     propsLight: {
         density: 0.001
@@ -667,14 +693,14 @@ const spawn = {
     propsNoRotation: {
         inertia: Infinity //prevents rotation
     },
-	propsHoist: {
-		inertia: Infinity, //prevents rotation
-		frictionAir: 0.01,
-		friction: 0,
-		frictionStatic: 0,
-		restitution: 0,
-		// density: 0.0001
-	},
+    propsHoist: {
+        inertia: Infinity, //prevents rotation
+        frictionAir: 0.01,
+        friction: 0,
+        frictionStatic: 0,
+        restitution: 0
+        // density: 0.0001
+    },
 
     propsDoor: {
         density: 0.001, //default density is 0.001
@@ -683,9 +709,9 @@ const spawn = {
         frictionStatic: 0,
         restitution: 0
     },
-	sandPaper: {
-		friction: 1,
-		frictionStatic: 1,
-		restitution: 0
-	}
+    sandPaper: {
+        friction: 1,
+        frictionStatic: 1,
+        restitution: 0
+    }
 };

@@ -122,6 +122,21 @@ const mobs = {
                     }
                 }
             },
+			seePlayerCheckByDistance: function() {
+				if (!(game.cycle % this.seePlayerFreq)) {
+					this.stroke = "transparent";
+					//checks if the mob can see the player, but map and body objects block view
+					if (this.distanceToPlayer2() < this.seeAtDistance2 ) {
+						this.seePlayer.yes = true;
+						this.locatePlayer();
+					} else if (this.seePlayer.recall) {
+						this.stroke = "#444";
+						this.seePlayer.yes = false;
+						this.seePlayer.recall -= this.seePlayerFreq;
+						if (this.seePlayer.recall < 0) this.seePlayer.recall = 0;
+					}
+				}
+			},
             memory: 120, //default time to remember player's location
             locatePlayer: function() {
                 // updates mob's memory of player location
@@ -133,20 +148,20 @@ const mobs = {
             yank: function() {
                 //accelerate towards the player
                 if (this.cd < game.cycle && this.seePlayer.yes) {
-					this.cd = game.cycle + this.delay;
+                    this.cd = game.cycle + this.delay;
                     if (Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position)) < 1000000) {
                         const angle = Math.atan2(
                             this.seePlayer.position.y - this.position.y,
                             this.seePlayer.position.x - this.position.x
                         );
-						const mag = (mech.onGround) ? 90 * player.mass * game.g : 70 * player.mass * game.g
-	                    player.force.x -= mag * Math.cos(angle);
-	                    player.force.y -= mag * Math.sin(angle);
+                        const mag = mech.onGround ? 90 * player.mass * game.g : 70 * player.mass * game.g;
+                        player.force.x -= mag * Math.cos(angle);
+                        player.force.y -= mag * Math.sin(angle);
 
                         ctx.beginPath();
                         ctx.moveTo(this.position.x, this.position.y);
                         ctx.lineTo(mech.pos.x, mech.pos.y);
-                        ctx.lineWidth = Math.min(60,this.radius*2);
+                        ctx.lineWidth = Math.min(60, this.radius * 2);
                         ctx.strokeStyle = "rgba(0,0,0,0.5)";
                         ctx.stroke();
                         ctx.beginPath();
@@ -205,21 +220,56 @@ const mobs = {
                     }
                 }
             },
-            pullPlayer: function() {
+            darkness: function() {
+                var grd = ctx.createRadialGradient(this.position.x, this.position.y, 0, this.position.x, this.position.y, this.eventHorizon);
+                grd.addColorStop(0, "rgba(0,0,0,1)");
+                grd.addColorStop(1, "rgba(0,0,0,0)");
+				ctx.fillStyle=grd;
+                ctx.beginPath();
+                ctx.arc(this.position.x, this.position.y, this.eventHorizon, 0, 2 * Math.PI);
+                ctx.fill();
+            },
+			blackHole: function() {
                 // if (this.cd < game.cycle && this.seePlayer.yes) {
                 //     this.cd = game.cycle + this.delay;
-                if (this.seePlayer.yes && Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position)) < 1000000) {
+                if (Matter.Vector.magnitude(Matter.Vector.sub(this.position, player.position)) < this.eventHorizon) {
                     const angle = Math.atan2(
-                        this.seePlayer.position.y - this.position.y,
-                        this.seePlayer.position.x - this.position.x
+                        player.position.y - this.position.y,
+                        player.position.x - this.position.x
                     );
-					player.force.x -= 1.3 * Math.cos(angle) * ((mech.onGround) ? 2 * player.mass * game.g : player.mass * game.g);
+                    player.force.x -= 1.3 * Math.cos(angle) * (mech.onGround ? 2 * player.mass * game.g : player.mass * game.g);
                     player.force.y -= 0.97 * player.mass * game.g * Math.sin(angle);
 
                     ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
                     ctx.lineTo(mech.pos.x, mech.pos.y);
-                    ctx.lineWidth = Math.min(60,this.radius*2);
+                    ctx.lineWidth = Math.min(60, this.radius * 2);
+                    ctx.strokeStyle = "rgba(0,0,0,0.5)";
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
+                    ctx.fillStyle = "rgba(0,0,0,0.3)";
+                    ctx.fill();
+                }
+            },
+            pullPlayer: function() {
+                // if (this.cd < game.cycle && this.seePlayer.yes) {
+                //     this.cd = game.cycle + this.delay;
+                if (
+                    this.seePlayer.yes &&
+                    Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position)) < 1000000
+                ) {
+                    const angle = Math.atan2(
+						player.position.y - this.position.y,
+                        player.position.x - this.position.x
+                    );
+                    player.force.x -= 1.3 * Math.cos(angle) * (mech.onGround ? 2 * player.mass * game.g : player.mass * game.g);
+                    player.force.y -= 0.97 * player.mass * game.g * Math.sin(angle);
+
+                    ctx.beginPath();
+                    ctx.moveTo(this.position.x, this.position.y);
+                    ctx.lineTo(mech.pos.x, mech.pos.y);
+                    ctx.lineWidth = Math.min(60, this.radius * 2);
                     ctx.strokeStyle = "rgba(0,0,0,0.5)";
                     ctx.stroke();
                     ctx.beginPath();
@@ -491,21 +541,21 @@ const mobs = {
                     }
                 }
             },
-			removeCons: function() {
-				for (let i = 0, len = cons.length; i < len; ++i) {
-					if (cons[i].bodyA === this) {
-						cons[i].bodyA = cons[i].bodyB;
-						cons.splice(i, 1);
-						this.removeCons();
-						break;
-					} else if (cons[i].bodyB === this) {
-						cons[i].bodyB = cons[i].bodyA;
-						cons.splice(i, 1);
-						this.removeCons();
-						break;
-					}
-				}
-			},
+            removeCons: function() {
+                for (let i = 0, len = cons.length; i < len; ++i) {
+                    if (cons[i].bodyA === this) {
+                        cons[i].bodyA = cons[i].bodyB;
+                        cons.splice(i, 1);
+                        this.removeCons();
+                        break;
+                    } else if (cons[i].bodyB === this) {
+                        cons[i].bodyB = cons[i].bodyA;
+                        cons.splice(i, 1);
+                        this.removeCons();
+                        break;
+                    }
+                }
+            },
             deadCounting: function(i) {
                 this.deadCount -= 0.0002;
                 this.stroke = "rgba(0,0,0," + this.deadCount + ")"; //fade away

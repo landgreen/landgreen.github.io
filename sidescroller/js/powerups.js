@@ -55,7 +55,7 @@ const powerUps = {
                 b.inventory.sort();
                 b.guns[b.activeGun].ammo += b.guns[b.activeGun].ammoPack * 2;
                 game.makeGunHUD();
-                game.makeTextLog("new gun: " + b.guns[b.activeGun].name, 240);
+                game.makeTextLog("<div style='font-size:150%;' >new gun: " + b.guns[b.activeGun].name + '</div>', 240);
                 playSound("powerup");
             } else {
                 b.guns[b.activeGun].ammo += b.guns[b.activeGun].ammoPack * 2;
@@ -67,28 +67,28 @@ const powerUps = {
     spawnRandomPowerUp: function(x, y) {
         //a chance to drop a power up
         //spawn heal chance is higher at low health
-        if (Math.random() * Math.random() + 0.15 > Math.sqrt(mech.health)) {
+        if (Math.random() * Math.random() + 0.14 > Math.sqrt(mech.health)) {
             powerUps.spawn(x, y, "heal");
             return;
         }
         //bonus ammo chance if using the default gun
-        if (Math.random() < 0.3 || (b.activeGun === 0 && Math.random() < 0.2)) {
+        if (Math.random() < 0.25 || (b.activeGun === 0 && Math.random() < 0.2)) {
             if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
             return;
         }
         //new gun has a chance for each unaquired gun to drop
-        if (Math.random() < 0.01 * (b.guns.length - b.inventory.length)) {
+        if (Math.random() < 0.011 * (b.guns.length - b.inventory.length)) {
             powerUps.spawn(x, y, "gun");
             return;
         }
     },
     chooseRandomPowerUp: function(x, y) {
         //100% chance to drop a random power up
-        if (Math.random() < 0.3) { //0.333 heal
+        if (Math.random() < 0.4) {
             powerUps.spawn(x, y, "heal", false);
-        } else if (Math.random() < 0.9) { // 0.6 ammp
+        } else if (Math.random() < 0.93) {
             powerUps.spawn(x, y, "ammo", false);
-        } else { //0.0666 gun
+        } else {
             powerUps.spawn(x, y, "gun", false);
         }
     },

@@ -314,6 +314,13 @@ const mech = {
             return;
         }
         this.displayHealth();
+		document.getElementById('dmg').style.transition = "opacity 0s";
+		document.getElementById('dmg').style.opacity = 0.1 + dmg*5;
+		setTimeout(function(){
+			document.getElementById('dmg').style.transition = "opacity 1s";
+			document.getElementById('dmg').style.opacity = "0";
+		}, 1);
+
         // document.getElementById("health").setAttribute("width", 225 * this.health);
     },
     deathCheck: function() {
@@ -507,38 +514,34 @@ const mech = {
         }
         ctx.save();
         ctx.scale(this.flipLegs, 1); //leg lines
-        ctx.strokeStyle = stroke;
-        ctx.lineWidth = 7;
         ctx.beginPath();
         ctx.moveTo(this.hip.x, this.hip.y);
         ctx.lineTo(this.knee.x, this.knee.y);
         ctx.lineTo(this.foot.x, this.foot.y);
+		ctx.strokeStyle = stroke;
+		ctx.lineWidth = 7;
         ctx.stroke();
         //toe lines
-        ctx.lineWidth = 4;
         ctx.beginPath();
         ctx.moveTo(this.foot.x, this.foot.y);
         ctx.lineTo(this.foot.x - 15, this.foot.y + 5);
         ctx.moveTo(this.foot.x, this.foot.y);
         ctx.lineTo(this.foot.x + 15, this.foot.y + 5);
+		ctx.lineWidth = 4;
         ctx.stroke();
         //hip joint
-        ctx.strokeStyle = "#333";
-        ctx.fillStyle = this.fillColor;
-        ctx.lineWidth = 2;
+        //ctx.strokeStyle = stroke//"#333";
         ctx.beginPath();
         ctx.arc(this.hip.x, this.hip.y, 11, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.stroke();
         //knee joint
-        ctx.beginPath();
+        ctx.moveTo(this.knee.x+7,this.knee.y);
         ctx.arc(this.knee.x, this.knee.y, 7, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.stroke();
         //foot joint
-        ctx.beginPath();
+		ctx.moveTo(this.foot.x+6,this.foot.y);
         ctx.arc(this.foot.x, this.foot.y, 6, 0, 2 * Math.PI);
+		ctx.fillStyle = this.fillColor;
         ctx.fill();
+		ctx.lineWidth = 2;
         ctx.stroke();
         ctx.restore();
     },
@@ -575,18 +578,17 @@ const mech = {
         this.calcLeg(0, 0);
         this.drawLeg("#333");
         ctx.rotate(this.angle);
-        ctx.strokeStyle = "#333";
-        ctx.lineWidth = 2;
-        //ctx.fillStyle = this.fillColor;
-        let grd = ctx.createLinearGradient(-30, 0, 30, 0);
-        grd.addColorStop(0, this.fillColorDark);
-        grd.addColorStop(1, this.fillColor);
-        ctx.fillStyle = grd;
-        ctx.beginPath();
-        //ctx.moveTo(0, 0);
+
+		ctx.beginPath();
         ctx.arc(0, 0, 30, 0, 2 * Math.PI);
+		let grd = ctx.createLinearGradient(-30, 0, 30, 0);
+		grd.addColorStop(0, this.fillColorDark);
+		grd.addColorStop(1, this.fillColor);
+		ctx.fillStyle = grd;
+		ctx.fill();
         ctx.arc(15, 0, 4, 0, 2 * Math.PI);
-        ctx.fill();
+		ctx.strokeStyle = "#333";
+		ctx.lineWidth = 2;
         ctx.stroke();
         ctx.restore();
 

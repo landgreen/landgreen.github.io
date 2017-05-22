@@ -38,7 +38,7 @@ const b = {
     },
     explode: function(me) {
         //  typically explode is used as some bullets are .onEnd
-		playSound("boom");
+        playSound("boom");
         game.drawList.push({
             //add dmg to draw queue
             x: bullet[me].position.x,
@@ -114,7 +114,7 @@ const b = {
             have: true,
             fire: function() {
                 const me = bullet.length;
-				playSound("snare2");
+                playSound("snare2");
                 const dir = (Math.random() - 0.5) * 0.09 + mech.angle;
                 bullet[me] = Bodies.rectangle(
                     mech.pos.x + 30 * Math.cos(mech.angle),
@@ -138,7 +138,7 @@ const b = {
             have: false,
             fire: function() {
                 const me = bullet.length;
-				playSound("snare2");
+                playSound("snare2");
                 const dir = (Math.random() - 0.5) * 0.15 + mech.angle;
                 bullet[me] = Bodies.rectangle(
                     mech.pos.x + 30 * Math.cos(mech.angle),
@@ -161,7 +161,7 @@ const b = {
             ammoPack: 4,
             have: false,
             fire: function() {
-				playSound("snare2");
+                playSound("snare2");
                 for (let i = 0; i < 9; i++) {
                     const me = bullet.length;
                     const dir = (Math.random() - 0.5) * 0.6 + mech.angle;
@@ -188,7 +188,7 @@ const b = {
             have: false,
             fire: function() {
                 const me = bullet.length;
-				playSound("snare2");
+                playSound("snare2");
                 const dir = mech.angle;
                 bullet[me] = Bodies.rectangle(
                     mech.pos.x + 40 * Math.cos(mech.angle),
@@ -302,11 +302,11 @@ const b = {
             ammoPack: 2,
             have: false,
             fire: function() {
-				playSound("snare2");
+                playSound("snare2");
                 const twist = 0.05 + Math.random() * 0.05;
                 let dir = mech.angle - twist * 2;
                 //let rotation = 0.02;
-				let speed = -15
+                let speed = -15;
                 for (let i = 0; i < 3; i++) {
                     dir += twist;
                     const me = bullet.length;
@@ -314,7 +314,7 @@ const b = {
                     //rotation -= 0.01;
                     //Matter.Body.setAngularVelocity(bullet[me], rotation);
                     b.fireProps(45, speed, dir, me); //cd , speed
-					speed +=9
+                    speed += 9;
                     //bullet[me].collisionFilter.mask = 0x000101; //for self collision
                     bullet[me].frictionAir = 0.04;
                     bullet[me].endCycle = game.cycle + Math.floor(250 + Math.random() * 100);
@@ -411,7 +411,7 @@ const b = {
             ammoPack: 5,
             have: false,
             fire: function() {
-				playSound("snare2");
+                playSound("snare2");
                 let dir = mech.angle - 0.1;
                 for (let i = 0; i < 5; i++) {
                     dir += 0.05 + (Math.random() - 0.5) * 0.04;
@@ -444,7 +444,7 @@ const b = {
             ammoPack: 2,
             have: false,
             fire: function() {
-				playSound("launcher");
+                playSound("launcher");
                 const me = bullet.length;
                 const dir = mech.angle;
                 bullet[me] = Bodies.circle(
@@ -476,7 +476,7 @@ const b = {
             ammoPack: 7,
             have: false,
             fire: function() {
-				playSound("snare2");
+                playSound("snare2");
                 let dir = mech.angle - 0.05;
                 for (let i = 0; i < 3; i++) {
                     dir += 0.05;
@@ -488,10 +488,10 @@ const b = {
                         b.fireAttributes(dir)
                     );
                     b.fireProps(30, 30, dir, me); //cd , speed
-					Matter.Body.setDensity(bullet[me], 0.0001);
+                    Matter.Body.setDensity(bullet[me], 0.0001);
                     bullet[me].endCycle = game.cycle + 300;
-					bullet[me].dmg = 0.4;
-					bullet[me].minDmgSpeed = 0;
+                    bullet[me].dmg = 0.4;
+                    bullet[me].minDmgSpeed = 0;
                     bullet[me].restitution = 0.95;
                     bullet[me].friction = 0;
                     bullet[me].do = function() {
@@ -506,7 +506,7 @@ const b = {
             ammoPack: 2,
             have: false,
             fire: function() {
-				playSound("snare2");
+                playSound("snare2");
                 const me = bullet.length;
                 const dir = mech.angle;
                 bullet[me] = Bodies.rectangle(
@@ -526,15 +526,15 @@ const b = {
     ],
     fire: function() {
         if (game.mouseDown && mech.fireCDcycle < game.cycle) {
-			if (b.guns[this.activeGun].ammo > 0) {
-				b.guns[this.activeGun].fire();
-				b.guns[this.activeGun].ammo--;
-				game.updateGunHUD()
-			} else {
-				mech.fireCDcycle = game.cycle + 30; //cooldown
-				game.makeTextLog('No ammo. Press E or Q to switch.',80)
-				playSound('no');
-			}
+            if (b.guns[this.activeGun].ammo > 0) {
+                b.guns[this.activeGun].fire();
+                b.guns[this.activeGun].ammo--;
+                game.updateGunHUD();
+            } else {
+                mech.fireCDcycle = game.cycle + 30; //cooldown
+                game.makeTextLog("NO AMMO<br>press <strong>E</strong> or <strong>Q</strong> to switch", 80);
+                playSound("no");
+            }
         }
     },
     draw: function() {
