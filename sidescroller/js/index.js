@@ -113,23 +113,23 @@ powerUp: 0x 100000   0x 001001
 */
 
 //setup random title
-const titles = [
-    "physics phobia",
-    "physics frenzy",
-    "impulse city",
-    "velocity city",
-    "isogonal",
-    "isogon impulse",
-    "isogon invasion",
-    "isogon towers!",
-    "isogon invasion!",
-    "bird robot!",
-    "ostrichbot",
-    "pewpew",
-	'shoot the baddies',
-	'get to the door',
-];
-document.getElementById("title").textContent = document.title = titles[Math.floor(titles.length * Math.random())];
+// const titles = [
+//     "physics phobia",
+//     "physics frenzy",
+//     "impulse city",
+//     "velocity city",
+//     "isogonal",
+//     "isogon impulse",
+//     "isogon invasion",
+//     "isogon towers!",
+//     "isogon invasion!",
+//     "bird robot!",
+//     "ostrichbot",
+//     "pewpew",
+// 	'shoot the baddies',
+// 	'get to the door',
+// ];
+// document.getElementById("title").textContent = document.title = titles[Math.floor(titles.length * Math.random())];
 
 //set up canvas
 const canvas = document.getElementById("canvas");
@@ -247,6 +247,7 @@ function cycle() {
     game.wipe();
 	game.textLog();
     mech.keyMove();
+	powerUps.loop();
     level.checkZones();
 	level.checkQuery();
 	mech.move();
@@ -267,7 +268,7 @@ function cycle() {
 		level.drawFillBGs()
 		level.exit.draw();
 		level.enter.draw();
-        mobs.loop();
+		game.draw.powerUp();
         game.draw.mobBullet();
         mobs.draw();
         game.draw.cons();
@@ -275,12 +276,10 @@ function cycle() {
         mech.draw();
 		level.drawFills()
         game.draw.map();
-		// mech.keyHold();
+		mobs.loop();
         b.fire();
         b.draw();
-        game.drawCircle();
-        game.draw.powerUp();
-        powerUps.loop();
+		game.drawCircle();
         ctx.restore();
     }
 	game.drawCursor();

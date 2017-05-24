@@ -8,7 +8,7 @@ const level = {
     levels: ["towers", "skyscrapers", "rooftops", "warehouse"], // name of the level methods that the player runs through
     onLevel: undefined,
     start: function() {
-        //game.levelsCleared = 7;  //for testing to simulate all possible mobs spawns
+        // game.levelsCleared = 7;  //for testing to simulate all possible mobs spawns
         spawn.setSpawnList(); //picks a couple mobs types for a themed random mob spawns
         this[this.levels[this.onLevel]](); //spawn the level player is on, this cycles in a loop
         //this.boss();

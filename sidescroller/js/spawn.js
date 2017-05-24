@@ -10,18 +10,18 @@ const spawn = {
         "hopper",
         "burster",
         "burster",
-		'blackHoler',
         "laserer",
         "striker",
         "striker",
         "springer",
-        "ghoster",
+         "ghoster",
         "blinker",
         "drifter",
         "sneakAttacker",
         "exploder",
         "spawner",
-        "laserTracker"
+        "laserTracker",
+		'blackHoler',
     ],
     bossPickList: [
         "chaser",
@@ -157,8 +157,8 @@ const spawn = {
     },
 	blackHoler: function(x, y, radius = 30 + Math.ceil(Math.random() * 40)) {
 		radius = 10+radius/4 //extra small
-		mobs.spawn(x, y, 0, radius, "transparent", [
-			"seePlayerCheckByDistance",
+		mobs.spawn(x, y, 0, radius, "#000", [
+			"seePlayerbyDistAndLOS",
 			"fallCheck",
 			"attraction",
 			"darkness",
@@ -167,7 +167,7 @@ const spawn = {
 		]);
 		let me = mob[mob.length - 1];
 		me.delay = 300;
-		me.eventHorizon = radius*33; //required for blackhole
+		me.eventHorizon = radius*30; //required for blackhole
 		me.seeAtDistance2 = me.eventHorizon*me.eventHorizon //vision limit is event horizon
 		me.accelMag = 0.0002;
 		me.frictionAir = 0.04;
@@ -240,19 +240,20 @@ const spawn = {
         let me;
         if (Math.random() > 0.25) {
             //fast
-            mobs.spawn(x, y, 0, radius, "transparent", ["seePlayerCheck", "fallCheck", "attraction"]);
+            mobs.spawn(x, y, 0, radius, "transparent", ["seePlayerCheckByDistance", "fallCheck", "attraction", "healthBar"]);
             me = mob[mob.length - 1];
             me.accelMag = 0.00025;
         } else {
             //slow but can yank
-            mobs.spawn(x, y, 7, radius, "transparent", ["seePlayerCheck", "fallCheck", "attraction", "yank"]);
+            mobs.spawn(x, y, 7, radius, "transparent", ["seePlayerCheckByDistance", "fallCheck", "attraction", "yank", "healthBar"]);
             me = mob[mob.length - 1];
             me.delay = 250 + Math.random() * 150;
             me.accelMag = 0.00015;
             if (Math.random() < Math.min(0.1 + game.levelsCleared * 0.15, 0.9)) spawn.shield(me, x, y);
         }
+		me.seeAtDistance2 = Math.pow(1000 - radius*3, 2) //sees longer distance at smaller radius
         me.collisionFilter.mask = 0x001100; //move through walls
-        me.memory = 720; //memory+memory*Math.random()
+        me.memory = 400; //memory+memory*Math.random()
     },
     blinker: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
         mobs.spawn(x, y, 6, radius, "rgb(0,200,255)", ["healthBar", "seePlayerCheck", "fallCheck", "blink"]);
