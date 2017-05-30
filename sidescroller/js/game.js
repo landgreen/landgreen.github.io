@@ -63,7 +63,11 @@ const game = {
 	},
 	updateGunHUD: function() {
 		for (let i = 0, len = b.inventory.length; i < len; ++i) {
-			document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name +' - ' + b.guns[b.inventory[i]].ammo
+			if (b.guns[b.inventory[i]].ammo === Infinity){
+				document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name
+			} else {
+				document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name +' - ' + b.guns[b.inventory[i]].ammo
+			}
 		}
 	},
     makeGunHUD: function() {
@@ -76,7 +80,12 @@ const game = {
         for (let i = 0, len = b.inventory.length; i < len; ++i) {
             const node = document.createElement("div");
             node.setAttribute("id", b.inventory[i]);
-            const textnode = document.createTextNode(b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo);
+			let textnode
+			if (b.guns[b.inventory[i]].ammo === Infinity){
+				textnode = document.createTextNode(b.guns[b.inventory[i]].name);
+			} else {
+				textnode = document.createTextNode(b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo);
+			}
             node.appendChild(textnode);
             document.getElementById("guns").appendChild(node);
         }
@@ -121,6 +130,7 @@ const game = {
             next();
             game.updateGunHUD()
 			game.boldActiveGunHUD()
+			mech.drop();
 			playSound('click');
         } else if (keys[81]) {
             //q    swap to previous active gun
@@ -132,6 +142,7 @@ const game = {
             previous();
             game.updateGunHUD()
 			game.boldActiveGunHUD()
+			mech.drop();
 			playSound('click');
         }
         if (keys[84]) {
@@ -213,6 +224,8 @@ const game = {
 			b.dmgScale = 1;
 			b.activeGun = 0;
 			game.makeGunHUD();
+			mech.isHolding = false;
+			mech.holding = null;
 			mech.addHealth(1);
 			mech.alive = true;
 			game.levelsCleared = 0;
@@ -224,6 +237,8 @@ const game = {
     },
     clearNow: false,
     clearMap: function() {
+		mech.isHolding = false;
+		mech.holding = null;
 		level.fill = [];
 		level.fillBG = [];
         level.zones = [];
@@ -247,8 +262,6 @@ const game = {
         consBB = [];
         removeAll(bullet);
         bullet = [];
-        removeAll(mobBullet);
-        mobBullet = [];
     },
     getCoords: {
         //used when building maps, outputs a draw rect command to console, only works in testing mode
@@ -357,25 +370,6 @@ const game = {
                 ctx.fill();
             }
             ctx.globalAlpha = 1;
-        },
-        mobBullet: function() {
-            let i = mobBullet.length;
-            ctx.beginPath();
-            while (i--) {
-                let vertices = mobBullet[i].vertices;
-                ctx.moveTo(vertices[0].x, vertices[0].y);
-                for (let j = 1; j < vertices.length; j += 1) {
-                    ctx.lineTo(vertices[j].x, vertices[j].y);
-                }
-                ctx.lineTo(vertices[0].x, vertices[0].y);
-                if (mobBullet[i].endCycle < game.cycle) {
-                    Matter.World.remove(engine.world, mobBullet[i]);
-                    mobBullet.splice(i, 1);
-                }
-            }
-            //ctx.fillStyle = ((game.cycle%2) ? '#000' : '#f00');
-            ctx.fillStyle = "#f00";
-            ctx.fill();
         },
         map: function() {
             ctx.beginPath();

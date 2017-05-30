@@ -96,9 +96,9 @@ FIX************************************************************
 sometimes the player falls off a ledge and stays crouched in mid air
 
 the jump height control by holding down jump  can also control any upward motion (like from a block that throws player up)
-*/
 
-/*collision info:
+
+collision info:
          category    mask
 player:  0x 001000   0x 110001
 bullet:  0x 000100   0x 000001
@@ -228,6 +228,7 @@ function run(el) {
     // onclick from the splash screen
     el.onclick = null; //removes the onclick effect so the function only runs once
     el.style.display = "none"; //hides the element that spawned the function
+	// document.body.style.pointerEvents = 'none';
 	//mouse down event can be simplified, we only need to get position from
 	window.onmousedown = function(e) {
 	    game.mouseDown = true;
@@ -269,11 +270,11 @@ function cycle() {
 		level.exit.draw();
 		level.enter.draw();
 		game.draw.powerUp();
-        game.draw.mobBullet();
         mobs.draw();
         game.draw.cons();
         game.draw.body();
         mech.draw();
+		mech.hold();
 		level.drawFills()
         game.draw.map();
 		mobs.loop();

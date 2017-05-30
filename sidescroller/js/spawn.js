@@ -5,21 +5,21 @@ const spawn = {
         "chaser",
         "chaser",
         "chaser",
-        "shooter",
-        "chaseShooter",
-        "hopper",
         "burster",
         "burster",
-        "laserer",
         "striker",
         "striker",
+		"shooter",
+		"chaseShooter",
+		"hopper",
         "springer",
-         "ghoster",
+     	"ghoster",
         "blinker",
         "drifter",
         "sneakAttacker",
         "exploder",
         "spawner",
+		"laserer",
         "laserTracker",
 		'blackHoler',
     ],
@@ -27,27 +27,35 @@ const spawn = {
         "chaser",
         "chaseShooter",
         "burster",
-        "laserer",
         "striker",
         "springer",
         "ghoster",
         "exploder",
         "spawner",
+		"laserer",
         "laserTracker"
     ],
     setSpawnList: function() {
         //this is run at the start of each new level to give the mobs on each level a flavor
         this.pickList = [];
-        for (let i = 0, len = 1 + Math.ceil(Math.random() * Math.random() * 3); i < len; ++i) {
+        for (let i = 0, len = Math.ceil(0.93 + Math.random() * Math.random() * 3); i < len; ++i) {
             this.pickList.push(this.fullPickList[Math.floor(Math.random() * this.fullPickList.length)]);
         }
     },
+	//
     randomMob: function(x, y, chance = 1) {
-        if (Math.random() < chance + game.levelsCleared * 0.04) {
+		if (game.levelsCleared === 0){
+			//cap mobs at 3 if on level 1
+			if (Math.random() < chance + game.levelsCleared * 0.04 && mob.length < 3){
+				const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
+				this[pick](x, y);
+			}
+		} else if (Math.random() < chance + game.levelsCleared * 0.04) {
             const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
             this[pick](x, y);
         }
     },
+	//
     randomSmallMob: function(
         x,
         y,
@@ -55,7 +63,7 @@ const spawn = {
         size = 16 + Math.ceil(Math.random() * 15),
         chance = 1
     ) {
-        if (Math.random() < chance + game.levelsCleared * 0.03) {
+        if (Math.random() < chance + game.levelsCleared * 0.03  && game.levelsCleared != 0) {
             const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
             for (let i = 0; i < num; ++i) {
                 this[pick](
@@ -67,7 +75,7 @@ const spawn = {
         }
     },
     randomBoss: function(x, y, chance = 1) {
-        if (Math.random() < chance + game.levelsCleared * 0.05) {
+        if (Math.random() < chance + game.levelsCleared * 0.05 && game.levelsCleared != 0) {
             if (Math.random() < 0.50) {
                 this.nodeBoss(x, y, this.bossPickList[Math.floor(Math.random() * this.bossPickList.length)]);
             } else if (Math.random() < 0.50) {
@@ -80,16 +88,6 @@ const spawn = {
     },
     //basic mob templates****************************************************************************************
     //***********************************************************************************************************
-    shooter: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 3, radius, "rgb(100,50,255)", ["healthBar", "seePlayerCheck", "fireAt", "healthBar"]);
-        let me = mob[mob.length - 1];
-        me.isStatic = true;
-        me.seePlayerFreq = 40 + Math.round(Math.random() * 35);
-        me.memory = 20; //memory+memory*Math.random()
-        //me.fireDelay = 40;
-        me.fireDelay = Math.ceil(10 + 2000 / radius);
-        if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.15, 1)) spawn.shield(me, x, y);
-    },
     springer: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
         mobs.spawn(x, y, 0, radius, "rgb(223,2,58)", ["healthBar", "gravity", "seePlayerCheck", "fallCheck"]);
         let me = mob[mob.length - 1];
@@ -116,25 +114,6 @@ const spawn = {
         me.accelMag = 0.0012;
         me.memory = 240; //memory+memory*Math.random() in cycles
         if (Math.random() < Math.min(game.levelsCleared * 0.15, 0.9)) spawn.shield(me, x, y);
-    },
-    chaseShooter: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 3, radius, "rgb(155,0,255)", [
-            "healthBar",
-            "gravity",
-            "seePlayerCheck",
-            "fallCheck",
-            "fireAt",
-            "attraction"
-        ]);
-        let me = mob[mob.length - 1];
-        me.accelMag = 0.0002;
-        me.g = 0.0001; //required if using 'gravity'
-        me.frictionAir = 0.0002;
-        me.memory = 180; //memory+memory*Math.random() in cycles
-        //me.fireDelay = 65;
-        me.fireDelay = Math.ceil(30 + 2000 / radius);
-        me.faceOnFire = false; //prevents rotation on fire
-        if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.15, 0.95)) spawn.shield(me, x, y);
     },
     hopper: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
         mobs.spawn(x, y, 4, radius, "rgb(0,200,150)", ["healthBar", "gravity", "seePlayerCheck", "fallCheck", "hop"]);
@@ -167,7 +146,7 @@ const spawn = {
 		]);
 		let me = mob[mob.length - 1];
 		me.delay = 300;
-		me.eventHorizon = radius*30; //required for blackhole
+		me.eventHorizon = radius*20; //required for blackhole
 		me.seeAtDistance2 = me.eventHorizon*me.eventHorizon //vision limit is event horizon
 		me.accelMag = 0.0002;
 		me.frictionAir = 0.04;
@@ -252,7 +231,7 @@ const spawn = {
             if (Math.random() < Math.min(0.1 + game.levelsCleared * 0.15, 0.9)) spawn.shield(me, x, y);
         }
 		me.seeAtDistance2 = Math.pow(1000 - radius*3, 2) //sees longer distance at smaller radius
-        me.collisionFilter.mask = 0x001100; //move through walls
+        me.collisionFilter.mask = 0x001110; //move through walls
         me.memory = 400; //memory+memory*Math.random()
     },
     blinker: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
@@ -260,7 +239,7 @@ const spawn = {
         let me = mob[mob.length - 1];
         me.blinkRate = 40 + Math.round(Math.random() * 60); //required for blink
         me.blinkLength = 150 + Math.round(Math.random() * 200); //required for blink
-        me.collisionFilter.mask = 0x001100; //move through walls
+        //me.collisionFilter.mask = 0x001100; //move through walls
         me.isStatic = true;
         me.memory = 360; //memory+memory*Math.random()
         me.seePlayerFreq = 40 + Math.round(Math.random() * 30);
@@ -271,12 +250,12 @@ const spawn = {
         let me = mob[mob.length - 1];
         me.blinkRate = 30 + Math.round(Math.random() * 30); //required for blink/drift
         me.blinkLength = 150; //required for blink/drift
-        me.collisionFilter.mask = 0x001100; //move through walls
+        //me.collisionFilter.mask = 0x001100; //move through walls
         me.isStatic = true;
         me.memory = 360; //memory+memory*Math.random()
         me.seePlayerFreq = 40 + Math.round(Math.random() * 30);
     },
-    sneakAttacker: function(x, y, radius = 15 + Math.ceil(Math.random() * 30)) {
+    sneakAttacker: function(x, y, radius = 25 + Math.ceil(Math.random() * 30)) {
         mobs.spawn(x, y, 6, radius, "rgb(235,235,235)", ["healthBar", "gravity", "fallCheck", "sneakAttack"]);
         let me = mob[mob.length - 1];
         me.g = 0.0005; //required if using 'gravity'
@@ -284,6 +263,45 @@ const spawn = {
         Matter.Body.rotate(me, Math.PI * 0.17);
         me.fill = "transparent";
     },
+	shooter: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
+		mobs.spawn(x, y, 3, radius, "rgb(100,50,255)", ["healthBar", "seePlayerCheck", "fire"]);
+        let me = mob[mob.length - 1];
+		me.facePlayer = true;
+		me.isStatic = true;
+		me.fireFreq = Math.ceil(20 + 2000 / radius);
+        me.memory = 120; //memory+memory*Math.random() in cycles
+		if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.15, 1)) spawn.shield(me, x, y);
+	},
+	chaseShooter: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
+        mobs.spawn(x, y, 3, radius, "rgb(155,0,255)", ["healthBar", "gravity", "seePlayerCheck", "fallCheck", "attraction", "fire"]);
+        let me = mob[mob.length - 1];
+		me.facePlayer = false;
+        me.g = 0.0002; //required if using 'gravity'
+        me.accelMag = 0.0003;
+		me.fireFreq = Math.ceil(40 + 2000 / radius);
+        me.memory = 120; //memory+memory*Math.random() in cycles
+		if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.15, 1)) spawn.shield(me, x, y);
+    },
+	bullet: function(x, y, radius = 4) { //bullets
+		mobs.spawn(x, y, 0, radius, "rgb(255,0,0)", ["gravity", "timeLimit"]);
+		let me = mob[mob.length - 1];
+		me.onHit = function(k) {
+			//run this function on hitting player
+			spawn.explode(k);
+			this.timeLeft = 0;
+		};
+		me.onDeath = function(k) {
+			this.deadCount = 0;  //don't leave a ghost body
+		};
+		Matter.Body.setDensity(me, 0.002);  //normal is 0.001
+		me.timeLeft = 240;
+		me.g = 0.001 ; //required if using 'gravity'
+		me.frictionAir = 0;
+		me.restitution = 0.8
+		me.noPowerUp = true;
+		// me.collisionFilter.mask = 0x001000;
+		me.collisionFilter.category = 0x010000;
+	},
     spawner: function(x, y, radius = 55 + Math.ceil(Math.random() * 50)) {
         mobs.spawn(x, y, 5, radius, "rgb(255,150,0)", ["healthBar", "gravity", "seePlayerCheck", "fallCheck", "attraction"]);
         let me = mob[mob.length - 1];
@@ -555,7 +573,7 @@ const spawn = {
     //constraints ************************************************************************************************
     //*************************************************************************************************************
     constrainAllMobCombos: function(num, stiffness) {
-        //runs thourgh every combination of last 'num' bodies and constrains them
+        //runs through every combination of last 'num' bodies and constrains them
         for (let i = 1; i < num + 1; ++i) {
             for (let j = i + 1; j < num + 1; ++j) {
                 consBB[consBB.length] = Constraint.create({
@@ -584,15 +602,24 @@ const spawn = {
         });
     },
     // body and map spawns ******************************************************************************
-    //***************************************************************************************************
-    boost: function(x, y, Vx = 0, Vy = -30) {
-        spawn.mapVertex(x + 50, y + 60, "120 40 -120 40 -50 -40 50 -40");
-        // level.addZone(x, y, 100, 30, "fling", {Vx:Vx, Vy: Vy});
-        level.addQueryRegion(x + 10, y, 80, 50, "bounce", [[player],body,mob,powerUp,bullet],{ Vx: Vx, Vy: Vy });
-        level.fillBG.push({ x: x, y: y - 0, width: 100, height: 25, color: "rgba(200,0,255,0.2)" });
-		level.fillBG.push({ x: x, y: y - 30, width: 100, height: 55, color: "rgba(200,0,255,0.1)" });
-		level.fillBG.push({ x: x, y: y - 95, width: 100, height: 120, color: "rgba(200,0,255,0.05)" });
-    },
+    //**********************************************************************************************
+    // boost: function(x, y, Vx = 0, Vy = -30) {
+    //     spawn.mapVertex(x + 50, y + 60, "120 40 -120 40 -50 -40 50 -40");
+    //     // level.addZone(x, y, 100, 30, "fling", {Vx:Vx, Vy: Vy});
+    //     level.addQueryRegion(x + 10, y, 80, 50, "bounce", [[player],body,mob,powerUp,bullet],{ Vx: Vx, Vy: Vy });
+    //     level.fillBG.push({ x: x, y: y - 0, width: 100, height: 25, color: "rgba(200,0,255,0.2)" });
+	// 	level.fillBG.push({ x: x, y: y - 30, width: 100, height: 55, color: "rgba(200,0,255,0.1)" });
+	// 	level.fillBG.push({ x: x, y: y - 95, width: 100, height: 120, color: "rgba(200,0,255,0.05)" });
+    // },
+	boost: function(x, y, Vx = 0, Vy = -0.007) {
+		spawn.mapVertex(x + 50, y + 35, "120 40 -120 40 -50 -40 50 -40");
+		// level.addZone(x, y, 100, 30, "fling", {Vx:Vx, Vy: Vy});
+		level.addQueryRegion(x + 10, y - 220, 80, 220, "force", [[player],body,mob,powerUp,bullet],{ Vx: Vx, Vy: Vy });
+		let color = 'rgba(200,0,255,'
+		level.fillBG.push({ x: x, y: y - 25, width: 100, height: 25, color: color+"0.2)" });
+		level.fillBG.push({ x: x, y: y - 55, width: 100, height: 55, color: color+"0.1)" });
+		level.fillBG.push({ x: x, y: y - 120, width: 100, height: 120, color: color+"0.05)" });
+	},
     debris: function(x, y, width, number = Math.floor(3 + Math.random() * 11)) {
         for (let i = 0; i < number; ++i) {
             if (Math.random() < 0.14) {

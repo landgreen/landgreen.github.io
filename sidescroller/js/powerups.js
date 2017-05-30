@@ -23,15 +23,19 @@ const powerUps = {
         },
         effect: function() {
             //only get ammo for guns player has
+            let target;
             if (b.inventory.length > 1) {
-                const target = b.guns[b.inventory[Math.ceil(Math.random() * (b.inventory.length - 1))]];
-                //ammo given scales as mobs take more hits to kill
-                const ammo = Math.ceil(target.ammoPack * (0.5 + Math.random()) / b.dmgScale);
-                target.ammo += ammo;
-                game.updateGunHUD();
-                game.makeTextLog("+" + ammo + " ammo: " + target.name, 180);
-                playSound("ammo");
+                target = b.guns[b.inventory[Math.ceil(Math.random() * (b.inventory.length - 1))]];
+            } else {
+                //if you don't have a gun just add ammo to a random gun, but not the basic gun
+                target = b.guns[1 + Math.floor(Math.random() * b.guns.length - 1)];
             }
+            //ammo given scales as mobs take more hits to kill
+            const ammo = Math.ceil(target.ammoPack * (0.4 + Math.random()) / b.dmgScale);
+            target.ammo += ammo;
+            game.updateGunHUD();
+            game.makeTextLog("+" + ammo + " ammo: " + target.name, 180);
+            playSound("ammo");
         }
     },
     gun: {
@@ -47,6 +51,7 @@ const powerUps = {
                 if (!b.guns[i].have) options.push(i);
             }
             if (options.length > 0) {
+				mech.drop();
                 //give player a gun they don't already have if possible
                 b.activeGun = options[Math.floor(Math.random() * options.length)];
                 //b.activeGun = 4;   //makes every gun you pick up this type  //enable for testing mostly
@@ -55,12 +60,14 @@ const powerUps = {
                 b.inventory.sort();
                 b.guns[b.activeGun].ammo += b.guns[b.activeGun].ammoPack * 2;
                 game.makeGunHUD();
-                game.makeTextLog("<div style='font-size:150%;' >new gun: " + b.guns[b.activeGun].name + '</div>', 240);
+                game.makeTextLog("<div style='font-size:150%;' >new gun: " + b.guns[b.activeGun].name + "</div>", 240);
                 playSound("powerup");
             } else {
-                b.guns[b.activeGun].ammo += b.guns[b.activeGun].ammoPack * 2;
+                const ammo = b.guns[b.activeGun].ammoPack * 2;
+                b.guns[b.activeGun].ammo += ammo;
                 game.updateGunHUD();
                 playSound("ammo");
+                game.makeTextLog("+" + ammo + " ammo: " + b.guns[b.activeGun].name, 180);
             }
         }
     },
@@ -128,8 +135,7 @@ const powerUps = {
             const dyP = player.position.y - powerUp[i].position.y;
             const dist2 = dxP * dxP + dyP * dyP;
             //gravitation for pickup
-            if (dist2 < 200000) {
-                // && mech.health < 1) { //powerUp[i].name === 'heal' &&
+            if (dist2 < 200000 && (powerUp[i].name != "heal" || mech.health < 1)) {
                 if (dist2 < 2000) {
                     mech.usePowerUp(i);
                     break;

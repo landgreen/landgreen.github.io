@@ -13,14 +13,19 @@ const Engine = Matter.Engine,
 
 // create an engine
 const engine = Engine.create();
-engine.world.gravity.scale = 0;  //turn off gravity (it's added back in later)
+engine.world.gravity.scale = 0; //turn off gravity (it's added back in later)
+// engine.velocityIterations = 100
+// engine.positionIterations = 100
+// engine.enableSleeping = true
+
 
 // matter events *********************************************************
 //************************************************************************
 //************************************************************************
 //************************************************************************
 
-function playerOnGroundCheck(event) { //runs on collisions events
+function playerOnGroundCheck(event) {
+    //runs on collisions events
     function enter() {
         mech.numTouching++;
         if (!mech.onGround) mech.enterLand();
@@ -37,7 +42,8 @@ function playerOnGroundCheck(event) { //runs on collisions events
     }
 }
 
-function playerOffGroundCheck(event) { //runs on collisions events
+function playerOffGroundCheck(event) {
+    //runs on collisions events
     function enter() {
         if (mech.onGround && mech.numTouching === 0) mech.enterAir();
     }
@@ -51,7 +57,8 @@ function playerOffGroundCheck(event) { //runs on collisions events
     }
 }
 
-function playerHeadCheck(event) { //runs on collisions events
+function playerHeadCheck(event) {
+    //runs on collisions events
     if (mech.crouch) {
         mech.isHeadClear = true;
         const pairs = event.pairs;
@@ -65,79 +72,71 @@ function playerHeadCheck(event) { //runs on collisions events
     }
 }
 
-function collisionChecks(event) {
+function mobCollisionChecks(event) {
     const pairs = event.pairs;
     for (let i = 0, j = pairs.length; i != j; i++) {
-		//player and mobbullet collisions
-		for (let k = 0; k < mobBullet.length; k++) {
-			if ( (pairs[i].bodyA === mobBullet[k] && pairs[i].bodyA.speed > 10 &&
-				 (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead)) ||
-				 (pairs[i].bodyB === mobBullet[k] && pairs[i].bodyB.speed > 10 &&
-				 (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead)) ){
-				   const dmg = game.dmgScale * mobBullet[k].dmg;
-				   mech.damage(dmg);
-				   mobBullet[k].endCycle = game.cycle;
-				   game.drawList.push({//add dmg to draw queue
-					   x: pairs[i].activeContacts[0].vertex.x,
-					   y: pairs[i].activeContacts[0].vertex.y,
-					   radius: dmg*1000,
-					   color: game.mobDmgColor,
-					   time: game.drawTime
-				   });
-				break;
-			}
-		}
         for (let k = 0; k < mob.length; k++) {
             if (mob[k].alive) {
-				//player and mob collision
-				if((pairs[i].bodyA === mob[k] &&
-				   (pairs[i].bodyB === playerBody || pairs[i].bodyB === playerHead)) ||
-				   (pairs[i].bodyB === mob[k] &&
-				   (pairs[i].bodyA === playerBody || pairs[i].bodyA === playerHead)) ){
-					mob[k].locatePlayer();
-					let dmg = mob[k].onHitDamage();
-					mech.hitMob(k, dmg);
-					if (mob[k].onHit) mob[k].onHit(k)
-					game.drawList.push({//add dmg to draw queue
-						x: pairs[i].activeContacts[0].vertex.x,
-						y: pairs[i].activeContacts[0].vertex.y,
-						radius: dmg*1000,
-						color: game.mobDmgColor,
-						time: game.drawTime
-					});
-					break;
-				}
-				//bullet mob collisions
                 if (pairs[i].bodyA === mob[k]) {
-                    if (pairs[i].bodyB.classType === "bullet" && pairs[i].bodyB.speed > pairs[i].bodyB.minDmgSpeed) {
-                        mob[k].locatePlayer();
-                        let dmg = b.dmgScale*(pairs[i].bodyB.dmg + 0.15 * pairs[i].bodyB.mass * Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity)));
-                        mob[k].damage(dmg);
-                        pairs[i].bodyB.onDmg(); //some bullets do actions when they hits things, like despawn
-						game.drawList.push({//add dmg to draw queue
-							x: pairs[i].activeContacts[0].vertex.x,
-							y: pairs[i].activeContacts[0].vertex.y,
-							radius: Math.sqrt(dmg)*40,
-							color: game.playerDmgColor,
-							time: game.drawTime
-						});
-                    }
+                    collide(pairs[i].bodyB);
                     break;
                 } else if (pairs[i].bodyB === mob[k]) {
-                    if (pairs[i].bodyA.classType === "bullet" && pairs[i].bodyA.speed > pairs[i].bodyA.minDmgSpeed) {
-                        mob[k].locatePlayer();
-                        let dmg = b.dmgScale*(pairs[i].bodyA.dmg + 0.15 * pairs[i].bodyA.mass * Matter.Vector.magnitude(Matter.Vector.sub(pairs[i].bodyA.velocity, pairs[i].bodyB.velocity)))
-                        mob[k].damage(dmg);
-                        pairs[i].bodyA.onDmg(); //some bullets do actions when they hits things, like despawn
-                        game.drawList.push({ //add dmg to draw queue
-							x: pairs[i].activeContacts[0].vertex.x,
-							y: pairs[i].activeContacts[0].vertex.y,
-							radius: Math.sqrt(dmg)*40,
-							color: game.playerDmgColor,
-							time: game.drawTime
-						});
-                    }
+                    collide(pairs[i].bodyA);
                     break;
+                }
+
+                function collide(obj) {
+                    //player and mob collision
+                    if (obj === playerBody || obj === playerHead) {
+                        mob[k].locatePlayer();
+                        let dmg = mob[k].onHitDamage();
+                        mech.hitMob(k, dmg);
+                        if (mob[k].onHit) mob[k].onHit(k);
+                        game.drawList.push({
+                            //add dmg to draw queue
+                            x: pairs[i].activeContacts[0].vertex.x,
+                            y: pairs[i].activeContacts[0].vertex.y,
+                            radius: dmg * 1000,
+                            color: game.mobDmgColor,
+                            time: game.drawTime
+                        });
+                        return;
+                    }
+                    //bullet mob collisions
+                    if (obj.classType === "bullet" && obj.speed > obj.minDmgSpeed) {
+                        mob[k].locatePlayer();
+                        let dmg = b.dmgScale *
+                            (obj.dmg + 0.15 * obj.mass * Matter.Vector.magnitude(Matter.Vector.sub(mob[k].velocity, obj.velocity)));
+                        mob[k].damage(dmg);
+                        obj.onDmg(); //some bullets do actions when they hits things, like despawn
+                        game.drawList.push({
+                            //add dmg to draw queue
+                            x: pairs[i].activeContacts[0].vertex.x,
+                            y: pairs[i].activeContacts[0].vertex.y,
+                            radius: Math.sqrt(dmg) * 40,
+                            color: game.playerDmgColor,
+                            time: game.drawTime
+                        });
+                        return;
+                    }
+                    //mob and body collisions
+                    if (obj.classType === "body" && Matter.Vector.magnitudeSquared(obj.velocity) > 25 ) {
+						//only triggers if absolute body velocity > x^2  and relative mob-body velocity > 15
+                        const v = Matter.Vector.magnitude(Matter.Vector.sub(mob[k].velocity, obj.velocity));
+                        if (v > 9) {
+                            let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.07;
+                            mob[k].damage(dmg);
+							mob[k].locatePlayer();
+                            game.drawList.push({
+                                //add dmg to draw queue
+                                x: pairs[i].activeContacts[0].vertex.x,
+                                y: pairs[i].activeContacts[0].vertex.y,
+                                radius: Math.sqrt(dmg) * 40,
+                                color: game.playerDmgColor,
+                                time: game.drawTime
+                            });
+                        }
+                    }
                 }
             }
         }
@@ -152,29 +151,29 @@ Events.on(engine, "beforeUpdate", function(event) {
             bodies[i].force.y += bodies[i].mass * magnitude;
         }
     }
-	addGravity(powerUp, game.g);
+    addGravity(powerUp, game.g);
     addGravity(body, game.g);
     // addGravity(bullet, b.gravity);
-    // addGravity(mobBullet, game.g);
     player.force.y += player.mass * game.g;
 
-	if (game.clearNow){  //reset before update to avoid getting into trouble with looking at array elements that don't exist
-		game.clearNow = false;
-		game.clearMap();
-		level.start();
-	}
+    if (game.clearNow) {
+        //reset before update to avoid getting into trouble with looking at array elements that don't exist
+        game.clearNow = false;
+        game.clearMap();
+        level.start();
+    }
 });
 
 //determine if player is on the ground
 Events.on(engine, "collisionStart", function(event) {
     playerOnGroundCheck(event);
     playerHeadCheck(event);
-    collisionChecks(event);
+    mobCollisionChecks(event);
 });
 Events.on(engine, "collisionActive", function(event) {
     playerOnGroundCheck(event);
     playerHeadCheck(event);
 });
-Events.on(engine, 'collisionEnd', function(event) {
+Events.on(engine, "collisionEnd", function(event) {
     playerOffGroundCheck(event);
 });

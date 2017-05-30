@@ -1,9 +1,12 @@
+//create array of mobs
 let mob = [];
 
+//method to populate the array above
 const mobs = {
     loop: function() {
         let i = mob.length;
         while (i--) {
+            //run through alive mobs here and run through array of strings
             if (mob[i].alive) {
                 for (let j = 0; j < mob[i].do.length; j++) {
                     //run all the behaviors for the mob each cycle
@@ -46,12 +49,11 @@ const mobs = {
             }
         }
     },
-    //**********************************************************************************************************************
-    //**********************************************************************************************************************
-    spawn: function(xPos, yPos, sides, radius, color, methods, name = "test") {
+    //**********************************************************************************************
+    //**********************************************************************************************
+    spawn: function(xPos, yPos, sides, radius, color, methods) {
         let i = mob.length;
         mob[i] = Matter.Bodies.polygon(xPos, yPos, sides, radius, {
-            name: name,
             //inertia: Infinity, //prevents rotation
             density: 0.001,
             //friction: 0,
@@ -485,12 +487,59 @@ const mobs = {
                     this.stroke = "transparent";
                 }
             },
-            // regen: function() {
-            //     if (game.cycle % 19) {
-            //         this.health += 0.1
-            //         if (this.health > 1) this.health = 1;
+            // toss: function() {
+            //     //throw a mob/bullet at player
+            //     if (!(game.cycle % this.tossFreq) && this.seePlayer.recall) {
+            //         //this.seePlayer.yes) {
+            //         spawn.toss(this.position.x, this.position.y);
+            //         // const x = (this.seePlayer.position.x - this.position.x)
+            //         // const y = (this.seePlayer.position.y - this.position.y)
+            // 		const x = 100//(player.position.x - this.position.x)
+            // 		const y = 10//(player.position.y - this.position.y)
+            //         const v = 15;
+            //         const g = -0.001*60;
+            //         const root = v * v * v * v - g * (g * x * x + 2 * y * v * v);
+            //         if (root > 0) {
+            // 			//let a = Math.atan2((v * v + Math.sqrt(root)) , (g * x));
+            // 			let a = Math.atan((v * v + Math.sqrt(root)) / (g * x));
+            // 			if (x < 0){
+            // 				a -= Math.PI
+            // 			}
+            // 			console.log(a*180/Math.PI);
+            //             Matter.Body.setVelocity(mob[mob.length - 1], {
+            //                 x: v * Math.cos(a),
+            //                 y: v * Math.sin(a)
+            //             });
+            //         }
             //     }
             // },
+            fire: function() {
+                //throw a mob/bullet at player
+                if (!(game.cycle % this.fireFreq) && this.seePlayer.recall) {
+                    const unitVector = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
+                    unitVector.y -= Math.abs(this.seePlayer.position.x - this.position.x) / 1600; //gives the bullet an arc
+                    spawn.bullet(this.position.x, this.position.y,2+Math.ceil(this.radius/15));
+                    const v = 15;
+                    Matter.Body.setVelocity(mob[mob.length - 1], {
+                        x: this.velocity.x + unitVector.x * v,
+                        y: this.velocity.y + unitVector.y * v
+                    });
+					if (this.facePlayer){
+						Matter.Body.setAngle(this, Math.PI + Math.atan2(unitVector.y,unitVector.x));
+					}
+                }
+            },
+			facePlayer: function(){
+				const unitVector = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
+				const angle = Math.atan2(unitVector.y, unitVector.x);
+				Matter.Body.setAngle(this, angle - Math.PI);
+			},
+            timeLimit: function() {
+                this.timeLeft--;
+                if (this.timeLeft < 0) {
+                    this.death(false); //death with no power up
+                }
+            },
             fallCheck: function() {
                 if (this.position.y > game.fallHeight) {
                     this.death();
@@ -528,7 +577,7 @@ const mobs = {
             },
             death: function(powerUp = true) {
                 this.onDeath(this); //custom death effects
-                if (powerUp) powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
+                if (powerUp && !this.noPowerUp) powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
                 this.alive = false;
                 this.seePlayer.recall = 0;
                 this.frictionAir = 0.005;
@@ -591,130 +640,6 @@ const mobs = {
                     mob.splice(i, 1);
                 }
             },
-            faceOnFire: true,
-            fireDelay: 50,
-            fireCD: 0,
-            fireAt: function() {
-                if (this.seePlayer.recall && this.fireCD < game.cycle) {
-                    this.fireCD = game.cycle + this.fireDelay;
-                    const unitVector = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
-                    const angle = Math.atan2(unitVector.y, unitVector.x);
-                    if (this.faceOnFire) Matter.Body.setAngle(this, angle - Math.PI);
-                    const len = mobBullet.length;
-                    mobBullet[len] = Bodies.rectangle(this.position.x, this.position.y, 14, 6, {
-                        angle: angle,
-                        density: 0.001,
-                        friction: 0.5,
-                        frictionStatic: 1,
-                        frictionAir: 0,
-                        restitution: 0,
-                        collisionFilter: {
-                            category: 0x010000,
-                            mask: 0x001001
-                        },
-                        dmg: 0.05,
-                        minDmgSpeed: 8,
-                        endCycle: game.cycle + 180,
-                        color: "#000",
-                        classType: "mobBullet",
-                        onDmg: function() {
-                            this.endCycle = game.cycle;
-                        }
-                    });
-                    const speed = 15;
-                    Matter.Body.setVelocity(mobBullet[len], {
-                        x: speed * Math.cos(angle),
-                        y: speed * Math.sin(angle)
-                    });
-                    World.add(engine.world, mobBullet[len]); //add to world
-                }
-            },
-
-            fire: function() {
-                this.cd = game.cycle + 50;
-                if (this.seePlayer.recall && this.cd < game.cycle) {
-                    //set angle of bullet
-                    function angleToHit(g, v2, x, y) {
-                        //console.log(0.5*Math.asin(g*x/v2))
-                        //return 0.5*Math.asin(g*x/v2)-Math.PI/2;  //angle of reach
-                        if (g === 0 || x === 0) return null;
-                        let sqrt;
-                        if (game.cycle % 2) {
-                            sqrt = v2 * v2 - g * (g * x * x + 2 * y * v2);
-                        } else {
-                            sqrt = v2 * v2 + g * (g * x * x + 2 * y * v2);
-                        }
-                        if (sqrt > 0) {
-                            //console.log(Math.atan2(v * v + Math.sqrt(sqrt), g * x))
-                            //console.log(Math.atan(v * v + Math.sqrt(sqrt) / (g * x)));
-                            //console.log('v2:',v2);
-                            //console.log('y:',y);
-                            //console.log(v2 + Math.sqrt(sqrt) / g / x);
-                            //console.log(Math.atan(v2 - Math.sqrt(sqrt) / g / x));
-                            // if (game.cycle % 3 === 0) {
-                            //     return Math.atan((v2 + Math.sqrt(sqrt)) / (g * x)) + Math.PI;
-                            // } else {
-                            //     return Math.atan((v2 + Math.sqrt(sqrt)) / (g * x)) - Math.PI;
-                            // }
-                            // let a = Math.atan(((v2 + Math.sqrt(sqrt)) / g / x))
-                            // if(x>0){
-                            // 	return Math.atan( (v2 + Math.sqrt(sqrt)) / g / x)-Math.PI/2
-                            // } else{
-                            // 	return Math.atan( (v2 + Math.sqrt(sqrt)) / g / x)+Math.PI/2
-                            // }
-
-                            // if (game.cycle % 3 === 0){
-                            // 	return Math.atan(((v2 + Math.sqrt(sqrt)) / g / x))
-                            // } else{
-                            // 	return Math.atan(((v2 + Math.sqrt(sqrt)) / g / x)*-1)
-                            // }
-                            return Math.atan((v2 + Math.sqrt(sqrt)) / g / x) - Math.PI / 2;
-                            //return Math.atan2(v2 + Math.sqrt(sqrt), g * x)-Math.PI/2;
-                            //return Math.atan2(g * x, v2 + Math.sqrt(sqrt))
-                        } else {
-                            return null;
-                        }
-                    }
-                    const v = 15;
-                    //const angle = angleToHit(0.001*0.06, v * v /60/60,(this.seePlayer.position.x - this.position.x), (this.position.y - this.seePlayer.position.y));
-                    const unitVector = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
-                    const angle = Math.atan2(unitVector.y, unitVector.x);
-                    if (angle !== null) {
-                        //const angle = -Math.PI*0.5; //2*Math.PI*Math.random();
-                        const len = mobBullet.length;
-                        mobBullet[len] = Bodies.rectangle(this.position.x, this.position.y, 7, 3, {
-                            angle: angle,
-                            density: 0.001,
-                            friction: 1,
-                            frictionStatic: 1,
-                            frictionAir: 0,
-                            restitution: 0,
-                            collisionFilter: {
-                                category: 0x010000,
-                                mask: 0x001001
-                            },
-                            dmg: 0.04,
-                            minDmgSpeed: 8,
-                            endCycle: game.cycle + 180,
-                            color: "#000",
-                            classType: "mobBullet",
-                            onDmg: function() {
-                                this.endCycle = game.cycle;
-                            }
-                        });
-                        // Matter.Body.setVelocity(mobBullet[len], { //bullet velocity includes its motion plus a force
-                        //     x: v * Math.cos(angle), //this.velocity.x,
-                        //     y: v * Math.sin(angle) //this.velocity.y
-                        // });
-                        const f = {
-                            x: 0.0012 * Math.cos(angle) / game.delta,
-                            y: 0.0012 * Math.sin(angle) / game.delta
-                        };
-                        mobBullet[len].force = f; //add force to fire bullets
-                        World.add(engine.world, mobBullet[len]); //add to world
-                    }
-                }
-            }
         });
         World.add(engine.world, mob[i]); //add to world
     }

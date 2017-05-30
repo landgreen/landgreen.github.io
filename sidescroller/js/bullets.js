@@ -1,4 +1,3 @@
-let mobBullet = [];
 let bullet = [];
 
 const b = {
@@ -108,29 +107,37 @@ const b = {
     },
     guns: [
         {
-            name: "basic",
+            name: "throw",
             ammo: Infinity,
             ammoPack: Infinity,
             have: true,
             fire: function() {
-                const me = bullet.length;
-                playSound("snare2");
-                const dir = (Math.random() - 0.5) * 0.09 + mech.angle;
-                bullet[me] = Bodies.rectangle(
-                    mech.pos.x + 30 * Math.cos(mech.angle),
-                    mech.pos.y + 30 * Math.sin(mech.angle),
-                    18,
-                    6,
-                    b.fireAttributes(dir)
-                );
-                b.fireProps(20, 36, dir, me); //cd , speed
-                bullet[me].endCycle = game.cycle + 180;
-                bullet[me].frictionAir = 0.01;
-                bullet[me].do = function() {
-                    this.force.y += this.mass * 0.001;
-                };
             }
         },
+		// {
+		// 	name: "basic",
+		// 	ammo: Infinity,
+		// 	ammoPack: Infinity,
+		// 	have: true,
+		// 	fire: function() {
+		// 		const me = bullet.length;
+		// 		playSound("snare2");
+		// 		const dir = (Math.random() - 0.5) * 0.09 + mech.angle;
+		// 		bullet[me] = Bodies.rectangle(
+		// 			mech.pos.x + 30 * Math.cos(mech.angle),
+		// 			mech.pos.y + 30 * Math.sin(mech.angle),
+		// 			18,
+		// 			6,
+		// 			b.fireAttributes(dir)
+		// 		);
+		// 		b.fireProps(20, 36, dir, me); //cd , speed
+		// 		bullet[me].endCycle = game.cycle + 180;
+		// 		bullet[me].frictionAir = 0.01;
+		// 		bullet[me].do = function() {
+		// 			this.force.y += this.mass * 0.001;
+		// 		};
+		// 	}
+		// },
         {
             name: "rapid fire",
             ammo: 0,
@@ -172,7 +179,7 @@ const b = {
                         11,
                         b.fireAttributes(dir)
                     );
-                    b.fireProps(35, 36 + Math.random() * 11, dir, me); //cd , speed
+                    b.fireProps(30, 36 + Math.random() * 11, dir, me); //cd , speed
                     bullet[me].endCycle = game.cycle + 60;
                     bullet[me].frictionAir = 0.02;
                     bullet[me].do = function() {
@@ -423,9 +430,9 @@ const b = {
                         3,
                         b.fireAttributes(dir)
                     );
-                    b.fireProps(25, 34 + (Math.random() - 0.5) * 8, dir, me); //cd , speed
+                    b.fireProps(25, 33 + (Math.random() - 0.5) * 8, dir, me); //cd , speed
                     //Matter.Body.setDensity(bullet[me], 0.00001);
-                    bullet[me].endCycle = game.cycle + 24 + Math.floor(Math.random() * 12);
+                    bullet[me].endCycle = game.cycle + 15 + Math.floor(Math.random() * 11);
                     // bullet[me].restitution = 0.2;
                     bullet[me].explodeRad = 80 + (Math.random() - 0.5) * 50;
                     bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
@@ -516,7 +523,7 @@ const b = {
                     17,
                     b.fireAttributes(dir)
                 );
-                b.fireProps(60, 52, dir, me); //cd , speed
+                b.fireProps(50, 52, dir, me); //cd , speed
                 bullet[me].endCycle = game.cycle + 180;
                 bullet[me].do = function() {
                     this.force.y += this.mass * 0.0005;
