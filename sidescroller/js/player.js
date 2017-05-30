@@ -400,46 +400,45 @@ const mech = {
             this.holding.collisionFilter.mask = 0x111101;
         }
     },
-    hold: function() {
-		function drawHold(target){
-			ctx.beginPath();
-			let vertices = target.vertices;
-			ctx.moveTo(vertices[0].x, vertices[0].y);
-			for (let j = 1; j < vertices.length; j += 1) {
-				ctx.lineTo(vertices[j].x, vertices[j].y);
-			}
-			ctx.lineTo(vertices[0].x, vertices[0].y);
-			ctx.fillStyle = "#bbb";
-			ctx.fill();
-			ctx.lineWidth = 3;
-			ctx.strokeStyle = "#000";
-			ctx.stroke();
+	drawHold: function(target){
+		ctx.beginPath();
+		let vertices = target.vertices;
+		ctx.moveTo(vertices[0].x, vertices[0].y);
+		for (let j = 1; j < vertices.length; j += 1) {
+			ctx.lineTo(vertices[j].x, vertices[j].y);
 		}
+		ctx.lineTo(vertices[0].x, vertices[0].y);
+		ctx.fillStyle = "#bbb";
+		ctx.fill();
+		ctx.lineWidth = 3;
+		ctx.strokeStyle = "#000";
+		ctx.stroke();
+	},
+	throw: function(){ //used in the mouse up event listener
+		if (this.isHolding) {
+			this.fireCDcycle = game.cycle + 15;
+			this.isHolding = false;
+			//bullet collisions
+			this.holding.collisionFilter.category = 0x000100;
+			this.holding.collisionFilter.mask = 0x000001;
+			const v = 45 - this.holding.mass*5 //speed scales a bit with mass:  45 - about (1 to 10)
+			Matter.Body.setVelocity(this.holding, {
+				x: player.velocity.x + Math.cos(this.angle) * v,
+				y: player.velocity.y + Math.sin(this.angle) * v
+			});
+		}
+	},
+    hold: function() {
         if (b.activeGun === 0) {
             if (this.isHolding) {
-				drawHold(this.holding)
+				this.drawHold(this.holding)
                 Matter.Body.setPosition(this.holding, {
                     x: mech.pos.x + 55 * Math.cos(this.angle),
                     y: mech.pos.y + 55 * Math.sin(this.angle)
                 });
                 Matter.Body.setVelocity(this.holding, player.velocity);
 				Matter.Body.rotate(this.holding, 0.02)
-				// throw
-                if (game.mouseDown && this.fireCDcycle < game.cycle) {
-                    this.fireCDcycle = game.cycle + 30;
-                    // this.drop();
-                    this.isHolding = false;
-                    //bullet collisions
-                    this.holding.collisionFilter.category = 0x000100;
-                    this.holding.collisionFilter.mask = 0x000001;
-					const v = 45 - this.holding.mass*5 //speed scales a bit with mass:  45 - about (1 to 10)
-                    Matter.Body.setVelocity(this.holding, {
-                        x: player.velocity.x + Math.cos(this.angle) * v,
-                        y: player.velocity.y + Math.sin(this.angle) * v
-                    });
-                }
-            } else {
-                if (game.mouseDown && this.fireCDcycle < game.cycle) {
+            } else if (game.mouseDown && this.fireCDcycle < game.cycle) {
                     // F
 					ctx.beginPath();
 					// ctx.moveTo(this.pos.x, this.pos.y);
@@ -461,7 +460,7 @@ const mech = {
                             body[i].bounds.max.x - body[i].bounds.min.x < 75 && body[i].bounds.max.y - body[i].bounds.min.y < 75
                         ) {
                             //draw outline
-							drawHold(body[i])
+							this.drawHold(body[i])
 
                             if (this.lookingAt(i) && Matter.Query.ray(map, body[i].position, this.pos).length === 0) {
                                 //add to closest list
@@ -475,7 +474,6 @@ const mech = {
                     }
                     // pick up if in range
                     if (mag < this.grabRange) {
-                        this.fireCDcycle = game.cycle + 30;
                         //pick up if distance closer then 100*100
                         this.isHolding = true;
                         if (this.holding) {
@@ -495,7 +493,7 @@ const mech = {
 						ctx.stroke();
                     }
                 }
-            }
+
         }
     },
     // findClosestBody: function() {

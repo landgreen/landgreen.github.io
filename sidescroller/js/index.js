@@ -160,6 +160,7 @@ window.onmousemove = function(e) {
 
 //normal mouse click events
 window.onmousedown = function(e) {
+	//mouse down gets reset in the run function below
     game.mouseDown = true;
 	game.mouse.x = e.clientX;
 	game.mouse.y = e.clientY;
@@ -232,6 +233,7 @@ function run(el) {
 	//mouse down event can be simplified, we only need to get position from
 	window.onmousedown = function(e) {
 	    game.mouseDown = true;
+		mech.throw();
 	};
 	document.body.style.cursor = 'none';
 	mech.spawn(); //spawns the player
