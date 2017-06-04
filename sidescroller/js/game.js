@@ -202,16 +202,21 @@ const game = {
 		requestAnimationFrame(zLoop);
 	},
     wipe: function() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // if (mech.health < 0.5) {
-        //     ctx.fillStyle = "rgba(255,255,255," + (0.5 + mech.health) + ")";
+		//ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = document.body.style.backgroundColor
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // if (mech.health < 0.7) {
+		// 	ctx.globalAlpha= 0.3 + mech.health
+		// 	ctx.fillStyle = document.body.style.backgroundColor
         // 	ctx.fillRect(0, 0, canvas.width, canvas.height);
+		// 	ctx.globalAlpha=1;
         // } else {
         //     ctx.clearRect(0, 0, canvas.width, canvas.height);
         // }
 	    //ctx.fillStyle = "rgba(255,255,255," + (1 - Math.sqrt(player.speed)*0.1) + ")";
-		// ctx.fillStyle = "rgba(255,255,255,0.4)";
-		// ctx.fillRect(0, 0, canvas.width, canvas.height);
+		//ctx.fillStyle = "rgba(255,255,255,0.4)";
+		//ctx.fillRect(0, 0, canvas.width, canvas.height);
     },
     reset: function() {
 			//removes guns and ammo
@@ -224,8 +229,7 @@ const game = {
 			b.dmgScale = 1;
 			b.activeGun = 0;
 			game.makeGunHUD();
-			mech.isHolding = false;
-			mech.holding = null;
+			mech.drop();
 			mech.addHealth(1);
 			mech.alive = true;
 			game.levelsCleared = 0;
@@ -237,8 +241,7 @@ const game = {
     },
     clearNow: false,
     clearMap: function() {
-		mech.isHolding = false;
-		mech.holding = null;
+		mech.drop();
 		level.fill = [];
 		level.fillBG = [];
         level.zones = [];

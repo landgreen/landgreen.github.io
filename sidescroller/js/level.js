@@ -19,9 +19,7 @@ const level = {
         //this.rooftops();
 
         this.addToWorld(); //add map to world
-        const text = "level " + (game.levelsCleared + 1) + " " + level.levels[level.onLevel];
-        document.title = text;
-        //game.makeTextLog(text,120)
+        this.levelAnnounce();
     },
     //******************************************************************************************************************
     //******************************************************************************************************************
@@ -59,9 +57,9 @@ const level = {
         }
         // spawn.springer(1225,-1000)
         //spawn.puller(1625, -1000);
-        spawn.blinker(1700, -1100);
-		spawn.bodyRect(1565, -1400, 200, 20); //center platform
-		//spawn.blinker(900, -230);
+        spawn.chaser(1700, -1100);
+        spawn.bodyRect(1565, -1400, 200, 5); //center platform
+        //spawn.blinker(900, -230);
     },
     warehouse: function() {
         // document.body.style.backgroundColor = (Math.random() < 0.5) ? "#aaa" : "#e3e3f0"
@@ -118,47 +116,50 @@ const level = {
         spawn.mapRect(-3150, 50, 775, 100);
         spawn.mapRect(-2600, -200, 775, 50);
         spawn.bodyRect(-1350, -200, 200, 200, 1, spawn.propsSlide); //weight
-        spawn.bodyRect(-1800, -180, 300, 100, 1, spawn.propsHoist); //hoist
+        spawn.bodyRect(-1800, 0, 300, 100, 1, spawn.propsHoist); //hoist
         cons[cons.length] = Constraint.create({
             pointA: {
                 x: -1650,
                 y: -500
             },
             bodyB: body[body.length - 1],
-            stiffness: 0.0015
+            stiffness: 0.0005,
+            length: 1
         });
 
         spawn.bodyRect(400, 400, 200, 200, 1, spawn.propsSlide); //weight
-        spawn.bodyRect(800, 420, 300, 100, 1, spawn.propsHoist); //hoist
+        spawn.bodyRect(800, 600, 300, 100, 1, spawn.propsHoist); //hoist
         cons[cons.length] = Constraint.create({
             pointA: {
                 x: 950,
                 y: 100
             },
             bodyB: body[body.length - 1],
-            stiffness: 0.0015
+            stiffness: 0.0005,
+            length: 1
         });
 
-        spawn.bodyRect(-2775, 550, 190, 150, 1, spawn.propsSlide); //weight
-        spawn.bodyRect(-2575, 550, 200, 150, 1, spawn.propsSlide); //weight
-        spawn.bodyRect(-2775, 700, 400, 100, 1, spawn.propsHoist); //hoist
+        spawn.bodyRect(-2775, 1150, 190, 150, 1, spawn.propsSlide); //weight
+        spawn.bodyRect(-2575, 1150, 200, 150, 1, spawn.propsSlide); //weight
+        spawn.bodyRect(-2775, 1300, 400, 100, 1, spawn.propsHoist); //hoist
         cons[cons.length] = Constraint.create({
             pointA: {
                 x: -2575,
                 y: 150
             },
             bodyB: body[body.length - 1],
-            stiffness: 0.0015
+            stiffness: 0.0005,
+            length: 220
         });
         //blocks
         //spawn.bodyRect(-155, -150, 10, 140, 1, spawn.propsFriction);
-		spawn.bodyRect(-165, -150, 30, 35, 1, spawn.propsFriction);
-		spawn.bodyRect(-165, -115, 30, 35, 1, spawn.propsFriction);
-		spawn.bodyRect(-165, -80, 30, 35, 1, spawn.propsFriction);
-		spawn.bodyRect(-165, -45, 30, 35, 1, spawn.propsFriction);
+        spawn.bodyRect(-165, -150, 30, 35, 1);
+        spawn.bodyRect(-165, -115, 30, 35, 1);
+        spawn.bodyRect(-165, -80, 30, 35, 1);
+        spawn.bodyRect(-165, -45, 30, 35, 1);
 
         spawn.bodyRect(-750, 400, 150, 150, 0.5);
-        spawn.bodyRect(250, 1175, 250, 225, 0.95); //block to get to top path on bottom level
+        spawn.bodyRect(-200, 1175, 250, 225, 1); //block to get to top path on bottom level
         spawn.bodyRect(-1450, 737, 75, 103, 0.5); //blocking path
         spawn.bodyRect(-2525, -50, 145, 100, 0.5);
         spawn.bodyRect(-2325, -300, 150, 100, 0.5);
@@ -284,9 +285,9 @@ const level = {
         spawn.mapRect(-700, -2350, 500, 50); //far left starting ceiling
         spawn.mapRect(-250, -2350, 50, 200); //far left starting right part of wall
         spawn.bodyRect(-240, -2150, 30, 36); //door to starting room
-		spawn.bodyRect(-240, -2115, 30, 36); //door to starting room
-		spawn.bodyRect(-240, -2080, 30, 35); //door to starting room
-		spawn.bodyRect(-240, -2045, 30, 35); //door to starting room
+        spawn.bodyRect(-240, -2115, 30, 36); //door to starting room
+        spawn.bodyRect(-240, -2080, 30, 35); //door to starting room
+        spawn.bodyRect(-240, -2045, 30, 35); //door to starting room
 
         spawn.bodyRect(200, -2150, 200, 220, 0.8); //
         spawn.mapRect(700, -2275, 700, 50); //
@@ -301,7 +302,7 @@ const level = {
         spawn.bodyRect(950, -1050, 300, 50, 0.8); //
         spawn.bodyRect(-600, -1250, 400, 250, 0.8); //
         spawn.mapRect(1600, -1000, 1600, 100); //middle ledge
-		spawn.bodyRect(2600, -1950, 100, 250, 0.8); //
+        spawn.bodyRect(2600, -1950, 100, 250, 0.8); //
         spawn.bodyRect(2700, -1125, 125, 125, 0.8); //
         spawn.bodyRect(2710, -1250, 125, 125, 0.8); //
         spawn.bodyRect(2705, -1350, 75, 100, 0.8); //
@@ -321,7 +322,7 @@ const level = {
         spawn.mapRect(5100, -725, 400, 50); //
         spawn.mapRect(4500, -700, 50, 600); //
         spawn.bodyRect(4500, -100, 50, 100, 0.8); //
-		// spawn.boost(4950, 0, 0, -0.005);
+        // spawn.boost(4950, 0, 0, -0.005);
 
         spawn.spawnStairs(3800, 0, 3, 150, 206); //stairs top exit
         spawn.mapRect(3500, -275, 350, 275); //exit platform
@@ -383,7 +384,7 @@ const level = {
         spawn.mapRect(-600, -1700, 50, 2000 - 100); //left wall
         spawn.bodyRect(-295, -1540, 40, 40); //center block under wall
         spawn.bodyRect(-298, -1580, 40, 40); //center block under wall
-		spawn.bodyRect(1500, -1540, 30, 30); //left of entrance
+        spawn.bodyRect(1500, -1540, 30, 30); //left of entrance
 
         spawn.mapRect(1550, -2000, 50, 550); //right wall
         spawn.mapRect(1350, -2000 + 505, 50, 1295); //right wall
@@ -532,7 +533,7 @@ const level = {
         spawn.bodyRect(3200, -1375, 300, 25, 0.9);
         spawn.bodyRect(1825, -1875, 400, 25, 0.9);
         // spawn.bodyRect(1800, -575, 250, 150, 0.8);
-		spawn.bodyRect(1800, -600, 250, 200, 0.8);
+        spawn.bodyRect(1800, -600, 250, 200, 0.8);
         spawn.bodyRect(2557, -450, 35, 55, 0.7);
         spawn.bodyRect(2957, -450, 30, 15, 0.7);
         spawn.bodyRect(2900, -450, 60, 45, 0.7);
@@ -626,11 +627,13 @@ const level = {
     },
     fillBG: [],
     drawFillBGs: function() {
+
         for (let i = 0, len = level.fillBG.length; i < len; ++i) {
             const f = level.fillBG[i];
             ctx.fillStyle = f.color;
             ctx.fillRect(f.x, f.y, f.width, f.height);
         }
+		
     },
 
     fill: [],
@@ -641,7 +644,7 @@ const level = {
             ctx.fillRect(f.x, f.y, f.width, f.height);
         }
     },
-    zones: [],  //zone do actions when player is in a region   // to effect everything use a query
+    zones: [], //zone do actions when player is in a region   // to effect everything use a query
     checkZones: function() {
         for (let i = 0, len = this.zones.length; i < len; ++i) {
             if (
@@ -695,7 +698,7 @@ const level = {
             });
         }
     },
-    queryList: [],  //queries do actions on many objects in regions
+    queryList: [], //queries do actions on many objects in regions
     checkQuery: function() {
         let bounds, action, info;
         function isInZone(targetArray) {
@@ -711,12 +714,6 @@ const level = {
             for (let j = 0, l = level.queryList[i].groups.length; j < l; ++j) {
                 isInZone(level.queryList[i].groups[j]);
             }
-            // isInZone([player]);
-            // isInZone(body);
-            // isInZone(powerUp);
-            // isInZone(bullet);
-            // isInZone(mob);
-            // isInZone(mobBullet);
         }
     },
     addQueryRegion: function(x, y, width, height, action, groups = [[player], body, mob, powerUp, bullet], info) {
@@ -737,21 +734,48 @@ const level = {
         };
     },
     queryActions: {
-        bounce: function(target, info) { //jerky fling upwards
+        bounce: function(target, info) {
+            //jerky fling upwards
             Matter.Body.setVelocity(target, { x: info.Vx + (Math.random() - 0.5) * 6, y: info.Vy });
             target.torque = (Math.random() - 0.5) * 2 * target.mass;
         },
         force: function(target, info) {
-            if (target.velocity.y < 0) { //gently force up if already on the way up
-                target.force.x += info.Vx*target.mass;
-                target.force.y += info.Vy*target.mass;
+            if (target.velocity.y < 0) {
+                //gently force up if already on the way up
+                target.force.x += info.Vx * target.mass;
+                target.force.y += info.Vy * target.mass;
             } else {
-                target.force.y -= 0.0007*target.mass;  //gently fall in on the way down
-			}
+                target.force.y -= 0.0007 * target.mass; //gently fall in on the way down
+            }
         },
         antiGrav: function(target) {
             target.force.y -= 0.0011 * target.mass;
         }
+    },
+    speech: function(say) {
+        var utterance = new SpeechSynthesisUtterance(say);
+        //msg.voice = voices[10]; // Note: some voices don't support altering params
+        //msg.voiceURI = 'native';
+        //utterance.volume = 1; // 0 to 1
+        //utterance.rate = 1; // 0.1 to 10
+        //utterance.pitch = 1; //0 to 2
+        //utterance.text = 'Hello World';
+        //http://stackoverflow.com/questions/14257598/what-are-language-codes-for-voice-recognition-languages-in-chromes-implementati
+        //de-DE  en-GB  fr-FR  en-US
+        utterance.lang = "en-GB";
+        speechSynthesis.speak(utterance);
+    },
+    levelAnnounce: function() {
+        let text = "level " + (game.levelsCleared + 1) + " " + level.levels[level.onLevel];
+        document.title = text;
+        // text = text + " with population: ";
+        // for (let i = 0, len = spawn.pickList.length; i < len; ++i) {
+        //     if (spawn.pickList[i] != spawn.pickList[i - 1]) {
+        //         text += spawn.pickList[i] + ", ";
+        //     }
+        // }
+        // this.speech(text);
+        // game.makeTextLog(text, 360);
     },
     addToWorld: function(mapName) {
         //needs to be run to put bodies into the world
@@ -759,7 +783,7 @@ const level = {
             //body[i].collisionFilter.group = 0;
             body[i].collisionFilter.category = 0x0000001;
             body[i].collisionFilter.mask = 0x111101;
-			body[i].classType = "body"
+            body[i].classType = "body";
             World.add(engine.world, body[i]); //add to world
         }
         for (let i = 0; i < map.length; i++) {

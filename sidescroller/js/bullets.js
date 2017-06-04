@@ -539,7 +539,7 @@ const b = {
                 game.updateGunHUD();
             } else {
                 mech.fireCDcycle = game.cycle + 30; //cooldown
-                game.makeTextLog("NO AMMO<br>press <strong>E</strong> or <strong>Q</strong> to switch", 80);
+                game.makeTextLog("<div style='font-size:150%;'>NO AMMO</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>", 80);
                 playSound("no");
             }
         }

@@ -31,7 +31,7 @@ const powerUps = {
                 target = b.guns[1 + Math.floor(Math.random() * b.guns.length - 1)];
             }
             //ammo given scales as mobs take more hits to kill
-            const ammo = Math.ceil(target.ammoPack * (0.4 + Math.random()) / b.dmgScale);
+            const ammo = Math.ceil(target.ammoPack * (0.25 + Math.random()) / b.dmgScale);
             target.ammo += ammo;
             game.updateGunHUD();
             game.makeTextLog("+" + ammo + " ammo: " + target.name, 180);
@@ -40,7 +40,7 @@ const powerUps = {
     },
     gun: {
         name: "gun",
-        color: "#0ff",
+		color: "#0cf",
         size: function() {
             return 38;
         },
@@ -50,20 +50,23 @@ const powerUps = {
             for (let i = 1; i < b.guns.length; ++i) {
                 if (!b.guns[i].have) options.push(i);
             }
+			//give player a gun they don't already have if possible
             if (options.length > 0) {
-				mech.drop();
-                //give player a gun they don't already have if possible
-                b.activeGun = options[Math.floor(Math.random() * options.length)];
+				// if (b.activeGun = 0) mech.drop();
+                // b.activeGun = options[Math.floor(Math.random() * options.length)];
+				const newGun = options[Math.floor(Math.random() * options.length)];
                 //b.activeGun = 4;   //makes every gun you pick up this type  //enable for testing mostly
-                b.guns[b.activeGun].have = true;
-                b.inventory.push(b.activeGun);
+                b.guns[newGun].have = true;
+                b.inventory.push(newGun);
                 b.inventory.sort();
-                b.guns[b.activeGun].ammo += b.guns[b.activeGun].ammoPack * 2;
+                b.guns[newGun].ammo += b.guns[newGun].ammoPack * 2;
                 game.makeGunHUD();
-                game.makeTextLog("<div style='font-size:150%;' >new gun: " + b.guns[b.activeGun].name + "</div>", 240);
+                game.makeTextLog("<div style='font-size:150%;' >new gun: " + b.guns[newGun].name +
+								"</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>", 360);
                 playSound("powerup");
             } else {
-                const ammo = b.guns[b.activeGun].ammoPack * 2;
+				//if you have all guns then get ammo
+                const ammo = Math.ceil(b.guns[b.activeGun].ammoPack * 2);
                 b.guns[b.activeGun].ammo += ammo;
                 game.updateGunHUD();
                 playSound("ammo");
@@ -73,6 +76,7 @@ const powerUps = {
     },
     spawnRandomPowerUp: function(x, y) {
         //a chance to drop a power up
+		//mostly used after mob dies
         //spawn heal chance is higher at low health
         if (Math.random() * Math.random() + 0.14 > Math.sqrt(mech.health)) {
             powerUps.spawn(x, y, "heal");
@@ -84,16 +88,17 @@ const powerUps = {
             return;
         }
         //new gun has a chance for each unaquired gun to drop
-        if (Math.random() < 0.011 * (b.guns.length - b.inventory.length)) {
+        if (Math.random() < 0.009 * (b.guns.length - b.inventory.length)) {
             powerUps.spawn(x, y, "gun");
             return;
         }
     },
     chooseRandomPowerUp: function(x, y) {
         //100% chance to drop a random power up
+		//this is mostly used for making debris power ups
         if (Math.random() < 0.4) {
             powerUps.spawn(x, y, "heal", false);
-        } else if (Math.random() < 0.93) {
+        } else if (Math.random() < 0.95) {
             powerUps.spawn(x, y, "ammo", false);
         } else {
             powerUps.spawn(x, y, "gun", false);

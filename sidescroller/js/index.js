@@ -128,11 +128,16 @@ powerUp: 0x 100000   0x 001001
 //     "pewpew",
 // 	'shoot the baddies',
 // 	'get to the door',
+// 'percussion',
+// 'impact',
+// 'carom',
+// 'landGame'
 // ];
 // document.getElementById("title").textContent = document.title = titles[Math.floor(titles.length * Math.random())];
 
 //set up canvas
-const canvas = document.getElementById("canvas");
+var canvas = document.getElementById("canvas");
+//using "const" causes problems in safari when an ID shares the same name.
 const ctx = canvas.getContext("2d");
 
 function setupCanvas() {
@@ -247,6 +252,7 @@ function run(el) {
 //**********************************************************************
 function cycle() {
     game.timing();
+	ctx.globalAlpha= (mech.health < 0.7) ? (mech.health+0.3)*(mech.health+0.3) : 1
     game.wipe();
 	game.textLog();
     mech.keyMove();
@@ -271,6 +277,7 @@ function cycle() {
 		level.drawFillBGs()
 		level.exit.draw();
 		level.enter.draw();
+		ctx.globalAlpha=1;
 		game.draw.powerUp();
         mobs.draw();
         game.draw.cons();

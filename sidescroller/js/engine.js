@@ -18,7 +18,6 @@ engine.world.gravity.scale = 0; //turn off gravity (it's added back in later)
 // engine.positionIterations = 100
 // engine.enableSleeping = true
 
-
 // matter events *********************************************************
 //************************************************************************
 //************************************************************************
@@ -106,7 +105,8 @@ function mobCollisionChecks(event) {
                     if (obj.classType === "bullet" && obj.speed > obj.minDmgSpeed) {
                         mob[k].locatePlayer();
                         let dmg = b.dmgScale *
-                            (obj.dmg + 0.15 * obj.mass * Matter.Vector.magnitude(Matter.Vector.sub(mob[k].velocity, obj.velocity)));
+                            (obj.dmg +
+                                0.15 * obj.mass * Matter.Vector.magnitude(Matter.Vector.sub(mob[k].velocity, obj.velocity)));
                         mob[k].damage(dmg);
                         obj.onDmg(); //some bullets do actions when they hits things, like despawn
                         game.drawList.push({
@@ -120,13 +120,13 @@ function mobCollisionChecks(event) {
                         return;
                     }
                     //mob and body collisions
-                    if (obj.classType === "body" && Matter.Vector.magnitudeSquared(obj.velocity) > 25 ) {
-						//only triggers if absolute body velocity > x^2  and relative mob-body velocity > 15
+                    if (obj.classType === "body" && Matter.Vector.magnitudeSquared(obj.velocity) > 25) {
+                        //only triggers if absolute body velocity > x^2  and relative mob-body velocity > 15
                         const v = Matter.Vector.magnitude(Matter.Vector.sub(mob[k].velocity, obj.velocity));
                         if (v > 9) {
                             let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.07;
                             mob[k].damage(dmg);
-							mob[k].locatePlayer();
+                            if (mob[k].distanceToPlayer2() < 1000000) mob[k].locatePlayer();
                             game.drawList.push({
                                 //add dmg to draw queue
                                 x: pairs[i].activeContacts[0].vertex.x,

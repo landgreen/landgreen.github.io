@@ -104,7 +104,7 @@ const mobs = {
             // SineWaveY: function() { //must add me.sineAmp  and me.sineFreq  to mob object to run
             //     this.force.y += this.mass * this.sineAmp * Math.sin(game.cycle * this.sineFreq)
             // },
-            seePlayerFreq: 20 + Math.round(Math.random() * 30), //how often NPC checks to see where player is, lower numbers have better vision
+            seePlayerFreq: 20 + Math.round(Math.random() * 20), //how often NPC checks to see where player is, lower numbers have better vision
             seePlayerCheck: function() {
                 if (!(game.cycle % this.seePlayerFreq)) {
                     // && this.distanceToPlayer2() < 2000000) { //view distance = 1414
@@ -167,6 +167,12 @@ const mobs = {
                 this.seePlayer.position.y = player.position.y;
                 this.stroke = "#000";
             },
+			locatePlayerByDist: function() {
+				if (this.distanceToPlayer2() < this.locateRange) {
+					this.locatePlayer();
+					this.stroke = "transparent";
+				}
+			},
             yank: function() {
                 //accelerate towards the player
                 if (this.cd < game.cycle && this.seePlayer.yes) {
@@ -270,7 +276,7 @@ const mobs = {
                 if (Matter.Vector.magnitude(Matter.Vector.sub(this.position, player.position)) < this.eventHorizon) {
                     const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
                     player.force.x -= 1.3 * Math.cos(angle) * (mech.onGround ? 2 * player.mass * game.g : player.mass * game.g);
-                    player.force.y -= 0.97 * player.mass * game.g * Math.sin(angle);
+                    player.force.y -= 0.96 * player.mass * game.g * Math.sin(angle);
 
                     ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
@@ -455,6 +461,42 @@ const mobs = {
                     ctx.stroke();
                 }
             },
+            phase: function() {
+                if (!(game.cycle % this.phaseRate)) {
+                    if (this.phasedOut) {
+                        this.phasedOut = false;
+                        this.do = ["phase", "healthBar", "seePlayerCheck", "fallCheck", "attraction", "gravity"];
+                        this.collisionFilter.mask = 0x001101; //make mob hittable by bullets again
+                        this.fill = "rgb(110,150,200)";
+                        if (this.distanceToPlayer2() < 1000) {
+                            this.locatePlayer();
+                        }
+                    } else {
+                        this.phasedOut = true;
+                        this.do = ["phase"];
+                        this.collisionFilter.mask = 0x000001; //make mob unhittable by bullets again
+                        // this.fill = "transparent";
+                        this.fill = "rgba(110,150,200,0.2)";
+                        this.stroke = "transparent";
+                    }
+                }
+            },
+            phaseIn: function() {
+                if (this.distanceToPlayer2() < this.phaseRange2) {
+                    this.do = ["phaseOut", "healthBar", "locatePlayerByDist", "attraction", "gravity"];
+                    this.collisionFilter.mask = 0x001101; //make mob hittable by bullets again
+                    this.fill = "rgb(110,150,255)";
+                }
+            },
+			phaseOut: function() {
+				if (this.distanceToPlayer2() > this.phaseRange2) {
+					this.do = ["phaseIn", "fallCheck", "locatePlayerByDist", "attraction", "gravity"];
+					this.collisionFilter.mask = 0x000001; //make mob unhittable by bullets again
+					// this.fill = "transparent";
+					this.fill = "rgba(110,150,255,0.17)";
+					this.stroke = "transparent";
+				}
+			},
             sneakAttack: function() {
                 //speeds towards player when player isn't looking on CD
                 if (
@@ -518,22 +560,22 @@ const mobs = {
                 if (!(game.cycle % this.fireFreq) && this.seePlayer.recall) {
                     const unitVector = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
                     unitVector.y -= Math.abs(this.seePlayer.position.x - this.position.x) / 1600; //gives the bullet an arc
-                    spawn.bullet(this.position.x, this.position.y,2+Math.ceil(this.radius/15));
+                    spawn.bullet(this.position.x, this.position.y, 2 + Math.ceil(this.radius / 15));
                     const v = 15;
                     Matter.Body.setVelocity(mob[mob.length - 1], {
                         x: this.velocity.x + unitVector.x * v,
                         y: this.velocity.y + unitVector.y * v
                     });
-					if (this.facePlayer){
-						Matter.Body.setAngle(this, Math.PI + Math.atan2(unitVector.y,unitVector.x));
-					}
+                    if (this.facePlayer) {
+                        Matter.Body.setAngle(this, Math.PI + Math.atan2(unitVector.y, unitVector.x));
+                    }
                 }
             },
-			facePlayer: function(){
-				const unitVector = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
-				const angle = Math.atan2(unitVector.y, unitVector.x);
-				Matter.Body.setAngle(this, angle - Math.PI);
-			},
+            facePlayer: function() {
+                const unitVector = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
+                const angle = Math.atan2(unitVector.y, unitVector.x);
+                Matter.Body.setAngle(this, angle - Math.PI);
+            },
             timeLimit: function() {
                 this.timeLeft--;
                 if (this.timeLeft < 0) {
@@ -605,11 +647,17 @@ const mobs = {
             removeConsBB: function() {
                 for (let i = 0, len = consBB.length; i < len; ++i) {
                     if (consBB[i].bodyA === this) {
+                        if (consBB[i].bodyB.shield) {
+                            consBB[i].bodyB.do = ["death"]; //delayed death to avoid issues with splice
+                        }
                         consBB[i].bodyA = consBB[i].bodyB;
                         consBB.splice(i, 1);
                         this.removeConsBB();
                         break;
                     } else if (consBB[i].bodyB === this) {
+                        if (consBB[i].bodyA.shield) {
+                            consBB[i].bodyA.do = ["death"]; //delayed death to avoid issues with splice
+                        }
                         consBB[i].bodyB = consBB[i].bodyA;
                         consBB.splice(i, 1);
                         this.removeConsBB();
@@ -639,7 +687,7 @@ const mobs = {
                     Matter.World.remove(engine.world, this);
                     mob.splice(i, 1);
                 }
-            },
+            }
         });
         World.add(engine.world, mob[i]); //add to world
     }

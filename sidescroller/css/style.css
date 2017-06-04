@@ -93,8 +93,11 @@ svg {
     z-index: 2;
     font-size: 25px;
     color: #333;
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.1);
     user-select: none;
+	pointer-events: none;
+	padding: 0px 5px 0px 5px;
+	border-radius: 5px;
 }
 
 #text-log {
@@ -109,6 +112,14 @@ svg {
     opacity: 0;
     transition: opacity 0.5s;
 	pointer-events: none;
+	user-select: none;
+}
+
+.box {
+	padding: 0px 5px 0px 5px;
+	/*margin: 0px 5px 0px 5px;*/
+	border: 2px solid #444;
+	background-color: rgba(255,255,255,0.5);
 }
 
 @keyframes slideinRL {
