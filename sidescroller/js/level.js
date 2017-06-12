@@ -72,7 +72,7 @@ const level = {
         level.exit.x = 425;
         level.exit.y = -35;
         this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
-		level.addQueryRegion(-600, -250, 180, 420, "death", [[player]],{});
+		//level.addQueryRegion(-600, -250, 180, 420, "death", [[player]],{});
 
         spawn.debris(-2250, 1330, 3000, 7); //20 debris per level
         spawn.debris(-3000, -800, 3280, 7); //20 debris per level
