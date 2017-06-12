@@ -139,7 +139,7 @@ const mobs = {
                     }
                 }
             },
-            seePlayerbyDistAndLOS: function() {
+            seePlayerbyDistOrLOS: function() {
                 if (!(game.cycle % this.seePlayerFreq)) {
                     // && this.distanceToPlayer2() < 2000000) { //view distance = 1414
                     this.stroke = "transparent";
@@ -159,6 +159,26 @@ const mobs = {
                     }
                 }
             },
+			seePlayerbyDistAndLOS: function() {
+				if (!(game.cycle % this.seePlayerFreq)) {
+					// && this.distanceToPlayer2() < 2000000) { //view distance = 1414
+					this.stroke = "transparent";
+					//checks if the mob can see the player, but map and body objects block view
+					if (
+						this.distanceToPlayer2() < this.seeAtDistance2 &&
+						(Matter.Query.ray(map, this.position, player.position).length === 0 &&
+							Matter.Query.ray(body, this.position, player.position).length === 0)
+					) {
+						this.seePlayer.yes = true;
+						this.locatePlayer();
+					} else if (this.seePlayer.recall) {
+						this.stroke = "#444";
+						this.seePlayer.yes = false;
+						this.seePlayer.recall -= this.seePlayerFreq;
+						if (this.seePlayer.recall < 0) this.seePlayer.recall = 0;
+					}
+				}
+			},
             memory: 120, //default time to remember player's location
             locatePlayer: function() {
                 // updates mob's memory of player location
@@ -200,53 +220,73 @@ const mobs = {
                 }
             },
             laser: function() {
-                if (game.cycle % 7 && this.seePlayer.yes && this.distanceToPlayer2() < 500000) {
+                if (game.cycle % 7 && this.seePlayer.yes){
+					ctx.setLineDash([125*Math.random(), 125*Math.random()]);
+					// ctx.lineDashOffset = 6*(game.cycle % 215);
+					const range = 500
+					if(this.distanceToPlayer() < range) {
                     //if (Math.random()>0.2 && this.seePlayer.yes && this.distanceToPlayer2()<800000) {
                     mech.damage(0.0003 * game.dmgScale);
                     ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
                     ctx.lineTo(mech.pos.x, mech.pos.y);
-                    ctx.lineWidth = 1;
+                    ctx.lineWidth = 2;
                     ctx.strokeStyle = "rgb(255,0,170)";
                     ctx.stroke();
 
                     ctx.beginPath();
                     ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
-                    ctx.fillStyle = "rgba(255,0,170,0.2)";
+                    ctx.fillStyle = "rgba(255,0,170,0.4)";
                     ctx.fill();
-                }
+                } else{
+					ctx.beginPath();
+					ctx.arc(this.position.x, this.position.y, range*0.9, 0, 2 * Math.PI);
+					ctx.strokeStyle = "rgba(255,0,170,0.5)";
+					ctx.lineWidth = 1;
+					ctx.stroke();
+				}
+				ctx.setLineDash([]);
+			}
+
             },
             laserTracking: function() {
-                if (game.cycle % 11) {
-                    if (this.seePlayer.yes) {
+                    if (this.seePlayer.yes && this.distanceToPlayer2() < 1500000) {
                         //targeting laser will slowly move from the mob to the player's position
                         this.laserPos = Matter.Vector.add(
                             this.laserPos,
                             Matter.Vector.mult(Matter.Vector.sub(this.seePlayer.position, this.laserPos), 0.05)
                         );
-                        //if laser is near the player do damage and darken laser color
-                        const r = 40;
-                        if (Matter.Vector.magnitude(Matter.Vector.sub(this.laserPos, mech.pos)) < r) {
+						const targetDist = Matter.Vector.magnitude(Matter.Vector.sub(this.laserPos, mech.pos))
+                        let r = 50;
+
+						// ctx.strokeStyle = "rgba(255,50,100,0.7)";
+						let laserOff
+                        if (targetDist < r ) {
+							ctx.beginPath();
                             mech.damage(0.002 * game.dmgScale);
-                            ctx.strokeStyle = (ctx.fillStyle = "rgba(255,50,100,0.7)");
-                            ctx.beginPath();
-                            ctx.arc(this.laserPos.x, this.laserPos.y, r * 1.2, 0, 2 * Math.PI);
-                            ctx.fill();
-                            ctx.lineWidth = 2;
-                            ctx.beginPath();
-                            ctx.moveTo(this.position.x, this.position.y);
-                            ctx.lineTo(this.laserPos.x, this.laserPos.y);
-                            ctx.stroke();
+							// ctx.fillStyle = "rgba(255,50,100,0.6)";
+							ctx.fillStyle = "rgba(0,0,255,0.6)";
+							ctx.arc(this.laserPos.x, this.laserPos.y, r*1.5, 0, 2 * Math.PI);
+							ctx.fill();
+							laserOff = this.laserPos
                         } else {
-                            ctx.fillStyle = (ctx.strokeStyle = "rgba(255,50,100,0.3)");
-                            ctx.beginPath();
-                            ctx.arc(this.laserPos.x, this.laserPos.y, r, 0, 2 * Math.PI);
-                            ctx.fill();
-                        }
+							laserOff = Matter.Vector.rotateAbout(player.position,
+								((game.cycle%2) ? -1 : 1 )* (targetDist-52)*0.003*Math.random(), this.position)
+						}
+						ctx.strokeStyle = "rgba(0,0,255,0.7)";
+						ctx.lineWidth = Math.min(3);
+						ctx.beginPath();
+						// ctx.setLineDash([15, 200]);
+						ctx.setLineDash([50*Math.random(), 150*Math.random()]);
+						// ctx.lineDashOffset = 20*(game.cycle % 215);
+
+						ctx.moveTo(laserOff.x, laserOff.y);
+						ctx.lineTo(this.position.x, this.position.y);
+						ctx.stroke();
+						ctx.setLineDash([]);
                     } else {
                         this.laserPos = this.position;
                     }
-                }
             },
             darkness: function() {
                 // var grd = ctx.createRadialGradient(this.position.x, this.position.y, this.eventHorizon/3, this.position.x, this.position.y, this.eventHorizon);
@@ -547,7 +587,7 @@ const mobs = {
             // 			if (x < 0){
             // 				a -= Math.PI
             // 			}
-            // 			console.log(a*180/Math.PI);
+            // 			1(a*180/Math.PI);
             //             Matter.Body.setVelocity(mob[mob.length - 1], {
             //                 x: v * Math.cos(a),
             //                 y: v * Math.sin(a)

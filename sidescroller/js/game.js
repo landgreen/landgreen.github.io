@@ -203,9 +203,9 @@ const game = {
 	},
     wipe: function() {
 		//ctx.clearRect(0, 0, canvas.width, canvas.height);
-			ctx.fillStyle = document.body.style.backgroundColor
-			ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+		// ctx.globalAlpha = (mech.health < 0.7) ? (mech.health+0.3)*(mech.health+0.3) : 1
+		ctx.fillStyle = document.body.style.backgroundColor
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
         // if (mech.health < 0.7) {
 		// 	ctx.globalAlpha= 0.3 + mech.health
 		// 	ctx.fillStyle = document.body.style.backgroundColor
@@ -220,10 +220,14 @@ const game = {
     },
     reset: function() {
 			//removes guns and ammo
-			b.inventory = [0];
-			for (let i = 1, len = b.guns.length; i < len; ++i) {
-				b.guns[i].ammo = 0;
-				b.guns[i].have = false;
+			b.inventory = [];
+			for (let i = 0, len = b.guns.length; i < len; ++i) {
+				if (b.guns[i].ammo != Infinity){
+					b.guns[i].ammo = 0;
+					b.guns[i].have = false;
+				} else {
+					b.inventory.push(i)
+				}
 			}
 			game.dmgScale = 1;
 			b.dmgScale = 1;
@@ -449,6 +453,18 @@ const game = {
             }
             ctx.fillStyle = "rgba(0, 255, 0, 0.3)";
             ctx.fill();
+			//query zones
+			ctx.beginPath();
+            for (let i = 0, len = level.queryList.length; i < len; ++i) {
+                ctx.rect(
+                    level.queryList[i].bounds.max.x,
+                    level.queryList[i].bounds.max.y,
+                    level.queryList[i].bounds.min.x - level.queryList[i].bounds.max.x,
+                    level.queryList[i].bounds.min.y - level.queryList[i].bounds.max.y
+                );
+            }
+            ctx.fillStyle = "rgba(0, 0, 255, 0.2)";
+            ctx.fill();
             //jump
             ctx.beginPath();
             let bodyDraw = jumpSensor.vertices;
@@ -495,5 +511,38 @@ const game = {
             ctx.fill();
             ctx.stroke();
         }
-    }
+    },
+	buildingUp: function(e){
+			if (game.mouseDown){
+				game.getCoords.pos2.x = Math.round(game.mouseInGame.x / 25) * 25;
+				game.getCoords.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;
+				let out
+
+				//body rect mode
+				out = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x-game.getCoords.pos1.x}, ${game.getCoords.pos2.y-game.getCoords.pos1.y});`;
+
+				//mob spawn
+				//out = `spawn.randomMob(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, 0.3);`
+
+				//draw foreground
+				//out = `level.fill.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "rgba(0,0,0,0.1)"});`;
+
+				//draw background fill
+				//out = `level.fillBG.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "#ccc"});`;
+
+				//svg mode
+				//out = 'rect x="'+game.getCoords.pos1.x+'" y="'+ game.getCoords.pos1.y+'" width="'+(game.getCoords.pos2.x-game.getCoords.pos1.x)+'" height="'+(game.getCoords.pos2.y-game.getCoords.pos1.y)+'"';
+
+				console.log(out)
+				// document.getElementById("copy-this").innerHTML = out
+				//
+				// window.getSelection().removeAllRanges();
+				// var range = document.createRange();
+				// range.selectNode(document.getElementById('copy-this'));
+				// window.getSelection().addRange(range);
+				// document.execCommand('copy')
+				// window.getSelection().removeAllRanges();
+			}
+
+	},
 };

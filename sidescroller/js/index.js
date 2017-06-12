@@ -171,45 +171,9 @@ window.onmousedown = function(e) {
 	game.mouse.y = e.clientY;
 };
 window.onmouseup = function(e) {
-    game.mouseDown = false;
+	// game.buildingUp(e); //uncomment when building levels
+	game.mouseDown = false;
 };
-//mouse click events for building maps:  replace with the normal events below when not building maps
-// window.onmousedown = function(e) {
-// 	if (!game.mouseDown){
-// 		game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
-// 		game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
-// 	}
-//     game.mouseDown = true;
-// };
-// window.onmouseup = function(e) {
-// 	if (game.mouseDown){
-// 		game.getCoords.pos2.x = Math.round(game.mouseInGame.x / 25) * 25;
-// 		game.getCoords.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;
-//
-// 		//body rect mode
-// 		//document.getElementById("copy-this").innerHTML = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x-game.getCoords.pos1.x}, ${game.getCoords.pos2.y-game.getCoords.pos1.y});`;
-//
-// 		//mob spawn
-// 		document.getElementById("copy-this").innerHTML = `spawn.randomMob(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, 0.3);`
-//
-// 		//draw foreground
-// 		//document.getElementById("copy-this").innerHTML = `level.fill.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "rgba(0,0,0,0.1)"});`;
-//
-// 		//draw background fill
-// 		//document.getElementById("copy-this").innerHTML = `level.fillBG.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "#ccc"});`;
-//
-// 		//svg mode
-// 		//document.getElementById("copy-this").innerHTML = 'rect x="'+game.getCoords.pos1.x+'" y="'+ game.getCoords.pos1.y+'" width="'+(game.getCoords.pos2.x-game.getCoords.pos1.x)+'" height="'+(game.getCoords.pos2.y-game.getCoords.pos1.y)+'"';
-//
-// 		window.getSelection().removeAllRanges();
-// 		var range = document.createRange();
-// 		range.selectNode(document.getElementById('copy-this'));
-// 		window.getSelection().addRange(range);
-// 		document.execCommand('copy')
-// 		window.getSelection().removeAllRanges();
-// 	}
-//     game.mouseDown = false;
-// };
 
 //keyboard input
 const keys = [];
@@ -237,6 +201,10 @@ function run(el) {
 	// document.body.style.pointerEvents = 'none';
 	//mouse down event can be simplified, we only need to get position from
 	window.onmousedown = function(e) {
+		if (!game.mouseDown){
+			game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
+			game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
+		}
 	    game.mouseDown = true;
 		mech.throw();
 	};
@@ -252,7 +220,7 @@ function run(el) {
 //**********************************************************************
 function cycle() {
     game.timing();
-	ctx.globalAlpha= (mech.health < 0.7) ? (mech.health+0.3)*(mech.health+0.3) : 1
+	ctx.globalAlpha = (mech.health < 0.5) ? (mech.health+0.5)*(mech.health+0.5) : 1
     game.wipe();
 	game.textLog();
     mech.keyMove();

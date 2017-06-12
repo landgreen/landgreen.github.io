@@ -111,8 +111,7 @@ const b = {
             ammo: Infinity,
             ammoPack: Infinity,
             have: true,
-            fire: function() {
-            }
+            fire: function() {}
         },
 		// {
 		// 	name: "basic",
@@ -415,7 +414,7 @@ const b = {
         {
             name: "flak",
             ammo: 0,
-            ammoPack: 5,
+            ammoPack: 4,
             have: false,
             fire: function() {
                 playSound("snare2");
@@ -426,15 +425,15 @@ const b = {
                     bullet[me] = Bodies.rectangle(
                         mech.pos.x + 50 * Math.cos(mech.angle),
                         mech.pos.y + 50 * Math.sin(mech.angle),
-                        15,
-                        3,
+                        17,
+                        4,
                         b.fireAttributes(dir)
                     );
-                    b.fireProps(25, 33 + (Math.random() - 0.5) * 8, dir, me); //cd , speed
+                    b.fireProps(25, 32 + (Math.random() - 0.5) * 8, dir, me); //cd , speed
                     //Matter.Body.setDensity(bullet[me], 0.00001);
                     bullet[me].endCycle = game.cycle + 15 + Math.floor(Math.random() * 11);
                     // bullet[me].restitution = 0.2;
-                    bullet[me].explodeRad = 80 + (Math.random() - 0.5) * 50;
+                    bullet[me].explodeRad = 85 + (Math.random() - 0.5) * 65;
                     bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
                     bullet[me].onDmg = function() {
                         this.endCycle = 0; //bullet ends cycle after doing damage  //this triggers explosion
@@ -494,7 +493,7 @@ const b = {
                         7,
                         b.fireAttributes(dir)
                     );
-                    b.fireProps(30, 30, dir, me); //cd , speed
+                    b.fireProps(25, 30, dir, me); //cd , speed
                     Matter.Body.setDensity(bullet[me], 0.0001);
                     bullet[me].endCycle = game.cycle + 300;
                     bullet[me].dmg = 0.4;

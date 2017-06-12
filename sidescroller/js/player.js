@@ -33,7 +33,10 @@ const mech = {
                 group: 0,
                 category: 0x001000,
                 mask: 0x010001
-            }
+            },
+			death: function(){
+				mech.death()
+			}
         });
         Matter.Body.setMass(player, mech.mass);
         World.add(engine.world, [player]);
@@ -390,6 +393,60 @@ const mech = {
             return false;
         }
     },
+	constrain: function(){
+		if (b.activeGun === 1) {
+				if (game.mouseDown && this.fireCDcycle < game.cycle) {
+                ctx.beginPath();
+                ctx.arc(this.pos.x, this.pos.y, this.grabRange, this.angle - Math.PI * 0.3, this.angle + Math.PI * 0.3, false);
+                ctx.arc(this.pos.x, this.pos.y, 40, this.angle + Math.PI * 0.3, this.angle - Math.PI * 0.3, true);
+                ctx.fillStyle = "rgba(30,30,90,0.05)";
+                ctx.fill();
+
+                //find closest body
+                let mag = this.grabRange;
+                let index = null;
+				const maxSize = 110
+                for (let i = 0, len = body.length; i < len; ++i) {
+                    if (
+                        body[i].bounds.max.x - body[i].bounds.min.x < maxSize
+						&& body[i].bounds.max.y - body[i].bounds.min.y < maxSize
+						&& this.lookingAt(i)
+						&& Matter.Query.ray(map, body[i].position, this.pos).length === 0
+                    ) {
+							this.drawHold(body[i]); //draw outline
+                            //add to closest list
+                            const dist = Matter.Vector.magnitude(Matter.Vector.sub(body[i].position, this.pos));
+                            if (dist < mag) {
+                                mag = dist;
+                                index = i;
+                            }
+
+                    }
+                }
+                // constain if in range
+                if (mag < this.grabRange) {
+					consBB[consBB.length] = Constraint.create({
+						bodyA: player,
+						bodyB: body[index],
+						stiffness: 0.01,
+						// length: 1
+					});
+					World.add(engine.world, consBB[consBB.length-1]);
+					// cons[cons.length] = Constraint.create({
+			        //     pointA: {
+			        //         x: player.position.x,
+			        //         y: player.position.y
+			        //     },
+			        //     bodyB: body[index],
+			        //     stiffness: 0.01,
+			        //     // length: 1
+			        // });
+					// World.add(engine.world, cons[cons.length-1]);
+                }
+            }
+        }
+
+	},
     isHolding: false,
     grabRange: 150,
     holding: null,
@@ -421,28 +478,33 @@ const mech = {
         if (this.isHolding) {
             this.fireCDcycle = game.cycle + 15;
             this.isHolding = false;
-            Matter.Body.setMass(player, 5);
-            //bullet collisions
+            //bullet-like collisions
             this.holding.collisionFilter.category = 0x000100;
             this.holding.collisionFilter.mask = 0x111101;
 			//check every second to see if player is away from thrown body, and make solid
 			const solid = function(that){
 				const dx = that.position.x - player.position.x;
                 const dy = that.position.y - player.position.y;
-				if (dx * dx + dy * dy > 10000){
+				if (dx * dx + dy * dy > 3000 && that.speed < 3){
 					that.collisionFilter.category = 0x000001;  //make solid
 				} else {
-					setTimeout(solid, 1000, that);
+					setTimeout(solid, 250, that);
 				}
 			}
-			setTimeout(solid, 3000, this.holding);
+			setTimeout(solid, 1000, this.holding);
 
-            // const v = 45 - this.holding.mass * 5; //speed scales a bit with mass:  45 - about (1 to 10)
 			const speed = 3 + Math.min(37/this.holding.mass, 50); //throw speed scales a bit with mass
             Matter.Body.setVelocity(this.holding, {
                 x: player.velocity.x + Math.cos(this.angle) * speed,
                 y: player.velocity.y + Math.sin(this.angle) * speed
             });
+			//player recoil //stronger in x-dir to prevent jump hacking
+			Matter.Body.setVelocity(player, {
+				x: player.velocity.x - Math.cos(this.angle) * 2,
+				y: player.velocity.y - Math.sin(this.angle) * 0.5
+			});
+			//return to normal player mass
+			Matter.Body.setMass(player, 5);
         }
     },
     hold: function() {
@@ -457,7 +519,6 @@ const mech = {
 				//gently spin the block
                 Matter.Body.rotate(this.holding, 0.01/this.holding.mass);
             } else if (game.mouseDown && this.fireCDcycle < game.cycle) {
-                // F
                 ctx.beginPath();
                 // ctx.moveTo(this.pos.x, this.pos.y);
                 ctx.arc(this.pos.x, this.pos.y, this.grabRange, this.angle - Math.PI * 0.3, this.angle + Math.PI * 0.3, false);
@@ -499,6 +560,14 @@ const mech = {
                         this.holding.collisionFilter.mask = 0x111101;
                     }
                     this.holding = body[index];
+					//combine momentum
+					const px = player.velocity.x*player.mass + this.holding.velocity.x*this.holding.mass
+					const py = player.velocity.y*player.mass - this.holding.velocity.y*this.holding.mass
+					Matter.Body.setVelocity(player,{
+						x:px/(player.mass+this.holding.mass),
+						y:py/(player.mass+this.holding.mass)
+					});
+
                     Matter.Body.setMass(player, 5 + this.holding.mass);
                     //collide with nothing
                     this.holding.collisionFilter.category = 0x000000;

@@ -140,7 +140,7 @@ const spawn = {
     blackHoler: function(x, y, radius = 30 + Math.ceil(Math.random() * 40)) {
         radius = 10 + radius / 4; //extra small
         mobs.spawn(x, y, 0, radius, "#000", [
-            "seePlayerbyDistAndLOS",
+            "seePlayerbyDistOrLOS",
             "fallCheck",
             "attraction",
             "darkness",
@@ -168,7 +168,7 @@ const spawn = {
             "laser"
         ]);
         let me = mob[mob.length - 1];
-        me.repulsionRange = 200000; //squared
+        me.repulsionRange = 160000; //squared
         me.seePlayerFreq = 2 + Math.round(Math.random() * 5);
         me.accelMag = 0.0006;
         me.frictionStatic = 0;
@@ -180,7 +180,7 @@ const spawn = {
         if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.1, 1)) spawn.shield(me, x, y);
     },
     laserTracker: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
-        mobs.spawn(x, y, 4, radius, "rgb(255,50,100)", [
+        mobs.spawn(x, y, 4, radius, "rgb(0,0,255)", [
             "healthBar",
             "seePlayerCheck",
             "attraction",
@@ -282,10 +282,11 @@ const spawn = {
         me.fill = "transparent";
     },
     shooter: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 3, radius, "rgb(100,50,255)", ["healthBar", "seePlayerCheck", "fire"]);
+        mobs.spawn(x, y, 3, radius, "rgb(100,50,255)", ["healthBar", "seePlayerbyDistAndLOS", "fire"]);
         let me = mob[mob.length - 1];
         me.facePlayer = true;
         me.isStatic = true;
+		me.seeAtDistance2 = 4000000
         me.fireFreq = Math.ceil(20 + 2000 / radius);
         me.memory = 120; //memory+memory*Math.random() in cycles
         if (Math.random() < Math.min(0.15 + game.levelsCleared * 0.1, 1)) spawn.shield(me, x, y);
@@ -294,7 +295,7 @@ const spawn = {
         mobs.spawn(x, y, 3, radius, "rgb(155,0,255)", [
             "healthBar",
             "gravity",
-            "seePlayerCheck",
+            "seePlayerbyDistAndLOS",
             "fallCheck",
             "attraction",
             "fire"
@@ -303,6 +304,7 @@ const spawn = {
         me.facePlayer = false;
         me.g = 0.0002; //required if using 'gravity'
         me.accelMag = 0.0003;
+		me.seeAtDistance2 = 4000000
         me.fireFreq = Math.ceil(40 + 2000 / radius);
         me.memory = 120; //memory+memory*Math.random() in cycles
         if (Math.random() < Math.min(0.15 + game.levelsCleared * 0.1, 1)) spawn.shield(me, x, y);
@@ -548,6 +550,14 @@ const spawn = {
         level.fillBG.push({ x: x, y: y - 55, width: 100, height: 55, color: color + "0.1)" });
         level.fillBG.push({ x: x, y: y - 120, width: 100, height: 120, color: color + "0.05)" });
     },
+	laserZone: function(x,y,width,height,dmg){
+		level.addZone(x, y, width, height, "laser",{dmg});
+		level.fill.push({x: x, y: y, width: width, height: height, color: '#f00'});
+	},
+	deathQuery: function(x,y,width,height){
+		level.addQueryRegion(x, y, width, height, "death", [[player], mob]);
+		level.fill.push({x: x, y: y, width: width, height: height, color: '#f00'});
+	},
     debris: function(x, y, width, number = Math.floor(3 + Math.random() * 11)) {
         for (let i = 0; i < number; ++i) {
             if (Math.random() < 0.14) {
