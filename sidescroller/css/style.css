@@ -1,8 +1,7 @@
 body {
     font-family: "Helvetica", "Arial", sans-serif;
     margin: 0;
-    /*cursor: none;*/
-	cursor: crosshair;
+	/*cursor: crosshair;*/
     overflow: hidden;
     background-color: #fff;
     transition: background-color 2s;
@@ -60,12 +59,12 @@ svg {
     pointer-events: none;
 }
 
-.hud {
+/*.hud {
     z-index: 2;
     pointer-events: none;
-}
+}*/
 
-.background {
+/*.background {
     z-index: -1;
     pointer-events: none;
 }
@@ -73,7 +72,7 @@ svg {
 .foreground {
     z-index: 1;
     pointer-events: none;
-}
+}*/
 
 #fade-out {
     position: absolute;
@@ -92,8 +91,8 @@ svg {
     left: 40px;
     z-index: 2;
     font-size: 25px;
-    color: #333;
-    background-color: rgba(255, 255, 255, 0.1);
+    color: #111;
+    background-color: rgba(255, 255, 255, 0.2);
     user-select: none;
 	pointer-events: none;
 	padding: 0px 5px 0px 5px;
@@ -105,10 +104,11 @@ svg {
     top: 20px;
     left: 0;
     width: 100%;
+	line-height: 180%;
     text-align: center;
     z-index: 2;
     font-size: 1.3em;
-    color: #333;
+    color: #000;
     opacity: 0;
     transition: opacity 0.5s;
 	pointer-events: none;
@@ -116,7 +116,7 @@ svg {
 }
 
 .box {
-	padding: 0px 5px 0px 5px;
+	padding: 3px 8px 3px 8px;
 	/*margin: 0px 5px 0px 5px;*/
 	border: 2px solid #444;
 	background-color: rgba(255,255,255,0.5);

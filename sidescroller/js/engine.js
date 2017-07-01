@@ -33,10 +33,11 @@ function playerOnGroundCheck(event) {
     for (let i = 0, j = pairs.length; i != j; ++i) {
         let pair = pairs[i];
         if (pair.bodyA === jumpSensor) {
+			mech.standingOn = pair.bodyB //keeping track to correctly provide recoil on jump
             enter();
         } else if (pair.bodyB === jumpSensor) {
+			mech.standingOn = pair.bodyA //keeping track to correctly provide recoil on jump
             enter();
-            mech.onBody = pair.bodyA.id;
         }
     }
 }
@@ -88,7 +89,7 @@ function mobCollisionChecks(event) {
                     //player and mob collision
                     if (obj === playerBody || obj === playerHead) {
                         mob[k].locatePlayer();
-                        let dmg = mob[k].onHitDamage();
+                        let dmg = Math.min(Math.max(0.01 * Math.sqrt(mob[k].mass) * game.dmgScale,0.01), 0.35)
                         mech.hitMob(k, dmg);
                         if (mob[k].onHit) mob[k].onHit(k);
                         game.drawList.push({
@@ -120,11 +121,10 @@ function mobCollisionChecks(event) {
                         return;
                     }
                     //mob and body collisions
-                    if (obj.classType === "body" && Matter.Vector.magnitudeSquared(obj.velocity) > 25) {
-                        //only triggers if absolute body velocity > x^2  and relative mob-body velocity > 15
+                    if (obj.classType === "body" && obj.speed > 6) {
                         const v = Matter.Vector.magnitude(Matter.Vector.sub(mob[k].velocity, obj.velocity));
                         if (v > 9) {
-                            let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.07;
+                            let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.15;
                             mob[k].damage(dmg);
                             if (mob[k].distanceToPlayer2() < 1000000) mob[k].locatePlayer();
                             game.drawList.push({

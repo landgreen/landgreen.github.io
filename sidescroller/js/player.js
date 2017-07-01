@@ -66,12 +66,7 @@ const mech = {
     yOff: 70,
     yOffGoal: 70,
     onGround: false, //checks if on ground or in air
-    onBody: {
-        id: 0,
-        index: 0,
-        type: "map",
-        action: ""
-    },
+	standingOn: undefined,
     numTouching: 0,
     crouch: false,
     isHeadClear: true,
@@ -142,17 +137,23 @@ const mech = {
     },
     transSmoothX: 0,
     transSmoothY: 0,
+	// mouseZoom: 0,
     look: function() {
         //always on mouse look
+		this.angle = Math.atan2(game.mouseInGame.y - this.pos.y, game.mouseInGame.x - this.pos.x);
         const mX = game.mouse.x - canvas.width2;
         const mY = game.mouse.y - canvas.height2;
-        this.angle = Math.atan2(mY, mX);
+        // this.angle = Math.atan2(mY, mX);
         //smoothed translations
         const scale = 1.4;
         this.transSmoothX = canvas.width2 - this.pos.x - mX * scale;
         this.transSmoothY = canvas.height2 - this.pos.y - mY * scale;
         this.transX = this.transX * 0.93 + this.transSmoothX * 0.07;
         this.transY = this.transY * 0.93 + this.transSmoothY * 0.07;
+		//zoom in/out based on mouse distance from player
+		//very cool, but too distracting and makes aiming even harder
+		// this.mouseZoom = this.mouseZoom*0.97 + (Math.sqrt(mX*mX+mY*mY)*0.5)*0.03
+		// game.zoom = canvas.height / (game.zoomScale + this.mouseZoom )
     },
     doCrouch: function() {
         if (!this.crouch) {
@@ -213,15 +214,20 @@ const mech = {
                 this.doCrouch();
                 player.frictionAir = this.friction.crouch;
             } else if (keys[87] && this.buttonCD_jump + 20 < game.cycle) {
-                //} else if (keys[87] || (keys[38] && this.buttonCD_jump + 20 < game.cycle)) {
-                //jump
-                this.buttonCD_jump = game.cycle; //can't jump until 20 cycles pass
-                Matter.Body.setVelocity(player, {
-                    //zero player velocity for consistant jumps
+                this.buttonCD_jump = game.cycle; //can't jump again until 20 cycles pass
+
+                player.force.y = -this.jumpForce / game.delta; //jump force / delta so that force is the same on game slowdowns
+				//apply a fraction of the jump force to the thing the player is jumping off of
+				Matter.Body.applyForce(mech.standingOn, mech.pos, {
+					x: 0,
+					y: this.jumpForce / game.delta*0.2*Math.min(mech.standingOn.mass,1)
+				})
+
+				//zero player velocity for consistant jumps
+				Matter.Body.setVelocity(player, {
                     x: player.velocity.x,
                     y: 0
                 });
-                player.force.y = -this.jumpForce / game.delta; //jump force / delta so that force is the same on game slowdowns
             }
             //horizontal move on ground
             if (keys[65]) {
@@ -493,15 +499,15 @@ const mech = {
 			}
 			setTimeout(solid, 1000, this.holding);
 
-			const speed = 3 + Math.min(37/this.holding.mass, 50); //throw speed scales a bit with mass
+			const speed = Math.min(50/this.holding.mass+1, 42); //throw speed scales a bit with mass
             Matter.Body.setVelocity(this.holding, {
-                x: player.velocity.x + Math.cos(this.angle) * speed,
-                y: player.velocity.y + Math.sin(this.angle) * speed
+                x: player.velocity.x*0.5 + Math.cos(this.angle) * speed,
+                y: player.velocity.y*0.5 + Math.sin(this.angle) * speed
             });
 			//player recoil //stronger in x-dir to prevent jump hacking
 			Matter.Body.setVelocity(player, {
 				x: player.velocity.x - Math.cos(this.angle) * 2,
-				y: player.velocity.y - Math.sin(this.angle) * 0.5
+				y: player.velocity.y - Math.sin(this.angle) * 0.4
 			});
 			//return to normal player mass
 			Matter.Body.setMass(player, 5);
@@ -533,7 +539,7 @@ const mech = {
                 //find closest body
                 let mag = this.grabRange;
                 let index = null;
-				const maxSize = 110
+				const maxSize = 75;
                 for (let i = 0, len = body.length; i < len; ++i) {
                     if (
                         body[i].bounds.max.x - body[i].bounds.min.x < maxSize
@@ -598,6 +604,7 @@ const mech = {
         ctx.strokeStyle = stroke;
         ctx.lineWidth = 7;
         ctx.stroke();
+
         //toe lines
         ctx.beginPath();
         ctx.moveTo(this.foot.x, this.foot.y);
@@ -606,8 +613,8 @@ const mech = {
         ctx.lineTo(this.foot.x + 15, this.foot.y + 5);
         ctx.lineWidth = 4;
         ctx.stroke();
+
         //hip joint
-        //ctx.strokeStyle = stroke//"#333";
         ctx.beginPath();
         ctx.arc(this.hip.x, this.hip.y, 11, 0, 2 * Math.PI);
         //knee joint
@@ -651,7 +658,7 @@ const mech = {
         ctx.save();
         ctx.translate(this.pos.x, this.pos.y);
         this.calcLeg(Math.PI, -3);
-        this.drawLeg("#444");
+        this.drawLeg("#4a4a4a");
         this.calcLeg(0, 0);
         this.drawLeg("#333");
         ctx.rotate(this.angle);
@@ -664,9 +671,13 @@ const mech = {
         ctx.fillStyle = grd;
         ctx.fill();
         ctx.arc(15, 0, 4, 0, 2 * Math.PI);
-        ctx.strokeStyle = "#333";
-        ctx.lineWidth = 2;
-        ctx.stroke();
+		ctx.strokeStyle = "#333";
+		ctx.lineWidth = 2;
+		ctx.stroke();
+		// ctx.beginPath();
+		// ctx.arc(15, 0, 3, 0, 2 * Math.PI);
+		// ctx.fillStyle = '#9cf' //'#0cf';
+		// ctx.fill()
         ctx.restore();
     }
 };

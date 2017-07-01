@@ -125,13 +125,16 @@ powerUp: 0x 100000   0x 001001
 //     "isogon invasion!",
 //     "bird robot!",
 //     "ostrichbot",
-//     "pewpew",
+//     "pew pew",
 // 	'shoot the baddies',
 // 	'get to the door',
 // 'percussion',
 // 'impact',
-// 'carom',
-// 'landGame'
+// 'landGame',
+// 'Cnoön',
+// 'polytope',
+// 'Tessellation tower',
+// 'polytope',
 // ];
 // document.getElementById("title").textContent = document.title = titles[Math.floor(titles.length * Math.random())];
 
@@ -194,6 +197,21 @@ function playSound(id) {
     }
 }
 
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+}
+
 function run(el) {
     // onclick from the splash screen
     el.onclick = null; //removes the onclick effect so the function only runs once
@@ -201,15 +219,17 @@ function run(el) {
 	// document.body.style.pointerEvents = 'none';
 	//mouse down event can be simplified, we only need to get position from
 	window.onmousedown = function(e) {
-		if (!game.mouseDown){
-			game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
-			game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
-		}
+		// keep this disabled unless building maps
+		// if (!game.mouseDown){
+		// 	game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
+		// 	game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
+		// }
 	    game.mouseDown = true;
 		mech.throw();
 	};
 	document.body.style.cursor = 'none';
 	mech.spawn(); //spawns the player
+	level.levels = shuffle(level.levels) //shuffles order of maps
     game.reset();
     Engine.run(engine); //starts game engine
     requestAnimationFrame(cycle); //starts game loop

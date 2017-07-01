@@ -2,8 +2,8 @@
 //*********************************************************************
 const game = {
     mouse: {
-        x: canvas.width/2,
-        y: canvas.height/2
+        x: canvas.width / 2,
+        y: canvas.height / 2
     },
     mouseInGame: {
         x: 0,
@@ -12,7 +12,7 @@ const game = {
     levelsCleared: 0,
     g: 0.001,
     dmgScale: 1,
-	paused: false,
+    paused: false,
     testing: false, //testing mode: shows wireframe and some variables
     cycle: 0, //total cycles, 60 per second
     cyclePaused: 0,
@@ -20,17 +20,17 @@ const game = {
     lastTimeStamp: 0, //tracks time stamps for measuing delta
     delta: 0, //measures how slow the engine is running compared to 60fps
     buttonCD: 0,
-	drawCursor: function(){
-		const size = 10
-		ctx.beginPath();
-		ctx.moveTo(game.mouse.x-size,game.mouse.y);
-		ctx.lineTo(game.mouse.x+size,game.mouse.y);
-		ctx.moveTo(game.mouse.x,game.mouse.y-size);
-		ctx.lineTo(game.mouse.x,game.mouse.y+size);
-		ctx.lineWidth=2;
-		ctx.strokeStyle= "#000"; //'rgba(0,0,0,0.4)'
-		ctx.stroke(); // Draw it
-	},
+    drawCursor: function() {
+        const size = 10;
+        ctx.beginPath();
+        ctx.moveTo(game.mouse.x - size, game.mouse.y);
+        ctx.lineTo(game.mouse.x + size, game.mouse.y);
+        ctx.moveTo(game.mouse.x, game.mouse.y - size);
+        ctx.lineTo(game.mouse.x, game.mouse.y + size);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#000"; //'rgba(0,0,0,0.4)'
+        ctx.stroke(); // Draw it
+    },
     drawList: [], //so you can draw a first frame of explosions.. I know this is bad
     drawTime: 8, //how long circles are drawn.  use to push into drawlist.time
     mobDmgColor: "rgba(255,0,0,0.7)", //used top push into drawList.color
@@ -53,23 +53,25 @@ const game = {
     },
     lastLogTime: 0,
     lastLogTimeBig: 0,
-	boldActiveGunHUD: function(){
-		for (let i = 0, len = b.inventory.length; i < len; ++i) {
-			// document.getElementById(b.inventory[i]).style.color = '#ccc'
-			document.getElementById(b.inventory[i]).style.opacity = '0.2'
-		}
-		// document.getElementById(b.activeGun).style.color = '#333'
-		document.getElementById(b.activeGun).style.opacity = '1'
-	},
-	updateGunHUD: function() {
-		for (let i = 0, len = b.inventory.length; i < len; ++i) {
-			if (b.guns[b.inventory[i]].ammo === Infinity){
-				document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name
-			} else {
-				document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name +' - ' + b.guns[b.inventory[i]].ammo
-			}
-		}
-	},
+    boldActiveGunHUD: function() {
+        for (let i = 0, len = b.inventory.length; i < len; ++i) {
+            // document.getElementById(b.inventory[i]).style.color = '#ccc'
+            document.getElementById(b.inventory[i]).style.opacity = "0.3";
+        }
+        // document.getElementById(b.activeGun).style.color = '#333'
+        document.getElementById(b.activeGun).style.opacity = "1";
+    },
+    updateGunHUD: function() {
+        for (let i = 0, len = b.inventory.length; i < len; ++i) {
+            if (b.guns[b.inventory[i]].ammo === Infinity) {
+                document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name;
+            } else {
+                document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name +
+                    " - " +
+                    b.guns[b.inventory[i]].ammo;
+            }
+        }
+    },
     makeGunHUD: function() {
         //remove all nodes
         const myNode = document.getElementById("guns");
@@ -80,27 +82,27 @@ const game = {
         for (let i = 0, len = b.inventory.length; i < len; ++i) {
             const node = document.createElement("div");
             node.setAttribute("id", b.inventory[i]);
-			let textnode
-			if (b.guns[b.inventory[i]].ammo === Infinity){
-				textnode = document.createTextNode(b.guns[b.inventory[i]].name);
-			} else {
-				textnode = document.createTextNode(b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo);
-			}
+            let textnode;
+            if (b.guns[b.inventory[i]].ammo === Infinity) {
+                textnode = document.createTextNode(b.guns[b.inventory[i]].name);
+            } else {
+                textnode = document.createTextNode(b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo);
+            }
             node.appendChild(textnode);
             document.getElementById("guns").appendChild(node);
         }
-		game.boldActiveGunHUD()
+        game.boldActiveGunHUD();
     },
-	makeTextLog: function(text,time=180){
-		document.getElementById("text-log").innerHTML = text
-		document.getElementById("text-log").style.opacity = 1
-		game.lastLogTime = game.cycle + time;
-	},
+    makeTextLog: function(text, time = 180) {
+        document.getElementById("text-log").innerHTML = text;
+        document.getElementById("text-log").style.opacity = 1;
+        game.lastLogTime = game.cycle + time;
+    },
     textLog: function() {
         if (game.lastLogTime && game.lastLogTime < game.cycle) {
             game.lastLogTime = 0;
             // document.getElementById("text-log").innerHTML = " ";
-			document.getElementById("text-log").style.opacity = 0;
+            document.getElementById("text-log").style.opacity = 0;
         }
     },
     timing: function() {
@@ -113,13 +115,13 @@ const game = {
         //runs on key press event
         if (keys[189]) {
             // -
-            game.zoomScale /= 0.9
-			game.setZoom()
+            game.zoomScale /= 0.9;
+            game.setZoom();
         } else if (keys[187]) {
-			// -
-			game.zoomScale *= 0.9
-			game.setZoom()
-		}
+            // -
+            game.zoomScale *= 0.9;
+            game.setZoom();
+        }
         if (keys[69]) {
             // e    swap to next active gun
             const next = function() {
@@ -128,10 +130,10 @@ const game = {
                 if (b.guns[b.activeGun].have === false || b.guns[b.activeGun].ammo < 1) next();
             };
             next();
-            game.updateGunHUD()
-			game.boldActiveGunHUD()
-			mech.drop();
-			playSound('click');
+            game.updateGunHUD();
+            game.boldActiveGunHUD();
+            mech.drop();
+            playSound("click");
         } else if (keys[81]) {
             //q    swap to previous active gun
             const previous = function() {
@@ -140,10 +142,10 @@ const game = {
                 if (b.guns[b.activeGun].have === false || b.guns[b.activeGun].ammo < 1) previous();
             };
             previous();
-            game.updateGunHUD()
-			game.boldActiveGunHUD()
-			mech.drop();
-			playSound('click');
+            game.updateGunHUD();
+            game.boldActiveGunHUD();
+            mech.drop();
+            playSound("click");
         }
         if (keys[84]) {
             // 84 = t
@@ -156,31 +158,35 @@ const game = {
             if (keys[57]) {
                 //9
                 powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
+                powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
+                powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
+                powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
+                powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
             }
             if (keys[79]) {
                 //o
                 Matter.Body.setPosition(player, this.mouseInGame);
                 Matter.Body.setVelocity(player, { x: 0, y: 0 });
             }
-			if (keys[80]) {
-				//p
-				if(game.paused){
-					game.paused = false
-					engine.timing.timeScale = 1
-					requestAnimationFrame(cycle)
-				} else {
-					engine.timing.timeScale = 0.001
-					game.paused = true
-				}
-			}
+            if (keys[80]) {
+                //p
+                if (game.paused) {
+                    game.paused = false;
+                    engine.timing.timeScale = 1;
+                    requestAnimationFrame(cycle);
+                } else {
+                    engine.timing.timeScale = 0.001;
+                    game.paused = true;
+                }
+            }
         }
     },
     zoom: null,
-	zoomScale: 1500,
-	setZoom: function() {
-		//use in window resize in index.js
-		this.zoom = canvas.height / game.zoomScale; //sets starting zoom scale
-	},
+    zoomScale: 1400,
+    setZoom: function() {
+        //use in window resize in index.js
+        this.zoom = canvas.height / game.zoomScale; //sets starting zoom scale
+    },
     camera: function() {
         ctx.translate(canvas.width2, canvas.height2); //center
         ctx.scale(this.zoom, this.zoom); //zoom in once centered
@@ -189,67 +195,67 @@ const game = {
         this.mouseInGame.x = (this.mouse.x - canvas.width2) / this.zoom + canvas.width2 - mech.transX;
         this.mouseInGame.y = (this.mouse.y - canvas.height2) / this.zoom + canvas.height2 - mech.transY;
     },
-	startZoomIn: function(time = 300){
-		game.zoom = 0
-		let count = 0
-		function zLoop(){
-			game.zoom += canvas.height / game.zoomScale / time;
-			count++
-			if (count<time){
-				requestAnimationFrame(zLoop);
-			}
-		}
-		requestAnimationFrame(zLoop);
-	},
+    startZoomIn: function(time = 300) {
+        game.zoom = 0;
+        let count = 0;
+        function zLoop() {
+            game.zoom += canvas.height / game.zoomScale / time;
+            count++;
+            if (count < time) {
+                requestAnimationFrame(zLoop);
+            }
+        }
+        requestAnimationFrame(zLoop);
+    },
     wipe: function() {
-		//ctx.clearRect(0, 0, canvas.width, canvas.height);
-		// ctx.globalAlpha = (mech.health < 0.7) ? (mech.health+0.3)*(mech.health+0.3) : 1
-		ctx.fillStyle = document.body.style.backgroundColor
-		ctx.fillRect(0, 0, canvas.width, canvas.height);
+        //ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // ctx.globalAlpha = (mech.health < 0.7) ? (mech.health+0.3)*(mech.health+0.3) : 1
+        ctx.fillStyle = document.body.style.backgroundColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         // if (mech.health < 0.7) {
-		// 	ctx.globalAlpha= 0.3 + mech.health
-		// 	ctx.fillStyle = document.body.style.backgroundColor
+        // 	ctx.globalAlpha= 0.3 + mech.health
+        // 	ctx.fillStyle = document.body.style.backgroundColor
         // 	ctx.fillRect(0, 0, canvas.width, canvas.height);
-		// 	ctx.globalAlpha=1;
+        // 	ctx.globalAlpha=1;
         // } else {
         //     ctx.clearRect(0, 0, canvas.width, canvas.height);
         // }
-	    //ctx.fillStyle = "rgba(255,255,255," + (1 - Math.sqrt(player.speed)*0.1) + ")";
-		//ctx.fillStyle = "rgba(255,255,255,0.4)";
-		//ctx.fillRect(0, 0, canvas.width, canvas.height);
+        //ctx.fillStyle = "rgba(255,255,255," + (1 - Math.sqrt(player.speed)*0.1) + ")";
+        //ctx.fillStyle = "rgba(255,255,255,0.4)";
+        //ctx.fillRect(0, 0, canvas.width, canvas.height);
     },
     reset: function() {
-			//removes guns and ammo
-			b.inventory = [];
-			for (let i = 0, len = b.guns.length; i < len; ++i) {
-				if (b.guns[i].ammo != Infinity){
-					b.guns[i].ammo = 0;
-					b.guns[i].have = false;
-				} else {
-					b.inventory.push(i)
-				}
-			}
-			game.dmgScale = 1;
-			b.dmgScale = 1;
-			b.activeGun = 0;
-			game.makeGunHUD();
-			mech.drop();
-			mech.addHealth(1);
-			mech.alive = true;
-			game.levelsCleared = 0;
-			level.onLevel = Math.floor(Math.random() * level.levels.length); //picks a random starting level
-			game.clearNow = true;
-			document.getElementById("text-log").style.opacity = 0;
-			document.getElementById("fade-out").style.opacity = 0;
-			game.startZoomIn()
+        //removes guns and ammo
+        b.inventory = [];
+        for (let i = 0, len = b.guns.length; i < len; ++i) {
+            if (b.guns[i].ammo != Infinity) {
+                b.guns[i].ammo = 0;
+                b.guns[i].have = false;
+            } else {
+                b.inventory.push(i);
+            }
+        }
+        game.dmgScale = 1;
+        b.dmgScale = 1;
+        b.activeGun = 0;
+        game.makeGunHUD();
+        mech.drop();
+        mech.addHealth(1);
+        mech.alive = true;
+        game.levelsCleared = 0;
+        level.onLevel = Math.floor(Math.random() * level.levels.length); //picks a random starting level
+        game.clearNow = true;
+        document.getElementById("text-log").style.opacity = 0;
+        document.getElementById("fade-out").style.opacity = 0;
+        game.startZoomIn();
     },
     clearNow: false,
     clearMap: function() {
-		mech.drop();
-		level.fill = [];
-		level.fillBG = [];
+        mech.drop();
+        level.fill = [];
+        level.fillBG = [];
         level.zones = [];
-		level.queryList = [];
+        level.queryList = [];
         this.drawList = [];
         function removeAll(array) {
             for (let i = 0; i < array.length; ++i)
@@ -305,7 +311,7 @@ const game = {
         ctx.textAlign = "right";
         ctx.fillStyle = "#000";
         let line = 100;
-		const x = canvas.width-5
+        const x = canvas.width - 5;
         ctx.fillText("Press T to exit testing mode", x, line);
         line += 30;
         ctx.fillText("cycle: " + game.cycle, x, line);
@@ -342,9 +348,6 @@ const game = {
         line += 20;
         ctx.fillText("zoom: " + this.zoom.toFixed(4), x, line);
         line += 20;
-        ctx.fillText("on " + mech.onBody.type + " id: " + mech.onBody.id + ", index: " + mech.onBody.index, x, line);
-        line += 20;
-        ctx.fillText("action: " + mech.onBody.action, x, line);
         ctx.textAlign = "center";
         ctx.fillText(`(${this.mouseInGame.x.toFixed(1)}, ${this.mouseInGame.y.toFixed(1)})`, this.mouse.x, this.mouse.y - 20);
     },
@@ -401,10 +404,10 @@ const game = {
                 }
                 ctx.lineTo(vertices[0].x, vertices[0].y);
             }
-            ctx.lineWidth = 1.5;
+            ctx.lineWidth = 2;
             ctx.fillStyle = "#777";
             ctx.fill();
-            ctx.strokeStyle = "#222";
+            ctx.strokeStyle = "#333";
             ctx.stroke();
         },
         cons: function() {
@@ -417,8 +420,9 @@ const game = {
                 ctx.moveTo(consBB[i].bodyA.position.x, consBB[i].bodyA.position.y);
                 ctx.lineTo(consBB[i].bodyB.position.x, consBB[i].bodyB.position.y);
             }
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "#999";
+            ctx.lineWidth = 2;
+            // ctx.strokeStyle = "#999";
+            ctx.strokeStyle = "rgba(0,0,0,0.15)";
             ctx.stroke();
         },
         wireFrame: function() {
@@ -453,8 +457,8 @@ const game = {
             }
             ctx.fillStyle = "rgba(0, 255, 0, 0.3)";
             ctx.fill();
-			//query zones
-			ctx.beginPath();
+            //query zones
+            ctx.beginPath();
             for (let i = 0, len = level.queryList.length; i < len; ++i) {
                 ctx.rect(
                     level.queryList[i].bounds.max.x,
@@ -512,37 +516,66 @@ const game = {
             ctx.stroke();
         }
     },
-	buildingUp: function(e){
-			if (game.mouseDown){
-				game.getCoords.pos2.x = Math.round(game.mouseInGame.x / 25) * 25;
-				game.getCoords.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;
-				let out
+    checkLineIntersection(v1, v1End, v2, v2End) {
+        // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
+        let denominator, a, b, numerator1, numerator2;
+        let result = {
+            x: null,
+            y: null,
+            onLine1: false,
+            onLine2: false
+        };
+        denominator = (v2End.y - v2.y) * (v1End.x - v1.x) - (v2End.x - v2.x) * (v1End.y - v1.y);
+        if (denominator == 0) {
+            return result;
+        }
+        a = v1.y - v2.y;
+        b = v1.x - v2.x;
+        numerator1 = (v2End.x - v2.x) * a - (v2End.y - v2.y) * b;
+        numerator2 = (v1End.x - v1.x) * a - (v1End.y - v1.y) * b;
+        a = numerator1 / denominator;
+        b = numerator2 / denominator;
 
-				//body rect mode
-				out = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x-game.getCoords.pos1.x}, ${game.getCoords.pos2.y-game.getCoords.pos1.y});`;
+        // if we cast these lines infinitely in both directions, they intersect here:
+        result.x = v1.x + a * (v1End.x - v1.x);
+        result.y = v1.y + a * (v1End.y - v1.y);
+        // if line1 is a segment and line2 is infinite, they intersect if:
+        if (a > 0 && a < 1) result.onLine1 = true;
+        // if line2 is a segment and line1 is infinite, they intersect if:
+        if (b > 0 && b < 1) result.onLine2 = true;
+        // if line1 and line2 are segments, they intersect if both of the above are true
+        return result;
+    },
+    buildingUp: function(e) {
+        if (game.mouseDown) {
+            game.getCoords.pos2.x = Math.round(game.mouseInGame.x / 25) * 25;
+            game.getCoords.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;
+            let out;
 
-				//mob spawn
-				//out = `spawn.randomMob(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, 0.3);`
+            //body rect mode
+            out = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x - game.getCoords.pos1.x}, ${game.getCoords.pos2.y - game.getCoords.pos1.y});`;
 
-				//draw foreground
-				//out = `level.fill.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "rgba(0,0,0,0.1)"});`;
+            //mob spawn
+            //out = `spawn.randomMob(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, 0.3);`
 
-				//draw background fill
-				//out = `level.fillBG.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "#ccc"});`;
+            //draw foreground
+            //out = `level.fill.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "rgba(0,0,0,0.1)"});`;
 
-				//svg mode
-				//out = 'rect x="'+game.getCoords.pos1.x+'" y="'+ game.getCoords.pos1.y+'" width="'+(game.getCoords.pos2.x-game.getCoords.pos1.x)+'" height="'+(game.getCoords.pos2.y-game.getCoords.pos1.y)+'"';
+            //draw background fill
+            //out = `level.fillBG.push({ x: ${game.getCoords.pos1.x}, y: ${game.getCoords.pos1.y}, width: ${game.getCoords.pos2.x-game.getCoords.pos1.x}, height: ${game.getCoords.pos2.y-game.getCoords.pos1.y}, color: "#ccc"});`;
 
-				console.log(out)
-				// document.getElementById("copy-this").innerHTML = out
-				//
-				// window.getSelection().removeAllRanges();
-				// var range = document.createRange();
-				// range.selectNode(document.getElementById('copy-this'));
-				// window.getSelection().addRange(range);
-				// document.execCommand('copy')
-				// window.getSelection().removeAllRanges();
-			}
+            //svg mode
+            //out = 'rect x="'+game.getCoords.pos1.x+'" y="'+ game.getCoords.pos1.y+'" width="'+(game.getCoords.pos2.x-game.getCoords.pos1.x)+'" height="'+(game.getCoords.pos2.y-game.getCoords.pos1.y)+'"';
 
-	},
+            console.log(out);
+            // document.getElementById("copy-this").innerHTML = out
+            //
+            // window.getSelection().removeAllRanges();
+            // var range = document.createRange();
+            // range.selectNode(document.getElementById('copy-this'));
+            // window.getSelection().addRange(range);
+            // document.execCommand('copy')
+            // window.getSelection().removeAllRanges();
+        }
+    }
 };

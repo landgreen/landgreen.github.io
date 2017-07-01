@@ -8,10 +8,10 @@ const level = {
     levels: ["towers", "skyscrapers", "rooftops", "warehouse", 'highrise'], // name of the level methods that the player runs through
     onLevel: undefined,
     start: function() {
-        //game.levelsCleared = 100000;  //for testing to simulate all possible mobs spawns
+        // game.levelsCleared = 3;  //for testing to simulate all possible mobs spawns
         spawn.setSpawnList(); //picks a couple mobs types for a themed random mob spawns
-        this[this.levels[this.onLevel]](); //spawn the level player is on, this cycles in a loop
-        //this.boss();
+        //this[this.levels[this.onLevel]](); //spawn the level player is on, this cycles in a loop
+        this.boss();
         //this.warehouse();
         //this.highrise();
         //this.towers();
@@ -24,6 +24,7 @@ const level = {
     //******************************************************************************************************************
     //empty map for testing mobs
     boss: function() {
+		game.levelsCleared = 10;  //for testing to simulate all possible mobs spawns
         mech.setPosToSpawn(-75, -60); //normal spawn
         level.enter.x = mech.spawnPos.x - 50;
         level.enter.y = mech.spawnPos.y + 20;
@@ -32,14 +33,19 @@ const level = {
         level.exit.y = -870;
         this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
         // this.addZone(250, -1000, 500, 1500, "laser");
+		//spawn.debris(0, -900, 4500, 10); //20 debris per level
         document.body.style.backgroundColor = "#eee";
-        spawn.debris(0, -900, 4500, 20); //20 debris per level
+		// document.body.style.backgroundColor = "#fafcff";
+		// document.body.style.backgroundColor = "#bbb";
+		// document.body.style.backgroundColor = "#eee4e4";
+		// document.body.style.backgroundColor = "#dcdcde";
+		// document.body.style.backgroundColor = "#e0e5e0";
 
         // this.addQueryRegion(550, -25, 100, 50, "bounce", { Vx: 0, Vy: -25 });
         // level.fillBG.push({ x: 550, y: -25, width: 100, height: 50, color: "#ff0" });
 
+		spawn.mapRect(-1200, 0, 2200, 300); //left ground
         spawn.mapRect(3500, -860, 100, 50); //ground bump wall
-        spawn.mapRect(-200, 0, 1200, 300); //ground
         spawn.mapVertex(1250, 0, "0 0 0 300 -500 600 -500 300");
         spawn.mapRect(1500, -300, 2000, 300); //upper ground
         spawn.mapVertex(3750, 0, "0 600 0 300 -500 0 -500 300");
@@ -47,20 +53,32 @@ const level = {
         spawn.mapRect(2200, -600, 600, 50); //center platform
         spawn.mapRect(1300, -850, 700, 50); //center platform
         spawn.mapRect(3000, -850, 700, 50); //center platform
+		spawn.mapRect(0, -2000, 3000, 50); //center platform
         spawn.spawnBuilding(-200, -250, 275, 240, false, true, "left"); //far left; player spawns in side
         //spawn.boost(350, 0, 0, -0.005);
         powerUps.spawn(450, -125, "gun", false);
+		// powerUps.spawn(450, -125, "gun", false);
+		// powerUps.spawn(450, -125, "gun", false);
         for (let i = 0; i < 5; i++) {
             //powerUps.spawn(2500+i*15, -1000, "gun", false);
+			powerUps.spawn(2500+ i*20, -1300, "gun", false);
             powerUps.spawn(2500 + i * 20, -1100, "ammo", false);
         }
-        // spawn.springer(1225,-1000)
-        //spawn.puller(1625, -1000);
-        spawn.shooter(1700, -1100,75);
-		// spawn.laserer(1700, -1100, 100);
-		//  spawn.laserTracker(1700, -1100, 10);
-        //spawn.bodyRect(1565, -1400, 200, 5); //center platform
-        //spawn.blinker(900, -230);
+		spawn.bodyRect(700, -50, 50, 50);
+		// spawn.bodyRect(700, -100, 50, 50);
+		// spawn.bodyRect(700, -150, 50, 50);
+		// spawn.bodyRect(700, -200, 50, 50);
+		// spawn.bodyRect(-100, -260, 250, 10);
+
+		spawn.zoomer(1240, -1100);
+		//spawn.shooter(400, -1400);
+		//  spawn.shooter(1300, -1150, 20);
+		//  spawn.shooter(800, -1150, 50);
+		// spawn.shooter(400, -1150, 150);
+		 //spawn.lineBoss(900, -1070,'laserSearcher');
+
+		//  spawn.randomBoss(-100, -1470);
+
     },
     warehouse: function() {
         // document.body.style.backgroundColor = (Math.random() < 0.5) ? "#aaa" : "#e3e3f0"
@@ -77,7 +95,7 @@ const level = {
         spawn.debris(-2250, 1330, 3000, 7); //20 debris per level
         spawn.debris(-3000, -800, 3280, 7); //20 debris per level
         spawn.debris(-1400, 410, 2300, 6); //20 debris per level
-        if (!game.levelsCleared) powerUps.spawn(-1250, 560, "gun", false); //starting gun
+        if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6)  powerUps.spawn(-1250, 560, "gun", false); //starting gun
         //foreground
         // level.fill.push({ x: -3025, y: 50, width: 4125, height: 1350, color: "rgba(0,0,0,0.05)"});
         // level.fill.push({ x: -1800, y: -500, width: 1975, height: 550, color: "rgba(0,0,0,0.05)"});
@@ -109,7 +127,8 @@ const level = {
         spawn.mapRect(-2850, 1400, 4100, 100);
         spawn.mapRect(-2375, 875, 1775, 100);
         spawn.mapRect(-1450, 950, 75, 346);
-        spawn.mapRect(-1450, 662, 75, 111);
+        spawn.mapRect(-1433, 662, 41, 111);
+		spawn.bodyRect(-1418, 773, 11, 102, 1, spawn.propsFriction); //blocking path
         spawn.mapRect(-2950, 1250, 175, 250);
         spawn.mapRect(-3050, 1100, 150, 400);
         spawn.mapRect(-3150, 50, 125, 1450);
@@ -163,37 +182,38 @@ const level = {
 
         spawn.bodyRect(-750, 400, 150, 150, 0.5);
         spawn.bodyRect(-200, 1175, 250, 225, 1); //block to get to top path on bottom level
-        spawn.bodyRect(-1450, 737, 75, 103, 0.5); //blocking path
+        // spawn.bodyRect(-1450, 737, 75, 103, 0.5); //blocking path
+
         spawn.bodyRect(-2525, -50, 145, 100, 0.5);
         spawn.bodyRect(-2325, -300, 150, 100, 0.5);
         spawn.bodyRect(-1275, -750, 200, 150, 0.5); //roof block
         spawn.bodyRect(-525, -700, 125, 100, 0.5); //roof block
 
         //mobs
-        spawn.randomMob(-1425, -100, 0.3);
-        spawn.randomMob(-750, -150, 0.3);
         spawn.randomSmallMob(-1125, 550);
-        spawn.randomBoss(-125, 250, -0.1);
-        spawn.randomMob(475, 300, 0.3);
-        spawn.randomSmallMob(825, 300);
-        spawn.randomMob(650, 1300, 0.1);
-        spawn.randomMob(375, 1100, 0.1);
-        spawn.randomSmallMob(-900, 825);
         spawn.randomSmallMob(-2325, 800);
-        spawn.randomBoss(-825, 1000, 0.3);
-        spawn.randomBoss(-1300, -1100, 0.1);
-        spawn.randomMob(-2025, 175, 0.3);
-        spawn.randomMob(-2325, 450, 0.3);
-        spawn.randomMob(-2700, 300, 0);
-        spawn.randomMob(-2500, 300, 0);
-        spawn.randomSmallMob(-2950, -50);
-        spawn.randomMob(-2075, -425, 0.2);
-        spawn.randomMob(-2925, 675, 0.3);
-        spawn.randomMob(-1550, -725, 0.2);
+		spawn.randomSmallMob(-2950, -50);
+		spawn.randomSmallMob(825, 300);
+		spawn.randomSmallMob(-900, 825);
+        spawn.randomMob(-2025, 175, 0.7);
+        spawn.randomMob(-2325, 450, 0.7);
+		spawn.randomMob(-2925, 675, 0.7);
+        spawn.randomMob(-2700, 300, 0.25);
+        spawn.randomMob(-2500, 300, 0.25);
+        spawn.randomMob(-2075, -425, 0.25);
+        spawn.randomMob(-1550, -725, 0.25);
+		spawn.randomMob(375, 1100, 0.15);
+		spawn.randomMob(-1425, -100, 0.3);
         spawn.randomMob(-800, -750, 0.2);
-        spawn.randomMob(-75, -700, 0.2);
-        spawn.randomMob(400, -350, 0.2);
-        spawn.randomMob(900, -200, -0.1);
+        spawn.randomMob(400, -350, 0);
+		spawn.randomMob(650, 1300, 0.1);
+		spawn.randomMob(-750, -150, 0);
+		spawn.randomMob(475, 300, 0);
+		spawn.randomMob(-75, -700, 0);
+		spawn.randomMob(900, -200, -0.1);
+		spawn.randomBoss(-125, 275, -0.1);
+		spawn.randomBoss(-825, 1000, 0.3);
+		spawn.randomBoss(-1300, -1100, 0.1);
         //spawn.randomBoss(600, -1575, 0);
         //spawn.randomMob(1120, -1200, 0.3);
         //spawn.randomSmallMob(2200, -1775); //
@@ -207,15 +227,10 @@ const level = {
 		level.exit.x = -4275;
         level.exit.y = -2805;
         this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
-		if (!game.levelsCleared) powerUps.spawn(-2550, -700, "gun", false); //starting gun
+		if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6)  powerUps.spawn(-2550, -700, "gun", false); //starting gun
+		spawn.debris(-2500, -2050, 2500, 10); //20 debris per level
+		spawn.debris(-2600, -700, 1700, 10); //20 debris per level
 
-		// spawn.laserZone(-550, -350, 10, 400, 0.3)
-		// spawn.deathQuery(-550, -350, 50, 400)
-
-        // spawn.debris(-3950, -2575, 1050, 4); //20 debris per level
-		spawn.debris(-2325, -1825, 2400, 10); //20 debris per level
-		spawn.debris(-2625, -700, 925, 10); //20 debris per level
-        // if (!game.levelsCleared) powerUps.spawn(2450, -1675, "gun", false);
 		//background
 		level.fillBG.push({ x: -4425, y: -3050, width: 425, height: 275, color: "#cff"});
 		//foreground
@@ -237,8 +252,9 @@ const level = {
 		spawn.bodyRect(-75, -300, 50, 50);
 
 		spawn.boost(-750, 0, 0, -0.01);
-		spawn.bodyRect(-425, -1375, 400, 225);
-		spawn.mapRect(-1125, -1575, 300, 475);
+		spawn.bodyRect(-425, -1375, 150, 250);
+		spawn.bodyRect(-1075, -1280, 100, 130);
+		spawn.mapRect(-1125, -1575, 50, 475);
 		spawn.bodyRect(-1475, -1275, 250, 125);
 		spawn.bodyRect(-825, -1160, 250, 10);
 
@@ -247,14 +263,16 @@ const level = {
 
 		spawn.mapRect(-1850, -1150, 1050, 175);
 		spawn.bodyRect(-1907, -1600, 550, 25);
-		spawn.bodyRect(-1700, -125, 125, 125);
-		spawn.bodyRect(-1375, -125, 150, 125);
-		spawn.bodyRect(-1600, -200, 75, 75);
-		spawn.bodyRect(-1260, -725, 75, 75);
+		spawn.bodyRect(-1600, -125, 125, 125);
+		spawn.bodyRect(-1560, -200, 75, 75);
+		// spawn.bodyRect(-1100, -125, 150, 125);
+		spawn.bodyRect(-1200, -75, 75, 75);
+
+		spawn.bodyRect(-1280, -750, 100, 100);
 
 		//building 2
 		spawn.mapRect(-3450, -600, 1300, 750);
-		spawn.mapRect(-2225, -425, 175, 575);
+		spawn.mapRect(-2225, -400, 175, 550);
 		spawn.boost(-2800, -600, 0, -0.005);
 		spawn.mapRect(-3450, -1325, 550, 50);
 		spawn.mapRect(-3425, -2200, 525, 50);
@@ -262,9 +280,9 @@ const level = {
 		spawn.mapRect(-2600, -2450, 450, 50);
 		spawn.bodyRect(-2275, -2700, 50, 60);
 		spawn.bodyRect(-2600, -1975, 250, 225);
-		spawn.bodyRect(-3425, -1425, 100, 100);
-		spawn.bodyRect(-3425, -1525, 100, 100);
-		spawn.bodyRect(-3325, -1425, 100, 100);
+		spawn.bodyRect(-3415, -1425, 100, 100);
+		spawn.bodyRect(-3400, -1525, 100, 100);
+		spawn.bodyRect(-3305, -1425, 100, 100);
 
 		//building 3
 		spawn.mapRect(-4450, -1750, 1025, 1900);
@@ -272,9 +290,12 @@ const level = {
 		spawn.mapRect(-4000, -2425, 275, 675);
 		// spawn.mapRect(-4450, -2650, 475, 1000);
 		spawn.mapRect(-4450, -2775, 475, 1125);
-		spawn.bodyRect(-3715, -2050, 50, 50);
+		spawn.bodyRect(-3720, -2050, 50, 50);
+		spawn.bodyRect(-3710, -2100, 50, 50);
+		spawn.bodyRect(-3715, -2150, 40, 40);
 		spawn.bodyRect(-3570, -1800, 50, 50);
 		spawn.bodyRect(-2970, -2250, 50, 50);
+		spawn.bodyRect(-3080, -2250, 40, 40);
 		spawn.bodyRect(-3420, -650, 50, 50);
 
 		//exit
@@ -287,9 +308,6 @@ const level = {
 		spawn.randomMob(-2500, -2700, 1);
 		spawn.randomMob(-3200, -750, 1);
 		spawn.randomMob(-1875, -775, 0.2);
-		spawn.randomMob(-525, -1275, 0.2);
-		spawn.randomMob(-125, -1500, 0.2);
-		spawn.randomMob(-1050, -725, 0.2);
 		spawn.randomMob(-950, -1675, 0.2);
 		spawn.randomMob(-1525, -1750, 0.2);
 		spawn.randomMob(-1375, -1400, 0.2);
@@ -302,12 +320,15 @@ const level = {
 		spawn.randomMob(-3650, -2125, 0.2);
 		spawn.randomMob(-4010, -3200, 0.2);
 		spawn.randomMob(-3500, -1825, 0.2);
-		spawn.randomMob(-450, -200, 0.2);
-		spawn.randomMob(-1525, -100, 0);
 		spawn.randomMob(-975, -100, 0);
-		spawn.randomMob(-325, -1450, 0);
-		spawn.randomBoss(-3250, -2500, 0.2);
-		spawn.randomBoss(-2375, -900, 0);
+		spawn.randomMob(-1050, -725, 0.2);
+		spawn.randomMob(-1525, -100, 0);
+		spawn.randomMob(-525, -1700, -0.1);
+		spawn.randomMob(-125, -1500, -0.1);
+		spawn.randomMob(-325, -1900, -0.1);
+		spawn.randomMob(-550, -100, -0.1);
+		spawn.randomBoss(-3250, -2700, 0.2);
+		spawn.randomBoss(-2450, -1100, 0);
 
     },
     //******************************************************************************************************************
@@ -325,7 +346,7 @@ const level = {
         this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
 
         spawn.debris(1650, -1800, 3800, 20); //20 debris per level
-        if (!game.levelsCleared) powerUps.spawn(2450, -1675, "gun", false);
+        if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6)  powerUps.spawn(2450, -1675, "gun", false);
 
         //foreground
         level.fill.push({ x: -650, y: -2300, width: 450, height: 300, color: "rgba(0,0,0,0.15)" });
@@ -373,7 +394,6 @@ const level = {
         spawn.mapRect(1950, -1600, 1025, 50); //
         spawn.bodyRect(3100, -1015, 375, 15, 0.8); //
         spawn.bodyRect(3500, -850, 75, 125, 0.8); //
-        spawn.bodyRect(4425, -1775, 75, 525, 0.1); //
         spawn.mapRect(3400, -1000, 100, 1100); //left building wall
         spawn.mapRect(5450, -775, 100, 875); //right building wall
         spawn.bodyRect(4850, -750, 300, 25, 0.8); //
@@ -391,28 +411,27 @@ const level = {
         spawn.mapRect(3500, -275, 350, 275); //exit platform
         spawn.mapRect(3600, -285, 100, 50); //ground bump wall
 
-        spawn.randomMob(900, -2125, 0.3); //
-        spawn.randomSmallMob(-350, -2400); //
+		spawn.randomSmallMob(2200, -1775); //
+		spawn.randomSmallMob(4000, -825); //
+		spawn.randomSmallMob(4100, -100);
+		spawn.randomSmallMob(4600, -100);
+		spawn.randomSmallMob(-350, -2400); //
+		spawn.randomMob(4250, -1350, 0.8); //
+		spawn.randomMob(2550, -1350, 0.8); //
         spawn.randomMob(1225, -2400, 0.3); //
-
-        spawn.randomBoss(600, -1575, 0);
         spawn.randomMob(1120, -1200, 0.3);
-        spawn.randomSmallMob(2200, -1775); //
-        spawn.randomBoss(2225, -1325, 0.4); //
-        spawn.randomBoss(4900, -1200, 0); //
         spawn.randomMob(3000, -1150, 0.2); //
         spawn.randomMob(3200, -1150, 0.3); //
         spawn.randomMob(3300, -1750, 0.3); //
-        spawn.randomMob(4250, -1350, 0.3); //
         spawn.randomMob(3650, -1350, 0.3); //
         spawn.randomMob(3600, -1800, 0.1); //
-        spawn.randomMob(2550, -1350, 0.3); //
-        spawn.randomSmallMob(4000, -825); //
-        spawn.randomSmallMob(4100, -100);
-        spawn.randomSmallMob(4600, -100);
         spawn.randomMob(5200, -100, 0.3);
         spawn.randomMob(5275, -900, 0.2);
         spawn.randomMob(3765, -450, 0.3); //
+		spawn.randomMob(900, -2125, 0.3); //
+		spawn.randomBoss(600, -1575, 0);
+		spawn.randomBoss(2225, -1325, 0.4); //
+		spawn.randomBoss(4900, -1200, 0); //
         //spawn.randomBoss(4850, -1250,0.7);
     },
     //******************************************************************************************************************
@@ -440,7 +459,7 @@ const level = {
         //mech.setPosToSpawn(3150, -700); //near exit spawn
         spawn.debris(-300, -200, 4800, 10); //ground debris //20 debris per level
         spawn.debris(-300, -650, 4800, 10); //1st floor debris //20 debris per level
-        if (!game.levelsCleared) powerUps.spawn(525, -700, "gun", false);
+        if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6)  powerUps.spawn(525, -700, "gun", false);
 
         spawn.mapRect(-600, 25, 5600, 300); //ground
         spawn.mapRect(-600, 0, 2000, 50); //ground
@@ -503,23 +522,23 @@ const level = {
             bodyB: mob[mob.length - 1],
             stiffness: 0.0004
         });
-        spawn.randomSmallMob(0, -1600);
-        spawn.randomMob(200, -1200, 1);
-        spawn.randomMob(950, -1150, 0.25);
+		spawn.randomSmallMob(3550, -550);
+		spawn.randomSmallMob(4575, -560, 1);
         spawn.randomSmallMob(1315, -880, 1);
         spawn.randomSmallMob(800, -600);
-        spawn.randomMob(-250, -700, 0.4);
+		spawn.randomSmallMob(-100, -1600);
+		spawn.randomMob(4100, -225, 0.8);
+		spawn.randomMob(-250, -700, 0.8);
+		spawn.randomMob(4500, -225, 0.15);
+		spawn.randomMob(3250, -225, 0.15);
         spawn.randomMob(-100, -225, 0.1);
-        spawn.randomMob(450, -225, 0.15);
         spawn.randomMob(1150, -225, 0.15);
         spawn.randomMob(2000, -225, 0.15);
-        spawn.randomMob(3250, -225, 0.15);
-        spawn.randomMob(4500, -225, 0.15);
-        spawn.randomBoss(1800, -800, 0.4);
-        spawn.randomMob(4100, -225, 0.4);
-        spawn.randomSmallMob(4575, -560, 1);
-        spawn.randomBoss(4150, -1000, 0.6);
-        spawn.randomSmallMob(3550, -550);
+		spawn.randomMob(450, -225, 0.15);
+		spawn.randomMob(100, -1200, 1);
+		spawn.randomMob(950, -1150, -0.1);
+		spawn.randomBoss(1800, -800, 0.4);
+		spawn.randomBoss(4150, -1000, 0.6);
     },
     //******************************************************************************************************************
     //******************************************************************************************************************
@@ -533,7 +552,7 @@ const level = {
         level.exit.y = -1875;
         this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
 
-        if (!game.levelsCleared) powerUps.spawn(1475, -1175, "gun", false);
+        if (game.levelsCleared < 2 || game.levelsCleared === 4 || game.levelsCleared === 7) powerUps.spawn(1475, -1175, "gun", false);
         spawn.debris(0, -2200, 4500, 20); //20 debris per level
         document.body.style.backgroundColor = "#dcdcde";
 
@@ -575,23 +594,6 @@ const level = {
         spawn.mapRect(3300, -1350, 150, 25); //higher ledge by far right building
         spawn.mapRect(3600, -1100, 400, 990); //far right building
         spawn.boost(4150, 0, -0.0005, -0.007);
-        spawn.randomSmallMob(1300, -70);
-        spawn.randomMob(-100, -450, 0.4);
-        spawn.randomMob(2650, -975, 0.4);
-        spawn.randomMob(2650, -1550, 0.2);
-        spawn.randomMob(1700, -1300, 0.2);
-        spawn.randomMob(2200, -600, 0.2);
-        spawn.randomBoss(3700, -1500, 0.4);
-        spawn.randomBoss(1700, -900, 0.4);
-        spawn.randomSmallMob(3200, -100);
-        spawn.randomSmallMob(4450, -100);
-        spawn.randomMob(1850, -1950, 0.25);
-        spawn.randomMob(2610, -1880, 0.25);
-        spawn.randomMob(3350, -950, 0.25);
-        spawn.randomMob(4150, -200, 0.15);
-        spawn.randomMob(1690, -2250, 0.25);
-        spawn.randomSmallMob(2700, -475);
-        spawn.randomMob(900, -1300, 0.25);
 
         spawn.bodyRect(3200, -1375, 300, 25, 0.9);
         spawn.bodyRect(1825, -1875, 400, 25, 0.9);
@@ -614,49 +616,24 @@ const level = {
         }
         spawn.bodyRect(1025, -1110, 400, 10, 0.9); //block on far left building
         spawn.bodyRect(1550, -1110, 250, 10, 0.9); //block on far left building
-    },
-    //******************************************************************************************************************
-    //******************************************************************************************************************
-    buildings: function() {
-        document.body.style.backgroundColor = "#f9faff";
-        playSound("ambient_crickets"); //play ambient audio for level
-        mech.setPosToSpawn(0, -100);
-        //mech.setPosToSpawn(3900,-400); //spawn near exit for testing
 
-        spawn.mapRect(-1000, 0, 5100, 500); //***********ground
-        spawn.spawnBuilding(-300, -250, 600, 240, true, true); //first floor  player spawns in side
-        spawn.spawnBuilding(-200, -500, 400, 240, true, true); //second floor
-        spawn.mapVertex(-844, -50, "0 0 0 -150 200 -150 400 0");
-        spawn.bodyRect(50, -600, 50, 100); //block on top of buildings
-        spawn.shooter(650, -600, 50); //near entrance high up
-        spawn.spawnBuilding(700, -400, 1400, 390, true, true); //long building
-        body[body.length] = Bodies.circle(1400, -240, 20); //hanging ball
-        spawn.constraintPB(1400, -375, body.length - 1, 0.9, spawn.propsNoRotation); //hanging ball
-        spawn.mapRect(700, -185, 85, 25); //ledge for sneak attackers inside building
-        spawn.mapRect(1250, -80, 300, 100); //table inside long building
-        spawn.sneakAttacker(765, -230, 30); //inside long center building
-        spawn.mapRect(2015, -185, 85, 25); //ledge for sneak attackers inside building
-        spawn.sneakAttacker(2035, -230, 30); //inside long center building
-        for (let i = 0; i < 9; i++) {
-            //some random blocks on the roof
-            const size = 20 + Math.round(Math.random() * Math.random() * 300);
-            spawn.bodyRect(
-                900 + 100 * i + Math.random() * 100,
-                -600,
-                size + Math.round(Math.random() * 50),
-                size + Math.round(Math.random() * 50)
-            );
-        }
-        spawn.mapRect(2700, -100, 1400, 150); //far right block higher ground
-        spawn.mapRect(3100, -200, 1000, 150); //far right block higher ground
-        spawn.spawnBuilding(3500, -500, 500, 290, false, false, "right"); //building around exit at the far right
-        spawn.mapRect(3700, -220, 100, 25); //ground bump wall
-        spawn.chaser(-850, -190, 30); //far left on ground
-        spawn.hopper(3150, -250, 75); //near exit on ground
-        spawn.hopper(3000, -150, 100); //near exit on ground
-        spawn.hopper(3700, -300, 50); //near exit on ground
-        spawn.ghoster(1000, -1800, 100); //high up looks like a sun
-        spawn.shooter(3600, -600, 50); //near entrance high up
+		spawn.randomSmallMob(1300, -70);
+		spawn.randomSmallMob(3200, -100);
+		spawn.randomSmallMob(4450, -100);
+		spawn.randomSmallMob(2700, -475);
+		spawn.randomMob(2650, -975, 0.8);
+		spawn.randomMob(2650, -1550, 0.8);
+		spawn.randomMob(4150, -200, 0.15);
+		spawn.randomMob(1700, -1300, 0.2);
+		spawn.randomMob(1850, -1950, 0.25);
+		spawn.randomMob(2610, -1880, 0.25);
+		spawn.randomMob(3350, -950, 0.25);
+		spawn.randomMob(1690, -2250, 0.25);
+		spawn.randomMob(2200, -600, 0.2);
+		spawn.randomMob(900, -1300, 0.25);
+		spawn.randomMob(-100, -900, -0.2);
+		spawn.randomBoss(3700, -1500, 0.4);
+		spawn.randomBoss(1700, -900, 0.4);
     },
     //*****************************************************************************************************************
     //*****************************************************************************************************************
@@ -739,12 +716,13 @@ const level = {
             });
         },
         nextLevel: function() {
+			if (player.velocity.y < 0.5){
             level.onLevel++;
             if (level.onLevel > level.levels.length - 1) level.onLevel = 0;
-            game.dmgScale += 0.2; //damage done by mobs increases each level
-            b.dmgScale *= 0.85; //damage done by player decreases each level
+            game.dmgScale += 0.3; //damage done by mobs increases each level
+            b.dmgScale *= 0.92; //damage done by player decreases each level
             game.levelsCleared++;
-            game.clearNow = true;
+            game.clearNow = true;}
         },
         death: function() {
             mech.death();
