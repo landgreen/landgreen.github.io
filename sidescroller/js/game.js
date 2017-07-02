@@ -405,7 +405,7 @@ const game = {
                 ctx.lineTo(vertices[0].x, vertices[0].y);
             }
             ctx.lineWidth = 2;
-            ctx.fillStyle = "#777";
+            ctx.fillStyle = "#888";
             ctx.fill();
             ctx.strokeStyle = "#333";
             ctx.stroke();

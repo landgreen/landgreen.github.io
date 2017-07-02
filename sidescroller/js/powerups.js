@@ -5,7 +5,7 @@ const powerUps = {
         name: "heal",
         color: "#0f9",
         size: function() {
-            return 40 * Math.sqrt(0.1 + Math.random() * 0.5);
+            return 40 * Math.sqrt(0.1 + Math.random() * 0.4);
         },
         effect: function() {
             let heal = this.size / 40;

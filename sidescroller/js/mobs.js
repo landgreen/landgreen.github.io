@@ -312,7 +312,7 @@ const mobs = {
                     }
                 };
                 if (this.seePlayer.recall) {
-					this.torque = this.lookTorque * this.inertia*2;
+                    this.torque = this.lookTorque * this.inertia * 2;
 
                     const seeRange = 2500;
                     best = { x: null, y: null, dist2: Infinity, who: null, v1: null, v2: null };
@@ -340,11 +340,11 @@ const mobs = {
                     ctx.beginPath();
                     ctx.moveTo(this.position.x, this.position.y);
                     ctx.lineTo(best.x, best.y);
-					ctx.strokeStyle = "#f00"; // Purple path
-					ctx.lineWidth=1;
-					ctx.setLineDash([50+120 * Math.random(), 50 * Math.random()]);
+                    ctx.strokeStyle = "#f00"; // Purple path
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([50 + 120 * Math.random(), 50 * Math.random()]);
                     ctx.stroke(); // Draw it
-					ctx.setLineDash([0, 0]);
+                    ctx.setLineDash([0, 0]);
                 }
             },
             searchSpring: function() {
@@ -480,10 +480,8 @@ const mobs = {
                 // });
             },
             zoom: function() {
-                if (game.cycle % this.zoomTotalCycles < this.zoomOnCycles) {
-                    if (game.cycle % this.zoomTotalCycles === 0) {
-                        this.setupTrail();
-                    }
+				this.zoomMode--
+                if (this.zoomMode > 150) {
                     this.drawTrail();
                     if (this.seePlayer.recall) {
                         //attraction to player
@@ -492,8 +490,26 @@ const mobs = {
                         this.force.x += forceMag * Math.cos(angle);
                         this.force.y += forceMag * Math.sin(angle);
                     }
-                }
+                } else if (this.zoomMode < 0){
+					this.zoomMode = 300;
+					this.setupTrail();
+				}
             },
+            // zoom: function() {
+            //     if (game.cycle % this.zoomTotalCycles < this.zoomOnCycles) {
+            //         if (game.cycle % this.zoomTotalCycles === 0) {
+            //             this.setupTrail();
+            //         }
+            //         this.drawTrail();
+            //         if (this.seePlayer.recall) {
+            //             //attraction to player
+            //             const forceMag = this.accelMag * this.mass;
+            //             const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
+            //             this.force.x += forceMag * Math.cos(angle);
+            //             this.force.y += forceMag * Math.sin(angle);
+            //         }
+            //     }
+            // },
             setupTrail: function() {
                 this.trail = [];
                 for (let i = 0; i < this.trailLength; ++i) {
@@ -1036,8 +1052,8 @@ const mobs = {
                     spawn.bullet(this.position.x, this.position.y, 5 + Math.ceil(this.radius / 15));
                     const v = 15;
                     Matter.Body.setVelocity(mob[mob.length - 1], {
-                        x: this.velocity.x + unitVector.x * v,
-                        y: this.velocity.y + unitVector.y * v
+                        x: this.velocity.x + unitVector.x * v + Math.random(),
+                        y: this.velocity.y + unitVector.y * v + Math.random()
                     });
                     if (this.facePlayer) {
                         Matter.Body.setAngle(this, Math.atan2(unitVector.y, unitVector.x));
@@ -1051,7 +1067,7 @@ const mobs = {
                 Matter.Body.setAngle(this, angle - Math.PI);
             },
             explode: function() {
-                mech.damage(0.1 * Math.sqrt(this.mass) * game.dmgScale);
+                mech.damage(0.01 * Math.sqrt(this.mass) * game.dmgScale);
                 game.drawList.push({
                     //add dmg to draw queue
                     x: mech.pos.x,
