@@ -14,9 +14,8 @@ const mobs = {
                     mob[i][mob[i].do[j]](); //do is an array that list the strings to run
                 }
             } else {
-                //if dead
-                mob[i].force.y += mob[i].mass * game.g / 2; //turn on gravity
-                mob[i].deadCounting(i); //count down to removing mob from array
+				//removing mob and replace with body, this is done here to avoid an array index bug with drawing I think
+				mob[i].replace(i);
             }
         }
     },
@@ -149,7 +148,6 @@ const mobs = {
                 //fallcheck
                 if (this.position.y > game.fallHeight) {
                     this.death();
-                    this.deadCount = 0;
                 }
             },
             // SineWaveY: function() { //must add me.sineAmp  and me.sineFreq  to mob object to run
@@ -315,7 +313,14 @@ const mobs = {
                     this.torque = this.lookTorque * this.inertia * 2;
 
                     const seeRange = 2500;
-                    best = { x: null, y: null, dist2: Infinity, who: null, v1: null, v2: null };
+                    best = {
+                        x: null,
+                        y: null,
+                        dist2: Infinity,
+                        who: null,
+                        v1: null,
+                        v2: null
+                    };
                     const look = {
                         x: this.position.x + seeRange * Math.cos(this.angle),
                         y: this.position.y + seeRange * Math.sin(this.angle)
@@ -431,7 +436,14 @@ const mobs = {
                     };
                     const seeRange = 3000;
                     if (!(game.cycle % (this.seePlayerFreq * 10))) {
-                        best = { x: null, y: null, dist2: Infinity, who: null, v1: null, v2: null };
+                        best = {
+                            x: null,
+                            y: null,
+                            dist2: Infinity,
+                            who: null,
+                            v1: null,
+                            v2: null
+                        };
                         const look = {
                             x: this.position.x + seeRange * Math.cos(this.angle),
                             y: this.position.y + seeRange * Math.sin(this.angle)
@@ -445,7 +457,14 @@ const mobs = {
                         }
                     }
                     if (!((game.cycle + this.seePlayerFreq * 5) % (this.seePlayerFreq * 10))) {
-                        best = { x: null, y: null, dist2: Infinity, who: null, v1: null, v2: null };
+                        best = {
+                            x: null,
+                            y: null,
+                            dist2: Infinity,
+                            who: null,
+                            v1: null,
+                            v2: null
+                        };
                         const look = {
                             x: this.position.x + seeRange * Math.cos(this.angle),
                             y: this.position.y + seeRange * Math.sin(this.angle)
@@ -463,8 +482,7 @@ const mobs = {
             alertNearByMobs: function() {
                 //this.alertRange2 is set at the very bottom of this mobs, after mob is made
                 for (let i = 0; i < mob.length; i++) {
-                    if (
-                        !mob[i].seePlayer.recall &&
+                    if (!mob[i].seePlayer.recall &&
                         Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, mob[i].position)) < this.alertRange2
                     ) {
                         mob[i].locatePlayer();
@@ -480,20 +498,21 @@ const mobs = {
                 // });
             },
             zoom: function() {
-				this.zoomMode--
-                if (this.zoomMode > 150) {
-                    this.drawTrail();
-                    if (this.seePlayer.recall) {
-                        //attraction to player
-                        const forceMag = this.accelMag * this.mass;
-                        const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
-                        this.force.x += forceMag * Math.cos(angle);
-                        this.force.y += forceMag * Math.sin(angle);
-                    }
-                } else if (this.zoomMode < 0){
-					this.zoomMode = 300;
-					this.setupTrail();
-				}
+                this.zoomMode--
+                    if (this.zoomMode > 150) {
+                        this.drawTrail();
+                        if (this.seePlayer.recall) {
+                            //attraction to player
+                            const forceMag = this.accelMag * this.mass;
+                            const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
+                            this.force.x += forceMag * Math.cos(angle);
+                            this.force.y += forceMag * Math.sin(angle);
+                        }
+                    } else
+                if (this.zoomMode < 0) {
+                    this.zoomMode = 300;
+                    this.setupTrail();
+                }
             },
             // zoom: function() {
             //     if (game.cycle % this.zoomTotalCycles < this.zoomOnCycles) {
@@ -836,7 +855,7 @@ const mobs = {
             },
             grow: function() {
                 if (this.seePlayer.recall) {
-                    if (this.radius < 100) {
+                    if (this.radius < 80) {
                         const scale = 1.03;
                         Matter.Body.scale(this, scale, scale);
                         this.radius *= scale;
@@ -1076,7 +1095,7 @@ const mobs = {
                     color: "rgba(255,0,0,0.25)",
                     time: 5
                 });
-                this.death(false); //death with no power up
+                this.death(false); //death with no power up or body
             },
             timeLimit: function() {
                 this.timeLeft--;
@@ -1112,33 +1131,42 @@ const mobs = {
                 // a placeholder for custom effects on mob death
                 //to use delare custon method in mob spawn
             },
-            deadCount: 0.2,
+            // death: function(powerUp = true) {
+            //     this.onDeath(this); //custom death effects
+            //     if (powerUp && !this.noPowerUp) powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
+            //     this.alive = false;
+            //     this.seePlayer.recall = 0;
+            //     this.frictionAir = 0.005;
+            //     this.restitution = 0;
+            //     this.fill = "rgba(0,0,0,0)";
+            //     this.collisionFilter.category = 0x000010;
+            //     if (this.collisionFilter.mask === 0x001100) {
+            //         this.collisionFilter.mask = 0x000000;
+            //     } else {
+            //         this.collisionFilter.mask = 0x000001;
+            //     }
+            //     if (this.isStatic) {
+            //         Matter.Body.setMass(this, 1);
+            //         Matter.Body.setStatic(this, false);
+            //     }
+            //     if (this.isSleeping) {
+            //         Matter.Body.setVelocity(this, {
+            //             x: 0,
+            //             y: 0
+            //         });
+            //         Matter.Sleeping.set(this, false);
+            //     }
+            //     this.removeConsBB();
+            //
+            // },
+			leaveBody: true,
             death: function(powerUp = true) {
                 this.onDeath(this); //custom death effects
-                if (powerUp && !this.noPowerUp) powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
-                this.alive = false;
-                this.seePlayer.recall = 0;
-                this.frictionAir = 0.005;
-                this.restitution = 0;
-                this.fill = "rgba(0,0,0,0)";
-                this.collisionFilter.category = 0x000010;
-                if (this.collisionFilter.mask === 0x001100) {
-                    this.collisionFilter.mask = 0x000000;
-                } else {
-                    this.collisionFilter.mask = 0x000001;
-                }
-                if (this.isStatic) {
-                    Matter.Body.setMass(this, 1);
-                    Matter.Body.setStatic(this, false);
-                }
-                if (this.isSleeping) {
-                    Matter.Body.setVelocity(this, {
-                        x: 0,
-                        y: 0
-                    });
-                    Matter.Sleeping.set(this, false);
-                }
-                this.removeConsBB();
+				this.removeConsBB();
+				this.alive = false;
+				if (powerUp) {
+					powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
+				}
             },
             removeConsBB: function() {
                 for (let i = 0, len = consBB.length; i < len; ++i) {
@@ -1176,13 +1204,20 @@ const mobs = {
                     }
                 }
             },
-            deadCounting: function(i) {
-                this.deadCount -= 0.0002;
-                this.stroke = "rgba(0,0,0," + this.deadCount + ")"; //fade away
-                if (this.deadCount < 0) {
-                    Matter.World.remove(engine.world, this);
-                    mob.splice(i, 1);
-                }
+            replace: function(i) {
+				if (this.leaveBody) {
+						const len = body.length
+						body[len] = Matter.Bodies.fromVertices(this.position.x, this.position.y, this.vertices);
+						Matter.Body.setVelocity(body[len], this.velocity);
+						Matter.Body.setAngularVelocity(body[len], this.angularVelocity)
+						// Matter.Body.setDensity(body[len], this.density)
+						body[len].collisionFilter.category = 0x0000001;
+						body[len].collisionFilter.mask = 0x111101;
+						body[len].classType = "body";
+						World.add(engine.world, body[len]); //add to world
+				}
+                Matter.World.remove(engine.world, this);
+                mob.splice(i, 1);
             }
         });
         mob[i].alertRange2 = Math.pow(mob[i].radius * 3 + 200, 2);

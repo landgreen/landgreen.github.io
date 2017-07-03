@@ -33,7 +33,7 @@ const level = {
         level.exit.y = -870;
         this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
         // this.addZone(250, -1000, 500, 1500, "laser");
-        //spawn.debris(0, -900, 4500, 10); //20 debris per level
+        //spawn.debris(0, -900, 4500, 10); //15 debris per level
         document.body.style.backgroundColor = "#eee";
         // document.body.style.backgroundColor = "#fafcff";
         // document.body.style.backgroundColor = "#bbb";
@@ -70,7 +70,7 @@ const level = {
         // spawn.bodyRect(700, -200, 50, 50);
         // spawn.bodyRect(-100, -260, 250, 10);
 
-        spawn.shooter(400, -1400);
+        spawn.spawner(400, -1400);
         //  spawn.shooter(1300, -1150, 20);
         //  spawn.shooter(800, -1150, 50);
         // spawn.shooter(400, -1150, 150);
@@ -89,9 +89,9 @@ const level = {
         this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
         //level.addQueryRegion(-600, -250, 180, 420, "death", [[player]],{});
 
-        spawn.debris(-2250, 1330, 3000, 7); //20 debris per level
-        spawn.debris(-3000, -800, 3280, 7); //20 debris per level
-        spawn.debris(-1400, 410, 2300, 6); //20 debris per level
+        spawn.debris(-2250, 1330, 3000, 6); //15 debris per level
+        spawn.debris(-3000, -800, 3280, 5); //15 debris per level
+        spawn.debris(-1400, 410, 2300, 4); //15 debris per level
         if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6)
             powerUps.spawn(-1250, 560, "gun", false); //starting gun
         //foreground
@@ -203,7 +203,7 @@ const level = {
         spawn.bodyRect(-165, -45, 30, 35, 1);
 
         spawn.bodyRect(-750, 400, 150, 150, 0.5);
-        spawn.bodyRect(-200, 1175, 250, 225, 1); //block to get to top path on bottom level
+        spawn.mapRect(-400, 1175, 50, 250); //block to get to top path on bottom level
         // spawn.bodyRect(-1450, 737, 75, 103, 0.5); //blocking path
 
         spawn.bodyRect(-2525, -50, 145, 100, 0.5);
@@ -251,8 +251,8 @@ const level = {
         this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
         if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6)
             powerUps.spawn(-2550, -700, "gun", false); //starting gun
-        spawn.debris(-2500, -2050, 2500, 10); //20 debris per level
-        spawn.debris(-2600, -700, 1700, 10); //20 debris per level
+        spawn.debris(-2500, -2050, 2500, 8); //15 debris per level
+        spawn.debris(-2600, -700, 1700, 7); //15 debris per level
 
         //background
         level.fillBG.push({
@@ -397,7 +397,7 @@ const level = {
         level.exit.y = -300;
         this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
 
-        spawn.debris(1650, -1800, 3800, 20); //20 debris per level
+        spawn.debris(1650, -1800, 3800, 15); //15 debris per level
         if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6)
             powerUps.spawn(2450, -1675, "gun", false);
 
@@ -600,8 +600,8 @@ const level = {
         //mech.setPosToSpawn(600, -1200); //normal spawn
         //mech.setPosToSpawn(525, -150); //ground first building
         //mech.setPosToSpawn(3150, -700); //near exit spawn
-        spawn.debris(-300, -200, 4800, 10); //ground debris //20 debris per level
-        spawn.debris(-300, -650, 4800, 10); //1st floor debris //20 debris per level
+        spawn.debris(-300, -200, 4800, 8); //ground debris //15 debris per level
+        spawn.debris(-300, -650, 4800, 7); //1st floor debris //15 debris per level
         if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6)
             powerUps.spawn(525, -700, "gun", false);
 
@@ -698,7 +698,7 @@ const level = {
 
         if (game.levelsCleared < 2 || game.levelsCleared === 4 || game.levelsCleared === 7)
             powerUps.spawn(1475, -1175, "gun", false);
-        spawn.debris(0, -2200, 4500, 20); //20 debris per level
+        spawn.debris(0, -2200, 4500, 15); //15 debris per level
         document.body.style.backgroundColor = "#dcdcde";
 
         //foreground

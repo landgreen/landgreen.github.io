@@ -44,7 +44,7 @@ const spawn = {
     },
     //
     randomMob: function(x, y, chance = 1) {
-        if (Math.random() < chance + game.levelsCleared * 0.03 && mob.length < 2 + game.levelsCleared * 2) {
+        if (Math.random() < chance + game.levelsCleared * 0.02 && mob.length < 2 + game.levelsCleared * 2) {
             const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
             this[pick](x, y);
         }
@@ -53,7 +53,7 @@ const spawn = {
     randomSmallMob: function(
         x,
         y,
-        num = Math.min(Math.ceil(Math.random() * Math.random() * game.levelsCleared), 5),
+        num = Math.min(Math.ceil(Math.random() * Math.random() * game.levelsCleared), 4),
         size = 16 + Math.ceil(Math.random() * 15),
         chance = 1
     ) {
@@ -149,7 +149,7 @@ const spawn = {
         me.trailFill = "#ff00f0";
         me.g = 0.001; //required if using 'gravity'
         me.frictionAir = 0.02;
-        me.accelMag = 0.005;
+        me.accelMag = 0.004;
         me.memory = 60;
         me.zoomMode = 150;
         me.onHit = function() {
@@ -334,15 +334,12 @@ const spawn = {
         me.onHit = function() {
             this.explode();
         };
-        me.onDeath = function() {
-            this.deadCount = 0; //don't leave a ghost body
-        };
         Matter.Body.setDensity(me, 0.002); //normal is 0.001
         me.timeLeft = 240;
         me.g = 0.001; //required if using 'gravity'
         me.frictionAir = 0;
         me.restitution = 0.8;
-        me.noPowerUp = true;
+        me.leaveBody = false;
         // me.collisionFilter.mask = 0x001000;
         me.collisionFilter.category = 0x010000;
     },
@@ -350,6 +347,7 @@ const spawn = {
         mobs.spawn(x, y, 5, radius, "rgb(255,150,0)", ["healthBar", "gravity", "seePlayerCheck", "attraction"]);
         let me = mob[mob.length - 1];
         me.g = 0.0004; //required if using 'gravity'
+		me.leaveBody = false;
         me.onDeath = function() {
             //run this function on death
             for (let i = 0; i < Math.ceil(this.mass * 0.2 + Math.random() * 3); ++i) {
@@ -402,13 +400,11 @@ const spawn = {
                 bodyB: target,
                 stiffness: stiffness
             });
-            me.onDeath = function() {
-                this.deadCount = 0; //don't show a body after death
-            };
             me.onDamage = function() {
                 //make sure the mob that owns the shield can tell when damage is done
                 this.alertNearByMobs();
             };
+			me.leaveBody = false;
             //swap order of shield and mob, so that mob is behind shield graphically
             mob[mob.length - 1] = mob[mob.length - 2];
             mob[mob.length - 2] = me;

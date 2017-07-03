@@ -133,8 +133,11 @@ powerUp: 0x 100000   0x 001001
 // 'landGame',
 // 'Cnoön',
 // 'polytope',
+// 'Tessellation',
 // 'Tessellation tower',
-// 'polytope',
+// 'debris',
+// 'Regular polygon',
+//'n-gon',
 // ];
 // document.getElementById("title").textContent = document.title = titles[Math.floor(titles.length * Math.random())];
 
