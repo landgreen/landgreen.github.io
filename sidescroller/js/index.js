@@ -140,6 +140,7 @@ powerUp: 0x 100000   0x 001001
 //'n-gon',
 // ];
 // document.getElementById("title").textContent = document.title = titles[Math.floor(titles.length * Math.random())];
+// setTimeout(function(){ document.body.style.backgroundColor = "000"; }, 30);
 
 //set up canvas
 var canvas = document.getElementById("canvas");
@@ -219,6 +220,10 @@ function run(el) {
     // onclick from the splash screen
     el.onclick = null; //removes the onclick effect so the function only runs once
     el.style.display = "none"; //hides the element that spawned the function
+	document.getElementById('info').style.display = "none"; //remove info splash
+	document.getElementById('splash').style.display = "none"; //remove info splash
+	document.getElementById('health-bg').style.display = "inline";  //add background to health
+	// document.getElementById('fade-out').style.opacity = "1"; //remove info splash
 	// document.body.style.pointerEvents = 'none';
 	//mouse down event can be simplified, we only need to get position from
 	window.onmousedown = function(e) {
@@ -253,6 +258,7 @@ function cycle() {
 	mech.move();
 	mech.look();
     mech.deathCheck();
+	game.fallChecks();
     ctx.save();
     game.camera();
     if (game.testing) {

@@ -34,6 +34,7 @@ const level = {
         this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
         // this.addZone(250, -1000, 500, 1500, "laser");
         //spawn.debris(0, -900, 4500, 10); //15 debris per level
+		setTimeout(function(){ document.body.style.backgroundColor = "#eee"; }, 1);
         document.body.style.backgroundColor = "#eee";
         // document.body.style.backgroundColor = "#fafcff";
         // document.body.style.backgroundColor = "#bbb";
@@ -1002,7 +1003,7 @@ const level = {
         }
     },
     levelAnnounce: function() {
-        let text = "level " + (game.levelsCleared + 1) + " " + level.levels[level.onLevel];
+        let text = "n-gon: level " + (game.levelsCleared + 1) + " " + level.levels[level.onLevel];
         document.title = text;
         // text = text + " with population: ";
         // for (let i = 0, len = spawn.pickList.length; i < len; ++i) {

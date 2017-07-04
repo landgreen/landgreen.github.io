@@ -1,11 +1,11 @@
 body {
     font-family: "Helvetica", "Arial", sans-serif;
     margin: 0;
-	/*cursor: crosshair;*/
     overflow: hidden;
     background-color: #fff;
-    transition: background-color 2s;
-	user-select: none;
+    user-select: none;
+	/*transition: background-color 2s;*/
+	/*cursor: crosshair;*/
 }
 
 canvas {
@@ -24,13 +24,27 @@ svg {
     height: 100%;
 }
 
-#dmg{
-	position: absolute;
-	z-index: 2;
-	width: 100%;
-	height: 100%;
-	background-color: #f67;
-	opacity: 0;
+#info {
+    color: #444;
+    font-size: 1.2em;
+    line-height: 1.7;
+    text-align: center;
+    z-index: 5;
+    height: 110%;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+}
+
+#dmg {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background-color: #f67;
+    opacity: 0;
     transition: opacity 1s;
 }
 
@@ -44,6 +58,7 @@ svg {
     opacity: 0.1;
     z-index: 1;
     pointer-events: none;
+    display: none;
 }
 
 #health {
@@ -59,30 +74,15 @@ svg {
     pointer-events: none;
 }
 
-/*.hud {
-    z-index: 2;
-    pointer-events: none;
-}*/
-
-/*.background {
-    z-index: -1;
-    pointer-events: none;
-}
-
-.foreground {
-    z-index: 1;
-    pointer-events: none;
-}*/
-
 #fade-out {
     position: absolute;
     z-index: 2;
     width: 100%;
     height: 100%;
     background-color: #fff;
-    opacity: 1;
-    transition: opacity 5s;
-	pointer-events: none;
+    opacity: 0;
+    transition: opacity 4s;
+    pointer-events: none;
 }
 
 #guns {
@@ -94,9 +94,9 @@ svg {
     color: #111;
     background-color: rgba(255, 255, 255, 0.2);
     user-select: none;
-	pointer-events: none;
-	padding: 0px 5px 0px 5px;
-	border-radius: 5px;
+    pointer-events: none;
+    padding: 0px 5px 0px 5px;
+    border-radius: 5px;
 }
 
 #text-log {
@@ -104,88 +104,24 @@ svg {
     top: 20px;
     left: 0;
     width: 100%;
-	line-height: 180%;
+    line-height: 180%;
     text-align: center;
     z-index: 2;
     font-size: 1.3em;
     color: #000;
     opacity: 0;
     transition: opacity 0.5s;
-	pointer-events: none;
-	user-select: none;
+    pointer-events: none;
+    user-select: none;
 }
 
 .box {
-	padding: 3px 8px 3px 8px;
-	/*margin: 0px 5px 0px 5px;*/
-	border: 2px solid #444;
-	background-color: rgba(255,255,255,0.5);
-}
-
-@keyframes slideinRL {
-    0% {
-        transform: translate(-900px, 0);
-    }
-    100% {
-        transform: translate(0px, 0);
-    }
-}
-
-@keyframes slideinLR {
-    0% {
-        transform: translate(900px, 0);
-    }
-    100% {
-        transform: translate(-100px, 0);
-    }
-}
-
-@keyframes fadein {
-    0% {
-        opacity: 0
-    }
-    100% {
-        opacity: 1;
-    }
+    padding: 3px 8px 3px 8px;
+    /*margin: 0px 5px 0px 5px;*/
+    border: 2px solid #444;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .intro {
-    background-color: #fff;
     z-index: 2;
 }
-
-#title {
-    animation: slideinRL 1s ease-out 1;
-}
-
-#instruct {
-    transform: translate(900px, 0);
-    animation: slideinLR 1s ease-out 1;
-    animation-delay: 1s;
-    animation-fill-mode: forwards;
-}
-
-
-/*#keysleft {
-  position: absolute;
-  z-index: 3;
-  font-family: "Arial", sans-serif;
-  color: #333;
-  top: 10px;
-  left: 10px;
-}
-
-#keysright{
-  position: absolute;
-  z-index: 3;
-  font-family: "Arial", sans-serif;
-  color: #333;
-  top: 10px;
-  right: 10px;
-  text-align: right;
-}*/
-
-
-/* #controls {
-  animation: fadein 3s ease-out 1;
-} */

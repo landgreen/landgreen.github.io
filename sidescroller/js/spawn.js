@@ -84,7 +84,7 @@ const spawn = {
     //***********************************************************************************************************
     starter: function(x, y, radius = 30) {
         //only on level 1
-        mobs.spawn(x, y, 9, radius, "#8ccec1", ["healthBar", "seePlayerByLookingAt", "attraction"]);
+        mobs.spawn(x, y, 8, radius, "#8ccec1", ["healthBar", "seePlayerByLookingAt", "attraction"]);
         let me = mob[mob.length - 1];
         me.accelMag = 0.0007;
     },
@@ -142,7 +142,7 @@ const spawn = {
         if (Math.random() < Math.min(game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
     },
     zoomer: function(x, y, radius = 25 + Math.ceil(Math.random() * 40)) {
-        mobs.spawn(x, y, 8, radius, "#ffe2fd", ["healthBar", "seePlayerByDistAndLOS", "zoom", "gravity"]);
+        mobs.spawn(x, y, 6, radius, "#ffe2fd", ["healthBar", "seePlayerByDistAndLOS", "zoom", "gravity"]);
         let me = mob[mob.length - 1];
         me.trailLength = 20; //required for trails
         me.setupTrail(); //fill trails array up with the current position of mob
@@ -157,7 +157,7 @@ const spawn = {
         };
     },
     hopper: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 4, radius, "rgb(0,200,150)", ["healthBar", "gravity", "seePlayerCheck", "hop"]);
+        mobs.spawn(x, y, 5, radius, "rgb(0,200,150)", ["healthBar", "gravity", "seePlayerCheck", "hop"]);
         let me = mob[mob.length - 1];
         me.accelMag = 0.12;
         me.g = 0.0025; //required if using 'gravity'
@@ -179,7 +179,7 @@ const spawn = {
     },
     blackHoler: function(x, y, radius = 30 + Math.ceil(Math.random() * 40)) {
         radius = 10 + radius / 4; //extra small
-        mobs.spawn(x, y, 0, radius, "#000", ["seePlayerByDistOrLOS", "attraction", "darkness", "blackHole", "healthBar"]);
+        mobs.spawn(x, y, 6, radius, "#000", ["seePlayerByDistOrLOS", "attraction", "darkness", "blackHole", "healthBar"]);
         let me = mob[mob.length - 1];
         me.eventHorizon = radius * 20; //required for blackhole
         me.seeAtDistance2 = (me.eventHorizon + 500) * (me.eventHorizon + 500); //vision limit is event horizon
@@ -252,12 +252,12 @@ const spawn = {
         let me;
         if (Math.random() > 0.25) {
             //fast
-            mobs.spawn(x, y, 9, radius, "transparent", ["healthBar", "seePlayerByLookingAt", "attraction", "search"]);
+            mobs.spawn(x, y, 5, radius, "transparent", ["healthBar", "seePlayerByLookingAt", "attraction", "search"]);
             me = mob[mob.length - 1];
             me.accelMag = 0.00025;
         } else {
             //slow but can yank
-            mobs.spawn(x, y, 7, radius, "transparent", ["healthBar", "seePlayerByLookingAt", "attraction", "yank", "search"]);
+            mobs.spawn(x, y, 9, radius, "transparent", ["healthBar", "seePlayerByLookingAt", "attraction", "yank", "search"]);
             me = mob[mob.length - 1];
             me.delay = 250 + Math.random() * 150;
             me.accelMag = 0.00015;
@@ -344,7 +344,7 @@ const spawn = {
         me.collisionFilter.category = 0x010000;
     },
     spawner: function(x, y, radius = 55 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 5, radius, "rgb(255,150,0)", ["healthBar", "gravity", "seePlayerCheck", "attraction"]);
+        mobs.spawn(x, y, 4, radius, "rgb(255,150,0)", ["healthBar", "gravity", "seePlayerCheck", "attraction"]);
         let me = mob[mob.length - 1];
         me.g = 0.0004; //required if using 'gravity'
 		me.leaveBody = false;

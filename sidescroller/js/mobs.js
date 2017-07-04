@@ -145,10 +145,6 @@ const mobs = {
             },
             gravity: function() {
                 this.force.y += this.mass * this.g;
-                //fallcheck
-                if (this.position.y > game.fallHeight) {
-                    this.death();
-                }
             },
             // SineWaveY: function() { //must add me.sineAmp  and me.sineFreq  to mob object to run
             //     this.force.y += this.mass * this.sineAmp * Math.sin(game.cycle * this.sineFreq)

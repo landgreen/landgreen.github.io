@@ -16,7 +16,7 @@ const game = {
     testing: false, //testing mode: shows wireframe and some variables
     cycle: 0, //total cycles, 60 per second
     cyclePaused: 0,
-    fallHeight: 4000, //below this y position the player dies
+    fallHeight: 2000, //below this y position the player dies
     lastTimeStamp: 0, //tracks time stamps for measuing delta
     delta: 0, //measures how slow the engine is running compared to 60fps
     buttonCD: 0,
@@ -307,6 +307,22 @@ const game = {
             }
         }
     },
+	fallChecks: function(){
+		if (!(game.cycle % (420))) {
+			remove = function(who){
+				let i = who.length;
+				while (i--) {
+					if (who[i].position.y > game.fallHeight) {
+						Matter.World.remove(engine.world, who[i]);
+						who.splice(i, 1);
+					}
+				}
+			}
+			remove(mob)
+			remove(body)
+			remove(powerUp)
+		}
+	},
     testingOutput: function() {
         ctx.textAlign = "right";
         ctx.fillStyle = "#000";
