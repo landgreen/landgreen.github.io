@@ -84,7 +84,7 @@ const spawn = {
     //***********************************************************************************************************
     starter: function(x, y, radius = 30) {
         //only on level 1
-        mobs.spawn(x, y, 8, radius, "#8ccec1", ["healthBar", "seePlayerByLookingAt", "attraction"]);
+        mobs.spawn(x, y, 8, radius, "#9ccdc6", ["healthBar", "seePlayerByLookingAt", "attraction"]);
         let me = mob[mob.length - 1];
         me.accelMag = 0.0007;
     },
@@ -109,7 +109,7 @@ const spawn = {
         me.accelMag = 0.0005;
     },
     springer: function(x, y, radius = 20 + Math.ceil(Math.random() * 35)) {
-        mobs.spawn(x, y, 10, radius, "rgb(170,60,100)", ["healthBar", "gravity", "searchSpring"]);
+        mobs.spawn(x, y, 8, radius, "#b386e8", ["healthBar", "gravity", "searchSpring"]);
         let me = mob[mob.length - 1];
         me.friction = 0;
         me.frictionAir = 0.1;
@@ -156,17 +156,17 @@ const spawn = {
             this.zoomMode = 150;
         };
     },
-    hopper: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-        mobs.spawn(x, y, 5, radius, "rgb(0,200,150)", ["healthBar", "gravity", "seePlayerCheck", "hop"]);
+    hopper: function(x, y, radius = 25 + Math.ceil(Math.random() * 30)) {
+        mobs.spawn(x, y, 5, radius, "rgb(0,200,180)", ["healthBar", "gravity", "seePlayerCheck", "hop"]);
         let me = mob[mob.length - 1];
-        me.accelMag = 0.12;
-        me.g = 0.0025; //required if using 'gravity'
-        me.frictionAir = 0.033;
+        me.accelMag = 0.04;
+        me.g = 0.0015; //required if using 'gravity'
+        me.frictionAir = 0.018;
         me.restitution = 0;
-        me.delay = 90;
+        me.delay = 110;
     },
     burster: function(x, y, radius = 45 + Math.ceil(Math.random() * 40)) {
-        mobs.spawn(x, y, 5, radius, "rgb(0,200,180)", ["healthBar", "seePlayerByLookingAt", "burstAttraction"]);
+        mobs.spawn(x, y, 5, radius, "#728ab2", ["healthBar", "seePlayerByLookingAt", "burstAttraction"]);
         let me = mob[mob.length - 1];
         me.cdBurst1 = 0; //must add for burstAttraction
         me.cdBurst2 = 0; //must add for burstAttraction
@@ -197,10 +197,6 @@ const spawn = {
         me.accelMag = 0.0006;
         me.frictionStatic = 0;
         me.friction = 0;
-        me.onHit = function() {
-            //run this function on hitting player
-            this.death();
-        };
         if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
     },
     laserTracker: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
@@ -218,10 +214,6 @@ const spawn = {
         me.accelMag = 0.0006;
         me.frictionStatic = 0;
         me.friction = 0;
-        me.onHit = function() {
-            //run this function on hitting player
-            this.death();
-        };
         me.onDamage = function() {
             this.laserPos = this.position;
         };
@@ -271,6 +263,7 @@ const spawn = {
     blinker: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
         mobs.spawn(x, y, 6, radius, "rgb(0,200,255)", ["healthBar", "seePlayerCheck", "blink"]);
         let me = mob[mob.length - 1];
+		Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
         me.blinkRate = 40 + Math.round(Math.random() * 60); //required for blink
         me.blinkLength = 150 + Math.round(Math.random() * 200); //required for blink
         //me.collisionFilter.mask = 0x001100; //move through walls
@@ -280,8 +273,8 @@ const spawn = {
     },
     drifter: function(x, y, radius = 15 + Math.ceil(Math.random() * 40)) {
         mobs.spawn(x, y, 4.5, radius, "rgb(0,200,255)", ["healthBar", "seePlayerCheck", "drift"]);
-        Matter.Body.rotate(mob[mob.length - 1], Math.random() * 2 * Math.PI);
         let me = mob[mob.length - 1];
+		Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
         me.blinkRate = 40 + Math.round(Math.random() * 30); //required for blink/drift
         me.blinkLength = 150; //required for blink/drift
         //me.collisionFilter.mask = 0x001100; //move through walls

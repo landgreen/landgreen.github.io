@@ -353,7 +353,7 @@ const mobs = {
                 ctx.arc(this.cons.pointA.x, this.cons.pointA.y, 6, 0, 2 * Math.PI);
                 ctx.arc(this.cons2.pointA.x, this.cons2.pointA.y, 6, 0, 2 * Math.PI);
                 // ctx.arc(this.cons.bodyB.position.x, this.cons.bodyB.position.y,6,0,2*Math.PI);
-                ctx.fillStyle = (ctx.fillStyle = "#222");
+                ctx.fillStyle = "#222";
                 ctx.fill();
 
                 if (!(game.cycle % this.seePlayerFreq)) {
@@ -1207,8 +1207,8 @@ const mobs = {
 						Matter.Body.setVelocity(body[len], this.velocity);
 						Matter.Body.setAngularVelocity(body[len], this.angularVelocity)
 						// Matter.Body.setDensity(body[len], this.density)
-						body[len].collisionFilter.category = 0x0000001;
-						body[len].collisionFilter.mask = 0x111101;
+						body[len].collisionFilter.category =   0x0000001;
+						body[len].collisionFilter.mask =   0x111101;
 						body[len].classType = "body";
 						World.add(engine.world, body[len]); //add to world
 				}

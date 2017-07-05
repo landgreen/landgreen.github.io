@@ -473,10 +473,10 @@ const mech = {
                 ctx.lineTo(vertices[j].x, vertices[j].y);
             }
             ctx.lineTo(vertices[0].x, vertices[0].y);
-            ctx.fillStyle = "#bbb";
+            ctx.fillStyle = "#ccc";
             ctx.fill();
-            ctx.lineWidth = 4;
-            ctx.strokeStyle = "#000";
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "#222";
             ctx.stroke();
     },
     throw: function() {
@@ -583,7 +583,7 @@ const mech = {
                     ctx.moveTo(this.holding.position.x, this.holding.position.y);
                     ctx.lineTo(mech.pos.x + 55 * Math.cos(this.angle), mech.pos.y + 55 * Math.sin(this.angle));
                     ctx.lineWidth = 50;
-                    ctx.strokeStyle = "#bbb";
+                    ctx.strokeStyle = "#ccc";
                     ctx.stroke();
                 }
             }

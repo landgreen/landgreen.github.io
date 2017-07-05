@@ -65,15 +65,15 @@ const level = {
             powerUps.spawn(2500 + i * 20, -1300, "gun", false);
             powerUps.spawn(2500 + i * 20, -1100, "ammo", false);
         }
-        // spawn.bodyRect(700, -50, 50, 50);
-        // spawn.bodyRect(700, -100, 50, 50);
-        // spawn.bodyRect(700, -150, 50, 50);
-        // spawn.bodyRect(700, -200, 50, 50);
-        // spawn.bodyRect(-100, -260, 250, 10);
+        spawn.bodyRect(700, -50, 50, 50);
+        spawn.bodyRect(700, -100, 50, 50);
+        spawn.bodyRect(700, -150, 50, 50);
+        spawn.bodyRect(700, -200, 50, 50);
+        spawn.bodyRect(-100, -260, 250, 10);
 
-        spawn.spawner(400, -1400);
-        //  spawn.shooter(1300, -1150, 20);
-        //  spawn.shooter(800, -1150, 50);
+        // spawn.hopper(400, -1400);
+        spawn.burster(1300, -1150);
+        // spawn.grower(800, -1150);
         // spawn.shooter(400, -1150, 150);
         //spawn.lineBoss(900, -1070,'laserSearcher');
         //  spawn.randomBoss(-100, -1470);
@@ -387,7 +387,7 @@ const level = {
     //******************************************************************************************************************
     //******************************************************************************************************************
     rooftops: function() {
-        document.body.style.backgroundColor = "#eee4e4";
+        document.body.style.backgroundColor = "#eee9e9";
         // this.addZone(-700, -50, 4100, 100, "death");
         mech.setPosToSpawn(-450, -2050); //normal spawn
         //mech.setPosToSpawn(4600, -900); //normal spawn
@@ -1003,7 +1003,7 @@ const level = {
         }
     },
     levelAnnounce: function() {
-        let text = "n-gon: level " + (game.levelsCleared + 1) + " " + level.levels[level.onLevel];
+        let text = "n-gon L" + (game.levelsCleared + 1) + " " + level.levels[level.onLevel];
         document.title = text;
         // text = text + " with population: ";
         // for (let i = 0, len = spawn.pickList.length; i < len; ++i) {

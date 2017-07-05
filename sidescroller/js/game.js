@@ -423,7 +423,7 @@ const game = {
             ctx.lineWidth = 2;
             ctx.fillStyle = "#999";
             ctx.fill();
-            ctx.strokeStyle = "#333";
+            ctx.strokeStyle = "#222";
             ctx.stroke();
         },
         cons: function() {

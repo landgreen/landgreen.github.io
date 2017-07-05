@@ -217,15 +217,11 @@ function shuffle(array) {
 }
 
 function run(el) {
-    // onclick from the splash screen
     el.onclick = null; //removes the onclick effect so the function only runs once
     el.style.display = "none"; //hides the element that spawned the function
-	document.getElementById('info').style.display = "none"; //remove info splash
-	document.getElementById('splash').style.display = "none"; //remove info splash
-	document.getElementById('health-bg').style.display = "inline";  //add background to health
-	// document.getElementById('fade-out').style.opacity = "1"; //remove info splash
-	// document.body.style.pointerEvents = 'none';
-	//mouse down event can be simplified, we only need to get position from
+	document.getElementById('dmg').style.display = "inline";
+	document.getElementById('health-bg').style.display = "inline";
+
 	window.onmousedown = function(e) {
 		// keep this disabled unless building maps
 		// if (!game.mouseDown){
