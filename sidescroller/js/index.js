@@ -244,7 +244,7 @@ function run(el) {
 //**********************************************************************
 function cycle() {
     game.timing();
-	ctx.globalAlpha = (mech.health < 0.5) ? (mech.health+0.5)*(mech.health+0.5) : 1
+	// ctx.globalAlpha = (mech.health < 0.5) ? (mech.health+0.5)*(mech.health+0.5) : 1
     game.wipe();
 	game.textLog();
     mech.keyMove();

@@ -72,7 +72,7 @@ const level = {
         spawn.bodyRect(-100, -260, 250, 10);
 
         // spawn.hopper(400, -1400);
-        spawn.burster(1300, -1150);
+        //spawn.burster(1300, -1150);
         // spawn.grower(800, -1150);
         // spawn.shooter(400, -1150, 150);
         //spawn.lineBoss(900, -1070,'laserSearcher');
@@ -156,7 +156,7 @@ const level = {
         spawn.mapRect(-3050, 1100, 150, 400);
         spawn.mapRect(-3150, 50, 125, 1450);
         spawn.mapRect(-2375, 600, 3175, 100);
-        spawn.mapRect(-2125, 300, 250, 325);
+        spawn.mapRect(-2125, 350, 250, 325);
         spawn.mapRect(-1950, -400, 100, 25);
         spawn.mapRect(-3150, 50, 775, 100);
         spawn.mapRect(-2600, -200, 775, 50);
@@ -326,7 +326,7 @@ const level = {
 
         //building 2
         spawn.mapRect(-3450, -600, 1300, 750);
-        spawn.mapRect(-2225, -400, 175, 550);
+        spawn.mapRect(-2225, -450, 175, 550);
         spawn.boost(-2800, -600, 0, -0.005);
         spawn.mapRect(-3450, -1325, 550, 50);
         spawn.mapRect(-3425, -2200, 525, 50);
@@ -341,7 +341,7 @@ const level = {
         //building 3
         spawn.mapRect(-4450, -1750, 1025, 1900);
         spawn.mapRect(-3750, -2000, 175, 275);
-        spawn.mapRect(-4000, -2425, 275, 675);
+        spawn.mapRect(-4000, -2355, 275, 675);
         // spawn.mapRect(-4450, -2650, 475, 1000);
         spawn.mapRect(-4450, -2775, 475, 1125);
         spawn.bodyRect(-3720, -2050, 50, 50);
@@ -917,8 +917,8 @@ const level = {
             if (player.velocity.y < 0.5) {
                 level.onLevel++;
                 if (level.onLevel > level.levels.length - 1) level.onLevel = 0;
-                game.dmgScale += 0.3; //damage done by mobs increases each level
-                b.dmgScale *= 0.92; //damage done by player decreases each level
+                game.dmgScale += 0.4; //damage done by mobs increases each level
+                b.dmgScale *= 0.9; //damage done by player decreases each level
                 game.levelsCleared++;
                 game.clearNow = true;
             }

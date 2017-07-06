@@ -154,7 +154,7 @@ Events.on(engine, "beforeUpdate", function(event) {
     addGravity(powerUp, game.g);
     addGravity(body, game.g);
     // addGravity(bullet, b.gravity);
-    player.force.y += player.mass * game.g;
+    player.force.y += player.mass * mech.gravity;
 
     if (game.clearNow) {
         //reset before update to avoid getting into trouble with looking at array elements that don't exist

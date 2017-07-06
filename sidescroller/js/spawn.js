@@ -44,7 +44,7 @@ const spawn = {
     },
     //
     randomMob: function(x, y, chance = 1) {
-        if (Math.random() < chance + game.levelsCleared * 0.02 && mob.length < 2 + game.levelsCleared * 2) {
+        if (Math.random() < chance + game.levelsCleared * 0.02 && mob.length < 3 + game.levelsCleared * 3) {
             const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
             this[pick](x, y);
         }
@@ -69,7 +69,7 @@ const spawn = {
         }
     },
     randomBoss: function(x, y, chance = 1) {
-        if (Math.random() < chance + game.levelsCleared * 0.04 && game.levelsCleared !== 0) {
+        if (Math.random() < chance + game.levelsCleared * 0.05 && game.levelsCleared !== 0) {
             if (Math.random() < 0.50) {
                 this.nodeBoss(x, y, this.bossPickList[Math.floor(Math.random() * this.bossPickList.length)]);
             } else if (Math.random() < 0.50) {
@@ -531,7 +531,7 @@ const spawn = {
     boost: function(x, y, Vx = 0, Vy = -0.007) {
         spawn.mapVertex(x + 50, y + 35, "120 40 -120 40 -50 -40 50 -40");
         // level.addZone(x, y, 100, 30, "fling", {Vx:Vx, Vy: Vy});
-        level.addQueryRegion(x + 10, y - 220, 80, 220, "force", [[player], body, mob, powerUp, bullet], { Vx: Vx, Vy: Vy });
+        level.addQueryRegion(x + 10, y - 220, 80, 220, "force", [[player], body, mob, powerUp, bullet], { Vx: Vx, Vy: Vy*1.6 });
         let color = "rgba(200,0,255,";
         level.fillBG.push({ x: x, y: y - 25, width: 100, height: 25, color: color + "0.2)" });
         level.fillBG.push({ x: x, y: y - 55, width: 100, height: 55, color: color + "0.1)" });
@@ -560,7 +560,7 @@ const spawn = {
             }
         }
     },
-    bodyRect: function(x, y, width, height, chance = 1, properties) {
+    bodyRect: function(x, y, width, height, chance = 1, properties = {friction: 0.05}) {
         if (Math.random() < chance) {
             body[body.length] = Bodies.rectangle(x + width / 2, y + height / 2, width, height, properties);
         }

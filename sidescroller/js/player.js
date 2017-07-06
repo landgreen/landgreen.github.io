@@ -97,15 +97,16 @@ const mech = {
     Sy: 0, //adds a smoothing effect to vertical only
     Vx: 0,
     Vy: 0,
-    VxMax: 7,
+    VxMax: 10,
     mass: 5,
     Fx: 0.025, //run Force on ground
     FxAir: 0.01, //run Force in Air
-    jumpForce: 0.25,
+    jumpForce: 0.34,
+	gravity: 0.0015,
     friction: {
-        ground: 0.1,
-        crouch: 0.45,
-        air: 0.002
+        ground: 0.01,
+        crouch: 0.2,
+        air: 0.0025
     },
     angle: 0,
     walk_cycle: 0,
@@ -230,40 +231,60 @@ const mech = {
                 });
             }
             //horizontal move on ground
+			const stoppingFriction = 0.9
             if (keys[65]) {
-                //left or a
-                if (player.velocity.x > -this.VxMax) {
-                    player.force.x += -this.Fx / game.delta;
-                }
+                //left / a
+				player.force.x -= this.Fx / game.delta *(1 - Math.sqrt(Math.abs(player.velocity.x)/this.VxMax));
+                // if (player.velocity.x > -this.VxMax) {
+				// 		player.force.x -= this.Fx / game.delta
+                // }
+				if (player.velocity.x>0){
+					Matter.Body.setVelocity(player, {
+						x: player.velocity.x*stoppingFriction,
+						y: player.velocity.y*stoppingFriction,
+					});
+				}
             } else if (keys[68]) {
-                //right or d
-                if (player.velocity.x < this.VxMax) {
-                    player.force.x += this.Fx / game.delta;
-                }
-            }
+                //right / d
+				player.force.x += this.Fx / game.delta *(1 - Math.sqrt(Math.abs(player.velocity.x)/this.VxMax));
+                // if (player.velocity.x < this.VxMax) {
+                // 		player.force.x += this.Fx / game.delta;
+                // }
+				if (player.velocity.x<0){
+					Matter.Body.setVelocity(player, {
+						x: player.velocity.x*stoppingFriction,
+						y: player.velocity.y*stoppingFriction,
+					});
+				}
+            } else {
+				//come to a stop
+				Matter.Body.setVelocity(player, {
+					x: player.velocity.x*stoppingFriction,
+					y: player.velocity.y*stoppingFriction,
+				});
+			}
         } else {
             // in air **********************************
             //check for short jumps
             if (
                 this.buttonCD_jump + 60 > game.cycle && //just pressed jump
                 !keys[87] && //but not pressing jump key
-                this.Vy < 0
+                this.Vy < 0 //moving up
             ) {
-                // and velocity is up
                 Matter.Body.setVelocity(player, {
-                    //reduce player velocity every cycle until not true
+                    //reduce player y-velocity every cycle
                     x: player.velocity.x,
                     y: player.velocity.y * 0.94
                 });
             }
             if (keys[65]) {
                 // move player   left / a
-                if (player.velocity.x > -this.VxMax / 2) {
+                if (player.velocity.x > -4) {
                     player.force.x += -this.FxAir / game.delta;
                 }
             } else if (keys[68]) {
                 //move player  right / d
-                if (player.velocity.x < this.VxMax / 2) {
+                if (player.velocity.x < 4) {
                     player.force.x += this.FxAir / game.delta;
                 }
             }
@@ -633,11 +654,11 @@ const mech = {
         this.hip.x = 12 + offset;
         this.hip.y = 24 + offset;
         //stepSize goes to zero if Vx is zero or not on ground (make this transition cleaner)
-        this.stepSize = 0.9 * this.stepSize + 0.1 * (8 * Math.sqrt(Math.abs(this.Vx)) * this.onGround);
+        this.stepSize = 0.8 * this.stepSize + 0.2 * (7 * Math.sqrt(Math.abs(this.Vx)) * this.onGround);
         //changes to stepsize are smoothed by adding only a percent of the new value each cycle
-        const stepAngle = 0.037 * this.walk_cycle + cycle_offset;
-        this.foot.x = 2 * this.stepSize * Math.cos(stepAngle) + offset;
-        this.foot.y = offset + this.stepSize * Math.sin(stepAngle) + this.yOff + this.height;
+        const stepAngle = 0.034 * this.walk_cycle + cycle_offset;
+        this.foot.x = 2.2 * this.stepSize * Math.cos(stepAngle) + offset;
+        this.foot.y = offset + 1.2*this.stepSize * Math.sin(stepAngle) + this.yOff + this.height;
         const Ymax = this.yOff + this.height;
         if (this.foot.y > Ymax) this.foot.y = Ymax;
 
