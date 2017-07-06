@@ -737,6 +737,12 @@ const b = {
                     80
                 );
                 playSound("no");
+				//switch to throw
+				b.activeGun = 0
+				game.updateGunHUD();
+	            game.boldActiveGunHUD();
+	            //mech.drop();
+	            // playSound("click");
             }
         }
     },
