@@ -270,15 +270,16 @@ function cycle() {
 		level.drawFillBGs()
 		level.exit.draw();
 		level.enter.draw();
-		ctx.globalAlpha=1;
+		// ctx.globalAlpha=1;
 		game.draw.powerUp();
         mobs.draw();
         game.draw.cons();
         game.draw.body();
         mech.draw();
 		mech.hold();
-		level.drawFills()
-        game.draw.map();
+		level.drawFills();
+        game.draw.drawMapPath();
+		// mech.drawHealth();
 		mobs.loop();
         b.fire();
         b.draw();

@@ -166,7 +166,10 @@ const game = {
             if (keys[79]) {
                 //o
                 Matter.Body.setPosition(player, this.mouseInGame);
-                Matter.Body.setVelocity(player, { x: 0, y: 0 });
+                Matter.Body.setVelocity(player, {
+                    x: 0,
+                    y: 0
+                });
             }
             if (keys[80]) {
                 //p
@@ -198,6 +201,7 @@ const game = {
     startZoomIn: function(time = 300) {
         game.zoom = 0;
         let count = 0;
+
         function zLoop() {
             game.zoom += canvas.height / game.zoomScale / time;
             count++;
@@ -257,6 +261,7 @@ const game = {
         level.zones = [];
         level.queryList = [];
         this.drawList = [];
+
         function removeAll(array) {
             for (let i = 0; i < array.length; ++i)
                 Matter.World.remove(engine.world, array[i]);
@@ -307,22 +312,22 @@ const game = {
             }
         }
     },
-	fallChecks: function(){
-		if (!(game.cycle % (420))) {
-			remove = function(who){
-				let i = who.length;
-				while (i--) {
-					if (who[i].position.y > game.fallHeight) {
-						Matter.World.remove(engine.world, who[i]);
-						who.splice(i, 1);
-					}
-				}
-			}
-			remove(mob)
-			remove(body)
-			remove(powerUp)
-		}
-	},
+    fallChecks: function() {
+        if (!(game.cycle % (420))) {
+            remove = function(who) {
+                let i = who.length;
+                while (i--) {
+                    if (who[i].position.y > game.fallHeight) {
+                        Matter.World.remove(engine.world, who[i]);
+                        who.splice(i, 1);
+                    }
+                }
+            }
+            remove(mob)
+            remove(body)
+            remove(powerUp)
+        }
+    },
     testingOutput: function() {
         ctx.textAlign = "right";
         ctx.fillStyle = "#000";
@@ -397,18 +402,34 @@ const game = {
             }
             ctx.globalAlpha = 1;
         },
-        map: function() {
-            ctx.beginPath();
+        // map: function() {
+        //     ctx.beginPath();
+        //     for (let i = 0, len = map.length; i < len; ++i) {
+        //         let vertices = map[i].vertices;
+        //         ctx.moveTo(vertices[0].x, vertices[0].y);
+        //         for (let j = 1; j < vertices.length; j += 1) {
+        //             ctx.lineTo(vertices[j].x, vertices[j].y);
+        //         }
+        //         ctx.lineTo(vertices[0].x, vertices[0].y);
+        //     }
+        //     ctx.fillStyle = "#444";
+        //     ctx.fill();
+        // },
+        mapPath: null, //holds the path for the map to speed up drawing
+        setPaths: function() { //runs at each new level to store the path for the mpa since the map doesn't change
+            this.mapPath = new Path2D();
             for (let i = 0, len = map.length; i < len; ++i) {
                 let vertices = map[i].vertices;
-                ctx.moveTo(vertices[0].x, vertices[0].y);
+                this.mapPath.moveTo(vertices[0].x, vertices[0].y);
                 for (let j = 1; j < vertices.length; j += 1) {
-                    ctx.lineTo(vertices[j].x, vertices[j].y);
+                    this.mapPath.lineTo(vertices[j].x, vertices[j].y);
                 }
-                ctx.lineTo(vertices[0].x, vertices[0].y);
+                this.mapPath.lineTo(vertices[0].x, vertices[0].y);
             }
+        },
+        drawMapPath: function() {
             ctx.fillStyle = "#444";
-            ctx.fill();
+            ctx.fill(this.mapPath);
         },
         body: function() {
             ctx.beginPath();

@@ -18,6 +18,7 @@ const level = {
         //this.skyscrapers();
         //this.rooftops();
         this.addToWorld(); //add map to world
+		game.draw.setPaths();
         this.levelAnnounce();
     },
     //******************************************************************************************************************
@@ -233,8 +234,8 @@ const level = {
         spawn.randomMob(-750, -150, 0);
         spawn.randomMob(475, 300, 0);
         spawn.randomMob(-75, -700, 0);
-        spawn.randomMob(900, -200, -0.1);
-        spawn.randomBoss(-125, 275, -0.1);
+        spawn.randomMob(900, -200, 0);
+        spawn.randomBoss(-125, 275, 0);
         spawn.randomBoss(-825, 1000, 0.3);
         spawn.randomBoss(-1300, -1100, 0.1);
         //spawn.randomBoss(600, -1575, 0);
@@ -252,8 +253,15 @@ const level = {
         this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
         if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6)
             powerUps.spawn(-2550, -700, "gun", false); //starting gun
-        spawn.debris(-2500, -2050, 2500, 8); //15 debris per level
-        spawn.debris(-2600, -700, 1700, 7); //15 debris per level
+
+
+        // spawn.debris(-2500, -2050, 2500, 8); //15 debris per level
+        // spawn.debris(-2600, -700, 1700, 7); //15 debris per level
+		spawn.debris(-2000, -50, 390, 4); //15 debris per level
+		spawn.debris(-950, -1185, 500, 4); //15 debris per level
+		spawn.debris(-2650, -650, 450, 4); //15 debris per level
+		spawn.debris(-3350, -650, 400, 2); //15 debris per level
+		spawn.debris(-600, -50, 400, 2); //15 debris per level
 
         //background
         level.fillBG.push({
@@ -377,12 +385,12 @@ const level = {
         spawn.randomMob(-975, -100, 0);
         spawn.randomMob(-1050, -725, 0.2);
         spawn.randomMob(-1525, -100, 0);
-        spawn.randomMob(-525, -1700, -0.1);
-        spawn.randomMob(-125, -1500, -0.1);
-        spawn.randomMob(-325, -1900, -0.1);
-        spawn.randomMob(-550, -100, -0.1);
+        spawn.randomMob(-525, -1700, 0.1);
+        spawn.randomMob(-125, -1500, 0.1);
+        spawn.randomMob(-325, -1900, 0.1);
+        spawn.randomMob(-550, -100, 0.1);
         spawn.randomBoss(-3250, -2700, 0.2);
-        spawn.randomBoss(-2450, -1100, 0);
+        spawn.randomBoss(-2450, -1100, 0.2);
     },
     //******************************************************************************************************************
     //******************************************************************************************************************
@@ -398,7 +406,14 @@ const level = {
         level.exit.y = -300;
         this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
 
-        spawn.debris(1650, -1800, 3800, 15); //15 debris per level
+        // spawn.debris(1650, -1800, 3800, 15); //15 debris per level
+		spawn.debris(1950, -1050, 700, 3); //15 debris per level
+		spawn.debris(4600, -825, 800, 3); //15 debris per level
+		spawn.debris(550, -1150, 1050, 3); //15 debris per level
+		spawn.debris(2000, -1650, 500, 3); //15 debris per level
+
+
+
         if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6)
             powerUps.spawn(2450, -1675, "gun", false);
 
@@ -538,8 +553,8 @@ const level = {
         spawn.randomMob(3765, -450, 0.3); //
         spawn.randomMob(900, -2125, 0.3); //
         spawn.randomBoss(600, -1575, 0);
+		spawn.randomBoss(4900, -1200, 0); //
         spawn.randomBoss(2225, -1325, 0.4); //
-        spawn.randomBoss(4900, -1200, 0); //
         //spawn.randomBoss(4850, -1250,0.7);
     },
     //******************************************************************************************************************
@@ -601,8 +616,8 @@ const level = {
         //mech.setPosToSpawn(600, -1200); //normal spawn
         //mech.setPosToSpawn(525, -150); //ground first building
         //mech.setPosToSpawn(3150, -700); //near exit spawn
-        spawn.debris(-300, -200, 4800, 8); //ground debris //15 debris per level
-        spawn.debris(-300, -650, 4800, 7); //1st floor debris //15 debris per level
+		spawn.debris(-200, -50, 4800, 15); //1st floor debris //15 debris per level
+
         if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6)
             powerUps.spawn(525, -700, "gun", false);
 
@@ -681,7 +696,7 @@ const level = {
         spawn.randomMob(2000, -225, 0.15);
         spawn.randomMob(450, -225, 0.15);
         spawn.randomMob(100, -1200, 1);
-        spawn.randomMob(950, -1150, -0.1);
+        spawn.randomMob(950, -1150, 0.1);
         spawn.randomBoss(1800, -800, 0.4);
         spawn.randomBoss(4150, -1000, 0.6);
     },
@@ -699,7 +714,14 @@ const level = {
 
         if (game.levelsCleared < 2 || game.levelsCleared === 4 || game.levelsCleared === 7)
             powerUps.spawn(1475, -1175, "gun", false);
-        spawn.debris(0, -2200, 4500, 15); //15 debris per level
+
+		spawn.debris(-240, -400, 310, 3); //15 debris per level
+		spawn.debris(625, -50, 750, 3); //15 debris per level
+		spawn.debris(2100, -450, 950, 3); //15 debris per level
+		spawn.debris(750, -1150, 1100, 3); //15 debris per level
+		spawn.debris(3150, -50, 950, 3); //15 debris per level
+
+
         document.body.style.backgroundColor = "#dcdcde";
 
         //foreground
@@ -831,7 +853,7 @@ const level = {
         spawn.randomMob(1690, -2250, 0.25);
         spawn.randomMob(2200, -600, 0.2);
         spawn.randomMob(900, -1300, 0.25);
-        spawn.randomMob(-100, -900, -0.2);
+        spawn.randomMob(-100, -900, 0.2);
         spawn.randomBoss(3700, -1500, 0.4);
         spawn.randomBoss(1700, -900, 0.4);
     },
@@ -914,12 +936,13 @@ const level = {
             });
         },
         nextLevel: function() {
-            if (player.velocity.y < 0.5) {
-                level.onLevel++;
+			//enter when player isn't falling
+            if (player.velocity.y < 0.1) {
+                level.onLevel++; //int that references an array element in level.levels
                 if (level.onLevel > level.levels.length - 1) level.onLevel = 0;
-                game.dmgScale += 0.4; //damage done by mobs increases each level
-                b.dmgScale *= 0.9; //damage done by player decreases each level
-                game.levelsCleared++;
+                game.dmgScale += 0.6; //damage done by mobs increases each level
+                b.dmgScale *= 0.88; //damage done by player decreases each level
+                game.levelsCleared++; //int
                 game.clearNow = true;
             }
         },

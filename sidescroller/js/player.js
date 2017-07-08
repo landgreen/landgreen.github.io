@@ -100,7 +100,7 @@ const mech = {
     VxMax: 10,
     mass: 5,
     Fx: 0.025, //run Force on ground
-    FxAir: 0.01, //run Force in Air
+    FxAir: 0.015, //run Force in Air
     jumpForce: 0.34,
 	gravity: 0.0015,
     friction: {
@@ -279,12 +279,12 @@ const mech = {
             }
             if (keys[65]) {
                 // move player   left / a
-                if (player.velocity.x > -4) {
+                if (player.velocity.x > -5) {
                     player.force.x += -this.FxAir / game.delta;
                 }
             } else if (keys[68]) {
                 //move player  right / d
-                if (player.velocity.x < 4) {
+                if (player.velocity.x < 5) {
                     player.force.x += this.FxAir / game.delta;
                 }
             }
