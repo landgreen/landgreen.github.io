@@ -51,6 +51,10 @@ article {
     max-width: 600px;
 }
 
+h1, h2, h3 {
+    font-weight: 400;
+}
+
 button {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-size: 1em;
@@ -59,15 +63,14 @@ button {
 input {
     font-size: 1em;
 }
-
 canvas {
     margin: 0.3em;
     /*border: 1px solid #999;*/
     box-shadow: 2px 2px 8px #aaa;
     border-radius: 5px;
+	user-select: none;
     /*cursor: crosshair;*/
 }
-
 a {
     text-decoration: none;
     color: #2793C7;
@@ -76,7 +79,6 @@ a:hover {
     text-decoration: underline;
     color: #000;
 }
-
 summary {
     cursor: pointer;
 	outline: none;
@@ -85,7 +87,6 @@ hr {
     border: 0;
     border-bottom: 1px solid #aaa;
 }
-
 th {
     font-weight: bold;
     text-align: left;
@@ -94,18 +95,15 @@ details p {
     text-align: center;
 	font-size: 1.3em;
 }
-
 ::selection {
     color: white;
     background: #2793C7;
     /*background: #0f0;*/
 }
-
 pre {
   overflow-x: auto;
   background-color: #eee;
 }
-
 
 table {
   margin: 25px auto;
@@ -135,6 +133,14 @@ table th {
 table th.last {
   border-right: none;
 }
+
+.black {
+	background-color: #000;
+}
+
+.number {
+	width: 52px;
+}
 .rainbow {
 	background: linear-gradient(red, orange , yellow, green, cyan, blue, violet);
 	font-weight: 900;
@@ -155,6 +161,9 @@ table th.last {
   border-bottom: 1px solid #aaa;
   font-weight: 300;
   font-size: 2.2em;
+}
+.strikeout {
+	text-decoration: line-through;
 }
 
 .center {
@@ -181,7 +190,7 @@ table th.last {
     border-radius: 1em;
     line-height:1.6;
 }
-.definition i {
+.definition em {
     color: #888;
     font-weight: 300;
 }
@@ -212,6 +221,7 @@ table th.last {
     /*border: 1px solid black;*/
     transition: all 200ms ease-in;
 }
+
 /*.svgDiagram:hover {
     z-index: 2;
     background: #fff;
