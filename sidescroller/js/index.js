@@ -142,6 +142,24 @@ powerUp: 0x 100000   0x 001001
 // document.getElementById("title").textContent = document.title = titles[Math.floor(titles.length * Math.random())];
 // setTimeout(function(){ document.body.style.backgroundColor = "000"; }, 30);
 
+//makes the SVG title screen tripy
+(function() {
+    document.getElementById("turb").setAttribute('seed', Math.floor(Math.random() * 1000)) //randomize the turbulence seed
+    document.getElementById("turb").setAttribute('baseFrequency', 0.015 + Math.random() * Math.random() * 0.4)
+    let f = 400;
+    const turb = function() {
+        const end = 0.05
+        if (f > end) {
+            f = f * 0.98 - 0.02
+            document.getElementById('turbulence').setAttribute('scale', f) //randomize the noise
+            requestAnimationFrame(turb);
+        } else {
+            document.getElementById('turbulence').setAttribute('scale', 0) //randomize the noise
+        }
+    }
+    requestAnimationFrame(turb);
+})()
+
 //set up canvas
 var canvas = document.getElementById("canvas");
 //using "const" causes problems in safari when an ID shares the same name.
@@ -156,7 +174,7 @@ function setupCanvas() {
     ctx.font = "15px Arial";
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
-	// ctx.lineCap='square';
+    // ctx.lineCap='square';
     game.setZoom();
 }
 setupCanvas();
@@ -172,14 +190,14 @@ window.onmousemove = function(e) {
 
 //normal mouse click events
 window.onmousedown = function(e) {
-	//mouse down gets reset in the run function below
+    //mouse down gets reset in the run function below
     game.mouseDown = true;
-	game.mouse.x = e.clientX;
-	game.mouse.y = e.clientY;
+    game.mouse.x = e.clientX;
+    game.mouse.y = e.clientY;
 };
 window.onmouseup = function(e) {
-	// game.buildingUp(e); //uncomment when building levels
-	game.mouseDown = false;
+    // game.buildingUp(e); //uncomment when building levels
+    game.mouseDown = false;
 };
 
 //keyboard input
@@ -202,59 +220,37 @@ function playSound(id) {
 }
 
 function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
+    var currentIndex = array.length,
+        temporaryValue, randomIndex;
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    return array;
 }
 
-function run(el) {
-    el.onclick = null; //removes the onclick effect so the function only runs once
-    el.style.display = "none"; //hides the element that spawned the function
-	document.getElementById('dmg').style.display = "inline";
-	document.getElementById('health-bg').style.display = "inline";
-
-	window.onmousedown = function(e) {
-		// keep this disabled unless building maps
-		// if (!game.mouseDown){
-		// 	game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
-		// 	game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
-		// }
-	    game.mouseDown = true;
-		mech.throw();
-	};
-	document.body.style.cursor = 'none';
-	mech.spawn(); //spawns the player
-	level.levels = shuffle(level.levels) //shuffles order of maps
-    game.reset();
-    Engine.run(engine); //starts game engine
-    requestAnimationFrame(cycle); //starts game loop
-	game.lastLogTime = game.cycle+360;
-}
 
 //main loop ************************************************************
 //**********************************************************************
 function cycle() {
     game.timing();
-	// ctx.globalAlpha = (mech.health < 0.5) ? (mech.health+0.5)*(mech.health+0.5) : 1
+    // ctx.globalAlpha = (mech.health < 0.5) ? (mech.health+0.5)*(mech.health+0.5) : 1
     game.wipe();
-	game.textLog();
+    game.textLog();
     mech.keyMove();
-	powerUps.loop();
+    powerUps.loop();
     level.checkZones();
-	level.checkQuery();
-	mech.move();
-	mech.look();
+    level.checkQuery();
+    mech.move();
+    mech.look();
     mech.deathCheck();
-	game.fallChecks();
+    game.fallChecks();
     ctx.save();
     game.camera();
     if (game.testing) {
@@ -267,25 +263,25 @@ function cycle() {
         game.getCoords.out();
         game.testingOutput();
     } else {
-		level.drawFillBGs()
-		level.exit.draw();
-		level.enter.draw();
-		// ctx.globalAlpha=1;
-		game.draw.powerUp();
+        level.drawFillBGs()
+        level.exit.draw();
+        level.enter.draw();
+        // ctx.globalAlpha=1;
+        game.draw.powerUp();
         mobs.draw();
         game.draw.cons();
         game.draw.body();
         mech.draw();
-		mech.hold();
-		level.drawFills();
+        mech.hold();
+        level.drawFills();
         game.draw.drawMapPath();
-		// mech.drawHealth();
-		mobs.loop();
+        // mech.drawHealth();
+        mobs.loop();
         b.fire();
         b.draw();
-		game.drawCircle();
+        game.drawCircle();
         ctx.restore();
     }
-	game.drawCursor();
-    if(!game.paused) requestAnimationFrame(cycle);
+    game.drawCursor();
+    if (!game.paused) requestAnimationFrame(cycle);
 }

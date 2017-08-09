@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +14,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
 </head>
+
 <body>
 	<div id='guns'></div>
 	<div id="text-log"></div>
@@ -57,11 +59,18 @@
 	<canvas id="canvas"></canvas>
 	<!-- **********  intro page ***********************************************
 ******************************************************************************* -->
-	<svg id='splash' class='intro' viewBox="0 0 800 800" onclick="run(this)">
-
-		<g transform = "translate(100,150) scale(34)" >
+	<svg id='splash' class='intro' viewBox="0 0 800 800" onclick="game.startGame()">
+		<filter id="filter1">
+			<feTurbulence id = 'turb' type="fractalNoise" baseFrequency="0.05" numOctaves="1" result="turb"/>
+			<!-- <feColorMatrix in="turb" result="huedturb" type="hueRotate" values="90">
+					<animate attributeType="XML" attributeName="values" values="0;360" dur="6s" repeatCount="indefinite"/>
+			</feColorMatrix> -->
+			<feDisplacementMap id="turbulence" in="SourceGraphic" scale="200.0" xChannelSelector="R" yChannelSelector="G"/>
+		</filter>
+		<g filter="url(#filter1)">
+		<g transform = "translate(100,210) scale(34)" >
 			<g> <!-- n   rgb(240,50,240) -->
-				<path class = 'path' d="M0 0  h1  v0.2  h1.7  l0.3 0.3  v2.6  h-1  v-1.7  h-1  v1.7  h-1 z"
+				<path  class = 'path' d="M0 0  h1  v0.2  h1.7  l0.3 0.3  v2.6  h-1  v-1.7  h-1  v1.7  h-1 z"
 				fill ='none' stroke = '#444' stroke-width = '0.0875' stroke-linejoin="round" stroke-linecap="round"/>
 			</g>
 			<rect x="4" y="1.25" width="1" height="0.5"
@@ -79,42 +88,33 @@
 				fill ='none' stroke = '#444' stroke-width = '0.0875' stroke-linejoin="round" stroke-linecap="round"/>
 			</g>
 		</g>
+		<defs>
+			<style>
+				.cls-1,.cls-5,.cls-6,.cls-8{fill:none;}.cls-1,.cls-5,.cls-6,.cls-7{stroke:#444;}.cls-1,.cls-5,.cls-6,.cls-7,.cls-8{stroke-linecap:round;stroke-linejoin:round;}.cls-1{stroke-width:10px;}.cls-2{fill:none;}.cls-3{fill:#444;}.cls-4{fill:rgb(0,200,255);}.cls-5{stroke-width:9.83px;}.cls-6,.cls-7{stroke-width:9.68px;}.cls-7{fill:#fff;}
+			</style>
+		</defs>
+		<g transform = "translate(340,440) scale(0.2)">
+			<path class="cls-1" d="M828.67,111.93s21.87-59-5.23-56.86S807.1,7.36,807.1,7.36"/>
+			<path class="cls-2" d="M801.57,669.64a145.44,145.44,0,0,1-145-145v-268a145.44,145.44,0,0,1,145-145h52a145.44,145.44,0,0,1,145,145v268a145.44,145.44,0,0,1-145,145Z"/><path class="cls-3" d="M853.57,116.64a140.44,140.44,0,0,1,140,140v268a140.44,140.44,0,0,1-140,140h-52a140.44,140.44,0,0,1-140-140v-268a140.44,140.44,0,0,1,140-140h52m0-10h-52c-82.5,0-150,67.5-150,150v268c0,82.5,67.5,150,150,150h52c82.5,0,150-67.5,150-150v-268c0-82.5-67.5-150-150-150Z"/><path class="cls-4" d="M832.41,106.64V323.55H651.57V256.64c0-82.5,67.5-150,150-150Z"/>
+			<path class="cls-3" d="M853.57,116.64a140.44,140.44,0,0,1,140,140v268a140.44,140.44,0,0,1-140,140h-52a140.44,140.44,0,0,1-140-140v-268a140.44,140.44,0,0,1,140-140h52m0-10h-52c-82.5,0-150,67.5-150,150v268c0,82.5,67.5,150,150,150h52c82.5,0,150-67.5,150-150v-268c0-82.5-67.5-150-150-150Z"/>
+			<line class="cls-5" x1="657.57" y1="318.64" x2="997.57" y2="318.64"/><line class="cls-6" x1="827.57" y1="115.64" x2="827.57" y2="315.64"/><ellipse class="cls-7" cx="827.57" cy="218.64" rx="29" ry="68"/>
+		</g>
 
-			<defs>
-				<style>
-					.cls-1,.cls-5,.cls-6,.cls-8{fill:none;}.cls-1,.cls-5,.cls-6,.cls-7{stroke:#444;}.cls-1,.cls-5,.cls-6,.cls-7,.cls-8{stroke-linecap:round;stroke-linejoin:round;}.cls-1{stroke-width:10px;}.cls-2{fill:none;}.cls-3{fill:#444;}.cls-4{fill:rgb(0,200,255);}.cls-5{stroke-width:9.83px;}.cls-6,.cls-7{stroke-width:9.68px;}.cls-7{fill:#fff;}
-				</style>
-			</defs>
-			<g transform = "translate(340,370) scale(0.2)">
-				<path class="cls-1" d="M828.67,111.93s21.87-59-5.23-56.86S807.1,7.36,807.1,7.36"/>
-				<path class="cls-2" d="M801.57,669.64a145.44,145.44,0,0,1-145-145v-268a145.44,145.44,0,0,1,145-145h52a145.44,145.44,0,0,1,145,145v268a145.44,145.44,0,0,1-145,145Z"/><path class="cls-3" d="M853.57,116.64a140.44,140.44,0,0,1,140,140v268a140.44,140.44,0,0,1-140,140h-52a140.44,140.44,0,0,1-140-140v-268a140.44,140.44,0,0,1,140-140h52m0-10h-52c-82.5,0-150,67.5-150,150v268c0,82.5,67.5,150,150,150h52c82.5,0,150-67.5,150-150v-268c0-82.5-67.5-150-150-150Z"/><path class="cls-4" d="M832.41,106.64V323.55H651.57V256.64c0-82.5,67.5-150,150-150Z"/>
-				<path class="cls-3" d="M853.57,116.64a140.44,140.44,0,0,1,140,140v268a140.44,140.44,0,0,1-140,140h-52a140.44,140.44,0,0,1-140-140v-268a140.44,140.44,0,0,1,140-140h52m0-10h-52c-82.5,0-150,67.5-150,150v268c0,82.5,67.5,150,150,150h52c82.5,0,150-67.5,150-150v-268c0-82.5-67.5-150-150-150Z"/>
-				<line class="cls-5" x1="657.57" y1="318.64" x2="997.57" y2="318.64"/><line class="cls-6" x1="827.57" y1="115.64" x2="827.57" y2="315.64"/><ellipse class="cls-7" cx="827.57" cy="218.64" rx="29" ry="68"/>
-			</g>
-
-			<g transform = "translate(240,410) scale(0.5)">
-				<rect x="0" y="0" width="60" height="60" stroke='#444' fill='none' rx='3' stroke-width="4"/>
-				<text text-anchor="middle" x="30" y="45" font-size='35px' fill = '#444'>Q</text>
-				<rect x="140" y="0" width="60" height="60" stroke='#444' fill='none' rx='5' stroke-width="4"/>
-				<text text-anchor="middle" x="170" y="45" font-size='35px' fill = '#444'>E</text>
-				<rect x="70" y="0" width="60" height="60" stroke='#444' fill='none' rx='5' stroke-width="4"/>
-				<text text-anchor="middle" x="100" y="45" font-size='35px' fill = '#444'>W</text>
-				<rect x="70" y="70" width="60" height="60" stroke='#444' fill='none' rx='5' stroke-width="4"/>
-				<text text-anchor="middle" x="100" y="113" font-size='35px' fill = '#444'>S</text>
-				<rect x="140" y="70" width="60" height="60" stroke='#444' fill='none' rx='5' stroke-width="4"/>
-				<text text-anchor="middle" x="170" y="113" font-size='35px' fill = '#444'>D</text>
-				<rect x="0" y="70" width="60" height="60" stroke='#444' fill='none' rx='5' stroke-width="4"/>
-				<text text-anchor="middle" x="30" y="113" font-size='35px' fill = '#444'>A</text>
-			</g>
-
-<g transform = "translate(400,0)">
-	<!-- <text text-anchor="middle" x="0" y="660" font-size='15px' fill = '#444'>click to start</text> -->
-	<!-- <text text-anchor="middle" x="0" y="650" font-size='15px' fill = '#444'>Mouse = fire</text>
-	<text text-anchor="middle" x="0" y="675" font-size='15px' fill = '#444'>WASD = move</text>
-	<text text-anchor="middle" x="0" y="700" font-size='15px' fill = '#444'>Q / E = switch weapon</text> -->
-	<!-- <text text-anchor="middle" x="0" y="780" font-size='15px' fill = '#444'>by Ross Landgreen with the matter.js physics engine</text> -->
-</g>
-
+		<g transform = "translate(220,475) scale(0.7)" >
+			<rect x="0" y="0" width="60" height="60" stroke='#444' fill='none' rx='3' stroke-width="3.5"/>
+			<text text-anchor="middle" x="30" y="45" font-size='35px' fill = '#444'>Q</text>
+			<rect x="140" y="0" width="60" height="60" stroke='#444' fill='none' rx='5' stroke-width="3.5"/>
+			<text text-anchor="middle" x="170" y="45" font-size='35px' fill = '#444'>E</text>
+			<rect x="70" y="0" width="60" height="60" stroke='#444' fill='none' rx='5' stroke-width="3.5"/>
+			<text text-anchor="middle" x="100" y="45" font-size='35px' fill = '#444'>W</text>
+			<rect x="70" y="70" width="60" height="60" stroke='#444' fill='none' rx='5' stroke-width="3.5"/>
+			<text text-anchor="middle" x="100" y="113" font-size='35px' fill = '#444'>S</text>
+			<rect x="140" y="70" width="60" height="60" stroke='#444' fill='none' rx='5' stroke-width="3.5"/>
+			<text text-anchor="middle" x="170" y="113" font-size='35px' fill = '#444'>D</text>
+			<rect x="0" y="70" width="60" height="60" stroke='#444' fill='none' rx='5' stroke-width="3.5"/>
+			<text text-anchor="middle" x="30" y="113" font-size='35px' fill = '#444'>A</text>
+		</g>
+	</g>
 	</svg>
 
 	<script src='js/lib/matter.min.js'></script>
@@ -128,4 +128,5 @@
 	<script src="js/engine.js"></script>
 	<script src="js/index.js"></script>
 </body>
+
 </html>

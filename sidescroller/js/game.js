@@ -239,6 +239,8 @@ const game = {
                 b.inventory.push(i);
             }
         }
+		game.paused = false;
+		engine.timing.timeScale = 1;
         game.dmgScale = 1;
         b.dmgScale = 1;
         b.activeGun = 0;
@@ -253,6 +255,41 @@ const game = {
         document.getElementById("fade-out").style.opacity = 0;
         game.startZoomIn();
     },
+	firstRun: true,
+	splashReturn: function(){
+		// document.getElementById('splash').onclick = 'run(this)';
+		document.getElementById("splash").onclick = function() {
+		            game.startGame()
+		        };
+	    document.getElementById('splash').style.display = "inline";
+		document.getElementById('dmg').style.display = "none";
+		document.getElementById('health-bg').style.display = "none";
+		document.body.style.cursor = 'auto';
+	},
+	startGame: function(){
+		document.getElementById('splash').onclick = null; //removes the onclick effect so the function only runs once
+	    document.getElementById('splash').style.display = "none"; //hides the element that spawned the function
+		document.getElementById('dmg').style.display = "inline";
+		document.getElementById('health-bg').style.display = "inline";
+
+		window.onmousedown = function(e) {
+			// keep this disabled unless building maps
+			// if (!game.mouseDown){
+			// 	game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
+			// 	game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
+			// }
+		    game.mouseDown = true;
+			mech.throw();
+		};
+		document.body.style.cursor = 'none';
+		mech.spawn(); //spawns the player
+		level.levels = shuffle(level.levels) //shuffles order of maps
+	    game.reset();
+	    if (game.firstRun)Engine.run(engine); //starts game engine
+		game.firstRun = false;
+	    requestAnimationFrame(cycle); //starts game loop
+		game.lastLogTime = game.cycle+360;
+	},
     clearNow: false,
     clearMap: function() {
         mech.drop();

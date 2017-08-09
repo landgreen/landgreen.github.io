@@ -302,16 +302,17 @@ const mech = {
             this.displayHealth();
             document.getElementById("text-log").style.opacity = 0; //fade out any active text logs
             document.getElementById("fade-out").style.opacity = 1; //slowly fades out
-            setTimeout(
-                function() {
-                    document.getElementById("fade-out").style.opacity = 0;
-                    engine.timing.timeScale = 1;
-                    game.reset();
-                    game.paused = false;
-                    requestAnimationFrame(cycle);
-                },
-                5000
-            ); //the time here needs to match the css transition time  3s = 3000
+			game.splashReturn();
+            // setTimeout(
+            //     function() {
+            //         document.getElementById("fade-out").style.opacity = 0;
+            //         engine.timing.timeScale = 1;
+            //         game.reset();
+            //         game.paused = false;
+            //         requestAnimationFrame(cycle);
+            //     },
+            //     5000
+            // ); //the time here needs to match the css transition time  3s = 3000
         }
     },
     health: 0,

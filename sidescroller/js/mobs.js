@@ -560,32 +560,32 @@ const mobs = {
                 }
                 ctx.globalAlpha = 1;
             },
-            yank: function() {
-                //accelerate towards the player
-                if (this.cd < game.cycle && this.seePlayer.yes) {
-                    this.cd = game.cycle + this.delay;
-                    if (Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position)) < 1000000) {
-                        const angle = Math.atan2(
-                            this.seePlayer.position.y - this.position.y,
-                            this.seePlayer.position.x - this.position.x
-                        );
-                        const mag = mech.onGround ? 90 * player.mass * game.g : 70 * player.mass * game.g;
-                        player.force.x -= mag * Math.cos(angle);
-                        player.force.y -= mag * Math.sin(angle);
-
-                        ctx.beginPath();
-                        ctx.moveTo(this.position.x, this.position.y);
-                        ctx.lineTo(mech.pos.x, mech.pos.y);
-                        ctx.lineWidth = Math.min(60, this.radius * 2);
-                        ctx.strokeStyle = "rgba(0,0,0,0.5)";
-                        ctx.stroke();
-                        ctx.beginPath();
-                        ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
-                        ctx.fillStyle = "rgba(0,0,0,0.3)";
-                        ctx.fill();
-                    }
-                }
-            },
+            // yank: function() {
+            //     //accelerate towards the player
+            //     if (this.cd < game.cycle && this.seePlayer.recall) {
+            //         this.cd = game.cycle + this.delay;
+            //         if (Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position)) < 1000000) {
+            //             const angle = Math.atan2(
+            //                 this.seePlayer.position.y - this.position.y,
+            //                 this.seePlayer.position.x - this.position.x
+            //             );
+            //             const mag = mech.onGround ? 50 * player.mass * game.g : 40 * player.mass * game.g;
+            //             player.force.x -= mag * Math.cos(angle);
+            //             player.force.y -= mag * Math.sin(angle);
+			//
+            //             ctx.beginPath();
+            //             ctx.moveTo(this.position.x, this.position.y);
+            //             ctx.lineTo(mech.pos.x, mech.pos.y);
+            //             ctx.lineWidth = Math.min(60, this.radius * 2);
+            //             ctx.strokeStyle = "rgba(0,0,0,0.5)";
+            //             ctx.stroke();
+            //             ctx.beginPath();
+            //             ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
+            //             ctx.fillStyle = "rgba(0,0,0,0.3)";
+            //             ctx.fill();
+            //         }
+            //     }
+            // },
             laser: function() {
                 if (game.cycle % 7 && this.seePlayer.yes) {
                     ctx.setLineDash([125 * Math.random(), 125 * Math.random()]);
@@ -685,11 +685,11 @@ const mobs = {
 
                 ctx.beginPath();
                 ctx.arc(this.position.x, this.position.y, this.eventHorizon * 0.33, 0, 2 * Math.PI);
-                ctx.fillStyle = "rgba(0,0,0,1)";
+                ctx.fillStyle = "rgba(0,0,0,0.7)";
                 ctx.fill();
                 ctx.beginPath();
                 ctx.arc(this.position.x, this.position.y, this.eventHorizon * 0.66, 0, 2 * Math.PI);
-                ctx.fillStyle = "rgba(0,0,0,0.7)";
+                ctx.fillStyle = "rgba(0,0,0,0.4)";
                 ctx.fill();
                 ctx.beginPath();
                 ctx.arc(this.position.x, this.position.y, this.eventHorizon, 0, 2 * Math.PI);
