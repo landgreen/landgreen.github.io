@@ -5,10 +5,17 @@
 	<meta charset="UTF-8">
 	<title>Ohm's Law</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script> -->
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<script src='../../../lib/chargeclass.js'></script>
 </head>
 
 <body>
@@ -17,81 +24,248 @@
 	</header>
 	<article>
 		<h2 class='underlined'>Electric Current</h2>
-		<p>Current is a measurement of the flow of electric charge over a period of time.</p>
+		<p>Current measures the flow of charge over a period of time. Current is not a substance. Current is a rate, like dollars per hour is a rate.</p>
+		<p>It can be helpful, and accurate, to think of electric current like water current. Free electrons flow through metals just like H<sub>2</sub>O flows through pipes.</p>
 		<div class='definition'>
-			<h1>$$I = \frac{q}{\Delta t}$$</h1>
-			<strong>I</strong> = electric current [A, Amps, Amperes]
-			<br><strong>q</strong> = charge that passes a point on a wire [C]
-			<br><strong>Δt</strong> = a period of time [s]
+			<h1>$$I = \frac{q}{\Delta t}$$</h1> \(I\) = electric current [A, Amps, Amperes]
+			<br>\(q\) = charge that passes a point on a wire [C]
+			<br>\(\Delta t\) = a period of time [s]
 		</div>
-		<p>The direction of current is defined as the direction of positive charge flow. Electrons actually move in the opposite direction.</p>
-
 		<div class='example'>
-			<p><strong>Example:</strong> Two wires of cross-sectional area 1.6mm² connect the terminals of a battery to the circuitry in a clock.  During the time interval of 0.04s, 5.0 x 10<sup>14</sup> electrons move to the right through the cross section.  What is the magnitude and direction of the current?</p>
+			<strong>Example:</strong> Two wires of cross-sectional area 1.6mm² connect the terminals of a battery to the circuitry in a clock. During the time interval of 0.04s, 5.0 x 10<sup>14</sup> electrons move to the right through the cross section. What
+			is the magnitude and direction of the current?
 			<details>
 				<summary>solution</summary>
-				$$q = 5.0 \times 10^{14} e^{-} \left(\frac{1.6 \times 10^{-19}C}{1 e^{-}}\right)$$
-				$$q = 0.00008C$$
-				<br>
-				$$I = \frac{q}{\Delta t}$$
-				$$I = \frac{0.00008}{0.04}$$
-				$$I = 0.002 A $$
+				$$q = 5.0 \times 10^{14} e^{-} \left(\frac{1.6 \times 10^{-19}C}{1 e^{-}}\right) = 0.00008C$$
+				<br> $$I = \frac{q}{\Delta t}$$ $$I = \frac{0.00008C}{0.04s}$$ $$I = 0.002 A $$
 				<p>If the electrons move to the right the current is to the <strong>left</strong>.</p>
 
 			</details>
 		</div>
 		<div class='example'>
-			<p><strong>Example:</strong> If 0.320 mA of current flow through a calculator,  how many electrons pass through per second?</p>
+			<strong>Example:</strong> If 0.320 mA of charge flow through a calculator, how many electrons pass through per second?
 			<details>
 				<summary>solution</summary>
-				$$ I = \frac{q}{\Delta t}$$
-				$$ q = I\Delta t$$
-				$$ q = (0.320 \times 10^{-3})(1)$$
-				$$ q = 0.000320 \ C \ \left(\frac{electron}{1.6 \times 10^{-19}C}\right) = $$
-				$$ q = 2 \times 10^{15} \ electrons$$
+				$$ I = \frac{q}{\Delta t}$$ $$ q = I\Delta t$$ $$ q = (0.320 \times 10^{-3}A) (1s)$$ $$ q = 0.000320 \ C \ \left(\frac{1 \ electron}{1.6 \times 10^{-19}C}\right) = $$ $$ q = 2 \times 10^{15} \ electrons$$
 
 			</details>
 		</div>
 
-		<h2 class='underlined'>How fast is electric current?</h2>
-		<p>Electric current can be thought of as the average motion of a huge number of electrons through a wire.  As the electrons travel they don't just move in a straight line.  They drift through the wire in a random walk as they bounce off other electrons and towards protons. Statistically more electrons will flow forward than backwards.</p>
+		<h2 class='underlined'>Charge Speed and Direction</h2>
+		<p>Electric current can be thought of as the average motion of a huge number of charges. As the charges travel they don't just move in a straight line. They drift through the material in a random walk as they bounce off other charges. Statistically more
+			charge will move forward than backwards.</p>
 
-		<p>The speed of electrons in a typical wire is around 0.0002 m/s. If the speed of electrons in is so slow how can we explain the near instantaneous effect of electricity?</p>
+		<p>The forward speed of electrons in a typical wire is around 0.0002 m/s. If the speed of electrons in is so slow how can we explain the near instantaneous speed of communication on telegraph, phone, and internet lines?</p>
+
+		<p>The direction of current is defined as the direction of positive charge flow. Since electrons have a negative charge they always move in the opposite direction of the current. Why don't the nuclei move?</p>
+		<p>What direction is the current in these simulations?</p>
+		<canvas id='charge7' height='150' width='600' onclick="charges7(this)"> </canvas>
+		<p>A small imbalance in net charge produces an electric field. The electric field points in the same direction as the current.</p>
+		<canvas id='charge8' height='150' width='600' onclick="charges8(this)"> </canvas>
+		<p>Positive charge flows from positive(red) potential to negative(blue) potential. Negative charge does the opposite.</p>
+		<canvas id='charge9' height='150' width='600' onclick="charges9(this)"> </canvas>
 
 		<h2 class='underlined'>Voltage</h2>
+		<p>Voltage is a measure of the difference in electrical potential between two points. Voltage is defined so that negatively charged objects are pulled towards higher voltages, while positively charged objects are pulled towards lower voltages. You can
+			review the notes on <a href="../../electrostatic/potential/index.html#voltage">voltage</a> from the last section</p>
 
-		<h2 class='underlined'>Ohm's Law</h2>
-		<div class='definition'>
-			<h1>$$ V = IR$$</h1>
-			<strong>V</strong> = voltage, a change in electric potential [v, volts]
-			<br><strong>I</strong> = electric current [A, Amps, Amperes]
-			<br><strong>R</strong> = resistance [Ω]
-		</div>
+		<p>Common sources of differences in potential (voltage) are the two terminals in a wall socket and the positive and negative terminals on a <a href='https://en.wikipedia.org/wiki/Battery_(electricity)'>battery</a>.</p>
 
+		<p>In these simulations I added a "battery" that pushes the electrons down.
+			<br>Areas with more negative charge have negative potential, shown as <span style="color:#05d;">blue</span>.
+			<br>Areas with more positive charge have positive potential, shown as <span style="color:#d50;">red</span>.
 
+			<div class="col-group">
+				<div>
+					<canvas id='charge10' height='400' width='270' onclick="charges10(this)"> </canvas>
+				</div>
 
-
-		<details class='history'>
-			<summary>Gustav Kirchhoff</summary>
-			<br>
-			<div>Gustav Kirchhoff was the physicist that is given the credit for creating the “Kirchhoff’s Law.” He was born on May 12, 1824 in Konigsberg, Prussia (now Russia). This law is an extension of Ohm’s Law and generalized the equations regarding current flow
-				and adapted them in the case of electrical conductors in three dimensions. Eventually, Kirchhoff found that current flows through a conductor at the speed of light. These laws are extremely important in understanding how an electric circuit functions.
-
-				<br>
-				<br>
-
-				<li>Kirchhoff also contributed to the study of spectroscopy and was a major contributor to the advancement in the research of blackbody radiation.
-
-					<li>Kirchhoff also founded the spectrum analysis with chemist Robert Bunsen
-
-						<li>“Kirchhoff’s Law” was initially called “Laws of Closed Electric Circuits”, but was later named after the creator.
-
-							<li>Kirchhoff was first a “Privatdozent”, which is an unpaid lecturer at the University of Berlin. But he eventually got a position at the University of Heidelberg as the professor of Physics.
-								<p><em>-Ariana Dideban</em></p>
+				<div>
+					<canvas id='charge12' height='400' width='270' onclick="charges12(this)"> </canvas>
+				</div>
 			</div>
-		</details>
+			<p>The simulation on the right is a <strong>circuit</strong>. A <strong>circuit</strong> is a looping path that guides the electrons back to the start, like a race track.</p>
 
+			<h2 class='underlined'>AC⚡DC</h2>
+			<p>In <strong>DC (direct current)</strong> circuits current is defined to flow out of the longer, positive end of the battery, but electrons actually move in the opposite direction. Below is an animated <a href="https://en.wikipedia.org/wiki/Electronic_symbol">circuit diagram</a> of a battery providing DC voltage and a resistor dropping the voltage:</p>
+			<!-- for svg path animation -->
+			<style type="text/css">
+				@keyframes marching_ants {
+					0% {
+						stroke-dashoffset: 0;
+					}
+					100% {
+						stroke-dashoffset: 20;
+					}
+				}
+				.ants {
+					animation: marching_ants 0.4s linear infinite;
+					stroke-dasharray: 0.1 19.9;
+				}
+				.ants_ac {
+					animation: marching_ants 0.8s ease-in-out infinite alternate;
+					stroke-dasharray: 0.1 19.9;
+				}
+			</style>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="350" height="150" class='center'>
+			<path d="M 50 68 v-63 h 265
+			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
+			h -265
+			v-60 m-40 0 h 80 m-20 -15 h-40"
+				fill = 'none' stroke="#333" stroke-width="8" stroke-linejoin="round"/>
+			<path d="M 50 68 v-63 h 265
+			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
+			h -265  v-58"
+				fill = 'none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants"/>
+			<path d='M32 60 h 10' fill = 'none' stroke="#88f" stroke-width="2" />
+			<path d='M32 97 h 10 m -5 -5 v 10' fill = 'none' stroke="#f88" stroke-width="2" />
+			<text x="65" y="57" text-anchor="start" font-size="18" fill = '#888'>battery</text>
+			<text x="290" y="80" text-anchor="end" font-size="18" fill = '#888'>resistor</text>
+		</svg>
+			<p>In <strong>AC (alternating current)</strong> circuits the current pushes the electrons forward and backwards about 60 times a second.  Current from a wall socket is AC, while current from a battery is DC.</p>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="350" height="150" class='center'>
+			<path d="M 50 58 v-53 h 265
+			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
+			h -265
+			v-50"
+				fill = 'none' stroke="#333" stroke-width="8" stroke-linejoin="round"/>
+			<path d="M 50 58 v-53 h 265
+			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
+			h -265 v-48"
+				fill = 'none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants_ac"/>
+			<circle cx="50" cy="77" r="19" fill = 'none' stroke="#333" stroke-width="5" />
+			<text x="50" y="79" text-anchor="middle" alignment-baseline="middle" font-size="45" fill = '#333'>~</text>
+			<text x="63" y="50" text-anchor="start" font-size="18" fill = '#888'>AC voltage</text>
+			<text x="79" y="70" text-anchor="start" font-size="18" fill = '#888'>source</text>
+			<text x="290" y="80" text-anchor="end" font-size="18" fill = '#888'>resistor</text>
+		</svg>
 
+			<h2 class='underlined'>Ohm's Law</h2>
+			<p>Ohm's Law says that the voltage in a conductor is proportional to the current. This means we can build an equation where V = I times a constant. We call this constant <strong>resistance</strong>. </p>
+
+			<p>You can think of <strong>resistance</strong> as a measure of a material's <a href="../../electrostatic/coulomb/index.html#conductivity">conductivity</a>. Conductors have nearly zero resistance and insulators have very high resistance. Semiconductive
+				elements, called <a href='https://en.wikipedia.org/wiki/Resistor'>resistors</a> have medium resistance.  They are added to a circuit for precise control over current. If the current is too high, the circuit will get hot. If the current is too low the circuit can't do its job.
+			</p>
+			<div class='definition'>
+				<h1>$$ V = IR$$</h1> \(I\) = electric current [A, amp, ampere]
+				<br>
+				<br>\(V\) = voltage, a change in electric potential [V, volt]
+				<br><em>Technically ΔV, but everyone uses V for simplicity</em>
+				<br> Sources: battery, solar panel, wall socket
+				<br>
+				<br>\(R\) = resistance [Ω, ohm]
+				<br> Sources: resistor, lights, motor
+			</div>
+
+			<div class='example'>
+				<div class="col-group">
+					<div>
+						<strong>Example:</strong> Find the voltage for a resistor that has a 300Ω of resistance and a current of 0.05A?
+						<details>
+							<summary>solution</summary>
+							$$ V = IR$$ $$ V = (0.05A) (300)$$ $$ V = 15 V$$
+						</details>
+					</div>
+					<div>
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="200" class='center'>
+							<path d="M 50 10 h 200
+							v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
+							h -200
+							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87"
+									fill = 'none' stroke="#333" stroke-width="4" stroke-linejoin="round"/>
+							<text x="230" y="85" text-anchor="end" font-size="20" fill = '#333'>V = ?</text>
+							<text x="230" y="125" text-anchor="end" font-size="20" fill = '#333'>300Ω</text>
+							<text x="150" y="172" text-anchor="middle" font-size="20" fill = '#333'>0.05A</text>
+							<g transform="translate(195 180) rotate(180)">
+								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
+								<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+							</g>
+						</svg>
+					</div>
+				</div>
+			</div>
+			<div class='example'>
+				<div class="col-group">
+					<div>
+						<strong>Example:</strong> Find the current for a 100Ω resistor with 2V drop?
+						<details>
+							<summary>solution</summary>
+							$$ V = IR$$ $$ I = \frac{V}{R}$$ $$ I = \frac{2}{100}$$ $$ I = 0.02 A$$
+						</details>
+					</div>
+					<div>
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="200" class='center'>
+							<path d="M 50 10 h 200
+							v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
+							h -200
+							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87"
+									fill = 'none' stroke="#333" stroke-width="4" stroke-linejoin="round"/>
+							<text x="230" y="85" text-anchor="end" font-size="20" fill = '#333'>2V</text>
+							<text x="230" y="125" text-anchor="end" font-size="20" fill = '#333'>100Ω</text>
+							<text x="150" y="172" text-anchor="middle" font-size="20" fill = '#333'>I = ?</text>
+							<g transform="translate(195 180) rotate(180)">
+								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
+								<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+							</g>
+						</svg>
+					</div>
+				</div>
+			</div>
+			<div class='example'>
+				<div class="col-group">
+					<div>
+						<strong>Example:</strong> What value resistor would drop 1.5V in a 0.001A current?
+						<details>
+							<summary>solution</summary>
+							$$ V = IR$$ $$ R = \frac{V}{I}$$ $$ R = \frac{1.5}{0.001}$$ $$ R = 1500 \Omega$$
+						</details>
+					</div>
+					<div>
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="200" class='center'>
+							<path d="M 50 10 h 200
+							v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
+							h -200
+							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87"
+									fill = 'none' stroke="#333" stroke-width="4" stroke-linejoin="round"/>
+							<text x="230" y="85" text-anchor="end" font-size="20" fill = '#333'>1.5V</text>
+							<text x="230" y="125" text-anchor="end" font-size="20" fill = '#333'>R = ?</text>
+							<text x="150" y="172" text-anchor="middle" font-size="20" fill = '#333'>0.001A</text>
+							<g transform="translate(195 180) rotate(180)">
+								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
+								<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+							</g>
+						</svg>
+					</div>
+				</div>
+			</div>
+			<div class='example'>
+				<div class="col-group">
+					<div>
+						<strong>Example:</strong> What voltage would cause 0.02C of charge pass through a 10Ω resistor every 10 seconds?
+						<details>
+							<summary>solution</summary>
+							$$ I = \frac{q}{\Delta t}$$ $$ I = \frac{0.02}{10}$$ $$ I = 0.002 A$$
+							<br> $$ V = IR $$ $$ V = (0.002)(10)$$ $$ V = 0.02V$$
+						</details>
+					</div>
+					<div>
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="200" class='center'>
+							<path d="M 50 10 h 200
+							v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
+							h -200
+							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87"
+									fill = 'none' stroke="#333" stroke-width="4" stroke-linejoin="round"/>
+							<text x="230" y="85" text-anchor="end" font-size="20" fill = '#333'>V = ?</text>
+							<text x="230" y="125" text-anchor="end" font-size="20" fill = '#333'>100Ω</text>
+							<text x="150" y="172" text-anchor="middle" font-size="20" fill = '#333'>I = ?</text>
+							<g transform="translate(195 180) rotate(180)">
+								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
+								<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+							</g>
+						</svg>
+					</div>
+				</div>
+			</div>
 	</article>
 	<div class='back'>
 		<a href="../../../index.html#units">Back</a>
@@ -99,6 +273,11 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
+	<script src="charge7.js"></script>
+	<script src="charge8.js"></script>
+	<script src="charge9.js"></script>
+	<script src="charge10.js"></script>
+	<script src="charge12.js"></script>
 </body>
 
 </html>

@@ -60,13 +60,13 @@ var springGravity = function(button) {
         this.Ug = 0;
         this.fillColor = fillColor;
         this.draw = function() {
-          ctx.strokeStyle = 'black';
+        //   ctx.strokeStyle = 'black';
           ctx.shadowColor = "#ccc";
           ctx.shadowBlur = 6;
             ctx.fillStyle = this.fillColor;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-            ctx.stroke();
+            // ctx.stroke();
             ctx.fill();
             ctx.shadowColor = "transparent";
         };
@@ -161,11 +161,7 @@ var springGravity = function(button) {
     var box;
 
     function spawn() {
-        box = new mass(3 * canvas.width / 4, 20, 0, 0, 5, //mass(x, y, Vx, Vy ,mass, fillColor)
-            randomColor({
-                luminosity: 'light',
-            })
-        );
+        box = new mass(3 * canvas.width / 4, 20, 0, 0, 5, randomColor());
         document.getElementById("spring-m2").value = box.mass;
         document.getElementById("spring-k2").value = physics.k;
     }

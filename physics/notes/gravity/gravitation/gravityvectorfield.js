@@ -15,22 +15,22 @@ make it so you can only move one body at a time
 make force vectors reduced if one star is inside the radius of another?
 */
 "use strict";
-
-(function setup() { //writes a message onload
-    var canvas = document.getElementById('gravity');
-    var ctx = canvas.getContext("2d");
-    ctx.font = "25px Arial";
-    ctx.fillStyle = '#aaa';
-    ctx.textAlign = "center";
-    ctx.fillText('click to start simulation', canvas.width / 2, canvas.height / 2);
-})()
+const setup1 = function() {
+	var canvas = document.getElementById('grav1');
+	var ctx = canvas.getContext("2d");
+	ctx.font = "300 30px Roboto";
+	ctx.fillStyle = '#aaa';
+	ctx.textAlign = "center";
+	ctx.fillText('click to start simulation', canvas.width / 2, canvas.height / 2);
+}
+setup1()
 
 function gravityDiagram(button) {
     button.onclick = null; //stops the function from running after first run
     var canvas = document.getElementById("gravity");
     var ctx = canvas.getContext("2d");
 
-    (function setupCanvas() {
+    function setupCanvas() {
         canvas.width = window.innerWidth - 40;
         ctx.font = '15px Arial';
         ctx.lineCap = "round";
@@ -39,7 +39,8 @@ function gravityDiagram(button) {
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         //ctx.lineWidth = 2;
-    })();
+    };
+	setupCanvas();
     window.onresize = function() {
         setupCanvas();
     };

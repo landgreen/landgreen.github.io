@@ -1,9 +1,23 @@
-var particles = function() {
+(function setup() { //writes a message onload
+    var canvas = document.getElementById('canvas0');
+    var ctx = canvas.getContext("2d");
+    ctx.font = "25px Arial";
+    ctx.fillStyle = '#aaa';
+    ctx.textAlign = "center";
+    ctx.fillText('click to start', canvas.width / 2, canvas.height / 2);
+})()
+
+var particles = function(button) {
+	button.onclick = null; //stops the function from running after first run
     // canvas setup
     var canvasID = "canvas0";
     var canvas = document.getElementById(canvasID);
     var ctx = canvas.getContext("2d");
     ctx.font = "18px Arial";
+	ctx.textAlign = "left";
+	ctx.shadowBlur = 5;
+    ctx.shadowOffsetX = 5;
+    ctx.shadowOffsetY = 5;
 
     var pause = false;
 
@@ -48,11 +62,15 @@ var particles = function() {
         this.pe = 0;
         this.fillColor = fillColor;
         this.draw = function() {
+			ctx.shadowColor = "#999";
+            ctx.shadowBlur = 6;
             ctx.fillStyle = this.fillColor;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-            ctx.stroke();
-            ctx.fill();
+			ctx.fill();
+            // ctx.stroke();
+			ctx.shadowColor = "transparent";
+
         };
         this.move = function() {
             this.x += this.Vx;
@@ -113,11 +131,7 @@ var particles = function() {
     var box;
 
     function spawn() {
-        box = new mass(50, 50, 1, 0, 20, //mass(x, y, Vx, Vy ,r, fillColor)
-            randomColor({
-                luminosity: 'light',
-            })
-        );
+        box = new mass(50, 50, 1, 0, 20,randomColor());
         box.calcEnergy();
         box.energy = box.pe+box.ke;
     }

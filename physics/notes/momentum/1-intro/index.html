@@ -24,12 +24,88 @@
         <p><a href="https://www.youtube.com/watch?v=GXdb3ghAGOU">Momentum</a> is defined as the product of mass and velocity. For example, a heavy truck moving rapidly has a large momentum—it takes a large or prolonged force to get the truck up to this speed, and it takes a large or prolonged force to bring it to a stop afterwards. If the truck were lighter, or moving more slowly, then it would have less momentum.</p>
         <div class='definition'>
         <h1>$$p = mv$$</h1>
-        <b>p</b> = momentum [kg m/s] <i>vector</i>
-        <br><b>m</b> = mass [kg]
-        <br><b>v</b> = velocity[m/s] <i>vector</i>
+        \(p\) = momentum [kg m/s] <em>vector</em>
+        <br>\(m\) = mass [kg]
+        <br>\(v\) = velocity[m/s] <em>vector</em>
       </div>
-        <br>
-        <br>
+	          <h1 class='underlined'>Impulse</h1>
+	  <p>An impulse is defined as both a force multiplied by time (FΔt) and a change in momentum (Δp). The longer a force is applied the more the momentum will change.
+	  </p>
+	  	<strong>Examples of impulse:</strong>
+	  	<div class="col-group">
+	  		<div>
+	  			cars speeding up
+	  			<br>cars crashing
+	  			<br>rockets accelerating
+	  		</div>
+	  		<div>
+	  			kicking a soccer ball
+	  			<br>punching
+	  			<br>jumping
+	  		</div>
+	  	</div>
+	  	<br>
+	  	<details class='derive'>
+	  		<summary>derivation of impulse</summary>
+	  		<p>The equation for impulse can be produce by replacing acceleration in F = ma with Δv/Δt.</p>
+	  			$$F = ma$$
+	  			$$a = \frac{\Delta v}{\Delta t}$$
+	  			$$F = m \frac{\Delta v}{\Delta t}$$
+	  			$$F \Delta t = m \Delta v$$
+	  			<br>
+	  			$$F \Delta t = m(v_f - v_i)$$
+	  			$$F \Delta t = mv_f - mv_i$$
+	  			$$F \Delta t = p_f - p_i$$
+	  			$$F \Delta t = \Delta p$$
+	  	</details>
+	  <div class='definition'>
+	  	<h1>
+	  		$$J = F \Delta t = \Delta p$$
+	  		$$F \Delta t = m\Delta v$$
+	  	</h1>
+	  	\(J\) = impulse [Ns, kg m/s] <em>vector</em>
+	  	<br>\(F\) = force [N, kg m/s²] <em>vector</em>
+	  	<br>\(\Delta t\) = time period [s]
+	  	<br>\(\Delta p\) = change in momentum [kg m/s] <em>vector</em>
+	  </div>
+	  <div class='example'>
+	  	<p><strong>Example:</strong> A medicine ball is hurtling towards you at 15 m/s.  You weakly try to stop it by applying a 100N force for 0.1s.  You don't stop the ball, but it slows to 14 m/s.  Calculate the mass of the ball.</p>
+	  	<details>
+	  		<summary>solution</summary>
+	  		$$F \Delta t = m\Delta v$$
+	  		$$\frac{F \Delta t}{\Delta v} = m$$
+	  		$$\frac{(100)(0.1)}{15-14} = m$$
+	  		$$\frac{(100)(0.1)}{1} = m$$
+	  		$$10kg = m$$
+	  	</details>
+
+	  </div>
+	  <div class='example'>
+	  	<p><strong>Example:</strong> The <a href = 'https://en.wikipedia.org/wiki/Tesla_Model_S'>Tesla Model S</a> car has a mass of 2,250kg.  It holds the record for fastest 0 to 60 miles/hour acceleration of a production car with 2.8 seconds.  Convert the miles/hour into m/s, and find the force produced by the car.</p>
+	  	<details>
+	  		<summary>solution</summary>
+	  		$$ 60\left(\frac{\color{red}{mile}}{\color{blue}{hour}}\right)\left(\frac{1609 m}{1 \color{red}{mile}}\right)\left(\frac{1 \color{blue}{hour}}{3600s}\right) = 26.8\small\frac{m}{s} $$
+	  		<br>
+	  		$$F \Delta t = m\Delta v$$
+	  		$$F = \frac{m\Delta v}{\Delta t}$$
+	  		$$F = \frac{(2250)(26.8)}{2.8}$$
+	  		$$F = \frac{60300}{2.8}$$
+	  		$$F = 21536 N$$
+	  	</details>
+	  </div>
+	  <div class='example'>
+	  	<p><strong>Example:</strong> How does the 0 to 60 miles/hour acceleration of the <a href = 'https://en.wikipedia.org/wiki/Tesla_Model_S'>Tesla Model S</a> from the previous example compare to the acceleration of gravity?</p>
+	  	<details>
+	  		<summary>solution</summary>
+	  		$$F = 21536 N$$
+	  		$$F = ma$$
+	  		$$\frac{F}{m}=a$$
+	  		$$\frac{21536}{2250}=a$$
+	  		$$a = 9.57 \small \frac{m}{s^2}$$
+	  		$$g = 9.81 \small \frac{m}{s^2}$$
+	  		<p>Wow, how is that going to feel?</p>
+	  	</details>
+	  </div>
         <h1 class='underlined'>Conservation of Momentum</h1>
         <p>Momentum is useful because the total momentum for a system of objects is <b>conserved</b>. This means the sum of all momentums won't change even if the objects collide.</p>
         <canvas id="canvas0" width='600' height='170' onclick="collision0(this)"> </canvas>
@@ -51,9 +127,9 @@
           $$m_{1}u_{1}+m_{2}u_{2}+...=m_{1}v_{1}+m_{2}v_{2}+...$$
         </h3>
 <br>
-        <b>u</b> = initial velocity [m/s] <i>vector</i>
-        <br><b>v</b> = final velocity [m/s] <i>vector</i>
-        <br><b>m</b> = mass [kg]
+        \(u\) = initial velocity [m/s] <em>vector</em>
+        <br>\(v\) = final velocity [m/s] <em>vector</em>
+        <br>\(m\) = mass [kg]
       </div>
         <br>
         <br>

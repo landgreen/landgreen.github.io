@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
-	<script src='../../../lib/randomColor.min.js'></script>
+	<script src='../../../lib/chargeclass.js'></script>
 </head>
 
 <body>
@@ -18,8 +18,13 @@
 	</header>
 	<article>
 		<p>A field has a value for each point in space and time. For example, on a weather map, the <a href='https://earth.nullschool.net/'>surface wind velocity</a> is described by assigning a vector to each point on the map.</p>
+
 		    <h2 class='underlined'>Electric Fields</h2>
-			<p>Electric fields predict the electric force of a +1C test charge at a location. This is useful when you only know about one charge instead of the pair, but remember the test charge doesn't exist.</p>
+			<p>Electric fields predict the electric force of an imaginary +1C test charge at a location. This is useful when you only know about one charge instead of the pair, but remember the test charge doesn't exist.</p>
+			<canvas id = 'charge3' height = '300' width='600' onclick="charges3(this)"> </canvas>
+			<p>Click the simulation a few times to push the electrons around.</p>
+			<canvas id = 'charge4' height = '300' width='600' onclick="charges4(this)"> </canvas>
+
 			<p>We get the electric field equation by simply setting one q to +1C in the electrostatic force equation.</p>
 			<div class='definition'>
 				<svg style="display: block; margin: auto" width="400" height="110" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 50 400 110">
@@ -43,12 +48,12 @@
 	            </g>
 	        </svg>
 				<h2>$$ E = \frac{k_{e}q}{r^{2}}$$</h2>
-				<p><strong>E</strong> = electric field at a point [N/C, N·C<sup>-1</sup>] <i>vector</i>
-					<br><strong>k<sub>e</sub></strong> = 8.987 × 10<sup>9</sup> = Coulomb's constant [N m²/C²] <i>scalar</i>
-					<br><strong>q</strong> = charge [C, Coulomb] <i>scalar</i>
-					<br><strong>r</strong> = distance between the charge and a location [m] <i>scalar</i>
+				<p>\(E\) = electric field at a point [N/C, N·C<sup>-1</sup>] <i>vector</i>
+					<br>\(k_e\) = 8.987 × 10<sup>9</sup> = Coulomb's constant [N m²/C²] <i>scalar</i>
+					<br>\(q\) = charge [C, Coulomb] <i>scalar</i>
+					<br>\(r\) = distance between the charge and a location [m] <i>scalar</i>
 			</div>
-			<a id ='efieldsim'></a>
+			<!-- <a id ='efieldsim'></a>
 			<p>It can be useful to visualize the electric field vectors on a 2-D field. This program calculates the electric field at several points and displays them as arrows.</p>
 		</article>
 
@@ -63,8 +68,8 @@
 			<br>
 			<br>
 			<br>
-			<br>
-			<p><b>Example:</b> Find the electric field 2.0m away from a negative 3.0μC charge.</p>
+			<br> -->
+			<div class='example'><b>Example:</b> Find the electric field 2.0m away from a negative 3.0μC charge.
 			<details>
 					<summary>solution</summary>
 					$$\mu = micro = 10^{-6}$$
@@ -188,12 +193,8 @@
 					</g>
 					</svg>
 			</details>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<p><b>Example:</b> How far from a 10nC charge is the field strength 10N/C?</p>
+		</div>
+<div class='example'><b>Example:</b> How far from a 10nC charge is the field strength 10N/C?
 			<details>
 					<summary>solution</summary>
 					$$n = nano = 10^{-9}$$
@@ -204,11 +205,7 @@
 					$$r^{2} = 8.987$$
 					$$r = 2.998m$$
 			</details>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
+		</div>
 			<h2 class='underlined'>Finding Force in an Electric Field</h2>
 			<p>Knowing the direction and strength of an electric field makes it easy to find the force felt by a charge placed in the field.</p>
 			<div class='definition'>
@@ -261,9 +258,9 @@
 					<text x="40" y="65" fill="black" alignment-baseline="central" font-size="25">E</text>
 	        </svg>
 				<h2>$$F = Eq$$</h2>
-				<p><strong>F</strong> = electrostatic force [N, Newton, kg m/s²] <i>vector</i>
-					<br><strong>E</strong> = electric field at a point [N/C, N·C<sup>-1</sup>] <i>vector</i>
-					<br><strong>q</strong> = charge [C, Coulomb] <i>scalar</i>
+				<p>\(F\) = electrostatic force [N, Newton, kg m/s²] <i>vector</i>
+					<br>\(E\) = electric field at a point [N/C, N·C<sup>-1</sup>] <i>vector</i>
+					<br>\(q\) = charge [C, Coulomb] <i>scalar</i>
 			</div>
 			<br>
 			<br>
@@ -439,7 +436,10 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
-	<script src="vectorfield.js"></script>
+	<!-- <script src="vectorfield.js"></script> -->
+	<script src="chargeclass.js"></script>
+	<script src="charge3.js"></script>
+	<script src="charge4.js"></script>
 </body>
 
 </html>

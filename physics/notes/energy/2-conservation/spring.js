@@ -51,7 +51,7 @@ var spring = function(button) {
             ctx.fillStyle = this.fillColor;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-            ctx.stroke();
+            // ctx.stroke();
             ctx.fill();
         };
         this.drawSpring = function() {
@@ -164,11 +164,7 @@ var spring = function(button) {
     var box;
 
     function spawn() {
-        box = new mass(130, canvas.height / 2, 1, 0, 20, //mass(x, y, Vx, Vy ,r, fillColor)
-            randomColor({
-                luminosity: 'light',
-            })
-        );
+        box = new mass(130, canvas.height / 2, 1, 0, 20, randomColor());
         document.getElementById("spring-m").value = Math.round(box.mass);
     }
     spawn();

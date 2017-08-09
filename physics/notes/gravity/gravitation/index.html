@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../../style.css">
     <script src='../../../lib/randomColor.min.js'></script>
+	<script src='../../../lib/gravityClass.js'></script>
 </head>
 
 <body>
@@ -18,11 +19,14 @@
     </header>
     <article>
         <h2 class="underlined">Newton's Law of Universal Gravitation</h2>
-        <p>Universal gravitation states that every particle in the universe is attracted to every other particle. <a href='http://www.bbc.co.uk/timelines/zwwgcdm'>Issac Newton</a> discovered the equation by watching the motion of planets and making empirical observations. Universal gravitation has been superseded by Einstein's general relativity, but it is still very accurate for most situations.</p>
+		Gravity simulation with <input class='number' id ='num' type="number" step="1" max = '1000' value = '10'> particles. Poke the particles with a click.
+		<canvas class='black' id = 'grav0' height = '300' width='600' onclick="grav0(this)"> </canvas>
+
+        <p>Universal gravitation states that every particle in the universe is attracted to every other particle. <a href='http://www.bbc.co.uk/timelines/zwwgcdm'>Issac Newton</a> discovered the equation by watching the motion of planets and making <a href='https://www.google.com/search?q=empirical'>empirical</a> observations. Universal gravitation has been superseded by Einstein's general relativity, but it is still very accurate for most situations.</p>
 		<details class='history'>
             <summary>Historical Background</summary>
 			<br>
-			<div>In 1687, Isaac Newton published Principia, which hypothesized the inverse-square law of universal gravitation. Newton's theory was used to predict the existence of Neptune based on different motions of Uranus which could not be explained by the actions of the other planets. Isaac Newton had come up with an idea and described it gravitation:"I deduced that the forces which keep the planets in their orbs must be reciprocally as the squares of their distances from the centers about which they revolve; and thereby compared the force requisite to keep the Moon in her orb with the force of gravity at the surface of the Earth; and found them answer pretty nearly." What he means by this, is that the forces that keep the planets in their orbits must be reciprocal to the their distances between their centers squared that they revolve. He then compared this to the force required to keep the Moon in orbit with the force of gravity on Earth, and found that it checked out. Newton’s theory of universal gravitation was added onto an improved by other scientists such as Albert Einstein where he solved for mercury not being able to be accounted for by Newtonian gravity with his new theory of relativity, which then accounted for the discrepancy in Mercury's orbit. <em>-Adam Friedenthal</em></div>
+			<div>In 1687, Isaac Newton published Principia, which hypothesized the inverse-square law of universal gravitation. Newton's theory was used to predict the existence of Neptune based on different motions of Uranus which could not be explained by the actions of the other planets. Isaac Newton had come up with an idea and described it gravitation: "I deduced that the forces which keep the planets in their orbs must be reciprocally as the squares of their distances from the centers about which they revolve; and thereby compared the force requisite to keep the Moon in her orb with the force of gravity at the surface of the Earth; and found them answer pretty nearly." What he means by this, is that the forces that keep the planets in their orbits must be reciprocal to the their distances between their centers squared that they revolve. He then compared this to the force required to keep the Moon in orbit with the force of gravity on Earth, and found that it checked out. Newton’s theory of universal gravitation was added onto an improved by other scientists such as Albert Einstein where he solved for mercury not being able to be accounted for by Newtonian gravity with his new theory of relativity, which then accounted for the discrepancy in Mercury's orbit. <em>-Adam Friedenthal</em></div>
 
         </details>
         <div class='definition'>
@@ -49,11 +53,21 @@
               <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
           </svg>
           <h2>$$ F = \frac{GM_{1}M_{2}}{r^{2}} $$</h2>
-            <p><strong>F</strong> = force of gravity [N, Newtons, kg m/s²] <i>vector</i>
-                <br><strong>G</strong> = 6.67408 × 10<sup>--11</sup> = universal gravitation constant [N m²/kg²] <i>scalar</i>
-                <br><strong>M</strong> = mass [kg, kilograms] <i>scalar</i>
-                <br><strong>r</strong> = distance between the center of each mass [m, meters] <i>scalar</i>
+            <p>\(F\) = force of gravity [N, Newtons, kg m/s²] <em>vector</em>
+                <br>\(G\) = 6.67408 × 10<sup>--11</sup> = universal gravitation constant [N m²/kg²]
+                <br>\(M\) = mass [kg, kilograms]
+                <br>\(r\) = distance between the center of each mass [m, meters]
         </div>
+		<br>
+		<br>
+
+	<div style="position: relative; width: 300px; height: 200px;" class='center'><a href="https://phet.colorado.edu/sims/html/gravity-force-lab/latest/gravity-force-lab_en.html" style="text-decoration: none;">
+		<img src="https://phet.colorado.edu/sims/html/gravity-force-lab/latest/gravity-force-lab-600.png" alt="Gravity Force Lab" style="border: none;" width="300" height="200"/><div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 30px;"></div>
+		<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 30px;"><tr><td style="text-align: center; color: #000; opacity: 0.9; background-color: #FFF; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td></tr></table></a>
+	</div>
+<br>
+<br>
+
         <p>Each mass feels an equal but opposite force as predicted by Newton's 3rd law.  This means that the same force of gravity you feel towards the Earth the Earth feels towards you.  So why don't we notice the Earth accelerate towards you?</p>
 
         <p>Notice how small G is (6.6x10<sup>-11</sup>). Out of the four fundamental forces gravity is by far the weakest. If gravity is so weak why do we notice its effects so easily?</p>
@@ -163,9 +177,7 @@
             </table>
             <a href="http://exoplanets.org/table">exoplanets data table</a>
         </center>
-        <br>
-        <br>
-        <p><b>Example:</b> Find the force of gravity between the Earth and the Moon.  The distance between them is 384,403 km.</p>
+	<div class = 'example'><b>Example:</b> Find the force of gravity between the Earth and the Moon.  The distance between them is 384,403 km.
         <details>
             <summary>solution</summary>
             $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
@@ -174,13 +186,8 @@
             $$ F = \frac{6.674 \times 5.972 \times 7.346}{14.78} \times \frac{10^{-11}10^{24}10^{22}}{10^{16}}$$
             $$ F = 19.798 \times 10^{19} N$$
         </details>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p><b>Example:</b> Find the force of gravity between the Earth and the Sun.  The distance between them is 149.6 billion m.</p>
+	</div>
+	<div class = 'example'><b>Example:</b> Find the force of gravity between the Earth and the Sun.  The distance between them is 149.6 billion m.
         <details>
             <summary>solution</summary>
             $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
@@ -188,13 +195,8 @@
             $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (2.00 \times 10^{30})}{22380 \times 10^{18}}$$
             $$ F =  3.561 \times 10^{22} N$$
         </details>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p><b>Example:</b> Find the force of gravity from the Earth and a 100kg person 10,000,000m from the center of Earth.</p>
+	</div>
+	<div class = 'example'><b>Example:</b> Find the force of gravity from the Earth and a 100kg person 10,000,000m from the center of Earth.
         <details>
             <summary>solution</summary>
             $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
@@ -202,13 +204,8 @@
             $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24})(100)}{ 10^{14}}$$
             $$ F = 398.57 N$$
         </details>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p><b>Example:</b> How massive must an object be in order to feel a force of 100N at a distance of 10,000,000m from the center of the Earth?</p>
+	</div>
+	<div class = 'example'><b>Example:</b> How massive must an object be in order to feel a force of 100N at a distance of 10,000,000m from the center of the Earth?
         <details>
             <summary>solution</summary>
             $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
@@ -217,13 +214,8 @@
             $$ M_{1} = \frac{(100)(10^{14})}{(6.674 \times 10^{-11})(5.972 \times 10^{24})}$$
             $$ M_{1} = 25.01kg$$
         </details>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p><b>Example:</b> When it is closest to the sun on its 75 year orbit <a href = "https://en.wikipedia.org/wiki/Halley%27s_Comet">Halley's Comet</a> feels a force of gravity from the Sun of 3.65×10<sup>12</sup> N.  Calculate its distance from the sun using the comet's mass of 2.2×10<sup>14</sup> kg.</p>
+	</div>
+	<div class = 'example'><b>Example:</b> When it is closest to the sun on its 75 year orbit <a href = "https://en.wikipedia.org/wiki/Halley%27s_Comet">Halley's Comet</a> feels a force of gravity from the Sun of 3.65×10<sup>12</sup> N.  Calculate its distance from the sun using the comet's mass of 2.2×10<sup>14</sup> kg.
         <details>
             <summary>solution</summary>
             $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
@@ -231,25 +223,13 @@
             $$ r^{2} = \frac{(6.674 \times 10^{-11})(2.00 \times 10^{30})(2.2 \times 10^{14})}{3.65 \times 10^{12}} $$
             $$ \sqrt{r^{2}} = \sqrt{8.04 \times 10^{21}} $$
             $$ r = 8.97 \times 10^{10} m $$
-
         </details>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+	</div>
         <h3>Force Field Simulation</h3>
-        <p>This type of diagram is called a force field. Each small line shows the gravitational acceleration vector potentially felt at that location.  These diagrams are helpful for predicting how a particle will move.</p>
-          <p>Can you see the pockets of zero gravity that form between the masses?</p>
-        </article>
-            <canvas class='center' id="gravity" height='600' width='600' onclick="gravityDiagram(this)"> </canvas>
-        <article>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+        <p>This type of diagram is called a force field. Each small line shows the gravitational acceleration vector potentially felt at that location.  These diagrams are helpful for predicting how a particle will move. Click the mouse to push the masses around.</p>
+		  <canvas id = 'grav1' height = '300' width='600' onclick="grav1(this)"> </canvas>
+		  <canvas id = 'grav3' height = '300' width='600' onclick="grav3(this)"> </canvas>
+
         <h2 class="underlined">Gravitational Acceleration</h2>
         <p>It is useful to adapt the universal gravitation equation to predict acceleration. To find acceleration we just need to divide an object's gravitational force by its mass.</p>
 
@@ -281,19 +261,15 @@
             <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
         </svg>
             <h2>$$ a = \frac{GM}{r^{2}} $$</h2>
-            <p><strong>a</strong> = acceleration of gravity [m/s²] <i>vector</i>
-                <br><strong>G</strong> = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N(m/kg)²] <i>scalar</i>
-                <br><strong>M</strong> = mass of the body pulling [kg, kilograms] <i>scalar</i>
-                <br><strong>r</strong> = distance between the center of each mass [m, meters] <i>scalar</i>
+            <p>\(a\) = acceleration of gravity [m/s²] <em>vector</em>
+                <br>\(G\) = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N(m/kg)²]
+                <br>\(M\) = mass of the body pulling [kg, kilograms]
+                <br>\(r\) = distance between the center of each mass [m, meters]
         </div>
         <p>The acceleration vector is pointed towards the center of the mass producing the acceleration.</p>
         <p>The mass of the body being accelerated isn't used in this equation. Use the mass of the body producing the acceleration.  To find the acceleration of objects on Earth use Earth's mass.
-        <br>
-        <br>
-        <br>
-        <br>
-        <p><b>Example:</b> Find the acceleration of gravity for an object on the surface of Earth.
-          <br>Is it really 9.8m/s²?</p>
+		<div class = 'example'><b>Example:</b> Find the acceleration of gravity for an object on the surface of Earth.
+          <br>Is it really 9.8m/s²?
         <details>
             <summary>solution</summary>
             $$ r = 6,371,000m $$
@@ -304,11 +280,8 @@
             $$ a=0.98195 \times 10^{1}$$
             $$ a=9.8195 \frac{m}{s^{2}}$$
         </details>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p><b>Example:</b> Find how far away from the earth you need to be to only accelerate at half of 9.8m/s²</p>
+	</div>
+	<div class = 'example'><b>Example:</b> Find how far away from the earth you need to be to only accelerate at half of 9.8m/s².
         <details>
             <summary>solution</summary>
             $$ a = \frac{GM}{r^{2}} $$
@@ -318,14 +291,11 @@
             <p>Let's find the distance above Earth's surface.</p>
             $$ 9,160km - 6,371km = 2789 km$$
         </details>
-        <br>
-        <br>
-        <br>
-        <br>
+</div>
 
         <a id ='gpe'></a>
 		<p class='underlined'> Gravitational Potential Energy</p>
-        <p>Gravitational potential energy can be made more accurate if we replace 9.8 with a calculated gravitational acceleration.  </p>
+        <p>Our old gravitational potential energy equation (U=mgh) can be made more accurate if we replace g = 9.8 with a calculated gravitational acceleration. This version of gravitational potential energy now works beyond Earth's surface.</p>
 
         <details class='derive'>
             <summary>derivation of universal gravitational potential energy</summary>
@@ -354,21 +324,19 @@
                   </g>
                 </svg>
                     <h1>$$U_{g} = -\frac{GM_{1}M_{2}}{r} $$</h1>
-                    <p><strong>U<sub>g</sub></strong> = gravitational potential energy [J, Joules] <i>scalar</i>
-                        <br><strong>G</strong> = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N(m/kg)²] <i>scalar</i>
-                        <br><strong>M</strong> = mass [kg, kilograms] <i>scalar</i>
-                        <br><strong>r</strong> = distance between the center of each mass [m, meters] <i>scalar</i>
+                    <p>\(U_g\) = gravitational potential energy [J, Joules]
+                        <br>\(G\) = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N(m/kg)²]
+                        <br>\(M\) = mass [kg, kilograms]
+                        <br>\(r\) = distance between the center of each mass [m, meters]
                 </div>
-                <p>This version of gravitational potential energy is more accurate over long distances.</p>
-
                 <p>What is the gravitational potential energy when two masses are at zero distance away?</p>
                 <p>What is the gravitational potential energy when two masses are at an infinite distance away?</p>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p><b>Example:</b> A 2000kg space ship starts at rest 20,000km from the surface of Earth.  How much kinetic energy will the ship have after it falls down to 10,000km from the surface of Earth?
+				<p>Energy is a scalar, not a vector.  This means that when we calculate gravitational potential energy it has no direction. You can see the potential in the simulation below. Think of the yellow regions as being deeper into the <a href='https://xkcd.com/681/'>gravity well</a>.
+					<br>Poke around with your mouse.
+					Number of particles = <input class='number' id ='num1' type="number" step="1" max = '100' value = '6'></p>
+				<canvas class = 'center' id = 'grav2' height = '300' width='400' onclick="grav2(this)"> </canvas>
+
+				<div class='example'><b>Example:</b> A 2000kg space ship starts at rest 20,000km from the surface of Earth.  How much kinetic energy will the ship have after it falls down to 10,000km from the surface of Earth?
         <details>
             <summary>solution</summary>
             $$E_{i} = E_{f}$$
@@ -379,12 +347,7 @@
             $$-3.02 \times 10^{10}+4.86 \times 10^{10} = K$$
             $$1.85 \times 10^{10} J = K$$
         </details>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p><b>Example:</b> Find the minimum escape velocity for a 100kg person on Earth.
+        <div class='example'> <b>Example:</b> Find the minimum escape velocity for a 100kg person on Earth.
         <details>
             <summary>solution</summary>
             $$E_{i} = E_{f}$$
@@ -398,11 +361,6 @@
             $$\sqrt{\frac{2(6.674\times 10^{-11}) (5.972 \times 10 ^{24})}{6,371,000}} = v$$
             $$11,183 \small \frac{m}{s} = \normalsize v $$
         </details>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
     </article>
 	<div class = 'back'>
 		<a href="../../../index.html#units">Back</a>
@@ -410,7 +368,11 @@
     <script>
         renderMathInElement(document.body);
     </script>
-    <script src="gravityvectorfield.js"></script>
+	<script src="grav0.js"></script>
+	<script src="grav1.js"></script>
+	<script src="grav2.js"></script>
+	<script src="grav3.js"></script>
+    <!-- <script src="gravityvectorfield.js"></script> -->
 	<script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src='../../../lib/function-plot.js'></script>
 	<script src='plot.js'></script>

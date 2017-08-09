@@ -2,74 +2,52 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Newton's Laws</title>
-    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon'/ >
+	<meta charset="UTF-8">
+	<title>Newton's Laws</title>
+	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
-    <link rel="stylesheet" href="../../../style.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+	<link rel="stylesheet" href="../../../style.css">
 </head>
 
 <body>
 
-  <header>
-  <h1>Newton's Laws</h1>
-  </header>
+	<header>
+		<h1>Newton's Laws</h1>
+	</header>
 
-    <article>
-        <h1 class='underlined'>Newton's First Law: Inertia</h1>
-        <p><i>When viewed in an inertial reference frame, an object either remains at rest or continues to move at a constant velocity, unless acted upon by an external force.</i></p>
+	<article>
+		<h1 class='underlined'>Newton's First Law: Inertia</h1>
+		<p><em>When viewed in an inertial reference frame, an object either remains at rest or continues to move at a constant velocity, unless acted upon by an external force.</em></p>
+		<p>Objects keep moving in a straight line at a constant velocity unless they have a force acting on them.</p>
+		<p>Objects with mass have inertia. <strong>Inertia</strong> is the resistance of any physical object to any change in velocity. The more mass an object has the more force is required to change its motion.</p>
+		<p>The earth continues to rotate every day and orbit the sun every year. The international space station is orbiting the earth at 7660 m/s and the moon is orbiting at 1023 m/s. These objects just keep moving. Why do things on Earth slow down so quickly?</p>
 
-        <p>Objects keep moving in a straight line at a constant velocity unless they have a force acting on them.</p>
-        <br>
-        <p><strong>Inertia</strong> is the resistance of any physical object to any change in speed or direction.  The more mass an object has the more it will resist changes to its motion.</p>
-        <br>
-        <p>The earth continues to rotate every day and orbit the sun every year.  The international space station is orbiting the earth at 7660 m/s and the moon is orbiting at 1023 m/s.  Neither of these bodies need a continuous force.  So, what causes objects on earth to slow down so quickly?</p>
-        <br>
-        <br>
-        <br>
-        <h1 class='underlined'>Newton's Second Law: Force</h1>
-        <p><i>The vector sum of the external forces F on an object is equal to the mass m of that object multiplied by the acceleration vector of the object.</i></p>
-        <div class='definition'>
+		<h1 class='underlined'>Newton's Second Law: Force</h1>
+		<p><em>The vector sum of the external forces F on an object is equal to the mass m of that object multiplied by the acceleration vector of the object.</em></p>
+		<div class='definition'>
+			<h2>$$\sum F=ma$$</h2>
+			<p>Σ = sigma The greek letter Sigma represents a summation of numbers. In this equation it means add up all the forces to get a total force. Sometimes this is called net Force.</p>
+			<h2>$$\sum F=F_{1}+F_{2}+F_{3}+... = F_{net}$$</h2>
+			<p>\( F \) = force [N, Newtons, kg m/s²] <em>vector</em>
+				<br>a push or a pull</p>
+			<p>\(m\) = mass [kg, kilogram]
+				<br>the measure of an object's resistance to acceleration</p>
+			<p>\(a\) = acceleration [m/s²] <em>vector</em>
+				<br>the change in velocity every second</p>
+			</p>
 
-            <h2><span id="KaTex_1">...</span></h2>
-            <script>
-                katex.render("\\sum F=ma", KaTex_1, {
-                    displayMode: true
-                });
-            </script>
-
-
-            <p><b>Σ = sigma</b> The greek letter Sigma represents a summation of numbers. In this equation it means add up all the forces to get a total force. Sometimes this is called net Force.</p>
-
-            <h2><span id="KaTex_2">...</span></h2>
-            <script>
-                katex.render("\\sum F=F_{1}+F_{2}+F_{3}+... = F_{net}", KaTex_2, {
-                    displayMode: true
-                });
-            </script>
-
-            <p><b>F = force</b> [N, Newtons, kg m/s²] <i>vector</i>
-            <br>Force is a push or a pull.  Force accelerates an object.</p>
-            <p><b>m = mass</b> [kg, kilogram]
-                <br>Mass is a measure of an object's resistance to acceleration.</p>
-            <p><b>a = acceleration</b> [m/s²] <i>vector</i>
-        </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p><b>Example:</b> On a corner kick you use the <a href="http://www.youtube.com/watch?v=2OSrvzNW9FE&t=1m39s">Magnus Effect</a> to curve the ball into the goal. To approximate the magnus effect assume the ball has a net force of 1N.  How much acceleration does that produce on a 0.43 kg soccerball?</p>
-        <details>
-            <summary>solution</summary>
-            $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1}{0.43}=a$$ $$2.33\small\frac{m}{s^{2}}=\normalsize a$$
-        </details>
-        <br>
-        <br>
-        <svg class='svgDiagram' width="300" height="120" viewBox="-15 0 285 120" style="outline: 0px solid black;float: right;">
+		</div>
+		<div class='example'><b>Example:</b> A soccer ball has a mass of 0.43kg.  Find the acceleration of the ball when it experiences a net force of 1N.
+			<details>
+				<summary>solution</summary>
+				$$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1}{0.43}=a$$ $$2.33\small\frac{m}{s^{2}}=\normalsize a$$
+			</details>
+		</div>
+		<div class='example'>
+			<svg class='svgDiagram' width="300" height="120" viewBox="-15 0 285 120" style="outline: 0px solid black;float: right;">
           <defs>
               <g id="vector">
                 <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
@@ -87,76 +65,61 @@
             <use xlink:href="#vector" transform='translate(180 60) rotate(-90)'/>
             <text x="200" y="53" fill="black">F=1900N</text>
         </svg>
-        <p><b>Example:</b> A 10kg mass at rest is being pulled left with a 2000N force and right with a 1900N force. How will the mass accelerate?  How far will the mass go in 6s?</p>
-        <details>
-            <summary>solution</summary>
-            $$\sum F=ma$$ $$-2000+1900=(10)(a)$$ $$-100=(10)(a)$$ $$-10\small\frac{m}{s^{2}}=\normalsize a$$
-            <p>The mass will accelerate to the left.</p>
-            $$ u = 0 $$
-            $$ \Delta x = ?$$
-            $$ \Delta t = 6s$$
-            $$ \Delta x = u\Delta t+ \small\frac{1}{2}\normalsize a \Delta t^{2}$$
-            $$ \Delta x = \small\frac{1}{2}\normalsize (-10)(6)^{2}$$
-            $$ \Delta x = -180m$$
-        </details>
-
-        <br>
-        <br>
-        <br>
-        <h1  class='underlined'>Newton's Third Law: Equal and Opposite Forces</h1>
-        <svg class='svgDiagram' width="300" height="150" style="outline: 0px solid black;float: right;">
+			<b>Example:</b> A 10kg mass at rest is being pulled left with a 2000N force and right with a 1900N force. How will the mass accelerate? How far will the mass go in 6s?
+			<details>
+				<summary>solution</summary>
+				$$\sum F=ma$$ $$-2000+1900=(10)(a)$$ $$-100=(10)(a)$$ $$-10\small\frac{m}{s^{2}}=\normalsize a$$
+				<p>The mass will accelerate to the left.</p>
+				$$ u = 0 $$ $$ \Delta x = ?$$ $$ \Delta t = 6s$$ $$ \Delta x = u\Delta t+ \small\frac{1}{2}\normalsize a \Delta t^{2}$$ $$ \Delta x = \small\frac{1}{2}\normalsize (-10)(6)^{2}$$ $$ \Delta x = -180m$$
+			</details>
+		</div>
+		<h1 class='underlined'>Newton's Third Law: Equal and Opposite Forces</h1>
+		<svg class='svgDiagram' width="300" height="150" style="outline: 0px solid black;float: right;">
             <rect x="60" y="50" width="80" height="80" style="stroke:black;stroke-width:2;fill:#cfe2f6" />
             <rect x="140" y="50" width="80" height="80" style="stroke:black;stroke-width:2;fill:#cff6d7" />
             <rect x="0" y="130" width="300" height="110" style="fill:#ccc" />
             <use xlink:href="#vector" transform='translate(190 90) rotate(90)'/>
             <use xlink:href="#vector" transform='translate(90 90) rotate(-90)'/>
         </svg>
-        <p><i>When one body exerts a force on a second body, the second body simultaneously exerts a force equal in magnitude and opposite in direction on the first body.</i></p>
-        <p>If you push on an object the object will push back with the same force, but in the opposite direction.</p>
-        <br>
-        <br>
-
-        <p><b>Example:</b> You push down on the ground with a 1000N force. Describe the magnitude and direction of the force the ground pushes on you.</p>
-        <details>
-            <summary>solution</summary>
-            <p>The force the ground applies is equal and opposite to the force you apply on the ground.</p>
-            <p>The magnitude is 1000N.</p>
-            <p>The direction is up.</p>
-        </details>
-        <br>
-        <br>
-        <p><b>Example:</b> A boxer's glove applies a 140N force to the face of another boxer. Describe the magnitude of the force the face applies to the glove.</p>
-        <details>
-            <summary>solution</summary>
-            <p>The force is equal and opposite.</p>
-            <p>The magnitude is 140N.</p>
-        </details>
-        <br>
-        <br>
-        <p><b>Example:</b> A 0.4 kg squirrel is pulling a 10kg box with a string.  The squirrel and box are accelerating to the left at 0.5 m/s².  What is the force of tension on the string? What force is the squirrel producing in order to accelerate to the left?</p>
-        <details>
-            <summary>solution</summary>
-            <p>Draw a free body diagram for each object and use newton's second law on each object.</p>
-            <br>
-            <p><strong>box</strong></p>
-            $$\sum F=ma$$
-            $$F_{tension}=(10)(-0.5)$$
-            $$F_{tension}=-5N$$
-            <br>
-            <p>The force on the string is equal but opposite for the squirrel and box.</p>
-            <p><strong>squirrel</strong></p>
-            $$\sum F=ma$$
-            $$F_{squirrel} + F_{tension}=ma$$
-            $$F_{squirrel} + 5=(0.4)(-0.5)$$
-            $$F_{squirrel}=-0.2-5$$
-            $$F_{squirrel}=-5.2N$$
-            <p>The squirrel is producing a force of 5.2N to the left.</p>
-        </details>
-    </article>
-	<div class = 'back'>
+		<p><em>When one body exerts a force on a second body, the second body simultaneously exerts a force equal in magnitude and opposite in direction on the first body.</em></p>
+		<p>If you push on an object the object will push back with the same force, but in the opposite direction.</p>
+		<div class='example'>
+		<b>Example:</b> You push down on the ground with a 1000N force. Describe the magnitude and direction of the force the ground pushes on you.
+		<details>
+			<summary>solution</summary>
+			<p>The force the ground applies is equal and opposite to the force you apply on the ground.</p>
+			<p>The magnitude is 1000N.</p>
+			<p>The direction is up.</p>
+		</details>
+	</div>
+		<div class='example'><b>Example:</b> A boxer's glove applies a 140N force to the face of another boxer. Describe the magnitude of the force the face applies to the glove.
+			<details>
+				<summary>solution</summary>
+				<p>The force is equal and opposite.</p>
+				<p>The magnitude is 140N.</p>
+			</details>
+		</div>
+		<div class='example'><b>Example:</b> A 0.4 kg squirrel is pulling a 10kg box with a string. The squirrel and box are accelerating to the left at 0.5 m/s². What is the force of tension on the string? What force is the squirrel producing in order to accelerate to the left?
+			<details>
+				<summary>solution</summary>
+				<p>Draw a free body diagram for each object and use newton's second law on each object.</p>
+				<br>
+				<p><strong>box</strong></p>
+				$$\sum F=ma$$ $$F_{tension}=(10)(-0.5)$$ $$F_{tension}=-5N$$
+				<br>
+				<p>The force on the string is equal but opposite for the squirrel and box.</p>
+				<p><strong>squirrel</strong></p>
+				$$\sum F=ma$$ $$F_{squirrel} + F_{tension}=ma$$ $$F_{squirrel} + 5=(0.4)(-0.5)$$ $$F_{squirrel}=-0.2-5$$ $$F_{squirrel}=-5.2N$$
+				<p>The squirrel is producing a force of 5.2N to the left.</p>
+			</details>
+		</div>
+	</article>
+	<div class='back'>
 		<a href="../../../index.html#units">Back</a>
 	</div>
-    <script>renderMathInElement(document.body);</script>
+	<script>
+		renderMathInElement(document.body);
+	</script>
 </body>
 
 </html>
