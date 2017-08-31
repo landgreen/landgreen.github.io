@@ -60,9 +60,19 @@ button {
     font-size: 1em;
     margin: 0.3em;
 }
+
 input {
-    font-size: 1em;
+  font-size: 100%;
+  width: 80px;
+  background: #eee;
+  border: 10px;
+  margin: 0.2em;
 }
+
+input:focus {
+  outline: 0;
+}
+
 canvas {
     margin: 0.3em;
     /*border: 1px solid #999;*/
@@ -112,12 +122,12 @@ table {
   /*border-bottom: 2px solid #222;*/
   width: 100%;
 }
-table tr:hover {
+/*table tr:hover {
   background: #f4f4f4;
 }
 table tr:hover td {
   color: #555;
-}
+}*/
 table th, table td {
   color: #777;
   border: 1px solid #eee;
@@ -344,4 +354,26 @@ header h1 {
     .grid li.wide {
         width: 50%;
     }
+}
+
+.draw-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 4s ease-in forwards;
+/*   animation: dash 4s ease-in alternate infinite; */
+}
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.fade-in {
+	opacity: 0;
+	animation: opacity 2s ease-in forwards;
+}
+@keyframes opacity {
+  to {
+    opacity: 1;
+  }
 }
