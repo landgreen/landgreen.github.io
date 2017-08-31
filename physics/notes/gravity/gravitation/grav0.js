@@ -1,7 +1,7 @@
 const setup0 = function() {
 	var canvas = document.getElementById('grav0');
 	var ctx = canvas.getContext("2d");
-	ctx.font = "300 30px Roboto";
+	ctx.font = "300 30px Arial, Helvetica, sans-serif";
 	ctx.fillStyle = '#aaa';
 	ctx.textAlign = "center";
 	ctx.fillText('click to start simulation', canvas.width / 2, canvas.height / 2);
@@ -10,7 +10,8 @@ setup0()
 
 function grav0(el) {
 	el.onclick = null; //stops the function from running on button click
-	Particle.setCanvas(el)
+	var canvas = el
+	var ctx = canvas.getContext("2d");
 	ctx.globalCompositeOperation = 'lighter'
 	// var canvas = el
 	// var ctx = canvas.getContext("2d");
@@ -39,7 +40,6 @@ function grav0(el) {
 	});
 	el.addEventListener("mouseenter", function() {
 		pause = false
-		Particle.setCanvas(el)
 		if (!pause) requestAnimationFrame(cycle);
 	});
 
@@ -49,20 +49,19 @@ function grav0(el) {
 	}, false);
 
 
-let q = [] //holds the Particles
-const reset = function(){
-	q = []
-	Particle.spawnRandom(q, Math.min(document.getElementById("num").value, 1000))
-}
-reset()
+	let q = [] //holds the Particles
+	const reset = function(){
+		q = []
+		Particle.spawnRandom(q, canvas, Math.min(Math.floor(document.getElementById("num").value), 500))
+	}
+	reset()
 
 
 	function cycle() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		Particle.physicsAll(q)
-		// Particle.vectorField(q,vMag)
-		Particle.drawAll(q)
-		Particle.bounds(q, -10)
+		Particle.drawAll(q, ctx)
+		Particle.bounds(q, canvas, -10)
 		if (!pause) requestAnimationFrame(cycle);
 	}
 	requestAnimationFrame(cycle);

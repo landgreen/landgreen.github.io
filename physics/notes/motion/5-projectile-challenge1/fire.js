@@ -1,10 +1,20 @@
-challenge();
-
-function challenge(){
 //set up canvas
 var canvasID = "canvas"
 var canvas = document.getElementById(canvasID);
 var ctx = canvas.getContext("2d");
+ctx.font = "20px Arial";
+// ctx.textAlign="center";
+
+var mouse = {
+  down: false,
+  x: null,
+  y: null
+};
+canvas.onmousemove = function(e) {
+  var rect = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - rect.left;
+  mouse.y = e.clientY - rect.top;
+}
 
 // module aliases
 var Engine = Matter.Engine,
@@ -21,34 +31,26 @@ var scale = 10;
 
  var settings = {
   ballRadius: 1,
-  x: 0,
-  y: 0,
-  Vx: (5+Math.round(Math.random()*20)),
-  Vy: 15,
-  gapY: 50 + Math.round(Math.random()*400),
-  gapX: 200 + Math.round(Math.random()*300)
+  	x: 0,
+  	y: 0,
+  	Vx: (10+Math.round(Math.random()*10)),
+  	Vy: 15,
+  	gapY: 150 + Math.round(Math.random()*300),
+  	gapX: 250 + Math.round(Math.random()*250),
+  	fire: function() {
+		settings.Vy = document.getElementById("num1").value
+    spawnMass(settings.x, settings.y, settings.Vx, settings.Vy, settings.ballRadius);
+	},
+	clear: function() {
+	  World.clear(engine.world, true);
+	  mass = [];
+  },
 }
+
 //write the random values to html
 document.getElementById("xpos").innerHTML = (settings.gapX/scale).toFixed(1);
 document.getElementById("ypos").innerHTML = (settings.gapY/scale).toFixed(1);
 document.getElementById("Vx").innerHTML = (settings.Vx).toFixed(1);
-
-//dat GUI setup
-var gui = new dat.GUI( { autoplace: false, width: 400 });
-//gui.close();
-
-settings.fire = function() {
-  spawnMass(settings.x, settings.y, settings.Vx, settings.Vy, settings.ballRadius);
-};
-gui.add(settings, 'fire');
-//remove all non-static bodies
-settings.clear = function() {
-  World.clear(engine.world, true);
-  mass = [];
-};
-gui.add(settings, 'clear');
-//gui.add(settings, 'Vx', 0, 200).step(1);
-gui.add(settings, 'Vy', 0, 50).step(1);
 
 //setup ball
 var mass = [];
@@ -117,10 +119,15 @@ engine.world.gravity.scale = 0.000001 * scale;
 engine.world.gravity.y = 9.8;
 
 //render
-(function render() {
+render()
+function render() {
   var bodies = Composite.allBodies(engine.world);
-  window.requestAnimationFrame(render);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //draw mouse position
+  ctx.fillStyle = '#333';
+  // ctx.fillText(`(${(mouse.x/scale).toFixed(0)}m, ${(-(mouse.y-canvas.height)/scale).toFixed(0)}m)`,mouse.x,mouse.y+40);
+  if (mouse.x) ctx.fillText(`(${(mouse.x/scale).toFixed(0)}m, ${(-(mouse.y-canvas.height)/scale).toFixed(0)}m)`,0,20);
+
   ctx.beginPath();
   for (var i = 0; i < bodies.length; i += 1) {
     var vertices = bodies[i].vertices;
@@ -145,5 +152,6 @@ engine.world.gravity.y = 9.8;
   ctx.strokeStyle = '#555';
   ctx.stroke();
 
-})();
-}
+
+  window.requestAnimationFrame(render);
+};

@@ -1,30 +1,19 @@
-window.onload = setup;
-function setup() { //writes a message onload
-    var canvas;
-    var ctx;
-    for (var i = 0; i < 6; i++) {
-        canvas = document.getElementById('canvas' + i);
-        ctx = canvas.getContext("2d");
-        ctx.font = "300 30px Roboto";
-        ctx.fillStyle = '#aaa';
-        ctx.textAlign = "center";
-        ctx.fillText('click to start simulation', canvas.width / 2, canvas.height / 2);
-    }
-}
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     setup();
-// }, false);
-
-
-var motion = function(canvasID, button, showPos, showTime, showVel, showAccel, position, velocity, acceleration, edges) {
-    button.onclick = null; //stops the function from running on button click
-    var canvasID = canvasID;
+var motion = function(canvasID, showPos, showTime, showVel, showAccel, position, velocity, acceleration, edges) {
     var canvas = document.getElementById(canvasID);
+    canvas.onclick = null; //stops the function from running on button click
     var ctx = canvas.getContext("2d");
     ctx.font = "300 24px Roboto";
     ctx.textAlign = "start";
     ctx.lineWidth = 2;
+
+    let pause = true
+    canvas.addEventListener("mouseleave", function() {
+        pause = true
+    });
+    canvas.addEventListener("mouseenter", function() {
+        pause = false
+        if (!pause) requestAnimationFrame(render);
+    });
 
     var mousePos = {
         x: position,
@@ -56,13 +45,6 @@ var motion = function(canvasID, button, showPos, showTime, showVel, showAccel, p
         physics.gravX = acceleration;
     }
 
-    function play() {
-
-
-    }
-
-
-
     function mass(x, y, Vx, Vy, r, fillColor) { //constructor function that determines how masses work
         this.x = x;
         this.y = y;
@@ -80,7 +62,7 @@ var motion = function(canvasID, button, showPos, showTime, showVel, showAccel, p
             ctx.fill();
         };
         this.move = function() {
-            this.t += 1/60;
+            this.t += 1 / 60;
             this.x += this.Vx / 60;
             this.y += this.Vy / 60;
         };
@@ -150,7 +132,7 @@ var motion = function(canvasID, button, showPos, showTime, showVel, showAccel, p
     window.requestAnimationFrame(render);
 
     function render() { //repeating animation function
-        window.requestAnimationFrame(render);
+        if (!pause) window.requestAnimationFrame(render);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (edges) box.edges();
         box.move();
@@ -160,3 +142,9 @@ var motion = function(canvasID, button, showPos, showTime, showVel, showAccel, p
         box.info();
     }
 }
+motion('canvas1', true, false, false, false, 300, 0, 0, false)
+motion('canvas2', true, true, false, false, 300, 0, 0, false)
+motion('canvas3', true, true, true, false, 300, 80, 0, true)
+motion('canvas5', true, true, true, false, 0, 20, 0, false)
+motion('canvas4', true, true, true, true, 300, 0, 9.8, true)
+motion('canvas0', false, true, true, true, 300, 0, 4.5, true)

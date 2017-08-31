@@ -28,9 +28,30 @@
 		<h1 class='underlined'>Newton's Second Law: Force</h1>
 		<p><em>The vector sum of the external forces F on an object is equal to the mass m of that object multiplied by the acceleration vector of the object.</em></p>
 		<div class='definition'>
-			<h2>$$\sum F=ma$$</h2>
-			<p>Σ = sigma The greek letter Sigma represents a summation of numbers. In this equation it means add up all the forces to get a total force. Sometimes this is called net Force.</p>
-			<h2>$$\sum F=F_{1}+F_{2}+F_{3}+... = F_{net}$$</h2>
+			<svg class='svgDiagram center' width="300" height="120" viewBox="-15 0 285 120">
+          <defs>
+              <g id="vector">
+                <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
+                <polygon points="0,50 -5,42 5,42" style="fill:#000;" />
+              </g>
+              <g id="box">
+                <rect x="0" y="0" width="80" height="80" style="stroke:black;stroke-width:2;fill:#e3d1a9" />
+                <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='25px'>m</text>
+              </g>
+          </defs>
+			<use x='100' y='20' xlink:href="#box"/>
+            <use xlink:href="#vector" transform='translate(100 60) rotate(90)'/>
+            <text x="40" y="60" font-size='25px' text-anchor="middle" alignment-baseline="middle">F</text>
+			<use xlink:href="#vector" transform='translate(180 80) rotate(-90)'/>
+			<text x="240" y="80" font-size='25px' text-anchor="middle" alignment-baseline="middle">F</text>
+            <use xlink:href="#vector" transform='translate(180 40) rotate(-90)'/>
+            <text x="240" y="40" font-size='25px' text-anchor="middle" alignment-baseline="middle">F</text>
+        </svg>
+			<h2>
+				$$\sum F=ma$$
+				$$\sum F=F_{1}+F_{2}+F_{3}+...$$
+			</h2>
+			<p>\( \sum \) = The greek letter Sigma represents a summation of numbers. It means add up all the forces to get a total force. This is also called net force.</p>
 			<p>\( F \) = force [N, Newtons, kg m/s²] <em>vector</em>
 				<br>a push or a pull</p>
 			<p>\(m\) = mass [kg, kilogram]
@@ -43,11 +64,11 @@
 		<div class='example'><b>Example:</b> A soccer ball has a mass of 0.43kg.  Find the acceleration of the ball when it experiences a net force of 1N.
 			<details>
 				<summary>solution</summary>
-				$$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1}{0.43}=a$$ $$2.33\small\frac{m}{s^{2}}=\normalsize a$$
+				$$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1}{0.43}=a$$ $$2.33\tfrac{m}{s^{2}}=a$$
 			</details>
 		</div>
 		<div class='example'>
-			<svg class='svgDiagram' width="300" height="120" viewBox="-15 0 285 120" style="outline: 0px solid black;float: right;">
+			<svg class='svgDiagram' width="300" height="120" viewBox="-15 0 285 120" style="float: right;">
           <defs>
               <g id="vector">
                 <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
@@ -58,8 +79,9 @@
                 <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle">10kg</text>
               </g>
           </defs>
-            <use x='100' y='20' xlink:href="#box"/>
+
             <rect x="0" y="100" width="300" height="110" style="fill:#ccc" />
+			<use x='100' y='20' xlink:href="#box"/>
             <use xlink:href="#vector" transform='translate(100 60) rotate(90)'/>
             <text x="10" y="53" fill="black">F=2000N</text>
             <use xlink:href="#vector" transform='translate(180 60) rotate(-90)'/>
@@ -68,9 +90,9 @@
 			<b>Example:</b> A 10kg mass at rest is being pulled left with a 2000N force and right with a 1900N force. How will the mass accelerate? How far will the mass go in 6s?
 			<details>
 				<summary>solution</summary>
-				$$\sum F=ma$$ $$-2000+1900=(10)(a)$$ $$-100=(10)(a)$$ $$-10\small\frac{m}{s^{2}}=\normalsize a$$
+				$$\sum F=ma$$ $$-2000+1900=(10)(a)$$ $$-100=(10)(a)$$ $$-10\tfrac{m}{s^{2}}= a$$
 				<p>The mass will accelerate to the left.</p>
-				$$ u = 0 $$ $$ \Delta x = ?$$ $$ \Delta t = 6s$$ $$ \Delta x = u\Delta t+ \small\frac{1}{2}\normalsize a \Delta t^{2}$$ $$ \Delta x = \small\frac{1}{2}\normalsize (-10)(6)^{2}$$ $$ \Delta x = -180m$$
+				$$ u = 0 $$ $$ \Delta x = ?$$ $$ \Delta t = 6s$$ $$ \Delta x = u\Delta t+ \tfrac{1}{2} a \Delta t^{2}$$ $$ \Delta x = \tfrac{1}{2} (-10)(6)^{2}$$ $$ \Delta x = -180m$$
 			</details>
 		</div>
 		<h1 class='underlined'>Newton's Third Law: Equal and Opposite Forces</h1>

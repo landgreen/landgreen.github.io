@@ -53,6 +53,22 @@
         <p>Pushing a stationary wall isn't work.</p>
         <p>A ball rolling on frictionless level ground isn't work. </p>
         <div class='definition'>
+			<svg style="display: block; margin: auto" width="400" height="140" class='svgDiagram, center' version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0 -20 300 120">
+				<rect id='ground' x="-100" y="61" width="400" height="200" style="fill:#cba" />
+				<rect x="0" y="0" width="60" height="60" style="stroke:black;stroke-width:2;fill:#cff " />
+				<rect x="200" y="0" width="60" height="60" stroke-dasharray="3,3" style="stroke:#444; stroke-width:2;" fill-opacity="0" />
+				<line x1="60" y1="70" x2="260" y2="70" style="stroke:#000;stroke-width:2" />
+				<line x1="60" y1="65" x2="60" y2="75" style="stroke:#000;stroke-width:2" />
+				<line x1="260" y1="65" x2="260" y2="75" style="stroke:#000;stroke-width:2" />
+				<text x="165" y="95" fill="black" text-anchor="middle" font-size="15">d</text>
+				<text x="90" y="60" fill="black" font-size="14">Θ</text>
+				<line x1="150" y1="10" x2="150" y2="70" style="stroke:#444;stroke-width:2" stroke-dasharray="3,3" />
+				<g transform="translate(65 60) rotate(-30 )">
+					<line x1="0" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+					<polygon points="0,0 -8,5 -8,-5" transform="translate(105 0)" style="fill:#000;" />
+					<text x="100" y="-6" fill="black" text-anchor="middle" font-size="15">F</text>
+				</g>
+			</svg>
             <h1>$$W = Fd\cos\theta$$</h1>
 
             \(W\) = work [J, Joules, kg m²/s²]
@@ -64,25 +80,25 @@
         <br>
         <br>
 
-        <svg style="display: block; margin: auto" width="400" height="150" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0 -20 400 130">
-            <rect id='ground' x="-100" y="61" width="800" height="200" style="fill:#cba" />
-            <rect x="0" y="0" width="60" height="60" style="stroke:black;stroke-width:2;fill:#cff " />
-            <rect x="200" y="0" width="60" height="60" stroke-dasharray="3,3" style="stroke:#ddd; stroke-width:2;" fill-opacity="0" />
-            <text x="30" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">5kg</text>
-            <line x1="60" y1="70" x2="260" y2="70" style="stroke:#000;stroke-width:2" />
-            <line x1="60" y1="65" x2="60" y2="75" style="stroke:#000;stroke-width:2" />
-            <line x1="260" y1="65" x2="260" y2="75" style="stroke:#000;stroke-width:2" />
-            <text x="165" y="95" fill="black" text-anchor="middle" font-size="15">d = 200m</text>
-            <text x="90" y="60" fill="black" font-size="14">Θ = 30°</text>
-            <line x1="150" y1="10" x2="150" y2="70" style="stroke:#999;stroke-width:2" stroke-dasharray="3,3" />
-            <g transform="translate(65 60) rotate(-30 )">
-                <line x1="0" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-                <polygon points="0,0 -8,5 -8,-5" transform="translate(105 0)" style="fill:#000;" />
-                <text x="100" y="-6" fill="black" text-anchor="middle" font-size="15">F = 100N</text>
-            </g>
-        </svg>
-
-	<div class = 'example'><strong>Example:</strong> If I apply 100N of force at an angle 30 degrees above the horizontal and I move a 5kg box 200 meters horizontally, how much work is done?
+	<div class = 'example'>
+		<svg style="display: block; margin: auto" width="600" height="150" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0 -20 400 130">
+			<rect id='ground' x="-100" y="61" width="800" height="200" style="fill:#cba" />
+			<rect x="0" y="0" width="60" height="60" style="stroke:black;stroke-width:2;fill:#cff " />
+			<rect x="200" y="0" width="60" height="60" stroke-dasharray="3,3" style="stroke:#444; stroke-width:2;" fill-opacity="0" />
+			<text x="30" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">5kg</text>
+			<line x1="60" y1="70" x2="260" y2="70" style="stroke:#000;stroke-width:2" />
+			<line x1="60" y1="65" x2="60" y2="75" style="stroke:#000;stroke-width:2" />
+			<line x1="260" y1="65" x2="260" y2="75" style="stroke:#000;stroke-width:2" />
+			<text x="165" y="95" fill="black" text-anchor="middle" font-size="15">d = 200m</text>
+			<text x="90" y="60" fill="black" font-size="14">Θ = 30°</text>
+			<line x1="150" y1="10" x2="150" y2="70" style="stroke:#444;stroke-width:2" stroke-dasharray="3,3" />
+			<g transform="translate(65 60) rotate(-30 )">
+				<line x1="0" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+				<polygon points="0,0 -8,5 -8,-5" transform="translate(105 0)" style="fill:#000;" />
+				<text x="100" y="-6" fill="black" text-anchor="middle" font-size="15">F = 100N</text>
+			</g>
+		</svg>
+		<strong>Example:</strong> If I apply 100N of force at an angle 30 degrees above the horizontal and I move a 5kg box 200 meters horizontally, how much work is done?
         <details>
             <summary>solution</summary>
             $$W = Fd\cos\theta$$ $$W = (100)(200)\cos(30)$$ $$W = (100)(200)(0.866)$$ $$W = 17320J$$
@@ -103,12 +119,7 @@
         </details>
 </div>
         <h1 class='underlined'>Kinetic Energy</h1>
-		<details class='history'>
-            <summary>Historical Background</summary>
-			<br>
-			<div>The discovery of the kinetic energy formula was made by a German philosopher, Gottfried Wilhelm Leibniz. He invented the concept of kinetic energy, which he described as “vis viva” (Latin for “living force”). This was an early principle of conservation of energy. Leibniz proposed this theory between 1676 - 1689, and during this time, it was seen as controversial because it seemingly went against the theory of conservation of momentum. It is now known that “vis viva” represents the conservation of kinetic energy in elastic collisions. <em>-Grace Freedson</em></div>
 
-        </details>
         <div class='definition'>
             <h1>$$K = \small\frac{1}{2}\normalsize mv^{2}$$</h1>
 
@@ -137,7 +148,14 @@
         </details>
 </div>
         <h1 class='underlined'>Potential Energy</h1>
-        <p>Potential energy is energy that could potentially do some work. We can measure some forms of potential energy.</p>
+        <p>Potential energy is energy that could potentially do some work.</p>
+		<p>Examples of potential energy are:
+			<li>a battery stores electrical energy
+			<li>being up high is gravitational energy
+			<li>a compressed spring
+			<li>two opposing magnets pushed together
+			<li>chemical energy, like gasoline or wood.
+		</p>
 
         <h1 class='underlined'>Gravitational Potential Energy</h1>
         <p>If you drop a massive object it will gain kinetic energy as it falls. We call the potential for the energy of its position to turn into kinetic energy gravitational potential energy</p>
@@ -154,7 +172,7 @@
             <br>\(g\) = acceleration from gravity (on earth = 9.8) [m/s²] <i>vector</i>
             <br>\(h\) = height [m]
         </div>
-        <p><strong>Height</strong> is the tricky part of this equation, because at the zero point is unclear. The floor can be the zero point, or the floor of the basement or the top of a table, or any point. You choose a zero point that makes the problem less complex.
+        <p><strong>Height</strong> is the tricky part of this equation, because where is zero height? The ground floor can be the zero point, or the floor of the basement or the top of a table, or any point. You choose a zero point that makes the problem less complex, like the starting or ending point.
         </p>
 
 
@@ -163,7 +181,7 @@
 
         <table style='width:100%'>
             <tr>
-                <th style='background-color:#fff;color:#333'>
+                <td style='background-color:#fff;color:#333'>
                     <svg style="display: block; margin: auto" width="170" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <rect id='ground' x="0" y="160" width="200" height="200" style="fill:#cba" />
                         <rect x="0" y="0" width="60" height="60" style="stroke:black;stroke-width:2;fill:#cff " />
@@ -177,8 +195,8 @@
                     </svg>
                     <br>
                     <br> $$U_{g} = mgh$$ $$U_{g} = (5)(9.8)(100)$$ $$U_{g} = 4900J$$
-                </th>
-                <th style='background-color:#fff;color:#333'>
+                </td>
+                <td style='background-color:#fff;color:#333'>
                     <svg style="display: block; margin: auto" width="170" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <rect id='ground' x="0" y="160" width="200" height="200" style="fill:#cba" />
                         <rect x="0" y="0" width="60" height="60" style="stroke:black;stroke-width:2;fill:#cff " />
@@ -192,8 +210,8 @@
                     </svg>
                     <br>
                     <br> $$U_{g} = mgh$$ $$U_{g} = (5)(9.8)(0)$$ $$U_{g} = 0J$$
-                </th>
-                <th style='background-color:#fff;color:#333'>
+                </td>
+                <td style='background-color:#fff;color:#333'>
                     <svg style="display: block; margin: auto" width="170" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <rect id='ground' x="0" y="160" width="200" height="200" style="fill:#cba" />
                         <rect x="0" y="0" width="60" height="60" style="stroke:black;stroke-width:2;fill:#cff " />
@@ -208,7 +226,7 @@
                     </svg>
                     <br>
                     <br> $$U_{g} = mgh$$ $$U_{g} = (5)(9.8)(50)$$ $$U_{g} = 2450J$$
-                </th>
+                </td>
             </tr>
         </table>
 
@@ -266,60 +284,61 @@
         <h1 class='underlined'>Elastic Potential Energy</h1>
         <p> Elastic materials all obey <strong>Hooke's law</strong> which says that there is a linear relationship between displacement and the restoring force:</p>
         <div class='definition'>
+			<svg width="550" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" class="svgDiagram">
+				<title>Hooke&#x27;s law</title>
+				<defs>
+					<marker id="se_marker_end_svg_4" markerUnits="strokeWidth" orient="auto" viewBox="0 0 100 100" markerWidth="5" markerHeight="5" refX="50" refY="50">
+						<path id="svg_6" d="m50,0l0,100" fill="black" stroke="black" stroke-width="10" />
+					</marker>
+					<marker id="se_marker_start_svg_4" markerUnits="strokeWidth" orient="auto" viewBox="0 0 100 100" markerWidth="5" markerHeight="5" refX="50" refY="50">
+						<path id="svg_7" d="m50,0l0,100" fill="black" stroke="black" stroke-width="10" />
+					</marker>
+					<marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_5">
+						<path stroke-width="10" fill="none" d="m0,50l100,40l-30,-40l30,-40l-100,40z" id="svg_9" />
+					</marker>
+					<marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_end_svg_14">
+						<path stroke-width="10" stroke="grey" fill="grey" d="m100,50l-100,40l30,-40l-30,-40l100,40z" id="svg_16" />
+					</marker>
+				</defs>
+				<g>
+					<title>Layer 1</title>
+					<g transform="rotate(1.5899989604949951 104.98438262939398,134.5313568115233) " id="svg_44">
+						<line id="svg_19" y2="136.65626" x2="196.7422" y1="122.73438" x1="178.39064" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
+						<line id="svg_23" y2="139.47498" x2="162.91566" y1="123.05079" x1="179.33985" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
+						<line id="svg_24" y2="139.51837" x2="163.83594" y1="125.59649" x1="145.48438" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
+						<line id="svg_25" y2="140.94219" x2="130.61327" y1="127.02031" x1="112.26171" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
+						<line id="svg_26" y2="142.02069" x2="130.32581" y1="125.59649" x1="146.75" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
+						<line id="svg_31" y2="142.32987" x2="96.31214" y1="125.90567" x1="112.73634" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
+						<line id="svg_32" y2="142.37325" x2="97.23242" y1="128.45138" x1="78.88086" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
+						<line id="svg_33" y2="143.79708" x2="64.00975" y1="129.8752" x1="45.65819" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
+						<line id="svg_34" y2="144.87557" x2="63.72229" y1="128.45138" x1="80.14649" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
+						<line id="svg_40" y2="146.28495" x2="30.34144" y1="129.86075" x1="46.76564" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
+						<line id="svg_41" y2="146.32833" x2="31.57813" y1="132.40645" x1="13.22657" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
+					</g>
+					<line fill="none" stroke-width="2" stroke-dasharray="3,3" stroke-linejoin="null" stroke-linecap="null" x1="227" y1="-18.5" x2="227" y2="181.40498" id="svg_12" stroke="black" />
+					<rect fill="#cba" height="200" width="590.00001" y="160" x="-48.3125" id="ground" />
+					<rect id="svg_1" stroke="grey" stroke-width="2" fill-opacity="0" stroke-dasharray="3,3" height="60" width="60" y="99.76563" x="304.45313" fill="black" />
+					<rect fill="#cba" height="200" width="63" y="-10" x="-48.3125" id="svg_13" />
+					<g id="svg_11">
+						<rect id="svg_2" stroke="black" stroke-width="2" fill="#ccc" height="60" width="60" y="100" x="197" />
+					</g>
+					<text id="svg_8" text-anchor="start" fill="black" y="180" x="276.89063" font-family="Serif">x</text>
+
+					<line fill="#000" stroke="#000" stroke-width="2" stroke-linejoin="null" stroke-linecap="null" x1="228.03129" y1="167.45314" x2="335.52179" y2="167.45314" id="svg_4" marker-end="url(#se_marker_end_svg_4)" marker-start="url(#se_marker_start_svg_4)" />
+
+					<text fill="#000000" x="88.10938" y="118.09375" id="svg_10" font-family="Sans-serif" text-anchor="middle" xml:space="preserve" font-style="normal">k</text>
+					<line marker-start="url(#se_marker_start_svg_5)" id="svg_5" y2="127.37501" x2="277.99482" y1="127.37501" x1="332.00003" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="3,3" stroke-width="2" fill="none" />
+					<line marker-end="url(#se_marker_end_svg_14)" id="svg_14" y2="127.37501" x2="271.60338" y1="127.37501" x1="337.43751" stroke-linecap="null" stroke-linejoin="null" stroke-width="2" stroke="grey" fill="none" />
+					<text id="svg_15" fill="#000000" x="291.46094" y="123.78906" font-family="Sans-serif" text-anchor="middle" xml:space="preserve" font-style="normal">F</text>
+				</g>
+			</svg>
+
             <h1>$$F = -kx$$</h1>
             \(F\) = Restoring elastic force [N, Newtons, kg m/s²] <i>Vector</i>
             <br>\(k\) = spring constant [kg/s²]
             <br>\(x\) = displacement from equilibrium [m]<i>vector</i>
         </div>
 
-        <svg style='float: right;' width="400" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" class="svgDiagram">
-            <title>Hooke&#x27;s law</title>
-            <defs>
-                <marker id="se_marker_end_svg_4" markerUnits="strokeWidth" orient="auto" viewBox="0 0 100 100" markerWidth="5" markerHeight="5" refX="50" refY="50">
-                    <path id="svg_6" d="m50,0l0,100" fill="black" stroke="black" stroke-width="10" />
-                </marker>
-                <marker id="se_marker_start_svg_4" markerUnits="strokeWidth" orient="auto" viewBox="0 0 100 100" markerWidth="5" markerHeight="5" refX="50" refY="50">
-                    <path id="svg_7" d="m50,0l0,100" fill="black" stroke="black" stroke-width="10" />
-                </marker>
-                <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_5">
-                    <path stroke-width="10" fill="none" d="m0,50l100,40l-30,-40l30,-40l-100,40z" id="svg_9" />
-                </marker>
-                <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_end_svg_14">
-                    <path stroke-width="10" stroke="grey" fill="grey" d="m100,50l-100,40l30,-40l-30,-40l100,40z" id="svg_16" />
-                </marker>
-            </defs>
-            <g>
-                <title>Layer 1</title>
-                <g transform="rotate(1.5899989604949951 104.98438262939398,134.5313568115233) " id="svg_44">
-                    <line id="svg_19" y2="136.65626" x2="196.7422" y1="122.73438" x1="178.39064" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_23" y2="139.47498" x2="162.91566" y1="123.05079" x1="179.33985" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_24" y2="139.51837" x2="163.83594" y1="125.59649" x1="145.48438" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_25" y2="140.94219" x2="130.61327" y1="127.02031" x1="112.26171" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_26" y2="142.02069" x2="130.32581" y1="125.59649" x1="146.75" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_31" y2="142.32987" x2="96.31214" y1="125.90567" x1="112.73634" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_32" y2="142.37325" x2="97.23242" y1="128.45138" x1="78.88086" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_33" y2="143.79708" x2="64.00975" y1="129.8752" x1="45.65819" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_34" y2="144.87557" x2="63.72229" y1="128.45138" x1="80.14649" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_40" y2="146.28495" x2="30.34144" y1="129.86075" x1="46.76564" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_41" y2="146.32833" x2="31.57813" y1="132.40645" x1="13.22657" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                </g>
-                <line fill="none" stroke-width="2" stroke-dasharray="3,3" stroke-linejoin="null" stroke-linecap="null" x1="227" y1="-18.5" x2="227" y2="181.40498" id="svg_12" stroke="black" />
-                <rect fill="#cba" height="200" width="590.00001" y="160" x="-48.3125" id="ground" />
-                <rect id="svg_1" stroke="grey" stroke-width="2" fill-opacity="0" stroke-dasharray="3,3" height="60" width="60" y="99.76563" x="304.45313" fill="black" />
-                <rect fill="#cba" height="200" width="63" y="-10" x="-48.3125" id="svg_13" />
-                <g id="svg_11">
-                    <rect id="svg_2" stroke="black" stroke-width="2" fill="#ccc" height="60" width="60" y="100" x="197" />
-                </g>
-                <text id="svg_8" text-anchor="start" fill="black" y="180" x="276.89063" font-family="Serif">x</text>
-
-                <line fill="#000" stroke="#000" stroke-width="2" stroke-linejoin="null" stroke-linecap="null" x1="228.03129" y1="167.45314" x2="335.52179" y2="167.45314" id="svg_4" marker-end="url(#se_marker_end_svg_4)" marker-start="url(#se_marker_start_svg_4)" />
-
-                <text fill="#000000" x="88.10938" y="118.09375" id="svg_10" font-family="Sans-serif" text-anchor="middle" xml:space="preserve" font-style="normal">k</text>
-                <line marker-start="url(#se_marker_start_svg_5)" id="svg_5" y2="127.37501" x2="277.99482" y1="127.37501" x1="332.00003" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="3,3" stroke-width="2" fill="none" />
-                <line marker-end="url(#se_marker_end_svg_14)" id="svg_14" y2="127.37501" x2="271.60338" y1="127.37501" x1="337.43751" stroke-linecap="null" stroke-linejoin="null" stroke-width="2" stroke="grey" fill="none" />
-                <text id="svg_15" fill="#000000" x="291.46094" y="123.78906" font-family="Sans-serif" text-anchor="middle" xml:space="preserve" font-style="normal">F</text>
-            </g>
-        </svg>
 
         <p>The spring constant k is different for every spring. Sometimes when you buy a spring the constant will be listed, but we can also measure k directly. </p>
 

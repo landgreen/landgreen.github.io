@@ -67,12 +67,14 @@ function vectorDiagram() {
     ctx.moveTo(settings.x, settings.y);
     ctx.lineTo(mousePos.x, settings.y);
     ctx.strokeStyle = "darkgreen";
+	ctx.setLineDash([6, 4]);
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(mousePos.x, settings.y);
     ctx.lineTo(mousePos.x, mousePos.y);
     ctx.strokeStyle = "blue";
     ctx.stroke();
+	ctx.setLineDash([]);
     //hypotenus
     ctx.beginPath();
     ctx.moveTo(mousePos.x, mousePos.y);

@@ -18,21 +18,28 @@
         <h1>Universal Gravitation</h1>
     </header>
     <article>
+		<p>
+			Gravity simulation with <input class='number' id ='num' type="number" step="1" min = '1' max = '500' value = '10'> particles. Poke the particles with a click.
+			<canvas class='black' id = 'grav0' height = '300' width='600' onclick="grav0(this)"> </canvas>
+		</p>
+		<p class='underlined'>Kepler's Laws of Planetary Motion</p>
+		<p>In 1609, just before Newton's universal gravitation in 1687, Johannes Kepler suggested 3 laws of planetary motion.</p>
+
+		<div>
+			<p>1. The orbit of a planet is an ellipse with the sun at one of the two foci.</p>
+			<p>2. A line segment joining a planet and the sun sweeps out equal areas during equal intervals of time.</p>
+			<p>3. The square of the orbital period of a planet is proportional to the cube of the semi-major axis of its orbit.</p>
+		</div>
+			<p>Kepler's Laws are pretty accurate, but limited in scope.  They only apply to objects in orbit around an approximately stationary central body, like the planets orbiting the sun.</p>
+
         <h2 class="underlined">Newton's Law of Universal Gravitation</h2>
-		Gravity simulation with <input class='number' id ='num' type="number" step="1" max = '1000' value = '10'> particles. Poke the particles with a click.
-		<canvas class='black' id = 'grav0' height = '300' width='600' onclick="grav0(this)"> </canvas>
+		<p>Universal gravitation states that every particle in the universe is attracted to every other particle.</p>
+		<p>In 1687 <a href='http://www.bbc.co.uk/timelines/zwwgcdm'>Issac Newton</a> discovered the equation by watching the motion of planets and making <a href='https://www.google.com/search?q=empirical'>empirical</a> observations. Amazingly, Newton's universal gravitation managed to connect the heavens and the earth with one equation. Imagine the impact of that discovery in those superstitious times.</p>
 
-        <p>Universal gravitation states that every particle in the universe is attracted to every other particle. <a href='http://www.bbc.co.uk/timelines/zwwgcdm'>Issac Newton</a> discovered the equation by watching the motion of planets and making <a href='https://www.google.com/search?q=empirical'>empirical</a> observations. Universal gravitation has been superseded by Einstein's general relativity, but it is still very accurate for most situations.</p>
-		<details class='history'>
-            <summary>Historical Background</summary>
-			<br>
-			<div>In 1687, Isaac Newton published Principia, which hypothesized the inverse-square law of universal gravitation. Newton's theory was used to predict the existence of Neptune based on different motions of Uranus which could not be explained by the actions of the other planets. Isaac Newton had come up with an idea and described it gravitation: "I deduced that the forces which keep the planets in their orbs must be reciprocally as the squares of their distances from the centers about which they revolve; and thereby compared the force requisite to keep the Moon in her orb with the force of gravity at the surface of the Earth; and found them answer pretty nearly." What he means by this, is that the forces that keep the planets in their orbits must be reciprocal to the their distances between their centers squared that they revolve. He then compared this to the force required to keep the Moon in orbit with the force of gravity on Earth, and found that it checked out. Newton’s theory of universal gravitation was added onto an improved by other scientists such as Albert Einstein where he solved for mercury not being able to be accounted for by Newtonian gravity with his new theory of relativity, which then accounted for the discrepancy in Mercury's orbit. <em>-Adam Friedenthal</em></div>
-
-        </details>
         <div class='definition'>
             <svg style="display: block; margin: auto" width="400" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="100" cy="100" r="50" fill = '#fff' stroke-width="2" stroke="#222"/>
-              <circle cx="300" cy="100" r="50" fill = '#fff' stroke-width="2" stroke="#222"/>
+              <circle cx="100" cy="100" r="40" fill = '#fff' stroke-width="2" stroke="#222"/>
+              <circle cx="300" cy="100" r="60" fill = '#fff' stroke-width="2" stroke="#222"/>
 
               <text x="100" y="90" fill="black" text-anchor="middle" font-size="25">M</text>
               <text x="118" y="93" fill="black" text-anchor="middle" font-size="19">1</text>
@@ -52,22 +59,36 @@
               <line x1="300" y1="25" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
               <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
           </svg>
+
           <h2>$$ F = \frac{GM_{1}M_{2}}{r^{2}} $$</h2>
             <p>\(F\) = force of gravity [N, Newtons, kg m/s²] <em>vector</em>
                 <br>\(G\) = 6.67408 × 10<sup>--11</sup> = universal gravitation constant [N m²/kg²]
                 <br>\(M\) = mass [kg, kilograms]
                 <br>\(r\) = distance between the center of each mass [m, meters]
-        </div>
-		<br>
-		<br>
+				<br><br>
+				<svg style="display: block; margin: auto" width="500" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+		  			<circle cx="250" cy="35" r="5" fill = '#fff' stroke-width="2" stroke="#222"/>
+		  			<circle cx="250" cy="1167" r="1000" fill = '#fff' stroke-width="2" stroke="#222"/>
 
-	<div style="position: relative; width: 300px; height: 200px;" class='center'><a href="https://phet.colorado.edu/sims/html/gravity-force-lab/latest/gravity-force-lab_en.html" style="text-decoration: none;">
+		  			<text x="250" y="22" fill="black" text-anchor="middle" font-size="25">M</text>
+		  			<text x="268" y="25" fill="black" text-anchor="middle" font-size="19">1</text>
+		  			<text x="250" y="190" fill="black" text-anchor="middle" font-size="25">M</text>
+		  			<text x="268" y="193" fill="black" text-anchor="middle" font-size="19">2</text>
+
+		  			<line x1="250" y1="35" x2="250" y2="100" style="stroke:#000;stroke-width:2" />
+		  			<polygon points="0,0 -8,5 -8,-5" transform="translate(250 104) rotate(90)" style="fill:#000;" />
+		  			<text x="250" y="116" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
+
+		  			<line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+		  			<line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
+		  			<text x="310" y="130" fill="black" text-anchor="middle" font-size="25">r</text>
+		  		</svg>
+        </div>
+		<p>In 1916 universal gravitation was improved on by Einstein's general relativity, but universal gravitation is still used for low mass and low speed situations, like the earth and its satellites.</p>
+	<!-- <div style="position: relative; width: 300px; height: 200px;" class='center'><a href="https://phet.colorado.edu/sims/html/gravity-force-lab/latest/gravity-force-lab_en.html" style="text-decoration: none;">
 		<img src="https://phet.colorado.edu/sims/html/gravity-force-lab/latest/gravity-force-lab-600.png" alt="Gravity Force Lab" style="border: none;" width="300" height="200"/><div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 30px;"></div>
 		<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 30px;"><tr><td style="text-align: center; color: #000; opacity: 0.9; background-color: #FFF; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td></tr></table></a>
-	</div>
-<br>
-<br>
-
+	</div> -->
         <p>Each mass feels an equal but opposite force as predicted by Newton's 3rd law.  This means that the same force of gravity you feel towards the Earth the Earth feels towards you.  So why don't we notice the Earth accelerate towards you?</p>
 
         <p>Notice how small G is (6.6x10<sup>-11</sup>). Out of the four fundamental forces gravity is by far the weakest. If gravity is so weak why do we notice its effects so easily?</p>
@@ -225,11 +246,6 @@
             $$ r = 8.97 \times 10^{10} m $$
         </details>
 	</div>
-        <h3>Force Field Simulation</h3>
-        <p>This type of diagram is called a force field. Each small line shows the gravitational acceleration vector potentially felt at that location.  These diagrams are helpful for predicting how a particle will move. Click the mouse to push the masses around.</p>
-		  <canvas id = 'grav1' height = '300' width='600' onclick="grav1(this)"> </canvas>
-		  <canvas id = 'grav3' height = '300' width='600' onclick="grav3(this)"> </canvas>
-
         <h2 class="underlined">Gravitational Acceleration</h2>
         <p>It is useful to adapt the universal gravitation equation to predict acceleration. To find acceleration we just need to divide an object's gravitational force by its mass.</p>
 
@@ -260,14 +276,36 @@
             <line x1="300" y1="25" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
             <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
         </svg>
+
             <h2>$$ a = \frac{GM}{r^{2}} $$</h2>
             <p>\(a\) = acceleration of gravity [m/s²] <em>vector</em>
                 <br>\(G\) = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N(m/kg)²]
                 <br>\(M\) = mass of the body pulling [kg, kilograms]
                 <br>\(r\) = distance between the center of each mass [m, meters]
+				<svg style="display: block; margin: auto" width="500" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+					<circle cx="250" cy="35" r="5" fill = '#fff' stroke-width="2" stroke="#222"/>
+					<circle cx="250" cy="1167" r="1000" fill = '#fff' stroke-width="2" stroke="#222"/>
+
+					<text x="250" y="193" fill="black" text-anchor="middle" font-size="25">M</text>
+
+					<line x1="250" y1="35" x2="250" y2="100" style="stroke:#000;stroke-width:2" />
+					<polygon points="0,0 -8,5 -8,-5" transform="translate(250 104) rotate(90)" style="fill:#000;" />
+					<text x="250" y="116" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">a</text>
+
+					<line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+					<line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
+					<text x="310" y="130" fill="black" text-anchor="middle" font-size="25">r</text>
+				</svg>
         </div>
         <p>The acceleration vector is pointed towards the center of the mass producing the acceleration.</p>
-        <p>The mass of the body being accelerated isn't used in this equation. Use the mass of the body producing the acceleration.  To find the acceleration of objects on Earth use Earth's mass.
+        <p>The mass of the body being accelerated isn't used in this equation. Use the mass of the body producing the acceleration.  To find the acceleration of objects on Earth use Earth's mass.</p>
+		<p>
+			The simulation below shows a vector <strong>field</strong>. Each vector shows the gravitational acceleration potentially felt at that location.  These diagrams are helpful for predicting how a particle will accelerate.
+			<br>Click the mouse to push the masses around. Number of particles =
+			<input class='number' id ='num1' type="number" step="1" min = '1' max = '200' value = '6'>
+		  	<canvas id = 'grav1' height = '500' width='600' onclick="grav1(this)"> </canvas>
+	  	</p>
+
 		<div class = 'example'><b>Example:</b> Find the acceleration of gravity for an object on the surface of Earth.
           <br>Is it really 9.8m/s²?
         <details>
@@ -328,12 +366,25 @@
                         <br>\(G\) = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N(m/kg)²]
                         <br>\(M\) = mass [kg, kilograms]
                         <br>\(r\) = distance between the center of each mass [m, meters]
+						<svg style="display: block; margin: auto" width="500" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+				  			<circle cx="250" cy="35" r="5" fill = '#fff' stroke-width="2" stroke="#222"/>
+				  			<circle cx="250" cy="1167" r="1000" fill = '#fff' stroke-width="2" stroke="#222"/>
+
+				  			<text x="250" y="70" fill="black" text-anchor="middle" font-size="25">M</text>
+				  			<text x="268" y="73" fill="black" text-anchor="middle" font-size="19">1</text>
+				  			<text x="250" y="192" fill="black" text-anchor="middle" font-size="25">M</text>
+				  			<text x="268" y="195" fill="black" text-anchor="middle" font-size="19">2</text>
+
+				  			<line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+				  			<line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
+				  			<text x="310" y="130" fill="black" text-anchor="middle" font-size="25">r</text>
+				  		</svg>
                 </div>
                 <p>What is the gravitational potential energy when two masses are at zero distance away?</p>
                 <p>What is the gravitational potential energy when two masses are at an infinite distance away?</p>
-				<p>Energy is a scalar, not a vector.  This means that when we calculate gravitational potential energy it has no direction. You can see the potential in the simulation below. Think of the yellow regions as being deeper into the <a href='https://xkcd.com/681/'>gravity well</a>.
+				<p>Energy is a scalar, not a vector.  This means that when we calculate gravitational potential energy it has no direction. You can see the potential energy in the simulation below as a scalar field. Think of the yellow regions as being deeper into the <a href='https://xkcd.com/681/'>gravity well</a>.
 					<br>Poke around with your mouse.
-					Number of particles = <input class='number' id ='num1' type="number" step="1" max = '100' value = '6'></p>
+					Number of particles = <input class='number' id ='num2' type="number" step="1" min = '1' max = '100' value = '6'></p>
 				<canvas class = 'center' id = 'grav2' height = '300' width='400' onclick="grav2(this)"> </canvas>
 
 				<div class='example'><b>Example:</b> A 2000kg space ship starts at rest 20,000km from the surface of Earth.  How much kinetic energy will the ship have after it falls down to 10,000km from the surface of Earth?
@@ -371,7 +422,6 @@
 	<script src="grav0.js"></script>
 	<script src="grav1.js"></script>
 	<script src="grav2.js"></script>
-	<script src="grav3.js"></script>
     <!-- <script src="gravityvectorfield.js"></script> -->
 	<script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src='../../../lib/function-plot.js'></script>

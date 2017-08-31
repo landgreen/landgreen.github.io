@@ -1,4 +1,4 @@
-motion();
+// motion();
 
 function motion() {
     var canvas = document.getElementById('canvas-1');
