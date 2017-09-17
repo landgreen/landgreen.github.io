@@ -98,49 +98,47 @@ sometimes the player falls off a ledge and stays crouched in mid air
 the jump height control by holding down jump  can also control any upward motion (like from a block that throws player up)
 
 
-collision info:
+//collision info:
          category    mask
-player:  0x 001000   0x 110001
-bullet:  0x 000100   0x 000001
-ghost:   0x 000010   0x 000001
-map:     0x 000001   0x 111111
-body:    0x 000001   0x 111101
-mob:     0x 000001   0x 001101
-mobBull: 0x 010000   0x 001001
 powerUp: 0x 100000   0x 001001
+mobBull: 0x 010000   0x 001001
+player:  0x 001000   0x 110011
+bullet:  0x 000100   0x 000011
+mob:     0x 000010   0x 001101
+map:     0x 000001   0x 111111
+body:    0x 000001   0x 011111
+// ? holding: 0x 000001   0x 000001
 
-//holding: 0x 000001   0x 000001
-*/
 
 //setup random title
-// const titles = [
-//     "physics phobia",
-//     "physics frenzy",
-//     "impulse city",
-//     "velocity city",
-//     "isogonal",
-//     "isogon impulse",
-//     "isogon invasion",
-//     "isogon towers!",
-//     "isogon invasion!",
-//     "bird robot!",
-//     "ostrichbot",
-//     "pew pew",
-// 	'shoot the baddies',
-// 	'get to the door',
-// 'percussion',
-// 'impact',
-// 'landGame',
-// 'Cnoön',
-// 'polytope',
-// 'Tessellation',
-// 'Tessellation tower',
-// 'debris',
-// 'Regular polygon',
-//'n-gon',
-// ];
-// document.getElementById("title").textContent = document.title = titles[Math.floor(titles.length * Math.random())];
-// setTimeout(function(){ document.body.style.backgroundColor = "000"; }, 30);
+const titles = [
+    "physics phobia",
+    "physics frenzy",
+    "impulse city",
+    "velocity city",
+    "isogonal",
+    "isogon impulse",
+    "isogon invasion",
+    "isogon towers!",
+    "isogon invasion!",
+    "bird robot!",
+    "ostrichbot",
+    "pew pew",
+	'shoot the baddies',
+	'get to the door',
+    'percussion',
+    'impact',
+    'landGame',
+    'Cnoön',
+    'polytope',
+    'Tessellation',
+    'Tessellation tower',
+    'debris',
+    'Regular polygon',
+    'n-gon',
+];
+document.getElementById("title").textContent = document.title = titles[Math.floor(titles.length * Math.random())];
+setTimeout(function(){ document.body.style.backgroundColor = "000"; }, 30);
 
 //makes the SVG title screen tripy
 (function() {
@@ -160,128 +158,132 @@ powerUp: 0x 100000   0x 001001
     requestAnimationFrame(turb);
 })()
 
+*/
+
 //set up canvas
 var canvas = document.getElementById("canvas");
 //using "const" causes problems in safari when an ID shares the same name.
 const ctx = canvas.getContext("2d");
 
 function setupCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas.width2 = canvas.width / 2; //precalculated because I use this often (in mouse look)
-    canvas.height2 = canvas.height / 2;
-    canvas.diagonal = Math.sqrt(canvas.width2 * canvas.width2 + canvas.height2 * canvas.height2);
-    ctx.font = "15px Arial";
-    ctx.lineJoin = "round";
-    ctx.lineCap = "round";
-    // ctx.lineCap='square';
-    game.setZoom();
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.width2 = canvas.width / 2; //precalculated because I use this often (in mouse look)
+  canvas.height2 = canvas.height / 2;
+  canvas.diagonal = Math.sqrt(
+    canvas.width2 * canvas.width2 + canvas.height2 * canvas.height2
+  );
+  ctx.font = "15px Arial";
+  ctx.lineJoin = "round";
+  ctx.lineCap = "round";
+  // ctx.lineCap='square';
+  game.setZoom();
 }
 setupCanvas();
 window.onresize = function() {
-    setupCanvas();
+  setupCanvas();
 };
 
 //mouse move input
 window.onmousemove = function(e) {
-    game.mouse.x = e.clientX;
-    game.mouse.y = e.clientY;
+  game.mouse.x = e.clientX;
+  game.mouse.y = e.clientY;
 };
 
 //normal mouse click events
 window.onmousedown = function(e) {
-    //mouse down gets reset in the run function below
-    game.mouseDown = true;
-    game.mouse.x = e.clientX;
-    game.mouse.y = e.clientY;
+  //mouse down gets reset in the run function below
+  game.mouseDown = true;
+  game.mouse.x = e.clientX;
+  game.mouse.y = e.clientY;
 };
 window.onmouseup = function(e) {
-    // game.buildingUp(e); //uncomment when building levels
-    game.mouseDown = false;
+  // game.buildingUp(e); //uncomment when building levels
+  game.mouseDown = false;
 };
 
 //keyboard input
 const keys = [];
 document.body.addEventListener("keydown", function(e) {
-    keys[e.keyCode] = true;
-    game.keyPress();
+  keys[e.keyCode] = true;
+  game.keyPress();
 });
 document.body.addEventListener("keyup", function(e) {
-    keys[e.keyCode] = false;
+  keys[e.keyCode] = false;
 });
 
 function playSound(id) {
-    //play sound
-    if (document.getElementById(id)) {
-        var sound = document.getElementById(id); //setup audio
-        sound.currentTime = 0; //reset position of playback to zero  //sound.load();
-        sound.play();
-    }
+  //play sound
+  if (document.getElementById(id)) {
+    var sound = document.getElementById(id); //setup audio
+    sound.currentTime = 0; //reset position of playback to zero  //sound.load();
+    sound.play();
+  }
 }
 
 function shuffle(array) {
-    var currentIndex = array.length,
-        temporaryValue, randomIndex;
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-    return array;
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
 }
-
 
 //main loop ************************************************************
 //**********************************************************************
 function cycle() {
-    game.timing();
-    // ctx.globalAlpha = (mech.health < 0.5) ? (mech.health+0.5)*(mech.health+0.5) : 1
-    game.wipe();
-    game.textLog();
-    mech.keyMove();
-    powerUps.loop();
-    level.checkZones();
-    level.checkQuery();
-    mech.move();
-    mech.look();
-    mech.deathCheck();
-    game.fallChecks();
-    ctx.save();
-    game.camera();
-    if (game.testing) {
-        mech.draw();
-        game.draw.wireFrame();
-        game.draw.cons();
-        game.draw.testing();
-        game.drawCircle();
-        ctx.restore();
-        game.getCoords.out();
-        game.testingOutput();
-    } else {
-        level.drawFillBGs()
-        level.exit.draw();
-        level.enter.draw();
-        // ctx.globalAlpha=1;
-        game.draw.powerUp();
-        mobs.draw();
-        game.draw.cons();
-        game.draw.body();
-        mech.draw();
-        mech.hold();
-        level.drawFills();
-        game.draw.drawMapPath();
-        // mech.drawHealth();
-        mobs.loop();
-        b.fire();
-        b.draw();
-        game.drawCircle();
-        ctx.restore();
-    }
-    game.drawCursor();
-    if (!game.paused) requestAnimationFrame(cycle);
+  game.timing();
+  // ctx.globalAlpha = (mech.health < 0.5) ? (mech.health+0.5)*(mech.health+0.5) : 1
+  game.wipe();
+  game.textLog();
+  mech.keyMove();
+  powerUps.loop();
+  level.checkZones();
+  level.checkQuery();
+  mech.move();
+  mech.look();
+  mech.deathCheck();
+  game.fallChecks();
+  ctx.save();
+  game.camera();
+  if (game.testing) {
+    mech.draw();
+    game.draw.wireFrame();
+    game.draw.cons();
+    game.draw.testing();
+    game.drawCircle();
+    ctx.restore();
+    game.getCoords.out();
+    game.testingOutput();
+  } else {
+    level.drawFillBGs();
+    level.exit.draw();
+    level.enter.draw();
+    // ctx.globalAlpha=1;
+    game.draw.powerUp();
+    mobs.draw();
+    game.draw.cons();
+    game.draw.body();
+    mech.draw();
+    mech.hold();
+    level.drawFills();
+    game.draw.drawMapPath();
+    // mech.drawHealth();
+    mobs.loop();
+    b.fire();
+    b.draw();
+    game.drawCircle();
+    ctx.restore();
+  }
+  game.drawCursor();
+  if (!game.paused) requestAnimationFrame(cycle);
 }
