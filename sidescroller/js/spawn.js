@@ -86,27 +86,33 @@ const spawn = {
       Math.random() < chance + game.levelsCleared * 0.07 &&
       game.levelsCleared !== 0
     ) {
-      if (Math.random() < 0.5) {
-        this.nodeBoss(
-          x,
-          y,
-          this.bossPickList[
-            Math.floor(Math.random() * this.bossPickList.length)
-          ]
-        );
-      } else if (Math.random() < 0.5) {
-        this.lineBoss(
-          x,
-          y,
-          this.bossPickList[
-            Math.floor(Math.random() * this.bossPickList.length)
-          ]
-        );
+      //choose from the possible picklist
+      const pick = this.pickList[
+        Math.floor(Math.random() * this.pickList.length)
+      ];
+      //is the pick able to be a boss?
+      let canBeBoss = false;
+      for (let i = 0, len = this.bossPickList.length; i < len; ++i) {
+        if (this.bossPickList[i] === pick) {
+          canBeBoss = true;
+        }
+      }
+      //spawn random boss
+      if (canBeBoss) {
+        if (Math.random() < 0.5) {
+          this.nodeBoss(x, y, pick);
+        } else {
+          this.lineBoss(x, y, pick);
+        }
       } else {
-        const pick = this.pickList[
-          Math.floor(Math.random() * this.pickList.length)
-        ];
-        this[pick](x, y, 80 + Math.random() * 40);
+        if (Math.random() < 0.5) {
+          //one extra large mob
+          this[pick](x, y, 90 + Math.random() * 40);
+        } else if (Math.random() < 0.5) {
+          this.lineBoss(x, y, "random");
+        } else {
+          this.nodeBoss(x, y, "random");
+        }
       }
     }
   },

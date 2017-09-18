@@ -77,12 +77,12 @@ const level = {
     // spawn.ghoster(400, -1400,400);
     //pawn.burster(1300, -1150);
     //spawn.grower(800, -1150);
-    for (let i = 0; i < 1; ++i) {
-      spawn.striker(800, -1150);
-    }
+    // for (let i = 0; i < 1; ++i) {
+    //   spawn.striker(800, -1150);
+    // }
     //spawn.zoomer(400, -1150);
     // spawn.nodeBoss(900, -1070, "starter", 9);
-    //  spawn.randomBoss(-100, -1470);
+    spawn.randomBoss(-100, -1470);
   },
   warehouse: function() {
     // document.body.style.backgroundColor = (Math.random() < 0.5) ? "#aaa" : "#e3e3f0"

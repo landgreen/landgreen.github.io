@@ -129,12 +129,12 @@ function mobCollisionChecks(event) {
             return;
           }
           //mob and body collisions
-          if (obj.classType === "body" && obj.speed > 6) {
+          if (obj.classType === "body" && obj.speed > 5) {
             const v = Matter.Vector.magnitude(
               Matter.Vector.sub(mob[k].velocity, obj.velocity)
             );
-            if (v > 9) {
-              let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.11;
+            if (v > 8) {
+              let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.08;
               mob[k].damage(dmg);
               if (mob[k].distanceToPlayer2() < 1000000) mob[k].locatePlayer();
               game.drawList.push({
