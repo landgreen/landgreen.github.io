@@ -3,6 +3,12 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=610, initial-scale=1" />
+	<meta name="description" content="Notes for a high school physics course.">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:title" content="Physics Notes">
+	<meta name="twitter:title" content="High School Physics Notes">
 	<title>Newton's Laws</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -22,33 +28,33 @@
 		<h1 class='underlined'>Newton's First Law: Inertia</h1>
 		<p><em>When viewed in an inertial reference frame, an object either remains at rest or continues to move at a constant velocity, unless acted upon by an external force.</em></p>
 		<p>Objects keep moving in a straight line at a constant velocity unless they have a force acting on them.</p>
-		<p>Objects with mass have inertia. <strong>Inertia</strong> is the resistance of any physical object to any change in velocity. The more mass an object has the more force is required to change its motion.</p>
+		<p>Objects with mass have inertia. <strong>Inertia</strong> is the resistance of any physical object to any change in velocity.
+			The more mass an object has the more force is required to change its motion.</p>
 		<p>Objects in space keep moving without slowing down. Why do things on Earth slow down so quickly?</p>
 
 		<h1 class='underlined'>Newton's Second Law: Force</h1>
 		<p><em>The vector sum of the external forces F on an object is equal to the mass m of that object multiplied by the acceleration vector of the object.</em></p>
 		<div class='definition'>
 			<svg class='svgDiagram center' width="300" height="120" viewBox="-15 0 285 120">
-          <defs>
-              <g id="vector">
-                <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
-                <polygon points="0,50 -5,42 5,42" style="fill:#000;" />
-              </g>
-          </defs>
-					<g transform='translate(100 20) rotate(0)'>
-						<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fff"/>
-						<text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='28px'>m</text>
+				<defs>
+					<g id="vector">
+						<line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
+						<polygon points="0,50 -5,42 5,42" style="fill:#000;" />
 					</g>
-          <use xlink:href="#vector" transform='translate(100 60) rotate(90)'/>
-          <text x="40" y="60" font-size='25px' text-anchor="middle" alignment-baseline="middle">F</text>
-					<use xlink:href="#vector" transform='translate(180 80) rotate(-90)'/>
-					<text x="240" y="80" font-size='25px' text-anchor="middle" alignment-baseline="middle">F</text>
-          <use xlink:href="#vector" transform='translate(180 40) rotate(-90)'/>
-          <text x="240" y="40" font-size='25px' text-anchor="middle" alignment-baseline="middle">F</text>
-        </svg>
+				</defs>
+				<g transform='translate(100 20) rotate(0)'>
+					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fff" />
+					<text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='28px'>m</text>
+				</g>
+				<use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
+				<text x="40" y="60" font-size='25px' text-anchor="middle" alignment-baseline="middle">F</text>
+				<use xlink:href="#vector" transform='translate(180 80) rotate(-90)' />
+				<text x="240" y="80" font-size='25px' text-anchor="middle" alignment-baseline="middle">F</text>
+				<use xlink:href="#vector" transform='translate(180 40) rotate(-90)' />
+				<text x="240" y="40" font-size='25px' text-anchor="middle" alignment-baseline="middle">F</text>
+			</svg>
 			<h2>
-				$$\sum F=ma$$
-				$$\sum F=F_{1}+F_{2}+F_{3}+...$$
+				$$\sum F=ma$$ $$\sum F=F_{1}+F_{2}+F_{3}+...$$
 			</h2>
 			<p>\( \sum \) = The greek letter Sigma represents a summation of numbers. It means add up all the forces to get a net force.</p>
 			<p>\( F \) = force [N, Newtons, kg m/s²] <em>vector</em>
@@ -60,7 +66,8 @@
 			</p>
 
 		</div>
-		<div class='example'><b>Example:</b> A soccer ball has a mass of 0.43kg.  Find the acceleration of the ball when it experiences a net force (total force) of 1N from air friction.
+		<div class='example'><b>Example:</b> A soccer ball has a mass of 0.43kg. Find the acceleration of the ball when it experiences a net force (total
+			force) of 1N from air friction.
 			<details>
 				<summary>solution</summary>
 				$$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1}{0.43}=a$$ $$2.33\tfrac{m}{s^{2}}=a$$
@@ -69,109 +76,134 @@
 
 		<div class='example'>
 			<svg class='svgDiagram center' width="300" height="120" viewBox="-15 0 285 120">
-						<rect x="0" y="100" width="300" height="110" style="fill:#ccf" />
-						<g transform='translate(100 20) rotate(0)'>
-							<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#ccc"/>
-							<text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>100kg</text>
-						</g>
-						<use xlink:href="#vector" transform='translate(100 60) rotate(90)'/>
-						<text x="10" y="53" fill="black">F=2000N</text>
-						<use xlink:href="#vector" transform='translate(180 60) rotate(-90)'/>
-						<text x="200" y="53" fill="black">F=1900N</text>
-				</svg>
-			<b>Example:</b> A 100kg boat at rest is being pushed left with a 2000N force from the wind. The water current is producing a force of 1900N to the right. How will the boat accelerate? How far will the boat go in 6s?
+				<rect x="0" y="100" width="300" height="110" style="fill:#ccf" />
+				<g transform='translate(100 20) rotate(0)'>
+					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#ccc" />
+					<text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>100kg</text>
+				</g>
+				<use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
+				<text x="10" y="53" fill="black">F=2000N</text>
+				<use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
+				<text x="200" y="53" fill="black">F=1900N</text>
+			</svg>
+			<b>Example:</b> A 100kg boat at rest is being pushed left with a 2000N force from the wind. The water current is producing
+			a force of 1900N to the right. How will the boat accelerate? How far will the boat go in 6s?
 			<details>
 				<summary>solution</summary>
 				<p>Vectors pointed down or left are negative.</p>
-				$$\sum F=ma$$
-				$$-2000+1900=(100)(a)$$
-				$$-100=(100)(a)$$
-				$$-1\tfrac{m}{s^{2}}= a$$
+				$$\sum F=ma$$ $$-2000+1900=(100)(a)$$ $$-100=(100)(a)$$ $$-1\tfrac{m}{s^{2}}= a$$
 				<p>The boat will accelerate to the left.</p>
-				$$ u = 0 $$ $$ \Delta x = ?$$ $$ \Delta t = 6s$$
-				$$ \Delta x = u\Delta t+ \tfrac{1}{2} a \Delta t^{2}$$
-				$$ \Delta x = (0)(6)+\tfrac{1}{2} (-1)(6)^{2}$$
-				$$ \Delta x = \tfrac{1}{2} (-1)(6)^{2}$$
-				$$ \Delta x = -18m$$
+				$$ u = 0 $$ $$ \Delta x = ?$$ $$ \Delta t = 6s$$ $$ \Delta x = u\Delta t+ \tfrac{1}{2} a \Delta t^{2}$$ $$ \Delta x = (0)(6)+\tfrac{1}{2}
+				(-1)(6)^{2}$$ $$ \Delta x = \tfrac{1}{2} (-1)(6)^{2}$$ $$ \Delta x = -18m$$
 				<p>The boat will move 18 meters to the left.</p>
 			</details>
 		</div>
 
 		<div class='example'>
 			<svg class='svgDiagram center' width="300" height="200">
-						<!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
-						<g transform='translate(100 60) rotate(0)'>
-							<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fac"/>
-							<text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='20px'>16kg</text>
-						</g>
-						<use xlink:href="#vector" transform='translate(140 140) rotate(0)'/>
-						<text x="150" y="187" fill="black">F=85N</text>
-						<use xlink:href="#vector" transform='translate(140 60) rotate(180)'/>
-						<text x="150" y="23" fill="black">F= 22N </text>
+				<!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
+				<g transform='translate(100 60) rotate(0)'>
+					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fac" />
+					<text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='20px'>16kg</text>
+				</g>
+				<use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
+				<text x="150" y="187" fill="black">F=85N</text>
+				<use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
+				<text x="150" y="23" fill="black">F= 22N </text>
 
-						<use xlink:href="#vector" transform='translate(100 100) rotate(90)'/>
-						<text x="10" y="93" fill="black">F=140N</text>
-						<use xlink:href="#vector" transform='translate(180 120) rotate(-90)'/>
-						<text x="200" y="113" fill="black">F=55N</text>
-						<use xlink:href="#vector" transform='translate(180 80) rotate(-90)'/>
-						<text x="200" y="73" fill="black">F=78N</text>
-				</svg>
+				<use xlink:href="#vector" transform='translate(100 100) rotate(90)' />
+				<text x="10" y="93" fill="black">F=140N</text>
+				<use xlink:href="#vector" transform='translate(180 120) rotate(-90)' />
+				<text x="200" y="113" fill="black">F=55N</text>
+				<use xlink:href="#vector" transform='translate(180 80) rotate(-90)' />
+				<text x="200" y="73" fill="black">F=78N</text>
+			</svg>
 			<b>Example:</b> Use the free body diagram to calculate the acceleration for both the horizontal and the vertical.
 			<details>
 				<summary>solution</summary>
 				<p>vertical</p>
-				$$\sum F=ma$$
-				$$22 - 85 = 16a$$
-				$$-63 = 16a$$
-				$$-3.9 \tfrac{m}{s^2} = a$$
+				$$\sum F=ma$$ $$22 - 85 = 16a$$ $$-63 = 16a$$ $$-3.9 \tfrac{m}{s^2} = a$$
 				<br>
 				<p>horizontal</p>
-				$$\sum F=ma$$
-				$$78+55-140 = 16a$$
-				$$-7 = 16a$$
-				$$-0.43 \tfrac{m}{s^2} = a$$
+				$$\sum F=ma$$ $$78+55-140 = 16a$$ $$-7 = 16a$$ $$-0.43 \tfrac{m}{s^2} = a$$
 			</details>
 		</div>
 
 		<h1 class='underlined'>Newton's Third Law:<br> Equal and Opposite Force Pairs</h1>
 		<p><em>When one body exerts a force on a second body, the second body simultaneously exerts a force equal in magnitude and opposite in direction on the first body.</em></p>
 		<svg class='svgDiagram center' width="400" height="110">
-				<rect x="0" y="80" width="600" height="110" style="fill:#ccc" />
-				<rect x="300" y="1" width="40" height="40" stroke = '#000' style="stroke-width:2;fill:#cfe2f6" />
-				<rect x="300" y="40" width="40" height="40" stroke = '#000' style="stroke-width:2;fill:#cff6d7" />
-				<use xlink:href="#vector-small" transform='translate(320 20) rotate(0)'/>
-        <use xlink:href="#vector-small" transform='translate(320 60) rotate(180)'/>
-        <rect x="60" y="1" width="80" height="80" stroke = '#000' style="stroke-width:2;fill:#cfe2f6" />
-        <rect x="140" y="1" width="80" height="80" stroke = '#000' style="stroke-width:2;fill:#cff6d7" />
-        <use xlink:href="#vector" transform='translate(192 40) rotate(90)'/>
-        <use xlink:href="#vector" transform='translate(88 40) rotate(-90)'/>
-    </svg>
-				<p>If you push on something it will push back with the same force, but in the opposite direction. Forces always come in equal, but opposite pairs.</p>
+			<rect x="0" y="80" width="600" height="110" style="fill:#ccc" />
+			<rect x="300" y="1" width="40" height="40" stroke='#000' style="stroke-width:2;fill:#cfe2f6" />
+			<rect x="300" y="40" width="40" height="40" stroke='#000' style="stroke-width:2;fill:#cff6d7" />
+			<use xlink:href="#vector-small" transform='translate(320 20) rotate(0)' />
+			<use xlink:href="#vector-small" transform='translate(320 60) rotate(180)' />
+			<rect x="60" y="1" width="80" height="80" stroke='#000' style="stroke-width:2;fill:#cfe2f6" />
+			<rect x="140" y="1" width="80" height="80" stroke='#000' style="stroke-width:2;fill:#cff6d7" />
+			<use xlink:href="#vector" transform='translate(192 40) rotate(90)' />
+			<use xlink:href="#vector" transform='translate(88 40) rotate(-90)' />
+		</svg>
+		<p>If you push on something it will push back with the same force, but in the opposite direction. Forces always come in equal,
+			but opposite pairs.</p>
 		<div class='example'>
-		<b>Example:</b> You push down on the ground with a 1000N force. Describe the magnitude and direction of the force the ground pushes on you.
-		<details>
-			<summary>solution</summary>
-			<p>The force the ground applies is equal and opposite to the force you apply on the ground.</p>
-			<p>The magnitude is 1000N.</p>
-			<p>The direction is up.</p>
-		</details>
-	</div>
-		<div class='example'><b>Example:</b> A boxer's glove applies a 140N force to the face of another boxer. Describe the magnitude of the force the face applies to the glove.
+			<b>Example:</b> You push down on the ground with a 1000N force. Describe the magnitude and direction of the force the
+			ground pushes on you.
+			<details>
+				<summary>solution</summary>
+				<p>The force the ground applies is equal and opposite to the force you apply on the ground.</p>
+				<p>The magnitude is 1000N.</p>
+				<p>The direction is up.</p>
+			</details>
+		</div>
+		<div class='example'><b>Example:</b> A boxer's glove applies a 140N force to the face of another boxer. Describe the magnitude of the force
+			the face applies to the glove.
 			<details>
 				<summary>solution</summary>
 				<p>The force is equal and opposite.</p>
 				<p>The magnitude is 140N.</p>
 			</details>
 		</div>
-		<div class='example'><b>Example:</b> A 0.4 kg squirrel is pulling a 10kg box with a string. The squirrel and box are accelerating to the left at 0.5 m/s². What is the force of tension on the string? What force is the squirrel producing in order to accelerate to the left?
+		<div class='example'>
+			<b>Example:</b> You (100kg) are floating away from your spaceship. In order to return to the ship you throw your 2kg space
+			laser away. As you are throwing the space laser, it accelerates at 40m/s². How much acceleration do you feel during the
+			throw?
 			<details>
 				<summary>solution</summary>
-				<p>Draw a free body diagram for each object and use newton's second law on each object.</p>
-				<br>
+				<p>The force the space laser feels is <br>equal and opposite to the force you feel.
+					<p>
+						<p>space laser</p>
+						$$F = ma $$ $$F=(2)(40)$$ $$F=80N$$
+						<p>you</p>
+						$$F = ma $$ $$80 = 100a$$ $$0.8 \tfrac{m}{s^2}=a$$
+			</details>
+		</div>
+		<div class='example'>
+			<svg class='svgDiagram center' width="600" height="120">
+				<line x1="180" y1="70" x2="400" y2="70" stroke-width="2" stroke="#888" />
+				<g transform='translate(100 20) rotate(0)'>
+					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#aaa" />
+					<text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>0.4kg</text>
+				</g>
+				<use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
+				<text x="35" y="65" fill="black">F</text>
+				<use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
+				<text x="237" y="66" fill="black">F</text>
+				<g transform='translate(400 20) rotate(0)'>
+					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fda" />
+					<text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='20px'>10kg</text>
+				</g>
+				<use xlink:href="#vector" transform='translate(400 60) rotate(90)' />
+				<text x="336" y="66" fill="black">F</text>
+			</svg>
+
+			<b>Example:</b> A 0.4 kg squirrel is pulling a 10kg box with a string. The squirrel and box are accelerating to the left
+			at 0.5 m/s². What is the force of tension on the string? What force is the squirrel producing in order to accelerate to
+			the left?
+			<details>
+				<summary>solution</summary>
 				<p><strong>box</strong></p>
 				$$\sum F=ma$$ $$F_{tension}=(10)(-0.5)$$ $$F_{tension}=-5N$$
 				<br>
-				<p>The force on the string is equal but opposite for the squirrel and box.</p>
+				<p>The force on the string is equal<br> but opposite for the squirrel and box.</p>
 				<p><strong>squirrel</strong></p>
 				$$\sum F=ma$$ $$F_{squirrel} + F_{tension}=ma$$ $$F_{squirrel} + 5=(0.4)(-0.5)$$ $$F_{squirrel}=-0.2-5$$ $$F_{squirrel}=-5.2N$$
 				<p>The squirrel is producing a force of 5.2N to the left.</p>

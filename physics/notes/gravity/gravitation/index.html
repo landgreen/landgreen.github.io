@@ -3,6 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=610, initial-scale=1" />
+    <meta name="description" content="Notes for a high school physics course.">
+    <meta name="author" content="Ross Landgreen">
+    <meta property="og:description" content="Notes for a high school physics course.">
+    <meta property="og:title" content="Physics Notes">
+    <meta name="twitter:title" content="High School Physics Notes">
     <title>Universal Gravitation</title>
     <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
@@ -10,7 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../../style.css">
     <script src='../../../lib/randomColor.min.js'></script>
-	<script src='../../../lib/gravityClass.js'></script>
+    <script src='../../../lib/gravityClass.js'></script>
 </head>
 
 <body>
@@ -18,86 +24,95 @@
         <h1>Universal Gravitation</h1>
     </header>
     <article>
-		<p>
-			Gravity simulation with <input class='number' id ='num' type="number" step="1" min = '1' max = '500' value = '10'> particles. Poke the particles with a click.
-			<canvas class='black' id = 'grav0' height = '300' width='600' onclick="grav0(this)"> </canvas>
-		</p>
-		<p class='underlined'>Kepler's Laws of Planetary Motion</p>
-		<p>In 1609, just before Newton's universal gravitation in 1687, Johannes Kepler suggested 3 laws of planetary motion.</p>
+        <p>
+            Gravity simulation with <input class='number' id='num' type="number" step="1" min='1' max='500' value='10'> particles.
+            Poke the particles with a click.
+            <canvas class='black' id='grav0' height='300' width='600' onclick="grav0(this)"> </canvas>
+        </p>
+        <p class='underlined'>Kepler's Laws of Planetary Motion</p>
+        <p>In 1609, just before Newton's universal gravitation in 1687, Johannes Kepler suggested 3 laws of planetary motion.</p>
 
-		<div>
-			<p>1. The orbit of a planet is an ellipse with the sun at one of the two foci.</p>
-			<p>2. A line segment joining a planet and the sun sweeps out equal areas during equal intervals of time.</p>
-			<p>3. The square of the orbital period of a planet is proportional to the cube of the semi-major axis of its orbit.</p>
-		</div>
-			<p>Kepler's Laws are pretty accurate, but limited in scope.  They only apply to objects in orbit around an approximately stationary central body, like the planets orbiting the sun.</p>
+        <div>
+            <p>1. The orbit of a planet is an ellipse with the sun at one of the two foci.</p>
+            <p>2. A line segment joining a planet and the sun sweeps out equal areas during equal intervals of time.</p>
+            <p>3. The square of the orbital period of a planet is proportional to the cube of the semi-major axis of its orbit.</p>
+        </div>
+        <p>Kepler's Laws are pretty accurate, but limited in scope. They only apply to objects in orbit around an approximately
+            stationary central body, like the planets orbiting the sun.</p>
 
         <h2 class="underlined">Newton's Law of Universal Gravitation</h2>
-		<p>Universal gravitation states that every particle in the universe is attracted to every other particle.</p>
-		<p>In 1687 <a href='http://www.bbc.co.uk/timelines/zwwgcdm'>Issac Newton</a> discovered the equation by watching the motion of planets and making <a href='https://www.google.com/search?q=empirical'>empirical</a> observations. Amazingly, Newton's universal gravitation managed to connect the heavens and the earth with one equation. Imagine the impact of that discovery in those superstitious times.</p>
+        <p>Universal gravitation states that every particle in the universe is attracted to every other particle.</p>
+        <p>In 1687 <a href='http://www.bbc.co.uk/timelines/zwwgcdm'>Issac Newton</a> discovered the equation by watching the
+            motion of planets and making <a href='https://www.google.com/search?q=empirical'>empirical</a> observations.
+            Amazingly, Newton's universal gravitation managed to connect the heavens and the earth with one equation. Imagine
+            the impact of that discovery in those superstitious times.</p>
 
         <div class='definition'>
             <svg style="display: block; margin: auto" width="400" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="100" cy="100" r="40" fill = '#fff' stroke-width="2" stroke="#222"/>
-              <circle cx="300" cy="100" r="60" fill = '#fff' stroke-width="2" stroke="#222"/>
+                <circle cx="100" cy="100" r="40" fill='#fff' stroke-width="2" stroke="#222" />
+                <circle cx="300" cy="100" r="60" fill='#fff' stroke-width="2" stroke="#222" />
 
-              <text x="100" y="90" fill="black" text-anchor="middle" font-size="25">M</text>
-              <text x="118" y="93" fill="black" text-anchor="middle" font-size="19">1</text>
-              <text x="300" y="90" fill="black" text-anchor="middle" font-size="25">M</text>
-              <text x="318" y="93" fill="black" text-anchor="middle" font-size="19">2</text>
+                <text x="100" y="90" fill="black" text-anchor="middle" font-size="25">M</text>
+                <text x="118" y="93" fill="black" text-anchor="middle" font-size="19">1</text>
+                <text x="300" y="90" fill="black" text-anchor="middle" font-size="25">M</text>
+                <text x="318" y="93" fill="black" text-anchor="middle" font-size="19">2</text>
 
-              <line x1="100" y1="100" x2="180" y2="100" style="stroke:#000;stroke-width:2" />
-              <polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
+                <line x1="100" y1="100" x2="180" y2="100" style="stroke:#000;stroke-width:2" />
+                <polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
 
-              <line x1="300" y1="100" x2="220" y2="100" style="stroke:#000;stroke-width:2" />
-              <polygon points="0,0 8,5 8,-5" transform="translate(220 100)" style="fill:#000;" />
+                <line x1="300" y1="100" x2="220" y2="100" style="stroke:#000;stroke-width:2" />
+                <polygon points="0,0 8,5 8,-5" transform="translate(220 100)" style="fill:#000;" />
 
-              <text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
+                <text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
 
-              <line x1="100" y1="30" x2="300" y2="30" style="stroke:#000;stroke-width:2" />
-              <line x1="100" y1="25" x2="100" y2="35" style="stroke:#000;stroke-width:2" />
-              <line x1="300" y1="25" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
-              <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
-          </svg>
+                <line x1="100" y1="30" x2="300" y2="30" style="stroke:#000;stroke-width:2" />
+                <line x1="100" y1="25" x2="100" y2="35" style="stroke:#000;stroke-width:2" />
+                <line x1="300" y1="25" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+                <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
+            </svg>
 
-          <h2>$$ F = \frac{GM_{1}M_{2}}{r^{2}} $$</h2>
+            <h2>$$ F = \frac{GM_{1}M_{2}}{r^{2}} $$</h2>
             <p>\(F\) = force of gravity [N, Newtons, kg m/s²] <em>vector</em>
                 <br>\(G\) = 6.67408 × 10<sup>--11</sup> = universal gravitation constant [N m²/kg²]
                 <br>\(M\) = mass [kg, kilograms]
                 <br>\(r\) = distance between the center of each mass [m, meters]
-				<br><br>
-				<svg style="display: block; margin: auto" width="500" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-		  			<circle cx="250" cy="35" r="5" fill = '#fff' stroke-width="2" stroke="#222"/>
-		  			<circle cx="250" cy="1167" r="1000" fill = '#fff' stroke-width="2" stroke="#222"/>
+                <br><br>
+                <svg style="display: block; margin: auto" width="500" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="250" cy="35" r="5" fill='#fff' stroke-width="2" stroke="#222" />
+                    <circle cx="250" cy="1167" r="1000" fill='#fff' stroke-width="2" stroke="#222" />
 
-		  			<text x="250" y="22" fill="black" text-anchor="middle" font-size="25">M</text>
-		  			<text x="268" y="25" fill="black" text-anchor="middle" font-size="19">1</text>
-		  			<text x="250" y="190" fill="black" text-anchor="middle" font-size="25">M</text>
-		  			<text x="268" y="193" fill="black" text-anchor="middle" font-size="19">2</text>
+                    <text x="250" y="22" fill="black" text-anchor="middle" font-size="25">M</text>
+                    <text x="268" y="25" fill="black" text-anchor="middle" font-size="19">1</text>
+                    <text x="250" y="190" fill="black" text-anchor="middle" font-size="25">M</text>
+                    <text x="268" y="193" fill="black" text-anchor="middle" font-size="19">2</text>
 
-		  			<line x1="250" y1="35" x2="250" y2="100" style="stroke:#000;stroke-width:2" />
-		  			<polygon points="0,0 -8,5 -8,-5" transform="translate(250 104) rotate(90)" style="fill:#000;" />
-		  			<text x="250" y="116" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
+                    <line x1="250" y1="35" x2="250" y2="100" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 -8,5 -8,-5" transform="translate(250 104) rotate(90)" style="fill:#000;" />
+                    <text x="250" y="116" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
 
-		  			<line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
-		  			<line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
-		  			<text x="310" y="130" fill="black" text-anchor="middle" font-size="25">r</text>
-		  		</svg>
+                    <line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+                    <line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
+                    <text x="310" y="130" fill="black" text-anchor="middle" font-size="25">r</text>
+                </svg>
         </div>
-		<p>In 1916 universal gravitation was improved on by Einstein's general relativity, but universal gravitation is still used for low mass and low speed situations, like the earth and its satellites.</p>
-	<!-- <div style="position: relative; width: 300px; height: 200px;" class='center'><a href="https://phet.colorado.edu/sims/html/gravity-force-lab/latest/gravity-force-lab_en.html" style="text-decoration: none;">
+        <p>In 1916 universal gravitation was improved on by Einstein's general relativity, but universal gravitation is still
+            used for low mass and low speed situations, like the earth and its satellites.</p>
+        <!-- <div style="position: relative; width: 300px; height: 200px;" class='center'><a href="https://phet.colorado.edu/sims/html/gravity-force-lab/latest/gravity-force-lab_en.html" style="text-decoration: none;">
 		<img src="https://phet.colorado.edu/sims/html/gravity-force-lab/latest/gravity-force-lab-600.png" alt="Gravity Force Lab" style="border: none;" width="300" height="200"/><div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 30px;"></div>
 		<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 30px;"><tr><td style="text-align: center; color: #000; opacity: 0.9; background-color: #FFF; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td></tr></table></a>
 	</div> -->
-        <p>Each mass feels an equal but opposite force as predicted by Newton's 3rd law.  This means that the same force of gravity you feel towards the Earth the Earth feels towards you.  So why don't we notice the Earth accelerate towards you?</p>
+        <p>Each mass feels an equal but opposite force as predicted by Newton's 3rd law. This means that the same force of gravity
+            you feel towards the Earth the Earth feels towards you. So why don't we notice the Earth accelerate towards you?</p>
 
-        <p>Notice how small G is (6.6x10<sup>-11</sup>). Out of the four fundamental forces gravity is by far the weakest. If gravity is so weak why do we notice its effects so easily?</p>
+        <p>Notice how small G is (6.6x10<sup>-11</sup>). Out of the four fundamental forces gravity is by far the weakest. If
+            gravity is so weak why do we notice its effects so easily?</p>
 
-		<p>All particles are attracted to each other, but the attraction is divided by the distance squared (1/r²). Physical laws that diminish with a <a href='https://en.wikipedia.org/wiki/Inverse-square_law'>1/r² rule</a> are common in physics
-			because of how signals spread out in 3 dimensions.</p>
-		<!-- <h3 class='center'>force = 1/radius<sup>2</sup></h3> -->
-		<div id = 'f-v-r'></div>
-		<p>What happens to the force of gravity as the distance between masses approaches zero?</p>
+        <p>All particles are attracted to each other, but the attraction is divided by the distance squared (1/r²). Physical
+            laws that diminish with a <a href='https://en.wikipedia.org/wiki/Inverse-square_law'>1/r² rule</a> are common
+            in physics because of how signals spread out in 3 dimensions.</p>
+        <!-- <h3 class='center'>force = 1/radius<sup>2</sup></h3> -->
+        <div id='f-v-r'></div>
+        <p>What happens to the force of gravity as the distance between masses approaches zero?</p>
         <br>
         <br>
         <br>
@@ -198,56 +213,52 @@
             </table>
             <a href="http://exoplanets.org/table">exoplanets data table</a>
         </center>
-	<div class = 'example'><b>Example:</b> Find the force of gravity between the Earth and the Moon.  The distance between them is 384,403 km.
-        <details>
-            <summary>solution</summary>
-            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
-            $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (7.346 \times 10^{22})}{(3.844 \times 10^{8})^{2}}$$
-            $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (7.346 \times 10^{22})}{14.78 \times 10^{16}}$$
-            $$ F = \frac{6.674 \times 5.972 \times 7.346}{14.78} \times \frac{10^{-11}10^{24}10^{22}}{10^{16}}$$
-            $$ F = 19.798 \times 10^{19} N$$
-        </details>
-	</div>
-	<div class = 'example'><b>Example:</b> Find the force of gravity between the Earth and the Sun.  The distance between them is 149.6 billion m.
-        <details>
-            <summary>solution</summary>
-            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
-            $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (2.00 \times 10^{30})}{(149.6 \times 10^{9})^{2}}$$
-            $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (2.00 \times 10^{30})}{22380 \times 10^{18}}$$
-            $$ F =  3.561 \times 10^{22} N$$
-        </details>
-	</div>
-	<div class = 'example'><b>Example:</b> Find the force of gravity from the Earth and a 100kg person 10,000,000m from the center of Earth.
-        <details>
-            <summary>solution</summary>
-            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
-            $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24})(100)}{ 10,000,000^{2}}$$
-            $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24})(100)}{ 10^{14}}$$
-            $$ F = 398.57 N$$
-        </details>
-	</div>
-	<div class = 'example'><b>Example:</b> How massive must an object be in order to feel a force of 100N at a distance of 10,000,000m from the center of the Earth?
-        <details>
-            <summary>solution</summary>
-            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
-            $$ M_{1} = \frac{Fr^{2}}{GM_{2}}$$
-            $$ M_{1} = \frac{(100)(10,000,000)^{2}}{(6.674 \times 10^{-11})(5.972 \times 10^{24})}$$
-            $$ M_{1} = \frac{(100)(10^{14})}{(6.674 \times 10^{-11})(5.972 \times 10^{24})}$$
-            $$ M_{1} = 25.01kg$$
-        </details>
-	</div>
-	<div class = 'example'><b>Example:</b> When it is closest to the sun on its 75 year orbit <a href = "https://en.wikipedia.org/wiki/Halley%27s_Comet">Halley's Comet</a> feels a force of gravity from the Sun of 3.65×10<sup>12</sup> N.  Calculate its distance from the sun using the comet's mass of 2.2×10<sup>14</sup> kg.
-        <details>
-            <summary>solution</summary>
-            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$
-            $$ r^{2} = \frac{GM_{1}M_{2}}{F} $$
-            $$ r^{2} = \frac{(6.674 \times 10^{-11})(2.00 \times 10^{30})(2.2 \times 10^{14})}{3.65 \times 10^{12}} $$
-            $$ \sqrt{r^{2}} = \sqrt{8.04 \times 10^{21}} $$
-            $$ r = 8.97 \times 10^{10} m $$
-        </details>
-	</div>
+        <div class='example'><b>Example:</b> Find the force of gravity between the Earth and the Moon. The distance between them is 384,403 km.
+            <details>
+                <summary>solution</summary>
+                $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (7.346 \times 10^{22})}{(3.844
+                \times 10^{8})^{2}}$$ $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (7.346 \times 10^{22})}{14.78
+                \times 10^{16}}$$ $$ F = \frac{6.674 \times 5.972 \times 7.346}{14.78} \times \frac{10^{-11}10^{24}10^{22}}{10^{16}}$$
+                $$ F = 19.798 \times 10^{19} N$$
+            </details>
+        </div>
+        <div class='example'><b>Example:</b> Find the force of gravity between the Earth and the Sun. The distance between them is 149.6 billion
+            m.
+            <details>
+                <summary>solution</summary>
+                $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (2.00 \times 10^{30})}{(149.6
+                \times 10^{9})^{2}}$$ $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (2.00 \times 10^{30})}{22380
+                \times 10^{18}}$$ $$ F = 3.561 \times 10^{22} N$$
+            </details>
+        </div>
+        <div class='example'><b>Example:</b> Find the force of gravity from the Earth and a 100kg person 10,000,000m from the center of Earth.
+            <details>
+                <summary>solution</summary>
+                $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24})(100)}{ 10,000,000^{2}}$$ $$
+                F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24})(100)}{ 10^{14}}$$ $$ F = 398.57 N$$
+            </details>
+        </div>
+        <div class='example'><b>Example:</b> How massive must an object be in order to feel a force of 100N at a distance of 10,000,000m from
+            the center of the Earth?
+            <details>
+                <summary>solution</summary>
+                $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ M_{1} = \frac{Fr^{2}}{GM_{2}}$$ $$ M_{1} = \frac{(100)(10,000,000)^{2}}{(6.674 \times
+                10^{-11})(5.972 \times 10^{24})}$$ $$ M_{1} = \frac{(100)(10^{14})}{(6.674 \times 10^{-11})(5.972 \times
+                10^{24})}$$ $$ M_{1} = 25.01kg$$
+            </details>
+        </div>
+        <div class='example'><b>Example:</b> When it is closest to the sun on its 75 year orbit <a href="https://en.wikipedia.org/wiki/Halley%27s_Comet">Halley's Comet</a>            feels a force of gravity from the Sun of 3.65×10<sup>12</sup> N. Calculate its distance from the sun using the
+            comet's mass of 2.2×10<sup>14</sup> kg.
+            <details>
+                <summary>solution</summary>
+                $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ r^{2} = \frac{GM_{1}M_{2}}{F} $$ $$ r^{2} = \frac{(6.674 \times 10^{-11})(2.00 \times
+                10^{30})(2.2 \times 10^{14})}{3.65 \times 10^{12}} $$ $$ \sqrt{r^{2}} = \sqrt{8.04 \times 10^{21}} $$ $$
+                r = 8.97 \times 10^{10} m $$
+            </details>
+        </div>
         <h2 class="underlined">Gravitational Acceleration</h2>
-        <p>It is useful to adapt the universal gravitation equation to predict acceleration. To find acceleration we just need to divide an object's gravitational force by its mass.</p>
+        <p>It is useful to adapt the universal gravitation equation to predict acceleration. To find acceleration we just need
+            to divide an object's gravitational force by its mass.</p>
 
         <details class='derive'>
             <summary>derivation of universal gravitational acceleration</summary>
@@ -259,173 +270,164 @@
 
 
         <div class='definition'>
-          <svg style="display: block; margin: auto" width="400" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="100" cy="100" r="20" fill = '#fff' stroke-width="2" stroke="#222"/>
-            <circle cx="300" cy="100" r="50" fill = '#fff' stroke-width="2" stroke="#222"/>
+            <svg style="display: block; margin: auto" width="400" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="20" fill='#fff' stroke-width="2" stroke="#222" />
+                <circle cx="300" cy="100" r="50" fill='#fff' stroke-width="2" stroke="#222" />
 
-            <text x="300" y="105" fill="black" text-anchor="middle" font-size="25">M</text>
+                <text x="300" y="105" fill="black" text-anchor="middle" font-size="25">M</text>
 
 
-            <line x1="100" y1="100" x2="180" y2="100" style="stroke:#000;stroke-width:2" />
-            <polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
+                <line x1="100" y1="100" x2="180" y2="100" style="stroke:#000;stroke-width:2" />
+                <polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
 
-            <text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">a</text>
+                <text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">a</text>
 
-            <line x1="100" y1="30" x2="300" y2="30" style="stroke:#000;stroke-width:2" />
-            <line x1="100" y1="25" x2="100" y2="35" style="stroke:#000;stroke-width:2" />
-            <line x1="300" y1="25" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
-            <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
-        </svg>
+                <line x1="100" y1="30" x2="300" y2="30" style="stroke:#000;stroke-width:2" />
+                <line x1="100" y1="25" x2="100" y2="35" style="stroke:#000;stroke-width:2" />
+                <line x1="300" y1="25" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+                <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
+            </svg>
 
             <h2>$$ a = \frac{GM}{r^{2}} $$</h2>
             <p>\(a\) = acceleration of gravity [m/s²] <em>vector</em>
                 <br>\(G\) = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N(m/kg)²]
                 <br>\(M\) = mass of the body pulling [kg, kilograms]
                 <br>\(r\) = distance between the center of each mass [m, meters]
-				<svg style="display: block; margin: auto" width="500" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-					<circle cx="250" cy="35" r="5" fill = '#fff' stroke-width="2" stroke="#222"/>
-					<circle cx="250" cy="1167" r="1000" fill = '#fff' stroke-width="2" stroke="#222"/>
+                <svg style="display: block; margin: auto" width="500" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="250" cy="35" r="5" fill='#fff' stroke-width="2" stroke="#222" />
+                    <circle cx="250" cy="1167" r="1000" fill='#fff' stroke-width="2" stroke="#222" />
 
-					<text x="250" y="193" fill="black" text-anchor="middle" font-size="25">M</text>
+                    <text x="250" y="193" fill="black" text-anchor="middle" font-size="25">M</text>
 
-					<line x1="250" y1="35" x2="250" y2="100" style="stroke:#000;stroke-width:2" />
-					<polygon points="0,0 -8,5 -8,-5" transform="translate(250 104) rotate(90)" style="fill:#000;" />
-					<text x="250" y="116" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">a</text>
+                    <line x1="250" y1="35" x2="250" y2="100" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 -8,5 -8,-5" transform="translate(250 104) rotate(90)" style="fill:#000;" />
+                    <text x="250" y="116" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">a</text>
 
-					<line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
-					<line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
-					<text x="310" y="130" fill="black" text-anchor="middle" font-size="25">r</text>
-				</svg>
+                    <line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+                    <line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
+                    <text x="310" y="130" fill="black" text-anchor="middle" font-size="25">r</text>
+                </svg>
         </div>
         <p>The acceleration vector is pointed towards the center of the mass producing the acceleration.</p>
-        <p>The mass of the body being accelerated isn't used in this equation. Use the mass of the body producing the acceleration.  To find the acceleration of objects on Earth use Earth's mass.</p>
-		<p>
-			The simulation below shows a vector <strong>field</strong>. Each vector shows the gravitational acceleration potentially felt at that location.  These diagrams are helpful for predicting how a particle will accelerate.
-			<br>Click the mouse to push the masses around. Number of particles =
-			<input class='number' id ='num1' type="number" step="1" min = '1' max = '200' value = '6'>
-		  	<canvas id = 'grav1' height = '500' width='600' onclick="grav1(this)"> </canvas>
-	  	</p>
+        <p>The mass of the body being accelerated isn't used in this equation. Use the mass of the body producing the acceleration.
+            To find the acceleration of objects on Earth use Earth's mass.</p>
+        <p>
+            The simulation below shows a vector <strong>field</strong>. Each vector shows the gravitational acceleration
+            potentially felt at that location. These diagrams are helpful for predicting how a particle will accelerate.
+            <br>Click the mouse to push the masses around. Number of particles =
+            <input class='number' id='num1' type="number" step="1" min='1' max='200' value='6'>
+            <canvas id='grav1' height='500' width='600' onclick="grav1(this)"> </canvas>
+        </p>
 
-		<div class = 'example'><b>Example:</b> Find the acceleration of gravity for an object on the surface of Earth.
-          <br>Is it really 9.8m/s²?
-        <details>
-            <summary>solution</summary>
-            $$ r = 6,371,000m $$
-            $$ a = \frac{GM}{r^{2}} $$
-            $$ a = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{(6.371\times10^{6})^{2}} $$
-            $$ a = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{40.590\times10^{12}} $$
-            $$ a = \frac{(6.674)(5.972)}{40.590} \times 10^{-11+24-12}$$
-            $$ a=0.98195 \times 10^{1}$$
-            $$ a=9.8195 \frac{m}{s^{2}}$$
-        </details>
-	</div>
-	<div class = 'example'><b>Example:</b> Find how far away from the earth you need to be to only accelerate at half of 9.8m/s².
-        <details>
-            <summary>solution</summary>
-            $$ a = \frac{GM}{r^{2}} $$
-            $$ r^{2} = \frac{GM}{a} $$
-            $$ r^{2} = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{9.8 \times 0.5} $$
-            $$ r = 9,160,226 m = 9,160 km $$
-            <p>Let's find the distance above Earth's surface.</p>
-            $$ 9,160km - 6,371km = 2789 km$$
-        </details>
-</div>
+        <div class='example'><b>Example:</b> Find the acceleration of gravity for an object on the surface of Earth.
+            <br>Is it really 9.8m/s²?
+            <details>
+                <summary>solution</summary>
+                $$ r = 6,371,000m $$ $$ a = \frac{GM}{r^{2}} $$ $$ a = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{(6.371\times10^{6})^{2}}
+                $$ $$ a = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{40.590\times10^{12}} $$ $$ a = \frac{(6.674)(5.972)}{40.590}
+                \times 10^{-11+24-12}$$ $$ a=0.98195 \times 10^{1}$$ $$ a=9.8195 \frac{m}{s^{2}}$$
+            </details>
+        </div>
+        <div class='example'><b>Example:</b> Find how far away from the earth you need to be to only accelerate at half of 9.8m/s².
+            <details>
+                <summary>solution</summary>
+                $$ a = \frac{GM}{r^{2}} $$ $$ r^{2} = \frac{GM}{a} $$ $$ r^{2} = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{9.8 \times
+                0.5} $$ $$ r = 9,160,226 m = 9,160 km $$
+                <p>Let's find the distance above Earth's surface.</p>
+                $$ 9,160km - 6,371km = 2789 km$$
+            </details>
+        </div>
 
-        <a id ='gpe'></a>
-		<p class='underlined'> Gravitational Potential Energy</p>
-        <p>Our old gravitational potential energy equation (U=mgh) can be made more accurate if we replace g = 9.8 with a calculated gravitational acceleration. This version of gravitational potential energy now works beyond Earth's surface.</p>
+        <a id='gpe'></a>
+        <p class='underlined'> Gravitational Potential Energy</p>
+        <p>Our old gravitational potential energy equation (U=mgh) can be made more accurate if we replace g = 9.8 with a calculated
+            gravitational acceleration. This version of gravitational potential energy now works beyond Earth's surface.</p>
 
         <details class='derive'>
             <summary>derivation of universal gravitational potential energy</summary>
-            $$U_{g} = mgh \quad a = \color{blue}{\frac{GM}{r^{2}}} $$
-            $$U_{g} = m\color{blue}{\frac{GM}{r^{2}}}h $$
-            $$U_{g} = \frac{GM_{1}M_{2}}{r^{2}}r $$
-            $$U_{g} = \frac{GM_{1}M_{2}}{r} $$
-            <br>When distance is very big the energy goes to zero, so it makes sense to choose the zero of this gravitational potential energy at an infinite distance away. This means that as we bring a mass closer to another mass we are doing negative work.
-            $$U_{g} = -\frac{GM_{1}M_{2}}{r} $$
+            $$U_{g} = mgh \quad a = \color{blue}{\frac{GM}{r^{2}}} $$ $$U_{g} = m\color{blue}{\frac{GM}{r^{2}}}h $$ $$U_{g} = \frac{GM_{1}M_{2}}{r^{2}}r
+            $$ $$U_{g} = \frac{GM_{1}M_{2}}{r} $$
+            <br>When distance is very big the energy goes to zero, so it makes sense to choose the zero of this gravitational
+            potential energy at an infinite distance away. This means that as we bring a mass closer to another mass we are
+            doing negative work. $$U_{g} = -\frac{GM_{1}M_{2}}{r} $$
 
         </details>
 
-                <div class='definition'>
-                  <svg class='center' style="display: block; margin: auto" width="600" height="240" viewbox="-100 -40 500 240" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="0" cy="100" r="98" fill = '#fff' stroke-width="2" stroke="#222"/>
-                    <circle cx="300" cy="100" r="30" fill = '#fff' stroke-width="2" stroke="#222"/>
-                    <text x="0" y="105" fill="black" text-anchor="middle" font-size="25">M</text>
-                    <text x="18" y="108" fill="black" text-anchor="middle" font-size="19">1</text>
-                    <text x="298" y="108" fill="black" text-anchor="middle" font-size="25">M</text>
-                    <text x="316" y="111" fill="black" text-anchor="middle" font-size="19">2</text>
-                  <g transform = 'translate(0,-10)'>
+        <div class='definition'>
+            <svg class='center' style="display: block; margin: auto" width="600" height="240" viewbox="-100 -40 500 240" class='svgDiagram'
+                version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="0" cy="100" r="98" fill='#fff' stroke-width="2" stroke="#222" />
+                <circle cx="300" cy="100" r="30" fill='#fff' stroke-width="2" stroke="#222" />
+                <text x="0" y="105" fill="black" text-anchor="middle" font-size="25">M</text>
+                <text x="18" y="108" fill="black" text-anchor="middle" font-size="19">1</text>
+                <text x="298" y="108" fill="black" text-anchor="middle" font-size="25">M</text>
+                <text x="316" y="111" fill="black" text-anchor="middle" font-size="19">2</text>
+                <g transform='translate(0,-10)'>
                     <line x1="0" y1="0" x2="300" y2="0" style="stroke:#000;stroke-width:2" />
                     <line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
                     <line x1="300" y1="-5" x2="300" y2="5" style="stroke:#000;stroke-width:2" />
                     <text x="150" y="-5" fill="black" text-anchor="middle" font-size="25">r</text>
-                  </g>
+                </g>
+            </svg>
+            <h1>$$U_{g} = -\frac{GM_{1}M_{2}}{r} $$</h1>
+            <p>\(U_g\) = gravitational potential energy [J, Joules]
+                <br>\(G\) = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N(m/kg)²]
+                <br>\(M\) = mass [kg, kilograms]
+                <br>\(r\) = distance between the center of each mass [m, meters]
+                <svg style="display: block; margin: auto" width="500" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="250" cy="35" r="5" fill='#fff' stroke-width="2" stroke="#222" />
+                    <circle cx="250" cy="1167" r="1000" fill='#fff' stroke-width="2" stroke="#222" />
+
+                    <text x="250" y="70" fill="black" text-anchor="middle" font-size="25">M</text>
+                    <text x="268" y="73" fill="black" text-anchor="middle" font-size="19">1</text>
+                    <text x="250" y="192" fill="black" text-anchor="middle" font-size="25">M</text>
+                    <text x="268" y="195" fill="black" text-anchor="middle" font-size="19">2</text>
+
+                    <line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+                    <line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
+                    <text x="310" y="130" fill="black" text-anchor="middle" font-size="25">r</text>
                 </svg>
-                    <h1>$$U_{g} = -\frac{GM_{1}M_{2}}{r} $$</h1>
-                    <p>\(U_g\) = gravitational potential energy [J, Joules]
-                        <br>\(G\) = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N(m/kg)²]
-                        <br>\(M\) = mass [kg, kilograms]
-                        <br>\(r\) = distance between the center of each mass [m, meters]
-						<svg style="display: block; margin: auto" width="500" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-				  			<circle cx="250" cy="35" r="5" fill = '#fff' stroke-width="2" stroke="#222"/>
-				  			<circle cx="250" cy="1167" r="1000" fill = '#fff' stroke-width="2" stroke="#222"/>
+        </div>
+        <p>What is the gravitational potential energy when two masses are at zero distance away?</p>
+        <p>What is the gravitational potential energy when two masses are at an infinite distance away?</p>
+        <p>Energy is a scalar, not a vector. This means that when we calculate gravitational potential energy it has no direction.
+            You can see the potential energy in the simulation below as a scalar field. Think of the yellow regions as being
+            deeper into the <a href='https://xkcd.com/681/'>gravity well</a>.
+            <br>Poke around with your mouse. Number of particles = <input class='number' id='num2' type="number" step="1"
+                min='1' max='100' value='6'></p>
+        <canvas class='center' id='grav2' height='300' width='400' onclick="grav2(this)"> </canvas>
 
-				  			<text x="250" y="70" fill="black" text-anchor="middle" font-size="25">M</text>
-				  			<text x="268" y="73" fill="black" text-anchor="middle" font-size="19">1</text>
-				  			<text x="250" y="192" fill="black" text-anchor="middle" font-size="25">M</text>
-				  			<text x="268" y="195" fill="black" text-anchor="middle" font-size="19">2</text>
-
-				  			<line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
-				  			<line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
-				  			<text x="310" y="130" fill="black" text-anchor="middle" font-size="25">r</text>
-				  		</svg>
-                </div>
-                <p>What is the gravitational potential energy when two masses are at zero distance away?</p>
-                <p>What is the gravitational potential energy when two masses are at an infinite distance away?</p>
-				<p>Energy is a scalar, not a vector.  This means that when we calculate gravitational potential energy it has no direction. You can see the potential energy in the simulation below as a scalar field. Think of the yellow regions as being deeper into the <a href='https://xkcd.com/681/'>gravity well</a>.
-					<br>Poke around with your mouse.
-					Number of particles = <input class='number' id ='num2' type="number" step="1" min = '1' max = '100' value = '6'></p>
-				<canvas class = 'center' id = 'grav2' height = '300' width='400' onclick="grav2(this)"> </canvas>
-
-				<div class='example'><b>Example:</b> A 2000kg space ship starts at rest 20,000km from the surface of Earth.  How much kinetic energy will the ship have after it falls down to 10,000km from the surface of Earth?
-        <details>
-            <summary>solution</summary>
-            $$E_{i} = E_{f}$$
-            $$U_{gi} = U_{gf} + K$$
-            $$U_{gi} - U_{gf} = K$$
-            $$-\frac{GM_{1}M_{2}}{r} +\frac{GM_{1}M_{2}}{r} = K$$
-            $$-\frac{(6.674\times 10^{-11})(5.972\times 10^{24})(2000)}{6,371,000 + 20,000,000} +\frac{(6.674\times 10^{-11})(5.972\times 10^{24})(2000)}{6,371,000 + 10,000,000} = K$$
-            $$-3.02 \times 10^{10}+4.86 \times 10^{10} = K$$
-            $$1.85 \times 10^{10} J = K$$
-        </details>
-        <div class='example'> <b>Example:</b> Find the minimum escape velocity for a 100kg person on Earth.
-        <details>
-            <summary>solution</summary>
-            $$E_{i} = E_{f}$$
-            $$U_{gi} + K = U_{gf} + K$$
-            <br> kinetic and potential energy will go to zero once the person escapes the earth's gravity
-            $$U_{gi} + K = 0$$
-            $$-U_{gi} = K$$
-            $$\frac{GM_{1}M_{2}}{r} = (1/2)M_{2}v^2$$
-            $$\frac{GM_{1}}{r} = (1/2)v^2$$
-            $$\sqrt{\frac{2GM_{1}}{r}} = v$$
-            $$\sqrt{\frac{2(6.674\times 10^{-11}) (5.972 \times 10 ^{24})}{6,371,000}} = v$$
-            $$11,183 \small \frac{m}{s} = \normalsize v $$
-        </details>
+        <div class='example'><b>Example:</b> A 2000kg space ship starts at rest 20,000km from the surface of Earth. How much kinetic energy will
+            the ship have after it falls down to 10,000km from the surface of Earth?
+            <details>
+                <summary>solution</summary>
+                $$E_{i} = E_{f}$$ $$U_{gi} = U_{gf} + K$$ $$U_{gi} - U_{gf} = K$$ $$-\frac{GM_{1}M_{2}}{r} +\frac{GM_{1}M_{2}}{r} = K$$ $$-\frac{(6.674\times
+                10^{-11})(5.972\times 10^{24})(2000)}{6,371,000 + 20,000,000} +\frac{(6.674\times 10^{-11})(5.972\times 10^{24})(2000)}{6,371,000
+                + 10,000,000} = K$$ $$-3.02 \times 10^{10}+4.86 \times 10^{10} = K$$ $$1.85 \times 10^{10} J = K$$
+            </details>
+            <div class='example'> <b>Example:</b> Find the minimum escape velocity for a 100kg person on Earth.
+                <details>
+                    <summary>solution</summary>
+                    $$E_{i} = E_{f}$$ $$U_{gi} + K = U_{gf} + K$$
+                    <br> kinetic and potential energy will go to zero once the person escapes the earth's gravity $$U_{gi}
+                    + K = 0$$ $$-U_{gi} = K$$ $$\frac{GM_{1}M_{2}}{r} = (1/2)M_{2}v^2$$ $$\frac{GM_{1}}{r} = (1/2)v^2$$ $$\sqrt{\frac{2GM_{1}}{r}}
+                    = v$$ $$\sqrt{\frac{2(6.674\times 10^{-11}) (5.972 \times 10 ^{24})}{6,371,000}} = v$$ $$11,183 \small
+                    \frac{m}{s} = \normalsize v $$
+                </details>
     </article>
-	<div class = 'back'>
-		<a href="../../../index.html#units">Back</a>
-	</div>
+    <div class='back'>
+        <a href="../../../index.html#units">Back</a>
+    </div>
     <script>
         renderMathInElement(document.body);
     </script>
-	<script src="grav0.js"></script>
-	<script src="grav1.js"></script>
-	<script src="grav2.js"></script>
+    <script src="grav0.js"></script>
+    <script src="grav1.js"></script>
+    <script src="grav2.js"></script>
     <!-- <script src="gravityvectorfield.js"></script> -->
-	<script src="http://d3js.org/d3.v3.min.js"></script>
-	<script src='../../../lib/function-plot.js'></script>
-	<script src='plot.js'></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src='../../../lib/function-plot.js'></script>
+    <script src='plot.js'></script>
 </body>
 
 </html>

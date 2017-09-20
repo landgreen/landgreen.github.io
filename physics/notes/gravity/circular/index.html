@@ -3,6 +3,12 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=610, initial-scale=1" />
+	<meta name="description" content="Notes for a high school physics course.">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:title" content="Physics Notes">
+	<meta name="twitter:title" content="High School Physics Notes">
 	<title>Orbits</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
@@ -19,18 +25,21 @@
 	</header>
 	<article>
 		<div class="col-group">
-			<p>In the frictionless environment of space two massive bodies can orbit each other because of their mutual gravitational attraction.</p>
+			<p>In the frictionless environment of space two massive bodies can orbit each other because of their mutual gravitational
+				attraction.</p>
 			<div>
-				<p>If the relative velocity between two bodies is too low they will collide. If the velocity is too high they will move away from each other. In between these extremes exist a range of stable orbits that can repeat with very little change.</p>
-				<p>Over enough time all orbits degrade. The Moon's orbit gets 38mm farther away every year because its kinetic energy changes into the tides.</p>
+				<p>If the relative velocity between two bodies is too low they will collide. If the velocity is too high they will move
+					away from each other. In between these extremes exist a range of stable orbits that can repeat with very little change.</p>
+				<p>Over enough time all orbits degrade. The Moon's orbit gets 38mm farther away every year because its kinetic energy changes
+					into the tides.</p>
 			</div>
 			<div>
-				<canvas style = 'border-radius: 250px;' class='black' id = 'grav1' height = '250' width='250' onclick="grav1(this)"> </canvas>
+				<canvas style='border-radius: 250px;' class='black' id='grav1' height='250' width='250' onclick="grav1(this)"> </canvas>
 			</div>
 		</div>
 
 
-<br>
+		<br>
 		<p>Play around with some orbits in the simulation below to develop an intuition for orbital mechanics.</p>
 		<center>
 			<div style="position: relative; width: 300px; height: 200px;"><a href="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_en.html" style="text-decoration: none;"><img src="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits-600.png" alt="Gravity And Orbits" style="border: none;" width="300" height="200"/><div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.6; filter: alpha(opacity = 60);"></div>
@@ -42,58 +51,59 @@
 		<p>How does the orbital path change as you increase the mass of either object?</p>
 
 		<p class='underlined'>Circular Motion</p>
-		<p>Any object moving in a circular path has a net force pointed at the center of the circle. The velocity of the object will always be perpendicular to the force.</p>
+		<p>Any object moving in a circular path has a net force pointed at the center of the circle. The velocity of the object will
+			always be perpendicular to the force.</p>
 		<div class='definition'>
-		<svg style="display: block; margin: auto" width="450" height="360" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="200" cy="200" r="150" fill = 'rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999"/>
-            <g transform="translate(53 200)">
-                <line x1="0" y1="0" x2="150" y2="0" style="stroke:#000;stroke-width:2" />
-                <line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
-                <line x1="150" y1="-5" x2="150" y2="5" style="stroke:#000;stroke-width:2" />
-                <text x="75" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
-            </g>
+			<svg style="display: block; margin: auto" width="450" height="360" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<circle cx="200" cy="200" r="150" fill='rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
+				<g transform="translate(53 200)">
+					<line x1="0" y1="0" x2="150" y2="0" style="stroke:#000;stroke-width:2" />
+					<line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
+					<line x1="150" y1="-5" x2="150" y2="5" style="stroke:#000;stroke-width:2" />
+					<text x="75" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
+				</g>
 
-            <g transform="translate(350 200) rotate(0)">
-                <g transform="translate(0 -100) rotate(90)">
-                    <line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
-                </g>
-                <text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">v</text>
+				<g transform="translate(350 200) rotate(0)">
+					<g transform="translate(0 -100) rotate(90)">
+						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+					</g>
+					<text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">v</text>
 
-                <g transform="translate(-75 0) rotate(0)">
-                    <line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
-                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
-                </g>
-                    <text x="-85" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
-                    <circle cx="0" cy="0" r="20" fill = '#f77' stroke-width="2" stroke="#222"/>
-            </g>
+					<g transform="translate(-75 0) rotate(0)">
+						<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
+						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+					</g>
+					<text x="-85" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
+					<circle cx="0" cy="0" r="20" fill='#f77' stroke-width="2" stroke="#222" />
+				</g>
 
-            <g transform="translate(306 94) rotate(-45)" opacity = 0.25>
-                <g transform="translate(0 -100) rotate(90)">
-                    <line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
-                </g>
-                <g transform="translate(-75 0) rotate(0)">
-                    <line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
-                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
-                </g>
-                <circle cx="0" cy="0" r="20" fill = '#f77' stroke-width="2" stroke="#222"/>
-            </g>
+				<g transform="translate(306 94) rotate(-45)" opacity=0 .25>
+					<g transform="translate(0 -100) rotate(90)">
+						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+					</g>
+					<g transform="translate(-75 0) rotate(0)">
+						<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
+						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+					</g>
+					<circle cx="0" cy="0" r="20" fill='#f77' stroke-width="2" stroke="#222" />
+				</g>
 
-            <g transform="translate(200 50) rotate(-90)" opacity = 0.07>
-                <g transform="translate(0 -100) rotate(90)">
-                    <line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
-                </g>
+				<g transform="translate(200 50) rotate(-90)" opacity=0 .07>
+					<g transform="translate(0 -100) rotate(90)">
+						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+					</g>
 
-                <g transform="translate(-75 0) rotate(0)">
-                    <line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
-                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
-                </g>
-                <circle cx="0" cy="0" r="20" fill = '#f77' stroke-width="2" stroke="#222"/>
-            </g>
-        </svg>
-			<h2>$$F = \frac{mv^{2}}{r}  \quad \quad a = \frac{v^{2}}{r} $$</h2>
+					<g transform="translate(-75 0) rotate(0)">
+						<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
+						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+					</g>
+					<circle cx="0" cy="0" r="20" fill='#f77' stroke-width="2" stroke="#222" />
+				</g>
+			</svg>
+			<h2>$$F = \frac{mv^{2}}{r} \quad \quad a = \frac{v^{2}}{r} $$</h2>
 			<p>
 				\(F\) = centripetal force [N] <em>vector</em>
 				<br>\(a\) = centripetal acceleration [m/s²] <em>vector</em>
@@ -113,7 +123,8 @@
 						<li>some roads have circular curves
 							<li>charged particles in a uniform magnetic field
 		</p>
-		<div class='example'><b>Example:</b> A 20kg dog is riding on a carousel 5m away from the center. If the dog is moving at 3m/s what magnitude and direction force will it have to exert to produce the circular motion needed to stay on the ride?
+		<div class='example'><b>Example:</b> A 20kg dog is riding on a carousel 5m away from the center. If the dog is moving at 3m/s what magnitude
+			and direction force will it have to exert to produce the circular motion needed to stay on the ride?
 			<details>
 				<summary>solution</summary>
 				$$F = \frac{mv^{2}}{r}$$ $$F = \frac{(20)(3)^{2}}{5}$$ $$F = 36N$$
@@ -121,15 +132,18 @@
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> You want to reproduce the feeling of Earth's gravity in space. This can be done by rotating your space station to produce the feeling of acceleration. Your space station is shaped like a wheel with a diameter of 50.0m. How fast does
-			the edge have to move to produce Earth's gravity?
+			<b>Example:</b> You want to reproduce the feeling of Earth's gravity in space. This can be done by rotating your space
+			station to produce the feeling of acceleration. Your space station is shaped like a wheel with a diameter of 50.0m. How
+			fast does the edge have to move to produce Earth's gravity?
 			<details>
 				<summary>solution</summary>
-				$$d = 2r \quad \quad r = 25m$$ $$a = \frac{v^{2}}{r}$$ $$\sqrt{ar} = v$$ $$\sqrt{(9.8)(25)} = v$$ $$15.7 \small \frac{m}{s} = \normalsize v$$
+				$$d = 2r \quad \quad r = 25m$$ $$a = \frac{v^{2}}{r}$$ $$\sqrt{ar} = v$$ $$\sqrt{(9.8)(25)} = v$$ $$15.7 \small \frac{m}{s}
+				= \normalsize v$$
 			</details>
 		</div>
-		<div class='example'><b>Example:</b> The second hand on a clock moves smoothly in a circle, but there is a brave 3 mg ant on the tip of the second hand. How much force must the ant apply to not fall off? The ant is 21 mm from the center of the clock. You can't directly
-			measure the velocity, but you do know it takes 60 seconds for the second hand to complete a circle.
+		<div class='example'><b>Example:</b> The second hand on a clock moves smoothly in a circle, but there is a brave 3 mg ant on the tip of the
+			second hand. How much force must the ant apply to not fall off? The ant is 21 mm from the center of the clock. You can't
+			directly measure the velocity, but you do know it takes 60 seconds for the second hand to complete a circle.
 			<details>
 				<summary>solution</summary>
 				<p>Velocity is distance divided by time.
@@ -139,53 +153,56 @@
 			</details>
 		</div>
 		<p class='underlined'>Circular Orbits</p>
-		Each satellite below starts with a different velocity. Simulation speed = <input class='number' id ='speed' type="number" step="1" min = '1' max = '100' value = '4'>
-		<canvas class='black' id = 'grav2' height = '600' width='600' onclick="grav2(this)"> </canvas>
-		<p><strong>The orbits of objects in space are elliptical. They are never perfectly circular,</strong> but many orbits come close enough to circular motion to make a rough approximation useful.</p>
+		Each satellite below starts with a different velocity. Simulation speed = <input class='number' id='speed' type="number"
+		 step="1" min='1' max='100' value='4'>
+		<canvas class='black' id='grav2' height='600' width='600' onclick="grav2(this)"> </canvas>
+		<p><strong>The orbits of objects in space are elliptical. They are never perfectly circular,</strong> but many orbits come
+			close enough to circular motion to make a rough approximation useful.</p>
 		<details class='derive'>
 			<summary>derivation of orbital velocity</summary>
-			<br>If we assume that the central mass is much larger and doesn't move, we can combine the equations for circular motion with the universal gravitation equations.
-				$$F = \frac{M_{1}v^{2}}{r} \quad F = \frac{GM_{1}M_{2}}{r^{2}} $$
-				<br>set the force of gravity and the centripital force equal $$\frac{M_{1}v^{2}}{r} = \frac{GM_{1}M_{2}}{r^{2}} $$
-				<br>cancel terms that show up on both sides $$\frac{\color{blue}M_{\color{blue}1}v^{2}}{\color{blue}r} = \frac{G\color{blue}M_{\color{blue}1}M_{2}}{r^{\color{blue}2}}$$ $$v^{2} = \frac{GM_{2}}{r} $$
+			<br>If we assume that the central mass is much larger and doesn't move, we can combine the equations for circular motion
+			with the universal gravitation equations. $$F = \frac{M_{1}v^{2}}{r} \quad F = \frac{GM_{1}M_{2}}{r^{2}} $$
+			<br>set the force of gravity and the centripital force equal $$\frac{M_{1}v^{2}}{r} = \frac{GM_{1}M_{2}}{r^{2}} $$
+			<br>cancel terms that show up on both sides $$\frac{\color{blue}M_{\color{blue}1}v^{2}}{\color{blue}r} = \frac{G\color{blue}M_{\color{blue}1}M_{2}}{r^{\color{blue}2}}$$
+			$$v^{2} = \frac{GM_{2}}{r} $$
 		</details>
 		<div class='definition'>
 			<svg style="display: block; margin: auto" width="450" height="360" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-				<circle cx="200" cy="200" r="50" fill = '#fff' stroke-width="2" stroke="#222"/>
+				<circle cx="200" cy="200" r="50" fill='#fff' stroke-width="2" stroke="#222" />
 				<text x="203" y="224" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">M</text>
-	            <circle cx="200" cy="200" r="150" fill = 'rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999"/>
-	            <g transform="translate(53 200)">
-	                <line x1="0" y1="0" x2="150" y2="0" style="stroke:#000;stroke-width:2" />
-	                <line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
-	                <line x1="150" y1="-5" x2="150" y2="5" style="stroke:#000;stroke-width:2" />
-	                <text x="75" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
-	            </g>
+				<circle cx="200" cy="200" r="150" fill='rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
+				<g transform="translate(53 200)">
+					<line x1="0" y1="0" x2="150" y2="0" style="stroke:#000;stroke-width:2" />
+					<line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
+					<line x1="150" y1="-5" x2="150" y2="5" style="stroke:#000;stroke-width:2" />
+					<text x="75" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
+				</g>
 
-	            <g transform="translate(350 200) rotate(0)">
-	                <g transform="translate(0 -100) rotate(90)">
-	                    <line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-	                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
-	                </g>
-	                <text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">v</text>
-                    <circle cx="0" cy="0" r="6" fill = '#f77' stroke-width="2" stroke="#222"/>
-	            </g>
+				<g transform="translate(350 200) rotate(0)">
+					<g transform="translate(0 -100) rotate(90)">
+						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+					</g>
+					<text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">v</text>
+					<circle cx="0" cy="0" r="6" fill='#f77' stroke-width="2" stroke="#222" />
+				</g>
 
-	            <g transform="translate(306 94) rotate(-45)" opacity = 0.25>
-	                <g transform="translate(0 -100) rotate(90)">
-	                    <line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-	                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
-	                </g>
-	                <circle cx="0" cy="0" r="6" fill = '#f77' stroke-width="2" stroke="#222"/>
-	            </g>
+				<g transform="translate(306 94) rotate(-45)" opacity=0 .25>
+					<g transform="translate(0 -100) rotate(90)">
+						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+					</g>
+					<circle cx="0" cy="0" r="6" fill='#f77' stroke-width="2" stroke="#222" />
+				</g>
 
-	            <g transform="translate(200 50) rotate(-90)" opacity = 0.07>
-	                <g transform="translate(0 -100) rotate(90)">
-	                    <line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-	                    <polygon points="0,0 8,5 8,-5" style="fill:#000;" />
-	                </g>
-	                <circle cx="0" cy="0" r="6" fill = '#f77' stroke-width="2" stroke="#222"/>
-	            </g>
-	        </svg>
+				<g transform="translate(200 50) rotate(-90)" opacity=0 .07>
+					<g transform="translate(0 -100) rotate(90)">
+						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+					</g>
+					<circle cx="0" cy="0" r="6" fill='#f77' stroke-width="2" stroke="#222" />
+				</g>
+			</svg>
 			<h1>$$v^{2} = \frac{GM}{r} $$</h1>
 			<br>\(v\) = orbital tangential velocity [m/s] <em>vector</em>
 			<br>\(G\) = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N m²/kg²]
@@ -211,14 +228,18 @@
 		<div class='example'><b>Example:</b> If a satellite is 800.0 km from the surface of the moon how fast must it move to travel in a circular orbit?
 			<details>
 				<summary>solution</summary>
-				$$r = 800,000 + 1,737,000 = 2,537,000m$$ $$v^{2} = \frac{GM}{r}$$ $$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2,537,000}$$ $$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2.537 \times 10^{6}}$$ $$\sqrt{v^{2}} = \sqrt{19.31
-				\times 10^5}$$ $$v = 1389.6 \small \frac{m}{s}$$
+				$$r = 800,000 + 1,737,000 = 2,537,000m$$ $$v^{2} = \frac{GM}{r}$$ $$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2,537,000}$$
+				$$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2.537 \times 10^{6}}$$ $$\sqrt{v^{2}} = \sqrt{19.31 \times
+				10^5}$$ $$v = 1389.6 \small \frac{m}{s}$$
 			</details>
 		</div>
-		<div class='example'><b>Example:</b> A geosynchronous orbit is always above the same point on the earth so it takes one day to orbit. This orbit requires a velocity of 3,070 m/s. Calculate how far away a geosynchronous satellite needs to be from the center of the earth.
+		<div class='example'><b>Example:</b> A geosynchronous orbit is always above the same point on the earth so it takes one day to orbit. This orbit
+			requires a velocity of 3,070 m/s. Calculate how far away a geosynchronous satellite needs to be from the center of the
+			earth.
 			<details>
 				<summary>solution</summary>
-				$$v^{2} = \frac{GM}{r}$$ $$r = \frac{GM}{v^{2}}$$ $$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(3,070)^{2}}$$ $$r = 4.22 \times 10^{7} m = 42,200 km$$
+				$$v^{2} = \frac{GM}{r}$$ $$r = \frac{GM}{v^{2}}$$ $$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(3,070)^{2}}$$
+				$$r = 4.22 \times 10^{7} m = 42,200 km$$
 				<p>altitude = orbital radius - Earth's surface radius</p>
 				$$a = 42,200 km - 6,371 km$$ $$a = 35,829 km $$
 			</details>

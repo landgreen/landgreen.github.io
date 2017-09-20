@@ -3,6 +3,12 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=610, initial-scale=1" />
+	<meta name="description" content="Notes for a high school physics course.">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:title" content="Physics Notes">
+	<meta name="twitter:title" content="High School Physics Notes">
 	<title>Coulomb's Law</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
@@ -17,37 +23,40 @@
 		<h1>Coulomb's Law</h1>
 	</header>
 	<article>
-		<p>Coulomb's law lets us calculate the electrostatic force. It is similar to the force of gravity, but while gravity shapes things on a large scale, the electrostatic force shapes the small. It explains concepts like: electricity, chemistry, and light!</p>
+		<p>Coulomb's law lets us calculate the electrostatic force. It is similar to the force of gravity, but while gravity shapes
+			things on a large scale, the electrostatic force shapes the small. It explains concepts like: electricity, chemistry,
+			and light!</p>
 
 		<h2 class='underlined'>Electric Charge</h2>
-		<p>Electric charge determines the magnitude and direction of the electrostatic force. Charge has a role in the electrostatic force similar to mass's role in gravity. To measure charge we use units called <a href="https://en.wikipedia.org/wiki/Orders_of_magnitude_(charge)">Coulombs [C]</a>.</p>
+		<p>Electric charge determines the magnitude and direction of the electrostatic force. Charge has a role in the electrostatic
+			force similar to mass's role in gravity. To measure charge we use units called <a href="https://en.wikipedia.org/wiki/Orders_of_magnitude_(charge)">Coulombs [C]</a>.</p>
 
 
 		<p>The direction of the electrostatic force is attractive if the charges are opposite.</p>
 		<svg style="display: block; margin: auto" width="400" height="50" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-			<g transform = 'translate(0,-80)'>
+			<g transform='translate(0,-80)'>
 				<line x1="100" y1="100" x2="177" y2="100" style="stroke:#000;stroke-width:2" />
 				<polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
 				<line x1="300" y1="100" x2="223" y2="100" style="stroke:#000;stroke-width:2" />
 				<polygon points="0,0 8,5 8,-5" transform="translate(220 100)" style="fill:#000;" />
-				<circle cx="105" cy="100" r="15" fill = '#ccf' stroke-width="2" stroke="#222"/>
+				<circle cx="105" cy="100" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
 				<text x="105" y="99" fill="black" text-anchor="middle" alignment-baseline="central" font-size="35">-</text>
-				<circle cx="295" cy="100" r="15" fill = '#fcc' stroke-width="2" stroke="#222"/>
+				<circle cx="295" cy="100" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
 				<text x="295" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="20">+</text>
 			</g>
 		</svg>
 
 		<p>The direction of the force is repulsive if the charges are the same.</p>
 		<svg style="display: block; margin: auto" width="400" height="50" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-			<g transform = 'translate(0,-80)'>
+			<g transform='translate(0,-80)'>
 				<line x1="100" y1="100" x2="23" y2="100" style="stroke:#000;stroke-width:2" />
 				<polygon points="0,0 -8,5 -8,-5" transform="translate(20 100) rotate(180)" style="fill:#000;" />
 				<line x1="300" y1="100" x2="377" y2="100" style="stroke:#000;stroke-width:2" />
 				<polygon points="0,0 8,5 8,-5" transform="translate(380 100) rotate(180)" style="fill:#000;" />
 
-				<circle cx="105" cy="100" r="15" fill = '#ccf' stroke-width="2" stroke="#222"/>
+				<circle cx="105" cy="100" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
 				<text x="105" y="99" fill="black" text-anchor="middle" alignment-baseline="central" font-size="35">-</text>
-				<circle cx="295" cy="100" r="15" fill = '#ccf' stroke-width="2" stroke="#222"/>
+				<circle cx="295" cy="100" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
 				<text x="295" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="35">-</text>
 			</g>
 		</svg>
@@ -55,73 +64,79 @@
 		<p class='center'>or</p>
 		<br>
 		<svg style="display: block; margin: auto" width="400" height="50" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-			<g transform = 'translate(0,-80)'>
+			<g transform='translate(0,-80)'>
 				<line x1="100" y1="100" x2="23" y2="100" style="stroke:#000;stroke-width:2" />
 				<polygon points="0,0 -8,5 -8,-5" transform="translate(20 100) rotate(180)" style="fill:#000;" />
 				<line x1="300" y1="100" x2="377" y2="100" style="stroke:#000;stroke-width:2" />
 				<polygon points="0,0 8,5 8,-5" transform="translate(380 100) rotate(180)" style="fill:#000;" />
 
-				<circle cx="105" cy="100" r="15" fill = '#fcc' stroke-width="2" stroke="#222"/>
+				<circle cx="105" cy="100" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
 				<text x="105" y="99" fill="black" text-anchor="middle" alignment-baseline="central" font-size="20">+</text>
-				<circle cx="295" cy="100" r="15" fill = '#fcc' stroke-width="2" stroke="#222"/>
+				<circle cx="295" cy="100" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
 				<text x="295" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="20">+</text>
 			</g>
 		</svg>
-		<p>Neutrally charged particles don't produce or experience net electrostatic forces. Examples: neutrons, neutrinos, photons, atoms. </p>
+		<p>Neutrally charged particles don't produce or experience net electrostatic forces. Examples: neutrons, neutrinos, photons,
+			atoms. </p>
 		<svg style="display: block; margin: auto" width="400" height="50" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-			<g transform = 'translate(0,-80)'>
-				<circle cx="105" cy="100" r="15" fill = '#ccc' stroke-width="2" stroke="#222"/>
-				<circle cx="295" cy="100" r="15" fill = '#fcc' stroke-width="2" stroke="#222"/>
+			<g transform='translate(0,-80)'>
+				<circle cx="105" cy="100" r="15" fill='#ccc' stroke-width="2" stroke="#222" />
+				<circle cx="295" cy="100" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
 				<text x="295" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="20">+</text>
 			</g>
 		</svg>
 		<br>
-		<p><strong>Most electric charge can be thought of as an imbalance of electrons and protons.</strong> The electrostatic force draws electrons and protons together in atoms, but you can separate a couple trillion electrons from their protons by walking with
-			socks on a carpet. A <a href="https://en.wikipedia.org/wiki/Triboelectric_effect#Triboelectric_series">TriboElectric</a> <a href="https://www.trifield.com/content/tribo-electric-series/">Series</a> lists which materials will become electrically charged
-			after they are rubbed together.</p>
+		<p><strong>Most electric charge can be thought of as an imbalance of electrons and protons.</strong> The electrostatic force
+			draws electrons and protons together in atoms, but you can separate a couple trillion electrons from their protons by
+			walking with socks on a carpet. A <a href="https://en.wikipedia.org/wiki/Triboelectric_effect#Triboelectric_series">TriboElectric</a>			<a href="https://www.trifield.com/content/tribo-electric-series/">Series</a> lists which materials will become electrically
+			charged after they are rubbed together.</p>
 		<div class="col-group">
 			<div class='center'>
 				<svg style="display: block; margin: auto" width="50" height="40" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-		<g transform = 'translate(20,20)'>
-		  <circle cx="5" cy="0" r="15" fill = '#ccf' stroke-width="2" stroke="#222"/>
-		  <text x="5" y="-1" fill="black" text-anchor="middle" alignment-baseline="central" font-size="35">-</text>
-		</g>
-	  	</svg>
+					<g transform='translate(20,20)'>
+						<circle cx="5" cy="0" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
+						<text x="5" y="-1" fill="black" text-anchor="middle" alignment-baseline="central" font-size="35">-</text>
+					</g>
+				</svg>
 				<strong>electron</strong>:
 				<br>charge = -1.602 × 10<sup>-19</sup> C
 				<br>mass = 9.109 × 10<sup>−31</sup> kg
 			</div>
 			<div class='center'>
 				<svg style="display: block; margin: auto" width="50" height="40" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-			<g transform = 'translate(20,20)'>
-			  <circle cx="5" cy="0" r="15" fill = '#fcc' stroke-width="2" stroke="#222"/>
-			  <text x="5" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="20">+</text>
-			</g>
-		  	</svg>
+					<g transform='translate(20,20)'>
+						<circle cx="5" cy="0" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
+						<text x="5" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="20">+</text>
+					</g>
+				</svg>
 				<strong>proton</strong>:
 				<br>charge = +1.602 × 10<sup>-19</sup> C
 				<br>mass = 1.672 × 10<sup>−27</sup> kg
 			</div>
 		</div>
 		<br>
-		<p>This simulation runs Coulomb's law (like charges repel, opposites attract). Hopefully, you see "atoms" spontaneously form from randomly placed charges. Try poking it with your mouse.
+		<p>This simulation runs Coulomb's law (like charges repel, opposites attract). Hopefully, you see "atoms" spontaneously form
+			from randomly placed charges. Try poking it with your mouse.
 		</p>
-		<canvas id = 'charge0' height = '300' width='600' onclick="charges0(this)"> </canvas>
+		<canvas id='charge0' height='300' width='600' onclick="charges0(this)"> </canvas>
 		<p>What role does distance play in the electrostatic force?</p>
-		<canvas id = 'charge1' height = '300' width='600' onclick="charges1(this)"> </canvas>
+		<canvas id='charge1' height='300' width='600' onclick="charges1(this)"> </canvas>
 		<!-- <canvas id = 'charges2' height = '400' width='600' onclick="charges2(this)"> </canvas> -->
 
-		<a id ='conductivity'></a>
+		<a id='conductivity'></a>
 		<h2 class='underlined'>Conductivity</h2>
-		<p> <strong>Conductive</strong> materials allow electric charges to easily move through them.  If a charge is applied to one part of a conductive material the charge will quickly spread out because like charges repel.</p>
+		<p> <strong>Conductive</strong> materials allow electric charges to easily move through them. If a charge is applied to one
+			part of a conductive material the charge will quickly spread out because like charges repel.</p>
 
 		<p>In this sim fresh electrons are added to the left side to induce a flow.</p>
-		<canvas id = 'charge2' height = '250' width='600' onclick="charges2(this)"> </canvas>
+		<canvas id='charge2' height='250' width='600' onclick="charges2(this)"> </canvas>
 
-		<p>In chemistry, elements are roughly divided into metals, metalloids and nonmetals. Metals are held together by loosely sharing their outer valence electrons. The cloud of free flowing electrons give metals most of their shared
-		characteristics, like conductivity.</p>
+		<p>In chemistry, elements are roughly divided into metals, metalloids and nonmetals. Metals are held together by loosely sharing
+			their outer valence electrons. The cloud of free flowing electrons give metals most of their shared characteristics, like
+			conductivity.
+		</p>
 
-		<p>The ease of electron flow is loosely ranked below. Check out <a href='https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity#Resistivity_and_conductivity_of_various_materials'>wikipedia</a> for more detail on conductivity.</p>
+		<p>The ease of electron flow is loosely ranked below. Check out <a href='https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity#Resistivity_and_conductivity_of_various_materials'>wikipedia</a>			for more detail on conductivity.</p>
 
 
 		<p><strong>superconductors</strong> - zero resistance!
@@ -143,40 +158,45 @@
 
 
 		<h2 class='underlined'>Coulomb's Law</h2>
-		<p>After the success of Newton's <a href='../../gravity/gravitation/index.html'>universal gravitation</a> in 1687 several scientists hypothesized that static electricity worked in a similar fashion, but the French physicist Charles-Augustin de Coulomb
-			is given credit for first publishing the law in 1785.
+		<p>After the success of Newton's <a href='../../gravity/gravitation/index.html'>universal gravitation</a> in 1687 several
+			scientists hypothesized that static electricity worked in a similar fashion, but the French physicist Charles-Augustin
+			de Coulomb is given credit for first publishing the law in 1785.
 		</p>
 		<details class='history'>
 			<summary>Historical Background</summary>
 			<br>
-			<div>Since the time of ancient Greece in 600 BCE, people knew that rubbing amber against wool would make the amber attracted to the wool. However, they did not understand why this happened. This question baffled scientists for a long time. By the mid 1700’s
-				things started to change. At the time, static electricity was the only electricity acknowledged in the scientific community. However, Benjamin Franklin started testing reactivity. He used metals to observe electrical charge. Later, Charles Coulomb,
-				a French scientist, verified the Law of Attraction by using hairs and wires to create a torsion balance. He developed and published his findings and law, resulting in what we now know today as Coulomb’s Law. <br><em>-Aja Two Crows</em></div>
+			<div>Since the time of ancient Greece in 600 BCE, people knew that rubbing amber against wool would make the amber attracted
+				to the wool. However, they did not understand why this happened. This question baffled scientists for a long time. By
+				the mid 1700’s things started to change. At the time, static electricity was the only electricity acknowledged in the
+				scientific community. However, Benjamin Franklin started testing reactivity. He used metals to observe electrical charge.
+				Later, Charles Coulomb, a French scientist, verified the Law of Attraction by using hairs and wires to create a torsion
+				balance. He developed and published his findings and law, resulting in what we now know today as Coulomb’s Law. <br><em>-Aja Two Crows</em></div>
 
 		</details>
 		<div class='definition'>
-			<svg style="display: block; margin: auto" width="400" height="150" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 50 400 150">
+			<svg style="display: block; margin: auto" width="400" height="150" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg"
+			 viewBox="0 50 400 150">
 
-            <line x1="100" y1="100" x2="177" y2="100" style="stroke:#000;stroke-width:2" />
-            <polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
+				<line x1="100" y1="100" x2="177" y2="100" style="stroke:#000;stroke-width:2" />
+				<polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
 
-            <line x1="300" y1="100" x2="223" y2="100" style="stroke:#000;stroke-width:2" />
-            <polygon points="0,0 8,5 8,-5" transform="translate(220 100)" style="fill:#000;" />
+				<line x1="300" y1="100" x2="223" y2="100" style="stroke:#000;stroke-width:2" />
+				<polygon points="0,0 8,5 8,-5" transform="translate(220 100)" style="fill:#000;" />
 
-            <circle cx="100" cy="100" r="10" fill = '#fff' stroke-width="2" stroke="#222"/>
-            <circle cx="300" cy="100" r="10" fill = '#fff' stroke-width="2" stroke="#222"/>
+				<circle cx="100" cy="100" r="10" fill='#fff' stroke-width="2" stroke="#222" />
+				<circle cx="300" cy="100" r="10" fill='#fff' stroke-width="2" stroke="#222" />
 
-            <text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
-			<text x="78" y="107" fill="black" text-anchor="middle" font-size="25">q</text>
-            <text x="322" y="107" fill="black" text-anchor="middle" font-size="25">q</text>
+				<text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
+				<text x="78" y="107" fill="black" text-anchor="middle" font-size="25">q</text>
+				<text x="322" y="107" fill="black" text-anchor="middle" font-size="25">q</text>
 
-            <g transform = 'translate(100,150)'>
-              <line x1="0" y1="0" x2="200" y2="0" style="stroke:#000;stroke-width:2" />
-              <line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
-              <line x1="200" y1="-5" x2="200" y2="5" style="stroke:#000;stroke-width:2" />
-              <text x="100" y="20" fill="black" text-anchor="middle" font-size="25">r</text>
-            </g>
-        </svg>
+				<g transform='translate(100,150)'>
+					<line x1="0" y1="0" x2="200" y2="0" style="stroke:#000;stroke-width:2" />
+					<line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
+					<line x1="200" y1="-5" x2="200" y2="5" style="stroke:#000;stroke-width:2" />
+					<text x="100" y="20" fill="black" text-anchor="middle" font-size="25">r</text>
+				</g>
+			</svg>
 			<h2>$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$</h2>
 			<p>\(F\) = electrostatic force [N, Newton, kg m/s²] <i>vector</i>
 				<br>\(k_e\) = 8.987 × 10<sup>9</sup> = Coulomb's constant [N m²/C²] <i>scalar</i>
@@ -187,25 +207,31 @@
 			<b>Example:</b> What is the electrostatic force between a 4.30μC charge and a 10.08μC charge at a distance of 0.03m?
 			<details>
 				<summary>solution</summary>
-				$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$ $$ F = \frac{(8.987 \times 10^{9})(4.30 \times 10^{-6})(10.08 \times 10^{-6})}{0.03^{2}} $$ $$F = 432.8N$$
+				$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$ $$ F = \frac{(8.987 \times 10^{9})(4.30 \times 10^{-6})(10.08 \times 10^{-6})}{0.03^{2}}
+				$$ $$F = 432.8N$$
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> What is the electrostatic force between an electron and a proton at a distance of 0.2m? How much acceleration will the electron experience?
+			<b>Example:</b> What is the electrostatic force between an electron and a proton at a distance of 0.2m? How much acceleration
+			will the electron experience?
 			<details>
 				<summary>solution</summary>
-				$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$ $$ F = \frac{(8.987 \times 10^{9})(-1.602 \times 10^{-19})(1.602 \times 10^{-19})}{0.2^{2}} $$ $$F = 5.76 \times 10^{-27}N$$
-				<br> $$F = ma$$ $$a = \frac{F}{m} $$ $$a = \frac{5.76 \times 10^{-27}}{9.109 \times 10^{-31}} $$ $$a = 6323.4 \small \frac{m}{s^{2}}$$
+				$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$ $$ F = \frac{(8.987 \times 10^{9})(-1.602 \times 10^{-19})(1.602 \times 10^{-19})}{0.2^{2}}
+				$$ $$F = 5.76 \times 10^{-27}N$$
+				<br> $$F = ma$$ $$a = \frac{F}{m} $$ $$a = \frac{5.76 \times 10^{-27}}{9.109 \times 10^{-31}} $$ $$a = 6323.4 \small
+				\frac{m}{s^{2}}$$
 			</details>
 		</div>
 		<div class='example'>
 			<b>Example:</b> Compare the gravitational force to the electrostatic force for a proton and an electron 1m apart.
 			<details>
 				<summary>solution</summary>
-				$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$ $$ F = \frac{(8.987 \times 10^{9})(-1.602 \times 10^{-19})(1.602 \times 10^{-19})}{1^{2}} $$ $$F = 2.30 \times 10^{-28}N$$
+				$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$ $$ F = \frac{(8.987 \times 10^{9})(-1.602 \times 10^{-19})(1.602 \times 10^{-19})}{1^{2}}
+				$$ $$F = 2.30 \times 10^{-28}N$$
 				<br>
 				<hr>
-				<br> $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ F = \frac{(6.674 \times 10^{-11})(1.672 \times 10^{-27}) (9.109 \times 10^{-31})}{1^{2}}$$ $$F = 1.02 \times 10^{-67}N$$
+				<br> $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ F = \frac{(6.674 \times 10^{-11})(1.672 \times 10^{-27}) (9.109 \times 10^{-31})}{1^{2}}$$
+				$$F = 1.02 \times 10^{-67}N$$
 				<br>
 				<hr>
 				<br> $$10^{-28} \quad vs. \quad 10^{-67}$$
@@ -214,10 +240,12 @@
 					<br>1,000,000,000,000,000,000,000,000,000,000,000,000,000!</p>
 			</details>
 		</div>
-		<div class='example'><b>Example:</b> You rub a balloon on a dry erase board and pull 20nC off the board onto the balloon. The balloon sticks to the board. Estimate the maximum possible mass of the balloon if the centers of the charges are 5mm apart?
+		<div class='example'><b>Example:</b> You rub a balloon on a dry erase board and pull 20nC off the board onto the balloon. The balloon sticks
+			to the board. Estimate the maximum possible mass of the balloon if the centers of the charges are 5mm apart?
 			<details>
 				<summary>solution</summary>
-				$$\scriptsize n=nano=10^{-9} \quad \quad m=milli = 10^{-3}$$ $$ F = \frac{k_{e}q_{1}q_{2}}{r^2} $$ $$ F = \frac{(8.987 \times 10^{9}) (20 \times 10^{-9})(-20 \times 10^{-9})}{(5 \times 10^{-3})^{2}} $$ $$ F = 0.144N $$
+				$$\scriptsize n=nano=10^{-9} \quad \quad m=milli = 10^{-3}$$ $$ F = \frac{k_{e}q_{1}q_{2}}{r^2} $$ $$ F = \frac{(8.987 \times
+				10^{9}) (20 \times 10^{-9})(-20 \times 10^{-9})}{(5 \times 10^{-3})^{2}} $$ $$ F = 0.144N $$
 				<p>The maximum mass would be when the force of gravity is balanced with the electrostatic force.</p>
 				$$\sum F=ma$$ $$F_{e}-F_{g}=ma$$ $$0.144-m(9.8)=0$$ $$m(9.8)=0.144$$ $$m=0.0147kg$$
 

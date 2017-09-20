@@ -3,8 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=610, initial-scale=1" />
+    <meta name="description" content="Notes for a high school physics course.">
+    <meta name="author" content="Ross Landgreen">
+    <meta property="og:description" content="Notes for a high school physics course.">
+    <meta property="og:title" content="Physics Notes">
+    <meta name="twitter:title" content="High School Physics Notes">
     <title>2-D Motion Challenge #1</title>
-    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon'/ >
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
     <link rel="stylesheet" type="text/css" href="../../../style.css">
     <script src='../../../lib/matter.min.js'></script>
@@ -13,17 +19,21 @@
 
 <body>
     <article>
-      <h2  class='underlined'>2-D Motion Challenge #1</h2>
-      <canvas id="canvas" width='700' height= '600'></canvas>
-      <br>The gap starts at <u id='ypos'></u>m high and <u id='xpos'></u>m away.
-      <br>The ball has a horizontal velocity of <u id='Vx'></u>m/s.
-	  <br> I think the correct <b>initial vertical velocity</b> is <input class='number' id ='num1' type="number" step="1" min = '1' max = '500' value = '10'>m/s <button id="fire1" onclick = 'settings.fire()'>Fire</button> <button id="clear1" onclick = 'settings.clear()'>clear</button>
-	  <p>Reload to try a new random problem.</p>
+        <h2 class='underlined'>2-D Motion Challenge #1</h2>
+        <canvas id="canvas" width='700' height='600'></canvas>
+        <br>The gap starts at
+        <u id='ypos'></u>m high and
+        <u id='xpos'></u>m away horizontally.
+        <br>The ball has a horizontal velocity of
+        <u id='Vx'></u>m/s.
+        <br> I think the correct <b>initial vertical velocity</b> is <input class='number' id='num1' type="number" step="1"
+            min='1' max='500' value='10'>m/s <button id="fire1" onclick='settings.fire()'>Fire</button> <button id="clear1" onclick='settings.clear()'>clear</button>
+        <p>Reload to try a new random problem.</p>
     </article>
-	<div class = 'back'>
-		<a href="../../../index.html#units">Back</a>
-	</div>
-<script src="fire.js"></script>
+    <div class='back'>
+        <a href="../../../index.html#units">Back</a>
+    </div>
+    <script src="fire.js"></script>
 </body>
 
 </html>

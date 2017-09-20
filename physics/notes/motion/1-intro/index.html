@@ -2,258 +2,273 @@
 <html lang="en-US">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=610, initial-scale=1" />
-    <meta name="description" content="Notes for a high school physics course.">
-    <meta name="keywords" content="physics, computer science, science, computer, course, Landgreen, Ross, school, notes, javascript, high school, new west charter, newwestcharter, simulation, teacher">
-    <meta name="author" content="Ross Landgreen">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=610, initial-scale=1" />
+	<meta name="description" content="Notes for a high school physics course.">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:title" content="Physics Notes">
+	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Notes for a high school physics course.">
+	<meta name="keywords" content="physics, computer science, science, computer, course, Landgreen, Ross, school, notes, javascript, high school, new west charter, newwestcharter, simulation, teacher">
+	<meta name="author" content="Ross Landgreen">
 
-    <title>Motion: review</title>
-    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+	<title>Motion: review</title>
+	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
-    <script src='../../../lib/randomColor.min.js'></script>
-    <link rel="stylesheet" href="../../../style.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+	<script src='../../../lib/randomColor.min.js'></script>
+	<link rel="stylesheet" href="../../../style.css">
 </head>
 
 <body>
 
-    <header>
-        <h1>Motion: Review</h1>
-    </header>
-    <article>
-        <h1 class='underlined'>Metric Units</h1>
-        <p>Physical quantities can be expressed in terms of these metric base units:</p>
-        <p><strong>distance:</strong> meter (m)
-            <br><strong>time:</strong> second (s)
-            <br><strong>mass:</strong> kilogram (kg)</p>
-        <p>We use <a href='https://en.wikipedia.org/wiki/Metric_prefix'>metric prefixes</a> to indicate multiplication or division by powers of ten. Converting from 10km to meters means moving the decimal 3 spaces larger.</p>
+	<header>
+		<h1>Motion: Review</h1>
+	</header>
+	<article>
+		<h1 class='underlined'>Metric Units</h1>
+		<p>Physical quantities can be expressed in terms of these metric base units:</p>
+		<p><strong>distance:</strong> meter (m)
+			<br><strong>time:</strong> second (s)
+			<br><strong>mass:</strong> kilogram (kg)</p>
+		<p>We use <a href='https://en.wikipedia.org/wiki/Metric_prefix'>metric prefixes</a> to indicate multiplication or division
+			by powers of ten. Converting from 10km to meters means moving the decimal 3 spaces larger.</p>
 
-		$$10km = 10\left(10^{3}\right)m = 10{,}000m$$
-		Converting from 10ms to meters means moving the decimal 3 spaces smaller.
-		$$10 ms = 10\left(10^{-3}\right)s = 0.01s$$
+		$$10km = 10\left(10^{3}\right)m = 10{,}000m$$ Converting from 10ms to meters means moving the decimal 3 spaces smaller. $$10
+		ms = 10\left(10^{-3}\right)s = 0.01s$$
 		<table class="infobox" cellpadding="1" style="padding:0; text-align:left;">
-		<tr style="background:#ccc;">
-		<th style="text-align:center;">Name</th>
-		<th style="text-align:center;">Symbol</th>
-		<th style="text-align:center;">Factor</th>
-		<th style="text-align:center;">Power</th>
-		</tr>
-		<tr>
-		<td>giga</td>
-		<td style="text-align: center;">G</td>
-		<td style="text-align: right;"><span class="nowrap"><span style="display:none" class="sortkey">7009100000000000000♠</span>1<span style="margin-left:.25em;">000</span><span style="margin-left:.25em;">000</span><span style="margin-left:.25em;">000</span></span></td>
-		<td style="text-align: center;">10<sup>9</sup></td>
-		</tr>
-		<tr>
-		<td>mega</td>
-		<td style="text-align: center;">M</td>
-		<td style="text-align: right;"><span class="nowrap"><span style="display:none" class="sortkey">7006100000000000000♠</span>1<span style="margin-left:.25em;">000</span><span style="margin-left:.25em;">000</span></span></td>
-		<td style="text-align: center;">10<sup>6</sup></td>
-		</tr>
-		<tr>
-		<td>kilo</td>
-		<td style="text-align: center;">k</td>
-		<td style="text-align: right;"><span class="nowrap"><span style="display:none" class="sortkey">7003100000000000000♠</span>1<span style="margin-left:.25em;">000</span></span></td>
-		<td style="text-align: center;">10<sup>3</sup></td>
-		</tr>
+			<tr style="background:#ccc;">
+				<th style="text-align:center;">Name</th>
+				<th style="text-align:center;">Symbol</th>
+				<th style="text-align:center;">Factor</th>
+				<th style="text-align:center;">Power</th>
+			</tr>
+			<tr>
+				<td>giga</td>
+				<td style="text-align: center;">G</td>
+				<td style="text-align: right;"><span class="nowrap"><span style="display:none" class="sortkey">7009100000000000000♠</span>1<span style="margin-left:.25em;">000</span>
+					<span
+					 style="margin-left:.25em;">000</span><span style="margin-left:.25em;">000</span></span>
+				</td>
+				<td style="text-align: center;">10<sup>9</sup></td>
+			</tr>
+			<tr>
+				<td>mega</td>
+				<td style="text-align: center;">M</td>
+				<td style="text-align: right;"><span class="nowrap"><span style="display:none" class="sortkey">7006100000000000000♠</span>1<span style="margin-left:.25em;">000</span>
+					<span
+					 style="margin-left:.25em;">000</span>
+						</span>
+				</td>
+				<td style="text-align: center;">10<sup>6</sup></td>
+			</tr>
+			<tr>
+				<td>kilo</td>
+				<td style="text-align: center;">k</td>
+				<td style="text-align: right;"><span class="nowrap"><span style="display:none" class="sortkey">7003100000000000000♠</span>1<span style="margin-left:.25em;">000</span></span>
+				</td>
+				<td style="text-align: center;">10<sup>3</sup></td>
+			</tr>
 
-		<tr>
-		<td>centi</td>
-		<td style="text-align: center;">c</td>
-		<td style="text-align: left;">0.01</td>
-		<td style="text-align: center;">10<sup>−2</sup></td>
-		</tr>
-		<tr>
-		<td>milli</td>
-		<td style="text-align: center;">m</td>
-		<td style="text-align: left;">0.001</td>
-		<td style="text-align: center;">10<sup>−3</sup></td>
-		</tr>
-		<tr>
-		<td>micro</td>
-		<td style="text-align: center;">μ</td>
-		<td style="text-align: left;"><span class="nowrap"><span style="display:none" class="sortkey">6994100000000000000♠</span>0.000<span style="margin-left:.25em;">001</span></span></td>
-		<td style="text-align: center;">10<sup>−6</sup></td>
-		</tr>
-		<tr>
-		<td>nano</td>
-		<td style="text-align: center;">n</td>
-		<td style="text-align: left;"><span class="nowrap"><span style="display:none" class="sortkey">6991100000000000000♠</span>0.000<span style="margin-left:.25em;">000</span><span style="margin-left:.25em;">001</span></span></td>
-		<td style="text-align: center;">10<sup>−9</sup></td>
-		</tr>
+			<tr>
+				<td>centi</td>
+				<td style="text-align: center;">c</td>
+				<td style="text-align: left;">0.01</td>
+				<td style="text-align: center;">10<sup>−2</sup></td>
+			</tr>
+			<tr>
+				<td>milli</td>
+				<td style="text-align: center;">m</td>
+				<td style="text-align: left;">0.001</td>
+				<td style="text-align: center;">10<sup>−3</sup></td>
+			</tr>
+			<tr>
+				<td>micro</td>
+				<td style="text-align: center;">μ</td>
+				<td style="text-align: left;"><span class="nowrap"><span style="display:none" class="sortkey">6994100000000000000♠</span>0.000<span style="margin-left:.25em;">001</span></span>
+				</td>
+				<td style="text-align: center;">10<sup>−6</sup></td>
+			</tr>
+			<tr>
+				<td>nano</td>
+				<td style="text-align: center;">n</td>
+				<td style="text-align: left;"><span class="nowrap"><span style="display:none" class="sortkey">6991100000000000000♠</span>0.000<span style="margin-left:.25em;">000</span>
+					<span
+					 style="margin-left:.25em;">001</span>
+						</span>
+				</td>
+				<td style="text-align: center;">10<sup>−9</sup></td>
+			</tr>
 		</table>
 
-	<div class='example'><strong>Example:</strong> 10km is how many meters?
-	<details>
-		<summary>solution</summary>
-		<p>replace k with 1000</p>
-		$$10km = 10(1000)m = 10{,}000m$$
-	</details>
-</div>
-<div class='example'><strong>Example:</strong> 450nm is how many meters?
-	<details>
-		<summary>solution</summary>
-		<p>replace n with 10<sup>-9</sup></p>
-		$$450nm = 450\left( 10^{-9}\right)m = 0.00000045m$$
-	</details>
-</div>
-	<h1 class='underlined'>Nonmetric Units</h1>
-	<p>Converting outside the metric system is more complex. You can do a <a href="https://www.google.com/search?q=unit+converter">google search</a> to find out how two units are related.  You then build a conversion fraction with the new unit on top and the old unit on the bottom to be canceled out. The top and the bottom of the fraction must be equal to each other.</p>
-	<p>Lets convert 50 minutes into seconds. </p>
-	$$ 50 min \to s$$
-	In order to cancel minutes we want to build a fraction with minutes on top and the seconds on the bottom.
-	$$ 50 min \left( \frac{s}{min} \right)$$
-	The fraction must be equal to one to not change the value we are converting.  This means the top and bottom must equal each other. One minute equals 60 seconds.
-	$$ 50 min \left( \frac{60s}{1min} \right)$$
-	We can cancel units.
-	$$ 50 \color{red}{min} \left( \frac{60s}{1 \color{red}{min} } \right)$$
-	$$ 50 \left( \frac{60s}{1} \right)$$
-	Multiply and divide to simplify
-	$$3000s$$
-
-	<div class='example'><strong>Example:</strong> A marathon is 26.2 miles. If one mile is the same as 1.6 km, how far is a marathon in kilometers?
-		<details>
-			<summary>solution</summary>
-			$$26.2 mile \left( \frac{1.6 km}{1 mile} \right) = 41.92km$$
-		</details>
-	</div>
-	<div class='example'><strong>Example:</strong> I'm 6 feet and 1 inch tall.  How many meters tall am I?
-		<details>
-			<summary>solution</summary>
-			<p>Let's get everything in inches first</p>
-			$$6ft\left( \frac{12inch}{1ft}\right) + 1inch$$
-			$$72inches + 1inch$$
-			$$73inches$$
-			<p>Now we convert into meters.<br> A google search says that 1m = 39.37inches</p>
-			$$73inches \left( \frac{1m}{39.37inch}\right) $$
-			$$73 \left( \frac{1m}{39.37}\right) $$
-			$$1.85m$$
-		</details>
-	</div>
-
-        <h1 class='underlined'>Position</h1>
-        <p>In physics we use the symbol x for position. That means you shouldn't use x for an unknown unless you are solving for position. We generally use meters(m) as our units.</p>
-        <p>To represent a distance we subtract the final position from the initial position. We use the Δ symbol to show change.</p>
-        <div class='definition'>
-            <h1>$$ \Delta x = x_{f}-x_{i}$$</h1>
-            <p>\(\Delta x\) = change in position, distance, displacement, length [m, meters]</p>
-            <p>\(x_i\) = initial (starting) position [m, meters]</p>
-            <p>\(x_f\) = final (ending) position [m, meters]</p>
-        </div>
-        <canvas class='center' id="canvas1" width='600' height='150'> </canvas>
-        <br>
-        <br>
-        <br>
-        <h1 class='underlined'>Time</h1>
-        <p> We keep track of time in the same way as position. We use t for time and generally use seconds(s) as our units.</p>
-        <div class='definition'>
-            <h1>$$\Delta t = t_{f}-t_{i}$$</h1>
-            <p>\(\Delta t\) = change in time, time period [s, seconds]</p>
-            <p>\(t_i\) = initial (starting) time [s, seconds]</p>
-            <p>\(t_f\) = final (ending) time [s, seconds]</p>
-        </div>
-        <canvas class='center' id="canvas2" width='600' height='150'> </canvas>
-        <br>
-        <br>
-        <br>
-        <h1 class='underlined'>Velocity</h1>
-        <p>Velocity is a measure of how much position changes (Δx) over a period of time (Δt).</p>
-        <div class='definition'>
-            <h1>$$v = \frac{\Delta x}{\Delta t}$$</h1>
-            <p>\(\Delta x\) = distance [m, meters]</p>
-            <p>\(\Delta t\) = time period [s, seconds]</p>
-            <p>\(v\) = average velocity [m/s, meters per second]</p>
-        </div>
-        <canvas class='center' id="canvas3" width='600' height='150'> </canvas>
-    <div class='example'><strong>Example:</strong> A car is traveling at 20 m/s for 80 seconds. How far does the car travel?
-        <details>
-            <summary>solution</summary>
-			$$\begin{aligned}
-			v &= 	\small\frac{\Delta x}{\Delta t} \\ \\
-			 20\tfrac{m}{s} &= 	\small\frac{\Delta x}{80s} \\ \\
-			 20\tfrac{m}{s}80s &= \Delta x \\ \\
-			 1600m &= \Delta x
-			 \end{aligned}$$
-
-            <canvas class='center' id="canvas5" width='600' height='150'> </canvas>
-        </details>
-	</div>
-        <div class='example'><strong>Example:</strong> Someone tells you they can run a 10km race in about an hour. What velocity is that in m/s? Is that fast? (1m/s is walking speed)
-        <details>
-            <summary>solution</summary>
-            $$10 km = 10(1,000)m = 10,000 m$$ $$1h \left(\frac{60min}{1h}\right)\left(\frac{60s}{1min}\right) = 3,600s$$ $$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{10,000m}{3,600s}$$ $$v = 2.7\tfrac{m}{s}$$
-        </details>
-	</div>
-        <div class='example'><strong>Example:</strong> Google maps says Las Vegas is 4 hours away from Los Angeles. Google says it is 270 miles away. How fast does google think I will drive on average? Answer this one in miles/hour.
-        <details>
-            <summary>solution</summary>
-            $$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{270miles}{4hour}$$ $$v = 67.5\tfrac{miles}{hour}$$
-        </details>
-	</div>
-	<div class='example'><strong>Example:</strong> If I walk at a speed of 1.2m/s how long will it take for me to walk 2km?
-        <details>
-            <summary>solution</summary>
-            $$2 km = 2(1000)m = 2,000 m$$ $$v = \frac{\Delta x}{\Delta t}$$ $$\Delta t = \frac{\Delta x}{v}$$ $$\Delta t = \frac{2,000m}{1.2\small\frac{m}{s}}$$ $$\Delta t = \frac{2,000}{1.2}s$$ $$\Delta t = 1,666.\overline{6} s$$
-        </details>
-	</div>
-        <h1 class='underlined'>Acceleration</h1>
-        <p>Acceleration is a measure of how much velocity changes (Δv) over a period of time (Δt).</p>
-        <div class='definition'>
-            <h1>$$a = \frac{\Delta v}{\Delta t}$$</h1>
-            <p>\(\Delta v\) = change in velocity [m/s] = \(v_f-v_i\)</p>
-            <p>\(\Delta t\) = time period, change in time [s, seconds]</p>
-            <p>\(a\) = acceleration [m/s²]</p>
-        </div>
-        <canvas class='center' id="canvas4" width='600' height='150'> </canvas>
-		<div class='example'><strong>Example:</strong> A basketball falls off a table and hits the floor in 0.45s. The ball has a velocity of 4.43m/s right before it hits the ground. What is the acceleration of the basketball as it falls?
-        <details>
-            <summary>solution</summary>
-            $$a = \frac{\Delta v}{\Delta t}$$ $$a = \frac{4.43\small\frac{m}{s}}{0.45s}$$ $$a = 9.84\tfrac{m}{s^{2}}$$
-        </details>
+		<div class='example'><strong>Example:</strong> 10km is how many meters?
+			<details>
+				<summary>solution</summary>
+				<p>replace k with 1000</p>
+				$$10km = 10(1000)m = 10{,}000m$$
+			</details>
 		</div>
-        <div class='example'><strong>Example:</strong> A car can go from 0 to 60 miles per hour in 5.9s. What is the acceleration in m/s²? (1 mile = 1609 meters)
-        <details>
-            <summary>solution</summary>
-            <!-- $$ 60\left(\frac{miles}{hour}\right)\left(\frac{1609 m}{1 mile}\right)\left(\frac{1 hour}{3600s}\right) = 26.8\small\frac{m}{s} $$ -->
-            $$ 60\left(\frac{\color{red}{mile}}{\color{blue}{hour}}\right)\left(\frac{1609 m}{1 \color{red}{mile}}\right)\left(\frac{1 \color{blue}{hour}}{3600s}\right) = 26.8\small\frac{m}{s} $$ $$a = \frac{\Delta v}{\Delta t}$$ $$a = \frac{26.8\small\frac{m}{s}}{5.9s}$$
-            $$a = 4.5\tfrac{m}{s^{2}}$$
-            <canvas class='center' id="canvas0" width='600' height='150'> </canvas>
-        </details>
+		<div class='example'><strong>Example:</strong> 450nm is how many meters?
+			<details>
+				<summary>solution</summary>
+				<p>replace n with 10<sup>-9</sup></p>
+				$$450nm = 450\left( 10^{-9}\right)m = 0.00000045m$$
+			</details>
+		</div>
+		<h1 class='underlined'>Nonmetric Units</h1>
+		<p>Converting outside the metric system is more complex. You can do a <a href="https://www.google.com/search?q=unit+converter">google search</a>			to find out how two units are related. You then build a conversion fraction with the new unit on top and the old unit
+			on the bottom to be canceled out. The top and the bottom of the fraction must be equal to each other.</p>
+		<p>Lets convert 50 minutes into seconds. </p>
+		$$ 50 min \to s$$ In order to cancel minutes we want to build a fraction with minutes on top and the seconds on the bottom.
+		$$ 50 min \left( \frac{s}{min} \right)$$ The fraction must be equal to one to not change the value we are converting. This
+		means the top and bottom must equal each other. One minute equals 60 seconds. $$ 50 min \left( \frac{60s}{1min} \right)$$
+		We can cancel units. $$ 50 \color{red}{min} \left( \frac{60s}{1 \color{red}{min} } \right)$$ $$ 50 \left( \frac{60s}{1}
+		\right)$$ Multiply and divide to simplify $$3000s$$
 
-        <div class='example'><strong>Example:</strong> I start a velocity of 1 m/s. I speed up to 3 m/s over 10 seconds. What is my acceleration?
-        <details>
-            <summary>solution</summary>
-            $$\Delta v = v_{f}-v_{i}$$ $$\Delta v = 3\small\frac{m}{s}-1\small\frac{m}{s}$$ $$\Delta v = 2\small\frac{m}{s}$$
-			<br>$$a = \frac{\Delta v}{\Delta t}$$ $$a = \frac{2\small\frac{m}{s}}{10s}$$ $$a = 0.2\tfrac{m}{s^{2}}$$
-        </details>
-	</div>
-	<div class='example'>
-		<div id = 'graph1'></div>
-		<div id = 'graph2'></div>
-		<strong>Example:</strong> These graphs show velocity vs. time. What do their slopes represent?
-		<details>
-			<summary>solution</summary>
-			<p>acceleration</p>
-			<p>acceleration is defined as the change in velocity every second.  This is the same as the slope of the graphs.</p>
-		</details>
-	</div>
+		<div class='example'><strong>Example:</strong> A marathon is 26.2 miles. If one mile is the same as 1.6 km, how far is a marathon in kilometers?
+			<details>
+				<summary>solution</summary>
+				$$26.2 mile \left( \frac{1.6 km}{1 mile} \right) = 41.92km$$
+			</details>
+		</div>
+		<div class='example'><strong>Example:</strong> I'm 6 feet and 1 inch tall. How many meters tall am I?
+			<details>
+				<summary>solution</summary>
+				<p>Let's get everything in inches first</p>
+				$$6ft\left( \frac{12inch}{1ft}\right) + 1inch$$ $$72inches + 1inch$$ $$73inches$$
+				<p>Now we convert into meters.<br> A google search says that 1m = 39.37inches</p>
+				$$73inches \left( \frac{1m}{39.37inch}\right) $$ $$73 \left( \frac{1m}{39.37}\right) $$ $$1.85m$$
+			</details>
+		</div>
+
+		<h1 class='underlined'>Position</h1>
+		<p>In physics we use the symbol x for position. That means you shouldn't use x for an unknown unless you are solving for position.
+			We generally use meters(m) as our units.</p>
+		<p>To represent a distance we subtract the final position from the initial position. We use the Δ symbol to show change.</p>
+		<div class='definition'>
+			<h1>$$ \Delta x = x_{f}-x_{i}$$</h1>
+			<p>\(\Delta x\) = change in position, distance, displacement, length [m, meters]</p>
+			<p>\(x_i\) = initial (starting) position [m, meters]</p>
+			<p>\(x_f\) = final (ending) position [m, meters]</p>
+		</div>
+		<canvas class='center' id="canvas1" width='600' height='150'> </canvas>
+		<br>
+		<br>
+		<br>
+		<h1 class='underlined'>Time</h1>
+		<p> We keep track of time in the same way as position. We use t for time and generally use seconds(s) as our units.</p>
+		<div class='definition'>
+			<h1>$$\Delta t = t_{f}-t_{i}$$</h1>
+			<p>\(\Delta t\) = change in time, time period [s, seconds]</p>
+			<p>\(t_i\) = initial (starting) time [s, seconds]</p>
+			<p>\(t_f\) = final (ending) time [s, seconds]</p>
+		</div>
+		<canvas class='center' id="canvas2" width='600' height='150'> </canvas>
+		<br>
+		<br>
+		<br>
+		<h1 class='underlined'>Velocity</h1>
+		<p>Velocity is a measure of how much position changes (Δx) over a period of time (Δt).</p>
+		<div class='definition'>
+			<h1>$$v = \frac{\Delta x}{\Delta t}$$</h1>
+			<p>\(\Delta x\) = distance [m, meters]</p>
+			<p>\(\Delta t\) = time period [s, seconds]</p>
+			<p>\(v\) = average velocity [m/s, meters per second]</p>
+		</div>
+		<canvas class='center' id="canvas3" width='600' height='150'> </canvas>
+		<div class='example'><strong>Example:</strong> A car is traveling at 20 m/s for 80 seconds. How far does the car travel?
+			<details>
+				<summary>solution</summary>
+				$$\begin{aligned} v &= \small\frac{\Delta x}{\Delta t} \\ \\ 20\tfrac{m}{s} &= \small\frac{\Delta x}{80s} \\ \\ 20\tfrac{m}{s}80s
+				&= \Delta x \\ \\ 1600m &= \Delta x \end{aligned}$$
+
+				<canvas class='center' id="canvas5" width='600' height='150'> </canvas>
+			</details>
+		</div>
+		<div class='example'><strong>Example:</strong> Someone tells you they can run a 10km race in about an hour. What velocity is that in m/s? Is
+			that fast? (1m/s is walking speed)
+			<details>
+				<summary>solution</summary>
+				$$10 km = 10(1,000)m = 10,000 m$$ $$1h \left(\frac{60min}{1h}\right)\left(\frac{60s}{1min}\right) = 3,600s$$ $$v = \frac{\Delta
+				x}{\Delta t}$$ $$v = \frac{10,000m}{3,600s}$$ $$v = 2.7\tfrac{m}{s}$$
+			</details>
+		</div>
+		<div class='example'><strong>Example:</strong> Google maps says Las Vegas is 4 hours away from Los Angeles. Google says it is 270 miles away.
+			How fast does google think I will drive on average? Answer this one in miles/hour.
+			<details>
+				<summary>solution</summary>
+				$$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{270miles}{4hour}$$ $$v = 67.5\tfrac{miles}{hour}$$
+			</details>
+		</div>
+		<div class='example'><strong>Example:</strong> If I walk at a speed of 1.2m/s how long will it take for me to walk 2km?
+			<details>
+				<summary>solution</summary>
+				$$2 km = 2(1000)m = 2,000 m$$ $$v = \frac{\Delta x}{\Delta t}$$ $$\Delta t = \frac{\Delta x}{v}$$ $$\Delta t = \frac{2,000m}{1.2\small\frac{m}{s}}$$
+				$$\Delta t = \frac{2,000}{1.2}s$$ $$\Delta t = 1,666.\overline{6} s$$
+			</details>
+		</div>
+		<h1 class='underlined'>Acceleration</h1>
+		<p>Acceleration is a measure of how much velocity changes (Δv) over a period of time (Δt).</p>
+		<div class='definition'>
+			<h1>$$a = \frac{\Delta v}{\Delta t}$$</h1>
+			<p>\(\Delta v\) = change in velocity [m/s] = \(v_f-v_i\)</p>
+			<p>\(\Delta t\) = time period, change in time [s, seconds]</p>
+			<p>\(a\) = acceleration [m/s²]</p>
+		</div>
+		<canvas class='center' id="canvas4" width='600' height='150'> </canvas>
+		<div class='example'><strong>Example:</strong> A basketball falls off a table and hits the floor in 0.45s. The ball has a velocity of 4.43m/s
+			right before it hits the ground. What is the acceleration of the basketball as it falls?
+			<details>
+				<summary>solution</summary>
+				$$a = \frac{\Delta v}{\Delta t}$$ $$a = \frac{4.43\small\frac{m}{s}}{0.45s}$$ $$a = 9.84\tfrac{m}{s^{2}}$$
+			</details>
+		</div>
+		<div class='example'><strong>Example:</strong> A car can go from 0 to 60 miles per hour in 5.9s. What is the acceleration in m/s²? (1 mile =
+			1609 meters)
+			<details>
+				<summary>solution</summary>
+				<!-- $$ 60\left(\frac{miles}{hour}\right)\left(\frac{1609 m}{1 mile}\right)\left(\frac{1 hour}{3600s}\right) = 26.8\small\frac{m}{s} $$ -->
+				$$ 60\left(\frac{\color{red}{mile}}{\color{blue}{hour}}\right)\left(\frac{1609 m}{1 \color{red}{mile}}\right)\left(\frac{1
+				\color{blue}{hour}}{3600s}\right) = 26.8\small\frac{m}{s} $$ $$a = \frac{\Delta v}{\Delta t}$$ $$a = \frac{26.8\small\frac{m}{s}}{5.9s}$$
+				$$a = 4.5\tfrac{m}{s^{2}}$$
+				<canvas class='center' id="canvas0" width='600' height='150'> </canvas>
+			</details>
+
+			<div class='example'><strong>Example:</strong> I start a velocity of 1 m/s. I speed up to 3 m/s over 10 seconds. What is my acceleration?
+				<details>
+					<summary>solution</summary>
+					$$\Delta v = v_{f}-v_{i}$$ $$\Delta v = 3\small\frac{m}{s}-1\small\frac{m}{s}$$ $$\Delta v = 2\small\frac{m}{s}$$
+					<br>$$a = \frac{\Delta v}{\Delta t}$$ $$a = \frac{2\small\frac{m}{s}}{10s}$$ $$a = 0.2\tfrac{m}{s^{2}}$$
+				</details>
+			</div>
+			<div class='example'>
+				<div id='graph1'></div>
+				<div id='graph2'></div>
+				<strong>Example:</strong> These graphs show velocity vs. time. What do their slopes represent?
+				<details>
+					<summary>solution</summary>
+					<p>acceleration</p>
+					<p>acceleration is defined as the change in velocity every second. This is the same as the slope of the graphs.</p>
+				</details>
+			</div>
 
 
-    </article>
-	<div class = 'back'>
+	</article>
+	<div class='back'>
 		<a href="../../../index.html#units">Back</a>
 	</div>
-    <script src="motion.js"></script>
+	<script src="motion.js"></script>
 	<script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src='../../../lib/function-plot.js'></script>
 	<script src='plot.js'></script>
 
-    <script>
-        renderMathInElement(document.body);
-    </script>
+	<script>
+		renderMathInElement(document.body);
+	</script>
 </body>
 
 </html>

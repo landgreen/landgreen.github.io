@@ -25,32 +25,46 @@
 <body>
 	<header>
 		<div class='head_graphics'>
-			<h2 style="position: absolute;right: 1em;top: 4.5em;color:#444;">
-          $$\sum F=ma$$
+			<h2 style="position: absolute;right: 1em;top: 4.5em;color:#666;">
+          <div class = 'fade-in'>$$\sum F=ma$$</div>
         </h2>
-			<h2 style="position: absolute;left: 0.5em;top: 5.5em;color:#444;">
-          $$F_{s}=\mu F_{N}$$
+			<h2 style="position: absolute;left: 0.5em;top: 5.5em;color:#666;">
+          <div class = 'fade-in'>$$F_{s}=\mu F_{N}$$</div>
         </h2>
+			<svg class = 'draw-path' width="250" height="220" style="position: absolute;left: 0;top: -1.3em;"
+			      version="1.1"
+			      xmlns="http://www.w3.org/2000/svg">
+			    <g transform='rotate(30) translate(20 -100)'>
+			        <rect x="110" y="110" width="80" height="80" style="stroke:#666;stroke-width:2;fill:none;fill-opacity:0" />
+			        <line x1="150" y1="110" x2="150" y2="55" style="stroke:#666;stroke-width:2" />
+			        <polygon class = 'fade-in' points="0,0 -6,12 0,10 6,12" transform='translate(150 50)' style="fill:#666;" />
+			        <text class = 'fade-in' text-anchor="middle" x="150" y="45" fill="#666">Fn</text>
+			        <line x1="110" y1="150" x2="75" y2="150" style="stroke:#666;stroke-width:2" />
+			        <polygon class = 'fade-in' points="0,0 -6,12 0,10 6,12" transform='translate(70 150) rotate(-90)' style="fill:#666;" />
+			        <text class = 'fade-in' x="45" y="156" fill="#666">Fs</text>
+			        <rect x="0" y="190" width="300" height="110" style="stroke:#666;stroke-width:2;fill:black;fill-opacity:0" />
+			    </g>
+			</svg>
 
-			<img src="media/FBDstaticFric.svg" width="250px" height="220px" style="position: absolute;left: 0;top: -1.3em;">
-
-			<svg width="300" height="220" viewBox="-15 0 285 120" version="1.1" xmlns="http://www.w3.org/2000/svg" style="position: absolute;right: 0;top: -1.3em;">
+			<svg class = 'draw-path' width="300" height="220" viewBox="-15 0 285 120" version="1.1" xmlns="http://www.w3.org/2000/svg" style="position: absolute;right: 0;top: -1.3em;">
                 <defs>
                     <g id="vector">
-                        <line x1="0" y1="0" x2="0" y2="45" style="stroke:#444;stroke-width:2" />
-                        <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' style="fill:#444;" />
+                        <line x1="0" y1="0" x2="0" y2="45" style="stroke:#666;stroke-width:2" />
+                        <polygon class = 'fade-in' points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' style="fill:#666;" />
                     </g>
                     <g id="box">
-                        <rect x="0" y="0" width="80" height="80" style="stroke:#444;stroke-width:2;fill:black;fill-opacity:0" />
-                        <text x="40" y="40" fill="#444" text-anchor="middle" alignment-baseline="middle">10kg</text>
+                        <rect x="0" y="0" width="80" height="80" style="stroke:#666;stroke-width:2;fill:black;fill-opacity:0" />
+                        <text class = 'fade-in' x="40" y="40" fill="#666" text-anchor="middle" alignment-baseline="middle">m</text>
                     </g>
                 </defs>
                 <use x='100' y='20' xlink:href="#box" />
-                <rect x="0" y="100" width="300" height="110" style="stroke:#444;stroke-width:2;fill:black;fill-opacity:0" />
+
+				<path d="M 0 150 v-50 h300" fill = 'none' stroke="#666" stroke-width="2" fill=none stroke-linejoin="round"/>
+
                 <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-                <text x="10" y="53" fill="#444">F=2000N</text>
+                <text class = 'fade-in' x="33" y="65" fill="#666">F</text>
                 <use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
-                <text x="200" y="53" fill="#444">F=1900N</text>
+                <text class = 'fade-in' x="235" y="65" fill="#666">F</text>
             </svg>
 		</div>
 
@@ -68,7 +82,6 @@
 					<br>Challenge:
 					<a href="notes/motion/5-projectile-challenge1/index.html">#1</a>
 					<a href="notes/motion/6-projectile-challenge2/index.html">#2</a>
-					<a href="notes/motion/7-projectile-challenge3/index.html">#3</a>
 				</p>
 				<p>
 					<a href="http://codepen.io/lilgreenland/full/ORLQWw/"><em class="fa fa-codepen"></em> Graphing Motion</a>
@@ -232,6 +245,7 @@
 		<h2 class='underlined'>Links</h2>
 
 		<p> <strong><i class="fa fa-picture-o" aria-hidden="true"></i> Classroom Photos:</strong>
+			<br><a href="https://goo.gl/photos/cF7Jec5wQRc5ynH7A">2017-2018</a>
 			<br><a href="https://goo.gl/photos/E7jTHpgHRFgT6C7p6">2016-2017</a>
 			<br><a href="https://goo.gl/photos/bmwn52QMrdLnD97a6">2015-2016</a>
 			<br><a href="https://goo.gl/photos/QQ9MFrFsrrATjeEp7">Dry Erase Art</a>

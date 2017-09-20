@@ -19,15 +19,12 @@ window.onresize = function(event) {
 };
 
 // module aliases
-  var Engine = Matter.Engine,
+var Engine = Matter.Engine,
     World = Matter.World,
     Body = Matter.Body,
     Bodies = Matter.Bodies,
     Composites = Matter.Composites,
     Composite = Matter.Composite;
-
-
-
 
 // create an engine
 var engine = Engine.create();

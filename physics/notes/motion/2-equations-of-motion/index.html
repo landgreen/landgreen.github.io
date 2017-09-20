@@ -3,6 +3,12 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=610, initial-scale=1" />
+	<meta name="description" content="Notes for a high school physics course.">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:title" content="Physics Notes">
+	<meta name="twitter:title" content="High School Physics Notes">
 	<title>Equations of Motion</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -18,24 +24,23 @@
 	</header>
 	<article>
 		<p>These equations give us the average velocity and acceleration</p>
-		<h1>$$v_{avg} = \frac{\Delta x}{\Delta t} \ \ \ \ \   a_{avg} = \frac{\Delta v}{\Delta t} $$</h1>
+		<h1>$$v_{avg} = \frac{\Delta x}{\Delta t} \ \ \ \ \ a_{avg} = \frac{\Delta v}{\Delta t} $$</h1>
 		<h1 class='underlined'>The Equations of Motion</h1>
-		<p>If an object's <b>acceleration is constant</b> the equations of motion are also true. They give exact values of intial and final velocity, not averages. Here is the <a href="http://dev.physicslab.org/document.aspx?doctype=3&filename=kinematics_derivationkinematicsequations.xml">derivation</a>			of these equations.</p>
+		<p>If an object's <b>acceleration is constant</b> the equations of motion are also true. They give exact values of intial
+			and final velocity, not averages. Here is the <a href="http://dev.physicslab.org/document.aspx?doctype=3&filename=kinematics_derivationkinematicsequations.xml">derivation</a>			of these equations.</p>
 		<div class='definition'>
-			<h2>$$v = u+a \Delta t$$
-  $$\Delta x = u\Delta t + \small\frac{1}{2}a \Delta t^{2}$$
-  $$\Delta x = \small\frac{1}{2}\normalsize(v+u)\Delta t$$
-  $$v^{2} = u^{2}+2a \Delta x$$
-  $$\Delta x = v\Delta t - \small\frac{1}{2}a \Delta t^{2}$$
-  </h2>
+			<h2>$$v = u+a \Delta t$$ $$\Delta x = u\Delta t + \small\frac{1}{2}a \Delta t^{2}$$ $$\Delta x = \small\frac{1}{2}\normalsize(v+u)\Delta
+				t$$ $$v^{2} = u^{2}+2a \Delta x$$ $$\Delta x = v\Delta t - \small\frac{1}{2}a \Delta t^{2}$$
+			</h2>
 			<p>\(\Delta x\) = distance [m] <em>vector</em></p>
 			<p>\(\Delta t\) = time period [s] <em>vector</em></p>
 			<p>\(v\) = final velocity [m/s] <em>vector</em></p>
 			<p>\(u\) = initial velocity [m/s] <em>vector</em></p>
 			<p>\(a\) = acceleration [m/s²] (constant)<em>vector</em></p>
 		</div>
-		<div class='example'><b>Example:</b> A bullet aimed straight <span class='highlight'>up</span> leaves the barrel of a gun at <span class='highlight'>400m/s</span>. It accelerates <span class='highlight'>down</span> at <span class='highlight'>9.8m/s²</span>. If the bullet
-			travels for <span class='highlight'>40.8s</span> before stopping how <span class='highlight'>far</span> up did it go?
+		<div class='example'><b>Example:</b> A bullet aimed straight <span class='highlight'>up</span> leaves the barrel of a gun at <span class='highlight'>400m/s</span>.
+			It accelerates <span class='highlight'>down</span> at <span class='highlight'>9.8m/s²</span>. If the bullet travels for
+			<span class='highlight'>40.8s</span> before stopping how <span class='highlight'>far</span> up did it go?
 			<br>(In the real world a bullet would stop quicker because of air friction.)
 			<details>
 				<summary>solution</summary>
@@ -43,7 +48,8 @@
 				<p>list known and unknown variables</p>
 				$$u = 400 \tfrac{m}{s}$$ $$a = -9.8 \tfrac{m}{s^{2}}$$ $$\Delta t = 40.8s$$ $$\Delta x = ?$$
 				<p>plug variables into matching equation</p>
-				$$\Delta x = u\Delta t + \tfrac{1}{2} a \Delta t^{2}$$ $$\Delta x = 400 (40.8) + \tfrac{1}{2} (-9.8)(40.8^{2})$$ $$\Delta x = 16320 - 8157$$ $$\Delta x = 8163m$$</p>
+				$$\Delta x = u\Delta t + \tfrac{1}{2} a \Delta t^{2}$$ $$\Delta x = 400 (40.8) + \tfrac{1}{2} (-9.8)(40.8^{2})$$ $$\Delta
+				x = 16320 - 8157$$ $$\Delta x = 8163m$$</p>
 			</details>
 		</div>
 		<div class='example'><b>Example:</b> A car moving at 30m/s puts on its brakes and comes to a stop in 10m. What is the acceleration of the car?
@@ -57,19 +63,24 @@
 				$$\frac{0^{2} - (30^{2})}{2 (10)}=a$$ $$\frac{-900}{20}=a$$ $$-45 \tfrac{m}{s^{2}}=a$$
 			</details>
 		</div>
-		<div class='example'><b>Example:</b> A plane takes off at a speed of 170 miles/hour while accelerating from rest on a runway that is 6,000ft long. What is the acceleration of the plane?<br> (1m = 3.3ft , 1 mile = 1609m)
+		<div class='example'><b>Example:</b> A plane takes off at a speed of 170 miles/hour while accelerating from rest on a runway that is 6,000ft
+			long. What is the acceleration of the plane?<br> (1m = 3.3ft , 1 mile = 1609m)
 			<details>
 				<summary>solution</summary>
 				<p>convert variables to correct units</p>
-				$$ 170\left(\frac{\color{red}{mile}}{\color{blue}{hour}}\right)\left(\frac{1609 m}{1 \color{red}{mile}}\right)\left(\frac{1 \color{blue}{hour}}{3600s}\right) = 76\tfrac{m}{s} $$ $$u = rest = 0$$ $$\Delta x = 6000ft\scriptsize \left(\frac{1m}{3.3ft}\right)\normalsize
+				$$ 170\left(\frac{\color{red}{mile}}{\color{blue}{hour}}\right)\left(\frac{1609 m}{1 \color{red}{mile}}\right)\left(\frac{1
+				\color{blue}{hour}}{3600s}\right) = 76\tfrac{m}{s} $$ $$u = rest = 0$$ $$\Delta x = 6000ft\scriptsize \left(\frac{1m}{3.3ft}\right)\normalsize
 				= 1818m$$ $$a = ?$$
 				<p>plug variables into matching equation</p>
-				$$v^{2} = u^{2}+2a \Delta x$$ $$v^{2} - u^{2}=2a \Delta x$$ $$\frac{v^{2} - u^{2}}{2 \Delta x}=a$$ $$\frac{76^{2} - (0^{2})}{2 (1818)}=a$$ $$\frac{5776}{3636}=a$$ $$1.589 \tfrac{m}{s^{2}}=a$$
+				$$v^{2} = u^{2}+2a \Delta x$$ $$v^{2} - u^{2}=2a \Delta x$$ $$\frac{v^{2} - u^{2}}{2 \Delta x}=a$$ $$\frac{76^{2} - (0^{2})}{2
+				(1818)}=a$$ $$\frac{5776}{3636}=a$$ $$1.589 \tfrac{m}{s^{2}}=a$$
 			</details>
 		</div>
 		<h1 class='underlined'>Acceleration of Gravity</h1>
-		<p>On earth everything is pulled down at 9.8 m/s². Generally the letter g is used for this number. The rate is the same for cars, birds, puppies, apples, balloons, and everything. Other effects like air friction, thrust, and buoyancy can change the precived
-			acceleration. Acceleration from gravity also changes based on the mass of the planet and your distance to the center of the planet.</p>
+		<p>On earth everything is pulled down at 9.8 m/s². Generally the letter g is used for this number. The rate is the same for
+			cars, birds, puppies, apples, balloons, and everything. Other effects like air friction, thrust, and buoyancy can change
+			the precived acceleration. Acceleration from gravity also changes based on the mass of the planet and your distance to
+			the center of the planet.</p>
 		<h3> g = acceleration from gravity on earth = 9.8 m/s²</h3>
 		<p>What is the acceleration in m/s² on the surface of Mars?
 			<br> (check <a href="https://www.wolframalpha.com/input/?i=what+is+the+gravity+on+mars">Wolfram alpha</a>)
@@ -78,18 +89,21 @@
 		<p>What is the acceleration in m/s² on the surface of the Moon?
 			<br>(check <a href="https://www.wolframalpha.com/input/?i=what+is+the+gravity+on+the+moon">Wolfram alpha</a>)
 		</p>
-		<div class='example'><b>Example:</b> A sleeping cat falls from rest off of a ledge. If the cat hits the ground moving at 6.0 m/s how long was the cat in free fall?
+		<div class='example'><b>Example:</b> A sleeping cat falls from rest off of a ledge. If the cat hits the ground moving at 6.0 m/s how long was
+			the cat in free fall?
 			<details>
 				<summary>solution</summary>
 				<div class="col-group">
 					<div>$$u = rest = 0$$ $$v = -6.0\small\frac{m}{s} $$ $$a = -9.8 \small\frac{m}{s^{2}} $$ $$\Delta t = ? $$
 					</div>
-					<div>$$v = u+a \Delta t$$ $$\large\frac{v - u}{a}\normalsize= \Delta t $$ $$\large\frac{-6 - 0}{-9.8}\normalsize= \Delta t $$ $$0.61s = \Delta t$$
+					<div>$$v = u+a \Delta t$$ $$\large\frac{v - u}{a}\normalsize= \Delta t $$ $$\large\frac{-6 - 0}{-9.8}\normalsize= \Delta
+						t $$ $$0.61s = \Delta t$$
 					</div>
 				</div>
 			</details>
 		</div>
-		<div class='example'><b>Example:</b> A meteor 4,000m above Europa, a moon of Jupiter, falls from rest. What is the impact velocity of the meteor? How long does it take for the meteor to hit the surface? (look up the gravity on <a href="https://www.google.com/search?q=what+is+the+gravity+on+europa&rlz=1C1CHFX_enUS532US532&oq=what+is+the+gravity+on+europa&aqs=chrome..69i57j0l3.7898j0j7&sourceid=chrome&ie=UTF-8">Europa</a>)
+		<div class='example'><b>Example:</b> A meteor 4,000m above Europa, a moon of Jupiter, falls from rest. What is the impact velocity of the meteor?
+			How long does it take for the meteor to hit the surface? (look up the gravity on <a href="https://www.google.com/search?q=what+is+the+gravity+on+europa&rlz=1C1CHFX_enUS532US532&oq=what+is+the+gravity+on+europa&aqs=chrome..69i57j0l3.7898j0j7&sourceid=chrome&ie=UTF-8">Europa</a>)
 			<details>
 				<summary>solution</summary>
 				$$\Delta x = -4000m$$ $$u = rest = 0$$ $$a = lookup = -1.315\tfrac{m}{s^{2}}$$ $$v = ?$$ $$\Delta t = ?$$
@@ -98,7 +112,8 @@
 				$$v^{2} = u^{2}+2a \Delta x$$ $$v^{2} = 0^{2}+2(-1.315)(-4000)$$ $$v^{2} = 10520 $$ $$v = \pm102.6\frac{m}{s} $$
 				<br>
 				<p>solving for Δt</p>
-				$$v = u+a \Delta t$$ $$\large \frac{v - u}{a} \normalsize = \Delta t$$ $$\large \frac{-102.6 - 0}{-1.315} \normalsize = \Delta t $$ $$78.0s = \Delta t $$
+				$$v = u+a \Delta t$$ $$\large \frac{v - u}{a} \normalsize = \Delta t$$ $$\large \frac{-102.6 - 0}{-1.315} \normalsize = \Delta
+				t $$ $$78.0s = \Delta t $$
 			</details>
 		</div>
 
