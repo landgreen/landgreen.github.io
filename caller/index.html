@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- https://vuejs.org/ https://vuejs.org/v2/guide/components.html https://github.com/jbaysolutions/vue-grid-layout -->
+  <meta charset="UTF-8">
+  <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
+  <title>Random Caller (vue.js)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="period-1">
+    <header>
+      <button v-on:click="nextPeriod">P{{period}}</button>
+      <button v-on:click="callRandom" class="blue">random</button>
+      <button v-on:click="showSettings" class="showhide white">more</button>
+      <div v-if="isSettingsSeen">
+        <button v-on:click="addItem">add</button>
+        <button v-on:click="removeItem">remove</button>
+        <button v-on:click="resetCount">reset count</button>
+        <button v-on:click="reset">reset</button>
+        <br>
+        <button v-on:click="exportOut">export</button>
+        <button v-on:click="importIn">import →</button>
+        <input type="file" class='files' id="selectFiles" value="Import">
+        <br>
+        <input type="checkbox" v-model="draggable" /> Drag
+        <input type="checkbox" v-model="resizable" /> Resize
+      </div>
+    </header>
+    <br>
+    <grid-layout :layout="layout" :col-num="9" :row-height="40" :is-draggable="draggable" :is-resizable="resizable" :vertical-compact="false"
+      :margin="[20, 20]" :use-css-transforms="true">
+
+      <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" @resized="resizedEvent" @moved="movedEvent"
+        v-bind:class="item.focus ? 'focus' : 'not-focus' ">
+        <span class="text">{{item.name}}</span> <span class="num">{{item.num}}</span>
+      </grid-item>
+
+    </grid-layout>
+
+    <select id='language'>
+      <option value="en-GB">GB</option>
+      <option value="en-US">US</option>
+      <option value="en-AU">AU</option>
+      <option value="fr-FR">FR</option>
+      <option value="de-DE">DE</option>
+      <option value="en-IN">IN</option>
+      <option value="zh-CN">CN</option>
+      <option value="pl">PL</option>
+      <option value="ru">RU</option>
+      <option value="sv-SE">SE</option>
+      <option value="en-ZA">ZA</option>
+    </select>
+  </div>
+  <footer id='speech'></footer>
+
+  <script src='lib/vue.min.js'></script>
+  <script src="lib/vue-grid-layout.min.js"></script>
+  <script src="lib/animals.js"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>
