@@ -1,0 +1,252 @@
+//http://newwestcharter.org/high-school-daily-bell-schedule/
+
+let todayMinutes = 0;
+let startMinutes = 430;
+let date = new Date();
+const MinutesInDay = 7 * 60 + 20 + 20;
+const scale = 200 / MinutesInDay;
+const color = {
+  passing: "#444",
+  period: "#333",
+  lunch: "#444"
+};
+const schedule = {
+  current: "regular",
+  setCurrentByDate: function() {
+    if (date.getDay() === 5) {
+      schedule.current = "advisory";
+    } else {
+      schedule.current = "regular";
+    }
+  },
+  cycleCurrent: function() {
+    if (schedule.current === "regular") {
+      schedule.current = "advisory";
+    } else if (schedule.current === "advisory") {
+      schedule.current = "rally";
+    } else if (schedule.current === "rally") {
+      schedule.current = "regular";
+    }
+    update();
+  },
+  regular: [
+    { start: 0, long: 7 * 60 + 30, name: "before school", showName: false, fill: color.passing },
+    { start: 7 * 60 + 30, long: 60, name: "P1", showName: true, fill: color.period },
+    { start: 8 * 60 + 30, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 8 * 60 + 33, long: 60, name: "P2", showName: true, fill: color.period },
+    { start: 9 * 60 + 33, long: 15, name: "brunch", showName: false, fill: color.lunch },
+    { start: 9 * 60 + 48, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 9 * 60 + 51, long: 60, name: "P3", showName: true, fill: color.period },
+    { start: 10 * 60 + 51, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 10 * 60 + 54, long: 60, name: "P4", showName: true, fill: color.period },
+    { start: 11 * 60 + 54, long: 30, name: "lunch", showName: false, fill: color.lunch },
+    { start: 12 * 60 + 24, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 12 * 60 + 27, long: 60, name: "P5", showName: true, fill: color.period },
+    { start: 13 * 60 + 27, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 13 * 60 + 30, long: 60, name: "P6", showName: true, fill: color.period },
+    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "after school", showName: false, fill: color.passing }
+  ],
+  advisory: [
+    { start: 0, long: 7 * 60 + 30, name: "before school", showName: false, fill: color.passing },
+    { start: 7 * 60 + 30, long: 55, name: "P1", showName: true, fill: color.period },
+    { start: 8 * 60 + 25, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 8 * 60 + 28, long: 55, name: "P2", showName: true, fill: color.period },
+    { start: 9 * 60 + 23, long: 15, name: "brunch", showName: false, fill: color.lunch },
+    { start: 9 * 60 + 38, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 9 * 60 + 41, long: 26, name: "A", showName: true, fill: color.period },
+    { start: 10 * 60 + 07, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 10 * 60 + 10, long: 55, name: "P3", showName: true, fill: color.period },
+    { start: 11 * 60 + 5, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 11 * 60 + 8, long: 55, name: "P4", showName: true, fill: color.period },
+    { start: 12 * 60 + 03, long: 27, name: "lunch", showName: false, fill: color.lunch },
+    { start: 12 * 60 + 30, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 12 * 60 + 33, long: 58, name: "P5", showName: true, fill: color.period },
+    { start: 13 * 60 + 31, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 13 * 60 + 34, long: 56, name: "P6", showName: true, fill: color.period },
+    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "after school", showName: false, fill: color.passing }
+  ],
+  rally: [
+    { start: 0, long: 7 * 60 + 30, name: "before school", showName: false, fill: color.passing },
+    { start: 7 * 60 + 30, long: 50, name: "P1", showName: true, fill: color.period },
+    { start: 8 * 60 + 20, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 8 * 60 + 23, long: 50, name: "P2", showName: true, fill: color.period },
+    { start: 9 * 60 + 13, long: 15, name: "brunch", showName: false, fill: color.lunch },
+    { start: 9 * 60 + 28, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 9 * 60 + 31, long: 50, name: "P3", showName: true, fill: color.period },
+    { start: 10 * 60 + 21, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 10 * 60 + 24, long: 50, name: "P4", showName: true, fill: color.period },
+    { start: 11 * 60 + 14, long: 30, name: "lunch", showName: false, fill: color.lunch },
+    { start: 11 * 60 + 44, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 11 * 60 + 47, long: 50, name: "P5", showName: true, fill: color.period },
+    { start: 12 * 60 + 37, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 12 * 60 + 40, long: 50, name: "P6", showName: true, fill: color.period },
+    { start: 13 * 60 + 30, long: 60, name: "Rally", showName: true, fill: color.period },
+    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "after school", showName: false, fill: color.passing }
+  ]
+};
+
+function drawDigitalClock(date) {
+  document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`;
+  document.getElementById("week-day").textContent = `${dayOfWeekAsString(date.getDay())}`;
+  // document.getElementById("date").textContent = `${date.getDate()}.${date.getMonth()}.20${date.getYear() % 100}`;
+  document.getElementById("date").textContent = nameOfMonthAsString(date.getMonth()) + " " + date.getDate();
+}
+
+function dayOfWeekAsString(dayIndex) {
+  return ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"][dayIndex];
+}
+function nameOfMonthAsString(MonthIndex) {
+  return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][MonthIndex];
+}
+
+function findCurrentPeriod(b) {
+  let period = 0;
+  for (let i = 0, len = b.length; i < len; ++i) {
+    if (todayMinutes >= b[i].start && todayMinutes < b[i].start + b[i].long) {
+      return i;
+    }
+  }
+  return b.length - 1;
+}
+
+function drawCurrentPeriod(b) {
+  const period = b[findCurrentPeriod(b)];
+  let startTime = {
+    hour: Math.floor((period.start / 60 - 1) % 12 + 1),
+    minute: period.start % 60
+  };
+  if (startTime.minute < 10) startTime.minute = "0" + startTime.minute; //add zero for single digit minutes
+  let endTime = {
+    hour: Math.floor(((period.start + period.long) / 60 - 1) % 12 + 1),
+    minute: (period.start + period.long) % 60
+  };
+  if (endTime.minute < 10) endTime.minute = "0" + endTime.minute; //add zero for single digit minutes
+  document.getElementById("period").textContent = period.name + " " + startTime.hour + ":" + startTime.minute + " - " + endTime.hour + ":" + endTime.minute;
+  // document.getElementById("period-time").textContent = startTime + " - " + endTime;
+}
+
+function moveSVGPeriods(b) {
+  //schedule title
+  document.getElementById("schedule").textContent = schedule.current;
+  // hide all periods
+  for (let i = 0, len = 17; i < len; ++i) {
+    document.getElementById(i).setAttribute("width", 0);
+    document.getElementById("n" + i).textContent = "  ";
+  }
+
+  for (let i = 0, len = b.length; i < len; ++i) {
+    //position period boxes
+    document.getElementById(i).setAttribute("x", (b[i].start - startMinutes) * scale);
+    document.getElementById(i).setAttribute("width", b[i].long * scale);
+    document.getElementById(i).setAttribute("fill", b[i].fill);
+    //period titles
+    if (b[i].showName) {
+      document.getElementById("n" + i).textContent = b[i].name;
+      document.getElementById("n" + i).setAttribute("x", (b[i].start + b[i].long / 2 - startMinutes) * scale);
+    }
+  }
+  //draw current time
+  let path1 = `M${(todayMinutes - startMinutes) * scale} 79 v12`;
+  document.getElementById("now").setAttribute("d", path1);
+  //focus path
+  let focus = 3;
+  //don't draw focus if after school or before school
+  // if (focus !== 0 && focus !== b.length - 1) {
+  //   const X = (b[focus].start - startMinutes) * scale;
+  //   const WIDTH = b[focus].long * scale;
+  //   const Y = 80;
+  //   const HEIGHT = 20;
+  //   let path = `M ${X + WIDTH} ${Y} h${-WIDTH}
+  //     L10 65 v-20 h 180 v20 h -180 h180 L${X + WIDTH} ${Y} `;
+  //   //   let path = `M ${X + WIDTH} ${Y + HEIGHT} h${-WIDTH}
+  //   //   L10 65 v-20 h 180 v20 h -180 h180 L${X + WIDTH} ${Y + HEIGHT} `;
+  //   //   let path = `M ${X} ${Y} h${WIDTH} v${HEIGHT} h${-WIDTH} v${-HEIGHT}
+  //   // L10 65 v-20 h 180 v20 h -180 h180 L${X + WIDTH} ${Y} `;
+  //   document.getElementById("focus").setAttribute("d", path);
+  // }
+}
+
+//**************************************************
+//weather
+
+function updateWeather() {
+  //get position
+  function success(position) {
+    getWeather(position.coords.latitude, position.coords.longitude);
+    localStorage.setItem("latitude", position.coords.latitude);
+    localStorage.setItem("longitude", position.coords.longitude);
+  }
+  function error() {
+    console.log("Unable to retrieve your location");
+  }
+
+  if (localStorage.getItem("latitude") === null) {
+    console.log("get new local");
+    navigator.geolocation.getCurrentPosition(success, error);
+  } else {
+    getWeather(localStorage.latitude, localStorage.longitude);
+  }
+
+  //generic function to get JSON
+  function loadJSON(path, success, error) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          if (success) success(JSON.parse(xhr.responseText));
+        } else {
+          if (error) error(xhr);
+        }
+      }
+    };
+    xhr.open("GET", path, true);
+    xhr.send();
+  }
+  //https://home.openweathermap.org/api_keys
+  //https://openweathermap.org/api
+  //https://api.openweathermap.org/data/2.5/weather?q=LosAngeles&APPID=
+  //https://api.openweathermap.org/data/2.5/forecast?q=LosAngeles&APPID=
+  function getWeather(lat, long) {
+    const APPID = "258f642b3c9947c0eeae26f4a1ef22a3";
+    loadJSON(
+      "https://api.openweathermap.org/data/2.5/weather?&units=imperial&lat=" + lat + "&lon=" + long + "&APPID=" + APPID,
+      function(data) {
+        // console.log(data);
+        setWeather(data.main.temp, data.weather[0].description);
+      },
+      function(xhr) {
+        console.error(xhr);
+      }
+    );
+  }
+
+  function setWeather(temp, weather) {
+    document.getElementById("temp").textContent = Math.round(temp) + "° F";
+    document.getElementById("weather").textContent = weather;
+  }
+}
+
+//**************************************************
+//main repeating loop
+function update() {
+  date = new Date();
+  todayMinutes = 700; //date.getHours() * 60 + date.getMinutes();
+  // startMinutes = todayMinutes - MinutesInDay / 2;
+  drawDigitalClock(date);
+  drawCurrentPeriod(schedule[schedule.current]);
+  moveSVGPeriods(schedule[schedule.current]);
+}
+
+//run once at start, then run when the next minute begins, then run every minute.
+schedule.setCurrentByDate();
+update();
+updateWeather();
+setTimeout(function() {
+  update();
+  window.setInterval(update, 60 * 1000); //update every minute
+  window.setInterval(updateWeather, 10 * 60 * 1000); //update weather every 10 min
+}, (60 - date.getSeconds()) * 1000);
+
+window.addEventListener("focus", function() {
+  update();
+});
