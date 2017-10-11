@@ -101,8 +101,8 @@ const mech = {
   mass: 5,
   Fx: 0.025, //run Force on ground
   FxAir: 0.015, //run Force in Air
-  jumpForce: 0.34,
-  gravity: 0.0015,
+  jumpForce: 0.38,
+  gravity: 0.0019,
   friction: {
     ground: 0.01,
     crouch: 0.2,
@@ -141,10 +141,7 @@ const mech = {
   // mouseZoom: 0,
   look: function() {
     //always on mouse look
-    this.angle = Math.atan2(
-      game.mouseInGame.y - this.pos.y,
-      game.mouseInGame.x - this.pos.x
-    );
+    this.angle = Math.atan2(game.mouseInGame.y - this.pos.y, game.mouseInGame.x - this.pos.x);
     const mX = game.mouse.x - canvas.width2;
     const mY = game.mouse.y - canvas.height2;
     // this.angle = Math.atan2(mY, mX);
@@ -224,11 +221,7 @@ const mech = {
         //apply a fraction of the jump force to the thing the player is jumping off of
         Matter.Body.applyForce(mech.standingOn, mech.pos, {
           x: 0,
-          y:
-            this.jumpForce /
-            game.delta *
-            0.2 *
-            Math.min(mech.standingOn.mass, 1)
+          y: this.jumpForce / game.delta * 0.2 * Math.min(mech.standingOn.mass, 1)
         });
 
         //zero player velocity for consistant jumps
@@ -241,10 +234,7 @@ const mech = {
       const stoppingFriction = 0.9;
       if (keys[65]) {
         //left / a
-        player.force.x -=
-          this.Fx /
-          game.delta *
-          (1 - Math.sqrt(Math.abs(player.velocity.x) / this.VxMax));
+        player.force.x -= this.Fx / game.delta * (1 - Math.sqrt(Math.abs(player.velocity.x) / this.VxMax));
         // if (player.velocity.x > -this.VxMax) {
         // 		player.force.x -= this.Fx / game.delta
         // }
@@ -256,10 +246,7 @@ const mech = {
         }
       } else if (keys[68]) {
         //right / d
-        player.force.x +=
-          this.Fx /
-          game.delta *
-          (1 - Math.sqrt(Math.abs(player.velocity.x) / this.VxMax));
+        player.force.x += this.Fx / game.delta * (1 - Math.sqrt(Math.abs(player.velocity.x) / this.VxMax));
         // if (player.velocity.x < this.VxMax) {
         // 		player.force.x += this.Fx / game.delta;
         // }
@@ -316,7 +303,7 @@ const mech = {
       document.getElementById("fade-out").style.opacity = 1; //slowly fades out
       setTimeout(function() {
         game.splashReturn();
-      }, 3000);
+      }, 5000);
 
       // setTimeout(
       //     function() {
@@ -341,17 +328,11 @@ const mech = {
       ctx.fillStyle = "rgba(100, 100, 100, 0.5)";
       ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60, 10);
       ctx.fillStyle = "#f00";
-      ctx.fillRect(
-        this.pos.x - this.radius,
-        this.pos.y - 50,
-        60 * this.health,
-        10
-      );
+      ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60 * this.health, 10);
     }
   },
   displayHealth: function() {
-    document.getElementById("health").style.width =
-      Math.floor(300 * this.health) + "px";
+    document.getElementById("health").style.width = Math.floor(300 * this.health) + "px";
   },
   addHealth: function(heal) {
     this.health += heal;
@@ -381,23 +362,9 @@ const mech = {
       this.death();
     }
   },
+  damageImmune: 0,
   hitMob: function(i, dmg) {
-    this.damage(dmg);
-    playSound("dmg" + Math.floor(Math.random() * 4));
-    //extra kick between player and mob
-    //this section would be better with forces but they don't work...
-    let angle = Math.atan2(
-      player.position.y - mob[i].position.y,
-      player.position.x - mob[i].position.x
-    );
-    Matter.Body.setVelocity(player, {
-      x: player.velocity.x + 8 * Math.cos(angle),
-      y: player.velocity.y + 8 * Math.sin(angle)
-    });
-    Matter.Body.setVelocity(mob[i], {
-      x: mob[i].velocity.x - 8 * Math.cos(angle),
-      y: mob[i].velocity.y - 8 * Math.sin(angle)
-    });
+    //prevents damage happening too quick
   },
   buttonCD: 0, //cooldown for player buttons
   usePowerUp: function(i) {
@@ -409,110 +376,19 @@ const mech = {
     dist: 1000,
     index: 0
   },
-  lookingAtMob: function(mob, threshold) {
-    //calculate a vector from mob to player and make it length 1
-    const diff = Matter.Vector.normalise(
-      Matter.Vector.sub(mob.position, player.position)
-    );
+  lookingAt: function(who, threshold) {
+    //calculate a vector from body to player and make it length 1
+    const diff = Matter.Vector.normalise(Matter.Vector.sub(who.position, player.position));
+    //make a vector for the player's direction of length 1
     const dir = {
-      //make a vector for the player's direction of length 1
-      x: Math.cos(mech.angle),
-      y: Math.sin(mech.angle)
-    };
-    //the dot prodcut of diff and dir will return how much over lap between the vectors
-    const dot = Matter.Vector.dot(dir, diff);
-    if (dot > threshold) {
-      return true;
-    } else {
-      return false;
-    }
-  },
-  lookingAt: function(i) {
-    //calculate a vector from mob to player and make it length 1
-    const diff = Matter.Vector.normalise(
-      Matter.Vector.sub(body[i].position, player.position)
-    );
-    const dir = {
-      //make a vector for the player's direction of length 1
       x: Math.cos(mech.angle),
       y: Math.sin(mech.angle)
     };
     //the dot product of diff and dir will return how much over lap between the vectors
-    const dot = Matter.Vector.dot(dir, diff);
-    //console.log(dot);
-    if (dot > 0.6) {
+    if (Matter.Vector.dot(dir, diff) > threshold) {
       return true;
-    } else {
-      return false;
     }
-  },
-  constrain: function() {
-    if (b.activeGun === 1) {
-      if (game.mouseDown && this.fireCDcycle < game.cycle) {
-        ctx.beginPath();
-        ctx.arc(
-          this.pos.x,
-          this.pos.y,
-          this.grabRange,
-          this.angle - Math.PI * 0.3,
-          this.angle + Math.PI * 0.3,
-          false
-        );
-        ctx.arc(
-          this.pos.x,
-          this.pos.y,
-          40,
-          this.angle + Math.PI * 0.3,
-          this.angle - Math.PI * 0.3,
-          true
-        );
-        ctx.fillStyle = "rgba(30,30,90,0.05)";
-        ctx.fill();
-
-        //find closest body
-        let mag = this.grabRange;
-        let index = null;
-        const maxSize = 110;
-        for (let i = 0, len = body.length; i < len; ++i) {
-          if (
-            body[i].bounds.max.x - body[i].bounds.min.x < maxSize &&
-            body[i].bounds.max.y - body[i].bounds.min.y < maxSize &&
-            this.lookingAt(i) &&
-            Matter.Query.ray(map, body[i].position, this.pos).length === 0
-          ) {
-            this.drawHold(body[i]); //draw outline
-            //add to closest list
-            const dist = Matter.Vector.magnitude(
-              Matter.Vector.sub(body[i].position, this.pos)
-            );
-            if (dist < mag) {
-              mag = dist;
-              index = i;
-            }
-          }
-        }
-        // constain if in range
-        if (mag < this.grabRange) {
-          consBB[consBB.length] = Constraint.create({
-            bodyA: player,
-            bodyB: body[index],
-            stiffness: 0.01
-            // length: 1
-          });
-          World.add(engine.world, consBB[consBB.length - 1]);
-          // cons[cons.length] = Constraint.create({
-          //     pointA: {
-          //         x: player.position.x,
-          //         y: player.position.y
-          //     },
-          //     bodyB: body[index],
-          //     stiffness: 0.01,
-          //     // length: 1
-          // });
-          // World.add(engine.world, cons[cons.length-1]);
-        }
-      }
-    }
+    return false;
   },
   isHolding: false,
   grabRange: 150,
@@ -527,19 +403,42 @@ const mech = {
     }
   },
   drawHold: function(target) {
+    const eye = 15;
+    const len = target.vertices.length - 1;
+    ctx.fillStyle = "rgba(110,170,200," + (0.2 + 0.4 * Math.random()) + ")";
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#000";
     ctx.beginPath();
-    let vertices = target.vertices;
-    ctx.moveTo(vertices[0].x, vertices[0].y);
-    for (let j = 1; j < vertices.length; j += 1) {
-      ctx.lineTo(vertices[j].x, vertices[j].y);
-    }
-    ctx.lineTo(vertices[0].x, vertices[0].y);
-    ctx.fillStyle = "#ccc";
+    ctx.moveTo(mech.pos.x + eye * Math.cos(this.angle), mech.pos.y + eye * Math.sin(this.angle));
+    ctx.lineTo(target.vertices[len].x, target.vertices[len].y);
+    ctx.lineTo(target.vertices[0].x, target.vertices[0].y);
     ctx.fill();
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = "#222";
     ctx.stroke();
+    for (let i = 0; i < len; i++) {
+      ctx.beginPath();
+      ctx.moveTo(mech.pos.x + eye * Math.cos(this.angle), mech.pos.y + eye * Math.sin(this.angle));
+      ctx.lineTo(target.vertices[i].x, target.vertices[i].y);
+      ctx.lineTo(target.vertices[i + 1].x, target.vertices[i + 1].y);
+      ctx.fill();
+      ctx.stroke();
+    }
   },
+  // drawHoldable: function(target) {
+  //   ctx.beginPath();
+  //   let vertices = target.vertices;
+  //   ctx.moveTo(vertices[0].x, vertices[0].y);
+  //   for (let j = 1; j < vertices.length; j += 1) {
+  //     ctx.lineTo(vertices[j].x, vertices[j].y);
+  //   }
+  //   ctx.lineTo(vertices[0].x, vertices[0].y);
+  //   // ctx.fillStyle = "#ccc";
+  //   ctx.fillStyle = "rgba(255,255,255," + (0.2 + 0.9 * Math.random()) + ")";
+
+  //   ctx.fill();
+  //   ctx.lineWidth = 2;
+  //   ctx.strokeStyle = "#222";
+  //   ctx.stroke();
+  // },
   throw: function() {
     //used in the mouse up event listener
     if (this.isHolding) {
@@ -574,65 +473,121 @@ const mech = {
       Matter.Body.setMass(player, 5);
     }
   },
+  fieldRangeDraw: 0.2,
+  fieldThreshold: 0.87,
   hold: function() {
     if (b.activeGun === 0) {
       if (this.isHolding) {
+        //hold blocks
         this.drawHold(this.holding);
         Matter.Body.setPosition(this.holding, {
-          x: mech.pos.x + 55 * Math.cos(this.angle),
-          y: mech.pos.y + 55 * Math.sin(this.angle)
+          x: mech.pos.x + 70 * Math.cos(this.angle),
+          y: mech.pos.y + 70 * Math.sin(this.angle)
         });
         Matter.Body.setVelocity(this.holding, player.velocity);
-        //gently spin the block
-        Matter.Body.rotate(this.holding, 0.01 / this.holding.mass);
+        Matter.Body.rotate(this.holding, 0.01 / this.holding.mass); //gently spin the block
       } else if (game.mouseDown && this.fireCDcycle < game.cycle) {
+        //pick up blocks with field
+        //draw field
+        const wiggle = Math.random() * 0.05;
         ctx.beginPath();
         // ctx.moveTo(this.pos.x, this.pos.y);
         ctx.arc(
           this.pos.x,
           this.pos.y,
-          this.grabRange,
-          this.angle - Math.PI * 0.3,
-          this.angle + Math.PI * 0.3,
+          this.grabRange + 5 * Math.random(),
+          this.angle - Math.PI * this.fieldRangeDraw - wiggle,
+          this.angle + Math.PI * this.fieldRangeDraw + wiggle,
           false
         );
         ctx.arc(
           this.pos.x,
           this.pos.y,
-          40,
-          this.angle + Math.PI * 0.3,
-          this.angle - Math.PI * 0.3,
+          38 + 4 * Math.random(),
+          this.angle + Math.PI * this.fieldRangeDraw + wiggle,
+          this.angle - Math.PI * this.fieldRangeDraw - wiggle,
           true
         );
-        ctx.fillStyle = "rgba(30,30,90,0.05)";
+        ctx.fillStyle = "rgba(110,170,200," + (0.15 + 0.15 * Math.random()) + ")";
+        //make the grab field flicker
+        // if (game.cycle % 4) {
+        //   ctx.fillStyle = "rgba(80,100,150,0.2)";
+        // } else {
+        //   ctx.fillStyle = "rgba(120,170,255,0.3)";
+        // }
         ctx.fill();
+        //draw random lines in field for cool effect
+        let offAngle = this.angle + 2 * Math.PI * this.fieldRangeDraw * (Math.random() - 0.5);
+        ctx.beginPath();
+        ctx.moveTo(this.pos.x + 40 * Math.cos(offAngle), this.pos.y + 40 * Math.sin(offAngle));
+        ctx.lineTo(this.pos.x + this.grabRange * Math.cos(offAngle), this.pos.y + this.grabRange * Math.sin(offAngle));
+        ctx.strokeStyle = "rgba(120,170,255,0.4)";
+        ctx.stroke();
 
-        // ctx.beginPath()
-        // ctx.arc(100,100,100,0,Math.PI*2, false); // outer (filled)
-        // ctx.arc(100,100,55,0,Math.PI*2, true); // inner (unfills it)
-        // ctx.fill();
+        // push all mobs in range
+        for (let i = 0, len = mob.length; i < len; ++i) {
+          if (
+            this.lookingAt(mob[i], this.fieldThreshold) &&
+            Matter.Vector.magnitude(Matter.Vector.sub(mob[i].position, this.pos)) < this.grabRange &&
+            Matter.Query.ray(map, mob[i].position, this.pos).length === 0
+          ) {
+            this.fireCDcycle = game.cycle + 10; //cool down
+            const dmg = b.dmgScale * 0.1;
+            mob[i].damage(dmg);
+            mob[i].locatePlayer();
+            //draw mob hit
+            this.drawHold(mob[i]);
+            // let vector = Matter.Vector.normalise(Matter.Vector.sub(mob[i].position, this.pos));
+            // ctx.beginPath();
+            // ctx.moveTo(this.pos.x + 40 * vector.x, this.pos.y + 40 * vector.y);
+            // ctx.lineTo(this.pos.x + this.grabRange * vector.x, this.pos.y + this.grabRange * vector.y);
+            // ctx.strokeStyle = "#000";
+
+            ctx.stroke();
+            //mob and player knock back
+            const angle = Math.atan2(player.position.y - mob[i].position.y, player.position.x - mob[i].position.x);
+            Matter.Body.setVelocity(mob[i], {
+              x: player.velocity.x - 20 * Math.cos(angle) / Math.sqrt(mob[i].mass),
+              y: player.velocity.y - 20 * Math.sin(angle) / Math.sqrt(mob[i].mass)
+            });
+            Matter.Body.setVelocity(player, {
+              x: player.velocity.x + 3 * Math.cos(angle) * Math.sqrt(mob[i].mass),
+              y: player.velocity.y + 3 * Math.sin(angle) * Math.sqrt(mob[i].mass)
+            });
+          }
+        }
+
         //find closest body
         let mag = this.grabRange;
         let index = null;
         const maxSize = 75;
+        ctx.beginPath(); //draw on each valid body
         for (let i = 0, len = body.length; i < len; ++i) {
           if (
             body[i].bounds.max.x - body[i].bounds.min.x < maxSize &&
             body[i].bounds.max.y - body[i].bounds.min.y < maxSize &&
-            this.lookingAt(i) &&
+            this.lookingAt(body[i], this.fieldThreshold) &&
             Matter.Query.ray(map, body[i].position, this.pos).length === 0
           ) {
-            this.drawHold(body[i]); //draw outline
+            let vertices = body[i].vertices;
+            ctx.moveTo(vertices[0].x, vertices[0].y);
+            for (let j = 1; j < vertices.length; j += 1) {
+              ctx.lineTo(vertices[j].x, vertices[j].y);
+            }
+            ctx.lineTo(vertices[0].x, vertices[0].y);
             //add to closest list
-            const dist = Matter.Vector.magnitude(
-              Matter.Vector.sub(body[i].position, this.pos)
-            );
+            const dist = Matter.Vector.magnitude(Matter.Vector.sub(body[i].position, this.pos));
             if (dist < mag) {
               mag = dist;
               index = i;
             }
           }
         }
+        ctx.fillStyle = "rgba(190,215,230," + (0.3 + 0.7 * Math.random()) + ")";
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#222";
+        ctx.stroke();
         // pick up if in range
         if (mag < this.grabRange) {
           //pick up if distance closer then 100*100
@@ -643,12 +598,8 @@ const mech = {
           }
           this.holding = body[index];
           //combine momentum
-          const px =
-            player.velocity.x * player.mass +
-            this.holding.velocity.x * this.holding.mass;
-          const py =
-            player.velocity.y * player.mass -
-            this.holding.velocity.y * this.holding.mass;
+          const px = player.velocity.x * player.mass + this.holding.velocity.x * this.holding.mass;
+          const py = player.velocity.y * player.mass - this.holding.velocity.y * this.holding.mass;
           Matter.Body.setVelocity(player, {
             x: px / (player.mass + this.holding.mass),
             y: py / (player.mass + this.holding.mass)
@@ -659,15 +610,19 @@ const mech = {
           this.holding.collisionFilter.category = 0x000000;
           this.holding.collisionFilter.mask = 0x000000;
           //draw grab
-          ctx.beginPath();
-          ctx.moveTo(this.holding.position.x, this.holding.position.y);
-          ctx.lineTo(
-            mech.pos.x + 55 * Math.cos(this.angle),
-            mech.pos.y + 55 * Math.sin(this.angle)
-          );
-          ctx.lineWidth = 50;
-          ctx.strokeStyle = "#ccc";
-          ctx.stroke();
+          // ctx.beginPath();
+          // // console.log(this.holding);
+          // ctx.moveTo(mech.pos.x + 55 * Math.cos(this.angle), mech.pos.y + 55 * Math.sin(this.angle));
+          // for (let i = 0, len = this.holding.vertices.length; i < len; i++) {
+          //   ctx.lineTo(this.holding.vertices[i].x, this.holding.vertices[i].y);
+          // }
+          // // ctx.moveTo(this.holding.position.x, this.holding.position.y);
+          // // ctx.lineTo(mech.pos.x + 55 * Math.cos(this.angle), mech.pos.y + 55 * Math.sin(this.angle));
+          // ctx.lineWidth = 3;
+          // ctx.strokeStyle = "#000";
+          // ctx.stroke();
+          // ctx.fillStyle = "rgba(0,0,0,0.5)";
+          // ctx.fill();
         }
       }
     }
@@ -716,40 +671,20 @@ const mech = {
     this.hip.x = 12 + offset;
     this.hip.y = 24 + offset;
     //stepSize goes to zero if Vx is zero or not on ground (make this transition cleaner)
-    this.stepSize =
-      0.8 * this.stepSize +
-      0.2 * (7 * Math.sqrt(Math.abs(this.Vx)) * this.onGround);
+    this.stepSize = 0.8 * this.stepSize + 0.2 * (7 * Math.sqrt(Math.abs(this.Vx)) * this.onGround);
     //changes to stepsize are smoothed by adding only a percent of the new value each cycle
     const stepAngle = 0.034 * this.walk_cycle + cycle_offset;
     this.foot.x = 2.2 * this.stepSize * Math.cos(stepAngle) + offset;
-    this.foot.y =
-      offset +
-      1.2 * this.stepSize * Math.sin(stepAngle) +
-      this.yOff +
-      this.height;
+    this.foot.y = offset + 1.2 * this.stepSize * Math.sin(stepAngle) + this.yOff + this.height;
     const Ymax = this.yOff + this.height;
     if (this.foot.y > Ymax) this.foot.y = Ymax;
 
     //calculate knee position as intersection of circle from hip and foot
-    const d = Math.sqrt(
-      (this.hip.x - this.foot.x) * (this.hip.x - this.foot.x) +
-        (this.hip.y - this.foot.y) * (this.hip.y - this.foot.y)
-    );
-    const l =
-      (this.legLength1 * this.legLength1 -
-        this.legLength2 * this.legLength2 +
-        d * d) /
-      (2 * d);
+    const d = Math.sqrt((this.hip.x - this.foot.x) * (this.hip.x - this.foot.x) + (this.hip.y - this.foot.y) * (this.hip.y - this.foot.y));
+    const l = (this.legLength1 * this.legLength1 - this.legLength2 * this.legLength2 + d * d) / (2 * d);
     const h = Math.sqrt(this.legLength1 * this.legLength1 - l * l);
-    this.knee.x =
-      l / d * (this.foot.x - this.hip.x) -
-      h / d * (this.foot.y - this.hip.y) +
-      this.hip.x +
-      offset;
-    this.knee.y =
-      l / d * (this.foot.y - this.hip.y) +
-      h / d * (this.foot.x - this.hip.x) +
-      this.hip.y;
+    this.knee.x = l / d * (this.foot.x - this.hip.x) - h / d * (this.foot.y - this.hip.y) + this.hip.x + offset;
+    this.knee.y = l / d * (this.foot.y - this.hip.y) + h / d * (this.foot.x - this.hip.x) + this.hip.y;
   },
   draw: function() {
     ctx.fillStyle = this.fillColor;

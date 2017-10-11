@@ -24,19 +24,14 @@ const powerUps = {
       //only get ammo for guns player has
       let target;
       if (b.inventory.length > 1) {
-        //add ammo to a gun in inventory, but not ammoless guns
-        target =
-          b.guns[
-            b.inventory[Math.ceil(Math.random() * (b.inventory.length - 1))]
-          ];
+        //add ammo to a gun in inventory, but not ammo-less guns
+        target = b.guns[b.inventory[Math.ceil(Math.random() * (b.inventory.length - 1))]];
       } else {
         //if you don't have a gun just add ammo to a random gun, but not the basic gun
         target = b.guns[Math.ceil(Math.random() * b.guns.length - 1)];
       }
       //ammo given scales as mobs take more hits to kill
-      const ammo = Math.ceil(
-        target.ammoPack * (0.65 + 0.5 * Math.random()) / b.dmgScale
-      );
+      const ammo = Math.ceil(target.ammoPack * (0.65 + 0.5 * Math.random()) / b.dmgScale);
       target.ammo += ammo;
       game.updateGunHUD();
       game.makeTextLog("+" + ammo + " ammo: " + target.name, 180);
@@ -63,13 +58,11 @@ const powerUps = {
         //newGun = 2 //makes every gun you pick up this type  //enable for testing one gun
         b.guns[newGun].have = true;
         b.inventory.push(newGun);
-        b.inventory.sort();
+        // b.inventory.sort();
         b.guns[newGun].ammo += b.guns[newGun].ammoPack * 2;
         game.makeGunHUD();
         game.makeTextLog(
-          "<div style='font-size:120%;' >new gun: " +
-            b.guns[newGun].name +
-            "</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>",
+          "<div style='font-size:120%;' >new gun: " + b.guns[newGun].name + "</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>",
           360
         );
         playSound("powerup");
@@ -154,8 +147,7 @@ const powerUps = {
         }
         //power up needs to be able to see player to gravitated
         if (
-          Matter.Query.ray(map, powerUp[i].position, player.position).length ===
-          0
+          Matter.Query.ray(map, powerUp[i].position, player.position).length === 0
           // && Matter.Query.ray(body, powerUp[i].position, player.position).length === 0
         ) {
           Matter.Body.setVelocity(powerUp[i], {
@@ -164,8 +156,7 @@ const powerUps = {
             y: powerUp[i].velocity.y * 0.94
           });
           powerUp[i].force.x += dxP / dist2 * powerUp[i].mass * 0.7;
-          powerUp[i].force.y +=
-            dyP / dist2 * powerUp[i].mass * 0.7 - powerUp[i].mass * game.g; //negate gravity
+          powerUp[i].force.y += dyP / dist2 * powerUp[i].mass * 0.7 - powerUp[i].mass * game.g; //negate gravity
         }
       }
     }

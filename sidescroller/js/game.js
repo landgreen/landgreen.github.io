@@ -40,13 +40,7 @@ const game = {
     let i = this.drawList.length;
     while (i--) {
       ctx.beginPath(); //draw circle
-      ctx.arc(
-        this.drawList[i].x,
-        this.drawList[i].y,
-        this.drawList[i].radius,
-        0,
-        2 * Math.PI
-      );
+      ctx.arc(this.drawList[i].x, this.drawList[i].y, this.drawList[i].radius, 0, 2 * Math.PI);
       ctx.fillStyle = this.drawList[i].color;
       ctx.fill();
       if (this.drawList[i].time) {
@@ -70,11 +64,9 @@ const game = {
   updateGunHUD: function() {
     for (let i = 0, len = b.inventory.length; i < len; ++i) {
       if (b.guns[b.inventory[i]].ammo === Infinity) {
-        document.getElementById(b.inventory[i]).innerHTML =
-          b.guns[b.inventory[i]].name;
+        document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name;
       } else {
-        document.getElementById(b.inventory[i]).innerHTML =
-          b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo;
+        document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo;
       }
     }
   },
@@ -92,9 +84,7 @@ const game = {
       if (b.guns[b.inventory[i]].ammo === Infinity) {
         textnode = document.createTextNode(b.guns[b.inventory[i]].name);
       } else {
-        textnode = document.createTextNode(
-          b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo
-        );
+        textnode = document.createTextNode(b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo);
       }
       node.appendChild(textnode);
       document.getElementById("guns").appendChild(node);
@@ -116,8 +106,7 @@ const game = {
   timing: function() {
     this.cycle++; //tracks game cycles
     //delta is used to adjust forces on game slow down;
-    this.delta =
-      (engine.timing.timestamp - this.lastTimeStamp) / 16.666666666666;
+    this.delta = (engine.timing.timestamp - this.lastTimeStamp) / 16.666666666666;
     this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
   },
   keyPress: function() {
@@ -133,26 +122,22 @@ const game = {
     }
     if (keys[69]) {
       // e    swap to next active gun
-      const next = function() {
-        b.activeGun++;
-        if (b.activeGun > b.guns.length - 1) b.activeGun = 0;
-        if (b.guns[b.activeGun].have === false || b.guns[b.activeGun].ammo < 1)
-          next();
-      };
-      next();
+      b.inventoryGun++;
+      if (b.inventoryGun > b.inventory.length - 1) b.inventoryGun = 0;
+      b.activeGun = b.inventory[b.inventoryGun];
+
+      //if (b.activeGun > b.guns.length - 1) b.activeGun = 0;
+      //if (b.guns[b.activeGun].have === false || b.guns[b.activeGun].ammo < 1) next();
       game.updateGunHUD();
       game.boldActiveGunHUD();
       mech.drop();
       playSound("click");
     } else if (keys[81]) {
       //q    swap to previous active gun
-      const previous = function() {
-        b.activeGun--;
-        if (b.activeGun < 0) b.activeGun = b.guns.length - 1;
-        if (b.guns[b.activeGun].have === false || b.guns[b.activeGun].ammo < 1)
-          previous();
-      };
-      previous();
+      b.inventoryGun--;
+      if (b.inventoryGun < 0) b.inventoryGun = b.inventory.length - 1;
+      b.activeGun = b.inventory[b.inventoryGun];
+
       game.updateGunHUD();
       game.boldActiveGunHUD();
       mech.drop();
@@ -168,13 +153,8 @@ const game = {
     } else if (this.testing) {
       if (keys[57]) {
         //9
-        for (let i = 0; i < 6; ++i) {
-          powerUps.spawnRandomPowerUp(
-            game.mouseInGame.x,
-            game.mouseInGame.y,
-            0,
-            0
-          );
+        for (let i = 0; i < 8; ++i) {
+          powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
         }
       }
       if (keys[79]) {
@@ -209,12 +189,8 @@ const game = {
     ctx.scale(this.zoom, this.zoom); //zoom in once centered
     ctx.translate(-canvas.width2 + mech.transX, -canvas.height2 + mech.transY); //uncenter, translate
     //calculate in game mouse position by undoing the zoom and translations
-    this.mouseInGame.x =
-      (this.mouse.x - canvas.width2) / this.zoom + canvas.width2 - mech.transX;
-    this.mouseInGame.y =
-      (this.mouse.y - canvas.height2) / this.zoom +
-      canvas.height2 -
-      mech.transY;
+    this.mouseInGame.x = (this.mouse.x - canvas.width2) / this.zoom + canvas.width2 - mech.transX;
+    this.mouseInGame.y = (this.mouse.y - canvas.height2) / this.zoom + canvas.height2 - mech.transY;
   },
   startZoomIn: function(time = 300) {
     game.zoom = 0;
@@ -318,8 +294,7 @@ const game = {
     this.drawList = [];
 
     function removeAll(array) {
-      for (let i = 0; i < array.length; ++i)
-        Matter.World.remove(engine.world, array[i]);
+      for (let i = 0; i < array.length; ++i) Matter.World.remove(engine.world, array[i]);
     }
     removeAll(map);
     map = [];
@@ -361,10 +336,7 @@ const game = {
         window.getSelection().addRange(range);
         document.execCommand("copy");
         window.getSelection().removeAllRanges();
-        console.log(
-          `spawn.mapRect(${this.pos1.x}, ${this.pos1.y}, ${this.pos2.x -
-            this.pos1.x}, ${this.pos2.y - this.pos1.y}); //`
-        );
+        console.log(`spawn.mapRect(${this.pos1.x}, ${this.pos1.y}, ${this.pos2.x - this.pos1.x}, ${this.pos2.y - this.pos1.y}); //`);
       }
     }
   },
@@ -426,11 +398,7 @@ const game = {
     ctx.fillText("zoom: " + this.zoom.toFixed(4), x, line);
     line += 20;
     ctx.textAlign = "center";
-    ctx.fillText(
-      `(${this.mouseInGame.x.toFixed(1)}, ${this.mouseInGame.y.toFixed(1)})`,
-      this.mouse.x,
-      this.mouse.y - 20
-    );
+    ctx.fillText(`(${this.mouseInGame.x.toFixed(1)}, ${this.mouseInGame.y.toFixed(1)})`, this.mouse.x, this.mouse.y - 20);
   },
   draw: {
     powerUp: function() {
@@ -546,12 +514,7 @@ const game = {
       //zones
       ctx.beginPath();
       for (let i = 0, len = level.zones.length; i < len; ++i) {
-        ctx.rect(
-          level.zones[i].x1,
-          level.zones[i].y1 + 70,
-          level.zones[i].x2 - level.zones[i].x1,
-          level.zones[i].y2 - level.zones[i].y1
-        );
+        ctx.rect(level.zones[i].x1, level.zones[i].y1 + 70, level.zones[i].x2 - level.zones[i].x1, level.zones[i].y2 - level.zones[i].y1);
       }
       ctx.fillStyle = "rgba(0, 255, 0, 0.3)";
       ctx.fill();
@@ -623,8 +586,7 @@ const game = {
       onLine1: false,
       onLine2: false
     };
-    denominator =
-      (v2End.y - v2.y) * (v1End.x - v1.x) - (v2End.x - v2.x) * (v1End.y - v1.y);
+    denominator = (v2End.y - v2.y) * (v1End.x - v1.x) - (v2End.x - v2.x) * (v1End.y - v1.y);
     if (denominator == 0) {
       return result;
     }
@@ -652,9 +614,8 @@ const game = {
       let out;
 
       //body rect mode
-      out = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1
-        .y}, ${game.getCoords.pos2.x - game.getCoords.pos1.x}, ${game.getCoords
-        .pos2.y - game.getCoords.pos1.y});`;
+      out = `spawn.mapRect(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, ${game.getCoords.pos2.x - game.getCoords.pos1.x}, ${game.getCoords.pos2.y -
+        game.getCoords.pos1.y});`;
 
       //mob spawn
       //out = `spawn.randomMob(${game.getCoords.pos1.x}, ${game.getCoords.pos1.y}, 0.3);`

@@ -4,6 +4,7 @@ const b = {
   dmgScale: 1, //scales all gun damage from momentum, but not raw .dmg
   gravity: 0.0006, //most other bodies have   gravity = 0.001
   activeGun: 0, //current gun in use by player
+  inventoryGun: 0,
   inventory: [0], //list of what guns player has  // 0 starts with basic gun
   // findGunInInventory: function() {
   //     for (let i = 0, len = b.inventory.length; i < len; ++i) {
@@ -53,10 +54,7 @@ const b = {
       sub = Matter.Vector.sub(bullet[me].position, body[i].position);
       dist = Matter.Vector.magnitude(sub);
       if (dist < bullet[me].explodeRad) {
-        knock = Matter.Vector.mult(
-          Matter.Vector.normalise(sub),
-          -Math.sqrt(dmg) * body[i].mass / 18
-        );
+        knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * body[i].mass / 18);
         body[i].force.x += knock.x;
         body[i].force.y += knock.y;
       }
@@ -66,10 +64,7 @@ const b = {
       sub = Matter.Vector.sub(bullet[me].position, powerUp[i].position);
       dist = Matter.Vector.magnitude(sub);
       if (dist < bullet[me].explodeRad) {
-        knock = Matter.Vector.mult(
-          Matter.Vector.normalise(sub),
-          -Math.sqrt(dmg) * powerUp[i].mass / 26
-        );
+        knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * powerUp[i].mass / 26);
         powerUp[i].force.x += knock.x;
         powerUp[i].force.y += knock.y;
       }
@@ -100,18 +95,10 @@ const b = {
         if (dist < bullet[me].explodeRad) {
           mob[i].damage(dmg);
           mob[i].locatePlayer();
-          knock = Matter.Vector.mult(
-            Matter.Vector.normalise(sub),
-            -Math.sqrt(dmg) * mob[i].mass / 18
-          );
+          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * mob[i].mass / 18);
           mob[i].force.x += knock.x;
           mob[i].force.y += knock.y;
-        } else if (
-          !mob[i].seePlayer.recall &&
-          Matter.Vector.magnitudeSquared(
-            Matter.Vector.sub(bullet[me].position, mob[i].position)
-          ) < alertRange2
-        ) {
+        } else if (!mob[i].seePlayer.recall && Matter.Vector.magnitudeSquared(Matter.Vector.sub(bullet[me].position, mob[i].position)) < alertRange2) {
           mob[i].locatePlayer();
         }
       }
@@ -121,17 +108,14 @@ const b = {
     dist = Matter.Vector.magnitude(sub);
     if (dist < bullet[me].explodeRad) {
       mech.damage(bullet[me].explodeRad * 0.0005);
-      knock = Matter.Vector.mult(
-        Matter.Vector.normalise(sub),
-        -Math.sqrt(dmg) * player.mass / 33
-      );
+      knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * player.mass / 33);
       player.force.x += knock.x;
       player.force.y += knock.y;
     }
   },
   guns: [
     {
-      name: "throw",
+      name: "field emitter",
       ammo: Infinity,
       ammoPack: Infinity,
       have: true,
@@ -183,6 +167,58 @@ const b = {
     // 		};
     // 	}
     // },
+    // {
+    //   name: "plasma arc",
+    //   ammo: 0,
+    //   ammoPack: 600,
+    //   have: false,
+    //   sync: 0,
+    //   step: 0,
+    //   cd: 0,
+    //   fire: function() {
+    //     if (this.sync === game.cycle) {
+    //       this.sync = game.cycle + 1;
+    //       this.step++;
+
+    //       //draw
+    //       if (this.step < 5) {
+    //         let rad = 70;
+    //         ctx.beginPath();
+    //         ctx.arc(mech.pos.x + rad * Math.cos(mech.angle), mech.pos.y + rad * Math.sin(mech.angle), 50, 0, 2 * Math.PI);
+    //         ctx.fillStyle = "rgba(255,0,100,0.3)";
+    //         ctx.fill();
+    //       } else {
+    //         let startRadius = 40;
+    //         let endRadius = 250;
+    //         // let endRadius = 250 * Math.sin(this.step * 0.1);
+    //         // if (endRadius > 0) {
+    //         //   endRadius += 60;
+    //         // } else {
+    //         //   endRadius = 60;
+    //         // }
+    //         let angleOff = 0.6;
+    //         ctx.strokeStyle = "#000";
+    //         ctx.fillStyle = "rgba(255,0,100,0.3)";
+    //         ctx.beginPath();
+    //         ctx.moveTo(mech.pos.x + startRadius * Math.cos(mech.angle + angleOff), mech.pos.y + startRadius * Math.sin(mech.angle + angleOff));
+    //         ctx.lineTo(mech.pos.x + endRadius * Math.cos(mech.angle), mech.pos.y + endRadius * Math.sin(mech.angle));
+    //         ctx.lineTo(mech.pos.x + startRadius * Math.cos(mech.angle - angleOff), mech.pos.y + startRadius * Math.sin(mech.angle - angleOff));
+    //         ctx.fill();
+    //         ctx.fillStyle = "rgba(255,0,100,0.6)";
+    //         angleOff = 0.3;
+    //         ctx.beginPath();
+    //         ctx.moveTo(mech.pos.x + startRadius * Math.cos(mech.angle + angleOff), mech.pos.y + startRadius * Math.sin(mech.angle + angleOff));
+    //         ctx.lineTo(mech.pos.x + 0.7 * endRadius * Math.cos(mech.angle), mech.pos.y + 0.7 * endRadius * Math.sin(mech.angle));
+    //         ctx.lineTo(mech.pos.x + startRadius * Math.cos(mech.angle - angleOff), mech.pos.y + startRadius * Math.sin(mech.angle - angleOff));
+    //         ctx.fill();
+    //       }
+    //       //mob collision check
+    //     } else {
+    //       this.step = 0;
+    //       this.sync = game.cycle + 1;
+    //     }
+    //   }
+    // },
     {
       name: "laser",
       ammo: 0,
@@ -208,12 +244,7 @@ const b = {
             let vertices = domain[i].vertices;
             const len = vertices.length - 1;
             for (let j = 0; j < len; j++) {
-              results = game.checkLineIntersection(
-                v1,
-                v1End,
-                vertices[j],
-                vertices[j + 1]
-              );
+              results = game.checkLineIntersection(v1, v1End, vertices[j], vertices[j + 1]);
               if (results.onLine1 && results.onLine2) {
                 const dx = v1.x - results.x;
                 const dy = v1.y - results.y;
@@ -230,12 +261,7 @@ const b = {
                 }
               }
             }
-            results = game.checkLineIntersection(
-              v1,
-              v1End,
-              vertices[0],
-              vertices[len]
-            );
+            results = game.checkLineIntersection(v1, v1End, vertices[0], vertices[len]);
             if (results.onLine1 && results.onLine2) {
               const dx = v1.x - results.x;
               const dy = v1.y - results.y;
@@ -274,32 +300,18 @@ const b = {
             //draw mob damage circle
             ctx.fillStyle = color;
             ctx.beginPath();
-            ctx.arc(
-              path[path.length - 1].x,
-              path[path.length - 1].y,
-              Math.sqrt(dmg) * 60,
-              0,
-              2 * Math.PI
-            );
+            ctx.arc(path[path.length - 1].x, path[path.length - 1].y, Math.sqrt(dmg) * 60, 0, 2 * Math.PI);
             ctx.fill();
           }
         };
 
         const reflection = function() {
           // https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector
-          const n = Matter.Vector.perp(
-            Matter.Vector.normalise(Matter.Vector.sub(best.v1, best.v2))
-          );
-          const d = Matter.Vector.sub(
-            path[path.length - 1],
-            path[path.length - 2]
-          );
+          const n = Matter.Vector.perp(Matter.Vector.normalise(Matter.Vector.sub(best.v1, best.v2)));
+          const d = Matter.Vector.sub(path[path.length - 1], path[path.length - 2]);
           const nn = Matter.Vector.mult(n, 2 * Matter.Vector.dot(d, n));
           const r = Matter.Vector.normalise(Matter.Vector.sub(d, nn));
-          path[path.length] = Matter.Vector.add(
-            Matter.Vector.mult(r, range),
-            path[path.length - 1]
-          );
+          path[path.length] = Matter.Vector.add(Matter.Vector.mult(r, range), path[path.length - 1]);
         };
         //beam before reflection
         checkforCollisions();
@@ -379,13 +391,7 @@ const b = {
         playSound("snare2");
         if (Math.random() > 0.2) mobs.alert(500);
         const dir = (Math.random() - 0.5) * 0.15 + mech.angle;
-        bullet[me] = Bodies.rectangle(
-          mech.pos.x + 30 * Math.cos(mech.angle),
-          mech.pos.y + 30 * Math.sin(mech.angle),
-          17,
-          5,
-          b.fireAttributes(dir)
-        );
+        bullet[me] = Bodies.rectangle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 17, 5, b.fireAttributes(dir));
         b.fireProps(5, 38, dir, me); //cd , speed
         bullet[me].endCycle = game.cycle + 60;
         bullet[me].frictionAir = 0.01;
@@ -406,8 +412,8 @@ const b = {
           const me = bullet.length;
           const dir = (Math.random() - 0.5) * 0.6 + mech.angle;
           bullet[me] = Bodies.rectangle(
-            mech.pos.x + 30 * Math.cos(mech.angle),
-            mech.pos.y + 30 * Math.sin(mech.angle),
+            mech.pos.x + 35 * Math.cos(mech.angle) + 15 * (Math.random() - 0.5),
+            mech.pos.y + 35 * Math.sin(mech.angle) + 15 * (Math.random() - 0.5),
             11,
             11,
             b.fireAttributes(dir)
@@ -430,13 +436,7 @@ const b = {
         const me = bullet.length;
         playSound("snare2");
         const dir = mech.angle;
-        bullet[me] = Bodies.rectangle(
-          mech.pos.x + 40 * Math.cos(mech.angle),
-          mech.pos.y + 40 * Math.sin(mech.angle),
-          31,
-          2,
-          b.fireAttributes(dir)
-        );
+        bullet[me] = Bodies.rectangle(mech.pos.x + 40 * Math.cos(mech.angle), mech.pos.y + 40 * Math.sin(mech.angle), 31, 2, b.fireAttributes(dir));
         b.fireProps(20, 45, dir, me); //cd , speed
         bullet[me].endCycle = game.cycle + 180;
         bullet[me].dmg = 1;
@@ -551,21 +551,14 @@ const b = {
         for (let i = 0; i < 3; i++) {
           dir += twist;
           const me = bullet.length;
-          bullet[me] = Bodies.rectangle(
-            mech.pos.x,
-            mech.pos.y,
-            30,
-            4,
-            b.fireAttributes(dir)
-          );
+          bullet[me] = Bodies.rectangle(mech.pos.x, mech.pos.y, 30, 4, b.fireAttributes(dir));
           //rotation -= 0.01;
           //Matter.Body.setAngularVelocity(bullet[me], rotation);
           b.fireProps(45, speed, dir, me); //cd , speed
           speed += 9;
           //bullet[me].collisionFilter.mask = 0x000101; //for self collision
           bullet[me].frictionAir = 0.04;
-          bullet[me].endCycle =
-            game.cycle + Math.floor(240 + Math.random() * 80);
+          bullet[me].endCycle = game.cycle + Math.floor(240 + Math.random() * 80);
           bullet[me].explodeRad = 170;
           bullet[me].lookFrequency = Math.floor(25 + Math.random() * 15);
           bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
@@ -579,14 +572,10 @@ const b = {
               for (let i = 0, len = mob.length; i < len; ++i) {
                 if (
                   mob[i].alive &&
-                  Matter.Query.ray(map, this.position, mob[i].position)
-                    .length === 0 &&
-                  Matter.Query.ray(body, this.position, mob[i].position)
-                    .length === 0
+                  Matter.Query.ray(map, this.position, mob[i].position).length === 0 &&
+                  Matter.Query.ray(body, this.position, mob[i].position).length === 0
                 ) {
-                  const dist = Matter.Vector.magnitude(
-                    Matter.Vector.sub(this.position, mob[i].position)
-                  );
+                  const dist = Matter.Vector.magnitude(Matter.Vector.sub(this.position, mob[i].position));
                   if (dist < closeDist) {
                     this.close = mob[i].position;
                     closeDist = dist;
@@ -607,12 +596,8 @@ const b = {
             //draw rocket
             ctx.beginPath();
             ctx.arc(
-              this.position.x -
-                Math.cos(this.angle) * 27 +
-                (Math.random() - 0.5) * 4,
-              this.position.y -
-                Math.sin(this.angle) * 27 +
-                (Math.random() - 0.5) * 4,
+              this.position.x - Math.cos(this.angle) * 27 + (Math.random() - 0.5) * 4,
+              this.position.y - Math.sin(this.angle) * 27 + (Math.random() - 0.5) * 4,
               11,
               0,
               2 * Math.PI
@@ -631,9 +616,7 @@ const b = {
                 x: Math.cos(this.angle),
                 y: Math.sin(this.angle)
               };
-              const target = Matter.Vector.normalise(
-                Matter.Vector.sub(this.position, this.close)
-              );
+              const target = Matter.Vector.normalise(Matter.Vector.sub(this.position, this.close));
               if (Matter.Vector.dot(target, face) > -0.98) {
                 if (Matter.Vector.cross(target, face) > 0) {
                   Matter.Body.rotate(this, 0.09);
@@ -674,17 +657,10 @@ const b = {
         for (let i = 0; i < 5; i++) {
           dir += 0.05 + (Math.random() - 0.5) * 0.04;
           const me = bullet.length;
-          bullet[me] = Bodies.rectangle(
-            mech.pos.x + 50 * Math.cos(mech.angle),
-            mech.pos.y + 50 * Math.sin(mech.angle),
-            17,
-            4,
-            b.fireAttributes(dir)
-          );
+          bullet[me] = Bodies.rectangle(mech.pos.x + 50 * Math.cos(mech.angle), mech.pos.y + 50 * Math.sin(mech.angle), 17, 4, b.fireAttributes(dir));
           b.fireProps(25, 32 + (Math.random() - 0.5) * 8, dir, me); //cd , speed
           //Matter.Body.setDensity(bullet[me], 0.00001);
-          bullet[me].endCycle =
-            game.cycle + 15 + Math.floor(Math.random() * 11);
+          bullet[me].endCycle = game.cycle + 15 + Math.floor(Math.random() * 11);
           // bullet[me].restitution = 0.2;
           bullet[me].explodeRad = 90 + (Math.random() - 0.5) * 75;
           bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
@@ -706,12 +682,7 @@ const b = {
         playSound("launcher");
         const me = bullet.length;
         const dir = mech.angle;
-        bullet[me] = Bodies.circle(
-          mech.pos.x + 30 * Math.cos(mech.angle),
-          mech.pos.y + 30 * Math.sin(mech.angle),
-          17,
-          b.fireAttributes(dir)
-        );
+        bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 17, b.fireAttributes(dir));
         b.fireProps(40, 28, dir, me); //cd , speed
         Matter.Body.setDensity(bullet[me], 0.000001);
         bullet[me].endCycle = game.cycle + 140;
@@ -730,6 +701,24 @@ const b = {
       }
     },
     {
+      name: "one shot",
+      ammo: 0,
+      ammoPack: 2,
+      have: false,
+      fire: function() {
+        playSound("snare2");
+        mobs.alert(800);
+        const me = bullet.length;
+        const dir = mech.angle;
+        bullet[me] = Bodies.rectangle(mech.pos.x + 50 * Math.cos(mech.angle), mech.pos.y + 50 * Math.sin(mech.angle), 50, 17, b.fireAttributes(dir));
+        b.fireProps(50, 52, dir, me); //cd , speed
+        bullet[me].endCycle = game.cycle + 180;
+        bullet[me].do = function() {
+          this.force.y += this.mass * 0.0005;
+        };
+      }
+    },
+    {
       name: "super balls",
       ammo: 0,
       ammoPack: 6,
@@ -741,12 +730,7 @@ const b = {
         for (let i = 0; i < 3; i++) {
           dir += 0.05;
           const me = bullet.length;
-          bullet[me] = Bodies.circle(
-            mech.pos.x + 30 * Math.cos(mech.angle),
-            mech.pos.y + 30 * Math.sin(mech.angle),
-            7,
-            b.fireAttributes(dir)
-          );
+          bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 7, b.fireAttributes(dir));
           b.fireProps(20, 30, dir, me); //cd , speed
           Matter.Body.setDensity(bullet[me], 0.0001);
           bullet[me].endCycle = game.cycle + 300;
@@ -759,30 +743,6 @@ const b = {
           };
         }
       }
-    },
-    {
-      name: "one shot",
-      ammo: 0,
-      ammoPack: 2,
-      have: false,
-      fire: function() {
-        playSound("snare2");
-        mobs.alert(800);
-        const me = bullet.length;
-        const dir = mech.angle;
-        bullet[me] = Bodies.rectangle(
-          mech.pos.x + 50 * Math.cos(mech.angle),
-          mech.pos.y + 50 * Math.sin(mech.angle),
-          50,
-          17,
-          b.fireAttributes(dir)
-        );
-        b.fireProps(50, 52, dir, me); //cd , speed
-        bullet[me].endCycle = game.cycle + 180;
-        bullet[me].do = function() {
-          this.force.y += this.mass * 0.0005;
-        };
-      }
     }
   ],
   fire: function() {
@@ -793,13 +753,11 @@ const b = {
         game.updateGunHUD();
       } else {
         mech.fireCDcycle = game.cycle + 30; //cooldown
-        game.makeTextLog(
-          "<div style='font-size:150%;'>NO AMMO</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>",
-          80
-        );
+        game.makeTextLog("<div style='font-size:150%;'>NO AMMO</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>", 80);
         playSound("no");
         //switch to throw
         b.activeGun = 0;
+        b.inventoryGun = 0;
         game.updateGunHUD();
         game.boldActiveGunHUD();
         //mech.drop();

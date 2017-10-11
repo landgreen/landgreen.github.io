@@ -11,7 +11,7 @@ const level = {
     // game.levelsCleared = 3;  //for testing to simulate all possible mobs spawns
     spawn.setSpawnList(); //picks a couple mobs types for a themed random mob spawns
     this[this.levels[this.onLevel]](); //spawn the level player is on, this cycles in a loop
-    //this.boss();
+    // this.boss();
     //this.warehouse();
     //this.highrise();
     //this.towers();
@@ -25,7 +25,11 @@ const level = {
   //******************************************************************************************************************
   //empty map for testing mobs
   boss: function() {
-    game.levelsCleared = 10; //for testing to simulate all possible mobs spawns
+    // game.levelsCleared = 5; //for testing to simulate all possible mobs spawns
+    // for (let i = 0; i < 5; i++) {
+    //   game.dmgScale += 0.4; //damage done by mobs increases each level
+    //   b.dmgScale *= 0.9; //damage done by player decreases each level
+    // }
     mech.setPosToSpawn(-75, -60); //normal spawn
     level.enter.x = mech.spawnPos.x - 50;
     level.enter.y = mech.spawnPos.y + 20;
@@ -60,7 +64,9 @@ const level = {
     spawn.mapRect(0, -2000, 3000, 50); //center platform
     spawn.spawnBuilding(-200, -250, 275, 240, false, true, "left"); //far left; player spawns in side
     //spawn.boost(350, 0, 0, -0.005);
-    powerUps.spawn(450, -125, "gun", false);
+    for (let i = 0; i < 17; i++) {
+      powerUps.spawn(450, -125, "gun", false);
+    }
     // powerUps.spawn(450, -125, "gun", false);
     // powerUps.spawn(450, -125, "gun", false);
     for (let i = 0; i < 5; i++) {
@@ -77,12 +83,12 @@ const level = {
     // spawn.ghoster(400, -1400,400);
     //pawn.burster(1300, -1150);
     //spawn.grower(800, -1150);
-    // for (let i = 0; i < 1; ++i) {
-    //   spawn.striker(800, -1150);
+    // for (let i = 0; i < 4; ++i) {
+    //   spawn.shooter(800, -1150);
     // }
     //spawn.zoomer(400, -1150);
     // spawn.nodeBoss(900, -1070, "starter", 9);
-    spawn.randomBoss(-100, -1470);
+    // spawn.randomBoss(-100, -1470);
   },
   warehouse: function() {
     // document.body.style.backgroundColor = (Math.random() < 0.5) ? "#aaa" : "#e3e3f0"
@@ -99,12 +105,7 @@ const level = {
     spawn.debris(-2250, 1330, 3000, 6); //15 debris per level
     spawn.debris(-3000, -800, 3280, 5); //15 debris per level
     spawn.debris(-1400, 410, 2300, 4); //15 debris per level
-    if (
-      game.levelsCleared < 2 ||
-      game.levelsCleared === 3 ||
-      game.levelsCleared === 6
-    )
-      powerUps.spawn(-1250, 560, "gun", false); //starting gun
+    if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6) powerUps.spawn(-1250, 560, "gun", false); //starting gun
     //foreground
     // level.fill.push({ x: -3025, y: 50, width: 4125, height: 1350, color: "rgba(0,0,0,0.05)"});
     // level.fill.push({ x: -1800, y: -500, width: 1975, height: 550, color: "rgba(0,0,0,0.05)"});
@@ -263,12 +264,7 @@ const level = {
     level.exit.x = -4275;
     level.exit.y = -2805;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
-    if (
-      game.levelsCleared < 2 ||
-      game.levelsCleared === 3 ||
-      game.levelsCleared === 6
-    )
-      powerUps.spawn(-2550, -700, "gun", false); //starting gun
+    if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6) powerUps.spawn(-2550, -700, "gun", false); //starting gun
 
     // spawn.debris(-2500, -2050, 2500, 8); //15 debris per level
     // spawn.debris(-2600, -700, 1700, 7); //15 debris per level
@@ -328,7 +324,7 @@ const level = {
     spawn.mapRect(-175, -250, 425, 300);
     spawn.bodyRect(-75, -300, 50, 50);
 
-    spawn.boost(-750, 0, 0, -0.01);
+    spawn.boost(-750, 0, 0, -0.011);
     spawn.bodyRect(-425, -1375, 150, 250);
     spawn.bodyRect(-1075, -1280, 100, 130);
     spawn.mapRect(-1125, -1575, 50, 475);
@@ -350,7 +346,7 @@ const level = {
     //building 2
     spawn.mapRect(-3450, -600, 1300, 750);
     spawn.mapRect(-2225, -450, 175, 550);
-    spawn.boost(-2800, -600, 0, -0.005);
+    spawn.boost(-2800, -600, 0, -0.0055);
     spawn.mapRect(-3450, -1325, 550, 50);
     spawn.mapRect(-3425, -2200, 525, 50);
     spawn.mapRect(-2600, -1750, 450, 50);
@@ -427,12 +423,7 @@ const level = {
     spawn.debris(550, -1150, 1050, 3); //15 debris per level
     spawn.debris(2000, -1650, 500, 3); //15 debris per level
 
-    if (
-      game.levelsCleared < 2 ||
-      game.levelsCleared === 3 ||
-      game.levelsCleared === 6
-    )
-      powerUps.spawn(2450, -1675, "gun", false);
+    if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6) powerUps.spawn(2450, -1675, "gun", false);
 
     //foreground
     level.fill.push({
@@ -635,12 +626,7 @@ const level = {
     //mech.setPosToSpawn(3150, -700); //near exit spawn
     spawn.debris(-200, -50, 4800, 15); //1st floor debris //15 debris per level
 
-    if (
-      game.levelsCleared < 2 ||
-      game.levelsCleared === 3 ||
-      game.levelsCleared === 6
-    )
-      powerUps.spawn(525, -700, "gun", false);
+    if (game.levelsCleared < 2 || game.levelsCleared === 3 || game.levelsCleared === 6) powerUps.spawn(525, -700, "gun", false);
 
     spawn.mapRect(-600, 25, 5600, 300); //ground
     spawn.mapRect(-600, 0, 2000, 50); //ground
@@ -733,12 +719,7 @@ const level = {
     level.exit.y = -1875;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
 
-    if (
-      game.levelsCleared < 2 ||
-      game.levelsCleared === 4 ||
-      game.levelsCleared === 7
-    )
-      powerUps.spawn(1475, -1175, "gun", false);
+    if (game.levelsCleared < 2 || game.levelsCleared === 4 || game.levelsCleared === 7) powerUps.spawn(1475, -1175, "gun", false);
 
     spawn.debris(-240, -400, 310, 3); //15 debris per level
     spawn.debris(625, -50, 750, 3); //15 debris per level
@@ -822,7 +803,7 @@ const level = {
     spawn.mapRect(-300, -350, 500, 50); //far left starting ceiling
     spawn.mapRect(150, -350, 50, 200); //far left starting right part of wall
     spawn.bodyRect(170, -130, 14, 140, 1, spawn.propsFriction); //door to starting room
-    spawn.boost(475, 0, 0.0005, -0.007);
+    spawn.boost(475, 0, 0.0005, -0.0083);
     spawn.mapRect(700, -1100, 400, 990); //far left building
     spawn.mapRect(1600, -400, 1500, 500); //long center building
     spawn.mapRect(1345, -1100, 250, 25); //left platform
@@ -839,7 +820,7 @@ const level = {
     spawn.mapRect(3300, -850, 150, 25); //ledge by far right building
     spawn.mapRect(3300, -1350, 150, 25); //higher ledge by far right building
     spawn.mapRect(3600, -1100, 400, 990); //far right building
-    spawn.boost(4150, 0, -0.0005, -0.007);
+    spawn.boost(4150, 0, -0.0005, -0.0083);
 
     spawn.bodyRect(3200, -1375, 300, 25, 0.9);
     spawn.bodyRect(1825, -1875, 400, 25, 0.9);
@@ -890,14 +871,7 @@ const level = {
       ctx.beginPath();
       ctx.moveTo(this.x, this.y + 30);
       ctx.lineTo(this.x, this.y - 80);
-      ctx.bezierCurveTo(
-        this.x,
-        this.y - 170,
-        this.x + 100,
-        this.y - 170,
-        this.x + 100,
-        this.y - 80
-      );
+      ctx.bezierCurveTo(this.x, this.y - 170, this.x + 100, this.y - 170, this.x + 100, this.y - 80);
       ctx.lineTo(this.x + 100, this.y + 30);
       ctx.lineTo(this.x, this.y + 30);
       ctx.fillStyle = "#ccc";
@@ -911,14 +885,7 @@ const level = {
       ctx.beginPath();
       ctx.moveTo(this.x, this.y + 30);
       ctx.lineTo(this.x, this.y - 80);
-      ctx.bezierCurveTo(
-        this.x,
-        this.y - 170,
-        this.x + 100,
-        this.y - 170,
-        this.x + 100,
-        this.y - 80
-      );
+      ctx.bezierCurveTo(this.x, this.y - 170, this.x + 100, this.y - 170, this.x + 100, this.y - 80);
       ctx.lineTo(this.x + 100, this.y + 30);
       ctx.lineTo(this.x, this.y + 30);
       ctx.fillStyle = "#0ff";
@@ -1019,15 +986,7 @@ const level = {
     }
   },
   //oddly query regions can't get smaller than 50 width?
-  addQueryRegion: function(
-    x,
-    y,
-    width,
-    height,
-    action,
-    groups = [[player], body, mob, powerUp, bullet],
-    info
-  ) {
+  addQueryRegion: function(x, y, width, height, action, groups = [[player], body, mob, powerUp, bullet], info) {
     this.queryList[this.queryList.length] = {
       bounds: {
         min: {
@@ -1070,8 +1029,7 @@ const level = {
     }
   },
   levelAnnounce: function() {
-    let text =
-      "n-gon L" + (game.levelsCleared + 1) + " " + level.levels[level.onLevel];
+    let text = "n-gon L" + (game.levelsCleared + 1) + " " + level.levels[level.onLevel];
     document.title = text;
     // text = text + " with population: ";
     // for (let i = 0, len = spawn.pickList.length; i < len; ++i) {

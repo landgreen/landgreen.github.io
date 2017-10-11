@@ -88,34 +88,41 @@ function mobCollisionChecks(event) {
         function collide(obj) {
           //player and mob collision
           if (obj === playerBody || obj === playerHead) {
-            mob[k].locatePlayer();
-            let dmg = Math.min(
-              Math.max(0.025 * Math.sqrt(mob[k].mass) * game.dmgScale, 0.04),
-              0.25
-            );
-            mech.hitMob(k, dmg);
-            if (mob[k].onHit) mob[k].onHit(k);
-            game.drawList.push({
-              //add dmg to draw queue
-              x: pairs[i].activeContacts[0].vertex.x,
-              y: pairs[i].activeContacts[0].vertex.y,
-              radius: dmg * 1000,
-              color: game.mobDmgColor,
-              time: game.drawTime
+            if (mech.damageImmune < game.cycle) {
+              //player is immune to mob collisison damage for 30/60 seconds
+              mech.damageImmune = game.cycle + 30;
+              mob[k].locatePlayer();
+              let dmg = Math.min(Math.max(0.025 * Math.sqrt(mob[k].mass) * game.dmgScale, 0.04), 0.25);
+              mech.damage(dmg);
+              playSound("dmg" + Math.floor(Math.random() * 4));
+
+              if (mob[k].onHit) mob[k].onHit(k);
+              game.drawList.push({
+                //add dmg to draw queue
+                x: pairs[i].activeContacts[0].vertex.x,
+                y: pairs[i].activeContacts[0].vertex.y,
+                radius: dmg * 1000,
+                color: game.mobDmgColor,
+                time: game.drawTime
+              });
+            }
+            //extra kick between player and mob
+            //this section would be better with forces but they don't work...
+            let angle = Math.atan2(player.position.y - mob[k].position.y, player.position.x - mob[k].position.x);
+            Matter.Body.setVelocity(player, {
+              x: player.velocity.x + 8 * Math.cos(angle),
+              y: player.velocity.y + 8 * Math.sin(angle)
+            });
+            Matter.Body.setVelocity(mob[k], {
+              x: mob[k].velocity.x - 8 * Math.cos(angle),
+              y: mob[k].velocity.y - 8 * Math.sin(angle)
             });
             return;
           }
           //bullet mob collisions
           if (obj.classType === "bullet" && obj.speed > obj.minDmgSpeed) {
             mob[k].locatePlayer();
-            let dmg =
-              b.dmgScale *
-              (obj.dmg +
-                0.15 *
-                  obj.mass *
-                  Matter.Vector.magnitude(
-                    Matter.Vector.sub(mob[k].velocity, obj.velocity)
-                  ));
+            let dmg = b.dmgScale * (obj.dmg + 0.15 * obj.mass * Matter.Vector.magnitude(Matter.Vector.sub(mob[k].velocity, obj.velocity)));
             mob[k].damage(dmg);
             obj.onDmg(); //some bullets do actions when they hits things, like despawn
             game.drawList.push({
@@ -130,11 +137,9 @@ function mobCollisionChecks(event) {
           }
           //mob and body collisions
           if (obj.classType === "body" && obj.speed > 5) {
-            const v = Matter.Vector.magnitude(
-              Matter.Vector.sub(mob[k].velocity, obj.velocity)
-            );
+            const v = Matter.Vector.magnitude(Matter.Vector.sub(mob[k].velocity, obj.velocity));
             if (v > 8) {
-              let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.08;
+              let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.06;
               mob[k].damage(dmg);
               if (mob[k].distanceToPlayer2() < 1000000) mob[k].locatePlayer();
               game.drawList.push({
