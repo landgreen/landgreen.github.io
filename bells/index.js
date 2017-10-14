@@ -2,13 +2,14 @@
 
 let todayMinutes = 0;
 let startMinutes = 430;
+let showSeconds = false;
 let date = new Date();
 const MinutesInDay = 7 * 60 + 20 + 20;
 const scale = 200 / MinutesInDay;
 const color = {
-  passing: "#444",
-  period: "#333",
-  lunch: "#444"
+  passing: "#ddd",
+  period: "#fff",
+  lunch: "#ddd"
 };
 const schedule = {
   current: "regular",
@@ -85,8 +86,22 @@ const schedule = {
   ]
 };
 
-function drawDigitalClock(date) {
-  document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`;
+function toggleShowSeconds() {
+  if (showSeconds) {
+    showSeconds = false;
+  } else {
+    showSeconds = true;
+  }
+}
+function drawDigitalClock() {
+  date = new Date();
+  if (showSeconds) {
+    document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10
+      ? "0" + date.getMinutes()
+      : date.getMinutes()}:${date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()}`;
+  } else {
+    document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`;
+  }
   document.getElementById("week-day").textContent = `${dayOfWeekAsString(date.getDay())}`;
   // document.getElementById("date").textContent = `${date.getDate()}.${date.getMonth()}.20${date.getYear() % 100}`;
   document.getElementById("date").textContent = nameOfMonthAsString(date.getMonth()) + " " + date.getDate();
@@ -97,6 +112,9 @@ function dayOfWeekAsString(dayIndex) {
 }
 function nameOfMonthAsString(MonthIndex) {
   return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][MonthIndex];
+}
+function nameOfSeasonAsString(MonthIndex) {
+  return ["spring", "summer", "fall", "winter"][MonthIndex];
 }
 
 function findCurrentPeriod(b) {
@@ -225,14 +243,16 @@ function updateWeather() {
     document.getElementById("weather").textContent = weather;
   }
 }
+function noWeather() {
+  document.getElementById("temp").textContent = "20" + date.getYear() % 100;
+  document.getElementById("weather").textContent = nameOfSeasonAsString(Math.floor(date.getMonth() / 4));
+}
 
 //**************************************************
 //main repeating loop
 function update() {
   date = new Date();
-  todayMinutes = 700; //date.getHours() * 60 + date.getMinutes();
-  // startMinutes = todayMinutes - MinutesInDay / 2;
-  drawDigitalClock(date);
+  todayMinutes = date.getHours() * 60 + date.getMinutes();
   drawCurrentPeriod(schedule[schedule.current]);
   moveSVGPeriods(schedule[schedule.current]);
 }
@@ -240,11 +260,15 @@ function update() {
 //run once at start, then run when the next minute begins, then run every minute.
 schedule.setCurrentByDate();
 update();
+drawDigitalClock();
+noWeather();
 updateWeather();
+window.setInterval(drawDigitalClock, 100); //update every 1/10 of second
+// window.setInterval(updateWeather, 10 * 60 * 1000); //update weather every 10 min
+
 setTimeout(function() {
-  update();
-  window.setInterval(update, 60 * 1000); //update every minute
   window.setInterval(updateWeather, 10 * 60 * 1000); //update weather every 10 min
+  window.setInterval(update, 60 * 1000); //update every minute
 }, (60 - date.getSeconds()) * 1000);
 
 window.addEventListener("focus", function() {

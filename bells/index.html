@@ -11,21 +11,21 @@
 </head>
 
 <body>
-	<svg viewBox="0 0 200 100" font-weight='300' font-family="Roboto">
+	<svg viewBox="0 0 200 100" font-family="Roboto">
 		<!-- <g id="grid" stroke="#004a4a" transform="translate(-50,-100) scale(0.08)">
 			<line x1="0" y1="1250" x2="9000" y2="1250" style="stroke-dasharray:1,48,1,0;stroke-width:9000;" />
 			<line x1="2000" y1="0" x2="2000" y2="9000" style="stroke-dasharray:1,48,1,0;stroke-width:9000;" />
 		</g> -->
-		<g fill='#0ff'>
-			<text id="time" x="100" y="0" font-weight='100' font-size='40px' text-anchor="middle" alignment-baseline="hanging"></text>
+		<g fill='#333' font-weight='100'>
+			<text id="time" x="100" y="2" font-weight='100' font-size='32px' text-anchor="middle" alignment-baseline="hanging" onclick="toggleShowSeconds()"></text>
 			<text id="week-day" x="5" y="3" font-size='12px' text-anchor="start" alignment-baseline="hanging"></text>
 			<text id="date" x="5" y="17" font-size='12px' text-anchor="start" alignment-baseline="hanging"></text>
 			<text id="weather" x="195" y="3" font-size='9px' text-anchor="end" alignment-baseline="hanging"></text>
 			<text id="temp" x="195" y="16" font-size='13px' text-anchor="end" alignment-baseline="hanging"></text>
 			<text id="period" x="100" y="70" font-size='8px' text-anchor="middle" alignment-baseline="hanging"></text>
 		</g>
-		<g onclick="schedule.cycleCurrent()">
-			<g transform="translate(0,80) scale(1)" class='period' stroke='#0ff' stroke-width='0.2'>
+		<g onclick="schedule.cycleCurrent()" font-weight='300'>
+			<g transform="translate(0,80) scale(1)" class='period' stroke='#333' stroke-width='0.2'>
 				<rect id="0" x="0" y="0" width="0" height="10" />
 				<rect id="1" x="0" y="0" width="0" height="10" />
 				<rect id="2" x="0" y="0" width="0" height="10" />
@@ -45,9 +45,9 @@
 				<rect id="16" x="0" y="0" width="0" height="10" />
 				<rect id="17" x="0" y="0" width="0" height="10" />
 			</g>
-			<text id="schedule" x="0.3" y="84.2" text-anchor="start" font-size='2px' fill="#0ff"></text>
-			<text id="schedule" x="0.3" y="86.2" text-anchor="start" font-size='2px' fill="#0ff">schedule</text>
-			<g transform="translate(0,85) scale(1)" font-size='3px' text-anchor="middle" fill="#0ff">
+			<text id="schedule" x="0.3" y="84.2" text-anchor="start" font-size='2px' fill="#333"></text>
+			<text id="schedule" x="0.3" y="86.2" text-anchor="start" font-size='2px' fill="#333">schedule</text>
+			<g transform="translate(0,85) scale(1)" font-size='3px' text-anchor="middle" fill="#333">
 				<text id="n0" x="0" y="0" alignment-baseline="middle"></text>
 				<text id="n1" x="0" y="0" alignment-baseline="middle"></text>
 				<text id="n2" x="0" y="0" alignment-baseline="middle"></text>

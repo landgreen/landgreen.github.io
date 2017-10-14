@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto:100,300");
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400");
 
 body {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   margin: 0;
   overflow: hidden;
-  background-color: #333;
+  background-color: #fff;
   user-select: none;
   /*cursor: crosshair;*/
 }
