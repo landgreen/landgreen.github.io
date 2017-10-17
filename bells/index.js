@@ -7,8 +7,8 @@ let date = new Date();
 const MinutesInDay = 7 * 60 + 20 + 20;
 const scale = 200 / MinutesInDay;
 const color = {
-  passing: "#ddd",
   period: "#fff",
+  passing: "#ddd",
   lunch: "#ddd"
 };
 const schedule = {
@@ -35,7 +35,7 @@ const schedule = {
     { start: 7 * 60 + 30, long: 60, name: "P1", showName: true, fill: color.period },
     { start: 8 * 60 + 30, long: 3, name: "passing", showName: false, fill: color.passing },
     { start: 8 * 60 + 33, long: 60, name: "P2", showName: true, fill: color.period },
-    { start: 9 * 60 + 33, long: 15, name: "brunch", showName: false, fill: color.lunch },
+    { start: 9 * 60 + 33, long: 15, name: "snack", showName: false, fill: color.lunch },
     { start: 9 * 60 + 48, long: 3, name: "passing", showName: false, fill: color.passing },
     { start: 9 * 60 + 51, long: 60, name: "P3", showName: true, fill: color.period },
     { start: 10 * 60 + 51, long: 3, name: "passing", showName: false, fill: color.passing },
@@ -52,7 +52,7 @@ const schedule = {
     { start: 7 * 60 + 30, long: 55, name: "P1", showName: true, fill: color.period },
     { start: 8 * 60 + 25, long: 3, name: "passing", showName: false, fill: color.passing },
     { start: 8 * 60 + 28, long: 55, name: "P2", showName: true, fill: color.period },
-    { start: 9 * 60 + 23, long: 15, name: "brunch", showName: false, fill: color.lunch },
+    { start: 9 * 60 + 23, long: 15, name: "snack", showName: false, fill: color.lunch },
     { start: 9 * 60 + 38, long: 3, name: "passing", showName: false, fill: color.passing },
     { start: 9 * 60 + 41, long: 26, name: "A", showName: true, fill: color.period },
     { start: 10 * 60 + 07, long: 3, name: "passing", showName: false, fill: color.passing },
@@ -71,7 +71,7 @@ const schedule = {
     { start: 7 * 60 + 30, long: 50, name: "P1", showName: true, fill: color.period },
     { start: 8 * 60 + 20, long: 3, name: "passing", showName: false, fill: color.passing },
     { start: 8 * 60 + 23, long: 50, name: "P2", showName: true, fill: color.period },
-    { start: 9 * 60 + 13, long: 15, name: "brunch", showName: false, fill: color.lunch },
+    { start: 9 * 60 + 13, long: 15, name: "snack", showName: false, fill: color.lunch },
     { start: 9 * 60 + 28, long: 3, name: "passing", showName: false, fill: color.passing },
     { start: 9 * 60 + 31, long: 50, name: "P3", showName: true, fill: color.period },
     { start: 10 * 60 + 21, long: 3, name: "passing", showName: false, fill: color.passing },
@@ -164,7 +164,7 @@ function moveSVGPeriods(b) {
     }
   }
   //draw current time
-  let path1 = `M${(todayMinutes - startMinutes) * scale} 79 v12`;
+  let path1 = `M${(todayMinutes - startMinutes) * scale} -2 v19`;
   document.getElementById("now").setAttribute("d", path1);
   //focus path
   let focus = 3;
@@ -260,13 +260,14 @@ function update() {
 //run once at start, then run when the next minute begins, then run every minute.
 schedule.setCurrentByDate();
 update();
-drawDigitalClock();
 noWeather();
 updateWeather();
+drawDigitalClock();
 window.setInterval(drawDigitalClock, 100); //update every 1/10 of second
 // window.setInterval(updateWeather, 10 * 60 * 1000); //update weather every 10 min
 
 setTimeout(function() {
+  update();
   window.setInterval(updateWeather, 10 * 60 * 1000); //update weather every 10 min
   window.setInterval(update, 60 * 1000); //update every minute
 }, (60 - date.getSeconds()) * 1000);
