@@ -15,54 +15,72 @@
 		<g fill='#333' font-weight='100'>
 			<text id="time" x="100" y="2" font-weight='100' font-size='50px' text-anchor="middle" alignment-baseline="hanging" onclick="toggleShowSeconds()"></text>
 			<text id="week-day" x="1" y="53" font-size='12px' text-anchor="start" alignment-baseline="hanging"></text>
-			<text id="date" x="1" y="67" font-size='12px' text-anchor="start" alignment-baseline="hanging"></text>
-			<text id="weather" x="199" y="53" font-size='9px' text-anchor="end" alignment-baseline="hanging"></text>
-			<text id="temp" x="199" y="66" font-size='13px' text-anchor="end" alignment-baseline="hanging"></text>
-			<text id="period" x="100" y="67" font-size='12px' text-anchor="middle" alignment-baseline="hanging"></text>
+			<text id="date" x="1" y="67" font-size='11px' text-anchor="start" alignment-baseline="hanging"></text>
+			<text id="weather" x="199" y="53" font-size='8px' text-anchor="end" alignment-baseline="hanging"></text>
+			<text id="temp" x="199" y="66" font-size='11px' text-anchor="end" alignment-baseline="hanging"></text>
+			<text id="period" x="100" y="67" font-size='11px' text-anchor="middle" alignment-baseline="hanging"></text>
 		</g>
 		<g transform="translate(0,82)" onclick="schedule.cycleCurrent()" font-weight='300'>
 			<g class='period' stroke='#333' stroke-width='0.15'>
-				<rect id="0" x="0" y="0" width="0" height="15" />
-				<rect id="1" x="0" y="0" width="0" height="15" />
-				<rect id="2" x="0" y="0" width="0" height="15" />
-				<rect id="3" x="0" y="0" width="0" height="15" />
-				<rect id="4" x="0" y="0" width="0" height="15" />
-				<rect id="5" x="0" y="0" width="0" height="15" />
-				<rect id="6" x="0" y="0" width="0" height="15" />
-				<rect id="7" x="0" y="0" width="0" height="15" />
-				<rect id="8" x="0" y="0" width="0" height="15" />
-				<rect id="9" x="0" y="0" width="0" height="15" />
-				<rect id="10" x="0" y="0" width="0" height="15" />
-				<rect id="11" x="0" y="0" width="0" height="15" />
-				<rect id="12" x="0" y="0" width="0" height="15" />
-				<rect id="13" x="0" y="0" width="0" height="15" />
-				<rect id="14" x="0" y="0" width="0" height="15" />
-				<rect id="15" x="0" y="0" width="0" height="15" />
-				<rect id="16" x="0" y="0" width="0" height="15" />
-				<rect id="17" x="0" y="0" width="0" height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="0" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="1" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="2" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="3" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="4" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="5" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="6" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="7" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="8" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="9" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="10" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="11" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="12" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="13" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="14" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="15" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="16" x="0" y="0" width="0"
+				 height="15" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="17" x="0" y="0" width="0"
+				 height="15" />
 			</g>
 			<path id='now' fill='none' stroke='#f05' stroke-width='0.5' stroke-linecap="round" opacity='1' d="" />
-			<text id="schedule" x="0.3" y="6.9" text-anchor="start" font-size='2px' fill="#333"></text>
-			<text id="schedule" x="0.3" y="8.9" text-anchor="start" font-size='2px' fill="#333">schedule</text>
+			<text id="schedule" x="0.3" y="16.9" text-anchor="start" font-size='2px' fill="#333"></text>
+			<!-- <text id="schedule" x="0.3" y="8.9" text-anchor="start" font-size='2px' fill="#333">schedule</text> -->
 			<g transform="translate(0,7.5)" font-size='3px' text-anchor="middle" fill="#333">
-				<text id="n0" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n1" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n2" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n3" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n4" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n5" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n6" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n7" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n8" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n9" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n10" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n11" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n12" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n13" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n14" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n15" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n16" x="0" y="0" alignment-baseline="middle"></text>
-				<text id="n17" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n0" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n1" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n2" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n3" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n4" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n5" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n6" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n7" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n8" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n9" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n10" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n11" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n12" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n13" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n14" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n15" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n16" x="0" y="0" alignment-baseline="middle"></text>
+				<text onmouseover="enterBlock(this)" id="n17" x="0" y="0" alignment-baseline="middle"></text>
 			</g>
 			<!-- <path id='focus' fill='none' stroke='#000' stroke-linejoin="round" stroke-linecap="round" stroke-width='0.2' d="" /> -->
 

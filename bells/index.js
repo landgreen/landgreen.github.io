@@ -2,8 +2,11 @@
 
 let todayMinutes = 0;
 let startMinutes = 430;
-let showSeconds = false;
+// let showSeconds = false;
+// let isStopwatch = false;
+let timeMode = 0;
 let date = new Date();
+let stopwatchStart;
 const MinutesInDay = 7 * 60 + 20 + 20;
 const scale = 200 / MinutesInDay;
 const color = {
@@ -13,6 +16,7 @@ const color = {
 };
 const schedule = {
   current: "regular",
+  mouse: 0,
   setCurrentByDate: function() {
     if (date.getDay() === 5) {
       schedule.current = "advisory";
@@ -31,7 +35,7 @@ const schedule = {
     update();
   },
   regular: [
-    { start: 0, long: 7 * 60 + 30, name: "before school", showName: false, fill: color.passing },
+    { start: 0, long: 7 * 60 + 30, name: "morning", showName: false, fill: color.passing },
     { start: 7 * 60 + 30, long: 60, name: "P1", showName: true, fill: color.period },
     { start: 8 * 60 + 30, long: 3, name: "passing", showName: false, fill: color.passing },
     { start: 8 * 60 + 33, long: 60, name: "P2", showName: true, fill: color.period },
@@ -45,10 +49,10 @@ const schedule = {
     { start: 12 * 60 + 27, long: 60, name: "P5", showName: true, fill: color.period },
     { start: 13 * 60 + 27, long: 3, name: "passing", showName: false, fill: color.passing },
     { start: 13 * 60 + 30, long: 60, name: "P6", showName: true, fill: color.period },
-    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "after school", showName: false, fill: color.passing }
+    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "afternoon", showName: false, fill: color.passing }
   ],
   advisory: [
-    { start: 0, long: 7 * 60 + 30, name: "before school", showName: false, fill: color.passing },
+    { start: 0, long: 7 * 60 + 30, name: "morning", showName: false, fill: color.passing },
     { start: 7 * 60 + 30, long: 55, name: "P1", showName: true, fill: color.period },
     { start: 8 * 60 + 25, long: 3, name: "passing", showName: false, fill: color.passing },
     { start: 8 * 60 + 28, long: 55, name: "P2", showName: true, fill: color.period },
@@ -64,10 +68,10 @@ const schedule = {
     { start: 12 * 60 + 33, long: 58, name: "P5", showName: true, fill: color.period },
     { start: 13 * 60 + 31, long: 3, name: "passing", showName: false, fill: color.passing },
     { start: 13 * 60 + 34, long: 56, name: "P6", showName: true, fill: color.period },
-    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "after school", showName: false, fill: color.passing }
+    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "afternoon", showName: false, fill: color.passing }
   ],
   rally: [
-    { start: 0, long: 7 * 60 + 30, name: "before school", showName: false, fill: color.passing },
+    { start: 0, long: 7 * 60 + 30, name: "morning", showName: false, fill: color.passing },
     { start: 7 * 60 + 30, long: 50, name: "P1", showName: true, fill: color.period },
     { start: 8 * 60 + 20, long: 3, name: "passing", showName: false, fill: color.passing },
     { start: 8 * 60 + 23, long: 50, name: "P2", showName: true, fill: color.period },
@@ -82,29 +86,38 @@ const schedule = {
     { start: 12 * 60 + 37, long: 3, name: "passing", showName: false, fill: color.passing },
     { start: 12 * 60 + 40, long: 50, name: "P6", showName: true, fill: color.period },
     { start: 13 * 60 + 30, long: 60, name: "Rally", showName: true, fill: color.period },
-    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "after school", showName: false, fill: color.passing }
+    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "afternoon", showName: false, fill: color.passing }
   ]
 };
 
 function toggleShowSeconds() {
-  if (showSeconds) {
-    showSeconds = false;
-  } else {
-    showSeconds = true;
+  timeMode++;
+  if (timeMode > 2) {
+    timeMode = 0;
+  } else if (timeMode === 2) {
+    stopwatchStart = Date.now();
   }
 }
 function drawDigitalClock() {
   date = new Date();
-  if (showSeconds) {
+  document.getElementById("week-day").textContent = `${dayOfWeekAsString(date.getDay())}`;
+  // document.getElementById("date").textContent = `${date.getDate()}.${date.getMonth()}.20${date.getYear() % 100}`;
+  document.getElementById("date").textContent = nameOfMonthAsString(date.getMonth()) + " " + date.getDate();
+
+  if (timeMode === 0) {
+    //time no seconds
+    document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`;
+  } else if (timeMode === 1) {
+    //time with seconds
     document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10
       ? "0" + date.getMinutes()
       : date.getMinutes()}:${date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()}`;
   } else {
-    document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`;
+    //stopwatch
+    let end = Date.now();
+    let d = new Date(end - stopwatchStart);
+    document.getElementById("time").textContent = d.toLocaleTimeString("en-GB").slice(3, 8);
   }
-  document.getElementById("week-day").textContent = `${dayOfWeekAsString(date.getDay())}`;
-  // document.getElementById("date").textContent = `${date.getDate()}.${date.getMonth()}.20${date.getYear() % 100}`;
-  document.getElementById("date").textContent = nameOfMonthAsString(date.getMonth()) + " " + date.getDate();
 }
 
 function dayOfWeekAsString(dayIndex) {
@@ -141,6 +154,27 @@ function drawCurrentPeriod(b) {
   if (endTime.minute < 10) endTime.minute = "0" + endTime.minute; //add zero for single digit minutes
   document.getElementById("period").textContent = period.name + " " + startTime.hour + ":" + startTime.minute + " - " + endTime.hour + ":" + endTime.minute;
   // document.getElementById("period-time").textContent = startTime + " - " + endTime;
+  document.getElementById(schedule.mouse).setAttribute("fill", schedule[schedule.current][schedule.mouse].fill);
+}
+function enterBlock(target) {
+  let id = target.id;
+  if (id.charAt(0) === "n") {
+    id = id.substr(1);
+  }
+  schedule.mouse = id;
+  period = schedule[schedule.current][id];
+  let startTime = {
+    hour: Math.floor((period.start / 60 - 1) % 12 + 1),
+    minute: period.start % 60
+  };
+  if (startTime.minute < 10) startTime.minute = "0" + startTime.minute; //add zero for single digit minutes
+  let endTime = {
+    hour: Math.floor(((period.start + period.long) / 60 - 1) % 12 + 1),
+    minute: (period.start + period.long) % 60
+  };
+  if (endTime.minute < 10) endTime.minute = "0" + endTime.minute; //add zero for single digit minutes
+  document.getElementById("period").textContent = period.name + " " + startTime.hour + ":" + startTime.minute + " - " + endTime.hour + ":" + endTime.minute;
+  document.getElementById(id).setAttribute("fill", "#eef");
 }
 
 function moveSVGPeriods(b) {
