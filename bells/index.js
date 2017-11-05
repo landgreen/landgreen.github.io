@@ -1,14 +1,14 @@
 //http://newwestcharter.org/high-school-daily-bell-schedule/
 
 let todayMinutes = 0;
-let startMinutes = 430;
-// let showSeconds = false;
-// let isStopwatch = false;
+let startMinutes = 440;
 let timeMode = 0;
 let date = new Date();
 let stopwatchStart;
-const MinutesInDay = 7 * 60 + 20 + 20;
-const scale = 200 / MinutesInDay;
+const MinutesInDay = 7 * 60 + 10 + 10;
+let scale = 200 / MinutesInDay * 2.5;
+let centerOnNow = true;
+
 const color = {
   period: "#fff",
   passing: "#ddd",
@@ -35,62 +35,62 @@ const schedule = {
     update();
   },
   regular: [
-    { start: 0, long: 7 * 60 + 30, name: "morning", showName: false, fill: color.passing },
+    { start: 0, long: 7 * 60 + 30, name: "", showName: false, fill: color.passing },
     { start: 7 * 60 + 30, long: 60, name: "P1", showName: true, fill: color.period },
-    { start: 8 * 60 + 30, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 8 * 60 + 30, long: 3, name: "", showName: false, fill: color.passing },
     { start: 8 * 60 + 33, long: 60, name: "P2", showName: true, fill: color.period },
     { start: 9 * 60 + 33, long: 15, name: "snack", showName: false, fill: color.lunch },
-    { start: 9 * 60 + 48, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 9 * 60 + 48, long: 3, name: "", showName: false, fill: color.passing },
     { start: 9 * 60 + 51, long: 60, name: "P3", showName: true, fill: color.period },
-    { start: 10 * 60 + 51, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 10 * 60 + 51, long: 3, name: "", showName: false, fill: color.passing },
     { start: 10 * 60 + 54, long: 60, name: "P4", showName: true, fill: color.period },
     { start: 11 * 60 + 54, long: 30, name: "lunch", showName: false, fill: color.lunch },
-    { start: 12 * 60 + 24, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 12 * 60 + 24, long: 3, name: "", showName: false, fill: color.passing },
     { start: 12 * 60 + 27, long: 60, name: "P5", showName: true, fill: color.period },
-    { start: 13 * 60 + 27, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 13 * 60 + 27, long: 3, name: "", showName: false, fill: color.passing },
     { start: 13 * 60 + 30, long: 60, name: "P6", showName: true, fill: color.period },
-    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "afternoon", showName: false, fill: color.passing }
+    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "", showName: false, fill: color.passing }
   ],
   advisory: [
-    { start: 0, long: 7 * 60 + 30, name: "morning", showName: false, fill: color.passing },
+    { start: 0, long: 7 * 60 + 30, name: "", showName: false, fill: color.passing },
     { start: 7 * 60 + 30, long: 55, name: "P1", showName: true, fill: color.period },
-    { start: 8 * 60 + 25, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 8 * 60 + 25, long: 3, name: "", showName: false, fill: color.passing },
     { start: 8 * 60 + 28, long: 55, name: "P2", showName: true, fill: color.period },
     { start: 9 * 60 + 23, long: 15, name: "snack", showName: false, fill: color.lunch },
-    { start: 9 * 60 + 38, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 9 * 60 + 38, long: 3, name: "", showName: false, fill: color.passing },
     { start: 9 * 60 + 41, long: 26, name: "A", showName: true, fill: color.period },
-    { start: 10 * 60 + 07, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 10 * 60 + 07, long: 3, name: "", showName: false, fill: color.passing },
     { start: 10 * 60 + 10, long: 55, name: "P3", showName: true, fill: color.period },
-    { start: 11 * 60 + 5, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 11 * 60 + 5, long: 3, name: "", showName: false, fill: color.passing },
     { start: 11 * 60 + 8, long: 55, name: "P4", showName: true, fill: color.period },
     { start: 12 * 60 + 03, long: 27, name: "lunch", showName: false, fill: color.lunch },
-    { start: 12 * 60 + 30, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 12 * 60 + 30, long: 3, name: "", showName: false, fill: color.passing },
     { start: 12 * 60 + 33, long: 58, name: "P5", showName: true, fill: color.period },
-    { start: 13 * 60 + 31, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 13 * 60 + 31, long: 3, name: "", showName: false, fill: color.passing },
     { start: 13 * 60 + 34, long: 56, name: "P6", showName: true, fill: color.period },
-    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "afternoon", showName: false, fill: color.passing }
+    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "", showName: false, fill: color.passing }
   ],
   rally: [
-    { start: 0, long: 7 * 60 + 30, name: "morning", showName: false, fill: color.passing },
+    { start: 0, long: 7 * 60 + 30, name: "", showName: false, fill: color.passing },
     { start: 7 * 60 + 30, long: 50, name: "P1", showName: true, fill: color.period },
-    { start: 8 * 60 + 20, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 8 * 60 + 20, long: 3, name: "", showName: false, fill: color.passing },
     { start: 8 * 60 + 23, long: 50, name: "P2", showName: true, fill: color.period },
     { start: 9 * 60 + 13, long: 15, name: "snack", showName: false, fill: color.lunch },
-    { start: 9 * 60 + 28, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 9 * 60 + 28, long: 3, name: "", showName: false, fill: color.passing },
     { start: 9 * 60 + 31, long: 50, name: "P3", showName: true, fill: color.period },
-    { start: 10 * 60 + 21, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 10 * 60 + 21, long: 3, name: "", showName: false, fill: color.passing },
     { start: 10 * 60 + 24, long: 50, name: "P4", showName: true, fill: color.period },
     { start: 11 * 60 + 14, long: 30, name: "lunch", showName: false, fill: color.lunch },
-    { start: 11 * 60 + 44, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 11 * 60 + 44, long: 3, name: "", showName: false, fill: color.passing },
     { start: 11 * 60 + 47, long: 50, name: "P5", showName: true, fill: color.period },
-    { start: 12 * 60 + 37, long: 3, name: "passing", showName: false, fill: color.passing },
+    { start: 12 * 60 + 37, long: 3, name: "", showName: false, fill: color.passing },
     { start: 12 * 60 + 40, long: 50, name: "P6", showName: true, fill: color.period },
     { start: 13 * 60 + 30, long: 60, name: "Rally", showName: true, fill: color.period },
-    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "afternoon", showName: false, fill: color.passing }
+    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "", showName: false, fill: color.passing }
   ]
 };
 
-function toggleShowSeconds() {
+function toggleMode() {
   timeMode++;
   if (timeMode > 2) {
     timeMode = 0;
@@ -103,21 +103,43 @@ function drawDigitalClock() {
   document.getElementById("week-day").textContent = `${dayOfWeekAsString(date.getDay())}`;
   // document.getElementById("date").textContent = `${date.getDate()}.${date.getMonth()}.20${date.getYear() % 100}`;
   document.getElementById("date").textContent = nameOfMonthAsString(date.getMonth()) + " " + date.getDate();
-
+  // document.getElementById("analogClock").setAttribute("visibility", "hidden");
   if (timeMode === 0) {
-    //time no seconds
+    //time no seconds   ⁚:∶
     document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`;
   } else if (timeMode === 1) {
     //time with seconds
     document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10
       ? "0" + date.getMinutes()
       : date.getMinutes()}:${date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()}`;
-  } else {
+  } else if (timeMode === 2) {
     //stopwatch
     let end = Date.now();
     let d = new Date(end - stopwatchStart);
     document.getElementById("time").textContent = d.toLocaleTimeString("en-GB").slice(3, 8);
   }
+  // else {
+  //   document.getElementById("time").textContent = "";
+  //   //analog clock
+  //   let seconds = date.getHours() * 60 * 60 + date.getMinutes() * 60 + date.getSeconds() + date.getMilliseconds() / 1000;
+  //   // console.log(seconds);
+  //   //hours
+  //   let h = (seconds / 60 / 60) % 12;
+  //   h = h / 12 * 2 * Math.PI - Math.PI / 2;
+  //   document.getElementById("clock-hours").setAttribute("x2", 15 * Math.cos(h));
+  //   document.getElementById("clock-hours").setAttribute("y2", 15 * Math.sin(h));
+  //   //minutes
+  //   let m = (seconds / 60) % 60;
+  //   m = m / 60 * 2 * Math.PI - Math.PI / 2;
+  //   document.getElementById("clock-minutes").setAttribute("x2", 24 * Math.cos(m));
+  //   document.getElementById("clock-minutes").setAttribute("y2", 24 * Math.sin(m));
+  //   //seconds
+  //   let s = seconds % 60;
+  //   s = s / 60 * 2 * Math.PI - Math.PI / 2;
+  //   document.getElementById("clock-seconds").setAttribute("x2", 30 * Math.cos(s));
+  //   document.getElementById("clock-seconds").setAttribute("y2", 30 * Math.sin(s));
+  //   document.getElementById("analogClock").setAttribute("visibility", "visible");
+  // }
 }
 
 function dayOfWeekAsString(dayIndex) {
@@ -173,13 +195,21 @@ function enterBlock(target) {
     minute: (period.start + period.long) % 60
   };
   if (endTime.minute < 10) endTime.minute = "0" + endTime.minute; //add zero for single digit minutes
-  document.getElementById("period").textContent = period.name + " " + startTime.hour + ":" + startTime.minute + " - " + endTime.hour + ":" + endTime.minute;
-  document.getElementById(id).setAttribute("fill", "#eef");
+  // document.getElementById("period").textContent = period.name + " " + startTime.hour + ":" + startTime.minute + " - " + endTime.hour + ":" + endTime.minute;
+  document.getElementById("period").textContent = startTime.hour + ":" + startTime.minute + " - " + endTime.hour + ":" + endTime.minute;
+  document.getElementById(id).setAttribute("fill", "#bff");
 }
 
 function moveSVGPeriods(b) {
+  //center on current time
+  if (centerOnNow) {
+    document.getElementById("period-zone").setAttribute("transform", "translate(" + (100 - (todayMinutes - startMinutes) * scale) + ",77)");
+    // document.getElementById("period-zone").setAttribute("transform", "translate(" + (50 - (todayMinutes - startMinutes) * scale) + ",77)");
+  } else {
+    document.getElementById("period-zone").setAttribute("transform", "translate(0,77)");
+  }
   //schedule title
-  document.getElementById("schedule").textContent = schedule.current;
+  document.getElementById("schedule").textContent = schedule.current + " schedule";
   // hide all periods
   for (let i = 0, len = 17; i < len; ++i) {
     document.getElementById(i).setAttribute("width", 0);
@@ -197,11 +227,12 @@ function moveSVGPeriods(b) {
       document.getElementById("n" + i).setAttribute("x", (b[i].start + b[i].long / 2 - startMinutes) * scale);
     }
   }
-  //draw current time
-  let path1 = `M${(todayMinutes - startMinutes) * scale} -2 v19`;
+  //draw line for current time
+  let path1 = `M${(todayMinutes - startMinutes) * scale} -2 v24`;
   document.getElementById("now").setAttribute("d", path1);
+
   //focus path
-  let focus = 3;
+  // let focus = 3;
   //don't draw focus if after school or before school
   // if (focus !== 0 && focus !== b.length - 1) {
   //   const X = (b[focus].start - startMinutes) * scale;
@@ -216,6 +247,17 @@ function moveSVGPeriods(b) {
   //   // L10 65 v-20 h 180 v20 h -180 h180 L${X + WIDTH} ${Y} `;
   //   document.getElementById("focus").setAttribute("d", path);
   // }
+}
+
+function toggleZoom() {
+  if (centerOnNow) {
+    centerOnNow = false;
+    scale = 200 / MinutesInDay;
+  } else {
+    centerOnNow = true;
+    scale = 200 / MinutesInDay * 2.5;
+  }
+  moveSVGPeriods(schedule[schedule.current]);
 }
 
 //**************************************************
@@ -287,6 +329,9 @@ function noWeather() {
 function update() {
   date = new Date();
   todayMinutes = date.getHours() * 60 + date.getMinutes();
+  // todayMinutes = Math.round(450 + Math.random() * 420); //set to random time during class
+  // todayMinutes = 7.5 * 60;
+  // todayMinutes = 14.5 * 60;
   drawCurrentPeriod(schedule[schedule.current]);
   moveSVGPeriods(schedule[schedule.current]);
 }
@@ -297,7 +342,8 @@ update();
 noWeather();
 updateWeather();
 drawDigitalClock();
-window.setInterval(drawDigitalClock, 100); //update every 1/10 of second
+
+// window.setInterval(drawDigitalClock, 100); //update every 1/10 of second
 // window.setInterval(updateWeather, 10 * 60 * 1000); //update weather every 10 min
 
 setTimeout(function() {
@@ -309,3 +355,9 @@ setTimeout(function() {
 window.addEventListener("focus", function() {
   update();
 });
+
+const cycle = function() {
+  drawDigitalClock();
+  window.requestAnimationFrame(cycle);
+};
+window.requestAnimationFrame(cycle);

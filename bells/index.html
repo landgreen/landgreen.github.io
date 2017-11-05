@@ -11,58 +11,83 @@
 </head>
 
 <body>
-	<svg viewBox="0 0 200 100" font-family="Roboto">
-		<g fill='#333' font-weight='100'>
-			<text id="time" x="100" y="2" font-weight='100' font-size='50px' text-anchor="middle" alignment-baseline="hanging" onclick="toggleShowSeconds()"></text>
-			<text id="week-day" x="1" y="53" font-size='12px' text-anchor="start" alignment-baseline="hanging"></text>
-			<text id="date" x="1" y="67" font-size='11px' text-anchor="start" alignment-baseline="hanging"></text>
-			<text id="weather" x="199" y="53" font-size='8px' text-anchor="end" alignment-baseline="hanging"></text>
-			<text id="temp" x="199" y="66" font-size='11px' text-anchor="end" alignment-baseline="hanging"></text>
-			<text id="period" x="100" y="67" font-size='11px' text-anchor="middle" alignment-baseline="hanging"></text>
+	<svg viewBox="0 0 200 100" fill="#222">
+		<!-- <g id='analogClock' onclick="toggleMode()" fill='none' stroke='#333' stroke-width="0.3" stroke-linecap="round" transform="translate(100,32) scale(0.9)">
+			<circle cx="0" cy="0" r="32" fill='f6f6f6' />
+			<line id="clock-hours" x1="0" y1="0" x2="50" y2="0" stroke-width="1" stroke='#333' />
+			<line id="clock-minutes" x1="0" y1="0" x2="50" y2="0" stroke-width="0.6" stroke='#333' />
+			<line id="clock-seconds" x1="0" y1="0" x2="50" y2="0" stroke-width="0.3" stroke='#666' />
+			<circle cx="0" cy="0" r="1" fill='#333' stroke='none' />
+			<g stroke-width="0.3" stroke='#333' stroke-linecap="butt">
+				<line x1="30" y1="0" x2="32" y2="0" />
+				<line x1="-32" y1="0" x2="-30" y2="0" />
+				<line x1="0" y1="-32" x2="0" y2="-30" />
+				<line x1="0" y1="30" x2="0" y2="32" />
+				<g stroke-width="0.2">
+					<line x1="27.7" y1="16" x2="26.84" y2="15.5" />
+					<line x1="-27.7" y1="-16" x2="-26.84" y2="-15.5" />
+					<line x1="16" y1="27.7" x2="15.5" y2="26.7" />
+					<line x1="-16" y1="-27.7" x2="-15.5" y2="-26.7" />
+					<line x1="-27.7" y1="16" x2="-26.84" y2="15.5" />
+					<line x1="27.7" y1="-16" x2="26.84" y2="-15.5" />
+					<line x1="16" y1="-27.7" x2="15.5" y2="-26.7" />
+					<line x1="-16" y1="27.7" x2="-15.5" y2="26.7" />
+				</g>
+
+			</g>
+		</g> -->
+		<g font-weight='100'>
+			<text id="time" x="100" y="2" font-size='55px' text-anchor="middle" alignment-baseline="hanging" onclick="toggleMode()"></text>
+			<text id="week-day" x="1" y="61" font-size='11px' text-anchor="start" alignment-baseline="baseline"></text>
+			<text id="date" x="1" y="74" font-size='11px' text-anchor="start" alignment-baseline="baseline"></text>
+			<a href="https://www.google.com/search?q=weather" target="_blank">
+				<text id="weather" x="199" y="61" font-size='7px' text-anchor="end" alignment-baseline="baseline"></text>
+				<text id="temp" x="199" y="74" font-size='11px' text-anchor="end" alignment-baseline="baseline"></text>
+			</a>
+			<text id="period" x="100" y="74" font-size='15px' text-anchor="middle" alignment-baseline="baseline"></text>
 		</g>
-		<g transform="translate(0,82)" onclick="schedule.cycleCurrent()" font-weight='300'>
+		<g id="period-zone" transform="translate(0,77)" onclick="toggleZoom()" font-weight='300'>
+			<!-- translate changed with centering in js -->
 			<g class='period' stroke='#333' stroke-width='0.15'>
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="0" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="1" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="2" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="3" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="4" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="5" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="6" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="7" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="8" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="9" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="10" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="11" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="12" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="13" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="14" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="15" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="16" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="17" x="0" y="0" width="0"
-				 height="15" />
+				 height="20" />
 			</g>
-			<path id='now' fill='none' stroke='#f05' stroke-width='0.5' stroke-linecap="round" opacity='1' d="" />
-			<text id="schedule" x="0.3" y="16.9" text-anchor="start" font-size='2px' fill="#333"></text>
-			<!-- <text id="schedule" x="0.3" y="8.9" text-anchor="start" font-size='2px' fill="#333">schedule</text> -->
-			<g transform="translate(0,7.5)" font-size='3px' text-anchor="middle" fill="#333">
+			<path id='now' fill='none' stroke='#f05' stroke-width='0.5' stroke-linecap="round" d="" />
+			<g transform="translate(0,10.5)" font-size='5px' text-anchor="middle">
 				<text onmouseover="enterBlock(this)" id="n0" x="0" y="0" alignment-baseline="middle"></text>
 				<text onmouseover="enterBlock(this)" id="n1" x="0" y="0" alignment-baseline="middle"></text>
 				<text onmouseover="enterBlock(this)" id="n2" x="0" y="0" alignment-baseline="middle"></text>
@@ -83,8 +108,10 @@
 				<text onmouseover="enterBlock(this)" id="n17" x="0" y="0" alignment-baseline="middle"></text>
 			</g>
 			<!-- <path id='focus' fill='none' stroke='#000' stroke-linejoin="round" stroke-linecap="round" stroke-width='0.2' d="" /> -->
-
 		</g>
+		<!-- target="_blank" href='http://newwestcharter.org/high-school-daily-bell-schedule/' -->
+		<text id="schedule" text-anchor="start" alignment-baseline="baseline" font-size='3px' onclick='schedule.cycleCurrent()' x="0.3"
+		 y="99.5"></text>
 	</svg>
 	<script src="index.js"></script>
 </body>

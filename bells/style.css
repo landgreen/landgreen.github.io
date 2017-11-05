@@ -1,15 +1,17 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400");
+/* @import url("https://fonts.googleapis.com/css?family=Londrina+Shadow"); */
 
 body {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  /* font-family: "Londrina Shadow", cursive; */
+
   margin: 0;
   overflow: hidden;
-  background-color: #fff;
   user-select: none;
   /*cursor: crosshair;*/
 }
 svg {
-  /* background-color: #eee; */
+  /* background-color: #fee; */
   /* user-select: none; */
   position: absolute;
   top: 0;
@@ -17,4 +19,8 @@ svg {
   width: 100%;
   height: 100%;
   z-index: -1;
+}
+
+a {
+  fill: #000;
 }
