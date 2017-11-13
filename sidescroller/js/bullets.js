@@ -143,6 +143,7 @@ const b = {
     // 		World.add(engine.world, cons[i]);
     //     }
     // },
+
     // {
     // 	name: "basic",
     // 	ammo: Infinity,
@@ -167,6 +168,7 @@ const b = {
     // 		};
     // 	}
     // },
+
     // {
     //   name: "plasma arc",
     //   ammo: 0,
@@ -217,6 +219,112 @@ const b = {
     //       this.step = 0;
     //       this.sync = game.cycle + 1;
     //     }
+    //   }
+    // },
+    // {
+    //   name: "plasma arc",
+    //   ammo: 0,
+    //   ammoPack: 200,
+    //   have: false,
+    //   fire: function() {
+    //     const me = bullet.length;
+    //     const dir = mech.angle;
+    //     bullet[me] = Bodies.rectangle(mech.pos.x + 80 * Math.cos(mech.angle), mech.pos.y + 80 * Math.sin(mech.angle), 0.1, 0.1, {
+    //       collisionFilter: {
+    //         category: 0x000000,
+    //         mask: 0x000000
+    //       },
+    //       onDmg: function() {}, //this.endCycle = 0  //triggers de-spawn
+    //       onEnd: function() {}
+    //     });
+    //     mech.fireCDcycle = game.cycle + 30; //cool down
+    //     World.add(engine.world, bullet[me]); //add bullet to world
+
+    //     bullet[me].endCycle = game.cycle + 100;
+    //     bullet[me].step = 0;
+    //     bullet[me].gunIndex = b.activeGun;
+    //     bullet[me].a = mech.angle;
+    //     bullet[me].p = { x: mech.pos.x + 100 * Math.cos(mech.angle), y: mech.pos.y + 100 * Math.sin(mech.angle) };
+    //     // bullet[me].v = { x: player.velocity.x, y: player.velocity.y };
+    //     bullet[me].do = function() {
+    //       this.step++;
+    //some drift
+    // this.p.x += this.v.x / 2;
+    // this.p.y += this.v.y / 2;
+
+    //graphics
+    // const radius = 150;
+    // const pRadius = 50;
+    // const offAngle = 0.5;
+    // ctx.translate(this.p.x, this.p.y);
+    // ctx.beginPath();
+    // ctx.arc(0, 0, 50, 0, 2 * Math.PI);
+    // ctx.fillStyle = "rgba(255,0,100," + (0.6 - this.step * 0.006) + ")";
+    // ctx.fill();
+
+    // var grd = ctx.createRadialGradient(0, 0, pRadius, 0, 0, radius);
+    // grd.addColorStop(0, "rgba(255,50,0,1)");
+    // grd.addColorStop(1, "rgba(255,0,50,0.1)");
+
+    // ctx.fillStyle = grd; //"rgba(255,0,100," + (0.6 - this.step * 0.006) + ")";
+    // ctx.beginPath();
+    // ctx.moveTo(pRadius * Math.cos(this.a - offAngle), pRadius * Math.sin(this.a - offAngle));
+    // // ctx.arc(pRadius * Math.cos(this.a), pRadius * Math.sin(this.a), 50, 0, 2 * Math.PI);
+    // ctx.quadraticCurveTo(
+    //   2 * radius * Math.cos(this.a),
+    //   2 * radius * Math.sin(this.a),
+    //   pRadius * Math.cos(this.a + offAngle),
+    //   pRadius * Math.sin(this.a + offAngle)
+    // );
+    // ctx.fill();
+    // //radius marker remove
+    // ctx.fillStyle = "#000";
+    // ctx.fillRect(radius * Math.cos(this.a), radius * Math.sin(this.a), 3, 3);
+
+    // ctx.translate(-this.p.x, -this.p.y);
+
+    // let startRadius = 40;
+    // let endRadius = 250;
+    // let angleOff = 0.6;
+    // ctx.strokeStyle = "#000";
+    // ctx.fillStyle = "rgba(255,0,100," + (0.3 - this.step * 0.03) + ")";
+    // ctx.beginPath();
+    // ctx.moveTo(this.p.x + startRadius * Math.cos(this.a + angleOff), this.p.y + startRadius * Math.sin(this.a + angleOff));
+    // ctx.lineTo(this.p.x + endRadius * Math.cos(this.a), this.p.y + endRadius * Math.sin(this.a));
+    // ctx.lineTo(this.p.x + startRadius * Math.cos(this.a - angleOff), this.p.y + startRadius * Math.sin(this.a - angleOff));
+    // ctx.fill();
+    // ctx.fillStyle = "rgba(255,0,100," + (0.6 - this.step * 0.06) + ")";
+    // angleOff = 0.3;
+    // ctx.beginPath();
+    // ctx.moveTo(this.p.x + startRadius * Math.cos(this.a + angleOff), this.p.y + startRadius * Math.sin(this.a + angleOff));
+    // ctx.lineTo(this.p.x + 0.7 * endRadius * Math.cos(this.a), this.p.y + 0.7 * endRadius * Math.sin(this.a));
+    // ctx.lineTo(this.p.x + startRadius * Math.cos(this.a - angleOff), this.p.y + startRadius * Math.sin(this.a - angleOff));
+    // ctx.fill();
+
+    // const position = {
+    //   x: mech.pos.x + 40 * Math.cos(mech.angle),
+    //   y: mech.pos.y + 40 * Math.sin(mech.angle)
+    // };
+
+    // ctx.translate(position.x, position.y);
+    // // var grd = ctx.createLinearGradient(0, -20, 50, 20);
+    // // grd.addColorStop(0, "rgba(0, 0, 0, 0)");
+    // // grd.addColorStop(1, "rgba(160, 192, 255, 1)");
+    // ctx.fillStyle = "#000";
+    // ctx.beginPath();
+    // ctx.moveTo(50, 0);
+    // ctx.lineTo(0, 20);
+    // ctx.lineTo(0, -20);
+    // ctx.fill();
+    // ctx.translate(-position.x, -position.y);
+
+    //mob collision
+    // for (let i = 0, len = mob.length; i < len; ++i) {
+    //   if (Matter.Vector.magnitude(Matter.Vector.sub(this.position, mob[i].position)) < 100) {
+    //     console.log("hit");
+    //   }
+    // }
+    //     };
     //   }
     // },
     {
@@ -389,7 +497,7 @@ const b = {
       fire: function() {
         const me = bullet.length;
         playSound("snare2");
-        if (Math.random() > 0.2) mobs.alert(500);
+        // if (Math.random() > 0.2) mobs.alert(500);
         const dir = (Math.random() - 0.5) * 0.15 + mech.angle;
         bullet[me] = Bodies.rectangle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 17, 5, b.fireAttributes(dir));
         b.fireProps(5, 38, dir, me); //cd , speed
@@ -407,7 +515,7 @@ const b = {
       have: false,
       fire: function() {
         playSound("snare2");
-        mobs.alert(650);
+        // mobs.alert(650);
         for (let i = 0; i < 9; i++) {
           const me = bullet.length;
           const dir = (Math.random() - 0.5) * 0.6 + mech.angle;
@@ -609,7 +717,8 @@ const b = {
               // ctx.beginPath();
               // ctx.moveTo(this.position.x, this.position.y);
               // ctx.lineTo(this.close.x, this.close.y);
-              // ctx.strokeStyle = "#2f6";
+              // ctx.strokeStyle = "rgba(40,255,100,0.1)"; //"#2f6";
+              // ctx.lineWidth = 20;
               // ctx.stroke();
               //rotate missile towards the target
               const face = {
@@ -669,6 +778,11 @@ const b = {
           };
           bullet[me].do = function() {
             // this.force.y += this.mass * 0.001
+            //draw
+            // ctx.beginPath();
+            // ctx.arc(this.position.x, this.position.y, 9, 0, 2 * Math.PI);
+            // ctx.fillStyle = "rgba(255,100,0,1)";
+            // ctx.fill();
           };
         }
       }
@@ -697,6 +811,12 @@ const b = {
         };
         bullet[me].do = function() {
           this.force.y += this.mass * 0.0015;
+          //draw explosion outline
+          // ctx.strokeStyle = "rgba(0,0,0,0.5)";
+          // ctx.lineWidth = "0.5";
+          // ctx.beginPath();
+          // ctx.arc(this.position.x, this.position.y, 350, 0, 2 * Math.PI);
+          // ctx.stroke();
         };
       }
     },
@@ -707,11 +827,11 @@ const b = {
       have: false,
       fire: function() {
         playSound("snare2");
-        mobs.alert(800);
+        // mobs.alert(800);
         const me = bullet.length;
         const dir = mech.angle;
-        bullet[me] = Bodies.rectangle(mech.pos.x + 50 * Math.cos(mech.angle), mech.pos.y + 50 * Math.sin(mech.angle), 50, 17, b.fireAttributes(dir));
-        b.fireProps(50, 52, dir, me); //cd , speed
+        bullet[me] = Bodies.rectangle(mech.pos.x + 50 * Math.cos(mech.angle), mech.pos.y + 50 * Math.sin(mech.angle), 54, 20, b.fireAttributes(dir));
+        b.fireProps(60, 54, dir, me); //cd , speed
         bullet[me].endCycle = game.cycle + 180;
         bullet[me].do = function() {
           this.force.y += this.mass * 0.0005;
@@ -725,7 +845,7 @@ const b = {
       have: false,
       fire: function() {
         playSound("snare2");
-        mobs.alert(450);
+        // mobs.alert(450);
         let dir = mech.angle - 0.05;
         for (let i = 0; i < 3; i++) {
           dir += 0.05;

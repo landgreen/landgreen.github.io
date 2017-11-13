@@ -332,7 +332,14 @@ const mech = {
     }
   },
   displayHealth: function() {
-    document.getElementById("health").style.width = Math.floor(300 * this.health) + "px";
+    id = document.getElementById("health");
+    id.style.width = Math.floor(300 * this.health) + "px";
+    //css animation blink if health is low
+    if (this.health < 0.3) {
+      id.classList.add("low-health");
+    } else {
+      id.classList.remove("low-health");
+    }
   },
   addHealth: function(heal) {
     this.health += heal;
@@ -473,7 +480,7 @@ const mech = {
       Matter.Body.setMass(player, 5);
     }
   },
-  fieldRangeDraw: 0.2,
+  fieldArc: 0.2,
   fieldThreshold: 0.87,
   hold: function() {
     if (b.activeGun === 0) {
@@ -489,38 +496,20 @@ const mech = {
       } else if (game.mouseDown && this.fireCDcycle < game.cycle) {
         //pick up blocks with field
         //draw field
-        const wiggle = Math.random() * 0.05;
+        const range = this.grabRange - 20;
         ctx.beginPath();
         // ctx.moveTo(this.pos.x, this.pos.y);
-        ctx.arc(
-          this.pos.x,
-          this.pos.y,
-          this.grabRange + 5 * Math.random(),
-          this.angle - Math.PI * this.fieldRangeDraw - wiggle,
-          this.angle + Math.PI * this.fieldRangeDraw + wiggle,
-          false
-        );
-        ctx.arc(
-          this.pos.x,
-          this.pos.y,
-          38 + 4 * Math.random(),
-          this.angle + Math.PI * this.fieldRangeDraw + wiggle,
-          this.angle - Math.PI * this.fieldRangeDraw - wiggle,
-          true
-        );
+        ctx.arc(this.pos.x, this.pos.y, range, this.angle - Math.PI * this.fieldArc, this.angle + Math.PI * this.fieldArc, false);
+        let eye = 13;
+        ctx.lineTo(mech.pos.x + eye * Math.cos(this.angle), mech.pos.y + eye * Math.sin(this.angle));
         ctx.fillStyle = "rgba(110,170,200," + (0.15 + 0.15 * Math.random()) + ")";
-        //make the grab field flicker
-        // if (game.cycle % 4) {
-        //   ctx.fillStyle = "rgba(80,100,150,0.2)";
-        // } else {
-        //   ctx.fillStyle = "rgba(120,170,255,0.3)";
-        // }
         ctx.fill();
         //draw random lines in field for cool effect
-        let offAngle = this.angle + 2 * Math.PI * this.fieldRangeDraw * (Math.random() - 0.5);
+        let offAngle = this.angle + 2 * Math.PI * this.fieldArc * (Math.random() - 0.5);
         ctx.beginPath();
-        ctx.moveTo(this.pos.x + 40 * Math.cos(offAngle), this.pos.y + 40 * Math.sin(offAngle));
-        ctx.lineTo(this.pos.x + this.grabRange * Math.cos(offAngle), this.pos.y + this.grabRange * Math.sin(offAngle));
+        eye = 15;
+        ctx.moveTo(mech.pos.x + eye * Math.cos(this.angle), mech.pos.y + eye * Math.sin(this.angle));
+        ctx.lineTo(this.pos.x + range * Math.cos(offAngle), this.pos.y + range * Math.sin(offAngle));
         ctx.strokeStyle = "rgba(120,170,255,0.4)";
         ctx.stroke();
 
@@ -532,18 +521,10 @@ const mech = {
             Matter.Query.ray(map, mob[i].position, this.pos).length === 0
           ) {
             this.fireCDcycle = game.cycle + 10; //cool down
-            const dmg = b.dmgScale * 0.1;
-            mob[i].damage(dmg);
+            // const dmg = b.dmgScale * 0.1;
+            // mob[i].damage(dmg);
             mob[i].locatePlayer();
-            //draw mob hit
             this.drawHold(mob[i]);
-            // let vector = Matter.Vector.normalise(Matter.Vector.sub(mob[i].position, this.pos));
-            // ctx.beginPath();
-            // ctx.moveTo(this.pos.x + 40 * vector.x, this.pos.y + 40 * vector.y);
-            // ctx.lineTo(this.pos.x + this.grabRange * vector.x, this.pos.y + this.grabRange * vector.y);
-            // ctx.strokeStyle = "#000";
-
-            ctx.stroke();
             //mob and player knock back
             const angle = Math.atan2(player.position.y - mob[i].position.y, player.position.x - mob[i].position.x);
             Matter.Body.setVelocity(mob[i], {
@@ -560,12 +541,12 @@ const mech = {
         //find closest body
         let mag = this.grabRange;
         let index = null;
-        const maxSize = 75;
+        // const maxSize = 375;
         ctx.beginPath(); //draw on each valid body
         for (let i = 0, len = body.length; i < len; ++i) {
           if (
-            body[i].bounds.max.x - body[i].bounds.min.x < maxSize &&
-            body[i].bounds.max.y - body[i].bounds.min.y < maxSize &&
+            // body[i].bounds.max.x - body[i].bounds.min.x < maxSize &&
+            // body[i].bounds.max.y - body[i].bounds.min.y < maxSize &&
             this.lookingAt(body[i], this.fieldThreshold) &&
             Matter.Query.ray(map, body[i].position, this.pos).length === 0
           ) {

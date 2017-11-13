@@ -23,17 +23,16 @@ const spawn = {
   bossPickList: ["zoomer", "chaser", "burster", "striker", "springer", "laserer", "laserTracker", "laserSearcher", "ghoster", "exploder", "spawner", "random"],
   setSpawnList: function() {
     //this is run at the start of each new level to determine the possible mobs for the level
-    //each level has 2 mobs: one new mob and one from the the last level  (bosses can be anything)
+    //each level has 2 mobs: one new mob and one from the the last level
     spawn.pickList.splice(0, 1);
     spawn.pickList.push(spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]);
   },
   randomMob: function(x, y, chance = 1) {
-    if (Math.random() < chance + 0.06 * game.levelsCleared && mob.length < 8 + game.levelsCleared && !(game.levelsCleared === 0 && mob.length > 4)) {
+    if (Math.random() < chance + 0.06 * game.levelsCleared) {
       const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       this[pick](x, y);
     }
   },
-  //
   randomSmallMob: function(
     x,
     y,
@@ -41,7 +40,7 @@ const spawn = {
     size = 16 + Math.ceil(Math.random() * 15),
     chance = 1
   ) {
-    if (Math.random() < chance + game.levelsCleared * 0.03 && game.levelsCleared !== 0) {
+    if (Math.random() < chance + game.levelsCleared * 0.03) {
       const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       for (let i = 0; i < num; ++i) {
         this[pick](x + Math.round((Math.random() - 0.5) * 20) + i * size * 2.5, y + Math.round((Math.random() - 0.5) * 20), size);
@@ -176,6 +175,7 @@ const spawn = {
     let me = mob[mob.length - 1];
     me.cdBurst1 = 0; //must add for burstAttraction
     me.cdBurst2 = 0; //must add for burstAttraction
+    me.delay = 0;
     me.burstDir = {
       x: 0,
       y: 0
@@ -184,7 +184,6 @@ const spawn = {
     me.frictionAir = 0.02;
     me.lookTorque = 0.0000013;
     me.restitution = 0;
-    me.delay = 60;
   },
   blackHoler: function(x, y, radius = 30 + Math.ceil(Math.random() * 70)) {
     radius = 9 + radius / 8; //extra small
@@ -201,7 +200,7 @@ const spawn = {
   laserer: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
     mobs.spawn(x, y, 4, radius, "rgb(255,0,190)", ["healthBar", "seePlayerByLookingAt", "attraction", "repulsion", "laser"]);
     let me = mob[mob.length - 1];
-    me.repulsionRange = 160000; //squared
+    me.repulsionRange = 90000; //squared
     // me.seePlayerFreq = 2 + Math.round(Math.random() * 5);
     me.accelMag = 0.0006;
     me.frictionStatic = 0;
@@ -575,9 +574,23 @@ const spawn = {
       color: "#f00"
     });
   },
+  mapGunPowerUp: function(x, y) {
+    if (game.levelsCleared < 3 || game.levelsCleared === 5 || game.levelsCleared === 7) powerUps.spawn(x, y, "gun", false); //starting gun
+  },
+  platform: function(x, y, width, height) {
+    const size = 20;
+    spawn.mapRect(x, y + height, width, 30);
+    level.fillBG.push({
+      x: x + width / 2 - size / 2,
+      y: y,
+      width: size,
+      height: height,
+      color: "#f0f0f3"
+    });
+  },
   debris: function(x, y, width, number = Math.floor(3 + Math.random() * 11)) {
     for (let i = 0; i < number; ++i) {
-      if (Math.random() < 0.2) {
+      if (Math.random() < 0.25) {
         powerUps.chooseRandomPowerUp(x + Math.random() * width, y);
       } else {
         const size = 18 + Math.random() * 25;
@@ -652,6 +665,10 @@ const spawn = {
   propsFriction: {
     friction: 0.5,
     frictionAir: 0.02,
+    frictionStatic: 1
+  },
+  propsFrictionMedium: {
+    friction: 0.15,
     frictionStatic: 1
   },
   propsBouncy: {

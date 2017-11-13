@@ -55,7 +55,7 @@ const powerUps = {
         // if (b.activeGun = 0) mech.drop();
         // b.activeGun = options[Math.floor(Math.random() * options.length)];
         let newGun = options[Math.floor(Math.random() * options.length)];
-        //newGun = 2 //makes every gun you pick up this type  //enable for testing one gun
+        // newGun = 1; //makes every gun you pick up this type  //enable for testing one gun
         b.guns[newGun].have = true;
         b.inventory.push(newGun);
         // b.inventory.sort();
@@ -128,8 +128,8 @@ const powerUps = {
     });
     if (moving) {
       Matter.Body.setVelocity(powerUp[i], {
-        x: (Math.random() - 0.5) * 10,
-        y: Math.random() * -7 - 3
+        x: (Math.random() - 0.5) * 15,
+        y: Math.random() * -9 - 3
       });
     }
     World.add(engine.world, powerUp[i]); //add to world
@@ -145,7 +145,7 @@ const powerUps = {
           mech.usePowerUp(i);
           break;
         }
-        //power up needs to be able to see player to gravitated
+        //power up needs to be able to see player to gravitate
         if (
           Matter.Query.ray(map, powerUp[i].position, player.position).length === 0
           // && Matter.Query.ray(body, powerUp[i].position, player.position).length === 0

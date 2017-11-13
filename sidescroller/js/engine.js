@@ -139,7 +139,7 @@ function mobCollisionChecks(event) {
           if (obj.classType === "body" && obj.speed > 5) {
             const v = Matter.Vector.magnitude(Matter.Vector.sub(mob[k].velocity, obj.velocity));
             if (v > 8) {
-              let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.06;
+              let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.04;
               mob[k].damage(dmg);
               if (mob[k].distanceToPlayer2() < 1000000) mob[k].locatePlayer();
               game.drawList.push({
@@ -171,11 +171,17 @@ Events.on(engine, "beforeUpdate", function(event) {
   addGravity(body, game.g);
   // addGravity(bullet, b.gravity);
   player.force.y += player.mass * mech.gravity;
-
+  //check if ready to start next level
   if (game.clearNow) {
     //reset before update to avoid getting into trouble with looking at array elements that don't exist
     game.clearNow = false;
+    // level.onLevel++; //int that references an array element in level.levels
+    // if (level.onLevel > level.levels.length - 1) level.onLevel = 0;
+    game.dmgScale += 0.4; //damage done by mobs increases each level
+    b.dmgScale *= 0.9; //damage done by player decreases each level
+    game.levelsCleared++;
     game.clearMap();
+    game.startZoomIn();
     level.start();
   }
 });

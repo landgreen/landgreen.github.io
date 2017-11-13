@@ -170,9 +170,7 @@ function setupCanvas() {
   canvas.height = window.innerHeight;
   canvas.width2 = canvas.width / 2; //precalculated because I use this often (in mouse look)
   canvas.height2 = canvas.height / 2;
-  canvas.diagonal = Math.sqrt(
-    canvas.width2 * canvas.width2 + canvas.height2 * canvas.height2
-  );
+  canvas.diagonal = Math.sqrt(canvas.width2 * canvas.width2 + canvas.height2 * canvas.height2);
   ctx.font = "15px Arial";
   ctx.lineJoin = "round";
   ctx.lineCap = "round";
@@ -242,7 +240,6 @@ function shuffle(array) {
 //**********************************************************************
 function cycle() {
   game.timing();
-  // ctx.globalAlpha = (mech.health < 0.5) ? (mech.health+0.5)*(mech.health+0.5) : 1
   game.wipe();
   game.textLog();
   mech.keyMove();
@@ -268,7 +265,6 @@ function cycle() {
     level.drawFillBGs();
     level.exit.draw();
     level.enter.draw();
-    // ctx.globalAlpha=1;
     game.draw.powerUp();
     mobs.draw();
     game.draw.cons();

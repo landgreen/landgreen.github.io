@@ -16,7 +16,7 @@ const game = {
   testing: false, //testing mode: shows wireframe and some variables
   cycle: 0, //total cycles, 60 per second
   cyclePaused: 0,
-  fallHeight: 2000, //below this y position the player dies
+  fallHeight: 3000, //below this y position the player dies
   lastTimeStamp: 0, //tracks time stamps for measuing delta
   delta: 0, //measures how slow the engine is running compared to 60fps
   buttonCD: 0,
@@ -153,7 +153,7 @@ const game = {
     } else if (this.testing) {
       if (keys[57]) {
         //9
-        for (let i = 0; i < 8; ++i) {
+        for (let i = 0; i < 16; ++i) {
           powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
         }
       }
@@ -192,7 +192,7 @@ const game = {
     this.mouseInGame.x = (this.mouse.x - canvas.width2) / this.zoom + canvas.width2 - mech.transX;
     this.mouseInGame.y = (this.mouse.y - canvas.height2) / this.zoom + canvas.height2 - mech.transY;
   },
-  startZoomIn: function(time = 300) {
+  startZoomIn: function(time = 150) {
     game.zoom = 0;
     let count = 0;
 
@@ -243,11 +243,12 @@ const game = {
     mech.addHealth(1);
     mech.alive = true;
     game.levelsCleared = 0;
-    level.onLevel = Math.floor(Math.random() * level.levels.length); //picks a random starting level
+    // level.onLevel = Math.floor(Math.random() * level.levels.length); //picks a random starting level
     game.clearNow = true;
     document.getElementById("text-log").style.opacity = 0;
     document.getElementById("fade-out").style.opacity = 0;
-    game.startZoomIn();
+    // game.zoom = 0.2; //used for testing  this should be commented out
+    // game.startZoomIn();
   },
   firstRun: true,
   splashReturn: function() {
@@ -276,8 +277,8 @@ const game = {
       mech.throw();
     };
     document.body.style.cursor = "none";
-    mech.spawn(); //spawns the player
-    level.levels = shuffle(level.levels); //shuffles order of maps
+    if (this.firstRun) mech.spawn(); //spawns the player
+    // level.levels = shuffle(level.levels); //shuffles order of maps
     game.reset();
     if (game.firstRun) Engine.run(engine); //starts game engine
     game.firstRun = false;

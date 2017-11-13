@@ -53,10 +53,23 @@ svg {
   height: 20px;
   width: 0px;
   transition: width 1s ease-out;
-  background-color: #f00;
   opacity: 0.6;
   z-index: 2;
   pointer-events: none;
+  background-color: #f00;
+}
+
+.low-health {
+  animation: blink 250ms infinite alternate;
+}
+
+@keyframes blink {
+  from {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 0.2;
+  }
 }
 
 #fade-out {
@@ -66,7 +79,7 @@ svg {
   height: 100%;
   background-color: #fff;
   opacity: 0;
-  transition: opacity 5s;
+  transition: opacity 7s;
   pointer-events: none;
 }
 

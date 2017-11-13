@@ -177,6 +177,7 @@ const mobs = {
       seePlayerCheck: function() {
         if (!(game.cycle % this.seePlayerFreq)) {
           if (
+            this.distanceToPlayer2() < this.seeAtDistance2 &&
             Matter.Query.ray(map, this.position, this.mechPosRange()).length === 0 &&
             Matter.Query.ray(body, this.position, this.mechPosRange()).length === 0
           ) {
@@ -337,7 +338,7 @@ const mobs = {
           vertexCollision(this.position, look, [player]);
           // hitting player
           if (best.who === player) {
-            dmg = 0.006 * game.dmgScale;
+            dmg = 0.004 * game.dmgScale;
             mech.damage(dmg);
             //draw damage
             ctx.fillStyle = color;
@@ -598,7 +599,7 @@ const mobs = {
         if (game.cycle % 7 && this.seePlayer.yes) {
           ctx.setLineDash([125 * Math.random(), 125 * Math.random()]);
           // ctx.lineDashOffset = 6*(game.cycle % 215);
-          const range = 500;
+          const range = 400;
           if (this.distanceToPlayer() < range) {
             //if (Math.random()>0.2 && this.seePlayer.yes && this.distanceToPlayer2()<800000) {
             mech.damage(0.0004 * game.dmgScale);
@@ -781,7 +782,7 @@ const mobs = {
         if (this.seePlayer.recall) {
           if (this.cdBurst2 < game.cycle && this.angularSpeed < 0.01) {
             this.cdBurst2 = Infinity;
-            this.cdBurst1 = game.cycle + 60;
+            this.cdBurst1 = game.cycle + 50;
             this.burstDir = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
           } else if (this.cdBurst1 < game.cycle) {
             this.cdBurst2 = game.cycle + this.delay;
