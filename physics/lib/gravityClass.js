@@ -1,4 +1,4 @@
-var canvas, ctx
+// var canvas, ctx
 class Particle { //Particle class
     constructor(position, mass = 50, charge = 0, velocity = {
         x: 0,
@@ -14,7 +14,7 @@ class Particle { //Particle class
         this.radius = Math.sqrt(mass);
     }
 
-    static spawnRandom(who, len = 1) {
+    static spawnRandom(who, canvas, len = 1) {
         for (let i = 0; i < len; ++i) {
             who[who.length] = new Particle({
                 x: 30 + Math.random() * (canvas.width - 60),
@@ -46,9 +46,9 @@ class Particle { //Particle class
                     const a = Math.atan2(dy, dx);
                     //the +4000 keeps r from being zero / adds stability
                     const r = (dx * dx + dy * dy) + 100
-                    const mag = -3 / r / who[i].mass * who[j].mass;
-                    who[i].velocity.x += mag * Math.cos(a)
-                    who[i].velocity.y += mag * Math.sin(a)
+                    const mag = 0.05 / r * who[j].mass;
+                    who[i].velocity.x -= mag * Math.cos(a)
+                    who[i].velocity.y -= mag * Math.sin(a)
                 }
             }
         }
@@ -68,12 +68,12 @@ class Particle { //Particle class
         }
         return mass
     }
-    static setCanvas(el) {
-        canvas = el;
-        ctx = canvas.getContext("2d");
-        ctx.font = "300 20px Roboto";
-    }
-    static drawAll(who) {
+    // static setCanvas(el) {
+    //     canvas = el;
+    //     ctx = canvas.getContext("2d");
+    //     ctx.font = "300 20px Roboto";
+    // }
+    static drawAll(who,ctx) {
         for (let i = 0, len = who.length; i < len; ++i) {
             ctx.fillStyle = who[i].color;
             ctx.beginPath();
@@ -91,7 +91,7 @@ class Particle { //Particle class
         }
         return count
     }
-    static bounds(who, range = 50) {
+    static bounds(who, canvas, range = 50) {
         //range = how far outside of canvas,  0 is at canvs edge
         const restitution = 0.5
         for (let i = 0, len = who.length; i < len; ++i) {
@@ -119,7 +119,7 @@ class Particle { //Particle class
             const a = Math.atan2(dy, dx);
             //the +4000 keeps r from being zero
             const r = (dx * dx + dy * dy) + 2000
-            const mag = 400000 / r / who[i].mass;
+            const mag = 10000 / r // / who[i].mass;
             who[i].velocity.x += mag * Math.cos(a)
             who[i].velocity.y += mag * Math.sin(a)
         }
@@ -141,7 +141,7 @@ class Particle { //Particle class
         return v
     }
 
-    static vectorField(who, mag = 100, spacing = 15, opacityThreshold = Math.round(spacing / 2)) {
+    static vectorField(who, ctx, canvas, mag = 100, spacing = 15, opacityThreshold = Math.round(spacing / 3)) {
         var lenX = Math.floor(canvas.width / spacing);
         var lenY = Math.floor(canvas.height / spacing);
         var x, y, dist, draw;
@@ -197,7 +197,7 @@ class Particle { //Particle class
         }
         ctx.globalAlpha = 1;
     }
-    static scalarField(who, fieldSpacing = 3, fieldMag = 10) {
+    static scalarField(who, ctx, canvas, fieldSpacing = 3, fieldMag = 10) {
         const lenX = Math.floor(canvas.width / fieldSpacing);
         const lenY = Math.floor(canvas.height / fieldSpacing);
         const offset = Math.floor(fieldSpacing / 2)
