@@ -330,7 +330,7 @@ const b = {
     {
       name: "laser",
       ammo: 0,
-      ammoPack: 200,
+      ammoPack: 190,
       have: false,
       fire: function() {
         //mech.fireCDcycle = game.cycle + 1
@@ -492,7 +492,7 @@ const b = {
     {
       name: "rapid fire",
       ammo: 0,
-      ammoPack: 40,
+      ammoPack: 45,
       have: false,
       fire: function() {
         const me = bullet.length;
@@ -500,7 +500,7 @@ const b = {
         // if (Math.random() > 0.2) mobs.alert(500);
         const dir = (Math.random() - 0.5) * 0.15 + mech.angle;
         bullet[me] = Bodies.rectangle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 17, 5, b.fireAttributes(dir));
-        b.fireProps(5, 38, dir, me); //cd , speed
+        b.fireProps(5, 40, dir, me); //cd , speed
         bullet[me].endCycle = game.cycle + 60;
         bullet[me].frictionAir = 0.01;
         bullet[me].do = function() {
@@ -831,7 +831,7 @@ const b = {
         const me = bullet.length;
         const dir = mech.angle;
         bullet[me] = Bodies.rectangle(mech.pos.x + 50 * Math.cos(mech.angle), mech.pos.y + 50 * Math.sin(mech.angle), 54, 20, b.fireAttributes(dir));
-        b.fireProps(60, 54, dir, me); //cd , speed
+        b.fireProps(30, 54, dir, me); //cd , speed
         bullet[me].endCycle = game.cycle + 180;
         bullet[me].do = function() {
           this.force.y += this.mass * 0.0005;

@@ -85,19 +85,19 @@ const powerUps = {
       powerUps.spawn(x, y, "heal");
       return;
     }
-    if (Math.random() < 0.2) {
+    if (Math.random() < 0.3) {
       if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
       return;
     }
     //new gun has a chance for each unaquired gun to drop
-    if (Math.random() < 0.003 * (b.guns.length - b.inventory.length)) {
+    if (Math.random() < 0.008 * (b.guns.length - b.inventory.length)) {
       powerUps.spawn(x, y, "gun");
       return;
     }
   },
   chooseRandomPowerUp: function(x, y) {
     //100% chance to drop a random power up
-    //this is mostly used for making debris power ups
+    //this is mostly used for making power up drops in debris
     if (Math.random() < 0.5) {
       powerUps.spawn(x, y, "heal", false);
     } else {

@@ -28,7 +28,7 @@ const spawn = {
     spawn.pickList.push(spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]);
   },
   randomMob: function(x, y, chance = 1) {
-    if (Math.random() < chance + 0.06 * game.levelsCleared) {
+    if (Math.random() < chance + 0.09 * game.levelsCleared) {
       const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       this[pick](x, y);
     }
@@ -36,7 +36,7 @@ const spawn = {
   randomSmallMob: function(
     x,
     y,
-    num = Math.min(Math.ceil(Math.random() * Math.random() * game.levelsCleared), 3),
+    num = Math.max(Math.min(Math.round(Math.random() * game.levelsCleared - 0.4), 3), 0),
     size = 16 + Math.ceil(Math.random() * 15),
     chance = 1
   ) {
@@ -48,7 +48,7 @@ const spawn = {
     }
   },
   randomBoss: function(x, y, chance = 1) {
-    if (Math.random() < chance + game.levelsCleared * 0.07 && game.levelsCleared !== 0) {
+    if (Math.random() < chance + game.levelsCleared * 0.09 && game.levelsCleared !== 0) {
       //choose from the possible picklist
       const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       //is the pick able to be a boss?
@@ -77,7 +77,7 @@ const spawn = {
       }
     }
   },
-  //basic mob templates****************************************************************************************
+  //mob templates *********************************************************************************************
   //***********************************************************************************************************
   starter: function(x, y, radius = 30) {
     //only on level 1
@@ -575,7 +575,7 @@ const spawn = {
     });
   },
   mapGunPowerUp: function(x, y) {
-    if (game.levelsCleared < 3 || game.levelsCleared === 5 || game.levelsCleared === 7) powerUps.spawn(x, y, "gun", false); //starting gun
+    if (game.levelsCleared < 4 || game.levelsCleared === 5 || game.levelsCleared === 7) powerUps.spawn(x, y, "gun", false); //starting gun
   },
   platform: function(x, y, width, height) {
     const size = 20;

@@ -169,19 +169,14 @@ Events.on(engine, "beforeUpdate", function(event) {
   }
   addGravity(powerUp, game.g);
   addGravity(body, game.g);
-  // addGravity(bullet, b.gravity);
   player.force.y += player.mass * mech.gravity;
   //check if ready to start next level
   if (game.clearNow) {
     //reset before update to avoid getting into trouble with looking at array elements that don't exist
     game.clearNow = false;
-    // level.onLevel++; //int that references an array element in level.levels
-    // if (level.onLevel > level.levels.length - 1) level.onLevel = 0;
-    game.dmgScale += 0.4; //damage done by mobs increases each level
-    b.dmgScale *= 0.9; //damage done by player decreases each level
-    game.levelsCleared++;
     game.clearMap();
     game.startZoomIn();
+    // game.zoom = 0.2; //used for testing  this should be commented out
     level.start();
   }
 });

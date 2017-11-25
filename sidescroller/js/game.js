@@ -247,8 +247,6 @@ const game = {
     game.clearNow = true;
     document.getElementById("text-log").style.opacity = 0;
     document.getElementById("fade-out").style.opacity = 0;
-    // game.zoom = 0.2; //used for testing  this should be commented out
-    // game.startZoomIn();
   },
   firstRun: true,
   splashReturn: function() {
