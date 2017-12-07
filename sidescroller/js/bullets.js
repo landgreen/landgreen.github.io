@@ -1,7 +1,7 @@
 let bullet = [];
 
 const b = {
-  dmgScale: 1, //scales all gun damage from momentum, but not raw .dmg
+  dmgScale: 0.9, //scales all gun damage from momentum, but not raw .dmg
   gravity: 0.0006, //most other bodies have   gravity = 0.001
   activeGun: 0, //current gun in use by player
   inventoryGun: 0,

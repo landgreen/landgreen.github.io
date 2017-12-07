@@ -81,7 +81,7 @@ const powerUps = {
     //a chance to drop a power up
     //mostly used after mob dies
     //spawn heal chance is higher at low health
-    if (Math.random() * Math.random() > Math.sqrt(mech.health) - 0.2) {
+    if (Math.random() * Math.random() > Math.sqrt(mech.health) || Math.random() < 0.05) {
       powerUps.spawn(x, y, "heal");
       return;
     }
@@ -89,7 +89,7 @@ const powerUps = {
       if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
       return;
     }
-    //new gun has a chance for each unaquired gun to drop
+    //new gun has a low chance for each not acquired gun to drop
     if (Math.random() < 0.008 * (b.guns.length - b.inventory.length)) {
       powerUps.spawn(x, y, "gun");
       return;

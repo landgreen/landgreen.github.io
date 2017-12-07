@@ -444,7 +444,7 @@ const game = {
     // },
     mapPath: null, //holds the path for the map to speed up drawing
     setPaths: function() {
-      //runs at each new level to store the path for the mpa since the map doesn't change
+      //runs at each new level to store the path for the map since the map doesn't change
       this.mapPath = new Path2D();
       for (let i = 0, len = map.length; i < len; ++i) {
         let vertices = map[i].vertices;

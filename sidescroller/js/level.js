@@ -885,7 +885,11 @@ const level = {
     spawn.bodyRect(220, -120, 14, 140, 1, spawn.propsFriction); //door to starting room
     spawn.mapRect(-50, -10, 100, 50);
     spawn.mapRect(0, 10, 400, 100); //***********ground
-    powerUps.spawn(550, -50, "gun", false); //starting gun
+    if (b.inventory.length < 4) {
+      powerUps.spawn(550, -50, "gun", false); //starting gun
+    } else {
+      powerUps.spawnRandomPowerUp(550, -50);
+    }
     level.fill.push({
       x: -250,
       y: -300,
@@ -1216,7 +1220,7 @@ const level = {
         const firstFloorH = maxJump - Math.floor(Math.random() * 50) + zeroFloor;
         const fullHeight = firstFloorH + 300 + 300;
 
-        const totalCases = 3;
+        const totalCases = 4;
         switch (Math.ceil(Math.random() * totalCases)) {
           case 1:
             spawn.mapRect(o.x, o.y - firstFloorH, firstPlatW, 100); //1st floor
@@ -1264,6 +1268,43 @@ const level = {
               color: "rgba(0,0,0,0.1)"
             });
             break;
+          case 4:
+            const poleWidth = 50;
+            const platWidth = 200;
+            const secondPlatX = platWidth + 125;
+            const totalWidth = platWidth + secondPlatX;
+            spawn.mapRect(o.x + firstPlatW - totalWidth, o.y - firstFloorH - 350, platWidth, wallWidth);
+            spawn.mapRect(o.x + firstPlatW - totalWidth, o.y - firstFloorH + 100, platWidth, wallWidth);
+            spawn.mapRect(o.x + secondPlatX + firstPlatW - totalWidth, o.y - firstFloorH - 100, platWidth, wallWidth);
+            spawn.mapRect(o.x + secondPlatX + firstPlatW - totalWidth, o.y - fullHeight, platWidth, wallWidth);
+            level.fillBG.push({
+              x: o.x + platWidth / 2 - poleWidth / 2 + firstPlatW - totalWidth,
+              y: o.y - firstFloorH - 350,
+              width: poleWidth,
+              height: firstFloorH + 350 - zeroFloor,
+              color: "rgba(0,0,0,0.2)"
+            });
+            level.fillBG.push({
+              x: o.x + platWidth / 2 - poleWidth / 2 + secondPlatX + firstPlatW - totalWidth,
+              y: o.y - fullHeight,
+              width: poleWidth,
+              height: fullHeight - zeroFloor,
+              color: "rgba(0,0,0,0.2)"
+            });
+            if (Math.random() < 0.9) {
+              const platX = firstPlatW - totalWidth - platWidth - 125;
+              spawn.mapRect(o.x + platX, o.y - firstFloorH - 100, platWidth, wallWidth);
+              spawn.mapRect(o.x + platX, o.y - fullHeight, platWidth, wallWidth);
+
+              level.fillBG.push({
+                x: o.x + platWidth / 2 - poleWidth / 2 + platX,
+                y: o.y - fullHeight,
+                width: poleWidth,
+                height: fullHeight - zeroFloor,
+                color: "rgba(0,0,0,0.2)"
+              });
+            }
+            break;
         }
         spawn.debris(o.x, o.y - zeroFloor, firstPlatW, 2);
         spawn.randomMob(o.x + firstPlatW - 200 - Math.random() * 600, o.y - zeroFloor - 100, mobChance); //in shadow
@@ -1274,13 +1315,11 @@ const level = {
         let offX = o.x + firstPlatW;
         const len = Math.ceil(Math.random() * 4);
         for (let i = 0; i < len; i++) {
-          const totalCases = 2;
-
+          const totalCases = 3;
           switch (Math.ceil(Math.random() * totalCases)) {
             case 1:
               const width = 150 + Math.floor(Math.random() * 500);
               const middle = Math.floor(width / 2);
-              const wallWidth = 25 + Math.floor(Math.random() * 30);
               spawn.mapRect(offX + 300, o.y - fullHeight, width, wallWidth); //top platform
               if (Math.random() < 0.5) spawn.mapRect(offX + 300, o.y - 50, width, 65); //ground bump
               //optional room on second floor
@@ -1317,7 +1356,7 @@ const level = {
               const forkBaseHeight = fullHeight - forkDepth - (maxJump - 100) - 250;
               spawn.mapRect(offX + 300, o.y - maxJump + 100, width2, maxJump - 100); //base
               spawn.mapRect(offX + 300, o.y - fullHeight + forkDepth, width2, forkBaseHeight); //fork base
-              spawn.mapRect(offX + 300, o.y - fullHeight, 100, forkDepth); //left fork
+              if (Math.random() < 0.7) spawn.mapRect(offX + 300, o.y - fullHeight, 100, forkDepth); //left fork
               spawn.mapRect(offX + 300 + width2 - 100, o.y - fullHeight, 100, forkDepth); //right fork
 
               level.fill.push({
@@ -1333,16 +1372,38 @@ const level = {
               break;
             case 3:
               const width3 = 200 + Math.floor(Math.random() * 300);
-              spawn.mapRect(offX + 300, o.y - fullHeight, width3, fullHeight - 150); //top platform
+              if (Math.random() < 0.7) {
+                spawn.mapRect(offX + 300, o.y - fullHeight, width3, fullHeight - 150); //top platform
 
-              level.fill.push({
-                x: offX + 300,
-                y: o.y - 150,
-                width: width3,
-                height: 150,
-                color: "rgba(0,0,0,0.25)"
-              });
+                level.fill.push({
+                  x: offX + 300,
+                  y: o.y - 150,
+                  width: width3,
+                  height: 150,
+                  color: "rgba(0,0,0,0.25)"
+                });
+              } else {
+                //add a gap
+                const gap = (fullHeight - 150) / 2 + 100;
+                spawn.mapRect(offX + 300, o.y - fullHeight, width3, fullHeight - 150 - gap); //top platform
+                spawn.mapRect(offX + 300, o.y - fullHeight + gap, width3, fullHeight - 150 - gap); //top platform
+                level.fill.push({
+                  x: offX + 300,
+                  y: o.y - 150,
+                  width: width3,
+                  height: 150,
+                  color: "rgba(0,0,0,0.25)"
+                });
+                level.fill.push({
+                  x: offX + 300,
+                  y: o.y - 150 - gap,
+                  width: width3,
+                  height: 200,
+                  color: "rgba(0,0,0,0.25)"
+                });
+              }
               spawn.randomMob(offX + 300 + Math.random() * width3, o.y - fullHeight - 100, mobChance); //top
+              spawn.debris(offX + 300, o.y - fullHeight - 100, width3, 1);
               offX += 300 + width3;
               break;
           }
@@ -1467,10 +1528,10 @@ const level = {
     nextLevel: function() {
       //enter when player isn't falling
       if (player.velocity.y < 0.1) {
-        game.dmgScale += 0.5; //damage done by mobs increases each level
+        game.dmgScale += 0.8; //damage done by mobs increases each level
         // b.dmgScale *= 0.9; //damage done by player decreases each level
         game.levelsCleared++;
-        game.clearNow = true; //triggers in the physics engine
+        game.clearNow = true; //triggers in the physics engine to remove all physics bodies
       }
     },
     death: function() {

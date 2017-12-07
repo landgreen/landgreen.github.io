@@ -28,7 +28,7 @@ const spawn = {
     spawn.pickList.push(spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]);
   },
   randomMob: function(x, y, chance = 1) {
-    if (Math.random() < chance + 0.09 * game.levelsCleared) {
+    if (Math.random() < chance + 0.11 * game.levelsCleared) {
       const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       this[pick](x, y);
     }
@@ -36,7 +36,7 @@ const spawn = {
   randomSmallMob: function(
     x,
     y,
-    num = Math.max(Math.min(Math.round(Math.random() * game.levelsCleared - 0.4), 3), 0),
+    num = Math.max(Math.min(Math.round(Math.random() * game.levelsCleared - 0.4), 4), 0),
     size = 16 + Math.ceil(Math.random() * 15),
     chance = 1
   ) {
@@ -48,7 +48,7 @@ const spawn = {
     }
   },
   randomBoss: function(x, y, chance = 1) {
-    if (Math.random() < chance + game.levelsCleared * 0.09 && game.levelsCleared !== 0) {
+    if (Math.random() < chance + game.levelsCleared * 0.11 && game.levelsCleared !== 0) {
       //choose from the possible picklist
       const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       //is the pick able to be a boss?
