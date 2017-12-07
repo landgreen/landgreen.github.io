@@ -31,15 +31,13 @@
 			<div>
 				<p>If the relative velocity between two bodies is too low they will collide. If the velocity is too high they will move
 					away from each other. In between these extremes exist a range of stable orbits that can repeat with very little change.</p>
-				<p>Over enough time all orbits degrade. The Moon's orbit gets 38mm farther away every year because its kinetic energy changes
-					into the tides.</p>
+				<p>Over enough time all orbits degrade as they lose energy. The Moon's orbit gets 38mm farther away every year because its
+					kinetic energy changes into the tides.</p>
 			</div>
 			<div>
 				<canvas style='border-radius: 250px;' class='black' id='grav1' height='250' width='250' onclick="grav1(this)"> </canvas>
 			</div>
 		</div>
-
-
 		<br>
 		<p>Play around with some orbits in the simulation below to develop an intuition for orbital mechanics.</p>
 		<center>
@@ -48,7 +46,6 @@
 					<img src="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits-600.png" alt="Gravity And Orbits"
 					 style="border: none;" width="300" height="200" />
 					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.6; filter: alpha(opacity = 60);"></div>
-
 					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 35px;">
 						<tr>
 							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
@@ -60,7 +57,6 @@
 		<p>What happen to the path of a satellite when you turn gravity off?</p>
 		<p>How would you describe the directions of the velocity and the force?</p>
 		<p>How does the orbital path change as you increase the mass of either object?</p>
-
 		<p class='underlined'>Circular Motion</p>
 		<p>Any object moving in a circular path has a net force pointed at the center of the circle. The velocity of the object will
 			always be perpendicular to the force.</p>
@@ -73,14 +69,12 @@
 					<line x1="150" y1="-5" x2="150" y2="5" style="stroke:#000;stroke-width:2" />
 					<text x="75" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
 				</g>
-
 				<g transform="translate(350 200) rotate(0)">
 					<g transform="translate(0 -100) rotate(90)">
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
 					<text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">v</text>
-
 					<g transform="translate(-75 0) rotate(0)">
 						<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
@@ -88,8 +82,7 @@
 					<text x="-85" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
 					<circle cx="0" cy="0" r="20" fill='#f77' stroke-width="2" stroke="#222" />
 				</g>
-
-				<g transform="translate(306 94) rotate(-45)" opacity=0 .25>
+				<g transform="translate(306 94) rotate(-45)" opacity=0.25>
 					<g transform="translate(0 -100) rotate(90)">
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
@@ -100,13 +93,11 @@
 					</g>
 					<circle cx="0" cy="0" r="20" fill='#f77' stroke-width="2" stroke="#222" />
 				</g>
-
-				<g transform="translate(200 50) rotate(-90)" opacity=0 .07>
+				<g transform="translate(200 50) rotate(-90)" opacity=0.07>
 					<g transform="translate(0 -100) rotate(90)">
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
-
 					<g transform="translate(-75 0) rotate(0)">
 						<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
@@ -122,27 +113,28 @@
 				<em>vector</em>
 				<br>\(v\) = tangential velocity [m/s]
 				<em>vector</em>
-				<br>\(r\) = radius of the circlular path [m]
+				<br>\(r\) = radius of the circular path [m]
 				<em>vector</em>
 				<br>\(m\) = mass [kg]
 			</p>
 			<p>
-				<strong>centripetal</strong>: pointing at the center
+				<strong>centripetal</strong>: pointing at the center (Not to be confused with centrifugal)
 				<br>
 				<strong>tangential</strong>: touching at only one point
 			</p>
 		</div>
 		<p>
 			<strong>Nearly circular motion can occur in many situations:</strong>
-			<li>swinging a rope attached to a mass
-				<li>a rotating wheel or sphere
-					<li>some orbits are nearly circular, but technically eliptical
-						<li>some roads have circular curves
-							<li>charged particles in a uniform magnetic field
+			<li>swinging a rope attached to a mass</li>
+			<li>a rotating wheel or sphere, (like a fidget spinner)</li>
+			<li>many orbits are nearly circular, but technically elliptical</li>
+			<li>some roads have circular curves</li>
+			<li>merry go round</li>
+			<li>charged particles in a uniform magnetic field</li>
 		</p>
 		<div class='example'>
-			<b>Example:</b> A 20kg dog is riding on a carousel 5m away from the center. If the dog is moving at 3m/s what magnitude and
-			direction force will it have to exert to produce the circular motion needed to stay on the ride?
+			<b>Example:</b> A 20kg dog is riding on a carousel 5m away from the center. If the dog is moving at 3m/s, what magnitude
+			and direction force will it have to exert to produce the circular motion needed to stay on the ride?
 			<details>
 				<summary>solution</summary>
 				$$F = \frac{mv^{2}}{r}$$ $$F = \frac{(20)(3)^{2}}{5}$$ $$F = 36N$$
@@ -165,16 +157,17 @@
 			measure the velocity, but you do know it takes 60 seconds for the second hand to complete a circle.
 			<details>
 				<summary>solution</summary>
-				<p>Velocity is distance divided by time.
-					<br>We can use the circumference of the circle divided by 60 seconds</p>
-				$$c = 2 \pi r $$ $$v = \frac{2 \pi (0.021)}{60}$$ $$v = 0.0022 \small \frac{m}{s}$$
+				<p>The distance is the circumference of the circle. The time is 60s. Velocity is distance over time.</p>
+
+				$$c = 2 \pi r $$ $$v = \frac{\Delta x}{\Delta y} $$ $$v = \frac{2 \pi (0.021)}{60}$$ $$v = 0.0022 \small \frac{m}{s}$$
 				<br> $$F = \frac{mv^{2}}{r}$$ $$F = \frac{0.000003(0.0022)^{2}}{0.021}$$ $$F = 0.00000175N $$ $$F = 6.914 \times 10^{-10}N$$
 			</details>
 		</div>
 		<p class='underlined'>Circular Orbits</p>
-		Each satellite below starts with a different velocity. Simulation speed =
-		<input class='number' id='speed' type="number" step="1" min='1' max='100' value='4'>
-		<canvas class='black' id='grav2' height='600' width='600' onclick="grav2(this)"> </canvas>
+		<p>Each satellite below starts with a different velocity. Simulation speed =
+			<input class='number' id='speed' type="number" step="1" min='1' max='100' value='4'>
+			<canvas class='black' id='grav2' height='600' width='600' onclick="grav2(this)"> </canvas>
+		</p>
 		<p>
 			<strong>The orbits of objects in space are elliptical. They are never perfectly circular,</strong> but many orbits come close
 			enough to circular motion to make a rough approximation useful.</p>
@@ -182,7 +175,7 @@
 			<summary>derivation of orbital velocity</summary>
 			<br>If we assume that the central mass is much larger and doesn't move, we can combine the equations for circular motion with
 			the universal gravitation equations. $$F = \frac{M_{1}v^{2}}{r} \quad F = \frac{GM_{1}M_{2}}{r^{2}} $$
-			<br>set the force of gravity and the centripital force equal $$\frac{M_{1}v^{2}}{r} = \frac{GM_{1}M_{2}}{r^{2}} $$
+			<br>set the force of gravity and the centripetal force equal $$\frac{M_{1}v^{2}}{r} = \frac{GM_{1}M_{2}}{r^{2}} $$
 			<br>cancel terms that show up on both sides $$\frac{\color{blue}M_{\color{blue}1}v^{2}}{\color{blue}r} = \frac{G\color{blue}M_{\color{blue}1}M_{2}}{r^{\color{blue}2}}$$
 			$$v^{2} = \frac{GM_{2}}{r} $$
 		</details>
@@ -197,25 +190,22 @@
 					<line x1="150" y1="-5" x2="150" y2="5" style="stroke:#000;stroke-width:2" />
 					<text x="75" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
 				</g>
-
 				<g transform="translate(350 200) rotate(0)">
 					<g transform="translate(0 -100) rotate(90)">
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
-					<text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">v</text>
+					<text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="23">v</text>
 					<circle cx="0" cy="0" r="6" fill='#f77' stroke-width="2" stroke="#222" />
 				</g>
-
-				<g transform="translate(306 94) rotate(-45)" opacity=0 .25>
+				<g transform="translate(306 94) rotate(-45)" opacity=0.25>
 					<g transform="translate(0 -100) rotate(90)">
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
 					<circle cx="0" cy="0" r="6" fill='#f77' stroke-width="2" stroke="#222" />
 				</g>
-
-				<g transform="translate(200 50) rotate(-90)" opacity=0 .07>
+				<g transform="translate(200 50) rotate(-90)" opacity=0.07>
 					<g transform="translate(0 -100) rotate(90)">
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
@@ -225,51 +215,19 @@
 			</svg>
 			<h1>$$v^{2} = \frac{GM}{r} $$</h1>
 			<br>\(v\) = orbital tangential velocity [m/s]
-			<em>vector</em>
 			<br>\(G\) = 6.67408 × 10
 			<sup>-11</sup> = universal gravitation constant [N m²/kg²]
-			<br>\(r\) = radius of the circlular orbit [m]
-			<em>vector</em>
-			<br>\(m\) = mass of the central body being orbited [kg]
-			<p>Only true for circular orbits!</p>
+			<br>\(r\) = radius of the circular orbit [m]
+			<br>\(M\) = mass of the central body being orbited [kg]
+			<p> Only true for circular orbits!
+				<br>The orbiting body needs to be much smaller than the central body!
+			</p>
 		</div>
 		<h3 class='center'>radius vs. orbital velocity
 			<br>for a satellite of Earth</h3>
-
 		<div id='v-vs-r'></div>
 		<p>It seems counter-intuitive, but as you orbit farther from the central body your velocity goes down.</p>
-		<!-- <br>
-		<p>Click the mouse on the simulation to set the radius for the circular orbit.</p>
-		<canvas id="canvas-1" class='center' width='600' height='350'></canvas>
-		<div class="col-group">
-			<div id='hud1' class='center'>
-
-			</div>
-			<div id='hud2' class='center'>
-
-			</div>
-		</div> -->
-		<div class='example'>
-			<b>Example:</b> If a satellite is 800.0 km from the surface of the moon how fast must it move to travel in a circular orbit?
-			<details>
-				<summary>solution</summary>
-				$$r = 800,000 + 1,737,000 = 2,537,000m$$ $$v^{2} = \frac{GM}{r}$$ $$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2,537,000}$$
-				$$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2.537 \times 10^{6}}$$ $$\sqrt{v^{2}} = \sqrt{19.31 \times
-				10^5}$$ $$v = 1389.6 \small \frac{m}{s}$$
-			</details>
-		</div>
-		<div class='example'>
-			<b>Example:</b> A geosynchronous orbit is always above the same point on the earth so it takes one day to orbit. This orbit
-			requires a velocity of 3,070 m/s. Calculate how far away a geosynchronous satellite needs to be from the center of the
-			earth.
-			<details>
-				<summary>solution</summary>
-				$$v^{2} = \frac{GM}{r}$$ $$r = \frac{GM}{v^{2}}$$ $$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(3,070)^{2}}$$
-				$$r = 4.22 \times 10^{7} m = 42,200 km$$
-				<p>altitude = orbital radius - Earth's surface radius</p>
-				$$a = 42,200 km - 6,371 km$$ $$a = 35,829 km $$
-			</details>
-		</div>
+		<br>
 		<center>
 			<h3>Local Massive Objects Data Table</h3>
 			<table border>
@@ -363,6 +321,36 @@
 			</table>
 			<a href="http://exoplanets.org/table">exoplanets data table</a>
 		</center>
+		<div class='example'>
+			<strong>Example:</strong> If a satellite is 800.0 km from the surface of the moon how fast must it move to travel in a circular
+			orbit?
+			<details>
+				<summary>solution</summary>
+				$$r = 800,000 + 1,737,000 = 2,537,000m$$ $$v^{2} = \frac{GM}{r}$$ $$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2,537,000}$$
+				$$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2.537 \times 10^{6}}$$ $$\sqrt{v^{2}} = \sqrt{19.31 \times
+				10^5}$$ $$v = 1389.6 \small \frac{m}{s}$$
+			</details>
+		</div>
+		<div class='example'>
+			<strong>Example:</strong> A geosynchronous orbit is always above the same point on the earth so it takes one day to orbit. This
+			orbit requires a velocity of 3,070 m/s. Calculate how far away a geosynchronous satellite needs to be from the center
+			of the earth.
+			<details>
+				<summary>solution</summary>
+				$$v^{2} = \frac{GM}{r}$$ $$r = \frac{GM}{v^{2}}$$ $$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(3,070)^{2}}$$
+				$$r = 4.22 \times 10^{7} m = 42,200 km$$
+				<p>altitude = orbital radius - Earth's surface radius</p>
+				$$a = 42,200 km - 6,371 km$$ $$a = 35,829 km $$
+			</details>
+		</div>
+		<div class='example'>
+			<strong>Example:</strong> A 100kg satellite and a 200kg satellite are both in a circular orbit around the Earth at 10,000,000m
+			from the center of the Earth. Which satellite will have the higher velocity?
+			<details>
+				<summary>solution</summary>
+				<p>They will both have the same velocity. The mass of the satellite doesn't matter, only the mass of the Earth.</p>
+			</details>
+		</div>
 	</article>
 	<div class='back'>
 		<a href="../../../index.html#units">Back</a>

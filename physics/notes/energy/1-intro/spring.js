@@ -41,7 +41,7 @@ var spring = function(button) {
 
   function mass(x, y, Vx, Vy, r, fillColor) {
     //constructor function that determines how masses work
-    this.x = x;
+    this.x = canvas.width;
     this.y = y;
     this.Vx = Vx;
     this.Vy = Vy;
@@ -137,14 +137,14 @@ var spring = function(button) {
       this.ke = 0.5 * this.mass * this.Vx * this.Vx * 60;
       var E = this.ke + this.u;
       //draw energy bars
+      // ctx.fillStyle = "rgba(255, 0, 255, 0.3)";
+      // ctx.fillRect(0, 0, canvas.width * (this.ke / E), 25);
       ctx.fillStyle = "rgba(255, 0, 255, 0.3)";
-      ctx.fillRect(0, 0, canvas.width * (this.ke / E), 25);
-      ctx.fillStyle = "rgba(0, 255, 255, 0.3)";
-      ctx.fillRect(0, 25, canvas.width * (this.u / E), 30);
+      ctx.fillRect(0, 0, canvas.width * (this.u / E), 25);
       //draw energy text
       ctx.fillStyle = "#000";
-      ctx.fillText("KE = ½mv² = " + this.ke.toFixed(0) + "J", 5, 20);
-      ctx.fillText("U = ½kx² = " + this.u.toFixed(0) + "J", 5, 46);
+      // ctx.fillText("KE = ½mv² = " + this.ke.toFixed(0) + "J", 5, 20);
+      ctx.fillText("U = ½kx² = " + this.u.toFixed(0) + "J", 5, 20);
       ctx.fillText("F = -kx = " + F.toFixed(0) + "N", 5, canvas.height - 5);
       //ctx.fillText('k = ' + (physics.k), 5, canvas.height - 25);
       ctx.fillText("x = " + (this.x - physics.equalibrium).toFixed(0) + "m", 5, canvas.height - 25);
@@ -172,7 +172,7 @@ var spring = function(button) {
   var box;
 
   function spawn() {
-    box = new mass(230, canvas.height / 2, 1, 0, 20, randomColor());
+    box = new mass(130, canvas.height / 2, 1, 0, 20, randomColor());
     document.getElementById("spring-m").value = Math.round(box.mass);
   }
   spawn();
@@ -226,7 +226,7 @@ var spring = function(button) {
     if (!pause) {
       window.requestAnimationFrame(render);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // box.edges();
+      box.edges();
       box.spring();
       box.move();
       drawEqualibrium();
