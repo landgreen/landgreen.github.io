@@ -100,18 +100,16 @@ function toggleMode() {
 }
 function drawDigitalClock() {
   date = new Date();
-  document.getElementById("week-day").textContent = `${dayOfWeekAsString(date.getDay())}`;
-  // document.getElementById("date").textContent = `${date.getDate()}.${date.getMonth()}.20${date.getYear() % 100}`;
-  document.getElementById("date").textContent = nameOfMonthAsString(date.getMonth()) + " " + date.getDate();
-  // document.getElementById("analogClock").setAttribute("visibility", "hidden");
+  // document.getElementById("week-day").textContent = dayOfWeekAsString(date.getDay());
+  // document.getElementById("date").textContent = nameOfMonthAsString(date.getMonth()) + " " + date.getDate();
   if (timeMode === 0) {
-    //time no seconds   ⁚:∶
+    //time no seconds
     document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`;
   } else if (timeMode === 1) {
     //time with seconds
-    document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10
-      ? "0" + date.getMinutes()
-      : date.getMinutes()}:${date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()}`;
+    document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}:${
+      date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
+    }`;
   } else if (timeMode === 2) {
     //stopwatch
     let end = Date.now();
@@ -263,7 +261,14 @@ function toggleZoom() {
 //**************************************************
 //weather
 
-function updateWeather() {
+function slowUpdate() {
+  //check if a new day and schedule
+  schedule.setCurrentByDate();
+  //output day and month
+  date = new Date();
+  document.getElementById("week-day").textContent = dayOfWeekAsString(date.getDay());
+  document.getElementById("date").textContent = nameOfMonthAsString(date.getMonth()) + " " + date.getDate();
+
   //get position
   function success(position) {
     getWeather(position.coords.latitude, position.coords.longitude);
@@ -316,7 +321,11 @@ function updateWeather() {
 
   function setWeather(temp, weather) {
     document.getElementById("temp").textContent = Math.round(temp) + "° F";
+
     document.getElementById("weather").textContent = weather;
+    let size = 70 / weather.length;
+    size = Math.min(11, Math.max(size, 4));
+    document.getElementById("weather").setAttribute("font-size", size + "px");
   }
 }
 function noWeather() {
@@ -340,15 +349,15 @@ function update() {
 schedule.setCurrentByDate();
 update();
 noWeather();
-updateWeather();
+slowUpdate();
 drawDigitalClock();
 
 // window.setInterval(drawDigitalClock, 100); //update every 1/10 of second
-// window.setInterval(updateWeather, 10 * 60 * 1000); //update weather every 10 min
+// window.setInterval(slowUpdate, 10 * 60 * 1000); //update weather every 10 min
 
 setTimeout(function() {
   update();
-  window.setInterval(updateWeather, 10 * 60 * 1000); //update weather every 10 min
+  window.setInterval(slowUpdate, 10 * 60 * 1000); //update weather every 10 min
   window.setInterval(update, 60 * 1000); //update every minute
 }, (60 - date.getSeconds()) * 1000);
 
