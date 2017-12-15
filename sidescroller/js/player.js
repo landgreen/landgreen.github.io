@@ -224,7 +224,7 @@ const mech = {
           y: this.jumpForce / game.delta * 0.2 * Math.min(mech.standingOn.mass, 1)
         });
 
-        //zero player velocity for consistant jumps
+        //zero player y-velocity for consistent jumps
         Matter.Body.setVelocity(player, {
           x: player.velocity.x,
           y: 0
@@ -279,17 +279,17 @@ const mech = {
       }
       if (keys[65]) {
         // move player   left / a
-        if (player.velocity.x > -5) {
+        if (player.velocity.x > -6) {
           player.force.x += -this.FxAir / game.delta;
         }
       } else if (keys[68]) {
         //move player  right / d
-        if (player.velocity.x < 5) {
+        if (player.velocity.x < 6) {
           player.force.x += this.FxAir / game.delta;
         }
       }
     }
-    //smoothly move height towards height goal ************
+    //smoothly move leg height towards height goal
     this.yOff = this.yOff * 0.85 + this.yOffGoal * 0.15;
   },
   alive: true,

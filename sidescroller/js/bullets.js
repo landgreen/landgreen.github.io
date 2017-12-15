@@ -1,7 +1,7 @@
 let bullet = [];
 
 const b = {
-  dmgScale: 0.9, //scales all gun damage from momentum, but not raw .dmg
+  dmgScale: 0.7, //scales all gun damage from momentum, but not raw .dmg
   gravity: 0.0006, //most other bodies have   gravity = 0.001
   activeGun: 0, //current gun in use by player
   inventoryGun: 0,
@@ -325,6 +325,168 @@ const b = {
     //   }
     // }
     //     };
+    //   }
+    // },
+    // {
+    //   name: "arc-welder",
+    //   ammo: 0,
+    //   ammoPack: 999999,
+    //   have: false,
+    //   fire: function() {
+    //     //mech.fireCDcycle = game.cycle + 1
+    //     let best;
+    //     const color = "#0ff";
+    //     const range = 200;
+    //     const path = [
+    //       {
+    //         x: mech.pos.x + 20 * Math.cos(mech.angle),
+    //         y: mech.pos.y + 20 * Math.sin(mech.angle)
+    //       },
+    //       {
+    //         x: mech.pos.x + range * Math.cos(mech.angle),
+    //         y: mech.pos.y + range * Math.sin(mech.angle)
+    //       }
+    //     ];
+    //     const vertexCollision = function(v1, v1End, domain) {
+    //       for (let i = 0; i < domain.length; ++i) {
+    //         let vertices = domain[i].vertices;
+    //         const len = vertices.length - 1;
+    //         for (let j = 0; j < len; j++) {
+    //           results = game.checkLineIntersection(v1, v1End, vertices[j], vertices[j + 1]);
+    //           if (results.onLine1 && results.onLine2) {
+    //             const dx = v1.x - results.x;
+    //             const dy = v1.y - results.y;
+    //             const dist2 = dx * dx + dy * dy;
+    //             if (dist2 < best.dist2 && (!domain[i].mob || domain[i].alive)) {
+    //               best = {
+    //                 x: results.x,
+    //                 y: results.y,
+    //                 dist2: dist2,
+    //                 who: domain[i],
+    //                 v1: vertices[j],
+    //                 v2: vertices[j + 1]
+    //               };
+    //             }
+    //           }
+    //         }
+    //         results = game.checkLineIntersection(v1, v1End, vertices[0], vertices[len]);
+    //         if (results.onLine1 && results.onLine2) {
+    //           const dx = v1.x - results.x;
+    //           const dy = v1.y - results.y;
+    //           const dist2 = dx * dx + dy * dy;
+    //           if (dist2 < best.dist2 && (!domain[i].mob || domain[i].alive)) {
+    //             best = {
+    //               x: results.x,
+    //               y: results.y,
+    //               dist2: dist2,
+    //               who: domain[i],
+    //               v1: vertices[0],
+    //               v2: vertices[len]
+    //             };
+    //           }
+    //         }
+    //       }
+    //     };
+    //     const checkforCollisions = function() {
+    //       best = {
+    //         x: null,
+    //         y: null,
+    //         dist2: Infinity,
+    //         who: null,
+    //         v1: null,
+    //         v2: null
+    //       };
+    //       vertexCollision(path[path.length - 2], path[path.length - 1], mob);
+    //       vertexCollision(path[path.length - 2], path[path.length - 1], map);
+    //       vertexCollision(path[path.length - 2], path[path.length - 1], body);
+    //     };
+    //     const laserHitMob = function(dmg) {
+    //       if (best.who.alive) {
+    //         dmg *= b.dmgScale * 0.2;
+    //         best.who.damage(dmg);
+    //         best.who.locatePlayer();
+    //         //draw mob damage circle
+    //         ctx.fillStyle = color;
+    //         ctx.beginPath();
+    //         ctx.arc(path[path.length - 1].x, path[path.length - 1].y, Math.sqrt(dmg) * 60, 0, 2 * Math.PI);
+    //         ctx.fill();
+    //       }
+    //     };
+
+    //     const reflection = function() {
+    //       // https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector
+    //       const n = Matter.Vector.perp(Matter.Vector.normalise(Matter.Vector.sub(best.v1, best.v2)));
+    //       const d = Matter.Vector.sub(path[path.length - 1], path[path.length - 2]);
+    //       const nn = Matter.Vector.mult(n, 2 * Matter.Vector.dot(d, n));
+    //       const r = Matter.Vector.normalise(Matter.Vector.sub(d, nn));
+    //       path[path.length] = Matter.Vector.add(Matter.Vector.mult(r, range), path[path.length - 1]);
+    //     };
+    //     //beam before reflection
+    //     checkforCollisions();
+    //     if (best.dist2 != Infinity) {
+    //       //if hitting something
+    //       path[path.length - 1] = {
+    //         x: best.x,
+    //         y: best.y
+    //       };
+    //       laserHitMob(1);
+
+    //       //1st reflection beam
+    //       reflection();
+    //       //ugly bug fix: this stops the reflection on a bug where the beam gets trapped inside a body
+    //       let who = best.who;
+    //       checkforCollisions();
+    //       if (best.dist2 != Infinity) {
+    //         //if hitting something
+    //         path[path.length - 1] = {
+    //           x: best.x,
+    //           y: best.y
+    //         };
+    //         laserHitMob(0.8);
+
+    //         //2nd reflection beam
+    //         //ugly bug fix: this stops the reflection on a bug where the beam gets trapped inside a body
+    //         if (who !== best.who) {
+    //           reflection();
+    //           checkforCollisions();
+    //           if (best.dist2 != Infinity) {
+    //             //if hitting something
+    //             path[path.length - 1] = {
+    //               x: best.x,
+    //               y: best.y
+    //             };
+    //             laserHitMob(0.6);
+    //           }
+    //         }
+    //       }
+    //     }
+    //     //draw the laser path
+    //     // ctx.strokeStyle = "#f00";
+    //     // ctx.lineWidth = 2;
+    //     // ctx.setLineDash([Math.ceil(120 * Math.random()), Math.ceil(120 * Math.random())]);
+    //     // ctx.beginPath();
+    //     // ctx.moveTo(path[0].x, path[0].y);
+    //     // for (let i = 1, len = path.length; i < len; ++i) {
+    //     // 	ctx.lineTo(path[i].x, path[i].y);
+    //     // }
+    //     // ctx.stroke();
+    //     // ctx.setLineDash([0, 0]);
+    //     ctx.fillStyle = color;
+    //     ctx.strokeStyle = color;
+    //     ctx.lineWidth = 2;
+    //     ctx.setLineDash([50 + 120 * Math.random(), 50 * Math.random()]);
+    //     for (let i = 1, len = path.length; i < len; ++i) {
+    //       ctx.beginPath();
+    //       ctx.moveTo(path[i - 1].x, path[i - 1].y);
+    //       ctx.lineTo(path[i].x, path[i].y);
+    //       ctx.stroke();
+    //       ctx.globalAlpha *= 0.6;
+    //       // ctx.beginPath();
+    //       // ctx.arc(path[i].x, path[i].y, 5, 0, 2 * Math.PI);
+    //       // ctx.fill();
+    //     }
+    //     ctx.setLineDash([0, 0]);
+    //     ctx.globalAlpha = 1;
     //   }
     // },
     {

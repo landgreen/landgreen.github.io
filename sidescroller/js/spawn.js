@@ -10,17 +10,19 @@ const spawn = {
     "springer",
     "zoomer",
     "shooter",
-    "laserer",
-    "laserTracker",
-    "laserSearcher",
+    "beamer",
+    "focuser",
+    "laser",
     "blinker",
     "drifter",
-    "blackHoler",
-    "ghoster",
+    "sucker",
     "exploder",
-    "spawner"
+    "spawner",
+    "ghoster",
+    "sneaker",
+    "bomber"
   ],
-  bossPickList: ["zoomer", "chaser", "burster", "striker", "springer", "laserer", "laserTracker", "laserSearcher", "ghoster", "exploder", "spawner", "random"],
+  bossPickList: ["zoomer", "chaser", "burster", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner", "bomber"],
   setSpawnList: function() {
     //this is run at the start of each new level to determine the possible mobs for the level
     //each level has 2 mobs: one new mob and one from the the last level
@@ -41,8 +43,8 @@ const spawn = {
     chance = 1
   ) {
     if (Math.random() < chance + game.levelsCleared * 0.03) {
-      const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       for (let i = 0; i < num; ++i) {
+        const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
         this[pick](x + Math.round((Math.random() - 0.5) * 20) + i * size * 2.5, y + Math.round((Math.random() - 0.5) * 20), size);
       }
     }
@@ -50,30 +52,31 @@ const spawn = {
   randomBoss: function(x, y, chance = 1) {
     if (Math.random() < chance + game.levelsCleared * 0.11 && game.levelsCleared !== 0) {
       //choose from the possible picklist
-      const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
+      let pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       //is the pick able to be a boss?
       let canBeBoss = false;
       for (let i = 0, len = this.bossPickList.length; i < len; ++i) {
         if (this.bossPickList[i] === pick) {
           canBeBoss = true;
+          break;
+        }
+      }
+      if (!canBeBoss) {
+        if (Math.random() < 0.4) {
+          //one extra large mob
+          this[pick](x, y, 90 + Math.random() * 40);
+          return;
+        } else if (Math.random() < 0.5) {
+          pick = "randomList";
+        } else {
+          pick = "random";
         }
       }
       //spawn random boss
-      if (canBeBoss) {
-        if (Math.random() < 0.5) {
-          this.nodeBoss(x, y, pick);
-        } else {
-          this.lineBoss(x, y, pick);
-        }
+      if (Math.random() < 0.5) {
+        this.nodeBoss(x, y, pick);
       } else {
-        if (Math.random() < 0.5) {
-          //one extra large mob
-          this[pick](x, y, 90 + Math.random() * 40);
-        } else if (Math.random() < 0.5) {
-          this.lineBoss(x, y, "random");
-        } else {
-          this.nodeBoss(x, y, "random");
-        }
+        this.lineBoss(x, y, pick);
       }
     }
   },
@@ -81,32 +84,43 @@ const spawn = {
   //***********************************************************************************************************
   starter: function(x, y, radius = 30) {
     //only on level 1
-    mobs.spawn(x, y, 8, radius, "#9ccdc6", ["healthBar", "seePlayerByLookingAt", "attraction"]);
+    mobs.spawn(x, y, 8, radius, "#9ccdc6");
     let me = mob[mob.length - 1];
     me.accelMag = 0.0007;
+    me.do = function() {
+      this.healthBar();
+      this.seePlayerByLookingAt();
+      this.attraction();
+    };
   },
   chaser: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-    mobs.spawn(x, y, 4, radius, "rgb(110,150,200)", ["healthBar", "gravity", "seePlayerCheck", "attraction"]);
+    mobs.spawn(x, y, 4, radius, "rgb(110,150,200)");
     let me = mob[mob.length - 1];
     me.g = 0.0005; //required if using 'gravity'
     me.accelMag = 0.0012;
     me.memory = 240;
     if (Math.random() < Math.min(game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
+    me.do = function() {
+      this.healthBar();
+      this.gravity();
+      this.seePlayerCheck();
+      this.attraction();
+    };
   },
-  // searcher: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-  //     mobs.spawn(x, y, 5, radius, "rgb(110,150,200)", ["healthBar", "seePlayerCheck", "attraction", "search"]);
-  //     let me = mob[mob.length - 1];
-  //     me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
-  //     if (Math.random() < Math.min(game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
-  // },
   grower: function(x, y, radius = 15) {
-    mobs.spawn(x, y, 7, radius, "hsl(144, 15%, 50%)", ["healthBar", "seePlayerByLookingAt", "attraction", "grow"]);
+    mobs.spawn(x, y, 7, radius, "hsl(144, 15%, 50%)");
     let me = mob[mob.length - 1];
     me.big = false; //required for grow
     me.accelMag = 0.0005;
+    me.do = function() {
+      this.healthBar();
+      this.seePlayerByLookingAt();
+      this.attraction();
+      this.grow();
+    };
   },
   springer: function(x, y, radius = 20 + Math.ceil(Math.random() * 35)) {
-    mobs.spawn(x, y, 8, radius, "#b386e8", ["healthBar", "gravity", "searchSpring"]);
+    mobs.spawn(x, y, 8, radius, "#b386e8");
     let me = mob[mob.length - 1];
     me.friction = 0;
     me.frictionAir = 0.1;
@@ -145,9 +159,14 @@ const spawn = {
       this.removeCons();
     };
     if (Math.random() < Math.min(game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
+    me.do = function() {
+      this.healthBar();
+      this.gravity();
+      this.searchSpring();
+    };
   },
   zoomer: function(x, y, radius = 20 + Math.ceil(Math.random() * 30)) {
-    mobs.spawn(x, y, 6, radius, "#ffe2fd", ["healthBar", "seePlayerByDistAndLOS", "zoom", "gravity"]);
+    mobs.spawn(x, y, 6, radius, "#ffe2fd");
     let me = mob[mob.length - 1];
     me.trailLength = 20; //required for trails
     me.setupTrail(); //fill trails array up with the current position of mob
@@ -160,18 +179,30 @@ const spawn = {
     me.onHit = function() {
       this.zoomMode = 150;
     };
+    me.do = function() {
+      this.healthBar();
+      this.seePlayerByDistAndLOS();
+      this.zoom();
+      this.gravity();
+    };
   },
   hopper: function(x, y, radius = 25 + Math.ceil(Math.random() * 30)) {
-    mobs.spawn(x, y, 5, radius, "rgb(0,200,180)", ["healthBar", "gravity", "seePlayerCheck", "hop"]);
+    mobs.spawn(x, y, 5, radius, "rgb(0,200,180)");
     let me = mob[mob.length - 1];
     me.accelMag = 0.04;
     me.g = 0.0015; //required if using 'gravity'
     me.frictionAir = 0.018;
     me.restitution = 0;
     me.delay = 110;
+    me.do = function() {
+      this.healthBar();
+      this.gravity();
+      this.seePlayerCheck();
+      this.hop();
+    };
   },
   burster: function(x, y, radius = 45 + Math.ceil(Math.random() * 40)) {
-    mobs.spawn(x, y, 5, radius, "#728ab2", ["healthBar", "seePlayerByLookingAt", "burstAttraction"]);
+    mobs.spawn(x, y, 5, radius, "#728ab2");
     let me = mob[mob.length - 1];
     me.cdBurst1 = 0; //must add for burstAttraction
     me.cdBurst2 = 0; //must add for burstAttraction
@@ -184,10 +215,15 @@ const spawn = {
     me.frictionAir = 0.02;
     me.lookTorque = 0.0000013;
     me.restitution = 0;
+    me.do = function() {
+      this.healthBar();
+      this.seePlayerByLookingAt();
+      this.burstAttraction();
+    };
   },
-  blackHoler: function(x, y, radius = 30 + Math.ceil(Math.random() * 70)) {
+  sucker: function(x, y, radius = 30 + Math.ceil(Math.random() * 70)) {
     radius = 9 + radius / 8; //extra small
-    mobs.spawn(x, y, 6, radius, "#000", ["seePlayerByDistOrLOS", "attraction", "darkness", "blackHole", "healthBar"]);
+    mobs.spawn(x, y, 6, radius, "#000");
     let me = mob[mob.length - 1];
     me.eventHorizon = radius * 30; //required for blackhole
     me.seeAtDistance2 = (me.eventHorizon + 500) * (me.eventHorizon + 500); //vision limit is event horizon
@@ -196,9 +232,16 @@ const spawn = {
     me.memory = 600;
     Matter.Body.setDensity(me, 0.008); //extra dense //normal is 0.001
     me.collisionFilter.mask = 0x001100; //move through walls
+    me.do = function() {
+      this.seePlayerByDistOrLOS();
+      this.attraction();
+      this.darkness();
+      this.blackHole();
+      this.healthBar();
+    };
   },
-  laserer: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
-    mobs.spawn(x, y, 4, radius, "rgb(255,0,190)", ["healthBar", "seePlayerByLookingAt", "attraction", "repulsion", "laser"]);
+  beamer: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
+    mobs.spawn(x, y, 4, radius, "rgb(255,0,190)");
     let me = mob[mob.length - 1];
     me.repulsionRange = 90000; //squared
     // me.seePlayerFreq = 2 + Math.round(Math.random() * 5);
@@ -206,9 +249,16 @@ const spawn = {
     me.frictionStatic = 0;
     me.friction = 0;
     if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
+    me.do = function() {
+      this.healthBar();
+      this.seePlayerByLookingAt();
+      this.attraction();
+      this.repulsion();
+      this.laserBeam();
+    };
   },
-  laserTracker: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
-    mobs.spawn(x, y, 4, radius, "rgb(0,0,255)", ["healthBar", "seePlayerByLookingAt", "attraction", "repulsion", "laserTracking"]);
+  focuser: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
+    mobs.spawn(x, y, 4, radius, "rgb(0,0,255)");
     let me = mob[mob.length - 1];
     me.laserPos = me.position; //required for laserTracking
     me.repulsionRange = 400000; //squared
@@ -220,17 +270,30 @@ const spawn = {
       this.laserPos = this.position;
     };
     if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
+    me.do = function() {
+      this.healthBar();
+      this.seePlayerByLookingAt();
+      this.attraction();
+      this.repulsion();
+      this.laserTracking();
+    };
   },
-  laserSearcher: function(x, y, radius = 30) {
+  laser: function(x, y, radius = 30) {
     //only on level 1
-    mobs.spawn(x, y, 3, radius, "#f00", ["healthBar", "seePlayerByLookingAt", "attraction", "laserSearch"]);
+    mobs.spawn(x, y, 3, radius, "#f00");
     let me = mob[mob.length - 1];
     me.vertices = Matter.Vertices.rotate(me.vertices, Math.PI, me.position); //make the pointy side of triangle the front
     Matter.Body.rotate(me, Math.random() * Math.PI * 2);
     me.accelMag = 0.00005;
+    me.do = function() {
+      this.healthBar();
+      this.seePlayerByLookingAt();
+      this.attraction();
+      this.laser();
+    };
   },
   striker: function(x, y, radius = 15 + Math.ceil(Math.random() * 25)) {
-    mobs.spawn(x, y, 5, radius, "rgb(221,102,119)", ["healthBar", "seePlayerCheck", "attraction", "gravity", "strike"]);
+    mobs.spawn(x, y, 5, radius, "rgb(221,102,119)");
     let me = mob[mob.length - 1];
     me.accelMag = 0.0004;
     me.g = 0.0002; //required if using 'gravity'
@@ -241,20 +304,54 @@ const spawn = {
     me.onDamage = function() {
       this.cd = game.cycle + this.delay;
     };
+    me.do = function() {
+      this.healthBar();
+      this.seePlayerCheck();
+      this.attraction();
+      this.gravity();
+      this.strike();
+    };
+  },
+  sneaker: function(x, y, radius = 15 + Math.ceil(Math.random() * 25)) {
+    let me;
+    mobs.spawn(x, y, 5, radius, "transparent");
+    me = mob[mob.length - 1];
+    me.accelMag = 0.0006;
+    me.g = 0.0002; //required if using 'gravity'
+    me.stroke = "transparent"; //used for drawSneaker
+    me.alpha = 1; //used in drawSneaker
+    me.canTouchPlayer = false; //used in drawSneaker
+    me.collisionFilter.mask = 0x000111; //can't touch player
+    // me.memory = 420;
+    // me.seePlayerFreq = 60 + Math.round(Math.random() * 30);
+    me.do = function() {
+      this.seePlayerCheck();
+      this.attraction();
+      this.gravity();
+      this.drawSneaker();
+    };
   },
   ghoster: function(x, y, radius = 50 + Math.ceil(Math.random() * 60)) {
     let me;
-    mobs.spawn(x, y, 9, radius, "transparent", ["healthBar", "seePlayerByLookingAt", "attraction", "search"]);
+    mobs.spawn(x, y, 7, radius, "transparent");
     me = mob[mob.length - 1];
-    me.accelMag = 0.00017;
+    me.seeAtDistance2 = 1500000;
+    me.accelMag = 0.0002;
     me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
-    me.lookTorque = 0.0000003;
-    me.stroke = "#999";
+    me.stroke = "transparent"; //used for drawGhost
+    me.alpha = 1; //used in drawGhost
+    me.canTouchPlayer = false; //used in drawGhost
+    me.collisionFilter.mask = 0x000100; //move through walls and player
     me.memory = 420;
-    me.collisionFilter.mask = 0x001100; //move through walls
+    me.do = function() {
+      this.seePlayerCheckByDistance();
+      this.attraction();
+      this.search();
+      this.drawGhost();
+    };
   },
   blinker: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-    mobs.spawn(x, y, 6, radius, "rgb(0,200,255)", ["healthBar", "seePlayerCheck", "blink"]);
+    mobs.spawn(x, y, 6, radius, "rgb(0,200,255)");
     let me = mob[mob.length - 1];
     Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
     me.blinkRate = 40 + Math.round(Math.random() * 60); //required for blink
@@ -263,9 +360,14 @@ const spawn = {
     me.isStatic = true;
     me.memory = 360;
     me.seePlayerFreq = 40 + Math.round(Math.random() * 30);
+    me.do = function() {
+      this.healthBar();
+      this.seePlayerCheck();
+      this.blink();
+    };
   },
   drifter: function(x, y, radius = 15 + Math.ceil(Math.random() * 40)) {
-    mobs.spawn(x, y, 4.5, radius, "rgb(0,200,255)", ["healthBar", "seePlayerCheck", "drift"]);
+    mobs.spawn(x, y, 4.5, radius, "rgb(0,200,255)");
     let me = mob[mob.length - 1];
     Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
     me.blinkRate = 40 + Math.round(Math.random() * 30); //required for blink/drift
@@ -274,47 +376,59 @@ const spawn = {
     me.isStatic = true;
     me.memory = 360;
     me.seePlayerFreq = 40 + Math.round(Math.random() * 30);
+    me.do = function() {
+      this.healthBar();
+      this.seePlayerCheck();
+      this.drift();
+    };
   },
-  // phaser: function(x, y, radius = 25 + Math.ceil(Math.random() * 30)) {
-  //     mobs.spawn(x, y, 6, radius, "rgba(110,150,255,0.17)", ["phaseIn", "locatePlayerByDist", "attraction", "gravity"]);
-  //     let me = mob[mob.length - 1];
-  //     me.stroke = "transparent";
-  //     me.accelMag = 0.001;
-  //     me.g = 0.0005; //required if using 'gravity'
-  //     me.phaseRange2 = Math.round(Math.pow(radius + 270, 2));
-  //     me.locateRange = 1000 * 1000;
-  //     me.collisionFilter.mask = 0x000001; //can't be hit by bullets or player
-  // },
-  // sneakAttacker: function(x, y, radius = 25 + Math.ceil(Math.random() * 30)) {
-  //     mobs.spawn(x, y, 6, radius, "rgba(120,190,210,0.08)", ["gravity", "sneakAttack"]);
-  //     let me = mob[mob.length - 1];
-  //     me.g = 0.0005; //required if using 'gravity'
-  //     me.collisionFilter.mask = 0x000001; //can't be hit by bullets or player
-  //     Matter.Body.rotate(me, Math.PI * 0.17);
-  // },
+  bomber: function(x, y, radius = 15 + Math.ceil(Math.random() * 25)) {
+    mobs.spawn(x, y, 4, radius, "rgb(160,230,255)");
+    let me = mob[mob.length - 1];
+    me.seeAtDistance2 = 800000;
+    me.fireFreq = Math.ceil(30 + 2000 / radius);
+    me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
+    me.hoverElevation = 400 + (Math.random() - 0.5) * 200; //squared
+    me.hoverXOff = (Math.random() - 0.5) * 100;
+    me.accelMag = Math.floor(10 * (Math.random() + 5)) * 0.00001;
+    me.g = 0.0002; //required if using 'gravity'   // gravity called in hoverOverPlayer
+    me.frictionStatic = 0;
+    me.friction = 0;
+    me.frictionAir = 0.01;
+    // me.memory = 300;
+    Matter.Body.setDensity(me, 0.0025); //extra dense //normal is 0.001
+    me.collisionFilter.mask = 0x001100; //move through walls
+    if (Math.random() < Math.min(0.3 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
+    me.do = function() {
+      this.healthBar();
+      this.seePlayerCheckByDistance();
+      this.hoverOverPlayer();
+      this.bomb();
+      this.search();
+    };
+  },
   shooter: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-    // mobs.spawn(x, y, 3, radius, "rgb(100,50,255)", ["healthBar", "seePlayerByDistAndLOS", "fire"]);
-    mobs.spawn(x, y, 3, radius, "rgb(100,50,255)", ["healthBar", "seePlayerByLookingAt", "fire"]);
+    mobs.spawn(x, y, 3, radius, "rgb(100,50,255)");
     let me = mob[mob.length - 1];
     me.vertices = Matter.Vertices.rotate(me.vertices, Math.PI, me.position); //make the pointy side of triangle the front
-    me.facePlayer = true;
-    me.fireFreq = Math.ceil(40 + 2000 / radius);
     me.memory = 120;
+    me.fireFreq = 0.013 + Math.random() * 0.01;
+    me.noseLength = 0;
+    me.fireAngle = 0;
+    me.accelMag = 0.0005;
+    me.frictionAir = 0.05;
+    me.lookTorque = 0.0000025 * (Math.random() > 0.5 ? -1 : 1);
+    me.fireDir = { x: 0, y: 0 };
     if (Math.random() < Math.min(0.15 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
+    me.do = function() {
+      this.healthBar();
+      this.seePlayerByLookingAt();
+      this.fire();
+    };
   },
-  // chaseShooter: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-  //     mobs.spawn(x, y, 3, radius, "rgb(155,0,255)", ["healthBar", "seePlayerByLookingAt", "attraction", "fire"]);
-  //     let me = mob[mob.length - 1];
-  //     me.vertices = Matter.Vertices.rotate(me.vertices, Math.PI, me.position); //make the pointy side of triangle the front
-  //     me.facePlayer = true;
-  //     me.accelMag = 0.0003;
-  //     me.fireFreq = Math.ceil(40 + 2000 / radius);
-  //     me.memory = 120;
-  //     if (Math.random() < Math.min(0.15 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
-  // },
-  bullet: function(x, y, radius = 6) {
+  bullet: function(x, y, radius = 6, sides = 0) {
     //bullets
-    mobs.spawn(x, y, 0, radius, "rgb(255,0,0)", ["gravity", "timeLimit"]);
+    mobs.spawn(x, y, sides, radius, "rgb(255,0,0)");
     let me = mob[mob.length - 1];
     me.stroke = "transparent";
     me.onHit = function() {
@@ -329,9 +443,13 @@ const spawn = {
     me.dropPowerUp = false;
     // me.collisionFilter.mask = 0x001000;
     me.collisionFilter.category = 0x010000;
+    me.do = function() {
+      this.gravity();
+      this.timeLimit();
+    };
   },
   spawner: function(x, y, radius = 55 + Math.ceil(Math.random() * 50)) {
-    mobs.spawn(x, y, 4, radius, "rgb(255,150,0)", ["healthBar", "gravity", "seePlayerCheck", "attraction"]);
+    mobs.spawn(x, y, 4, radius, "rgb(255,150,0)");
     let me = mob[mob.length - 1];
     me.g = 0.0004; //required if using 'gravity'
     me.leaveBody = false;
@@ -347,9 +465,15 @@ const spawn = {
       }
     };
     if (Math.random() < Math.min(game.levelsCleared * 0.1, 0.5)) spawn.shield(me, x, y);
+    me.do = function() {
+      this.healthBar();
+      this.gravity();
+      this.seePlayerCheck();
+      this.attraction();
+    };
   },
   spawns: function(x, y, radius = 15 + Math.ceil(Math.random() * 5)) {
-    mobs.spawn(x, y, 4, radius, "rgb(255,0,0)", ["healthBar", "gravity", "seePlayerCheck", "attraction"]);
+    mobs.spawn(x, y, 4, radius, "rgb(255,0,0)");
     let me = mob[mob.length - 1];
     me.onHit = function() {
       //run this function on hitting player
@@ -360,25 +484,37 @@ const spawn = {
     me.memory = 30;
     me.seePlayerFreq = 80 + Math.round(Math.random() * 50);
     me.frictionAir = 0.002;
+    me.do = function() {
+      this.healthBar();
+      this.gravity();
+      this.seePlayerCheck();
+      this.attraction();
+    };
   },
   exploder: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-    mobs.spawn(x, y, 4, radius, "rgb(255,0,0)", ["healthBar", "gravity", "seePlayerCheck", "attraction"]);
+    mobs.spawn(x, y, 4, radius, "rgb(255,0,0)");
     let me = mob[mob.length - 1];
     me.onHit = function() {
       //run this function on hitting player
       this.explode();
     };
     me.g = 0.0004; //required if using 'gravity'
+    me.do = function() {
+      this.healthBar();
+      this.gravity();
+      this.seePlayerCheck();
+      this.attraction();
+    };
   },
 
   shield: function(target, x, y, stiffness = 0.4) {
     if (this.allowShields) {
-      mobs.spawn(x, y, 9, target.radius + 20, "rgba(220,220,255,0.6)", []);
+      mobs.spawn(x, y, 9, target.radius + 20, "rgba(220,220,255,0.6)");
       let me = mob[mob.length - 1];
       me.stroke = "rgb(220,220,255)";
       me.density = 0.0001; //very low density to not mess with the original mob's motion
       me.shield = true;
-      me.collisionFilter.mask = 0x001100; //don't collide with bodies, map, and mobs
+      me.collisionFilter.mask = 0x001100; //don't collide with bodies, map, and mobs, onyl bullets and player
       consBB[consBB.length] = Constraint.create({
         //attach shield to last spawned mob
         bodyA: me,
@@ -395,6 +531,7 @@ const spawn = {
       //swap order of shield and mob, so that mob is behind shield graphically
       mob[mob.length - 1] = mob[mob.length - 2];
       mob[mob.length - 2] = me;
+      me.do = function() {};
     }
   },
   //complex constrained mob templates**********************************************************************
@@ -410,19 +547,20 @@ const spawn = {
     l = Math.ceil(Math.random() * 100) + 70,
     stiffness = Math.random() * 0.03 + 0.005
   ) {
-    this.allowShields = false;
+    this.allowShields = false; //dont' want shields on boss mobs
     let px = 0;
     let py = 0;
     let a = 2 * Math.PI / nodes;
     for (let i = 0; i < nodes; ++i) {
       px += l * Math.cos(a * i);
       py += l * Math.sin(a * i);
-      // this[this.bossPickList[Math.floor(Math.random() * this.bossPickList.length)]](x + px, y + py, radius);
+      let whoSpawn = spawn;
       if (spawn === "random") {
-        this[this.fullPickList[Math.floor(Math.random() * this.fullPickList.length)]](x + px, y + py, radius);
-      } else {
-        this[spawn](x + px, y + py, radius);
+        whoSpawn = this.fullPickList[Math.floor(Math.random() * this.fullPickList.length)];
+      } else if (spawn === "randomList") {
+        whoSpawn = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       }
+      this[whoSpawn](x + px, y + py, radius);
     }
     if (Math.random() < 0.3) {
       this.constrain2AdjacentMobs(nodes, stiffness * 2, true);
@@ -441,13 +579,15 @@ const spawn = {
     l = Math.ceil(Math.random() * 80) + 30,
     stiffness = Math.random() * 0.06 + 0.01
   ) {
-    this.allowShields = false;
+    this.allowShields = false; //dont' want shields on boss mobs
     for (let i = 0; i < nodes; ++i) {
+      let whoSpawn = spawn;
       if (spawn === "random") {
-        this[this.fullPickList[Math.floor(Math.random() * this.fullPickList.length)]](x + i * radius + i * l, y, radius);
-      } else {
-        this[spawn](x + i * radius + i * l, y, radius);
+        whoSpawn = this.fullPickList[Math.floor(Math.random() * this.fullPickList.length)];
+      } else if (spawn === "randomList") {
+        whoSpawn = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       }
+      this[whoSpawn](x + i * radius + i * l, y, radius);
     }
     this.constrain2AdjacentMobs(nodes, stiffness);
     this.allowShields = true;
@@ -590,7 +730,7 @@ const spawn = {
   },
   debris: function(x, y, width, number = Math.floor(3 + Math.random() * 11)) {
     for (let i = 0; i < number; ++i) {
-      if (Math.random() < 0.25) {
+      if (Math.random() < 0.3) {
         powerUps.chooseRandomPowerUp(x + Math.random() * width, y);
       } else {
         const size = 18 + Math.random() * 25;

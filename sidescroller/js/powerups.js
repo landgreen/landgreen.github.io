@@ -85,7 +85,7 @@ const powerUps = {
       powerUps.spawn(x, y, "heal");
       return;
     }
-    if (Math.random() < 0.3) {
+    if (Math.random() < 0.35) {
       if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
       return;
     }

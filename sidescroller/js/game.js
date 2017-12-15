@@ -606,6 +606,7 @@ const game = {
     // if line1 and line2 are segments, they intersect if both of the above are true
     return result;
   },
+  //was used in level design
   buildingUp: function(e) {
     if (game.mouseDown) {
       game.getCoords.pos2.x = Math.round(game.mouseInGame.x / 25) * 25;

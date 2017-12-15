@@ -92,7 +92,7 @@ function mobCollisionChecks(event) {
               //player is immune to mob collisison damage for 30/60 seconds
               mech.damageImmune = game.cycle + 30;
               mob[k].locatePlayer();
-              let dmg = Math.min(Math.max(0.025 * Math.sqrt(mob[k].mass) * game.dmgScale, 0.04), 0.25);
+              let dmg = Math.min(Math.max(0.025 * Math.sqrt(mob[k].mass), 0.05), 0.3) * game.dmgScale;
               mech.damage(dmg);
               playSound("dmg" + Math.floor(Math.random() * 4));
 

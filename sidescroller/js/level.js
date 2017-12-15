@@ -13,7 +13,7 @@ const level = {
     this.procedural();
 
     // this[this.levels[this.onLevel]](); //spawn the level player is on, this cycles in a loop
-    // this.boss();    //this.warehouse();    //this.highrise();    //this.towers();    // this.skyscrapers();    //this.rooftops();
+    // this.boss(); //this.warehouse();    //this.highrise();    //this.towers();    // this.skyscrapers();    //this.rooftops();
 
     this.addToWorld(); //add map to world
     game.draw.setPaths();
@@ -37,10 +37,10 @@ const level = {
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
     // this.addZone(250, -1000, 500, 1500, "laser");
     //spawn.debris(0, -900, 4500, 10); //15 debris per level
-    setTimeout(function() {
-      document.body.style.backgroundColor = "#eee";
-    }, 1);
-    document.body.style.backgroundColor = "#eee";
+    // setTimeout(function() {
+    //   document.body.style.backgroundColor = "#eee";
+    // }, 1);
+    document.body.style.backgroundColor = "#fff";
     // document.body.style.backgroundColor = "#fafcff";
     // document.body.style.backgroundColor = "#bbb";
     // document.body.style.backgroundColor = "#eee4e4";
@@ -50,7 +50,7 @@ const level = {
     // this.addQueryRegion(550, -25, 100, 50, "bounce", { Vx: 0, Vy: -25 });
     // level.fillBG.push({ x: 550, y: -25, width: 100, height: 50, color: "#ff0" });
 
-    spawn.mapRect(-1200, 0, 2200, 200); //left ground
+    spawn.mapRect(-1200, 0, 2200, 300); //left ground
     spawn.mapRect(3500, -860, 100, 50); //ground bump wall
     spawn.mapVertex(1250, 0, "0 0 0 300 -500 600 -500 300");
     spawn.mapRect(1500, -300, 2000, 300); //upper ground
@@ -77,15 +77,36 @@ const level = {
     spawn.bodyRect(700, -150, 50, 50);
     spawn.bodyRect(700, -200, 50, 50);
     spawn.bodyRect(-100, -260, 250, 10);
+    // spawn.springer(100, -550);
+    // spawn.grower(100, -550);
+    // spawn.chaser(100, -550);
+    // spawn.striker(100, -550);
+    // spawn.burster(100, -550);
+    // spawn.hopper(100, -550);
+    // spawn.grower(100, -550);
+    // spawn.springer(100, -550);
+    // spawn.zoomer(100, -550);
+    // spawn.shooter(100, -550);
+    // spawn.beamer(100, -550);
+    // spawn.focuser(100, -550);
+    // spawn.laser(100, -550);
+    // spawn.blinker(100, -550);
+    // spawn.drifter(100, -550);
+    // spawn.sucker(100, -550);
+    // spawn.exploder(100, -550);
+    // spawn.spawner(100, -550);
+    // spawn.ghoster(100, -550);
+    // spawn.sneaker(100, -550);
+    // spawn.bomber(100, -550);
 
-    // spawn.laserer(1300, -1150);
-
-    // spawn.grower(800, -1150);
     // for (let i = 0; i < 4; ++i) {
     //   spawn.shooter(800, -1150);
     // }
-    spawn.nodeBoss(900, -1070, "starter", 9);
+    // spawn.nodeBoss(900, -1070, "shooter", 9);
     // spawn.randomBoss(-100, -1470);
+    // spawn.randomBoss(500, -1470);
+    // spawn.randomBoss(900, -1470);
+    // spawn.randomBoss(900, -1000);
   },
   warehouse: function() {
     // document.body.style.backgroundColor = (Math.random() < 0.5) ? "#aaa" : "#e3e3f0"
@@ -1043,7 +1064,7 @@ const level = {
           nodeRange.y -= Math.floor(115 + Math.random() * 200);
         }
         spawn.mapRect(o.x, o.y, nodeRange.x, 100); //ground
-
+        spawn.mapRect(o.x + nodeRange.x, o.y + nodeRange.y + 15, 100, -nodeRange.y + 85); //right wall
         // set starting position for new mapNode
         o.x += nodeRange.x;
         o.y += nodeRange.y;
@@ -1313,7 +1334,7 @@ const level = {
 
         //random platforms
         let offX = o.x + firstPlatW;
-        const len = Math.ceil(Math.random() * 4);
+        const len = Math.ceil(Math.random() * Math.random() * 4.5);
         for (let i = 0; i < len; i++) {
           const totalCases = 3;
           switch (Math.ceil(Math.random() * totalCases)) {
@@ -1409,12 +1430,13 @@ const level = {
           }
         }
         o.x += offX - o.x + 200;
-        spawn.mapRect(startingX, o.y, o.x - startingX, 100); //ground
+        spawn.mapRect(startingX, o.y, o.x - startingX + 15, 100); //ground
+        spawn.mapRect(o.x, o.y - fullHeight + 15, 100, fullHeight + 85); //right wall
         o.y -= fullHeight;
       }
     ];
     //randomized zone spawns
-    mapNodes = Math.min(5, 3 + game.levelsCleared);
+    mapNodes = Math.min(4, 2 + game.levelsCleared);
     for (let i = 0; i < mapNodes; ++i) {
       // mapNode[5]();
       mapNode[Math.floor(Math.random() * mapNode.length)](); //run a random mapNode
@@ -1528,8 +1550,8 @@ const level = {
     nextLevel: function() {
       //enter when player isn't falling
       if (player.velocity.y < 0.1) {
-        game.dmgScale += 0.8; //damage done by mobs increases each level
-        // b.dmgScale *= 0.9; //damage done by player decreases each level
+        game.dmgScale += 0.4; //damage done by mobs increases each level
+        b.dmgScale *= 0.98; //damage done by player decreases each level
         game.levelsCleared++;
         game.clearNow = true; //triggers in the physics engine to remove all physics bodies
       }
@@ -1614,6 +1636,9 @@ const level = {
     // let text = "n-gon L" + (game.levelsCleared + 1) + " " + level.levels[level.onLevel];
     let text = "n-gon Level " + (game.levelsCleared + 1);
     document.title = text;
+    // text = "Level " + (game.levelsCleared + 1) + ": " + spawn.pickList[0] + "s + " + spawn.pickList[1] + "s";
+    // game.makeTextLog(text, 300);
+
     // text = text + " with population: ";
     // for (let i = 0, len = spawn.pickList.length; i < len; ++i) {
     //     if (spawn.pickList[i] != spawn.pickList[i - 1]) {

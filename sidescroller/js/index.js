@@ -1,9 +1,18 @@
 "use strict";
 /* TODO:  *******************************************
 *****************************************************
-make a graphics that looks like the player has a tail
-  (loose wires / a tail / a rope)
-  to indicate player motion
+mutators (as a power up)
+  infinite ammo
+    or just more ammo from drops?
+    or 50% chance to not use up a bullet?
+  flying
+  low gravity
+  more damage done and taken
+  larger bullets
+  vampire damage
+  double jumps
+  higher speed?
+  shield
 
 game mechanics
   mechanics that support the physics engine
@@ -31,41 +40,6 @@ track foot positions with velocity better as the player walks/crouch/runs
 brief forced crouch after landing at a high speed
  	you could just set the crouch keys[] to true for a few cycles if velocity.y is large
 
-physics puzzle mechanics
-	move a block over and jump on it to get over a wall
-	drop some weight on a suspended nonrotating block to lower it and remove a blockage
-	knock over a very tall plank to clear a wide gap
-
-power ups  (rogue-like patterned after binding of issac with mostly stacking power ups)
-	should power ups automaticaly active or should player have to pick them up?
-
-gun power ups:
-one at a time: shape, restitution, airfriction, sound, gravity??
-	bullet = default bullet shape	zero restitution, medium airfraction
-	needle = long needle 			low restitution, zero air friction
-	square = large	 				high resitituion, high air friction
-
-one at a time: number, accuracy, size, lifespan, collision, gravity
-	'sniper = 1 bullet, perfect accuracy, larger size, long life, can collide with other bullets
-	'multi = 3 bullets, good accuracy in 3 different directions, medium lifespan, medium size, can't collide with other bullets
-	'spray = many bullets, very bad accuracy, small size, short life, can't collide with other bullets
-overlapping and	progressive:
-	`faster = higher starting bullet speed
-	'larger = +increase size and while keeping speed constant
-	`rapid = reduce cooldown to fire
-	'dmg = lower damage threshhold and base dmg is also higher
-	`frictionAir = lower airfriction
-	????bullets can pass through body or map, but hit mobs
-
-player power ups:
-	heal: heals player
-	higher jump?
-	higher speed?
-	double jump?
-	shield?
-		could regen slowly
-	reduce dmg?
-
 add bullet on damage effects
 	effects could:
 		add to the array mod.do new mob behaviors
@@ -90,14 +64,6 @@ add bullet on damage effects
 			replace with check if player feet are in an area.
 
 
-FIX************************************************************
-***************************************************************
-***************************************************************
-sometimes the player falls off a ledge and stays crouched in mid air
-
-the jump height control by holding down jump  can also control any upward motion (like from a block that throws player up)
-
-
 //collision info:
          category    mask
 powerUp: 0x 100000   0x 001001
@@ -109,36 +75,6 @@ map:     0x 000001   0x 111111
 body:    0x 000001   0x 011111
 // ? holding: 0x 000001   0x 000001
 
-
-//setup random title
-const titles = [
-    "physics phobia",
-    "physics frenzy",
-    "impulse city",
-    "velocity city",
-    "isogonal",
-    "isogon impulse",
-    "isogon invasion",
-    "isogon towers!",
-    "isogon invasion!",
-    "bird robot!",
-    "ostrichbot",
-    "pew pew",
-	'shoot the baddies',
-	'get to the door',
-    'percussion',
-    'impact',
-    'landGame',
-    'Cnoön',
-    'polytope',
-    'Tessellation',
-    'Tessellation tower',
-    'debris',
-    'Regular polygon',
-    'n-gon',
-];
-document.getElementById("title").textContent = document.title = titles[Math.floor(titles.length * Math.random())];
-setTimeout(function(){ document.body.style.backgroundColor = "000"; }, 30);
 
 //makes the SVG title screen tripy
 (function() {
