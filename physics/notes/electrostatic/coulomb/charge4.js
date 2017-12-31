@@ -1,19 +1,20 @@
-const setup2 = function() {
-  var canvas = document.getElementById("charge2");
+const setup4 = function() {
+  var canvas = document.getElementById("charge4");
   var ctx = canvas.getContext("2d");
   ctx.font = "300 30px Roboto";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
 };
-setup2();
+setup4();
 
-function charges2(el) {
+function charges4(el) {
   el.onclick = null; //stops the function from running on button click
   Charge.setCanvas(el);
   // var canvas = el
   // var ctx = canvas.getContext("2d");
   ctx.textAlign = "right";
+
   //___________________get mouse input___________________
   var mouse = {
     down: false,
@@ -44,7 +45,7 @@ function charges2(el) {
 
   const q = []; //holds the charges
   //spawn
-  const separation = 35;
+  const separation = 15;
   const off = 250;
 
   for (let i = 0; i < Math.ceil((canvas.width + off * 2) / separation); ++i) {
@@ -91,9 +92,9 @@ function charges2(el) {
   }
   // Charge.spawnCharges(q, 25, 'e')
   // Charge.spawnCharges(q, 25, 'p')
-  let current = 8.2 / 60;
+  let current = 52 / 60;
   function ammeter() {
-    current = current * 0.995 + Charge.teleport(q, 200) * 0.005;
+    current = current * 0.99 + Charge.teleport(q, 200) * 0.01;
     // console.log((current*60).toFixed(2))
     ctx.fillStyle = "#000";
     ctx.fillText((current * 60).toFixed(1) + " e⁻/s", canvas.width - 5, canvas.height - 3);

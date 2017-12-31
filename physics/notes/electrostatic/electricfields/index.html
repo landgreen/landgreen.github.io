@@ -23,16 +23,25 @@
 		<h1>Electric Fields</h1>
 	</header>
 	<article>
-		<p>A field has a value for each point in space and time. For example, on a weather map, the <a href='https://earth.nullschool.net/'>surface wind velocity</a>			is described by assigning a vector to each point on the map.</p>
-
-		<h2 class='underlined'>Electric Fields</h2>
-		<p>Electric fields predict the electric force of an imaginary +1C test charge at a location. This is useful when you only
-			know about one charge instead of the pair, but remember the test charge doesn't exist.</p>
+		<p>A
+			<strong>field</strong> has a value for each point in space and time. For example, on a weather map, the
+			<a href='https://earth.nullschool.net/'>surface wind velocity</a> is described by assigning a vector to each point on the map.</p>
+		<!-- <h2 class='underlined'>Electric Fields</h2> -->
+		<p>
+			<a href='https://www.youtube.com/watch?v=63FnT0W-Hxc'>Electric fields</a> predict the electric force of an imaginary +1C test charge at a location. This is useful when you
+			only know about one charge instead of the pair, but remember the test charge doesn't exist.</p>
+		<p>Click the simulations to push the electrons out of position.</p>
 		<canvas id='charge3' height='300' width='600' onclick="charges3(this)"> </canvas>
-		<p>Click the simulation a few times to push the electrons around.</p>
+		<p>Why does the field go to zero when the protons and electrons are in atoms?</p>
 		<canvas id='charge4' height='300' width='600' onclick="charges4(this)"> </canvas>
+		<h2 class='underlined'>Electric Field Equation</h2>
 
 		<p>We get the electric field equation by simply setting one q to +1C in the electrostatic force equation.</p>
+		<!-- <details class='derive'>
+			<summary>derivation of the electric field equation</summary>
+			$$F = \frac{k_{e}q_{1}q_{2}}{r^{2}}$$ $$E = \frac{F}{q}$$ $$F = Eq$$ $$Eq = \frac{k_{e}q_{1}q_{2}}{r^{2}}$$ $$E = \frac{k_{e}q}{r^{2}}$$
+
+		</details> -->
 		<div class='definition'>
 			<svg style="display: block; margin: auto" width="400" height="110" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg"
 			 viewBox="0 50 400 110">
@@ -56,35 +65,265 @@
 				</g>
 			</svg>
 			<h2>$$ E = \frac{k_{e}q}{r^{2}}$$</h2>
-			<p>\(E\) = electric field at a point [N/C, N·C<sup>-1</sup>] <i>vector</i>
-				<br>\(k_e\) = 8.987 × 10<sup>9</sup> = Coulomb's constant [N m²/C²] <i>scalar</i>
-				<br>\(q\) = charge [C, Coulomb] <i>scalar</i>
-				<br>\(r\) = distance between the charge and a location [m] <i>scalar</i>
-		</div>
-		<!-- <a id ='efieldsim'></a>
-			<p>It can be useful to visualize the electric field vectors on a 2-D field. This program calculates the electric field at several points and displays them as arrows.</p>
-		</article>
+			<p>\(E\) = electric field at a point [N/C, N·C
+				<sup>-1</sup>]
+				<em>vector</em>
+				<br>\(k_e\) = 8.987 × 10
+				<sup>9</sup> = Coulomb's constant [N m²/C²]
 
-		<canvas class='center' id="field" height='600' width='600' onclick="diagram(this)"> </canvas>
-	    <article>
-			<p>Are blue charges positive or negative?
-			<br>Are red charges positive or negative?
-			<br>What happens when you put two different charges near each other?
-			<br>What happens when you put two of the same charge near each other?
-			</p>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br> -->
-		<div class='example'><b>Example:</b> Find the electric field 2.0m away from a negative 3.0μC charge.
+				<br>\(q\) = charge [C, Coulomb]
+
+				<br>\(r\) = distance between the charge and a location [m]
+
+		</div>
+		<p>We can figure out the direction of the electric field by imagining what a positive +1C charge would do at each location.</p>
+		<div class="col-group">
+			<div>
+				<svg style="display: block; margin: auto" width="250" height="250" viewBox="0 0 400 400" class='svgDiagram' version="1.1"
+				 xmlns="http://www.w3.org/2000/svg">
+					<g transform="translate(200 200)">
+						<g transform="rotate(0)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(30)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(60)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(90)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(120)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(150)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(180)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(210)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(240)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(270)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(300)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(330)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<circle cx="0" cy="0" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
+						<line x1="-5" y1="0" x2="5" y2="0" style="stroke:#000;stroke-width:2" />
+					</g>
+				</svg>
+				<p class='center'>Negative charges produce an inward electric field.</p>
+			</div>
+			<div>
+				<svg style="display: block; margin: auto" width="250" height="250" viewBox="0 0 400 400" class='svgDiagram' version="1.1"
+				 xmlns="http://www.w3.org/2000/svg">
+					<g transform="translate(200 200)">
+						<g transform="rotate(0)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(30)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(60)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(90)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(120)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(150)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(180)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(210)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(240)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(270)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(300)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<g transform="rotate(330)">
+							<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+							<g transform="translate(50 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+							<g transform="translate(150 0)">
+								<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+							</g>
+						</g>
+						<circle cx="0" cy="0" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
+						<text x="0" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="20">+</text>
+					</g>
+				</svg>
+				<p class='center'>Positive charges produce an outward electric field.</p>
+			</div>
+		</div>
+		<div class='example'>
+			<b>Example:</b> Find the electric field 2.0m away from a negative 3.0μC charge.
 			<details>
 				<summary>solution</summary>
 				$$\mu = micro = 10^{-6}$$
 				<br> $$E = \frac{k_{e}q}{r^{2}}$$ $$E = \frac{(8.987 \times 10^{9})(-3 \times 10^{-6})}{(2)^{2}}$$ $$E = -6740 {\scriptsize
 				\frac{N}{C}}$$
-				<p>The test charge is always positive and the charge that generates this field is negative. Opposites attract so the field
-					is pointed at the -3.0μC charge</p>
+				<p>The test charge is always positive and the charge that generates this field is negative. Opposites attract, so the field
+					is pointed towards the -3.0μC charge</p>
 				<svg style="display: block; margin: auto" width="400" height="400" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
 					<g transform="translate(200 200)">
 						<g transform="rotate(0)">
@@ -201,7 +440,8 @@
 				</svg>
 			</details>
 		</div>
-		<div class='example'><b>Example:</b> How far from a 10nC charge is the field strength 10N/C?
+		<div class='example'>
+			<b>Example:</b> How far from a 10nC charge is the field strength 10N/C?
 			<details>
 				<summary>solution</summary>
 				$$n = nano = 10^{-9}$$
@@ -211,7 +451,8 @@
 		</div>
 		<h2 class='underlined'>Finding Force in an Electric Field</h2>
 		<p>Knowing the direction and strength of an electric field makes it easy to find the force felt by a charge placed in the
-			field.</p>
+			field.
+		</p>
 		<div class='definition'>
 			<svg style="display: block; margin: auto" width="400" height="210" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
 				<g transform="translate(0 50) rotate(0)">
@@ -262,17 +503,24 @@
 				<text x="40" y="65" fill="black" alignment-baseline="central" font-size="25">E</text>
 			</svg>
 			<h2>$$F = Eq$$</h2>
-			<p>\(F\) = electrostatic force [N, Newton, kg m/s²] <i>vector</i>
-				<br>\(E\) = electric field at a point [N/C, N·C<sup>-1</sup>] <i>vector</i>
-				<br>\(q\) = charge [C, Coulomb] <i>scalar</i>
+			<p>\(F\) = electrostatic force [N, Newton, kg m/s²]
+				<em>vector</em>
+				<br>\(E\) = electric field at the charge [N/C, N·C
+				<sup>-1</sup>]
+				<em>vector</em>
+				<br>\(q\) = charge [C, Coulomb]
+				<br>The charge q is not the source of the electric field E.
+
 		</div>
 		<br>
 		<br>
 		<br>
 		<br>
 		<br>
-		<p><b>Example:</b> A positive 0.005μC charge is placed in a uniform 200N/C field pointed to the right. What force does the
-			charge feel?</p>
+		<p>
+			<b>Example:</b> A positive 0.005μC charge is placed in a uniform 200N/C field pointed to the right. What force does the charge
+			feel?
+		</p>
 		<details>
 			<summary>solution</summary>
 			<svg style="display: block; margin: auto" width="400" height="160" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -319,21 +567,23 @@
 				</g>
 			</svg>
 			$$F = Eq$$ $$F = (200)(0.005 \times 10^{-6})$$ $$F = 10^{-6} N \ \rightarrow$$
-			<p>The electric field shows what force positive charge will experience. Our Charge is positive so it will go in the same
-				direction as the field, <strong>right</strong>.</p>
+			<p>The electric field shows the force a positive charge would experience. Our charge is positive so it will go in the same
+				direction as the field,
+				<strong>right</strong>.</p>
 		</details>
 		<br>
 		<br>
 		<br>
 		<br>
 		<br>
-		<p><b>Example:</b> What strength and direction of an electric field would make a proton accelerate to the right at 2m/s²?</p>
+		<p>
+			<b>Example:</b> What strength and direction of an electric field would make a proton accelerate to the right at 2m/s²?</p>
 		<details>
 			<summary>solution</summary>
 			$$m_{p} = 1.672 \times 10^{-27}kg \quad q_{p} = 1.602 \times 10^{-19}C$$
 			<br> $$F=ma$$ $$F=(1.672 \times 10^{-27})(2)$$ $$F=3.344 \times 10^{-27} N$$
-			<br> $$F = Eq$$ $$\frac{F}{q} = E$$ $$\frac{3.344 \times 10^{-27}N}{1.602 \times 10^{-19}C} = E$$ $$2.087 \times 10^{-8}
-			{\scriptsize \frac{N}{C}} = E$$
+			<br> $$F = Eq$$ $$\frac{F}{q} = E$$ $$\frac{3.344 \times 10^{-27}N}{1.602 \times 10^{-19}C} = E$$ $$2.087 \times 10^{-8} {\scriptsize
+			\frac{N}{C}} = E$$
 			<p>The field is directed right to get a positive charge to go right</p>
 			$$E = 2.087 \times 10^{-8} {\scriptsize \frac{N}{C}} \rightarrow$$
 		</details>
@@ -345,8 +595,9 @@
 
 		<h2 class='underlined'>Solving for Multiple Charges</h2>
 
-		<p><b>Example:</b> A positive 1μC charge is 50mm away from a -2μC charge. Find the magnitude and direction of the electric
-			field halfway in between these charges.</p>
+		<p>
+			<b>Example:</b> A positive 1μC charge is 50mm away from a -2μC charge. Find the magnitude and direction of the electric field
+			halfway in between these charges.</p>
 		<details>
 			<summary>solution</summary>
 			<p>Draw a picture</p>
@@ -380,8 +631,9 @@
 		<br>
 		<br>
 		<br>
-		<p><b>Example:</b> A 0.03μC charge is 2m East of a -0.01μC charge. Find the Magnitude and direction of the electric field
-			1m West of the -0.01μC charge.</p>
+		<p>
+			<b>Example:</b> A 0.03μC charge is 2m East of a -0.01μC charge. Find the Magnitude and direction of the electric field 1m
+			West of the -0.01μC charge.</p>
 		<details>
 			<summary>solution</summary>
 			<p>Draw a picture</p>
