@@ -9,7 +9,7 @@
 	<meta property="og:description" content="Notes for a high school physics course.">
 	<meta property="og:title" content="Physics Notes">
 	<meta name="twitter:title" content="High School Physics Notes">
-	<title>waves</title>
+	<title>Waves</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script> -->
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
@@ -106,12 +106,7 @@
 				<td>The Wave</td>
 			</tr>
 		</table>
-		<p>At quantum scales all particles act like waves towards the particles they are not in contact with. This
-			<strong>wave-particle duality</strong> is a central idea in quantum mechanics.</p>
-		<p>The wave nature of particles is easy to see at the subatomic scale for things like electrons, protons, or photons. At larger
-			scales the wave nature is less noticeable because of the difficulty isolating larger objects. This is why humans, or cats,
-			never manifest quantum effects.</p>
-		<h2 class='underlined'>Wave Properties</h2>
+		<h2 class='underlined'>Wave Terms</h2>
 		<p>Waves have some properties that aren't always intuitive.</p>
 		<li>Waves don't have mass, but they do have energy.</li>
 		<li>Multiple waves can be in the same position at the same time.</li>
@@ -145,31 +140,27 @@
 					<circle cx="500" cy="604" r="10" />
 				</g>
 			</svg>
+			<strong>Medium</strong> = the substance or material that carries the wave
+			<br>
+			<strong>Propagate</strong> = transmit through a medium
+			<br>
 			<strong>Amplitude</strong> = maximum displacement from rest (m)
 			<br>
 			<strong>Crest</strong> = high point on a wave
 			<br>
 			<strong>Trough</strong> = low point on a wave
 			<br>
-			<br>
-			<strong>Medium</strong> = the substance or material that carries the wave
-			<br>
-			<strong>Pulse</strong> = a single disturbance in a medium
-			<br>
-			<strong>Cycle</strong> = a series of disturbances that are repeated regularly
-			<br>
+			<!-- <strong>Pulse</strong> = a single disturbance
+			<br> -->
+			<!-- <strong>Cycle</strong> = a disturbance that repeats over and over again.
+			<br> -->
 			<br>
 			<strong>Wavelength</strong> = λ = the distance between adjacent crests or troughs (m)
 			<br>
 			<strong>Period</strong> = T = the time for one complete wave cycle to pass a given point (s)
 			<br>
 			<strong>Frequency</strong> = f = the number of cycles that pass per second (Hz, 1/s)
-
-
 		</div>
-
-
-
 		<p>Play around with the settings in the "sine wave" simulation below.
 			<br> Which of the properties seem related?</p>
 	</article>
@@ -181,7 +172,7 @@
 				<feDisplacementMap id='fe-disp' in="SourceGraphic" scale="17" xChannelSelector="R" yChannelSelector="G" />
 				<feGaussianBlur in="displace" stdDeviation="0.5" />
 			</filter>
-			<g stroke="#e9efef" style="stroke-dasharray:1,98,1,0;stroke-width:2000;">
+			<g stroke="#e9efef" style="stroke-dasharray:1,98,1,0;stroke-width:4000;">
 				<line x1="0" y1="0" x2="2000" y2="0" />
 				<line x1="0" y1="0" x2="0" y2="2000" />
 			</g>
@@ -196,9 +187,9 @@
 				<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;'
 				/>
 				<text x="50" y="391" text-anchor="middle" font-size="15" fill='#000'>100m</text>
-				<text id='time' x="595" y="395" text-anchor="end" font-size="17" fill='#000'>time</text>
+				<!-- <text id='time' x="595" y="395" text-anchor="end" font-size="17" fill='#000'>time</text>
 				<text id='period' x="150" y="395" text-anchor="start" font-size="17" fill='#000'>period</text>
-				<text id='frequency' x="500" y="395" text-anchor="end" font-size="17" fill='#000'>frequency</text>
+				<text id='frequency' x="500" y="395" text-anchor="end" font-size="17" fill='#000'>frequency</text> -->
 			</g>
 
 		</svg>
@@ -208,12 +199,12 @@
 			<input class='number' id='velocity' type="number" step="5">m/s &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; wavelength =
 			<input class='number' id='wavelength' type="number" min="20" step="20">m
 		</div>
-		<!-- <div style='position:relative;left: 0;right: 0;top:88%;margin: 0 auto;'>
+
+		<div style='position:relative;left: 0;right: 0;top:88%;margin: 0 auto;'>
 			<span id='frequency'></span> &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
-			<span id='period'></span> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; time
-			=
+			<span id='period'></span> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; time =
 			<span id='time'></span>
-		</div> -->
+		</div>
 	</div>
 	<article>
 		<div class='example'>
@@ -259,7 +250,72 @@
 
 			</details>
 		</div>
+
+		<h2 class='underlined'>Media and Wave Speed</h2>
+		<p>Waves propagate at a speed determined by their medium. Properties like frequency, amplitude, or wavelength generally don't
+			determine the speed of propagation.</p>
+		<p>Each type of wave has a different mechanism of propagation. The speed and possibility of a wave propagating through a medium
+			is different for each wave type.</p>
+		<table>
+			<tr>
+				<th>speed (m/s)</th>
+				<th>vacuum</th>
+				<th>air</th>
+				<th>water</th>
+				<th>glass</th>
+			</tr>
+			<tr>
+				<th>sound</td>
+					<td>N/A</td>
+					<td>340</td>
+					<td>1,484</td>
+					<td>4,540</td>
+			</tr>
+			<tr>
+				<th>light</td>
+					<td style="padding: 10px;">300,000,000</td>
+					<td style="padding: 10px;">300,000,000</td>
+					<td style="padding: 10px;">220,000,000</td>
+					<td style="padding: 10px;">200,000,000</td>
+			</tr>
+		</table>
+
+		<p>Sound travels faster for denser media, like water. The atoms are closer together. This means the atoms don't have to move
+			as far to collide.</p>
+		<p> Light always propagates at the fastest possible speed for anything. In dense transparent media, like water, it actually
+			gets briefly absorbed by atoms and then re-emitted. This makes it seem like light slows down.</p>
+		<div class='example'>
+			<strong>Investigation:</strong> Can you figure out what factors affect the speed of a string wave? Go experiment with a string,
+			or slinky to find out.
+			<details>
+				<summary>solution</summary>
+				Tension is probably the easiest way to control the speed of a string wave. The equation below shows that string mass and
+				length are also factors. $$ v = \sqrt{\frac{T}{mL}}$$
+				<div class="col-group">
+					<div class='center'>
+						v = velocity (m/s)
+						<br>T = tension (N)
+
+					</div>
+					<div class='center'>
+						m = mass (kg)
+						<br>L = string length (m)
+					</div>
+				</div>
+				Changing wave speed is used to change the pitch of stringed instruments. Think about how notes from a guitar or harp are
+				changed through tension, length, or string mass.
+			</details>
+		</div>
+		<div class='example'>
+			<strong>Example:</strong> Two students are holding a slinky while standing 3.6 m apart. The first student sends a pulse which
+			travels all the way down and back again. It takes 2.4 s for the wave to return. What is the speed of the wave?
+			<details>
+				<summary>solution</summary>
+				$$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{3.6 \times 2}{2.4} $$ $$v = 3 \tfrac{m}{s}$$
+			</details>
+		</div>
 		<h2 class='underlined'>The Wave Equation</h2>
+		<p>For regularly repeating waves the product of the frequency and wavelength is equal to the wave's velocity.</p>
 		<div class='definition'>
 			<h1>$$v = f \lambda \quad \quad v = \frac{\lambda}{T} $$</h1>
 			\(v\) = wave speed [m/s]
@@ -267,30 +323,6 @@
 			<br>\(f\) = frequency [Hz, s⁻¹, hertz]
 			<br>\(T\) = time period [s, seconds]
 		</div>
-
-		<table border>
-			<tr>
-				<td></td>
-				<th>vacuum</th>
-				<th>air</th>
-				<th>water</th>
-				<th>glass</th>
-			</tr>
-			<tr>
-				<th>sound (m/s)</td>
-					<td>N/A</td>
-					<td>340</td>
-					<td>1,484</td>
-					<td>4,540</td>
-			</tr>
-			<tr>
-				<th>light (m/s)</td>
-					<td>300,000,000</td>
-					<td>300,000,000</td>
-					<td>220,000,000</td>
-					<td>200,000,000</td>
-			</tr>
-		</table>
 
 		<div class='example'>
 			<strong>Example:</strong> An air horn sounds at a frequency of 220 Hz. What is the wavelength of the sound wave?
@@ -302,53 +334,36 @@
 			</details>
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> Two students are holding a slinky while standing 3.6 m apart. The first student sends a pulse which
-			travels all the way down and back again. It takes 2.4 s for the wave to return. What is the speed of the wave?
+			<strong>Example:</strong> A cell phone sends and receives microwave light at a wavelength of 1cm. How many cycles of a microwave
+			signal pass through the phone in one second?
 			<details>
 				<summary>solution</summary>
-				$$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{3.6 \times 2}{2.4} $$ $$v = 3 \tfrac{m}{s}$$
-			</details>
-		</div>
-		<div class='example'>
-			<strong>Example:</strong> A cell phone produces microwave light at a wavelength of 1cm. How many cycles of a microwave signal
-			pass through the phone in one second?
-			<details>
-				<summary>solution</summary>
+				<p>cycles per second is frequency</p>
 				$$c = 3.0 \times 10^{8}$$ $$v = f \lambda$$ $$f = \frac{v}{\lambda}$$ $$f = \frac{(3.0 \times 10^{8})}{0.01}$$ $$f=3\times
 				10^{10}Hz$$
 
 			</details>
 		</div>
-		<h2 class='underlined'>Polarization</h2>
-		<li>3D movies</li>
-		<li>sunglasses</li>
-		<h2 class='underlined'>Interference</h2>
-		<li>standing wave?</li>
-		<li>superposition</li>
-		<li>diffraction gratings</li>
-		<li>interferance patterns</li>
-		<h2 class='underlined'>Reflection and Refraction</h2>
-		<li>index of refractions</li>
-		<li>Snell's Law</li>
-		<li>lens</li>
-		<li>mirrors</li>
-		<li>telescopes</li>
-		<h2 class='underlined'>The Doppler Effect</h2>
-		<li>in sound</li>
-		<li>in light</li>
-		<li>redshift / blueshift</li>
-		<li>big bang</li>
-
-		<h2 class='underlined'>Sound</h2>
-		<li>longitudinal vs transverse</li>
-		<li>ear biology</li>
-		<li>pitch and frequency</li>
-		<li>chords and harmonics</li>
-		<li>resonant frequencies</li>
-		<h2 class='underlined'>Quantum Waves</h2>
-		<li>double slit experiment</li>
-		<li>wave-particle duality</li>
-		<li>de Broglie wavelength</li>
+		<div class='example'>
+			<strong>Example:</strong> Gravity waves move at the speed of light. The first detected gravity wave was on 11 February 2016 when
+			the LIGO and Virgo Scientific Collaboration observed gravitational waves originated from a pair of merging black holes.
+			If you play the same frequency as sound you can hear a
+			<a href='https://www.youtube.com/watch?v=TWqhUANNFXw'>chirp.</a>.
+			<p>How big are gravity waves? Over the 0.2 second detection, the frequency increased from 35Hz to 250Hz. Calculate the starting
+				and ending wavelength?</p>
+			<details>
+				<summary>solution</summary>
+				$$ v = 3 \times 10^{8} m/s$$ $$v = f \lambda$$ $$\lambda = \frac{v}{f}$$ $$\lambda = \frac{3 \times 10^{8}}{35}$$ $$\lambda
+				= \frac{3 \times 10^{8}}{35}$$ $$\lambda = 8,500,000m$$
+				<br> $$\lambda = \frac{3 \times 10^{8}}{250}$$ $$\lambda = 1,200,000m$$
+				<p>The wavelength ranged from 8,500km to 1,200km.</p>
+				<p>We can also find the length of the entire signal.</p>
+				$$v = \frac{\Delta x}{\Delta t}$$ $$\Delta x = v\Delta t$$ $$\Delta x = (3 \times 10^{8}) (0.2)$$ $$\Delta x = 0.6 \times
+				10^{8} m$$
+				<p>The entire signal was 60,000 km long.
+					<br> That's about 5 Earths long.</p>
+			</details>
+		</div>
 	</article>
 	<div class='back'>
 		<a href="../../../index.html#units ">Back</a>
