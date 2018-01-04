@@ -36,21 +36,22 @@
 		<p>Current measures the flow of charge over a period of time. Current is not a substance. Current is a rate, like dollars
 			per hour is a rate.</p>
 		<p>It can be helpful, and accurate, to think of electric current like water current. Free electrons flow through metals just
-			like H<sub>2</sub>O flows through pipes.</p>
+			like H₂O flows through pipes.</p>
 		<div class='definition'>
 			<h1>$$I = \frac{q}{\Delta t}$$</h1> \(I\) = electric current [A, Amps, Amperes]
 			<br>\(q\) = charge that passes a point on a wire [C]
 			<br>\(\Delta t\) = a period of time [s]
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> Two wires of cross-sectional area 1.6mm² connect the terminals of a battery to the circuitry
-			in a clock. During the time interval of 0.04s, 5.0 x 10<sup>14</sup> electrons move to the right through the cross section.
-			What is the magnitude and direction of the current?
+			<strong>Example:</strong> Two wires of cross-sectional area 1.6mm² connect the terminals of a battery to the circuitry in a clock.
+			After 0.04 seconds, 5.0 x 10¹⁴ electrons move to the right through the cross section. What is the magnitude and direction
+			of the current?
 			<details>
 				<summary>solution</summary>
 				$$q = 5.0 \times 10^{14} e^{-} \left(\frac{1.6 \times 10^{-19}C}{1 e^{-}}\right) = 0.00008C$$
 				<br> $$I = \frac{q}{\Delta t}$$ $$I = \frac{0.00008C}{0.04s}$$ $$I = 0.002 A $$
-				<p>If the electrons move to the right the current is to the <strong>left</strong>.</p>
+				<p>If the electrons move to the right the current is to the
+					<strong>left</strong>.</p>
 
 			</details>
 		</div>
@@ -84,14 +85,18 @@
 		<h2 class='underlined'>Voltage</h2>
 		<p>Voltage is a measure of the difference in electrical potential between two points. Voltage is defined so that negatively
 			charged objects are pulled towards higher voltages, while positively charged objects are pulled towards lower voltages.
-			You can review the notes on <a href="../../electrostatic/potential/index.html#voltage">voltage</a> from the last section</p>
+			You can review the notes on
+			<a href="../../electrostatic/potential/index.html#voltage">voltage</a> from the last section</p>
 
 		<p>Common sources of differences in potential (voltage) are the two terminals in a wall socket and the positive and negative
-			terminals on a <a href='https://en.wikipedia.org/wiki/Battery_(electricity)'>battery</a>.</p>
+			terminals on a
+			<a href='https://en.wikipedia.org/wiki/Battery_(electricity)'>battery</a>.</p>
 
 		<p>In these simulations I added a "battery" that pushes the electrons down.
-			<br>Areas with more negative charge have negative potential, shown as <span style="color:#05d;">blue</span>.
-			<br>Areas with more positive charge have positive potential, shown as <span style="color:#d50;">red</span>.
+			<br>Areas with more negative charge have negative potential, shown as
+			<span style="color:#05d;">blue</span>.
+			<br>Areas with more positive charge have positive potential, shown as
+			<span style="color:#d50;">red</span>.
 
 			<div class="col-group">
 				<div>
@@ -102,12 +107,15 @@
 					<canvas id='charge12' height='400' width='270' onclick="charges12(this)"> </canvas>
 				</div>
 			</div>
-			<p>The simulation on the right is a <strong>circuit</strong>. A <strong>circuit</strong> is a looping path that guides the
-				electrons back to the start, like a race track.</p>
+			<p>The simulation on the right is a
+				<strong>circuit</strong>. A
+				<strong>circuit</strong> is a looping path that guides the electrons back to the start, like a race track.</p>
 
 			<h2 class='underlined'>AC⚡DC</h2>
-			<p>In <strong>DC (direct current)</strong> circuits current is defined to flow out of the longer, positive end of the battery,
-				but electrons actually move in the opposite direction. Below is an animated <a href="https://en.wikipedia.org/wiki/Electronic_symbol">circuit diagram</a>				of a battery providing DC voltage and a resistor dropping the voltage:</p>
+			<p>In
+				<strong>DC (direct current)</strong> circuits current is defined to flow out of the longer, positive end of the battery, but
+				electrons actually move in the opposite direction. Below is an animated
+				<a href="https://en.wikipedia.org/wiki/Electronic_symbol">circuit diagram</a> of a battery providing DC voltage and a resistor dropping the voltage:</p>
 			<!-- for svg path animation -->
 			<style type="text/css">
 				@keyframes marching_ants {
@@ -143,8 +151,9 @@
 				<text x="65" y="57" text-anchor="start" font-size="18" fill='#888'>battery</text>
 				<text x="290" y="80" text-anchor="end" font-size="18" fill='#888'>resistor</text>
 			</svg>
-			<p>In <strong>AC (alternating current)</strong> circuits the current pushes the electrons forward and backwards about 60
-				times a second. Current from a wall socket is AC, while current from a battery is DC.</p>
+			<p>In
+				<strong>AC (alternating current)</strong> circuits the current pushes the electrons forward and backwards about 60 times a second.
+				Current from a wall socket is AC, while current from a battery is DC.</p>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="350" height="150" class='center'>
 				<path d="M 50 58 v-53 h 265
 			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
@@ -163,17 +172,24 @@
 
 			<h2 class='underlined'>Ohm's Law</h2>
 			<p>Ohm's Law says that the voltage in a conductor is proportional to the current. This means we can build an equation where
-				V = I times a constant. We call this constant <strong>resistance</strong>. </p>
+				V = I times a constant. We call this constant
+				<strong>resistance</strong>. </p>
 
-			<p>You can think of <strong>resistance</strong> as a measure of a material's <a href="../../electrostatic/coulomb/index.html#conductivity">conductivity</a>.
-				Conductors have nearly zero resistance and insulators have very high resistance. Semiconductive elements, called <a href='https://en.wikipedia.org/wiki/Resistor'>resistors</a>				have medium resistance. They are added to a circuit for precise control over current. If the current is too high, the
-				circuit will get hot. If the current is too low the circuit can't do its job.
+			<p>You can think of
+				<strong>resistance</strong> as a measure of a material's
+				<a href="../../electrostatic/coulomb/index.html#conductivity">conductivity</a>. Conductors have nearly zero resistance and insulators have very high resistance. Semiconductive elements,
+				called
+				<a href='https://en.wikipedia.org/wiki/Resistor'>resistors</a> have medium resistance. They are added to a circuit for precise control over current. If the current is
+				too high, the circuit will get hot. If the current is too low the circuit can't do its job.
 			</p>
+			<p>Play with this
+				<a href="https://codepen.io/lilgreenland/full/xprGvr/">circuit simulator</a> for resistance. Adjust the wiggle of the resistor to see how it changes the voltage and current.</p>
 			<div class='definition'>
 				<h1>$$ V = IR$$</h1> \(I\) = electric current [A, amp, ampere]
 				<br>
 				<br>\(V\) = voltage, a change in electric potential [V, volt]
-				<br><em>Technically ΔV, but everyone uses V for simplicity</em>
+				<br>
+				<em>Technically ΔV, but everyone uses V for simplicity</em>
 				<br> Sources: battery, solar panel, wall socket
 				<br>
 				<br>\(R\) = resistance [Ω, ohm]
@@ -285,6 +301,16 @@
 					</div>
 				</div>
 			</div>
+			<!-- <canvas id='chargeVIR' height='600' width='600' onclick="chargesVIR(this)"> </canvas>
+			resistor wiggle =
+			<input class='number' id='wiggle' type="number" step="1" min="0" max="100" value="35">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; battery push =
+			<input class='number' id='push' type="number" step="0.01" min="0" max="1" value="0.15">
+			<br> V =
+			<span id='voltage-a'></span> v
+			<br>I =
+			<span id='current-a'></span> A
+			<br>R =
+			<span id='resistance-a'></span> Ω -->
 	</article>
 	<div class='back'>
 		<a href="../../../index.html#units">Back</a>
@@ -297,6 +323,7 @@
 	<script src="charge9.js"></script>
 	<script src="charge10.js"></script>
 	<script src="charge12.js"></script>
+	<!-- <script src="chargeVIR.js"></script> -->
 </body>
 
 </html>

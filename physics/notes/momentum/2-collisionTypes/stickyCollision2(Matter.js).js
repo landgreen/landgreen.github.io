@@ -38,7 +38,7 @@ function stickyCollision2() {
     spawnMass(350 + len2 / 1.4 - v * 3, Ypos, v, 0, len2, 4, 1.5);
     //write a problem based on the values in the spawn
     document.getElementById("ex2").innerHTML =
-      "<strong>Randomized Problem:</strong> Two masses are stuck until an explosion causes them to separate. After the explosion the " +
+      "<strong>Click to Randomize Problem:</strong> Two masses are stuck until an explosion causes them to separate. After the explosion the " +
       mass[0].mass.toFixed(2) +
       "kg <span style='color: " +
       mass[0].color +
@@ -83,7 +83,7 @@ function stickyCollision2() {
     mass[1].force = { x: 0.03, y: 0 };
     setTimeout(function() {
       document.getElementById("ex2").innerHTML =
-        "<strong>Randomized Problem:</strong> Two masses are stuck until an explosion causes them to separate. After the explosion the " +
+        "<strong>Click to Randomize Problem:</strong> Two masses are stuck until an explosion causes them to separate. After the explosion the " +
         mass[0].mass.toFixed(2) +
         "kg <span style='color: " +
         mass[0].color +

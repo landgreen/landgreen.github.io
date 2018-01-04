@@ -49,7 +49,8 @@
 				<li>“Kirchhoff’s Law” was initially called “Laws of Closed Electric Circuits”, but was later named after the creator.</li>
 				<li>Kirchhoff was first a “Privatdozent”, which is an unpaid lecturer at the University of Berlin. But he eventually got
 					a position at the University of Heidelberg as the professor of Physics.</li>
-				<br><em>-Ariana Dideban</em>
+				<br>
+				<em>-Ariana Dideban</em>
 			</div>
 		</details>
 		<h2 class='underlined'>Kirchhoff’s Law: Current</h2>
@@ -71,8 +72,10 @@
 			</svg>
 			<p>For any point on a circuit: the total charge flowing into the point equals the total charge flowing out.</p>
 			<h1>$$ I _{in} = I_{out} $$</h1>
-			\(I_{in}\) = total charge <strong>entering</strong> a circuit per second [A]
-			<br>\(I_{out}\) = total charge <strong>exiting</strong> a circuit per second [A]
+			\(I_{in}\) = total charge
+			<strong>entering</strong> a circuit per second [A]
+			<br>\(I_{out}\) = total charge
+			<strong>exiting</strong> a circuit per second [A]
 		</div>
 		<div class='example'>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="200" class='center'>
@@ -93,8 +96,7 @@
 					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
 				</g>
 			</svg>
-			<strong>Example:</strong> If a 3-way circuit junction has two wires with 2A each entering. How much current is in the
-			3rd wire?
+			<strong>Example:</strong> If a 3-way circuit junction has two wires with 2A each entering. How much current is in the 3rd wire?
 			<details>
 				<summary>solution</summary>
 				$$ I _{in} = I_{out} $$ $$ 2A + 2A = I_{out} $$ $$ 4A = I_{out} $$
@@ -125,8 +127,8 @@
 					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
 				</g>
 			</svg>
-			<strong>Example:</strong> A circuit splits into 3 branches. Branch #1 has 20mA, branch #2 has 40mA, and branch #3 has
-			55mA. Find the current before the split.
+			<strong>Example:</strong> A circuit splits into 3 branches. Branch #1 has 20mA, branch #2 has 40mA, and branch #3 has 55mA. Find
+			the current before the split.
 			<details>
 				<summary>solution</summary>
 				<p>no need to convert units for just addition and subtraction</p>
@@ -173,8 +175,8 @@
 		<p>DC voltage sources, like batteries, provide positive voltage. Most other elements have negative voltage. The elements with
 			negative voltage convert the electric potential into some other type of energy, like heat, light, sound, or motion.
 		</p>
-		<p>Check <a href="https://en.wikipedia.org/wiki/Electronic_symbol">here</a> to see what the different circuit diagram symbols
-			mean.
+		<p>Check
+			<a href="https://en.wikipedia.org/wiki/Electronic_symbol">here</a> to see what the different circuit diagram symbols mean.
 			<br>(mostly resistors or DC voltage sources)</p>
 		<div class='definition'>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
@@ -262,8 +264,8 @@
 		</div>
 
 		<h2 class='underlined'>Resistors in Series</h2>
-		<p>Electrical components are in a <strong>series</strong> when they are connected in a single path so that all charge flows
-			through the same components.</p>
+		<p>Electrical components are in a
+			<strong>series</strong> when they are connected in a single path so that all charge flows through the same components.</p>
 		<canvas class='center' id='charge13' height='200' width='500' onclick="charges13(this)"> </canvas>
 		<div class='definition'>
 			<p>The total equivalent resistance for resistors in a series is the sum of the resistors. This means you can replace several
@@ -289,8 +291,7 @@
 			</svg>
 			<h1>$$R_{eq} = R_1+R_2+ ... + R_n$$</h1>
 			\(R_{n}\) = A single resistor in a series [ohms, Ω]
-			<br>\(R_{eq}\) = Equivalent resistance. The resistance of a single resistor that could replace several resistors. [ohms,
-			Ω]
+			<br>\(R_{eq}\) = Equivalent resistance. The resistance of a single resistor that could replace several resistors. [ohms, Ω]
 		</div>
 		<div class='example'>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="550" height="100" class='center'>
@@ -308,11 +309,19 @@
 			<strong>Example:</strong> What is the equivalent resistance for four 100Ω resistors in a series?
 			<details>
 				<summary>solution</summary>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="550" height="100" class='center'>
+					<path d="M 10 50 h225
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 225" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					/>
+					<text x="275" y="25" text-anchor="middle" font-size="20" fill='#333'>400Ω</text>
+				</svg>
 				$$R_{eq} = R_1+R_2+R_3+R_4$$ $$R_{eq} = 100+100+100+100$$ $$R_{eq} = 400\Omega$$
+
 			</details>
 		</div>
 		<h2 class='underlined'>Resistors in Parallel</h2>
-		<p>Electrical components are in <strong>parallel</strong> when the path branches, and charges take different paths.</p>
+		<p>Electrical components are in
+			<strong>parallel</strong> when the path branches, and charges take different paths.</p>
 
 		<canvas class='center' id='charge11' height='200' width='500' onclick="charges11(this)"> </canvas>
 		<div class='definition'>
@@ -338,8 +347,7 @@
 			</svg>
 			<h1>$$\frac{1}{R_{eq}} = \frac{1}{R_{1}}+\frac{1}{R_{2}}+ ... + \frac{1}{R_{n}}$$</h1>
 			\(R_{n}\) = A single resistor in parallel [ohms, Ω]
-			<br>\(R_{eq}\) = Equivalent resistance. The resistance of a single resistor that could replace several resistors [ohms,
-			Ω]
+			<br>\(R_{eq}\) = Equivalent resistance. The resistance of a single resistor that could replace several resistors [ohms, Ω]
 		</div>
 		<div class='example'>
 			<strong>Example:</strong> What is the equivalent resistance for five 100Ω resistors all in parallel?
@@ -367,6 +375,12 @@
 			<strong>Example:</strong> Find the equivalent resistance for the three resistors above.
 			<details>
 				<summary>solution</summary>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="100" class='center'>
+					<path d="M 10 50 h220
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					/>
+					<text x="305" y="25" text-anchor="end" font-size="20">57.14 Ω</text>
+				</svg>
 				$$\frac{1}{R_{eq}} = \frac{1}{R_{1}} + \frac{1}{R_{2}} + \frac{1}{R_{3}}$$ $$\frac{1}{R_{eq}} = \frac{1}{400} + \frac{1}{200}
 				+ \frac{1}{100}$$ $$\frac{1}{R_{eq}} = \frac{1}{400} + \left(\frac{2}{2}\right)\frac{1}{200} + \left(\frac{4}{4}\right)\frac{1}{100}$$
 				$$\frac{1}{R_{eq}} = \frac{1}{400} + \frac{2}{400} + \frac{4}{400}$$ $$\frac{1}{R_{eq}} = \frac{7}{400}$$ $$R_{eq} =
@@ -384,8 +398,7 @@
 				<text x="298" y="125" text-anchor="end" font-size="20">R2 = ?</text>
 				<!-- <text x="290" y="225" text-anchor="end" font-size="20">11kΩ</text> -->
 			</svg>
-			<strong>Example:</strong> The equivalent resistance for the above circuit is 10kΩ. Use that information to find the missing
-			resistance.
+			<strong>Example:</strong> The equivalent resistance for the above circuit is 10kΩ. Use that information to find the missing resistance.
 			<details>
 				<summary>solution</summary>
 				$$\frac{1}{R_{eq}} = \frac{1}{R_{1}} + \frac{1}{R_{2}}$$ $$\frac{1}{10} = \frac{1}{30} + \frac{1}{R_{2}}$$ $$\frac{1}{10}

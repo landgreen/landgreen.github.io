@@ -55,6 +55,41 @@
             <canvas id="canvas2" width='600' height='200'> </canvas>
             <div id='ex2'></div>
         </div>
+
+        <h1 class='underlined'>2-D Conservation of Momentum</h1>
+        <p>Momentum is a vector. It has a direction and a magnitude. We can solve for the horizontal and vertical components
+            separately just like how we solved 2-d Motion problems. Although in this case there isn't a time variable to
+            link up the vertical and horizontal equations.</p>
+
+        <div class='example'>
+            <canvas id="canvas3" width='600' height='300' onclick="collision2d(this)"> </canvas>
+            <strong>Horizontal Example:</strong> A
+            <a style='color: pink'>pink</a> hexagon and a
+            <a style='color: cyan'>cyan</a> triangle collide. Before the collision the hexagon has a mass of 5.20kg and is moving to the right at
+            2m/s. The cyan triangle is moving to the left at 1m/s and has a mass of 1.17kg. If the triangle bounces off the
+            hexagon at 2.92 m/s to the right what is the horizontal velocity of the hexagon? (ignore the vertical information)
+            <details>
+                <summary>solution</summary>
+                <p style='text-align: center;'>initial momentum = final momentum</p>
+                <p style='text-align: center;'>hexagon + triangle = hexagon + triangle</p>
+                $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$ $$(5.20)(2)+(1.17)(-1)=(5.20)v_{1}+(1.17)(2.92)$$ $$10.40-1.17=(5.20)v_{1}+3.42$$
+                $$5.81=(5.20)v_{1}$$ $$1.12 \small\frac{m}{s}=\normalsize v_{1}$$
+            </details>
+            <br>
+            <strong>Vertical Example:</strong> Lets take a look at the vertical aspect of the
+            <a style='color: pink'>pink</a> hexagon and
+            <a style='color: cyan'>cyan</a> triangle collision. Before the collision the hexagon has a mass of 5.20kg and is not moving up or down.
+            The final vertical velocity of the hexagon is 0.23 down. The final vertical velocity of the triangle is 0.67
+            up. What is the triangle's initial vertical velocity?
+            <details>
+                <summary>solution</summary>
+                <p style='text-align: center;'>initial momentum = final momentum</p>
+                <p style='text-align: center;'>hexagon + triangle = hexagon + triangle</p>
+                $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$ $$(5.20)(0)+(1.17)(u_{2})=(5.20)(-0.23)+(1.17)(0.67)$$ $$(1.17)(u_{2})=-0.41$$
+                $$u_{2}=-0.35\small\frac{m}{s}$$
+        </div>
+        </details>
+        </div>
     </article>
     <br>
     <br>
@@ -71,6 +106,7 @@
     <br>
     <script src="stickyCollision(Matter.js).js"></script>
     <script src="stickyCollision2(Matter.js).js"></script>
+    <script src="collision2D(Matter.js).js"></script>
 </body>
 
 </html>

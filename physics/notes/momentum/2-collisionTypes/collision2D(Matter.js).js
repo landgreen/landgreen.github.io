@@ -1,7 +1,19 @@
-function stickyCollision() {
+(function setup() {
+  //writes a message onload
+  var canvas;
+  var ctx;
+  canvas = document.getElementById("canvas3");
+  ctx = canvas.getContext("2d");
+  ctx.font = "300 30px Roboto";
+  ctx.fillStyle = "#aaa";
+  ctx.textAlign = "center";
+  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
+})();
+
+function collision2d(el) {
   //set up canvas
-  var canvasID = "canvas";
-  var canvas = document.getElementById(canvasID);
+  el.onclick = null; //stops the function from running on button click
+  var canvas = el;
   var ctx = canvas.getContext("2d");
 
   // module aliases
@@ -21,7 +33,7 @@ function stickyCollision() {
 
   var mass = [];
 
-  document.getElementById(canvasID).addEventListener("mousedown", function() {
+  document.getElementById(el.id).addEventListener("mousedown", function() {
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
     spawnList();
@@ -29,42 +41,10 @@ function stickyCollision() {
   spawnList();
   function spawnList() {
     var Ypos = canvas.height / 2;
-    spawnMass(100, Ypos, Math.ceil(Math.random() * 10) * 15, 0, 25 + Math.ceil(Math.random() * 60), 8, 0.1);
-    spawnMass(600, Ypos, -Math.ceil(Math.random() * 10) * 15, 0, 30 + Math.ceil(Math.random() * 50), 4, 1.5);
-    var vel = (mass[0].mass * mass[0].velocity.x + mass[1].mass * mass[1].velocity.x) / (mass[0].mass + mass[1].mass);
-    //write a problem based on the values in the spawn
-    document.getElementById("ex").innerHTML =
-      "<strong>Click to Randomize Problem:</strong> A " +
-      mass[0].mass.toFixed(2) +
-      "kg <span style='color: " +
-      mass[0].color +
-      "'>octagon</span> moving at " +
-      mass[0].velocity.x.toFixed(2) +
-      "m/s collides and sticks to a " +
-      mass[1].mass.toFixed(2) +
-      "kg <span style='color: " +
-      mass[1].color +
-      "'>square</span> moving at " +
-      mass[1].velocity.x.toFixed(2) +
-      "m/s. What is the velocity of the objects after they collide?<details> <summary>solution</summary><p style='text-align: center;'>octogon + square = octogon + square</p>$$m_{1}u_{1}+m_{2}u_{2}=(m_{1}+m_{2})v$$ $$(" +
-      mass[0].mass.toFixed(2) +
-      ")(" +
-      mass[0].velocity.x.toFixed(2) +
-      ")+(" +
-      mass[1].mass.toFixed(2) +
-      ")(" +
-      mass[1].velocity.x.toFixed(2) +
-      ")=(" +
-      mass[0].mass.toFixed(2) +
-      "+" +
-      mass[1].mass.toFixed(2) +
-      ")v$$ $$" +
-      vel.toFixed(2) +
-      " \\small\\frac{m}{s}=\\normalsize v$$</details>";
-    //re-encodes the mathjax into math, makes the $$ $$ work
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    spawnMass(-100, Ypos, 120, 0, 44.72135955, "pink", 6, 0.1);
+    spawnMass(500, Ypos - 50, -60, -20, 30, "cyan", 3, 1.5);
   }
-  function spawnMass(xIn, yIn, VxIn, VyIn, length, sides, angle) {
+  function spawnMass(xIn, yIn, VxIn, VyIn, length, color, sides, angle) {
     //spawn mass
     var i = mass.length;
     mass.push();
@@ -72,19 +52,17 @@ function stickyCollision() {
       friction: 0,
       frictionStatic: 0,
       frictionAir: 0,
-      restitution: 0,
+      restitution: 0.988,
       length: length,
-      color: randomColor({
-        luminosity: "bright"
-      })
+      color: color
     });
 
     Body.setVelocity(mass[i], {
       x: VxIn / 60 * scale,
       y: -VyIn / 60 * scale
     });
-    //Matter.Body.setAngle(mass[i], angle)
-    //Matter.Body.setAngularVelocity(mass[i], -0.004   );
+    Matter.Body.setAngle(mass[i], angle);
+    Matter.Body.setAngularVelocity(mass[i], -0.004);
     World.add(engine.world, mass[i]);
   }
 
@@ -113,6 +91,19 @@ function stickyCollision() {
   //   })
   // ]);
 
+  function edgeBounce() {
+    for (var k = 0, length = mass.length; k < length; k++) {
+      if (mass[k].position.x - mass[k].length / 2 < 0) {
+        Matter.Body.setPosition(mass[k], { x: mass[k].length / 2, y: mass[k].position.y });
+        Matter.Body.setVelocity(mass[k], { x: Math.abs(mass[k].velocity.x), y: 0 });
+      }
+      if (mass[k].position.x + mass[k].length / 2 > canvas.width) {
+        Matter.Body.setPosition(mass[k], { x: canvas.width - mass[k].length / 2, y: mass[k].position.y });
+        Matter.Body.setVelocity(mass[k], { x: -Math.abs(mass[k].velocity.x), y: 0 });
+      }
+    }
+  }
+
   // run the engine
   Engine.run(engine);
 
@@ -125,7 +116,7 @@ function stickyCollision() {
     // ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.lineWidth = 1;
-    ctx.strokeStyle = "#000000";
+    ctx.strokeStyle = "#000";
     for (var i = 0; i < bodies.length; i += 1) {
       var vertices = bodies[i].vertices;
       ctx.beginPath();
@@ -162,13 +153,37 @@ function stickyCollision() {
       px += mass[k].mass * mass[k].velocity.x;
       py += mass[k].mass * -mass[k].velocity.y;
     }
-    // ctx.textAlign="left";
-    // ctx.fillText('mv + mv = total horizontal momentum ',5,13);
-    // ctx.fillText('(' + mass[0].mass.toFixed(2)+')('+mass[0].velocity.x.toFixed(2) +') + ('
-    // +mass[1].mass.toFixed(2)+') ('+mass[1].velocity.x.toFixed(2)+') = '      +px.toFixed(2),5,30);
-    // ctx.textAlign="right";
-    // ctx.fillText('mv + mv = total vertical momentum',canvas.width-5,13);
-    // ctx.fillText('(' + mass[0].mass.toFixed(2)+')('+-mass[0].velocity.y.toFixed(2) +') + ('
-    // +mass[1].mass.toFixed(2)+') ('+-mass[1].velocity.y.toFixed(2)+') = '      +py.toFixed(2),canvas.width-5,30);
+    ctx.textAlign = "left";
+    ctx.fillText("mv + mv = total horizontal momentum ", 5, 15);
+    ctx.fillText(
+      "(" +
+        mass[0].mass.toFixed(2) +
+        ")(" +
+        mass[0].velocity.x.toFixed(2) +
+        ") + (" +
+        mass[1].mass.toFixed(2) +
+        ") (" +
+        mass[1].velocity.x.toFixed(2) +
+        ") = " +
+        px.toFixed(2),
+      5,
+      37
+    );
+
+    ctx.fillText("mv + mv = total vertical momentum", 5, canvas.height - 33);
+    ctx.fillText(
+      "(" +
+        mass[0].mass.toFixed(2) +
+        ")(" +
+        -mass[0].velocity.y.toFixed(2) +
+        ") + (" +
+        mass[1].mass.toFixed(2) +
+        ") (" +
+        -mass[1].velocity.y.toFixed(2) +
+        ") = " +
+        py.toFixed(2),
+      5,
+      canvas.height - 10
+    );
   })();
 }

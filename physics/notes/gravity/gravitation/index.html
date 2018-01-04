@@ -263,9 +263,9 @@
 
         <details class='derive'>
             <summary>derivation of universal gravitational acceleration</summary>
-            $$ F = M_{2}a $$ $$ \frac{F}{M_{2}} = a $$
+            $$ F = mg $$ $$ \frac{F}{m} = g $$
             <p>Newton's second law tells us we can replace F/M with acceleration.</p>
-            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ \frac{F}{M_{2}} = \frac{GM_{1}}{r^{2}} $$ $$ a = \frac{GM_{1}}{r^{2}} $$
+            $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ \frac{F}{M_{2}} = \frac{GM_{1}}{r^{2}} $$ $$ g = \frac{GM_{1}}{r^{2}} $$
 
         </details>
 
@@ -281,7 +281,7 @@
                 <line x1="100" y1="100" x2="180" y2="100" style="stroke:#000;stroke-width:2" />
                 <polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
 
-                <text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">a</text>
+                <text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">g</text>
 
                 <line x1="100" y1="30" x2="300" y2="30" style="stroke:#000;stroke-width:2" />
                 <line x1="100" y1="25" x2="100" y2="35" style="stroke:#000;stroke-width:2" />
@@ -289,8 +289,8 @@
                 <text x="200" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
             </svg>
 
-            <h2>$$ a = \frac{GM}{r^{2}} $$</h2>
-            <p>\(a\) = acceleration of gravity [m/s²]
+            <h2>$$ g = \frac{GM}{r^{2}} $$</h2>
+            <p>\(g\) = acceleration of gravity [m/s²]
                 <em>vector</em>
                 <br>\(G\) = 6.67408 × 10
                 <sup>-11</sup> = universal gravitation constant [N(m/kg)²]
@@ -329,16 +329,16 @@
             <br>Is it really 9.8m/s²?
             <details>
                 <summary>solution</summary>
-                $$ r = 6,371,000m $$ $$ a = \frac{GM}{r^{2}} $$ $$ a = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{(6.371\times10^{6})^{2}}
-                $$ $$ a = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{40.590\times10^{12}} $$ $$ a = \frac{(6.674)(5.972)}{40.590}
-                \times 10^{-11+24-12}$$ $$ a=0.98195 \times 10^{1}$$ $$ a=9.8195 \frac{m}{s^{2}}$$
+                $$ r = 6,371,000m $$ $$ g = \frac{GM}{r^{2}} $$ $$ g = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{(6.371\times10^{6})^{2}}
+                $$ $$ g = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{40.590\times10^{12}} $$ $$ g = \frac{(6.674)(5.972)}{40.590}
+                \times 10^{-11+24-12}$$ $$ g=0.98195 \times 10^{1}$$ $$ g=9.8195 \frac{m}{s^{2}}$$
             </details>
         </div>
         <div class='example'>
             <b>Example:</b> Find how far away from the Earth you need to be to only accelerate at half of 9.8m/s².
             <details>
                 <summary>solution</summary>
-                $$ a = \frac{GM}{r^{2}} $$ $$ r^{2} = \frac{GM}{a} $$ $$ r^{2} = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{9.8 \times
+                $$ g = \frac{GM}{r^{2}} $$ $$ r^{2} = \frac{GM}{g} $$ $$ r^{2} = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{9.8 \times
                 0.5} $$ $$ r = 9,160,226 m = 9,160 km $$
                 <p>Let's find the distance above Earth's surface.</p>
                 $$ 9,160km - 6,371km = 2789 km$$
@@ -351,7 +351,7 @@
             of Phobos? (Does your answer agree with wikipedia?)
             <details>
                 <summary>solution</summary>
-                $$ a = \frac{GM}{r^{2}} $$ $$ M = \frac{ar^2}{G}$$ $$ M = \frac{(0.0057)(11266)^2}{6.674\times 10^{-11}}$$ $$M = 1.08 \times
+                $$ g = \frac{GM}{r^{2}} $$ $$ M = \frac{gr^2}{G}$$ $$ M = \frac{(0.0057)(11266)^2}{6.674\times 10^{-11}}$$ $$M = 1.08 \times
                 10^{16}kg$$
                 <p></p>
             </details>
@@ -847,7 +847,7 @@
 
         <details class='derive'>
             <summary>derivation of universal gravitational potential energy</summary>
-            $$U_{g} = mgh \quad a = \color{blue}{\frac{GM}{r^{2}}} $$ $$U_{g} = m\color{blue}{\frac{GM}{r^{2}}}h $$ $$U_{g} = \frac{GM_{1}M_{2}}{r^{2}}r
+            $$U_{g} = mgh \quad g = \color{blue}{\frac{GM}{r^{2}}} $$ $$U_{g} = m\color{blue}{\frac{GM}{r^{2}}}h $$ $$U_{g} = \frac{GM_{1}M_{2}}{r^{2}}r
             $$ $$U_{g} = \frac{GM_{1}M_{2}}{r} $$
             <br>When distance is very big the energy goes to zero, so it makes sense to choose the zero of this gravitational
             potential energy at an infinite distance away. This means that as we bring a mass closer to another mass we are
@@ -920,10 +920,6 @@
                 $$U_{i} = -\frac{GM_{1}M_{2}}{r}$$ $$U_{i} = -\frac{(6.674 \times 10^{-11})(100,000)(100,000)}{2}$$ $$U_{i} = -0.33J$$
                 <br> $$U_{f} = -\frac{(6.674 \times 10^{-11})(100,000)(100,000)}{10}$$ $$U_{f} = -0.068J$$
                 <br> $$E_i = E_f$$ $$U_{i} + W = U_{f} $$ $$-0.33 + W = -0.068$$ $$W = 0.262J$$
-
-
-
-
             </details>
         </div>
 
