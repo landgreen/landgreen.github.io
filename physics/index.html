@@ -19,19 +19,51 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
-	<link rel="stylesheet" href="lib\font-awesome-4.6.3\css\font-awesome.min.css">
+	<!-- <link rel="stylesheet" href="lib\font-awesome-4.6.3\css\font-awesome.min.css"> -->
+	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
 </head>
 
 <body>
 	<header>
 		<div class='head_graphics'>
+
+			<style>
+				.draw-path {
+					stroke-dasharray: 1000;
+					stroke-dashoffset: 1000;
+					animation: dash 8s ease-in forwards;
+					/*   animation: dash 4s ease-in alternate infinite; */
+				}
+
+				@keyframes dash {
+					to {
+						stroke-dashoffset: 0;
+					}
+				}
+
+				.fade-in {
+					opacity: 0;
+					animation: opacity 2s ease-in forwards;
+				}
+
+				@keyframes opacity {
+					to {
+						opacity: 1;
+					}
+				}
+			</style>
+
 			<h2 style="position: absolute;right: 1em;top: 4.5em;color:#666;">
 				<div class='fade-in'>$$\sum F=ma$$</div>
 			</h2>
-			<h2 style="position: absolute;left: 0.5em;top: 5.5em;color:#666;">
+			<!-- <h2 style="position: absolute;left: 0.5em;top: 5.5em;color:#666;">
 				<div class='fade-in'>$$F_{s}=\mu F_{N}$$</div>
+			</h2> -->
+
+			<h2 style="position: absolute;left: 0.5em;top: 4.5em;color:#666;">
+				<div class='fade-in'>$$ F = \frac{GM_{1}M_{2}}{r^{2}} $$</div>
 			</h2>
-			<svg class='draw-path' width="250" height="220" style="position: absolute;left: 0;top: -1.3em;" version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<!-- <svg class='draw-path' width="250" height="220" style="position: absolute;left: 0;top: -1.3em;" version="1.1" xmlns="http://www.w3.org/2000/svg">
 				<g transform='rotate(30) translate(20 -100)'>
 					<rect x="110" y="110" width="80" height="80" style="stroke:#666;stroke-width:2;fill:none;fill-opacity:0" />
 					<line x1="150" y1="110" x2="150" y2="55" style="stroke:#666;stroke-width:2" />
@@ -42,13 +74,37 @@
 					<text class='fade-in' x="45" y="156" fill="#666">Fs</text>
 					<rect x="0" y="190" width="300" height="110" style="stroke:#666;stroke-width:2;fill:black;fill-opacity:0" />
 				</g>
+			</svg> -->
+
+			<svg class='draw-path' width="300" height="220" viewbox='30,0,350,200' style="position: absolute;left: 0;top: -1.3em;" version="1.1"
+			 xmlns="http://www.w3.org/2000/svg">
+				<circle cx="100" cy="100" r="60" fill='none' stroke-width="2" stroke="#666" />
+				<circle cx="300" cy="100" r="40" fill='none' stroke-width="2" stroke="#666" />
+
+				<line x1="100" y1="100" x2="172" y2="100" style="stroke:#666;stroke-width:2" />
+				<polygon class='fade-in' points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#666;" />
+
+				<line x1="300" y1="100" x2="228" y2="100" style="stroke:#666;stroke-width:2" />
+				<polygon class='fade-in' points="0,0 8,5 8,-5" transform="translate(220 100)" style="fill:#666;" />
+
+				<line x1="100" y1="30" x2="300" y2="30" style="stroke:#666;stroke-width:2" />
+				<line x1="100" y1="25" x2="100" y2="35" style="stroke:#666;stroke-width:2" />
+				<line x1="300" y1="25" x2="300" y2="35" style="stroke:#666;stroke-width:2" />
+				<g class='fade-in' text-anchor="middle" fill="#666">
+					<text x="200" y="25" font-size="25">r</text>
+					<text x="100" y="90" font-size="25">M</text>
+					<text x="118" y="93" font-size="19">1</text>
+					<text x="300" y="90" font-size="25">M</text>
+					<text x="318" y="93" font-size="19">2</text>
+					<text x="200" y="100" alignment-baseline="central" font-size="25">F</text>
+				</g>
 			</svg>
 
 			<svg class='draw-path' width="300" height="220" viewBox="-15 0 285 120" version="1.1" xmlns="http://www.w3.org/2000/svg"
 			 style="position: absolute;right: 0;top: -1.3em;">
 				<defs>
 					<g id="vector">
-						<line x1="0" y1="0" x2="0" y2="45" style="stroke:#666;stroke-width:2" />
+						<line x1="0" y1="0" x2="0" y2="40" style="stroke:#666;stroke-width:2" />
 						<polygon class='fade-in' points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' style="fill:#666;" />
 					</g>
 					<g id="box">
@@ -72,6 +128,7 @@
 			<a style="position: relative;" class='e-mail-link' href="mailto:rlandgreen@newwestcharter.org?Subject=physics%20class" target="_top">rlandgreen@newwestcharter.org</a>
 		</h3>
 	</header>
+
 	<ul class="grid">
 		<li>
 			<div>
@@ -90,16 +147,16 @@
 				</p>
 				<p>
 					<a href="http://codepen.io/lilgreenland/full/ORLQWw/">
-						<em class="fa fa-codepen"></em> Graphing Motion</a>
+						<i class="fab fa-codepen"></i> Graphing Motion</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=ZM8ECpBuQYE&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV&index=1">
-						<em class="fa fa-youtube-play"></em> CC: Motion</a>
+						<i class="fab fa-youtube"></i> CC: Motion</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=w3BhzYI6zXU&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV&index=4">
-						<i class="fa fa-youtube-play"></i> CC: 2-D Motion</a>
+						<i class="fab fa-youtube"></i> CC: 2-D Motion</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=7bUVjJWA6Vw">
-						<i class="fa fa-youtube-play"></i> TED-Ed: metric</a>
+						<i class="fab fa-youtube"></i> TED-Ed: metric</a>
 				</p>
 			</div>
 		</li>
@@ -115,10 +172,10 @@
 				</p>
 				<p>
 					<a href="https://www.youtube.com/watch?v=kKKM8Y-u7ds&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV&index=5">
-						<i class="fa fa-youtube-play"></i> CC: Newton's Laws</a>
+						<i class="fab fa-youtube"></i> CC: Newton's Laws</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=fo_pmp5rtzo&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV&index=6">
-						<i class="fa fa-youtube-play"></i> CC: Friction</a>
+						<i class="fab fa-youtube"></i> CC: Friction</a>
 				</p>
 			</div>
 		</li>
@@ -132,7 +189,7 @@
 				</p>
 				<p>
 					<a href="https://www.youtube.com/watch?v=Y-QOfc2XqOk&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV&index=10">
-						<i class="fa fa-youtube-play"></i> CC: Collisions</a>
+						<i class="fab fa-youtube"></i> CC: Collisions</a>
 				</p>
 			</div>
 		</li>
@@ -146,7 +203,7 @@
 				</p>
 				<p>
 					<a href="https://www.youtube.com/watch?v=w4QFJb9a8vo&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV&index=9">
-						<i class="fa fa-youtube-play"></i> CC: Energy</a>
+						<i class="fab fa-youtube"></i> CC: Energy</a>
 				</p>
 			</div>
 		</li>
@@ -160,17 +217,17 @@
 						<a href="notes/gravity/circular/index.html">Orbits</a>
 					</p>
 					<a href="http://codepen.io/lilgreenland/full/pbyprV/">
-						<i class="fa fa-codepen"></i> Gravity Simulation</a>
+						<i class="fab fa-codepen"></i> Gravity Simulation</a>
 					<!-- <br><a href="https://scratch.mit.edu/projects/80302834/"><i class="fa fa-codepen"></i> Orbits</a> -->
 					<br>
 					<a href="http://lilgreenland.github.io/planetesimals/">
-						<i class="fa fa-codepen"></i> Planetesimals</a>
+						<i class="fab fa-codepen"></i> Planetesimals</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=7gf6YpdvtE0&index=8&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Gravity</a>
+						<i class="fab fa-youtube"></i> CC: Gravity</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=bpFK2VCRHUs&index=7&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Circular Motion</a>
+						<i class="fab fa-youtube"></i> CC: Circular Motion</a>
 				</p>
 			</div>
 		</li>
@@ -185,17 +242,17 @@
 					<a href="notes/electrostatic/potential/index.html">Electric Potential</a>
 				</p>
 				<p>
-					<a href="http://codepen.io/lilgreenland/full/grqvNG/">
-						<i class="fa fa-codepen"></i> Field lines</a>
+					<a href="https://codepen.io/lilgreenland/full/grqvNG/">
+						<i class="fab fa-codepen"></i> Field lines</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=TFlVWf8JX4A&index=25&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Electric Charge</a>
+						<i class="fab fa-youtube"></i> CC: Electric Charge</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=mdulzEfQXDE&index=26&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Electric Fields</a>
+						<i class="fab fa-youtube"></i> CC: Electric Fields</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=ZrMltpK6iAw&index=27&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Voltage</a>
+						<i class="fab fa-youtube"></i> CC: Voltage</a>
 					<!-- <br><a href="https://drive.google.com/a/newwestcharter.org/file/d/0BzIVTsJCTyOqTmc1VzU1a0NXSEk/view?usp=sharing"><i class="fa fa-file-pdf-o"></i> Mr. Trask: Review Questions</a>
 				  <br><a href="https://drive.google.com/a/newwestcharter.org/file/d/0BzIVTsJCTyOqUFpVT2h6ejFhbDg/view?usp=sharing"><i class="fa fa-file-pdf-o"></i> Mr. Trask: Review Answers</a> -->
 				</p>
@@ -214,17 +271,20 @@
 				<p>
 					<!-- <a href='https://docs.google.com/document/d/1JtshyxLGHkNGaFLrhwov8qaCSiG6Lfp9MI9uD3NEqCw/edit?usp=sharing'><i class="fa fa-flask"></i> penny lab info</a>
 				<br> -->
+					<a href="https://codepen.io/lilgreenland/full/xprGvr/">
+						<i class="fab fa-codepen"></i> Circuit Simulation</a>
+					<br>
 					<a href="https://www.youtube.com/watch?v=HXOok3mfMLM&index=28&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Current</a>
+						<i class="fab fa-youtube"></i> CC: Current</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=g-wjP1otQWI&index=29&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Resistors and Batteries</a>
+						<i class="fab fa-youtube"></i> CC: Resistors and Batteries</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=-w-VTw0tQlE&index=30&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Circuits</a>
+						<i class="fab fa-youtube"></i> CC: Circuits</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=vuCJP_5KOlI&index=31&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Kirchhoff's Laws</a>
+						<i class="fab fa-youtube"></i> CC: Kirchhoff's Laws</a>
 				</p>
 			</div>
 		</li>
@@ -236,136 +296,121 @@
 				</p>
 				<p>
 					<a href="https://www.youtube.com/watch?v=s94suB5uLWw&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV&index=32">
-						<i class="fa fa-youtube-play"></i> CC: Magnetism</a>
-					<br>
+						<i class="fab fa-youtube"></i> CC: Magnetism</a>
+					<!-- <br>
 					<a href="https://www.youtube.com/watch?v=pQp6bmJPU_0&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV&index=34">
-						<i class="fa fa-youtube-play"></i> CC: Induction</a>
+						<i class="fab fa-youtube"></i> CC: Induction</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=5fqwJyt4Lus&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV&index=33">
-						<i class="fa fa-youtube-play"></i> CC: Ampère's Law</a>
+						<i class="fab fa-youtube"></i> CC: Ampère's Law</a> -->
 				</p>
 			</div>
 		</li>
 		<li>
 			<div>
-				<h2>Waves and Particles</h2>
+				<h2>Waves</h2>
 				<p>
 					<a href="notes/waves/waves/index.html"> Waves</a>
 					<br>
+					<a href="notes/waves/waveproperties/index.html"> Wave Properties</a>
+
+				</p>
+				<p>
+					<a href="http://codepen.io/lilgreenland/full/vGXYam/">
+						<i class="fab fa-codepen"></i> Waves</a>
+					<br>
+					<a href="https://www.youtube.com/watch?v=TfYCnOvNnFU&index=17&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
+						<i class="fab fa-youtube"></i> CC: Traveling Waves</a>
+					<br>
+					<a href="https://www.youtube.com/watch?v=qV4lR9EWGlY&index=18&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
+						<i class="fab fa-youtube"></i> CC: Sound</a>
+					<br>
+				</p>
+			</div>
+		</li>
+		<li>
+			<div>
+				<h2>Light</h2>
+				<p>
 					<a href="notes/waves/light/index.html"> Light</a>
 					<br>
 					<a href="notes/waves/photons/index.html"> Photons</a>
 				</p>
 				<p>
-					<a href="http://codepen.io/lilgreenland/full/vGXYam/">
-						<i class="fa fa-codepen"></i> Waves</a>
-
+					<a href="https://www.youtube.com/watch?v=IRBfpBPELmE&index=39&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
+						<i class="fab fa-youtube"></i> CC: Light is Waves</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=Oh4m8Ees-3Q&index=38&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Geometry Optics</a>
-					<br>
-					<a href="https://www.youtube.com/watch?v=IRBfpBPELmE&index=39&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Light is Waves</a>
-					<br>
+						<i class="fab fa-youtube"></i> CC: Geometry Optics</a>
+					<!-- <br>
 					<a href="					https://www.youtube.com/watch?v=7kb1VT0J3DE&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV&index=43">
-						<i class="fa fa-youtube-play"></i> CC: Quantum Mechanics #1</a>
+						<i class="fab fa-youtube"></i> CC: Quantum Mechanics #1</a>
 					<br>
 					<a href="					https://www.youtube.com/watch?v=qO_W70VegbQ&index=44&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Quantum Mechanics #2</a>
+						<i class="fab fa-youtube"></i> CC: Quantum Mechanics #2</a> -->
 
 					<br>
 					<a href="https://www.youtube.com/watch?v=-ob7foUzXaY&index=40&list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">
-						<i class="fa fa-youtube-play"></i> CC: Spectra & Interference</a>
+						<i class="fab fa-youtube"></i> CC: Spectra & Interference</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=jjy-eqWM38g&index=24&list=PL8dPuuaLjXtPAJr1ysd5yGIyiSFuh0mIL">
-						<i class="fa fa-youtube-play"></i> CC: Astronomy - Light</a>
+						<i class="fab fa-youtube"></i> CC: Astronomy - Light</a>
 				</p>
 			</div>
 		</li>
-		<li>
+		<!-- <li>
 			<div>
 				<h2>Relativity</h2>
 				<p>
 					<a href="https://docs.google.com/document/d/1-vo5qos57riirBNiLrWAIp0fEvJx5Fk_W_X3wUCbOd4/edit?usp=sharing">
-						<i class="fa fa-file-text"></i> Special Relativity</a>
+						<i class="far fa-file-alt"></i> Special Relativity</a>
 				</p>
 				<p>
-					<!-- <a href="https://docs.google.com/document/d/1t1_-q3Wz3hq0s4f3etFYQFdyeLTmovErWeyuv6zcYOE/edit?usp=sharing"><i class="fa fa-file-text"></i> Review Worksheet</a>
-					<br><a href="https://docs.google.com/document/d/1-Q6lqZ5RGnv_uRU0nQ_KF7ADw8AapeQvQiU4xcsG2XA/edit?usp=sharing"><i class="fa fa-file-text"></i> Review Worksheet 2</a><br> -->
 					<a href="http://codepen.io/lilgreenland/full/pPxoON/">
-						<i class="fa fa-codepen"></i> Relativity Calculator</a>
+						<i class="fab fa-codepen"></i> Relativity Calculator</a>
 					<br>
 					<a href="http://codepen.io/lilgreenland/full/EKpjxq">
-						<i class="fa fa-codepen"></i> Relativity Simulation</a>
+						<i class="fab fa-codepen"></i> Relativity Simulation</a>
 					<br>
 					<a href="https://www.youtube.com/watch?v=AInCqm5nCzw">
-						<i class="fa fa-youtube-play"></i> CC: Special Relativity</a>
+						<i class="fab fa-youtube"></i> CC: Special Relativity</a>
 				</p>
 
 			</div>
-		</li>
+		</li> -->
 	</ul>
-
 	<article>
 		<h2 class='underlined'>About Physics</h2>
 		<p>
-			<strong>Physics is science.</strong> Physics is the natural science that involves the study of matter and its motion through space
-			and time, along with related concepts such as energy and force. One of the most fundamental scientific disciplines, the
-			main goal of physics is to understand how the universe behaves.
+			<strong>Physics is science.</strong> One of the most fundamental scientific disciplines, physics investigates how matter and energy
+			change with space and time.
 		</p>
 		<p>
-			<strong>Physics is technology.</strong> For example, physics is behind all the different technologies in a cell phone. We will
-			study how electromagnetic waves encode information between a cell phone and tower, how electricity in the computer chips
-			is controlled by transistors, resistors, and other elements, how a phone's speaker produces changing waves of air pressure,
-			how a phone uses GPS to know its position, and more!
+			<strong>Physics advances technology.</strong> Physics is behind all the different technologies in a cell phone. Physics explains
+			how electromagnetic waves encode information between a cell phone and tower, how electricity in the computer chips is
+			controlled by transistors, resistors, and other elements, how a phone's speaker produces changing waves of air pressure,
+			and how a phone uses GPS to know its position.
 		</p>
 		<p>
-			<strong>Physics is engineering.</strong> This class will reward a curious mind that wants to apply their knowledge of physics
-			to design, build, tinker, and experiment.
+			<strong>Physics guides engineering.</strong> Physics gives helps engineers design, build, tinker, and experiment by allowing them
+			to predict how things behave.
 		</p>
 		<p>
-			<strong>Physics is math.</strong> Physics makes math less abstract and more concrete. Students will hone their math skills on
-			real world problems giving their math skills a greater relevance and fluidity.</p>
-		<br>
-
-		<!-- <h2>Assigment Calender</h2>
-        <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;height=525&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=en.usa%23holiday%40group.v.calendar.google.com&amp;color=%23125A12&amp;src=n1f89kf1tnatjle1nit0lr7mo0%40group.calendar.google.com&amp;color=%23AB8B00&amp;src=newwestcharter.org_6k9574kg0pmgfevla0aift6grg%40group.calendar.google.com&amp;color=%23B1365F&amp;ctz=America%2FLos_Angeles"
-            style="border-width:0" width="700" height="525" frameborder="0" scrolling="no"></iframe>
- -->
-
+			<strong>Physics speaks with math.</strong> Math is the language physics uses to predict and communicate the nature of our universe.
+		</p>
 		<h2 class='underlined'>Links</h2>
 		<p>
 			<strong>
-				<i class="fa fa-folder" aria-hidden="true"></i> Shared:</strong>
+				<i class="fas fa-folder"></i> Shared </strong>
+			<br>
+			<a href="https://drive.google.com/open?id=0BzIVTsJCTyOqUzhydDZOdzV1WVk">files</a>
+			<br>
+			<a href="https://goo.gl/photos/E7jTHpgHRFgT6C7p6">photos</a>
 
-			<a href="https://drive.google.com/open?id=0BzIVTsJCTyOqUzhydDZOdzV1WVk">folder</a>
-			</strong>
 		</p>
 		<p>
 			<strong>
-				<i class="fa fa-picture-o" aria-hidden="true"></i> Photos:</strong>
-			<a href="https://goo.gl/photos/E7jTHpgHRFgT6C7p6">from class</a>
-		</p>
-		<!-- <p> <strong><i class="fa fa-file" aria-hidden="true"></i> Class Files:</strong>
-			<a href="https://docs.google.com/document/d/1RVgK3AZp1_yurAAfzleDuwsUFpCZWZ7pQuswe74w1dg/edit?usp=sharing"> lab outline </a>
-		</p> -->
-		<p>
-			<strong>
-				<i class="fa fa-youtube-play"></i> Youtube:</strong>
-			<br>
-			<a href="https://www.youtube.com/playlist?list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">crashcourse</a>
-			<br>
-			<a href="https://www.youtube.com/user/physicswoman">physics girl</a>
-			<br>
-			<a href="https://www.youtube.com/user/destinws2">smarter every day</a>
-			<br>
-			<a href="https://www.youtube.com/user/1veritasium">veritasium</a>
-			<br>
-			<a href="https://www.youtube.com/user/minutephysics">minute physics</a>
-		</p>
-		<p>
-			<strong>
-				<i class="fa fa-space-shuttle" aria-hidden="true"></i> Physics Resources:</strong>
+				<i class="fas fa-space-shuttle"></i> Physics Resources</strong>
 			<br>
 			<a href="http://www.nextgenscience.org/">next generation science standards</a>
 			<br>
@@ -379,7 +424,20 @@
 			<br>
 			<a href="http://www.wolframalpha.com/">wolfram alpha computational search engine</a>
 		</p>
-		<br>
+		<p>
+			<strong>
+				<i class="fab fa-youtube"></i> Youtube Channels</strong>
+			<br>
+			<a href="https://www.youtube.com/playlist?list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">crashcourse</a>
+			<br>
+			<a href="https://www.youtube.com/user/physicswoman">physics girl</a>
+			<br>
+			<a href="https://www.youtube.com/user/destinws2">smarter every day</a>
+			<br>
+			<a href="https://www.youtube.com/user/1veritasium">veritasium</a>
+			<br>
+			<a href="https://www.youtube.com/user/minutephysics">minute physics</a>
+		</p>
 		<h2 class='underlined'>Materials</h2>
 		<p>An organized notebook/binder and a scientific calculator is required.
 			<br> I'm flexible about most other details, but I recommend:</p>
@@ -392,10 +450,9 @@
 		<a href='https://www.amazon.com/dp/B00092RJX0/_encoding=UTF8?coliid=I17A6WSIFV5AG6&colid=26R4C03G1WG78'>these</a> colored pens.
 		<br>
 		<strong>highlighter</strong>
-		<br>
+
 		<h2 class='underlined'>Contact</h2>
-		<p>If you were absent check in to see what you missed. The best time to meet with me is after school, any day but Wednesday.
-		</p>
+		<p>If you were absent check in to see what you missed. The best time to meet with me is after school.</p>
 		<!-- <p>If you are taking physics in the fall of 2016 with Mr. Landgreen take <a href="https://docs.google.com/a/newwestcharter.org/forms/d/e/1FAIpQLScjMKG7BDMcB_Hdy4cFF-glvlEoa489wQyomVHu7q3FQXI8ig/viewform">this survey</a>.
 			<br>(You must be on your @newwestcharter.org e-mail account)</p> -->
 

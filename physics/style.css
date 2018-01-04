@@ -1,32 +1,43 @@
-@import 'https://fonts.googleapis.com/css?family=Roboto:300,400,700';
-
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700");
 
 /************Reset**************/
 
 * {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
-html, body, div, object, iframe, fieldset {
-    margin: 0;
-    padding: 0;
-    border: 0;
+html,
+body,
+div,
+object,
+iframe,
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
-ol, ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
-header, footer, nav, section, article, hgroup, figure {
-    display: block;
+header,
+footer,
+nav,
+section,
+article,
+hgroup,
+figure {
+  display: block;
 }
 legend {
-    display: none;
+  display: none;
 }
 
 svg:not(:root) {
@@ -37,33 +48,36 @@ svg:not(:root) {
 
 /*global elements____________________________________*/
 body {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-size: 105%;
-    background-color: #fff;
-    padding-top: 0;
-    color: #444;
-    margin: 0;
-    line-height:1.4;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 105%;
+  background-color: #fff;
+  padding-top: 0;
+  color: #333;
+  margin: 0;
+  line-height: 1.4;
 }
 article {
-    padding: 0.1em;
-    margin: 0 auto;
-    max-width: 600px;
+  padding: 0.1em;
+  margin: 0 auto;
+  max-width: 600px;
 }
 
-h1, h2, h3 {
-    font-weight: 400;
+h1,
+h2,
+h3 {
+  font-weight: 400;
 }
 
 button {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-size: 1em;
-    margin: 0.3em;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 1em;
+  margin: 0.3em;
 }
 
 input {
+  font-family: Monaco, monospace;
   font-size: 100%;
-  width: 80px;
+  width: 69px;
   background: #eee;
   border: 10px;
   margin: 0.2em;
@@ -74,41 +88,41 @@ input:focus {
 }
 
 canvas {
-    margin: 0.3em;
-    /*border: 1px solid #999;*/
-    box-shadow: 2px 2px 8px #aaa;
-    border-radius: 5px;
-	user-select: none;
-    /*cursor: crosshair;*/
+  margin: 0.3em;
+  /*border: 1px solid #999;*/
+  box-shadow: 2px 2px 8px #aaa;
+  border-radius: 5px;
+  user-select: none;
+  /*cursor: crosshair;*/
 }
 a {
-    text-decoration: none;
-    color: #2793C7;
+  text-decoration: none;
+  color: #2793c7;
 }
 a:hover {
-    text-decoration: underline;
-    color: #000;
+  text-decoration: underline;
+  color: #000;
 }
 summary {
-    cursor: pointer;
-	outline: none;
+  cursor: pointer;
+  outline: none;
 }
 hr {
-    border: 0;
-    border-bottom: 1px solid #aaa;
+  border: 0;
+  border-bottom: 1px solid #aaa;
 }
 th {
-    font-weight: bold;
-    text-align: left;
+  font-weight: bold;
+  text-align: left;
 }
 details p {
-    text-align: center;
-	font-size: 1.3em;
+  text-align: center;
+  font-size: 1.3em;
 }
 ::selection {
-    color: white;
-    background: #2793C7;
-    /*background: #0f0;*/
+  color: white;
+  background: #2793c7;
+  /*background: #0f0;*/
 }
 pre {
   overflow-x: auto;
@@ -128,7 +142,8 @@ table {
 table tr:hover td {
   color: #555;
 }*/
-table th, table td {
+table th,
+table td {
   color: #777;
   border: 1px solid #eee;
   padding: 12px 20px;
@@ -145,35 +160,36 @@ table th.last {
 }
 
 .black {
-	background-color: #000;
+  background-color: #000;
 }
 
 .number {
-	width: 52px;
+  width: 52px;
 }
 .rainbow {
-	background: linear-gradient(red, orange , yellow, green, cyan, blue, violet);
-	font-weight: 900;
-	color: #fff;
+  background: linear-gradient(red, orange, yellow, green, cyan, blue, violet);
+  font-weight: 900;
+  color: #fff;
 }
 .ion {
-	background: #fef;
+  background: #fef;
 }
 
 /*classes_________________________________________*/
 .back {
-	text-align: center;
-	margin: 10em;
+  text-align: center;
+  margin: 10em;
 }
 
 .underlined {
   margin-top: 2em;
+  margin-bottom: 0em;
   border-bottom: 1px solid #aaa;
   font-weight: 300;
   font-size: 2.2em;
 }
 .strikeout {
-	text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .center {
@@ -185,7 +201,7 @@ table th.last {
 
 .highlight {
   color: #fff;
-  background-color: #2793C7;
+  background-color: #2793c7;
   /*color: #000;
   background-color: #ffcdf0;*/
   border-radius: 5px;
@@ -194,42 +210,44 @@ table th.last {
 }
 
 .definition {
-    background-color: #ddeef6;
-    padding: 1em;
-    margin: 1em 0em 1em 0em;
-    border-radius: 1em;
-    line-height:1.6;
+  color: #000;
+  background-color: #ddeef6;
+  padding: 1em;
+  margin: 1em 0em 1em 0em;
+  border-radius: 1em;
+  line-height: 1.6;
 }
 .definition em {
-    color: #888;
-    font-weight: 300;
+  color: #888;
+  font-weight: 300;
 }
-.example{
-	margin: 8em 0em 8em 0em;
+.example {
+  margin: 8em 0em 8em 0em;
 }
 
-.data th, td {
-    padding: 0.5em;
+.data th,
+td {
+  padding: 0.5em;
 }
 
 .derive {
-    text-align: center;
-    background-color: #e6f9f0;
-    padding: 1.3em;
-    border-radius: 1em;
+  text-align: center;
+  background-color: #e6f9f0;
+  padding: 1.3em;
+  border-radius: 1em;
 }
 .history {
-	font-family: "Times New Roman", Times, serif;
-	font-size: 100%;
-    text-align: left;
-    background-color: #e6f9f0;
-	font-size: 1em;
-    padding: 1.3em;
-    border-radius: 1em;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 100%;
+  text-align: left;
+  background-color: #e6f9f0;
+  font-size: 1em;
+  padding: 1.3em;
+  border-radius: 1em;
 }
 .svgDiagram {
-    /*border: 1px solid black;*/
-    transition: all 200ms ease-in;
+  /*border: 1px solid black;*/
+  transition: all 200ms ease-in;
 }
 
 /*.svgDiagram:hover {
@@ -242,24 +260,23 @@ table th.last {
 /*math tex rendering __________________________*/
 
 .katex {
-    font-size: 1.5em !important;
+  font-size: 1.5em !important;
 }
 details .katex {
-    font-size: 2em !important;
+  font-size: 2em !important;
 }
 
 /*basic flex box __________________________*/
 .flex-container {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
 }
 .flex-item {
-    margin: 0.8em
+  margin: 0.8em;
 }
-
 
 /*2 Equal-Width Columns that combine in the article________________*/
 @media screen and (min-width: 43em) {
@@ -271,35 +288,48 @@ details .katex {
     width: 50%;
   }
 }
+/* Grid ________________________________________________*/
+.wrapper {
+  display: grid;
+  grid-template-columns: 292px 292px;
+  grid-gap: 16px;
+}
+
+.wrapper > div {
+  /* border: 1px solid #aaa; */
+  background: #fff;
+  border-radius: 5px;
+  padding: 5px;
+}
 
 /* Header setup_________________________________*/
 header {
-    background-color: #222;
-    color: white;
-    padding: 0.1em 0em 0.1em 0em;
-    text-align: center;
+  background-color: #222;
+  color: white;
+  padding: 0.1em 0em 0.1em 0em;
+  text-align: center;
 }
 
 header h1 {
-    margin: 0.5em;
-    font-size: 5em;
-    font-weight: 300;
+  margin: 0.5em;
+  font-size: 5em;
+  font-weight: 300;
 }
 
 .e-mail-link {
-    border-radius: 290486px;
-    color: white;
-    font-size: 0.6em;
-    letter-spacing: 0.2em;
-    padding: 1em 2em;
-    text-decoration: none;
-    transition: none 200ms ease-out;
-    transition-property: color, background;
+  border-radius: 290486px;
+  color: white;
+  font-size: 0.6em;
+  letter-spacing: 0.2em;
+  padding: 1em 2em;
+  text-decoration: none;
+  transition: none 200ms ease-out;
+  transition-property: color, background;
 }
 .e-mail-link:hover {
-    text-decoration: none;
-    background-color: #2793C7;
-    color: white;
+  text-decoration: none;
+  background-color: #2793c7;
+  color: white;
 }
 
 @media screen and (max-width: 600px) {
@@ -311,69 +341,49 @@ header h1 {
 /* grid setup ---------------------------- */
 
 .grid {
-    overflow: hidden;
-    padding: 0.5em 0 0 0.5em;
-    max-width: 76em;
-    margin: 0 auto;
-    line-height:1.6;
+  overflow: hidden;
+  padding: 0.5em 0 0 0.5em;
+  max-width: 76em;
+  margin: 0 auto;
+  line-height: 1.6;
 }
-.grid h3, .grid h2 {
-    border-bottom: 1px solid #aaa;
-    font-weight: 400;
+.grid h3,
+.grid h2 {
+  border-bottom: 1px solid #aaa;
+  font-weight: 400;
+  margin-bottom: -0.3em;
 }
 .grid a {
-    color: #555;
+  color: #555;
 }
 .grid a:hover {
-    color: #2793C7;
+  color: #2793c7;
 }
 .grid li {
-    padding: 0 0.5em 0.5em 0;
+  padding: 0 0.5em 0.5em 0;
 }
-.grid li> div {
-    padding: 1em 1em;
+.grid li > div {
+  padding: 1em 1em;
 }
 @media all and (min-width: 27em) {
-    .grid li {
-        width: 50%;
-        float: left;
-    }
-}
-@media all and (min-width: 40em) {
-    .grid li {
-        width: 33.3333333%;
-    }
-    .grid li.wide {
-        width: 66.666666%;
-    }
-}
-@media all and (min-width: 60em) {
-    .grid li {
-        width: 25%;
-    }
-    .grid li.wide {
-        width: 50%;
-    }
-}
-
-.draw-path {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: dash 4s ease-in forwards;
-/*   animation: dash 4s ease-in alternate infinite; */
-}
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
+  .grid li {
+    width: 50%;
+    float: left;
   }
 }
-
-.fade-in {
-	opacity: 0;
-	animation: opacity 2s ease-in forwards;
+@media all and (min-width: 40em) {
+  .grid li {
+    width: 33.3333333%;
+  }
+  .grid li.wide {
+    width: 66.666666%;
+  }
 }
-@keyframes opacity {
-  to {
-    opacity: 1;
+@media all and (min-width: 60em) {
+  .grid li {
+    width: 25%;
+  }
+  .grid li.wide {
+    width: 50%;
   }
 }
