@@ -139,7 +139,7 @@ function mobCollisionChecks(event) {
           if (obj.classType === "body" && obj.speed > 5) {
             const v = Matter.Vector.magnitude(Matter.Vector.sub(mob[k].velocity, obj.velocity));
             if (v > 8) {
-              let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.04;
+              let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.05;
               mob[k].damage(dmg);
               if (mob[k].distanceToPlayer2() < 1000000) mob[k].locatePlayer();
               game.drawList.push({

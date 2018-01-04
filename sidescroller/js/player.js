@@ -138,19 +138,30 @@ const mech = {
   },
   transSmoothX: 0,
   transSmoothY: 0,
+  lastGroundedPositionY: 0,
   // mouseZoom: 0,
   look: function() {
     //always on mouse look
     this.angle = Math.atan2(game.mouseInGame.y - this.pos.y, game.mouseInGame.x - this.pos.x);
-    const mX = game.mouse.x - canvas.width2;
-    const mY = game.mouse.y - canvas.height2;
-    // this.angle = Math.atan2(mY, mX);
     //smoothed translations
     const scale = 1.4;
-    this.transSmoothX = canvas.width2 - this.pos.x - mX * scale;
-    this.transSmoothY = canvas.height2 - this.pos.y - mY * scale;
-    this.transX = this.transX * 0.93 + this.transSmoothX * 0.07;
-    this.transY = this.transY * 0.93 + this.transSmoothY * 0.07;
+    this.transSmoothX = canvas.width2 - this.pos.x - (game.mouse.x - canvas.width2) * scale;
+    this.transSmoothY = canvas.height2 - this.pos.y - (game.mouse.y - canvas.height2) * scale;
+
+    // only track vertical camera if player is on ground   //or going past 50% of screen?
+    // if (this.onGround) {
+    //   this.lastGroundedPositionY += (this.pos.y - this.lastGroundedPositionY) * 0.05;
+    //   this.transSmoothX = canvas.width2 - this.pos.x - (game.mouse.x - canvas.width2) * scale;
+    //   this.transSmoothY = canvas.height2 - this.lastGroundedPositionY - (game.mouse.y - canvas.height2) * scale;
+    // } else {
+    //   this.transSmoothX = canvas.width2 - this.pos.x - (game.mouse.x - canvas.width2) * scale;
+    //   this.transSmoothY = canvas.height2 - this.lastGroundedPositionY - (game.mouse.y - canvas.height2) * scale;
+    // }
+
+    // this.transX = this.transX * 0.93 + this.transSmoothX * 0.07;
+    // this.transY = this.transY * 0.93 + this.transSmoothY * 0.07;
+    this.transX += (this.transSmoothX - this.transX) * 0.07;
+    this.transY += (this.transSmoothY - this.transY) * 0.07;
     //zoom in/out based on mouse distance from player
     //very cool, but too distracting and makes aiming even harder
     // this.mouseZoom = this.mouseZoom*0.97 + (Math.sqrt(mX*mX+mY*mY)*0.5)*0.03
@@ -398,15 +409,15 @@ const mech = {
     return false;
   },
   isHolding: false,
-  grabRange: 150,
+  grabRange: 175,
   holding: null,
   drop: function() {
     if (this.isHolding) {
       this.isHolding = false;
       Matter.Body.setMass(player, 5);
-      this.holding.collisionFilter.category = 0x000001;
-      this.holding.collisionFilter.mask = 0x111111;
-      this.holding = null;
+      this.holdingTarget.collisionFilter.category = 0x000001;
+      this.holdingTarget.collisionFilter.mask = 0x111111;
+      this.holdingTarget = null;
     }
   },
   drawHold: function(target) {
@@ -430,79 +441,67 @@ const mech = {
       ctx.stroke();
     }
   },
-  // drawHoldable: function(target) {
-  //   ctx.beginPath();
-  //   let vertices = target.vertices;
-  //   ctx.moveTo(vertices[0].x, vertices[0].y);
-  //   for (let j = 1; j < vertices.length; j += 1) {
-  //     ctx.lineTo(vertices[j].x, vertices[j].y);
-  //   }
-  //   ctx.lineTo(vertices[0].x, vertices[0].y);
-  //   // ctx.fillStyle = "#ccc";
-  //   ctx.fillStyle = "rgba(255,255,255," + (0.2 + 0.9 * Math.random()) + ")";
-
-  //   ctx.fill();
-  //   ctx.lineWidth = 2;
-  //   ctx.strokeStyle = "#222";
-  //   ctx.stroke();
-  // },
-  throw: function() {
-    //used in the mouse up event listener
-    if (this.isHolding) {
-      this.fireCDcycle = game.cycle + 15;
-      this.isHolding = false;
-      //bullet-like collisions
-      this.holding.collisionFilter.category = 0x000100;
-      this.holding.collisionFilter.mask = 0x111111;
-      //check every second to see if player is away from thrown body, and make solid
-      const solid = function(that) {
-        const dx = that.position.x - player.position.x;
-        const dy = that.position.y - player.position.y;
-        if (dx * dx + dy * dy > 3000 && that.speed < 3) {
-          that.collisionFilter.category = 0x000001; //make solid
-        } else {
-          setTimeout(solid, 250, that);
-        }
-      };
-      setTimeout(solid, 1000, this.holding);
-
-      const speed = Math.min(50 / this.holding.mass + 1, 42); //throw speed scales a bit with mass
-      Matter.Body.setVelocity(this.holding, {
-        x: player.velocity.x * 0.5 + Math.cos(this.angle) * speed,
-        y: player.velocity.y * 0.5 + Math.sin(this.angle) * speed
-      });
-      //player recoil //stronger in x-dir to prevent jump hacking
-      Matter.Body.setVelocity(player, {
-        x: player.velocity.x - Math.cos(this.angle) * 2,
-        y: player.velocity.y - Math.sin(this.angle) * 0.4
-      });
-      //return to normal player mass
-      Matter.Body.setMass(player, 5);
-    }
-  },
   fieldArc: 0.2,
   fieldThreshold: 0.87,
   hold: function() {
     if (b.activeGun === 0) {
       if (this.isHolding) {
         //hold blocks
-        this.drawHold(this.holding);
-        Matter.Body.setPosition(this.holding, {
+        this.drawHold(this.holdingTarget);
+        Matter.Body.setPosition(this.holdingTarget, {
           x: mech.pos.x + 70 * Math.cos(this.angle),
           y: mech.pos.y + 70 * Math.sin(this.angle)
         });
-        Matter.Body.setVelocity(this.holding, player.velocity);
-        Matter.Body.rotate(this.holding, 0.01 / this.holding.mass); //gently spin the block
+        Matter.Body.setVelocity(this.holdingTarget, player.velocity);
+        Matter.Body.rotate(this.holdingTarget, 0.01 / this.holdingTarget.mass); //gently spin the block
+
+        //throw
+        if (game.mouseDown) {
+          this.fireCDcycle = game.cycle + 15;
+          this.isHolding = false;
+          //bullet-like collisions
+          this.holdingTarget.collisionFilter.category = 0x000100;
+          this.holdingTarget.collisionFilter.mask = 0x111111;
+          //check every second to see if player is away from thrown body, and make solid
+          const solid = function(that) {
+            const dx = that.position.x - player.position.x;
+            const dy = that.position.y - player.position.y;
+            if (dx * dx + dy * dy > 3000 && that.speed < 3) {
+              that.collisionFilter.category = 0x000001; //make solid
+            } else {
+              setTimeout(solid, 250, that);
+            }
+          };
+          setTimeout(solid, 1000, this.holdingTarget);
+          //throw speed scales a bit with mass
+          const speed = Math.min(53 / this.holdingTarget.mass + 5, 45);
+          Matter.Body.setVelocity(this.holdingTarget, {
+            x: player.velocity.x * 0.5 + Math.cos(this.angle) * speed,
+            y: player.velocity.y * 0.5 + Math.sin(this.angle) * speed
+          });
+          //player recoil //stronger in x-dir to prevent jump hacking
+          Matter.Body.setVelocity(player, {
+            x: player.velocity.x - Math.cos(this.angle) * 2,
+            y: player.velocity.y - Math.sin(this.angle) * 0.4
+          });
+          //return to normal player mass
+          Matter.Body.setMass(player, 5);
+        }
       } else if (game.mouseDown && this.fireCDcycle < game.cycle) {
         //pick up blocks with field
+
         //draw field
         const range = this.grabRange - 20;
         ctx.beginPath();
-        // ctx.moveTo(this.pos.x, this.pos.y);
         ctx.arc(this.pos.x, this.pos.y, range, this.angle - Math.PI * this.fieldArc, this.angle + Math.PI * this.fieldArc, false);
         let eye = 13;
         ctx.lineTo(mech.pos.x + eye * Math.cos(this.angle), mech.pos.y + eye * Math.sin(this.angle));
-        ctx.fillStyle = "rgba(110,170,200," + (0.15 + 0.15 * Math.random()) + ")";
+        if (this.holdingTarget) {
+          ctx.fillStyle = "rgba(110,170,200," + (0.05 + 0.1 * Math.random()) + ")";
+        } else {
+          ctx.fillStyle = "rgba(110,170,200," + (0.15 + 0.15 * Math.random()) + ")";
+        }
+
         ctx.fill();
         //draw random lines in field for cool effect
         let offAngle = this.angle + 2 * Math.PI * this.fieldArc * (Math.random() - 0.5);
@@ -520,7 +519,7 @@ const mech = {
             Matter.Vector.magnitude(Matter.Vector.sub(mob[i].position, this.pos)) < this.grabRange &&
             Matter.Query.ray(map, mob[i].position, this.pos).length === 0
           ) {
-            this.fireCDcycle = game.cycle + 10; //cool down
+            this.fireCDcycle = game.cycle + 15; //cool down
             // const dmg = b.dmgScale * 0.1;
             // mob[i].damage(dmg);
             mob[i].locatePlayer();
@@ -528,83 +527,74 @@ const mech = {
             //mob and player knock back
             const angle = Math.atan2(player.position.y - mob[i].position.y, player.position.x - mob[i].position.x);
             Matter.Body.setVelocity(mob[i], {
-              x: player.velocity.x - 20 * Math.cos(angle) / Math.sqrt(mob[i].mass),
-              y: player.velocity.y - 20 * Math.sin(angle) / Math.sqrt(mob[i].mass)
+              x: player.velocity.x - 15 * Math.cos(angle) / Math.sqrt(mob[i].mass),
+              y: player.velocity.y - 15 * Math.sin(angle) / Math.sqrt(mob[i].mass)
             });
             Matter.Body.setVelocity(player, {
-              x: player.velocity.x + 3 * Math.cos(angle) * Math.sqrt(mob[i].mass),
-              y: player.velocity.y + 3 * Math.sin(angle) * Math.sqrt(mob[i].mass)
+              x: player.velocity.x + 5 * Math.cos(angle) * Math.sqrt(mob[i].mass),
+              y: player.velocity.y + 5 * Math.sin(angle) * Math.sqrt(mob[i].mass)
             });
           }
         }
 
-        //find closest body
-        let mag = this.grabRange;
-        let index = null;
-        // const maxSize = 375;
-        ctx.beginPath(); //draw on each valid body
+        //find body to pickup
+        const grabbing = {
+          targetIndex: null,
+          targetRange: this.grabRange,
+          lookingAt: false
+        };
         for (let i = 0, len = body.length; i < len; ++i) {
-          if (
-            // body[i].bounds.max.x - body[i].bounds.min.x < maxSize &&
-            // body[i].bounds.max.y - body[i].bounds.min.y < maxSize &&
-            this.lookingAt(body[i], this.fieldThreshold) &&
-            Matter.Query.ray(map, body[i].position, this.pos).length === 0
-          ) {
-            let vertices = body[i].vertices;
-            ctx.moveTo(vertices[0].x, vertices[0].y);
-            for (let j = 1; j < vertices.length; j += 1) {
-              ctx.lineTo(vertices[j].x, vertices[j].y);
-            }
-            ctx.lineTo(vertices[0].x, vertices[0].y);
-            //add to closest list
+          if (Matter.Query.ray(map, body[i].position, this.pos).length === 0) {
+            //is this next body a better target then my current best
             const dist = Matter.Vector.magnitude(Matter.Vector.sub(body[i].position, this.pos));
-            if (dist < mag) {
-              mag = dist;
-              index = i;
+            const looking = this.lookingAt(body[i], this.fieldThreshold);
+            if (dist < grabbing.targetRange && (looking || !grabbing.lookingAt)) {
+              grabbing.targetRange = dist;
+              grabbing.targetIndex = i;
+              grabbing.lookingAt = looking;
             }
           }
         }
-        ctx.fillStyle = "rgba(190,215,230," + (0.3 + 0.7 * Math.random()) + ")";
-        ctx.fill();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "#222";
-        ctx.stroke();
-        // pick up if in range
-        if (mag < this.grabRange) {
-          //pick up if distance closer then 100*100
-          this.isHolding = true;
-          if (this.holding) {
-            this.holding.collisionFilter.category = 0x000001;
-            this.holding.collisionFilter.mask = 0x111111;
-          }
-          this.holding = body[index];
-          //combine momentum
-          const px = player.velocity.x * player.mass + this.holding.velocity.x * this.holding.mass;
-          const py = player.velocity.y * player.mass - this.holding.velocity.y * this.holding.mass;
-          Matter.Body.setVelocity(player, {
-            x: px / (player.mass + this.holding.mass),
-            y: py / (player.mass + this.holding.mass)
-          });
 
-          Matter.Body.setMass(player, 5 + this.holding.mass);
-          //collide with nothing
-          this.holding.collisionFilter.category = 0x000000;
-          this.holding.collisionFilter.mask = 0x000000;
-          //draw grab
-          // ctx.beginPath();
-          // // console.log(this.holding);
-          // ctx.moveTo(mech.pos.x + 55 * Math.cos(this.angle), mech.pos.y + 55 * Math.sin(this.angle));
-          // for (let i = 0, len = this.holding.vertices.length; i < len; i++) {
-          //   ctx.lineTo(this.holding.vertices[i].x, this.holding.vertices[i].y);
-          // }
-          // // ctx.moveTo(this.holding.position.x, this.holding.position.y);
-          // // ctx.lineTo(mech.pos.x + 55 * Math.cos(this.angle), mech.pos.y + 55 * Math.sin(this.angle));
-          // ctx.lineWidth = 3;
-          // ctx.strokeStyle = "#000";
-          // ctx.stroke();
-          // ctx.fillStyle = "rgba(0,0,0,0.5)";
-          // ctx.fill();
+        // set pick up target for when mouse is released
+        if (body[grabbing.targetIndex]) {
+          this.holdingTarget = body[grabbing.targetIndex];
+          //
+          ctx.beginPath(); //draw on each valid body
+          let vertices = this.holdingTarget.vertices;
+          ctx.moveTo(vertices[0].x, vertices[0].y);
+          for (let j = 1; j < vertices.length; j += 1) {
+            ctx.lineTo(vertices[j].x, vertices[j].y);
+          }
+          ctx.lineTo(vertices[0].x, vertices[0].y);
+          ctx.fillStyle = "rgba(190,215,230," + (0.3 + 0.7 * Math.random()) + ")";
+          ctx.fill();
+
+          ctx.globalAlpha = 0.2;
+          this.drawHold(this.holdingTarget);
+          ctx.globalAlpha = 1;
+        } else {
+          this.holdingTarget = null;
         }
+      } else if (!game.mouseDown && this.holdingTarget) {
+        this.isHolding = true;
+        if (this.holdingTarget) {
+          this.holdingTarget.collisionFilter.category = 0x000001;
+          this.holdingTarget.collisionFilter.mask = 0x111111;
+        }
+        //combine momentum
+        const px = player.velocity.x * player.mass + this.holdingTarget.velocity.x * this.holdingTarget.mass;
+        const py = player.velocity.y * player.mass - this.holdingTarget.velocity.y * this.holdingTarget.mass;
+        Matter.Body.setVelocity(player, {
+          x: px / (player.mass + this.holdingTarget.mass),
+          y: py / (player.mass + this.holdingTarget.mass)
+        });
+        Matter.Body.setMass(player, 5 + this.holdingTarget.mass);
+        //collide with nothing
+        this.holdingTarget.collisionFilter.category = 0x000000;
+        this.holdingTarget.collisionFilter.mask = 0x000000;
+      } else {
+        this.holdingTarget = null;
       }
     }
   },

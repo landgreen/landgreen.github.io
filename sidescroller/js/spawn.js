@@ -2,27 +2,27 @@
 const spawn = {
   pickList: ["starter", "starter"],
   fullPickList: [
-    "chaser",
-    "striker",
-    "burster",
-    "hopper",
-    "grower",
-    "springer",
-    "zoomer",
-    "shooter",
-    "beamer",
-    "focuser",
-    "laser",
-    "blinker",
-    "drifter",
-    "sucker",
-    "exploder",
-    "spawner",
-    "ghoster",
-    "sneaker",
-    "bomber"
+    // "chaser",
+    // "striker",
+    // "spinner",
+    // "hopper",
+    // "grower",
+    // "springer",
+    // "zoomer",
+    // "shooter",
+    // "beamer",
+    // "focuser",
+    // "laser",
+    "blinker"
+    // "drifter",
+    // "sucker",
+    // "exploder",
+    // "spawner",
+    // "ghoster",
+    // "sneaker",
+    // "bomber"
   ],
-  bossPickList: ["zoomer", "chaser", "burster", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner", "bomber"],
+  bossPickList: ["zoomer", "chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner", "bomber"],
   setSpawnList: function() {
     //this is run at the start of each new level to determine the possible mobs for the level
     //each level has 2 mobs: one new mob and one from the the last level
@@ -201,9 +201,10 @@ const spawn = {
       this.hop();
     };
   },
-  burster: function(x, y, radius = 45 + Math.ceil(Math.random() * 40)) {
-    mobs.spawn(x, y, 5, radius, "#728ab2");
+  spinner: function(x, y, radius = 45 + Math.ceil(Math.random() * 40)) {
+    mobs.spawn(x, y, 5, radius, "#000000");
     let me = mob[mob.length - 1];
+    me.fill = randomColor({ hue: "blue" });
     me.cdBurst1 = 0; //must add for burstAttraction
     me.cdBurst2 = 0; //must add for burstAttraction
     me.delay = 0;
@@ -211,9 +212,9 @@ const spawn = {
       x: 0,
       y: 0
     };
-    me.accelMag = 0.15;
-    me.frictionAir = 0.02;
-    me.lookTorque = 0.0000013;
+    me.accelMag = 0.16;
+    me.frictionAir = 0.022;
+    me.lookTorque = 0.0000014;
     me.restitution = 0;
     me.do = function() {
       this.healthBar();
@@ -356,22 +357,47 @@ const spawn = {
     Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
     me.blinkRate = 40 + Math.round(Math.random() * 60); //required for blink
     me.blinkLength = 150 + Math.round(Math.random() * 200); //required for blink
-    //me.collisionFilter.mask = 0x001100; //move through walls
+    // me.collisionFilter.mask = 0x001100; //move through walls
     me.isStatic = true;
     me.memory = 360;
     me.seePlayerFreq = 40 + Math.round(Math.random() * 30);
+    me.isBig = false;
+    me.onDeath = function() {
+      if (this.isBig) {
+        const scale = 1 / 3;
+        Matter.Body.scale(this, scale, scale);
+        this.isBig = false;
+      }
+    };
     me.do = function() {
       this.healthBar();
       this.seePlayerCheck();
       this.blink();
+      //strike by expanding
+      if (this.isBig) {
+        if (this.cd - this.delay + 15 < game.cycle) {
+          const scale = 1 / 3;
+          Matter.Body.scale(this, scale, scale);
+          this.isBig = false;
+        }
+      } else if (this.seePlayer.yes && this.cd < game.cycle) {
+        const dist = Matter.Vector.sub(this.seePlayer.position, this.position);
+        const distMag2 = Matter.Vector.magnitudeSquared(dist);
+        if (distMag2 < 80000) {
+          this.cd = game.cycle + this.delay;
+          const scale = 3;
+          Matter.Body.scale(this, scale, scale);
+          this.isBig = true;
+        }
+      }
     };
   },
   drifter: function(x, y, radius = 15 + Math.ceil(Math.random() * 40)) {
     mobs.spawn(x, y, 4.5, radius, "rgb(0,200,255)");
     let me = mob[mob.length - 1];
     Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
-    me.blinkRate = 40 + Math.round(Math.random() * 30); //required for blink/drift
-    me.blinkLength = 150; //required for blink/drift
+    me.blinkRate = 30 + Math.round(Math.random() * 30); //required for blink/drift
+    me.blinkLength = 160; //required for blink/drift
     //me.collisionFilter.mask = 0x001100; //move through walls
     me.isStatic = true;
     me.memory = 360;
@@ -383,7 +409,7 @@ const spawn = {
     };
   },
   bomber: function(x, y, radius = 15 + Math.ceil(Math.random() * 25)) {
-    mobs.spawn(x, y, 4, radius, "rgb(160,230,255)");
+    mobs.spawn(x, y, 4, radius, "rgba(0,0,80,0.7)");
     let me = mob[mob.length - 1];
     me.seeAtDistance2 = 800000;
     me.fireFreq = Math.ceil(30 + 2000 / radius);
@@ -396,7 +422,7 @@ const spawn = {
     me.friction = 0;
     me.frictionAir = 0.01;
     // me.memory = 300;
-    Matter.Body.setDensity(me, 0.0025); //extra dense //normal is 0.001
+    // Matter.Body.setDensity(me, 0.0015); //extra dense //normal is 0.001
     me.collisionFilter.mask = 0x001100; //move through walls
     if (Math.random() < Math.min(0.3 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
     me.do = function() {
@@ -408,7 +434,7 @@ const spawn = {
     };
   },
   shooter: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-    mobs.spawn(x, y, 3, radius, "rgb(100,50,255)");
+    mobs.spawn(x, y, 3, radius, "rgb(255,100,150)");
     let me = mob[mob.length - 1];
     me.vertices = Matter.Vertices.rotate(me.vertices, Math.PI, me.position); //make the pointy side of triangle the front
     me.memory = 120;
@@ -662,13 +688,10 @@ const spawn = {
   },
   // body and map spawns ******************************************************************************
   //**********************************************************************************************
-  boost: function(x, y, Vx = 0, Vy = -0.007) {
+  boost: function(x, y, height = -1000) {
     spawn.mapVertex(x + 50, y + 35, "120 40 -120 40 -50 -40 50 -40");
     // level.addZone(x, y, 100, 30, "fling", {Vx:Vx, Vy: Vy});
-    level.addQueryRegion(x + 10, y - 220, 80, 220, "force", [[player], body, mob, powerUp, bullet], {
-      Vx: Vx,
-      Vy: Vy * 1.6
-    });
+    level.addQueryRegion(x, y - 120, 100, 120, "boost", [[player], body, mob, powerUp, bullet], -1.1 * Math.sqrt(Math.abs(height)));
     let color = "rgba(200,0,255,";
     level.fillBG.push({
       x: x,
@@ -714,9 +737,6 @@ const spawn = {
       color: "#f00"
     });
   },
-  mapGunPowerUp: function(x, y) {
-    if (game.levelsCleared < 4 || game.levelsCleared === 5 || game.levelsCleared === 7) powerUps.spawn(x, y, "gun", false); //starting gun
-  },
   platform: function(x, y, width, height) {
     const size = 20;
     spawn.mapRect(x, y + height, width, 30);
@@ -730,7 +750,7 @@ const spawn = {
   },
   debris: function(x, y, width, number = Math.floor(3 + Math.random() * 11)) {
     for (let i = 0; i < number; ++i) {
-      if (Math.random() < 0.3) {
+      if (Math.random() < 0.15) {
         powerUps.chooseRandomPowerUp(x + Math.random() * width, y);
       } else {
         const size = 18 + Math.random() * 25;

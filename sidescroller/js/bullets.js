@@ -1,9 +1,10 @@
 let bullet = [];
 
 const b = {
-  dmgScale: 0.7, //scales all gun damage from momentum, but not raw .dmg
+  dmgScale: 1.5, //scales all gun damage from momentum, but not raw .dmg //this is reset in game.reset
   gravity: 0.0006, //most other bodies have   gravity = 0.001
   activeGun: 0, //current gun in use by player
+  lastActiveGun: 0,
   inventoryGun: 0,
   inventory: [0], //list of what guns player has  // 0 starts with basic gun
   // findGunInInventory: function() {

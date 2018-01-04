@@ -5,7 +5,7 @@ const powerUps = {
     name: "heal",
     color: "#0f9",
     size: function() {
-      return 40 * Math.sqrt(0.1 + Math.random() * 0.4);
+      return 40 * Math.sqrt(0.1 + Math.random() * 0.5);
     },
     effect: function() {
       let heal = this.size / 40;
@@ -16,7 +16,7 @@ const powerUps = {
   },
   ammo: {
     name: "ammo",
-    color: "#023",
+    color: "#467",
     size: function() {
       return 17;
     },
@@ -77,19 +77,20 @@ const powerUps = {
       }
     }
   },
+  //powerups also come from spawn.debris
   spawnRandomPowerUp: function(x, y) {
     //a chance to drop a power up
     //mostly used after mob dies
     //spawn heal chance is higher at low health
-    if (Math.random() * Math.random() > Math.sqrt(mech.health) || Math.random() < 0.05) {
+    if (Math.random() * Math.random() - 0.25 > Math.sqrt(mech.health) || Math.random() < 0.03) {
       powerUps.spawn(x, y, "heal");
       return;
     }
-    if (Math.random() < 0.35) {
+    if (Math.random() < 0.15) {
       if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
       return;
     }
-    //new gun has a low chance for each not acquired gun to drop
+    //a new gun has a low chance for each not acquired gun to drop
     if (Math.random() < 0.008 * (b.guns.length - b.inventory.length)) {
       powerUps.spawn(x, y, "gun");
       return;
@@ -134,14 +135,19 @@ const powerUps = {
     }
     World.add(engine.world, powerUp[i]); //add to world
   },
-  loop: function() {
+  attractionLoop: function() {
     for (let i = 0, len = powerUp.length; i < len; ++i) {
       const dxP = player.position.x - powerUp[i].position.x;
       const dyP = player.position.y - powerUp[i].position.y;
       const dist2 = dxP * dxP + dyP * dyP;
       //gravitation for pickup
-      if (dist2 < 200000 && (powerUp[i].name != "heal" || mech.health < 1)) {
+      if (dist2 < 100000 && (powerUp[i].name != "heal" || mech.health < 1)) {
         if (dist2 < 2000) {
+          //knock back from grabbing power up
+          Matter.Body.setVelocity(player, {
+            x: player.velocity.x + powerUp[i].velocity.x * powerUp[i].mass / player.mass * 0.25,
+            y: player.velocity.y + powerUp[i].velocity.y * powerUp[i].mass / player.mass * 0.25
+          });
           mech.usePowerUp(i);
           break;
         }
@@ -150,13 +156,14 @@ const powerUps = {
           Matter.Query.ray(map, powerUp[i].position, player.position).length === 0
           // && Matter.Query.ray(body, powerUp[i].position, player.position).length === 0
         ) {
+          //extra friction
           Matter.Body.setVelocity(powerUp[i], {
-            //extra friction
-            x: powerUp[i].velocity.x * 0.94,
-            y: powerUp[i].velocity.y * 0.94
+            x: powerUp[i].velocity.x * 0.97,
+            y: powerUp[i].velocity.y * 0.97
           });
-          powerUp[i].force.x += dxP / dist2 * powerUp[i].mass * 0.7;
-          powerUp[i].force.y += dyP / dist2 * powerUp[i].mass * 0.7 - powerUp[i].mass * game.g; //negate gravity
+          //float towards player
+          powerUp[i].force.x += dxP / dist2 * powerUp[i].mass * 1.6;
+          powerUp[i].force.y += dyP / dist2 * powerUp[i].mass * 1.6 - powerUp[i].mass * game.g; //negate gravity
         }
       }
     }

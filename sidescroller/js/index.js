@@ -100,6 +100,7 @@ body:    0x 000001   0x 011111
 var canvas = document.getElementById("canvas");
 //using "const" causes problems in safari when an ID shares the same name.
 const ctx = canvas.getContext("2d");
+document.body.style.backgroundColor = "#fff";
 
 function setupCanvas() {
   canvas.width = window.innerWidth;
@@ -181,7 +182,7 @@ function cycle() {
   game.wipe();
   game.textLog();
   mech.keyMove();
-  powerUps.loop();
+  powerUps.attractionLoop();
   level.checkZones();
   level.checkQuery();
   mech.move();

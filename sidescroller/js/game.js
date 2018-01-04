@@ -120,29 +120,39 @@ const game = {
       game.zoomScale *= 0.9;
       game.setZoom();
     }
+
+    const switchGun = function() {
+      game.updateGunHUD();
+      game.boldActiveGunHUD();
+      mech.drop();
+      playSound("click");
+    };
     if (keys[69]) {
       // e    swap to next active gun
       b.inventoryGun++;
       if (b.inventoryGun > b.inventory.length - 1) b.inventoryGun = 0;
       b.activeGun = b.inventory[b.inventoryGun];
-
-      //if (b.activeGun > b.guns.length - 1) b.activeGun = 0;
-      //if (b.guns[b.activeGun].have === false || b.guns[b.activeGun].ammo < 1) next();
-      game.updateGunHUD();
-      game.boldActiveGunHUD();
-      mech.drop();
-      playSound("click");
+      b.lastActiveGun = b.activeGun;
+      switchGun();
     } else if (keys[81]) {
       //q    swap to previous active gun
       b.inventoryGun--;
       if (b.inventoryGun < 0) b.inventoryGun = b.inventory.length - 1;
       b.activeGun = b.inventory[b.inventoryGun];
-
-      game.updateGunHUD();
-      game.boldActiveGunHUD();
-      mech.drop();
-      playSound("click");
+      b.lastActiveGun = b.activeGun;
+      switchGun();
+    } else if (keys[32]) {
+      //space to toggle back to field emitter gun
+      if (b.activeGun === 0) {
+        b.activeGun = b.lastActiveGun;
+        switchGun();
+      } else {
+        b.lastActiveGun = b.activeGun;
+        b.activeGun = 0;
+        switchGun();
+      }
     }
+
     if (keys[84]) {
       // 84 = t
       if (this.testing) {
@@ -236,7 +246,7 @@ const game = {
     game.paused = false;
     engine.timing.timeScale = 1;
     game.dmgScale = 1;
-    b.dmgScale = 0.8;
+    b.dmgScale = 0.9;
     b.activeGun = 0;
     game.makeGunHUD();
     mech.drop();
@@ -266,13 +276,14 @@ const game = {
     document.getElementById("health-bg").style.display = "inline";
 
     window.onmousedown = function(e) {
+      game.mouseDown = true;
       // keep this disabled unless building maps
       // if (!game.mouseDown){
       // 	game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
       // 	game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
       // }
-      game.mouseDown = true;
-      mech.throw();
+
+      // mech.throw();
     };
     document.body.style.cursor = "none";
     if (this.firstRun) mech.spawn(); //spawns the player
@@ -401,29 +412,24 @@ const game = {
   },
   draw: {
     powerUp: function() {
-      // ctx.lineWidth = 5
+      // draw power up
+      // ctx.globalAlpha = 0.4 * Math.sin(game.cycle * 0.15) + 0.6;
       // for (let i = 0, len = powerUp.length; i < len; ++i) {
-      //     let vertices = powerUp[i].vertices;
-      //     ctx.beginPath();
-      //     ctx.moveTo(vertices[0].x, vertices[0].y);
-      //     for (let j = 1; j < vertices.length; j += 1) {
-      //         ctx.lineTo(vertices[j].x, vertices[j].y);
-      //     }
-      //     ctx.lineTo(vertices[0].x, vertices[0].y);
-      // 	ctx.globalAlpha = powerUp[i].alpha;
-      //     ctx.strokeStyle = powerUp[i].color
-      //     ctx.stroke()
+      //   let vertices = powerUp[i].vertices;
+      //   ctx.beginPath();
+      //   ctx.moveTo(vertices[0].x, vertices[0].y);
+      //   for (let j = 1; j < vertices.length; j += 1) {
+      //     ctx.lineTo(vertices[j].x, vertices[j].y);
+      //   }
+      //   ctx.lineTo(vertices[0].x, vertices[0].y);
+      //   ctx.fillStyle = powerUp[i].color;
+      //   ctx.fill();
       // }
       // ctx.globalAlpha = 1;
       ctx.globalAlpha = 0.4 * Math.sin(game.cycle * 0.15) + 0.6;
       for (let i = 0, len = powerUp.length; i < len; ++i) {
-        let vertices = powerUp[i].vertices;
         ctx.beginPath();
-        ctx.moveTo(vertices[0].x, vertices[0].y);
-        for (let j = 1; j < vertices.length; j += 1) {
-          ctx.lineTo(vertices[j].x, vertices[j].y);
-        }
-        ctx.lineTo(vertices[0].x, vertices[0].y);
+        ctx.arc(powerUp[i].position.x, powerUp[i].position.y, powerUp[i].size, 0, 2 * Math.PI);
         ctx.fillStyle = powerUp[i].color;
         ctx.fill();
       }
@@ -455,8 +461,11 @@ const game = {
         this.mapPath.lineTo(vertices[0].x, vertices[0].y);
       }
     },
+    mapFill: "#444",
+    bodyFill: "#999",
+    bodyStroke: "#222",
     drawMapPath: function() {
-      ctx.fillStyle = "#444";
+      ctx.fillStyle = this.mapFill;
       ctx.fill(this.mapPath);
     },
     body: function() {
@@ -470,9 +479,9 @@ const game = {
         ctx.lineTo(vertices[0].x, vertices[0].y);
       }
       ctx.lineWidth = 2;
-      ctx.fillStyle = "#999";
+      ctx.fillStyle = this.bodyFill;
       ctx.fill();
-      ctx.strokeStyle = "#222";
+      ctx.strokeStyle = this.bodyStroke;
       ctx.stroke();
     },
     cons: function() {

@@ -799,7 +799,7 @@ const mobs = {
         if (this.seePlayer.recall) {
           if (this.cdBurst2 < game.cycle && this.angularSpeed < 0.01) {
             this.cdBurst2 = Infinity;
-            this.cdBurst1 = game.cycle + 50;
+            this.cdBurst1 = game.cycle + 40;
             this.burstDir = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
           } else if (this.cdBurst1 < game.cycle) {
             this.cdBurst2 = game.cycle + this.delay;
@@ -814,6 +814,7 @@ const mobs = {
             // this.force.y += forceMag * Math.sin(angle); // - 0.0007 * this.mass; //antigravity
           } else if (this.cdBurst1 != Infinity) {
             this.torque += 0.000035 * this.inertia;
+            this.fill = randomColor({ hue: "blue" });
             //draw attack vector
             const mag = this.radius * 2 + 200;
             const gradient = ctx.createRadialGradient(this.position.x, this.position.y, 0, this.position.x, this.position.y, mag);
@@ -940,7 +941,6 @@ const mobs = {
       blink: function() {
         //teleport towards player as a way to move
         if (this.seePlayer.recall && !(game.cycle % this.blinkRate)) {
-          // && !mech.lookingAtMob(this,0.5)){
           ctx.beginPath();
           ctx.moveTo(this.position.x, this.position.y);
           const dist = Matter.Vector.sub(this.seePlayer.position, this.position);
@@ -1124,7 +1124,7 @@ const mobs = {
         Matter.Body.setAngle(this, angle - Math.PI);
       },
       explode: function() {
-        mech.damage(0.035 * Math.sqrt(this.mass) * game.dmgScale);
+        mech.damage(Math.min(Math.max(0.02 * Math.sqrt(this.mass), 0.05), 0.35) * game.dmgScale);
         this.dropPowerUp = false;
         this.death(); //death with no power up or body
       },
@@ -1248,8 +1248,12 @@ const mobs = {
           body[len] = Matter.Bodies.fromVertices(this.position.x, this.position.y, this.vertices);
           Matter.Body.setVelocity(body[len], this.velocity);
           Matter.Body.setAngularVelocity(body[len], this.angularVelocity);
-          body[len].collisionFilter.category = 0x000001;
-          body[len].collisionFilter.mask = 0x011111;
+          body[len].collisionFilter.category = this.collisionFilter.category; // 0x000001;
+          body[len].collisionFilter.mask = this.collisionFilter.mask; // 0x011111;
+          //let some of the dead bodies just fall to prevent build up also let all large mobs fall
+          // if (Math.random() < 1 - body.length * 0.004 || body[len].mass > 7) {
+          //   body[len].collisionFilter.mask = 0x000100;
+          // }
           body[len].classType = "body";
           World.add(engine.world, body[len]); //add to world
         }
