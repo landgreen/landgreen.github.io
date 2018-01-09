@@ -2,25 +2,25 @@
 const spawn = {
   pickList: ["starter", "starter"],
   fullPickList: [
-    // "chaser",
-    // "striker",
-    // "spinner",
-    // "hopper",
-    // "grower",
-    // "springer",
-    // "zoomer",
-    // "shooter",
-    // "beamer",
-    // "focuser",
-    // "laser",
-    "blinker"
-    // "drifter",
-    // "sucker",
-    // "exploder",
-    // "spawner",
-    // "ghoster",
-    // "sneaker",
-    // "bomber"
+    "chaser",
+    "striker",
+    "spinner",
+    "hopper",
+    "grower",
+    "springer",
+    "zoomer",
+    "shooter",
+    "beamer",
+    "focuser",
+    "laser",
+    "blinker",
+    "drifter",
+    "sucker",
+    "exploder",
+    "spawner",
+    "ghoster",
+    "sneaker",
+    "bomber"
   ],
   bossPickList: ["zoomer", "chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner", "bomber"],
   setSpawnList: function() {
@@ -362,10 +362,10 @@ const spawn = {
     me.memory = 360;
     me.seePlayerFreq = 40 + Math.round(Math.random() * 30);
     me.isBig = false;
+    me.scaleMag = Math.max(5 - me.mass, 1.75);
     me.onDeath = function() {
       if (this.isBig) {
-        const scale = 1 / 3;
-        Matter.Body.scale(this, scale, scale);
+        Matter.Body.scale(this, 1 / this.scaleMag, 1 / this.scaleMag);
         this.isBig = false;
       }
     };
@@ -376,8 +376,7 @@ const spawn = {
       //strike by expanding
       if (this.isBig) {
         if (this.cd - this.delay + 15 < game.cycle) {
-          const scale = 1 / 3;
-          Matter.Body.scale(this, scale, scale);
+          Matter.Body.scale(this, 1 / this.scaleMag, 1 / this.scaleMag);
           this.isBig = false;
         }
       } else if (this.seePlayer.yes && this.cd < game.cycle) {
@@ -385,8 +384,7 @@ const spawn = {
         const distMag2 = Matter.Vector.magnitudeSquared(dist);
         if (distMag2 < 80000) {
           this.cd = game.cycle + this.delay;
-          const scale = 3;
-          Matter.Body.scale(this, scale, scale);
+          Matter.Body.scale(this, this.scaleMag, this.scaleMag);
           this.isBig = true;
         }
       }

@@ -93,8 +93,32 @@ body:    0x 000001   0x 011111
     }
     requestAnimationFrame(turb);
 })()
-
 */
+
+//toggle full screen
+document.addEventListener(
+  "keydown",
+  function(e) {
+    if (e.keyCode == 13) {
+      toggleFullScreen(canvas);
+    }
+  },
+  false
+);
+function toggleFullScreen(el) {
+  var doc = window.document;
+  var docEl = doc.documentElement;
+
+  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+  if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+    requestFullScreen.call(docEl);
+  } else {
+    cancelFullScreen.call(doc);
+  }
+  setupCanvas();
+}
 
 //set up canvas
 var canvas = document.getElementById("canvas");
@@ -178,7 +202,9 @@ function shuffle(array) {
 //main loop ************************************************************
 //**********************************************************************
 function cycle() {
-  game.timing();
+  game.cycle++; //tracks game cycles
+  Engine.update(engine, game.delta);
+  // game.timing();
   game.wipe();
   game.textLog();
   mech.keyMove();

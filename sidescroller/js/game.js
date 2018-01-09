@@ -18,7 +18,7 @@ const game = {
   cyclePaused: 0,
   fallHeight: 3000, //below this y position the player dies
   lastTimeStamp: 0, //tracks time stamps for measuing delta
-  delta: 0, //measures how slow the engine is running compared to 60fps
+  delta: 1000 / 60, //speed of game engine //looks like it has to be 16 to match player input
   buttonCD: 0,
   drawCursor: function() {
     const size = 10;
@@ -103,12 +103,12 @@ const game = {
       document.getElementById("text-log").style.opacity = 0;
     }
   },
-  timing: function() {
-    this.cycle++; //tracks game cycles
-    //delta is used to adjust forces on game slow down;
-    this.delta = (engine.timing.timestamp - this.lastTimeStamp) / 16.666666666666;
-    this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
-  },
+  // timing: function() {
+  //   this.cycle++; //tracks game cycles
+  //   //delta is used to adjust forces on game slow down;
+  //   this.delta = (engine.timing.timestamp - this.lastTimeStamp) / 16.666666666666;
+  //   this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
+  // },
   keyPress: function() {
     //runs on key press event
     if (keys[189]) {
@@ -141,15 +141,31 @@ const game = {
       b.activeGun = b.inventory[b.inventoryGun];
       b.lastActiveGun = b.activeGun;
       switchGun();
-    } else if (keys[32]) {
-      //space to toggle back to field emitter gun
-      if (b.activeGun === 0) {
-        b.activeGun = b.lastActiveGun;
-        switchGun();
+    }
+    // else if (keys[32]) {
+    //   //space to toggle back to field emitter gun
+    //   if (b.activeGun === 0) {
+    //     b.activeGun = b.lastActiveGun;
+    //     switchGun();
+    //   } else {
+    //     b.lastActiveGun = b.activeGun;
+    //     b.activeGun = 0;
+    //     switchGun();
+    //   }
+    // }
+
+    if (keys[80]) {
+      //p  for pause
+      if (game.paused) {
+        game.paused = false;
+        // engine.timing.timeScale = 1;
+        requestAnimationFrame(cycle);
       } else {
-        b.lastActiveGun = b.activeGun;
-        b.activeGun = 0;
-        switchGun();
+        // engine.timing.timeScale = 0.001;
+        game.paused = true;
+        game.makeTextLog("<h1>PAUSED</h1>", 1);
+
+        // ctx.fillText("paused", canvas.width / 2, canvas.height / 2);
       }
     }
 
@@ -174,17 +190,6 @@ const game = {
           x: 0,
           y: 0
         });
-      }
-      if (keys[80]) {
-        //p
-        if (game.paused) {
-          game.paused = false;
-          engine.timing.timeScale = 1;
-          requestAnimationFrame(cycle);
-        } else {
-          engine.timing.timeScale = 0.001;
-          game.paused = true;
-        }
       }
     }
   },
@@ -289,7 +294,7 @@ const game = {
     if (this.firstRun) mech.spawn(); //spawns the player
     // level.levels = shuffle(level.levels); //shuffles order of maps
     game.reset();
-    if (game.firstRun) Engine.run(engine); //starts game engine
+    // if (game.firstRun) Engine.run(engine); //starts game engine
     game.firstRun = false;
     requestAnimationFrame(cycle); //starts game loop
     game.lastLogTime = game.cycle + 360;
@@ -374,8 +379,6 @@ const game = {
     ctx.fillText("Press T to exit testing mode", x, line);
     line += 30;
     ctx.fillText("cycle: " + game.cycle, x, line);
-    line += 20;
-    ctx.fillText("delta: " + game.delta.toFixed(6), x, line);
     line += 20;
     ctx.fillText("x: " + player.position.x.toFixed(0), x, line);
     line += 20;

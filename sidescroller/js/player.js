@@ -228,11 +228,11 @@ const mech = {
       } else if (keys[87] && this.buttonCD_jump + 20 < game.cycle) {
         this.buttonCD_jump = game.cycle; //can't jump again until 20 cycles pass
 
-        player.force.y = -this.jumpForce / game.delta; //jump force / delta so that force is the same on game slowdowns
+        player.force.y = -this.jumpForce; //jump force
         //apply a fraction of the jump force to the thing the player is jumping off of
         Matter.Body.applyForce(mech.standingOn, mech.pos, {
           x: 0,
-          y: this.jumpForce / game.delta * 0.2 * Math.min(mech.standingOn.mass, 1)
+          y: this.jumpForce * 0.2 * Math.min(mech.standingOn.mass, 1)
         });
 
         //zero player y-velocity for consistent jumps
@@ -245,9 +245,9 @@ const mech = {
       const stoppingFriction = 0.9;
       if (keys[65]) {
         //left / a
-        player.force.x -= this.Fx / game.delta * (1 - Math.sqrt(Math.abs(player.velocity.x) / this.VxMax));
+        player.force.x -= this.Fx * (1 - Math.sqrt(Math.abs(player.velocity.x) / this.VxMax));
         // if (player.velocity.x > -this.VxMax) {
-        // 		player.force.x -= this.Fx / game.delta
+        // 		player.force.x -= this.Fx
         // }
         if (player.velocity.x > 0) {
           Matter.Body.setVelocity(player, {
@@ -257,9 +257,9 @@ const mech = {
         }
       } else if (keys[68]) {
         //right / d
-        player.force.x += this.Fx / game.delta * (1 - Math.sqrt(Math.abs(player.velocity.x) / this.VxMax));
+        player.force.x += this.Fx * (1 - Math.sqrt(Math.abs(player.velocity.x) / this.VxMax));
         // if (player.velocity.x < this.VxMax) {
-        // 		player.force.x += this.Fx / game.delta;
+        // 		player.force.x += this.Fx;
         // }
         if (player.velocity.x < 0) {
           Matter.Body.setVelocity(player, {
@@ -291,12 +291,12 @@ const mech = {
       if (keys[65]) {
         // move player   left / a
         if (player.velocity.x > -6) {
-          player.force.x += -this.FxAir / game.delta;
+          player.force.x += -this.FxAir;
         }
       } else if (keys[68]) {
         //move player  right / d
         if (player.velocity.x < 6) {
-          player.force.x += this.FxAir / game.delta;
+          player.force.x += this.FxAir;
         }
       }
     }
