@@ -175,6 +175,12 @@ function drawCurrentPeriod(b) {
   document.getElementById("period").textContent = period.name + " " + startTime.hour + ":" + startTime.minute + " - " + endTime.hour + ":" + endTime.minute;
   // document.getElementById("period-time").textContent = startTime + " - " + endTime;
   document.getElementById(schedule.mouse).setAttribute("fill", schedule[schedule.current][schedule.mouse].fill);
+  //color now line
+  if (period.showName && (todayMinutes - period.start < 15 || todayMinutes - period.start > period.long - 15)) {
+    document.getElementById("now").setAttribute("stroke", "#f05");
+  } else {
+    document.getElementById("now").setAttribute("stroke", "#000");
+  }
 }
 function enterBlock(target) {
   let id = target.id;
@@ -339,7 +345,7 @@ function update() {
   date = new Date();
   todayMinutes = date.getHours() * 60 + date.getMinutes();
   // todayMinutes = Math.round(450 + Math.random() * 420); //set to random time during class
-  // todayMinutes = 7.5 * 60;
+  // todayMinutes = 7.5 * 60 + 60 + 82;
   // todayMinutes = 14.5 * 60;
   drawCurrentPeriod(schedule[schedule.current]);
   moveSVGPeriods(schedule[schedule.current]);
