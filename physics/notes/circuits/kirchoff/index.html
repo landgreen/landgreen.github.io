@@ -32,27 +32,6 @@
 		<h1>Kirchhoff’s Laws</h1>
 	</header>
 	<article>
-		<br>
-		<details class='history'>
-			<summary>Gustav Kirchhoff</summary>
-			<br>
-			<div>Gustav Kirchhoff was the physicist that is given the credit for creating the “Kirchhoff’s Law.” He was born on May 12,
-				1824 in Konigsberg, Prussia (now Russia). This law is an extension of Ohm’s Law and generalized the equations regarding
-				current flow and adapted them in the case of electrical conductors in three dimensions. Eventually, Kirchhoff found that
-				current flows through a conductor at the speed of light. These laws are extremely important in understanding how an electric
-				circuit functions.
-				<br>
-				<br>
-				<li>Kirchhoff also contributed to the study of spectroscopy and was a major contributor to the advancement in the research
-					of blackbody radiation.</li>
-				<li>Kirchhoff also founded the spectrum analysis with chemist Robert Bunsen</li>
-				<li>“Kirchhoff’s Law” was initially called “Laws of Closed Electric Circuits”, but was later named after the creator.</li>
-				<li>Kirchhoff was first a “Privatdozent”, which is an unpaid lecturer at the University of Berlin. But he eventually got
-					a position at the University of Heidelberg as the professor of Physics.</li>
-				<br>
-				<em>-Ariana Dideban</em>
-			</div>
-		</details>
 		<h2 class='underlined'>Kirchhoff’s Law: Current</h2>
 		<div class='definition'>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="130" class='center'>
@@ -76,6 +55,7 @@
 			<strong>entering</strong> a circuit per second [A]
 			<br>\(I_{out}\) = total charge
 			<strong>exiting</strong> a circuit per second [A]
+			<p>If a circuit doesn't branch it will have the same current at every point.</p>
 		</div>
 		<div class='example'>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="200" class='center'>
@@ -175,9 +155,6 @@
 		<p>DC voltage sources, like batteries, provide positive voltage. Most other elements have negative voltage. The elements with
 			negative voltage convert the electric potential into some other type of energy, like heat, light, sound, or motion.
 		</p>
-		<p>Check
-			<a href="https://en.wikipedia.org/wiki/Electronic_symbol">here</a> to see what the different circuit diagram symbols mean.
-			<br>(mostly resistors or DC voltage sources)</p>
 		<div class='definition'>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
 				<path d="M 100 50 h 110
@@ -191,13 +168,31 @@
 				<text x="430" y="160" text-anchor="middle" font-size="20" fill='#333'>V3</text>
 				<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>V4</text>
 			</svg>
-			<p>For any closed circuit loop the sum of all potential differences equals zero.</p>
+			<p>For any closed circuit loop the sum of all potential differences equals zero.
+			</p>
+
 			<h1>
 				$$ \sum V = 0 $$ $$ V_1+V_2+V_3+V_4 = 0 $$
 			</h1>
 			\(V\) = potential difference, voltage [V, volts]
 		</div>
 
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="270" class='center'>
+			<path d="M 50 50 h 80
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+				h -160 
+				h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+				M 290 50 h170
+				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+				h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+			<text x="40" y="140" text-anchor="end" font-size="20" fill='#333'>+6.0V</text>
+			<text x="305" y="157" text-anchor="start" font-size="20" fill='#3cc'>-3.0V</text>
+			<text x="475" y="157" text-anchor="start" font-size="20" fill='#3cc'>-3.0V</text>
+			<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>-2.0V</text>
+		</svg>
+		<p>An important consquence of Kirchhoff’s laws is that elements placed in parallel have the same voltage.</p>
+		<p>In the diagram above, the resistors in parallel have the same voltage at -3.0V.</p>
 		<div class='example'>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
 				<path d="M 100 50 h 110
@@ -263,10 +258,12 @@
 			</details>
 		</div>
 
+
+
 		<h2 class='underlined'>Resistors in Series</h2>
 		<p>Electrical components are in a
 			<strong>series</strong> when they are connected in a single path so that all charge flows through the same components.</p>
-		<canvas class='center' id='charge13' height='200' width='500' onclick="charges13(this)"> </canvas>
+		<!-- <canvas class='center' id='charge13' height='200' width='500' onclick="charges13(this)"> </canvas> -->
 		<div class='definition'>
 			<p>The total equivalent resistance for resistors in a series is the sum of the resistors. This means you can replace several
 				resistors in a series with just one and the circuit will be the same.</p>
@@ -323,7 +320,7 @@
 		<p>Electrical components are in
 			<strong>parallel</strong> when the path branches, and charges take different paths.</p>
 
-		<canvas class='center' id='charge11' height='200' width='500' onclick="charges11(this)"> </canvas>
+		<!-- <canvas class='center' id='charge11' height='200' width='500' onclick="charges11(this)"> </canvas> -->
 		<div class='definition'>
 			<p>The equation for replacing resistors in parallel is a bit more complex. The inverse of the total equivalent resistance
 				for resistors in parallel is equal to the sum of the inverse of each resistance.</p>
@@ -668,8 +665,8 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
-	<script src="charge11.js"></script>
-	<script src="charge13.js"></script>
+	<!-- <script src="charge11.js"></script> -->
+	<!-- <script src="charge13.js"></script> -->
 </body>
 
 </html>

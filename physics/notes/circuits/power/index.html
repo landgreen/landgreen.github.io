@@ -26,13 +26,17 @@
 	</header>
 	<article>
 		<p>Power is defined as the rate that energy changes over time. Power measures the rate that voltage sources, like batteries,
-			convert energy into electrical energy. Power could also measure the rate that electrical components, like resistors or
-			LEDs, convert electrical energy in other types of energy, like heat or light.</p>
+			convert energy into electrical energy. Power could also measure the rate that electrical components convert electrical
+			energy in other forms, like heat or light.</p>
 		<div class='definition'>
 			<h1>$$P = \frac{E}{\Delta t}$$</h1> \(P\) = power [W, J/s, Watt]
 			<br> \(E\) = energy [J, joules]
 			<br> \(\Delta t\) = time period [s, second]
 		</div>
+		<h2 class='underlined'>Electrical Power</h2>
+		<p>Watt is the unit of power. The wattage of an electrical appliance give you an idea of how much electrical energy the appliance
+			converts. An 800W microwave uses 800J per second. A 1600W microwave will heat food much faster because it uses up twice
+			that much energy per second.</p>
 		<details class='derive'>
 			<summary>derivation of electrical power</summary>
 			<p> We can convert power into electrical terms with some substitution</p>
@@ -42,15 +46,14 @@
 			$$P=IV \ \ \ V=IR$$ $$P=I(IR)$$ $$P=I^2R$$
 
 		</details>
+
 		<div class='definition'>
 			<h1> $$P = IV$$ $$P = I^2R$$</h1>
 			\(P\) = power [W, Watt, J/s]
 			<br> \(I\) = current [A, amp]
 			<br> \(V\) = voltage [V, volt]
 		</div>
-		<p>Watt is the unit of power. The wattage of an electrical appliance give you an idea of how much electrical energy the appliance
-			converts. An 800W microwave uses 800J per second. A 1600W microwave will heat food much faster because it uses up twice
-			that much energy per second.</p>
+
 
 		<div class='example'>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
@@ -103,6 +106,13 @@
 						<summary>solution</summary>
 						$$P=I^2R$$ $$P=(0.05)^2(300)$$ $$P=0.75W$$
 					</details>
+					<br>Find the
+					<strong>heat</strong> dissipated by the resistor in 10 seconds?
+					<details>
+						<summary>solution</summary>
+						$$P=0.75W$$
+						<br> $$P = \frac{E}{\Delta t}$$ $$E = P \Delta t$$ $$E = (0.75W)(10s)$$ $$E = 7.5J$$
+					</details>
 				</div>
 				<div>
 					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="193" class='center'>
@@ -121,6 +131,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class='example'>
 			<div class="col-group">
 				<div>
@@ -173,10 +184,11 @@
 				</div>
 			</div>
 		</div>
+		<h2 class='underlined'>Kilowatt Hour</h2>
 
+		<p>Power bills in America use a unit called kiloWatt hour. This is actually a unit of energy, not power. $$(kilo)(Watt)(hour)$$
+			$$(1000)\left(\frac{J}{s}\right)(3600s)$$ $$(3,600,000)\left(\frac{J}{s}\right)(s)$$ $$1kWh = 3,600,000J$$</p>
 		<div class='example'>
-			<p>Power bills in America use a unit called kiloWatt hour. This is actually a unit of energy, not power.</p>
-			$$(kilo)(Watt)(hour)$$ $$(1000)\left(\frac{J}{s}\right)(3600s)$$ $$(3,600,000)\left(\frac{J}{s}\right)(s)$$ $$1kWh = 3,600,000J$$
 			<strong>Example:</strong> The average price in America for 1 kiloWatt hour is $0.12. How much would it cost to run an 800W microwave
 			for 3 hours?
 			<details>
