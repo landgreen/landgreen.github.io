@@ -224,7 +224,7 @@ const level = {
         let nodeRange = { x: 100, y: -Math.floor(200 + Math.random() * 150) };
         for (let i = 0, len = 1 + Math.ceil(Math.random() * 4); i < len; i++) {
           spawn.platform(o.x + nodeRange.x, o.y, wide, nodeRange.y);
-          spawn.debris(o.x + nodeRange.x - 120, o.y, wide + 250, Math.floor(Math.random() * 0.8 + 0.5));
+          spawn.debris(o.x + nodeRange.x - 120, o.y - 50, wide + 250, Math.floor(Math.random() * 0.8 + 0.5));
           if (Math.random() < 0.3) {
             spawn.randomBoss(o.x + nodeRange.x + 20 + (wide - 40) * Math.random(), o.y + nodeRange.y - 450, mobChance);
           } else {
@@ -314,8 +314,8 @@ const level = {
           color: "rgba(0,0,0,0.1)"
         });
         //random extras
-        spawn.debris(o.x, o.y, nodeRange.x - 300, 1); //ground
-        spawn.debris(o.x, o.y + floorHeight * 2, nodeRange.x, 1); //B2
+        spawn.debris(o.x, o.y - 50, nodeRange.x - 300, 1); //ground
+        spawn.debris(o.x, o.y + floorHeight * 2 - 50, nodeRange.x, 1); //B2
         spawn.randomSmallMob(o.x + wallWidth + Math.random() * nodeRange.x - 300, o.y - 50); //ground
         if (numberOfFloors === 3) {
           spawn.randomBoss(o.x + nodeRange.x / 2, o.y + floorHeight * 2 - 50);
@@ -357,8 +357,8 @@ const level = {
         } else {
           spawn.boost(o.x + boostX, o.y, nodeRange.y);
         }
-        spawn.debris(o.x, o.y - nodeRange.y, boostX - boostPadding, 1); //on roof
-        spawn.debris(o.x, o.y, boostX - boostPadding, 1); //on ground
+        spawn.debris(o.x, o.y - nodeRange.y - 50, boostX - boostPadding, 1); //on roof
+        spawn.debris(o.x, o.y - 50, boostX - boostPadding, 1); //on ground
         let blockSize = 60 + Math.random() * 150;
         spawn.bodyRect(o.x + wallWidth + Math.random() * (boostX - blockSize - wallWidth), o.y - blockSize, blockSize, blockSize, 0.8); //left
         spawn.bodyRect(o.x + nodeRange.x - blockSize - 10, o.y - blockSize, blockSize, blockSize, 0.8); //right
@@ -485,7 +485,7 @@ const level = {
             }
             break;
         }
-        spawn.debris(o.x, o.y - zeroFloor, firstPlatW, 2);
+        spawn.debris(o.x, o.y - zeroFloor - 50, firstPlatW, 2);
         spawn.randomMob(o.x + firstPlatW - 200 - Math.random() * 600, o.y - zeroFloor - 100, mobChance); //in shadow
         spawn.randomMob(o.x + firstPlatW - 200 - Math.random() * 400, o.y - fullHeight - 100, mobChance); //top
         spawn.randomBoss(o.x + firstPlatW - 200, o.y - fullHeight - 500, mobChance); //top
@@ -545,7 +545,7 @@ const level = {
                 height: fullHeight - forkDepth - forkBaseHeight - maxJump + 100,
                 color: "rgba(0,0,0,0.1)"
               });
-              spawn.debris(offX + 300, o.y - maxJump + 100, width2, 1);
+              spawn.debris(offX + 300, o.y - maxJump - 100, width2, 1);
               spawn.randomMob(offX + 450 + Math.random() * (width2 - 300), o.y - fullHeight + 200, 1); //top
               offX += 300 + width2;
               break;
@@ -615,7 +615,7 @@ const level = {
             } else {
               spawn.mapRect(o.x, o.y, (len - i) * width, height + 15); //ledge
             }
-            if (Math.random() < 0.5) spawn.debris(o.x, o.y - 10, width, 1);
+            if (Math.random() < 0.5) spawn.debris(o.x, o.y - 50, width, 1);
             o.x += width;
             o.y -= height;
           }
@@ -639,7 +639,7 @@ const level = {
             } else {
               spawn.mapRect(x, o.y, width - x + o.x, height + 15); //ledge
             }
-            if (Math.random() < 0.5) spawn.debris(o.x, o.y - 10, width, 1);
+            if (Math.random() < 0.5) spawn.debris(o.x, o.y - 50, width, 1);
             o.x += width;
             o.y += height;
           }
@@ -674,12 +674,79 @@ const level = {
         }
         o.x -= 15;
       }
+      // function() {
+      //   platform = function(x, y, width, height, extend = 0) {
+      //     spawn.mapRect(x, y - height, width, 50);
+      //     level.fillBG.push({
+      //       x: x + width / 2 - 25,
+      //       y: y - height,
+      //       width: 50,
+      //       height: height + extend,
+      //       color: "rgba(0,0,0,0.15)"
+      //     });
+      //     spawn.debris(x, y - height - 50, width, Math.floor(Math.random() * 1.5));
+      //     spawn.randomMob(x + Math.random() * (width - 50) + 25, y - height - 50, mobChance);
+      //   };
+      //   let nodeRange = { x: 1500 + Math.floor(Math.random() * 500), y: 0, down: false, up: false };
+      //   // const wallWidth = 20 + Math.floor(Math.random() * 40);
+      //   //level 1
+      //   const ledge = { width: nodeRange.x / 2, height: Math.max((maxJump - 200) * Math.random() + 200, 200) };
+      //   if (Math.random() < 0.33) {
+      //     //flat ground
+      //     spawn.mapRect(o.x, o.y, nodeRange.x, 100); //ground
+      //     ledge.height = 0;
+      //   } else {
+      //     if (Math.random() < 0.5) {
+      //       //level down
+      //       nodeRange.down = true;
+      //       spawn.mapRect(o.x, o.y, ledge.width + 100 - 25, 100); //ground
+      //       spawn.mapRect(o.x + ledge.width, o.y, 100, ledge.height + 100); //ledge wall
+      //       o.y += ledge.height;
+      //       spawn.mapRect(o.x + ledge.width, o.y, nodeRange.x - ledge.width, 100); //ground
+      //       const wide = Math.min(250 + Math.random() * (ledge.width - 250), nodeRange.x - ledge.width - 350);
+      //       platform(o.x + 250 + ledge.width, o.y, wide, ledge.height);
+      //     } else {
+      //       //level up
+      //       nodeRange.down = false;
+      //       spawn.mapRect(o.x, o.y, ledge.width + 100, 100); //ground
+      //       spawn.mapRect(o.x + ledge.width, o.y - ledge.height, 100, ledge.height + 100); //ledge wall
+      //       const wide = Math.min(250 + Math.random() * (ledge.width - 250), ledge.width - 250);
+      //       platform(o.x + 150, o.y, wide, ledge.height);
+      //       o.y -= ledge.height;
+      //       spawn.mapRect(o.x + ledge.width + 25, o.y, nodeRange.x - ledge.width - 25, 100); //ground
+      //     }
+      //   }
+
+      //   // platform(x, o.y, width, maxJump * 2 - 100);
+      //   o.x += nodeRange.x;
+      // }
+      // function() {
+      //   platform = function(x, y, width, height) {
+      //     spawn.mapRect(x, y - height, width, 50);
+      //     level.fillBG.push({
+      //       x: x + width / 2 - 25,
+      //       y: y - height,
+      //       width: 50,
+      //       height: height,
+      //       color: "rgba(0,0,0,0.15)"
+      //     });
+      //     spawn.debris(x, y - height - 50, width, Math.floor(Math.random() * 1.5));
+      //     spawn.randomMob(x + Math.random() * (width - 50) + 25, y - height - 50, mobChance);
+      //   };
+      //   let nodeRange = { x: 1500 + Math.floor(Math.random() * 500), y: 0, down: false, up: false };
+      //   let level = maxJump - 100 * Math.random();
+
+      //   // platform(x, o.y, width, maxJump * 2 - 100);
+      //   o.x += nodeRange.x;
+      // }
     ];
+    //
+    //
     //randomized zone spawns
     const mapNodes = Math.min(4, 2 + game.levelsCleared);
     // const mapNodes = 1;
     for (let i = 0; i < mapNodes; ++i) {
-      // mapNode[0]();
+      // mapNode[1]();
       mapNode[Math.floor(Math.random() * mapNode.length)](); //run a random mapNode
     }
     //ending zone
@@ -694,12 +761,19 @@ const level = {
     spawn.mapRect(o.x, o.y - 350, 500, 50);
     // spawn.mapRect(o.x - 200, o.y, 300, 200);
     // spawn.mapGunPowerUp(o.x - 50, o.y + 0); //spawns a gun on most early levels
-    level.fillBG.push({
+    // level.fillBG.push({
+    //   x: o.x,
+    //   y: o.y,
+    //   width: 450,
+    //   height: -350,
+    //   color: "#dff"
+    // });
+    level.fill.push({
       x: o.x,
       y: o.y,
       width: 450,
       height: -350,
-      color: "#dff"
+      color: "rgba(0, 255, 255, 0.15)"
     });
     //set new fall height
     game.fallHeight = o.y + 15000;

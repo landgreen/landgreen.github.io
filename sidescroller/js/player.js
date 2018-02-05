@@ -225,7 +225,7 @@ const mech = {
         //on ground && not crouched and pressing s or down
         this.doCrouch();
         player.frictionAir = this.friction.crouch;
-      } else if (keys[87] && this.buttonCD_jump + 20 < game.cycle) {
+      } else if ((keys[87] || keys[32]) && this.buttonCD_jump + 20 < game.cycle) {
         this.buttonCD_jump = game.cycle; //can't jump again until 20 cycles pass
 
         player.force.y = -this.jumpForce; //jump force
@@ -279,7 +279,7 @@ const mech = {
       //check for short jumps
       if (
         this.buttonCD_jump + 60 > game.cycle && //just pressed jump
-        !keys[87] && //but not pressing jump key
+        !(keys[87] || keys[32]) && //but not pressing jump key
         this.Vy < 0 //moving up
       ) {
         Matter.Body.setVelocity(player, {
@@ -418,6 +418,7 @@ const mech = {
       this.holdingTarget.collisionFilter.category = 0x000001;
       this.holdingTarget.collisionFilter.mask = 0x111111;
       this.holdingTarget = null;
+      this.throwCharge = 0;
     }
   },
   drawHold: function(target) {
@@ -443,6 +444,8 @@ const mech = {
   },
   fieldArc: 0.2,
   fieldThreshold: 0.87,
+  throwCharge: 0,
+  throwChargeMax: 50,
   hold: function() {
     if (b.activeGun === 0) {
       if (this.isHolding) {
@@ -454,9 +457,30 @@ const mech = {
         });
         Matter.Body.setVelocity(this.holdingTarget, player.velocity);
         Matter.Body.rotate(this.holdingTarget, 0.01 / this.holdingTarget.mass); //gently spin the block
-
-        //throw
         if (game.mouseDown) {
+          this.throwCharge++;
+          //draw charge
+          const x = mech.pos.x + 15 * Math.cos(this.angle);
+          const y = mech.pos.y + 15 * Math.sin(this.angle);
+          const len = this.holdingTarget.vertices.length - 1;
+          const edge = this.throwCharge * this.throwCharge * 0.02;
+          const grd = ctx.createRadialGradient(x, y, edge, x, y, edge + 5);
+          grd.addColorStop(0, "rgba(255,50,150,0.3)");
+          grd.addColorStop(1, "transparent");
+          ctx.fillStyle = grd;
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(this.holdingTarget.vertices[len].x, this.holdingTarget.vertices[len].y);
+          ctx.lineTo(this.holdingTarget.vertices[0].x, this.holdingTarget.vertices[0].y);
+          ctx.fill();
+          for (let i = 0; i < len; i++) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(this.holdingTarget.vertices[i].x, this.holdingTarget.vertices[i].y);
+            ctx.lineTo(this.holdingTarget.vertices[i + 1].x, this.holdingTarget.vertices[i + 1].y);
+            ctx.fill();
+          }
+        } else if (this.throwCharge > 0) {
           this.fireCDcycle = game.cycle + 15;
           this.isHolding = false;
           //bullet-like collisions
@@ -474,7 +498,8 @@ const mech = {
           };
           setTimeout(solid, 1000, this.holdingTarget);
           //throw speed scales a bit with mass
-          const speed = Math.min(53 / this.holdingTarget.mass + 5, 45);
+          const speed = Math.min(54 / this.holdingTarget.mass + 5, 48) * Math.min(this.throwCharge, this.throwChargeMax) / this.throwChargeMax;
+          this.throwCharge = 0;
           Matter.Body.setVelocity(this.holdingTarget, {
             x: player.velocity.x * 0.5 + Math.cos(this.angle) * speed,
             y: player.velocity.y * 0.5 + Math.sin(this.angle) * speed
@@ -519,7 +544,7 @@ const mech = {
             Matter.Vector.magnitude(Matter.Vector.sub(mob[i].position, this.pos)) < this.grabRange &&
             Matter.Query.ray(map, mob[i].position, this.pos).length === 0
           ) {
-            this.fireCDcycle = game.cycle + 15; //cool down
+            this.fireCDcycle = game.cycle + 30; //cool down
             // const dmg = b.dmgScale * 0.1;
             // mob[i].damage(dmg);
             mob[i].locatePlayer();
@@ -576,7 +601,7 @@ const mech = {
         } else {
           this.holdingTarget = null;
         }
-      } else if (!game.mouseDown && this.holdingTarget) {
+      } else if (!game.mouseDown && this.holdingTarget && this.fireCDcycle < game.cycle) {
         this.isHolding = true;
         if (this.holdingTarget) {
           this.holdingTarget.collisionFilter.category = 0x000001;
@@ -589,7 +614,7 @@ const mech = {
           x: px / (player.mass + this.holdingTarget.mass),
           y: py / (player.mass + this.holdingTarget.mass)
         });
-        Matter.Body.setMass(player, 5 + this.holdingTarget.mass);
+        Matter.Body.setMass(player, 5 + this.holdingTarget.mass / 2);
         //collide with nothing
         this.holdingTarget.collisionFilter.category = 0x000000;
         this.holdingTarget.collisionFilter.mask = 0x000000;

@@ -2,25 +2,24 @@
 const spawn = {
   pickList: ["starter", "starter"],
   fullPickList: [
-    "chaser",
-    "striker",
-    "spinner",
-    "hopper",
-    "grower",
-    "springer",
-    "zoomer",
-    "shooter",
-    "beamer",
-    "focuser",
-    "laser",
-    "blinker",
-    "drifter",
-    "sucker",
-    "exploder",
-    "spawner",
-    "ghoster",
-    "sneaker",
-    "bomber"
+    // "chaser",
+    // "striker",
+    // "spinner",
+    "hopper"
+    // "grower",
+    // "springer",
+    // "zoomer",
+    // "shooter",
+    // "beamer",
+    // "focuser",
+    // "laser",
+    // "blinker",
+    // "sucker",
+    // "exploder",
+    // "spawner",
+    // "ghoster",
+    // "sneaker",
+    // "bomber"
   ],
   bossPickList: ["zoomer", "chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner", "bomber"],
   setSpawnList: function() {
@@ -194,17 +193,30 @@ const spawn = {
     me.frictionAir = 0.018;
     me.restitution = 0;
     me.delay = 110;
+    me.randomHopFrequency = 50 + Math.floor(Math.random() * 1000);
+    me.randomHopCD = game.cycle + me.randomHopFrequency;
     me.do = function() {
       this.healthBar();
       this.gravity();
       this.seePlayerCheck();
       this.hop();
+      //randomly hob if not aware of player
+      if (this.randomHopCD < game.cycle && this.speed < 1 && !this.seePlayer.recall) {
+        this.randomHopCD = game.cycle + this.randomHopFrequency;
+        //slowly change randomHopFrequency after each hop
+        this.randomHopFrequency = Math.max(100, this.randomHopFrequency + (0.5 - Math.random()) * 200);
+        const forceMag = (this.accelMag + this.accelMag * Math.random()) * this.mass * (0.1 + Math.random() * 0.3);
+        const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI;
+        this.force.x += forceMag * Math.cos(angle);
+        this.force.y += forceMag * Math.sin(angle) - 0.04 * this.mass; //antigravity
+      }
     };
   },
   spinner: function(x, y, radius = 45 + Math.ceil(Math.random() * 40)) {
     mobs.spawn(x, y, 5, radius, "#000000");
     let me = mob[mob.length - 1];
-    me.fill = randomColor({ hue: "blue" });
+    me.fill = "#28b";
+    me.rememberFill = me.fill;
     me.cdBurst1 = 0; //must add for burstAttraction
     me.cdBurst2 = 0; //must add for burstAttraction
     me.delay = 0;
@@ -219,7 +231,45 @@ const spawn = {
     me.do = function() {
       this.healthBar();
       this.seePlayerByLookingAt();
-      this.burstAttraction();
+      //accelerate towards the player after a delay
+      if (this.seePlayer.recall) {
+        if (this.cdBurst2 < game.cycle && this.angularSpeed < 0.01) {
+          this.cdBurst2 = Infinity;
+          this.cdBurst1 = game.cycle + 40;
+          this.burstDir = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
+        } else if (this.cdBurst1 < game.cycle) {
+          this.cdBurst2 = game.cycle + this.delay;
+          this.cdBurst1 = Infinity;
+          this.force = Matter.Vector.mult(this.burstDir, this.mass * 0.25);
+          this.fill = this.rememberFill;
+          // const forceMag = (this.accelMag + this.accelMag * Math.random()) * this.mass;
+          // const angle = Math.atan2(
+          //     this.seePlayer.position.y - this.position.y,
+          //     this.seePlayer.position.x - this.position.x
+          // );
+          // this.force.x += forceMag * Math.cos(angle);
+          // this.force.y += forceMag * Math.sin(angle); // - 0.0007 * this.mass; //antigravity
+        } else if (this.cdBurst1 != Infinity) {
+          this.torque += 0.000035 * this.inertia;
+          this.fill = randomColor({ hue: "blue" });
+          //draw attack vector
+          const mag = this.radius * 2 + 200;
+          const gradient = ctx.createRadialGradient(this.position.x, this.position.y, 0, this.position.x, this.position.y, mag);
+          gradient.addColorStop(0, "rgba(0,0,0,0.2)");
+          gradient.addColorStop(1, "transparent");
+          ctx.strokeStyle = gradient;
+          ctx.lineWidth = 5;
+          ctx.setLineDash([10, 20]); //30
+          const dir = Matter.Vector.add(this.position, Matter.Vector.mult(this.burstDir, mag));
+          ctx.beginPath();
+          ctx.moveTo(this.position.x, this.position.y);
+          ctx.lineTo(dir.x, dir.y);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      } else {
+        this.cdBurst2 = 0;
+      }
     };
   },
   sucker: function(x, y, radius = 30 + Math.ceil(Math.random() * 70)) {
@@ -232,21 +282,43 @@ const spawn = {
     // me.frictionAir = 0.005;
     me.memory = 600;
     Matter.Body.setDensity(me, 0.008); //extra dense //normal is 0.001
-    me.collisionFilter.mask = 0x001100; //move through walls
+    // me.collisionFilter.mask = 0x001100; //move through walls
     me.do = function() {
       this.seePlayerByDistOrLOS();
       this.attraction();
       this.darkness();
-      this.blackHole();
       this.healthBar();
+      //black hole        //keep it slow, most to stop issues from explosion knockbacks
+      if (this.speed > 5) {
+        Matter.Body.setVelocity(this, {
+          x: this.velocity.x * 0.99,
+          y: this.velocity.y * 0.99
+        });
+      }
+      if (Matter.Vector.magnitude(Matter.Vector.sub(this.position, player.position)) < this.eventHorizon) {
+        const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
+        player.force.x -= 1.3 * Math.cos(angle) * (mech.onGround ? 2 * player.mass * game.g : player.mass * game.g);
+        player.force.y -= 0.96 * player.mass * game.g * Math.sin(angle);
+
+        ctx.beginPath();
+        ctx.moveTo(this.position.x, this.position.y);
+        ctx.lineTo(mech.pos.x, mech.pos.y);
+        ctx.lineWidth = Math.min(60, this.radius * 2);
+        ctx.strokeStyle = "rgba(0,0,0,0.5)";
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(0,0,0,0.3)";
+        ctx.fill();
+      }
     };
   },
   beamer: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
     mobs.spawn(x, y, 4, radius, "rgb(255,0,190)");
     let me = mob[mob.length - 1];
-    me.repulsionRange = 90000; //squared
+    me.repulsionRange = 73000; //squared
     // me.seePlayerFreq = 2 + Math.round(Math.random() * 5);
-    me.accelMag = 0.0006;
+    me.accelMag = 0.0005;
     me.frictionStatic = 0;
     me.friction = 0;
     if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
@@ -255,7 +327,34 @@ const spawn = {
       this.seePlayerByLookingAt();
       this.attraction();
       this.repulsion();
-      this.laserBeam();
+      //laser beam
+      if (game.cycle % 7 && this.seePlayer.yes) {
+        ctx.setLineDash([125 * Math.random(), 125 * Math.random()]);
+        // ctx.lineDashOffset = 6*(game.cycle % 215);
+        const range = 370;
+        if (this.distanceToPlayer() < range) {
+          //if (Math.random()>0.2 && this.seePlayer.yes && this.distanceToPlayer2()<800000) {
+          mech.damage(0.0004 * game.dmgScale);
+          ctx.beginPath();
+          ctx.moveTo(this.position.x, this.position.y);
+          ctx.lineTo(mech.pos.x, mech.pos.y);
+          ctx.lineTo(mech.pos.x + (Math.random() - 0.5) * 3000, mech.pos.y + (Math.random() - 0.5) * 3000);
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = "rgb(255,0,170)";
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
+          ctx.fillStyle = "rgba(255,0,170,0.15)";
+          ctx.fill();
+        }
+        ctx.beginPath();
+        ctx.arc(this.position.x, this.position.y, range * 0.9, 0, 2 * Math.PI);
+        ctx.strokeStyle = "rgba(255,0,170,0.5)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
     };
   },
   focuser: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
@@ -264,7 +363,7 @@ const spawn = {
     me.laserPos = me.position; //required for laserTracking
     me.repulsionRange = 400000; //squared
     //me.seePlayerFreq = 2 + Math.round(Math.random() * 5);
-    me.accelMag = 0.0006;
+    me.accelMag = 0.0005;
     me.frictionStatic = 0;
     me.friction = 0;
     me.onDamage = function() {
@@ -276,7 +375,51 @@ const spawn = {
       this.seePlayerByLookingAt();
       this.attraction();
       this.repulsion();
-      this.laserTracking();
+      //laser Tracking
+      if (this.seePlayer.yes && this.distanceToPlayer2() < 1700000) {
+        //targeting laser will slowly move from the mob to the player's position
+        this.laserPos = Matter.Vector.add(this.laserPos, Matter.Vector.mult(Matter.Vector.sub(player.position, this.laserPos), 0.1));
+        const targetDist = Matter.Vector.magnitude(Matter.Vector.sub(this.laserPos, mech.pos));
+        let r = 30;
+
+        // ctx.setLineDash([15, 200]);
+        // ctx.lineDashOffset = 20*(game.cycle % 215);
+        ctx.beginPath();
+        ctx.moveTo(this.position.x, this.position.y);
+        if (targetDist < r) {
+          mech.damage(0.0005 * game.dmgScale);
+          // ctx.setLineDash([150 * Math.random(), 50 * Math.random()]);
+          ctx.setLineDash([50 + 120 * Math.random(), 50 * Math.random()]);
+          ctx.strokeStyle = "rgba(0,0,255,0.7)";
+          ctx.lineWidth = 3;
+          ctx.lineTo(this.laserPos.x, this.laserPos.y);
+          ctx.lineTo(this.laserPos.x + (Math.random() - 0.5) * 3000, this.laserPos.y + (Math.random() - 0.5) * 3000);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.fillStyle = "rgba(0,0,255,0.6)";
+          ctx.arc(this.laserPos.x, this.laserPos.y, r, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.setLineDash([]);
+        } else {
+          let laserOffR = Matter.Vector.rotateAbout(this.laserPos, (targetDist - r) * 0.002, this.position);
+          let sub = Matter.Vector.normalise(Matter.Vector.sub(laserOffR, this.position));
+          laserOffR = Matter.Vector.add(laserOffR, Matter.Vector.mult(sub, 1300));
+          ctx.lineTo(laserOffR.x, laserOffR.y);
+
+          let laserOffL = Matter.Vector.rotateAbout(this.laserPos, (targetDist - r) * -0.002, this.position);
+          sub = Matter.Vector.normalise(Matter.Vector.sub(laserOffL, this.position));
+          laserOffL = Matter.Vector.add(laserOffL, Matter.Vector.mult(sub, 1300));
+          ctx.lineTo(laserOffL.x, laserOffL.y);
+          // ctx.fillStyle = "rgba(0,0,255,0.15)";
+          var gradient = ctx.createRadialGradient(this.position.x, this.position.y, 0, this.position.x, this.position.y, 1300);
+          gradient.addColorStop(0, `rgba(0,0,255,${r * r / (targetDist * targetDist)})`);
+          gradient.addColorStop(1, "transparent");
+          ctx.fillStyle = gradient;
+          ctx.fill();
+        }
+      } else {
+        this.laserPos = this.position;
+      }
     };
   },
   laser: function(x, y, radius = 30) {
@@ -285,7 +428,11 @@ const spawn = {
     let me = mob[mob.length - 1];
     me.vertices = Matter.Vertices.rotate(me.vertices, Math.PI, me.position); //make the pointy side of triangle the front
     Matter.Body.rotate(me, Math.random() * Math.PI * 2);
-    me.accelMag = 0.00005;
+    me.accelMag = 0.00007;
+    me.onHit = function() {
+      //run this function on hitting player
+      this.explode();
+    };
     me.do = function() {
       this.healthBar();
       this.seePlayerByLookingAt();
@@ -329,7 +476,34 @@ const spawn = {
       this.seePlayerCheck();
       this.attraction();
       this.gravity();
-      this.drawSneaker();
+      //draw
+      if (this.seePlayer.yes) {
+        if (this.alpha < 1) this.alpha += 0.01;
+      } else {
+        if (this.alpha > 0) this.alpha -= 0.03;
+      }
+      if (this.alpha > 0) {
+        if (this.alpha > 0.95) {
+          this.healthBar();
+          if (!this.canTouchPlayer) {
+            this.canTouchPlayer = true;
+            this.collisionFilter.mask = 0x001111; //can   touch player
+          }
+        }
+        //draw body
+        ctx.beginPath();
+        const vertices = this.vertices;
+        ctx.moveTo(vertices[0].x, vertices[0].y);
+        for (let j = 1, len = vertices.length; j < len; ++j) {
+          ctx.lineTo(vertices[j].x, vertices[j].y);
+        }
+        ctx.lineTo(vertices[0].x, vertices[0].y);
+        ctx.fillStyle = `rgba(0,0,0,${this.alpha * this.alpha})`;
+        ctx.fill();
+      } else if (this.canTouchPlayer) {
+        this.canTouchPlayer = false;
+        this.collisionFilter.mask = 0x000111; //can't   touch player
+      }
     };
   },
   ghoster: function(x, y, radius = 50 + Math.ceil(Math.random() * 60)) {
@@ -348,12 +522,41 @@ const spawn = {
       this.seePlayerCheckByDistance();
       this.attraction();
       this.search();
-      this.drawGhost();
+      //draw
+      if (this.distanceToPlayer2() - this.seeAtDistance2 < 0) {
+        if (this.alpha < 1) this.alpha += 0.004;
+      } else {
+        if (this.alpha > 0) this.alpha -= 0.03;
+      }
+      if (this.alpha > 0) {
+        if (this.alpha > 0.9) {
+          this.healthBar();
+          if (!this.canTouchPlayer) {
+            this.canTouchPlayer = true;
+            this.collisionFilter.mask = 0x001110; //can   touch player but not walls
+          }
+        }
+        //draw body
+        ctx.beginPath();
+        const vertices = this.vertices;
+        ctx.moveTo(vertices[0].x, vertices[0].y);
+        for (let j = 1, len = vertices.length; j < len; ++j) {
+          ctx.lineTo(vertices[j].x, vertices[j].y);
+        }
+        ctx.lineTo(vertices[0].x, vertices[0].y);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = `rgba(0,0,0,${this.alpha * this.alpha})`;
+        ctx.stroke();
+      } else if (this.canTouchPlayer) {
+        this.canTouchPlayer = false;
+        this.collisionFilter.mask = 0x000110; //can't   touch player or walls
+      }
     };
   },
   blinker: function(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
-    mobs.spawn(x, y, 6, radius, "rgb(0,200,255)");
+    mobs.spawn(x, y, 6, radius, "transparent");
     let me = mob[mob.length - 1];
+    me.stroke = "rgb(0,200,255)"; //used for drawGhost
     Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
     me.blinkRate = 40 + Math.round(Math.random() * 60); //required for blink
     me.blinkLength = 150 + Math.round(Math.random() * 200); //required for blink
@@ -391,8 +594,9 @@ const spawn = {
     };
   },
   drifter: function(x, y, radius = 15 + Math.ceil(Math.random() * 40)) {
-    mobs.spawn(x, y, 4.5, radius, "rgb(0,200,255)");
+    mobs.spawn(x, y, 4.5, radius, "transparent");
     let me = mob[mob.length - 1];
+    me.stroke = "rgb(0,200,255)"; //used for drawGhost
     Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
     me.blinkRate = 30 + Math.round(Math.random() * 30); //required for blink/drift
     me.blinkLength = 160; //required for blink/drift
@@ -407,8 +611,9 @@ const spawn = {
     };
   },
   bomber: function(x, y, radius = 15 + Math.ceil(Math.random() * 25)) {
-    mobs.spawn(x, y, 4, radius, "rgba(0,0,80,0.7)");
+    mobs.spawn(x, y, 4, radius, "transparent");
     let me = mob[mob.length - 1];
+    me.stroke = "rgba(0,0,80,0.7)"; //used for drawGhost
     me.seeAtDistance2 = 800000;
     me.fireFreq = Math.ceil(30 + 2000 / radius);
     me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
@@ -530,7 +735,6 @@ const spawn = {
       this.attraction();
     };
   },
-
   shield: function(target, x, y, stiffness = 0.4) {
     if (this.allowShields) {
       mobs.spawn(x, y, 9, target.radius + 20, "rgba(220,220,255,0.6)");
@@ -752,7 +956,8 @@ const spawn = {
         powerUps.chooseRandomPowerUp(x + Math.random() * width, y);
       } else {
         const size = 18 + Math.random() * 25;
-        body[body.length] = Bodies.rectangle(x + Math.random() * width, y, size * (0.6 + Math.random()), size * (0.6 + Math.random()));
+        spawn.bodyRect(x, y, size * (0.6 + Math.random()), size * (0.6 + Math.random()), 1);
+        // body[body.length] = Bodies.rectangle(x + Math.random() * width, y, size * (0.6 + Math.random()), size * (0.6 + Math.random()));
       }
     }
   },
@@ -763,7 +968,8 @@ const spawn = {
     height,
     chance = 1,
     properties = {
-      friction: 0.05
+      friction: 0.05,
+      frictionAir: 0.01
     }
   ) {
     if (Math.random() < chance) {

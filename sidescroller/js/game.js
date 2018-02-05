@@ -109,6 +109,24 @@ const game = {
   //   this.delta = (engine.timing.timestamp - this.lastTimeStamp) / 16.666666666666;
   //   this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
   // },
+  nextGun: function() {
+    b.inventoryGun++;
+    if (b.inventoryGun > b.inventory.length - 1) b.inventoryGun = 0;
+    game.switchGun();
+  },
+  previousGun: function() {
+    b.inventoryGun--;
+    if (b.inventoryGun < 0) b.inventoryGun = b.inventory.length - 1;
+    game.switchGun();
+  },
+  switchGun: function() {
+    b.activeGun = b.inventory[b.inventoryGun];
+    b.lastActiveGun = b.activeGun;
+    game.updateGunHUD();
+    game.boldActiveGunHUD();
+    mech.drop();
+    playSound("click");
+  },
   keyPress: function() {
     //runs on key press event
     if (keys[189]) {
@@ -120,37 +138,22 @@ const game = {
       game.zoomScale *= 0.9;
       game.setZoom();
     }
-
-    const switchGun = function() {
-      game.updateGunHUD();
-      game.boldActiveGunHUD();
-      mech.drop();
-      playSound("click");
-    };
     if (keys[69]) {
       // e    swap to next active gun
-      b.inventoryGun++;
-      if (b.inventoryGun > b.inventory.length - 1) b.inventoryGun = 0;
-      b.activeGun = b.inventory[b.inventoryGun];
-      b.lastActiveGun = b.activeGun;
-      switchGun();
+      game.nextGun();
     } else if (keys[81]) {
       //q    swap to previous active gun
-      b.inventoryGun--;
-      if (b.inventoryGun < 0) b.inventoryGun = b.inventory.length - 1;
-      b.activeGun = b.inventory[b.inventoryGun];
-      b.lastActiveGun = b.activeGun;
-      switchGun();
+      game.previousGun();
     }
     // else if (keys[32]) {
     //   //space to toggle back to field emitter gun
     //   if (b.activeGun === 0) {
     //     b.activeGun = b.lastActiveGun;
-    //     switchGun();
+    //     game.switchGun();
     //   } else {
     //     b.lastActiveGun = b.activeGun;
     //     b.activeGun = 0;
-    //     switchGun();
+    //     game.switchGun();
     //   }
     // }
 
@@ -207,6 +210,7 @@ const game = {
     this.mouseInGame.x = (this.mouse.x - canvas.width2) / this.zoom + canvas.width2 - mech.transX;
     this.mouseInGame.y = (this.mouse.y - canvas.height2) / this.zoom + canvas.height2 - mech.transY;
   },
+  zoomInFactor: 0,
   startZoomIn: function(time = 150) {
     game.zoom = 0;
     let count = 0;
@@ -216,15 +220,18 @@ const game = {
       count++;
       if (count < time) {
         requestAnimationFrame(zLoop);
+      } else {
+        game.setZoom();
       }
     }
     requestAnimationFrame(zLoop);
   },
   wipe: function() {
-    //ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // ctx.fillStyle = "#000";
+    // ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     // ctx.globalAlpha = (mech.health < 0.7) ? (mech.health+0.3)*(mech.health+0.3) : 1
-    ctx.fillStyle = document.body.style.backgroundColor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
     // if (mech.health < 0.7) {
     // 	ctx.globalAlpha= 0.3 + mech.health
     // 	ctx.fillStyle = document.body.style.backgroundColor
@@ -236,6 +243,16 @@ const game = {
     //ctx.fillStyle = "rgba(255,255,255," + (1 - Math.sqrt(player.speed)*0.1) + ")";
     //ctx.fillStyle = "rgba(255,255,255,0.4)";
     //ctx.fillRect(0, 0, canvas.width, canvas.height);
+  },
+  gravity: function() {
+    function addGravity(bodies, magnitude) {
+      for (var i = 0; i < bodies.length; i++) {
+        bodies[i].force.y += bodies[i].mass * magnitude;
+      }
+    }
+    addGravity(powerUp, game.g);
+    addGravity(body, game.g);
+    player.force.y += player.mass * mech.gravity;
   },
   reset: function() {
     //removes guns and ammo
@@ -301,13 +318,17 @@ const game = {
   },
   clearNow: false,
   clearMap: function() {
+    //if player is holding something this remembers it before it gets deleted
+    let holdTarget;
+    if (mech.holdingTarget) {
+      holdTarget = mech.holdingTarget;
+    }
     mech.drop();
     level.fill = [];
     level.fillBG = [];
     level.zones = [];
     level.queryList = [];
     this.drawList = [];
-
     function removeAll(array) {
       for (let i = 0; i < array.length; ++i) Matter.World.remove(engine.world, array[i]);
     }
@@ -325,6 +346,16 @@ const game = {
     consBB = [];
     removeAll(bullet);
     bullet = [];
+    // if player was holding something this makes a new copy to hold
+    if (holdTarget) {
+      len = body.length;
+      body[len] = Matter.Bodies.fromVertices(0, 0, holdTarget.vertices, {
+        friction: holdTarget.friction,
+        frictionAir: holdTarget.frictionAir,
+        frictionStatic: holdTarget.frictionStatic
+      });
+      mech.holdingTarget = body[len];
+    }
   },
   getCoords: {
     //used when building maps, outputs a draw rect command to console, only works in testing mode
@@ -470,6 +501,135 @@ const game = {
     drawMapPath: function() {
       ctx.fillStyle = this.mapFill;
       ctx.fill(this.mapPath);
+    },
+
+    seeEdges: function() {
+      const eye = {
+        x: mech.pos.x + 20 * Math.cos(mech.angle),
+        y: mech.pos.y + 20 * Math.sin(mech.angle)
+      };
+      //find all vertex nodes in range and in LOS
+      findNodes = function(domain, center) {
+        let nodes = [];
+        for (let i = 0; i < domain.length; ++i) {
+          let vertices = domain[i].vertices;
+
+          for (let j = 0, len = vertices.length; j < len; j++) {
+            //calculate distance to player
+            const dx = vertices[j].x - center.x;
+            const dy = vertices[j].y - center.y;
+            if (dx * dx + dy * dy < 800 * 800 && Matter.Query.ray(domain, center, vertices[j]).length === 0) {
+              nodes.push(vertices[j]);
+            }
+          }
+        }
+        return nodes;
+      };
+      let nodes = findNodes(map, eye);
+      //sort node list by angle to player
+      nodes.sort(function(a, b) {
+        //sub artan2 from player loc
+        const dx = a.x - eye.x;
+        const dy = a.y - eye.y;
+        return Math.atan2(dy, dx) - Math.atan2(dy, dx);
+      });
+      console.log(nodes);
+      //draw nodes
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#000";
+      ctx.beginPath();
+      for (let i = 0; i < nodes.length; ++i) {
+        ctx.lineTo(nodes[i].x, nodes[i].y);
+      }
+      ctx.stroke();
+    },
+    see: function() {
+      const vertexCollision = function(
+        v1,
+        v1End,
+        domain,
+        best = {
+          x: null,
+          y: null,
+          dist2: Infinity,
+          who: null,
+          v1: null,
+          v2: null
+        }
+      ) {
+        for (let i = 0; i < domain.length; ++i) {
+          let vertices = domain[i].vertices;
+          const len = vertices.length - 1;
+          for (let j = 0; j < len; j++) {
+            results = game.checkLineIntersection(v1, v1End, vertices[j], vertices[j + 1]);
+            if (results.onLine1 && results.onLine2) {
+              const dx = v1.x - results.x;
+              const dy = v1.y - results.y;
+              const dist2 = dx * dx + dy * dy;
+              if (dist2 < best.dist2 && (!domain[i].mob || domain[i].alive)) {
+                best = {
+                  x: results.x,
+                  y: results.y,
+                  dist2: dist2,
+                  who: domain[i],
+                  v1: vertices[j],
+                  v2: vertices[j + 1]
+                };
+              }
+            }
+          }
+          results = game.checkLineIntersection(v1, v1End, vertices[0], vertices[len]);
+          if (results.onLine1 && results.onLine2) {
+            const dx = v1.x - results.x;
+            const dy = v1.y - results.y;
+            const dist2 = dx * dx + dy * dy;
+            if (dist2 < best.dist2 && (!domain[i].mob || domain[i].alive)) {
+              best = {
+                x: results.x,
+                y: results.y,
+                dist2: dist2,
+                who: domain[i],
+                v1: vertices[0],
+                v2: vertices[len]
+              };
+            }
+          }
+        }
+        return best;
+      };
+      const range = 3000;
+      ctx.beginPath();
+      for (let i = 0; i < Math.PI * 2; i += Math.PI / 2 / 100) {
+        const cosAngle = Math.cos(mech.angle + i);
+        const sinAngle = Math.sin(mech.angle + i);
+
+        const start = {
+          x: mech.pos.x + 20 * cosAngle,
+          y: mech.pos.y + 20 * sinAngle
+        };
+        const end = {
+          x: mech.pos.x + range * cosAngle,
+          y: mech.pos.y + range * sinAngle
+        };
+        let result = vertexCollision(start, end, map);
+        result = vertexCollision(start, end, body, result);
+        result = vertexCollision(start, end, mob, result);
+
+        if (result.dist2 < range * range) {
+          // ctx.arc(result.x, result.y, 2, 0, 2 * Math.PI);
+          ctx.lineTo(result.x, result.y);
+        } else {
+          // ctx.arc(end.x, end.y, 2, 0, 2 * Math.PI);
+          ctx.lineTo(end.x, end.y);
+        }
+      }
+      // ctx.lineWidth = 1;
+      // ctx.strokeStyle = "#000";
+      // ctx.stroke();
+      ctx.fillStyle = "rgba(0,0,0,0.3)";
+      ctx.fillStyle = "#fff";
+      ctx.fill();
+      ctx.clip();
     },
     body: function() {
       ctx.beginPath();

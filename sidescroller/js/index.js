@@ -95,31 +95,6 @@ body:    0x 000001   0x 011111
 })()
 */
 
-//toggle full screen
-document.addEventListener(
-  "keydown",
-  function(e) {
-    if (e.keyCode == 13) {
-      toggleFullScreen(canvas);
-    }
-  },
-  false
-);
-function toggleFullScreen(el) {
-  var doc = window.document;
-  var docEl = doc.documentElement;
-
-  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-
-  if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-    requestFullScreen.call(docEl);
-  } else {
-    cancelFullScreen.call(doc);
-  }
-  setupCanvas();
-}
-
 //set up canvas
 var canvas = document.getElementById("canvas");
 //using "const" causes problems in safari when an ID shares the same name.
@@ -166,10 +141,42 @@ const keys = [];
 document.body.addEventListener("keydown", function(e) {
   keys[e.keyCode] = true;
   game.keyPress();
+  //full screen toggle
+  if (e.keyCode == 13) {
+    toggleFullScreen(canvas);
+  }
 });
+
 document.body.addEventListener("keyup", function(e) {
   keys[e.keyCode] = false;
 });
+
+document.body.addEventListener(
+  "wheel",
+  function(e) {
+    if (e.deltaY > 0) {
+      game.nextGun();
+    } else {
+      game.previousGun();
+    }
+  },
+  { passive: true }
+);
+
+function toggleFullScreen(el) {
+  var doc = window.document;
+  var docEl = doc.documentElement;
+
+  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+  if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+    requestFullScreen.call(docEl);
+  } else {
+    cancelFullScreen.call(doc);
+  }
+  setupCanvas();
+}
 
 function playSound(id) {
   //play sound
@@ -203,6 +210,13 @@ function shuffle(array) {
 //**********************************************************************
 function cycle() {
   game.cycle++; //tracks game cycles
+  if (game.clearNow) {
+    game.clearNow = false;
+    game.clearMap();
+    game.startZoomIn();
+    level.start();
+  }
+  game.gravity();
   Engine.update(engine, game.delta);
   // game.timing();
   game.wipe();
@@ -227,6 +241,7 @@ function cycle() {
     game.getCoords.out();
     game.testingOutput();
   } else {
+    // game.draw.see();
     level.drawFillBGs();
     level.exit.draw();
     level.enter.draw();
@@ -240,9 +255,10 @@ function cycle() {
     game.draw.drawMapPath();
     // mech.drawHealth();
     mobs.loop();
-    b.fire();
     b.draw();
+    b.fire();
     game.drawCircle();
+    // game.draw.seeEdges();
     ctx.restore();
   }
   game.drawCursor();

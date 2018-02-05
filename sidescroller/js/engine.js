@@ -40,6 +40,7 @@ function playerOnGroundCheck(event) {
       enter();
     }
   }
+  mech.numTouching = 0;
 }
 
 function playerOffGroundCheck(event) {
@@ -158,28 +159,6 @@ function mobCollisionChecks(event) {
     }
   }
 }
-
-Events.on(engine, "beforeUpdate", function(event) {
-  mech.numTouching = 0;
-  //gravity
-  function addGravity(bodies, magnitude) {
-    for (var i = 0; i < bodies.length; i++) {
-      bodies[i].force.y += bodies[i].mass * magnitude;
-    }
-  }
-  addGravity(powerUp, game.g);
-  addGravity(body, game.g);
-  player.force.y += player.mass * mech.gravity;
-  //check if ready to start next level
-  if (game.clearNow) {
-    //reset before update to avoid getting into trouble with looking at array elements that don't exist
-    game.clearNow = false;
-    game.clearMap();
-    game.startZoomIn();
-    // game.zoom = 0.2; //used for testing  this should be commented out
-    level.start();
-  }
-});
 
 //determine if player is on the ground
 Events.on(engine, "collisionStart", function(event) {

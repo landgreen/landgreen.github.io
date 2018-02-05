@@ -55,7 +55,7 @@ const powerUps = {
         // if (b.activeGun = 0) mech.drop();
         // b.activeGun = options[Math.floor(Math.random() * options.length)];
         let newGun = options[Math.floor(Math.random() * options.length)];
-        // newGun = 1; //makes every gun you pick up this type  //enable for testing one gun
+        // newGun = 4; //makes every gun you pick up this type  //enable for testing one gun
         b.guns[newGun].have = true;
         b.inventory.push(newGun);
         // b.inventory.sort();
@@ -86,12 +86,12 @@ const powerUps = {
       powerUps.spawn(x, y, "heal");
       return;
     }
-    if (Math.random() < 0.15) {
+    if (Math.random() < 0.18) {
       if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
       return;
     }
     //a new gun has a low chance for each not acquired gun to drop
-    if (Math.random() < 0.008 * (b.guns.length - b.inventory.length)) {
+    if (Math.random() < 0.006 * (b.guns.length - b.inventory.length)) {
       powerUps.spawn(x, y, "gun");
       return;
     }
