@@ -32,6 +32,286 @@
 		<h1>Kirchhoff’s Laws</h1>
 	</header>
 	<article>
+		<h2 class='underlined'>Electric Potential in Circuits</h2>
+		<p>We call a change in electric potential across a circuit element the
+			<strong>electric potential difference</strong> or more commonly the
+			<strong>voltage</strong>.</p>
+		<p>Electric potential quickly spreads to a uniform value throughout an uninterrupted section of wire. This is similar to how
+			water in a cup stays at the same height because it spreads out against the force of gravity.</p>
+		<p>Electric potential is constant until it reaches a circuit element.
+			<br>Across a resistor the potential drops, so the voltage is negative.
+			<br>Across a battery the potential increases, so the voltage is positive.</p>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="70" class='center'>
+				<g stroke-width="45" stroke-linejoin="round" fill='none' opacity="0.2">
+					<path d="M 0 20 h 260" stroke="#f00" />
+					<path d="M 340 20 h 260" stroke="#05f" />
+				</g>
+				<path d="M 0 20 h 260 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 260" fill='none' stroke="#555" stroke-width="4"
+				 stroke-linejoin="round" />
+				<g text-anchor="end" font-size="20" font-weight="bold">
+					<text x="150" y="40" fill='#f33'>4V</text>
+					<text x="500" y="40" fill='#33f'>2V</text>
+				</g>
+			</svg>
+			<strong>Example:</strong> In the diagram above the potential in red is at 4V. The potential in blue is at 2V. What is the potential
+			difference across the resistor?
+			<details>
+				<summary>solution</summary>
+				$$\Delta V = V_f-V_i $$ $$\Delta V = 2V-4V$$ $$\Delta V = -2V$$
+			</details>
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="90" class='center'>
+				<g stroke-width="45" stroke-linejoin="round" fill='none' opacity="0.3">
+					<path d="M 0 20 h 260" stroke="#f90" />
+					<path d="M 340 20 h 260" stroke="#59b" />
+				</g>
+				<path d="M 0 20 h 260 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 260" fill='none' stroke="#555" stroke-width="4"
+				 stroke-linejoin="round" />
+				<g text-anchor="end" font-size="20" font-weight="bold">
+					<text x="150" y="40" fill='#f40'>1.50V</text>
+					<text x="500" y="40" fill='#169'>0.70V</text>
+				</g>
+				<text x="300" y="80" text-anchor="middle" font-size="20" fill='#333'>0.0020A</text>
+				<g transform="translate(337 60) rotate(180)">
+					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+			</svg>
+			<strong>Example:</strong> Calculate the resistance using the diagram above.
+			<details>
+				<summary>solution</summary>
+				$$\Delta V = V_f-V_i $$ $$\Delta V = 0.70V-1.50V$$ $$\Delta V = -0.80V$$
+				<br> $$\Delta V=IR$$ $$R = \frac{\Delta V}{I}$$ $$R = \frac{0.80}{0.0020}$$ $$R = 400 \Omega$$
+			</details>
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="300" class='center'>
+
+				<g stroke-width="30" stroke-linejoin="round" fill='none' opacity="0.3">
+					<path d="M 10 150 h220
+						 M 100 150 l 50 100 h 80
+						 M 100 150 l 50 -100 h 80" stroke="#59b" />
+					<path d="M 310 150 h 220
+						 M 310 250 h 90 l50 -100
+						 M 310 50 h 90 l50 100" stroke="#f40" />
+				</g>
+				<path d="M 10 150 h220
+						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220
+						M 100 150 l 50 100 h 80
+						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 -100
+						M 100 150 l 50 -100 h 80
+						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 100" fill='none' stroke="#555" stroke-width="4"
+				 stroke-linejoin="round" />
+				<g text-anchor="end" font-size="20" font-weight="bold">
+					<text x="90" y="130" fill='#59b'>5.5V</text>
+					<text x="502" y="130" fill='#f40'>9.0V</text>
+				</g>
+				<g transform="translate(231 20) rotate(0)">
+					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<!-- <text x="270" y="25" text-anchor="middle" font-size="20">ΔV = -3V</text>
+				<text x="270" y="125" text-anchor="middle" font-size="20">ΔV = -3V</text>
+				<text x="270" y="225" text-anchor="middle" font-size="20">ΔV = -3V</text> -->
+			</svg>
+			<strong>Example:</strong> Even if the wire branches the potential is the same for an uninterrupted section. Use the potential
+			to find the potential difference, or voltage drop, across each resistor.
+			<details>
+				<summary>solution</summary>
+				$$\Delta V = V_f-V_i $$ $$\Delta V = 5.5V-9V$$
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="300" class='center'>
+					<g stroke-width="30" stroke-linejoin="round" fill='none' opacity="0.3">
+						<path d="M 10 150 h220
+							 M 100 150 l 50 100 h 80
+							 M 100 150 l 50 -100 h 80" stroke="#59b" />
+						<path d="M 310 150 h 220
+							 M 310 250 h 90 l50 -100
+							 M 310 50 h 90 l50 100" stroke="#f40" />
+					</g>
+					<path d="M 10 150 h220
+							l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220
+							M 100 150 l 50 100 h 80
+							l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 -100
+							M 100 150 l 50 -100 h 80
+							l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 100" fill='none' stroke="#555" stroke-width="4"
+					 stroke-linejoin="round" />
+					<g text-anchor="end" font-size="20" font-weight="bold">
+						<text x="90" y="130" fill='#59b'>5.5V</text>
+						<text x="502" y="130" fill='#f40'>9.0V</text>
+					</g>
+					<text x="270" y="25" text-anchor="middle" font-size="20">ΔV = -3.5V</text>
+					<text x="270" y="125" text-anchor="middle" font-size="20">ΔV = -3.5V</text>
+					<text x="270" y="225" text-anchor="middle" font-size="20">ΔV = -3.5V</text>
+				</svg>
+				The current is to the left, because the potential is dropping from right to left and resistors always decrease voltage.
+			</details>
+			<br>
+			<strong>Investigation:</strong> Explain why voltages in parallel, like in the diagram above, must all be the same?
+			<details>
+				<summary>solution</summary>
+				<br> Electric potential is the same for all of an uninterrupted wire, even if it branches. So, each branch has the same potential.
+				This means they must also have the same potential difference.
+			</details>
+		</div>
+
+
+
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="270" class='center'
+			 viewbox="0,50,560,200">
+				<g stroke-width="50" stroke-linejoin="round" fill='none'>
+					<path d="M 50 146 v-96 h80" stroke="#0ff" opacity="0.3" />
+					<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#f0f" opacity="0.2" />
+					<path d="M 290 190 v60 h -160 h -80 v-87 M 460 190 v60 h-170" stroke="#05f" opacity="0.2" />
+				</g>
+				<path d="M 50 50 h 80
+						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+						v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						h -160 
+						h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+						M 290 50 h170
+						v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						h-170" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
+				<g text-anchor="end" font-size="20" font-weight="bold">
+					<text x="97" y="70" fill='#066'>0.0V</text>
+					<text x="455" y="245" fill='#00b'>6.0V</text>
+					<text x="97" y="245" fill='#00b'>6.0V</text>
+					<text x="285" y="245" fill='#00b'>6.0V</text>
+					<text x="285" y="70" fill='#a0a'>2.0V</text>
+					<text x="455" y="70" fill='#a0a'>2.0V</text>
+				</g>
+			</svg>
+			<strong>Example:</strong> The electric potential for each uninterrupted section of wire is shown in the circuit diagram above.
+			Use the potential to find the potential difference, or voltage, across each element in the circuit.
+			<details>
+				<summary>solution</summary>
+				<p>Subtract the potential before and after each element to find potential difference across each element.</p>
+				$$V_f-V_i = \Delta V $$ $$2V-6V = -4V$$ $$0V-2V = -2V$$ $$6V-0V = 6V$$
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="270" class='center'
+				 viewbox="0,50,560,200">
+					<g stroke-width="50" stroke-linejoin="round" fill='none'>
+						<path d="M 50 146 v-96 h80" stroke="#0ff" opacity="0.3" />
+						<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#f0f" opacity="0.2" />
+						<path d="M 290 190 v60 h -160 h -80 v-87 M 460 190 v60 h-170" stroke="#05f" opacity="0.2" />
+					</g>
+					<path d="M 50 50 h 80
+						   l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+						   v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						   h -160 
+						   h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+						   M 290 50 h170
+						   v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						   h-170" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
+					<g text-anchor="end" font-size="17">
+						<text x="90" y="70" fill='#066'>0.0V</text>
+						<text x="455" y="245" fill='#00b'>6.0V</text>
+						<text x="90" y="245" fill='#00b'>6.0V</text>
+						<text x="285" y="245" fill='#00b'>6.0V</text>
+						<text x="285" y="70" fill='#a0a'>2.0V</text>
+						<text x="455" y="70" fill='#a0a'>2.0V</text>
+					</g>
+					<g font-size="21" fill='#000' font-weight="bold">
+						<text x="43" y="140" text-anchor="end">+6.0V</text>
+						<text x="305" y="157" text-anchor="start">-4.0V</text>
+						<text x="475" y="157" text-anchor="start">-4.0V</text>
+						<text x="170" y="85" text-anchor="middle">-2.0V</text>
+					</g>
+				</svg>
+		</div>
+
+		<h2 class='underlined'>Kirchhoff’s Law: Voltage</h2>
+		<p>DC voltage sources, like batteries, provide positive voltage. Most other elements have negative voltage. The elements with
+			negative voltage convert the electric potential into some other type of energy, like heat, light, sound, or motion.
+		</p>
+		<div class='definition'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
+				<path d="M 100 50 h 110
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
+				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+				h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+				h -110 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="43" y="160" text-anchor="middle" font-size="20" fill='#333'>V1</text>
+				<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>V2</text>
+				<text x="430" y="160" text-anchor="middle" font-size="20" fill='#333'>V3</text>
+				<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>V4</text>
+				<path d="M180 154  l 10.5 -10 l-10.5 10 l -10 -10 l10 10  A 70 70, 0, 1, 1, 225 215" stroke="#aaa" fill="none" stroke-width="3"
+				 stroke-miterlimit="1" stroke-linejoin="round" stroke-linecap="round" />
+			</svg>
+			<p>For any closed circuit loop the sum of all potential differences equals zero.</p>
+
+			<h1>
+				$$ \sum V = 0 $$ $$ V_1+V_2+V_3+V_4 = 0 $$
+			</h1>
+			\(V\) = potential difference, voltage [V, volts]
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
+				<path d="M 100 50 h 110
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
+				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+				h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+				h -110 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="55" y="160" text-anchor="end" font-size="20" fill='#333'>1.51V</text>
+				<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>-0.55V</text>
+				<text x="415" y="160" text-anchor="start" font-size="20" fill='#333'>-0.33V</text>
+				<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>V = ?</text>
+			</svg>
+			<strong>Example:</strong> What's the voltage drop across the resistor in the diagram?
+			<details>
+				<summary>solution</summary>
+				$$ V_1+V_2+V_3+V_4 = 0 $$ $$ 1.51-0.55-0.33-V_{4} = 0 $$ $$ V_{4} = -0.63V $$
+			</details>
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
+				<path d="M 100 50 h 110
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
+				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+				h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+				h -110 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="55" y="160" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+				<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>6kΩ</text>
+				<text x="415" y="160" text-anchor="start" font-size="20" fill='#333'>20kΩ</text>
+				<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>5kΩ</text>
+				<text x="250" y="225" text-anchor="middle" font-size="20" fill='#333'>0.194mA</text>
+				<g transform="translate(290 200) rotate(180)">
+					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+			</svg>
+			<strong>Example:</strong> Use Ohm's law to find the voltage for each resistor
+			<details>
+				<summary>solution</summary>
+				<p>All elements in a series have the same current</p>
+				$$V = IR$$ $$V = (0.000194)(6000)$$ $$V = 1.164V$$
+				<br> $$V = IR$$ $$V = (0.000194)(20000)$$ $$V = 3.88V$$
+				<br> $$V = IR$$ $$V = (0.000194)(5000)$$ $$V = 0.97V$$
+			</details>
+			<br>Use the resistor voltages to calculate the voltage in the battery.
+			<details>
+				<summary>solution</summary>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
+					<path d="M 100 50 h 110
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					h -110 v-87 m-40 0 h 80 m-10 -15 h-60 m30 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					/>
+					<text x="55" y="160" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+					<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>-1.164V</text>
+					<text x="415" y="160" text-anchor="start" font-size="20" fill='#333'>-3.88V</text>
+					<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>-0.97V</text>
+				</svg>
+				$$ \sum V = 0$$ $$ V_{bat}+V_1+V_2+V_3 = 0 $$ $$ V_{bat} = -V_1-V_2-V_3 $$ $$ V_{bat} = 1.164+3.88+0.97 $$ $$ V_{4} = 6.014V
+				$$
+			</details>
+		</div>
+
 		<h2 class='underlined'>Kirchhoff’s Law: Current</h2>
 		<div class='definition'>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="130" class='center'>
@@ -52,9 +332,9 @@
 			<p>For any point on a circuit: the total charge flowing into the point equals the total charge flowing out.</p>
 			<h1>$$ I _{in} = I_{out} $$</h1>
 			\(I_{in}\) = total charge
-			<strong>entering</strong> a circuit per second [A]
+			<strong>entering</strong> a point per second [A, amps]
 			<br>\(I_{out}\) = total charge
-			<strong>exiting</strong> a circuit per second [A]
+			<strong>exiting</strong> a point per second [A, amps]
 			<p>If a circuit doesn't branch it will have the same current at every point.</p>
 		</div>
 		<div class='example'>
@@ -151,114 +431,6 @@
 				$$ I _{in} = I_{out} $$ $$ 450 = I_{1} + 115 + 120 $$ $$ 450 - 115 - 120 = I_{1}$$ $$ 215 mA = I_{1}$$
 			</details>
 		</div>
-		<h2 class='underlined'>Kirchhoff’s Law: Voltage</h2>
-		<p>DC voltage sources, like batteries, provide positive voltage. Most other elements have negative voltage. The elements with
-			negative voltage convert the electric potential into some other type of energy, like heat, light, sound, or motion.
-		</p>
-		<div class='definition'>
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
-				<path d="M 100 50 h 110
-				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-				h -110 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
-				/>
-				<text x="43" y="160" text-anchor="middle" font-size="20" fill='#333'>V1</text>
-				<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>V2</text>
-				<text x="430" y="160" text-anchor="middle" font-size="20" fill='#333'>V3</text>
-				<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>V4</text>
-			</svg>
-			<p>For any closed circuit loop the sum of all potential differences equals zero.
-			</p>
-
-			<h1>
-				$$ \sum V = 0 $$ $$ V_1+V_2+V_3+V_4 = 0 $$
-			</h1>
-			\(V\) = potential difference, voltage [V, volts]
-		</div>
-
-		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="270" class='center'>
-			<path d="M 50 50 h 80
-				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				h -160 
-				h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
-				M 290 50 h170
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-			<text x="40" y="140" text-anchor="end" font-size="20" fill='#333'>+6.0V</text>
-			<text x="305" y="157" text-anchor="start" font-size="20" fill='#3cc'>-3.0V</text>
-			<text x="475" y="157" text-anchor="start" font-size="20" fill='#3cc'>-3.0V</text>
-			<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>-2.0V</text>
-		</svg>
-		<p>An important consquence of Kirchhoff’s laws is that elements placed in parallel have the same voltage.</p>
-		<p>In the diagram above, the resistors in parallel have the same voltage at -3.0V.</p>
-		<div class='example'>
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
-				<path d="M 100 50 h 110
-				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-				h -110 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
-				/>
-				<text x="55" y="160" text-anchor="end" font-size="20" fill='#333'>1.51V</text>
-				<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>-0.55V</text>
-				<text x="415" y="160" text-anchor="start" font-size="20" fill='#333'>-0.33V</text>
-				<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>V = ?</text>
-			</svg>
-			<strong>Example:</strong> What's the voltage drop across the resistor in the diagram?
-			<details>
-				<summary>solution</summary>
-				$$ V_1+V_2+V_3+V_4 = 0 $$ $$ 1.51-0.55-0.33-V_{4} = 0 $$ $$ V_{4} = -0.63V $$
-			</details>
-		</div>
-		<div class='example'>
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
-				<path d="M 100 50 h 110
-				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
-				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-				h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-				h -110 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
-				/>
-				<text x="55" y="160" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
-				<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>6kΩ</text>
-				<text x="415" y="160" text-anchor="start" font-size="20" fill='#333'>20kΩ</text>
-				<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>5kΩ</text>
-				<text x="250" y="225" text-anchor="middle" font-size="20" fill='#333'>0.194mA</text>
-				<g transform="translate(290 200) rotate(180)">
-					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
-					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
-				</g>
-			</svg>
-			<strong>Example:</strong> Use Ohm's law to find the voltage for each resistor
-			<details>
-				<summary>solution</summary>
-				<p>All elements in a series have the same current</p>
-				$$V = IR$$ $$V = (0.000194)(6000)$$ $$V = 1.164V$$
-				<br> $$V = IR$$ $$V = (0.000194)(20000)$$ $$V = 3.88V$$
-				<br> $$V = IR$$ $$V = (0.000194)(5000)$$ $$V = 0.97V$$
-			</details>
-			<br>Use the resistor voltages to calculate the voltage in the battery.
-			<details>
-				<summary>solution</summary>
-				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
-					<path d="M 100 50 h 110
-					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
-					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-					h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-					h -110 v-87 m-40 0 h 80 m-10 -15 h-60 m30 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
-					/>
-					<text x="55" y="160" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
-					<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>-1.164V</text>
-					<text x="415" y="160" text-anchor="start" font-size="20" fill='#333'>-3.88V</text>
-					<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>-0.97V</text>
-				</svg>
-				$$ \sum V = 0$$ $$ V_{bat}+V_1+V_2+V_3 = 0 $$ $$ V_{bat} = -V_1-V_2-V_3 $$ $$ V_{bat} = 1.164+3.88+0.97 $$ $$ V_{4} = 6.014V
-				$$
-			</details>
-		</div>
-
-
 
 		<h2 class='underlined'>Resistors in Series</h2>
 		<p>Electrical components are in a
@@ -346,6 +518,7 @@
 			\(R_{n}\) = A single resistor in parallel [ohms, Ω]
 			<br>\(R_{eq}\) = Equivalent resistance. The resistance of a single resistor that could replace several resistors [ohms, Ω]
 		</div>
+
 		<div class='example'>
 			<strong>Example:</strong> What is the equivalent resistance for five 100Ω resistors all in parallel?
 			<details>
@@ -540,8 +713,8 @@
 				<text x="170" y="307" text-anchor="middle" font-size="20" fill='#333'>0.0039A</text>
 				<text x="170" y="332" text-anchor="middle" font-size="20" fill='#0aa'>-2.0V</text>
 			</svg>
-			<p>Resistors in parallel have the same voltage, but not the same current. Lets expand back to our full size circuit and fill
-				in the voltage.</p>
+			<p>Resistors in parallel have the same voltage, but not the same current. Let's expand back to our full size circuit and
+				fill in the voltage.</p>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="350" class='center'>
 				<path d="M 50 50 h 80
 			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
@@ -656,7 +829,7 @@
 			$$V_1+V_4+V_{eq} + V_{bat} = 0$$ $$-2.3-2.0-1.7+6.0 = 0 $$ $$0 = 0 $$
 			<p>The power from the battery should equal the sum of the power lost in the resistors.</p>
 			$$P_{bat}=IV$$ $$P_{bat}=(0.0039)(6.0)$$ $$P_{bat}=0.023W$$
-			<br> $$P_{resistors} = 0.0090W+0.0078W+0.0036W+0.0032W$$ $$P_{resistors} = 0.023W$$
+			<br> $$P_{res} = 0.0090W+0.0078W+0.0036W+0.0032W$$ $$P_{res} = 0.023W$$
 			<p class='center'>Looks good!</p>
 	</article>
 	<div class='back'>
