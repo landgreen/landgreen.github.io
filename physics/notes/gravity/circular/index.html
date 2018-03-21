@@ -17,6 +17,9 @@
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 	<script src='../../../lib/randomColor.min.js'></script>
 	<script src='../../../lib/gravityClass.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js'></script>
+	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
+
 </head>
 
 <body>
@@ -57,6 +60,7 @@
 		<p>What happen to the path of a satellite when you turn gravity off?</p>
 		<p>How would you describe the directions of the velocity and the force?</p>
 		<p>How does the orbital path change as you increase the mass of either object?</p>
+
 		<p class='underlined'>Circular Motion</p>
 		<p>Any object moving in a circular path has a net force pointed at the center of the circle. The velocity of the object will
 			always be perpendicular to the force.</p>
@@ -227,7 +231,20 @@
 			<br>for a satellite of Earth</h3>
 		<div id='v-vs-r'></div>
 		<p>It seems counter-intuitive, but as you orbit farther from the central body your velocity goes down.</p>
-		<br>
+		<p>Take a look at the simulation below to see circular orbits at different distances.
+			<br>Click and drag to move. Double click for full screen.</p>
+		<style>
+			.full-page {
+				position: fixed;
+				top: -5px;
+				left: -5px;
+				z-index: 0;
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+
+		<div id='three-orbit'></div>
 		<center>
 			<h3>Local Massive Objects Data Table</h3>
 			<table border>
@@ -358,10 +375,11 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
+	<script src="orbits.js"></script>
 	<script src="grav1.js"></script>
 	<script src="grav2.js"></script>
 	<script src="motion.js"></script>
-	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="https://d3js.org/d3.v3.min.js"></script>
 	<script src='../../../lib/function-plot.js'></script>
 	<script src='plot.js'></script>
 </body>
