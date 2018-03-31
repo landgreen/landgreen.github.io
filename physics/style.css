@@ -56,6 +56,8 @@ body {
   margin: 0;
   line-height: 1.4;
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 article {
   padding: 0.1em;
