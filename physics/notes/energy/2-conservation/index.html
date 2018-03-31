@@ -3,7 +3,9 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=610, initial-scale=1" />
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
 	<meta name="description" content="Notes for a high school physics course.">
 	<meta name="author" content="Ross Landgreen">
 	<meta property="og:description" content="Notes for a high school physics course.">
@@ -24,11 +26,10 @@
 		<h1>Conservation of Energy</h1>
 	</header>
 	<article>
-		<h1 class='underlined'>Trading Energy</h1>
 		<p>Take a look at the simulated spring and mass system below.</p>
-		<p>What types of energy are being traded?</p>
-		<p>When is the velocity the highest?</p>
-		<p>What is the effect of a higher spring constant?</p>
+		<p>What types of energy are being traded?
+			<br>When is the velocity the highest?
+			<br>What is the effect of a higher spring constant?</p>
 		<canvas id="canvas1" width='600' height='200' onclick="spring(this)"> </canvas>
 		<br>
 		<button id="pause1">
@@ -159,6 +160,7 @@
 			</details>
 		</div>
 		<h1 class='underlined'>Energy Loss and Gain in a System</h1>
+		<br>
 		<div class="col-group">
 			<div>
 				<canvas id="canvas0" width='250' height='445' onclick="particles(this)"> </canvas>
