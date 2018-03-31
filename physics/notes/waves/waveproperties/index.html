@@ -17,6 +17,7 @@
 	 crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx"
 	 crossorigin="anonymous"></script>
+	<script src="wave.js "></script>
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 </head>
 
@@ -31,6 +32,128 @@
 		<li>Waves move at a constant speed determined by their medium.</li>
 		<li>Waves expand in all directions.</li>
 
+		<h2 class='underlined'>Interference</h2>
+		<p>When two waves are in the same position we say they are in
+			<a href="http://ophysics.com/waves4.html">
+				<strong>superposition</strong>
+			</a>. Unlike particles, waves pass through each other without any effect.</p>
+		<div class="definition">
+			<svg onload="drawSineWave(this, 25, 10, 0,'#f80',1, false, 563); drawSineWave(this, 280, 55, 0,'#08b',1, false, 563);" width='500'
+			 height='120'></svg>
+			<svg onload="drawSineWaves(this, 30, 10, 0,'#f80', 280, 55, 0, '#08b', '#000', false, false, 563);" width='500' height='160'></svg>
+			<h3>For waves in superposition the observed amplitude is the sum of each wave's amplitude.</h3>
+		</div>
+		<p>Waves can add
+			<strong>constructively</strong> where the resulting amplitude is higher. An example of this would be two speakers playing the
+			same song.</p>
+		<p>Waves can also add
+			<strong>destructively</strong> where the resulting amplitude is lower. An example of this would be
+			<a href="https://www.youtube.com/watch?v=HOdEvhEjO2I">noise cancelling headphones</a>.</p>
+		<p>Sound waves at different frequencies interfere to produce
+			<a href="https://musiclab.chromeexperiments.com/Spectrogram ">music</a>. </p>
+		<p>
+			<a href="https://www.youtube.com/watch?v=rpberBTNUss">The Wedge</a> is a famous surf spot that has some dangerously fun waves because of constructive interference from a wave
+			reflected off a jetty.
+		</p>
+
+		<div class='example'>
+			<svg onload=" drawSineWave(this, 250, 40, 0, '#808'); drawSineWave(this,250, 80, 0, '#088') " width='600' height='170'></svg>
+			<strong>Example:</strong> Draw the superposition of these waves. Because they have the same frequency, they add constructively.
+			<details>
+				<summary>solution</summary>
+				<svg onload="drawSineWaves(this, 250, 40,0, '#808', 250, 80,0, '#088') " width='600' height='260'></svg>
+			</details>
+		</div>
+		<div class='example'>
+			<svg onload="drawSineWave(this, 200, 40, 100, '#f80'); drawSineWave(this,200, 40, 0, '#08f') " width='600' height='85'></svg>
+			<strong>Example:</strong> Draw the superposition of these waves. Because they are the same wave half a wavelength out of phase
+			with each other they add destructively.
+			<details>
+				<summary>solution</summary>
+				<svg onload="drawSineWaves(this, 200, 40, 100, '#f80', 200, 40, 0, '#08f') " width='600' height='125'></svg>
+			</details>
+		</div>
+		<div class='example'>
+			<svg onload="drawSineWave(this, 200, 20, 100, '#0f8'); drawSineWave(this,200, 40, 0, '#80f') " width='600' height='85'></svg>
+			<strong>Example:</strong> Draw the superposition of these waves.
+			<details>
+				<summary>solution</summary>
+				<svg onload="drawSineWaves(this, 200, 20, 100, '#0f8', 200, 40, 0, '#80f') " width='600' height='125'></svg>
+			</details>
+		</div>
+		<div class='example'>
+			<svg onload="drawSineWave(this, 40, 20, 0, '#f88'); drawSineWave(this,200, 40, 0, '#88f') " width='600' height='85'></svg>
+			<strong>Example:</strong> Draw the superposition of these waves.
+			<details>
+				<summary>solution</summary>
+				<svg onload="drawSineWaves(this, 40, 20,0, '#f88',200, 40,0, '#88f') " width='600' height='125'></svg>
+			</details>
+		</div>
+		<div class='example'>
+			<svg onload="drawSineWave(this, 400, 30, 0, '#f80'); drawSineWave(this,100, 80, 0, '#08f') " width='600' height='170'></svg>
+			<strong>Example:</strong> Draw the superposition of these waves.
+			<details>
+				<summary>solution</summary>
+				<svg onload="drawSineWaves(this, 400, 30, 0, '#f80', 100, 80, 0, '#08f') " width='600' height='280'></svg>
+			</details>
+		</div>
+		<div class='example'>
+			<svg onload="drawSineWave(this, 200, 40, 50, '#f88'); drawSineWave(this,200, 40, 0, '#8f8') " width='600' height='85'></svg>
+			<strong>Example:</strong> Draw the superposition of these waves.
+			<details>
+				<summary>solution</summary>
+				<svg onload="drawSineWaves(this, 200, 40, 50, '#f88', 200, 40, 0, '#8f8') " width='600' height='125'></svg>
+			</details>
+		</div>
+		<div class='example'>
+			<svg onload="drawSineWave(this, 70, 80, 0, '#0ff'); drawSineWave(this,60, 80, 0, '#f0f') " width='600' height='165'></svg>
+			<strong>Example:</strong> Draw the superposition of these waves. When waves have almost the same frequency they produce a pattern
+			called
+			<strong>beats</strong>.
+			<details>
+				<summary>solution</summary>
+				<svg onload="drawSineWaves(this, 70, 80, 0, '#0ff', 60, 80, 0, '#f0f') " width='600' height='325'></svg>
+			</details>
+		</div>
+		<div class='example'>
+			<strong>Example:</strong> A wave is created on each side of a rope with an amplitude of 0.3m. The waves
+			<a href="http://ophysics.com/waves3b.html ">interfere</a> as they pass through each other.
+			<br>
+			<br>What is the amplitude of the rope when each wave's crest line up?
+			<br>What is the amplitude when a crest lines up with a trough?
+			<details>
+				<summary>solution</summary>
+				<p> Two crests add constructively to make a larger amplitude.</p> $$ 0.3m + 0.3m = 0.6m$$
+				<br>
+				<p> A crest and trough add destructively to cancel out.</p> $$ 0.3m - 0.3m = 0m$$
+			</details>
+		</div>
+
+		<h2 class='underlined'>Diffraction</h2>
+		<p>Waves tend to spread out in every direction possible within their medium. This behavior is very noticeable when a wave
+			hits a wall.</p>
+		<p>
+			<strong>Diffraction</strong> describes how a wave will spread out after passing through a small gap. This explains how sound can
+			be heard through an open door even when there is no line of sight. Perhaps the clearest example of diffraction is water
+			waves going around a gap.
+			<p>Play around with this
+				<a href="http://www.falstad.com/ripple/Ripple.html ">ripple tank simulation</a> on the setting
+				<em>Example: Single Slit</em>.</p>
+		</p>
+		<li>diffraction gratings</li>
+		<li>interferance patterns</li>
+
+		<h2 class='underlined'>The Doppler Effect</h2>
+		<li>in sound</li>
+		<li>sonic boom / mach</li>
+		<li>in light</li>
+		<li>redshift / blueshift</li>
+		<li>big bang</li>
+		<li>radar speed guns</li>
+
+		<h2 class='underlined'>Polarization</h2>
+		<li>3D movies</li>
+		<li>sunglasses</li>
 
 		<h2 class='underlined'>Waves and Barriers</h2>
 		<li>index of refractions</li>
@@ -45,11 +168,11 @@
 		<p>
 			<strong>Reflection</strong> = change in direction of a wave after hitting a barrier.</p>
 		<span class='center'>angle of incidence = angle of reflection</span>
-		<svg width="600" height="200">
-			<path d="M300 0 v 200" stroke-width='2' fill='none' stroke='#999' stroke-dasharray="10, 10" />
-			<path d="M0 0 L 300 180 L 600 0" stroke-width='2' fill='none' stroke='#f00' />
-			<rect x="0" y="180" width="600" height="20" fill="#999" />
-			<!-- <path d="M10 10 C 20 20, 40 20, 50 10" stroke-width="2" fill="none" stroke="#999" /> -->
+		<svg width="600 " height="200 ">
+			<path d="M300 0 v 200 " stroke-width='2' fill='none' stroke='#999' stroke-dasharray="10, 10 " />
+			<path d="M0 0 L 300 180 L 600 0 " stroke-width='2' fill='none' stroke='#f00' />
+			<rect x="0 " y="180 " width="600 " height="20 " fill="#999 " />
+			<!-- <path d="M10 10 C 20 20, 40 20, 50 10 " stroke-width="2 " fill="none " stroke="#999 " /> -->
 		</svg>
 
 		<p>When light strikes a bumpy surface it scatters in multiple directions, producing a
@@ -60,19 +183,19 @@
 
 		<h2 class='underlined'>Snell's Law</h2>
 
-		<div class="definition">
+		<div class="definition ">
 			<h1>
 				$$\frac{sin \theta_1}{sin \theta_2} = \frac{v_1}{v_2} = \frac{ \lambda_1}{\lambda_2} =\frac{n_2}{n_1} $$</h1>
-			<svg width="560" height="200">
+			<svg width="560 " height="200 ">
 				<!-- <rect x='280' y='0' height='200' width='280' fill='#ccf' /> -->
 				<rect x='0' y='0' height='200' width='280' fill='#fff' />
-				<path d="M0 100 h 580" stroke-width='2' fill='none' stroke='#999' stroke-dasharray="10, 10" />
-				<path d="M130 0 L 280 100 L 600 190" stroke-width='2' fill='none' stroke='#f00' />
+				<path d="M0 100 h 580 " stroke-width='2' fill='none' stroke='#999' stroke-dasharray="10, 10 " />
+				<path d="M130 0 L 280 100 L 600 190 " stroke-width='2' fill='none' stroke='#f00' />
 				<g transform='translate(280 100)'>
-					<path d="M-50 -30 Q -65 -18, -52 -4" stroke-width='2' fill="transparent" stroke='#000' />
+					<path d="M-50 -30 Q -65 -18, -52 -4 " stroke-width='2' fill="transparent " stroke='#000' />
 				</g>
 				<g transform='translate(280 100)'>
-					<path d="M-50 -30 Q -65 -18, -52 -4" stroke-width='2' fill="transparent" stroke='#000' />
+					<path d="M-50 -30 Q -65 -18, -52 -4 " stroke-width='2' fill="transparent " stroke='#000' />
 				</g>
 			</svg>
 			\( \theta_1 \) = angle of incidence
@@ -85,51 +208,6 @@
 		</div>
 
 		<svg width="600 " viewbox='0,0,2500,1000'>
-			<sodipodi:namedview pagecolor="#ffffff " bordercolor="#666666 " borderopacity="1 " objecttolerance="10
-			 " gridtolerance="10 " guidetolerance="10 " inkscape:pageopacity="0 " inkscape:pageshadow="2 " inkscape:window-width="1366 "
-			 inkscape:window-height="706 " id="namedview80 " showgrid="false " inkscape:zoom="0.44497725 " inkscape:cx="1156.7314 "
-			 inkscape:cy="422.25095 " inkscape:window-x="-8
-			 " inkscape:window-y="-8 " inkscape:window-maximized="1 " inkscape:current-layer="layer1 " />
-			<defs id="defs4 ">
-				<inkscape:perspective sodipodi:type="inkscape:persp3d " inkscape:vp_x="0 : 379.17868 : 1 " inkscape:vp_y="0 : 1000
-			 : 0 " inkscape:vp_z="2440.5742 : 379.17868 : 1 " inkscape:persp3d-origin="1220.2871 : 252.78579 : 1 " id="perspective84 "
-				/>
-				<marker refX="0 " refY="0 " orient="auto " id="Arrow1Send " style="overflow:visible ">
-					<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z " transform="matrix(-0.2,0,0,-0.2,-1.2,0) " id="path3669 " style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none "
-					/>
-				</marker>
-				<marker refX="0 " refY="0 " orient="auto " id="TriangleOutL " style="overflow:visible ">
-					<path d="m 5.77,0 -8.65,5 0,-10 8.65,5 z " transform="scale(0.8,0.8) " id="path3797 " style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none "
-					/>
-				</marker>
-				<marker refX="0 " refY="0 " orient="auto " id="Arrow2Lend " style="overflow:visible ">
-					<path d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519
-			 -6e-7,8.035443 z " transform="matrix(-1.1,0,0,-1.1,-1.1,0) " id="path3675 " style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round "
-					/>
-				</marker>
-				<marker refX="0 " refY="0 " orient="auto " id="Arrow1Mend " style="overflow:visible ">
-					<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z " transform="matrix(-0.4,0,0,-0.4,-4,0) " id="path3663 " style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none "
-					/>
-				</marker>
-				<marker refX="0 " refY="0 " orient="auto " id="Arrow1Lend " style="overflow:visible ">
-					<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z " transform="matrix(-0.8,0,0,-0.8,-10,0) " id="path3657 " style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none "
-					/>
-				</marker>
-				<marker refX="0 " refY="0 " orient="auto " id="Arrow2Mstart " style="overflow:visible ">
-					<path d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519
-			 -6e-7,8.035443 z " transform="scale(0.6,0.6) " id="path3678 " style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round "
-					/>
-				</marker>
-				<marker refX="0 " refY="0 " orient="auto " id="Arrow2Mend " style="overflow:visible ">
-					<path d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519
-			 -6e-7,8.035443 z " transform="scale(-0.6,-0.6) " id="path3681 " style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round "
-					/>
-				</marker>
-				<marker refX="0 " refY="0 " orient="auto " id="Arrow1Lstart " style="overflow:visible ">
-					<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z " transform="matrix(0.8,0,0,0.8,10,0) " id="path3654 " style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none "
-					/>
-				</marker>
-			</defs>
 			<g transform="translate(-2.2857318,-301.00481) " id="layer1 ">
 				<rect width="2440.5742 " height="382.36691 " x="2.2857318 " y="678.07648 " id="rect2816 " style="opacity:0.25;fill:#008dff;fill-opacity:1;stroke:none "
 				/>
@@ -243,69 +321,19 @@
 			</g>
 		</svg>
 
-
-		<div class='center' style="position: relative; width: 300px; height: 200px;">
-			<a href="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light_en.html" style="text-decoration: none;">
-				<img src="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light-600.png" alt="Bending Light" style="border: none;"
-				 width="300" height="200" />
-				<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.7; filter: alpha(opacity = 80);"></div>
-				<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 36px;">
+		<div class='center' style="position: relative; width: 300px; height: 200px; ">
+			<a href="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light_en.html " style="text-decoration: none; ">
+				<img src="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light-600.png " alt="Bending Light
+			 " style="border: none; " width="300 " height="200 " />
+				<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity:
+			 0.7; filter: alpha(opacity=8 0); "></div>
+				<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 36px; ">
 					<tr>
-						<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
+						<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif; ">Click to Run</td>
 					</tr>
 				</table>
 			</a>
 		</div>
-		<h2 class='underlined'>Diffraction and Interference</h2>
-		<li>standing wave?</li>
-		<li>superposition</li>
-		<a href="https://musiclab.chromeexperiments.com/Spectrogram">spectrogram</a>
-		<li>diffraction gratings</li>
-		<li>interferance patterns</li>
-
-
-		<p>Waves tend to spread out in every direction possible within their medium. This behavior is very noticeable when a wave
-			hits a wall.</p>
-		<p>
-			<strong>Diffraction</strong> describes how a wave will spread out after passing through a small gap. This explains how sound can
-			be heard through an open door even when there is no line of sight. Perhaps the clearest example of diffraction is water
-			waves going around a gap.
-			<p>Play around with this
-				<a href="http://www.falstad.com/ripple/Ripple.html ">ripple tank simulation</a> on the setting
-				<em>Example: Single Slit</em>.</p>
-		</p>
-
-		<h2 class='underlined'>Polarization</h2>
-		<li>3D movies</li>
-		<li>sunglasses</li>
-
-		<h2 class='underlined'>The Doppler Effect</h2>
-		<li>in sound</li>
-		<li>sonic boom / mach</li>
-		<li>in light</li>
-		<li>redshift / blueshift</li>
-		<li>big bang</li>
-		<li>radar speed guns</li>
-
-		<h2 class='underlined'>Sound</h2>
-		<li>longitudinal vs transverse</li>
-		<li>ear biology</li>
-		<li>pitch and frequency</li>
-		<li>chords and harmonics</li>
-		<li>resonant frequencies</li>
-
-		<h2 class='underlined'>Wave-Particle Duality</h2>
-		<li>laser</li>
-		<li>double slit experiment</li>
-		<li>wave-particle duality</li>
-		<li>de Broglie wavelength</li>
-
-		<p>At quantum scales all particles act like waves towards the particles they are not in contact with. This
-			<strong>wave-particle duality</strong> is a central idea in quantum mechanics.</p>
-		<p>The wave nature of particles is easy to see at the subatomic scale for things like electrons, protons, or photons. At larger
-			scales the wave nature is less noticeable because of the difficulty isolating larger objects. This is why humans, or cats,
-			don't have obvious quantum effects.</p>
-
 	</article>
 	<div class='back'>
 		<a href="../../../index.html#units ">Back</a>
@@ -314,6 +342,7 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
+
 </body>
 
 </html>

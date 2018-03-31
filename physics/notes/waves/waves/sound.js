@@ -26,7 +26,7 @@
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
 })();
 
-function sound(el, speedOpacity = true, waveOut = false, drawOne = false) {
+function sound(el, drawMode = 0, waveOut = false, drawOne = false) {
   el.onclick = null; //stops the function from running on button click
   const canvas = el;
   const ctx = canvas.getContext("2d");
@@ -70,7 +70,6 @@ function sound(el, speedOpacity = true, waveOut = false, drawOne = false) {
     radius: 5,
     rows: Math.floor(canvas.width / 10),
     columns: 4,
-    contrast: 0.04,
     cycle: 0,
     pusherCycle: 1,
     pusherReady: true,
@@ -187,20 +186,33 @@ function sound(el, speedOpacity = true, waveOut = false, drawOne = false) {
     //draw atoms
     ctx.lineWidth = 0.5;
     ctx.strokeStyle = "#fff";
-    if (speedOpacity) {
+    if (drawMode === 0) {
       for (let i = 0, len = atom.length; i < len; ++i) {
         let vertices = atom[i].vertices;
         ctx.beginPath();
         ctx.arc(vertices[0].x, vertices[0].y, settings.radius, 0, 2 * Math.PI);
-        // const mag = atom[i].speed + Math.abs(atom[i].angularVelocity * 10); //can't get a value for angular speed not sure why
+        //colored balls
+        const hue = Math.max(Math.min(atom[i].velocity.x * 20, 180), -180);
+        ctx.fillStyle = "hsla(" + hue + ", 100%, 50%,1)";
+        // const alpha = Math.max(Math.min(atom[i].speed * atom[i].speed * atom[i].speed * 0.01, 1), 0.02);
+        // ctx.fillStyle = "hsla(" + hue + ", 100%, 50%," + alpha + ")";
+        ctx.fill();
+      }
+    } else if (drawMode === 1) {
+      for (let i = 0, len = atom.length; i < len; ++i) {
+        let vertices = atom[i].vertices;
+        ctx.beginPath();
+        ctx.arc(vertices[0].x, vertices[0].y, settings.radius, 0, 2 * Math.PI);
+        //speed opacity balls
         const mag = atom[i].speed; //can't get a value for angular speed not sure why
-        const alpha = Math.max(Math.min(atom[i].speed * atom[i].speed * settings.contrast, 1), 0.05);
+        const alpha = Math.max(Math.min(atom[i].speed * atom[i].speed * 0.04, 1), 0.05);
         ctx.fillStyle = "rgba(0,0,0," + alpha + ")";
         ctx.fill();
       }
     } else {
       ctx.fillStyle = "rgba(0,0,0,1)";
       for (let i = 0, len = atom.length; i < len; ++i) {
+        //normal black balls
         let vertices = atom[i].vertices;
         ctx.beginPath();
         ctx.arc(vertices[0].x, vertices[0].y, settings.radius, 0, 2 * Math.PI);
