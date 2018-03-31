@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<meta name="description" content="Notes for a high school physics course.">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:title" content="Physics Notes">
+	<meta name="twitter:title" content="High School Physics Notes">
+	<title>Waves</title>
+	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+
+	<script src='../../../lib/matter.min.js'></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0"
+	 crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx"
+	 crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="../../../style.css">
+</head>
+
+<body>
+	<header>
+		<h1>Waves</h1>
+	</header>
+	<article>
+
+
+		<!-- <p>One of the most interesting results from quantum mechanics is the view that everything has properties of both waves and
+			particles. This is very noticeable at the scale of atoms, but at the human scale waves and particles are clearly different.</p>
+		<h2 class='underlined'>Particles Aren't Waves!</h2>
+		<p>Particles are: rocks, balls, people, oranges, air, water, and atoms.</p>
+		<li>Particles have position.</li>
+		<li>Particles have mass.</li>
+		<li>Particles can't be in the same place at the same time.</li>
+		<li>Particles can accelerate.</li>
+		<li>Particles move in one direction.</li>
+		<h2 class='underlined'>Waves Aren't Particles!</h2>
+		<p>Wave are: a ripple, a wiggle, an oscillation, a disturbance, a tremor, a signal
+			<br>Waves are: sound, light, water waves, and also atoms</p>
+		<li>Waves are spread out over a range of positions.</li>
+		<li>Waves don't have mass.</li>
+		<li>Waves can be in the same position at the same time.</li>
+		<li>Waves only move at a constant speed.</li>
+		<li>A wave moves in all directions.</li> -->
+
+
+		<h1 class='definition'>
+			<strong>A wave is a disturbance of a medium that transmits energy from one location to another.</strong>
+		</h1>
+
+		<table border>
+			<tr>
+				<th>wave</th>
+				<th>medium</th>
+				<th>examples</th>
+			</tr>
+			<tr>
+				<td>sound</td>
+				<td>matter (any phase)</td>
+				<td>talking, music</td>
+			</tr>
+			<tr>
+				<td>light</td>
+				<td>electro-magnetic fields</td>
+				<td>sunlight, wifi, radio</td>
+			</tr>
+			<tr>
+				<td>surface</td>
+				<td>interface between two media</td>
+				<td>ocean waves, ripples</td>
+			</tr>
+			<tr>
+				<td>string</td>
+				<td>strings, ropes</td>
+				<td>whip, guitar string</td>
+			</tr>
+			<tr>
+				<td>seismic</td>
+				<td>solids</td>
+				<td>S and P waves</td>
+			</tr>
+			<tr>
+				<td>electrical</td>
+				<td>wires</td>
+				<td>cable TV, phone lines</td>
+			</tr>
+			<tr>
+				<td>gravitational</td>
+				<td>spacetime</td>
+				<td>LIGO, Virgo</td>
+			</tr>
+			<tr>
+				<td>traffic</td>
+				<td>cars on a road</td>
+				<td>ripples of slow traffic</td>
+			</tr>
+			<tr>
+				<td>audience</td>
+				<td>stadium of people</td>
+				<td>The Wave</td>
+			</tr>
+		</table>
+
+		<h2 class='underlined'>Wave Terms</h2>
+
+		<div class='definition'>
+			<svg width="560 " height="350 " viewBox="0 100 1000 550 ">
+				<!-- style="border: 2px solid red;" -->
+				<path d="M0 375 h1000 " stroke-width='2' fill='none' stroke='#333' stroke-dasharray="20, 20" />
+				<path d="M41,373 L50,351 L60,329 L69,308 L78,287 L87,267 L97,248 L106,230 L115,213 L124,198 L134,185 L143,173 L152,163
+						 L162,154 L171,148 L180,144 L189,142 L199,142 L208,144 L217,148 L226,154 L236,163 L245,173 L254,185 L264,198 L273,213 L282,230
+						 L291,248 L301,267 L310,287 L319,308 L328,329 L338,351 L347,373 L356,395 L366,417 L375,438 L384,459 L393,479 L403,498 L412,516
+						 L421,533 L430,548 L440,561 L449,573 L458,583 L468,592 L477,598 L486,602 L495,604 L505,604 L514,602 L523,598 L532,592 L542,583
+						 L551,573 L560,561 L570,548 L579,533 L588,516 L597,498 L607,479 L616,459 L625,438 L634,417 L644,395 L653,373 L662,351 L672,329
+						 L681,308 L690,287 L699,267 L709,248 L718,230 L727,213 L736,198 L746,185 L755,173 L764,163 L774,154 L783,148 L792,144 L801,142
+						 L811,142 L820,144 L829,148 L838,154 L848,163 L857,173 L866,185 L876,198 L885,213 L894,230 L903,248 L913,267 L922,287 L931,308
+						 L940,329 L950,351 L959,373 " stroke-width='4' fill='none' stroke='#000' />
+				<g fill='#000' font-size="30" text-anchor="middle">
+					<text x="190" y="120">crest</text>
+					<text x="500" y="640">trough</text>
+					<text x="800" y="120">amplitude</text>
+					<text x="500" y="430">wavelength</text>
+					<text x="0" y="420" text-anchor="start">equilibrium</text>
+				</g>
+				<g stroke-width='3' fill="none">
+					<path d='M807 375 h10 h-20 h10 v-225 h10 h-20' stroke="#36f" />
+					<path d='M195 400 v10 v-20 v10 h605 v10 v-20' stroke="#f63" />
+				</g>
+				<g fill='#f0d' stroke="none">
+					<circle cx="193" cy="140" r="10" />
+					<circle cx="500" cy="604" r="10" />
+					<circle cx="40" cy="375" r="10" />
+				</g>
+			</svg>
+			<strong>Medium</strong> = the substance that carries the wave
+			<br>
+			<strong>Propagate</strong> = transmit through the medium, how waves move
+			<br>
+			<strong>Equilibrium</strong> = resting state of a medium
+			<br>
+			<strong>Amplitude</strong> = maximum displacement from equilibrium (m)
+			<br>
+			<strong>Crest</strong> = high point on a wave
+			<br>
+			<strong>Trough</strong> = low point on a wave
+			<br>
+			<!-- <strong>Pulse</strong> = a single disturbance
+			<br> -->
+			<!-- <strong>Cycle</strong> = a disturbance that repeats over and over again.
+			<br> -->
+			<br>
+			<strong>Wavelength</strong> = λ = the distance between adjacent crests or troughs (m)
+			<br>
+			<strong>Period</strong> = T = the time for one complete wave cycle to pass a given point (s)
+			<br>
+			<strong>Frequency</strong> = f = the number of cycles that pass per second (Hz, 1/s)
+		</div>
+		<p>Play around with the settings in the "sine wave" simulation below.
+			<br> Which of the properties seem related?</p>
+	</article>
+	<div class='center' style="height: 400px;" id='wave_animation'>
+		<svg id='sin-wave' width='600' height='400' style='position:absolute;left: 0;right: 0;margin: 0 auto; background: #fff'>
+			<filter id="displacementFilter">
+				<feTurbulence id='fe-turb' type="turbulence" baseFrequency="0.02" numOctaves="3" />
+				<feDisplacementMap id='fe-disp' in="SourceGraphic" scale="17" xChannelSelector="R" yChannelSelector="G" />
+				<feGaussianBlur stdDeviation="0.5" />
+				<feOffset dx="0" dy="-6" />
+			</filter>
+			<g stroke="#d9dfdf" style="stroke-dasharray:1,98,1,0;stroke-width:4000;">
+				<line x1="0" y1="0" x2="2000" y2="0" />
+				<line x1="0" y1="0" x2="0" y2="2000" />
+			</g>
+			<g stroke-dasharray='10,10' stroke='#777' stroke-width='2'>
+				<line x1="0" y1="200" x2="3000" y2="200" />
+			</g>
+			<path filter="url(#displacementFilter)" id="sine_wave" stroke-width='9' fill='rgba(0,0,255,0.4)' stroke='rgba(255,255,255,0.5)'
+			 stroke-miterlimit="10" />
+			<g>
+				<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;'
+				/>
+				<text x="50" y="391" text-anchor="middle" font-size="15" fill='#000'>100m</text>
+				<!-- <text id='time' x="595" y="395" text-anchor="end" font-size="17" fill='#000'>time</text>
+				<text id='period' x="150" y="395" text-anchor="start" font-size="17" fill='#000'>period</text>
+				<text id='frequency' x="500" y="395" text-anchor="end" font-size="17" fill='#000'>frequency</text> -->
+			</g>
+
+		</svg>
+		<div style='position:relative;left: 0;right: 0;top:2%; margin: 0 auto;'>
+			amplitude =
+			<input class='number' id='amplitude' type="number" step="5">m &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; velocity =
+			<input class='number' id='velocity' type="number" step="5">m/s &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; wavelength =
+			<input class='number' id='wavelength' type="number" min="0" step="20">m
+		</div>
+
+		<div style='position:relative;left: 0;right: 0;top:88%;margin: 0 auto;'>
+			<span id='frequency'></span> &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+			<span id='period'></span> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; time =
+			<span id='time'></span>
+		</div>
+	</div>
+	<article>
+		<div class='example'>
+			<strong>Graphing:</strong> Let's see if we can find a relationship between frequency and period. Change the wavelength and record
+			about five different pairs of frequency and period. Graph the pairs with period as the x-coordinate and frequency as the
+			y-coordinate. What does the graph look like?
+			<details>
+				<summary>solution</summary>
+				<p class='center'>it's an inverse function</p>
+				<div id='T-vs-f' class='center'></div>
+			</details>
+		</div>
+		<h2 class='underlined'>Frequency and Period</h2>
+		<div class='definition'>
+			<h1>$$f = \frac{1}{T}$$</h1>
+			\(f\) = frequency [Hz, 1/s, hertz]
+			<br>How often an event happens in a second.
+			<br>
+			<br>\(T\) = time period [s, seconds]
+			<br>How many seconds are between each event.
+		</div>
+		<!-- <p>If a wave has a frequency of 2Hz, then 2 wavelengths pass a point every second. The period would be 1/2 a second. This
+			means it would takes 0.5 a second a single wave to pass.</p> -->
+		<div class='example'>
+			<strong>Example:</strong> The Los Angles Metro Expo Line has a train arrive at 6:50am, 6:56am, and 7:02. What is the period and
+			frequency of the trains?
+			<details>
+				<summary>solution</summary>
+				$$6:56-6:50 = 6min$$ $$T = 6 min \left(\frac{60s}{1min}\right) = 360s$$ $$f = \frac{1}{360}$$ $$f=0.0027Hz$$
+			</details>
+		</div>
+		<div class='example'>
+			<strong>Example:</strong> An air horn sounds at a frequency of 220 Hz. How many seconds pass between each wave crest?
+			<details>
+				<summary>solution</summary>
+				$$T = \frac{1}{f}$$ $$T = \frac{1}{220}$$ $$T = 0.0045s$$
+			</details>
+		</div>
+		<div class='example'>
+			<strong>Example:</strong> Red light has a frequency of 450 THz. What is the period of red light? (THz = 10¹²Hz)
+			<details>
+				<summary>solution</summary>
+				$$T = \frac{1}{f}$$ $$T = \frac{1}{450 \times 10^{12}}$$ $$T = 2.22 \times 10^{-15}s$$
+			</details>
+		</div>
+
+		<h2 class='underlined'>Media and Wave Speed</h2>
+		<p>When a wave moves, what is moving is energy, not matter.</p>
+
+		<p>The speed of propagation is determined by the medium. Properties like frequency, amplitude, or wavelength generally don't
+			have an effect.</p>
+		<p>Each type of wave has a different mechanism of propagation. The speed and possibility of a wave propagating through a medium
+			is different for each wave type.</p>
+		<table>
+			<tr>
+				<th>speed (m/s)</th>
+				<th>vacuum</th>
+				<th>air</th>
+				<th>water</th>
+				<th>glass</th>
+			</tr>
+			<tr>
+				<th>sound</td>
+					<td>N/A</td>
+					<td>340</td>
+					<td>1,484</td>
+					<td>4,540</td>
+			</tr>
+			<tr>
+				<th>light</td>
+					<td style="padding: 10px;">299,792,458</td>
+					<td style="padding: 10px;">299,700,000</td>
+					<td style="padding: 10px;">220,000,000</td>
+					<td style="padding: 10px;">200,000,000</td>
+			</tr>
+		</table>
+		<p>
+			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo">Sound</a> travels faster in dense media because the atoms are
+			<a href='https://www.youtube.com/watch?v=w6Q15GZpSUY'>closer</a> together. This means the atoms don't have to move as far to collide.</p>
+		<p>Light seems like it slows down in dense media, but light always propagates at the fastest possible speed for any physical
+			thing. The slow down occurs when the light gets briefly absorbed by atoms and then re-emitted in the same direction.</p>
+		<div class='example'>
+			<strong>Investigation:</strong> Can you figure out what factors affect the speed of a string wave? Go experiment with a string,
+			or slinky to find out.
+			<details>
+				<summary>solution</summary>
+				<br> Tension is probably the easiest way to control the speed of a string wave. The equation below shows that string mass
+				and length are also factors. $$ v = \sqrt{\frac{T}{mL}}$$
+				<div class="col-group">
+					<div class='center'>
+						v = velocity (m/s)
+						<br>T = tension (N)
+
+					</div>
+					<div class='center'>
+						m = mass (kg)
+						<br>L = string length (m)
+					</div>
+				</div>
+				<br>Changing wave speed is used to change the pitch of stringed instruments. Notes from a guitar or harp are changed through
+				tension, length, or string mass.
+			</details>
+		</div>
+		<div class='example'>
+			<strong>Example:</strong> Two students are holding a slinky while standing 3.6 m apart. The first student sends a pulse which
+			travels all the way down and back again. It takes 2.4 s for the wave to return. What is the speed of the wave?
+			<details>
+				<summary>solution</summary>
+				$$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{3.6 \times 2}{2.4} $$ $$v = 3 \tfrac{m}{s}$$
+			</details>
+		</div>
+		<h2 class='underlined'>The Wave Equation</h2>
+		<p>For regularly repeating waves the product of the frequency and wavelength is equal to the wave's velocity.</p>
+		<div class='definition'>
+			<h1>$$v = f \lambda \quad \quad v = \frac{\lambda}{T} $$</h1>
+			\(v\) = propagation speed [m/s]
+			<br>\(\lambda\) = wavelength [m, meters]
+			<br>\(f\) = frequency [Hz, 1/s, hertz]
+			<br>\(T\) = time period [s, seconds]
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A medium sized air horn sounds at a frequency of 220 Hz. What is the wavelength of the sound wave?
+			<details>
+				<summary>solution</summary>
+				<p>speed of sound at sea level = 340 m/s</p>
+				$$v = f \lambda$$ $$\lambda = \frac{v}{f}$$ $$\lambda = \frac{340}{220}$$ $$\lambda = 1.54m$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A cell phone sends and receives light in the microwave range, at wavelengths around 1cm. How many cycles
+			pass through the phone in one second?
+			<details>
+				<summary>solution</summary>
+				$$v = 3.0 \times 10^{8} \tfrac{m}{s}$$ $$\lambda = 1cm = 0.01m$$
+				<br> $$v = f \lambda$$ $$f = \frac{v}{\lambda}$$ $$f = \frac{(3.0 \times 10^{8})}{0.01}$$ $$f=3\times 10^{10}Hz$$ $$f=30
+				GHz$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> AC (alternating current) electricity in the U.S. has a frequency of 60Hz. In most other countries it
+			is 50Hz. An electrical signal propagates through a wire at about 2/3 the speed of light. What is the wavelength for an
+			AC wave in the United States?
+			<details>
+				<summary>solution</summary>
+				$$v = f \lambda$$ $$\lambda = \frac{v}{f} $$ $$\lambda = \frac{(\tfrac{2}{3})(3.0 \times 10^8)}{60} $$ $$\lambda = \frac{2.0
+				\times 10^8}{60} $$ $$\lambda = 0.033 \times 10^8 m $$ $$\lambda = 3,300km $$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Gravity waves are ripples in spacetime that move at the speed of light. The first detected gravity wave
+			was on 11 February 2016 when the LIGO and Virgo Scientific Collaboration observed gravitational waves originated from
+			a pair of merging black holes. If you convert the gravity wave into a sound wave you can hear a
+			<a href='https://www.youtube.com/watch?v=TWqhUANNFXw'>chirp</a>.
+			<br>
+			<br>How big are gravity waves? Over the 0.2 second detection, the frequency increased from 35Hz to 250Hz. Calculate the starting
+			and ending wavelength.
+			<details>
+				<summary>solution</summary>
+				$$ v = 3 \times 10^{8} m/s$$ $$v = f \lambda$$ $$\lambda = \frac{v}{f}$$ $$\lambda = \frac{3 \times 10^{8}}{35}$$ $$\lambda
+				= \frac{3 \times 10^{8}}{35}$$ $$\lambda = 8,500,000m$$
+				<br> $$\lambda = \frac{3 \times 10^{8}}{250}$$ $$\lambda = 1,200,000m$$
+				<p>The wavelength ranged from 8,500km to 1,200km.</p>
+				<p>We can also find the length of the entire signal.</p>
+				$$v = \frac{\Delta x}{\Delta t}$$ $$\Delta x = v\Delta t$$ $$\Delta x = (3 \times 10^{8}) (0.2)$$ $$\Delta x = 0.6 \times
+				10^{8} m$$
+				<p>The entire signal was 60,000 km long.
+					<br> That's about 5 Earths long.</p>
+			</details>
+		</div>
+
+		<h2 class='underlined' id='sound-waves'>How Waves Propagate</h2>
+		<p>
+			<strong>Propagate</strong> is the word we use to describe waves moving. We try not to say move, because waves are a signal transmitting
+			through the medium. The medium doesn't move, just the signal.
+		</p>
+
+		<!-- <p>Each medium has their own mechanism of propagation, but there are some general principles.
+			<li>A medium is brought out of equilibrium by a disruption.</li>
+			<li>The medium is brought back to equilibrium by a restorative force.</li>
+			<li>The restorative force also pushes the disruptions forward through the medium.</li>
+		</p> -->
+		<p>Each medium has their own mechanism of propagation, but there are some general principles. A medium at rest is in
+			<strong>equilibrium</strong>; the forces are in balance. A disruption spreads through the medium bringing it out of equilibrium.
+		</p>
+
+		<p>
+			<a href="https://waveforms.surge.sh/waveforms-intro">Sound waves</a> are vibrations that propagate through matter. They are produced from changes in pressure and velocity.
+			Your
+			<a href="https://www.youtube.com/watch?v=qgdqp-oPb1Q">ear</a> senses the amplitude and frequency of the vibrations.
+		</p>
+		<p>Each time you click the simulations below you will send a pulse of compressed particles, sound!</p>
+
+	</article>
+	<canvas class='center' id='sound1' height='50' width='600' onclick="sound(this,2, false)"> </canvas>
+	<article>
+		<p>I've graphed the density and highlighted the particles with higher speeds. You can see the wave trading between kinetic
+			energy and pressure.
+		</p>
+	</article>
+	<canvas class='center' id='sound2' height='50' width='600' onclick="sound(this, 1, true)"> </canvas>
+	<article>
+		<p>Waves don't transmit matter, just energy. In the simulation below one particle is highlighted. Watch how it moves when
+			it becomes part of the wave, but over time it stays in the same area.</p>
+	</article>
+	<canvas class='center' id='sound3' height='50' width='600' onclick="sound(this, 1, false, true)"> </canvas>
+	<article>
+		<h2 class='underlined'>Transverse and Longitudinal</h2>
+		<p>Sound waves are vibrations that move in the same direction the wave moves. Most other waves are produced by vibration perpendicular
+			to the direction the wave moves, like waves on strings </p>
+		<div class='definition'>
+			<p>
+				<strong>Longitudinal</strong> = a wave that vibrates in the direction of propagation
+				<br>Examples: sound, slinky
+			</p>
+
+			<p>
+				<strong>Transverse</strong> = a wave that vibrates perpendicular to the direction of propagation
+				<br>Examples: light, string
+			</p>
+
+		</div>
+		<p>What other waves are transverse?</p>
+
+	</article>
+	<div class='back'>
+		<a href="../../../index.html#units ">Back</a>
+	</div>
+
+	<script>
+		renderMathInElement(document.body);
+	</script>
+	<!-- <script src='../../../lib/perlin.js'></script> -->
+	<script src="wave.js "></script>
+	<script src="sound.js "></script>
+	<script src="https://d3js.org/d3.v3.min.js "></script>
+	<script src='../../../lib/function-plot.js'></script>
+	<script src='plot.js'></script>
+</body>
+
+</html>
