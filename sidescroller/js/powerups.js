@@ -105,6 +105,13 @@ const powerUps = {
       powerUps.spawn(x, y, "ammo", false);
     }
   },
+  spawnStartingPowerUps: function(x, y) {
+    if (b.inventory.length < 3) {
+      powerUps.spawn(x, y, "gun", false); //starting gun
+    } else {
+      powerUps.spawnRandomPowerUp(x, y);
+    }
+  },
   spawn: function(x, y, target, moving = true) {
     let i = powerUp.length;
     target = powerUps[target];
@@ -164,6 +171,10 @@ const powerUps = {
           //float towards player
           powerUp[i].force.x += dxP / dist2 * powerUp[i].mass * 1.6;
           powerUp[i].force.y += dyP / dist2 * powerUp[i].mass * 1.6 - powerUp[i].mass * game.g; //negate gravity
+          //draw the pulling effect
+          ctx.globalAlpha = 0.2;
+          mech.drawHold(powerUp[i], false);
+          ctx.globalAlpha = 1;
         }
       }
     }

@@ -309,7 +309,7 @@ const game = {
     };
     document.body.style.cursor = "none";
     if (this.firstRun) mech.spawn(); //spawns the player
-    // level.levels = shuffle(level.levels); //shuffles order of maps
+    level.levels = shuffle(level.levels); //shuffles order of maps
     game.reset();
     // if (game.firstRun) Engine.run(engine); //starts game engine
     game.firstRun = false;
@@ -533,7 +533,6 @@ const game = {
         const dy = a.y - eye.y;
         return Math.atan2(dy, dx) - Math.atan2(dy, dx);
       });
-      console.log(nodes);
       //draw nodes
       ctx.lineWidth = 2;
       ctx.strokeStyle = "#000";

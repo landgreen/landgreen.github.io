@@ -222,7 +222,6 @@ function cycle() {
   game.wipe();
   game.textLog();
   mech.keyMove();
-  powerUps.attractionLoop();
   level.checkZones();
   level.checkQuery();
   mech.move();
@@ -251,6 +250,7 @@ function cycle() {
     game.draw.body();
     mech.draw();
     mech.hold();
+    powerUps.attractionLoop();
     level.drawFills();
     game.draw.drawMapPath();
     // mech.drawHealth();

@@ -409,9 +409,12 @@ const b = {
           bullet[me].onDmg = function() {
             this.endCycle = 0; //bullet ends cycle after doing damage  //this also triggers explosion
           };
+          bullet[me].lockedOn = null;
+          bullet[me].missileNumber = i;
           bullet[me].do = function() {
             if (!(game.cycle % this.lookFrequency)) {
               this.close = null;
+              this.lockedOn = null;
               let closeDist = Infinity;
               for (let i = 0, len = mob.length; i < len; ++i) {
                 if (
@@ -423,6 +426,7 @@ const b = {
                   if (dist < closeDist) {
                     this.close = mob[i].position;
                     closeDist = dist;
+                    this.lockedOn = mob[i];
                   }
                 }
               }
@@ -432,6 +436,28 @@ const b = {
                   this.endCycle = 0; //bullet ends cycle after doing damage  //this also triggers explosion
                 }
               }
+            }
+            //show locked on targeting
+            if (this.lockedOn) {
+              ctx.beginPath();
+              const vertices = this.lockedOn.vertices;
+              ctx.moveTo(this.position.x, this.position.y);
+              const mod = Math.floor((game.cycle / 3 + this.missileNumber) % vertices.length);
+              ctx.lineTo(vertices[mod].x, vertices[mod].y);
+
+              // for (let j = 0, len2 = vertices.length; j < len2; ++j) {
+              //   ctx.moveTo(this.position.x, this.position.y);
+              //   ctx.lineTo(vertices[j].x, vertices[j].y);
+              // }
+              // ctx.lineTo(vertices[0].x, vertices[0].y);
+              // ctx.lineTo(this.position.x, this.position.y);
+              ctx.strokeStyle = "rgba(0,0,255,0.25)"; //"#2f6";
+              ctx.lineWidth = 1;
+              ctx.setLineDash([50 + 120 * Math.random(), 50 * Math.random()]);
+              ctx.stroke();
+              ctx.setLineDash([0, 0]);
+              // ctx.fillStyle = "rgba(0,0,255,0.1)"; //"#2f6";
+              // ctx.fill();
             }
             //accelerate in direction bullet is facing
             const dir = this.angle; // + (Math.random() - 0.5);
@@ -536,24 +562,24 @@ const b = {
           //extra gravity for harder arcs
           this.force.y += this.mass * 0.0022;
           //draw timer
-          if (!(game.cycle % 10)) {
-            if (this.isFlashOn) {
-              this.isFlashOn = false;
-            } else {
-              this.isFlashOn = true;
-            }
-          }
-          if (this.isFlashOn) {
-            ctx.fillStyle = "#000";
-            ctx.beginPath();
-            ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-            ctx.fill();
-            //draw clock on timer
-            ctx.fillStyle = "#f12";
-            ctx.beginPath();
-            ctx.arc(this.position.x, this.position.y, this.radius * (1 - (this.endCycle - game.cycle) / 140), 0, 2 * Math.PI);
-            ctx.fill();
-          }
+          // if (!(game.cycle % 10)) {
+          //   if (this.isFlashOn) {
+          //     this.isFlashOn = false;
+          //   } else {
+          //     this.isFlashOn = true;
+          //   }
+          // }
+          // if (this.isFlashOn) {
+          //   ctx.fillStyle = "#000";
+          //   ctx.beginPath();
+          //   ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
+          //   ctx.fill();
+          //   //draw clock on timer
+          //   ctx.fillStyle = "#f12";
+          //   ctx.beginPath();
+          //   ctx.arc(this.position.x, this.position.y, this.radius * (1 - (this.endCycle - game.cycle) / 140), 0, 2 * Math.PI);
+          //   ctx.fill();
+          // }
         };
       }
     },
@@ -586,24 +612,24 @@ const b = {
           //extra gravity for harder arcs
           this.force.y += this.mass * 0.0022;
           //draw timer
-          if (!(game.cycle % 10)) {
-            if (this.isFlashOn) {
-              this.isFlashOn = false;
-            } else {
-              this.isFlashOn = true;
-            }
-          }
-          if (this.isFlashOn) {
-            ctx.fillStyle = "#000";
-            ctx.beginPath();
-            ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-            ctx.fill();
-            //draw clock on timer
-            ctx.fillStyle = "#f12";
-            ctx.beginPath();
-            ctx.arc(this.position.x, this.position.y, this.radius * (1 - (this.endCycle - game.cycle) / this.totalCycles), 0, 2 * Math.PI);
-            ctx.fill();
-          }
+          // if (!(game.cycle % 10)) {
+          //   if (this.isFlashOn) {
+          //     this.isFlashOn = false;
+          //   } else {
+          //     this.isFlashOn = true;
+          //   }
+          // }
+          // if (this.isFlashOn) {
+          //   ctx.fillStyle = "#000";
+          //   ctx.beginPath();
+          //   ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
+          //   ctx.fill();
+          //   //draw clock on timer
+          //   ctx.fillStyle = "#f12";
+          //   ctx.beginPath();
+          //   ctx.arc(this.position.x, this.position.y, this.radius * (1 - (this.endCycle - game.cycle) / this.totalCycles), 0, 2 * Math.PI);
+          //   ctx.fill();
+          // }
         };
       }
     },

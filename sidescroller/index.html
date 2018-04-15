@@ -2,8 +2,15 @@
 <html>
 
 <head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
 
-
+		gtag('config', 'UA-113454647-1');
+	</script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="2-d platoformer game">
@@ -12,16 +19,6 @@
 	<meta property="og:description" content="Canvas based side scrolling video game with the matter.js physics engine.">
 	<meta property="og:title" content="n-gon">
 	<meta name="twitter:title" content="n-gon">
-
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() { dataLayer.push(arguments); }
-		gtag('js', new Date());
-		gtag('config', 'UA-113454647-1');
-	</script>
-
 	<title>n-gon</title>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
@@ -86,6 +83,12 @@
 			}
 		}
 
+		@keyframes dash {
+			to {
+				stroke-dashoffset: 0;
+			}
+		}
+
 		.draw-lines {
 			stroke-dasharray: 20;
 			stroke-dashoffset: 20;
@@ -108,12 +111,6 @@
 			stroke-dasharray: 300;
 			stroke-dashoffset: 300;
 			animation: dash 5s ease-in forwards;
-		}
-
-		@keyframes dash {
-			to {
-				stroke-dashoffset: 0;
-			}
 		}
 	</style>
 	<svg id='splash' class='intro' viewBox="0 0 800 800" onclick="game.startGame()">
@@ -167,7 +164,7 @@
 				<rect x="70" y="70" width="60" height="60" rx='3' />
 				<rect x="140" y="70" width="60" height="60" rx='3' />
 			</g>
-			<g class="draw-lines4" text-anchor="middle" stroke='#000' fill='none' stroke-width="2" font-size="38px" font-family="Arial Black, Gadget, sans-serif">
+			<g class="draw-lines4" text-anchor="middle" stroke='#000' fill='none' stroke-width="2" font-size="38px" font-family="Arial Black, sans-serif">
 				<text x="30" y="45">Q</text>
 				<text x="170" y="45">E</text>
 				<text x="100" y="45">W</text>
@@ -177,7 +174,6 @@
 			</g>
 		</g>
 	</svg>
-
 	<script src='js/lib/matter.min.js'></script>
 	<script src='js/lib/randomColor.js'></script>
 	<script src="js/game.js"></script>

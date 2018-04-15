@@ -18,8 +18,8 @@ const spawn = {
     "exploder",
     "spawner",
     "ghoster",
-    "sneaker",
-    "bomber"
+    "sneaker"
+    // "bomber"
   ],
   bossPickList: ["zoomer", "chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner", "bomber"],
   setSpawnList: function() {
@@ -29,7 +29,7 @@ const spawn = {
     spawn.pickList.push(spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]);
   },
   randomMob: function(x, y, chance = 1) {
-    if (Math.random() < chance + 0.11 * game.levelsCleared) {
+    if (Math.random() < chance + 0.1 * game.levelsCleared && mob.length < 5 + game.levelsCleared * 2) {
       const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       this[pick](x, y);
     }
@@ -37,11 +37,11 @@ const spawn = {
   randomSmallMob: function(
     x,
     y,
-    num = Math.max(Math.min(Math.round(Math.random() * game.levelsCleared - 0.4), 4), 0),
+    num = Math.max(Math.min(Math.round(Math.random() * game.levelsCleared * 0.5 - 0.4), 4), 0),
     size = 16 + Math.ceil(Math.random() * 15),
     chance = 1
   ) {
-    if (Math.random() < chance + game.levelsCleared * 0.03) {
+    if (Math.random() < chance + game.levelsCleared * 0.03 && mob.length < 5 + game.levelsCleared * 2) {
       for (let i = 0; i < num; ++i) {
         const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
         this[pick](x + Math.round((Math.random() - 0.5) * 20) + i * size * 2.5, y + Math.round((Math.random() - 0.5) * 20), size);
@@ -49,7 +49,7 @@ const spawn = {
     }
   },
   randomBoss: function(x, y, chance = 1) {
-    if (Math.random() < chance + game.levelsCleared * 0.11 && game.levelsCleared !== 0) {
+    if (Math.random() < chance + game.levelsCleared * 0.1 && game.levelsCleared !== 0 && mob.length < 5 + game.levelsCleared * 2) {
       //choose from the possible picklist
       let pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       //is the pick able to be a boss?
@@ -242,13 +242,6 @@ const spawn = {
           this.cdBurst1 = Infinity;
           this.force = Matter.Vector.mult(this.burstDir, this.mass * 0.25);
           this.fill = this.rememberFill;
-          // const forceMag = (this.accelMag + this.accelMag * Math.random()) * this.mass;
-          // const angle = Math.atan2(
-          //     this.seePlayer.position.y - this.position.y,
-          //     this.seePlayer.position.x - this.position.x
-          // );
-          // this.force.x += forceMag * Math.cos(angle);
-          // this.force.y += forceMag * Math.sin(angle); // - 0.0007 * this.mass; //antigravity
         } else if (this.cdBurst1 != Infinity) {
           this.torque += 0.000035 * this.inertia;
           this.fill = randomColor({ hue: "blue" });
@@ -266,6 +259,8 @@ const spawn = {
           ctx.lineTo(dir.x, dir.y);
           ctx.stroke();
           ctx.setLineDash([]);
+        } else {
+          this.fill = this.rememberFill;
         }
       } else {
         this.cdBurst2 = 0;
@@ -357,62 +352,68 @@ const spawn = {
       }
     };
   },
-  focuser: function(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
+  focuser: function(x, y, radius = 30 + Math.ceil(Math.random() * 10)) {
+    radius = Math.ceil(radius * 0.7);
     mobs.spawn(x, y, 4, radius, "rgb(0,0,255)");
     let me = mob[mob.length - 1];
+    Matter.Body.setDensity(me, 0.003); //extra dense //normal is 0.001
+    me.restitution = 0;
     me.laserPos = me.position; //required for laserTracking
-    me.repulsionRange = 400000; //squared
+    me.repulsionRange = 1200000; //squared
     //me.seePlayerFreq = 2 + Math.round(Math.random() * 5);
-    me.accelMag = 0.0005;
+    me.accelMag = 0.0002;
     me.frictionStatic = 0;
     me.friction = 0;
     me.onDamage = function() {
       this.laserPos = this.position;
     };
-    if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
+    // if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
     me.do = function() {
       this.healthBar();
       this.seePlayerByLookingAt();
-      this.attraction();
-      this.repulsion();
+      const dist2 = this.distanceToPlayer2();
       //laser Tracking
-      if (this.seePlayer.yes && this.distanceToPlayer2() < 1700000) {
+      if (this.seePlayer.yes && dist2 < 4000000) {
+        this.attraction();
+        const rangeWidth = 2000; //this is sqrt of 4000000 from above if()
         //targeting laser will slowly move from the mob to the player's position
         this.laserPos = Matter.Vector.add(this.laserPos, Matter.Vector.mult(Matter.Vector.sub(player.position, this.laserPos), 0.1));
-        const targetDist = Matter.Vector.magnitude(Matter.Vector.sub(this.laserPos, mech.pos));
-        let r = 30;
+        let targetDist = Matter.Vector.magnitude(Matter.Vector.sub(this.laserPos, mech.pos));
+        const r = 10;
 
         // ctx.setLineDash([15, 200]);
         // ctx.lineDashOffset = 20*(game.cycle % 215);
         ctx.beginPath();
         ctx.moveTo(this.position.x, this.position.y);
-        if (targetDist < r) {
-          mech.damage(0.0005 * game.dmgScale);
-          // ctx.setLineDash([150 * Math.random(), 50 * Math.random()]);
-          ctx.setLineDash([50 + 120 * Math.random(), 50 * Math.random()]);
-          ctx.strokeStyle = "rgba(0,0,255,0.7)";
-          ctx.lineWidth = 3;
-          ctx.lineTo(this.laserPos.x, this.laserPos.y);
-          ctx.lineTo(this.laserPos.x + (Math.random() - 0.5) * 3000, this.laserPos.y + (Math.random() - 0.5) * 3000);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.fillStyle = "rgba(0,0,255,0.6)";
-          ctx.arc(this.laserPos.x, this.laserPos.y, r, 0, 2 * Math.PI);
-          ctx.fill();
-          ctx.setLineDash([]);
+        if (targetDist < r + 15) {
+          // || dist2 < 80000
+          targetDist = r + 10;
+          //charge at player
+          const forceMag = this.accelMag * 40 * this.mass;
+          const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x);
+          this.force.x += forceMag * Math.cos(angle);
+          this.force.y += forceMag * Math.sin(angle);
         } else {
-          let laserOffR = Matter.Vector.rotateAbout(this.laserPos, (targetDist - r) * 0.002, this.position);
+          //high friction if can't lock onto player
+          Matter.Body.setVelocity(this, {
+            x: this.velocity.x * 0.96,
+            y: this.velocity.y * 0.96
+          });
+        }
+        if (dist2 > 80000) {
+          const laserWidth = 0.002;
+          let laserOffR = Matter.Vector.rotateAbout(this.laserPos, (targetDist - r) * laserWidth, this.position);
           let sub = Matter.Vector.normalise(Matter.Vector.sub(laserOffR, this.position));
-          laserOffR = Matter.Vector.add(laserOffR, Matter.Vector.mult(sub, 1300));
+          laserOffR = Matter.Vector.add(laserOffR, Matter.Vector.mult(sub, rangeWidth));
           ctx.lineTo(laserOffR.x, laserOffR.y);
 
-          let laserOffL = Matter.Vector.rotateAbout(this.laserPos, (targetDist - r) * -0.002, this.position);
+          let laserOffL = Matter.Vector.rotateAbout(this.laserPos, (targetDist - r) * -laserWidth, this.position);
           sub = Matter.Vector.normalise(Matter.Vector.sub(laserOffL, this.position));
-          laserOffL = Matter.Vector.add(laserOffL, Matter.Vector.mult(sub, 1300));
+          laserOffL = Matter.Vector.add(laserOffL, Matter.Vector.mult(sub, rangeWidth));
           ctx.lineTo(laserOffL.x, laserOffL.y);
           // ctx.fillStyle = "rgba(0,0,255,0.15)";
-          var gradient = ctx.createRadialGradient(this.position.x, this.position.y, 0, this.position.x, this.position.y, 1300);
-          gradient.addColorStop(0, `rgba(0,0,255,${r * r / (targetDist * targetDist)})`);
+          var gradient = ctx.createRadialGradient(this.position.x, this.position.y, 0, this.position.x, this.position.y, rangeWidth);
+          gradient.addColorStop(0, `rgba(0,0,255,${(r + 5) * (r + 5) / (targetDist * targetDist)})`);
           gradient.addColorStop(1, "transparent");
           ctx.fillStyle = gradient;
           ctx.fill();
@@ -890,7 +891,7 @@ const spawn = {
   },
   // body and map spawns ******************************************************************************
   //**********************************************************************************************
-  boost: function(x, y, height = -1000) {
+  boost: function(x, y, height = 1000) {
     spawn.mapVertex(x + 50, y + 35, "120 40 -120 40 -50 -40 50 -40");
     // level.addZone(x, y, 100, 30, "fling", {Vx:Vx, Vy: Vy});
     level.addQueryRegion(x, y - 120, 100, 120, "boost", [[player], body, mob, powerUp, bullet], -1.1 * Math.sqrt(Math.abs(height)));
@@ -956,7 +957,7 @@ const spawn = {
         powerUps.chooseRandomPowerUp(x + Math.random() * width, y);
       } else {
         const size = 18 + Math.random() * 25;
-        spawn.bodyRect(x, y, size * (0.6 + Math.random()), size * (0.6 + Math.random()), 1);
+        spawn.bodyRect(x + Math.random() * width, y, size * (0.6 + Math.random()), size * (0.6 + Math.random()), 1);
         // body[body.length] = Bodies.rectangle(x + Math.random() * width, y, size * (0.6 + Math.random()), size * (0.6 + Math.random()));
       }
     }

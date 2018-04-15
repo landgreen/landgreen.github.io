@@ -421,7 +421,7 @@ const mech = {
       this.throwCharge = 0;
     }
   },
-  drawHold: function(target) {
+  drawHold: function(target, stroke = true) {
     const eye = 15;
     const len = target.vertices.length - 1;
     ctx.fillStyle = "rgba(110,170,200," + (0.2 + 0.4 * Math.random()) + ")";
@@ -432,14 +432,14 @@ const mech = {
     ctx.lineTo(target.vertices[len].x, target.vertices[len].y);
     ctx.lineTo(target.vertices[0].x, target.vertices[0].y);
     ctx.fill();
-    ctx.stroke();
+    if (stroke) ctx.stroke();
     for (let i = 0; i < len; i++) {
       ctx.beginPath();
       ctx.moveTo(mech.pos.x + eye * Math.cos(this.angle), mech.pos.y + eye * Math.sin(this.angle));
       ctx.lineTo(target.vertices[i].x, target.vertices[i].y);
       ctx.lineTo(target.vertices[i + 1].x, target.vertices[i + 1].y);
       ctx.fill();
-      ctx.stroke();
+      if (stroke) ctx.stroke();
     }
   },
   fieldArc: 0.2,
@@ -458,7 +458,7 @@ const mech = {
         Matter.Body.setVelocity(this.holdingTarget, player.velocity);
         Matter.Body.rotate(this.holdingTarget, 0.01 / this.holdingTarget.mass); //gently spin the block
         if (game.mouseDown) {
-          this.throwCharge++;
+          this.throwCharge += 2;
           //draw charge
           const x = mech.pos.x + 15 * Math.cos(this.angle);
           const y = mech.pos.y + 15 * Math.sin(this.angle);
