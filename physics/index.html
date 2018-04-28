@@ -26,41 +26,16 @@
 
 	<link rel="stylesheet" type="text/css" href="style.css">
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
-	<!-- <link rel="stylesheet" href="lib\font-awesome-4.6.3\css\font-awesome.min.css"> -->
-	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+	<link rel="stylesheet" type="text/css" href="lib/katex/katex.min.css">
+	<script src="lib/katex/katex.min.js"></script>
+	<script src="lib/katex/contrib/auto-render.min.js"></script>
+
+	<!-- <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script> -->
 </head>
 
 <body>
 	<header>
-		<div class='side-graphics'>
-			<style>
-				.draw-path {
-					stroke-dasharray: 1000;
-					stroke-dashoffset: 1000;
-					animation: dash 8s ease-in forwards;
-					/*   animation: dash 4s ease-in alternate infinite; */
-				}
-
-				@keyframes dash {
-					to {
-						stroke-dashoffset: 0;
-					}
-				}
-
-				.fade-in {
-					opacity: 0;
-					animation: opacity 2s ease-in forwards;
-				}
-
-				@keyframes opacity {
-					to {
-						opacity: 1;
-					}
-				}
-			</style>
+		<!-- <div class='side-graphics'>
 			<h2 style="position: absolute;right: 1em;top: 4.5em;color:#666;">
 				<div class='fade-in'>$$\sum F=ma$$</div>
 			</h2>
@@ -71,13 +46,10 @@
 			 xmlns="http://www.w3.org/2000/svg">
 				<circle cx="100" cy="100" r="60" fill='none' stroke-width="2" stroke="#666" />
 				<circle cx="300" cy="100" r="40" fill='none' stroke-width="2" stroke="#666" />
-
 				<line x1="100" y1="100" x2="172" y2="100" style="stroke:#666;stroke-width:2" />
-				<polygon class='fade-in' points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#666;" />
-
+				<polygon class='fade-in' points="0,0 -9,5 -8,0 -9,-5" transform="translate(180 100)" style="fill:#666;" />
 				<line x1="300" y1="100" x2="228" y2="100" style="stroke:#666;stroke-width:2" />
-				<polygon class='fade-in' points="0,0 8,5 8,-5" transform="translate(220 100)" style="fill:#666;" />
-
+				<polygon class='fade-in' points="0,0 9,5 8,0 9,-5" transform="translate(220 100)" style="fill:#666;" />
 				<line x1="100" y1="30" x2="300" y2="30" style="stroke:#666;stroke-width:2" />
 				<line x1="100" y1="25" x2="100" y2="35" style="stroke:#666;stroke-width:2" />
 				<line x1="300" y1="25" x2="300" y2="35" style="stroke:#666;stroke-width:2" />
@@ -104,15 +76,13 @@
 					</g>
 				</defs>
 				<use x='100' y='20' xlink:href="#box" />
-
 				<path d="M 0 150 v-50 h300" fill='none' stroke="#666" stroke-width="2" fill=none stroke-linejoin="round" />
-
 				<use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
 				<text class='fade-in' x="33" y="65" fill="#666">F</text>
 				<use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
 				<text class='fade-in' x="235" y="65" fill="#666">F</text>
 			</svg>
-		</div>
+		</div> -->
 
 		<h1 style="position: relative;">Physics</h1>
 		<h3>
@@ -120,21 +90,55 @@
 		</h3>
 	</header>
 
+	<style>
+		.unit-icon {
+			margin-top: -40px;
+			margin-bottom: -10px;
+			border-bottom: 1px solid #aaa;
+			font-weight: 400;
+			font-size: 2.2em;
+		}
+
+		.fade-opacity {
+			opacity: 0;
+			transition: opacity .4s;
+		}
+	</style>
 	<ul class="listing listing-style">
-		<li>
-			<h2>Motion</h2>
+		<li onmouseover="document.getElementById('fade0').style.opacity = '100';" onmouseout="document.getElementById('fade0').style.opacity='0';">
+			<a href="notes/motion/2-equations-of-motion/index.html">
+				<svg class="unit-icon" width="220" height="100">
+					<text x="0" y="90" font-size="25" fill="#333"> Motion </text>
+					<g id="fade0" class="fade-opacity">
+						<rect x="45" y="69" width="6" height="6" stroke="none" fill="#fff" />
+						<path d="M 50 70  q 70 -70, 140 20" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linejoin="round" stroke-dasharray="5, 5"></path>
+						<circle cx="185" cy="84" r="9.5" stroke="none" fill="#aaa" />
+					</g>
+				</svg>
+			</a>
+			<!-- <h2>Motion</h2> -->
 			<p>
 				<a href="notes/motion/1-intro/index.html">Motion Review</a>
 				<br>
 				<a href="notes/motion/2-equations-of-motion/index.html">Equations of Motion</a>
 				<br>
 				<a href="notes/motion/3-vectors-and-scalors/index.html">Vectors</a>
-				<br>
-				<a href="notes/motion/4-2D-motion/index.html">2-D Motion</a>
 			</p>
 		</li>
-		<li>
-			<h2>Force</h2>
+		<li onmouseover="document.getElementById('fade1').style.opacity = '100';" onmouseout="document.getElementById('fade1').style.opacity='0';">
+			<a href="notes/force/1-intro/index.html">
+				<svg class="unit-icon" width="220" height="100">
+					<g id="fade1" class="fade-opacity" fill="#bbb" stroke-width="1" stroke="#bbb" transform="translate(130 69)">
+						<rect x="0" y="0" width="30" height="30" stroke="none" />
+						<line x1="0" y1="15" x2="-30" y2="15" stroke-width="1" />
+						<polygon points="0,0 9,5 8,0 9,-5" transform="translate(-35 15)" stroke="none" />
+						<line x1="30" y1="15" x2="60" y2="15" stroke-width="1" />
+						<polygon points="0,0 -9,5 -8,0 -9,-5" transform="translate(62 15)" stroke="none" />
+					</g>
+					<text x="0" y="90" font-size="25" fill="#333"> Force </text>
+				</svg>
+			</a>
+			<!-- <h2>Force</h2> -->
 			<p>
 				<a href="notes/force/1-intro/index.html">Newton's Laws</a>
 				<br>
@@ -143,71 +147,152 @@
 				<a href="notes/force/3-friction/index.html">Friction</a>
 			</p>
 		</li>
-		<li>
-			<h2>Momentum</h2>
+		<li onmouseover="document.getElementById('fade2').style.opacity = '100';" onmouseout="document.getElementById('fade2').style.opacity='0';">
+			<a href="notes/momentum/1-intro/index.html">
+				<svg class="unit-icon" width="220" height="100">
+					<!-- <g id="fade1" class="fade-opacity" fill="#bbb" stroke-width="1" stroke="#bbb" transform="translate(150 69)">
+						<path d="M10 13 h -25 m25 3 h -20 m20 -6 h-20" fill="none" stroke-width="1" stroke-linejoin="round" stroke="#aaa" />
+						<path d="M50 13 h 20 m-20 3 h 16 m-16 -6 h16" fill="none" stroke-width="1" stroke-linejoin="round" stroke="#aaa" />
+						<circle cx="10" cy="13" r="6" stroke="none" />
+						<circle cx="50" cy="13" r="5" stroke="none" />
+					</g> -->
+					<!-- <g id="fade2" class="fade-opacity" fill="#bbb" stroke-width="1" stroke="#bbb" transform="translate(150 69)">
+						<circle cx="0" cy="13" r="8" stroke="none" />
+						<circle cx="60" cy="13" r="8" stroke="none" />
+						<g transform="translate(-10 0)">
+							<line x1="0" y1="0" x2="25" y2="0" stroke-width="1" />
+							<polygon points="0,0 -9,4 -8,0 -9,-4" transform="translate(27 0)" stroke="none" />
+						</g>
+						<g transform="translate(70 0)">
+							<line x1="0" y1="0" x2="-25" y2="0" stroke-width="1" />
+							<polygon points="0,0 9,4 8,0 9,-4" transform="translate(-27 0)" stroke="none" />
+						</g>
+					</g> -->
+					<g id="fade2" class="fade-opacity" fill="#bbb" stroke-width="1" stroke="#bbb" transform="translate(200 68)">
+						<path d="M0 13 h -50
+									 m50 6 h -46
+									 m46 -12 h-40
+									 m40 -5 h -33
+									 m33 22 h -40" fill="none" stroke-width="1" stroke-linejoin="round" stroke="#ccc" />
+						<circle cx="0" cy="13" r="13" stroke="none" />
+					</g>
+					<text x="0" y="90" font-size="25" fill="#333"> Momentum </text>
+				</svg>
+			</a>
+			<!-- <h2>Momentum</h2> -->
 			<p>
 				<a href="notes/momentum/1-intro/index.html">Momentum</a>
 				<br>
 				<a href="notes/momentum/2-collisionTypes/index.html">Collisions</a>
 			</p>
 		</li>
-		<li>
-			<h2>Energy</h2>
+		<li onmouseover="document.getElementById('fade3').style.opacity = '100';" onmouseout="document.getElementById('fade3').style.opacity='0';">
+			<a href="notes/energy/1-intro/index.html">
+				<svg class="unit-icon" width="220" height="100">
+					<g id="fade3" class="fade-opacity" fill="#bbb" stroke-width="1" stroke="#bbb">
+						<!-- <path d="M 0 10  q 80 0, 80 100" stroke="#bbb" stroke-width="2" fill="none" stroke-linejoin="round"></path> -->
+						<!-- <path d="M 0 25 Q 35 20 45 50 Q 55 80 80 75 Q 120 75 120 45 Q 120 20 155 20 L 215 20" stroke="#bbb" stroke-width="2" fill="none" stroke-linejoin="round"></path> -->
+						<!-- <path d="M 5 140 Q 205 140 255 210 Q 305 280 395 245 C 425 235 430 175 400 175 C 365 175 370 235 395 245 Q 470 275 645 275"
+						 stroke="#bbb" stroke-width="6" fill="none" stroke-linejoin="round" transform="scale(0.33)"></path> -->
+					</g>
+					<text x="0" y="90" font-size="25" fill="#333"> Energy </text>
+				</svg>
+			</a>
+			<!-- <h2>Energy</h2> -->
 			<p>
 				<a href="notes/energy/1-intro/index.html">Energy</a>
 				<br>
 				<a href="notes/energy/2-conservation/index.html">Conservation of Energy</a>
 			</p>
 		</li>
-		<li>
-			<h2>Gravity</h2>
+		<li onmouseover="document.getElementById('fade4').style.opacity = '100';" onmouseout="document.getElementById('fade4').style.opacity='0';">
+			<a href="notes/gravity/gravitation/index.html">
+				<svg class="unit-icon" width="220" height="100">
+					<g id="fade4" class="fade-opacity" fill="#bbb" stroke-width="1" stroke="#bbb">
+						<line x1="190" y1="80" x2="173" y2="80" />
+						<polygon points="0,0 9,5 8,0 9,-5" transform="translate(165 80)" stroke="none" />
+						<circle cx="120" cy="80" r="15" stroke="none" />
+						<circle cx="120" cy="80" r="75" fill="none" stroke-width="1" />
+						<circle cx="195" cy="80" r="5" stroke="none" />
+					</g>
+					<rect x="40" y="70" width="40" height="50" fill="#fff" />
+					<text x="0" y="90" font-size="25" fill="#333">Gravity </text>
+				</svg>
+			</a>
+			<!-- <h2>Gravity</h2> -->
 			<p>
-
 				<a href="notes/gravity/gravitation/index.html">Universal Gravitation</a>
 				<br>
 				<a href="notes/gravity/circular/index.html">Orbits</a>
-				<br>
-				<a href="http://codepen.io/lilgreenland/full/pbyprV/">
-					<i class="fab fa-codepen"></i> Gravity Simulation</a>
 			</p>
 		</li>
 		<li>
 			<h2>Electrostatics</h2>
 			<p>
-				<a href="notes/electrostatic/coulomb/index.html">Coulomb's Law</a>
+				<a href="notes/electrostatic/coulomb/index.html ">Coulomb's Law</a>
 				<br>
-				<a href="notes/electrostatic/electricfields/index.html">Electric Fields</a>
+				<a href="notes/electrostatic/electricfields/index.html ">Electric Fields</a>
 				<br>
-				<a href="notes/electrostatic/potential/index.html">Electric Potential</a>
+				<a href="notes/electrostatic/potential/index.html ">Electric Potential</a>
 			</p>
 		</li>
-		<li>
-			<h2>Circuits</h2>
+		<li onmouseover="document.getElementById('fade6').style.opacity = '100';" onmouseout="document.getElementById('fade6').style.opacity='0';">
+			<a href="notes/circuits/Ohm's Law/index.html">
+				<svg class="unit-icon" width="220" height="100">
+					<path id="fade6" class="fade-opacity" d="M 120 76 v-17 h 80
+					v 10 l5 3 l-10 3 l10 3 l-10 3 l10 3 l-10 3 l5 3 v10
+					m -40 -41 v 10 l5 3 l-10 3 l10 3 l-10 3 l10 3 l-10 3 l5 3 v10
+						h -40 v-19 m-15 0 h 30 m-22.5 -5 h 15" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke="#aaa" />
+					<text x="0" y="90" font-size="25" fill="#333">Circuits</text>
+				</svg>
+			</a>
+			<!-- <h2>Circuits</h2> -->
 			<p>
 				<a href="notes/circuits/Ohm's Law/index.html"> Ohm's Law</a>
 				<br>
 				<a href="notes/circuits/power/index.html"> Power</a>
 				<br>
 				<a href="notes/circuits/kirchoff/index.html"> Kirchhoff’s Laws</a>
-				<br>
-				<a href="https://codepen.io/lilgreenland/full/xprGvr/">
-					<i class="fab fa-codepen"></i> Circuit Simulation</a>
 			</p>
 		</li>
-		<li>
-			<h2>Magnetism</h2>
+		<li onmouseover="document.getElementById('fade7').style.opacity = '100';" onmouseout="document.getElementById('fade7').style.opacity='0';">
+			<a href="notes/motion/2-equations-of-motion/index.html">
+				<svg class="unit-icon" width="220" height="100">
+					<g id="fade7" class="fade-opacity" transform="translate(140 72)">
+						<rect x="0" y="0" width="35" height="20" stroke="none" stroke-width="2" fill="#eee" />
+						<!-- <rect x="35" y="0" width="35" height="20" stroke="none" stroke-width="2" fill="#edd" /> -->
+						<rect x="0" y="0" width="70" height="20" stroke="#bbb" stroke-width="2" fill="none" />
+						<text x="2" y="17" font-size="20" fill="#bbb">N</text>
+						<text x="55" y="17" font-size="20" fill="#bbb">S</text>
+					</g>
+					<text x="0" y="90" font-size="25" fill="#333">
+						Magnetism
+					</text>
+				</svg>
+			</a>
+			<!-- <h2>Magnetism</h2> -->
 			<p>
 				<a href="notes/magnetism/magnetism/index.html">Magnetism</a>
 			</p>
 		</li>
-		<li>
-			<h2>Waves</h2>
+		<li onmouseover="document.getElementById('fade8').style.opacity = '100';" onmouseout="document.getElementById('fade8').style.opacity='0';">
+			<a href="notes/waves/waves/index.html">
+				<svg class="unit-icon" width="220" height="100">
+					<!-- <path id="fade8" class="fade-opacity" transform="translate(100 20)" d="M-1 65 L0 62.48689887164855 L1 60 L2 57.51310112835145 L3 55.18246325898285 L4 53.154528940713114 L5 51.55672074497985 L6 50.489434837048464 L7 50.01973271571728 L8 50.17712749271311 L9 50.9517294753398 L10 52.29486757224211 L11 54.122147477075266 L12 56.31875447315322 L13 58.74666766435696 L14 61.253332335643044 L15 63.68124552684678 L16 65.87785252292474 L17 67.70513242775789 L18 69.0482705246602 L19 69.82287250728689 L20 69.98026728428272 L21 69.51056516295154 L22 68.44327925502014 L23 66.84547105928688 L24 64.81753674101715 L25 62.48689887164854 L26 59.99999999999999 L27 57.51310112835145 L28 55.18246325898284 L29 53.15452894071311 L30 51.55672074497985 L31 50.489434837048464 L32 50.01973271571728 L33 50.17712749271311 L34 50.9517294753398 L35 52.29486757224211 L36 54.122147477075266 L37 56.31875447315322 L38 58.74666766435696 L39 61.25333233564305 L40 63.68124552684679 L41 65.87785252292473 L42 67.70513242775789 L43 69.0482705246602 L44 69.82287250728689 L45 69.98026728428272 L46 69.51056516295154 L47 68.44327925502014 L48 66.84547105928688 L49 64.81753674101715 L50 62.48689887164854 L51 59.999999999999986 L52 57.51310112835145 L53 55.18246325898285 L54 53.15452894071311 L55 51.55672074497984 L56 50.489434837048464 L57 50.01973271571728 L58 50.17712749271311 L59 50.9517294753398 L60 52.29486757224211 L61 54.12214747707528 L62 56.318754473153234 L63 58.746667664356956 L64 61.253332335643044 L65 63.68124552684679 L66 65.87785252292473 L67 67.7051324277579 L68 69.0482705246602 L69 69.82287250728689 L70 69.98026728428272 L71 69.51056516295154 L72 68.44327925502014 L73 66.8454710592869 L74 64.81753674101714 L75 62.48689887164854 L76 60.00000000000001 L77 57.51310112835144 L78 55.18246325898285 L79 53.1545289407131 L80 51.55672074497984 L81 50.489434837048464 L82 50.01973271571728 L83 50.17712749271311 L84 50.95172947533982 L85 52.29486757224211 L86 54.12214747707529 L87 56.318754473153234 L88 58.746667664356956 L89 61.253332335643066 L90 63.68124552684679 L91 65.87785252292475 L92 67.7051324277579 L93 69.0482705246602 L94 69.82287250728689 L95 69.98026728428272 L96 69.51056516295152 L97 68.44327925502014 L98 66.8454710592869 L99 64.81753674101714 L100 62.48689887164854 L101 59.99999999999997 L102 57.513101128351444 L103 55.18246325898285 L104 53.1545289407131 L105 51.55672074497985 L106 50.48943483704846 L107 50.01973271571728 L108 50.17712749271311 L109 50.95172947533981 L110 52.29486757224211 L111 54.12214747707529 L112 56.31875447315323 L113 58.74666766435699 L114 61.25333233564306 L115 63.68124552684678 L116 65.87785252292475 L117 67.7051324277579 L118 69.04827052466021 L119 69.82287250728689 L120 69.98026728428272"
+					 stroke="#ddd" stroke-width="3" fill="none"></path> -->
+					<path id="fade8" transform="translate(30 0)" class="fade-opacity" d="M63 74.12214747707526 L64 73.98089786811599 L65 74.14968887489285 L66 74.65925826289069 L67 75.48943483704846 L68 76.5690883191412 L69 77.78240151491966 L70 78.98089786811603 L71 80.00000000000001 L72 80.67836039477467 L73 80.87785252292474 L74 80.5019794927243 L75 79.51056516295155 L76 77.92893218813455 L77 75.85031112510715 L78 73.4309116808588 L79 70.87785252292474 L80 68.43091168085881 L81 66.3397459621556 L82 64.83876224438502 L83 64.12214747707525 L84 64.32163960522531 L85 65.48943483704845 L86 67.58819045102518 L87 70.48943483704845 L88 73.98089786811596 L89 77.78240151491964 L90 81.5690883191412 L91 84.99999999999999 L92 87.74942820664013 L93 89.53810656076914 L94 90.16123775561496 L95 89.51056516295156 L96 87.58819045102523 L97 84.51056516295155 L98 80.50197949272429 L99 75.87785252292475 L100 71.01910213188405 L101 66.33974596215563 L102 62.25057179335985 L103 59.1221474770753 L104 57.25057179335985 L105 56.82918079920406 L106 57.92893218813451 L107 60.48943483704843 L108 64.32163960522529 L109 69.12214747707522 L110 74.4980205072757 L111 79.99999999999994 L112 85.16123775561489 L113 89.53810656076911 L114 92.74942820664015 L115 94.51056516295154 L116 94.65925826289069 L117 93.17081920079593 L118 90.16123775561496 L119 85.8778525229248 L120 80.67836039477473 L121 75.00000000000006 L122 69.32163960522536 L123 64.12214747707527 L124 59.838762244385094 L125 56.82918079920409 L126 55.34074173710932 L127 55.48943483704845 L128 57.25057179335982 L129 60.461893439230856 L130 64.83876224438504 L131 70 L132 75.50197949272417 L133 80.87785252292467 L134 85.67836039477464 L135 89.51056516295151 L136 92.07106781186548 L137 93.17081920079589 L138 92.74942820664015 L139 90.87785252292471 L140 87.74942820664019 L141 83.66025403784444 L142 78.98089786811605 L143 74.12214747707536 L144 69.49802050727578 L145 65.48943483704848 L146 62.41180954897486 L147 60.48943483704851 L148 59.83876224438505 L149 60.461893439230884 L150 62.250571793359846 L151 64.99999999999994 L152 68.43091168085874 L153 72.2175984850803 L154 76.01910213188398 L155 79.51056516295152 L156 82.41180954897473 L157 84.51056516295148 L158 85.67836039477464 L159 85.87785252292475 L160 85.16123775561493 L161 83.66025403784437 L162 81.5690883191412 L163 79.12214747707526 L164 76.56908831914123 L165 74.14968887489289 L166 72.07106781186552 L167 70.48943483704849 L168 69.49802050727574 L169 69.12214747707527 L170 69.32163960522539 L171 70.00000000000007 L172 71.01910213188398 L173 72.21759848508034 L174 73.4309116808588 L175 74.51056516295152 L176 75.3407417371093 L177 75.85031112510713"
+					 stroke="#bbb" stroke-width="2" stroke-linecap="round" fill="none"></path>
+
+					<text x="0" y="90" font-size="25" fill="#333"> Waves </text>
+				</svg>
+			</a>
+			<!-- <h2>Waves</h2> -->
 			<p>
 				<a href="notes/waves/waves/index.html"> Waves</a>
 				<br>
-				<a href="notes/waves/light/index.html"> Light</a>
+				<a href="notes/waves/waveproperties/index.html"> Wave Properties</a>
 				<br>
-				<a href="notes/waves/waveproperties/index.html"> Wave Phenomena</a>
+				<a href="notes/waves/light/index.html"> Light</a>
 				<br>
 				<a href="notes/waves/photons/index.html"> Photons</a>
 			</p>
@@ -215,14 +300,9 @@
 		<li>
 			<h2>Relativity</h2>
 			<p>
-				<a href="https://docs.google.com/document/d/1-vo5qos57riirBNiLrWAIp0fEvJx5Fk_W_X3wUCbOd4/edit?usp=sharing">
-					<i class="far fa-file-alt"></i> Special Relativity</a>
+				<a href="notes/relativity/special/index.html"> Special Relativity</a>
 				<br>
-				<a href="http://codepen.io/lilgreenland/full/pPxoON/">
-					<i class="fab fa-codepen"></i> Relativity Calculator</a>
-				<br>
-				<a href="http://codepen.io/lilgreenland/full/EKpjxq">
-					<i class="fab fa-codepen"></i> Relativity Simulation</a>
+				<a href="notes/relativity/special/index.html#solver"> Solver</a>
 			</p>
 		</li>
 	</ul>
@@ -251,18 +331,18 @@
 		<ul class="listing">
 			<li>
 				<strong>
-					<i class="fas fa-folder"></i> Shared </strong>
+					Shared </strong>
 				<a href="https://drive.google.com/open?id=0BzIVTsJCTyOqUzhydDZOdzV1WVk">course files</a>
 				<a href="https://goo.gl/photos/E7jTHpgHRFgT6C7p6">classroom photos</a>
 			</li>
 			<li>
 				<strong>
-					<i class="fa fa-book"></i> Physics Resources</strong>
+					Physics Resources</strong>
 				<a href="http://www.nextgenscience.org/">science standards</a>
 			</li>
 			<li>
 				<strong>
-					<i class="fab fa-youtube"></i> Youtube Channels</strong>
+					Youtube Channels</strong>
 				<a href="https://www.youtube.com/playlist?list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">crashcourse</a>
 				<a href="https://www.youtube.com/user/physicswoman">physics girl</a>
 				<a href="https://www.youtube.com/user/destinws2">smarter every day</a>
@@ -271,7 +351,7 @@
 			</li>
 			<li>
 				<strong>
-					<i class="fas fa-space-shuttle"></i> Learn Physics</strong>
+					Learn Physics</strong>
 				<a href="http://www.physicsclassroom.com/class">the physics classroom</a>
 				<a href="https://www.khanacademy.org/science/physics">khan academy physics</a>
 				<a href="http://physics.info/">physics hypertextbook</a>
@@ -281,36 +361,36 @@
 
 		<!-- <p>
 			<strong>
-				<i class="fas fa-folder"></i> Shared </strong>
+				<i class="fas fa-folder "></i> Shared </strong>
 			<br>
-			<a href="https://drive.google.com/open?id=0BzIVTsJCTyOqUzhydDZOdzV1WVk">files</a>
+			<a href="https://drive.google.com/open?id=0BzIVTsJCTyOqUzhydDZOdzV1WVk ">files</a>
 			<br>
-			<a href="https://goo.gl/photos/E7jTHpgHRFgT6C7p6">photos</a>
+			<a href="https://goo.gl/photos/E7jTHpgHRFgT6C7p6 ">photos</a>
 
 		</p>
 		<p>
 			<strong>
-				<i class="fas fa-space-shuttle"></i> Physics Resources</strong>
+				<i class="fas fa-space-shuttle "></i> Physics Resources</strong>
 			<br>
-			<a href="http://www.physicsclassroom.com/class">the physics classroom</a>
+			<a href="http://www.physicsclassroom.com/class ">the physics classroom</a>
 			<br>
-			<a href="https://www.khanacademy.org/science/physics">khan academy physics</a>
+			<a href="https://www.khanacademy.org/science/physics ">khan academy physics</a>
 			<br>
-			<a href="http://physics.info/">physics hypertextbook</a>
+			<a href="http://physics.info/ ">physics hypertextbook</a>
 		</p>
 		<p>
 			<strong>
-				<i class="fab fa-youtube"></i> Youtube Channels</strong>
+				<i class="fab fa-youtube "></i> Youtube Channels</strong>
 			<br>
-			<a href="https://www.youtube.com/playlist?list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">crashcourse</a>
+			<a href="https://www.youtube.com/playlist?list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV ">crashcourse</a>
 			<br>
-			<a href="https://www.youtube.com/user/physicswoman">physics girl</a>
+			<a href="https://www.youtube.com/user/physicswoman ">physics girl</a>
 			<br>
-			<a href="https://www.youtube.com/user/destinws2">smarter every day</a>
+			<a href="https://www.youtube.com/user/destinws2 ">smarter every day</a>
 			<br>
-			<a href="https://www.youtube.com/user/1veritasium">veritasium</a>
+			<a href="https://www.youtube.com/user/1veritasium ">veritasium</a>
 			<br>
-			<a href="https://www.youtube.com/user/minutephysics">minute physics</a>
+			<a href="https://www.youtube.com/user/minutephysics ">minute physics</a>
 		</p> -->
 		<h2 class='underlined'>Materials</h2>
 		<p>An organized notebook/binder and a scientific calculator is required.
@@ -327,7 +407,7 @@
 
 		<h2 class='underlined'>Contact</h2>
 		<p>If you were absent check in to see what you missed. The best time to meet with me is after school.</p>
-		<!-- <p>If you are taking physics in the fall of 2016 with Mr. Landgreen take <a href="https://docs.google.com/a/newwestcharter.org/forms/d/e/1FAIpQLScjMKG7BDMcB_Hdy4cFF-glvlEoa489wQyomVHu7q3FQXI8ig/viewform">this survey</a>.
+		<!-- <p>If you are taking physics in the fall of 2016 with Mr. Landgreen take <a href="https://docs.google.com/a/newwestcharter.org/forms/d/e/1FAIpQLScjMKG7BDMcB_Hdy4cFF-glvlEoa489wQyomVHu7q3FQXI8ig/viewform ">this survey</a>.
 			<br>(You must be on your @newwestcharter.org e-mail account)</p> -->
 
 		<h3>
