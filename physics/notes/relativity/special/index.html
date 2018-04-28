@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="description" content="Notes for a high school physics course.">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:title" content="Physics Notes">
+	<meta name="twitter:title" content="High School Physics Notes">
+	<title>Special Relativity</title>
+	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+
+	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+	<script src="../../../lib/katex/katex.min.js"></script>
+	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../../style.css">
+</head>
+
+<body>
+	<header>
+		<h1>Special Relativity</h1>
+	</header>
+	<article>
+		<p>
+			Speed and velocity have no meaning without a reference point. If I said we are moving at 230,000 m/s, your first question
+			should be relative to what. A plane? The Earth? The Sun? We are moving at 230,000 m/s relative to the center of our galaxy,
+			the Milky Way.
+		</p>
+		<p>
+			Since the choice of reference point is arbitrary, it makes sense that physics works the same at any relative speed. Physics
+			works the same moving at 0 m/s relative to our galaxy as it does moving at 230,000 m/s.
+		</p>
+
+		<div class="definition">
+			Relative velocity is the velocity with which a object approaches or recedes from another object
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Imagine two cars. One is moving at 15 m/s and the other at 20 m/s. How fast are they moving relative
+			to each other?
+			<details>
+				<summary>solution</summary>
+				$$v = 20\tfrac{m}{s}-15\tfrac{m}{s}$$ $$v = 5 \tfrac{m}{s}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Image a boat traveling up a river. The current in the river is 5 m/s downstream. The boat is moving
+			upstream at 15 m/s relative to the water in the river. How fast is the boat moving relative to the land?
+			<details>
+				<summary>solution</summary>
+				$$v = 15\tfrac{m}{s}-5\tfrac{m}{s}$$ $$v = 10 \tfrac{m}{s}$$
+			</details>
+		</div>
+
+		<h2 class='underlined'>Speed of Light</h2>
+		<p>In 1676
+			<a href="https://en.wikipedia.org/wiki/R%C3%B8mer%27s_determination_of_the_speed_of_light">Ole Rømer</a> discovered that light has a speed by timing the eclipses of the Jupiter moon Io. He found the speed to be
+			around 220,000,000 m/s. This isn't too far from the value we use today.
+		</p>
+		<div class="definition">
+			<h1>$$ c = 3 \times 10^8 \tfrac{m}{s} $$</h1>
+			<p>In 1887 the
+				<a href="https://www.youtube.com/watch?v=7qJoRNseyLQ">Michelson–Morley experiment</a> proved that the speed of light is constant even for observers moving at different speeds!</p>
+		</div>
+
+		<p>A constant speed of light for all observers, leads to a paradox. Imagine I am at rest relative to you, and I shine my flashlight
+			at you. You will measure the speed of light to be 3 x 10⁸ m/s. Now imagine I am moving towards you at a high speed and
+			I shine my flash light at you. The light will still move at 3 x 10⁸ m/s, no faster.</p>
+
+		<p>How can two observers moving relative to each other both see the speed of light as the same?
+		</p>
+
+		<h2 class='underlined'>Special Relativity</h2>
+		<p>In 1905 Albert Einstein came up with special relativity, a modification of the laws of physics to take into account a constant
+			<a href="https://www.youtube.com/watch?v=msVuCEs8Ydo">speed of light</a>. Special relativity says that observers may measure different values for distance and time, but they
+			agree about the speed of light.
+		</p>
+
+		<p> Postulates of special relativity
+			<br>
+			<br>1. The laws of physics are the same in all reference frames.
+			<br>2. Light moves at the same speed for all observers.
+
+			<p>
+				<strong>inertial reference frame</strong> = A point of view with no acceleration.</p>
+			<p>Special relativity impacts us in several ways. Some examples are:
+				<li>the physics of magnets</li>
+				<li>the color of gold</li>
+				<li>the mass of electrons in an atom</li>
+				<li>Global Positioning System (GPS)</li>
+
+			</p>
+			<p>For more on special relativity, check out this
+				<a href="https://www.lucify.com/inside-einsteins-head/">explorable explanation</a>.</p>
+
+
+			<h2 class='underlined'>Lorentz transformations</h2>
+			<p>Lorentz transformations convert between two inertial reference frames. We will use gamma in the equation below for each
+				conversion.
+			</p>
+			<p>A high relative velocity will cause observers to disagree about concepts like the passage of time, the lengths of objects
+				and the mass of objects. You can see a rough
+				<a href="http://codepen.io/lilgreenland/full/EKpjxq">simulation</a> of these dilation effects.</p>
+
+			<div class="definition">
+				<h1>$$ \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2} } }$$</h1>
+				\( \gamma \) = Lorentz factor, gamma [no units]
+				<br>
+				<em>Gamma is always greater than 1.</em>
+				<br>\(v\) = relative velocity [m/s]
+				<br>\(c\) = speed of light, 3 x 10⁸ [m/s]
+			</div>
+
+			<div class='example'>
+				<strong>Example:</strong> Calculate gamma for two reference frames at
+				<strong>rest</strong> relative to each other.
+				<details>
+					<summary>solution</summary>
+					$$\gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2} } }$$ $$\gamma = \frac{1}{\sqrt{1-\frac{0^2}{c^2} } }$$ $$\gamma = \frac{1}{\sqrt{1}}$$
+					$$\gamma = 1$$
+				</details>
+			</div>
+
+			<div class='example'>
+				<strong>Example:</strong> Calculate gamma for two reference frames moving at
+				<strong>½ the speed of light</strong> relative to each other.
+				<details>
+					<summary>solution</summary>
+					$$\gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2} } }$$ $$\gamma = \frac{1}{\sqrt{1-\frac{(0.5)^2 c^2}{c^2} } }$$ $$\gamma = \frac{1}{\sqrt{1-0.25}}$$
+					$$\gamma = \frac{1}{\sqrt{0.75}}$$ $$\gamma = \frac{1}{0.866}$$ $$\gamma = 1.155$$
+				</details>
+			</div>
+
+			<div class='example'>
+				<strong>Example:</strong> Calculate gamma for two reference frames moving at
+				<strong>the speed of light</strong> relative to each other.
+				<details>
+					<summary>solution</summary>
+					$$\gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2} } }$$ $$\gamma = \frac{1}{\sqrt{1-\frac{c^2}{c^2} } }$$ $$\gamma = \frac{1}{\sqrt{1-1}
+					}$$ $$\gamma = \frac{1}{\sqrt{0} }$$ $$\gamma = \frac{1}{0}$$ $$\gamma = undefined $$
+				</details>
+			</div>
+			<p>At zero velocity, the effects of special relativity aren't noticeable becomes gamma becomes one. As the relative speed
+				approaches the speed of light, gamma increases to infinity.</p>
+			<div id="graphGamma"></div>
+			<h2 class='underlined'>Time Dilation</h2>
+			<div class="definition">
+				<h1>$$ \Delta t = \gamma \Delta t_0$$</h1>
+				\(\Delta t_0\) = proper time for observer, as seen from a frame of reference where the events occur in the
+				<strong>same</strong> location
+				<br>
+				<br>\(\Delta t\) = elapsed time for observer, as seen from a frame of reference where the events occur in
+				<strong>different</strong> locations
+				<br>
+				<br>\( \gamma \) = Lorentz factor, gamma [no units]
+			</div>
+			<p>\(\Delta t_0\) is how long events take when at rest relative to the events. This is the point of view where there is no
+				relative velocity between events and observer.
+			</p>
+			<p>
+				If you are flying in an airplane, the events on the plane occur in the same location, because there is no relative motion.
+			</p>
+
+			<p>\(\Delta t\) is how much time passes for the observer while watching events that are moving. This is the point of view
+				where there is a relative velocity between events and observer.
+			</p>
+			<p>
+				If you watch an airplane fly past, events on the plane occur in different locations because the airplane is moving.
+			</p>
+
+			<p>Because gamma must be greater than one, \(\Delta t\) will always be larger than \(\Delta t_0\). An observer will see moving
+				frames of reference in slow time.</p>
+
+			<div class='example'>
+				<strong>Example:</strong> You are on Earth, and a spaceship zooms past near the speed of light. Will you see the ship in slow
+				motion or fast forward?
+				<details>
+					<summary>solution</summary>
+					<br>You will see them in slow motion. Observers always see moving objects in slow motion.
+				</details>
+				<br>What does the spaceship see?
+				<details>
+					<summary>solution</summary>
+					<br>From the ship's point of view you are in slow motion!
+				</details>
+			</div>
+
+			<div class='example'>
+				<strong>Example:</strong> Your watch says it’s been a day. How much time do you see pass for an object moving at 0.999c relative
+				to you?
+				<details>
+					<summary>solution</summary>
+					$$\gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2} } }$$ $$\gamma = 3$$
+					<br> $$ \Delta t = \gamma \Delta t_0 $$ $$ 1 \ day = 22.3 \Delta t_0 $$ $$ 0.045 \ days = \Delta t_0 $$
+				</details>
+			</div>
+
+
+
+			<div class='example'>
+				<strong>Example:</strong> If 30 seconds pass for an observer on Earth how much time do they see pass for a spaceship moving at
+				0.9c?
+				<details>
+					<summary>solution</summary>
+					$$\gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2} } }$$ $$\gamma = 2.7$$
+					<br> $$ \Delta t = \gamma \Delta t_0 $$ $$ 30 = 2.7 \Delta t_0 $$ $$ 11.1 s = \Delta t_0 $$
+				</details>
+			</div>
+
+			<div class='example'>
+				<strong>Example:</strong> An observer on Earth can see a clock on a spaceship moving at 0.85c. How much time will the Earth observer
+				experience while they see 30 seconds pass on the ship?
+				<details>
+					<summary>solution</summary>
+					$$\gamma = 2.55$$
+					<br> $$ \Delta t = \gamma \Delta t_0 $$ $$ \Delta t = (2.55) (30) $$ $$ \Delta t = 76.5s $$
+				</details>
+			</div>
+
+			<div class='example'>
+				<p>
+					<a href="http://hyperphysics.phy-astr.gsu.edu/hbase/Relativ/muon.html">Muons</a> are elementary particles similar to electrons, but more massive. Muons are produced in Earth's upper atmosphere
+					by cosmic rays, but they have a half life of 2.2 microseconds. This means after 0.0000022s half of a population of muons
+					will have decayed in other particles. </p>
+				<p></p>
+				<strong>Example:</strong> As muons enter the Earth's atmosphere they typically have speed of 0.98c. How long would the half life
+				of these high speed muons look to an observer at rest relative to the muon?
+				<details>
+					<summary>solution</summary>
+					$$\gamma = 5.0$$
+					<br>$$ \Delta t = \gamma \Delta t_0 $$ $$ \Delta t = (5) (2.2 \times 10^{-6}) $$ $$ \Delta t = 11 \times 10^{-6} s$$ $$
+					\Delta t = 11 \mu s$$
+				</details>
+			</div>
+
+			<h2 class='underlined'>Length Contraction</h2>
+			<div class="definition">
+				<h1>$$ L = \frac{L_0}{\gamma}$$</h1>
+				\( L\) = contracted length, as seen from a relative velocity
+				<br>\( L_0\) = rest length, as seen from its own rest frame
+
+				<br>\( \gamma \) = Lorentz factor, gamma [no units]
+			</div>
+			<p>The rest length is always longer. An object will look contracted from a moving reference frame. The contraction only occurs
+				in the direction fo the relative velocity.</p>
+
+
+			<div class='example'>
+				<strong>Example:</strong> When you are holding a meter stick it looks like it 1 meter long. How long would the meter stick look
+				if it was moving at 0.5c relative to you?
+				<details>
+					<summary>solution</summary>
+					$$\gamma = 1.15$$
+					<br> $$L = \frac{L_0}{\gamma}$$ $$ L = \frac{1}{1.15} $$ $$ 0.87 m = L $$
+				</details>
+			</div>
+
+			<div class='example'>
+				<strong>Example:</strong> I see myself as 1.84m tall. If I ran past you at 0.4c how tall would I look to you?
+				<details>
+					<summary>solution</summary>
+					<br> I would still look 1.84m tall because the length contraction is in the direction you are traveling. I would look thinner
+					though!
+				</details>
+			</div>
+
+			<h2 class='underlined'>Relativistic Mass</h2>
+
+			<div class="definition">
+				<h1>$$ m = \gamma m_0 $$ </h1>
+				<br>\( m \) = mass, as seen by an observer with a relative velocity
+				<br>\( m_0\) = rest mass, as seen by an observer at rest
+				<br>\( \gamma \) = Lorentz factor, gamma [no units]
+			</div>
+			<p>The rest mass is
+				<strong>lower</strong> than the mass seen in motion. The observed mass increases as the relative velocity increases.</p>
+
+			<div class='example'>
+				<strong>Example:</strong> My rest mass is 77kg. What would an observer at relative velocity of 0.94c measure mass as?
+				<details>
+					<summary>solution</summary>
+					$$\gamma = 2.93$$
+					<br> $$ m = \gamma m_0 $$ $$ m = (2.93)(77) $$ $$ m = 225.6kg $$
+				</details>
+			</div>
+
+			<h2 class='underlined'>Mass and Energy</h2>
+			<p>Energy has many forms. Mass is just another type of potential energy.</p>
+			<div class="definition">
+				<h1>$$ E = mc^2$$ </h1>
+				\( E\) = Energy [J]
+				<br>\( m \) = relativistic mass, as seen by an observer with a relative velocity [kg]
+				<br>\(c\) = speed of light, 3 x 10⁸ [m/s]
+			</div>
+
+			<div class='example'>
+				<strong>Example:</strong> How much energy would an observer measure for a 1kg mass at rest?
+				<details>
+					<summary>solution</summary>
+					$$ E = mc^2 $$ $$ E = (1)(3 \times 10^{8})^2 $$ $$ E = 9 \times 10 ^{16} J$$ For perspective the energy from the nuclear
+					bomb dropped on Hiroshima was 6.3 x 10¹³ J. A 1kg of matter has about 1000 times more energy from its mass.
+				</details>
+			</div>
+
+			<div class='example'>
+				<strong>Example:</strong> How much energy would an observer measure for a proton at rest?
+				<details>
+					<summary>solution</summary>
+					$$ m_p = 1.67 \times 10^{-27} kg $$
+					<br> $$ E = mc^2 $$ $$ E = (1.67 \times 10^{-27})(3 \times 10^{8})^2 $$ $$ E = 1.5 \times 10^{-10} J$$
+				</details>
+			</div>
+
+			<div class='example'>
+				<strong>Example:</strong> How much energy would an observer measure for a proton in the
+				<a href="https://en.wikipedia.org/wiki/Large_Hadron_Collider">Large Hadron Collider</a>. The LHC can accelerate a proton to 0.999999991c?
+				<details>
+					<summary>hint</summary>
+					<br>Calculate the heavier proton mass as seen by the observer. $$ m = \gamma m_0 $$ Calculate the energy using that mass.
+					$$ E = mc^2 $$
+					<br>
+					<br>
+				</details>
+				<details>
+					<summary>solution</summary>
+					$$ \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2} } }$$ $$ \gamma = \frac{1}{\sqrt{1-\frac{(0.999999991)^2c^2}{c^2} } }$$ $$ \gamma
+					= \frac{1}{\sqrt{1-(0.999999991)^2 } }$$ $$ \gamma = 7453.6$$
+					<br>$$m_0 = m_p = 1.67 \times 10^{-27}$$
+					<br> $$ \color{red}m\color{black} = \gamma m_0 $$ $$ E = \color{red}m\color{black}c^2 $$ $$ E = \gamma m_0 c^2 $$ $$ E =
+					(7453.6) (1.67 \times 10^{-27}) (3\times 10^8)^2 $$ $$E = 1.12 \times 10^{-6} J $$
+				</details>
+			</div>
+
+
+
+
+			<h2 class='underlined'>Gravitational Time Dilation</h2>
+			<p>
+				A unified description of gravity as a geometric property of space and time, or spacetime. In particular, the curvature of
+				spacetime is directly related to the energy and momentum of whatever matter and radiation are present.
+			</p>
+
+			<p>
+				Consequences: Gravitational Time Dilation Frequency Shift Light Deflection Gravitational lensing Gravitational waves Singularities
+
+			</p>
+
+			<div class="definition">
+				<h1>$$ \Delta t_0 = \Delta t_f \sqrt{1 - \left( \frac{2GM}{rc^2} \right) } $$ </h1>
+				\(\Delta t_0\) = slow-ticking time for an observer inside the gravitational field at distance r from the center of the mass
+				[s]
+				<br>\(\Delta t_f\) = fast-ticking time for an observer outside the influence of the gravitational field [s]
+				<br>\(G\) = 6.67408 × 10
+				<sup>-11</sup> = universal gravitation constant [N m²/kg²]
+				<br>\(M\) = mass of gravity well [kg, kilograms]
+				<br>\(r\) = distance to the center of the mass [m, meters]
+				<br>\(c\) = speed of light, 3 x 10⁸ [m/s]
+			</div>
+
+			<h2 class='underlined'>Black Holes</h2>
+			<p>
+				Heavy masses can push gravitational time dilation to the point of breaking because you have to take the square root of a
+				negative number. We can find where the equation breaks down by solving for the radius where the time dilation approaches
+				zero.$$ \Delta t_0 = \Delta t_f \sqrt{1 - \left( \frac{2GM}{rc^2} \right) } $$ $$\sqrt{1 - \left( \frac{2GM}{rc^2} \right)
+				} = 0 $$ $$1 - \left( \frac{2GM}{rc^2} \right) = 0 $$ $$1 = \frac{2GM}{rc^2} $$ $$r = \frac{2GM}{c^2} $$
+				<p>This radius is called the Schwarzschild radius, or the event horizon.</p>
+				<p>Objects that achieve the high density needed to reach this point are called black holes. We can only speculate how black
+					holes might behave. The equation suggests very extreme outcomes. At the event horizon time stops. Objects fall into
+					black holes and never get out, frozen in time.
+				</p>
+			</p>
+
+			<div class='example'>
+				<strong>Example:</strong> At the center of the milky way (our galaxy) there is a black hole with the mass of 4.3 million solar
+				masses. Find the radius of its event horizon. $$ M_{sun} = 2 \times 10^{30} kg $$
+
+				<details>
+					<summary>solution</summary>
+					$$M = (4.3 \times 10^{6}) (2 \times 10^{30}) $$ $$M = 8.6 \times 10^{36} kg $$
+					<br> $$r = \frac{2GM}{c^2} $$ $$r = \frac{2 (6.67 \times 10^{-11}) (8.6 \times 10^{36})}{(3 \times 10^8) ^2} $$ $$r = 1.27
+					\times 10^{10} m $$
+					<span class='center'>That's about half the orbital radius of Mercury.</span>
+				</details>
+			</div>
+			<h2 class='underlined' id="solver">Lorentz Transformation Solver</h2>
+			<p>
+				The left observer sees a spaceship fly by. The right observer is on the ship.
+			</p>
+			<ul class="listing">
+				<li>
+					<div>Relative Velocity
+						<br>v =
+						<input id='velocity' type="number" value='0.9' min="0" max="1" step="0.01"> c
+						<br>v =
+						<input id='velocity2' type="number" value='2.7' min="0" max="3" step="0.1"> x 10
+						<sup>8</sup> m/s
+					</div>
+				</li>
+				<li>
+					<div>Lorentz Factor
+						<br>γ =
+						<input id='gamma' type="number" value='2.2942' min="1" step="0.1">
+					</div>
+				</li>
+				<li>
+					<div>
+						<strong>MOVING RELATIVE TO SPACESHIP</strong>
+						<br>
+						<em style="font-size: 0.9rem">frame of reference where an observer sees events occur in different locations</em>
+						<br>
+						<div class="tooltip">time
+							<span class="tooltiptext">time passed for observer as ship flies past</span>
+						</div> =
+						<input id='v_time' type="number" value='22.94'> s
+						<br>mass =
+						<input id='v_mass' type="number" value='22.94' min="0"> kg
+						<br>length =
+						<input id='v_length' type="number" value='4.36' min="0"> m
+					</div>
+				</li>
+				<li>
+					<div>
+						<strong>AT REST RELATIVE TO SPACESHIP</strong>
+						<br>
+						<em style="font-size: 0.9rem">frame of reference where an observer sees events occur in the same location</em>
+						<br> proper time =
+						<input id='time' type="number" value='10'> s
+						<br>rest mass =
+						<input id='mass' type="number" value='10' min="0"> kg
+						<br>rest length =
+						<input id='length' type="number" value='10' min="0"> m
+					</div>
+				</li>
+			</ul>
+			<canvas id="rockets" width='600' height='150' style="box-shadow: 0px 0px 0px #aaa;"></canvas>
+	</article>
+	<div class='back'>
+		<a href="../../../index.html#units ">Back</a>
+	</div>
+
+	<script>
+		renderMathInElement(document.body);
+	</script>
+	<script src="solver.js"></script>
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<script src='../../../lib/function-plot.js'></script>
+	<script>
+		functionPlot({
+			width: 600,
+			height: 350,
+			target: "#graphGamma",
+			// title: 'v vs. gamma',
+			yAxis: {
+				domain: [0, 10],
+				label: " gamma "
+			},
+			xAxis: {
+				domain: [0, 1.1],
+				label: " v/c "
+			},
+			grid: true,
+			data: [
+				{
+					fn: "nthRoot(1 - x^2, 2)^-1",
+					color: "#000"
+				}
+			]
+		});
+	</script>
+
+</body>
+
+</html>
