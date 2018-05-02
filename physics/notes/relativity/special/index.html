@@ -135,10 +135,40 @@
 	<canvas class='center' id="special" width='600' height='400' style="background: url(../../../media/Space.jpg); border-radius: 0px;"></canvas>
 	<!-- <canvas class='center' id="special" width='600' height='400' style="background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/Space.jpg); border-radius: 0px;"></canvas> -->
 	<article>
+
+		<div class='example'>
+			<strong>Question:</strong> Are the effects of special relativity 'real' or an 'illusion' that only affects how an observer sees
+			things?
+			<details>
+				<summary>solution</summary>
+				<br>Effects like time dilation and length contraction have real consequences that all observers can agree on.
+				<br>
+				<br>For example, time dilation can produce real differences in the ages of objects. (see
+				<a href="https://en.wikipedia.org/wiki/Twin_paradox">twin paradox</a>)
+				<br>
+				<br>Consider momentum. The proper, rest, momentum of a car is zero.
+				<br> If you get hit by a car what matters is the apparent, moving, momentum.
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> Does this mean time travel maybe possible one day?
+			<details>
+				<summary>solution</summary>
+				<p>YES!!!</p>
+				You can go forwards in time. If you can get up to a high speed relative to the Earth you will age slow as the Earth ages
+				fast. You could use this to see the far future, but right now we don't have a safe way to get a person up to relativistic
+				speeds.
+
+				<br>
+				<br> You probably can't go backwards in time, but the equations don't completely rule it out.
+			</details>
+		</div>
+
 		<h2 class='underlined'>Lorentz factor</h2>
 		<p>We will use the
-			<strong>Lorentz factor</strong> in equations that convert between two inertial reference frames for concepts like time, length,
-			and mass. The Lorentz factor represents the scale of difference between each point of view.
+			<strong>Lorentz factor</strong> in equations that convert between two non-accelerating reference frames for concepts like time,
+			length, and mass. The Lorentz factor represents the scale of difference between each point of view.
 		</p>
 
 		<div class="definition">
@@ -187,32 +217,42 @@
 			speed approaches the speed of light, gamma increases towards infinity.</p>
 		<div id="graphGamma"></div>
 		<h2 class='underlined'>Time Dilation</h2>
+		<p>You can find a derivation for time dilation
+			<a href="#derivation">here</a>.
+		</p>
 		<div class="definition">
+			<!-- <p>One observer watches a series of events while at rest relative to the events. Another observer watches the events while
+				moving relative to the events.</p> -->
 			<h1>$$ \Delta t = \gamma \Delta t_0$$</h1>
-			\(\Delta t_0\) = proper time for observer, as seen from a frame of reference where the events occur in the
-			<strong>same</strong> location
-			<br>
-			<br>\(\Delta t\) = elapsed time for observer, as seen from a frame of reference where the events occur in
+			\(\Delta t\) = elapsed time for observer, as seen from a frame of reference where the events occur in
 			<strong>different</strong> locations
+			<br>
+			<br> \(\Delta t_0\) = elapsed time for observer, as seen from a frame of reference where the events occur in the
+			<strong>same</strong> location,
+			<strong>proper time</strong>
 			<br>
 			<br>\( \gamma \) = Lorentz factor, gamma [no units]
 		</div>
-		<p>\(\Delta t_0\) is how long events take when at rest relative to the events. This is the point of view where there is no
-			relative velocity between events and observer.
-		</p>
-		<p>
-			If you are flying in an airplane, the events on the plane occur in the same location, because there is no relative motion.
-		</p>
+		<p>Gamma must be greater than one. This means that \(\Delta t > \Delta t_0\).</p>
+		<ul class="listing">
+			<li>
+				<p>\(\Delta t\) represents the time passed for an observer while watching events that are moving relative to the observer.
+					<br>
+					<br>This is the point of view where there is a relative velocity between events and observer.
 
-		<p>\(\Delta t\) is how much time passes for the observer while watching events that are moving. This is the point of view
-			where there is a relative velocity between events and observer.
-		</p>
-		<p>
-			If you watch an airplane fly past, events on the plane occur in different locations because the airplane is moving.
-		</p>
-
-		<p>Because gamma must be greater than one, \(\Delta t\) will always be larger than \(\Delta t_0\). An observer will see moving
-			frames of reference in slow time.</p>
+					<br>
+					<br>If you watch an airplane fly past, events on the plane occur in different locations because the airplane is moving.
+				</p>
+			</li>
+			<li>
+				<p>\(\Delta t_0\) represents the time passed for an observer while watching events that are at rest relative to the obserer.
+					<br>
+					<br> This is the point of view where there is no relative velocity between events and observer.
+					<br>
+					<br>If you are flying in an airplane, the events on the plane occur in the same location, because there is no relative motion.
+				</p>
+			</li>
+		</ul>
 
 		<div class='example'>
 			<strong>Question:</strong> You are on Earth, and a spaceship zooms past near the speed of light. Will you see the ship in slow
@@ -224,13 +264,22 @@
 			<br>What does the spaceship see?
 			<details>
 				<summary>solution</summary>
-				<br>From the ship's point of view you are in slow motion!
+				<br>From the ship's point of view you are in slow motion! This is similar to how two people at a distance will see each other
+				as smaller.
 			</details>
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> You see a person on a spaceship moving at 0.999c. While you watch the person, you see 2 seconds pass
-			on their watch. How much time passed you while watching them?
+			<strong>Example:</strong> You see a person on a spaceship moving at 0.999c. While you observe the person, you see 2 seconds pass
+			on their watch. How much time passes for you while you watch them?
+			<details>
+				<summary>hint</summary>
+				<br>What is the event? (the watch ticking)
+				<br>Who sees the event at rest? (the person on the ship)
+				<br>Who sees the event as moving? (you)
+				<br>
+				<br>
+			</details>
 			<details>
 				<summary>solution</summary>
 				$$\gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2} } }$$ $$\gamma = 22.4$$
@@ -242,12 +291,20 @@
 
 
 		<div class='example'>
-			<strong>Example:</strong> If 30 seconds pass for an observer on Earth how much time do they see pass for a spaceship moving at
-			0.9c?
+			<strong>Example:</strong> A spaceship is moving at 0.9c relative to Earth. 30 seconds pass for an observer on Earth. How much
+			time passes for an observer on the ship while they watch 30s pass on Earth?
+			<details>
+				<summary>hint</summary>
+				<br>What is the event? (the 30s on Earth)
+				<br>Who sees the event at rest? (the Earth observer)
+				<br>Who sees the event as moving? (the spaceship observer)
+				<br>
+				<br>
+			</details>
 			<details>
 				<summary>solution</summary>
 				$$\gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2} } }$$ $$\gamma = 2.7$$
-				<br> $$ \Delta t = \gamma \Delta t_0 $$ $$ 30 = 2.7 \Delta t_0 $$ $$ 11.1 s = \Delta t_0 $$
+				<br> $$ \Delta t = \gamma \Delta t_0 $$ $$ \Delta t = (2.7)( 30) $$ $$ \Delta t = 81 s$$
 			</details>
 		</div>
 
@@ -280,8 +337,10 @@
 		<h2 class='underlined'>Length Contraction</h2>
 		<div class="definition">
 			<h1>$$ L = \frac{L_0}{\gamma}$$</h1>
-			\( L\) = contracted length, as seen from a relative velocity
-			<br>\( L_0\) = rest length, as seen from its own rest frame
+			\( L\) =
+			<strong>contracted length</strong>, as seen from a relative velocity
+			<br>\( L_0\) =
+			<strong>rest length</strong>, as seen from its own rest frame
 
 			<br>\( \gamma \) = Lorentz factor, gamma [no units]
 		</div>
@@ -290,8 +349,8 @@
 
 
 		<div class='example'>
-			<strong>Example:</strong> When you are holding a meter stick it looks like it 1 meter long. How long would the meter stick look
-			if it was moving at 0.5c relative to you?
+			<strong>Example:</strong> When you are holding a meter stick it looks like it is 1 meter long. How long would the meter stick
+			look if it was moving at 0.5c relative to you?
 			<details>
 				<summary>solution</summary>
 				$$\gamma = 1.15$$
@@ -313,7 +372,8 @@
 		<div class="definition">
 			<h1>$$ m = \gamma m_0 $$ </h1>
 			<br>\( m \) = mass, as seen by an observer with a relative velocity
-			<br>\( m_0\) = rest mass, as seen by an observer at rest
+			<br>\( m_0\) =
+			<strong>rest mass</strong>, as seen by an observer at rest
 			<br>\( \gamma \) = Lorentz factor, gamma [no units]
 		</div>
 		<p>The rest mass is
@@ -434,10 +494,171 @@
 				<span class='center'>That's about half the orbital radius of Mercury.</span>
 			</details>
 		</div>
-		<h2 class='underlined' id="solver">Lorentz Transformation Solver</h2>
-		<p>
-			The left observer sees a spaceship fly by. The right observer is on the ship.
+
+		<h2 class='underlined' id="derivation">Derivation of Velocity Time Dilation</h2>
+		<p>To understand where the time dilation equation comes from we will explore a
+			<a href="https://en.wikipedia.org/wiki/Time_dilation#Simple_inference_of_velocity_time_dilation">hypothetical situation</a>. Imagine a light clock that works by firing light at a mirror and measuring the time for the
+			light to return.
 		</p>
+		<p>On the left, a light clock is at rest relative to the observer.
+			<br> On the right, a light clock is moving at v relative to the observer.
+		</p>
+	</article>
+	<svg class='center' width="1000" viewbox="0 0 1424 503">
+		<defs>
+			<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="marker11576">
+				<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="scale(-0.4,-0.4)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+				 id="path8608" inkscape:connector-curvature="0" />
+			</marker>
+			<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="marker8622">
+				<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="scale(-0.8,-0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+				 id="path8614" inkscape:connector-curvature="0" />
+			</marker>
+			<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow2Mend">
+				<path d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+				 transform="matrix(-0.6,0,0,-0.6,3,0)" style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+				 id="path3352" inkscape:connector-curvature="0" />
+			</marker>
+			<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow1Mend">
+				<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="scale(-0.45,-0.45)" style="font-size:12px;fill:#4040ff;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+				 id="path3370" inkscape:connector-curvature="0" />
+			</marker>
+			<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow2Mstart">
+				<path d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+				 transform="matrix(0.6,0,0,0.6,-3,0)" style="font-size:12px;fill:#4040ff;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+				 id="path3355" inkscape:connector-curvature="0" />
+			</marker>
+			<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Club">
+				<path d="m -1.5971367,-7.0977635 c -1.8892507,0 -3.426382,1.5371314 -3.426382,3.4263822 0,0.6566798 0.2383531,1.2269257 0.5594092,1.7481542 -0.038751,0.032111 -0.079672,0.058463 -0.1165436,0.093235 -0.6224234,-0.8549928 -1.5893983,-1.4451409 -2.7271199,-1.4451409 -1.8892515,-1e-7 -3.426382,1.5371314 -3.426382,3.42638214 0,1.88925076 1.5371305,3.42638216 3.426382,3.42638216 0.9934462,0 1.868619,-0.4420611 2.4940326,-1.1188187 -0.124687,0.3548915 -0.2097783,0.7214874 -0.2097783,1.1188187 0,1.8892506 1.5371313,3.4263822 3.426382,3.4263822 1.88925064,0 3.4263821,-1.5371316 3.4263821,-3.4263822 0,-0.7933959 -0.3155586,-1.4938285 -0.7691878,-2.0744763 C 2.4152718,1.7663868 3.7718375,2.2973711 4.7661444,3.8340272 4.0279463,3.0958289 3.5540908,1.7534117 3.5540908,-0.05852936 l -0.6293354,-0.04661745 0.5827179,-0.0233087 c 0,-1.81194109 0.4505466,-3.15435829 1.188745,-3.89255659 -0.9590906,1.4822308 -2.2571634,2.0263625 -3.5662345,2.3075635 0.4041964,-0.5619092 0.6992616,-1.213407 0.6992616,-1.9579327 0,-1.8892506 -1.53713146,-3.4263822 -3.4263821,-3.4263822 z"
+				 transform="scale(0.6,0.6)" style="fill-rule:evenodd;stroke:#000000;stroke-width:0.74587913pt;marker-start:none" id="path3209"
+				 inkscape:connector-curvature="0" />
+			</marker>
+			<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="TriangleInL">
+				<path d="m 5.77,0 -8.65,5 0,-10 8.65,5 z" transform="scale(-0.8,-0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+				 id="path3287" inkscape:connector-curvature="0" />
+			</marker>
+			<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Dot_l">
+				<path d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z" transform="matrix(0.8,0,0,0.8,5.700394,0.8)"
+				 style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none" id="path3314" inkscape:connector-curvature="0"
+				/>
+			</marker>
+			<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow1Send">
+				<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="scale(-0.2,-0.2)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+				 id="path3364" inkscape:connector-curvature="0" />
+			</marker>
+			<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow2Lend">
+				<path d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+				 transform="matrix(-1.1,0,0,-1.1,5.5,0)" style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+				 id="path3358" inkscape:connector-curvature="0" />
+			</marker>
+			<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="TriangleOutL">
+				<path d="m 5.77,0 -8.65,5 0,-10 8.65,5 z" transform="scale(0.8,0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+				 id="path3278" inkscape:connector-curvature="0" />
+			</marker>
+			<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="SquareL">
+				<path d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z" transform="scale(0.8,0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+				 id="path3305" inkscape:connector-curvature="0" />
+			</marker>
+		</defs>
+
+		<rect width="454.5047" height="18.048552" x="678.03058" y="435.8931" style="opacity:0.5;fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:2.19980764;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.1998076, 4.39961522;stroke-dashoffset:0"
+		 id="rect7455" />
+		<text x="633.73218" y="454.33301" transform="scale(1.0010881,0.99891309)" style="font-size:28.82546234px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+		 id="text2269" xml:space="preserve">
+			<tspan x="633.73218" y="454.33301" id="tspan2271" />
+		</text>
+
+		<path d="M 575.28956,441.77759 703.03809,290.78773 894.66102,64.302985" style="fill:none;stroke:#4040ff;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-mid:url(#Arrow1Mend)"
+		 id="path2566" inkscape:connector-curvature="0" />
+
+		<path d="M 1211.5161,441.8137 1083.7676,290.82384 892.14463,64.339095" style="fill:none;stroke:#4040ff;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-mid:url(#Arrow2Mstart)"
+		 id="path6476" inkscape:connector-curvature="0" />
+		<text x="864.85461" y="300.71805" transform="scale(1.0010881,0.99891309)" style="font-size:28.82526207px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+		 id="text2321" xml:space="preserve">
+			<tspan x="864.85461" y="300.71805" id="tspan2323">L</tspan>
+		</text>
+		<path d="m 893.40358,66.384135 0,368.636895" style="fill:none;stroke:#40ff40;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:16, 4;stroke-dashoffset:0"
+		 id="path11579" inkscape:connector-curvature="0" />
+		<path d="M 584.11521,433.63965 895.06259,65.414515" style="fill:none;stroke:#40ff40;stroke-width:4.02089643;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:16.08358492, 4.02089623;stroke-dashoffset:0"
+		 id="path18418" inkscape:connector-curvature="0" />
+
+		<path d="m 582.46174,433.41254 c 311.95859,0 311.95859,0 311.95859,0" style="fill:none;stroke:#40ff40;stroke-width:3.99553132;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:15.98212571, 3.99553143;stroke-dashoffset:0"
+		 id="path12556" inkscape:connector-curvature="0" />
+		<text x="707.20532" y="421.70142" style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+		 id="text15483" xml:space="preserve" sodipodi:linespacing="125%">
+			<tspan x="707.20532" y="421.70142" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Bitstream Vera Sans"
+			 id="tspan15485">1/2 v ∆t</tspan>
+		</text>
+		<path d="m 876.39286,431.4514 0,-15 15,0" style="fill:none;stroke:#40ff40;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+		 id="path17437" inkscape:connector-curvature="0" />
+		<text x="763.51379" y="257.45874" style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+		 id="text18414" xml:space="preserve" sodipodi:linespacing="125%">
+			<tspan x="763.51379" y="257.45874" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Bitstream Vera Sans"
+			 id="tspan18416">D</tspan>
+		</text>
+		<text x="1009.8401" y="257.45874" style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+		 id="text20408" xml:space="preserve" sodipodi:linespacing="125%">
+			<tspan x="1009.8401" y="257.45874" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Bitstream Vera Sans"
+			 id="tspan20410">D</tspan>
+		</text>
+		<g id="g4467" transform="translate(48.772193,35.622895)">
+			<rect width="280.91357" height="19.196096" x="11.424166" y="399.91989" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.98540807px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+			 id="rect2243-4" />
+		</g>
+		<g id="g4462" transform="translate(48.772193,35.622895)">
+			<rect width="280.91357" height="19.196096" x="11.424056" y="11.099292" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.98540807px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+			 id="MirrorA-4" />
+		</g>
+		<text x="375.83951" y="268.11478" transform="scale(1.0010881,0.99891309)" style="font-size:28.82546234px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+		 id="text2321-2" xml:space="preserve">
+			<tspan x="375.83951" y="268.11478" id="tspan2323-4">L</tspan>
+		</text>
+		<g transform="matrix(2.412562,0,0,2.4720388,-131.82009,-942.70811)" id="g8954">
+			<path inkscape:connector-curvature="0" d="m 129.35494,556.62809 0,-67.00269 0,-80.40322" style="fill:none;stroke:#4040ff;stroke-width:1.64199996;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-mid:url(#Arrow2Mstart);marker-end:none"
+			 id="PhotonPathBA" />
+			<path inkscape:connector-curvature="0" d="m 135.35494,409.22218 0,67.00269 0,80.40322" style="fill:none;stroke:#4040ff;stroke-width:1.64199996;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-mid:url(#Arrow2Mstart);marker-end:none"
+			 id="path8952" />
+		</g>
+
+		<path inkscape:connector-curvature="0" d="m 349.52161,66.705675 9.98421,0 0,368.474475 -9.98421,0" style="fill:none;stroke:#000000;stroke-width:1.28442347px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+		 id="path1538" />
+
+
+		<rect id="rect2243-1" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+		 y="436.20599" x="796.35272" height="19.20911" width="208.27559" />
+		<path d="m 675.81861,444.93801 225.83701,0 225.83698,0" style="fill:none;stroke:#404040;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-mid:url(#marker11576);stroke-miterlimit:4;stroke-dasharray:none"
+		 id="path10599" inkscape:connector-curvature="0" />
+		<rect id="rect2243" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+		 y="435.5687" x="471.16052" height="19.20911" width="208.27559" />
+		<rect id="rect1552" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+		 transform="scale(-1,1)" y="436.21494" x="-1328.3921" height="19.20911" width="208.27559" />
+		<rect width="454.5047" height="18.048552" x="676.80945" y="47.097408" style="opacity:0.5;fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:2.19980764;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.1998076, 4.39961522;stroke-dashoffset:0"
+		 id="rect7455-2" />
+		<rect id="MirrorA" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+		 y="46.484497" x="796.87946" height="19.20911" width="208.27559" />
+		<path d="m 674.53652,56.101013 225.83701,0 225.83697,0" style="fill:none;stroke:#404040;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-mid:url(#marker11576);stroke-miterlimit:4;stroke-dasharray:none"
+		 id="path10599-4" inkscape:connector-curvature="0" />
+		<rect id="MirrorA-40" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+		 y="46.116199" x="1120.123" height="19.20911" width="208.27559" />
+		<rect id="MirrorA-7" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+		 y="46.274174" x="470.55688" height="19.20911" width="208.27559" />
+	</svg>
+	<article>
+		<p>Each light clock's path is marked in blue. When we apply the equation velocity equals distance over time to each path we
+			get these relationships.</p>
+		$$c = \frac{2L}{\Delta t_0 } \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad c = \frac{2D}{\Delta
+		t } $$ $$D = \tfrac{1}{2} c \Delta t \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad L = \tfrac{1}{2}
+		c \Delta t_0$$
+
+		<p>Next we will apply the Pythagorean theorem to the triangle highlighted in green.</p>
+		$$c^2 = a^2 + b^2$$ $$ D^2 = L^2 + (\tfrac{1}{2}v\Delta t)^2 $$ $$ \tfrac{1}{2}c\Delta t^2 = (\tfrac{1}{2}c \Delta t_0)^2
+		+ (\tfrac{1}{2}v\Delta t)^2 $$ $$ \tfrac{1}{4} c^2 \Delta t^2 = \tfrac{1}{4}c^2 \Delta t_0^2 + \tfrac{1}{4}v^2 \Delta t^2
+		$$ $$ \Delta t^2 = \Delta t_0^2 + \tfrac{v^2}{c^2} \Delta t^2 $$ $$ \Delta t^2 - \tfrac{v^2}{c^2} \Delta t^2 = \Delta t_0^2$$
+		$$ \Delta t^2 (1 - \tfrac{v^2}{c^2} ) = \Delta t_0^2 $$ $$ \Delta t \sqrt{1 - \tfrac{v^2}{c^2}} = \Delta t_0 $$ $$ \Delta
+		t = \frac{\Delta t_0}{ \sqrt{1 - \tfrac{v^2}{c^2}}} $$ $$ \Delta t = \gamma \Delta t_0 $$
+
+		<h2 class='underlined' id="solver">Lorentz Transformation Solver</h2>
+		<br>
 		<ul class="listing">
 			<li>
 				<div>Relative Velocity
