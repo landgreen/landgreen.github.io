@@ -283,7 +283,6 @@ details .katex {
 /* Grid with auto placement ______________________________________*/
 .listing {
   list-style: none;
-  margin: 0.5em;
   display: grid;
   grid-gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
