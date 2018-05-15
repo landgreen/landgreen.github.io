@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="description" content="Notes for a high school physics course.">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:title" content="Physics Notes">
+	<meta name="twitter:title" content="High School Physics Notes">
+	<title>General Relativity</title>
+	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+
+	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+	<script src="../../../lib/katex/katex.min.js"></script>
+	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../../style.css">
+</head>
+
+<body>
+	<header>
+		<h1>General Relativity</h1>
+	</header>
+	<article>
+		<p>
+			Special relativity is limited to situations where observers aren't accelerating.
+		</p>
+		<p>
+			General relativity, published by Einstein in 1915, extended relativity to acceleration, and specifically gravitational acceleration.
+		</p>
+		<p>
+			The theory of general relativity proposed a unified description of gravity as a geometric property of space and time, or
+			spacetime.
+		</p>
+		<h3 class="definition">
+			Spacetime is
+			<a href="https://www.youtube.com/watch?v=DdC0QN6f3G4">curved</a> by the energy of matter and radiation.
+		</h3>
+		<p>
+			The calculations for general relativity are beyond our scope, but we can explore some of the predictions:
+			<li>
+				<strong>
+					<a href="#time">Gravitational Time Dilation:</a>
+				</strong> gravity slows time</li>
+			<li>
+				<strong>
+					<a href="https://en.wikipedia.org/wiki/Gravitational_lens">Gravitational lensing:</a>
+				</strong> gravity bends the path of light</li>
+			<li>
+				<strong>
+					<a href="https://www.youtube.com/watch?v=e-P5IFTqB98">Gravitational</a>
+					<a href="https://www.youtube.com/watch?v=8nHBGFKLHZQ">singularity:</a>
+				</strong> high gravity leads to black holes
+			</li>
+			<li>
+				<strong>
+					<a href="https://www.youtube.com/watch?v=4GbWfNHtHRg">Gravity</a>
+					<a href="https://www.youtube.com/watch?v=YHS9g72npqA">waves:</a>
+				</strong> moving sources of gravity make waves in spacetime
+			</li>
+		</p>
+		<p>The theory of general relativity suggests a significant change to fundamental aspects of reality, but there is overwhelming
+			<a href="https://en.wikipedia.org/wiki/Tests_of_general_relativity">evidence</a> in its favor.</p>
+
+		<h2 class='underlined'>Gravitational Acceleration is indistinguishable from acceleration</h2>
+
+		<h2 class='underlined'>Spacetime</h2>
+		<p>
+			One of the implications of relativity is that space and time are unified to form a single four-dimensional continuum called
+			<strong>spacetime</strong>.
+		</p>
+		$$ (\Delta s)^2 = (\Delta ct)^2 - (\Delta x)^2 - (\Delta y)^2 - (\Delta z)^2$$
+		<p>
+			\( \Delta s \) is the spacetime
+			<strong>interval</strong>. Observers at different relative velocities will disagree about events in space and time, but they will
+			all agree on the spacetime interval.
+		</p>
+		<p>General relativity explains that mass and energy curve spacetime. Gravitational acceleration can be understood as a consequence
+			of this curvature.</p>
+
+		<h2 class='underlined' id="time">Gravitational Time Dilation</h2>
+		<p>General relativity correctly predicted that gravity slows down time.</p>
+		<p> Time dilation from gravity is less complex than special relativity, because both observers agree that time is slower under
+			more intense gravity.
+		</p>
+
+		<div class="definition">
+			<h1>$$ \Delta t_0 = \Delta t_f \sqrt{1 - \left( \frac{2GM}{rc^2} \right) } $$ </h1>
+			\(\Delta t_0\) = slow-ticking time for an observer inside the gravitational field at distance r from the center of the mass
+			[s]
+			<br>\(\Delta t_f\) = fast-ticking time for an observer outside the influence of the gravitational field [s]
+			<br>\(G\) = 6.67408 × 10
+			<sup>-11</sup> = universal gravitation constant [N m²/kg²]
+			<br>\(M\) = mass of gravity well [kg, kilograms]
+			<br>\(r\) = distance to the center of the mass [m, meters]
+			<br>\(c\) = speed of light, 3 x 10⁸ [m/s]
+		</div>
+
+
+
+		<div class='example'>
+			<strong>Example:</strong> Let's calculate the time dilation for a super dense neutron star.
+			<br> If one second passes far from the star, how much time pass on the surface of the star?
+			<a href="https://en.wikipedia.org/wiki/PSR_J0348%2B0432">PSR J0348+0432</a> is a neutron star with a very large mass.
+			<br>\(M = 4.02 \times 10^{30} \ kg \quad \) \( \quad r = 13 \ km\)
+			<details>
+				<summary>solution</summary>
+				$$ \Delta t_0 = \Delta t_f \sqrt{1 - \left( \frac{2GM}{rc^2} \right) } $$ $$ \Delta t_0 = 1 \sqrt{1 - \left( \frac{2(6.674
+				\times 10^{-11})(4.02\times 10^{30})}{(13000)(3 \times 10^8)^2} \right) } $$ $$ \Delta t_0 = 1 \sqrt{1 - 0.4586 } $$
+				$$ \Delta t_0 = 0.7358 \ s $$
+
+			</details>
+		</div>
+
+
+
+
+		<div class='example'>
+			<strong>Example:</strong> If 10 seconds pass on the surface of the sun, how much time passes far from the sun's gravity?
+			<details>
+				<summary>Local Massive Objects Data Table</summary>
+				<table border>
+					<tr align=center>
+						<th align=left>Planet</th>
+						<th>mass (kg)</th>
+						<th>radius (km)</th>
+						<th>density (g/cm
+							<sup>3</sup>)</th>
+					</tr>
+					<tr align=center>
+						<td align=left>Sun</td>
+						<td>2.00×10
+							<sup>30</sup>
+						</td>
+						<td>695,700</td>
+						<td>1.408</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Mercury</td>
+						<td>3.301×10
+							<sup>23</sup>
+						</td>
+						<td>2,440</td>
+						<td>5.427</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Venus</td>
+						<td>4.867×10
+							<sup>24</sup>
+						</td>
+						<td>6,052</td>
+						<td>5.243</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Earth</td>
+						<td>5.972×10
+							<sup>24</sup>
+						</td>
+						<td>6,371</td>
+						<td>5.515</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Moon</td>
+						<td>7.346×10
+							<sup>22</sup>
+						</td>
+						<td>1,737</td>
+						<td>3.344</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Mars</td>
+						<td>6.417×10
+							<sup>23</sup>
+						</td>
+						<td>3,390</td>
+						<td>3.933</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Jupiter</td>
+						<td>1.899×10
+							<sup>27</sup>
+						</td>
+						<td>70,000</td>
+						<td>1.326</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Saturn</td>
+						<td>5.685×10
+							<sup>26</sup>
+						</td>
+						<td>58,232</td>
+						<td>0.687</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Uranus</td>
+						<td>8.68×10
+							<sup>25</sup>
+						</td>
+						<td>25,362</td>
+						<td>1.270</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Neptune</td>
+						<td>1.024×10
+							<sup>26</sup>
+						</td>
+						<td>24,622</td>
+						<td>1.638</td>
+					</tr>
+				</table>
+			</details>
+			<details>
+				<summary>solution</summary>
+				$$ \Delta t_0 = \Delta t_f \sqrt{1 - \left( \frac{2GM}{rc^2} \right) } $$ $$ 10 = \Delta t_f \sqrt{1 - \left( \frac{2(6.67408
+				\times 10^{-11})(2\times 10^{30})}{(6.957 \times 10^{8})(3 \times 10^8)^2} \right) } $$ $$ 10 = \Delta t_f \sqrt{1 -
+				4.2637 \times 10^{-6}} $$ $$ 10 = \Delta t_f (0.999997868) $$ $$ \Delta t = 10.00002132 \ s $$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> How much does the passage of time slow due to Earth's gravitational field. If year passes on Earth,
+			how much time will pass far from Earth's gravity?
+			<details>
+				<summary>Local Massive Objects Data Table</summary>
+				<table border>
+					<tr align=center>
+						<th align=left>Planet</th>
+						<th>mass (kg)</th>
+						<th>radius (km)</th>
+						<th>density (g/cm
+							<sup>3</sup>)</th>
+					</tr>
+					<tr align=center>
+						<td align=left>Sun</td>
+						<td>2.00×10
+							<sup>30</sup>
+						</td>
+						<td>695,700</td>
+						<td>1.408</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Mercury</td>
+						<td>3.301×10
+							<sup>23</sup>
+						</td>
+						<td>2,440</td>
+						<td>5.427</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Venus</td>
+						<td>4.867×10
+							<sup>24</sup>
+						</td>
+						<td>6,052</td>
+						<td>5.243</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Earth</td>
+						<td>5.972×10
+							<sup>24</sup>
+						</td>
+						<td>6,371</td>
+						<td>5.515</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Moon</td>
+						<td>7.346×10
+							<sup>22</sup>
+						</td>
+						<td>1,737</td>
+						<td>3.344</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Mars</td>
+						<td>6.417×10
+							<sup>23</sup>
+						</td>
+						<td>3,390</td>
+						<td>3.933</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Jupiter</td>
+						<td>1.899×10
+							<sup>27</sup>
+						</td>
+						<td>70,000</td>
+						<td>1.326</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Saturn</td>
+						<td>5.685×10
+							<sup>26</sup>
+						</td>
+						<td>58,232</td>
+						<td>0.687</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Uranus</td>
+						<td>8.68×10
+							<sup>25</sup>
+						</td>
+						<td>25,362</td>
+						<td>1.270</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Neptune</td>
+						<td>1.024×10
+							<sup>26</sup>
+						</td>
+						<td>24,622</td>
+						<td>1.638</td>
+					</tr>
+				</table>
+			</details>
+			<details>
+				<summary>solution</summary>
+				$$ \Delta t_0 = \Delta t_f \sqrt{1 - \left( \frac{2GM}{rc^2} \right) } $$ $$ 1 = \Delta t_f \sqrt{1 - \left( \frac{2(6.67408
+				\times 10^{-11})(5.972 \times 10^{24})}{(6.371 \times 10^6)(3 \times 10^8)^2} \right) } $$ $$ 1 = \Delta t_f \sqrt{1
+				- \left( 1.39 \times 10 ^{-9} \right) } $$ $$ 1 = \Delta t_f (0.999999999 \dots ) $$ The time dilation effect is too
+				low for my calculator to display the result. To see the effect I subtracted one from the result in the calculator. $$\Delta
+				t_f - \Delta t = 6.951 \times 10^{-10} yrs$$ $$\Delta t_f - \Delta t = 21.923 \ ms$$ The above numbers represents the
+				difference between time on Earth and time far from Earth's gravity.
+			</details>
+		</div>
+
+		<h2 class='underlined'>Black Holes</h2>
+		<p>
+			Heavy masses can push gravitational time dilation to the point of breaking because you have to take the square root of a
+			negative number. We can find where the equation breaks down by solving for the radius where the time dilation approaches
+			zero.
+			<p>This radius is called the Schwarzschild radius, or the
+				<strong>event horizon</strong>.</p>
+			<details class='derive'>
+				<summary>derivation of event horizon</summary>
+				$$ \Delta t_0 = \Delta t_f \sqrt{1 - \left( \frac{2GM}{rc^2} \right) } $$ $$\sqrt{1 - \left( \frac{2GM}{rc^2} \right) } =
+				0 $$ $$1 - \left( \frac{2GM}{rc^2} \right) = 0 $$ $$1 = \frac{2GM}{rc^2} $$ $$r = \frac{2GM}{c^2} $$
+
+			</details>
+
+
+
+			<div class="definition">
+				<h1>$$r = \frac{2GM}{c^2} $$ </h1>
+				<br>\(G\) = 6.67408 × 10
+				<sup>-11</sup> = universal gravitation constant [N m²/kg²]
+				<br>\(M\) = mass of black hole [kg, kilograms]
+				<br>\(r\) = radius of event horizon [m, meters]
+				<br>\(c\) = speed of light, 3 x 10⁸ [m/s]
+			</div>
+
+
+
+			<p>Objects that achieve the high density needed to reach this point are called
+				<strong>black holes</strong>. We can only speculate how black holes might behave, but the time dilation equation suggests very
+				extreme outcomes. At the event horizon time stops. Objects fall into black holes and never get out, frozen in time.
+			</p>
+			<p>
+				Black hole are a possible outcome at the end of the
+				<a href="https://en.wikipedia.org/wiki/Stellar_evolution">life</a> of a very massive star. Stars convert mass to energy from nuclear fusion. This energy balances the force of
+				gravity and prevents stars from becoming black holes. When stars runs out of nuclear fuel, gravity will dominate and
+				a black hole may form.
+			</p>
+			<p>An accurate model of black holes probably needs a unified theory of physics that combines general relativity with quantum
+				mechanics. This grand unified theory of physics doesn't exist yet, but many physicists are actively working on building
+				one.
+			</p>
+		</p>
+
+		<div class='example'>
+			<strong>Example:</strong> Black holes are rare and sometimes hard to see for obvious reasons. A possible candidate is
+			<a href="https://en.wikipedia.org/wiki/XTE_J1118%2B480">XTE J1118+480</a>. It has a mass of 6 solar masses. How large is it's event horizon?
+			<br>\( M _{\bigodot} = M_{sun} = 2 \times 10^{30} \ kg\)
+			<details>
+				<summary>solution</summary>
+				$$M = 6 \ M _{\bigodot} $$ $$M = 6 (2 \times 10^{30}kg) $$ $$M = 12 \times 10^{30} kg $$
+				<br> $$r = \frac{2GM}{c^2} $$ $$r = \frac{2 (6.67 \times 10^{-11}) (12 \times 10^{30})}{(3 \times 10^8) ^2} $$ $$r = 1778.6
+				m $$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> At the center of most massive galaxies exists a supermassive black hole. The milky way (our galaxy)
+			has a black hole with the mass of
+			<a href="https://en.wikipedia.org/wiki/Galactic_Center#Supermassive_black_hole">4.3 million solar masses</a>. Find the radius of its event horizon.
+
+			<!-- <br>\( M _{\bigodot} = M_{sun} = 2 \times 10^{30} \ kg\) -->
+
+
+			<details>
+				<summary>solution</summary>
+				$$M = (4.3 \times 10^{6}) \ M _{\bigodot} $$ $$M = (4.3 \times 10^{6}) (2 \times 10^{30}kg) $$ $$M = 8.6 \times 10^{36} kg
+				$$
+				<br> $$r = \frac{2GM}{c^2} $$ $$r = \frac{2 (6.67 \times 10^{-11}) (8.6 \times 10^{36})}{(3 \times 10^8) ^2} $$ $$r = 1.27
+				\times 10^{10} m $$
+				<span class='center'>That's about half the orbital radius of Mercury.</span>
+			</details>
+		</div>
+
+	</article>
+	<div class='back'>
+		<a href="../../../index.html#units ">Back</a>
+	</div>
+
+	<script>
+		renderMathInElement(document.body);
+	</script>
+</body>
+
+</html>
