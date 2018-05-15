@@ -50,14 +50,14 @@ svg:not(:root) {
 body {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 105%;
-  background-color: #fff;
-  padding-top: 0;
   color: #333;
-  margin: 0;
   line-height: 1.4;
   overflow-x: hidden;
-  width: 100%;
-  position: relative;
+  /* background-color: #fff; */
+  /* padding-top: 0; */
+  /* margin: 0; */
+  /* width: 100%; */
+  /* position: relative; */
 }
 article {
   padding: 0.1em;
@@ -122,6 +122,7 @@ details p {
   text-align: center;
   font-size: 1.3em;
 }
+
 ::selection {
   color: white;
   background: #2793c7;
@@ -139,12 +140,7 @@ table {
   /*border-bottom: 2px solid #222;*/
   width: 100%;
 }
-/*table tr:hover {
-  background: #f4f4f4;
-}
-table tr:hover td {
-  color: #555;
-}*/
+
 table th,
 table td {
   color: #777;
@@ -181,7 +177,8 @@ table th.last {
 /*classes_________________________________________*/
 .back {
   text-align: center;
-  margin: 10em;
+  margin: 10em 0em 0em 0em;
+  padding: 2em 0em 0.4em 0em;
 }
 
 .underlined {
@@ -219,11 +216,13 @@ table th.last {
   margin: 1em 0em 1em 0em;
   border-radius: 1em;
   line-height: 1.6;
+  font-size: 110%;
 }
 .definition em {
   color: #888;
   font-weight: 300;
 }
+
 .example {
   margin: 8em 0em 8em 0em;
 }
