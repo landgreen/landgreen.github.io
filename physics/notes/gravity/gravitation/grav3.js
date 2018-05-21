@@ -1,7 +1,7 @@
 const setup3 = function() {
 	var canvas = document.getElementById('grav3');
 	var ctx = canvas.getContext("2d");
-	ctx.font = "300 30px Roboto";
+	ctx.font = "300 30px Arial, Helvetica, sans-serif";
 	ctx.fillStyle = '#aaa';
 	ctx.textAlign = "center";
 	ctx.fillText('click to start simulation', canvas.width / 2, canvas.height / 2);
@@ -44,7 +44,7 @@ function grav3(el) {
 
 	const q = [] //holds the Particles
 	Particle.spawnRandom(q, 9)
-	let vMag = 300000/Particle.totalMass(q)
+	let vMag = 170000/Particle.totalMass(q)
 
 	function cycle() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
