@@ -126,14 +126,14 @@ var springGravity = function(button) {
       ctx.fillRect(0, 50, canvas.width * (this.Ug / this.energy), 25);
       //draw energy text
       ctx.fillStyle = "#000";
-      ctx.fillText("K = ½mv² = " + this.ke.toFixed(0) + "J", 5, 20);
-      ctx.fillText("Us = ½ky² = " + this.Us.toFixed(0) + "J", 5, 44);
-      ctx.fillText("Ug = mgh = " + this.Ug.toFixed(0) + "J", 5, 69);
-      ctx.fillText("E = " + this.energy.toFixed(0) + "J", 5, 92); //total energy doesn't stay still, probably because of onyl calculating 60 times a second?
-      ctx.fillText("g = " + physics.gravY.toFixed(2) + "m/s²", 5, canvas.height - 5);
-      ctx.fillText("h = " + height.toFixed(2) + "m", 5, canvas.height - 30);
-      ctx.fillText("y = " + (this.y - physics.equalibrium).toFixed(2) + "m", 5, canvas.height - 55);
-      ctx.fillText("v = " + this.Vy.toFixed(2) + "m/s", 5, canvas.height - 80);
+      ctx.fillText("K = ½mv² = " + (this.ke / 1000).toFixed(0) + "kJ", 5, 20);
+      ctx.fillText("Us = ½ky² = " + (this.Us / 1000).toFixed(0) + "kJ", 5, 44);
+      ctx.fillText("Ug = mgh = " + (this.Ug / 1000).toFixed(0) + "kJ", 5, 69);
+      ctx.fillText("E = " + (this.energy / 1000).toFixed(0) + "kJ", 5, 92); //total energy doesn't stay still, probably because of onyl calculating 60 times a second?
+      ctx.fillText("g = " + physics.gravY.toFixed(1) + "m/s²", 5, canvas.height - 5);
+      ctx.fillText("h = " + height.toFixed(0) + "m", 5, canvas.height - 30);
+      ctx.fillText("y = " + (this.y - physics.equalibrium).toFixed(0) + "m", 5, canvas.height - 55);
+      ctx.fillText("v = " + this.Vy.toFixed(0) + "m/s", 5, canvas.height - 80);
 
       // //force vector
       // ctx.lineWidth = 2;
@@ -194,25 +194,28 @@ var springGravity = function(button) {
     box.x = mousePos.x;
     box.y = mousePos.y;
     box.Vx = 0;
+    box.Vy = 0;
   });
   //get values for spring constant
-  document.getElementById("spring-k2").addEventListener("change", function() {
+  document.getElementById("spring-k2").addEventListener("input", function() {
     physics.k = document.getElementById("spring-k2").value;
     box.Vx = 0;
     physics.turns = 1 + 5 * Math.sqrt(physics.k);
   });
 
   //gets values for mass
-  document.getElementById("spring-m2").addEventListener("change", function() {
+  document.getElementById("spring-m2").addEventListener("input", function() {
     box.mass = document.getElementById("spring-m2").value;
     box.r = box.radiusFromMass(box.mass);
   });
 
   window.requestAnimationFrame(render);
 
+  let cycle = 0;
   function render() {
     //repeating animation function
     if (!pause) {
+      cycle++;
       window.requestAnimationFrame(render);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (var i = 0; i < physics.rate / 60; i++) {

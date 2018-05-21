@@ -208,13 +208,13 @@ var spring = function(button) {
   });
   //get values for spring constant
 
-  document.getElementById("spring-k").addEventListener("change", function() {
+  document.getElementById("spring-k").addEventListener("input", function() {
     physics.k = document.getElementById("spring-k").value;
     box.Vx = 0;
   });
 
   //gets values for mass
-  document.getElementById("spring-m").addEventListener("change", function() {
+  document.getElementById("spring-m").addEventListener("input", function() {
     box.mass = document.getElementById("spring-m").value;
     box.r = Math.sqrt(box.mass / Math.PI / 0.01);
   });
