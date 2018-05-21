@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=610, initial-scale=1" />
+	<meta name="description" content="Notes for a high school physics course.">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:title" content="Physics Notes">
+	<meta name="twitter:title" content="High School Physics Notes">
+	<title>Kirchhoff’s Laws</title>
+	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script> -->
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0"
+	 crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx"
+	 crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<script src='../../../lib/chargeclass.js'></script>
+</head>
+
+<body>
+	<header>
+		<h1>Kirchhoff’s Laws</h1>
+	</header>
+	<article>
+		<h2 class='underlined'>Electric Potential in Circuits</h2>
+		<p>We call a change in electric potential across a circuit element the
+			<strong>electric potential difference</strong> or more commonly the
+			<strong>voltage</strong>.</p>
+		<p>Electric potential quickly spreads to a uniform value throughout an uninterrupted section of wire. This is similar to how
+			water in a cup stays at the same height because it spreads out against the force of gravity.</p>
+		<p>Electric potential is constant until it reaches a circuit element.
+			<br>Across a resistor the potential drops, so the voltage is negative.
+			<br>Across a battery the potential increases, so the voltage is positive.</p>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="70" class='center'>
+				<g stroke-width="45" stroke-linejoin="round" fill='none' opacity="0.2">
+					<path d="M 0 20 h 260" stroke="#f00" />
+					<path d="M 340 20 h 260" stroke="#05f" />
+				</g>
+				<path d="M 0 20 h 260 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 260" fill='none' stroke="#555" stroke-width="4"
+				 stroke-linejoin="round" />
+				<g text-anchor="end" font-size="20" font-weight="bold">
+					<text x="150" y="40" fill='#f33'>4V</text>
+					<text x="500" y="40" fill='#33f'>2V</text>
+				</g>
+			</svg>
+			<strong>Example:</strong> In the diagram above the potential in red is at 4V. The potential in blue is at 2V. What is the potential
+			difference across the resistor?
+			<details>
+				<summary>solution</summary>
+				$$\Delta V = V_f-V_i $$ $$\Delta V = 2V-4V$$ $$\Delta V = -2V$$
+			</details>
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="90" class='center'>
+				<g stroke-width="45" stroke-linejoin="round" fill='none' opacity="0.3">
+					<path d="M 0 20 h 260" stroke="#f90" />
+					<path d="M 340 20 h 260" stroke="#59b" />
+				</g>
+				<path d="M 0 20 h 260 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 260" fill='none' stroke="#555" stroke-width="4"
+				 stroke-linejoin="round" />
+				<g text-anchor="end" font-size="20" font-weight="bold">
+					<text x="150" y="40" fill='#f40'>1.50V</text>
+					<text x="500" y="40" fill='#169'>0.70V</text>
+				</g>
+				<text x="300" y="80" text-anchor="middle" font-size="20" fill='#333'>0.0020A</text>
+				<g transform="translate(337 60) rotate(180)">
+					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+			</svg>
+			<strong>Example:</strong> Calculate the resistance using the diagram above.
+			<details>
+				<summary>solution</summary>
+				$$\Delta V = V_f-V_i $$ $$\Delta V = 0.70V-1.50V$$ $$\Delta V = -0.80V$$
+				<br> $$\Delta V=IR$$ $$R = \frac{\Delta V}{I}$$ $$R = \frac{0.80}{0.0020}$$ $$R = 400 \Omega$$
+			</details>
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="300" class='center'>
+
+				<g stroke-width="30" stroke-linejoin="round" fill='none' opacity="0.3">
+					<path d="M 10 150 h220
+						 M 100 150 l 50 100 h 80
+						 M 100 150 l 50 -100 h 80" stroke="#59b" />
+					<path d="M 310 150 h 220
+						 M 310 250 h 90 l50 -100
+						 M 310 50 h 90 l50 100" stroke="#f40" />
+				</g>
+				<path d="M 10 150 h220
+						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220
+						M 100 150 l 50 100 h 80
+						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 -100
+						M 100 150 l 50 -100 h 80
+						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 100" fill='none' stroke="#555" stroke-width="4"
+				 stroke-linejoin="round" />
+				<g text-anchor="end" font-size="20" font-weight="bold">
+					<text x="90" y="130" fill='#59b'>5.5V</text>
+					<text x="502" y="130" fill='#f40'>9.0V</text>
+				</g>
+				<g transform="translate(231 20) rotate(0)">
+					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<!-- <text x="270" y="25" text-anchor="middle" font-size="20">ΔV = -3V</text>
+				<text x="270" y="125" text-anchor="middle" font-size="20">ΔV = -3V</text>
+				<text x="270" y="225" text-anchor="middle" font-size="20">ΔV = -3V</text> -->
+			</svg>
+			<strong>Example:</strong> Even if the wire branches the potential is the same for an uninterrupted section. Use the potential
+			to find the potential difference, or voltage drop, across each resistor.
+			<details>
+				<summary>solution</summary>
+				$$\Delta V = V_f-V_i $$ $$\Delta V = 5.5V-9V$$
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="300" class='center'>
+					<g stroke-width="30" stroke-linejoin="round" fill='none' opacity="0.3">
+						<path d="M 10 150 h220
+							 M 100 150 l 50 100 h 80
+							 M 100 150 l 50 -100 h 80" stroke="#59b" />
+						<path d="M 310 150 h 220
+							 M 310 250 h 90 l50 -100
+							 M 310 50 h 90 l50 100" stroke="#f40" />
+					</g>
+					<path d="M 10 150 h220
+							l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220
+							M 100 150 l 50 100 h 80
+							l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 -100
+							M 100 150 l 50 -100 h 80
+							l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 100" fill='none' stroke="#555" stroke-width="4"
+					 stroke-linejoin="round" />
+					<g text-anchor="end" font-size="20" font-weight="bold">
+						<text x="90" y="130" fill='#59b'>5.5V</text>
+						<text x="502" y="130" fill='#f40'>9.0V</text>
+					</g>
+					<text x="270" y="25" text-anchor="middle" font-size="20">ΔV = -3.5V</text>
+					<text x="270" y="125" text-anchor="middle" font-size="20">ΔV = -3.5V</text>
+					<text x="270" y="225" text-anchor="middle" font-size="20">ΔV = -3.5V</text>
+				</svg>
+				The current is to the left, because the potential is dropping from right to left and resistors always decrease voltage.
+			</details>
+			<br>
+			<strong>Investigation:</strong> Explain why voltages in parallel, like in the diagram above, must all be the same?
+			<details>
+				<summary>solution</summary>
+				<br> Electric potential is the same for all of an uninterrupted wire, even if it branches. So, each branch has the same potential.
+				This means they must also have the same potential difference.
+			</details>
+		</div>
+
+
+
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="270" class='center'
+			 viewbox="0,50,560,200">
+				<g stroke-width="50" stroke-linejoin="round" fill='none'>
+					<path d="M 50 146 v-96 h80" stroke="#0ff" opacity="0.3" />
+					<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#f0f" opacity="0.2" />
+					<path d="M 290 190 v60 h -160 h -80 v-87 M 460 190 v60 h-170" stroke="#05f" opacity="0.2" />
+				</g>
+				<path d="M 50 50 h 80
+						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+						v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						h -160 
+						h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+						M 290 50 h170
+						v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						h-170" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
+				<g text-anchor="end" font-size="20" font-weight="bold">
+					<text x="97" y="70" fill='#066'>0.0V</text>
+					<text x="455" y="245" fill='#00b'>6.0V</text>
+					<text x="97" y="245" fill='#00b'>6.0V</text>
+					<text x="285" y="245" fill='#00b'>6.0V</text>
+					<text x="285" y="70" fill='#a0a'>2.0V</text>
+					<text x="455" y="70" fill='#a0a'>2.0V</text>
+				</g>
+			</svg>
+			<strong>Example:</strong> The electric potential for each uninterrupted section of wire is shown in the circuit diagram above.
+			Use the potential to find the potential difference, or voltage, across each element in the circuit.
+			<details>
+				<summary>solution</summary>
+				<p>Subtract the potential before and after each element to find potential difference across each element.</p>
+				$$V_f-V_i = \Delta V $$ $$2V-6V = -4V$$ $$0V-2V = -2V$$ $$6V-0V = 6V$$
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="270" class='center'
+				 viewbox="0,50,560,200">
+					<g stroke-width="50" stroke-linejoin="round" fill='none'>
+						<path d="M 50 146 v-96 h80" stroke="#0ff" opacity="0.3" />
+						<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#f0f" opacity="0.2" />
+						<path d="M 290 190 v60 h -160 h -80 v-87 M 460 190 v60 h-170" stroke="#05f" opacity="0.2" />
+					</g>
+					<path d="M 50 50 h 80
+						   l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+						   v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						   h -160 
+						   h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+						   M 290 50 h170
+						   v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						   h-170" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
+					<g text-anchor="end" font-size="17">
+						<text x="90" y="70" fill='#066'>0.0V</text>
+						<text x="455" y="245" fill='#00b'>6.0V</text>
+						<text x="90" y="245" fill='#00b'>6.0V</text>
+						<text x="285" y="245" fill='#00b'>6.0V</text>
+						<text x="285" y="70" fill='#a0a'>2.0V</text>
+						<text x="455" y="70" fill='#a0a'>2.0V</text>
+					</g>
+					<g font-size="21" fill='#000' font-weight="bold">
+						<text x="43" y="140" text-anchor="end">+6.0V</text>
+						<text x="305" y="157" text-anchor="start">-4.0V</text>
+						<text x="475" y="157" text-anchor="start">-4.0V</text>
+						<text x="170" y="85" text-anchor="middle">-2.0V</text>
+					</g>
+				</svg>
+		</div>
+
+		<h2 class='underlined'>Kirchhoff’s Law: Voltage</h2>
+		<p>If it is possible for the current to take a looping path through the circuit, the total change in potential is zero. Otherwise
+			the potential would keep getting higher.
+		</p>
+		<div class='definition'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
+				<path d="M 100 50 h 110
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
+				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+				h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+				h -110 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="43" y="160" text-anchor="middle" font-size="20" fill='#333'>V1</text>
+				<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>V2</text>
+				<text x="430" y="160" text-anchor="middle" font-size="20" fill='#333'>V3</text>
+				<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>V4</text>
+
+				<path transform="translate(250 150) rotate(0)" d="M-70 4  l 10.5 -10 l-10.5 10 l -10 -10 l10 10  A 70 70, 0, 1, 1, -25 65"
+				 stroke="#bbb" fill="none" stroke-width="3" stroke-miterlimit="1" stroke-linejoin="round" stroke-linecap="round" />
+
+				<!-- <path d="M180 154  l 10.5 -10 l-10.5 10 l -10 -10 l10 10  A 70 70, 0, 1, 1, 225 215" stroke="#bbb" fill="none" stroke-width="3"
+				 stroke-miterlimit="1" stroke-linejoin="round" stroke-linecap="round" /> -->
+			</svg>
+			<p>For any closed circuit loop the sum of all potential differences equals zero.</p>
+
+			<h1>
+				$$ \sum V = 0 $$ $$ V_1+V_2+V_3+V_4 = 0 $$
+			</h1>
+			\(V\) = potential difference, voltage [V, volts]
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
+				<path d="M 100 50 h 110
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
+				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+				h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+				h -110 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="55" y="160" text-anchor="end" font-size="20" fill='#333'>1.51V</text>
+				<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>-0.55V</text>
+				<text x="415" y="160" text-anchor="start" font-size="20" fill='#333'>-0.33V</text>
+				<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>V = ?</text>
+			</svg>
+			<strong>Example:</strong> What's the voltage drop across the resistor in the diagram?
+			<details>
+				<summary>solution</summary>
+				$$ V_1+V_2+V_3+V_4 = 0 $$ $$ 1.51-0.55-0.33-V_{4} = 0 $$ $$ V_{4} = -0.63V $$
+			</details>
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
+				<path d="M 100 50 h 110
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
+				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+				h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+				h -110 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="55" y="160" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+				<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>6kΩ</text>
+				<text x="415" y="160" text-anchor="start" font-size="20" fill='#333'>20kΩ</text>
+				<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>5kΩ</text>
+				<text x="250" y="225" text-anchor="middle" font-size="20" fill='#333'>0.194mA</text>
+				<g transform="translate(290 200) rotate(180)">
+					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+			</svg>
+			<strong>Example:</strong> Use Ohm's law to find the voltage for each resistor.
+			<details>
+				<summary>solution</summary>
+				<p>All elements in a series have the same current</p>
+				$$V = IR$$ $$V = (0.000194)(6000)$$ $$V = 1.164V$$
+				<br> $$V = IR$$ $$V = (0.000194)(20000)$$ $$V = 3.88V$$
+				<br> $$V = IR$$ $$V = (0.000194)(5000)$$ $$V = 0.97V$$
+			</details>
+			<br>Use the resistor voltages to calculate the voltage in the battery.
+			<details>
+				<summary>solution</summary>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="300" class='center'>
+					<path d="M 100 50 h 110
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					h -110 v-87 m-40 0 h 80 m-10 -15 h-60 m30 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					/>
+					<text x="55" y="160" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+					<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>-1.164V</text>
+					<text x="415" y="160" text-anchor="start" font-size="20" fill='#333'>-3.88V</text>
+					<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>-0.97V</text>
+				</svg>
+				$$ \sum V = 0$$ $$ V_{bat}+V_1+V_2+V_3 = 0 $$ $$ V_{bat} = -V_1-V_2-V_3 $$ $$ V_{bat} = 1.164+3.88+0.97 $$ $$ V_{4} = 6.014V
+				$$
+			</details>
+		</div>
+
+
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="270" class='center'
+			 viewbox="0,50,560,200">
+
+				<path d="M 50 50 h 80
+						   l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+						   v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						   h -160 
+						   h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+						   M 290 50 h170
+						   v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						   h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+				<g text-anchor="end" font-size="20" fill='#333'>
+					<text x="40" y="140" text-anchor="end">9.0V</text>
+					<text x="170" y="85" text-anchor="middle">R = ?</text>
+					<text x="305" y="157" text-anchor="start">3.4V</text>
+					<text x="475" y="157" text-anchor="start">3.4V</text>
+				</g>
+				<g transform="translate(210 220) rotate(180)">
+					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<text x="170" y="245" text-anchor="middle" font-size="20" fill='#333'>0.5 mA</text>
+			</svg>
+			<strong>Example:</strong> Find the missing resistance.
+			<details>
+				<summary>solution</summary>
+				<p>Only one of the 3.4V drops are in each loop.</p>
+				$$ \sum V = 0$$ $$ 9 - 3.4 - V = 0 $$ $$V = 5.6 V$$
+				<br> $$V=IR$$ $$R = \frac{V}{I}$$ $$R = \frac{5.6}{0.0005}$$ $$R=11, \! 200 \Omega$$
+			</details>
+		</div>
+
+
+
+
+		<h2 class='underlined'>Kirchhoff’s Law: Current</h2>
+		<div class='definition'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="130" class='center'>
+				<path d="M 0 30 L 300 30  M 150 30 L 150 130" fill='none' stroke="#333" stroke-width="4" />
+				<g transform="translate(120 20) rotate(180)">
+					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<g transform="translate(180 20) rotate(0)">
+					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<g transform="translate(160 116) rotate(-90)">
+					<line x1="5" y1="0" x2="65" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<circle cx="150" cy="30.5" r="5" fill="#333" />
+			</svg>
+			<p>For any point on a circuit: the total charge flowing into the point equals the total charge flowing out.</p>
+			<h1>$$ \sum I _{in} = \sum I_{out} $$</h1>
+			\(I_{in}\) = total charge
+			<strong>entering</strong> a point per second [A, amps]
+			<br>\(I_{out}\) = total charge
+			<strong>exiting</strong> a point per second [A, amps]
+			<p>If a circuit doesn't branch it will have the same current at every point.</p>
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="200" class='center'>
+				<path d="M 10 10 L 390 10  M 200 10 L 200 190" fill='none' stroke="#333" stroke-width="4" />
+				<text x="140" y="45" text-anchor="middle" font-family="sans-serif" font-size="23" fill='#333'>2A</text>
+				<g transform="translate(185 20) rotate(180)">
+					<line x1="5" y1="0" x2="100" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<text x="260" y="45" text-anchor="middle" font-family="sans-serif" font-size="23" fill='#333'>2A</text>
+				<g transform="translate(215 20) rotate(0)">
+					<line x1="5" y1="0" x2="100" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<text x="240" y="100" text-anchor="middle" font-family="sans-serif" font-size="23" fill='#333'>I = ?</text>
+				<g transform="translate(210 135) rotate(-90)">
+					<line x1="5" y1="0" x2="100" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+			</svg>
+			<strong>Example:</strong> If a 3-way circuit junction has two wires with 2A each entering. How much current is in the 3rd wire?
+			<details>
+				<summary>solution</summary>
+				$$ \sum I _{in} = \sum I_{out} $$ $$ 2A + 2A = I_{out} $$ $$ 4A = I_{out} $$
+			</details>
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="200" class='center'>
+				<path d="M 0 100 L 400 100  M 100 100 L 150 175 L 250 175 L 300 100
+				M 100 100 L 150 25 L 250 25 L 300 100" fill='none' stroke="#333" stroke-width="4" />
+				<text x="50" y="95" text-anchor="middle" font-size="23" fill='#333'>I = ?</text>
+				<g transform="translate(75 110) rotate(180)">
+					<line x1="5" y1="0" x2="50" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<text x="200" y="95" text-anchor="middle" font-size="23" fill='#333'>20mA</text>
+				<g transform="translate(225 110) rotate(180)">
+					<line x1="5" y1="0" x2="50" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<text x="200" y="20" text-anchor="middle" font-size="23" fill='#333'>40mA</text>
+				<g transform="translate(225 35) rotate(180)">
+					<line x1="5" y1="0" x2="50" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<text x="200" y="170" text-anchor="middle" font-size="23" fill='#333'>55mA</text>
+				<g transform="translate(225 185) rotate(180)">
+					<line x1="5" y1="0" x2="50" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+			</svg>
+			<strong>Example:</strong> A circuit splits into 3 branches. Branch #1 has 20mA, branch #2 has 40mA, and branch #3 has 55mA. Find
+			the current before the split.
+			<details>
+				<summary>solution</summary>
+				<p>no need to convert units for just addition and subtraction</p>
+				$$ \sum I _{in} = \sum I_{out} $$ $$ I _{in} = 20 + 40 + 55 $$ $$ I _{in} = 115 mA $$
+			</details>
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="200" class='center'>
+				<path d="M 0 100 L 400 100  M 100 100 L 100 175 L 300 175 L 300 100
+				M 100 100 L 100 25 L 300 25 L 300 100" fill='none' stroke="#333" stroke-width="4" />
+				<text x="50" y="95" text-anchor="middle" font-size="23" fill='#333'>450mA</text>
+				<g transform="translate(75 110) rotate(180)">
+					<line x1="5" y1="0" x2="50" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<text x="350" y="95" text-anchor="middle" font-size="23" fill='#333'>450mA</text>
+				<g transform="translate(375 110) rotate(180)">
+					<line x1="5" y1="0" x2="50" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<text x="200" y="95" text-anchor="middle" font-size="23" fill='#333'>115mA</text>
+				<g transform="translate(225 110) rotate(180)">
+					<line x1="5" y1="0" x2="50" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<text x="200" y="20" text-anchor="middle" font-size="23" fill='#333'>I = ?</text>
+				<g transform="translate(225 35) rotate(180)">
+					<line x1="5" y1="0" x2="50" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<text x="200" y="170" text-anchor="middle" font-size="23" fill='#333'>120mA</text>
+				<g transform="translate(225 185) rotate(180)">
+					<line x1="5" y1="0" x2="50" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+			</svg>
+			<strong>Example:</strong> Find the current in the top branch.
+			<details>
+				<summary>solution</summary>
+				$$ \sum I _{in} = \sum I_{out} $$ $$ 450 = I_{1} + 115 + 120 $$ $$ 450 - 115 - 120 = I_{1}$$ $$ 215 mA = I_{1}$$
+			</details>
+		</div>
+
+		<h2 class='underlined'>Resistors in Series</h2>
+		<p>Electrical components are in a
+			<strong>series</strong> when they are connected in a single path so that all charge flows through the same components.</p>
+		<!-- <canvas class='center' id='charge13' height='200' width='500' onclick="charges13(this)"> </canvas> -->
+		<div class='definition'>
+			<p>The total equivalent resistance for resistors in a series is the sum of the resistors. This means you can replace several
+				resistors in a series with just one and the circuit will be the same.</p>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="100" class='center'>
+				<path d="M 10 50 h40
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 40
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 40
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 40
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 40" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="100" y="25" text-anchor="end" font-size="20" fill='#333'>R1</text>
+				<text x="220" y="25" text-anchor="end" font-size="20" fill='#333'>R2</text>
+				<text x="340" y="25" text-anchor="end" font-size="20" fill='#333'>R3</text>
+				<text x="460" y="25" text-anchor="end" font-size="20" fill='#333'>R4</text>
+			</svg>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="100" class='center'>
+				<path d="M 10 50 h220
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="285" y="25" text-anchor="end" font-size="20">Req</text>
+
+			</svg>
+			<h1>$$R_{eq} = R_1+R_2+ ... + R_n$$</h1>
+			\(R_{n}\) = A single resistor in a series [ohms, Ω]
+			<br>\(R_{eq}\) = Equivalent resistance. The resistance of a single resistor that could replace several resistors. [ohms, Ω]
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="550" height="100" class='center'>
+				<path d="M 10 50 h40
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 40
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 40
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 40
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 40" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="90" y="25" text-anchor="middle" font-size="20" fill='#333'>100Ω</text>
+				<text x="210" y="25" text-anchor="middle" font-size="20" fill='#333'>100Ω</text>
+				<text x="330" y="25" text-anchor="middle" font-size="20" fill='#333'>100Ω</text>
+				<text x="450" y="25" text-anchor="middle" font-size="20" fill='#333'>100Ω</text>
+			</svg>
+			<strong>Example:</strong> What is the equivalent resistance for four 100Ω resistors in a series?
+			<details>
+				<summary>solution</summary>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="550" height="100" class='center'>
+					<path d="M 10 50 h225
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 225" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					/>
+					<text x="275" y="25" text-anchor="middle" font-size="20" fill='#333'>400Ω</text>
+				</svg>
+				$$R_{eq} = R_1+R_2+R_3+R_4$$ $$R_{eq} = 100+100+100+100$$ $$R_{eq} = 400\Omega$$
+
+			</details>
+		</div>
+		<h2 class='underlined'>Resistors in Parallel</h2>
+		<p>Electrical components are in
+			<strong>parallel</strong> when the path branches, and charges take different paths.</p>
+
+		<!-- <canvas class='center' id='charge11' height='200' width='500' onclick="charges11(this)"> </canvas> -->
+		<div class='definition'>
+			<p>The equation for replacing resistors in parallel is a bit more complex. The inverse of the total equivalent resistance
+				for resistors in parallel is equal to the sum of the inverse of each resistance.</p>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="300" class='center'>
+				<path d="M 10 150 h220
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220
+				M 100 150 l 50 100 h 80
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 -100
+				M 100 150 l 50 -100 h 80
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 100" fill='none' stroke="#333" stroke-width="4"
+				 stroke-linejoin="round" />
+				<text x="280" y="25" text-anchor="end" font-size="20">R1</text>
+				<text x="280" y="125" text-anchor="end" font-size="20">R2</text>
+				<text x="280" y="225" text-anchor="end" font-size="20">R3</text>
+			</svg>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="100" class='center'>
+				<path d="M 10 50 h220
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="285" y="25" text-anchor="end" font-size="20">Req</text>
+			</svg>
+			<h1>$$\frac{1}{R_{eq}} = \frac{1}{R_{1}}+\frac{1}{R_{2}}+ ... + \frac{1}{R_{n}}$$</h1>
+			\(R_{n}\) = A single resistor in parallel [ohms, Ω]
+			<br>\(R_{eq}\) = Equivalent resistance. The resistance of a single resistor that could replace several resistors [ohms, Ω]
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> What is the equivalent resistance for five 100Ω resistors all in parallel?
+			<details>
+				<summary>solution</summary>
+				$$\frac{1}{R_{eq}} = \frac{1}{R_{1}} + \frac{1}{R_{2}} + \frac{1}{R_{3}} + \frac{1}{R_{4}} + \frac{1}{R_{5}}$$ $$\frac{1}{R_{eq}}
+				= \frac{1}{100} + \frac{1}{100} + \frac{1}{100} + \frac{1}{100} + \frac{1}{100}$$ $$\frac{1}{R_{eq}} = \frac{5}{100}$$
+				$$R_{eq} = \frac{100}{5}$$ $$R_{eq} = 20 \Omega$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="300" class='center'>
+				<path d="M 10 150 h220
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220
+				M 100 150 l 0 100 h 130
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 140 l0 -100
+				M 100 150 l 0 -100 h 130
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 140 l0 100" fill='none' stroke="#333" stroke-width="4"
+				 stroke-linejoin="round" />
+				<text x="290" y="25" text-anchor="end" font-size="20">400Ω</text>
+				<text x="290" y="125" text-anchor="end" font-size="20">200Ω</text>
+				<text x="290" y="225" text-anchor="end" font-size="20">100Ω</text>
+			</svg>
+			<strong>Example:</strong> Find the equivalent resistance for the three resistors above.
+			<details>
+				<summary>solution</summary>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="100" class='center'>
+					<path d="M 10 50 h220
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					/>
+					<text x="305" y="25" text-anchor="end" font-size="20">57.14 Ω</text>
+				</svg>
+				$$\frac{1}{R_{eq}} = \frac{1}{R_{1}} + \frac{1}{R_{2}} + \frac{1}{R_{3}}$$ $$\frac{1}{R_{eq}} = \frac{1}{400} + \frac{1}{200}
+				+ \frac{1}{100}$$ $$\frac{1}{R_{eq}} = \frac{1}{400} + \left(\frac{2}{2}\right)\frac{1}{200} + \left(\frac{4}{4}\right)\frac{1}{100}$$
+				$$\frac{1}{R_{eq}} = \frac{1}{400} + \frac{2}{400} + \frac{4}{400}$$ $$\frac{1}{R_{eq}} = \frac{7}{400}$$ $$R_{eq} =
+				\frac{400}{7}$$ $$R_{eq} = 57.14 \Omega$$
+			</details>
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="300" class='center'>
+				<path d="M 100 250 v-100 h130
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 140 v100
+				M 100 150 l 0 -100 h 130
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 140 l0 100" fill='none' stroke="#333" stroke-width="4"
+				 stroke-linejoin="round" />
+				<text x="290" y="25" text-anchor="end" font-size="20">30kΩ</text>
+				<text x="298" y="125" text-anchor="end" font-size="20">R2 = ?</text>
+				<!-- <text x="290" y="225" text-anchor="end" font-size="20">11kΩ</text> -->
+			</svg>
+			<strong>Example:</strong> The equivalent resistance for the above circuit is 10kΩ. Use that information to find the missing resistance.
+			<details>
+				<summary>solution</summary>
+				$$\frac{1}{R_{eq}} = \frac{1}{R_{1}} + \frac{1}{R_{2}}$$ $$\frac{1}{10} = \frac{1}{30} + \frac{1}{R_{2}}$$ $$\frac{1}{10}
+				- \frac{1}{30} = \frac{1}{R_{2}}$$ $$\frac{3}{30} - \frac{1}{30} = \frac{1}{R_{2}}$$ $$\frac{2}{30} = \frac{1}{R_{2}}$$
+				$$15k \Omega = R_{2}$$
+			</details>
+		</div>
+		<div class='example'>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="310" class='center'>
+
+				<!-- <circle cx="100" cy="100" r="20" /> -->
+				<path d="M 100 120 v60 M 155 250 h60" fill='none' stroke="rgba(0,200,255,0.2)" stroke-width="35" stroke-linejoin="round"
+				 stroke-linecap="round" />
+				<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 80
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+					M 290 50 h45 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 45
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+				<text x="390" y="85" text-anchor="middle" font-size="20" fill='#333'>100Ω</text>
+				<text x="390" y="283" text-anchor="middle" font-size="20" fill='#333'>100Ω</text>
+				<text x="185" y="283" text-anchor="middle" font-size="20" fill='#333'>100Ω</text>
+				<text x="140" y="155" text-anchor="middle" font-size="20" fill='#333'>100Ω</text>
+				<text x="310" y="155" text-anchor="middle" font-size="20" fill='#333'>100Ω</text>
+
+
+				<!-- <circle cx="100" cy="150" r="40" fill="rgba(0,255,255,0.2)" />
+				<circle cx="185" cy="250" r="40" fill="rgba(0,255,255,0.2)" /> -->
+			</svg>
+			<strong>Example:</strong> Identify groups of resistors that are in series or parallel. Combine them to shrink the circuit until
+			you reduce the circuit to just one resistor.
+			<br>(Start with the highlighted resistors in series.)
+			<details>
+				<summary>solution</summary>
+				<div class="col-group">
+					<div class='center'>
+						<svg viewbox="80,0,560,310" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="200" class='center'>
+							<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 80
+							l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+							v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+							h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+							h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+							M 290 50 h45 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 45
+							v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+							h-170" fill='none' stroke="#333" stroke-width="5" stroke-linejoin="round" />
+							<text x="390" y="90" text-anchor="middle" font-size="30" fill='#333'>100Ω</text>
+							<text x="390" y="291" text-anchor="middle" font-size="30" fill='#333'>100Ω</text>
+							<text x="185" y="291" text-anchor="middle" font-size="30" fill='#333'>100Ω</text>
+							<text x="152" y="155" text-anchor="middle" font-size="30" fill='#333'>100Ω</text>
+							<text x="320" y="155" text-anchor="middle" font-size="30" fill='#333'>100Ω</text>
+						</svg>
+						<svg viewbox="80,0,560,310" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="200" class='center'>
+							<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 80
+						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+						v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+						h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+						M 290 50 h45 h 125
+						v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						h-170" fill='none' stroke="#333" stroke-width="5" stroke-linejoin="round" />
+							<text x="390" y="90" text-anchor="middle" font-size="30" fill='#333'>100Ω</text>
+							<text x="390" y="291" text-anchor="middle" font-size="30" fill='#333'>100Ω</text>
+							<text x="152" y="155" text-anchor="middle" font-size="30" fill='#0bb' font-weight='bold'>200Ω</text>
+							<text x="320" y="155" text-anchor="middle" font-size="30" fill='#333'>100Ω</text>
+						</svg>
+
+
+					</div>
+					<div class='center'>
+						<svg viewbox="80,0,560,310" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="200" class='center'>
+							<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 80
+					   l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+					   v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					   h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					   h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="5" stroke-linejoin="round"
+							/>
+							<text x="390" y="90" text-anchor="middle" font-size="30" fill='#333'>100Ω</text>
+							<text x="390" y="291" text-anchor="middle" font-size="30" fill='#333'>100Ω</text>
+							<text x="325" y="155" text-anchor="middle" font-size="30" fill='#0bb' font-weight='bold'>66.6Ω</text>
+						</svg>
+						<svg viewbox="80,0,560,310" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="200" class='center'>
+							<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 240					  
+					  v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					  h -240 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="5" stroke-linejoin="round"
+							/>
+							<text x="335" y="155" text-anchor="middle" font-size="30" fill='#0bb' font-weight='bold'>266.6Ω</text>
+						</svg>
+					</div>
+					<p>Equivalent Resistance = 266.6Ω</p>
+			</details>
+			</div>
+			<h2 class='underlined'>Solving Complex Circuits</h2>
+			<p>How do you solve a circuit with both series and parallel elements? One technique is to simplify the circuit by replacing
+				resistors in series or parallel with one equivalent resistor.</p>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="350" class='center'>
+				<path d="M 50 50 h 80
+			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+			M 290 50 h170
+			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+			h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+				<text x="40" y="140" text-anchor="end" font-size="20" fill='#333'>6.0V</text>
+				<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
+				<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600Ω</text>
+				<text x="254" y="157" text-anchor="start" font-size="16" fill='#999'>R2</text>
+				<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>800Ω</text>
+				<text x="424" y="157" text-anchor="start" font-size="16" fill='#999'>R3</text>
+				<text x="475" y="157" text-anchor="start" font-size="20" fill='#333'>900Ω</text>
+				<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
+				<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500Ω</text>
+			</svg>
+			<p class='center'>We can start by combining the two parallel resistors.</p>
+			$$\frac{1}{R_{eq}} = \frac{1}{R_{2}} + \frac{1}{R_{3}}$$ $$R_{eq} = \left(\frac{1}{800} + \frac{1}{900}\right)^{-1}$$ $$R_{eq}
+			= \left(0.00125 + 0.00\overline{11}\right)^{-1}$$ $$R_{eq} = 420 \Omega$$
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="300" class='center'>
+				<path d="M 50 50 h 80
+			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="40" y="140" text-anchor="end" font-size="20" fill='#333'>6.0V</text>
+				<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
+				<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600Ω</text>
+				<text x="274" y="157" text-anchor="end" font-size="16" fill='#999'>Req</text>
+				<text x="305" y="157" text-anchor="start" font-size="20" fill='#0aa'>420Ω</text>
+				<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
+				<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500Ω</text>
+			</svg>
+			<p class='center'>Next we can combine the 3 resistors in series.</p>
+			$$R_{eq} = 600+420+500$$ $$R_{eq} = 1520 \Omega$$
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="215" class='center'>
+				<path d="M 50 50 h 80 h 160
+			v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v20
+			h -160
+			h -80 v-47 m-40 0 h 80 m-20 -15 h-40 m20 0 v -60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="40" y="100" text-anchor="end" font-size="20" fill='#333'>6.0V</text>
+				<text x="274" y="117" text-anchor="end" font-size="16" fill='#999'>Req</text>
+				<text x="305" y="117" text-anchor="start" font-size="20" fill='#0aa'>1520Ω</text>
+			</svg>
+			<pclass='center'>Kirchoff's Voltage law says that the total positive voltage must equal the negative voltage. This tells us the voltage
+				drop on the resistor is the same as the battery.</p>
+				$$V_{bat} + V_1 = 0$$ $$6.0 + V_1 = 0$$ $$V_1 = -6.0$$
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="215" class='center'>
+					<path d="M 50 50 h 80 h 160
+			v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v20
+			h -160
+			h -80 v-47 m-40 0 h 80 m-20 -15 h-40 m20 0 v -60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					/>
+					<text x="40" y="100" text-anchor="end" font-size="20" fill='#333'>6.0V</text>
+					<text x="274" y="117" text-anchor="end" font-size="16" fill='#999'>Req</text>
+					<text x="305" y="117" text-anchor="start" font-size="20" fill='#333'>1520Ω</text>
+					<text x="305" y="147" text-anchor="start" font-size="20" fill='#0aa'>-6.0V</text>
+				</svg>
+				<p class='center'>We can solve for current through the resistor with Ohm's law.</p>
+				$$V=IR$$ $$I = \frac{V}{R}$$ $$I = \frac{6.0}{1530}$$ $$I = 0.0039A$$
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="215" class='center'>
+					<path d="M 50 50 h 80 h 160
+				v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v20
+				h -160
+				h -80 v-47 m-40 0 h 80 m-20 -15 h-40 m20 0 v -60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					/>
+					<text x="40" y="100" text-anchor="end" font-size="20" fill='#333'>6.0V</text>
+					<text x="274" y="117" text-anchor="end" font-size="16" fill='#999'>Req</text>
+					<text x="305" y="87" text-anchor="start" font-size="20" fill='#0aa'>0.0039A</text>
+					<text x="305" y="117" text-anchor="start" font-size="20" fill='#333'>1523Ω</text>
+					<text x="305" y="147" text-anchor="start" font-size="20" fill='#333'>-6.0V</text>
+				</svg>
+
+				<p>This current can be applied to any circuit element in series with Req. If we expand the circuit back to when they were
+					all in a series we will know the current for all the resistors.</p>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="350" class='center'>
+					<path d="M 50 50 h 80
+			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					/>
+					<text x="40" y="140" text-anchor="end" font-size="20" fill='#333'>6.0V</text>
+					<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
+					<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600Ω</text>
+					<text x="170" y="110" text-anchor="middle" font-size="20" fill='#0aa'>0.0039A</text>
+					<text x="245" y="157" text-anchor="start" font-size="16" fill='#999'>Req</text>
+					<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>420Ω</text>
+					<text x="305" y="182" text-anchor="start" font-size="20" fill='#0aa'>0.0039A</text>
+					<text x="424" y="157" text-anchor="start" font-size="16" fill='#999'>R3</text>
+					<text x="475" y="157" text-anchor="start" font-size="20" fill='#333'>900Ω</text>
+					<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
+					<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500Ω</text>
+					<text x="170" y="307" text-anchor="middle" font-size="20" fill='#0aa'>0.0039A</text>
+				</svg>
+				<p class='center'>We can use Ohm's law to find voltages.</p>
+				<div class="col-group">
+					<div>
+						$$V=IR_1$$ $$V=(0.0039)(600)$$ $$V=2.3V$$
+					</div>
+					<div>
+						$$V=IR_4$$ $$V=(0.0039)(500)$$ $$V=2.0V$$
+					</div>
+				</div>
+				$$V=IR_{eq}$$ $$V=(0.0039)(420)$$ $$V=1.7V$$
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="350" class='center'>
+					<path d="M 50 50 h 80
+			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					/>
+					<text x="40" y="140" text-anchor="end" font-size="20" fill='#333'>6.0V</text>
+					<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
+					<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600Ω</text>
+					<text x="170" y="110" text-anchor="middle" font-size="20" fill='#333'>0.0039A</text>
+					<text x="170" y="135" text-anchor="middle" font-size="20" fill='#0aa'>-2.3V</text>
+					<text x="245" y="157" text-anchor="start" font-size="16" fill='#999'>Req</text>
+					<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>420Ω</text>
+					<text x="305" y="182" text-anchor="start" font-size="20" fill='#333'>0.0039A</text>
+					<text x="305" y="207" text-anchor="start" font-size="20" fill='#0aa'>-1.7V</text>
+					<text x="424" y="157" text-anchor="start" font-size="16" fill='#999'>R3</text>
+					<text x="475" y="157" text-anchor="start" font-size="20" fill='#333'>900Ω</text>
+					<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
+					<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500Ω</text>
+					<text x="170" y="307" text-anchor="middle" font-size="20" fill='#333'>0.0039A</text>
+					<text x="170" y="332" text-anchor="middle" font-size="20" fill='#0aa'>-2.0V</text>
+				</svg>
+				<p>Resistors in parallel have the same voltage, but not the same current. Let's expand back to our full size circuit and
+					fill in the voltage.</p>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="350" class='center'>
+					<path d="M 50 50 h 80
+			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+			M 290 50 h170
+			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+			h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					<text x="40" y="140" text-anchor="end" font-size="20" fill='#333'>6.0V</text>
+					<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
+					<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600Ω</text>
+					<text x="170" y="110" text-anchor="middle" font-size="20" fill='#333'>0.0039A</text>
+					<text x="170" y="135" text-anchor="middle" font-size="20" fill='#333'>-2.3V</text>
+					<text x="254" y="157" text-anchor="start" font-size="16" fill='#999'>R2</text>
+					<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>800Ω</text>
+					<text x="305" y="182" text-anchor="start" font-size="20" fill='#0aa'>-1.7V</text>
+					<text x="424" y="157" text-anchor="start" font-size="16" fill='#999'>R3</text>
+					<text x="475" y="157" text-anchor="start" font-size="20" fill='#333'>900Ω</text>
+					<text x="475" y="182" text-anchor="start" font-size="20" fill='#0aa'>-1.7V</text>
+					<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
+					<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500Ω</text>
+					<text x="170" y="307" text-anchor="middle" font-size="20" fill='#333'>0.0039A</text>
+					<text x="170" y="332" text-anchor="middle" font-size="20" fill='#333'>-2.0V</text>
+				</svg>
+				<p class='center'>We can use Ohm's law on R2 and R3 to find current.</p>
+				<div class="col-group">
+					<div>
+						$$I=\frac{V}{R_2}$$ $$I=\frac{1.7}{800}$$ $$I=0.0021A$$
+					</div>
+					<div>
+						$$I=\frac{V}{R_3}$$ $$I=\frac{1.7}{900}$$ $$I=0.0019A$$
+					</div>
+				</div>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="350" class='center'>
+					<path d="M 50 50 h 80
+			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+			M 290 50 h170
+			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+			h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					<text x="40" y="140" text-anchor="end" font-size="20" fill='#333'>6.0V</text>
+					<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
+					<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600Ω</text>
+					<text x="170" y="110" text-anchor="middle" font-size="20" fill='#333'>0.0039A</text>
+					<text x="170" y="135" text-anchor="middle" font-size="20" fill='#333'>-2.3V</text>
+					<text x="254" y="157" text-anchor="start" font-size="16" fill='#999'>R2</text>
+					<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>800Ω</text>
+					<text x="305" y="182" text-anchor="start" font-size="20" fill='#333'>-1.7V</text>
+					<text x="305" y="207" text-anchor="start" font-size="20" fill='#0aa'>0.0021A</text>
+					<text x="424" y="157" text-anchor="start" font-size="16" fill='#999'>R3</text>
+					<text x="475" y="157" text-anchor="start" font-size="20" fill='#333'>900Ω</text>
+					<text x="475" y="182" text-anchor="start" font-size="20" fill='#333'>-1.7V</text>
+					<text x="475" y="207" text-anchor="start" font-size="20" fill='#0aa'>0.0019A</text>
+					<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
+					<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500Ω</text>
+					<text x="170" y="307" text-anchor="middle" font-size="20" fill='#333'>0.0039A</text>
+					<text x="170" y="332" text-anchor="middle" font-size="20" fill='#333'>-2.0V</text>
+				</svg>
+				<p class='center'>We can calculate the power dissipated by each element with P=IV.</p>
+				<div class="col-group">
+					<div>
+						$$P = IV_1$$ $$P = (0.0039)(2.3)$$ $$P = 0.0090W$$
+					</div>
+					<div>
+						$$P = IV_4$$ $$P = (0.0039)(2.0)$$ $$P = 0.0078W$$
+					</div>
+				</div>
+				<div class="col-group">
+					<div>
+						$$P = IV_2$$ $$P = (0.0021)(1.7)$$ $$P = 0.0036W$$
+					</div>
+					<div>
+						$$P = IV_3$$ $$P = (0.0019)(1.7)$$ $$P = 0.0032W$$
+					</div>
+				</div>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="370" class='center'>
+					<path d="M 50 50 h 80
+			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+			M 290 50 h170
+			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+			h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					<text x="40" y="140" text-anchor="end" font-size="20" fill='#333'>6.0V</text>
+					<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
+					<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600Ω</text>
+					<text x="170" y="110" text-anchor="middle" font-size="20" fill='#333'>0.0039A</text>
+					<text x="170" y="135" text-anchor="middle" font-size="20" fill='#333'>-2.3V</text>
+					<text x="170" y="160" text-anchor="middle" font-size="20" fill='#0aa'>0.0090W</text>
+					<text x="254" y="157" text-anchor="start" font-size="16" fill='#999'>R2</text>
+					<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>800Ω</text>
+					<text x="305" y="182" text-anchor="start" font-size="20" fill='#333'>-1.7V</text>
+					<text x="305" y="207" text-anchor="start" font-size="20" fill='#333'>0.0021A</text>
+					<text x="305" y="232" text-anchor="start" font-size="20" fill='#0aa'>0.0036W</text>
+					<text x="424" y="157" text-anchor="start" font-size="16" fill='#999'>R3</text>
+					<text x="475" y="157" text-anchor="start" font-size="20" fill='#333'>900Ω</text>
+					<text x="475" y="182" text-anchor="start" font-size="20" fill='#333'>-1.7V</text>
+					<text x="475" y="207" text-anchor="start" font-size="20" fill='#333'>0.0019A</text>
+					<text x="475" y="232" text-anchor="start" font-size="20" fill='#0aa'>0.0032W</text>
+					<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
+					<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500Ω</text>
+					<text x="170" y="307" text-anchor="middle" font-size="20" fill='#333'>0.0039A</text>
+					<text x="170" y="332" text-anchor="middle" font-size="20" fill='#333'>-2.0V</text>
+					<text x="170" y="357" text-anchor="middle" font-size="20" fill='#0aa'>0.0078W</text>
+				</svg>
+				<p>That was a long problem. Let's check our work. The total voltage should equal zero, if we count the resistors in parallel
+					as one.</p>
+				$$V_1+V_4+V_{eq} + V_{bat} = 0$$ $$-2.3-2.0-1.7+6.0 = 0 $$ $$0 = 0 $$
+				<p>The power from the battery should equal the sum of the power lost in the resistors.</p>
+				$$P_{bat}=IV$$ $$P_{bat}=(0.0039)(6.0)$$ $$P_{bat}=0.023W$$
+				<br> $$P_{res} = 0.0090W+0.0078W+0.0036W+0.0032W$$ $$P_{res} = 0.023W$$
+				<p class='center'>Looks good!</p>
+	</article>
+	<div class='back'>
+		<a href="../../../index.html#units">Back</a>
+	</div>
+	<script>
+		renderMathInElement(document.body);
+	</script>
+	<!-- <script src="charge11.js"></script> -->
+	<!-- <script src="charge13.js"></script> -->
+</body>
+
+</html>
