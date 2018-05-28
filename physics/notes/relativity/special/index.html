@@ -107,7 +107,7 @@
 			</details>
 		</div>
 
-		<h2 class='underlined'>Special Relativity</h2>
+		<h2 class='underlined' id="specialrelativity">Special Relativity</h2>
 		<p>
 			The Michelson–Morley experiment and a few other experiments indicated that there was a problem with our understanding of
 			relative velocity.
@@ -364,7 +364,7 @@
 		<div class='example'>
 			<p>
 				<a href="https://www.youtube.com/watch?v=400xfGmSlqQ">Muons</a> are elementary particles similar to electrons, but more massive. Muons are produced in Earth's upper atmosphere
-				by cosmic rays, but they have a half life of 2.2 microseconds. This means after 0.0000022 seconds half of a population
+				by cosmic rays, but they have a half-life of 2.2 microseconds. This means after 0.0000022 seconds half of a population
 				of muons will decay in other particles. </p>
 			<p></p>
 			<strong>Example:</strong> As muons enter the Earth's atmosphere they typically have a speed of 0.98c. How long would the half
@@ -473,8 +473,12 @@
 		</div> -->
 
 		<h2 class='underlined'>Mass–Energy Equivalence</h2>
-		<p>One of the non obvious consequences of special relativity is that mass and energy are equivalent. This means that energy
-			affects the inertia and gravity of an object.
+		<p>One of the non obvious consequences of special relativity is that mass and energy are equivalent. Mass can be thought of
+			as a type of energy.</p>
+		<p>Previously we thought that only mass determined, inertia and gravity. It is more accurate to include all types of energy
+			in these calculations. For example, a hot object produces slightly more gravity than a cold one. </p>
+		<p>
+			Light has energy, so it produces and is affected by gravity. The path of light is bent by a gravitational field.
 		</p>
 		<div class="definition">
 			<h1>$$ E = \gamma mc^2$$ </h1>
@@ -630,19 +634,100 @@
 				<text transform="matrix(0.583 0 0 0.583 475.7793 443.4707)" fill="#231F20" font-family="'HelveticaNeueLTPro-Roman'" font-size="30">+</text>
 			</svg>
 			$$ e^- + e^+ \to \gamma + \gamma $$
-			<p>When a fundamental particle and it's
+			<p>When a fundamental particle and its
 				<a href="https://www.youtube.com/watch?v=Lo8NmoDL9T8">antiparticle</a> collide they
 				<a href="https://en.wikipedia.org/wiki/Annihilation">annihilate</a> to form two photons. The photons have the same energy as the original particles.
 				<br>
 				<em>(The symbol gamma is used here to represent a photon, not the Lorentz factor.)</em>
 			</p>
 			<strong>Example:</strong> The antimatter version of an electron is a positron. Calculate the energy of a photon produced by the
-			annihilation of an electron and positron?
+			annihilation of an electron and positron.
+			<details>
+				<summary>Subatomic Particles Data Table</summary>
+				<table border>
+					<tr>
+						<th>name</th>
+						<th>symbol</th>
+						<th>charge (C)</th>
+						<th>mass (kg)</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Proton">proton</a>
+						</td>
+						<td> \(p^+\)
+						</td>
+						<td>1.602 × 10
+							<sup> −19</sup>
+						</td>
+						<td>1.672621 × 10
+							<sup>-27</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Neutron">neutron</a>
+						</td>
+						<td>\(n\)
+						</td>
+						<td>0</td>
+						<td>‎1.674927 × 10
+							<sup>-27</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Electron">electron</a>
+						</td>
+						<td>\(e^-\)
+						</td>
+						<td>−1.602 × 10
+							<sup> −19</sup>
+						</td>
+						<td>9.109383 × 10
+							<sup>-31</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Positron">positron</a>
+						</td>
+						<td>\(e^+\)
+						</td>
+						<td>1.602 × 10
+							<sup> −19</sup>
+						</td>
+						<td>9.109383 × 10
+							<sup>-31</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Neutrino">neutrino</a>
+						</td>
+						<td>\(v_e\)
+						</td>
+						<td>0</td>
+						<td>almost 0
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Neutrino">antineutrino</a>
+						</td>
+						<td>\(\bar{v}_e\)
+						</td>
+						<td>0</td>
+						<td>almost 0
+						</td>
+					</tr>
+				</table>
+			</details>
 			<details>
 				<summary>hint</summary>
 				<br>Matter antimatter annihilation converts
 				<strong>all</strong> the mass of a particle into energy. Find the energy of an electron at rest. That energy will be the same
-				for a photon.
+				for a photon produced by electron and position annihilation.
 				<br>
 				<br>
 			</details>
@@ -657,7 +742,7 @@
 		<div class='example'>
 			<strong>Example:</strong> The
 			<a href="https://en.wikipedia.org/wiki/Large_Hadron_Collider">Large Hadron Collider</a> can accelerate a proton to 0.999999991c. How much energy would an observer measure for a proton
-			at that speed.
+			at that speed?
 			<details>
 				<summary>solution</summary>
 				$$ \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2} } }$$ $$ \gamma = \frac{1}{\sqrt{1-\frac{(0.999999991)^2c^2}{c^2} } }$$ $$ \gamma
@@ -668,10 +753,186 @@
 		</div>
 
 		<div class='example'>
-			<p>Kinetic energy is the energy an object has because of it's velocity. We can find a relativistic equation for kinetic energy
+			<a href="https://en.wikipedia.org/wiki/File:Beta_Negative_Decay.svg">
+				<svg class='center' x="0px" y="0px" width="310px" height="280px">
+					<!-- class="side-graphics" style="position: relative; top: 250px; left: 100%;" -->
+					<path fill="none" stroke="#000000" stroke-width="2" d="   M125.368,170.183c0.211-6.429,0.436-12.811,1.174-17.297c0.739-4.487,2.01-7.017,3.982-6.963c1.973,0.054,4.644,2.68,7.74,6.868   c3.096,4.188,6.595,9.862,9.96,15.043c3.365,5.18,6.572,9.776,9.176,12.15c2.603,2.375,4.59,2.48,5.902,0.107   s1.961-7.197,2.31-13.119c0.35-5.921,0.424-12.854,0.773-18.775c0.349-5.921,0.997-10.746,2.31-13.119   c1.313-2.374,3.301-2.267,5.903,0.107c2.603,2.374,5.81,6.97,9.175,12.151s6.865,10.854,9.961,15.042s5.767,6.814,7.739,6.868   s3.243-2.476,3.982-6.963c0.739-4.486,0.964-10.868,1.175-17.297"
+					/>
+					<path fill="none" stroke="#000000" stroke-width="2" d="M77.2,259.725l48.294-90.021" />
+					<path fill="none" stroke="#000000" stroke-width="2" d="M82.944,57.899l42.423,111.941" />
+					<path fill="none" stroke="#000000" stroke-width="2" d="M206.547,145.077l20.635-87.621" />
+					<path fill="none" stroke="#000000" stroke-width="2" d="M206.52,145.105l65.924-48.609" />
+					<path d="M19.531,37.781V285h0.938V37.781H19.531z" />
+					<path d="M15.936,47.58l4.048-11.008l4.048,11.008C21.642,45.821,18.372,45.832,15.936,47.58z" />
+					<path d="M289.42,91.032l2.805,0.367c-0.442,1.736-1.262,3.084-2.458,4.042c-1.196,0.959-2.724,1.438-4.583,1.438    c-2.342,0-4.198-0.765-5.57-2.293s-2.058-3.672-2.058-6.431c0-2.854,0.693-5.069,2.08-6.646c1.387-1.576,3.187-2.364,5.397-2.364    c2.141,0,3.89,0.772,5.246,2.316c1.356,1.545,2.035,3.718,2.035,6.519c0,0.171-0.005,0.426-0.015,0.767h-11.94    c0.101,1.864,0.598,3.292,1.493,4.282c0.894,0.99,2.01,1.485,3.347,1.485c0.995,0,1.844-0.276,2.548-0.83    C288.45,93.13,289.008,92.246,289.42,91.032z M280.511,86.382h8.939c-0.12-1.427-0.462-2.497-1.025-3.211    c-0.864-1.107-1.984-1.662-3.361-1.662c-1.247,0-2.294,0.442-3.144,1.326C281.07,83.72,280.601,84.902,280.511,86.382z"
+					/>
+					<path d="M186.09,194.777l-4.099-16.368h2.097l2.35,10.729c0.252,1.124,0.47,2.241,0.652,3.35c0.394-1.749,0.626-2.758,0.695-3.025    l2.94-11.054h2.465l2.213,8.284c0.555,2.055,0.955,3.986,1.201,5.795c0.196-1.034,0.453-2.222,0.769-3.562l2.424-10.518h2.054    l-4.235,16.368h-1.97l-3.256-12.472c-0.273-1.042-0.436-1.683-0.484-1.921c-0.162,0.752-0.313,1.393-0.453,1.921l-3.276,12.472    H186.09z"
+					/>
+					<path fill="none" stroke="#000000" d="M65.322,259.725l48.294-90.021" />
+					<path fill="none" stroke="#000000" d="M71.066,57.899l42.422,111.941" />
+					<path fill="none" stroke="#000000" d="M53.444,259.725l48.294-90.021" />
+					<path fill="none" stroke="#000000" d="M59.188,57.899l42.422,111.941" />
+					<path d="M85.21,52v-1.393c-0.696,1.072-1.643,1.607-2.839,1.607c-0.528,0-1.021-0.107-1.479-0.321    c-0.458-0.214-0.798-0.484-1.02-0.808c-0.222-0.325-0.378-0.722-0.468-1.192c-0.062-0.315-0.093-0.815-0.093-1.5v-5.875h1.517    v5.259c0,0.839,0.031,1.405,0.093,1.696c0.096,0.423,0.298,0.754,0.607,0.996c0.309,0.241,0.691,0.361,1.146,0.361    c0.455,0,0.882-0.123,1.281-0.37s0.681-0.583,0.847-1.009c0.166-0.425,0.249-1.043,0.249-1.853v-5.081h1.517V52H85.21z"
+					/>
+					<path d="M60.446,51.576v-1.393c-0.696,1.072-1.643,1.607-2.839,1.607c-0.528,0-1.021-0.107-1.479-0.321    c-0.458-0.214-0.798-0.484-1.02-0.808c-0.222-0.325-0.378-0.722-0.468-1.192c-0.062-0.315-0.093-0.815-0.093-1.5v-5.875h1.517    v5.259c0,0.839,0.031,1.405,0.093,1.696c0.096,0.423,0.298,0.754,0.607,0.996c0.309,0.241,0.691,0.361,1.146,0.361    c0.455,0,0.882-0.123,1.281-0.37s0.681-0.583,0.847-1.009c0.166-0.425,0.249-1.043,0.249-1.853v-5.081h1.517v9.482H60.446z"
+					/>
+					<path d="M72.51,52v-1.196c-0.567,0.94-1.401,1.411-2.502,1.411c-0.714,0-1.369-0.208-1.968-0.625    c-0.598-0.417-1.062-0.999-1.39-1.746s-0.493-1.606-0.493-2.576c0-0.946,0.149-1.805,0.446-2.576    c0.298-0.771,0.745-1.362,1.34-1.772s1.261-0.616,1.997-0.616c0.54,0,1.02,0.121,1.441,0.362c0.421,0.241,0.764,0.555,1.028,0.942    V38.91h1.508V52H72.51z M67.716,47.268c0,1.214,0.242,2.122,0.725,2.724c0.483,0.601,1.053,0.901,1.71,0.901    c0.663,0,1.226-0.287,1.689-0.861s0.695-1.451,0.695-2.629c0-1.298-0.236-2.25-0.708-2.857c-0.472-0.607-1.053-0.911-1.744-0.911    c-0.674,0-1.237,0.292-1.689,0.875S67.716,46.012,67.716,47.268z"
+					/>
+					<path d="M76.818,277v-1.162c-0.551,0.914-1.361,1.37-2.43,1.37c-0.692,0-1.329-0.202-1.91-0.606s-1.031-0.971-1.35-1.695    c-0.319-0.726-0.479-1.56-0.479-2.502c0-0.919,0.145-1.752,0.434-2.501s0.723-1.322,1.301-1.722    c0.578-0.398,1.225-0.598,1.939-0.598c0.524,0,0.99,0.117,1.399,0.352c0.409,0.233,0.742,0.539,0.998,0.914v-4.561h1.464V277    H76.818z M72.163,272.404c0,1.18,0.234,2.061,0.704,2.645c0.469,0.584,1.022,0.876,1.661,0.876c0.644,0,1.19-0.278,1.641-0.837    c0.45-0.558,0.675-1.408,0.675-2.553c0-1.261-0.229-2.186-0.687-2.775c-0.458-0.59-1.023-0.884-1.694-0.884    c-0.654,0-1.201,0.283-1.64,0.85C72.382,270.292,72.163,271.186,72.163,272.404z"
+					/>
+					<path d="M54.16,277v-1.353c-0.676,1.04-1.595,1.561-2.757,1.561c-0.513,0-0.991-0.104-1.436-0.312    c-0.445-0.209-0.775-0.471-0.99-0.785s-0.367-0.701-0.454-1.158c-0.06-0.306-0.09-0.791-0.09-1.456v-5.705h1.473v5.106    c0,0.815,0.03,1.365,0.09,1.648c0.093,0.41,0.289,0.732,0.589,0.967c0.3,0.233,0.671,0.351,1.113,0.351    c0.441,0,0.856-0.12,1.244-0.36c0.387-0.239,0.661-0.566,0.822-0.979c0.161-0.413,0.241-1.013,0.241-1.799v-4.934h1.473V277H54.16    z"
+					/>
+					<path d="M65.93,277v-1.162c-0.551,0.914-1.361,1.37-2.43,1.37c-0.692,0-1.329-0.202-1.91-0.606s-1.031-0.971-1.35-1.695    c-0.319-0.726-0.479-1.56-0.479-2.502c0-0.919,0.145-1.752,0.434-2.501s0.723-1.322,1.301-1.722    c0.578-0.398,1.225-0.598,1.939-0.598c0.524,0,0.99,0.117,1.399,0.352c0.409,0.233,0.742,0.539,0.998,0.914v-4.561h1.464V277    H65.93z M61.275,272.404c0,1.18,0.234,2.061,0.704,2.645c0.469,0.584,1.022,0.876,1.661,0.876c0.644,0,1.19-0.278,1.641-0.837    c0.45-0.558,0.675-1.408,0.675-2.553c0-1.261-0.229-2.186-0.687-2.775c-0.458-0.59-1.023-0.884-1.694-0.884    c-0.654,0-1.201,0.283-1.64,0.85C61.494,270.292,61.275,271.186,61.275,272.404z"
+					/>
+					<path d="M58.647,295.412v-12.812h1.844v1.821c0.888-1.407,2.17-2.11,3.848-2.11c0.729,0,1.398,0.139,2.009,0.416    s1.068,0.642,1.372,1.092s0.516,0.985,0.638,1.604c0.076,0.402,0.114,1.105,0.114,2.111v7.877h-2.049v-7.793    c0-0.885-0.08-1.546-0.239-1.984s-0.442-0.788-0.848-1.05c-0.406-0.261-0.882-0.392-1.429-0.392c-0.873,0-1.626,0.293-2.26,0.88    c-0.633,0.588-0.95,1.701-0.95,3.342v6.997H58.647z"
+					/>
+					<path d="M64.25,32.104V14.383h1.867v1.665c0.44-0.651,0.937-1.14,1.491-1.466c0.554-0.326,1.226-0.488,2.015-0.488    c1.032,0,1.943,0.281,2.732,0.844c0.789,0.563,1.385,1.357,1.787,2.383c0.402,1.025,0.603,2.149,0.603,3.372    c0,1.311-0.222,2.491-0.666,3.541c-0.444,1.049-1.089,1.854-1.936,2.413c-0.846,0.559-1.736,0.838-2.669,0.838    c-0.683,0-1.296-0.153-1.838-0.458s-0.989-0.691-1.337-1.158v6.237H64.25z M66.106,20.861c0,1.649,0.315,2.867,0.945,3.655    c0.63,0.789,1.393,1.182,2.289,1.182c0.911,0,1.69-0.408,2.339-1.224c0.649-0.816,0.974-2.081,0.974-3.794    c0-1.632-0.317-2.855-0.951-3.667c-0.634-0.813-1.391-1.219-2.271-1.219c-0.873,0-1.645,0.433-2.316,1.297    C66.442,17.956,66.106,19.212,66.106,20.861z"
+					/>
+					<path d="M225.359,47.829l-3.332-10.48c-0.221-0.692-0.513-1.374-0.874-2.045c-0.362-0.671-0.859-1.007-1.493-1.007    c-0.301,0-0.633,0.07-0.995,0.208l-0.211-0.559l3.754-1.63h0.664l3.965,12.286l2.457-5.32c0.452-0.958,0.679-1.709,0.679-2.253    c0-0.437-0.086-1.049-0.257-1.837c-0.131-0.575-0.196-1.007-0.196-1.294c0-1.054,0.538-1.582,1.613-1.582    c0.955,0,1.433,0.479,1.433,1.438c0,0.948-0.663,2.759-1.99,5.432l-4.312,8.643H225.359z"
+					/>
+					<path d="M242.656,48.344l1.603,0.21c-0.253,0.992-0.721,1.762-1.404,2.31s-1.557,0.822-2.619,0.822    c-1.338,0-2.399-0.437-3.183-1.31c-0.784-0.874-1.176-2.098-1.176-3.675c0-1.631,0.396-2.897,1.188-3.798    c0.793-0.9,1.82-1.351,3.084-1.351c1.224,0,2.223,0.441,2.998,1.324c0.775,0.883,1.163,2.124,1.163,3.725    c0,0.098-0.003,0.244-0.009,0.438h-6.823c0.058,1.065,0.342,1.881,0.854,2.447c0.511,0.566,1.148,0.849,1.912,0.849    c0.568,0,1.054-0.158,1.456-0.475C242.102,49.542,242.421,49.038,242.656,48.344z M237.565,45.687h5.108    c-0.069-0.815-0.265-1.427-0.586-1.835c-0.494-0.633-1.135-0.95-1.921-0.95c-0.713,0-1.312,0.253-1.797,0.758    C237.885,44.166,237.617,44.841,237.565,45.687z"
+					/>
+					<path d="M92.136,221.646l10.447-9.274l-1.95,13.832C99.115,223.012,95.677,221.182,92.136,221.646z" />
+					<g id="g4675" transform="translate(-1.6071429,-4.6428572)">
+						<path d="M103.337,125.369l-0.138-13.969l9.154,10.552C108.949,121.002,105.312,122.393,103.337,125.369z" />
+					</g>
+					<path d="M84.864,218.18l5.223-4.637l-0.975,6.916C88.353,218.863,86.634,217.948,84.864,218.18z" />
+					<path d="M91.868,119.62l-0.069-6.984l4.577,5.276C94.674,117.436,92.856,118.132,91.868,119.62z" />
+					<path d="M72.986,218.18l5.223-4.637l-0.975,6.916C76.475,218.863,74.756,217.948,72.986,218.18z" />
+					<path d="M79.99,119.62l-0.069-6.984l4.577,5.276C82.796,117.436,80.978,118.132,79.99,119.62z" />
+					<g transform="translate(3.75,-2.6785714)">
+						<path d="M228.188,123.114l13.414-3.9l-7.691,11.661C233.907,127.341,231.586,124.213,228.188,123.114z" />
+					</g>
+					<path fill="none" stroke="#000000" stroke-width="2" d="M125.368,170.183c0.211-6.429,0.436-12.811,1.174-17.297c0.739-4.487,2.01-7.017,3.982-6.963c1.973,0.054,4.644,2.68,7.74,6.868   c3.096,4.188,6.595,9.862,9.96,15.043c3.365,5.18,6.572,9.776,9.176,12.15c2.603,2.375,4.59,2.48,5.902,0.107   s1.961-7.197,2.31-13.119c0.35-5.921,0.424-12.854,0.773-18.775c0.349-5.921,0.997-10.746,2.31-13.119   c1.313-2.374,3.301-2.267,5.903,0.107c2.603,2.374,5.81,6.97,9.175,12.151s6.865,10.854,9.961,15.042s5.767,6.814,7.739,6.868   s3.243-2.476,3.982-6.963c0.739-4.486,0.964-10.868,1.175-17.297"
+					/>
+					<path fill="none" stroke="#000000" stroke-width="1.1015" d="M218.982,25.784h13.771" />
+					<path fill="none" stroke="#000000" d="M294.909,76.242h8.716" />
+					<g transform="matrix(-0.9999968,-2.5532833e-3,2.5532833e-3,-0.9999968,432.47378,207.73137)">
+						<path d="M209.727,110.371l7.698-11.657l1.688,13.867C216.822,109.89,213.029,109.009,209.727,110.371z" />
+					</g>
+					<path fill="none" stroke="#000000" d="M204.885,179.176h6.092" />
+					<path d="M22.258,15.419l-0.575,3.03h3.03l-0.339,1.698h-3.03l-1.149,6.139c-0.157,0.706-0.262,1.358-0.262,2.011   c0,0.758,0.366,1.228,1.202,1.228c0.392,0,0.731-0.026,1.019-0.104l-0.104,1.698c-0.392,0.157-1.045,0.235-1.672,0.235   c-1.907,0-2.665-1.149-2.665-2.456c0-0.731,0.104-1.437,0.288-2.351l1.228-6.4h-1.803l0.313-1.698h1.803l0.444-2.351L22.258,15.419   z"
+					/>
+				</svg>
+			</a>
+			$$ n \to p^+ + e^- + \bar{v}_e $$
+			<p>
+				A free neutron is unstable with a half-life of about 15 minutes. It decays into a proton, an electron and an antineutrino.
+				This process is called beta decay.
+			</p>
+			<strong>Example:</strong> The beta decay products are measured to have a total kinetic energy of 0.78 MeV. Show that conservation
+			of energy holds for beta decay.
+			<details>
+				<summary>Subatomic Particles Data Table</summary>
+				<table border>
+					<tr>
+						<th>name</th>
+						<th>symbol</th>
+						<th>charge (C)</th>
+						<th>mass (kg)</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Proton">proton</a>
+						</td>
+						<td> \(p^+\)
+						</td>
+						<td>1.602 × 10
+							<sup> −19</sup>
+						</td>
+						<td>1.672621 × 10
+							<sup>-27</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Neutron">neutron</a>
+						</td>
+						<td>\(n\)
+						</td>
+						<td>0</td>
+						<td>‎1.674927 × 10
+							<sup>-27</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Electron">electron</a>
+						</td>
+						<td>\(e^-\)
+						</td>
+						<td>−1.602 × 10
+							<sup> −19</sup>
+						</td>
+						<td>9.109383 × 10
+							<sup>-31</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Positron">positron</a>
+						</td>
+						<td>\(e^+\)
+						</td>
+						<td>1.602 × 10
+							<sup> −19</sup>
+						</td>
+						<td>9.109383 × 10
+							<sup>-31</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Neutrino">neutrino</a>
+						</td>
+						<td>\(v_e\)
+						</td>
+						<td>0</td>
+						<td>almost 0
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Neutrino">antineutrino</a>
+						</td>
+						<td>\(\bar{v}_e\)
+						</td>
+						<td>0</td>
+						<td>almost 0
+						</td>
+					</tr>
+				</table>
+			</details>
+			<details>
+				<summary>hint</summary>
+				<br> Convert the masses of each particle into energy. Conservation of energy holds if the left side of the reaction equals
+				the right side plus the kinetic energy.
+				<br>
+				<br>The antineutrino has such a low mass it can be ignored
+				<br>
+				<br>Be sure to include enough precision in the masses.
+				<br>
+				<br>
+			</details>
+			<details>
+				<summary>solution</summary>
+				<span style="font-size: 0.9em;">
+					$$E_0=mc^2$$ $$E_p = (1.672621 \times 10^{-27})(9 \times 10 ^{16}) = 1.5053589 \times 10^{-10}J$$ $$E_e = (9.109383 \times
+					10^{-31})(9 \times 10 ^{16}) = 8.1984447 \times 10^{-14}J$$ $$KE = 0.78MeV \left(\frac{1.602 \times 10^{-19}J}{eV}\right)
+					= 1.24 \times 10^{-13} J $$ $$ E_p + E_e + KE$$ $$ \small 1.5053589 \times 10^{-10}J + 8.1984447 \times 10^{-14}J +
+					1.24 \times 10^{-13} J = $$ $$ \color{blue} 1.507418 \times 10^{-10}J $$ $$ E_n = (1.674927 \times 10^{-27})(9 \times
+					10 ^{16}) = \color{blue} 1.5074343 \times 10^{-10} J$$
+				</span>
+				<br>The energy of a neutron is very close to the total energy of its products. The small difference can be attributed to
+				the detail in the measurements.
+			</details>
+		</div>
+
+		<div class='example'>
+			<p>Kinetic energy is the energy an object has because of its velocity. We can find a relativistic equation for kinetic energy
 				by subtracting the energy of an object at rest from the energy at a relative velocity.</p>
 			$$KE = E - E_0$$ $$KE = \gamma mc^2 - mc^2 $$ $$KE = (\gamma -1)mc^2$$
-			<strong>Example:</strong> How much kinetic energy would an observer measure for a 1kg object moving at half the speed of light.
+			<strong>Example:</strong> How much kinetic energy would an observer measure for a 1kg object moving at half the speed of light?
 			<details>
 				<summary>solution</summary>
 				$$ \gamma = 1.15$$
@@ -680,7 +941,6 @@
 				<br>It would take that much energy to accelerate 1kg to half the speed of light.
 			</details>
 		</div>
-
 
 		<h2 class='underlined'>Spacetime</h2>
 		<p>

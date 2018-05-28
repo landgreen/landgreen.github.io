@@ -16,12 +16,13 @@
 	<meta name="keywords" content="physics, computer science, science, computer, course, Landgreen, Ross, school, notes, javascript, high school, new west charter, newwestcharter, simulation, teacher">
 	<meta name="author" content="Ross Landgreen">
 
-	<title>Motion: review</title>
+	<title>Motion Review</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/contrib/auto-render.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+	<script src="../../../lib/katex/katex.min.js"></script>
+	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+
 	<script src='../../../lib/randomColor.min.js'></script>
 	<link rel="stylesheet" href="../../../style.css">
 </head>
@@ -29,7 +30,7 @@
 <body>
 
 	<header>
-		<h1>Motion: Review</h1>
+		<h1>Motion Review</h1>
 	</header>
 	<article>
 		<h1 class='underlined'>Metric Units</h1>
@@ -46,96 +47,77 @@
 
 		$$10km = 10\left(10^{3}\right)m = 10{,}000m$$ Converting from 10ms to meters means moving the decimal 3 spaces smaller. $$10
 		ms = 10\left(10^{-3}\right)s = 0.01s$$
-		<table class="infobox" cellpadding="1" style="padding:0; text-align:left;">
-			<tr style="background:#ccc;">
-				<th style="text-align:center;">Name</th>
-				<th style="text-align:center;">Symbol</th>
-				<th style="text-align:center;">Factor</th>
-				<th style="text-align:center;">Power</th>
+		<table>
+			<tr>
+				<th>Name</th>
+				<th>Symbol</th>
+				<th>Factor</th>
+				<th>Power</th>
 			</tr>
 			<tr>
 				<td>giga</td>
-				<td style="text-align: center;">G</td>
+				<td>G</td>
 				<td style="text-align: right;">
-					<span class="nowrap">
-						<span style="display:none" class="sortkey">7009100000000000000♠</span>1
-						<span style="margin-left:.25em;">000</span>
-						<span style="margin-left:.25em;">000</span>
-						<span style="margin-left:.25em;">000</span>
-					</span>
+					1,000,000,000
 				</td>
-				<td style="text-align: center;">10
+				<td>10
 					<sup>9</sup>
 				</td>
 			</tr>
 			<tr>
 				<td>mega</td>
-				<td style="text-align: center;">M</td>
+				<td>M</td>
 				<td style="text-align: right;">
-					<span class="nowrap">
-						<span style="display:none" class="sortkey">7006100000000000000♠</span>1
-						<span style="margin-left:.25em;">000</span>
-						<span style="margin-left:.25em;">000</span>
-					</span>
+					1,000,000
 				</td>
-				<td style="text-align: center;">10
+				<td>10
 					<sup>6</sup>
 				</td>
 			</tr>
 			<tr>
 				<td>kilo</td>
-				<td style="text-align: center;">k</td>
+				<td>k</td>
 				<td style="text-align: right;">
-					<span class="nowrap">
-						<span style="display:none" class="sortkey">7003100000000000000♠</span>1
-						<span style="margin-left:.25em;">000</span>
-					</span>
+					1,000
 				</td>
-				<td style="text-align: center;">10
+				<td>10
 					<sup>3</sup>
 				</td>
 			</tr>
 
 			<tr>
 				<td>centi</td>
-				<td style="text-align: center;">c</td>
+				<td>c</td>
 				<td style="text-align: left;">0.01</td>
-				<td style="text-align: center;">10
+				<td>10
 					<sup>−2</sup>
 				</td>
 			</tr>
 			<tr>
 				<td>milli</td>
-				<td style="text-align: center;">m</td>
+				<td>m</td>
 				<td style="text-align: left;">0.001</td>
-				<td style="text-align: center;">10
+				<td>10
 					<sup>−3</sup>
 				</td>
 			</tr>
 			<tr>
 				<td>micro</td>
-				<td style="text-align: center;">μ</td>
+				<td>μ</td>
 				<td style="text-align: left;">
-					<span class="nowrap">
-						<span style="display:none" class="sortkey">6994100000000000000♠</span>0.000
-						<span style="margin-left:.25em;">001</span>
-					</span>
+					0.000 001
 				</td>
-				<td style="text-align: center;">10
+				<td>10
 					<sup>−6</sup>
 				</td>
 			</tr>
 			<tr>
 				<td>nano</td>
-				<td style="text-align: center;">n</td>
+				<td>n</td>
 				<td style="text-align: left;">
-					<span class="nowrap">
-						<span style="display:none" class="sortkey">6991100000000000000♠</span>0.000
-						<span style="margin-left:.25em;">000</span>
-						<span style="margin-left:.25em;">001</span>
-					</span>
+					0.000 000 001
 				</td>
-				<td style="text-align: center;">10
+				<td>10
 					<sup>−9</sup>
 				</td>
 			</tr>
@@ -167,14 +149,14 @@
 		$$ 50 min \to s$$ In order to cancel minutes we want to build a fraction with minutes on top and the seconds on the bottom.
 		$$ 50 min \left( \frac{s}{min} \right)$$ The fraction must be equal to one to not change the value we are converting. This
 		means the top and bottom must equal each other. One minute equals 60 seconds. $$ 50 min \left( \frac{60s}{1min} \right)$$
-		We can cancel units. $$ 50 \color{red}{min} \left( \frac{60s}{1 \color{red}{min} } \right)$$ $$ 50 \left( \frac{60s}{1}
+		We can cancel units. $$ 50 \textcolor{red}{min} \left( \frac{60s}{1 \textcolor{red}{min} } \right)$$ $$ 50 \left( \frac{60s}{1}
 		\right)$$ Multiply and divide to simplify $$3000s$$
 
 		<div class='example'>
 			<strong>Example:</strong> A marathon is 26.2 miles. If one mile is the same as 1.6 km, how far is a marathon in kilometers?
 			<details>
 				<summary>solution</summary>
-				$$26.2 mile \left( \frac{1.6 km}{1 mile} \right) = 41.92km$$
+				$$26.2 \textcolor{red}{mile} \left( \frac{1.6 km}{1 \textcolor{red}{mile}} \right) = 41.92km$$
 			</details>
 		</div>
 		<div class='example'>
@@ -182,10 +164,10 @@
 			<details>
 				<summary>solution</summary>
 				<p>Let's get everything in inches first</p>
-				$$6ft\left( \frac{12inch}{1ft}\right) + 1inch$$ $$72inches + 1inch$$ $$73inches$$
+				$$6ft\left( \frac{12in}{1ft}\right) + 1in$$ $$72in + 1in$$ $$73in$$
 				<p>Now we convert into meters.
-					<br> A google search says that 1m = 39.37inches</p>
-				$$73inches \left( \frac{1m}{39.37inch}\right) $$ $$73 \left( \frac{1m}{39.37}\right) $$ $$1.85m$$
+					<br> A google search says that 1m = 39.37in</p>
+				$$73\textcolor{red}{in} \left( \frac{1m}{39.37\textcolor{red}{in}}\right) $$ $$73 \left( \frac{1m}{39.37}\right) $$ $$1.85m$$
 			</details>
 		</div>
 

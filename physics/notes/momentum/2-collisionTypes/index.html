@@ -14,6 +14,10 @@
     <title>More Collisions</title>
     <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
+    <!-- <link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+	<script src="../../../lib/katex/katex.min.js"></script>
+	<script src="../../../lib/katex/contrib/auto-render.min.js"></script> -->
+
     <link rel="stylesheet" type="text/css" href="../../../style.css">
     <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full">
         MathJax.Hub.Config({
@@ -31,9 +35,9 @@
         <h1>More Collisions</h1>
     </header>
     <article>
-        <h1 class='underlined'>Sticky Collisions</h1>
-        <p>Sticky collisions are called perfectly inelastic collision. The equations for conservation of momentum simplify a
-            bit when the objects start or end stuck together.</p>
+        <p>When two object collide and stick together we say the collision is
+            <strong>perfectly inelastic</strong>. In those situations the equations for conservation of momentum simplify a bit.
+        </p>
         $$m_1u_1 + m_2u_2 = m_1v+m_2v$$ $$m_1u_1 + m_2u_2 = \left(m_1+m_2\right)v$$
         <p>Objects can also start together and separate, like in an explosion.</p>
         $$\left(m_1+m_2\right)u = m_1v_1 + m_2v_2$$
@@ -65,7 +69,7 @@
 
         <div class='example'>
             <canvas id="canvas3" width='600' height='300' onclick="collision2d(this)"> </canvas>
-            <strong>Horizontal Example:</strong> A
+            <strong>Horizontal:</strong> A
             <a style='color: pink'>pink</a> hexagon and a
             <a style='color: cyan'>cyan</a> triangle collide. Before the collision the hexagon has a mass of 5.20kg and is moving to the right at
             2m/s. The cyan triangle is moving to the left at 1m/s and has a mass of 1.17kg. If the triangle bounces off the
@@ -78,7 +82,7 @@
                 $$5.81=(5.20)v_{1}$$ $$1.12 \small\frac{m}{s}=\normalsize v_{1}$$
             </details>
             <br>
-            <strong>Vertical Example:</strong> Lets take a look at the vertical aspect of the
+            <strong>Vertical:</strong> Lets take a look at the vertical aspect of the
             <a style='color: pink'>pink</a> hexagon and
             <a style='color: cyan'>cyan</a> triangle collision. Before the collision the hexagon has a mass of 5.20kg and is not moving up or down.
             The final vertical velocity of the hexagon is 0.23 down. The final vertical velocity of the triangle is 0.67

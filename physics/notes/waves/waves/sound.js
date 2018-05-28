@@ -238,7 +238,8 @@ function sound(el, drawMode = 0, waveOut = false, drawOne = false) {
     ctx.arc(where.x, where.y, settings.radius * 1.2, 0, 2 * Math.PI);
     ctx.fillStyle = "#f24";
     ctx.strokeStyle = "#fff";
-    ctx.lineWidth = 2;
+    // ctx.strokeStyle = "rgba(255,255,255,0.7)";
+    ctx.lineWidth = 10;
     ctx.stroke();
     ctx.fill();
   };
