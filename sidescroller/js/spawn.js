@@ -19,9 +19,8 @@ const spawn = {
     "spawner",
     "ghoster",
     "sneaker"
-    // "bomber"
   ],
-  bossPickList: ["zoomer", "chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner", "bomber"],
+  bossPickList: ["zoomer", "chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner"],
   setSpawnList: function() {
     //this is run at the start of each new level to determine the possible mobs for the level
     //each level has 2 mobs: one new mob and one from the the last level
@@ -126,16 +125,19 @@ const spawn = {
     me.lookTorque = 0.000005;
     me.g = 0.0002; //required if using 'gravity'
     me.seePlayerFreq = Math.ceil(40 + 25 * Math.random());
+    const springStiffness = 0.002;
+    const springDampening = 0.1;
+
     me.springTarget = {
       x: me.position.x,
       y: me.position.y
     };
-    let len = cons.length;
+    const len = cons.length;
     cons[len] = Constraint.create({
       pointA: me.springTarget,
       bodyB: me,
-      stiffness: 0.003,
-      damping: 0.07
+      stiffness: springStiffness,
+      damping: springDampening
     });
     cons[len].length = 100 + 1.5 * radius;
     me.cons = cons[len];
@@ -144,15 +146,15 @@ const spawn = {
       x: me.position.x,
       y: me.position.y
     };
-    len = cons.length;
-    cons[len] = Constraint.create({
+    const len2 = cons.length;
+    cons[len2] = Constraint.create({
       pointA: me.springTarget2,
       bodyB: me,
-      stiffness: 0.003,
-      damping: 0.07
+      stiffness: springStiffness,
+      damping: springDampening
     });
-    cons[len].length = 100 + 1.5 * radius;
-    me.cons2 = cons[len];
+    cons[len2].length = 100 + 1.5 * radius;
+    me.cons2 = cons[len2];
 
     me.onDeath = function() {
       this.removeCons();
@@ -1060,6 +1062,9 @@ const spawn = {
   propsHeavy: {
     density: 0.01 //default density is 0.001
   },
+  propsIsNotHoldable: {
+    isNotHoldable: true
+  },
   propsNoRotation: {
     inertia: Infinity //prevents rotation
   },
@@ -1068,7 +1073,8 @@ const spawn = {
     frictionAir: 0.001,
     friction: 0,
     frictionStatic: 0,
-    restitution: 0
+    restitution: 0,
+    isNotHoldable: true
     // density: 0.0001
   },
   propsDoor: {

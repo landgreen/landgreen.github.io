@@ -617,7 +617,7 @@ const mobs = {
       grow: function() {
         if (this.seePlayer.recall) {
           if (this.radius < 80) {
-            const scale = 1.03;
+            const scale = 1.01;
             Matter.Body.scale(this, scale, scale);
             this.radius *= scale;
             // this.torque = -0.00002 * this.inertia;

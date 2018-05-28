@@ -178,16 +178,16 @@ function toggleFullScreen(el) {
   setupCanvas();
 }
 
-function playSound(id) {
-  //play sound
-  if (false) {
-    //sounds are turned off for now
-    // if (document.getElementById(id)) {
-    var sound = document.getElementById(id); //setup audio
-    sound.currentTime = 0; //reset position of playback to zero  //sound.load();
-    sound.play();
-  }
-}
+// function playSound(id) {
+//   //play sound
+//   if (false) {
+//     //sounds are turned off for now
+//     // if (document.getElementById(id)) {
+//     var sound = document.getElementById(id); //setup audio
+//     sound.currentTime = 0; //reset position of playback to zero  //sound.load();
+//     sound.play();
+//   }
+// }
 
 function shuffle(array) {
   var currentIndex = array.length,

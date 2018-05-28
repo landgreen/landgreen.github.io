@@ -125,7 +125,6 @@ const game = {
     game.updateGunHUD();
     game.boldActiveGunHUD();
     mech.drop();
-    playSound("click");
   },
   keyPress: function() {
     //runs on key press event
@@ -211,7 +210,7 @@ const game = {
     this.mouseInGame.y = (this.mouse.y - canvas.height2) / this.zoom + canvas.height2 - mech.transY;
   },
   zoomInFactor: 0,
-  startZoomIn: function(time = 150) {
+  startZoomIn: function(time = 250) {
     game.zoom = 0;
     let count = 0;
 

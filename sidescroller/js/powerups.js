@@ -11,7 +11,6 @@ const powerUps = {
       let heal = this.size / 40;
       mech.addHealth(heal * heal);
       //game.makeTextLog('heal for '+(heal*100).toFixed(0)+'%',80)
-      playSound("powerup");
     }
   },
   ammo: {
@@ -35,7 +34,6 @@ const powerUps = {
       target.ammo += ammo;
       game.updateGunHUD();
       game.makeTextLog("+" + ammo + " ammo: " + target.name, 180);
-      playSound("ammo");
     }
   },
   gun: {
@@ -65,14 +63,12 @@ const powerUps = {
           "<div style='font-size:120%;' >new gun: " + b.guns[newGun].name + "</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>",
           360
         );
-        playSound("powerup");
       } else {
         //if you have all guns then get ammo
         const ammoTarget = Math.ceil(Math.random() * (b.guns.length - 1));
         const ammo = Math.ceil(b.guns[ammoTarget].ammoPack * 2);
         b.guns[ammoTarget].ammo += ammo;
         game.updateGunHUD();
-        playSound("ammo");
         game.makeTextLog("+" + ammo + " ammo: " + b.guns[ammoTarget].name, 180);
       }
     }

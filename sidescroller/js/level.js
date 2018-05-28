@@ -13,13 +13,12 @@ const level = {
     // game.levelsCleared = 3; //for testing to simulate all possible mobs spawns
     spawn.setSpawnList(); //picks a couple mobs types for a themed random mob spawns
     this[this.levels[this.onLevel]](); //picks the current map from the the levels array
-    console.log(mob.length);
     //this.testingMap();
     // this.skyscrapers();
     // this.rooftops();
     // this.warehouse();
     // this.highrise();
-    //this.towers();
+    // this.towers();
     this.addToWorld(); //add map to world
     game.draw.setPaths();
     this.levelAnnounce();
@@ -132,7 +131,7 @@ const level = {
     spawn.bodyRect(1050, -2350, 30, 30, 0.8); //
     spawn.boost(1800, -1000, 1000);
     spawn.bodyRect(1625, -1100, 100, 75); //
-    spawn.bodyRect(1350, -1025, 400, 25); //
+    spawn.bodyRect(1350, -1025, 400, 25, 1, spawn.propsIsNotHoldable); // ground plank
     spawn.mapRect(-700, -1000, 2100, 100); //lower left ledge
     spawn.bodyRect(350, -1100, 200, 100, 0.8); //
     spawn.bodyRect(370, -1200, 100, 100, 0.8); //
@@ -146,11 +145,11 @@ const level = {
     spawn.bodyRect(2705, -1350, 75, 100, 0.8); //
     spawn.mapRect(3450, -1600, 350, 50); //
     spawn.mapRect(1950, -1600, 1025, 50); //
-    spawn.bodyRect(3100, -1015, 375, 15, 0.8); //
+    spawn.bodyRect(3100, -1015, 375, 15, 0.8, spawn.propsIsNotHoldable); //
     spawn.bodyRect(3500, -850, 75, 125, 0.8); //
     spawn.mapRect(3400, -1000, 100, 1100); //left building wall
     spawn.mapRect(5450, -775, 100, 875); //right building wall
-    spawn.bodyRect(4850, -750, 300, 25, 0.8); //
+    spawn.bodyRect(4850, -750, 300, 25, 0.8, spawn.propsIsNotHoldable); //
     spawn.bodyRect(3925, -1400, 100, 150, 0.8); //
     spawn.mapRect(3450, -1250, 1100, 50); //
     spawn.mapRect(3450, -1225, 50, 75); //
@@ -572,6 +571,7 @@ const level = {
     spawn.mapRect(-600 + 1300, -2000, 900, 50); //center wall
     map[map.length] = Bodies.polygon(425, -1700, 0, 15); //circle above door
     spawn.bodyRect(420, -1675, 15, 170, 1, spawn.propsDoor); // door
+    body[body.length - 1].isNotHoldable = true;
     //makes door swing
     consBB[consBB.length] = Constraint.create({
       bodyA: body[body.length - 1],
@@ -798,7 +798,7 @@ const level = {
       if (target.velocity.y < 0) {
         mech.buttonCD_jump = 0; //reset short jump counter to pre vent short jumps on boosts
         Matter.Body.setVelocity(target, {
-          x: target.velocity.x,
+          x: target.velocity.x + (Math.random() - 0.5) * 2,
           y: info
         });
       }

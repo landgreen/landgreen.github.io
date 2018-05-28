@@ -95,8 +95,6 @@ function mobCollisionChecks(event) {
               mob[k].locatePlayer();
               let dmg = Math.min(Math.max(0.025 * Math.sqrt(mob[k].mass), 0.05), 0.3) * game.dmgScale;
               mech.damage(dmg);
-              playSound("dmg" + Math.floor(Math.random() * 4));
-
               if (mob[k].onHit) mob[k].onHit(k);
               game.drawList.push({
                 //add dmg to draw queue

@@ -210,7 +210,7 @@ const mech = {
       player.frictionAir = this.friction.ground;
     }
   },
-  buttonCD_jump: 0, //cooldown for player buttons
+  buttonCD_jump: 0, //cool down for player buttons
   keyMove: function() {
     if (this.onGround) {
       //on ground **********************
@@ -227,7 +227,6 @@ const mech = {
         player.frictionAir = this.friction.crouch;
       } else if ((keys[87] || keys[32]) && this.buttonCD_jump + 20 < game.cycle) {
         this.buttonCD_jump = game.cycle; //can't jump again until 20 cycles pass
-
         player.force.y = -this.jumpForce; //jump force
         //apply a fraction of the jump force to the thing the player is jumping off of
         Matter.Body.applyForce(mech.standingOn, mech.pos, {
@@ -416,7 +415,7 @@ const mech = {
       this.isHolding = false;
       Matter.Body.setMass(player, 5);
       this.holdingTarget.collisionFilter.category = 0x000001;
-      this.holdingTarget.collisionFilter.mask = 0x111111;
+      this.holdingTarget.collisionFilter.mask = 0x011111;
       this.holdingTarget = null;
       this.throwCharge = 0;
     }
@@ -492,6 +491,7 @@ const mech = {
             const dy = that.position.y - player.position.y;
             if (dx * dx + dy * dy > 3000 && that.speed < 3) {
               that.collisionFilter.category = 0x000001; //make solid
+              that.collisionFilter.mask = 0x011111;
             } else {
               setTimeout(solid, 250, that);
             }
@@ -573,7 +573,7 @@ const mech = {
             //is this next body a better target then my current best
             const dist = Matter.Vector.magnitude(Matter.Vector.sub(body[i].position, this.pos));
             const looking = this.lookingAt(body[i], this.fieldThreshold);
-            if (dist < grabbing.targetRange && (looking || !grabbing.lookingAt)) {
+            if (dist < grabbing.targetRange && (looking || !grabbing.lookingAt) && !body[i].isNotHoldable) {
               grabbing.targetRange = dist;
               grabbing.targetIndex = i;
               grabbing.lookingAt = looking;

@@ -318,7 +318,6 @@ const b = {
       have: false,
       fire: function() {
         const me = bullet.length;
-        // playSound("snare2");
         b.muzzleFlash(15);
         // if (Math.random() > 0.2) mobs.alert(500);
         const dir = (Math.random() - 0.5) * 0.15 + mech.angle;
@@ -338,7 +337,6 @@ const b = {
       have: false,
       fire: function() {
         b.muzzleFlash(35);
-        // playSound("snare2");
         // mobs.alert(650);
         for (let i = 0; i < 9; i++) {
           const me = bullet.length;
@@ -366,7 +364,6 @@ const b = {
       have: false,
       fire: function() {
         const me = bullet.length;
-        // playSound("snare2");
         const dir = mech.angle;
         bullet[me] = Bodies.rectangle(mech.pos.x + 40 * Math.cos(mech.angle), mech.pos.y + 40 * Math.sin(mech.angle), 31, 2, b.fireAttributes(dir));
         b.fireProps(20, 45, dir, me); //cd , speed
@@ -386,7 +383,6 @@ const b = {
       have: false,
       fire: function() {
         // b.muzzleFlash();
-        // playSound("snare2");
         const twist = 0.05 + Math.random() * 0.05;
         let dir = mech.angle - twist * 2;
         //let rotation = 0.02;
@@ -507,7 +503,6 @@ const b = {
       have: false,
       fire: function() {
         b.muzzleFlash(30);
-        // playSound("snare2");
         let dir = mech.angle - 0.1;
         for (let i = 0; i < 5; i++) {
           dir += 0.05 + (Math.random() - 0.5) * 0.04;
@@ -540,7 +535,6 @@ const b = {
       have: false,
       fire: function() {
         // b.muzzleFlash();
-        // playSound("launcher");
         const me = bullet.length;
         const dir = mech.angle;
         bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 22, b.fireAttributes(dir));
@@ -590,7 +584,6 @@ const b = {
       have: false,
       fire: function() {
         // b.muzzleFlash();
-        // playSound("launcher");
         const me = bullet.length;
         const dir = mech.angle; // + Math.random() * 0.05;
         bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 15, b.fireAttributes(dir));
@@ -640,7 +633,6 @@ const b = {
       have: false,
       fire: function() {
         b.muzzleFlash(45);
-        // playSound("snare2");
         // mobs.alert(800);
         const me = bullet.length;
         const dir = mech.angle;
@@ -659,7 +651,6 @@ const b = {
       have: false,
       fire: function() {
         b.muzzleFlash(20);
-        // playSound("snare2");
         // mobs.alert(450);
         let dir = mech.angle - 0.05;
         for (let i = 0; i < 3; i++) {
@@ -689,14 +680,12 @@ const b = {
       } else {
         mech.fireCDcycle = game.cycle + 30; //cooldown
         game.makeTextLog("<div style='font-size:150%;'>NO AMMO</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>", 80);
-        playSound("no");
         //switch to throw
         b.activeGun = 0;
         b.inventoryGun = 0;
         game.updateGunHUD();
         game.boldActiveGunHUD();
         //mech.drop();
-        // playSound("click");
       }
     }
   },
@@ -738,7 +727,6 @@ const b = {
 // 	have: true,
 // 	fire: function() {
 // 		const me = bullet.length;
-// 		playSound("snare2");
 // 		const dir = (Math.random() - 0.5) * 0.09 + mech.angle;
 // 		bullet[me] = Bodies.rectangle(
 // 			mech.pos.x + 30 * Math.cos(mech.angle),
