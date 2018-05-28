@@ -114,10 +114,6 @@ hr {
   border: 0;
   border-bottom: 1px solid #aaa;
 }
-th {
-  font-weight: bold;
-  text-align: left;
-}
 details p {
   text-align: center;
   font-size: 1.3em;
@@ -133,29 +129,49 @@ pre {
   background-color: #eee;
 }
 
-table {
-  margin: 25px auto;
-  border-collapse: collapse;
+/* table {
+  margin: 5px auto;
   border: 1px solid #eee;
-  /*border-bottom: 2px solid #222;*/
+  border-collapse: collapse;
   width: 100%;
 }
 
-table th,
-table td {
-  color: #777;
-  border: 1px solid #eee;
-  padding: 12px 20px;
+th,
+td {
+  border: 1px solid #ddd;
   border-collapse: collapse;
+  padding: 0.25rem;
+  text-align: left;
 }
-table th {
+th {
   background: #444;
   color: #fff;
-  text-transform: uppercase;
-  font-size: 0.85em;
 }
-table th.last {
-  border-right: none;
+
+tbody tr:hover {
+  background: #ddd;
+} */
+
+table {
+  margin: 5px auto;
+  border-collapse: collapse;
+  border: 1px solid #eee;
+  width: 100%;
+}
+tr:hover {
+  background: #f4f4f4;
+}
+
+th,
+td {
+  text-align: center;
+  border: 1px solid #eee;
+  padding: 0.25rem;
+  border-collapse: collapse;
+}
+th {
+  background: #444;
+  color: #fff;
 }
 
 .black {
@@ -227,11 +243,6 @@ table th.last {
   margin: 8em 0em 8em 0em;
 }
 
-.data th,
-td {
-  padding: 0.5em;
-}
-
 .derive {
   text-align: center;
   background-color: #e6f9f0;
@@ -251,10 +262,10 @@ td {
 /*math tex rendering __________________________*/
 
 .katex {
-  font-size: 1.5em !important;
+  font-size: 1.5em;
 }
 details .katex {
-  font-size: 2em !important;
+  font-size: 2em;
 }
 
 /*basic flex box __________________________*/
