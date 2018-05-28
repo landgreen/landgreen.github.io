@@ -118,15 +118,15 @@ var springGravity = function(button) {
       this.ke = 0.5 * this.mass * this.Vy * this.Vy;
       this.energy = this.Us + this.Ug + this.ke;
       //draw energy bars
-      ctx.fillStyle = "rgba(255, 0, 255, 0.3)";
+      ctx.fillStyle = "rgba(255, 0, 255, 0.4)";
       ctx.fillRect(0, 0, canvas.width * (this.ke / this.energy), 25);
-      ctx.fillStyle = "rgba(0, 255, 255, 0.3)";
+      ctx.fillStyle = "rgba(0, 255, 255, 0.4)";
       ctx.fillRect(0, 25, canvas.width * (this.Us / this.energy), 25);
-      ctx.fillStyle = "rgba(255, 255, 0, 0.3)";
+      ctx.fillStyle = "rgba(0, 255, 70, 0.4)";
       ctx.fillRect(0, 50, canvas.width * (this.Ug / this.energy), 25);
       //draw energy text
       ctx.fillStyle = "#000";
-      ctx.fillText("K = ½mv² = " + (this.ke / 1000).toFixed(0) + "kJ", 5, 20);
+      ctx.fillText("KE = ½mv² = " + (this.ke / 1000).toFixed(0) + "kJ", 5, 20);
       ctx.fillText("Us = ½ky² = " + (this.Us / 1000).toFixed(0) + "kJ", 5, 44);
       ctx.fillText("Ug = mgh = " + (this.Ug / 1000).toFixed(0) + "kJ", 5, 69);
       ctx.fillText("E = " + (this.energy / 1000).toFixed(0) + "kJ", 5, 92); //total energy doesn't stay still, probably because of onyl calculating 60 times a second?

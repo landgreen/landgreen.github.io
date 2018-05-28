@@ -11,7 +11,7 @@
   <meta property="og:description" content="Notes for a high school physics course.">
   <meta property="og:title" content="Physics Notes">
   <meta name="twitter:title" content="High School Physics Notes">
-  <title>Forces</title>
+  <title>Free Body Diagrams</title>
   <link rel="shortcut icon" href="../../../media/favicon.ico" type="image/x-icon" />
 
   <link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
@@ -23,10 +23,97 @@
 
 <body>
   <header>
-    <h1>Forces</h1>
+    <h1>Free Body Diagrams</h1>
   </header>
 
   <article>
+    <p>A free body diagram shows all the force vectors on a single mass. Typically you label the mass in the center of a box
+      and draw force vectors going away from the box. A free body diagram is often drawn to visualize Newton's second law.</p>
+
+    <div class='example'>
+      <svg class='svgDiagram center' width="300" height="120" viewBox="-15 0 285 120">
+        <rect x="0" y="100" width="300" height="110" style="fill:#ccc" />
+        <g transform='translate(100 20) rotate(0)'>
+          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#bdd" />
+          <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>2.0kg</text>
+        </g>
+        <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
+        <text x="10" y="53" fill="black">F=200N</text>
+        <use xlink:href="#vector" transform='translate(180 80) rotate(-90)' />
+        <text x="200" y="73" fill="black">F=500N</text>
+        <use xlink:href="#vector" transform='translate(180 40) rotate(-90)' />
+        <text x="200" y="33" fill="black">F=300N</text>
+      </svg>
+      <b>Example:</b> Find the acceleration for the free body diagram above.
+      <details>
+        <summary>solution</summary>
+        $$\sum F=ma$$ $$-200+300+500=2a$$ $$600=2a$$ $$300 \tfrac{m}{s^2}=a$$
+      </details>
+    </div>
+
+    <div class='example'>
+      <svg class='svgDiagram center' width="300" height="200">
+        <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
+        <g transform='translate(100 60) rotate(0)'>
+          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#e50" />
+          <text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='20px'>0.09kg</text>
+        </g>
+        <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
+        <text x="150" y="187" fill="black">F=0.34N</text>
+        <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
+        <text x="150" y="23" fill="black">F= ? </text>
+      </svg>
+      <b>Example:</b> This book
+      <a href='https://www.amazon.com/Martian-Novel-Andy-Weir-ebook/dp/B00EMXBDMA'>The Martian</a> by Andy Weir (mass = 0.09kg) is resting on a table (acceleration = zero). The force of gravity produces
+      a downwards force of 0.34N. What force is required to keep the book at rest on the table.
+      <details>
+        <summary>solution</summary>
+        $$\sum F=ma$$ $$F_{up} + F_{g} = ma$$ $$F_{up} - 0.34 = (0.09)(0)$$ $$F_{up} - 0.34 = 0$$ $$F_{up} = 0.34N$$
+      </details>
+    </div>
+
+    <div class='example'>
+
+      <b>Example:</b> Draw a free body diagram for a 83kg person holding onto a rope in a game of "Tug of war". The rope is
+      pulling them with a force of 520N left. The person's feet are countering that with 540N to the right.
+      <details>
+        <summary>solution</summary>
+        <svg class='svgDiagram center' width="300" height="120" viewBox="-15 0 285 120">
+          <g transform='translate(100 20) rotate(0)'>
+            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fcf" />
+            <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>83kg</text>
+          </g>
+          <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
+          <text x="10" y="53" fill="black">F= 520N</text>
+          <use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
+          <text x="200" y="53" fill="black">F=540N</text>
+        </svg>
+      </details>
+    </div>
+
+    <div class='example'>
+      <b>Example:</b> A red crate is falling, but a parachute is slowing its acceleration to only 2 m/s² down. The force of
+      gravity is 833N down. The parachute provides 663N up. Draw a free body diagram and use it to find the mass of the crate.
+      <details>
+        <summary>solution</summary>
+        <svg class='svgDiagram center' width="300" height="200">
+          <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
+          <g transform='translate(100 60) rotate(0)'>
+            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#eaa" />
+            <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>m = ?</text>
+          </g>
+          <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
+          <text x="150" y="187" fill="black">F=833N</text>
+          <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
+          <text x="150" y="23" fill="black">F= 663N </text>
+        </svg>
+        $$\sum F=ma$$ $$F_1+F_2=ma$$ $$-833+663 = m(2)$$ $$\frac{-170}{2} = \frac{m(2)}{2}$$ $$-85 kg = m$$
+        <p>Wait, a negative mass doesn't make sense. Oh, the acceleration is negative, because it points down.</p>
+        $$\frac{-170}{-2} = \frac{m(-2)}{-2}$$ $$85 kg = m$$
+      </details>
+    </div>
+
+
     <h1 class='underlined'>The Force of gravity</h1>
     <p>
       <strong>Mass</strong> is a measure of an object's inertia.
@@ -513,94 +600,6 @@
         <br>
         <p> weight on Mars</p>
         $$F_{g}=ma$$ $$F_{g}=(0.\overline{54})(3.711)$$ $$F_{g}=2.02N$$
-      </details>
-    </div>
-
-    <h1 class='underlined'>Free Body Diagrams</h1>
-    <p>A free body diagram (FBD) is a diagram that shows all the force vectors on a single mass. It helps visualize the directions
-      and how different masses apply forces to each other.</p>
-    <p>Typically you label the mass in the center of the box and draw force vectors going away from the box.</p>
-
-    <div class='example'>
-      <svg class='svgDiagram center' width="300" height="120" viewBox="-15 0 285 120">
-        <rect x="0" y="100" width="300" height="110" style="fill:#ccc" />
-        <g transform='translate(100 20) rotate(0)'>
-          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#bdd" />
-          <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>2.0kg</text>
-        </g>
-        <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-        <text x="10" y="53" fill="black">F=200N</text>
-        <use xlink:href="#vector" transform='translate(180 80) rotate(-90)' />
-        <text x="200" y="73" fill="black">F=500N</text>
-        <use xlink:href="#vector" transform='translate(180 40) rotate(-90)' />
-        <text x="200" y="33" fill="black">F=300N</text>
-      </svg>
-      <b>Example:</b> Find the acceleration for the free body diagram above.
-      <details>
-        <summary>solution</summary>
-        $$\sum F=ma$$ $$-200+300+500=2a$$ $$600=2a$$ $$300 \tfrac{m}{s^2}=a$$
-      </details>
-    </div>
-
-    <div class='example'>
-      <svg class='svgDiagram center' width="300" height="200">
-        <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
-        <g transform='translate(100 60) rotate(0)'>
-          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#e50" />
-          <text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='20px'>0.09kg</text>
-        </g>
-        <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
-        <text x="150" y="187" fill="black">F=0.34N</text>
-        <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
-        <text x="150" y="23" fill="black">F= ? </text>
-      </svg>
-      <b>Example:</b> This book
-      <a href='https://www.amazon.com/Martian-Novel-Andy-Weir-ebook/dp/B00EMXBDMA'>The Martian</a> by Andy Weir (mass = 0.09kg) is resting on a table (acceleration = zero). The force of gravity produces
-      a downwards force of 0.34N. What force is required to keep the book at rest on the table.
-      <details>
-        <summary>solution</summary>
-        $$\sum F=ma$$ $$F_{up} + F_{g} = ma$$ $$F_{up} - 0.34 = (0.09)(0)$$ $$F_{up} - 0.34 = 0$$ $$F_{up} = 0.34N$$
-      </details>
-    </div>
-
-    <div class='example'>
-
-      <b>Example:</b> Draw a free body diagram for a 83kg person holding onto a rope in a game of "Tug of war". The rope is
-      pulling them with a force of 520N left. The person's feet are countering that with 540N to the right.
-      <details>
-        <summary>solution</summary>
-        <svg class='svgDiagram center' width="300" height="120" viewBox="-15 0 285 120">
-          <g transform='translate(100 20) rotate(0)'>
-            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fcf" />
-            <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>83kg</text>
-          </g>
-          <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-          <text x="10" y="53" fill="black">F= 520N</text>
-          <use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
-          <text x="200" y="53" fill="black">F=540N</text>
-        </svg>
-      </details>
-    </div>
-
-    <div class='example'>
-      <b>Example:</b> A red crate is falling, but a parachute is slowing its acceleration to only 2 m/s² down. The force of
-      gravity is 833N down. The parachute provides 663N up. Draw a free body diagram and use it to find the mass of the crate.
-      <details>
-        <summary>solution</summary>
-        <svg class='svgDiagram center' width="300" height="200">
-          <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
-          <g transform='translate(100 60) rotate(0)'>
-            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#eaa" />
-            <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>m = ?</text>
-          </g>
-          <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
-          <text x="150" y="187" fill="black">F=833N</text>
-          <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
-          <text x="150" y="23" fill="black">F= 663N </text>
-        </svg>
-        $$\sum F=ma$$ $$F_1+F_2=ma$$ $$-833+663 = m(2)$$ $$\frac{-170}{2} = \frac{m(2)}{2}$$ $$-85 kg = m$$
-        <p>Wait, a negative mass doesn't make sense. Oh, the acceleration is negative, because it points down.</p>
-        $$\frac{-170}{-2} = \frac{m(-2)}{-2}$$ $$85 kg = m$$
       </details>
     </div>
 

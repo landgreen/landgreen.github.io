@@ -20,7 +20,6 @@
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 	<script src='../../../lib/randomColor.min.js'></script>
-	<link rel="stylesheet" href="../../../lib/font-awesome-4.6.3/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -28,49 +27,74 @@
 		<h1>Conservation of Energy</h1>
 	</header>
 	<article>
+		<style>
+			.canvas-container {
+				position: relative;
+				width: 600px;
+				height: 200px;
+			}
+
+			#canvas1 {
+				position: absolute;
+			}
+
+			#buttons {
+				position: absolute;
+				right: 0%;
+				bottom: 0%
+			}
+		</style>
 		<p>Take a look at the simulated spring and mass system below.</p>
-		<p>What types of energy are being traded?
-			<br>When is the velocity the highest?
-			<br>What is the effect of a higher spring constant?</p>
-		<canvas id="canvas1" width='600' height='200' onclick="spring(this)"> </canvas>
-		<br>
-		<button id="pause1">
-			&nbsp;
-			<i class="fa fa-pause" aria-hidden="true"></i>&nbsp;
-		</button> &nbsp;k =
+
+		<div class="canvas-container">
+			<canvas id="canvas1" width='600' height='200' onclick="spring(this)"></canvas>
+			<div id="buttons">
+				&nbsp;k =
+				<input id='spring-k' type="number" min="0" max="10" value=0.1 step=0.05> &nbsp;&nbsp;&nbsp; m =
+				<input id='spring-m' type="number" min="1" max="100" value=0 step=1>
+				<button id="pause1">pause </button>
+			</div>
+		</div>
+
+		<!-- <canvas id="canvas1" width='600' height='200' onclick="spring(this)"> </canvas>
+		<button id="pause1">pause </button> &nbsp;k =
 		<input id='spring-k' type="number" min="0" max="10" value=0.1 step=0.05> &nbsp;&nbsp;&nbsp; m =
-		<input id='spring-m' type="number" min="1" max="100" value=0 step=1>
-		<br>
-		<br>
-		<br>
-		<br>
-		<div class="col-group">
+		<input id='spring-m' type="number" min="1" max="100" value=0 step=1> -->
+		<p>What types of energy are being traded?
+			<br>
+			<br>When is the velocity the highest?
+			<br>
+			<br>What is the effect of a higher spring constant?</p>
+
+		<div class="example col-group">
 			<div>
 				<br>
 				<canvas id="canvas2" width='250' height='500' onclick="springGravity(this)"> </canvas>
 				<br>
-				<button id="pause2">
-					&nbsp;
-					<i class="fa fa-pause" aria-hidden="true"></i>&nbsp;
-				</button> &nbsp; k =
+				<button id="pause2"> pause </button> &nbsp; k =
 				<input id='spring-k2' type="number" min="0" max="10" value=3 step=1> m =
 				<input id='spring-m2' type="number" min="1" max="100" value=0 step=1>
 			</div>
 			<div>
-				<p>This simulation is a bit more fun with gravitational potential energy as well.</p>
-				<p>When is kinetic energy the highest?</p>
+				<p>This spring simulation is aligned vertically. It has gravitational potential energy in addition to kinetic and spring
+					energy.
+				</p>
+				<br>
+				<br> When is kinetic energy the highest?
 				<br>
 				<br>
-				<p>When is gravitational energy the lowest?</p>
+				<br> When is gravitational energy the lowest?
 				<br>
 				<br>
-				<p>When is spring energy the lowest?</p>
+				<br> When is spring energy the lowest?
 				<br>
 				<br>
-				<p>What is the effect of a lower mass?</p>
+				<br> What is the effect of a lower mass?
+				<br>
+				<br>
+				<br>Why does the total energy stay the same?
 			</div>
 		</div>
-
 
 		<h1 class='underlined'>Conservation of Energy</h1>
 		<p>Energy is conserved. This means it can't be reduced or increased, but as systems change, the energy changes form. Since

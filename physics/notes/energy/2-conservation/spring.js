@@ -28,7 +28,8 @@ var spring = function(button) {
     restitution: 0,
     airFriction: 1,
     equalibrium: 400,
-    k: 0.1 //document.getElementById("spring-k").value,
+    k: 0.1, //document.getElementById("spring-k").value,
+    turns: 3 + 25 * Math.sqrt(0.1)
   };
 
   function drawEqualibrium() {
@@ -68,13 +69,16 @@ var spring = function(button) {
       ctx.moveTo(box.x - this.r, box.y);
       var turns = 21;
       var add = 5;
-      for (var i = 1; i < turns + 1; i++) {
-        ctx.lineTo((box.x - this.r) * (1 - i / turns), box.y + (i % 2 === 0 ? 10 : -10));
-        // ctx.lineTo(box.x + (i % 2 === 0 ? 10 : -10), (box.y - this.r) * (1 - i / turns));
+      // for (var i = 1; i < turns + 1; i++) {
+      //   ctx.lineTo((box.x - this.r) * (1 - i / turns), box.y + (i % 2 === 0 ? 10 : -10));
+      // }
+      for (var i = 1; i < physics.turns + 1; i++) {
+        ctx.lineTo((box.x - this.r) * (1 - i / physics.turns), box.y + (i % 2 === 0 ? 10 : -10));
       }
       ctx.stroke();
       ctx.shadowColor = "transparent";
     };
+
     this.move = function() {
       this.x += this.Vx;
       this.y += this.Vy;
@@ -143,29 +147,29 @@ var spring = function(button) {
       ctx.fillRect(0, 25, canvas.width * (this.u / E), 30);
       //draw energy text
       ctx.fillStyle = "#000";
-      ctx.fillText("KE = ½mv² = " + this.ke.toFixed(0) + "J", 5, 20);
-      ctx.fillText("U = ½kx² = " + this.u.toFixed(0) + "J", 5, 46);
+      ctx.fillText("KE = ½mv² = " + (this.ke / 1000).toFixed(1) + "kJ", 5, 20);
+      ctx.fillText("Us = ½kx² = " + (this.u / 1000).toFixed(1) + "kJ", 5, 46);
       ctx.fillText("F = -kx = " + F.toFixed(0) + "N", 5, canvas.height - 5);
       //ctx.fillText('k = ' + (physics.k), 5, canvas.height - 25);
       ctx.fillText("x = " + (this.x - physics.equalibrium).toFixed(0) + "m", 5, canvas.height - 25);
       //force vector
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "black";
-      ctx.fillStyle = "black";
-      ctx.beginPath();
-      var y = box.y + box.r + 5;
-      var x = box.x + F;
-      ctx.moveTo(box.x, y);
-      ctx.lineTo(x, y);
-      ctx.stroke();
-      //Force arrow
-      ctx.beginPath();
-      ctx.lineTo(x, y + 5);
-      //if F is negative times 5 else times -5
-      ctx.lineTo(x + (F > 0 ? 8 : -8), y);
-      ctx.lineTo(x, y - 5);
-      ctx.lineTo(x, y);
-      ctx.fill();
+      // ctx.lineWidth = 2;
+      // ctx.strokeStyle = "black";
+      // ctx.fillStyle = "black";
+      // ctx.beginPath();
+      // var y = box.y + box.r + 5;
+      // var x = box.x + F;
+      // ctx.moveTo(box.x, y);
+      // ctx.lineTo(x, y);
+      // ctx.stroke();
+      // //Force arrow
+      // ctx.beginPath();
+      // ctx.lineTo(x, y + 5);
+      // //if F is negative times 5 else times -5
+      // ctx.lineTo(x + (F > 0 ? 8 : -8), y);
+      // ctx.lineTo(x, y - 5);
+      // ctx.lineTo(x, y);
+      // ctx.fill();
     };
   }
 
@@ -211,6 +215,7 @@ var spring = function(button) {
   document.getElementById("spring-k").addEventListener("input", function() {
     physics.k = document.getElementById("spring-k").value;
     box.Vx = 0;
+    physics.turns = 3 + 25 * Math.sqrt(physics.k);
   });
 
   //gets values for mass
