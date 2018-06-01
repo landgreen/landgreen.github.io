@@ -45,7 +45,7 @@ class Particle { //Particle class
                     const dy = who[i].position.y - who[j].position.y
                     const a = Math.atan2(dy, dx);
                     //the +4000 keeps r from being zero / adds stability
-                    const r = (dx * dx + dy * dy) + 100
+                    const r = (dx * dx + dy * dy)
                     const mag = 0.05 / r * who[j].mass;
                     who[i].velocity.x -= mag * Math.cos(a)
                     who[i].velocity.y -= mag * Math.sin(a)
