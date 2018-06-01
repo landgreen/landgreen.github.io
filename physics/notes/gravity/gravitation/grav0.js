@@ -54,8 +54,8 @@ function grav0(el) {
   let q = []; //holds the Particles
   const reset = function() {
     q = [];
-    if (document.getElementById("num").value > 1000) {
-      document.getElementById("num").value = 1000;
+    if (document.getElementById("num").value > 10000) {
+      document.getElementById("num").value = 10000;
     }
     Particle.spawnRandom(q, canvas, Math.floor(document.getElementById("num").value));
   };
@@ -63,7 +63,7 @@ function grav0(el) {
 
   function cycle() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    Particle.physicsAll(q);
+    Particle.integration(q);
     Particle.drawAll(q, ctx);
     Particle.bounds(q, canvas, -10);
     if (!pause) requestAnimationFrame(cycle);

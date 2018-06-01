@@ -29,7 +29,7 @@
     <article>
         <p>
             Gravity simulation with
-            <input class='number' id='num' type="number" step="1" min='1' max='500' value='10'> particles. Poke the particles with a click.
+            <input class='number' id='num' type="number" step="1" min='1' max='9999' value='10'> particles. Poke the particles with a click.
             <canvas class='black' id='grav0' height='300' width='600' onclick="grav0(this)"> </canvas>
         </p>
         <p class='underlined'>Kepler's Laws of Planetary Motion</p>
@@ -896,13 +896,13 @@
         <p>What is the gravitational potential energy when two masses are at zero distance away?</p>
         <p>What is the gravitational potential energy when two masses are at an infinite distance away?</p>
         <p>Energy is a scalar, not a vector. This means that when we calculate gravitational potential energy it has no direction.
-            You can see the potential energy in the simulation below as a scalar field. Think of the yellow regions as being
+            You can see the potential energy in the simulation below as a scalar field. Think of the reddish regions as being
             deeper into the
             <a href='https://xkcd.com/681/'>gravity well</a>.
             <br>Poke around with your mouse. Number of particles =
             <input class='number' id='num2' type="number" step="1" min='1' max='100' value='6'>
         </p>
-        <canvas class='center' id='grav2' height='400' width='500' onclick="grav2(this)"> </canvas>
+        <canvas class='center' id='grav2' height='400' width='600' onclick="grav2(this)"> </canvas>
 
         <div class='example'>
             <strong>Example:</strong> How much gravitational potential energy exists between two 100,000kg masses at a distance of

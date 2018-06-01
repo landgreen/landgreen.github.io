@@ -103,7 +103,7 @@ function charges3(el) {
   });
 
   const q = []; //holds the charges
-  //spawn
+  //spawn p before e to avoid a bug in the class method allPhysics
   for (let i = 0, len = Math.ceil((canvas.width + c.off * 2) / c.separation); i < len; ++i) {
     if (i < len / 2 - c.gap || i > len / 2 + c.gap) {
       q[q.length] = new Charge("p", {
