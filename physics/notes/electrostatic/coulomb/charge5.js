@@ -43,7 +43,7 @@ function charges4(el) {
   });
 
   const q = []; //holds the charges
-  //spawn
+  //spawn p before e to avoid a bug in the class method allPhysics
   const separation = 15;
   const off = 250;
 

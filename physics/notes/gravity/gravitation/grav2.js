@@ -35,9 +35,9 @@ function grav2(el) {
   let pause = false;
   el.addEventListener("mouseleave", function() {
     pause = true;
-    setTimeout(function() {
-      Particle.scalarField(q, 1, fMag);
-    }, 100);
+    // setTimeout(function() {
+    //   Particle.scalarField(q, 1, fMag);
+    // }, 100);
   });
   el.addEventListener("mouseenter", function() {
     pause = false;
@@ -67,7 +67,7 @@ function grav2(el) {
 
   function cycle() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    Particle.physicsAll(q);
+    Particle.integration(q);
     Particle.scalarField(q, ctx, canvas, 3, fMag);
     Particle.bounds(q, canvas, -10);
     if (!pause) requestAnimationFrame(cycle);

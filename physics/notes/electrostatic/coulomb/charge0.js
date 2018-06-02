@@ -44,6 +44,7 @@ function charges0(el) {
   });
 
   const q = []; //holds the charges
+  //spawn p before e to avoid a bug in the class method allPhysics
   Charge.spawnCharges(q, 25, "p");
   Charge.spawnCharges(q, 25, "e");
 

@@ -77,40 +77,91 @@ class Charge {
       }
     }
   }
-  static physicsAll(who) {
+
+  static physicsAll(who, minDistance = 600) {
     for (let i = 0, len = who.length; i < len; ++i) {
       if (who[i].electron) {
-        //move
+        //change position from velocity
         who[i].position.x += who[i].velocity.x;
         who[i].position.y += who[i].velocity.y;
         //friction
         who[i].velocity.x *= 0.99;
         who[i].velocity.y *= 0.99;
-        //electrostatic force
+        //accelerate from electrostatic force
         for (let j = 0, len = who.length; j < len; ++j) {
           if (i != j) {
             const dx = who[i].position.x - who[j].position.x;
             const dy = who[i].position.y - who[j].position.y;
-            const a = Math.atan2(dy, dx);
-            //the +1000 keeps r from being zero / adds stability
-            const r = dx * dx + dy * dy + 1000;
-            const mag = 200 * who[i].charge * who[j].charge / r;
-            who[i].velocity.x += mag * Math.cos(a);
-            who[i].velocity.y += mag * Math.sin(a);
+            const d2 = dx * dx + dy * dy + minDistance;
+            const mag = 200 * who[i].charge * who[j].charge / (d2 * Math.sqrt(d2));
+            who[i].velocity.x += mag * dx;
+            who[i].velocity.y += mag * dy;
           }
         }
       }
     }
   }
-  static pushZone(who, offx = 0, push = 0.1) {
+  // static physicsAll(who) {
+  //   const minDistance2 = 1000;
+  //   for (let i = 0, len = who.length; i < len; ++i) {
+  //     if (who[i].electron) {
+  //       //change position from velocity
+  //       who[i].position.x += who[i].velocity.x;
+  //       who[i].position.y += who[i].velocity.y;
+  //       //friction
+  //       who[i].velocity.x *= 0.99;
+  //       who[i].velocity.y *= 0.99;
+  //       //accelerate from electrostatic force
+  //       for (let j = 0, len = who.length; j < len; ++j) {
+  //         if (i != j) {
+  //           const dx = who[i].position.x - who[j].position.x;
+  //           const dy = who[i].position.y - who[j].position.y;
+  //           const d2 = Math.max(dx * dx + dy * dy, minDistance2);
+  //           const mag = 200 * who[i].charge * who[j].charge / (d2 * Math.sqrt(d2));
+  //           who[i].velocity.x += mag * dx;
+  //           who[i].velocity.y += mag * dy;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  // static physicsAll(who) {
+  //   for (let i = 0, len = who.length; i < len; ++i) {
+  //     if (who[i].electron) {
+  //       //move
+  //       who[i].position.x += who[i].velocity.x;
+  //       who[i].position.y += who[i].velocity.y;
+  //       //friction
+  //       who[i].velocity.x *= 0.99;
+  //       who[i].velocity.y *= 0.99;
+  //       //electrostatic force
+  //       for (let j = 0, len = who.length; j < len; ++j) {
+  //         if (j < i) {
+  //           const dx = who[i].position.x - who[j].position.x;
+  //           const dy = who[i].position.y - who[j].position.y;
+  //           const a = Math.atan2(dy, dx);
+  //           const r = dx * dx + dy * dy + 1000; //the +1000 keeps r from being zero / adds stability
+  //           const mag = 200 * who[i].charge * who[j].charge / r;
+  //           who[i].velocity.x += mag * Math.cos(a);
+  //           who[i].velocity.y += mag * Math.sin(a);
+  //           who[j].velocity.x -= mag * Math.cos(a);
+  //           who[j].velocity.y -= mag * Math.sin(a);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  static pushZone(who, offx = 0, offy = 50, height = 300, push = 0.1) {
     const range = {
       min: {
         x: offx - 50,
-        y: 50
+        y: offy
       },
       max: {
         x: offx + 50,
-        y: 350
+        y: offy + height
       }
     };
     //draw push
@@ -248,293 +299,296 @@ class Charge {
     }
     ctx.globalAlpha = 1;
   }
-  static scalarField(who, fieldSpacing = 3, fieldMag = 1000) {
-    const lenX = Math.floor(canvas.width / fieldSpacing);
-    const lenY = Math.floor(canvas.height / fieldSpacing);
-    const offset = Math.floor(fieldSpacing / 2);
-    const squareRadius = fieldSpacing + 1;
-    const yHeight = Math.floor(canvas.height / lenY);
-    const xheight = Math.floor(canvas.width / lenX);
-    const chroma = [
-      //http://gka.github.io/palettes/#colors=800,f00,f80,fd0,fff,0df,08f,00f,008|steps=256|bez=0|coL=0
-      "#880000",
-      "#8b0000",
-      "#8f0001",
-      "#930001",
-      "#960001",
-      "#9a0002",
-      "#9d0002",
-      "#a10002",
-      "#a40002",
-      "#a80002",
-      "#ac0002",
-      "#af0002",
-      "#b30002",
-      "#b70002",
-      "#bb0002",
-      "#be0002",
-      "#c20002",
-      "#c60002",
-      "#c90002",
-      "#cd0002",
-      "#d10002",
-      "#d50002",
-      "#d90002",
-      "#dc0001",
-      "#e00001",
-      "#e40001",
-      "#e80001",
-      "#ec0001",
-      "#f00001",
-      "#f40001",
-      "#f80000",
-      "#fc0000",
-      "#ff0200",
-      "#ff1300",
-      "#ff1e00",
-      "#ff2500",
-      "#ff2c00",
-      "#ff3200",
-      "#ff3700",
-      "#ff3c00",
-      "#ff4000",
-      "#ff4400",
-      "#ff4800",
-      "#ff4c00",
-      "#ff5000",
-      "#ff5300",
-      "#ff5600",
-      "#ff5a00",
-      "#ff5d00",
-      "#ff6000",
-      "#ff6300",
-      "#ff6600",
-      "#ff6900",
-      "#ff6c00",
-      "#ff6f00",
-      "#ff7100",
-      "#ff7400",
-      "#ff7700",
-      "#ff7900",
-      "#ff7c00",
-      "#ff7f00",
-      "#ff8100",
-      "#ff8400",
-      "#ff8600",
-      "#ff8900",
-      "#ff8c00",
-      "#ff8e00",
-      "#ff9100",
-      "#ff9400",
-      "#ff9700",
-      "#ff9a00",
-      "#ff9c00",
-      "#ff9f00",
-      "#ffa200",
-      "#ffa500",
-      "#ffa700",
-      "#ffaa00",
-      "#ffad00",
-      "#ffaf00",
-      "#ffb200",
-      "#ffb500",
-      "#ffb700",
-      "#ffba00",
-      "#ffbc00",
-      "#ffbf00",
-      "#ffc200",
-      "#ffc400",
-      "#ffc700",
-      "#ffc900",
-      "#ffcc00",
-      "#ffcf00",
-      "#ffd100",
-      "#ffd400",
-      "#ffd600",
-      "#ffd900",
-      "#ffdb00",
-      "#ffdd0e",
-      "#ffde22",
-      "#ffdf30",
-      "#ffe03b",
-      "#ffe144",
-      "#ffe24d",
-      "#ffe355",
-      "#ffe45d",
-      "#ffe565",
-      "#ffe66c",
-      "#ffe773",
-      "#ffe87a",
-      "#ffe981",
-      "#ffeb88",
-      "#ffec8e",
-      "#ffed95",
-      "#ffee9b",
-      "#ffefa2",
-      "#fff0a9",
-      "#fff1af",
-      "#fff2b5",
-      "#fff3bc",
-      "#fff4c2",
-      "#fff5c9",
-      "#fff6cf",
-      "#fff8d5",
-      "#fff9dc",
-      "#fffae2",
-      "#fffbe9",
-      "#fffcef",
-      "#fffdf5",
-      "#fffefc",
-      "#fdfeff",
-      "#f8fdff",
-      "#f3fcff",
-      "#eefbff",
-      "#eafaff",
-      "#e5f9ff",
-      "#e0f8ff",
-      "#dbf7ff",
-      "#d6f6ff",
-      "#d1f5ff",
-      "#ccf4ff",
-      "#c6f3ff",
-      "#c1f2ff",
-      "#bcf1ff",
-      "#b6f0ff",
-      "#b0efff",
-      "#abeeff",
-      "#a5edff",
-      "#9fecff",
-      "#98ebff",
-      "#92eaff",
-      "#8be9ff",
-      "#84e7ff",
-      "#7de6ff",
-      "#75e5ff",
-      "#6de4ff",
-      "#64e3ff",
-      "#5ae2ff",
-      "#4fe1ff",
-      "#42e0ff",
-      "#31dfff",
-      "#17ddff",
-      "#04dbff",
-      "#0ad9ff",
-      "#0fd6ff",
-      "#13d3ff",
-      "#16d0ff",
-      "#18ceff",
-      "#1acbff",
-      "#1bc8ff",
-      "#1dc6ff",
-      "#1ec3ff",
-      "#1fc0ff",
-      "#1fbeff",
-      "#20bbff",
-      "#20b8ff",
-      "#21b6ff",
-      "#21b3ff",
-      "#20b0ff",
-      "#20aeff",
-      "#20abff",
-      "#1fa8ff",
-      "#1ea6ff",
-      "#1da3ff",
-      "#1ca0ff",
-      "#1b9eff",
-      "#199bff",
-      "#1898ff",
-      "#1596ff",
-      "#1393ff",
-      "#1091ff",
-      "#0c8eff",
-      "#078bff",
-      "#0189ff",
-      "#0686ff",
-      "#0d83ff",
-      "#1280ff",
-      "#167dff",
-      "#197aff",
-      "#1b77ff",
-      "#1d73ff",
-      "#1f70ff",
-      "#206dff",
-      "#216aff",
-      "#2267ff",
-      "#2364ff",
-      "#2461ff",
-      "#245dff",
-      "#245aff",
-      "#2457ff",
-      "#2453ff",
-      "#2450ff",
-      "#234cff",
-      "#2248ff",
-      "#2245ff",
-      "#2141ff",
-      "#1f3dff",
-      "#1e39ff",
-      "#1c34ff",
-      "#1a30ff",
-      "#182bff",
-      "#1526ff",
-      "#111fff",
-      "#0d18ff",
-      "#070fff",
-      "#0102ff",
-      "#0000fc",
-      "#0000f8",
-      "#0000f4",
-      "#0000f0",
-      "#0000ec",
-      "#0000e8",
-      "#0000e4",
-      "#0000e0",
-      "#0000dd",
-      "#0000d9",
-      "#0000d5",
-      "#0000d1",
-      "#0000cd",
-      "#0000ca",
-      "#0000c6",
-      "#0000c2",
-      "#0000be",
-      "#0000bb",
-      "#0000b7",
-      "#0000b3",
-      "#0000af",
-      "#0000ac",
-      "#0000a8",
-      "#0000a5",
-      "#0000a1",
-      "#00009d",
-      "#00009a",
-      "#000096",
-      "#000093",
-      "#00008f",
-      "#00008c",
-      "#000088"
+  static scalarField(who) {
+    const fieldMag = 1000;
+    const chromaBytes = [
+      [0x88, 0x00, 0x00],
+      [0x8b, 0x00, 0x00],
+      [0x8f, 0x00, 0x01],
+      [0x93, 0x00, 0x01],
+      [0x96, 0x00, 0x01],
+      [0x9a, 0x00, 0x02],
+      [0x9d, 0x00, 0x02],
+      [0xa1, 0x00, 0x02],
+      [0xa4, 0x00, 0x02],
+      [0xa8, 0x00, 0x02],
+      [0xac, 0x00, 0x02],
+      [0xaf, 0x00, 0x02],
+      [0xb3, 0x00, 0x02],
+      [0xb7, 0x00, 0x02],
+      [0xbb, 0x00, 0x02],
+      [0xbe, 0x00, 0x02],
+      [0xc2, 0x00, 0x02],
+      [0xc6, 0x00, 0x02],
+      [0xc9, 0x00, 0x02],
+      [0xcd, 0x00, 0x02],
+      [0xd1, 0x00, 0x02],
+      [0xd5, 0x00, 0x02],
+      [0xd9, 0x00, 0x02],
+      [0xdc, 0x00, 0x01],
+      [0xe0, 0x00, 0x01],
+      [0xe4, 0x00, 0x01],
+      [0xe8, 0x00, 0x01],
+      [0xec, 0x00, 0x01],
+      [0xf0, 0x00, 0x01],
+      [0xf4, 0x00, 0x01],
+      [0xf8, 0x00, 0x00],
+      [0xfc, 0x00, 0x00],
+      [0xff, 0x02, 0x00],
+      [0xff, 0x13, 0x00],
+      [0xff, 0x1e, 0x00],
+      [0xff, 0x25, 0x00],
+      [0xff, 0x2c, 0x00],
+      [0xff, 0x32, 0x00],
+      [0xff, 0x37, 0x00],
+      [0xff, 0x3c, 0x00],
+      [0xff, 0x40, 0x00],
+      [0xff, 0x44, 0x00],
+      [0xff, 0x48, 0x00],
+      [0xff, 0x4c, 0x00],
+      [0xff, 0x50, 0x00],
+      [0xff, 0x53, 0x00],
+      [0xff, 0x56, 0x00],
+      [0xff, 0x5a, 0x00],
+      [0xff, 0x5d, 0x00],
+      [0xff, 0x60, 0x00],
+      [0xff, 0x63, 0x00],
+      [0xff, 0x66, 0x00],
+      [0xff, 0x69, 0x00],
+      [0xff, 0x6c, 0x00],
+      [0xff, 0x6f, 0x00],
+      [0xff, 0x71, 0x00],
+      [0xff, 0x74, 0x00],
+      [0xff, 0x77, 0x00],
+      [0xff, 0x79, 0x00],
+      [0xff, 0x7c, 0x00],
+      [0xff, 0x7f, 0x00],
+      [0xff, 0x81, 0x00],
+      [0xff, 0x84, 0x00],
+      [0xff, 0x86, 0x00],
+      [0xff, 0x89, 0x00],
+      [0xff, 0x8c, 0x00],
+      [0xff, 0x8e, 0x00],
+      [0xff, 0x91, 0x00],
+      [0xff, 0x94, 0x00],
+      [0xff, 0x97, 0x00],
+      [0xff, 0x9a, 0x00],
+      [0xff, 0x9c, 0x00],
+      [0xff, 0x9f, 0x00],
+      [0xff, 0xa2, 0x00],
+      [0xff, 0xa5, 0x00],
+      [0xff, 0xa7, 0x00],
+      [0xff, 0xaa, 0x00],
+      [0xff, 0xad, 0x00],
+      [0xff, 0xaf, 0x00],
+      [0xff, 0xb2, 0x00],
+      [0xff, 0xb5, 0x00],
+      [0xff, 0xb7, 0x00],
+      [0xff, 0xba, 0x00],
+      [0xff, 0xbc, 0x00],
+      [0xff, 0xbf, 0x00],
+      [0xff, 0xc2, 0x00],
+      [0xff, 0xc4, 0x00],
+      [0xff, 0xc7, 0x00],
+      [0xff, 0xc9, 0x00],
+      [0xff, 0xcc, 0x00],
+      [0xff, 0xcf, 0x00],
+      [0xff, 0xd1, 0x00],
+      [0xff, 0xd4, 0x00],
+      [0xff, 0xd6, 0x00],
+      [0xff, 0xd9, 0x00],
+      [0xff, 0xdb, 0x00],
+      [0xff, 0xdd, 0x0e],
+      [0xff, 0xde, 0x22],
+      [0xff, 0xdf, 0x30],
+      [0xff, 0xe0, 0x3b],
+      [0xff, 0xe1, 0x44],
+      [0xff, 0xe2, 0x4d],
+      [0xff, 0xe3, 0x55],
+      [0xff, 0xe4, 0x5d],
+      [0xff, 0xe5, 0x65],
+      [0xff, 0xe6, 0x6c],
+      [0xff, 0xe7, 0x73],
+      [0xff, 0xe8, 0x7a],
+      [0xff, 0xe9, 0x81],
+      [0xff, 0xeb, 0x88],
+      [0xff, 0xec, 0x8e],
+      [0xff, 0xed, 0x95],
+      [0xff, 0xee, 0x9b],
+      [0xff, 0xef, 0xa2],
+      [0xff, 0xf0, 0xa9],
+      [0xff, 0xf1, 0xaf],
+      [0xff, 0xf2, 0xb5],
+      [0xff, 0xf3, 0xbc],
+      [0xff, 0xf4, 0xc2],
+      [0xff, 0xf5, 0xc9],
+      [0xff, 0xf6, 0xcf],
+      [0xff, 0xf8, 0xd5],
+      [0xff, 0xf9, 0xdc],
+      [0xff, 0xfa, 0xe2],
+      [0xff, 0xfb, 0xe9],
+      [0xff, 0xfc, 0xef],
+      [0xff, 0xfd, 0xf5],
+      [0xff, 0xfe, 0xfc],
+      [0xfd, 0xfe, 0xff],
+      [0xf8, 0xfd, 0xff],
+      [0xf3, 0xfc, 0xff],
+      [0xee, 0xfb, 0xff],
+      [0xea, 0xfa, 0xff],
+      [0xe5, 0xf9, 0xff],
+      [0xe0, 0xf8, 0xff],
+      [0xdb, 0xf7, 0xff],
+      [0xd6, 0xf6, 0xff],
+      [0xd1, 0xf5, 0xff],
+      [0xcc, 0xf4, 0xff],
+      [0xc6, 0xf3, 0xff],
+      [0xc1, 0xf2, 0xff],
+      [0xbc, 0xf1, 0xff],
+      [0xb6, 0xf0, 0xff],
+      [0xb0, 0xef, 0xff],
+      [0xab, 0xee, 0xff],
+      [0xa5, 0xed, 0xff],
+      [0x9f, 0xec, 0xff],
+      [0x98, 0xeb, 0xff],
+      [0x92, 0xea, 0xff],
+      [0x8b, 0xe9, 0xff],
+      [0x84, 0xe7, 0xff],
+      [0x7d, 0xe6, 0xff],
+      [0x75, 0xe5, 0xff],
+      [0x6d, 0xe4, 0xff],
+      [0x64, 0xe3, 0xff],
+      [0x5a, 0xe2, 0xff],
+      [0x4f, 0xe1, 0xff],
+      [0x42, 0xe0, 0xff],
+      [0x31, 0xdf, 0xff],
+      [0x17, 0xdd, 0xff],
+      [0x04, 0xdb, 0xff],
+      [0x0a, 0xd9, 0xff],
+      [0x0f, 0xd6, 0xff],
+      [0x13, 0xd3, 0xff],
+      [0x16, 0xd0, 0xff],
+      [0x18, 0xce, 0xff],
+      [0x1a, 0xcb, 0xff],
+      [0x1b, 0xc8, 0xff],
+      [0x1d, 0xc6, 0xff],
+      [0x1e, 0xc3, 0xff],
+      [0x1f, 0xc0, 0xff],
+      [0x1f, 0xbe, 0xff],
+      [0x20, 0xbb, 0xff],
+      [0x20, 0xb8, 0xff],
+      [0x21, 0xb6, 0xff],
+      [0x21, 0xb3, 0xff],
+      [0x20, 0xb0, 0xff],
+      [0x20, 0xae, 0xff],
+      [0x20, 0xab, 0xff],
+      [0x1f, 0xa8, 0xff],
+      [0x1e, 0xa6, 0xff],
+      [0x1d, 0xa3, 0xff],
+      [0x1c, 0xa0, 0xff],
+      [0x1b, 0x9e, 0xff],
+      [0x19, 0x9b, 0xff],
+      [0x18, 0x98, 0xff],
+      [0x15, 0x96, 0xff],
+      [0x13, 0x93, 0xff],
+      [0x10, 0x91, 0xff],
+      [0x0c, 0x8e, 0xff],
+      [0x07, 0x8b, 0xff],
+      [0x01, 0x89, 0xff],
+      [0x06, 0x86, 0xff],
+      [0x0d, 0x83, 0xff],
+      [0x12, 0x80, 0xff],
+      [0x16, 0x7d, 0xff],
+      [0x19, 0x7a, 0xff],
+      [0x1b, 0x77, 0xff],
+      [0x1d, 0x73, 0xff],
+      [0x1f, 0x70, 0xff],
+      [0x20, 0x6d, 0xff],
+      [0x21, 0x6a, 0xff],
+      [0x22, 0x67, 0xff],
+      [0x23, 0x64, 0xff],
+      [0x24, 0x61, 0xff],
+      [0x24, 0x5d, 0xff],
+      [0x24, 0x5a, 0xff],
+      [0x24, 0x57, 0xff],
+      [0x24, 0x53, 0xff],
+      [0x24, 0x50, 0xff],
+      [0x23, 0x4c, 0xff],
+      [0x22, 0x48, 0xff],
+      [0x22, 0x45, 0xff],
+      [0x21, 0x41, 0xff],
+      [0x1f, 0x3d, 0xff],
+      [0x1e, 0x39, 0xff],
+      [0x1c, 0x34, 0xff],
+      [0x1a, 0x30, 0xff],
+      [0x18, 0x2b, 0xff],
+      [0x15, 0x26, 0xff],
+      [0x11, 0x1f, 0xff],
+      [0x0d, 0x18, 0xff],
+      [0x07, 0x0f, 0xff],
+      [0x01, 0x02, 0xff],
+      [0x00, 0x00, 0xfc],
+      [0x00, 0x00, 0xf8],
+      [0x00, 0x00, 0xf4],
+      [0x00, 0x00, 0xf0],
+      [0x00, 0x00, 0xec],
+      [0x00, 0x00, 0xe8],
+      [0x00, 0x00, 0xe4],
+      [0x00, 0x00, 0xe0],
+      [0x00, 0x00, 0xdd],
+      [0x00, 0x00, 0xd9],
+      [0x00, 0x00, 0xd5],
+      [0x00, 0x00, 0xd1],
+      [0x00, 0x00, 0xcd],
+      [0x00, 0x00, 0xca],
+      [0x00, 0x00, 0xc6],
+      [0x00, 0x00, 0xc2],
+      [0x00, 0x00, 0xbe],
+      [0x00, 0x00, 0xbb],
+      [0x00, 0x00, 0xb7],
+      [0x00, 0x00, 0xb3],
+      [0x00, 0x00, 0xaf],
+      [0x00, 0x00, 0xac],
+      [0x00, 0x00, 0xa8],
+      [0x00, 0x00, 0xa5],
+      [0x00, 0x00, 0xa1],
+      [0x00, 0x00, 0x9d],
+      [0x00, 0x00, 0x9a],
+      [0x00, 0x00, 0x96],
+      [0x00, 0x00, 0x93],
+      [0x00, 0x00, 0x8f],
+      [0x00, 0x00, 0x8c],
+      [0x00, 0x00, 0x88]
     ];
-    let hue = 0; //tracks last color to see if a new ctx color is needed
-    for (let k = 0; k < lenY + 1; k++) {
-      for (let j = 0; j < lenX + 1; j++) {
-        const x = xheight * j;
-        const y = yHeight * k;
-        let mag = 0;
-        for (let i = 0, len = who.length; i < len; i++) {
-          const dx = who[i].position.x - x;
-          const dy = who[i].position.y - y;
-          mag -= who[i].charge / (Math.sqrt(dx * dx + dy * dy) + 1);
-        }
-        let thisHue = Math.min(Math.max(Math.round(mag * fieldMag) + 128, 0), 255);
-        if (thisHue != hue) {
-          //only change color if the color is new
-          hue = thisHue;
-          ctx.fillStyle = chroma[hue];
-        }
-        ctx.fillRect(x - offset, y - offset, squareRadius, squareRadius);
+
+    let imgData = ctx.createImageData(canvas.width, canvas.height);
+
+    for (var i = 0; i < imgData.data.length; i += 8) {
+      const x = (i / 4) % canvas.width;
+      const y = Math.floor(i / 4 / canvas.width);
+      let mag = 0;
+      for (let j = 0, len = who.length; j < len; j++) {
+        const dx = who[j].position.x - x;
+        const dy = who[j].position.y - y;
+        mag -= who[j].charge / (Math.sqrt(dx * dx + dy * dy) + 1);
+      }
+      let hue = Math.min(Math.max(Math.round(mag * fieldMag) + 128, 0), 255);
+
+      // imgData.data[i + 0] = chromaBytes[hue][0]; // red
+      // imgData.data[i + 1] = chromaBytes[hue][1]; // green
+      // imgData.data[i + 2] = chromaBytes[hue][2]; // blue
+      // imgData.data[i + 3] = 255; // alpha
+
+      for (let k = 0; k < 8; k += 4) {
+        //make pixels bigger, is this really worth it?
+        imgData.data[i + k + 0] = chromaBytes[hue][0]; // red
+        imgData.data[i + k + 1] = chromaBytes[hue][1]; // green
+        imgData.data[i + k + 2] = chromaBytes[hue][2]; // blue
+        imgData.data[i + k + 3] = 255; // alpha
       }
     }
+    ctx.putImageData(imgData, 0, 0);
   }
+
   static magnetic(who, scale = 0.05) {
     for (let i = 0, len = who.length; i < len; ++i) {
       let dir = Math.atan2(who[i].velocity.y, who[i].velocity.x);
