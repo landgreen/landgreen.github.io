@@ -1,7 +1,7 @@
 # landgreen.github.io
 [https://landgreen.github.io/](https://landgreen.github.io/) is a public website written by Ross Landgreen.
 
-physics: full course notes for high school physics, with JavaScript simulations
+<strong>physics</strong>: full course notes for high school physics, with JavaScript simulations
 
 n-gon: a 2-d sidescroller physics game
 
