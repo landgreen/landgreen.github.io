@@ -63,22 +63,19 @@
 			<br>\(\Delta t\) = a period of time [s]
 		</div>
 		<div class='example'>
-			<svg viewBox="0,0,300,135" class="side-graphics" style="position: relative; top: 150px; left: 100%;margin-top: -250px;">
+			<svg viewBox="0,0,846,381" class="side-graphics" style="position: relative; top: 150px; left: 100%; margin-top: -250px;">
 				<g>
-					<path style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.35433070999999999;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;"
-					 d="M 8.8582677,15.944883 C 8.8582677,10.629922 12.401575,5.3149617 17.716535,5.3149617 C 23.031495,5.3149617 26.574803,10.629922 26.574803,15.944883 C 26.574803,21.259844 26.574803,35.433072 26.574803,35.433072 L 7.0866142,35.433072 L 7.0866142,32.775592 L 8.8582677,32.775592 C 8.8582677,32.775592 8.8582677,21.259844 8.8582677,15.944883 z"
+					<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 25,45 c 0,-40 50,-40 50,0 L 75,100 l -55,0 l 0,-8 l 5,0 z"
 					/>
-					<path style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.35433070999999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;"
-					 d="M 12.401575,134.64567 L 14.173228,134.64567 L 14.173228,42.519686 L 15.059055,42.519686 L 15.059055,38.976379 L 14.173228,38.976379 L 14.173228,32.775592 L 12.401575,31.003938 L 12.401575,28.346458 L 15.944882,28.346458 L 15.944882,26.574804 L 12.401575,24.803151 L 12.401575,23.031497 L 10.629921,23.031497 L 10.629921,31.889765 L 12.401575,33.661418 L 12.401575,38.976379 L 11.515748,38.976379 L 11.515748,42.519686 L 12.401575,42.519686 L 12.401575,134.64567 z"
+					<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 35,380 l 5,0 l 0,-260 l 2,0 l 0,-10 l -2,0 l 0,-18 l -5,-5 l 0,-5 l 10,0 l 0,-5 l -10,-7 l 0,-5 l -5,0 l 0,25 l 5,5 l 0,15 l -2,0 l 0,10 l 2,0 l 0,260 z"
 					/>
-					<path style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.35433071999999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"
-					 d="M 21.259843,127.55906 L 23.031496,127.55906 L 23.031496,42.519686 L 23.917323,42.519686 L 23.917323,38.976379 L 23.031496,38.976379 L 23.031496,33.661418 L 24.80315,31.889765 L 24.80315,26.574804 L 23.031496,26.574804 L 23.031496,23.031497 L 15.059055,23.031497 L 15.059055,24.803151 L 21.259843,28.346458 L 23.031496,28.346458 L 23.031496,31.003938 L 21.259843,32.775592 L 21.259843,38.976379 L 20.374016,38.976379 L 20.374016,42.519686 L 21.259843,42.519686 L 21.259843,127.55906 z"
+					<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 60,360 l 5,0 l 0,-240 l 2,0 l 0,-10 l -2,0 l 0,-15 l 5,-5 l 0,-15 l -5,0 l 0,-10 l -23,0 l 0,5 l 18,12 l 5,0 l 0,5 l -5,5 l 0,18 l -2,0 l 0,10 l 2,0 l 0,240 z"
 					/>
-					<path style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.35433071;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-					 d="M 11.515748,23.031497 C 12.401575,21.259844 15.059055,21.259844 15.944882,23.031497 C 16.830709,24.803151 19.488189,24.803151 20.374016,23.031497"
-					/>
+					<path style="fill: none; stroke: #000000; stroke-width: 1;" d="M 32,65 c 7,-8 13,-8 20,0" />
+					<path style="fill: none; stroke: #000000; stroke-width: 1;" d="M 45,65 c 2,5 10,5 12,0" />
 				</g>
 			</svg>
+
 			<strong>Example:</strong>
 			Every minute 1.2 coulombs of charge passes through a typical
 			<a href="https://en.wikipedia.org/wiki/Light-emitting_diode">LED</a>.
@@ -126,6 +123,7 @@
 		<p>A small imbalance in net charge produces an electric field. The electric field points in the same direction as the current.</p>
 		<canvas id='charge8' height='150' width='600' onclick="charges8(this)"> </canvas>
 		<p>Positive charge flows from positive(red) potential to negative(blue) potential. Negative charge does the opposite.</p>
+		<!-- style="filter: blur(1px)" -->
 		<canvas id='charge9' height='150' width='600' onclick="charges9(this)"> </canvas>
 
 		<h2 class='underlined'>Voltage (Potential Difference)</h2>
@@ -267,7 +265,7 @@
 						<strong>Example:</strong> Find the voltage for a resistor that has 300Ω of resistance and a current of 0.05A.
 						<details>
 							<summary>solution</summary>
-							$$ V = IR$$ $$ V = (0.05A) (300)$$ $$ V = 15 V$$
+							$$ V = IR$$ $$ V = (0.05\,A) (300 \,\Omega)$$ $$ V = 15 \, V$$
 						</details>
 					</div>
 					<div>
@@ -293,7 +291,7 @@
 						<strong>Example:</strong> Find the current for a 100Ω resistor with 2V drop?
 						<details>
 							<summary>solution</summary>
-							$$ V = IR$$ $$ I = \frac{V}{R}$$ $$ I = \frac{2}{100}$$ $$ I = 0.02 A$$
+							$$ V = IR$$ $$ I = \frac{V}{R}$$ $$ I = \frac{2 \,V}{100 \, \Omega}$$ $$ I = 0.02\, A$$
 						</details>
 					</div>
 					<div>
@@ -316,10 +314,10 @@
 			<div class='example'>
 				<div class="col-group">
 					<div>
-						<strong>Example:</strong> What value resistor would drop 1.5V in a 0.001A current?
+						<strong>Example:</strong> What value resistor would drop 1.5 V in a 0.001 A current?
 						<details>
 							<summary>solution</summary>
-							$$ V = IR$$ $$ R = \frac{V}{I}$$ $$ R = \frac{1.5}{0.001}$$ $$ R = 1500 \Omega$$
+							$$ V = IR$$ $$ R = \frac{V}{I}$$ $$ R = \frac{1.5\,V}{0.001\,A}$$ $$ R = 1500 \, \Omega$$
 						</details>
 					</div>
 					<div>
@@ -328,9 +326,9 @@
 							v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
 							h -200
 							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-							<text x="230" y="85" text-anchor="end" font-size="20" fill='#333'>1.5V</text>
+							<text x="230" y="85" text-anchor="end" font-size="20" fill='#333'>1.5&thinsp;V</text>
 							<text x="230" y="125" text-anchor="end" font-size="20" fill='#333'>R = ?</text>
-							<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>0.001A</text>
+							<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>0.001&thinsp;A</text>
 							<g transform="translate(195 180) rotate(180)">
 								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
 								<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
