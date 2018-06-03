@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 63);
+/******/ 	return __webpack_require__(__webpack_require__.s = 79);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -78,16 +78,16 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_get_iterator__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_get_iterator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_get_iterator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__domTree__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__fontMetrics__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_slicedToArray__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_slicedToArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_slicedToArray__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__domTree__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__fontMetrics__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__symbols__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__stretchy__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__units__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__wide_character__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__units__ = __webpack_require__(21);
 
 
 
@@ -115,14 +115,14 @@ var mainitLetters = ["\\imath", "ı", // dotless i
  */
 var lookupSymbol = function lookupSymbol(value,
 // TODO(#963): Use a union type for this.
-fontFamily, mode) {
+fontName, mode) {
     // Replace the value with its replaced value from symbol.js
     if (__WEBPACK_IMPORTED_MODULE_4__symbols__["a" /* default */][mode][value] && __WEBPACK_IMPORTED_MODULE_4__symbols__["a" /* default */][mode][value].replace) {
         value = __WEBPACK_IMPORTED_MODULE_4__symbols__["a" /* default */][mode][value].replace;
     }
     return {
         value: value,
-        metrics: __WEBPACK_IMPORTED_MODULE_3__fontMetrics__["a" /* default */].getCharacterMetrics(value, fontFamily, mode)
+        metrics: __WEBPACK_IMPORTED_MODULE_3__fontMetrics__["a" /* default */].getCharacterMetrics(value, fontName, mode)
     };
 };
 
@@ -136,8 +136,8 @@ fontFamily, mode) {
  * should if present come first in `classes`.
  * TODO(#953): Make `options` mandatory and always pass it in.
  */
-var makeSymbol = function makeSymbol(value, fontFamily, mode, options, classes) {
-    var lookup = lookupSymbol(value, fontFamily, mode);
+var makeSymbol = function makeSymbol(value, fontName, mode, options, classes) {
+    var lookup = lookupSymbol(value, fontName, mode);
     var metrics = lookup.metrics;
     value = lookup.value;
 
@@ -150,7 +150,7 @@ var makeSymbol = function makeSymbol(value, fontFamily, mode, options, classes) 
         symbolNode = new __WEBPACK_IMPORTED_MODULE_2__domTree__["a" /* default */].symbolNode(value, metrics.height, metrics.depth, italic, metrics.skew, metrics.width, classes);
     } else {
         // TODO(emily): Figure out a good way to only print this in development
-        typeof console !== "undefined" && console.warn("No character metrics for '" + value + "' in style '" + fontFamily + "'");
+        typeof console !== "undefined" && console.warn("No character metrics for '" + value + "' in style '" + fontName + "'");
         symbolNode = new __WEBPACK_IMPORTED_MODULE_2__domTree__["a" /* default */].symbolNode(value, 0, 0, 0, 0, 0, classes);
     }
 
@@ -184,7 +184,7 @@ var mathsym = function mathsym(value, mode, options) {
     // text ordinal and is therefore not present as a symbol in the symbols
     // table for text, as well as a special case for boldsymbol because it
     // can be used for bold + and -
-    if (options && options.fontFamily && options.fontFamily === "boldsymbol" && lookupSymbol(value, "Main-Bold", mode).metrics) {
+    if (options && options.font && options.font === "boldsymbol" && lookupSymbol(value, "Main-Bold", mode).metrics) {
         return makeSymbol(value, "Main-Bold", mode, options, classes.concat(["mathbf"]));
     } else if (value === "\\" || __WEBPACK_IMPORTED_MODULE_4__symbols__["a" /* default */][mode][value].font === "main") {
         return makeSymbol(value, "Main-Regular", mode, options, classes);
@@ -269,25 +269,34 @@ var makeOrd = function makeOrd(group, options, type) {
 
     var classes = ["mord"];
 
-    var fontFamily = options.fontFamily;
-    if (fontFamily) {
+    // Math mode or Old font (i.e. \rm)
+    var isFont = mode === "math" || mode === "text" && options.font;
+    var fontOrFamily = isFont ? options.font : options.fontFamily;
+    if (value.charCodeAt(0) === 0xD835) {
+        // surrogate pairs get special treatment
+        var _wideCharacterFont = Object(__WEBPACK_IMPORTED_MODULE_6__wide_character__["a" /* wideCharacterFont */])(value, mode),
+            _wideCharacterFont2 = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_slicedToArray___default()(_wideCharacterFont, 2),
+            wideFontName = _wideCharacterFont2[0],
+            wideFontClass = _wideCharacterFont2[1];
+
+        return makeSymbol(value, wideFontName, mode, options, [wideFontClass]);
+    } else if (fontOrFamily) {
         var _fontName3 = void 0;
         var fontClasses = void 0;
-        if (fontFamily === "boldsymbol") {
+        if (fontOrFamily === "boldsymbol") {
             var fontData = boldsymbol(value, mode, options, classes);
             _fontName3 = fontData.fontName;
             fontClasses = [fontData.fontClass];
-        } else if (fontFamily === "mathit" || __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].contains(mainitLetters, value)) {
+        } else if (fontOrFamily === "mathit" || __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].contains(mainitLetters, value)) {
             var _fontData = mathit(value, mode, options, classes);
             _fontName3 = _fontData.fontName;
             fontClasses = [_fontData.fontClass];
-        } else if (fontFamily.indexOf("math") !== -1 || mode === "math") {
-            // To support old font functions (i.e. \rm \sf etc.) or math mode.
-            _fontName3 = fontMap[fontFamily].fontName;
-            fontClasses = [fontFamily];
+        } else if (isFont) {
+            _fontName3 = fontMap[fontOrFamily].fontName;
+            fontClasses = [fontOrFamily];
         } else {
-            _fontName3 = retrieveTextFontName(fontFamily, options.fontWeight, options.fontShape);
-            fontClasses = [fontFamily, options.fontWeight, options.fontShape];
+            _fontName3 = retrieveTextFontName(fontOrFamily, options.fontWeight, options.fontShape);
+            fontClasses = [fontOrFamily, options.fontWeight, options.fontShape];
         }
         if (lookupSymbol(value, _fontName3, mode).metrics) {
             return makeSymbol(value, _fontName3, mode, options, classes.concat(fontClasses));
@@ -327,7 +336,7 @@ var sizeElementFromChildren = function sizeElementFromChildren(elem) {
     var _iteratorError = undefined;
 
     try {
-        for (var _iterator = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_get_iterator___default()(elem.children), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (var _iterator = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator___default()(elem.children), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var child = _step.value;
 
             if (child.height > height) {
@@ -376,14 +385,16 @@ var makeSpan = function makeSpan(classes, children, options, style) {
     return span;
 };
 
-var makeLineSpan = function makeLineSpan(className, options) {
-    // Return a span with an SVG image of a horizontal line. The SVG path
-    // fills the middle fifth of the span. We want an extra tall span
-    // because Chrome will sometimes not display a span that is 0.04em tall.
-    var lineHeight = options.fontMetrics().defaultRuleThickness;
-    var line = __WEBPACK_IMPORTED_MODULE_6__stretchy__["a" /* default */].ruleSpan(className, lineHeight, options);
-    line.height = lineHeight;
-    line.style.height = 5 * line.height + "em";
+// SVG one is simpler -- doesn't require height, depth, max-font setting.
+// This is also a separate method for typesafety.
+var makeSvgSpan = function makeSvgSpan(classes, children, options, style) {
+    return new __WEBPACK_IMPORTED_MODULE_2__domTree__["a" /* default */].span(classes, children, options, style);
+};
+
+var makeLineSpan = function makeLineSpan(className, options, thickness) {
+    var line = makeSpan([className], [], options);
+    line.height = thickness || options.fontMetrics().defaultRuleThickness;
+    line.style.borderBottomWidth = line.height + "em";
     line.maxFontSize = 1.0;
     return line;
 };
@@ -454,7 +465,7 @@ var getVListChildrenAndDepth = function getVListChildrenAndDepth(params) {
         var _iteratorError2 = undefined;
 
         try {
-            for (var _iterator2 = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_get_iterator___default()(params.children), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            for (var _iterator2 = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator___default()(params.children), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
                 var child = _step2.value;
 
                 bottom -= child.type === "kern" ? child.size : child.elem.height + child.elem.depth;
@@ -519,7 +530,7 @@ var makeVList = function makeVList(params, options) {
     var _iteratorError3 = undefined;
 
     try {
-        for (var _iterator3 = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_get_iterator___default()(children), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+        for (var _iterator3 = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator___default()(children), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
             var child = _step3.value;
 
             if (child.type === "elem") {
@@ -556,7 +567,7 @@ var makeVList = function makeVList(params, options) {
     var _iteratorError4 = undefined;
 
     try {
-        for (var _iterator4 = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_get_iterator___default()(children), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+        for (var _iterator4 = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator___default()(children), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
             var _child = _step4.value;
 
             if (_child.type === "kern") {
@@ -606,7 +617,13 @@ var makeVList = function makeVList(params, options) {
     // A second row is used if necessary to represent the vlist's depth.
     var rows = void 0;
     if (minPos < 0) {
-        var depthStrut = makeSpan(["vlist"], []);
+        // We will define depth in an empty span with display: table-cell.
+        // It should render with the height that we define. But Chrome, in
+        // contenteditable mode only, treats that span as if it contains some
+        // text content. And that min-height over-rides our desired height.
+        // So we put another empty span inside the depth strut span.
+        var emptySpan = makeSpan([], []);
+        var depthStrut = makeSpan(["vlist"], [emptySpan]);
         depthStrut.style.height = -minPos + "em";
 
         // Safari wants the first row to have inline content; otherwise it
@@ -629,8 +646,6 @@ var makeVList = function makeVList(params, options) {
 
 // Converts verb group into body string, dealing with \verb* form
 var makeVerb = function makeVerb(group, options) {
-    // TODO(#892): Make ParseNode type-safe and confirm `group.type` to guarantee
-    // that `group.value.body` is of type string.
     var text = group.value.body;
     if (group.value.star) {
         text = text.replace(/ /g, "\u2423"); // Open Box
@@ -645,8 +660,8 @@ var makeVerb = function makeVerb(group, options) {
 // either a vertical or horizontal list.  In KaTeX, at least for now, it's
 // static space between elements in a horizontal layout.
 var makeGlue = function makeGlue(measurement, options) {
-    // Make an empty span for the rule
-    var rule = makeSpan(["mord", "rule"], [], options);
+    // Make an empty span for the space
+    var rule = makeSpan(["mspace"], [], options);
     var size = Object(__WEBPACK_IMPORTED_MODULE_7__units__["a" /* calculateSize */])(measurement, options);
     rule.style.marginRight = size + "em";
     return rule;
@@ -654,14 +669,8 @@ var makeGlue = function makeGlue(measurement, options) {
 
 // Takes an Options object, and returns the appropriate fontLookup
 var retrieveTextFontName = function retrieveTextFontName(fontFamily, fontWeight, fontShape) {
-    var baseFontName = retrieveBaseFontName(fontFamily);
-    var fontStylesName = retrieveFontStylesName(fontWeight, fontShape);
-    return baseFontName + "-" + fontStylesName;
-};
-
-var retrieveBaseFontName = function retrieveBaseFontName(font) {
     var baseFontName = "";
-    switch (font) {
+    switch (fontFamily) {
         case "amsrm":
             baseFontName = "AMS";
             break;
@@ -675,20 +684,21 @@ var retrieveBaseFontName = function retrieveBaseFontName(font) {
             baseFontName = "Typewriter";
             break;
         default:
-            throw new Error("Invalid font provided: " + font);
+            throw new Error("Invalid font provided: " + fontFamily);
     }
-    return baseFontName;
-};
 
-var retrieveFontStylesName = function retrieveFontStylesName(fontWeight, fontShape) {
-    var fontStylesName = '';
-    if (fontWeight === "textbf") {
-        fontStylesName += "Bold";
+    var fontStylesName = void 0;
+    if (fontWeight === "textbf" && fontShape === "textit") {
+        fontStylesName = "BoldItalic";
+    } else if (fontWeight === "textbf") {
+        fontStylesName = "Bold";
+    } else if (fontWeight === "textit") {
+        fontStylesName = "Italic";
+    } else {
+        fontStylesName = "Regular";
     }
-    if (fontShape === "textit") {
-        fontStylesName += "Italic";
-    }
-    return fontStylesName || "Regular";
+
+    return baseFontName + "-" + fontStylesName;
 };
 
 // A map of spacing functions to their attributes, like size and corresponding
@@ -721,6 +731,31 @@ var spacingFunctions = {
     "\\!": {
         size: "-0.16667em",
         className: "negativethinspace"
+    },
+    "\\nobreak": {
+        size: "0em",
+        className: "nobreak"
+    },
+    "\\allowbreak": {
+        size: "0em",
+        className: "allowbreak"
+    }
+};
+
+// A lookup table to determine whether a spacing function/symbol should be
+// treated like a regular space character.  If a symbol or command is a key
+// in this table, then it should be a regular space character.  Furthermore,
+// the associated value may have a `className` specifying an extra CSS class
+// to add to the created `span`.
+var regularSpace = {
+    " ": {},
+    "\\ ": {},
+    "~": {
+        className: "nobreak"
+    },
+    "\\space": {},
+    "\\nobreakspace": {
+        className: "nobreak"
     }
 };
 
@@ -784,7 +819,7 @@ var svgData = {
 
 var staticSvg = function staticSvg(value, options) {
     // Create a span with inline SVG for the element.
-    var _svgData$value = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray___default()(svgData[value], 3),
+    var _svgData$value = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_slicedToArray___default()(svgData[value], 3),
         pathName = _svgData$value[0],
         width = _svgData$value[1],
         height = _svgData$value[2];
@@ -798,7 +833,7 @@ var staticSvg = function staticSvg(value, options) {
         "viewBox": "0 0 " + 1000 * width + " " + 1000 * height,
         "preserveAspectRatio": "xMinYMin"
     });
-    var span = makeSpan(["overlay"], [svgNode], options);
+    var span = makeSvgSpan(["overlay"], [svgNode], options);
     span.height = height;
     span.style.height = height + "em";
     span.style.width = width + "em";
@@ -810,6 +845,7 @@ var staticSvg = function staticSvg(value, options) {
     makeSymbol: makeSymbol,
     mathsym: mathsym,
     makeSpan: makeSpan,
+    makeSvgSpan: makeSvgSpan,
     makeLineSpan: makeLineSpan,
     makeAnchor: makeAnchor,
     makeFragment: makeFragment,
@@ -820,7 +856,8 @@ var staticSvg = function staticSvg(value, options) {
     staticSvg: staticSvg,
     svgData: svgData,
     tryCombineChars: tryCombineChars,
-    spacingFunctions: spacingFunctions
+    spacingFunctions: spacingFunctions,
+    regularSpace: regularSpace
 });
 
 /***/ }),
@@ -828,13 +865,93 @@ var staticSvg = function staticSvg(value, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator__ = __webpack_require__(18);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _functions; });
+/* harmony export (immutable) */ __webpack_exports__["b"] = defineFunction;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ordargument; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buildHTML__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildMathML__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ParseNode__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__domTree__ = __webpack_require__(13);
+
+
+
+
+
+/** Context provided to function handlers for error messages. */
+
+
+/**
+ * Final function spec for use at parse time.
+ * This is almost identical to `FunctionPropSpec`, except it
+ * 1. includes the function handler, and
+ * 2. requires all arguments except argTypes.
+ * It is generated by `defineFunction()` below.
+ */
+
+
+/**
+ * All registered functions.
+ * `functions.js` just exports this same dictionary again and makes it public.
+ * `Parser.js` requires this dictionary.
+ */
+var _functions = {};
+
+function defineFunction(_ref) {
+    var type = _ref.type,
+        nodeType = _ref.nodeType,
+        names = _ref.names,
+        props = _ref.props,
+        handler = _ref.handler,
+        htmlBuilder = _ref.htmlBuilder,
+        mathmlBuilder = _ref.mathmlBuilder;
+
+    // Set default values of functions
+    var data = {
+        type: type,
+        numArgs: props.numArgs,
+        argTypes: props.argTypes,
+        greediness: props.greediness === undefined ? 1 : props.greediness,
+        allowedInText: !!props.allowedInText,
+        allowedInMath: props.allowedInMath === undefined ? true : props.allowedInMath,
+        numOptionalArgs: props.numOptionalArgs || 0,
+        infix: !!props.infix,
+        consumeMode: props.consumeMode,
+        handler: handler
+    };
+    for (var i = 0; i < names.length; ++i) {
+        _functions[names[i]] = data;
+    }
+    if (type) {
+        if (htmlBuilder) {
+            __WEBPACK_IMPORTED_MODULE_0__buildHTML__["d" /* groupTypes */][type] = htmlBuilder;
+        }
+        if (mathmlBuilder) {
+            __WEBPACK_IMPORTED_MODULE_1__buildMathML__["d" /* groupTypes */][type] = mathmlBuilder;
+        }
+    }
+}
+
+// Since the corresponding buildHTML/buildMathML function expects a
+// list of elements, we normalize for different kinds of arguments
+var ordargument = function ordargument(arg) {
+    var node = Object(__WEBPACK_IMPORTED_MODULE_2__ParseNode__["b" /* checkNodeType */])(arg, "ordgroup");
+    return node ? node.value : [arg];
+};
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export MathNode */
+/* unused harmony export TextNode */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(8);
 
 
 
@@ -855,6 +972,7 @@ var staticSvg = function staticSvg(value, options) {
  * MathML node types used in KaTeX. For a complete list of MathML nodes, see
  * https://developer.mozilla.org/en-US/docs/Web/MathML/Element.
  */
+
 
 /**
  * This node represents a general purpose MathML node of any type. The
@@ -982,8 +1100,6 @@ var MathNode = function () {
 /**
  * This node represents a piece of text.
  */
-
-
 var TextNode = function () {
     function TextNode(text) {
         __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, TextNode);
@@ -1032,23 +1148,24 @@ var TextNode = function () {
 });
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return makeText; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return makeTextRow; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return groupTypes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return buildExpression; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return buildGroup; });
 /* harmony export (immutable) */ __webpack_exports__["c"] = buildMathML;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fontMetrics__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseError__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Style__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fontMetrics__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Style__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__symbols__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stretchy__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stretchy__ = __webpack_require__(32);
 /**
  * WARNING: New methods on groupTypes should be added to src/functions.
  *
@@ -1072,17 +1189,48 @@ var TextNode = function () {
  */
 var makeText = function makeText(text, mode) {
     if (__WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */][mode][text] && __WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */][mode][text].replace) {
-        text = __WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */][mode][text].replace;
+        if (text.charCodeAt(0) !== 0xD835) {
+            text = __WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */][mode][text].replace;
+        }
     }
 
     return new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].TextNode(text);
+};
+
+var makeTextRow = function makeTextRow(body, options) {
+    // Convert each element of the body into MathML, and combine consecutive
+    // <mtext> outputs into a single <mtext> tag.  In this way, we don't
+    // nest non-text items (e.g., $nested-math$) within an <mtext>.
+    var inner = [];
+    var currentText = null;
+    for (var i = 0; i < body.length; i++) {
+        var group = buildGroup(body[i], options);
+        if (group.type === 'mtext' && currentText !== null) {
+            Array.prototype.push.apply(currentText.children, group.children);
+        } else {
+            inner.push(group);
+            if (group.type === 'mtext') {
+                currentText = group;
+            } else {
+                currentText = null;
+            }
+        }
+    }
+
+    // If there is a single tag in the end (presumably <mtext>),
+    // just return it.  Otherwise, wrap them in an <mrow>.
+    if (inner.length === 1) {
+        return inner[0];
+    } else {
+        return new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mrow", inner);
+    }
 };
 
 /**
  * Returns the math variant as a string or null if none is required.
  */
 var getVariant = function getVariant(group, options) {
-    var font = options.fontFamily;
+    var font = options.font;
     if (!font) {
         return null;
     }
@@ -1268,7 +1416,7 @@ groupTypes.supsub = function (group, options) {
 groupTypes.spacing = function (group) {
     var node = void 0;
 
-    if (group.value === "\\ " || group.value === "\\space" || group.value === " " || group.value === "~") {
+    if (__WEBPACK_IMPORTED_MODULE_0__buildCommon__["a" /* default */].regularSpace.hasOwnProperty(group.value)) {
         node = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mtext", [new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].TextNode("\xA0")]);
     } else {
         node = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mspace");
@@ -1306,16 +1454,17 @@ groupTypes.xArrow = function (group, options) {
     return node;
 };
 
-groupTypes.mclass = function (group, options) {
-    var inner = buildExpression(group.value.value, options);
-    return new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mstyle", inner);
-};
-
 groupTypes.raisebox = function (group, options) {
     var node = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mpadded", [buildGroup(group.value.body, options)]);
     var dy = group.value.dy.value.number + group.value.dy.value.unit;
     node.setAttribute("voffset", dy);
     return node;
+};
+
+groupTypes.tag = function (group, options) {
+    var table = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mtable", [new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mlabeledtr", [new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mtd", buildExpression(group.value.tag, options)), new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mtd", [new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mrow", buildExpression(group.value.body, options))])])]);
+    table.setAttribute("side", "right");
+    return table;
 };
 
 /**
@@ -1373,7 +1522,12 @@ function buildMathML(tree, texExpression, options) {
 
     // Wrap up the expression in an mrow so it is presented in the semantics
     // tag correctly.
-    var wrapper = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mrow", expression);
+    var wrapper = void 0;
+    if (expression.length === 1 && __WEBPACK_IMPORTED_MODULE_6__utils__["a" /* default */].contains(["mrow", "mtable"], expression[0].type)) {
+        wrapper = expression[0];
+    } else {
+        wrapper = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mrow", expression);
+    }
 
     // Build a TeX annotation of the source
     var annotation = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("annotation", [new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].TextNode(texExpression)]);
@@ -1389,83 +1543,6 @@ function buildMathML(tree, texExpression, options) {
 }
 
 /***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _functions; });
-/* harmony export (immutable) */ __webpack_exports__["b"] = defineFunction;
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ordargument; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildMathML__ = __webpack_require__(2);
-
-
-
-/** Context provided to function handlers for error messages. */
-
-
-// TODO: Enumerate all allowed output types.
-
-
-/**
- * Final function spec for use at parse time.
- * This is almost identical to `FunctionPropSpec`, except it
- * 1. includes the function handler, and
- * 2. requires all arguments except argTypes.
- * It is generated by `defineFunction()` below.
- */
-
-
-/**
- * All registered functions.
- * `functions.js` just exports this same dictionary again and makes it public.
- * `Parser.js` requires this dictionary.
- */
-var _functions = {};
-
-function defineFunction(_ref) {
-    var type = _ref.type,
-        names = _ref.names,
-        props = _ref.props,
-        handler = _ref.handler,
-        htmlBuilder = _ref.htmlBuilder,
-        mathmlBuilder = _ref.mathmlBuilder;
-
-    // Set default values of functions
-    var data = {
-        numArgs: props.numArgs,
-        argTypes: props.argTypes,
-        greediness: props.greediness === undefined ? 1 : props.greediness,
-        allowedInText: !!props.allowedInText,
-        allowedInMath: props.allowedInMath === undefined ? true : props.allowedInMath,
-        numOptionalArgs: props.numOptionalArgs || 0,
-        infix: !!props.infix,
-        handler: handler
-    };
-    for (var i = 0; i < names.length; ++i) {
-        _functions[names[i]] = data;
-    }
-    if (type) {
-        if (htmlBuilder) {
-            __WEBPACK_IMPORTED_MODULE_0__buildHTML__["d" /* groupTypes */][type] = htmlBuilder;
-        }
-        if (mathmlBuilder) {
-            __WEBPACK_IMPORTED_MODULE_1__buildMathML__["d" /* groupTypes */][type] = mathmlBuilder;
-        }
-    }
-}
-
-// Since the corresponding buildHTML/buildMathML function expects a
-// list of elements, we normalize for different kinds of arguments
-var ordargument = function ordargument(arg) {
-    if (arg.type === "ordgroup") {
-        return arg.value;
-    } else {
-        return [arg];
-    }
-};
-
-/***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1477,18 +1554,18 @@ var ordargument = function ordargument(arg) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return groupTypes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return buildGroup; });
 /* harmony export (immutable) */ __webpack_exports__["c"] = buildHTML;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ParseError__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Style__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Style__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__domTree__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__units__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__stretchy__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__spacingData__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__domTree__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__units__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__stretchy__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__spacingData__ = __webpack_require__(142);
 
 
 /**
@@ -1555,8 +1632,7 @@ var buildExpression = function buildExpression(expression, options, isRealGroup)
     // Parse expressions into `groups`.
     var rawGroups = [];
     for (var i = 0; i < expression.length; i++) {
-        var group = expression[i];
-        var output = buildGroup(group, options);
+        var output = buildGroup(expression[i], options);
         if (output instanceof __WEBPACK_IMPORTED_MODULE_5__domTree__["a" /* default */].documentFragment) {
             rawGroups.push.apply(rawGroups, __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray___default()(output.children));
         } else {
@@ -1688,7 +1764,7 @@ var getTypeOfDomTree = function getTypeOfDomTree(node) {
 // 'mtight' indicates that the node is script or scriptscript style.
 var isLeftTight = function isLeftTight(node) {
     node = getOutermostNode(node, "left");
-    return __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].contains(node.classes, "mtight");
+    return node.hasClass("mtight");
 };
 
 /**
@@ -1698,22 +1774,20 @@ var isLeftTight = function isLeftTight(node) {
  * handling them itself.
  */
 var shouldHandleSupSub = function shouldHandleSupSub(group, options) {
-    if (!group.value.base) {
+    var base = group.value.base;
+    if (!base) {
         return false;
+    } else if (base.type === "op") {
+        // Operators handle supsubs differently when they have limits
+        // (e.g. `\displaystyle\sum_2^3`)
+        return base.value.limits && (options.style.size === __WEBPACK_IMPORTED_MODULE_3__Style__["a" /* default */].DISPLAY.size || base.value.alwaysHandleSupSub);
+    } else if (base.type === "accent") {
+        return __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].isCharacterBox(base.value.base);
+    } else if (base.type === "horizBrace") {
+        var isSup = !group.value.sub;
+        return isSup === base.value.isOver;
     } else {
-        var base = group.value.base;
-        if (base.type === "op") {
-            // Operators handle supsubs differently when they have limits
-            // (e.g. `\displaystyle\sum_2^3`)
-            return base.value.limits && (options.style.size === __WEBPACK_IMPORTED_MODULE_3__Style__["a" /* default */].DISPLAY.size || base.value.alwaysHandleSupSub);
-        } else if (base.type === "accent") {
-            return __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].isCharacterBox(base.value.base);
-        } else if (base.type === "horizBrace") {
-            var isSup = group.value.sub ? false : true;
-            return isSup === base.value.isOver;
-        } else {
-            return null;
-        }
+        return false;
     }
 };
 
@@ -1726,317 +1800,312 @@ var makeNullDelimiter = function makeNullDelimiter(options, classes) {
  * This is a map of group types to the function used to handle that type.
  * Simpler types come at the beginning, while complicated types come afterwards.
  */
-var groupTypes = {};
+var groupTypes = {
+    mathord: function mathord(group, options) {
+        return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeOrd(group, options, "mathord");
+    },
 
-groupTypes.mathord = function (group, options) {
-    return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeOrd(group, options, "mathord");
-};
+    textord: function textord(group, options) {
+        return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeOrd(group, options, "textord");
+    },
 
-groupTypes.textord = function (group, options) {
-    return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeOrd(group, options, "textord");
-};
+    bin: function bin(group, options) {
+        return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options, ["mbin"]);
+    },
 
-groupTypes.bin = function (group, options) {
-    return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options, ["mbin"]);
-};
+    rel: function rel(group, options) {
+        return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options, ["mrel"]);
+    },
 
-groupTypes.rel = function (group, options) {
-    return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options, ["mrel"]);
-};
+    open: function open(group, options) {
+        return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options, ["mopen"]);
+    },
 
-groupTypes.open = function (group, options) {
-    return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options, ["mopen"]);
-};
+    close: function close(group, options) {
+        return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options, ["mclose"]);
+    },
 
-groupTypes.close = function (group, options) {
-    return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options, ["mclose"]);
-};
+    inner: function inner(group, options) {
+        return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options, ["minner"]);
+    },
 
-groupTypes.inner = function (group, options) {
-    return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options, ["minner"]);
-};
+    punct: function punct(group, options) {
+        return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options, ["mpunct"]);
+    },
 
-groupTypes.punct = function (group, options) {
-    return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options, ["mpunct"]);
-};
+    ordgroup: function ordgroup(group, options) {
+        return makeSpan(["mord"], buildExpression(group.value, options, true), options);
+    },
 
-groupTypes.ordgroup = function (group, options) {
-    return makeSpan(["mord"], buildExpression(group.value, options, true), options);
-};
+    supsub: function supsub(group, options) {
+        // Superscript and subscripts are handled in the TeXbook on page
+        // 445-446, rules 18(a-f).
 
-groupTypes.supsub = function (group, options) {
-    // Superscript and subscripts are handled in the TeXbook on page
-    // 445-446, rules 18(a-f).
-
-    // Here is where we defer to the inner group if it should handle
-    // superscripts and subscripts itself.
-    if (shouldHandleSupSub(group, options)) {
-        return groupTypes[group.value.base.type](group, options);
-    }
-
-    var base = buildGroup(group.value.base, options);
-    var supm = void 0;
-    var subm = void 0;
-
-    var metrics = options.fontMetrics();
-    var newOptions = void 0;
-
-    // Rule 18a
-    var supShift = 0;
-    var subShift = 0;
-
-    if (group.value.sup) {
-        newOptions = options.havingStyle(options.style.sup());
-        supm = buildGroup(group.value.sup, newOptions, options);
-        if (!__WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].isCharacterBox(group.value.base)) {
-            supShift = base.height - newOptions.fontMetrics().supDrop * newOptions.sizeMultiplier / options.sizeMultiplier;
-        }
-    }
-
-    if (group.value.sub) {
-        newOptions = options.havingStyle(options.style.sub());
-        subm = buildGroup(group.value.sub, newOptions, options);
-        if (!__WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].isCharacterBox(group.value.base)) {
-            subShift = base.depth + newOptions.fontMetrics().subDrop * newOptions.sizeMultiplier / options.sizeMultiplier;
-        }
-    }
-
-    // Rule 18c
-    var minSupShift = void 0;
-    if (options.style === __WEBPACK_IMPORTED_MODULE_3__Style__["a" /* default */].DISPLAY) {
-        minSupShift = metrics.sup1;
-    } else if (options.style.cramped) {
-        minSupShift = metrics.sup3;
-    } else {
-        minSupShift = metrics.sup2;
-    }
-
-    // scriptspace is a font-size-independent size, so scale it
-    // appropriately
-    var multiplier = options.sizeMultiplier;
-    var scriptspace = 0.5 / metrics.ptPerEm / multiplier + "em";
-
-    var supsub = void 0;
-    if (!group.value.sup) {
-        // Rule 18b
-        subShift = Math.max(subShift, metrics.sub1, subm.height - 0.8 * metrics.xHeight);
-
-        var vlistElem = [{ type: "elem", elem: subm, marginRight: scriptspace }];
-        // Subscripts shouldn't be shifted by the base's italic correction.
-        // Account for that by shifting the subscript back the appropriate
-        // amount. Note we only do this when the base is a single symbol.
-        if (base instanceof __WEBPACK_IMPORTED_MODULE_5__domTree__["a" /* default */].symbolNode) {
-            vlistElem[0].marginLeft = -base.italic + "em";
+        // Here is where we defer to the inner group if it should handle
+        // superscripts and subscripts itself.
+        if (shouldHandleSupSub(group, options)) {
+            return groupTypes[group.value.base.type](group, options);
         }
 
-        supsub = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
-            positionType: "shift",
-            positionData: subShift,
-            children: vlistElem
-        }, options);
-    } else if (!group.value.sub) {
-        // Rule 18c, d
-        supShift = Math.max(supShift, minSupShift, supm.depth + 0.25 * metrics.xHeight);
+        var base = buildGroup(group.value.base, options);
+        var supm = void 0;
+        var subm = void 0;
 
-        supsub = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
-            positionType: "shift",
-            positionData: -supShift,
-            children: [{ type: "elem", elem: supm, marginRight: scriptspace }]
-        }, options);
-    } else {
-        supShift = Math.max(supShift, minSupShift, supm.depth + 0.25 * metrics.xHeight);
-        subShift = Math.max(subShift, metrics.sub2);
+        var metrics = options.fontMetrics();
+        var newOptions = void 0;
 
-        var ruleWidth = metrics.defaultRuleThickness;
+        // Rule 18a
+        var supShift = 0;
+        var subShift = 0;
 
-        // Rule 18e
-        if (supShift - supm.depth - (subm.height - subShift) < 4 * ruleWidth) {
-            subShift = 4 * ruleWidth - (supShift - supm.depth) + subm.height;
-            var psi = 0.8 * metrics.xHeight - (supShift - supm.depth);
-            if (psi > 0) {
-                supShift += psi;
-                subShift -= psi;
+        if (group.value.sup) {
+            newOptions = options.havingStyle(options.style.sup());
+            supm = buildGroup(group.value.sup, newOptions, options);
+            if (!__WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].isCharacterBox(group.value.base)) {
+                supShift = base.height - newOptions.fontMetrics().supDrop * newOptions.sizeMultiplier / options.sizeMultiplier;
             }
         }
 
-        var _vlistElem = [{ type: "elem", elem: subm, shift: subShift, marginRight: scriptspace }, { type: "elem", elem: supm, shift: -supShift, marginRight: scriptspace }];
-        // See comment above about subscripts not being shifted
-        if (base instanceof __WEBPACK_IMPORTED_MODULE_5__domTree__["a" /* default */].symbolNode) {
-            _vlistElem[0].marginLeft = -base.italic + "em";
+        if (group.value.sub) {
+            newOptions = options.havingStyle(options.style.sub());
+            subm = buildGroup(group.value.sub, newOptions, options);
+            if (!__WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].isCharacterBox(group.value.base)) {
+                subShift = base.depth + newOptions.fontMetrics().subDrop * newOptions.sizeMultiplier / options.sizeMultiplier;
+            }
         }
 
-        supsub = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
-            positionType: "individualShift",
-            children: _vlistElem
-        }, options);
-    }
-
-    // We ensure to wrap the supsub vlist in a span.msupsub to reset text-align
-    var mclass = getTypeOfDomTree(base) || "mord";
-    return makeSpan([mclass], [base, makeSpan(["msupsub"], [supsub])], options);
-};
-
-groupTypes.spacing = function (group, options) {
-    if (group.value === "\\ " || group.value === "\\space" || group.value === " " || group.value === "~") {
-        // Spaces are generated by adding an actual space. Each of these
-        // things has an entry in the symbols table, so these will be turned
-        // into appropriate outputs.
-        if (group.mode === "text") {
-            return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeOrd(group, options, "textord");
+        // Rule 18c
+        var minSupShift = void 0;
+        if (options.style === __WEBPACK_IMPORTED_MODULE_3__Style__["a" /* default */].DISPLAY) {
+            minSupShift = metrics.sup1;
+        } else if (options.style.cramped) {
+            minSupShift = metrics.sup3;
         } else {
-            return makeSpan(["mspace"], [__WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options)], options);
+            minSupShift = metrics.sup2;
         }
-    } else {
-        // Other kinds of spaces are of arbitrary width. We use CSS to
-        // generate these.
-        return makeSpan(["mspace", __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].spacingFunctions[group.value].className], [], options);
-    }
-};
 
-groupTypes.horizBrace = function (group, options) {
-    var style = options.style;
+        // scriptspace is a font-size-independent size, so scale it
+        // appropriately for use as the marginRight.
+        var multiplier = options.sizeMultiplier;
+        var marginRight = 0.5 / metrics.ptPerEm / multiplier + "em";
 
-    var hasSupSub = group.type === "supsub";
-    var supSubGroup = void 0;
-    var newOptions = void 0;
-    if (hasSupSub) {
-        // Ref: LaTeX source2e: }}}}\limits}
-        // i.e. LaTeX treats the brace similar to an op and passes it
-        // with \limits, so we need to assign supsub style.
-        if (group.value.sup) {
-            newOptions = options.havingStyle(style.sup());
-            supSubGroup = buildGroup(group.value.sup, newOptions, options);
+        var supsub = void 0;
+        if (!group.value.sup) {
+            // Rule 18b
+            subShift = Math.max(subShift, metrics.sub1, subm.height - 0.8 * metrics.xHeight);
+
+            var vlistElem = [{ type: "elem", elem: subm, marginRight: marginRight }];
+            // Subscripts shouldn't be shifted by the base's italic correction.
+            // Account for that by shifting the subscript back the appropriate
+            // amount. Note we only do this when the base is a single symbol.
+            if (base instanceof __WEBPACK_IMPORTED_MODULE_5__domTree__["a" /* default */].symbolNode) {
+                vlistElem[0].marginLeft = -base.italic + "em";
+            }
+
+            supsub = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
+                positionType: "shift",
+                positionData: subShift,
+                children: vlistElem
+            }, options);
+        } else if (!group.value.sub) {
+            // Rule 18c, d
+            supShift = Math.max(supShift, minSupShift, supm.depth + 0.25 * metrics.xHeight);
+
+            supsub = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
+                positionType: "shift",
+                positionData: -supShift,
+                children: [{ type: "elem", elem: supm, marginRight: marginRight }]
+            }, options);
         } else {
-            newOptions = options.havingStyle(style.sub());
-            supSubGroup = buildGroup(group.value.sub, newOptions, options);
+            supShift = Math.max(supShift, minSupShift, supm.depth + 0.25 * metrics.xHeight);
+            subShift = Math.max(subShift, metrics.sub2);
+
+            var ruleWidth = metrics.defaultRuleThickness;
+
+            // Rule 18e
+            var maxWidth = 4 * ruleWidth;
+            if (supShift - supm.depth - (subm.height - subShift) < maxWidth) {
+                subShift = maxWidth - (supShift - supm.depth) + subm.height;
+                var psi = 0.8 * metrics.xHeight - (supShift - supm.depth);
+                if (psi > 0) {
+                    supShift += psi;
+                    subShift -= psi;
+                }
+            }
+
+            var _vlistElem = [{ type: "elem", elem: subm, shift: subShift, marginRight: marginRight }, { type: "elem", elem: supm, shift: -supShift, marginRight: marginRight }];
+            // See comment above about subscripts not being shifted.
+            if (base instanceof __WEBPACK_IMPORTED_MODULE_5__domTree__["a" /* default */].symbolNode) {
+                _vlistElem[0].marginLeft = -base.italic + "em";
+            }
+
+            supsub = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
+                positionType: "individualShift",
+                children: _vlistElem
+            }, options);
         }
-        group = group.value.base;
-    }
 
-    // Build the base group
-    var body = buildGroup(group.value.base, options.havingBaseStyle(__WEBPACK_IMPORTED_MODULE_3__Style__["a" /* default */].DISPLAY));
+        // Wrap the supsub vlist in a span.msupsub to reset text-align.
+        var mclass = getTypeOfDomTree(base) || "mord";
+        return makeSpan([mclass], [base, makeSpan(["msupsub"], [supsub])], options);
+    },
+    spacing: function spacing(group, options) {
+        if (__WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].regularSpace.hasOwnProperty(group.value)) {
+            var className = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].regularSpace[group.value].className;
+            // Spaces are generated by adding an actual space. Each of these
+            // things has an entry in the symbols table, so these will be turned
+            // into appropriate outputs.
+            if (group.mode === "text") {
+                var ord = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeOrd(group, options, "textord");
+                ord.classes.push(className);
+                return ord;
+            } else {
+                return makeSpan(["mspace", className], [__WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].mathsym(group.value, group.mode, options)], options);
+            }
+        } else {
+            // Other kinds of spaces are of arbitrary width. We use CSS to
+            // generate these.
+            return makeSpan(["mspace", __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].spacingFunctions[group.value].className], [], options);
+        }
+    },
+    horizBrace: function horizBrace(group, options) {
+        var style = options.style;
 
-    // Create the stretchy element
-    var braceBody = __WEBPACK_IMPORTED_MODULE_8__stretchy__["a" /* default */].svgSpan(group, options);
+        var hasSupSub = group.type === "supsub";
+        var supSubGroup = void 0;
+        var newOptions = void 0;
+        if (hasSupSub) {
+            // Ref: LaTeX source2e: }}}}\limits}
+            // i.e. LaTeX treats the brace similar to an op and passes it
+            // with \limits, so we need to assign supsub style.
+            if (group.value.sup) {
+                newOptions = options.havingStyle(style.sup());
+                supSubGroup = buildGroup(group.value.sup, newOptions, options);
+            } else {
+                newOptions = options.havingStyle(style.sub());
+                supSubGroup = buildGroup(group.value.sub, newOptions, options);
+            }
+            group = group.value.base;
+        }
 
-    // Generate the vlist, with the appropriate kerns               ┏━━━━━━━━┓
-    // This first vlist contains the subject matter and the brace:   equation
-    var vlist = void 0;
-    if (group.value.isOver) {
-        vlist = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
-            positionType: "firstBaseline",
-            children: [{ type: "elem", elem: body }, { type: "kern", size: 0.1 }, { type: "elem", elem: braceBody }]
-        }, options);
-        vlist.children[0].children[0].children[1].classes.push("svg-align");
-    } else {
-        vlist = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
-            positionType: "bottom",
-            positionData: body.depth + 0.1 + braceBody.height,
-            children: [{ type: "elem", elem: braceBody }, { type: "kern", size: 0.1 }, { type: "elem", elem: body }]
-        }, options);
-        vlist.children[0].children[0].children[0].classes.push("svg-align");
-    }
+        // Build the base group
+        var body = buildGroup(group.value.base, options.havingBaseStyle(__WEBPACK_IMPORTED_MODULE_3__Style__["a" /* default */].DISPLAY));
 
-    if (hasSupSub) {
-        // In order to write the supsub, wrap the first vlist in another vlist:
-        // They can't all go in the same vlist, because the note might be wider
-        // than the equation. We want the equation to control the brace width.
+        // Create the stretchy element
+        var braceBody = __WEBPACK_IMPORTED_MODULE_8__stretchy__["a" /* default */].svgSpan(group, options);
 
-        //      note          long note           long note
-        //   ┏━━━━━━━━┓   or    ┏━━━┓     not    ┏━━━━━━━━━┓
-        //    equation           eqn                 eqn
-
-        var vSpan = makeSpan(["mord", group.value.isOver ? "mover" : "munder"], [vlist], options);
-
+        // Generate the vlist, with the appropriate kerns        ┏━━━━━━━━┓
+        // This first vlist contains the content and the brace:   equation
+        var vlist = void 0;
         if (group.value.isOver) {
             vlist = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
                 positionType: "firstBaseline",
-                children: [{ type: "elem", elem: vSpan }, { type: "kern", size: 0.2 }, { type: "elem", elem: supSubGroup }]
+                children: [{ type: "elem", elem: body }, { type: "kern", size: 0.1 }, { type: "elem", elem: braceBody }]
             }, options);
+            vlist.children[0].children[0].children[1].classes.push("svg-align");
         } else {
             vlist = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
                 positionType: "bottom",
-                positionData: vSpan.depth + 0.2 + supSubGroup.height,
-                children: [{ type: "elem", elem: supSubGroup }, { type: "kern", size: 0.2 }, { type: "elem", elem: vSpan }]
+                positionData: body.depth + 0.1 + braceBody.height,
+                children: [{ type: "elem", elem: braceBody }, { type: "kern", size: 0.1 }, { type: "elem", elem: body }]
+            }, options);
+            vlist.children[0].children[0].children[0].classes.push("svg-align");
+        }
+
+        if (hasSupSub) {
+            // To write the supsub, wrap the first vlist in another vlist:
+            // They can't all go in the same vlist, because the note might be
+            // wider than the equation. We want the equation to control the
+            // brace width.
+
+            //      note          long note           long note
+            //   ┏━━━━━━━━┓   or    ┏━━━┓     not    ┏━━━━━━━━━┓
+            //    equation           eqn                 eqn
+
+            var vSpan = makeSpan(["mord", group.value.isOver ? "mover" : "munder"], [vlist], options);
+
+            if (group.value.isOver) {
+                vlist = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
+                    positionType: "firstBaseline",
+                    children: [{ type: "elem", elem: vSpan }, { type: "kern", size: 0.2 }, { type: "elem", elem: supSubGroup }]
+                }, options);
+            } else {
+                vlist = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
+                    positionType: "bottom",
+                    positionData: vSpan.depth + 0.2 + supSubGroup.height + supSubGroup.depth,
+                    children: [{ type: "elem", elem: supSubGroup }, { type: "kern", size: 0.2 }, { type: "elem", elem: vSpan }]
+                }, options);
+            }
+        }
+
+        return makeSpan(["mord", group.value.isOver ? "mover" : "munder"], [vlist], options);
+    },
+    xArrow: function xArrow(group, options) {
+        var style = options.style;
+
+        // Build the argument groups in the appropriate style.
+        // Ref: amsmath.dtx:   \hbox{$\scriptstyle\mkern#3mu{#6}\mkern#4mu$}%
+
+        var newOptions = options.havingStyle(style.sup());
+        var upperGroup = buildGroup(group.value.body, newOptions, options);
+        upperGroup.classes.push("x-arrow-pad");
+
+        var lowerGroup = void 0;
+        if (group.value.below) {
+            // Build the lower group
+            newOptions = options.havingStyle(style.sub());
+            lowerGroup = buildGroup(group.value.below, newOptions, options);
+            lowerGroup.classes.push("x-arrow-pad");
+        }
+
+        var arrowBody = __WEBPACK_IMPORTED_MODULE_8__stretchy__["a" /* default */].svgSpan(group, options);
+
+        // Re shift: Note that stretchy.svgSpan returned arrowBody.depth = 0.
+        // The point we want on the math axis is at 0.5 * arrowBody.height.
+        var arrowShift = -options.fontMetrics().axisHeight + 0.5 * arrowBody.height;
+        // 2 mu kern. Ref: amsmath.dtx: #7\if0#2\else\mkern#2mu\fi
+        var upperShift = -options.fontMetrics().axisHeight - 0.5 * arrowBody.height - 0.111; // 0.111 em = 2 mu
+        if (upperGroup.depth > 0.25 || group.value.label === "\\xleftequilibrium") {
+            upperShift -= upperGroup.depth; // shift up if depth encroaches
+        }
+
+        // Generate the vlist
+        var vlist = void 0;
+        if (group.value.below) {
+            var lowerShift = -options.fontMetrics().axisHeight + lowerGroup.height + 0.5 * arrowBody.height + 0.111;
+            vlist = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
+                positionType: "individualShift",
+                children: [{ type: "elem", elem: upperGroup, shift: upperShift }, { type: "elem", elem: arrowBody, shift: arrowShift }, { type: "elem", elem: lowerGroup, shift: lowerShift }]
+            }, options);
+        } else {
+            vlist = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
+                positionType: "individualShift",
+                children: [{ type: "elem", elem: upperGroup, shift: upperShift }, { type: "elem", elem: arrowBody, shift: arrowShift }]
             }, options);
         }
-    }
 
-    return makeSpan(["mord", group.value.isOver ? "mover" : "munder"], [vlist], options);
-};
+        vlist.children[0].children[0].children[1].classes.push("svg-align");
 
-groupTypes.xArrow = function (group, options) {
-    var style = options.style;
-
-    // Build the argument groups in the appropriate style.
-    // Ref: amsmath.dtx:   \hbox{$\scriptstyle\mkern#3mu{#6}\mkern#4mu$}%
-
-    var newOptions = options.havingStyle(style.sup());
-    var upperGroup = buildGroup(group.value.body, newOptions, options);
-    upperGroup.classes.push("x-arrow-pad");
-
-    var lowerGroup = void 0;
-    if (group.value.below) {
-        // Build the lower group
-        newOptions = options.havingStyle(style.sub());
-        lowerGroup = buildGroup(group.value.below, newOptions, options);
-        lowerGroup.classes.push("x-arrow-pad");
-    }
-
-    var arrowBody = __WEBPACK_IMPORTED_MODULE_8__stretchy__["a" /* default */].svgSpan(group, options);
-
-    // Re shift: Note that stretchy.svgSpan returned arrowBody.depth = 0.
-    // The point we want on the math axis is at 0.5 * arrowBody.height.
-    var arrowShift = -options.fontMetrics().axisHeight + 0.5 * arrowBody.height;
-    // 2 mu kern. Ref: amsmath.dtx: #7\if0#2\else\mkern#2mu\fi
-    var upperShift = -options.fontMetrics().axisHeight - 0.5 * arrowBody.height - 0.111;
-    if (group.value.label === "\\xleftequilibrium") {
-        upperShift -= upperGroup.depth;
-    }
-
-    // Generate the vlist
-    var vlist = void 0;
-    if (group.value.below) {
-        var lowerShift = -options.fontMetrics().axisHeight + lowerGroup.height + 0.5 * arrowBody.height + 0.111;
-        vlist = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
-            positionType: "individualShift",
-            children: [{ type: "elem", elem: upperGroup, shift: upperShift }, { type: "elem", elem: arrowBody, shift: arrowShift }, { type: "elem", elem: lowerGroup, shift: lowerShift }]
-        }, options);
-    } else {
-        vlist = __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
-            positionType: "individualShift",
-            children: [{ type: "elem", elem: upperGroup, shift: upperShift }, { type: "elem", elem: arrowBody, shift: arrowShift }]
+        return makeSpan(["mrel", "x-arrow"], [vlist], options);
+    },
+    raisebox: function raisebox(group, options) {
+        var body = groupTypes.sizing({ value: {
+                value: [{
+                    type: "text",
+                    value: {
+                        body: group.value.value,
+                        font: "mathrm" // simulate \textrm
+                    }
+                }],
+                size: 6 // simulate \normalsize
+            } }, options);
+        var dy = Object(__WEBPACK_IMPORTED_MODULE_6__units__["a" /* calculateSize */])(group.value.dy.value, options);
+        return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
+            positionType: "shift",
+            positionData: -dy,
+            children: [{ type: "elem", elem: body }]
         }, options);
     }
-
-    vlist.children[0].children[0].children[1].classes.push("svg-align");
-
-    return makeSpan(["mrel", "x-arrow"], [vlist], options);
-};
-
-groupTypes.mclass = function (group, options) {
-    var elements = buildExpression(group.value.value, options, true);
-
-    return makeSpan([group.value.mclass], elements, options);
-};
-
-groupTypes.raisebox = function (group, options) {
-    var body = groupTypes.sizing({ value: {
-            value: [{
-                type: "text",
-                value: {
-                    body: group.value.value,
-                    font: "mathrm" // simulate \textrm
-                }
-            }],
-            size: 6 // simulate \normalsize
-        } }, options);
-    var dy = Object(__WEBPACK_IMPORTED_MODULE_6__units__["a" /* calculateSize */])(group.value.dy.value, options);
-    return __WEBPACK_IMPORTED_MODULE_4__buildCommon__["a" /* default */].makeVList({
-        positionType: "shift",
-        positionData: -dy,
-        children: [{ type: "elem", elem: body }]
-    }, options);
 };
 
 /**
@@ -2071,6 +2140,31 @@ var buildGroup = function buildGroup(group, options, baseOptions) {
 };
 
 /**
+ * Combine an array of HTML DOM nodes (e.g., the output of `buildExpression`)
+ * into an unbreakable HTML node of class .base, with proper struts to
+ * guarantee correct vertical extent.  `buildHTML` calls this repeatedly to
+ * make up the entire expression as a sequence of unbreakable units.
+ */
+function buildHTMLUnbreakable(children, options) {
+    // Compute height and depth of this chunk.
+    var body = makeSpan(["base"], children, options);
+
+    // Add strut, which ensures that the top of the HTML element falls at
+    // the height of the expression, and the bottom of the HTML element
+    // falls at the depth of the expression.
+    // We used to have separate top and bottom struts, where the bottom strut
+    // would like to use `vertical-align: top`, but in IE 9 this lowers the
+    // baseline of the box to the bottom of this strut (instead of staying in
+    // the normal place) so we use an absolute value for vertical-align instead.
+    var strut = makeSpan(["strut"]);
+    strut.style.height = body.height + body.depth + "em";
+    strut.style.verticalAlign = -body.depth + "em";
+    body.children.unshift(strut);
+
+    return body;
+}
+
+/**
  * Take an entire parse tree, and build it into an appropriate set of HTML
  * nodes.
  */
@@ -2079,27 +2173,77 @@ function buildHTML(tree, options) {
     // of the incoming tree so that it isn't accidentally changed
     tree = JSON.parse(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(tree));
 
+    // Strip off outer tag wrapper for processing below.
+    var tag = null;
+    if (tree.length === 1 && tree[0].type === "tag") {
+        tag = tree[0].value.tag;
+        tree = tree[0].value.body;
+    }
+
     // Build the expression contained in the tree
     var expression = buildExpression(tree, options, true);
-    var body = makeSpan(["base"], expression, options);
 
-    // Add struts, which ensure that the top of the HTML element falls at the
-    // height of the expression, and the bottom of the HTML element falls at the
-    // depth of the expression.
-    var topStrut = makeSpan(["strut"]);
-    var bottomStrut = makeSpan(["strut", "bottom"]);
+    var children = [];
 
-    topStrut.style.height = body.height + "em";
-    bottomStrut.style.height = body.height + body.depth + "em";
-    // We'd like to use `vertical-align: top` but in IE 9 this lowers the
-    // baseline of the box to the bottom of this strut (instead staying in the
-    // normal place) so we use an absolute value for vertical-align instead
-    bottomStrut.style.verticalAlign = -body.depth + "em";
+    // Create one base node for each chunk between potential line breaks.
+    // The TeXBook [p.173] says "A formula will be broken only after a
+    // relation symbol like $=$ or $<$ or $\rightarrow$, or after a binary
+    // operation symbol like $+$ or $-$ or $\times$, where the relation or
+    // binary operation is on the ``outer level'' of the formula (i.e., not
+    // enclosed in {...} and not part of an \over construction)."
 
-    // Wrap the struts and body together
-    var htmlNode = makeSpan(["katex-html"], [topStrut, bottomStrut, body]);
+    var parts = [];
+    for (var i = 0; i < expression.length; i++) {
+        parts.push(expression[i]);
+        if (expression[i].hasClass("mbin") || expression[i].hasClass("mrel") || expression[i].hasClass("allowbreak")) {
+            // Put any post-operator glue on same line as operator.
+            // Watch for \nobreak along the way.
+            var nobreak = false;
+            while (i < expression.length - 1 && expression[i + 1].hasClass("mspace")) {
+                i++;
+                parts.push(expression[i]);
+                if (expression[i].hasClass("nobreak")) {
+                    nobreak = true;
+                }
+            }
+            // Don't allow break if \nobreak among the post-operator glue.
+            if (!nobreak) {
+                children.push(buildHTMLUnbreakable(parts, options));
+                parts = [];
+            }
+        } else if (expression[i].hasClass("newline")) {
+            // Write the line except the newline
+            parts.pop();
+            if (parts.length > 0) {
+                children.push(buildHTMLUnbreakable(parts, options));
+                parts = [];
+            }
+            // Put the newline at the top level
+            children.push(expression[i]);
+        }
+    }
+    if (parts.length > 0) {
+        children.push(buildHTMLUnbreakable(parts, options));
+    }
 
+    // Now, if there was a tag, build it too and append it as a final child.
+    var tagChild = void 0;
+    if (tag) {
+        tagChild = buildHTMLUnbreakable(buildExpression(tag, options, true));
+        tagChild.classes = ["tag"];
+        children.push(tagChild);
+    }
+
+    var htmlNode = makeSpan(["katex-html"], children);
     htmlNode.setAttribute("aria-hidden", "true");
+
+    // Adjust the strut of the tag to be the maximum height of all children
+    // (the height of the enclosing htmlNode) for proper vertical alignment.
+    if (tag) {
+        var strut = tagChild.children[0];
+        strut.style.height = htmlNode.height + htmlNode.depth + "em";
+        strut.style.verticalAlign = -htmlNode.depth + "em";
+    }
 
     return htmlNode;
 }
@@ -2109,17 +2253,171 @@ function buildHTML(tree, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ParseNode__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Token__ = __webpack_require__(25);
+
+
+
 
 /**
- * This file contains a list of utility functions which are useful in other
- * files.
+ * This is the ParseError class, which is the main error thrown by KaTeX
+ * functions when something has gone wrong. This is used to distinguish internal
+ * errors from errors in the expression that the user provided.
+ *
+ * If possible, a caller should provide a Token or ParseNode with information
+ * about where in the source string the problem occurred.
  */
+
+var ParseError =
+// Error position based on passed-in Token or ParseNode.
+
+function ParseError(message, // The error message
+token) // An object providing position information
+{
+    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, ParseError);
+
+    var error = "KaTeX parse error: " + message;
+    var start = void 0;
+
+    var loc = token && token.loc;
+    if (loc && loc.start <= loc.end) {
+        // If we have the input and a position, make the error a bit fancier
+
+        // Get the input
+        var input = loc.lexer.input;
+
+        // Prepend some information
+        start = loc.start;
+        var end = loc.end;
+        if (start === input.length) {
+            error += " at end of input: ";
+        } else {
+            error += " at position " + (start + 1) + ": ";
+        }
+
+        // Underline token in question using combining underscores
+        var underlined = input.slice(start, end).replace(/[^]/g, "$&\u0332");
+
+        // Extract some context from the input and add it to the error
+        var left = void 0;
+        if (start > 15) {
+            left = "…" + input.slice(start - 15, start);
+        } else {
+            left = input.slice(0, start);
+        }
+        var right = void 0;
+        if (end + 15 < input.length) {
+            right = input.slice(end, end + 15) + "…";
+        } else {
+            right = input.slice(end);
+        }
+        error += left + underlined + right;
+    }
+
+    // Some hackery to make ParseError a prototype of Error
+    // See http://stackoverflow.com/a/8460753
+    var self = new Error(error);
+    self.name = "ParseError";
+    // $FlowFixMe
+    self.__proto__ = ParseError.prototype;
+    // $FlowFixMe
+    self.position = start;
+    return self;
+};
+
+// $FlowFixMe More hackery
+
+
+ParseError.prototype.__proto__ = Error.prototype;
+
+/* harmony default export */ __webpack_exports__["a"] = (ParseError);
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = assertNodeType;
+/* harmony export (immutable) */ __webpack_exports__["b"] = checkNodeType;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SourceLocation__ = __webpack_require__(37);
+
+
+
+/**
+ * The resulting parse tree nodes of the parse tree.
+ *
+ * It is possible to provide position information, so that a `ParseNode` can
+ * fulfill a role similar to a `Token` in error reporting.
+ * For details on the corresponding properties see `Token` constructor.
+ * Providing such information can lead to better error reporting.
+ */
+var ParseNode = function ParseNode(type, // type of node, like e.g. "ordgroup"
+value, // type-specific representation of the node
+mode, // parse mode in action for this node, "math" or "text"
+first, // first token or node of the input for
+last) // last token or node of the input for this
+// node, will default to firstToken if unset
+{
+    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, ParseNode);
+
+    this.type = type;
+    this.value = value;
+    this.mode = mode;
+    this.loc = __WEBPACK_IMPORTED_MODULE_1__SourceLocation__["a" /* default */].range(first, last);
+};
+
+/* harmony default export */ __webpack_exports__["c"] = (ParseNode);
+
+// Map from `type` field value to corresponding `value` type.
+
+/**
+ * Asserts that the node is of the given type and returns it with stricter
+ * typing. Throws if the node's type does not match.
+ */
+function assertNodeType(node, type) {
+    var typedNode = checkNodeType(node, type);
+    if (!typedNode) {
+        throw new Error("Expected node of type " + type + ", but got node of type " + node.type);
+    }
+    return typedNode;
+}
+
+/**
+ * Returns the node more strictly typed iff it is of the given type. Otherwise,
+ * returns null.
+ */
+function checkNodeType(node, type) {
+    return node.type === type ? node : null;
+}
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+var core = module.exports = {version: '2.4.0'};
+if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
 
 /**
  * Provide an `indexOf` function which works in IE8, but defers to native if
  * possible.
  */
 var nativeIndexOf = Array.prototype.indexOf;
+/**
+ * This file contains a list of utility functions which are useful in other
+ * files.
+ */
+
 var indexOf = function indexOf(list, elem) {
     if (list == null) {
         return -1;
@@ -2254,93 +2552,7 @@ var isCharacterBox = function isCharacterBox(group) {
 });
 
 /***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ParseNode__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Token__ = __webpack_require__(27);
-
-
-
-
-/**
- * This is the ParseError class, which is the main error thrown by KaTeX
- * functions when something has gone wrong. This is used to distinguish internal
- * errors from errors in the expression that the user provided.
- *
- * If possible, a caller should provide a Token or ParseNode with information
- * about where in the source string the problem occurred.
- */
-
-var ParseError =
-// Error position based on passed-in Token or ParseNode.
-
-function ParseError(message, // The error message
-token) // An object providing position information
-{
-    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, ParseError);
-
-    var error = "KaTeX parse error: " + message;
-    var start = void 0;
-
-    var loc = token && token.loc;
-    if (loc && loc.start <= loc.end) {
-        // If we have the input and a position, make the error a bit fancier
-
-        // Get the input
-        var input = loc.lexer.input;
-
-        // Prepend some information
-        start = loc.start;
-        var end = loc.end;
-        if (start === input.length) {
-            error += " at end of input: ";
-        } else {
-            error += " at position " + (start + 1) + ": ";
-        }
-
-        // Underline token in question using combining underscores
-        var underlined = input.slice(start, end).replace(/[^]/g, "$&\u0332");
-
-        // Extract some context from the input and add it to the error
-        var left = void 0;
-        if (start > 15) {
-            left = "…" + input.slice(start - 15, start);
-        } else {
-            left = input.slice(0, start);
-        }
-        var right = void 0;
-        if (end + 15 < input.length) {
-            right = input.slice(end, end + 15) + "…";
-        } else {
-            right = input.slice(end);
-        }
-        error += left + underlined + right;
-    }
-
-    // Some hackery to make ParseError a prototype of Error
-    // See http://stackoverflow.com/a/8460753
-    var self = new Error(error);
-    self.name = "ParseError";
-    // $FlowFixMe
-    self.__proto__ = ParseError.prototype;
-    // $FlowFixMe
-    self.position = start;
-    return self;
-};
-
-// $FlowFixMe More hackery
-
-
-ParseError.prototype.__proto__ = Error.prototype;
-
-/* harmony default export */ __webpack_exports__["a"] = (ParseError);
-
-/***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2355,20 +2567,62 @@ exports.default = function (instance, Constructor) {
 };
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports) {
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
 
-var core = module.exports = {version: '2.4.0'};
-if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+var store      = __webpack_require__(49)('wks')
+  , uid        = __webpack_require__(33)
+  , Symbol     = __webpack_require__(15).Symbol
+  , USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function(name){
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
 
 /***/ }),
-/* 9 */
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _defineProperty = __webpack_require__(86);
+
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+/***/ }),
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
 
 
@@ -2506,70 +2760,28 @@ var _text = [D, Dc, T, Tc, T, Tc, T, Tc];
 });
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _defineProperty = __webpack_require__(73);
-
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store      = __webpack_require__(52)('wks')
-  , uid        = __webpack_require__(32)
-  , Symbol     = __webpack_require__(16).Symbol
-  , USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function(name){
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-/***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__unicodeScripts__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__svgGeometry__ = __webpack_require__(111);
+/* unused harmony export HtmlDomContainer */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits__ = __webpack_require__(129);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_core_js_object_assign__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_core_js_object_assign__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_classCallCheck__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_createClass__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__unicodeScripts__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__svgGeometry__ = __webpack_require__(140);
+
+
 
 
 
@@ -2607,30 +2819,22 @@ var createClass = function createClass(classes) {
 // To ensure that all nodes have compatible signatures for these methods.
 
 
-/**
- * All `DomChildNode`s MUST have `height`, `depth`, and `maxFontSize` numeric
- * fields.
- *
- * `DomChildNode` is not defined as an interface since `documentFragment` also
- * has these fields but should not be considered a `DomChildNode`.
- */
+// Span wrapping other DOM nodes.
 
-/**
- * This node represents a span node, with a className, a list of children, and
- * an inline style. It also contains information about its height, depth, and
- * maxFontSize.
- */
-var span = function () {
-    function span(classes, children, options, style) {
-        __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, span);
+// Span wrapping an SVG node.
+
+
+var HtmlDomContainer = function () {
+    function HtmlDomContainer(classes, children, options, style) {
+        __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_classCallCheck___default()(this, HtmlDomContainer);
 
         this.classes = classes || [];
         this.children = children || [];
+        this.attributes = {};
         this.height = 0;
         this.depth = 0;
         this.maxFontSize = 0;
-        this.style = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign___default()({}, style);
-        this.attributes = {};
+        this.style = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_core_js_object_assign___default()({}, style);
         if (options) {
             if (options.style.isTight()) {
                 this.classes.push("mtight");
@@ -2643,72 +2847,87 @@ var span = function () {
     }
 
     /**
-     * Sets an arbitrary attribute on the span. Warning: use this wisely. Not all
-     * browsers support attributes the same, and having too many custom attributes
-     * is probably bad.
+     * Sets an arbitrary attribute on the node. Warning: use this wisely. Not
+     * all browsers support attributes the same, and having too many custom
+     * attributes is probably bad.
      */
 
 
-    __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(span, [{
+    __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_createClass___default()(HtmlDomContainer, [{
         key: "setAttribute",
         value: function setAttribute(attribute, value) {
             this.attributes[attribute] = value;
         }
     }, {
+        key: "hasClass",
+        value: function hasClass(className) {
+            return __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].contains(this.classes, className);
+        }
+
+        /**
+         * Try to combine with given sibling.  Returns true if the sibling has
+         * been successfully merged into this node, and false otherwise.
+         * Default behavior fails (returns false).
+         */
+
+    }, {
         key: "tryCombine",
         value: function tryCombine(sibling) {
             return false;
         }
+    }, {
+        key: "tagName",
+        value: function tagName() {
+            throw new Error("use of generic HtmlDomContainer tagName");
+        }
 
         /**
-         * Convert the span into an HTML node
+         * Convert into an HTML node
          */
 
     }, {
         key: "toNode",
         value: function toNode() {
-            var span = document.createElement("span");
+            var node = document.createElement(this.tagName());
 
             // Apply the class
-            span.className = createClass(this.classes);
+            node.className = createClass(this.classes);
 
             // Apply inline styles
             for (var style in this.style) {
                 if (Object.prototype.hasOwnProperty.call(this.style, style)) {
-                    // $FlowFixMe Flow doesn't seem to understand span.style's type.
-                    span.style[style] = this.style[style];
+                    // $FlowFixMe Flow doesn't seem to understand node.style's type.
+                    node.style[style] = this.style[style];
                 }
             }
 
             // Apply attributes
             for (var attr in this.attributes) {
-                if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
-                    span.setAttribute(attr, this.attributes[attr]);
+                if (this.attributes.hasOwnProperty(attr)) {
+                    node.setAttribute(attr, this.attributes[attr]);
                 }
             }
 
             // Append the children, also as HTML nodes
             for (var i = 0; i < this.children.length; i++) {
-                span.appendChild(this.children[i].toNode());
+                node.appendChild(this.children[i].toNode());
             }
 
-            return span;
+            return node;
         }
 
         /**
-         * Convert the span into an HTML markup string
+         * Convert into an HTML markup string
          */
 
     }, {
         key: "toMarkup",
         value: function toMarkup() {
-            var markup = "<span";
+            var markup = "<" + this.tagName();
 
             // Add the class
             if (this.classes.length) {
-                markup += " class=\"";
-                markup += __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].escape(createClass(this.classes));
-                markup += "\"";
+                markup += " class=\"" + __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].escape(createClass(this.classes)) + "\"";
             }
 
             var styles = "";
@@ -2716,19 +2935,19 @@ var span = function () {
             // Add the styles, after hyphenation
             for (var style in this.style) {
                 if (this.style.hasOwnProperty(style)) {
-                    styles += __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].hyphenate(style) + ":" + this.style[style] + ";";
+                    styles += __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].hyphenate(style) + ":" + this.style[style] + ";";
                 }
             }
 
             if (styles) {
-                markup += " style=\"" + __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].escape(styles) + "\"";
+                markup += " style=\"" + __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].escape(styles) + "\"";
             }
 
             // Add the attributes
             for (var attr in this.attributes) {
-                if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
+                if (this.attributes.hasOwnProperty(attr)) {
                     markup += " " + attr + "=\"";
-                    markup += __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].escape(this.attributes[attr]);
+                    markup += __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].escape(this.attributes[attr]);
                     markup += "\"";
                 }
             }
@@ -2740,14 +2959,43 @@ var span = function () {
                 markup += this.children[i].toMarkup();
             }
 
-            markup += "</span>";
+            markup += "</" + this.tagName() + ">";
 
             return markup;
         }
     }]);
 
-    return span;
+    return HtmlDomContainer;
 }();
+
+/**
+ * This node represents a span node, with a className, a list of children, and
+ * an inline style. It also contains information about its height, depth, and
+ * maxFontSize.
+ *
+ * Represents two types with different uses: SvgSpan to wrap an SVG and DomSpan
+ * otherwise. This typesafety is important when HTML builders access a span's
+ * children.
+ */
+
+var span = function (_HtmlDomContainer) {
+    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits___default()(span, _HtmlDomContainer);
+
+    function span(classes, children, options, style) {
+        __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_classCallCheck___default()(this, span);
+
+        return __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default()(this, (span.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(span)).call(this, classes, children, options, style));
+    }
+
+    __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_createClass___default()(span, [{
+        key: "tagName",
+        value: function tagName() {
+            return "span";
+        }
+    }]);
+
+    return span;
+}(HtmlDomContainer);
 
 /**
  * This node represents an anchor (<a>) element with a hyperlink, a list of classes,
@@ -2756,157 +3004,27 @@ var span = function () {
  */
 
 
-var anchor = function () {
-    function anchor(href, classes, children, options) {
-        __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, anchor);
+var anchor = function (_HtmlDomContainer2) {
+    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits___default()(anchor, _HtmlDomContainer2);
 
-        this.href = href;
-        this.classes = classes;
-        this.children = children;
-        this.height = 0;
-        this.depth = 0;
-        this.maxFontSize = 0;
-        this.style = {};
-        this.attributes = {};
-        if (options.style.isTight()) {
-            this.classes.push("mtight");
-        }
-        var color = options.getColor();
-        if (color) {
-            this.style.color = color;
-        }
+    function anchor(href, classes, children, options) {
+        __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_classCallCheck___default()(this, anchor);
+
+        var _this2 = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default()(this, (anchor.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(anchor)).call(this, classes, children, options));
+
+        _this2.setAttribute('href', href);
+        return _this2;
     }
 
-    /**
-     * Sets an arbitrary attribute on the anchor. Warning: use this wisely. Not all
-     * browsers support attributes the same, and having too many custom attributes
-     * is probably bad.
-     */
-
-
-    __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(anchor, [{
-        key: "setAttribute",
-        value: function setAttribute(attribute, value) {
-            this.attributes[attribute] = value;
-        }
-    }, {
-        key: "tryCombine",
-        value: function tryCombine(sibling) {
-            return false;
-        }
-
-        /**
-         * Convert the anchor into an HTML node
-         */
-
-    }, {
-        key: "toNode",
-        value: function toNode() {
-            var a = document.createElement("a");
-
-            // Apply the href
-            a.setAttribute('href', this.href);
-
-            // Apply the class
-            if (this.classes.length) {
-                a.className = createClass(this.classes);
-            }
-
-            // Apply inline styles
-            for (var style in this.style) {
-                if (Object.prototype.hasOwnProperty.call(this.style, style)) {
-                    // $FlowFixMe Flow doesn't seem to understand a.style's type.
-                    a.style[style] = this.style[style];
-                }
-            }
-
-            // Apply attributes
-            for (var attr in this.attributes) {
-                if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
-                    a.setAttribute(attr, this.attributes[attr]);
-                }
-            }
-
-            // Append the children, also as HTML nodes
-            for (var i = 0; i < this.children.length; i++) {
-                a.appendChild(this.children[i].toNode());
-            }
-
-            return a;
-        }
-
-        /**
-         * Convert the a into an HTML markup string
-         */
-
-    }, {
-        key: "toMarkup",
-        value: function toMarkup() {
-            var markup = "<a";
-
-            // Add the href
-            markup += "href=\"" + (markup += __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].escape(this.href)) + "\"";
-            // Add the class
-            if (this.classes.length) {
-                markup += " class=\"" + __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].escape(createClass(this.classes)) + "\"";
-            }
-
-            var styles = "";
-
-            // Add the styles, after hyphenation
-            for (var style in this.style) {
-                if (this.style.hasOwnProperty(style)) {
-                    styles += __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].hyphenate(style) + ":" + this.style[style] + ";";
-                }
-            }
-
-            if (styles) {
-                markup += " style=\"" + __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].escape(styles) + "\"";
-            }
-
-            // Add the attributes
-            for (var attr in this.attributes) {
-                if (attr !== "href" && Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
-                    markup += " " + attr + "=\"" + __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].escape(this.attributes[attr]) + "\"";
-                }
-            }
-
-            markup += ">";
-
-            // Add the markup of the children, also as markup
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator___default()(this.children), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var child = _step.value;
-
-                    markup += child.toMarkup();
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-
-            markup += "</a>";
-
-            return markup;
+    __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_createClass___default()(anchor, [{
+        key: "tagName",
+        value: function tagName() {
+            return "a";
         }
     }]);
 
     return anchor;
-}();
+}(HtmlDomContainer);
 
 /**
  * This node represents a document fragment, which contains elements, but when
@@ -2918,20 +3036,32 @@ var anchor = function () {
 
 var documentFragment = function () {
     function documentFragment(children) {
-        __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, documentFragment);
+        __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_classCallCheck___default()(this, documentFragment);
 
         this.children = children || [];
+        this.classes = [];
         this.height = 0;
         this.depth = 0;
         this.maxFontSize = 0;
-    }
-
-    /**
-     * Convert the fragment into a node
-     */
+    } // Never used; needed for satisfying interface.
 
 
-    __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(documentFragment, [{
+    __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_createClass___default()(documentFragment, [{
+        key: "hasClass",
+        value: function hasClass(className) {
+            return __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].contains(this.classes, className);
+        }
+    }, {
+        key: "tryCombine",
+        value: function tryCombine(sibling) {
+            return false;
+        }
+
+        /**
+         * Convert the fragment into a node
+         */
+
+    }, {
         key: "toNode",
         value: function toNode() {
             // Create a fragment
@@ -2982,7 +3112,7 @@ var iCombinations = {
 
 var symbolNode = function () {
     function symbolNode(value, height, depth, italic, skew, width, classes, style) {
-        __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, symbolNode);
+        __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_classCallCheck___default()(this, symbolNode);
 
         this.value = value;
         this.height = height || 0;
@@ -2991,7 +3121,7 @@ var symbolNode = function () {
         this.skew = skew || 0;
         this.width = width || 0;
         this.classes = classes || [];
-        this.style = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign___default()({}, style);
+        this.style = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_core_js_object_assign___default()({}, style);
         this.maxFontSize = 0;
 
         // Mark text from non-Latin scripts with specific classes so that we
@@ -3001,7 +3131,7 @@ var symbolNode = function () {
         // We use CSS class names like cjk_fallback, hangul_fallback and
         // brahmic_fallback. See ./unicodeScripts.js for the set of possible
         // script names
-        var script = Object(__WEBPACK_IMPORTED_MODULE_4__unicodeScripts__["a" /* scriptFromCodepoint */])(this.value.charCodeAt(0));
+        var script = Object(__WEBPACK_IMPORTED_MODULE_6__unicodeScripts__["a" /* scriptFromCodepoint */])(this.value.charCodeAt(0));
         if (script) {
             this.classes.push(script + "_fallback");
         }
@@ -3012,7 +3142,12 @@ var symbolNode = function () {
         }
     }
 
-    __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(symbolNode, [{
+    __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_createClass___default()(symbolNode, [{
+        key: "hasClass",
+        value: function hasClass(className) {
+            return __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].contains(this.classes, className);
+        }
+    }, {
         key: "tryCombine",
         value: function tryCombine(sibling) {
             if (!sibling || !(sibling instanceof symbolNode) || this.italic > 0 || createClass(this.classes) !== createClass(sibling.classes) || this.skew !== sibling.skew || this.maxFontSize !== sibling.maxFontSize) {
@@ -3088,7 +3223,7 @@ var symbolNode = function () {
             if (this.classes.length) {
                 needsSpan = true;
                 markup += " class=\"";
-                markup += __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].escape(createClass(this.classes));
+                markup += __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].escape(createClass(this.classes));
                 markup += "\"";
             }
 
@@ -3099,16 +3234,16 @@ var symbolNode = function () {
             }
             for (var style in this.style) {
                 if (this.style.hasOwnProperty(style)) {
-                    styles += __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].hyphenate(style) + ":" + this.style[style] + ";";
+                    styles += __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].hyphenate(style) + ":" + this.style[style] + ";";
                 }
             }
 
             if (styles) {
                 needsSpan = true;
-                markup += " style=\"" + __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].escape(styles) + "\"";
+                markup += " style=\"" + __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].escape(styles) + "\"";
             }
 
-            var escaped = __WEBPACK_IMPORTED_MODULE_5__utils__["a" /* default */].escape(this.value);
+            var escaped = __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* default */].escape(this.value);
             if (needsSpan) {
                 markup += ">";
                 markup += escaped;
@@ -3130,18 +3265,13 @@ var symbolNode = function () {
 
 var svgNode = function () {
     function svgNode(children, attributes) {
-        __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, svgNode);
+        __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_classCallCheck___default()(this, svgNode);
 
         this.children = children || [];
         this.attributes = attributes || {};
-        this.height = 0;
-        this.depth = 0;
-        this.maxFontSize = 0;
     }
-    // Required for all `DomChildNode`s. Are always 0 for svgNode.
 
-
-    __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(svgNode, [{
+    __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_createClass___default()(svgNode, [{
         key: "toNode",
         value: function toNode() {
             var svgNS = "http://www.w3.org/2000/svg";
@@ -3188,13 +3318,13 @@ var svgNode = function () {
 
 var pathNode = function () {
     function pathNode(pathName, alternate) {
-        __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, pathNode);
+        __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_classCallCheck___default()(this, pathNode);
 
         this.pathName = pathName;
         this.alternate = alternate; // Used only for tall \sqrt
     }
 
-    __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(pathNode, [{
+    __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_createClass___default()(pathNode, [{
         key: "toNode",
         value: function toNode() {
             var svgNS = "http://www.w3.org/2000/svg";
@@ -3203,7 +3333,7 @@ var pathNode = function () {
             if (this.alternate) {
                 node.setAttribute("d", this.alternate);
             } else {
-                node.setAttribute("d", __WEBPACK_IMPORTED_MODULE_6__svgGeometry__["a" /* default */].path[this.pathName]);
+                node.setAttribute("d", __WEBPACK_IMPORTED_MODULE_8__svgGeometry__["a" /* default */].path[this.pathName]);
             }
 
             return node;
@@ -3214,7 +3344,7 @@ var pathNode = function () {
             if (this.alternate) {
                 return "<path d='" + this.alternate + "'/>";
             } else {
-                return "<path d='" + __WEBPACK_IMPORTED_MODULE_6__svgGeometry__["a" /* default */].path[this.pathName] + "'/>";
+                return "<path d='" + __WEBPACK_IMPORTED_MODULE_8__svgGeometry__["a" /* default */].path[this.pathName] + "'/>";
             }
         }
     }]);
@@ -3224,12 +3354,12 @@ var pathNode = function () {
 
 var lineNode = function () {
     function lineNode(attributes) {
-        __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, lineNode);
+        __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_classCallCheck___default()(this, lineNode);
 
         this.attributes = attributes || {};
     }
 
-    __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(lineNode, [{
+    __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_createClass___default()(lineNode, [{
         key: "toNode",
         value: function toNode() {
             var svgNS = "http://www.w3.org/2000/svg";
@@ -3275,16 +3405,1255 @@ var lineNode = function () {
 });
 
 /***/ }),
-/* 13 */
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject       = __webpack_require__(18)
+  , IE8_DOM_DEFINE = __webpack_require__(60)
+  , toPrimitive    = __webpack_require__(38)
+  , dP             = Object.defineProperty;
+
+exports.f = __webpack_require__(19) ? Object.defineProperty : function defineProperty(O, P, Attributes){
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if(IE8_DOM_DEFINE)try {
+    return dP(O, P, Attributes);
+  } catch(e){ /* empty */ }
+  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
+  if('value' in Attributes)O[P] = Attributes.value;
+  return O;
+};
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global    = __webpack_require__(15)
+  , core      = __webpack_require__(7)
+  , ctx       = __webpack_require__(40)
+  , hide      = __webpack_require__(24)
+  , PROTOTYPE = 'prototype';
+
+var $export = function(type, name, source){
+  var IS_FORCED = type & $export.F
+    , IS_GLOBAL = type & $export.G
+    , IS_STATIC = type & $export.S
+    , IS_PROTO  = type & $export.P
+    , IS_BIND   = type & $export.B
+    , IS_WRAP   = type & $export.W
+    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
+    , expProto  = exports[PROTOTYPE]
+    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
+    , key, own, out;
+  if(IS_GLOBAL)source = name;
+  for(key in source){
+    // contains in native
+    own = !IS_FORCED && target && target[key] !== undefined;
+    if(own && key in exports)continue;
+    // export native or passed
+    out = own ? target[key] : source[key];
+    // prevent global pollution for namespaces
+    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+    // bind timers to global for call from export context
+    : IS_BIND && own ? ctx(out, global)
+    // wrap global constructors for prevent change them in library
+    : IS_WRAP && target[key] == out ? (function(C){
+      var F = function(a, b, c){
+        if(this instanceof C){
+          switch(arguments.length){
+            case 0: return new C;
+            case 1: return new C(a);
+            case 2: return new C(a, b);
+          } return new C(a, b, c);
+        } return C.apply(this, arguments);
+      };
+      F[PROTOTYPE] = C[PROTOTYPE];
+      return F;
+    // make static versions for prototype methods
+    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+    if(IS_PROTO){
+      (exports.virtual || (exports.virtual = {}))[key] = out;
+      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+      if(type & $export.R && expProto && !expProto[key])hide(expProto, key, out);
+    }
+  }
+};
+// type bitmap
+$export.F = 1;   // forced
+$export.G = 2;   // global
+$export.S = 4;   // static
+$export.P = 8;   // proto
+$export.B = 16;  // bind
+$export.W = 32;  // wrap
+$export.U = 64;  // safe
+$export.R = 128; // real proto method for `library` 
+module.exports = $export;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function(it, key){
+  return hasOwnProperty.call(it, key);
+};
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(22);
+module.exports = function(it){
+  if(!isObject(it))throw TypeError(it + ' is not an object!');
+  return it;
+};
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(23)(function(){
+  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+});
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = __webpack_require__(65)
+  , defined = __webpack_require__(44);
+module.exports = function(it){
+  return IObject(defined(it));
+};
+
+/***/ }),
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray__ = __webpack_require__(57);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return validUnit; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return calculateSize; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Options__ = __webpack_require__(57);
+
+
+/**
+ * This file does conversion between units.  In particular, it provides
+ * calculateSize to convert other units into ems.
+ */
+
+
+
+
+// This table gives the number of TeX pts in one of each *absolute* TeX unit.
+// Thus, multiplying a length by this number converts the length from units
+// into pts.  Dividing the result by ptPerEm gives the number of ems
+// *assuming* a font size of ptPerEm (normal size, normal style).
+var ptPerUnit = {
+    // https://en.wikibooks.org/wiki/LaTeX/Lengths and
+    // https://tex.stackexchange.com/a/8263
+    "pt": 1, // TeX point
+    "mm": 7227 / 2540, // millimeter
+    "cm": 7227 / 254, // centimeter
+    "in": 72.27, // inch
+    "bp": 803 / 800, // big (PostScript) points
+    "pc": 12, // pica
+    "dd": 1238 / 1157, // didot
+    "cc": 14856 / 1157, // cicero (12 didot)
+    "nd": 685 / 642, // new didot
+    "nc": 1370 / 107, // new cicero (12 new didot)
+    "sp": 1 / 65536, // scaled point (TeX's internal smallest unit)
+    // https://tex.stackexchange.com/a/41371
+    "px": 803 / 800 // \pdfpxdimen defaults to 1 bp in pdfTeX and LuaTeX
+};
+
+// Dictionary of relative units, for fast validity testing.
+var relativeUnit = {
+    "ex": true,
+    "em": true,
+    "mu": true
+};
+
+/**
+ * Determine whether the specified unit (either a string defining the unit
+ * or a "size" parse node containing a unit field) is valid.
+ */
+var validUnit = function validUnit(unit) {
+    if (typeof unit !== "string") {
+        unit = unit.unit;
+    }
+    return unit in ptPerUnit || unit in relativeUnit || unit === "ex";
+};
+
+/*
+ * Convert a "size" parse node (with numeric "number" and string "unit" fields,
+ * as parsed by functions.js argType "size") into a CSS em value for the
+ * current style/scale.  `options` gives the current options.
+ */
+var calculateSize = function calculateSize(sizeValue, options) {
+    var scale = void 0;
+    if (sizeValue.unit in ptPerUnit) {
+        // Absolute units
+        scale = ptPerUnit[sizeValue.unit] // Convert unit to pt
+        / options.fontMetrics().ptPerEm // Convert pt to CSS em
+        / options.sizeMultiplier; // Unscale to make absolute units
+    } else if (sizeValue.unit === "mu") {
+        // `mu` units scale with scriptstyle/scriptscriptstyle.
+        scale = options.fontMetrics().cssEmPerMu;
+    } else {
+        // Other relative units always refer to the *textstyle* font
+        // in the current size.
+        var unitOptions = void 0;
+        if (options.style.isTight()) {
+            // isTight() means current style is script/scriptscript.
+            unitOptions = options.havingStyle(options.style.text());
+        } else {
+            unitOptions = options;
+        }
+        // TODO: In TeX these units are relative to the quad of the current
+        // *text* font, e.g. cmr10. KaTeX instead uses values from the
+        // comparably-sized *Computer Modern symbol* font. At 10pt, these
+        // match. At 7pt and 5pt, they differ: cmr7=1.138894, cmsy7=1.170641;
+        // cmr5=1.361133, cmsy5=1.472241. Consider $\scriptsize a\kern1emb$.
+        // TeX \showlists shows a kern of 1.13889 * fontsize;
+        // KaTeX shows a kern of 1.171 * fontsize.
+        if (sizeValue.unit === "ex") {
+            scale = unitOptions.fontMetrics().xHeight;
+        } else if (sizeValue.unit === "em") {
+            scale = unitOptions.fontMetrics().quad;
+        } else {
+            throw new __WEBPACK_IMPORTED_MODULE_0__ParseError__["a" /* default */]("Invalid unit: '" + sizeValue.unit + "'");
+        }
+        if (unitOptions !== options) {
+            scale *= unitOptions.sizeMultiplier / options.sizeMultiplier;
+        }
+    }
+    return Math.min(sizeValue.number * scale, options.maxSize);
+};
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+module.exports = function(it){
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+module.exports = function(exec){
+  try {
+    return !!exec();
+  } catch(e){
+    return true;
+  }
+};
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var dP         = __webpack_require__(14)
+  , createDesc = __webpack_require__(29);
+module.exports = __webpack_require__(19) ? function(object, key, value){
+  return dP.f(object, key, createDesc(1, value));
+} : function(object, key, value){
+  object[key] = value;
+  return object;
+};
+
+/***/ }),
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Token; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SourceLocation__ = __webpack_require__(37);
+
+
+
+
+/**
+ * Interface required to break circular dependency between Token, Lexer, and
+ * ParseError.
+ */
+
+
+/**
+ * The resulting token returned from `lex`.
+ *
+ * It consists of the token text plus some position information.
+ * The position information is essentially a range in an input string,
+ * but instead of referencing the bare input string, we refer to the lexer.
+ * That way it is possible to attach extra metadata to the input string,
+ * like for example a file name or similar.
+ *
+ * The position information is optional, so it is OK to construct synthetic
+ * tokens if appropriate. Not providing available position information may
+ * lead to degraded error reporting, though.
+ */
+var Token = function () {
+    function Token(text, // the text of this token
+    loc) {
+        __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, Token);
+
+        this.text = text;
+        this.loc = loc;
+    }
+
+    /**
+     * Given a pair of tokens (this and endToken), compute a `Token` encompassing
+     * the whole input range enclosed by these two.
+     */
+
+
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(Token, [{
+        key: "range",
+        value: function range(endToken, // last token of the range, inclusive
+        text) // the text of the newly constructed token
+        {
+            return new Token(text, __WEBPACK_IMPORTED_MODULE_2__SourceLocation__["a" /* default */].range(this, endToken));
+        }
+    }]);
+
+    return Token;
+}();
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+module.exports = {};
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+var $keys       = __webpack_require__(64)
+  , enumBugKeys = __webpack_require__(50);
+
+module.exports = Object.keys || function keys(O){
+  return $keys(O, enumBugKeys);
+};
+
+/***/ }),
+/* 28 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = defineSymbol;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return extraLatin; });
+
+// Some of these have a "-token" suffix since these are also used as `ParseNode`
+// types for raw text tokens, and we want to avoid conflicts with higher-level
+// `ParseNode` types. These `ParseNode`s are constructed within `Parser` by
+// looking up the `symbols` map.
+
+/**
+ * This file holds a list of all no-argument functions and single-character
+ * symbols (like 'a' or ';').
+ *
+ * For each of the symbols, there are three properties they can have:
+ * - font (required): the font to be used for this symbol. Either "main" (the
+     normal font), or "ams" (the ams fonts).
+ * - group (required): the ParseNode group type the symbol should have (i.e.
+     "textord", "mathord", etc).
+     See https://github.com/Khan/KaTeX/wiki/Examining-TeX#group-types
+ * - replace: the character that this symbol or function should be
+ *   replaced with (i.e. "\phi" has a replace value of "\u03d5", the phi
+ *   character in the main font).
+ *
+ * The outermost map in the table indicates what mode the symbols should be
+ * accepted in (e.g. "math" or "text").
+ */
+
+var symbols = {
+    "math": {},
+    "text": {}
+};
+/* harmony default export */ __webpack_exports__["a"] = (symbols);
+
+/** `acceptUnicodeChar = true` is only applicable if `replace` is set. */
+function defineSymbol(mode, font, group, replace, name, acceptUnicodeChar) {
+    symbols[mode][name] = { font: font, group: group, replace: replace };
+
+    if (acceptUnicodeChar && replace) {
+        symbols[mode][replace] = symbols[mode][name];
+    }
+}
+
+// Some abbreviations for commonly used strings.
+// This helps minify the code, and also spotting typos using jshint.
+
+// modes:
+var math = "math";
+var text = "text";
+
+// fonts:
+var main = "main";
+var ams = "ams";
+
+// groups:
+var accent = "accent-token";
+var bin = "bin";
+var close = "close";
+var inner = "inner";
+var mathord = "mathord";
+var op = "op-token";
+var open = "open";
+var punct = "punct";
+var rel = "rel";
+var spacing = "spacing";
+var textord = "textord";
+
+// Now comes the symbol table
+
+// Relation Symbols
+defineSymbol(math, main, rel, "\u2261", "\\equiv", true);
+defineSymbol(math, main, rel, "\u227A", "\\prec", true);
+defineSymbol(math, main, rel, "\u227B", "\\succ", true);
+defineSymbol(math, main, rel, "\u223C", "\\sim", true);
+defineSymbol(math, main, rel, "\u22A5", "\\perp");
+defineSymbol(math, main, rel, "\u2AAF", "\\preceq", true);
+defineSymbol(math, main, rel, "\u2AB0", "\\succeq", true);
+defineSymbol(math, main, rel, "\u2243", "\\simeq", true);
+defineSymbol(math, main, rel, "\u2223", "\\mid", true);
+defineSymbol(math, main, rel, "\u226A", "\\ll", true);
+defineSymbol(math, main, rel, "\u226B", "\\gg", true);
+defineSymbol(math, main, rel, "\u224D", "\\asymp", true);
+defineSymbol(math, main, rel, "\u2225", "\\parallel");
+defineSymbol(math, main, rel, "\u22C8", "\\bowtie", true);
+defineSymbol(math, main, rel, "\u2323", "\\smile", true);
+defineSymbol(math, main, rel, "\u2291", "\\sqsubseteq", true);
+defineSymbol(math, main, rel, "\u2292", "\\sqsupseteq", true);
+defineSymbol(math, main, rel, "\u2250", "\\doteq", true);
+defineSymbol(math, main, rel, "\u2322", "\\frown", true);
+defineSymbol(math, main, rel, "\u220B", "\\ni", true);
+defineSymbol(math, main, rel, "\u221D", "\\propto", true);
+defineSymbol(math, main, rel, "\u22A2", "\\vdash", true);
+defineSymbol(math, main, rel, "\u22A3", "\\dashv", true);
+defineSymbol(math, main, rel, "\u220B", "\\owns");
+
+// Punctuation
+defineSymbol(math, main, punct, ".", "\\ldotp");
+defineSymbol(math, main, punct, "\u22C5", "\\cdotp");
+
+// Misc Symbols
+defineSymbol(math, main, textord, "#", "\\#");
+defineSymbol(text, main, textord, "#", "\\#");
+defineSymbol(math, main, textord, "&", "\\&");
+defineSymbol(text, main, textord, "&", "\\&");
+defineSymbol(math, main, textord, "\u2135", "\\aleph", true);
+defineSymbol(math, main, textord, "\u2200", "\\forall", true);
+defineSymbol(math, main, textord, "\u210F", "\\hbar", true);
+defineSymbol(math, main, textord, "\u2203", "\\exists", true);
+defineSymbol(math, main, textord, "\u2207", "\\nabla", true);
+defineSymbol(math, main, textord, "\u266D", "\\flat", true);
+defineSymbol(math, main, textord, "\u2113", "\\ell", true);
+defineSymbol(math, main, textord, "\u266E", "\\natural", true);
+defineSymbol(math, main, textord, "\u2663", "\\clubsuit", true);
+defineSymbol(math, main, textord, "\u2118", "\\wp", true);
+defineSymbol(math, main, textord, "\u266F", "\\sharp", true);
+defineSymbol(math, main, textord, "\u2662", "\\diamondsuit", true);
+defineSymbol(math, main, textord, "\u211C", "\\Re", true);
+defineSymbol(math, main, textord, "\u2661", "\\heartsuit", true);
+defineSymbol(math, main, textord, "\u2111", "\\Im", true);
+defineSymbol(math, main, textord, "\u2660", "\\spadesuit", true);
+defineSymbol(text, main, textord, "\xA7", "\\S", true);
+defineSymbol(text, main, textord, "\xB6", "\\P", true);
+
+// Math and Text
+defineSymbol(math, main, textord, "\u2020", "\\dag");
+defineSymbol(text, main, textord, "\u2020", "\\dag");
+defineSymbol(text, main, textord, "\u2020", "\\textdagger");
+defineSymbol(math, main, textord, "\u2021", "\\ddag");
+defineSymbol(text, main, textord, "\u2021", "\\ddag");
+defineSymbol(text, main, textord, "\u2020", "\\textdaggerdbl");
+
+// Large Delimiters
+defineSymbol(math, main, close, "\u23B1", "\\rmoustache", true);
+defineSymbol(math, main, open, "\u23B0", "\\lmoustache", true);
+defineSymbol(math, main, close, "\u27EF", "\\rgroup", true);
+defineSymbol(math, main, open, "\u27EE", "\\lgroup", true);
+
+// Binary Operators
+defineSymbol(math, main, bin, "\u2213", "\\mp", true);
+defineSymbol(math, main, bin, "\u2296", "\\ominus", true);
+defineSymbol(math, main, bin, "\u228E", "\\uplus", true);
+defineSymbol(math, main, bin, "\u2293", "\\sqcap", true);
+defineSymbol(math, main, bin, "\u2217", "\\ast");
+defineSymbol(math, main, bin, "\u2294", "\\sqcup", true);
+defineSymbol(math, main, bin, "\u25EF", "\\bigcirc");
+defineSymbol(math, main, bin, "\u2219", "\\bullet");
+defineSymbol(math, main, bin, "\u2021", "\\ddagger");
+defineSymbol(math, main, bin, "\u2240", "\\wr", true);
+defineSymbol(math, main, bin, "\u2A3F", "\\amalg");
+defineSymbol(math, main, bin, "&", "\\And"); // from amsmath
+
+// Arrow Symbols
+defineSymbol(math, main, rel, "\u27F5", "\\longleftarrow", true);
+defineSymbol(math, main, rel, "\u21D0", "\\Leftarrow", true);
+defineSymbol(math, main, rel, "\u27F8", "\\Longleftarrow", true);
+defineSymbol(math, main, rel, "\u27F6", "\\longrightarrow", true);
+defineSymbol(math, main, rel, "\u21D2", "\\Rightarrow", true);
+defineSymbol(math, main, rel, "\u27F9", "\\Longrightarrow", true);
+defineSymbol(math, main, rel, "\u2194", "\\leftrightarrow", true);
+defineSymbol(math, main, rel, "\u27F7", "\\longleftrightarrow", true);
+defineSymbol(math, main, rel, "\u21D4", "\\Leftrightarrow", true);
+defineSymbol(math, main, rel, "\u27FA", "\\Longleftrightarrow", true);
+defineSymbol(math, main, rel, "\u21A6", "\\mapsto", true);
+defineSymbol(math, main, rel, "\u27FC", "\\longmapsto", true);
+defineSymbol(math, main, rel, "\u2197", "\\nearrow", true);
+defineSymbol(math, main, rel, "\u21A9", "\\hookleftarrow", true);
+defineSymbol(math, main, rel, "\u21AA", "\\hookrightarrow", true);
+defineSymbol(math, main, rel, "\u2198", "\\searrow", true);
+defineSymbol(math, main, rel, "\u21BC", "\\leftharpoonup", true);
+defineSymbol(math, main, rel, "\u21C0", "\\rightharpoonup", true);
+defineSymbol(math, main, rel, "\u2199", "\\swarrow", true);
+defineSymbol(math, main, rel, "\u21BD", "\\leftharpoondown", true);
+defineSymbol(math, main, rel, "\u21C1", "\\rightharpoondown", true);
+defineSymbol(math, main, rel, "\u2196", "\\nwarrow", true);
+defineSymbol(math, main, rel, "\u21CC", "\\rightleftharpoons", true);
+
+// AMS Negated Binary Relations
+defineSymbol(math, ams, rel, "\u226E", "\\nless", true);
+defineSymbol(math, ams, rel, "\uE010", "\\nleqslant");
+defineSymbol(math, ams, rel, "\uE011", "\\nleqq");
+defineSymbol(math, ams, rel, "\u2A87", "\\lneq", true);
+defineSymbol(math, ams, rel, "\u2268", "\\lneqq", true);
+defineSymbol(math, ams, rel, "\uE00C", "\\lvertneqq");
+defineSymbol(math, ams, rel, "\u22E6", "\\lnsim", true);
+defineSymbol(math, ams, rel, "\u2A89", "\\lnapprox", true);
+defineSymbol(math, ams, rel, "\u2280", "\\nprec", true);
+// unicode-math maps \u22e0 to \npreccurlyeq. We'll use the AMS synonym.
+defineSymbol(math, ams, rel, "\u22E0", "\\npreceq", true);
+defineSymbol(math, ams, rel, "\u22E8", "\\precnsim", true);
+defineSymbol(math, ams, rel, "\u2AB9", "\\precnapprox", true);
+defineSymbol(math, ams, rel, "\u2241", "\\nsim", true);
+defineSymbol(math, ams, rel, "\uE006", "\\nshortmid");
+defineSymbol(math, ams, rel, "\u2224", "\\nmid", true);
+defineSymbol(math, ams, rel, "\u22AC", "\\nvdash", true);
+defineSymbol(math, ams, rel, "\u22AD", "\\nvDash", true);
+defineSymbol(math, ams, rel, "\u22EA", "\\ntriangleleft");
+defineSymbol(math, ams, rel, "\u22EC", "\\ntrianglelefteq", true);
+defineSymbol(math, ams, rel, "\u228A", "\\subsetneq", true);
+defineSymbol(math, ams, rel, "\uE01A", "\\varsubsetneq");
+defineSymbol(math, ams, rel, "\u2ACB", "\\subsetneqq", true);
+defineSymbol(math, ams, rel, "\uE017", "\\varsubsetneqq");
+defineSymbol(math, ams, rel, "\u226F", "\\ngtr", true);
+defineSymbol(math, ams, rel, "\uE00F", "\\ngeqslant");
+defineSymbol(math, ams, rel, "\uE00E", "\\ngeqq");
+defineSymbol(math, ams, rel, "\u2A88", "\\gneq", true);
+defineSymbol(math, ams, rel, "\u2269", "\\gneqq", true);
+defineSymbol(math, ams, rel, "\uE00D", "\\gvertneqq");
+defineSymbol(math, ams, rel, "\u22E7", "\\gnsim", true);
+defineSymbol(math, ams, rel, "\u2A8A", "\\gnapprox", true);
+defineSymbol(math, ams, rel, "\u2281", "\\nsucc", true);
+// unicode-math maps \u22e1 to \nsucccurlyeq. We'll use the AMS synonym.
+defineSymbol(math, ams, rel, "\u22E1", "\\nsucceq", true);
+defineSymbol(math, ams, rel, "\u22E9", "\\succnsim", true);
+defineSymbol(math, ams, rel, "\u2ABA", "\\succnapprox", true);
+// unicode-math maps \u2246 to \simneqq. We'll use the AMS synonym.
+defineSymbol(math, ams, rel, "\u2246", "\\ncong", true);
+defineSymbol(math, ams, rel, "\uE007", "\\nshortparallel");
+defineSymbol(math, ams, rel, "\u2226", "\\nparallel", true);
+defineSymbol(math, ams, rel, "\u22AF", "\\nVDash", true);
+defineSymbol(math, ams, rel, "\u22EB", "\\ntriangleright");
+defineSymbol(math, ams, rel, "\u22ED", "\\ntrianglerighteq", true);
+defineSymbol(math, ams, rel, "\uE018", "\\nsupseteqq");
+defineSymbol(math, ams, rel, "\u228B", "\\supsetneq", true);
+defineSymbol(math, ams, rel, "\uE01B", "\\varsupsetneq");
+defineSymbol(math, ams, rel, "\u2ACC", "\\supsetneqq", true);
+defineSymbol(math, ams, rel, "\uE019", "\\varsupsetneqq");
+defineSymbol(math, ams, rel, "\u22AE", "\\nVdash", true);
+defineSymbol(math, ams, rel, "\u2AB5", "\\precneqq", true);
+defineSymbol(math, ams, rel, "\u2AB6", "\\succneqq", true);
+defineSymbol(math, ams, rel, "\uE016", "\\nsubseteqq");
+defineSymbol(math, ams, bin, "\u22B4", "\\unlhd");
+defineSymbol(math, ams, bin, "\u22B5", "\\unrhd");
+
+// AMS Negated Arrows
+defineSymbol(math, ams, rel, "\u219A", "\\nleftarrow", true);
+defineSymbol(math, ams, rel, "\u219B", "\\nrightarrow", true);
+defineSymbol(math, ams, rel, "\u21CD", "\\nLeftarrow", true);
+defineSymbol(math, ams, rel, "\u21CF", "\\nRightarrow", true);
+defineSymbol(math, ams, rel, "\u21AE", "\\nleftrightarrow", true);
+defineSymbol(math, ams, rel, "\u21CE", "\\nLeftrightarrow", true);
+
+// AMS Misc
+defineSymbol(math, ams, rel, "\u25B3", "\\vartriangle");
+defineSymbol(math, ams, textord, "\u210F", "\\hslash");
+defineSymbol(math, ams, textord, "\u25BD", "\\triangledown");
+defineSymbol(math, ams, textord, "\u25CA", "\\lozenge");
+defineSymbol(math, ams, textord, "\u24C8", "\\circledS");
+defineSymbol(math, ams, textord, "\xAE", "\\circledR");
+defineSymbol(text, ams, textord, "\xAE", "\\circledR");
+defineSymbol(math, ams, textord, "\u2221", "\\measuredangle", true);
+defineSymbol(math, ams, textord, "\u2204", "\\nexists");
+defineSymbol(math, ams, textord, "\u2127", "\\mho");
+defineSymbol(math, ams, textord, "\u2132", "\\Finv", true);
+defineSymbol(math, ams, textord, "\u2141", "\\Game", true);
+defineSymbol(math, ams, textord, "k", "\\Bbbk");
+defineSymbol(math, ams, textord, "\u2035", "\\backprime");
+defineSymbol(math, ams, textord, "\u25B2", "\\blacktriangle");
+defineSymbol(math, ams, textord, "\u25BC", "\\blacktriangledown");
+defineSymbol(math, ams, textord, "\u25A0", "\\blacksquare");
+defineSymbol(math, ams, textord, "\u29EB", "\\blacklozenge");
+defineSymbol(math, ams, textord, "\u2605", "\\bigstar");
+defineSymbol(math, ams, textord, "\u2222", "\\sphericalangle", true);
+defineSymbol(math, ams, textord, "\u2201", "\\complement", true);
+// unicode-math maps U+F0 (ð) to \matheth. We map to AMS function \eth
+defineSymbol(math, ams, textord, "\xF0", "\\eth", true);
+defineSymbol(math, ams, textord, "\u2571", "\\diagup");
+defineSymbol(math, ams, textord, "\u2572", "\\diagdown");
+defineSymbol(math, ams, textord, "\u25A1", "\\square");
+defineSymbol(math, ams, textord, "\u25A1", "\\Box");
+defineSymbol(math, ams, textord, "\u25CA", "\\Diamond");
+// unicode-math maps U+A5 to \mathyen. We map to AMS function \yen
+defineSymbol(math, ams, textord, "\xA5", "\\yen", true);
+defineSymbol(text, ams, textord, "\xA5", "\\yen", true);
+defineSymbol(math, ams, textord, "\u2713", "\\checkmark", true);
+defineSymbol(text, ams, textord, "\u2713", "\\checkmark");
+
+// AMS Hebrew
+defineSymbol(math, ams, textord, "\u2136", "\\beth", true);
+defineSymbol(math, ams, textord, "\u2138", "\\daleth", true);
+defineSymbol(math, ams, textord, "\u2137", "\\gimel", true);
+
+// AMS Greek
+defineSymbol(math, ams, textord, "\u03DD", "\\digamma");
+defineSymbol(math, ams, textord, "\u03F0", "\\varkappa");
+
+// AMS Delimiters
+defineSymbol(math, ams, open, "\u250C", "\\ulcorner", true);
+defineSymbol(math, ams, close, "\u2510", "\\urcorner", true);
+defineSymbol(math, ams, open, "\u2514", "\\llcorner", true);
+defineSymbol(math, ams, close, "\u2518", "\\lrcorner", true);
+
+// AMS Binary Relations
+defineSymbol(math, ams, rel, "\u2266", "\\leqq", true);
+defineSymbol(math, ams, rel, "\u2A7D", "\\leqslant");
+defineSymbol(math, ams, rel, "\u2A95", "\\eqslantless", true);
+defineSymbol(math, ams, rel, "\u2272", "\\lesssim");
+defineSymbol(math, ams, rel, "\u2A85", "\\lessapprox");
+defineSymbol(math, ams, rel, "\u224A", "\\approxeq", true);
+defineSymbol(math, ams, bin, "\u22D6", "\\lessdot");
+defineSymbol(math, ams, rel, "\u22D8", "\\lll", true);
+defineSymbol(math, ams, rel, "\u2276", "\\lessgtr");
+defineSymbol(math, ams, rel, "\u22DA", "\\lesseqgtr");
+defineSymbol(math, ams, rel, "\u2A8B", "\\lesseqqgtr");
+defineSymbol(math, ams, rel, "\u2251", "\\doteqdot");
+defineSymbol(math, ams, rel, "\u2253", "\\risingdotseq", true);
+defineSymbol(math, ams, rel, "\u2252", "\\fallingdotseq", true);
+defineSymbol(math, ams, rel, "\u223D", "\\backsim", true);
+defineSymbol(math, ams, rel, "\u22CD", "\\backsimeq", true);
+defineSymbol(math, ams, rel, "\u2AC5", "\\subseteqq", true);
+defineSymbol(math, ams, rel, "\u22D0", "\\Subset", true);
+defineSymbol(math, ams, rel, "\u228F", "\\sqsubset", true);
+defineSymbol(math, ams, rel, "\u227C", "\\preccurlyeq", true);
+defineSymbol(math, ams, rel, "\u22DE", "\\curlyeqprec", true);
+defineSymbol(math, ams, rel, "\u227E", "\\precsim", true);
+defineSymbol(math, ams, rel, "\u2AB7", "\\precapprox", true);
+defineSymbol(math, ams, rel, "\u22B2", "\\vartriangleleft");
+defineSymbol(math, ams, rel, "\u22B4", "\\trianglelefteq");
+defineSymbol(math, ams, rel, "\u22A8", "\\vDash");
+defineSymbol(math, ams, rel, "\u22AA", "\\Vvdash", true);
+defineSymbol(math, ams, rel, "\u2323", "\\smallsmile");
+defineSymbol(math, ams, rel, "\u2322", "\\smallfrown");
+defineSymbol(math, ams, rel, "\u224F", "\\bumpeq", true);
+defineSymbol(math, ams, rel, "\u224E", "\\Bumpeq", true);
+defineSymbol(math, ams, rel, "\u2267", "\\geqq", true);
+defineSymbol(math, ams, rel, "\u2A7E", "\\geqslant", true);
+defineSymbol(math, ams, rel, "\u2A96", "\\eqslantgtr", true);
+defineSymbol(math, ams, rel, "\u2273", "\\gtrsim", true);
+defineSymbol(math, ams, rel, "\u2A86", "\\gtrapprox", true);
+defineSymbol(math, ams, bin, "\u22D7", "\\gtrdot");
+defineSymbol(math, ams, rel, "\u22D9", "\\ggg", true);
+defineSymbol(math, ams, rel, "\u2277", "\\gtrless", true);
+defineSymbol(math, ams, rel, "\u22DB", "\\gtreqless", true);
+defineSymbol(math, ams, rel, "\u2A8C", "\\gtreqqless", true);
+defineSymbol(math, ams, rel, "\u2256", "\\eqcirc", true);
+defineSymbol(math, ams, rel, "\u2257", "\\circeq", true);
+defineSymbol(math, ams, rel, "\u225C", "\\triangleq", true);
+defineSymbol(math, ams, rel, "\u223C", "\\thicksim");
+defineSymbol(math, ams, rel, "\u2248", "\\thickapprox");
+defineSymbol(math, ams, rel, "\u2AC6", "\\supseteqq", true);
+defineSymbol(math, ams, rel, "\u22D1", "\\Supset", true);
+defineSymbol(math, ams, rel, "\u2290", "\\sqsupset", true);
+defineSymbol(math, ams, rel, "\u227D", "\\succcurlyeq", true);
+defineSymbol(math, ams, rel, "\u22DF", "\\curlyeqsucc", true);
+defineSymbol(math, ams, rel, "\u227F", "\\succsim", true);
+defineSymbol(math, ams, rel, "\u2AB8", "\\succapprox", true);
+defineSymbol(math, ams, rel, "\u22B3", "\\vartriangleright");
+defineSymbol(math, ams, rel, "\u22B5", "\\trianglerighteq");
+defineSymbol(math, ams, rel, "\u22A9", "\\Vdash", true);
+defineSymbol(math, ams, rel, "\u2223", "\\shortmid");
+defineSymbol(math, ams, rel, "\u2225", "\\shortparallel");
+defineSymbol(math, ams, rel, "\u226C", "\\between", true);
+defineSymbol(math, ams, rel, "\u22D4", "\\pitchfork", true);
+defineSymbol(math, ams, rel, "\u221D", "\\varpropto");
+defineSymbol(math, ams, rel, "\u25C0", "\\blacktriangleleft");
+// unicode-math says that \therefore is a mathord atom.
+// We kept the amssymb atom type, which is rel.
+defineSymbol(math, ams, rel, "\u2234", "\\therefore", true);
+defineSymbol(math, ams, rel, "\u220D", "\\backepsilon");
+defineSymbol(math, ams, rel, "\u25B6", "\\blacktriangleright");
+// unicode-math says that \because is a mathord atom.
+// We kept the amssymb atom type, which is rel.
+defineSymbol(math, ams, rel, "\u2235", "\\because", true);
+defineSymbol(math, ams, rel, "\u22D8", "\\llless");
+defineSymbol(math, ams, rel, "\u22D9", "\\gggtr");
+defineSymbol(math, ams, bin, "\u22B2", "\\lhd");
+defineSymbol(math, ams, bin, "\u22B3", "\\rhd");
+defineSymbol(math, ams, rel, "\u2242", "\\eqsim", true);
+defineSymbol(math, main, rel, "\u22C8", "\\Join");
+defineSymbol(math, ams, rel, "\u2251", "\\Doteq", true);
+
+// AMS Binary Operators
+defineSymbol(math, ams, bin, "\u2214", "\\dotplus", true);
+defineSymbol(math, ams, bin, "\u2216", "\\smallsetminus");
+defineSymbol(math, ams, bin, "\u22D2", "\\Cap", true);
+defineSymbol(math, ams, bin, "\u22D3", "\\Cup", true);
+defineSymbol(math, ams, bin, "\u2A5E", "\\doublebarwedge", true);
+defineSymbol(math, ams, bin, "\u229F", "\\boxminus", true);
+defineSymbol(math, ams, bin, "\u229E", "\\boxplus", true);
+defineSymbol(math, ams, bin, "\u22C7", "\\divideontimes", true);
+defineSymbol(math, ams, bin, "\u22C9", "\\ltimes", true);
+defineSymbol(math, ams, bin, "\u22CA", "\\rtimes", true);
+defineSymbol(math, ams, bin, "\u22CB", "\\leftthreetimes", true);
+defineSymbol(math, ams, bin, "\u22CC", "\\rightthreetimes", true);
+defineSymbol(math, ams, bin, "\u22CF", "\\curlywedge", true);
+defineSymbol(math, ams, bin, "\u22CE", "\\curlyvee", true);
+defineSymbol(math, ams, bin, "\u229D", "\\circleddash", true);
+defineSymbol(math, ams, bin, "\u229B", "\\circledast", true);
+defineSymbol(math, ams, bin, "\u22C5", "\\centerdot");
+defineSymbol(math, ams, bin, "\u22BA", "\\intercal", true);
+defineSymbol(math, ams, bin, "\u22D2", "\\doublecap");
+defineSymbol(math, ams, bin, "\u22D3", "\\doublecup");
+defineSymbol(math, ams, bin, "\u22A0", "\\boxtimes", true);
+
+// AMS Arrows
+// Note: unicode-math maps \u21e2 to their own function \rightdasharrow.
+// We'll map it to AMS function \dashrightarrow. It produces the same atom.
+defineSymbol(math, ams, rel, "\u21E2", "\\dashrightarrow", true);
+// unicode-math maps \u21e0 to \leftdasharrow. We'll use the AMS synonym.
+defineSymbol(math, ams, rel, "\u21E0", "\\dashleftarrow", true);
+defineSymbol(math, ams, rel, "\u21C7", "\\leftleftarrows", true);
+defineSymbol(math, ams, rel, "\u21C6", "\\leftrightarrows", true);
+defineSymbol(math, ams, rel, "\u21DA", "\\Lleftarrow", true);
+defineSymbol(math, ams, rel, "\u219E", "\\twoheadleftarrow", true);
+defineSymbol(math, ams, rel, "\u21A2", "\\leftarrowtail", true);
+defineSymbol(math, ams, rel, "\u21AB", "\\looparrowleft", true);
+defineSymbol(math, ams, rel, "\u21CB", "\\leftrightharpoons", true);
+defineSymbol(math, ams, rel, "\u21B6", "\\curvearrowleft", true);
+// unicode-math maps \u21ba to \acwopencirclearrow. We'll use the AMS synonym.
+defineSymbol(math, ams, rel, "\u21BA", "\\circlearrowleft", true);
+defineSymbol(math, ams, rel, "\u21B0", "\\Lsh", true);
+defineSymbol(math, ams, rel, "\u21C8", "\\upuparrows", true);
+defineSymbol(math, ams, rel, "\u21BF", "\\upharpoonleft", true);
+defineSymbol(math, ams, rel, "\u21C3", "\\downharpoonleft", true);
+defineSymbol(math, ams, rel, "\u22B8", "\\multimap", true);
+defineSymbol(math, ams, rel, "\u21AD", "\\leftrightsquigarrow", true);
+defineSymbol(math, ams, rel, "\u21C9", "\\rightrightarrows", true);
+defineSymbol(math, ams, rel, "\u21C4", "\\rightleftarrows", true);
+defineSymbol(math, ams, rel, "\u21A0", "\\twoheadrightarrow", true);
+defineSymbol(math, ams, rel, "\u21A3", "\\rightarrowtail", true);
+defineSymbol(math, ams, rel, "\u21AC", "\\looparrowright", true);
+defineSymbol(math, ams, rel, "\u21B7", "\\curvearrowright", true);
+// unicode-math maps \u21bb to \cwopencirclearrow. We'll use the AMS synonym.
+defineSymbol(math, ams, rel, "\u21BB", "\\circlearrowright", true);
+defineSymbol(math, ams, rel, "\u21B1", "\\Rsh", true);
+defineSymbol(math, ams, rel, "\u21CA", "\\downdownarrows", true);
+defineSymbol(math, ams, rel, "\u21BE", "\\upharpoonright", true);
+defineSymbol(math, ams, rel, "\u21C2", "\\downharpoonright", true);
+defineSymbol(math, ams, rel, "\u21DD", "\\rightsquigarrow", true);
+defineSymbol(math, ams, rel, "\u21DD", "\\leadsto");
+defineSymbol(math, ams, rel, "\u21DB", "\\Rrightarrow", true);
+defineSymbol(math, ams, rel, "\u21BE", "\\restriction");
+
+defineSymbol(math, main, textord, "\u2018", "`");
+defineSymbol(math, main, textord, "$", "\\$");
+defineSymbol(text, main, textord, "$", "\\$");
+defineSymbol(text, main, textord, "$", "\\textdollar");
+defineSymbol(math, main, textord, "%", "\\%");
+defineSymbol(text, main, textord, "%", "\\%");
+defineSymbol(math, main, textord, "_", "\\_");
+defineSymbol(text, main, textord, "_", "\\_");
+defineSymbol(text, main, textord, "_", "\\textunderscore");
+defineSymbol(math, main, textord, "\u2220", "\\angle", true);
+defineSymbol(math, main, textord, "\u221E", "\\infty", true);
+defineSymbol(math, main, textord, "\u2032", "\\prime");
+defineSymbol(math, main, textord, "\u25B3", "\\triangle");
+defineSymbol(math, main, textord, "\u0393", "\\Gamma", true);
+defineSymbol(math, main, textord, "\u0394", "\\Delta", true);
+defineSymbol(math, main, textord, "\u0398", "\\Theta", true);
+defineSymbol(math, main, textord, "\u039B", "\\Lambda", true);
+defineSymbol(math, main, textord, "\u039E", "\\Xi", true);
+defineSymbol(math, main, textord, "\u03A0", "\\Pi", true);
+defineSymbol(math, main, textord, "\u03A3", "\\Sigma", true);
+defineSymbol(math, main, textord, "\u03A5", "\\Upsilon", true);
+defineSymbol(math, main, textord, "\u03A6", "\\Phi", true);
+defineSymbol(math, main, textord, "\u03A8", "\\Psi", true);
+defineSymbol(math, main, textord, "\u03A9", "\\Omega", true);
+defineSymbol(math, main, textord, "A", "\u0391");
+defineSymbol(math, main, textord, "B", "\u0392");
+defineSymbol(math, main, textord, "E", "\u0395");
+defineSymbol(math, main, textord, "Z", "\u0396");
+defineSymbol(math, main, textord, "H", "\u0397");
+defineSymbol(math, main, textord, "I", "\u0399");
+defineSymbol(math, main, textord, "K", "\u039A");
+defineSymbol(math, main, textord, "M", "\u039C");
+defineSymbol(math, main, textord, "N", "\u039D");
+defineSymbol(math, main, textord, "O", "\u039F");
+defineSymbol(math, main, textord, "P", "\u03A1");
+defineSymbol(math, main, textord, "T", "\u03A4");
+defineSymbol(math, main, textord, "X", "\u03A7");
+defineSymbol(math, main, textord, "\xAC", "\\neg");
+defineSymbol(math, main, textord, "\xAC", "\\lnot");
+defineSymbol(math, main, textord, "\u22A4", "\\top");
+defineSymbol(math, main, textord, "\u22A5", "\\bot");
+defineSymbol(math, main, textord, "\u2205", "\\emptyset");
+defineSymbol(math, ams, textord, "\u2205", "\\varnothing");
+defineSymbol(math, main, mathord, "\u03B1", "\\alpha", true);
+defineSymbol(math, main, mathord, "\u03B2", "\\beta", true);
+defineSymbol(math, main, mathord, "\u03B3", "\\gamma", true);
+defineSymbol(math, main, mathord, "\u03B4", "\\delta", true);
+defineSymbol(math, main, mathord, "\u03F5", "\\epsilon", true);
+defineSymbol(math, main, mathord, "\u03B6", "\\zeta", true);
+defineSymbol(math, main, mathord, "\u03B7", "\\eta", true);
+defineSymbol(math, main, mathord, "\u03B8", "\\theta", true);
+defineSymbol(math, main, mathord, "\u03B9", "\\iota", true);
+defineSymbol(math, main, mathord, "\u03BA", "\\kappa", true);
+defineSymbol(math, main, mathord, "\u03BB", "\\lambda", true);
+defineSymbol(math, main, mathord, "\u03BC", "\\mu", true);
+defineSymbol(math, main, mathord, "\u03BD", "\\nu", true);
+defineSymbol(math, main, mathord, "\u03BE", "\\xi", true);
+defineSymbol(math, main, mathord, "\u03BF", "\\omicron", true);
+defineSymbol(math, main, mathord, "\u03C0", "\\pi", true);
+defineSymbol(math, main, mathord, "\u03C1", "\\rho", true);
+defineSymbol(math, main, mathord, "\u03C3", "\\sigma", true);
+defineSymbol(math, main, mathord, "\u03C4", "\\tau", true);
+defineSymbol(math, main, mathord, "\u03C5", "\\upsilon", true);
+defineSymbol(math, main, mathord, "\u03D5", "\\phi", true);
+defineSymbol(math, main, mathord, "\u03C7", "\\chi", true);
+defineSymbol(math, main, mathord, "\u03C8", "\\psi", true);
+defineSymbol(math, main, mathord, "\u03C9", "\\omega", true);
+defineSymbol(math, main, mathord, "\u03B5", "\\varepsilon", true);
+defineSymbol(math, main, mathord, "\u03D1", "\\vartheta", true);
+defineSymbol(math, main, mathord, "\u03D6", "\\varpi", true);
+defineSymbol(math, main, mathord, "\u03F1", "\\varrho", true);
+defineSymbol(math, main, mathord, "\u03C2", "\\varsigma", true);
+defineSymbol(math, main, mathord, "\u03C6", "\\varphi", true);
+defineSymbol(math, main, bin, "\u2217", "*");
+defineSymbol(math, main, bin, "+", "+");
+defineSymbol(math, main, bin, "\u2212", "-");
+defineSymbol(math, main, bin, "\u22C5", "\\cdot", true);
+defineSymbol(math, main, bin, "\u2218", "\\circ");
+defineSymbol(math, main, bin, "\xF7", "\\div", true);
+defineSymbol(math, main, bin, "\xB1", "\\pm", true);
+defineSymbol(math, main, bin, "\xD7", "\\times", true);
+defineSymbol(math, main, bin, "\u2229", "\\cap", true);
+defineSymbol(math, main, bin, "\u222A", "\\cup", true);
+defineSymbol(math, main, bin, "\u2216", "\\setminus");
+defineSymbol(math, main, bin, "\u2227", "\\land");
+defineSymbol(math, main, bin, "\u2228", "\\lor");
+defineSymbol(math, main, bin, "\u2227", "\\wedge", true);
+defineSymbol(math, main, bin, "\u2228", "\\vee", true);
+defineSymbol(math, main, textord, "\u221A", "\\surd");
+defineSymbol(math, main, open, "(", "(");
+defineSymbol(math, main, open, "[", "[");
+defineSymbol(math, main, open, "\u27E8", "\\langle", true);
+defineSymbol(math, main, open, "\u2223", "\\lvert");
+defineSymbol(math, main, open, "\u2225", "\\lVert");
+defineSymbol(math, main, close, ")", ")");
+defineSymbol(math, main, close, "]", "]");
+defineSymbol(math, main, close, "?", "?");
+defineSymbol(math, main, close, "!", "!");
+defineSymbol(math, main, close, "\u27E9", "\\rangle", true);
+defineSymbol(math, main, close, "\u2223", "\\rvert");
+defineSymbol(math, main, close, "\u2225", "\\rVert");
+defineSymbol(math, main, rel, "=", "=");
+defineSymbol(math, main, rel, "<", "<");
+defineSymbol(math, main, rel, ">", ">");
+defineSymbol(math, main, rel, ":", ":");
+defineSymbol(math, main, rel, "\u2248", "\\approx", true);
+defineSymbol(math, main, rel, "\u2245", "\\cong", true);
+defineSymbol(math, main, rel, "\u2265", "\\ge");
+defineSymbol(math, main, rel, "\u2265", "\\geq", true);
+defineSymbol(math, main, rel, "\u2190", "\\gets");
+defineSymbol(math, main, rel, ">", "\\gt");
+defineSymbol(math, main, rel, "\u2208", "\\in", true);
+defineSymbol(math, main, rel, "\u2209", "\\notin", true);
+defineSymbol(math, main, rel, "\u0338", "\\not");
+defineSymbol(math, main, rel, "\u2282", "\\subset", true);
+defineSymbol(math, main, rel, "\u2283", "\\supset", true);
+defineSymbol(math, main, rel, "\u2286", "\\subseteq", true);
+defineSymbol(math, main, rel, "\u2287", "\\supseteq", true);
+defineSymbol(math, ams, rel, "\u2288", "\\nsubseteq", true);
+defineSymbol(math, ams, rel, "\u2289", "\\nsupseteq", true);
+defineSymbol(math, main, rel, "\u22A8", "\\models");
+defineSymbol(math, main, rel, "\u2190", "\\leftarrow", true);
+defineSymbol(math, main, rel, "\u2264", "\\le");
+defineSymbol(math, main, rel, "\u2264", "\\leq", true);
+defineSymbol(math, main, rel, "<", "\\lt");
+defineSymbol(math, main, rel, "\u2260", "\\ne", true);
+defineSymbol(math, main, rel, "\u2260", "\\neq");
+defineSymbol(math, main, rel, "\u2192", "\\rightarrow", true);
+defineSymbol(math, main, rel, "\u2192", "\\to");
+defineSymbol(math, ams, rel, "\u2271", "\\ngeq", true);
+defineSymbol(math, ams, rel, "\u2270", "\\nleq", true);
+defineSymbol(math, main, spacing, null, "\\!");
+defineSymbol(math, main, spacing, "\xA0", "\\ ");
+defineSymbol(math, main, spacing, "\xA0", "~");
+defineSymbol(math, main, spacing, null, "\\,");
+defineSymbol(math, main, spacing, null, "\\:");
+defineSymbol(math, main, spacing, null, "\\;");
+defineSymbol(math, main, spacing, null, "\\enspace");
+defineSymbol(math, main, spacing, null, "\\qquad");
+defineSymbol(math, main, spacing, null, "\\quad");
+defineSymbol(math, main, spacing, "\xA0", "\\space");
+// Ref: LaTeX Source 2e: \DeclareRobustCommand{\nobreakspace}{%
+defineSymbol(math, main, spacing, "\xA0", "\\nobreakspace");
+defineSymbol(text, main, spacing, null, "\\!");
+defineSymbol(text, main, spacing, "\xA0", "\\ ");
+defineSymbol(text, main, spacing, "\xA0", "~");
+defineSymbol(text, main, spacing, null, "\\,");
+defineSymbol(text, main, spacing, null, "\\:");
+defineSymbol(text, main, spacing, null, "\\;");
+defineSymbol(text, main, spacing, null, "\\enspace");
+defineSymbol(text, main, spacing, null, "\\qquad");
+defineSymbol(text, main, spacing, null, "\\quad");
+defineSymbol(text, main, spacing, "\xA0", "\\space");
+defineSymbol(text, main, spacing, "\xA0", "\\nobreakspace");
+defineSymbol(math, main, spacing, null, "\\nobreak");
+defineSymbol(math, main, spacing, null, "\\allowbreak");
+defineSymbol(math, main, punct, ",", ",");
+defineSymbol(math, main, punct, ";", ";");
+defineSymbol(math, main, punct, ":", "\\colon");
+defineSymbol(math, ams, bin, "\u22BC", "\\barwedge", true);
+defineSymbol(math, ams, bin, "\u22BB", "\\veebar", true);
+defineSymbol(math, main, bin, "\u2299", "\\odot", true);
+defineSymbol(math, main, bin, "\u2295", "\\oplus", true);
+defineSymbol(math, main, bin, "\u2297", "\\otimes", true);
+defineSymbol(math, main, textord, "\u2202", "\\partial", true);
+defineSymbol(math, main, bin, "\u2298", "\\oslash", true);
+defineSymbol(math, ams, bin, "\u229A", "\\circledcirc", true);
+defineSymbol(math, ams, bin, "\u22A1", "\\boxdot", true);
+defineSymbol(math, main, bin, "\u25B3", "\\bigtriangleup");
+defineSymbol(math, main, bin, "\u25BD", "\\bigtriangledown");
+defineSymbol(math, main, bin, "\u2020", "\\dagger");
+defineSymbol(math, main, bin, "\u22C4", "\\diamond");
+defineSymbol(math, main, bin, "\u22C6", "\\star");
+defineSymbol(math, main, bin, "\u25C3", "\\triangleleft");
+defineSymbol(math, main, bin, "\u25B9", "\\triangleright");
+defineSymbol(math, main, open, "{", "\\{");
+defineSymbol(text, main, textord, "{", "\\{");
+defineSymbol(text, main, textord, "{", "\\textbraceleft");
+defineSymbol(math, main, close, "}", "\\}");
+defineSymbol(text, main, textord, "}", "\\}");
+defineSymbol(text, main, textord, "}", "\\textbraceright");
+defineSymbol(math, main, open, "{", "\\lbrace");
+defineSymbol(math, main, close, "}", "\\rbrace");
+defineSymbol(math, main, open, "[", "\\lbrack");
+defineSymbol(math, main, close, "]", "\\rbrack");
+defineSymbol(text, main, textord, "<", "\\textless"); // in T1 fontenc
+defineSymbol(text, main, textord, ">", "\\textgreater"); // in T1 fontenc
+defineSymbol(math, main, open, "\u230A", "\\lfloor", true);
+defineSymbol(math, main, close, "\u230B", "\\rfloor", true);
+defineSymbol(math, main, open, "\u2308", "\\lceil", true);
+defineSymbol(math, main, close, "\u2309", "\\rceil", true);
+defineSymbol(math, main, textord, "\\", "\\backslash");
+defineSymbol(math, main, textord, "\u2223", "|");
+defineSymbol(math, main, textord, "\u2223", "\\vert");
+defineSymbol(text, main, textord, "|", "\\textbar"); // in T1 fontenc
+defineSymbol(math, main, textord, "\u2225", "\\|");
+defineSymbol(math, main, textord, "\u2225", "\\Vert");
+defineSymbol(text, main, textord, "\u2225", "\\textbardbl");
+defineSymbol(text, main, textord, "~", "\\textasciitilde");
+defineSymbol(math, main, rel, "\u2191", "\\uparrow", true);
+defineSymbol(math, main, rel, "\u21D1", "\\Uparrow", true);
+defineSymbol(math, main, rel, "\u2193", "\\downarrow", true);
+defineSymbol(math, main, rel, "\u21D3", "\\Downarrow", true);
+defineSymbol(math, main, rel, "\u2195", "\\updownarrow", true);
+defineSymbol(math, main, rel, "\u21D5", "\\Updownarrow", true);
+defineSymbol(math, main, op, "\u2210", "\\coprod");
+defineSymbol(math, main, op, "\u22C1", "\\bigvee");
+defineSymbol(math, main, op, "\u22C0", "\\bigwedge");
+defineSymbol(math, main, op, "\u2A04", "\\biguplus");
+defineSymbol(math, main, op, "\u22C2", "\\bigcap");
+defineSymbol(math, main, op, "\u22C3", "\\bigcup");
+defineSymbol(math, main, op, "\u222B", "\\int");
+defineSymbol(math, main, op, "\u222B", "\\intop");
+defineSymbol(math, main, op, "\u222C", "\\iint");
+defineSymbol(math, main, op, "\u222D", "\\iiint");
+defineSymbol(math, main, op, "\u220F", "\\prod");
+defineSymbol(math, main, op, "\u2211", "\\sum");
+defineSymbol(math, main, op, "\u2A02", "\\bigotimes");
+defineSymbol(math, main, op, "\u2A01", "\\bigoplus");
+defineSymbol(math, main, op, "\u2A00", "\\bigodot");
+defineSymbol(math, main, op, "\u222E", "\\oint");
+defineSymbol(math, main, op, "\u2A06", "\\bigsqcup");
+defineSymbol(math, main, op, "\u222B", "\\smallint");
+defineSymbol(text, main, inner, "\u2026", "\\textellipsis");
+defineSymbol(math, main, inner, "\u2026", "\\mathellipsis");
+defineSymbol(text, main, inner, "\u2026", "\\ldots", true);
+defineSymbol(math, main, inner, "\u2026", "\\ldots", true);
+defineSymbol(math, main, inner, "\u22EF", "\\@cdots", true);
+defineSymbol(math, main, inner, "\u22F1", "\\ddots", true);
+defineSymbol(math, main, textord, "\u22EE", "\\vdots", true);
+defineSymbol(math, main, accent, "\u02CA", "\\acute");
+defineSymbol(math, main, accent, "\u02CB", "\\grave");
+defineSymbol(math, main, accent, "\xA8", "\\ddot");
+defineSymbol(math, main, accent, "~", "\\tilde");
+defineSymbol(math, main, accent, "\u02C9", "\\bar");
+defineSymbol(math, main, accent, "\u02D8", "\\breve");
+defineSymbol(math, main, accent, "\u02C7", "\\check");
+defineSymbol(math, main, accent, "^", "\\hat");
+defineSymbol(math, main, accent, "\u20D7", "\\vec");
+defineSymbol(math, main, accent, "\u02D9", "\\dot");
+defineSymbol(math, main, accent, "\u02DA", "\\mathring");
+defineSymbol(math, main, mathord, "\u0131", "\\imath", true);
+defineSymbol(math, main, mathord, "\u0237", "\\jmath", true);
+defineSymbol(text, main, textord, "\u0131", "\\i", true);
+defineSymbol(text, main, textord, "\u0237", "\\j", true);
+defineSymbol(text, main, textord, "\xDF", "\\ss", true);
+defineSymbol(text, main, textord, "\xE6", "\\ae", true);
+defineSymbol(text, main, textord, "\xE6", "\\ae", true);
+defineSymbol(text, main, textord, "\u0153", "\\oe", true);
+defineSymbol(text, main, textord, "\xF8", "\\o", true);
+defineSymbol(text, main, textord, "\xC6", "\\AE", true);
+defineSymbol(text, main, textord, "\u0152", "\\OE", true);
+defineSymbol(text, main, textord, "\xD8", "\\O", true);
+defineSymbol(text, main, accent, "\u02CA", "\\'"); // acute
+defineSymbol(text, main, accent, "\u02CB", "\\`"); // grave
+defineSymbol(text, main, accent, "\u02C6", "\\^"); // circumflex
+defineSymbol(text, main, accent, "\u02DC", "\\~"); // tilde
+defineSymbol(text, main, accent, "\u02C9", "\\="); // macron
+defineSymbol(text, main, accent, "\u02D8", "\\u"); // breve
+defineSymbol(text, main, accent, "\u02D9", "\\."); // dot above
+defineSymbol(text, main, accent, "\u02DA", "\\r"); // ring above
+defineSymbol(text, main, accent, "\u02C7", "\\v"); // caron
+defineSymbol(text, main, accent, "\xA8", '\\"'); // diaresis
+defineSymbol(text, main, accent, "\u02DD", "\\H"); // double acute
+defineSymbol(text, main, accent, "\u25EF", "\\textcircled"); // \bigcirc glyph
+
+defineSymbol(text, main, textord, "\u2013", "--");
+defineSymbol(text, main, textord, "\u2013", "\\textendash");
+defineSymbol(text, main, textord, "\u2014", "---");
+defineSymbol(text, main, textord, "\u2014", "\\textemdash");
+defineSymbol(text, main, textord, "\u2018", "`");
+defineSymbol(text, main, textord, "\u2018", "\\textquoteleft");
+defineSymbol(text, main, textord, "\u2019", "'");
+defineSymbol(text, main, textord, "\u2019", "\\textquoteright");
+defineSymbol(text, main, textord, "\u201C", "``");
+defineSymbol(text, main, textord, "\u201C", "\\textquotedblleft");
+defineSymbol(text, main, textord, "\u201D", "''");
+defineSymbol(text, main, textord, "\u201D", "\\textquotedblright");
+//  \degree from gensymb package
+defineSymbol(math, main, textord, "\xB0", "\\degree", true);
+defineSymbol(text, main, textord, "\xB0", "\\degree");
+// \textdegree from inputenc package
+defineSymbol(text, main, textord, "\xB0", "\\textdegree", true);
+// TODO: In LaTeX, \pounds can generate a different character in text and math
+// mode, but among our fonts, only Main-Italic defines this character "163".
+defineSymbol(math, main, mathord, "\xA3", "\\pounds");
+defineSymbol(math, main, mathord, "\xA3", "\\mathsterling", true);
+defineSymbol(text, main, mathord, "\xA3", "\\pounds");
+defineSymbol(text, main, mathord, "\xA3", "\\textsterling", true);
+defineSymbol(math, ams, textord, "\u2720", "\\maltese");
+defineSymbol(text, ams, textord, "\u2720", "\\maltese");
+
+defineSymbol(text, main, spacing, "\xA0", "\\ ");
+defineSymbol(text, main, spacing, "\xA0", " ");
+defineSymbol(text, main, spacing, "\xA0", "~");
+
+// There are lots of symbols which are the same, so we add them in afterwards.
+// All of these are textords in math mode
+var mathTextSymbols = "0123456789/@.\"";
+for (var i = 0; i < mathTextSymbols.length; i++) {
+    var ch = mathTextSymbols.charAt(i);
+    defineSymbol(math, main, textord, ch, ch);
+}
+
+// All of these are textords in text mode
+var textSymbols = "0123456789!@*()-=+[]<>|\";:?/.,";
+for (var _i = 0; _i < textSymbols.length; _i++) {
+    var _ch = textSymbols.charAt(_i);
+    defineSymbol(text, main, textord, _ch, _ch);
+}
+
+// All of these are textords in text mode, and mathords in math mode
+var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+for (var _i2 = 0; _i2 < letters.length; _i2++) {
+    var _ch2 = letters.charAt(_i2);
+    defineSymbol(math, main, mathord, _ch2, _ch2);
+    defineSymbol(text, main, textord, _ch2, _ch2);
+}
+
+// The next loop loads wide (surrogate pair) characters.
+// We support some letters in the Unicode range U+1D400 to U+1D7FF,
+// Mathematical Alphanumeric Symbols.
+// Some editors do not deal well with wide characters. So don't write the
+// string into this file. Instead, create the string from the surrogate pair.
+var wideChar = "";
+for (var _i3 = 0; _i3 < letters.length; _i3++) {
+    var _ch3 = letters.charAt(_i3);
+
+    // The hex numbers in the next line are a surrogate pair.
+    // 0xD835 is the high surrogate for all letters in the range we support.
+    // 0xDC00 is the low surrogate for bold A.
+    wideChar = String.fromCharCode(0xD835, 0xDC00 + _i3); // A-Z a-z bold
+    defineSymbol(math, main, mathord, _ch3, wideChar);
+    defineSymbol(text, main, textord, _ch3, wideChar);
+
+    wideChar = String.fromCharCode(0xD835, 0xDC34 + _i3); // A-Z a-z italic
+    defineSymbol(math, main, mathord, _ch3, wideChar);
+    defineSymbol(text, main, textord, _ch3, wideChar);
+
+    wideChar = String.fromCharCode(0xD835, 0xDC68 + _i3); // A-Z a-z bold italic
+    defineSymbol(math, main, mathord, _ch3, wideChar);
+    defineSymbol(text, main, textord, _ch3, wideChar);
+
+    wideChar = String.fromCharCode(0xD835, 0xDD04 + _i3); // A-Z a-z Fractur
+    defineSymbol(math, main, mathord, _ch3, wideChar);
+    defineSymbol(text, main, textord, _ch3, wideChar);
+
+    wideChar = String.fromCharCode(0xD835, 0xDDA0 + _i3); // A-Z a-z sans-serif
+    defineSymbol(math, main, mathord, _ch3, wideChar);
+    defineSymbol(text, main, textord, _ch3, wideChar);
+
+    wideChar = String.fromCharCode(0xD835, 0xDDD4 + _i3); // A-Z a-z sans bold
+    defineSymbol(math, main, mathord, _ch3, wideChar);
+    defineSymbol(text, main, textord, _ch3, wideChar);
+
+    wideChar = String.fromCharCode(0xD835, 0xDE08 + _i3); // A-Z a-z sans italic
+    defineSymbol(math, main, mathord, _ch3, wideChar);
+    defineSymbol(text, main, textord, _ch3, wideChar);
+
+    wideChar = String.fromCharCode(0xD835, 0xDE70 + _i3); // A-Z a-z monospace
+    defineSymbol(math, main, mathord, _ch3, wideChar);
+    defineSymbol(text, main, textord, _ch3, wideChar);
+
+    if (_i3 < 26) {
+        // KaTeX fonts have only capital letters for blackboard bold and script.
+        // See exception for k below.
+        wideChar = String.fromCharCode(0xD835, 0xDD38 + _i3); // A-Z double struck
+        defineSymbol(math, main, mathord, _ch3, wideChar);
+        defineSymbol(text, main, textord, _ch3, wideChar);
+
+        wideChar = String.fromCharCode(0xD835, 0xDC9C + _i3); // A-Z script
+        defineSymbol(math, main, mathord, _ch3, wideChar);
+        defineSymbol(text, main, textord, _ch3, wideChar);
+    }
+
+    // TODO: Add bold script when it is supported by a KaTeX font.
+}
+// "k" is the only double struck lower case letter in the KaTeX fonts.
+wideChar = String.fromCharCode(0xD835, 0xDD5C); // k double struck
+defineSymbol(math, main, mathord, "k", wideChar);
+defineSymbol(text, main, textord, "k", wideChar);
+
+// Next, some wide character numerals
+for (var _i4 = 0; _i4 < 10; _i4++) {
+    var _ch4 = letters.charAt(_i4);
+
+    wideChar = String.fromCharCode(0xD835, 0xDFCE + _i4); // 0-9 bold
+    defineSymbol(math, main, mathord, _ch4, wideChar);
+    defineSymbol(text, main, textord, _ch4, wideChar);
+
+    wideChar = String.fromCharCode(0xD835, 0xDFE2 + _i4); // 0-9 sans serif
+    defineSymbol(math, main, mathord, _ch4, wideChar);
+    defineSymbol(text, main, textord, _ch4, wideChar);
+
+    wideChar = String.fromCharCode(0xD835, 0xDFEC + _i4); // 0-9 bold sans
+    defineSymbol(math, main, mathord, _ch4, wideChar);
+    defineSymbol(text, main, textord, _ch4, wideChar);
+
+    wideChar = String.fromCharCode(0xD835, 0xDFF6 + _i4); // 0-9 monospace
+    defineSymbol(math, main, mathord, _ch4, wideChar);
+    defineSymbol(text, main, textord, _ch4, wideChar);
+}
+
+// We add these Latin-1 letters as symbols for backwards-compatibility,
+// but they are not actually in the font, nor are they supported by the
+// Unicode accent mechanism, so they fall back to Times font and look ugly.
+// TODO(edemaine): Fix this.
+var extraLatin = "ÇÐÞçþ";
+for (var _i5 = 0; _i5 < extraLatin.length; _i5++) {
+    var _ch5 = extraLatin.charAt(_i5);
+    defineSymbol(math, main, mathord, _ch5, _ch5);
+    defineSymbol(text, main, textord, _ch5, _ch5);
+}
+defineSymbol(text, main, textord, "ð", "ð");
+
+// Unicode versions of existing characters
+defineSymbol(text, main, textord, "\u2013", "–");
+defineSymbol(text, main, textord, "\u2014", "—");
+defineSymbol(text, main, textord, "\u2018", "‘");
+defineSymbol(text, main, textord, "\u2019", "’");
+defineSymbol(text, main, textord, "\u201C", "“");
+defineSymbol(text, main, textord, "\u201D", "”");
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+module.exports = function(bitmap, value){
+  return {
+    enumerable  : !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable    : !(bitmap & 4),
+    value       : value
+  };
+};
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.13 ToObject(argument)
+var defined = __webpack_require__(44);
+module.exports = function(it){
+  return Object(defined(it));
+};
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(105), __esModule: true };
+
+/***/ }),
+/* 32 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__domTree__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__domTree__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils__ = __webpack_require__(8);
 
 
 /**
@@ -3485,18 +4854,19 @@ var svgSpan = function svgSpan(group, options) {
                 "preserveAspectRatio": "none"
             });
             return {
-                span: __WEBPACK_IMPORTED_MODULE_2__buildCommon__["a" /* default */].makeSpan([], [svgNode], options),
+                span: __WEBPACK_IMPORTED_MODULE_2__buildCommon__["a" /* default */].makeSvgSpan([], [svgNode], options),
                 minWidth: 0,
                 height: _height
             };
         } else {
             var spans = [];
 
-            var _katexImagesData$labe = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray___default()(katexImagesData[label], 4),
-                paths = _katexImagesData$labe[0],
-                _minWidth = _katexImagesData$labe[1],
-                _viewBoxHeight = _katexImagesData$labe[2],
-                align1 = _katexImagesData$labe[3];
+            var data = katexImagesData[label];
+
+            var _data = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray___default()(data, 3),
+                paths = _data[0],
+                _minWidth = _data[1],
+                _viewBoxHeight = _data[2];
 
             var _height2 = _viewBoxHeight / 1000;
 
@@ -3504,6 +4874,8 @@ var svgSpan = function svgSpan(group, options) {
             var widthClasses = void 0;
             var aligns = void 0;
             if (numSvgChildren === 1) {
+                // $FlowFixMe: All these cases must be of the 4-tuple type.
+                var align1 = data[3];
                 widthClasses = ["hide-tail"];
                 aligns = [align1];
             } else if (numSvgChildren === 2) {
@@ -3526,7 +4898,7 @@ var svgSpan = function svgSpan(group, options) {
                     "preserveAspectRatio": aligns[i] + " slice"
                 });
 
-                var _span = __WEBPACK_IMPORTED_MODULE_2__buildCommon__["a" /* default */].makeSpan([widthClasses[i]], [_svgNode], options);
+                var _span = __WEBPACK_IMPORTED_MODULE_2__buildCommon__["a" /* default */].makeSvgSpan([widthClasses[i]], [_svgNode], options);
                 if (numSvgChildren === 1) {
                     return { span: _span, minWidth: _minWidth, height: _height2 };
                 } else {
@@ -3606,7 +4978,7 @@ var encloseSpan = function encloseSpan(inner, label, pad, options) {
             "height": totalHeight + "em"
         });
 
-        img = __WEBPACK_IMPORTED_MODULE_2__buildCommon__["a" /* default */].makeSpan([], [svgNode], options);
+        img = __WEBPACK_IMPORTED_MODULE_2__buildCommon__["a" /* default */].makeSvgSpan([], [svgNode], options);
     }
 
     img.height = totalHeight;
@@ -3615,1188 +4987,58 @@ var encloseSpan = function encloseSpan(inner, label, pad, options) {
     return img;
 };
 
-var ruleSpan = function ruleSpan(className, lineThickness, options) {
-
-    // Get a span with an SVG path that fills the middle fifth of the span.
-    // We're using an extra wide span so Chrome won't round it down to zero.
-
-    var path = void 0;
-    var svgNode = void 0;
-    var parentClass = "stretchy"; // default
-
-    if (className === "vertical-separator") {
-        path = new __WEBPACK_IMPORTED_MODULE_1__domTree__["a" /* default */].pathNode("vertSeparator");
-        svgNode = new __WEBPACK_IMPORTED_MODULE_1__domTree__["a" /* default */].svgNode([path], {
-            "width": "0.25em", // contains a path that is 0.05 ems wide.
-            "height": "400em",
-            "viewBox": "0 0 250 400000",
-            "preserveAspectRatio": "xMinYMin slice"
-        });
-        parentClass = "vertical-separator";
-    } else {
-        // The next two lines are the only place in KaTeX where SVG paths are
-        // put into a viewBox that is not always exactly a 1000:1 scale to the
-        // document em size. Instead, the path is a horizontal line set to
-        // take up the middle fifth of the viewBox and span. If the context is
-        // normalsize/textstyle then the line will be 0.04em and the usual
-        // 1000:1 ratio holds. But if the context is scriptstyle, then
-        // lineThickness > 0.04em and we have a ratio somewhat different than
-        // 1000:1.
-
-        path = new __WEBPACK_IMPORTED_MODULE_1__domTree__["a" /* default */].pathNode("stdHorizRule");
-        svgNode = new __WEBPACK_IMPORTED_MODULE_1__domTree__["a" /* default */].svgNode([path], {
-            "width": "400em",
-            "height": 5 * lineThickness + "em",
-            "viewBox": "0 0 400000 200",
-            "preserveAspectRatio": "xMinYMin slice"
-        });
-    }
-
-    return __WEBPACK_IMPORTED_MODULE_2__buildCommon__["a" /* default */].makeSpan([parentClass], [svgNode], options);
-};
-
 /* harmony default export */ __webpack_exports__["a"] = ({
     encloseSpan: encloseSpan,
     mathMLnode: mathMLnode,
-    ruleSpan: ruleSpan,
     svgSpan: svgSpan
 });
 
 /***/ }),
-/* 14 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 33 */
+/***/ (function(module, exports) {
+
+var id = 0
+  , px = Math.random();
+module.exports = function(key){
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SourceLocation__ = __webpack_require__(31);
 
+var $at  = __webpack_require__(94)(true);
 
-
-/**
- * The resulting parse tree nodes of the parse tree.
- *
- * It is possible to provide position information, so that a `ParseNode` can
- * fulfill a role similar to a `Token` in error reporting.
- * For details on the corresponding properties see `Token` constructor.
- * Providing such information can lead to better error reporting.
- */
-var ParseNode = function ParseNode(type, // type of node, like e.g. "ordgroup"
-value, // type-specific representation of the node
-mode, // parse mode in action for this node, "math" or "text"
-first, // first token or node of the input for
-last) // last token or node of the input for this
-// node, will default to firstToken if unset
-{
-    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, ParseNode);
-
-    this.type = type;
-    this.value = value;
-    this.mode = mode;
-    this.loc = __WEBPACK_IMPORTED_MODULE_1__SourceLocation__["a" /* default */].range(first, last);
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (ParseNode);
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject       = __webpack_require__(22)
-  , IE8_DOM_DEFINE = __webpack_require__(70)
-  , toPrimitive    = __webpack_require__(71)
-  , dP             = Object.defineProperty;
-
-exports.f = __webpack_require__(23) ? Object.defineProperty : function defineProperty(O, P, Attributes){
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if(IE8_DOM_DEFINE)try {
-    return dP(O, P, Attributes);
-  } catch(e){ /* empty */ }
-  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
-  if('value' in Attributes)O[P] = Attributes.value;
-  return O;
-};
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
-if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-module.exports = {};
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(103), __esModule: true };
-
-/***/ }),
-/* 19 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return validUnit; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return calculateSize; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParseError__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Options__ = __webpack_require__(43);
-
-
-/**
- * This file does conversion between units.  In particular, it provides
- * calculateSize to convert other units into ems.
- */
-
-
-
-
-// This table gives the number of TeX pts in one of each *absolute* TeX unit.
-// Thus, multiplying a length by this number converts the length from units
-// into pts.  Dividing the result by ptPerEm gives the number of ems
-// *assuming* a font size of ptPerEm (normal size, normal style).
-var ptPerUnit = {
-    // https://en.wikibooks.org/wiki/LaTeX/Lengths and
-    // https://tex.stackexchange.com/a/8263
-    "pt": 1, // TeX point
-    "mm": 7227 / 2540, // millimeter
-    "cm": 7227 / 254, // centimeter
-    "in": 72.27, // inch
-    "bp": 803 / 800, // big (PostScript) points
-    "pc": 12, // pica
-    "dd": 1238 / 1157, // didot
-    "cc": 14856 / 1157, // cicero (12 didot)
-    "nd": 685 / 642, // new didot
-    "nc": 1370 / 107, // new cicero (12 new didot)
-    "sp": 1 / 65536, // scaled point (TeX's internal smallest unit)
-    // https://tex.stackexchange.com/a/41371
-    "px": 803 / 800 // \pdfpxdimen defaults to 1 bp in pdfTeX and LuaTeX
-};
-
-// Dictionary of relative units, for fast validity testing.
-var relativeUnit = {
-    "ex": true,
-    "em": true,
-    "mu": true
-};
-
-/**
- * Determine whether the specified unit (either a string defining the unit
- * or a "size" parse node containing a unit field) is valid.
- */
-var validUnit = function validUnit(unit) {
-    if (typeof unit !== "string") {
-        unit = unit.unit;
-    }
-    return unit in ptPerUnit || unit in relativeUnit || unit === "ex";
-};
-
-/*
- * Convert a "size" parse node (with numeric "number" and string "unit" fields,
- * as parsed by functions.js argType "size") into a CSS em value for the
- * current style/scale.  `options` gives the current options.
- */
-var calculateSize = function calculateSize(sizeValue, options) {
-    var scale = void 0;
-    if (sizeValue.unit in ptPerUnit) {
-        // Absolute units
-        scale = ptPerUnit[sizeValue.unit] // Convert unit to pt
-        / options.fontMetrics().ptPerEm // Convert pt to CSS em
-        / options.sizeMultiplier; // Unscale to make absolute units
-    } else if (sizeValue.unit === "mu") {
-        // `mu` units scale with scriptstyle/scriptscriptstyle.
-        scale = options.fontMetrics().cssEmPerMu;
-    } else {
-        // Other relative units always refer to the *textstyle* font
-        // in the current size.
-        var unitOptions = void 0;
-        if (options.style.isTight()) {
-            // isTight() means current style is script/scriptscript.
-            unitOptions = options.havingStyle(options.style.text());
-        } else {
-            unitOptions = options;
-        }
-        // TODO: In TeX these units are relative to the quad of the current
-        // *text* font, e.g. cmr10. KaTeX instead uses values from the
-        // comparably-sized *Computer Modern symbol* font. At 10pt, these
-        // match. At 7pt and 5pt, they differ: cmr7=1.138894, cmsy7=1.170641;
-        // cmr5=1.361133, cmsy5=1.472241. Consider $\scriptsize a\kern1emb$.
-        // TeX \showlists shows a kern of 1.13889 * fontsize;
-        // KaTeX shows a kern of 1.171 * fontsize.
-        if (sizeValue.unit === "ex") {
-            scale = unitOptions.fontMetrics().xHeight;
-        } else if (sizeValue.unit === "em") {
-            scale = unitOptions.fontMetrics().quad;
-        } else {
-            throw new __WEBPACK_IMPORTED_MODULE_0__ParseError__["a" /* default */]("Invalid unit: '" + sizeValue.unit + "'");
-        }
-        if (unitOptions !== options) {
-            scale *= unitOptions.sizeMultiplier / options.sizeMultiplier;
-        }
-    }
-    return Math.min(sizeValue.number * scale, options.maxSize);
-};
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-module.exports = function(it){
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function(it, key){
-  return hasOwnProperty.call(it, key);
-};
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(20);
-module.exports = function(it){
-  if(!isObject(it))throw TypeError(it + ' is not an object!');
-  return it;
-};
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(24)(function(){
-  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+// 21.1.3.27 String.prototype[@@iterator]()
+__webpack_require__(62)(String, 'String', function(iterated){
+  this._t = String(iterated); // target
+  this._i = 0;                // next index
+// 21.1.5.2.1 %StringIteratorPrototype%.next()
+}, function(){
+  var O     = this._t
+    , index = this._i
+    , point;
+  if(index >= O.length)return {value: undefined, done: true};
+  point = $at(O, index);
+  this._i += point.length;
+  return {value: point, done: false};
 });
 
 /***/ }),
-/* 24 */
+/* 35 */
 /***/ (function(module, exports) {
 
-module.exports = function(exec){
-  try {
-    return !!exec();
-  } catch(e){
-    return true;
-  }
-};
+exports.f = {}.propertyIsEnumerable;
 
 /***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global    = __webpack_require__(16)
-  , core      = __webpack_require__(8)
-  , ctx       = __webpack_require__(47)
-  , hide      = __webpack_require__(26)
-  , PROTOTYPE = 'prototype';
-
-var $export = function(type, name, source){
-  var IS_FORCED = type & $export.F
-    , IS_GLOBAL = type & $export.G
-    , IS_STATIC = type & $export.S
-    , IS_PROTO  = type & $export.P
-    , IS_BIND   = type & $export.B
-    , IS_WRAP   = type & $export.W
-    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
-    , expProto  = exports[PROTOTYPE]
-    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
-    , key, own, out;
-  if(IS_GLOBAL)source = name;
-  for(key in source){
-    // contains in native
-    own = !IS_FORCED && target && target[key] !== undefined;
-    if(own && key in exports)continue;
-    // export native or passed
-    out = own ? target[key] : source[key];
-    // prevent global pollution for namespaces
-    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-    // bind timers to global for call from export context
-    : IS_BIND && own ? ctx(out, global)
-    // wrap global constructors for prevent change them in library
-    : IS_WRAP && target[key] == out ? (function(C){
-      var F = function(a, b, c){
-        if(this instanceof C){
-          switch(arguments.length){
-            case 0: return new C;
-            case 1: return new C(a);
-            case 2: return new C(a, b);
-          } return new C(a, b, c);
-        } return C.apply(this, arguments);
-      };
-      F[PROTOTYPE] = C[PROTOTYPE];
-      return F;
-    // make static versions for prototype methods
-    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
-    if(IS_PROTO){
-      (exports.virtual || (exports.virtual = {}))[key] = out;
-      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
-      if(type & $export.R && expProto && !expProto[key])hide(expProto, key, out);
-    }
-  }
-};
-// type bitmap
-$export.F = 1;   // forced
-$export.G = 2;   // global
-$export.S = 4;   // static
-$export.P = 8;   // proto
-$export.B = 16;  // bind
-$export.W = 32;  // wrap
-$export.U = 64;  // safe
-$export.R = 128; // real proto method for `library` 
-module.exports = $export;
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP         = __webpack_require__(15)
-  , createDesc = __webpack_require__(33);
-module.exports = __webpack_require__(23) ? function(object, key, value){
-  return dP.f(object, key, createDesc(1, value));
-} : function(object, key, value){
-  object[key] = value;
-  return object;
-};
-
-/***/ }),
-/* 27 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Token; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SourceLocation__ = __webpack_require__(31);
-
-
-
-
-/**
- * Interface required to break circular dependency between Token, Lexer, and
- * ParseError.
- */
-
-
-/**
- * The resulting token returned from `lex`.
- *
- * It consists of the token text plus some position information.
- * The position information is essentially a range in an input string,
- * but instead of referencing the bare input string, we refer to the lexer.
- * That way it is possible to attach extra metadata to the input string,
- * like for example a file name or similar.
- *
- * The position information is optional, so it is OK to construct synthetic
- * tokens if appropriate. Not providing available position information may
- * lead to degraded error reporting, though.
- */
-var Token = function () {
-    function Token(text, // the text of this token
-    loc) {
-        __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, Token);
-
-        this.text = text;
-        this.loc = loc;
-    }
-
-    /**
-     * Given a pair of tokens (this and endToken), compute a `Token` encompassing
-     * the whole input range enclosed by these two.
-     */
-
-
-    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(Token, [{
-        key: "range",
-        value: function range(endToken, // last token of the range, inclusive
-        text) // the text of the newly constructed token
-        {
-            return new Token(text, __WEBPACK_IMPORTED_MODULE_2__SourceLocation__["a" /* default */].range(this, endToken));
-        }
-    }]);
-
-    return Token;
-}();
-
-/***/ }),
-/* 28 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-/**
- * This file holds a list of all no-argument functions and single-character
- * symbols (like 'a' or ';').
- *
- * For each of the symbols, there are three properties they can have:
- * - font (required): the font to be used for this symbol. Either "main" (the
-     normal font), or "ams" (the ams fonts).
- * - group (required): the ParseNode group type the symbol should have (i.e.
-     "textord", "mathord", etc).
-     See https://github.com/Khan/KaTeX/wiki/Examining-TeX#group-types
- * - replace: the character that this symbol or function should be
- *   replaced with (i.e. "\phi" has a replace value of "\u03d5", the phi
- *   character in the main font).
- *
- * The outermost map in the table indicates what mode the symbols should be
- * accepted in (e.g. "math" or "text").
- */
-
-var symbols = {
-    "math": {},
-    "text": {}
-};
-/* harmony default export */ __webpack_exports__["a"] = (symbols);
-
-/** `acceptUnicodeChar = true` is only applicable if `replace` is set. */
-function defineSymbol(mode, font, group, replace, name, acceptUnicodeChar) {
-    symbols[mode][name] = { font: font, group: group, replace: replace };
-
-    if (acceptUnicodeChar && replace) {
-        symbols[mode][replace] = symbols[mode][name];
-    }
-}
-
-// Some abbreviations for commonly used strings.
-// This helps minify the code, and also spotting typos using jshint.
-
-// modes:
-var math = "math";
-var text = "text";
-
-// fonts:
-var main = "main";
-var ams = "ams";
-
-// groups:
-var accent = "accent";
-var bin = "bin";
-var close = "close";
-var inner = "inner";
-var mathord = "mathord";
-var op = "op";
-var open = "open";
-var punct = "punct";
-var rel = "rel";
-var spacing = "spacing";
-var textord = "textord";
-
-// Now comes the symbol table
-
-// Relation Symbols
-defineSymbol(math, main, rel, "\u2261", "\\equiv", true);
-defineSymbol(math, main, rel, "\u227A", "\\prec", true);
-defineSymbol(math, main, rel, "\u227B", "\\succ", true);
-defineSymbol(math, main, rel, "\u223C", "\\sim", true);
-defineSymbol(math, main, rel, "\u22A5", "\\perp");
-defineSymbol(math, main, rel, "\u2AAF", "\\preceq", true);
-defineSymbol(math, main, rel, "\u2AB0", "\\succeq", true);
-defineSymbol(math, main, rel, "\u2243", "\\simeq", true);
-defineSymbol(math, main, rel, "\u2223", "\\mid", true);
-defineSymbol(math, main, rel, "\u226A", "\\ll");
-defineSymbol(math, main, rel, "\u226B", "\\gg", true);
-defineSymbol(math, main, rel, "\u224D", "\\asymp", true);
-defineSymbol(math, main, rel, "\u2225", "\\parallel");
-defineSymbol(math, main, rel, "\u22C8", "\\bowtie", true);
-defineSymbol(math, main, rel, "\u2323", "\\smile", true);
-defineSymbol(math, main, rel, "\u2291", "\\sqsubseteq", true);
-defineSymbol(math, main, rel, "\u2292", "\\sqsupseteq", true);
-defineSymbol(math, main, rel, "\u2250", "\\doteq", true);
-defineSymbol(math, main, rel, "\u2322", "\\frown", true);
-defineSymbol(math, main, rel, "\u220B", "\\ni", true);
-defineSymbol(math, main, rel, "\u221D", "\\propto", true);
-defineSymbol(math, main, rel, "\u22A2", "\\vdash", true);
-defineSymbol(math, main, rel, "\u22A3", "\\dashv", true);
-defineSymbol(math, main, rel, "\u220B", "\\owns");
-
-// Punctuation
-defineSymbol(math, main, punct, ".", "\\ldotp");
-defineSymbol(math, main, punct, "\u22C5", "\\cdotp");
-
-// Misc Symbols
-defineSymbol(math, main, textord, "#", "\\#");
-defineSymbol(text, main, textord, "#", "\\#");
-defineSymbol(math, main, textord, "&", "\\&");
-defineSymbol(text, main, textord, "&", "\\&");
-defineSymbol(math, main, textord, "\u2135", "\\aleph", true);
-defineSymbol(math, main, textord, "\u2200", "\\forall", true);
-defineSymbol(math, main, textord, "\u210F", "\\hbar");
-defineSymbol(math, main, textord, "\u2203", "\\exists", true);
-defineSymbol(math, main, textord, "\u2207", "\\nabla", true);
-defineSymbol(math, main, textord, "\u266D", "\\flat", true);
-defineSymbol(math, main, textord, "\u2113", "\\ell", true);
-defineSymbol(math, main, textord, "\u266E", "\\natural", true);
-defineSymbol(math, main, textord, "\u2663", "\\clubsuit", true);
-defineSymbol(math, main, textord, "\u2118", "\\wp", true);
-defineSymbol(math, main, textord, "\u266F", "\\sharp", true);
-defineSymbol(math, main, textord, "\u2662", "\\diamondsuit", true);
-defineSymbol(math, main, textord, "\u211C", "\\Re", true);
-defineSymbol(math, main, textord, "\u2661", "\\heartsuit", true);
-defineSymbol(math, main, textord, "\u2111", "\\Im", true);
-defineSymbol(math, main, textord, "\u2660", "\\spadesuit", true);
-defineSymbol(text, main, textord, "\xA7", "\\S", true);
-defineSymbol(text, main, textord, "\xB6", "\\P", true);
-
-// Math and Text
-defineSymbol(math, main, textord, "\u2020", "\\dag");
-defineSymbol(text, main, textord, "\u2020", "\\dag");
-defineSymbol(text, main, textord, "\u2020", "\\textdagger");
-defineSymbol(math, main, textord, "\u2021", "\\ddag");
-defineSymbol(text, main, textord, "\u2021", "\\ddag");
-defineSymbol(text, main, textord, "\u2020", "\\textdaggerdbl");
-
-// Large Delimiters
-defineSymbol(math, main, close, "\u23B1", "\\rmoustache");
-defineSymbol(math, main, open, "\u23B0", "\\lmoustache");
-defineSymbol(math, main, close, "\u27EF", "\\rgroup");
-defineSymbol(math, main, open, "\u27EE", "\\lgroup");
-
-// Binary Operators
-defineSymbol(math, main, bin, "\u2213", "\\mp", true);
-defineSymbol(math, main, bin, "\u2296", "\\ominus", true);
-defineSymbol(math, main, bin, "\u228E", "\\uplus", true);
-defineSymbol(math, main, bin, "\u2293", "\\sqcap", true);
-defineSymbol(math, main, bin, "\u2217", "\\ast");
-defineSymbol(math, main, bin, "\u2294", "\\sqcup", true);
-defineSymbol(math, main, bin, "\u25EF", "\\bigcirc");
-defineSymbol(math, main, bin, "\u2219", "\\bullet");
-defineSymbol(math, main, bin, "\u2021", "\\ddagger");
-defineSymbol(math, main, bin, "\u2240", "\\wr", true);
-defineSymbol(math, main, bin, "\u2A3F", "\\amalg");
-defineSymbol(math, main, bin, "&", "\\And"); // from amsmath
-
-// Arrow Symbols
-defineSymbol(math, main, rel, "\u27F5", "\\longleftarrow", true);
-defineSymbol(math, main, rel, "\u21D0", "\\Leftarrow", true);
-defineSymbol(math, main, rel, "\u27F8", "\\Longleftarrow", true);
-defineSymbol(math, main, rel, "\u27F6", "\\longrightarrow", true);
-defineSymbol(math, main, rel, "\u21D2", "\\Rightarrow", true);
-defineSymbol(math, main, rel, "\u27F9", "\\Longrightarrow", true);
-defineSymbol(math, main, rel, "\u2194", "\\leftrightarrow", true);
-defineSymbol(math, main, rel, "\u27F7", "\\longleftrightarrow", true);
-defineSymbol(math, main, rel, "\u21D4", "\\Leftrightarrow", true);
-defineSymbol(math, main, rel, "\u27FA", "\\Longleftrightarrow", true);
-defineSymbol(math, main, rel, "\u21A6", "\\mapsto", true);
-defineSymbol(math, main, rel, "\u27FC", "\\longmapsto", true);
-defineSymbol(math, main, rel, "\u2197", "\\nearrow", true);
-defineSymbol(math, main, rel, "\u21A9", "\\hookleftarrow", true);
-defineSymbol(math, main, rel, "\u21AA", "\\hookrightarrow", true);
-defineSymbol(math, main, rel, "\u2198", "\\searrow", true);
-defineSymbol(math, main, rel, "\u21BC", "\\leftharpoonup", true);
-defineSymbol(math, main, rel, "\u21C0", "\\rightharpoonup", true);
-defineSymbol(math, main, rel, "\u2199", "\\swarrow", true);
-defineSymbol(math, main, rel, "\u21BD", "\\leftharpoondown", true);
-defineSymbol(math, main, rel, "\u21C1", "\\rightharpoondown", true);
-defineSymbol(math, main, rel, "\u2196", "\\nwarrow", true);
-defineSymbol(math, main, rel, "\u21CC", "\\rightleftharpoons", true);
-
-// AMS Negated Binary Relations
-defineSymbol(math, ams, rel, "\u226E", "\\nless", true);
-defineSymbol(math, ams, rel, "\uE010", "\\nleqslant");
-defineSymbol(math, ams, rel, "\uE011", "\\nleqq");
-defineSymbol(math, ams, rel, "\u2A87", "\\lneq", true);
-defineSymbol(math, ams, rel, "\u2268", "\\lneqq", true);
-defineSymbol(math, ams, rel, "\uE00C", "\\lvertneqq");
-defineSymbol(math, ams, rel, "\u22E6", "\\lnsim", true);
-defineSymbol(math, ams, rel, "\u2A89", "\\lnapprox", true);
-defineSymbol(math, ams, rel, "\u2280", "\\nprec", true);
-// unicode-math maps \u22e0 to \npreccurlyeq. We'll use the AMS synonym.
-defineSymbol(math, ams, rel, "\u22E0", "\\npreceq", true);
-defineSymbol(math, ams, rel, "\u22E8", "\\precnsim", true);
-defineSymbol(math, ams, rel, "\u2AB9", "\\precnapprox", true);
-defineSymbol(math, ams, rel, "\u2241", "\\nsim", true);
-defineSymbol(math, ams, rel, "\uE006", "\\nshortmid");
-defineSymbol(math, ams, rel, "\u2224", "\\nmid", true);
-defineSymbol(math, ams, rel, "\u22AC", "\\nvdash", true);
-defineSymbol(math, ams, rel, "\u22AD", "\\nvDash", true);
-defineSymbol(math, ams, rel, "\u22EA", "\\ntriangleleft");
-defineSymbol(math, ams, rel, "\u22EC", "\\ntrianglelefteq", true);
-defineSymbol(math, ams, rel, "\u228A", "\\subsetneq", true);
-defineSymbol(math, ams, rel, "\uE01A", "\\varsubsetneq");
-defineSymbol(math, ams, rel, "\u2ACB", "\\subsetneqq", true);
-defineSymbol(math, ams, rel, "\uE017", "\\varsubsetneqq");
-defineSymbol(math, ams, rel, "\u226F", "\\ngtr", true);
-defineSymbol(math, ams, rel, "\uE00F", "\\ngeqslant");
-defineSymbol(math, ams, rel, "\uE00E", "\\ngeqq");
-defineSymbol(math, ams, rel, "\u2A88", "\\gneq", true);
-defineSymbol(math, ams, rel, "\u2269", "\\gneqq", true);
-defineSymbol(math, ams, rel, "\uE00D", "\\gvertneqq");
-defineSymbol(math, ams, rel, "\u22E7", "\\gnsim", true);
-defineSymbol(math, ams, rel, "\u2A8A", "\\gnapprox", true);
-defineSymbol(math, ams, rel, "\u2281", "\\nsucc", true);
-// unicode-math maps \u22e1 to \nsucccurlyeq. We'll use the AMS synonym.
-defineSymbol(math, ams, rel, "\u22E1", "\\nsucceq", true);
-defineSymbol(math, ams, rel, "\u22E9", "\\succnsim", true);
-defineSymbol(math, ams, rel, "\u2ABA", "\\succnapprox", true);
-// unicode-math maps \u2246 to \simneqq. We'll use the AMS synonym.
-defineSymbol(math, ams, rel, "\u2246", "\\ncong", true);
-defineSymbol(math, ams, rel, "\uE007", "\\nshortparallel");
-defineSymbol(math, ams, rel, "\u2226", "\\nparallel", true);
-defineSymbol(math, ams, rel, "\u22AF", "\\nVDash", true);
-defineSymbol(math, ams, rel, "\u22EB", "\\ntriangleright");
-defineSymbol(math, ams, rel, "\u22ED", "\\ntrianglerighteq", true);
-defineSymbol(math, ams, rel, "\uE018", "\\nsupseteqq");
-defineSymbol(math, ams, rel, "\u228B", "\\supsetneq", true);
-defineSymbol(math, ams, rel, "\uE01B", "\\varsupsetneq");
-defineSymbol(math, ams, rel, "\u2ACC", "\\supsetneqq", true);
-defineSymbol(math, ams, rel, "\uE019", "\\varsupsetneqq");
-defineSymbol(math, ams, rel, "\u22AE", "\\nVdash", true);
-defineSymbol(math, ams, rel, "\u2AB5", "\\precneqq", true);
-defineSymbol(math, ams, rel, "\u2AB6", "\\succneqq", true);
-defineSymbol(math, ams, rel, "\uE016", "\\nsubseteqq");
-defineSymbol(math, ams, bin, "\u22B4", "\\unlhd");
-defineSymbol(math, ams, bin, "\u22B5", "\\unrhd");
-
-// AMS Negated Arrows
-defineSymbol(math, ams, rel, "\u219A", "\\nleftarrow", true);
-defineSymbol(math, ams, rel, "\u219B", "\\nrightarrow", true);
-defineSymbol(math, ams, rel, "\u21CD", "\\nLeftarrow", true);
-defineSymbol(math, ams, rel, "\u21CF", "\\nRightarrow", true);
-defineSymbol(math, ams, rel, "\u21AE", "\\nleftrightarrow", true);
-defineSymbol(math, ams, rel, "\u21CE", "\\nLeftrightarrow", true);
-
-// AMS Misc
-defineSymbol(math, ams, rel, "\u25B3", "\\vartriangle");
-defineSymbol(math, ams, textord, "\u210F", "\\hslash");
-defineSymbol(math, ams, textord, "\u25BD", "\\triangledown");
-defineSymbol(math, ams, textord, "\u25CA", "\\lozenge");
-defineSymbol(math, ams, textord, "\u24C8", "\\circledS");
-defineSymbol(math, ams, textord, "\xAE", "\\circledR");
-defineSymbol(text, ams, textord, "\xAE", "\\circledR");
-defineSymbol(math, ams, textord, "\u2221", "\\measuredangle", true);
-defineSymbol(math, ams, textord, "\u2204", "\\nexists");
-defineSymbol(math, ams, textord, "\u2127", "\\mho");
-defineSymbol(math, ams, textord, "\u2132", "\\Finv", true);
-defineSymbol(math, ams, textord, "\u2141", "\\Game", true);
-defineSymbol(math, ams, textord, "k", "\\Bbbk");
-defineSymbol(math, ams, textord, "\u2035", "\\backprime");
-defineSymbol(math, ams, textord, "\u25B2", "\\blacktriangle");
-defineSymbol(math, ams, textord, "\u25BC", "\\blacktriangledown");
-defineSymbol(math, ams, textord, "\u25A0", "\\blacksquare");
-defineSymbol(math, ams, textord, "\u29EB", "\\blacklozenge");
-defineSymbol(math, ams, textord, "\u2605", "\\bigstar");
-defineSymbol(math, ams, textord, "\u2222", "\\sphericalangle", true);
-defineSymbol(math, ams, textord, "\u2201", "\\complement", true);
-// unicode-math maps U+F0 (ð) to \matheth. We map to AMS function \eth
-defineSymbol(math, ams, textord, "\xF0", "\\eth", true);
-defineSymbol(math, ams, textord, "\u2571", "\\diagup");
-defineSymbol(math, ams, textord, "\u2572", "\\diagdown");
-defineSymbol(math, ams, textord, "\u25A1", "\\square");
-defineSymbol(math, ams, textord, "\u25A1", "\\Box");
-defineSymbol(math, ams, textord, "\u25CA", "\\Diamond");
-// unicode-math maps U+A5 to \mathyen. We map to AMS function \yen
-defineSymbol(math, ams, textord, "\xA5", "\\yen", true);
-defineSymbol(math, ams, textord, "\u2713", "\\checkmark", true);
-defineSymbol(text, ams, textord, "\u2713", "\\checkmark");
-
-// AMS Hebrew
-defineSymbol(math, ams, textord, "\u2136", "\\beth", true);
-defineSymbol(math, ams, textord, "\u2138", "\\daleth", true);
-defineSymbol(math, ams, textord, "\u2137", "\\gimel", true);
-
-// AMS Greek
-defineSymbol(math, ams, textord, "\u03DD", "\\digamma");
-defineSymbol(math, ams, textord, "\u03F0", "\\varkappa");
-
-// AMS Delimiters
-defineSymbol(math, ams, open, "\u250C", "\\ulcorner");
-defineSymbol(math, ams, close, "\u2510", "\\urcorner");
-defineSymbol(math, ams, open, "\u2514", "\\llcorner");
-defineSymbol(math, ams, close, "\u2518", "\\lrcorner");
-
-// AMS Binary Relations
-defineSymbol(math, ams, rel, "\u2266", "\\leqq", true);
-defineSymbol(math, ams, rel, "\u2A7D", "\\leqslant");
-defineSymbol(math, ams, rel, "\u2A95", "\\eqslantless", true);
-defineSymbol(math, ams, rel, "\u2272", "\\lesssim");
-defineSymbol(math, ams, rel, "\u2A85", "\\lessapprox");
-defineSymbol(math, ams, rel, "\u224A", "\\approxeq", true);
-defineSymbol(math, ams, bin, "\u22D6", "\\lessdot");
-defineSymbol(math, ams, rel, "\u22D8", "\\lll");
-defineSymbol(math, ams, rel, "\u2276", "\\lessgtr");
-defineSymbol(math, ams, rel, "\u22DA", "\\lesseqgtr");
-defineSymbol(math, ams, rel, "\u2A8B", "\\lesseqqgtr");
-defineSymbol(math, ams, rel, "\u2251", "\\doteqdot");
-defineSymbol(math, ams, rel, "\u2253", "\\risingdotseq", true);
-defineSymbol(math, ams, rel, "\u2252", "\\fallingdotseq", true);
-defineSymbol(math, ams, rel, "\u223D", "\\backsim", true);
-defineSymbol(math, ams, rel, "\u22CD", "\\backsimeq", true);
-defineSymbol(math, ams, rel, "\u2AC5", "\\subseteqq", true);
-defineSymbol(math, ams, rel, "\u22D0", "\\Subset", true);
-defineSymbol(math, ams, rel, "\u228F", "\\sqsubset", true);
-defineSymbol(math, ams, rel, "\u227C", "\\preccurlyeq", true);
-defineSymbol(math, ams, rel, "\u22DE", "\\curlyeqprec", true);
-defineSymbol(math, ams, rel, "\u227E", "\\precsim", true);
-defineSymbol(math, ams, rel, "\u2AB7", "\\precapprox", true);
-defineSymbol(math, ams, rel, "\u22B2", "\\vartriangleleft");
-defineSymbol(math, ams, rel, "\u22B4", "\\trianglelefteq");
-defineSymbol(math, ams, rel, "\u22A8", "\\vDash");
-defineSymbol(math, ams, rel, "\u22AA", "\\Vvdash", true);
-defineSymbol(math, ams, rel, "\u2323", "\\smallsmile");
-defineSymbol(math, ams, rel, "\u2322", "\\smallfrown");
-defineSymbol(math, ams, rel, "\u224F", "\\bumpeq", true);
-defineSymbol(math, ams, rel, "\u224E", "\\Bumpeq", true);
-defineSymbol(math, ams, rel, "\u2267", "\\geqq", true);
-defineSymbol(math, ams, rel, "\u2A7E", "\\geqslant", true);
-defineSymbol(math, ams, rel, "\u2A96", "\\eqslantgtr", true);
-defineSymbol(math, ams, rel, "\u2273", "\\gtrsim", true);
-defineSymbol(math, ams, rel, "\u2A86", "\\gtrapprox", true);
-defineSymbol(math, ams, bin, "\u22D7", "\\gtrdot");
-defineSymbol(math, ams, rel, "\u22D9", "\\ggg", true);
-defineSymbol(math, ams, rel, "\u2277", "\\gtrless", true);
-defineSymbol(math, ams, rel, "\u22DB", "\\gtreqless", true);
-defineSymbol(math, ams, rel, "\u2A8C", "\\gtreqqless", true);
-defineSymbol(math, ams, rel, "\u2256", "\\eqcirc", true);
-defineSymbol(math, ams, rel, "\u2257", "\\circeq", true);
-defineSymbol(math, ams, rel, "\u225C", "\\triangleq", true);
-defineSymbol(math, ams, rel, "\u223C", "\\thicksim");
-defineSymbol(math, ams, rel, "\u2248", "\\thickapprox");
-defineSymbol(math, ams, rel, "\u2AC6", "\\supseteqq", true);
-defineSymbol(math, ams, rel, "\u22D1", "\\Supset", true);
-defineSymbol(math, ams, rel, "\u2290", "\\sqsupset", true);
-defineSymbol(math, ams, rel, "\u227D", "\\succcurlyeq", true);
-defineSymbol(math, ams, rel, "\u22DF", "\\curlyeqsucc", true);
-defineSymbol(math, ams, rel, "\u227F", "\\succsim", true);
-defineSymbol(math, ams, rel, "\u2AB8", "\\succapprox", true);
-defineSymbol(math, ams, rel, "\u22B3", "\\vartriangleright");
-defineSymbol(math, ams, rel, "\u22B5", "\\trianglerighteq");
-defineSymbol(math, ams, rel, "\u22A9", "\\Vdash", true);
-defineSymbol(math, ams, rel, "\u2223", "\\shortmid");
-defineSymbol(math, ams, rel, "\u2225", "\\shortparallel");
-defineSymbol(math, ams, rel, "\u226C", "\\between", true);
-defineSymbol(math, ams, rel, "\u22D4", "\\pitchfork", true);
-defineSymbol(math, ams, rel, "\u221D", "\\varpropto");
-defineSymbol(math, ams, rel, "\u25C0", "\\blacktriangleleft");
-// unicode-math says that \therefore is a mathord atom.
-// We kept the amssymb atom type, which is rel.
-defineSymbol(math, ams, rel, "\u2234", "\\therefore", true);
-defineSymbol(math, ams, rel, "\u220D", "\\backepsilon");
-defineSymbol(math, ams, rel, "\u25B6", "\\blacktriangleright");
-// unicode-math says that \because is a mathord atom.
-// We kept the amssymb atom type, which is rel.
-defineSymbol(math, ams, rel, "\u2235", "\\because", true);
-defineSymbol(math, ams, rel, "\u22D8", "\\llless");
-defineSymbol(math, ams, rel, "\u22D9", "\\gggtr");
-defineSymbol(math, ams, bin, "\u22B2", "\\lhd");
-defineSymbol(math, ams, bin, "\u22B3", "\\rhd");
-defineSymbol(math, ams, rel, "\u2242", "\\eqsim", true);
-defineSymbol(math, main, rel, "\u22C8", "\\Join");
-defineSymbol(math, ams, rel, "\u2251", "\\Doteq", true);
-
-// AMS Binary Operators
-defineSymbol(math, ams, bin, "\u2214", "\\dotplus", true);
-defineSymbol(math, ams, bin, "\u2216", "\\smallsetminus");
-defineSymbol(math, ams, bin, "\u22D2", "\\Cap", true);
-defineSymbol(math, ams, bin, "\u22D3", "\\Cup", true);
-defineSymbol(math, ams, bin, "\u2A5E", "\\doublebarwedge", true);
-defineSymbol(math, ams, bin, "\u229F", "\\boxminus", true);
-defineSymbol(math, ams, bin, "\u229E", "\\boxplus", true);
-defineSymbol(math, ams, bin, "\u22C7", "\\divideontimes", true);
-defineSymbol(math, ams, bin, "\u22C9", "\\ltimes", true);
-defineSymbol(math, ams, bin, "\u22CA", "\\rtimes", true);
-defineSymbol(math, ams, bin, "\u22CB", "\\leftthreetimes", true);
-defineSymbol(math, ams, bin, "\u22CC", "\\rightthreetimes", true);
-defineSymbol(math, ams, bin, "\u22CF", "\\curlywedge", true);
-defineSymbol(math, ams, bin, "\u22CE", "\\curlyvee", true);
-defineSymbol(math, ams, bin, "\u229D", "\\circleddash", true);
-defineSymbol(math, ams, bin, "\u229B", "\\circledast", true);
-defineSymbol(math, ams, bin, "\u22C5", "\\centerdot");
-defineSymbol(math, ams, bin, "\u22BA", "\\intercal", true);
-defineSymbol(math, ams, bin, "\u22D2", "\\doublecap");
-defineSymbol(math, ams, bin, "\u22D3", "\\doublecup");
-defineSymbol(math, ams, bin, "\u22A0", "\\boxtimes", true);
-
-// AMS Arrows
-// Note: unicode-math maps \u21e2 to their own function \rightdasharrow.
-// We'll map it to AMS function \dashrightarrow. It produces the same atom.
-defineSymbol(math, ams, rel, "\u21E2", "\\dashrightarrow", true);
-// unicode-math maps \u21e0 to \leftdasharrow. We'll use the AMS synonym.
-defineSymbol(math, ams, rel, "\u21E0", "\\dashleftarrow", true);
-defineSymbol(math, ams, rel, "\u21C7", "\\leftleftarrows", true);
-defineSymbol(math, ams, rel, "\u21C6", "\\leftrightarrows", true);
-defineSymbol(math, ams, rel, "\u21DA", "\\Lleftarrow", true);
-defineSymbol(math, ams, rel, "\u219E", "\\twoheadleftarrow", true);
-defineSymbol(math, ams, rel, "\u21A2", "\\leftarrowtail", true);
-defineSymbol(math, ams, rel, "\u21AB", "\\looparrowleft", true);
-defineSymbol(math, ams, rel, "\u21CB", "\\leftrightharpoons", true);
-defineSymbol(math, ams, rel, "\u21B6", "\\curvearrowleft", true);
-// unicode-math maps \u21ba to \acwopencirclearrow. We'll use the AMS synonym.
-defineSymbol(math, ams, rel, "\u21BA", "\\circlearrowleft", true);
-defineSymbol(math, ams, rel, "\u21B0", "\\Lsh", true);
-defineSymbol(math, ams, rel, "\u21C8", "\\upuparrows", true);
-defineSymbol(math, ams, rel, "\u21BF", "\\upharpoonleft", true);
-defineSymbol(math, ams, rel, "\u21C3", "\\downharpoonleft", true);
-defineSymbol(math, ams, rel, "\u22B8", "\\multimap", true);
-defineSymbol(math, ams, rel, "\u21AD", "\\leftrightsquigarrow", true);
-defineSymbol(math, ams, rel, "\u21C9", "\\rightrightarrows", true);
-defineSymbol(math, ams, rel, "\u21C4", "\\rightleftarrows", true);
-defineSymbol(math, ams, rel, "\u21A0", "\\twoheadrightarrow", true);
-defineSymbol(math, ams, rel, "\u21A3", "\\rightarrowtail", true);
-defineSymbol(math, ams, rel, "\u21AC", "\\looparrowright", true);
-defineSymbol(math, ams, rel, "\u21B7", "\\curvearrowright", true);
-// unicode-math maps \u21bb to \cwopencirclearrow. We'll use the AMS synonym.
-defineSymbol(math, ams, rel, "\u21BB", "\\circlearrowright", true);
-defineSymbol(math, ams, rel, "\u21B1", "\\Rsh", true);
-defineSymbol(math, ams, rel, "\u21CA", "\\downdownarrows", true);
-defineSymbol(math, ams, rel, "\u21BE", "\\upharpoonright", true);
-defineSymbol(math, ams, rel, "\u21C2", "\\downharpoonright", true);
-defineSymbol(math, ams, rel, "\u21DD", "\\rightsquigarrow", true);
-defineSymbol(math, ams, rel, "\u21DD", "\\leadsto");
-defineSymbol(math, ams, rel, "\u21DB", "\\Rrightarrow", true);
-defineSymbol(math, ams, rel, "\u21BE", "\\restriction");
-
-defineSymbol(math, main, textord, "\u2018", "`");
-defineSymbol(math, main, textord, "$", "\\$");
-defineSymbol(text, main, textord, "$", "\\$");
-defineSymbol(text, main, textord, "$", "\\textdollar");
-defineSymbol(math, main, textord, "%", "\\%");
-defineSymbol(text, main, textord, "%", "\\%");
-defineSymbol(math, main, textord, "_", "\\_");
-defineSymbol(text, main, textord, "_", "\\_");
-defineSymbol(text, main, textord, "_", "\\textunderscore");
-defineSymbol(math, main, textord, "\u2220", "\\angle", true);
-defineSymbol(math, main, textord, "\u221E", "\\infty", true);
-defineSymbol(math, main, textord, "\u2032", "\\prime");
-defineSymbol(math, main, textord, "\u25B3", "\\triangle");
-defineSymbol(math, main, textord, "\u0393", "\\Gamma", true);
-defineSymbol(math, main, textord, "\u0394", "\\Delta", true);
-defineSymbol(math, main, textord, "\u0398", "\\Theta", true);
-defineSymbol(math, main, textord, "\u039B", "\\Lambda", true);
-defineSymbol(math, main, textord, "\u039E", "\\Xi", true);
-defineSymbol(math, main, textord, "\u03A0", "\\Pi", true);
-defineSymbol(math, main, textord, "\u03A3", "\\Sigma", true);
-defineSymbol(math, main, textord, "\u03A5", "\\Upsilon", true);
-defineSymbol(math, main, textord, "\u03A6", "\\Phi", true);
-defineSymbol(math, main, textord, "\u03A8", "\\Psi", true);
-defineSymbol(math, main, textord, "\u03A9", "\\Omega", true);
-defineSymbol(math, main, textord, "\xAC", "\\neg");
-defineSymbol(math, main, textord, "\xAC", "\\lnot");
-defineSymbol(math, main, textord, "\u22A4", "\\top");
-defineSymbol(math, main, textord, "\u22A5", "\\bot");
-defineSymbol(math, main, textord, "\u2205", "\\emptyset");
-defineSymbol(math, ams, textord, "\u2205", "\\varnothing");
-defineSymbol(math, main, mathord, "\u03B1", "\\alpha", true);
-defineSymbol(math, main, mathord, "\u03B2", "\\beta", true);
-defineSymbol(math, main, mathord, "\u03B3", "\\gamma", true);
-defineSymbol(math, main, mathord, "\u03B4", "\\delta", true);
-defineSymbol(math, main, mathord, "\u03F5", "\\epsilon", true);
-defineSymbol(math, main, mathord, "\u03B6", "\\zeta", true);
-defineSymbol(math, main, mathord, "\u03B7", "\\eta", true);
-defineSymbol(math, main, mathord, "\u03B8", "\\theta", true);
-defineSymbol(math, main, mathord, "\u03B9", "\\iota", true);
-defineSymbol(math, main, mathord, "\u03BA", "\\kappa", true);
-defineSymbol(math, main, mathord, "\u03BB", "\\lambda", true);
-defineSymbol(math, main, mathord, "\u03BC", "\\mu", true);
-defineSymbol(math, main, mathord, "\u03BD", "\\nu", true);
-defineSymbol(math, main, mathord, "\u03BE", "\\xi", true);
-defineSymbol(math, main, mathord, "\u03BF", "\\omicron", true);
-defineSymbol(math, main, mathord, "\u03C0", "\\pi", true);
-defineSymbol(math, main, mathord, "\u03C1", "\\rho", true);
-defineSymbol(math, main, mathord, "\u03C3", "\\sigma", true);
-defineSymbol(math, main, mathord, "\u03C4", "\\tau", true);
-defineSymbol(math, main, mathord, "\u03C5", "\\upsilon", true);
-defineSymbol(math, main, mathord, "\u03D5", "\\phi", true);
-defineSymbol(math, main, mathord, "\u03C7", "\\chi", true);
-defineSymbol(math, main, mathord, "\u03C8", "\\psi", true);
-defineSymbol(math, main, mathord, "\u03C9", "\\omega", true);
-defineSymbol(math, main, mathord, "\u03B5", "\\varepsilon", true);
-defineSymbol(math, main, mathord, "\u03D1", "\\vartheta", true);
-defineSymbol(math, main, mathord, "\u03D6", "\\varpi", true);
-defineSymbol(math, main, mathord, "\u03F1", "\\varrho", true);
-defineSymbol(math, main, mathord, "\u03C2", "\\varsigma", true);
-defineSymbol(math, main, mathord, "\u03C6", "\\varphi", true);
-defineSymbol(math, main, bin, "\u2217", "*");
-defineSymbol(math, main, bin, "+", "+");
-defineSymbol(math, main, bin, "\u2212", "-");
-defineSymbol(math, main, bin, "\u22C5", "\\cdot", true);
-defineSymbol(math, main, bin, "\u2218", "\\circ");
-defineSymbol(math, main, bin, "\xF7", "\\div", true);
-defineSymbol(math, main, bin, "\xB1", "\\pm", true);
-defineSymbol(math, main, bin, "\xD7", "\\times", true);
-defineSymbol(math, main, bin, "\u2229", "\\cap", true);
-defineSymbol(math, main, bin, "\u222A", "\\cup", true);
-defineSymbol(math, main, bin, "\u2216", "\\setminus");
-defineSymbol(math, main, bin, "\u2227", "\\land");
-defineSymbol(math, main, bin, "\u2228", "\\lor");
-defineSymbol(math, main, bin, "\u2227", "\\wedge", true);
-defineSymbol(math, main, bin, "\u2228", "\\vee", true);
-defineSymbol(math, main, textord, "\u221A", "\\surd");
-defineSymbol(math, main, open, "(", "(");
-defineSymbol(math, main, open, "[", "[");
-defineSymbol(math, main, open, "\u27E8", "\\langle", true);
-defineSymbol(math, main, open, "\u2223", "\\lvert");
-defineSymbol(math, main, open, "\u2225", "\\lVert");
-defineSymbol(math, main, close, ")", ")");
-defineSymbol(math, main, close, "]", "]");
-defineSymbol(math, main, close, "?", "?");
-defineSymbol(math, main, close, "!", "!");
-defineSymbol(math, main, close, "\u27E9", "\\rangle", true);
-defineSymbol(math, main, close, "\u2223", "\\rvert");
-defineSymbol(math, main, close, "\u2225", "\\rVert");
-defineSymbol(math, main, rel, "=", "=");
-defineSymbol(math, main, rel, "<", "<");
-defineSymbol(math, main, rel, ">", ">");
-defineSymbol(math, main, rel, ":", ":");
-defineSymbol(math, main, rel, "\u2248", "\\approx", true);
-defineSymbol(math, main, rel, "\u2245", "\\cong", true);
-defineSymbol(math, main, rel, "\u2265", "\\ge");
-defineSymbol(math, main, rel, "\u2265", "\\geq", true);
-defineSymbol(math, main, rel, "\u2190", "\\gets");
-defineSymbol(math, main, rel, ">", "\\gt");
-defineSymbol(math, main, rel, "\u2208", "\\in", true);
-defineSymbol(math, main, rel, "\u2209", "\\notin", true);
-defineSymbol(math, main, rel, "\u0338", "\\not");
-defineSymbol(math, main, rel, "\u2282", "\\subset", true);
-defineSymbol(math, main, rel, "\u2283", "\\supset", true);
-defineSymbol(math, main, rel, "\u2286", "\\subseteq", true);
-defineSymbol(math, main, rel, "\u2287", "\\supseteq", true);
-defineSymbol(math, ams, rel, "\u2288", "\\nsubseteq", true);
-defineSymbol(math, ams, rel, "\u2289", "\\nsupseteq", true);
-defineSymbol(math, main, rel, "\u22A8", "\\models");
-defineSymbol(math, main, rel, "\u2190", "\\leftarrow", true);
-defineSymbol(math, main, rel, "\u2264", "\\le");
-defineSymbol(math, main, rel, "\u2264", "\\leq", true);
-defineSymbol(math, main, rel, "<", "\\lt");
-defineSymbol(math, main, rel, "\u2260", "\\ne", true);
-defineSymbol(math, main, rel, "\u2260", "\\neq");
-defineSymbol(math, main, rel, "\u2192", "\\rightarrow", true);
-defineSymbol(math, main, rel, "\u2192", "\\to");
-defineSymbol(math, ams, rel, "\u2271", "\\ngeq", true);
-defineSymbol(math, ams, rel, "\u2270", "\\nleq", true);
-defineSymbol(math, main, spacing, null, "\\!");
-defineSymbol(math, main, spacing, "\xA0", "\\ ");
-defineSymbol(math, main, spacing, "\xA0", "~");
-defineSymbol(math, main, spacing, null, "\\,");
-defineSymbol(math, main, spacing, null, "\\:");
-defineSymbol(math, main, spacing, null, "\\;");
-defineSymbol(math, main, spacing, null, "\\enspace");
-defineSymbol(math, main, spacing, null, "\\qquad");
-defineSymbol(math, main, spacing, null, "\\quad");
-defineSymbol(math, main, spacing, "\xA0", "\\space");
-// Ref: LaTeX Source 2e: \DeclareRobustCommand{\nobreakspace}{%
-defineSymbol(math, main, spacing, "\xA0", "\\nobreakspace");
-defineSymbol(text, main, spacing, null, "\\!");
-defineSymbol(text, main, spacing, "\xA0", "\\ ");
-defineSymbol(text, main, spacing, "\xA0", "~");
-defineSymbol(text, main, spacing, null, "\\,");
-defineSymbol(text, main, spacing, null, "\\:");
-defineSymbol(text, main, spacing, null, "\\;");
-defineSymbol(text, main, spacing, null, "\\enspace");
-defineSymbol(text, main, spacing, null, "\\qquad");
-defineSymbol(text, main, spacing, null, "\\quad");
-defineSymbol(text, main, spacing, "\xA0", "\\space");
-defineSymbol(text, main, spacing, "\xA0", "\\nobreakspace");
-defineSymbol(math, main, punct, ",", ",");
-defineSymbol(math, main, punct, ";", ";");
-defineSymbol(math, main, punct, ":", "\\colon");
-defineSymbol(math, ams, bin, "\u22BC", "\\barwedge", true);
-defineSymbol(math, ams, bin, "\u22BB", "\\veebar", true);
-defineSymbol(math, main, bin, "\u2299", "\\odot", true);
-defineSymbol(math, main, bin, "\u2295", "\\oplus", true);
-defineSymbol(math, main, bin, "\u2297", "\\otimes", true);
-defineSymbol(math, main, textord, "\u2202", "\\partial", true);
-defineSymbol(math, main, bin, "\u2298", "\\oslash", true);
-defineSymbol(math, ams, bin, "\u229A", "\\circledcirc", true);
-defineSymbol(math, ams, bin, "\u22A1", "\\boxdot", true);
-defineSymbol(math, main, bin, "\u25B3", "\\bigtriangleup");
-defineSymbol(math, main, bin, "\u25BD", "\\bigtriangledown");
-defineSymbol(math, main, bin, "\u2020", "\\dagger");
-defineSymbol(math, main, bin, "\u22C4", "\\diamond");
-defineSymbol(math, main, bin, "\u22C6", "\\star");
-defineSymbol(math, main, bin, "\u25C3", "\\triangleleft");
-defineSymbol(math, main, bin, "\u25B9", "\\triangleright");
-defineSymbol(math, main, open, "{", "\\{");
-defineSymbol(text, main, textord, "{", "\\{");
-defineSymbol(text, main, textord, "{", "\\textbraceleft");
-defineSymbol(math, main, close, "}", "\\}");
-defineSymbol(text, main, textord, "}", "\\}");
-defineSymbol(text, main, textord, "}", "\\textbraceright");
-defineSymbol(math, main, open, "{", "\\lbrace");
-defineSymbol(math, main, close, "}", "\\rbrace");
-defineSymbol(math, main, open, "[", "\\lbrack");
-defineSymbol(math, main, close, "]", "\\rbrack");
-defineSymbol(text, main, textord, "<", "\\textless"); // in T1 fontenc
-defineSymbol(text, main, textord, ">", "\\textgreater"); // in T1 fontenc
-defineSymbol(math, main, open, "\u230A", "\\lfloor");
-defineSymbol(math, main, close, "\u230B", "\\rfloor");
-defineSymbol(math, main, open, "\u2308", "\\lceil");
-defineSymbol(math, main, close, "\u2309", "\\rceil");
-defineSymbol(math, main, textord, "\\", "\\backslash");
-defineSymbol(math, main, textord, "\u2223", "|");
-defineSymbol(math, main, textord, "\u2223", "\\vert");
-defineSymbol(text, main, textord, "|", "\\textbar"); // in T1 fontenc
-defineSymbol(math, main, textord, "\u2225", "\\|");
-defineSymbol(math, main, textord, "\u2225", "\\Vert");
-defineSymbol(text, main, textord, "\u2225", "\\textbardbl");
-defineSymbol(math, main, rel, "\u2191", "\\uparrow", true);
-defineSymbol(math, main, rel, "\u21D1", "\\Uparrow", true);
-defineSymbol(math, main, rel, "\u2193", "\\downarrow", true);
-defineSymbol(math, main, rel, "\u21D3", "\\Downarrow", true);
-defineSymbol(math, main, rel, "\u2195", "\\updownarrow", true);
-defineSymbol(math, main, rel, "\u21D5", "\\Updownarrow", true);
-defineSymbol(math, main, op, "\u2210", "\\coprod");
-defineSymbol(math, main, op, "\u22C1", "\\bigvee");
-defineSymbol(math, main, op, "\u22C0", "\\bigwedge");
-defineSymbol(math, main, op, "\u2A04", "\\biguplus");
-defineSymbol(math, main, op, "\u22C2", "\\bigcap");
-defineSymbol(math, main, op, "\u22C3", "\\bigcup");
-defineSymbol(math, main, op, "\u222B", "\\int");
-defineSymbol(math, main, op, "\u222B", "\\intop");
-defineSymbol(math, main, op, "\u222C", "\\iint");
-defineSymbol(math, main, op, "\u222D", "\\iiint");
-defineSymbol(math, main, op, "\u220F", "\\prod");
-defineSymbol(math, main, op, "\u2211", "\\sum");
-defineSymbol(math, main, op, "\u2A02", "\\bigotimes");
-defineSymbol(math, main, op, "\u2A01", "\\bigoplus");
-defineSymbol(math, main, op, "\u2A00", "\\bigodot");
-defineSymbol(math, main, op, "\u222E", "\\oint");
-defineSymbol(math, main, op, "\u2A06", "\\bigsqcup");
-defineSymbol(math, main, op, "\u222B", "\\smallint");
-defineSymbol(text, main, inner, "\u2026", "\\textellipsis");
-defineSymbol(math, main, inner, "\u2026", "\\mathellipsis");
-defineSymbol(text, main, inner, "\u2026", "\\ldots", true);
-defineSymbol(math, main, inner, "\u2026", "\\ldots", true);
-defineSymbol(math, main, inner, "\u22EF", "\\@cdots", true);
-defineSymbol(math, main, inner, "\u22F1", "\\ddots", true);
-defineSymbol(math, main, textord, "\u22EE", "\\vdots", true);
-defineSymbol(math, main, accent, "\u02CA", "\\acute");
-defineSymbol(math, main, accent, "\u02CB", "\\grave");
-defineSymbol(math, main, accent, "\xA8", "\\ddot");
-defineSymbol(math, main, accent, "~", "\\tilde");
-defineSymbol(math, main, accent, "\u02C9", "\\bar");
-defineSymbol(math, main, accent, "\u02D8", "\\breve");
-defineSymbol(math, main, accent, "\u02C7", "\\check");
-defineSymbol(math, main, accent, "^", "\\hat");
-defineSymbol(math, main, accent, "\u20D7", "\\vec");
-defineSymbol(math, main, accent, "\u02D9", "\\dot");
-defineSymbol(math, main, accent, "\u02DA", "\\mathring");
-defineSymbol(math, main, mathord, "\u0131", "\\imath", true);
-defineSymbol(math, main, mathord, "\u0237", "\\jmath", true);
-defineSymbol(text, main, textord, "\u0131", "\\i", true);
-defineSymbol(text, main, textord, "\u0237", "\\j", true);
-defineSymbol(text, main, textord, "\xDF", "\\ss", true);
-defineSymbol(text, main, textord, "\xE6", "\\ae", true);
-defineSymbol(text, main, textord, "\xE6", "\\ae", true);
-defineSymbol(text, main, textord, "\u0153", "\\oe", true);
-defineSymbol(text, main, textord, "\xF8", "\\o", true);
-defineSymbol(text, main, textord, "\xC6", "\\AE", true);
-defineSymbol(text, main, textord, "\u0152", "\\OE", true);
-defineSymbol(text, main, textord, "\xD8", "\\O", true);
-defineSymbol(text, main, accent, "\u02CA", "\\'"); // acute
-defineSymbol(text, main, accent, "\u02CB", "\\`"); // grave
-defineSymbol(text, main, accent, "\u02C6", "\\^"); // circumflex
-defineSymbol(text, main, accent, "\u02DC", "\\~"); // tilde
-defineSymbol(text, main, accent, "\u02C9", "\\="); // macron
-defineSymbol(text, main, accent, "\u02D8", "\\u"); // breve
-defineSymbol(text, main, accent, "\u02D9", "\\."); // dot above
-defineSymbol(text, main, accent, "\u02DA", "\\r"); // ring above
-defineSymbol(text, main, accent, "\u02C7", "\\v"); // caron
-defineSymbol(text, main, accent, "\xA8", '\\"'); // diaresis
-defineSymbol(text, main, accent, "\u02DD", "\\H"); // double acute
-
-defineSymbol(text, main, textord, "\u2013", "--");
-defineSymbol(text, main, textord, "\u2013", "\\textendash");
-defineSymbol(text, main, textord, "\u2014", "---");
-defineSymbol(text, main, textord, "\u2014", "\\textemdash");
-defineSymbol(text, main, textord, "\u2018", "`");
-defineSymbol(text, main, textord, "\u2018", "\\textquoteleft");
-defineSymbol(text, main, textord, "\u2019", "'");
-defineSymbol(text, main, textord, "\u2019", "\\textquoteright");
-defineSymbol(text, main, textord, "\u201C", "``");
-defineSymbol(text, main, textord, "\u201C", "\\textquotedblleft");
-defineSymbol(text, main, textord, "\u201D", "''");
-defineSymbol(text, main, textord, "\u201D", "\\textquotedblright");
-defineSymbol(math, main, textord, "\xB0", "\\degree");
-defineSymbol(text, main, textord, "\xB0", "\\degree");
-// TODO: In LaTeX, \pounds can generate a different character in text and math
-// mode, but among our fonts, only Main-Italic defines this character "163".
-defineSymbol(math, main, mathord, "\xA3", "\\pounds");
-defineSymbol(math, main, mathord, "\xA3", "\\mathsterling", true);
-defineSymbol(text, main, mathord, "\xA3", "\\pounds");
-defineSymbol(text, main, mathord, "\xA3", "\\textsterling", true);
-defineSymbol(math, ams, textord, "\u2720", "\\maltese");
-defineSymbol(text, ams, textord, "\u2720", "\\maltese");
-
-defineSymbol(text, main, spacing, "\xA0", "\\ ");
-defineSymbol(text, main, spacing, "\xA0", " ");
-defineSymbol(text, main, spacing, "\xA0", "~");
-
-// There are lots of symbols which are the same, so we add them in afterwards.
-
-// All of these are textords in math mode
-var mathTextSymbols = "0123456789/@.\"";
-for (var i = 0; i < mathTextSymbols.length; i++) {
-    var ch = mathTextSymbols.charAt(i);
-    defineSymbol(math, main, textord, ch, ch);
-}
-
-// All of these are textords in text mode
-var textSymbols = "0123456789!@*()-=+[]<>|\";:?/.,";
-for (var _i = 0; _i < textSymbols.length; _i++) {
-    var _ch = textSymbols.charAt(_i);
-    defineSymbol(text, main, textord, _ch, _ch);
-}
-
-// All of these are textords in text mode, and mathords in math mode
-var letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-for (var _i2 = 0; _i2 < letters.length; _i2++) {
-    var _ch2 = letters.charAt(_i2);
-    defineSymbol(math, main, mathord, _ch2, _ch2);
-    defineSymbol(text, main, textord, _ch2, _ch2);
-}
-
-// We add these Latin-1 letters as symbols for backwards-compatibility,
-// but they are not actually in the font, nor are they supported by the
-// Unicode accent mechanism, so they fall back to Times font and look ugly.
-// TODO(edemaine): Fix this.
-var extraLatin = "ÇÐÞçþ";
-for (var _i3 = 0; _i3 < extraLatin.length; _i3++) {
-    var _ch3 = extraLatin.charAt(_i3);
-    defineSymbol(math, main, mathord, _ch3, _ch3);
-    defineSymbol(text, main, textord, _ch3, _ch3);
-}
-defineSymbol(text, main, textord, "ð", "ð");
-
-// Unicode versions of existing characters
-defineSymbol(text, main, textord, "\u2013", "–");
-defineSymbol(text, main, textord, "\u2014", "—");
-defineSymbol(text, main, textord, "\u2018", "‘");
-defineSymbol(text, main, textord, "\u2019", "’");
-defineSymbol(text, main, textord, "\u201C", "“");
-defineSymbol(text, main, textord, "\u201D", "”");
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.13 ToObject(argument)
-var defined = __webpack_require__(38);
-module.exports = function(it){
-  return Object(defined(it));
-};
-
-/***/ }),
-/* 30 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__unicodeScripts__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__submodules_katex_fonts_fontMetricsData__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__unicodeScripts__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__submodules_katex_fonts_fontMetricsData__ = __webpack_require__(75);
 
 
 /**
@@ -5046,15 +5288,15 @@ var getFontMetrics = function getFontMetrics(size) {
 });
 
 /***/ }),
-/* 31 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_freeze__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_freeze__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_freeze___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_freeze__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
 
 
@@ -5107,42 +5349,86 @@ var SourceLocation = function () {
 /* harmony default export */ __webpack_exports__["a"] = (SourceLocation);
 
 /***/ }),
-/* 32 */
-/***/ (function(module, exports) {
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
 
-var id = 0
-  , px = Math.random();
-module.exports = function(key){
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = __webpack_require__(22);
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function(it, S){
+  if(!isObject(it))return it;
+  var fn, val;
+  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
+  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+  throw TypeError("Can't convert object to primitive value");
 };
 
 /***/ }),
-/* 33 */
-/***/ (function(module, exports) {
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = function(bitmap, value){
-  return {
-    enumerable  : !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable    : !(bitmap & 4),
-    value       : value
+// most Object methods by ES6 should accept primitives
+var $export = __webpack_require__(16)
+  , core    = __webpack_require__(7)
+  , fails   = __webpack_require__(23);
+module.exports = function(KEY, exec){
+  var fn  = (core.Object || {})[KEY] || Object[KEY]
+    , exp = {};
+  exp[KEY] = exec(fn);
+  $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
+};
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// optional / simple context binding
+var aFunction = __webpack_require__(85);
+module.exports = function(fn, that, length){
+  aFunction(fn);
+  if(that === undefined)return fn;
+  switch(length){
+    case 1: return function(a){
+      return fn.call(that, a);
+    };
+    case 2: return function(a, b){
+      return fn.call(that, a, b);
+    };
+    case 3: return function(a, b, c){
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function(/* ...args */){
+    return fn.apply(that, arguments);
   };
 };
 
 /***/ }),
-/* 34 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseError_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ParseNode__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Token__ = __webpack_require__(25);
 
 
+
+/* eslint no-console:0 */
 /**
  * This is a module for storing settings passed into KaTeX. It correctly handles
  * default settings.
  */
+
+
+
 
 
 
@@ -5156,23 +5442,95 @@ module.exports = function(bitmap, value){
  *                 math (true), meaning that the math starts in \displaystyle
  *                 and is placed in a block with vertical margin.
  */
-var Settings = function Settings(options) {
-    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, Settings);
+var Settings = function () {
+    function Settings(options) {
+        __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, Settings);
 
-    // allow null options
-    options = options || {};
-    this.displayMode = __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* default */].deflt(options.displayMode, false);
-    this.throwOnError = __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* default */].deflt(options.throwOnError, true);
-    this.errorColor = __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* default */].deflt(options.errorColor, "#cc0000");
-    this.macros = options.macros || {};
-    this.colorIsTextColor = __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* default */].deflt(options.colorIsTextColor, false);
-    this.maxSize = Math.max(0, __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* default */].deflt(options.maxSize, Infinity));
-};
+        // allow null options
+        options = options || {};
+        this.displayMode = __WEBPACK_IMPORTED_MODULE_2__utils__["a" /* default */].deflt(options.displayMode, false);
+        this.throwOnError = __WEBPACK_IMPORTED_MODULE_2__utils__["a" /* default */].deflt(options.throwOnError, true);
+        this.errorColor = __WEBPACK_IMPORTED_MODULE_2__utils__["a" /* default */].deflt(options.errorColor, "#cc0000");
+        this.macros = options.macros || {};
+        this.colorIsTextColor = __WEBPACK_IMPORTED_MODULE_2__utils__["a" /* default */].deflt(options.colorIsTextColor, false);
+        this.strict = __WEBPACK_IMPORTED_MODULE_2__utils__["a" /* default */].deflt(options.strict, "warn");
+        this.maxSize = Math.max(0, __WEBPACK_IMPORTED_MODULE_2__utils__["a" /* default */].deflt(options.maxSize, Infinity));
+        this.maxExpand = Math.max(0, __WEBPACK_IMPORTED_MODULE_2__utils__["a" /* default */].deflt(options.maxExpand, Infinity));
+    }
+
+    /**
+     * Report nonstrict (non-LaTeX-compatible) input.
+     * Can safely not be called if `this.strict` is false in JavaScript.
+     */
+
+
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(Settings, [{
+        key: "reportNonstrict",
+        value: function reportNonstrict(errorCode, errorMsg, token) {
+            var strict = this.strict;
+            if (typeof strict === "function") {
+                // Allow return value of strict function to be boolean or string
+                // (or null/undefined, meaning no further processing).
+                strict = strict(errorCode, errorMsg, token);
+            }
+            if (!strict || strict === "ignore") {
+                return;
+            } else if (strict === true || strict === "error") {
+                throw new __WEBPACK_IMPORTED_MODULE_3__ParseError_js__["a" /* default */]("LaTeX-incompatible input and strict mode is set to 'error': " + (errorMsg + " [" + errorCode + "]"), token);
+            } else if (strict === "warn") {
+                typeof console !== "undefined" && console.warn("LaTeX-incompatible input and strict mode is set to 'warn': " + (errorMsg + " [" + errorCode + "]"));
+            } else {
+                // won't happen in type-safe code
+                typeof console !== "undefined" && console.warn("LaTeX-incompatible input and strict mode is set to " + ("unrecognized '" + strict + "': " + errorMsg + " [" + errorCode + "]"));
+            }
+        }
+
+        /**
+         * Check whether to apply strict (LaTeX-adhering) behavior for unusual
+         * input (like `\\`).  Unlike `nonstrict`, will not throw an error;
+         * instead, "error" translates to a return value of `true`, while "ignore"
+         * translates to a return value of `false`.  May still print a warning:
+         * "warn" prints a warning and returns `false`.
+         * This is for the second category of `errorCode`s listed in the README.
+         */
+
+    }, {
+        key: "useStrictBehavior",
+        value: function useStrictBehavior(errorCode, errorMsg, token) {
+            var strict = this.strict;
+            if (typeof strict === "function") {
+                // Allow return value of strict function to be boolean or string
+                // (or null/undefined, meaning no further processing).
+                // But catch any exceptions thrown by function, treating them
+                // like "error".
+                try {
+                    strict = strict(errorCode, errorMsg, token);
+                } catch (error) {
+                    strict = "error";
+                }
+            }
+            if (!strict || strict === "ignore") {
+                return false;
+            } else if (strict === true || strict === "error") {
+                return true;
+            } else if (strict === "warn") {
+                typeof console !== "undefined" && console.warn("LaTeX-incompatible input and strict mode is set to 'warn': " + (errorMsg + " [" + errorCode + "]"));
+                return false;
+            } else {
+                // won't happen in type-safe code
+                typeof console !== "undefined" && console.warn("LaTeX-incompatible input and strict mode is set to " + ("unrecognized '" + strict + "': " + errorMsg + " [" + errorCode + "]"));
+                return false;
+            }
+        }
+    }]);
+
+    return Settings;
+}();
 
 /* harmony default export */ __webpack_exports__["a"] = (Settings);
 
 /***/ }),
-/* 35 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5180,7 +5538,7 @@ var Settings = function Settings(options) {
 
 exports.__esModule = true;
 
-var _from = __webpack_require__(79);
+var _from = __webpack_require__(92);
 
 var _from2 = _interopRequireDefault(_from);
 
@@ -5199,30 +5557,7 @@ exports.default = function (arr) {
 };
 
 /***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $at  = __webpack_require__(81)(true);
-
-// 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(48)(String, 'String', function(iterated){
-  this._t = String(iterated); // target
-  this._i = 0;                // next index
-// 21.1.5.2.1 %StringIteratorPrototype%.next()
-}, function(){
-  var O     = this._t
-    , index = this._i
-    , point;
-  if(index >= O.length)return {value: undefined, done: true};
-  point = $at(O, index);
-  this._i += point.length;
-  return {value: point, done: false};
-});
-
-/***/ }),
-/* 37 */
+/* 43 */
 /***/ (function(module, exports) {
 
 // 7.1.4 ToInteger
@@ -5233,7 +5568,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 38 */
+/* 44 */
 /***/ (function(module, exports) {
 
 // 7.2.1 RequireObjectCoercible(argument)
@@ -5243,48 +5578,164 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 45 */
+/***/ (function(module, exports) {
 
-// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys       = __webpack_require__(87)
-  , enumBugKeys = __webpack_require__(53);
-
-module.exports = Object.keys || function keys(O){
-  return $keys(O, enumBugKeys);
-};
+module.exports = true;
 
 /***/ }),
-/* 40 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(49)
-  , defined = __webpack_require__(38);
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+var anObject    = __webpack_require__(18)
+  , dPs         = __webpack_require__(96)
+  , enumBugKeys = __webpack_require__(50)
+  , IE_PROTO    = __webpack_require__(48)('IE_PROTO')
+  , Empty       = function(){ /* empty */ }
+  , PROTOTYPE   = 'prototype';
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var createDict = function(){
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = __webpack_require__(61)('iframe')
+    , i      = enumBugKeys.length
+    , lt     = '<'
+    , gt     = '>'
+    , iframeDocument;
+  iframe.style.display = 'none';
+  __webpack_require__(99).appendChild(iframe);
+  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+  // createDict = iframe.contentWindow.Object;
+  // html.removeChild(iframe);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while(i--)delete createDict[PROTOTYPE][enumBugKeys[i]];
+  return createDict();
+};
+
+module.exports = Object.create || function create(O, Properties){
+  var result;
+  if(O !== null){
+    Empty[PROTOTYPE] = anObject(O);
+    result = new Empty;
+    Empty[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
 module.exports = function(it){
-  return IObject(defined(it));
+  return toString.call(it).slice(8, -1);
 };
 
 /***/ }),
-/* 41 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shared = __webpack_require__(52)('keys')
-  , uid    = __webpack_require__(32);
+var shared = __webpack_require__(49)('keys')
+  , uid    = __webpack_require__(33);
 module.exports = function(key){
   return shared[key] || (shared[key] = uid(key));
 };
 
 /***/ }),
-/* 42 */
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(15)
+  , SHARED = '__core-js_shared__'
+  , store  = global[SHARED] || (global[SHARED] = {});
+module.exports = function(key){
+  return store[key] || (store[key] = {});
+};
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports) {
+
+// IE 8- don't enum bug keys
+module.exports = (
+  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+).split(',');
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var def = __webpack_require__(14).f
+  , has = __webpack_require__(17)
+  , TAG = __webpack_require__(10)('toStringTag');
+
+module.exports = function(it, tag, stat){
+  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
+};
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(106);
+var global        = __webpack_require__(15)
+  , hide          = __webpack_require__(24)
+  , Iterators     = __webpack_require__(26)
+  , TO_STRING_TAG = __webpack_require__(10)('toStringTag');
+
+for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
+  var NAME       = collections[i]
+    , Collection = global[NAME]
+    , proto      = Collection && Collection.prototype;
+  if(proto && !proto[TO_STRING_TAG])hide(proto, TO_STRING_TAG, NAME);
+  Iterators[NAME] = Iterators.Array;
+}
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports.f = __webpack_require__(10);
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global         = __webpack_require__(15)
+  , core           = __webpack_require__(7)
+  , LIBRARY        = __webpack_require__(45)
+  , wksExt         = __webpack_require__(53)
+  , defineProperty = __webpack_require__(14).f;
+module.exports = function(name){
+  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
+  if(name.charAt(0) != '_' && !(name in $Symbol))defineProperty($Symbol, name, {value: wksExt.f(name)});
+};
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports) {
+
+exports.f = Object.getOwnPropertySymbols;
+
+/***/ }),
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = scriptFromCodepoint;
 /* harmony export (immutable) */ __webpack_exports__["b"] = supportedCodepoint;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_get_iterator__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_get_iterator__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_get_iterator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_get_iterator__);
 
 
@@ -5440,15 +5891,15 @@ function supportedCodepoint(codepoint) {
 }
 
 /***/ }),
-/* 43 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fontMetrics__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fontMetrics__ = __webpack_require__(36);
 
 
 
@@ -5494,6 +5945,9 @@ var sizeAtStyle = function sizeAtStyle(size, style) {
  * different properties, call a `.having*` method.
  */
 var Options = function () {
+    // A font family applies to a group of fonts (i.e. SansSerif), while a font
+    // represents a specific font (i.e. SansSerif Bold).
+    // See: https://tex.stackexchange.com/questions/22350/difference-between-textrm-and-mathrm
     function Options(data) {
         __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, Options);
 
@@ -5502,7 +5956,8 @@ var Options = function () {
         this.size = data.size || Options.BASESIZE;
         this.textSize = data.textSize || this.size;
         this.phantom = !!data.phantom;
-        this.fontFamily = data.fontFamily;
+        this.font = data.font || "";
+        this.fontFamily = data.fontFamily || "";
         this.fontWeight = data.fontWeight || '';
         this.fontShape = data.fontShape || '';
         this.sizeMultiplier = sizeMultipliers[this.size - 1];
@@ -5530,6 +5985,7 @@ var Options = function () {
                 textSize: this.textSize,
                 color: this.color,
                 phantom: this.phantom,
+                font: this.font,
                 fontFamily: this.fontFamily,
                 fontWeight: this.fontWeight,
                 fontShape: this.fontShape,
@@ -5639,14 +6095,28 @@ var Options = function () {
         }
 
         /**
-         * Create a new options objects with the give font.
+         * Creates a new options object with the given math font or old text font.
+         * @type {[type]}
          */
 
     }, {
-        key: "withFontFamily",
-        value: function withFontFamily(fontFamily) {
+        key: "withFont",
+        value: function withFont(font) {
             return this.extend({
-                fontFamily: fontFamily || this.fontFamily
+                font: font
+            });
+        }
+
+        /**
+         * Create a new options objects with the given fontFamily.
+         */
+
+    }, {
+        key: "withTextFontFamily",
+        value: function withTextFontFamily(fontFamily) {
+            return this.extend({
+                fontFamily: fontFamily,
+                font: ""
             });
         }
 
@@ -5655,10 +6125,11 @@ var Options = function () {
          */
 
     }, {
-        key: "withFontWeight",
-        value: function withFontWeight(fontWeight) {
+        key: "withTextFontWeight",
+        value: function withTextFontWeight(fontWeight) {
             return this.extend({
-                fontWeight: fontWeight
+                fontWeight: fontWeight,
+                font: ""
             });
         }
 
@@ -5667,10 +6138,11 @@ var Options = function () {
          */
 
     }, {
-        key: "withFontShape",
-        value: function withFontShape(fontShape) {
+        key: "withTextFontShape",
+        value: function withTextFontShape(fontShape) {
             return this.extend({
-                fontShape: fontShape
+                fontShape: fontShape,
+                font: ""
             });
         }
 
@@ -5808,17 +6280,18 @@ Options.colorMap = {
 /* harmony default export */ __webpack_exports__["a"] = (Options);
 
 /***/ }),
-/* 44 */
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParseError__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Style__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__domTree__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Style__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__domTree__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__fontMetrics__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__fontMetrics__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__symbols__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(8);
+
 /**
  * This file deals with creating delimiters of various sizes. The TeXbook
  * discusses these routines on page 441-442, in the "Another subroutine sets box
@@ -5855,11 +6328,12 @@ Options.colorMap = {
  * after following replacement from symbols.js)
  */
 var getMetrics = function getMetrics(symbol, font, mode) {
-    if (__WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */].math[symbol] && __WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */].math[symbol].replace) {
-        return __WEBPACK_IMPORTED_MODULE_4__fontMetrics__["a" /* default */].getCharacterMetrics(__WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */].math[symbol].replace, font, mode);
-    } else {
-        return __WEBPACK_IMPORTED_MODULE_4__fontMetrics__["a" /* default */].getCharacterMetrics(symbol, font, mode);
+    var replace = __WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */].math[symbol] && __WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */].math[symbol].replace;
+    var metrics = __WEBPACK_IMPORTED_MODULE_4__fontMetrics__["a" /* default */].getCharacterMetrics(replace || symbol, font, mode);
+    if (!metrics) {
+        throw new Error("Unsupported symbol " + symbol + " and font size " + font + ".");
     }
+    return metrics;
 };
 
 /**
@@ -5869,11 +6343,11 @@ var getMetrics = function getMetrics(symbol, font, mode) {
 var styleWrap = function styleWrap(delim, toStyle, options, classes) {
     var newOptions = options.havingBaseStyle(toStyle);
 
-    var span = __WEBPACK_IMPORTED_MODULE_3__buildCommon__["a" /* default */].makeSpan((classes || []).concat(newOptions.sizingClasses(options)), [delim], options);
+    var span = __WEBPACK_IMPORTED_MODULE_3__buildCommon__["a" /* default */].makeSpan(classes.concat(newOptions.sizingClasses(options)), [delim], options);
 
-    span.delimSizeMultiplier = newOptions.sizeMultiplier / options.sizeMultiplier;
-    span.height *= span.delimSizeMultiplier;
-    span.depth *= span.delimSizeMultiplier;
+    var delimSizeMultiplier = newOptions.sizeMultiplier / options.sizeMultiplier;
+    span.height *= delimSizeMultiplier;
+    span.depth *= delimSizeMultiplier;
     span.maxFontSize = newOptions.sizeMultiplier;
 
     return span;
@@ -5932,9 +6406,9 @@ var makeInner = function makeInner(symbol, font, mode) {
     // Apply the correct CSS class to choose the right font.
     if (font === "Size1-Regular") {
         sizeClass = "delim-size1";
-    } else if (font === "Size4-Regular") {
-        sizeClass = "delim-size4";
-    }
+    } else /* if (font === "Size4-Regular") */{
+            sizeClass = "delim-size4";
+        }
 
     var inner = __WEBPACK_IMPORTED_MODULE_3__buildCommon__["a" /* default */].makeSpan(["delimsizinginner", sizeClass], [__WEBPACK_IMPORTED_MODULE_3__buildCommon__["a" /* default */].makeSpan([], [__WEBPACK_IMPORTED_MODULE_3__buildCommon__["a" /* default */].makeSymbol(symbol, font, mode)])]);
 
@@ -5988,19 +6462,19 @@ var makeStackedDelim = function makeStackedDelim(delim, heightTotal, center, opt
         repeat = "\u23A5";
         bottom = "\u23A6";
         font = "Size4-Regular";
-    } else if (delim === "\\lfloor") {
+    } else if (delim === "\\lfloor" || delim === "\u230A") {
         repeat = top = "\u23A2";
         bottom = "\u23A3";
         font = "Size4-Regular";
-    } else if (delim === "\\lceil") {
+    } else if (delim === "\\lceil" || delim === "\u2308") {
         top = "\u23A1";
         repeat = bottom = "\u23A2";
         font = "Size4-Regular";
-    } else if (delim === "\\rfloor") {
+    } else if (delim === "\\rfloor" || delim === "\u230B") {
         repeat = top = "\u23A5";
         bottom = "\u23A6";
         font = "Size4-Regular";
-    } else if (delim === "\\rceil") {
+    } else if (delim === "\\rceil" || delim === "\u2309") {
         top = "\u23A4";
         repeat = bottom = "\u23A5";
         font = "Size4-Regular";
@@ -6026,22 +6500,22 @@ var makeStackedDelim = function makeStackedDelim(delim, heightTotal, center, opt
         bottom = "\u23AD";
         repeat = "\u23AA";
         font = "Size4-Regular";
-    } else if (delim === "\\lgroup") {
+    } else if (delim === "\\lgroup" || delim === "\u27EE") {
         top = "\u23A7";
         bottom = "\u23A9";
         repeat = "\u23AA";
         font = "Size4-Regular";
-    } else if (delim === "\\rgroup") {
+    } else if (delim === "\\rgroup" || delim === "\u27EF") {
         top = "\u23AB";
         bottom = "\u23AD";
         repeat = "\u23AA";
         font = "Size4-Regular";
-    } else if (delim === "\\lmoustache") {
+    } else if (delim === "\\lmoustache" || delim === "\u23B0") {
         top = "\u23A7";
         bottom = "\u23AD";
         repeat = "\u23AA";
         font = "Size4-Regular";
-    } else if (delim === "\\rmoustache") {
+    } else if (delim === "\\rmoustache" || delim === "\u23B1") {
         top = "\u23AB";
         bottom = "\u23A9";
         repeat = "\u23AA";
@@ -6148,7 +6622,7 @@ var sqrtSvg = function sqrtSvg(sqrtName, height, viewBoxHeight, options) {
         "preserveAspectRatio": "xMinYMin slice"
     });
 
-    return __WEBPACK_IMPORTED_MODULE_3__buildCommon__["a" /* default */].makeSpan(["hide-tail"], [svg], options);
+    return __WEBPACK_IMPORTED_MODULE_3__buildCommon__["a" /* default */].makeSvgSpan(["hide-tail"], [svg], options);
 };
 
 /**
@@ -6163,6 +6637,7 @@ var makeSqrtImage = function makeSqrtImage(height, options) {
     var spanHeight = 0;
     var texHeight = 0;
     var viewBoxHeight = 0;
+    var advanceWidth = void 0;
 
     // We create viewBoxes with 80 units of "padding" above each surd.
     // Then browser rounding error on the parent span height will not
@@ -6179,7 +6654,7 @@ var makeSqrtImage = function makeSqrtImage(height, options) {
         texHeight = 1.00 * sizeMultiplier;
         span = sqrtSvg("sqrtMain", spanHeight, viewBoxHeight, options);
         span.style.minWidth = "0.853em";
-        span.advanceWidth = 0.833 * sizeMultiplier; // from the font.
+        advanceWidth = 0.833 * sizeMultiplier; // from the font.
     } else if (delim.type === "large") {
         // These SVGs come from fonts: KaTeX_Size1, _Size2, etc.
         viewBoxHeight = (1000 + vbPad) * sizeToMaxHeight[delim.size];
@@ -6187,7 +6662,7 @@ var makeSqrtImage = function makeSqrtImage(height, options) {
         spanHeight = (sizeToMaxHeight[delim.size] + emPad) / sizeMultiplier;
         span = sqrtSvg("sqrtSize" + delim.size, spanHeight, viewBoxHeight, options);
         span.style.minWidth = "1.02em";
-        span.advanceWidth = 1.0 / sizeMultiplier; // from the font
+        advanceWidth = 1.0 / sizeMultiplier; // from the font.
     } else {
         // Tall sqrt. In TeX, this would be stacked using multiple glyphs.
         // We'll use a single SVG to accomplish the same thing.
@@ -6196,7 +6671,7 @@ var makeSqrtImage = function makeSqrtImage(height, options) {
         viewBoxHeight = Math.floor(1000 * height) + vbPad;
         span = sqrtSvg("sqrtTall", spanHeight, viewBoxHeight, options);
         span.style.minWidth = "0.742em";
-        span.advanceWidth = 1.056 / sizeMultiplier;
+        advanceWidth = 1.056 / sizeMultiplier;
     }
 
     span.height = texHeight;
@@ -6204,6 +6679,7 @@ var makeSqrtImage = function makeSqrtImage(height, options) {
 
     return {
         span: span,
+        advanceWidth: advanceWidth,
         // Calculate the actual line width.
         // This actually should depend on the chosen font -- e.g. \boldmath
         // should use the thicker surd symbols from e.g. KaTeX_Main-Bold, and
@@ -6214,10 +6690,10 @@ var makeSqrtImage = function makeSqrtImage(height, options) {
 
 // There are three kinds of delimiters, delimiters that stack when they become
 // too large
-var stackLargeDelimiters = ["(", ")", "[", "\\lbrack", "]", "\\rbrack", "\\{", "\\lbrace", "\\}", "\\rbrace", "\\lfloor", "\\rfloor", "\\lceil", "\\rceil", "\\surd"];
+var stackLargeDelimiters = ["(", ")", "[", "\\lbrack", "]", "\\rbrack", "\\{", "\\lbrace", "\\}", "\\rbrace", "\\lfloor", "\\rfloor", "\u230A", "\u230B", "\\lceil", "\\rceil", "\u2308", "\u2309", "\\surd"];
 
 // delimiters that always stack
-var stackAlwaysDelimiters = ["\\uparrow", "\\downarrow", "\\updownarrow", "\\Uparrow", "\\Downarrow", "\\Updownarrow", "|", "\\|", "\\vert", "\\Vert", "\\lvert", "\\rvert", "\\lVert", "\\rVert", "\\lgroup", "\\rgroup", "\\lmoustache", "\\rmoustache"];
+var stackAlwaysDelimiters = ["\\uparrow", "\\downarrow", "\\updownarrow", "\\Uparrow", "\\Downarrow", "\\Updownarrow", "|", "\\|", "\\vert", "\\Vert", "\\lvert", "\\rvert", "\\lVert", "\\rVert", "\\lgroup", "\\rgroup", "\u27EE", "\u27EF", "\\lmoustache", "\\rmoustache", "\u23B0", "\u23B1"];
 
 // and delimiters that never stack
 var stackNeverDelimiters = ["<", ">", "\\langle", "\\rangle", "/", "\\backslash", "\\lt", "\\gt"];
@@ -6272,6 +6748,7 @@ var stackLargeDelimiterSequence = [{ type: "small", style: __WEBPACK_IMPORTED_MO
 
 /**
  * Get the font used in a delimiter based on what kind of delimiter it is.
+ * TODO(#963) Use more specific font family return type once that is introduced.
  */
 var delimTypeToFont = function delimTypeToFont(type) {
     if (type.type === "small") {
@@ -6280,6 +6757,8 @@ var delimTypeToFont = function delimTypeToFont(type) {
         return "Size" + type.size + "-Regular";
     } else if (type.type === "stack") {
         return "Size4-Regular";
+    } else {
+        throw new Error("Add support for delim type '" + type.type + "' here.");
     }
 };
 
@@ -6395,11 +6874,77 @@ var makeLeftRightDelim = function makeLeftRightDelim(delim, height, depth, optio
 });
 
 /***/ }),
-/* 45 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(20)
-  , document = __webpack_require__(16).document
+var META     = __webpack_require__(33)('meta')
+  , isObject = __webpack_require__(22)
+  , has      = __webpack_require__(17)
+  , setDesc  = __webpack_require__(14).f
+  , id       = 0;
+var isExtensible = Object.isExtensible || function(){
+  return true;
+};
+var FREEZE = !__webpack_require__(23)(function(){
+  return isExtensible(Object.preventExtensions({}));
+});
+var setMeta = function(it){
+  setDesc(it, META, {value: {
+    i: 'O' + ++id, // object ID
+    w: {}          // weak collections IDs
+  }});
+};
+var fastKey = function(it, create){
+  // return primitive with prefix
+  if(!isObject(it))return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+  if(!has(it, META)){
+    // can't set metadata to uncaught frozen object
+    if(!isExtensible(it))return 'F';
+    // not necessary to add metadata
+    if(!create)return 'E';
+    // add missing metadata
+    setMeta(it);
+  // return object ID
+  } return it[META].i;
+};
+var getWeak = function(it, create){
+  if(!has(it, META)){
+    // can't set metadata to uncaught frozen object
+    if(!isExtensible(it))return true;
+    // not necessary to add metadata
+    if(!create)return false;
+    // add missing metadata
+    setMeta(it);
+  // return hash weak collections IDs
+  } return it[META].w;
+};
+// add metadata on freeze-family methods calling
+var onFreeze = function(it){
+  if(FREEZE && meta.NEED && isExtensible(it) && !has(it, META))setMeta(it);
+  return it;
+};
+var meta = module.exports = {
+  KEY:      META,
+  NEED:     false,
+  fastKey:  fastKey,
+  getWeak:  getWeak,
+  onFreeze: onFreeze
+};
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = !__webpack_require__(19) && !__webpack_require__(23)(function(){
+  return Object.defineProperty(__webpack_require__(61)('div'), 'a', {get: function(){ return 7; }}).a != 7;
+});
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(22)
+  , document = __webpack_require__(15).document
   // in old IE typeof document.createElement is 'object'
   , is = isObject(document) && isObject(document.createElement);
 module.exports = function(it){
@@ -6407,61 +6952,21 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// most Object methods by ES6 should accept primitives
-var $export = __webpack_require__(25)
-  , core    = __webpack_require__(8)
-  , fails   = __webpack_require__(24);
-module.exports = function(KEY, exec){
-  var fn  = (core.Object || {})[KEY] || Object[KEY]
-    , exp = {};
-  exp[KEY] = exec(fn);
-  $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
-};
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// optional / simple context binding
-var aFunction = __webpack_require__(72);
-module.exports = function(fn, that, length){
-  aFunction(fn);
-  if(that === undefined)return fn;
-  switch(length){
-    case 1: return function(a){
-      return fn.call(that, a);
-    };
-    case 2: return function(a, b){
-      return fn.call(that, a, b);
-    };
-    case 3: return function(a, b, c){
-      return fn.call(that, a, b, c);
-    };
-  }
-  return function(/* ...args */){
-    return fn.apply(that, arguments);
-  };
-};
-
-/***/ }),
-/* 48 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var LIBRARY        = __webpack_require__(82)
-  , $export        = __webpack_require__(25)
-  , redefine       = __webpack_require__(83)
-  , hide           = __webpack_require__(26)
-  , has            = __webpack_require__(21)
-  , Iterators      = __webpack_require__(17)
-  , $iterCreate    = __webpack_require__(84)
-  , setToStringTag = __webpack_require__(54)
-  , getPrototypeOf = __webpack_require__(91)
-  , ITERATOR       = __webpack_require__(11)('iterator')
+var LIBRARY        = __webpack_require__(45)
+  , $export        = __webpack_require__(16)
+  , redefine       = __webpack_require__(63)
+  , hide           = __webpack_require__(24)
+  , has            = __webpack_require__(17)
+  , Iterators      = __webpack_require__(26)
+  , $iterCreate    = __webpack_require__(95)
+  , setToStringTag = __webpack_require__(51)
+  , getPrototypeOf = __webpack_require__(67)
+  , ITERATOR       = __webpack_require__(10)('iterator')
   , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
   , FF_ITERATOR    = '@@iterator'
   , KEYS           = 'keys'
@@ -6523,88 +7028,92 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED
 };
 
 /***/ }),
-/* 49 */
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(24);
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var has          = __webpack_require__(17)
+  , toIObject    = __webpack_require__(20)
+  , arrayIndexOf = __webpack_require__(97)(false)
+  , IE_PROTO     = __webpack_require__(48)('IE_PROTO');
+
+module.exports = function(object, names){
+  var O      = toIObject(object)
+    , i      = 0
+    , result = []
+    , key;
+  for(key in O)if(key != IE_PROTO)has(O, key) && result.push(key);
+  // Don't enum bug & hidden keys
+  while(names.length > i)if(has(O, key = names[i++])){
+    ~arrayIndexOf(result, key) || result.push(key);
+  }
+  return result;
+};
+
+/***/ }),
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(50);
+var cof = __webpack_require__(47);
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
 
 /***/ }),
-/* 50 */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = function(it){
-  return toString.call(it).slice(8, -1);
-};
-
-/***/ }),
-/* 51 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(37)
+var toInteger = __webpack_require__(43)
   , min       = Math.min;
 module.exports = function(it){
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
 
 /***/ }),
-/* 52 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(16)
-  , SHARED = '__core-js_shared__'
-  , store  = global[SHARED] || (global[SHARED] = {});
-module.exports = function(key){
-  return store[key] || (store[key] = {});
+// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
+var has         = __webpack_require__(17)
+  , toObject    = __webpack_require__(30)
+  , IE_PROTO    = __webpack_require__(48)('IE_PROTO')
+  , ObjectProto = Object.prototype;
+
+module.exports = Object.getPrototypeOf || function(O){
+  O = toObject(O);
+  if(has(O, IE_PROTO))return O[IE_PROTO];
+  if(typeof O.constructor == 'function' && O instanceof O.constructor){
+    return O.constructor.prototype;
+  } return O instanceof Object ? ObjectProto : null;
 };
 
 /***/ }),
-/* 53 */
-/***/ (function(module, exports) {
-
-// IE 8- don't enum bug keys
-module.exports = (
-  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-).split(',');
-
-/***/ }),
-/* 54 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(15).f
-  , has = __webpack_require__(21)
-  , TAG = __webpack_require__(11)('toStringTag');
-
-module.exports = function(it, tag, stat){
-  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
-};
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var classof   = __webpack_require__(56)
-  , ITERATOR  = __webpack_require__(11)('iterator')
-  , Iterators = __webpack_require__(17);
-module.exports = __webpack_require__(8).getIteratorMethod = function(it){
+var classof   = __webpack_require__(69)
+  , ITERATOR  = __webpack_require__(10)('iterator')
+  , Iterators = __webpack_require__(26);
+module.exports = __webpack_require__(7).getIteratorMethod = function(it){
   if(it != undefined)return it[ITERATOR]
     || it['@@iterator']
     || Iterators[classof(it)];
 };
 
 /***/ }),
-/* 56 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
-var cof = __webpack_require__(50)
-  , TAG = __webpack_require__(11)('toStringTag')
+var cof = __webpack_require__(47)
+  , TAG = __webpack_require__(10)('toStringTag')
   // ES3 wrong here
   , ARG = cof(function(){ return arguments; }()) == 'Arguments';
 
@@ -6627,7 +7136,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 57 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6635,11 +7144,11 @@ module.exports = function(it){
 
 exports.__esModule = true;
 
-var _isIterable2 = __webpack_require__(97);
+var _isIterable2 = __webpack_require__(110);
 
 var _isIterable3 = _interopRequireDefault(_isIterable2);
 
-var _getIterator2 = __webpack_require__(18);
+var _getIterator2 = __webpack_require__(31);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
@@ -6684,28 +7193,77 @@ exports.default = function () {
 }();
 
 /***/ }),
-/* 58 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(99);
-var global        = __webpack_require__(16)
-  , hide          = __webpack_require__(26)
-  , Iterators     = __webpack_require__(17)
-  , TO_STRING_TAG = __webpack_require__(11)('toStringTag');
+"use strict";
 
-for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
-  var NAME       = collections[i]
-    , Collection = global[NAME]
-    , proto      = Collection && Collection.prototype;
-  if(proto && !proto[TO_STRING_TAG])hide(proto, TO_STRING_TAG, NAME);
-  Iterators[NAME] = Iterators.Array;
-}
+
+exports.__esModule = true;
+
+var _iterator = __webpack_require__(117);
+
+var _iterator2 = _interopRequireDefault(_iterator);
+
+var _symbol = __webpack_require__(119);
+
+var _symbol2 = _interopRequireDefault(_symbol);
+
+var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+} : function (obj) {
+  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+};
 
 /***/ }),
-/* 59 */
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
+var $keys      = __webpack_require__(64)
+  , hiddenKeys = __webpack_require__(50).concat('length', 'prototype');
+
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O){
+  return $keys(O, hiddenKeys);
+};
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pIE            = __webpack_require__(35)
+  , createDesc     = __webpack_require__(29)
+  , toIObject      = __webpack_require__(20)
+  , toPrimitive    = __webpack_require__(38)
+  , has            = __webpack_require__(17)
+  , IE8_DOM_DEFINE = __webpack_require__(60)
+  , gOPD           = Object.getOwnPropertyDescriptor;
+
+exports.f = __webpack_require__(19) ? gOPD : function getOwnPropertyDescriptor(O, P){
+  O = toIObject(O);
+  P = toPrimitive(P, true);
+  if(IE8_DOM_DEFINE)try {
+    return gOPD(O, P);
+  } catch(e){ /* empty */ }
+  if(has(O, P))return createDesc(!pIE.f.call(O, P), O[P]);
+};
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(137), __esModule: true };
+
+/***/ }),
+/* 75 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// This file is GENERATED by buildMetrics.sh. DO NOT MODIFY.
 /* harmony default export */ __webpack_exports__["a"] = ({
     "AMS-Regular": {
         "65": [0, 0.68889, 0, 0, 0.72222],
@@ -6789,8 +7347,8 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "8666": [0.13667, 0.63667, 0, 0, 1.0],
         "8667": [0.13667, 0.63667, 0, 0, 1.0],
         "8669": [-0.13313, 0.37788, 0, 0, 1.0],
-        "8672": [-0.064, 0.437, 0, 0, 1187],
-        "8674": [-0.064, 0.437, 0, 0, 1167],
+        "8672": [-0.064, 0.437, 0, 0, 1.334],
+        "8674": [-0.064, 0.437, 0, 0, 1.334],
         "8705": [0, 0.825, 0, 0, 0.5],
         "8708": [0, 0.68889, 0, 0, 0.55556],
         "8709": [0.08167, 0.58167, 0, 0, 0.77778],
@@ -7193,6 +7751,7 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "172": [0, 0.44444, 0, 0, 0.76666],
         "176": [0, 0.69444, 0, 0, 0.86944],
         "177": [0.13333, 0.63333, 0, 0, 0.89444],
+        "184": [0.17014, 0, 0, 0, 0.51111],
         "198": [0, 0.68611, 0, 0, 1.04166],
         "215": [0.13333, 0.63333, 0, 0, 0.89444],
         "216": [0.04861, 0.73472, 0, 0, 0.89444],
@@ -7434,6 +7993,7 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "163": [0, 0.69444, 0, 0, 0.86853],
         "168": [0, 0.69444, 0.11473, 0, 0.59111],
         "176": [0, 0.69444, 0, 0, 0.94888],
+        "184": [0.17014, 0, 0, 0, 0.53222],
         "198": [0, 0.68611, 0.11431, 0, 1.02277],
         "216": [0.04861, 0.73472, 0.09062, 0, 0.88555],
         "223": [0.19444, 0.69444, 0.09736, 0, 0.665],
@@ -7561,6 +8121,7 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "163": [0, 0.69444, 0, 0, 0.76909],
         "168": [0, 0.66786, 0.10474, 0, 0.51111],
         "176": [0, 0.69444, 0, 0, 0.83129],
+        "184": [0.17014, 0, 0, 0, 0.46],
         "198": [0, 0.68333, 0.12028, 0, 0.88277],
         "216": [0.04861, 0.73194, 0.09403, 0, 0.76666],
         "223": [0.19444, 0.69444, 0.10514, 0, 0.53666],
@@ -7600,7 +8161,7 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "8463": [0, 0.68889, 0, 0, 0.54028]
     },
     "Main-Regular": {
-        "32": [0, 0, 0, 0, 0],
+        "32": [0, 0, 0, 0, 0.25],
         "33": [0, 0.69444, 0, 0, 0.27778],
         "34": [0, 0.69444, 0, 0, 0.5],
         "35": [0.19444, 0.69444, 0, 0, 0.83334],
@@ -7694,11 +8255,14 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "124": [0.25, 0.75, 0, 0, 0.27778],
         "125": [0.25, 0.75, 0, 0, 0.5],
         "126": [0.35, 0.31786, 0, 0, 0.5],
-        "160": [0, 0, 0, 0, 0],
+        "160": [0, 0, 0, 0, 0.25],
+        "167": [0.19444, 0.69444, 0, 0, 0.44445],
         "168": [0, 0.66786, 0, 0, 0.5],
         "172": [0, 0.43056, 0, 0, 0.66667],
         "176": [0, 0.69444, 0, 0, 0.75],
         "177": [0.08333, 0.58333, 0, 0, 0.77778],
+        "182": [0.19444, 0.69444, 0, 0, 0.61111],
+        "184": [0.17014, 0, 0, 0, 0.44445],
         "198": [0, 0.68333, 0, 0, 0.90278],
         "215": [0.08333, 0.58333, 0, 0, 0.77778],
         "216": [0.04861, 0.73194, 0, 0, 0.77778],
@@ -7740,7 +8304,7 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "8221": [0, 0.69444, 0, 0, 0.5],
         "8224": [0.19444, 0.69444, 0, 0, 0.44445],
         "8225": [0.19444, 0.69444, 0, 0, 0.44445],
-        "8230": [0, 0.12, 0, 0, 1015],
+        "8230": [0, 0.12, 0, 0, 1.172],
         "8242": [0, 0.55556, 0, 0, 0.275],
         "8407": [0, 0.71444, 0.15382, 0, 0.5],
         "8463": [0, 0.68889, 0, 0, 0.54028],
@@ -7759,14 +8323,14 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "8599": [0.19444, 0.69444, 0, 0, 1.0],
         "8600": [0.19444, 0.69444, 0, 0, 1.0],
         "8601": [0.19444, 0.69444, 0, 0, 1.0],
-        "8614": [0.011, 0.511, 0, 0, 889],
-        "8617": [0.011, 0.511, 0, 0, 1015],
-        "8618": [0.011, 0.511, 0, 0, 1015],
+        "8614": [0.011, 0.511, 0, 0, 1.0],
+        "8617": [0.011, 0.511, 0, 0, 1.126],
+        "8618": [0.011, 0.511, 0, 0, 1.126],
         "8636": [-0.13313, 0.36687, 0, 0, 1.0],
         "8637": [-0.13313, 0.36687, 0, 0, 1.0],
         "8640": [-0.13313, 0.36687, 0, 0, 1.0],
         "8641": [-0.13313, 0.36687, 0, 0, 1.0],
-        "8652": [0.011, 0.671, 0, 0, 889],
+        "8652": [0.011, 0.671, 0, 0, 1.0],
         "8656": [-0.13313, 0.36687, 0, 0, 1.0],
         "8657": [0.19444, 0.69444, 0, 0, 0.61111],
         "8658": [-0.13313, 0.36687, 0, 0, 1.0],
@@ -7801,11 +8365,11 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "8764": [-0.13313, 0.36687, 0, 0, 0.77778],
         "8768": [0.19444, 0.69444, 0, 0, 0.27778],
         "8771": [-0.03625, 0.46375, 0, 0, 0.77778],
-        "8773": [-0.022, 0.589, 0, 0, 667],
+        "8773": [-0.022, 0.589, 0, 0, 1.0],
         "8776": [-0.01688, 0.48312, 0, 0, 0.77778],
         "8781": [-0.03625, 0.46375, 0, 0, 0.77778],
-        "8784": [-0.133, 0.67, 0, 0, 666],
-        "8800": [0.215, 0.716, 0, 0, 666],
+        "8784": [-0.133, 0.67, 0, 0, 0.778],
+        "8800": [0.215, 0.716, 0, 0, 0.778],
         "8801": [-0.03625, 0.46375, 0, 0, 0.77778],
         "8804": [0.13597, 0.63597, 0, 0, 0.77778],
         "8805": [0.13597, 0.63597, 0, 0, 0.77778],
@@ -7831,22 +8395,22 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "8867": [0, 0.69444, 0, 0, 0.61111],
         "8868": [0, 0.69444, 0, 0, 0.77778],
         "8869": [0, 0.69444, 0, 0, 0.77778],
-        "8872": [0.249, 0.75, 0, 0, 692],
+        "8872": [0.249, 0.75, 0, 0, 0.867],
         "8900": [-0.05555, 0.44445, 0, 0, 0.5],
         "8901": [-0.05555, 0.44445, 0, 0, 0.27778],
         "8902": [-0.03472, 0.46528, 0, 0, 0.5],
-        "8904": [0.005, 0.505, 0, 0, 847],
-        "8942": [0.03, 0.9, 0, 0, 121],
-        "8943": [-0.19, 0.31, 0, 0, 1015],
-        "8945": [-0.1, 0.82, 0, 0, 1015],
+        "8904": [0.005, 0.505, 0, 0, 0.9],
+        "8942": [0.03, 0.9, 0, 0, 0.278],
+        "8943": [-0.19, 0.31, 0, 0, 1.172],
+        "8945": [-0.1, 0.82, 0, 0, 1.282],
         "8968": [0.25, 0.75, 0, 0, 0.44445],
         "8969": [0.25, 0.75, 0, 0, 0.44445],
         "8970": [0.25, 0.75, 0, 0, 0.44445],
         "8971": [0.25, 0.75, 0, 0, 0.44445],
         "8994": [-0.14236, 0.35764, 0, 0, 1.0],
         "8995": [-0.14236, 0.35764, 0, 0, 1.0],
-        "9136": [0.244, 0.744, 0, 0, 301],
-        "9137": [0.244, 0.744, 0, 0, 301],
+        "9136": [0.244, 0.744, 0, 0, 0.412],
+        "9137": [0.244, 0.744, 0, 0, 0.412],
         "9651": [0.19444, 0.69444, 0, 0, 0.88889],
         "9657": [-0.03472, 0.46528, 0, 0, 0.5],
         "9661": [0.19444, 0.69444, 0, 0, 0.88889],
@@ -7861,15 +8425,15 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "9839": [0.19444, 0.69444, 0, 0, 0.38889],
         "10216": [0.25, 0.75, 0, 0, 0.38889],
         "10217": [0.25, 0.75, 0, 0, 0.38889],
-        "10222": [0.244, 0.744, 0, 0, 184],
-        "10223": [0.244, 0.744, 0, 0, 184],
-        "10229": [0.011, 0.511, 0, 0, 1470],
-        "10230": [0.011, 0.511, 0, 0, 1469],
-        "10231": [0.011, 0.511, 0, 0, 1748],
-        "10232": [0.024, 0.525, 0, 0, 1497],
-        "10233": [0.024, 0.525, 0, 0, 1526],
-        "10234": [0.024, 0.525, 0, 0, 1746],
-        "10236": [0.011, 0.511, 0, 0, 1498],
+        "10222": [0.244, 0.744, 0, 0, 0.412],
+        "10223": [0.244, 0.744, 0, 0, 0.412],
+        "10229": [0.011, 0.511, 0, 0, 1.609],
+        "10230": [0.011, 0.511, 0, 0, 1.638],
+        "10231": [0.011, 0.511, 0, 0, 1.859],
+        "10232": [0.024, 0.525, 0, 0, 1.609],
+        "10233": [0.024, 0.525, 0, 0, 1.638],
+        "10234": [0.024, 0.525, 0, 0, 1.858],
+        "10236": [0.011, 0.511, 0, 0, 1.638],
         "10815": [0, 0.68333, 0, 0, 0.75],
         "10927": [0.13597, 0.63597, 0, 0, 0.77778],
         "10928": [0.13597, 0.63597, 0, 0, 0.77778]
@@ -8252,6 +8816,7 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "168": [0, 0.69444, 0, 0, 0.55],
         "176": [0, 0.69444, 0, 0, 0.73334],
         "180": [0, 0.69444, 0, 0, 0.55],
+        "184": [0.17014, 0, 0, 0, 0.48889],
         "305": [0, 0.45833, 0, 0, 0.25556],
         "567": [0.19444, 0.45833, 0, 0, 0.28611],
         "710": [0, 0.69444, 0, 0, 0.55],
@@ -8370,6 +8935,7 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "126": [0.35, 0.32659, 0.08826, 0, 0.5],
         "168": [0, 0.67937, 0.06385, 0, 0.5],
         "176": [0, 0.69444, 0, 0, 0.73752],
+        "184": [0.17014, 0, 0, 0, 0.44445],
         "305": [0, 0.44444, 0.04169, 0, 0.23889],
         "567": [0.19444, 0.44444, 0.04169, 0, 0.26667],
         "710": [0, 0.69444, 0.0799, 0, 0.5],
@@ -8488,19 +9054,21 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "121": [0.19444, 0.44444, 0.01389, 0, 0.46111],
         "122": [0, 0.44444, 0, 0, 0.43472],
         "126": [0.35, 0.32659, 0, 0, 0.5],
+        "168": [0, 0.67937, 0, 0, 0.5],
         "176": [0, 0.69444, 0, 0, 0.66667],
+        "184": [0.17014, 0, 0, 0, 0.44445],
         "305": [0, 0.44444, 0, 0, 0.23889],
         "567": [0.19444, 0.44444, 0, 0, 0.26667],
         "710": [0, 0.69444, 0, 0, 0.5],
         "711": [0, 0.63194, 0, 0, 0.5],
         "713": [0, 0.60889, 0, 0, 0.5],
         "714": [0, 0.69444, 0, 0, 0.5],
+        "715": [0, 0.69444, 0, 0, 0.5],
         "728": [0, 0.69444, 0, 0, 0.5],
         "729": [0, 0.67937, 0, 0, 0.27778],
         "730": [0, 0.69444, 0, 0, 0.66667],
+        "732": [0, 0.67659, 0, 0, 0.5],
         "733": [0, 0.69444, 0, 0, 0.5],
-        "771": [0, 0.67659, 0, 0, 0.5],
-        "776": [0, 0.67937, 0, 0, 0.5],
         "915": [0, 0.69444, 0, 0, 0.54167],
         "916": [0, 0.69444, 0, 0, 0.83334],
         "920": [0, 0.69444, 0, 0, 0.77778],
@@ -8698,6 +9266,7 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "57683": [0, 0.12, 0, 0, 0.45]
     },
     "Typewriter-Regular": {
+        "32": [0, 0, 0, 0, 0.525],
         "33": [0, 0.61111, 0, 0, 0.525],
         "34": [0, 0.61111, 0, 0, 0.525],
         "35": [0, 0.61111, 0, 0, 0.525],
@@ -8793,7 +9362,9 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
         "125": [0.08333, 0.69444, 0, 0, 0.525],
         "126": [0, 0.61111, 0, 0, 0.525],
         "127": [0, 0.61111, 0, 0, 0.525],
+        "160": [0, 0, 0, 0, 0.525],
         "176": [0, 0.61111, 0, 0, 0.525],
+        "184": [0.19445, 0, 0, 0, 0.525],
         "305": [0, 0.43056, 0, 0, 0.525],
         "567": [0.22222, 0.43056, 0, 0, 0.525],
         "711": [0, 0.56597, 0, 0, 0.525],
@@ -8824,17 +9395,17 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
 });
 
 /***/ }),
-/* 60 */
+/* 76 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = sizingGroup;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__defineFunction__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__defineFunction__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildMathML__ = __webpack_require__(3);
 
 
 
@@ -8917,16 +9488,16 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 61 */
+/* 77 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _environments; });
 /* harmony export (immutable) */ __webpack_exports__["b"] = defineEnvironment;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildMathML__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Options__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseNode__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildMathML__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Options__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseNode__ = __webpack_require__(6);
 
 
 
@@ -8981,8 +9552,9 @@ function defineEnvironment(_ref) {
         htmlBuilder = _ref.htmlBuilder,
         mathmlBuilder = _ref.mathmlBuilder;
 
-    // Set default values of environments
+    // Set default values of environments.
     var data = {
+        type: type,
         numArgs: props.numArgs || 0,
         greediness: 1,
         allowedInText: false,
@@ -9001,21 +9573,21 @@ function defineEnvironment(_ref) {
 }
 
 /***/ }),
-/* 62 */
+/* 78 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return combiningDiacriticalMarksEndRegex; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return controlWordRegex; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(7);
+/* unused harmony export controlWordRegex */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_match_at__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_match_at__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_match_at___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_match_at__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseError__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SourceLocation__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Token__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SourceLocation__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Token__ = __webpack_require__(25);
 
 
 
@@ -9053,12 +9625,15 @@ function defineEnvironment(_ref) {
  * If there is no matching function or symbol definition, the Parser will
  * still reject the input.
  */
+var spaceRegexString = "[ \r\n\t]";
 var commentRegexString = "%[^\n]*[\n]";
 var controlWordRegexString = "\\\\[a-zA-Z@]+";
 var controlSymbolRegexString = "\\\\[^\uD800-\uDFFF]";
+var controlWordWhitespaceRegexString = "" + controlWordRegexString + spaceRegexString + "*";
+var controlWordWhitespaceRegex = new RegExp("^(" + controlWordRegexString + ")" + spaceRegexString + "*$");
 var combiningDiacriticalMarkString = "[\u0300-\u036F]";
 var combiningDiacriticalMarksEndRegex = new RegExp(combiningDiacriticalMarkString + "+$");
-var tokenRegex = new RegExp("([ \r\n\t]+)|" + ( // whitespace
+var tokenRegex = new RegExp("(" + spaceRegexString + "+)|" + ( // whitespace
 "(" + commentRegexString) + // comments
 "|[!-\\[\\]-\u2027\u202A-\uD7FF\uF900-\uFFFF]" + ( // single codepoint
 combiningDiacriticalMarkString + "*") + // ...plus accents
@@ -9066,7 +9641,7 @@ combiningDiacriticalMarkString + "*") + // ...plus accents
 combiningDiacriticalMarkString + "*") + // ...plus accents
 "|\\\\verb\\*([^]).*?\\3" + // \verb*
 "|\\\\verb([^*a-zA-Z]).*?\\4" + ( // \verb unstarred
-"|" + controlWordRegexString) + ( // \macroName
+"|" + controlWordWhitespaceRegexString) + ( // \macroName + spaces
 "|" + controlSymbolRegexString) + // \\, \', etc.
 ")");
 
@@ -9109,6 +9684,12 @@ var Lexer = function () {
             this.pos += match[0].length;
             var end = this.pos;
 
+            // Trim any trailing whitespace from control word match
+            var controlMatch = text.match(controlWordWhitespaceRegex);
+            if (controlMatch) {
+                text = controlMatch[1];
+            }
+
             if (commentRegex.test(text)) {
                 return this.lex();
             } else {
@@ -9120,17 +9701,17 @@ var Lexer = function () {
     return Lexer;
 }();
 
-/* harmony default export */ __webpack_exports__["c"] = (Lexer);
+/* harmony default export */ __webpack_exports__["b"] = (Lexer);
 
 /***/ }),
-/* 63 */
+/* 79 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_katex_less__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_katex_less__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_katex_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__src_katex_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__katex_js__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__katex_js__ = __webpack_require__(81);
 /**
  * This is the webpack entry point for KaTeX. As flow[1] and jest[2] doesn't support
  * CSS modules natively, a separate entry point is used and it is not flowtyped.
@@ -9144,21 +9725,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = (__WEBPACK_IMPORTED_MODULE_1__katex_js__["a" /* default */]);
 
 /***/ }),
-/* 64 */
+/* 80 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 65 */
+/* 81 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_ParseError__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_Settings__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_buildTree__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_parseTree__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_utils__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_Settings__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_buildTree__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_parseTree__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_buildCommon__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__src_domTree__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__src_utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__src_symbols__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__package_json__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__package_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__package_json__);
 
 /* eslint no-console:0 */
 /**
@@ -9176,12 +9762,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+
+
+
+
+
 /**
  * Parse and build an expression, and place that expression in the DOM node
  * given.
  */
 var render = function render(expression, baseNode, options) {
-    __WEBPACK_IMPORTED_MODULE_4__src_utils__["a" /* default */].clearNode(baseNode);
+    __WEBPACK_IMPORTED_MODULE_6__src_utils__["a" /* default */].clearNode(baseNode);
     var node = renderToDomTree(expression, options).toNode();
     baseNode.appendChild(node);
 };
@@ -9215,13 +9807,32 @@ var generateParseTree = function generateParseTree(expression, options) {
 };
 
 /**
+ * If the given error is a KaTeX ParseError and options.throwOnError is false,
+ * renders the invalid LaTeX as a span with hover title giving the KaTeX
+ * error message.  Otherwise, simply throws the error.
+ */
+var renderError = function renderError(error, expression, options) {
+    if (options.throwOnError || !(error instanceof __WEBPACK_IMPORTED_MODULE_0__src_ParseError__["a" /* default */])) {
+        throw error;
+    }
+    var node = __WEBPACK_IMPORTED_MODULE_4__src_buildCommon__["a" /* default */].makeSpan(["katex-error"], [new __WEBPACK_IMPORTED_MODULE_5__src_domTree__["a" /* default */].symbolNode(expression)]);
+    node.setAttribute("title", error.toString());
+    node.setAttribute("style", "color:" + options.errorColor);
+    return node;
+};
+
+/**
  * Generates and returns the katex build tree. This is used for advanced
  * use cases (like rendering to custom output).
  */
 var renderToDomTree = function renderToDomTree(expression, options) {
     var settings = new __WEBPACK_IMPORTED_MODULE_1__src_Settings__["a" /* default */](options);
-    var tree = Object(__WEBPACK_IMPORTED_MODULE_3__src_parseTree__["a" /* default */])(expression, settings);
-    return Object(__WEBPACK_IMPORTED_MODULE_2__src_buildTree__["b" /* buildTree */])(tree, expression, settings);
+    try {
+        var tree = Object(__WEBPACK_IMPORTED_MODULE_3__src_parseTree__["a" /* default */])(expression, settings);
+        return Object(__WEBPACK_IMPORTED_MODULE_2__src_buildTree__["b" /* buildTree */])(tree, expression, settings);
+    } catch (error) {
+        return renderError(error, expression, settings);
+    }
 };
 
 /**
@@ -9230,11 +9841,19 @@ var renderToDomTree = function renderToDomTree(expression, options) {
  */
 var renderToHTMLTree = function renderToHTMLTree(expression, options) {
     var settings = new __WEBPACK_IMPORTED_MODULE_1__src_Settings__["a" /* default */](options);
-    var tree = Object(__WEBPACK_IMPORTED_MODULE_3__src_parseTree__["a" /* default */])(expression, settings);
-    return Object(__WEBPACK_IMPORTED_MODULE_2__src_buildTree__["a" /* buildHTMLTree */])(tree, expression, settings);
+    try {
+        var tree = Object(__WEBPACK_IMPORTED_MODULE_3__src_parseTree__["a" /* default */])(expression, settings);
+        return Object(__WEBPACK_IMPORTED_MODULE_2__src_buildTree__["a" /* buildHTMLTree */])(tree, expression, settings);
+    } catch (error) {
+        return renderError(error, expression, settings);
+    }
 };
 
 /* harmony default export */ __webpack_exports__["a"] = ({
+    /**
+     * Current KaTeX version
+     */
+    version: __WEBPACK_IMPORTED_MODULE_8__package_json__["version"],
     /**
      * Renders the given LaTeX into an HTML+MathML combination, and adds
      * it as a child to the specified DOM node.
@@ -9275,121 +9894,42 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
      * The internal tree representation is unstable and is very likely
      * to change. Use at your own risk.
      */
-    __renderToHTMLTree: renderToHTMLTree
+    __renderToHTMLTree: renderToHTMLTree,
+    /**
+     * adds a new symbol to internal symbols table
+    */
+    __defineSymbol: __WEBPACK_IMPORTED_MODULE_7__src_symbols__["b" /* defineSymbol */]
 });
 
 /***/ }),
-/* 66 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(67), __esModule: true };
+module.exports = { "default": __webpack_require__(83), __esModule: true };
 
 /***/ }),
-/* 67 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(68);
-module.exports = __webpack_require__(8).Object.freeze;
+__webpack_require__(84);
+module.exports = __webpack_require__(7).Object.freeze;
 
 /***/ }),
-/* 68 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.5 Object.freeze(O)
-var isObject = __webpack_require__(20)
-  , meta     = __webpack_require__(69).onFreeze;
+var isObject = __webpack_require__(22)
+  , meta     = __webpack_require__(59).onFreeze;
 
-__webpack_require__(46)('freeze', function($freeze){
+__webpack_require__(39)('freeze', function($freeze){
   return function freeze(it){
     return $freeze && isObject(it) ? $freeze(meta(it)) : it;
   };
 });
 
 /***/ }),
-/* 69 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var META     = __webpack_require__(32)('meta')
-  , isObject = __webpack_require__(20)
-  , has      = __webpack_require__(21)
-  , setDesc  = __webpack_require__(15).f
-  , id       = 0;
-var isExtensible = Object.isExtensible || function(){
-  return true;
-};
-var FREEZE = !__webpack_require__(24)(function(){
-  return isExtensible(Object.preventExtensions({}));
-});
-var setMeta = function(it){
-  setDesc(it, META, {value: {
-    i: 'O' + ++id, // object ID
-    w: {}          // weak collections IDs
-  }});
-};
-var fastKey = function(it, create){
-  // return primitive with prefix
-  if(!isObject(it))return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
-  if(!has(it, META)){
-    // can't set metadata to uncaught frozen object
-    if(!isExtensible(it))return 'F';
-    // not necessary to add metadata
-    if(!create)return 'E';
-    // add missing metadata
-    setMeta(it);
-  // return object ID
-  } return it[META].i;
-};
-var getWeak = function(it, create){
-  if(!has(it, META)){
-    // can't set metadata to uncaught frozen object
-    if(!isExtensible(it))return true;
-    // not necessary to add metadata
-    if(!create)return false;
-    // add missing metadata
-    setMeta(it);
-  // return hash weak collections IDs
-  } return it[META].w;
-};
-// add metadata on freeze-family methods calling
-var onFreeze = function(it){
-  if(FREEZE && meta.NEED && isExtensible(it) && !has(it, META))setMeta(it);
-  return it;
-};
-var meta = module.exports = {
-  KEY:      META,
-  NEED:     false,
-  fastKey:  fastKey,
-  getWeak:  getWeak,
-  onFreeze: onFreeze
-};
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = !__webpack_require__(23) && !__webpack_require__(24)(function(){
-  return Object.defineProperty(__webpack_require__(45)('div'), 'a', {get: function(){ return 7; }}).a != 7;
-});
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(20);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function(it, S){
-  if(!isObject(it))return it;
-  var fn, val;
-  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
-  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
-  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-/***/ }),
-/* 72 */
+/* 85 */
 /***/ (function(module, exports) {
 
 module.exports = function(it){
@@ -9398,42 +9938,42 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 73 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(74), __esModule: true };
+module.exports = { "default": __webpack_require__(87), __esModule: true };
 
 /***/ }),
-/* 74 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(75);
-var $Object = __webpack_require__(8).Object;
+__webpack_require__(88);
+var $Object = __webpack_require__(7).Object;
 module.exports = function defineProperty(it, key, desc){
   return $Object.defineProperty(it, key, desc);
 };
 
 /***/ }),
-/* 75 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $export = __webpack_require__(25);
+var $export = __webpack_require__(16);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(23), 'Object', {defineProperty: __webpack_require__(15).f});
+$export($export.S + $export.F * !__webpack_require__(19), 'Object', {defineProperty: __webpack_require__(14).f});
 
 /***/ }),
-/* 76 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return buildTree; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return buildHTMLTree; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildMathML__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Options__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Settings__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Style__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Options__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Settings__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Style__ = __webpack_require__(12);
 
 
 
@@ -9478,41 +10018,41 @@ var buildHTMLTree = function buildHTMLTree(tree, expression, settings) {
 /* unused harmony default export */ var _unused_webpack_default_export = (buildTree);
 
 /***/ }),
-/* 77 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(78), __esModule: true };
+module.exports = { "default": __webpack_require__(91), __esModule: true };
 
 /***/ }),
-/* 78 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var core  = __webpack_require__(8)
+var core  = __webpack_require__(7)
   , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
 module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
   return $JSON.stringify.apply($JSON, arguments);
 };
 
 /***/ }),
-/* 79 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(80), __esModule: true };
+module.exports = { "default": __webpack_require__(93), __esModule: true };
 
 /***/ }),
-/* 80 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(36);
-__webpack_require__(92);
-module.exports = __webpack_require__(8).Array.from;
+__webpack_require__(34);
+__webpack_require__(100);
+module.exports = __webpack_require__(7).Array.from;
 
 /***/ }),
-/* 81 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(37)
-  , defined   = __webpack_require__(38);
+var toInteger = __webpack_require__(43)
+  , defined   = __webpack_require__(44);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function(TO_STRING){
@@ -9530,30 +10070,18 @@ module.exports = function(TO_STRING){
 };
 
 /***/ }),
-/* 82 */
-/***/ (function(module, exports) {
-
-module.exports = true;
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(26);
-
-/***/ }),
-/* 84 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var create         = __webpack_require__(85)
-  , descriptor     = __webpack_require__(33)
-  , setToStringTag = __webpack_require__(54)
+var create         = __webpack_require__(46)
+  , descriptor     = __webpack_require__(29)
+  , setToStringTag = __webpack_require__(51)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(26)(IteratorPrototype, __webpack_require__(11)('iterator'), function(){ return this; });
+__webpack_require__(24)(IteratorPrototype, __webpack_require__(10)('iterator'), function(){ return this; });
 
 module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -9561,61 +10089,14 @@ module.exports = function(Constructor, NAME, next){
 };
 
 /***/ }),
-/* 85 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject    = __webpack_require__(22)
-  , dPs         = __webpack_require__(86)
-  , enumBugKeys = __webpack_require__(53)
-  , IE_PROTO    = __webpack_require__(41)('IE_PROTO')
-  , Empty       = function(){ /* empty */ }
-  , PROTOTYPE   = 'prototype';
+var dP       = __webpack_require__(14)
+  , anObject = __webpack_require__(18)
+  , getKeys  = __webpack_require__(27);
 
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict = function(){
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(45)('iframe')
-    , i      = enumBugKeys.length
-    , lt     = '<'
-    , gt     = '>'
-    , iframeDocument;
-  iframe.style.display = 'none';
-  __webpack_require__(90).appendChild(iframe);
-  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
-  // createDict = iframe.contentWindow.Object;
-  // html.removeChild(iframe);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
-  createDict = iframeDocument.F;
-  while(i--)delete createDict[PROTOTYPE][enumBugKeys[i]];
-  return createDict();
-};
-
-module.exports = Object.create || function create(O, Properties){
-  var result;
-  if(O !== null){
-    Empty[PROTOTYPE] = anObject(O);
-    result = new Empty;
-    Empty[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = createDict();
-  return Properties === undefined ? result : dPs(result, Properties);
-};
-
-
-/***/ }),
-/* 86 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP       = __webpack_require__(15)
-  , anObject = __webpack_require__(22)
-  , getKeys  = __webpack_require__(39);
-
-module.exports = __webpack_require__(23) ? Object.defineProperties : function defineProperties(O, Properties){
+module.exports = __webpack_require__(19) ? Object.defineProperties : function defineProperties(O, Properties){
   anObject(O);
   var keys   = getKeys(Properties)
     , length = keys.length
@@ -9626,36 +10107,14 @@ module.exports = __webpack_require__(23) ? Object.defineProperties : function de
 };
 
 /***/ }),
-/* 87 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var has          = __webpack_require__(21)
-  , toIObject    = __webpack_require__(40)
-  , arrayIndexOf = __webpack_require__(88)(false)
-  , IE_PROTO     = __webpack_require__(41)('IE_PROTO');
-
-module.exports = function(object, names){
-  var O      = toIObject(object)
-    , i      = 0
-    , result = []
-    , key;
-  for(key in O)if(key != IE_PROTO)has(O, key) && result.push(key);
-  // Don't enum bug & hidden keys
-  while(names.length > i)if(has(O, key = names[i++])){
-    ~arrayIndexOf(result, key) || result.push(key);
-  }
-  return result;
-};
-
-/***/ }),
-/* 88 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(40)
-  , toLength  = __webpack_require__(51)
-  , toIndex   = __webpack_require__(89);
+var toIObject = __webpack_require__(20)
+  , toLength  = __webpack_require__(66)
+  , toIndex   = __webpack_require__(98);
 module.exports = function(IS_INCLUDES){
   return function($this, el, fromIndex){
     var O      = toIObject($this)
@@ -9674,10 +10133,10 @@ module.exports = function(IS_INCLUDES){
 };
 
 /***/ }),
-/* 89 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(37)
+var toInteger = __webpack_require__(43)
   , max       = Math.max
   , min       = Math.min;
 module.exports = function(index, length){
@@ -9686,45 +10145,27 @@ module.exports = function(index, length){
 };
 
 /***/ }),
-/* 90 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(16).document && document.documentElement;
+module.exports = __webpack_require__(15).document && document.documentElement;
 
 /***/ }),
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has         = __webpack_require__(21)
-  , toObject    = __webpack_require__(29)
-  , IE_PROTO    = __webpack_require__(41)('IE_PROTO')
-  , ObjectProto = Object.prototype;
-
-module.exports = Object.getPrototypeOf || function(O){
-  O = toObject(O);
-  if(has(O, IE_PROTO))return O[IE_PROTO];
-  if(typeof O.constructor == 'function' && O instanceof O.constructor){
-    return O.constructor.prototype;
-  } return O instanceof Object ? ObjectProto : null;
-};
-
-/***/ }),
-/* 92 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var ctx            = __webpack_require__(47)
-  , $export        = __webpack_require__(25)
-  , toObject       = __webpack_require__(29)
-  , call           = __webpack_require__(93)
-  , isArrayIter    = __webpack_require__(94)
-  , toLength       = __webpack_require__(51)
-  , createProperty = __webpack_require__(95)
-  , getIterFn      = __webpack_require__(55);
+var ctx            = __webpack_require__(40)
+  , $export        = __webpack_require__(16)
+  , toObject       = __webpack_require__(30)
+  , call           = __webpack_require__(101)
+  , isArrayIter    = __webpack_require__(102)
+  , toLength       = __webpack_require__(66)
+  , createProperty = __webpack_require__(103)
+  , getIterFn      = __webpack_require__(68);
 
-$export($export.S + $export.F * !__webpack_require__(96)(function(iter){ Array.from(iter); }), 'Array', {
+$export($export.S + $export.F * !__webpack_require__(104)(function(iter){ Array.from(iter); }), 'Array', {
   // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
   from: function from(arrayLike/*, mapfn = undefined, thisArg = undefined*/){
     var O       = toObject(arrayLike)
@@ -9754,11 +10195,11 @@ $export($export.S + $export.F * !__webpack_require__(96)(function(iter){ Array.f
 
 
 /***/ }),
-/* 93 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
-var anObject = __webpack_require__(22);
+var anObject = __webpack_require__(18);
 module.exports = function(iterator, fn, value, entries){
   try {
     return entries ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -9771,12 +10212,12 @@ module.exports = function(iterator, fn, value, entries){
 };
 
 /***/ }),
-/* 94 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
-var Iterators  = __webpack_require__(17)
-  , ITERATOR   = __webpack_require__(11)('iterator')
+var Iterators  = __webpack_require__(26)
+  , ITERATOR   = __webpack_require__(10)('iterator')
   , ArrayProto = Array.prototype;
 
 module.exports = function(it){
@@ -9784,13 +10225,13 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 95 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $defineProperty = __webpack_require__(15)
-  , createDesc      = __webpack_require__(33);
+var $defineProperty = __webpack_require__(14)
+  , createDesc      = __webpack_require__(29);
 
 module.exports = function(object, index, value){
   if(index in object)$defineProperty.f(object, index, createDesc(0, value));
@@ -9798,10 +10239,10 @@ module.exports = function(object, index, value){
 };
 
 /***/ }),
-/* 96 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR     = __webpack_require__(11)('iterator')
+var ITERATOR     = __webpack_require__(10)('iterator')
   , SAFE_CLOSING = false;
 
 try {
@@ -9824,35 +10265,29 @@ module.exports = function(exec, skipClosing){
 };
 
 /***/ }),
-/* 97 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(98), __esModule: true };
+__webpack_require__(52);
+__webpack_require__(34);
+module.exports = __webpack_require__(109);
 
 /***/ }),
-/* 98 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(58);
-__webpack_require__(36);
-module.exports = __webpack_require__(102);
-
-/***/ }),
-/* 99 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(100)
-  , step             = __webpack_require__(101)
-  , Iterators        = __webpack_require__(17)
-  , toIObject        = __webpack_require__(40);
+var addToUnscopables = __webpack_require__(107)
+  , step             = __webpack_require__(108)
+  , Iterators        = __webpack_require__(26)
+  , toIObject        = __webpack_require__(20);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(48)(Array, 'Array', function(iterated, kind){
+module.exports = __webpack_require__(62)(Array, 'Array', function(iterated, kind){
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -9878,13 +10313,13 @@ addToUnscopables('values');
 addToUnscopables('entries');
 
 /***/ }),
-/* 100 */
+/* 107 */
 /***/ (function(module, exports) {
 
 module.exports = function(){ /* empty */ };
 
 /***/ }),
-/* 101 */
+/* 108 */
 /***/ (function(module, exports) {
 
 module.exports = function(done, value){
@@ -9892,13 +10327,39 @@ module.exports = function(done, value){
 };
 
 /***/ }),
-/* 102 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var classof   = __webpack_require__(56)
-  , ITERATOR  = __webpack_require__(11)('iterator')
-  , Iterators = __webpack_require__(17);
-module.exports = __webpack_require__(8).isIterable = function(it){
+var anObject = __webpack_require__(18)
+  , get      = __webpack_require__(68);
+module.exports = __webpack_require__(7).getIterator = function(it){
+  var iterFn = get(it);
+  if(typeof iterFn != 'function')throw TypeError(it + ' is not iterable!');
+  return anObject(iterFn.call(it));
+};
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(111), __esModule: true };
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(52);
+__webpack_require__(34);
+module.exports = __webpack_require__(112);
+
+/***/ }),
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var classof   = __webpack_require__(69)
+  , ITERATOR  = __webpack_require__(10)('iterator')
+  , Iterators = __webpack_require__(26);
+module.exports = __webpack_require__(7).isIterable = function(it){
   var O = Object(it);
   return O[ITERATOR] !== undefined
     || '@@iterator' in O
@@ -9906,63 +10367,560 @@ module.exports = __webpack_require__(8).isIterable = function(it){
 };
 
 /***/ }),
-/* 103 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(58);
-__webpack_require__(36);
-module.exports = __webpack_require__(104);
+module.exports = { "default": __webpack_require__(114), __esModule: true };
 
 /***/ }),
-/* 104 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(22)
-  , get      = __webpack_require__(55);
-module.exports = __webpack_require__(8).getIterator = function(it){
-  var iterFn = get(it);
-  if(typeof iterFn != 'function')throw TypeError(it + ' is not iterable!');
-  return anObject(iterFn.call(it));
+__webpack_require__(115);
+module.exports = __webpack_require__(7).Object.getPrototypeOf;
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.9 Object.getPrototypeOf(O)
+var toObject        = __webpack_require__(30)
+  , $getPrototypeOf = __webpack_require__(67);
+
+__webpack_require__(39)('getPrototypeOf', function(){
+  return function getPrototypeOf(it){
+    return $getPrototypeOf(toObject(it));
+  };
+});
+
+/***/ }),
+/* 116 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _typeof2 = __webpack_require__(71);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
 };
 
 /***/ }),
-/* 105 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(106), __esModule: true };
+module.exports = { "default": __webpack_require__(118), __esModule: true };
 
 /***/ }),
-/* 106 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(107);
-module.exports = __webpack_require__(8).Object.assign;
+__webpack_require__(34);
+__webpack_require__(52);
+module.exports = __webpack_require__(53).f('iterator');
 
 /***/ }),
-/* 107 */
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(120), __esModule: true };
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(121);
+__webpack_require__(126);
+__webpack_require__(127);
+__webpack_require__(128);
+module.exports = __webpack_require__(7).Symbol;
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// ECMAScript 6 symbols shim
+var global         = __webpack_require__(15)
+  , has            = __webpack_require__(17)
+  , DESCRIPTORS    = __webpack_require__(19)
+  , $export        = __webpack_require__(16)
+  , redefine       = __webpack_require__(63)
+  , META           = __webpack_require__(59).KEY
+  , $fails         = __webpack_require__(23)
+  , shared         = __webpack_require__(49)
+  , setToStringTag = __webpack_require__(51)
+  , uid            = __webpack_require__(33)
+  , wks            = __webpack_require__(10)
+  , wksExt         = __webpack_require__(53)
+  , wksDefine      = __webpack_require__(54)
+  , keyOf          = __webpack_require__(122)
+  , enumKeys       = __webpack_require__(123)
+  , isArray        = __webpack_require__(124)
+  , anObject       = __webpack_require__(18)
+  , toIObject      = __webpack_require__(20)
+  , toPrimitive    = __webpack_require__(38)
+  , createDesc     = __webpack_require__(29)
+  , _create        = __webpack_require__(46)
+  , gOPNExt        = __webpack_require__(125)
+  , $GOPD          = __webpack_require__(73)
+  , $DP            = __webpack_require__(14)
+  , $keys          = __webpack_require__(27)
+  , gOPD           = $GOPD.f
+  , dP             = $DP.f
+  , gOPN           = gOPNExt.f
+  , $Symbol        = global.Symbol
+  , $JSON          = global.JSON
+  , _stringify     = $JSON && $JSON.stringify
+  , PROTOTYPE      = 'prototype'
+  , HIDDEN         = wks('_hidden')
+  , TO_PRIMITIVE   = wks('toPrimitive')
+  , isEnum         = {}.propertyIsEnumerable
+  , SymbolRegistry = shared('symbol-registry')
+  , AllSymbols     = shared('symbols')
+  , OPSymbols      = shared('op-symbols')
+  , ObjectProto    = Object[PROTOTYPE]
+  , USE_NATIVE     = typeof $Symbol == 'function'
+  , QObject        = global.QObject;
+// Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
+var setter = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
+
+// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
+var setSymbolDesc = DESCRIPTORS && $fails(function(){
+  return _create(dP({}, 'a', {
+    get: function(){ return dP(this, 'a', {value: 7}).a; }
+  })).a != 7;
+}) ? function(it, key, D){
+  var protoDesc = gOPD(ObjectProto, key);
+  if(protoDesc)delete ObjectProto[key];
+  dP(it, key, D);
+  if(protoDesc && it !== ObjectProto)dP(ObjectProto, key, protoDesc);
+} : dP;
+
+var wrap = function(tag){
+  var sym = AllSymbols[tag] = _create($Symbol[PROTOTYPE]);
+  sym._k = tag;
+  return sym;
+};
+
+var isSymbol = USE_NATIVE && typeof $Symbol.iterator == 'symbol' ? function(it){
+  return typeof it == 'symbol';
+} : function(it){
+  return it instanceof $Symbol;
+};
+
+var $defineProperty = function defineProperty(it, key, D){
+  if(it === ObjectProto)$defineProperty(OPSymbols, key, D);
+  anObject(it);
+  key = toPrimitive(key, true);
+  anObject(D);
+  if(has(AllSymbols, key)){
+    if(!D.enumerable){
+      if(!has(it, HIDDEN))dP(it, HIDDEN, createDesc(1, {}));
+      it[HIDDEN][key] = true;
+    } else {
+      if(has(it, HIDDEN) && it[HIDDEN][key])it[HIDDEN][key] = false;
+      D = _create(D, {enumerable: createDesc(0, false)});
+    } return setSymbolDesc(it, key, D);
+  } return dP(it, key, D);
+};
+var $defineProperties = function defineProperties(it, P){
+  anObject(it);
+  var keys = enumKeys(P = toIObject(P))
+    , i    = 0
+    , l = keys.length
+    , key;
+  while(l > i)$defineProperty(it, key = keys[i++], P[key]);
+  return it;
+};
+var $create = function create(it, P){
+  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
+};
+var $propertyIsEnumerable = function propertyIsEnumerable(key){
+  var E = isEnum.call(this, key = toPrimitive(key, true));
+  if(this === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key))return false;
+  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key] ? E : true;
+};
+var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key){
+  it  = toIObject(it);
+  key = toPrimitive(key, true);
+  if(it === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key))return;
+  var D = gOPD(it, key);
+  if(D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key]))D.enumerable = true;
+  return D;
+};
+var $getOwnPropertyNames = function getOwnPropertyNames(it){
+  var names  = gOPN(toIObject(it))
+    , result = []
+    , i      = 0
+    , key;
+  while(names.length > i){
+    if(!has(AllSymbols, key = names[i++]) && key != HIDDEN && key != META)result.push(key);
+  } return result;
+};
+var $getOwnPropertySymbols = function getOwnPropertySymbols(it){
+  var IS_OP  = it === ObjectProto
+    , names  = gOPN(IS_OP ? OPSymbols : toIObject(it))
+    , result = []
+    , i      = 0
+    , key;
+  while(names.length > i){
+    if(has(AllSymbols, key = names[i++]) && (IS_OP ? has(ObjectProto, key) : true))result.push(AllSymbols[key]);
+  } return result;
+};
+
+// 19.4.1.1 Symbol([description])
+if(!USE_NATIVE){
+  $Symbol = function Symbol(){
+    if(this instanceof $Symbol)throw TypeError('Symbol is not a constructor!');
+    var tag = uid(arguments.length > 0 ? arguments[0] : undefined);
+    var $set = function(value){
+      if(this === ObjectProto)$set.call(OPSymbols, value);
+      if(has(this, HIDDEN) && has(this[HIDDEN], tag))this[HIDDEN][tag] = false;
+      setSymbolDesc(this, tag, createDesc(1, value));
+    };
+    if(DESCRIPTORS && setter)setSymbolDesc(ObjectProto, tag, {configurable: true, set: $set});
+    return wrap(tag);
+  };
+  redefine($Symbol[PROTOTYPE], 'toString', function toString(){
+    return this._k;
+  });
+
+  $GOPD.f = $getOwnPropertyDescriptor;
+  $DP.f   = $defineProperty;
+  __webpack_require__(72).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(35).f  = $propertyIsEnumerable;
+  __webpack_require__(55).f = $getOwnPropertySymbols;
+
+  if(DESCRIPTORS && !__webpack_require__(45)){
+    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
+  }
+
+  wksExt.f = function(name){
+    return wrap(wks(name));
+  }
+}
+
+$export($export.G + $export.W + $export.F * !USE_NATIVE, {Symbol: $Symbol});
+
+for(var symbols = (
+  // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
+  'hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables'
+).split(','), i = 0; symbols.length > i; )wks(symbols[i++]);
+
+for(var symbols = $keys(wks.store), i = 0; symbols.length > i; )wksDefine(symbols[i++]);
+
+$export($export.S + $export.F * !USE_NATIVE, 'Symbol', {
+  // 19.4.2.1 Symbol.for(key)
+  'for': function(key){
+    return has(SymbolRegistry, key += '')
+      ? SymbolRegistry[key]
+      : SymbolRegistry[key] = $Symbol(key);
+  },
+  // 19.4.2.5 Symbol.keyFor(sym)
+  keyFor: function keyFor(key){
+    if(isSymbol(key))return keyOf(SymbolRegistry, key);
+    throw TypeError(key + ' is not a symbol!');
+  },
+  useSetter: function(){ setter = true; },
+  useSimple: function(){ setter = false; }
+});
+
+$export($export.S + $export.F * !USE_NATIVE, 'Object', {
+  // 19.1.2.2 Object.create(O [, Properties])
+  create: $create,
+  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
+  defineProperty: $defineProperty,
+  // 19.1.2.3 Object.defineProperties(O, Properties)
+  defineProperties: $defineProperties,
+  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
+  // 19.1.2.7 Object.getOwnPropertyNames(O)
+  getOwnPropertyNames: $getOwnPropertyNames,
+  // 19.1.2.8 Object.getOwnPropertySymbols(O)
+  getOwnPropertySymbols: $getOwnPropertySymbols
+});
+
+// 24.3.2 JSON.stringify(value [, replacer [, space]])
+$JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function(){
+  var S = $Symbol();
+  // MS Edge converts symbol values to JSON as {}
+  // WebKit converts symbol values to JSON as null
+  // V8 throws on boxed symbols
+  return _stringify([S]) != '[null]' || _stringify({a: S}) != '{}' || _stringify(Object(S)) != '{}';
+})), 'JSON', {
+  stringify: function stringify(it){
+    if(it === undefined || isSymbol(it))return; // IE8 returns string on undefined
+    var args = [it]
+      , i    = 1
+      , replacer, $replacer;
+    while(arguments.length > i)args.push(arguments[i++]);
+    replacer = args[1];
+    if(typeof replacer == 'function')$replacer = replacer;
+    if($replacer || !isArray(replacer))replacer = function(key, value){
+      if($replacer)value = $replacer.call(this, key, value);
+      if(!isSymbol(value))return value;
+    };
+    args[1] = replacer;
+    return _stringify.apply($JSON, args);
+  }
+});
+
+// 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(24)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+// 19.4.3.5 Symbol.prototype[@@toStringTag]
+setToStringTag($Symbol, 'Symbol');
+// 20.2.1.9 Math[@@toStringTag]
+setToStringTag(Math, 'Math', true);
+// 24.3.3 JSON[@@toStringTag]
+setToStringTag(global.JSON, 'JSON', true);
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getKeys   = __webpack_require__(27)
+  , toIObject = __webpack_require__(20);
+module.exports = function(object, el){
+  var O      = toIObject(object)
+    , keys   = getKeys(O)
+    , length = keys.length
+    , index  = 0
+    , key;
+  while(length > index)if(O[key = keys[index++]] === el)return key;
+};
+
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// all enumerable object keys, includes symbols
+var getKeys = __webpack_require__(27)
+  , gOPS    = __webpack_require__(55)
+  , pIE     = __webpack_require__(35);
+module.exports = function(it){
+  var result     = getKeys(it)
+    , getSymbols = gOPS.f;
+  if(getSymbols){
+    var symbols = getSymbols(it)
+      , isEnum  = pIE.f
+      , i       = 0
+      , key;
+    while(symbols.length > i)if(isEnum.call(it, key = symbols[i++]))result.push(key);
+  } return result;
+};
+
+/***/ }),
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.2.2 IsArray(argument)
+var cof = __webpack_require__(47);
+module.exports = Array.isArray || function isArray(arg){
+  return cof(arg) == 'Array';
+};
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
+var toIObject = __webpack_require__(20)
+  , gOPN      = __webpack_require__(72).f
+  , toString  = {}.toString;
+
+var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
+  ? Object.getOwnPropertyNames(window) : [];
+
+var getWindowNames = function(it){
+  try {
+    return gOPN(it);
+  } catch(e){
+    return windowNames.slice();
+  }
+};
+
+module.exports.f = function getOwnPropertyNames(it){
+  return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
+};
+
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(54)('asyncIterator');
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(54)('observable');
+
+/***/ }),
+/* 129 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _setPrototypeOf = __webpack_require__(130);
+
+var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
+
+var _create = __webpack_require__(134);
+
+var _create2 = _interopRequireDefault(_create);
+
+var _typeof2 = __webpack_require__(71);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
+  }
+
+  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+/***/ }),
+/* 130 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(131), __esModule: true };
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(132);
+module.exports = __webpack_require__(7).Object.setPrototypeOf;
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.3.19 Object.setPrototypeOf(O, proto)
+var $export = __webpack_require__(16);
+$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(133).set});
+
+/***/ }),
+/* 133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+/* eslint-disable no-proto */
+var isObject = __webpack_require__(22)
+  , anObject = __webpack_require__(18);
+var check = function(O, proto){
+  anObject(O);
+  if(!isObject(proto) && proto !== null)throw TypeError(proto + ": can't set as prototype!");
+};
+module.exports = {
+  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
+    function(test, buggy, set){
+      try {
+        set = __webpack_require__(40)(Function.call, __webpack_require__(73).f(Object.prototype, '__proto__').set, 2);
+        set(test, []);
+        buggy = !(test instanceof Array);
+      } catch(e){ buggy = true; }
+      return function setPrototypeOf(O, proto){
+        check(O, proto);
+        if(buggy)O.__proto__ = proto;
+        else set(O, proto);
+        return O;
+      };
+    }({}, false) : undefined),
+  check: check
+};
+
+/***/ }),
+/* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(135), __esModule: true };
+
+/***/ }),
+/* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(136);
+var $Object = __webpack_require__(7).Object;
+module.exports = function create(P, D){
+  return $Object.create(P, D);
+};
+
+/***/ }),
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__(16)
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+$export($export.S, 'Object', {create: __webpack_require__(46)});
+
+/***/ }),
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(138);
+module.exports = __webpack_require__(7).Object.assign;
+
+/***/ }),
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.1 Object.assign(target, source)
-var $export = __webpack_require__(25);
+var $export = __webpack_require__(16);
 
-$export($export.S + $export.F, 'Object', {assign: __webpack_require__(108)});
+$export($export.S + $export.F, 'Object', {assign: __webpack_require__(139)});
 
 /***/ }),
-/* 108 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // 19.1.2.1 Object.assign(target, source, ...)
-var getKeys  = __webpack_require__(39)
-  , gOPS     = __webpack_require__(109)
-  , pIE      = __webpack_require__(110)
-  , toObject = __webpack_require__(29)
-  , IObject  = __webpack_require__(49)
+var getKeys  = __webpack_require__(27)
+  , gOPS     = __webpack_require__(55)
+  , pIE      = __webpack_require__(35)
+  , toObject = __webpack_require__(30)
+  , IObject  = __webpack_require__(65)
   , $assign  = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(24)(function(){
+module.exports = !$assign || __webpack_require__(23)(function(){
   var A = {}
     , B = {}
     , S = Symbol()
@@ -9987,19 +10945,7 @@ module.exports = !$assign || __webpack_require__(24)(function(){
 } : $assign;
 
 /***/ }),
-/* 109 */
-/***/ (function(module, exports) {
-
-exports.f = Object.getOwnPropertySymbols;
-
-/***/ }),
-/* 110 */
-/***/ (function(module, exports) {
-
-exports.f = {}.propertyIsEnumerable;
-
-/***/ }),
-/* 111 */
+/* 140 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10009,23 +10955,11 @@ exports.f = {}.propertyIsEnumerable;
  * It's a storehouse of path geometry for SVG images.
  */
 
-// We do frac-lines, underlines, and overlines with an SVG path and we put that
-// path is into a viewBox that is 5 times as thick as the line. That way,
-// any browser rounding error on the size of the surrounding span will
-// not pinch the ink of the line.  Think of it as padding for the line.
-// As usual, the viewBox-to-em scale is 1000.
+// In all paths below, the viewBox-to-em scale is 1000:1.
 
-var hLinePad = 80; // padding above and below a std 0.04em horiz rule.
-var vLinePad = 100; // padding on either side of a std vert 0.05em rule.
+var hLinePad = 80; // padding above a sqrt viniculum.
 
 var path = {
-    // stdHorizRule is used for frac-lines, underlines, and overlines.
-    // It is 0.04em thick if the line comes from normalsize/textstyle.
-    stdHorizRule: "M0 " + hLinePad + "H400000 v40H0z M0 " + hLinePad + "H400000 v40H0z",
-
-    // vertSeparator is used in arrays. It is 0.05em wide in a 0.25em viewBox.
-    vertSeparator: "M" + vLinePad + " 0h50V400000h-50zM" + vLinePad + " 0h50V400000h-50z",
-
     // sqrtMain path geometry is from glyph U221A in the font KaTeX Main
     // All surds have 80 units padding above the viniculumn.
     sqrtMain: "M95," + (622 + hLinePad) + "c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,\n-10,-9.5,-14c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54c44.2,-33.3,65.8,\n-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10s173,378,173,378c0.7,0,\n35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429c69,-144,104.5,-217.7,106.5,\n-221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467\ns-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422\ns-65,47,-65,47z M834 " + hLinePad + "H400000v40H845z",
@@ -10161,20 +11095,127 @@ var path = {
 /* harmony default export */ __webpack_exports__["a"] = ({ path: path });
 
 /***/ }),
-/* 112 */
+/* 141 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return wideCharacterFont; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParseError__ = __webpack_require__(5);
+
+
+
+/**
+ * Data below is from https://www.unicode.org/charts/PDF/U1D400.pdf
+ * That document sorts characters into groups by font type, say bold or italic.
+ *
+ * In the arrays below, each subarray consists three elements:
+ *      * The CSS class of that group when in math mode.
+ *      * The CSS class of that group when in text mode.
+ *      * The font name, so that KaTeX can get font metrics.
+ */
+
+/**
+ * This file provides support for Unicode range U+1D400 to U+1D7FF,
+ * Mathematical Alphanumeric Symbols.
+ *
+ * Function wideCharacterFont takes a wide character as input and returns
+ * the font information necessary to render it properly.
+ */
+
+var wideLatinLetterData = [["mathbf", "textbf", "Main-Bold"], // A-Z bold upright
+["mathbf", "textbf", "Main-Bold"], // a-z bold upright
+
+["mathit", "textit", "Math-Italic"], // A-Z italic
+["mathit", "textit", "Math-Italic"], // a-z italic
+
+["boldsymbol", "boldsymbol", "Main-BoldItalic"], // A-Z bold italic
+["boldsymbol", "boldsymbol", "Main-BoldItalic"], // a-z bold italic
+
+// Map fancy A-Z letters to script, not calligraphic.
+// This aligns with unicode-math and math fonts (except Cambria Math).
+["mathscr", "textscr", "Script-Regular"], // A-Z script
+["", "", ""], // a-z script.  No font
+
+["", "", ""], // A-Z bold script. No font
+["", "", ""], // a-z bold script. No font
+
+["mathfrak", "textfrak", "Fraktur-Regular"], // A-Z Fraktur
+["mathfrak", "textfrak", "Fraktur-Regular"], // a-z Fraktur
+
+["mathbb", "textbb", "AMS-Regular"], // A-Z double-struck
+["mathbb", "textbb", "AMS-Regular"], // k double-struck
+
+["", "", ""], // A-Z bold Fraktur No font metrics
+["", "", ""], // a-z bold Fraktur.   No font.
+
+["mathsf", "textsf", "SansSerif-Regular"], // A-Z sans-serif
+["mathsf", "textsf", "SansSerif-Regular"], // a-z sans-serif
+
+["mathboldsf", "textboldsf", "SansSerif-Bold"], // A-Z bold sans-serif
+["mathboldsf", "textboldsf", "SansSerif-Bold"], // a-z bold sans-serif
+
+["mathitsf", "textitsf", "SansSerif-Italic"], // A-Z italic sans-serif
+["mathitsf", "textitsf", "SansSerif-Italic"], // a-z italic sans-serif
+
+["", "", ""], // A-Z bold italic sans. No font
+["", "", ""], // a-z bold italic sans. No font
+
+["mathtt", "texttt", "Typewriter-Regular"], // A-Z monospace
+["mathtt", "texttt", "Typewriter-Regular"]];
+
+var wideNumeralData = [["mathbf", "textbf", "Main-Bold"], // 0-9 bold
+["", "", ""], // 0-9 double-struck. No KaTeX font.
+["mathsf", "textsf", "SansSerif-Regular"], // 0-9 sans-serif
+["mathboldsf", "textboldsf", "SansSerif-Bold"], // 0-9 bold sans-serif
+["mathtt", "texttt", "Typewriter-Regular"]];
+
+var wideCharacterFont = function wideCharacterFont(wideChar, mode) {
+
+    // IE doesn't support codePointAt(). So work with the surrogate pair.
+    var H = wideChar.charCodeAt(0); // high surrogate
+    var L = wideChar.charCodeAt(1); // low surrogate
+    var codePoint = (H - 0xD800) * 0x400 + (L - 0xDC00) + 0x10000;
+
+    var j = mode === "math" ? 0 : 1; // column index for CSS class.
+
+    if (0x1D400 <= codePoint && codePoint < 0x1D6A4) {
+        // wideLatinLetterData contains exactly 26 chars on each row.
+        // So we can calculate the relevant row. No traverse necessary.
+        var i = Math.floor((codePoint - 0x1D400) / 26);
+        return [wideLatinLetterData[i][2], wideLatinLetterData[i][j]];
+    } else if (0x1D7CE <= codePoint && codePoint <= 0x1D7FF) {
+        // Numerals, ten per row.
+        var _i = Math.floor((codePoint - 0x1D7CE) / 10);
+        return [wideNumeralData[_i][2], wideNumeralData[_i][j]];
+    } else if (codePoint === 0x1D6A5 || codePoint === 0x1D6A6) {
+        // dotless i or j
+        return [wideLatinLetterData[0][2], wideLatinLetterData[0][j]];
+    } else if (0x1D6A6 < codePoint && codePoint < 0x1D7CE) {
+        // Greek letters. Not supported, yet.
+        return ["", ""];
+    } else {
+        // We don't support any wide characters outside 1D400–1D7FF.
+        throw new __WEBPACK_IMPORTED_MODULE_0__ParseError__["a" /* default */]("Unsupported character: " + wideChar);
+    }
+};
+
+/***/ }),
+/* 142 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return spacings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return tightSpacings; });
-/**
- * Describes spaces between different classes of atoms.
- */
+
 
 var thinspace = {
     number: 3,
     unit: "mu"
 };
+/**
+ * Describes spaces between different classes of atoms.
+ */
+
 var mediumspace = {
     number: 4,
     unit: "mu"
@@ -10183,6 +11224,13 @@ var thickspace = {
     number: 5,
     unit: "mu"
 };
+
+// Making the type below exact with all optional fields doesn't work due to
+// - https://github.com/facebook/flow/issues/4582
+// - https://github.com/facebook/flow/issues/5688
+// However, since *all* fields are optional, $Shape<> works as suggested in 5688
+// above.
+
 
 // Spacing relationships for display and text styles
 var spacings = {
@@ -10259,11 +11307,13 @@ var tightSpacings = {
 };
 
 /***/ }),
-/* 113 */
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Parser__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Parser__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ParseNode__ = __webpack_require__(6);
 
 /**
  * Provides a single function for parsing an expression using a Parser
@@ -10272,43 +11322,59 @@ var tightSpacings = {
 
 
 
+
+
 /**
  * Parses an expression using a Parser, then returns the parsed result.
  */
 var parseTree = function parseTree(toParse, settings) {
-  if (!(typeof toParse === 'string' || toParse instanceof String)) {
-    throw new TypeError('KaTeX can only parse string typed expression');
-  }
-  var parser = new __WEBPACK_IMPORTED_MODULE_0__Parser__["a" /* default */](toParse, settings);
+    if (!(typeof toParse === 'string' || toParse instanceof String)) {
+        throw new TypeError('KaTeX can only parse string typed expression');
+    }
+    var parser = new __WEBPACK_IMPORTED_MODULE_0__Parser__["a" /* default */](toParse, settings);
+    var tree = parser.parse();
 
-  return parser.parse();
+    // If the input used \tag, it will set the \df@tag macro to the tag.
+    // In this case, we separately parse the tag and wrap the tree.
+    if (parser.gullet.macros["\\df@tag"]) {
+        if (!settings.displayMode) {
+            throw new __WEBPACK_IMPORTED_MODULE_1__ParseError__["a" /* default */]("\\tag works only in display equations");
+        }
+        parser.gullet.feed("\\df@tag");
+        tree = [new __WEBPACK_IMPORTED_MODULE_2__ParseNode__["c" /* default */]("tag", {
+            body: tree,
+            tag: parser.parse()
+        }, "text")];
+    }
+
+    return tree;
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (parseTree);
 
 /***/ }),
-/* 114 */
+/* 144 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MacroExpander__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MacroExpander__ = __webpack_require__(177);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__symbols__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__units__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__unicodeScripts__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__unicodeAccents__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__units__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__unicodeScripts__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__unicodeAccents__ = __webpack_require__(180);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__unicodeAccents___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__unicodeAccents__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__unicodeSymbols__ = __webpack_require__(149);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ParseNode__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ParseError__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Lexer_js__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Settings__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Token__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__unicodeSymbols__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ParseNode__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Lexer_js__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Settings__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Token__ = __webpack_require__(25);
 
 
 
@@ -10357,7 +11423,7 @@ var parseTree = function parseTree(toParse, settings) {
  *
  * The earlier functions return ParseNodes.
  * The later functions (which are called deeper in the parse) sometimes return
- * ParsedFuncOrArgOrDollar, which contain a ParseNode as well as some data about
+ * ParsedFuncOrArg, which contain a ParseNode as well as some data about
  * whether the parsed object is a function which is missing some arguments, or a
  * standalone object which can be used as an argument to another function.
  */
@@ -10370,17 +11436,6 @@ function newFunction(token) {
     return { type: "fn", result: token.text, token: token };
 }
 
-function newDollar(token) {
-    return { type: "$", result: "$", token: token };
-}
-
-function assertFuncOrArg(parsed) {
-    if (parsed.type === "$") {
-        throw new __WEBPACK_IMPORTED_MODULE_11__ParseError__["a" /* default */]("Unexpected $", parsed.token);
-    }
-    return parsed;
-}
-
 var Parser = function () {
     function Parser(input, settings) {
         __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, Parser);
@@ -10389,7 +11444,7 @@ var Parser = function () {
         this.mode = "math";
         // Create a new macro expander (gullet) and (indirectly via that) also a
         // new lexer (mouth) for this parser (stomach, in the language of TeX)
-        this.gullet = new __WEBPACK_IMPORTED_MODULE_4__MacroExpander__["a" /* default */](input, settings.macros, this.mode);
+        this.gullet = new __WEBPACK_IMPORTED_MODULE_4__MacroExpander__["a" /* default */](input, settings, this.mode);
         // Use old \color behavior (same as LaTeX's \textcolor) if requested.
         // We do this after the macros object has been copied by MacroExpander.
         if (settings.colorIsTextColor) {
@@ -10552,17 +11607,17 @@ var Parser = function () {
                 if (numerBody.length === 1 && numerBody[0].type === "ordgroup") {
                     numerNode = numerBody[0];
                 } else {
-                    numerNode = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("ordgroup", numerBody, this.mode);
+                    numerNode = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("ordgroup", numerBody, this.mode);
                 }
 
                 if (denomBody.length === 1 && denomBody[0].type === "ordgroup") {
                     denomNode = denomBody[0];
                 } else {
-                    denomNode = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("ordgroup", denomBody, this.mode);
+                    denomNode = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("ordgroup", denomBody, this.mode);
                 }
 
                 var value = this.callFunction(funcName, [numerNode, denomNode], []);
-                return [new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */](value.type, value, this.mode)];
+                return [new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */](value.type, value, this.mode)];
             } else {
                 return body;
             }
@@ -10592,18 +11647,17 @@ var Parser = function () {
                 }
             }
 
-            var arg = assertFuncOrArg(group);
-            if (arg.type === "fn") {
+            if (group.type === "fn") {
                 // ^ and _ have a greediness, so handle interactions with functions'
                 // greediness
-                var funcGreediness = __WEBPACK_IMPORTED_MODULE_2__functions__["a" /* default */][arg.result].greediness;
+                var funcGreediness = __WEBPACK_IMPORTED_MODULE_2__functions__["a" /* default */][group.result].greediness;
                 if (funcGreediness > Parser.SUPSUB_GREEDINESS) {
                     return this.parseGivenFunction(group);
                 } else {
-                    throw new __WEBPACK_IMPORTED_MODULE_11__ParseError__["a" /* default */]("Got function '" + arg.result + "' with no arguments " + "as " + name, symbolToken);
+                    throw new __WEBPACK_IMPORTED_MODULE_11__ParseError__["a" /* default */]("Got function '" + group.result + "' with no arguments " + "as " + name, symbolToken);
                 }
             } else {
-                return arg.result;
+                return group.result;
             }
         }
 
@@ -10619,15 +11673,15 @@ var Parser = function () {
             var textordArray = [];
 
             for (var i = 0; i < text.length; i++) {
-                textordArray.push(new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("textord", text[i], "text"));
+                textordArray.push(new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("textord", text[i], "text"));
             }
 
-            var textNode = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("text", {
+            var textNode = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("text", {
                 body: textordArray,
                 type: "text"
             }, this.mode);
 
-            var colorNode = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("color", {
+            var colorNode = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("color", {
                 color: this.settings.errorColor,
                 value: [textNode],
                 type: "color"
@@ -10691,7 +11745,7 @@ var Parser = function () {
                     if (superscript) {
                         throw new __WEBPACK_IMPORTED_MODULE_11__ParseError__["a" /* default */]("Double superscript", lex);
                     }
-                    var prime = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("textord", "\\prime", this.mode);
+                    var prime = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("textord", "\\prime", this.mode);
 
                     // Many primes can be grouped together, so we handle this here
                     var primes = [prime];
@@ -10708,16 +11762,18 @@ var Parser = function () {
                         primes.push(this.handleSupSubscript("superscript"));
                     }
                     // Put everything into an ordgroup as the superscript
-                    superscript = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("ordgroup", primes, this.mode);
+                    superscript = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("ordgroup", primes, this.mode);
                 } else {
                     // If it wasn't ^, _, or ', stop parsing super/subscripts
                     break;
                 }
             }
 
+            // Base must be set if superscript or subscript are set per logic above,
+            // but need to check here for type check to pass.
             if (superscript || subscript) {
                 // If we got either a superscript or subscript, create a supsub
-                return new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("supsub", {
+                return new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("supsub", {
                     base: base,
                     sup: superscript,
                     sub: subscript
@@ -10752,25 +11808,7 @@ var Parser = function () {
 
             var func = start.result;
 
-            if (func === "$") {
-                if (this.mode === "math") {
-                    throw new __WEBPACK_IMPORTED_MODULE_11__ParseError__["a" /* default */]("$ within math mode");
-                }
-                var outerMode = this.mode;
-                this.switchMode("math");
-                // Expand next symbol now that we're in math mode.
-                this.consume();
-                var body = this.parseExpression(false, "$");
-                // We can't expand the next symbol after the $ until after
-                // switching modes back.  So don't consume within expect.
-                this.expect("$", false);
-                this.switchMode(outerMode);
-                this.consume();
-                return new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("styling", {
-                    style: "text",
-                    value: body
-                }, "math");
-            } else if (func === "\\begin") {
+            if (func === "\\begin") {
                 // begin...end is similar to left...right
                 var begin = this.parseGivenFunction(start);
                 var envName = begin.value.name;
@@ -10826,7 +11864,6 @@ var Parser = function () {
     }, {
         key: "parseGivenFunction",
         value: function parseGivenFunction(baseGroup, breakOnTokenText) {
-            baseGroup = assertFuncOrArg(baseGroup);
             if (baseGroup.type === "fn") {
                 var func = baseGroup.result;
                 var funcData = __WEBPACK_IMPORTED_MODULE_2__functions__["a" /* default */][func];
@@ -10836,13 +11873,25 @@ var Parser = function () {
                     throw new __WEBPACK_IMPORTED_MODULE_11__ParseError__["a" /* default */]("Can't use function '" + func + "' in math mode", baseGroup.token);
                 }
 
+                // Consume the command token after possibly switching to the
+                // mode specified by the function (for instant mode switching),
+                // and then immediately switch back.
+                if (funcData.consumeMode) {
+                    var oldMode = this.mode;
+                    this.switchMode(funcData.consumeMode);
+                    this.consume();
+                    this.switchMode(oldMode);
+                } else {
+                    this.consume();
+                }
+
                 var _parseArguments2 = this.parseArguments(func, funcData),
                     args = _parseArguments2.args,
                     optArgs = _parseArguments2.optArgs;
 
                 var _token = baseGroup.token;
                 var _result2 = this.callFunction(func, args, optArgs, _token, breakOnTokenText);
-                return new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */](_result2.type, _result2, this.mode);
+                return new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */](_result2.type, _result2, this.mode);
             } else {
                 return baseGroup.result;
             }
@@ -10919,7 +11968,6 @@ var Parser = function () {
                     }
                 }
                 var argNode = void 0;
-                arg = assertFuncOrArg(arg);
                 if (arg.type === "fn") {
                     var argGreediness = __WEBPACK_IMPORTED_MODULE_2__functions__["a" /* default */][arg.result].greediness;
                     if (argGreediness > baseGreediness) {
@@ -11085,7 +12133,7 @@ var Parser = function () {
             if (!match) {
                 throw new __WEBPACK_IMPORTED_MODULE_11__ParseError__["a" /* default */]("Invalid color: '" + res.text + "'", res);
             }
-            return newArgument(new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("color", match[0], this.mode), res);
+            return newArgument(new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("color-token", match[0], this.mode), res);
         }
 
         /**
@@ -11105,7 +12153,7 @@ var Parser = function () {
             // and keep them as-is. Some browser will replace backslashes with
             // forward slashes.
             var url = raw.replace(/\\([#$%&~_^{}])/g, '$1');
-            return newArgument(new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("url", url, this.mode), res);
+            return newArgument(new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("url", url, this.mode), res);
         }
 
         /**
@@ -11135,7 +12183,7 @@ var Parser = function () {
             if (!Object(__WEBPACK_IMPORTED_MODULE_6__units__["b" /* validUnit */])(data)) {
                 throw new __WEBPACK_IMPORTED_MODULE_11__ParseError__["a" /* default */]("Invalid unit: '" + data.unit + "'", res);
             }
-            return newArgument(new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("size", data, this.mode), res);
+            return newArgument(new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("size", data, this.mode), res);
         }
 
         /**
@@ -11173,7 +12221,7 @@ var Parser = function () {
                 if (mode === "text") {
                     this.formLigatures(expression);
                 }
-                return newArgument(new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("ordgroup", expression, this.mode, firstToken, lastToken), firstToken.range(lastToken, firstToken.text));
+                return newArgument(new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("ordgroup", expression, this.mode, firstToken, lastToken), firstToken.range(lastToken, firstToken.text));
             } else {
                 // Otherwise, just return a nucleus, or nothing for an optional group
                 if (mode) {
@@ -11205,15 +12253,15 @@ var Parser = function () {
                 var v = a.value;
                 if (v === "-" && group[i + 1].value === "-") {
                     if (i + 1 < n && group[i + 2].value === "-") {
-                        group.splice(i, 3, new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("textord", "---", "text", a, group[i + 2]));
+                        group.splice(i, 3, new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("textord", "---", "text", a, group[i + 2]));
                         n -= 2;
                     } else {
-                        group.splice(i, 2, new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("textord", "--", "text", a, group[i + 1]));
+                        group.splice(i, 2, new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("textord", "--", "text", a, group[i + 1]));
                         n -= 1;
                     }
                 }
                 if ((v === "'" || v === "`") && group[i + 1].value === v) {
-                    group.splice(i, 2, new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("textord", v + v, "text", a, group[i + 1]));
+                    group.splice(i, 2, new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("textord", v + v, "text", a, group[i + 1]));
                     n -= 1;
                 }
             }
@@ -11231,9 +12279,10 @@ var Parser = function () {
             var text = nucleus.text;
 
             if (__WEBPACK_IMPORTED_MODULE_2__functions__["a" /* default */][text]) {
-                this.consume();
-                // If there exists a function with this name, we return the function and
-                // say that it is a function.
+                // If there exists a function with this name, we return the
+                // function and say that it is a function.
+                // The token will be consumed later in parseGivenFunction
+                // (after possibly switching modes).
                 return newFunction(nucleus);
             } else if (/^\\verb[^a-zA-Z]/.test(text)) {
                 this.consume();
@@ -11248,16 +12297,18 @@ var Parser = function () {
                     throw new __WEBPACK_IMPORTED_MODULE_11__ParseError__["a" /* default */]("\\verb assertion failed --\n                    please report what input caused this bug");
                 }
                 arg = arg.slice(1, -1); // remove first and last char
-                return newArgument(new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("verb", {
+                return newArgument(new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("verb", {
                     body: arg,
                     star: star
                 }, "text"), nucleus);
-            } else if (text === "$") {
-                return newDollar(nucleus);
             }
             // At this point, we should have a symbol, possibly with accents.
             // First expand any accented base symbol according to unicodeSymbols.
             if (__WEBPACK_IMPORTED_MODULE_9__unicodeSymbols__["a" /* default */].hasOwnProperty(text[0]) && !__WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */][this.mode][text[0]]) {
+                // This behavior is not strict (XeTeX-compatible) in math mode.
+                if (this.settings.strict && this.mode === "math") {
+                    this.settings.reportNonstrict("unicodeTextInMathMode", "Accented Unicode text character \"" + text[0] + "\" used in " + "math mode", nucleus);
+                }
                 text = __WEBPACK_IMPORTED_MODULE_9__unicodeSymbols__["a" /* default */][text[0]] + text.substr(1);
             }
             // Strip off any combining characters
@@ -11273,9 +12324,20 @@ var Parser = function () {
             // Recognize base symbol
             var symbol = null;
             if (__WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */][this.mode][text]) {
-                symbol = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */](__WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */][this.mode][text].group, text, this.mode, nucleus);
-            } else if (this.mode === "text" && Object(__WEBPACK_IMPORTED_MODULE_7__unicodeScripts__["b" /* supportedCodepoint */])(text.charCodeAt(0))) {
-                symbol = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("textord", text, this.mode, nucleus);
+                if (this.settings.strict && this.mode === 'math' && __WEBPACK_IMPORTED_MODULE_5__symbols__["c" /* extraLatin */].indexOf(text) >= 0) {
+                    this.settings.reportNonstrict("unicodeTextInMathMode", "Latin-1/Unicode text character \"" + text[0] + "\" used in " + "math mode", nucleus);
+                }
+                symbol = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */](__WEBPACK_IMPORTED_MODULE_5__symbols__["a" /* default */][this.mode][text].group, text, this.mode, nucleus);
+            } else if (text.charCodeAt(0) >= 0x80) {
+                // no symbol for e.g. ^
+                if (this.settings.strict) {
+                    if (!Object(__WEBPACK_IMPORTED_MODULE_7__unicodeScripts__["b" /* supportedCodepoint */])(text.charCodeAt(0))) {
+                        this.settings.reportNonstrict("unknownSymbol", "Unrecognized Unicode character \"" + text[0] + "\"", nucleus);
+                    } else if (this.mode === "math") {
+                        this.settings.reportNonstrict("unicodeTextInMathMode", "Unicode text character \"" + text[0] + "\" used in math mode", nucleus);
+                    }
+                }
+                symbol = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("textord", text, this.mode, nucleus);
             } else {
                 return null; // EOF, ^, _, {, }, etc.
             }
@@ -11291,7 +12353,7 @@ var Parser = function () {
                     if (!command) {
                         throw new __WEBPACK_IMPORTED_MODULE_11__ParseError__["a" /* default */]("Accent " + accent + " unsupported in " + this.mode + " mode", nucleus);
                     }
-                    symbol = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["a" /* default */]("accent", {
+                    symbol = new __WEBPACK_IMPORTED_MODULE_10__ParseNode__["c" /* default */]("accent", {
                         type: "accent",
                         label: command,
                         isStretchy: false,
@@ -11307,58 +12369,61 @@ var Parser = function () {
     return Parser;
 }();
 
-Parser.endOfExpression = ["}", "\\end", "\\right", "&", "\\\\", "\\cr"];
+Parser.endOfExpression = ["}", "\\end", "\\right", "&"];
 Parser.SUPSUB_GREEDINESS = 1;
 /* harmony default export */ __webpack_exports__["a"] = (Parser);
 
 /***/ }),
-/* 115 */
+/* 145 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParseError__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ParseNode__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__defineFunction__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_sqrt__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__functions_color__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__functions_text__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__functions_enclose__ = __webpack_require__(119);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__functions_overline__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__functions_underline__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__functions_rule__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__functions_kern__ = __webpack_require__(123);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__functions_phantom__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__functions_mod__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__functions_op__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__functions_operatorname__ = __webpack_require__(127);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__functions_genfrac__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__functions_lap__ = __webpack_require__(129);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__functions_smash__ = __webpack_require__(130);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__functions_delimsizing__ = __webpack_require__(131);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__functions_sizing__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__functions_styling__ = __webpack_require__(132);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__functions_font__ = __webpack_require__(133);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__functions_accent__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__functions_accentunder__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__functions_verb__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__functions_href__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__functions_mathchoice__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__defineFunction__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__functions_sqrt__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__functions_color__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__functions_text__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__functions_math__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__functions_enclose__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__functions_overline__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__functions_underline__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__functions_rule__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__functions_kern__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__functions_phantom__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__functions_mclass__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__functions_mod__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__functions_op__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__functions_operatorname__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__functions_genfrac__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__functions_lap__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__functions_smash__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__functions_delimsizing__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__functions_sizing__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__functions_styling__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__functions_font__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__functions_accent__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__functions_accentunder__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__functions_cr__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__functions_verb__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__functions_href__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__functions_mathchoice__ = __webpack_require__(174);
 
 /** Include this to ensure that all functions are defined. */
 
 
 
-
 // WARNING: New functions should be added to src/functions and imported here.
 
-var functions = __WEBPACK_IMPORTED_MODULE_2__defineFunction__["a" /* _functions */];
+var functions = __WEBPACK_IMPORTED_MODULE_1__defineFunction__["a" /* _functions */];
 /* harmony default export */ __webpack_exports__["a"] = (functions);
 
 // Define a convenience function that mimcs the old semantics of defineFunction
 // to support existing code so that we can migrate it a little bit at a time.
-var defineFunction = function defineFunction(names, props, handler) // null only if handled in parser
+var defineFunction = function defineFunction(
+// Type of node data output by the function handler. This is required to aid
+type, names, props, handler) // null only if handled in parser
 {
-    Object(__WEBPACK_IMPORTED_MODULE_2__defineFunction__["b" /* default */])({ names: names, props: props, handler: handler });
+    Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({ type: type, names: names, props: props, handler: handler });
 };
 
 // TODO(kevinb): have functions return an object and call defineFunction with
@@ -11381,98 +12446,11 @@ var defineFunction = function defineFunction(names, props, handler) // null only
 
 
 
-// Math class commands except \mathop
-defineFunction(["\\mathord", "\\mathbin", "\\mathrel", "\\mathopen", "\\mathclose", "\\mathpunct", "\\mathinner"], {
-    numArgs: 1
-}, function (context, args) {
-    var body = args[0];
-    return {
-        type: "mclass",
-        mclass: "m" + context.funcName.substr(5),
-        value: Object(__WEBPACK_IMPORTED_MODULE_2__defineFunction__["c" /* ordargument */])(body)
-    };
-});
-
-// Build a relation by placing one symbol on top of another
-defineFunction(["\\stackrel"], {
-    numArgs: 2
-}, function (context, args) {
-    var top = args[0];
-    var bottom = args[1];
-
-    var bottomop = new __WEBPACK_IMPORTED_MODULE_1__ParseNode__["a" /* default */]("op", {
-        type: "op",
-        limits: true,
-        alwaysHandleSupSub: true,
-        symbol: false,
-        value: Object(__WEBPACK_IMPORTED_MODULE_2__defineFunction__["c" /* ordargument */])(bottom)
-    }, bottom.mode);
-
-    var supsub = new __WEBPACK_IMPORTED_MODULE_1__ParseNode__["a" /* default */]("supsub", {
-        base: bottomop,
-        sup: top,
-        sub: null
-    }, top.mode);
-
-    return {
-        type: "mclass",
-        mclass: "mrel",
-        value: [supsub]
-    };
-});
 
 
 
-var singleCharIntegrals = {
-    "\u222B": "\\int",
-    "\u222C": "\\iint",
-    "\u222D": "\\iiint",
-    "\u222E": "\\oint"
-};
 
-// There are 2 flags for operators; whether they produce limits in
-// displaystyle, and whether they are symbols and should grow in
-// displaystyle. These four groups cover the four possible choices.
 
-// No limits, not symbols
-defineFunction(["\\arcsin", "\\arccos", "\\arctan", "\\arctg", "\\arcctg", "\\arg", "\\ch", "\\cos", "\\cosec", "\\cosh", "\\cot", "\\cotg", "\\coth", "\\csc", "\\ctg", "\\cth", "\\deg", "\\dim", "\\exp", "\\hom", "\\ker", "\\lg", "\\ln", "\\log", "\\sec", "\\sin", "\\sinh", "\\sh", "\\tan", "\\tanh", "\\tg", "\\th"], {
-    numArgs: 0
-}, function (context) {
-    return {
-        type: "op",
-        limits: false,
-        symbol: false,
-        body: context.funcName
-    };
-});
-
-// Limits, not symbols
-defineFunction(["\\det", "\\gcd", "\\inf", "\\lim", "\\max", "\\min", "\\Pr", "\\sup"], {
-    numArgs: 0
-}, function (context) {
-    return {
-        type: "op",
-        limits: true,
-        symbol: false,
-        body: context.funcName
-    };
-});
-
-// No limits, symbols
-defineFunction(["\\int", "\\iint", "\\iiint", "\\oint", "\u222B", "\u222C", "\u222D", "\u222E"], {
-    numArgs: 0
-}, function (context) {
-    var fName = context.funcName;
-    if (fName.length === 1) {
-        fName = singleCharIntegrals[fName];
-    }
-    return {
-        type: "op",
-        limits: false,
-        symbol: true,
-        body: fName
-    };
-});
 
 
 
@@ -11495,7 +12473,7 @@ defineFunction(["\\int", "\\iint", "\\iiint", "\\oint", "\u222B", "\u222C", "\u2
 
 
 // Horizontal stretchy braces
-defineFunction(["\\overbrace", "\\underbrace"], {
+defineFunction("horizBrace", ["\\overbrace", "\\underbrace"], {
     numArgs: 1
 }, function (context, args) {
     var base = args[0];
@@ -11511,7 +12489,7 @@ defineFunction(["\\overbrace", "\\underbrace"], {
 
 
 // Stretchy arrows with an optional argument
-defineFunction(["\\xleftarrow", "\\xrightarrow", "\\xLeftarrow", "\\xRightarrow", "\\xleftrightarrow", "\\xLeftrightarrow", "\\xhookleftarrow", "\\xhookrightarrow", "\\xmapsto", "\\xrightharpoondown", "\\xrightharpoonup", "\\xleftharpoondown", "\\xleftharpoonup", "\\xrightleftharpoons", "\\xleftrightharpoons", "\\xlongequal", "\\xtwoheadrightarrow", "\\xtwoheadleftarrow", "\\xtofrom",
+defineFunction("xArrow", ["\\xleftarrow", "\\xrightarrow", "\\xLeftarrow", "\\xRightarrow", "\\xleftrightarrow", "\\xLeftrightarrow", "\\xhookleftarrow", "\\xhookrightarrow", "\\xmapsto", "\\xrightharpoondown", "\\xrightharpoonup", "\\xleftharpoondown", "\\xleftharpoonup", "\\xrightleftharpoons", "\\xleftrightharpoons", "\\xlongequal", "\\xtwoheadrightarrow", "\\xtwoheadleftarrow", "\\xtofrom",
 // The next 3 functions are here to support the mhchem extension.
 // Direct use of these functions is discouraged and may break someday.
 "\\xrightleftarrows", "\\xrightequilibrium", "\\xleftequilibrium"], {
@@ -11529,7 +12507,7 @@ defineFunction(["\\xleftarrow", "\\xrightarrow", "\\xLeftarrow", "\\xRightarrow"
 });
 
 // Infix generalized fractions
-defineFunction(["\\over", "\\choose", "\\atop"], {
+defineFunction("infix", ["\\over", "\\choose", "\\atop"], {
     numArgs: 0,
     infix: true
 }, function (context) {
@@ -11554,21 +12532,11 @@ defineFunction(["\\over", "\\choose", "\\atop"], {
     };
 });
 
-// Row breaks for aligned data
-defineFunction(["\\\\", "\\cr"], {
-    numArgs: 0,
-    numOptionalArgs: 1,
-    argTypes: ["size"]
-}, function (context, args, optArgs) {
-    var size = optArgs[0];
-    return {
-        type: "cr",
-        size: size
-    };
-});
+// Row and line breaks
+
 
 // Environment delimiters
-defineFunction(["\\begin", "\\end"], {
+defineFunction("environment", ["\\begin", "\\end"], {
     numArgs: 1,
     argTypes: ["text"]
 }, function (context, args) {
@@ -11588,7 +12556,7 @@ defineFunction(["\\begin", "\\end"], {
 });
 
 // Box manipulation
-defineFunction(["\\raisebox"], {
+defineFunction("raisebox", ["\\raisebox"], {
     numArgs: 2,
     argTypes: ["size", "text"],
     allowedInText: true
@@ -11599,7 +12567,7 @@ defineFunction(["\\raisebox"], {
         type: "raisebox",
         dy: amount,
         body: body,
-        value: Object(__WEBPACK_IMPORTED_MODULE_2__defineFunction__["c" /* ordargument */])(body)
+        value: Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["c" /* ordargument */])(body)
     };
 });
 
@@ -11612,18 +12580,18 @@ defineFunction(["\\raisebox"], {
 
 
 /***/ }),
-/* 116 */
+/* 146 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__domTree__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__delimiter__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Style__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__domTree__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__delimiter__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Style__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__buildMathML__ = __webpack_require__(3);
 
 
 
@@ -11685,7 +12653,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 
         var _delimiter$sqrtImage = __WEBPACK_IMPORTED_MODULE_4__delimiter__["a" /* default */].sqrtImage(minDelimiterHeight, options),
             img = _delimiter$sqrtImage.span,
-            ruleWidth = _delimiter$sqrtImage.ruleWidth;
+            ruleWidth = _delimiter$sqrtImage.ruleWidth,
+            advanceWidth = _delimiter$sqrtImage.advanceWidth;
 
         var delimDepth = img.height - ruleWidth;
 
@@ -11697,7 +12666,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
         // Shift the sqrt image
         var imgShift = img.height - inner.height - lineClearance - ruleWidth;
 
-        inner.style.paddingLeft = img.advanceWidth + "em";
+        inner.style.paddingLeft = advanceWidth + "em";
 
         // Overlay the image and the argument.
         var body = __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeVList({
@@ -11744,16 +12713,18 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 117 */
+/* 147 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseError__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ParseNode__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildHTML__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__buildMathML__ = __webpack_require__(3);
+
 
 
 
@@ -11763,7 +12734,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 
 
 var htmlBuilder = function htmlBuilder(group, options) {
-    var elements = __WEBPACK_IMPORTED_MODULE_4__buildHTML__["a" /* buildExpression */](group.value.value, options.withColor(group.value.color), false);
+    var elements = __WEBPACK_IMPORTED_MODULE_5__buildHTML__["a" /* buildExpression */](group.value.value, options.withColor(group.value.color), false);
 
     // \color isn't supposed to affect the type of the elements it contains.
     // To accomplish this, we wrap the results in a fragment, so the inner
@@ -11773,7 +12744,7 @@ var htmlBuilder = function htmlBuilder(group, options) {
 };
 
 var mathmlBuilder = function mathmlBuilder(group, options) {
-    var inner = __WEBPACK_IMPORTED_MODULE_5__buildMathML__["a" /* buildExpression */](group.value.value, options);
+    var inner = __WEBPACK_IMPORTED_MODULE_6__buildMathML__["a" /* buildExpression */](group.value.value, options);
 
     var node = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mstyle", inner);
 
@@ -11792,7 +12763,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
         argTypes: ["color", "original"]
     },
     handler: function handler(context, args) {
-        var color = args[0];
+        var color = Object(__WEBPACK_IMPORTED_MODULE_4__ParseNode__["a" /* assertNodeType */])(args[0], "color-token");
         var body = args[1];
         return {
             type: "color",
@@ -11861,16 +12832,14 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 118 */
+/* 148 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(2);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__buildHTML__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__buildMathML__ = __webpack_require__(3);
 
 
 
@@ -11904,7 +12873,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
         numArgs: 1,
         argTypes: ["text"],
         greediness: 2,
-        allowedInText: true
+        allowedInText: true,
+        consumeMode: "text"
     },
     handler: function handler(context, args) {
         var body = args[0];
@@ -11918,59 +12888,93 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
         var font = group.value.font;
         // Checks if the argument is a font family or a font style.
         var newOptions = void 0;
-        if (textFontFamilies[font]) {
-            newOptions = options.withFontFamily(textFontFamilies[font]);
+        if (!font) {
+            newOptions = options;
+        } else if (textFontFamilies[font]) {
+            newOptions = options.withTextFontFamily(textFontFamilies[font]);
         } else if (textFontWeights[font]) {
-            newOptions = options.withFontWeight(textFontWeights[font]);
+            newOptions = options.withTextFontWeight(textFontWeights[font]);
         } else {
-            newOptions = options.withFontShape(textFontShapes[font]);
+            newOptions = options.withTextFontShape(textFontShapes[font]);
         }
-        var inner = __WEBPACK_IMPORTED_MODULE_3__buildHTML__["a" /* buildExpression */](group.value.body, newOptions, true);
+        var inner = __WEBPACK_IMPORTED_MODULE_2__buildHTML__["a" /* buildExpression */](group.value.body, newOptions, true);
         __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].tryCombineChars(inner);
         return __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeSpan(["mord", "text"], inner, newOptions);
     },
     mathmlBuilder: function mathmlBuilder(group, options) {
-        var body = group.value.body;
-
-        // Convert each element of the body into MathML, and combine consecutive
-        // <mtext> outputs into a single <mtext> tag.  In this way, we don't
-        // nest non-text items (e.g., $nested-math$) within an <mtext>.
-        var inner = [];
-        var currentText = null;
-        for (var i = 0; i < body.length; i++) {
-            var _group = __WEBPACK_IMPORTED_MODULE_4__buildMathML__["b" /* buildGroup */](body[i], options);
-            if (_group.type === 'mtext' && currentText != null) {
-                Array.prototype.push.apply(currentText.children, _group.children);
-            } else {
-                inner.push(_group);
-                if (_group.type === 'mtext') {
-                    currentText = _group;
-                }
-            }
-        }
-
-        // If there is a single tag in the end (presumably <mtext>),
-        // just return it.  Otherwise, wrap them in an <mrow>.
-        if (inner.length === 1) {
-            return inner[0];
-        } else {
-            return new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mrow", inner);
-        }
+        return __WEBPACK_IMPORTED_MODULE_3__buildMathML__["f" /* makeTextRow */](group.value.body, options);
     }
 });
 
 /***/ }),
-/* 119 */
+/* 149 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ParseError__ = __webpack_require__(5);
+
+
+
+// Switching from text mode back to math mode
+Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
+    type: "styling",
+    names: ["\\(", "$"],
+    props: {
+        numArgs: 0,
+        allowedInText: true,
+        allowedInMath: false,
+        consumeMode: "math"
+    },
+    handler: function handler(context, args) {
+        var funcName = context.funcName,
+            parser = context.parser;
+
+        var outerMode = parser.mode;
+        parser.switchMode("math");
+        var close = funcName === "\\(" ? "\\)" : "$";
+        var body = parser.parseExpression(false, close);
+        // We can't expand the next symbol after the closing $ until after
+        // switching modes back.  So don't consume within expect.
+        parser.expect(close, false);
+        parser.switchMode(outerMode);
+        parser.consume();
+        return {
+            type: "styling",
+            style: "text",
+            value: body
+        };
+    }
+});
+
+// Check for extra closing math delimiters
+Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
+    type: "text", // Doesn't matter what this is.
+    names: ["\\)", "\\]"],
+    props: {
+        numArgs: 0,
+        allowedInText: true,
+        allowedInMath: false
+    },
+    handler: function handler(context, args) {
+        throw new __WEBPACK_IMPORTED_MODULE_1__ParseError__["a" /* default */]("Mismatched " + context.funcName);
+    }
+});
+
+/***/ }),
+/* 150 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stretchy__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stretchy__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ParseNode__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__buildHTML__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__buildMathML__ = __webpack_require__(3);
+
 
 
 
@@ -11982,13 +12986,12 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 
 var htmlBuilder = function htmlBuilder(group, options) {
     // \cancel, \bcancel, \xcancel, \sout, \fbox, \colorbox, \fcolorbox
-    var inner = __WEBPACK_IMPORTED_MODULE_5__buildHTML__["b" /* buildGroup */](group.value.body, options);
+    var inner = __WEBPACK_IMPORTED_MODULE_6__buildHTML__["b" /* buildGroup */](group.value.body, options);
 
     var label = group.value.label.substr(1);
     var scale = options.sizeMultiplier;
     var img = void 0;
     var imgShift = 0;
-    var isColorbox = /color/.test(label);
 
     if (label === "sout") {
         img = __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeSpan(["stretchy", "sout"]);
@@ -12011,16 +13014,16 @@ var htmlBuilder = function htmlBuilder(group, options) {
         img = __WEBPACK_IMPORTED_MODULE_4__stretchy__["a" /* default */].encloseSpan(inner, label, vertPad, options);
         imgShift = inner.depth + vertPad;
 
-        if (isColorbox) {
+        if (group.value.backgroundColor) {
             img.style.backgroundColor = group.value.backgroundColor.value;
-            if (label === "fcolorbox") {
+            if (group.value.borderColor) {
                 img.style.borderColor = group.value.borderColor.value;
             }
         }
     }
 
     var vlist = void 0;
-    if (isColorbox) {
+    if (group.value.backgroundColor) {
         vlist = __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeVList({
             positionType: "individualShift",
             children: [
@@ -12055,7 +13058,7 @@ var htmlBuilder = function htmlBuilder(group, options) {
 };
 
 var mathmlBuilder = function mathmlBuilder(group, options) {
-    var node = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("menclose", [__WEBPACK_IMPORTED_MODULE_6__buildMathML__["b" /* buildGroup */](group.value.body, options)]);
+    var node = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("menclose", [__WEBPACK_IMPORTED_MODULE_7__buildMathML__["b" /* buildGroup */](group.value.body, options)]);
     switch (group.value.label) {
         case "\\cancel":
             node.setAttribute("notation", "updiagonalstrike");
@@ -12069,17 +13072,16 @@ var mathmlBuilder = function mathmlBuilder(group, options) {
         case "\\fbox":
             node.setAttribute("notation", "box");
             break;
-        case "\\colorbox":
-            node.setAttribute("mathbackground", group.value.backgroundColor.value);
-            break;
         case "\\fcolorbox":
-            node.setAttribute("mathbackground", group.value.backgroundColor.value);
             // TODO(ron): I don't know any way to set the border color.
             node.setAttribute("notation", "box");
             break;
-        default:
-            // xcancel
+        case "\\xcancel":
             node.setAttribute("notation", "updiagonalstrike downdiagonalstrike");
+            break;
+    }
+    if (group.value.backgroundColor) {
+        node.setAttribute("mathbackground", group.value.backgroundColor.value);
     }
     return node;
 };
@@ -12094,7 +13096,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
         argTypes: ["color", "text"]
     },
     handler: function handler(context, args, optArgs) {
-        var color = args[0];
+        var color = Object(__WEBPACK_IMPORTED_MODULE_5__ParseNode__["a" /* assertNodeType */])(args[0], "color-token");
         var body = args[1];
         return {
             type: "enclose",
@@ -12118,8 +13120,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
         argTypes: ["color", "color", "text"]
     },
     handler: function handler(context, args, optArgs) {
-        var borderColor = args[0];
-        var backgroundColor = args[1];
+        var borderColor = Object(__WEBPACK_IMPORTED_MODULE_5__ParseNode__["a" /* assertNodeType */])(args[0], "color-token");
+        var backgroundColor = Object(__WEBPACK_IMPORTED_MODULE_5__ParseNode__["a" /* assertNodeType */])(args[1], "color-token");
         var body = args[2];
         return {
             type: "enclose",
@@ -12154,15 +13156,15 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 120 */
+/* 151 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(3);
 
 
 
@@ -12195,13 +13197,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
         // Generate the vlist, with the appropriate kerns
         var vlist = __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeVList({
             positionType: "firstBaseline",
-            children: [{ type: "elem", elem: innerGroup },
-            // The kern on the next line would ordinarily be 3 * line.height
-            // But we put the line into a span that is 5 lines tall, to
-            // overcome a Chrome rendering issue. The SVG has a space in
-            // the bottom that is 2 lines high. That and the 1-line-high
-            // kern sum up to the same distance as the old 3 line kern.
-            { type: "kern", size: line.height }, { type: "elem", elem: line }]
+            children: [{ type: "elem", elem: innerGroup }, { type: "kern", size: 3 * line.height }, { type: "elem", elem: line }, { type: "kern", size: line.height }]
         }, options);
 
         return __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeSpan(["mord", "overline"], [vlist], options);
@@ -12218,15 +13214,15 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 121 */
+/* 152 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(3);
 
 
 
@@ -12260,11 +13256,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
         var vlist = __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeVList({
             positionType: "top",
             positionData: innerGroup.height,
-            children: [
-            // The SVG image is 5x as tall as the line.
-            // The bottom 2/5 of the image is blank and acts like a kern.
-            // So we omit the kern that would otherwise go at the bottom.
-            { type: "elem", elem: line }, { type: "kern", size: 5 * line.height }, { type: "elem", elem: innerGroup }]
+            children: [{ type: "kern", size: line.height }, { type: "elem", elem: line }, { type: "kern", size: 3 * line.height }, { type: "elem", elem: innerGroup }]
         }, options);
 
         return __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeSpan(["mord", "underline"], [vlist], options);
@@ -12281,14 +13273,16 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 122 */
+/* 153 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__defineFunction__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__units__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__defineFunction__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseNode__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__units__ = __webpack_require__(21);
+
 
 
 
@@ -12304,8 +13298,8 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
     },
     handler: function handler(context, args, optArgs) {
         var shift = optArgs[0];
-        var width = args[0];
-        var height = args[1];
+        var width = Object(__WEBPACK_IMPORTED_MODULE_3__ParseNode__["a" /* assertNodeType */])(args[0], "size");
+        var height = Object(__WEBPACK_IMPORTED_MODULE_3__ParseNode__["a" /* assertNodeType */])(args[1], "size");
         return {
             type: "rule",
             shift: shift && shift.value,
@@ -12320,11 +13314,11 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
         // Calculate the shift, width, and height of the rule, and account for units
         var shift = 0;
         if (group.value.shift) {
-            shift = Object(__WEBPACK_IMPORTED_MODULE_3__units__["a" /* calculateSize */])(group.value.shift, options);
+            shift = Object(__WEBPACK_IMPORTED_MODULE_4__units__["a" /* calculateSize */])(group.value.shift, options);
         }
 
-        var width = Object(__WEBPACK_IMPORTED_MODULE_3__units__["a" /* calculateSize */])(group.value.width, options);
-        var height = Object(__WEBPACK_IMPORTED_MODULE_3__units__["a" /* calculateSize */])(group.value.height, options);
+        var width = Object(__WEBPACK_IMPORTED_MODULE_4__units__["a" /* calculateSize */])(group.value.width, options);
+        var height = Object(__WEBPACK_IMPORTED_MODULE_4__units__["a" /* calculateSize */])(group.value.height, options);
 
         // Style the rule to the right size
         rule.style.borderRightWidth = width + "em";
@@ -12352,19 +13346,16 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 123 */
+/* 154 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__units__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ParseError__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__units__ = __webpack_require__(21);
 
-/* eslint no-console:0 */
 // Horizontal spacing commands
-
 
 
 
@@ -12382,19 +13373,21 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
         allowedInText: true
     },
     handler: function handler(context, args) {
-        var mathFunction = context.funcName[1] === 'm'; // \mkern, \mskip
-        var muUnit = args[0].value.unit === 'mu';
-        if (mathFunction) {
-            if (!muUnit) {
-                typeof console !== "undefined" && console.warn("In LaTeX, " + context.funcName + " supports only mu units, " + ("not " + args[0].value.unit + " units"));
-            }
-            if (context.parser.mode !== "math") {
-                throw new __WEBPACK_IMPORTED_MODULE_4__ParseError__["a" /* default */]("Can't use function '" + context.funcName + "' in text mode");
-            }
-        } else {
-            // !mathFunction
-            if (muUnit) {
-                typeof console !== "undefined" && console.warn("In LaTeX, " + context.funcName + " does not support mu units");
+        if (context.parser.settings.strict) {
+            var mathFunction = context.funcName[1] === 'm'; // \mkern, \mskip
+            var muUnit = args[0].value.unit === 'mu';
+            if (mathFunction) {
+                if (!muUnit) {
+                    context.parser.settings.reportNonstrict("mathVsTextUnits", "LaTeX's " + context.funcName + " supports only mu units, " + ("not " + args[0].value.unit + " units"));
+                }
+                if (context.parser.mode !== "math") {
+                    context.parser.settings.reportNonstrict("mathVsTextUnits", "LaTeX's " + context.funcName + " works only in math mode");
+                }
+            } else {
+                // !mathFunction
+                if (muUnit) {
+                    context.parser.settings.reportNonstrict("mathVsTextUnits", "LaTeX's " + context.funcName + " doesn't support mu units");
+                }
             }
         }
         return {
@@ -12416,15 +13409,15 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 124 */
+/* 155 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(3);
 
 
 
@@ -12527,16 +13520,125 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 125 */
+/* 156 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Style__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseNode__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildMathML__ = __webpack_require__(3);
+
+
+
+
+
+
+
+
+var makeSpan = __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeSpan;
+
+function htmlBuilder(group, options) {
+    var elements = __WEBPACK_IMPORTED_MODULE_4__buildHTML__["a" /* buildExpression */](group.value.value, options, true);
+    return makeSpan([group.value.mclass], elements, options);
+}
+
+function mathmlBuilder(group, options) {
+    var inner = __WEBPACK_IMPORTED_MODULE_5__buildMathML__["a" /* buildExpression */](group.value.value, options);
+    return new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mstyle", inner);
+}
+
+// Math class commands except \mathop
+Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
+    type: "mclass",
+    names: ["\\mathord", "\\mathbin", "\\mathrel", "\\mathopen", "\\mathclose", "\\mathpunct", "\\mathinner"],
+    props: {
+        numArgs: 1
+    },
+    handler: function handler(context, args) {
+        var body = args[0];
+        return {
+            type: "mclass",
+            mclass: "m" + context.funcName.substr(5),
+            value: Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["c" /* ordargument */])(body)
+        };
+    },
+
+    htmlBuilder: htmlBuilder,
+    mathmlBuilder: mathmlBuilder
+});
+
+// Build a relation or stacked op by placing one symbol on top of another
+Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
+    type: "mclass",
+    names: ["\\stackrel", "\\overset", "\\underset"],
+    props: {
+        numArgs: 2
+    },
+    handler: function handler(context, args) {
+        var baseArg = args[1];
+        var shiftedArg = args[0];
+
+        var mclass = "mrel"; // default. May change below.
+        if (context.funcName !== "\\stackrel") {
+            // LaTeX applies \binrel spacing to \overset and \underset. \binrel
+            // spacing varies with (bin|rel|ord) of the atom in the argument.
+            // We'll do the same.
+            var atomType = "";
+            if (baseArg.type === "ordgroup") {
+                atomType = baseArg.value[0].type;
+            } else {
+                atomType = baseArg.type;
+            }
+            if (/^(bin|rel)$/.test(atomType)) {
+                mclass = "m" + atomType;
+            } else {
+                // This may capture some instances in which the baseArg is more
+                // than just a single symbol. Say a \overset inside an \overset.
+                // TODO: A more comprehensive way to determine the baseArg type.
+                mclass = "mord";
+            }
+        }
+
+        var baseOp = new __WEBPACK_IMPORTED_MODULE_3__ParseNode__["c" /* default */]("op", {
+            type: "op",
+            limits: true,
+            alwaysHandleSupSub: true,
+            symbol: false,
+            suppressBaseShift: context.funcName !== "\\stackrel",
+            value: Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["c" /* ordargument */])(baseArg)
+        }, baseArg.mode);
+
+        var supsub = new __WEBPACK_IMPORTED_MODULE_3__ParseNode__["c" /* default */]("supsub", {
+            base: baseOp,
+            sup: context.funcName === "\\underset" ? null : shiftedArg,
+            sub: context.funcName === "\\underset" ? shiftedArg : null
+        }, shiftedArg.mode);
+
+        return {
+            type: "mclass",
+            mclass: mclass,
+            value: [supsub]
+        };
+    },
+
+    htmlBuilder: htmlBuilder,
+    mathmlBuilder: mathmlBuilder
+});
+
+/***/ }),
+/* 157 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Style__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildHTML__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildMathML__ = __webpack_require__(3);
 
 // \mod-type functions
 
@@ -12658,18 +13760,18 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 126 */
+/* 158 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__domTree__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Style__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__domTree__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Style__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__buildMathML__ = __webpack_require__(3);
 
 // Limits, symbols
 
@@ -12738,8 +13840,9 @@ var htmlBuilder = function htmlBuilder(group, options) {
     // If content of op is a single symbol, shift it vertically.
     var baseShift = 0;
     var slant = 0;
-    if (base instanceof __WEBPACK_IMPORTED_MODULE_2__domTree__["a" /* default */].symbolNode) {
-        // Shift the symbol so its center lies on the axis (rule 13). It
+    if (base instanceof __WEBPACK_IMPORTED_MODULE_2__domTree__["a" /* default */].symbolNode && !group.value.suppressBaseShift) {
+        // We suppress the shift of the base of \overset and \underset. Otherwise,
+        // shift the symbol so its center lies on the axis (rule 13). It
         // appears that our fonts have the centers of the symbols already
         // almost on the axis, so these numbers are very small. Note we
         // don't actually apply this here, but instead it is used either in
@@ -12848,6 +13951,10 @@ var mathmlBuilder = function mathmlBuilder(group, options) {
         // ref: https://www.w3.org/TR/REC-MathML/chap3_2.html#sec3.2.4
         var operator = new __WEBPACK_IMPORTED_MODULE_3__mathMLTree__["a" /* default */].MathNode("mo", [__WEBPACK_IMPORTED_MODULE_7__buildMathML__["e" /* makeText */]("\u2061", "text")]);
 
+        // TODO: Refactor to not return an HTML DOM object from MathML builder
+        // or refactor documentFragment to be standalone and explicitly reusable
+        // for both HTML and MathML DOM operations. In either case, update the
+        // return type of `mathBuilder` in `defineFunction` to accommodate.
         return new __WEBPACK_IMPORTED_MODULE_2__domTree__["a" /* default */].documentFragment([node, operator]);
     }
 
@@ -12912,19 +14019,115 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
     mathmlBuilder: mathmlBuilder
 });
 
+// There are 2 flags for operators; whether they produce limits in
+// displaystyle, and whether they are symbols and should grow in
+// displaystyle. These four groups cover the four possible choices.
+
+var singleCharIntegrals = {
+    "\u222B": "\\int",
+    "\u222C": "\\iint",
+    "\u222D": "\\iiint",
+    "\u222E": "\\oint"
+};
+
+Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
+    type: "op",
+    names: ["\\mathop"],
+    props: {
+        numArgs: 1
+    },
+    handler: function handler(context, args) {
+        var body = args[0];
+        return {
+            type: "op",
+            limits: false,
+            symbol: false,
+            value: Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["c" /* ordargument */])(body)
+        };
+    },
+    htmlBuilder: htmlBuilder,
+    mathmlBuilder: mathmlBuilder
+});
+
+// No limits, not symbols
+Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
+    type: "op",
+    names: ["\\arcsin", "\\arccos", "\\arctan", "\\arctg", "\\arcctg", "\\arg", "\\ch", "\\cos", "\\cosec", "\\cosh", "\\cot", "\\cotg", "\\coth", "\\csc", "\\ctg", "\\cth", "\\deg", "\\dim", "\\exp", "\\hom", "\\ker", "\\lg", "\\ln", "\\log", "\\sec", "\\sin", "\\sinh", "\\sh", "\\tan", "\\tanh", "\\tg", "\\th"],
+    props: {
+        numArgs: 0
+    },
+    handler: function handler(context) {
+        return {
+            type: "op",
+            limits: false,
+            symbol: false,
+            body: context.funcName
+        };
+    },
+
+    htmlBuilder: htmlBuilder,
+    mathmlBuilder: mathmlBuilder
+});
+
+// Limits, not symbols
+Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
+    type: "op",
+    names: ["\\det", "\\gcd", "\\inf", "\\lim", "\\max", "\\min", "\\Pr", "\\sup"],
+    props: {
+        numArgs: 0
+    },
+    handler: function handler(context) {
+        return {
+            type: "op",
+            limits: true,
+            symbol: false,
+            body: context.funcName
+        };
+    },
+
+    htmlBuilder: htmlBuilder,
+    mathmlBuilder: mathmlBuilder
+});
+
+// No limits, symbols
+Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
+    type: "op",
+    names: ["\\int", "\\iint", "\\iiint", "\\oint", "\u222B", "\u222C", "\u222D", "\u222E"],
+    props: {
+        numArgs: 0
+    },
+    handler: function handler(context) {
+        var fName = context.funcName;
+        if (fName.length === 1) {
+            fName = singleCharIntegrals[fName];
+        }
+        return {
+            type: "op",
+            limits: false,
+            symbol: true,
+            body: fName
+        };
+    },
+
+    htmlBuilder: htmlBuilder,
+    mathmlBuilder: mathmlBuilder
+});
+
 /***/ }),
-/* 127 */
+/* 159 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__defineFunction__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__domTree__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ParseNode__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__defineFunction__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__buildCommon__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__domTree__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__buildHTML__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__buildMathML__ = __webpack_require__(3);
+
 
 
 
@@ -12936,7 +14139,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 
 // \operatorname
 // amsopn.dtx: \mathop{#1\kern\z@\operator@font#3}\newmcodes@
-Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
+Object(__WEBPACK_IMPORTED_MODULE_2__defineFunction__["b" /* default */])({
     type: "operatorname",
     names: ["\\operatorname"],
     props: {
@@ -12946,7 +14149,7 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
         var body = args[0];
         return {
             type: "operatorname",
-            value: Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["c" /* ordargument */])(body)
+            value: Object(__WEBPACK_IMPORTED_MODULE_2__defineFunction__["c" /* ordargument */])(body)
         };
     },
 
@@ -12956,22 +14159,46 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
             var letter = "";
             var mode = "";
 
+            var groupValue = group.value.value.map(function (child) {
+                var childValue = child.value;
+                // In the amsopn package, \newmcodes@ changes four
+                // characters, *-/:’, from math operators back into text.
+                if (typeof childValue === "string" && "*-/:".indexOf(childValue) !== -1) {
+                    return new __WEBPACK_IMPORTED_MODULE_1__ParseNode__["c" /* default */]("textord", childValue, child.mode);
+                } else {
+                    return child;
+                }
+            });
+
+            // Consolidate Greek letter function names into symbol characters.
+            var temp = __WEBPACK_IMPORTED_MODULE_6__buildHTML__["a" /* buildExpression */](groupValue, options.withFont("mathrm"), true);
+
+            // All we want from temp are the letters. With them, we'll
+            // create a text operator similar to \tan or \cos.
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;
 
             try {
-                for (var _iterator = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator___default()(group.value.value), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                for (var _iterator = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator___default()(temp), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var child = _step.value;
 
-                    // In the amsopn package, \newmcodes@ changes four
-                    // characters, *-/:’, from math operators back into text.
-                    if ("*-/:".indexOf(child.value) !== -1) {
-                        child.type = "textord";
+                    if (child instanceof __WEBPACK_IMPORTED_MODULE_5__domTree__["a" /* default */].symbolNode) {
+                        letter = child.value;
+
+                        // In the amsopn package, \newmcodes@ changes four
+                        // characters, *-/:’, from math operators back into text.
+                        // Given what is in temp, we have to address two of them.
+                        letter = letter.replace(/\u2212/, "-"); // minus => hyphen
+                        letter = letter.replace(/\u2217/, "*");
+
+                        // Use math mode for Greek letters
+                        mode = /[\u0391-\u03D7]/.test(letter) ? "math" : "text";
+                        output.push(__WEBPACK_IMPORTED_MODULE_3__buildCommon__["a" /* default */].mathsym(letter, mode));
+                    } else {
+                        output.push(child);
                     }
                 }
-
-                // Consolidate Greek letter function names into symbol characters.
             } catch (err) {
                 _didIteratorError = true;
                 _iteratorError = err;
@@ -12986,58 +14213,15 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
                     }
                 }
             }
-
-            var temp = __WEBPACK_IMPORTED_MODULE_5__buildHTML__["a" /* buildExpression */](group.value.value, options.withFontFamily("mathrm"), true);
-
-            // All we want from temp are the letters. With them, we'll
-            // create a text operator similar to \tan or \cos.
-            var _iteratorNormalCompletion2 = true;
-            var _didIteratorError2 = false;
-            var _iteratorError2 = undefined;
-
-            try {
-                for (var _iterator2 = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_get_iterator___default()(temp), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                    var _child = _step2.value;
-
-                    if (_child instanceof __WEBPACK_IMPORTED_MODULE_4__domTree__["a" /* default */].symbolNode) {
-                        letter = _child.value;
-
-                        // In the amsopn package, \newmcodes@ changes four
-                        // characters, *-/:’, from math operators back into text.
-                        // Given what is in temp, we have to address two of them.
-                        letter = letter.replace(/\u2212/, "-"); // minus => hyphen
-                        letter = letter.replace(/\u2217/, "*");
-
-                        // Use math mode for Greek letters
-                        mode = /[\u0391-\u03D7]/.test(letter) ? "math" : "text";
-                        output.push(__WEBPACK_IMPORTED_MODULE_2__buildCommon__["a" /* default */].mathsym(letter, mode));
-                    } else {
-                        output.push(_child);
-                    }
-                }
-            } catch (err) {
-                _didIteratorError2 = true;
-                _iteratorError2 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                        _iterator2.return();
-                    }
-                } finally {
-                    if (_didIteratorError2) {
-                        throw _iteratorError2;
-                    }
-                }
-            }
         }
-        return __WEBPACK_IMPORTED_MODULE_2__buildCommon__["a" /* default */].makeSpan(["mop"], output, options);
+        return __WEBPACK_IMPORTED_MODULE_3__buildCommon__["a" /* default */].makeSpan(["mop"], output, options);
     },
 
     mathmlBuilder: function mathmlBuilder(group, options) {
         // The steps taken here are similar to the html version.
         var output = [];
         if (group.value.value.length > 0) {
-            var temp = __WEBPACK_IMPORTED_MODULE_6__buildMathML__["a" /* buildExpression */](group.value.value, options.withFontFamily("mathrm"));
+            var temp = __WEBPACK_IMPORTED_MODULE_7__buildMathML__["a" /* buildExpression */](group.value.value, options.withFont("mathrm"));
 
             var word = temp.map(function (node) {
                 return node.toText();
@@ -13045,31 +14229,31 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
 
             word = word.replace(/\u2212/g, "-");
             word = word.replace(/\u2217/g, "*");
-            output = [new __WEBPACK_IMPORTED_MODULE_3__mathMLTree__["a" /* default */].TextNode(word)];
+            output = [new __WEBPACK_IMPORTED_MODULE_4__mathMLTree__["a" /* default */].TextNode(word)];
         }
-        var identifier = new __WEBPACK_IMPORTED_MODULE_3__mathMLTree__["a" /* default */].MathNode("mi", output);
+        var identifier = new __WEBPACK_IMPORTED_MODULE_4__mathMLTree__["a" /* default */].MathNode("mi", output);
         identifier.setAttribute("mathvariant", "normal");
 
         // \u2061 is the same as &ApplyFunction;
         // ref: https://www.w3schools.com/charsets/ref_html_entities_a.asp
-        var operator = new __WEBPACK_IMPORTED_MODULE_3__mathMLTree__["a" /* default */].MathNode("mo", [__WEBPACK_IMPORTED_MODULE_6__buildMathML__["e" /* makeText */]("\u2061", "text")]);
+        var operator = new __WEBPACK_IMPORTED_MODULE_4__mathMLTree__["a" /* default */].MathNode("mo", [__WEBPACK_IMPORTED_MODULE_7__buildMathML__["e" /* makeText */]("\u2061", "text")]);
 
-        return new __WEBPACK_IMPORTED_MODULE_4__domTree__["a" /* default */].documentFragment([identifier, operator]);
+        return new __WEBPACK_IMPORTED_MODULE_5__domTree__["a" /* default */].documentFragment([identifier, operator]);
     }
 });
 
 /***/ }),
-/* 128 */
+/* 160 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__delimiter__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Style__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__delimiter__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Style__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__buildMathML__ = __webpack_require__(3);
 
 
 
@@ -13221,13 +14405,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 
             frac = __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeVList({
                 positionType: "individualShift",
-                children: [{ type: "elem", elem: denomm, shift: denomShift },
-                // The next line would ordinarily contain "shift: midShift".
-                // But we put the rule into a a span that is 5 rules tall,
-                // to overcome a Chrome rendering issue. Put another way,
-                // we've replaced a kern of width = 2 * ruleWidth with a
-                // bottom padding inside the SVG = 2 * ruleWidth.
-                { type: "elem", elem: rule, shift: midShift + 2 * ruleWidth }, { type: "elem", elem: numerm, shift: -numShift }]
+                children: [{ type: "elem", elem: denomm, shift: denomShift }, { type: "elem", elem: rule, shift: midShift }, { type: "elem", elem: numerm, shift: -numShift }]
             }, options);
         }
 
@@ -13298,15 +14476,15 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 129 */
+/* 161 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(3);
 
 // Horizontal overlap functions
 
@@ -13360,15 +14538,15 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 130 */
+/* 162 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(3);
 
 // smash, with optional [tb], as in AMS
 
@@ -13472,18 +14650,18 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 131 */
+/* 163 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__defineFunction__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__delimiter__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ParseError__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__defineFunction__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__delimiter__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__buildMathML__ = __webpack_require__(3);
 
 
 
@@ -13514,7 +14692,7 @@ var delimiterSizes = {
     "\\Bigg": { mclass: "mord", size: 4 }
 };
 
-var delimiters = ["(", ")", "[", "\\lbrack", "]", "\\rbrack", "\\{", "\\lbrace", "\\}", "\\rbrace", "\\lfloor", "\\rfloor", "\\lceil", "\\rceil", "<", ">", "\\langle", "\u27E8", "\\rangle", "\u27E9", "\\lt", "\\gt", "\\lvert", "\\rvert", "\\lVert", "\\rVert", "\\lgroup", "\\rgroup", "\\lmoustache", "\\rmoustache", "/", "\\backslash", "|", "\\vert", "\\|", "\\Vert", "\\uparrow", "\\Uparrow", "\\downarrow", "\\Downarrow", "\\updownarrow", "\\Updownarrow", "."];
+var delimiters = ["(", ")", "[", "\\lbrack", "]", "\\rbrack", "\\{", "\\lbrace", "\\}", "\\rbrace", "\\lfloor", "\\rfloor", "\u230A", "\u230B", "\\lceil", "\\rceil", "\u2308", "\u2309", "<", ">", "\\langle", "\u27E8", "\\rangle", "\u27E9", "\\lt", "\\gt", "\\lvert", "\\rvert", "\\lVert", "\\rVert", "\\lgroup", "\\rgroup", "\u27EE", "\u27EF", "\\lmoustache", "\\rmoustache", "\u23B0", "\u23B1", "/", "\\backslash", "|", "\\vert", "\\|", "\\Vert", "\\uparrow", "\\Uparrow", "\\downarrow", "\\Downarrow", "\\updownarrow", "\\Updownarrow", "."];
 
 // Delimiter functions
 function checkDelimiter(delim, context) {
@@ -13576,6 +14754,13 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
     }
 });
 
+function leftRightGroupValue(group) {
+    if (!group.value.body) {
+        throw new Error("Bug: The leftright ParseNode wasn't fully parsed.");
+    }
+    return group.value;
+}
+
 Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
     type: "leftright",
     names: ["\\left", "\\right"],
@@ -13615,8 +14800,9 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
         }
     },
     htmlBuilder: function htmlBuilder(group, options) {
+        var groupValue = leftRightGroupValue(group);
         // Build the inner expression
-        var inner = __WEBPACK_IMPORTED_MODULE_6__buildHTML__["a" /* buildExpression */](group.value.body, options, true, [null, "mclose"]);
+        var inner = __WEBPACK_IMPORTED_MODULE_6__buildHTML__["a" /* buildExpression */](groupValue.body, options, true, [null, "mclose"]);
 
         var innerHeight = 0;
         var innerDepth = 0;
@@ -13639,13 +14825,13 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
         innerDepth *= options.sizeMultiplier;
 
         var leftDelim = void 0;
-        if (group.value.left === ".") {
+        if (groupValue.left === ".") {
             // Empty delimiters in \left and \right make null delimiter spaces.
             leftDelim = __WEBPACK_IMPORTED_MODULE_6__buildHTML__["e" /* makeNullDelimiter */](options, ["mopen"]);
         } else {
             // Otherwise, use leftRightDelim to generate the correct sized
             // delimiter.
-            leftDelim = __WEBPACK_IMPORTED_MODULE_2__delimiter__["a" /* default */].leftRightDelim(group.value.left, innerHeight, innerDepth, options, group.mode, ["mopen"]);
+            leftDelim = __WEBPACK_IMPORTED_MODULE_2__delimiter__["a" /* default */].leftRightDelim(groupValue.left, innerHeight, innerDepth, options, group.mode, ["mopen"]);
         }
         // Add it to the beginning of the expression
         inner.unshift(leftDelim);
@@ -13663,10 +14849,10 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
 
         var rightDelim = void 0;
         // Same for the right delimiter
-        if (group.value.right === ".") {
+        if (groupValue.right === ".") {
             rightDelim = __WEBPACK_IMPORTED_MODULE_6__buildHTML__["e" /* makeNullDelimiter */](options, ["mclose"]);
         } else {
-            rightDelim = __WEBPACK_IMPORTED_MODULE_2__delimiter__["a" /* default */].leftRightDelim(group.value.right, innerHeight, innerDepth, options, group.mode, ["mclose"]);
+            rightDelim = __WEBPACK_IMPORTED_MODULE_2__delimiter__["a" /* default */].leftRightDelim(groupValue.right, innerHeight, innerDepth, options, group.mode, ["mclose"]);
         }
         // Add it to the end of the expression.
         inner.push(rightDelim);
@@ -13674,18 +14860,19 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
         return __WEBPACK_IMPORTED_MODULE_0__buildCommon__["a" /* default */].makeSpan(["minner"], inner, options);
     },
     mathmlBuilder: function mathmlBuilder(group, options) {
-        var inner = __WEBPACK_IMPORTED_MODULE_7__buildMathML__["a" /* buildExpression */](group.value.body, options);
+        var groupValue = leftRightGroupValue(group);
+        var inner = __WEBPACK_IMPORTED_MODULE_7__buildMathML__["a" /* buildExpression */](groupValue.body, options);
 
-        if (group.value.left !== ".") {
-            var leftNode = new __WEBPACK_IMPORTED_MODULE_3__mathMLTree__["a" /* default */].MathNode("mo", [__WEBPACK_IMPORTED_MODULE_7__buildMathML__["e" /* makeText */](group.value.left, group.mode)]);
+        if (groupValue.left !== ".") {
+            var leftNode = new __WEBPACK_IMPORTED_MODULE_3__mathMLTree__["a" /* default */].MathNode("mo", [__WEBPACK_IMPORTED_MODULE_7__buildMathML__["e" /* makeText */](groupValue.left, group.mode)]);
 
             leftNode.setAttribute("fence", "true");
 
             inner.unshift(leftNode);
         }
 
-        if (group.value.right !== ".") {
-            var rightNode = new __WEBPACK_IMPORTED_MODULE_3__mathMLTree__["a" /* default */].MathNode("mo", [__WEBPACK_IMPORTED_MODULE_7__buildMathML__["e" /* makeText */](group.value.right, group.mode)]);
+        if (groupValue.right !== ".") {
+            var rightNode = new __WEBPACK_IMPORTED_MODULE_3__mathMLTree__["a" /* default */].MathNode("mo", [__WEBPACK_IMPORTED_MODULE_7__buildMathML__["e" /* makeText */](groupValue.right, group.mode)]);
 
             rightNode.setAttribute("fence", "true");
 
@@ -13721,27 +14908,34 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
             middleDelim = __WEBPACK_IMPORTED_MODULE_6__buildHTML__["e" /* makeNullDelimiter */](options, []);
         } else {
             middleDelim = __WEBPACK_IMPORTED_MODULE_2__delimiter__["a" /* default */].sizedDelim(group.value.value, 1, options, group.mode, []);
+
+            // Property `isMiddle` not defined on `span`. It is only used in
+            // this file above. Fixing this correctly requires refactoring the
+            // htmlBuilder return type to support passing additional data.
+            // An easier, but unideal option would be to add `isMiddle` to
+            // `span` just for this case.
+            // $FlowFixMe
             middleDelim.isMiddle = { value: group.value.value, options: options };
         }
         return middleDelim;
     },
     mathmlBuilder: function mathmlBuilder(group, options) {
-        var middleNode = new __WEBPACK_IMPORTED_MODULE_3__mathMLTree__["a" /* default */].MathNode("mo", [__WEBPACK_IMPORTED_MODULE_7__buildMathML__["e" /* makeText */](group.value.middle, group.mode)]);
+        var middleNode = new __WEBPACK_IMPORTED_MODULE_3__mathMLTree__["a" /* default */].MathNode("mo", [__WEBPACK_IMPORTED_MODULE_7__buildMathML__["e" /* makeText */](group.value.value, group.mode)]);
         middleNode.setAttribute("fence", "true");
         return middleNode;
     }
 });
 
 /***/ }),
-/* 132 */
+/* 164 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Style__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__sizing__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Style__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__sizing__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(3);
 
 
 
@@ -13773,18 +14967,22 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
         parser.consumeSpaces();
         var body = parser.parseExpression(true, breakOnTokenText);
 
+        // TODO: Refactor to avoid duplicating styleMap in multiple places (e.g.
+        // here and in buildHTML and de-dupe the enumeration of all the styles).
+        // $FlowFixMe: The names above exactly match the styles.
+        var style = funcName.slice(1, funcName.length - 5);
         return {
             type: "styling",
             // Figure out what style to use by pulling out the style from
             // the function name
-            style: funcName.slice(1, funcName.length - 5),
+            style: style,
             value: body
         };
     },
     htmlBuilder: function htmlBuilder(group, options) {
         // Style changes are handled in the TeXbook on pg. 442, Rule 3.
         var newStyle = styleMap[group.value.style];
-        var newOptions = options.havingStyle(newStyle);
+        var newOptions = options.havingStyle(newStyle).withFont('');
         return Object(__WEBPACK_IMPORTED_MODULE_3__sizing__["a" /* sizingGroup */])(group.value.value, newOptions, options);
     },
     mathmlBuilder: function mathmlBuilder(group, options) {
@@ -13822,16 +15020,16 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 133 */
+/* 165 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys__ = __webpack_require__(166);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__defineFunction__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ParseNode__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__defineFunction__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ParseNode__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(3);
 
 
 // TODO(kevinb): implement \\sl and \\sc
@@ -13844,12 +15042,14 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 
 var htmlBuilder = function htmlBuilder(group, options) {
     var font = group.value.font;
-    return __WEBPACK_IMPORTED_MODULE_3__buildHTML__["b" /* buildGroup */](group.value.body, options.withFontFamily(font));
+    var newOptions = options.withFont(font);
+    return __WEBPACK_IMPORTED_MODULE_3__buildHTML__["b" /* buildGroup */](group.value.body, newOptions);
 };
 
 var mathmlBuilder = function mathmlBuilder(group, options) {
     var font = group.value.font;
-    return __WEBPACK_IMPORTED_MODULE_4__buildMathML__["b" /* buildGroup */](group.value.body, options.withFontFamily(font));
+    var newOptions = options.withFont(font);
+    return __WEBPACK_IMPORTED_MODULE_4__buildMathML__["b" /* buildGroup */](group.value.body, newOptions);
 };
 
 var fontAliases = {
@@ -13919,7 +15119,7 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
         return {
             type: "font",
             font: style,
-            body: new __WEBPACK_IMPORTED_MODULE_2__ParseNode__["a" /* default */]("ordgroup", body, parser.mode)
+            body: new __WEBPACK_IMPORTED_MODULE_2__ParseNode__["c" /* default */]("ordgroup", body, parser.mode)
         };
     },
     htmlBuilder: htmlBuilder,
@@ -13927,44 +15127,44 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 134 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(135), __esModule: true };
+module.exports = { "default": __webpack_require__(167), __esModule: true };
 
 /***/ }),
-/* 135 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(136);
-module.exports = __webpack_require__(8).Object.keys;
+__webpack_require__(168);
+module.exports = __webpack_require__(7).Object.keys;
 
 /***/ }),
-/* 136 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
-var toObject = __webpack_require__(29)
-  , $keys    = __webpack_require__(39);
+var toObject = __webpack_require__(30)
+  , $keys    = __webpack_require__(27);
 
-__webpack_require__(46)('keys', function(){
+__webpack_require__(39)('keys', function(){
   return function keys(it){
     return $keys(toObject(it));
   };
 });
 
 /***/ }),
-/* 137 */
+/* 169 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stretchy__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stretchy__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__buildMathML__ = __webpack_require__(3);
 
 
 
@@ -14054,16 +15254,33 @@ var htmlBuilder = function htmlBuilder(group, options) {
 
         accentBody = __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeSpan(["accent-body"], [accent]);
 
-        // CSS defines `.katex .accent .accent-body { width: 0 }`
+        // "Full" accents expand the width of the resulting symbol to be
+        // at least the width of the accent, and overlap directly onto the
+        // character without any vertical offset.
+        var accentFull = group.value.label === "\\textcircled";
+        if (accentFull) {
+            accentBody.classes.push('accent-full');
+            clearance = body.height;
+        }
+
+        // Shift the accent over by the skew.
+        var left = skew;
+
+        // CSS defines `.katex .accent .accent-body:not(.accent-full) { width: 0 }`
         // so that the accent doesn't contribute to the bounding box.
         // We need to shift the character by its width (effectively half
         // its width) to compensate.
-        var left = -width / 2;
-
-        // Shift the accent over by the skew.
-        left += skew;
+        if (!accentFull) {
+            left -= width / 2;
+        }
 
         accentBody.style.left = left + "em";
+
+        // \textcircled uses the \bigcirc glyph, so it needs some
+        // vertical adjustment to match LaTeX.
+        if (group.value.label === "\\textcircled") {
+            accentBody.style.top = ".2em";
+        }
 
         accentBody = __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeVList({
             positionType: "firstBaseline",
@@ -14107,14 +15324,15 @@ var htmlBuilder = function htmlBuilder(group, options) {
 };
 
 var mathmlBuilder = function mathmlBuilder(group, options) {
+    var groupValue = group.value;
     var accentNode = void 0;
-    if (group.value.isStretchy) {
-        accentNode = __WEBPACK_IMPORTED_MODULE_4__stretchy__["a" /* default */].mathMLnode(group.value.label);
+    if (groupValue.isStretchy) {
+        accentNode = __WEBPACK_IMPORTED_MODULE_4__stretchy__["a" /* default */].mathMLnode(groupValue.label);
     } else {
-        accentNode = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mo", [__WEBPACK_IMPORTED_MODULE_6__buildMathML__["e" /* makeText */](group.value.label, group.mode)]);
+        accentNode = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mo", [__WEBPACK_IMPORTED_MODULE_6__buildMathML__["e" /* makeText */](groupValue.label, group.mode)]);
     }
 
-    var node = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mover", [__WEBPACK_IMPORTED_MODULE_6__buildMathML__["b" /* buildGroup */](group.value.base, options), accentNode]);
+    var node = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mover", [__WEBPACK_IMPORTED_MODULE_6__buildMathML__["b" /* buildGroup */](groupValue.base, options), accentNode]);
 
     node.setAttribute("accent", "true");
 
@@ -14153,7 +15371,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 // Text-mode accents
 Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
     type: "accent",
-    names: ["\\'", "\\`", "\\^", "\\~", "\\=", "\\u", "\\.", '\\"', "\\r", "\\H", "\\v"],
+    names: ["\\'", "\\`", "\\^", "\\~", "\\=", "\\u", "\\.", '\\"', "\\r", "\\H", "\\v", "\\textcircled"],
     props: {
         numArgs: 1,
         allowedInText: true,
@@ -14175,16 +15393,16 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 138 */
+/* 170 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stretchy__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stretchy__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildMathML__ = __webpack_require__(3);
 
 // Horizontal overlap functions
 
@@ -14227,21 +15445,105 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
     },
     mathmlBuilder: function mathmlBuilder(group, options) {
         var accentNode = __WEBPACK_IMPORTED_MODULE_3__stretchy__["a" /* default */].mathMLnode(group.value.label);
-        var node = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("munder", [__WEBPACK_IMPORTED_MODULE_5__buildMathML__["b" /* buildGroup */](group.value.body, options), accentNode]);
+        var node = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("munder", [__WEBPACK_IMPORTED_MODULE_5__buildMathML__["b" /* buildGroup */](group.value.base, options), accentNode]);
         node.setAttribute("accentunder", "true");
         return node;
     }
 });
 
 /***/ }),
-/* 139 */
+/* 171 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseError__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__units__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ParseNode__ = __webpack_require__(6);
+
+// Row breaks within tabular environments, and line breaks at top level
+
+
+
+
+
+
+
+
+// \\ is a macro mapping to either \cr or \newline.  Because they have the
+// same signature, we implement them as one megafunction, with newRow
+// indicating whether we're in the \cr case, and newLine indicating whether
+// to break the line in the \newline case.
+
+Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
+    type: "cr",
+    names: ["\\cr", "\\newline"],
+    props: {
+        numArgs: 0,
+        numOptionalArgs: 1,
+        argTypes: ["size"],
+        allowedInText: true
+    },
+
+    handler: function handler(context, args, optArgs) {
+        var size = optArgs[0];
+        var newRow = context.funcName === "\\cr";
+        var newLine = false;
+        if (!newRow) {
+            if (context.parser.settings.displayMode && context.parser.settings.useStrictBehavior("newLineInDisplayMode", "In LaTeX, \\\\ or \\newline " + "does nothing in display mode")) {
+                newLine = false;
+            } else {
+                newLine = true;
+            }
+        }
+        return {
+            type: "cr",
+            newLine: newLine,
+            newRow: newRow,
+            size: size && Object(__WEBPACK_IMPORTED_MODULE_5__ParseNode__["a" /* assertNodeType */])(size, "size")
+        };
+    },
+
+    // The following builders are called only at the top level,
+    // not within tabular/array environments.
+
+    htmlBuilder: function htmlBuilder(group, options) {
+        if (group.value.newRow) {
+            throw new __WEBPACK_IMPORTED_MODULE_4__ParseError__["a" /* default */]("\\cr valid only within a tabular/array environment");
+        }
+        var span = __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeSpan(["mspace"], [], options);
+        if (group.value.newLine) {
+            span.classes.push("newline");
+            if (group.value.size) {
+                span.style.marginTop = Object(__WEBPACK_IMPORTED_MODULE_3__units__["a" /* calculateSize */])(group.value.size.value, options) + "em";
+            }
+        }
+        return span;
+    },
+
+    mathmlBuilder: function mathmlBuilder(group, options) {
+        var node = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mspace");
+        if (group.value.newLine) {
+            node.setAttribute("linebreak", "newline");
+            if (group.value.size) {
+                node.setAttribute("height", Object(__WEBPACK_IMPORTED_MODULE_3__units__["a" /* calculateSize */])(group.value.size.value, options) + "em");
+            }
+        }
+        return node;
+    }
+});
+
+/***/ }),
+/* 172 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseError__ = __webpack_require__(5);
 
 
 
@@ -14267,44 +15569,35 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
         // \verb enters text mode and therefore is sized like \textstyle
         var newOptions = options.havingStyle(options.style.text());
         for (var i = 0; i < text.length; i++) {
-            if (text[i] === '\xA0') {
-                // spaces appear as nonbreaking space
-                // The space character isn't in the Typewriter-Regular font,
-                // so we implement it as a kern of the same size as a character.
-                // 0.525 is the width of a texttt character in LaTeX.
-                // It automatically gets scaled by the font size.
-                var rule = __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeSpan(["mord", "rule"], [], newOptions);
-                rule.style.marginLeft = "0.525em";
-                body.push(rule);
-            } else {
-                body.push(__WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeSymbol(text[i], "Typewriter-Regular", group.mode, newOptions, ["mathtt"]));
+            var c = text[i];
+            if (c === '~') {
+                c = '\\textasciitilde';
             }
+            body.push(__WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeSymbol(c, "Typewriter-Regular", group.mode, newOptions, ["mord", "texttt"]));
         }
         __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].tryCombineChars(body);
-        return __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeSpan(["mord", "text"].concat(newOptions.sizingClasses(options)),
-        // tryCombinChars expects CombinableDomNode[] while makeSpan expects
-        // DomChildNode[].
-        // $FlowFixMe: CombinableDomNode[] is not compatible with DomChildNode[]
-        body, newOptions);
+        return __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeSpan(["mord", "text"].concat(newOptions.sizingClasses(options)), body, newOptions);
     },
     mathmlBuilder: function mathmlBuilder(group, options) {
         var text = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].TextNode(__WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeVerb(group, options));
         var node = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mtext", [text]);
-        node.setAttribute("mathvariant", __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].fontMap["mathtt"].variant);
+        node.setAttribute("mathvariant", "monospace");
         return node;
     }
 });
 
 /***/ }),
-/* 140 */
+/* 173 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseNode__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildHTML__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildMathML__ = __webpack_require__(3);
+
 
 
 
@@ -14321,7 +15614,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
     },
     handler: function handler(context, args) {
         var body = args[1];
-        var href = args[0].value;
+        var href = Object(__WEBPACK_IMPORTED_MODULE_3__ParseNode__["a" /* assertNodeType */])(args[0], "url").value;
         return {
             type: "href",
             href: href,
@@ -14329,14 +15622,14 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
         };
     },
     htmlBuilder: function htmlBuilder(group, options) {
-        var elements = __WEBPACK_IMPORTED_MODULE_3__buildHTML__["a" /* buildExpression */](group.value.body, options, false);
+        var elements = __WEBPACK_IMPORTED_MODULE_4__buildHTML__["a" /* buildExpression */](group.value.body, options, false);
 
         var href = group.value.href;
 
         return new __WEBPACK_IMPORTED_MODULE_1__buildCommon__["a" /* default */].makeAnchor(href, [], elements, options);
     },
     mathmlBuilder: function mathmlBuilder(group, options) {
-        var inner = __WEBPACK_IMPORTED_MODULE_4__buildMathML__["a" /* buildExpression */](group.value.body, options);
+        var inner = __WEBPACK_IMPORTED_MODULE_5__buildMathML__["a" /* buildExpression */](group.value.body, options);
         var math = new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mrow", inner);
         math.setAttribute("href", group.value.href);
         return math;
@@ -14344,16 +15637,16 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 141 */
+/* 174 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineFunction__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Style__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Style__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__buildMathML__ = __webpack_require__(3);
 
 
 
@@ -14403,12 +15696,12 @@ Object(__WEBPACK_IMPORTED_MODULE_0__defineFunction__["b" /* default */])({
 });
 
 /***/ }),
-/* 142 */
+/* 175 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineEnvironment__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__environments_array_js__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__defineEnvironment__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__environments_array_js__ = __webpack_require__(176);
 
 
 var environments = __WEBPACK_IMPORTED_MODULE_0__defineEnvironment__["a" /* _environments */];
@@ -14419,20 +15712,19 @@ var environments = __WEBPACK_IMPORTED_MODULE_0__defineEnvironment__["a" /* _envi
 
 
 /***/ }),
-/* 143 */
+/* 176 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buildCommon__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__defineEnvironment__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseError__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ParseNode__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__units__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stretchy__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__buildHTML__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__buildMathML__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__defineEnvironment__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mathMLTree__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParseError__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ParseNode__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__units__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__buildHTML__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__buildMathML__ = __webpack_require__(3);
 
 
 
@@ -14447,6 +15739,19 @@ var environments = __WEBPACK_IMPORTED_MODULE_0__defineEnvironment__["a" /* _envi
 
 // Data stored in the ParseNode associated with the environment.
 
+// Same as above but with some fields not yet filled.
+
+
+function getNumHLines(parser) {
+    var n = 0;
+    parser.consumeSpaces();
+    while (parser.nextToken.text === "\\hline") {
+        parser.consume();
+        n++;
+        parser.consumeSpaces();
+    }
+    return n;
+}
 
 /**
  * Parse the body of the environment, with rows delimited by \\ and
@@ -14455,15 +15760,25 @@ var environments = __WEBPACK_IMPORTED_MODULE_0__defineEnvironment__["a" /* _envi
  * ("text", "display", etc.), then each cell is cast into that style.
  */
 function parseArray(parser, result, style) {
+    // Parse body of array with \\ temporarily mapped to \cr
+    var oldNewline = parser.gullet.macros["\\\\"];
+    parser.gullet.macros["\\\\"] = "\\cr";
+
     var row = [];
     var body = [row];
     var rowGaps = [];
+    var numHLinesBeforeRow = [];
+
+    // Test for \hline at the top of the array.
+    numHLinesBeforeRow.push(getNumHLines(parser));
+
     while (true) {
         // eslint-disable-line no-constant-condition
-        var cell = parser.parseExpression(false, undefined);
-        cell = new __WEBPACK_IMPORTED_MODULE_4__ParseNode__["a" /* default */]("ordgroup", cell, parser.mode);
+        var cell = parser.parseExpression(false, "\\cr");
+        cell = new __WEBPACK_IMPORTED_MODULE_4__ParseNode__["c" /* default */]("ordgroup", cell, parser.mode);
         if (style) {
-            cell = new __WEBPACK_IMPORTED_MODULE_4__ParseNode__["a" /* default */]("styling", {
+            cell = new __WEBPACK_IMPORTED_MODULE_4__ParseNode__["c" /* default */]("styling", {
+                type: "styling",
                 style: style,
                 value: [cell]
             }, parser.mode);
@@ -14480,21 +15795,29 @@ function parseArray(parser, result, style) {
                 body.pop();
             }
             break;
-        } else if (next === "\\\\" || next === "\\cr") {
+        } else if (next === "\\cr") {
             var cr = parser.parseFunction();
             if (!cr) {
                 throw new __WEBPACK_IMPORTED_MODULE_3__ParseError__["a" /* default */]("Failed to parse function after " + next);
             }
-            rowGaps.push(cr.value.size);
+            rowGaps.push(Object(__WEBPACK_IMPORTED_MODULE_4__ParseNode__["a" /* assertNodeType */])(cr, "cr").value.size);
+
+            // check for \hline(s) following the row separator
+            numHLinesBeforeRow.push(getNumHLines(parser));
+
             row = [];
             body.push(row);
         } else {
-            throw new __WEBPACK_IMPORTED_MODULE_3__ParseError__["a" /* default */]("Expected & or \\\\ or \\end", parser.nextToken);
+            throw new __WEBPACK_IMPORTED_MODULE_3__ParseError__["a" /* default */]("Expected & or \\\\ or \\cr or \\end", parser.nextToken);
         }
     }
     result.body = body;
     result.rowGaps = rowGaps;
-    return new __WEBPACK_IMPORTED_MODULE_4__ParseNode__["a" /* default */](result.type, result, parser.mode);
+    result.numHLinesBeforeRow = numHLinesBeforeRow;
+    // $FlowFixMe: The required fields were added immediately above.
+    var res = result;
+    parser.gullet.macros["\\\\"] = oldNewline;
+    return new __WEBPACK_IMPORTED_MODULE_4__ParseNode__["c" /* default */]("array", res, parser.mode);
 }
 
 // Decides on a style for cells in an array according to whether the given
@@ -14508,11 +15831,14 @@ function dCellStyle(envName) {
 }
 
 var htmlBuilder = function htmlBuilder(group, options) {
+    var groupValue = Object(__WEBPACK_IMPORTED_MODULE_4__ParseNode__["a" /* assertNodeType */])(group, "array").value;
     var r = void 0;
     var c = void 0;
     var nr = group.value.body.length;
+    var numHLinesBeforeRow = group.value.numHLinesBeforeRow;
     var nc = 0;
     var body = new Array(nr);
+    var hlinePos = [];
 
     // Horizontal spacing
     var pt = 1 / options.fontMetrics().ptPerEm;
@@ -14525,14 +15851,24 @@ var htmlBuilder = function htmlBuilder(group, options) {
     var jot = 3 * pt;
     // Default \arraystretch from lttab.dtx
     // TODO(gagern): may get redefined once we have user-defined macros
-    var arraystretch = __WEBPACK_IMPORTED_MODULE_6__utils__["a" /* default */].deflt(group.value.arraystretch, 1);
+    var arraystretch = __WEBPACK_IMPORTED_MODULE_6__utils__["a" /* default */].deflt(groupValue.arraystretch, 1);
     var arrayskip = arraystretch * baselineskip;
     var arstrutHeight = 0.7 * arrayskip; // \strutbox in ltfsstrc.dtx and
     var arstrutDepth = 0.3 * arrayskip; // \@arstrutbox in lttab.dtx
 
     var totalHeight = 0;
-    for (r = 0; r < group.value.body.length; ++r) {
-        var inrow = group.value.body[r];
+
+    // Set a position for \hline(s) at the top of the array, if any.
+    for (var i = 1; i <= numHLinesBeforeRow[0]; i++) {
+        if (i > 1) {
+            // The first \hline doesn't add to height.
+            totalHeight += 0.25;
+        }
+        hlinePos.push(totalHeight);
+    }
+
+    for (r = 0; r < groupValue.body.length; ++r) {
+        var inrow = groupValue.body[r];
         var _height = arstrutHeight; // \@array adds an \@arstrut
         var _depth = arstrutDepth; // to each tow (via the template)
 
@@ -14542,7 +15878,7 @@ var htmlBuilder = function htmlBuilder(group, options) {
 
         var outrow = new Array(inrow.length);
         for (c = 0; c < inrow.length; ++c) {
-            var elt = __WEBPACK_IMPORTED_MODULE_8__buildHTML__["b" /* buildGroup */](inrow[c], options);
+            var elt = __WEBPACK_IMPORTED_MODULE_7__buildHTML__["b" /* buildGroup */](inrow[c], options);
             if (_depth < elt.depth) {
                 _depth = elt.depth;
             }
@@ -14552,9 +15888,10 @@ var htmlBuilder = function htmlBuilder(group, options) {
             outrow[c] = elt;
         }
 
+        var rowGap = groupValue.rowGaps[r];
         var gap = 0;
-        if (group.value.rowGaps[r]) {
-            gap = Object(__WEBPACK_IMPORTED_MODULE_5__units__["a" /* calculateSize */])(group.value.rowGaps[r].value, options);
+        if (rowGap) {
+            gap = Object(__WEBPACK_IMPORTED_MODULE_5__units__["a" /* calculateSize */])(rowGap.value, options);
             if (gap > 0) {
                 // \@argarraycr
                 gap += arstrutDepth;
@@ -14567,7 +15904,7 @@ var htmlBuilder = function htmlBuilder(group, options) {
         // In AMS multiline environments such as aligned and gathered, rows
         // correspond to lines that have additional \jot added to the
         // \baselineskip via \openup.
-        if (group.value.addJot) {
+        if (groupValue.addJot) {
             _depth += jot;
         }
 
@@ -14577,10 +15914,19 @@ var htmlBuilder = function htmlBuilder(group, options) {
         outrow.pos = totalHeight;
         totalHeight += _depth + gap; // \@yargarraycr
         body[r] = outrow;
+
+        // Set a position for \hline(s), if any.
+        for (var _i = 1; _i <= numHLinesBeforeRow[r + 1]; _i++) {
+            if (_i > 1) {
+                // the first \hline doesn't add height
+                totalHeight += 0.25;
+            }
+            hlinePos.push(totalHeight);
+        }
     }
 
     var offset = totalHeight / 2 + options.fontMetrics().axisHeight;
-    var colDescriptions = group.value.cols || [];
+    var colDescriptions = groupValue.cols || [];
     var cols = [];
     var colSep = void 0;
     var colDescrNum = void 0;
@@ -14602,7 +15948,7 @@ var htmlBuilder = function htmlBuilder(group, options) {
             }
 
             if (colDescr.separator === "|") {
-                var _separator = __WEBPACK_IMPORTED_MODULE_7__stretchy__["a" /* default */].ruleSpan("vertical-separator", 0.05, options);
+                var _separator = __WEBPACK_IMPORTED_MODULE_0__buildCommon__["a" /* default */].makeSpan(["vertical-separator"], [], options);
                 _separator.style.height = totalHeight + "em";
                 _separator.style.verticalAlign = -(totalHeight - offset) + "em";
 
@@ -14621,7 +15967,7 @@ var htmlBuilder = function htmlBuilder(group, options) {
         }
 
         var sepwidth = void 0;
-        if (c > 0 || group.value.hskipBeforeAndAfter) {
+        if (c > 0 || groupValue.hskipBeforeAndAfter) {
             sepwidth = __WEBPACK_IMPORTED_MODULE_6__utils__["a" /* default */].deflt(colDescr.pregap, arraycolsep);
             if (sepwidth !== 0) {
                 colSep = __WEBPACK_IMPORTED_MODULE_0__buildCommon__["a" /* default */].makeSpan(["arraycolsep"], []);
@@ -14650,7 +15996,7 @@ var htmlBuilder = function htmlBuilder(group, options) {
         col = __WEBPACK_IMPORTED_MODULE_0__buildCommon__["a" /* default */].makeSpan(["col-align-" + (colDescr.align || "c")], [col]);
         cols.push(col);
 
-        if (c < nc - 1 || group.value.hskipBeforeAndAfter) {
+        if (c < nc - 1 || groupValue.hskipBeforeAndAfter) {
             sepwidth = __WEBPACK_IMPORTED_MODULE_6__utils__["a" /* default */].deflt(colDescr.postgap, arraycolsep);
             if (sepwidth !== 0) {
                 colSep = __WEBPACK_IMPORTED_MODULE_0__buildCommon__["a" /* default */].makeSpan(["arraycolsep"], []);
@@ -14660,22 +16006,39 @@ var htmlBuilder = function htmlBuilder(group, options) {
         }
     }
     body = __WEBPACK_IMPORTED_MODULE_0__buildCommon__["a" /* default */].makeSpan(["mtable"], cols);
+
+    // Add \hline(s), if any.
+    if (hlinePos.length > 0) {
+        var line = __WEBPACK_IMPORTED_MODULE_0__buildCommon__["a" /* default */].makeLineSpan("hline", options, 0.05);
+        var vListChildren = [{ type: "elem", elem: body, shift: 0 }];
+        while (hlinePos.length > 0) {
+            var lineShift = hlinePos.pop() - offset;
+            vListChildren.push({ type: "elem", elem: line, shift: lineShift });
+        }
+        body = __WEBPACK_IMPORTED_MODULE_0__buildCommon__["a" /* default */].makeVList({
+            positionType: "individualShift",
+            children: vListChildren
+        }, options);
+    }
+
     return __WEBPACK_IMPORTED_MODULE_0__buildCommon__["a" /* default */].makeSpan(["mord"], [body], options);
 };
 
 var mathmlBuilder = function mathmlBuilder(group, options) {
-    return new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mtable", group.value.body.map(function (row) {
+    var groupValue = Object(__WEBPACK_IMPORTED_MODULE_4__ParseNode__["a" /* assertNodeType */])(group, "array").value;
+    return new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mtable", groupValue.body.map(function (row) {
         return new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mtr", row.map(function (cell) {
-            return new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mtd", [__WEBPACK_IMPORTED_MODULE_9__buildMathML__["b" /* buildGroup */](cell, options)]);
+            return new __WEBPACK_IMPORTED_MODULE_2__mathMLTree__["a" /* default */].MathNode("mtd", [__WEBPACK_IMPORTED_MODULE_8__buildMathML__["b" /* buildGroup */](cell, options)]);
         }));
     }));
 };
 
 // Convinient function for aligned and alignedat environments.
 var alignedHandler = function alignedHandler(context, args) {
+    var cols = [];
     var res = {
         type: "array",
-        cols: [],
+        cols: cols,
         addJot: true
     };
     res = parseArray(context.parser, res, "display");
@@ -14691,7 +16054,7 @@ var alignedHandler = function alignedHandler(context, args) {
     // binary.  This behavior is implemented in amsmath's \start@aligned.
     var numMaths = void 0;
     var numCols = 0;
-    var emptyGroup = new __WEBPACK_IMPORTED_MODULE_4__ParseNode__["a" /* default */]("ordgroup", [], context.mode);
+    var emptyGroup = new __WEBPACK_IMPORTED_MODULE_4__ParseNode__["c" /* default */]("ordgroup", [], context.mode);
     if (args[0] && args[0].value) {
         var arg0 = "";
         for (var i = 0; i < args[0].value.length; i++) {
@@ -14702,16 +16065,16 @@ var alignedHandler = function alignedHandler(context, args) {
     }
     var isAligned = !numCols;
     res.value.body.forEach(function (row) {
-        for (var _i = 1; _i < row.length; _i += 2) {
+        for (var _i2 = 1; _i2 < row.length; _i2 += 2) {
             // Modify ordgroup node within styling node
-            var ordgroup = row[_i].value.value[0];
+            var ordgroup = row[_i2].value.value[0];
             ordgroup.value.unshift(emptyGroup);
         }
         if (!isAligned) {
             // Case 1
             var curMaths = row.length / 2;
             if (numMaths < curMaths) {
-                throw new __WEBPACK_IMPORTED_MODULE_3__ParseError__["a" /* default */]("Too many math in a row: " + ("expected " + numMaths + ", but got " + curMaths), row);
+                throw new __WEBPACK_IMPORTED_MODULE_3__ParseError__["a" /* default */]("Too many math in a row: " + ("expected " + numMaths + ", but got " + curMaths), row[0]);
             }
         } else if (numCols < row.length) {
             // Case 2
@@ -14722,16 +16085,16 @@ var alignedHandler = function alignedHandler(context, args) {
     // Adjusting alignment.
     // In aligned mode, we add one \qquad between columns;
     // otherwise we add nothing.
-    for (var _i2 = 0; _i2 < numCols; ++_i2) {
+    for (var _i3 = 0; _i3 < numCols; ++_i3) {
         var _align = "r";
         var _pregap = 0;
-        if (_i2 % 2 === 1) {
+        if (_i3 % 2 === 1) {
             _align = "l";
-        } else if (_i2 > 0 && isAligned) {
+        } else if (_i3 > 0 && isAligned) {
             // "aligned" mode.
             _pregap = 1; // add one \quad
         }
-        res.value.cols[_i2] = {
+        cols[_i3] = {
             type: "align",
             align: _align,
             pregap: _pregap,
@@ -14804,7 +16167,7 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineEnvironment__["b" /* default */])({
         };
         res = parseArray(context.parser, res, dCellStyle(context.envName));
         if (delimiters) {
-            res = new __WEBPACK_IMPORTED_MODULE_4__ParseNode__["a" /* default */]("leftright", {
+            res = new __WEBPACK_IMPORTED_MODULE_4__ParseNode__["c" /* default */]("leftright", {
                 body: [res],
                 left: delimiters[0],
                 right: delimiters[1]
@@ -14848,7 +16211,7 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineEnvironment__["b" /* default */])({
             }]
         };
         res = parseArray(context.parser, res, dCellStyle(context.envName));
-        res = new __WEBPACK_IMPORTED_MODULE_4__ParseNode__["a" /* default */]("leftright", {
+        res = new __WEBPACK_IMPORTED_MODULE_4__ParseNode__["c" /* default */]("leftright", {
             body: [res],
             left: "\\{",
             right: "."
@@ -14917,22 +16280,23 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineEnvironment__["b" /* default */])({
 });
 
 /***/ }),
-/* 144 */
+/* 177 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Lexer__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Token__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__macros__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ParseError__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_object_assign__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_object_assign__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Lexer__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Token__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__macros__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ParseError__ = __webpack_require__(5);
+
 
 
 
@@ -14948,23 +16312,34 @@ Object(__WEBPACK_IMPORTED_MODULE_1__defineEnvironment__["b" /* default */])({
 
 
 
-
 var MacroExpander = function () {
-    function MacroExpander(input, macros, mode) {
-        __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, MacroExpander);
+    function MacroExpander(input, settings, mode) {
+        __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, MacroExpander);
 
-        this.lexer = new __WEBPACK_IMPORTED_MODULE_3__Lexer__["c" /* default */](input);
-        this.macros = __WEBPACK_IMPORTED_MODULE_7_object_assign___default()({}, __WEBPACK_IMPORTED_MODULE_5__macros__["a" /* default */], macros);
+        this.feed(input);
+        this.macros = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_assign___default()({}, __WEBPACK_IMPORTED_MODULE_6__macros__["a" /* default */], settings.macros);
+        this.maxExpand = settings.maxExpand;
         this.mode = mode;
         this.stack = []; // contains tokens in REVERSE order
     }
 
     /**
-     * Switches between "text" and "math" modes.
+     * Feed a new input string to the same MacroExpander
+     * (with existing macros etc.).
      */
 
 
-    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(MacroExpander, [{
+    __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(MacroExpander, [{
+        key: "feed",
+        value: function feed(input) {
+            this.lexer = new __WEBPACK_IMPORTED_MODULE_4__Lexer__["b" /* default */](input);
+        }
+
+        /**
+         * Switches between "text" and "math" modes.
+         */
+
+    }, {
         key: "switchMode",
         value: function switchMode(newMode) {
             this.mode = newMode;
@@ -15059,14 +16434,14 @@ var MacroExpander = function () {
                         } else if (tok.text === "}") {
                             --depth;
                         } else if (tok.text === "EOF") {
-                            throw new __WEBPACK_IMPORTED_MODULE_6__ParseError__["a" /* default */]("End of input in macro argument", startOfArg);
+                            throw new __WEBPACK_IMPORTED_MODULE_7__ParseError__["a" /* default */]("End of input in macro argument", startOfArg);
                         }
                     }
                     arg.pop(); // remove last }
                     arg.reverse(); // like above, to fit in with stack order
                     args[i] = arg;
                 } else if (startOfArg.text === "EOF") {
-                    throw new __WEBPACK_IMPORTED_MODULE_6__ParseError__["a" /* default */]("End of input expecting macro argument");
+                    throw new __WEBPACK_IMPORTED_MODULE_7__ParseError__["a" /* default */]("End of input expecting macro argument");
                 } else {
                     args[i] = [startOfArg];
                 }
@@ -15100,11 +16475,6 @@ var MacroExpander = function () {
         value: function expandOnce() {
             var topToken = this.popToken();
             var name = topToken.text;
-            var isMacro = name.charAt(0) === "\\";
-            if (isMacro && __WEBPACK_IMPORTED_MODULE_3__Lexer__["b" /* controlWordRegex */].test(name)) {
-                // Consume all spaces after \macro (but not \\, \', etc.)
-                this.consumeSpaces();
-            }
             if (!this.macros.hasOwnProperty(name)) {
                 // Fully expanded
                 this.pushToken(topToken);
@@ -15115,6 +16485,12 @@ var MacroExpander = function () {
                 tokens = _getExpansion2.tokens,
                 numArgs = _getExpansion2.numArgs;
 
+            if (this.maxExpand !== Infinity) {
+                this.maxExpand--;
+                if (this.maxExpand < 0) {
+                    throw new __WEBPACK_IMPORTED_MODULE_7__ParseError__["a" /* default */]("Too many expansions: infinite loop or " + "need to increase maxExpand setting");
+                }
+            }
             var expansion = tokens;
             if (numArgs) {
                 var args = this.consumeArgs(numArgs);
@@ -15124,7 +16500,7 @@ var MacroExpander = function () {
                     var tok = expansion[i];
                     if (tok.text === "#") {
                         if (i === 0) {
-                            throw new __WEBPACK_IMPORTED_MODULE_6__ParseError__["a" /* default */]("Incomplete placeholder at end of macro body", tok);
+                            throw new __WEBPACK_IMPORTED_MODULE_7__ParseError__["a" /* default */]("Incomplete placeholder at end of macro body", tok);
                         }
                         tok = expansion[--i]; // next token on stack
                         if (tok.text === "#") {
@@ -15136,7 +16512,7 @@ var MacroExpander = function () {
                             // replace the placeholder with the indicated argument
                             (_expansion = expansion).splice.apply(_expansion, [i, 2].concat(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default()(args[+tok.text - 1])));
                         } else {
-                            throw new __WEBPACK_IMPORTED_MODULE_6__ParseError__["a" /* default */]("Not a valid argument number", tok);
+                            throw new __WEBPACK_IMPORTED_MODULE_7__ParseError__["a" /* default */]("Not a valid argument number", tok);
                         }
                     }
                 }
@@ -15170,7 +16546,7 @@ var MacroExpander = function () {
             for (;;) {
                 var expanded = this.expandOnce();
                 // expandOnce returns Token if and only if it's fully expanded.
-                if (expanded instanceof __WEBPACK_IMPORTED_MODULE_4__Token__["a" /* Token */]) {
+                if (expanded instanceof __WEBPACK_IMPORTED_MODULE_5__Token__["a" /* Token */]) {
                     // \relax stops the expansion, but shouldn't get returned (a
                     // null return value couldn't get implemented as a function).
                     if (expanded.text === "\\relax") {
@@ -15205,7 +16581,7 @@ var MacroExpander = function () {
                         ++numArgs;
                     }
                 }
-                var bodyLexer = new __WEBPACK_IMPORTED_MODULE_3__Lexer__["c" /* default */](expansion);
+                var bodyLexer = new __WEBPACK_IMPORTED_MODULE_4__Lexer__["b" /* default */](expansion);
                 var tokens = [];
                 var tok = bodyLexer.lex();
                 while (tok.text !== "EOF") {
@@ -15232,7 +16608,7 @@ var MacroExpander = function () {
 /* harmony default export */ __webpack_exports__["a"] = (MacroExpander);
 
 /***/ }),
-/* 145 */
+/* 178 */
 /***/ (function(module, exports) {
 
 function getRelocatable(re) {
@@ -15275,20 +16651,22 @@ function matchAt(re, str, pos) {
 module.exports = matchAt;
 
 /***/ }),
-/* 146 */
+/* 179 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export defineMacro */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__submodules_katex_fonts_fontMetricsData__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__submodules_katex_fonts_fontMetricsData__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__symbols__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Token__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Token__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ParseError__ = __webpack_require__(5);
 
 /**
  * Predefined macros for KaTeX.
  * This can be used to define some commands in terms of others.
  */
+
 
 
 
@@ -15358,6 +16736,42 @@ defineMacro("\\TextOrMath", function (context) {
     }
 });
 
+// Basic support for global macro definitions:
+//     \gdef\macro{expansion}
+//     \gdef\macro#1{expansion}
+//     \gdef\macro#1#2{expansion}
+//     \gdef\macro#1#2#3#4#5#6#7#8#9{expansion}
+defineMacro("\\gdef", function (context) {
+    var arg = context.consumeArgs(1)[0];
+    if (arg.length !== 1) {
+        throw new __WEBPACK_IMPORTED_MODULE_4__ParseError__["a" /* default */]("\\gdef's first argument must be a macro name");
+    }
+    var name = arg[0].text;
+    // Count argument specifiers, and check they are in the order #1 #2 ...
+    var numArgs = 0;
+    arg = context.consumeArgs(1)[0];
+    while (arg.length === 1 && arg[0].text === "#") {
+        arg = context.consumeArgs(1)[0];
+        if (arg.length !== 1) {
+            throw new __WEBPACK_IMPORTED_MODULE_4__ParseError__["a" /* default */]("Invalid argument number length \"" + arg.length + "\"");
+        }
+        if (!/^[1-9]$/.test(arg[0].text)) {
+            throw new __WEBPACK_IMPORTED_MODULE_4__ParseError__["a" /* default */]("Invalid argument number \"" + arg[0].text + "\"");
+        }
+        numArgs++;
+        if (parseInt(arg[0].text) !== numArgs) {
+            throw new __WEBPACK_IMPORTED_MODULE_4__ParseError__["a" /* default */]("Argument number \"" + arg[0].text + "\" out of order");
+        }
+        arg = context.consumeArgs(1)[0];
+    }
+    // Final arg is the expansion of the macro
+    context.macros[name] = {
+        tokens: arg,
+        numArgs: numArgs
+    };
+    return '';
+});
+
 //////////////////////////////////////////////////////////////////////
 // Grouping
 // \let\bgroup={ \let\egroup=}
@@ -15380,6 +16794,15 @@ defineMacro("\\rbrack", "]");
 defineMacro("\\aa", "\\r a");
 defineMacro("\\AA", "\\r A");
 
+// \DeclareTextCommandDefault{\textcopyright}{\textcircled{c}}
+// \DeclareTextCommandDefault{\textregistered}{\textcircled{%
+//      \check@mathfonts\fontsize\sf@size\z@\math@fontsfalse\selectfont R}}
+// \DeclareRobustCommand{\copyright}{%
+//    \ifmmode{\nfss@text{\textcopyright}}\else\textcopyright\fi}
+defineMacro("\\textcopyright", "\\textcircled{c}");
+defineMacro("\\copyright", "\\TextOrMath{\\textcopyright}{\\text{\\textcopyright}}");
+defineMacro("\\textregistered", "\\textcircled{\\scriptsize R}");
+
 // Unicode double-struck letters
 defineMacro("\u2102", "\\mathbb{C}");
 defineMacro("\u210D", "\\mathbb{H}");
@@ -15388,6 +16811,21 @@ defineMacro("\u2119", "\\mathbb{P}");
 defineMacro("\u211A", "\\mathbb{Q}");
 defineMacro("\u211D", "\\mathbb{R}");
 defineMacro("\u2124", "\\mathbb{Z}");
+
+defineMacro("\u210E", "\\mathit{h}"); // Planck constant
+
+// Characters omitted from Unicode range 1D400–1D7FF
+defineMacro("\u212C", "\\mathscr{B}"); // script
+defineMacro("\u2130", "\\mathscr{E}");
+defineMacro("\u2131", "\\mathscr{F}");
+defineMacro("\u210B", "\\mathscr{H}");
+defineMacro("\u2110", "\\mathscr{I}");
+defineMacro("\u2112", "\\mathscr{L}");
+defineMacro("\u2133", "\\mathscr{M}");
+defineMacro("\u211B", "\\mathscr{R}");
+defineMacro("\u212D", "\\mathfrak{C}"); // Fraktur
+defineMacro("\u210C", "\\mathfrak{H}");
+defineMacro("\u2128", "\\mathfrak{Z}");
 
 // Unicode middle dot
 // The KaTeX fonts do not contain U+00B7. Instead, \cdotp displays
@@ -15398,6 +16836,15 @@ defineMacro("\xB7", "\\cdotp");
 defineMacro("\\llap", "\\mathllap{\\textrm{#1}}");
 defineMacro("\\rlap", "\\mathrlap{\\textrm{#1}}");
 defineMacro("\\clap", "\\mathclap{\\textrm{#1}}");
+
+// Unicode stacked relations
+defineMacro("\u2258", "\\mathrel{=\\kern{-1em}\\raisebox{0.4em}{$\\scriptsize\\frown$}}");
+defineMacro("\u2259", "\\stackrel{\\tiny\\wedge}{=}");
+defineMacro("\u225A", "\\stackrel{\\tiny\\vee}{=}");
+defineMacro("\u225B", "\\stackrel{\\scriptsize\\star}{=}");
+defineMacro("\u225D", "\\stackrel{\\tiny\\mathrm{def}}{=}");
+defineMacro("\u225E", "\\stackrel{\\tiny\\mathrm{m}}{=}");
+defineMacro("\u225F", "\\stackrel{\\tiny?}{=}");
 
 //////////////////////////////////////////////////////////////////////
 // amsmath.sty
@@ -15416,10 +16863,6 @@ defineMacro("\\varUpsilon", "\\mathit{\\Upsilon}");
 defineMacro("\\varPhi", "\\mathit{\\Phi}");
 defineMacro("\\varPsi", "\\mathit{\\Psi}");
 defineMacro("\\varOmega", "\\mathit{\\Omega}");
-
-// \def\overset#1#2{\binrel@{#2}\binrel@@{\mathop{\kern\z@#2}\limits^{#1}}}
-defineMacro("\\overset", "\\mathop{#2}\\limits^{#1}");
-defineMacro("\\underset", "\\mathop{#2}\\limits_{#1}");
 
 // \newcommand{\boxed}[1]{\fbox{\m@th$\displaystyle#1$}}
 defineMacro("\\boxed", "\\fbox{\\displaystyle{#1}}");
@@ -15586,8 +17029,21 @@ defineMacro("\\thinspace", "\\,"); //   \let\thinspace\,
 defineMacro("\\medspace", "\\:"); //   \let\medspace\:
 defineMacro("\\thickspace", "\\;"); //   \let\thickspace\;
 
+// \tag@in@display form of \tag
+defineMacro("\\tag", "\\@ifstar\\tag@literal\\tag@paren");
+defineMacro("\\tag@paren", "\\tag@literal{({#1})}");
+defineMacro("\\tag@literal", function (context) {
+    if (context.macros["\\df@tag"]) {
+        throw new __WEBPACK_IMPORTED_MODULE_4__ParseError__["a" /* default */]("Multiple \\tag");
+    }
+    return "\\gdef\\df@tag{\\text{#1}}";
+});
+
 //////////////////////////////////////////////////////////////////////
 // LaTeX source2e
+
+// \\ defaults to \newline, but changes to \cr within array environment
+defineMacro("\\\\", "\\newline");
 
 // \def\TeX{T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\@}
 // TODO: Doesn't normally work in math mode because \@ fails.  KaTeX doesn't
@@ -15617,8 +17073,11 @@ defineMacro("\\KaTeX", "\\textrm{K\\kern-.17em\\raisebox{" + latexRaiseA + "}{\\
 
 // \DeclareRobustCommand\hspace{\@ifstar\@hspacer\@hspace}
 // \def\@hspace#1{\hskip  #1\relax}
-// KaTeX doesn't do line breaks, so \hspace and \hspace* are the same as \kern
-defineMacro("\\hspace", "\\@ifstar\\kern\\kern");
+// \def\@hspacer#1{\vrule \@width\z@\nobreak
+//                 \hskip #1\hskip \z@skip}
+defineMacro("\\hspace", "\\@ifstar\\@hspacer\\@hspace");
+defineMacro("\\@hspace", "\\hskip #1\\relax");
+defineMacro("\\@hspacer", "\\rule{0pt}{0pt}\\hskip #1\\relax");
 
 //////////////////////////////////////////////////////////////////////
 // mathtools.sty
@@ -15694,104 +17153,7 @@ defineMacro("\\limsup", "\\DOTSB\\mathop{\\operatorname{lim\\,sup}}\\limits");
 defineMacro("\\liminf", "\\DOTSB\\mathop{\\operatorname{lim\\,inf}}\\limits");
 
 /***/ }),
-/* 147 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
-
-
-/***/ }),
-/* 148 */
+/* 180 */
 /***/ (function(module, exports) {
 
 // Mapping of Unicode accent characters to their LaTeX equivalent in text and
@@ -15814,10 +17176,11 @@ module.exports = {
 };
 
 /***/ }),
-/* 149 */
+/* 181 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+
 // This file is GENERATED by unicodeMake.js. DO NOT MODIFY.
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -16140,6 +17503,12 @@ module.exports = {
     "\u038F": "\u03A9\u0301", // Ώ = \'{Ω}
     "\u1FFA": "\u03A9\u0300" // Ὼ = \`{Ω}
 });
+
+/***/ }),
+/* 182 */
+/***/ (function(module, exports) {
+
+module.exports = {"name":"katex","version":"0.10.0-alpha","description":"Fast math typesetting for the web.","main":"dist/katex.js","repository":{"type":"git","url":"git://github.com/Khan/KaTeX.git"},"files":["katex.js","cli.js","src/","contrib/","dist/"],"license":"MIT","devDependencies":{"babel-eslint":"^8.1.2","babel-jest":"^22.0.4","babel-loader":"^7.1.2","babel-plugin-transform-class-properties":"^6.23.0","babel-plugin-transform-runtime":"^6.15.0","babel-preset-es2015":"^6.18.0","babel-preset-flow":"^6.23.0","babel-register":"^6.26.0","benchmark":"^2.1.4","check-dependencies":"^1.1.0","css-loader":"^0.28.8","eslint":"^4.14.0","eslint-plugin-flowtype":"^2.40.1","extract-text-webpack-plugin":"^3.0.2","file-loader":"^1.1.6","flow-bin":"^0.62.0","jest":"^22.0.4","jest-serializer-html":"^4.0.1","js-yaml":"^3.10.0","json-stable-stringify":"^1.0.1","jspngopt":"^0.2.0","less":"~2.7.1","less-loader":"^4.0.5","mkdirp":"^0.5.1","pako":"1.0.4","pre-commit":"^1.2.2","query-string":"^5.1.0","rimraf":"^2.6.2","selenium-webdriver":"^2.48.2","sri-toolbox":"^0.2.0","style-loader":"^0.19.1","stylelint":"^8.4.0","stylelint-config-standard":"^18.0.0","uglifyjs-webpack-plugin":"^1.1.6","webpack":"^3.6.0","webpack-bundle-analyzer":"^2.11.1","webpack-dev-server":"^2.7.1"},"bin":"cli.js","scripts":{"test":"npm run prestart && npm run test:lint && npm run test:flow && npm run test:jest","test:lint":"eslint katex.js katex.webpack.js cli.js webpack.common.js webpack.config.js webpack.dev.js src static test contrib dockers && stylelint src/katex.less","test:flow":"flow","test:jest":"jest","test:jest:watch":"jest --watch","test:jest:update":"jest --updateSnapshot","test:jest:coverage":"jest --coverage","test:screenshots":"npm run test:screenshots:update -- --verify","test:screenshots:update":"npm run prestart && dockers/Screenshotter/screenshotter.sh","test:perf":"npm run prestart && NODE_ENV=test node test/perf-test.js","clean":"rm -rf build/* node_modules/","clean-install":"npm run clean && npm i","prestart":"node check-node-version.js && check-dependencies && cd src && node unicodeMake.js >unicodeSymbols.js","start":"webpack-dev-server --hot --config webpack.dev.js","analyze":"webpack --config webpack.analyze.js","build":"npm run prestart && rimraf build/* && webpack","watch":"npm run build -- --watch","dist":"npm test && npm run build && npm run dist:copy && npm run dist:zip && npm run dist:dist","dist:copy":"cd build && mkdirp katex && cp -r katex.js katex.min.js katex.css katex.min.css contrib fonts ../README.md katex","dist:zip":"cd build && tar czf katex.tar.gz katex/ && zip -rq katex.zip katex/","dist:dist":"rimraf dist/ && cp -r build/katex/ dist/"},"pre-commit":["test:lint"],"dependencies":{"match-at":"^0.1.1","nomnom":"^1.8.1"},"jest":{"collectCoverageFrom":["src/**/*.js","contrib/**/*.js"],"setupTestFrameworkScriptFile":"<rootDir>/test/setup.js","snapshotSerializers":["jest-serializer-html"],"testMatch":["**/test/*-spec.js"],"transform":{"^.+\\.js$":"babel-jest"}}}
 
 /***/ })
 /******/ ])["default"];
