@@ -8,6 +8,8 @@
   ctx.fillText("click to start", canvas.width / 2, canvas.height / 2);
 })();
 
+//___________________get mouse input___________________
+
 var particles = function(button) {
   button.onclick = null; //stops the function from running after first run
   // canvas setup
@@ -19,6 +21,17 @@ var particles = function(button) {
   ctx.shadowBlur = 5;
   ctx.shadowOffsetX = 5;
   ctx.shadowOffsetY = 5;
+
+  const mouse = {
+    down: false,
+    x: 0,
+    y: 0
+  };
+  canvas.onmousemove = function(e) {
+    var rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  };
 
   var pause = false;
 
@@ -130,7 +143,7 @@ var particles = function(button) {
   var box;
 
   function spawn() {
-    box = new mass(50, 50, 1, 0, 20, randomColor());
+    box = new mass(mouse.x, mouse.y, 1, 0, 20, randomColor());
     box.calcEnergy();
     box.energy = box.pe + box.ke;
   }
