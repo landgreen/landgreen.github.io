@@ -3,13 +3,13 @@
 
 <strong>physics:</strong> full course notes for high school physics, with JavaScript simulations
 
-<strong>n-gon:</strong> a 2-d sidescroller physics game
+<strong>n-gon:</strong> 2-d physics sidescroller shooter game
 
-<strong>planetesimals:</strong> a asteroids-like game with collision physics and n-body gravity.
+<strong>planetesimals:</strong> asteroids-like game with collision physics and n-body gravity.
 
-<strong>caller:</strong> a randomized caller for classrooms
+<strong>caller:</strong> randomized caller for classrooms
 
-<strong>bells:</strong> a bell schedule 
+<strong>bells:</strong> bell schedule display
 
 
 
