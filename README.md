@@ -1,16 +1,12 @@
 # landgreen.github.io
 [https://landgreen.github.io/](https://landgreen.github.io/) is a public website written by Ross Landgreen.
 
-<strong>physics:</strong> full course notes for high school physics, with JavaScript simulations
+[physics:](https://landgreen.github.io/physics/) full course notes for high school physics, with JavaScript simulations
 
-<strong>n-gon:</strong> 2-d physics sidescroller shooter game
+[n-gon:](https://landgreen.github.io/sidescroller/) 2-d physics sidescroller shooter
 
-<strong>planetesimals:</strong> asteroids-like game with collision physics and n-body gravity.
+[planetesimals:](https://landgreen.github.io/planetesimals/) asteroids-like game with collision physics and n-body gravity.
 
-<strong>caller:</strong> randomized caller for classrooms
+[caller:](https://landgreen.github.io/caller/) randomized caller for classrooms
 
-<strong>bells:</strong> bell schedule display
-
-
-
-
+[bells:](https://landgreen.github.io/bells/) bell schedule display
