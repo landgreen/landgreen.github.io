@@ -60,7 +60,7 @@ function charges6(el) {
   for (let i = 0; i < len; ++i) {
     for (let j = 0; j < len; ++j) {
       q[q.length] = new Charge("e", {
-        x: i * separation + offx,
+        x: i * separation + offx + 10 * (Math.random() - 0.5),
         y: j * separation + offy
       });
     }
