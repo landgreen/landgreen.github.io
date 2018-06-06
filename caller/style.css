@@ -28,7 +28,7 @@ footer {
 select {
   border: 0;
   border-radius: 15px;
-  position: absolute;
+  position: fixed;
   bottom: 3px;
   right: 3px;
   z-index: 2;
@@ -66,7 +66,7 @@ select {
   position: absolute;
   top: 7px;
   right: 7px;
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
 button {
@@ -117,4 +117,10 @@ button:focus {
   right: 0.5em;
   color: #777;
   background: transparent;
+}
+
+#first-time {
+  margin: auto;
+  max-width: 600px;
+  font-size: 2em;
 }
