@@ -13,17 +13,17 @@
 
   <div id="periods">
     <header>
+      <button v-on:click="undoLastedCalled" class="undo white">undo</button>
       <button v-on:click="nextPeriod">P{{period}}</button>
       <button v-on:click="callRandom" class="blue">random</button>
       <button v-on:click="showSettings" class="showhide white">more</button>
-      <div v-if="isSettingsSeen">
+      <div v-if="isSettingsSeen" class="settings">
         <input type="checkbox" class="slideOne" v-model="draggable" v-on:click="saveToLocalSettings" /> Drag
         <input type="checkbox" v-model="resizable" v-on:click="saveToLocalSettings" /> Resize
         <input type="checkbox" v-model="verbose" v-on:click="saveToLocalSettings" /> Verbose
         <br>
         <button id='add' v-on:click="addItem">add</button>
         <button v-on:click="removeItem">remove</button>
-        <button v-on:click="undoLastedCalled">undo last</button>
         <button v-on:click="resetCount">reset count</button>
         <button v-on:click="reset">reset names</button>
         <button v-on:click="tidy">tidy</button>
