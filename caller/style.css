@@ -116,10 +116,10 @@ button:focus {
   color: #333;
 }
 .white:hover {
-  background: #ccc;
+  background: #ddd;
 }
 .white:active {
-  background: #aaa;
+  background: #bbb;
 }
 
 .showhide {

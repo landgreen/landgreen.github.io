@@ -13,7 +13,13 @@
 
   <div id="periods">
     <header>
-      <button v-on:click="undoLastedCalled" class="undo white">undo</button>
+      <button v-on:click="undoLastedCalled" class="undo white">
+        <svg height="25px" viewBox="0 0 409 409">
+          <path fill="#777" stroke="none" d="M212.018,7.461c-60.921,0-118.198,28.518-155.245,75.784L0.122,50.491L0,237.986l162.426-93.645l-52.213-30.21
+           c25.648-28.724,62.548-46.02,101.805-46.02c75.233,0,136.475,61.213,136.475,136.465c0,75.25-61.241,136.468-136.475,136.468
+           v60.645c108.701,0,197.133-88.423,197.133-197.112C409.151,95.891,320.719,7.461,212.018,7.461z" />
+        </svg>
+      </button>
       <button v-on:click="nextPeriod">P{{period}}</button>
       <button v-on:click="callRandom" class="blue">random</button>
       <button v-on:click="showSettings" class="showhide white">more</button>
