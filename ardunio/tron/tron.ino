@@ -1,6 +1,6 @@
 #include <Adafruit_NeoPixel.h>
 
-const int WAIT = 1;         // WAIT is used x4 times per cycle
+const int WAIT = 200;         // how many cycles to look for player joystick input
 const int LEDPIN = 6;         // pin for LEDS
 const int SWITCH_PIN_1 = 2;   // pin for P1 switch
 const int SWITCH_PIN_2 = 4;   // pin for P2 switch
@@ -19,7 +19,7 @@ int p2Velocity[2] = { -1, 0};
 bool isP1Move = true;
 bool isP2Move = true;
 
-//locations where the players have been
+// locations where the players have been
 bool on[16][16] = {
   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -54,7 +54,6 @@ void setup() {
   //activate pull-up resistor on the push-button pin
   pinMode(SWITCH_PIN_1, INPUT_PULLUP);
   pinMode(SWITCH_PIN_2, INPUT_PULLUP);
-
   strip.setBrightness(BRIGHTNESS);
   strip.begin();
   for (int i = 0; i < NUM_LEDS; i += 4) {
@@ -72,17 +71,17 @@ void setup() {
 }
 
 void loop() {
-  //each player moves at least once per cycle
   isP1Move = true;
   isP2Move = true;
 
-  //basic move loop
+  // basic move loop
   for (int i = 0; i < 4; i++) {
+    //player moves extra if button is down
     if (!digitalRead(SWITCH_PIN_1)) {
-      isP1Move = true; //player moves extra if button is down
+      isP1Move = true;
     }
     if (!digitalRead(SWITCH_PIN_2)) {
-      isP2Move = true; //player moves extra if button is down
+      isP2Move = true;
     }
     if (isP1Move) P1Move();
     if (isP2Move) P2Move();
@@ -90,30 +89,37 @@ void loop() {
     updateGameState();
     drawPlayers();
     strip.show();
-    for (int i = 0; i < 100; i++) {
-      playerInputScan();
-      delay(WAIT);
+    //check for player input
+    for (int i = 0; i < WAIT; i++) {
+      playerJoystickInput();
     }
-
   }
 }
+
 void updateGameState() {
   on[p1[0]][p1[1]] = true;
   on[p2[0]][p2[1]] = true;
 }
 
-void playerInputScan() {
-  //get input from game controllers
-  p1Input[0] = -map(analogRead(0), 0, 1023, -3, 4);
-  p1Input[1] = -map(analogRead(1), 0, 1023, -3, 4);
-  p2Input[0] = map(analogRead(2), 0, 1023, -3, 4);
-  p2Input[1] = map(analogRead(3), 0, 1023, -3, 4);
+void playerJoystickInput() {
+  //read input from game controllers
+  int p1x = -map(analogRead(0), 0, 1023, -3, 4);
+  int p1y = -map(analogRead(1), 0, 1023, -3, 4);
+  int p2x =  map(analogRead(2), 0, 1023, -3, 4);
+  int p2y =  map(analogRead(3), 0, 1023, -3, 4);
+
+  // log the input if it is not zero
+  if (!(p1x == 0 && p1y == 0)) {
+    p1Input[0] = p1x;
+    p1Input[1] = p1y;
+  }
+  if (!(p2x == 0 && p2y == 0)) {
+    p2Input[0] = p2x;
+    p2Input[1] = p2y;
+  }
 }
 
-
-
-void P1Move()
-{
+void P1Move() {
   // change player velocity from inputs
   // don't let player go backwards and die
   if (p1Input[0] > 1 && p1Velocity[0] != -1) {
@@ -147,8 +153,7 @@ void P1Move()
   }
 }
 
-void P2Move()
-{
+void P2Move() {
   // change player velocity from inputs
   // don't let player go backwards and die
   if (p2Input[0] > 1 && p2Velocity[0] != -1) {
@@ -200,8 +205,7 @@ void playerCollisions() {
   isP2Move = false;
 }
 
-void p1Wins()
-{
+void p1Wins() {
   if (isP1Move && on[p1[0]][p1[1]]) {
     tie();
   }
@@ -216,8 +220,7 @@ void p1Wins()
   while (1) {}
 }
 
-void p2Wins()
-{
+void p2Wins() {
   if (isP2Move && on[p2[0]][p2[1]]) {
     tie();
   }
@@ -232,8 +235,7 @@ void p2Wins()
   while (1) {}
 }
 
-void tie()
-{
+void tie() {
   Serial.println("tie game");
   GameStateDump();
   strip.setBrightness(20);
@@ -251,8 +253,7 @@ void drawPlayers() {
   ZigZagPixel(p2[0], p2[1], 255, 0, 255);
 }
 
-void ZigZagPixel(int x, int y, int r, int g, int b)
-{
+void ZigZagPixel(int x, int y, int r, int g, int b) {
   if (y % 2) {
     strip.setPixelColor(y * 16 + x, r, g,  b);
   } else {
@@ -260,8 +261,7 @@ void ZigZagPixel(int x, int y, int r, int g, int b)
   }
 }
 
-void getZigZagPixel(int x, int y)
-{
+void getZigZagPixel(int x, int y) {
   if (y % 2) {
     Serial.println(strip.getPixelColor(y * 16 + x) );
   } else {
