@@ -34,7 +34,7 @@ function charges0(el) {
     mouse.down = false;
   };
 
-  let B = -0.04;
+  let B = -0.03;
   document.getElementById("B").addEventListener(
     "input",
     function() {
@@ -55,20 +55,38 @@ function charges0(el) {
 
   const q = []; //holds the charges
   //spawn p before e to avoid a bug in the class method allPhysics
-  Charge.spawnCharges(q, 12, "p");
-  Charge.spawnCharges(q, 12, "e");
+  // Charge.spawnCharges(q, 12, "p");
+  Charge.spawnCharges(q, 1, "e");
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   function cycle() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    Charge.physicsAll(q, 0.999);
-    Charge.magneticField(q, B);
-    Charge.drawMagneticField(B);
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (Math.random() < 0.05) {
+      q[q.length] = new Charge(
+        "e",
+        {
+          //position
+          x: 30 + Math.random() * (canvas.width - 60),
+          y: 30 + Math.random() * (canvas.height - 60)
+        },
+        {
+          //velocity
+          x: 12 * (Math.random() - 0.5),
+          y: 12 * (Math.random() - 0.5)
+        }
+      );
+    }
+
+    Charge.physicsAll(q, 0.998, 1);
+    Charge.physicsMagneticField(q, B);
+    // Charge.drawMagneticField(B);
     // Charge.vectorField()
     // Charge.scalarField(q);
-    Charge.drawAll(q);
-
-    // Charge.pushZone()
-    Charge.bounds(q);
+    Charge.drawCloudChamber(q);
+    // Charge.drawAll(q);
+    // Charge.bounds(q);
+    Charge.boundsRemove(q, 0);
     if (!pause) requestAnimationFrame(cycle);
   }
   requestAnimationFrame(cycle);

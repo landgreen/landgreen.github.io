@@ -12,20 +12,56 @@ class Charge {
     this.position = position;
     this.velocity = velocity;
     if (type === "e") {
-      this.electron = true;
+      this.canMove = true;
       this.name = "electron";
+      this.mass = 1;
       this.charge = -1;
       this.radius = 15;
       this.color = "rgba(0,100,255,0.4)";
     } else if (type === "p") {
-      this.electron = false;
+      this.canMove = false;
       this.name = "proton";
+      this.mass = 1000;
+      this.charge = 1;
+      this.radius = 4;
+      this.color = "rgba(255,0,100,1)";
+    } else if (type === "n") {
+      this.canMove = true;
+      this.name = "neutron";
+      this.mass = 1000;
+      this.charge = 0;
+      this.radius = 4;
+      this.color = "rgba(255,0,100,1)";
+    } else if (type === "muon") {
+      this.canMove = true;
+      this.name = "muon";
+      this.mass = 200;
+      this.charge = -1;
+      this.radius = 8;
+      this.color = "rgba(0,100,255,0.8)";
+    } else if (type === "positron") {
+      this.canMove = true;
+      this.name = "positron";
+      this.mass = 1;
+      this.charge = 1;
+      this.radius = 15;
+      this.color = "rgba(255,0,100,0.4)";
+    } else if (type === "alpha") {
+      this.canMove = true;
+      this.name = "alpha";
+      this.mass = 4000;
+      this.charge = 2;
+      this.radius = 8;
+      this.color = "rgba(255,0,100,0.4)";
+    } else if (type === "proton") {
+      this.canMove = true;
+      this.name = "proton";
+      this.mass = 1000;
       this.charge = 1;
       this.radius = 4;
       this.color = "rgba(255,0,100,1)";
     }
   }
-
   static spawnCharges(who, len = 1, type = "e") {
     for (let i = 0; i < len; ++i) {
       who[who.length] = new Charge(type, {
@@ -53,7 +89,7 @@ class Charge {
   static teleport(who, off = 200) {
     let count = 0;
     for (let i = 0, len = who.length; i < len; ++i) {
-      if (who[i].electron && who[i].position.x > canvas.width + off) {
+      if (who[i].canMove && who[i].position.x > canvas.width + off) {
         count++;
         who[i].position.x = -off;
       }
@@ -64,7 +100,7 @@ class Charge {
   static bounds(who, range = 50) {
     //range = how far outside of canvas,  0 is at canvas edge
     for (let i = 0, len = who.length; i < len; ++i) {
-      if (who[i].electron) {
+      if (who[i].canMove) {
         if (who[i].position.x > canvas.width + range) {
           who[i].velocity.x = 0; //-Math.abs(who[i].velocity.x)
           who[i].position.x = canvas.width + range;
@@ -83,9 +119,29 @@ class Charge {
     }
   }
 
-  static physicsAll(who, friction = 0.99, minDistance2 = 600) {
+  static boundsRemove(who, range = 50) {
+    //range = how far outside of canvas,  0 is at canvas edge
+    let i = who.length;
+    while (--i) {
+      if (
+        who[i].canMove &&
+        (who[i].position.x > canvas.width + range || who[i].position.x < -range || who[i].position.y > canvas.height + range || who[i].position.y < -range)
+      ) {
+        who.splice(i, 1);
+      }
+    }
+    //fixes issue where the last particle isn't being removed ... be nice to have a better solution, but this works
+    if (
+      who[0].canMove &&
+      (who[0].position.x > canvas.width + range || who[0].position.x < -range || who[0].position.y > canvas.height + range || who[0].position.y < -range)
+    ) {
+      who.splice(0, 1);
+    }
+  }
+
+  static physicsAll(who, friction = 0.99, minDistance2 = 500, strength = 200) {
     for (let i = 0, len = who.length; i < len; ++i) {
-      if (who[i].electron) {
+      if (who[i].canMove) {
         //change position from velocity
         who[i].position.x += who[i].velocity.x;
         who[i].position.y += who[i].velocity.y;
@@ -97,8 +153,9 @@ class Charge {
           if (i != j) {
             const dx = who[i].position.x - who[j].position.x;
             const dy = who[i].position.y - who[j].position.y;
-            const d2 = Math.max(dx * dx + dy * dy, minDistance2);
-            const mag = (200 * who[i].charge * who[j].charge) / (d2 * Math.sqrt(d2));
+            // const d2 = Math.max(dx * dx + dy * dy, minDistance2);
+            const d2 = dx * dx + dy * dy + minDistance2;
+            const mag = (strength * who[i].charge * who[j].charge) / (d2 * Math.sqrt(d2));
             who[i].velocity.x += mag * dx;
             who[i].velocity.y += mag * dy;
           }
@@ -107,16 +164,71 @@ class Charge {
     }
   }
 
-  static magneticField(who, B) {
+  static physicsMagneticField(who, B) {
     for (let i = 0, len = who.length; i < len; ++i) {
-      if (who[i].electron) {
-        const velocity = Math.sqrt(who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y);
-        const mag = B; //who[i].charge
+      if (who[i].canMove) {
+        // const velocity = Math.sqrt(who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y);
         // assumes the magnetic field, B, is either in or out of the page
-        who[i].velocity.x -= mag * who[i].velocity.y;
-        who[i].velocity.y += mag * who[i].velocity.x;
+        who[i].velocity.x -= B * who[i].velocity.y;
+        who[i].velocity.y += B * who[i].velocity.x;
       }
     }
+  }
+
+  // static magnetic(who, scale = 0.05) {
+  //   for (let i = 0, len = who.length; i < len; ++i) {
+  //     let dir = Math.atan2(who[i].velocity.y, who[i].velocity.x);
+  //     let angle = dir + (Math.PI / 2) * who[i].charge;
+  //     let speed = Math.sqrt(who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y);
+  //     let mag = scale * speed;
+  //     who[i].velocity.x += mag * Math.cos(angle);
+  //     who[i].velocity.y += mag * Math.sin(angle);
+  //   }
+  // }
+
+  static drawCloudChamber(who) {
+    // let imgData = ctx.createImageData(canvas.width, canvas.height);
+    let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0, len = who.length; i < len; ++i) {
+      const imgIndex = 4 * (Math.floor(who[i].position.x) + Math.floor(who[i].position.y) * canvas.width);
+      //trace the path of particles, but if there hasn't been a particle in that pixel recently
+      //must be above velocity threshold of 1
+      // && who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y > 1
+      if (imgData.data[imgIndex + 3] === 0) {
+        imgData.data[imgIndex + 0] = 255; // red
+        imgData.data[imgIndex + 1] = 255; // green
+        imgData.data[imgIndex + 2] = 255; // blue
+        imgData.data[imgIndex + 3] = 255; // alpha
+        //draw larger pixels
+        // imgData.data[imgIndex + 0 + 4] = 255; // red
+        // imgData.data[imgIndex + 1 + 4] = 255; // green
+        // imgData.data[imgIndex + 2 + 4] = 255; // blue
+        // imgData.data[imgIndex + 3 + 4] = 255; // alpha
+
+        // imgData.data[imgIndex + 0 + 4 * canvas.width] = 255; // red
+        // imgData.data[imgIndex + 1 + 4 * canvas.width] = 255; // green
+        // imgData.data[imgIndex + 2 + 4 * canvas.width] = 255; // blue
+        // imgData.data[imgIndex + 3 + 4 * canvas.width] = 255; // alpha
+
+        // imgData.data[imgIndex + 0 + 4 + 4 * canvas.width] = 255; // red
+        // imgData.data[imgIndex + 1 + 4 + 4 * canvas.width] = 255; // green
+        // imgData.data[imgIndex + 2 + 4 + 4 * canvas.width] = 255; // blue
+        // imgData.data[imgIndex + 3 + 4 + 4 * canvas.width] = 255; // alpha
+      }
+    }
+
+    for (var i = 0; i < imgData.data.length; i += 4) {
+      //added random speckles
+      if (Math.random() < 0.00001) {
+        imgData.data[i + 0] = 255; // red
+        imgData.data[i + 1] = 255; // green
+        imgData.data[i + 2] = 255; // blue
+        imgData.data[i + 3] = Math.floor(Math.random() * 255); // alpha
+      }
+      if (imgData.data[i + 3] > 0) imgData.data[i + 3]--; // fade alpha
+    }
+    ctx.putImageData(imgData, 0, 0);
   }
 
   static drawMagneticField(B) {
@@ -154,7 +266,7 @@ class Charge {
   // static physicsAll(who) {
   //   const minDistance2 = 1000;
   //   for (let i = 0, len = who.length; i < len; ++i) {
-  //     if (who[i].electron) {
+  //     if (who[i].canMove) {
   //       //change position from velocity
   //       who[i].position.x += who[i].velocity.x;
   //       who[i].position.y += who[i].velocity.y;
@@ -178,7 +290,7 @@ class Charge {
 
   // static physicsAll(who) {
   //   for (let i = 0, len = who.length; i < len; ++i) {
-  //     if (who[i].electron) {
+  //     if (who[i].canMove) {
   //       //move
   //       who[i].position.x += who[i].velocity.x;
   //       who[i].position.y += who[i].velocity.y;
@@ -229,7 +341,7 @@ class Charge {
     //push electrons
     for (let i = 0, len = who.length; i < len; ++i) {
       if (
-        who[i].electron &&
+        who[i].canMove &&
         who[i].position.x < range.max.x &&
         who[i].position.x > range.min.x &&
         who[i].position.y < range.max.y &&
@@ -252,7 +364,7 @@ class Charge {
     //slow electrons
     for (let i = 0, len = who.length; i < len; ++i) {
       if (
-        who[i].electron &&
+        who[i].canMove &&
         who[i].position.x < range.max.x &&
         who[i].position.x > range.min.x &&
         who[i].position.y < range.max.y &&
@@ -266,7 +378,7 @@ class Charge {
 
   static repulse(who, pos) {
     for (let i = 0, len = who.length; i < len; ++i) {
-      if (who[i].electron) {
+      if (who[i].canMove) {
         const dx = who[i].position.x - pos.x;
         const dy = who[i].position.y - pos.y;
         const a = Math.atan2(dy, dx);
@@ -638,16 +750,5 @@ class Charge {
       }
     }
     ctx.putImageData(imgData, 0, 0);
-  }
-
-  static magnetic(who, scale = 0.05) {
-    for (let i = 0, len = who.length; i < len; ++i) {
-      let dir = Math.atan2(who[i].velocity.y, who[i].velocity.x);
-      let angle = dir + (Math.PI / 2) * who[i].charge;
-      let speed = Math.sqrt(who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y);
-      let mag = scale * speed;
-      who[i].velocity.x += mag * Math.cos(angle);
-      who[i].velocity.y += mag * Math.sin(angle);
-    }
   }
 }

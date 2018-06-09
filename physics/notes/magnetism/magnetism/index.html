@@ -27,9 +27,18 @@
 		<h1>Magnetism</h1>
 	</header>
 	<article>
-		<br> Magnetic field strength =
+		<p>
+			<a href="https://www.youtube.com/watch?v=400xfGmSlqQ">Cloud chambers</a> are a simple method of detecting high energy particles. Inside the chamber is a a supersaturated vapor
+			of water or alcohol. High speed particles disrupt the vapor and leave a trail.</p>
+
+		<p>When a powerful magnetic field is applied to the cloud chamber the charged particles curve. The arc of their curve indicates
+			charge and mass.</p>
+
+		<!-- filter: blur(1px); -->
+		<canvas class="cloud" id='charge0' height='600' width='600' onclick="charges0(this)" style="background: #000;">
+		</canvas>
+		Magnetic field strength =
 		<input id='B' type="number" value="0.03" min="-1" max="1" step="0.01" width="148" style="width: 60px;"> T
-		<canvas id='charge0' height='500' width='600' onclick="charges0(this)"> </canvas>
 
 		<h1 class='underlined'>Magnetic Fields</h1>
 		<p>Magnetic fields are an addition to electric fields that accounts for Einstein's theory of
