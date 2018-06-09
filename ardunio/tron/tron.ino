@@ -73,25 +73,19 @@ void setup() {
 void loop() {
   isP1Move = true;
   isP2Move = true;
-
-  // basic move loop
   for (int i = 0; i < 4; i++) {
     //player moves extra if button is down
-    if (!digitalRead(SWITCH_PIN_1)) {
-      isP1Move = true;
-    }
-    if (!digitalRead(SWITCH_PIN_2)) {
-      isP2Move = true;
-    }
+    if (!digitalRead(SWITCH_PIN_1)) isP1Move = true;
+    if (!digitalRead(SWITCH_PIN_2)) isP2Move = true;
     if (isP1Move) P1Move();
     if (isP2Move) P2Move();
     playerCollisions();
     updateGameState();
     drawPlayers();
-    strip.show();
+    
     //check for player input
     for (int i = 0; i < WAIT; i++) {
-      playerJoystickInput();
+      playerJoystickInput(); //consider placing playerJoystickInput() in more places in the loop to get more twitch response
     }
   }
 }
@@ -251,6 +245,7 @@ void drawPlayers() {
   //draw players
   ZigZagPixel(p1[0], p1[1], 0, 255, 255);
   ZigZagPixel(p2[0], p2[1], 255, 0, 255);
+  strip.show();
 }
 
 void ZigZagPixel(int x, int y, int r, int g, int b) {
