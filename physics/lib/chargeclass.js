@@ -25,6 +25,7 @@ class Charge {
       this.color = "rgba(255,0,100,1)";
     }
   }
+
   static spawnCharges(who, len = 1, type = "e") {
     for (let i = 0; i < len; ++i) {
       who[who.length] = new Charge(type, {
@@ -33,11 +34,13 @@ class Charge {
       });
     }
   }
+
   static setCanvas(el) {
     canvas = el;
     ctx = canvas.getContext("2d");
     ctx.font = "300 20px Roboto";
   }
+
   static drawAll(who) {
     for (let i = 0, len = who.length; i < len; ++i) {
       ctx.fillStyle = who[i].color;
@@ -46,6 +49,7 @@ class Charge {
       ctx.fill();
     }
   }
+
   static teleport(who, off = 200) {
     let count = 0;
     for (let i = 0, len = who.length; i < len; ++i) {
@@ -56,8 +60,9 @@ class Charge {
     }
     return count;
   }
+
   static bounds(who, range = 50) {
-    //range = how far outside of canvas,  0 is at canvs edge
+    //range = how far outside of canvas,  0 is at canvas edge
     for (let i = 0, len = who.length; i < len; ++i) {
       if (who[i].electron) {
         if (who[i].position.x > canvas.width + range) {
@@ -78,22 +83,22 @@ class Charge {
     }
   }
 
-  static physicsAll(who, minDistance = 600) {
+  static physicsAll(who, friction = 0.99, minDistance2 = 600) {
     for (let i = 0, len = who.length; i < len; ++i) {
       if (who[i].electron) {
         //change position from velocity
         who[i].position.x += who[i].velocity.x;
         who[i].position.y += who[i].velocity.y;
         //friction
-        who[i].velocity.x *= 0.99;
-        who[i].velocity.y *= 0.99;
+        who[i].velocity.x *= friction;
+        who[i].velocity.y *= friction;
         //accelerate from electrostatic force
         for (let j = 0, len = who.length; j < len; ++j) {
           if (i != j) {
             const dx = who[i].position.x - who[j].position.x;
             const dy = who[i].position.y - who[j].position.y;
-            const d2 = dx * dx + dy * dy + minDistance;
-            const mag = 200 * who[i].charge * who[j].charge / (d2 * Math.sqrt(d2));
+            const d2 = Math.max(dx * dx + dy * dy, minDistance2);
+            const mag = (200 * who[i].charge * who[j].charge) / (d2 * Math.sqrt(d2));
             who[i].velocity.x += mag * dx;
             who[i].velocity.y += mag * dy;
           }
@@ -101,6 +106,51 @@ class Charge {
       }
     }
   }
+
+  static magneticField(who, B) {
+    for (let i = 0, len = who.length; i < len; ++i) {
+      if (who[i].electron) {
+        const velocity = Math.sqrt(who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y);
+        const mag = B; //who[i].charge
+        // assumes the magnetic field, B, is either in or out of the page
+        who[i].velocity.x -= mag * who[i].velocity.y;
+        who[i].velocity.y += mag * who[i].velocity.x;
+      }
+    }
+  }
+
+  static drawMagneticField(B) {
+    ctx.fillStyle = "black";
+    ctx.globalAlpha = 0.3;
+    var steps = 30 / Math.pow(Math.abs(B), 0.2);
+    var text;
+    if (B < 0) {
+      for (var i = 0; i < canvas.width; i += steps) {
+        for (var j = 0; j < canvas.height; j += steps) {
+          ctx.beginPath();
+          ctx.arc(i, j, 10, 0, 2 * Math.PI);
+          ctx.moveTo(i + 7, j + 7);
+          ctx.lineTo(i - 7, j - 7);
+          ctx.moveTo(i - 7, j + 7);
+          ctx.lineTo(i + 7, j - 7);
+          ctx.stroke();
+        }
+      }
+    } else if (B > 0) {
+      for (var i = 0; i < canvas.width; i += steps) {
+        for (var j = 0; j < canvas.height; j += steps) {
+          ctx.beginPath();
+          ctx.arc(i, j, 10, 0, 2 * Math.PI);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(i, j, 1.5, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
   // static physicsAll(who) {
   //   const minDistance2 = 1000;
   //   for (let i = 0, len = who.length; i < len; ++i) {
@@ -213,6 +263,7 @@ class Charge {
       }
     }
   }
+
   static repulse(who, pos) {
     for (let i = 0, len = who.length; i < len; ++i) {
       if (who[i].electron) {
@@ -252,8 +303,8 @@ class Charge {
     for (var k = 0; k < lenY; k++) {
       for (var j = 0; j < lenX; j++) {
         draw = true;
-        x = canvas.width * (j + 0.5) / lenX;
-        y = canvas.height * (k + 0.5) / lenY;
+        x = (canvas.width * (j + 0.5)) / lenX;
+        y = (canvas.height * (k + 0.5)) / lenY;
         //calc Forces
         var f, a;
         var fx = 0;
@@ -266,7 +317,7 @@ class Charge {
             draw = false; //don't draw in inside a body
             break; //exit the forloop
           }
-          f = -who[i].charge * 6000000 / (dist * dist);
+          f = (-who[i].charge * 6000000) / (dist * dist);
           a = Math.atan2(dy, dx);
           fx += f * Math.cos(a);
           fy += f * Math.sin(a);
@@ -592,7 +643,7 @@ class Charge {
   static magnetic(who, scale = 0.05) {
     for (let i = 0, len = who.length; i < len; ++i) {
       let dir = Math.atan2(who[i].velocity.y, who[i].velocity.x);
-      let angle = dir + Math.PI / 2 * who[i].charge;
+      let angle = dir + (Math.PI / 2) * who[i].charge;
       let speed = Math.sqrt(who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y);
       let mag = scale * speed;
       who[i].velocity.x += mag * Math.cos(angle);

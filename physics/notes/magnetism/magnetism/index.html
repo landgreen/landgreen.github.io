@@ -19,6 +19,7 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<script src='../../../lib/chargeclass.js'></script>
 </head>
 
 <body>
@@ -26,6 +27,10 @@
 		<h1>Magnetism</h1>
 	</header>
 	<article>
+		<br> Magnetic field strength =
+		<input id='B' type="number" value="0.03" min="-1" max="1" step="0.01" width="148" style="width: 60px;"> T
+		<canvas id='charge0' height='500' width='600' onclick="charges0(this)"> </canvas>
+
 		<h1 class='underlined'>Magnetic Fields</h1>
 		<p>Magnetic fields are an addition to electric fields that accounts for Einstein's theory of
 			<a href="../../relativity/special/index.html#specialrelativity">special relativity</a>. Like electric fields, magnetic fields are produced by charged particles, but only when the charged
@@ -1085,6 +1090,7 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
+	<script src="charge0.js"></script>
 </body>
 
 </html>
