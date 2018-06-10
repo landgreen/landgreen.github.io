@@ -18,6 +18,8 @@ class Charge {
       this.charge = -1;
       this.radius = 15;
       this.color = "rgba(0,100,255,0.4)";
+      this.life = 100 + Math.floor(Math.random() * 500);
+      this.wide = 0;
     } else if (type === "p") {
       this.canMove = false;
       this.name = "proton";
@@ -25,20 +27,26 @@ class Charge {
       this.charge = 1;
       this.radius = 4;
       this.color = "rgba(255,0,100,1)";
-    } else if (type === "n") {
+      this.life = Infinity;
+      this.wide = 1;
+    } else if (type === "neutron") {
       this.canMove = true;
       this.name = "neutron";
-      this.mass = 1000;
+      this.mass = 1001;
       this.charge = 0;
       this.radius = 4;
       this.color = "rgba(255,0,100,1)";
+      this.life = 100 + Math.floor(Math.random() * 500);
+      this.wide = 0;
     } else if (type === "muon") {
       this.canMove = true;
       this.name = "muon";
-      this.mass = 200;
+      this.mass = 207;
       this.charge = -1;
       this.radius = 8;
       this.color = "rgba(0,100,255,0.8)";
+      this.life = 300 + Math.floor(Math.random() * 500);
+      this.wide = 1;
     } else if (type === "positron") {
       this.canMove = true;
       this.name = "positron";
@@ -46,6 +54,8 @@ class Charge {
       this.charge = 1;
       this.radius = 15;
       this.color = "rgba(255,0,100,0.4)";
+      this.life = 100 + Math.floor(Math.random() * 500);
+      this.wide = 0;
     } else if (type === "alpha") {
       this.canMove = true;
       this.name = "alpha";
@@ -53,6 +63,8 @@ class Charge {
       this.charge = 2;
       this.radius = 8;
       this.color = "rgba(255,0,100,0.4)";
+      this.life = 30 + Math.floor(Math.random() * 40);
+      this.wide = 5;
     } else if (type === "proton") {
       this.canMove = true;
       this.name = "proton";
@@ -60,6 +72,8 @@ class Charge {
       this.charge = 1;
       this.radius = 4;
       this.color = "rgba(255,0,100,1)";
+      this.life = 100 + Math.floor(Math.random() * 500);
+      this.wide = 1;
     }
   }
   static spawnCharges(who, len = 1, type = "e") {
@@ -150,14 +164,14 @@ class Charge {
         who[i].velocity.y *= friction;
         //accelerate from electrostatic force
         for (let j = 0, len = who.length; j < len; ++j) {
-          if (i != j) {
+          if (i != j && who[i].charge && who[j].charge) {
             const dx = who[i].position.x - who[j].position.x;
             const dy = who[i].position.y - who[j].position.y;
             // const d2 = Math.max(dx * dx + dy * dy, minDistance2);
             const d2 = dx * dx + dy * dy + minDistance2;
             const mag = (strength * who[i].charge * who[j].charge) / (d2 * Math.sqrt(d2));
-            who[i].velocity.x += mag * dx;
-            who[i].velocity.y += mag * dy;
+            who[i].velocity.x += (mag * dx) / who[i].mass;
+            who[i].velocity.y += (mag * dy) / who[i].mass;
           }
         }
       }
@@ -166,11 +180,11 @@ class Charge {
 
   static physicsMagneticField(who, B) {
     for (let i = 0, len = who.length; i < len; ++i) {
-      if (who[i].canMove) {
+      if (who[i].canMove && who[i].charge) {
         // const velocity = Math.sqrt(who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y);
         // assumes the magnetic field, B, is either in or out of the page
-        who[i].velocity.x -= B * who[i].velocity.y;
-        who[i].velocity.y += B * who[i].velocity.x;
+        who[i].velocity.x -= (who[i].charge * B * who[i].velocity.y) / who[i].mass;
+        who[i].velocity.y += (who[i].charge * B * who[i].velocity.x) / who[i].mass;
       }
     }
   }
@@ -194,27 +208,21 @@ class Charge {
       const imgIndex = 4 * (Math.floor(who[i].position.x) + Math.floor(who[i].position.y) * canvas.width);
       //trace the path of particles, but if there hasn't been a particle in that pixel recently
       //must be above velocity threshold of 1
-      // && who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y > 1
-      if (imgData.data[imgIndex + 3] === 0) {
-        imgData.data[imgIndex + 0] = 255; // red
-        imgData.data[imgIndex + 1] = 255; // green
-        imgData.data[imgIndex + 2] = 255; // blue
-        imgData.data[imgIndex + 3] = 255; // alpha
-        //draw larger pixels
-        // imgData.data[imgIndex + 0 + 4] = 255; // red
-        // imgData.data[imgIndex + 1 + 4] = 255; // green
-        // imgData.data[imgIndex + 2 + 4] = 255; // blue
-        // imgData.data[imgIndex + 3 + 4] = 255; // alpha
+      const velocity = Math.min(Math.max((who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y) * 350, 0), 255);
+      imgData.data[imgIndex + 0] = 255; // red
+      imgData.data[imgIndex + 1] = 255; // green
+      imgData.data[imgIndex + 2] = 255; // blue
+      imgData.data[imgIndex + 3] = velocity; //255;   // alpha
 
-        // imgData.data[imgIndex + 0 + 4 * canvas.width] = 255; // red
-        // imgData.data[imgIndex + 1 + 4 * canvas.width] = 255; // green
-        // imgData.data[imgIndex + 2 + 4 * canvas.width] = 255; // blue
-        // imgData.data[imgIndex + 3 + 4 * canvas.width] = 255; // alpha
-
-        // imgData.data[imgIndex + 0 + 4 + 4 * canvas.width] = 255; // red
-        // imgData.data[imgIndex + 1 + 4 + 4 * canvas.width] = 255; // green
-        // imgData.data[imgIndex + 2 + 4 + 4 * canvas.width] = 255; // blue
-        // imgData.data[imgIndex + 3 + 4 + 4 * canvas.width] = 255; // alpha
+      for (let j = 0; j < who[i].wide; ++j) {
+        const wide = who[i].wide; //Math.floor(Math.max(1, who[i].wide));
+        const off = 4 * Math.floor(wide * (Math.random() - 0.5)) + 4 * canvas.width * Math.floor(wide * (Math.random() - 0.5));
+        // const off = 4 * Math.floor(wide * (Math.random() - 0.5));
+        // const off = 4 * canvas.width * Math.floor(wide * (Math.random() - 0.5));
+        imgData.data[imgIndex + 4 + off] = 255; // red
+        imgData.data[imgIndex + 5 + off] = 255; // green
+        imgData.data[imgIndex + 6 + off] = 255; // blue
+        imgData.data[imgIndex + 7 + off] = velocity; //255;   // alpha
       }
     }
 
@@ -224,11 +232,12 @@ class Charge {
         imgData.data[i + 0] = 255; // red
         imgData.data[i + 1] = 255; // green
         imgData.data[i + 2] = 255; // blue
-        imgData.data[i + 3] = Math.floor(Math.random() * 255); // alpha
+        imgData.data[i + 3] = Math.floor(Math.random() * Math.random() * 255); // alpha
       }
-      if (imgData.data[i + 3] > 0) imgData.data[i + 3]--; // fade alpha
+      if (imgData.data[i + 3] > 0 && Math.random() < 0.2) imgData.data[i + 3]--; // fade alpha
     }
     ctx.putImageData(imgData, 0, 0);
+    // ctx.putImageData(imgData, 1, 0); //falling because of the 1 in third parameter
   }
 
   static drawMagneticField(B) {
