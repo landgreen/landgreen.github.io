@@ -14,6 +14,30 @@ function charges12(el) {
   ctx.textAlign = "left";
   ctx.font = "300 18px Roboto";
 
+  //switch between draw modes
+  let drawMode = 3;
+  document.addEventListener("keypress", event => {
+    if (!pause) {
+      if (event.charCode === 49) {
+        drawMode = 1; //particle
+        el.style.background = "#fff";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } else if (event.charCode === 50) {
+        drawMode = 2; //particles + electric vector field
+        el.style.background = "#fff";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } else if (event.charCode === 51) {
+        drawMode = 3; //electric potential scalar field
+        el.style.background = "#fff";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } else if (event.charCode === 52) {
+        drawMode = 4; //cloud chamber
+        el.style.background = "#000";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+  });
+
   //___________________get mouse input___________________
   var mouse = {
     down: false,
@@ -55,8 +79,8 @@ function charges12(el) {
   const separation = 10;
   let lenX = 17;
   let lenY = 35;
-  const offx = canvas.width / 2 - (lenX - 1) * separation / 2;
-  const offy = canvas.height / 2 - (lenY - 1) * separation / 2;
+  const offx = canvas.width / 2 - ((lenX - 1) * separation) / 2;
+  const offy = canvas.height / 2 - ((lenY - 1) * separation) / 2;
   const v = 1.8;
 
   for (let i = 0; i < lenX; ++i) {
@@ -99,14 +123,24 @@ function charges12(el) {
 
   let inZone = [];
   function cycle() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     Charge.physicsAll(q);
     Charge.bounds(q);
-    // Charge.teleport(q)
-    // Charge.vectorField(q)
-    Charge.scalarField(q, 3);
+    //choose a draw mode
+    if (drawMode === 1) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      Charge.drawAll(q);
+    } else if (drawMode === 2) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      Charge.vectorField(q);
+      ctx.globalAlpha = 0.5;
+      Charge.drawAll(q);
+      ctx.globalAlpha = 1;
+    } else if (drawMode === 3) {
+      Charge.scalarField(q);
+    } else if (drawMode === 4) {
+      Charge.drawCloudChamber(q);
+    }
     voltmeter();
-    // Charge.drawAll(q)
     Charge.pushZone(q, offx);
     if (!pause) requestAnimationFrame(cycle);
   }

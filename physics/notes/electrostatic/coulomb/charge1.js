@@ -14,6 +14,30 @@ function charges1(el) {
   // var canvas = el
   // var ctx = canvas.getContext("2d");
 
+  //switch between draw modes
+  let drawMode = 1;
+  document.addEventListener("keypress", event => {
+    if (!pause) {
+      if (event.charCode === 49) {
+        drawMode = 1; //particle
+        el.style.background = "#fff";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } else if (event.charCode === 50) {
+        drawMode = 2; //particles + electric vector field
+        el.style.background = "#fff";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } else if (event.charCode === 51) {
+        drawMode = 3; //electric potential scalar field
+        el.style.background = "#fff";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } else if (event.charCode === 52) {
+        drawMode = 4; //cloud chamber
+        el.style.background = "#000";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+  });
+
   //___________________get mouse input___________________
   var mouse = {
     down: false,
@@ -46,8 +70,8 @@ function charges1(el) {
   //spawn p before e to avoid a bug in the class method allPhysics
   const separation = 30;
   const len = 7;
-  const offx = canvas.width / 2 - (len - 1) * separation / 2;
-  const offy = canvas.height / 2 - (len - 1) * separation / 2;
+  const offx = canvas.width / 2 - ((len - 1) * separation) / 2;
+  const offy = canvas.height / 2 - ((len - 1) * separation) / 2;
   for (let i = 0; i < len; ++i) {
     for (let j = 0; j < len; ++j) {
       q[q.length] = new Charge("p", {
@@ -67,12 +91,22 @@ function charges1(el) {
   // Charge.spawnCharges(q, 25, 'e')
   // Charge.spawnCharges(q, 25, 'p')
   function cycle() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     Charge.physicsAll(q);
-    // Charge.vectorField()
-    // Charge.scalarField()
-    Charge.drawAll(q);
-    // Charge.pushZone()
+    //choose a draw mode
+    if (drawMode === 1) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      Charge.drawAll(q);
+    } else if (drawMode === 2) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      Charge.vectorField(q);
+      ctx.globalAlpha = 0.5;
+      Charge.drawAll(q);
+      ctx.globalAlpha = 1;
+    } else if (drawMode === 3) {
+      Charge.scalarField(q);
+    } else if (drawMode === 4) {
+      Charge.drawCloudChamber(q);
+    }
     Charge.bounds(q);
     if (!pause) requestAnimationFrame(cycle);
   }

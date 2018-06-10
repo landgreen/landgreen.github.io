@@ -18,7 +18,7 @@ class Charge {
       this.charge = -1;
       this.radius = 15;
       this.color = "rgba(0,100,255,0.4)";
-      this.life = 100 + Math.floor(Math.random() * 500);
+      this.life = 300 + Math.floor(Math.random() * 1500);
       this.wide = 0;
     } else if (type === "p") {
       this.canMove = false;
@@ -36,7 +36,7 @@ class Charge {
       this.charge = 0;
       this.radius = 4;
       this.color = "rgba(255,0,100,1)";
-      this.life = 100 + Math.floor(Math.random() * 500);
+      this.life = 100 + Math.floor(Math.random() * 1000);
       this.wide = 0;
     } else if (type === "muon") {
       this.canMove = true;
@@ -54,7 +54,7 @@ class Charge {
       this.charge = 1;
       this.radius = 15;
       this.color = "rgba(255,0,100,0.4)";
-      this.life = 100 + Math.floor(Math.random() * 500);
+      this.life = 100 + Math.floor(Math.random() * 1300);
       this.wide = 0;
     } else if (type === "alpha") {
       this.canMove = true;
@@ -63,8 +63,8 @@ class Charge {
       this.charge = 2;
       this.radius = 8;
       this.color = "rgba(255,0,100,0.4)";
-      this.life = 30 + Math.floor(Math.random() * 40);
-      this.wide = 5;
+      this.life = 15 + Math.floor(Math.random() * 3);
+      this.wide = 6;
     } else if (type === "proton") {
       this.canMove = true;
       this.name = "proton";
@@ -72,8 +72,8 @@ class Charge {
       this.charge = 1;
       this.radius = 4;
       this.color = "rgba(255,0,100,1)";
-      this.life = 100 + Math.floor(Math.random() * 500);
-      this.wide = 1;
+      this.life = 300 + Math.floor(Math.random() * 1500);
+      this.wide = 3;
     }
   }
   static spawnCharges(who, len = 1, type = "e") {
@@ -133,6 +133,14 @@ class Charge {
     }
   }
 
+  static isOnCanvas(who) {
+    if (who.position.x > canvas.width || who.position.x < 0 || who.position.y > canvas.height || who.position.y < 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   static boundsRemove(who, range = 50) {
     //range = how far outside of canvas,  0 is at canvas edge
     let i = who.length;
@@ -145,12 +153,12 @@ class Charge {
       }
     }
     //fixes issue where the last particle isn't being removed ... be nice to have a better solution, but this works
-    if (
-      who[0].canMove &&
-      (who[0].position.x > canvas.width + range || who[0].position.x < -range || who[0].position.y > canvas.height + range || who[0].position.y < -range)
-    ) {
-      who.splice(0, 1);
-    }
+    // if (
+    //   who[0].canMove &&
+    //   (who[0].position.x > canvas.width + range || who[0].position.x < -range || who[0].position.y > canvas.height + range || who[0].position.y < -range)
+    // ) {
+    //   who.splice(0, 1);
+    // }
   }
 
   static physicsAll(who, friction = 0.99, minDistance2 = 500, strength = 200) {
@@ -200,44 +208,55 @@ class Charge {
   //   }
   // }
 
-  static drawCloudChamber(who) {
-    // let imgData = ctx.createImageData(canvas.width, canvas.height);
-    let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  static drawCloudChamber(who, falling = false) {
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+    // let imgData = ctx.createImageData(canvasWidth, canvasHeight);
+    let imgData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
+    let data = imgData.data;
 
     for (let i = 0, len = who.length; i < len; ++i) {
-      const imgIndex = 4 * (Math.floor(who[i].position.x) + Math.floor(who[i].position.y) * canvas.width);
-      //trace the path of particles, but if there hasn't been a particle in that pixel recently
-      //must be above velocity threshold of 1
-      const velocity = Math.min(Math.max((who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y) * 350, 0), 255);
-      imgData.data[imgIndex + 0] = 255; // red
-      imgData.data[imgIndex + 1] = 255; // green
-      imgData.data[imgIndex + 2] = 255; // blue
-      imgData.data[imgIndex + 3] = velocity; //255;   // alpha
+      if (who[i].canMove && Charge.isOnCanvas(who[i])) {
+        const imgIndex = 4 * (Math.floor(who[i].position.x) + Math.floor(who[i].position.y) * canvasWidth);
+        //must be above velocity threshold of 1
+        const velocity = Math.min(Math.max((who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y) * 1000, 0), 255);
+        data[imgIndex + 0] = 255; // red
+        data[imgIndex + 1] = 255; // green
+        data[imgIndex + 2] = 255; // blue
+        data[imgIndex + 3] = velocity; //255; //velocity;  // alpha
 
-      for (let j = 0; j < who[i].wide; ++j) {
-        const wide = who[i].wide; //Math.floor(Math.max(1, who[i].wide));
-        const off = 4 * Math.floor(wide * (Math.random() - 0.5)) + 4 * canvas.width * Math.floor(wide * (Math.random() - 0.5));
-        // const off = 4 * Math.floor(wide * (Math.random() - 0.5));
-        // const off = 4 * canvas.width * Math.floor(wide * (Math.random() - 0.5));
-        imgData.data[imgIndex + 4 + off] = 255; // red
-        imgData.data[imgIndex + 5 + off] = 255; // green
-        imgData.data[imgIndex + 6 + off] = 255; // blue
-        imgData.data[imgIndex + 7 + off] = velocity; //255;   // alpha
+        for (let j = 0; j < who[i].wide; ++j) {
+          const wide = who[i].wide; //Math.floor(Math.max(1, who[i].wide));
+          const off = 4 * Math.floor(wide * (Math.random() - 0.5)) + 4 * canvasWidth * Math.floor(wide * (Math.random() - 0.5));
+          data[imgIndex + 4 + off] = 255; // red
+          data[imgIndex + 5 + off] = 255; // green
+          data[imgIndex + 6 + off] = 255; // blue
+          data[imgIndex + 7 + off] = velocity; //255; //velocity;  // alpha
+        }
       }
     }
 
-    for (var i = 0; i < imgData.data.length; i += 4) {
+    for (let i = 0; i < data.length; i += 4) {
       //added random speckles
-      if (Math.random() < 0.00001) {
-        imgData.data[i + 0] = 255; // red
-        imgData.data[i + 1] = 255; // green
-        imgData.data[i + 2] = 255; // blue
-        imgData.data[i + 3] = Math.floor(Math.random() * Math.random() * 255); // alpha
+      if (Math.random() < 0.00005) {
+        data[i + 0] = 255; // red
+        data[i + 1] = 255; // green
+        data[i + 2] = 255; // blue
+        data[i + 3] = Math.floor(Math.random() * Math.random() * 255); // alpha
       }
-      if (imgData.data[i + 3] > 0 && Math.random() < 0.2) imgData.data[i + 3]--; // fade alpha
+
+      // && Math.random() < 0.2
+      if (data[i + 3] > 0) {
+        data[i + 3]--; // fade alpha
+      } else {
+        data[i + 3] = 0;
+      }
     }
-    ctx.putImageData(imgData, 0, 0);
-    // ctx.putImageData(imgData, 1, 0); //falling because of the 1 in third parameter
+    if (falling) {
+      ctx.putImageData(imgData, 0, 1); //falling because of the 1 in third parameter
+    } else {
+      ctx.putImageData(imgData, 0, 0);
+    }
   }
 
   static drawMagneticField(B) {
@@ -732,32 +751,50 @@ class Charge {
       [0x00, 0x00, 0x88]
     ];
 
-    let imgData = ctx.createImageData(canvas.width, canvas.height);
+    let imageData = ctx.createImageData(canvas.width, canvas.height);
+    // var imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
 
-    for (var i = 0; i < imgData.data.length; i += 8) {
-      const x = (i / 4) % canvas.width;
-      const y = Math.floor(i / 4 / canvas.width);
-      let mag = 0;
-      for (let j = 0, len = who.length; j < len; j++) {
-        const dx = who[j].position.x - x;
-        const dy = who[j].position.y - y;
-        mag -= who[j].charge / (Math.sqrt(dx * dx + dy * dy) + 1);
-      }
-      let hue = Math.min(Math.max(Math.round(mag * fieldMag) + 128, 0), 255);
+    let data = imageData.data;
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
 
-      // imgData.data[i + 0] = chromaBytes[hue][0]; // red
-      // imgData.data[i + 1] = chromaBytes[hue][1]; // green
-      // imgData.data[i + 2] = chromaBytes[hue][2]; // blue
-      // imgData.data[i + 3] = 255; // alpha
-
-      for (let k = 0; k < 8; k += 4) {
-        //make pixels bigger, is this really worth it?
-        imgData.data[i + k + 0] = chromaBytes[hue][0]; // red
-        imgData.data[i + k + 1] = chromaBytes[hue][1]; // green
-        imgData.data[i + k + 2] = chromaBytes[hue][2]; // blue
-        imgData.data[i + k + 3] = 255; // alpha
+    for (let y = 0; y < canvasHeight; ++y) {
+      for (let x = 0; x < canvasWidth; x += 2) {
+        const index = (y * canvasWidth + x) * 4;
+        let mag = 0;
+        for (let j = 0, len = who.length; j < len; j++) {
+          const dx = who[j].position.x - x;
+          const dy = who[j].position.y - y;
+          mag -= who[j].charge / (Math.sqrt(dx * dx + dy * dy) + 1);
+        }
+        let hue = Math.min(Math.max(Math.round(mag * fieldMag) + 128, 0), 255);
+        for (let k = 0; k < 8; k += 4) {
+          //make pixels 2 wide
+          data[index + k + 0] = chromaBytes[hue][0]; // red
+          data[index + k + 1] = chromaBytes[hue][1]; // green
+          data[index + k + 2] = chromaBytes[hue][2]; // blue
+          data[index + k + 3] = 255; // alpha
+        }
       }
     }
-    ctx.putImageData(imgData, 0, 0);
+    // for (var i = 0; i < data.length; i += 8) {
+    //   const x = (i / 4) % canvasWidth;
+    //   const y = Math.floor(i / 4 / canvasWidth);
+    //   let mag = 0;
+    //   for (let j = 0, len = who.length; j < len; j++) {
+    //     const dx = who[j].position.x - x;
+    //     const dy = who[j].position.y - y;
+    //     mag -= who[j].charge / (Math.sqrt(dx * dx + dy * dy) + 1);
+    //   }
+    //   let hue = Math.min(Math.max(Math.round(mag * fieldMag) + 128, 0), 255);
+    //   for (let k = 0; k < 8; k += 4) {
+    //     //make pixels bigger, is this really worth it?
+    //     data[i + k + 0] = chromaBytes[hue][0]; // red
+    //     data[i + k + 1] = chromaBytes[hue][1]; // green
+    //     data[i + k + 2] = chromaBytes[hue][2]; // blue
+    //     data[i + k + 3] = 255; // alpha
+    //   }
+    // }
+    ctx.putImageData(imageData, 0, 0);
   }
 }
