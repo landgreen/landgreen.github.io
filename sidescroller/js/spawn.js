@@ -2,23 +2,23 @@
 const spawn = {
   pickList: ["starter", "starter"],
   fullPickList: [
-    "chaser",
-    "striker",
-    "spinner",
-    "hopper",
-    "grower",
-    "springer",
-    "zoomer",
-    "shooter",
-    "beamer",
-    "focuser",
-    "laser",
-    "blinker",
-    "sucker",
-    "exploder",
-    "spawner",
-    "ghoster",
-    "sneaker"
+    // "chaser",
+    // "striker",
+    // "spinner",
+    // "hopper",
+    // "grower",
+    // "springer",
+    // "zoomer",
+    // "shooter",
+    // "beamer",
+    // "focuser",
+    // "laser",
+    // "blinker",
+    "sucker"
+    // "exploder",
+    // "spawner",
+    // "ghoster",
+    // "sneaker"
   ],
   bossPickList: ["zoomer", "chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner"],
   setSpawnList: function() {
@@ -293,6 +293,7 @@ const spawn = {
         });
       }
       if (Matter.Vector.magnitude(Matter.Vector.sub(this.position, player.position)) < this.eventHorizon) {
+        mech.damage(0.0001 * game.dmgScale);
         const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
         player.force.x -= 1.3 * Math.cos(angle) * (mech.onGround ? 2 * player.mass * game.g : player.mass * game.g);
         player.force.y -= 0.96 * player.mass * game.g * Math.sin(angle);
@@ -415,7 +416,7 @@ const spawn = {
           ctx.lineTo(laserOffL.x, laserOffL.y);
           // ctx.fillStyle = "rgba(0,0,255,0.15)";
           var gradient = ctx.createRadialGradient(this.position.x, this.position.y, 0, this.position.x, this.position.y, rangeWidth);
-          gradient.addColorStop(0, `rgba(0,0,255,${(r + 5) * (r + 5) / (targetDist * targetDist)})`);
+          gradient.addColorStop(0, `rgba(0,0,255,${((r + 5) * (r + 5)) / (targetDist * targetDist)})`);
           gradient.addColorStop(1, "transparent");
           ctx.fillStyle = gradient;
           ctx.fill();
@@ -781,7 +782,7 @@ const spawn = {
     this.allowShields = false; //dont' want shields on boss mobs
     let px = 0;
     let py = 0;
-    let a = 2 * Math.PI / nodes;
+    let a = (2 * Math.PI) / nodes;
     for (let i = 0; i < nodes; ++i) {
       px += l * Math.cos(a * i);
       py += l * Math.sin(a * i);
@@ -1018,11 +1019,11 @@ const spawn = {
     w += 50;
     if (stepRight) {
       for (let i = 0; i < num; i++) {
-        this.mapRect(x - w / num * (1 + i), y - h + i * h / num, w / num + 50, h - i * h / num + 50);
+        this.mapRect(x - (w / num) * (1 + i), y - h + (i * h) / num, w / num + 50, h - (i * h) / num + 50);
       }
     } else {
       for (let i = 0; i < num; i++) {
-        this.mapRect(x + i * w / num, y - h + i * h / num, w / num + 50, h - i * h / num + 50);
+        this.mapRect(x + (i * w) / num, y - h + (i * h) / num, w / num + 50, h - (i * h) / num + 50);
       }
     }
   },

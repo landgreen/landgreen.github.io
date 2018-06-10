@@ -554,7 +554,7 @@ const mobs = {
               ctx.moveTo(this.position.x, this.position.y);
               ctx.lineTo(bullet[i].position.x, bullet[i].position.y);
               const angle = Math.atan2(dy, dx);
-              const mag = 1500 * bullet[i].mass * game.g / dist;
+              const mag = (1500 * bullet[i].mass * game.g) / dist;
               bullet[i].force.x += mag * Math.cos(angle);
               bullet[i].force.y += mag * Math.sin(angle);
             }
