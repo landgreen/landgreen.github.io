@@ -248,6 +248,7 @@ function charges15(el) {
   }
 
   time = 0;
+  // el.style.filter = "invert(100%)";
   function cycle() {
     time++;
     if (isRadiation) addRemove();
