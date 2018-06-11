@@ -1,6 +1,6 @@
 #include <Adafruit_NeoPixel.h>
 
-const int WAIT = 200;         // how many cycles to look for player joystick input
+const int WAIT = 250;         // how many cycles to look for player joystick input
 const int LEDPIN = 6;         // pin for LEDS
 const int SWITCH_PIN_1 = 2;   // pin for P1 switch
 const int SWITCH_PIN_2 = 4;   // pin for P2 switch
@@ -79,6 +79,7 @@ void loop() {
     if (!digitalRead(SWITCH_PIN_2)) isP2Move = true;
     if (isP1Move) P1Move();
     if (isP2Move) P2Move();
+    playerJoystickInput(); //extra check for player input to smooth control sensing
     playerCollisions();
     updateGameState();
     drawPlayers();
@@ -116,16 +117,16 @@ void playerJoystickInput() {
 void P1Move() {
   // change player velocity from inputs
   // don't let player go backwards and die
-  if (p1Input[0] > 1 && p1Velocity[0] != -1) {
+  if (p1Input[0] > 0 && p1Velocity[0] != -1) {
     p1Velocity[0] = 1;
     p1Velocity[1] = 0;
-  } else if (p1Input[0] < -1 && p1Velocity[0] != 1) {
+  } else if (p1Input[0] < 0 && p1Velocity[0] != 1) {
     p1Velocity[0] = -1;
     p1Velocity[1] = 0;
-  } else if (p1Input[1] > 1 && p1Velocity[1] != -1) {
+  } else if (p1Input[1] > 0 && p1Velocity[1] != -1) {
     p1Velocity[1] = 1;
     p1Velocity[0] = 0;
-  } else if (p1Input[1] < -1 && p1Velocity[1] != 1) {
+  } else if (p1Input[1] < 0 && p1Velocity[1] != 1) {
     p1Velocity[1] = -1;
     p1Velocity[0] = 0;
   }
@@ -150,16 +151,16 @@ void P1Move() {
 void P2Move() {
   // change player velocity from inputs
   // don't let player go backwards and die
-  if (p2Input[0] > 1 && p2Velocity[0] != -1) {
+  if (p2Input[0] > 0 && p2Velocity[0] != -1) {
     p2Velocity[0] = 1;
     p2Velocity[1] = 0;
-  } else if (p2Input[0] < -1  && p2Velocity[0] != 1) {
+  } else if (p2Input[0] < 0  && p2Velocity[0] != 1) {
     p2Velocity[0] = -1;
     p2Velocity[1] = 0;
-  } else if (p2Input[1] > 1  && p2Velocity[1] != -1) {
+  } else if (p2Input[1] > 0  && p2Velocity[1] != -1) {
     p2Velocity[1] = 1;
     p2Velocity[0] = 0;
-  } else if (p2Input[1] < -1  && p2Velocity[1] != 1) {
+  } else if (p2Input[1] < 0  && p2Velocity[1] != 1) {
     p2Velocity[1] = -1;
     p2Velocity[0] = 0;
   }
