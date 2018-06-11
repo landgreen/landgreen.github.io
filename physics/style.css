@@ -178,9 +178,6 @@ th {
   background-color: #000;
 }
 
-.number {
-  width: 52px;
-}
 .rainbow {
   background: linear-gradient(red, orange, yellow, green, cyan, blue, violet);
   font-weight: 900;

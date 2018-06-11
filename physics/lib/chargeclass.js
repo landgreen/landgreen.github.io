@@ -46,7 +46,7 @@ class Charge {
       this.radius = 8;
       this.color = "rgba(0,100,255,0.8)";
       this.life = 300 + Math.floor(Math.random() * 500);
-      this.wide = 1;
+      this.wide = 2;
     } else if (type === "positron") {
       this.canMove = true;
       this.name = "positron";

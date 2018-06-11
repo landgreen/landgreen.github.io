@@ -20,6 +20,7 @@
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 	<script src='../../../lib/chargeclass.js'></script>
+	<script src='../../../lib/dat.gui.min.js'></script>
 </head>
 
 <body>
@@ -30,29 +31,134 @@
 		<p>
 			<a href="https://www.youtube.com/watch?v=400xfGmSlqQ">Cloud chambers</a> are a simple method of detecting high energy particles. Inside the
 			<a href="https://www.youtube.com/watch?v=NyKZlFPYNAg">chamber</a> is a a supersaturated vapor of water or alcohol. High speed particles disrupt the vapor and leave a trail.</p>
-		<canvas class="cloud" id='cloud-chamber' height='600' width='600' onclick="charges15(this)" style="background: #000;">
-		</canvas>
-		<ul class="listing">
-			<li>
-				<div>
-					Magnetic field strength=
-					<input id='B' type="number" value="0.02" min="-1" max="1" step="0.01" width="148" style="width: 60px;">T
-				</div>
-			</li>
-			<li>
-				<div style="text-align: right;">
-					<!-- &nbsp; -->
-					radiation
-					<input id="radiation" type="checkbox" style="width: 15px; padding: 0px; margin:0px;" checked>
-				</div>
-			</li>
-		</ul>
 		<p>When a powerful magnetic field is applied to the cloud chamber the charged particles curve. The arc of their curve indicates
 			charge and mass.</p>
+		<div id="my-gui-container"></div>
+		<canvas class="cloud" id='cloud-chamber' height='600' width='600' onclick="charges15(this)" style="background: #000;">
+		</canvas>
 
-		<div class='example'>
+
+		<div class="example">
 			<strong>Question:</strong> The magnetic field causes most of the particles to move in a circular arc, yet some particles still
 			move in a straight line. What properties could cause a particle to curve or not curve in a magnetic field?
+			<details>
+				<summary>Subatomic Particles Data Table</summary>
+				<table border>
+					<tr>
+						<th>name</th>
+						<th>symbol</th>
+						<th>charge (C)</th>
+						<th>charge (e)</th>
+						<th>mass (kg)</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Proton">proton</a>
+						</td>
+						<td> \(p^+\)
+						</td>
+						<td>+1.602 × 10
+							<sup>-19</sup>
+						</td>
+						<td>+1</td>
+						<td>1.6726 × 10
+							<sup>-27</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Electron">electron</a>
+						</td>
+						<td>\(e^-\)
+						</td>
+						<td>−1.602 × 10
+							<sup>-19</sup>
+						</td>
+						<td>−1</td>
+						<td>9.1094 × 10
+							<sup>-31</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Positron">positron</a>
+						</td>
+						<td>\(e^+\)
+						</td>
+						<td>+1.602 × 10
+							<sup>-19</sup>
+						</td>
+						<td>+1</td>
+						<td>9.1094 × 10
+							<sup>-31</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Neutron">neutron</a>
+						</td>
+						<td>\(n\)
+						</td>
+						<td>0</td>
+						<td>0</td>
+						<td>‎1.6749 × 10
+							<sup>-27</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Neutrino">neutrino</a>
+						</td>
+						<td>\(v_e\)
+						</td>
+						<td>0</td>
+						<td>0</td>
+						<td>1.78 × 10
+							<sup>-36</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Neutrino">antineutrino</a>
+						</td>
+						<td>\(\bar{v}_e\)
+						</td>
+						<td>0</td>
+						<td>0</td>
+						<td>1.78 × 10
+							<sup>-36</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Muon">muon</a>
+						</td>
+						<td>\( \mu^-\)
+						</td>
+						<td>−1.602 × 10
+							<sup>-19</sup>
+						</td>
+						<td>−1</td>
+						<td>1.8835 × 10
+							<sup>-28</sup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://en.wikipedia.org/wiki/Alpha_particle">alpha</a>
+						</td>
+						<td>\( \small{}^4_2 \normalsize \alpha\)
+						</td>
+						<td>+3.204 × 10
+							<sup>-19</sup>
+						</td>
+						<td>+2</td>
+						<td>6.6447 × 10
+							<sup>-27</sup>
+						</td>
+					</tr>
+				</table>
+			</details>
 			<details>
 				<summary>solution</summary>
 				<br> Charged particles like electrons and positrons follow curved paths. Neutrally charged particles ignore the magnetic
@@ -61,7 +167,6 @@
 				<br>The particles moving in a straight line are charged, but they are so massive their curve isn't noticeable. The short
 				wide ones are alpha particles. The longer ones are either protons, or muons. You can learn more
 				<a href="https://www.nuledo.com/en/cloud-chambers/#alfa-castice">here</a>.
-
 			</details>
 		</div>
 		<div class='example'>
