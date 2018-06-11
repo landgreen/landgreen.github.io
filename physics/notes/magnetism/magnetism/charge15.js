@@ -25,28 +25,28 @@ function charges15(el) {
   // var ctx = canvas.getContext("2d");
 
   //switch between draw modes
-  let drawMode = 4;
-  document.addEventListener("keypress", event => {
-    if (!pause) {
-      if (event.charCode === 49) {
-        drawMode = 1; //particle
-        el.style.background = "#fff";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      } else if (event.charCode === 50) {
-        drawMode = 2; //particles + electric vector field
-        el.style.background = "#fff";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      } else if (event.charCode === 51) {
-        drawMode = 3; //electric potential scalar field
-        el.style.background = "#fff";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      } else if (event.charCode === 52) {
-        drawMode = 4; //cloud chamber
-        el.style.background = "#000";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-    }
-  });
+  // let drawMode = 4;
+  // document.addEventListener("keypress", event => {
+  //   if (checkVisible(el)) {
+  //     if (event.charCode === 49) {
+  //       drawMode = 1; //particle
+  //       el.style.background = "#fff";
+  //       ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //     } else if (event.charCode === 50) {
+  //       drawMode = 2; //particles + electric vector field
+  //       el.style.background = "#fff";
+  //       ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //     } else if (event.charCode === 51) {
+  //       drawMode = 3; //electric potential scalar field
+  //       el.style.background = "#fff";
+  //       ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //     } else if (event.charCode === 52) {
+  //       drawMode = 4; //cloud chamber
+  //       el.style.background = "#000";
+  //       ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //     }
+  //   }
+  // });
 
   //___________________get mouse input___________________
   var mouse = {
@@ -248,20 +248,29 @@ function charges15(el) {
     muon: true,
     proton: true,
     magneticField: 0.02,
-    radiation: 1
+    radiation: 1,
+    falling: false,
+    display: "cloud chamber"
   };
 
   let gui = new dat.GUI();
-  // let gui = new dat.GUI();
-  gui.add(settings, "alpha");
-  gui.add(settings, "beta");
-  gui.add(settings, "proton");
-  gui.add(settings, "muon");
-  gui.add(settings, "magneticField", -0.1, 0.1).step(0.01);
-  gui.add(settings, "radiation", 0, 10).step(0.1);
-  gui.add(settings, "pause");
+  let gui2 = new dat.GUI();
+  var spawn = gui.addFolder("spawn particles");
+  spawn.open();
+  spawn.add(settings, "alpha");
+  spawn.add(settings, "beta");
+  spawn.add(settings, "proton");
+  spawn.add(settings, "muon");
+
+  gui2.add(settings, "display", ["magnetic field", "electric field", "electric potential", "cloud chamber"]);
+
+  gui2.add(settings, "falling");
+  gui2.add(settings, "radiation", 0, 10).step(0.1);
+  gui2.add(settings, "magneticField", -0.1, 0.1).step(0.01);
+  gui2.add(settings, "pause");
 
   var customContainer = document.getElementById("my-gui-container");
+  customContainer.appendChild(gui2.domElement);
   customContainer.appendChild(gui.domElement);
 
   // let gui2 = new dat.GUI({ autoPlace: false });
@@ -274,20 +283,20 @@ function charges15(el) {
       for (let i = 0; i < 3; ++i) {
         Charge.physicsAll(q, 0.997, 0.1, 7);
         Charge.physicsMagneticField(q, settings.magneticField);
-        if (drawMode === 1) {
+        if (settings.display === "magnetic field") {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           Charge.drawMagneticField(settings.magneticField);
           Charge.drawAll(q);
-        } else if (drawMode === 2) {
+        } else if (settings.display === "electric field") {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           Charge.vectorField(q);
           ctx.globalAlpha = 0.5;
           Charge.drawAll(q);
           ctx.globalAlpha = 1;
-        } else if (drawMode === 3) {
+        } else if (settings.display === "electric potential") {
           Charge.scalarField(q);
-        } else if (drawMode === 4) {
-          Charge.drawCloudChamber(q, false);
+        } else if (settings.display === "cloud chamber") {
+          Charge.drawCloudChamber(q, settings.falling);
         }
         Charge.boundsRemove(q, 0);
       }

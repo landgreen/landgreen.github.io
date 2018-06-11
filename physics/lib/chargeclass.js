@@ -215,6 +215,7 @@ class Charge {
     let imgData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
     let data = imgData.data;
 
+    //add streaks for particles
     for (let i = 0, len = who.length; i < len; ++i) {
       if (who[i].canMove && Charge.isOnCanvas(who[i])) {
         const imgIndex = 4 * (Math.floor(who[i].position.x) + Math.floor(who[i].position.y) * canvasWidth);
@@ -236,24 +237,24 @@ class Charge {
       }
     }
 
+    // fade alpha for all pixels
     for (let i = 0; i < data.length; i += 4) {
-      //added random speckles
-      if (Math.random() < 0.00005) {
-        data[i + 0] = 255; // red
-        data[i + 1] = 255; // green
-        data[i + 2] = 255; // blue
-        data[i + 3] = Math.floor(Math.random() * Math.random() * 255); // alpha
-      }
-
-      // && Math.random() < 0.2
       if (data[i + 3] > 0) {
-        data[i + 3]--; // fade alpha
-      } else {
-        data[i + 3] = 0;
+        data[i + 3]--;
       }
     }
+
+    //add random speckles
+    for (let i = 0, len = Math.floor(data.length / 40000); i < len; ++i) {
+      const index = Math.floor((Math.random() * data.length) / 4) * 4;
+      data[index + 0] = 255; // red
+      data[index + 1] = 255; // green
+      data[index + 2] = 255; // blue
+      data[index + 3] = Math.floor(Math.random() * Math.random() * 155); // alpha
+    }
+
     if (falling) {
-      ctx.putImageData(imgData, 0, 1); //falling because of the 1 in third parameter
+      ctx.putImageData(imgData, 0, 1); //pixels fall because of the 1 in third parameter
     } else {
       ctx.putImageData(imgData, 0, 0);
     }
