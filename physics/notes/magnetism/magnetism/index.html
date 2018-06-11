@@ -29,149 +29,162 @@
 	</header>
 	<article>
 		<p>
-			<a href="https://www.youtube.com/watch?v=400xfGmSlqQ">Cloud chambers</a> are a simple method of detecting high energy particles. Inside the
-			<a href="https://www.youtube.com/watch?v=NyKZlFPYNAg">chamber</a> is a a supersaturated vapor of water or alcohol. High speed particles disrupt the vapor and leave a trail.</p>
-		<p>When a powerful magnetic field is applied to the cloud chamber the charged particles curve. The arc of their curve indicates
-			charge and mass.</p>
-		<div id="my-gui-container"></div>
-		<canvas class="cloud" id='cloud-chamber' height='600' width='600' onclick="charges15(this)" style="background: #000;">
+			<a href="https://www.youtube.com/watch?v=400xfGmSlqQ">Cloud chambers</a> are a simple method of detecting high energy charged particles. In order to detect the particles, the
+			<a href="https://www.youtube.com/watch?v=NyKZlFPYNAg">chamber</a> is filled with a supersaturated vapor of water or alcohol. High speed particles disrupt the vapor and leave
+			a trail.</p>
+		As
+		<a href="https://www.nuledo.com/en/cloud-chambers/#alfa-castice">radiation</a> passes through the chamber only charged particles are visible. This is because neutral particles don't disrupt
+		the vapor. When a powerful magnetic field is applied to the cloud chamber the charged particles curve. The arc of their
+		curve indicates charge and mass.
+		<details>
+			<summary>Subatomic Particles Data Table</summary>
+			<table border>
+				<tr>
+					<th>name</th>
+					<th>symbol</th>
+					<th>charge (C)</th>
+					<th>charge (e)</th>
+					<th>mass (kg)</th>
+				</tr>
+				<tr>
+					<td>
+						<a href="https://en.wikipedia.org/wiki/Proton">proton</a>
+					</td>
+					<td> \(p^+\)
+					</td>
+					<td>+1.602 × 10
+						<sup>-19</sup>
+					</td>
+					<td>+1</td>
+					<td>1.6726 × 10
+						<sup>-27</sup>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="https://en.wikipedia.org/wiki/Electron">electron</a>
+					</td>
+					<td>\(e^-\)
+					</td>
+					<td>−1.602 × 10
+						<sup>-19</sup>
+					</td>
+					<td>−1</td>
+					<td>9.1094 × 10
+						<sup>-31</sup>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="https://en.wikipedia.org/wiki/Positron">positron</a>
+					</td>
+					<td>\(e^+\)
+					</td>
+					<td>+1.602 × 10
+						<sup>-19</sup>
+					</td>
+					<td>+1</td>
+					<td>9.1094 × 10
+						<sup>-31</sup>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="https://en.wikipedia.org/wiki/Neutron">neutron</a>
+					</td>
+					<td>\(n\)
+					</td>
+					<td>0</td>
+					<td>0</td>
+					<td>‎1.6749 × 10
+						<sup>-27</sup>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="https://en.wikipedia.org/wiki/Neutrino">neutrino</a>
+					</td>
+					<td>\(v_e\)
+					</td>
+					<td>0</td>
+					<td>0</td>
+					<td>1.78 × 10
+						<sup>-36</sup>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="https://en.wikipedia.org/wiki/Neutrino">antineutrino</a>
+					</td>
+					<td>\(\bar{v}_e\)
+					</td>
+					<td>0</td>
+					<td>0</td>
+					<td>1.78 × 10
+						<sup>-36</sup>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="https://en.wikipedia.org/wiki/Muon">muon</a>
+					</td>
+					<td>\( \mu^-\)
+					</td>
+					<td>−1.602 × 10
+						<sup>-19</sup>
+					</td>
+					<td>−1</td>
+					<td>1.8835 × 10
+						<sup>-28</sup>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="https://en.wikipedia.org/wiki/Alpha_particle">alpha</a>
+					</td>
+					<td>\( \small{}^4_2 \normalsize \alpha\)
+					</td>
+					<td>+3.204 × 10
+						<sup>-19</sup>
+					</td>
+					<td>+2</td>
+					<td>6.6447 × 10
+						<sup>-27</sup>
+					</td>
+				</tr>
+			</table>
+		</details>
+		<br>
+		<div id="gui-container"></div>
+		<canvas class="cloud" id='cloud-chamber' height='400' width='600' onclick="charges15(this)" style="background: #000;">
 		</canvas>
-
-
-		<div class="example">
-			<strong>Question:</strong> The magnetic field causes most of the particles to move in a circular arc, yet some particles still
-			move in a straight line. What properties could cause a particle to curve or not curve in a magnetic field?
-			<details>
-				<summary>Subatomic Particles Data Table</summary>
-				<table border>
-					<tr>
-						<th>name</th>
-						<th>symbol</th>
-						<th>charge (C)</th>
-						<th>charge (e)</th>
-						<th>mass (kg)</th>
-					</tr>
-					<tr>
-						<td>
-							<a href="https://en.wikipedia.org/wiki/Proton">proton</a>
-						</td>
-						<td> \(p^+\)
-						</td>
-						<td>+1.602 × 10
-							<sup>-19</sup>
-						</td>
-						<td>+1</td>
-						<td>1.6726 × 10
-							<sup>-27</sup>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="https://en.wikipedia.org/wiki/Electron">electron</a>
-						</td>
-						<td>\(e^-\)
-						</td>
-						<td>−1.602 × 10
-							<sup>-19</sup>
-						</td>
-						<td>−1</td>
-						<td>9.1094 × 10
-							<sup>-31</sup>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="https://en.wikipedia.org/wiki/Positron">positron</a>
-						</td>
-						<td>\(e^+\)
-						</td>
-						<td>+1.602 × 10
-							<sup>-19</sup>
-						</td>
-						<td>+1</td>
-						<td>9.1094 × 10
-							<sup>-31</sup>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="https://en.wikipedia.org/wiki/Neutron">neutron</a>
-						</td>
-						<td>\(n\)
-						</td>
-						<td>0</td>
-						<td>0</td>
-						<td>‎1.6749 × 10
-							<sup>-27</sup>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="https://en.wikipedia.org/wiki/Neutrino">neutrino</a>
-						</td>
-						<td>\(v_e\)
-						</td>
-						<td>0</td>
-						<td>0</td>
-						<td>1.78 × 10
-							<sup>-36</sup>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="https://en.wikipedia.org/wiki/Neutrino">antineutrino</a>
-						</td>
-						<td>\(\bar{v}_e\)
-						</td>
-						<td>0</td>
-						<td>0</td>
-						<td>1.78 × 10
-							<sup>-36</sup>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="https://en.wikipedia.org/wiki/Muon">muon</a>
-						</td>
-						<td>\( \mu^-\)
-						</td>
-						<td>−1.602 × 10
-							<sup>-19</sup>
-						</td>
-						<td>−1</td>
-						<td>1.8835 × 10
-							<sup>-28</sup>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="https://en.wikipedia.org/wiki/Alpha_particle">alpha</a>
-						</td>
-						<td>\( \small{}^4_2 \normalsize \alpha\)
-						</td>
-						<td>+3.204 × 10
-							<sup>-19</sup>
-						</td>
-						<td>+2</td>
-						<td>6.6447 × 10
-							<sup>-27</sup>
-						</td>
-					</tr>
-				</table>
-			</details>
-			<details>
-				<summary>solution</summary>
-				<br> Charged particles like electrons and positrons follow curved paths. Neutrally charged particles ignore the magnetic
-				field, but they aren't visible in a cloud cloud-chamber.
-				<br>
-				<br>The particles moving in a straight line are charged, but they are so massive their curve isn't noticeable. The short
-				wide ones are alpha particles. The longer ones are either protons, or muons. You can learn more
-				<a href="https://www.nuledo.com/en/cloud-chambers/#alfa-castice">here</a>.
-			</details>
+		<br>Turn off all the radiation except beta. Beta radiation is made of negatively charged electrons and positively charged antielectrons,
+		called positrons. What do you see the electrons and positrons doing?
+		<details>
+			<summary>observations</summary>
+			<li>The particles almost move in a
+				<a href="../../gravity/circular/index.html#circular">circle</a>, but they are slowing down.
+			</li>
+			<li>The electrons and positrons travel in opposite directions around the circle.</li>
+		</details>
+		<br>
+		<br>Try adjusting the strength of the magnetic field. What do you notice?
+		<details>
+			<summary>observations</summary>
+			<li>A stronger magnetic field makes the circles smaller and faster.</li>
+			<li>A negative magnetic field changes the direction of circular motion.</li>
+		</details>
+		<br>
+		<br> The magnetic field causes charged particles to curve. Yet, the muons and protons move in a straight line. What property
+		of a particle could affect how it curves in response to the magnetic force?
+		<details>
+			<summary>solution</summary>
+			<br>The muons and protons are much more massive than the electrons. The arc of the curve isn't noticeable, but they are still
+			curving slightly.
+		</details>
 		</div>
+
 		<div class='example'>
-
-
 			<h1 class='underlined'>Magnetic Fields</h1>
 			<p>Magnetic fields are an addition to electric fields that accounts for Einstein's theory of
 				<a href="../../relativity/special/index.html#specialrelativity">special relativity</a>. Like electric fields, magnetic fields are produced by charged particles, but only when the charged

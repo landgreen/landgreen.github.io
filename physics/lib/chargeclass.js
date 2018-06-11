@@ -143,15 +143,27 @@ class Charge {
 
   static boundsRemove(who, range = 50) {
     //range = how far outside of canvas,  0 is at canvas edge
-    let i = who.length;
-    while (--i) {
-      if (
-        who[i].canMove &&
-        (who[i].position.x > canvas.width + range || who[i].position.x < -range || who[i].position.y > canvas.height + range || who[i].position.y < -range)
-      ) {
-        who.splice(i, 1);
+
+    for (let i = 0, len = who.length; i < len; ++i) {
+      if (who[i]) {
+        if (
+          who[i].canMove &&
+          (who[i].position.x > canvas.width + range || who[i].position.x < -range || who[i].position.y > canvas.height + range || who[i].position.y < -range)
+        ) {
+          who.splice(i, 1);
+        }
       }
     }
+
+    // let i = who.length;
+    // while (--i) {
+    //   if (
+    //     who[i].canMove &&
+    //     (who[i].position.x > canvas.width + range || who[i].position.x < -range || who[i].position.y > canvas.height + range || who[i].position.y < -range)
+    //   ) {
+    //     who.splice(i, 1);
+    //   }
+    // }
     //fixes issue where the last particle isn't being removed ... be nice to have a better solution, but this works
     // if (
     //   who[0].canMove &&
@@ -220,11 +232,11 @@ class Charge {
       if (who[i].canMove && Charge.isOnCanvas(who[i])) {
         const imgIndex = 4 * (Math.floor(who[i].position.x) + Math.floor(who[i].position.y) * canvasWidth);
         //must be above velocity threshold of 1
-        const velocity = Math.min(Math.max((who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y) * 1000, 0), 255);
+        // const velocity = Math.min(Math.max((who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y) * 1000, 0), 255);
         data[imgIndex + 0] = 255; // red
         data[imgIndex + 1] = 255; // green
         data[imgIndex + 2] = 255; // blue
-        data[imgIndex + 3] = velocity; //255; //velocity;  // alpha
+        data[imgIndex + 3] = 255; //255; //velocity;  // alpha
 
         for (let j = 0; j < who[i].wide; ++j) {
           const wide = who[i].wide; //Math.floor(Math.max(1, who[i].wide));
@@ -232,7 +244,7 @@ class Charge {
           data[imgIndex + 4 + off] = 255; // red
           data[imgIndex + 5 + off] = 255; // green
           data[imgIndex + 6 + off] = 255; // blue
-          data[imgIndex + 7 + off] = velocity; //255; //velocity;  // alpha
+          data[imgIndex + 7 + off] = 255; //255; //velocity;  // alpha
         }
       }
     }

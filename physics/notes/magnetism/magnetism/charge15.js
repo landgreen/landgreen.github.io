@@ -87,7 +87,7 @@ function charges15(el) {
   function addRemove() {
     // chance to add particles   //0.03 in total chance is good
     c = 6; //c = speed of light
-    spawnRate = 0.005 * settings.radiation;
+    spawnRate = 0.001 * settings.radiation;
     if (settings.alpha) {
       if (Math.random() < spawnRate) {
         const x = 30 + Math.random() * (canvas.width - 60);
@@ -125,7 +125,7 @@ function charges15(el) {
       }
     }
 
-    if (settings.beta) {
+    if (settings.electron) {
       if (Math.random() < spawnRate) {
         const x = 30 + Math.random() * (canvas.width - 60);
         const y = 30 + Math.random() * (canvas.height - 60);
@@ -230,21 +230,28 @@ function charges15(el) {
       }
     }
 
-    // chance to remove particles
-    //remove particle if they are slow
-    let i = q.length;
-    while (--i) {
-      q[i].life--;
-      // const velocity2 = q[i].velocity.x * q[i].velocity.x + q[i].velocity.y * q[i].velocity.y;
-      // || (velocity2 < 0.01 && q[i].canMove)
-      if (q[i].life < 0) q.splice(i, 1);
+    //remove particles after life is zero
+    for (let i = 0, len = q.length; i < len; ++i) {
+      if (q[i]) {
+        q[i].life--;
+        if (q[i].life < 0) q.splice(i, 1);
+      }
     }
+
+    // let i = q.length;
+    // while (--i) {
+    //   q[i].life--;
+    //   // const velocity2 = q[i].velocity.x * q[i].velocity.x + q[i].velocity.y * q[i].velocity.y;
+    //   // || (velocity2 < 0.01 && q[i].canMove)
+    //   if (q[i].life < 0) q.splice(i, 1);
+    // }
     // if (Math.random() < 0.01) q.splice(0, 1);
   }
   const settings = {
     pause: false,
+    timeRate: 3,
     alpha: true,
-    beta: true,
+    electron: true,
     muon: true,
     proton: true,
     magneticField: 0.02,
@@ -254,22 +261,29 @@ function charges15(el) {
   };
 
   let gui = new dat.GUI();
+  gui.add(settings, "radiation", 0, 10).step(0.1);
+  gui.add(settings, "alpha");
+  gui.add(settings, "electron");
+  gui.add(settings, "proton");
+  gui.add(settings, "muon");
+
   let gui2 = new dat.GUI();
-  var spawn = gui.addFolder("spawn particles");
-  spawn.open();
-  spawn.add(settings, "alpha");
-  spawn.add(settings, "beta");
-  spawn.add(settings, "proton");
-  spawn.add(settings, "muon");
-
-  gui2.add(settings, "display", ["magnetic field", "electric field", "electric potential", "cloud chamber"]);
-
+  let displayController = gui2.add(settings, "display", ["magnetic field", "electric field", "electric potential", "cloud chamber"]);
+  displayController.onChange(function(value) {
+    if (value === "cloud chamber") {
+      el.style.background = "#000";
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    } else {
+      el.style.background = "#fff";
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  });
   gui2.add(settings, "falling");
-  gui2.add(settings, "radiation", 0, 10).step(0.1);
   gui2.add(settings, "magneticField", -0.1, 0.1).step(0.01);
+  gui2.add(settings, "timeRate", 0, 10).step(1);
   gui2.add(settings, "pause");
 
-  var customContainer = document.getElementById("my-gui-container");
+  var customContainer = document.getElementById("gui-container");
   customContainer.appendChild(gui2.domElement);
   customContainer.appendChild(gui.domElement);
 
@@ -279,9 +293,9 @@ function charges15(el) {
 
   function cycle() {
     if (checkVisible(el) && !settings.pause) {
-      addRemove();
-      for (let i = 0; i < 3; ++i) {
-        Charge.physicsAll(q, 0.997, 0.1, 7);
+      for (let i = 0; i < settings.timeRate; ++i) {
+        addRemove();
+        Charge.physicsAll(q, 0.997, 1, 7);
         Charge.physicsMagneticField(q, settings.magneticField);
         if (settings.display === "magnetic field") {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
