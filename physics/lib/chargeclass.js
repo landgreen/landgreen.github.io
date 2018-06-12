@@ -18,7 +18,7 @@ class Charge {
       this.charge = -1;
       this.radius = 15;
       this.color = "rgba(0,100,255,0.4)";
-      this.life = 300 + Math.floor(Math.random() * 1500);
+      this.life = 100 + Math.floor(Math.random() * 500);
       this.wide = 0;
       this.speed = 0.13; // % of speed of light, c
     } else if (type === "p") {
@@ -38,7 +38,7 @@ class Charge {
       this.charge = 0;
       this.radius = 4;
       this.color = "rgba(255,0,100,1)";
-      this.life = 100 + Math.floor(Math.random() * 1000);
+      this.life = 100 + Math.floor(Math.random() * 500);
       this.wide = 0;
       this.speed = 0;
     } else if (type === "muon") {
@@ -48,7 +48,7 @@ class Charge {
       this.charge = -1;
       this.radius = 8;
       this.color = "rgba(0,100,255,0.8)";
-      this.life = 300 + Math.floor(Math.random() * 500);
+      this.life = 100 + Math.floor(Math.random() * 200);
       this.wide = 1;
       this.speed = 0.99; // % of speed of light, c
     } else if (type === "positron") {
@@ -58,7 +58,7 @@ class Charge {
       this.charge = 1;
       this.radius = 15;
       this.color = "rgba(255,0,100,0.4)";
-      this.life = 100 + Math.floor(Math.random() * 1300);
+      this.life = 100 + Math.floor(Math.random() * 500);
       this.wide = 0;
       this.speed = 0.13; // % of speed of light, c
     } else if (type === "alpha") {
@@ -68,7 +68,7 @@ class Charge {
       this.charge = 2;
       this.radius = 8;
       this.color = "rgba(255,0,100,0.4)";
-      this.life = 100 + Math.floor(Math.random() * 120);
+      this.life = 30 + Math.floor(Math.random() * 25);
       this.wide = 6;
       this.speed = 0.05; // % of speed of light, c
     } else if (type === "proton") {
@@ -78,7 +78,7 @@ class Charge {
       this.charge = 1;
       this.radius = 4;
       this.color = "rgba(255,0,100,1)";
-      this.life = 300 + Math.floor(Math.random() * 1500);
+      this.life = 100 + Math.floor(Math.random() * 300);
       this.wide = 1;
       this.speed = 0.43; // % of speed of light, c
     }
@@ -236,24 +236,23 @@ class Charge {
 
     //add streaks for particles
     for (let i = 0, len = who.length; i < len; ++i) {
+      //draw path of particles
       if (who[i].canMove && Charge.isOnCanvas(who[i])) {
+        const velocity2 = who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y;
+        const energyCycles = 2 + Math.floor(0.003 * who[i].mass * velocity2);
         const imgIndex = 4 * (Math.floor(who[i].position.x) + Math.floor(who[i].position.y) * canvasWidth);
-        //must be above velocity threshold of 1
-        // const velocity = Math.min(Math.max((who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y) * 1000, 0), 255);
-        data[imgIndex + 0] = 255; // red
-        data[imgIndex + 1] = 255; // green
-        data[imgIndex + 2] = 255; // blue
-        data[imgIndex + 3] = 255; //255; //velocity;  // alpha
 
-        for (let j = 0; j < who[i].wide; ++j) {
-          const wide = who[i].wide; //Math.floor(Math.max(1, who[i].wide));
-          const mag = wide * Math.random();
+        for (let j = 0; j < energyCycles; ++j) {
+          const mag = who[i].wide * Math.random();
           const angle = Math.PI * 2 * Math.random();
-          const off = 4 * Math.floor(mag * Math.cos(angle)) + 4 * canvasWidth * Math.floor(mag * Math.sin(angle));
-          data[imgIndex + 4 + off] = 255; // red
-          data[imgIndex + 5 + off] = 255; // green
-          data[imgIndex + 6 + off] = 255; // blue
-          data[imgIndex + 7 + off] = 255; //255; //velocity;  // alpha
+          const velocityMag = Math.random();
+          const x = mag * Math.cos(angle) + who[i].velocity.x * velocityMag;
+          const y = mag * Math.sin(angle) + who[i].velocity.y * velocityMag;
+          const off = 4 * Math.floor(x) + 4 * canvasWidth * Math.floor(y);
+          data[imgIndex + 0 + off] = 255; // red
+          data[imgIndex + 1 + off] = 255; // green
+          data[imgIndex + 2 + off] = 255; // blue
+          data[imgIndex + 3 + off] = 255; //255; //velocity;  // alpha
         }
       }
     }
@@ -266,7 +265,7 @@ class Charge {
     }
 
     //add random speckles
-    for (let i = 0, len = Math.floor(data.length / 40000); i < len; ++i) {
+    for (let i = 0, len = Math.floor(data.length / 10000); i < len; ++i) {
       const index = Math.floor((Math.random() * data.length) / 4) * 4;
       data[index + 0] = 255; // red
       data[index + 1] = 255; // green

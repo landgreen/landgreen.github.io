@@ -2202,7 +2202,7 @@
 			<li>
 				<div>Lorentz Factor
 					<br>γ =
-					<input id='gamma' type="number" value='2.2942' min="1" step="0.1">
+					<input id='gamma' type="number" value='2.2942' min="1" step="0.1" max="9999999">
 				</div>
 			</li>
 			<li>
@@ -2214,11 +2214,11 @@
 					<div class="tooltip">time
 						<span class="tooltiptext">time passed for observer as ship flies past</span>
 					</div> =
-					<input id='v_time' type="number" value='22.94'> s
+					<input id='v_time' type="number" value='22.94' min="-1000.0" max="1000.0"> s
 					<br>energy =
-					<input id='v_mass' type="number" value='22.94' min="0"> J
+					<input id='v_mass' type="number" value='22.94' min="0" min="-1000.0" max="1000.0"> J
 					<br>length =
-					<input id='v_length' type="number" value='4.36' min="0"> m
+					<input id='v_length' type="number" value='4.36' min="0" min="-1000.0" max="1000.0"> m
 				</div>
 			</li>
 			<li>
@@ -2227,11 +2227,11 @@
 					<br>
 					<em style="font-size: 0.9rem">frame of reference where an observer sees events occur in the same location</em>
 					<br> proper time =
-					<input id='time' type="number" value='10'> s
+					<input id='time' type="number" value='10' min="-1000.0" max="1000.0"> s
 					<br>rest energy =
-					<input id='mass' type="number" value='10' min="0"> J
+					<input id='mass' type="number" value='10' min="0" min="-1000.0" max="1000.0"> J
 					<br>rest length =
-					<input id='length' type="number" value='10' min="0"> m
+					<input id='length' type="number" value='10' min="0" min="-1000.0" max="1000.0"> m
 				</div>
 			</li>
 		</ul>

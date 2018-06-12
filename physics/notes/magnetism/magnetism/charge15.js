@@ -10,43 +10,18 @@ function checkVisible(elm) {
 const setup0 = function() {
   var canvas = document.getElementById("cloud-chamber");
   var ctx = canvas.getContext("2d");
-  ctx.font = "300 30px Roboto";
-
+  // ctx.font = "300 30px Roboto";
+  ctx.font = "300 30px Ariel";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
+  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2 + 5);
 };
 setup0();
 
 function charges15(el) {
   el.onclick = null; //stops the function from running on button click
   Charge.setCanvas(el);
-  // var canvas = el
-  // var ctx = canvas.getContext("2d");
-
-  //switch between draw modes
-  // let drawMode = 4;
-  // document.addEventListener("keypress", event => {
-  //   if (checkVisible(el)) {
-  //     if (event.charCode === 49) {
-  //       drawMode = 1; //particle
-  //       el.style.background = "#fff";
-  //       ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //     } else if (event.charCode === 50) {
-  //       drawMode = 2; //particles + electric vector field
-  //       el.style.background = "#fff";
-  //       ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //     } else if (event.charCode === 51) {
-  //       drawMode = 3; //electric potential scalar field
-  //       el.style.background = "#fff";
-  //       ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //     } else if (event.charCode === 52) {
-  //       drawMode = 4; //cloud chamber
-  //       el.style.background = "#000";
-  //       ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //     }
-  //   }
-  // });
+  canvas.height = 400;
 
   //___________________get mouse input___________________
   var mouse = {
@@ -67,31 +42,16 @@ function charges15(el) {
     mouse.down = false;
   };
 
-  // let pause = false;
-  // el.addEventListener("mouseleave", function() {
-  //   pause = true;
-  // });
-  // el.addEventListener("mouseenter", function() {
-  //   pause = false;
-  //   Charge.setCanvas(el);
-  //   if (!pause) requestAnimationFrame(cycle);
-  // });
-
   const q = []; //holds the charges
-  //spawn p before e to avoid a bug in the class method allPhysics
-  // Charge.spawnCharges(q, 20, "p");
-  Charge.spawnCharges(q, 1, "e");
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+  // ctx.clearRect(0, 0, canvas.width, canvas.height);
   function addRemove() {
     // chance to add particles   //0.03 in total chance is good
-    c = 10; //c = speed of light
+    c = 30; //c = speed of light
     spawnRate = 0.002 * settings.radiation;
     if (settings.alpha && Math.random() < spawnRate) {
       const x = 30 + Math.random() * (canvas.width - 60);
       const y = 30 + Math.random() * (canvas.width - 60);
-      const mag = (0.05 + 0.01 * (Math.random() - 0.5)) * c;
+      const mag = (0.08 + 0.01 * (Math.random() - 0.5)) * c;
       const angle = Math.random() * Math.PI * 2;
       q[q.length] = new Charge("alpha", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
       //sometimes spawn two alpha particles in the same location
@@ -101,13 +61,13 @@ function charges15(el) {
       }
     }
 
-    if (settings.electron && Math.random() < spawnRate * 2) {
+    if (settings.beta && Math.random() < spawnRate * 2) {
       const x = 30 + Math.random() * (canvas.width - 60);
       const y = 30 + Math.random() * (canvas.width - 60);
       const mag = (0.15 + 0.1 * (Math.random() - 0.5)) * c;
       const angle = Math.random() * Math.PI * 2;
       if (Math.random() < 0.5) q[q.length] = new Charge("e", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
-      if (Math.random() < 0.5) q[q.length] = new Charge("positron", { x: x, y: y }, { x: -mag * Math.cos(angle), y: -mag * Math.sin(angle) });
+      if (Math.random() < 0.5) q[q.length] = new Charge("positron", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
     }
     if (settings.proton && Math.random() < spawnRate) {
       const x = 30 + Math.random() * (canvas.width - 60);
@@ -125,75 +85,6 @@ function charges15(el) {
       q[q.length] = new Charge("muon", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
     }
 
-    // if (settings.electron) {
-    //   if (Math.random() < spawnRate) {
-    //     const x = 30 + Math.random() * (canvas.width - 60);
-    //     const y = 30 + Math.random() * (canvas.height - 60);
-    //     const Vx = (c * (Math.random() - 0.5)) / 5;
-    //     const Vy = (c * (Math.random() - 0.5)) / 5;
-    //     const VxBaseline = c * (Math.random() - 0.5);
-    //     const VyBaseline = c * (Math.random() - 0.5);
-    //     q[q.length] = new Charge(
-    //       "e",
-    //       {
-    //         //position
-    //         x: x,
-    //         y: y
-    //       },
-    //       {
-    //         //velocity
-    //         x: Vx + VxBaseline,
-    //         y: Vy + VxBaseline
-    //       }
-    //     );
-
-    //     q[q.length] = new Charge(
-    //       "positron",
-    //       {
-    //         //position
-    //         x: x - (Vx + VxBaseline) * 20,
-    //         y: y - (Vx + VxBaseline) * 20
-    //       },
-    //       {
-    //         //velocity
-    //         x: -Vx + VxBaseline,
-    //         y: -Vy + VxBaseline
-    //       }
-    //     );
-    //   }
-    //   if (Math.random() < spawnRate) {
-    //     q[q.length] = new Charge(
-    //       "e",
-    //       {
-    //         //position
-    //         x: 30 + Math.random() * (canvas.width - 60),
-    //         y: 30 + Math.random() * (canvas.height - 60)
-    //       },
-    //       {
-    //         //velocity
-    //         x: c * (Math.random() - 0.5),
-    //         y: c * (Math.random() - 0.5)
-    //       }
-    //     );
-    //   }
-
-    //   if (Math.random() < spawnRate * 0.1) {
-    //     q[q.length] = new Charge(
-    //       "positron",
-    //       {
-    //         //position
-    //         x: 30 + Math.random() * (canvas.width - 60),
-    //         y: 30 + Math.random() * (canvas.height - 60)
-    //       },
-    //       {
-    //         //velocity
-    //         x: c * (Math.random() - 0.5),
-    //         y: c * (Math.random() - 0.5)
-    //       }
-    //     );
-    //   }
-    // }
-
     //remove particles after life is zero
     for (let i = 0, len = q.length; i < len; ++i) {
       if (q[i]) {
@@ -201,79 +92,91 @@ function charges15(el) {
         if (q[i].life < 0) q.splice(i, 1);
       }
     }
-
-    // let i = q.length;
-    // while (--i) {
-    //   q[i].life--;
-    //   // const velocity2 = q[i].velocity.x * q[i].velocity.x + q[i].velocity.y * q[i].velocity.y;
-    //   // || (velocity2 < 0.01 && q[i].canMove)
-    //   if (q[i].life < 0) q.splice(i, 1);
-    // }
-    // if (Math.random() < 0.01) q.splice(0, 1);
   }
+
+  document.getElementById("settings").style.display = "inline";
+  document.getElementById("observations").style.display = "inline";
   const settings = {
-    pause: false,
-    timeRate: 3,
-    alpha: true,
-    electron: true,
-    muon: true,
-    proton: true,
-    magneticField: 0.02,
-    radiation: 1,
-    falling: false,
-    display: "cloud chamber"
+    timeRate: document.getElementById("cloud-timerate-slider").value,
+    alpha: document.getElementById("cloud-alpha-checkbox").checked,
+    beta: document.getElementById("cloud-beta-checkbox").checked,
+    muon: document.getElementById("cloud-muon-checkbox").checked,
+    proton: document.getElementById("cloud-proton-checkbox").checked,
+    magneticField: document.getElementById("cloud-magfield-slider").value,
+    radiation: document.getElementById("cloud-radiation-slider").value,
+    display: 4
   };
 
-  let gui = new dat.GUI();
-  gui.add(settings, "radiation", 0, 20).step(0.1);
-  gui.add(settings, "alpha");
-  gui.add(settings, "electron");
-  gui.add(settings, "proton");
-  gui.add(settings, "muon");
+  document.getElementById("cloud-radiation-slider").addEventListener("input", event => {
+    settings.radiation = document.getElementById("cloud-radiation-slider").value;
+    document.getElementById("cloud-radiation-text").innerHTML = settings.radiation;
+  });
 
-  let gui2 = new dat.GUI();
-  let displayController = gui2.add(settings, "display", ["magnetic field", "electric field", "electric potential", "cloud chamber"]);
-  displayController.onChange(function(value) {
-    if (value === "cloud chamber") {
-      el.style.background = "#000";
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    } else {
-      el.style.background = "#fff";
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  document.getElementById("cloud-timerate-slider").addEventListener("input", event => {
+    settings.timeRate = document.getElementById("cloud-timerate-slider").value;
+    document.getElementById("cloud-timerate-text").innerHTML = settings.timeRate;
+  });
+
+  document.getElementById("cloud-magfield-slider").addEventListener("input", event => {
+    settings.magneticField = document.getElementById("cloud-magfield-slider").value;
+    document.getElementById("cloud-magfield-text").innerHTML = settings.magneticField;
+  });
+
+  document.getElementById("cloud-alpha-checkbox").addEventListener("input", event => {
+    settings.alpha = document.getElementById("cloud-alpha-checkbox").checked;
+  });
+  document.getElementById("cloud-beta-checkbox").addEventListener("input", event => {
+    settings.beta = document.getElementById("cloud-beta-checkbox").checked;
+  });
+  document.getElementById("cloud-proton-checkbox").addEventListener("input", event => {
+    settings.proton = document.getElementById("cloud-proton-checkbox").checked;
+  });
+  document.getElementById("cloud-muon-checkbox").addEventListener("input", event => {
+    settings.muon = document.getElementById("cloud-muon-checkbox").checked;
+  });
+
+  //switch between draw modes
+  document.addEventListener("keypress", event => {
+    if (checkVisible(el)) {
+      if (event.charCode === 49) {
+        settings.display = 1; //particle
+        el.style.background = "#fff";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } else if (event.charCode === 50) {
+        settings.display = 2; //particles + electric vector field
+        el.style.background = "#fff";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } else if (event.charCode === 51) {
+        settings.display = 3; //electric potential scalar field
+        el.style.background = "#fff";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } else if (event.charCode === 52) {
+        settings.display = 4; //cloud chamber
+        el.style.background = "#000";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
     }
   });
-  gui2.add(settings, "falling");
-  gui2.add(settings, "magneticField", -0.1, 0.3).step(0.01);
-  gui2.add(settings, "timeRate", 0, 10).step(1);
-  gui2.add(settings, "pause");
-
-  var customContainer = document.getElementById("gui-container");
-  customContainer.appendChild(gui2.domElement);
-  customContainer.appendChild(gui.domElement);
-
-  // let gui2 = new dat.GUI({ autoPlace: false });
-  // customContainer.appendChild(gui2.domElement);
-  // gui2.add(settings, "magneticField", -1, 1).step(0.01);
 
   function cycle() {
-    if (checkVisible(el) && !settings.pause) {
+    if (checkVisible(el)) {
       for (let i = 0; i < settings.timeRate; ++i) {
         addRemove();
-        Charge.physicsAll(q, 0.997, 1, 7);
+        Charge.physicsAll(q, 0.99, 1, 2);
         Charge.physicsMagneticField(q, settings.magneticField);
-        if (settings.display === "magnetic field") {
+        if (settings.display === 1) {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           Charge.drawMagneticField(settings.magneticField);
           Charge.drawAll(q);
-        } else if (settings.display === "electric field") {
+        } else if (settings.display === 2) {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           Charge.vectorField(q);
           ctx.globalAlpha = 0.5;
           Charge.drawAll(q);
           ctx.globalAlpha = 1;
-        } else if (settings.display === "electric potential") {
+        } else if (settings.display === 3) {
           Charge.scalarField(q);
-        } else if (settings.display === "cloud chamber") {
+        } else if (settings.display === 4) {
           Charge.drawCloudChamber(q, settings.falling);
         }
         Charge.boundsRemove(q, 0);

@@ -79,13 +79,16 @@ button {
 
 input {
   font-family: Monaco, monospace;
-  font-size: 100%;
-  width: 69px;
-  background: #eee;
+  font-size: 90%;
   border: 10px;
   margin: 0.2em;
 }
-
+input[type="number"] {
+  background: #eee;
+}
+input[type="text"] {
+  background: #eee;
+}
 input:focus {
   outline: 0;
 }
