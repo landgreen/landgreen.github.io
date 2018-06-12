@@ -86,149 +86,113 @@ function charges15(el) {
 
   function addRemove() {
     // chance to add particles   //0.03 in total chance is good
-    c = 6; //c = speed of light
-    spawnRate = 0.001 * settings.radiation;
-    if (settings.alpha) {
-      if (Math.random() < spawnRate) {
-        const x = 30 + Math.random() * (canvas.width - 60);
-        const y = 30 + Math.random() * (canvas.width - 60);
-
-        q[q.length] = new Charge(
-          "alpha",
-          {
-            //position
-            x: x,
-            y: y
-          },
-          {
-            //velocity
-            x: (c * (Math.random() - 0.5)) / 2,
-            y: (c * (Math.random() - 0.5)) / 2
-          }
-        );
-        //sometimes spawn two alpha particles in the same location
-        if (Math.random() < 0.2) {
-          q[q.length] = new Charge(
-            "alpha",
-            {
-              //position
-              x: x,
-              y: y
-            },
-            {
-              //velocity
-              x: (c * (Math.random() - 0.5)) / 2,
-              y: (c * (Math.random() - 0.5)) / 2
-            }
-          );
-        }
+    c = 10; //c = speed of light
+    spawnRate = 0.002 * settings.radiation;
+    if (settings.alpha && Math.random() < spawnRate) {
+      const x = 30 + Math.random() * (canvas.width - 60);
+      const y = 30 + Math.random() * (canvas.width - 60);
+      const mag = (0.05 + 0.01 * (Math.random() - 0.5)) * c;
+      const angle = Math.random() * Math.PI * 2;
+      q[q.length] = new Charge("alpha", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
+      //sometimes spawn two alpha particles in the same location
+      if (Math.random() < 0.1) {
+        const off = Math.PI / 6 + (Math.random() * Math.PI) / 2;
+        q[q.length] = new Charge("alpha", { x: x, y: y }, { x: mag * Math.cos(angle + off), y: mag * Math.sin(angle + off) });
       }
     }
 
-    if (settings.electron) {
-      if (Math.random() < spawnRate) {
-        const x = 30 + Math.random() * (canvas.width - 60);
-        const y = 30 + Math.random() * (canvas.height - 60);
-        const Vx = (c * (Math.random() - 0.5)) / 5;
-        const Vy = (c * (Math.random() - 0.5)) / 5;
-        const VxBaseline = c * (Math.random() - 0.5);
-        const VyBaseline = c * (Math.random() - 0.5);
-        q[q.length] = new Charge(
-          "e",
-          {
-            //position
-            x: x,
-            y: y
-          },
-          {
-            //velocity
-            x: Vx + VxBaseline,
-            y: Vy + VxBaseline
-          }
-        );
-
-        q[q.length] = new Charge(
-          "positron",
-          {
-            //position
-            x: x - (Vx + VxBaseline) * 20,
-            y: y - (Vx + VxBaseline) * 20
-          },
-          {
-            //velocity
-            x: -Vx + VxBaseline,
-            y: -Vy + VxBaseline
-          }
-        );
-      }
-      if (Math.random() < spawnRate) {
-        q[q.length] = new Charge(
-          "e",
-          {
-            //position
-            x: 30 + Math.random() * (canvas.width - 60),
-            y: 30 + Math.random() * (canvas.height - 60)
-          },
-          {
-            //velocity
-            x: c * (Math.random() - 0.5),
-            y: c * (Math.random() - 0.5)
-          }
-        );
-      }
-
-      if (Math.random() < spawnRate * 0.1) {
-        q[q.length] = new Charge(
-          "positron",
-          {
-            //position
-            x: 30 + Math.random() * (canvas.width - 60),
-            y: 30 + Math.random() * (canvas.height - 60)
-          },
-          {
-            //velocity
-            x: c * (Math.random() - 0.5),
-            y: c * (Math.random() - 0.5)
-          }
-        );
-      }
+    if (settings.electron && Math.random() < spawnRate * 2) {
+      const x = 30 + Math.random() * (canvas.width - 60);
+      const y = 30 + Math.random() * (canvas.width - 60);
+      const mag = (0.15 + 0.1 * (Math.random() - 0.5)) * c;
+      const angle = Math.random() * Math.PI * 2;
+      if (Math.random() < 0.5) q[q.length] = new Charge("e", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
+      if (Math.random() < 0.5) q[q.length] = new Charge("positron", { x: x, y: y }, { x: -mag * Math.cos(angle), y: -mag * Math.sin(angle) });
+    }
+    if (settings.proton && Math.random() < spawnRate) {
+      const x = 30 + Math.random() * (canvas.width - 60);
+      const y = 30 + Math.random() * (canvas.width - 60);
+      const mag = (0.43 + 0.1 * (Math.random() - 0.5)) * c;
+      const angle = Math.random() * Math.PI * 2;
+      q[q.length] = new Charge("proton", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
     }
 
-    if (settings.proton) {
-      if (Math.random() < spawnRate) {
-        q[q.length] = new Charge(
-          "proton",
-          {
-            //position
-            x: 30 + Math.random() * (canvas.width - 60),
-            y: 30 + Math.random() * (canvas.height - 60)
-          },
-          {
-            //velocity
-            x: 2 * c * (Math.random() - 0.5),
-            y: 2 * c * (Math.random() - 0.5)
-          }
-        );
-      }
+    if (settings.muon && Math.random() < spawnRate) {
+      const x = 30 + Math.random() * (canvas.width - 60);
+      const y = 30 + Math.random() * (canvas.width - 60);
+      const mag = 0.99 * c;
+      const angle = Math.random() * Math.PI * 2;
+      q[q.length] = new Charge("muon", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
     }
 
-    if (settings.muon) {
-      if (Math.random() < spawnRate * 0.2) {
-        q[q.length] = new Charge(
-          "muon",
-          {
-            //position
-            x: 30 + Math.random() * (canvas.width - 60),
-            y: 30 + Math.random() * (canvas.height - 60)
-          },
-          {
-            //velocity
-            x: 1.5 * c * (Math.random() - 0.5),
-            y: 1.5 * c * (Math.random() - 0.5)
-          }
-        );
-      }
-    }
+    // if (settings.electron) {
+    //   if (Math.random() < spawnRate) {
+    //     const x = 30 + Math.random() * (canvas.width - 60);
+    //     const y = 30 + Math.random() * (canvas.height - 60);
+    //     const Vx = (c * (Math.random() - 0.5)) / 5;
+    //     const Vy = (c * (Math.random() - 0.5)) / 5;
+    //     const VxBaseline = c * (Math.random() - 0.5);
+    //     const VyBaseline = c * (Math.random() - 0.5);
+    //     q[q.length] = new Charge(
+    //       "e",
+    //       {
+    //         //position
+    //         x: x,
+    //         y: y
+    //       },
+    //       {
+    //         //velocity
+    //         x: Vx + VxBaseline,
+    //         y: Vy + VxBaseline
+    //       }
+    //     );
+
+    //     q[q.length] = new Charge(
+    //       "positron",
+    //       {
+    //         //position
+    //         x: x - (Vx + VxBaseline) * 20,
+    //         y: y - (Vx + VxBaseline) * 20
+    //       },
+    //       {
+    //         //velocity
+    //         x: -Vx + VxBaseline,
+    //         y: -Vy + VxBaseline
+    //       }
+    //     );
+    //   }
+    //   if (Math.random() < spawnRate) {
+    //     q[q.length] = new Charge(
+    //       "e",
+    //       {
+    //         //position
+    //         x: 30 + Math.random() * (canvas.width - 60),
+    //         y: 30 + Math.random() * (canvas.height - 60)
+    //       },
+    //       {
+    //         //velocity
+    //         x: c * (Math.random() - 0.5),
+    //         y: c * (Math.random() - 0.5)
+    //       }
+    //     );
+    //   }
+
+    //   if (Math.random() < spawnRate * 0.1) {
+    //     q[q.length] = new Charge(
+    //       "positron",
+    //       {
+    //         //position
+    //         x: 30 + Math.random() * (canvas.width - 60),
+    //         y: 30 + Math.random() * (canvas.height - 60)
+    //       },
+    //       {
+    //         //velocity
+    //         x: c * (Math.random() - 0.5),
+    //         y: c * (Math.random() - 0.5)
+    //       }
+    //     );
+    //   }
+    // }
 
     //remove particles after life is zero
     for (let i = 0, len = q.length; i < len; ++i) {
@@ -261,7 +225,7 @@ function charges15(el) {
   };
 
   let gui = new dat.GUI();
-  gui.add(settings, "radiation", 0, 10).step(0.1);
+  gui.add(settings, "radiation", 0, 20).step(0.1);
   gui.add(settings, "alpha");
   gui.add(settings, "electron");
   gui.add(settings, "proton");
@@ -279,7 +243,7 @@ function charges15(el) {
     }
   });
   gui2.add(settings, "falling");
-  gui2.add(settings, "magneticField", -0.1, 0.1).step(0.01);
+  gui2.add(settings, "magneticField", -0.1, 0.3).step(0.01);
   gui2.add(settings, "timeRate", 0, 10).step(1);
   gui2.add(settings, "pause");
 

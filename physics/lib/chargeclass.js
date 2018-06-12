@@ -20,6 +20,7 @@ class Charge {
       this.color = "rgba(0,100,255,0.4)";
       this.life = 300 + Math.floor(Math.random() * 1500);
       this.wide = 0;
+      this.speed = 0.13; // % of speed of light, c
     } else if (type === "p") {
       this.canMove = false;
       this.name = "proton";
@@ -29,6 +30,7 @@ class Charge {
       this.color = "rgba(255,0,100,1)";
       this.life = Infinity;
       this.wide = 1;
+      this.speed = 0; // % of speed of light, c  //note this p can't move, use proton
     } else if (type === "neutron") {
       this.canMove = true;
       this.name = "neutron";
@@ -38,6 +40,7 @@ class Charge {
       this.color = "rgba(255,0,100,1)";
       this.life = 100 + Math.floor(Math.random() * 1000);
       this.wide = 0;
+      this.speed = 0;
     } else if (type === "muon") {
       this.canMove = true;
       this.name = "muon";
@@ -46,7 +49,8 @@ class Charge {
       this.radius = 8;
       this.color = "rgba(0,100,255,0.8)";
       this.life = 300 + Math.floor(Math.random() * 500);
-      this.wide = 2;
+      this.wide = 1;
+      this.speed = 0.99; // % of speed of light, c
     } else if (type === "positron") {
       this.canMove = true;
       this.name = "positron";
@@ -56,6 +60,7 @@ class Charge {
       this.color = "rgba(255,0,100,0.4)";
       this.life = 100 + Math.floor(Math.random() * 1300);
       this.wide = 0;
+      this.speed = 0.13; // % of speed of light, c
     } else if (type === "alpha") {
       this.canMove = true;
       this.name = "alpha";
@@ -63,8 +68,9 @@ class Charge {
       this.charge = 2;
       this.radius = 8;
       this.color = "rgba(255,0,100,0.4)";
-      this.life = 15 + Math.floor(Math.random() * 3);
+      this.life = 100 + Math.floor(Math.random() * 120);
       this.wide = 6;
+      this.speed = 0.05; // % of speed of light, c
     } else if (type === "proton") {
       this.canMove = true;
       this.name = "proton";
@@ -73,7 +79,8 @@ class Charge {
       this.radius = 4;
       this.color = "rgba(255,0,100,1)";
       this.life = 300 + Math.floor(Math.random() * 1500);
-      this.wide = 3;
+      this.wide = 1;
+      this.speed = 0.43; // % of speed of light, c
     }
   }
   static spawnCharges(who, len = 1, type = "e") {
@@ -240,7 +247,9 @@ class Charge {
 
         for (let j = 0; j < who[i].wide; ++j) {
           const wide = who[i].wide; //Math.floor(Math.max(1, who[i].wide));
-          const off = 4 * Math.floor(wide * (Math.random() - 0.5)) + 4 * canvasWidth * Math.floor(wide * (Math.random() - 0.5));
+          const mag = wide * Math.random();
+          const angle = Math.PI * 2 * Math.random();
+          const off = 4 * Math.floor(mag * Math.cos(angle)) + 4 * canvasWidth * Math.floor(mag * Math.sin(angle));
           data[imgIndex + 4 + off] = 255; // red
           data[imgIndex + 5 + off] = 255; // green
           data[imgIndex + 6 + off] = 255; // blue
