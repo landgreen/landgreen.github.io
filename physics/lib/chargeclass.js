@@ -241,18 +241,21 @@ class Charge {
         const velocity2 = who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y;
         const energyCycles = 2 + Math.floor(0.003 * who[i].mass * velocity2);
         const imgIndex = 4 * (Math.floor(who[i].position.x) + Math.floor(who[i].position.y) * canvasWidth);
+        const alpha = Math.min(255, Math.max(0, 500 * velocity2));
 
         for (let j = 0; j < energyCycles; ++j) {
           const mag = who[i].wide * Math.random();
           const angle = Math.PI * 2 * Math.random();
+          //adds marks to where the particle was and will be to make the pattern less periodic
           const velocityMag = Math.random();
-          const x = mag * Math.cos(angle) + who[i].velocity.x * velocityMag;
-          const y = mag * Math.sin(angle) + who[i].velocity.y * velocityMag;
+          const x = mag * Math.cos(angle) - who[i].velocity.x * velocityMag;
+          const y = mag * Math.sin(angle) - who[i].velocity.y * velocityMag;
           const off = 4 * Math.floor(x) + 4 * canvasWidth * Math.floor(y);
           data[imgIndex + 0 + off] = 255; // red
           data[imgIndex + 1 + off] = 255; // green
           data[imgIndex + 2 + off] = 255; // blue
-          data[imgIndex + 3 + off] = 255; //255; //velocity;  // alpha
+          // data[imgIndex + 3 + off] = 255; //255; //velocity;  // alpha
+          data[imgIndex + 3 + off] = alpha;
         }
       }
     }
@@ -265,7 +268,7 @@ class Charge {
     }
 
     //add random speckles
-    for (let i = 0, len = Math.floor(data.length / 10000); i < len; ++i) {
+    for (let i = 0, len = Math.floor(data.length / 15000); i < len; ++i) {
       const index = Math.floor((Math.random() * data.length) / 4) * 4;
       data[index + 0] = 255; // red
       data[index + 1] = 255; // green
