@@ -117,10 +117,6 @@ hr {
   border: 0;
   border-bottom: 1px solid #aaa;
 }
-details p {
-  text-align: center;
-  font-size: 1.3em;
-}
 
 ::selection {
   color: white;
@@ -263,9 +259,6 @@ th {
 
 .katex {
   font-size: 1.5em;
-}
-details .katex {
-  font-size: 2em;
 }
 
 /*basic flex box __________________________*/
