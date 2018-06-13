@@ -59,21 +59,26 @@
 			}
 
 			.d {
-				grid-column: 2;
+				grid-column: 1;
 				grid-row: 2;
 			}
 
 			.e {
-				grid-column: 3;
+				grid-column: 2;
 				grid-row: 2;
 			}
 
 			.f {
-				grid-column: 4;
+				grid-column: 3;
 				grid-row: 2;
 			}
 
 			.g {
+				grid-column: 4;
+				grid-row: 2;
+			}
+
+			.h {
 				grid-column: 5;
 				grid-row: 2;
 			}
@@ -85,7 +90,7 @@
 					<label>time rate</label> =
 					<span id="cloud-timerate-text">1</span>
 					<br>
-					<input type="range" id='cloud-timerate-slider' min="0" max="8" step="1" value="1">
+					<input type="range" id='cloud-timerate-slider' min="0" max="10" step="1" value="1">
 				</div>
 				<div class="b">
 					<label>radiation rate</label> =
@@ -108,10 +113,14 @@
 					<label for="cloud-beta-checkbox">beta</label>
 				</div>
 				<div class="f">
+					<input type="checkbox" id="cloud-gamma-checkbox" name="gamma" checked>
+					<label for="cloud-gamma-checkbox">gamma</label>
+				</div>
+				<div class="g">
 					<input type="checkbox" id="cloud-proton-checkbox" name="proton" checked>
 					<label for="cloud-proton-checkbox">proton</label>
 				</div>
-				<div class="g">
+				<div class="h">
 					<input type="checkbox" id="cloud-muon-checkbox" name="muon" checked>
 					<label for="cloud-muon-checkbox">muon</label>
 				</div>
@@ -120,7 +129,17 @@
 		<canvas class="cloud" id='cloud-chamber' height='100' width='600' onclick="charges15(this)" style="background: #000;">
 		</canvas>
 		<div id="observations" style="display:none">
-			Select the radiation type beta. This produces both electrons and positrons. What do you observe?
+
+			Select the radiation type beta and adjust the strength of the magnetic field. Beta radiation is high speed electrons. What
+			do you observe?
+			<details>
+				<summary>observations</summary>
+				<li>A stronger magnetic field makes the circles smaller and faster.</li>
+				<li>A negative magnetic field changes the direction of circular motion.</li>
+			</details>
+			<br>
+			<br> Select the radiation type gamma. Gamma radiation is high energy photons. They can't be seen in the cloud chamber, but
+			when they collide with matter they produce pairs of electrons and positrons. What do you observe?
 			<details>
 				<summary>observations</summary>
 				<li>The particles almost move in a
@@ -128,13 +147,7 @@
 				</li>
 				<li>The electrons and positrons travel in opposite directions around the circle.</li>
 			</details>
-			<br>
-			<br>Try adjusting the strength of the magnetic field. What do you notice?
-			<details>
-				<summary>observations</summary>
-				<li>A stronger magnetic field makes the circles smaller and faster.</li>
-				<li>A negative magnetic field changes the direction of circular motion.</li>
-			</details>
+
 			<br>
 			<br> The magnetic field causes charged particles to curve. Yet, most of the particles are moving in a straight line. What
 			property of a particle could affect how it curves in response to the magnetic force?
@@ -142,7 +155,10 @@
 				<summary>solution</summary>
 				<br>The muons and protons are much more massive than the electrons. They accelerate less because the force is divided by
 				their mass. They still curve slightly, but it isn't noticeable.
+				<br>
+				<br>Neutrally charged particles, like neutrons, don't curve either, but they can't be seen in a cloud chamber.
 			</details>
+
 		</div>
 
 		<div class='example'>

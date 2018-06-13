@@ -11,7 +11,7 @@ const setup0 = function() {
   var canvas = document.getElementById("cloud-chamber");
   var ctx = canvas.getContext("2d");
   // ctx.font = "300 30px Roboto";
-  ctx.font = "300 30px Ariel";
+  ctx.font = "300 26px Arial, Helvetica, sans-serif";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2 + 5);
@@ -64,11 +64,31 @@ function charges15(el) {
     if (settings.beta && Math.random() < spawnRate * 2) {
       const x = 30 + Math.random() * (canvas.width - 60);
       const y = 30 + Math.random() * (canvas.width - 60);
-      const mag = (0.15 + 0.1 * (Math.random() - 0.5)) * c;
+      const mag = (0.16 + 0.8 * (Math.random() - 0.5)) * c;
       const angle = Math.random() * Math.PI * 2;
-      if (Math.random() < 0.5) q[q.length] = new Charge("e", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
-      if (Math.random() < 0.5) q[q.length] = new Charge("positron", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
+      if (Math.random() < 0.8) q[q.length] = new Charge("e", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
+      if (Math.random() < 0.05) {
+        const magOff = mag * 6 * Math.random();
+        q[q.length] = new Charge("e", { x: x, y: y }, { x: magOff * Math.cos(angle), y: magOff * Math.sin(angle) });
+      }
+      // if (Math.random() < 0.2) {
+      //   const angleOff = angle + Math.random();
+      //   const magOff = mag + (Math.random() - 0.5) * c * 0.7;
+      //   q[q.length] = new Charge("positron", { x: x, y: y }, { x: magOff * Math.cos(angleOff), y: magOff * Math.sin(angleOff) });
+      // }
     }
+
+    if (settings.gamma && Math.random() < spawnRate * 0.5) {
+      const x = 30 + Math.random() * (canvas.width - 60);
+      const y = 30 + Math.random() * (canvas.width - 60);
+      const mag = (0.16 + 0.8 * (Math.random() - 0.5)) * c;
+      const angle = Math.random() * Math.PI * 2;
+      q[q.length] = new Charge("e", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
+      const angleOff = angle + Math.random();
+      const magOff = mag + (Math.random() - 0.5) * c * 0.7;
+      q[q.length] = new Charge("positron", { x: x, y: y }, { x: magOff * Math.cos(angleOff), y: magOff * Math.sin(angleOff) });
+    }
+
     if (settings.proton && Math.random() < spawnRate) {
       const x = 30 + Math.random() * (canvas.width - 60);
       const y = 30 + Math.random() * (canvas.width - 60);
@@ -84,6 +104,11 @@ function charges15(el) {
       const angle = Math.random() * Math.PI * 2;
       q[q.length] = new Charge("muon", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
     }
+    //add decays and additions spawned by active particles
+    //    https://www.nuledo.com/en/cloud-chambers/#alfa-castice
+    //muon decay into electron
+    //high speed protons produce electrons
+    //positron electron annihilation?
 
     //remove particles after life is zero
     for (let i = 0, len = q.length; i < len; ++i) {
@@ -100,6 +125,7 @@ function charges15(el) {
     timeRate: document.getElementById("cloud-timerate-slider").value,
     alpha: document.getElementById("cloud-alpha-checkbox").checked,
     beta: document.getElementById("cloud-beta-checkbox").checked,
+    gamma: document.getElementById("cloud-gamma-checkbox").checked,
     muon: document.getElementById("cloud-muon-checkbox").checked,
     proton: document.getElementById("cloud-proton-checkbox").checked,
     magneticField: document.getElementById("cloud-magfield-slider").value,
@@ -127,6 +153,9 @@ function charges15(el) {
   });
   document.getElementById("cloud-beta-checkbox").addEventListener("input", event => {
     settings.beta = document.getElementById("cloud-beta-checkbox").checked;
+  });
+  document.getElementById("cloud-gamma-checkbox").addEventListener("input", event => {
+    settings.gamma = document.getElementById("cloud-gamma-checkbox").checked;
   });
   document.getElementById("cloud-proton-checkbox").addEventListener("input", event => {
     settings.proton = document.getElementById("cloud-proton-checkbox").checked;
