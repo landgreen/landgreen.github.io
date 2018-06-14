@@ -48,25 +48,50 @@ class Particle {
     this.velocity.y *= 0.999;
   }
 
-  //http://www.artcompsci.org/msa/web/vol_1/v1_web.pdf
+  // // http://www.artcompsci.org/msa/web/vol_1/v1_web.pdf
+  // // http://www.artcompsci.org/kali/pub/msa/title.html
+  // static integration(who) {
+  //   const minDistance2 = 100;
+  //   for (let i = 0, len = who.length; i < len; ++i) {
+  //     //change position from velocity
+  //     who[i].position.x += who[i].velocity.x;
+  //     who[i].position.y += who[i].velocity.y;
+  //     //accelerate from gravity
+  //     for (let j = 0, len = who.length; j < len; ++j) {
+  //       if (i < j) {
+  //         const dx = who[i].position.x - who[j].position.x;
+  //         const dy = who[i].position.y - who[j].position.y;
+  //         const d2 = Math.max(dx * dx + dy * dy, minDistance2);
+  //         const mag = 0.05 / d2 / Math.sqrt(d2);
+  //         who[i].velocity.x -= mag * who[j].mass * dx;
+  //         who[i].velocity.y -= mag * who[j].mass * dy;
+  //         who[j].velocity.x += mag * who[i].mass * dx;
+  //         who[j].velocity.y += mag * who[i].mass * dy;
+  //       }
+  //     }
+  //   }
+  // }
+
+  // http://exploratoria.github.io/exhibits/astronomy/gravitating-system/
   static integration(who) {
     const minDistance2 = 100;
-    for (let i = 0, len = who.length; i < len; ++i) {
-      //change position from velocity
+    //change position from velocity
+    const len = who.length;
+    for (let i = 0; i < len; ++i) {
       who[i].position.x += who[i].velocity.x;
       who[i].position.y += who[i].velocity.y;
-      //accelerate from gravity
-      for (let j = 0, len = who.length; j < len; ++j) {
-        if (i < j) {
-          const dx = who[i].position.x - who[j].position.x;
-          const dy = who[i].position.y - who[j].position.y;
-          const d2 = Math.max(dx * dx + dy * dy, minDistance2);
-          const mag = 0.05 / d2 / Math.sqrt(d2);
-          who[i].velocity.x -= mag * who[j].mass * dx;
-          who[i].velocity.y -= mag * who[j].mass * dy;
-          who[j].velocity.x += mag * who[i].mass * dx;
-          who[j].velocity.y += mag * who[i].mass * dy;
-        }
+    }
+    //accelerate velocity from gravity
+    for (let i = 0; i < len; ++i) {
+      for (let j = i + 1; j < len; ++j) {
+        const dx = who[i].position.x - who[j].position.x;
+        const dy = who[i].position.y - who[j].position.y;
+        const d2 = Math.max(dx * dx + dy * dy, minDistance2);
+        const mag = 0.05 / d2 / Math.sqrt(d2);
+        who[i].velocity.x -= mag * who[j].mass * dx;
+        who[i].velocity.y -= mag * who[j].mass * dy;
+        who[j].velocity.x += mag * who[i].mass * dx;
+        who[j].velocity.y += mag * who[i].mass * dy;
       }
     }
   }
@@ -187,8 +212,8 @@ class Particle {
     for (var k = 0; k < lenY; k++) {
       for (var j = 0; j < lenX; j++) {
         draw = true;
-        x = canvas.width * (j + 0.5) / lenX;
-        y = canvas.height * (k + 0.5) / lenY;
+        x = (canvas.width * (j + 0.5)) / lenX;
+        y = (canvas.height * (k + 0.5)) / lenY;
         //calc Forces
         var f, a;
         var fx = 0;
@@ -201,7 +226,7 @@ class Particle {
             draw = false; //don't draw in inside a body
             break; //exit the forloop
           }
-          f = who[i].mass * mag / (dist * dist);
+          f = (who[i].mass * mag) / (dist * dist);
           a = Math.atan2(dy, dx);
           fx += f * Math.cos(a);
           fy += f * Math.sin(a);
