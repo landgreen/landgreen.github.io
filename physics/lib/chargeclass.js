@@ -191,11 +191,11 @@ class Charge {
         who[i].velocity.y *= friction;
         //accelerate from electrostatic force
         for (let j = 0, len = who.length; j < len; ++j) {
-          if (i != j && who[i].charge && who[j].charge) {
+          if (i != j) {
             const dx = who[i].position.x - who[j].position.x;
             const dy = who[i].position.y - who[j].position.y;
-            // const d2 = Math.max(dx * dx + dy * dy, minDistance2);
-            const d2 = dx * dx + dy * dy + minDistance2;
+            // const d2 = Math.max(dx * dx + dy * dy, minDistance2);  // better accuracy, like for orbits
+            const d2 = dx * dx + dy * dy + minDistance2; // + minDistance2 leads to more stability
             const mag = (strength * who[i].charge * who[j].charge) / (d2 * Math.sqrt(d2));
             who[i].velocity.x += (mag * dx) / who[i].mass;
             who[i].velocity.y += (mag * dy) / who[i].mass;
