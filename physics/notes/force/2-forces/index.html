@@ -35,19 +35,33 @@
         <rect x="0" y="100" width="300" height="110" style="fill:#ccc" />
         <g transform='translate(100 20) rotate(0)'>
           <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#bdd" />
-          <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>2.0kg</text>
+          <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>2.0 kg</text>
         </g>
         <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-        <text x="10" y="53" fill="black">F=200N</text>
+        <text x="35" y="53" fill="black">200 N</text>
         <use xlink:href="#vector" transform='translate(180 80) rotate(-90)' />
-        <text x="200" y="73" fill="black">F=500N</text>
+        <text x="200" y="73" fill="black">500 N</text>
         <use xlink:href="#vector" transform='translate(180 40) rotate(-90)' />
-        <text x="200" y="33" fill="black">F=300N</text>
+        <text x="200" y="33" fill="black">300 N</text>
       </svg>
       <b>Example:</b> Find the acceleration for the free body diagram above.
       <details>
         <summary>solution</summary>
-        $$\sum F=ma$$ $$-200+300+500=2a$$ $$600=2a$$ $$300 \tfrac{m}{s^2}=a$$
+
+        <ul class="listing">
+          <li>
+            <div>
+              $$ \text{no units}$$ $$\sum F=ma$$ $$-200+300+500 = $$ $$600=2a$$ $$300 \tfrac{m}{s^2}=a$$
+            </div>
+          </li>
+          <li>
+            <div>
+              $$ \text{with units}$$ $$\sum F=ma$$ $$-200\,N+300\,N+500\,N=$$ $$600\,N=(2\,kg)a$$ $$300 \tfrac{m}{s^2}=a$$
+            </div>
+          </li>
+        </ul>
+
+
       </details>
     </div>
 
@@ -56,44 +70,45 @@
         <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
         <g transform='translate(100 60) rotate(0)'>
           <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#e50" />
-          <text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='20px'>0.09kg</text>
+          <text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='20px'>0.09 kg</text>
         </g>
         <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
-        <text x="150" y="187" fill="black">F=0.34N</text>
+        <text x="150" y="187" fill="black">0.34 N</text>
         <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
         <text x="150" y="23" fill="black">F= ? </text>
       </svg>
       <b>Example:</b> This book
-      <a href='https://www.amazon.com/Martian-Novel-Andy-Weir-ebook/dp/B00EMXBDMA'>The Martian</a> by Andy Weir (mass = 0.09kg) is resting on a table (acceleration = zero). The force of gravity produces
-      a downwards force of 0.34N. What force is required to keep the book at rest on the table.
+      <a href='https://www.amazon.com/Martian-Novel-Andy-Weir-ebook/dp/B00EMXBDMA'>The Martian</a> by Andy Weir (mass = 0.09 kg) is resting on a table (acceleration = zero). The force of gravity produces
+      a downwards force of 0.34 N. What force is required to keep the book at rest on the table.
       <details>
         <summary>solution</summary>
-        $$\sum F=ma$$ $$F_{up} + F_{g} = ma$$ $$F_{up} - 0.34 = (0.09)(0)$$ $$F_{up} - 0.34 = 0$$ $$F_{up} = 0.34N$$
+        $$\sum F=ma$$ $$F_{up} + F_{g} = ma$$ $$F_{up} - 0.34 = (0.09)(0)$$ $$F_{up} - 0.34 = 0$$ $$F_{up} = 0.34 \, N$$
       </details>
     </div>
 
     <div class='example'>
 
-      <b>Example:</b> Draw a free body diagram for a 83kg person holding onto a rope in a game of "Tug of war". The rope is
-      pulling them with a force of 520N left. The person's feet are countering that with 540N to the right.
+      <b>Example:</b> Draw a free body diagram for a 83 kg person holding onto a rope in a game of "Tug of war". The rope is
+      pulling them with a force of 520 N left. The person's feet are countering that with 540 N to the right.
       <details>
         <summary>solution</summary>
         <svg class='svgDiagram center' width="300" height="120" viewBox="-15 0 285 120">
           <g transform='translate(100 20) rotate(0)'>
             <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fcf" />
-            <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>83kg</text>
+            <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>83 kg</text>
           </g>
           <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-          <text x="10" y="53" fill="black">F= 520N</text>
+          <text x="35" y="53" fill="black">520 N</text>
           <use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
-          <text x="200" y="53" fill="black">F=540N</text>
+          <text x="200" y="53" fill="black">540 N</text>
         </svg>
       </details>
     </div>
 
     <div class='example'>
       <b>Example:</b> A red crate is falling, but a parachute is slowing its acceleration to only 2 m/s² down. The force of
-      gravity is 833N down. The parachute provides 663N up. Draw a free body diagram and use it to find the mass of the crate.
+      gravity is 833 N down. The parachute provides 663 N up. Draw a free body diagram and use it to find the mass of the
+      crate.
       <details>
         <summary>solution</summary>
         <svg class='svgDiagram center' width="300" height="200">
@@ -103,13 +118,14 @@
             <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>m = ?</text>
           </g>
           <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
-          <text x="150" y="187" fill="black">F=833N</text>
+          <text x="150" y="187" fill="black">833 N</text>
           <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
-          <text x="150" y="23" fill="black">F= 663N </text>
+          <text x="150" y="23" fill="black">663 N </text>
         </svg>
-        $$\sum F=ma$$ $$F_1+F_2=ma$$ $$-833+663 = m(2)$$ $$\frac{-170}{2} = \frac{m(2)}{2}$$ $$-85 kg = m$$
-        <p>Wait, a negative mass doesn't make sense. Oh, the acceleration is negative, because it points down.</p>
-        $$\frac{-170}{-2} = \frac{m(-2)}{-2}$$ $$85 kg = m$$
+        $$\sum F=ma$$ $$F_1+F_2=ma$$ $$-833+663 = m(2)$$ $$\frac{-170}{2} = \frac{m(2)}{2}$$ $$-85 \, kg = m$$
+        <p>A negative mass doesn't make sense. Where did we mess up?
+          <br>Oh, the acceleration is negative, because it points down.</p>
+        $$\frac{-170}{-2} = \frac{m(-2)}{-2}$$ $$85 \, kg = m$$
       </details>
     </div>
 
@@ -121,7 +137,7 @@
       but we mostly notice the attraction towards the Earth because it is so large and so close.</p>
     <p>It's funny, we have a special word just for the direction of gravity, down.</p>
     <div class='definition'>
-      <svg class='svgDiagram center' width="100" height="165">
+      <svg class='svgDiagram center' width="100" height="170">
         <defs>
           <g id="vector">
             <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
@@ -133,7 +149,9 @@
           <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle">mass</text>
         </g>
         <use xlink:href="#vector" transform='translate(50 90) rotate(0)' />
-        <text x="50" y="160" text-anchor="middle" fill="black">Fg</text>
+        <text x="50" y="160" text-anchor="middle" fill="black">F
+          <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+        </text>
       </svg>
       <h1>$$F_g=mg $$</h1> \(F_g\) = the force of gravity, weight [N, Newtons, pounds]
       <em>vector</em>
@@ -534,18 +552,18 @@
 
     <div class='example'>
       <strong>Example:</strong> Amazon says the book
-      <a href="https://www.amazon.com/Three-Body-Problem-Cixin-Liu/dp/0765382032">The Three-Body Problem</a> by Cixin Liu has a mass of 0.44 kg. What force of gravity will it feel?
+      <a href="https://www.amazon.com/Three-Body-Problem-Cixin-Liu/dp/0765382032">The Three-Body Problem</a> by Cixin Liu has a mass of 0.44 kg. What force of gravity does the book have?
       <details>
         <summary>solution</summary>
-        $$F_g=mg$$ $$F_g=(0.44)(9.8)$$ $$F_g=4.3N$$
+        $$F_g=mg$$ $$F_g=(0.44 \, kg )(9.8\, \tfrac{m}{s^2})$$ $$F_g=4.3 \, N$$
       </details>
     </div>
     <div class='example'>
       <strong>Example:</strong> How much mass does the book
-      <a href="https://www.amazon.com/Cats-Cradle-Novel-Kurt-Vonnegut/dp/038533348X">Cat's Cradle</a> by Kurt Vonnegut have if it feels a force of gravity of 1.8N?
+      <a href="https://www.amazon.com/Cats-Cradle-Novel-Kurt-Vonnegut/dp/038533348X">Cat's Cradle</a> by Kurt Vonnegut have if it feels a force of gravity of 1.8 N?
       <details>
         <summary>solution</summary>
-        $$F_g=mg$$ $$\frac{F_g}{g}=m$$ $$\frac{1.8}{9.8}=m$$ $$0.18 kg=m$$
+        $$F_g=mg$$ $$\frac{F_g}{g}=m$$ $$\frac{1.8 \, N}{9.8\, \tfrac{m}{s^2}}=m$$ $$0.18 \, kg=m$$
       </details>
     </div>
     <h3 class='underlined'>Weight and Mass</h3>
@@ -560,14 +578,13 @@
       we counter gravity with a normal force from the ground.</p>
     <div class='example'>
       <strong>Example:</strong> The book
-      <a href="https://www.amazon.com/Name-Wind-Patrick-Rothfuss/dp/0756404746/">The Name of the Wind</a> by Patrick Rothfuss has a mass of 0.34kg. How does its mass and weight change in a freefall
+      <a href="https://www.amazon.com/Name-Wind-Patrick-Rothfuss/dp/0756404746/">The Name of the Wind</a> by Patrick Rothfuss has a mass of 0.34 kg. How does its mass and weight change in a freefall
       on Earth?
       <details>
         <summary>solution</summary>
-        <p>The mass doesn't change from 0.34kg</p>
-        <p>The weight is the force of gravity.
-          <br>It also doesn't change in a freefall</p>
-        $$F_{g}=mg$$ $$F_{g}=(0.34)(9.8)$$ $$F_{g}=3.33N$$
+        <p>The mass doesn't change as an object falls.</p>
+        <p>Weight just means force of gravity, which also doesn't change in a short freefall</p>
+        $$F_{g}=mg$$ $$F_{g}=(0.34)(9.8)$$ $$F_{g}=3.33 \, N$$
       </details>
     </div>
     <div class='example'>
@@ -577,29 +594,46 @@
       <a href="https://www.google.com/search?q=gravity+on+moon">Moon</a>?
       <details>
         <summary>solution</summary>
-        <p>weight on the earth:</p>
-        $$F_{g}=mg$$ $$F_{g}=0.95(9.8)$$ $$F_{g}=9.31N$$
-        <br>
-        <p>weight on the moon:</p>
-        $$F_{g}=ma$$ $$F_{g}=0.95(1.6)$$ $$F_{g}=1.52N$$
+        <ul class="listing">
+          <li>
+            <div>
+              $$\text{weight on the earth}$$ $$F_{g}=mg$$ $$F_{g}=0.95(9.8)$$ $$F_{g}=9.31 \, N$$
+            </div>
+          </li>
+          <li>
+            <div>
+              $$\text{weight on the moon}$$ $$F_{g}=ma$$ $$F_{g}=0.95(1.6)$$ $$F_{g}=1.52 \, N$$
+            </div>
+          </li>
+        </ul>
+        <p>Weight changes on different planets, but mass doesn't change.</p>
       </details>
     </div>
     <div class='example'>
       <strong>Example:</strong> The book
       <a href="https://www.amazon.com/Uprooted-Naomi-Novik/dp/0804179034">Uprooted by Naomi Novik</a> is resting on a table. Amazon says the shipping weight is 1.2 pounds.
       <br>What is the mass in kilograms of the book on Earth? On Mars?
+      <details>
+        <summary>solution</summary>
+        $$\text{mass is the same everywhere}$$ $$ 1.2lbs \frac{1kg}{2.2lbs} = 0. \overline{54}kg $$ $$ m = 0. \overline{54} \, kg
+        $$
+      </details>
       <br>What is the weight of the book in Newtons on Earth (a = 9.8 m/s²)?
       <br>On Mars (a = 3.711 m/s²)?
       <details>
         <summary>solution</summary>
-        <p> mass doesn't change</p>
-        $$ 1.2lbs \frac{1kg}{2.2lbs} = 0. \overline{54}kg $$ $$ m = 0. \overline{54} kg $$
-        <br>
-        <p>weight on Earth</p>
-        $$F_{g}=mg$$ $$F_{g}=(0.\overline{54})(9.8)$$ $$F_{g}=5.35N$$
-        <br>
-        <p> weight on Mars</p>
-        $$F_{g}=ma$$ $$F_{g}=(0.\overline{54})(3.711)$$ $$F_{g}=2.02N$$
+        <ul class="listing">
+          <li>
+            <div>
+              $$\text{weight on Earth}$$ $$F_{g}=mg$$ $$F_{g}=(0.\overline{54})(9.8)$$ $$F_{g}=5.35\,N$$
+            </div>
+          </li>
+          <li>
+            <div>
+              $$\text{weight on Mars}$$ $$F_{g}=ma$$ $$F_{g}=(0.\overline{54})(3.711)$$ $$F_{g}=2.02\,N$$
+            </div>
+          </li>
+        </ul>
       </details>
     </div>
 
@@ -632,132 +666,199 @@
       </div>
     </div>
     <div class='example'>
-      <strong>Example:</strong> You are accelerating up in an elevator at 2m/s². If your mass is 100kg, what is the normal force
+      <strong>Example:</strong> You are accelerating up in an elevator at 2 m/s². If your mass is 100 kg, what is the normal force
       you feel from the elevator?
       <details>
         <summary>solution</summary>
-        <svg class='svgDiagram center' width="300" height="200">
-          <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
-          <g transform='translate(100 60) rotate(0)'>
-            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#eaa" />
-            <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>100kg</text>
-          </g>
-          <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
-          <text x="150" y="187" fill="black">Fg</text>
-          <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
-          <text x="150" y="23" fill="black">FN </text>
-        </svg>
-        $$F_{g}=mg$$ $$F_{g}=(100)(-9.8)$$ $$F_{g}=-980N$$
-        <br> $$\sum F=ma$$ $$F_{g}+F_{N}=ma$$ $$F_{N}=ma-F_{g}$$ $$F_{N}=(100)(2)-(-980)$$ $$F_{N}=1180N$$
-        <svg class='svgDiagram center' width="300" height="200">
-          <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
-          <g transform='translate(100 60) rotate(0)'>
-            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#eaa" />
-            <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>100kg</text>
-          </g>
-          <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
-          <text x="150" y="187" fill="black">Fg = 980N</text>
-          <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
-          <text x="150" y="23" fill="black">FN = 1180N </text>
-        </svg>
+
+        <ul class="listing">
+          <li>
+            <div>
+              $$F_{g}=mg$$ $$F_{g}=(100)(-9.8)$$ $$F_{g}=-980\,N$$
+              <br> $$\sum F=ma$$ $$F_{g}+F_{N}=ma$$ $$F_{N}=ma-F_{g}$$ $$F_{N}=(100)(2)-(-980)$$ $$F_{N}=1180\,N$$
+            </div>
+          </li>
+          <li>
+            <div>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <svg class='svgDiagram center' width="300" height="200">
+                <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
+                <g transform='translate(100 60) rotate(0)'>
+                  <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#eaa" />
+                  <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>100 kg</text>
+                </g>
+                <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
+                <text x="150" y="187" fill="black">F
+                  <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+                  <tspan dy="-5">= 980 N</tspan>
+                </text>
+                <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
+                <text x="150" y="23" fill="black">F
+                  <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+                  <tspan dy="-5">= 1180 N</tspan>
+                </text>
+              </svg>
+            </div>
+          </li>
+        </ul>
       </details>
 
     </div>
     <div class='example'>
-      <strong>Example:</strong> A 20kg box is at rest on a horizontal sidewalk. Find the force of gravity and the normal force on
+      <strong>Example:</strong> A 20 kg box is at rest on a horizontal sidewalk. Find the force of gravity and the normal force on
       the box.
       <details>
         <summary>solution</summary>
-        <svg class='svgDiagram' width="240" height="220" style="float: right;">
-          <rect x="0" y="150" width="200" height="200" style="fill:#cba" />
-          <rect x="60" y="70" width="80" height="80" style="stroke:black;stroke-width:2;fill:#ccf " />
-          <text x="100" y="110" fill="black" text-anchor="middle" alignment-baseline="middle">20kg</text>
-          <use xlink:href="#vector" transform='translate(100 70) rotate(-180)' />
-          <text x="100" y="20" text-anchor="middle" fill="black">FN = 196N</text>
-          <use xlink:href="#vector" transform='translate(100 150) rotate(0)' />
-          <text x="100" y="215" text-anchor="middle" fill="black">Fg = 196N</text>
-        </svg> $$F_{g}=mg$$ $$F_{g}=(20)(-9.8)$$ $$F_{g}=-196N$$
-        <br>
-        <p>In the simple case of a flat horizontal surface and no vertical acceleration the force of gravity will be equal and
-          opposite to the normal force.</p>
-        $$\sum F=ma$$ $$F_{g}+F_{N}=ma$$ $$F_{N}=ma-F_{g}$$ $$F_{N}=(20)(0)-(-196)$$ $$F_{N}=196N$$
+
+        <ul class="listing">
+          <li>
+            <div>
+              $$F_{g}=mg$$ $$F_{g}=(20)(-9.8)$$ $$F_{g}=-196\,N$$
+              <br> $$\sum F=ma$$ $$F_{g}+F_{N}=ma$$ $$F_{N}=ma-F_{g}$$ $$F_{N}=(20)(0)-(-196)$$ $$F_{N}=196 \, N$$
+            </div>
+          </li>
+          <li>
+            <div>
+              <svg width="240" height="225">
+                <rect x="0" y="150" width="200" height="200" style="fill:#cba" />
+                <rect x="60" y="70" width="80" height="80" style="stroke:black;stroke-width:2;fill:#ccf " />
+                <text x="100" y="110" fill="black" text-anchor="middle" alignment-baseline="middle">20 kg</text>
+                <use xlink:href="#vector" transform='translate(100 70) rotate(-180)' />
+                <text x="100" y="15" text-anchor="middle" fill="black">F
+                  <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+                  <tspan dy="-5">= 196 N</tspan>
+                </text>
+                <use xlink:href="#vector" transform='translate(100 150) rotate(0)' />
+                <text x="100" y="216" text-anchor="middle" fill="black">Fg = 196 N</text>
+              </svg>
+              <br>
+              <br>
+              <p>In the simple case of a flat horizontal surface with no vertical acceleration the force of gravity will always
+                be equal and opposite to the normal force.</p>
+            </div>
+          </li>
+        </ul>
       </details>
     </div>
+
     <div class='example'>
-      <svg class='svgDiagram' width="230" height="280" style="outline: 0px solid black;float: right;padding: 20px 20px 20px 20px;">
-        <g transform='translate(50 -30) rotate(20)'>
+
+      <svg class="center" width="230" height="226">
+        <g transform='translate(50 -50) rotate(20)'>
           <rect x="-100" y="170" width="1000" height="1000" style="fill:#cba" />
-          <rect x="60" y="90" width="80" height="80" style="stroke:black;stroke-width:2;fill:#cff " />
-          <text x="100" y="130" fill="black" text-anchor="middle" alignment-baseline="middle">20kg</text>
+          <rect x="60" y="90" width="80" height="80" style="stroke:black;stroke-width:2;fill:#ff0" />
+          <text x="100" y="130" fill="black" text-anchor="middle" alignment-baseline="middle">20 kg</text>
           <use xlink:href="#vector" transform='translate(100 90) rotate(-180)' />
-          <text x="100" y="33" text-anchor="middle" fill="black">FN</text>
+          <text x="100" y="33" text-anchor="middle" fill="black">F
+            <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+          </text>
         </g>
-        <g transform='translate(90 165) rotate(0)'>
+        <g transform='translate(90 145) rotate(0)'>
           <use xlink:href="#vector" />
           <text x="0" y="70" text-anchor="middle" fill="black">Fg</text>
         </g>
       </svg>
-      <strong>Example:</strong> A 20kg box is at rest on a steep sidewalk. The sidewalk is at an angle 20 degrees from horizontal.
+      <strong>Example:</strong> A 20 kg box is at rest on a steep sidewalk. The sidewalk is at an angle 20 degrees from horizontal.
       Find the force of gravity and the normal force on the box. What is the acceleration of the box? (assume no friction)
       <details>
         <summary>solution</summary>
-
-        $$F_{g}=mg$$ $$F_{g}=(20)(-9.8)$$ $$F_{g}=196N$$
-        <br>
-        <svg class='svgDiagram' width="200" height="120" style="float:right;">
-          <g transform='translate(100 0) rotate(0)'>
-            <line x1="0" y1="0" x2="0" y2="95" style="stroke:#000;stroke-width:2" />
-            <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 100)' />
-            <text x="0" y="115" text-anchor="middle" fill="black">Fg</text>
+        <ul class="listing">
+          <li>
+            <div>
+              $$F_{g}=mg$$ $$F_{g}=(20)(-9.8)$$ $$F_{g}=196 \, N$$
+            </div>
+          </li>
+          <li>
+            <div>
+              <br>
+              <svg s width="200" height="120">
+                <g transform='translate(100 1) rotate(0)'>
+                  <line x1="0" y1="0" x2="0" y2="95" style="stroke:#000;stroke-width:2" />
+                  <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 100)' />
+                  <text x="0" y="115" text-anchor="middle" fill="black">Fg</text>
+                </g>
+                <g transform='translate(100 1) rotate(20)'>
+                  <line x1="0" y1="0" x2="0" y2="89" style="stroke:#000;stroke-width:2" />
+                  <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 94)' />
+                  <text x="0" y="109" text-anchor="middle" fill="black">Fg⊥</text>
+                </g>
+                <g transform='translate(100 1) rotate(-70)'>
+                  <line x1="0" y1="0" x2="0" y2="29" style="stroke:#000;stroke-width:2" />
+                  <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 34)' />
+                  <text x="0" y="49" text-anchor="middle" fill="black">Fg∥</text>
+                </g>
+              </svg>
+            </div>
+          </li>
+        </ul>
+        <p>Separate the gravity
+          <a href="..\..\motion\3-vectors-and-scalors\index.html">vector</a> into components parallel and perpendicular to the ground. Acceleration is zero in the perpendicular
+          direction.
+        </p>
+        <ul class="listing">
+          <li>
+            <div>
+              <p>
+                $$\text{perpendicular to ground}$$
+              </p>
+              $$F_{g\perp}=F_{g}\cos(20)$$ $$F_{g\perp}=(196)\cos(20)$$ $$F_{g\perp}=184N$$
+              <br> $$\sum F_{\perp}=ma$$ $$F_{g\perp}+F_{N}=ma$$ $$F_{N}=ma-F_{g\perp}$$ $$F_{N}=(20)(0)-(-184)$$ $$F_{N}=184N$$
+              <br>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>
+                $$\text{parallel to ground}$$
+              </p>
+              $$F_{g\parallel}=F_{g}\sin(20)$$ $$F_{g\parallel}=(196)\sin(20)$$ $$F_{g\parallel}=67N$$
+              <br> $$\sum F_{\parallel}=ma$$ $$F_{g\parallel}=ma$$ $$(67)=(20)a$$ $$3.35\small\frac{m}{s^{2}}=\normalsize a$$
+            </div>
+          </li>
+        </ul>
+        <svg class="center" width="230" height="246">
+          <g transform='translate(50 -30) rotate(20)'>
+            <rect x="-100" y="170" width="1000" height="1000" style="fill:#cba" />
+            <rect x="60" y="90" width="80" height="80" style="stroke:black;stroke-width:2;fill:#ff0" />
+            <text x="100" y="130" fill="black" text-anchor="middle" alignment-baseline="middle">20kg</text>
+            <use xlink:href="#vector" transform='translate(100 90) rotate(-180)' />
+            <text x="100" y="33" text-anchor="middle" fill="black">F
+              <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+              <tspan dy="-5"> = 184 N</tspan>
+            </text>
           </g>
-          <g transform='translate(100 0) rotate(20)'>
-            <line x1="0" y1="0" x2="0" y2="89" style="stroke:#000;stroke-width:2" />
-            <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 94)' />
-            <text x="0" y="109" text-anchor="middle" fill="black">Fg⊥</text>
-          </g>
-          <g transform='translate(100 0) rotate(-70)'>
-            <line x1="0" y1="0" x2="0" y2="29" style="stroke:#000;stroke-width:2" />
-            <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 34)' />
-            <text x="0" y="49" text-anchor="middle" fill="black">Fg∥</text>
+          <g transform='translate(90 165) rotate(0)'>
+            <use xlink:href="#vector" />
+            <text x="0" y="70" text-anchor="middle" fill="black">Fg = 196 N</text>
           </g>
         </svg>
-        <p>Separate the gravity
-          <a href="..\..\motion\3-vectors-and-scalors\index.html">vector</a> into components parallel and perpendicular to the ground</p>
-
-        <p>
-          <strong>perpendicular to ground</strong>
-        </p>
-        $$F_{g\perp}=F_{g}\cos(20)$$ $$F_{g\perp}=(196)\cos(20)$$ $$F_{g\perp}=184N$$
-        <br> $$\sum F_{\perp}=ma$$ $$F_{g\perp}+F_{N}=ma$$ $$F_{N}=ma-F_{g\perp}$$ $$F_{N}=(20)(0)-(-184)$$ $$F_{N}=184N$$
-        <br>
-        <p>
-          <strong>parallel to ground</strong>
-        </p>
-        $$F_{g\parallel}=F_{g}\sin(20)$$ $$F_{g\parallel}=(196)\sin(20)$$ $$F_{g\parallel}=67N$$
-        <br> $$\sum F_{\parallel}=ma$$ $$F_{g\parallel}=ma$$ $$(67)=(20)a$$ $$3.35\small\frac{m}{s^{2}}=\normalsize a$$
-
       </details>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+
     <h3 class='underlined'>Tension Forces</h3> Tension is the pulling force from a string or rope. Ropes are useful for transferring a force over
     a distance. If you wanted to apply a force on your dog while going for a walk you could use the tension on the leash
     to transfer that force.
 
     <div class='example'>
-      <strong>Example:</strong> A helium balloon is attached to a 0.5g paper clip. If the balloon and paper clip are accelerating
-      up at 0.023m/s², what is the tension on the paper clip from the balloon in Newtons?
+      <strong>Example:</strong> A helium balloon is attached to a 0.5 g paper clip. If the balloon and paper clip are accelerating
+      up at 0.023 m/s², what is the tension on the paper clip from the balloon in Newtons?
       <details>
         <summary>solution</summary>
-        $$a = 0.023\small\frac{m}{s^{2}}$$ $$m = 0.5g = 0.0005kg$$ $$\sum F=ma$$ $$F_{g} + F_{T} = ma$$ $$F_{T} = ma - F_{g}$$ $$F_{T}
-        = ma - mg$$ $$F_{T} = 0.0005*0.023 - 0.0005*9.8$$ $$F_{T} = 0.0049115N$$
+        $$a = 0.023\tfrac{m}{s^{2}}$$ $$m = 0.5\,g = 0.0005\,kg$$
+        <br>$$\sum F=ma$$ $$F_{g} + F_{T} = ma$$ $$F_{T} = ma - F_{g}$$ $$F_{T} = ma - mg$$ $$F_{T} = 0.0005*0.023 - 0.0005*9.8$$
+        $$F_{T} = 0.0049115\,N$$
       </details>
     </div>
     <div class='example'>
-      <b>Example:</b> A 100 kg person is pulling a 10kg crate with a rope (ignore the mass of the rope). Both the person and
+      <b>Example:</b> A 100 kg person is pulling a 10 kg crate with a rope (ignore the mass of the rope). Both the person and
       the crate are accelerating to the left at 0.1 m/s². What force is the person producing in order to accelerate to the
       left?
       <details>
@@ -766,28 +867,28 @@
           <line x1="180" y1="70" x2="400" y2="70" stroke-width="2" stroke="#888" />
           <g transform='translate(100 20) rotate(0)'>
             <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#ccc" />
-            <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>100kg</text>
+            <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>100 kg</text>
           </g>
           <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-          <text x="30" y="65" fill="black">Fp</text>
+          <text x="30" y="65" fill="black">F
+            <tspan font-size="0.7em" dy="5" dx="-5">p</tspan>
+          </text>
           <use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
-          <text x="235" y="66" fill="black">Ft</text>
+          <text x="195" y="50" fill="black">F
+            <tspan font-size="0.7em" dy="5" dx="-5">T</tspan>
+          </text>
           <g transform='translate(400 20) rotate(0)'>
             <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#a98" />
-            <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>10kg</text>
+            <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>10 kg</text>
           </g>
           <use xlink:href="#vector" transform='translate(400 60) rotate(90)' />
-          <text x="332" y="66" fill="black">Ft</text>
+          <text x="360" y="48" fill="black">F
+            <tspan font-size="0.7em" dy="5" dx="-5">T</tspan>
+          </text>
         </svg>
-        <p>
-          <strong>crate</strong>
-        </p>
-        $$\sum F=ma$$ $$F_t = 10 (-0.1)$$ $$F_t = -1N$$
-        <br>
-        <p>
-          <strong>person</strong>
-        </p>
-        $$\sum F=ma$$ $$F_p + F_t = ma$$ $$F_p + 1 = (100)(-0.1)$$ $$F_p + 1 = -10$$ $$F_p = -11N$$
+        <p>The tension force is equal and opposite for the person and crate.</p>
+        $$\text{crate}$$ $$\sum F=ma$$ $$F_T = 10 (-0.1)$$ $$F_T = -1N$$
+        <br> $$\text{person}$$ $$\sum F=ma$$ $$F_p + F_T = ma$$ $$F_p + 1 = (100)(-0.1)$$ $$F_p + 1 = -10$$ $$F_p = -11N$$
       </details>
     </div>
 
@@ -797,29 +898,33 @@
           <line x1="0" y1="0" x2="0" y2="45" style="stroke:#999;stroke-width:2" />
           <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#999" />
         </g>
-        <text x="126" y="126" fill="#999">Ftx</text>
+        <text x="125" y="125" fill="#999">F
+          <tspan font-size="0.7em" dy="5" dx="-5">Tx</tspan>
+        </text>
         <line x1="160" y1="80" x2="200" y2="120" style="stroke:#000;stroke-width:2" />
         <polygon points="0,10 -6,-2 0,0 6,-2" transform='translate(160 80) rotate(135)' />
         <g transform='translate(200 80) rotate(0)'>
           <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#c96" />
-          <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>10kg</text>
+          <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>10 kg</text>
         </g>
-        <text x="136" y="82" fill="black">Ft</text>
+        <text x="146" y="67" fill="black">F
+          <tspan font-size="0.7em" dy="5" dx="-5">Tx</tspan>
+        </text>
 
         <use xlink:href="#vector" transform='translate(280 120) rotate(-90)' />
-        <text x="332" y="126" fill="black">Fdog</text>
+        <text x="332" y="126" fill="black">F
+          <tspan font-size="0.7em" dy="5" dx="-5">dog</tspan>
+        </text>
       </svg>
       <b>Example:</b> You are walking your dog with the leash at a 45 degree angle down towards the dog. Neither your nor the
-      dog are accelerating. The dog is pulling on the leash forward with a force of 100N. Calculate the x part of the tension
+      dog are accelerating. The dog is pulling on the leash forward with a force of 100 N. Calculate the x part of the tension
       force on the leash. Then calculate the total tension force.
       <details>
         <summary>solution</summary>
-        <p>
-          <strong>dog</strong>
-        </p>
-        $$\sum F=ma$$ $$-F_{tx} + 100 = 0$$ $$-F_{tx} = -100$$
-        <p>The 100N is only the x-part of the tension force vector.</p>
-        $$F_t^2 = 100^2+100^2$$ $$F_t^2 = 20000$$ $$F_t = 141N$$
+        $$\text{dog}$$ $$\sum F=ma$$ $$-F_{tx} + 100 = 0$$ $$-F_{tx} = -100$$
+        <p>The 100 N is only the x-part of the tension force vector. We can find the total tension force with the Pythagorean
+          theorem. At 45° the x and y parts of the force are the same.</p>
+        $$F_t^2 = 100^2+100^2$$ $$F_t^2 = 20000$$ $$F_t = 141 \, N$$
       </details>
     </div>
 
