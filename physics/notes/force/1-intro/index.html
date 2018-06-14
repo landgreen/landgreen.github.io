@@ -79,11 +79,25 @@
 
 		</div>
 		<div class='example'>
-			<b>Example:</b> A soccer ball has a mass of 0.43kg. Find the acceleration of the ball when it experiences a net force (total
+			<b>Example:</b> A soccer ball has a mass of 0.43 kg. Find the acceleration of the ball when it experiences a net force (total
 			force) of 1N from air friction.
 			<details>
 				<summary>solution</summary>
-				$$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1}{0.43}=a$$ $$2.33\tfrac{m}{s^{2}}=a$$
+				<ul class="listing">
+					<li>
+						<div>
+							$$ \text{no units}$$ $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1}{0.43}=a$$ $$2.33 \, \tfrac{m}{s^{2}}=a$$
+						</div>
+					</li>
+					<li>
+						<div>
+							$$ \text{with units}$$ $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1 \, N}{0.43 \, kg}=a$$ $$\frac{1 \, kg \frac{m}{s^2}} {0.43 \,
+							kg }=a$$ $$2.33 \, \tfrac{m}{s^2}=a$$
+						</div>
+					</li>
+				</ul>
+
+
 			</details>
 		</div>
 
@@ -92,53 +106,76 @@
 				<rect x="0" y="100" width="300" height="110" style="fill:#ccf" />
 				<g transform='translate(100 20) rotate(0)'>
 					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#ccc" />
-					<text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>100kg</text>
+					<text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>100 kg</text>
 				</g>
 				<use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-				<text x="10" y="53" fill="black">F=2000N</text>
+				<text x="30" y="53" fill="black">2000 N</text>
 				<use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
-				<text x="200" y="53" fill="black">F=1900N</text>
+				<text x="200" y="53" fill="black">1900 N</text>
 			</svg>
 			<b>Example:</b> A 100kg boat at rest is being pushed left with a 2000N force from the wind. The water current is producing
 			a force of 1900N to the right. How will the boat accelerate? How far will the boat go in 6s?
 			<details>
 				<summary>solution</summary>
-				<p>Vectors pointed down or left are negative.</p>
-				$$\sum F=ma$$ $$-2000+1900=(100)(a)$$ $$-100=(100)(a)$$ $$-1\tfrac{m}{s^{2}}= a$$
-				<p>The boat will accelerate to the left.</p>
-				$$ u = 0 $$ $$ \Delta x = ?$$ $$ \Delta t = 6s$$ $$ \Delta x = u\Delta t+ \tfrac{1}{2} a \Delta t^{2}$$ $$ \Delta x = (0)(6)+\tfrac{1}{2}
-				(-1)(6)^{2}$$ $$ \Delta x = \tfrac{1}{2} (-1)(6)^{2}$$ $$ \Delta x = -18m$$
-				<p>The boat will move 18 meters to the left.</p>
+				$$ \text{Vectors pointed down or left are negative.}$$ $$\sum F=ma$$ $$-2000+1900=(100)(a)$$ $$-100=(100)(a)$$ $$-1\tfrac{m}{s^{2}}=
+				a$$ $$ \text{The boat will accelerate to the left.}$$ $$ u = 0 $$ $$ \Delta x = ?$$ $$ \Delta t = 6s$$ $$ \Delta x =
+				u\Delta t+ \tfrac{1}{2} a \Delta t^{2}$$ $$ \Delta x = (0)(6)+\tfrac{1}{2} (-1)(6)^{2}$$ $$ \Delta x = \tfrac{1}{2} (-1)(6)^{2}$$
+				$$ \Delta x = -18 \, m$$ $$ \text{The boat will move 18 meters to the left.}$$
 			</details>
 		</div>
+
+
+
+		<div class='example'>
+			<b>Example:</b> If I apply a force to a mass it accelerates. What happens if I apply a larger force to the same mass? Use
+			<a href="../../motion/1-intro/index.html#proportions">proportions</a>.
+			<details>
+				<summary>solution</summary>
+				$$ \text{m is constant}$$ $$ \text{F and a are directly proportional}$$ $${\Uparrow \atop F} {\atop =} { \atop m} {\Uparrow
+				\atop a} $$ $$ \text{Increasing F will increase a}$$
+
+			</details>
+		</div>
+		<div class='example'>
+			<b>Example:</b> If I apply a 100 N force to a mass it accelerates at 2m/s². What happens if I double the mass while keeping
+			the force the same? Use
+			<a href="../../motion/1-intro/index.html#proportions">proportions</a>.
+			<details>
+				<summary>solution</summary>
+				$$ \text{F is constant}$$ $$ \text{m and a are inversely proportional}$$ $${ \atop F} {\atop =} { \Downarrow \atop m} {\Uparrow
+				\atop a} $$ $$ \text{doubling m will half a}$$ $$ a = 1 \, \tfrac{m}{s^2}$$
+
+			</details>
+		</div>
+
+
 
 		<div class='example'>
 			<svg class='svgDiagram center' width="300" height="200">
 				<!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
 				<g transform='translate(100 60) rotate(0)'>
 					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fac" />
-					<text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='20px'>16kg</text>
+					<text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='20px'>16 kg</text>
 				</g>
 				<use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
-				<text x="150" y="187" fill="black">F=85N</text>
+				<text x="150" y="187" fill="black">85 N</text>
 				<use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
-				<text x="150" y="23" fill="black">F= 22N </text>
+				<text x="150" y="23" fill="black">22 N </text>
 
 				<use xlink:href="#vector" transform='translate(100 100) rotate(90)' />
-				<text x="10" y="93" fill="black">F=140N</text>
+				<text x="30" y="93" fill="black">140 N</text>
 				<use xlink:href="#vector" transform='translate(180 120) rotate(-90)' />
-				<text x="200" y="113" fill="black">F=55N</text>
+				<text x="210" y="113" fill="black">55 N</text>
 				<use xlink:href="#vector" transform='translate(180 80) rotate(-90)' />
-				<text x="200" y="73" fill="black">F=78N</text>
+				<text x="210" y="73" fill="black">78 N</text>
 			</svg>
 			<b>Example:</b> Use the free body diagram to calculate the acceleration for both the horizontal and the vertical.
 			<details>
 				<summary>solution</summary>
-				<p>vertical</p>
-				$$\sum F=ma$$ $$22 - 85 = 16a$$ $$-63 = 16a$$ $$-3.9 \tfrac{m}{s^2} = a$$
-				<br>
-				<p>horizontal</p>
-				$$\sum F=ma$$ $$78+55-140 = 16a$$ $$-7 = 16a$$ $$-0.43 \tfrac{m}{s^2} = a$$
+				$$ \text{vertical}$$ $$\sum F=ma$$ $$22 {\color{#aaa} \, N} - 85{\color{#aaa} \, N} = (16 {\color{#aaa} \, kg})a$$ $$-63
+				{\color{#aaa} \, N} = (16 {\color{#aaa} \, kg})a$$ $$-3.9 {\color{#aaa} \, \tfrac{m}{s^2}} = a$$
+				<br> $$ \text{horizontal}$$ $$\sum F=ma$$ $$78{\color{#aaa} \, N}+55{\color{#aaa} \, N}-140{\color{#aaa} \, N} = (16 {\color{#aaa}
+				\, kg})a$$ $$-7{\color{#aaa} \, N} = (16 {\color{#aaa} \, kg})a$$ $$-0.43 {\color{#aaa} \, \tfrac{m}{s^2}} = a$$
 			</details>
 		</div>
 
@@ -162,37 +199,32 @@
 		<p>If you push on something it will push back with the same force, but in the opposite direction. Forces always come in equal,
 			but opposite pairs.</p>
 		<div class='example'>
-			<b>Example:</b> You push down on the ground with a 1000N force. Describe the magnitude and direction of the force the ground
+			<b>Example:</b> You push down on the ground with a 1000 N force. Describe the magnitude and direction of the force the ground
 			pushes on you.
 			<details>
 				<summary>solution</summary>
-				<p>The force the ground applies is equal and opposite to the force you apply on the ground.</p>
-				<p>The magnitude is 1000N.</p>
-				<p>The direction is up.</p>
+				<p>The force the ground applies is equal and opposite to the force you apply on the ground. The magnitude is 1000 N. The
+					direction is up.</p>
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> A boxer's glove applies a 140N force to the face of another boxer. Describe the magnitude of the force the
+			<b>Example:</b> A boxer's glove applies a 140 N force to the face of another boxer. Describe the magnitude of the force the
 			face applies to the glove.
 			<details>
 				<summary>solution</summary>
-				<p>The force is equal and opposite.</p>
-				<p>The magnitude is 140N.</p>
+				<p>The force is equal and opposite. The magnitude is 140 N.</p>
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> You (100kg) are floating away from your spaceship. In order to return to the ship you throw your 2kg space
-			laser away. As you are throwing the space laser, it accelerates at 40m/s². How much acceleration do you feel during the
+			<b>Example:</b> You (100 kg) are floating away from your spaceship. In order to return to the ship you throw your 2 kg space
+			laser away. As you are throwing the space laser, it accelerates at 40 m/s². How much acceleration do you feel during the
 			throw?
 			<details>
 				<summary>solution</summary>
-				<p>The force the space laser feels is
-					<br>equal and opposite to the force you feel.
-					<p>
-						<p>space laser</p>
-						$$F = ma $$ $$F=(2)(40)$$ $$F=80N$$
-						<p>you</p>
-						$$F = ma $$ $$80 = 100a$$ $$0.8 \tfrac{m}{s^2}=a$$
+				<p>The force the space laser feels is equal and opposite to the force you feel.
+				</p>
+				$$ \text{space laser}$$ $$F = ma $$ $$F=(2)(40)$$ $$F=80 \, N$$
+				<br> $$ \text{you}$$ $$F = ma $$ $$-80 = 100a$$ $$-0.8 \tfrac{m}{s^2}=a$$
 			</details>
 		</div>
 		<div class='example'>
@@ -200,37 +232,31 @@
 				<line x1="180" y1="70" x2="400" y2="70" stroke-width="2" stroke="#888" />
 				<g transform='translate(100 20) rotate(0)'>
 					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#aaa" />
-					<text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>0.4kg</text>
+					<text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>0.4 kg</text>
 				</g>
 				<use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
 				<text x="35" y="65" fill="black">F</text>
 				<use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
 				<text x="237" y="66" fill="black">F</text>
 				<g transform='translate(400 20) rotate(0)'>
-					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fda" />
-					<text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='20px'>10kg</text>
+					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#ea5" />
+					<text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='20px'>10 kg</text>
 				</g>
 				<use xlink:href="#vector" transform='translate(400 60) rotate(90)' />
 				<text x="336" y="66" fill="black">F</text>
 			</svg>
 
-			<b>Example:</b> A 0.4 kg squirrel is pulling a 10kg box with a string. The squirrel and box are accelerating to the left
+			<b>Example:</b> A 0.4 kg squirrel is pulling a 10 kg box with a string. The squirrel and box are accelerating to the left
 			at 0.5 m/s². What is the force of tension on the string? What force is the squirrel producing in order to accelerate to
 			the left?
 			<details>
 				<summary>solution</summary>
-				<p>
-					<strong>box</strong>
-				</p>
-				$$\sum F=ma$$ $$F_{tension}=(10)(-0.5)$$ $$F_{tension}=-5N$$
+				$$ \text{box}$$ $$\sum F=ma$$ $$F_{tension}=(10)(-0.5)$$ $$F_{tension}=-5\,N$$
 				<br>
-				<p>The force on the string is equal
-					<br> but opposite for the squirrel and box.</p>
-				<p>
-					<strong>squirrel</strong>
-				</p>
-				$$\sum F=ma$$ $$F_{squirrel} + F_{tension}=ma$$ $$F_{squirrel} + 5=(0.4)(-0.5)$$ $$F_{squirrel}=-0.2-5$$ $$F_{squirrel}=-5.2N$$
-				<p>The squirrel is producing a force of 5.2N to the left.</p>
+				<p>The force on the string is equal but opposite for the squirrel and box.</p>
+				$$ \text{squirrel}$$ $$\sum F=ma$$ $$F_{squirrel} + F_{tension}=ma$$ $$F_{squirrel} + 5=(0.4)(-0.5)$$ $$F_{squirrel}=-0.2-5$$
+				$$F_{squirrel}=-5.2 \, N$$
+				<p>The squirrel is producing a force of 5.2 N to the left.</p>
 			</details>
 		</div>
 	</article>
