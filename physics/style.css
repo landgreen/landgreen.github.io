@@ -348,22 +348,6 @@ header h1 {
   font-weight: 300;
 }
 
-.e-mail-link {
-  border-radius: 290486px;
-  color: white;
-  font-size: 0.6em;
-  letter-spacing: 0.2em;
-  padding: 1em 2em;
-  text-decoration: none;
-  transition: none 200ms ease-out;
-  transition-property: color, background;
-}
-.e-mail-link:hover {
-  text-decoration: none;
-  background-color: #2793c7;
-  color: white;
-}
-
 @media screen and (max-width: 800px) {
   .side-graphics {
     visibility: hidden;
