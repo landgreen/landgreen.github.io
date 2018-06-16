@@ -50,10 +50,16 @@
 					<text x="500" y="40" fill='#777'>2V</text>
 				</g>
 			</svg>
-			<strong>Example:</strong> In the diagram above the potential in red is at 4V. The potential in blue is at 2V. What is the potential
+			<strong>Example:</strong> In the diagram above the potential in red is 4V. The potential in grey is 2V. What is the potential
 			difference across the resistor?
 			<details>
 				<summary>solution</summary>
+				$$\Delta V = V_f-V_i $$ $$\Delta V = 2V-4V$$ $$\Delta V = -2V$$
+			</details>
+			<br> What is the voltage across the resistor?
+			<details>
+				<summary>solution</summary>
+				<p>Voltage means a potential difference. They are the same.</p>
 				$$\Delta V = V_f-V_i $$ $$\Delta V = 2V-4V$$ $$\Delta V = -2V$$
 			</details>
 		</div>
@@ -421,6 +427,73 @@
 				$$ \sum I _{in} = \sum I_{out} $$ $$ 2A + 2A = I_{out} $$ $$ 4A = I_{out} $$
 			</details>
 		</div>
+
+		<div class='example'>
+
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="100" class='center'>
+				<path d="M 0 50 h 160 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 100 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 160"
+				 fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+
+				<g transform="translate(125 40) rotate(180)">
+					<line x1="5" y1="0" x2="100" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<text x="70" y="30" text-anchor="middle" font-family="sans-serif" font-size="23" fill='#333'>I = 10 mA</text>
+
+				<g transform="translate(550 40) rotate(180)">
+					<line x1="5" y1="0" x2="100" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+				<text x="495" y="30" text-anchor="middle" font-family="sans-serif" font-size="23" fill='#333'>I = ?</text>
+
+				<text x="200" y="25" text-anchor="middle" font-family="sans-serif" font-size="23" fill='#333'>166 Ω</text>
+				<text x="380" y="25" text-anchor="middle" font-family="sans-serif" font-size="23" fill='#333'>166 Ω</text>
+			</svg>
+			<strong>Example:</strong> The current is 10 mA before two 166 Ω resistors. What is the current after the resistors?
+			<details>
+				<summary>solution</summary>
+				<style type="text/css">
+					@keyframes marching_ants {
+						0% {
+							stroke-dashoffset: 20;
+						}
+						100% {
+							stroke-dashoffset: 0;
+						}
+					}
+
+					.ants {
+						animation: marching_ants 0.4s linear infinite;
+						stroke-dasharray: 0.1 19.9;
+					}
+				</style>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="100" class='center'>
+					<path d="M 0 50 h 160 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 100 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 160"
+					 fill='none' stroke="#333" stroke-width="7" stroke-linejoin="round" />
+
+					<path d="M 0 50 h 160 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 100 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 160"
+					 fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants" />
+
+					<g transform="translate(125 40) rotate(180)">
+						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#333;stroke-width:2" />
+						<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+					</g>
+					<text x="70" y="30" text-anchor="middle" font-family="sans-serif" font-size="23" fill='#333'>I = 10 mA</text>
+
+					<g transform="translate(550 40) rotate(180)">
+						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#333;stroke-width:2" />
+						<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+					</g>
+					<text x="495" y="30" text-anchor="middle" font-family="sans-serif" font-size="23" fill='#333'>I = 10 mA</text>
+				</svg>
+				<br> The total current entering a part of a circuit must equal the total current exiting. If a circuit doesn't branch it
+				will have the same current at every point. Current doesn't change across resistors and batteries. $$I = 10 \, mA $$
+
+			</details>
+		</div>
+
+
+
 		<div class='example'>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="200" class='center'>
 				<path d="M 0 100 L 400 100  M 100 100 L 150 175 L 250 175 L 300 100
