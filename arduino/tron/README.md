@@ -1,5 +1,5 @@
 <strong>Materials:</strong>
-ardunio
+<br>ardunio
 <br>two joysticks
 <br>16x16 neopixel matrix  
 <br>
