@@ -261,18 +261,6 @@ th {
   font-size: 1.5em;
 }
 
-/*basic flex box __________________________*/
-.flex-container {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-}
-.flex-item {
-  margin: 0.8em;
-}
-
 /*2 Equal-Width Columns that combine in the article________________*/
 @media screen and (min-width: 43em) {
   .col-group {

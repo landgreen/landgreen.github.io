@@ -5,12 +5,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
-
 	<meta name="description" content="Notes for a high school physics course.">
 	<meta name="author" content="Ross Landgreen">
 	<meta property="og:description" content="Notes for a high school physics course.">
 	<meta property="og:title" content="Physics Notes">
 	<meta name="twitter:title" content="High School Physics Notes">
+
 	<title>Equations of Motion</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -28,16 +28,16 @@
 	</header>
 	<article>
 		<p>These equations give us the average velocity and acceleration</p>
-		<h1>$$v_{avg} = \frac{\Delta x}{\Delta t} \ \ \ \ \ a_{avg} = \frac{\Delta v}{\Delta t} $$</h1>
+		<h1>$$v_{\mathrm{avg}} = \frac{\Delta x}{\Delta t} \ \ \ \ \ a_{\mathrm{avg}} = \frac{\Delta v}{\Delta t} $$</h1>
 		<h1 class='underlined'>The Equations of Motion</h1>
 		<p>If an object's
-			<b>acceleration is constant</b> the equations of motion are also true. They give exact values of intial and final velocity,
+			<strong>acceleration is constant</strong> the equations of motion are also true. They give exact values of initial and final velocity,
 			not averages. Here is the
 			<a href="http://dev.physicslab.org/document.aspx?doctype=3&filename=kinematics_derivationkinematicsequations.xml">derivation</a> of these equations.</p>
 		<div class='definition'>
-			<h2>$$v = u+a \Delta t$$ $$\Delta x = u\Delta t + \small\frac{1}{2}a \Delta t^{2}$$ $$\Delta x = \small\frac{1}{2}\normalsize(v+u)\Delta
+			<h3>$$v = u+a \Delta t$$ $$\Delta x = u\Delta t + \small\frac{1}{2}a \Delta t^{2}$$ $$\Delta x = \small\frac{1}{2}\normalsize(v+u)\Delta
 				t$$ $$v^{2} = u^{2}+2a \Delta x$$ $$\Delta x = v\Delta t - \small\frac{1}{2}a \Delta t^{2}$$
-			</h2>
+			</h3>
 			<p>\(\Delta x\) = distance [m]
 				<em>vector</em>
 			</p>
@@ -66,11 +66,11 @@
 			<details>
 				<summary>solution</summary>
 
-				<p>list known and unknown variables</p>
-				$$u = 400 \,\tfrac{m}{s}$$ $$a = -9.8 \,\tfrac{m}{s^{2}}$$ $$\Delta t = 40.8 \, s$$ $$\Delta x =\, ?$$
-				<p>plug variables into matching equation</p>
-				$$\Delta x = u\Delta t + \tfrac{1}{2} a \Delta t^{2}$$ $$\Delta x = (400) (40.8) + \tfrac{1}{2} (-9.8)(40.8^{2})$$ $$\Delta
-				x = 16320 - 8157$$ $$\Delta x = 8163m$$</p>
+				$$\text{list known and unknown variables}$$ $$u = 400 \, \mathrm{\tfrac{m}{s}}$$ $$a = -9.8 \, \mathrm{\tfrac{m}{s^{2}}}$$
+				$$\Delta t = 40.8 \, \mathrm{s}$$ $$\Delta x =\, ?$$
+				<br> $$\text{identify matching equation}$$ $$\Delta x = u\Delta t + \tfrac{1}{2} a \Delta t^{2}$$
+				<br> $$\text{plug in values}$$ $$\Delta x = (400) (40.8) + \tfrac{1}{2} (-9.8)(40.8^{2})$$ $$\Delta x = 16320 - 8157$$ $$\Delta
+				x = 8163 \, \mathrm{m}$$</p>
 			</details>
 		</div>
 		<div class='example'>
@@ -78,27 +78,29 @@
 			car?
 			<details>
 				<summary>solution</summary>
-				<p>list known and unknown variables</p>
-				$$u = 30 \, \tfrac{m}{s}$$ $$v = 0 \, \tfrac{m}{s}$$ $$\Delta x = 10 \, m$$ $$a =\, ?$$
-				<p>isolate the unknown variable</p>
-				$$v^{2} = u^{2}+2a \Delta x$$ $$v^{2} - u^{2}=2a \Delta x$$ $$\frac{v^{2} - u^{2}}{2 \Delta x}=a$$
-				<p>plug in variables</p>
-				$$\frac{0^{2} - (30 \, \tfrac{m}{s})^{2}}{2 (10 \, m)}=a$$ $$\frac{-900 \, \tfrac{m^2}{s^2}}{20 \, m}=a$$ $$-45 \tfrac{m}{s^{2}}=a$$
+				$$\text{list known and unknown variables}$$ $$u = 30 \, \mathrm{\tfrac{m}{s} }$$ $$v = 0 \, \mathrm{\tfrac{m}{s}}$$ $$\Delta
+				x = 10 \, \mathrm{m}$$ $$a =\, ?$$
+
+				<br> $$\text{identify matching equation}$$ $$v^{2} = u^{2}+2a \Delta x$$
+				<br> $$\text{solve for unknown}$$ $$v^{2} - u^{2}=2a \Delta x$$ $$\frac{v^{2} - u^{2}}{2 \Delta x}=a$$
+				<br> $$\text{plug in values}$$ $$\frac{0^{2} - (30 \, \tfrac{m}{s})^{2}}{2 (10 \, \mathrm{m})}=a$$ $$\frac{-900 \, \mathrm{\tfrac{m^2}{s^2}}
+				}{20 \, \mathrm{m}}=a$$ $$-45 \mathrm{\tfrac{m}{s^{2}}}=a$$
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> A plane takes off at a speed of 170 miles/hour while accelerating from rest on a runway that is 6,000ft long.
-			What is the acceleration of the plane?
-			<br> (1m = 3.3ft , 1 mile = 1609m)
+			<b>Example:</b> A plane takes off at a speed of 170 miles/hour while accelerating from rest on a runway that is 6,000 ft
+			long. Find the acceleration of the plane in m/s²?
+			<br>
+			<a href="..\1-intro\index.html#nonmetric">unit conversion</a>: 1m = 3.3 ft , 1 mile = 1609 m
 			<details>
 				<summary>solution</summary>
-				<p>convert variables to metric units</p>
-				$$ 170\left(\frac{\color{red}{mile}}{\color{blue}{hour}}\right)\left(\frac{1609 m}{1 \color{red}{mile}}\right)\left(\frac{1
-				\color{blue}{hour}}{3600s}\right) = 76\tfrac{m}{s} $$ $$u = rest = 0$$ $$\Delta x = 6000ft\scriptsize \left(\frac{1m}{3.3ft}\right)\normalsize
-				= 1818m$$ $$a = \,?$$
-				<p>plug variables into matching equation</p>
-				$$v^{2} = u^{2}+2a \Delta x$$ $$v^{2} - u^{2}=2a \Delta x$$ $$\frac{v^{2} - u^{2}}{2 \Delta x}=a$$ $$\frac{76^{2} - (0^{2})}{2
-				(1818)}=a$$ $$\frac{5776}{3636}=a$$ $$1.589 \tfrac{m}{s^{2}}=a$$
+				$$\text{convert units to metric}$$ $$\begin{aligned} v &= \mathrm{170\left(\frac{\color{red}{mile}}{\color{blue}{hour}}\right)\left(\frac{1609
+				\, m}{1 \, \color{red}{mile}}\right)\left(\frac{1 \, \color{blue}{hour}}{3600\,s}\right) = 76\,\mathrm{\tfrac{m}{s}}
+				} \\ u &= \mathrm{rest} = 0 \\ \Delta &x = 6000\,\mathrm{ft}\scriptsize \left(\frac{1 \, \mathrm{m}}{3.3 \, \mathrm{ft}
+				}\right)\normalsize = 1818 \, \mathrm{m} \\ a &= \,? \end{aligned}$$
+				<br> $$\text{plug variables into matching equation}$$ $$v^{2} = u^{2}+2a \Delta x$$ $$v^{2} - u^{2}=2a \Delta x$$ $$\frac{v^{2}
+				- u^{2}}{2 \Delta x}=a$$ $$\frac{76^{2} - (0^{2})}{2 (1818)}=a$$ $$\frac{5776}{3636}=a$$ $$1.589 \, \mathrm{\tfrac{m}{s^{2}}
+				}=a$$
 			</details>
 		</div>
 		<h1 class='underlined'>Acceleration of Gravity</h1>
@@ -116,40 +118,59 @@
 			<br>(check
 			<a href="https://www.wolframalpha.com/input/?i=what+is+the+gravity+on+the+moon">Wolfram alpha</a>)
 		</p>
+
 		<div class='example'>
 			<b>Example:</b> A sleeping cat falls from rest off of a ledge. If the cat hits the ground moving at 6.0 m/s how long was
 			the cat in free fall?
+
 			<details>
 				<summary>solution</summary>
-				<div class="col-group">
-					<div>$$u = rest = 0$$ $$v = -6.0 \, \tfrac{m}{s} $$ $$a = -9.8 \,\tfrac{m}{s^{2}} $$ $$\Delta t = \,? $$
-					</div>
-					<div>$$v = u+a \Delta t$$ $$\frac{v - u}{a} = \Delta t $$ $$\frac{(-6\, \tfrac{m}{s}) -(0)}{-9.8 \, \tfrac{m}{s^{2}}}= \Delta
-						t $$ $$0.61\,s = \Delta t$$
-					</div>
+				<div class="listing">
+					<li>
+						<div>$$u = \mathrm{rest} = 0$$ $$v = -6.0 \, \mathrm{\tfrac{m}{s}} $$ $$a = -9.8 \,\mathrm{ \tfrac{m}{s^{2}} }$$ $$\Delta
+							t = \,? $$
+						</div>
+					</li>
+					<li>
+						<div>$$v = u+a \Delta t$$ $$\frac{v - u}{a} = \Delta t $$ $$\frac{(-6\, \mathrm{\tfrac{m}{s} }) -(0)}{-9.8 \, \mathrm{\tfrac{m}{s^{2}}}}=
+							\Delta t $$ $$0.61\,\mathrm{s} = \Delta t$$
+						</div>
+					</li>
 				</div>
 			</details>
 		</div>
+
 		<div class='example'>
 			<b>Example:</b> A meteor 4,000 m above Europa, a moon of Jupiter, falls from rest. What is the impact velocity of the meteor?
 			How long does it take for the meteor to hit the surface? (look up the gravity on
 			<a href="https://www.google.com/search?q=what+is+the+gravity+on+europa&rlz=1C1CHFX_enUS532US532&oq=what+is+the+gravity+on+europa&aqs=chrome..69i57j0l3.7898j0j7&sourceid=chrome&ie=UTF-8">Europa</a>)
 			<details>
 				<summary>solution</summary>
-				$$\Delta x = -4000\,m$$ $$u = rest = 0$$ $$a = -1.315\,\tfrac{m}{s^{2}}$$ $$v = \,?$$ $$\Delta t = \,?$$
-				<br> $$v^{2} = u^{2}+2a \Delta x$$ $$v^{2} = 0^{2}+2(-1.315)(-4000)$$ $$v^{2} = 10520 $$ $$v = \pm102.6 \, \tfrac{m}{s} $$
-				<br> $$v = u+a \Delta t$$ $$\frac{v - u}{a} = \Delta t$$ $$ \frac{-102.6 - 0}{-1.315} = \Delta t $$ $$78.0\,s = \Delta t
-				$$
+
+				<div class="listing">
+					<li>
+						<div>$$\Delta x = -4000\,\mathrm{m}$$ $$u = \mathrm{rest} = 0$$ $$a = -1.315\, \mathrm{\tfrac{m}{s^{2}}}$$ $$v = \,?$$ $$\Delta
+							t = \,?$$
+						</div>
+					</li>
+					<li>
+						<div>$$v^{2} = u^{2}+2a \Delta x$$ $$v^{2} = 0^{2}+2(-1.315)(-4000)$$ $$v^{2} = 10520 $$ $$v = \pm102.6 \, \mathrm{\tfrac{m}{s}}
+							$$
+						</div>
+					</li>
+				</div>
+				<br> $$v = u+a \Delta t$$ $$\frac{v - u}{a} = \Delta t$$ $$ \frac{-102.6 - 0}{-1.315} = \Delta t $$ $$78.0\, \mathrm{s} =
+				\Delta t $$
 			</details>
 		</div>
 
-
 		<h1 class='underlined'>2-D Motion</h1>
-		<p>Solving for 2-Dimensional motion can use the same techniques as 1-Dimension if we divide the problem up into x and y information.
-			The x information is typically horizontal and the y information is typically vertical. As long as x and y are perpendicular
-			to each other the events in each direction don't effect each other. They are said to be independent from each other.</p>
+		<p>Solving for 2-Dimensional motion can reuse the methods from 1-Dimension. We just have to divide the problem up into x and
+			y information. The x information is typically horizontal and the y information is typically vertical. As long as x and
+			y are perpendicular to each other the events in each direction don't affect each other. The x and y axises are considered
+			independent from each other.</p>
 		<p>In this
-			<a href="http://codepen.io/lilgreenland/full/ORLQWw/">simulation</a> you can see what the a graph of position, velocity, and acceleration looks like for 2-D motion.</p>
+			<a href="http://codepen.io/lilgreenland/full/ORLQWw/">simulation</a> you can see what a graph of position, velocity, and acceleration looks like for 2-D motion.</p>
 		<p> It helps to organize our information in an x column and y column with time separate. The x and y columns are completely
 			independent of each other, but time is shared.</p>
 		<table style='table-layout: fixed;width: 300px;'>
@@ -187,9 +208,8 @@
 	<article>
 		<div class='example'>
 			<canvas id="myCanvas" width='600' height='300'></canvas>
-			<p>
-				<b>Example</b>: A ball moving horizontally at 2 m/s rolls off a table that is 1. 5m high. Find how far the ball travels
-				horizontally before it hits the ground. Click to rewatch the simulation above.</p>
+			<strong>Example</strong>: A ball moving horizontally at 2 m/s rolls off a table that is 1.5 m high. Find how far the ball travels
+			horizontally before it hits the ground. Click to rewatch the simulation above.
 			<details>
 				<summary>solution</summary>
 				<p>The information given is organized in the chart below. Vectors directed down or left are negative and vectors directed
@@ -218,10 +238,10 @@
 				</table>
 				<p>There isn't enough information to solve the horizontal side. Let start on the vertical.</p>
 				$$v^{2} = u^{2}+2a \Delta y$$ $$v^{2} = 0^{2}+2(-9.8)(-1.5)$$ $$v^{2} = 24.9$$ $$v = \sqrt{24.9}$$ $$v = \pm4.98 $$ $$v =
-				-4.98 \, \tfrac{m}{s}$$
+				-4.98 \, \mathrm{\tfrac{m}{s}}$$
 				<p>We know the final velocity is down so after the square root we choose the negative value. Lets plug final velocity back
 					in and solve for time.</p>
-				<br> $$v = u + a \Delta t$$ $$-4.98 = 0+(-9.8)\Delta t$$ $$0.51 \, s = \Delta t$$
+				<br> $$v = u + a \Delta t$$ $$-4.98 = 0+(-9.8)\Delta t$$ $$0.51 \, \mathrm{s} = \Delta t$$
 				<p> With this new information we can use time to solve on the horizontal side.</p>
 				<table style='table-layout: fixed;width: 300px;'>
 					<tr>
@@ -244,8 +264,8 @@
 						<td>a = 9.8 m/s²</td>
 					</tr>
 				</table>
-				$$\Delta x = u\Delta t + \tfrac{1}{2}a \Delta t^{2}$$ $$\Delta x = 2(0.51) + \small\frac{1}{2}(0)(0.51)^{2}$$ $$\Delta x
-				= 1.02 \,m$$
+				$$\Delta x = u\Delta t + \tfrac{1}{2}a \Delta t^{2}$$ $$\Delta x = 2(0.51) + \tfrac{1}{2}(0)(0.51)^{2}$$ $$\Delta x = 1.02
+				\, \mathrm{m}$$
 		</div>
 		</details>
 
@@ -279,11 +299,11 @@
 						<td>a = -9.8 m/s²</td>
 					</tr>
 				</table>
-				$$v^{2} = u^{2}+2a \Delta y$$ $$v^{2} = 8.66^{2}+2(-9.8)(-2.0)$$ $$v^{2} = 114$$ $$v = \pm 10.7 \, \tfrac{m}{s}$$ $$v = -10.7
-				\, \tfrac{m}{s}$$
-				<br> $$v = u+a \Delta t$$ $$-10.7 = 8.66+(-9.8)\Delta t$$ $$1.97 \,s = \Delta t$$
+				$$v^{2} = u^{2}+2a \Delta y$$ $$v^{2} = 8.66^{2}+2(-9.8)(-2.0)$$ $$v^{2} = 114$$ $$v = \pm 10.7 \, \mathrm{\tfrac{m}{s}}$$
+				$$v = -10.7 \, \mathrm{\tfrac{m}{s}}$$
+				<br> $$v = u+a \Delta t$$ $$-10.7 = 8.66+(-9.8)\Delta t$$ $$1.97 \, \mathrm{s} = \Delta t$$
 				<br> $$\Delta x = u\Delta t + \tfrac{1}{2}a \Delta t^{2}$$ $$\Delta x = 5(1.97) + \tfrac{1}{2}(0)(1.97)^{2}$$ $$\Delta x
-				= 9.85 \, m$$
+				= 9.85 \, \mathrm{m}$$
 				<table>
 					<tr>
 						<td colspan="2" style='text-align: center;'>Δt = 1.97 s</td>
@@ -336,10 +356,10 @@
 				<p>We can also use trig identities to change the initial velocity into x and y parts.</p>
 				<div class="col-group">
 					<div>
-						$$u_x = 10 cos(60)$$ $$u_x = (10) (0.5)$$ $$u_x = 5 \, \tfrac{m}{s}$$
+						$$u_x = 10 \mathrm{cos}(60)$$ $$u_x = (10) (0.5)$$ $$u_x = 5 \, \mathrm{\tfrac{m}{s} }$$
 					</div>
 					<div>
-						$$u_y = 10 sin(60)$$ $$u_y = (10) (0.87)$$ $$u_y = 8.7 \, \tfrac{m}{s}$$
+						$$u_y = 10 \mathrm{sin}(60)$$ $$u_y = (10) (0.87)$$ $$u_y = 8.7 \, \mathrm{\tfrac{m}{s} }$$
 					</div>
 				</div>
 				<table style='table-layout: fixed;width: 300px;'>
@@ -371,7 +391,7 @@
 						$$0 = \Delta t $$
 					</div>
 					<div>
-						$$0 = 8.7 + \tfrac{1}{2}(-9.8) \Delta t$$ $$-8.7 = -4.9 \Delta t$$ $$1.93 \, s = \Delta t$$
+						$$0 = 8.7 + \tfrac{1}{2}(-9.8) \Delta t$$ $$-8.7 = -4.9 \Delta t$$ $$1.93 \, \mathrm{s} = \Delta t$$
 					</div>
 				</div>
 
@@ -398,7 +418,7 @@
 				</table>
 				<p>With the time we can now use horizontal information to solve for the horizontal distance.</p>
 				$$\Delta x = u\Delta t + \tfrac{1}{2}a \Delta t^{2}$$ $$\Delta x = (5)(1.93) + \tfrac{1}{2}(0)(1.93)^{2}$$ $$\Delta x = (5)(1.93)$$
-				$$\Delta x = 9.65 \, m$$
+				$$\Delta x = 9.65 \, \mathrm{m}$$
 				<table style='table-layout: fixed;width: 300px;'>
 					<td colspan="2" style='text-align: center'>Δt = 1.93 s</td>
 					</tr>
@@ -422,67 +442,66 @@
 					</tr>
 				</table>
 			</details>
+		</div>
 
-			<div class='example'>
-				<svg style="float: right;" width="220" height="260" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-					<g id="vector" transform='translate(0 150) rotate(-25)'>
-						<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
-						<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
-						<text x="100" y="-13" fill="black" text-anchor="middle" alignment-baseline="middle">V = 150 m/s</text>
-					</g>
-					<line x1="0" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
-					<line x1="181" y1="150" x2="181" y2="63" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
-					<text x="100" y="165" fill="black" text-anchor="middle" alignment-baseline="middle">Vx</text>
-					<text x="205" y="105" fill="black" text-anchor="middle" alignment-baseline="middle">Vy</text>
-					<text x="67" y="141" fill="black" text-anchor="middle" alignment-baseline="middle">θ = 35°</text>
-				</svg>
-				<strong>Example:</strong>
-				<br>A ball is thrown at 35° from the horizon
-				<br>from ground level
-				<br>with a speed of 150 m/s.
-				<br>How long will the ball be in the air?
-				<details>
-					<summary>solution</summary>
-					<table>
-						<tr>
-							<td colspan="2" style='text-align: center;'>Δt = ?</td>
-						</tr>
-						<tr>
-							<td>Δx = </td>
-							<td>Δy = 0 m</td>
-						</tr>
-						<tr>
-							<td>u = 150 cos(35) = 123.0 m/s</td>
-							<td>u = 150 sin(35) = 86.0 m/s</td>
-						</tr>
-						<tr>
-							<td>v = </td>
-							<td>v = </td>
-						</tr>
-						<tr>
-							<td>a = 0</td>
-							<td>a = -9.8 m/s²</td>
-						</tr>
-					</table>
-					$$\Delta y = u\Delta t + \small\frac{1}{2}a \Delta t^{2}$$ $$0 = (86.0) \Delta t + \small\frac{1}{2}(-9.8)\Delta t^{2}$$
-					<p>We don't have to use the quadratic equation if we factor out time and solve two separate equations.</p>
-					$$0 = \Delta t(86.0 + \small\frac{1}{2}(-9.8)\Delta t)$$ $$0=\Delta t \quad \quad 0 = 86.0 + \small\frac{1}{2}(-9.8)\Delta
-					t$$
-					<p>The solution of zero time isn't helpful.</p>
-					$$0 = 86.0 + \small\frac{1}{2}(-9.8)\Delta t$$ $$-86.0 = -4.9\Delta t$$ $$\Delta t = 17.6 \, s$$
-				</details>
-			</div>
+		<div class='example'>
+			<svg style="float: right;" width="220" height="260" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<g id="vector" transform='translate(0 150) rotate(-25)'>
+					<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
+					<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
+					<text x="100" y="-13" fill="black" text-anchor="middle" alignment-baseline="middle">V = 150 m/s</text>
+				</g>
+				<line x1="0" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
+				<line x1="181" y1="150" x2="181" y2="63" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
+				<text x="100" y="165" fill="black" text-anchor="middle" alignment-baseline="middle">Vx</text>
+				<text x="205" y="105" fill="black" text-anchor="middle" alignment-baseline="middle">Vy</text>
+				<text x="67" y="141" fill="black" text-anchor="middle" alignment-baseline="middle">θ = 35°</text>
+			</svg>
+			<strong>Example:</strong>
+			<br>A ball is thrown at 35° from the horizon
+			<br>from ground level
+			<br>with a speed of 150 m/s.
+			<br>How long will the ball be in the air?
+			<details>
+				<summary>solution</summary>
+				<table>
+					<tr>
+						<td colspan="2" style='text-align: center;'>Δt = ?</td>
+					</tr>
+					<tr>
+						<td>Δx = </td>
+						<td>Δy = 0 m</td>
+					</tr>
+					<tr>
+						<td>u = 150 cos(35) = 123.0 m/s</td>
+						<td>u = 150 sin(35) = 86.0 m/s</td>
+					</tr>
+					<tr>
+						<td>v = </td>
+						<td>v = </td>
+					</tr>
+					<tr>
+						<td>a = 0</td>
+						<td>a = -9.8 m/s²</td>
+					</tr>
+				</table>
+				$$\Delta y = u\Delta t + \small\frac{1}{2}a \Delta t^{2}$$ $$0 = (86.0) \Delta t + \small\frac{1}{2}(-9.8)\Delta t^{2}$$
+				<p>We don't have to use the quadratic equation if we factor out time and solve two separate equations.</p>
+				$$0 = \Delta t(86.0 + \small\frac{1}{2}(-9.8)\Delta t)$$ $$0=\Delta t \quad \quad 0 = 86.0 + \small\frac{1}{2}(-9.8)\Delta
+				t$$
+				<p>The solution of zero time isn't helpful.</p>
+				$$0 = 86.0 + \small\frac{1}{2}(-9.8)\Delta t$$ $$-86.0 = -4.9\Delta t$$ $$\Delta t = 17.6 \, \mathrm{s}$$
+			</details>
+		</div>
 
-
-
-			<div class='example'>
-				<strong>Challenge:</strong> Test your 2-D motion skills with these randomly generated problems.
-				<p>
-					<a href="../5-projectile-challenge1/index.html">2-D motion challenge #1</a>
-					<br>
-					<a href="../6-projectile-challenge2/index.html">2-D motion challenge #2</a>
-				</p>
-			</div>
+		<div class='example'>
+			<strong>Challenge:</strong> Test your 2-D motion skills with these randomly generated problems.
+			<p>
+				<a href="../5-projectile-challenge1/index.html">2-D motion challenge #1</a>
+				<br>
+				<a href="../6-projectile-challenge2/index.html">2-D motion challenge #2</a>
+			</p>
+		</div>
 
 	</article>
 	<div class='back'>
