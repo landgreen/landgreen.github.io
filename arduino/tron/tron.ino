@@ -83,7 +83,7 @@ void loop() {
     playerCollisions();
     updateGameState();
     drawPlayers();
-    
+
     //check for player input
     for (int i = 0; i < WAIT; i++) {
       playerJoystickInput(); //consider placing playerJoystickInput() in more places in the loop to get more twitch response
@@ -204,42 +204,37 @@ void p1Wins() {
   if (isP1Move && on[p1[0]][p1[1]]) {
     tie();
   }
-  Serial.println("p1/cyan wins!");
-  GameStateDump();
+//  Serial.println("p1/cyan wins!");
+//  GameStateDump();
   strip.setBrightness(20);
   FillEmpty(0, 15, 15);
   ZigZagPixel(p2[0], p2[1], 255, 0, 0);
   strip.show();
 
-  //end game
-  while (1) {}
+  endGame();
 }
 
 void p2Wins() {
   if (isP2Move && on[p2[0]][p2[1]]) {
     tie();
   }
-  Serial.println("p2/pink, wins!");
-  GameStateDump();
+//  Serial.println("p2/pink, wins!");
+//  GameStateDump();
   strip.setBrightness(20);
   FillEmpty(15, 0, 15);
   ZigZagPixel(p1[0], p1[1], 255, 0, 0);
   strip.show();
-
-  //end game
-  while (1) {}
+  endGame();
 }
 
 void tie() {
-  Serial.println("tie game");
-  GameStateDump();
+//  Serial.println("tie game");
+//  GameStateDump();
   strip.setBrightness(20);
   FillEmpty(15, 15, 15);
   ZigZagPixel(p1[0], p1[1], 255, 0, 0);
   strip.show();
-
-  //end game
-  while (1) {}
+  endGame();
 }
 
 void drawPlayers() {
@@ -307,3 +302,13 @@ void FillEmpty(int r, int g, int b) {
     }
   }
 }
+
+
+
+
+void(* resetFunc) (void) = 0; //declare reset function @ address 0
+void endGame() {
+  delay(5000);
+  resetFunc();  //call reset
+}
+
