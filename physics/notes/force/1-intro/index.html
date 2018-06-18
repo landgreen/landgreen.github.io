@@ -11,7 +11,7 @@
 	<meta property="og:description" content="Notes for a high school physics course.">
 	<meta property="og:title" content="Physics Notes">
 	<meta name="twitter:title" content="High School Physics Notes">
-	<title>Newton's Laws</title>
+	<title>Newton's Laws of Motion</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
@@ -24,14 +24,25 @@
 <body>
 
 	<header>
-		<h1>Newton's Laws</h1>
+		<h1>Newton's Laws of Motion</h1>
 	</header>
 
 	<article>
-		<h1 class='underlined'>Newton's First Law: Inertia</h1>
 		<p>
-			<em>When viewed in an inertial reference frame, an object either remains at rest or continues to move at a constant velocity,
-				unless acted upon by an external force.</em>
+			<a href="https://en.wikipedia.org/wiki/Isaac_Newton">Issac Newton</a>(1643-1727) made many profound contributions to science. He was an important figure in the
+			<a href="https://en.wikipedia.org/wiki/Scientific_Revolution">Scientific Revolution</a>. He worked on optics. He discovered
+			<a href="..\..\gravity\gravitation\index.html#universal-gravitation">universal gravitation</a>. He also shares credit for inventing calculus.
+
+		</p>
+		<p>In his work
+			<em>Philosophiæ Naturalis Principia Mathematica</em>, Newton formulated his three laws of motion. These laws make up the foundation
+			of classical mechanics. They predict how forces cause acceleration.
+		</p>
+
+		<h1 class='underlined'>Newton's First Law: Inertia</h1>
+		<p class="quote">
+			"When viewed in an inertial reference frame, an object either remains at rest or continues to move at a constant velocity,
+			unless acted upon by an external force."
 		</p>
 		<p>Objects keep moving in a straight line at a constant velocity unless they have a force acting on them.</p>
 		<p>Objects with mass have inertia.
@@ -40,9 +51,9 @@
 		<p>Objects in space keep moving without slowing down. Why do things on Earth slow down so quickly?</p>
 
 		<h1 class='underlined'>Newton's Second Law: Force</h1>
-		<p>
-			<em>The vector sum of the external forces F on an object is equal to the mass m of that object multiplied by the acceleration
-				vector of the object.</em>
+		<p class="quote">
+			"The vector sum of the external forces F on an object is equal to the mass m of that object multiplied by the acceleration
+			vector of the object."
 		</p>
 		<div class='definition'>
 			<svg class='svgDiagram center' width="300" height="120" viewBox="-15 0 285 120">
@@ -86,13 +97,13 @@
 				<ul class="listing">
 					<li>
 						<div>
-							$$ \text{no units}$$ $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1}{0.43}=a$$ $$2.33 \, \tfrac{m}{s^{2}}=a$$
+							$$ \text{no units}$$ $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1}{0.43}=a$$ $$2.33 \, \mathrm{\tfrac{m}{s^{2}}}=a$$
 						</div>
 					</li>
 					<li>
 						<div>
-							$$ \text{with units}$$ $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1 \, N}{0.43 \, kg}=a$$ $$\frac{1 \, kg \frac{m}{s^2}} {0.43 \,
-							kg }=a$$ $$2.33 \, \tfrac{m}{s^2}=a$$
+							$$ \text{with units}$$ $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1 \, \mathrm{N}}{0.43 \, \mathrm{kg}}=a$$ $$\frac{1 \, \mathrm{kg
+							\frac{m}{s^2}}} {0.43 \, \mathrm{kg} }=a$$ $$2.33 \, \mathrm{\tfrac{m}{s^2}}=a$$
 						</div>
 					</li>
 				</ul>
@@ -117,10 +128,10 @@
 			a force of 1900 N to the right. How will the boat accelerate? How far will the boat go in 6 s?
 			<details>
 				<summary>solution</summary>
-				$$ \text{Vectors pointed down or left are negative.}$$ $$\sum F=ma$$ $$-2000+1900=(100)(a)$$ $$-100=(100)(a)$$ $$-1\tfrac{m}{s^{2}}=
-				a$$ $$ \text{The boat will accelerate to the left.}$$ $$ u = 0 $$ $$ \Delta x = ?$$ $$ \Delta t = 6s$$ $$ \Delta x =
-				u\Delta t+ \tfrac{1}{2} a \Delta t^{2}$$ $$ \Delta x = (0)(6)+\tfrac{1}{2} (-1)(6)^{2}$$ $$ \Delta x = \tfrac{1}{2} (-1)(6)^{2}$$
-				$$ \Delta x = -18 \, m$$ $$ \text{The boat will move 18 meters to the left.}$$
+				$$ \text{Vectors pointed down or left are negative.}$$ $$\sum F=ma$$ $$-2000+1900=(100)(a)$$ $$-100=(100)(a)$$ $$-1 \mathrm{\tfrac{m}{s^{2}}}=
+				a$$ $$ \text{The boat will accelerate to the left.}$$ $$ u = 0 $$ $$ \Delta x = ?$$ $$ \Delta t = 6\mathrm{s}$$ $$ \Delta
+				x = u\Delta t+ \tfrac{1}{2} a \Delta t^{2}$$ $$ \Delta x = (0)(6)+\tfrac{1}{2} (-1)(6)^{2}$$ $$ \Delta x = \tfrac{1}{2}
+				(-1)(6)^{2}$$ $$ \Delta x = -18 \, \mathrm{m}$$ $$ \text{The boat will move 18 meters to the left.}$$
 			</details>
 		</div>
 
@@ -143,7 +154,7 @@
 			<details>
 				<summary>solution</summary>
 				$$ \text{F is constant}$$ $$ \text{m and a are inversely proportional}$$ $${ \atop F} {\atop =} { \Downarrow \atop m} {\Uparrow
-				\atop a} $$ $$ \text{doubling m will half a}$$ $$ a = 1 \, \tfrac{m}{s^2}$$
+				\atop a} $$ $$ \text{doubling m will half a}$$ $$ a = 1 \, \mathrm{\tfrac{m}{s^2}}$$
 
 			</details>
 		</div>
@@ -172,18 +183,21 @@
 			<b>Example:</b> Use the free body diagram to calculate the acceleration for both the horizontal and the vertical.
 			<details>
 				<summary>solution</summary>
-				$$ \text{vertical}$$ $$\sum F=ma$$ $$22 {\color{#aaa} \, N} - 85{\color{#aaa} \, N} = (16 {\color{#aaa} \, kg})a$$ $$-63
-				{\color{#aaa} \, N} = (16 {\color{#aaa} \, kg})a$$ $$-3.9 {\color{#aaa} \, \tfrac{m}{s^2}} = a$$
-				<br> $$ \text{horizontal}$$ $$\sum F=ma$$ $$78{\color{#aaa} \, N}+55{\color{#aaa} \, N}-140{\color{#aaa} \, N} = (16 {\color{#aaa}
-				\, kg})a$$ $$-7{\color{#aaa} \, N} = (16 {\color{#aaa} \, kg})a$$ $$-0.43 {\color{#aaa} \, \tfrac{m}{s^2}} = a$$
+				$$ \text{vertical}$$ $$\sum F=ma$$ $$22 {\color{#aaa} \, \mathrm{N}} - 85{\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa}
+				\, \mathrm{kg}})a$$ $$-63 {\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$ $$-3.9 {\color{#aaa} \,
+				\mathrm{\tfrac{m}{s^2}}} = a$$
+
+				<br> $$ \text{horizontal}$$ $$\sum F=ma$$ $$78{\color{#aaa} \, \mathrm{N}}+55{\color{#aaa} \, \mathrm{N}}-140{\color{#aaa}
+				\, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$ $$-7{\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$
+				$$-0.43 {\color{#aaa} \, \mathrm{\tfrac{m}{s^2}}} = a$$
 			</details>
 		</div>
 
 		<h1 class='underlined'>Newton's Third Law:
 			<br> Equal and Opposite Force Pairs</h1>
-		<p>
-			<em>When one body exerts a force on a second body, the second body simultaneously exerts a force equal in magnitude and opposite
-				in direction on the first body.</em>
+		<p class="quote">
+			"When one body exerts a force on a second body, the second body simultaneously exerts a force equal in magnitude and opposite
+			in direction on the first body."
 		</p>
 		<svg class='svgDiagram center' width="400" height="110">
 			<rect x="0" y="80" width="600" height="110" style="fill:#ccc" />
@@ -223,24 +237,24 @@
 				<summary>solution</summary>
 				<p>The force the space laser feels is equal and opposite to the force you feel.
 				</p>
-				$$ \text{space laser}$$ $$F = ma $$ $$F=(2)(40)$$ $$F=80 \, N$$
-				<br> $$ \text{you}$$ $$F = ma $$ $$-80 = 100a$$ $$-0.8 \tfrac{m}{s^2}=a$$
+				$$ \text{space laser}$$ $$F = ma $$ $$F=(2)(40)$$ $$F=80 \, \mathrm{N}$$
+				<br> $$ \text{you}$$ $$F = ma $$ $$-80 = 100a$$ $$-0.8 \mathrm{\tfrac{m}{s^2}}=a$$
 			</details>
 		</div>
 		<div class='example'>
 			<svg class='svgDiagram center' width="600" height="120">
 				<line x1="180" y1="70" x2="400" y2="70" stroke-width="2" stroke="#888" />
 				<g transform='translate(100 20) rotate(0)'>
-					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#aaa" />
-					<text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>0.4 kg</text>
+					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#ea5" />
+					<text x="40" y="40" fill="#fff" text-anchor="middle" alignment-baseline="middle" font-size='20px'>0.4 kg</text>
 				</g>
 				<use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
 				<text x="35" y="65" fill="black">F</text>
 				<use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
 				<text x="237" y="66" fill="black">F</text>
 				<g transform='translate(400 20) rotate(0)'>
-					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#ea5" />
-					<text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='20px'>10 kg</text>
+					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#aaa" />
+					<text x="40" y="40" fill="#000" text-anchor="middle" alignment-baseline="middle" font-size='20px'>10 kg</text>
 				</g>
 				<use xlink:href="#vector" transform='translate(400 60) rotate(90)' />
 				<text x="336" y="66" fill="black">F</text>
@@ -251,12 +265,13 @@
 			the left?
 			<details>
 				<summary>solution</summary>
-				$$ \text{box}$$ $$\sum F=ma$$ $$F_{tension}=(10)(-0.5)$$ $$F_{tension}=-5\,N$$
+				$$ \text{box}$$ $$\sum F=ma$$ $$F_{\mathrm{tension}}=(10)(-0.5)$$ $$F_{\mathrm{tension}}=-5\, \mathrm{N}$$
 				<br>
-				<p>The force on the string is equal but opposite for the squirrel and box.</p>
-				$$ \text{squirrel}$$ $$\sum F=ma$$ $$F_{squirrel} + F_{tension}=ma$$ $$F_{squirrel} + 5=(0.4)(-0.5)$$ $$F_{squirrel}=-0.2-5$$
-				$$F_{squirrel}=-5.2 \, N$$
-				<p>The squirrel is producing a force of 5.2 N to the left.</p>
+				<p>The tension force on the string is equal but opposite for the squirrel and box.</p>
+				$$ \text{squirrel}$$ $$\sum F=ma$$ $$F_{\mathrm{squirrel}} + F_{\mathrm{tension}}=ma$$ $$F_{\mathrm{squirrel}} + 5=(0.4)(-0.5)$$
+				$$F_{\mathrm{squirrel}}=-0.2-5$$ $$F_{\mathrm{squirrel}}=-5.2 \, \mathrm{N}$$
+				<p>The negative sign tells us that the squirrel's force is pointed left.</p>
+				$$F_{\mathrm{squirrel}}=5.2 \, \mathrm{N} \text{ left}$$
 			</details>
 		</div>
 	</article>

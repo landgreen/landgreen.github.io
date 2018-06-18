@@ -50,11 +50,11 @@ function collision0(el) {
   document.getElementById(el.id).addEventListener("mousedown", function() {
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
-    spawnMass(0, 110, 120, 0, 20 + Math.round(Math.random() * 70), Math.random());
-    spawnMass(700, 110, -120, 0, 20 + Math.round(Math.random() * 70), Math.random());
+    spawnMass(0, 130, 120, 0, 20 + Math.round(Math.random() * 70), Math.random());
+    spawnMass(700, 130, -120, 0, 20 + Math.round(Math.random() * 70), Math.random());
   });
-  spawnMass(0, 110, 200, 0, 20 + Math.round(Math.random() * 70), Math.random());
-  spawnMass(700, 110, -200, 0, 20 + Math.round(Math.random() * 70), Math.random());
+  spawnMass(0, 130, 200, 0, 20 + Math.round(Math.random() * 70), Math.random());
+  spawnMass(700, 130, -200, 0, 20 + Math.round(Math.random() * 70), Math.random());
 
   function spawnMass(xIn, yIn, VxIn, VyIn, length, rest) {
     var i = mass.length;
@@ -70,8 +70,8 @@ function collision0(el) {
       })
     });
     Body.setVelocity(mass[i], {
-      x: VxIn / 60 * scale,
-      y: -VyIn / 60 * scale
+      x: (VxIn / 60) * scale,
+      y: (-VyIn / 60) * scale
     });
     //Matter.Body.setAngularVelocity(mass[i], 0.4);
     World.add(engine.world, mass[i]);
