@@ -119,7 +119,7 @@
 					<circle cx="40" cy="375" r="10" />
 				</g>
 			</svg>
-			<strong>Medium</strong> = the substance that carries the wave
+			<strong>Medium</strong> = substance that carries the wave
 			<br>
 			<strong>Propagate</strong> = transmit through the medium, how waves move
 			<br>
@@ -136,11 +136,11 @@
 			<!-- <strong>Cycle</strong> = a disturbance that repeats over and over again.
 			<br> -->
 			<br>
-			<strong>Wavelength</strong> = λ = the distance between adjacent crests or troughs (m)
+			<strong>Wavelength, λ</strong> = distance between adjacent crests or troughs [m]
 			<br>
-			<strong>Period</strong> = T = the time for one complete wave cycle to pass a given point (s)
+			<strong>Period, T</strong> = time for one complete wave cycle to pass a point [s]
 			<br>
-			<strong>Frequency</strong> = f = the number of cycles that pass per second (Hz, 1/s)
+			<strong>Frequency, f</strong> = number of cycles that pass per second [Hz, 1/s]
 		</div>
 		<p>Play around with the settings in the "sine wave" simulation below.
 			<br> Which of the properties seem related?</p>
@@ -292,11 +292,17 @@
 						circleElem.style.animationDuration = per + "s";
 						freqElem.value = 1 / Math.max(per, 0.001);
 					});
-
-
 					freqElem.addEventListener("change", event => {
 						per = 1 / Math.max(freqElem.value, 0.001);
 						circleElem.style.animationDuration = per + "s";
+						perElem.value = per;
+					});
+					perElem.addEventListener("input", event => {
+						per = perElem.value;
+						freqElem.value = 1 / Math.max(per, 0.001);
+					});
+					freqElem.addEventListener("input", event => {
+						per = 1 / Math.max(freqElem.value, 0.001);
 						perElem.value = per;
 					});
 
@@ -315,9 +321,9 @@
 				}
 				sliderControl();
 			</script>
-			<strong>Interactive:</strong>
-			Which slider controls period and which controls frequency?
-			<br> (Click the circle to start animation, click to pause when it gets annoying.)
+			<strong>Interactive:</strong> Click the circle to start; click again to pause after it gets annoying.
+			<br>
+			<br>Think about the definition of period and frequency. Which slider controls period and which controls frequency?
 			<details>
 				<summary>solution</summary>
 				<p>Period is controlled by the left slider and frequency by the right.</p>
