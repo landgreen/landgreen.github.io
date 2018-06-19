@@ -205,8 +205,127 @@
 			<br>\(T\) = time period [s, seconds]
 			<br>How many seconds are between each event.
 		</div>
-		<!-- <p>If a wave has a frequency of 2Hz, then 2 wavelengths pass a point every second. The period would be 1/2 a second. This
-			means it would takes 0.5 a second a single wave to pass.</p> -->
+
+		<div class='example'>
+			<strong>Example:</strong> An air horn sounds at a frequency of 220 Hz. How many seconds pass between each wave crest?
+			<details>
+				<summary>solution</summary>
+				$$T = \frac{1}{f}$$ $$T = \frac{1}{220}$$ $$T = 0.0045s$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<style>
+				.slider-wrapper {
+					display: inline-block;
+					width: 20px;
+					height: 200px;
+					padding: 0;
+				}
+
+				.slider-wrapper input {
+					width: 200px;
+					height: 20px;
+					margin: 0;
+					transform-origin: 100px 100px;
+					transform: rotate(-90deg);
+				}
+
+				.wrapper {
+					display: grid;
+					grid-gap: 0px;
+					grid-template-columns: 160px 30px 210px 20px;
+				}
+
+				#circle {
+					background-color: #333;
+					/* border: 10px solid #000; */
+					width: 200px;
+					height: 200px;
+					margin: 0 auto;
+					border-radius: 50%;
+					animation-name: pulsate;
+					animation-duration: 1.5s;
+					animation-timing-function: ease-in-out;
+					animation-delay: 0;
+					animation-direction: alternate;
+					animation-iteration-count: infinite;
+					animation-fill-mode: none;
+					animation-play-state: running;
+				}
+
+
+				@keyframes pulsate {
+					from {
+						transform: scale(1);
+						background-color: #666;
+					}
+					to {
+						transform: scale(.1);
+						background-color: #222;
+					}
+				}
+			</style>
+			<div class="wrapper">
+				<div style="grid-column: 2 / span 1; grid-row: 1;" class="slider-wrapper">
+					<input type="range" id='per-slider' min="0.5" max="2" step="0.01" value="4">
+				</div>
+				<div style="grid-column: 3 / span 1; grid-row: 1;">
+					<div id="circle"></div>
+				</div>
+				<div style="grid-column: 4 / span 1; grid-row: 1;" class="slider-wrapper">
+					<input type="range" id='freq-slider' min="0.5" max="2" step="0.01" value="0.25">
+				</div>
+			</div>
+			<script>
+				function sliderControl() {
+					let counter = 0;
+					let radius = 100;
+					let perElem = document.getElementById("per-slider");
+					let freqElem = document.getElementById("freq-slider");
+					let circleElem = document.getElementById("circle");
+					let per = perElem.value;
+					let freq = freqElem.value;
+
+					perElem.addEventListener("change", event => {
+						per = perElem.value;
+						circleElem.style.animationDuration = per + "s";
+						freqElem.value = 1 / Math.max(per, 0.001);
+					});
+
+
+					freqElem.addEventListener("change", event => {
+						per = 1 / Math.max(freqElem.value, 0.001);
+						circleElem.style.animationDuration = per + "s";
+						perElem.value = per;
+					});
+
+					let isPaused = true;
+					circleElem.style.animationPlayState = "paused";
+					circleElem.addEventListener("mousedown", event => {
+						if (isPaused) {
+							circleElem.style.animationPlayState = "running";
+							isPaused = false;
+						} else {
+							circleElem.style.animationPlayState = "paused";
+							isPaused = true;
+						}
+					});
+
+				}
+				sliderControl();
+			</script>
+			<strong>Interactive:</strong>
+			Which slider controls period and which controls frequency?
+			<br> (Click the circle to start animation, click to pause when it gets annoying.)
+			<details>
+				<summary>solution</summary>
+				<p>Period is controlled by the left slider and frequency by the right.</p>
+			</details>
+		</div>
+
+
+
 		<div class='example'>
 			<strong>Example:</strong> The Los Angles Metro Expo Line has a train arrive at 6:50am, 6:56am, and 7:02. What is the period and
 			frequency of the trains?
@@ -215,13 +334,8 @@
 				$$6:56-6:50 = 6min$$ $$T = 6 min \left(\frac{60s}{1min}\right) = 360s$$ $$f = \frac{1}{360}$$ $$f=0.0027Hz$$
 			</details>
 		</div>
-		<div class='example'>
-			<strong>Example:</strong> An air horn sounds at a frequency of 220 Hz. How many seconds pass between each wave crest?
-			<details>
-				<summary>solution</summary>
-				$$T = \frac{1}{f}$$ $$T = \frac{1}{220}$$ $$T = 0.0045s$$
-			</details>
-		</div>
+
+
 		<div class='example'>
 			<strong>Example:</strong> Red light has a frequency of 450 THz. What is the period of red light? (THz = 10¹²Hz)
 			<details>
@@ -254,14 +368,14 @@
 			</tr>
 			<tr>
 				<th>light</td>
-					<td style="padding: 10px;">299,792,458</td>
-					<td style="padding: 10px;">299,700,000</td>
-					<td style="padding: 10px;">220,000,000</td>
-					<td style="padding: 10px;">200,000,000</td>
+					<td style=" padding: 10px; ">299,792,458</td>
+					<td style="padding: 10px; ">299,700,000</td>
+					<td style="padding: 10px; ">220,000,000</td>
+					<td style="padding: 10px; ">200,000,000</td>
 			</tr>
 		</table>
 		<p>
-			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo">Sound</a> travels faster in dense media because the atoms are
+			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo ">Sound</a> travels faster in dense media because the atoms are
 			<a href='https://www.youtube.com/watch?v=w6Q15GZpSUY'>closer</a> together. This means the atoms don't have to move as far to collide.</p>
 		<p>A light wave moves slower in dense media because as the light wave propagates through a medium it produces ripples that
 			interfere in a way that slows the group velocity of the light wave.</p>
@@ -272,7 +386,7 @@
 				<summary>solution</summary>
 				<br> Tension is probably the easiest way to control the speed of a string wave. The equation below shows that string mass
 				and length are also factors. $$ v = \sqrt{\frac{T}{mL}}$$
-				<div class="col-group">
+				<div class="col-group ">
 					<div class='center'>
 						v = velocity (m/s)
 						<br>T = tension (N)
@@ -329,7 +443,7 @@
 		<div class='example'>
 			<b>Example:</b> If I triple the wavelength of a sound wave while keeping the wave speed the same, what happens to the frequency?
 			Use
-			<a href="../../motion/1-intro/index.html#proportions">proportions</a>.
+			<a href="../../motion/1-intro/index.html#proportions ">proportions</a>.
 			<details>
 				<summary>solution</summary>
 				$$ \text{v is constant}$$ $$ \text{λ and f are inversely proportional}$$ $${ \atop v} {\atop =} { \Downarrow \atop f} { \Uparrow
@@ -340,7 +454,7 @@
 		<div class='example'>
 			<b>Example:</b> As a wave enters a new medium its speed decreases. The frequency of the wave stays the same, but how does
 			the wavelength change? Use
-			<a href="../../motion/1-intro/index.html#proportions">proportions</a>.
+			<a href="../../motion/1-intro/index.html#proportions ">proportions</a>.
 			<details>
 				<summary>solution</summary>
 				$$ \text{f is constant}$$ $$ \text{v and λ are directly proportional}$$ $${\Downarrow \atop v} {\atop =} { \atop f} {\Downarrow
@@ -398,25 +512,25 @@
 		</p>
 
 		<p>
-			<a href="https://waveforms.surge.sh/waveforms-intro">Sound waves</a> are vibrations that propagate through matter. They are produced from changes in pressure and velocity.
+			<a href="https://waveforms.surge.sh/waveforms-intro ">Sound waves</a> are vibrations that propagate through matter. They are produced from changes in pressure and velocity.
 			Your
-			<a href="https://www.youtube.com/watch?v=qgdqp-oPb1Q">ear</a> senses the amplitude and frequency of the vibrations.
+			<a href="https://www.youtube.com/watch?v=qgdqp-oPb1Q ">ear</a> senses the amplitude and frequency of the vibrations.
 		</p>
 		<p>Each time you click the simulations below you will send a pulse of compressed particles, sound!</p>
 
 	</article>
-	<canvas class='center' id='sound1' height='50' width='600' onclick="sound(this,2, false)"> </canvas>
+	<canvas class='center' id='sound1' height='50' width='600' onclick="sound(this,2, false) "> </canvas>
 	<article>
 		<p>I've graphed the density and highlighted the particles with higher speeds. You can see the wave trading between kinetic
 			energy and pressure.
 		</p>
 	</article>
-	<canvas class='center' id='sound2' height='50' width='600' onclick="sound(this, 1, true)"> </canvas>
+	<canvas class='center' id='sound2' height='50' width='600' onclick="sound(this, 1, true) "> </canvas>
 	<article>
 		<p>Waves don't transmit matter, just energy. In the simulation below one particle is highlighted. Watch how it moves when
 			it becomes part of the wave, but over time it stays in the same area.</p>
 	</article>
-	<canvas class='center' id='sound3' height='50' width='600' onclick="sound(this, 1, false, true)"> </canvas>
+	<canvas class='center' id='sound3' height='50' width='600' onclick="sound(this, 1, false, true) "> </canvas>
 	<article>
 		<h2 class='underlined'>Transverse and Longitudinal</h2>
 		<p>Sound waves are vibrations that move in the same direction the wave moves. Most other waves are produced by vibration perpendicular
@@ -437,7 +551,7 @@
 
 	</article>
 	<div class='back'>
-		<a href="../../../index.html">Back</a>
+		<a href="../../../index.html ">Back</a>
 	</div>
 
 	<script>
