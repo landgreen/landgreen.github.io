@@ -11,7 +11,7 @@
     <meta property="og:description" content="Notes for a high school physics course.">
     <meta property="og:title" content="Physics Notes">
     <meta name="twitter:title" content="High School Physics Notes">
-    <title>More Collisions</title>
+    <title>Collisions</title>
     <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
     <!-- <link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
@@ -22,7 +22,7 @@
     <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full">
         MathJax.Hub.Config({
             CommonHTML: {
-                scale: 150
+                scale: 125
             }
         });
     </script>
@@ -33,7 +33,7 @@
 <body onload="stickyCollision();stickyCollision2();">
     <header>
         <h1>
-            <a href="../../../index.html#units">More Collisions</a>
+            <a href="../../../index.html">Collisions</a>
         </h1>
     </header>
     <article>
@@ -43,15 +43,15 @@
         $$m_1u_1 + m_2u_2 = m_1v+m_2v$$ $$m_1u_1 + m_2u_2 = \left(m_1+m_2\right)v$$
         <p>Objects can also start together and separate, like in an explosion.</p>
         $$\left(m_1+m_2\right)u = m_1v_1 + m_2v_2$$
+
         <div class='example'>
-            <strong>Example:</strong> A 100.0kg goalie throws a 1.1kg soccer ball while jumping forward at 3.2m/s. If the ball flies
-            out of the goalie's hands at 10.0m/s what speed is the goalie?
+            <strong>Example:</strong> A 100.0 kg goalie throws a 1.1 kg soccer ball while jumping forward at 3.2 m/s. If the ball
+            flies out of the goalie's hands at 10.0 m/s what speed is the goalie?
             <details>
                 <summary>solution</summary>
-                <p style='text-align: center;'>initial momentum = final momentum</p>
-                <p style='text-align: center;'>(goalie and ball) = goalie + ball</p>
-                $$(m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}$$ $$(100.0+1.1)(3.2)=(100.0)v_{1}+(1.1)(10.0)$$ $$323.52=(100.0)v_{1}+11$$ $$3.13\small\frac{m}{s}=\normalsize
-                v_{1}$$
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$\text{goalie holding ball = goalie + ball}$$ $$(m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}$$
+                $$(100.0+1.1)(3.2)=(100.0)v_{1}+(1.1)(10.0)$$ $$323.52=(100.0)v_{1}+11$$ $$3.13 \, \mathrm{\tfrac{m}{s}}
+                = v_{1}$$
             </details>
         </div>
 
@@ -73,28 +73,26 @@
             <canvas id="canvas3" width='600' height='300' onclick="collision2d(this)"> </canvas>
             <strong>Horizontal:</strong> A
             <a style='color: pink'>pink</a> hexagon and a
-            <a style='color: cyan'>cyan</a> triangle collide. Before the collision the hexagon has a mass of 5.20kg and is moving to the right at
-            2m/s. The cyan triangle is moving to the left at 1m/s and has a mass of 1.17kg. If the triangle bounces off the
-            hexagon at 2.92 m/s to the right what is the horizontal velocity of the hexagon? (ignore the vertical information)
+            <a style='color: cyan'>cyan</a> triangle collide. Before the collision the hexagon has a mass of 5.20 kg and is moving to the right
+            at 2 m/s. The cyan triangle is moving to the left at 1 m/s and has a mass of 1.17 kg. If the triangle bounces
+            off the hexagon at 2.92 m/s to the right what is the horizontal velocity of the hexagon? (ignore the vertical
+            information)
             <details>
                 <summary>solution</summary>
-                <p style='text-align: center;'>initial momentum = final momentum</p>
-                <p style='text-align: center;'>hexagon + triangle = hexagon + triangle</p>
-                $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$ $$(5.20)(2)+(1.17)(-1)=(5.20)v_{1}+(1.17)(2.92)$$ $$10.40-1.17=(5.20)v_{1}+3.42$$
-                $$5.81=(5.20)v_{1}$$ $$1.12 \small\frac{m}{s}=\normalsize v_{1}$$
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$\text{hexagon + triangle = hexagon + triangle}$$ $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$
+                $$(5.20)(2)+(1.17)(-1)=(5.20)v_{1}+(1.17)(2.92)$$ $$10.40-1.17=(5.20)v_{1}+3.42$$ $$5.81=(5.20)v_{1}$$ $$1.12
+                \mathrm{\tfrac{m}{s}}= v_{1}$$
             </details>
             <br>
             <strong>Vertical:</strong> Lets take a look at the vertical aspect of the
             <a style='color: pink'>pink</a> hexagon and
-            <a style='color: cyan'>cyan</a> triangle collision. Before the collision the hexagon has a mass of 5.20kg and is not moving up or down.
-            The final vertical velocity of the hexagon is 0.23 down. The final vertical velocity of the triangle is 0.67
-            up. What is the triangle's initial vertical velocity?
+            <a style='color: cyan'>cyan</a> triangle collision. Before the collision the hexagon has a mass of 5.20 kg and is not moving up or down.
+            The final vertical velocity of the hexagon is 0.23 m/s down. The final vertical velocity of the triangle is 0.67
+            m/s up. What is the triangle's initial vertical velocity?
             <details>
                 <summary>solution</summary>
-                <p style='text-align: center;'>initial momentum = final momentum</p>
-                <p style='text-align: center;'>hexagon + triangle = hexagon + triangle</p>
-                $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$ $$(5.20)(0)+(1.17)(u_{2})=(5.20)(-0.23)+(1.17)(0.67)$$ $$(1.17)(u_{2})=-0.41$$
-                $$u_{2}=-0.35\small\frac{m}{s}$$
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$\text{hexagon + triangle = hexagon + triangle}$$ $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$
+                $$(5.20)(0)+(1.17)(u_{2})=(5.20)(-0.23)+(1.17)(0.67)$$ $$(1.17)(u_{2})=-0.41$$ $$u_{2}=-0.35 \mathrm{\tfrac{m}{s}}$$
         </div>
         </details>
         </div>
