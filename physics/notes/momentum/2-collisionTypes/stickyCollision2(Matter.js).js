@@ -40,15 +40,15 @@ function stickyCollision2() {
     document.getElementById("ex2").innerHTML =
       "<strong>Click to Randomize Problem:</strong> Two masses are stuck until an explosion causes them to separate. After the explosion the " +
       mass[0].mass.toFixed(2) +
-      "kg <span style='color: " +
+      " kg <span style='color: " +
       mass[0].color +
       "'>square</span> has a velocity of ???" +
-      "m/s, and the " +
+      " m/s, and the " +
       mass[1].mass.toFixed(2) +
-      "kg <span style='color: " +
+      " kg <span style='color: " +
       mass[1].color +
       "'>square</span> has a velocity of  ???" +
-      "m/s. What was the velocity of the two squares before the explosion?" +
+      " m/s. What was the velocity of the two squares before the explosion?" +
       "<details> <summary>solution</summary></details>";
     //re-encodes the mathjax into math, makes the $$ $$ work
     MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
@@ -69,8 +69,8 @@ function stickyCollision2() {
     });
 
     Body.setVelocity(mass[i], {
-      x: VxIn / 60 * scale,
-      y: -VyIn / 60 * scale
+      x: (VxIn / 60) * scale,
+      y: (-VyIn / 60) * scale
     });
     //Matter.Body.setAngle(mass[i], angle)
     //Matter.Body.setAngularVelocity(mass[i], -0.004   );
@@ -85,17 +85,17 @@ function stickyCollision2() {
       document.getElementById("ex2").innerHTML =
         "<strong>Click to Randomize Problem:</strong> Two masses are stuck until an explosion causes them to separate. After the explosion the " +
         mass[0].mass.toFixed(2) +
-        "kg <span style='color: " +
+        " kg <span style='color: " +
         mass[0].color +
         "'>square</span> has a velocity of " +
         mass[0].velocity.x.toFixed(2) +
         " m/s, and the " +
         mass[1].mass.toFixed(2) +
-        "kg <span style='color: " +
+        " kg <span style='color: " +
         mass[1].color +
         "'>square</span> has a velocity of  " +
         mass[1].velocity.x.toFixed(2) +
-        "m/s. What was the velocity of the two squares before the explosion? <details> <summary>solution</summary>$$(m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}$$" +
+        " m/s. What was the velocity of the two squares before the explosion? <details> <summary>solution</summary>$$(m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}$$" +
         "$$(" +
         mass[0].mass.toFixed(2) +
         " + " +
@@ -116,7 +116,7 @@ function stickyCollision2() {
         "$$" +
         "$$u=" +
         ((mass[0].mass * mass[0].velocity.x + mass[1].mass * mass[1].velocity.x) / (mass[0].mass + mass[1].mass)).toFixed(2) +
-        "\\tfrac{m}{s}$$</details>";
+        " \\mathrm{\\tfrac{m}{s}}$$</details>";
       //re-encodes the mathjax into math, makes the $$ $$ work
       MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
     }, 100);

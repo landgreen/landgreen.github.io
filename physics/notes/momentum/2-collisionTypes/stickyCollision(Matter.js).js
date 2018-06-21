@@ -36,17 +36,17 @@ function stickyCollision() {
     document.getElementById("ex").innerHTML =
       "<strong>Click to Randomize Problem:</strong> A " +
       mass[0].mass.toFixed(2) +
-      "kg <span style='color: " +
+      " kg <span style='color: " +
       mass[0].color +
       "'>octagon</span> moving at " +
       mass[0].velocity.x.toFixed(2) +
-      "m/s collides and sticks to a " +
+      " m/s collides and sticks to a " +
       mass[1].mass.toFixed(2) +
-      "kg <span style='color: " +
+      " kg <span style='color: " +
       mass[1].color +
       "'>square</span> moving at " +
       mass[1].velocity.x.toFixed(2) +
-      "m/s. What is the velocity of the objects after they collide?<details> <summary>solution</summary><p style='text-align: center;'>octogon + square = octogon + square</p>$$m_{1}u_{1}+m_{2}u_{2}=(m_{1}+m_{2})v$$ $$(" +
+      " m/s. What is the velocity of the objects after they collide?<details> <summary>solution</summary> $$ \\text{⯃ + ■ = ⯃ + ■}$$ $$m_{1}u_{1}+m_{2}u_{2}=(m_{1}+m_{2})v$$ $$(" +
       mass[0].mass.toFixed(2) +
       ")(" +
       mass[0].velocity.x.toFixed(2) +
@@ -60,7 +60,7 @@ function stickyCollision() {
       mass[1].mass.toFixed(2) +
       ")v$$ $$" +
       vel.toFixed(2) +
-      " \\small\\frac{m}{s}=\\normalsize v$$</details>";
+      " \\mathrm{\\tfrac{m}{s}}= v$$</details>";
     //re-encodes the mathjax into math, makes the $$ $$ work
     MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
   }
@@ -75,13 +75,13 @@ function stickyCollision() {
       restitution: 0,
       length: length,
       color: randomColor({
-        luminosity: "bright"
+        luminosity: "light"
       })
     });
 
     Body.setVelocity(mass[i], {
-      x: VxIn / 60 * scale,
-      y: -VyIn / 60 * scale
+      x: (VxIn / 60) * scale,
+      y: (-VyIn / 60) * scale
     });
     //Matter.Body.setAngle(mass[i], angle)
     //Matter.Body.setAngularVelocity(mass[i], -0.004   );
