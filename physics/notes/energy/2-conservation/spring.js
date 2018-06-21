@@ -67,18 +67,12 @@ var spring = function(button) {
       ctx.shadowColor = "#ccc";
       ctx.beginPath();
       ctx.moveTo(box.x - this.r, box.y);
-      var turns = 21;
-      var add = 5;
-      // for (var i = 1; i < turns + 1; i++) {
-      //   ctx.lineTo((box.x - this.r) * (1 - i / turns), box.y + (i % 2 === 0 ? 10 : -10));
-      // }
       for (var i = 1; i < physics.turns + 1; i++) {
         ctx.lineTo((box.x - this.r) * (1 - i / physics.turns), box.y + (i % 2 === 0 ? 10 : -10));
       }
       ctx.stroke();
       ctx.shadowColor = "transparent";
     };
-
     this.move = function() {
       this.x += this.Vx;
       this.y += this.Vy;
@@ -86,27 +80,28 @@ var spring = function(button) {
       this.Vy *= physics.airFriction;
     };
     this.edges = function() {
-      if (this.x > canvas.width - this.r) {
-        this.Vx *= -physics.restitution;
-        this.x = canvas.width - this.r;
-      } else if (this.x < this.r) {
+      // if (this.x > canvas.width - this.r) {
+      //   this.Vx *= -physics.restitution;
+      //   this.x = canvas.width - this.r;
+      // }
+      if (this.x < this.r) {
         this.Vx *= -physics.restitution;
         this.x = this.r;
       }
-      if (this.y > canvas.height - this.r) {
-        this.Vy *= -physics.restitution;
-        this.y = canvas.height - this.r;
-      } else if (this.y < this.r) {
-        this.Vy *= -physics.restitution;
-        this.y = this.r;
-      }
+      // if (this.y > canvas.height - this.r) {
+      //   this.Vy *= -physics.restitution;
+      //   this.y = canvas.height - this.r;
+      // } else if (this.y < this.r) {
+      //   this.Vy *= -physics.restitution;
+      //   this.y = this.r;
+      // }
     };
     this.gravity = function() {
       this.Vx += physics.gravX;
       this.Vy += physics.gravY;
     };
     this.spring = function() {
-      this.Vx += physics.k * (physics.equalibrium - this.x) / 60 / this.mass;
+      this.Vx += (physics.k * (physics.equalibrium - this.x)) / 60 / this.mass;
     };
 
     this.calcEnergy = function() {
@@ -231,7 +226,7 @@ var spring = function(button) {
     if (!pause) {
       window.requestAnimationFrame(render);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // box.edges();
+      box.edges();
       box.spring();
       box.move();
       drawEqualibrium();

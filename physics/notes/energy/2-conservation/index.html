@@ -57,16 +57,13 @@
 				<button id="pause1">pause </button>
 			</div>
 		</div>
-
-		<!-- <canvas id="canvas1" width='600' height='200' onclick="spring(this)"> </canvas>
-		<button id="pause1">pause </button> &nbsp;k =
-		<input id='spring-k' type="number" min="0" max="10" value=0.1 step=0.05> &nbsp;&nbsp;&nbsp; m =
-		<input id='spring-m' type="number" min="1" max="100" value=0 step=1> -->
-		<p>What types of energy are being traded?
+		<p>
+			What types of energy are being traded?
 			<br>
 			<br>When is the velocity the highest?
 			<br>
-			<br>What is the effect of a higher spring constant?</p>
+			<br>What is the effect of a higher spring constant?
+		</p>
 
 		<div class="example col-group">
 			<div>
@@ -78,8 +75,8 @@
 				<input id='spring-m2' type="number" min="1" max="100" value=0 step=1>
 			</div>
 			<div>
-				<p>This spring simulation is aligned vertically. It has gravitational potential energy in addition to kinetic and spring
-					energy.
+				<p>
+					This spring simulation is aligned vertically. It has gravitational potential energy in addition to kinetic and spring energy.
 				</p>
 				<br>
 				<br> When is kinetic energy the highest?
@@ -104,19 +101,22 @@
 			energy at any other time.
 		</p>
 		<div class='definition'>
-			<h1>Energy cannot be created or destroyed,
-				<br>but it can change forms. $$E_i=E_f$$</h1>
+			Energy cannot be created or destroyed, but it can change forms.
+			<h1>$$E_i=E_f$$</h1>
 			\( E_i \) = initial energy[J]
 			<br>\( E_f \) = final energy [J]
 		</div>
-		<p>This equation is barebones right now. We need to change it for each situation.</p>
-		<p>We should only include energy types that are changed.
-			<br>If an object
-			<strong>changes speed</strong>, include kinetic energy.
-			<br>If an object
-			<strong>moves vertically</strong>, include gravitational potential energy.
-			<br>If a
-			<strong>spring is compressed</strong>, include spring potential energy.</p>
+		<p>This equation is bare bones right now. We need to change it for each situation. We should only include energy types that
+			are changed. For now we can calculate three types of energy.</p>
+
+		<li>If an object
+			<strong>changes speed</strong>, include kinetic energy.</li>
+		<li>If an object
+			<strong>moves vertically</strong>, include gravitational potential energy.</li>
+		<li>If a
+			<strong>spring is compressed</strong>, include spring potential energy.</li>
+
+
 		<p>For example, if a ball at rest starts high up and falls down, the conservation of energy equation should only include kinetic
 			and gravitational energy.</p>
 		$$K_i + U_i = K_f + U_f$$ $$\frac{1}{2}mu^2 + mgh_i = \frac{1}{2}mv^2 + mgh_f$$
@@ -124,67 +124,61 @@
 			at rest. Choosing the final height to be zero will set the final gravitational potential energy to zero.</p>
 		$$mgh_i = \frac{1}{2}mv^2$$
 		<p>Also, look for variables that show up in every term. In this case mass can be ignored by dividing everything by mass.</p>
-		$$gh_i = \frac{1}{2}v^2_f$$
+		$$gh_i = \frac{1}{2}v^2$$
 
 		<div class='example'>
-			<b>Example:</b> A ball falls from rest off a 0.80m table. How fast is the ball going just before it hits the ground?
+			<b>Example:</b> A ball falls from rest off a 0.80 m table. How fast is the ball going just before it hits the ground?
 			<details>
 				<summary>solution</summary>
-				$$U_g = K$$ $$mgh_{i} = \frac{1}{2}mv^{2}$$
-				<p>m is in every term. Let's divide by m.</p>
-				$$ \frac{mgh_{i}}{m} = \frac{\frac{1}{2}mv^{2}}{m}$$ $$gh_{i} = \frac{1}{2}v^{2}$$ $$(9.8)(0.80) = \frac{1}{2}v^{2}$$ $$15.68
-				= v^{2}$$ $$\pm 3.959\small\frac{m}{s} =\normalsize v$$
+				$$U_g = K$$ $$mgh_{i} = \tfrac{1}{2}mv^{2}$$ $$\text{m is in every term.}$$ $$ \frac{mgh_{i}}{m} = \frac{\tfrac{1}{2}mv^{2}}{m}$$
+				$$gh_{i} = \tfrac{1}{2}v^{2}$$ $$(9.8)(0.80) = \tfrac{1}{2}v^{2}$$ $$15.68 = v^{2}$$ $$\pm 3.959 \mathrm{ \tfrac{m}{s}
+				} = v$$
 			</details>
 		</div>
 		<div class='example'>
 			<b>Example:</b> If you throw a half-filled water bottle straight up at 10 m/s, how high will it go?
 			<details>
 				<summary>solution</summary>
-				$$K = U_g$$ $$\frac{1}{2}mv^{2} = mgh$$
-				<p>m is in every term. Let's divide by m.</p>
-				$$\frac{1}{2}v^{2} = gh$$ $$\frac{1}{2}(10)^{2} = (9.8)h$$ $$50 = (9.8)h$$ $$5.10m = h$$
+				$$K = U_g$$ $$\tfrac{1}{2}mv^{2} = mgh$$ $$\tfrac{1}{2}v^{2} = gh$$ $$\tfrac{1}{2}(10)^{2} = 9.8h$$ $$50 = 9.8h$$ $$5.10
+				\, \mathrm{m} = h$$
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> A 0.43kg soccer ball kicked at 10m/s rolls down a 30m tall hill. How fast will the ball be moving at the
+			<b>Example:</b> A 0.43 kg soccer ball kicked at 10 m/s rolls down a 30 m tall hill. How fast will the ball be moving at the
 			bottom of the hill?
 			<details>
 				<summary>solution</summary>
-				$$U_{i} + K_{i} = U_{f} + K_{f}$$ $$mgh_{i} + \frac{1}{2}mu^{2} = mgh_{f} +\frac{1}{2}mv^{2}$$
-				<p>m is in every term. Let's divide by m.</p>
-				$$gh_{i} + \frac{1}{2}u^{2} = gh_{f} +\frac{1}{2}v^{2}$$ $$(9.8)(30) + \frac{1}{2}(10)^{2} = (9.8)(0) + \frac{1}{2}v^{2}$$
-				$$294 + 50 = \frac{1}{2}v^{2}$$ $$344 = \frac{1}{2}v^{2}$$ $$\pm 26.2 \small\frac{m}{s} =\normalsize v$$
+				$$U_{i} + K_{i} = U_{f} + K_{f}$$ $$mgh_{i} + \tfrac{1}{2}mu^{2} = mgh_{f} +\tfrac{1}{2}mv^{2}$$ $$gh_{i} + \tfrac{1}{2}u^{2}
+				= gh_{f} +\tfrac{1}{2}v^{2}$$ $$(9.8)(30) + \frac{1}{2}(10)^{2} = (9.8)(0) + \frac{1}{2}v^{2}$$ $$294 + 50 = \tfrac{1}{2}v^{2}$$
+				$$344 = \tfrac{1}{2}v^{2}$$ $$\pm 26.2 \mathrm{\tfrac{m}{s}} = v$$
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> A 0.20kg ball is placed on a spring compressed down 0.15m. The internet says that your spring has a spring
-			constant of 200.0kg/s². How high could the ball go just using the energy stored in the spring?
+			<b>Example:</b> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your spring has a spring
+			constant of 200.0 kg/s². How high could the ball go just using the energy stored in the spring?
 			<details>
 				<summary>solution</summary>
-				$$U_{s} = U_{g}$$ $$\frac{1}{2}kx^{2} = mgh$$
-				<p>Can't divide by mass this time.</p>
-				$$\frac{1}{2}(200)(0.15)^{2} = (0.2)(9.8)h$$ $$1.15m = h$$
+				$$U_{s} = U_{g}$$ $$\tfrac{1}{2}kx^{2} = mgh$$ $$\text{Can't divide by mass}$$ $$\tfrac{1}{2}(200)(0.15)^{2} = (0.2)(9.8)h$$
+				$$1.15 \, \mathrm{m} = h$$
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> A roller coaster cart starts at rest 126m high on the top of the first drop on "Superman: Escape from Krypton"
+			<b>Example:</b> A roller coaster cart starts at rest 126 m high on the top of the first drop on "Superman: Escape from Krypton"
 			at Six Flags Magic Mountain. How fast is the cart going at the bottom of the hill?
 			<details>
 				<summary>solution</summary>
-				$$U_{i} + K_{i} = U_{f} + K_{f}$$ $$mgh_{i} + \frac{1}{2}mu^{2} = mgh_{f} +\frac{1}{2}mv^{2}$$
-				<p>m is in every term. Let's divide by m.</p>
-				$$gh_{i} + \frac{1}{2}u^{2} = gh_{f} +\frac{1}{2}v^{2}$$ $$(9.8)(126) + \frac{1}{2}(0)^{2} = (9.8)(0) +\frac{1}{2}v^{2}$$
-				$$1234.8 = \frac{1}{2}v^{2}$$ $$\pm 49.69 \small\frac{m}{s} =\normalsize v$$
+				$$U_{i} + K_{i} = U_{f} + K_{f}$$ $$mgh_{i} + \tfrac{1}{2}mu^{2} = mgh_{f} +\tfrac{1}{2}mv^{2}$$ $$gh_{i} + \tfrac{1}{2}u^{2}
+				= gh_{f} +\tfrac{1}{2}v^{2}$$ $$(9.8)(126) + \tfrac{1}{2}(0)^{2} = (9.8)(0) +\tfrac{1}{2}v^{2}$$ $$1234.8 = \tfrac{1}{2}v^{2}$$
+				$$\pm 49.69 \, \mathrm{\tfrac{m}{s}} = v$$
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> A 0.20kg ball is placed on a spring compressed down 0.15m. The internet says that your spring has a spring
-			constant of 200.0kg/s². How fast should the ball be moving right after it leaves the spring?
+			<b>Example:</b> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your spring has a spring
+			constant of 200.0 kg/s². How fast should the ball be moving right after it leaves the spring?
 			<details>
 				<summary>solution</summary>
-				$$U_{s} = K$$ $$\frac{1}{2}kx^{2} = \frac{1}{2}mv^{2}$$
-				<p>Can't divide by mass this time.</p>
-				$$\frac{1}{2}(200)(0.15)^{2} = \frac{1}{2}(0.2)v^{2}$$ $$22.5 = v^{2}$$ $$\pm 4.74 \small\frac{m}{s} =\normalsize v$$
+				$$U_{s} = K$$ $$\tfrac{1}{2}kx^{2} = \tfrac{1}{2}mv^{2}$$ $$\tfrac{1}{2}(200)(0.15)^{2} = \tfrac{1}{2}(0.2)v^{2}$$ $$22.5
+				= v^{2}$$ $$\pm 4.74 \, \mathrm{\tfrac{m}{s}} = v$$
 			</details>
 		</div>
 		<h1 class='underlined'>Energy Loss and Gain in a System</h1>
@@ -221,27 +215,25 @@
 		</div>
 
 		<div class='example'>
-			<b>Example:</b> Compressing a volume of gas does 100J of work, but at the same time the gas
-			<strong>losses</strong> 200J of heat to the surroundings. What is the change in the internal energy of the gas? Will the gas get
-			hotter or cooler in temperature?
+			<b>Example:</b> Compressing a volume of gas does 100 J of work, but at the same time the gas
+			<strong>losses</strong> 200 J of heat to the surroundings. What is the change in the internal energy of the gas? Will the gas
+			increase of decrease in temperature?
 			<details>
 				<summary>solution</summary>
-				$$\Delta U = Q + W$$ $$\Delta U = -200 + 100$$ $$\Delta U = -100J$$
-				<p>The gas got cooler in temperature.</p>
+				$$\Delta U = Q + W$$ $$\Delta U = -200 + 100$$ $$\Delta U = -100\,\mathrm{J}$$ $$\text{The gas will decrease in temperature}$$
 			</details>
 		</div>
 
-		<b>Example:</b> A 0.43kg soccer ball kicked at 10m/s rolls down a 30m tall hill. We already solved this problem and got a
-		final velocity of 26.2m/s for the ball.
+		<b>Example:</b> A 0.43 kg soccer ball kicked at 10 m/s rolls down a 30 m tall hill. We already solved this problem and got
+		a final velocity of 26.2 m/s for the ball.
 		<br>
 		<br>When actually performing the experiment we found at the bottom of the hill the ball only has a speed of 20.0m/s. Calculate
 		the energy loss for the ball. How could the ball have lost energy?
 		<details>
 			<summary>solution</summary>
-			<p>Find the difference between the experimental kinetic energy the calculated kinetic energy.</p>
-			$$\Delta KE = \frac{1}{2}mv^{2} - \frac{1}{2}mv^{2}$$ $$\Delta KE = \frac{1}{2}(0.43)(26.2)^{2} - \frac{1}{2}(0.43)(20.0)^{2}$$
-			$$\Delta KE = 147.6 - 86$$ $$\Delta KE = 61.6 J$$
-			<p>The energy loss was probably from friction.</p>
+			<p>Find the difference between the experimental kinetic energy and the calculated kinetic energy.</p>
+			$$\Delta KE = \tfrac{1}{2}mv^{2} - \tfrac{1}{2}mv^{2}$$ $$\Delta KE = \tfrac{1}{2}(0.43)(26.2)^{2} - \tfrac{1}{2}(0.43)(20.0)^{2}$$
+			$$\Delta KE = 147.6 - 86$$ $$\Delta KE = 61.6 \, \mathrm{J}$$ $$\text{The energy loss was probably from friction.}$$
 		</details>
 		</div>
 	</article>

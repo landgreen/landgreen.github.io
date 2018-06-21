@@ -28,7 +28,8 @@ var spring = function(button) {
     restitution: 0,
     airFriction: 1,
     equalibrium: 400,
-    k: 0.1 //document.getElementById("spring-k").value,
+    k: 0.1, //document.getElementById("spring-k").value,
+    turns: 3 + 25 * Math.sqrt(0.1)
   };
 
   function drawEqualibrium() {
@@ -62,15 +63,13 @@ var spring = function(button) {
       ctx.shadowColor = "transparent";
     };
     this.drawSpring = function() {
+      ctx.lineWidth = 1;
       ctx.strokeStyle = "black";
       ctx.shadowColor = "#ccc";
       ctx.beginPath();
       ctx.moveTo(box.x - this.r, box.y);
-      var turns = 21;
-      var add = 5;
-      for (var i = 1; i < turns + 1; i++) {
-        ctx.lineTo((box.x - this.r) * (1 - i / turns), box.y + (i % 2 === 0 ? 10 : -10));
-        // ctx.lineTo(box.x + (i % 2 === 0 ? 10 : -10), (box.y - this.r) * (1 - i / turns));
+      for (var i = 1; i < physics.turns + 1; i++) {
+        ctx.lineTo((box.x - this.r) * (1 - i / physics.turns), box.y + (i % 2 === 0 ? 10 : -10));
       }
       ctx.stroke();
       ctx.shadowColor = "transparent";
@@ -82,20 +81,21 @@ var spring = function(button) {
       this.Vy *= physics.airFriction;
     };
     this.edges = function() {
-      if (this.x > canvas.width - this.r) {
-        this.Vx *= -physics.restitution;
-        this.x = canvas.width - this.r;
-      } else if (this.x < this.r) {
+      // if (this.x > canvas.width - this.r) {
+      //   this.Vx *= -physics.restitution;
+      //   this.x = canvas.width - this.r;
+      // }
+      if (this.x < this.r) {
         this.Vx *= -physics.restitution;
         this.x = this.r;
       }
-      if (this.y > canvas.height - this.r) {
-        this.Vy *= -physics.restitution;
-        this.y = canvas.height - this.r;
-      } else if (this.y < this.r) {
-        this.Vy *= -physics.restitution;
-        this.y = this.r;
-      }
+      // if (this.y > canvas.height - this.r) {
+      //   this.Vy *= -physics.restitution;
+      //   this.y = canvas.height - this.r;
+      // } else if (this.y < this.r) {
+      //   this.Vy *= -physics.restitution;
+      //   this.y = this.r;
+      // }
     };
     this.gravity = function() {
       this.Vx += physics.gravX;
@@ -211,6 +211,7 @@ var spring = function(button) {
   document.getElementById("spring-k").addEventListener("change", function() {
     physics.k = document.getElementById("spring-k").value;
     box.Vx = 0;
+    physics.turns = 3 + 25 * Math.sqrt(physics.k);
   });
 
   //gets values for mass

@@ -90,13 +90,13 @@ var springGravity = function(button) {
       this.Vy *= physics.airFriction;
     };
     this.edges = function() {
-      if (this.x > canvas.width - this.r) {
-        this.Vx *= -physics.restitution;
-        this.x = canvas.width - this.r;
-      } else if (this.x < this.r) {
-        this.Vx *= -physics.restitution;
-        this.x = this.r;
-      }
+      // if (this.x > canvas.width - this.r) {
+      //   this.Vx *= -physics.restitution;
+      //   this.x = canvas.width - this.r;
+      // } else if (this.x < this.r) {
+      //   this.Vx *= -physics.restitution;
+      //   this.x = this.r;
+      // }
       if (this.y > canvas.height - this.r) {
         this.Vy *= -physics.restitution;
         this.y = canvas.height - this.r;
@@ -109,7 +109,7 @@ var springGravity = function(button) {
       this.Vy += physics.gravY / physics.rate; //mass cancels out from F=mg, f=ma, ma=mg, a=g, v+=g
     };
     this.spring = function() {
-      this.Vy += physics.k * (physics.equalibrium - this.y) / this.mass / physics.rate;
+      this.Vy += (physics.k * (physics.equalibrium - this.y)) / this.mass / physics.rate;
     };
     this.springInfo = function() {
       var height = canvas.height - this.r - this.y;
@@ -159,7 +159,7 @@ var springGravity = function(button) {
   var box;
 
   function spawn() {
-    box = new mass(3 * canvas.width / 4, 70, 0, 0, 5, randomColor());
+    box = new mass((3 * canvas.width) / 4, 70, 0, 0, 5, randomColor());
     document.getElementById("spring-m2").value = box.mass;
     document.getElementById("spring-k2").value = physics.k;
   }
@@ -220,7 +220,7 @@ var springGravity = function(button) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (var i = 0; i < physics.rate / 60; i++) {
         box.move();
-        // box.edges();
+        box.edges();
         box.spring();
         box.gravity();
       }

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<meta name="description" content="Notes for a high school physics course.">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:title" content="Physics Notes">
+	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Notes for a high school physics course.">
+	<meta name="keywords" content="physics, computer science, science, computer, course, Landgreen, Ross, school, notes, javascript, high school, new west charter, newwestcharter, simulation, teacher">
+	<meta name="author" content="Ross Landgreen">
+
+	<title>Problem Solving</title>
+	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+
+	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+	<script src="../../../lib/katex/katex.min.js"></script>
+	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+
+	<link rel="stylesheet" href="../../../style.css">
+</head>
+
+<body>
+
+	<header>
+		<h1>
+			<a href="../../../index.html">Problem Solving</a>
+		</h1>
+	</header>
+	<article>
+		<h1 class='underlined' id="proportions">Using Proportions</h1>
+
+		<p>If you change a variable we can predict whether other variables in the same equation will increase or decrease. The first
+			step is to decide if the relationship between the variables is directly proportional or inversely proportional.</p>
+		<div class="definition">
+			<!-- $$\frac{y}{x} = k$$ $$y=kx$$ -->
+			$$ {\color{#09e}{\Uparrow} \atop y} {\atop = k } {\color{#09e}{\Uparrow} \atop x} \quad\quad\quad {\color{#f00}{\Downarrow}
+			\atop y} {\atop = k } {\color{#f00}{\Downarrow} \atop x} \quad\quad\quad \frac{ y \color{#f00}{\Downarrow}}{x \color{#f00}{\Downarrow}}
+			= k$$
+			<p>
+				<strong>directly proportional</strong> = a constant ratio, k, between two variables. Both variables increase and decrease together.
+			</p>
+			<br>
+			<!-- $$y=\frac{k}{x} $$ $$ yx = k$$  -->
+			$$ {\color{#09e}{\Uparrow} \atop y} {\color{#f00}{\Downarrow} \atop x} {\atop = k } \quad\quad\quad {\color{#f00}{\Downarrow}
+			\atop y} {\color{#09e}{\Uparrow} \atop x} {\atop = k } \quad\quad\quad y {\color{#f00}{\Downarrow}} = \frac{k}{x \color{#09e}{\Uparrow}}
+			$$
+
+			<p>
+				<strong>inversely proportional</strong> = a constant ratio, k, between a variable and the inverse of a variable. Variables increase
+				and decrease
+				<strong>opposite</strong> to each other.
+			</p>
+		</div>
+		<p>You can use proportions when everything else in an equation is constant except two variables. Then you predict how one
+			will change when the other changes.</p>
+
+		<div class='example'>
+			<h3>$$v = \frac{\Delta x}{\Delta t}$$</h3>
+			<strong>Example:</strong> You can run 100 m in about 15 s. If you want to decrease your time, should you increase or decrease
+			your velocity?
+			<details>
+				<summary>solution</summary>
+				$$ \text{Δx is constant}$$ $$v = \frac{\Delta x}{\Delta t}$$ $$v \Delta t = \Delta x$$ $$ \text{v and Δt are inversely proportional}$$
+				$${\color{#09e}{\Uparrow} \atop v} {\color{#f00}{\Downarrow} \atop \Delta t} {\atop =} { \atop \Delta x}$$ $$ \text{increasing
+				v will decrease Δt}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<h3>$$F = ma$$</h3>
+			<strong>Example:</strong> A force of 100 N produces an acceleration of 10 m/s² for a 10 kg mass. How should you change the force
+			to reduce the acceleration?
+			<details>
+				<summary>solution</summary>
+				$$ \text{m is constant}$$ $$F = ma$$ $$ \text{F and a are directly proportional}$$ $${\color{#f00}{\Downarrow} \atop F} {\atop
+				=} { \atop m} {\color{#f00}{\Downarrow} \atop a} $$ $$ \text{Decreasing F will decrease a}$$
+			</details>
+		</div>
+
+	</article>
+	<div class='back'>
+		<a href="../../../index.html">Back</a>
+	</div>
+	<script>
+		renderMathInElement(document.body);
+	</script>
+</body>
+
+</html>
