@@ -28,7 +28,7 @@ class Particle {
           x: 30 + Math.random() * (canvas.width - 60),
           y: 30 + Math.random() * (canvas.height - 60)
         },
-        5 + Math.floor(Math.random() * Math.random() * 300),
+        30 + Math.floor(Math.random() * 220),
         0,
         {
           x: Math.random() - 0.5,
@@ -259,7 +259,7 @@ class Particle {
     }
     ctx.globalAlpha = 1;
   }
-  static scalarField(who, ctx, canvas, fieldSpacing = 3, fieldMag = 10) {
+  static scalarField(who, ctx, canvas, fieldMag = -10) {
     const chromaBytes = [
       [0x88, 0x00, 0x00],
       [0x8b, 0x00, 0x00],
@@ -546,32 +546,5 @@ class Particle {
       }
     }
     ctx.putImageData(imgData, 0, 0);
-
-    // const lenX = Math.floor(canvas.width / fieldSpacing);
-    // const lenY = Math.floor(canvas.height / fieldSpacing);
-    // const offset = Math.floor(fieldSpacing / 2);
-    // const squareRadius = fieldSpacing + 1;
-    // const yHeight = Math.floor(canvas.height / lenY);
-    // const xheight = Math.floor(canvas.width / lenX);
-    // for (let k = 0; k < lenY + 1; k++) {
-    //   for (let j = 0; j < lenX + 1; j++) {
-    //     const x = xheight * j;
-    //     const y = yHeight * k;
-    //     let mag = 0;
-    //     for (let i = 0, len = who.length; i < len; i++) {
-    //       const dx = who[i].position.x - x;
-    //       const dy = who[i].position.y - y;
-    //       mag -= who[i].mass / (Math.sqrt(dx * dx + dy * dy) + 2);
-    //     }
-
-    //     ctx.fillStyle = "hsl(" + (Math.min(Math.max(Math.round(mag * fieldMag), 110), 290) + 130) % 360 + ", 100%, 50%)";
-    //     // ctx.fillStyle = 'hsl('+
-    //     // Math.min(Math.max(Math.round(3000*mag*mag * fieldMag), 0), 359)
-    //     //  +', 100%, ' +
-    //     // Math.min(Math.max(Math.round(mag * fieldMag), 0), 100)
-    //     // + '%)'
-    //     ctx.fillRect(x - offset, y - offset, squareRadius, squareRadius);
-    //   }
-    // }
   }
 }

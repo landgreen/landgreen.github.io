@@ -56,19 +56,17 @@ function grav2(el) {
 
   let fMag;
   const reset = function() {
+    if (document.getElementById("num2").value > 500) document.getElementById("num2").value = 500;
     q = [];
-    if (document.getElementById("num2").value > 500) {
-      document.getElementById("num2").value = 500;
-    }
     Particle.spawnRandom(q, canvas, Math.floor(document.getElementById("num2").value));
-    fMag = -20000 / Particle.totalMass(q);
+    fMag = -15000 / Particle.totalMass(q); //calibrate color magnitude.
   };
   reset();
 
   function cycle() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     Particle.integration(q);
-    Particle.scalarField(q, ctx, canvas, 3, fMag);
+    Particle.scalarField(q, ctx, canvas, fMag);
     Particle.bounds(q, canvas, -10);
     if (!pause) requestAnimationFrame(cycle);
   }

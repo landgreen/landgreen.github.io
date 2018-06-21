@@ -102,7 +102,7 @@ var spring = function(button) {
       this.Vy += physics.gravY;
     };
     this.spring = function() {
-      this.Vx += physics.k * (physics.equalibrium - this.x) / 60 / this.mass;
+      this.Vx += (physics.k * (physics.equalibrium - this.x)) / 60 / this.mass;
     };
 
     this.calcEnergy = function() {
@@ -125,8 +125,8 @@ var spring = function(button) {
       }
       //text
       ctx.fillStyle = "#000";
-      ctx.fillText("KE = ½mv² = " + this.ke.toFixed(0) + "J", 5, 15);
-      ctx.fillText("PE = mgh = " + this.pe.toFixed(0) + "J", 5, 35);
+      ctx.fillText("KE = ½mv² = " + this.ke.toFixed(0) + " J", 5, 15);
+      ctx.fillText("PE = mgh = " + this.pe.toFixed(0) + " J", 5, 35);
       //ctx.fillText('PE + KE = ' + (PE + KE).toFixed(0) + 'J', 5, 55);
       //ctx.fillText('Vx = ' + (this.Vx).toFixed(0) + 'm/s', 5, 30);
       //ctx.fillText('Vy = ' + this.Vy.toFixed(1) + 'm/s', 5, 75);
@@ -144,10 +144,10 @@ var spring = function(button) {
       //draw energy text
       ctx.fillStyle = "#000";
       // ctx.fillText("KE = ½mv² = " + this.ke.toFixed(0) + "J", 5, 20);
-      ctx.fillText("U = ½kx² = " + this.u.toFixed(0) + "J", 5, 20);
-      ctx.fillText("F = -kx = " + F.toFixed(0) + "N", 5, canvas.height - 5);
+      ctx.fillText("U = ½kx² = " + this.u.toFixed(0) + " J", 5, 20);
+      ctx.fillText("F = -kx = " + F.toFixed(0) + " N", 5, canvas.height - 5);
       //ctx.fillText('k = ' + (physics.k), 5, canvas.height - 25);
-      ctx.fillText("x = " + (this.x - physics.equalibrium).toFixed(0) + "m", 5, canvas.height - 25);
+      ctx.fillText("x = " + (this.x - physics.equalibrium).toFixed(0) + " m", 5, canvas.height - 25);
       //force vector
       ctx.lineWidth = 2;
       ctx.strokeStyle = "black";
