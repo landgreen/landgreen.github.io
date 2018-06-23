@@ -66,7 +66,7 @@ function grav1(el) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     Particle.vectorField(q, ctx, canvas, vMag);
     Particle.drawAll(q, ctx);
-    Particle.bounds(q, canvas, -10);
+    Particle.bounds(q, canvas);
     if (!pause) requestAnimationFrame(cycle);
   }
   requestAnimationFrame(cycle);

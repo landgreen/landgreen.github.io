@@ -67,7 +67,8 @@ function grav2(el) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     Particle.integration(q);
     Particle.scalarField(q, ctx, canvas, fMag);
-    Particle.bounds(q, canvas, -10);
+    // Particle.vectorColorField(q, ctx, canvas, fMag);
+    Particle.bounds(q, canvas);
     if (!pause) requestAnimationFrame(cycle);
   }
   requestAnimationFrame(cycle);

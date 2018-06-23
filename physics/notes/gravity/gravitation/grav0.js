@@ -1,29 +1,32 @@
-const setup0 = function() {
-  var canvas = document.getElementById("grav0");
-  var ctx = canvas.getContext("2d");
-  ctx.font = "300 30px Arial, Helvetica, sans-serif";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-};
-setup0();
-
-function grav0(el) {
-  el.onclick = null; //stops the function from running on button click
-  var canvas = el;
-  var ctx = canvas.getContext("2d");
+(function grav0() {
+  const canvas = document.getElementById("grav0");
+  const ctx = canvas.getContext("2d");
   ctx.globalCompositeOperation = "lighter";
-  // var canvas = el
-  // var ctx = canvas.getContext("2d");
+
+  let height, width;
+
+  function setupCanvas() {
+    // canvas.width = window.innerWidth;
+    canvas.width = document.body.clientWidth; //window.innerWidth; //document.body.scrollWidth;
+    canvas.height = document.getElementById("myHeader").clientHeight;
+    width = canvas.width;
+    height = canvas.height;
+    ctx.globalCompositeOperation = "lighter";
+    // ctx.globalAlpha = 0.7;
+  }
+  setupCanvas();
+  window.onresize = function() {
+    setupCanvas();
+  };
 
   //___________________get mouse input___________________
-  var mouse = {
+  const mouse = {
     down: false,
     x: 0,
     y: 0
   };
   canvas.onmousemove = function(e) {
-    var rect = canvas.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
     mouse.y = e.clientY - rect.top;
   };
@@ -34,14 +37,6 @@ function grav0(el) {
   canvas.onmouseup = function() {
     mouse.down = false;
   };
-  let pause = false;
-  el.addEventListener("mouseleave", function() {
-    pause = true;
-  });
-  el.addEventListener("mouseenter", function() {
-    pause = false;
-    if (!pause) requestAnimationFrame(cycle);
-  });
 
   document.getElementById("num").addEventListener(
     "input",
@@ -54,19 +49,21 @@ function grav0(el) {
   let q = []; //holds the Particles
   const reset = function() {
     q = [];
-    if (document.getElementById("num").value > 10000) {
-      document.getElementById("num").value = 10000;
+    if (document.getElementById("num").value > 1000) {
+      document.getElementById("num").value = 1000;
     }
     Particle.spawnRandom(q, canvas, Math.floor(document.getElementById("num").value));
   };
   reset();
 
   function cycle() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    Particle.integration(q);
-    Particle.drawAll(q, ctx);
-    Particle.bounds(q, canvas, -10);
-    if (!pause) requestAnimationFrame(cycle);
+    if (window.pageYOffset < height) {
+      ctx.clearRect(0, 0, width, height);
+      Particle.integration(q);
+      Particle.drawAll(q, ctx);
+      Particle.bounds(q, canvas);
+    }
+    requestAnimationFrame(cycle);
   }
   requestAnimationFrame(cycle);
-}
+})();

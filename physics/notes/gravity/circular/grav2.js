@@ -143,10 +143,10 @@ function grav2(el) {
     "#0fb"
   );
 
-  q1[q1.length - 1].radius *= 4; //artifically large radius for visibility
-  q2[q2.length - 1].radius *= 4; //artifically large radius for visibility
-  q3[q3.length - 1].radius *= 4; //artifically large radius for visibility
-  q4[q4.length - 1].radius *= 4; //artifically large radius for visibility
+  q1[q1.length - 1].radius *= 4; // large radius for visibility
+  q2[q2.length - 1].radius *= 4; // large radius for visibility
+  q3[q3.length - 1].radius *= 4; // large radius for visibility
+  q4[q4.length - 1].radius *= 4; // large radius for visibility
 
   function drawBounds() {
     ctx.beginPath();
@@ -156,21 +156,9 @@ function grav2(el) {
     ctx.lineTo(canvas.width / 2, canvas.height);
     ctx.strokeStyle = "#eee";
     ctx.lineWidth = 1;
-    // ctx.setLineDash([5, 19.77]);
     ctx.stroke();
   }
   drawBounds();
-
-  // for(i = 0; i<50000; ++i){
-  // 	Particle.physicsAll(q1)
-  // 	Particle.drawAll(q1)
-  // 	Particle.physicsAll(q2)
-  // 	Particle.drawAll(q2)
-  // 	Particle.physicsAll(q3)
-  // 	Particle.drawAll(q3)
-  // 	Particle.physicsAll(q4)
-  // 	Particle.drawAll(q4)
-  // }
 
   function cycle() {
     // ctx.clearRect(0, 0, canvas.width, canvas.height);

@@ -154,23 +154,25 @@ class Particle {
     }
     return count;
   }
-  static bounds(who, canvas, range = 50) {
-    //range = how far outside of canvas,  0 is at canvs edge
+  static bounds(who, canvas) {
     const restitution = 0.5;
+    const width = canvas.width;
+    const height = canvas.height;
+
     for (let i = 0, len = who.length; i < len; ++i) {
-      if (who[i].position.x > canvas.width + range) {
+      if (who[i].position.x > width - who[i].radius) {
         who[i].velocity.x = -Math.abs(who[i].velocity.x) * restitution;
-        who[i].position.x = canvas.width + range;
-      } else if (who[i].position.x < -range) {
+        who[i].position.x = width - who[i].radius;
+      } else if (who[i].position.x < who[i].radius) {
         who[i].velocity.x = Math.abs(who[i].velocity.x) * restitution;
-        who[i].position.x = -range;
+        who[i].position.x = who[i].radius;
       }
-      if (who[i].position.y > canvas.height + range) {
+      if (who[i].position.y > height - who[i].radius) {
         who[i].velocity.y = -Math.abs(who[i].velocity.y) * restitution;
-        who[i].position.y = canvas.height + range;
-      } else if (who[i].position.y < -range) {
+        who[i].position.y = height - who[i].radius;
+      } else if (who[i].position.y < who[i].radius) {
         who[i].velocity.y = Math.abs(who[i].velocity.y) * restitution;
-        who[i].position.y = -range;
+        who[i].position.y = who[i].radius;
       }
     }
   }
@@ -223,8 +225,8 @@ class Particle {
           var dy = who[i].position.y - y;
           dist = Math.sqrt(dx * dx + dy * dy) + spacing * 2;
           if (dist < who[i].r) {
-            draw = false; //don't draw in inside a body
-            break; //exit the forloop
+            draw = false; //don't draw inside a body
+            break; //exit the for loop
           }
           f = (who[i].mass * mag) / (dist * dist);
           a = Math.atan2(dy, dx);
@@ -520,7 +522,6 @@ class Particle {
     ];
 
     let imgData = ctx.createImageData(canvas.width, canvas.height);
-
     for (var i = 0; i < imgData.data.length; i += 8) {
       const x = (i / 4) % canvas.width;
       const y = Math.floor(i / 4 / canvas.width);
@@ -531,7 +532,6 @@ class Particle {
         mag -= who[j].mass / (Math.sqrt(dx * dx + dy * dy) + 1);
       }
       let hue = Math.min(Math.max(Math.round(256 - mag * fieldMag), 0), 255);
-
       // imgData.data[i + 0] = chromaBytes[hue][0]; // red
       // imgData.data[i + 1] = chromaBytes[hue][1]; // green
       // imgData.data[i + 2] = chromaBytes[hue][2]; // blue
@@ -542,6 +542,62 @@ class Particle {
         imgData.data[i + k + 0] = chromaBytes[hue][0]; // red
         imgData.data[i + k + 1] = chromaBytes[hue][1]; // green
         imgData.data[i + k + 2] = chromaBytes[hue][2]; // blue
+        imgData.data[i + k + 3] = 255; // alpha
+      }
+    }
+    ctx.putImageData(imgData, 0, 0);
+  }
+
+  static vectorColorField(who, ctx, canvas, fieldMag = -10) {
+    let imgData = ctx.createImageData(canvas.width, canvas.height);
+    for (var i = 0; i < imgData.data.length; i += 8) {
+      const x = (i / 4) % canvas.width;
+      const y = Math.floor(i / 4 / canvas.width);
+      let fx = 0;
+      let fy = 0;
+      let a = 0;
+      for (let j = 0, len = who.length; j < len; j++) {
+        const dx = who[j].position.x - x;
+        const dy = who[j].position.y - y;
+        const mag = who[j].mass / (dx * dx + dy * dy + 1);
+        a = Math.atan2(dy, dx);
+        fx += mag * Math.cos(a);
+        fy += mag * Math.sin(a);
+      }
+      a = (Math.atan2(fy, fx) + 2 * Math.PI) % (2 * Math.PI);
+
+      let hue = a / 2 / Math.PI;
+      const mag = Math.min(Math.max(Math.pow((fx * fx + fy * fy) * 0.5, 0.1), 0), 1);
+
+      function hslToRgb(h, s, l) {
+        var r, g, b;
+        if (s == 0) {
+          r = g = b = l; // achromatic
+        } else {
+          function hue2rgb(p, q, t) {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+          }
+          var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+          var p = 2 * l - q;
+          r = hue2rgb(p, q, h + 1 / 3);
+          g = hue2rgb(p, q, h);
+          b = hue2rgb(p, q, h - 1 / 3);
+        }
+        return [r * 255, g * 255, b * 255];
+      }
+
+      const out = hslToRgb(hue, 1, mag);
+      // if (Math.random() < 0.0001) console.log(a, hue, 1, mag, out);
+      for (let k = 0; k < 8; k += 4) {
+        //make pixels bigger, is this really worth it?
+        imgData.data[i + k + 0] = out[0]; // red
+        imgData.data[i + k + 1] = out[1]; // green
+        imgData.data[i + k + 2] = out[2]; // blue
         imgData.data[i + k + 3] = 255; // alpha
       }
     }
