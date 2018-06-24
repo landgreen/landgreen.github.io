@@ -240,17 +240,7 @@ th {
 }
 
 .derive {
-  text-align: center;
   background-color: #e6f9f0;
-  padding: 1.3em;
-  border-radius: 1em;
-}
-.history {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 100%;
-  text-align: left;
-  background-color: #e6f9f0;
-  font-size: 1em;
   padding: 1.3em;
   border-radius: 1em;
 }

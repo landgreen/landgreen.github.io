@@ -55,12 +55,21 @@ function grav2(el) {
   );
 
   let fMag;
+
   const reset = function() {
-    if (document.getElementById("num2").value > 500) document.getElementById("num2").value = 500;
-    q = [];
-    Particle.spawnRandom(q, canvas, Math.floor(document.getElementById("num2").value));
+    // q = [];
+    const numberRequested = Math.floor(Math.min(document.getElementById("num2").value, 100));
+    const diff = numberRequested - q.length;
+    if (diff > 0) {
+      //add
+      Particle.spawnRandom(q, canvas, diff);
+    } else {
+      //remove
+      q.length = q.length + diff;
+    }
     fMag = -15000 / Particle.totalMass(q); //calibrate color magnitude.
   };
+
   reset();
 
   function cycle() {

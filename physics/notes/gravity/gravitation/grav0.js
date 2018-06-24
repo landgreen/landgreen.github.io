@@ -12,7 +12,7 @@
     width = canvas.width;
     height = canvas.height;
     ctx.globalCompositeOperation = "lighter";
-    // ctx.globalAlpha = 0.7;
+    ctx.globalAlpha = 0.7;
   }
   setupCanvas();
   window.onresize = function() {
@@ -48,11 +48,16 @@
 
   let q = []; //holds the Particles
   const reset = function() {
-    q = [];
-    if (document.getElementById("num").value > 1000) {
-      document.getElementById("num").value = 1000;
+    // q = [];
+    const numberRequested = Math.floor(Math.min(document.getElementById("num").value, 1000));
+    const diff = numberRequested - q.length;
+    if (diff > 0) {
+      //add
+      Particle.spawnRandom(q, canvas, diff);
+    } else {
+      //remove
+      q.length = q.length + diff;
     }
-    Particle.spawnRandom(q, canvas, Math.floor(document.getElementById("num").value));
   };
   reset();
 

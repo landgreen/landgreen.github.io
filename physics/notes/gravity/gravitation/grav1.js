@@ -13,6 +13,22 @@ function grav1(el) {
   var canvas = el;
   var ctx = canvas.getContext("2d");
 
+  let height, width;
+
+  function setupCanvas() {
+    // canvas.width = window.innerWidth;
+    canvas.width = Math.min(document.body.clientWidth, 1200); //window.innerWidth; //document.body.scrollWidth;
+    canvas.height = 400;
+    width = canvas.width;
+    height = canvas.height;
+    // ctx.globalCompositeOperation = "lighter";
+    // ctx.globalAlpha = 0.7;
+  }
+  setupCanvas();
+  window.onresize = function() {
+    setupCanvas();
+  };
+
   //___________________get mouse input___________________
   var mouse = {
     down: false,
@@ -51,12 +67,16 @@ function grav1(el) {
   let vMag;
   let q = []; //holds the Particles
   const reset = function() {
-    q = [];
-    if (document.getElementById("num1").value > 100) {
-      document.getElementById("num1").value = 100;
+    // q = [];
+    const numberRequested = Math.floor(Math.min(document.getElementById("num1").value, 1000));
+    const diff = numberRequested - q.length;
+    if (diff > 0) {
+      //add
+      Particle.spawnRandom(q, canvas, diff);
+    } else {
+      //remove
+      q.length = q.length + diff;
     }
-    Particle.spawnRandom(q, canvas, Math.floor(document.getElementById("num1").value));
-    // Particle.spawnRandom(q, canvas, Math.min(Math.floor(document.getElementById("num1").value), 200))
     vMag = 170000 / Particle.totalMass(q); //scales the vector field intensity
   };
   reset();
