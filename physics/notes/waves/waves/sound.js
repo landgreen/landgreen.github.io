@@ -1,7 +1,7 @@
 (function() {
   var canvas = document.getElementById("sound1");
   var ctx = canvas.getContext("2d");
-  ctx.font = "300 24px Roboto";
+  ctx.font = "24px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -10,7 +10,7 @@
 (function() {
   var canvas = document.getElementById("sound2");
   var ctx = canvas.getContext("2d");
-  ctx.font = "300 24px Roboto";
+  ctx.font = "24px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -19,7 +19,7 @@
 (function() {
   var canvas = document.getElementById("sound3");
   var ctx = canvas.getContext("2d");
-  ctx.font = "300 24px Roboto";
+  ctx.font = "24px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -200,9 +200,8 @@ function sound(el, drawMode = 0, waveOut = false, drawOne = false) {
       }
     } else if (drawMode === 1) {
       for (let i = 0, len = atom.length; i < len; ++i) {
-        let vertices = atom[i].vertices;
         ctx.beginPath();
-        ctx.arc(vertices[0].x, vertices[0].y, settings.radius, 0, 2 * Math.PI);
+        ctx.arc(atom[i].position.x, atom[i].position.y, settings.radius, 0, 2 * Math.PI);
         //speed opacity balls
         const mag = atom[i].speed; //can't get a value for angular speed not sure why
         const alpha = Math.max(Math.min(atom[i].speed * atom[i].speed * 0.04, 1), 0.05);
@@ -213,9 +212,8 @@ function sound(el, drawMode = 0, waveOut = false, drawOne = false) {
       ctx.fillStyle = "rgba(0,0,0,1)";
       for (let i = 0, len = atom.length; i < len; ++i) {
         //normal black balls
-        let vertices = atom[i].vertices;
         ctx.beginPath();
-        ctx.arc(vertices[0].x, vertices[0].y, settings.radius, 0, 2 * Math.PI);
+        ctx.arc(atom[i].position.x, atom[i].position.y, settings.radius, 0, 2 * Math.PI);
         ctx.fill();
         ctx.stroke();
       }

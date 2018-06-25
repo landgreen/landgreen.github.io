@@ -11,7 +11,7 @@
 	<meta property="og:description" content="Notes for a high school physics course.">
 	<meta property="og:title" content="Physics Notes">
 	<meta name="twitter:title" content="High School Physics Notes">
-	<title>Coulomb's Law</title>
+	<title>Electrostatics</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
@@ -25,12 +25,11 @@
 <body>
 	<header>
 		<h1>
-			<a href="../../../index.html">Coulomb's Law</a>
+			<a href="../../../index.html">Electrostatics</a>
 		</h1>
 	</header>
 	<article>
-		<p>Coulomb's law lets us calculate the electrostatic force. It is similar to the force of gravity, but while gravity shapes
-			things on a large scale, the electrostatic force shapes the small. It explains concepts like: electricity, chemistry,
+		<p>Some particles have an electric charge. The rules that govern these charges can explain electricity, chemical bonds, magnetism,
 			and light!</p>
 
 		<h2 class='underlined' id='Electric-Charge'>Electric Charge</h2>
@@ -173,51 +172,50 @@
 				<p>Valid for stationary point source charges at macroscopic sizes</p>
 		</div>
 		<div class='example'>
-			<b>Example:</b> What is the electrostatic force between a 4.30μC charge and a 10.08μC charge at a distance of 0.03m?
+			<b>Example:</b> What is the electrostatic force between a 4.30 μC charge and a 10.08 μC charge at a distance of 0.03 m?
 			<details>
 				<summary>solution</summary>
 				$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$ $$ F = \frac{(8.987 \times 10^{9})(4.30 \times 10^{-6})(10.08 \times 10^{-6})}{0.03^{2}}
-				$$ $$F = 432.8N$$
+				$$ $$F = 432.8 \, \mathrm{N}$$
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> What is the electrostatic force between an electron and a proton at a distance of 0.2m? How much acceleration
+			<b>Example:</b> What is the electrostatic force between an electron and a proton at a distance of 0.2 m? How much acceleration
 			will the electron experience?
 			<details>
 				<summary>solution</summary>
 				$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$ $$ F = \frac{(8.987 \times 10^{9})(-1.602 \times 10^{-19})(1.602 \times 10^{-19})}{0.2^{2}}
-				$$ $$F = 5.76 \times 10^{-27}N$$
-				<br> $$F = ma$$ $$a = \frac{F}{m} $$ $$a = \frac{5.76 \times 10^{-27}}{9.109 \times 10^{-31}} $$ $$a = 6323.4 \small \frac{m}{s^{2}}$$
+				$$ $$F = 5.76 \times 10^{-27}\, \mathrm{N}$$
+				<br> $$F = ma$$ $$a = \frac{F}{m} $$ $$a = \frac{5.76 \times 10^{-27}}{9.109 \times 10^{-31}} $$ $$a = 6323.4 \, \mathrm{\tfrac{m}{s^{2}}}$$
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> Compare the gravitational force to the electrostatic force for a proton and an electron 1m apart.
+			<b>Example:</b> Compare the gravitational force to the electrostatic force for a proton and an electron 1 m apart.
 			<details>
 				<summary>solution</summary>
 				$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$ $$ F = \frac{(8.987 \times 10^{9})(-1.602 \times 10^{-19})(1.602 \times 10^{-19})}{1^{2}}
-				$$ $$F = 2.30 \times 10^{-28}N$$
+				$$ $$F = 2.30 \times 10^{-28} \, \mathrm{N}$$
 				<br>
 				<hr>
 				<br> $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ F = \frac{(6.674 \times 10^{-11})(1.672 \times 10^{-27}) (9.109 \times 10^{-31})}{1^{2}}$$
-				$$F = 1.02 \times 10^{-67}N$$
+				$$F = 1.02 \times 10^{-67} \, \mathrm{N}$$
 				<br>
 				<hr>
-				<br> $$10^{-28}N \quad vs. \quad 10^{-67}N$$
+				<br> $$10^{-28} \, \mathrm{N} \quad \text{vs.} \quad 10^{-67} \, \mathrm{N}$$
 				<p>The electrostatic force is 10
-					<sup>39</sup> times stronger!
-					<br>or
-					<br>1,000,000,000,000,000,000,000,000,000,000,000,000,000!</p>
+					<sup>39</sup> times stronger than the gravitational force! $$\small 10^{39} = 1 \ 000 \ 000 \ 000 \ 000 \ 000 \ 000 \ 000
+					\ 000 \ 000 \ 000 \ 000 \ 000 \ 000$$
 			</details>
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> You rub a balloon on a dry erase board and pull 20nC off the board onto the balloon. The balloon sticks
+			<strong>Example:</strong> You rub a balloon on a dry erase board and pull 20 nC off the board onto the balloon. The balloon sticks
 			to the board. Estimate the maximum possible mass of the balloon if the centers of the charges are 5mm apart?
 			<details>
 				<summary>solution</summary>
-				$$\scriptsize n=nano=10^{-9} \quad \quad m=milli = 10^{-3}$$ $$ F = \frac{k_{e}q_{1}q_{2}}{r^2} $$ $$ F = \frac{(8.987 \times
-				10^{9}) (20 \times 10^{-9})(-20 \times 10^{-9})}{(5 \times 10^{-3})^{2}} $$ $$ F = 0.144N $$
+				$$ n=\text{nano}=10^{-9} \quad \quad m=\text{milli} = 10^{-3}$$ $$ F = \frac{k_{e}q_{1}q_{2}}{r^2} $$ $$ F = \frac{(8.987
+				\times 10^{9}) (20 \times 10^{-9})(-20 \times 10^{-9})}{(5 \times 10^{-3})^{2}} $$ $$ F = 0.144\, \mathrm{N} $$
 				<p>The maximum mass would be when the force of gravity is balanced with the electrostatic force.</p>
-				$$\sum F=ma$$ $$F_{e}-F_{g}=ma$$ $$0.144-m(9.8)=0$$ $$m(9.8)=0.144$$ $$m=0.0147kg$$
+				$$\sum F=ma$$ $$F_{e}-F_{g}=ma$$ $$0.144-m(9.8)=0$$ $$m(9.8)=0.144$$ $$m=0.0147\, \mathrm{kg}$$
 			</details>
 		</div>
 

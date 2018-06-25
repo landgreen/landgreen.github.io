@@ -1,7 +1,7 @@
 const setup5 = function() {
   var canvas = document.getElementById("charge5");
   var ctx = canvas.getContext("2d");
-  ctx.font = "300 30px Roboto";
+  ctx.font = "30px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);

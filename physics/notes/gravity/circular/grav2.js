@@ -1,7 +1,7 @@
 const setup2 = function() {
   var canvas = document.getElementById("grav2");
   var ctx = canvas.getContext("2d");
-  ctx.font = "300 25px Arial, Helvetica, sans-serif";
+  ctx.font = "300 25px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);

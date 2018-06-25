@@ -127,14 +127,19 @@
 				<em>vector</em>
 				<br>\(m\) = mass [kg]
 			</p>
-			<p>
-				<strong>centripetal</strong>: pointing at the center (Not to be confused with centrifugal)
-				<br>
-				<strong>tangential</strong>: touching at only one point
-			</p>
 		</div>
 		<p>
-			<strong>Nearly circular motion can occur in many situations:</strong>
+			The term
+			<strong>centripetal</strong> means pointing at the center. In all circular motion force and acceleration always points at the
+			center of the circle. This is often confused with centrifugal, which means away from the center.
+		</p>
+		<p>
+			<strong>Tangential</strong> means touching at only one point. Since the velocity is perpendicular to the centripetal force, it
+			doesn't enter or exit the circle.</p>
+
+
+		<p>
+			Nearly circular motion can occur in many situations:
 			<li>swinging a rope attached to a mass</li>
 			<li>a rotating wheel or sphere, (like a fidget spinner)</li>
 			<li>many orbits are nearly circular, but technically elliptical</li>
@@ -143,34 +148,21 @@
 			<li>charged particles in a uniform magnetic field</li>
 		</p>
 		<div class='example'>
-			<b>Example:</b> A 20kg dog is riding on a carousel 5m away from the center. If the dog is moving at 3m/s, what magnitude
+			<b>Example:</b> A 20 kg dog is riding on a carousel 5 m away from the center. If the dog is moving at 3 m/s, what magnitude
 			and direction force will it have to exert to produce the circular motion needed to stay on the ride?
 			<details>
 				<summary>solution</summary>
-				$$F = \frac{mv^{2}}{r}$$ $$F = \frac{(20)(3)^{2}}{5}$$ $$F = 36N$$
-				<p>pointed towards the center of the carousel</p>
+				$$F = \frac{mv^{2}}{r}$$ $$F = \frac{(20)(3)^{2}}{5}$$ $$F = 36\,\mathrm{N}$$ $$\text{towards the center of the carousel}$$
 			</details>
 		</div>
 		<div class='example'>
 			<b>Example:</b> You want to reproduce the feeling of Earth's gravity in space. This can be done by rotating your space station
-			to produce the feeling of acceleration. Your space station is shaped like a wheel with a diameter of 50.0m. How fast does
-			the edge have to move to produce Earth's gravity?
+			to produce the feeling of acceleration. Your space station is shaped like a wheel with a diameter of 50.0 m. How fast
+			does the edge have to move to produce Earth's gravity?
 			<details>
 				<summary>solution</summary>
-				$$d = 2r \quad \quad r = 25m$$ $$a = \frac{v^{2}}{r}$$ $$\sqrt{ar} = v$$ $$\sqrt{(9.8)(25)} = v$$ $$15.7 \small \frac{m}{s}
-				= \normalsize v$$
-			</details>
-		</div>
-		<div class='example'>
-			<b>Example:</b> The second hand on a clock moves smoothly in a circle, but there is a brave 3 mg ant on the tip of the second
-			hand. How much force must the ant apply to not fall off? The ant is 21 mm from the center of the clock. You can't directly
-			measure the velocity, but you do know it takes 60 seconds for the second hand to complete a circle.
-			<details>
-				<summary>solution</summary>
-				<p>The distance is the circumference of the circle. The time is 60s. Velocity is distance over time.</p>
-
-				$$c = 2 \pi r $$ $$v = \frac{\Delta x}{\Delta y} $$ $$v = \frac{2 \pi (0.021)}{60}$$ $$v = 0.0022 \small \frac{m}{s}$$
-				<br> $$F = \frac{mv^{2}}{r}$$ $$F = \frac{0.000003(0.0022)^{2}}{0.021}$$ $$F = 0.00000175N $$ $$F = 6.914 \times 10^{-10}N$$
+				$$d = 2r \quad \quad r = 25\,\mathrm{m}$$ $$a = \frac{v^{2}}{r}$$ $$\sqrt{ar} = v$$ $$\sqrt{(9.8)(25)} = v$$ $$15.7 \,\mathrm{\tfrac{m}{s}}
+				=v$$
 			</details>
 		</div>
 		<p class='underlined'>Circular Orbits</p>
@@ -184,9 +176,8 @@
 		<details class='derive'>
 			<summary>derivation of orbital velocity</summary>
 			<br>If we assume that the central mass is much larger and doesn't move, we can combine the equations for circular motion with
-			the universal gravitation equations. $$F = \frac{M_{1}v^{2}}{r} \quad F = \frac{GM_{1}M_{2}}{r^{2}} $$
-			<br>set the force of gravity and the centripetal force equal $$\frac{M_{1}v^{2}}{r} = \frac{GM_{1}M_{2}}{r^{2}} $$
-			<br>cancel terms that show up on both sides $$\frac{\color{blue}M_{\color{blue}1}v^{2}}{\color{blue}r} = \frac{G\color{blue}M_{\color{blue}1}M_{2}}{r^{\color{blue}2}}$$
+			the universal gravitation equations. $$F = \frac{M_{1}v^{2}}{r} \quad F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$\frac{M_{1}v^{2}}{r}
+			= \frac{GM_{1}M_{2}}{r^{2}} $$ $$\frac{\color{blue}M_{\color{blue}1}v^{2}}{\color{blue}r} = \frac{G\color{blue}M_{\color{blue}1}M_{2}}{r^{\color{blue}2}}$$
 			$$v^{2} = \frac{GM_{2}}{r} $$
 		</details>
 		<div class='definition'>
@@ -229,14 +220,15 @@
 			<sup>-11</sup> = universal gravitation constant [N m²/kg²]
 			<br>\(r\) = radius of the circular orbit [m]
 			<br>\(M\) = mass of the central body being orbited [kg]
-			<p> Only true for circular orbits!
-				<br>The orbiting body needs to be much smaller than the central body!
+			<p> The orbiting body needs to be much smaller than the central body!
+				<br>Only true for circular orbits!
 			</p>
 		</div>
-		<h3 class='center'>radius vs. orbital velocity
-			<br>for a satellite of Earth</h3>
+		<p>There are several restrictions on where we can use this equation. Most planets orbiting the sun, moons orbiting large planets,
+			and satellites are all applicable.</p>
 		<div id='v-vs-r'></div>
-		<p>It seems counter-intuitive, but as you orbit farther from the central body your velocity goes down.</p>
+		<p>This is a graph of radius vs. orbital velocity for a satellite orbiting Earth in circular motion. It seems counter-intuitive,
+			but as you orbit farther from the central body your velocity goes down.</p>
 		<p>Take a look at the simulation below to see circular orbits at different distances.
 			<br>Click and drag to move. Double click for full screen.</p>
 		<style>
@@ -263,7 +255,7 @@
 				</tr>
 				<tr align=center>
 					<td align=left>Sun</td>
-					<td>2.00×10
+					<td>2.00 × 10
 						<sup>30</sup>
 					</td>
 					<td>695,700</td>
@@ -271,7 +263,7 @@
 				</tr>
 				<tr align=center>
 					<td align=left>Mercury</td>
-					<td>3.301×10
+					<td>3.301 × 10
 						<sup>23</sup>
 					</td>
 					<td>2,440</td>
@@ -279,7 +271,7 @@
 				</tr>
 				<tr align=center>
 					<td align=left>Venus</td>
-					<td>4.867×10
+					<td>4.867 × 10
 						<sup>24</sup>
 					</td>
 					<td>6,052</td>
@@ -287,7 +279,7 @@
 				</tr>
 				<tr align=center>
 					<td align=left>Earth</td>
-					<td>5.972×10
+					<td>5.972 × 10
 						<sup>24</sup>
 					</td>
 					<td>6,371</td>
@@ -295,7 +287,7 @@
 				</tr>
 				<tr align=center>
 					<td align=left>Moon</td>
-					<td>7.346×10
+					<td>7.346 × 10
 						<sup>22</sup>
 					</td>
 					<td>1,737</td>
@@ -303,7 +295,7 @@
 				</tr>
 				<tr align=center>
 					<td align=left>Mars</td>
-					<td>6.417×10
+					<td>6.417 × 10
 						<sup>23</sup>
 					</td>
 					<td>3,390</td>
@@ -311,7 +303,7 @@
 				</tr>
 				<tr align=center>
 					<td align=left>Jupiter</td>
-					<td>1.899×10
+					<td>1.899 × 10
 						<sup>27</sup>
 					</td>
 					<td>70,000</td>
@@ -319,7 +311,7 @@
 				</tr>
 				<tr align=center>
 					<td align=left>Saturn</td>
-					<td>5.685×10
+					<td>5.685 × 10
 						<sup>26</sup>
 					</td>
 					<td>58,232</td>
@@ -327,7 +319,7 @@
 				</tr>
 				<tr align=center>
 					<td align=left>Uranus</td>
-					<td>8.68×10
+					<td>8.68 × 10
 						<sup>25</sup>
 					</td>
 					<td>25,362</td>
@@ -335,7 +327,7 @@
 				</tr>
 				<tr align=center>
 					<td align=left>Neptune</td>
-					<td>1.024×10
+					<td>1.024 × 10
 						<sup>26</sup>
 					</td>
 					<td>24,622</td>
@@ -345,13 +337,12 @@
 			<a href="http://exoplanets.org/table">exoplanets data table</a>
 		</center>
 		<div class='example'>
-			<strong>Example:</strong> If a satellite is 800.0 km from the surface of the moon how fast must it move to travel in a circular
+			<strong>Example:</strong> If a satellite is 800.0 km above the surface of the moon how fast must it move to travel in a circular
 			orbit?
 			<details>
 				<summary>solution</summary>
-				$$r = 800,000 + 1,737,000 = 2,537,000m$$ $$v^{2} = \frac{GM}{r}$$ $$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2,537,000}$$
-				$$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2.537 \times 10^{6}}$$ $$\sqrt{v^{2}} = \sqrt{19.31 \times
-				10^5}$$ $$v = 1389.6 \small \frac{m}{s}$$
+				$$r = 800,000\,\mathrm{m} + 1,737,000\,\mathrm{m} = 2,537,000\,\mathrm{m}$$ $$v^{2} = \frac{GM}{r}$$ $$v^{2} = \frac{(6.67
+				\times 10^{-11})(7.346 \times 10^{22})}{2,537,000}$$ $$\sqrt{v^{2}} = \sqrt{19.31 \times 10^5}$$ $$v = 1389.6 \,\mathrm{\tfrac{m}{s}}$$
 			</details>
 		</div>
 		<div class='example'>
@@ -361,14 +352,14 @@
 			<details>
 				<summary>solution</summary>
 				$$v^{2} = \frac{GM}{r}$$ $$r = \frac{GM}{v^{2}}$$ $$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(3,070)^{2}}$$
-				$$r = 4.22 \times 10^{7} m = 42,200 km$$
-				<p>altitude = orbital radius - Earth's surface radius</p>
-				$$a = 42,200 km - 6,371 km$$ $$a = 35,829 km $$
+				$$r = 4.22 \times 10^{7} \,\mathrm{m} = 42,200 \,\mathrm{km}$$
+				<br>$$\text{altitude = orbital radius - Earth's surface radius}$$ $$a = 42,200 \,\mathrm{km} - 6,371 \,\mathrm{km}$$ $$a
+				= 35,829 \,\mathrm{km}$$
 			</details>
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> A 100kg satellite and a 200kg satellite are both in a circular orbit around the Earth at 10,000,000m
-			from the center of the Earth. Which satellite will have the higher velocity?
+			<strong>Example:</strong> A 100 kg satellite and a 200 kg satellite are both in a circular orbit around the Earth at 10,000,000
+			m from the center of the Earth. Which satellite will have the higher velocity?
 			<details>
 				<summary>solution</summary>
 				<br>They will both have the same velocity. The mass of the satellite doesn't matter, only the mass of the Earth.
@@ -384,7 +375,6 @@
 	<script src="orbits.js"></script>
 	<script src="grav1.js"></script>
 	<script src="grav2.js"></script>
-	<!-- <script src="motion.js"></script> -->
 	<script src="https://d3js.org/d3.v3.min.js"></script>
 	<script src='../../../lib/function-plot.js'></script>
 	<script src='plot.js'></script>

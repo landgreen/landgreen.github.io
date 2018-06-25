@@ -1,12 +1,12 @@
 window.onload = setup;
 function setup() {
-  //writes a message onload
+  //writes a message onload for all canvases
   var canvas;
   var ctx;
   for (var i = 0; i < 4; i++) {
     canvas = document.getElementById("canvas" + i);
     ctx = canvas.getContext("2d");
-    ctx.font = "300 30px Roboto";
+    ctx.font = "300 30px Arial";
     ctx.fillStyle = "#aaa";
     ctx.textAlign = "center";
     ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);

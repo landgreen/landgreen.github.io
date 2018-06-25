@@ -4,7 +4,7 @@
   var ctx;
   canvas = document.getElementById("canvas3");
   ctx = canvas.getContext("2d");
-  ctx.font = "300 30px Roboto";
+  ctx.font = "300 30px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
@@ -58,8 +58,8 @@ function collision2d(el) {
     });
 
     Body.setVelocity(mass[i], {
-      x: VxIn / 60 * scale,
-      y: -VyIn / 60 * scale
+      x: (VxIn / 60) * scale,
+      y: (-VyIn / 60) * scale
     });
     Matter.Body.setAngle(mass[i], angle);
     Matter.Body.setAngularVelocity(mass[i], -0.004);

@@ -3,8 +3,6 @@
 /************Reset**************/
 
 * {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 html,
@@ -28,16 +26,9 @@ table {
   border-spacing: 0;
 }
 header,
-footer,
-nav,
-section,
 article,
-hgroup,
 figure {
   display: block;
-}
-legend {
-  display: none;
 }
 
 svg:not(:root) {
@@ -48,16 +39,11 @@ svg:not(:root) {
 
 /*global elements____________________________________*/
 body {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: "Roboto", "Helvetica Neue", "Arial", sans-serif;
   font-size: 105%;
   color: #333;
   line-height: 1.4;
   overflow-x: hidden;
-  /* background-color: #fff; */
-  /* padding-top: 0; */
-  /* margin: 0; */
-  /* width: 100%; */
-  /* position: relative; */
 }
 article {
   padding: 0.1em;
@@ -72,7 +58,7 @@ h3 {
 }
 
 button {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: "Roboto", "Helvetica Neue", "Arial", sans-serif;
   font-size: 1em;
   margin: 0.3em;
 }
@@ -127,29 +113,6 @@ pre {
   overflow-x: auto;
   background-color: #eee;
 }
-
-/* table {
-  margin: 5px auto;
-  border: 1px solid #eee;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th,
-td {
-  border: 1px solid #ddd;
-  border-collapse: collapse;
-  padding: 0.25rem;
-  text-align: left;
-}
-th {
-  background: #444;
-  color: #fff;
-}
-
-tbody tr:hover {
-  background: #ddd;
-} */
 
 table {
   margin: 5px auto;

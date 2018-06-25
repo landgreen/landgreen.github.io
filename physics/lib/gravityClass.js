@@ -548,6 +548,8 @@ class Particle {
     ctx.putImageData(imgData, 0, 0);
   }
 
+  // experimental visualization with color to represent direction of vector field
+  // not recommended for use, because it is slow and confusing
   static vectorColorField(who, ctx, canvas, fieldMag = -10) {
     let imgData = ctx.createImageData(canvas.width, canvas.height);
     for (var i = 0; i < imgData.data.length; i += 8) {
@@ -594,7 +596,7 @@ class Particle {
       const out = hslToRgb(hue, 1, mag);
       // if (Math.random() < 0.0001) console.log(a, hue, 1, mag, out);
       for (let k = 0; k < 8; k += 4) {
-        //make pixels bigger, is this really worth it?
+        //make pixels bigger
         imgData.data[i + k + 0] = out[0]; // red
         imgData.data[i + k + 1] = out[1]; // green
         imgData.data[i + k + 2] = out[2]; // blue
