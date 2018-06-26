@@ -86,15 +86,15 @@
 		</div>
 		<h1 class='underlined' id="entropy">Entropy</h1>
 		<p>
-			<strong>Entropy</strong> is hard to define. Several fields use the term to describe slightly different ideas. The different definitions
-			of entropy are all loosely centered around the idea that entropy measures disorder. A high entropy system of particles
-			is not organized. A low entropy system is very orderly. But how do you measure order?
+			<strong>Entropy</strong> is hard to define because different fields use the term to describe slightly different ideas. The definitions
+			of entropy are all loosely centered around disorder. A high entropy system of particles is not organized. A low entropy
+			system is very orderly, but how do you measure order?
 		</p>
 		<p>
-			Well, order is whatever you decide. Generally it is a state of a system that is able to do work. In the simulation below,
-			the work we want done is rotating the rotor. What state of the system would make the rotor turn?
+			Well, order is whatever you decide. I want entropy to measure the ability to do work. A low entropy state would be able to
+			do work and high entropy wouldn't. In the simulation below, the work we want done is rotating the rotor. What state of
+			the system would make the rotor turn?
 		</p>
-
 		<p>
 			Click the clear button to remove the particles. Click inside the simulation to add some particles. Try to place the particles
 			in a low entropy state. If you chose well the rotor will turn on its own until it runs out of entropy.
@@ -133,7 +133,7 @@
 				<button id="clear1">clear</button>
 			</div>
 			<div class="c center">
-				external rotor torque
+				rotor external power
 				<br>
 				<input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.05" value="0">
 			</div>
@@ -144,22 +144,29 @@
 			to power the rotor from an external power source. The spinning rotor lowers entropy and puts the system back in a state
 			that can do work.
 		</p>
+		<p>The equations that make
+			<a href="https://en.wikipedia.org/wiki/Entropy">entropy</a> measurable play an important role in thermochemistry, heat transfer, and information theory.</p>
 
-		<p>
+		<!-- <p>
 			Entropy can be defined in many other ways. Entropy as dispersal of temperature is useful for understanding engines. If a
 			system has high entropy, the temperature is the same throughout the system. A low entropy system might have a sections
 			with very low or very high temperature. These pockets of temperature difference can be made to do work, like in a
 			<a href="http://www.animatedengines.com/">combustion engine
 			</a>.
-		</p>
-		<p>
+		</p> -->
+		<!-- <p>
+			In chemical reactions, entropy is calculated as the ratio of energy to temperature. This give a prediction of free enrgy
+			avoidable for a chemical reaction.
+		</p> -->
+
+		<!-- <p>
 			In chemical reactions, entropy is defined as low before an irreversible reaction or when chemical equilibrium is unbalanced.
 			Paper has low entropy before I burn it. After it's been burned, it has high entropy.
-		</p>
-		<p>
+		</p> -->
+		<!-- <p>
 			Energy is required for power plants, cell phones, cars, life. Energy only produces work when a system is in a low entropy
 			state as defined by each system. Low entropy for a car is gasoline. A human will not get work from gasoline, we need tacos.
-		</p>
+		</p> -->
 
 		<h1 class='underlined'>Arrow of Time</h1>
 		<p>

@@ -9,6 +9,9 @@ entropy1();
 function entropy1() {
   const canvas = document.getElementById("entropy1");
   const ctx = canvas.getContext("2d");
+  ctx.font = "18px sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
 
   // let pause = false;
   // el.addEventListener("mouseleave", function() {
@@ -47,6 +50,8 @@ function entropy1() {
     cycle: 0,
     timeRate: 1,
     rotorTorque: document.getElementById("rotor-slider").value,
+    workDoneBySystem: 0,
+    workDoneBySystemSmoothed: 0,
     count: {
       left: 0,
       right: 0
@@ -264,14 +269,47 @@ function entropy1() {
         right++;
       }
     }
-    return { left: left, right: right };
+
+    const entropy = (left - right) / 300;
+    return { left: left, right: right, entropy: entropy };
   }
 
-  function workDisplay() {
-    ctx.fillStyle = "#fff";
-    const work = rotor.angularSpeed * 5000;
-    ctx.fillRect(175, 190, work, 20);
-    // ctx.fillRect(290, canvas.height, 20, -work);
+  function dataDisplay() {
+    settings.workDoneBySystemSmoothed = settings.workDoneBySystemSmoothed * 0.98 + settings.workDoneBySystem * 0.02;
+    const workDisplay = settings.workDoneBySystemSmoothed * 2000;
+    ctx.fillStyle = "#eee";
+    ctx.fillRect(170, 190, 260, 30);
+    // ctx.fillStyle = "#e57";
+    ctx.fillRect(170, 240, 260, 30);
+
+    //display work done by rotor if it isn't powered
+    if (settings.rotorTorque == 0) {
+      ctx.fillStyle = "#3ff";
+      ctx.fillRect(170, 190, Math.min(workDisplay, 260), 30);
+    } else {
+      ctx.fillStyle = "#acc";
+      ctx.fillRect(170, 190, 260, 30);
+    }
+    //display entropy
+    ctx.fillStyle = "#f8a";
+    ctx.fillRect(170, 240, 260 - Math.min(Math.abs(counter().entropy) * 260, 260), 30);
+
+    //text
+    ctx.fillStyle = "#000";
+    ctx.fillText("work done", 300, 205);
+    ctx.fillText("entropy", 300, 255);
+  }
+
+  function rotorControl() {
+    //external added energy
+    if (rotor.angularSpeed < 0.03) rotor.torque = settings.rotorTorque * rotor.inertia * 0.00001;
+
+    //energy leaves the system when the rotor turns.
+    const energyLossRate = 0.999;
+    // settings.workDoneBySystem = rotor.angularVelocity * (1 - energyLossRate);
+    energyInRotor = rotor.angularVelocity * rotor.angularVelocity * rotor.inertia;
+    Matter.Body.setAngularVelocity(rotor, rotor.angularVelocity * energyLossRate);
+    settings.workDoneBySystem = energyInRotor - rotor.angularVelocity * rotor.angularVelocity * rotor.inertia;
   }
 
   function cycle() {
@@ -280,10 +318,10 @@ function entropy1() {
       for (let i = 0; i < settings.timeRate; ++i) {
         Engine.update(engine, 16.666);
         speedControl();
-        if (rotor.angularSpeed < 0.03) rotor.torque = settings.rotorTorque * rotor.inertia * 0.00001;
+        rotorControl();
       }
       draw();
-      // workDisplay();
+      dataDisplay();
     }
     requestAnimationFrame(cycle);
   }
