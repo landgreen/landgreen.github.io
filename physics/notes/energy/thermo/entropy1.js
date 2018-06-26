@@ -1,17 +1,13 @@
-// (function() {
-//   var canvas = document.getElementById("entropy1");
-//   var ctx = canvas.getContext("2d");
-//   ctx.font = "24px Arial";
-//   ctx.fillStyle = "#aaa";
-//   ctx.textAlign = "center";
-//   ctx.textBaseline = "middle";
-//   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-// })();
-entropy1(document.getElementById("entropy1"));
+function checkVisible(elm) {
+  var rect = elm.getBoundingClientRect();
+  var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+  return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+}
 
-function entropy1(el) {
-  el.onclick = null; //stops the function from running on button click
-  const canvas = el;
+entropy1();
+
+function entropy1() {
+  const canvas = document.getElementById("entropy1");
   const ctx = canvas.getContext("2d");
 
   // let pause = false;
@@ -43,36 +39,26 @@ function entropy1(el) {
   engine.velocityIterations = 1;
 
   const settings = {
-    pause: true,
     width: canvas.width,
     height: canvas.height,
     wallWidth: 100,
     edge: 10,
     radius: 7,
     cycle: 0,
-    pusherCycle: 1,
-    pusherReady: true,
-    frequency: 0.07,
-    phaseEnd: Math.floor(2 * Math.PI * (1 / 0.07)),
-    pushMag: canvas.width * 0.1,
-    drawStep: 25,
-    rotorTorque: document.getElementById("rotor-slider").value
+    timeRate: 1,
+    rotorTorque: document.getElementById("rotor-slider").value,
+    count: {
+      left: 0,
+      right: 0
+    }
   };
 
   document.getElementById("rotor-slider").addEventListener("input", event => {
     settings.rotorTorque = -document.getElementById("rotor-slider").value;
   });
 
-  const pauseID = document.getElementById("pause1");
-  pauseID.addEventListener("click", event => {
-    if (settings.pause) {
-      settings.pause = false;
-      if (!settings.pause) requestAnimationFrame(cycle);
-      pauseID.innerHTML = "pause";
-    } else {
-      pauseID.innerHTML = "play";
-      settings.pause = true;
-    }
+  document.getElementById("time-rate-slider").addEventListener("input", event => {
+    settings.timeRate = document.getElementById("time-rate-slider").value;
   });
 
   document.getElementById("clear1").addEventListener("click", event => {
@@ -97,8 +83,9 @@ function entropy1(el) {
 
   canvas.addEventListener("mousedown", event => {
     if (!settings.pause) {
+      const spread = 10;
       for (let i = 0; i < 10; ++i) {
-        addAtom(mouse.x + Math.random() - 0.5, mouse.y + Math.random() - 0.5);
+        addAtom(mouse.x + spread * (Math.random() - 0.5), mouse.y + spread * (Math.random() - 0.5));
       }
     }
   });
@@ -177,7 +164,7 @@ function entropy1(el) {
 
   //add atoms
   let atom = [];
-  for (let i = 0; i < 25; ++i) {
+  for (let i = 0; i < 100; ++i) {
     addAtom((Math.random() * settings.width) / 4.5 + settings.edge, Math.random() * (settings.height - settings.edge * 2) + settings.edge);
     addAtom(settings.width - (Math.random() * settings.width) / 4.5 - settings.edge, Math.random() * (settings.height - settings.edge * 2) + settings.edge);
   }
@@ -266,13 +253,39 @@ function entropy1(el) {
     }
   }
 
+  function counter() {
+    let left = 0;
+    let right = 0;
+    let midpoint = canvas.width / 2;
+    for (let i = 0, len = atom.length; i < len; ++i) {
+      if (atom[i].position.x > midpoint) {
+        left++;
+      } else {
+        right++;
+      }
+    }
+    return { left: left, right: right };
+  }
+
+  function workDisplay() {
+    ctx.fillStyle = "#fff";
+    const work = rotor.angularSpeed * 5000;
+    ctx.fillRect(175, 190, work, 20);
+    // ctx.fillRect(290, canvas.height, 20, -work);
+  }
+
   function cycle() {
-    settings.cycle++;
-    Engine.update(engine, 16.666);
-    speedControl();
-    if (rotor.angularSpeed < 0.03) rotor.torque = settings.rotorTorque * rotor.inertia * 0.00001;
-    draw();
-    if (!settings.pause) requestAnimationFrame(cycle);
+    if (checkVisible(canvas)) {
+      settings.cycle++;
+      for (let i = 0; i < settings.timeRate; ++i) {
+        Engine.update(engine, 16.666);
+        speedControl();
+        if (rotor.angularSpeed < 0.03) rotor.torque = settings.rotorTorque * rotor.inertia * 0.00001;
+      }
+      draw();
+      // workDisplay();
+    }
+    requestAnimationFrame(cycle);
   }
   requestAnimationFrame(cycle);
 }

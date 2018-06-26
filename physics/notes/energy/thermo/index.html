@@ -56,8 +56,8 @@
 			<p>The
 				<strong>first law of thermodynamics</strong> says that the change in internal energy of a system is equal to heat flow into a
 				system plus work done by the system.</p>
-			<h1>$$\Delta U = Q - W$$</h1>
-			\( U \) = total internal energy of a system [J]
+			<h1>$$\Delta E = Q - W$$</h1>
+			\( E \) = total internal energy of a system [J]
 			<br>\( Q \) = Heat, thermal energy added(+) or removed(-) from system [J]
 			<br>\( W \) = work done by a system [J]
 		</div>
@@ -68,7 +68,7 @@
 			increase of decrease in temperature?
 			<details>
 				<summary>solution</summary>
-				$$\Delta U = Q - W$$ $$\Delta U = -200 - 100$$ $$\Delta U = -300\,\mathrm{J}$$ $$\text{The gas will decrease in temperature}$$
+				$$\Delta E = Q - W$$ $$\Delta E = -200 - 100$$ $$\Delta E = -300\,\mathrm{J}$$ $$\text{The gas will decrease in temperature}$$
 			</details>
 		</div>
 
@@ -79,63 +79,109 @@
 		the energy loss for the ball. How could the ball have lost energy?
 		<details>
 			<summary>solution</summary>
-			<p>Find the difference between the experimental kinetic energy and the calculated kinetic energy.</p>
-			$$\Delta KE = \tfrac{1}{2}mv^{2} - \tfrac{1}{2}mv^{2}$$ $$\Delta KE = \tfrac{1}{2}(0.43)(26.2)^{2} - \tfrac{1}{2}(0.43)(20.0)^{2}$$
-			$$\Delta KE = 147.6 - 86$$ $$\Delta KE = 61.6 \, \mathrm{J}$$ $$\text{The energy loss was probably from friction.}$$
+			$$\text{energy difference = calculated - experimental}$$ $$\Delta E = \tfrac{1}{2}mv^{2} - \tfrac{1}{2}mv^{2}$$ $$\Delta
+			E = \tfrac{1}{2}(0.43)(26.2)^{2} - \tfrac{1}{2}(0.43)(20.0)^{2}$$ $$\Delta E = 147.6\, \mathrm{J} - 86\, \mathrm{J}$$
+			$$\Delta E = 61.6 \, \mathrm{J}$$ $$\text{The energy loss was probably from friction.}$$
 		</details>
 		</div>
-		<h1 class='underlined'>The content below is in progress</h1>
-
-
-		<h1 class='underlined'>Temperature</h1>
-
-		<h1 class='underlined'>Entropy</h1>
+		<h1 class='underlined' id="entropy">Entropy</h1>
 		<p>
 			<strong>Entropy</strong> is hard to define. Several fields use the term to describe slightly different ideas. The different definitions
 			of entropy are all loosely centered around the idea that entropy measures disorder. A high entropy system of particles
 			is not organized. A low entropy system is very orderly. But how do you measure order?
 		</p>
-		<p>Well, order is whatever you decide. Generally it is a state of a system that is able to do work. In the simulation below,
-			the work we want done is rotating the rotor. What state of the system would make the rotor turn?</p>
-
-		<p>Click play and then click the simulation several times to add particles according to your definition of low entropy. If
-			you chose well the rotor will turn on its own.</p>
-		<canvas class='center' id='entropy1' height='300' width='600'> </canvas>
-		<button id="pause1" style="width: 60px;">play</button>
-		<button id="clear1">clear</button>
-		rotor torque
-		<input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.05" value="0">
-
-		<br>
 		<p>
-			When the particles are evenly spread out the system is in high entropy. Adjust the slider to power the rotor. The spinning
-			rotor lowers entropy and puts the system back in a state that can do work. Turn off the rotor and it will turn on it's
-			own until it runs out of entropy.
+			Well, order is whatever you decide. Generally it is a state of a system that is able to do work. In the simulation below,
+			the work we want done is rotating the rotor. What state of the system would make the rotor turn?
 		</p>
 
 		<p>
-			Entropy can be defined in many other ways. Order defined as dispersal of temperature is useful for understanding engines.
-			If a system has high entropy, the temperature is the same throughout the system. A low entropy system might have a sections
+			Click the clear button to remove the particles. Click inside the simulation to add some particles. Try to place the particles
+			in a low entropy state. If you chose well the rotor will turn on its own until it runs out of entropy.
+		</p>
+		<canvas class='center' id='entropy1' height='300' width='600'> </canvas>
+
+		<style>
+			.wrapper {
+				display: grid;
+				grid-gap: 0px;
+				grid-template-columns: 200px 200px 200px;
+			}
+
+			.a {
+				grid-column: 1;
+				grid-row: 1;
+			}
+
+			.b {
+				grid-column: 2;
+				grid-row: 1;
+			}
+
+			.c {
+				grid-column: 3;
+				grid-row: 1;
+			}
+		</style>
+		<div class="wrapper">
+			<div class="a center">
+				time rate
+				<br>
+				<input type="range" id='time-rate-slider' min="0" max="10" step="1" value="1">
+			</div>
+			<div class="b center">
+				<button id="clear1">clear</button>
+			</div>
+			<div class="c center">
+				external rotor torque
+				<br>
+				<input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.05" value="0">
+			</div>
+
+		</div>
+		<p>
+			When the particles are evenly spread out the system is in high entropy. If your system gets in this state, adjust the slider
+			to power the rotor from an external power source. The spinning rotor lowers entropy and puts the system back in a state
+			that can do work.
+		</p>
+
+		<p>
+			Entropy can be defined in many other ways. Entropy as dispersal of temperature is useful for understanding engines. If a
+			system has high entropy, the temperature is the same throughout the system. A low entropy system might have a sections
 			with very low or very high temperature. These pockets of temperature difference can be made to do work, like in a
 			<a href="http://www.animatedengines.com/">combustion engine
 			</a>.
 		</p>
-		<p>In chemical reactions, entropy is defined as low before an irreversible reaction or when chemical equilibrium is unbalanced.
-			Some paper has low entropy before I burn it. After it's been burned it has high entropy.</p>
+		<p>
+			In chemical reactions, entropy is defined as low before an irreversible reaction or when chemical equilibrium is unbalanced.
+			Paper has low entropy before I burn it. After it's been burned, it has high entropy.
+		</p>
+		<p>
+			Energy is required for power plants, cell phones, cars, life. Energy only produces work when a system is in a low entropy
+			state as defined by each system. Low entropy for a car is gasoline. A human will not get work from gasoline, we need tacos.
+		</p>
 
 		<h1 class='underlined'>Arrow of Time</h1>
-		<p>The laws of physics are time reversible. Nature behaves the same moving forwards or backwards in time. The only exception
-			is entropy. The second law of thermodynamics states that entropy of an isolated system doesn't decrease over time.
-		</p>
-
 		<p>
-			At the start of time entropy was very low. As time moves forward entropy increases. This means there is less entropy available
-			to do work.
+			The laws of physics are time reversible. Nature behaves the same moving forwards or backwards in time. The only exception
+			is entropy. (also the weak nuclear force)
 		</p>
-
-		<p>Stars convert low entropy hydrogen into higher entropy Helium and heat. As the heat from the sun strikes the Earth it lowers
-			the Earth's entropy because it creates energy density differences. Those energy differences are harnessed by plants, and
-			weather patterns, and solar panels to produce work.</p>
+		<div class="definition">
+			The second law of thermodynamics states that entropy of an isolated system doesn't decrease over time.
+		</div>
+		<p>
+			The second law is true no matter how you define entropy. As time moves forward entropy either increases or stays the same.
+			Over time things get messy. There is less entropy available to do work. It's a bit pessimistic.
+		</p>
+		<p>
+			Yet, it seem like the Earth's entropy is lowering. Life and technology are low entropy states, but the Earth isn't isolated.
+			We take in low entropy light from the sun and radiate high entropy light into space.
+		</p>
+		<p>
+			Inside the Sun, nuclear fusion converts low entropy hydrogen into higher entropy helium and heat. Heat in the form of light
+			strikes the Earth. Sunlight is harnessed by plants to produce work. We are able to order our world because the system
+			of Earth is able to get work out of sunlight. All sources of low entropy come from the sun, except for nuclear and geothermal.
+		</p>
 
 
 	</article>
