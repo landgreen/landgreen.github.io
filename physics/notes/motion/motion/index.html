@@ -23,7 +23,6 @@
 	<script src="../../../lib/katex/katex.min.js"></script>
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
-	<script src='../../../lib/randomColor.min.js'></script>
 	<link rel="stylesheet" href="../../../style.css">
 </head>
 
@@ -78,8 +77,8 @@
 			<strong>Example:</strong> A car is traveling at 20 m/s for 80 seconds. How far does the car travel?
 			<details>
 				<summary>solution</summary>
-				$$\begin{aligned} v &= \small\frac{\Delta x}{\Delta t} \\ 20\, \mathrm{\tfrac{m}{s} }&= \small\frac{\Delta x}{80\, \mathrm{s}}
-				\\ (20 \mathrm{\tfrac{m}{s}} )(80\, \mathrm{s}) &= \Delta x \\ 1600\, \mathrm{m} &= \Delta x \end{aligned}$$
+				$$ v = \frac{\Delta x}{\Delta t} $$ $$ v \Delta t= \Delta x$$ $$ (20 \mathrm{\tfrac{m}{s}}) (80\, \mathrm{s}) = \Delta x
+				$$ $$ 1600\, \mathrm{m} = \Delta x $$
 				<canvas class='center' id="canvas5" width='600' height='150'> </canvas>
 			</details>
 		</div>
@@ -89,17 +88,18 @@
 			<details>
 				<summary>solution</summary>
 				$$10 \, \mathrm{km} = 10(1,000) \mathrm{m} = 10,000 \, \mathrm{m}$$ $$1\, \mathrm{h} \left(\frac{60\, \mathrm{min}}{1\, \mathrm{h}}\right)\left(\frac{60\,
-				\mathrm{s}}{1\, \mathrm{min}}\right) = 3,600 \mathrm{s}$$ $$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{10,000\, \mathrm{m}}{3,600\,
+				\mathrm{s}}{1\, \mathrm{min}}\right) = 3,600 \,\mathrm{s}$$ $$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{10,000\, \mathrm{m}}{3,600\,
 				\mathrm{s}}$$ $$v = 2.7\, \mathrm{\tfrac{m}{s}}$$
 			</details>
 		</div>
 		<div class='example'>
 			<strong>Example:</strong> Google maps says Las Vegas is 4 hours away from Los Angeles. Google says it is 270 miles away. How fast
-			does google think I will drive on average? Answer this one in miles/hour.
+			does google think I will drive? Answer this one in miles/hour.
 			<details>
 				<summary>solution</summary>
 				$$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{270\, \mathrm{miles} }{4\, \mathrm{hour}}$$ $$v = 67.5\, \mathrm{\tfrac{miles}{hour}
 				}$$
+				<p>The speed limit for most of that trip is 70 mph. Google is assuming that everyone is under the speed limit.</p>
 			</details>
 		</div>
 		<div class='example'>
@@ -166,6 +166,7 @@
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
 	</div>
+	<script src='../../../lib/randomColor.min.js'></script>
 	<script src="motion.js"></script>
 	<script src="https://d3js.org/d3.v3.min.js"></script>
 	<script src='../../../lib/function-plot.js'></script>

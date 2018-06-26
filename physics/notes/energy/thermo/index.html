@@ -95,27 +95,44 @@
 			of entropy are all loosely centered around the idea that entropy measures disorder. A high entropy system of particles
 			is not organized. A low entropy system is very orderly. But how do you measure order?
 		</p>
+		<p>Well, order is whatever you decide. Generally it is a state of a system that is able to do work. In the simulation below,
+			the work we want done is rotating the rotor. What state of the system would make the rotor turn?</p>
 
-		<canvas class='center' id='entropy1' height='300' width='600' onclick="entropy(this)"> </canvas>
+		<p>Click play and then click the simulation several times to add particles according to your definition of low entropy. If
+			you chose well the rotor will turn on its own.</p>
+		<canvas class='center' id='entropy1' height='300' width='600'> </canvas>
+		<button id="pause1" style="width: 60px;">play</button>
+		<button id="clear1">clear</button>
+		rotor torque
+		<input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.05" value="0">
+
+		<br>
+		<p>
+			When the particles are evenly spread out the system is in high entropy. Adjust the slider to power the rotor. The spinning
+			rotor lowers entropy and puts the system back in a state that can do work. Turn off the rotor and it will turn on it's
+			own until it runs out of entropy.
+		</p>
 
 		<p>
-			Entropy can also be thought of as the dispersal of temperature in a system. If a system is in equilibrium then entropy is
-			high and the temperature is the same throughout the system. A low entropy system might have a section with very low or
-			very high temperature. These pockets of temperature difference can be made to do work, like in a combustion engine.
+			Entropy can be defined in many other ways. Order defined as dispersal of temperature is useful for understanding engines.
+			If a system has high entropy, the temperature is the same throughout the system. A low entropy system might have a sections
+			with very low or very high temperature. These pockets of temperature difference can be made to do work, like in a
+			<a href="http://www.animatedengines.com/">combustion engine
+			</a>.
 		</p>
-
+		<p>In chemical reactions, entropy is defined as low before an irreversible reaction or when chemical equilibrium is unbalanced.
+			Some paper has low entropy before I burn it. After it's been burned it has high entropy.</p>
 
 		<h1 class='underlined'>Arrow of Time</h1>
-		<p>All the equations of physics are reversible. The fundamental laws of Nature don't see time as moving forwards or backwards.
-			The only exception is entropy. The second law of thermodynamics states that entropy of an isolated system doesn't decrease
-			over time.
+		<p>The laws of physics are time reversible. Nature behaves the same moving forwards or backwards in time. The only exception
+			is entropy. The second law of thermodynamics states that entropy of an isolated system doesn't decrease over time.
 		</p>
-		<p>Examples:</p>
 
 		<p>
 			At the start of time entropy was very low. As time moves forward entropy increases. This means there is less entropy available
 			to do work.
 		</p>
+
 		<p>Stars convert low entropy hydrogen into higher entropy Helium and heat. As the heat from the sun strikes the Earth it lowers
 			the Earth's entropy because it creates energy density differences. Those energy differences are harnessed by plants, and
 			weather patterns, and solar panels to produce work.</p>
@@ -127,7 +144,8 @@
 	</div>
 	<script src="energy.js"></script>
 	<script src='../../../lib/matter.min.js'></script>
-	<script src="entropy.js"></script>
+	<script src="entropy1.js"></script>
+	<!-- <script src="entropy2.js"></script> -->
 	<script>
 		renderMathInElement(document.body);
 	</script>

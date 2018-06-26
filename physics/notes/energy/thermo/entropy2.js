@@ -1,5 +1,5 @@
 (function() {
-  var canvas = document.getElementById("entropy1");
+  var canvas = document.getElementById("entropy2");
   var ctx = canvas.getContext("2d");
   ctx.font = "24px Arial";
   ctx.fillStyle = "#aaa";
@@ -8,22 +8,20 @@
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
 })();
 
-function entropy(el) {
+function entropy2(el) {
   el.onclick = null; //stops the function from running on button click
   const canvas = el;
   const ctx = canvas.getContext("2d");
 
-  // let pause = false;
-  // el.addEventListener("mouseleave", function() {
-  //   pause = true;
-  // });
-  // el.addEventListener("mouseenter", function() {
-  //   pause = false;
-  //   if (!pause) requestAnimationFrame(cycle);
-  // });
-  // el.addEventListener("click", function() {
-
-  // });
+  let pause = false;
+  el.addEventListener("mouseleave", function() {
+    pause = true;
+  });
+  el.addEventListener("mouseenter", function() {
+    pause = false;
+    if (!pause) requestAnimationFrame(cycle);
+  });
+  el.addEventListener("click", function() {});
 
   const Engine = Matter.Engine,
     World = Matter.World,
@@ -82,8 +80,8 @@ function entropy(el) {
   addWall(-wide, 0, wide, settings.height + wide); //left wall
   addWall(settings.width, 0, wide, settings.height + wide); //right wall
   //inner walls
-  addWall(200, -wide, 200, 215); //top center
-  addWall(200, -wide + 285, 200, 275); //bottom center
+  addWall(200, -wide, 200, 225); //top center
+  addWall(200, -wide + 275, 200, 275); //bottom center
 
   //add rotor
   const rotor1 = Matter.Bodies.rectangle(300, 300, 10, 200, { density: 0.01 });
@@ -117,16 +115,22 @@ function entropy(el) {
 
   //add atoms
   const atom = [];
-  for (let i = 0; i < 400; ++i) {
+  for (let i = 0; i < 500; ++i) {
     const len = atom.length;
-    atom[len] = Matter.Bodies.polygon((Math.random() * settings.width) / 3, Math.random() * settings.height, 0, settings.radius, {
-      friction: 0,
-      frictionAir: 0,
-      // density: 1,
-      frictionStatic: 0,
-      restitution: 1, //no energy loss on collision
-      inertia: Infinity //no rotation
-    });
+    atom[len] = Matter.Bodies.polygon(
+      Math.random() < 0.5 ? (Math.random() * settings.width) / 3 : settings.width - (Math.random() * settings.width) / 3,
+      Math.random() * settings.height,
+      0,
+      settings.radius,
+      {
+        friction: 0,
+        frictionAir: 0,
+        // density: 1,
+        frictionStatic: 0,
+        restitution: 1, //no energy loss on collision
+        inertia: Infinity //no rotation
+      }
+    );
     const speed = 1;
     Matter.Body.setVelocity(atom[len], {
       x: speed * (Math.random() - 0.5),
@@ -152,7 +156,7 @@ function entropy(el) {
       ctx.fillStyle = "#ddd";
       ctx.fill();
       ctx.lineWidth = 2;
-      ctx.strokeStyle = "#333";
+      ctx.strokeStyle = "#777";
       ctx.stroke();
     }
 
@@ -170,12 +174,16 @@ function entropy(el) {
       ctx.lineTo(vertices[j].x, vertices[j].y);
     }
     ctx.lineTo(vertices[0].x, vertices[0].y);
-    ctx.fillStyle = "#779";
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "#000";
+    ctx.stroke();
+    ctx.fillStyle = "#888";
     ctx.fill();
 
     //draw atoms
     ctx.beginPath();
-    ctx.fillStyle = "#f20";
+    // ctx.fillStyle = "#8bb";
+    ctx.fillStyle = "#f00";
     for (let i = 0, len = atom.length; i < len; ++i) {
       ctx.moveTo(atom[i].position.x, atom[i].position.y);
       ctx.arc(atom[i].position.x, atom[i].position.y, settings.radius, 0, 2 * Math.PI);
@@ -197,9 +205,10 @@ function entropy(el) {
   function cycle() {
     settings.cycle++;
     Engine.update(engine, 16.666);
+    rotor.torque = -0.05;
     speedBoost();
     draw();
-    requestAnimationFrame(cycle);
+    if (!pause) requestAnimationFrame(cycle);
   }
   requestAnimationFrame(cycle);
 }

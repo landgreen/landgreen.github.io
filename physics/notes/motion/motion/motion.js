@@ -148,5 +148,5 @@ motion("canvas1", true, false, false, false, 300, 0, 0, false);
 motion("canvas2", true, true, false, false, 300, 0, 0, false);
 motion("canvas3", true, true, true, false, 300, 80, 0, true);
 motion("canvas5", true, true, true, false, 0, 20, 0, false);
-motion("canvas4", true, true, true, true, 300, 0, 9.8, true);
+motion("canvas4", true, true, true, true, 300, 0, -9.8, true);
 motion("canvas0", false, true, true, true, 300, 0, 4.5, true);
