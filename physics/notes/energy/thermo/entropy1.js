@@ -169,7 +169,7 @@ function entropy1() {
 
   //add atoms
   let atom = [];
-  for (let i = 0; i < 100; ++i) {
+  for (let i = 0; i < 40; ++i) {
     addAtom((Math.random() * settings.width) / 4.5 + settings.edge, Math.random() * (settings.height - settings.edge * 2) + settings.edge);
     addAtom(settings.width - (Math.random() * settings.width) / 4.5 - settings.edge, Math.random() * (settings.height - settings.edge * 2) + settings.edge);
   }
@@ -231,6 +231,11 @@ function entropy1() {
     ctx.fillStyle = "#000";
     ctx.fill();
 
+    ctx.beginPath();
+    ctx.arc(rotor.position.x, rotor.position.y, 4, 0, 2 * Math.PI);
+    ctx.fillStyle = "#444";
+    ctx.fill();
+
     //draw atoms
     ctx.beginPath();
     ctx.fillStyle = "#f04"; //"#055";
@@ -242,9 +247,9 @@ function entropy1() {
   };
 
   // particles tend to lose speed, but they also sometimes get moving too fast
-  function speedControl(factor = 1.4) {
+  function speedControl(factor = 1.3) {
     for (let i = 0, len = atom.length; i < len; ++i) {
-      if (atom[i].speed < 1) {
+      if (atom[i].speed < 0.5) {
         Matter.Body.setVelocity(atom[i], {
           x: atom[i].velocity.x * factor,
           y: atom[i].velocity.y * factor
@@ -278,26 +283,28 @@ function entropy1() {
     settings.workDoneBySystemSmoothed = settings.workDoneBySystemSmoothed * 0.98 + settings.workDoneBySystem * 0.02;
     const workDisplay = settings.workDoneBySystemSmoothed * 2000;
     ctx.fillStyle = "#eee";
-    ctx.fillRect(170, 190, 260, 30);
+    const tall = 35;
+    ctx.fillRect(170, 190, 260, tall);
     // ctx.fillStyle = "#e57";
-    ctx.fillRect(170, 240, 260, 30);
+    ctx.fillRect(170, 245, 260, tall);
 
     //display work done by rotor if it isn't powered
     if (settings.rotorTorque == 0) {
       ctx.fillStyle = "#3ff";
-      ctx.fillRect(170, 190, Math.min(workDisplay, 260), 30);
+      ctx.fillRect(170, 190, Math.min(workDisplay, 260), tall);
     } else {
       ctx.fillStyle = "#acc";
-      ctx.fillRect(170, 190, 260, 30);
+      ctx.fillRect(170, 190, 260, tall);
     }
     //display entropy
     ctx.fillStyle = "#f8a";
-    ctx.fillRect(170, 240, 260 - Math.min(Math.abs(counter().entropy) * 260, 260), 30);
+    ctx.fillRect(170, 245, 260 - Math.min(Math.abs(counter().entropy) * 260, 260), tall);
 
     //text
     ctx.fillStyle = "#000";
-    ctx.fillText("work done", 300, 205);
-    ctx.fillText("entropy", 300, 255);
+    ctx.fillText("work done", 300, 210);
+    ctx.fillText("entropy", 300, 262.5);
+    // ctx.fillText("entropy = " + (100 - 100 * Math.abs(counter().entropy)).toFixed(0), 300, 262.5);
   }
 
   function rotorControl() {
