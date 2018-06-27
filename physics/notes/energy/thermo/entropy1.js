@@ -125,11 +125,11 @@ function entropy1() {
 
   //add rotor
   const r = {
-    radius: 190,
+    radius: 180,
     width: 8,
     position: {
       x: 300,
-      y: 90
+      y: 96
     },
     density: 0.005
   };
@@ -180,7 +180,7 @@ function entropy1() {
       radius: radius,
       friction: 0,
       frictionAir: 0,
-      // density: 1,
+      density: 0.002,
       frictionStatic: 0,
       restitution: 1, //no energy loss on collision
       inertia: Infinity //no rotation
@@ -190,6 +190,35 @@ function entropy1() {
       y: speed * (Math.random() - 0.5)
     });
     World.add(engine.world, atom[len]);
+  }
+
+  // particles tend to lose speed, but they also sometimes get moving too fast
+  function speedControl(factor = 1.3) {
+    for (let i = 0, len = atom.length; i < len; ++i) {
+      if (atom[i].speed < 0.5) {
+        Matter.Body.setVelocity(atom[i], {
+          x: atom[i].velocity.x * factor,
+          y: atom[i].velocity.y * factor
+        });
+      } else if (atom[i].speed > 10) {
+        Matter.Body.setVelocity(atom[i], {
+          x: atom[i].velocity.x / factor,
+          y: atom[i].velocity.y / factor
+        });
+      }
+    }
+  }
+
+  function rotorControl() {
+    //external added energy
+    if (rotor.angularSpeed < 0.03) rotor.torque = settings.rotorTorque * rotor.inertia * 0.00001;
+
+    //energy leaves the system when the rotor turns.
+    const energyLossRate = 0.999;
+    // settings.workDoneBySystem = rotor.angularVelocity * (1 - energyLossRate);
+    energyInRotor = rotor.angularVelocity * rotor.angularVelocity * rotor.inertia;
+    Matter.Body.setAngularVelocity(rotor, rotor.angularVelocity * energyLossRate);
+    settings.workDoneBySystem = energyInRotor - rotor.angularVelocity * rotor.angularVelocity * rotor.inertia;
   }
 
   const draw = function() {
@@ -246,42 +275,25 @@ function entropy1() {
     ctx.fill();
   };
 
-  // particles tend to lose speed, but they also sometimes get moving too fast
-  function speedControl(factor = 1.3) {
-    for (let i = 0, len = atom.length; i < len; ++i) {
-      if (atom[i].speed < 0.5) {
-        Matter.Body.setVelocity(atom[i], {
-          x: atom[i].velocity.x * factor,
-          y: atom[i].velocity.y * factor
-        });
-      } else if (atom[i].speed > 10) {
-        Matter.Body.setVelocity(atom[i], {
-          x: atom[i].velocity.x / factor,
-          y: atom[i].velocity.y / factor
-        });
-      }
-    }
-  }
-
-  function counter() {
-    let left = 0;
-    let right = 0;
-    let midpoint = canvas.width / 2;
-    for (let i = 0, len = atom.length; i < len; ++i) {
-      if (atom[i].position.x > midpoint) {
-        left++;
-      } else {
-        right++;
-      }
-    }
-
-    const entropy = (left - right) / 300;
-    return { left: left, right: right, entropy: entropy };
-  }
-
   function dataDisplay() {
+    function counter() {
+      let left = 0;
+      let right = 0;
+      let midpoint = canvas.width / 2;
+      for (let i = 0, len = atom.length; i < len; ++i) {
+        if (atom[i].position.x > midpoint) {
+          left++;
+        } else {
+          right++;
+        }
+      }
+
+      const entropy = (left - right) / 200;
+      return { left: left, right: right, entropy: entropy };
+    }
+
     settings.workDoneBySystemSmoothed = settings.workDoneBySystemSmoothed * 0.98 + settings.workDoneBySystem * 0.02;
-    const workDisplay = settings.workDoneBySystemSmoothed * 2000;
+    const workDisplay = settings.workDoneBySystemSmoothed * 3000;
     ctx.fillStyle = "#eee";
     const tall = 35;
     ctx.fillRect(170, 190, 260, tall);
@@ -307,18 +319,6 @@ function entropy1() {
     // ctx.fillText("entropy = " + (100 - 100 * Math.abs(counter().entropy)).toFixed(0), 300, 262.5);
   }
 
-  function rotorControl() {
-    //external added energy
-    if (rotor.angularSpeed < 0.03) rotor.torque = settings.rotorTorque * rotor.inertia * 0.00001;
-
-    //energy leaves the system when the rotor turns.
-    const energyLossRate = 0.999;
-    // settings.workDoneBySystem = rotor.angularVelocity * (1 - energyLossRate);
-    energyInRotor = rotor.angularVelocity * rotor.angularVelocity * rotor.inertia;
-    Matter.Body.setAngularVelocity(rotor, rotor.angularVelocity * energyLossRate);
-    settings.workDoneBySystem = energyInRotor - rotor.angularVelocity * rotor.angularVelocity * rotor.inertia;
-  }
-
   function cycle() {
     if (checkVisible(canvas)) {
       settings.cycle++;
@@ -328,7 +328,7 @@ function entropy1() {
         rotorControl();
       }
       draw();
-      dataDisplay();
+      // dataDisplay();
     }
     requestAnimationFrame(cycle);
   }
