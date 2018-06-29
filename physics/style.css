@@ -244,6 +244,7 @@ th {
   display: flex;
   flex-direction: column;
 }
+
 /* front page grid ________________________________________________*/
 .listing-style {
   overflow: hidden;
@@ -290,6 +291,7 @@ header {
   color: #fff;
   padding: 0.1em 0em 0.1em 0em;
   text-align: center;
+  position: relative;
   width: 100%;
 }
 
@@ -372,5 +374,3 @@ header h1 a:hover {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
-
-/* range sliders */
