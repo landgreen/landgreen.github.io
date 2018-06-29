@@ -96,9 +96,9 @@ const wave = function() {
   );
 
   function drawSineWave() {
-    let d = "M-1 " + (-Math.sin(2 * Math.PI / settings.wavelength * (-1 + settings.phase)) * settings.amplitude + origin.y);
+    let d = "M-1 " + (-Math.sin(((2 * Math.PI) / settings.wavelength) * (-1 + settings.phase)) * settings.amplitude + origin.y);
     for (let x = 0; x < settings.width; ++x) {
-      d += " L" + x + " " + (-Math.sin(2 * Math.PI / settings.wavelength * (x - 1 + settings.phase)) * settings.amplitude + origin.y);
+      d += " L" + x + " " + (-Math.sin(((2 * Math.PI) / settings.wavelength) * (x - 1 + settings.phase)) * settings.amplitude + origin.y);
     }
     d += "V500 L-100 500";
     sineWaveTarget.setAttribute("d", d);
@@ -108,7 +108,7 @@ const wave = function() {
     //repeating animation function
     settings.phase -= settings.velocity / 60;
     settings.time += 1 / 60;
-    document.getElementById("time").innerHTML = settings.time.toFixed(1) + "s";
+    document.getElementById("time").innerHTML = settings.time.toFixed(1) + " s";
     drawSineWave();
     if (!pause) window.requestAnimationFrame(render);
   }
