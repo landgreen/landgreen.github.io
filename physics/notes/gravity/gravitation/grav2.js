@@ -74,7 +74,7 @@ function grav2(el) {
 
   function cycle() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    Particle.integration(q);
+    Particle.integration(q, 0.1);
     Particle.scalarField(q, ctx, canvas, fMag);
     // Particle.vectorColorField(q, ctx, canvas, fMag);
     Particle.bounds(q, canvas);

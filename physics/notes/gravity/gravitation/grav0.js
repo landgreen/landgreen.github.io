@@ -64,7 +64,7 @@
   function cycle() {
     if (window.pageYOffset < height) {
       ctx.clearRect(0, 0, width, height);
-      Particle.integration(q);
+      Particle.integration(q, 0.1);
       Particle.drawAll(q, ctx);
       Particle.bounds(q, canvas);
     }

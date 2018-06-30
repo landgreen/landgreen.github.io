@@ -73,7 +73,7 @@ class Particle {
   // }
 
   // http://exploratoria.github.io/exhibits/astronomy/gravitating-system/
-  static integration(who) {
+  static integration(who, GravityConst = 0.05) {
     const minDistance2 = 100;
     //change position from velocity
     const len = who.length;
@@ -87,7 +87,7 @@ class Particle {
         const dx = who[i].position.x - who[j].position.x;
         const dy = who[i].position.y - who[j].position.y;
         const d2 = Math.max(dx * dx + dy * dy, minDistance2);
-        const mag = 0.05 / d2 / Math.sqrt(d2);
+        const mag = GravityConst / d2 / Math.sqrt(d2);
         who[i].velocity.x -= mag * who[j].mass * dx;
         who[i].velocity.y -= mag * who[j].mass * dy;
         who[j].velocity.x += mag * who[i].mass * dx;

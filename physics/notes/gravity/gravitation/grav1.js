@@ -82,7 +82,7 @@ function grav1(el) {
   reset();
 
   function cycle() {
-    Particle.integration(q);
+    Particle.integration(q, 0.1);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     Particle.vectorField(q, ctx, canvas, vMag);
     Particle.drawAll(q, ctx);
