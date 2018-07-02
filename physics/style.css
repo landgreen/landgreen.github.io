@@ -46,7 +46,7 @@ body {
   overflow-x: hidden;
 }
 article {
-  padding: 0.1em;
+  padding: 5px;
   margin: 0 auto;
   max-width: 600px;
 }
@@ -81,11 +81,9 @@ input:focus {
 
 canvas {
   margin: 0.3em;
-  /*border: 1px solid #999;*/
   box-shadow: 2px 2px 8px #aaa;
   border-radius: 5px;
   user-select: none;
-  /*cursor: crosshair;*/
 }
 a {
   text-decoration: none;
@@ -107,8 +105,8 @@ hr {
 ::selection {
   color: white;
   background: #2793c7;
-  /*background: #0f0;*/
 }
+
 pre {
   overflow-x: auto;
   background-color: #eee;
@@ -120,6 +118,7 @@ table {
   border: 1px solid #eee;
   width: 100%;
 }
+
 tr:hover {
   background: #f4f4f4;
 }
@@ -310,6 +309,19 @@ header h1 a:hover {
   text-decoration: none;
 }
 
+@media screen and (max-width: 650px) {
+  header h1 {
+    font-size: 3em;
+  }
+  .definition {
+    padding: 10px;
+    font-size: 100%;
+  }
+  .katex {
+    font-size: 1.2em;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .side-graphics {
     visibility: hidden;
@@ -348,28 +360,4 @@ header h1 a:hover {
   to {
     opacity: 1;
   }
-}
-
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 200px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
 }
