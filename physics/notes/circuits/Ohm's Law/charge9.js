@@ -1,6 +1,7 @@
 (function() {
   var canvas = document.getElementById("charge9");
   var ctx = canvas.getContext("2d");
+  canvas.width = document.getElementsByTagName("article")[0].clientWidth;
   ctx.font = "24px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";

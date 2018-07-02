@@ -80,7 +80,7 @@ input:focus {
 }
 
 canvas {
-  margin: 0.3em;
+  margin: 0px;
   box-shadow: 2px 2px 8px #aaa;
   border-radius: 5px;
   user-select: none;
