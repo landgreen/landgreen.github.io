@@ -10,7 +10,6 @@ function checkVisible(elm) {
 const setup0 = function() {
   var canvas = document.getElementById("cloud-chamber");
   var ctx = canvas.getContext("2d");
-  // ctx.font = "300 30px Roboto";
   ctx.font = "26px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";

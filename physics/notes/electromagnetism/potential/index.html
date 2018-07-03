@@ -2,15 +2,16 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for high school physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for high school physics.">
 	<meta property="og:title" content="Physics Notes">
 	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for high school physics.">
+
 	<title>Electric Potential</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -241,18 +242,18 @@
 				<br>\(r\) = distance between the center of each charge [m, meters]
 
 		</div>
-		<p>Here is a simulation of electric potential as a scalar field. You can think of the charges like mountains and valleys.
-			A similar scalar field for gravity would look like a
-			<a href="http://geodesy.curtin.edu.au/research/models/GGMplus/">topographical map</a>.</p>
+		<p>
+			Here is a simulation of electric potential as a scalar field. You can think of the charges like mountains and valleys. A
+			similar scalar field for gravity would look like a
+			<a href="http://geodesy.curtin.edu.au/research/models/GGMplus/">topographical map</a>.
+		</p>
 
-		<!-- style="filter: blur(1px)" -->
-		<canvas class='center' id='charge5' height='300' width='600' onclick="charges5(this)"> </canvas>
+		<canvas class='center' id='charge5' height='300' onclick="charges5(this)"> </canvas>
 		<p>Click the simulations a few times to push the electrons around.</p>
-		<canvas class='center' id='charge6' height='300' width='600' onclick="charges6(this)"> </canvas>
-
+		<canvas class='center' id='charge6' height='300' onclick="charges6(this)"> </canvas>
 
 		<div class='example'>
-			<b>Example:</b> A
+			<strong>Example:</strong> A
 			<a href="https://en.wikipedia.org/wiki/Scanning_electron_microscope">scanning electron microscope</a> can achieve resolution better than 1 nanometer. It produces images by scanning with a
 			focused beam of electrons. The electrons are propelled at a sample target with a voltage between 5,000 V and 25,000 V.
 			Generally the higher voltage gives better resolution.
@@ -267,12 +268,12 @@
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> The electric potential at 0.1 m from a charge is 10 J/C. If I were to bring another 4 μC charge to 0.1 m
-			away from the original charge how much energy would that take?
+			<strong>Example:</strong> The electric potential at 0.1 m from a charge is 10 J/C. If I were to bring another 4 μC charge to 0.1
+			m away from the original charge how much energy would that take?
 			<details>
 				<summary>solution</summary>
-				$$ V = \frac{\color{red}{k_{e}q_{1}}}{\color{red}{r}} $$ $$ U_{e} = \frac{\color{red}{k_{e}q_{1}}{q_2}}{\color{red}{r}} $$
-				$$ U_{e} = V q $$ $$ U_{e} = (10)(4 \times 10^{-6}) $$ $$ U_{e} = 40 \times 10^{-6} \, \mathrm{J} $$
+				$$ V = \frac{\color{red}{k_{e}q_{1}}}{\color{red}{r}} $$ $$ U_{e} = \frac{ {\color{red}{k_{e}q_{1} } }{q_2}}{\color{red}{r}}
+				$$ $$ U_{e} = V q $$ $$ U_{e} = (10)(4 \times 10^{-6}) $$ $$ U_{e} = 40 \times 10^{-6} \, \mathrm{J} $$
 
 			</details>
 		</div>

@@ -2,15 +2,16 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for high school physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for high school physics.">
 	<meta property="og:title" content="Physics Notes">
 	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for high school physics.">
+
 	<title>Electric Fields</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -19,7 +20,6 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
-	<script src='../../../lib/chargeclass.js'></script>
 </head>
 
 <body>
@@ -37,17 +37,12 @@
 			<a href='https://www.youtube.com/watch?v=63FnT0W-Hxc'>Electric fields</a> predict the electric force of an imaginary +1 C test charge at a location. This is useful when you
 			only know about one charge instead of the pair, but remember the test charge doesn't exist.</p>
 		<p>Click the simulations to push the electrons out of position.</p>
-		<canvas id='charge3' height='300' width='600' onclick="charges3(this)"> </canvas>
+		<canvas id='charge3' height='300' onclick="charges3(this)"> </canvas>
 		<p>Why does the field go to zero when the protons and electrons are in atoms?</p>
-		<canvas id='charge4' height='300' width='600' onclick="charges4(this)"> </canvas>
+		<canvas id='charge4' height='300' onclick="charges4(this)"> </canvas>
 		<h2 class='underlined'>Electric Field Equation</h2>
 
 		<p>We get the electric field equation by simply setting one q to +1 C in the electrostatic force equation.</p>
-		<!-- <details class='derive'>
-			<summary>derivation of the electric field equation</summary>
-			$$F = \frac{k_{e}q_{1}q_{2}}{r^{2}}$$ $$E = \frac{F}{q}$$ $$F = Eq$$ $$Eq = \frac{k_{e}q_{1}q_{2}}{r^{2}}$$ $$E = \frac{k_{e}q}{r^{2}}$$
-
-		</details> -->
 		<div class='definition'>
 			<svg style="display: block; margin: auto" width="400" height="110" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg"
 			 viewBox="0 50 400 110">
@@ -660,8 +655,7 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
-	<!-- <script src="vectorfield.js"></script> -->
-	<script src="chargeclass.js"></script>
+	<script src='../../../lib/chargeclass.js'></script>
 	<script src="charge3.js"></script>
 	<script src="charge4.js"></script>
 </body>

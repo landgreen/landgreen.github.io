@@ -2,15 +2,16 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for high school physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for high school physics.">
 	<meta property="og:title" content="Physics Notes">
 	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for high school physics.">
+
 	<title>Electrostatics</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -19,7 +20,6 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
-	<script src='../../../lib/chargeclass.js'></script>
 </head>
 
 <body>
@@ -127,9 +127,9 @@
 			form atoms.
 		</p>
 
-		<canvas id='charge0' height='300' width='600' onclick="charges0(this)"> </canvas>
+		<canvas id='charge0' height='300' onclick="charges0(this)"> </canvas>
 		<p>They love making atoms. Try poking the simulations with your mouse.</p>
-		<canvas id='charge1' height='300' width='600' onclick="charges1(this)"> </canvas>
+		<canvas id='charge1' height='300' onclick="charges1(this)"> </canvas>
 
 		<h2 class='underlined' id='Coulombs-Law'>Coulomb's Law</h2>
 		<p>After the success of Newton's
@@ -236,9 +236,9 @@
 			a conductive material the charge will quickly spread out because like charges repel.</p>
 		<p>In this simulation electrons are removed from the right and added to the left to produce a messy looking flow of charge.
 		</p>
-		<canvas id='charge2' height='250' width='600' onclick="charges2(this)"> </canvas>
+		<canvas id='charge2' height='250' onclick="charges2(this)"> </canvas>
 		<p>Why is the current higher when the atoms are closer together?</p>
-		<canvas id='charge4' height='250' width='600' onclick="charges4(this)"> </canvas>
+		<canvas id='charge4' height='250' onclick="charges4(this)"> </canvas>
 		<p>A gap in the wire will reduce the flow of electrons.</p>
 
 
@@ -268,7 +268,7 @@
 				<input id='separation' type="number" value="25" min="10" max='50' step="1"> &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; rows =
 				<input id='rows' type="number" value="3" min="1" max="13" step="2">
 			</div>
-			<canvas id='charge3' height='250' width='600' onclick="charges3(this)"></canvas>
+			<canvas id='charge3' height='250' onclick="charges3(this)"></canvas>
 		</div>
 
 		<br>
@@ -326,7 +326,7 @@
 			<a href="https://en.wikipedia.org/wiki/Triboelectric_effect#Triboelectric_series">TriboElectric Series
 			</a> lists which materials will become electrically charged after they are rubbed together.</p>
 
-		<!-- <canvas id = 'charges2' height = '400' width='600' onclick="charges2(this)"> </canvas> -->
+		<!-- <canvas id = 'charges2' height = '400'  onclick="charges2(this)"> </canvas> -->
 		<!-- https://en.wikipedia.org/wiki/File:Cat_demonstrating_static_cling_with_styrofoam_peanuts.jpg -->
 		<div class='example'>
 			<strong>Question:</strong> If you rubbed polystyrene foam (styrofoam) on a
@@ -353,6 +353,7 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
+	<script src='../../../lib/chargeclass.js'></script>
 	<script src="charge0.js"></script>
 	<script src="charge1.js"></script>
 	<script src="charge2.js"></script>
