@@ -4,6 +4,7 @@
 functionPlot({
   width: 625,
   height: 450,
+  disableZoom: true,
   target: "#T-vs-f",
   tip: {
     xLine: true, // dashed line parallel to y = 0

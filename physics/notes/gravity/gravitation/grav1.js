@@ -17,8 +17,8 @@ function grav1(el) {
 
   function setupCanvas() {
     // canvas.width = window.innerWidth;
-    canvas.width = Math.min(document.body.clientWidth, 1200); //window.innerWidth; //document.body.scrollWidth;
-    canvas.height = 400;
+    // canvas.width = Math.min(document.body.clientWidth, 1200); //window.innerWidth; //document.body.scrollWidth;
+    // canvas.height = 400;
     width = canvas.width;
     height = canvas.height;
     // ctx.globalCompositeOperation = "lighter";

@@ -10,11 +10,14 @@ function vectorDiagram() {
   var canvas = document.getElementById("myCanvas");
   var ctx = canvas.getContext("2d");
   //find the width of the parent node and set the canvas to that wdith
-  ctx.font = "15px Arial";
+  ctx.font = "18px Arial";
+  ctx.lineWidth = 1.5;
 
   var settings = {
     x: canvas.width * 0.5,
-    y: canvas.height * 0.5
+    y: canvas.height * 0.5,
+    colorX: "#d42",
+    colorY: "#38d"
   };
 
   var vector = {
@@ -56,27 +59,27 @@ function vectorDiagram() {
     //clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     //right angle mark
-    if (Math.abs(vector.x) > 50 && Math.abs(vector.y) > 50) {
+    if (Math.abs(vector.x) > 25 && Math.abs(vector.y) > 25) {
       var xOff = vector.x > 0 ? -20 : 20;
       var yOff = vector.y > 0 ? 20 : -20;
       ctx.beginPath();
-      ctx.moveTo(settings.x + vector.x + xOff, settings.y);
-      ctx.lineTo(settings.x + vector.x + xOff, settings.y + yOff);
+      ctx.moveTo(settings.x + vector.x + xOff, settings.y + 0.5);
+      ctx.lineTo(settings.x + vector.x + xOff, settings.y + yOff + 0.5);
       ctx.lineTo(settings.x + vector.x, settings.y + yOff);
-      ctx.strokeStyle = "grey";
+      ctx.strokeStyle = "#ccc";
       ctx.stroke();
     }
     //x and y components
     ctx.beginPath();
     ctx.moveTo(settings.x, settings.y);
     ctx.lineTo(mousePos.x, settings.y);
-    ctx.strokeStyle = "#060";
+    ctx.strokeStyle = settings.colorX;
     ctx.setLineDash([6, 4]);
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(mousePos.x, settings.y);
     ctx.lineTo(mousePos.x, mousePos.y);
-    ctx.strokeStyle = "#00f";
+    ctx.strokeStyle = settings.colorY;
     ctx.stroke();
     ctx.setLineDash([]);
     //hypotenus
@@ -88,8 +91,10 @@ function vectorDiagram() {
     //angle
     if (Math.abs(vector.mag > 50)) {
       ctx.beginPath();
+      ctx.moveTo(settings.x, settings.y);
       ctx.arc(settings.x, settings.y, 20, -vector.angle, 0);
-      ctx.stroke();
+      ctx.fillStyle = "rgba(0,0,0,0.1)";
+      ctx.fill();
     }
     //data
     ctx.fillStyle = "black";
@@ -106,14 +111,14 @@ function vectorDiagram() {
     }
     ctx.fillText("mag = " + vector.mag.toFixed(0), 5, 25);
     ctx.fillText("θ = " + ((vector.angle * 180) / Math.PI).toFixed(0), 5, 50);
-    ctx.fillStyle = "#060";
+    ctx.fillStyle = settings.colorX;
     if (Math.abs(vector.x) > 50) {
       ctx.fillText(vector.x.toFixed(0), settings.x + vector.x * 0.5, settings.y - 3);
     }
     ctx.fillText("x = mag cos(θ)", 5, 100);
     ctx.fillText("x = " + vector.mag.toFixed(0) + " cos(" + ((vector.angle * 180) / Math.PI).toFixed(0) + ")", 5, 125);
     ctx.fillText("x = " + vector.x.toFixed(0), 4, 150);
-    ctx.fillStyle = "#00f";
+    ctx.fillStyle = settings.colorY;
     if (Math.abs(vector.y) > 50) {
       ctx.fillText(-vector.y.toFixed(0), settings.x + vector.x + 3, settings.y + vector.y * 0.5);
     }

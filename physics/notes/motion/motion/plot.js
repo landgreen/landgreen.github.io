@@ -4,9 +4,11 @@
 functionPlot({
   width: 625,
   height: 200,
+  disableZoom: true,
   target: "#graph1",
   // title: 'F = 1/r²',
   grid: true,
+
   xAxis: {
     domain: [0, 10],
     label: "time (s)"
@@ -37,6 +39,7 @@ functionPlot({
 functionPlot({
   width: 625,
   height: 200,
+  disableZoom: true,
   target: "#graph2",
   // title: 'F = 1/r²',
   grid: true,

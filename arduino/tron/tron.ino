@@ -5,17 +5,17 @@ const int LEDPIN = 6;         // pin for LEDS
 const int SWITCH_PIN_1 = 2;   // pin for P1 switch
 const int SWITCH_PIN_2 = 4;   // pin for P2 switch
 const int NUM_LEDS = 256;     // 16x16 = 256
-const int BRIGHTNESS = 5;     // 0-100 LED brightness
+const int BRIGHTNESS = 30;     // 0-100 LED brightness
 
 //player 1 is cyan
 //player 2 is pink
 
-int p1[2] = { -1, 8};  //player location
-int p2[2] = {16, 8};   //player location
-int p1Input[2] = {1, 0};
-int p2Input[2] = { -1, 0};
-int p1Velocity[2] = {1, 0};
-int p2Velocity[2] = { -1, 0};
+int p1[2] = {8, -1};  //player location
+int p2[2] = {8, 16};   //player location
+int p1Input[2] = {0, 0};
+int p2Input[2] = { 0, 0};
+int p1Velocity[2] = {0, -1};
+int p2Velocity[2] = {0, 1};
 bool isP1Move = true;
 bool isP2Move = true;
 
@@ -75,8 +75,16 @@ void loop() {
   isP2Move = true;
   for (int i = 0; i < 4; i++) {
     //player moves extra if button is down
-    if (!digitalRead(SWITCH_PIN_1)) isP1Move = true;
-    if (!digitalRead(SWITCH_PIN_2)) isP2Move = true;
+    if (!digitalRead(SWITCH_PIN_1)) {
+      isP1Move = true;
+        Serial.print(1);
+        Serial.println();
+    }
+    if (!digitalRead(SWITCH_PIN_2)) {
+      isP2Move = true;
+        Serial.print(2);
+        Serial.println();
+    }
     if (isP1Move) P1Move();
     if (isP2Move) P2Move();
     playerJoystickInput(); //extra check for player input to smooth control sensing
