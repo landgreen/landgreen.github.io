@@ -23,6 +23,7 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
 	<link rel="stylesheet" href="../../../style.css">
+	<script src='../../../lib/function-graph-SVG.js'></script>
 </head>
 
 <body>
@@ -34,40 +35,61 @@
 	</header>
 	<article>
 		<p>
-			It is important to know where things are in both space and time. Physics looks not only at position, but how position changes
-			as time changes.
+			It's important to know where things are in both space and time. Physics explores not only position, but how position changes
+			with time.
 		</p>
-		<h1 class='underlined'>Position</h1>
-		<p>In physics we use the symbol x for position. That means you shouldn't use x for an unknown unless you are solving for position.
-			We generally use meters(m) as our units.</p>
+		<h1 class='underlined'>Distance</h1>
+		<p>In physics we use the symbol x for position with meters for units. You might be used to using 'x' in other ways, but in
+			physics it is reserved for position to keep things from getting confusing.</p>
 		<p>To represent a distance we subtract the final position from the initial position. We use the Δ symbol to show change.</p>
 		<div class='definition'>
 			<h1>$$ \Delta x = x_{f}-x_{i}$$</h1>
-			<p>\(\Delta x\) = change in position, distance, displacement, length [m, meters]</p>
-			<p>\(x_i\) = initial (starting) position [m, meters]</p>
-			<p>\(x_f\) = final (ending) position [m, meters]</p>
+			<p>\(\Delta x\) = change in position, distance, displacement [m, meters]</p>
+			<p>\(x_i\) = initial position [m, meters]</p>
+			<p>\(x_f\) = final position [m, meters]</p>
 		</div>
 		<canvas class='center' id="canvas1" width='600' height='150'> </canvas>
-		<br>
-		<br>
-		<br>
+		<div class='example'>
+			<strong>Example:</strong> Mount Everest is 8,848 m above sea level. The base camp, where most mountain climbers begin their trek,
+			is 5,150 m above sea level. What is the vertical distance between the base camp and the peak?
+			<details>
+				<summary>solution</summary>
+				$$ \text{final position} = 8848\,\mathrm{m} $$ $$\text{inital position} = 5150\,\mathrm{m}$$
+				<br> $$ \Delta x = x_{f}-x_{i}$$ $$ \Delta x = 8848\,\mathrm{m}-5150\,\mathrm{m}$$ $$ \Delta x = 3698\,\mathrm{m}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong>
+			<a href="..\..\review\units\index.html">Convert</a> your answer from the previous problem into miles and kilometers. Which is easier to convert?
+			<br>1 mile = 1609 meters
+			<br>1 kilometer = 1000 meters
+			<details>
+				<summary>solution</summary>
+				$$ \Delta x = 3698\,\mathrm{m}$$
+				<br> $$ 3698\,\mathrm{m} \left( \mathrm{ \frac{1 \, mile}{1609.34 \, m}} \right) = 2.297 \, \mathrm{mile} $$
+				<br> $$3698\,\mathrm{m} = 3\overleftarrow{\undergroup{6}\undergroup{9}\undergroup{8}}. \, \mathrm{m}= 3.698 \, \mathrm{km}$$
+			</details>
+		</div>
+
 		<h1 class='underlined'>Time</h1>
-		<p> We keep track of time in the same way as position. We use t for time and generally use seconds(s) as our units.</p>
+		<p> We keep track of time in the same way as position. We use t as the symbol with seconds as our main units.</p>
 		<div class='definition'>
 			<h1>$$\Delta t = t_{f}-t_{i}$$</h1>
 			<p>\(\Delta t\) = change in time, time period [s, seconds]</p>
-			<p>\(t_i\) = initial (starting) time [s, seconds]</p>
-			<p>\(t_f\) = final (ending) time [s, seconds]</p>
+			<p>\(t_i\) = initial time [s, seconds]</p>
+			<p>\(t_f\) = final time [s, seconds]</p>
 		</div>
 		<canvas class='center' id="canvas2" width='600' height='150'> </canvas>
 		<br>
 		<br>
 		<br>
 		<h1 class='underlined'>Velocity</h1>
-		<p>Velocity is a measure of how much position changes (Δx) over a period of time (Δt).</p>
+		<p>Velocity measures how much position changes, Δx, over a period of time, Δt. We use this relationship more than any other
+			in physics.</p>
 		<div class='definition'>
 			<h1>$$v = \frac{\Delta x}{\Delta t}$$</h1>
-			<p>\(\Delta x\) = distance [m, meters]</p>
+			<p>\(\Delta x\) = change in position, distance [m, meters]</p>
 			<p>\(\Delta t\) = time period [s, seconds]</p>
 			<p>\(v\) = average velocity [m/s, meters per second]</p>
 		</div>
@@ -87,8 +109,8 @@
 			<details>
 				<summary>solution</summary>
 				$$10 \, \mathrm{km} = 10(1,000) \mathrm{m} = 10,000 \, \mathrm{m}$$ $$1\, \mathrm{h} \left(\frac{60\, \mathrm{min}}{1\, \mathrm{h}}\right)\left(\frac{60\,
-				\mathrm{s}}{1\, \mathrm{min}}\right) = 3,600 \,\mathrm{s}$$ $$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{10,000\, \mathrm{m}}{3,600\,
-				\mathrm{s}}$$ $$v = 2.7\, \mathrm{\tfrac{m}{s}}$$
+				\mathrm{s}}{1\, \mathrm{min}}\right) = 3,600 \,\mathrm{s}$$
+				<br>$$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{10,000\, \mathrm{m}}{3,600\, \mathrm{s}}$$ $$v = 2.7\, \mathrm{\tfrac{m}{s}}$$
 			</details>
 		</div>
 		<div class='example'>
@@ -98,18 +120,47 @@
 				<summary>solution</summary>
 				$$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{270\, \mathrm{miles} }{4\, \mathrm{hour}}$$ $$v = 67.5\, \mathrm{\tfrac{miles}{hour}
 				}$$
-				<p>The speed limit for most of that trip is 70 mph. Google is assuming that everyone is under the speed limit.</p>
+				<p>The posted speed limit is 70 mph.</p>
 			</details>
 		</div>
 		<div class='example'>
 			<strong>Example:</strong> If I walk at a speed of 1.2 m/s how long will it take for me to walk 2 km?
 			<details>
 				<summary>solution</summary>
-				$$2 \, \mathrm{km} = 2(1000) \mathrm{m} = 2,000 \, \mathrm{m}$$ $$v = \frac{\Delta x}{\Delta t}$$ $$\Delta t = \frac{\Delta
-				x}{v}$$ $$\Delta t = \frac{2,000\, \mathrm{m}}{1.2\, \mathrm{\tfrac{m}{s}}}$$ $$\Delta t = \frac{2,000}{1.2}\, \mathrm{s}$$
-				$$\Delta t = 1,666.\overline{6} \, \mathrm{s}$$
+				$$2 \, \mathrm{km} = 2(1000) \mathrm{m} = 2000 \, \mathrm{m}$$
+				<br>$$v = \frac{\Delta x}{\Delta t}$$ $$\Delta t = \frac{\Delta x}{v}$$ $$\Delta t = \frac{2000\, \mathrm{m}}{1.2\, \mathrm{\tfrac{m}{s}}}$$
+				$$\Delta t = \frac{2000}{1.2}\, \mathrm{s}$$ $$\Delta t = 1666.\overline{6} \, \mathrm{s}$$
 			</details>
 		</div>
+
+		<div class='example'>
+			<svg class='center' id="SVG-graph-0" width="290" height="290">
+			</svg>
+			<script>
+				funGraphSVG("SVG-graph-0", x => x, {
+					x0: 15,
+					y0: 270,
+					precision: 1,
+					stroke: "#3cf",
+					step: 10,
+					scale: 50,
+					gridSize: 50,
+					strokeWidth: 3,
+					xLabel: "time (s)",
+					yLabel: "position (m)",
+					showMouseCoords: true,
+				});
+			</script>
+			<br>
+			<strong>Example:</strong> This graph show position vs. time. What does its slope represent?
+			<details>
+				<summary>solution</summary>
+				<p>velocity</p>
+				<p>Velocity is defined as the change in position every second. This is the same as the rise over the run, which is slope.</p>
+			</details>
+		</div>
+
+
 		<h1 class='underlined'>Acceleration</h1>
 		<p>Acceleration is a measure of how much velocity changes (Δv) over a period of time (Δt).</p>
 		<div class='definition'>
@@ -152,15 +203,360 @@
 			</details>
 		</div>
 		<div class='example'>
-			<div id='graph1'></div>
-			<div id='graph2'></div>
-			<strong>Example:</strong> These graphs show velocity vs. time. What do their slopes represent?
+			<svg class='center' id="SVG-graph-3" width="290" height="290">
+			</svg>
+			<script>
+				funGraphSVG("SVG-graph-3", x => 0.37 * x * x, {
+					x0: 15,
+					y0: 270,
+					precision: 1,
+					stroke: "#3cf",
+					step: 10,
+					scale: 50,
+					gridSize: 50,
+					strokeWidth: 3,
+					xLabel: "time (s)",
+					yLabel: "velocity (m/s)",
+					showMouseCoords: true,
+				});
+			</script>
+			<br>
+			<strong>Example:</strong> This graph show velocity vs. time. What does its slope represent?
 			<details>
 				<summary>solution</summary>
 				<p>acceleration</p>
-				<p>acceleration is defined as the change in velocity every second. This is the same as the slope of the graphs.</p>
+				<p>Acceleration is defined as the change in velocity every second. This is the same as the rise over the run, which is slope.</p>
+
 			</details>
 		</div>
+
+		<h1 class='underlined'>Graphing Motion</h1>
+
+		<p>Velocity is the slope of the position vs. time graph.
+			<br>Acceleration is the slope of the velocity vs. time graph.</p>
+		<p>If the acceleration is positive, the velocity increases with time.
+			<br>If the velocity is positive the position increases with time.</p>
+		<style>
+			.graph-box {
+				border-radius: 10px;
+				border: 1px solid #666;
+			}
+		</style>
+
+		<svg id="SVG-graph-4" class="graph-box" width="290" height="250">
+		</svg>
+		<script>
+			const x0 = 145
+			const y0 = 125;
+
+			funGraphSVG("SVG-graph-4", x => 1 / 4 * x * x, {
+				x0: x0,
+				y0: y0,
+				precision: 1,
+				stroke: "rgba(255,0,50,0.5)",
+				// stroke: "#f57",
+				scale: 50,
+				gridSize: 50,
+				strokeWidth: 8,
+				xLabel: "time (s)",
+				yLabel: "position (m)",
+			});
+		</script>
+		<svg id="SVG-graph-5" class="graph-box" width="290" height="250">
+		</svg>
+		<script>
+			funGraphSVG("SVG-graph-5", x => 1 / 2 * x, {
+				x0: x0,
+				y0: y0,
+				precision: 1,
+				stroke: "rgba(150,30,255,0.5)",
+				// stroke: "#f7f",
+				step: 10,
+				scale: 50,
+				gridSize: 50,
+				strokeWidth: 8,
+				xLabel: "time (s)",
+				yLabel: "velocity (m/s)",
+			});
+		</script>
+		<div class="center">
+			acceleration =
+			<input id='acceleration-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5">
+			<input id='acceleration' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
+		</div>
+		<svg id="SVG-graph-6" class="graph-box center" width="290" height="250">
+		</svg>
+		<script>
+			document.getElementById('SVG-graph-6').setAttribute("width", Math.min(document.getElementsByTagName("article")[0].clientWidth, 585) + "px");
+			funGraphSVG("SVG-graph-6", x => 1 / 2, {
+				x0: 292,//x0,
+				y0: y0,
+				precision: 1,
+				stroke: "rgba(0,130,255,0.5)",
+				// stroke: "#3af",
+				step: 10,
+				scale: 50,
+				gridSize: 50,
+				strokeWidth: 8,
+				xLabel: "time (s)",
+				yLabel: "acceleration (m/s²)",
+			});
+		</script>
+
+
+		<script>
+			function redrawGraphs() {
+				funGraphSVG("SVG-graph-6", x => document.getElementById("acceleration").value, {
+					x0: x0,
+					y0: y0,
+					scale: 50,
+					showAxis: false,
+					updatePath: true,
+				});
+
+				funGraphSVG("SVG-graph-5", x => document.getElementById("acceleration").value * x, {
+					x0: x0,
+					y0: y0,
+					scale: 50,
+					showAxis: false,
+					updatePath: true,
+				});
+
+				funGraphSVG("SVG-graph-4", x => document.getElementById("acceleration").value / 2 * x * x, {
+					x0: x0,
+					y0: y0,
+					scale: 50,
+					showAxis: false,
+					updatePath: true,
+				});
+			}
+			document.getElementById("acceleration").addEventListener("input", event => {
+				document.getElementById("acceleration-slider").value = document.getElementById("acceleration").value
+				redrawGraphs()
+			});
+			document.getElementById("acceleration-slider").addEventListener("input", event => {
+				document.getElementById("acceleration").value = document.getElementById("acceleration-slider").value
+				redrawGraphs()
+			});
+		</script>
+
+		<div class='example'>
+			<strong>Graph:</strong> Draw the position vs. time and velocity vs. time graphs for an object moving at 2 m/s for 10 s.
+			<details id="example0">
+				<summary>solution</summary>
+				<svg id="SVG-graph-12" width="550" height="300">
+				</svg>
+				<svg id="SVG-graph-13" width="550" height="300">
+				</svg>
+				<script>
+					// funGraphSVG() don't work inside <details>
+					// this is my workaround
+					document.getElementById("example0").addEventListener("toggle", handler0);
+					function handler0(e) {
+						e.target.removeEventListener(e.type, arguments.callee); // remove this handler
+						funGraphSVG("SVG-graph-12", x => 2 * x, {
+							x0: 20,
+							y0: 280,
+							stroke: "rgba(255,0,50,1)",
+							precision: 2,
+							step: 10,
+							xScale: 50,
+							yScale: 10,
+							gridSize: 50,
+							strokeWidth: 3,
+							xLabel: "time (s)",
+							yLabel: "position (m)",
+							showMouseCoords: true
+						});
+						funGraphSVG("SVG-graph-13", x => 2, {
+							x0: 20,
+							y0: 280,
+							stroke: "rgba(150,30,255,1)",
+							precision: 2,
+							step: 10,
+							scale: 50,
+							gridSize: 50,
+							strokeWidth: 3,
+							xLabel: "time (s)",
+							yLabel: "velocity (m/s)",
+							showMouseCoords: true
+						});
+					}
+				</script>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Graph:</strong> Sketch the position vs. time and velocity vs. time graphs for an object falling for 10 s. For your sketch,
+			just make sure your graphs have the right shape.
+			<details>
+				<summary>hint</summary>
+				<br>The acceleration is -9.8 m/s².
+				<br>The velocity should decrease by about 10 every second.
+				<br>The position should curve downwards.
+				<br>
+				<br>
+			</details>
+			<details id="example1">
+				<summary>solution</summary>
+				<svg id="SVG-graph-14" width="550" height="300">
+				</svg>
+				<svg id="SVG-graph-15" width="550" height="300">
+				</svg>
+				<script>
+					// funGraphSVG() don't work inside <details>
+					// this is my workaround
+					document.getElementById("example1").addEventListener("toggle", handler1);
+					function handler1(e) {
+						e.target.removeEventListener(e.type, arguments.callee); // remove this handler
+						funGraphSVG("SVG-graph-14", x => -9.8 / 2 * x * x, {
+							x0: 35,
+							y0: 15,
+							stroke: "rgba(255,0,50,1)",
+							precision: 3,
+							step: 10,
+							xScale: 50,
+							yScale: 0.5,
+							gridSize: 50,
+							strokeWidth: 3,
+							xLabel: "time (s)",
+							yLabel: "position (m)",
+							showMouseCoords: true
+						});
+						funGraphSVG("SVG-graph-15", x => -9.8 * x, {
+							x0: 35,
+							y0: 15,
+							stroke: "rgba(150,30,255,1)",
+							precision: 3,
+							step: 10,
+							xScale: 50,
+							yScale: 2.5,
+							gridSize: 50,
+							strokeWidth: 3,
+							xLabel: "time (s)",
+							yLabel: "velocity (m/s)",
+							showMouseCoords: true
+						});
+					}
+				</script>
+			</details>
+		</div>
+		<div class='example'>Acceleration doesn't have to be constant. In the graphs below, acceleration is increasing. The change in acceleration over
+			time is called
+			<strong>jerk</strong>.
+			<svg id="SVG-graph-8" class="graph-box" width="290" height="250">
+			</svg>
+			<script>
+				funGraphSVG("SVG-graph-8", x => 1 / 12 * x * x * x, {
+					x0: x0,
+					y0: y0,
+					precision: 1,
+					stroke: "rgba(255,0,50,0.5)",
+					scale: 50,
+					gridSize: 50,
+					strokeWidth: 8,
+					xLabel: "time (s)",
+					yLabel: "position (m)",
+				});
+			</script>
+			<svg id="SVG-graph-9" class="graph-box" width="290" height="250">
+			</svg>
+			<script>
+				funGraphSVG("SVG-graph-9", x => 1 / 4 * x * x, {
+					x0: x0,
+					y0: y0,
+					precision: 1,
+					stroke: "rgba(150,30,255,0.5)",
+					scale: 50,
+					gridSize: 50,
+					strokeWidth: 8,
+					xLabel: "time (s)",
+					yLabel: "velocity (m/s)",
+				});
+			</script>
+			<svg id="SVG-graph-11" class="graph-box" width="290" height="250">
+			</svg>
+			<script>
+				funGraphSVG("SVG-graph-11", x => 1 / 2, {
+					x0: x0,
+					y0: y0,
+					precision: 1,
+					stroke: "rgba(0,200,200,0.5)",
+					step: 10,
+					scale: 50,
+					gridSize: 50,
+					strokeWidth: 8,
+					xLabel: "time (s)",
+					yLabel: "jerk (m/s³)",
+				});
+			</script>
+			<svg id="SVG-graph-10" class="graph-box" width="290" height="250">
+			</svg>
+			<script>
+				funGraphSVG("SVG-graph-10", x => 1 / 2 * x, {
+					x0: x0,
+					y0: y0,
+					precision: 1,
+					stroke: "rgba(0,130,255,0.5)",
+					step: 10,
+					scale: 50,
+					gridSize: 50,
+					strokeWidth: 8,
+					xLabel: "time (s)",
+					yLabel: "acceleration (m/s²)",
+				});
+			</script>
+			<br>jerk =
+			<input id='jerk-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5">
+			<input id='jerk' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
+			<script>
+				function redrawGraphsJerk() {
+					funGraphSVG("SVG-graph-8", x => document.getElementById("jerk").value / 6 * x * x * x, {
+						x0: x0,
+						y0: y0,
+						scale: 50,
+						showAxis: false,
+						updatePath: true,
+					});
+
+					funGraphSVG("SVG-graph-9", x => document.getElementById("jerk").value / 2 * x * x, {
+						x0: x0,
+						y0: y0,
+						scale: 50,
+						showAxis: false,
+						updatePath: true,
+					});
+
+					funGraphSVG("SVG-graph-10", x => document.getElementById("jerk").value * x, {
+						x0: x0,
+						y0: y0,
+						scale: 50,
+						showAxis: false,
+						updatePath: true,
+					});
+
+					funGraphSVG("SVG-graph-11", x => document.getElementById("jerk").value, {
+						x0: x0,
+						y0: y0,
+						scale: 50,
+						showAxis: false,
+						updatePath: true,
+					});
+				}
+				document.getElementById("jerk").addEventListener("input", event => {
+					document.getElementById("jerk-slider").value = document.getElementById("jerk").value
+					redrawGraphsJerk()
+				});
+				document.getElementById("jerk-slider").addEventListener("input", event => {
+					document.getElementById("jerk").value = document.getElementById("jerk-slider").value
+					redrawGraphsJerk()
+				});
+			</script>
+			<p>A large jerk can cause you to stumble. A jerk could come from a short lasting push or pull. It could come from a car starting
+				to break, or accelerate. Falling causes a jerk. Jumping. Bouncing. Any change in acceleration.</p>
+		</div>
+
+
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>

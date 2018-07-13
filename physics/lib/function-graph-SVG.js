@@ -1,30 +1,33 @@
-// https://developer.mozilla.org/en-US/docs/Web/API/Document/createElementNS
-
 function funGraphSVG(
   id,
   func,
   {
     x0 = 0, // center point x, unscaled
     y0 = 0, // center point y, unscaled
-    step = 1,
-    scale = 100,
-    strokeWidth = 1,
+    step = 2,
+    scale = undefined,
+    xScale = 50,
+    yScale = 50,
+    strokeWidth = 2,
     showFunction = true,
     stroke = "#07b",
-    fill = "none",
-    showAxis = true, //also disables labels, axisNUmbers and grid
+    showAxis = true, //also disables labels, axisNumbers and grid
     showLabels = true,
     xLabel = "",
     yLabel = "",
     showAxisNumbers = true,
-    precision = 3,
+    precision = 2,
     showGrid = true,
-    gridSize = 100, //spacing relative to canvas size
+    gridSize = 50, //spacing relative to canvas size
     updatePath = false, //used for changing the equation of the function
     showMouseCoords = false,
     recenterOnClick = false
   } = {}
 ) {
+  if (scale) {
+    xScale = scale;
+    yScale = scale;
+  }
   const target = document.getElementById(id);
   const bounds = target.getBoundingClientRect();
 
@@ -76,13 +79,14 @@ function funGraphSVG(
         const newElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
         newElement.setAttribute("x", x);
         newElement.setAttribute("y", y);
-        newElement.style.fill = fill;
+        newElement.style.fill = "#000";
         newElement.style.fontSize = fontSize;
         newElement.style.textAnchor = textAnchor;
         if (rotation) {
           newElement.setAttribute("transform", `rotate(${rotation}, ${x}, ${y})`);
         }
-        // newElement.style.fontFamily = "Arial";
+        // newElement.style.fontFamily = "monospace";
+        // newElement.style.fontFamily = "Arial,Helvetica";
         newElement.textContent = text.toString();
         target.appendChild(newElement);
       }
@@ -93,28 +97,28 @@ function funGraphSVG(
         const xPos = x + i * gridSize;
         const yPos = y;
         path += `M ${xPos} ${yPos}  v 3`;
-        addText((x0 + (i * gridSize) / scale - x0).toPrecision(precision), xPos, yPos + 15);
+        addText((x0 + (i * gridSize) / xScale - x0).toPrecision(precision), xPos, yPos + 14);
       }
       // negative horizontal marks
       for (let i = -1; i * gridSize > -x; --i) {
         const xPos = x + i * gridSize;
         const yPos = y;
         path += `M ${xPos} ${yPos}  v 3`;
-        addText((x0 + (i * gridSize) / scale - x0).toPrecision(precision), xPos, yPos + 15);
+        addText((x0 + (i * gridSize) / xScale - x0).toPrecision(precision), xPos, yPos + 14);
       }
       // positive vertical marks
       for (let i = 1; i * gridSize < y; ++i) {
         const xPos = x;
         const yPos = y - i * gridSize;
         path += `M ${xPos} ${yPos}  h -3`;
-        addText((x0 + (i * gridSize) / scale - x0).toPrecision(precision), xPos - 5, yPos + 4, { textAnchor: "end" });
+        addText((x0 + (i * gridSize) / yScale - x0).toPrecision(precision), xPos - 5, yPos + 4, { textAnchor: "end" });
       }
       // negative vertical marks
       for (let i = -1; i * gridSize > -bounds.height + y; --i) {
         const xPos = x;
         const yPos = y - i * gridSize;
         path += `M ${xPos} ${yPos}  h -3`;
-        addText((x0 + (i * gridSize) / scale - x0).toPrecision(precision), xPos - 5, yPos + 4, { textAnchor: "end" });
+        addText((x0 + (i * gridSize) / yScale - x0).toPrecision(precision), xPos - 5, yPos + 4, { textAnchor: "end" });
       }
       const newElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
       newElement.setAttribute("d", path);
@@ -125,8 +129,21 @@ function funGraphSVG(
     }
 
     if (showLabels) {
-      addText(xLabel, bounds.width, y0 - 3, { textAnchor: "end" });
-      addText(yLabel, x0 + 13, 0, { textAnchor: "end", rotation: -90 });
+      if (x0 > (2 * bounds.width) / 3) {
+        //left of x-axis
+        addText(xLabel, +2, y0 - 4, { textAnchor: "start" });
+      } else {
+        //right of x-axis
+        addText(xLabel, bounds.width - 2, y0 - 4, { textAnchor: "end" });
+      }
+
+      if (y0 > bounds.height / 3) {
+        //top of y-axis
+        addText(yLabel, x0 + 13, 0, { textAnchor: "end", rotation: -90 });
+      } else {
+        //bottom of y-axis
+        addText(yLabel, x0 + 13, bounds.height, { textAnchor: "start", rotation: -90 });
+      }
     }
   }
 
@@ -135,7 +152,7 @@ function funGraphSVG(
     let xx, yy, path;
     for (let i = Math.floor(-x0 / step), len = Math.floor((bounds.width - x0) / step); i <= len; i++) {
       xx = step * i;
-      yy = scale * func(xx / scale);
+      yy = yScale * func(xx / xScale);
       if (isFinite(yy)) {
         if (path === undefined) {
           path = `M ${x0 + xx} ${y0 - yy}`;
@@ -152,7 +169,7 @@ function funGraphSVG(
       newElement.setAttribute("id", id + "-path");
       newElement.setAttribute("d", path);
       newElement.style.stroke = stroke;
-      newElement.style.fill = fill;
+      newElement.style.fill = "none";
       newElement.style.strokeWidth = strokeWidth;
       newElement.style.strokeLinecap = "round";
       target.appendChild(newElement);
@@ -176,7 +193,7 @@ function funGraphSVG(
     newTextElement.setAttribute("id", id + "-coords");
     newTextElement.setAttribute("x", 0);
     newTextElement.setAttribute("y", 0);
-    newTextElement.style.fill = stroke;
+    newTextElement.style.fill = "#000";
     newTextElement.style.fontSize = 12;
     newTextElement.style.textAnchor = "start";
     // newTextElement.style.fontFamily = "Arial";
@@ -201,14 +218,14 @@ function funGraphSVG(
         y: event.clientY - rect.top
       };
       //move circle to mouse location
-      const yPos = y0 - scale * func((mouse.x - x0) / scale);
+      const yPos = y0 - yScale * func((mouse.x - x0) / xScale);
       if (isFinite(yPos)) {
         document.getElementById(id + "-circle").setAttribute("cx", mouse.x);
         document.getElementById(id + "-circle").setAttribute("cy", yPos);
         //move text to mouse location
         document.getElementById(id + "-coords").setAttribute("x", mouse.x + 5);
         document.getElementById(id + "-coords").setAttribute("y", yPos - 10);
-        document.getElementById(id + "-coords").textContent = `(${((mouse.x - x0) / scale).toPrecision(3)}, ${((y0 - yPos) / scale).toPrecision(
+        document.getElementById(id + "-coords").textContent = `(${((mouse.x - x0) / xScale).toPrecision(3)}, ${((y0 - yPos) / yScale).toPrecision(
           3
         )})`.toString();
       }
@@ -241,11 +258,11 @@ function funGraphSVG(
         x0: x0 - (mouse.x - bounds.width / 2),
         y0: y0 - (mouse.y - bounds.height / 2),
         step: step,
-        scale: scale,
+        xScale: xScale,
+        yScale: yScale,
         strokeWidth: strokeWidth,
         showFunction: showFunction,
         stroke: stroke,
-        fill: fill,
         showAxis: showAxis,
         showLabels: showLabels,
         xLabel: xLabel,

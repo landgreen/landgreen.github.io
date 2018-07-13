@@ -18,6 +18,7 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<script src='../../../lib/function-graph-SVG.js'></script>
 </head>
 
 <body>
@@ -240,8 +241,23 @@
 		</div>
 		<p>At a low relative velocity, the effects of special relativity aren't noticeable because the Lorentz factor becomes one.
 			As the relative speed approaches the speed of light, the Lorentz factor increases towards infinity.</p>
-		<div id="graphGamma"></div>
-
+		<svg id="SVG-graph-0" width="600" height="400">
+		</svg>
+		<script>
+			funGraphSVG("SVG-graph-0", x => 1 / (Math.sqrt(1 - x * x)), {
+				x0: 25,
+				y0: 380,
+				// stroke: "08f",
+				precision: 1,
+				xScale: 500,
+				yScale: 50,
+				// strokeWidth: 5,
+				gridSize: 100,
+				xLabel: "v/c",
+				yLabel: "Lorentz factor",
+				showMouseCoords: true,
+			});
+		</script>
 		<h2 class='underlined'>Time Dilation</h2>
 		<p>
 			Our time dilation equation is a simplified version of the
@@ -2197,10 +2213,7 @@
 					<strong>MOVING RELATIVE TO SPACESHIP</strong>
 					<br>
 					<em style="font-size: 0.9rem">frame of reference where an observer sees events occur in different locations</em>
-					<br>
-					<div class="tooltip">time
-						<span class="tooltiptext">time passed for observer as ship flies past</span>
-					</div> =
+					<br> time =
 					<input id='v_time' type="number" value='22.94' min="-1000.0" max="1000.0"> s
 					<br>energy =
 					<input id='v_mass' type="number" value='22.94' min="0" min="-1000.0" max="1000.0"> J
@@ -2233,32 +2246,6 @@
 	</script>
 	<script src="relative.js"></script>
 	<script src="solver.js"></script>
-	<script src="https://d3js.org/d3.v3.min.js"></script>
-	<script src='../../../lib/function-plot.js'></script>
-	<script>
-		functionPlot({
-			width: 600,
-			height: 350,
-			target: "#graphGamma",
-			// title: 'v vs. gamma',
-			yAxis: {
-				domain: [0, 10],
-				label: " gamma "
-			},
-			xAxis: {
-				domain: [0, 1.1],
-				label: " v/c "
-			},
-			grid: true,
-			data: [
-				{
-					fn: "nthRoot(1 - x^2, 2)^-1",
-					color: "#000"
-				}
-			]
-		});
-	</script>
-
 </body>
 
 </html>

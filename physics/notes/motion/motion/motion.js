@@ -104,19 +104,19 @@ var motion = function(canvasID, showPos, showTime, showVel, showAccel, position,
       var line = 0;
       if (showPos) {
         line += lineHeight;
-        ctx.fillText("x = " + this.x.toFixed(0) + "m", 5, line);
+        ctx.fillText("x = " + this.x.toFixed(0) + " m", 5, line);
       }
       if (showTime) {
         line += lineHeight;
-        ctx.fillText("t = " + this.t.toFixed(1) + "s", 5, line);
+        ctx.fillText("t = " + this.t.toFixed(1) + " s", 5, line);
       }
       if (showVel) {
         line += lineHeight;
-        ctx.fillText("v = " + this.Vx.toFixed(0) + "m/s", 5, line);
+        ctx.fillText("v = " + this.Vx.toFixed(0) + " m/s", 5, line);
       }
       if (showAccel) {
         line += lineHeight;
-        ctx.fillText("a = " + physics.gravX.toFixed(1) + "m/s²", 5, line);
+        ctx.fillText("a = " + physics.gravX.toFixed(1) + " m/s²", 5, line);
       }
     };
   }

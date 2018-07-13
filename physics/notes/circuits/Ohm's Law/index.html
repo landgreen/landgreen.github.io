@@ -20,7 +20,7 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
-	<script src='../../../lib/chargeclass.js'></script>
+	<script src='../../../lib/function-graph-SVG.js'></script>
 </head>
 
 <body>
@@ -203,7 +203,7 @@
 			</svg>
 			<p>In
 				<strong>AC (alternating current)</strong> circuits the current pushes the electrons forward and backwards about 60 times a second.
-				Current from a wall socket is AC, while current from a battery is DC.</p>
+				Current from a wall socket is AC.</p>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="350" height="150" class='center'>
 				<path d="M 50 58 v-53 h 265
 			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
@@ -224,12 +224,74 @@
 				<br>(we will use mostly resistors or DC voltage sources)</p> -->
 			<h2 class='underlined'>Ohm's Law</h2>
 			<p>
-				<a href="https://en.wikipedia.org/wiki/Ohm%27s_law">Ohm's Law</a> says that the voltage in a conductor is proportional to the current. This means we can build an equation
-				where V = I times a constant, resistance. The
+				Play with this
+				<a href="https://codepen.io/lilgreenland/full/xprGvr/">circuit simulator</a> for resistance. Adjust the wiggle of the resistor to see how it changes the voltage and current.
+			</p>
+			<p>
+				Ohm's Law says that the voltage in a conductor is proportional to the current. This means we can build an equation where
+				V = I times a constant, resistance. The
 				<strong>resistance</strong> of a material is the inverse of its conductivity.
 				<a href="../../electromagnetism/coulomb/index.html#conductivity">Conductors</a> have nearly zero resistance and insulators have very high resistance. </p>
 
+			<div class="center">
+				resistance =
+				<input id='resistance-slider' type="range" min="0" max="10" step="0.1" value="1">
+				<input id='resistance' type="number" step="0.1" value="1" min="0" style="width: 60px;"> Ω
 
+				<svg id="SVG-graph-0" width="600" height="400">
+				</svg>
+			</div>
+			<script>
+				funGraphSVG("SVG-graph-0", x => x, {
+					x0: 27,
+					y0: 380,
+					stroke: "rgba(255,50,0,1)",
+					precision: 2,
+					gridSize: 50,
+					strokeWidth: 5,
+					xLabel: "current (A)",
+					yLabel: "voltage (V)",
+					step: 10,  //big steps because the function is linear
+				});
+
+				document.getElementById("resistance").addEventListener("input", event => {
+					document.getElementById("resistance-slider").value = document.getElementById("resistance").value
+
+					funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, {
+						x0: 25,
+						y0: 380,
+						showAxis: false,
+						updatePath: true,
+					});
+				});
+				document.getElementById("resistance-slider").addEventListener("input", event => {
+					document.getElementById("resistance").value = document.getElementById("resistance-slider").value
+					funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, {
+						x0: 25,
+						y0: 380,
+						showAxis: false,
+						updatePath: true,
+					});
+				});
+
+			</script>
+			<p>What is the relationship between current and voltage when the resistance is very high?</p>
+			<div class='definition'>
+				<h1>$$ V = IR$$</h1> \(I\) = electric current [A, amps, ampere]
+				<br>
+				<br>\(V\) = voltage, a change in electric potential [V, volts]
+				<br>
+				<em>Technically ΔV, but V is often used for simplicity.</em>
+				<br> Sources: battery, solar panel, wall socket
+				<br>
+				<br>\(R\) = resistance [Ω, ohms]
+				<br> Sources: resistors, LEDs, electric motors
+			</div>
+
+			<p>Semiconductive elements, called
+				<a href='https://en.wikipedia.org/wiki/Resistor'>resistors</a>, have medium resistance. They are added to a circuit for precise control over current. If the current is
+				too high, the circuit will get hot. If the current is too low the circuit can't do its job.
+			</p>
 			<a href="https://en.wikipedia.org/wiki/Electronic_color_code">
 				<svg viewBox="-50,0,2280,650" style="margin:-20px; padding:-20px;">
 					<g>
@@ -248,23 +310,7 @@
 					</g>
 				</svg>
 			</a>
-			<p>Semiconductive elements, called
-				<a href='https://en.wikipedia.org/wiki/Resistor'>resistors</a>, have medium resistance. They are added to a circuit for precise control over current. If the current is
-				too high, the circuit will get hot. If the current is too low the circuit can't do its job.
-			</p>
-			<div class='definition'>
-				<h1>$$ V = IR$$</h1> \(I\) = electric current [A, amps, ampere]
-				<br>
-				<br>\(V\) = voltage, a change in electric potential [V, volts]
-				<br>
-				<em>Technically ΔV, but everyone uses V for simplicity</em>
-				<br> Sources: battery, solar panel, wall socket
-				<br>
-				<br>\(R\) = resistance [Ω, ohms]
-				<br> Sources: resistors, LEDs, electric motors
-			</div>
-			<p>Play with this
-				<a href="https://codepen.io/lilgreenland/full/xprGvr/">circuit simulator</a> for resistance. Adjust the wiggle of the resistor to see how it changes the voltage and current.</p>
+
 			<div class='example'>
 				<div class="col-group">
 					<div>
@@ -389,6 +435,7 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
+	<script src='../../../lib/chargeclass.js'></script>
 	<script src="charge7.js"></script>
 	<script src="charge8.js"></script>
 	<script src="charge9.js"></script>

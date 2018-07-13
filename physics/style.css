@@ -79,6 +79,10 @@ input:focus {
   outline: 0;
 }
 
+input[type="range"] {
+  height: 8px;
+}
+
 canvas {
   margin: 0px;
   box-shadow: 2px 2px 8px #aaa;
