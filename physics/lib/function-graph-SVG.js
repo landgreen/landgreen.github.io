@@ -16,7 +16,9 @@ function funGraphSVG(
     xLabel = "",
     yLabel = "",
     showAxisNumbers = true,
-    precision = 2,
+    precision = undefined,
+    xPrecision = 2,
+    yPrecision = 2,
     showGrid = true,
     gridSize = 50, //spacing relative to canvas size
     updatePath = false, //used for changing the equation of the function
@@ -24,6 +26,10 @@ function funGraphSVG(
     recenterOnClick = false
   } = {}
 ) {
+  if (precision) {
+    xPrecision = precision;
+    yPrecision = precision;
+  }
   if (scale) {
     xScale = scale;
     yScale = scale;
@@ -97,28 +103,28 @@ function funGraphSVG(
         const xPos = x + i * gridSize;
         const yPos = y;
         path += `M ${xPos} ${yPos}  v 3`;
-        addText((x0 + (i * gridSize) / xScale - x0).toPrecision(precision), xPos, yPos + 14);
+        addText((x0 + (i * gridSize) / xScale - x0).toPrecision(xPrecision), xPos, yPos + 14);
       }
       // negative horizontal marks
       for (let i = -1; i * gridSize > -x; --i) {
         const xPos = x + i * gridSize;
         const yPos = y;
         path += `M ${xPos} ${yPos}  v 3`;
-        addText((x0 + (i * gridSize) / xScale - x0).toPrecision(precision), xPos, yPos + 14);
+        addText((x0 + (i * gridSize) / xScale - x0).toPrecision(xPrecision), xPos, yPos + 14);
       }
       // positive vertical marks
       for (let i = 1; i * gridSize < y; ++i) {
         const xPos = x;
         const yPos = y - i * gridSize;
         path += `M ${xPos} ${yPos}  h -3`;
-        addText((x0 + (i * gridSize) / yScale - x0).toPrecision(precision), xPos - 5, yPos + 4, { textAnchor: "end" });
+        addText((x0 + (i * gridSize) / yScale - x0).toPrecision(yPrecision), xPos - 5, yPos + 4, { textAnchor: "end" });
       }
       // negative vertical marks
       for (let i = -1; i * gridSize > -bounds.height + y; --i) {
         const xPos = x;
         const yPos = y - i * gridSize;
         path += `M ${xPos} ${yPos}  h -3`;
-        addText((x0 + (i * gridSize) / yScale - x0).toPrecision(precision), xPos - 5, yPos + 4, { textAnchor: "end" });
+        addText((x0 + (i * gridSize) / yScale - x0).toPrecision(yPrecision), xPos - 5, yPos + 4, { textAnchor: "end" });
       }
       const newElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
       newElement.setAttribute("d", path);
@@ -225,8 +231,8 @@ function funGraphSVG(
         //move text to mouse location
         document.getElementById(id + "-coords").setAttribute("x", mouse.x + 5);
         document.getElementById(id + "-coords").setAttribute("y", yPos - 10);
-        document.getElementById(id + "-coords").textContent = `(${((mouse.x - x0) / xScale).toPrecision(3)}, ${((y0 - yPos) / yScale).toPrecision(
-          3
+        document.getElementById(id + "-coords").textContent = `(${((mouse.x - x0) / xScale).toPrecision(xPrecision)}, ${((y0 - yPos) / yScale).toPrecision(
+          yPrecision
         )})`.toString();
       }
     });
@@ -268,7 +274,8 @@ function funGraphSVG(
         xLabel: xLabel,
         yLabel: yLabel,
         showAxisNumbers: showAxisNumbers,
-        precision: precision,
+        xPrecision: precision,
+        yPrecision: precision,
         showGrid: showGrid,
         gridSize: gridSize,
         updatePath: updatePath,

@@ -133,7 +133,7 @@
 			<p>Chemistry is most accurately described by quantum mechanics, but chemical
 				<a href="http://www.testtubegames.com/bondbreaker.html">bonds</a> and chemical reactions can be loosely explained with electrostatic forces. Let's see how far classical physics
 				will take us.</p>
-			<strong>Example</strong>: Calculate what Coulomb's law predicts for the force that holds together regular table salt, NaCl.
+			<strong>Example</strong>: Calculate what Coulomb's law predicts for the energy holding together regular table salt, NaCl.
 			<details>
 				<summary>lengthy investigation</summary>
 				<div class="col-group center">
@@ -169,8 +169,8 @@
 					</div>
 				</div>
 				<p>In nonionic atoms the numbers of electrons and protons are equal so the electrostatic forces are balanced to zero. When
-					NaCl ionically bond one electron leaves Na and joins Cl. Na becomes Na+1 and Cl becomes Cl-1. This unbalanced positive
-					and negative charge produces an attractive force.</p>
+					NaCl ionically bond one electron leaves Na and joins Cl. Na gains a +1 charge and Cl gains a -1 charge. The unbalanced
+					charges produce an attractive force.</p>
 				<svg style="display: block; margin: auto" width="210" height="105" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
 					<g transform='translate(105,52)'>
 						<circle cx="-50" cy="0" r="50" fill='#fdd' stroke-width="2" stroke="#222" />
@@ -181,17 +181,18 @@
 						<text x="55" y="-5" fill="black" text-anchor="middle" alignment-baseline="central" font-size="15">-1</text>
 					</g>
 				</svg>
-				$$r = \left(227 \times 10^{-12}\right) + \left(175 \times 10^{-12}\right) = 402 \times 10^{-12}m $$ $$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}}
+				<!-- $$r = \left(227 \times 10^{-12}\right) + \left(175 \times 10^{-12}\right) = 402 \times 10^{-12}m $$ $$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}}
 				$$ $$ F = \frac{(8.987 \times 10^{9})(1.602 \times 10^{-19})(1.602 \times 10^{-19})}{(402 \times 10^{-12})^{2}} $$ $$
 				F = 1.427 \times 10^{-9} \, \mathrm{N}$$
 				<p>That's a small force, but atoms don't have much mass. Let's calculate the acceleration that Na feels.</p>
 				$$F = ma$$ $$a = \frac{F}{m}$$ $$a = \frac{1.427 \times 10^{-9}}{3.8 \times 10^{-26}}$$ $$a = 3.75 \times 10^{16} { \, \mathrm{\tfrac{m}{s^{2}}}}$$
-				<p>That acceleration is very large! Let's calculate the electric potential energy between the ions.</p>
-				$$ U_{e} = \frac{k_{e}q_{1}q_{2}}{r} $$ $$ U_{e} = \frac{(8.987 \times 10^{9})(1.602 \times 10^{-19})(1.602 \times 10^{-19})}{402
-				\times 10^{-12}} $$ $$ U_{e} = 5.737 \times 10^{-19} \, \mathrm{J}$$
+				<p>That acceleration is very large! Let's calculate the electric potential energy between the ions.</p> -->
+				$$ U_{e} = \frac{k_{e}q_{1}q_{2}}{r} $$ $$ U_{e} = \frac{(8.987 \times 10^{9})(1.602 \times 10^{-19})(-1.602 \times 10^{-19})}{402
+				\times 10^{-12}} $$ $$ U_{e} = -5.737 \times 10^{-19} \, \mathrm{J}$$
 
-				<p>The internet has the "NaCl Dissociation Energy" slightly higher at 6.82 x 10
-					<sup>-19</sup> J. Not bad Coulomb!</p>
+				<p>Our answer is negative because it would take added positive energy to get the ions to separate.</p>
+				<p> The measured NaCl dissociation energy is slightly higher at -6.82 x 10
+					<sup>-19</sup> J. Coulomb's law isn't perfect, but it is a close approximation.</p>
 		</div>
 
 		</details>
@@ -258,13 +259,17 @@
 			focused beam of electrons. The electrons are propelled at a sample target with a voltage between 5,000 V and 25,000 V.
 			Generally the higher voltage gives better resolution.
 			<br>
-			<br>Find the electric potential one nanometer away from just one electron.
-			<br>What about 100 electrons at 0.01 nanometers?
+			<br>Let's estimate the voltage needed for a 1 nanometer resolution. We can start by finding the energy to potentially bring
+			an electron very close to another electron. What is the potential at 1 nanometer from an electron?
 			<details>
 				<summary>solution</summary>
 				$$ V = \frac{k_{e}q}{r} $$ $$ V = \frac{(8.987 \times 10^{9})(-1.6 \times 10^{-19})}{10^{-9}} $$ $$ V = -1.440\, \mathrm{volts}$$
-				<br> $$ V = \frac{(8.987 \times 10^{9})(100 \times -1.6 \times 10^{-19})}{10^{-11}} $$ $$ V = -14,400 \, \mathrm{volts}$$
 
+			</details>
+			<br>What is the potential at 0.001 nm from a single electron?
+			<details>
+				<summary>solution</summary>
+				$$ V = \frac{(8.987 \times 10^{9})(-1.6 \times 10^{-19})}{10^{-12}} $$ $$ V = -1440 \, \mathrm{volts}$$
 			</details>
 		</div>
 		<div class='example'>

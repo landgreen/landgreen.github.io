@@ -19,6 +19,7 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<script src='../../../lib/function-graph-SVG.js'></script>
 </head>
 
 <body>
@@ -66,7 +67,7 @@
 		<p>Any object moving in a circular path has a net force pointed at the center of the circle. The velocity of the object will
 			always be perpendicular to the force.</p>
 		<div class='definition'>
-			<svg style="display: block; margin: auto" width="450" height="360" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<svg style="display: block; margin: auto" width="450" height="360" version="1.1" xmlns="http://www.w3.org/2000/svg">
 				<circle cx="200" cy="200" r="150" fill='rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
 				<g transform="translate(53 200)">
 					<line x1="0" y1="0" x2="150" y2="0" style="stroke:#000;stroke-width:2" />
@@ -176,7 +177,7 @@
 			$$v^{2} = \frac{GM_{2}}{r} $$
 		</details>
 		<div class='definition'>
-			<svg style="display: block; margin: auto" width="450" height="360" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<svg style="display: block; margin: auto" width="450" height="360" version="1.1" xmlns="http://www.w3.org/2000/svg">
 				<circle cx="200" cy="200" r="50" fill='#fff' stroke-width="2" stroke="#222" />
 				<text x="203" y="224" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">M</text>
 				<circle cx="200" cy="200" r="150" fill='rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
@@ -219,9 +220,33 @@
 				<br>Only true for circular orbits!
 			</p>
 		</div>
-		<p>There are several restrictions on where we can use this equation. Most planets orbiting the sun, moons orbiting large planets,
-			and satellites are all applicable.</p>
-		<div id='v-vs-r'></div>
+		<p>Situations where there is circular motion and a much larger central body include: planets orbiting the sun, moons orbiting
+			large planets, and satellites.</p>
+
+		<svg id="SVG-graph-0" width="600" height="300">
+			<path d="M 25 -1 v 281 h 65 v -281" fill='rgba(100,50,0,0.2)' />
+			<path d="M 90 -1 v 281 h 18.5 v -281" fill='rgba(100,190,255,0.25)' />
+			<path d="M 446.5 -1 v 381" stroke="#999" stroke-width="1" fill='none' stroke-dasharray="4" />
+			<text x="438" y="75" fill="black" text-anchor="middle" alignment-baseline="central" font-size="13" transform="rotate(-90 438 75)">geosynchronous orbit</text>
+			<text x="98" y="190" fill="black" text-anchor="middle" alignment-baseline="central" font-size="13" transform="rotate(-90 98 190)">low Earth orbits</text>
+		</svg>
+		<script>
+			funGraphSVG("SVG-graph-0", x => Math.sqrt(398576 / x), {
+				x0: 25,
+				y0: 280,
+				stroke: "#08f",
+				strokeWidth: 3,
+				xPrecision: 5,
+				yPrecision: 2,
+				xScale: 0.01,
+				yScale: 25,
+				gridSize: 75,
+				showGrid: false,
+				xLabel: "radius (km)",
+				yLabel: "velocity (km/s)",
+				showMouseCoords: true,
+			});
+		</script>
 		<p>This is a graph of radius vs. orbital velocity for a satellite orbiting Earth in circular motion. It seems counter-intuitive,
 			but as you orbit farther from the central body your velocity goes down.</p>
 		<p>Take a look at the simulation below to see circular orbits at different distances.
@@ -374,9 +399,6 @@
 	<script src="orbits.js"></script>
 	<script src="grav1.js"></script>
 	<script src="grav2.js"></script>
-	<script src="https://d3js.org/d3.v3.min.js"></script>
-	<script src='../../../lib/function-plot.js'></script>
-	<script src='plot.js'></script>
 </body>
 
 </html>
