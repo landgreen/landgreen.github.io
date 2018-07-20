@@ -40,13 +40,11 @@
 					kinetic energy changes into the tides.</p>
 			</div>
 			<div>
-				<canvas style='border-radius: 250px;' class='black' id='grav1' height='250' width='250' onclick="grav1(this)"> </canvas>
+				<canvas id='grav1' height='250' width='250' style="background-color: #111;border-radius: 250px;"> </canvas>
 			</div>
 		</div>
-		<br>
-		<p>Play around with some orbits in the simulation below to develop an intuition for orbital mechanics.</p>
-		<center>
-			<div style="position: relative; width: 300px; height: 200px;">
+		<div class="example">
+			<div class="center" style="position: relative; width: 300px; height: 200px;">
 				<a href="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_en.html" style="text-decoration: none;">
 					<img src="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits-600.png" alt="Gravity And Orbits"
 					 style="border: none;" width="300" height="200" />
@@ -58,10 +56,10 @@
 					</table>
 				</a>
 			</div>
-		</center>
-		<p>What happen to the path of a satellite when you turn gravity off?</p>
-		<p>How would you describe the directions of the velocity and the force?</p>
-		<p>How does the orbital path change as you increase the mass of either object?</p>
+			<p>What happen to the path of a satellite when you turn gravity off?</p>
+			<p>How would you describe the direction of the velocity compared to the force?</p>
+			<p>How does the orbital path change as you increase the mass of either object?</p>
+		</div>
 
 		<p class='underlined' id="circular">Circular Motion</p>
 		<p>Any object moving in a circular path has a net force pointed at the center of the circle. The velocity of the object will
@@ -164,7 +162,7 @@
 		<p class='underlined'>Circular Orbits</p>
 		<p>Each satellite below starts with a different velocity. Simulation speed =
 			<input class='number' id='speed' type="number" step="1" min='0' max='1000' value='2'>
-			<canvas class='black' id='grav2' height='600' width='600' onclick="grav2(this)"> </canvas>
+			<canvas id='grav2' height='600' width='600' onclick="grav2(this)" style="background-color: #000;"> </canvas>
 		</p>
 		<p>
 			<strong>The orbits of objects in space are elliptical. They are never perfectly circular,</strong> but many orbits come close
@@ -222,33 +220,6 @@
 		</div>
 		<p>Situations where there is circular motion and a much larger central body include: planets orbiting the sun, moons orbiting
 			large planets, and satellites.</p>
-
-		<svg id="SVG-graph-0" width="600" height="300">
-			<path d="M 25 -1 v 281 h 65 v -281" fill='rgba(100,50,0,0.2)' />
-			<path d="M 90 -1 v 281 h 18.5 v -281" fill='rgba(100,190,255,0.25)' />
-			<path d="M 446.5 -1 v 381" stroke="#999" stroke-width="1" fill='none' stroke-dasharray="4" />
-			<text x="438" y="75" fill="black" text-anchor="middle" alignment-baseline="central" font-size="13" transform="rotate(-90 438 75)">geosynchronous orbit</text>
-			<text x="98" y="190" fill="black" text-anchor="middle" alignment-baseline="central" font-size="13" transform="rotate(-90 98 190)">low Earth orbits</text>
-		</svg>
-		<script>
-			funGraphSVG("SVG-graph-0", x => Math.sqrt(398576 / x), {
-				x0: 25,
-				y0: 280,
-				stroke: "#08f",
-				strokeWidth: 3,
-				xPrecision: 5,
-				yPrecision: 2,
-				xScale: 0.01,
-				yScale: 25,
-				gridSize: 75,
-				showGrid: false,
-				xLabel: "radius (km)",
-				yLabel: "velocity (km/s)",
-				showMouseCoords: true,
-			});
-		</script>
-		<p>This is a graph of radius vs. orbital velocity for a satellite orbiting Earth in circular motion. It seems counter-intuitive,
-			but as you orbit farther from the central body your velocity goes down.</p>
 		<p>Take a look at the simulation below to see circular orbits at different distances.
 			<br>Click and drag to move. Double click for full screen.</p>
 		<style>
@@ -263,126 +234,156 @@
 		</style>
 
 		<div id='three-orbit'></div>
-		<center>
-			<h3>Local Massive Objects Data Table</h3>
-			<table border>
-				<tr align=center>
-					<th align=left>Planet</th>
-					<th>mass (kg)</th>
-					<th>radius (km)</th>
-					<th>density (g/cm
-						<sup>3</sup>)</th>
-				</tr>
-				<tr align=center>
-					<td align=left>Sun</td>
-					<td>2.00 × 10
-						<sup>30</sup>
-					</td>
-					<td>695,700</td>
-					<td>1.408</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Mercury</td>
-					<td>3.301 × 10
-						<sup>23</sup>
-					</td>
-					<td>2,440</td>
-					<td>5.427</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Venus</td>
-					<td>4.867 × 10
-						<sup>24</sup>
-					</td>
-					<td>6,052</td>
-					<td>5.243</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Earth</td>
-					<td>5.972 × 10
-						<sup>24</sup>
-					</td>
-					<td>6,371</td>
-					<td>5.515</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Moon</td>
-					<td>7.346 × 10
-						<sup>22</sup>
-					</td>
-					<td>1,737</td>
-					<td>3.344</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Mars</td>
-					<td>6.417 × 10
-						<sup>23</sup>
-					</td>
-					<td>3,390</td>
-					<td>3.933</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Jupiter</td>
-					<td>1.899 × 10
-						<sup>27</sup>
-					</td>
-					<td>70,000</td>
-					<td>1.326</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Saturn</td>
-					<td>5.685 × 10
-						<sup>26</sup>
-					</td>
-					<td>58,232</td>
-					<td>0.687</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Uranus</td>
-					<td>8.68 × 10
-						<sup>25</sup>
-					</td>
-					<td>25,362</td>
-					<td>1.270</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Neptune</td>
-					<td>1.024 × 10
-						<sup>26</sup>
-					</td>
-					<td>24,622</td>
-					<td>1.638</td>
-				</tr>
-			</table>
-			<a href="http://exoplanets.org/table">exoplanets data table</a>
-		</center>
 		<div class='example'>
+			<center>
+				<table border>
+					<tr align=center>
+						<th align=left>Planet</th>
+						<th>mass (kg)</th>
+						<th>radius (km)</th>
+						<th>density (g/cm
+							<sup>3</sup>)</th>
+					</tr>
+					<tr align=center>
+						<td align=left>Sun</td>
+						<td>2.00 × 10
+							<sup>30</sup>
+						</td>
+						<td>695&#8239;700</td>
+						<td>1.408</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Mercury</td>
+						<td>3.301 × 10
+							<sup>23</sup>
+						</td>
+						<td>2&#8239;440</td>
+						<td>5.427</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Venus</td>
+						<td>4.867 × 10
+							<sup>24</sup>
+						</td>
+						<td>6&#8239;052</td>
+						<td>5.243</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Earth</td>
+						<td>5.972 × 10
+							<sup>24</sup>
+						</td>
+						<td>6&#8239;371</td>
+						<td>5.515</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Moon</td>
+						<td>7.346 × 10
+							<sup>22</sup>
+						</td>
+						<td>1737</td>
+						<td>3.344</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Mars</td>
+						<td>6.417 × 10
+							<sup>23</sup>
+						</td>
+						<td>3390</td>
+						<td>3.933</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Jupiter</td>
+						<td>1.899 × 10
+							<sup>27</sup>
+						</td>
+						<td>70&#8239;000</td>
+						<td>1.326</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Saturn</td>
+						<td>5.685 × 10
+							<sup>26</sup>
+						</td>
+						<td>58&#8239;232</td>
+						<td>0.687</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Uranus</td>
+						<td>8.68 × 10
+							<sup>25</sup>
+						</td>
+						<td>25&#8239;362</td>
+						<td>1.270</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Neptune</td>
+						<td>1.024 × 10
+							<sup>26</sup>
+						</td>
+						<td>24&#8239;622</td>
+						<td>1.638</td>
+					</tr>
+				</table>
+			</center>
+			<br>
 			<strong>Example:</strong> If a satellite is 800.0 km above the surface of the moon how fast must it move to travel in a circular
 			orbit?
 			<details>
 				<summary>solution</summary>
-				$$r = 800000\,\mathrm{m} + 1737000\,\mathrm{m} = 2537000\,\mathrm{m}$$ $$v^{2} = \frac{GM}{r}$$ $$v^{2} = \frac{(6.67 \times
-				10^{-11})(7.346 \times 10^{22})}{2,537,000}$$ $$\sqrt{v^{2}} = \sqrt{19.31 \times 10^5}$$ $$v = 1389.6 \,\mathrm{\tfrac{m}{s}}$$
+				$$r = 800\,000\,\mathrm{m} + 1\,737\,000\,\mathrm{m} = 2\,537\,000\,\mathrm{m}$$ $$v^{2} = \frac{GM}{r}$$ $$v^{2} = \frac{(6.67
+				\times 10^{-11})(7.346 \times 10^{22})}{2\,537\,000}$$ $$\sqrt{v^{2}} = \sqrt{19.31 \times 10^5}$$ $$v = 1389.6 \,\mathrm{\tfrac{m}{s}}$$
 			</details>
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> A geosynchronous orbit is always above the same point on the earth so it takes one day to orbit. This
-			orbit requires a velocity of 3,070 m/s. Calculate how far away a geosynchronous satellite needs to be from the center
-			of the earth.
+			<p class="center">Radius Vs. Orbital Velocity
+				<br>(for satellites in circular motion around Earth)</p>
+			<svg id="SVG-graph-0" width="600" height="300">
+				<path d="M 25 -1 v 281 h 65 v -281" fill='rgba(100,50,0,0.2)' />
+				<path d="M 90 -1 v 281 h 18.5 v -281" fill='rgba(100,190,255,0.25)' />
+				<path d="M 446.5 -1 v 381" stroke="#999" stroke-width="1" fill='none' stroke-dasharray="4" />
+
+				<a xlink:href="https://en.wikipedia.org/wiki/Geosynchronous_orbit">
+					<text x="438" y="75" fill="black" text-anchor="middle" alignment-baseline="central" font-size="13" transform="rotate(-90 438 75)">geosynchronous orbit</text>
+				</a>
+				<a xlink:href="https://en.wikipedia.org/wiki/Low_Earth_orbit">
+					<text x="98" y="190" fill="black" text-anchor="middle" alignment-baseline="central" font-size="13" transform="rotate(-90 98 190)">low Earth orbits</text>
+				</a>
+			</svg>
+			<script>
+				funGraphSVG("SVG-graph-0", x => Math.sqrt(398576 / x), {
+					x0: 25,
+					y0: 280,
+					stroke: "#08f",
+					strokeWidth: 3,
+					xPrecision: 5,
+					yPrecision: 2,
+					xScale: 0.01,
+					yScale: 25,
+					gridSize: 75,
+					showGrid: false,
+					xLabel: "radius (km)",
+					yLabel: "velocity (km/s)",
+					showMouseCoords: true,
+				});
+			</script>
+			<strong>Example:</strong> A geosynchronous orbit can stay above the same point on the Earth. To be able to do this the orbit must
+			equal one Earth day, which requires a velocity of 3070 m/s. Calculate how far away a geosynchronous satellite needs to
+			be from the center of the earth.
 			<details>
 				<summary>solution</summary>
 				$$v^{2} = \frac{GM}{r}$$ $$r = \frac{GM}{v^{2}}$$ $$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(3,070)^{2}}$$
-				$$r = 4.22 \times 10^{7} \,\mathrm{m} = 42,200 \,\mathrm{km}$$
-				<br>$$\text{altitude = orbital radius - Earth's surface radius}$$ $$\text{altitude} = 42,200 \,\mathrm{km} - 6,371 \,\mathrm{km}$$
-				$$\text{altitude} = 35,829 \,\mathrm{km}$$
+				$$r = 4.22 \times 10^{7} \,\mathrm{m} = 42\,200 \,\mathrm{km}$$
+				<br>$$\text{altitude = orbital radius - Earth's surface radius}$$ $$\text{altitude} = 42\,200 \,\mathrm{km} - 6371 \,\mathrm{km}$$
+				$$\text{altitude} = 35\,829 \,\mathrm{km}$$
 			</details>
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> A 100 kg satellite and a 200 kg satellite are both in a circular orbit around the Earth at 10,000,000
-			m from the center of the Earth. Which satellite will have the higher velocity?
+			<strong>Example:</strong> A 100 kg satellite and a 200 kg satellite are both in a circular orbit around the Earth at an orbital
+			radius of 10&#8239;000&#8239;000 m. Which satellite has the higher velocity?
 			<details>
 				<summary>solution</summary>
-				<br>They will both have the same velocity. The mass of the satellite doesn't matter, only the mass of the Earth.
+				<br>They both have the same velocity. The mass of the satellite doesn't matter, only the mass of the Earth.
 			</details>
 		</div>
 	</article>

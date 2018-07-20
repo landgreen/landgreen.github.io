@@ -46,61 +46,37 @@ function collision0(el) {
   engine.world.gravity.y = 0;
 
   var mass = [];
+  spawnMass(0, 150, 100, 0);
+  spawnMass(700, 150, -100, 0);
 
   document.getElementById(el.id).addEventListener("mousedown", function() {
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
-    spawnMass(0, 130, 120, 0, 20 + Math.round(Math.random() * 70), Math.random());
-    spawnMass(700, 130, -120, 0, 20 + Math.round(Math.random() * 70), Math.random());
+    spawnMass(0, 150, 150, 0);
+    spawnMass(700, 150, -150, 0);
   });
-  spawnMass(0, 130, 200, 0, 20 + Math.round(Math.random() * 70), Math.random());
-  spawnMass(700, 130, -200, 0, 20 + Math.round(Math.random() * 70), Math.random());
 
-  function spawnMass(xIn, yIn, VxIn, VyIn, length, rest) {
+  function spawnMass(xIn, yIn, VxIn, VyIn, length = 40 + Math.round(Math.random() * 30), rest = Math.random()) {
     var i = mass.length;
     mass.push();
-    mass[i] = Bodies.rectangle(xIn * scale, yIn * scale, length * scale, length * scale, {
+    mass[i] = Bodies.polygon(xIn * scale, yIn * scale, 3 + Math.floor(Math.random() * 3), length * scale, {
       friction: 0,
       frictionStatic: 0,
       frictionAir: 0,
       restitution: rest,
+      angle: Math.random() * Math.PI,
       length: length,
       color: randomColor({
         luminosity: "light"
       })
     });
+    Matter.Body.setAngularVelocity(mass[i], 0.05 * (Math.random() - 0.5));
     Body.setVelocity(mass[i], {
       x: (VxIn / 60) * scale,
       y: (-VyIn / 60) * scale
     });
-    //Matter.Body.setAngularVelocity(mass[i], 0.4);
     World.add(engine.world, mass[i]);
   }
-
-  //add walls flush with the edges of the canvas
-  // var offset = 25;
-  // World.add(engine.world, [
-  //   Bodies.rectangle(canvas.width*0.5, -offset-1, canvas.width * 2 + 2 * offset, 50, { //top
-  //     isStatic: true,
-  //     friction: 1,
-  //     frictionStatic: 1,
-  //   }),
-  //   Bodies.rectangle(canvas.width * 0.5, canvas.height + offset + 1, canvas.width * 2 + 2 * offset, 50, { //bottom
-  //     isStatic: true,
-  //     friction: 1,
-  //     frictionStatic: 1,
-  //   }),
-  //   Bodies.rectangle(canvas.width + offset + 1, canvas.height * 0.5, 50, canvas.height * 2 + 2 * offset, { //right
-  //     isStatic: true,
-  //     friction: 1,
-  //     frictionStatic: 1,
-  //   }),
-  //   Bodies.rectangle(-offset-1, canvas.height*0.5, 50, canvas.height * 2 + 2 * offset, {  //left
-  //     isStatic: true,
-  //     friction: 1,
-  //     frictionStatic: 1,
-  //   })
-  // ]);
 
   function edgeBounce() {
     for (var k = 0, length = mass.length; k < length; k++) {
@@ -135,8 +111,6 @@ function collision0(el) {
     var bodies = Composite.allBodies(engine.world);
     window.requestAnimationFrame(render);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // ctx.fillStyle = 'rgba(255,255,255,0.4)';  //trails
-    // ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.lineWidth = 1;
     ctx.strokeStyle = "#000000";
@@ -154,7 +128,7 @@ function collision0(el) {
         ctx.fillStyle = "#ccc";
       }
       ctx.fill();
-      ctx.stroke();
+      // ctx.stroke();
     }
 
     //draw lines
@@ -170,8 +144,8 @@ function collision0(el) {
     ctx.fillStyle = "#000";
     var p = 0;
     for (var k = 0, length = mass.length; k < length; k++) {
-      ctx.fillText(mass[k].mass.toFixed(2) + "kg", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 22);
-      ctx.fillText(mass[k].velocity.x.toFixed(2) + "m/s", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 2);
+      // ctx.fillText(mass[k].mass.toFixed(2) + "kg", mass[k].position.x, mass[k].position.y - 12);
+      // ctx.fillText(mass[k].velocity.x.toFixed(2) + "m/s", mass[k].position.x, mass[k].position.y + 12);
       p += mass[k].mass * mass[k].velocity.x;
     }
     ctx.textAlign = "left";
@@ -190,6 +164,10 @@ function collision0(el) {
       5,
       37
     );
-    //edgeBounce();
+    //color underlines
+    ctx.fillStyle = mass[0].color;
+    ctx.fillRect(5, 45, 103, 10);
+    ctx.fillStyle = mass[1].color;
+    ctx.fillRect(135, 45, 103, 10);
   })();
 }

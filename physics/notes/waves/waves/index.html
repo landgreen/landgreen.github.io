@@ -19,6 +19,7 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<script src='../../../lib/function-graph-SVG.js'></script>
 </head>
 
 <body>
@@ -184,10 +185,29 @@
 			<strong>Graphing:</strong> Let's see if we can find a relationship between frequency and period. Change the wavelength and record
 			about five different pairs of frequency and period. Graph the pairs with period as the x-coordinate and frequency as the
 			y-coordinate. What does the graph look like?
-			<details>
+
+			<details id="example0">
 				<summary>solution</summary>
-				<p class='center'>it's an inverse function</p>
-				<div id='T-vs-f' class='center'></div>
+				<p>It's an inverse function.</p>
+				<svg id="SVG-graph-0" width="600" height="400"></svg>
+				<script>
+					// funGraphSVG() don't work inside <details>
+					// this is my workaround
+					document.getElementById("example0").addEventListener("toggle", handler0);
+					function handler0(e) {
+						e.target.removeEventListener(e.type, arguments.callee); // remove this handler
+						funGraphSVG("SVG-graph-0", x => 1 / x, {
+							x0: 15,
+							y0: 385,
+							precision: 1,
+							scale: 100,
+							gridSize: 100,
+							xLabel: "frequency (Hz)",
+							yLabel: "period (s)",
+							showMouseCoords: true,
+						});
+					}
+				</script>
 			</details>
 		</div>
 		<h2 class='underlined'>Frequency and Period</h2>
@@ -282,12 +302,12 @@
 
 					perElem.addEventListener("change", event => {
 						per = perElem.value;
-						circleElem.style.animationDuration = per + " s";
+						circleElem.style.animationDuration = per + "s";
 						freqElem.value = 1 / Math.max(per, 0.001);
 					});
 					freqElem.addEventListener("change", event => {
 						per = 1 / Math.max(freqElem.value, 0.001);
-						circleElem.style.animationDuration = per + " s";
+						circleElem.style.animationDuration = per + "s";
 						perElem.value = per;
 					});
 					perElem.addEventListener("input", event => {
@@ -310,7 +330,6 @@
 							isPaused = true;
 						}
 					});
-
 				}
 				sliderControl();
 			</script>
@@ -559,9 +578,6 @@
 	<script src='../../../lib/matter.min.js'></script>
 	<script src="wave.js "></script>
 	<script src="sound.js "></script>
-	<script src="https://d3js.org/d3.v3.min.js "></script>
-	<script src='../../../lib/function-plot.js'></script>
-	<script src='plot.js'></script>
 </body>
 
 </html>

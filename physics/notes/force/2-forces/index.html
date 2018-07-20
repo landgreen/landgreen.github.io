@@ -29,11 +29,28 @@
   </header>
 
   <article>
-    <p>A free body diagram shows all the force vectors on a single mass. Typically you label the mass in the center of a box
-      and draw force vectors going away from the box. A free body diagram is often drawn to visualize Newton's second law.</p>
+    <p> Free body diagrams are a technique that helps visualize the forces on a mass in order to solve Newton's second law.</p>
+    <div class="definition">
+      <svg class='center' width="300" height="120" viewBox="-15 0 285 120">
+        <g transform='translate(100 20) rotate(0)'>
+          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fff" />
+          <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>m</text>
+        </g>
+        <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
+        <text x="37" y="65" fill="black">F</text>
+        <use xlink:href="#vector" transform='translate(180 80) rotate(-90)' />
+        <text x="235" y="85" fill="black">F</text>
+        <use xlink:href="#vector" transform='translate(180 40) rotate(-90)' />
+        <text x="235" y="45" fill="black">F</text>
+      </svg>
+      <p>A
+        <strong>free body diagram</strong> shows all the force vectors on a single mass. Mass is typically written inside a box,
+        with force vectors pointed away from the box.
+      </p>
+    </div>
 
     <div class='example'>
-      <svg class='svgDiagram center' width="300" height="120" viewBox="-15 0 285 120">
+      <svg class='center' width="300" height="120" viewBox="-15 0 285 120">
         <rect x="0" y="100" width="300" height="110" style="fill:#ccc" />
         <g transform='translate(100 20) rotate(0)'>
           <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#bdd" />
@@ -54,7 +71,7 @@
     </div>
 
     <div class='example'>
-      <svg class='svgDiagram center' width="300" height="200">
+      <svg class='center' width="300" height="200">
         <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
         <g transform='translate(100 60) rotate(0)'>
           <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#e50" />
@@ -79,7 +96,7 @@
       is pulling them with a force of 520 N left. The person's feet are countering that with 540 N to the right.
       <details>
         <summary>solution</summary>
-        <svg class='svgDiagram center' width="300" height="120" viewBox="-15 0 285 120">
+        <svg class='center' width="300" height="120" viewBox="-15 0 285 120">
           <g transform='translate(100 20) rotate(0)'>
             <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fcf" />
             <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>83 kg</text>
@@ -98,7 +115,7 @@
       the crate.
       <details>
         <summary>solution</summary>
-        <svg class='svgDiagram center' width="300" height="200">
+        <svg class='center' width="300" height="200">
           <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
           <g transform='translate(100 60) rotate(0)'>
             <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#eaa" />
@@ -124,7 +141,7 @@
       but we mostly notice the attraction towards the Earth because it is so large and so close.</p>
     <p>It's funny, we have a special word just for the direction of gravity, down.</p>
     <div class='definition'>
-      <svg class='svgDiagram center' width="100" height="170">
+      <svg class='center' width="100" height="170">
         <defs>
           <g id="vector">
             <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
@@ -565,8 +582,8 @@
       the earth, but they don't notice any gravity because they are in a freefall.</p>
     <p>
       <strong>Freefall</strong> means that you are just letting gravity accelerate you without any opposing forces. To keep from
-      falling we are careful to always counter the force of gravity. This can be done with a parachute or a jetpack! Mostly
-      we counter gravity with a normal force from the ground.</p>
+      falling we are careful to always counter the force of gravity. This can be done with a parachute, or a jet pack, or
+      just the ground.</p>
     <div class='example'>
       <strong>Example:</strong> The book
       <a href="https://www.amazon.com/Name-Wind-Patrick-Rothfuss/dp/0756404746/">The Name of the Wind</a> by Patrick Rothfuss has a mass of 0.34 kg. How does its mass and weight change in a freefall
@@ -588,12 +605,12 @@
         <ul class="listing">
           <li>
             <div>
-              $$\text{weight on the earth}$$ $$F_{g}=mg$$ $$F_{g}=0.95(9.8)$$ $$F_{g}=9.31 \, \mathrm{N}$$
+              $$\text{weight on the earth}$$ $$F_{g}=mg$$ $$F_{g}=(0.95)(9.8)$$ $$F_{g}=9.31 \, \mathrm{N}$$
             </div>
           </li>
           <li>
             <div>
-              $$\text{weight on the moon}$$ $$F_{g}=ma$$ $$F_{g}=0.95(1.6)$$ $$F_{g}=1.52 \, \mathrm{N}$$
+              $$\text{weight on the moon}$$ $$F_{g}=ma$$ $$F_{g}=(0.95)(1.6)$$ $$F_{g}=1.52 \, \mathrm{N}$$
             </div>
           </li>
         </ul>
@@ -636,7 +653,7 @@
         <p>Typically a normal force will balance the force of gravity to keep an object from accelerating up or down.</p>
       </div>
       <div>
-        <svg class='svgDiagram center' width="240" height="230">
+        <svg class='center' width="240" height="230">
           <defs>
             <g id="vector">
               <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
@@ -680,7 +697,7 @@
               <br>
               <br>
               <br>
-              <svg class='svgDiagram center' width="300" height="200">
+              <svg class='center' width="300" height="200">
                 <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
                 <g transform='translate(100 60) rotate(0)'>
                   <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#eaa" />
@@ -886,7 +903,7 @@
     </div>
 
     <div class='example'>
-      <svg class='svgDiagram center' width="600" height="200">
+      <svg class='center' width="600" height="200">
         <g transform='translate(200 120) rotate(90)'>
           <line x1="0" y1="0" x2="0" y2="45" style="stroke:#999;stroke-width:2" />
           <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#999" />

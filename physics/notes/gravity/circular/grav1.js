@@ -1,14 +1,5 @@
-const setup1 = function() {
-  var canvas = document.getElementById("grav1");
-  var ctx = canvas.getContext("2d");
-  ctx.font = "300 22px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-};
-setup1();
-
-function grav1(el) {
+grav1();
+function grav1(el = document.getElementById("grav1")) {
   el.onclick = null; //stops the function from running on button click
   var canvas = el;
   var ctx = canvas.getContext("2d");
@@ -31,13 +22,13 @@ function grav1(el) {
   canvas.onmouseup = function() {
     mouse.down = false;
   };
-  let pause = false;
+  let pause = true;
   el.addEventListener("mouseleave", function() {
     pause = true;
   });
   el.addEventListener("mouseenter", function() {
+    if (pause) requestAnimationFrame(cycle);
     pause = false;
-    if (!pause) requestAnimationFrame(cycle);
   });
 
   const q = []; //holds the Particles
@@ -75,20 +66,13 @@ function grav1(el) {
     "#fff"
   );
 
-  // ctx.globalCompositeOperation = 'lighter'
-  // ctx.clearRect(0, 0, canvas.width, canvas.height);
   function cycle() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // ctx.globalAlpha = 0.05
-    // ctx.fillStyle = '#000'
-    // ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.globalAlpha = 1;
     Particle.integration(q);
-    // Particle.vectorField(q,vMag)
     Particle.drawAll(q, ctx);
     Particle.bounds(q, canvas);
     if (!pause) requestAnimationFrame(cycle);
   }
-  // for (let i =0; i<140; ++i)requestAnimationFrame(cycle);
   requestAnimationFrame(cycle);
 }

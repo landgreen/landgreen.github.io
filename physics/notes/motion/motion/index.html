@@ -387,6 +387,34 @@
 		</div>
 
 		<div class='example'>
+			<svg id="SVG-graph-16" width="600" height="220">
+			</svg>
+			<script>
+				funGraphSVG("SVG-graph-16", x => 1 / 4 * x, {
+					x0: 20,
+					y0: 200,
+					precision: 1,
+					stroke: "#d9d",
+					step: 10,
+					scale: 60,
+					gridSize: 60,
+					strokeWidth: 4,
+					xLabel: "time (s)",
+					yLabel: "velocity (m/s)",
+				});
+			</script>
+
+			<strong>Graph:</strong> Use this graph of velocity vs. time to determine acceleration.
+			<details>
+				<summary>solution</summary>
+				<p>Acceleration is the slope of the velocity vs. time graph. Slope is the vertical rise of the graph divided by the horizontal
+					run.
+				</p>
+				$$\mathrm{slope} = \frac{\mathrm{rise}}{\mathrm{run}}$$ $$a = \frac{\Delta v}{\Delta t}$$ $$a = \frac{1}{4}$$
+			</details>
+		</div>
+
+		<div class='example'>
 			<strong>Graph:</strong> Sketch the position vs. time and velocity vs. time graphs for an object falling for 10 s. For your sketch,
 			just make sure your graphs have the right shape.
 			<details>

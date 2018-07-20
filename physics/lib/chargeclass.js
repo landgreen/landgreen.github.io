@@ -458,6 +458,55 @@ class Charge {
     return v;
   }
 
+  static vectorLines(who) {
+    let imageData = ctx.createImageData(canvas.width, canvas.height);
+    // var imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
+
+    let data = imageData.data;
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+
+    for (let y = 0; y < canvasHeight; ++y) {
+      for (let x = 0; x < canvasWidth; ++x) {
+        const index = (y * canvasWidth + x) * 4;
+        let mag = 0;
+        let fx = 0;
+        let fy = 0;
+        for (let j = 0, len = who.length; j < len; j++) {
+          const dx = who[j].position.x - x;
+          const dy = who[j].position.y - y;
+          const d2 = Math.max(dx * dx + dy * dy, 1);
+          const mag = who[j].charge / d2 / Math.sqrt(d2);
+          fx += mag * dx;
+          fy += mag * dy;
+
+          // const a = Math.atan2(dy, dx);
+          // const f = who[j].charge / (dx * dx + dy * dy + 1);
+          // fx += f * Math.cos(a);
+          // fy += f * Math.sin(a);
+        }
+        const a = Math.atan2(fy, fx) + Math.PI / 2;
+        // mag = Math.sqrt(fx * fx + fy * fy);
+        // if (Math.abs((mag * 1000) % 1) < 0.1) {
+        const threshold = 1;
+        const lineThickness = 17;
+        if (Math.abs((a * lineThickness) % Math.PI) < threshold) {
+          data[index] = 0; // red
+          data[index + 1] = 0; // green
+          data[index + 2] = 0; // blue
+          data[index + 3] = 255; // alpha
+        } else {
+          data[index] = 255; // red
+          data[index + 1] = 255; // green
+          data[index + 2] = 255; // blue
+          data[index + 3] = 255; // alpha
+        }
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
+    // if (Math.abs(fMag / 100 - Math.floor(fMag / 100)) < 0.01 && fMag > 0.001)
+  }
+
   static vectorField(who, spacing = 15) {
     var lenX = Math.floor(canvas.width / spacing);
     var lenY = Math.floor(canvas.height / spacing);

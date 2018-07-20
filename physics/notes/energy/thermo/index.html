@@ -28,6 +28,16 @@
 		</h1>
 	</header>
 	<article>
+		<h1 class='underlined'>Temperature</h1>
+		<p>Temperature is a measure of the average kinetic energy in a system of particles. Kinetic energy can be stored in spin,
+			vibrations between particles, and normal translational movement.</p>
+		<div id="kinetic-energy"></div>
+		<canvas class='center' id='temperature' height='150' width='600'> </canvas>
+		<canvas class='center' id='temperature-out' height='200' width='600'> </canvas>
+		<button id="clear-temp">clear</button>
+		<input type="range" id='time-rate-slider-temp' min="0.01" max="1" step="0.01" value="0.05">
+
+
 		<h1 class='underlined'>Energy Loss and Gain in a System</h1>
 		<br>
 		<div class="col-group">
@@ -170,7 +180,7 @@
 
 		<h1 class='underlined'>Arrow of Time</h1>
 		<p>
-			If you were to watch a video of th Earth orbiting the sun, it would be difficult to tell if the video was running forwards
+			If you were to watch a video of the Earth orbiting the sun, it would be difficult to tell if the video was running forwards
 			or backwards. Simple physical systems don't have a clear forwards or backwards.
 		</p>
 		<p>
@@ -213,6 +223,7 @@
 	<script src="energy.js"></script>
 	<script src='../../../lib/matter.min.js'></script>
 	<script src="entropy1.js"></script>
+	<script src="temperature.js"></script>
 	<script>
 		renderMathInElement(document.body);
 	</script>
