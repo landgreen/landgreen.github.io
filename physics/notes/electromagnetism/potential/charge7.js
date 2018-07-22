@@ -1,22 +1,21 @@
-const setup1 = function() {
-  var canvas = document.getElementById("charge1");
+(function() {
+  var canvas = document.getElementById("charge7");
   var ctx = canvas.getContext("2d");
   canvas.width = document.getElementsByTagName("article")[0].clientWidth;
   ctx.font = "30px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-};
-setup1();
+})();
 
-function charges1(el) {
+function charges7(el) {
   el.onclick = null; //stops the function from running on button click
   Charge.setCanvas(el);
   // var canvas = el
   // var ctx = canvas.getContext("2d");
 
   //switch between draw modes
-  let drawMode = 1;
+  let drawMode = 3;
   document.addEventListener("keypress", event => {
     if (!pause) {
       if (event.charCode === 49) {
@@ -69,30 +68,65 @@ function charges1(el) {
 
   const q = []; //holds the charges
   //spawn p before e to avoid a bug in the class method allPhysics
+  const side = 30;
+  const apothem = side * 0.866; //vertical distance between rows
+  const rows = 6; // y
+  const columns = 10; // x
 
-  const separation = 30;
-  const len = 7;
-  const offx = canvas.width / 2 - ((len - 1) * separation) / 2;
-  const offy = canvas.height / 2 - ((len - 1) * separation) / 2;
-  for (let i = 0; i < len; ++i) {
-    for (let j = 0; j < len; ++j) {
+  const hexLeft = canvas.width / 2 - side * ((columns * 3) / 4);
+  const hexTop = canvas.height / 2 - apothem * (rows / 2);
+
+  for (let y = 1; y < rows; ++y) {
+    let xOff = 0;
+    if (y % 2) {
+    } else {
+      xOff = 0.5; //odd
+    }
+    for (let x = -1, i = 0; i < columns; ++i) {
+      if (i % 2) {
+        //even
+        x++;
+        xOff = Math.abs(xOff);
+      } else {
+        //odd
+        x += 2;
+        xOff = -Math.abs(xOff);
+      }
+
       q[q.length] = new Charge("p", {
-        x: i * separation + offx,
-        y: j * separation + offy
+        x: hexLeft + (x + xOff) * side,
+        y: hexTop + y * apothem
       });
     }
   }
-  for (let i = 0; i < len; ++i) {
-    for (let j = 0; j < len; ++j) {
+
+  for (let y = 1; y < rows; ++y) {
+    let xOff = 0;
+    if (y % 2) {
+    } else {
+      xOff = 0.5; //odd
+    }
+    for (let x = -1, i = 0; i < columns; ++i) {
+      if (i % 2) {
+        //even
+        x++;
+        xOff = Math.abs(xOff);
+      } else {
+        //odd
+        x += 2;
+        xOff = -Math.abs(xOff);
+      }
+
       q[q.length] = new Charge("e", {
-        x: i * separation + offx,
-        y: j * separation + offy
+        x: hexLeft + (x + xOff) * side + 10 * (Math.random() - 0.5),
+        y: hexTop + y * apothem
       });
     }
   }
 
   function cycle() {
     Charge.physicsAll(q);
+    Charge.bounds(q);
     //choose a draw mode
     if (drawMode === 1) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -108,7 +142,6 @@ function charges1(el) {
     } else if (drawMode === 4) {
       Charge.drawCloudChamber(q);
     }
-    Charge.bounds(q);
     if (!pause) requestAnimationFrame(cycle);
   }
   requestAnimationFrame(cycle);

@@ -130,6 +130,11 @@
 		<canvas id='charge0' height='300' onclick="charges0(this)"> </canvas>
 		<p> They love making atoms. Try poking the simulations with your mouse.</p>
 		<canvas id='charge1' height='300' onclick="charges1(this)"> </canvas>
+		<p>
+			This one is organized in a hexagon pattern, like
+			<a href="https://en.wikipedia.org/wiki/Graphene">graphene</a>.
+		</p>
+		<canvas id='charge6' height='500' onclick="charges6(this)"> </canvas>
 
 		<h2 class='underlined' id='Coulombs-Law'>Coulomb's Law</h2>
 		<p>After the success of Newton's
@@ -237,13 +242,12 @@
 		<p>In this simulation electrons are removed from the right and added to the left to produce a messy looking flow of charge.
 		</p>
 		<canvas id='charge2' height='250' onclick="charges2(this)"> </canvas>
-		<p>Why is the current higher when the atoms are closer together?</p>
-		<canvas id='charge4' height='250' onclick="charges4(this)"> </canvas>
+		<!-- <p>Why is the current higher when the atoms are closer together?</p>
+		<canvas id='charge4' height='250' onclick="charges4(this)"> </canvas> -->
+		<br>
+		<canvas id='charge7' height='250' onclick="charges7(this)"> </canvas>
+
 		<p>A gap in the wire will reduce the flow of electrons.</p>
-
-
-
-
 		<style>
 			.canvas-container {
 				position: relative;
@@ -311,10 +315,14 @@
 				<br>If you heat a nonmetal up so much that electrons can leave the nucleus you get a plasma. A plasma is very conductive.
 			</details>
 		</div>
+
+
+
 		<h2 class='underlined' id='Static-Electricity'>Static Electricity</h2>
 		<p>
 			<strong>Static electricity occurs when there is an imbalance of electrons and protons.</strong> A lasting charge separation can
-			only occur in insulating materials, because in conductors the charges pair up very quickly. </p>
+			only occur in insulating materials, because in conductors the charges pair up very quickly.
+		</p>
 
 		<p>Static electricity effects are much stronger and longer lasting in low humidity. This is because water molecules increase
 			the conductivity of air, allowing more separated charges to return.</p>
@@ -322,16 +330,62 @@
 			is produced in a similar way when a cloud with rising air ends up with an unbalanced distribution of charge.
 		</p>
 
-		<p>A
-			<a href="https://en.wikipedia.org/wiki/Triboelectric_effect#Triboelectric_series">TriboElectric Series
-			</a> lists which materials will become electrically charged after they are rubbed together.</p>
+		<div class="example">
+			<p>Play around with this Phet simulation for static electricity.
+			</p>
+			<div class='center' style="position: relative; width: 300px; height: 200px;">
+				<a href="https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity_en.html"
+				 style="text-decoration: none;" target="_blank">
+					<img src="https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity-600.png"
+					 alt="Balloons and Static Electricity" style="border: none;" width="300" height="200" />
+					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.6; filter: alpha(opacity = 60);"></div>
+					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
+						<tr>
+							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
+						</tr>
+					</table>
+				</a>
+			</div>
 
-		<!-- <canvas id = 'charges2' height = '400'  onclick="charges2(this)"> </canvas> -->
-		<!-- https://en.wikipedia.org/wiki/File:Cat_demonstrating_static_cling_with_styrofoam_peanuts.jpg -->
+			<p>Which are conductors and which are insulators:
+				<br> (balloons, sweater, wall, air)</p>
+			<p>Why do some electrons jump to the balloon from the sweater?
+				<br> Why not the other way around?</p>
+			<p>Why is the balloon attracted to the sweater after it gains some electrons?</p>
+			<p>Why is the balloon attracted to the wall after it gains some electrons?</p>
+
+
+		</div>
+
+
+
+		<div id="charge5-zone" class="example">
+			<p>The positive charges on the left pull the electrons on the right closer, but not enough to to get them to jump over. This
+				leaves the grouping on the right with an
+				<strong>induced charge</strong>. Substances with an induced charge are slightly negative on one side and slightly positive on
+				the other side. This small difference in charge is why static electricity makes things sticky.
+			</p>
+			<canvas id='charge5' height="290" width="600" onclick="charges5(this)"> </canvas>
+			<br>
+			<strong>Question:</strong> Why can't the electrons get to the positive charge group?
+			<details>
+				<summary>solution</summary>
+				<p>The electrostatic force follows a 1/r² rule, so it is weaker with distance. The electrons want to spread out into the
+					positive charge, but the short distance attraction to nearby protons is a stronger force.</p>
+
+				<p>Add a conductive path and the electrons will spread out evenly.
+					<button id="add-path">add path</button>
+				</p>
+
+			</details>
+		</div>
+
 		<div class='example'>
+			<p>A
+				<a href="https://en.wikipedia.org/wiki/Triboelectric_effect#Triboelectric_series">TriboElectric Series
+				</a> lists which materials will become electrically charged after they are rubbed together.</p>
 			<strong>Question:</strong> If you rubbed polystyrene foam (styrofoam) on a
-			<a href="https://en.wikipedia.org/wiki/File:Cat_demonstrating_static_cling_with_styrofoam_peanuts.jpg">cat</a>, static electricity would cause them stick together. Which would gain a positive charge? Use the
-			<a href="https://en.wikipedia.org/wiki/Triboelectric_effect#Triboelectric_series">TriboElectric series</a> to decide.
+			<a href="https://en.wikipedia.org/wiki/File:Cat_demonstrating_static_cling_with_styrofoam_peanuts.jpg">cat</a>, static electricity would cause them stick together. Which would gain a positive charge?
 			<details>
 				<summary>solution</summary>
 				<br> The cat would end up with a positive charge. This means the cat would lose electrons to the styrofoam.
@@ -359,6 +413,9 @@
 	<script src="charge2.js"></script>
 	<script src="charge3.js"></script>
 	<script src="charge4.js"></script>
+	<script src="charge5.js"></script>
+	<script src="charge6.js"></script>
+	<script src="charge7.js"></script>
 </body>
 
 </html>

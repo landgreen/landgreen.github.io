@@ -1,5 +1,5 @@
-const setup1 = function() {
-  var canvas = document.getElementById("charge1");
+const setup5 = function() {
+  var canvas = document.getElementById("charge5");
   var ctx = canvas.getContext("2d");
   canvas.width = document.getElementsByTagName("article")[0].clientWidth;
   ctx.font = "30px Arial";
@@ -7,13 +7,11 @@ const setup1 = function() {
   ctx.textAlign = "center";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
 };
-setup1();
+setup5();
 
-function charges1(el) {
+function charges5(el) {
   el.onclick = null; //stops the function from running on button click
   Charge.setCanvas(el);
-  // var canvas = el
-  // var ctx = canvas.getContext("2d");
 
   //switch between draw modes
   let drawMode = 1;
@@ -58,33 +56,70 @@ function charges1(el) {
     mouse.down = false;
   };
   let pause = false;
-  el.addEventListener("mouseleave", function() {
+
+  const elZone = document.getElementById("charge5-zone");
+  elZone.addEventListener("mouseleave", function() {
     pause = true;
   });
-  el.addEventListener("mouseenter", function() {
+  elZone.addEventListener("mouseenter", function() {
     Charge.setCanvas(el);
     if (pause) requestAnimationFrame(cycle);
     pause = false;
   });
 
+  let addPath = false;
+  document.getElementById("add-path").addEventListener("click", event => {
+    if (!addPath) {
+      addPath = true;
+
+      //unpause
+      // Charge.setCanvas(el);
+      // if (pause) requestAnimationFrame(cycle);
+      // pause = false;
+
+      const y = canvas.height / 2;
+      const x = 15 + 7 * 30;
+      for (let i = 0; i < 8; ++i)
+        q[q.length] = new Charge("p", {
+          x: x + i * 30,
+          y: y
+        });
+    }
+  });
+
   const q = []; //holds the charges
   //spawn p before e to avoid a bug in the class method allPhysics
 
-  const separation = 30;
-  const len = 7;
-  const offx = canvas.width / 2 - ((len - 1) * separation) / 2;
-  const offy = canvas.height / 2 - ((len - 1) * separation) / 2;
-  for (let i = 0; i < len; ++i) {
-    for (let j = 0; j < len; ++j) {
+  //grouping of positive on left
+  let rows = 9;
+  let separation = 30;
+  let offx = 15;
+  let offy = canvas.height / 2 - ((rows - 1) * separation) / 2;
+  for (let i = 0; i < 7; ++i) {
+    for (let j = 0; j < rows; ++j) {
       q[q.length] = new Charge("p", {
         x: i * separation + offx,
         y: j * separation + offy
       });
     }
   }
-  for (let i = 0; i < len; ++i) {
-    for (let j = 0; j < len; ++j) {
-      q[q.length] = new Charge("e", {
+
+  //grouping of negative and positive on right
+  separation = 30;
+  const columns = 5;
+  offx = canvas.width - 30 * columns + 15;
+  offy = canvas.height / 2 - ((rows - 1) * separation) / 2;
+  for (let i = 0; i < columns; ++i) {
+    for (let j = 0; j < rows; ++j) {
+      q[q.length] = new Charge("p", {
+        x: i * separation + offx,
+        y: j * separation + offy
+      });
+    }
+  }
+  for (let i = 0; i < columns; ++i) {
+    for (let j = 0; j < rows; ++j) {
+      q[q.length] = new Charge("e-small", {
         x: i * separation + offx,
         y: j * separation + offy
       });
@@ -92,7 +127,7 @@ function charges1(el) {
   }
 
   function cycle() {
-    Charge.physicsAll(q);
+    Charge.physicsAll(q, 0.99, 500, 200);
     //choose a draw mode
     if (drawMode === 1) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -109,6 +144,7 @@ function charges1(el) {
       Charge.drawCloudChamber(q);
     }
     Charge.bounds(q);
+    // Charge.mouseCharge(q, mouse, 2);
     if (!pause) requestAnimationFrame(cycle);
   }
   requestAnimationFrame(cycle);

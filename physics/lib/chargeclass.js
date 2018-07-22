@@ -81,6 +81,16 @@ class Charge {
       this.life = 100 + Math.floor(Math.random() * 300);
       this.wide = 1;
       this.speed = 0.43; // % of speed of light, c
+    } else if (type === "e-small") {
+      this.canMove = true;
+      this.name = "electron";
+      this.mass = 1;
+      this.charge = -1;
+      this.radius = 7;
+      this.color = "rgba(0,100,255,0.6)";
+      this.life = 100 + Math.floor(Math.random() * 500);
+      this.wide = 0;
+      this.speed = 0.13; // % of speed of light, c
     }
   }
   static spawnCharges(who, len = 1, type = "e") {
@@ -161,23 +171,6 @@ class Charge {
         }
       }
     }
-
-    // let i = who.length;
-    // while (--i) {
-    //   if (
-    //     who[i].canMove &&
-    //     (who[i].position.x > canvas.width + range || who[i].position.x < -range || who[i].position.y > canvas.height + range || who[i].position.y < -range)
-    //   ) {
-    //     who.splice(i, 1);
-    //   }
-    // }
-    //fixes issue where the last particle isn't being removed ... be nice to have a better solution, but this works
-    // if (
-    //   who[0].canMove &&
-    //   (who[0].position.x > canvas.width + range || who[0].position.x < -range || who[0].position.y > canvas.height + range || who[0].position.y < -range)
-    // ) {
-    //   who.splice(0, 1);
-    // }
   }
 
   static physicsAll(who, friction = 0.99, minDistance2 = 500, strength = 200) {
@@ -215,17 +208,6 @@ class Charge {
       }
     }
   }
-
-  // static magnetic(who, scale = 0.05) {
-  //   for (let i = 0, len = who.length; i < len; ++i) {
-  //     let dir = Math.atan2(who[i].velocity.y, who[i].velocity.x);
-  //     let angle = dir + (Math.PI / 2) * who[i].charge;
-  //     let speed = Math.sqrt(who[i].velocity.x * who[i].velocity.x + who[i].velocity.y * who[i].velocity.y);
-  //     let mag = scale * speed;
-  //     who[i].velocity.x += mag * Math.cos(angle);
-  //     who[i].velocity.y += mag * Math.sin(angle);
-  //   }
-  // }
 
   static drawCloudChamber(who, falling = false) {
     const canvasWidth = canvas.width;
@@ -315,58 +297,6 @@ class Charge {
     ctx.globalAlpha = 1;
   }
 
-  // static physicsAll(who) {
-  //   const minDistance2 = 1000;
-  //   for (let i = 0, len = who.length; i < len; ++i) {
-  //     if (who[i].canMove) {
-  //       //change position from velocity
-  //       who[i].position.x += who[i].velocity.x;
-  //       who[i].position.y += who[i].velocity.y;
-  //       //friction
-  //       who[i].velocity.x *= 0.99;
-  //       who[i].velocity.y *= 0.99;
-  //       //accelerate from electrostatic force
-  //       for (let j = 0, len = who.length; j < len; ++j) {
-  //         if (i != j) {
-  //           const dx = who[i].position.x - who[j].position.x;
-  //           const dy = who[i].position.y - who[j].position.y;
-  //           const d2 = Math.max(dx * dx + dy * dy, minDistance2);
-  //           const mag = 200 * who[i].charge * who[j].charge / (d2 * Math.sqrt(d2));
-  //           who[i].velocity.x += mag * dx;
-  //           who[i].velocity.y += mag * dy;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-
-  // static physicsAll(who) {
-  //   for (let i = 0, len = who.length; i < len; ++i) {
-  //     if (who[i].canMove) {
-  //       //move
-  //       who[i].position.x += who[i].velocity.x;
-  //       who[i].position.y += who[i].velocity.y;
-  //       //friction
-  //       who[i].velocity.x *= 0.99;
-  //       who[i].velocity.y *= 0.99;
-  //       //electrostatic force
-  //       for (let j = 0, len = who.length; j < len; ++j) {
-  //         if (j < i) {
-  //           const dx = who[i].position.x - who[j].position.x;
-  //           const dy = who[i].position.y - who[j].position.y;
-  //           const a = Math.atan2(dy, dx);
-  //           const r = dx * dx + dy * dy + 1000; //the +1000 keeps r from being zero / adds stability
-  //           const mag = 200 * who[i].charge * who[j].charge / r;
-  //           who[i].velocity.x += mag * Math.cos(a);
-  //           who[i].velocity.y += mag * Math.sin(a);
-  //           who[j].velocity.x -= mag * Math.cos(a);
-  //           who[j].velocity.y -= mag * Math.sin(a);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-
   static pushZone(who, offx = 0, offy = 50, height = 300, push = 0.1) {
     const range = {
       min: {
@@ -443,6 +373,21 @@ class Charge {
     }
   }
 
+  static mouseCharge(who, pos, charge = 1) {
+    for (let i = 0, len = who.length; i < len; ++i) {
+      if (who[i].canMove) {
+        const dx = who[i].position.x - pos.x;
+        const dy = who[i].position.y - pos.y;
+        const a = Math.atan2(dy, dx);
+        //the +4000 keeps r from being zero
+        const r = dx * dx + dy * dy + 4000;
+        const mag = (charge * 1000) / r;
+        who[i].velocity.x += mag * Math.cos(a);
+        who[i].velocity.y += mag * Math.sin(a);
+      }
+    }
+  }
+
   static potential(who, position) {
     let v = 0;
     for (let i = 0, len = who.length; i < len; ++i) {
@@ -456,55 +401,6 @@ class Charge {
       v += who[i].charge / Math.sqrt(dx * dx + dy * dy + 4000);
     }
     return v;
-  }
-
-  static vectorLines(who) {
-    let imageData = ctx.createImageData(canvas.width, canvas.height);
-    // var imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
-
-    let data = imageData.data;
-    const canvasWidth = canvas.width;
-    const canvasHeight = canvas.height;
-
-    for (let y = 0; y < canvasHeight; ++y) {
-      for (let x = 0; x < canvasWidth; ++x) {
-        const index = (y * canvasWidth + x) * 4;
-        let mag = 0;
-        let fx = 0;
-        let fy = 0;
-        for (let j = 0, len = who.length; j < len; j++) {
-          const dx = who[j].position.x - x;
-          const dy = who[j].position.y - y;
-          const d2 = Math.max(dx * dx + dy * dy, 1);
-          const mag = who[j].charge / d2 / Math.sqrt(d2);
-          fx += mag * dx;
-          fy += mag * dy;
-
-          // const a = Math.atan2(dy, dx);
-          // const f = who[j].charge / (dx * dx + dy * dy + 1);
-          // fx += f * Math.cos(a);
-          // fy += f * Math.sin(a);
-        }
-        const a = Math.atan2(fy, fx) + Math.PI / 2;
-        // mag = Math.sqrt(fx * fx + fy * fy);
-        // if (Math.abs((mag * 1000) % 1) < 0.1) {
-        const threshold = 1;
-        const lineThickness = 17;
-        if (Math.abs((a * lineThickness) % Math.PI) < threshold) {
-          data[index] = 0; // red
-          data[index + 1] = 0; // green
-          data[index + 2] = 0; // blue
-          data[index + 3] = 255; // alpha
-        } else {
-          data[index] = 255; // red
-          data[index + 1] = 255; // green
-          data[index + 2] = 255; // blue
-          data[index + 3] = 255; // alpha
-        }
-      }
-    }
-    ctx.putImageData(imageData, 0, 0);
-    // if (Math.abs(fMag / 100 - Math.floor(fMag / 100)) < 0.01 && fMag > 0.001)
   }
 
   static vectorField(who, spacing = 15) {

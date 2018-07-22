@@ -63,14 +63,14 @@ function charges2(el) {
     pause = true;
   });
   el.addEventListener("mouseenter", function() {
-    pause = false;
     Charge.setCanvas(el);
-    if (!pause) requestAnimationFrame(cycle);
+    if (pause) requestAnimationFrame(cycle);
+    pause = false;
   });
 
   const q = []; //holds the charges
   //spawn p before e to avoid a bug in the class method allPhysics
-  const separation = 35;
+  const separation = 47;
   const off = 250;
 
   for (let i = 0; i < Math.ceil((canvas.width + off * 2) / separation); ++i) {
@@ -88,7 +88,7 @@ function charges2(el) {
     });
   }
 
-  const Vx = 0;
+  const Vx = 1.5;
   for (let i = 0; i < Math.ceil((canvas.width + off * 2) / separation); ++i) {
     q[q.length] = new Charge(
       "e",

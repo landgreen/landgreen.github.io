@@ -36,9 +36,9 @@ function charges0(el) {
     pause = true;
   });
   el.addEventListener("mouseenter", function() {
-    pause = false;
     Charge.setCanvas(el);
-    if (!pause) requestAnimationFrame(cycle);
+    if (pause) requestAnimationFrame(cycle);
+    pause = false;
   });
 
   //switch between draw modes
