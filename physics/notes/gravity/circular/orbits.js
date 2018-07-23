@@ -100,6 +100,7 @@ const orbitals = function() {
   camera.lookAt(new THREE.Vector3(0, 0, 0));
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableZoom = true;
+  controls.enableKeys = false;
   // controls.enableDamping = true;
   // controls.dampingFactor = 0.08;
 
