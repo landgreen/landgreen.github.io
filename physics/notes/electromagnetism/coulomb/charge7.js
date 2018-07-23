@@ -107,7 +107,7 @@ function charges7(el) {
     } else {
       xOff = 0.5; //odd
     }
-    for (let x = -1, i = 0; i < columns; ++i) {
+    for (let x = -1, i = 0; i < columns + 3; ++i) {
       if (i % 2) {
         //even
         x++;
@@ -155,6 +155,7 @@ function charges7(el) {
     } else if (drawMode === 4) {
       Charge.drawCloudChamber(q);
     }
+
     ammeter();
     // Charge.bounds(q);
     if (!pause) requestAnimationFrame(cycle);

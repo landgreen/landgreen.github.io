@@ -239,43 +239,50 @@
 		<p>
 			<strong>Conductive</strong> materials allow electric charges to easily move through them. If a charge is applied to one part of
 			a conductive material the charge will quickly spread out because like charges repel.</p>
-		<p>In this simulation electrons are removed from the right and added to the left to produce a messy looking flow of charge.
-		</p>
-		<canvas id='charge2' height='250' onclick="charges2(this)"> </canvas>
-		<!-- <p>Why is the current higher when the atoms are closer together?</p>
+		<div class="example">
+			<p>In this simulation electrons are removed from the right and added to the left to produce a messy looking flow of charge.
+			</p>
+			<canvas id='charge2' height='250' onclick="charges2(this)"> </canvas>
+			<!-- <details>
+				<summary>more simulations of current</summary> -->
+			<!-- <p>Why is the current higher when the atoms are closer together?</p>
 		<canvas id='charge4' height='250' onclick="charges4(this)"> </canvas> -->
-		<br>
-		<canvas id='charge7' height='250' onclick="charges7(this)"> </canvas>
+			<p>The flow of electrons is called
+				<strong>current</strong>.</p>
+			<canvas id='charge8' height='250' onclick="charges8(this)"> </canvas>
+			<p>In some materials the current comes from the flow of an electron hole.</p>
+			<canvas id='charge9' height='250' onclick="charges9(this)"> </canvas>
+			<!-- <canvas id='charge7' height='250' onclick="charges7(this)"> </canvas>
+				<p>A gap in the wire will reduce the flow of electrons.</p>
+				<style>
+					.canvas-container {
+						position: relative;
+						width: 600px;
+						height: 250px;
+					}
 
-		<p>A gap in the wire will reduce the flow of electrons.</p>
-		<style>
-			.canvas-container {
-				position: relative;
-				width: 600px;
-				height: 250px;
-			}
+					#canvas1 {
+						position: absolute;
+					}
 
-			#canvas1 {
-				position: absolute;
-			}
-
-			#buttons {
-				position: absolute;
-				left: 15%;
-				top: 5px;
-			}
-		</style>
-		<div class="canvas-container">
-			<div id="buttons" class="center">
-				gap =
-				<input id='gap' type="number" value="4" min="0" step="1" max="15"> &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;separation =
-				<input id='separation' type="number" value="25" min="10" max='50' step="1"> &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; rows =
-				<input id='rows' type="number" value="3" min="1" max="13" step="2">
-			</div>
-			<canvas id='charge3' height='250' onclick="charges3(this)"></canvas>
+					#buttons {
+						position: absolute;
+						left: 15%;
+						top: 5px;
+					}
+				</style>
+				<div class="canvas-container">
+					<div id="buttons" class="center">
+						gap =
+						<input id='gap' type="number" value="4" min="0" step="1" max="15"> &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;separation =
+						<input id='separation' type="number" value="25" min="10" max='50' step="1"> &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; rows =
+						<input id='rows' type="number" value="3" min="1" max="13" step="2">
+					</div>
+					<canvas id='charge3' height='250' onclick="charges3(this)"></canvas>
+				</div>
+			</details> -->
 		</div>
 
-		<br>
 		<p>In chemistry, elements are roughly divided into metals, metalloids and nonmetals. Metals are held together by loosely sharing
 			their outer valence electrons. The cloud of free flowing electrons give metals most of their shared characteristics, like
 			conductivity.
@@ -411,11 +418,13 @@
 	<script src="charge0.js"></script>
 	<script src="charge1.js"></script>
 	<script src="charge2.js"></script>
-	<script src="charge3.js"></script>
-	<script src="charge4.js"></script>
+	<!-- <script src="charge3.js"></script> -->
+	<!-- <script src="charge4.js"></script> -->
 	<script src="charge5.js"></script>
 	<script src="charge6.js"></script>
-	<script src="charge7.js"></script>
+	<!-- <script src="charge7.js"></script> -->
+	<script src="charge8.js"></script>
+	<script src="charge9.js"></script>
 </body>
 
 </html>

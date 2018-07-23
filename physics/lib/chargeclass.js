@@ -128,6 +128,37 @@ class Charge {
     return count;
   }
 
+  static teleportHoles(who, off = 200) {
+    //measure the charge imbalance to find holes on the left side
+    let totalCharge = 0;
+    for (let i = 0, len = who.length; i < len; ++i) {
+      if (who[i].position.x < -off) {
+        totalCharge += who[i].charge;
+      }
+    }
+    //find how many electrons are at the right end
+    let count = 0;
+    for (let i = 0, len = who.length; i < len; ++i) {
+      if (who[i].canMove && who[i].position.x > canvas.width + off) {
+        //teleport only if there is a charge imbalance at the left side
+        //in this way the hole is moving to the right
+        if (totalCharge > 0) {
+          count++;
+          who[i].position.x = -off;
+        }
+      }
+    }
+
+    return count;
+  }
+
+  static uniformField(who, fieldVector = { x: 0.05, y: 0 }, range = { x: 0, y: 0, width: 600, height: 250 }) {
+    for (let i = 0, len = who.length; i < len; ++i) {
+      who[i].velocity.x += fieldVector.x;
+      who[i].velocity.y += fieldVector.y;
+    }
+  }
+
   static bounds(who, range = 50) {
     //range = how far outside of canvas,  0 is at canvas edge
     for (let i = 0, len = who.length; i < len; ++i) {

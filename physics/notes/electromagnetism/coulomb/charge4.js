@@ -1,4 +1,4 @@
-const setup4 = function() {
+(function() {
   var canvas = document.getElementById("charge4");
   var ctx = canvas.getContext("2d");
   canvas.width = document.getElementsByTagName("article")[0].clientWidth;
@@ -6,8 +6,7 @@ const setup4 = function() {
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-};
-setup4();
+})();
 
 function charges4(el) {
   el.onclick = null; //stops the function from running on button click

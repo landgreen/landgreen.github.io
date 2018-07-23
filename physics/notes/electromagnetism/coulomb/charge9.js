@@ -1,19 +1,19 @@
 (function() {
-  var canvas = document.getElementById("charge7");
+  var canvas = document.getElementById("charge9");
   var ctx = canvas.getContext("2d");
   canvas.width = document.getElementsByTagName("article")[0].clientWidth;
-  ctx.font = "24px Arial";
+  ctx.font = "30px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
 })();
 
-function charges7(el) {
+function charges9(el) {
   el.onclick = null; //stops the function from running on button click
   Charge.setCanvas(el);
-  ctx.textAlign = "right";
   // var canvas = el
   // var ctx = canvas.getContext("2d");
+  ctx.textAlign = "right";
 
   //switch between draw modes
   let drawMode = 1;
@@ -62,70 +62,94 @@ function charges7(el) {
     pause = true;
   });
   el.addEventListener("mouseenter", function() {
-    pause = false;
     Charge.setCanvas(el);
-    if (!pause) requestAnimationFrame(cycle);
+    if (pause) requestAnimationFrame(cycle);
+    pause = false;
   });
 
   const q = []; //holds the charges
   //spawn p before e to avoid a bug in the class method allPhysics
-  const separation = 40;
-  const off = 250;
+  const side = 30;
+  const apothem = side * 0.866; //vertical distance between rows
+  const rows = 7; // y
+  const columns = 20; // x
 
-  for (let i = 0; i < Math.ceil((canvas.width + off * 2) / separation); ++i) {
-    q[q.length] = new Charge("p", {
-      x: separation * i - off,
-      y: canvas.height / 2 + separation
-    });
-    q[q.length] = new Charge("p", {
-      x: separation * i - off,
-      y: canvas.height / 2
-    });
-    q[q.length] = new Charge("p", {
-      x: separation * i - off,
-      y: canvas.height / 2 - separation
-    });
-  }
+  const hexLeft = canvas.width / 2 - side * ((columns * 3) / 4) - 60;
+  const hexTop = canvas.height / 2 - apothem * (rows / 2);
 
-  for (let i = 0; i < Math.ceil((canvas.width + off * 2) / separation); ++i) {
-    q[q.length] = new Charge(
-      "e",
-      {
-        x: separation * i - off,
-        y: canvas.height / 2 + separation
-      },
-      { x: 2, y: 0 }
-    );
-    q[q.length] = new Charge(
-      "e",
-      {
-        x: separation * i - off,
-        y: canvas.height / 2
-      },
-      { x: 2, y: 0 }
-    );
-    q[q.length] = new Charge(
-      "e",
-      {
-        x: separation * i - off,
-        y: canvas.height / 2 - separation
-      },
-      { x: 2, y: 0 }
-    );
+  for (let y = 1; y < rows; ++y) {
+    let xOff = 0;
+    if (y % 2) {
+    } else {
+      xOff = 0.5; //odd
+    }
+    for (let x = 0, i = 0; i < columns; ++i) {
+      if (i % 2) {
+        //even
+        x++;
+        xOff = Math.abs(xOff);
+      } else {
+        //odd
+        x += 2;
+        xOff = -Math.abs(xOff);
+      }
+
+      q[q.length] = new Charge("p", {
+        x: hexLeft + (x + xOff) * side,
+        y: hexTop + y * apothem
+      });
+    }
   }
-  // Charge.spawnCharges(q, 25, 'e')
-  // Charge.spawnCharges(q, 25, 'p')
+  const Vx = 0;
+  for (let y = 1; y < rows; ++y) {
+    let xOff = 0;
+    if (y % 2) {
+    } else {
+      xOff = 0.5; //odd
+    }
+    for (let x = 0, i = 0; i < columns; ++i) {
+      if (i % 2) {
+        //even
+        x++;
+        xOff = Math.abs(xOff);
+      } else {
+        //odd
+        x += 2;
+        xOff = -Math.abs(xOff);
+      }
+      if (!(y === 3 && x % 2)) {
+        // if (!(y === 3 && x === 8) && !(y === 5 && x === 14) && !(y === 1 && x === 17) && !(y === 6 && x === 21)) {
+        q[q.length] = new Charge(
+          "e-small",
+          {
+            x: hexLeft + (x + xOff) * side + 5,
+            y: hexTop + y * apothem
+          },
+          { x: Vx, y: 0 }
+        );
+      }
+    }
+  }
+  // console.log(q[0].position);
+  // console.log(q[q.length - 1].position);
+  // let totalCharge = 0;
+  // for (let i = 0, len = q.length; i < len; ++i) {
+  //   totalCharge += q[i].charge;
+  // }
+  // console.log(totalCharge);
 
   let current = 1 / 60;
   function ammeter() {
-    current = current * 0.99 + Charge.teleport(q, 200) * 0.01;
+    current = current * 0.995 + Charge.teleportHoles(q, 100) * 0.005;
     // console.log((current*60).toFixed(2))
     ctx.fillStyle = "#000";
-    ctx.fillText((current * 60).toFixed(1) + " e⁻/s", canvas.width - 3, canvas.height - 3);
+    ctx.fillText((current * 60).toFixed(1) + " e⁻/s", canvas.width - 5, canvas.height - 3);
   }
 
   function cycle() {
-    Charge.physicsAll(q);
+    Charge.physicsAll(q, 0.93, 217, 110);
+    Charge.uniformField(q, { x: 0.076, y: 0 });
+
     //choose a draw mode
     if (drawMode === 1) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -143,6 +167,7 @@ function charges7(el) {
     }
 
     ammeter();
+    // Charge.bounds(q);
     if (!pause) requestAnimationFrame(cycle);
   }
   requestAnimationFrame(cycle);
