@@ -11,6 +11,8 @@ function funGraphSVG(
     strokeWidth = 2,
     showFunction = true,
     stroke = "#07b",
+    fill = undefined,
+    positiveOnly = false,
     showAxis = true, //also disables labels, axisNumbers and grid
     showLabels = true,
     xLabel = "",
@@ -37,7 +39,7 @@ function funGraphSVG(
   const target = document.getElementById(id);
   const bounds = target.getBoundingClientRect();
 
-  if (showAxis) {
+  if (showAxis && !updatePath) {
     const x = x0 + 0.5; //sharper lines, not between pixels
     const y = y0 + 0.5; //sharper lines, not between pixels
 
@@ -155,8 +157,15 @@ function funGraphSVG(
 
   //build a path for the function by calculating each pixel's y-value for each x-value
   if (showFunction) {
-    let xx, yy, path;
-    for (let i = Math.floor(-x0 / step), len = Math.floor((bounds.width - x0) / step); i <= len; i++) {
+    let xx, yy, path, start;
+
+    if (positiveOnly) {
+      start = 0;
+    } else {
+      start = Math.floor(-x0 / step);
+    }
+
+    for (let i = start, len = Math.floor((bounds.width - x0) / step); i <= len; i++) {
       xx = step * i;
       yy = yScale * func(xx / xScale);
       if (isFinite(yy)) {
@@ -167,6 +176,7 @@ function funGraphSVG(
         }
       }
     }
+
     if (updatePath) {
       document.getElementById(id + "-path").setAttribute("d", path);
     } else {
@@ -180,62 +190,104 @@ function funGraphSVG(
       newElement.style.strokeLinecap = "round";
       target.appendChild(newElement);
     }
+
+    if (fill) {
+      //send path back along the axis to the origin
+      if (positiveOnly) {
+        let yStart = y0 - yScale * func(0);
+        if (!isFinite(yStart)) {
+          yStart = 0;
+        }
+        path += ` L ${bounds.width} ${y0 - yy} L ${bounds.width} ${y0} L ${x0} ${y0} L ${x0} ${yStart}`;
+      } else {
+        let yStart = y0 - yScale * func(-x0);
+        if (!isFinite(yStart)) {
+          yStart = 0;
+        }
+        path += ` L ${bounds.width} ${y0 - yy} L ${bounds.width} ${y0} L ${0} ${y0} L ${0} ${yStart}`;
+      }
+      if (updatePath) {
+        document.getElementById(id + "-fill").setAttribute("d", path);
+      } else {
+        //add path to SVG
+        const newElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        newElement.setAttribute("id", id + "-fill");
+        newElement.setAttribute("d", path);
+        newElement.style.stroke = "none";
+        newElement.style.fill = fill;
+        target.appendChild(newElement);
+      }
+    }
   }
 
   //mouse over show value of function
   if (showMouseCoords) {
-    //add circle
-    const newElement = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    newElement.setAttribute("id", id + "-circle");
-    newElement.setAttribute("cx", 0);
-    newElement.setAttribute("cy", 0);
-    newElement.setAttribute("r", strokeWidth + 2);
-    newElement.style.display = "none";
-    newElement.style.fill = stroke; //set fill to stroke color for function
-    target.appendChild(newElement);
-
-    //add text
-    const newTextElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    newTextElement.setAttribute("id", id + "-coords");
-    newTextElement.setAttribute("x", 0);
-    newTextElement.setAttribute("y", 0);
-    newTextElement.style.fill = "#000";
-    newTextElement.style.fontSize = 12;
-    newTextElement.style.textAnchor = "start";
-    // newTextElement.style.fontFamily = "Arial";
-    // newTextElement.textContent = " ".toString();
-    target.appendChild(newTextElement);
-
-    //circle hides when mouse leaves the graph
-    target.addEventListener("mouseleave", event => {
-      document.getElementById(id + "-circle").style.display = "none";
-      document.getElementById(id + "-coords").style.display = "none";
-    });
-    target.addEventListener("mouseenter", event => {
-      document.getElementById(id + "-circle").style.display = "block";
-      document.getElementById(id + "-coords").style.display = "block";
-    });
-
-    //mouse circle on mouse move
-    target.addEventListener("mousemove", event => {
-      let rect = target.getBoundingClientRect();
-      let mouse = {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top
-      };
-      //move circle to mouse location
-      const yPos = y0 - yScale * func((mouse.x - x0) / xScale);
-      if (isFinite(yPos)) {
-        document.getElementById(id + "-circle").setAttribute("cx", mouse.x);
-        document.getElementById(id + "-circle").setAttribute("cy", yPos);
-        //move text to mouse location
-        document.getElementById(id + "-coords").setAttribute("x", mouse.x + 5);
-        document.getElementById(id + "-coords").setAttribute("y", yPos - 10);
-        document.getElementById(id + "-coords").textContent = `(${((mouse.x - x0) / xScale).toPrecision(xPrecision)}, ${((y0 - yPos) / yScale).toPrecision(
-          yPrecision
-        )})`.toString();
+    if (updatePath) {
+      //move circle to off screen
+      document.getElementById(id + "-circle").setAttribute("cx", -100);
+      document.getElementById(id + "-circle").setAttribute("cy", -100);
+      //move text to off screen
+      document.getElementById(id + "-coords").setAttribute("x", -100);
+      document.getElementById(id + "-coords").setAttribute("y", -100);
+    } else {
+      //add circle
+      const newElement = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      newElement.setAttribute("id", id + "-circle");
+      newElement.setAttribute("cx", 0);
+      newElement.setAttribute("cy", 0);
+      newElement.setAttribute("r", strokeWidth + 2);
+      newElement.style.display = "none";
+      if (stroke === "none") {
+        newElement.style.fill = "#000"; //set fill to stroke color for function
+      } else {
+        newElement.style.fill = stroke; //set fill to stroke color for function
       }
-    });
+      target.appendChild(newElement);
+
+      //add text
+      const newTextElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      newTextElement.setAttribute("id", id + "-coords");
+      newTextElement.setAttribute("x", 0);
+      newTextElement.setAttribute("y", 0);
+      newTextElement.style.fill = "#000";
+      newTextElement.style.fontSize = 12;
+      newTextElement.style.textAnchor = "start";
+      // newTextElement.style.fontFamily = "Arial";
+      // newTextElement.textContent = " ".toString();
+      target.appendChild(newTextElement);
+
+      //circle hides when mouse leaves the graph
+      target.addEventListener("mouseleave", event => {
+        document.getElementById(id + "-circle").style.display = "none";
+        document.getElementById(id + "-coords").style.display = "none";
+      });
+      target.addEventListener("mouseenter", event => {
+        document.getElementById(id + "-circle").style.display = "block";
+        document.getElementById(id + "-coords").style.display = "block";
+      });
+
+      //mouse circle on mouse move
+
+      target.addEventListener("mousemove", event => {
+        let rect = target.getBoundingClientRect();
+        let mouse = {
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top
+        };
+        //move circle to mouse location
+        const yPos = y0 - yScale * func((mouse.x - x0) / xScale);
+        if (isFinite(yPos)) {
+          document.getElementById(id + "-circle").setAttribute("cx", mouse.x);
+          document.getElementById(id + "-circle").setAttribute("cy", yPos);
+          //move text to mouse location
+          document.getElementById(id + "-coords").setAttribute("x", mouse.x + 5);
+          document.getElementById(id + "-coords").setAttribute("y", yPos - 10);
+          document.getElementById(id + "-coords").textContent = `(${((mouse.x - x0) / xScale).toPrecision(xPrecision)}, ${((y0 - yPos) / yScale).toPrecision(
+            yPrecision
+          )})`.toString();
+        }
+      });
+    }
   }
 
   function removeAll() {

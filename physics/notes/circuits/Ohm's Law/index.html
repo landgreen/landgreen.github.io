@@ -241,43 +241,71 @@
 					<input id='resistance-slider' type="range" min="0" max="10" step="0.01" value="1" style="width: 250px;">
 					<input id='resistance' type="number" step="0.01" value="1" min="0" style="width: 50px;"> Ω
 					<svg id="SVG-graph-0" width="600" height="300">
+
+						<circle id="origin-0" cx="27" cy="280" r="6" fill="rgb(255,0,0)" />
 					</svg>
 				</div>
 				<script>
-					funGraphSVG("SVG-graph-0", x => x, {
-						x0: 27,
-						y0: 280,
-						stroke: "rgba(255,75,0,1)",
-						precision: 2,
-						gridSize: 50,
-						strokeWidth: 5,
-						xLabel: "current (A)",
-						yLabel: "voltage (V)",
-						step: 10,  //big steps because the function is linear
-					});
-					document.getElementById("resistance").addEventListener("input", event => {
-						document.getElementById("resistance-slider").value = document.getElementById("resistance").value
-						funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, {
-							x0: 25,
+					{
+						let settings = {
+							x0: 27,
 							y0: 280,
-							showAxis: false,
-							updatePath: true,
+							// stroke: "none",
+							stroke: "rgba(255,0,0,1)",
+							strokeWidth: 3,
+							fill: "rgba(255,0,0,0.2)",
+							positiveOnly: true,
+							precision: 2,
+							gridSize: 50,
+							xLabel: "current (A)",
+							yLabel: "voltage (V)",
+							step: 10,  //big steps because the function is linear
+							showMouseCoords: true,
+						}
+						funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, settings);
+						settings.updatePath = true
+						document.getElementById("resistance").addEventListener("input", event => {
+							document.getElementById("resistance-slider").value = document.getElementById("resistance").value
+							funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, settings);
 						});
-					});
-					document.getElementById("resistance-slider").addEventListener("input", event => {
-						document.getElementById("resistance").value = document.getElementById("resistance-slider").value
-						funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, {
-							x0: 25,
-							y0: 280,
-							showAxis: false,
-							updatePath: true,
+						document.getElementById("resistance-slider").addEventListener("input", event => {
+							document.getElementById("resistance").value = document.getElementById("resistance-slider").value
+							funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, settings);
 						});
-					});
+						//bring circle at origin to front
+						const parent = document.getElementById("SVG-graph-0");
+						const shouldBeLast = document.getElementById("origin-0");
+						const last = document.getElementById("SVG-graph-0-path");
+						parent.insertBefore(parent.removeChild(shouldBeLast), last);
+
+					}
 				</script>
-				<p>What is the relationship between current and voltage when the resistance is very high?</p>
-				<p>
-					<em>When the resistance is high, a _____________ change in voltage produces a _____________ change in current.</em>
-				</p>
+
+				<strong>Question</strong> What is the relationship between current and voltage?
+				<style>
+					.underlined-normal {
+						text-decoration: underline;
+					}
+				</style>
+				<br>
+				<em>When the resistance is HIGH, a _________ voltage produces a _________ current.</em>
+				<br>
+				<em>When the resistance is LOW, a _________ voltage produces a _________ current.</em>
+
+				<details>
+					<summary>solution</summary>
+					<br>
+					<em>When the resistance is HIGH, a
+						<span class="underlined-normal">large</span> voltage produces a
+						<span class="underlined-normal">small</span> current.</em>
+					<br>
+					<em>When the resistance is LOW, a
+						<span class="underlined-normal">small</span> voltage produces a
+						<span class="underlined-normal">large</span> current.</em>
+
+					<p>Voltage is directly proportional to current. This means that we can make an equation where voltage = current x resistance.</p>
+
+				</details>
 			</div>
 
 			<div class='definition'>

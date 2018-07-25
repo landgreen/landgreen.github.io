@@ -1,17 +1,5 @@
-(function setup() {
-  //writes a message onload
+var spring = function() {
   var canvas = document.getElementById("canvas1");
-  var ctx = canvas.getContext("2d");
-  ctx.font = "25px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-})();
-
-var spring = function(button) {
-  button.onclick = null; //stops the function from running after first run
-  var canvasID = "canvas1";
-  var canvas = document.getElementById(canvasID);
   var ctx = canvas.getContext("2d");
   ctx.font = "18px Arial";
   ctx.textAlign = "start";
@@ -20,20 +8,20 @@ var spring = function(button) {
   ctx.shadowOffsetX = 5;
   ctx.shadowOffsetY = 5;
 
-  var pause = false;
+  var pause = true; //start paused
 
   var physics = {
     gravX: 0,
     gravY: 0,
     restitution: 0,
     airFriction: 1,
-    equalibrium: 400,
-    k: 0.1, //document.getElementById("spring-k").value,
+    equalibrium: 300,
+    k: document.getElementById("spring-k").value,
     turns: 3 + 25 * Math.sqrt(0.1)
   };
 
   function drawEqualibrium() {
-    ctx.strokeStyle = "grey";
+    ctx.strokeStyle = "#bbb";
     ctx.beginPath();
     ctx.moveTo(physics.equalibrium, 0);
     ctx.lineTo(physics.equalibrium, canvas.height);
@@ -42,7 +30,7 @@ var spring = function(button) {
 
   function mass(x, y, Vx, Vy, r, fillColor) {
     //constructor function that determines how masses work
-    this.x = canvas.width;
+    this.x = 500;
     this.y = y;
     this.Vx = Vx;
     this.Vy = Vy;
@@ -139,19 +127,19 @@ var spring = function(button) {
       //draw energy bars
       // ctx.fillStyle = "rgba(255, 0, 255, 0.3)";
       // ctx.fillRect(0, 0, canvas.width * (this.ke / E), 25);
-      ctx.fillStyle = "rgba(255, 0, 255, 0.3)";
+      ctx.fillStyle = "hsla(0, 58%, 50%,0.3)";
       ctx.fillRect(0, 0, canvas.width * (this.u / E), 25);
       //draw energy text
       ctx.fillStyle = "#000";
       // ctx.fillText("KE = ½mv² = " + this.ke.toFixed(0) + "J", 5, 20);
-      ctx.fillText("U = ½kx² = " + this.u.toFixed(0) + " J", 5, 20);
-      ctx.fillText("F = -kx = " + F.toFixed(0) + " N", 5, canvas.height - 5);
+      ctx.fillText("U = " + this.u.toFixed(0) + " J", 5, 20);
+      ctx.fillText("F = " + F.toFixed(0) + " N", 5, canvas.height - 5);
       //ctx.fillText('k = ' + (physics.k), 5, canvas.height - 25);
       ctx.fillText("x = " + (this.x - physics.equalibrium).toFixed(0) + " m", 5, canvas.height - 25);
       //force vector
       ctx.lineWidth = 2;
-      ctx.strokeStyle = "black";
-      ctx.fillStyle = "black";
+      ctx.strokeStyle = "#666";
+      ctx.fillStyle = "#666";
       ctx.beginPath();
       var y = box.y + box.r + 5;
       var x = box.x + F;
@@ -172,7 +160,7 @@ var spring = function(button) {
   var box;
 
   function spawn() {
-    box = new mass(130, canvas.height / 2, 1, 0, 20, randomColor());
+    box = new mass(130, canvas.height / 2, 0, 0, 20, "hsl(200, 50%, 50%)");
     document.getElementById("spring-m").value = Math.round(box.mass);
   }
   spawn();
@@ -180,9 +168,11 @@ var spring = function(button) {
   document.getElementById("pause1").addEventListener("click", function() {
     if (pause) {
       pause = false;
+      document.getElementById("pause1").innerHTML = "pause";
       render();
     } else {
       pause = true;
+      document.getElementById("pause1").innerHTML = "play";
     }
   });
 
@@ -201,39 +191,70 @@ var spring = function(button) {
     };
   }
   //on click move to mouse
-  document.getElementById(canvasID).addEventListener("mousedown", function(evt) {
+  canvas.addEventListener("mousedown", function(evt) {
     mousePos = getMousePos(canvas, evt);
     box.x = mousePos.x;
     box.Vx = 0;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // drawEqualibrium();
+    box.drawSpring();
+    box.draw();
+    graphingOnSVG();
   });
   //get values for spring constant
 
-  document.getElementById("spring-k").addEventListener("change", function() {
+  document.getElementById("spring-k").addEventListener("input", function() {
     physics.k = document.getElementById("spring-k").value;
-    box.Vx = 0;
+    // box.Vx = 0;
     physics.turns = 3 + 25 * Math.sqrt(physics.k);
   });
 
-  //gets values for mass
-  document.getElementById("spring-m").addEventListener("change", function() {
-    box.mass = document.getElementById("spring-m").value;
-    box.r = Math.sqrt(box.mass / Math.PI / 0.01);
+  document.getElementById("spring-k-slider").addEventListener("input", function() {
+    physics.k = document.getElementById("spring-k-slider").value;
+    // box.Vx = 0;
+    physics.turns = 3 + 25 * Math.sqrt(physics.k);
+    if (pause) graphingOnSVG();
   });
 
-  window.requestAnimationFrame(render);
+  //gets values for mass
+  document.getElementById("spring-m").addEventListener("input", function() {
+    box.mass = document.getElementById("spring-m").value;
+    box.r = Math.sqrt(box.mass / Math.PI / 0.01);
+
+    //adjust radius for tracking circle on SVG graph
+    document.getElementById("graphing-position").setAttribute("r", box.r);
+  });
+
+  //graphing position on the SVG
+  document.getElementById("graphing-position").style.display = "block"; //makes hidden circle visible
+  document.getElementById("graphing-position").setAttribute("r", box.r); //set radius
+  //bring circle to front layer
+  const parent = document.getElementById("SVG-graph-0");
+  const shouldBeLast = document.getElementById("graphing-position");
+  const last = document.getElementById("SVG-graph-0-path");
+  parent.insertBefore(parent.removeChild(shouldBeLast), last);
+  // circle moves on the graph
+  function graphingOnSVG() {
+    document.getElementById("graphing-position").setAttribute("cx", box.x);
+    const x = box.x - 299;
+
+    document.getElementById("graphing-position").setAttribute("cy", 280 - (physics.k / 2000) * x * x * 5);
+  }
 
   function render() {
     //repeating animation function
-    if (!pause) {
-      window.requestAnimationFrame(render);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      box.edges();
-      box.spring();
-      box.move();
-      drawEqualibrium();
-      box.drawSpring();
-      box.draw();
-      box.springInfo();
-    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    box.edges();
+    box.spring();
+    box.move();
+    // drawEqualibrium();
+    box.drawSpring();
+    box.draw();
+    // box.springInfo();
+    graphingOnSVG();
+    if (!pause) window.requestAnimationFrame(render);
   }
+  window.requestAnimationFrame(render);
 };
+spring();

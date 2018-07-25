@@ -209,7 +209,7 @@ var spring = function(button) {
 
   document.getElementById("spring-k").addEventListener("input", function() {
     physics.k = document.getElementById("spring-k").value;
-    box.Vx = 0;
+    // box.Vx = 0;
     physics.turns = 3 + 25 * Math.sqrt(physics.k);
   });
 

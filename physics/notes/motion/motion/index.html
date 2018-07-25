@@ -141,7 +141,9 @@
 					x0: 15,
 					y0: 270,
 					precision: 1,
-					stroke: "#3cf",
+					stroke: "rgba(20, 200, 255, 1)",
+					fill: "rgba(20, 200, 255, 0.07)",
+					positiveOnly: true,
 					step: 10,
 					scale: 50,
 					gridSize: 50,
@@ -210,8 +212,10 @@
 					x0: 15,
 					y0: 270,
 					precision: 1,
-					stroke: "#3cf",
-					step: 10,
+					stroke: "rgba(20, 200, 255, 1)",
+					fill: "rgba(20, 200, 255, 0.07)",
+					positiveOnly: true,
+					step: 5,
 					scale: 50,
 					gridSize: 50,
 					strokeWidth: 3,
@@ -395,6 +399,7 @@
 					y0: 200,
 					precision: 1,
 					stroke: "#d9d",
+					positiveOnly: true,
 					step: 10,
 					scale: 60,
 					gridSize: 60,
@@ -591,9 +596,6 @@
 	</div>
 	<script src='../../../lib/randomColor.min.js'></script>
 	<script src="motion.js"></script>
-	<script src="https://d3js.org/d3.v3.min.js"></script>
-	<script src='../../../lib/function-plot.js'></script>
-	<script src='plot.js'></script>
 	<script>
 		renderMathInElement(document.body);
 	</script>

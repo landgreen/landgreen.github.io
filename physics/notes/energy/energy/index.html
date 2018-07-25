@@ -157,14 +157,21 @@
         <h1 class='underlined'>Kinetic Energy</h1>
 
         <div class='definition'>
-            <svg class="center" width="80" height="80">
-                <rect x="10" y="25" width="50" height="50" fill="#fff" stroke-width="2" stroke="#000" />
-                <text x="35" y="50" fill="black" text-anchor="middle" alignment-baseline="middle">m</text>
-                <g transform="translate(5 10) rotate(0 )">
-                    <line x1="0" y1="0" x2="60" y2="0" style="stroke:#000;stroke-width:2" />
-                    <polygon points="0,0 -8,5 -8,-5" transform="translate(65 0)" style="fill:#000;" />
-                    <text x="72" y="4" fill="black" text-anchor="middle" font-size="15">v</text>
+            <svg class="center" width="370" height="100">
+                <rect x="155" y="5" width="90" height="90" fill="#fff" stroke-width="2" stroke="#000" />
+                <text x="200" y="50" fill="black" text-anchor="middle" alignment-baseline="middle">mass</text>
+
+                <g transform="translate(155.5 5.5)" style="stroke:#000;stroke-width:1">
+                    <line x1="0" y1="10" x2="-80" y2="10" />
+                    <line x1="0" y1="20" x2="-125" y2="20" />
+                    <line x1="0" y1="30" x2="-55" y2="30" />
+                    <line x1="0" y1="40" x2="-155" y2="40" />
+                    <line x1="0" y1="50" x2="-145" y2="50" />
+                    <line x1="0" y1="60" x2="-115" y2="60" />
+                    <line x1="0" y1="70" x2="-65" y2="70" />
+                    <line x1="0" y1="80" x2="-90" y2="80" />
                 </g>
+
             </svg>
             <h1>$$K = \small\tfrac{1}{2}\normalsize mv^{2}$$</h1>
             \(K\) = kinetic energy [J, Joules]
@@ -369,10 +376,11 @@
                 <br>$$U_{g} = mgh$$ $$U_{g} = (80.0)(9.8)(-122)$$ $$U_{g} = -95648\,\mathrm{J}$$
             </details>
         </div>
-        <h1 class='underlined'>Elastic Potential Energy</h1>
+        <h1 class='underlined'>Hooke's Law</h1>
         <p> Elastic materials all obey
             <strong>Hooke's law</strong> which says that there is a linear relationship between displacement and the restoring force:
         </p>
+
         <div class='definition'>
             <svg class="center" width="550" height="200" viewBox="-35,0,550,200">
                 <defs>
@@ -451,10 +459,12 @@
         </div>
         <p>The spring constant k is different for every spring. Sometimes when you buy a spring the constant will be listed,
             but we can also measure k directly. </p>
-
         <p> The Spring force is always directed back towards the equilibrium point. This works for compressing the spring or
             expanding the spring.
         </p>
+
+        <h1 class='underlined'>Elastic Potential Energy</h1>
+        <p>We can convert our equation for the elastic force into energy.</p>
         <details class='derive'>
             <summary>derivation of elastic potential energy</summary>
             <p>
@@ -470,18 +480,79 @@
             </p>
         </details>
 
-        </p>
+
         <div class='definition'>
             <h1>$$U_{s} = \tfrac{1}{2}kx^{2}$$</h1>
             \(U_s\) = elastic/spring potential energy [J, Joules, kg m²/s²]
             <br>\(k\) = spring constant [kg/s²]
             <br>\(x\) = displacement [m]
         </div>
-        <canvas id="canvas1" width='600' height='200' onclick="spring(this)"> </canvas>
-        <br>
-        <button id="pause1">pause</button> k =
-        <input id='spring-k' type="number" min="0" max="10" value=0.1 step=0.05> &nbsp;&nbsp;&nbsp; m =
-        <input id='spring-m' type="number" min="1" max="100" value=0 step=1>
+
+
+        <div class="example">
+            <!-- style="position: relative; top: 100px; left: 528px;" -->
+            <button id="pause1" style="float:right; width: 60px;">play</button>
+            <canvas id="canvas1" width='600' height='100'> </canvas>
+            <svg id="SVG-graph-0" width="599" height="300">
+                <!-- fill="hsla(199, 58%, 50%,0.5)" -->
+                <!-- stroke="hsla(199, 58%, 50%,0.7)" -->
+                <!-- 200, 60%, 70% -->
+                <circle id="graphing-position" cx="50" cy="50" r="8" fill="hsla(200, 50%, 50%,1)" stroke-width="1" style="display: none;"
+                />
+            </svg>
+            <p>k =
+                <input id='spring-k-slider' type="range" min="0" max="3" step="0.01" value="1" style="width: 250px;">
+                <input id='spring-k' type="number" min="0" max="10" value="1" step="0.01">kg/s²
+                <span style="float:right">m =
+                    <input id='spring-m' type="number" min="1" max="100" value=0 step=1> kg</span>
+            </p>
+            <script src='../../../lib/function-graph-SVG.js'></script>
+            <script>
+                {
+                    let settings = {
+                        x0: 299,
+                        y0: 280,
+                        stroke: "none",
+                        // stroke: "hsl(1, 90%, 60%)",
+                        // strokeWidth: 3,
+                        fill: "hsla(200, 50%, 50%,0.25)",
+                        positiveOnly: false,
+                        xPrecision: 3,
+                        yPrecision: 2,
+                        xScale: 1,
+                        yScale: 5,
+                        // gridSize: 50,
+                        // showGrid: false,
+                        xLabel: "displacement (m)",
+                        yLabel: "energy (kJ)",
+                        step: 5,
+                        showMouseCoords: true,
+                    }
+
+                    funGraphSVG("SVG-graph-0", x => document.getElementById("spring-k").value / 2000 * x * x, settings);
+
+                    document.getElementById("spring-k-slider").value = document.getElementById("spring-k").value
+                    document.getElementById("spring-k").addEventListener("input", event => {
+                        document.getElementById("spring-k-slider").value = document.getElementById("spring-k").value
+                        settings.updatePath = true
+                        funGraphSVG("SVG-graph-0", x => document.getElementById("spring-k").value / 2000 * x * x, settings);
+                    });
+                    document.getElementById("spring-k-slider").addEventListener("input", event => {
+                        document.getElementById("spring-k").value = document.getElementById("spring-k-slider").value
+                        settings.updatePath = true
+                        funGraphSVG("SVG-graph-0", x => document.getElementById("spring-k").value / 2000 * x * x, settings);
+                    });
+                }
+            </script>
+            <p>
+                <strong>Question:</strong> What role does the spring constant play in elastic potential energy? Try adjusting the
+                value of k.
+            </p>
+            <p>
+                <strong>Question:</strong> What role does the mass constant play in elastic potential energy? Try adjusting the value
+                of m.
+            </p>
+        </div>
         <div class='example'>
             <strong>Example:</strong> Find the elastic energy of a 500 g cylinder stuck to a spring (k = 0.3) that is 200 cm away
             from its equilibrium point?
@@ -568,7 +639,6 @@
     <div class='back'>
         <a href="../../../index.html">Back</a>
     </div>
-    <script src='../../../lib/randomColor.min.js'></script>
     <script src="spring.js"></script>
     <script>
         renderMathInElement(document.body);
