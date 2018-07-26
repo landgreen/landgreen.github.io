@@ -117,7 +117,7 @@ function charges9(el) {
         x += 2;
         xOff = -Math.abs(xOff);
       }
-      if (!(y === 3 && x % 2)) {
+      if (!(y === 3 && (x % 2 || x === 11))) {
         // if (!(y === 3 && x === 8) && !(y === 5 && x === 14) && !(y === 1 && x === 17) && !(y === 6 && x === 21)) {
         q[q.length] = new Charge(
           "e-small",
