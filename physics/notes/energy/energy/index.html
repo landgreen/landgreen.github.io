@@ -81,28 +81,32 @@
         </ul>
 
         <div class='definition'>
-            <svg style="display: block; margin: auto" width="400" height="140" class='svgDiagram, center' version="1.1" xmlns="http://www.w3.org/2000/svg"
-                viewbox="0 -20 300 120">
-                <rect id='ground' x="-100" y="61" width="400" height="200" style="fill:#cba" />
-                <rect x="0" y="0" width="60" height="60" style="stroke:black;stroke-width:2;fill:#fff" />
-                <rect x="200" y="0" width="60" height="60" stroke-dasharray="3,3" style="stroke:#444; stroke-width:2;" fill-opacity="0" />
-                <line x1="60" y1="70" x2="260" y2="70" style="stroke:#000;stroke-width:2" />
-                <line x1="60" y1="65" x2="60" y2="75" style="stroke:#000;stroke-width:2" />
-                <line x1="260" y1="65" x2="260" y2="75" style="stroke:#000;stroke-width:2" />
-                <text x="165" y="95" fill="black" text-anchor="middle" font-size="15">d</text>
-                <text x="90" y="60" fill="black" font-size="14">Θ</text>
-                <line x1="150" y1="10" x2="150" y2="70" style="stroke:#444;stroke-width:2" stroke-dasharray="3,3" />
-                <g transform="translate(65 60) rotate(-30 )">
-                    <line x1="0" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-                    <polygon points="0,0 -8,5 -8,-5" transform="translate(105 0)" style="fill:#000;" />
-                    <text x="100" y="-6" fill="black" text-anchor="middle" font-size="15">F</text>
+            <svg class='center' width="500" height="190" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
+                    <rect x="60" y="50" width="100" height="100" fill="#fff" />
+                    <rect x="340" y="50" width="100" height="100" stroke-dasharray="4,4" stroke="#999" fill="none" />
+                    <line x1="-50" y1="150" x2="600" y2="150" />
+
+                    <g transform="translate(160,165)">
+                        <line x1="0" y1="0" x2="280" y2="0" />
+                        <line x1="0" y1="-6" x2="0" y2="6" />
+                        <line x1="280" y1="-6" x2="280" y2="6" />
+                        <text x="140" y="19" stroke="none" text-anchor="middle">Δx</text>
+                    </g>
+                    <text x="200" y="94" stroke="none">Θ</text>
+                    <line x1="160" y1="100" x2="252" y2="100" stroke-dasharray="4,4" stroke="#999" />
+                    <g transform="translate(160 100) rotate(-30 )">
+                        <line x1="0" y1="0" x2="100" y2="0" />
+                        <polygon points="0,0 -8,5 -8,-5" transform="translate(105 0)" />
+                        <text x="115" y="6" stroke="none" text-anchor="middle">F</text>
+                    </g>
                 </g>
             </svg>
-            <h1>$$W = Fd\cos\theta$$</h1>
+            <h1>$$W = F \Delta x \cos\theta$$</h1>
             \(W\) = work [J, Joules, kg m²/s²]
             <br>\(F\) = Force [N, Newtons, kg m/s²]
             <em>vector</em>
-            <br>\(d\) = displacement [m]
+            <br>\(\Delta x\) = displacement [m]
             <em>vector</em>
             <br>\(\theta\) = angle between applied force and displacement
         </div>
@@ -112,29 +116,32 @@
         </p>
 
         <div class='example'>
-            <svg style="display: block; margin: auto" width="600" height="150" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg"
-                viewbox="0 -20 400 130">
-                <rect id='ground' x="-100" y="61" width="800" height="200" style="fill:#cba" />
-                <rect x="0" y="0" width="60" height="60" style="stroke:black;stroke-width:2;fill:#cff " />
-                <rect x="200" y="0" width="60" height="60" stroke-dasharray="3,3" style="stroke:#444; stroke-width:2;" fill-opacity="0" />
-                <text x="30" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">5 kg</text>
-                <line x1="60" y1="70" x2="260" y2="70" style="stroke:#000;stroke-width:2" />
-                <line x1="60" y1="65" x2="60" y2="75" style="stroke:#000;stroke-width:2" />
-                <line x1="260" y1="65" x2="260" y2="75" style="stroke:#000;stroke-width:2" />
-                <text x="165" y="95" fill="black" text-anchor="middle" font-size="15">d = 200 m</text>
-                <text x="90" y="60" fill="black" font-size="14">Θ = 30°</text>
-                <line x1="150" y1="10" x2="150" y2="70" style="stroke:#444;stroke-width:2" stroke-dasharray="3,3" />
-                <g transform="translate(65 60) rotate(-30 )">
-                    <line x1="0" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-                    <polygon points="0,0 -8,5 -8,-5" transform="translate(105 0)" style="fill:#000;" />
-                    <text x="100" y="-6" fill="black" text-anchor="middle" font-size="15">F = 100 N</text>
+            <svg class='center' width="500" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
+                    <rect x="60" y="50" width="100" height="100" fill="#ddeef6" />
+                    <text x="110" y="100" stroke="none" text-anchor="middle" alignment-baseline="middle">5 kg</text>
+                    <rect x="340" y="50" width="100" height="100" stroke-dasharray="4,4" stroke="#999" fill="none" />
+                    <line x1="-50" y1="150" x2="600" y2="150" />
+                    <g transform="translate(160,165)">
+                        <line x1="0" y1="0" x2="280" y2="0" />
+                        <line x1="0" y1="-6" x2="0" y2="6" />
+                        <line x1="280" y1="-6" x2="280" y2="6" />
+                        <text x="140" y="19" stroke="none" text-anchor="middle">Δx = 200 m</text>
+                    </g>
+                    <text x="200" y="94" stroke="none">Θ = 30°</text>
+                    <line x1="160" y1="100" x2="252" y2="100" stroke-dasharray="4,4" stroke="#999" />
+                    <g transform="translate(160 100) rotate(-30 )">
+                        <line x1="0" y1="0" x2="100" y2="0" />
+                        <polygon points="0,0 -8,5 -8,-5" transform="translate(105 0)" />
+                        <text x="110" y="6" stroke="none">F = 100 N</text>
+                    </g>
                 </g>
             </svg>
             <strong>Example:</strong> If I apply 100 N of force at an angle 30 degrees above the horizontal and I move a 5 kg box
             200 m horizontally, how much work is done?
             <details>
                 <summary>solution</summary>
-                $$W = Fd\cos\theta$$ $$W = (100)(200)\cos(30)$$ $$W = (100)(200)(0.866)$$ $$W = 17320\, \mathrm{J}$$
+                $$W = F\Delta x\cos\theta$$ $$W = (100)(200)\cos(30)$$ $$W = (100)(200)(0.866)$$ $$W = 17320\, \mathrm{J}$$
             </details>
         </div>
         <div class='example'>
@@ -142,20 +149,31 @@
             how much work is done?
             <details>
                 <summary>solution</summary>
-                $$W = Fd\cos\theta$$ $$W = (10)(2)\cos(0)$$ $$W = (10)(2)(1)$$ $$W = 20\, \mathrm{J}$$
+                $$W = F\Delta x\cos\theta$$ $$W = (10)(2)\cos(0)$$ $$W = (10)(2)(1)$$ $$W = 20\, \mathrm{J}$$
             </details>
         </div>
         <div class='example'>
-            <strong>Example:</strong> What is the least amount of work it would take to lift a Tesla (2,085 kg) up 2.5 meters?
+            <strong>Example:</strong> What is the least amount of work it would take to lift a Tesla electric car (2,085&nbsp;kg)
+            up 2.5 meters?
             <details>
                 <summary>solution</summary>
                 <p>The force to lift must be slightly larger than the force of gravity.</p>
                 $$F_{g} = mg$$
-                <br> $$W = Fd\cos\theta$$ $$W = (mg)d\cos\theta$$ $$W = (2085)(9.8)(2.5)\cos(0)$$ $$W = 51082.5\, \mathrm{J}$$
+                <br> $$W = F\Delta x\cos\theta$$ $$W = (mg)\Delta x\cos\theta$$ $$W = (2085)(9.8)(2.5)\cos(0)$$ $$W = 51082.5\,
+                \mathrm{J}$$
             </details>
         </div>
         <h1 class='underlined'>Kinetic Energy</h1>
-
+        <p>Kinetic energy is the energy objects have from motion.
+        </p>
+        <details class='derive'>
+            <summary>derivation of kinetic energy</summary>
+            <br>$$v^2 = u^2 +2a\Delta x$$
+            <p>Kinetic energy is defined as relative to zero velocity, so set the initial velocity to zero.</p>
+            $$v^2 = 2a\Delta x$$ $$a\Delta x =\frac{v^2}{2}$$ $$ma\Delta x =\tfrac{1}{2}mv^2 $$ $$F\Delta x =\tfrac{1}{2}mv^2 $$ $$W
+            = \tfrac{1}{2}mv^2$$
+            <p>Kinetic energy is the same as the work required to bring a mass to a speed.</p> $$K =\tfrac{1}{2}mv^2$$
+        </details>
         <div class='definition'>
             <svg class="center" width="370" height="100">
                 <rect x="155" y="5" width="90" height="90" fill="#fff" stroke-width="2" stroke="#000" />
@@ -173,25 +191,11 @@
                 </g>
 
             </svg>
-            <h1>$$K = \small\tfrac{1}{2}\normalsize mv^{2}$$</h1>
+            <h1>$$K = \tfrac{1}{2} mv^{2}$$</h1>
             \(K\) = kinetic energy [J, Joules]
             <br>\(m\) = mass [kg]
             <br>\(v\) = velocity [m/s]
         </div>
-        <details class='derive'>
-            <summary>derivation of kinetic energy</summary>
-            <br>$$v^2 = u^2 +2a\Delta x$$
-            <p>Kinetic energy is defined as relative to zero velocity, so set the initial velocity to zero.</p>
-            <br>$$v^2 = 2a\Delta x$$ $$a\Delta x =\frac{v^2}{2}$$
-            <p>times both sides by mass</p>
-            $$ma\Delta x =\tfrac{1}{2}mv^2 $$ $$F=ma$$ $$F\Delta x =\tfrac{1}{2}mv^2 $$
-            <p>Kinetic energy can be produced by work.</p>
-            $$K = W = Fd = F\Delta x$$ $$K =\tfrac{1}{2}mv^2$$
-        </details>
-        <p>Kinetic energy is the energy objects have from motion. This includes anything moving:
-            <em>light, sound, heat, electricity</em>
-            </light>
-        </p>
         <p>Energy has units of Joules in the metric system. 1 Joule is the same as a 2 kg mass moving at 1 m/s.</p>
 
         <p>Energy is a
@@ -199,8 +203,9 @@
             easier.
         </p>
         <div class='example'>
-            <strong>Example:</strong> What is the kinetic energy of Zoe running at 5 m/s to the right? (Zoe is a
-            <a href='https://www.google.com/search?q=nova+scotia+duck+tolling+retriever&rlz=1C1CHFX_enUS532US532&biw=1280&bih=679&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjGwb-xoa3OAhVG8WMKHVRWCBkQ_AUIBigB'>dog</a>. She has a mass of 20kg. She is 0.56 meters tall. She has reddish fur, like a fox.)
+            <strong>Example:</strong> What is the kinetic energy of Zoe running at 5 m/s to the right?
+            <br>
+            <a href='https://www.google.com/search?q=nova+scotia+duck+tolling+retriever&tbm=isch'>Zoe </a> has a mass of 20kg. She is 0.56 meters tall with reddish fur.
             <details>
                 <summary>solution</summary>
                 $$KE = \tfrac{1}{2}mv^{2}$$ $$K = \tfrac{1}{2}(20)(5)^{2}$$ $$K = 250 \, \mathrm{J}$$
@@ -242,20 +247,21 @@
             position to turn into kinetic energy gravitational potential energy</p>
         <details class='derive'>
             <summary>derivation of gravitational potential energy</summary>
-            <br> Gravitational energy can be calculated with the work equation. $$W = Fd\cos\theta$$ As an object falls the force
-            of gravity pulls the object vertically down. $$F_{g} = mg$$ $$W = mgd\cos\theta$$ The displacement is vertical
-            so lets call it height: h. $$W = mgh\cos\theta$$ The force of gravity and the height are pointed in the same
-            direction, so cos(0)=1. $$W = mgh$$ We now have a nice equation for the energy that comes from the work of lifting
-            an object.
+            <br> Gravitational energy can be calculated with the work equation. $$W = F\Delta x\cos\theta$$ As an object falls
+            the force of gravity pulls the object vertically down. $$F_{g} = mg$$ $$W = mg\Delta x\cos\theta$$ The displacement
+            is vertical so lets call it height: h. $$W = mgh\cos\theta$$ The force of gravity and the height are pointed
+            in the same direction, so cos(0)=1. $$W = mgh$$ We now have a nice equation for the energy that comes from the
+            work of lifting an object.
         </details>
         <div class='definition'>
-            <svg style="display: block; margin: auto" width="285" height="190">
-                <rect x="0" y="160" width="300" height="200" style="fill:#cba" />
+            <svg class="center" width="285" height="162">
                 <rect x="100" y="1" width="60" height="60" style="stroke:black;stroke-width:2;fill:#fff " />
                 <text x="130" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">m</text>
-                <line x1="170" y1="60" x2="170" y2="160" style="stroke:#444;stroke-width:2" />
-                <line x1="165" y1="160" x2="175" y2="160" style="stroke:#444;stroke-width:2" />
-                <line x1="165" y1="60" x2="175" y2="60" style="stroke:#444;stroke-width:2" />
+                <line x1="170" y1="60" x2="170" y2="157" style="stroke:#000;stroke-width:2" />
+                <line x1="165" y1="157" x2="175" y2="157" style="stroke:#000;stroke-width:2" />
+                <line x1="165" y1="60" x2="175" y2="60" style="stroke:#000;stroke-width:2" />
+                <line id="ground" x1="-50" y1="160" x2="500" y2="160" stroke="#000" stroke-width="2" />
+
                 <text x="175" y="115" fill="black" text-anchor="start">h</text>
             </svg>
 
@@ -267,78 +273,78 @@
         </div>
         <p>
             <strong>Height</strong> is the tricky part of this equation, because where is zero height? The ground floor can be the
-            zero point, or the floor of the basement or the top of a table, or any point. You choose a zero point that makes
-            the problem less complex, like the starting or ending point.
+            zero point, or the floor of the basement or the top of a table, or any point.
         </p>
-        <p>Which of these three zero points seem the best choice?</p>
+        <p>Which of these zero points seem the best choice?</p>
         <table style='width:100%'>
             <tr>
                 <td style='background-color:#fff;color:#333'>
-                    <svg style="display: block; margin: auto" width="170" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <rect id='ground' x="0" y="160" width="200" height="200" style="fill:#cba" />
-                        <rect x="0" y="0" width="60" height="60" style="stroke:black;stroke-width:2;fill:#cff " />
+                    <svg style="display: block; margin: auto" width="170" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1" y="1" width="60" height="60" style="stroke:black;stroke-width:2;fill:#ddeef6" />
                         <text x="30" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">5 kg</text>
-                        <line x1="70" y1="60" x2="70" y2="160" style="stroke:#444;stroke-width:2" />
-                        <line x1="65" y1="160" x2="75" y2="160" style="stroke:#444;stroke-width:2" />
-                        <line x1="65" y1="60" x2="75" y2="60" style="stroke:#444;stroke-width:2" />
+                        <line x1="70" y1="60" x2="70" y2="157" style="stroke:#000;stroke-width:2" />
+                        <line x1="65" y1="157" x2="75" y2="157" style="stroke:#000;stroke-width:2" />
+                        <line x1="65" y1="60" x2="75" y2="60" style="stroke:#000;stroke-width:2" />
+                        <line id="ground" x1="-50" y1="160" x2="500" y2="160" stroke="#000" stroke-width="2" />
+
                         <text x="80" y="70" fill="black" text-anchor="start">y = 100 m</text>
                         <text x="80" y="155" text-anchor="start" style='fill:red'>y = 0 m</text>
                         <text x="5" y="180" fill="black" text-anchor="start">g = 9.8 m/s²</text>
                     </svg>
-                    <br>
-                    <br> $$U_{g} = mgh$$ $$U_{g} = (5)(9.8)(100)$$ $$U_{g} = 4900 \, \mathrm{J}$$
+                    $$U_{g} = (5)(9.8)(100)$$ $$U_{g} = 4900 \, \mathrm{J}$$
                 </td>
                 <td style='background-color:#fff;color:#333'>
-                    <svg style="display: block; margin: auto" width="170" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <rect id='ground' x="0" y="160" width="200" height="200" style="fill:#cba" />
-                        <rect x="0" y="0" width="60" height="60" style="stroke:black;stroke-width:2;fill:#cff " />
+                    <svg style="display: block; margin: auto" width="170" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1" y="1" width="60" height="60" style="stroke:black;stroke-width:2;fill:#ddeef6 " />
                         <text x="30" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">5 kg</text>
-                        <line x1="70" y1="60" x2="70" y2="160" style="stroke:#444;stroke-width:2" />
-                        <line x1="65" y1="160" x2="75" y2="160" style="stroke:#444;stroke-width:2" />
-                        <line x1="65" y1="60" x2="75" y2="60" style="stroke:#444;stroke-width:2" />
+                        <line x1="70" y1="60" x2="70" y2="157" style="stroke:#000;stroke-width:2" />
+                        <line x1="65" y1="157" x2="75" y2="157" style="stroke:#000;stroke-width:2" />
+                        <line x1="65" y1="60" x2="75" y2="60" style="stroke:#000;stroke-width:2" />
+                        <line id="ground" x1="-50" y1="160" x2="500" y2="160" stroke="#000" stroke-width="2" />
+
                         <text x="80" y="70" text-anchor="start" style='fill:red'>y = 0</text>
                         <text x="80" y="155" fill="black" text-anchor="start">y = -100 m</text>
                         <text x="5" y="180" fill="black" text-anchor="start">g = 9.8 m/s²</text>
                     </svg>
-                    <br>
-                    <br> $$U_{g} = mgh$$ $$U_{g} = (5)(9.8)(0)$$ $$U_{g} = 0$$
+                    $$U_{g} = (5)(9.8)(0)$$ $$U_{g} = 0$$
                 </td>
                 <td style='background-color:#fff;color:#333'>
-                    <svg style="display: block; margin: auto" width="170" height="200" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <rect id='ground' x="0" y="160" width="200" height="200" style="fill:#cba" />
-                        <rect x="0" y="0" width="60" height="60" style="stroke:black;stroke-width:2;fill:#cff " />
+                    <svg style="display: block; margin: auto" width="170" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1" y="1" width="60" height="60" style="stroke:black;stroke-width:2;fill:#ddeef6 " />
                         <text x="30" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">5 kg</text>
-                        <line x1="70" y1="60" x2="70" y2="160" style="stroke:#444;stroke-width:2" />
-                        <line x1="65" y1="160" x2="75" y2="160" style="stroke:#444;stroke-width:2" />
-                        <line x1="65" y1="60" x2="75" y2="60" style="stroke:#444;stroke-width:2" />
+                        <line x1="70" y1="60" x2="70" y2="157" style="stroke:#000;stroke-width:2" />
+                        <line x1="65" y1="157" x2="75" y2="157" style="stroke:#000;stroke-width:2" />
+                        <line x1="65" y1="60" x2="75" y2="60" style="stroke:#000;stroke-width:2" />
+                        <line id="ground" x1="-50" y1="160" x2="500" y2="160" stroke="#000" stroke-width="2" />
+
                         <text x="80" y="70" fill="black" text-anchor="start">y = 50 m</text>
                         <text x="80" y="115" text-anchor="start" style='fill:red'>y = 0</text>
                         <text x="80" y="155" fill="black" text-anchor="start">y = -50 m</text>
                         <text x="5" y="180" fill="black" text-anchor="start">g = 9.8 m/s²</text>
                     </svg>
-                    <br>
-                    <br> $$U_{g} = mgh$$ $$U_{g} = (5)(9.8)(50)$$ $$U_{g} = 2450 \, \mathrm{J}$$
+                    $$U_{g} = (5)(9.8)(50)$$ $$U_{g} = 2450 \, \mathrm{J}$$
                 </td>
             </tr>
         </table>
 
         <p>We get 3 different answers because of the different zero points. Unlike kinetic energy, gravitational potential energy
-            isn't consistent, but we can still use it to find a
-            <strong>change in gravitational potential energy</strong>.</p>
+            isn't consistent on it's own, but we can still use it to find a change in gravitational potential energy.</p>
         <div class='example'>
-            <svg width="200" height="200" viewbox="-30,0,150,200" class='center' version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <rect id='ground' x="-50" y="160" width="400" height="200" style="fill:#cba" />
-                <rect x="0" y="0" width="60" height="60" style="stroke:black;stroke-width:2;fill:#fdd" />
-                <rect x="0" y="100" width="60" height="60" stroke-dasharray="3,3" fill-opacity="0" style="stroke:grey;stroke-width:2;" />
-                <text x="30" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">100 kg</text>
-                <line x1="70" y1="60" x2="70" y2="160" style="stroke:#444;stroke-width:2" />
-                <line x1="65" y1="160" x2="75" y2="160" style="stroke:#444;stroke-width:2" />
-                <line x1="65" y1="60" x2="75" y2="60" style="stroke:#444;stroke-width:2" />
-                <text x="80" y="70" fill="black" text-anchor="start">y = 15 m</text>
-                <text x="80" y="155" fill="black" text-anchor="start">y = 0</text>
-                <text x="5" y="180" fill="black" text-anchor="start">g = 9.8 m/s²</text>
+            <svg width="200" height="200" class='center' version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(50, 0)">
+                    <rect x="1" y="1" width="60" height="60" style="stroke:black;stroke-width:2;fill:#ccc;" />
+                    <rect x="0.5" y="100.5" width="60" height="60" stroke-dasharray="3,3" fill-opacity="0" style="stroke:grey;stroke-width:1;"
+                    />
+                    <text x="30" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">100 kg</text>
+                    <line x1="70" y1="60" x2="70" y2="157" style="stroke:#000;stroke-width:2" />
+                    <line x1="65" y1="157" x2="75" y2="157" style="stroke:#000;stroke-width:2" />
+                    <line x1="65" y1="60" x2="75" y2="60" style="stroke:#000;stroke-width:2" />
+                    <line id="ground" x1="-50" y1="160" x2="500" y2="160" stroke="#000" stroke-width="2" />
+                    <text x="80" y="70" fill="black" text-anchor="start">y = 15 m</text>
+                    <text x="80" y="155" fill="black" text-anchor="start">y = 0</text>
+                    <text x="5" y="180" fill="black" text-anchor="start">g = 9.8 m/s²</text>
+                </g>
             </svg>
-            <br>
             <strong>Example:</strong> How much energy does it take for an elevator to bring a 100 kg person from the 1st story to
             the 6th story?
             <a href='https://www.wolframalpha.com/input/?i=how+high+is+1+story+in+meters'> convert 1 story to meters</a>
@@ -351,19 +357,22 @@
             </details>
         </div>
         <div class='example'>
-            <svg width="200" height="200" viewbox="-30,0,150,220" version="1.1" xmlns="http://www.w3.org/2000/svg" class='center'>
-                <rect id='ground' x="-50" y="160" width="400" height="200" style="fill:#cba" />
-                <rect x="0" y="0" width="60" height="60" stroke-dasharray="3,3" fill-opacity="0" style="stroke:grey;stroke-width:2;" />
-                <rect x="0" y="100" width="60" height="60" style="stroke:black;stroke-width:2;fill:#ccc" />
-                <text x="30" y="130" fill="black" text-anchor="middle" alignment-baseline="middle">80 kg</text>
-                <line x1="70" y1="60" x2="70" y2="160" style="stroke:#444;stroke-width:2" />
-                <line x1="65" y1="160" x2="75" y2="160" style="stroke:#444;stroke-width:2" />
-                <line x1="65" y1="60" x2="75" y2="60" style="stroke:#444;stroke-width:2" />
-                <text x="80" y="70" fill="black" text-anchor="start">y = 0</text>
-                <text x="80" y="155" fill="black" text-anchor="start">y = -400 ft</text>
-                <text x="5" y="180" fill="black" text-anchor="start">g = 9.8 m/s²</text>
+            <svg width="205" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg" class='center'>
+                <g transform="translate(50, 0)">
+                    <rect x="0.5" y="0.5" width="60" height="60" stroke-dasharray="3,3" fill-opacity="0" style="stroke:grey;stroke-width:1;"
+                    />
+                    <rect x="0" y="100" width="60" height="60" style="stroke:#000;stroke-width:2;fill:#9dd" />
+                    <text x="30" y="130" fill="black" text-anchor="middle" alignment-baseline="middle">80 kg</text>
+                    <line x1="70" y1="60" x2="70" y2="157" style="stroke:#000;stroke-width:2" />
+                    <line x1="65" y1="157" x2="75" y2="157" style="stroke:#000;stroke-width:2" />
+                    <line x1="65" y1="60" x2="75" y2="60" style="stroke:#000;stroke-width:2" />
+                    <line id="ground" x1="-50" y1="160" x2="500" y2="160" stroke="#000" stroke-width="2" />
+
+                    <text x="80" y="70" fill="black" text-anchor="start">y = 0</text>
+                    <text x="80" y="155" fill="black" text-anchor="start">y = -400 ft</text>
+                    <text x="5" y="180" fill="black" text-anchor="start">g = 9.8 m/s²</text>
+                </g>
             </svg>
-            <br>
             <strong>Example:</strong> How much gravitational energy is lost as an 80.0 kg person rides down from the top of the 400
             ft ride
             <em>LEX LUTHOR: Drop of Doom</em>?
@@ -377,80 +386,65 @@
             </details>
         </div>
         <h1 class='underlined'>Hooke's Law</h1>
-        <p> Elastic materials all obey
-            <strong>Hooke's law</strong> which says that there is a linear relationship between displacement and the restoring force:
+        <p>
+            Hooke's law is an approximation the force from a spring. It is an accurate approximation for solids under small deformations.
         </p>
 
         <div class='definition'>
-            <svg class="center" width="550" height="200" viewBox="-35,0,550,200">
-                <defs>
-                    <marker id="se_marker_end_svg_4" markerUnits="strokeWidth" orient="auto" viewBox="0 0 100 100" markerWidth="5" markerHeight="5"
-                        refX="50" refY="50">
-                        <path id="svg_6" d="m50,0l0,100" fill="black" stroke="black" stroke-width="10" />
-                    </marker>
-                    <marker id="se_marker_start_svg_4" markerUnits="strokeWidth" orient="auto" viewBox="0 0 100 100" markerWidth="5" markerHeight="5"
-                        refX="50" refY="50">
-                        <path id="svg_7" d="m50,0l0,100" fill="black" stroke="black" stroke-width="10" />
-                    </marker>
-                    <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth"
-                        id="se_marker_start_svg_5">
-                        <path stroke-width="10" fill="none" d="m0,50l100,40l-30,-40l30,-40l-100,40z" id="svg_9" />
-                    </marker>
-                    <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth"
-                        id="se_marker_end_svg_14">
-                        <path stroke-width="10" stroke="grey" fill="grey" d="m100,50l-100,40l30,-40l-30,-40l100,40z" id="svg_16" />
-                    </marker>
-                </defs>
-                <g transform="rotate(1.6 105,134.5)" id="svg_44">
-                    <line id="svg_19" y2="136.65626" x2="196.7422" y1="122.73438" x1="178.39064" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_23" y2="139.47498" x2="162.91566" y1="123.05079" x1="179.33985" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_24" y2="139.51837" x2="163.83594" y1="125.59649" x1="145.48438" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_25" y2="140.94219" x2="130.61327" y1="127.02031" x1="112.26171" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_26" y2="142.02069" x2="130.32581" y1="125.59649" x1="146.75" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null"
-                        stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_31" y2="142.32987" x2="96.31214" y1="125.90567" x1="112.73634" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_32" y2="142.37325" x2="97.23242" y1="128.45138" x1="78.88086" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_33" y2="143.79708" x2="64.00975" y1="129.8752" x1="45.65819" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null"
-                        stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_34" y2="144.87557" x2="63.72229" y1="128.45138" x1="80.14649" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_40" y2="146.28495" x2="30.34144" y1="129.86075" x1="46.76564" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_41" y2="146.32833" x2="31.57813" y1="132.40645" x1="13.22657" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
+            <svg class='center' width="500" height="350" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
+                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#999" />
+                    <rect x="60" y="30" width="50" height="50" fill="#fff" />
+                    <path d="M1 0 v80 h500" fill="none" />
+                    <text x="30" y="37" stroke="none" text-anchor="middle">k</text>
+                    <path stroke-linejoin="round" d="M0 47 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17"
+                        fill="none" stroke-width="2" />
+                    <g transform="translate(85,90)">
+                        <line x1="0" y1="0" x2="145" y2="0" />
+                        <line x1="0" y1="-5" x2="0" y2="5" />
+                        <line x1="145" y1="-5" x2="145" y2="5" />
+                        <text x="72" y="19" stroke="none" text-anchor="middle">x</text>
+                    </g>
+                    <g transform="translate(110 55)">
+                        <line x1="0" y1="0" x2="50" y2="0" />
+                        <polygon points="0,0 -6,3 -6,-3" transform="translate(55 0)" />
+                        <text x="65" y="6" stroke="none" text-anchor="middle">F</text>
+                    </g>
                 </g>
-                <line fill="none" stroke-width="2" stroke-dasharray="3,3" stroke-linejoin="null" stroke-linecap="null" x1="227" y1="-18.5"
-                    x2="227" y2="181.40498" id="svg_12" stroke="black" />
 
-                <rect id="svg_1" stroke="grey" stroke-width="2" fill-opacity="0" stroke-dasharray="3,3" height="60" width="60" y="99.76563"
-                    x="304.45313" fill="black" />
-                <rect fill="#cba" height="200" width="163" y="-10" x="-148" id="wall" />
-                <rect fill="#cba" height="200" width="600" y="160" x="-100" id="ground" />
-                <rect id="svg_2" stroke="black" stroke-width="2" fill="#fff" height="60" width="60" y="100" x="197" />
+                <g font-size="19" stroke="#000" fill="#000" stroke-width="2" transform="translate(0 120)">
+                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#999" />
+                    <rect x="205" y="30" width="50" height="50" fill="#fff" />
+                    <path d="M1 0 v80 h500" fill="none" />
+                    <text x="115" y="40" stroke="none" text-anchor="middle">k</text>
+                    <text x="300" y="48" stroke="none" text-anchor="middle">F = 0</text>
+                    <text x="300" y="73" stroke="none" text-anchor="middle">x = 0</text>
+                    <!-- <text x="350" y="60" stroke="none">equalibrium</text> -->
+                    <path stroke-linejoin="round" d="M0 47 l 10 15 l 10 -15 l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 5 5"
+                        fill="none" />
+                </g>
 
-                <text id="svg_8" text-anchor="start" fill="black" y="180" x="276.89063" font-family="Serif">x</text>
-
-                <line fill="#000" stroke="#000" stroke-width="2" stroke-linejoin="null" stroke-linecap="null" x1="228.03129" y1="167.45314"
-                    x2="335.52179" y2="167.45314" id="svg_4" marker-end="url(#se_marker_end_svg_4)" marker-start="url(#se_marker_start_svg_4)"
-                />
-                <text fill="#000000" x="88.10938" y="118.09375" id="svg_10" font-family="Sans-serif" text-anchor="middle" xml:space="preserve"
-                    font-style="normal">k</text>
-                <line marker-start="url(#se_marker_start_svg_5)" id="svg_5" y2="127.37501" x2="277.99482" y1="127.37501" x1="332.00003" stroke-linecap="null"
-                    stroke-linejoin="null" stroke-dasharray="3,3" stroke-width="2" fill="none" />
-                <line marker-end="url(#se_marker_end_svg_14)" id="svg_14" y2="127.37501" x2="271.60338" y1="127.37501" x1="337.43751" stroke-linecap="null"
-                    stroke-linejoin="null" stroke-width="2" stroke="grey" fill="none" />
-                <text id="svg_15" fill="#000000" x="291.46094" y="123.78906" font-family="Sans-serif" text-anchor="middle" xml:space="preserve"
-                    font-style="normal">F</text>
-
+                <g font-size="19" stroke="#000" fill="#000" stroke-width="2" transform="translate(0 240)">
+                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#999" />
+                    <rect x="350" y="30" width="50" height="50" fill="#fff" />
+                    <path d="M1 0 v80 h500" fill="none" />
+                    <text x="130" y="47" stroke="none" text-anchor="middle">k</text>
+                    <path stroke-linejoin="round" d="M0 55 l 15 10 l 15 -10 l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 5 -5"
+                        fill="none" />
+                    <g transform="translate(230,90)">
+                        <line x1="0" y1="0" x2="145" y2="0" />
+                        <line x1="0" y1="-5" x2="0" y2="5" />
+                        <line x1="145" y1="-5" x2="145" y2="5" />
+                        <text x="72" y="19" stroke="none" text-anchor="middle">x</text>
+                    </g>
+                    <g transform="translate(300 45)">
+                        <line x1="0" y1="0" x2="50" y2="0" />
+                        <polygon points="0,0 6,3 6,-3" transform="translate(-5 0)" />
+                        <text x="-15" y="6" stroke="none" text-anchor="middle">F</text>
+                    </g>
+                </g>
             </svg>
-
-            <h1>$$F = -kx$$</h1>
+            <h1>$$F = -k \Delta x$$</h1>
             \(F\) = Restoring elastic force [N, Newtons, kg m/s²]
             <i>Vector</i>
             <br>\(k\) = spring constant [kg/s²]
@@ -462,177 +456,163 @@
         <p> The Spring force is always directed back towards the equilibrium point. This works for compressing the spring or
             expanding the spring.
         </p>
+        <div class='example'>
+            <svg class='center' width="500" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
+                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#999" />
+                    <rect x="60" y="30" width="50" height="50" fill="#f65" />
+                    <path d="M1 0 v80 h500" fill="none" />
+                    <text x="50" y="23" stroke="none" text-anchor="middle">k = 0.4</text>
+                    <path stroke-linejoin="round" d="M0 47 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17"
+                        fill="none" stroke-width="2" />
+                    <g transform="translate(85,90)">
+                        <line x1="0" y1="0" x2="145" y2="0" />
+                        <line x1="0" y1="-5" x2="0" y2="5" />
+                        <line x1="145" y1="-5" x2="145" y2="5" />
+                        <text x="72" y="19" stroke="none" text-anchor="middle">x = 80 mm</text>
+                    </g>
+                    <g transform="translate(110 55)">
+                        <line x1="0" y1="0" x2="50" y2="0" />
+                        <polygon points="0,0 -6,3 -6,-3" transform="translate(55 0)" />
+                        <text x="60" y="6" stroke="none">F = ?</text>
+                    </g>
+                </g>
+            </svg>
+            <strong>Example:</strong> Find the force from the spring in the diagram above.
+            <details>
+                <summary>solution</summary>
+                $$\Delta x= \mathrm{80\,(m)m = 80\left(\frac{1}{1000}\right)m =0.08 \, m}$$
 
+                <br> $$F= -k \Delta x$$ $$F= -(0.4 \, \mathrm{\tfrac{kg}{s^2}})(0.08 \, \mathrm{m})$$ $$F= -0.032 \, \mathrm{N}$$
+                <p>hmmm, why is the force negative. We know the force should point right. It needs to be positive. Oh, the displacement
+                    points left. It should be negative.</p>
+                $$F= -(-0.4 \, \mathrm{\tfrac{kg}{s^2}})(0.08 \, \mathrm{m})$$ $$F= 0.032 \, \mathrm{N}$$
+            </details>
+        </div>
         <h1 class='underlined'>Elastic Potential Energy</h1>
         <p>We can convert our equation for the elastic force into energy.</p>
         <details class='derive'>
             <summary>derivation of elastic potential energy</summary>
             <p>
-                The energy stored in an elastic material can be calculated with the equation for work and some calculus. $$W = Fd\cos\theta$$
-                The displacement in the work equation d is the same as the displacement in the force equation x. Lets make
-                them both x. $$W = Fx\cos\theta$$ The elastic force and the displacement are always at 0 degrees. cos(0)
-                = 1 $$W = Fx$$ The force is the elastic force. $$F = -kx$$ We can't directly replace F with -kx in the work
-                equation because the force changes over the displacement.
-                <br>F= 0 at x=0 and F=-k*10 at x=10
-                <br>We need to use an operation from calculus called an integral.
-                <br>The integral will find the area of F times x, which equals work. $$W = \int_{0}^{x} kx \ dx$$ $$W = \frac{1}{2}
-                kx^2 $$
-            </p>
+                The energy stored in an elastic material can be calculated with the equation for work and some calculus.</p>
+            $$W = F\Delta x\cos\theta$$
+            <p>The elastic force and the displacement are always at 0 degrees. </p>
+            $$W = F\Delta x$$ The force is the elastic force. $$F = -k\Delta x$$
+            <p>We can't directly replace F with -kx in the work equation because the force changes over the displacement.</p>
+            <p>F = 0 at x = 0
+                <br>F = -k (10) at x = 10</p>
+            <p>We need to use an operation from calculus called an integral. The integral will find the area of F times x, which
+                equals work.</p> $$W = \int_{0}^{x} k \Delta x \ dx$$ $$W = \tfrac{1}{2} k (\Delta x)^2 $$ $$U_s = \tfrac{1}{2}
+            k (\Delta x)^2 $$
         </details>
 
 
         <div class='definition'>
-            <h1>$$U_{s} = \tfrac{1}{2}kx^{2}$$</h1>
+            <h1>$$U_{s} = \tfrac{1}{2}k(\Delta x)^{2}$$</h1>
             \(U_s\) = elastic/spring potential energy [J, Joules, kg m²/s²]
             <br>\(k\) = spring constant [kg/s²]
             <br>\(x\) = displacement [m]
         </div>
+        <p>Elastic potential energy is equal to the work required to bring a spring to a position. Hooke's law is an good approximation
+            until the spring get stretched too much and deformed.</p>
 
-
-        <div class="example">
-            <!-- style="position: relative; top: 100px; left: 528px;" -->
-            <button id="pause1" style="float:right; width: 60px;">play</button>
-            <canvas id="canvas1" width='600' height='100'> </canvas>
-            <svg id="SVG-graph-0" width="599" height="300">
-                <!-- fill="hsla(199, 58%, 50%,0.5)" -->
-                <!-- stroke="hsla(199, 58%, 50%,0.7)" -->
-                <!-- 200, 60%, 70% -->
-                <circle id="graphing-position" cx="50" cy="50" r="8" fill="hsla(200, 50%, 50%,1)" stroke-width="1" style="display: none;"
-                />
-            </svg>
-            <p>k =
-                <input id='spring-k-slider' type="range" min="0" max="3" step="0.01" value="1" style="width: 250px;">
-                <input id='spring-k' type="number" min="0" max="10" value="1" step="0.01">kg/s²
-                <span style="float:right">m =
-                    <input id='spring-m' type="number" min="1" max="100" value=0 step=1> kg</span>
-            </p>
-            <script src='../../../lib/function-graph-SVG.js'></script>
-            <script>
-                {
-                    let settings = {
-                        x0: 299,
-                        y0: 280,
-                        stroke: "none",
-                        // stroke: "hsl(1, 90%, 60%)",
-                        // strokeWidth: 3,
-                        fill: "hsla(200, 50%, 50%,0.25)",
-                        positiveOnly: false,
-                        xPrecision: 3,
-                        yPrecision: 2,
-                        xScale: 1,
-                        yScale: 5,
-                        // gridSize: 50,
-                        // showGrid: false,
-                        xLabel: "displacement (m)",
-                        yLabel: "energy (kJ)",
-                        step: 5,
-                        showMouseCoords: true,
-                    }
-
-                    funGraphSVG("SVG-graph-0", x => document.getElementById("spring-k").value / 2000 * x * x, settings);
-
-                    document.getElementById("spring-k-slider").value = document.getElementById("spring-k").value
-                    document.getElementById("spring-k").addEventListener("input", event => {
-                        document.getElementById("spring-k-slider").value = document.getElementById("spring-k").value
-                        settings.updatePath = true
-                        funGraphSVG("SVG-graph-0", x => document.getElementById("spring-k").value / 2000 * x * x, settings);
-                    });
-                    document.getElementById("spring-k-slider").addEventListener("input", event => {
-                        document.getElementById("spring-k").value = document.getElementById("spring-k-slider").value
-                        settings.updatePath = true
-                        funGraphSVG("SVG-graph-0", x => document.getElementById("spring-k").value / 2000 * x * x, settings);
-                    });
+        <button id="pause1" style="width: 60px;position: relative; top: 140px; left: 535px;">play</button>
+        <canvas id="canvas1" width='600' height='100'> </canvas>
+        <svg id="SVG-graph-0" width="599" height="300">
+            <circle id="graphing-position" cx="50" cy="50" r="8" fill="hsl(200, 50%, 50%)" stroke-width="2" style="display: none;" />
+        </svg>
+        <p>k =
+            <input id='spring-k-slider' type="range" min="0" max="100" step="1" style="width: 250px;">
+            <input id='spring-k' type="number" min="0" max="100" value="15" step="1">kg/s²
+            <span style="float:right">m =
+                <input id='spring-m' type="number" min="1" max="100" value=0 step=1> kg</span>
+        </p>
+        <script src='../../../lib/function-graph-SVG.js'></script>
+        <script>
+            {
+                let settings = {
+                    x0: 299,
+                    y0: 280,
+                    stroke: "none",
+                    // stroke: "hsl(1, 90%, 60%)",
+                    // strokeWidth: 3,
+                    fill: "hsla(200, 50%, 50%,0.25)",
+                    positiveOnly: false,
+                    xPrecision: 1,
+                    yPrecision: 3,
+                    xScale: 50,
+                    yScale: 1,
+                    // gridSize: 50,
+                    // showGrid: false,
+                    xLabel: "displacement (m)",
+                    yLabel: "energy (J)",
+                    step: 5,
+                    showMouseCoords: true,
                 }
-            </script>
-            <p>
-                <strong>Question:</strong> What role does the spring constant play in elastic potential energy? Try adjusting the
-                value of k.
-            </p>
-            <p>
-                <strong>Question:</strong> What role does the mass constant play in elastic potential energy? Try adjusting the value
-                of m.
-            </p>
-        </div>
+
+                funGraphSVG("SVG-graph-0", x => document.getElementById("spring-k").value / 2 * x * x, settings);
+
+                document.getElementById("spring-k-slider").value = document.getElementById("spring-k").value
+                document.getElementById("spring-k").addEventListener("input", event => {
+                    document.getElementById("spring-k-slider").value = document.getElementById("spring-k").value
+                    settings.updatePath = true
+                    funGraphSVG("SVG-graph-0", x => document.getElementById("spring-k").value / 2 * x * x, settings);
+                });
+                document.getElementById("spring-k-slider").addEventListener("input", event => {
+                    document.getElementById("spring-k").value = document.getElementById("spring-k-slider").value
+                    settings.updatePath = true
+                    funGraphSVG("SVG-graph-0", x => document.getElementById("spring-k").value / 2 * x * x, settings);
+                });
+            }
+        </script>
+        <p>
+            <strong>Question:</strong> What role does the spring constant play in elastic potential energy? Try adjusting the value
+            of k.
+        </p>
+        <p>
+            <strong>Question:</strong> What role does the mass constant play in elastic potential energy? Try adjusting the value
+            of m.
+        </p>
+
         <div class='example'>
             <strong>Example:</strong> Find the elastic energy of a 500 g cylinder stuck to a spring (k = 0.3) that is 200 cm away
             from its equilibrium point?
             <details>
                 <summary>solution</summary>
                 $$200 \, \mathrm{(c)m} = \mathrm{200\left(\frac{1}{100}\right)m = 2\,m}$$
-                <br> $$U_{s} = \tfrac{1}{2}kx^{2}$$ $$U_{s} = \tfrac{1}{2} (0.3)(2)^{2}$$ $$U_{s} = 0.6 \, \mathrm{J}$$
+                <br> $$U_{s} = \tfrac{1}{2}k (\Delta x)^{2}$$ $$U_{s} = \tfrac{1}{2} (0.3)(2)^{2}$$ $$U_{s} = 0.6 \, \mathrm{J}$$
             </details>
         </div>
-        <div class='example'>
-            <svg width="600" height="200">
-                <defs>
-                    <marker id="se_marker_end_svg_4" markerUnits="strokeWidth" orient="auto" viewBox="0 0 100 100" markerWidth="5" markerHeight="5"
-                        refX="50" refY="50">
-                        <path id="svg_6" d="m50,0l0,100" fill="black" stroke="black" stroke-width="10" />
-                    </marker>
-                    <marker id="se_marker_start_svg_4" markerUnits="strokeWidth" orient="auto" viewBox="0 0 100 100" markerWidth="5" markerHeight="5"
-                        refX="50" refY="50">
-                        <path id="svg_7" d="m50,0l0,100" fill="black" stroke="black" stroke-width="10" />
-                    </marker>
-                    <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth"
-                        id="se_marker_start_svg_5">
-                        <path stroke-width="10" fill="none" d="m0,50l100,40l-30,-40l30,-40l-100,40z" id="svg_9" />
-                    </marker>
-                    <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth"
-                        id="se_marker_end_svg_14">
-                        <path stroke-width="10" stroke="grey" fill="grey" d="m100,50l-100,40l30,-40l-30,-40l100,40z" id="svg_16" />
-                    </marker>
-                </defs>
-                <g transform="rotate(1.5899989604949951 104.98438262939398,134.5313568115233) " id="svg_44">
-                    <line id="svg_19" y2="136.65626" x2="196.7422" y1="122.73438" x1="178.39064" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_23" y2="139.47498" x2="162.91566" y1="123.05079" x1="179.33985" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_24" y2="139.51837" x2="163.83594" y1="125.59649" x1="145.48438" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_25" y2="140.94219" x2="130.61327" y1="127.02031" x1="112.26171" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_26" y2="142.02069" x2="130.32581" y1="125.59649" x1="146.75" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null"
-                        stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_31" y2="142.32987" x2="96.31214" y1="125.90567" x1="112.73634" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_32" y2="142.37325" x2="97.23242" y1="128.45138" x1="78.88086" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_33" y2="143.79708" x2="64.00975" y1="129.8752" x1="45.65819" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null"
-                        stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_34" y2="144.87557" x2="63.72229" y1="128.45138" x1="80.14649" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_40" y2="146.28495" x2="30.34144" y1="129.86075" x1="46.76564" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                    <line id="svg_41" y2="146.32833" x2="31.57813" y1="132.40645" x1="13.22657" stroke-linecap="null" stroke-linejoin="null"
-                        stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none" />
-                </g>
-                <line fill="none" stroke-width="2" stroke-dasharray="3,3" stroke-linejoin="null" stroke-linecap="null" x1="227" y1="-18.5"
-                    x2="227" y2="181.40498" id="svg_12" stroke="black" />
-                <rect fill="#cba" height="200" width="590.00001" y="160" x="-48.3125" id="ground" />
-                <rect id="svg_1" stroke="grey" stroke-width="2" fill-opacity="0" stroke-dasharray="3,3" height="60" width="60" y="99.76563"
-                    x="304.45313" fill="black" />
-                <rect fill="#cba" height="200" width="63" y="-10" x="-48.3125" id="svg_13" />
-                <rect id="svg_2" stroke="black" stroke-width="2" fill="#ccc" height="60" width="60" y="100" x="197" />
-                <line fill="#000" stroke="#000" stroke-width="2" stroke-linejoin="null" stroke-linecap="null" x1="228.03129" y1="167.45314"
-                    x2="335.52179" y2="167.45314" id="svg_4" marker-end="url(#se_marker_end_svg_4)" marker-start="url(#se_marker_start_svg_4)"
-                />
-                <line marker-start="url(#se_marker_start_svg_5)" id="svg_5" y2="127.37501" x2="277.99482" y1="127.37501" x1="332.00003" stroke-linecap="null"
-                    stroke-linejoin="null" stroke-dasharray="3,3" stroke-width="2" fill="none" />
-                <line marker-end="url(#se_marker_end_svg_14)" id="svg_14" y2="127.37501" x2="271.60338" y1="127.37501" x1="337.43751" stroke-linecap="null"
-                    stroke-linejoin="null" stroke-width="2" stroke="grey" fill="none" />
-                <text fill="#000000" x="88.10938" y="118.09375" id="svg_10" font-family="Sans-serif" text-anchor="middle" xml:space="preserve"
-                    font-style="normal">k=?</text>
-                <text id="svg_15" fill="#000000" x="291" y="94" font-family="Sans-serif" text-anchor="middle" xml:space="preserve" font-style="normal">F = 100 N</text>
-                <text id="svg_8" text-anchor="middle" fill="black" y="190" x="276.89063" font-family="Serif">x = 40 cm</text>
 
+        <div class='example'>
+            <svg class='center' width="500" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
+                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#999" />
+                    <rect x="350" y="30" width="50" height="50" fill="#f65" />
+                    <path d="M1 0 v80 h500" fill="none" />
+                    <text x="130" y="47" stroke="none" text-anchor="middle">k = ?</text>
+                    <path stroke-linejoin="round" d="M0 55 l 15 10 l 15 -10 l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 5 -5"
+                        fill="none" />
+                    <g transform="translate(230,90)">
+                        <line x1="0" y1="0" x2="145" y2="0" />
+                        <line x1="0" y1="-5" x2="0" y2="5" />
+                        <line x1="145" y1="-5" x2="145" y2="5" />
+                        <text x="72" y="19" stroke="none" text-anchor="middle">x = 40 cm</text>
+                    </g>
+                    <g transform="translate(300 45)">
+                        <line x1="0" y1="0" x2="50" y2="0" />
+                        <polygon points="0,0 6,3 6,-3" transform="translate(-5 0)" />
+                        <text x="0" y="-10" stroke="none" text-anchor="middle">F = 100 N</text>
+                    </g>
+                </g>
             </svg>
-            <br>
             <strong>Example:</strong> You need to find the spring constant for a spring mass system. To find the spring constant
             you pull the mass 40 cm out of equilibrium and measure a spring force of 100 N. What's the spring constant?
             <details>
                 <summary>solution</summary>
                 $$x= \mathrm{40\,(c)m = 40\left(\frac{1}{100}\right)m =0.4 \, m}$$
-                <br> $$F= -kx$$ $$-\frac{F}{x} = k$$ $$-\frac{-100}{0.4} = k$$ $$250 \mathrm{\tfrac{kg}{s^2}} = k$$
+                <br> $$F= -k \Delta x$$ $$-\frac{F}{\Delta x} = k$$ $$-\frac{-100}{0.4} = k$$ $$250 \mathrm{\tfrac{kg}{s^2}}
+                = k$$
             </details>
         </div>
     </article>
