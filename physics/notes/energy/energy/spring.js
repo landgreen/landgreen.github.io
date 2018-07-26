@@ -3,7 +3,7 @@ var spring = function() {
   var ctx = canvas.getContext("2d");
   ctx.font = "18px Arial";
   ctx.textAlign = "start";
-  ctx.miterLimit = 1;
+  ctx.lineJoin = "round";
   ctx.shadowBlur = 5;
   ctx.shadowOffsetX = 5;
   ctx.shadowOffsetY = 5;
@@ -17,7 +17,7 @@ var spring = function() {
     airFriction: 1,
     equalibrium: 300,
     k: document.getElementById("spring-k").value,
-    turns: 3 + 25 * Math.sqrt(0.1)
+    turns: 40 //3 + 25 * Math.sqrt(0.1)
   };
 
   function drawEqualibrium() {
@@ -40,6 +40,7 @@ var spring = function() {
     this.ke = 0;
     this.pe = 0;
     this.u = 0;
+    this.lineWidth = 0.5 + Math.sqrt(physics.k) / 3;
     this.fillColor = fillColor;
     this.draw = function() {
       ctx.fillStyle = this.fillColor;
@@ -51,7 +52,7 @@ var spring = function() {
       ctx.shadowColor = "transparent";
     };
     this.drawSpring = function() {
-      ctx.lineWidth = 1;
+      ctx.lineWidth = box.lineWidth;
       ctx.strokeStyle = "black";
       ctx.shadowColor = "#ccc";
       ctx.beginPath();
@@ -90,7 +91,8 @@ var spring = function() {
       this.Vy += physics.gravY;
     };
     this.spring = function() {
-      this.Vx += (physics.k * (physics.equalibrium - this.x)) / 60 / this.mass;
+      const displacement = (physics.equalibrium - this.x) / 50;
+      this.Vx += (physics.k * displacement) / this.mass / 60;
     };
 
     this.calcEnergy = function() {
@@ -206,15 +208,28 @@ var spring = function() {
 
   document.getElementById("spring-k").addEventListener("input", function() {
     physics.k = document.getElementById("spring-k").value;
+    box.lineWidth = 0.5 + Math.sqrt(physics.k) / 3;
     // box.Vx = 0;
-    physics.turns = 3 + 25 * Math.sqrt(physics.k);
+    // physics.turns = 3 + 25 * Math.sqrt(physics.k);
+    if (pause) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      box.drawSpring();
+      box.draw();
+      graphingOnSVG();
+    }
   });
 
   document.getElementById("spring-k-slider").addEventListener("input", function() {
     physics.k = document.getElementById("spring-k-slider").value;
+    box.lineWidth = 0.5 + Math.sqrt(physics.k) / 3;
     // box.Vx = 0;
-    physics.turns = 3 + 25 * Math.sqrt(physics.k);
-    if (pause) graphingOnSVG();
+    // physics.turns = 3 + 25 * Math.sqrt(physics.k);
+    if (pause) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      box.drawSpring();
+      box.draw();
+      graphingOnSVG();
+    }
   });
 
   //gets values for mass
@@ -232,14 +247,14 @@ var spring = function() {
   //bring circle to front layer
   const parent = document.getElementById("SVG-graph-0");
   const shouldBeLast = document.getElementById("graphing-position");
-  const last = document.getElementById("SVG-graph-0-path");
+  const last = document.getElementById("");
   parent.insertBefore(parent.removeChild(shouldBeLast), last);
   // circle moves on the graph
   function graphingOnSVG() {
     document.getElementById("graphing-position").setAttribute("cx", box.x);
     const x = box.x - 299;
 
-    document.getElementById("graphing-position").setAttribute("cy", 280 - (physics.k / 2000) * x * x * 5);
+    document.getElementById("graphing-position").setAttribute("cy", 280 - ((physics.k / 2) * x * x) / 50 / 50);
   }
 
   function render() {
