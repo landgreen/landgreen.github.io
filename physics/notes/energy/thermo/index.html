@@ -31,12 +31,17 @@
 		<h1 class='underlined'>Temperature</h1>
 		<p>Temperature is a measure of the average kinetic energy in a system of particles. Kinetic energy can be stored in spin,
 			vibrations between particles, and normal translational movement.</p>
-		<div id="kinetic-energy"></div>
-		<canvas class='center' id='temperature' height='150' width='600'> </canvas>
-		<canvas class='center' id='temperature-out' height='200' width='600'> </canvas>
-		<button id="clear-temp">clear</button>
-		<input type="range" id='time-rate-slider-temp' min="0.01" max="1" step="0.01" value="0.05">
-
+		<div>
+			<div id="kinetic-energy"></div>
+			<canvas class='center' id='temperature' height='150' width='600'> </canvas>
+			<canvas class='center' id='temperature-out' height='200' width='600'> </canvas>
+			<p>temperature =
+				<input type="range" id='time-rate-slider-temp' min="0.01" max="1" step="0.01" value="0.05">
+				<button id="clear-temp" style="float: right;">clear</button>
+			</p>
+			<p>The graph above shows the distribution of kinetics energy for particles at various temperatures.
+			</p>
+		</div>
 
 		<h1 class='underlined'>Energy Loss and Gain in a System</h1>
 		<br>

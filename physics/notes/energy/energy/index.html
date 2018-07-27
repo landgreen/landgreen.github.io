@@ -84,17 +84,17 @@
             <svg class='center' width="500" height="190" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
                     <rect x="60" y="50" width="100" height="100" fill="#fff" />
-                    <rect x="340" y="50" width="100" height="100" stroke-dasharray="4,4" stroke="#999" fill="none" />
+                    <rect x="340" y="50" width="100" height="100" stroke-dasharray="4,4" stroke="#000" fill="none" />
                     <line x1="-50" y1="150" x2="600" y2="150" />
 
-                    <g transform="translate(160,165)">
+                    <g transform="translate(110,165)">
                         <line x1="0" y1="0" x2="280" y2="0" />
                         <line x1="0" y1="-6" x2="0" y2="6" />
                         <line x1="280" y1="-6" x2="280" y2="6" />
                         <text x="140" y="19" stroke="none" text-anchor="middle">Δx</text>
                     </g>
                     <text x="200" y="94" stroke="none">Θ</text>
-                    <line x1="160" y1="100" x2="252" y2="100" stroke-dasharray="4,4" stroke="#999" />
+                    <line x1="160" y1="100" x2="252" y2="100" stroke-dasharray="4,4" stroke="#000" />
                     <g transform="translate(160 100) rotate(-30 )">
                         <line x1="0" y1="0" x2="100" y2="0" />
                         <polygon points="0,0 -8,5 -8,-5" transform="translate(105 0)" />
@@ -120,16 +120,16 @@
                 <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
                     <rect x="60" y="50" width="100" height="100" fill="#ddeef6" />
                     <text x="110" y="100" stroke="none" text-anchor="middle" alignment-baseline="middle">5 kg</text>
-                    <rect x="340" y="50" width="100" height="100" stroke-dasharray="4,4" stroke="#999" fill="none" />
+                    <rect x="340" y="50" width="100" height="100" stroke-dasharray="4,4" stroke="#000" fill="none" />
                     <line x1="-50" y1="150" x2="600" y2="150" />
-                    <g transform="translate(160,165)">
+                    <g transform="translate(110,165)">
                         <line x1="0" y1="0" x2="280" y2="0" />
                         <line x1="0" y1="-6" x2="0" y2="6" />
                         <line x1="280" y1="-6" x2="280" y2="6" />
                         <text x="140" y="19" stroke="none" text-anchor="middle">Δx = 200 m</text>
                     </g>
                     <text x="200" y="94" stroke="none">Θ = 30°</text>
-                    <line x1="160" y1="100" x2="252" y2="100" stroke-dasharray="4,4" stroke="#999" />
+                    <line x1="160" y1="100" x2="252" y2="100" stroke-dasharray="4,4" stroke="#000" />
                     <g transform="translate(160 100) rotate(-30 )">
                         <line x1="0" y1="0" x2="100" y2="0" />
                         <polygon points="0,0 -8,5 -8,-5" transform="translate(105 0)" />
@@ -189,7 +189,6 @@
                     <line x1="0" y1="70" x2="-65" y2="70" />
                     <line x1="0" y1="80" x2="-90" y2="80" />
                 </g>
-
             </svg>
             <h1>$$K = \tfrac{1}{2} mv^{2}$$</h1>
             \(K\) = kinetic energy [J, Joules]
@@ -257,12 +256,13 @@
             <svg class="center" width="285" height="162">
                 <rect x="100" y="1" width="60" height="60" style="stroke:black;stroke-width:2;fill:#fff " />
                 <text x="130" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">m</text>
-                <line x1="170" y1="60" x2="170" y2="157" style="stroke:#000;stroke-width:2" />
-                <line x1="165" y1="157" x2="175" y2="157" style="stroke:#000;stroke-width:2" />
-                <line x1="165" y1="60" x2="175" y2="60" style="stroke:#000;stroke-width:2" />
+                <g transform="translate(130)">
+                    <line x1="0" y1="65" x2="0" y2="157" style="stroke:#000;stroke-width:2" />
+                    <line x1="-5" y1="157" x2="5" y2="157" style="stroke:#000;stroke-width:2" />
+                    <line x1="-5" y1="65" x2="5" y2="65" style="stroke:#000;stroke-width:2" />
+                </g>
                 <line id="ground" x1="-50" y1="160" x2="500" y2="160" stroke="#000" stroke-width="2" />
-
-                <text x="175" y="115" fill="black" text-anchor="start">h</text>
+                <text x="133" y="115" fill="black" text-anchor="start">h</text>
             </svg>
 
             <h1>$$U_{g} = mgh$$</h1>
@@ -275,54 +275,57 @@
             <strong>Height</strong> is the tricky part of this equation, because where is zero height? The ground floor can be the
             zero point, or the floor of the basement or the top of a table, or any point.
         </p>
-        <p>Which of these zero points seem the best choice?</p>
+        <p>Which of these zero points are correct?</p>
         <table style='width:100%'>
             <tr>
                 <td style='background-color:#fff;color:#333'>
-                    <svg style="display: block; margin: auto" width="170" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="center" width="150" height="165" version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <rect x="1" y="1" width="60" height="60" style="stroke:black;stroke-width:2;fill:#ddeef6" />
                         <text x="30" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">5 kg</text>
-                        <line x1="70" y1="60" x2="70" y2="157" style="stroke:#000;stroke-width:2" />
-                        <line x1="65" y1="157" x2="75" y2="157" style="stroke:#000;stroke-width:2" />
-                        <line x1="65" y1="60" x2="75" y2="60" style="stroke:#000;stroke-width:2" />
+                        <g transform="translate(30)">
+                            <line x1="0" y1="65" x2="0" y2="157" style="stroke:#000;stroke-width:2" />
+                            <line x1="-5" y1="157" x2="5" y2="157" style="stroke:#000;stroke-width:2" />
+                            <line x1="-5" y1="65" x2="5" y2="65" style="stroke:#000;stroke-width:2" />
+                        </g>
                         <line id="ground" x1="-50" y1="160" x2="500" y2="160" stroke="#000" stroke-width="2" />
 
-                        <text x="80" y="70" fill="black" text-anchor="start">y = 100 m</text>
-                        <text x="80" y="155" text-anchor="start" style='fill:red'>y = 0 m</text>
-                        <text x="5" y="180" fill="black" text-anchor="start">g = 9.8 m/s²</text>
+                        <text x="55" y="80" fill="black" text-anchor="start">y = 100 m</text>
+                        <text x="55" y="155" text-anchor="start" style='fill:red'>y = 0 m</text>
                     </svg>
-                    $$U_{g} = (5)(9.8)(100)$$ $$U_{g} = 4900 \, \mathrm{J}$$
+                    $$ \footnotesize U_{g} = (5)(9.8)(100)$$ $$ \footnotesize U_{g} = 4900 \, \mathrm{J}$$
                 </td>
                 <td style='background-color:#fff;color:#333'>
-                    <svg style="display: block; margin: auto" width="170" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="center" width="150" height="165" version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <rect x="1" y="1" width="60" height="60" style="stroke:black;stroke-width:2;fill:#ddeef6 " />
                         <text x="30" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">5 kg</text>
-                        <line x1="70" y1="60" x2="70" y2="157" style="stroke:#000;stroke-width:2" />
-                        <line x1="65" y1="157" x2="75" y2="157" style="stroke:#000;stroke-width:2" />
-                        <line x1="65" y1="60" x2="75" y2="60" style="stroke:#000;stroke-width:2" />
+                        <g transform="translate(30)">
+                            <line x1="0" y1="65" x2="0" y2="157" style="stroke:#000;stroke-width:2" />
+                            <line x1="-5" y1="157" x2="5" y2="157" style="stroke:#000;stroke-width:2" />
+                            <line x1="-5" y1="65" x2="5" y2="65" style="stroke:#000;stroke-width:2" />
+                        </g>
                         <line id="ground" x1="-50" y1="160" x2="500" y2="160" stroke="#000" stroke-width="2" />
 
-                        <text x="80" y="70" text-anchor="start" style='fill:red'>y = 0</text>
-                        <text x="80" y="155" fill="black" text-anchor="start">y = -100 m</text>
-                        <text x="5" y="180" fill="black" text-anchor="start">g = 9.8 m/s²</text>
+                        <text x="55" y="80" text-anchor="start" style='fill:red'>y = 0</text>
+                        <text x="55" y="155" fill="black" text-anchor="start">y = -100 m</text>
                     </svg>
-                    $$U_{g} = (5)(9.8)(0)$$ $$U_{g} = 0$$
+                    $$\footnotesize U_{g} = (5)(9.8)(0)$$ $$\footnotesize U_{g} = 0$$
                 </td>
                 <td style='background-color:#fff;color:#333'>
-                    <svg style="display: block; margin: auto" width="170" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="center" width="150" height="165" version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <rect x="1" y="1" width="60" height="60" style="stroke:black;stroke-width:2;fill:#ddeef6 " />
                         <text x="30" y="30" fill="black" text-anchor="middle" alignment-baseline="middle">5 kg</text>
-                        <line x1="70" y1="60" x2="70" y2="157" style="stroke:#000;stroke-width:2" />
-                        <line x1="65" y1="157" x2="75" y2="157" style="stroke:#000;stroke-width:2" />
-                        <line x1="65" y1="60" x2="75" y2="60" style="stroke:#000;stroke-width:2" />
+                        <g transform="translate(30)">
+                            <line x1="0" y1="65" x2="0" y2="157" style="stroke:#000;stroke-width:2" />
+                            <line x1="-5" y1="157" x2="5" y2="157" style="stroke:#000;stroke-width:2" />
+                            <line x1="-5" y1="65" x2="5" y2="65" style="stroke:#000;stroke-width:2" />
+                        </g>
                         <line id="ground" x1="-50" y1="160" x2="500" y2="160" stroke="#000" stroke-width="2" />
 
-                        <text x="80" y="70" fill="black" text-anchor="start">y = 50 m</text>
-                        <text x="80" y="115" text-anchor="start" style='fill:red'>y = 0</text>
-                        <text x="80" y="155" fill="black" text-anchor="start">y = -50 m</text>
-                        <text x="5" y="180" fill="black" text-anchor="start">g = 9.8 m/s²</text>
+                        <text x="55" y="80" fill="black" text-anchor="start">y = 50 m</text>
+                        <text x="55" y="116" text-anchor="start" style='fill:red'>y = 0</text>
+                        <text x="55" y="155" fill="black" text-anchor="start">y = -50 m</text>
                     </svg>
-                    $$U_{g} = (5)(9.8)(50)$$ $$U_{g} = 2450 \, \mathrm{J}$$
+                    $$\footnotesize U_{g} = (5)(9.8)(50)$$ $$\footnotesize U_{g} = 2450 \, \mathrm{J}$$
                 </td>
             </tr>
         </table>
@@ -357,7 +360,7 @@
             </details>
         </div>
         <div class='example'>
-            <svg width="205" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg" class='center'>
+            <svg width="205" height="180" version="1.1" xmlns="http://www.w3.org/2000/svg" class='center'>
                 <g transform="translate(50, 0)">
                     <rect x="0.5" y="0.5" width="60" height="60" stroke-dasharray="3,3" fill-opacity="0" style="stroke:grey;stroke-width:1;"
                     />
@@ -370,7 +373,6 @@
 
                     <text x="80" y="70" fill="black" text-anchor="start">y = 0</text>
                     <text x="80" y="155" fill="black" text-anchor="start">y = -400 ft</text>
-                    <text x="5" y="180" fill="black" text-anchor="start">g = 9.8 m/s²</text>
                 </g>
             </svg>
             <strong>Example:</strong> How much gravitational energy is lost as an 80.0 kg person rides down from the top of the 400
@@ -393,17 +395,17 @@
         <div class='definition'>
             <svg class='center' width="500" height="350" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
-                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#999" />
+                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#000" />
                     <rect x="60" y="30" width="50" height="50" fill="#fff" />
                     <path d="M1 0 v80 h500" fill="none" />
-                    <text x="30" y="37" stroke="none" text-anchor="middle">k</text>
+                    <!-- <text x="30" y="37" stroke="none" text-anchor="middle">k</text> -->
                     <path stroke-linejoin="round" d="M0 47 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17"
                         fill="none" stroke-width="2" />
-                    <g transform="translate(85,90)">
-                        <line x1="0" y1="0" x2="145" y2="0" />
+                    <g transform="translate(60,90)">
+                        <line x1="0" y1="0" x2="170" y2="0" />
                         <line x1="0" y1="-5" x2="0" y2="5" />
-                        <line x1="145" y1="-5" x2="145" y2="5" />
-                        <text x="72" y="19" stroke="none" text-anchor="middle">x</text>
+                        <line x1="170" y1="-5" x2="170" y2="5" />
+                        <text x="87" y="19" stroke="none" text-anchor="middle">x</text>
                     </g>
                     <g transform="translate(110 55)">
                         <line x1="0" y1="0" x2="50" y2="0" />
@@ -413,29 +415,29 @@
                 </g>
 
                 <g font-size="19" stroke="#000" fill="#000" stroke-width="2" transform="translate(0 120)">
-                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#999" />
-                    <rect x="205" y="30" width="50" height="50" fill="#fff" />
+                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#000" />
+                    <rect x="233" y="30" width="50" height="50" fill="#fff" />
                     <path d="M1 0 v80 h500" fill="none" />
-                    <text x="115" y="40" stroke="none" text-anchor="middle">k</text>
-                    <text x="300" y="48" stroke="none" text-anchor="middle">F = 0</text>
-                    <text x="300" y="73" stroke="none" text-anchor="middle">x = 0</text>
+                    <!-- <text x="115" y="40" stroke="none" text-anchor="middle">k</text> -->
+                    <!-- <text x="300" y="48" stroke="none" text-anchor="middle">F = 0</text> -->
+                    <!-- <text x="300" y="73" stroke="none" text-anchor="middle">x = 0</text> -->
                     <!-- <text x="350" y="60" stroke="none">equalibrium</text> -->
-                    <path stroke-linejoin="round" d="M0 47 l 10 15 l 10 -15 l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 5 5"
+                    <path stroke-linejoin="round" d="M0 47 l 10 15 l 10 -15 l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 10 -15l 10 15 l 3 -4"
                         fill="none" />
                 </g>
 
                 <g font-size="19" stroke="#000" fill="#000" stroke-width="2" transform="translate(0 240)">
-                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#999" />
+                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#000" />
                     <rect x="350" y="30" width="50" height="50" fill="#fff" />
                     <path d="M1 0 v80 h500" fill="none" />
-                    <text x="130" y="47" stroke="none" text-anchor="middle">k</text>
+                    <!-- <text x="130" y="47" stroke="none" text-anchor="middle">k</text> -->
                     <path stroke-linejoin="round" d="M0 55 l 15 10 l 15 -10 l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 5 -5"
                         fill="none" />
                     <g transform="translate(230,90)">
-                        <line x1="0" y1="0" x2="145" y2="0" />
+                        <line x1="0" y1="0" x2="120" y2="0" />
                         <line x1="0" y1="-5" x2="0" y2="5" />
-                        <line x1="145" y1="-5" x2="145" y2="5" />
-                        <text x="72" y="19" stroke="none" text-anchor="middle">x</text>
+                        <line x1="120" y1="-5" x2="120" y2="5" />
+                        <text x="60" y="19" stroke="none" text-anchor="middle">x</text>
                     </g>
                     <g transform="translate(300 45)">
                         <line x1="0" y1="0" x2="50" y2="0" />
@@ -444,7 +446,7 @@
                     </g>
                 </g>
             </svg>
-            <h1>$$F = -k \Delta x$$</h1>
+            <h1>$$F = -k x$$</h1>
             \(F\) = Restoring elastic force [N, Newtons, kg m/s²]
             <i>Vector</i>
             <br>\(k\) = spring constant [kg/s²]
@@ -456,20 +458,88 @@
         <p> The Spring force is always directed back towards the equilibrium point. This works for compressing the spring or
             expanding the spring.
         </p>
+
         <div class='example'>
-            <svg class='center' width="500" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <svg class='center' width="500" height="360" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
-                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#999" />
+                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#000" />
                     <rect x="60" y="30" width="50" height="50" fill="#f65" />
                     <path d="M1 0 v80 h500" fill="none" />
-                    <text x="50" y="23" stroke="none" text-anchor="middle">k = 0.4</text>
+                    <!-- <text x="30" y="37" stroke="none" text-anchor="middle">k</text> -->
+                    <path stroke-linejoin="round" d="M0 47 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17"
+                        fill="none" stroke-width="2" />
+                    <g transform="translate(60,90)">
+                        <line x1="0" y1="0" x2="170" y2="0" />
+                        <line x1="0" y1="-5" x2="0" y2="5" />
+                        <line x1="170" y1="-5" x2="170" y2="5" />
+                        <text x="90" y="19" stroke="none" text-anchor="middle">x</text>
+                    </g>
+                    <g transform="translate(110 55)">
+                        <line x1="0" y1="0" x2="50" y2="0" />
+                        <polygon points="0,0 -6,3 -6,-3" transform="translate(55 0)" />
+                        <text x="65" y="6" stroke="none" text-anchor="middle">F</text>
+                    </g>
+                </g>
+                <g font-size="19" stroke="#000" fill="#000" stroke-width="2" transform="translate(0 120)">
+                    <line x1="230" y1="0" x2="231" y2="80" stroke-dasharray="4,4" stroke="#000" />
+                    <rect x="60" y="30" width="50" height="50" fill="#5cc" />
+                    <path d="M1 0 v80 h500" fill="none" />
                     <path stroke-linejoin="round" d="M0 47 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17"
                         fill="none" stroke-width="2" />
                     <g transform="translate(85,90)">
                         <line x1="0" y1="0" x2="145" y2="0" />
                         <line x1="0" y1="-5" x2="0" y2="5" />
                         <line x1="145" y1="-5" x2="145" y2="5" />
-                        <text x="72" y="19" stroke="none" text-anchor="middle">x = 80 mm</text>
+                        <text x="72" y="19" stroke="none" text-anchor="middle">x</text>
+                    </g>
+                    <g transform="translate(110 55)">
+                        <line x1="0" y1="0" x2="50" y2="0" />
+                        <polygon points="0,0 -6,3 -6,-3" transform="translate(55 0)" />
+                        <text x="60" y="6" stroke="none">F</text>
+                    </g>
+                </g>
+                <g font-size="19" stroke="#000" fill="#000" stroke-width="2" transform="translate(0 240)">
+                    <line x1="230" y1="0" x2="231" y2="80" stroke-dasharray="4,4" stroke="#000" />
+                    <rect x="60" y="30" width="50" height="50" fill="#fffa66" />
+                    <path d="M1 0 v80 h500" fill="none" />
+                    <path stroke-linejoin="round" d="M0 47 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17"
+                        fill="none" stroke-width="2" />
+                    <g transform="translate(1,90)">
+                        <line x1="0" y1="0" x2="60" y2="0" />
+                        <line x1="0" y1="-5" x2="0" y2="5" />
+                        <line x1="60" y1="-5" x2="60" y2="5" />
+                        <text x="30" y="19" stroke="none" text-anchor="middle">x</text>
+                    </g>
+                    <g transform="translate(110 55)">
+                        <line x1="0" y1="0" x2="50" y2="0" />
+                        <polygon points="0,0 -6,3 -6,-3" transform="translate(55 0)" />
+                        <text x="60" y="6" stroke="none">F</text>
+                    </g>
+                </g>
+            </svg>
+            <strong>Example:</strong> What's the difference between these diagrams? Which is correct?
+            <details>
+                <summary>answer</summary>
+                <p>The red/orange one is correctly drawn. Displacement is defined as the the distance from equilibrium for the
+                    spring only.
+                </p>
+            </details>
+        </div>
+
+        <div class='example'>
+            <svg class='center' width="500" height="121" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
+                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#000" />
+                    <rect x="60" y="30" width="50" height="50" fill="#f65" />
+                    <path d="M1 0 v80 h500" fill="none" />
+                    <text x="50" y="23" stroke="none" text-anchor="middle">k = 0.4</text>
+                    <path stroke-linejoin="round" d="M0 47 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17 l 5 17 l 5 -17"
+                        fill="none" stroke-width="2" />
+                    <g transform="translate(60,90)">
+                        <line x1="0" y1="0" x2="170" y2="0" />
+                        <line x1="0" y1="-5" x2="0" y2="5" />
+                        <line x1="170" y1="-5" x2="170" y2="5" />
+                        <text x="90" y="19" stroke="none" text-anchor="middle">x = 80 mm</text>
                     </g>
                     <g transform="translate(110 55)">
                         <line x1="0" y1="0" x2="50" y2="0" />
@@ -481,34 +551,54 @@
             <strong>Example:</strong> Find the force from the spring in the diagram above.
             <details>
                 <summary>solution</summary>
-                $$\Delta x= \mathrm{80\,(m)m = 80\left(\frac{1}{1000}\right)m =0.08 \, m}$$
+                $$ x= \mathrm{80\,(m)m = 80\left(\frac{1}{1000}\right)m =0.08 \, m}$$
 
-                <br> $$F= -k \Delta x$$ $$F= -(0.4 \, \mathrm{\tfrac{kg}{s^2}})(0.08 \, \mathrm{m})$$ $$F= -0.032 \, \mathrm{N}$$
+                <br> $$F= -k x$$ $$F= -(0.4 \, \mathrm{\tfrac{kg}{s^2}})(0.08 \, \mathrm{m})$$ $$F= -0.032 \, \mathrm{N}$$
                 <p>hmmm, why is the force negative. We know the force should point right. It needs to be positive. Oh, the displacement
                     points left. It should be negative.</p>
                 $$F= -(-0.4 \, \mathrm{\tfrac{kg}{s^2}})(0.08 \, \mathrm{m})$$ $$F= 0.032 \, \mathrm{N}$$
             </details>
         </div>
+
+
+
+
         <h1 class='underlined'>Elastic Potential Energy</h1>
         <p>We can convert our equation for the elastic force into energy.</p>
         <details class='derive'>
             <summary>derivation of elastic potential energy</summary>
             <p>
                 The energy stored in an elastic material can be calculated with the equation for work and some calculus.</p>
-            $$W = F\Delta x\cos\theta$$
+            $$W = F x\cos\theta$$
             <p>The elastic force and the displacement are always at 0 degrees. </p>
-            $$W = F\Delta x$$ The force is the elastic force. $$F = -k\Delta x$$
+            $$W = F x$$ The force is the elastic force. $$F = -k x$$
             <p>We can't directly replace F with -kx in the work equation because the force changes over the displacement.</p>
             <p>F = 0 at x = 0
                 <br>F = -k (10) at x = 10</p>
             <p>We need to use an operation from calculus called an integral. The integral will find the area of F times x, which
-                equals work.</p> $$W = \int_{0}^{x} k \Delta x \ dx$$ $$W = \tfrac{1}{2} k (\Delta x)^2 $$ $$U_s = \tfrac{1}{2}
-            k (\Delta x)^2 $$
+                equals work.</p> $$W = \int_{0}^{x} k x \ dx$$ $$W = \tfrac{1}{2} kx^2 $$ $$U_s = \tfrac{1}{2} k x^2 $$
         </details>
 
 
         <div class='definition'>
-            <h1>$$U_{s} = \tfrac{1}{2}k(\Delta x)^{2}$$</h1>
+
+            <svg class='center' width="500" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
+                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#000" />
+                    <rect x="350" y="30" width="50" height="50" fill="#fff" />
+                    <path d="M1 0 v80 h500" fill="none" />
+                    <!-- <text x="130" y="47" stroke="none" text-anchor="middle">k</text> -->
+                    <path stroke-linejoin="round" d="M0 55 l 15 10 l 15 -10 l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 5 -5"
+                        fill="none" />
+                    <g transform="translate(230,90)">
+                        <line x1="0" y1="0" x2="120" y2="0" />
+                        <line x1="0" y1="-5" x2="0" y2="5" />
+                        <line x1="120" y1="-5" x2="120" y2="5" />
+                        <text x="60" y="19" stroke="none" text-anchor="middle">x</text>
+                    </g>
+                </g>
+            </svg>
+            <h1>$$U_{s} = \tfrac{1}{2}kx^{2}$$</h1>
             \(U_s\) = elastic/spring potential energy [J, Joules, kg m²/s²]
             <br>\(k\) = spring constant [kg/s²]
             <br>\(x\) = displacement [m]
@@ -519,7 +609,7 @@
         <button id="pause1" style="width: 60px;position: relative; top: 140px; left: 535px;">play</button>
         <canvas id="canvas1" width='600' height='100'> </canvas>
         <svg id="SVG-graph-0" width="599" height="300">
-            <circle id="graphing-position" cx="50" cy="50" r="8" fill="hsl(200, 50%, 50%)" stroke-width="2" style="display: none;" />
+            <circle id="graphing-position" cx="50" cy="50" r="8" fill="rgb(255, 102, 85)" stroke-width="2" style="display: none;" />
         </svg>
         <p>k =
             <input id='spring-k-slider' type="range" min="0" max="100" step="1" style="width: 250px;">
@@ -565,14 +655,14 @@
                 });
             }
         </script>
-        <p>
+        <!-- <p>
             <strong>Question:</strong> What role does the spring constant play in elastic potential energy? Try adjusting the value
             of k.
         </p>
         <p>
             <strong>Question:</strong> What role does the mass constant play in elastic potential energy? Try adjusting the value
             of m.
-        </p>
+        </p> -->
 
         <div class='example'>
             <strong>Example:</strong> Find the elastic energy of a 500 g cylinder stuck to a spring (k = 0.3) that is 200 cm away
@@ -580,24 +670,25 @@
             <details>
                 <summary>solution</summary>
                 $$200 \, \mathrm{(c)m} = \mathrm{200\left(\frac{1}{100}\right)m = 2\,m}$$
-                <br> $$U_{s} = \tfrac{1}{2}k (\Delta x)^{2}$$ $$U_{s} = \tfrac{1}{2} (0.3)(2)^{2}$$ $$U_{s} = 0.6 \, \mathrm{J}$$
+                <br> $$U_{s} = \tfrac{1}{2}kx^{2}$$ $$U_{s} = \tfrac{1}{2} (0.3 \,\mathrm{\tfrac{kg}{s^2}})(2\,\mathrm{m})^{2}$$
+                $$U_{s} = 0.6 \, \mathrm{J}$$
             </details>
         </div>
 
         <div class='example'>
             <svg class='center' width="500" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
-                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#999" />
+                    <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#000" />
                     <rect x="350" y="30" width="50" height="50" fill="#f65" />
                     <path d="M1 0 v80 h500" fill="none" />
                     <text x="130" y="47" stroke="none" text-anchor="middle">k = ?</text>
                     <path stroke-linejoin="round" d="M0 55 l 15 10 l 15 -10 l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 5 -5"
                         fill="none" />
                     <g transform="translate(230,90)">
-                        <line x1="0" y1="0" x2="145" y2="0" />
+                        <line x1="0" y1="0" x2="120" y2="0" />
                         <line x1="0" y1="-5" x2="0" y2="5" />
-                        <line x1="145" y1="-5" x2="145" y2="5" />
-                        <text x="72" y="19" stroke="none" text-anchor="middle">x = 40 cm</text>
+                        <line x1="120" y1="-5" x2="120" y2="5" />
+                        <text x="60" y="19" stroke="none" text-anchor="middle">x = 40 cm</text>
                     </g>
                     <g transform="translate(300 45)">
                         <line x1="0" y1="0" x2="50" y2="0" />
@@ -611,7 +702,7 @@
             <details>
                 <summary>solution</summary>
                 $$x= \mathrm{40\,(c)m = 40\left(\frac{1}{100}\right)m =0.4 \, m}$$
-                <br> $$F= -k \Delta x$$ $$-\frac{F}{\Delta x} = k$$ $$-\frac{-100}{0.4} = k$$ $$250 \mathrm{\tfrac{kg}{s^2}}
+                <br> $$F= -k x$$ $$-\frac{F}{ x} = k$$ $$-\frac{-100 \,\mathrm{N} }{0.4\,\mathrm{m}} = k$$ $$250 \mathrm{\tfrac{kg}{s^2}}
                 = k$$
             </details>
         </div>

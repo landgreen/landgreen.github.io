@@ -38,6 +38,21 @@
       up a little snail.</p>
 
     <div class='definition'>
+      <svg class="center" width="370" height="116">
+        <rect x="130" y="25" width="120" height="90" fill="#fff" stroke-width="2" stroke="#000" />
+        <text x="190" y="70" fill="black" text-anchor="middle" alignment-baseline="middle">mass</text>
+
+        <g transform="translate(130.5 25.5)" style="stroke:#000;stroke-width:1">
+          <line x1="0" y1="10" x2="-80" y2="10" />
+          <line x1="0" y1="20" x2="-125" y2="20" />
+          <line x1="0" y1="30" x2="-55" y2="30" />
+          <line x1="0" y1="40" x2="-155" y2="40" />
+          <line x1="0" y1="50" x2="-145" y2="50" />
+          <line x1="0" y1="60" x2="-115" y2="60" />
+          <line x1="0" y1="70" x2="-65" y2="70" />
+          <line x1="0" y1="80" x2="-90" y2="80" />
+        </g>
+      </svg>
       <h1>$$p = mv$$</h1>
       \(p\) = momentum [kg m/s]
       <em>vector</em>
@@ -102,6 +117,8 @@
     <div class="example">
       $$\Delta v = \frac{F \Delta t}{m} $$
       <svg id="SVG-graph-0" width="600" height="300">
+        <circle id="origin-0" cx="15" cy="285" r="6" fill="rgb(210,120,120)" />
+
       </svg>
       <div class="center">
         force =
@@ -113,56 +130,49 @@
 
       </div>
       <script>
-        funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, {
-          x0: 15,
-          y0: 285,
-          stroke: "rgba(255,75,0,1)",
-          precision: 1,
-          scale: 65,
-          gridSize: 65,
-          strokeWidth: 5,
-          xLabel: "time (s)",
-          yLabel: "velocity (m/s)",
-          step: 10,  // big steps because the function is linear
-        });
-        //force event listeners
-        document.getElementById("force").addEventListener("input", event => {
-          document.getElementById("force-slider").value = document.getElementById("force").value
-          funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, {
+        {
+          let settings = {
             x0: 15,
             y0: 285,
-            showAxis: false,
-            updatePath: true,
+            stroke: "rgb(210,120,120)",
+            strokeWidth: 3,
+            fill: "rgba(210,120,120,0.15)",
+            positiveOnly: true,
+            precision: 1,
+            gridSize: 60,
+            scale: 60,
+            xLabel: "time (s)",
+            yLabel: "velocity (m/s)",
+            step: 5,  //big steps because the function is linear
+            showMouseCoords: true,
+          }
+          funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, settings);
+
+          //force event listeners
+          settings.updatePath = true
+          document.getElementById("force").addEventListener("input", event => {
+            document.getElementById("force-slider").value = document.getElementById("force").value
+            funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, settings);
           });
-        });
-        document.getElementById("force-slider").addEventListener("input", event => {
-          document.getElementById("force").value = document.getElementById("force-slider").value
-          funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, {
-            x0: 15,
-            y0: 285,
-            showAxis: false,
-            updatePath: true,
+          document.getElementById("force-slider").addEventListener("input", event => {
+            document.getElementById("force").value = document.getElementById("force-slider").value
+            funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, settings);
           });
-        });
-        // mass event listeners
-        document.getElementById("mass").addEventListener("input", event => {
-          document.getElementById("mass-slider").value = document.getElementById("mass").value
-          funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, {
-            x0: 15,
-            y0: 285,
-            showAxis: false,
-            updatePath: true,
+          // mass event listeners
+          document.getElementById("mass").addEventListener("input", event => {
+            document.getElementById("mass-slider").value = document.getElementById("mass").value
+            funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, settings);
           });
-        });
-        document.getElementById("mass-slider").addEventListener("input", event => {
-          document.getElementById("mass").value = document.getElementById("mass-slider").value
-          funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, {
-            x0: 15,
-            y0: 285,
-            showAxis: false,
-            updatePath: true,
+          document.getElementById("mass-slider").addEventListener("input", event => {
+            document.getElementById("mass").value = document.getElementById("mass-slider").value
+            funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, settings);
           });
-        });
+          //bring circle at origin to front
+          const parent = document.getElementById("SVG-graph-0");
+          const shouldBeLast = document.getElementById("origin-0");
+          const last = document.getElementById("SVG-graph-0-path");
+          parent.insertBefore(parent.removeChild(shouldBeLast), last);
+        }
       </script>
       <p>
         This a graph of velocity vs. time graph for a collision. The slope of this graph is acceleration, and a high acceleration

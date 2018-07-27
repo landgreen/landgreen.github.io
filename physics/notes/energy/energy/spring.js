@@ -122,14 +122,15 @@ var spring = function() {
       //ctx.fillText('Vy = ' + this.Vy.toFixed(1) + 'm/s', 5, 75);
     };
     this.springInfo = function() {
-      var F = -physics.k * (this.x - physics.equalibrium);
-      this.u = 0.5 * physics.k * (this.x - physics.equalibrium) * (this.x - physics.equalibrium);
-      this.ke = 0.5 * this.mass * this.Vx * this.Vx * 60;
+      const xScaled = (this.x - 300) / 50;
+      var F = -physics.k * xScaled;
+      this.u = 0.5 * physics.k * xScaled * xScaled;
+      this.ke = 0.5 * this.mass * this.Vx * this.Vx;
       var E = this.ke + this.u;
       //draw energy bars
       // ctx.fillStyle = "rgba(255, 0, 255, 0.3)";
       // ctx.fillRect(0, 0, canvas.width * (this.ke / E), 25);
-      ctx.fillStyle = "hsla(0, 58%, 50%,0.3)";
+      ctx.fillStyle = "rgba(255, 102, 85,0.25)";
       ctx.fillRect(0, 0, canvas.width * (this.u / E), 25);
       //draw energy text
       ctx.fillStyle = "#000";
@@ -137,14 +138,17 @@ var spring = function() {
       ctx.fillText("U = " + this.u.toFixed(0) + " J", 5, 20);
       ctx.fillText("F = " + F.toFixed(0) + " N", 5, canvas.height - 5);
       //ctx.fillText('k = ' + (physics.k), 5, canvas.height - 25);
-      ctx.fillText("x = " + (this.x - physics.equalibrium).toFixed(0) + " m", 5, canvas.height - 25);
+      ctx.fillText("x = " + xScaled.toFixed(1) + " m", 270, canvas.height - 5);
+    };
+    this.forceArrow = function() {
       //force vector
+      var F = (-physics.k * (this.x - physics.equalibrium)) / 50;
       ctx.lineWidth = 2;
-      ctx.strokeStyle = "#666";
-      ctx.fillStyle = "#666";
+      ctx.strokeStyle = "#000";
+      ctx.fillStyle = "#000";
       ctx.beginPath();
       var y = box.y + box.r + 5;
-      var x = box.x + F;
+      var x = box.x + F / 2;
       ctx.moveTo(box.x, y);
       ctx.lineTo(x, y);
       ctx.stroke();
@@ -162,7 +166,7 @@ var spring = function() {
   var box;
 
   function spawn() {
-    box = new mass(130, canvas.height / 2, 0, 0, 20, "hsl(200, 50%, 50%)");
+    box = new mass(130, canvas.height / 2, 0, 0, 20, "rgb(255, 102, 85)");
     document.getElementById("spring-m").value = Math.round(box.mass);
   }
   spawn();
@@ -266,6 +270,7 @@ var spring = function() {
     // drawEqualibrium();
     box.drawSpring();
     box.draw();
+    box.forceArrow();
     // box.springInfo();
     graphingOnSVG();
     if (!pause) window.requestAnimationFrame(render);
