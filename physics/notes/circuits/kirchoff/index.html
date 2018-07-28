@@ -94,7 +94,7 @@
 			</details>
 		</div>
 		<div class='example'>
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="300" class='center'>
+			<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300">
 
 				<g stroke-width="30" stroke-linejoin="round" fill='none' opacity="0.3">
 					<path d="M 10 150 h220
@@ -151,15 +151,52 @@
 				</svg>
 				The current is to the left, because the potential is dropping from right to left and resistors always decrease voltage.
 			</details>
-			<br>
-			<strong>Investigation:</strong> Explain why voltages in parallel, like in the diagram above, must all be the same?
+
+		</div>
+		<div class="example">
+			<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300">
+				<g stroke-width="30" stroke-linejoin="round" stroke-linecap="round" fill='none' opacity="0.3">
+					<path d="M 10 150 
+					c 50 -15, 170 -15, 220 0
+					M 75 140
+					c 0 100, 100 40, 155 100
+					M 100 138
+					c 0 -200, 100 0, 130 -100" stroke="#b88" />
+
+					<path d="M 310 150 
+					c 50 15, 170 15, 200 0
+					M 310 240
+					c 0 50, 100 -40, 130 -78
+	
+					M 310 38
+					c 0 100, 100 0, 150 122" stroke="#f00" />
+				</g>
+
+				<path d="M 10 150 
+			c 50 -15, 170 -15, 220 0
+			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
+			c 50 15, 170 15, 200 0
+
+			M 75 140
+			c 0 100, 100 40, 155 100
+			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
+			c 0 50, 100 -40, 130 -78
+
+			M 100 138
+			c 0 -200, 100 0, 130 -100
+			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
+			c 0 100, 100 0, 150 122" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+				<text x="295" y="20" text-anchor="end" font-size="20">400 Ω</text>
+				<text x="295" y="130" text-anchor="end" font-size="20">200 Ω</text>
+				<text x="295" y="221" text-anchor="end" font-size="20">100 Ω</text>
+			</svg>
+			<strong>Question:</strong> Explain why resistors in parallel must all have the same voltage drop.
 			<details>
 				<summary>solution</summary>
 				<br> Electric potential is the same for all of an uninterrupted wire, even if it branches. So, each branch has the same potential.
 				This means they must also have the same potential difference.
 			</details>
 		</div>
-
 
 
 		<div class='example'>
@@ -674,22 +711,30 @@
 		</div>
 
 		<div class='example'>
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="300" class='center'>
-				<path d="M 10 150 h220
-				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220
-				M 100 150 l 0 100 h 130
-				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 140 l0 -100
-				M 100 150 l 0 -100 h 130
-				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 140 l0 100" fill='none' stroke="#333" stroke-width="4"
-				 stroke-linejoin="round" />
-				<text x="290" y="25" text-anchor="end" font-size="20">400 Ω</text>
-				<text x="290" y="125" text-anchor="end" font-size="20">200 Ω</text>
-				<text x="290" y="225" text-anchor="end" font-size="20">100 Ω</text>
+			<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300">
+				<path d="M 10 150 
+				c 50 -15, 170 -15, 220 0
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
+				c 50 15, 170 15, 200 0
+
+				M 75 140
+				c 0 100, 100 40, 155 100
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
+				c 0 50, 100 -40, 130 -78
+
+				M 100 138
+				c 0 -200, 100 0, 130 -100
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
+				c 0 100, 100 0, 150 122
+				" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+				<text x="295" y="20" text-anchor="end" font-size="20">400 Ω</text>
+				<text x="295" y="130" text-anchor="end" font-size="20">200 Ω</text>
+				<text x="295" y="221" text-anchor="end" font-size="20">100 Ω</text>
 			</svg>
 			<strong>Example:</strong> Find the equivalent resistance for the three resistors above.
 			<details>
 				<summary>solution</summary>
-				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="100" class='center'>
+				<svg xmlns="http://www.w3.org/2000/svg" width="600" height="100">
 					<path d="M 10 50 h220
 					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
 					/>
@@ -701,8 +746,9 @@
 				\frac{400}{7}$$ $$R_{eq} = 57.14 \, \Omega$$
 			</details>
 		</div>
+
 		<div class='example'>
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="300" class='center'>
+			<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300">
 				<path d="M 100 250 v-100 h130
 				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 140 v100
 				M 100 150 l 0 -100 h 130
@@ -720,7 +766,7 @@
 			</details>
 		</div>
 		<div class='example'>
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="310" class='center'>
+			<svg xmlns="http://www.w3.org/2000/svg" width="560" height="310">
 
 				<!-- <circle cx="100" cy="100" r="20" /> -->
 				<path d="M 100 120 v60 M 155 250 h60" fill='none' stroke="rgba(0,200,255,0.2)" stroke-width="35" stroke-linejoin="round"
@@ -746,7 +792,7 @@
 				<summary>solution</summary>
 				<div class="col-group">
 					<div class='center'>
-						<svg viewbox="80,0,560,310" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="200" class='center'>
+						<svg viewbox="80,0,560,310" xmlns="http://www.w3.org/2000/svg" height="200" class='center'>
 							<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 80
 							l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
 							v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60

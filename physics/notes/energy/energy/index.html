@@ -177,7 +177,7 @@
         <div class='definition'>
             <svg class="center" width="370" height="100">
                 <rect x="155" y="5" width="90" height="90" fill="#fff" stroke-width="2" stroke="#000" />
-                <text x="200" y="50" fill="black" text-anchor="middle" alignment-baseline="middle">mass</text>
+                <text x="200" y="50" fill="black" text-anchor="middle" alignment-baseline="middle">m</text>
 
                 <g transform="translate(155.5 5.5)" style="stroke:#000;stroke-width:1">
                     <line x1="0" y1="10" x2="-80" y2="10" />
@@ -628,12 +628,9 @@
                     // strokeWidth: 3,
                     fill: "hsla(200, 50%, 50%,0.25)",
                     positiveOnly: false,
-                    xPrecision: 1,
-                    yPrecision: 3,
                     xScale: 50,
                     yScale: 1,
-                    // gridSize: 50,
-                    // showGrid: false,
+                    showGrid: false,
                     xLabel: "displacement (m)",
                     yLabel: "energy (J)",
                     step: 5,
@@ -655,14 +652,12 @@
                 });
             }
         </script>
-        <!-- <p>
-            <strong>Question:</strong> What role does the spring constant play in elastic potential energy? Try adjusting the value
-            of k.
+        <p>
+            How does the spring constant affect the behavior of the spring?
         </p>
         <p>
-            <strong>Question:</strong> What role does the mass constant play in elastic potential energy? Try adjusting the value
-            of m.
-        </p> -->
+            How does mass affect the behavior of the spring?
+        </p>
 
         <div class='example'>
             <strong>Example:</strong> Find the elastic energy of a 500 g cylinder stuck to a spring (k = 0.3) that is 200 cm away
@@ -679,7 +674,7 @@
             <svg class='center' width="500" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
                     <line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#000" />
-                    <rect x="350" y="30" width="50" height="50" fill="#f65" />
+
                     <path d="M1 0 v80 h500" fill="none" />
                     <text x="130" y="47" stroke="none" text-anchor="middle">k = ?</text>
                     <path stroke-linejoin="round" d="M0 55 l 15 10 l 15 -10 l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 5 -5"
@@ -690,11 +685,13 @@
                         <line x1="120" y1="-5" x2="120" y2="5" />
                         <text x="60" y="19" stroke="none" text-anchor="middle">x = 40 cm</text>
                     </g>
-                    <g transform="translate(300 45)">
+                    <g transform="translate(305 45)">
                         <line x1="0" y1="0" x2="50" y2="0" />
                         <polygon points="0,0 6,3 6,-3" transform="translate(-5 0)" />
                         <text x="0" y="-10" stroke="none" text-anchor="middle">F = 100 N</text>
                     </g>
+                    <rect x="350" y="30" width="50" height="50" fill="#f65" />
+                    <!-- <circle cx="375" cy="55" r="25" fill="#f65" stroke="none" /> -->
                 </g>
             </svg>
             <strong>Example:</strong> You need to find the spring constant for a spring mass system. To find the spring constant

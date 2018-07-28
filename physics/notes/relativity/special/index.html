@@ -242,21 +242,28 @@
 		<p>At a low relative velocity, the effects of special relativity aren't noticeable because the Lorentz factor is one. As the
 			relative speed approaches the speed of light, the Lorentz factor increases towards infinity.</p>
 		<svg id="SVG-graph-0" width="550" height="400">
+			<line id="dotted-line" x1="525.5" y1="0" x2="525.5" y2="380" stroke-dasharray="4,8" stroke="#000" stroke-width="1" />
 		</svg>
 		<script>
 			funGraphSVG("SVG-graph-0", x => 1 / (Math.sqrt(1 - x * x)), {
 				x0: 25,
 				y0: 380,
-				// stroke: "08f",
-				precision: 1,
+				stroke: "rgb(255, 80, 100)",
+				strokeWidth: 4,
+				positiveOnly: true,
+				xDecimals: 1,
+				yDecimals: 0,
 				xScale: 500,
 				yScale: 50,
-				// strokeWidth: 5,
-				// gridSize: 100,
 				xLabel: "v/c",
 				yLabel: "Lorentz factor",
 				showMouseCoords: true,
 			});
+			//bring dotted at origin to front
+			const parent = document.getElementById("SVG-graph-0");
+			const shouldBeLast = document.getElementById("dotted-line");
+			const last = document.getElementById("SVG-graph-0-path");
+			parent.insertBefore(parent.removeChild(shouldBeLast), last);
 		</script>
 		<h2 class='underlined'>Time Dilation</h2>
 		<p>

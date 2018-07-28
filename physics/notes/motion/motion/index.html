@@ -140,7 +140,6 @@
 				funGraphSVG("SVG-graph-0", x => x, {
 					x0: 15,
 					y0: 270,
-					precision: 1,
 					stroke: "rgba(20, 200, 255, 1)",
 					fill: "rgba(20, 200, 255, 0.07)",
 					positiveOnly: true,
@@ -211,7 +210,6 @@
 				funGraphSVG("SVG-graph-3", x => 0.37 * x * x, {
 					x0: 15,
 					y0: 270,
-					precision: 1,
 					stroke: "rgba(20, 200, 255, 1)",
 					fill: "rgba(20, 200, 255, 0.07)",
 					positiveOnly: true,
@@ -247,92 +245,63 @@
 			}
 		</style>
 
-		<svg id="SVG-graph-4" class="graph-box" width="290" height="250">
-		</svg>
+		<svg id="SVG-graph-4" class="graph-box" width="290" height="250"></svg>
+		<svg id="SVG-graph-5" class="graph-box" width="290" height="250"></svg>
+		<div class="center">
+			acceleration =
+			<input id='acceleration-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5" style="width:350px;">
+			<input id='acceleration' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
+		</div>
+		<svg id="SVG-graph-6" class="graph-box center" width="585" height="250"></svg>
 		<script>
 			const x0 = 145
 			const y0 = 125;
 
-			funGraphSVG("SVG-graph-4", x => 1 / 4 * x * x, {
+			let settings4 = {
 				x0: x0,
 				y0: y0,
-				precision: 1,
 				stroke: "rgba(255,0,50,0.5)",
-				// stroke: "#f57",
+				// fill: "rgba(0,0,0,0.1)",
 				scale: 50,
 				gridSize: 50,
 				strokeWidth: 8,
 				xLabel: "time (s)",
 				yLabel: "position (m)",
-			});
-		</script>
-		<svg id="SVG-graph-5" class="graph-box" width="290" height="250">
-		</svg>
-		<script>
-			funGraphSVG("SVG-graph-5", x => 1 / 2 * x, {
+			}
+			let settings5 = {
 				x0: x0,
 				y0: y0,
-				precision: 1,
 				stroke: "rgba(150,30,255,0.5)",
-				// stroke: "#f7f",
+				// fill: "rgba(0,0,0,0.1)",
 				step: 10,
 				scale: 50,
 				gridSize: 50,
 				strokeWidth: 8,
 				xLabel: "time (s)",
 				yLabel: "velocity (m/s)",
-			});
-		</script>
-		<div class="center">
-			acceleration =
-			<input id='acceleration-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5" style="width:350px;">
-			<input id='acceleration' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
-		</div>
-		<svg id="SVG-graph-6" class="graph-box center" width="290" height="250">
-		</svg>
-		<script>
-			document.getElementById('SVG-graph-6').setAttribute("width", Math.min(document.getElementsByTagName("article")[0].clientWidth, 585) + "px");
-			funGraphSVG("SVG-graph-6", x => 1 / 2, {
-				x0: 292,//x0,
+			}
+			let settings6 = {
+				x0: x0,
 				y0: y0,
-				precision: 1,
 				stroke: "rgba(0,130,255,0.5)",
-				// stroke: "#3af",
+				// fill: "rgba(0,0,0,0.1)",
 				step: 10,
 				scale: 50,
 				gridSize: 50,
 				strokeWidth: 8,
 				xLabel: "time (s)",
 				yLabel: "acceleration (m/s²)",
-			});
-		</script>
-
-
-		<script>
+			}
+			funGraphSVG("SVG-graph-4", x => 1 / 4 * x * x, settings4);
+			funGraphSVG("SVG-graph-5", x => 1 / 2 * x, settings5);
+			funGraphSVG("SVG-graph-6", x => 1 / 2, settings6);
 			function redrawGraphs() {
-				funGraphSVG("SVG-graph-6", x => document.getElementById("acceleration").value, {
-					x0: x0,
-					y0: y0,
-					scale: 50,
-					showAxis: false,
-					updatePath: true,
-				});
-
-				funGraphSVG("SVG-graph-5", x => document.getElementById("acceleration").value * x, {
-					x0: x0,
-					y0: y0,
-					scale: 50,
-					showAxis: false,
-					updatePath: true,
-				});
-
-				funGraphSVG("SVG-graph-4", x => document.getElementById("acceleration").value / 2 * x * x, {
-					x0: x0,
-					y0: y0,
-					scale: 50,
-					showAxis: false,
-					updatePath: true,
-				});
+				settings4.updatePath = true
+				settings5.updatePath = true
+				settings6.updatePath = true
+				funGraphSVG("SVG-graph-6", x => document.getElementById("acceleration").value, settings4);
+				funGraphSVG("SVG-graph-5", x => document.getElementById("acceleration").value * x, settings5);
+				funGraphSVG("SVG-graph-4", x => document.getElementById("acceleration").value / 2 * x * x, settings6);
 			}
 			document.getElementById("acceleration").addEventListener("input", event => {
 				document.getElementById("acceleration-slider").value = document.getElementById("acceleration").value
@@ -362,7 +331,6 @@
 							x0: 20,
 							y0: 280,
 							stroke: "rgba(255,0,50,1)",
-							precision: 2,
 							step: 10,
 							xScale: 50,
 							yScale: 10,
@@ -376,7 +344,6 @@
 							x0: 20,
 							y0: 280,
 							stroke: "rgba(150,30,255,1)",
-							precision: 2,
 							step: 10,
 							scale: 50,
 							gridSize: 50,
@@ -397,7 +364,6 @@
 				funGraphSVG("SVG-graph-16", x => 1 / 4 * x, {
 					x0: 20,
 					y0: 200,
-					precision: 1,
 					stroke: "#d9d",
 					positiveOnly: true,
 					step: 10,
@@ -446,7 +412,6 @@
 							x0: 35,
 							y0: 15,
 							stroke: "rgba(255,0,50,1)",
-							precision: 3,
 							step: 10,
 							xScale: 50,
 							yScale: 0.5,
@@ -460,7 +425,6 @@
 							x0: 35,
 							y0: 15,
 							stroke: "rgba(150,30,255,1)",
-							precision: 3,
 							step: 10,
 							xScale: 50,
 							yScale: 2.5,
@@ -477,119 +441,86 @@
 		<div class='example'>Acceleration doesn't have to be constant. In the graphs below, acceleration is increasing. The change in acceleration over
 			time is called
 			<strong>jerk</strong>.
-			<svg id="SVG-graph-8" class="graph-box" width="290" height="250">
-			</svg>
-			<script>
-				funGraphSVG("SVG-graph-8", x => 1 / 12 * x * x * x, {
-					x0: x0,
-					y0: y0,
-					precision: 1,
-					stroke: "rgba(255,0,50,0.5)",
-					scale: 50,
-					gridSize: 50,
-					strokeWidth: 8,
-					xLabel: "time (s)",
-					yLabel: "position (m)",
-				});
-			</script>
-			<svg id="SVG-graph-9" class="graph-box" width="290" height="250">
-			</svg>
-			<script>
-				funGraphSVG("SVG-graph-9", x => 1 / 4 * x * x, {
-					x0: x0,
-					y0: y0,
-					precision: 1,
-					stroke: "rgba(150,30,255,0.5)",
-					scale: 50,
-					gridSize: 50,
-					strokeWidth: 8,
-					xLabel: "time (s)",
-					yLabel: "velocity (m/s)",
-				});
-			</script>
-			<svg id="SVG-graph-11" class="graph-box" width="290" height="250">
-			</svg>
-			<script>
-				funGraphSVG("SVG-graph-11", x => 1 / 2, {
-					x0: x0,
-					y0: y0,
-					precision: 1,
-					stroke: "rgba(0,200,200,0.5)",
-					step: 10,
-					scale: 50,
-					gridSize: 50,
-					strokeWidth: 8,
-					xLabel: "time (s)",
-					yLabel: "jerk (m/s³)",
-				});
-			</script>
-			<svg id="SVG-graph-10" class="graph-box" width="290" height="250">
-			</svg>
-			<script>
-				funGraphSVG("SVG-graph-10", x => 1 / 2 * x, {
-					x0: x0,
-					y0: y0,
-					precision: 1,
-					stroke: "rgba(0,130,255,0.5)",
-					step: 10,
-					scale: 50,
-					gridSize: 50,
-					strokeWidth: 8,
-					xLabel: "time (s)",
-					yLabel: "acceleration (m/s²)",
-				});
-			</script>
+			<svg id="SVG-graph-8" class="graph-box" width="290" height="250"></svg>
+			<svg id="SVG-graph-9" class="graph-box" width="290" height="250"></svg>
+			<svg id="SVG-graph-11" class="graph-box" width="290" height="250"></svg>
+			<svg id="SVG-graph-10" class="graph-box" width="290" height="250"></svg>
 			<br>jerk =
 			<input id='jerk-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5" style="width:420px;">
 			<input id='jerk' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
-			<script>
-				function redrawGraphsJerk() {
-					funGraphSVG("SVG-graph-8", x => document.getElementById("jerk").value / 6 * x * x * x, {
-						x0: x0,
-						y0: y0,
-						scale: 50,
-						showAxis: false,
-						updatePath: true,
-					});
-
-					funGraphSVG("SVG-graph-9", x => document.getElementById("jerk").value / 2 * x * x, {
-						x0: x0,
-						y0: y0,
-						scale: 50,
-						showAxis: false,
-						updatePath: true,
-					});
-
-					funGraphSVG("SVG-graph-10", x => document.getElementById("jerk").value * x, {
-						x0: x0,
-						y0: y0,
-						scale: 50,
-						showAxis: false,
-						updatePath: true,
-					});
-
-					funGraphSVG("SVG-graph-11", x => document.getElementById("jerk").value, {
-						x0: x0,
-						y0: y0,
-						scale: 50,
-						showAxis: false,
-						updatePath: true,
-					});
-				}
-				document.getElementById("jerk").addEventListener("input", event => {
-					document.getElementById("jerk-slider").value = document.getElementById("jerk").value
-					redrawGraphsJerk()
-				});
-				document.getElementById("jerk-slider").addEventListener("input", event => {
-					document.getElementById("jerk").value = document.getElementById("jerk-slider").value
-					redrawGraphsJerk()
-				});
-			</script>
 			<p>A large jerk can cause you to stumble. A jerk could come from a short lasting push or pull. It could come from a car starting
 				to break, or accelerate. Falling causes a jerk. Jumping. Bouncing. Any change in acceleration.</p>
 		</div>
+		<script>
+			settings8 = {
+				x0: x0,
+				y0: y0,
+				stroke: "rgba(255,0,50,0.5)",
+				scale: 50,
+				gridSize: 50,
+				strokeWidth: 8,
+				xLabel: "time (s)",
+				yLabel: "position (m)",
+			}
+			funGraphSVG("SVG-graph-8", x => 1 / 12 * x * x * x, settings8);
 
+			settings9 = {
+				x0: x0,
+				y0: y0,
+				stroke: "rgba(150,30,255,0.5)",
+				scale: 50,
+				gridSize: 50,
+				strokeWidth: 8,
+				xLabel: "time (s)",
+				yLabel: "velocity (m/s)",
+			}
+			funGraphSVG("SVG-graph-9", x => 1 / 4 * x * x, settings9);
 
+			settings10 = {
+				x0: x0,
+				y0: y0,
+				stroke: "rgba(0,130,255,0.5)",
+				step: 10,
+				scale: 50,
+				gridSize: 50,
+				strokeWidth: 8,
+				xLabel: "time (s)",
+				yLabel: "jerk (m/s³)",
+			}
+			funGraphSVG("SVG-graph-10", x => 1 / 2 * x, settings10);
+
+			settings11 = {
+				x0: x0,
+				y0: y0,
+				stroke: "rgba(0,200,200,0.5)",
+				step: 10,
+				scale: 50,
+				gridSize: 50,
+				strokeWidth: 8,
+				xLabel: "time (s)",
+				yLabel: "acceleration (m/s²)",
+			}
+			funGraphSVG("SVG-graph-11", x => 1 / 2, settings11);
+
+			function redrawGraphsJerk() {
+				settings8.updatePath = true
+				settings9.updatePath = true
+				settings10.updatePath = true
+				settings11.updatePath = true
+				funGraphSVG("SVG-graph-8", x => document.getElementById("jerk").value / 6 * x * x * x, settings8);
+				funGraphSVG("SVG-graph-9", x => document.getElementById("jerk").value / 2 * x * x, settings9);
+				funGraphSVG("SVG-graph-10", x => document.getElementById("jerk").value * x, settings10);
+				funGraphSVG("SVG-graph-11", x => document.getElementById("jerk").value, settings11);
+			}
+			document.getElementById("jerk").addEventListener("input", event => {
+				document.getElementById("jerk-slider").value = document.getElementById("jerk").value
+				redrawGraphsJerk()
+			});
+			document.getElementById("jerk-slider").addEventListener("input", event => {
+				document.getElementById("jerk").value = document.getElementById("jerk-slider").value
+				redrawGraphsJerk()
+			});
+		</script>
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>

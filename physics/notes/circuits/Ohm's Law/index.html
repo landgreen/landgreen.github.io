@@ -255,7 +255,6 @@
 							strokeWidth: 3,
 							fill: "rgba(255,0,0,0.2)",
 							positiveOnly: true,
-							precision: 2,
 							gridSize: 50,
 							xLabel: "current (A)",
 							yLabel: "voltage (V)",
@@ -353,15 +352,17 @@
 						</details>
 					</div>
 					<div>
-						<svg width="300" height="200">
-							<path d="M 50 10 h 200
-							v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
-							h -200
-							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-							<text x="230" y="85" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
-							<text x="230" y="125" text-anchor="end" font-size="20" fill='#333'>300 Ω</text>
-							<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>0.05 A</text>
-							<g transform="translate(195 180) rotate(180)">
+						<svg width="300" height="275">
+							<path d="M 50 120 
+							c -10 -50, 200 -150, 200 -37
+							l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 
+							c 10 100, -200 200, -200 -27
+							m-40 0 h 80 m-20 -15 h-40 m20 0" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"
+							/>
+							<text x="230" y="115" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+							<text x="230" y="145" text-anchor="end" font-size="20" fill='#333'>300 Ω</text>
+							<text x="147" y="256" text-anchor="middle" font-size="20" fill='#333'>0.05 A</text>
+							<g transform="translate(190 236) rotate(180)">
 								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
 								<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
 							</g>
@@ -384,8 +385,8 @@
 							v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
 							h -200
 							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-							<text x="230" y="85" text-anchor="end" font-size="20" fill='#333'>2 V</text>
-							<text x="230" y="125" text-anchor="end" font-size="20" fill='#333'>100 Ω</text>
+							<text x="230" y="90" text-anchor="end" font-size="20" fill='#333'>2 V</text>
+							<text x="230" y="120" text-anchor="end" font-size="20" fill='#333'>100 Ω</text>
 							<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>I = ?</text>
 							<g transform="translate(195 180) rotate(180)">
 								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
@@ -418,12 +419,12 @@
 					</div>
 					<div>
 						<svg width="300" height="200">
-							<path d="M 50 10 h 200
+							<path transform="rotate(180, 150, 100)" d="M 50 10 h 200
 							v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
 							h -200
 							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-							<text x="230" y="85" text-anchor="end" font-size="20" fill='#333'>1.5&thinsp;V</text>
-							<text x="230" y="125" text-anchor="end" font-size="20" fill='#333'>R = ?</text>
+							<text x="110" y="90" text-anchor="end" font-size="20" fill='#333'>1.5&thinsp;V</text>
+							<text x="110" y="120" text-anchor="end" font-size="20" fill='#333'>R = ?</text>
 							<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>0.001&thinsp;A</text>
 							<g transform="translate(195 180) rotate(180)">
 								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
@@ -444,15 +445,17 @@
 						</details>
 					</div>
 					<div>
-						<svg width="300" height="200">
-							<path d="M 50 10 h 200
-							v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
-							h -200
-							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-							<text x="230" y="85" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
-							<text x="230" y="125" text-anchor="end" font-size="20" fill='#333'>10 Ω</text>
-							<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>I = ?</text>
-							<g transform="translate(195 180) rotate(180)">
+						<svg width="300" height="275">
+							<path d="M 50 120 
+								c -20 -100, 140 -100, 200 -37
+								l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 
+								c -70 80, -190 80, -200 -27
+								m-40 0 h 80 m-20 -15 h-40 m20 0" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"
+							/>
+							<text x="230" y="117" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+							<text x="230" y="150" text-anchor="end" font-size="20" fill='#333'>10 Ω</text>
+							<text x="147" y="256" text-anchor="middle" font-size="20" fill='#333'>I = ?</text>
+							<g transform="translate(190 236) rotate(180)">
 								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
 								<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
 							</g>

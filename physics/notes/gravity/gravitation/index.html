@@ -474,8 +474,6 @@
                         fill: "rgba(200,50,0,0.3)",
                         positiveOnly: true,
                         strokeWidth: 4,
-                        xPrecision: 5,
-                        yPrecision: 2,
                         xScale: 0.05,
                         yScale: 10,
                         gridSize: 100,
@@ -566,8 +564,6 @@
                             fill: "rgba(0,100,120,0.3)",
                             positiveOnly: true,
                             strokeWidth: 4,
-                            xPrecision: 6,
-                            yPrecision: 2,
                             xScale: 0.005,
                             yScale: 5,
                             gridSize: 100,
@@ -1043,11 +1039,13 @@
         </svg>
         <script>
             funGraphSVG("SVG-graph-0", x => 1 / x / x, {
-                x0: 25,
+                x0: 20,
                 y0: 380,
+                fill: "rgba(0,0,0,0.05)",
                 stroke: "08f",
-                precision: 1,
+                strokeWidth: 3,
                 scale: 100,
+                positiveOnly: true,
                 gridSize: 100,
                 xLabel: "radius",
                 yLabel: "force",

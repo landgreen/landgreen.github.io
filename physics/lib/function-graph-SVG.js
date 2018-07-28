@@ -18,9 +18,9 @@ function funGraphSVG(
     xLabel = "",
     yLabel = "",
     showAxisNumbers = true,
-    precision = undefined,
-    xPrecision = 2,
-    yPrecision = 2,
+    decimals = undefined,
+    xDecimals = 0,
+    yDecimals = 0,
     showGrid = true,
     gridSize = 50, //spacing relative to canvas size
     updatePath = false, //used for changing the equation of the function
@@ -28,9 +28,9 @@ function funGraphSVG(
     recenterOnClick = false
   } = {}
 ) {
-  if (precision) {
-    xPrecision = precision;
-    yPrecision = precision;
+  if (decimals) {
+    xDecimals = decimals;
+    yDecimals = decimals;
   }
   if (scale) {
     xScale = scale;
@@ -45,25 +45,38 @@ function funGraphSVG(
 
     if (showGrid) {
       let path = "";
-      // positive horizontal marks
-      for (let i = 1; i * gridSize < bounds.width - x; ++i) {
-        const xPos = x + i * gridSize;
-        path += `M ${xPos} 0  v ${bounds.height}`;
-      }
-      // negative horizontal marks
-      for (let i = -1; i * gridSize > -x; --i) {
-        const xPos = x + i * gridSize;
-        path += `M ${xPos} 0  v ${bounds.height}`;
-      }
-      // positive vertical marks
-      for (let i = 1; i * gridSize < y; ++i) {
-        const yPos = y - i * gridSize;
-        path += `M 0 ${yPos}  h ${bounds.width}`;
-      }
-      // negative vertical marks
-      for (let i = -1; i * gridSize > -bounds.height + y; --i) {
-        const yPos = y - i * gridSize;
-        path += `M 0 ${yPos}  h ${bounds.width}`;
+      if (positiveOnly) {
+        // positive horizontal marks
+        for (let i = 1; i * gridSize < bounds.width - x; ++i) {
+          const xPos = x + i * gridSize;
+          path += `M ${xPos} 0  v ${y}`;
+        }
+        // positive vertical marks
+        for (let i = 1; i * gridSize < y; ++i) {
+          const yPos = y - i * gridSize;
+          path += `M ${x} ${yPos}  h ${bounds.width}`;
+        }
+      } else {
+        // positive horizontal marks
+        for (let i = 1; i * gridSize < bounds.width - x; ++i) {
+          const xPos = x + i * gridSize;
+          path += `M ${xPos} 0  v ${bounds.height}`;
+        }
+        // negative horizontal marks
+        for (let i = -1; i * gridSize > -x; --i) {
+          const xPos = x + i * gridSize;
+          path += `M ${xPos} 0  v ${bounds.height}`;
+        }
+        // positive vertical marks
+        for (let i = 1; i * gridSize < y; ++i) {
+          const yPos = y - i * gridSize;
+          path += `M 0 ${yPos}  h ${bounds.width}`;
+        }
+        // negative vertical marks
+        for (let i = -1; i * gridSize > -bounds.height + y; --i) {
+          const yPos = y - i * gridSize;
+          path += `M 0 ${yPos}  h ${bounds.width}`;
+        }
       }
       const newElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
       newElement.setAttribute("d", path);
@@ -83,50 +96,34 @@ function funGraphSVG(
     target.appendChild(newElement);
     //label axis with tick marks and values at gridSize increments
     if (showAxisNumbers) {
-      function addText(text, x, y, { textAnchor = "middle", fontSize = "12", rotation = 0, fill = "#000" } = {}) {
-        const newElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        newElement.setAttribute("x", x);
-        newElement.setAttribute("y", y);
-        newElement.style.fill = "#000";
-        newElement.style.fontSize = fontSize;
-        newElement.style.textAnchor = textAnchor;
-        if (rotation) {
-          newElement.setAttribute("transform", `rotate(${rotation}, ${x}, ${y})`);
-        }
-        // newElement.style.fontFamily = "monospace";
-        // newElement.style.fontFamily = "Arial,Helvetica";
-        newElement.textContent = text.toString();
-        target.appendChild(newElement);
-      }
-
       let path = "";
       // positive horizontal marks
       for (let i = 1; i * gridSize < bounds.width - x; ++i) {
         const xPos = x + i * gridSize;
         const yPos = y;
         path += `M ${xPos} ${yPos}  v 3`;
-        addText((x0 + (i * gridSize) / xScale - x0).toPrecision(xPrecision), xPos, yPos + 14);
+        addText((x0 + (i * gridSize) / xScale - x0).toFixed(xDecimals), xPos, yPos + 14);
       }
       // negative horizontal marks
       for (let i = -1; i * gridSize > -x; --i) {
         const xPos = x + i * gridSize;
         const yPos = y;
         path += `M ${xPos} ${yPos}  v 3`;
-        addText((x0 + (i * gridSize) / xScale - x0).toPrecision(xPrecision), xPos, yPos + 14);
+        addText((x0 + (i * gridSize) / xScale - x0).toFixed(xDecimals), xPos, yPos + 14);
       }
       // positive vertical marks
       for (let i = 1; i * gridSize < y; ++i) {
         const xPos = x;
         const yPos = y - i * gridSize;
         path += `M ${xPos} ${yPos}  h -3`;
-        addText((x0 + (i * gridSize) / yScale - x0).toPrecision(yPrecision), xPos - 5, yPos + 4, { textAnchor: "end" });
+        addText((x0 + (i * gridSize) / yScale - x0).toFixed(yDecimals), xPos - 5, yPos + 4, { textAnchor: "end" });
       }
       // negative vertical marks
       for (let i = -1; i * gridSize > -bounds.height + y; --i) {
         const xPos = x;
         const yPos = y - i * gridSize;
         path += `M ${xPos} ${yPos}  h -3`;
-        addText((x0 + (i * gridSize) / yScale - x0).toPrecision(yPrecision), xPos - 5, yPos + 4, { textAnchor: "end" });
+        addText((x0 + (i * gridSize) / yScale - x0).toFixed(yDecimals), xPos - 5, yPos + 4, { textAnchor: "end" });
       }
       const newElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
       newElement.setAttribute("d", path);
@@ -282,12 +279,27 @@ function funGraphSVG(
           //move text to mouse location
           document.getElementById(id + "-coords").setAttribute("x", mouse.x + 5);
           document.getElementById(id + "-coords").setAttribute("y", yPos - 10);
-          document.getElementById(id + "-coords").textContent = `(${((mouse.x - x0) / xScale).toPrecision(xPrecision)}, ${((y0 - yPos) / yScale).toPrecision(
-            yPrecision
-          )})`.toString();
+          document.getElementById(id + "-coords").textContent = `(${((mouse.x - x0) / xScale).toFixed(xDecimals + 1)}, 
+          ${((y0 - yPos) / yScale).toFixed(yDecimals + 1)})`.toString();
         }
       });
     }
+  }
+
+  function addText(text, x, y, { textAnchor = "middle", fontSize = "12", rotation = 0, fill = "#000" } = {}) {
+    const newElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    newElement.setAttribute("x", x);
+    newElement.setAttribute("y", y);
+    newElement.style.fill = "#000";
+    newElement.style.fontSize = fontSize;
+    newElement.style.textAnchor = textAnchor;
+    if (rotation) {
+      newElement.setAttribute("transform", `rotate(${rotation}, ${x}, ${y})`);
+    }
+    // newElement.style.fontFamily = "monospace";
+    // newElement.style.fontFamily = "Arial,Helvetica";
+    newElement.textContent = text.toString();
+    target.appendChild(newElement);
   }
 
   function removeAll() {
@@ -326,8 +338,8 @@ function funGraphSVG(
         xLabel: xLabel,
         yLabel: yLabel,
         showAxisNumbers: showAxisNumbers,
-        xPrecision: precision,
-        yPrecision: precision,
+        xDecimals: xDecimals,
+        yDecimals: yDecimals,
         showGrid: showGrid,
         gridSize: gridSize,
         updatePath: updatePath,

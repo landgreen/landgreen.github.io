@@ -37,15 +37,25 @@
             bonding between surfaces.
         </p>
         <div class='definition'>
-            <svg width="500" height="220" class="center">
-                <rect x="0" y="190" width="500" height="110" style="fill:#ccc" />
+            <svg width="500" height="250" class="center">
+                <rect x="0" y="190" width="500" height="110" fill="#bcd" />
+                <g stroke="#000" stroke-width="2" fill="none">
+                    <path d="M0 190 h500 " />
+                </g>
                 <rect x="210" y="110" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fff" />
                 <line x1="250" y1="110" x2="250" y2="55" style="stroke:black;stroke-width:2" />
                 <polygon points="0,0 -6,12 0,10 6,12" transform='translate(250 50)' style="fill:black;" />
-                <text text-anchor="middle" x="250" y="45" fill="black">Fn</text>
+                <g fill="black" stroke="none">
+                    <text x="245" y="45">F
+                        <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+                    </text>
+                    <text x="150" y="156">F
+                        <tspan font-size="0.7em" dy="5" dx="-5">k</tspan>
+                    </text>
+                </g>
                 <line x1="210" y1="150" x2="175" y2="150" style="stroke:black;stroke-width:2" />
                 <polygon points="0,0 -6,12 0,10 6,12" transform='translate(170 150) rotate(-90)' style="fill:black;" />
-                <text x="145" y="156" fill="black">Fk</text>
+
                 <line x1="250" y1="205" x2="287" y2="205" style="stroke:#000;stroke-width:2" />
                 <polygon points="0,0 -6,12 0,10 6,12" transform='translate(290 205) rotate(90)' style="fill:#000;" />
                 <text x="292" y="210" fill="#000">v</text>
@@ -71,7 +81,12 @@
         <div class='definition'>
             <svg width="500" height="300" class="center">
                 <g transform='rotate(20) translate(150 -90)'>
-                    <rect x="-150" y="190" width="700" height="300" style="fill:#ccc" />
+                    <rect x="-150" y="190" width="700" height="300" style="fill:#bcd" />
+
+                    <g stroke="#000" stroke-width="2" fill="none">
+                        <path d="M-150 190 h700 " />
+                    </g>
+
                     <rect x="110" y="110" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fff" />
                     <line x1="150" y1="110" x2="150" y2="55" style="stroke:black;stroke-width:2" />
                     <polygon points="0,0 -6,12 0,10 6,12" transform='translate(150 50)' style="fill:black;" />
@@ -102,8 +117,10 @@
             <br>
         </div>
         <div class='example'>
-            <svg class='center' width="600" height="200">
-                <rect x="0" y="180" width="600" height="80" stroke='none' fill="#a98" />
+            <svg class='center' width="600" height="210">
+                <g stroke="#000" stroke-width="2" fill="none">
+                    <path d="M0 180 h700 " />
+                </g>
                 <g transform='translate(260 120) rotate(90)'>
                     <line x1="0" y1="0" x2="0" y2="45" stroke="#000" stroke-width="2" />
                     <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#000" />
@@ -162,7 +179,13 @@
     <article>
         <div class='example'>
             <svg class='center' width="600" height="335">
-                <rect x="0" y="260" width="600" height="80" stroke='none' fill="#ccc" />
+
+
+                <rect x="0" y="260" width="600" height="80" stroke='none' fill="#ddd" />
+                <g stroke="#000" stroke-width="2" fill="none">
+                    <path d="M0 260 h600 " />
+                </g>
+
                 <g transform='translate(260 100) rotate(0)'>
                     <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#c96" />
                     <text x="40" y="40" fill="white" text-anchor="middle" alignment-baseline="middle" font-size='18px'>10 kg</text>
