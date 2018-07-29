@@ -52,7 +52,7 @@
     <div class='example'>
       <svg class='center' width="300" height="120" viewBox="-15 0 285 120">
         <g transform='translate(100 20) rotate(0)'>
-          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#bdd" />
+          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#bcd" />
           <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>2.0 kg</text>
         </g>
         <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
@@ -82,7 +82,7 @@
         <use xlink:href="#vector" transform='translate(115 60) rotate(180)' />
         <text x="125" y="23" fill="black">F= ? </text>
       </svg>
-      <strong>Example:</strong> This book
+      <strong>Example:</strong> The book
       <a href='https://www.amazon.com/Martian-Novel-Andy-Weir-ebook/dp/B00EMXBDMA'>The Martian</a> by Andy Weir (mass = 0.09 kg) is resting on a table (acceleration = zero). The force of gravity produces
       a downwards force of 0.34 N. What force is required to keep the book at rest on the table.
       <details>
@@ -99,7 +99,7 @@
         <summary>solution</summary>
         <svg class='center' width="300" height="120" viewBox="-15 0 285 120">
           <g transform='translate(100 20) rotate(0)'>
-            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fcf" />
+            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#f65" />
             <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>83 kg</text>
           </g>
           <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
@@ -142,21 +142,22 @@
       but we mostly notice the attraction towards the Earth because it is so large and so close.</p>
     <p>It's funny, we have a special word just for the direction of gravity, down.</p>
     <div class='definition'>
-      <svg class='center' width="100" height="165">
+      <svg class='center' width="500" height="230">
         <defs>
           <g id="vector">
             <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
             <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
           </g>
         </defs>
-        <g id="box-white" transform='translate(10 10)'>
+        <g id="box-white" transform='translate(210 10)'>
           <rect x="0" y="0" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fff " />
           <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle">m</text>
         </g>
-        <use xlink:href="#vector" transform='translate(50 90) rotate(0)' />
-        <text x="50" y="157" text-anchor="middle" fill="black">F
+        <use xlink:href="#vector" transform='translate(250 90) rotate(0)' />
+        <text x="250" y="157" text-anchor="middle" fill="black">F
           <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
         </text>
+        <circle cx="250" cy="880" r="695" fill="#bcd" stroke="#000" stroke-width="2" />
       </svg>
       <h1>$$F_g=mg $$</h1> \(F_g\) = the force of gravity, weight [N, Newtons, kg m/s²]
       <em>vector</em>
@@ -655,7 +656,7 @@
           force prevents objects from passing through each other.</p>
       </div>
       <div>
-        <svg class='center' width="200" height="228">
+        <svg class='center' width="275" height="250">
           <defs>
             <g id="vector">
               <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
@@ -667,16 +668,18 @@
             </g>
           </defs>
           <!-- <rect x="0" y="150" width="200" height="200" style="fill:#cba" /> -->
-          <line x1="0" y1="150" x2="200" y2="150" stroke="#000" stroke-width="2" />
-          <use x='60' y='70' xlink:href="#box" />
-          <use xlink:href="#vector" transform='translate(100 70) rotate(-180)' />
+          <rect x="0" y="150" width="300" height="200" fill="#bcd" stroke="none" />
+          <line x1="0" y1="150" x2="300" y2="150" stroke="#000" stroke-width="2" />
+
+          <use x='100' y='70' xlink:href="#box" />
+          <use xlink:href="#vector" transform='translate(140 70) rotate(-180)' />
           <!-- <text x="100" y="13" text-anchor="middle" fill="black">Normal Force</text> -->
-          <text x="103" y="13" text-anchor="middle" fill="#000">F
+          <text x="143" y="13" text-anchor="middle" fill="#000">F
             <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
           </text>
-          <use xlink:href="#vector" transform='translate(100 150) rotate(0)' />
+          <use xlink:href="#vector" transform='translate(140 150) rotate(0)' />
           <!-- <text x="100" y="220" text-anchor="middle" fill="black">Force of gravity</text> -->
-          <text x="102" y="220" text-anchor="middle" fill="#000">F
+          <text x="142" y="220" text-anchor="middle" fill="#000">F
             <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
           </text>
         </svg>
@@ -773,7 +776,7 @@
       <svg class="center" width="230" height="226">
         <g transform='translate(50 -50) rotate(20)'>
           <line x1="-100" y1="170" x2="200" y2="170" stroke="#000" stroke-width="2" />
-          <rect x="60" y="90" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fffa66" />
+          <rect x="60" y="90" width="80" height="80" style="stroke:black;stroke-width:2;fill:#f65" />
           <text x="100" y="130" fill="black" text-anchor="middle" alignment-baseline="middle">20 kg</text>
           <use xlink:href="#vector" transform='translate(100 90) rotate(-180)' />
           <text x="100" y="33" text-anchor="middle" fill="black">F
@@ -847,7 +850,7 @@
         <svg class="center" width="230" height="246">
           <g transform='translate(50 -30) rotate(20)'>
             <line x1="-100" y1="170" x2="200" y2="170" stroke="#000" stroke-width="2" />
-            <rect x="60" y="90" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fffa66" />
+            <rect x="60" y="90" width="80" height="80" style="stroke:black;stroke-width:2;fill:#f65" />
             <text x="100" y="130" fill="black" text-anchor="middle" alignment-baseline="middle">20 kg</text>
             <use xlink:href="#vector" transform='translate(100 90) rotate(-180)' />
             <text x="100" y="33" text-anchor="middle" fill="black">F
@@ -952,7 +955,7 @@
         <line x1="160" y1="80" x2="200" y2="120" style="stroke:#000;stroke-width:2" />
         <polygon points="0,10 -6,-2 0,0 6,-2" transform='translate(160 80) rotate(135)' />
         <g transform='translate(200 80) rotate(0)'>
-          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#c96" />
+          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#f65" />
           <text x="40" y="40" fill="black" text-anchor="middle" alignment-baseline="middle" font-size='20px'>10 kg</text>
         </g>
         <text x="146" y="67" fill="black">T
