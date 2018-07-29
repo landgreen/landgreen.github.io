@@ -1,15 +1,3 @@
-(function setup() {
-  //writes a message onload
-  var canvas;
-  var ctx;
-  canvas = document.getElementById("canvas3");
-  ctx = canvas.getContext("2d");
-  ctx.font = "300 30px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-})();
-
 function collision2d(el) {
   //set up canvas
   el.onclick = null; //stops the function from running on button click

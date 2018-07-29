@@ -487,18 +487,24 @@
 				</g>
 			</svg>
 			<p>temperature =
-				<input id='temperature-slider' type="range" min="0.05" max="0.5" step="0.01" value="0.31" style="width: 450px;">
+				<input id='temperature-slider' type="range" min="0.01" max="0.51" step="0.001" value="0.31" style="width: 450px;">
 			</p>
 		</div>
 		<script src='../../../lib/function-graph-SVG.js'></script>
 		<script>
 			{
+				const blackBody = [
+					"#000000", "#100000", "#200000", "#300000", "#400000", "#500000", "#600000", "#700000", "#800000", "#900000", "#a00000", "#b00000", "#c00000", "#d00000", "#e00000", "#e50000", "#e90000", "#ea0000", "#ed0000", "#f00000", "#f50000", "#f90000", "#fa0000", "#fe0000", "#ff800", "#ff2300", "#ff3800", "#ff5300", "#ff6500", "#ff7300", "#ff7e00", "#ff8912", "#ff932c", "#ff9d3f", "#ffa54f", "#ffad5e", "#ffb46b", "#ffbb78", "#ffc184", "#ffc78f", "#ffcc99", "#ffd1a3", "#ffd5ad", "#ffd9b6", "#ffddbe", "#ffe1c6", "#ffe4ce", "#ffe8d5", "#ffebdc", "#ffeee3", "#fff0e9", "#fff3ef", "#fff5f5", "#fff8fb", "#fef9ff", "#f9f6ff", "#f5f3ff", "#f0f1ff", "#edefff", "#e9edff", "#e6ebff", "#e3e9ff", "#e0e7ff", "#dde6ff", "#dae4ff", "#d8e3ff", "#d6e1ff", "#d3e0ff", "#d1dfff", "#cfddff", "#cedcff", "#ccdbff", "#cadaff", "#c9d9ff", "#c7d8ff", "#c6d8ff", "#c4d7ff", "#c3d6ff", "#c2d5ff", "#c1d4ff", "#c0d4ff",
+				]
+
+				let T = document.getElementById("temperature-slider").value
+				const BBColor = Math.ceil((T - 0.01) * blackBody.length * 2)
 				let settings = {
 					x0: 0,
 					y0: 580,
-					stroke: "#fff",
-					strokeWidth: 4,
-					fill: "rgba(255,255,255,0.3)",
+					stroke: blackBody[BBColor],
+					strokeWidth: 8,
+					fill: "rgba(255,255,255,0.5)",
 					positiveOnly: true,
 					gridSize: 100,
 					xScale: 200,
@@ -513,13 +519,17 @@
 					showAxis: false,
 					// showMouseCoords: true,
 				}
-				let T = document.getElementById("temperature-slider").value
+
 				const normalize = 15 / Math.PI * Math.PI * Math.PI * Math.PI;
 				funGraphSVG("SVG-graph-0", x => normalize / (x * x * x * x * x * (Math.exp(1 / x / T) - 1)), settings); //normalized version
 				settings.updatePath = true
 				document.getElementById("temperature-slider").addEventListener("input", event => {
 					T = document.getElementById("temperature-slider").value
 					funGraphSVG("SVG-graph-0", x => normalize / (x * x * x * x * x * (Math.exp(1 / x / T) - 1)), settings); //normalized version
+					const BBColor = Math.ceil((T - 0.01) * blackBody.length * 2)
+					document.getElementById('SVG-graph-0-path').style.stroke = blackBody[BBColor];
+					document.getElementById('SVG-graph-0-fill').style.fill = blackBody[BBColor];
+					document.getElementById('SVG-graph-0-fill').style.opacity = 0.5
 				});
 			}
 		</script>

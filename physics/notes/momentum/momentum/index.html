@@ -229,110 +229,11 @@
 
       </details>
     </div>
-    <h1 class='underlined'>Conservation of Momentum</h1>
-    <p>Momentum is useful because the total momentum for a system of objects is
-      <b>conserved</b>. This means the sum of all momentums won't change even if the objects collide.</p>
-    <canvas id="canvas0" width='600' height='270' onclick="collision0(this)"> </canvas>
-    <p>Click the simulation above a few times and note that the total momentum is the same before and after a collision.</p>
 
-    <p>Conservation of momentum isn't true if one of the objects in the system interacts with an object outside the system.
-      For example: conservation doesn't hold if an object hits the ground, and the ground isn't part of our system.</p>
-    <canvas id="canvas1" width='600' height='200' onclick="collision1(this)"> </canvas>
-    <br>
-    <br>
-    <br>
-    <p>Conservation of momentum means we can set the total momentums at two points in time equal to each other. (as long as
-      there are no outside forces)</p>
-    <div class='definition'>
-      $$ \sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$m_1 u_1 + m_2u_2 + \cdots = m_1v_1 + m_2v_2 + \cdots$$ \(p\) =
-      momentum [kg m/s]
-      <em>vector</em>
-      <br> \(u\) = initial velocity [m/s]
-      <em>vector</em>
-      <br>\(v\) = final velocity [m/s]
-      <em>vector</em>
-      <br>\(m\) = mass [kg]
+    <div class='back'>
+      <a href="../../../index.html">Back</a>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div class='example'>
-      <canvas id="canvas2" width='600' height='200' onclick="collision2(this)"> </canvas>
-      <strong>Example:</strong> A
-      <a style='color:#0f0'>green</a> and
-      <a style='color: white;background-color: lightgrey;'>white</a> box collide. The green box has a mass of 2kg and is moving to the right at 3m/s. The white box is moving
-      to the left at 1m/s and has a mass of 10kg. If the white box has stopped after the collision what is the velocity of
-      the green box?
-      <details>
-        <summary>solution</summary>
-        $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$\text{green + white = green + white}$$ $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$
-        $$(2)(3)+(10)(-1)=(2)v_{1}+(1)(10)$$ $$6-10=(2)v_{1}$$ $$-4=(2)v_{1}$$ $$-2 \mathrm{\tfrac{m}{s}} = v_{1}$$
-      </details>
-    </div>
-
-    <div class='example'>
-      <button id="pause">pause</button>
-      <br>
-      <canvas id="canvas3" width='600' height='180' onclick="collision3(this)"> </canvas>
-      <table class='data'>
-        <tr>
-          <th>
-            <a style='color: #0f0'>green box</a>
-          </th>
-          <th>
-            <a style='color: #00AEFF'>blue box</a>
-          </th>
-          <th>
-            <a style='color: orange'>orange box</a>
-          </th>
-        </tr>
-        <tr>
-          <td>m = 1.60kg</td>
-          <td>m = 4.90kg</td>
-          <td>m = 3.60kg</td>
-        </tr>
-        <tr>
-          <td>u = 3.0m/s</td>
-          <td>u = 2.0m/s</td>
-          <td>u = -1.0m/s</td>
-        </tr>
-        <tr>
-          <td>
-            <b>v = ???</b>
-          </td>
-          <td>v = 1.18m/s</td>
-          <td>v = 1.58m/s</td>
-        </tr>
-      </table>
-      <strong>Example:</strong> Three boxes collide. Use the table to find the final velocity of the
-      <a style='color: green'>green</a> box.
-      <details>
-        <summary>solution</summary>
-        $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$ {\color{#0f0} \blacksquare} \quad +\quad {\color{#419eff} \blacksquare}
-        \quad+\quad {\color{orange} \blacksquare} \quad = \quad {\color{#0f0} \blacksquare} \quad+\quad {\color{#419eff}
-        \blacksquare} \quad+\quad {\color{orange} \blacksquare}$$ $$m_{1}u_{1}+m_{2}u_{2}+m_{3}u_{3} \ = \ m_{1}v_{1}+m_{2}v_{2}+m_{3}v_{3}$$
-        $$(1.6)(3)+(4.9)(2)+(3.6)(-1)=(1.6)v_{1}+(4.9)(1.18)+(3.6)(1.58)$$ $$11=1.6v_{1}+11.47$$ $$-0.29 \mathrm{\tfrac{m}{s}}
-        = v_{1}$$
-      </details>
-    </div>
-
-
-  </article>
-  <div class='back'>
-    <a href="../../../index.html">Back</a>
-  </div>
-  <script src='../../../lib/matter.min.js'></script>
-  <script src='../../../lib/randomColor.min.js'></script>
-  <script src="collisionDemo(Matter.js).js"></script>
-  <script src="collisionDemo2(Matter.js).js"></script>
-  <script src="collisionEx1(Matter.js).js"></script>
-  <script src="collisionEx3(Matter.js).js"></script>
-  <script>
-    renderMathInElement(document.body);
-  </script>
+    <script> renderMathInElement(document.body); </script>
 </body>
 
 </html>

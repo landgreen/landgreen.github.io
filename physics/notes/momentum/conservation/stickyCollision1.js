@@ -1,7 +1,7 @@
-function stickyCollision2() {
+function stickyCollision1(el) {
   //set up canvas
-  var canvasID = "canvas2";
-  var canvas = document.getElementById(canvasID);
+  el.onclick = null; //stops the function from running on button click
+  var canvas = el;
   var ctx = canvas.getContext("2d");
 
   // module aliases
@@ -21,10 +21,12 @@ function stickyCollision2() {
 
   var mass = [];
 
-  document.getElementById(canvasID).addEventListener("mousedown", function() {
+  canvas.addEventListener("mousedown", function() {
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
     spawnList();
+    document.getElementById("ex1-details").open = false;
+    document.getElementById("ex1-math").innerHTML = "";
     clearTimeout(explodeTimer);
     explodeTimer = setTimeout(explode, 2000);
   });
@@ -37,21 +39,18 @@ function stickyCollision2() {
     spawnMass(350 - len1 / 1.4 - v * 3, Ypos, v, 0, len1, 4, 0.1);
     spawnMass(350 + len2 / 1.4 - v * 3, Ypos, v, 0, len2, 4, 1.5);
     //write a problem based on the values in the spawn
-    document.getElementById("ex2").innerHTML =
+    document.getElementById("ex1-question").innerHTML =
       "<strong>Click to Randomize Problem:</strong> Two masses are stuck until an explosion causes them to separate. After the explosion the " +
       mass[0].mass.toFixed(2) +
-      " kg <span style='color: " +
+      "&nbsp;kg <span style='color: " +
       mass[0].color +
       "'>square</span> has a velocity of ???" +
-      " m/s, and the " +
+      "&nbsp;m/s, and the " +
       mass[1].mass.toFixed(2) +
-      " kg <span style='color: " +
+      "&nbsp;kg <span style='color: " +
       mass[1].color +
       "'>square</span> has a velocity of  ???" +
-      " m/s. What was the velocity of the two squares before the explosion?" +
-      "<details> <summary>solution</summary></details>";
-    //re-encodes the mathjax into math, makes the $$ $$ work
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+      "&nbsp;m/s. What was the velocity of the two squares before the explosion?";
   }
   function spawnMass(xIn, yIn, VxIn, VyIn, length, sides, angle) {
     //spawn mass
@@ -82,43 +81,32 @@ function stickyCollision2() {
     mass[0].force = { x: -0.03, y: 0 };
     mass[1].force = { x: 0.03, y: 0 };
     setTimeout(function() {
-      document.getElementById("ex2").innerHTML =
+      document.getElementById("ex1-question").innerHTML =
         "<strong>Click to Randomize Problem:</strong> Two masses are stuck until an explosion causes them to separate. After the explosion the " +
         mass[0].mass.toFixed(2) +
-        " kg <span style='color: " +
+        "&nbsp;kg <span style='color: " +
         mass[0].color +
         "'>square</span> has a velocity of " +
         mass[0].velocity.x.toFixed(2) +
-        " m/s, and the " +
+        "&nbsp;m/s, and the " +
         mass[1].mass.toFixed(2) +
-        " kg <span style='color: " +
+        "&nbsp;kg <span style='color: " +
         mass[1].color +
         "'>square</span> has a velocity of  " +
         mass[1].velocity.x.toFixed(2) +
-        " m/s. What was the velocity of the two squares before the explosion? <details> <summary>solution</summary>$$(m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}$$" +
-        "$$(" +
-        mass[0].mass.toFixed(2) +
-        " + " +
-        mass[1].mass.toFixed(2) +
-        ")u=(" +
-        mass[0].mass.toFixed(2) +
-        ")(" +
-        mass[0].velocity.x.toFixed(2) +
-        ") + (" +
-        mass[1].mass.toFixed(2) +
-        ")(" +
-        mass[1].velocity.x.toFixed(2) +
-        ")$$" +
-        "$$(" +
-        (mass[0].mass + mass[1].mass).toFixed(2) +
-        ")u=" +
-        (mass[0].mass * mass[0].velocity.x + mass[1].mass * mass[1].velocity.x).toFixed(2) +
-        "$$" +
-        "$$u=" +
-        ((mass[0].mass * mass[0].velocity.x + mass[1].mass * mass[1].velocity.x) / (mass[0].mass + mass[1].mass)).toFixed(2) +
-        " \\mathrm{\\tfrac{m}{s}}$$</details>";
-      //re-encodes the mathjax into math, makes the $$ $$ work
-      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+        "&nbsp;m/s. What was the velocity of the two squares before the explosion?";
+
+      katex.render(
+        String.raw`\begin{gathered} (m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}
+        \\ (${mass[0].mass.toFixed(2)} + ${mass[1].mass.toFixed(2)})u=(${mass[0].mass.toFixed(2)})(${mass[0].velocity.x.toFixed(2)}) + (${mass[1].mass.toFixed(
+          2
+        )})(${mass[1].velocity.x.toFixed(2)})
+        \\(${(mass[0].mass + mass[1].mass).toFixed(2)})u = ${(mass[0].mass * mass[0].velocity.x + mass[1].mass * mass[1].velocity.x).toFixed(2)}
+        \\u= ${((mass[0].mass * mass[0].velocity.x + mass[1].mass * mass[1].velocity.x) / (mass[0].mass + mass[1].mass)).toFixed(2)} \, \mathrm{\tfrac{m}{s}}
+        \end{gathered}`,
+        document.getElementById("ex1-math")
+      );
+      document.getElementById("ex1-details").open = false;
     }, 100);
   }
 
@@ -186,7 +174,7 @@ function stickyCollision2() {
     // ctx.stroke();
 
     ctx.textAlign = "center";
-    ctx.font = "300 20px Roboto";
+    ctx.font = "18px Arial";
     ctx.fillStyle = "#000";
     var p = 0;
     for (var k = 0, length = mass.length; k < length; k++) {

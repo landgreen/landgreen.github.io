@@ -3,11 +3,11 @@ function setup() {
   //writes a message onload for all canvases
   var canvas;
   var ctx;
-  for (var i = 0; i < 4; i++) {
+  for (var i = 0; i < 7; i++) {
     canvas = document.getElementById("canvas" + i);
     ctx = canvas.getContext("2d");
-    ctx.font = "300 30px Arial";
-    ctx.fillStyle = "#aaa";
+    ctx.font = "25px Arial";
+    ctx.fillStyle = "#999";
     ctx.textAlign = "center";
     ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
   }
