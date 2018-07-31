@@ -30,8 +30,8 @@
 		</h1>
 	</header>
 	<article>
-		<p>Kirchhoff’s Laws were published in 1845 by German physicist Gustav Kirchhoff. When combined with Ohm's law we are able
-			to calculate voltage and current for circuits.</p>
+		<p>Kirchhoff’s Laws were published in 1845 by German physicist Gustav Kirchhoff. When Kirchhoff's laws are combined with Ohm's
+			law we are able to calculate voltage and current for complex circuits.</p>
 		<h2 class='underlined'>Electric Potential in Circuits</h2>
 		<p>Electric potential roughly represents the concentration of electrical potential energy in a circuit. Potential is also
 			similar to water pressure.
@@ -156,41 +156,40 @@
 
 		</div>
 		<div class="example">
-			<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300">
+			<svg xmlns="http://www.w3.org/2000/svg" width="550" height="330">
 				<g stroke-width="30" stroke-linejoin="round" stroke-linecap="round" fill='none' opacity="0.3">
-					<path d="M 10 150 
+					<path d="M -10 150 
 					c 50 -15, 170 -15, 220 0
-					M 75 140
-					c 0 100, 100 40, 155 100
+					M 25 143
+					c 0 100, 100 40, 205 147
 					M 100 138
-					c 0 -200, 100 0, 130 -100" stroke="#b88" />
+					c 0 -100, 100 0, 130 -100" stroke="#b88" />
 
-					<path d="M 310 150 
-					c 50 15, 170 15, 200 0
-					M 310 240
-					c 0 50, 100 -40, 130 -78
-	
+					<path d="M 300 150 
+					c 50 15, 170 15, 300 0
+					M 310 290
+					c 0 50, 100 -40, 140 -128
 					M 310 38
 					c 0 100, 100 0, 150 122" stroke="#f00" />
 				</g>
 
-				<path d="M 10 150 
+				<path d="M -10 150 
 			c 50 -15, 170 -15, 220 0
 			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
-			c 50 15, 170 15, 200 0
+			c 50 15, 170 15, 300 0
 
-			M 75 140
-			c 0 100, 100 40, 155 100
+			M 25 143
+			c 0 100, 100 40, 205 147
 			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
-			c 0 50, 100 -40, 130 -78
+			c 0 50, 100 -40, 140 -128
 
 			M 100 138
-			c 0 -200, 100 0, 130 -100
+			c 0 -100, 100 0, 130 -100
 			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
 			c 0 100, 100 0, 150 122" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
 				<text x="295" y="20" text-anchor="end" font-size="20">400 Ω</text>
 				<text x="295" y="130" text-anchor="end" font-size="20">200 Ω</text>
-				<text x="295" y="221" text-anchor="end" font-size="20">100 Ω</text>
+				<text x="295" y="271" text-anchor="end" font-size="20">100 Ω</text>
 			</svg>
 			<strong>Question:</strong> Explain why resistors in parallel must all have the same voltage drop.
 			<details>
@@ -218,9 +217,9 @@
 						v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
 						h-170" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
 				<g text-anchor="end" font-size="20" font-weight="bold">
-					<text x="97" y="70" fill='#999'>0.0 V</text>
+					<text x="101" y="70" fill='#999'>0.0 V</text>
 					<text x="455" y="245" fill='#c33'>6.0 V</text>
-					<text x="97" y="245" fill='#c33'>6.0 V</text>
+					<text x="101" y="245" fill='#c33'>6.0 V</text>
 					<text x="285" y="245" fill='#c33'>6.0 V</text>
 					<text x="285" y="70" fill='#955'>2.0 V</text>
 					<text x="455" y="70" fill='#955'>2.0 V</text>
@@ -249,9 +248,9 @@
 						   v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
 						   h-170" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
 					<g text-anchor="end" font-size="17">
-						<text x="90" y="70" fill='#999'>0.0 V</text>
+						<text x="95" y="70" fill='#999'>0.0 V</text>
 						<text x="455" y="245" fill='#c33'>6.0 V</text>
-						<text x="90" y="245" fill='#c33'>6.0 V</text>
+						<text x="95" y="245" fill='#c33'>6.0 V</text>
 						<text x="285" y="245" fill='#c33'>6.0 V</text>
 						<text x="285" y="70" fill='#955'>2.0 V</text>
 						<text x="455" y="70" fill='#955'>2.0 V</text>
@@ -714,21 +713,20 @@
 
 		<div class='example'>
 			<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300">
-				<path d="M 10 150 
+				<path d="M -10 150 
 				c 50 -15, 170 -15, 220 0
 				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
-				c 50 15, 170 15, 200 0
-
+				c 50 15, 170 15, 300 0
+	
 				M 75 140
 				c 0 100, 100 40, 155 100
 				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
 				c 0 50, 100 -40, 130 -78
-
+	
 				M 100 138
 				c 0 -200, 100 0, 130 -100
 				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
-				c 0 100, 100 0, 150 122
-				" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+				c 0 100, 100 0, 250 115" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
 				<text x="295" y="20" text-anchor="end" font-size="20">400 Ω</text>
 				<text x="295" y="130" text-anchor="end" font-size="20">200 Ω</text>
 				<text x="295" y="221" text-anchor="end" font-size="20">100 Ω</text>
@@ -850,9 +848,6 @@
 			</details>
 		</div>
 		<h2 class='underlined'>Solving Complex Circuits</h2>
-		<p>How do you solve a circuit with both series and parallel elements? One technique is to simplify the circuit by replacing
-			resistors in series or parallel with one equivalent resistor.</p>
-
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="350" class='center'
 		 onmouseover="document.getElementById('volts9').style.opacity = '0.5';" onmouseout="document.getElementById('volts9').style.opacity='0';">
 			<g id="volts9" stroke-width="50" stroke-linejoin="round" fill='none' opacity="0">
@@ -879,57 +874,69 @@
 			<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
 			<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500 Ω</text>
 		</svg>
-		<p class='center'>We can start by combining the two parallel resistors.</p>
-		$$\frac{1}{R_{eq}} = \frac{1}{R_{2}} + \frac{1}{R_{3}}$$ $$R_{eq} = \left(\frac{1}{800} + \frac{1}{900}\right)^{-1}$$ $$R_{eq}
-		= \left(0.00125 + 0.00\overline{11}\right)^{-1}$$ $$R_{eq} = 420 \, \Omega$$
-		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="300" class='center'>
-			<path d="M 50 50 h 80
-			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
-			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
-			/>
-			<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
-			<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
-			<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600 Ω</text>
-			<text x="274" y="157" text-anchor="end" font-size="16" fill='#999'>Req</text>
-			<text x="305" y="157" text-anchor="start" font-size="20" fill='#0aa'>420 Ω</text>
-			<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
-			<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500 Ω</text>
-		</svg>
-		<p class='center'>Next we can combine the 3 resistors in series.</p>
-		$$R_{eq} = 600+420+500$$ $$R_{eq} = 1520 \, \Omega$$
-		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="215" class='center'>
-			<path d="M 50 50 h 80 h 160
-			v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v20
-			h -160
-			h -80 v-47 m-40 0 h 80 m-20 -15 h-40 m20 0 v -60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
-			/>
-			<text x="45" y="100" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
-			<text x="274" y="117" text-anchor="end" font-size="16" fill='#999'>Req</text>
-			<text x="305" y="117" text-anchor="start" font-size="20" fill='#0aa'>1520 Ω</text>
-		</svg>
-		<pclass='center'>Kirchoff's Voltage law says that the total positive voltage must equal the negative voltage. This tells us the voltage
-			drop on the resistor is the same as the battery.</p>
+		<p>How do you solve a circuit with both series and parallel elements? One technique is to simplify the circuit by replacing
+			resistors in series or parallel with one equivalent resistor.</p>
+		<details>
+			<summary>
+				<strong>finding resistance for a simplified circuit</strong>
+			</summary>
+			<p>We can start by combining the two parallel resistors.</p>
+			$$\frac{1}{R_{eq}} = \frac{1}{R_{2}} + \frac{1}{R_{3}}$$ $$R_{eq} = \left(\frac{1}{800} + \frac{1}{900}\right)^{-1}$$ $$R_{eq}
+			= \left(0.00125 + 0.00\overline{11}\right)^{-1}$$ $$R_{eq} = 420 \, \Omega$$
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="300" class='center'>
+				<path d="M 50 50 h 80
+				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+				h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+				h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
+				<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
+				<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600 Ω</text>
+				<text x="274" y="157" text-anchor="end" font-size="16" fill='#999'>Req</text>
+				<text x="305" y="157" text-anchor="start" font-size="20" fill='#0aa'>420 Ω</text>
+				<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
+				<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500 Ω</text>
+			</svg>
+			<p>Next we can combine the 3 resistors in series.</p>
+			$$R_{eq} = 600+420+500$$ $$R_{eq} = 1520 \, \Omega$$
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="215" class='center'>
+				<path d="M 50 50 h 80 h 160
+				v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v20
+				h -160
+				h -80 v-47 m-40 0 h 80 m-20 -15 h-40 m20 0 v -60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+				/>
+				<text x="45" y="100" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
+				<text x="274" y="117" text-anchor="end" font-size="16" fill='#999'>Req</text>
+				<text x="305" y="117" text-anchor="start" font-size="20" fill='#0aa'>1520 Ω</text>
+			</svg>
+
+		</details>
+		<details>
+			<summary>
+				<strong>using Kirchoff's laws to build back up to the full circuit</strong>
+			</summary>
+			<p>Kirchoff's Voltage law says that the total positive voltage must equal the negative voltage. This tells us the voltage
+				drop on the resistor is the same as the battery.</p>
 			$$V_{bat} + V_1 = 0$$ $$6.0 \, \mathrm{V}+ V_1 = 0$$ $$V_1 = -6.0 \, \mathrm{V}$$
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="215" class='center'>
 				<path d="M 50 50 h 80 h 160
-			v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v20
-			h -160
-			h -80 v-47 m-40 0 h 80 m-20 -15 h-40 m20 0 v -60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v20
+					h -160
+					h -80 v-47 m-40 0 h 80 m-20 -15 h-40 m20 0 v -60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
 				/>
 				<text x="45" y="100" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
 				<text x="274" y="117" text-anchor="end" font-size="16" fill='#999'>Req</text>
 				<text x="305" y="117" text-anchor="start" font-size="20" fill='#333'>1520 Ω</text>
 				<text x="305" y="147" text-anchor="start" font-size="20" fill='#0aa'>-6.0 V</text>
 			</svg>
-			<p class='center'>We can solve for current through the resistor with Ohm's law.</p>
+			<p>We can solve for current through the resistor with Ohm's law.</p>
 			$$V=IR$$ $$I = \frac{V}{R}$$ $$I = \frac{6.0\, \mathrm{V}}{1530\, \Omega}$$ $$I = 0.0039\, \mathrm{A}$$
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="215" class='center'>
 				<path d="M 50 50 h 80 h 160
-				v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v20
-				h -160
-				h -80 v-47 m-40 0 h 80 m-20 -15 h-40 m20 0 v -60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+						v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v20
+						h -160
+						h -80 v-47 m-40 0 h 80 m-20 -15 h-40 m20 0 v -60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
 				/>
 				<text x="45" y="100" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
 				<text x="274" y="117" text-anchor="end" font-size="16" fill='#999'>Req</text>
@@ -942,10 +949,10 @@
 				all in a series we will know the current for all the resistors.</p>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="350" class='center'>
 				<path d="M 50 50 h 80
-			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
-			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
 				/>
 				<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
 				<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
@@ -960,7 +967,7 @@
 				<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500 Ω</text>
 				<text x="170" y="307" text-anchor="middle" font-size="20" fill='#0aa'>0.0039 A</text>
 			</svg>
-			<p class='center'>We can use Ohm's law to find voltages.</p>
+			<p>We can use Ohm's law to find voltages.</p>
 			<div class="col-group">
 				<div>
 					$$V=IR_1$$ $$V=(0.0039\, \mathrm{A})(600\, \Omega)$$ $$V=2.3\, \mathrm{V}$$
@@ -972,10 +979,10 @@
 			$$V=IR_{eq}$$ $$V=(0.0039\, \mathrm{A})(420\, \Omega)$$ $$V=1.7\, \mathrm{V}$$
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="350" class='center'>
 				<path d="M 50 50 h 80
-			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
-			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round"
 				/>
 				<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
 				<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
@@ -997,13 +1004,13 @@
 				fill in the voltage.</p>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="350" class='center'>
 				<path d="M 50 50 h 80
-			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
-			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
-			M 290 50 h170
-			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-			h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+					M 290 50 h170
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
 				<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
 				<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
 				<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600 Ω</text>
@@ -1031,13 +1038,13 @@
 			</div>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="350" class='center'>
 				<path d="M 50 50 h 80
-			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
-			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
-			M 290 50 h170
-			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-			h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+					M 290 50 h170
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
 				<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
 				<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
 				<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600 Ω</text>
@@ -1056,7 +1063,12 @@
 				<text x="170" y="307" text-anchor="middle" font-size="20" fill='#333'>0.0039 A</text>
 				<text x="170" y="332" text-anchor="middle" font-size="20" fill='#333'>-2.0 V</text>
 			</svg>
-			<p class='center'>We can calculate the power dissipated by each element with P=IV.</p>
+		</details>
+		<details>
+			<summary>
+				<strong>solving for power dissipated</strong>
+			</summary>
+			<p>We can calculate the power dissipated by each element with P=IV.</p>
 			<div class="col-group">
 				<div>
 					$$P = IV_1$$ $$P = (0.0039)(2.3)$$ $$P = 0.0090\, \mathrm{W}$$
@@ -1075,13 +1087,13 @@
 			</div>
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="370" class='center'>
 				<path d="M 50 50 h 80
-			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
-			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-			h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
-			h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
-			M 290 50 h170
-			v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
-			h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+					h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+					M 290 50 h170
+					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+					h-170" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
 				<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
 				<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
 				<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600 Ω</text>
@@ -1104,13 +1116,20 @@
 				<text x="170" y="332" text-anchor="middle" font-size="20" fill='#333'>-2.0 V</text>
 				<text x="170" y="357" text-anchor="middle" font-size="20" fill='#0aa'>0.0078 W</text>
 			</svg>
+		</details>
+		<details>
+			<summary>
+				<strong>checking our work</strong>
+			</summary>
 			<p>That was a long problem. Let's check our work. The total voltage should equal zero, if we count the resistors in parallel
 				as one.</p>
 			$$V_1+V_4+V_{eq} + V_{bat} = 0$$ $$-2.3-2.0-1.7+6.0 = 0 $$ $$0 = 0 $$
 			<p>The power from the battery should equal the sum of the power lost in the resistors.</p>
 			$$P_{bat}=IV$$ $$P_{bat}=(0.0039)(6.0)$$ $$P_{bat}=0.023\, \mathrm{W}$$
 			<br> $$P_{res} = 0.0090\, \mathrm{W}+0.0078\, \mathrm{W}+0.0036\, \mathrm{W}+0.0032\, \mathrm{W}$$ $$P_{res} = 0.023\, \mathrm{W}$$
-			<p class='center'>Looks good!</p>
+			<p>Looks good!</p>
+		</details>
+
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
