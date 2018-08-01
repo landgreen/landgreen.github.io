@@ -2,23 +2,25 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
-	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
 	<title>Orbits</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
-	<script src="../../../lib/katex/katex.min.js"></script>
-	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
-
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+
+	<script defer src="orbits.js"></script>
+	<script defer src="grav1.js"></script>
+	<script defer src="grav2.js"></script>
 	<script src='../../../lib/function-graph-SVG.js'></script>
 </head>
 
@@ -78,12 +80,12 @@
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
-					<text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">v</text>
+					<text x="0" y="-115" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">v</text>
 					<g transform="translate(-75 0) rotate(0)">
 						<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
-					<text x="-85" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
+					<text x="-85" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">F</text>
 					<circle cx="0" cy="0" r="20" fill='#f77' stroke-width="2" stroke="#222" />
 				</g>
 				<g transform="translate(306 94) rotate(-45)" opacity=0.25>
@@ -161,7 +163,7 @@
 		</div>
 		<p class='underlined'>Circular Orbits</p>
 		<p>Each satellite below starts with a different velocity. Simulation speed =
-			<input class='number' id='speed' type="number" step="1" min='0' max='1000' value='2'>
+			<input class='number' id='speed' type="number" step="1" min='0' max='1000' value='2' style="width:40px;">
 			<canvas id='grav2' height='600' width='600' onclick="grav2(this)" style="background-color: #000;"> </canvas>
 		</p>
 		<p>
@@ -177,7 +179,7 @@
 		<div class='definition'>
 			<svg style="display: block; margin: auto" width="450" height="360" version="1.1" xmlns="http://www.w3.org/2000/svg">
 				<circle cx="200" cy="200" r="50" fill='#fff' stroke-width="2" stroke="#222" />
-				<text x="203" y="224" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">M</text>
+				<text x="203" y="224" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">M</text>
 				<circle cx="200" cy="200" r="150" fill='rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
 				<g transform="translate(53 200)">
 					<line x1="0" y1="0" x2="150" y2="0" style="stroke:#000;stroke-width:2" />
@@ -190,7 +192,7 @@
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
-					<text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="23">v</text>
+					<text x="0" y="-115" fill="black" text-anchor="middle" dominant-baseline="central" font-size="23">v</text>
 					<circle cx="0" cy="0" r="6" fill='#f77' stroke-width="2" stroke="#222" />
 				</g>
 				<g transform="translate(306 94) rotate(-45)" opacity=0.25>
@@ -344,13 +346,13 @@
 				<path d="M 446.5 -1 v 381" stroke="#999" stroke-width="1" fill='none' stroke-dasharray="4" />
 
 				<a xlink:href="https://en.wikipedia.org/wiki/Geosynchronous_orbit">
-					<text x="438" y="75" fill="black" text-anchor="middle" alignment-baseline="central" font-size="13" transform="rotate(-90 438 75)">geosynchronous orbit</text>
+					<text x="438" y="75" fill="black" text-anchor="middle" dominant-baseline="central" font-size="13" transform="rotate(-90 438 75)">geosynchronous orbit</text>
 				</a>
 				<a xlink:href="https://en.wikipedia.org/wiki/Low_Earth_orbit">
-					<text x="98" y="190" fill="black" text-anchor="middle" alignment-baseline="central" font-size="13" transform="rotate(-90 98 190)">low Earth orbits</text>
+					<text x="98" y="190" fill="black" text-anchor="middle" dominant-baseline="central" font-size="13" transform="rotate(-90 98 190)">low Earth orbits</text>
 				</a>
 			</svg>
-			<script>
+			<script defer>
 				funGraphSVG("SVG-graph-0", x => Math.sqrt(398576 / x), {
 					x0: 25,
 					y0: 280,
@@ -388,16 +390,15 @@
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
 	</div>
-	<script>
-		renderMathInElement(document.body);
-	</script>
+
+	<script src="../../../lib/katex/katex.min.js"></script>
+	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+	<script> renderMathInElement(document.body); </script>
+
 	<script src='../../../lib/randomColor.min.js'></script>
 	<script src='../../../lib/gravityClass.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js'></script>
 	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
-	<script src="orbits.js"></script>
-	<script src="grav1.js"></script>
-	<script src="grav2.js"></script>
 </body>
 
 </html>

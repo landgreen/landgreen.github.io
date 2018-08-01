@@ -2,17 +2,24 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
-	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
 	<title>Thermodynamics</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+
+	<script defer src='../../../lib/randomColor.min.js'></script>
+	<script defer src="energy.js"></script>
+	<script defer src='../../../lib/matter.min.js'></script>
+	<script defer src="entropy1.js"></script>
+	<script defer src="temperature.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 	<script src="../../../lib/katex/katex.min.js"></script>
@@ -224,14 +231,8 @@
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
 	</div>
-	<script src='../../../lib/randomColor.min.js'></script>
-	<script src="energy.js"></script>
-	<script src='../../../lib/matter.min.js'></script>
-	<script src="entropy1.js"></script>
-	<script src="temperature.js"></script>
-	<script>
-		renderMathInElement(document.body);
-	</script>
+
+	<script> renderMathInElement(document.body); </script>
 </body>
 
 </html>

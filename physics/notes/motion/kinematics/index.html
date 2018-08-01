@@ -2,14 +2,16 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
-	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
 
 	<title>Kinematics</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
@@ -205,19 +207,10 @@
 			<a href="https://codepen.io/lilgreenland">@lilgreenland</a>) on
 			<a href="https://codepen.io">CodePen</a>.</p>
 		<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-	</article>
 
-
-
-	<!-- <p data-height="830" data-theme-id="light" data-slug-hash="ZJVGZR" data-default-tab="result" data-user="lilgreenland" data-embed-version="2"
-	 data-pen-title="ballistics calculator (vue)" class="codepen">See the Pen
-		<a href="https://codepen.io/lilgreenland/pen/ZJVGZR/">ballistics calculator (vue)</a> by Landgreen (
-		<a href="https://codepen.io/lilgreenland">@lilgreenland</a>) on
-		<a href="https://codepen.io">CodePen</a>.</p>
-	<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script> -->
-	<article>
 		<div class='example'>
-			<canvas id="myCanvas" width='600' height='300'></canvas>
+			<canvas class='center' id="myCanvas" width='500' height='200'></canvas>
+			<br>
 			<strong>Example</strong>: A ball moving horizontally at 2 m/s rolls off a table that is 1.5 m high. Find how far the ball travels
 			horizontally before it hits the ground. Click to rewatch the simulation above.
 			<details>
@@ -459,13 +452,13 @@
 				<g id="vector" transform='translate(0 150) rotate(-25)'>
 					<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
 					<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
-					<text x="100" y="-13" fill="black" text-anchor="middle" alignment-baseline="middle">V = 150 m/s</text>
+					<text x="100" y="-13" fill="black" text-anchor="middle" dominant-baseline="middle">V = 150 m/s</text>
 				</g>
 				<line x1="0" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
 				<line x1="181" y1="150" x2="181" y2="63" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
-				<text x="100" y="165" fill="black" text-anchor="middle" alignment-baseline="middle">Vx</text>
-				<text x="205" y="105" fill="black" text-anchor="middle" alignment-baseline="middle">Vy</text>
-				<text x="67" y="141" fill="black" text-anchor="middle" alignment-baseline="middle">θ = 35°</text>
+				<text x="100" y="165" fill="black" text-anchor="middle" dominant-baseline="middle">Vx</text>
+				<text x="205" y="105" fill="black" text-anchor="middle" dominant-baseline="middle">Vy</text>
+				<text x="67" y="141" fill="black" text-anchor="middle" dominant-baseline="middle">θ = 35°</text>
 			</svg>
 			<strong>Example:</strong>
 			<br>A ball is thrown at 35° from the horizon

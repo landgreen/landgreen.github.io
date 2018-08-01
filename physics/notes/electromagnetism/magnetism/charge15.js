@@ -83,7 +83,7 @@ function charges15(el) {
       const mag = (0.16 + 0.8 * (Math.random() - 0.5)) * c;
       const angle = Math.random() * Math.PI * 2;
       q[q.length] = new Charge("e", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
-      const angleOff = angle + Math.random();
+      const angleOff = angle + 3 * (Math.random() - 0.5);
       const magOff = mag + (Math.random() - 0.5) * c * 0.7;
       q[q.length] = new Charge("positron", { x: x, y: y }, { x: magOff * Math.cos(angleOff), y: magOff * Math.sin(angleOff) });
     }

@@ -2,25 +2,24 @@
 <html lang="en-US">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
-	<meta name="twitter:title" content="High School Physics Notes">
-	<meta name="description" content="Notes for a high school physics course.">
-	<meta name="keywords" content="physics, computer science, science, computer, course, Landgreen, Ross, school, notes, javascript, high school, new west charter, newwestcharter, simulation, teacher">
-	<meta name="author" content="Ross Landgreen">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
 
 	<title>Motion</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
-	<script src="../../../lib/katex/katex.min.js"></script>
-	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+
+	<script defer src='../../../lib/randomColor.min.js'></script>
+	<script defer src="motion.js"></script>
 
 	<link rel="stylesheet" href="../../../style.css">
 	<script src='../../../lib/function-graph-SVG.js'></script>
@@ -88,7 +87,7 @@
 		<p>Velocity measures how much position changes, Δx, over a period of time, Δt. We use this relationship more than any other
 			in physics.</p>
 		<div class='definition'>
-			<h1>$$v = \frac{\Delta x}{\Delta t}$$</h1>
+			<h1>$$v_{\mathrm{avg}} = \frac{\Delta x}{\Delta t}$$</h1>
 			<p>\(\Delta x\) = change in position, distance [m, meters]</p>
 			<p>\(\Delta t\) = time period [s, seconds]</p>
 			<p>\(v\) = average velocity [m/s, meters per second]</p>
@@ -136,7 +135,7 @@
 		<div class='example'>
 			<svg class='center' id="SVG-graph-0" width="290" height="290">
 			</svg>
-			<script>
+			<script defer>
 				funGraphSVG("SVG-graph-0", x => x, {
 					x0: 15,
 					y0: 270,
@@ -165,7 +164,7 @@
 		<h1 class='underlined'>Acceleration</h1>
 		<p>Acceleration is a measure of how much velocity changes (Δv) over a period of time (Δt).</p>
 		<div class='definition'>
-			<h1>$$a = \frac{\Delta v}{\Delta t}$$</h1>
+			<h1>$$a_{\mathrm{avg}} = \frac{\Delta v}{\Delta t}$$</h1>
 			<p>\(\Delta v\) = change in velocity [m/s] = \(v_f-v_i\)</p>
 			<p>\(\Delta t\) = time period, change in time [s, seconds]</p>
 			<p>\(a\) = acceleration [m/s²]</p>
@@ -206,7 +205,7 @@
 		<div class='example'>
 			<svg class='center' id="SVG-graph-3" width="290" height="290">
 			</svg>
-			<script>
+			<script defer>
 				funGraphSVG("SVG-graph-3", x => 0.37 * x * x, {
 					x0: 15,
 					y0: 270,
@@ -253,7 +252,7 @@
 			<input id='acceleration' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
 		</div>
 		<svg id="SVG-graph-6" class="graph-box center" width="585" height="250"></svg>
-		<script>
+		<script defer>
 			const x0 = 145
 			const y0 = 125;
 
@@ -263,7 +262,7 @@
 				stroke: "rgba(255,0,50,0.5)",
 				// fill: "rgba(0,0,0,0.1)",
 				scale: 50,
-				gridSize: 50,
+				showGrid: false,
 				strokeWidth: 8,
 				xLabel: "time (s)",
 				yLabel: "position (m)",
@@ -275,7 +274,7 @@
 				// fill: "rgba(0,0,0,0.1)",
 				step: 10,
 				scale: 50,
-				gridSize: 50,
+				showGrid: false,
 				strokeWidth: 8,
 				xLabel: "time (s)",
 				yLabel: "velocity (m/s)",
@@ -287,7 +286,7 @@
 				// fill: "rgba(0,0,0,0.1)",
 				step: 10,
 				scale: 50,
-				gridSize: 50,
+				showGrid: false,
 				strokeWidth: 8,
 				xLabel: "time (s)",
 				yLabel: "acceleration (m/s²)",
@@ -321,7 +320,7 @@
 				</svg>
 				<svg id="SVG-graph-13" width="550" height="300">
 				</svg>
-				<script>
+				<script defer>
 					// funGraphSVG() don't work inside <details>
 					// this is my workaround
 					document.getElementById("example0").addEventListener("toggle", handler0);
@@ -338,6 +337,7 @@
 							strokeWidth: 3,
 							xLabel: "time (s)",
 							yLabel: "position (m)",
+							positiveOnly: true,
 							showMouseCoords: true
 						});
 						funGraphSVG("SVG-graph-13", x => 2, {
@@ -350,6 +350,7 @@
 							strokeWidth: 3,
 							xLabel: "time (s)",
 							yLabel: "velocity (m/s)",
+							positiveOnly: true,
 							showMouseCoords: true
 						});
 					}
@@ -360,7 +361,7 @@
 		<div class='example'>
 			<svg id="SVG-graph-16" width="600" height="220">
 			</svg>
-			<script>
+			<script defer>
 				funGraphSVG("SVG-graph-16", x => 1 / 4 * x, {
 					x0: 20,
 					y0: 200,
@@ -402,7 +403,7 @@
 				</svg>
 				<svg id="SVG-graph-15" width="550" height="300">
 				</svg>
-				<script>
+				<script defer>
 					// funGraphSVG() don't work inside <details>
 					// this is my workaround
 					document.getElementById("example1").addEventListener("toggle", handler1);
@@ -419,6 +420,7 @@
 							strokeWidth: 3,
 							xLabel: "time (s)",
 							yLabel: "position (m)",
+							positiveOnly: true,
 							showMouseCoords: true
 						});
 						funGraphSVG("SVG-graph-15", x => -9.8 * x, {
@@ -432,6 +434,7 @@
 							strokeWidth: 3,
 							xLabel: "time (s)",
 							yLabel: "velocity (m/s)",
+							positiveOnly: true,
 							showMouseCoords: true
 						});
 					}
@@ -451,13 +454,13 @@
 			<p>A large jerk can cause you to stumble. A jerk could come from a short lasting push or pull. It could come from a car starting
 				to break, or accelerate. Falling causes a jerk. Jumping. Bouncing. Any change in acceleration.</p>
 		</div>
-		<script>
+		<script defer>
 			settings8 = {
 				x0: x0,
 				y0: y0,
 				stroke: "rgba(255,0,50,0.5)",
 				scale: 50,
-				gridSize: 50,
+				showGrid: false,
 				strokeWidth: 8,
 				xLabel: "time (s)",
 				yLabel: "position (m)",
@@ -469,7 +472,7 @@
 				y0: y0,
 				stroke: "rgba(150,30,255,0.5)",
 				scale: 50,
-				gridSize: 50,
+				showGrid: false,
 				strokeWidth: 8,
 				xLabel: "time (s)",
 				yLabel: "velocity (m/s)",
@@ -482,10 +485,10 @@
 				stroke: "rgba(0,130,255,0.5)",
 				step: 10,
 				scale: 50,
-				gridSize: 50,
+				showGrid: false,
 				strokeWidth: 8,
 				xLabel: "time (s)",
-				yLabel: "jerk (m/s³)",
+				yLabel: "acceleration (m/s²)",
 			}
 			funGraphSVG("SVG-graph-10", x => 1 / 2 * x, settings10);
 
@@ -495,10 +498,10 @@
 				stroke: "rgba(0,200,200,0.5)",
 				step: 10,
 				scale: 50,
-				gridSize: 50,
+				showGrid: false,
 				strokeWidth: 8,
 				xLabel: "time (s)",
-				yLabel: "acceleration (m/s²)",
+				yLabel: "jerk (m/s³)",
 			}
 			funGraphSVG("SVG-graph-11", x => 1 / 2, settings11);
 
@@ -525,11 +528,9 @@
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
 	</div>
-	<script src='../../../lib/randomColor.min.js'></script>
-	<script src="motion.js"></script>
-	<script>
-		renderMathInElement(document.body);
-	</script>
+	<script src="../../../lib/katex/katex.min.js"></script>
+	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+	<script> renderMathInElement(document.body); </script>
 </body>
 
 </html>

@@ -247,7 +247,7 @@ function funGraphSVG(
       newTextElement.setAttribute("x", 0);
       newTextElement.setAttribute("y", 0);
       newTextElement.style.fill = "#000";
-      newTextElement.style.fontSize = 12;
+      newTextElement.style.fontSize = "12px";
       newTextElement.style.textAnchor = "start";
       // newTextElement.style.fontFamily = "Arial";
       // newTextElement.textContent = " ".toString();
@@ -286,7 +286,7 @@ function funGraphSVG(
     }
   }
 
-  function addText(text, x, y, { textAnchor = "middle", fontSize = "12", rotation = 0, fill = "#000" } = {}) {
+  function addText(text, x, y, { textAnchor = "middle", fontSize = "12px", rotation = 0, fill = "#000" } = {}) {
     const newElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
     newElement.setAttribute("x", x);
     newElement.setAttribute("y", y);
@@ -297,7 +297,7 @@ function funGraphSVG(
       newElement.setAttribute("transform", `rotate(${rotation}, ${x}, ${y})`);
     }
     // newElement.style.fontFamily = "monospace";
-    // newElement.style.fontFamily = "Arial,Helvetica";
+    newElement.style.fontFamily = "Arial,Helvetica";
     newElement.textContent = text.toString();
     target.appendChild(newElement);
   }

@@ -2,14 +2,16 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="description" content="Notes for a high school physics course.">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#222" />
+    <meta name="description" content="Interactive notes for algebra based physics.">
     <meta name="author" content="Ross Landgreen">
-    <meta property="og:description" content="Notes for a high school physics course.">
+    <meta property="og:description" content="Interactive notes for algebra based physics.">
     <meta property="og:title" content="Physics Notes">
-    <meta name="twitter:title" content="High School Physics Notes">
+    <meta name="twitter:title" content="Physics Notes">
+    <meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
     <title>Universal Gravitation</title>
     <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -19,6 +21,11 @@
 
     <link rel="stylesheet" type="text/css" href="../../../style.css">
     <script src='../../../lib/function-graph-SVG.js'></script>
+    <script defer src='../../../lib/randomColor.min.js'></script>
+    <script defer src='../../../lib/gravityClass.js'></script>
+    <script defer src="grav0.js "></script>
+    <script defer src="grav1.js "></script>
+    <script defer src="grav2.js "></script>
 </head>
 
 <body>
@@ -30,7 +37,7 @@
         </h1>
     </header>
     <div style="position: absolute;top: 0px; left: 0px; z-index: 1; color: #fff;">
-        <input id='num' type="number" step="1" min='1' max='999' value='10'> particles
+        <input id='num' type="number" step="1" min='1' max='999' value='10' style="width: 60px;"> particles
     </div>
     <article>
         <p>
@@ -109,7 +116,7 @@
                     <line x1="300" y1="100" x2="220" y2="100" style="stroke:#000;stroke-width:2" />
                     <polygon points="0,0 8,5 8,-5" transform="translate(215 100)" style="fill:#000;" />
 
-                    <text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25 ">F</text>
+                    <text x="200" y="100" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25 ">F</text>
 
                     <line x1="100" y1="30" x2="300" y2="30" style="stroke:#000;stroke-width:2" />
                     <line x1="100" y1="25" x2="100" y2="35" style="stroke:#000;stroke-width:2" />
@@ -137,7 +144,7 @@
 
                         <line x1="250" y1="35" x2="250" y2="100" style="stroke:#000;stroke-width:2" />
                         <polygon points="0,0 -8,5 -8,-5" transform="translate(250 104) rotate(90)" style="fill:#000;" />
-                        <text x="250" y="116" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25 ">F</text>
+                        <text x="250" y="116" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25 ">F</text>
 
                         <line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
                         <line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
@@ -321,7 +328,7 @@
                     <line x1="100" y1="100" x2="180" y2="100" style="stroke:#000;stroke-width:2" />
                     <polygon points="0,0 -8,5 -8,-5" transform="translate(185 100)" style="fill:#000;" />
 
-                    <text x="200" y="100" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25 ">g</text>
+                    <text x="200" y="100" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25 ">g</text>
 
                     <line x1="100" y1="30" x2="300" y2="30" style="stroke:#000;stroke-width:2" />
                     <line x1="100" y1="25" x2="100" y2="35" style="stroke:#000;stroke-width:2" />
@@ -344,7 +351,7 @@
 
                         <line x1="250" y1="35" x2="250" y2="100" style="stroke:#000;stroke-width:2" />
                         <polygon points="0,0 -8,5 -8,-5" transform="translate(250 104) rotate(90)" style="fill:#000;" />
-                        <text x="250" y="116" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25 ">a</text>
+                        <text x="250" y="116" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25 ">a</text>
 
                         <line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
                         <line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
@@ -362,7 +369,7 @@
     <canvas class='center' id='grav1' height='400' width='600' onclick="grav1(this)"> </canvas>
     <article>
         Click the mouse to push the masses around. Number of particles =
-        <input id='num1' type="number" step="1" min='1' max='200' value='6'>
+        <input id='num1' type="number" step="1" min='1' max='200' value='6' style="width:60px;">
         </p>
 
         <div class='example'>
@@ -459,7 +466,7 @@
                 <summary>answer</summary>
                 <p id="random-mass-name"></p>
             </details>
-            <script>
+            <script defer>
                 (function () {
                     const GConst = 6.674e-11;
                     const masses = [{ mass: 3.301e23, name: "Mercury" }, { mass: 4.867e24, name: "Venus" }, { mass: 5.972e24, name: "Earth" }, { mass: 6.417e23, name: "Mars" }]; //{ mass: 7.346e22, name: "The Moon" },
@@ -550,7 +557,7 @@
                 <summary>answer</summary>
                 <p id="random-mass-name-2"></p>
             </details>
-            <script>
+            <script defer>
                     (function () {
                         const GConst = 6.674e-11;
                         const masses = [{ mass: 1.899e27, name: "Jupiter" }, { mass: 5.685e26, name: "Saturn" }, { mass: 8.68e25, name: "Uranus" }, { mass: 1.024e26, name: "Neptune" }]
@@ -587,10 +594,11 @@
                     })()
             </script>
         </div>
-        <h2 class="underlined "> Inverse-Square Law</h2>
+        <h2 class="underlined ">Inverse-Square Law</h2>
+        <h1>$$\frac{1}{r^2}$$</h1>
         <p>
-            All particles are attracted to each other, but the attraction is divided by the distance squared (1/r²). Physical laws that
-            diminish at 1/r² are common in nature because of how signals spread out in 3 dimensions.
+            All particles are attracted to each other, but the attraction is divided by the distance squared. Physical laws that diminish
+            at 1/r² are common in nature because of how signals spread out in 3 dimensions.
         </p>
         <p>
             If you threw darts in random directions, the chance of hitting your target would obey this rule. Notice how the density of
@@ -1033,16 +1041,15 @@
                 </g>
             </svg>
         </a>
-        <p>As you can see in the graph below, a 1/r
-            <sup>2</sup> function has some interesting results at r = 0 and f = 0.</p>
+        <p>As you can see in the graph below, a 1/r² function has some interesting results at r = 0 and f = 0.</p>
         <svg id="SVG-graph-0" width="600" height="400">
         </svg>
-        <script>
+        <script defer>
             funGraphSVG("SVG-graph-0", x => 1 / x / x, {
                 x0: 20,
                 y0: 380,
                 fill: "rgba(0,0,0,0.05)",
-                stroke: "08f",
+                stroke: "333",
                 strokeWidth: 3,
                 scale: 100,
                 positiveOnly: true,
@@ -1138,7 +1145,7 @@
         </p>
         <canvas class='center' id='grav2' height='400' width='600' onclick="grav2(this)"> </canvas>
         <p> Poke around with your mouse. Number of particles =
-            <input id='num2' type="number" step="1" min='1' max='100' value='6'>
+            <input id='num2' type="number" step="1" min='1' max='100' value='6' style="width:60px;">
         </p>
 
         <div class='example'>
@@ -1201,14 +1208,8 @@
     <div class='back'>
         <a href="../../../index.html ">Back</a>
     </div>
-    <script>
-        renderMathInElement(document.body);
-    </script>
-    <script src='../../../lib/randomColor.min.js'></script>
-    <script src='../../../lib/gravityClass.js'></script>
-    <script src="grav0.js "></script>
-    <script src="grav1.js "></script>
-    <script src="grav2.js "></script>
+
+    <script> renderMathInElement(document.body); </script>
 </body>
 
 </html>

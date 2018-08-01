@@ -2,17 +2,22 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
 	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
 	<title>Conservation of Energy</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+
+	<script defer src='../../../lib/randomColor.min.js'></script>
+	<script defer src="spring-gravity.js"></script>
+	<script defer src="spring.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 	<script src="../../../lib/katex/katex.min.js"></script>
@@ -51,8 +56,8 @@
 			<canvas id="canvas1" width='600' height='200' onclick="spring(this)"></canvas>
 			<div id="buttons">
 				&nbsp;k =
-				<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1> &nbsp;&nbsp;&nbsp; m =
-				<input id='spring-m' type="number" min="1" max="100" value=0 step=1>
+				<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 60px;"> &nbsp;&nbsp;&nbsp; m =
+				<input id='spring-m' type="number" min="1" max="100" value=0 step=1 style="width: 60px;">
 				<button id="pause1">pause </button>
 			</div>
 		</div>
@@ -70,8 +75,8 @@
 				<canvas id="canvas2" width='250' height='500' onclick="springGravity(this)"> </canvas>
 				<br> &nbsp;&nbsp;
 				<button id="pause2"> pause </button> &nbsp; k =
-				<input id='spring-k2' type="number" min="0" max="10" value=3 step=1> m =
-				<input id='spring-m2' type="number" min="1" max="100" value=0 step=1>
+				<input id='spring-k2' type="number" min="0" max="10" value=3 step=1 style="width: 60px;"> m =
+				<input id='spring-m2' type="number" min="1" max="100" value=0 step=1 style="width: 60px;">
 			</div>
 			<div>
 				<p>
@@ -184,13 +189,7 @@
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
 	</div>
-	<script src='../../../lib/randomColor.min.js'></script>
-	<script src="spring-gravity.js"></script>
-	<script src="spring.js"></script>
-	<script src="energy.js"></script>
-	<script>
-		renderMathInElement(document.body);
-	</script>
+	<script> renderMathInElement(document.body); </script>
 </body>
 
 </html>
