@@ -167,7 +167,7 @@
 					stroke-dasharray: 0.1 19.9;
 				}
 			</style>
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="350" height="150" class='center'>
+			<svg viewBox="-75 0 550 150">
 				<path d="M 50 68 v-63 h 265
 			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
 			h -265
@@ -184,7 +184,7 @@
 			<p>In
 				<strong>AC (alternating current)</strong> circuits the current pushes the electrons forward and backwards about 60 times a second.
 				Current from a wall socket is AC.</p>
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="350" height="150" class='center'>
+			<svg viewBox="-75 0 550 150">
 				<path d="M 50 58 v-53 h 265
 			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
 			h -265
@@ -219,15 +219,15 @@
 					resistance =
 					<input id='resistance-slider' type="range" min="0" max="10" step="0.01" value="1" style="width: 250px;">
 					<input id='resistance' type="number" step="0.01" value="1" min="0" style="width: 50px;"> Ω
-					<svg id="SVG-graph-0" width="600" height="300">
+					<svg id="SVG-graph-0" viewBox="0 0 600 300">
 
-						<circle id="origin-0" cx="27" cy="280" r="6" fill="rgb(255,0,0)" />
+						<circle id="origin-0" cx="20" cy="280" r="6" fill="rgb(255,0,0)" />
 					</svg>
 				</div>
 				<script>
 					{
 						let settings = {
-							x0: 27,
+							x0: 20,
 							y0: 280,
 							// stroke: "none",
 							stroke: "rgba(255,0,0,1)",
@@ -322,58 +322,47 @@
 			</a>
 
 			<div class='example'>
-				<div class="col-group">
-					<div>
-						<strong>Example:</strong> Find the voltage for a resistor that has 300&nbsp;Ω of resistance and a current of 0.05&nbsp;A.
-						<details>
-							<summary>solution</summary>
-							$$ V = IR$$ $$ V = (0.05\, \mathrm{A}) (300 \, \Omega)$$ $$ V = 15 \, \mathrm{V}$$
-						</details>
-					</div>
-					<div>
-						<svg width="300" height="275">
-							<path d="M 50 120 
-							c -10 -50, 200 -150, 200 -37
-							l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 
-							c 10 100, -200 200, -200 -27
-							m-40 0 h 80 m-20 -15 h-40 m20 0" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"
-							/>
-							<text x="230" y="115" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
-							<text x="230" y="145" text-anchor="end" font-size="20" fill='#333'>300 Ω</text>
-							<text x="147" y="256" text-anchor="middle" font-size="20" fill='#333'>0.05 A</text>
-							<g transform="translate(190 236) rotate(180)">
-								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
-								<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
-							</g>
-						</svg>
-					</div>
-				</div>
+				<svg viewBox="-125 0 550 275">
+					<path d="M 50 120 
+					c -10 -50, 200 -150, 200 -37
+					l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 
+					c 10 100, -200 200, -200 -27
+					m-40 0 h 80 m-20 -15 h-40 m20 0" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"
+					/>
+					<text x="230" y="115" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+					<text x="230" y="145" text-anchor="end" font-size="20" fill='#333'>300 Ω</text>
+					<text x="147" y="256" text-anchor="middle" font-size="20" fill='#333'>0.05 A</text>
+					<g transform="translate(190 236) rotate(180)">
+						<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
+						<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+					</g>
+				</svg>
+				<strong>Example:</strong> Find the voltage for a resistor that has 300&nbsp;Ω of resistance and a current of 0.05&nbsp;A.
+				<details>
+					<summary>solution</summary>
+					$$ V = IR$$ $$ V = (0.05\, \mathrm{A}) (300 \, \Omega)$$ $$ V = 15 \, \mathrm{V}$$
+				</details>
 			</div>
 			<div class='example'>
-				<div class="col-group">
-					<div>
-						<strong>Example:</strong> Find the current for a 100&nbsp;Ω resistor with 2&nbsp;V drop?
-						<details>
-							<summary>solution</summary>
-							$$ V = IR$$ $$ I = \frac{V}{R}$$ $$ I = \frac{2 \, \mathrm{V}}{100 \, \Omega}$$ $$ I = 0.02\, \mathrm{A}$$
-						</details>
-					</div>
-					<div>
-						<svg width="300" height="200">
-							<path d="M 50 10 h 200
-							v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
-							h -200
-							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-							<text x="230" y="90" text-anchor="end" font-size="20" fill='#333'>2 V</text>
-							<text x="230" y="120" text-anchor="end" font-size="20" fill='#333'>100 Ω</text>
-							<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>I = ?</text>
-							<g transform="translate(195 180) rotate(180)">
-								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
-								<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
-							</g>
-						</svg>
-					</div>
-				</div>
+				<svg viewBox="-130 0 550 200">
+					<path d="M 50 10 h 200
+					v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
+					h -200
+					v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					<text x="230" y="90" text-anchor="end" font-size="20" fill='#333'>2 V</text>
+					<text x="230" y="120" text-anchor="end" font-size="20" fill='#333'>100 Ω</text>
+					<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>I = ?</text>
+					<g transform="translate(195 180) rotate(180)">
+						<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
+						<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+					</g>
+				</svg>
+
+				<strong>Example:</strong> Find the current for a 100&nbsp;Ω resistor with 2&nbsp;V drop?
+				<details>
+					<summary>solution</summary>
+					$$ V = IR$$ $$ I = \frac{V}{R}$$ $$ I = \frac{2 \, \mathrm{V}}{100 \, \Omega}$$ $$ I = 0.02\, \mathrm{A}$$
+				</details>
 			</div>
 
 			<div class='example'>
@@ -388,59 +377,47 @@
 			</div>
 
 			<div class='example'>
-				<div class="col-group">
-					<div>
-						<strong>Example:</strong> What value resistor would drop 1.5&nbsp;V in a 0.001&nbsp;A current?
-						<details>
-							<summary>solution</summary>
-							$$ V = IR$$ $$ R = \frac{V}{I}$$ $$ R = \frac{1.5\, \mathrm{V}}{0.001\, \mathrm{A}}$$ $$ R = 1500 \, \Omega$$
-						</details>
-					</div>
-					<div>
-						<svg width="300" height="200">
-							<path transform="rotate(180, 150, 100)" d="M 50 10 h 200
+				<svg viewBox="-130 0 550 200">
+					<path transform="rotate(180, 150, 100)" d="M 50 10 h 200
 							v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
 							h -200
 							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-							<text x="110" y="90" text-anchor="end" font-size="20" fill='#333'>1.5&thinsp;V</text>
-							<text x="110" y="120" text-anchor="end" font-size="20" fill='#333'>R = ?</text>
-							<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>0.001&thinsp;A</text>
-							<g transform="translate(195 180) rotate(180)">
-								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
-								<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
-							</g>
-						</svg>
-					</div>
-				</div>
+					<text x="110" y="90" text-anchor="end" font-size="20" fill='#333'>1.5&thinsp;V</text>
+					<text x="110" y="120" text-anchor="end" font-size="20" fill='#333'>R = ?</text>
+					<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>0.001&thinsp;A</text>
+					<g transform="translate(195 180) rotate(180)">
+						<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
+						<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+					</g>
+				</svg>
+				<strong>Example:</strong> What value resistor would drop 1.5&nbsp;V in a 0.001&nbsp;A current?
+				<details>
+					<summary>solution</summary>
+					$$ V = IR$$ $$ R = \frac{V}{I}$$ $$ R = \frac{1.5\, \mathrm{V}}{0.001\, \mathrm{A}}$$ $$ R = 1500 \, \Omega$$
+				</details>
 			</div>
 			<div class='example'>
-				<div class="col-group">
-					<div>
-						<strong>Example:</strong> What voltage would cause 0.02&nbsp;C of charge to pass through a 10&nbsp;Ω resistor every 10&nbsp;s?
-						<details>
-							<summary>solution</summary>
-							$$ I = \frac{q}{\Delta t}$$ $$ I = \frac{0.02}{10}$$ $$ I = 0.002 \, \mathrm{A}$$
-							<br> $$ V = IR $$ $$ V = (0.002)(10)$$ $$ V = 0.02 \, \mathrm{V}$$
-						</details>
-					</div>
-					<div>
-						<svg width="300" height="275">
-							<path d="M 50 120 
-								c -20 -100, 140 -100, 200 -37
-								l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 
-								c -70 80, -190 80, -200 -27
-								m-40 0 h 80 m-20 -15 h-40 m20 0" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"
-							/>
-							<text x="230" y="117" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
-							<text x="230" y="150" text-anchor="end" font-size="20" fill='#333'>10 Ω</text>
-							<text x="147" y="256" text-anchor="middle" font-size="20" fill='#333'>I = ?</text>
-							<g transform="translate(190 236) rotate(180)">
-								<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
-								<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
-							</g>
-						</svg>
-					</div>
-				</div>
+				<svg viewBox="-150 0 600 275">
+					<path d="M 50 120 
+						c -20 -100, 140 -100, 200 -37
+						l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 
+						c -70 80, -190 80, -200 -27
+						m-40 0 h 80 m-20 -15 h-40 m20 0" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"
+					/>
+					<text x="230" y="117" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+					<text x="230" y="150" text-anchor="end" font-size="20" fill='#333'>10 Ω</text>
+					<text x="147" y="256" text-anchor="middle" font-size="20" fill='#333'>I = ?</text>
+					<g transform="translate(190 236) rotate(180)">
+						<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
+						<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+					</g>
+				</svg>
+				<strong>Example:</strong> What voltage would cause 0.02&nbsp;C of charge to pass through a 10&nbsp;Ω resistor every 10&nbsp;s?
+				<details>
+					<summary>solution</summary>
+					$$ I = \frac{q}{\Delta t}$$ $$ I = \frac{0.02}{10}$$ $$ I = 0.002 \, \mathrm{A}$$
+					<br> $$ V = IR $$ $$ V = (0.002)(10)$$ $$ V = 0.02 \, \mathrm{V}$$
+				</details>
 			</div>
 	</article>
 	<div class='back'>

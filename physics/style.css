@@ -324,6 +324,9 @@ header h1 a:hover {
   header h1 {
     font-size: 3em;
   }
+  .underlined {
+    font-size: 1.5em;
+  }
   .definition {
     padding: 10px;
     font-size: 100%;
