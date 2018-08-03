@@ -90,7 +90,7 @@
 		<h2 class='underlined'>Wave Terms</h2>
 
 		<div class='definition'>
-			<svg width="560 " height="350 " viewBox="0 100 1000 550">
+			<svg viewBox="0 100 1000 550">
 				<!-- style="border: 2px solid red;" -->
 				<path d="M0 375 h1000 " stroke-width='2' fill='none' stroke='#333' stroke-dasharray="20, 20" />
 				<path d="M41,373 L50,351 L60,329 L69,308 L78,287 L87,267 L97,248 L106,230 L115,213 L124,198 L134,185 L143,173 L152,163
@@ -145,7 +145,7 @@
 			<br> Which of the properties seem related?</p>
 	</article>
 	<div class='center' style="height: 400px;" id='wave_animation'>
-		<svg id='sin-wave' width='600' height='400' style='position:absolute;left: 0;right: 0;margin: 0 auto; background: #fff'>
+		<svg id='sin-wave' height='400' style='position:absolute;left: 0;right: 0;margin: 0 auto; background: #fff'>
 			<filter id="displacementFilter">
 				<feTurbulence id='fe-turb' type="turbulence" baseFrequency="0.02" numOctaves="3" />
 				<feDisplacementMap id='fe-disp' in="SourceGraphic" scale="17" xChannelSelector="R" yChannelSelector="G" />
@@ -190,7 +190,7 @@
 			<details id="example0">
 				<summary>solution</summary>
 				<p>It's an inverse function.</p>
-				<svg id="SVG-graph-0" width="600" height="400"></svg>
+				<svg id="SVG-graph-0" viewBox="0 0 600 400"></svg>
 				<script>
 					// funGraphSVG() don't work inside <details>
 					// this is my workaround

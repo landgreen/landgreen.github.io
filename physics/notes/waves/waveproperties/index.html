@@ -41,9 +41,9 @@
 			are in
 			<strong>superposition</strong>.</p>
 		<div class="definition">
-			<svg onload="drawSineWave(this, 25, 10, 0,'#39f',0.7, false, 563); drawSineWave(this, 280, 55, 0,'#f37',0.7, false, 563);"
-			 width='500' height='120'></svg>
-			<svg onload="drawSineWaves(this, 30, 10, 0,'#f80', 280, 55, 0, '#08b', '#000', false, false, 563);" width='500' height='160'></svg>
+			<svg onload="drawSineWave(this, 25, 10, 0,'#39f',0.7, true, 563); drawSineWave(this, 280, 55, 0,'#f37',0.7, true, 563);"
+			 width='100' height='120'></svg>
+			<svg onload="drawSineWaves(this, 30, 10, 0,'#f80', 280, 55, 0, '#08b', '#000', false, true, 563);" width="100" height='160'></svg>
 			<p>The observed amplitude for waves in superposition is the sum of each wave's amplitude.</p>
 		</div>
 		<p>Ears are able to detect separate sound frequencies, even though they enter the ear in a superposition. This
@@ -78,65 +78,59 @@
 
 
 		<div class='example'>
-			<svg onload=" drawSineWave(this, 250, 40, 0, '#808'); drawSineWave(this,250, 80, 0, '#088'); centerLine(this)" width='600'
-			 height='170'></svg>
+			<svg onload=" drawSineWave(this, 250, 40, 0, '#808'); drawSineWave(this,250, 80, 0, '#088'); centerLine(this)" height='170'></svg>
 			<strong>Example:</strong> Draw the superposition of these waves. They have the same wavelength, so they only add constructively.
 			<details>
 				<summary>solution</summary>
-				<svg onload="drawSineWaves(this, 250, 40,0, '#808', 250, 80,0, '#088'); centerLine(this)" width='600' height='260'></svg>
+				<svg onload="drawSineWaves(this, 250, 40,0, '#808', 250, 80,0, '#088'); centerLine(this)" height='260'></svg>
 			</details>
 		</div>
 		<div class='example'>
-			<svg onload="drawSineWave(this, 200, 40, 100, '#f80'); drawSineWave(this,200, 40, 0, '#08f'); centerLine(this) " width='600'
-			 height='85'></svg>
+			<svg onload="drawSineWave(this, 200, 40, 100, '#f80'); drawSineWave(this,200, 40, 0, '#08f'); centerLine(this)" height='85'></svg>
 			<strong>Example:</strong> Draw the superposition of these waves. They have the same wavelength but they are out of phase with
 			each other. They can only add destructively.
 			<details>
 				<summary>solution</summary>
-				<svg onload="drawSineWaves(this, 200, 40, 100, '#f80', 200, 40, 0, '#08f'); centerLine(this) " width='600' height='125'></svg>
+				<svg onload="drawSineWaves(this, 200, 40, 100, '#f80', 200, 40, 0, '#08f'); centerLine(this)" height='125'></svg>
 			</details>
 		</div>
 		<div class='example'>
-			<svg onload="drawSineWave(this, 200, 20, 100, '#0f8'); drawSineWave(this,200, 40, 0, '#80f'); centerLine(this) " width='600'
-			 height='85'></svg>
+			<svg onload="drawSineWave(this, 200, 20, 100, '#0f8'); drawSineWave(this,200, 40, 0, '#80f'); centerLine(this)" height='85'></svg>
 			<strong>Example:</strong> Draw the superposition of these waves.
 			<details>
 				<summary>solution</summary>
-				<svg onload="drawSineWaves(this, 200, 20, 100, '#0f8', 200, 40, 0, '#80f'); centerLine(this) " width='600' height='125'></svg>
+				<svg onload="drawSineWaves(this, 200, 20, 100, '#0f8', 200, 40, 0, '#80f'); centerLine(this)" height='125'></svg>
 			</details>
 		</div>
 		<div class='example'>
-			<svg onload="drawSineWave(this, 40, 20, 0, '#f88'); drawSineWave(this,200, 40, 0, '#88f'); centerLine(this) " width='600'
-			 height='85'></svg>
+			<svg onload="drawSineWave(this, 40, 20, 0, '#f88'); drawSineWave(this,200, 40, 0, '#88f'); centerLine(this)" height='85'></svg>
 			<strong>Example:</strong> Draw the superposition of these waves.
 			<details>
 				<summary>solution</summary>
-				<svg onload="drawSineWaves(this, 40, 20,0, '#f88',200, 40,0, '#88f'); centerLine(this) " width='600' height='125'></svg>
+				<svg onload="drawSineWaves(this, 40, 20,0, '#f88',200, 40,0, '#88f'); centerLine(this) " height='125'></svg>
 			</details>
 		</div>
 		<div class='example'>
-			<svg onload="drawSineWave(this, 400, 30, 0, '#f80'); drawSineWave(this,100, 80, 0, '#08f'); centerLine(this) " width='600'
-			 height='170'></svg>
+			<svg onload="drawSineWave(this, 400, 30, 0, '#f80'); drawSineWave(this,100, 80, 0, '#08f'); centerLine(this) " height='170'></svg>
 			<strong>Example:</strong> Draw the superposition of these waves.
 			<details>
 				<summary>solution</summary>
-				<svg onload="drawSineWaves(this, 400, 30, 0, '#f80', 100, 80, 0, '#08f'); centerLine(this) " width='600' height='280'></svg>
+				<svg onload="drawSineWaves(this, 400, 30, 0, '#f80', 100, 80, 0, '#08f'); centerLine(this) " height='280'></svg>
 			</details>
 		</div>
 		<div class='example'>
-			<svg onload="drawSineWave(this, 200, 40, 50, '#f88'); drawSineWave(this,200, 40, 0, '#8f8'); centerLine(this) " width='600'
-			 height='85'></svg>
+			<svg onload="drawSineWave(this, 200, 40, 50, '#f88'); drawSineWave(this,200, 40, 0, '#8f8'); centerLine(this) " height='85'></svg>
 			<strong>Example:</strong> Draw the superposition of these waves.
 			<details>
 				<summary>solution</summary>
-				<svg onload="drawSineWaves(this, 200, 40, 50, '#f88', 200, 40, 0, '#8f8'); centerLine(this) " width='600' height='125'></svg>
+				<svg onload="drawSineWaves(this, 200, 40, 50, '#f88', 200, 40, 0, '#8f8'); centerLine(this) " height='125'></svg>
 			</details>
 		</div>
 		<div class='example'>
 			<svg onload="drawSineWavesArray(this, [
 				{ wavelength: 40, amplitude: 35, phase: 0,  color: '#39f', opacity: 0.4 },
 				{ wavelength: 44, amplitude: 35, phase: 0,  color: '#f37', opacity: 0.4 },
-				], false, true)" width='600' height='75'></svg>
+				], false, true)" height='75'></svg>
 			<strong>Example:</strong> Draw the superposition of these waves. When waves have similar frequencies they produce a pattern called
 			<strong>beats</strong>.
 			<details>
@@ -144,7 +138,7 @@
 				<svg onload="drawSineWavesArray(this, [
 				{ wavelength: 40, amplitude: 35, phase: 0,  color: '#39f', opacity: 0.15 },
 				{ wavelength: 44, amplitude: 35, phase: 0,  color: '#f37', opacity: 0.15 },
-				], true, true)" width='600' height='150'></svg>
+				], true, true)" height='150'></svg>
 			</details>
 		</div>
 	</article>
@@ -170,7 +164,7 @@
 		{ wavelength: 44.4, amplitude: 0.5*2/Math.PI,  phase: 0, color: '#f08', opacity: 0 },
 		{ wavelength: 40, amplitude: 0.25*2/Math.PI,  phase: 0, color: '#f08', opacity: 0 },
 		{ wavelength: 36.36, amplitude: 0.125*2/Math.PI,  phase: 0, color: '#f08', opacity: 0 },
-		], true, true)" width='600' height='290'></svg>
+		], true, true)" height='290'></svg>
 
 		<svg onload="drawSineWavesArray(this, [
 		{ wavelength: 200, amplitude: 20, phase: 0, color: '#08f', opacity: 0.2 },
@@ -185,7 +179,7 @@
 		{ wavelength: 200, amplitude: 20, phase: 72, color: '#08f', opacity: 0.2 },
 		{ wavelength: 200, amplitude: 20, phase: 80, color: '#08f', opacity: 0.2 },
 		{ wavelength: 200, amplitude: 20, phase: 88, color: '#08f', opacity: 0.2 },
-		], true, true)" width='600' height='350'></svg>
+		], true, true)" height='350'></svg>
 
 		<p>Interference is even more complex and interesting in higher dimensions. Take a look at these 2-D ripple tank simulations:</p>
 		<p>
@@ -200,160 +194,157 @@
 		<div class="definition">
 			<strong>Polarization</strong> is a property of transverse waves that describes the angle of oscillation. The polarization can
 			be any angle perpendicular to the direction the wave is moving.</div>
-	</article>
-	<svg class='center' width="679.998" height="349.332" viewBox="0 0 679.998 349.332">
-		<style type="text/css">
-			.st0 {
-				fill: none;
-				stroke: #666666;
-				stroke-width: 2;
-			}
+		<svg viewBox="0 0 680 349">
+			<style type="text/css">
+				.st0 {
+					fill: none;
+					stroke: #666666;
+					stroke-width: 2;
+				}
 
-			.st1 {
-				fill: none;
-				stroke: #FF0000;
-				stroke-width: 3;
-			}
+				.st1 {
+					fill: none;
+					stroke: #FF0000;
+					stroke-width: 3;
+				}
 
-			.st2 {
-				fill: #FB805F;
-			}
+				.st2 {
+					fill: #FB805F;
+				}
 
-			.st3 {
-				fill: none;
-				stroke: #FCC0A7;
-				stroke-width: 3;
-			}
+				.st3 {
+					fill: none;
+					stroke: #FCC0A7;
+					stroke-width: 3;
+				}
 
-			.st4 {
-				fill: #FC4128;
-			}
+				.st4 {
+					fill: #FC4128;
+				}
 
-			.st5 {
-				fill: #FCC0A7;
-			}
+				.st5 {
+					fill: #FCC0A7;
+				}
 
-			.st6 {
-				fill: none;
-				stroke: #666666;
-				stroke-width: 2;
-				stroke-linecap: round;
-			}
+				.st6 {
+					fill: none;
+					stroke: #666666;
+					stroke-width: 2;
+					stroke-linecap: round;
+				}
 
-			.st7 {
-				fill: #FF0000;
-			}
+				.st7 {
+					fill: #FF0000;
+				}
 
-			.st8 {
-				fill: #FFFFFF;
-			}
+				.st8 {
+					fill: #FFFFFF;
+				}
 
-			.st9 {
-				fill: none;
-			}
+				.st9 {
+					fill: none;
+				}
 
-			.st10 {
-				fill: none;
-				stroke: #000000;
-				stroke-width: 2;
-			}
+				.st10 {
+					fill: none;
+					stroke: #000000;
+					stroke-width: 2;
+				}
 
-			.st11 {
-				fill: none;
-				stroke: #000000;
-				stroke-width: 3;
-			}
+				.st11 {
+					fill: none;
+					stroke: #000000;
+					stroke-width: 3;
+				}
 
-			.st12 {
-				fill: none;
-				stroke: #FC4128;
-				stroke-width: 3;
-			}
+				.st12 {
+					fill: none;
+					stroke: #FC4128;
+					stroke-width: 3;
+				}
 
-			.st13 {
-				fill: none;
-				stroke: #FB805F;
-				stroke-width: 3;
-			}
-		</style>
-		<path class="st8" d="M679.998,349.332H0V0h679.998V349.332z" />
-		<path class="st10" d="M103.895,134.301l-86.969,50.211V67.176l86.969-50.211V134.301z" />
-		<path class="st10" d="M16.926,125.844l86.969-50.211" />
-		<path class="st10" d="M60.412,42.07v117.336" />
-		<path class="st0" d="M81.441,106.375l290.586,77.859" />
-		<path class="st3" d="M372.197,184.281c-11.033-6.191-38.688-22.242-50.433-25.391c-11.741-3.145-6.733,6.836-5.534,10.391
+				.st13 {
+					fill: none;
+					stroke: #FB805F;
+					stroke-width: 3;
+				}
+			</style>
+			<path class="st8" d="M679.998,349.332H0V0h679.998V349.332z" />
+			<path class="st10" d="M103.895,134.301l-86.969,50.211V67.176l86.969-50.211V134.301z" />
+			<path class="st10" d="M16.926,125.844l86.969-50.211" />
+			<path class="st10" d="M60.412,42.07v117.336" />
+			<path class="st0" d="M81.441,106.375l290.586,77.859" />
+			<path class="st3" d="M372.197,184.281c-11.033-6.191-38.688-22.242-50.433-25.391c-11.741-3.145-6.733,6.836-5.534,10.391
 							c1.198,3.559,6.207,13.539-5.535,10.391c-11.744-3.141-39.398-19.195-50.43-25.383c-11.033-6.191-38.688-22.242-50.43-25.391
 							c-11.744-3.145-6.736,6.836-5.535,10.395c1.197,3.555,6.205,13.535-5.537,10.391c-11.744-3.145-39.398-19.199-50.43-25.387
 							c-11.031-6.191-38.686-22.242-50.43-25.391c-11.744-3.145-6.734,6.836-5.535,10.395" />
-		<path class="st3" d="M372.197,184.281c1.137-13.434,5.992-48.84-5.752-51.984c-11.744-3.148-39.244,26.188-50.215,36.992
+			<path class="st3" d="M372.197,184.281c1.137-13.434,5.992-48.84-5.752-51.984c-11.744-3.148-39.244,26.188-50.215,36.992
 							c-10.972,10.797-38.472,40.133-50.215,36.988c-11.744-3.146-6.889-38.551-5.75-51.988c1.137-13.434,5.992-48.836-5.752-51.984
 							c-11.744-3.148-39.244,26.188-50.213,36.992c-10.973,10.797-38.473,40.137-50.217,36.988
 							c-11.742-3.145-6.889-38.551-5.75-51.984c1.139-13.433,5.992-48.84-5.752-51.988c-11.742-3.145-39.242,26.191-50.213,36.992"
-		/>
-		<path class="st13" d="M372.205,184.285c4.037-6.488,16.627-23.328,4.885-26.477c-11.744-3.145-46.981,7.625-60.852,11.48
+			/>
+			<path class="st13" d="M372.205,184.285c4.037-6.488,16.627-23.328,4.885-26.477c-11.744-3.145-46.981,7.625-60.852,11.48
 							c-13.869,3.848-49.107,14.621-60.854,11.478c-11.742-3.148,0.85-19.989,4.887-26.478c4.035-6.484,16.625-23.328,4.881-26.473
 							c-11.744-3.145-46.977,7.625-60.848,11.477c-13.867,3.852-49.107,14.625-60.852,11.477c-11.744-3.145,0.85-19.988,4.883-26.473
 							c4.039-6.484,16.629-23.328,4.885-26.477c-11.744-3.145-46.982,7.629-60.852,11.48" />
-		<path class="st1" d="M372.197,184.281c-4.916-13.396-16.24-48.695-27.982-51.844c-11.744-3.145-23.065,26.09-27.983,36.848
+			<path class="st1" d="M372.197,184.281c-4.916-13.396-16.24-48.695-27.982-51.844c-11.744-3.145-23.065,26.09-27.983,36.848
 							c-4.916,10.762-16.238,39.992-27.982,36.844c-11.742-3.145-23.066-38.445-27.982-51.84s-16.238-48.695-27.982-51.844
 							c-11.744-3.145-23.066,26.086-27.982,36.848c-4.916,10.762-16.24,39.992-27.984,36.844
 							c-11.742-3.145-23.066-38.445-27.982-51.84s-16.238-48.695-27.982-51.844c-11.744-3.145-23.066,26.086-27.982,36.848"
-		/>
-		<path class="st9" d="M415.678,217.844l-86.963,50.211V150.719l86.963-50.211V217.844z" />
-		<path class="st11" d="M415.678,100.508v117.336" />
-		<path class="st6" d="M328.715,209.387l86.963-50.211" />
-		<path class="st6" d="M328.715,201.387l86.963-50.211" />
-		<path class="st6" d="M328.715,193.387l86.963-50.211" />
-		<path class="st6" d="M328.715,185.387l86.963-50.211" />
-		<path class="st6" d="M328.715,177.387l86.963-50.211" />
-		<path class="st6" d="M328.715,169.387l86.963-50.211" />
-		<path class="st6" d="M328.715,161.387l86.963-50.211" />
-		<path class="st6" d="M328.715,153.387l86.963-50.211" />
-		<path class="st6" d="M328.715,265.387l86.963-50.211" />
-		<path class="st6" d="M328.715,257.387l86.963-50.211" />
-		<path class="st6" d="M328.715,249.387l86.963-50.211" />
-		<path class="st6" d="M328.715,241.387l86.963-50.211" />
-		<path class="st6" d="M328.715,233.387l86.963-50.211" />
-		<path class="st6" d="M328.715,225.387l86.963-50.211" />
-		<path class="st6" d="M328.715,217.387l86.963-50.211" />
-		<path class="st11" d="M328.715,268.055V150.719" />
-		<path class="st12" d="M89.99,83.66l-29.578,17.078L30.83,117.816" />
-		<path class="st4" d="M94.367,81.133l-12.381,1.965v10.367L94.367,81.133z" />
-		<path d="M81.986,88.281" />
-		<path class="st4" d="M26.455,120.344l12.381-1.965v-10.367L26.455,120.344z" />
-		<path d="M38.836,113.195" />
-		<path class="st3" d="M81.326,116.879l-20.914-16.141l-20.92-16.141" />
-		<path class="st5" d="M84.42,119.27l-6.037-11.984l-5.432,10.457L84.42,119.27z" />
-		<path d="M75.666,112.516" />
-		<path class="st5" d="M36.4,82.207l6.037,11.984l5.432-10.461L36.4,82.207z" />
-		<path d="M45.154,88.965" />
-		<path class="st13" d="M81.326,60.441l-20.914,40.297l-20.918,40.297" />
-		<path class="st2" d="M84.42,54.48L72.953,69.25l5.43,4.195L84.42,54.48z" />
-		<path d="M75.668,71.348" />
-		<path class="st2" d="M36.402,146.996l11.467-14.77l-5.43-4.191L36.402,146.996z" />
-		<path d="M45.154,130.133" />
-		<path class="st7" d="M60.41,54.926l-3.842,18.922l7.682-4.438L60.41,54.926z" />
-		<path d="M60.41,71.629" />
-		<path class="st7" d="M60.41,146.551l3.84-18.922l-7.682,4.438L60.41,146.551z" />
-		<path d="M60.41,129.848" />
-		<path class="st1" d="M60.41,60.828v39.91v39.91" />
-		<path class="st0" d="M372.197,184.281l246.988,66.18" />
-		<path class="st1" d="M596.061,244.266c-4.918-13.395-16.241-48.695-27.983-51.84c-11.742-3.148-23.066,26.082-27.984,36.844
+			/>
+			<path class="st9" d="M415.678,217.844l-86.963,50.211V150.719l86.963-50.211V217.844z" />
+			<path class="st11" d="M415.678,100.508v117.336" />
+			<path class="st6" d="M328.715,209.387l86.963-50.211" />
+			<path class="st6" d="M328.715,201.387l86.963-50.211" />
+			<path class="st6" d="M328.715,193.387l86.963-50.211" />
+			<path class="st6" d="M328.715,185.387l86.963-50.211" />
+			<path class="st6" d="M328.715,177.387l86.963-50.211" />
+			<path class="st6" d="M328.715,169.387l86.963-50.211" />
+			<path class="st6" d="M328.715,161.387l86.963-50.211" />
+			<path class="st6" d="M328.715,153.387l86.963-50.211" />
+			<path class="st6" d="M328.715,265.387l86.963-50.211" />
+			<path class="st6" d="M328.715,257.387l86.963-50.211" />
+			<path class="st6" d="M328.715,249.387l86.963-50.211" />
+			<path class="st6" d="M328.715,241.387l86.963-50.211" />
+			<path class="st6" d="M328.715,233.387l86.963-50.211" />
+			<path class="st6" d="M328.715,225.387l86.963-50.211" />
+			<path class="st6" d="M328.715,217.387l86.963-50.211" />
+			<path class="st11" d="M328.715,268.055V150.719" />
+			<path class="st12" d="M89.99,83.66l-29.578,17.078L30.83,117.816" />
+			<path class="st4" d="M94.367,81.133l-12.381,1.965v10.367L94.367,81.133z" />
+			<path d="M81.986,88.281" />
+			<path class="st4" d="M26.455,120.344l12.381-1.965v-10.367L26.455,120.344z" />
+			<path d="M38.836,113.195" />
+			<path class="st3" d="M81.326,116.879l-20.914-16.141l-20.92-16.141" />
+			<path class="st5" d="M84.42,119.27l-6.037-11.984l-5.432,10.457L84.42,119.27z" />
+			<path d="M75.666,112.516" />
+			<path class="st5" d="M36.4,82.207l6.037,11.984l5.432-10.461L36.4,82.207z" />
+			<path d="M45.154,88.965" />
+			<path class="st13" d="M81.326,60.441l-20.914,40.297l-20.918,40.297" />
+			<path class="st2" d="M84.42,54.48L72.953,69.25l5.43,4.195L84.42,54.48z" />
+			<path d="M75.668,71.348" />
+			<path class="st2" d="M36.402,146.996l11.467-14.77l-5.43-4.191L36.402,146.996z" />
+			<path d="M45.154,130.133" />
+			<path class="st7" d="M60.41,54.926l-3.842,18.922l7.682-4.438L60.41,54.926z" />
+			<path d="M60.41,71.629" />
+			<path class="st7" d="M60.41,146.551l3.84-18.922l-7.682,4.438L60.41,146.551z" />
+			<path d="M60.41,129.848" />
+			<path class="st1" d="M60.41,60.828v39.91v39.91" />
+			<path class="st0" d="M372.197,184.281l246.988,66.18" />
+			<path class="st1" d="M596.061,244.266c-4.918-13.395-16.241-48.695-27.983-51.84c-11.742-3.148-23.066,26.082-27.984,36.844
 							c-4.914,10.758-16.233,39.992-27.979,36.845c-11.746-3.146-23.066-38.445-27.98-51.841
 							c-4.914-13.397-16.242-48.694-27.988-51.839c-11.741-3.148-23.063,26.082-27.979,36.843
 							c-4.916,10.759-16.238,39.992-27.982,36.845c-11.743-3.146-23.065-38.445-27.981-51.84" />
-		<path class="st0" d="M81.441,106.375l-21.031-5.637" />
-		<path class="st10" d="M662.67,284.023l-86.969,50.211V216.898l86.969-50.211V284.023z" />
-		<path class="st10" d="M575.701,275.566l86.969-50.211" />
-		<path class="st10" d="M619.189,191.793v117.336" />
-		<path class="st7" d="M619.186,204.648l-3.84,18.922l7.681-4.438L619.186,204.648z" />
-		<path d="M619.186,221.352" />
-		<path class="st7" d="M619.186,296.273l3.841-18.922l-7.681,4.438L619.186,296.273z" />
-		<path d="M619.186,279.57" />
-		<path class="st1" d="M619.186,210.551v39.91v39.91" />
-	</svg>
-	<article>
-
+			<path class="st0" d="M81.441,106.375l-21.031-5.637" />
+			<path class="st10" d="M662.67,284.023l-86.969,50.211V216.898l86.969-50.211V284.023z" />
+			<path class="st10" d="M575.701,275.566l86.969-50.211" />
+			<path class="st10" d="M619.189,191.793v117.336" />
+			<path class="st7" d="M619.186,204.648l-3.84,18.922l7.681-4.438L619.186,204.648z" />
+			<path d="M619.186,221.352" />
+			<path class="st7" d="M619.186,296.273l3.841-18.922l-7.681,4.438L619.186,296.273z" />
+			<path d="M619.186,279.57" />
+			<path class="st1" d="M619.186,210.551v39.91v39.91" />
+		</svg>
 		<p>Most light sources are unpolarized. They oscillate a bit in every direction. Light can become polarized after passing through
 			a polarization filter that only removes the light that oscillates at a certain angle. </p>
 		<p>A
@@ -407,7 +398,7 @@
 			<strong>Diffraction</strong> is when a wave spreads out after some of the wave hits a barrier. This explains how sound can be
 			heard through an open door even when there is no line of sight.</p>
 		<p>Diffraction can be explained by thinking of every point on a wavefront as the source of spherical waves.</p>
-		<svg class="center" width="500" height="320">
+		<svg viewBox="0 0 500 320">
 			<g transform="matrix(1.1071035,0,0,1.1071035,-4.2837428,-418.671)">
 				<path d="M 132.1875,495.6875 C 132.61944,505.8429 140.98893,513.93751 151.25,513.9375 C 161.51108,513.9375 169.88056,505.84288 170.3125,495.6875"
 				 style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#babdb6;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.53333285"
@@ -611,24 +602,18 @@
 		</p>
 
 		<div class='example'>
-			<svg width='1000' height='200' viewBox="100,0,1000,200">
-				<defs>
-					<filter id="f1" x="0" y="0">
-						<feGaussianBlur in="SourceGraphic" stdDeviation="0" />
-					</filter>
-				</defs>
-				<g fill="transparent">
+			<svg viewBox="100,0,600,200">
+				<g fill="none">
 					<path d="M300 0 v95 M300 105 v95 " stroke="#000" stroke-width="10" />
-					<path d="M60 0 v200 M110 0 v200 M170 0 v200 M230 0 v200 M280 0 v200" stroke="#f08" opacity="0.6" stroke-width="20" filter="url(#f1)"
-					/>
+					<path d="M60 0 v200 M110 0 v200 M170 0 v200 M230 0 v200 M280 0 v200" stroke="#f08" opacity="0.6" stroke-width="20" />
 				</g>
 			</svg>
 			<strong>Example:</strong> Draw the pattern of the waves that would pass through the gap as the waves propagate to the right.
 
 			<details>
 				<summary>solution</summary>
-				<svg width='1000' height='400' viewBox="100,0,1000,400">
-					<g fill="transparent" filter="url(#f1)" stroke-width="20" stroke="#f08">
+				<svg viewBox="100,0,600,400" viewBox="100,0,1000,400">
+					<g fill="none" stroke-width="20" stroke="#f08">
 						<circle cx="300" cy="200" r="40" opacity="0.6" />
 						<circle cx="300" cy="200" r="100" opacity="0.6" />
 						<circle cx="300" cy="200" r="160" opacity="0.6" />
@@ -639,21 +624,19 @@
 						<circle cx="300" cy="200" r="460" opacity="0.6" />
 						<circle cx="300" cy="200" r="520" opacity="0.6" />
 					</g>
-					<g fill="transparent">
+					<g fill="none">
 						<rect width="300" height="400" fill="#fff" stroke="none" />
-						<path d="M60 0 v400 M110 0 v400 M170 0 v400 M230 0 v400 M280 0 v400" stroke="#f08" opacity="0.6" stroke-width="20" filter="url(#f1)"
-						/>
+						<path d="M60 0 v400 M110 0 v400 M170 0 v400 M230 0 v400 M280 0 v400" stroke="#f08" opacity="0.6" stroke-width="20" />
 						<path d="M300 0 v195 M300 205 v200" stroke="#000" stroke-width="10" />
 					</g>
 				</svg>
 			</details>
 		</div>
 		<div class='example'>
-			<svg width='1000' height='200' viewBox="100,0,1000,200">
-				<g fill="transparent">
+			<svg viewBox="100,0,600,200">
+				<g fill="none">
 					<path d="M300 0 v70 M300 80 v45 M300 135 v95 " stroke="#000" stroke-width="10" />
-					<path d="M60 0 v200 M110 0 v200 M170 0 v200 M230 0 v200 M280 0 v200" stroke="#f08" opacity="0.6" stroke-width="20" filter="url(#f1)"
-					/>
+					<path d="M60 0 v200 M110 0 v200 M170 0 v200 M230 0 v200 M280 0 v200" stroke="#f08" opacity="0.6" stroke-width="20" />
 				</g>
 			</svg>
 			<strong>Example:</strong> Draw the pattern of the waves that would pass through the gap as the waves propagate to the right.
@@ -662,9 +645,9 @@
 				<br>This is the famous
 				<a href="https://www.youtube.com/watch?v=Iuv6hY6zsd0">double slit experiment</a>.
 				<br>Notice the alternating constructive and destructive interference pattern.
-				<svg width='1000' height='400' viewBox="0,0,1400,600" style="position:relative;left:-100px;">
-					<g fill="transparent">
-						<g stroke="#f08" stroke-width="20" filter="url(#f1)">
+				<svg viewBox="100,0,600,400">
+					<g fill="none">
+						<g stroke="#f08" stroke-width="20">
 							<g transform="translate(300, 200)">
 								<circle r="40" opacity="0.6" />
 								<circle r="100" opacity="0.6" />
@@ -698,8 +681,7 @@
 
 						</g>
 						<rect x="-300" width="600" height="600" fill="#fff" stroke="none" />
-						<path d="M60 0 v600 M110 0 v600 M170 0 v600 M230 0 v600 M280 0 v600" stroke="#f08" opacity="0.6" stroke-width="20" filter="url(#f1)"
-						/>
+						<path d="M60 0 v600 M110 0 v600 M170 0 v600 M230 0 v600 M280 0 v600" stroke="#f08" opacity="0.6" stroke-width="20" />
 						<path d="M300 0 v195 M300 205 v190 M300 405 v200 " stroke="#000" stroke-width="10" />
 					</g>
 				</svg>
@@ -711,49 +693,46 @@
 			new medium, and part of the wave reflects back into the old medium.
 		</p>
 		<p>These effects are produced because media have different propagation speeds.</p>
-	</article>
-	<svg width="885" height="500" viewBox="0 0 430 268" class="center">
-		<rect y="213.151" fill="#ddeef6" width="426.896" height="56.693" />
-		<line fill="none" stroke="#000" stroke-miterlimit="10" stroke-dasharray="3,3" x1="213.698" y1="48.108" x2="213.698" y2="300"
-		/>
-		<g opacity="0.7" stroke-width="1">
-			<line fill="none" stroke="#ff0000" stroke-miterlimit="10" x1="213.698" y1="213.151" x2="319.633" y2="107.217" />
-			<path d="M323.9,102.949c-1.263,2.753-2.483,6.516-2.681,9.407l-2.146-4.579l-4.579-2.146
+		<svg viewBox="0 0 430 268">
+			<rect y="213.151" fill="#ddeef6" width="426.896" height="56.693" />
+			<line fill="none" stroke="#000" stroke-miterlimit="10" stroke-dasharray="3,3" x1="213.698" y1="48.108" x2="213.698" y2="300"
+			/>
+			<g opacity="0.7" stroke-width="1">
+				<line fill="none" stroke="#ff0000" stroke-miterlimit="10" x1="213.698" y1="213.151" x2="319.633" y2="107.217" />
+				<path d="M323.9,102.949c-1.263,2.753-2.483,6.516-2.681,9.407l-2.146-4.579l-4.579-2.146
 							C317.385,105.433,321.147,104.213,323.9,102.949z" fill="#f00" />
-			<line fill="none" stroke="#f00" stroke-miterlimit="10" x1="319.633" y1="107.217" x2="425.567" y2="1.282" />
-		</g>
-		<g stroke-width="1.7">
-			<line fill="none" stroke="#f00" stroke-miterlimit="10" x1="0.9" y1="0.354" x2="107.299" y2="106.752" />
-			<path d="M111.567,111.02c-2.753-1.263-6.516-2.483-9.407-2.681l4.579-2.146l2.146-4.579
+				<line fill="none" stroke="#f00" stroke-miterlimit="10" x1="319.633" y1="107.217" x2="425.567" y2="1.282" />
+			</g>
+			<g stroke-width="1.7">
+				<line fill="none" stroke="#f00" stroke-miterlimit="10" x1="0.9" y1="0.354" x2="107.299" y2="106.752" />
+				<path d="M111.567,111.02c-2.753-1.263-6.516-2.483-9.407-2.681l4.579-2.146l2.146-4.579
 							C109.083,104.505,110.303,108.268,111.567,111.02z" fill="#f00" />
-			<line fill="none" stroke="#f00" stroke-miterlimit="10" x1="107.299" y1="106.752" x2="213.698" y2="213.151" />
-		</g>
-		<g opacity="0.7" stroke-width="1">
-			<line fill="none" stroke="#f00" stroke-miterlimit="10" x1="213.698" y1="213.151" x2="225.671" y2="241.498" />
-			<path d="M227.432,245.668c-1.557-1.655-3.826-3.564-5.779-4.518l3.787-0.199l2.783-2.576
+				<line fill="none" stroke="#f00" stroke-miterlimit="10" x1="107.299" y1="106.752" x2="213.698" y2="213.151" />
+			</g>
+			<g opacity="0.7" stroke-width="1">
+				<line fill="none" stroke="#f00" stroke-miterlimit="10" x1="213.698" y1="213.151" x2="225.671" y2="241.498" />
+				<path d="M227.432,245.668c-1.557-1.655-3.826-3.564-5.779-4.518l3.787-0.199l2.783-2.576
 							C227.545,240.439,227.331,243.398,227.432,245.668z" fill="#f00" />
-			<line fill="none" stroke="#f00" stroke-miterlimit="10" x1="225.671" y1="241.498" x2="237.644" y2="269.845" />
-		</g>
+				<line fill="none" stroke="#f00" stroke-miterlimit="10" x1="225.671" y1="241.498" x2="237.644" y2="269.845" />
+			</g>
 
-		<path fill="none" stroke="#000" stroke-miterlimit="10" d="M221.974,232.741c-2.543,1.075-5.34,1.67-8.275,1.67" />
-		<path fill="none" stroke="#000" stroke-miterlimit="10" d="M198.666,198.119c1.924-1.923,4.214-3.48,6.758-4.556
+			<path fill="none" stroke="#000" stroke-miterlimit="10" d="M221.974,232.741c-2.543,1.075-5.34,1.67-8.275,1.67" />
+			<path fill="none" stroke="#000" stroke-miterlimit="10" d="M198.666,198.119c1.924-1.923,4.214-3.48,6.758-4.556
 				c2.543-1.076,5.34-1.671,8.275-1.671s5.732,0.595,8.275,1.671c2.544,1.076,4.834,2.633,6.758,4.556" />
 
-		<text transform="matrix(0.7071 0.7071 -0.7071 0.7071 50.1001 40.6514)" font-size="14">Incident ray</text>
-		<text transform="matrix(1 0 0 1 191.666 37.687)" font-size="14">Normal</text>
-		<text transform="matrix(0.7071 -0.7071 0.7071 0.7071 324.8916 92.687)" font-size="14">Reflected ray</text>
-		<text transform="matrix(1 0 0 1 237.6436 250.6865)" font-size="14">Refracted ray</text>
-		<g font-size="18">
-			<text transform="matrix(1 0 0 1 196.666 186.5557)">θ</text>
-			<text transform="matrix(0.583 0 0 0.583 206.6191 190.8848)">i</text>
-			<text transform="matrix(1 0 0 1 220.9736 186.5557)">θ</text>
-			<text transform="matrix(0.583 0 0 0.583 229.9268 190.8848)">r</text>
-			<text transform="matrix(1 0 0 1 216 258.6865)">θ</text>
-			<text transform="matrix(0.583 0 0 0.583 225 263.0156)" font-size="15">R</text>
-		</g>
-	</svg>
-	<article>
-		<!-- <p>Part of a wave will refract and part will reflect.</p> -->
+			<text transform="matrix(0.7071 0.7071 -0.7071 0.7071 50.1001 40.6514)" font-size="14">Incident ray</text>
+			<text transform="matrix(1 0 0 1 191.666 37.687)" font-size="14">Normal</text>
+			<text transform="matrix(0.7071 -0.7071 0.7071 0.7071 324.8916 92.687)" font-size="14">Reflected ray</text>
+			<text transform="matrix(1 0 0 1 237.6436 250.6865)" font-size="14">Refracted ray</text>
+			<g font-size="18">
+				<text transform="matrix(1 0 0 1 196.666 186.5557)">θ</text>
+				<text transform="matrix(0.583 0 0 0.583 206.6191 190.8848)">i</text>
+				<text transform="matrix(1 0 0 1 220.9736 186.5557)">θ</text>
+				<text transform="matrix(0.583 0 0 0.583 229.9268 190.8848)">r</text>
+				<text transform="matrix(1 0 0 1 216 258.6865)">θ</text>
+				<text transform="matrix(0.583 0 0 0.583 225 263.0156)" font-size="15">R</text>
+			</g>
+		</svg>
 		<p>
 			<strong>Refraction</strong> = After entering a new medium, a wave will change its direction of propagation.
 		</p>
@@ -773,7 +752,7 @@
 			made by coating one side of a plate of glass with metal.</p>
 
 		<div class='example'>
-			<svg class='center' width="600" height="210">
+			<svg viewBox="-25,0,500,210">
 				<path d="M200 2 h200 v200 l-200 -200" fill="#ddeef6" stroke="#000" stroke-width="1" />
 				<path d="M0 80 h 250" fill="none" stroke="#f00" stroke-width="3" />
 				<path d="M 245 80 v-6 l 10 6 l -10 6 v6" fill="#f00" stroke="none" />
@@ -783,7 +762,7 @@
 			<details>
 				<summary>solution</summary>
 				<p>It will refract up, towards the normal.</p>
-				<svg class='center' width="600" height="210">
+				<svg viewBox="-25,0,500,210">
 					<path d="M200 2 h200 v200 l-200 -200" fill="#ddeef6" stroke="#000" stroke-width="1" />
 					<path d="M0 80 h 278" fill="none" stroke="#f00" stroke-width="3" />
 					<g opacity="0.66">
@@ -864,7 +843,7 @@
 		<h2 class='underlined'>Snell's Law</h2>
 		<p>When a wave enters a new medium several ratios have equal proportions.</p>
 
-		<svg class='center' width="590" height="450" viewBox="0 60 350 500" style="border-radius: 20px;">
+		<svg viewBox="-200 25 800 590" style="border-radius: 20px;">
 			<rect style="opacity:1;fill:#ddeef6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;"
 			 width="950" height="315" x="-300" y="305" />
 			<rect style="opacity:1;fill:#FFF;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;"
@@ -971,121 +950,119 @@
 			<strong>critical angle.
 			</strong>
 		</p>
-	</article>
-	<svg class='center' width="1100" viewbox='0,0,2500,750'>
-		<g transform="translate(-2.2857318,-301.00481)">
-			<rect width="2440.5742" height="382.36691" x="2.2857318" y="678.07648" style="opacity:1;fill:#ddeef6;fill-opacity:1;stroke:none"
-			/>
-			<path d="m 504.42859,309.75482 0,752.85738" style="fill:none;stroke:#000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:18,
+		<svg class='center' viewbox='60,0,2200,750'>
+			<g transform="translate(-2.2857318,-301.00481)">
+				<rect width="2440.5742" height="382.36691" x="2.2857318" y="678.07648" style="opacity:1;fill:#ddeef6;fill-opacity:1;stroke:none"
+				/>
+				<path d="m 504.42859,309.75482 0,752.85738" style="fill:none;stroke:#000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:18,
 				 18;stroke-dashoffset:0 " />
-			<path d="m 1189.4287,700 0,756.85735" style="fill:none;stroke:#000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:18,
+				<path d="m 1189.4287,700 0,756.85735" style="fill:none;stroke:#000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:18,
 				 18;stroke-dashoffset:0 " />
-			<path d="m 1928.7144,700 0,756.85739" style="fill:none;stroke:#000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:18,
+				<path d="m 1928.7144,700 0,756.85739" style="fill:none;stroke:#000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:18,
 				 18;stroke-dashoffset:0 " />
-			<text x="94.909042" y="391.50513" id="text3613 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-				<tspan x="94.909042 " y="391.50513 " id="tspan3615 ">Air</tspan>
-			</text>
-			<text x="81.428574" y="1010.3622" id="text3617 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-				<tspan x="81.428574 " y="1010.3622 " id="tspan3619 ">Water</tspan>
-			</text>
-			<text x="116.29911" y="795.89911" id="text3621 " xml:space="preserve " style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-				<tspan x="116.29911 " y="795.89911 " id="tspan3623 ">n</tspan>
-			</text>
-			<text x="150.87053" y="814.18481" id="text3625 " xml:space="preserve " style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-				<tspan x="150.87053 " y="814.18481 " id="tspan3627 " style="font-size:40px ">1</tspan>
-			</text>
-			<text x="115.71024" y="587.51251" id="text3629 " xml:space="preserve " style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-				<tspan x="115.71024 " y="587.51251 " id="tspan3631 ">n</tspan>
-			</text>
-			<text x="152.28166" y="605.79822" id="text3633 " xml:space="preserve " style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-				<tspan x="152.28166 " y="605.79822 " id="tspan3635 " style="font-size:40px ">2</tspan>
-			</text>
-			<path d="M 355.20378,996.83356 503.69508,677.20021 820,353.21941" style="fill:none;stroke:#f00;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lend);marker-mid:none;marker-end:url(#Arrow1Lend) "
-			 sodipodi:nodetypes="ccc" />
-			<path d="m 917.18594,1002.596 272.21646,-322.90684 453.2484,-1.37503" id="path7353 " style="fill:none;stroke:#f00;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lend);marker-mid:none;marker-end:url(#Arrow1Lend) "
-			 sodipodi:nodetypes="ccc" />
-			<path d="m 1506.6444,916.12009 423.4812,-239.01163 423.4813,239.01163" id="path12499 " style="opacity:0.98999999;fill:none;stroke:#f00;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lend);marker-mid:none;marker-end:url(#Arrow1Lend) "
-			/>
-			<text x="1179.8596" y="507.2356" style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream
+				<text x="94.909042" y="391.50513" id="text3613 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+					<tspan x="94.909042 " y="391.50513 " id="tspan3615 ">Air</tspan>
+				</text>
+				<text x="81.428574" y="1010.3622" id="text3617 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+					<tspan x="81.428574 " y="1010.3622 " id="tspan3619 ">Water</tspan>
+				</text>
+				<text x="116.29911" y="795.89911" id="text3621 " xml:space="preserve " style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+					<tspan x="116.29911 " y="795.89911 " id="tspan3623 ">n</tspan>
+				</text>
+				<text x="150.87053" y="814.18481" id="text3625 " xml:space="preserve " style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+					<tspan x="150.87053 " y="814.18481 " id="tspan3627 " style="font-size:40px ">1</tspan>
+				</text>
+				<text x="115.71024" y="587.51251" id="text3629 " xml:space="preserve " style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+					<tspan x="115.71024 " y="587.51251 " id="tspan3631 ">n</tspan>
+				</text>
+				<text x="152.28166" y="605.79822" id="text3633 " xml:space="preserve " style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+					<tspan x="152.28166 " y="605.79822 " id="tspan3635 " style="font-size:40px ">2</tspan>
+				</text>
+				<path d="M 355.20378,996.83356 503.69508,677.20021 820,353.21941" style="fill:none;stroke:#f00;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lend);marker-mid:none;marker-end:url(#Arrow1Lend) "
+				 sodipodi:nodetypes="ccc" />
+				<path d="m 917.18594,1002.596 272.21646,-322.90684 453.2484,-1.37503" id="path7353 " style="fill:none;stroke:#f00;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lend);marker-mid:none;marker-end:url(#Arrow1Lend) "
+				 sodipodi:nodetypes="ccc" />
+				<path d="m 1506.6444,916.12009 423.4812,-239.01163 423.4813,239.01163" id="path12499 " style="opacity:0.98999999;fill:none;stroke:#f00;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lend);marker-mid:none;marker-end:url(#Arrow1Lend) "
+				/>
+				<text x="1179.8596" y="507.2356" style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream
 				 Vera Sans ">
-				<tspan x="1179.8596 " y="607.2356" id="tspan12511 ">Critical angle</tspan>
-			</text>
-			<text x="63.945057" y="869.64319" id="text12515 " xml:space="preserve " style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream
+					<tspan x="1179.8596 " y="607.2356" id="tspan12511 ">Critical angle</tspan>
+				</text>
+				<text x="63.945057" y="869.64319" id="text12515 " xml:space="preserve " style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream
 				 Vera Sans " transform="matrix(0.6839677,-0.72951229,0.72951229,0.6839677,0,0) ">
-				<tspan x="72.859116 " y="869.64319 " id="tspan12517 " style="font-size:36px ">Refracted ray</tspan>
-			</text>
-			<path d="M 2069.3107,648.98372 A 133.34013,133.34013 0 0 1 1953.5476,582.71335 " transform="translate(-153.46197,179.81763) "
-			 style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none "
-			/>
-			<path d="m 2077.188,648.72016 c -31.9734,2.01714 -42.0902,1.01814 -67.4425,-18.56829 " transform="translate(-897.17626,163.10335)"
-			 id="path12523 " style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-			 sodipodi:nodetypes="cc " />
-			<path d="m 2083.0346,383.06725 a 133.34013,133.34013 0 0 1 73.9046,32.52859 " transform="translate(-1571.462,163.10335)"
-			 style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none "
-			/>
-			<path d="M 2069.3107,648.98372 A 133.34013,133.34013 0 0 1 1953.5476,582.71335 " transform="matrix(-1,0,0,1,4007.9677,179.81763)"
-			 style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none "
-			/>
-			<path d="m 1999.275,629.42909 a 133.34013,133.34013 0 0 1 -45.7274,-46.71574 " transform="matrix(0.80923823,-0.58748062,0.58748062,0.80923823,-1492.8483,1524.2097)"
-			 style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none "
-			/>
-			<g transform="translate(-772.61485,89.267765) " id="g12535 ">
-				<g transform="translate(2509.1783,175.74624) " id="g12559 ">
-					<text x="60 " y="595.21942 " id="text12537 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-						<tspan x="60 " y="595.21942 " id="tspan12539 ">θ</tspan>
-					</text>
-					<text x="90.571426 " y="609.50513 " id="text12541 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-						<tspan x="90.571426 " y="609.50513 " id="tspan12543 " style="font-size:36px ">1</tspan>
-					</text>
-				</g>
-				<g transform="translate(810.08143,-125.21831) " id="g12553 ">
-					<text x="391.33005 " y="946.7525 " id="text12545 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-						<tspan x="391.33005 " y="946.7525 " id="tspan12547 ">θ</tspan>
-					</text>
-					<text x="421.90146 " y="961.03821 " id="text12549 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-						<tspan x="421.90146 " y="961.03821 " id="tspan12551 " style="font-size:36px ">1</tspan>
-					</text>
-				</g>
-				<g transform="translate(-10.162436,-343.41126) " id="g12579 ">
-					<g transform="translate(2398.1022,173.74624) " id="g12589 ">
-						<text x="391.33005 " y="946.7525 " id="text12581 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-							<tspan x="391.33005 " y="946.7525 " id="tspan12583 ">θ</tspan>
+					<tspan x="72.859116 " y="869.64319 " id="tspan12517 " style="font-size:36px ">Refracted ray</tspan>
+				</text>
+				<path d="M 2069.3107,648.98372 A 133.34013,133.34013 0 0 1 1953.5476,582.71335 " transform="translate(-153.46197,179.81763) "
+				 style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none "
+				/>
+				<path d="m 2077.188,648.72016 c -31.9734,2.01714 -42.0902,1.01814 -67.4425,-18.56829 " transform="translate(-897.17626,163.10335)"
+				 id="path12523 " style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+				 sodipodi:nodetypes="cc " />
+				<path d="m 2083.0346,383.06725 a 133.34013,133.34013 0 0 1 73.9046,32.52859 " transform="translate(-1571.462,163.10335)"
+				 style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none "
+				/>
+				<path d="M 2069.3107,648.98372 A 133.34013,133.34013 0 0 1 1953.5476,582.71335 " transform="matrix(-1,0,0,1,4007.9677,179.81763)"
+				 style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none "
+				/>
+				<path d="m 1999.275,629.42909 a 133.34013,133.34013 0 0 1 -45.7274,-46.71574 " transform="matrix(0.80923823,-0.58748062,0.58748062,0.80923823,-1492.8483,1524.2097)"
+				 style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none "
+				/>
+				<g transform="translate(-772.61485,89.267765) " id="g12535 ">
+					<g transform="translate(2509.1783,175.74624) " id="g12559 ">
+						<text x="60 " y="595.21942 " id="text12537 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+							<tspan x="60 " y="595.21942 " id="tspan12539 ">θ</tspan>
 						</text>
-						<text x="421.90146 " y="961.03821 " id="text12585 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-							<tspan x="421.90146 " y="961.03821 " id="tspan12587 " style="font-size:36px ">2</tspan>
+						<text x="90.571426 " y="609.50513 " id="text12541 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+							<tspan x="90.571426 " y="609.50513 " id="tspan12543 " style="font-size:36px ">1</tspan>
 						</text>
 					</g>
-					<g transform="translate(927.36065,-153.54319) " id="g12595 ">
-						<text x="391.33005 " y="946.7525 " id="text12597 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-							<tspan x="391.33005 " y="946.7525 " id="tspan12599 ">θ</tspan>
+					<g transform="translate(810.08143,-125.21831) " id="g12553 ">
+						<text x="391.33005 " y="946.7525 " id="text12545 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+							<tspan x="391.33005 " y="946.7525 " id="tspan12547 ">θ</tspan>
 						</text>
-						<text x="421.90146 " y="961.03821 " id="text12601 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-							<tspan x="421.90146 " y="961.03821 " id="tspan12603 " style="font-size:36px ">2</tspan>
+						<text x="421.90146 " y="961.03821 " id="text12549 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+							<tspan x="421.90146 " y="961.03821 " id="tspan12551 " style="font-size:36px ">1</tspan>
+						</text>
+					</g>
+					<g transform="translate(-10.162436,-343.41126) " id="g12579 ">
+						<g transform="translate(2398.1022,173.74624) " id="g12589 ">
+							<text x="391.33005 " y="946.7525 " id="text12581 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+								<tspan x="391.33005 " y="946.7525 " id="tspan12583 ">θ</tspan>
+							</text>
+							<text x="421.90146 " y="961.03821 " id="text12585 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+								<tspan x="421.90146 " y="961.03821 " id="tspan12587 " style="font-size:36px ">2</tspan>
+							</text>
+						</g>
+						<g transform="translate(927.36065,-153.54319) " id="g12595 ">
+							<text x="391.33005 " y="946.7525 " id="text12597 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+								<tspan x="391.33005 " y="946.7525 " id="tspan12599 ">θ</tspan>
+							</text>
+							<text x="421.90146 " y="961.03821 " id="text12601 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+								<tspan x="421.90146 " y="961.03821 " id="tspan12603 " style="font-size:36px ">2</tspan>
+							</text>
+						</g>
+					</g>
+					<g transform="translate(2369.7163,-503.05597) " id="g12605 ">
+						<text x="-495.58389 " y="1278.0825 " id="text12607 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+							<tspan x="-495.58389 " y="1278.0825 " id="tspan12609 ">θ</tspan>
+						</text>
+						<text x="-465.01248 " y="1292.3683 " id="text12611 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
+							<tspan x="-465.01248 " y="1292.3683 " id="tspan12613 " style="font-size:36px ">c</tspan>
 						</text>
 					</g>
 				</g>
-				<g transform="translate(2369.7163,-503.05597) " id="g12605 ">
-					<text x="-495.58389 " y="1278.0825 " id="text12607 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-						<tspan x="-495.58389 " y="1278.0825 " id="tspan12609 ">θ</tspan>
-					</text>
-					<text x="-465.01248 " y="1292.3683 " id="text12611 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-						<tspan x="-465.01248 " y="1292.3683 " id="tspan12613 " style="font-size:36px ">c</tspan>
-					</text>
-				</g>
-			</g>
-			<text xml:space="preserve " style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream
+				<text xml:space="preserve " style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream
 				 Vera Sans " x="1930.4741 " y="574.09497 " id="text2894 ">
-				<tspan sodipodi:role="line " x="1930.4741 " y="574.09497 " id="tspan2898 ">Total internal</tspan>
-				<tspan sodipodi:role="line " x="1930.4741 " y="644.09497 " id="tspan3060 ">reflection</tspan>
-			</text>
-			<text x="-577.61652 " y="723.16687 " id="text12515-1 " xml:space="preserve " style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream
+					<tspan sodipodi:role="line " x="1930.4741 " y="574.09497 " id="tspan2898 ">Total internal</tspan>
+					<tspan sodipodi:role="line " x="1930.4741 " y="644.09497 " id="tspan3060 ">reflection</tspan>
+				</text>
+				<text x="-577.61652 " y="723.16687 " id="text12515-1 " xml:space="preserve " style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream
 				 Vera Sans " transform="matrix(0.4237924,-0.90575935,0.90575935,0.4237924,0,0) " inkscape:transform-center-y="-11.233951
 				 " inkscape:transform-center-x="0.10730641 ">
-				<tspan x="-568.70245 " y="723.16687 " id="tspan12517-7 " style="font-size:36px ">Incident ray</tspan>
-			</text>
-		</g>
-	</svg>
-	<article>
+					<tspan x="-568.70245 " y="723.16687 " id="tspan12517-7 " style="font-size:36px ">Incident ray</tspan>
+				</text>
+			</g>
+		</svg>
 		<p>You can see total internal reflection if you swim under some water and look upwards.</p>
 		<div class='example'>
 			<strong>Example:</strong> A 600 nm wave of red light starts in water and enters air. What is the critical angle for total internal

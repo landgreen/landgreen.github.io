@@ -15,7 +15,6 @@
 
 	<title>Motion</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
-
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 
 	<script defer src='../../../lib/randomColor.min.js'></script>
@@ -133,31 +132,29 @@
 		</div>
 
 		<div class='example'>
-			<svg class='center' id="SVG-graph-0" width="290" height="290">
-			</svg>
-			<script defer>
-				funGraphSVG("SVG-graph-0", x => x, {
-					x0: 15,
-					y0: 270,
-					stroke: "rgba(20, 200, 255, 1)",
-					fill: "rgba(20, 200, 255, 0.07)",
-					positiveOnly: true,
-					step: 10,
-					scale: 50,
-					gridSize: 50,
-					strokeWidth: 3,
-					xLabel: "time (s)",
-					yLabel: "position (m)",
-					showMouseCoords: true,
-				});
-			</script>
-			<br>
-			<strong>Example:</strong> This graph show position vs. time. What does its slope represent?
-			<details>
-				<summary>solution</summary>
-				<p>velocity</p>
-				<p>Velocity is defined as the change in position every second. This is the same as the rise over the run, which is slope.</p>
-			</details>
+			<svg class='center' id="SVG-graph-0" viewBox="0 0 600 290" </svg>
+				<script defer>
+					funGraphSVG("SVG-graph-0", x => x / 2, {
+						x0: 15,
+						y0: 270,
+						stroke: "rgba(20, 200, 255, 1)",
+						fill: "rgba(20, 200, 255, 0.07)",
+						positiveOnly: true,
+						step: 10,
+						scale: 50,
+						gridSize: 50,
+						strokeWidth: 3,
+						xLabel: "time (s)",
+						yLabel: "position (m)",
+						showMouseCoords: true,
+					});
+				</script>
+				<strong>Example:</strong> This graph show position vs. time. What does its slope represent?
+				<details>
+					<summary>solution</summary>
+					<p>velocity</p>
+					<p>Velocity is defined as the change in position every second. This is the same as the rise over the run, which is slope.</p>
+				</details>
 		</div>
 
 
@@ -203,10 +200,10 @@
 			</details>
 		</div>
 		<div class='example'>
-			<svg class='center' id="SVG-graph-3" width="290" height="290">
+			<svg class='center' id="SVG-graph-3" viewBox="0 0 600 290">
 			</svg>
 			<script defer>
-				funGraphSVG("SVG-graph-3", x => 0.37 * x * x, {
+				funGraphSVG("SVG-graph-3", x => 0.04 * x * x, {
 					x0: 15,
 					y0: 270,
 					stroke: "rgba(20, 200, 255, 1)",
@@ -221,7 +218,6 @@
 					showMouseCoords: true,
 				});
 			</script>
-			<br>
 			<strong>Example:</strong> This graph show velocity vs. time. What does its slope represent?
 			<details>
 				<summary>solution</summary>
@@ -243,82 +239,82 @@
 				border: 1px solid #666;
 			}
 		</style>
-
-		<svg id="SVG-graph-4" class="graph-box" width="290" height="250"></svg>
-		<svg id="SVG-graph-5" class="graph-box" width="290" height="250"></svg>
-		<div class="center">
-			acceleration =
-			<input id='acceleration-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5" style="width:350px;">
-			<input id='acceleration' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
+		<div class='center'>
+			<svg id="SVG-graph-4" class="graph-box" width="290" height="250"></svg>
+			<svg id="SVG-graph-5" class="graph-box" width="290" height="250"></svg>
+			<div class="center">
+				acceleration =
+				<input id='acceleration-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5" style="width:200px;">
+				<input id='acceleration' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
+			</div>
+			<svg id="SVG-graph-6" class="graph-box center" width="400" height="250"></svg>
+			<script defer>
+				const x0 = 145
+				const y0 = 125;
+				let settings4 = {
+					x0: x0,
+					y0: y0,
+					stroke: "rgba(255,0,50,0.5)",
+					// fill: "rgba(0,0,0,0.1)",
+					scale: 50,
+					showGrid: false,
+					strokeWidth: 8,
+					xLabel: "time (s)",
+					yLabel: "position (m)",
+				}
+				let settings5 = {
+					x0: x0,
+					y0: y0,
+					stroke: "rgba(150,30,255,0.5)",
+					// fill: "rgba(0,0,0,0.1)",
+					step: 10,
+					scale: 50,
+					showGrid: false,
+					strokeWidth: 8,
+					xLabel: "time (s)",
+					yLabel: "velocity (m/s)",
+				}
+				let settings6 = {
+					x0: x0,
+					y0: y0,
+					stroke: "rgba(0,130,255,0.5)",
+					// fill: "rgba(0,0,0,0.1)",
+					step: 10,
+					scale: 50,
+					showGrid: false,
+					strokeWidth: 8,
+					xLabel: "time (s)",
+					yLabel: "acceleration (m/s²)",
+				}
+				funGraphSVG("SVG-graph-4", x => 1 / 4 * x * x, settings4);
+				funGraphSVG("SVG-graph-5", x => 1 / 2 * x, settings5);
+				funGraphSVG("SVG-graph-6", x => 1 / 2, settings6);
+				function redrawGraphs() {
+					settings4.updatePath = true
+					settings5.updatePath = true
+					settings6.updatePath = true
+					funGraphSVG("SVG-graph-6", x => document.getElementById("acceleration").value, settings4);
+					funGraphSVG("SVG-graph-5", x => document.getElementById("acceleration").value * x, settings5);
+					funGraphSVG("SVG-graph-4", x => document.getElementById("acceleration").value / 2 * x * x, settings6);
+				}
+				document.getElementById("acceleration").addEventListener("input", event => {
+					document.getElementById("acceleration-slider").value = document.getElementById("acceleration").value
+					redrawGraphs()
+				});
+				document.getElementById("acceleration-slider").addEventListener("input", event => {
+					document.getElementById("acceleration").value = document.getElementById("acceleration-slider").value
+					redrawGraphs()
+				});
+			</script>
 		</div>
-		<svg id="SVG-graph-6" class="graph-box center" width="585" height="250"></svg>
-		<script defer>
-			const x0 = 145
-			const y0 = 125;
-
-			let settings4 = {
-				x0: x0,
-				y0: y0,
-				stroke: "rgba(255,0,50,0.5)",
-				// fill: "rgba(0,0,0,0.1)",
-				scale: 50,
-				showGrid: false,
-				strokeWidth: 8,
-				xLabel: "time (s)",
-				yLabel: "position (m)",
-			}
-			let settings5 = {
-				x0: x0,
-				y0: y0,
-				stroke: "rgba(150,30,255,0.5)",
-				// fill: "rgba(0,0,0,0.1)",
-				step: 10,
-				scale: 50,
-				showGrid: false,
-				strokeWidth: 8,
-				xLabel: "time (s)",
-				yLabel: "velocity (m/s)",
-			}
-			let settings6 = {
-				x0: x0,
-				y0: y0,
-				stroke: "rgba(0,130,255,0.5)",
-				// fill: "rgba(0,0,0,0.1)",
-				step: 10,
-				scale: 50,
-				showGrid: false,
-				strokeWidth: 8,
-				xLabel: "time (s)",
-				yLabel: "acceleration (m/s²)",
-			}
-			funGraphSVG("SVG-graph-4", x => 1 / 4 * x * x, settings4);
-			funGraphSVG("SVG-graph-5", x => 1 / 2 * x, settings5);
-			funGraphSVG("SVG-graph-6", x => 1 / 2, settings6);
-			function redrawGraphs() {
-				settings4.updatePath = true
-				settings5.updatePath = true
-				settings6.updatePath = true
-				funGraphSVG("SVG-graph-6", x => document.getElementById("acceleration").value, settings4);
-				funGraphSVG("SVG-graph-5", x => document.getElementById("acceleration").value * x, settings5);
-				funGraphSVG("SVG-graph-4", x => document.getElementById("acceleration").value / 2 * x * x, settings6);
-			}
-			document.getElementById("acceleration").addEventListener("input", event => {
-				document.getElementById("acceleration-slider").value = document.getElementById("acceleration").value
-				redrawGraphs()
-			});
-			document.getElementById("acceleration-slider").addEventListener("input", event => {
-				document.getElementById("acceleration").value = document.getElementById("acceleration-slider").value
-				redrawGraphs()
-			});
-		</script>
 
 		<div class='example'>
 			<strong>Graph:</strong> Draw the position vs. time and velocity vs. time graphs for an object moving at 2 m/s for 10 s.
 			<details id="example0">
 				<summary>solution</summary>
-				<svg id="SVG-graph-12" width="550" height="300">
+				<svg id="SVG-graph-12" viewBox="0 0 600 300">
 				</svg>
-				<svg id="SVG-graph-13" width="550" height="300">
+				<svg id="SVG-graph-13" viewBox="0 0 600 300">
 				</svg>
 				<script defer>
 					// funGraphSVG() don't work inside <details>
@@ -359,8 +355,7 @@
 		</div>
 
 		<div class='example'>
-			<svg id="SVG-graph-16" width="600" height="220">
-			</svg>
+			<svg id="SVG-graph-16" viewBox="0 0 600 300"> </svg>
 			<script defer>
 				funGraphSVG("SVG-graph-16", x => 1 / 4 * x, {
 					x0: 20,
@@ -399,9 +394,9 @@
 			</details>
 			<details id="example1">
 				<summary>solution</summary>
-				<svg id="SVG-graph-14" width="550" height="300">
+				<svg id="SVG-graph-14" viewBox="0 0 600 300">
 				</svg>
-				<svg id="SVG-graph-15" width="550" height="300">
+				<svg id="SVG-graph-15" viewBox="0 0 600 300">
 				</svg>
 				<script defer>
 					// funGraphSVG() don't work inside <details>
@@ -441,13 +436,16 @@
 				</script>
 			</details>
 		</div>
-		<div class='example'>Acceleration doesn't have to be constant. In the graphs below, acceleration is increasing. The change in acceleration over
-			time is called
-			<strong>jerk</strong>.
-			<svg id="SVG-graph-8" class="graph-box" width="290" height="250"></svg>
-			<svg id="SVG-graph-9" class="graph-box" width="290" height="250"></svg>
-			<svg id="SVG-graph-11" class="graph-box" width="290" height="250"></svg>
-			<svg id="SVG-graph-10" class="graph-box" width="290" height="250"></svg>
+		<div class='example'>
+			<p>Acceleration doesn't have to be constant. In the graphs below, acceleration is increasing. The change in acceleration
+				over time is called
+				<strong>jerk</strong>.</p>
+			<div class='center'>
+				<svg id="SVG-graph-8" class="graph-box" width="290" height="250"></svg>
+				<svg id="SVG-graph-9" class="graph-box" width="290" height="250"></svg>
+				<svg id="SVG-graph-11" class="graph-box" width="290" height="250"></svg>
+				<svg id="SVG-graph-10" class="graph-box" width="290" height="250"></svg>
+			</div>
 			<br>jerk =
 			<input id='jerk-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5" style="width:420px;">
 			<input id='jerk' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
