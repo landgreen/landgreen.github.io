@@ -330,17 +330,6 @@ header h1 a:hover {
   }
 }
 
-@media screen and (max-width: 800px) {
-  .side-graphics {
-    visibility: hidden;
-  }
-}
-@media screen and (max-width: 1100px) {
-  .side-graphics-wide {
-    visibility: hidden;
-  }
-}
-
 @keyframes dash {
   to {
     stroke-dashoffset: 0;
