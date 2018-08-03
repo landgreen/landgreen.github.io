@@ -33,34 +33,13 @@
 		</h1>
 	</header>
 	<article>
-		<style>
-			.canvas-container {
-				position: relative;
-				width: 600px;
-				height: 200px;
-			}
-
-			#canvas1 {
-				position: absolute;
-			}
-
-			#buttons {
-				position: absolute;
-				right: 0%;
-				bottom: 0%
-			}
-		</style>
 		<p>Take a look at the simulated spring and mass system below.</p>
 
-		<div class="canvas-container">
-			<canvas id="canvas1" width='600' height='200' onclick="spring(this)"></canvas>
-			<div id="buttons">
-				&nbsp;k =
-				<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 60px;"> &nbsp;&nbsp;&nbsp; m =
-				<input id='spring-m' type="number" min="1" max="100" value=0 step=1 style="width: 60px;">
-				<button id="pause1">pause </button>
-			</div>
-		</div>
+		<button id="pause1">pause </button>
+		k =
+		<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 60px;"> &nbsp;&nbsp;&nbsp; m =
+		<input id='spring-m' type="number" min="1" max="100" value=0 step=1 style="width: 60px;">
+		<canvas id="canvas1" width='600' height='200' onclick="spring(this)"></canvas>
 		<p>
 			What types of energy are being traded?
 			<br>
@@ -73,7 +52,7 @@
 			<div>
 				<br> &nbsp;
 				<canvas id="canvas2" width='250' height='500' onclick="springGravity(this)"> </canvas>
-				<br> &nbsp;&nbsp;
+				<br>
 				<button id="pause2"> pause </button> &nbsp; k =
 				<input id='spring-k2' type="number" min="0" max="10" value=3 step=1 style="width: 60px;"> m =
 				<input id='spring-m2' type="number" min="1" max="100" value=0 step=1 style="width: 60px;">

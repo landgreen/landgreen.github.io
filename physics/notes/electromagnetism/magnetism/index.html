@@ -37,93 +37,69 @@
 			<a href="https://www.nuledo.com/en/cloud-chambers/#alfa-castice">radiation</a> passes through the chamber only charged particles are visible. This is because neutral particles don't disrupt
 			the vapor. When a powerful magnetic field is applied to the cloud chamber the charged particles curve. The arc of their
 			curve indicates charge and mass.</p>
-		<style>
-			.wrapper {
-				display: grid;
-				grid-gap: 0px;
-				grid-template-columns: 100px 100px 100px 100px 100px 100px;
-			}
-
-			.a {
-				grid-column: 1 / span 2;
-				grid-row: 1;
-			}
-
-			.b {
-				grid-column: 3 / span 2;
-				grid-row: 1;
-			}
-
-			.c {
-				grid-column: 5 /span 2;
-				grid-row: 1;
-			}
-
-			.d {
-				grid-column: 1;
-				grid-row: 2;
-			}
-
-			.e {
-				grid-column: 2;
-				grid-row: 2;
-			}
-
-			.f {
-				grid-column: 3;
-				grid-row: 2;
-			}
-
-			.g {
-				grid-column: 4;
-				grid-row: 2;
-			}
-
-			.h {
-				grid-column: 5;
-				grid-row: 2;
-			}
-		</style>
 		<form id="settings" style="display:none">
-			<div class="wrapper">
-				<div class="a">
+			<div class="flex-grid-thirds center">
+				<div class="col">
 					<label>time rate</label> =
 					<span id="cloud-timerate-text">1</span>
 					<br>
 					<input type="range" id='cloud-timerate-slider' min="0" max="10" step="1" value="1">
 				</div>
-				<div class="b">
+				<div class="col">
 					<label>radiation rate</label> =
 					<span id="cloud-radiation-text">3</span>
 					<br>
 					<input type="range" id='cloud-radiation-slider' min="0" max="30" step="1" value="3">
 				</div>
-				<div class="c">
+				<div class="col">
 					<label>magnetic field</label> =
 					<span id="cloud-magfield-text">0.06</span>
 					<br>
 					<input type="range" id='cloud-magfield-slider' min="-0.2" max="0.2" step="0.01" value="0.06">
 				</div>
-				<div class="d">
+			</div>
+			<style>
+				.checkboxes label {
+					display: block;
+					float: left;
+					padding-right: 10px;
+					padding-left: 22px;
+					text-indent: -22px;
+				}
+
+				.checkboxes input {
+					vertical-align: middle;
+				}
+
+				.checkboxes label span {
+					vertical-align: middle;
+				}
+			</style>
+			<div class="checkboxes">
+				<label for="cloud-alpha-checkbox">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="checkbox" id="cloud-alpha-checkbox" name="alpha" checked>
-					<label for="cloud-alpha-checkbox">alpha</label>
-				</div>
-				<div class="e">
-					<input type="checkbox" id="cloud-beta-checkbox" name="beta" checked>
-					<label for="cloud-beta-checkbox">beta</label>
-				</div>
-				<div class="f">
-					<input type="checkbox" id="cloud-gamma-checkbox" name="gamma" checked>
-					<label for="cloud-gamma-checkbox">gamma</label>
-				</div>
-				<div class="g">
-					<input type="checkbox" id="cloud-proton-checkbox" name="proton" checked>
-					<label for="cloud-proton-checkbox">proton</label>
-				</div>
-				<div class="h">
-					<input type="checkbox" id="cloud-muon-checkbox" name="muon" checked>
-					<label for="cloud-muon-checkbox">muon</label>
-				</div>
+					<span>alpha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				</label>
+				<label for="cloud-beta-checkbox">
+					<input type="checkbox" id="cloud-beta-checkbox" name="beta" style="margin:-4px;" checked>
+					<span>beta&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				</label>
+
+				<label class="check-label" for="cloud-gamma-checkbox">
+					<input class="check-box" type="checkbox" id="cloud-gamma-checkbox" name="gamma" style="margin:-4px;" checked>
+					<span>gamma&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				</label>
+
+				<label class="check-label" for="cloud-proton-checkbox">
+					<input class="check-box" type="checkbox" id="cloud-proton-checkbox" name="proton" style="margin:-4px;" checked>
+					<span>proton&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				</label>
+
+				<label class="check-label" for="cloud-muon-checkbox">
+					<input class="check-box" type="checkbox" id="cloud-muon-checkbox" name="muon" style="margin:-4px;" checked>
+					<span> muon</span>
+				</label>
 			</div>
 		</form>
 		<canvas class="cloud" id='cloud-chamber' height='100' width='600' onclick="charges15(this)" style="background: #000;">

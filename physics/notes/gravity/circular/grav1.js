@@ -1,7 +1,6 @@
 grav1();
-function grav1(el = document.getElementById("grav1")) {
-  el.onclick = null; //stops the function from running on button click
-  var canvas = el;
+function grav1() {
+  var canvas = document.getElementById("grav1");
   var ctx = canvas.getContext("2d");
 
   //___________________get mouse input___________________
@@ -22,14 +21,6 @@ function grav1(el = document.getElementById("grav1")) {
   canvas.onmouseup = function() {
     mouse.down = false;
   };
-  let pause = true;
-  el.addEventListener("mouseleave", function() {
-    pause = true;
-  });
-  el.addEventListener("mouseenter", function() {
-    if (pause) requestAnimationFrame(cycle);
-    pause = false;
-  });
 
   const q = []; //holds the Particles
 
@@ -72,7 +63,7 @@ function grav1(el = document.getElementById("grav1")) {
     Particle.integration(q);
     Particle.drawAll(q, ctx);
     Particle.bounds(q, canvas);
-    if (!pause) requestAnimationFrame(cycle);
+    requestAnimationFrame(cycle);
   }
   requestAnimationFrame(cycle);
 }
