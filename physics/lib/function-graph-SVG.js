@@ -39,6 +39,28 @@ function funGraphSVG(
   const target = document.getElementById(id);
   const bounds = target.getBoundingClientRect();
 
+  //**********************************
+
+  // // Create an SVGPoint for future math
+  // var pt = target.createSVGPoint();
+
+  // // Get point in global SVG space
+  // function cursorPoint(evt) {
+  //   pt.x = evt.clientX;
+  //   pt.y = evt.clientY;
+  //   return pt.matrixTransform(target.getScreenCTM().inverse());
+  // }
+
+  // svg.addEventListener(
+  //   "mousemove",
+  //   function(evt) {
+  //     var loc = cursorPoint(evt);
+  //     // Use loc.x and loc.y here
+  //   },
+  //   false
+  // );
+  //**********************************
+
   if (showAxis && !updatePath) {
     const x = x0 + 0.5; //sharper lines, not between pixels
     const y = y0 + 0.5; //sharper lines, not between pixels

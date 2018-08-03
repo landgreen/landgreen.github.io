@@ -20,7 +20,7 @@ function centerLine(el) {
 function drawSineWave(el, wavelength, amplitude, phase = 0, color = "#000", opacity = 1, autoWidth = true, widthSVG = "600") {
   let width;
   if (autoWidth) {
-    width = window.innerWidth;
+    width = screen.width; //window.innerWidth;
     el.style.position = "relative";
     el.style.left = Math.min(-(width - 600) / 2, 0) + "px";
   } else {
@@ -29,10 +29,10 @@ function drawSineWave(el, wavelength, amplitude, phase = 0, color = "#000", opac
   el.setAttribute("width", width);
 
   const offset = el.getAttribute("height") / 2;
-  let d = "M-1 " + (-Math.sin(2 * Math.PI / wavelength * (-1 + phase)) * amplitude + offset);
+  let d = "M-1 " + (-Math.sin(((2 * Math.PI) / wavelength) * (-1 + phase)) * amplitude + offset);
 
   for (let x = 0; x < width; ++x) {
-    d += " L" + x + " " + (-Math.sin(2 * Math.PI / wavelength * (x - 1 + phase)) * amplitude + offset);
+    d += " L" + x + " " + (-Math.sin(((2 * Math.PI) / wavelength) * (x - 1 + phase)) * amplitude + offset);
   }
 
   newpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -63,7 +63,8 @@ function drawSineWaves(
 ) {
   let width;
   if (autoWidth) {
-    width = window.innerWidth;
+    // width = window.innerWidth;
+    width = screen.width;
     el.style.position = "relative";
     el.style.left = Math.min(-(width - 600) / 2, 0) + "px";
   } else {
@@ -78,13 +79,16 @@ function drawSineWaves(
 
   const offset = el.getAttribute("height") / 2;
   let d =
-    "M-1 " + (-Math.sin(2 * Math.PI / wavelength1 * (-1 + phase1)) * amplitude1 + -Math.sin(2 * Math.PI / wavelength2 * (-1 + phase2)) * amplitude2 + offset);
+    "M-1 " +
+    (-Math.sin(((2 * Math.PI) / wavelength1) * (-1 + phase1)) * amplitude1 + -Math.sin(((2 * Math.PI) / wavelength2) * (-1 + phase2)) * amplitude2 + offset);
   for (let x = 0; x < width; ++x) {
     d +=
       " L" +
       x +
       " " +
-      (-Math.sin(2 * Math.PI / wavelength1 * (x - 1 + phase1)) * amplitude1 + -Math.sin(2 * Math.PI / wavelength2 * (x - 1 + phase2)) * amplitude2 + offset);
+      (-Math.sin(((2 * Math.PI) / wavelength1) * (x - 1 + phase1)) * amplitude1 +
+        -Math.sin(((2 * Math.PI) / wavelength2) * (x - 1 + phase2)) * amplitude2 +
+        offset);
   }
 
   newpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -100,14 +104,15 @@ function drawSineWaves(
 }
 
 function AppendSinePath(el, wavelength, amplitude, phase = 0, color = "#000", opacity = 1) {
-  let width = window.innerWidth;
+  // let width = window.innerWidth;
+  let width = screen.width;
   el.style.position = "relative";
   el.style.left = Math.min(-(width - 600) / 2, 0) + "px";
 
   const offset = el.getAttribute("height") / 2;
-  let d = "M-1 " + (-Math.sin(2 * Math.PI / wavelength * (-1 + phase)) * amplitude + offset);
+  let d = "M-1 " + (-Math.sin(((2 * Math.PI) / wavelength) * (-1 + phase)) * amplitude + offset);
   for (let x = 0; x < width; ++x) {
-    d += " L" + x + " " + (-Math.sin(2 * Math.PI / wavelength * (x - 1 + phase)) * amplitude + offset);
+    d += " L" + x + " " + (-Math.sin(((2 * Math.PI) / wavelength) * (x - 1 + phase)) * amplitude + offset);
   }
 
   newpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -123,7 +128,8 @@ function AppendSinePath(el, wavelength, amplitude, phase = 0, color = "#000", op
 function drawSineWavesArray(el, waves, superposition = true, autoWidth = true, widthSVG = "600") {
   let width;
   if (autoWidth) {
-    width = window.innerWidth;
+    width = screen.width;
+    // width = window.innerWidth;
     el.style.position = "relative";
     el.style.left = Math.min(-(width - 600) / 2, 0) + "px";
   } else {
@@ -138,7 +144,7 @@ function drawSineWavesArray(el, waves, superposition = true, autoWidth = true, w
     let d = "M-1 ";
     let amp = offset;
     for (let i = 0; i < waves.length; ++i) {
-      amp += -Math.sin(2 * Math.PI / waves[i].wavelength * (-1 + waves[i].phase)) * waves[i].amplitude;
+      amp += -Math.sin(((2 * Math.PI) / waves[i].wavelength) * (-1 + waves[i].phase)) * waves[i].amplitude;
     }
     d += amp;
 
@@ -146,7 +152,7 @@ function drawSineWavesArray(el, waves, superposition = true, autoWidth = true, w
     for (let x = 0; x < width; ++x) {
       let amp = offset;
       for (let i = 0; i < waves.length; ++i) {
-        amp += -Math.sin(2 * Math.PI / waves[i].wavelength * (x - 1 + waves[i].phase)) * waves[i].amplitude;
+        amp += -Math.sin(((2 * Math.PI) / waves[i].wavelength) * (x - 1 + waves[i].phase)) * waves[i].amplitude;
       }
       d += " L" + x + " " + amp;
     }

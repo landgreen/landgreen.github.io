@@ -330,6 +330,12 @@ header h1 a:hover {
   }
 }
 
+@media screen and (max-width: 630px) {
+  .hide-on-mobile {
+    display: none;
+  }
+}
+
 @keyframes dash {
   to {
     stroke-dashoffset: 0;

@@ -18,10 +18,10 @@
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 
-	<script defer src="orbits.js"></script>
+	<script src='../../../lib/function-graph-SVG.js'></script>
 	<script defer src="grav1.js"></script>
 	<script defer src="grav2.js"></script>
-	<script src='../../../lib/function-graph-SVG.js'></script>
+	<script defer src="orbits.js"></script>
 </head>
 
 <body>
@@ -42,7 +42,7 @@
 					kinetic energy changes into the tides.</p>
 			</div>
 			<div>
-				<canvas id='grav1' height='250' width='250' style="background-color: #111;border-radius: 250px;"> </canvas>
+				<canvas class="center" id='grav1' height='250' width='250' style="background-color: #111;border-radius: 250px;"> </canvas>
 			</div>
 		</div>
 		<div class="example">
@@ -222,20 +222,24 @@
 		</div>
 		<p>Situations where there is circular motion and a much larger central body include: planets orbiting the sun, moons orbiting
 			large planets, and satellites.</p>
-		<p>Take a look at the simulation below to see circular orbits at different distances.
-			<br>Click and drag to move. Double click for full screen.</p>
-		<style>
-			.full-page {
-				position: fixed;
-				top: -5px;
-				left: -5px;
-				z-index: 0;
-				margin: 0;
-				padding: 0;
-			}
-		</style>
 
-		<div id='three-orbit'></div>
+		<div class="hide-on-mobile">
+			<p>Take a look at the simulation below to see circular orbits at different distances. Click and drag to move. Double click
+				for full screen.</p>
+			<style>
+				.full-page {
+					position: fixed;
+					top: -5px;
+					left: -5px;
+					z-index: 0;
+					margin: 0;
+					padding: 0;
+				}
+			</style>
+
+			<div id='three-orbit'></div>
+		</div>
+
 		<div class='example'>
 			<center>
 				<table border>
@@ -243,8 +247,7 @@
 						<th align=left>Planet</th>
 						<th>mass (kg)</th>
 						<th>radius (km)</th>
-						<th>density (g/cm
-							<sup>3</sup>)</th>
+						<th>density (g/cm³)</th>
 					</tr>
 					<tr align=center>
 						<td align=left>Sun</td>

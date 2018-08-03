@@ -130,11 +130,13 @@
 		<canvas id='charge0' height='300' onclick="charges0(this)"> </canvas>
 		<p> They love making atoms. Try poking the simulations with your mouse.</p>
 		<canvas id='charge1' height='300' onclick="charges1(this)"> </canvas>
-		<p>
-			This one is organized in a hexagon pattern, like
-			<a href="https://en.wikipedia.org/wiki/Graphene">graphene</a>.
-		</p>
-		<canvas id='charge6' height='500' onclick="charges6(this)"> </canvas>
+		<div class="hide-on-mobile">
+			<p>
+				This one is organized in a hexagon pattern, like
+				<a href="https://en.wikipedia.org/wiki/Graphene">graphene</a>.
+			</p>
+			<canvas id='charge6' height='500' onclick="charges6(this)"> </canvas>
+		</div>
 		<p>Keep in mind these simulations only approximate how protons and electrons interact. They aren't perfectly accurate.</p>
 
 		<h2 class='underlined' id='Coulombs-Law'>Coulomb's Law</h2>
@@ -249,11 +251,13 @@
 		<canvas id='charge4' height='250' onclick="charges4(this)"> </canvas> -->
 		<p>The flow of electric charge is called
 			<strong>electric current</strong>.</p>
-		<canvas id='charge8' height='250' onclick="charges8(this)"> </canvas>
-		<p>In some materials the current can be thought of as the flow of an electron hole. This view of current helps to understand
-			the semiconductors in solar panels, LEDs, and transistors.</p>
-		<canvas id='charge9' height='250' onclick="charges9(this)"> </canvas>
-		<!-- <canvas id='charge7' height='250' onclick="charges7(this)"> </canvas>
+
+		<div class="hide-on-mobile">
+			<canvas id='charge8' height='250' onclick="charges8(this)"> </canvas>
+			<p>In some materials the current can be thought of as the flow of an electron hole. This view of current helps to understand
+				the semiconductors in solar panels, LEDs, and transistors.</p>
+			<canvas id='charge9' height='250' onclick="charges9(this)"> </canvas>
+			<!-- <canvas id='charge7' height='250' onclick="charges7(this)"> </canvas>
 				<p>A gap in the wire will reduce the flow of electrons.</p>
 				<style>
 					.canvas-container {
@@ -282,6 +286,8 @@
 					<canvas id='charge3' height='250' onclick="charges3(this)"></canvas>
 				</div>
 			</details> -->
+		</div>
+
 
 		<div class="example">
 			<p>In chemistry, elements are roughly divided into metals, metalloids and nonmetals. Metals are held together by loosely
@@ -368,7 +374,7 @@
 
 
 
-		<div id="charge5-zone" class="example">
+		<div id="charge5-zone" class="example hide-on-mobile">
 			<p>The positive charges on the left pull the electrons on the right closer, but not enough to to get them to jump over. This
 				leaves the grouping on the right with an
 				<strong>induced charge</strong>. Substances with an induced charge are slightly negative on one side and slightly positive on
