@@ -650,130 +650,91 @@
 
     <h3 class='underlined'>The Normal Force</h3>
     <p>Typically a normal force will balance the force of gravity to keep an object from accelerating up or down.</p>
-    <div class="col-group definition">
-      <div>
-        <p>A
-          <strong>normal force</strong> occurs when two objects are in contact. It is perpendicular to the point of contact. A normal
-          force prevents objects from passing through each other.</p>
-      </div>
-      <div>
-        <svg class='center' width="275" height="250">
-          <defs>
-            <g id="vector">
-              <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
-              <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
-            </g>
-            <g id="box">
-              <rect x="0" y="0" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fff " />
-              <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle">m</text>
-            </g>
-          </defs>
-          <!-- <rect x="0" y="150" width="200" height="200" style="fill:#cba" /> -->
-          <rect x="0" y="150" width="300" height="200" fill="#bcd" stroke="none" />
-          <line x1="0" y1="150" x2="300" y2="150" stroke="#000" stroke-width="2" />
+    <div class="definition">
+      <svg class='center' width="275" height="250">
+        <defs>
+          <g id="vector">
+            <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
+            <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
+          </g>
+          <g id="box">
+            <rect x="0" y="0" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fff " />
+            <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle">m</text>
+          </g>
+        </defs>
+        <!-- <rect x="0" y="150" width="200" height="200" style="fill:#cba" /> -->
+        <rect x="0" y="150" width="300" height="200" fill="#bcd" stroke="none" />
+        <line x1="0" y1="150" x2="300" y2="150" stroke="#000" stroke-width="2" />
 
-          <use x='100' y='70' xlink:href="#box" />
-          <use xlink:href="#vector" transform='translate(140 70) rotate(-180)' />
-          <!-- <text x="100" y="13" text-anchor="middle" fill="black">Normal Force</text> -->
-          <text x="143" y="13" text-anchor="middle" fill="#000">F
-            <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
-          </text>
-          <use xlink:href="#vector" transform='translate(140 150) rotate(0)' />
-          <!-- <text x="100" y="220" text-anchor="middle" fill="black">Force of gravity</text> -->
-          <text x="142" y="220" text-anchor="middle" fill="#000">F
-            <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
-          </text>
-        </svg>
-      </div>
+        <use x='100' y='70' xlink:href="#box" />
+        <use xlink:href="#vector" transform='translate(140 70) rotate(-180)' />
+        <!-- <text x="100" y="13" text-anchor="middle" fill="black">Normal Force</text> -->
+        <text x="143" y="13" text-anchor="middle" fill="#000">F
+          <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+        </text>
+        <use xlink:href="#vector" transform='translate(140 150) rotate(0)' />
+        <!-- <text x="100" y="220" text-anchor="middle" fill="black">Force of gravity</text> -->
+        <text x="142" y="220" text-anchor="middle" fill="#000">F
+          <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+        </text>
+      </svg>
+      <p>A
+        <strong>normal force</strong> occurs when two objects are in contact. It is perpendicular to the point of contact. A normal
+        force prevents objects from passing through each other.</p>
     </div>
     <div class='example'>
       <strong>Example:</strong> You are accelerating up in an elevator at 2&nbsp;m/s². If your mass is 100&nbsp;kg, what is the normal
       force you feel from the elevator?
       <details>
         <summary>solution</summary>
+        $$F_{g}=mg$$ $$F_{g}=(100)(-9.8)$$ $$F_{g}=-980\, \mathrm{N}$$
+        <br> $$\sum F=ma$$ $$F_{g}+F_{N}=ma$$ $$F_{N}=ma-F_{g}$$ $$F_{N}=(100)(2)-(-980)$$ $$F_{N}=1180\, \mathrm{N}$$
+        <svg class='center' width="280" height="200">
+          <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
+          <line x1="0" y1="140" x2="280" y2="140" stroke="#000" stroke-width="2" />
 
-        <ul class="listing">
-          <li>
-            <div>
-              $$F_{g}=mg$$ $$F_{g}=(100)(-9.8)$$ $$F_{g}=-980\, \mathrm{N}$$
-              <br> $$\sum F=ma$$ $$F_{g}+F_{N}=ma$$ $$F_{N}=ma-F_{g}$$ $$F_{N}=(100)(2)-(-980)$$ $$F_{N}=1180\, \mathrm{N}$$
-            </div>
-          </li>
-          <li>
-            <div>
-              <br>
-              <br>
-              <br>
-              <br>
-              <br>
-              <br>
-              <br>
-              <br>
-              <br>
-              <svg class='center' width="280" height="200">
-                <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
-                <line x1="0" y1="140" x2="280" y2="140" stroke="#000" stroke-width="2" />
-
-                <g transform='translate(100 60) rotate(0)'>
-                  <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#eaa" />
-                  <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>100 kg</text>
-                </g>
-                <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
-                <text x="150" y="187" fill="black">F
-                  <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
-                  <tspan dy="-5">= 980 N</tspan>
-                </text>
-                <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
-                <text x="150" y="23" fill="black">F
-                  <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
-                  <tspan dy="-5">= 1180 N</tspan>
-                </text>
-              </svg>
-            </div>
-          </li>
-        </ul>
+          <g transform='translate(100 60) rotate(0)'>
+            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#eaa" />
+            <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>100 kg</text>
+          </g>
+          <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
+          <text x="150" y="187" fill="black">F
+            <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+            <tspan dy="-5">= 980 N</tspan>
+          </text>
+          <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
+          <text x="150" y="23" fill="black">F
+            <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+            <tspan dy="-5">= 1180 N</tspan>
+          </text>
+        </svg>
       </details>
-
     </div>
     <div class='example'>
       <strong>Example:</strong> A 20 kg box is at rest on a horizontal sidewalk. Find the force of gravity and the normal force on
       the box.
       <details>
         <summary>solution</summary>
-
-        <ul class="listing">
-          <li>
-            <div>
-              $$F_{g}=mg$$ $$F_{g}=(20)(9.8)$$ $$F_{g}=196\, \mathrm{N}$$
-              <br> $$\sum F=ma$$ $$-F_{g}+F_{N}=ma$$ $$F_{N}=ma+F_{g}$$ $$F_{N}=(20)(0) + 196$$ $$F_{N}=196 \, \mathrm{N}$$
-            </div>
-          </li>
-          <li>
-            <div>
-              <svg width="240" height="225">
-                <line x1="0" y1="150" x2="200" y2="150" stroke="#000" stroke-width="2" />
-                <rect x="60" y="70" width="80" height="80" style="stroke:black;stroke-width:2;fill:#ccf " />
-                <text x="100" y="110" fill="black" text-anchor="middle" dominant-baseline="middle">20 kg</text>
-                <use xlink:href="#vector" transform='translate(100 70) rotate(-180)' />
-                <text x="100" y="15" text-anchor="middle" fill="black">F
-                  <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
-                  <tspan dy="-5">= 196 N</tspan>
-                </text>
-                <use xlink:href="#vector" transform='translate(100 150) rotate(0)' />
-                <text x="100" y="216" text-anchor="middle" fill="black">Fg = 196 N</text>
-              </svg>
-              <br>
-              <br>
-              <p>In the simple case of a flat horizontal surface with no vertical acceleration the force of gravity will always
-                be equal and opposite to the normal force.</p>
-            </div>
-          </li>
-        </ul>
+        <p>In the simple case of a flat horizontal surface with no vertical acceleration the force of gravity will always be
+          equal and opposite to the normal force.</p>
+        $$F_{g}=mg$$ $$F_{g}=(20)(9.8)$$ $$F_{g}=196\, \mathrm{N}$$
+        <br> $$\sum F=ma$$ $$-F_{g}+F_{N}=ma$$ $$F_{N}=ma+F_{g}$$ $$F_{N}=(20)(0) + 196$$ $$F_{N}=196 \, \mathrm{N}$$
+        <svg class="center" width="240" height="225">
+          <line x1="0" y1="150" x2="200" y2="150" stroke="#000" stroke-width="2" />
+          <rect x="60" y="70" width="80" height="80" style="stroke:black;stroke-width:2;fill:#ccf " />
+          <text x="100" y="110" fill="black" text-anchor="middle" dominant-baseline="middle">20 kg</text>
+          <use xlink:href="#vector" transform='translate(100 70) rotate(-180)' />
+          <text x="100" y="15" text-anchor="middle" fill="black">F
+            <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+            <tspan dy="-5">= 196 N</tspan>
+          </text>
+          <use xlink:href="#vector" transform='translate(100 150) rotate(0)' />
+          <text x="100" y="216" text-anchor="middle" fill="black">Fg = 196 N</text>
+        </svg>
       </details>
     </div>
 
     <div class='example'>
-
       <svg class="center" width="230" height="226">
         <g transform='translate(50 -50) rotate(20)'>
           <line x1="-100" y1="170" x2="200" y2="170" stroke="#000" stroke-width="2" />
@@ -802,7 +763,7 @@
           <li>
             <div>
               <br>
-              <svg s width="200" height="120">
+              <svg class="center" width="200" height="120">
                 <g transform='translate(100 1) rotate(0)'>
                   <line x1="0" y1="0" x2="0" y2="95" style="stroke:#000;stroke-width:2" />
                   <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 100)' />
@@ -1012,50 +973,52 @@
       <br>Assume no friction, no air resistance, Earth gravity, and an inelastic rope.
       <details>
         <summary>hint</summary>
-        <svg width="200" height="200">
-          <g font-size="19" stroke="#000" fill="#fff" stroke-width="2">
-            <rect x="75" y="75" width="50" height="50" />
-          </g>
-          <g transform='translate(125 100) rotate(-90)'>
-            <use xlink:href="#vector" />
-          </g>
-          <g transform='translate(100 125) rotate(0)'>
-            <use xlink:href="#vector" />
-          </g>
-          <g transform='translate(100 75) rotate(180)'>
-            <use xlink:href="#vector" />
-          </g>
-          <g fill="black" stroke="none">
-            <text x="100" y="100" dominant-baseline="middle" text-anchor="middle">20 kg</text>
-            <text x="150" y="90">T = ?</text>
-            <text x="110" y="35">F
-              <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
-            </text>
-            <text x="110" y="173">F
-              <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
-            </text>
-          </g>
-        </svg>
+        <div class="center">
+          <svg width="200" height="200">
+            <g font-size="19" stroke="#000" fill="#fff" stroke-width="2">
+              <rect x="75" y="75" width="50" height="50" />
+            </g>
+            <g transform='translate(125 100) rotate(-90)'>
+              <use xlink:href="#vector" />
+            </g>
+            <g transform='translate(100 125) rotate(0)'>
+              <use xlink:href="#vector" />
+            </g>
+            <g transform='translate(100 75) rotate(180)'>
+              <use xlink:href="#vector" />
+            </g>
+            <g fill="black" stroke="none">
+              <text x="100" y="100" dominant-baseline="middle" text-anchor="middle">20 kg</text>
+              <text x="150" y="90">T = ?</text>
+              <text x="110" y="35">F
+                <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+              </text>
+              <text x="110" y="173">F
+                <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+              </text>
+            </g>
+          </svg>
 
-        <svg width="200" height="200">
-          <g font-size="19" stroke="#000" fill="#fff" stroke-width="2">
-            <rect x="75" y="75" width="50" height="50" />
-          </g>
-          <g transform='translate(100 125) rotate(0)'>
-            <use xlink:href="#vector" />
-          </g>
-          <g transform='translate(100 75) rotate(180)'>
-            <use xlink:href="#vector" />
-          </g>
-          <g fill="black" stroke="none">
-            <text x="100" y="100" dominant-baseline="middle" text-anchor="middle">10 kg</text>
-            <text x="110" y="35">T = ?</text>
-            <text x="110" y="173">F
-              <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
-              <tspan font-size="1em" dy="-5"> = ?</tspan>
-            </text>
-          </g>
-        </svg>
+          <svg width="200" height="200">
+            <g font-size="19" stroke="#000" fill="#fff" stroke-width="2">
+              <rect x="75" y="75" width="50" height="50" />
+            </g>
+            <g transform='translate(100 125) rotate(0)'>
+              <use xlink:href="#vector" />
+            </g>
+            <g transform='translate(100 75) rotate(180)'>
+              <use xlink:href="#vector" />
+            </g>
+            <g fill="black" stroke="none">
+              <text x="100" y="100" dominant-baseline="middle" text-anchor="middle">10 kg</text>
+              <text x="110" y="35">T = ?</text>
+              <text x="110" y="173">F
+                <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+                <tspan font-size="1em" dy="-5"> = ?</tspan>
+              </text>
+            </g>
+          </svg>
+        </div>
         <p>Both free body diagrams share the same tension and acceleration. Build two equations with Newton's second law and
           solve a system of equations for T and a. While T and a are the same magnitude they have different directions, so
           watch the sign of acceleration in particular.</p>
