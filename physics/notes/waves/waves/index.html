@@ -91,7 +91,6 @@
 
 		<div class='definition'>
 			<svg viewBox="0 100 1000 550">
-				<!-- style="border: 2px solid red;" -->
 				<path d="M0 375 h1000 " stroke-width='2' fill='none' stroke='#333' stroke-dasharray="20, 20" />
 				<path d="M41,373 L50,351 L60,329 L69,308 L78,287 L87,267 L97,248 L106,230 L115,213 L124,198 L134,185 L143,173 L152,163
 						 L162,154 L171,148 L180,144 L189,142 L199,142 L208,144 L217,148 L226,154 L236,163 L245,173 L254,185 L264,198 L273,213 L282,230
@@ -143,9 +142,17 @@
 		</div>
 		<p>Play around with the settings in the "sine wave" simulation below.
 			<br> Which of the properties seem related?</p>
+		<div class="flex-grid-thirds">
+			<div class="col">amplitude =
+				<input class='number' id='amplitude' type="number" step="5" min="-1000" max="1000">m</div>
+			<div class="col">velocity =
+				<input class='number' id='velocity' type="number" step="5" min="-1000" max="1000">m/s</div>
+			<div class="col">wavelength =
+				<input class='number' id='wavelength' type="number" min="0" step="20" min="-1000" max="1000">m</div>
+		</div>
 	</article>
 	<div class='center' style="height: 400px;" id='wave_animation'>
-		<svg id='sin-wave' height='400' style='position:absolute;left: 0;right: 0;margin: 0 auto; background: #fff'>
+		<svg id='sin-wave' height='400'>
 			<filter id="displacementFilter">
 				<feTurbulence id='fe-turb' type="turbulence" baseFrequency="0.02" numOctaves="3" />
 				<feDisplacementMap id='fe-disp' in="SourceGraphic" scale="17" xChannelSelector="R" yChannelSelector="G" />
@@ -168,20 +175,20 @@
 			</g>
 
 		</svg>
-		<div style='position:relative;left: 0;right: 0;top:2%; margin: 0 auto;'>
-			amplitude =
-			<input class='number' id='amplitude' type="number" step="5" min="-1000" max="1000">m &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; velocity =
-			<input class='number' id='velocity' type="number" step="5" min="-1000" max="1000">m/s &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; wavelength =
-			<input class='number' id='wavelength' type="number" min="0" step="20" min="-1000" max="1000">m
-		</div>
-
-		<div style='position:relative;left: 0;right: 0;top:88%;margin: 0 auto;'>
-			<span id='frequency'></span> &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
-			<span id='period'></span> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; time =
-			<span id='time'></span>
-		</div>
 	</div>
 	<article>
+		<div class="flex-grid-thirds">
+			<div class="col">
+				<span id='frequency' class='center'></span>
+			</div>
+			<div class="col">
+				<span id='time' class='center'></span>
+			</div>
+			<div class="col">
+				<span id='period' class='center'></span>
+			</div>
+		</div>
+
 		<div class='example'>
 			<strong>Graphing:</strong> Let's see if we can find a relationship between frequency and period. Change the wavelength and record
 			about five different pairs of frequency and period. Graph the pairs with period as the x-coordinate and frequency as the
@@ -391,14 +398,14 @@
 			</tr>
 			<tr>
 				<th>light</td>
-					<td style=" padding: 10px; ">299,792,458</td>
-					<td style="padding: 10px; ">299,700,000</td>
-					<td style="padding: 10px; ">220,000,000</td>
-					<td style="padding: 10px; ">200,000,000</td>
+					<td>299&thinsp;792&thinsp;458</td>
+					<td>299&thinsp;700&thinsp;000</td>
+					<td>220&thinsp;000&thinsp;000</td>
+					<td>200&thinsp;000&thinsp;000</td>
 			</tr>
 		</table>
 		<p>
-			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo ">Sound</a> travels faster in dense media because the atoms are
+			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo">Sound</a> travels faster in dense media because the atoms are
 			<a href='https://www.youtube.com/watch?v=w6Q15GZpSUY'>closer</a> together. This means the atoms don't have to move as far to collide.</p>
 		<p>A light wave moves slower in dense media because as the light wave propagates through a medium it produces ripples that
 			interfere in a way that slows the group velocity of the light wave.</p>
