@@ -252,7 +252,7 @@
 				.wrapper {
 					display: grid;
 					grid-gap: 0px;
-					grid-template-columns: 160px 30px 210px 20px;
+					grid-template-columns: 30px 210px 30px;
 				}
 
 				#circle {
@@ -284,13 +284,13 @@
 				}
 			</style>
 			<div class="wrapper">
-				<div style="grid-column: 2 / span 1; grid-row: 1;" class="slider-wrapper">
+				<div style="grid-column: 1 / span 1;" class="slider-wrapper">
 					<input type="range" id='per-slider' min="0.5" max="2" step="0.01" value="4">
 				</div>
-				<div style="grid-column: 3 / span 1; grid-row: 1;">
+				<div style="grid-column: 2 / span 1;">
 					<div id="circle"></div>
 				</div>
-				<div style="grid-column: 4 / span 1; grid-row: 1;" class="slider-wrapper">
+				<div style="grid-column: 3 / span 1;" class="slider-wrapper">
 					<input type="range" id='freq-slider' min="0.5" max="2" step="0.01" value="0.25">
 				</div>
 			</div>
