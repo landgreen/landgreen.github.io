@@ -207,7 +207,7 @@ function charges15(el) {
         } else if (settings.display === 4) {
           Charge.drawCloudChamber(q, settings.falling);
         }
-        Charge.boundsRemove(q, 0);
+        // Charge.boundsRemove(q, 0);
       }
     }
     requestAnimationFrame(cycle);

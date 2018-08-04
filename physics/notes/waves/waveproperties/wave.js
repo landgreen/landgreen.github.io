@@ -11,7 +11,6 @@ function centerLine(el) {
   newpath.setAttributeNS(null, "opacity", 0.3);
   newpath.setAttributeNS(null, "fill", "none");
   newpath.setAttributeNS(null, "stroke-dasharray", "5,5");
-
   el.appendChild(newpath);
 }
 
@@ -20,7 +19,7 @@ function centerLine(el) {
 function drawSineWave(el, wavelength, amplitude, phase = 0, color = "#000", opacity = 1, autoWidth = true, widthSVG = "600") {
   let width;
   if (autoWidth) {
-    width = screen.width; //window.innerWidth;
+    width = screen.width - 5; //window.innerWidth;
     el.style.position = "relative";
     el.style.left = Math.min(-(width - 600) / 2, 0) + "px";
   } else {
@@ -64,7 +63,7 @@ function drawSineWaves(
   let width;
   if (autoWidth) {
     // width = window.innerWidth;
-    width = screen.width;
+    width = screen.width - 5;
     el.style.position = "relative";
     el.style.left = Math.min(-(width - 600) / 2, 0) + "px";
   } else {
@@ -105,7 +104,7 @@ function drawSineWaves(
 
 function AppendSinePath(el, wavelength, amplitude, phase = 0, color = "#000", opacity = 1) {
   // let width = window.innerWidth;
-  let width = screen.width;
+  let width = screen.width - 5;
   el.style.position = "relative";
   el.style.left = Math.min(-(width - 600) / 2, 0) + "px";
 
@@ -128,7 +127,7 @@ function AppendSinePath(el, wavelength, amplitude, phase = 0, color = "#000", op
 function drawSineWavesArray(el, waves, superposition = true, autoWidth = true, widthSVG = "600") {
   let width;
   if (autoWidth) {
-    width = screen.width;
+    width = screen.width - 5;
     // width = window.innerWidth;
     el.style.position = "relative";
     el.style.left = Math.min(-(width - 600) / 2, 0) + "px";

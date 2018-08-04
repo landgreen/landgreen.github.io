@@ -88,8 +88,6 @@ canvas {
   box-shadow: 2px 2px 8px #aaa;
   border-radius: 5px;
   user-select: none;
-  max-width: 100%;
-  height: auto;
 }
 
 a {
@@ -314,6 +312,8 @@ header h1 a:hover {
   text-decoration: none;
 }
 
+/* responsive media rules for mobile________________________________ */
+
 @media screen and (max-width: 650px) {
   header h1 {
     font-size: 3em;
@@ -328,22 +328,11 @@ header h1 a:hover {
   .katex {
     font-size: 1.2em;
   }
-}
-
-@media screen and (max-width: 630px) {
+  canvas {
+    max-width: 100%;
+    height: auto;
+  }
   .hide-on-mobile {
     display: none;
-  }
-}
-
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes opacity {
-  to {
-    opacity: 1;
   }
 }
