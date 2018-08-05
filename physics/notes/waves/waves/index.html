@@ -142,41 +142,47 @@
 		</div>
 		<p>Play around with the settings in the "sine wave" simulation below.
 			<br> Which of the properties seem related?</p>
-		<div class="flex-grid-thirds">
-			<div class="col">amplitude =
-				<input class='number' id='amplitude' type="number" step="5" min="-1000" max="1000">m</div>
-			<div class="col">velocity =
-				<input class='number' id='velocity' type="number" step="5" min="-1000" max="1000">m/s</div>
-			<div class="col">wavelength =
-				<input class='number' id='wavelength' type="number" min="0" step="20" min="-1000" max="1000">m</div>
-		</div>
 	</article>
-	<div class='center' style="height: 400px;" id='wave_animation'>
-		<svg id='sin-wave' height='400'>
-			<filter id="displacementFilter">
-				<feTurbulence id='fe-turb' type="turbulence" baseFrequency="0.02" numOctaves="3" />
-				<feDisplacementMap id='fe-disp' in="SourceGraphic" scale="17" xChannelSelector="R" yChannelSelector="G" />
-				<feGaussianBlur stdDeviation="0.5" />
-				<feOffset dx="0" dy="-6" />
-			</filter>
-			<g stroke="#d9dfdf" style="stroke-dasharray:1,98,1,0;stroke-width:4000;">
-				<line x1="0" y1="0" x2="2000" y2="0" />
-				<line x1="0" y1="0" x2="0" y2="2000" />
-			</g>
-			<g stroke-dasharray='10,10' stroke='#777' stroke-width='2'>
-				<line x1="0" y1="200" x2="3000" y2="200" />
-			</g>
-			<path filter="url(#displacementFilter)" id="sine_wave" stroke-width='9' fill='rgba(0,0,255,0.4)' stroke='rgba(255,255,255,0.5)'
-			 stroke-miterlimit="10" />
-			<g>
-				<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;'
-				/>
-				<text x="50" y="391" text-anchor="middle" font-size="15" fill='#000'>100 m</text>
-			</g>
+	<div id="sine-wave-zone">
+		<div class="flex-grid-thirds">
+			<div class="col">
+				<span class='center'>amplitude =
+					<input id='amplitude' type="number" step="5" min="-1000" max="1000" style="width:40px;">m</span>
+			</div>
+			<div class="col">
+				<span class='center'>velocity =
+					<input id='velocity' type="number" step="5" min="-1000" max="1000" style="width:40px;">m/s</span>
+			</div>
+			<div class="col">
+				<span class='center'>wavelength =
+					<input id='wavelength' type="number" min="0" step="20" min="-1000" max="1000" style="width:40px;">m</span>
+			</div>
+		</div>
+		<div class='center' style="height: 400px;" id='wave_animation'>
+			<svg id='sin-wave' height='400'>
+				<filter id="displacementFilter">
+					<feTurbulence id='fe-turb' type="turbulence" baseFrequency="0.02" numOctaves="3" />
+					<feDisplacementMap id='fe-disp' in="SourceGraphic" scale="17" xChannelSelector="R" yChannelSelector="G" />
+					<feGaussianBlur stdDeviation="0.5" />
+					<feOffset dx="0" dy="-6" />
+				</filter>
+				<g stroke="#d9dfdf" style="stroke-dasharray:1,98,1,0;stroke-width:4000;">
+					<line x1="0" y1="0" x2="2000" y2="0" />
+					<line x1="0" y1="0" x2="0" y2="2000" />
+				</g>
+				<g stroke-dasharray='10,10' stroke='#777' stroke-width='2'>
+					<line x1="0" y1="200" x2="3000" y2="200" />
+				</g>
+				<path filter="url(#displacementFilter)" id="sine_wave" stroke-width='9' fill='rgba(0,0,255,0.4)' stroke='rgba(255,255,255,0.5)'
+				 stroke-miterlimit="10" />
+				<g>
+					<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;'
+					/>
+					<text x="50" y="391" text-anchor="middle" font-size="15" fill='#000'>100 m</text>
+				</g>
 
-		</svg>
-	</div>
-	<article>
+			</svg>
+		</div>
 		<div class="flex-grid-thirds">
 			<div class="col">
 				<span id='frequency' class='center'></span>
@@ -188,6 +194,8 @@
 				<span id='period' class='center'></span>
 			</div>
 		</div>
+	</div>
+	<article>
 
 		<div class='example'>
 			<strong>Graphing:</strong> Let's see if we can find a relationship between frequency and period. Change the wavelength and record

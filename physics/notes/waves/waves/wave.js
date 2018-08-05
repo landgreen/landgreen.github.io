@@ -23,10 +23,11 @@ const wave = function() {
   document.getElementById("sin-wave").setAttribute("width", settings.width);
 
   let pause = true;
-  document.getElementById("wave_animation").addEventListener("mouseleave", function() {
+  const elZone = document.getElementById("sine-wave-zone");
+  elZone.addEventListener("mouseleave", function() {
     pause = true;
   });
-  document.getElementById("wave_animation").addEventListener("mouseenter", function() {
+  elZone.addEventListener("mouseenter", function() {
     if (pause) {
       pause = false;
       requestAnimationFrame(render);
