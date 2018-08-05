@@ -23,23 +23,12 @@ function charges15(el) {
   canvas.height = 400;
 
   //___________________get mouse input___________________
-  var mouse = {
-    down: false,
-    x: 0,
-    y: 0
-  };
-  canvas.onmousemove = function(e) {
-    var rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  };
-  canvas.onmousedown = function() {
-    mouse.down = true;
-    if (q.length) Charge.repulse(q, mouse);
-  };
-  canvas.onmouseup = function() {
-    mouse.down = false;
-  };
+  canvas.addEventListener("mousedown", function(event) {
+    Charge.repulse(q, {
+      x: (event.offsetX * canvas.width) / canvas.clientWidth,
+      y: (event.offsetY * canvas.height) / canvas.clientHeight
+    });
+  });
 
   const q = []; //holds the charges
   // ctx.clearRect(0, 0, canvas.width, canvas.height);

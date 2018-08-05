@@ -66,20 +66,12 @@ function entropy1() {
     cons = [];
   });
 
-  let mouse = {
-    down: false,
-    x: 0,
-    y: 0
-  };
-
-  canvas.onmousemove = function(e) {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  };
-
   canvas.addEventListener("mousedown", event => {
     if (!settings.pause) {
+      const mouse = {
+        x: (event.offsetX * canvas.width) / canvas.clientWidth,
+        y: (event.offsetY * canvas.height) / canvas.clientHeight
+      };
       const spread = 10;
       for (let i = 0; i < 10; ++i) {
         addAtom(mouse.x + spread * (Math.random() - 0.5), mouse.y + spread * (Math.random() - 0.5));

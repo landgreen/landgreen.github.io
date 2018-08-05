@@ -184,12 +184,7 @@ var spring = function() {
 
   //on click move to mouse
   canvas.addEventListener("mousedown", function(event) {
-    // const mouse = {
-    // x: event.offsetX
-    // y: event.offsetY
-    // };
-    box.x = event.offsetX;
-    box.Vx = 0;
+    (box.x = (event.offsetX * canvas.width) / canvas.clientWidth), (box.Vx = 0);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // drawEqualibrium();

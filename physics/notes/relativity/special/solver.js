@@ -109,7 +109,7 @@ let solver = function() {
   }
   function convertGamma() {
     const g = document.getElementById("gamma").value;
-    document.getElementById("velocity").value = Math.sqrt(1 - 1 / g * (1 / g));
+    document.getElementById("velocity").value = Math.sqrt(1 - (1 / g) * (1 / g));
     update();
   }
   update();
@@ -147,6 +147,8 @@ let solver = function() {
     if (rockets.isOn) {
       rockets.isOn = false;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawRocket(ctx, 20, 20, rockets.t1, 1 / rockets.gamma);
+      drawRocket(ctx, 320, 20, rockets.t2, 1);
     } else {
       rockets.isOn = true;
     }
@@ -265,7 +267,7 @@ const special = function() {
     moveScale: 1.4
   };
 
-  //velcoityes are in terms of c
+  //velocities are in terms of c
   const gammaCal = function(v1, v2) {
     const v = v1 - v2;
     return 1 / Math.sqrt(1 - v * v);

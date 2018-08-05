@@ -180,12 +180,15 @@ var springGravity = function(button) {
     y: window.innerHeight * 0.5
   };
 
-  //gets mouse position
-  function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
+  //gets mouse position, even when canvas is scaled by CSS
+  function getMousePos(canvas, event) {
+    const mouse = {
+      x: event.clientX - ctx.canvas.offsetLeft,
+      y: event.clientY - ctx.canvas.offsetTop
+    };
     return {
-      x: evt.clientX - rect.left,
-      y: evt.clientY - rect.top
+      x: (mouse.x * canvas.width) / canvas.clientWidth,
+      y: (mouse.y * canvas.height) / canvas.clientHeight
     };
   }
   //on click move to mouse

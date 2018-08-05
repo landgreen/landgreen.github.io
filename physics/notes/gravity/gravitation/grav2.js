@@ -14,23 +14,12 @@ function grav2(el) {
   var ctx = canvas.getContext("2d");
 
   //___________________get mouse input___________________
-  var mouse = {
-    down: false,
-    x: 0,
-    y: 0
-  };
-  canvas.onmousemove = function(e) {
-    var rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  };
-  canvas.onmousedown = function() {
-    mouse.down = true;
-    Particle.repulse(q, mouse);
-  };
-  canvas.onmouseup = function() {
-    mouse.down = false;
-  };
+  canvas.addEventListener("mousedown", function(event) {
+    Particle.repulse(q, {
+      x: (event.offsetX * canvas.width) / canvas.clientWidth,
+      y: (event.offsetY * canvas.height) / canvas.clientHeight
+    });
+  });
 
   let pause = false;
   el.addEventListener("mouseleave", function() {

@@ -16,24 +16,11 @@ function grav2(el) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   //___________________get mouse input___________________
-  var mouse = {
-    down: false,
-    x: 0,
-    y: 0
-  };
-  canvas.onmousemove = function(e) {
-    var rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  };
   canvas.onmousedown = function() {
-    mouse.down = true;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBounds();
   };
-  canvas.onmouseup = function() {
-    mouse.down = false;
-  };
+
   let pause = false;
   el.addEventListener("mouseleave", function() {
     pause = true;

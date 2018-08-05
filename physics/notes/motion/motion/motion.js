@@ -20,17 +20,11 @@ var motion = function(canvasID, showPos, showTime, showVel, showAccel, position,
     y: canvas.height / 2
   };
 
-  //gets mouse position
-  function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-      x: evt.clientX - rect.left,
-      y: evt.clientY - rect.top
-    };
-  }
-
   document.getElementById(canvasID).addEventListener("mousedown", function(evt) {
-    mousePos = getMousePos(canvas, evt);
+    mousePos = {
+      x: (event.offsetX * canvas.width) / canvas.clientWidth,
+      y: (event.offsetY * canvas.height) / canvas.clientHeight
+    };
     spawn();
     physics.startTime = new Date().getTime();
   });
