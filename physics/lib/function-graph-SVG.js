@@ -24,8 +24,8 @@ function funGraphSVG(
     showGrid = true,
     gridSize = 50, //spacing relative to canvas size
     updatePath = false, //used for changing the equation of the function
-    showMouseCoords = false,
-    recenterOnClick = false
+    showMouseCoords = false
+    // recenterOnClick = false
   } = {}
 ) {
   if (decimals) {
@@ -37,29 +37,13 @@ function funGraphSVG(
     yScale = scale;
   }
   const target = document.getElementById(id);
-  const bounds = target.getBoundingClientRect();
 
-  //**********************************
-
-  // // Create an SVGPoint for future math
-  // var pt = target.createSVGPoint();
-
-  // // Get point in global SVG space
-  // function cursorPoint(evt) {
-  //   pt.x = evt.clientX;
-  //   pt.y = evt.clientY;
-  //   return pt.matrixTransform(target.getScreenCTM().inverse());
-  // }
-
-  // svg.addEventListener(
-  //   "mousemove",
-  //   function(evt) {
-  //     var loc = cursorPoint(evt);
-  //     // Use loc.x and loc.y here
-  //   },
-  //   false
-  // );
-  //**********************************
+  let bounds = target.viewBox.baseVal; //target.getAttribute("viewBox");
+  if (bounds.width === 0) {
+    //if viewBox doesn't exist, like for non-scaling SVG
+    const bounding = target.getBoundingClientRect();
+    bounds = { width: bounding.width, height: bounding.height };
+  }
 
   if (showAxis && !updatePath) {
     const x = x0 + 0.5; //sharper lines, not between pixels
@@ -286,13 +270,23 @@ function funGraphSVG(
       });
 
       //mouse circle on mouse move
-
+      // Create an SVGPoint for future math
+      var pt = target.createSVGPoint();
       target.addEventListener("mousemove", event => {
-        let rect = target.getBoundingClientRect();
-        let mouse = {
-          x: event.clientX - rect.left,
-          y: event.clientY - rect.top
-        };
+        // Get point in global SVG space
+        function cursorPoint(event) {
+          pt.x = event.clientX;
+          pt.y = event.clientY;
+          return pt.matrixTransform(target.getScreenCTM().inverse());
+        }
+        let mouse = cursorPoint(event);
+        // let rect = target.getBoundingClientRect();
+        // // console.log("rect:", rect);
+        // // console.log("bounds:", bounds);
+        // let mouse = {
+        //   x: event.clientX - rect.x,
+        //   y: event.clientY - rect.top
+        // };
         //move circle to mouse location
         const yPos = y0 - yScale * func((mouse.x - x0) / xScale);
         if (isFinite(yPos)) {
@@ -318,56 +312,56 @@ function funGraphSVG(
     if (rotation) {
       newElement.setAttribute("transform", `rotate(${rotation}, ${x}, ${y})`);
     }
-    // newElement.style.fontFamily = "monospace";
-    newElement.style.fontFamily = "Arial,Helvetica";
+    // newElement.style.fontFamily = "Arial,Helvetica";
+    newElement.style.fontFamily = "monospace";
     newElement.textContent = text.toString();
     target.appendChild(newElement);
   }
 
-  function removeAll() {
-    //remove all elements in SVG
-    while (target.lastChild) {
-      target.removeChild(target.lastChild);
-    }
-    // remove all event listeners in SVG
-    var clone = target.cloneNode();
-    while (target.firstChild) {
-      clone.appendChild(target.lastChild);
-    }
-    target.parentNode.replaceChild(clone, target);
-  }
+  //   function removeAll() {
+  //     //remove all elements in SVG
+  //     while (target.lastChild) {
+  //       target.removeChild(target.lastChild);
+  //     }
+  //     // remove all event listeners in SVG
+  //     var clone = target.cloneNode();
+  //     while (target.firstChild) {
+  //       clone.appendChild(target.lastChild);
+  //     }
+  //     target.parentNode.replaceChild(clone, target);
+  //   }
 
-  if (recenterOnClick) {
-    target.addEventListener("click", event => {
-      let rect = target.getBoundingClientRect();
-      let mouse = {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top
-      };
-      removeAll();
-      //redraw with the same parameters
-      funGraphSVG(id, func, {
-        x0: x0 - (mouse.x - bounds.width / 2),
-        y0: y0 - (mouse.y - bounds.height / 2),
-        step: step,
-        xScale: xScale,
-        yScale: yScale,
-        strokeWidth: strokeWidth,
-        showFunction: showFunction,
-        stroke: stroke,
-        showAxis: showAxis,
-        showLabels: showLabels,
-        xLabel: xLabel,
-        yLabel: yLabel,
-        showAxisNumbers: showAxisNumbers,
-        xDecimals: xDecimals,
-        yDecimals: yDecimals,
-        showGrid: showGrid,
-        gridSize: gridSize,
-        updatePath: updatePath,
-        showMouseCoords: showMouseCoords,
-        recenterOnClick: recenterOnClick
-      });
-    });
-  }
+  //   if (recenterOnClick) {
+  //     target.addEventListener("click", event => {
+  //       let rect = target.getBoundingClientRect();
+  //       let mouse = {
+  //         x: event.clientX - rect.left,
+  //         y: event.clientY - rect.top
+  //       };
+  //       removeAll();
+  //       //redraw with the same parameters
+  //       funGraphSVG(id, func, {
+  //         x0: x0 - (mouse.x - bounds.width / 2),
+  //         y0: y0 - (mouse.y - bounds.height / 2),
+  //         step: step,
+  //         xScale: xScale,
+  //         yScale: yScale,
+  //         strokeWidth: strokeWidth,
+  //         showFunction: showFunction,
+  //         stroke: stroke,
+  //         showAxis: showAxis,
+  //         showLabels: showLabels,
+  //         xLabel: xLabel,
+  //         yLabel: yLabel,
+  //         showAxisNumbers: showAxisNumbers,
+  //         xDecimals: xDecimals,
+  //         yDecimals: yDecimals,
+  //         showGrid: showGrid,
+  //         gridSize: gridSize,
+  //         updatePath: updatePath,
+  //         showMouseCoords: showMouseCoords,
+  //         recenterOnClick: recenterOnClick
+  //       });
+  //     });
+  //   }
 }

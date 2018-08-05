@@ -182,24 +182,13 @@ var spring = function() {
     }
   });
 
-  //mouse controls
-  var mousePos = {
-    x: window.innerWidth * 0.5,
-    y: window.innerHeight * 0.5
-  };
-
-  //gets mouse position
-  function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-      x: evt.clientX - rect.left,
-      y: evt.clientY - rect.top
-    };
-  }
   //on click move to mouse
-  canvas.addEventListener("mousedown", function(evt) {
-    mousePos = getMousePos(canvas, evt);
-    box.x = mousePos.x;
+  canvas.addEventListener("mousedown", function(event) {
+    // const mouse = {
+    // x: event.offsetX
+    // y: event.offsetY
+    // };
+    box.x = event.offsetX;
     box.Vx = 0;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);

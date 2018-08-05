@@ -87,9 +87,9 @@
 				<text x="240" y="40" font-size='25px' text-anchor="middle" dominant-baseline="middle">F</text>
 			</svg>
 			<h2>
-				$$\sum F=ma$$ $$\sum F=F_{1}+F_{2}+F_{3}+...$$
+				$$\sum F=ma$$
 			</h2>
-			<p>\( \sum \) = The greek letter Sigma represents a summation of numbers. It means add up all the forces to get a net force.</p>
+
 			<p>\( F \) = force [N, Newtons, kg m/s²]
 				<em>vector</em>
 				<br>a push or a pull</p>
@@ -101,6 +101,13 @@
 			</p>
 
 		</div>
+		<p>\( \sum \) = The greek letter Sigma represents a summation of numbers. It means add up all the forces to get a net force.</p>
+		$$\sum F=F_{1}+F_{2}+F_{3}+...$$
+		<p>If there was a 5N force to the left and a 20N force to the right we could get the net force by adding them. Force is a
+			vector, so the left force should be negative.</p>
+		$$\sum F= - 5 \, \mathrm{N} + 20 \, \mathrm{N} $$ $$\sum F= 15 \, \mathrm{N}$$
+
+
 		<div class='example'>
 			<b>Example:</b> A soccer ball has a mass of 0.43 kg. Find the acceleration of the ball when it experiences a net force (total
 			force) of 1 N from air friction.
@@ -125,16 +132,16 @@
 		</div>
 
 		<div class='example'>
-			<svg class="center" width="285" height="125">
-				<rect x="0" y="100" width="300" height="110" style="fill:#ccf" />
-				<g transform='translate(100 20) rotate(0)'>
-					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#ccc" />
-					<text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>100 kg</text>
+			<svg viewBox="-25 0 550 150">
+				<rect x="-25" y="80" width="600" height="200" style="fill:#adf" />
+				<g transform='translate(220 20)'>
+					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#f65" />
+					<text x="40" y="40" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-size='20px'>100 kg</text>
 				</g>
-				<use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-				<text x="30" y="53" fill="black">2000 N</text>
-				<use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
-				<text x="200" y="53" fill="black">1900 N</text>
+				<use xlink:href="#vector" transform='translate(220 60) rotate(90)' />
+				<text x="110" y="65" fill="black">2000 N</text>
+				<use xlink:href="#vector" transform='translate(300 60) rotate(-90)' />
+				<text x="355" y="65" fill="black">1900 N</text>
 			</svg>
 			<b>Example:</b> A 100 kg boat at rest is being pushed left with a 2000 N force from the wind. The water current is producing
 			a force of 1900 N to the right. How will the boat accelerate? How far will the boat go in 6 s?
@@ -171,13 +178,11 @@
 			</details>
 		</div>
 
-
-
 		<div class='example'>
 			<svg class='center' width="300" height="200">
 				<g transform='translate(100 60) rotate(0)'>
-					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fac" />
-					<text x="40" y="40" fill="white" text-anchor="middle" dominant-baseline="middle" font-size='20px'>16 kg</text>
+					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fffa66" />
+					<text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>16 kg</text>
 				</g>
 				<use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
 				<text x="150" y="187" fill="black">85 N</text>
@@ -210,11 +215,11 @@
 			"When one body exerts a force on a second body, the second body simultaneously exerts a force equal in magnitude and opposite
 			in direction on the first body."
 		</p>
-		<svg class='center' width="275" height="100">
-			<rect x="60" y="1" width="80" height="80" stroke='#000' style="stroke-width:2;fill:#cfe2f6" />
-			<rect x="140" y="1" width="80" height="80" stroke='#000' style="stroke-width:2;fill:#cff6d7" />
-			<use xlink:href="#vector" transform='translate(192 40) rotate(90)' />
-			<use xlink:href="#vector" transform='translate(88 40) rotate(-90)' />
+		<svg viewBox="-50 0 400 100">
+			<rect x="41" y="0" width="100" height="100" stroke='#000' style="stroke-width:0;fill:#f65" />
+			<rect x="140" y="10" width="80" height="80" stroke='#000' style="stroke-width:0;fill:#5cc" />
+			<use xlink:href="#vector" transform='translate(192 50) rotate(90)' />
+			<use xlink:href="#vector" transform='translate(88 50) rotate(-90)' />
 		</svg>
 		<p>If you push on something it will push back with the same force, but in the opposite direction. Forces always come in equal,
 			but opposite pairs.</p>
@@ -239,34 +244,54 @@
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> You (100 kg) are floating away from your spaceship. In order to return to the ship you throw your 2 kg space
-			laser away. As you are throwing the space laser, it accelerates at 40 m/s². How much acceleration do you feel during the
-			throw?
+			<b>Example:</b> You (100 kg) are standing on a frictionless skateboard. You throw your 2 kg bottle of water to the right.
+			During the throw the water bottle briefly accelerates at 40 m/s². How much acceleration do you feel at that time?
+			<details>
+				<summary>hint</summary>
+				<p>
+					Calculate the force the water bottle feels when it accelerates at 40 m/s². Plug the negative value of that force in as the
+					force you feel.
+				</p>
+
+			</details>
 			<details>
 				<summary>solution</summary>
-				<p>The force the space laser feels is equal and opposite to the force you feel.
-				</p>
-				$$ \text{space laser}$$ $$F = ma $$ $$F=(2)(40)$$ $$F=80 \, \mathrm{N}$$
-				<br> $$ \text{you}$$ $$F = ma $$ $$-80 = 100a$$ $$-0.8 \mathrm{\tfrac{m}{s^2}}=a$$
+				<p>The force the water bottle feels is equal and opposite to the force you feel.</p>
+				$$ \text{water bottle}$$ $$F = ma $$ $$F=(2\, \mathrm{kg})(40 \, \mathrm{N})$$ $$F=\color{#80f}80 \, \mathrm{N}$$
+				<br> $$ \text{you}$$ $$F = ma $$ $$- {\color{#80f}80 \, \mathrm{N}} = (100 \, \mathrm{kg}) a$$ $$-0.8 \mathrm{\tfrac{m}{s^2}}=a$$
 			</details>
 		</div>
+
+		<!-- <div class='example'>
+				<b>Example:</b> You (100 kg) are floating away from your spaceship. In order to return to the ship you throw your 2 kg space
+				laser away. As you are throwing the space laser, it accelerates at 40 m/s². How much acceleration do you feel during the
+				throw?
+				<details>
+					<summary>solution</summary>
+					<p>The force the space laser feels is equal and opposite to the force you feel.
+					</p>
+					$$ \text{space laser}$$ $$F = ma $$ $$F=(2)(40)$$ $$F=80 \, \mathrm{N}$$
+					<br> $$ \text{you}$$ $$F = ma $$ $$-80 = 100a$$ $$-0.8 \mathrm{\tfrac{m}{s^2}}=a$$
+				</details>
+			</div> -->
+
 		<div class='example'>
 			<svg viewBox="20 0 500 120">
-				<line x1="180" y1="70" x2="400" y2="70" stroke-width="2" stroke="#888" />
+				<line x1="180" y1="70" x2="400" y2="70" stroke-width="2" stroke="#000" />
 				<g transform='translate(100 20) rotate(0)'>
-					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#ea5" />
-					<text x="40" y="40" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-size='20px'>0.4 kg</text>
+					<rect x="0" y="0" width="80" height="80" stroke='#000' stroke-width='2' fill="#f95" />
+					<text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>0.4 kg</text>
 				</g>
 				<use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-				<text x="35" y="65" fill="black">F</text>
+				<text x="35" y="65" fill="#000">F</text>
 				<use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
-				<text x="237" y="66" fill="black">F</text>
+				<!-- <text x="237" y="66" fill="#000">F</text> -->
 				<g transform='translate(400 20) rotate(0)'>
-					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#aaa" />
+					<rect x="0" y="0" width="80" height="80" stroke='#000' stroke-width='2' fill="#bbb" />
 					<text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>10 kg</text>
 				</g>
 				<use xlink:href="#vector" transform='translate(400 60) rotate(90)' />
-				<text x="336" y="66" fill="black">F</text>
+				<!-- <text x="336" y="66" fill="#000">F</text> -->
 			</svg>
 
 			<b>Example:</b> A 0.4 kg squirrel is pulling a 10 kg box with a string. The squirrel and box are accelerating to the left
