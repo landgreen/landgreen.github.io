@@ -5,9 +5,9 @@
 #endif
 
 #define PIN 9
-#define NUM_LEDS 23 //gets a tiny bit hot at 64
+#define NUM_LEDS 20 //gets a tiny bit hot at 64
 #define BRIGHTNESS 100
-#define WAIT 30
+#define WAIT 50
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -24,6 +24,7 @@ void setup() {
 int r = 255;
 int g = 0;
 int b = 0;
+int one = 0;
 
 // rainbow wave
 void loop() {
@@ -48,8 +49,15 @@ void drawAll() {
   for (int i = 0; i < NUM_LEDS; i++) {
     strip.setPixelColor(i, r, g, b);
   }
+//  lightOne();
   strip.show();
   delay(WAIT);
+}
+
+void lightOne(){
+  one++;
+  if (one > NUM_LEDS*5) one = 0;
+    strip.setPixelColor(floor(one/5), b, r, g);
 }
 
 
