@@ -39,6 +39,11 @@ function funGraphSVG(
   const target = document.getElementById(id);
 
   let bounds = target.viewBox.baseVal; //target.getAttribute("viewBox");
+  if (bounds === null) {
+    //if viewBox doesn't exist, like for non-scaling SVG
+    const bounding = target.getBoundingClientRect();
+    bounds = { width: bounding.width, height: bounding.height };
+  }
   if (bounds.width === 0) {
     //if viewBox doesn't exist, like for non-scaling SVG
     const bounding = target.getBoundingClientRect();
