@@ -1,4 +1,4 @@
-const setup4 = function() {
+(function() {
   var canvas = document.getElementById("charge4");
   var ctx = canvas.getContext("2d");
   canvas.width = document.getElementsByTagName("article")[0].clientWidth;
@@ -6,8 +6,7 @@ const setup4 = function() {
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-};
-setup4();
+})();
 
 function charges4(el) {
   el.onclick = null; //stops the function from running on button click
@@ -41,36 +40,25 @@ function charges4(el) {
   });
 
   //___________________get mouse input___________________
-  var mouse = {
-    down: false,
-    x: 0,
-    y: 0
-  };
-  canvas.onmousemove = function(e) {
-    var rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  };
-  canvas.onmousedown = function() {
-    mouse.down = true;
-    Charge.repulse(q, mouse);
-  };
-  canvas.onmouseup = function() {
-    mouse.down = false;
-  };
+  canvas.addEventListener("mousedown", function(event) {
+    Charge.repulse(q, {
+      x: (event.offsetX * canvas.width) / canvas.clientWidth,
+      y: (event.offsetY * canvas.height) / canvas.clientHeight
+    });
+  });
   let pause = false;
   el.addEventListener("mouseleave", function() {
     pause = true;
   });
   el.addEventListener("mouseenter", function() {
-    pause = false;
     Charge.setCanvas(el);
-    if (!pause) requestAnimationFrame(cycle);
+    if (pause) requestAnimationFrame(cycle);
+    pause = false;
   });
 
   const q = []; //holds the charges
   //spawn p before e to avoid a bug in the class method allPhysics
-  const separation = 15;
+  const separation = 25;
   const off = 250;
 
   for (let i = 0; i < Math.ceil((canvas.width + off * 2) / separation); ++i) {

@@ -16,12 +16,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="theme-color" content="#222" />
-	<meta name="description" content="Interactive notes for high school physics.">
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Interactive notes for high school physics.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
-	<meta name="twitter:title" content="High School Physics Notes">
-	<meta name="twitter:description" content="Interactive notes for high school physics.">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
 
 	<title>Physics Notes</title>
 	<link rel='shortcut icon' href='media/favicon.ico' type='image/x-icon' />
@@ -30,6 +30,25 @@
 
 <body>
 	<header>
+		<!-- <style>
+			.fade-in {
+				opacity: 0;
+				animation: opacity 2s ease-in forwards;
+			}
+
+			.draw-path {
+				stroke-dasharray: 1000;
+				stroke-dashoffset: 1000;
+				animation: dash 8s ease-in forwards;
+				/*   animation: dash 4s ease-in alternate infinite; */
+			}
+
+			@keyframes dash {
+				to {
+					stroke-dashoffset: 0;
+				}
+			}
+		</style> -->
 		<!-- <div class='side-graphics'>
 			<h2 style="position: absolute;right: 1em;top: 4.5em;color:#666;">
 				<div class='fade-in'>$$\sum F=ma$$</div>
@@ -54,7 +73,7 @@
 					<text x="118" y="93" font-size="19">1</text>
 					<text x="300" y="90" font-size="25">M</text>
 					<text x="318" y="93" font-size="19">2</text>
-					<text x="200" y="100" alignment-baseline="central" font-size="25">F</text>
+					<text x="200" y="100" dominant-baseline="central" font-size="25">F</text>
 				</g>
 			</svg>
 
@@ -67,7 +86,7 @@
 					</g>
 					<g id="box">
 						<rect x="0" y="0" width="80" height="80" style="stroke:#666;stroke-width:2;fill:black;fill-opacity:0" />
-						<text class='fade-in' x="40" y="40" fill="#666" text-anchor="middle" alignment-baseline="middle">m</text>
+						<text class='fade-in' x="40" y="40" fill="#666" text-anchor="middle" dominant-baseline="middle">m</text>
 					</g>
 				</defs>
 				<use x='100' y='20' xlink:href="#box" />
@@ -86,16 +105,6 @@
 
 	<ul class="listing listing-style" id="units">
 		<li>
-			<h2>Review</h2>
-			<p>
-				<a href="notes/review/units/index.html">Units</a>
-				<br>
-				<a href="notes/review/vectors/index.html">Vectors & Scalars</a>
-				<br>
-				<a href="notes/review/solving/index.html">Problem Solving</a>
-			</p>
-		</li>
-		<li>
 			<h2>Motion</h2>
 			<p>
 				<a href="notes/motion/motion/index.html">Motion</a>
@@ -106,27 +115,27 @@
 		<li>
 			<h2>Force</h2>
 			<p>
-				<a href="notes/force/1-intro/index.html">Newton's Laws</a>
+				<a href="notes/force/laws/index.html">Newton's Laws</a>
 				<br>
-				<a href="notes/force/2-forces/index.html">Forces</a>
+				<a href="notes/force/forces/index.html">Forces</a>
 				<br>
-				<a href="notes/force/3-friction/index.html">Friction</a>
+				<a href="notes/force/friction/index.html">Friction</a>
 			</p>
 		</li>
 		<li>
 			<h2>Momentum</h2>
 			<p>
-				<a href="notes/momentum/1-intro/index.html">Momentum</a>
+				<a href="notes/momentum/momentum/index.html">Momentum</a>
 				<br>
-				<a href="notes/momentum/2-collisionTypes/index.html">Collisions</a>
+				<a href="notes/momentum/impulse/index.html">Impulse</a>
 			</p>
 		</li>
 		<li>
 			<h2>Energy</h2>
 			<p>
-				<a href="notes/energy/1-intro/index.html">Energy</a>
+				<a href="notes/energy/energy/index.html">Energy</a>
 				<br>
-				<a href="notes/energy/2-conservation/index.html">Conservation of Energy</a>
+				<a href="notes/energy/conservation/index.html">Conservation of Energy</a>
 				<br>
 				<a href="notes/energy/thermo/index.html">Thermodynamics</a>
 			</p>
@@ -140,7 +149,7 @@
 			</p>
 		</li>
 		<li>
-			<h2>Charge</h2>
+			<h2>Electromagnetism</h2>
 			<p>
 				<a href="notes/electromagnetism/coulomb/index.html">Electrostatics</a>
 				<br>
@@ -181,6 +190,16 @@
 				<a href="notes/relativity/general/index.html"> General Relativity</a>
 			</p>
 		</li>
+		<li>
+			<h2>Reference</h2>
+			<p>
+				<a href="notes/review/units/index.html">Units</a>
+				<br>
+				<a href="notes/review/vectors/index.html">Vectors & Scalars</a>
+				<br>
+				<a href="notes/review/solving/index.html">Problem Solving</a>
+			</p>
+		</li>
 	</ul>
 
 	<article>
@@ -212,27 +231,26 @@
 				<a href="https://goo.gl/photos/E7jTHpgHRFgT6C7p6">classroom photos</a>
 			</li>
 			<li>
-				<strong>Simulations</strong>
+				<strong>Education Resources</strong>
 				<a href="https://phet.colorado.edu/en/simulations/category/html">PhET simulations</a>
-				<a href="https://explorabl.es/">explorable explanations</a>
+				<a href="https://www.exploratorium.edu/snacks">science snacks</a>
+				<!-- <a href="https://kellyoshea.blog/greatest-hits/">physics teacher blog</a> -->
+				<!-- <a href="http://www.animations.physics.unsw.edu.au/">Physclips</a> -->
 			</li>
-
 			<li>
 				<strong>Youtube</strong>
 				<a href="https://www.youtube.com/user/physicswoman">physics girl</a>
 				<a href="https://www.youtube.com/user/destinws2">smarter every day</a>
 				<a href="https://www.youtube.com/user/1veritasium">veritasium</a>
+			</li>
+			<li>
+				<strong>Teach Yourself</strong>
+				<a href="https://www.khanacademy.org/science/physics/">Khan Academy</a>
 				<a href="https://www.youtube.com/user/flippingphysics/playlists">flipping physics</a>
 				<a href="https://www.youtube.com/playlist?list=PL8dPuuaLjXtN0ge7yDk_UA0ldZJdhwkoV">crashcourse</a>
 			</li>
-			<li>
-				<strong>Education Resources</strong>
-				<a href="http://www.nextgenscience.org/">science standards</a>
-				<a href="https://www.exploratorium.edu/snacks">science snacks</a>
-				<a href="https://kellyoshea.blog/greatest-hits/">physics teacher blog</a>
-				<a href="http://www.animations.physics.unsw.edu.au/">Physclips</a>
 
-			</li>
+
 		</ul>
 
 		<h2 class='underlined'>Materials</h2>
@@ -263,14 +281,9 @@
 
 		<h2 class='underlined'>About The Site</h2>
 		<p>
-			This site contains course notes for algebra based high school physics. It was written for my students, but it might be useful
-			for anyone learning physics.
+			This site contains course notes for algebra based physics. It was written for my students, but it might be useful for anyone
+			learning physics.
 		</p>
-		<!-- <p>
-			I project the site onto my dry erase board during class. It serves as a focus for introducing new content, solving example
-			problems, and class discussion. Outside of class, students use it catch up on missed content or review before tests. My
-			students are my editors, and they are dedicated to pointing out mistakes I've made on the site.
-		</p> -->
 		<p>
 			The source code is hosted on
 			<a href="https://github.com/landgreen/landgreen.github.io">

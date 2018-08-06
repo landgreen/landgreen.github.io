@@ -20,17 +20,11 @@ var motion = function(canvasID, showPos, showTime, showVel, showAccel, position,
     y: canvas.height / 2
   };
 
-  //gets mouse position
-  function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-      x: evt.clientX - rect.left,
-      y: evt.clientY - rect.top
-    };
-  }
-
   document.getElementById(canvasID).addEventListener("mousedown", function(evt) {
-    mousePos = getMousePos(canvas, evt);
+    mousePos = {
+      x: (event.offsetX * canvas.width) / canvas.clientWidth,
+      y: (event.offsetY * canvas.height) / canvas.clientHeight
+    };
     spawn();
     physics.startTime = new Date().getTime();
   });
@@ -104,19 +98,19 @@ var motion = function(canvasID, showPos, showTime, showVel, showAccel, position,
       var line = 0;
       if (showPos) {
         line += lineHeight;
-        ctx.fillText("x = " + this.x.toFixed(0) + "m", 5, line);
+        ctx.fillText("x = " + this.x.toFixed(0) + " m", 5, line);
       }
       if (showTime) {
         line += lineHeight;
-        ctx.fillText("t = " + this.t.toFixed(1) + "s", 5, line);
+        ctx.fillText("t = " + this.t.toFixed(1) + " s", 5, line);
       }
       if (showVel) {
         line += lineHeight;
-        ctx.fillText("v = " + this.Vx.toFixed(0) + "m/s", 5, line);
+        ctx.fillText("v = " + this.Vx.toFixed(0) + " m/s", 5, line);
       }
       if (showAccel) {
         line += lineHeight;
-        ctx.fillText("a = " + physics.gravX.toFixed(1) + "m/s²", 5, line);
+        ctx.fillText("a = " + physics.gravX.toFixed(1) + " m/s²", 5, line);
       }
     };
   }

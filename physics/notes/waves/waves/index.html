@@ -2,15 +2,16 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
-	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
 	<title>Waves</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -19,6 +20,7 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<script src='../../../lib/function-graph-SVG.js'></script>
 </head>
 
 <body>
@@ -88,8 +90,7 @@
 		<h2 class='underlined'>Wave Terms</h2>
 
 		<div class='definition'>
-			<svg width="560 " height="350 " viewBox="0 100 1000 550">
-				<!-- style="border: 2px solid red;" -->
+			<svg viewBox="0 100 1000 550">
 				<path d="M0 375 h1000 " stroke-width='2' fill='none' stroke='#333' stroke-dasharray="20, 20" />
 				<path d="M41,373 L50,351 L60,329 L69,308 L78,287 L87,267 L97,248 L106,230 L115,213 L124,198 L134,185 L143,173 L152,163
 						 L162,154 L171,148 L180,144 L189,142 L199,142 L208,144 L217,148 L226,154 L236,163 L245,173 L254,185 L264,198 L273,213 L282,230
@@ -142,52 +143,90 @@
 		<p>Play around with the settings in the "sine wave" simulation below.
 			<br> Which of the properties seem related?</p>
 	</article>
-	<div class='center' style="height: 400px;" id='wave_animation'>
-		<svg id='sin-wave' width='600' height='400' style='position:absolute;left: 0;right: 0;margin: 0 auto; background: #fff'>
-			<filter id="displacementFilter">
-				<feTurbulence id='fe-turb' type="turbulence" baseFrequency="0.02" numOctaves="3" />
-				<feDisplacementMap id='fe-disp' in="SourceGraphic" scale="17" xChannelSelector="R" yChannelSelector="G" />
-				<feGaussianBlur stdDeviation="0.5" />
-				<feOffset dx="0" dy="-6" />
-			</filter>
-			<g stroke="#d9dfdf" style="stroke-dasharray:1,98,1,0;stroke-width:4000;">
-				<line x1="0" y1="0" x2="2000" y2="0" />
-				<line x1="0" y1="0" x2="0" y2="2000" />
-			</g>
-			<g stroke-dasharray='10,10' stroke='#777' stroke-width='2'>
-				<line x1="0" y1="200" x2="3000" y2="200" />
-			</g>
-			<path filter="url(#displacementFilter)" id="sine_wave" stroke-width='9' fill='rgba(0,0,255,0.4)' stroke='rgba(255,255,255,0.5)'
-			 stroke-miterlimit="10" />
-			<g>
-				<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;'
-				/>
-				<text x="50" y="391" text-anchor="middle" font-size="15" fill='#000'>100 m</text>
-			</g>
-
-		</svg>
-		<div style='position:relative;left: 0;right: 0;top:2%; margin: 0 auto;'>
-			amplitude =
-			<input class='number' id='amplitude' type="number" step="5" min="-1000" max="1000">m &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; velocity =
-			<input class='number' id='velocity' type="number" step="5" min="-1000" max="1000">m/s &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; wavelength =
-			<input class='number' id='wavelength' type="number" min="0" step="20" min="-1000" max="1000">m
+	<div id="sine-wave-zone">
+		<div class="flex-grid-thirds">
+			<div class="col">
+				<span class='center'>amplitude =
+					<input id='amplitude' type="number" step="5" min="-1000" max="1000" style="width:40px;">m</span>
+			</div>
+			<div class="col">
+				<span class='center'>velocity =
+					<input id='velocity' type="number" step="5" min="-1000" max="1000" style="width:40px;">m/s</span>
+			</div>
+			<div class="col">
+				<span class='center'>wavelength =
+					<input id='wavelength' type="number" min="0" step="20" min="-1000" max="1000" style="width:40px;">m</span>
+			</div>
 		</div>
+		<div class='center' style="height: 400px;" id='wave_animation'>
+			<svg id='sin-wave' height='400'>
+				<filter id="displacementFilter">
+					<feTurbulence id='fe-turb' type="turbulence" baseFrequency="0.02" numOctaves="3" />
+					<feDisplacementMap id='fe-disp' in="SourceGraphic" scale="17" xChannelSelector="R" yChannelSelector="G" />
+					<feGaussianBlur stdDeviation="0.5" />
+					<feOffset dx="0" dy="-6" />
+				</filter>
+				<g stroke="#d9dfdf" style="stroke-dasharray:1,98,1,0;stroke-width:4000;">
+					<line x1="0" y1="0" x2="2000" y2="0" />
+					<line x1="0" y1="0" x2="0" y2="2000" />
+				</g>
+				<g stroke-dasharray='10,10' stroke='#777' stroke-width='2'>
+					<line x1="0" y1="200" x2="3000" y2="200" />
+				</g>
+				<path filter="url(#displacementFilter)" id="sine_wave" stroke-width='9' fill='rgba(0,0,255,0.4)' stroke='rgba(255,255,255,0.5)'
+				 stroke-miterlimit="10" />
+				<g>
+					<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;'
+					/>
+					<text x="50" y="391" text-anchor="middle" font-size="15" fill='#000'>100 m</text>
+				</g>
 
-		<div style='position:relative;left: 0;right: 0;top:88%;margin: 0 auto;'>
-			<span id='frequency'></span> &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
-			<span id='period'></span> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; time =
-			<span id='time'></span>
+			</svg>
+		</div>
+		<div class="flex-grid-thirds">
+			<div class="col">
+				<span id='frequency' class='center'></span>
+			</div>
+			<div class="col">
+				<span id='time' class='center'></span>
+			</div>
+			<div class="col">
+				<span id='period' class='center'></span>
+			</div>
 		</div>
 	</div>
 	<article>
+
 		<div class='example'>
 			<strong>Graphing:</strong> Let's see if we can find a relationship between frequency and period. Change the wavelength and record
 			about five different pairs of frequency and period. Graph the pairs with period as the x-coordinate and frequency as the
 			y-coordinate. What does the graph look like?
-			<details>
+
+			<details id="example0">
 				<summary>solution</summary>
-				<p class='center'>it's an inverse function</p>
-				<div id='T-vs-f' class='center'></div>
+				<p>It's an inverse function.</p>
+				<svg id="SVG-graph-0" viewBox="0 0 600 400"></svg>
+				<script>
+					// funGraphSVG() don't work inside <details>
+					// this is my workaround
+					document.getElementById("example0").addEventListener("toggle", handler0);
+					function handler0(e) {
+						e.target.removeEventListener(e.type, arguments.callee); // remove this handler
+						funGraphSVG("SVG-graph-0", x => 1 / x, {
+							x0: 15,
+							y0: 385,
+							precision: 1,
+							scale: 100,
+							gridSize: 100,
+							positiveOnly: true,
+							xLabel: "frequency (Hz)",
+							yLabel: "period (s)",
+							showMouseCoords: true,
+							stroke: "none",
+							fill: "rgba(255,0,50,0.3)",
+						});
+					}
+				</script>
 			</details>
 		</div>
 		<h2 class='underlined'>Frequency and Period</h2>
@@ -228,7 +267,7 @@
 				.wrapper {
 					display: grid;
 					grid-gap: 0px;
-					grid-template-columns: 160px 30px 210px 20px;
+					grid-template-columns: 30px 210px 30px;
 				}
 
 				#circle {
@@ -260,13 +299,13 @@
 				}
 			</style>
 			<div class="wrapper">
-				<div style="grid-column: 2 / span 1; grid-row: 1;" class="slider-wrapper">
+				<div style="grid-column: 1 / span 1;" class="slider-wrapper">
 					<input type="range" id='per-slider' min="0.5" max="2" step="0.01" value="4">
 				</div>
-				<div style="grid-column: 3 / span 1; grid-row: 1;">
+				<div style="grid-column: 2 / span 1;">
 					<div id="circle"></div>
 				</div>
-				<div style="grid-column: 4 / span 1; grid-row: 1;" class="slider-wrapper">
+				<div style="grid-column: 3 / span 1;" class="slider-wrapper">
 					<input type="range" id='freq-slider' min="0.5" max="2" step="0.01" value="0.25">
 				</div>
 			</div>
@@ -282,12 +321,12 @@
 
 					perElem.addEventListener("change", event => {
 						per = perElem.value;
-						circleElem.style.animationDuration = per + " s";
+						circleElem.style.animationDuration = per + "s";
 						freqElem.value = 1 / Math.max(per, 0.001);
 					});
 					freqElem.addEventListener("change", event => {
 						per = 1 / Math.max(freqElem.value, 0.001);
-						circleElem.style.animationDuration = per + " s";
+						circleElem.style.animationDuration = per + "s";
 						perElem.value = per;
 					});
 					perElem.addEventListener("input", event => {
@@ -310,7 +349,6 @@
 							isPaused = true;
 						}
 					});
-
 				}
 				sliderControl();
 			</script>
@@ -368,14 +406,14 @@
 			</tr>
 			<tr>
 				<th>light</td>
-					<td style=" padding: 10px; ">299,792,458</td>
-					<td style="padding: 10px; ">299,700,000</td>
-					<td style="padding: 10px; ">220,000,000</td>
-					<td style="padding: 10px; ">200,000,000</td>
+					<td>299&thinsp;792&thinsp;458</td>
+					<td>299&thinsp;700&thinsp;000</td>
+					<td>220&thinsp;000&thinsp;000</td>
+					<td>200&thinsp;000&thinsp;000</td>
 			</tr>
 		</table>
 		<p>
-			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo ">Sound</a> travels faster in dense media because the atoms are
+			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo">Sound</a> travels faster in dense media because the atoms are
 			<a href='https://www.youtube.com/watch?v=w6Q15GZpSUY'>closer</a> together. This means the atoms don't have to move as far to collide.</p>
 		<p>A light wave moves slower in dense media because as the light wave propagates through a medium it produces ripples that
 			interfere in a way that slows the group velocity of the light wave.</p>
@@ -559,9 +597,6 @@
 	<script src='../../../lib/matter.min.js'></script>
 	<script src="wave.js "></script>
 	<script src="sound.js "></script>
-	<script src="https://d3js.org/d3.v3.min.js "></script>
-	<script src='../../../lib/function-plot.js'></script>
-	<script src='plot.js'></script>
 </body>
 
 </html>

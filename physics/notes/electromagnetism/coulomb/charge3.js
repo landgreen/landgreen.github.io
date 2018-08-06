@@ -76,31 +76,20 @@ function charges3(el) {
   ctx.textAlign = "right";
 
   //___________________get mouse input___________________
-  var mouse = {
-    down: false,
-    x: 0,
-    y: 0
-  };
-  canvas.onmousemove = function(e) {
-    var rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  };
-  canvas.onmousedown = function() {
-    mouse.down = true;
-    Charge.repulse(q, mouse);
-  };
-  canvas.onmouseup = function() {
-    mouse.down = false;
-  };
+  canvas.addEventListener("mousedown", function(event) {
+    Charge.repulse(q, {
+      x: (event.offsetX * canvas.width) / canvas.clientWidth,
+      y: (event.offsetY * canvas.height) / canvas.clientHeight
+    });
+  });
 
   el.addEventListener("mouseleave", function() {
     c.pause = true;
   });
   el.addEventListener("mouseenter", function() {
-    c.pause = false;
     Charge.setCanvas(el);
-    if (!c.pause) requestAnimationFrame(cycle);
+    if (c.pause) requestAnimationFrame(cycle);
+    c.pause = false;
   });
 
   //switch between draw modes

@@ -79,16 +79,15 @@ input:focus {
   outline: 0;
 }
 
+input[type="range"] {
+  height: 8px;
+}
+
 canvas {
   margin: 0px;
   box-shadow: 2px 2px 8px #aaa;
   border-radius: 5px;
   user-select: none;
-}
-.canvas-graph {
-  box-shadow: none;
-  border-radius: 0px;
-  /* border: 1px solid #eee; */
 }
 
 a {
@@ -141,19 +140,6 @@ th {
   color: #fff;
 }
 
-.black {
-  background-color: #000;
-}
-
-.rainbow {
-  background: linear-gradient(red, orange, yellow, green, cyan, blue, violet);
-  font-weight: 900;
-  color: #fff;
-}
-.ion {
-  background: #fef;
-}
-
 /*classes_________________________________________*/
 .back {
   text-align: center;
@@ -167,9 +153,6 @@ th {
   border-bottom: 1px solid #aaa;
   font-weight: 300;
   font-size: 2.2em;
-}
-.strikeout {
-  text-decoration: line-through;
 }
 
 .center {
@@ -211,14 +194,6 @@ th {
   background-color: #e6f9f0;
   padding: 1.3em;
   border-radius: 1em;
-}
-
-.quote {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 120%;
-  padding: 0.5em 2em;
-  /* border-radius: 20px; */
-  /* background: #eee; */
 }
 
 /*math tex rendering __________________________*/
@@ -290,6 +265,27 @@ th {
   padding: 5px;
 }
 
+/* 3 column flex Grid ________________________________________________*/
+
+.flex-grid-thirds {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-grid-thirds .col {
+  width: 32%;
+}
+
+@media (max-width: 500px) {
+  .flex-grid-thirds {
+    display: block;
+  }
+  .flex-grid-thirds .col {
+    width: 100%;
+    margin: 0 0 10px 0;
+  }
+}
+
 /* Header setup_________________________________*/
 header {
   /* background: linear-gradient(to left, #9bb, #bb9, #b9b); */
@@ -316,9 +312,14 @@ header h1 a:hover {
   text-decoration: none;
 }
 
+/* responsive media rules for mobile________________________________ */
+
 @media screen and (max-width: 650px) {
   header h1 {
     font-size: 3em;
+  }
+  .underlined {
+    font-size: 1.8em;
   }
   .definition {
     padding: 10px;
@@ -327,44 +328,11 @@ header h1 a:hover {
   .katex {
     font-size: 1.2em;
   }
-}
-
-@media screen and (max-width: 800px) {
-  .side-graphics {
-    visibility: hidden;
+  canvas {
+    max-width: 100%;
+    height: auto;
   }
-}
-@media screen and (max-width: 1100px) {
-  .side-graphics-wide {
-    visibility: hidden;
-  }
-}
-@media screen and (max-width: 1100px) {
-  .display-over-1100 {
+  .hide-on-mobile {
     display: none;
-  }
-}
-
-.draw-path {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: dash 8s ease-in forwards;
-  /*   animation: dash 4s ease-in alternate infinite; */
-}
-
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.fade-in {
-  opacity: 0;
-  animation: opacity 2s ease-in forwards;
-}
-
-@keyframes opacity {
-  to {
-    opacity: 1;
   }
 }

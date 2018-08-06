@@ -2,23 +2,26 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
-	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
 	<title>Orbits</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
-	<script src="../../../lib/katex/katex.min.js"></script>
-	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
-
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+
+	<script src='../../../lib/function-graph-SVG.js'></script>
+	<script defer src="grav1.js"></script>
+	<script defer src="grav2.js"></script>
+	<script defer src="orbits.js"></script>
 </head>
 
 <body>
@@ -39,13 +42,11 @@
 					kinetic energy changes into the tides.</p>
 			</div>
 			<div>
-				<canvas style='border-radius: 250px;' class='black' id='grav1' height='250' width='250' onclick="grav1(this)"> </canvas>
+				<canvas class="center" id='grav1' height='250' width='250' style="background-color: #111;border-radius: 250px;"> </canvas>
 			</div>
 		</div>
-		<br>
-		<p>Play around with some orbits in the simulation below to develop an intuition for orbital mechanics.</p>
-		<center>
-			<div style="position: relative; width: 300px; height: 200px;">
+		<div class="example">
+			<div class="center" style="position: relative; width: 300px; height: 200px;">
 				<a href="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_en.html" style="text-decoration: none;">
 					<img src="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits-600.png" alt="Gravity And Orbits"
 					 style="border: none;" width="300" height="200" />
@@ -57,16 +58,16 @@
 					</table>
 				</a>
 			</div>
-		</center>
-		<p>What happen to the path of a satellite when you turn gravity off?</p>
-		<p>How would you describe the directions of the velocity and the force?</p>
-		<p>How does the orbital path change as you increase the mass of either object?</p>
+			<p>What happen to the path of a satellite when you turn gravity off?</p>
+			<p>How would you describe the direction of the velocity compared to the force?</p>
+			<p>How does the orbital path change as you increase the mass of either object?</p>
+		</div>
 
 		<p class='underlined' id="circular">Circular Motion</p>
 		<p>Any object moving in a circular path has a net force pointed at the center of the circle. The velocity of the object will
 			always be perpendicular to the force.</p>
 		<div class='definition'>
-			<svg style="display: block; margin: auto" width="450" height="360" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<svg viewBox="-60 0 550 360">
 				<circle cx="200" cy="200" r="150" fill='rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
 				<g transform="translate(53 200)">
 					<line x1="0" y1="0" x2="150" y2="0" style="stroke:#000;stroke-width:2" />
@@ -79,12 +80,12 @@
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
-					<text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">v</text>
+					<text x="0" y="-115" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">v</text>
 					<g transform="translate(-75 0) rotate(0)">
 						<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
-					<text x="-85" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
+					<text x="-85" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">F</text>
 					<circle cx="0" cy="0" r="20" fill='#f77' stroke-width="2" stroke="#222" />
 				</g>
 				<g transform="translate(306 94) rotate(-45)" opacity=0.25>
@@ -162,8 +163,8 @@
 		</div>
 		<p class='underlined'>Circular Orbits</p>
 		<p>Each satellite below starts with a different velocity. Simulation speed =
-			<input class='number' id='speed' type="number" step="1" min='0' max='1000' value='2'>
-			<canvas class='black' id='grav2' height='600' width='600' onclick="grav2(this)"> </canvas>
+			<input class='number' id='speed' type="number" step="1" min='0' max='1000' value='2' style="width:40px;">
+			<canvas id='grav2' height='600' width='600' onclick="grav2(this)" style="background-color: #000;"> </canvas>
 		</p>
 		<p>
 			<strong>The orbits of objects in space are elliptical. They are never perfectly circular,</strong> but many orbits come close
@@ -176,9 +177,9 @@
 			$$v^{2} = \frac{GM_{2}}{r} $$
 		</details>
 		<div class='definition'>
-			<svg style="display: block; margin: auto" width="450" height="360" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<svg viewBox="-60 0 550 360">
 				<circle cx="200" cy="200" r="50" fill='#fff' stroke-width="2" stroke="#222" />
-				<text x="203" y="224" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">M</text>
+				<text x="203" y="224" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">M</text>
 				<circle cx="200" cy="200" r="150" fill='rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
 				<g transform="translate(53 200)">
 					<line x1="0" y1="0" x2="150" y2="0" style="stroke:#000;stroke-width:2" />
@@ -191,7 +192,7 @@
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
-					<text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="23">v</text>
+					<text x="0" y="-115" fill="black" text-anchor="middle" dominant-baseline="central" font-size="23">v</text>
 					<circle cx="0" cy="0" r="6" fill='#f77' stroke-width="2" stroke="#222" />
 				</g>
 				<g transform="translate(306 94) rotate(-45)" opacity=0.25>
@@ -219,164 +220,188 @@
 				<br>Only true for circular orbits!
 			</p>
 		</div>
-		<p>There are several restrictions on where we can use this equation. Most planets orbiting the sun, moons orbiting large planets,
-			and satellites are all applicable.</p>
-		<div id='v-vs-r'></div>
-		<p>This is a graph of radius vs. orbital velocity for a satellite orbiting Earth in circular motion. It seems counter-intuitive,
-			but as you orbit farther from the central body your velocity goes down.</p>
-		<p>Take a look at the simulation below to see circular orbits at different distances.
-			<br>Click and drag to move. Double click for full screen.</p>
-		<style>
-			.full-page {
-				position: fixed;
-				top: -5px;
-				left: -5px;
-				z-index: 0;
-				margin: 0;
-				padding: 0;
-			}
-		</style>
+		<p>Situations where there is circular motion and a much larger central body include: planets orbiting the sun, moons orbiting
+			large planets, and satellites.</p>
 
-		<div id='three-orbit'></div>
-		<center>
-			<h3>Local Massive Objects Data Table</h3>
-			<table border>
-				<tr align=center>
-					<th align=left>Planet</th>
-					<th>mass (kg)</th>
-					<th>radius (km)</th>
-					<th>density (g/cm
-						<sup>3</sup>)</th>
-				</tr>
-				<tr align=center>
-					<td align=left>Sun</td>
-					<td>2.00 × 10
-						<sup>30</sup>
-					</td>
-					<td>695,700</td>
-					<td>1.408</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Mercury</td>
-					<td>3.301 × 10
-						<sup>23</sup>
-					</td>
-					<td>2,440</td>
-					<td>5.427</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Venus</td>
-					<td>4.867 × 10
-						<sup>24</sup>
-					</td>
-					<td>6,052</td>
-					<td>5.243</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Earth</td>
-					<td>5.972 × 10
-						<sup>24</sup>
-					</td>
-					<td>6,371</td>
-					<td>5.515</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Moon</td>
-					<td>7.346 × 10
-						<sup>22</sup>
-					</td>
-					<td>1,737</td>
-					<td>3.344</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Mars</td>
-					<td>6.417 × 10
-						<sup>23</sup>
-					</td>
-					<td>3,390</td>
-					<td>3.933</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Jupiter</td>
-					<td>1.899 × 10
-						<sup>27</sup>
-					</td>
-					<td>70,000</td>
-					<td>1.326</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Saturn</td>
-					<td>5.685 × 10
-						<sup>26</sup>
-					</td>
-					<td>58,232</td>
-					<td>0.687</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Uranus</td>
-					<td>8.68 × 10
-						<sup>25</sup>
-					</td>
-					<td>25,362</td>
-					<td>1.270</td>
-				</tr>
-				<tr align=center>
-					<td align=left>Neptune</td>
-					<td>1.024 × 10
-						<sup>26</sup>
-					</td>
-					<td>24,622</td>
-					<td>1.638</td>
-				</tr>
-			</table>
-			<a href="http://exoplanets.org/table">exoplanets data table</a>
-		</center>
+		<div class="hide-on-mobile">
+			<p>Take a look at the simulation below to see circular orbits at different distances. Click and drag to move. Double click
+				for full screen.</p>
+			<style>
+				.full-page {
+					position: fixed;
+					top: -5px;
+					left: -5px;
+					z-index: 0;
+					margin: 0;
+					padding: 0;
+				}
+			</style>
+
+			<div id='three-orbit'></div>
+		</div>
+
 		<div class='example'>
+			<center>
+				<table border>
+					<tr align=center>
+						<th align=left>Planet</th>
+						<th>mass (kg)</th>
+						<th>radius (km)</th>
+						<th>density (g/cm³)</th>
+					</tr>
+					<tr align=center>
+						<td align=left>Sun</td>
+						<td>2.00 × 10
+							<sup>30</sup>
+						</td>
+						<td>695&#8239;700</td>
+						<td>1.408</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Mercury</td>
+						<td>3.301 × 10
+							<sup>23</sup>
+						</td>
+						<td>2&#8239;440</td>
+						<td>5.427</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Venus</td>
+						<td>4.867 × 10
+							<sup>24</sup>
+						</td>
+						<td>6&#8239;052</td>
+						<td>5.243</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Earth</td>
+						<td>5.972 × 10
+							<sup>24</sup>
+						</td>
+						<td>6&#8239;371</td>
+						<td>5.515</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Moon</td>
+						<td>7.346 × 10
+							<sup>22</sup>
+						</td>
+						<td>1737</td>
+						<td>3.344</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Mars</td>
+						<td>6.417 × 10
+							<sup>23</sup>
+						</td>
+						<td>3390</td>
+						<td>3.933</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Jupiter</td>
+						<td>1.899 × 10
+							<sup>27</sup>
+						</td>
+						<td>70&#8239;000</td>
+						<td>1.326</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Saturn</td>
+						<td>5.685 × 10
+							<sup>26</sup>
+						</td>
+						<td>58&#8239;232</td>
+						<td>0.687</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Uranus</td>
+						<td>8.68 × 10
+							<sup>25</sup>
+						</td>
+						<td>25&#8239;362</td>
+						<td>1.270</td>
+					</tr>
+					<tr align=center>
+						<td align=left>Neptune</td>
+						<td>1.024 × 10
+							<sup>26</sup>
+						</td>
+						<td>24&#8239;622</td>
+						<td>1.638</td>
+					</tr>
+				</table>
+			</center>
+			<br>
 			<strong>Example:</strong> If a satellite is 800.0 km above the surface of the moon how fast must it move to travel in a circular
 			orbit?
 			<details>
 				<summary>solution</summary>
-				$$r = 800000\,\mathrm{m} + 1737000\,\mathrm{m} = 2537000\,\mathrm{m}$$ $$v^{2} = \frac{GM}{r}$$ $$v^{2} = \frac{(6.67 \times
-				10^{-11})(7.346 \times 10^{22})}{2,537,000}$$ $$\sqrt{v^{2}} = \sqrt{19.31 \times 10^5}$$ $$v = 1389.6 \,\mathrm{\tfrac{m}{s}}$$
+				$$r = 800\,000\,\mathrm{m} + 1\,737\,000\,\mathrm{m} = 2\,537\,000\,\mathrm{m}$$ $$v^{2} = \frac{GM}{r}$$ $$v^{2} = \frac{(6.67
+				\times 10^{-11})(7.346 \times 10^{22})}{2\,537\,000}$$ $$\sqrt{v^{2}} = \sqrt{19.31 \times 10^5}$$ $$v = 1389.6 \,\mathrm{\tfrac{m}{s}}$$
 			</details>
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> A geosynchronous orbit is always above the same point on the earth so it takes one day to orbit. This
-			orbit requires a velocity of 3,070 m/s. Calculate how far away a geosynchronous satellite needs to be from the center
-			of the earth.
+			<p class="center">Radius Vs. Orbital Velocity
+				<br>(for satellites in circular motion around Earth)</p>
+			<svg id="SVG-graph-0" viewBox="0 0 600 300">
+				<path d="M 25 -1 v 281 h 65 v -281" fill='rgba(100,50,0,0.2)' />
+				<path d="M 90 -1 v 281 h 18.5 v -281" fill='rgba(100,190,255,0.25)' />
+				<path d="M 446.5 -1 v 381" stroke="#999" stroke-width="1" fill='none' stroke-dasharray="4" />
+
+				<a xlink:href="https://en.wikipedia.org/wiki/Geosynchronous_orbit">
+					<text x="438" y="75" fill="black" text-anchor="middle" dominant-baseline="central" font-size="13" transform="rotate(-90 438 75)">geosynchronous orbit</text>
+				</a>
+				<a xlink:href="https://en.wikipedia.org/wiki/Low_Earth_orbit">
+					<text x="98" y="190" fill="black" text-anchor="middle" dominant-baseline="central" font-size="13" transform="rotate(-90 98 190)">low Earth orbits</text>
+				</a>
+			</svg>
+			<script defer>
+				funGraphSVG("SVG-graph-0", x => Math.sqrt(398576 / x), {
+					x0: 25,
+					y0: 280,
+					stroke: "#08f",
+					strokeWidth: 3,
+					xScale: 0.01,
+					yScale: 25,
+					gridSize: 75,
+					showGrid: false,
+					xLabel: "radius (km)",
+					yLabel: "velocity (km/s)",
+					showMouseCoords: true,
+				});
+			</script>
+			<strong>Example:</strong> A geosynchronous orbit can stay above the same point on the Earth. To be able to do this the orbit must
+			equal one Earth day, which requires a velocity of 3070 m/s. Calculate how far away a geosynchronous satellite needs to
+			be from the center of the earth.
 			<details>
 				<summary>solution</summary>
 				$$v^{2} = \frac{GM}{r}$$ $$r = \frac{GM}{v^{2}}$$ $$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(3,070)^{2}}$$
-				$$r = 4.22 \times 10^{7} \,\mathrm{m} = 42,200 \,\mathrm{km}$$
-				<br>$$\text{altitude = orbital radius - Earth's surface radius}$$ $$\text{altitude} = 42,200 \,\mathrm{km} - 6,371 \,\mathrm{km}$$
-				$$\text{altitude} = 35,829 \,\mathrm{km}$$
+				$$r = 4.22 \times 10^{7} \,\mathrm{m} = 42\,200 \,\mathrm{km}$$
+				<br>$$\text{altitude = orbital radius - Earth's surface radius}$$ $$\text{altitude} = 42\,200 \,\mathrm{km} - 6371 \,\mathrm{km}$$
+				$$\text{altitude} = 35\,829 \,\mathrm{km}$$
 			</details>
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> A 100 kg satellite and a 200 kg satellite are both in a circular orbit around the Earth at 10,000,000
-			m from the center of the Earth. Which satellite will have the higher velocity?
+			<strong>Example:</strong> A 100 kg satellite and a 200 kg satellite are both in a circular orbit around the Earth at an orbital
+			radius of 10&#8239;000&#8239;000 m. Which satellite has the higher velocity?
 			<details>
 				<summary>solution</summary>
-				<br>They will both have the same velocity. The mass of the satellite doesn't matter, only the mass of the Earth.
+				<br>They both have the same velocity. The mass of the satellite doesn't matter, only the mass of the Earth.
 			</details>
 		</div>
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
 	</div>
-	<script>
-		renderMathInElement(document.body);
-	</script>
+
+	<script src="../../../lib/katex/katex.min.js"></script>
+	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+	<script> renderMathInElement(document.body); </script>
+
 	<script src='../../../lib/randomColor.min.js'></script>
 	<script src='../../../lib/gravityClass.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js'></script>
 	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
-	<script src="orbits.js"></script>
-	<script src="grav1.js"></script>
-	<script src="grav2.js"></script>
-	<script src="https://d3js.org/d3.v3.min.js"></script>
-	<script src='../../../lib/function-plot.js'></script>
-	<script src='plot.js'></script>
 </body>
 
 </html>

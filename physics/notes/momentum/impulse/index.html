@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#222" />
+  <meta name="description" content="Interactive notes for algebra based physics.">
+  <meta name="author" content="Ross Landgreen">
+  <meta property="og:description" content="Interactive notes for algebra based physics.">
+  <meta property="og:title" content="Physics Notes">
+  <meta name="twitter:title" content="Physics Notes">
+  <meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
+  <title>Impulse</title>
+  <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+
+  <link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+  <script src="../../../lib/katex/katex.min.js"></script>
+  <script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+
+  <link rel="stylesheet" href="../../../style.css">
+  <script src='../../../lib/function-graph-SVG.js'></script>
+</head>
+
+<body>
+
+  <header>
+    <h1>
+      <a href="../../../index.html">Impulse</a>
+    </h1>
+  </header>
+  <article>
+    <p>An impulse is defined as both a force multiplied by time (FΔt) and a change in momentum (Δp). The longer a force is applied,
+      the more the momentum will change.
+    </p>
+    <strong>Examples of impulse:</strong>
+    <div class="col-group">
+      <div>
+        cars speeding up
+        <br>cars crashing
+        <br>rockets accelerating
+      </div>
+      <div>
+        kicking a soccer ball
+        <br>punching
+        <br>jumping
+      </div>
+    </div>
+    <br>
+    <details class='derive'>
+      <summary>derivation of impulse</summary>
+      $$a = \color{#f00}\frac{\Delta v}{\Delta t}$$
+      <br>$$F = ma$$ $$F = m \color{#f00}\frac{\Delta v}{\Delta t}$$ $$F \Delta t = m \Delta v$$
+      <br> $$F \Delta t = m(v_f - v_i)$$ $$F \Delta t = mv_f - mv_i$$ $$F \Delta t = p_f - p_i$$ $$F \Delta t = \Delta p$$
+    </details>
+    <div class='definition'>
+      <h1>
+        $$J = \Delta p$$ $$F \Delta t = \Delta p $$
+      </h1>
+      \(J\) = impulse [Ns, kg m/s]
+      <em>vector</em>
+      <br>\(F\) = force [N, kg m/s²]
+      <em>vector</em>
+      <br>\(\Delta t\) = time period [s]
+      <br>\(\Delta p\) = change in momentum [kg m/s]
+      <em>vector</em>
+      <br>\(m\) = mass [kg]
+      <br>\(v\) = velocity[m/s]
+      <em>vector</em>
+    </div>
+    <p>When using impulse in solving problems you might want to unpack momentum into mass and velocity.</p>
+    $$F \Delta t = m\Delta v$$ $$F \Delta t = mv - mu$$
+
+    <div class='example'>
+      <strong>Example:</strong> Which will produce a greater change in velocity: doubling the force or doubling the time the force
+      is applied?
+      <details>
+        <summary>solution</summary>
+        <p>Doubling force or time applied will produce the same increase in velocity. This is because F and Δt are in the same
+          position in the equation.</p>
+        $$\Delta v = \frac{\color{blue}F \Delta t}{m} $$
+
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> A medicine ball is hurtling towards you at 15 m/s. You weakly try to stop it by applying a 100 N
+      force for 0.1 s. You don't stop the ball, but it slows to 14 m/s. Calculate the mass of the ball.
+      <details>
+        <summary>solution</summary>
+        $$F \Delta t = m\Delta v$$ $$\frac{F \Delta t}{\Delta v} = m$$ $$\frac{(-100)(0.1)}{14-15} = m$$ $$\frac{(-100)(0.1)}{-1}
+        = m$$ $$10 \, \mathrm{kg} = m$$
+      </details>
+    </div>
+    <div class='example'>
+      <strong>Example:</strong> The
+      <a href='https://en.wikipedia.org/wiki/Tesla_Model_S'>Tesla Model S</a> car has a mass of 2,250 kg. It holds the record for fastest 0 to 60 miles/hour acceleration of a
+      production car with 2.8 seconds. Convert the miles/hour into m/s, and find the force produced by the car.
+      <details>
+        <summary>solution</summary>
+        $$ 60 \left( \mathrm{ \frac{\color{red}{mile}}{\color{blue}{hour}}} \right)\left(\frac{1609\,\mathrm{ m}}{1 \,\color{red}{\mathrm{mile}
+        }}\right)\left(\frac{1\, \color{blue}{ \mathrm{hour} }}{3600\, \mathrm{s} }\right) = 26.8 \mathrm{\tfrac{m}{s}} $$
+        <br> $$F \Delta t = m\Delta v$$ $$F = \frac{m\Delta v}{\Delta t}$$ $$F = \frac{(2250)(26.8)}{2.8}$$ $$F = \frac{60300}{2.8}$$
+        $$F = 21536 \, \mathrm{N}$$
+      </details>
+      <br> How does the 0 to 60 miles/hour acceleration compare to the acceleration of gravity?
+      <details>
+        <summary>solution</summary>
+        $$F = 21536 N$$ $$F = ma$$ $$\frac{F}{m}=a$$ $$\frac{21536}{2250}=a$$ $$a = 9.57 \,\mathrm{ \tfrac{m}{s^2} }$$
+        <p>It's just a bit under the acceleration of gravity. How would that feel?</p> $$ g = 9.81 \, \mathrm{\tfrac{m}{s^2}}
+        $$
+      </details>
+    </div>
+
+    <div class="example">
+      $$F \Delta t = m\Delta v$$ $$\Delta v = \frac{F \Delta t}{m} $$
+      <svg id="SVG-graph-0" viewBox="0 0 600 300">
+        <circle id="origin-0" cx="15" cy="285" r="6" fill="rgb(210,120,120)" />
+
+      </svg>
+      <div class="center">
+        force =
+        <input id='force-slider' type="range" min="0" max="10" step="0.01" value="1" style="width: 250px;">
+        <input id='force' type="number" step="0.01" value="1" min="0" style="width: 50px;"> N
+        <br>mass =
+        <input id='mass-slider' type="range" min="0" max="10" step="0.01" value="1" style="width: 250px;">
+        <input id='mass' type="number" step="0.01" value="1" min="0" style="width: 50px;"> kg
+
+      </div>
+      <script>
+        {
+          let settings = {
+            x0: 15,
+            y0: 285,
+            stroke: "rgb(210,120,120)",
+            strokeWidth: 3,
+            fill: "rgba(210,120,120,0.15)",
+            positiveOnly: true,
+            gridSize: 60,
+            scale: 60,
+            xLabel: "time (s)",
+            yLabel: "velocity (m/s)",
+            step: 5,  //big steps because the function is linear
+            showMouseCoords: true,
+          }
+          funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, settings);
+
+          //force event listeners
+          settings.updatePath = true
+          document.getElementById("force").addEventListener("input", event => {
+            document.getElementById("force-slider").value = document.getElementById("force").value
+            funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, settings);
+          });
+          document.getElementById("force-slider").addEventListener("input", event => {
+            document.getElementById("force").value = document.getElementById("force-slider").value
+            funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, settings);
+          });
+          // mass event listeners
+          document.getElementById("mass").addEventListener("input", event => {
+            document.getElementById("mass-slider").value = document.getElementById("mass").value
+            funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, settings);
+          });
+          document.getElementById("mass-slider").addEventListener("input", event => {
+            document.getElementById("mass").value = document.getElementById("mass-slider").value
+            funGraphSVG("SVG-graph-0", x => document.getElementById("force").value / document.getElementById("mass").value * x, settings);
+          });
+          //bring circle at origin to front
+          const parent = document.getElementById("SVG-graph-0");
+          const shouldBeLast = document.getElementById("origin-0");
+          const last = document.getElementById("SVG-graph-0-path");
+          parent.insertBefore(parent.removeChild(shouldBeLast), last);
+        }
+      </script>
+      <p>The graph above is velocity vs. time for a car collision. The slope of this graph is acceleration, and a high acceleration
+        makes collisions dangerous.</p>
+      <strong>Example:</strong> Based on this graph, what types of vehicles will be safer in collisions?
+      <details>
+        <summary>solution</summary>
+        <p>A vehicle with more mass will experience less acceleration. A plane, train or bus would be safe choices. On the other
+          hand, a larger vehicle is safer for you, but more dangerous for whatever you crash into.
+        </p>
+        <p>Another way to improve safety is to reduce the force. This can be done by increasing the total time for the collision.
+          Like hitting a pillow instead of a brick. Modern cars lengthen the time of a collision with crumple zones.</p>
+      </details>
+    </div>
+
+    <div class='back'>
+      <a href="../../../index.html">Back</a>
+    </div>
+    <script> renderMathInElement(document.body); </script>
+</body>
+
+</html>

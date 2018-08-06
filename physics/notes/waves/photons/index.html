@@ -2,15 +2,16 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-
-  <meta name="description" content="Notes for a high school physics course.">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#222" />
+  <meta name="description" content="Interactive notes for algebra based physics.">
   <meta name="author" content="Ross Landgreen">
-  <meta property="og:description" content="Notes for a high school physics course.">
+  <meta property="og:description" content="Interactive notes for algebra based physics.">
   <meta property="og:title" content="Physics Notes">
-  <meta name="twitter:title" content="High School Physics Notes">
+  <meta name="twitter:title" content="Physics Notes">
+  <meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
   <title>Photons</title>
   <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -58,13 +59,14 @@
       <strong>photon</strong>. A photon acts like a wave. It has a frequency, a wavelength, and a constant speed. Yet, when
       <a href="https://www.youtube.com/watch?v=GzbKb59my3U">detected</a>, a photon acts like a particle with its own energy and position.
     </p>
-
-    <div style="background:url(/path/to/image.png) center top; width:100%; overflow:hidden">
-      <img src="/path/to/image.png" style="visibility: hidden;">
-    </div>
-
-
   </article>
+  <style>
+    @media screen and (max-width: 1100px) {
+      .display-over-1100 {
+        display: none;
+      }
+    }
+  </style>
   <svg class='center display-over-1100' width="1100" viewBox="0 0 720 500" style="margin-top: -350px;margin-bottom: -370px;">
     <g stroke="#eee" fill="#eee">
       <g transform="translate(-14.82002,-13.154438)">
@@ -149,8 +151,17 @@
       <sup>8</sup> [m/s]
     </div>
 
+
+
     <div class='example'>
-      <strong>Question:</strong> Which has more energy: a red photon or a blue photon?
+      <div style="background-color: #000000; border-radius:20px;padding: 5px; margin:50px;">
+        $$\color{#d0d} f = 668–789 \, \mathrm{THz} \quad\quad \lambda = 380–450 \, \mathrm{nm}$$ $$\color{#25f} f = 606–668 \, \mathrm{THz}
+        \quad\quad \lambda = 450–495 \, \mathrm{nm}$$ $$\color{#0d0}f = 526–606 \, \mathrm{THz} \quad\quad \lambda = 495–570
+        \, \mathrm{nm}$$ $$\color{#ee0}f = 508–526 \, \mathrm{THz} \quad\quad \lambda = 570–590 \, \mathrm{nm}$$ $$\color{orange}f
+        = 484–508 \, \mathrm{THz} \quad\quad \lambda = 590–620 \, \mathrm{nm}$$ $$\color{#f20}f = 400–484 \, \mathrm{THz}
+        \quad\quad \lambda = 620–750 \, \mathrm{nm}$$
+      </div>
+      <strong>Question:</strong> Which has more energy, one red photon or one blue photon?
       <details>
         <summary>solution</summary>
         $$E=hf$$ $$ \text{h is constant.}$$ $$ \text{E and f are directly proportional.}$$ $${\Uparrow \atop E} {\atop = h} {\Uparrow
@@ -207,24 +218,29 @@
         <summary>solution</summary>
         $$\lambda = 632.8 \, \mathrm{nm} $$ $$E=\frac{hc}{\lambda}$$ $$E=\frac{(6.626 \times 10^{-34})(3 \times 10^8)}{632.8 \times
         10^{-9}}$$ $$E = 3.14 \times 10^{-19} \, \mathrm{J}$$
-        <br> $$\frac{0.005W}{3.14 \times 10^{-19} \, \mathrm{J}} = 1.59 \times 10^{16} \, \mathrm{\tfrac{1}{s}}$$
+        <br> $$\mathrm{power} = \frac{\mathrm{energy}}{\mathrm{time}} $$ $$\frac{\mathrm{power}}{\mathrm{energy}} = \frac{1}{\mathrm{time}}
+        $$ $$\frac{\mathrm{power}}{\mathrm{energy}} = \mathrm{frequency} $$ $$\frac{0.005\, \mathrm{W}}{3.14 \times 10^{-19}
+        \, \mathrm{J}} = \mathrm{frequency}$$ $$ 1.59 \times 10^{16} \, \mathrm{\tfrac{1}{s}} = \mathrm{frequency}$$
         <br>15,900,000,000,000,000 photons/second from a low power laser beam!
       </details>
     </div>
 
     <h2 class='underlined'>The Photoelectric Effect</h2>
     <p>
-      <a href="https://www.youtube.com/watch?v=WO38qVDGgqw">The photoelectric effect</a> occurs when metals dislodge electrons after being hit by light. Bright red light does
-      not produce the effect, but dim UV light does.</p>
+      <a href="https://www.youtube.com/watch?v=WO38qVDGgqw">The photoelectric effect</a> occurs when metals dislodge electrons after being hit by light. Light with a frequency
+      above the visible spectrum is required to produce the effect. Bright red light can't produce the effect, but even dim
+      UV light can.
+    </p>
 
     <p>In 1905,
       <a href="https://www.youtube.com/watch?v=hSgIDgGpRpk">Albert Einstein</a> published an explanation of the photoelectric effect. He suggested that light is made up of many
       small packets of energy, and each packet interacts with a single electron. Only high frequency light triggers the effect
       because it has more energy per packet.</p>
-    <p> The photoelectric effect can be understood with conservation of energy. The kinetic energy of a released electron is
-      equal to the difference between the energy of an incoming photon and the energy needed to dislodge the electron.</p>
+    <p> An equation that describes the photoelectric effect can be produced using conservation of energy. The kinetic energy
+      of a released electron is equal to the difference between the energy of an incoming photon and the energy needed to
+      dislodge the electron.</p>
     <div class='definition'>
-      <svg width="450" height="210" viewBox="-35 -30 80 92">
+      <svg viewBox="-75 -40  200 105">
         <g stroke="#888" stroke-width="1.2" fill="none ">
           <path d="M 35.226774,40.542778 C 35.998163,39.572674 56.542778,10.542778 56.542778,10.542778 " />
           <path d="M 51.563677,10.563677 L 56.521879,10.5 L 58,15.5 " />
@@ -436,7 +452,7 @@
     <p>Electrons tend to occupy the lowest unfilled energy level, but if an electron gains the exact energy needed to jump to
       a higher energy level it will transition.
     </p>
-    <svg class='center' width="440px" height="345px">
+    <svg class='center' viewBox="-75 0 600 345">
       <g font-size="22">
         <text x="9.81" y="185.93">Energy</text>
         <text x="251.81" y="185.93">Excited States</text>
@@ -459,7 +475,7 @@
     <p>When an electron in an atom collides with a photon with the right energy, the electron can enter a higher unoccupied
       energy level in the atom. Electrons are unstable at higher energy levels. They will quickly collapse down to an unoccupied
       energy level and emit a photon. The photon will have an energy equal to the difference in energy levels.</p>
-    <svg class='center' width="310 " height="270" viewBox="-7.667 -2.207 310 270">
+    <svg viewBox="-80 0 400 270">
       <circle cx="118.5" cy="138.293" r="52.222" stroke-width="2" stroke="#C3C3C3" fill="none" />
       <circle cx="118.5" cy="138.293" r="11.75" stroke-width="2" stroke="#C3C3C3" fill="none" />
       <path d="M235.444,149.793c-5.779,59.497-55.931,106-116.944,106 c-64.894,0-117.5-52.606-117.5-117.5s52.606-117.5,117.5-117.5c60.838,0,110.876,46.236,116.894,105.486 "
@@ -533,7 +549,7 @@
     </p>
 
     <p>Hydrogen has a very simple emission spectrum.</p>
-    <svg width="600" height="40" viewBox="0 0 334 22">
+    <svg viewBox="0 0 336 25">
       <rect x="0" y="0" width="335" height="40" style="fill:#000000;stroke:none; " />
       <rect x="32" y="0" width="2" height="40" style="fill:#4b0095;stroke:none; " />
       <rect x="61" y="0" width="2" height="40" style="fill:#3600e0;stroke:none; " />
@@ -541,7 +557,7 @@
       <rect x="305" y="0" width="3" height="40" style="fill:#d60f00;stroke:none; " />
     </svg>
     <p>Iron has more electrons and more possible energy transitions.</p>
-    <svg width="600" height="40" viewBox="0 0 600 40">
+    <svg viewBox="0 0 600 40">
       <path fill="#a100ff " d=" M 0.00 0.00 L 3.00 0.00 C 3.00 33.00 3.00 66.00 3.00 99.00 L 0.00 99.00 L 0.00 0.00 Z " />
       <path fill="#000000 " d=" M 3.00 0.00 L 4.00 0.00 C 4.00 33.00 4.00 66.00 4.00 99.00 L 3.00 99.00 C 3.00 66.00 3.00
           33.00 3.00 0.00 Z " />
@@ -836,7 +852,7 @@
         <a href="https://photos.app.goo.gl/kAB78NooguuwEKx62">bands of color</a>.
       </div>
       <div>
-        <svg width="350" viewBox="0 0 640 480 ">
+        <svg class='center' width="350" viewBox="0 0 640 480 ">
           <path fill="#000000" d="m316.363464,475.042236c-4.076172,-0.946075 -7.176758,-3.1474 -13.423248,-9.530182c-4.467499,-4.564972
             -11.428986,-11.253143 -15.470001,-14.862549c-4.041046,-3.609406 -7.347382,-7.579163 -7.347382,-8.821625c0,-1.242493
             -1.15033,-2.55011 -2.556366,-2.905853c-1.845917,-0.467072 -2.556396,-1.686829 -2.556396,-4.389252c0,-2.656403 0.741943,-3.970276
@@ -961,7 +977,7 @@
     <p>Light absorption occurs at the same energies as emission. Hydrogen's absorption frequencies are the same as its emission
       frequencies.
     </p>
-    <svg width="600 " height="40" viewBox="0 0 334 22">
+    <svg viewBox="0 0 336 25">
       <rect x="0" y="0" width="335" height="40" style="fill:#000000;stroke:none; " />
       <rect x="32" y="0" width="2" height="40" style="fill:#4b0095;stroke:none; " />
       <!-- <text x="32 " y="50 " fill="black " >410 nm</text> -->
@@ -969,7 +985,7 @@
       <rect x="125" y="0" width="3" height="40" style="fill:#00d97f;stroke:none; " />
       <rect x="305" y="0" width="3" height="40" style="fill:#d60f00;stroke:none; " />
     </svg>
-    <svg width="600 " height="40" viewBox="0 0 334 22 ">
+    <svg viewBox="0 0 336 25">
       <defs>
         <linearGradient id="s" x1="0% " y1="0% " x2="100% " y2="0% ">
           <stop offset="0%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
@@ -997,7 +1013,7 @@
       and astronomy.</p>
     <div class='example'>
       <p>Sunlight is mostly thermal radiation with large sections of absorption from the molecules in earth's atmosphere.</p>
-      <svg width="600" height="400" viewbox='0 0 800 600' <defs id="defs4747 ">
+      <svg viewbox='25 0 800 600'>
         <g id="g3710 " transform="translate(66.009356,-172.95341) ">
           <g id="g3650 ">
             <text xml:space="preserve " style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Trebuchet
@@ -1450,7 +1466,7 @@
     </div>
 
     <div class='example'>
-      <svg class='center' width="600" height="450">
+      <svg viewBox="0 0 600 450">
         <g transform="translate(-47.689941,-20.119128)">
           <path d="M 184.60538,223.53202 L 446.73996,61.528805 " id="path3201 " style="fill:none;fill-rule:evenodd;stroke:#99a366;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline "
           />

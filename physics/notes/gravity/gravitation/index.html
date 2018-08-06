@@ -2,14 +2,16 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="description" content="Notes for a high school physics course.">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#222" />
+    <meta name="description" content="Interactive notes for algebra based physics.">
     <meta name="author" content="Ross Landgreen">
-    <meta property="og:description" content="Notes for a high school physics course.">
+    <meta property="og:description" content="Interactive notes for algebra based physics.">
     <meta property="og:title" content="Physics Notes">
-    <meta name="twitter:title" content="High School Physics Notes">
+    <meta name="twitter:title" content="Physics Notes">
+    <meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
     <title>Universal Gravitation</title>
     <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -19,6 +21,11 @@
 
     <link rel="stylesheet" type="text/css" href="../../../style.css">
     <script src='../../../lib/function-graph-SVG.js'></script>
+    <script defer src='../../../lib/randomColor.min.js'></script>
+    <script defer src='../../../lib/gravityClass.js'></script>
+    <script defer src="grav0.js "></script>
+    <script defer src="grav1.js "></script>
+    <script defer src="grav2.js "></script>
 </head>
 
 <body>
@@ -26,11 +33,11 @@
     </canvas>
     <header id="myHeader">
         <h1>
-            <a href=" ../../../index.html ">Universal Gravitation</a>
+            <a href=" ../../../index.html">Universal Gravitation</a>
         </h1>
     </header>
     <div style="position: absolute;top: 0px; left: 0px; z-index: 1; color: #fff;">
-        <input id='num' type="number" step="1" min='1' max='999' value='10'> particles
+        <input id='num' type="number" step="1" min='1' max='999' value='10' style="width: 60px;"> particles
     </div>
     <article>
         <p>
@@ -52,7 +59,7 @@
             Like many early philosophers, Aristotle organized the sky into a geocentric model. Moving planetary spheres surrounded a
             stationary and spherical Earth.
             <a href="https://en.wikipedia.org/wiki/Almagest#Ptolemy's_planetary_model">
-                <img src="..\..\..\media\Ptolemaicsystem-small.png" width="600" title="Ptolemaic geocentric planetary spheres model">
+                <img src="..\..\..\media\Ptolemaicsystem-small.png" title="Ptolemaic geocentric planetary spheres model" style='height: 100%; width: 100%; object-fit: contain'>
             </a>
 
             <p>The geocentric models showed flaws. Planets would inexplicably change in speed and direction. To correct these
@@ -68,14 +75,14 @@
                 <img src="..\..\..\media\Copernican_heliocentrism_theory_diagram.svg" title="Copernican heliocentric model">
             </a>
             <p>
-                In 1609, German astronomer, Johannes Kepler published 3
-                <a href="https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion">laws of planetary motion</a> based on the heliocentric theory. In his model orbits moved in an ellipse, not
-                circles.
+                In 1609, German
+                <a href="https://www.youtube.com/watch?v=-FYvy3_egHw">astronomer</a>, Johannes Kepler published 3 laws of planetary motion based on the heliocentric theory. In
+                his model orbits moved in an
+                <a href="https://en.wikipedia.org/wiki/Ellipse">ellipse</a>, not a circle.
             </p>
             <p>
-                Italian natural philosopher,
-                <a href="https://en.wikipedia.org/wiki/Galileo_Galilei">Galileo Galilei</a>, discovered that falling objects all accelerate at the same rate as long as air resistance
-                isn't a significant factor.
+                Italian natural philosopher, Galileo Galilei, discovered that falling objects all accelerate at the same rate as long as
+                air resistance isn't a significant factor.
             </p>
 
             <p>Galileo also championed Copernican heliocentrism. This blasphemous idea upset the Catholic church so much they
@@ -83,7 +90,7 @@
                 sentenced him to house arrest from 1633 until his death in 1642.
             </p>
 
-            <h2 class="underlined " id="universal-gravitation ">Universal Gravitation</h2>
+            <h2 class="underlined" id="universal-gravitation">Universal Gravitation</h2>
             <p></p>
             <p>In 1687
                 <a href='http://www.bbc.co.uk/timelines/zwwgcdm'>Isaac Newton</a> published his book, Mathematical Principles of Natural Philosophy. The book contained his
@@ -95,28 +102,27 @@
                 also makes stars, planets, and moons orbit each other!</p>
 
             <div class='definition'>
-                <svg style="display: block; margin: auto " width="400 " height="200 " class='svgDiagram' version="1.1
-            " xmlns="http://www.w3.org/2000/svg ">
-                    <circle cx="100 " cy="100 " r="40 " fill='#fff' stroke-width="2 " stroke="#222 " />
-                    <circle cx="300 " cy="100 " r="60 " fill='#fff' stroke-width="2 " stroke="#222 " />
+                <svg class="center" width="330" height="165">
+                    <circle cx="50" cy="100" r="40" fill='#fff' stroke-width="2" stroke="#222" />
+                    <circle cx="250" cy="100" r="60" fill='#fff' stroke-width="2" stroke="#222" />
 
-                    <text x="100 " y="90 " fill="black " text-anchor="middle " font-size="25 ">M</text>
-                    <text x="118 " y="93 " fill="black " text-anchor="middle " font-size="19 ">1</text>
-                    <text x="300 " y="90 " fill="black " text-anchor="middle " font-size="25 ">M</text>
-                    <text x="318 " y="93 " fill="black " text-anchor="middle " font-size="19 ">2</text>
+                    <text x="50" y="90" fill="black" text-anchor="middle" font-size="25 ">M</text>
+                    <text x="68" y="93" fill="black" text-anchor="middle" font-size="19 ">1</text>
+                    <text x="250" y="90" fill="black" text-anchor="middle" font-size="25 ">M</text>
+                    <text x="268" y="93" fill="black" text-anchor="middle" font-size="19 ">2</text>
 
-                    <line x1="100 " y1="100 " x2="180 " y2="100 " style="stroke:#000;stroke-width:2 " />
-                    <polygon points="0,0 -8,5 -8,-5 " transform="translate(185 100) " style="fill:#000; " />
+                    <line x1="50" y1="100" x2="130" y2="100" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 -8,5 -8,-5" transform="translate(135 100)" style="fill:#000;" />
 
-                    <line x1="300 " y1="100 " x2="220 " y2="100 " style="stroke:#000;stroke-width:2 " />
-                    <polygon points="0,0 8,5 8,-5 " transform="translate(215 100) " style="fill:#000; " />
+                    <line x1="250" y1="100" x2="170" y2="100" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 8,5 8,-5" transform="translate(165 100)" style="fill:#000;" />
 
-                    <text x="200 " y="100 " fill="black " text-anchor="middle " alignment-baseline="central " font-size="25 ">F</text>
+                    <text x="150" y="100" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25 ">F</text>
 
-                    <line x1="100 " y1="30 " x2="300 " y2="30 " style="stroke:#000;stroke-width:2 " />
-                    <line x1="100 " y1="25 " x2="100 " y2="35 " style="stroke:#000;stroke-width:2 " />
-                    <line x1="300 " y1="25 " x2="300 " y2="35 " style="stroke:#000;stroke-width:2 " />
-                    <text x="200 " y="25 " fill="black " text-anchor="middle " font-size="25 ">r</text>
+                    <line x1="50" y1="30" x2="250" y2="30" style="stroke:#000;stroke-width:2" />
+                    <line x1="50" y1="25" x2="50" y2="35" style="stroke:#000;stroke-width:2" />
+                    <line x1="250" y1="25" x2="250" y2="35" style="stroke:#000;stroke-width:2" />
+                    <text x="150" y="25" fill="black" text-anchor="middle" font-size="25 ">r</text>
                 </svg>
 
                 <h2>$$ F = \frac{GM_{1}M_{2}}{r^{2}} $$</h2>
@@ -128,24 +134,22 @@
                     <br>\(r\) = distance between the center of each mass [m, meters]
                     <br>
                     <br>
-                    <svg style="display: block; margin: auto " width="500 " height="200 " class='svgDiagram' version="1.1
-            " xmlns="http://www.w3.org/2000/svg ">
-                        <circle cx="250 " cy="35 " r="5 " fill='#fff' stroke-width="2 " stroke="#222 " />
-                        <circle cx="250 " cy="1167 " r="1000 " fill='#fff' stroke-width="2 " stroke="#222 " />
+                    <svg viewBox="-50 0 600 213">
+                        <circle cx="250" cy="35" r="5" fill='#fff' stroke-width="2" stroke="#222" />
+                        <circle cx="250" cy="1167" r="1000" fill='#fff' stroke-width="2" stroke="#222" />
 
-                        <text x="250 " y="22 " fill="black " text-anchor="middle " font-size="25 ">M</text>
-                        <text x="268 " y="25 " fill="black " text-anchor="middle " font-size="19 ">1</text>
-                        <text x="250 " y="190 " fill="black " text-anchor="middle " font-size="25 ">M</text>
-                        <text x="268 " y="193 " fill="black " text-anchor="middle " font-size="19 ">2</text>
+                        <text x="250" y="22" fill="black" text-anchor="middle" font-size="25 ">M</text>
+                        <text x="268" y="25" fill="black" text-anchor="middle" font-size="19 ">1</text>
+                        <text x="250" y="190" fill="black" text-anchor="middle" font-size="25 ">M</text>
+                        <text x="268" y="193" fill="black" text-anchor="middle" font-size="19 ">2</text>
 
-                        <line x1="250 " y1="35 " x2="250 " y2="100 " style="stroke:#000;stroke-width:2 " />
-                        <polygon points="0,0 -8,5 -8,-5 " transform="translate(250 104) rotate(90) " style="fill:#000; " />
-                        <text x="250 " y="116 " fill="black " text-anchor="middle " alignment-baseline="central
-            " font-size="25 ">F</text>
+                        <line x1="250" y1="35" x2="250" y2="100" style="stroke:#000;stroke-width:2" />
+                        <polygon points="0,0 -8,5 -8,-5" transform="translate(250 104) rotate(90)" style="fill:#000;" />
+                        <text x="250" y="116" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25 ">F</text>
 
-                        <line x1="290 " y1="35 " x2="300 " y2="35 " style="stroke:#000;stroke-width:2 " />
-                        <line x1="295 " y1="35 " x2="295 " y2="300 " style="stroke:#000;stroke-width:2 " />
-                        <text x="310 " y="130 " fill="black " text-anchor="middle " font-size="25 ">r</text>
+                        <line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+                        <line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
+                        <text x="310" y="130" fill="black" text-anchor="middle" font-size="25 ">r</text>
                     </svg>
             </div>
             <p>In 1916 universal gravitation was improved on by Einstein's
@@ -159,81 +163,36 @@
             <p>Notice how small G is (6.674 x 10
                 <sup>-11</sup>). Out of the four fundamental forces gravity is by far the weakest. If gravity is so weak why do
                 we notice its effects so easily?</p>
-            <!-- </article>
-    <canvas id='matter-gravity' height='400' width='600'> </canvas>
-    <article>
-        <style>
-            .wrapper {
-                display: grid;
-                grid-gap: 0px;
-                grid-template-columns: 200px 200px 200px;
-            }
-
-            .a {
-                grid-column: 1;
-                grid-row: 1;
-            }
-
-            .b {
-                grid-column: 2;
-                grid-row: 1;
-            }
-
-            .c {
-                grid-column: 3;
-                grid-row: 1;
-            }
-        </style>
-        <div class="wrapper">
-            <div class="a center">
-                gravity constant
-                <br>
-                <input type="range" id='gravity-constant' min="0" max="0.05" step="0.001" value="0.01">
-            </div>
-            <div class="b center">
-                <button id="clear1">clear</button>
-            </div>
-            <div class="c center">
-
-            </div>
-
-        </div> -->
-
-
             <div class='example'>
-                <table>
+                <table border>
                     <tr align=center>
-                        <th align=left>name</th>
+                        <th align=left>Planet</th>
                         <th>mass (kg)</th>
                         <th>radius (km)</th>
-                        <th>density (g/cm
-                            <sup>3</sup>)</th>
-
+                        <th>density (g/cm³)</th>
                     </tr>
                     <tr align=center>
                         <td align=left>Sun</td>
                         <td>2.00 × 10
                             <sup>30</sup>
                         </td>
-                        <td>695,700</td>
+                        <td>695&#8239;700</td>
                         <td>1.408</td>
-
                     </tr>
                     <tr align=center>
                         <td align=left>Mercury</td>
                         <td>3.301 × 10
                             <sup>23</sup>
                         </td>
-                        <td>2,440</td>
+                        <td>2&#8239;440</td>
                         <td>5.427</td>
-
                     </tr>
                     <tr align=center>
                         <td align=left>Venus</td>
                         <td>4.867 × 10
                             <sup>24</sup>
                         </td>
-                        <td>6,052</td>
+                        <td>6&#8239;052</td>
                         <td>5.243</td>
                     </tr>
                     <tr align=center>
@@ -241,7 +200,7 @@
                         <td>5.972 × 10
                             <sup>24</sup>
                         </td>
-                        <td>6,371</td>
+                        <td>6&#8239;371</td>
                         <td>5.515</td>
                     </tr>
                     <tr align=center>
@@ -249,7 +208,7 @@
                         <td>7.346 × 10
                             <sup>22</sup>
                         </td>
-                        <td>1,737</td>
+                        <td>1737</td>
                         <td>3.344</td>
                     </tr>
                     <tr align=center>
@@ -257,7 +216,7 @@
                         <td>6.417 × 10
                             <sup>23</sup>
                         </td>
-                        <td>3,390</td>
+                        <td>3390</td>
                         <td>3.933</td>
                     </tr>
                     <tr align=center>
@@ -265,7 +224,7 @@
                         <td>1.899 × 10
                             <sup>27</sup>
                         </td>
-                        <td>70,000</td>
+                        <td>70&#8239;000</td>
                         <td>1.326</td>
                     </tr>
                     <tr align=center>
@@ -273,15 +232,15 @@
                         <td>5.685 × 10
                             <sup>26</sup>
                         </td>
-                        <td>58,232</td>
+                        <td>58&#8239;232</td>
                         <td>0.687</td>
                     </tr>
                     <tr align=center>
                         <td align=left>Uranus</td>
-                        <td>8.682 × 10
+                        <td>8.68 × 10
                             <sup>25</sup>
                         </td>
-                        <td>25,362</td>
+                        <td>25&#8239;362</td>
                         <td>1.270</td>
                     </tr>
                     <tr align=center>
@@ -289,13 +248,13 @@
                         <td>1.024 × 10
                             <sup>26</sup>
                         </td>
-                        <td>24,622</td>
+                        <td>24&#8239;622</td>
                         <td>1.638</td>
                     </tr>
                 </table>
                 <br>
                 <strong>Example:</strong> Find the force of gravity between the Earth and the Moon. The distance between them is
-                384,403 km.
+                384&#8239;403 km.
                 <details>
                     <summary>solution</summary>
                     $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24}) (7.346 \times 10^{22})}{(3.844
@@ -315,20 +274,20 @@
                 </details>
             </div>
             <div class='example'>
-                <strong>Example:</strong> Find the force of gravity between the Earth and a 100 kg person that is 10,000,000 m from
-                the center of the Earth.
+                <strong>Example:</strong> Find the force of gravity between the Earth and a 100 kg person that is 10&#8239;000&#8239;000
+                m from the center of the Earth.
                 <details>
                     <summary>solution</summary>
-                    $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24})(100)}{ 10,000,000^{2}}$$ $$
-                    F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24})(100)}{ 10^{14}}$$ $$ F = 398.57 \, \mathrm{N}$$
+                    $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24})(100)}{ 10\,000\,000^{2}}$$
+                    $$ F = \frac{(6.674 \times 10^{-11})(5.972 \times 10^{24})(100)}{ 10^{14}}$$ $$ F = 398.57 \, \mathrm{N}$$
                 </details>
             </div>
             <div class='example'>
-                <strong>Example:</strong> How massive must an object be in order to feel a force of 100 N at a distance of 10,000,000
+                <strong>Example:</strong> How massive must an object be in order to feel a force of 100 N at a distance of 10&#8239;000&#8239;000
                 m from the center of the Earth?
                 <details>
                     <summary>solution</summary>
-                    $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ M_{1} = \frac{Fr^{2}}{GM_{2}}$$ $$ M_{1} = \frac{(100)(10,000,000)^{2}}{(6.674 \times
+                    $$ F = \frac{GM_{1}M_{2}}{r^{2}} $$ $$ M_{1} = \frac{Fr^{2}}{GM_{2}}$$ $$ M_{1} = \frac{(100)(10\,000\,000)^{2}}{(6.674 \times
                     10^{-11})(5.972 \times 10^{24})}$$ $$ M_{1} = \frac{(100)(10^{14})}{(6.674 \times 10^{-11})(5.972 \times
                     10^{24})}$$ $$ M_{1} = 25.01 \, \mathrm{kg}$$
                 </details>
@@ -359,46 +318,44 @@
             </details>
 
             <div class='definition'>
-                <svg style="display: block; margin: auto" width="400" height="200">
-                    <circle cx="100 " cy="100 " r="20 " fill='#fff' stroke-width="2 " stroke="#222 " />
-                    <circle cx="300 " cy="100 " r="50 " fill='#fff' stroke-width="2 " stroke="#222 " />
+                <svg class="center" width="330" height="160">
+                    <circle cx="50" cy="100" r="20" fill='#fff' stroke-width="2" stroke="#222" />
+                    <circle cx="250" cy="100" r="50" fill='#fff' stroke-width="2" stroke="#222" />
 
-                    <text x="300 " y="105 " fill="black " text-anchor="middle " font-size="25 ">M</text>
+                    <text x="250" y="105" fill="black" text-anchor="middle" font-size="25 ">M</text>
 
 
-                    <line x1="100 " y1="100 " x2="180 " y2="100 " style="stroke:#000;stroke-width:2 " />
-                    <polygon points="0,0 -8,5 -8,-5 " transform="translate(185 100) " style="fill:#000; " />
+                    <line x1="50" y1="100" x2="130" y2="100" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 -8,5 -8,-5" transform="translate(135 100)" style="fill:#000;" />
 
-                    <text x="200 " y="100 " fill="black " text-anchor="middle " alignment-baseline="central " font-size="25 ">g</text>
+                    <text x="150" y="100" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25 ">g</text>
 
-                    <line x1="100 " y1="30 " x2="300 " y2="30 " style="stroke:#000;stroke-width:2 " />
-                    <line x1="100 " y1="25 " x2="100 " y2="35 " style="stroke:#000;stroke-width:2 " />
-                    <line x1="300 " y1="25 " x2="300 " y2="35 " style="stroke:#000;stroke-width:2 " />
-                    <text x="200 " y="25 " fill="black " text-anchor="middle " font-size="25 ">r</text>
+                    <line x1="50" y1="30" x2="250" y2="30" style="stroke:#000;stroke-width:2" />
+                    <line x1="50" y1="25" x2="50" y2="35" style="stroke:#000;stroke-width:2" />
+                    <line x1="250" y1="25" x2="250" y2="35" style="stroke:#000;stroke-width:2" />
+                    <text x="150" y="25" fill="black" text-anchor="middle" font-size="25 ">r</text>
                 </svg>
 
                 <h2>$$ g = \frac{GM}{r^{2}} $$</h2>
                 <p>\(g\) = acceleration of gravity [m/s²]
                     <em>vector</em>
-                    <br>\(G = \small 6.674 \times 10^{-11}\) = universal gravitation constant [m³/kg/s²]
+                    <br>\(G\) = \(\small 6.674 \times 10^{-11}\) = universal gravitation constant [m³/kg/s²]
                     <br>\(M\) = mass of the body pulling [kg, kilograms]
                     <br>(not the body experiencing the acceleration)
                     <br>\(r\) = distance between the center of each mass [m, meters]
-                    <svg style="display: block; margin: auto " width="500 " height="200 " class='svgDiagram' version="1.1
-            " xmlns="http://www.w3.org/2000/svg ">
-                        <circle cx="250 " cy="35 " r="5 " fill='#fff' stroke-width="2 " stroke="#222 " />
-                        <circle cx="250 " cy="1167 " r="1000 " fill='#fff' stroke-width="2 " stroke="#222 " />
+                    <svg viewBox="-50 0 600 213">
+                        <circle cx="250" cy="35" r="5" fill='#fff' stroke-width="2" stroke="#222" />
+                        <circle cx="250" cy="1167" r="1000" fill='#fff' stroke-width="2" stroke="#222" />
 
-                        <text x="250 " y="193 " fill="black " text-anchor="middle " font-size="25 ">M</text>
+                        <text x="250" y="193" fill="black" text-anchor="middle" font-size="25 ">M</text>
 
-                        <line x1="250 " y1="35 " x2="250 " y2="100 " style="stroke:#000;stroke-width:2 " />
-                        <polygon points="0,0 -8,5 -8,-5 " transform="translate(250 104) rotate(90) " style="fill:#000; " />
-                        <text x="250 " y="116 " fill="black " text-anchor="middle " alignment-baseline="central
-            " font-size="25 ">a</text>
+                        <line x1="250" y1="35" x2="250" y2="100" style="stroke:#000;stroke-width:2" />
+                        <polygon points="0,0 -8,5 -8,-5" transform="translate(250 104) rotate(90)" style="fill:#000;" />
+                        <text x="250" y="116" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25 ">a</text>
 
-                        <line x1="290 " y1="35 " x2="300 " y2="35 " style="stroke:#000;stroke-width:2 " />
-                        <line x1="295 " y1="35 " x2="295 " y2="300 " style="stroke:#000;stroke-width:2 " />
-                        <text x="310 " y="130 " fill="black " text-anchor="middle " font-size="25 ">r</text>
+                        <line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+                        <line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
+                        <text x="310" y="130" fill="black" text-anchor="middle" font-size="25 ">r</text>
                     </svg>
             </div>
             <p>The acceleration vector is pointed towards the center of the mass producing the acceleration.</p>
@@ -412,7 +369,7 @@
     <canvas class='center' id='grav1' height='400' width='600' onclick="grav1(this)"> </canvas>
     <article>
         Click the mouse to push the masses around. Number of particles =
-        <input id='num1' type="number" step="1" min='1' max='200' value='6'>
+        <input id='num1' type="number" step="1" min='1' max='200' value='6' style="width:60px;">
         </p>
 
         <div class='example'>
@@ -420,9 +377,9 @@
             <br>Is it really 9.8 m/s²?
             <details>
                 <summary>solution</summary>
-                $$ r = 6,371,000 \, \mathrm{m} $$ $$ g = \frac{GM}{r^{2}} $$ $$ g = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{(6.371\times10^{6})^{2}}
+                $$ r = 6\,371\,000 \, \mathrm{m} $$ $$ g = \frac{GM}{r^{2}} $$ $$ g = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{(6.371\times10^{6})^{2}}
                 $$ $$ g = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{40.590\times10^{12}} $$ $$ g = \frac{(6.674)(5.972)}{40.590}
-                \times 10^{-11+24-12}$$ $$ g=0.98195 \times 10^{1}$$ $$ g=9.8195 \, \mathrm{\frac{m}{s^{2}}}$$
+                \times 10^{-11+24-12}$$ $$ g=0.981\,95 \times 10^{1}$$ $$ g=9.8195 \, \mathrm{\frac{m}{s^{2}}}$$
             </details>
         </div>
         <div class='example'>
@@ -430,36 +387,223 @@
             <details>
                 <summary>solution</summary>
                 $$ g = \frac{GM}{r^{2}} $$ $$ r^{2} = \frac{GM}{g} $$ $$ r^{2} = \frac{(6.674\times 10^{-11})(5.972\times 10^{24})}{9.8 \times
-                0.5} $$ $$ r = 9,160,226 \,\mathrm{m} = 9,160 \,\mathrm{km} $$ $$\text{distance above Earth's surface}$$
-                $$ 9,160\, \mathrm{km} - 6,371\,\mathrm{km} = 2789 \,\mathrm{km}$$
+                0.5} $$ $$ r = 9\,160\,226 \,\mathrm{m} = 9160 \,\mathrm{km} $$ $$\text{distance above Earth's surface}$$
+                $$ 9160\, \mathrm{km} - 6371\,\mathrm{km} = 2789 \,\mathrm{km}$$
             </details>
         </div>
         <div class='example'>
             <strong>Example:</strong> Mars has two very small moons,
             <a href='https://en.wikipedia.org/wiki/Phobos_(moon)'>Phobos</a> and
-            <a href='https://en.wikipedia.org/wiki/Deimos_(moon)'>Deimos</a>. Phobos has a surface gravity of 0.0057 m/s² and a surface radius of 11,266 m. Calculate the mass
-            of Phobos? (Does your answer agree with wikipedia?)
+            <a href='https://en.wikipedia.org/wiki/Deimos_(moon)'>Deimos</a>. Phobos has a surface gravity of 0.0057 m/s² and a surface radius of 11&#8239;266 m. Calculate the
+            mass of Phobos? (Does your answer agree with wikipedia?)
             <details>
                 <summary>solution</summary>
-                $$ g = \frac{GM}{r^{2}} $$ $$ M = \frac{gr^2}{G}$$ $$ M = \frac{(0.0057)(11266)^2}{6.674\times 10^{-11}}$$ $$M = 1.08 \times
+                $$ g = \frac{GM}{r^{2}} $$ $$ M = \frac{gr^2}{G}$$ $$ M = \frac{(0.0057)(11\,266)^2}{6.674\times 10^{-11}}$$ $$M = 1.08 \times
                 10^{16}\,\mathrm{kg}$$
                 <p></p>
             </details>
         </div>
 
-        <h2 class="underlined "> Inverse-Square Law</h2>
+        <div class='example'>
+            <button id="random-mass" type="button">Randomize Planet</button>
+            <table border>
+                <tr align=center>
+                    <th align=left>Planet</th>
+                    <th>mass (kg)</th>
+                    <th>radius (km)</th>
+                    <th>surface g (m/s²)</th>
+                </tr>
+                <tr align=center>
+                    <td align=left>Mercury</td>
+                    <td>3.301 × 10
+                        <sup>23</sup>
+                    </td>
+                    <td>2&#8239;440</td>
+                    <td>3.7</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Venus</td>
+                    <td>4.867 × 10
+                        <sup>24</sup>
+                    </td>
+                    <td>6&#8239;052</td>
+                    <td>8.9</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Earth</td>
+                    <td>5.972 × 10
+                        <sup>24</sup>
+                    </td>
+                    <td>6&#8239;371</td>
+                    <td>9.8</td>
+                </tr>
+                <!-- <tr align=center>
+                    <td align=left>Moon</td>
+                    <td>7.346 × 10
+                        <sup>22</sup>
+                    </td>
+                    <td>1737</td>
+                    <td>1.6</td>
+                </tr> -->
+                <tr align=center>
+                    <td align=left>Mars</td>
+                    <td>6.417 × 10
+                        <sup>23</sup>
+                    </td>
+                    <td>3390</td>
+                    <td>3.7</td>
+                </tr>
+            </table>
+            <svg id="SVG-graph-1" viewBox="0 0 600 300"> </svg>
+            <strong>Example:</strong> Which terrestrial planet is being graphed?
+            <details>
+                <summary>hint</summary>
+                <p>Hover your mouse over the graph. Move your mouse horizontally to check the radius for each planet in the
+                    chart above. If the acceleration and the radius match it is the correct planet.</p>
+            </details>
+            <details>
+                <summary>answer</summary>
+                <p id="random-mass-name"></p>
+            </details>
+            <script defer>
+                (function () {
+                    const GConst = 6.674e-11;
+                    const masses = [{ mass: 3.301e23, name: "Mercury" }, { mass: 4.867e24, name: "Venus" }, { mass: 5.972e24, name: "Earth" }, { mass: 6.417e23, name: "Mars" }]; //{ mass: 7.346e22, name: "The Moon" },
+                    let currentPlanet = Math.floor(masses.length * Math.random());
+                    let Mass = masses[currentPlanet].mass;
+                    document.getElementById("random-mass-name").innerHTML = masses[currentPlanet].name;
+                    let settings = {
+                        x0: 20,
+                        y0: 280,
+                        // stroke: "rgba(0,100,120,1)",
+                        stroke: "none",
+                        fill: "rgba(200,50,0,0.3)",
+                        positiveOnly: true,
+                        strokeWidth: 4,
+                        xScale: 0.05,
+                        yScale: 10,
+                        gridSize: 100,
+                        xLabel: "distance (km)",
+                        yLabel: "gravity (m/s²)",
+                        showMouseCoords: true,
+                    }
+
+                    funGraphSVG("SVG-graph-1", x => GConst * Mass / x / x / 1000000, settings);
+                    document.getElementById("random-mass").addEventListener("click", event => {
+                        let newPlanet = Math.floor(masses.length * Math.random())
+                        while (newPlanet === currentPlanet) {
+                            newPlanet = Math.floor(masses.length * Math.random())
+                        }
+                        currentPlanet = newPlanet
+                        Mass = masses[currentPlanet].mass;
+                        document.getElementById("random-mass-name").innerHTML = masses[currentPlanet].name;
+                        settings.updatePath = true
+                        funGraphSVG("SVG-graph-1", x => GConst * Mass / x / x / 1000000, settings);
+                    });
+                })()
+            </script>
+        </div>
+        <div class='example'>
+            <button id="random-mass-2" type="button">Randomize Planet</button>
+            <table border>
+                <tr align=center>
+                    <th align=left>Planet</th>
+                    <th>mass (kg)</th>
+                    <th>radius (km)</th>
+                    <th>surface g (m/s²)</th>
+                </tr>
+                <tr align=center>
+                    <td align=left>Jupiter</td>
+                    <td>1.899 × 10
+                        <sup>27</sup>
+                    </td>
+                    <td>69&#8239;911</td>
+                    <td>?</td>
+                    <!-- 24.79 -->
+                </tr>
+                <tr align=center>
+                    <td align=left>Saturn</td>
+                    <td>5.685 × 10
+                        <sup>26</sup>
+                    </td>
+                    <td>58&#8239;232</td>
+                    <td>?</td>
+                    <!-- 10.44 -->
+                </tr>
+                <tr align=center>
+                    <td align=left>Uranus</td>
+                    <td>8.68 × 10
+                        <sup>25</sup>
+                    </td>
+                    <td>25&#8239;362</td>
+                    <td>?</td>
+                    <!-- 8.87 -->
+                </tr>
+                <tr align=center>
+                    <td align=left>Neptune</td>
+                    <td>1.024 × 10
+                        <sup>26</sup>
+                    </td>
+                    <td>24&#8239;622</td>
+                    <td>?</td>
+                    <!-- 11.15 -->
+                </tr>
+            </table>
+            <svg id="SVG-graph-2" viewBox="0 0 600 300"> </svg>
+            <strong>Example:</strong> Which gas giant is being graphed? You need to do math for this one.
+            <details>
+                <summary>answer</summary>
+                <p id="random-mass-name-2"></p>
+            </details>
+            <script defer>
+                    (function () {
+                        const GConst = 6.674e-11;
+                        const masses = [{ mass: 1.899e27, name: "Jupiter" }, { mass: 5.685e26, name: "Saturn" }, { mass: 8.68e25, name: "Uranus" }, { mass: 1.024e26, name: "Neptune" }]
+                        let currentPlanet = Math.floor(masses.length * Math.random())
+                        let Mass = masses[currentPlanet].mass;
+                        document.getElementById("random-mass-name-2").innerHTML = masses[currentPlanet].name;
+                        let settings = {
+                            x0: 20,
+                            y0: 280,
+                            stroke: "none",
+                            fill: "rgba(0,100,120,0.3)",
+                            positiveOnly: true,
+                            strokeWidth: 4,
+                            xScale: 0.005,
+                            yScale: 5,
+                            gridSize: 100,
+                            xLabel: "distance (km)",
+                            yLabel: "gravity (m/s²)",
+                            showMouseCoords: true,
+                        }
+                        funGraphSVG("SVG-graph-2", x => GConst * Mass / x / x / 1000000, settings);
+                        document.getElementById("random-mass-2").addEventListener("click", event => {
+                            let newPlanet = Math.floor(masses.length * Math.random())
+                            while (newPlanet === currentPlanet) {
+                                newPlanet = Math.floor(masses.length * Math.random())
+                            }
+                            currentPlanet = newPlanet
+                            Mass = masses[currentPlanet].mass;
+                            document.getElementById("random-mass-name-2").innerHTML = masses[currentPlanet].name;
+                            settings.updatePath = true
+                            funGraphSVG("SVG-graph-2", x => GConst * Mass / x / x / 1000000, settings);
+
+                        });
+                    })()
+            </script>
+        </div>
+        <h2 class="underlined ">Inverse-Square Law</h2>
+        <h1>$$\frac{1}{r^2}$$</h1>
         <p>
-            All particles are attracted to each other, but the attraction is divided by the distance squared (1/r²). Physical laws that
-            diminish at 1/r² are common in nature because of how signals spread out in 3 dimensions.
+            All particles are attracted to each other, but the attraction is divided by the distance squared. Physical laws that diminish
+            at 1/r² are common in nature because of how signals spread out in 3 dimensions.
         </p>
         <p>
             If you threw darts in random directions, the chance of hitting your target would obey this rule. Notice how the density of
             lines decreases with distance.
         </p>
         <a href="https://en.wikipedia.org/wiki/Inverse-square_law">
-
-            <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-            <svg width="478.81232" height="319.20819">
+            <svg viewBox="-60 0 600 319">
                 <defs id="defs4">
                     <marker style="overflow:visible;" id="Arrow2Mend" refX="0.0" refY="0.0" orient="auto" inkscape:stockid="Arrow2Mend">
                         <path transform="scale(0.6) rotate(180) translate(0,0)" d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
@@ -473,7 +617,7 @@
                     </marker>
                     <marker style="overflow:visible;" id="Arrow1Lend" refX="0.0" refY="0.0" orient="auto" inkscape:stockid="Arrow1Lend">
                         <path transform="scale(0.8) rotate(180) translate(12.5,0)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;"
-                            d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z " id="path4810" />
+                            d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z" id="path4810" />
                     </marker>
                     <linearGradient id="linearGradient4066" inkscape:collect="always">
                         <stop id="stop4068" offset="0" style="stop-color:#ff2a2a;stop-opacity:1;" />
@@ -612,15 +756,6 @@
                             id="path5689" />
                     </marker>
                 </defs>
-                <metadata id="metadata7">
-                    <rdf:RDF>
-                        <cc:Work rdf:about="">
-                            <dc:format>image/svg+xml</dc:format>
-                            <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-                            <dc:title></dc:title>
-                        </cc:Work>
-                    </rdf:RDF>
-                </metadata>
                 <g sodipodi:insensitive="true" style="display:inline" transform="translate(-91.923882,-63.42284)" inkscape:label="Background"
                     id="layer4" inkscape:groupmode="layer">
                     <rect y="63.42284" x="91.923882" height="319.20819" width="478.81232" id="rect4256" style="fill:#ffffff;fill-opacity:1;stroke:none"
@@ -893,16 +1028,18 @@
                 </g>
             </svg>
         </a>
-        <p>As you can see in the graph below, a 1/r
-            <sup>2</sup> function has some interesting results at r = 0 and f = 0.</p>
-        <svg id="SVG-graph-0" width="600" height="400">
-        </svg>
-        <script>
+        <p>As you can see in the graph below, a 1/r² function has some interesting results at r = 0 and f = 0.</p>
+        <svg id="SVG-graph-0" viewBox="0 0 600 400"></svg>
+        <script defer>
             funGraphSVG("SVG-graph-0", x => 1 / x / x, {
-                x0: 25,
+                x0: 20,
                 y0: 380,
-                stroke: "08f",
-                precision: 1,
+                fill: "rgba(0,0,0,0.05)",
+                stroke: "333",
+                strokeWidth: 3,
+                scale: 100,
+                positiveOnly: true,
+                gridSize: 100,
                 xLabel: "radius",
                 yLabel: "force",
                 showMouseCoords: true,
@@ -950,19 +1087,18 @@
         </details>
 
         <div class='definition'>
-            <svg class='center' style="display: block; margin: auto" width="600" height="240" viewbox="-100 -40 500
-            240" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="0" cy="100 " r="98 " fill='#fff' stroke-width="2 " stroke="#222 " />
-                <circle cx="300 " cy="100 " r="30 " fill='#fff' stroke-width="2 " stroke="#222 " />
-                <text x="0 " y="105 " fill="black " text-anchor="middle " font-size="25 ">M</text>
-                <text x="18 " y="108 " fill="black " text-anchor="middle " font-size="19 ">1</text>
-                <text x="298 " y="108 " fill="black " text-anchor="middle " font-size="25 ">M</text>
-                <text x="316 " y="111 " fill="black " text-anchor="middle " font-size="19 ">2</text>
+            <svg viewbox="-100 -40 500 240">
+                <circle cx="0" cy="100" r="98" fill='#fff' stroke-width="2" stroke="#222" />
+                <circle cx="300" cy="100" r="30" fill='#fff' stroke-width="2" stroke="#222" />
+                <text x="0" y="105" fill="black" text-anchor="middle" font-size="25 ">M</text>
+                <text x="18" y="108" fill="black" text-anchor="middle" font-size="19 ">1</text>
+                <text x="298" y="108" fill="black" text-anchor="middle" font-size="25 ">M</text>
+                <text x="316" y="111" fill="black" text-anchor="middle" font-size="19 ">2</text>
                 <g transform='translate(0,-10)'>
-                    <line x1="0 " y1="0 " x2="300 " y2="0 " style="stroke:#000;stroke-width:2 " />
-                    <line x1="0 " y1="-5 " x2="0 " y2="5 " style="stroke:#000;stroke-width:2 " />
-                    <line x1="300 " y1="-5 " x2="300 " y2="5 " style="stroke:#000;stroke-width:2 " />
-                    <text x="150 " y="-5 " fill="black " text-anchor="middle " font-size="25 ">r</text>
+                    <line x1="0" y1="0" x2="300" y2="0" style="stroke:#000;stroke-width:2" />
+                    <line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
+                    <line x1="300" y1="-5" x2="300" y2="5" style="stroke:#000;stroke-width:2" />
+                    <text x="150" y="-5" fill="black" text-anchor="middle" font-size="25 ">r</text>
                 </g>
             </svg>
             <h1>$$U_{g} = -\frac{GM_{1}M_{2}}{r} $$</h1>
@@ -971,19 +1107,18 @@
                 <sup>-11</sup> = universal gravitation constant [N(m/kg)²]
                 <br>\(M\) = mass [kg, kilograms]
                 <br>\(r\) = distance between the center of each mass [m, meters]
-                <svg style="display: block; margin: auto " width="500 " height="200 " class='svgDiagram' version="1.1
-            " xmlns="http://www.w3.org/2000/svg ">
-                    <circle cx="250 " cy="35 " r="5 " fill='#fff' stroke-width="2 " stroke="#222 " />
-                    <circle cx="250 " cy="1167 " r="1000 " fill='#fff' stroke-width="2 " stroke="#222 " />
+                <svg viewbox="-50 0 600 213">
+                    <circle cx="250" cy="35" r="5" fill='#fff' stroke-width="2" stroke="#222" />
+                    <circle cx="250" cy="1167" r="1000" fill='#fff' stroke-width="2" stroke="#222" />
 
-                    <text x="250 " y="70 " fill="black " text-anchor="middle " font-size="25 ">M</text>
-                    <text x="268 " y="73 " fill="black " text-anchor="middle " font-size="19 ">1</text>
-                    <text x="250 " y="192 " fill="black " text-anchor="middle " font-size="25 ">M</text>
-                    <text x="268 " y="195 " fill="black " text-anchor="middle " font-size="19 ">2</text>
+                    <text x="250" y="70" fill="black" text-anchor="middle" font-size="25 ">M</text>
+                    <text x="268" y="73" fill="black" text-anchor="middle" font-size="19 ">1</text>
+                    <text x="250" y="192" fill="black" text-anchor="middle" font-size="25 ">M</text>
+                    <text x="268" y="195" fill="black" text-anchor="middle" font-size="19 ">2</text>
 
-                    <line x1="290 " y1="35 " x2="300 " y2="35 " style="stroke:#000;stroke-width:2 " />
-                    <line x1="295 " y1="35 " x2="295 " y2="300 " style="stroke:#000;stroke-width:2 " />
-                    <text x="310 " y="130 " fill="black " text-anchor="middle " font-size="25 ">r</text>
+                    <line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
+                    <line x1="295" y1="35" x2="295" y2="300" style="stroke:#000;stroke-width:2" />
+                    <text x="310" y="130" fill="black" text-anchor="middle" font-size="25 ">r</text>
                 </svg>
         </div>
         <p>What is the gravitational potential energy when two masses are at zero distance away?</p>
@@ -995,35 +1130,35 @@
         </p>
         <canvas class='center' id='grav2' height='400' width='600' onclick="grav2(this)"> </canvas>
         <p> Poke around with your mouse. Number of particles =
-            <input id='num2' type="number" step="1" min='1' max='100' value='6'>
+            <input id='num2' type="number" step="1" min='1' max='100' value='6' style="width:60px;">
         </p>
 
         <div class='example'>
-            <strong>Example:</strong> How much gravitational potential energy exists between two 100,000 kg masses at a distance
-            of 2 meters?
+            <strong>Example:</strong> Calculate the gravitational potential energy between two 100&#8239;000 kg masses when there
+            is only 2 m between the center of each mass.
             <details>
                 <summary>solution</summary>
-                $$U_{g} = -\frac{GM_{1}M_{2}}{r}$$ $$U_{g} = -\frac{(6.674 \times 10^{-11}) (100,000)(100,000)} {2} $$ $$U_{g} = -0.33\,\mathrm{J}$$
+                $$U_{g} = -\frac{GM_{1}M_{2}}{r}$$ $$U_{g} = -\frac{(6.674 \times 10^{-11}) (100\,000)(100\,000)} {2} $$ $$U_{g} = -0.33\,\mathrm{J}$$
                 <p>The energy is negative because it would take positive work to separate the masses.</p>
             </details>
         </div>
 
         <div class='example'>
-            <strong>Example:</strong> Two 100,000 kg masses are 2 meters apart. How much work would it take to bring them to 10 m
-            apart?
+            <strong>Example:</strong> Two 100&#8239;000 kg masses are 2 meters apart. How much work would it take to bring them to
+            10 m apart?
             </strong>
             <details>
                 <summary>solution</summary>
-                $$U_{i} = -\frac{GM_{1}M_{2}}{r}$$ $$U_{i} = -\frac{(6.674 \times 10^{-11})(100,000)(100,000)}{2}$$ $$U_{i} = -0.33\,\mathrm{J}$$
-                <br> $$U_{f} = -\frac{(6.674 \times 10^{-11})(100,000)(100,000)}{10}$$ $$U_{f} = -0.068\,\mathrm{J}$$
+                $$U_{i} = -\frac{GM_{1}M_{2}}{r}$$ $$U_{i} = -\frac{(6.674 \times 10^{-11})(100\,000)(100\,000)}{2}$$ $$U_{i} = -0.33\,\mathrm{J}$$
+                <br> $$U_{f} = -\frac{(6.674 \times 10^{-11})(100\,000)(100\,000)}{10}$$ $$U_{f} = -0.068\,\mathrm{J}$$
                 <br> $$E_i = E_f$$ $$U_{i} + W = U_{f} $$ $$-0.33 + W = -0.068$$ $$W = 0.262 \, \mathrm{J}$$
             </details>
         </div>
 
 
         <div class='example'>
-            <strong>Example:</strong> A 2000 kg space ship starts at rest 20,000 km from the surface of Earth. How much kinetic energy
-            will the ship have after it falls down to 10,000km from the surface of Earth?
+            <strong>Example:</strong> A 2000 kg space ship starts at rest 20&#8239;000 km from the surface of Earth. How much kinetic
+            energy will the ship have after it falls down to 10&#8239;000km from the surface of Earth?
             <details>
                 <summary>hint</summary>
                 <br> Use conservation of energy. Set the initial kinetic and gravitational potential equal to the final kinetic
@@ -1034,9 +1169,9 @@
             <details>
                 <summary>solution</summary>
                 $$E_{i} = E_{f}$$ $$U_{gi} = U_{gf} + K$$ $$ K = U_{gi} - U_{gf}$$ $$K = -\frac{GM_{1}M_{2}}{r} +\frac{GM_{1}M_{2}}{r}$$
-                $$K = -\frac{(6.674\times 10^{-11})(5.972\times 10^{24})(2000)}{6,371,000 + 20,000,000}$$ $$+ \frac{(6.674\times
-                10^{-11})(5.972\times 10^{24})(2000)}{6,371,000 + 10,000,000}$$ $$K = -3.02 \times 10^{10}+4.86 \times 10^{10}
-                $$ $$K = 1.85 \times 10^{10} \, \mathrm{J}$$
+                $$K = -\frac{(6.674\times 10^{-11})(5.972\times 10^{24})(2000)}{6\,371\,000 + 20\,000\,000}$$ $$+ \frac{(6.674\times
+                10^{-11})(5.972\times 10^{24})(2000)}{6\,371\,000 + 10\,000\,000}$$ $$K = -3.02 \times 10^{10}+4.86 \times
+                10^{10} $$ $$K = 1.85 \times 10^{10} \, \mathrm{J}$$
             </details>
         </div>
         <div class='example'>
@@ -1051,21 +1186,15 @@
                 <summary>solution</summary>
                 $$E_{i} = E_{f}$$ $$U_{gi} + K = U_{gf} + K$$ $$U_{gi} + K = 0$$ $$-U_{gi} = K$$ $$\frac{GM_{1}M_{2}}{r} = (1/2)M_{2}v^2$$
                 $$\frac{GM_{1}}{r} = (1/2)v^2$$ $$\sqrt{\frac{2GM_{1}}{r}} = v$$ $$\sqrt{\frac{2(6.674\times 10^{-11}) (5.972
-                \times 10 ^{24})}{6,371,000}} = v$$ $$11,183 \, \mathrm{\tfrac{m}{s}} =v $$
+                \times 10 ^{24})}{6\,371\,000}} = v$$ $$11\,183 \, \mathrm{\tfrac{m}{s}} =v $$
             </details>
         </div>
     </article>
     <div class='back'>
         <a href="../../../index.html ">Back</a>
     </div>
-    <script>
-        renderMathInElement(document.body);
-    </script>
-    <script src='../../../lib/randomColor.min.js'></script>
-    <script src='../../../lib/gravityClass.js'></script>
-    <script src="grav0.js "></script>
-    <script src="grav1.js "></script>
-    <script src="grav2.js "></script>
+
+    <script> renderMathInElement(document.body); </script>
 </body>
 
 </html>

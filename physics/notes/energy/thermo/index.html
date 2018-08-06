@@ -2,17 +2,24 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
-	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
 	<title>Thermodynamics</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+
+	<script defer src='../../../lib/randomColor.min.js'></script>
+	<script defer src="energy.js"></script>
+	<script defer src='../../../lib/matter.min.js'></script>
+	<script defer src="entropy1.js"></script>
+	<script defer src="temperature.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 	<script src="../../../lib/katex/katex.min.js"></script>
@@ -28,13 +35,29 @@
 		</h1>
 	</header>
 	<article>
+		<h1 class='underlined'>Temperature</h1>
+		<p>Temperature is a measure of the average kinetic energy in a system of particles. Kinetic energy can be stored in spin,
+			vibrations between particles, and normal translational movement.</p>
+		<div>
+			<div id="kinetic-energy"></div>
+			<canvas class='center' id='temperature' height='150' width='600'> </canvas>
+			<canvas class='center' id='temperature-out' height='200' width='600'> </canvas>
+			<p>temperature =
+				<input type="range" id='time-rate-slider-temp' min="0.01" max="1" step="0.01" value="0.05">
+				<button id="clear-temp" style="float: right;">clear</button>
+			</p>
+			<p>The graph above shows the distribution of kinetics energy for particles at various temperatures.
+			</p>
+		</div>
+
 		<h1 class='underlined'>Energy Loss and Gain in a System</h1>
 		<br>
 		<div class="col-group">
 			<div>
+				<br>&nbsp;
 				<canvas id="canvas0" width='250' height='445' onclick="particles(this)"> </canvas>
-				<br>
-				<button id="pause">pause</button>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="pause">pause</button>&nbsp;&nbsp;&nbsp;
 				<button id="energy">friction: OFF</button>
 			</div>
 			<div>
@@ -100,38 +123,16 @@
 			in a state that will turn the rotor.
 		</p>
 		<canvas class='center' id='entropy1' height='300' width='600'> </canvas>
-		<style>
-			.wrapper {
-				display: grid;
-				grid-gap: 0px;
-				grid-template-columns: 200px 200px 200px;
-			}
-
-			.a {
-				grid-column: 1;
-				grid-row: 1;
-			}
-
-			.b {
-				grid-column: 2;
-				grid-row: 1;
-			}
-
-			.c {
-				grid-column: 3;
-				grid-row: 1;
-			}
-		</style>
-		<div class="wrapper">
-			<div class="a center">
+		<div class="flex-grid-thirds">
+			<div class="col center">
 				time rate
 				<br>
 				<input type="range" id='time-rate-slider' min="0" max="5" step="1" value="1">
 			</div>
-			<div class="b center">
+			<div class="col center">
 				<button id="clear1">clear</button>
 			</div>
-			<div class="c center">
+			<div class="col center">
 				rotor external power
 				<br>
 				<input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.1" value="0">
@@ -169,7 +170,7 @@
 
 		<h1 class='underlined'>Arrow of Time</h1>
 		<p>
-			If you were to watch a video of th Earth orbiting the sun, it would be difficult to tell if the video was running forwards
+			If you were to watch a video of the Earth orbiting the sun, it would be difficult to tell if the video was running forwards
 			or backwards. Simple physical systems don't have a clear forwards or backwards.
 		</p>
 		<p>
@@ -208,13 +209,8 @@
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
 	</div>
-	<script src='../../../lib/randomColor.min.js'></script>
-	<script src="energy.js"></script>
-	<script src='../../../lib/matter.min.js'></script>
-	<script src="entropy1.js"></script>
-	<script>
-		renderMathInElement(document.body);
-	</script>
+
+	<script> renderMathInElement(document.body); </script>
 </body>
 
 </html>

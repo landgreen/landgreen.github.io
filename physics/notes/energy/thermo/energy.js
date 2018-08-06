@@ -22,17 +22,6 @@ var particles = function(button) {
   ctx.shadowOffsetX = 5;
   ctx.shadowOffsetY = 5;
 
-  const mouse = {
-    down: false,
-    x: 0,
-    y: 0
-  };
-  canvas.onmousemove = function(e) {
-    var rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  };
-
   var pause = false;
 
   var physics = {
@@ -142,13 +131,31 @@ var particles = function(button) {
 
   var box;
 
+  let mouse = {
+    x: 0,
+    y: 0
+  };
+
   function spawn() {
     box = new mass(mouse.x, mouse.y, 1, 0, 20, randomColor());
     box.calcEnergy();
     box.energy = box.pe + box.ke;
   }
   spawn();
-  document.getElementById(canvasID).addEventListener("mousedown", function() {
+  document.getElementById(canvasID).addEventListener("mousedown", function(event) {
+    //gets mouse position, even when canvas is scaled by CSS
+    function getMousePos(canvas, event) {
+      const mouse = {
+        x: event.clientX - ctx.canvas.offsetLeft,
+        y: event.clientY - ctx.canvas.offsetTop
+      };
+      return {
+        x: (mouse.x * canvas.width) / canvas.clientWidth,
+        y: (mouse.y * canvas.height) / canvas.clientHeight
+      };
+    }
+
+    mouse = getMousePos(canvas, event);
     spawn();
   });
 

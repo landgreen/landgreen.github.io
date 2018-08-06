@@ -2,15 +2,16 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
-	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
 	<title>Vectors & Scalars</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -74,7 +75,7 @@
 				<path d="M165 90 v-15 h 15" stroke="#bbb" stroke-width="1" fill="none" />
 			</svg>
 			<p>A vector is a variable that has a magnitude and direction. Temperature is just a scalar with no direction. You can't say
-				it is 50°C down. Velocity is a vector. You could say the velocity is 50m/s down.</p>
+				it is 50°C down. Velocity is a vector. You could say the velocity is 50 m/s down.</p>
 			<br>
 
 			<table style="width:100%;text-align:left">
@@ -116,14 +117,14 @@
 				<g id="vector" transform='translate(0 150) rotate(-25)'>
 					<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
 					<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
-					<text x="100" y="-13" fill="black" text-anchor="middle" alignment-baseline="middle">c</text>
+					<text x="100" y="-13" fill="black" text-anchor="middle" dominant-baseline="middle">c</text>
 				</g>
 				<line x1="5" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
 				<line x1="181" y1="147" x2="181" y2="67" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
 				<path d="M165 150 v-15 h 15" stroke="#bbb" stroke-width="1" fill="none" />
 
-				<text x="100" y="165" fill="black" text-anchor="middle" alignment-baseline="middle">a</text>
-				<text x="205" y="105" fill="black" text-anchor="middle" alignment-baseline="middle">b</text>
+				<text x="100" y="165" fill="black" text-anchor="middle" dominant-baseline="middle">a</text>
+				<text x="205" y="105" fill="black" text-anchor="middle" dominant-baseline="middle">b</text>
 			</svg>
 			<p>Think of a vector like the hypotenuse of a right triangle. This makes the other two sides of the triangle the horizontal
 				and vertical components of the vector.</p>
@@ -141,15 +142,15 @@
 				<g id="vector" transform='translate(0 150) rotate(-25)'>
 					<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
 					<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
-					<text x="100" y="-13" fill="black" text-anchor="middle" alignment-baseline="middle">hyp</text>
+					<text x="100" y="-13" fill="black" text-anchor="middle" dominant-baseline="middle">hyp</text>
 				</g>
 				<line x1="5" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
 				<line x1="181" y1="147" x2="181" y2="67" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
 				<path d="M165 150 v-15 h 15" stroke="#bbb" stroke-width="1" fill="none" />
 
-				<text x="100" y="165" fill="black" text-anchor="middle" alignment-baseline="middle">adj</text>
-				<text x="205" y="105" fill="black" text-anchor="middle" alignment-baseline="middle">opp</text>
-				<text x="46" y="141" fill="black" text-anchor="middle" alignment-baseline="middle">θ</text>
+				<text x="100" y="165" fill="black" text-anchor="middle" dominant-baseline="middle">adj</text>
+				<text x="205" y="105" fill="black" text-anchor="middle" dominant-baseline="middle">opp</text>
+				<text x="46" y="141" fill="black" text-anchor="middle" dominant-baseline="middle">θ</text>
 			</svg>
 			$$ \sin \theta = \frac{\mathrm{opp}}{\mathrm{hyp}} $$ $$ \cos \theta = \frac{\mathrm{adj}}{\mathrm{hyp}} $$ $$ \tan \theta
 			= \frac{\mathrm{opp}}{\mathrm{adj}} $$
@@ -163,16 +164,16 @@
 				<g id="vector" transform='translate(0 100) rotate(-25)'>
 					<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
 					<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
-					<text x="100" y="-13" fill="black" text-anchor="middle" alignment-baseline="middle">v</text>
+					<text x="100" y="-13" fill="black" text-anchor="middle" dominant-baseline="middle">v</text>
 				</g>
 
 				<line x1="5" y1="100" x2="181" y2="100" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
 				<line x1="181" y1="97" x2="181" y2="17" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
 				<path d="M165 100 v-15 h 15" stroke="#bbb" stroke-width="1" fill="none" />
 
-				<text x="100" y="115" fill="black" text-anchor="middle" alignment-baseline="middle">Vx</text>
-				<text x="205" y="55" fill="black" text-anchor="middle" alignment-baseline="middle">Vy</text>
-				<text x="46" y="91" fill="black" text-anchor="middle" alignment-baseline="middle">θ</text>
+				<text x="100" y="115" fill="black" text-anchor="middle" dominant-baseline="middle">Vx</text>
+				<text x="205" y="55" fill="black" text-anchor="middle" dominant-baseline="middle">Vy</text>
+				<text x="46" y="91" fill="black" text-anchor="middle" dominant-baseline="middle">θ</text>
 			</svg>
 			<br>$$ v_{x} = v\,\cos \theta$$ $$ v_{y} = v\,\sin \theta $$
 			<br>
@@ -182,25 +183,27 @@
 				<g id="vector" transform='translate(0 100) rotate(-25)'>
 					<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
 					<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
-					<text x="100" y="-13" fill="black" text-anchor="middle" alignment-baseline="middle">d</text>
+					<text x="100" y="-13" fill="black" text-anchor="middle" dominant-baseline="middle">d</text>
 				</g>
 				<line x1="5" y1="100" x2="181" y2="100" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
 				<line x1="181" y1="97" x2="181" y2="17" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
 				<path d="M165 100 v-15 h 15" stroke="#bbb" stroke-width="1" fill="none" />
-				<text x="100" y="115" fill="black" text-anchor="middle" alignment-baseline="middle">x</text>
-				<text x="205" y="55" fill="black" text-anchor="middle" alignment-baseline="middle">y</text>
-				<text x="46" y="91" fill="black" text-anchor="middle" alignment-baseline="middle">θ</text>
+				<text x="100" y="115" fill="black" text-anchor="middle" dominant-baseline="middle">x</text>
+				<text x="205" y="55" fill="black" text-anchor="middle" dominant-baseline="middle">y</text>
+				<text x="46" y="91" fill="black" text-anchor="middle" dominant-baseline="middle">θ</text>
 			</svg>
 			<br>$$ x = d\,\cos \theta $$ $$ y = d\,\sin \theta $$
-			<br>
-			<br>
-			<br>
-			<p>In the simulation below position the mouse to around magnitude 250 and angle 14°. What are the x and y components of the
-				vector?
-			</p>
-			<p>At what angles are the magnitude and the x-component equal?</p>
-			<p>What does a negative sign mean for a vector? </p>
-			<canvas id="myCanvas" height='300' width='600'> </canvas>
+
+			<div class="hide-on-mobile example">
+				<p>In the simulation below position the mouse to around magnitude 250 and angle 14°. What are the x and y components of
+					the vector?
+				</p>
+				<p>At what angles are the magnitude and the x-component equal?</p>
+				<p>What does a negative sign mean for a vector? </p>
+				<canvas id="myCanvas" height='300' width='600'> </canvas>
+			</div>
+
+
 			<div class='example'>
 				<b>Example:</b> A plane is taking off at an angle of 14° above the horizon. If the plane is moving at 250 m/s how fast is
 				it moving in only the vertical direction?
@@ -244,7 +247,7 @@
 				<g id="vector" transform='translate(10 12) rotate(0)'>
 					<line x1="0" y1="0" x2="0" y2="30" style="stroke:#000;stroke-width:2" />
 					<polygon points="0,-2 -5,7 0,5 5,7" transform='translate(0 0) rotate(0)' />
-					<text x="0" y="-6" text-anchor="middle" alignment-baseline="middle">(0,30)</text>
+					<text x="0" y="-6" text-anchor="middle" dominant-baseline="middle">(0,30)</text>
 				</g>
 			</svg>
 			=

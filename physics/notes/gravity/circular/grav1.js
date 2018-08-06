@@ -1,43 +1,13 @@
-const setup1 = function() {
+grav1();
+function grav1() {
   var canvas = document.getElementById("grav1");
   var ctx = canvas.getContext("2d");
-  ctx.font = "300 22px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-};
-setup1();
 
-function grav1(el) {
-  el.onclick = null; //stops the function from running on button click
-  var canvas = el;
-  var ctx = canvas.getContext("2d");
-
-  //___________________get mouse input___________________
-  var mouse = {
-    down: false,
-    x: 0,
-    y: 0
-  };
-  canvas.onmousemove = function(e) {
-    var rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  };
-  canvas.onmousedown = function() {
-    mouse.down = true;
-    Particle.repulse(q, mouse);
-  };
-  canvas.onmouseup = function() {
-    mouse.down = false;
-  };
-  let pause = false;
-  el.addEventListener("mouseleave", function() {
-    pause = true;
-  });
-  el.addEventListener("mouseenter", function() {
-    pause = false;
-    if (!pause) requestAnimationFrame(cycle);
+  canvas.addEventListener("mousedown", function(event) {
+    Particle.repulse(q, {
+      x: (event.offsetX * canvas.width) / canvas.clientWidth,
+      y: (event.offsetY * canvas.height) / canvas.clientHeight
+    });
   });
 
   const q = []; //holds the Particles
@@ -75,20 +45,13 @@ function grav1(el) {
     "#fff"
   );
 
-  // ctx.globalCompositeOperation = 'lighter'
-  // ctx.clearRect(0, 0, canvas.width, canvas.height);
   function cycle() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // ctx.globalAlpha = 0.05
-    // ctx.fillStyle = '#000'
-    // ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.globalAlpha = 1;
     Particle.integration(q);
-    // Particle.vectorField(q,vMag)
     Particle.drawAll(q, ctx);
     Particle.bounds(q, canvas);
-    if (!pause) requestAnimationFrame(cycle);
+    requestAnimationFrame(cycle);
   }
-  // for (let i =0; i<140; ++i)requestAnimationFrame(cycle);
   requestAnimationFrame(cycle);
 }

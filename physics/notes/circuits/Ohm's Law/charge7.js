@@ -1,7 +1,7 @@
 (function() {
   var canvas = document.getElementById("charge7");
   var ctx = canvas.getContext("2d");
-  canvas.width = document.getElementsByTagName("article")[0].clientWidth;
+  // canvas.width = document.getElementsByTagName("article")[0].clientWidth;
   ctx.font = "24px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
@@ -40,23 +40,12 @@ function charges7(el) {
   });
 
   //___________________get mouse input___________________
-  var mouse = {
-    down: false,
-    x: 0,
-    y: 0
-  };
-  canvas.onmousemove = function(e) {
-    var rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  };
-  canvas.onmousedown = function() {
-    mouse.down = true;
-    Charge.repulse(q, mouse);
-  };
-  canvas.onmouseup = function() {
-    mouse.down = false;
-  };
+  canvas.addEventListener("mousedown", function(event) {
+    Charge.repulse(q, {
+      x: (event.offsetX * canvas.width) / canvas.clientWidth,
+      y: (event.offsetY * canvas.height) / canvas.clientHeight
+    });
+  });
   let pause = false;
   el.addEventListener("mouseleave", function() {
     pause = true;
@@ -116,7 +105,7 @@ function charges7(el) {
   // Charge.spawnCharges(q, 25, 'e')
   // Charge.spawnCharges(q, 25, 'p')
 
-  let current = 8.2 / 60;
+  let current = 1 / 60;
   function ammeter() {
     current = current * 0.99 + Charge.teleport(q, 200) * 0.01;
     // console.log((current*60).toFixed(2))

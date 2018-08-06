@@ -2,15 +2,16 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
-	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
 	<title>Light</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -111,7 +112,11 @@
 			shortest wavelength are on the other.</p>
 		<p>The Electromagnetic spectrum is very loosely divided in these regions based on the
 			<a href='https://en.wikipedia.org/wiki/Electromagnetic_spectrum#Rationale_for_spectrum_regional_names'>source of that light</a>.</p>
-
+		<style>
+			.ion {
+				background: #fef;
+			}
+		</style>
 		<table>
 			<tr>
 				<th>region</th>
@@ -150,6 +155,13 @@
 				<td>2 x 10
 					<sup>-20</sup> J</td>
 			</tr>
+			<style>
+				.rainbow {
+					background: linear-gradient(red, orange, yellow, green, cyan, blue, violet);
+					font-weight: 900;
+					color: #fff;
+				}
+			</style>
 			<tr>
 				<td class='rainbow'>visible light</td>
 				<td>0.5 x 10
@@ -190,18 +202,18 @@
 
 
 		<div class='example'>
-			Hydrogen is the most common element in the universe, making up about 75% of all normal mass. It floods the universe with
-			light at its signature wavelength of
+			<strong>Question:</strong> Hydrogen is the most common element in the universe, making up about 75% of all normal mass. It floods
+			the universe with light at its signature wavelength of
 			<a href='https://en.wikipedia.org/wiki/Hydrogen_line'>21 cm</a>. What region of the electromagnetic spectrum would this light be in?
 			<details>
 				<summary>solution</summary>
-				$$21\, \mathrm{cm} \left(\frac{0.01}{c}\right) = 0.21\, \mathrm{m}$$ $$\text{ 0.21m is in the microwave}$$
+				$$21\, \mathrm{cm} \left(\frac{0.01}{c}\right) = 0.21\, \mathrm{m}$$ $$\text{ 0.21 m is in the microwave}$$
 
 			</details>
 		</div>
 		<div class='example'>
-			In human skin, vitamin D production occurs when the precursor molecule reacts with light at wavelengths between 270 and 300
-			nm. What range of the E-M spectrum includes that wavelength?
+			<strong>Question:</strong> In human skin, vitamin D production occurs when the precursor molecule reacts with light at wavelengths
+			between 270 and 300 nm. What range of the E-M spectrum includes that wavelength?
 			<details>
 				<summary>solution</summary>
 				<p>Ultraviolet, specifically
@@ -233,15 +245,18 @@
 				</table>
 			</a>
 		</div>
-		<p>The colors we can see come from three overlapping regions. We can see every color on the rainbow from just 3 different
-			types of cones. What about colors not on the rainbow? If multiple cones are activated our brains actually invent colors
-			to describe the experience, like pink or white.</p>
-		<p>Light sources work by
+		<p>
+			The colors we can see come from three overlapping regions. We can see every color on the rainbow from just 3 different types
+			of cones. What about colors not on the rainbow? If multiple cones are activated our brains actually invent colors to describe
+			the experience, like pink or white.
+		</p>
+		<p>
+			Light sources work by
 			<a href="https://en.wikipedia.org/wiki/Additive_color">adding color</a>.
 			<br> Pigments and dyes work by
-			<a href="https://en.wikipedia.org/wiki/Subtractive_color">subtracting color</a>.</p>
-		<svg class='center' version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="540"
-		 height="380" fill="none">
+			<a href="https://en.wikipedia.org/wiki/Subtractive_color">subtracting color</a>.
+		</p>
+		<svg viewBox="0 0 540 380" fill="none">
 			<defs>
 				<linearGradient id="spectrum">
 					<stop offset="0%" stop-color="#000001" />
@@ -310,15 +325,21 @@
 		</svg>
 
 		<div class='example'>
-			What combination of colors do we call pink light?
+			<strong>Question:</strong> What combination of colors do we call pink light?
 			<details>
 				<summary>solution</summary>
-				<p>Red plus blue light makes pink.</p>
+				<p>The ratios for
+					<a href="https://www.google.com/search?q=rgb%28255%2C+105%2C+180%29">pink</a> are:</p>
+				<p>red = 1.0
+					<br>green = 0.4
+					<br>blue = 0.7
+				</p>
+
 			</details>
 		</div>
 
 		<div class='example'>
-			What type of light makes the color black?
+			<strong>Question:</strong> What type of light makes the color black?
 			<details>
 				<summary>solution</summary>
 				<p>the absence of light</p>
@@ -341,32 +362,36 @@
 				<sup>-18</sup> J</strong>). This "safe" radiation doesn't have enough energy to cause cellular damage by breaking chemical
 			bonds.
 		</p>
-		<p class='center'>radio waves, microwaves, infrared, visible light</p>
-		<br>
+		<li>radio waves</li>
+		<li>microwaves,</li>
+		<li>infrared</li>
+		<li>visible light</li>
 		<p>
 			<strong>Ionizing radiation is generally above 10eV (1.60 x 10
 				<sup>-18</sup> J</strong>). This "unsafe" radiation can potentially
-			<a href='https://en.wikipedia.org/wiki/Ionization'>ionize</a> an atom and break chemical bonds. Breaking chemical bonds can cause cell death and cancer.</p>
-		<p class='center'>ultraviolet, x-ray, gamma-ray</p>
-		<br>
-		<br>
-		<br>
-		<p>Try this PhET simulation to see how different molecules interact with different regions of the electromagnetic spectrum.</p>
-		<div class='center' style="position: relative; width: 300px; height: 200px;">
-			<a href="https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light_en.html" style="text-decoration: none;">
-				<img src="https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light-600.png" alt="Molecules and Light"
-				 style="border: none;" width="300" height="200" />
-				<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.9; filter: alpha(opacity = 60);"></div>
-				<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
-					<tr>
-						<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
-					</tr>
-				</table>
-			</a>
-		</div>
-
+			<a href='https://en.wikipedia.org/wiki/Ionization'>ionize</a> an atom and break chemical bonds. Breaking chemical bonds can cause cell death and cancer.
+		</p>
+		<li>ultraviolet</li>
+		<li>x-ray</li>
+		<li>gamma-ray</li>
 		<div class='example'>
-			Greenhouse gasses need to interact with infrared light. Which molecules from the simulation could be greenhouse gasses?
+			<p>Try this PhET simulation to see how different molecules interact with different regions of the electromagnetic spectrum.</p>
+			<div class='center' style="position: relative; width: 300px; height: 200px;">
+				<a href="https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light_en.html" style="text-decoration: none;">
+					<img src="https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light-600.png" alt="Molecules and Light"
+					 style="border: none;" width="300" height="200" />
+					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.9; filter: alpha(opacity = 60);"></div>
+					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
+						<tr>
+							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
+						</tr>
+					</table>
+				</a>
+			</div>
+
+
+			<strong>Question:</strong> Greenhouse gasses need to interact with infrared light. Which molecules from the simulation could be
+			greenhouse gasses?
 			<details>
 				<summary>solution</summary>
 				<br>
@@ -376,38 +401,39 @@
 		</div>
 
 		<div class='example'>
-			Can microwave ovens ionize atoms? Are they dangerous?
+			<strong>Question:</strong> Can microwave ovens ionize atoms? Are they dangerous?
 			<details>
 				<summary>solution</summary>
-				<br>Microwave ovens make microwaves. Each microwave photon has an energy around 10
-				<sup>-23</sup> J. This is far below the threshold for ionizing atoms
-				<br>(1.60 x 10
-				<sup>-18</sup> J).
+				<p>
+					Microwave ovens make microwaves. Each microwave photon has an energy around 10
+					<sup>-23</sup> J. This is far below the ionization threshold: 1.60 x 10
+					<sup>-18</sup> J.
+				</p>
+				<p>
+					Many studies have been done on the risks of microwaves, but no adverse health effects have been
+					<a href='https://en.wikipedia.org/wiki/Mobile_phone_radiation_and_health'>established</a>. Microwaves can heat up things, but they will not directly cause
+					<a href='https://en.wikipedia.org/wiki/Microwave_oven#Direct_microwave_exposure'>cell damage or cancer</a>. Cell Phones and Wi-fi also use microwaves to transmit data.
+				</p>
 
-				<br>
-				<br>This means microwaves can heat up things, but they will not directly cause
-				<a href='https://en.wikipedia.org/wiki/Microwave_oven#Direct_microwave_exposure'>cell damage or cancer</a>.
-
-				<br>
-				<br>Cell Phones and Wifi also use microwaves to transmit data. Many studies have been done, but the current evidence indicates
-				that cell phones and wifi
-				<a href='https://en.wikipedia.org/wiki/Mobile_phone_radiation_and_health'>don't cause cancer</a>. Since microwaves are so common there continues to be research on this.
 			</details>
 		</div>
 		<div class='example'>
-			Which is more damaging an ultraviolet or gamma-ray photon?
+			<strong>Question:</strong> Which is more damaging an ultraviolet or gamma-ray photon?
 			<details>
 				<summary>solution</summary>
-				<p>Gamma Rays.
-					<br> UV is less likely to ionize cells. Gamma-rays have much more energy per photon, but gamma-rays also have higher penetration,
-					so they can pass deeper into the body.</p>
+				<br>Gamma Rays
+				<p>
+					UV is less likely to ionize cells. Gamma-rays have much more energy per photon, but gamma-rays also have higher penetration.
+					This means they can pass deeper into the body or not interact at all.</p>
 			</details>
 		</div>
 
 		<h2 class='underlined' id="thermal"> Thermal Radiation</h2>
 		<!-- Blackbody Radiation -->
-		<p>The particles in all substances move and vibrate randomly. Temperature is a measure of the average kinetic energy of these
-			particles. When the temperature is high there is more motion.</p>
+		<p>The particles in all substances move and vibrate randomly.
+			<a href="..\..\energy\thermo\index.html">Temperature</a> is a measure of the average kinetic energy of these particles. When the temperature is high there is more
+			motion.
+		</p>
 		<p>When charged particles move they produce light. This means that as substances get hotter they make brighter and higher
 			frequency light.</p>
 		</p>
@@ -418,288 +444,312 @@
 
 		<p> Examples of visible thermal radiation: stars, glowing metal, incandescent lights, the yellow part of fire (not the blue),
 			stove coils, sparks</p>
-		<svg width="600" height="480" viewBox="0 0 600 480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-			<defs>
-				<linearGradient id="grad_spectrum" x1="0%" y1="0%" x2="100%" y2="0%">
-					<stop offset="0.000000" stop-color="#020005" />
-					<stop offset="0.013514" stop-color="#020006" />
-					<stop offset="0.027027" stop-color="#030008" />
-					<stop offset="0.040541" stop-color="#04000a" />
-					<stop offset="0.054054" stop-color="#06000d" />
-					<stop offset="0.067568" stop-color="#080110" />
-					<stop offset="0.081081" stop-color="#0c0117" />
-					<stop offset="0.094595" stop-color="#11021f" />
-					<stop offset="0.108108" stop-color="#17032a" />
-					<stop offset="0.121622" stop-color="#1f053a" />
-					<stop offset="0.135135" stop-color="#25084b" />
-					<stop offset="0.148649" stop-color="#290a5c" />
-					<stop offset="0.162162" stop-color="#2b0e6f" />
-					<stop offset="0.175676" stop-color="#291380" />
-					<stop offset="0.189189" stop-color="#1f237b" />
-					<stop offset="0.202703" stop-color="#132e74" />
-					<stop offset="0.216216" stop-color="#09376c" />
-					<stop offset="0.229730" stop-color="#0a3e66" />
-					<stop offset="0.243243" stop-color="#0c4667" />
-					<stop offset="0.256757" stop-color="#0e4f6a" />
-					<stop offset="0.270270" stop-color="#10596c" />
-					<stop offset="0.283784" stop-color="#11636d" />
-					<stop offset="0.297297" stop-color="#146e6f" />
-					<stop offset="0.310811" stop-color="#177970" />
-					<stop offset="0.324324" stop-color="#178672" />
-					<stop offset="0.337838" stop-color="#1a9574" />
-					<stop offset="0.351351" stop-color="#1da375" />
-					<stop offset="0.364865" stop-color="#1db273" />
-					<stop offset="0.378378" stop-color="#20c070" />
-					<stop offset="0.391892" stop-color="#22cb6b" />
-					<stop offset="0.405405" stop-color="#21d662" />
-					<stop offset="0.418919" stop-color="#23e054" />
-					<stop offset="0.432432" stop-color="#36e842" />
-					<stop offset="0.445946" stop-color="#50ed28" />
-					<stop offset="0.459459" stop-color="#73eb22" />
-					<stop offset="0.472973" stop-color="#8fe722" />
-					<stop offset="0.486486" stop-color="#a5e221" />
-					<stop offset="0.500000" stop-color="#b9dc22" />
-					<stop offset="0.513514" stop-color="#cbd621" />
-					<stop offset="0.527027" stop-color="#dcce20" />
-					<stop offset="0.540541" stop-color="#ecc420" />
-					<stop offset="0.554054" stop-color="#f2b735" />
-					<stop offset="0.567568" stop-color="#f5ab42" />
-					<stop offset="0.581081" stop-color="#f69f49" />
-					<stop offset="0.594595" stop-color="#f7944b" />
-					<stop offset="0.608108" stop-color="#f98848" />
-					<stop offset="0.621622" stop-color="#fa7b42" />
-					<stop offset="0.635135" stop-color="#fb6c39" />
-					<stop offset="0.648649" stop-color="#fd5b2e" />
-					<stop offset="0.662162" stop-color="#fc471f" />
-					<stop offset="0.675676" stop-color="#f7300f" />
-					<stop offset="0.689189" stop-color="#ea220d" />
-					<stop offset="0.702703" stop-color="#d42215" />
-					<stop offset="0.716216" stop-color="#bf2318" />
-					<stop offset="0.729730" stop-color="#a92309" />
-					<stop offset="0.743243" stop-color="#981f07" />
-					<stop offset="0.756757" stop-color="#871b06" />
-					<stop offset="0.770270" stop-color="#771805" />
-					<stop offset="0.783784" stop-color="#671504" />
-					<stop offset="0.797297" stop-color="#591303" />
-					<stop offset="0.810811" stop-color="#4d1103" />
-					<stop offset="0.824324" stop-color="#420e02" />
-					<stop offset="0.837838" stop-color="#370c01" />
-					<stop offset="0.851351" stop-color="#2e0a01" />
-					<stop offset="0.864865" stop-color="#270801" />
-					<stop offset="0.878378" stop-color="#210600" />
-					<stop offset="0.891892" stop-color="#1e0400" />
-					<stop offset="0.905405" stop-color="#1a0300" />
-					<stop offset="0.918919" stop-color="#170200" />
-					<stop offset="0.932432" stop-color="#130100" />
-					<stop offset="0.945946" stop-color="#100100" />
-					<stop offset="0.959459" stop-color="#0c0100" />
-					<stop offset="0.972973" stop-color="#080100" />
-					<stop offset="0.986486" stop-color="#060100" />
-					<stop offset="1.000000" stop-color="#040100" />
-				</linearGradient>
-			</defs>
-			<rect x="144" y="18" width="62" height="395" fill="url(#grad_spectrum)" fill-opacity="0.3" />
-			<g font-family="Arial" font-size="12.00pt" font-weight="bold" text-anchor="middle" stroke="none" fill="#999999">
-				<text x="120" y="16">UV</text>
-				<text x="175" y="16">VISIBLE</text>
-				<text x="372" y="16">INFRARED</text>
-			</g>
-			<a xlink:title="Plot #1">
-				<g style="fill:none; color:#000; stroke:currentColor; stroke-width:2.00; stroke-linecap:butt; stroke-linejoin:miter">
-					<path d="M85.9,413.4 L91.0,413.4 L96.0,413.4 L101.0,413.4 L106.1,413.4 L111.1,413.4 L116.1,413.4 L121.2,413.4    L126.2,413.4 L131.2,413.2 L136.3,413.0 L141.3,412.5 L146.3,411.7 L151.4,410.6 L156.4,409.2 L161.4,407.5    L166.4,405.6 L171.5,403.6 L176.5,401.5 L181.5,399.4 L186.6,397.4 L191.6,395.5 L196.6,393.8 L201.7,392.3    L206.7,391.0 L211.7,389.9 L216.8,389.0 L221.8,388.3 L226.8,387.8 L231.9,387.4 L236.9,387.2 L241.9,387.2    L247.0,387.3 L252.0,387.4 L257.0,387.7 L262.1,388.1 L267.1,388.5 L272.1,388.9 L277.2,389.5 L282.2,390.0    L287.2,390.6 L292.3,391.2 L297.3,391.8 L302.3,392.4 L307.4,393.0 L312.4,393.6 L317.4,394.3 L322.5,394.9    L327.5,395.5 L332.5,396.1 L337.5,396.6 L342.6,397.2 L347.6,397.8 L352.6,398.3 L357.7,398.8 L362.7,399.3    L367.7,399.8 L372.8,400.3 L377.8,400.8 L382.8,401.2 L387.9,401.6 L392.9,402.1 L397.9,402.5 L403.0,402.8    L408.0,403.2 L413.0,403.6 L418.1,403.9 L423.1,404.3 L428.1,404.6 L433.2,404.9 L438.2,405.2 L443.2,405.5    L448.3,405.7 L453.3,406.0 L458.3,406.2 L463.4,406.5 L468.4,406.7 L473.4,406.9 L478.5,407.2 L483.5,407.4    L488.5,407.6 L493.6,407.8 L498.6,407.9 L503.6,408.1 L508.6,408.3 L513.7,408.5 L518.7,408.6 L523.7,408.8    L528.8,408.9 L533.8,409.1 L538.8,409.2 L543.9,409.3 L548.9,409.5 L553.9,409.6 L559.0,409.7 L564.0,409.8    L569.0,409.9 L574.1,410.0 L579.1,410.1 "
-					/>
+
+		<div class="center">
+			<svg id="SVG-graph-0" viewBox="0 0 580 600">
+				<defs>
+					<linearGradient id="rainbow" x2="1">
+						<stop id="stop380nm" offset="0.000000" style="stop-color:#020005;" />
+						<stop id="stop390nm" offset="0.027027" style="stop-color:#030008;" />
+						<stop id="stop400nm" offset="0.054054" style="stop-color:#06000D;" />
+						<stop id="stop410nm" offset="0.081081" style="stop-color:#0C0117;" />
+						<stop id="stop420nm" offset="0.108108" style="stop-color:#17032A;" />
+						<stop id="stop430nm" offset="0.135135" style="stop-color:#25084B;" />
+						<stop id="stop440nm" offset="0.162162" style="stop-color:#2B0E6F;" />
+						<stop id="stop450nm" offset="0.189189" style="stop-color:#1F237B;" />
+						<stop id="stop460nm" offset="0.216216" style="stop-color:#09376C;" />
+						<stop id="stop470nm" offset="0.243243" style="stop-color:#0C4667;" />
+						<stop id="stop480nm" offset="0.270270" style="stop-color:#10596C;" />
+						<stop id="stop490nm" offset="0.297297" style="stop-color:#146E6F;" />
+						<stop id="stop500nm" offset="0.324324" style="stop-color:#178672;" />
+						<stop id="stop510nm" offset="0.351351" style="stop-color:#1DA375;" />
+						<stop id="stop520nm" offset="0.378378" style="stop-color:#20C070;" />
+						<stop id="stop530nm" offset="0.405405" style="stop-color:#21D662;" />
+						<stop id="stop540nm" offset="0.432432" style="stop-color:#36E842;" />
+						<stop id="stop550nm" offset="0.459459" style="stop-color:#73EB22;" />
+						<stop id="stop560nm" offset="0.486486" style="stop-color:#A5E221;" />
+						<stop id="stop570nm" offset="0.513514" style="stop-color:#CBD621;" />
+						<stop id="stop580nm" offset="0.540541" style="stop-color:#ECC420;" />
+						<stop id="stop590nm" offset="0.567568" style="stop-color:#F5AB42;" />
+						<stop id="stop600nm" offset="0.594595" style="stop-color:#F7944B;" />
+						<stop id="stop610nm" offset="0.621622" style="stop-color:#FA7B42;" />
+						<stop id="stop620nm" offset="0.648649" style="stop-color:#FD5B2E;" />
+						<stop id="stop630nm" offset="0.675676" style="stop-color:#F7300F;" />
+						<stop id="stop640nm" offset="0.702703" style="stop-color:#D42215;" />
+						<stop id="stop650nm" offset="0.729730" style="stop-color:#A92309;" />
+						<stop id="stop660nm" offset="0.756757" style="stop-color:#871B06;" />
+						<stop id="stop670nm" offset="0.783784" style="stop-color:#671504;" />
+						<stop id="stop680nm" offset="0.810811" style="stop-color:#4D1103;" />
+						<stop id="stop690nm" offset="0.837838" style="stop-color:#370C01;" />
+						<stop id="stop700nm" offset="0.864865" style="stop-color:#270801;" />
+						<stop id="stop710nm" offset="0.891892" style="stop-color:#1E0400;" />
+						<stop id="stop720nm" offset="0.918919" style="stop-color:#170200;" />
+						<stop id="stop735nm" offset="0.959459" style="stop-color:#0C0100;" />
+						<stop id="stop745nm" offset="0.986486" style="stop-color:#060100;" />
+						<stop id="stop750nm" offset="1.000000" style="stop-color:#040100;" />
+					</linearGradient>
+				</defs>
+				<rect x="0" y="0" width="600" height="580" fill="#000" />
+				<rect x="70" y="0" width="150" height="580" fill="url(#rainbow)" />
+				<g font-size="19" stroke="none" fill="#000" stroke-width="2">
+					<text x="40" y="600" text-anchor="middle">UV</text>
+					<text x="140" y="600" text-anchor="middle">visible</text>
+					<text x="300" y="600" text-anchor="middle">infrared</text>
 				</g>
-			</a>
-			<a xlink:title="Plot #2">
-				<g style="fill:none; color:#000; stroke:currentColor; stroke-width:2.00; stroke-linecap:butt; stroke-linejoin:miter">
-					<path d="M85.9,413.4 L91.0,413.4 L96.0,413.4 L101.0,413.4 L106.1,413.4 L111.1,413.4 L116.1,413.1 L121.2,412.1    L126.2,409.5 L131.2,404.9 L136.3,397.8 L141.3,388.6 L146.3,377.8 L151.4,366.1 L156.4,354.4 L161.4,343.3    L166.4,333.3 L171.5,324.6 L176.5,317.4 L181.5,311.8 L186.6,307.7 L191.6,304.9 L196.6,303.4 L201.7,303.0    L206.7,303.5 L211.7,304.7 L216.8,306.6 L221.8,309.0 L226.8,311.8 L231.9,314.8 L236.9,318.0 L241.9,321.4    L247.0,324.9 L252.0,328.4 L257.0,331.9 L262.1,335.3 L267.1,338.7 L272.1,342.0 L277.2,345.2 L282.2,348.3    L287.2,351.3 L292.3,354.1 L297.3,356.9 L302.3,359.5 L307.4,362.0 L312.4,364.4 L317.4,366.7 L322.5,368.9    L327.5,371.0 L332.5,373.0 L337.5,374.8 L342.6,376.6 L347.6,378.3 L352.6,379.9 L357.7,381.4 L362.7,382.9    L367.7,384.3 L372.8,385.6 L377.8,386.8 L382.8,388.0 L387.9,389.1 L392.9,390.2 L397.9,391.2 L403.0,392.1    L408.0,393.0 L413.0,393.9 L418.1,394.7 L423.1,395.5 L428.1,396.2 L433.2,396.9 L438.2,397.6 L443.2,398.2    L448.3,398.9 L453.3,399.4 L458.3,400.0 L463.4,400.5 L468.4,401.0 L473.4,401.5 L478.5,401.9 L483.5,402.4    L488.5,402.8 L493.6,403.2 L498.6,403.6 L503.6,403.9 L508.6,404.3 L513.7,404.6 L518.7,404.9 L523.7,405.2    L528.8,405.5 L533.8,405.8 L538.8,406.0 L543.9,406.3 L548.9,406.5 L553.9,406.8 L559.0,407.0 L564.0,407.2    L569.0,407.4 L574.1,407.6 L579.1,407.8 "
-					/>
-				</g>
-			</a>
-			<a xlink:title="Plot #3">
-				<g style="fill:none; color:#000; stroke:currentColor; stroke-width:2.00; stroke-linecap:butt; stroke-linejoin:miter">
-					<path d="M85.9,413.4 L91.0,413.4 L96.0,413.4 L101.0,413.4 L106.1,413.2 L111.1,411.3 L116.1,404.1 L121.2,387.4    L126.2,359.4 L131.2,321.6 L136.3,278.1 L141.3,233.5 L146.3,191.6 L151.4,155.1 L156.4,125.5 L161.4,103.3    L166.4,88.2 L171.5,79.6 L176.5,76.4 L181.5,77.9 L186.6,83.0 L191.6,91.0 L196.6,101.0 L201.7,112.5    L206.7,125.0 L211.7,138.0 L216.8,151.3 L221.8,164.6 L226.8,177.7 L231.9,190.4 L236.9,202.8 L241.9,214.6    L247.0,226.0 L252.0,236.8 L257.0,247.0 L262.1,256.7 L267.1,265.8 L272.1,274.4 L277.2,282.4 L282.2,290.0    L287.2,297.1 L292.3,303.8 L297.3,310.0 L302.3,315.9 L307.4,321.4 L312.4,326.5 L317.4,331.3 L322.5,335.9    L327.5,340.1 L332.5,344.0 L337.5,347.8 L342.6,351.2 L347.6,354.5 L352.6,357.6 L357.7,360.5 L362.7,363.2    L367.7,365.7 L372.8,368.1 L377.8,370.3 L382.8,372.5 L387.9,374.4 L392.9,376.3 L397.9,378.1 L403.0,379.8    L408.0,381.3 L413.0,382.8 L418.1,384.2 L423.1,385.5 L428.1,386.8 L433.2,388.0 L438.2,389.1 L443.2,390.2    L448.3,391.2 L453.3,392.1 L458.3,393.0 L463.4,393.9 L468.4,394.7 L473.4,395.5 L478.5,396.2 L483.5,396.9    L488.5,397.6 L493.6,398.2 L498.6,398.8 L503.6,399.4 L508.6,399.9 L513.7,400.4 L518.7,400.9 L523.7,401.4    L528.8,401.8 L533.8,402.3 L538.8,402.7 L543.9,403.1 L548.9,403.4 L553.9,403.8 L559.0,404.1 L564.0,404.5    L569.0,404.8 L574.1,405.1 L579.1,405.3 "
-					/>
-				</g>
-			</a>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M80.9,413.4 L71.9,413.4 " />
-				<g transform="translate(63.6,417.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
-					<text>
-						<tspan> 0</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M80.9,360.5 L71.9,360.5 " />
-				<g transform="translate(63.6,365.0)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
-					<text>
-						<tspan> 2</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M80.9,307.6 L71.9,307.6 " />
-				<g transform="translate(63.6,312.1)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
-					<text>
-						<tspan> 4</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M80.9,254.7 L71.9,254.7 " />
-				<g transform="translate(63.6,259.2)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
-					<text>
-						<tspan> 6</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M80.9,201.8 L71.9,201.8 " />
-				<g transform="translate(63.6,206.3)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
-					<text>
-						<tspan> 8</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M80.9,148.9 L71.9,148.9 " />
-				<g transform="translate(63.6,153.4)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
-					<text>
-						<tspan> 10</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M80.9,96.0 L71.9,96.0 " />
-				<g transform="translate(63.6,100.5)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
-					<text>
-						<tspan> 12</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M80.9,43.1 L71.9,43.1 " />
-				<g transform="translate(63.6,47.6)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
-					<text>
-						<tspan> 14</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M80.9,413.4 L80.9,422.4 " />
-				<g transform="translate(80.9,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
-					<text>
-						<tspan> 0</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M163.9,413.4 L163.9,422.4 " />
-				<g transform="translate(163.9,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
-					<text>
-						<tspan> 500</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M247.0,413.4 L247.0,422.4 " />
-				<g transform="translate(247.0,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
-					<text>
-						<tspan> 1000</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M330.0,413.4 L330.0,422.4 " />
-				<g transform="translate(330.0,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
-					<text>
-						<tspan> 1500</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M413.0,413.4 L413.0,422.4 " />
-				<g transform="translate(413.0,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
-					<text>
-						<tspan> 2000</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M496.1,413.4 L496.1,422.4 " />
-				<g transform="translate(496.1,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
-					<text>
-						<tspan> 2500</tspan>
-					</text>
-				</g>
-			</g>
-			<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-				<path d="M579.1,413.4 L579.1,422.4 " />
-				<g transform="translate(579.1,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
-					<text>
-						<tspan> 3000</tspan>
-					</text>
-				</g>
-				<path d="M80.9,16.7 L80.9,413.4 L579.1,413.4 M579.1,16.7 M80.9,16.7 " />
-				<g transform="translate(25.9,215.1) rotate(270)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
-					<text>
-						<tspan>Spectral radiance (kW / sr / m² / nm)</tspan>
-					</text>
-				</g>
-				<g transform="translate(330.0,471.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
-					<text>
-						<tspan>Wavelength (nm)</tspan>
-					</text>
-				</g>
-				<g transform="translate(155.6,71.4)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:start">
-					<text>
-						<tspan>5000 K</tspan>
-					</text>
-				</g>
-				<g transform="translate(180.5,297.6)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:start">
-					<text>
-						<tspan>4000 K</tspan>
-					</text>
-				</g>
-				<g transform="translate(213.8,380.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:start">
-					<text>
-						<tspan>3000 K</tspan>
-					</text>
-				</g>
-			</g>
-		</svg>
+			</svg>
+			<p>temperature =
+				<input id='temperature-slider' type="range" min="0.01" max="0.51" step="0.001" value="0.31" style="width: 200px;">
+			</p>
+		</div>
+		<script src='../../../lib/function-graph-SVG.js'></script>
+		<script>
+			{
+				const blackBody = [
+					"#000000", "#100000", "#200000", "#300000", "#400000", "#500000", "#600000", "#700000", "#800000", "#900000", "#a00000", "#b00000", "#c00000", "#d00000", "#e00000", "#e50000", "#e90000", "#ea0000", "#ed0000", "#f00000", "#f50000", "#f90000", "#fa0000", "#fe0000", "#ff800", "#ff2300", "#ff3800", "#ff5300", "#ff6500", "#ff7300", "#ff7e00", "#ff8912", "#ff932c", "#ff9d3f", "#ffa54f", "#ffad5e", "#ffb46b", "#ffbb78", "#ffc184", "#ffc78f", "#ffcc99", "#ffd1a3", "#ffd5ad", "#ffd9b6", "#ffddbe", "#ffe1c6", "#ffe4ce", "#ffe8d5", "#ffebdc", "#ffeee3", "#fff0e9", "#fff3ef", "#fff5f5", "#fff8fb", "#fef9ff", "#f9f6ff", "#f5f3ff", "#f0f1ff", "#edefff", "#e9edff", "#e6ebff", "#e3e9ff", "#e0e7ff", "#dde6ff", "#dae4ff", "#d8e3ff", "#d6e1ff", "#d3e0ff", "#d1dfff", "#cfddff", "#cedcff", "#ccdbff", "#cadaff", "#c9d9ff", "#c7d8ff", "#c6d8ff", "#c4d7ff", "#c3d6ff", "#c2d5ff", "#c1d4ff", "#c0d4ff",
+				]
+
+				let T = document.getElementById("temperature-slider").value
+				const BBColor = Math.ceil((T - 0.01) * blackBody.length * 2)
+				let settings = {
+					x0: 0,
+					y0: 580,
+					stroke: blackBody[BBColor],
+					// stroke: "none",
+					strokeWidth: 3,
+					fill: "rgba(255,255,255,0.7)",
+					positiveOnly: true,
+					gridSize: 100,
+					xScale: 200,
+					yScale: 35,
+					xDecimals: 1,
+					yDecimals: 0,
+					xLabel: "wavelength",
+					yLabel: "radiance",
+					step: 1,
+					// showAxisNumbers: false,
+					// showGrid: false,
+					showAxis: false,
+					// showMouseCoords: true,
+				}
+
+				const normalize = 15 / Math.PI * Math.PI * Math.PI * Math.PI;
+				funGraphSVG("SVG-graph-0", x => normalize / (x * x * x * x * x * (Math.exp(1 / x / T) - 1)), settings); //normalized version
+				settings.updatePath = true
+				document.getElementById("temperature-slider").addEventListener("input", event => {
+					T = document.getElementById("temperature-slider").value
+					funGraphSVG("SVG-graph-0", x => normalize / (x * x * x * x * x * (Math.exp(1 / x / T) - 1)), settings); //normalized version
+					const BBColor = Math.ceil((T - 0.01) * blackBody.length * 2)
+					document.getElementById('SVG-graph-0-path').style.stroke = blackBody[BBColor];
+					document.getElementById('SVG-graph-0-fill').style.fill = blackBody[BBColor];
+					document.getElementById('SVG-graph-0-fill').style.opacity = 0.7
+				});
+			}
+		</script>
 		<p>The wavelengths given off by thermal radiation reflect the range of particle speeds. Because the speeds are unevenly distributed
 			the light produced has a sharp drop off at shorter wavelengths and a long tail for longer wavelengths.
-
 		</p>
+
 		<div class='example'>
-			Based on the graph above, estimate the temperature of the sun's surface.
+			<svg viewBox="0 0 710 600">
+				<rect x="0" y="0" width="720" height="600" fill="#FFFFFF" />
+
+				<rect x="114.0" y="19.5" width="536.8" height="513.3" fill="#E0E0E0" />
+
+				<g style="fill:none; stroke:black; stroke-width:2; stroke-linecap:butt; stroke-linejoin:miter">
+					<path d='M114.0,532.8 h15.0 m521.8,0 h-15' />
+					<path d='M114.0,424.7 h15.0 m521.8,0 h-15' />
+					<path d='M114.0,316.7 h15.0 m521.8,0 h-15' />
+					<path d='M114.0,208.6 h15.0 m521.8,0 h-15' />
+					<path d='M114.0,100.5 h15.0 m521.8,0 h-15' />
+
+					<path d='M114.0,505.8 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,478.8 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,451.8 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,397.7 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,370.7 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,343.7 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,289.7 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,262.6 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,235.6 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,181.6 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,154.6 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,127.6 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,73.5 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,46.5 h7.5 m529.3,0 h-7.5' />
+					<path d='M114.0,19.5 h7.5 m529.3,0 h-7.5' />
+
+					<path d='M114.0,532.8 v-15.0 m0,-498.3 v15.0' />
+					<path d='M248.2,532.8 v-15.0 m0,-498.3 v15.0' />
+					<path d='M382.4,532.8 v-15.0 m0,-498.3 v15.0' />
+					<path d='M516.6,532.8 v-15.0 m0,-498.3 v15.0' />
+					<path d='M650.8,532.8 v-15.0 m0,-498.3 v15.0' />
+
+					<path d='M140.8,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M167.7,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M194.5,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M221.4,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M275.0,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M301.9,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M328.7,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M355.6,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M409.2,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M436.1,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M462.9,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M489.8,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M543.4,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M570.3,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M597.1,532.8 v-7.5 m0,-505.8 v7.5' />
+					<path d='M624.0,532.8 v-7.5 m0,-505.8 v7.5' />
+
+					<rect x="114.0" y="19.5" width="536.8" height="513.3" />
+				</g>
+
+				<g style="fill:none; stroke-width:3; stroke-linecap:butt; stroke-linejoin:miter" transform="translate(30,0)">
+
+					<path id='3500K' stroke='#990000' d='
+				M89.4,532.8 L94.8,532.8 L100.3,532.8 L105.7,532.8 L111.1,532.8 L116.5,532.8 L122.0,532.8 L127.4,532.8 
+				L132.8,532.8 L138.2,532.8 L143.6,532.8 L149.1,532.7 L154.5,532.5 L159.9,532.1 L165.3,531.4 L170.8,530.5 
+				L176.2,529.2 L181.6,527.6 L187.0,525.6 L192.4,523.2 L197.9,520.7 L203.3,517.8 L208.7,514.9 L214.1,511.9 
+				L219.6,508.8 L225.0,505.9 L230.4,503.0 L235.8,500.3 L241.2,497.7 L246.7,495.4 L252.1,493.3 L257.5,491.4 
+				L262.9,489.7 L268.4,488.3 L273.8,487.1 L279.2,486.1 L284.6,485.4 L290.0,484.8 L295.5,484.4 L300.9,484.2 
+				L306.3,484.1 L311.7,484.2 L317.2,484.4 L322.6,484.7 L328.0,485.1 L333.4,485.6 L338.8,486.1 L344.3,486.8 
+				L349.7,487.5 L355.1,488.2 L360.5,489.0 L366.0,489.8 L371.4,490.7 L376.8,491.5 L382.2,492.4 L387.6,493.3 
+				L393.1,494.2 L398.5,495.1 L403.9,496.0 L409.3,496.9 L414.8,497.8 L420.2,498.7 L425.6,499.5 L431.0,500.4 
+				L436.4,501.2 L441.9,502.1 L447.3,502.9 L452.7,503.7 L458.1,504.5 L463.6,505.2 L469.0,506.0 L474.4,506.7 
+				L479.8,507.4 L485.2,508.1 L490.7,508.8 L496.1,509.5 L501.5,510.1 L506.9,510.7 L512.4,511.3 L517.8,511.9 
+				L523.2,512.5 L528.6,513.1 L534.0,513.6 L539.5,514.1 L544.9,514.7 L550.3,515.2 L555.7,515.6 L561.2,516.1 
+				L566.6,516.6 L572.0,517.0 L577.4,517.4 L582.8,517.8 L588.3,518.2 L593.7,518.6 L599.1,519.0 L604.5,519.4 
+				L610.0,519.7 L615.4,520.1 L620.8,520.4  h0.01' />
+
+					<path id='4000K' stroke='#FF0000' d='
+				M89.4,532.8 L94.8,532.8 L100.3,532.8 L105.7,532.8 L111.1,532.8 L116.5,532.8 L122.0,532.8 L127.4,532.8 
+				L132.8,532.8 L138.2,532.7 L143.6,532.3 L149.1,531.6 L154.5,530.4 L159.9,528.3 L165.3,525.4 L170.8,521.6 
+				L176.2,516.8 L181.6,511.3 L187.0,505.2 L192.4,498.7 L197.9,492.0 L203.3,485.3 L208.7,478.7 L214.1,472.4 
+				L219.6,466.5 L225.0,461.1 L230.4,456.3 L235.8,452.0 L241.2,448.4 L246.7,445.3 L252.1,442.8 L257.5,440.9 
+				L262.9,439.5 L268.4,438.5 L273.8,438.0 L279.2,437.8 L284.6,438.1 L290.0,438.6 L295.5,439.4 L300.9,440.4 
+				L306.3,441.7 L311.7,443.1 L317.2,444.6 L322.6,446.3 L328.0,448.1 L333.4,450.0 L338.8,451.9 L344.3,453.8 
+				L349.7,455.8 L355.1,457.8 L360.5,459.8 L366.0,461.8 L371.4,463.8 L376.8,465.8 L382.2,467.7 L387.6,469.6 
+				L393.1,471.5 L398.5,473.3 L403.9,475.1 L409.3,476.9 L414.8,478.6 L420.2,480.3 L425.6,481.9 L431.0,483.5 
+				L436.4,485.1 L441.9,486.6 L447.3,488.0 L452.7,489.4 L458.1,490.8 L463.6,492.1 L469.0,493.4 L474.4,494.6 
+				L479.8,495.8 L485.2,497.0 L490.7,498.1 L496.1,499.2 L501.5,500.3 L506.9,501.3 L512.4,502.2 L517.8,503.2 
+				L523.2,504.1 L528.6,505.0 L534.0,505.8 L539.5,506.6 L544.9,507.4 L550.3,508.2 L555.7,508.9 L561.2,509.7 
+				L566.6,510.3 L572.0,511.0 L577.4,511.7 L582.8,512.3 L588.3,512.9 L593.7,513.5 L599.1,514.0 L604.5,514.6 
+				L610.0,515.1 L615.4,515.6 L620.8,516.1  h0.01' />
+
+					<path id='4500K' stroke='#FF6600' d='
+				M89.4,532.8 L94.8,532.8 L100.3,532.8 L105.7,532.8 L111.1,532.8 L116.5,532.8 L122.0,532.8 L127.4,532.7 
+				L132.8,532.5 L138.2,531.7 L143.6,530.0 L149.1,526.8 L154.5,521.7 L159.9,514.5 L165.3,505.2 L170.8,494.1 
+				L176.2,481.7 L181.6,468.4 L187.0,454.7 L192.4,441.1 L197.9,428.1 L203.3,415.9 L208.7,404.8 L214.1,394.9 
+				L219.6,386.4 L225.0,379.2 L230.4,373.4 L235.8,368.8 L241.2,365.5 L246.7,363.2 L252.1,362.0 L257.5,361.7 
+				L262.9,362.2 L268.4,363.3 L273.8,365.1 L279.2,367.4 L284.6,370.1 L290.0,373.2 L295.5,376.6 L300.9,380.2 
+				L306.3,383.9 L311.7,387.8 L317.2,391.8 L322.6,395.8 L328.0,399.9 L333.4,404.0 L338.8,408.0 L344.3,412.0 
+				L349.7,415.9 L355.1,419.8 L360.5,423.6 L366.0,427.3 L371.4,430.9 L376.8,434.4 L382.2,437.8 L387.6,441.2 
+				L393.1,444.4 L398.5,447.5 L403.9,450.5 L409.3,453.4 L414.8,456.2 L420.2,458.9 L425.6,461.5 L431.0,464.0 
+				L436.4,466.5 L441.9,468.8 L447.3,471.0 L452.7,473.2 L458.1,475.3 L463.6,477.3 L469.0,479.2 L474.4,481.1 
+				L479.8,482.9 L485.2,484.6 L490.7,486.2 L496.1,487.8 L501.5,489.3 L506.9,490.8 L512.4,492.2 L517.8,493.5 
+				L523.2,494.8 L528.6,496.1 L534.0,497.3 L539.5,498.5 L544.9,499.6 L550.3,500.6 L555.7,501.7 L561.2,502.7 
+				L566.6,503.6 L572.0,504.5 L577.4,505.4 L582.8,506.3 L588.3,507.1 L593.7,507.9 L599.1,508.7 L604.5,509.4 
+				L610.0,510.1 L615.4,510.8 L620.8,511.4  h0.01' />
+
+					<path id='5000K' stroke='#FFCC00' d='
+				M89.4,532.8 L94.8,532.8 L100.3,532.8 L105.7,532.8 L111.1,532.8 L116.5,532.8 L122.0,532.7 L127.4,532.3 
+				L132.8,531.0 L138.2,527.6 L143.6,521.0 L149.1,510.3 L154.5,495.2 L159.9,476.0 L165.3,453.5 L170.8,428.8 
+				L176.2,403.1 L181.6,377.6 L187.0,353.1 L192.4,330.5 L197.9,310.2 L203.3,292.6 L208.7,277.8 L214.1,265.8 
+				L219.6,256.6 L225.0,249.9 L230.4,245.6 L235.8,243.4 L241.2,243.1 L246.7,244.4 L252.1,247.0 L257.5,250.9 
+				L262.9,255.7 L268.4,261.3 L273.8,267.6 L279.2,274.3 L284.6,281.4 L290.0,288.8 L295.5,296.3 L300.9,303.9 
+				L306.3,311.6 L311.7,319.2 L317.2,326.7 L322.6,334.1 L328.0,341.4 L333.4,348.5 L338.8,355.5 L344.3,362.2 
+				L349.7,368.8 L355.1,375.1 L360.5,381.2 L366.0,387.2 L371.4,392.8 L376.8,398.3 L382.2,403.6 L387.6,408.7 
+				L393.1,413.5 L398.5,418.2 L403.9,422.7 L409.3,427.0 L414.8,431.1 L420.2,435.0 L425.6,438.8 L431.0,442.4 
+				L436.4,445.9 L441.9,449.2 L447.3,452.4 L452.7,455.4 L458.1,458.3 L463.6,461.1 L469.0,463.8 L474.4,466.3 
+				L479.8,468.8 L485.2,471.1 L490.7,473.3 L496.1,475.5 L501.5,477.5 L506.9,479.5 L512.4,481.4 L517.8,483.2 
+				L523.2,484.9 L528.6,486.6 L534.0,488.2 L539.5,489.7 L544.9,491.2 L550.3,492.6 L555.7,494.0 L561.2,495.3 
+				L566.6,496.5 L572.0,497.7 L577.4,498.9 L582.8,500.0 L588.3,501.0 L593.7,502.0 L599.1,503.0 L604.5,504.0 
+				L610.0,504.9 L615.4,505.7 L620.8,506.6  h0.01' />
+
+					<path id='5500K' stroke='#00CC00' d='
+				M89.4,532.8 L94.8,532.8 L100.3,532.8 L105.7,532.8 L111.1,532.8 L116.5,532.8 L122.0,532.4 L127.4,530.5 
+				L132.8,525.1 L138.2,513.7 L143.6,494.4 L149.1,466.5 L154.5,430.9 L159.9,389.5 L165.3,344.7 L170.8,299.2 
+				L176.2,255.0 L181.6,214.0 L187.0,177.4 L192.4,146.0 L197.9,120.0 L203.3,99.5 L208.7,84.4 L214.1,74.0 
+				L219.6,68.1 L225.0,66.1 L230.4,67.4 L235.8,71.6 L241.2,78.1 L246.7,86.6 L252.1,96.6 L257.5,107.8 
+				L262.9,119.9 L268.4,132.6 L273.8,145.8 L279.2,159.3 L284.6,172.8 L290.0,186.3 L295.5,199.7 L300.9,212.8 
+				L306.3,225.7 L311.7,238.3 L317.2,250.5 L322.6,262.4 L328.0,273.8 L333.4,284.8 L338.8,295.4 L344.3,305.6 
+				L349.7,315.4 L355.1,324.7 L360.5,333.7 L366.0,342.2 L371.4,350.4 L376.8,358.2 L382.2,365.7 L387.6,372.8 
+				L393.1,379.6 L398.5,386.1 L403.9,392.3 L409.3,398.1 L414.8,403.8 L420.2,409.1 L425.6,414.2 L431.0,419.1 
+				L436.4,423.7 L441.9,428.1 L447.3,432.3 L452.7,436.3 L458.1,440.2 L463.6,443.8 L469.0,447.3 L474.4,450.6 
+				L479.8,453.8 L485.2,456.8 L490.7,459.7 L496.1,462.5 L501.5,465.1 L506.9,467.6 L512.4,470.0 L517.8,472.3 
+				L523.2,474.5 L528.6,476.7 L534.0,478.7 L539.5,480.6 L544.9,482.4 L550.3,484.2 L555.7,485.9 L561.2,487.5 
+				L566.6,489.1 L572.0,490.6 L577.4,492.0 L582.8,493.4 L588.3,494.7 L593.7,496.0 L599.1,497.2 L604.5,498.3 
+				L610.0,499.5 L615.4,500.5 L620.8,501.6  h0.01' />
+
+				</g>
+
+				<rect x="114.0" y="19.5" width="536.8" height="513.3" style="fill:none; stroke:black; stroke-width:3; stroke-linecap:butt; stroke-linejoin:miter"
+				/>
+
+				<g style="stroke:none; fill:black; font-family:Arial; font-size:14.00pt">
+					<g text-anchor="end">
+						<text transform="translate(104.3,538.0)"> 0</text>
+						<text transform="translate(104.3,429.9)"> 2E+11</text>
+						<text transform="translate(104.3,321.9)"> 4E+11</text>
+						<text transform="translate(104.3,213.8)"> 6E+11</text>
+						<text transform="translate(104.3,105.7)"> 8E+11</text>
+					</g>
+
+					<g text-anchor="middle">
+						<text transform="translate(114.0,559.0)"> 0</text>
+						<text transform="translate(248.2,559.0)"> 500</text>
+						<text transform="translate(382.4,559.0)"> 1000</text>
+						<text transform="translate(516.6,559.0)"> 1500</text>
+						<text transform="translate(650.8,559.0)"> 2000</text>
+					</g>
+
+					<g text-anchor="middle">
+						<text transform="translate(30.5,276.2) rotate(270)">Spectral energy density (kJ/m
+							<tspan dy='-5' font-size='10.00pt'>3</tspan>
+							<tspan dy='5'>nm)</tspan>
+						</text>
+						<text transform="translate(382.4,590.5)">Wavelength (nm)</text>
+					</g>
+				</g>
+
+				<g style="stroke:none; fill:black; font-family:Arial; font-size:14.00pt; text-anchor:middle">
+					<text x='336.3' y='479.1'>3500K</text>
+					<text x='309.2' y='432.8'>4000K</text>
+					<text x='287.5' y='356.7'>4500K</text>
+					<text x='271.2' y='238.1'>5000K</text>
+					<text x='260.4' y='62.4'>5500K</text>
+				</g>
+			</svg>
+			<strong>Question:</strong> Based on the graph above, estimate the temperature of the sun's surface.
 			<details>
 				<summary>solution</summary>
-				<p>The blackbody spectrum of the sun is centered on visible light. It should be slightly above the
-					<a href='https://www.google.com/search?q=sun%27s+surface+temperature&oq=sun%27s+surface+tep&aqs=chrome.1.69i57j0l5.5053j0j7&sourceid=chrome&ie=UTF-8'>5000 K</a> spectrum.</p>
+				<p>The blackbody spectrum of the
+					<a href='https://www.google.com/search?q=sun+surface+temperature'>sun</a> is centered on visible light. It should be slightly above green, near 5500 K.</p>
 			</details>
 		</div>
 		<div class='example'>
-			Does this mean that even room temperature materials could emit a UV ray?
+			<strong>Question:</strong> Could a substance at room temperature emit a UV ray from thermal emission?
 			<details>
 				<summary>solution</summary>
 				<p>Yep, but it would be rare.</p>
 			</details>
 		</div>
 		<div class='example'>
-			Which is the hottest of these materials?
-			<br>red, yellow, white, black, pink, green, orange, blue
+			<strong>Question:</strong> You see several substances glowing from thermal emission. What color do you suspect is the highest
+			temperature?
+			<br> (red, yellow, white, black, pink, green, orange, blue)
 			<details>
 				<summary>solution</summary>
-				<p>blue!
-					<br>(pink and green are not even possible colors)
+				<p>hottest to coldest:
+					<br>
+					<strong>blue</strong>, white, yellow, orange, red, black</p>
+				<p>
+					(pink and green are not possible thermal emission colors)
 				</p>
 			</details>
 		</div>
 		<div class='example'>
-			If fire is caused by thermal radiation, why is fire sometimes blue, or yellow, or even green?
+			<strong>Question:</strong> If fire is caused by thermal radiation, why is fire sometimes blue, or yellow, or even green?
 			<details>
 				<summary>solution</summary>
 				<p>Fire has light from both chemical reactions(blue) and thermal radiation (red/yellow). Watch this

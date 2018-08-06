@@ -5,12 +5,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="theme-color" content="#222" />
-	<meta name="description" content="Interactive notes for high school physics.">
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Interactive notes for high school physics.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
 	<meta name="twitter:title" content="High School Physics Notes">
-	<meta name="twitter:description" content="Interactive notes for high school physics.">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
 
 	<title>Magnetism</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
@@ -37,93 +37,69 @@
 			<a href="https://www.nuledo.com/en/cloud-chambers/#alfa-castice">radiation</a> passes through the chamber only charged particles are visible. This is because neutral particles don't disrupt
 			the vapor. When a powerful magnetic field is applied to the cloud chamber the charged particles curve. The arc of their
 			curve indicates charge and mass.</p>
-		<style>
-			.wrapper {
-				display: grid;
-				grid-gap: 0px;
-				grid-template-columns: 100px 100px 100px 100px 100px 100px;
-			}
-
-			.a {
-				grid-column: 1 / span 2;
-				grid-row: 1;
-			}
-
-			.b {
-				grid-column: 3 / span 2;
-				grid-row: 1;
-			}
-
-			.c {
-				grid-column: 5 /span 2;
-				grid-row: 1;
-			}
-
-			.d {
-				grid-column: 1;
-				grid-row: 2;
-			}
-
-			.e {
-				grid-column: 2;
-				grid-row: 2;
-			}
-
-			.f {
-				grid-column: 3;
-				grid-row: 2;
-			}
-
-			.g {
-				grid-column: 4;
-				grid-row: 2;
-			}
-
-			.h {
-				grid-column: 5;
-				grid-row: 2;
-			}
-		</style>
 		<form id="settings" style="display:none">
-			<div class="wrapper">
-				<div class="a">
+			<div class="flex-grid-thirds center">
+				<div class="col">
 					<label>time rate</label> =
 					<span id="cloud-timerate-text">1</span>
 					<br>
 					<input type="range" id='cloud-timerate-slider' min="0" max="10" step="1" value="1">
 				</div>
-				<div class="b">
+				<div class="col">
 					<label>radiation rate</label> =
 					<span id="cloud-radiation-text">3</span>
 					<br>
 					<input type="range" id='cloud-radiation-slider' min="0" max="30" step="1" value="3">
 				</div>
-				<div class="c">
+				<div class="col">
 					<label>magnetic field</label> =
 					<span id="cloud-magfield-text">0.06</span>
 					<br>
 					<input type="range" id='cloud-magfield-slider' min="-0.2" max="0.2" step="0.01" value="0.06">
 				</div>
-				<div class="d">
+			</div>
+			<style>
+				.checkboxes label {
+					display: block;
+					float: left;
+					padding-right: 10px;
+					padding-left: 22px;
+					text-indent: -22px;
+				}
+
+				.checkboxes input {
+					vertical-align: middle;
+				}
+
+				.checkboxes label span {
+					vertical-align: middle;
+				}
+			</style>
+			<div class="checkboxes">
+				<label for="cloud-alpha-checkbox">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="checkbox" id="cloud-alpha-checkbox" name="alpha" checked>
-					<label for="cloud-alpha-checkbox">alpha</label>
-				</div>
-				<div class="e">
-					<input type="checkbox" id="cloud-beta-checkbox" name="beta" checked>
-					<label for="cloud-beta-checkbox">beta</label>
-				</div>
-				<div class="f">
-					<input type="checkbox" id="cloud-gamma-checkbox" name="gamma" checked>
-					<label for="cloud-gamma-checkbox">gamma</label>
-				</div>
-				<div class="g">
-					<input type="checkbox" id="cloud-proton-checkbox" name="proton" checked>
-					<label for="cloud-proton-checkbox">proton</label>
-				</div>
-				<div class="h">
-					<input type="checkbox" id="cloud-muon-checkbox" name="muon" checked>
-					<label for="cloud-muon-checkbox">muon</label>
-				</div>
+					<span>alpha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				</label>
+				<label for="cloud-beta-checkbox">
+					<input type="checkbox" id="cloud-beta-checkbox" name="beta" style="margin:-4px;" checked>
+					<span>beta&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				</label>
+
+				<label class="check-label" for="cloud-gamma-checkbox">
+					<input class="check-box" type="checkbox" id="cloud-gamma-checkbox" name="gamma" style="margin:-4px;" checked>
+					<span>gamma&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				</label>
+
+				<label class="check-label" for="cloud-proton-checkbox">
+					<input class="check-box" type="checkbox" id="cloud-proton-checkbox" name="proton" style="margin:-4px;" checked>
+					<span>proton&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				</label>
+
+				<label class="check-label" for="cloud-muon-checkbox">
+					<input class="check-box" type="checkbox" id="cloud-muon-checkbox" name="muon" style="margin:-4px;" checked>
+					<span> muon</span>
+				</label>
 			</div>
 		</form>
 		<canvas class="cloud" id='cloud-chamber' height='100' width='600' onclick="charges15(this)" style="background: #000;">
@@ -161,6 +137,405 @@
 			</details>
 		</div>
 
+		<h2 class='underlined'>Magnetic Force on a Particle</h2>
+		<p>Magnetic fields are produced by moving charges.
+			<br>Magnetic fields produce a force on other moving charged particles.</p>
+		<p>To show vector directions in 3-D we use these symbols:
+			<br>The ⊙ symbol indicates a vector pointed out of the page.
+			<br>The ⊕ symbol indicates a vector pointed into the page.</p>
+		<div class='definition'>
+			<p>A charged particle will experience a force when it moves in a magnetic field.
+			</p>
+			<svg viewBox="-25 0 400 170">
+				<g transform='translate(10,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(10,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(10,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(10,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(60,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(60,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(60,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(60,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(110,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(110,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(110,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(110,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(160,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(160,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(160,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(160,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(210,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(210,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(210,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(210,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(260,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(260,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(260,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(260,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(310,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(310,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(310,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(310,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<text x="10" y="35" fill="black" dominant-baseline="central" text-anchor="middle" font-size="20">B</text>
+
+				<g transform="translate(135 135)">
+					<line x1="0" y1="0" x2="0" y2="-60" style="stroke:#000;stroke-width:2" />
+					<g transform="translate(0 -65) rotate(90)">
+						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+					</g>
+					<text x="0" y="-80" fill="black" dominant-baseline="central" text-anchor="middle" font-size="20">v</text>
+					<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+					<g transform="translate(105 0) rotate(180)">
+						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+					</g>
+					<text x="110" y="0" fill="black" dominant-baseline="central" font-size="20">F</text>
+					<circle cx="0" cy="0" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
+					<line x1="-5" y1="0" x2="5" y2="0" style="stroke:#000;stroke-width:2" />
+				</g>
+			</svg>
+			<h2>$$ F=qvB \sin \theta $$</h2>
+			<p>\(F\) = magnetic force [N, Newton, kg m/s²]
+				<em>vector</em>
+				<br>\(q\) = charge [C, Coulomb]
+				<br>\(v\) = velocity [m/s]
+				<em>vector</em>
+				<br>\(B\) = magnetic field [T, tesla, kg/C/s]
+				<em>vector</em>
+				<br>\(\theta\) = angle between v and B
+				<br>
+				<a href='https://en.wikipedia.org/wiki/Orders_of_magnitude_(magnetic_field)'>orders of magnitude of teslas</a>
+		</div>
+		<p>The direction of magnetic forces is tricky, so we will learn it
+			<a href='#direction'>separately</a>.</p>
+		<div class='example'>
+			<strong>Example:</strong> A +2 C particle is moving at a right angle 10 m/s through a 5 mT field from a refrigerator magnet. What
+			magnitude force will be applied to the particle?
+			<details>
+				<summary>solution</summary>
+				$$ F=qvB $$ $$ F = (2)(10)(0.005) $$ $$ F = 0.1 \, \mathrm{N} $$
+			</details>
+		</div>
+		<div class='example'>
+
+			<strong>Example:</strong> In order to learn about the strength of a magnetic field electrons are fired into the field at 100 m/s.
+			The electrons accelerate at 1 m/s². What is the magnitude of the magnetic field?
+			<details>
+				<summary>solution</summary>
+				$$ F = ma $$ $$ F = (9.1 \times 10^{-31})(1)$$ $$ F = 9.1 \times 10^{-31} \, \mathrm{N}$$
+				<br> $$ F = q v B $$ $$ B = \frac{F}{qv} $$ $$ B = \frac{9.1 \times 10^{-31}}{(1.6 \times 10^{-19})(100)} $$ $$ B = 5.688
+				\times 10^{-14} \, \mathrm{T} $$
+			</details>
+		</div>
+		<h2 class='underlined'>Magnetic Force on a Wire</h2>
+		<div class='definition'>
+			<p>A wire in a magnetic field will experience a force when current runs through it. The length of the wire is multiplied
+				by the current in the wire times the magnetic field.</p>
+			<svg viewBox="-40 0 400 170">
+				<g transform='translate(10,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(10,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(10,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(10,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(60,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(60,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(60,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(60,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(110,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(110,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(110,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(110,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(160,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(160,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(160,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(160,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(210,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(210,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(210,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(210,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(260,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(260,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(260,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(260,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(310,10)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(310,60)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(310,110)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<g transform='translate(310,160)'>
+					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
+					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
+				</g>
+				<text x="10" y="35" fill="black" dominant-baseline="central" text-anchor="middle" font-size="18" font-family="Times New Roman">B</text>
+
+				<line x1="135" y1="0" x2="135" y2="200" stroke="#A62" stroke-width="10" />
+
+				<g transform="translate(148 90)">
+					<line x1="0" y1="0" x2="0" y2="-60" style="stroke:#000;stroke-width:2" />
+					<g transform="translate(0 -65) rotate(90)">
+						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+					</g>
+					<text x="0" y="-78" fill="black" dominant-baseline="central" text-anchor="middle" font-size="18" font-family="Times New Roman">I</text>
+				</g>
+				<g transform="translate(152 90)">
+					<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+					<g transform="translate(105 0) rotate(180)">
+						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+					</g>
+					<text x="110" y="0" fill="black" dominant-baseline="central" font-size="18" font-family="Times New Roman">F</text>
+
+					<line x1="-5" y1="0" x2="5" y2="0" style="stroke:#000;stroke-width:2" />
+				</g>
+				<g transform='translate(115,40)'>
+					<line x1="0" y1="0" x2="0" y2="100" style="stroke:#000;stroke-width:2" />
+					<line x1="-5" y1="0" x2="5" y2="0" style="stroke:#000;stroke-width:2" />
+					<line x1="-5" y1="100" x2="5" y2="100" style="stroke:#000;stroke-width:2" />
+					<text x="-10" y="55" fill="black" text-anchor="middle" font-size="18" font-family="Times New Roman">l</text>
+				</g>
+			</svg>
+			<h2>$$ F=lIB \sin \theta $$</h2>
+			<p>\(F\) = magnetic force [N, Newton, kg m/s²]
+				<em>vector</em>
+				<br>\(l\) = length [m, meter]
+				<br>\(I\) = current [A, Amps]
+				<em>vector</em>
+				<br>\(B\) = magnetic field [T, tesla, kg/C/s]
+				<em>vector</em>
+				<br>\(\theta\) = angle between the magnetic field and the current
+		</div>
+		<p>The magnetic force can be used to build a
+			<a href="https://www.youtube.com/watch?v=NJRDclzi5Vg">rail gun</a>.
+		</p>
+
+		<div class='example'>
+			<strong>Example:</strong> A 15 cm wire has 20 mA flowing through it east to west. The wire is in a magnetic field of 10 T directed
+			up. Describe the force on the wire.
+			<details>
+				<summary>solution</summary>
+				$$ F=lIB$$ $$ F = (0.15)(0.02)(10) $$ $$ F = 0.03 \, \text{N North}$$
+			</details>
+		</div>
+		<div class='example'>
+
+			<strong>Example:</strong> How long is a wire that has a force of 0.050 N caused by the 0.21 A current interacting with a 0.45
+			T magnetic field at a right angle?
+			<details>
+				<summary>solution</summary>
+				$$ F=lIB $$ $$ l= \frac{F}{IB} $$ $$ l= \frac{0.050}{(0.21)(0.45)} $$ $$ l= 0.53 \, \mathrm{m} $$
+			</details>
+		</div>
+
+
+
+		<h2 class='underlined' id='direction'>Direction of Magnetic Forces</h2>
+		<p>The 3-d nature of the magnetic force can be solved with a vector operation called a cross product. The direction of a cross
+			product can be found with the
+			<strong>right hand rule</strong>.</p>
+		<img class='center' src="../../../media/Rechte-Hand-Regel.svg">
+		<p>Using your right hand, place your thumb in the direction of the current/charge. Place your index finger in the direction
+			of the magnetic field. The palm of your hand will face in the correct direction of the force.</p>
+		</p>
+		<div class='example'>
+
+			<strong>Example:</strong> A magnetic field is pointed North. A positively charged particle is moving down through the field. What
+			direction is the magnetic force on the particle?
+			<details>
+				<summary>solution</summary>
+				<br> Using the right hand rule place your thumb down and your index finger north. $$\text{East}$$
+			</details>
+		</div>
+		<div class='example'>
+
+			<strong>Example:</strong> What direction magnetic field would produce a downward force on a negatively charged particle moving
+			west?
+			<details>
+				<summary>solution</summary>
+				<br>A negatively charged particle will go in the opposite direction of a positively charged particle. Using the right hand
+				rule place your thumb
+				<del>west</del> east and the palm of your hand down. $$\text{South}$$
+			</details>
+		</div>
+		<div class='example'>
+
+			<strong>Example:</strong> A 1C charged particle is moving west at 10 m/s through a 2 T magnetic field directed east. What is the
+			magnitude and direction of the force on the particle?
+			<details>
+				<summary>solution</summary>
+				<p>Since the velocity and magnetic field are in opposite directions there is no force.</p>
+				$$F=qvB \sin \theta $$ $$\sin 180 = 0$$ $$F=0$$
+			</details>
+		</div>
+		<div class='example'>
+
+			<strong>Example:</strong> Find the magnitude and direction of the force on a 24 μC charge moving down at 13 m/s through an 8.5
+			T magnetic field directed South.
+			<details>
+				<summary>solution</summary>
+				$$ F = q v B $$ $$ F = (24 \times 10^{-6})(13)(8.5) $$ $$ F = 0.00265 \, \text{N West}$$
+			</details>
+		</div>
+
+
 		<h1 class='underlined'>Magnetic Fields</h1>
 		<p>Magnetic fields are an addition to electric fields that accounts for Einstein's theory of
 			<a href="../../relativity/special/index.html#specialrelativity">special relativity</a>. Like electric fields, magnetic fields are produced by charged particles, but only when the charged
@@ -180,7 +555,7 @@
 		<div id="mag-field"> </div>
 		<p>Current moving in a ring shape has the same magnetic field as a permanent magnet. The magnetic field from permanent magnets
 			comes from spinning charges.</p>
-		<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="600">
+		<svg viewBox="0 0 600 600">
 			<rect id="background" x="0" y="0" width="600" height="600" fill="#ffffff" />
 			<g id="image" transform="translate(300.0,300.0) scale(75.0,-75.0)">
 				<g id="ringBack" opacity="0.65">
@@ -272,8 +647,7 @@
 			<strong>Paramagnetic magnets</strong> only have unbalanced spins when exposed to a magnetic field.
 			<br>Example: the refrigerator door, paper clips hanging from a magnet.</p>
 
-		<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" baseProfile="full" width="600"
-		 height="600">
+		<svg viewBox="0 0 600 600">
 			<defs>
 				<path id="arrow0" stroke="none" fill="#000000" transform="scale(0.01)" d="M 0.3,0 L -2.2,2.25 L 3.8,0 L -2.2,-2.25 L 0.3,0 Z"
 				/>
@@ -467,8 +841,7 @@
 			<a href='https://en.wikipedia.org/wiki/Aurora'>aurora</a>.</p>
 
 
-		<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" baseProfile="full" width="600"
-		 height="600" viewBox="0 0 320 300">
+		<svg viewBox="0 0 300 300">
 			<defs>
 				<path id="arrow1" stroke="none" fill="#000000" transform="scale(0.0666666666667)" d="M 0.3,0 L -2.2,2.25 L 3.8,0 L -2.2,-2.25 L 0.3,0 Z"
 				/>
@@ -584,401 +957,6 @@
 				</g>
 			</g>
 		</svg>
-		<h2 class='underlined'>Magnetic Force on a Particle</h2>
-		<p>Magnetic fields are produced by moving charges.
-			<br>Magnetic fields produce a force on other moving charged particles.</p>
-		<p>To show vector directions in 3-D we use these symbols:
-			<br>The ⊙ symbol indicates a vector pointed out of the page.
-			<br>The ⊕ symbol indicates a vector pointed into the page.</p>
-		<div class='definition'>
-			<p>A charged particle will experience a force when it moves in a magnetic field.
-			</p>
-			<svg style="display: block; margin: auto" width="320" height="170" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-
-				<g transform='translate(10,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(10,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(10,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(10,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(60,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(60,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(60,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(60,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(110,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(110,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(110,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(110,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(160,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(160,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(160,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(160,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(210,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(210,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(210,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(210,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(260,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(260,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(260,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(260,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(310,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(310,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(310,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(310,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<text x="10" y="35" fill="black" alignment-baseline="central" text-anchor="middle" font-size="25">B</text>
-
-				<g transform="translate(135 135)">
-					<line x1="0" y1="0" x2="0" y2="-60" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(0 -65) rotate(90)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<text x="0" y="-80" fill="black" alignment-baseline="central" text-anchor="middle" font-size="25">v</text>
-					<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(105 0) rotate(180)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<text x="110" y="0" fill="black" alignment-baseline="central" font-size="25">F</text>
-					<circle cx="0" cy="0" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
-					<line x1="-5" y1="0" x2="5" y2="0" style="stroke:#000;stroke-width:2" />
-				</g>
-			</svg>
-			<h2>$$ F=qvB \sin \theta $$</h2>
-			<p>\(F\) = magnetic force [N, Newton, kg m/s²]
-				<em>vector</em>
-				<br>\(q\) = charge [C, Coulomb]
-				<br>\(v\) = velocity [m/s]
-				<em>vector</em>
-				<br>\(B\) = magnetic field [T, tesla, kg/C/s]
-				<em>vector</em>
-				<br>\(\theta\) = angle between v and B
-				<br>
-				<a href='https://en.wikipedia.org/wiki/Orders_of_magnitude_(magnetic_field)'>orders of magnitude of teslas</a>
-		</div>
-		<p>The direction of magnetic forces is tricky, so we will learn it
-			<a href='#direction'>separately</a>.</p>
-		<div class='example'>
-			<strong>Example:</strong> A +2 C particle is moving at a right angle 10 m/s through a 5 mT field from a refrigerator magnet. What
-			magnitude force will be applied to the particle?
-			<details>
-				<summary>solution</summary>
-				$$ F=qvB $$ $$ F = (2)(10)(0.005) $$ $$ F = 0.1 \, \mathrm{N} $$
-			</details>
-		</div>
-		<div class='example'>
-
-			<strong>Example:</strong> In order to learn about the strength of a magnetic field electrons are fired into the field at 100 m/s.
-			The electrons accelerate at 1 m/s². What is the magnitude of the magnetic field?
-			<details>
-				<summary>solution</summary>
-				$$ F = ma $$ $$ F = (9.1 \times 10^{-31})(1)$$ $$ F = 9.1 \times 10^{-31} \, \mathrm{N}$$
-				<br> $$ F = q v B $$ $$ B = \frac{F}{qv} $$ $$ B = \frac{9.1 \times 10^{-31}}{(1.6 \times 10^{-19})(100)} $$ $$ B = 5.688
-				\times 10^{-14} \, \mathrm{T} $$
-			</details>
-		</div>
-		<h2 class='underlined'>Magnetic Force on a Wire</h2>
-		<div class='definition'>
-			<p>A wire in a magnetic field will experience a force when current runs through it. The length of the wire is multiplied
-				by the current in the wire times the magnetic field.</p>
-			<svg style="display: block; margin: auto" width="320" height="170" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
-				<g transform='translate(10,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(10,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(10,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(10,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(60,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(60,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(60,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(60,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(110,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(110,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(110,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(110,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(160,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(160,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(160,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(160,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(210,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(210,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(210,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(210,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(260,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(260,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(260,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(260,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(310,10)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(310,60)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(310,110)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<g transform='translate(310,160)'>
-					<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
-					<circle cx="0" cy="0" r="2" stroke="transparent" fill="#bbb" />
-				</g>
-				<text x="10" y="35" fill="black" alignment-baseline="central" text-anchor="middle" font-size="25" font-family="Times New Roman">B</text>
-
-				<line x1="135" y1="0" x2="135" y2="200" stroke="#A62" stroke-width="10" />
-
-				<g transform="translate(148 90)">
-					<line x1="0" y1="0" x2="0" y2="-60" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(0 -65) rotate(90)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<text x="0" y="-78" fill="black" alignment-baseline="central" text-anchor="middle" font-size="25" font-family="Times New Roman">I</text>
-				</g>
-				<g transform="translate(152 90)">
-					<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(105 0) rotate(180)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<text x="110" y="0" fill="black" alignment-baseline="central" font-size="25" font-family="Times New Roman">F</text>
-
-					<line x1="-5" y1="0" x2="5" y2="0" style="stroke:#000;stroke-width:2" />
-				</g>
-				<g transform='translate(115,40)'>
-					<line x1="0" y1="0" x2="0" y2="100" style="stroke:#000;stroke-width:2" />
-					<line x1="-5" y1="0" x2="5" y2="0" style="stroke:#000;stroke-width:2" />
-					<line x1="-5" y1="100" x2="5" y2="100" style="stroke:#000;stroke-width:2" />
-					<text x="-10" y="55" fill="black" text-anchor="middle" font-size="25" font-family="Times New Roman">l</text>
-				</g>
-			</svg>
-			<h2>$$ F=lIB \sin \theta $$</h2>
-			<p>\(F\) = magnetic force [N, Newton, kg m/s²]
-				<em>vector</em>
-				<br>\(l\) = length [m, meter]
-				<br>\(I\) = current [A, Amps]
-				<em>vector</em>
-				<br>\(B\) = magnetic field [T, tesla, kg/C/s]
-				<em>vector</em>
-				<br>\(\theta\) = angle between the magnetic field and the current
-		</div>
-		<p>The magnetic force can be used to build a
-			<a href="https://www.youtube.com/watch?v=NJRDclzi5Vg">rail gun</a>.
-		</p>
-
-		<div class='example'>
-			<strong>Example:</strong> A 15 cm wire has 20 mA flowing through it east to west. The wire is in a magnetic field of 10 T directed
-			up. Describe the force on the wire.
-			<details>
-				<summary>solution</summary>
-				$$ F=lIB$$ $$ F = (0.15)(0.02)(10) $$ $$ F = 0.03 \, \text{N North}$$
-			</details>
-		</div>
-		<div class='example'>
-
-			<strong>Example:</strong> How long is a wire that has a force of 0.050 N caused by the 0.21 A current interacting with a 0.45
-			T magnetic field at a right angle?
-			<details>
-				<summary>solution</summary>
-				$$ F=lIB $$ $$ l= \frac{F}{IB} $$ $$ l= \frac{0.050}{(0.21)(0.45)} $$ $$ l= 0.53 \, \mathrm{m} $$
-			</details>
-		</div>
-		<h2 class='underlined' id='direction'>Direction of Magnetic Forces</h2>
-		<p>The 3-d nature of the magnetic force can be solved with a vector operation called a cross product. The direction of a cross
-			product can be found with the
-			<strong>right hand rule</strong>.</p>
-		<img class='center' src="../../../media/Rechte-Hand-Regel.svg">
-		<p>Using your right hand, place your thumb in the direction of the current/charge. Place your index finger in the direction
-			of the magnetic field. The palm of your hand will face in the correct direction of the force.</p>
-		</p>
-		<div class='example'>
-
-			<strong>Example:</strong> A magnetic field is pointed North. A positively charged particle is moving down through the field. What
-			direction is the magnetic force on the particle?
-			<details>
-				<summary>solution</summary>
-				<br> Using the right hand rule place your thumb down and your index finger north. $$\text{East}$$
-			</details>
-		</div>
-		<div class='example'>
-
-			<strong>Example:</strong> What direction magnetic field would produce a downward force on a negatively charged particle moving
-			west?
-			<details>
-				<summary>solution</summary>
-				<br>A negatively charged particle will go in the opposite direction of a positively charged particle. Using the right hand
-				rule place your thumb
-				<del>west</del> east and the palm of your hand down. $$\text{South}$$
-			</details>
-		</div>
-		<div class='example'>
-
-			<strong>Example:</strong> A 1C charged particle is moving west at 10 m/s through a 2 T magnetic field directed east. What is the
-			magnitude and direction of the force on the particle?
-			<details>
-				<summary>solution</summary>
-				<p>Since the velocity and magnetic field are in opposite directions there is no force.</p>
-				$$F=qvB \sin \theta $$ $$\sin 180 = 0$$ $$F=0$$
-			</details>
-		</div>
-		<div class='example'>
-
-			<strong>Example:</strong> Find the magnitude and direction of the force on a 24 μC charge moving down at 13 m/s through an 8.5
-			T magnetic field directed South.
-			<details>
-				<summary>solution</summary>
-				$$ F = q v B $$ $$ F = (24 \times 10^{-6})(13)(8.5) $$ $$ F = 0.00265 \, \text{N West}$$
-			</details>
-		</div>
 
 		<h2 class='underlined'>Path of a Charged Particle</h2>
 		<p>The magnetic force on a charged particle is always at a 90 degree angle to the velocity. This satisfies the requirement
@@ -986,7 +964,7 @@
 			<a href="../../gravity/circular/index.html">circular motion</a> and it means we can set the equation for magnetic force equal to the centripetal force. $$ F = qvB
 			\quad \quad F = \frac{mv^{2}}{r}$$ $$qvB = \frac{mv^{2}}{r}$$ $$qB = \frac{mv}{r}$$
 			<div class='definition'>
-				<svg style="display: block; margin: auto" width="450" height="360" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<svg viewBox="-25 0 600 360">
 					<g transform='translate(15,20)'>
 						<g transform='translate(10,10)'>
 							<circle cx="0" cy="0" r="9" stroke="#bbb" stroke-width="2" fill='transparent' />
@@ -1098,13 +1076,13 @@
 							<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 							<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 						</g>
-						<text x="0" y="-115" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">v</text>
+						<text x="0" y="-115" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">v</text>
 
 						<g transform="translate(-75 0) rotate(0)">
 							<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
 							<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 						</g>
-						<text x="-85" y="0" fill="black" text-anchor="middle" alignment-baseline="central" font-size="25">F</text>
+						<text x="-85" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">F</text>
 						<circle cx="0" cy="0" r="20" fill='#ccf' stroke-width="2" stroke="#222" />
 						<rect x="-7" y="-1" width="14" height="2" fill='#222' />
 					</g>

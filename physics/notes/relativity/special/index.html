@@ -2,14 +2,16 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
-	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
 	<title>Special Relativity</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
@@ -18,6 +20,7 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<script src='../../../lib/function-graph-SVG.js'></script>
 </head>
 
 <body>
@@ -238,10 +241,32 @@
 				This means that the speed of light is also the maximum relative speed for any object.
 			</details>
 		</div>
-		<p>At a low relative velocity, the effects of special relativity aren't noticeable because the Lorentz factor becomes one.
-			As the relative speed approaches the speed of light, the Lorentz factor increases towards infinity.</p>
-		<div id="graphGamma"></div>
-
+		<p>At a low relative velocity, the effects of special relativity aren't noticeable because the Lorentz factor is one. As the
+			relative speed approaches the speed of light, the Lorentz factor increases towards infinity.</p>
+		<svg id="SVG-graph-0" viewBox="0 0 600 400">
+			<line id="dotted-line" x1="525.5" y1="0" x2="525.5" y2="380" stroke-dasharray="4,8" stroke="#000" stroke-width="1" />
+		</svg>
+		<script>
+			funGraphSVG("SVG-graph-0", x => 1 / (Math.sqrt(1 - x * x)), {
+				x0: 25,
+				y0: 380,
+				stroke: "rgb(255, 80, 100)",
+				strokeWidth: 4,
+				positiveOnly: true,
+				xDecimals: 1,
+				yDecimals: 0,
+				xScale: 500,
+				yScale: 50,
+				xLabel: "v/c",
+				yLabel: "Lorentz factor",
+				showMouseCoords: true,
+			});
+			//bring dotted at origin to front
+			const parent = document.getElementById("SVG-graph-0");
+			const shouldBeLast = document.getElementById("dotted-line");
+			const last = document.getElementById("SVG-graph-0-path");
+			parent.insertBefore(parent.removeChild(shouldBeLast), last);
+		</script>
 		<h2 class='underlined'>Time Dilation</h2>
 		<p>
 			Our time dilation equation is a simplified version of the
@@ -491,7 +516,7 @@
 
 		<div class='example'>
 			<a href="https://commons.wikimedia.org/wiki/File:Mutual_Annihilation_of_a_Positron_Electron_pair.svg">
-				<svg class='center' width="600px" viewBox="0 150 566 305">
+				<svg viewBox="-25 0 600 455">
 					<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="276.94" y1="284.068" x2="370.397" y2="284.068"
 					/>
 					<line fill="none" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" x1="185.839" y1="284.068" x2="266.569" y2="284.163"
@@ -780,8 +805,7 @@
 
 		<div class='example'>
 			<a href="https://en.wikipedia.org/wiki/File:Beta_Negative_Decay.svg">
-				<svg class='center' x="0px" y="0px" width="310px" height="280px">
-					<!-- class="side-graphics" style="position: relative; top: 250px; left: 100%;" -->
+				<svg viewBox="-40 0 400 280">
 					<path fill="none" stroke="#000000" stroke-width="2" d="   M125.368,170.183c0.211-6.429,0.436-12.811,1.174-17.297c0.739-4.487,2.01-7.017,3.982-6.963c1.973,0.054,4.644,2.68,7.74,6.868   c3.096,4.188,6.595,9.862,9.96,15.043c3.365,5.18,6.572,9.776,9.176,12.15c2.603,2.375,4.59,2.48,5.902,0.107   s1.961-7.197,2.31-13.119c0.35-5.921,0.424-12.854,0.773-18.775c0.349-5.921,0.997-10.746,2.31-13.119   c1.313-2.374,3.301-2.267,5.903,0.107c2.603,2.374,5.81,6.97,9.175,12.151s6.865,10.854,9.961,15.042s5.767,6.814,7.739,6.868   s3.243-2.476,3.982-6.963c0.739-4.486,0.964-10.868,1.175-17.297"
 					/>
 					<path fill="none" stroke="#000000" stroke-width="2" d="M77.2,259.725l48.294-90.021" />
@@ -1030,7 +1054,7 @@
 
 		<p>
 			<a href="https://commons.wikimedia.org/wiki/File:World_line.svg">
-				<svg class="center" width="480.667" height="491.333" viewBox="0 0 480.667 491.333">
+				<svg viewBox="0 0 480 491">
 					<g id="Layer_2" i:layer="yes" i:dimmedPercent="50" i:rgbTrio="#FFFF4F004F00">
 						<g i:knockout="Off">
 							<g i:knockout="On" a:adobe-knockout="true">
@@ -2009,220 +2033,215 @@
 				<br>\( \Delta t_0 \) is one tick of the light clock at rest.
 
 			</p>
-	</article>
-	<a href="https://commons.wikimedia.org/wiki/File:Time-dilation-002-mod.svg">
-		<svg class='center' width="1000" viewbox="0 0 1424 503">
-			<defs>
-				<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="marker11576">
-					<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="scale(-0.4,-0.4)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
-					 id="path8608" inkscape:connector-curvature="0" />
-				</marker>
-				<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="marker8622">
-					<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="scale(-0.8,-0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
-					 id="path8614" inkscape:connector-curvature="0" />
-				</marker>
-				<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow2Mend">
-					<path d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
-					 transform="matrix(-0.6,0,0,-0.6,3,0)" style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
-					 id="path3352" inkscape:connector-curvature="0" />
-				</marker>
-				<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow1Mend">
-					<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="scale(-0.45,-0.45)" style="font-size:12px;fill:#4040ff;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
-					 id="path3370" inkscape:connector-curvature="0" />
-				</marker>
-				<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow2Mstart">
-					<path d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
-					 transform="matrix(0.6,0,0,0.6,-3,0)" style="font-size:12px;fill:#4040ff;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
-					 id="path3355" inkscape:connector-curvature="0" />
-				</marker>
-				<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Club">
-					<path d="m -1.5971367,-7.0977635 c -1.8892507,0 -3.426382,1.5371314 -3.426382,3.4263822 0,0.6566798 0.2383531,1.2269257 0.5594092,1.7481542 -0.038751,0.032111 -0.079672,0.058463 -0.1165436,0.093235 -0.6224234,-0.8549928 -1.5893983,-1.4451409 -2.7271199,-1.4451409 -1.8892515,-1e-7 -3.426382,1.5371314 -3.426382,3.42638214 0,1.88925076 1.5371305,3.42638216 3.426382,3.42638216 0.9934462,0 1.868619,-0.4420611 2.4940326,-1.1188187 -0.124687,0.3548915 -0.2097783,0.7214874 -0.2097783,1.1188187 0,1.8892506 1.5371313,3.4263822 3.426382,3.4263822 1.88925064,0 3.4263821,-1.5371316 3.4263821,-3.4263822 0,-0.7933959 -0.3155586,-1.4938285 -0.7691878,-2.0744763 C 2.4152718,1.7663868 3.7718375,2.2973711 4.7661444,3.8340272 4.0279463,3.0958289 3.5540908,1.7534117 3.5540908,-0.05852936 l -0.6293354,-0.04661745 0.5827179,-0.0233087 c 0,-1.81194109 0.4505466,-3.15435829 1.188745,-3.89255659 -0.9590906,1.4822308 -2.2571634,2.0263625 -3.5662345,2.3075635 0.4041964,-0.5619092 0.6992616,-1.213407 0.6992616,-1.9579327 0,-1.8892506 -1.53713146,-3.4263822 -3.4263821,-3.4263822 z"
-					 transform="scale(0.6,0.6)" style="fill-rule:evenodd;stroke:#000000;stroke-width:0.74587913pt;marker-start:none" id="path3209"
-					 inkscape:connector-curvature="0" />
-				</marker>
-				<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="TriangleInL">
-					<path d="m 5.77,0 -8.65,5 0,-10 8.65,5 z" transform="scale(-0.8,-0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
-					 id="path3287" inkscape:connector-curvature="0" />
-				</marker>
-				<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Dot_l">
-					<path d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z" transform="matrix(0.8,0,0,0.8,5.700394,0.8)"
-					 style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none" id="path3314" inkscape:connector-curvature="0"
-					/>
-				</marker>
-				<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow1Send">
-					<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="scale(-0.2,-0.2)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
-					 id="path3364" inkscape:connector-curvature="0" />
-				</marker>
-				<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow2Lend">
-					<path d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
-					 transform="matrix(-1.1,0,0,-1.1,5.5,0)" style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
-					 id="path3358" inkscape:connector-curvature="0" />
-				</marker>
-				<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="TriangleOutL">
-					<path d="m 5.77,0 -8.65,5 0,-10 8.65,5 z" transform="scale(0.8,0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
-					 id="path3278" inkscape:connector-curvature="0" />
-				</marker>
-				<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="SquareL">
-					<path d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z" transform="scale(0.8,0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
-					 id="path3305" inkscape:connector-curvature="0" />
-				</marker>
-			</defs>
+			<a href="https://commons.wikimedia.org/wiki/File:Time-dilation-002-mod.svg">
+				<svg viewbox="0 0 1400 460">
+					<defs>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="marker11576">
+							<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="scale(-0.4,-0.4)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+							 id="path8608" inkscape:connector-curvature="0" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="marker8622">
+							<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="scale(-0.8,-0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+							 id="path8614" inkscape:connector-curvature="0" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow2Mend">
+							<path d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+							 transform="matrix(-0.6,0,0,-0.6,3,0)" style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+							 id="path3352" inkscape:connector-curvature="0" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow1Mend">
+							<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="scale(-0.45,-0.45)" style="font-size:12px;fill:#4040ff;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+							 id="path3370" inkscape:connector-curvature="0" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow2Mstart">
+							<path d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+							 transform="matrix(0.6,0,0,0.6,-3,0)" style="font-size:12px;fill:#4040ff;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+							 id="path3355" inkscape:connector-curvature="0" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Club">
+							<path d="m -1.5971367,-7.0977635 c -1.8892507,0 -3.426382,1.5371314 -3.426382,3.4263822 0,0.6566798 0.2383531,1.2269257 0.5594092,1.7481542 -0.038751,0.032111 -0.079672,0.058463 -0.1165436,0.093235 -0.6224234,-0.8549928 -1.5893983,-1.4451409 -2.7271199,-1.4451409 -1.8892515,-1e-7 -3.426382,1.5371314 -3.426382,3.42638214 0,1.88925076 1.5371305,3.42638216 3.426382,3.42638216 0.9934462,0 1.868619,-0.4420611 2.4940326,-1.1188187 -0.124687,0.3548915 -0.2097783,0.7214874 -0.2097783,1.1188187 0,1.8892506 1.5371313,3.4263822 3.426382,3.4263822 1.88925064,0 3.4263821,-1.5371316 3.4263821,-3.4263822 0,-0.7933959 -0.3155586,-1.4938285 -0.7691878,-2.0744763 C 2.4152718,1.7663868 3.7718375,2.2973711 4.7661444,3.8340272 4.0279463,3.0958289 3.5540908,1.7534117 3.5540908,-0.05852936 l -0.6293354,-0.04661745 0.5827179,-0.0233087 c 0,-1.81194109 0.4505466,-3.15435829 1.188745,-3.89255659 -0.9590906,1.4822308 -2.2571634,2.0263625 -3.5662345,2.3075635 0.4041964,-0.5619092 0.6992616,-1.213407 0.6992616,-1.9579327 0,-1.8892506 -1.53713146,-3.4263822 -3.4263821,-3.4263822 z"
+							 transform="scale(0.6,0.6)" style="fill-rule:evenodd;stroke:#000000;stroke-width:0.74587913pt;marker-start:none" id="path3209"
+							 inkscape:connector-curvature="0" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="TriangleInL">
+							<path d="m 5.77,0 -8.65,5 0,-10 8.65,5 z" transform="scale(-0.8,-0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+							 id="path3287" inkscape:connector-curvature="0" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Dot_l">
+							<path d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z" transform="matrix(0.8,0,0,0.8,5.700394,0.8)"
+							 style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none" id="path3314" inkscape:connector-curvature="0"
+							/>
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow1Send">
+							<path d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" transform="scale(-0.2,-0.2)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+							 id="path3364" inkscape:connector-curvature="0" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow2Lend">
+							<path d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+							 transform="matrix(-1.1,0,0,-1.1,5.5,0)" style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+							 id="path3358" inkscape:connector-curvature="0" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="TriangleOutL">
+							<path d="m 5.77,0 -8.65,5 0,-10 8.65,5 z" transform="scale(0.8,0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+							 id="path3278" inkscape:connector-curvature="0" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="SquareL">
+							<path d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z" transform="scale(0.8,0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+							 id="path3305" inkscape:connector-curvature="0" />
+						</marker>
+					</defs>
 
 
-			<text x="60" y="92" style="font-size:28.82546234px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;">
-				Δtₒ
-			</text>
-			<text x="473" y="92" style="font-size:28.82546234px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;">
-				Δt
-			</text>
+					<text x="60" y="92" style="font-size:28.82546234px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;">
+						Δtₒ
+					</text>
+					<text x="473" y="92" style="font-size:28.82546234px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;">
+						Δt
+					</text>
 
-			<rect width="454.5047" height="18.048552" x="678.03058" y="435.8931" style="opacity:0.5;fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:2.19980764;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.1998076, 4.39961522;stroke-dashoffset:0"
-			 id="rect7455" />
-			<text x="633.73218" y="454.33301" transform="scale(1.0010881,0.99891309)" style="font-size:28.82546234px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;"
-			 id="text2269" xml:space="preserve">
-				<tspan x="633.73218" y="454.33301" id="tspan2271" />
-			</text>
+					<rect width="454.5047" height="18.048552" x="678.03058" y="435.8931" style="opacity:0.5;fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:2.19980764;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.1998076, 4.39961522;stroke-dashoffset:0"
+					 id="rect7455" />
+					<text x="633.73218" y="454.33301" transform="scale(1.0010881,0.99891309)" style="font-size:28.82546234px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;"
+					 id="text2269" xml:space="preserve">
+						<tspan x="633.73218" y="454.33301" id="tspan2271" />
+					</text>
 
-			<path d="M 575.28956,441.77759 703.03809,290.78773 894.66102,64.302985" style="fill:none;stroke:#4040ff;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-mid:url(#Arrow1Mend)"
-			 id="path2566" inkscape:connector-curvature="0" />
+					<path d="M 575.28956,441.77759 703.03809,290.78773 894.66102,64.302985" style="fill:none;stroke:#4040ff;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-mid:url(#Arrow1Mend)"
+					 id="path2566" inkscape:connector-curvature="0" />
 
-			<path d="M 1211.5161,441.8137 1083.7676,290.82384 892.14463,64.339095" style="fill:none;stroke:#4040ff;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-mid:url(#Arrow2Mstart)"
-			 id="path6476" inkscape:connector-curvature="0" />
-			<text x="864.85461" y="300.71805" transform="scale(1.0010881,0.99891309)" style="font-size:28.82526207px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;"
-			 id="text2321" xml:space="preserve">
-				<tspan x="864.85461" y="300.71805" id="tspan2323">L</tspan>
-			</text>
-			<path d="m 893.40358,66.384135 0,368.636895" style="fill:none;stroke:#40ff40;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:16, 4;stroke-dashoffset:0"
-			 id="path11579" inkscape:connector-curvature="0" />
-			<path d="M 584.11521,433.63965 895.06259,65.414515" style="fill:none;stroke:#40ff40;stroke-width:4.02089643;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:16.08358492, 4.02089623;stroke-dashoffset:0"
-			 id="path18418" inkscape:connector-curvature="0" />
+					<path d="M 1211.5161,441.8137 1083.7676,290.82384 892.14463,64.339095" style="fill:none;stroke:#4040ff;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-mid:url(#Arrow2Mstart)"
+					 id="path6476" inkscape:connector-curvature="0" />
+					<text x="864.85461" y="300.71805" transform="scale(1.0010881,0.99891309)" style="font-size:28.82526207px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;"
+					 id="text2321" xml:space="preserve">
+						<tspan x="864.85461" y="300.71805" id="tspan2323">L</tspan>
+					</text>
+					<path d="m 893.40358,66.384135 0,368.636895" style="fill:none;stroke:#40ff40;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:16, 4;stroke-dashoffset:0"
+					 id="path11579" inkscape:connector-curvature="0" />
+					<path d="M 584.11521,433.63965 895.06259,65.414515" style="fill:none;stroke:#40ff40;stroke-width:4.02089643;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:16.08358492, 4.02089623;stroke-dashoffset:0"
+					 id="path18418" inkscape:connector-curvature="0" />
 
-			<path d="m 582.46174,433.41254 c 311.95859,0 311.95859,0 311.95859,0" style="fill:none;stroke:#40ff40;stroke-width:3.99553132;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:15.98212571, 3.99553143;stroke-dashoffset:0"
-			 id="path12556" inkscape:connector-curvature="0" />
-			<text x="707.20532" y="421.70142" style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;"
-			 id="text15483" xml:space="preserve" sodipodi:linespacing="125%">
-				<tspan x="750" y="421.70142" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman, Times, serif;"
-				 id="tspan15485">W</tspan>
-			</text>
-			<path d="m 876.39286,431.4514 0,-15 15,0" style="fill:none;stroke:#40ff40;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-			 id="path17437" inkscape:connector-curvature="0" />
-			<text x="763.51379" y="257.45874" style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;"
-			 id="text18414" xml:space="preserve" sodipodi:linespacing="125%">
-				<tspan x="763.51379" y="257.45874" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman, Times, serif;"
-				 id="tspan18416">D</tspan>
-			</text>
-			<text x="1009.8401" y="257.45874" style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;"
-			 id="text20408" xml:space="preserve" sodipodi:linespacing="125%">
-				<tspan x="1009.8401" y="257.45874" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman, Times, serif;"
-				 id="tspan20410">D</tspan>
-			</text>
-			<g id="g4467" transform="translate(48.772193,35.622895)">
-				<rect width="280.91357" height="19.196096" x="11.424166" y="399.91989" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.98540807px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-				 id="rect2243-4" />
-			</g>
-			<g id="g4462" transform="translate(48.772193,35.622895)">
-				<rect width="280.91357" height="19.196096" x="11.424056" y="11.099292" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.98540807px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-				 id="MirrorA-4" />
-			</g>
-			<text x="375.83951" y="268.11478" transform="scale(1.0010881,0.99891309)" style="font-size:28.82546234px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;"
-			 id="text2321-2" xml:space="preserve">
-				<tspan x="375.83951" y="268.11478" id="tspan2323-4">L</tspan>
-			</text>
-			<g transform="matrix(2.412562,0,0,2.4720388,-131.82009,-942.70811)" id="g8954">
-				<path inkscape:connector-curvature="0" d="m 129.35494,556.62809 0,-67.00269 0,-80.40322" style="fill:none;stroke:#4040ff;stroke-width:1.64199996;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-mid:url(#Arrow2Mstart);marker-end:none"
-				 id="PhotonPathBA" />
-				<path inkscape:connector-curvature="0" d="m 135.35494,409.22218 0,67.00269 0,80.40322" style="fill:none;stroke:#4040ff;stroke-width:1.64199996;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-mid:url(#Arrow2Mstart);marker-end:none"
-				 id="path8952" />
-			</g>
+					<path d="m 582.46174,433.41254 c 311.95859,0 311.95859,0 311.95859,0" style="fill:none;stroke:#40ff40;stroke-width:3.99553132;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:15.98212571, 3.99553143;stroke-dashoffset:0"
+					 id="path12556" inkscape:connector-curvature="0" />
+					<text x="707.20532" y="421.70142" style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;"
+					 id="text15483" xml:space="preserve" sodipodi:linespacing="125%">
+						<tspan x="750" y="421.70142" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman, Times, serif;"
+						 id="tspan15485">W</tspan>
+					</text>
+					<path d="m 876.39286,431.4514 0,-15 15,0" style="fill:none;stroke:#40ff40;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+					 id="path17437" inkscape:connector-curvature="0" />
+					<text x="763.51379" y="257.45874" style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;"
+					 id="text18414" xml:space="preserve" sodipodi:linespacing="125%">
+						<tspan x="763.51379" y="257.45874" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman, Times, serif;"
+						 id="tspan18416">D</tspan>
+					</text>
+					<text x="1009.8401" y="257.45874" style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;"
+					 id="text20408" xml:space="preserve" sodipodi:linespacing="125%">
+						<tspan x="1009.8401" y="257.45874" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman, Times, serif;"
+						 id="tspan20410">D</tspan>
+					</text>
+					<g id="g4467" transform="translate(48.772193,35.622895)">
+						<rect width="280.91357" height="19.196096" x="11.424166" y="399.91989" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.98540807px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+						 id="rect2243-4" />
+					</g>
+					<g id="g4462" transform="translate(48.772193,35.622895)">
+						<rect width="280.91357" height="19.196096" x="11.424056" y="11.099292" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.98540807px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+						 id="MirrorA-4" />
+					</g>
+					<text x="375.83951" y="268.11478" transform="scale(1.0010881,0.99891309)" style="font-size:28.82546234px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;"
+					 id="text2321-2" xml:space="preserve">
+						<tspan x="375.83951" y="268.11478" id="tspan2323-4">L</tspan>
+					</text>
+					<g transform="matrix(2.412562,0,0,2.4720388,-131.82009,-942.70811)" id="g8954">
+						<path inkscape:connector-curvature="0" d="m 129.35494,556.62809 0,-67.00269 0,-80.40322" style="fill:none;stroke:#4040ff;stroke-width:1.64199996;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-mid:url(#Arrow2Mstart);marker-end:none"
+						 id="PhotonPathBA" />
+						<path inkscape:connector-curvature="0" d="m 135.35494,409.22218 0,67.00269 0,80.40322" style="fill:none;stroke:#4040ff;stroke-width:1.64199996;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-mid:url(#Arrow2Mstart);marker-end:none"
+						 id="path8952" />
+					</g>
 
-			<path inkscape:connector-curvature="0" d="m 349.52161,66.705675 9.98421,0 0,368.474475 -9.98421,0" style="fill:none;stroke:#000000;stroke-width:1.28442347px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-			 id="path1538" />
-			<rect id="rect2243-1" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-			 y="436.20599" x="796.35272" height="19.20911" width="208.27559" />
-			<path d="m 675.81861,444.93801 225.83701,0 225.83698,0" style="fill:none;stroke:#404040;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-mid:url(#marker11576);stroke-miterlimit:4;stroke-dasharray:none"
-			 id="path10599" inkscape:connector-curvature="0" />
-			<rect id="rect2243" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-			 y="435.5687" x="471.16052" height="19.20911" width="208.27559" />
-			<rect id="rect1552" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-			 transform="scale(-1,1)" y="436.21494" x="-1328.3921" height="19.20911" width="208.27559" />
-			<rect width="454.5047" height="18.048552" x="676.80945" y="47.097408" style="opacity:0.5;fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:2.19980764;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.1998076, 4.39961522;stroke-dashoffset:0"
-			 id="rect7455-2" />
-			<rect id="MirrorA" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-			 y="46.484497" x="796.87946" height="19.20911" width="208.27559" />
-			<path d="m 674.53652,56.101013 225.83701,0 225.83697,0" style="fill:none;stroke:#404040;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-mid:url(#marker11576);stroke-miterlimit:4;stroke-dasharray:none"
-			 id="path10599-4" inkscape:connector-curvature="0" />
-			<rect id="MirrorA-40" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-			 y="46.116199" x="1120.123" height="19.20911" width="208.27559" />
-			<rect id="MirrorA-7" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-			 y="46.274174" x="470.55688" height="19.20911" width="208.27559" />
+					<path inkscape:connector-curvature="0" d="m 349.52161,66.705675 9.98421,0 0,368.474475 -9.98421,0" style="fill:none;stroke:#000000;stroke-width:1.28442347px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+					 id="path1538" />
+					<rect id="rect2243-1" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+					 y="436.20599" x="796.35272" height="19.20911" width="208.27559" />
+					<path d="m 675.81861,444.93801 225.83701,0 225.83698,0" style="fill:none;stroke:#404040;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-mid:url(#marker11576);stroke-miterlimit:4;stroke-dasharray:none"
+					 id="path10599" inkscape:connector-curvature="0" />
+					<rect id="rect2243" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+					 y="435.5687" x="471.16052" height="19.20911" width="208.27559" />
+					<rect id="rect1552" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+					 transform="scale(-1,1)" y="436.21494" x="-1328.3921" height="19.20911" width="208.27559" />
+					<rect width="454.5047" height="18.048552" x="676.80945" y="47.097408" style="opacity:0.5;fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:2.19980764;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.1998076, 4.39961522;stroke-dashoffset:0"
+					 id="rect7455-2" />
+					<rect id="MirrorA" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+					 y="46.484497" x="796.87946" height="19.20911" width="208.27559" />
+					<path d="m 674.53652,56.101013 225.83701,0 225.83697,0" style="fill:none;stroke:#404040;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-mid:url(#marker11576);stroke-miterlimit:4;stroke-dasharray:none"
+					 id="path10599-4" inkscape:connector-curvature="0" />
+					<rect id="MirrorA-40" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+					 y="46.116199" x="1120.123" height="19.20911" width="208.27559" />
+					<rect id="MirrorA-7" style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:1.72270131;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+					 y="46.274174" x="470.55688" height="19.20911" width="208.27559" />
 
-			<text x="660" y="453" style="font-size:28.82546234px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;">
-				v
-			</text>
+					<text x="660" y="453" style="font-size:28.82546234px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman, Times, serif;">
+						v
+					</text>
 
-		</svg>
-	</a>
-	<article>
-		<p>First we apply \( v= \frac{\Delta x}{\Delta t}\) to each side of the triangle highlighted in green.</p>
-		$$ c = \frac{2D}{\Delta t } \quad \quad \quad \quad \quad c = \frac{2L}{\Delta t_0 } \quad \quad \quad \quad \quad v = \frac{2W}{\Delta
-		t}$$ $$D = \tfrac{1}{2} c \Delta t \quad \quad \quad \quad L = \tfrac{1}{2} c \Delta t_0 \quad \quad \quad \quad W = \tfrac{1}{2}
-		v \Delta t $$
-		<p>Next, we apply the Pythagorean theorem to the triangle.</p>
-		$$ D^2 = L^2 + W^2 $$ $$ (\tfrac{1}{2}c\Delta t)^2 = (\tfrac{1}{2}c \Delta t_0)^2 + (\tfrac{1}{2}v\Delta t)^2 $$ $$ \tfrac{1}{4}
-		c^2 \Delta t^2 = \tfrac{1}{4}c^2 \Delta t_0^2 + \tfrac{1}{4}v^2 \Delta t^2 $$ $$ \Delta t^2 = \Delta t_0^2 + \tfrac{v^2}{c^2}
-		\Delta t^2 $$ $$ \Delta t^2 - \tfrac{v^2}{c^2} \Delta t^2 = \Delta t_0^2$$ $$ \Delta t^2 (1 - \tfrac{v^2}{c^2} ) = \Delta
-		t_0^2 $$ $$ \Delta t \sqrt{1 - \tfrac{v^2}{c^2}} = \Delta t_0 $$ $$ \Delta t = \frac{\Delta t_0}{ \sqrt{1 - \tfrac{v^2}{c^2}}}
-		$$ $$ \Delta t = \gamma \Delta t_0 $$
+				</svg>
+			</a>
 
-		<h2 class='underlined' id="solver">Lorentz Transformation Solver</h2>
-		<br>
-		<ul class="listing">
-			<li>
-				<div>Relative Velocity
-					<br>v =
-					<input id='velocity' type="number" value='0.9' min="0" max="1" step="0.01"> c
-					<br>v =
-					<input id='velocity2' type="number" value='2.7' min="0" max="3" step="0.1"> x 10
-					<sup>8</sup> m/s
-				</div>
-			</li>
-			<li>
-				<div>Lorentz Factor
-					<br>γ =
-					<input id='gamma' type="number" value='2.2942' min="1" step="0.1" max="9999999">
-				</div>
-			</li>
-			<li>
-				<div>
-					<strong>MOVING RELATIVE TO SPACESHIP</strong>
-					<br>
-					<em style="font-size: 0.9rem">frame of reference where an observer sees events occur in different locations</em>
-					<br>
-					<div class="tooltip">time
-						<span class="tooltiptext">time passed for observer as ship flies past</span>
-					</div> =
-					<input id='v_time' type="number" value='22.94' min="-1000.0" max="1000.0"> s
-					<br>energy =
-					<input id='v_mass' type="number" value='22.94' min="0" min="-1000.0" max="1000.0"> J
-					<br>length =
-					<input id='v_length' type="number" value='4.36' min="0" min="-1000.0" max="1000.0"> m
-				</div>
-			</li>
-			<li>
-				<div>
-					<strong>AT REST RELATIVE TO SPACESHIP</strong>
-					<br>
-					<em style="font-size: 0.9rem">frame of reference where an observer sees events occur in the same location</em>
-					<br> proper time =
-					<input id='time' type="number" value='10' min="-1000.0" max="1000.0"> s
-					<br>rest energy =
-					<input id='mass' type="number" value='10' min="0" min="-1000.0" max="1000.0"> J
-					<br>rest length =
-					<input id='length' type="number" value='10' min="0" min="-1000.0" max="1000.0"> m
-				</div>
-			</li>
-		</ul>
-		<canvas id="rockets" width='600' height='150' style="box-shadow: 0px 0px 0px #aaa;"></canvas>
+			<p>First we apply \( v= \frac{\Delta x}{\Delta t}\) to each side of the triangle highlighted in green.</p>
+			$$ c = \frac{2D}{\Delta t } \quad \quad \quad c = \frac{2L}{\Delta t_0 } \quad \quad \quad v = \frac{2W}{\Delta t}$$ $$D
+			= \tfrac{1}{2} c \Delta t \quad \quad L = \tfrac{1}{2} c \Delta t_0 \quad \quad W = \tfrac{1}{2} v \Delta t $$
+			<p>Next, we apply the Pythagorean theorem to the triangle.</p>
+			$$ D^2 = L^2 + W^2 $$ $$ (\tfrac{1}{2}c\Delta t)^2 = (\tfrac{1}{2}c \Delta t_0)^2 + (\tfrac{1}{2}v\Delta t)^2 $$ $$ \tfrac{1}{4}
+			c^2 \Delta t^2 = \tfrac{1}{4}c^2 \Delta t_0^2 + \tfrac{1}{4}v^2 \Delta t^2 $$ $$ \Delta t^2 = \Delta t_0^2 + \tfrac{v^2}{c^2}
+			\Delta t^2 $$ $$ \Delta t^2 - \tfrac{v^2}{c^2} \Delta t^2 = \Delta t_0^2$$ $$ \Delta t^2 (1 - \tfrac{v^2}{c^2} ) = \Delta
+			t_0^2 $$ $$ \Delta t \sqrt{1 - \tfrac{v^2}{c^2}} = \Delta t_0 $$ $$ \Delta t = \frac{\Delta t_0}{ \sqrt{1 - \tfrac{v^2}{c^2}}}
+			$$ $$ \Delta t = \gamma \Delta t_0 $$
+
+			<h2 class='underlined' id="solver">Lorentz Transformation Solver</h2>
+			<br>
+			<ul class="listing">
+				<li>
+					<div>Relative Velocity
+						<br>v =
+						<input id='velocity' type="number" value='0.9' min="0" max="1" step="0.01"> c
+						<br>v =
+						<input id='velocity2' type="number" value='2.7' min="0" max="3" step="0.1"> x 10
+						<sup>8</sup> m/s
+					</div>
+				</li>
+				<li>
+					<div>Lorentz Factor
+						<br>γ =
+						<input id='gamma' type="number" value='2.2942' min="1" step="0.1" max="9999999">
+					</div>
+				</li>
+				<li>
+					<div>
+						<strong>MOVING RELATIVE TO SPACESHIP</strong>
+						<br>
+						<em style="font-size: 0.9rem">frame of reference where an observer sees events occur in different locations</em>
+						<br> time =
+						<input id='v_time' type="number" value='22.94' min="-1000.0" max="1000.0"> s
+						<br>energy =
+						<input id='v_mass' type="number" value='22.94' min="0" min="-1000.0" max="1000.0"> J
+						<br>length =
+						<input id='v_length' type="number" value='4.36' min="0" min="-1000.0" max="1000.0"> m
+					</div>
+				</li>
+				<li>
+					<div>
+						<strong>AT REST RELATIVE TO SPACESHIP</strong>
+						<br>
+						<em style="font-size: 0.9rem">frame of reference where an observer sees events occur in the same location</em>
+						<br> proper time =
+						<input id='time' type="number" value='10' min="-1000.0" max="1000.0"> s
+						<br>rest energy =
+						<input id='mass' type="number" value='10' min="0" min="-1000.0" max="1000.0"> J
+						<br>rest length =
+						<input id='length' type="number" value='10' min="0" min="-1000.0" max="1000.0"> m
+					</div>
+				</li>
+			</ul>
+			<canvas id="rockets" width='600' height='150' style="box-shadow: 0px 0px 0px #aaa;"></canvas>
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
@@ -2231,34 +2250,7 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
-	<script src="relative.js"></script>
 	<script src="solver.js"></script>
-	<script src="https://d3js.org/d3.v3.min.js"></script>
-	<script src='../../../lib/function-plot.js'></script>
-	<script>
-		functionPlot({
-			width: 600,
-			height: 350,
-			target: "#graphGamma",
-			// title: 'v vs. gamma',
-			yAxis: {
-				domain: [0, 10],
-				label: " gamma "
-			},
-			xAxis: {
-				domain: [0, 1.1],
-				label: " v/c "
-			},
-			grid: true,
-			data: [
-				{
-					fn: "nthRoot(1 - x^2, 2)^-1",
-					color: "#000"
-				}
-			]
-		});
-	</script>
-
 </body>
 
 </html>

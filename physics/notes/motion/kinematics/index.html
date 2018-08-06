@@ -2,14 +2,16 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="description" content="Notes for a high school physics course.">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
 	<meta name="author" content="Ross Landgreen">
-	<meta property="og:description" content="Notes for a high school physics course.">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
 	<meta property="og:title" content="Physics Notes">
-	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
 
 	<title>Kinematics</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
@@ -38,7 +40,7 @@
 			<a href="http://dev.physicslab.org/document.aspx?doctype=3&filename=kinematics_derivationkinematicsequations.xml">derivation</a> of these equations.</p>
 		<div class='definition'>
 			<h3>$$v = u+a \Delta t$$ $$\Delta x = u\Delta t + \tfrac{1}{2}a \Delta t^{2}$$ $$\Delta x = \tfrac{1}{2}(v+u)\Delta t$$ $$v^{2}
-				= u^{2}+2a \Delta x$$ $$\Delta x = v\Delta t - \tfrac{1}{2}a \Delta t^{2}$$
+				= u^{2}+2a \Delta x$$
 			</h3>
 			<p>\(\Delta x\) = distance [m]
 				<em>vector</em>
@@ -194,21 +196,25 @@
 				<td>a</td>
 			</tr>
 		</table>
-		<p>If an object is in free fall we know the gravitational acceleration is purely in the vertical and there is zero horizontal
+		<p>
+			If an object is in free fall we know the gravitational acceleration is purely in the vertical and there is zero horizontal
 			acceleration.
 		</p>
-		<p>Play around with this 2-D motion solver to get a feel for what paths an object can take. You can also plug in vlaues to
-			see if you did a 2-D motion problem correctly.</p>
-	</article>
-	<p data-height="830" data-theme-id="light" data-slug-hash="ZJVGZR" data-default-tab="result" data-user="lilgreenland" data-embed-version="2"
-	 data-pen-title="ballistics calculator (vue)" class="codepen">See the Pen
-		<a href="https://codepen.io/lilgreenland/pen/ZJVGZR/">ballistics calculator (vue)</a> by Landgreen (
-		<a href="https://codepen.io/lilgreenland">@lilgreenland</a>) on
-		<a href="https://codepen.io">CodePen</a>.</p>
-	<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
-	<article>
+
+		<div class="hide-on-mobile">
+			<p>Play around with this 2-D motion solver to get a feel for what paths an object can take. You can also plug in numbers
+				to check your answer on 2-D motion problems.</p>
+			<p data-height="778" data-theme-id="light" data-slug-hash="ZJVGZR" data-default-tab="result" data-user="lilgreenland" data-pen-title="2-D ballistics calculator (vue.js)"
+			 class="codepen">See the Pen
+				<a href="https://codepen.io/lilgreenland/pen/ZJVGZR/">2-D ballistics calculator (vue.js)</a> by Landgreen (
+				<a href="https://codepen.io/lilgreenland">@lilgreenland</a>) on
+				<a href="https://codepen.io">CodePen</a>.</p>
+			<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+		</div>
+
 		<div class='example'>
-			<canvas id="myCanvas" width='600' height='300'></canvas>
+			<canvas class='center' id="myCanvas" width='500' height='200'></canvas>
+			<br>
 			<strong>Example</strong>: A ball moving horizontally at 2 m/s rolls off a table that is 1.5 m high. Find how far the ball travels
 			horizontally before it hits the ground. Click to rewatch the simulation above.
 			<details>
@@ -271,7 +277,7 @@
 		</details>
 
 		<div class='example'>
-			<canvas id="graph2" width='600' height='200'></canvas>
+			<!-- <canvas id="graph2" width='600' height='200'></canvas> -->
 			<canvas id="myCanvas2" width='600' height='300'></canvas>
 			<b>Example</b>: A pokéball is thrown at an angle of 60° above the horizon and a speed of 10 m/s. If the ball is thrown from
 			2.0 meters above the ground how far does the ball go before it misses the charmander and hits the ground.
@@ -330,21 +336,18 @@
 		</div>
 
 		<div class='example'>
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="250" viewbox='-25 0 600 250'
-			 class='center'>
-				<!-- <text x="50" y="200" text-anchor="middle" font-size="20" fill = '#333'>6kΩ</text> -->
+			<svg viewbox='-25 0 600 250'>
 				<rect x="-50" y="200" width="700" height="100" fill='#ddd' stroke='none' />
-
-				<path d="M2 200 Q 276 -195 550 200" fill='none' stroke="#888" stroke-width="4" stroke-linejoin="round" stroke-dasharray="0, 30"
+				<path d="M2 200 Q 276 -195 550 200" fill='none' stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-dasharray="0, 30"
 				 stroke-linecap="round" />
-				<path d="M1 215 v11 v-5 h550 v5 v-11" fill='none' stroke="#333" stroke-width="2" stroke-linejoin="round" />
-				<text x="276" y="243" text-anchor="middle" font-size="20" fill='#333'>Δx</text>
-				<text x="42" y="130" text-anchor="middle" font-size="20" fill='#333'>v</text>
-				<text x="23" y="197" text-anchor="middle" font-size="20" fill='#333'>θ</text>
+				<path d="M1 215 v11 v-5 h550 v5 v-11" fill='none' stroke="#000" stroke-width="2" stroke-linejoin="round" />
+				<text x="276" y="243" text-anchor="middle" font-size="20" fill='#000'>Δx</text>
+				<text x="42" y="130" text-anchor="middle" font-size="20" fill='#000'>v</text>
+				<text x="23" y="197" text-anchor="middle" font-size="20" fill='#000'>θ</text>
 
 				<g transform="translate(39 135) rotate(120)">
-					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
-					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
 				</g>
 			</svg>
 
@@ -446,23 +449,21 @@
 		</div>
 
 		<div class='example'>
-			<svg style="float: right;" width="220" height="260" class='svgDiagram' version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<svg class='center' width="220" height="170">
 				<g id="vector" transform='translate(0 150) rotate(-25)'>
 					<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
 					<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
-					<text x="100" y="-13" fill="black" text-anchor="middle" alignment-baseline="middle">V = 150 m/s</text>
+					<text x="100" y="-13" fill="black" text-anchor="middle" dominant-baseline="middle">V = 150 m/s</text>
 				</g>
 				<line x1="0" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
 				<line x1="181" y1="150" x2="181" y2="63" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
-				<text x="100" y="165" fill="black" text-anchor="middle" alignment-baseline="middle">Vx</text>
-				<text x="205" y="105" fill="black" text-anchor="middle" alignment-baseline="middle">Vy</text>
-				<text x="67" y="141" fill="black" text-anchor="middle" alignment-baseline="middle">θ = 35°</text>
+				<text x="100" y="165" fill="black" text-anchor="middle" dominant-baseline="middle">Vx</text>
+				<text x="205" y="105" fill="black" text-anchor="middle" dominant-baseline="middle">Vy</text>
+				<text x="67" y="141" fill="black" text-anchor="middle" dominant-baseline="middle">θ = 35°</text>
 			</svg>
-			<strong>Example:</strong>
-			<br>A ball is thrown at 35° from the horizon
-			<br>from ground level
-			<br>with a speed of 150 m/s.
-			<br>How long will the ball be in the air?
+			<br>
+			<strong>Example:</strong> A ball is thrown at 35° from the horizon from ground level with a speed of 150 m/s. How long will the
+			ball be in the air?
 			<details>
 				<summary>solution</summary>
 				<table>

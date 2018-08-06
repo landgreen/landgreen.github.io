@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#222" />
+    <meta name="description" content="Interactive notes for algebra based physics.">
+    <meta name="author" content="Ross Landgreen">
+    <meta property="og:description" content="Interactive notes for algebra based physics.">
+    <meta property="og:title" content="Physics Notes">
+    <meta name="twitter:title" content="Physics Notes">
+    <meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
+    <title>Momentum</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+
+    <link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+    <script src="../../../lib/katex/katex.min.js"></script>
+    <script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+</head>
+
+<body>
+    <header>
+        <h1>
+            <a href="../../../index.html">Momentum</a>
+        </h1>
+    </header>
+    <article>
+        <p>
+            Momentum is defined as the product of mass and velocity.
+        </p>
+        <p>A rapidly moving truck has a large momentum. It takes a large or prolonged force to get the truck up to this speed,
+            or to bring it to a stop afterwards. A slow moving snail has a small momentum. It would be easy to slow down
+            or speed up a little snail.</p>
+
+        <div class='definition'>
+            <svg class="center" width="370" height="100">
+                <rect x="155" y="5" width="90" height="90" fill="#fff" stroke-width="2" stroke="#000" />
+                <text x="200" y="50" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="25">m</text>
+                <g transform="translate(155.5 5.5)" style="stroke:#000;stroke-width:1">
+                    <line x1="0" y1="10" x2="-80" y2="10" />
+                    <line x1="0" y1="20" x2="-125" y2="20" />
+                    <line x1="0" y1="30" x2="-55" y2="30" />
+                    <line x1="0" y1="40" x2="-155" y2="40" />
+                    <line x1="0" y1="50" x2="-145" y2="50" />
+                    <line x1="0" y1="60" x2="-115" y2="60" />
+                    <line x1="0" y1="70" x2="-65" y2="70" />
+                    <line x1="0" y1="80" x2="-90" y2="80" />
+                </g>
+            </svg>
+            <h1>$$p = mv$$</h1>
+            \(p\) = momentum [kg m/s]
+            <em>vector</em>
+            <br>\(m\) = mass [kg]
+            <br>\(v\) = velocity[m/s]
+            <em>vector</em>
+        </div>
+
+        <div class='example'>
+            <strong>Example:</strong> What is the momentum of a bowling ball?
+            <br>Google a typical
+            <a href="https://www.google.com/search?q=mass+of+bowling+ball+in+kg">mass</a> and
+            <a href="https://www.google.com/search?q=speed+of+bowling+ball">velocity</a>.
+            <details>
+                <summary>solution</summary>
+                $$\text{convert to m/s}$$ $$ 18 \left( \mathrm{ \frac{\color{red}{mile}}{\color{blue}{hour}}} \right)\left(\frac{1609\,\mathrm{
+                m}}{1 \,\color{red}{\mathrm{mile} }}\right)\left(\frac{1\, \color{blue}{ \mathrm{hour} }}{3600\, \mathrm{s}
+                }\right) = 8.0 \mathrm{\tfrac{m}{s}} $$
+                <br> $$p=mv$$ $$p=(5.0 \, \mathrm{kg})(8.0 \, \mathrm{\tfrac{m}{s}})$$ $$p=40 \,\mathrm{kg \tfrac{m}{s}}$$
+            </details>
+        </div>
+
+        <p class='underlined'>Conservation of Momentum</p>
+        <p>Momentum is useful because the total momentum for a system of objects is
+            <b>conserved</b>. This means the sum of all momentums won't change even if the objects collide.</p>
+        <canvas id="canvas0" width='600' height='270' onclick="collision0(this)"> </canvas>
+        <p>Click the simulation above a few times and note that the total momentum is the same before and after a collision.</p>
+
+        <p>Conservation of momentum isn't true if one of the objects in the system interacts with an object outside the system.
+            For example: conservation doesn't hold if an object hits the ground, and the ground isn't part of our system.</p>
+        <canvas id="canvas1" width='600' height='200' onclick="collision1(this)"> </canvas>
+        <br>
+        <br>
+        <br>
+        <p>Conservation of momentum means we can set the total momentums at two points in time equal to each other. (as long
+            as there are no outside forces)</p>
+        <div class='definition'>
+
+            <svg viewBox="-65 0 600 70">
+                <g transform="translate(75.5 15.5)" stroke="#000" stroke-width="1" fill="none">
+                    <rect x="0.5" y="0.5" width="50" height="50" fill="#fff" stroke-width="2" />
+                    <!-- <text x="25" y="25" fill="#000" stroke="none" text-anchor="middle" dominant-baseline="middle">m</text> -->
+                    <line x1="0" y1="5" x2="-35" y2="5" />
+                    <line x1="0" y1="15" x2="-65" y2="15" />
+                    <line x1="0" y1="25" x2="-35" y2="25" />
+                    <line x1="0" y1="35" x2="-75" y2="35" />
+                    <line x1="0" y1="45" x2="-40" y2="45" />
+                </g>
+                <g transform="translate(375.5 15.5)" stroke="#000" stroke-width="1" fill="none">
+                    <rect x="-50.5" y="0.5" width="50" height="50" fill="#fff" stroke-width="2" />
+                    <!-- <text x="-25" y="25" fill="#000" stroke="none" text-anchor="middle" dominant-baseline="middle">m</text> -->
+                    <line x1="0" y1="5" x2="35" y2="5" />
+                    <line x1="0" y1="15" x2="45" y2="15" />
+                    <line x1="0" y1="25" x2="85" y2="25" />
+                    <line x1="0" y1="35" x2="55" y2="35" />
+                    <line x1="0" y1="45" x2="30" y2="45" />
+                </g>
+            </svg>
+
+            $$ \sum p_i = \sum p_f$$ $$m_1 u_1 + m_2u_2 + \cdots = m_1v_1 + m_2v_2 + \cdots$$ \(p\) = momentum [kg m/s]
+            <em>vector</em>
+            <br> \(u\) = initial velocity [m/s]
+            <em>vector</em>
+            <br>\(v\) = final velocity [m/s]
+            <em>vector</em>
+            <br>\(m\) = mass [kg]
+        </div>
+
+        <div class='example'>
+            <canvas id="canvas2" width='600' height='200' onclick="collision2(this)"> </canvas>
+            <strong>Example:</strong> A
+            <a style='color:#0f0'>green</a> and
+            <a style='color: white;background-color: lightgrey;'>white</a> box collide. The green box has a mass of 2kg and is moving to the right at 3m/s. The white box is moving
+            to the left at 1m/s and has a mass of 10kg. If the white box has stopped after the collision what is the velocity
+            of the green box?
+            <details>
+                <summary>solution</summary>
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$\text{green + white = green + white}$$ $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$
+                $$(2)(3)+(10)(-1)=(2)v_{1}+(1)(10)$$ $$6-10=(2)v_{1}$$ $$-4=(2)v_{1}$$ $$-2 \mathrm{\tfrac{m}{s}} = v_{1}$$
+            </details>
+        </div>
+
+        <div class='example'>
+            <button id="pause">pause</button>
+            <br>
+            <canvas id="canvas3" width='600' height='180' onclick="collision3(this)"> </canvas>
+            <table class='data'>
+                <tr>
+                    <th>
+                        <a style='color: #0f0'>green box</a>
+                    </th>
+                    <th>
+                        <a style='color: #00AEFF'>blue box</a>
+                    </th>
+                    <th>
+                        <a style='color: orange'>orange box</a>
+                    </th>
+                </tr>
+                <tr>
+                    <td>m = 1.60kg</td>
+                    <td>m = 4.90kg</td>
+                    <td>m = 3.60kg</td>
+                </tr>
+                <tr>
+                    <td>u = 3.0m/s</td>
+                    <td>u = 2.0m/s</td>
+                    <td>u = -1.0m/s</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>v = ???</b>
+                    </td>
+                    <td>v = 1.18m/s</td>
+                    <td>v = 1.58m/s</td>
+                </tr>
+            </table>
+            <strong>Example:</strong> Three boxes collide. Use the table to find the final velocity of the
+            <a style='color: green'>green</a> box.
+            <details>
+                <summary>solution</summary>
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$ {\color{#0f0} \blacksquare} \quad +\quad {\color{#419eff} \blacksquare}
+                \quad+\quad {\color{orange} \blacksquare} \quad = \quad {\color{#0f0} \blacksquare} \quad+\quad {\color{#419eff}
+                \blacksquare} \quad+\quad {\color{orange} \blacksquare}$$ $$m_{1}u_{1}+m_{2}u_{2}+m_{3}u_{3} \ = \ m_{1}v_{1}+m_{2}v_{2}+m_{3}v_{3}$$
+                $$(1.6)(3)+(4.9)(2)+(3.6)(-1)=(1.6)v_{1}+(4.9)(1.18)+(3.6)(1.58)$$ $$11=1.6v_{1}+11.47$$ $$-0.29 \mathrm{\tfrac{m}{s}}
+                = v_{1}$$
+            </details>
+        </div>
+
+        <h1 class='underlined'>Perfectly Inelastic Collisions</h1>
+        <p>When two object collide and stick together we say the collision is
+            <strong>perfectly inelastic</strong>. In those situations the equations for conservation of momentum simplify a bit.
+        </p>
+        $$m_1u_1 + m_2u_2 = m_1v+m_2v$$ $$m_1u_1 + m_2u_2 = \left(m_1+m_2\right)v$$
+        <p>Objects can also start as one mass and separate, like in an explosion.</p>
+        $$\left(m_1+m_2\right)u = m_1v_1 + m_2v_2$$
+
+        <div class='example'>
+            <strong>Example:</strong> A 100.0 kg goalie throws a 1.1 kg soccer ball while jumping forward at 3.2 m/s. If the ball
+            flies out of the goalie's hands at 10.0 m/s what speed is the goalie?
+            <details>
+                <summary>solution</summary>
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$\text{goalie holding ball = goalie + ball}$$ $$(m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}$$
+                $$(100.0+1.1)(3.2)=(100.0)v_{1}+(1.1)(10.0)$$ $$323.52=(100.0)v_{1}+11$$ $$3.13 \, \mathrm{\tfrac{m}{s}}
+                = v_{1}$$
+            </details>
+        </div>
+
+
+
+        <div class='example'>
+            <canvas id="canvas4" width='600' height='200' onclick="stickyCollision0(this)"> </canvas>
+            <div id='ex0-question'>
+                <strong>Click to Randomize Problem:</strong> Click above to generate a random problem.
+            </div>
+            <details id="ex0-details">
+                <summary>solution</summary>
+                <div id='ex0-math'></div>
+            </details>
+        </div>
+
+
+        <div class='example'>
+            <canvas id="canvas5" width='600' height='200' onclick="stickyCollision1(this)"> </canvas>
+            <div id='ex1-question'>
+                <strong>Click to Randomize Problem:</strong> Click above to generate a random problem.
+            </div>
+            <details id="ex1-details">
+                <summary>solution</summary>
+                <div id='ex1-math'></div>
+            </details>
+        </div>
+
+
+
+
+        <h1 class='underlined'>2-D Conservation of Momentum</h1>
+        <p>Momentum is a vector. It has a direction and a magnitude. We can solve for the horizontal and vertical components
+            separately just like how we solved 2-d Motion problems. Although in this case there isn't a time variable to
+            link up the vertical and horizontal equations.</p>
+
+        <div class='example'>
+            <canvas id="canvas6" width='600' height='300' onclick="collision2d(this)"> </canvas>
+            <strong>Horizontal:</strong> A
+            <a style='color: pink'>pink</a> hexagon and a
+            <a style='color: cyan'>cyan</a> triangle collide. Before the collision the hexagon has a mass of 5.20 kg and is moving to the right
+            at 2 m/s. The cyan triangle is moving to the left at 1 m/s and has a mass of 1.17 kg. If the triangle bounces
+            off the hexagon at 2.92 m/s to the right what is the horizontal velocity of the hexagon? (ignore the vertical
+            information)
+            <details>
+                <summary>solution</summary>
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$\text{hexagon + triangle = hexagon + triangle}$$ $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$
+                $$(5.20)(2)+(1.17)(-1)=(5.20)v_{1}+(1.17)(2.92)$$ $$10.40-1.17=(5.20)v_{1}+3.42$$ $$5.81=(5.20)v_{1}$$ $$1.12
+                \, \mathrm{\tfrac{m}{s}}= v_{1}$$
+            </details>
+            <br>
+            <strong>Vertical:</strong> Lets take a look at the vertical aspect of the
+            <a style='color: pink'>pink</a> hexagon and
+            <a style='color: cyan'>cyan</a> triangle collision. Before the collision the hexagon has a mass of 5.20 kg and is not moving up or down.
+            The final vertical velocity of the hexagon is 0.23 m/s down. The final vertical velocity of the triangle is 0.67
+            m/s up. What is the triangle's initial vertical velocity?
+            <details>
+                <summary>solution</summary>
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$\text{hexagon + triangle = hexagon + triangle}$$ $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$
+                $$(5.20)(0)+(1.17)(u_{2})=(5.20)(-0.23)+(1.17)(0.67)$$ $$(1.17)(u_{2})=-0.41$$ $$u_{2}=-0.35 \, \mathrm{\tfrac{m}{s}}$$
+        </div>
+        </details>
+        </div>
+    </article>
+    <div class='back'>
+        <a href="../../../index.html">Back</a>
+    </div>
+    <script src='../../../lib/matter.min.js'></script>
+    <script src='../../../lib/randomColor.min.js'></script>
+    <script src="collisionDemo(Matter.js).js"></script>
+    <script src="collisionDemo2(Matter.js).js"></script>
+    <script src="collisionEx1(Matter.js).js"></script>
+    <script src="collisionEx3(Matter.js).js"></script>
+
+    <script src="stickyCollision0.js"></script>
+    <script src="stickyCollision1.js"></script>
+    <script src="collision2D.js"></script>
+    <script> renderMathInElement(document.body); </script>
+</body>
+
+</html>
