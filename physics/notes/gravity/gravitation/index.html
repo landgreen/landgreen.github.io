@@ -169,7 +169,6 @@
                         <th align=left>Planet</th>
                         <th>mass (kg)</th>
                         <th>radius (km)</th>
-                        <th>density (g/cm³)</th>
                     </tr>
                     <tr align=center>
                         <td align=left>Sun</td>
@@ -177,7 +176,6 @@
                             <sup>30</sup>
                         </td>
                         <td>695&#8239;700</td>
-                        <td>1.408</td>
                     </tr>
                     <tr align=center>
                         <td align=left>Mercury</td>
@@ -185,7 +183,6 @@
                             <sup>23</sup>
                         </td>
                         <td>2&#8239;440</td>
-                        <td>5.427</td>
                     </tr>
                     <tr align=center>
                         <td align=left>Venus</td>
@@ -193,7 +190,6 @@
                             <sup>24</sup>
                         </td>
                         <td>6&#8239;052</td>
-                        <td>5.243</td>
                     </tr>
                     <tr align=center>
                         <td align=left>Earth</td>
@@ -201,7 +197,6 @@
                             <sup>24</sup>
                         </td>
                         <td>6&#8239;371</td>
-                        <td>5.515</td>
                     </tr>
                     <tr align=center>
                         <td align=left>Moon</td>
@@ -209,7 +204,6 @@
                             <sup>22</sup>
                         </td>
                         <td>1737</td>
-                        <td>3.344</td>
                     </tr>
                     <tr align=center>
                         <td align=left>Mars</td>
@@ -217,7 +211,6 @@
                             <sup>23</sup>
                         </td>
                         <td>3390</td>
-                        <td>3.933</td>
                     </tr>
                     <tr align=center>
                         <td align=left>Jupiter</td>
@@ -225,7 +218,6 @@
                             <sup>27</sup>
                         </td>
                         <td>70&#8239;000</td>
-                        <td>1.326</td>
                     </tr>
                     <tr align=center>
                         <td align=left>Saturn</td>
@@ -233,7 +225,6 @@
                             <sup>26</sup>
                         </td>
                         <td>58&#8239;232</td>
-                        <td>0.687</td>
                     </tr>
                     <tr align=center>
                         <td align=left>Uranus</td>
@@ -241,7 +232,6 @@
                             <sup>25</sup>
                         </td>
                         <td>25&#8239;362</td>
-                        <td>1.270</td>
                     </tr>
                     <tr align=center>
                         <td align=left>Neptune</td>
@@ -249,7 +239,6 @@
                             <sup>26</sup>
                         </td>
                         <td>24&#8239;622</td>
-                        <td>1.638</td>
                     </tr>
                 </table>
                 <br>
@@ -294,8 +283,8 @@
             </div>
             <div class='example'>
                 <strong>Example:</strong> When it is closest to the Sun on its 75 year orbit,
-                <a href="https://en.wikipedia.org/wiki/Halley%27s_Comet ">Halley's Comet</a> feels a force of gravity from the Sun of 3.65×10
-                <sup>12</sup> N. Calculate its distance from the Sun using the comet's mass of 2.2×10
+                <a href="https://en.wikipedia.org/wiki/Halley%27s_Comet ">Halley's Comet</a> feels a force of gravity from the Sun of 3.65 × 10
+                <sup>12</sup> N. Calculate its distance from the Sun using the comet's mass of 2.2 × 10
                 <sup>14</sup> kg.
                 <details>
                     <summary>solution</summary>
@@ -411,7 +400,7 @@
                     <th align=left>Planet</th>
                     <th>mass (kg)</th>
                     <th>radius (km)</th>
-                    <th>surface g (m/s²)</th>
+                    <th>g (m/s²)</th>
                 </tr>
                 <tr align=center>
                     <td align=left>Mercury</td>
@@ -510,7 +499,7 @@
                     <th align=left>Planet</th>
                     <th>mass (kg)</th>
                     <th>radius (km)</th>
-                    <th>surface g (m/s²)</th>
+                    <th>g (m/s²)</th>
                 </tr>
                 <tr align=center>
                     <td align=left>Jupiter</td>
@@ -1145,20 +1134,25 @@
 
         <div class='example'>
             <strong>Example:</strong> Two 100&#8239;000 kg masses are 2 meters apart. How much work would it take to bring them to
-            10 m apart?
+            10&nbsp;m apart?
             </strong>
+            <details>
+                <summary>hint</summary>
+                <p>Calculate the gravitational potential energy at each distance. The change in energy is the work.</p>
+            </details>
+
             <details>
                 <summary>solution</summary>
                 $$U_{i} = -\frac{GM_{1}M_{2}}{r}$$ $$U_{i} = -\frac{(6.674 \times 10^{-11})(100\,000)(100\,000)}{2}$$ $$U_{i} = -0.33\,\mathrm{J}$$
                 <br> $$U_{f} = -\frac{(6.674 \times 10^{-11})(100\,000)(100\,000)}{10}$$ $$U_{f} = -0.068\,\mathrm{J}$$
-                <br> $$E_i = E_f$$ $$U_{i} + W = U_{f} $$ $$-0.33 + W = -0.068$$ $$W = 0.262 \, \mathrm{J}$$
+                <br> $$\Delta U = U_{f} - U_{i} $$ $$\Delta U = (-0.068) - (-0.33) $$ $$\Delta U = 0.262 \, \mathrm{J}$$
             </details>
         </div>
 
 
         <div class='example'>
-            <strong>Example:</strong> A 2000 kg space ship starts at rest 20&#8239;000 km from the surface of Earth. How much kinetic
-            energy will the ship have after it falls down to 10&#8239;000km from the surface of Earth?
+            <strong>Example:</strong> A 2000 kg space ship starts at rest 20&#8239;000&nbsp;km from the surface of Earth. How much
+            kinetic energy will the ship have after it falls down to 10&#8239;000&nbsp;km from the surface of Earth?
             <details>
                 <summary>hint</summary>
                 <br> Use conservation of energy. Set the initial kinetic and gravitational potential equal to the final kinetic
@@ -1175,7 +1169,7 @@
             </details>
         </div>
         <div class='example'>
-            <strong>Example:</strong> Find the minimum escape velocity for a 100kg person on Earth.
+            <strong>Example:</strong> Find the minimum escape velocity for a 100&nbsp;kg person on Earth.
             <details>
                 <summary>hint</summary>
                 <br> Use conservation of energy to find the energy needed to bring both the kinetic and potential energy to zero.

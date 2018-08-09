@@ -44,12 +44,12 @@ function stickyCollision1(el) {
       mass[0].mass.toFixed(2) +
       "&nbsp;kg <span style='color: " +
       mass[0].color +
-      "'>square</span> has a velocity of ???" +
+      "'><strong>square</strong></span> has a velocity of ???" +
       "&nbsp;m/s, and the " +
       mass[1].mass.toFixed(2) +
       "&nbsp;kg <span style='color: " +
       mass[1].color +
-      "'>square</span> has a velocity of  ???" +
+      "'><strong>square</strong></span> has a velocity of  ???" +
       "&nbsp;m/s. What was the velocity of the two squares before the explosion?";
   }
   function spawnMass(xIn, yIn, VxIn, VyIn, length, sides, angle) {
@@ -86,13 +86,13 @@ function stickyCollision1(el) {
         mass[0].mass.toFixed(2) +
         "&nbsp;kg <span style='color: " +
         mass[0].color +
-        "'>square</span> has a velocity of " +
+        "'><strong>square</strong></span> has a velocity of " +
         mass[0].velocity.x.toFixed(2) +
         "&nbsp;m/s, and the " +
         mass[1].mass.toFixed(2) +
         "&nbsp;kg <span style='color: " +
         mass[1].color +
-        "'>square</span> has a velocity of  " +
+        "'><strong>square</strong></span> has a velocity of  " +
         mass[1].velocity.x.toFixed(2) +
         "&nbsp;m/s. What was the velocity of the two squares before the explosion?";
 

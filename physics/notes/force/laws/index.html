@@ -56,10 +56,14 @@
 			"When viewed in an inertial reference frame, an object either remains at rest or continues to move at a constant velocity,
 			unless acted upon by an external force."
 		</p>
-		<p>Objects keep moving in a straight line at a constant velocity unless they have a force acting on them.</p>
-		<p>Objects with mass have inertia.
-			<strong>Inertia</strong> is the resistance of any physical object to any change in velocity. The more mass an object has the more
-			force is required to change its motion.</p>
+		<div class='definition'>
+			Objects keep moving in a straight line at a constant velocity unless they have a force acting on them.
+			<p>Objects with mass have inertia.
+				<strong>Inertia</strong> is the resistance of any physical object to any change in velocity. The more mass an object has the
+				more force is required to change its motion.</p>
+
+		</div>
+
 		<p>Objects in space keep moving without slowing down. Why do things on Earth slow down so quickly?</p>
 
 		<h1 class='underlined'>Newton's Second Law: Force</h1>
@@ -72,7 +76,7 @@
 				<defs>
 					<g id="vector">
 						<line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
-						<polygon points="0,50 -5,42 5,42" style="fill:#000;" />
+						<polygon points="0,50 -5,42 0,43 5,42" style="fill:#000;" />
 					</g>
 				</defs>
 				<g transform='translate(100 20) rotate(0)'>
@@ -113,21 +117,9 @@
 			force) of 1 N from air friction.
 			<details>
 				<summary>solution</summary>
-				<ul class="listing">
-					<li>
-						<div>
-							$$ \text{no units}$$ $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1}{0.43}=a$$ $$2.33 \, \mathrm{\tfrac{m}{s^{2}}}=a$$
-						</div>
-					</li>
-					<li>
-						<div>
-							$$ \text{with units}$$ $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1 \, \mathrm{N}}{0.43 \, \mathrm{kg}}=a$$ $$\frac{1 \, \mathrm{kg
-							\frac{m}{s^2}}} {0.43 \, \mathrm{kg} }=a$$ $$2.33 \, \mathrm{\tfrac{m}{s^2}}=a$$
-						</div>
-					</li>
-				</ul>
-
-
+				$$m = 0.43\,\mathrm{kg}$$ $$\sum F = 1\,\mathrm{N}$$ $$a = \, ?$$
+				<br> $$\sum F=ma$$ $$\frac{\sum F}{m}=a$$ $$\frac{1 \, \mathrm{N}}{0.43 \, \mathrm{kg}}=a$$ $$\frac{1 \, \mathrm{kg \frac{m}{s^2}}}
+				{0.43 \, \mathrm{kg} }=a$$ $$2.33 \, \mathrm{\tfrac{m}{s^2}}=a$$
 			</details>
 		</div>
 
@@ -178,51 +170,31 @@
 			</details>
 		</div>
 
-		<div class='example'>
-			<svg class='center' width="300" height="200">
-				<g transform='translate(100 60) rotate(0)'>
-					<rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fffa66" />
-					<text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>16 kg</text>
-				</g>
-				<use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
-				<text x="150" y="187" fill="black">85 N</text>
-				<use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
-				<text x="150" y="23" fill="black">22 N </text>
-
-				<use xlink:href="#vector" transform='translate(100 100) rotate(90)' />
-				<text x="30" y="93" fill="black">140 N</text>
-				<use xlink:href="#vector" transform='translate(180 120) rotate(-90)' />
-				<text x="210" y="113" fill="black">55 N</text>
-				<use xlink:href="#vector" transform='translate(180 80) rotate(-90)' />
-				<text x="210" y="73" fill="black">78 N</text>
-			</svg>
-			<b>Example:</b> Use the free body diagram to calculate the acceleration for both the horizontal and the vertical.
-			<details>
-				<summary>solution</summary>
-				$$ \text{vertical}$$ $$\sum F=ma$$ $$22 {\color{#aaa} \, \mathrm{N}} - 85{\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa}
-				\, \mathrm{kg}})a$$ $$-63 {\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$ $$-3.9 {\color{#aaa} \,
-				\mathrm{\tfrac{m}{s^2}}} = a$$
-
-				<br> $$ \text{horizontal}$$ $$\sum F=ma$$ $$78{\color{#aaa} \, \mathrm{N}}+55{\color{#aaa} \, \mathrm{N}}-140{\color{#aaa}
-				\, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$ $$-7{\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$
-				$$-0.43 {\color{#aaa} \, \mathrm{\tfrac{m}{s^2}}} = a$$
-			</details>
-		</div>
-
 		<h1 class='underlined'>Newton's Third Law:
 			<br>Equal and Opposite Force Pairs</h1>
 		<p class="quote">
 			"When one body exerts a force on a second body, the second body simultaneously exerts a force equal in magnitude and opposite
 			in direction on the first body."
 		</p>
-		<svg viewBox="-50 0 400 100">
-			<rect x="41" y="0" width="100" height="100" stroke='#000' style="stroke-width:0;fill:#f65" />
-			<rect x="140" y="10" width="80" height="80" stroke='#000' style="stroke-width:0;fill:#5cc" />
-			<use xlink:href="#vector" transform='translate(192 50) rotate(90)' />
-			<use xlink:href="#vector" transform='translate(88 50) rotate(-90)' />
-		</svg>
-		<p>If you push on something it will push back with the same force, but in the opposite direction. Forces always come in equal,
-			but opposite pairs.</p>
+		<div class='definition'>
+			<br>
+			<svg viewBox="-60 0 400 100">
+				<rect x="40" y="1" width="100" height="98" stroke='#000' style="stroke-width:1.5;fill:#fff;" />
+				<rect x="140" y="15" width="70" height="70" stroke='#000' style="stroke-width:1.5;fill:#bcd;" />
+				<use xlink:href="#vector" transform='translate(192.5 50) rotate(90)' />
+				<use xlink:href="#vector" transform='translate(87.5 50) rotate(-90)' />
+				<text x="110" y="35" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>F
+					<tspan font-size="0.7em" dy="5" dx="-5">1</tspan>
+				</text>
+				<text x="172" y="37" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>F
+					<tspan font-size="0.7em" dy="5" dx="-5">2</tspan>
+				</text>
+			</svg>
+			$$F_1 = -F_2$$
+			<p>If you push on something it will push back with the same force, but in the opposite direction. Forces always come in equal,
+				but opposite pairs.</p>
+		</div>
+		<p>Most of the time force pairs come from objects in contact, but even non-contact forces, like gravity, still obey this law.</p>
 		<div class='example'>
 			<b>Example:</b> You push down on the ground with a 1000 N force. Describe the magnitude and direction of the force the ground
 			pushes on you.
@@ -275,39 +247,6 @@
 				</details>
 			</div> -->
 
-		<div class='example'>
-			<svg viewBox="20 0 500 120">
-				<line x1="180" y1="70" x2="400" y2="70" stroke-width="2" stroke="#000" />
-				<g transform='translate(100 20) rotate(0)'>
-					<rect x="0" y="0" width="80" height="80" stroke='#000' stroke-width='2' fill="#f95" />
-					<text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>0.4 kg</text>
-				</g>
-				<use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-				<text x="35" y="65" fill="#000">F</text>
-				<use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
-				<!-- <text x="237" y="66" fill="#000">F</text> -->
-				<g transform='translate(400 20) rotate(0)'>
-					<rect x="0" y="0" width="80" height="80" stroke='#000' stroke-width='2' fill="#bbb" />
-					<text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>10 kg</text>
-				</g>
-				<use xlink:href="#vector" transform='translate(400 60) rotate(90)' />
-				<!-- <text x="336" y="66" fill="#000">F</text> -->
-			</svg>
-
-			<b>Example:</b> A 0.4 kg squirrel is pulling a 10 kg box with a string. The squirrel and box are accelerating to the left
-			at 0.5 m/s². What is the force of tension on the string? What force is the squirrel producing in order to accelerate to
-			the left?
-			<details>
-				<summary>solution</summary>
-				$$ \text{box}$$ $$\sum F=ma$$ $$F_{\mathrm{tension}}=(10)(-0.5)$$ $$F_{\mathrm{tension}}=-5\, \mathrm{N}$$
-				<br>
-				<p>The tension force on the string is equal but opposite for the squirrel and box.</p>
-				$$ \text{squirrel}$$ $$\sum F=ma$$ $$F_{\mathrm{squirrel}} + F_{\mathrm{tension}}=ma$$ $$F_{\mathrm{squirrel}} + 5=(0.4)(-0.5)$$
-				$$F_{\mathrm{squirrel}}=-0.2-5$$ $$F_{\mathrm{squirrel}}=-5.2 \, \mathrm{N}$$
-				<p>The negative sign tells us that the squirrel's force is pointed left.</p>
-				$$F_{\mathrm{squirrel}}=5.2 \, \mathrm{N} \text{ left}$$
-			</details>
-		</div>
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>

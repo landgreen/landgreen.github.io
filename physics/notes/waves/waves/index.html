@@ -158,7 +158,7 @@
 					<input id='wavelength' type="number" min="0" step="20" min="-1000" max="1000" style="width:40px;">m</span>
 			</div>
 		</div>
-		<div class='center' style="height: 400px;" id='wave_animation'>
+		<div class='center' id='wave_animation'>
 			<svg id='sin-wave' height='400'>
 				<filter id="displacementFilter">
 					<feTurbulence id='fe-turb' type="turbulence" baseFrequency="0.02" numOctaves="3" />
@@ -268,6 +268,7 @@
 					display: grid;
 					grid-gap: 0px;
 					grid-template-columns: 30px 210px 30px;
+					justify-content: center;
 				}
 
 				#circle {
@@ -389,7 +390,14 @@
 			have an effect.</p>
 		<p>Each type of wave has a different mechanism of propagation. The speed and possibility of a wave propagating through a medium
 			is different for each wave type.</p>
-		<table>
+		<!-- <style>
+			@media screen and (max-width: 650px) {
+				.smol {
+					font-size: 0.6em;
+				}
+			}
+		</style> -->
+		<table class="smol">
 			<tr>
 				<th>speed (m/s)</th>
 				<th>vacuum</th>
@@ -401,8 +409,8 @@
 				<th>sound</td>
 					<td>N/A</td>
 					<td>340</td>
-					<td>1,484</td>
-					<td>4,540</td>
+					<td>1484</td>
+					<td>4540</td>
 			</tr>
 			<tr>
 				<th>light</td>
@@ -414,9 +422,12 @@
 		</table>
 		<p>
 			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo">Sound</a> travels faster in dense media because the atoms are
-			<a href='https://www.youtube.com/watch?v=w6Q15GZpSUY'>closer</a> together. This means the atoms don't have to move as far to collide.</p>
-		<p>A light wave moves slower in dense media because as the light wave propagates through a medium it produces ripples that
-			interfere in a way that slows the group velocity of the light wave.</p>
+			<a href='https://www.youtube.com/watch?v=w6Q15GZpSUY'>closer</a> together. This means the atoms don't have to move as far to collide.
+		</p>
+		<p>
+			A light wave moves slower in dense media because as the light wave propagates through a medium it produces ripples that interfere
+			in a way that slows the group velocity of the light wave.
+		</p>
 		<div class='example'>
 			<strong>Investigation:</strong> Can you figure out what factors affect the speed of a string wave? Go experiment with a string,
 			or slinky to find out.

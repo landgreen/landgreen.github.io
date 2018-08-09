@@ -45,14 +45,20 @@
 			<a href='https://en.wikipedia.org/wiki/Metric_prefix'>metric prefixes</a> to indicate multiplication or division by powers of ten. Converting from 10km to meters means moving
 			the decimal 3 digits larger.</p>
 
-		$$10 \, \mathrm{{\color{#f00}k}m} = 10\left({\color{#f00}1000}\right) \mathrm{m} = 10\,000 \, \mathrm{m}$$
+		$$10 \, \mathrm{{\color{#f09}k}m} = 10\left({\color{#f09}1000}\right) \mathrm{m} = 10\,000 \, \mathrm{m}$$
+		<!-- $$10 \, \mathrm{{\color{#f09}M}m} = 10\left({\color{#f09}1000\,000}\right) \mathrm{m} = 10\,000\,000 \, \mathrm{m}$$ -->
 		<p> Converting from 10 ms to meters means moving the decimal 3 digits smaller.</p>
-		$$10 \, \mathrm{{\color{#00f}m}s} = 10\left({\color{#00f}0.001 }\right) \mathrm{s} = 0.01\, \mathrm{s}$$
+		$$10 \, \mathrm{{\color{#09f}m}s} = 10\left({\color{#09f}0.001 }\right) \mathrm{s} = 0.01\, \mathrm{s}$$
+		<!-- $$10 \, \mathrm{{\color{#07f}\mu}s}	= 10\left({\color{#07f}0.000001 }\right) \mathrm{s} = 0.00001\, \mathrm{s}$$ -->
 
 		<br>
 		<p>In practice, I just move the decimal to the left for negative exponents and to the right for positive.</p>
 		$$10 \, \mathrm{km} = 10.\overrightarrow{\undergroup{0}\undergroup{0}\undergroup{0}} \, \mathrm{m} = 10\,000 \, \mathrm{m}$$
-		$$10 \, \mathrm{ms} = 0\overleftarrow{\undergroup{0}\undergroup{1}\undergroup{0}}. \, \mathrm{s}= 0.01 \, \mathrm{s}$$
+		$$10 \, \mathrm{Mm} = 10.\overrightarrow{\undergroup{0}\undergroup{0}\undergroup{0}\undergroup{0}\undergroup{0}\undergroup{0}}
+		\, \mathrm{m} = 10\,000\,000 \, \mathrm{m}$$
+		<br> $$10 \, \mathrm{ms} = 0\overleftarrow{\undergroup{0}\undergroup{1}\undergroup{0}}.0 \, \mathrm{s}= 0.01 \, \mathrm{s}$$
+		$$10 \, \mathrm{\mu s} = 0\overleftarrow{\undergroup{0}\undergroup{0}\undergroup{0}\undergroup{0}\undergroup{1}\undergroup{0}}.0\,
+		\mathrm{s}= 0.000\,01 \, \mathrm{s}$$
 		<br>
 		<table>
 			<tr>
@@ -142,27 +148,41 @@
 			<details>
 				<summary>solution</summary>
 				$$ \mathrm{n} = 10^{-9} $$ $$450\,\mathrm{nm} = 450\left( 10^{-9}\right) \mathrm{m} = 0.000\,000\,45 \, \mathrm{m}$$
+				<br> $$450 \, \mathrm{ns} = 0\overleftarrow{\undergroup{0}\undergroup{0}\undergroup{0}\undergroup{0}\undergroup{0}\undergroup{0}\undergroup{4}\undergroup{5}\undergroup{0}}.0\,
+				\mathrm{s}= 0.000\,000\,45 \, \mathrm{m}$$
 			</details>
 		</div>
 		<h1 class='underlined' id='nonmetric'>Nonmetric Units</h1>
 		<p>Converting outside the metric system is more complex. You can do a
 			<a href="https://www.google.com/search?q=unit+converter">google search</a> to find out how two units are related. You then build a conversion fraction with the new unit on top
 			and the old unit on the bottom to be canceled out. The top and the bottom of the fraction must be equal to each other.</p>
-		<p>Lets convert 50 minutes into seconds. </p>
-		$$ 50 \,\mathrm{min} \to \mathrm{s}$$ In order to cancel minutes we want to build a fraction with minutes on top and the
-		seconds on the bottom. $$ 50 \,\mathrm{min} \left( \mathrm{\frac{s}{min}} \right)$$ The fraction must be equal to one to
-		not change the value we are converting. This means the top and bottom must equal each other. One minute equals 60 seconds.
-		$$ 50 \, \mathrm{min} \left( \frac{60\, \mathrm{s}}{1\,\mathrm{min}} \right)$$ We can cancel units. $$ 50 \, \textcolor{red}{
-		\mathrm{min}} \left( \frac{60\, \mathrm{s}}{1 \,\textcolor{red}{\mathrm{min}} } \right)$$ $$ 50 \left( \frac{60\, \mathrm{s}}{1}
-		\right)$$ Multiply and divide to simplify $$3000\, \mathrm{s}$$
+		<p>Lets convert 50 minutes into seconds.</p>
+		$$ 50 \,\mathrm{min} \to \mathrm{s}$$
+		<p>In order to cancel minutes we want to build a fraction with minutes on top and the seconds on the bottom.</p>
+		$$ 50 \,\mathrm{min} \left( \mathrm{\frac{s}{min}} \right)$$
+		<p>Our fraction can't change the actual value, so it must be equal to one. The top and bottom of the fraction must equal each
+			other.
+		</p>
+		$$\text{1 minute = 60 seconds.}$$ $$ 50 \, \mathrm{min} \left( \frac{60\, \mathrm{s}}{1\,\mathrm{min}} \right)$$ $$ 50 \,
+		\textcolor{#f09}{ \mathrm{min}} \left( \frac{60\, \mathrm{s}}{1 \,\textcolor{#f09}{\mathrm{min}} } \right)$$ $$ 50 \left(
+		\frac{60\, \mathrm{s}}{1} \right)$$ $$3000\, \mathrm{s}$$
+
+		<div class='example'>
+			<strong>Example:</strong> Convert 50 minutes into hours.
+			<details>
+				<summary>solution</summary>
+				$$ 50 \,\mathrm{min} \to \mathrm{hour}$$ $$50\,\mathrm{\color{#f09}min} \left( \frac{1\,\mathrm{hour}}{60\,\mathrm{\color{#f09}min}}
+				\right)$$ $$\frac{50}{60}\,\mathrm{hour}$$ $$0.8\overline{33}\,\mathrm{hour}$$
+			</details>
+		</div>
 
 		<div class='example'>
 			<strong>Example:</strong> A marathon is 26.2 miles. How far is a marathon in kilometers?
 			<br>(1 mile = 1.6 kilometers)
 			<details>
 				<summary>solution</summary>
-				$$26.2 \, \textcolor{red}{ \mathrm{mile}} \left( \frac{1.6 \, \mathrm{km}}{1 \,\textcolor{red}{ \mathrm{mile}}} \right) =
-				41.92\, \mathrm{km}$$
+				$$26.2 \, \textcolor{#f09}{ \mathrm{mile}} \left( \frac{1.6 \, \mathrm{km}}{1 \,\textcolor{#f09}{ \mathrm{mile}}} \right)
+				= 41.92\, \mathrm{km}$$
 			</details>
 		</div>
 		<div class='example'>
@@ -171,8 +191,8 @@
 				<summary>solution</summary>
 				$$\mathrm{ft \to inches}$$ $$6\, \mathrm{ft}\left( \frac{12\,\mathrm{in}}{1\, \mathrm{ft}}\right) + 1\, \mathrm{in}$$ $$72\,
 				\mathrm{in} + 1\, \mathrm{in}$$ $$73\, \mathrm{in}$$
-				<br> $$\text {a google search returns: } 1 \, \mathrm{m} = 39.37 \, \mathrm{in}$$ $$73\,\textcolor{red}{ \mathrm{in}} \left(
-				\frac{1\, \mathrm{m}}{39.37 \, \textcolor{red}{ \mathrm{in}}}\right) $$ $$73 \left( \frac{1\, \mathrm{m}}{39.37}\right)
+				<br> $$\text {a google search returns: } 1 \, \mathrm{m} = 39.37 \, \mathrm{in}$$ $$73\,\textcolor{#f09}{ \mathrm{in}} \left(
+				\frac{1\, \mathrm{m}}{39.37 \, \textcolor{#f09}{ \mathrm{in}}}\right) $$ $$73 \left( \frac{1\, \mathrm{m}}{39.37}\right)
 				$$ $$1.85\, \mathrm{m}$$
 			</details>
 		</div>

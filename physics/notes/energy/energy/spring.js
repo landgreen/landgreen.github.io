@@ -220,13 +220,26 @@ var spring = function() {
     }
   });
 
-  //gets values for mass
-  document.getElementById("spring-m").addEventListener("input", function() {
+  function newMass() {
     box.mass = document.getElementById("spring-m").value;
     box.r = Math.sqrt(box.mass / Math.PI / 0.01);
-
     //adjust radius for tracking circle on SVG graph
     document.getElementById("graphing-position").setAttribute("r", box.r);
+    if (pause) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      box.drawSpring();
+      box.draw();
+      graphingOnSVG();
+    }
+  }
+  //gets values for mass
+  document.getElementById("spring-m").addEventListener("input", function() {
+    document.getElementById("spring-m-slider").value = document.getElementById("spring-m").value;
+    newMass();
+  });
+  document.getElementById("spring-m-slider").addEventListener("input", event => {
+    document.getElementById("spring-m").value = document.getElementById("spring-m-slider").value;
+    newMass();
   });
 
   //graphing position on the SVG

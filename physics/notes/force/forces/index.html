@@ -112,6 +112,37 @@
     </div>
 
     <div class='example'>
+      <svg class='center' width="300" height="200">
+        <g transform='translate(100 60) rotate(0)'>
+          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fffa66" />
+          <text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>16 kg</text>
+        </g>
+        <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
+        <text x="150" y="187" fill="black">85 N</text>
+        <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
+        <text x="150" y="23" fill="black">22 N </text>
+
+        <use xlink:href="#vector" transform='translate(100 100) rotate(90)' />
+        <text x="30" y="93" fill="black">140 N</text>
+        <use xlink:href="#vector" transform='translate(180 120) rotate(-90)' />
+        <text x="210" y="113" fill="black">55 N</text>
+        <use xlink:href="#vector" transform='translate(180 80) rotate(-90)' />
+        <text x="210" y="73" fill="black">78 N</text>
+      </svg>
+      <b>Example:</b> Use the free body diagram to calculate the acceleration for both the horizontal and the vertical.
+      <details>
+        <summary>solution</summary>
+        $$ \text{vertical}$$ $$\sum F=ma$$ $$22 {\color{#aaa} \, \mathrm{N}} - 85{\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa}
+        \, \mathrm{kg}})a$$ $$-63 {\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$ $$-3.9 {\color{#aaa}
+        \, \mathrm{\tfrac{m}{s^2}}} = a$$
+
+        <br> $$ \text{horizontal}$$ $$\sum F=ma$$ $$78{\color{#aaa} \, \mathrm{N}}+55{\color{#aaa} \, \mathrm{N}}-140{\color{#aaa}
+        \, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$ $$-7{\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$
+        $$-0.43 {\color{#aaa} \, \mathrm{\tfrac{m}{s^2}}} = a$$
+      </details>
+    </div>
+
+    <div class='example'>
       <strong>Example:</strong> A red crate is falling, but a parachute is slowing its acceleration to only 2 m/s² down. The force
       of gravity is 833 N down. The parachute provides 663 N up. Draw a free body diagram and use it to find the mass of
       the crate.
@@ -942,7 +973,39 @@
       </details>
     </div>
 
+    <div class='example'>
+      <svg viewBox="20 0 500 120">
+        <line x1="180" y1="70" x2="400" y2="70" stroke-width="2" stroke="#000" />
+        <g transform='translate(100 20) rotate(0)'>
+          <rect x="0" y="0" width="80" height="80" stroke='#000' stroke-width='2' fill="#f95" />
+          <text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>0.4 kg</text>
+        </g>
+        <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
+        <text x="35" y="65" fill="#000">F</text>
+        <use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
+        <!-- <text x="237" y="66" fill="#000">F</text> -->
+        <g transform='translate(400 20) rotate(0)'>
+          <rect x="0" y="0" width="80" height="80" stroke='#000' stroke-width='2' fill="#bbb" />
+          <text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>10 kg</text>
+        </g>
+        <use xlink:href="#vector" transform='translate(400 60) rotate(90)' />
+        <!-- <text x="336" y="66" fill="#000">F</text> -->
+      </svg>
 
+      <b>Example:</b> A 0.4 kg squirrel is pulling a 10 kg box with a string. The squirrel and box are accelerating to the left
+      at 0.5 m/s². What is the force of tension on the string? What force is the squirrel producing in order to accelerate
+      to the left?
+      <details>
+        <summary>solution</summary>
+        $$ \text{box}$$ $$\sum F=ma$$ $$F_{\mathrm{tension}}=(10)(-0.5)$$ $$F_{\mathrm{tension}}=-5\, \mathrm{N}$$
+        <br>
+        <p>The tension force on the string is equal but opposite for the squirrel and box.</p>
+        $$ \text{squirrel}$$ $$\sum F=ma$$ $$F_{\mathrm{squirrel}} + F_{\mathrm{tension}}=ma$$ $$F_{\mathrm{squirrel}} + 5=(0.4)(-0.5)$$
+        $$F_{\mathrm{squirrel}}=-0.2-5$$ $$F_{\mathrm{squirrel}}=-5.2 \, \mathrm{N}$$
+        <p>The negative sign tells us that the squirrel's force is pointed left.</p>
+        $$F_{\mathrm{squirrel}}=5.2 \, \mathrm{N} \text{ left}$$
+      </details>
+    </div>
 
 
     <div class='example'>
@@ -1043,11 +1106,6 @@
         \mathrm{kg}) a$$ $$98\, \mathrm{N} = (30\,\mathrm{kg}) a$$ $$-3.2\overline{6} \, \mathrm{\tfrac{m}{s^2}}= a$$
       </details>
     </div>
-
-
-
-
-
 
   </article>
   <div class='back'>

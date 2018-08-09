@@ -38,13 +38,13 @@ function stickyCollision0(el) {
       mass[0].mass.toFixed(2) +
       " kg <span style='color: " +
       mass[0].color +
-      "'>octagon</span> moving at " +
+      "'><strong>octagon</strong></span> moving at " +
       mass[0].velocity.x.toFixed(2) +
       " m/s collides and sticks to a " +
       mass[1].mass.toFixed(2) +
       " kg <span style='color: " +
       mass[1].color +
-      "'>square</span> moving at " +
+      "'><strong>square</strong></span> moving at " +
       mass[1].velocity.x.toFixed(2) +
       " m/s. What is the velocity of the objects after they collide?";
 

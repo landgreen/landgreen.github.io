@@ -19,9 +19,6 @@
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 
 	<script src='../../../lib/function-graph-SVG.js'></script>
-	<script defer src="grav1.js"></script>
-	<script defer src="grav2.js"></script>
-	<script defer src="orbits.js"></script>
 </head>
 
 <body>
@@ -241,96 +238,83 @@
 		</div>
 
 		<div class='example'>
-			<center>
-				<table border>
-					<tr align=center>
-						<th align=left>Planet</th>
-						<th>mass (kg)</th>
-						<th>radius (km)</th>
-						<th>density (g/cm³)</th>
-					</tr>
-					<tr align=center>
-						<td align=left>Sun</td>
-						<td>2.00 × 10
-							<sup>30</sup>
-						</td>
-						<td>695&#8239;700</td>
-						<td>1.408</td>
-					</tr>
-					<tr align=center>
-						<td align=left>Mercury</td>
-						<td>3.301 × 10
-							<sup>23</sup>
-						</td>
-						<td>2&#8239;440</td>
-						<td>5.427</td>
-					</tr>
-					<tr align=center>
-						<td align=left>Venus</td>
-						<td>4.867 × 10
-							<sup>24</sup>
-						</td>
-						<td>6&#8239;052</td>
-						<td>5.243</td>
-					</tr>
-					<tr align=center>
-						<td align=left>Earth</td>
-						<td>5.972 × 10
-							<sup>24</sup>
-						</td>
-						<td>6&#8239;371</td>
-						<td>5.515</td>
-					</tr>
-					<tr align=center>
-						<td align=left>Moon</td>
-						<td>7.346 × 10
-							<sup>22</sup>
-						</td>
-						<td>1737</td>
-						<td>3.344</td>
-					</tr>
-					<tr align=center>
-						<td align=left>Mars</td>
-						<td>6.417 × 10
-							<sup>23</sup>
-						</td>
-						<td>3390</td>
-						<td>3.933</td>
-					</tr>
-					<tr align=center>
-						<td align=left>Jupiter</td>
-						<td>1.899 × 10
-							<sup>27</sup>
-						</td>
-						<td>70&#8239;000</td>
-						<td>1.326</td>
-					</tr>
-					<tr align=center>
-						<td align=left>Saturn</td>
-						<td>5.685 × 10
-							<sup>26</sup>
-						</td>
-						<td>58&#8239;232</td>
-						<td>0.687</td>
-					</tr>
-					<tr align=center>
-						<td align=left>Uranus</td>
-						<td>8.68 × 10
-							<sup>25</sup>
-						</td>
-						<td>25&#8239;362</td>
-						<td>1.270</td>
-					</tr>
-					<tr align=center>
-						<td align=left>Neptune</td>
-						<td>1.024 × 10
-							<sup>26</sup>
-						</td>
-						<td>24&#8239;622</td>
-						<td>1.638</td>
-					</tr>
-				</table>
-			</center>
+			<table border>
+				<tr align=center>
+					<th align=left>Planet</th>
+					<th>mass (kg)</th>
+					<th>radius (km)</th>
+				</tr>
+				<tr align=center>
+					<td align=left>Sun</td>
+					<td>2.00 × 10
+						<sup>30</sup>
+					</td>
+					<td>695&#8239;700</td>
+				</tr>
+				<tr align=center>
+					<td align=left>Mercury</td>
+					<td>3.301 × 10
+						<sup>23</sup>
+					</td>
+					<td>2&#8239;440</td>
+				</tr>
+				<tr align=center>
+					<td align=left>Venus</td>
+					<td>4.867 × 10
+						<sup>24</sup>
+					</td>
+					<td>6&#8239;052</td>
+				</tr>
+				<tr align=center>
+					<td align=left>Earth</td>
+					<td>5.972 × 10
+						<sup>24</sup>
+					</td>
+					<td>6&#8239;371</td>
+				</tr>
+				<tr align=center>
+					<td align=left>Moon</td>
+					<td>7.346 × 10
+						<sup>22</sup>
+					</td>
+					<td>1737</td>
+				</tr>
+				<tr align=center>
+					<td align=left>Mars</td>
+					<td>6.417 × 10
+						<sup>23</sup>
+					</td>
+					<td>3390</td>
+				</tr>
+				<tr align=center>
+					<td align=left>Jupiter</td>
+					<td>1.899 × 10
+						<sup>27</sup>
+					</td>
+					<td>70&#8239;000</td>
+				</tr>
+				<tr align=center>
+					<td align=left>Saturn</td>
+					<td>5.685 × 10
+						<sup>26</sup>
+					</td>
+					<td>58&#8239;232</td>
+				</tr>
+				<tr align=center>
+					<td align=left>Uranus</td>
+					<td>8.68 × 10
+						<sup>25</sup>
+					</td>
+					<td>25&#8239;362</td>
+				</tr>
+				<tr align=center>
+					<td align=left>Neptune</td>
+					<td>1.024 × 10
+						<sup>26</sup>
+					</td>
+					<td>24&#8239;622</td>
+				</tr>
+			</table>
 			<br>
 			<strong>Example:</strong> If a satellite is 800.0 km above the surface of the moon how fast must it move to travel in a circular
 			orbit?
@@ -402,6 +386,9 @@
 	<script src='../../../lib/gravityClass.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js'></script>
 	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
+	<script defer src="grav1.js"></script>
+	<script defer src="grav2.js"></script>
+	<script defer src="orbits.js"></script>
 </body>
 
 </html>

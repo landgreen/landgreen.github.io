@@ -14,7 +14,7 @@ const wave = function() {
     frequency: 0.2,
     period: 5,
     phase: 100,
-    width: window.innerWidth, //805
+    width: document.body.clientWidth,
     time: 0,
     water: true,
     baseF: 0.02,
@@ -101,7 +101,7 @@ const wave = function() {
     for (let x = 0; x < settings.width; ++x) {
       d += " L" + x + " " + (-Math.sin(((2 * Math.PI) / settings.wavelength) * (x - 1 + settings.phase)) * settings.amplitude + origin.y);
     }
-    d += "V500 L-100 500";
+    d += "h20 V500 L-100 500";
     sineWaveTarget.setAttribute("d", d);
   }
   drawSineWave();
