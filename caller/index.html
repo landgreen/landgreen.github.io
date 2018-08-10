@@ -24,15 +24,20 @@
       <button v-on:click="callRandom" class="blue">random</button>
       <button v-on:click="showSettings" class="showhide white">more</button>
       <div v-if="isSettingsSeen" class="settings">
-        <input type="checkbox" class="slideOne" v-model="draggable" v-on:click="saveToLocalSettings" /> Drag
-        <input type="checkbox" v-model="resizable" v-on:click="saveToLocalSettings" /> Resize
-        <input type="checkbox" v-model="verbose" v-on:click="saveToLocalSettings" /> Verbose
+        <form>
+          <input id="drag" type="checkbox" class="slideOne" v-model="draggable" v-on:click="saveToLocalSettings" />
+          <label for="drag">drag</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input id="resize" type="checkbox" v-model="resizable" v-on:click="saveToLocalSettings" />
+          <label for="resize">resize</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input id="verbose" type="checkbox" v-model="verbose" v-on:click="saveToLocalSettings" />
+          <label for="verbose">verbose</label>
+        </form>
         <br>
         <button id='add' v-on:click="addItem">add</button>
         <button v-on:click="removeItem">remove</button>
         <button v-on:click="resetCount">reset count</button>
         <button v-on:click="reset">reset names</button>
-        <button v-on:click="tidy">tidy</button>
+        <!-- <button v-on:click="tidy">tidy</button> -->
         <br>
         <button v-on:click="exportOut">save to JSON file</button>
         <button v-on:click="importIn">load from JSON file →</button>
