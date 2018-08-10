@@ -128,7 +128,7 @@ function MotionSimulation() {
 //***************************************
 //***************************************
 
-MotionSimulationTwo();
+// MotionSimulationTwo();
 
 function MotionSimulationTwo() {
   //set up canvas

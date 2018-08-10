@@ -201,7 +201,135 @@
 			acceleration.
 		</p>
 
+
+		<!--
+https://vuejs.org/
+https://github.com/NightCatSama/vue-slider-component
+https://nightcatsama.github.io/vue-slider-component/example/#demo3
+https://vuejs.org/v2/guide/components.html
+-->
+		<style>
+			.pink-color {
+				background-color: #fffbff;
+				/*   border-left: 2px solid rgba(250,150,150,0.7); */
+				border-right: 2px solid #fbb;
+				border-bottom: 2px solid #fbb;
+				border-top: 2px solid #fbb;
+			}
+
+			.cyan-color {
+				background-color: #fbffff;
+				border-left: 2px solid #bdd;
+				/*   border-right: 2px solid rgba(150,220,220,0.8); */
+				border-bottom: 2px solid #bdd;
+				border-top: 2px solid #bdd;
+			}
+
+			.vue-table {
+				margin: 20px 0px -1px 0px;
+				padding: 0;
+				border-collapse: collapse;
+				border: 1px solid #ccc;
+				width: 588px;
+				font-size: 125%;
+			}
+
+			.vue-table th,
+			.vue-table td {
+				color: #555;
+				padding: 12px 20px;
+				border-collapse: collapse;
+				text-align: left;
+			}
+
+			.vue-table th {
+				background: #444;
+				color: #fff;
+				text-transform: uppercase;
+				font-size: 0.85em;
+			}
+
+			.vue-table th.last {
+				border-right: none;
+			}
+
+			.vue-table tr:hover {
+				background: none;
+			}
+		</style>
 		<div class="hide-on-mobile">
+			<p>Play around with this ballistics calculator to see how time, velocity and acceleration can change the path of a projectile.</p>
+			<div id="values">
+				<table class="vue-table">
+					<tr>
+						<td colspan="2">
+							<div>
+								<vue-slider v-model="t" v-on:input="calcT" event-type="auto" width="auto" :height="6" :dot-size="20" :min="-5" :max="30"
+								 :interval="0.1"></vue-slider>
+							</div>
+							<div class="center">Δt =
+								<input v-on:input="calcT" v-model.number="t" type="number"> s</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							↔ Δx = {{x}} m
+						</td>
+						<td>
+							↕ Δy = {{y}} m
+						</td>
+					</tr>
+					<tr>
+						<td class='cyan-color'>
+							↔ u =
+							<input v-on:input="calcX" v-model.number="ux" type="number"> m/s
+						</td>
+						<td class='pink-color'>
+							↕ u =
+							<input v-on:input="calc" v-model.number="uy" type="number"> m/s
+						</td>
+					</tr>
+					<tr>
+						<td class='cyan-color'>↔ v = {{vx}} m/s</td>
+						<td class='pink-color'>↕ v = {{vy}} m/s</td>
+					</tr>
+					<tr>
+						<td>
+							↔ a =
+							<input v-on:input="calcX" v-model.number="ax" type="number"> m/s²
+						</td>
+						<td>
+							↕ a =
+							<input v-on:input="calc" v-model.number="ay" type="number"> m/s²
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<svg id='plot' class='graph' width="586" height="400" xmlns="http://www.w3.org/2000/svg">
+				<!--   acceleration vectors -->
+				<text text-anchor="middle" alignment-baseline="middle" x="550" y="40" font-size='20px' fill='#bbb'>a</text>
+				<polygon id='a' transform='translate(200 100) rotate(0)' points="2,0 -6,4 -6,-4" fill="#bbb" />
+				<line id='a_line' x1="550" y1="50" x2="0" y2="0" stroke="#bbb" stroke-width="2" />
+				<!--   initial velocity vectors-->
+				<line id='v_ux' x1="50" y1="200" x2="0" y2="200" stroke="rgba(150,220,220,0.8)" stroke-width="5" />
+				<line id='v_uy' x1="50" y1="200" x2="50" y2="0" stroke="rgba(250,150,150,0.7)" stroke-width="5" />
+				<!--   final velocity vectors-->
+				<line id='v_vx' x1="0" y1="0" x2="0" y2="0" stroke="rgba(150,220,220,0.8)" stroke-width="5" />
+				<line id='v_vy' x1="0" y1="0" x2="0" y2="0" stroke="rgba(250,150,150,0.7)" stroke-width="5" />
+				<!--   trajectory -->
+				<path d="M0 200 h600 M50 0 v1000" stroke="#888" stroke-width="1" fill='none' stroke-dasharray="5, 5" />
+				<path id='b-path-full' d="" stroke="#888" stroke-width="2" fill='none' stroke-linejoin="round" stroke-linecap="round" />
+				<path id='b-path' d="" stroke="#333" stroke-width="6" fill='none' stroke-linejoin="round" stroke-linecap="round" />
+				<circle id='b_path_start' cx="50" cy="200" r="7" fill='#000' />
+				<circle id='b_path_end' cx="100" cy="100" r="7" fill='#000' />
+				<!--     v-bind:style="{cx: cxEnd}" -->
+				<!--   axis -->
+			</svg>
+		</div>
+
+
+		<!-- <div class="hide-on-mobile">
 			<p>Play around with this 2-D motion solver to get a feel for what paths an object can take. You can also plug in numbers
 				to check your answer on 2-D motion problems.</p>
 			<p data-height="778" data-theme-id="light" data-slug-hash="ZJVGZR" data-default-tab="result" data-user="lilgreenland" data-pen-title="2-D ballistics calculator (vue.js)"
@@ -210,10 +338,10 @@
 				<a href="https://codepen.io/lilgreenland">@lilgreenland</a>) on
 				<a href="https://codepen.io">CodePen</a>.</p>
 			<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-		</div>
+		</div> -->
 
 		<div class='example'>
-			<canvas class='center' id="myCanvas" width='500' height='200'></canvas>
+			<canvas class='center' id="myCanvas" width='600' height='200'></canvas>
 			<br>
 			<strong>Example</strong>: A ball moving horizontally at 2 m/s rolls off a table that is 1.5 m high. Find how far the ball travels
 			horizontally before it hits the ground. Click to rewatch the simulation above.
@@ -278,7 +406,7 @@
 
 		<div class='example'>
 			<!-- <canvas id="graph2" width='600' height='200'></canvas> -->
-			<canvas id="myCanvas2" width='600' height='300'></canvas>
+			<!-- <canvas id="myCanvas2" width='600' height='300'></canvas> -->
 			<b>Example</b>: A pokéball is thrown at an angle of 60° above the horizon and a speed of 10 m/s. If the ball is thrown from
 			2.0 meters above the ground how far does the ball go before it misses the charmander and hits the ground.
 			<br>
@@ -337,7 +465,7 @@
 
 		<div class='example'>
 			<svg viewbox='-25 0 600 250'>
-				<rect x="-50" y="200" width="700" height="100" fill='#ddd' stroke='none' />
+				<rect x="-50" y="200" width="700" height="100" fill='#cdc' stroke='none' />
 				<path d="M2 200 Q 276 -195 550 200" fill='none' stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-dasharray="0, 30"
 				 stroke-linecap="round" />
 				<path d="M1 215 v11 v-5 h550 v5 v-11" fill='none' stroke="#000" stroke-width="2" stroke-linejoin="round" />
@@ -514,6 +642,9 @@
 	</script>
 	<script src='../../../lib/matter.min.js'></script>
 	<script src="2dMotion(Matter.js).js"></script>
+	<script src="../../../lib/vue.min.js"></script>
+	<script src="../../../lib/vueslider.js"></script>
+	<script src="ballistics.js"></script>
 
 </body>
 
