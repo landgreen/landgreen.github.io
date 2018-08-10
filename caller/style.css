@@ -1,0 +1,145 @@
+@import "https://fonts.googleapis.com/css?family=Roboto:400";
+body {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  /* font-size: 100%; */
+  background-color: #eee;
+  padding-top: 0;
+  color: #444;
+  margin: 0;
+  user-select: none;
+}
+
+header {
+  text-align: center;
+  margin: auto;
+  display: block;
+  background-color: #fff;
+  box-shadow: 0 8px 6px -6px #999;
+  padding: 0.5em;
+}
+
+footer {
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+select {
+  border: 0;
+  border-radius: 15px;
+  position: fixed;
+  bottom: 3px;
+  right: 3px;
+  z-index: 2;
+}
+
+.vue-grid-layout {
+  /* background: #eee; */
+  margin: auto;
+  max-width: 1000px;
+}
+
+.vue-grid-item {
+  /* border: 1px solid black; */
+  background-color: #fff;
+  box-shadow: 0 10px 7px -7px #aaa;
+  border-radius: 3px;
+}
+
+.text {
+  /* font-size: 1.3em; */
+  position: absolute;
+  /* font-size: 100%; */
+  top: 11px;
+  left: 11px;
+}
+.focus {
+  background-color: #4aa;
+  color: #fff;
+  box-shadow: 0 25px 25px -3px #aaa;
+}
+
+.num {
+  text-align: right;
+  font-size: 1.3em;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  opacity: 0.4;
+}
+
+button {
+  font-size: 1.5em;
+  border-radius: 4px;
+  color: #fff;
+  background: #444;
+  padding: 10px 20px 10px 20px;
+  margin: 10px;
+  text-decoration: none;
+  border: none;
+}
+
+button:hover {
+  background: #555;
+}
+button:active {
+  background: #777;
+}
+button:focus {
+  outline: 0;
+}
+
+.settings button {
+  font-size: 1em;
+  border-radius: 4px;
+  color: #000;
+  background: #fff;
+  border: 1px solid black;
+  padding: 10px;
+  margin: 5px;
+  text-decoration: none;
+}
+
+.blue {
+  background: #4aa;
+}
+.blue:hover {
+  background: #5bb;
+}
+.blue:active {
+  background: #6cc;
+}
+
+.white {
+  background: transparent;
+  color: #333;
+}
+.white:hover {
+  background: #ddd;
+}
+.white:active {
+  background: #bbb;
+}
+
+.showhide {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  color: #777;
+  background: transparent;
+}
+
+.undo {
+  position: absolute;
+  top: 0.5em;
+  left: 0.5em;
+  color: #777;
+  background: transparent;
+}
+
+#first-time {
+  margin: auto;
+  max-width: 600px;
+  font-size: 2em;
+}
