@@ -21,6 +21,7 @@
 
 	<script src="wave.js "></script>
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<script src='../../../lib/function-graph-SVG.js'></script>
 </head>
 
 <body>
@@ -61,6 +62,61 @@
 			<a href="https://www.youtube.com/watch?v=VOXbeRGVhaY">The Wedge</a> is a famous surf spot that has some dangerously fun waves because of constructive interference from a wave
 			reflected off a jetty.
 		</p>
+
+
+
+
+
+
+
+
+		<!-- <div class="example">
+			<svg id="SVG-graph-0" viewBox="0 0 600 299"></svg>
+			<script>
+				{
+					let settings = {
+						x0: 299,
+						y0: 149,
+						// stroke: "none",
+						stroke: "#000",
+						strokeWidth: 3,
+						// fill: "rgba(255,0,100,0.2)",
+						// positiveOnly: true,
+						gridSize: 50,
+						xLabel: "current (A)",
+						yLabel: "voltage (V)",
+						step: 1,
+						showMouseCoords: true,
+					}
+					let xOff1 = 0;
+					let xOff2 = 0;
+					funGraphSVG("SVG-graph-0", x => Math.sin(x + xOff1), settings);
+					settings.showAxis = false;
+					settings.stroke = "#3be"
+					settings.fill = "none"
+					funGraphSVG("SVG-graph-0", x => Math.sin(x + xOff1), settings);
+					settings.stroke = "#f09"
+					funGraphSVG("SVG-graph-0", x => 0.5 * Math.sin(x * 10 + xOff2), settings);
+					settings.updatePath = true
+
+					function cycle() {
+						xOff1 += 0.01
+						xOff2 -= 0.01
+						funGraphSVG("SVG-graph-0", x => Math.sin(x + xOff1) + 0.5 * Math.sin(x * 10 + xOff2), settings);
+						requestAnimationFrame(cycle)
+					}
+					cycle()
+				}
+			</script>
+		</div> -->
+
+
+
+
+
+
+
+
 
 		<div class='example'>
 			<strong>Question:</strong> A wave is created on each side of a rope with an amplitude of 0.3m. The waves
@@ -645,7 +701,7 @@
 				<br>This is the famous
 				<a href="https://www.youtube.com/watch?v=Iuv6hY6zsd0">double slit experiment</a>.
 				<br>Notice the alternating constructive and destructive interference pattern.
-				<svg viewBox="100,0,600,400">
+				<svg viewBox="100,0,600,600">
 					<g fill="none">
 						<g stroke="#f08" stroke-width="20">
 							<g transform="translate(300, 200)">
@@ -692,7 +748,6 @@
 			Reflection and refraction occur when the wave speed changes as it enters a new medium. Part of the wave refracts into the
 			new medium, and part of the wave reflects back into the old medium.
 		</p>
-		<p>These effects are produced because media have different propagation speeds.</p>
 		<svg viewBox="0 0 430 268">
 			<rect y="213.151" fill="#ddeef6" width="426.896" height="56.693" />
 			<line fill="none" stroke="#000" stroke-miterlimit="10" stroke-dasharray="3,3" x1="213.698" y1="48.108" x2="213.698" y2="300"
@@ -734,7 +789,10 @@
 			</g>
 		</svg>
 		<p>
-			<strong>Refraction</strong> = After entering a new medium, a wave will change its direction of propagation.
+			<strong>Refraction</strong> = After entering a new medium, a wave will change its direction of propagation. This occurs because
+			different media have different speeds.
+
+
 		</p>
 		<p>When slowing down, the wave will bend towards the normal.
 			<br> When speeding up, the wave will bend away from the normal.</p>
@@ -784,7 +842,7 @@
 					 width="300" height="200" />
 					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity:
 										 0.9; filter: alpha(opacity=8 0);"></div>
-					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 36px;">
+					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
 						<tr>
 							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif; ">Click to Run</td>
 						</tr>
