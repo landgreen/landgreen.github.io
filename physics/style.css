@@ -142,26 +142,6 @@ th {
 }
 
 /*classes_________________________________________*/
-.back {
-  text-align: center;
-  padding: 2em;
-  margin: 10em 0em 0em 0em;
-  width: 100%;
-  background-color: #333;
-}
-
-.back a {
-  background-color: #fff;
-  font-size: 1.25em;
-  font-weight: 300;
-  color: #000;
-  padding: 0.3em 1em;
-  border-radius: 1em;
-  /* border-bottom: 2px solid #666; */
-  /* border: 1px solid #eee; */
-  /* padding: 15px 1070px 15px 0px; */
-}
-
 .underlined {
   margin-top: 2em;
   margin-bottom: 0em;
@@ -325,6 +305,23 @@ header h1 a {
 header h1 a:hover {
   color: #fff;
   text-decoration: none;
+}
+
+/* footer setup_________________________________*/
+.back {
+  text-align: center;
+  padding: 2em;
+  margin: 10em 0em 0em 0em;
+  width: 100%;
+  background-color: #222;
+}
+
+.back a {
+  background-color: #fff;
+  font-size: 1.3em;
+  color: #000;
+  padding: 0.3em 1em;
+  border-radius: 1em;
 }
 
 /* responsive media rules for mobile________________________________ */
