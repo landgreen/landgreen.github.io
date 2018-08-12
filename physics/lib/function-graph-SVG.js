@@ -50,6 +50,10 @@ function funGraphSVG(
     bounds = { width: bounding.width, height: bounding.height };
   }
 
+  if (!updatePath) {
+    target.setAttribute("title", "My new Alt");
+  }
+
   if (showAxis && !updatePath) {
     const x = x0 + 0.5; //sharper lines, not between pixels
     const y = y0 + 0.5; //sharper lines, not between pixels

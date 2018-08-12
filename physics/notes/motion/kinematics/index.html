@@ -32,12 +32,33 @@
 	<article>
 		<p>These equations give us the average velocity and acceleration. They do not tell us the exact value of velocity or acceleration,
 			just an average.</p>
-		<h1>$$v_{\mathrm{avg}} = \frac{\Delta x}{\Delta t} \ \ \ \ \ a_{\mathrm{avg}} = \frac{\Delta v}{\Delta t} $$</h1>
+		<h1>$$v_{\mathrm{avg}} = \frac{\Delta x}{\Delta t} \quad \quad a_{\mathrm{avg}} = \frac{\Delta v}{\Delta t} $$</h1>
 		<h1 class='underlined'>The Equations of Motion</h1>
 		<p>If an object's
 			<strong>acceleration is constant</strong> the equations of motion are also true. They give exact values of initial and final velocity,
-			not averages. Here is the
-			<a href="http://dev.physicslab.org/document.aspx?doctype=3&filename=kinematics_derivationkinematicsequations.xml">derivation</a> of these equations.</p>
+			not averages.</p>
+		<div class="derive">
+			<details>
+				<summary>derivation of equations of motion for constant acceleration</summary>
+				<p>The first equation is the average acceleration equation rearranged with acceleration as a constant value.</p>
+				$$a_{\mathrm{avg}} = \frac{\Delta v}{\Delta t}$$ $$a = \frac{v - u}{\Delta t}$$ $$a \Delta t = v - u$$ $$\large \boxed{v
+				= u + a \Delta t}$$
+				<p>The second equations comes from how average velocity works when acceleration is constant.</p>
+				$$v_{\mathrm{avg}} = \tfrac{1}{2}(v+u)$$
+				<p>We can plug our previous equation into this to remove the final velocity.</p>
+				$$v_{\mathrm{avg}} = \tfrac{1}{2}({\color{#00e}u + a \Delta t}+u)$$ $$v_{\mathrm{avg}} = u + \tfrac{1}{2}a \Delta t$$
+				<p>This can be combined with the equation for average velocity.</p>
+				$$v_{\mathrm{avg}} = \frac{\Delta x}{\Delta t}$$ $${\color{#00e}u + \tfrac{1}{2}a \Delta t}= \frac{\Delta x}{\Delta t}$$
+				$$u\Delta t + \tfrac{1}{2}a \Delta t^2 = \Delta x$$ $$ \boxed{ \Delta x = u\Delta t + \tfrac{1}{2}a \Delta t^2 }$$
+				<p>The rest of the equations of motion are derived by plugging equations into each other to remove a variable.</p>
+
+
+				<p>I followed the derivations
+					<a href="https://physics.info/motion-equations/">here</a> and
+					<a href="http://dev.physicslab.org/document.aspx?doctype=3&filename=kinematics_derivationkinematicsequations.xml">here</a>.
+				</p>
+			</details>
+		</div>
 		<div class='definition'>
 			<h3>$$v = u+a \Delta t$$ $$\Delta x = u\Delta t + \tfrac{1}{2}a \Delta t^{2}$$ $$\Delta x = \tfrac{1}{2}(v+u)\Delta t$$ $$v^{2}
 				= u^{2}+2a \Delta x$$

@@ -154,6 +154,7 @@ function collision2d(el) {
         mass[1].velocity.x.toFixed(2) +
         ") = " +
         px.toFixed(2),
+      // Math.floor(px).toFixed(5),
       5,
       37
     );

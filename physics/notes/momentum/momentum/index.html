@@ -76,12 +76,12 @@
         <p class='underlined'>Conservation of Momentum</p>
         <p>Momentum is useful because the total momentum for a system of objects is
             <b>conserved</b>. This means the sum of all momentums won't change even if the objects collide.</p>
-        <canvas id="canvas0" width='600' height='270' onclick="collision0(this)"> </canvas>
+        <canvas id="canvas0" width='580' height='270' onclick="collision0(this)"> </canvas>
         <p>Click the simulation above a few times and note that the total momentum is the same before and after a collision.</p>
 
         <p>Conservation of momentum isn't true if one of the objects in the system interacts with an object outside the system.
             For example: conservation doesn't hold if an object hits the ground, and the ground isn't part of our system.</p>
-        <canvas id="canvas1" width='600' height='200' onclick="collision1(this)"> </canvas>
+        <canvas id="canvas1" width='580' height='200' onclick="collision1(this)"> </canvas>
         <br>
         <br>
         <br>
@@ -110,7 +110,7 @@
                 </g>
             </svg>
 
-            $$ \sum p_i = \sum p_f$$ $$m_1 u_1 + m_2u_2 + \cdots = m_1v_1 + m_2v_2 + \cdots$$ \(p\) = momentum [kg m/s]
+            $$ \sum p_i = \sum p_f$$ $$m_1 u_1 + m_2u_2 = m_1v_1 + m_2v_2$$ \(p\) = momentum [kg m/s]
             <em>vector</em>
             <br> \(u\) = initial velocity [m/s]
             <em>vector</em>
@@ -118,9 +118,11 @@
             <em>vector</em>
             <br>\(m\) = mass [kg]
         </div>
-
+        <p>
+            You cna extend conservation of momentum to any number of particles, not just two.
+        </p>
         <div class='example'>
-            <canvas id="canvas2" width='600' height='200' onclick="collision2(this)"> </canvas>
+            <canvas id="canvas2" width='580' height='200' onclick="collision2(this)"> </canvas>
             <strong>Example:</strong> A
             <span style='color:#0f0'>
                 <strong>green</strong>
@@ -141,7 +143,7 @@
         <div class='example'>
             <button id="pause">pause</button>
             <br>
-            <canvas id="canvas3" width='600' height='180' onclick="collision3(this)"> </canvas>
+            <canvas id="canvas3" width='580' height='180' onclick="collision3(this)"> </canvas>
             <table class='data'>
                 <tr>
                     <th>
@@ -208,7 +210,7 @@
 
 
         <div class='example'>
-            <canvas id="canvas4" width='600' height='200' onclick="stickyCollision0(this)"> </canvas>
+            <canvas id="canvas4" width='580' height='200' onclick="stickyCollision0(this)"> </canvas>
             <div id='ex0-question'>
                 <strong>Click to Randomize Problem:</strong> Click above to generate a random problem.
             </div>
@@ -220,7 +222,7 @@
 
 
         <div class='example'>
-            <canvas id="canvas5" width='600' height='200' onclick="stickyCollision1(this)"> </canvas>
+            <canvas id="canvas5" width='580' height='200' onclick="stickyCollision1(this)"> </canvas>
             <div id='ex1-question'>
                 <strong>Click to Randomize Problem:</strong> Click above to generate a random problem.
             </div>
@@ -239,7 +241,7 @@
             link up the vertical and horizontal equations.</p>
 
         <div class='example'>
-            <canvas id="canvas6" width='600' height='300' onclick="collision2d(this)"> </canvas>
+            <canvas id="canvas6" width='580' height='300' onclick="collision2d(this)"> </canvas>
             <strong>Horizontal:</strong> A
             <span style='color: pink'>
                 <strong>pink</strong>
