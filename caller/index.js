@@ -1,18 +1,18 @@
 let defaultPeriods = [
   [
-    { x: 0, y: 0, w: 3, h: 1, i: "0", name: "Ln0", num: 0, focus: false },
-    { x: 3, y: 0, w: 3, h: 1, i: "1", name: "Lan1", num: 0, focus: false },
-    { x: 6, y: 0, w: 3, h: 1, i: "2", name: "Lan2", num: 0, focus: false },
-    { x: 0, y: 1, w: 3, h: 1, i: "3", name: "Lan3", num: 0, focus: false },
-    { x: 3, y: 1, w: 3, h: 1, i: "4", name: "Lan4", num: 0, focus: false },
-    { x: 6, y: 1, w: 3, h: 1, i: "5", name: "Lan5", num: 0, focus: false },
-    { x: 0, y: 2, w: 2, h: 1, i: "6", name: "Lan6", num: 0, focus: false },
-    { x: 2, y: 2, w: 4, h: 1, i: "7", name: "Lan7", num: 0, focus: false },
-    { x: 0, y: 3, w: 3, h: 1, i: "8", name: "Lan8", num: 0, focus: false },
-    { x: 3, y: 3, w: 3, h: 1, i: "9", name: "Lan9", num: 0, focus: false },
-    { x: 6, y: 2, w: 3, h: 2, i: "10", name: "Lan10", num: 0, focus: false }
+    // { x: 0, y: 0, w: 3, h: 1, i: "0", name: "Ln0", num: 0, focus: false },
+    // { x: 3, y: 0, w: 3, h: 1, i: "1", name: "Lan1", num: 0, focus: false },
+    // { x: 6, y: 0, w: 3, h: 1, i: "2", name: "Lan2", num: 0, focus: false },
+    // { x: 0, y: 1, w: 3, h: 1, i: "3", name: "Lan3", num: 0, focus: false },
+    // { x: 3, y: 1, w: 3, h: 1, i: "4", name: "Lan4", num: 0, focus: false },
+    // { x: 6, y: 1, w: 3, h: 1, i: "5", name: "Lan5", num: 0, focus: false },
+    // { x: 0, y: 2, w: 2, h: 1, i: "6", name: "Lan6", num: 0, focus: false },
+    // { x: 2, y: 2, w: 4, h: 1, i: "7", name: "Lan7", num: 0, focus: false },
+    // { x: 0, y: 3, w: 3, h: 1, i: "8", name: "Lan8", num: 0, focus: false },
+    // { x: 3, y: 3, w: 3, h: 1, i: "9", name: "Lan9", num: 0, focus: false },
+    // { x: 6, y: 2, w: 3, h: 2, i: "10", name: "Lan10", num: 0, focus: false }
   ],
-  [{ x: 0, y: 0, w: 2, h: 1, i: "0", name: "Ln0", num: 3, focus: false }, { x: 2, y: 0, w: 2, h: 1, i: "1", name: "Lan1", num: 4, focus: false }],
+  [],
   [],
   [],
   [],
@@ -140,7 +140,7 @@ let p = new Vue({
       }
     },
     reset: function() {
-      if (prompt("To reset all names in all periods type yes", "no") === "yes") {
+      if (prompt("WARNING THIS WILL REMOVE ALL NAMES FROM ALL PERIODS.  Type yes to remove all names", "no") === "yes") {
         this.allPeriods = defaultPeriods;
         this.layout = this.allPeriods[this.period - 1];
         this.saveToLocal();
