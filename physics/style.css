@@ -81,7 +81,7 @@ input:focus {
 }
 
 input[type="range"] {
-  height: 8px;
+  height: 12px;
 }
 
 canvas {
