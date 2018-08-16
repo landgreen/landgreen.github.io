@@ -5,7 +5,11 @@
   ctx.font = "30px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
+  ctx.fillText(
+    "click to start simulation",
+    canvas.width / 2,
+    canvas.height / 2
+  );
 })();
 
 function charges8(el) {
@@ -123,7 +127,11 @@ function charges8(el) {
     current = current * 0.995 + Charge.teleport(q, 200) * 0.005;
     // console.log((current*60).toFixed(2))
     ctx.fillStyle = "#000";
-    ctx.fillText((current * 60).toFixed(1) + " e⁻/s", canvas.width - 5, canvas.height - 3);
+    ctx.fillText(
+      (current * 60).toFixed(1) + " e⁻/s",
+      canvas.width - 5,
+      canvas.height - 3
+    );
   }
 
   function cycle() {
