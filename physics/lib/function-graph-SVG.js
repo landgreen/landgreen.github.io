@@ -95,7 +95,7 @@ function funGraphSVG(
       }
       const newElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
       newElement.setAttribute("d", path);
-      newElement.style.stroke = "#eee";
+      newElement.style.stroke = "#ddd";
       newElement.style.fill = "none";
       newElement.style.strokeWidth = 1;
       target.appendChild(newElement);
@@ -289,13 +289,7 @@ function funGraphSVG(
           return pt.matrixTransform(target.getScreenCTM().inverse());
         }
         let mouse = cursorPoint(event);
-        // let rect = target.getBoundingClientRect();
-        // // console.log("rect:", rect);
-        // // console.log("bounds:", bounds);
-        // let mouse = {
-        //   x: event.clientX - rect.x,
-        //   y: event.clientY - rect.top
-        // };
+
         //move circle to mouse location
         const yPos = y0 - yScale * func((mouse.x - x0) / xScale);
         if (isFinite(yPos)) {

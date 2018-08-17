@@ -54,21 +54,26 @@ const schedule = {
     update();
   },
   regular: [
-    { start: 0, long: 7 * 60 + 30, name: "", showName: false, fill: color.passing },
-    { start: 7 * 60 + 30, long: 60, name: "P1", showName: true, fill: color.period },
-    { start: 8 * 60 + 30, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 8 * 60 + 33, long: 60, name: "P2", showName: true, fill: color.period },
-    { start: 9 * 60 + 33, long: 15, name: "snack", showName: false, fill: color.lunch },
-    { start: 9 * 60 + 48, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 9 * 60 + 51, long: 60, name: "P3", showName: true, fill: color.period },
-    { start: 10 * 60 + 51, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 10 * 60 + 54, long: 60, name: "P4", showName: true, fill: color.period },
-    { start: 11 * 60 + 54, long: 30, name: "lunch", showName: false, fill: color.lunch },
-    { start: 12 * 60 + 24, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 12 * 60 + 27, long: 60, name: "P5", showName: true, fill: color.period },
-    { start: 13 * 60 + 27, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 13 * 60 + 30, long: 60, name: "P6", showName: true, fill: color.period },
-    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "", showName: false, fill: color.passing }
+    { start: 0, long: 8 * 60 + 30, name: "", showName: false, fill: color.passing },
+    { start: 8 * 60 + 30, long: 50, name: "P1", showName: true, fill: color.period },
+    { start: 9 * 60 + 20, long: 3, name: "", showName: false, fill: color.passing },
+    { start: 9 * 60 + 23, long: 50, name: "P2", showName: true, fill: color.period },
+    { start: 10 * 60 + 13, long: 15, name: "snack", showName: false, fill: color.lunch },
+
+    { start: 10 * 60 + 28, long: 3, name: "", showName: false, fill: color.passing },
+    { start: 10 * 60 + 31, long: 50, name: "P3", showName: true, fill: color.period },
+    { start: 11 * 60 + 21, long: 3, name: "", showName: false, fill: color.passing },
+    { start: 11 * 60 + 24, long: 50, name: "P4", showName: true, fill: color.period },
+
+    { start: 12 * 60 + 14, long: 3, name: "", showName: false, fill: color.passing },
+    { start: 12 * 60 + 17, long: 50, name: "P5", showName: true, fill: color.period },
+    { start: 13 * 60 + 7, long: 35, name: "lunch", showName: false, fill: color.lunch },
+
+    { start: 13 * 60 + 42, long: 3, name: "", showName: false, fill: color.passing },
+    { start: 13 * 60 + 45, long: 50, name: "P6", showName: true, fill: color.period },
+    { start: 14 * 60 + 35, long: 3, name: "", showName: false, fill: color.passing },
+    { start: 14 * 60 + 38, long: 50, name: "P7", showName: true, fill: color.period },
+    { start: 14 * 60 + 30, long: 8 * 60 + 30, name: "", showName: false, fill: color.passing }
   ],
   advisory: [
     { start: 0, long: 7 * 60 + 30, name: "", showName: false, fill: color.passing },
@@ -195,7 +200,7 @@ function drawCurrentPeriod(b) {
   // document.getElementById("period-time").textContent = startTime + " - " + endTime;
   document.getElementById(schedule.mouse).setAttribute("fill", schedule[schedule.current][schedule.mouse].fill);
   //color now line
-  if (period.showName && (todayMinutes - period.start < 10 || todayMinutes - period.start > period.long - 15)) {
+  if (period.showName && (todayMinutes - period.start < 15 || todayMinutes - period.start > period.long - 15)) {
     document.getElementById("now").setAttribute("stroke", "#f05");
   } else {
     document.getElementById("now").setAttribute("stroke", "#000");
