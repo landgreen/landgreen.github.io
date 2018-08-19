@@ -9,11 +9,11 @@ const level = {
   boostScale: 0.000023,
   levels: ["skyscrapers", "rooftops", "warehouse", "highrise", "towers"],
   onLevel: 0,
-  start: function() {
+  start: function () {
     // game.levelsCleared = 3; //for testing to simulate all possible mobs spawns
     spawn.setSpawnList(); //picks a couple mobs types for a themed random mob spawns
     this[this.levels[this.onLevel]](); //picks the current map from the the levels array
-    //this.testingMap();
+    // this.testingMap();
     // this.skyscrapers();
     // this.rooftops();
     // this.warehouse();
@@ -26,7 +26,7 @@ const level = {
   //******************************************************************************************************************
   //******************************************************************************************************************
   //empty map for testing mobs
-  testingMap: function() {
+  testingMap: function () {
     // game.levelsCleared = 5; //for testing to simulate all possible mobs spawns
     // for (let i = 0; i < 5; i++) {
     //   game.dmgScale += 0.4; //damage done by mobs increases each level
@@ -79,14 +79,14 @@ const level = {
     spawn.bodyRect(700, -200, 50, 50);
     spawn.bodyRect(-100, -260, 250, 10);
 
-    spawn.starter(-600, -550);
-    // for (let i = 0; i < 4; ++i) {
-    //   spawn.shooter(800, -1150);
-    // }
+    spawn.group(-600, -550);
+    for (let i = 0; i < 4; ++i) {
+      spawn.chaser(800, -1150);
+    }
     // spawn.nodeBoss(900, -1070, "shooter", 9);
     // spawn.randomBoss(-100, -1470);
   },
-  rooftops: function() {
+  rooftops: function () {
     document.body.style.backgroundColor = "#eee4e4";
     // this.addZone(-700, -50, 4100, 100, "death");
     mech.setPosToSpawn(-450, -2050); //normal spawn
@@ -102,15 +102,69 @@ const level = {
     powerUps.spawnStartingPowerUps(2450, -1675);
 
     //foreground
-    level.fill.push({ x: -650, y: -2300, width: 450, height: 300, color: "rgba(0,0,0,0.15)" });
-    level.fill.push({ x: 3450, y: -1250, width: 1100, height: 1250, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: 4550, y: -725, width: 900, height: 725, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: 3400, y: 100, width: 2150, height: 900, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: -700, y: -1900, width: 2100, height: 2900, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: 1950, y: -1550, width: 1025, height: 550, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: 1600, y: -900, width: 1600, height: 1900, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: 3450, y: -1550, width: 350, height: 300, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: 700, y: -2225, width: 700, height: 225, color: "rgba(0,0,0,0.1)" });
+    level.fill.push({
+      x: -650,
+      y: -2300,
+      width: 450,
+      height: 300,
+      color: "rgba(0,0,0,0.15)"
+    });
+    level.fill.push({
+      x: 3450,
+      y: -1250,
+      width: 1100,
+      height: 1250,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: 4550,
+      y: -725,
+      width: 900,
+      height: 725,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: 3400,
+      y: 100,
+      width: 2150,
+      height: 900,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: -700,
+      y: -1900,
+      width: 2100,
+      height: 2900,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: 1950,
+      y: -1550,
+      width: 1025,
+      height: 550,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: 1600,
+      y: -900,
+      width: 1600,
+      height: 1900,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: 3450,
+      y: -1550,
+      width: 350,
+      height: 300,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: 700,
+      y: -2225,
+      width: 700,
+      height: 225,
+      color: "rgba(0,0,0,0.1)"
+    });
 
     //spawn.mapRect(-700, 0, 6250, 100); //ground
     spawn.mapRect(3400, 0, 2150, 100); //ground
@@ -187,7 +241,7 @@ const level = {
     spawn.randomBoss(4900, -1200, 0); //
     //spawn.randomBoss(4850, -1250,0.7);
   },
-  skyscrapers: function() {
+  skyscrapers: function () {
     mech.setPosToSpawn(-50, -50); //normal spawn
     //mech.setPosToSpawn(1550, -1200); //spawn left high
     //mech.setPosToSpawn(1800, -2000); //spawn near exit
@@ -202,18 +256,72 @@ const level = {
     document.body.style.backgroundColor = "#dcdcde";
 
     //foreground
-    level.fill.push({ x: 2500, y: -1100, width: 450, height: 250, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: 2400, y: -550, width: 600, height: 150, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: 2550, y: -1650, width: 250, height: 200, color: "rgba(0,0,0,0.1)" });
+    level.fill.push({
+      x: 2500,
+      y: -1100,
+      width: 450,
+      height: 250,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: 2400,
+      y: -550,
+      width: 600,
+      height: 150,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: 2550,
+      y: -1650,
+      width: 250,
+      height: 200,
+      color: "rgba(0,0,0,0.1)"
+    });
     //level.fill.push({ x: 1350, y: -2100, width: 400, height: 250, color: "rgba(0,255,255,0.1)" });
-    level.fill.push({ x: 700, y: -110, width: 400, height: 110, color: "rgba(0,0,0,0.2)" });
-    level.fill.push({ x: 3600, y: -110, width: 400, height: 110, color: "rgba(0,0,0,0.2)" });
-    level.fill.push({ x: -250, y: -300, width: 450, height: 300, color: "rgba(0,0,0,0.15)" });
+    level.fill.push({
+      x: 700,
+      y: -110,
+      width: 400,
+      height: 110,
+      color: "rgba(0,0,0,0.2)"
+    });
+    level.fill.push({
+      x: 3600,
+      y: -110,
+      width: 400,
+      height: 110,
+      color: "rgba(0,0,0,0.2)"
+    });
+    level.fill.push({
+      x: -250,
+      y: -300,
+      width: 450,
+      height: 300,
+      color: "rgba(0,0,0,0.15)"
+    });
 
     //background
-    level.fillBG.push({ x: 1300, y: -1800, width: 750, height: 1800, color: "#d4d4d7" });
-    level.fillBG.push({ x: 3350, y: -1325, width: 50, height: 1325, color: "#d4d4d7" });
-    level.fillBG.push({ x: 1350, y: -2100, width: 400, height: 250, color: "#d4f4f4" });
+    level.fillBG.push({
+      x: 1300,
+      y: -1800,
+      width: 750,
+      height: 1800,
+      color: "#d4d4d7"
+    });
+    level.fillBG.push({
+      x: 3350,
+      y: -1325,
+      width: 50,
+      height: 1325,
+      color: "#d4d4d7"
+    });
+    level.fillBG.push({
+      x: 1350,
+      y: -2100,
+      width: 400,
+      height: 250,
+      color: "#d4f4f4"
+    });
 
     spawn.mapRect(-300, 0, 5000, 300); //***********ground
     spawn.mapRect(-300, -350, 50, 400); //far left starting left wall
@@ -280,7 +388,7 @@ const level = {
     spawn.randomBoss(3700, -1500, 0.4);
     spawn.randomBoss(1700, -900, 0.4);
   },
-  highrise: function() {
+  highrise: function () {
     document.body.style.backgroundColor = "#fafcff";
     mech.setPosToSpawn(0, -700); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
@@ -299,12 +407,42 @@ const level = {
     spawn.debris(-2625, -600, 925); //20 debris per level
     // if (!game.levelsCleared) powerUps.spawn(2450, -1675, "gun", false);
     //background
-    level.fillBG.push({ x: -4425, y: -3050, width: 425, height: 275, color: "#cff" });
+    level.fillBG.push({
+      x: -4425,
+      y: -3050,
+      width: 425,
+      height: 275,
+      color: "#cff"
+    });
     //foreground
-    level.fill.push({ x: -1650, y: -1575, width: 550, height: 425, color: "rgba(10,10,0,0.12)" });
-    level.fill.push({ x: -2600, y: -2400, width: 450, height: 1800, color: "rgba(10,10,0,0.12)" });
-    level.fill.push({ x: -3425, y: -2150, width: 525, height: 1550, color: "rgba(10,10,0,0.12)" });
-    level.fill.push({ x: -1850, y: -1150, width: 2025, height: 1150, color: "rgba(10,10,0,0.12)" });
+    level.fill.push({
+      x: -1650,
+      y: -1575,
+      width: 550,
+      height: 425,
+      color: "rgba(10,10,0,0.12)"
+    });
+    level.fill.push({
+      x: -2600,
+      y: -2400,
+      width: 450,
+      height: 1800,
+      color: "rgba(10,10,0,0.12)"
+    });
+    level.fill.push({
+      x: -3425,
+      y: -2150,
+      width: 525,
+      height: 1550,
+      color: "rgba(10,10,0,0.12)"
+    });
+    level.fill.push({
+      x: -1850,
+      y: -1150,
+      width: 2025,
+      height: 1150,
+      color: "rgba(10,10,0,0.12)"
+    });
 
     //building 1
     spawn.bodyRect(-1000, -675, 25, 25);
@@ -393,7 +531,7 @@ const level = {
     spawn.randomBoss(-3250, -2700, 0.2);
     spawn.randomBoss(-2450, -1100, 0);
   },
-  warehouse: function() {
+  warehouse: function () {
     document.body.style.backgroundColor = "#bbb";
     mech.setPosToSpawn(25, -60); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
@@ -415,10 +553,34 @@ const level = {
     // level.fill.push({ x: -2600, y: -150, width: 700, height: 200, color: "rgba(0,0,0,0.05)"});
     //background
     const BGColor = "#f3f3ea";
-    level.fillBG.push({ x: -3025, y: 50, width: 4125, height: 1350, color: BGColor });
-    level.fillBG.push({ x: -1800, y: -500, width: 1975, height: 555, color: BGColor });
-    level.fillBG.push({ x: -2600, y: -150, width: 700, height: 205, color: BGColor });
-    level.fillBG.push({ x: 300, y: -250, width: 350, height: 250, color: "#cff" });
+    level.fillBG.push({
+      x: -3025,
+      y: 50,
+      width: 4125,
+      height: 1350,
+      color: BGColor
+    });
+    level.fillBG.push({
+      x: -1800,
+      y: -500,
+      width: 1975,
+      height: 555,
+      color: BGColor
+    });
+    level.fillBG.push({
+      x: -2600,
+      y: -150,
+      width: 700,
+      height: 205,
+      color: BGColor
+    });
+    level.fillBG.push({
+      x: 300,
+      y: -250,
+      width: 350,
+      height: 250,
+      color: "#cff"
+    });
     spawn.mapRect(-1500, 0, 2750, 100);
     spawn.mapRect(175, -600, 125, 700);
     spawn.mapRect(-1900, -600, 2200, 100);
@@ -532,7 +694,7 @@ const level = {
     //spawn.randomMob(1120, -1200, 0.3);
     //spawn.randomSmallMob(2200, -1775); //
   },
-  towers: function() {
+  towers: function () {
     mech.setPosToSpawn(1375, -1550); //normal spawn
     level.enter.x = mech.spawnPos.x - 50;
     level.enter.y = mech.spawnPos.y + 20;
@@ -542,13 +704,49 @@ const level = {
 
     document.body.style.backgroundColor = "#e0e5e0";
     //foreground
-    level.fill.push({ x: -550, y: -1700, width: 1300, height: 1700, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: 750, y: -1450, width: 650, height: 1450, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: 750, y: -1950, width: 800, height: 450, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: 3000, y: -1000, width: 650, height: 1000, color: "rgba(0,0,0,0.1)" });
-    level.fill.push({ x: 3650, y: -1300, width: 1300, height: 1300, color: "rgba(0,0,0,0.1)" });
+    level.fill.push({
+      x: -550,
+      y: -1700,
+      width: 1300,
+      height: 1700,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: 750,
+      y: -1450,
+      width: 650,
+      height: 1450,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: 750,
+      y: -1950,
+      width: 800,
+      height: 450,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: 3000,
+      y: -1000,
+      width: 650,
+      height: 1000,
+      color: "rgba(0,0,0,0.1)"
+    });
+    level.fill.push({
+      x: 3650,
+      y: -1300,
+      width: 1300,
+      height: 1300,
+      color: "rgba(0,0,0,0.1)"
+    });
     //background
-    level.fillBG.push({ x: 2495, y: -500, width: 10, height: 525, color: "#ccc" });
+    level.fillBG.push({
+      x: 2495,
+      y: -500,
+      width: 10,
+      height: 525,
+      color: "#ccc"
+    });
 
     //mech.setPosToSpawn(600, -1200); //normal spawn
     //mech.setPosToSpawn(525, -150); //ground first building
@@ -647,7 +845,7 @@ const level = {
   enter: {
     x: 0,
     y: 0,
-    draw: function() {
+    draw: function () {
       ctx.beginPath();
       ctx.moveTo(this.x, this.y + 30);
       ctx.lineTo(this.x, this.y - 80);
@@ -661,7 +859,7 @@ const level = {
   exit: {
     x: 0,
     y: 0,
-    draw: function() {
+    draw: function () {
       ctx.beginPath();
       ctx.moveTo(this.x, this.y + 30);
       ctx.lineTo(this.x, this.y - 80);
@@ -673,7 +871,7 @@ const level = {
     }
   },
   fillBG: [],
-  drawFillBGs: function() {
+  drawFillBGs: function () {
     for (let i = 0, len = level.fillBG.length; i < len; ++i) {
       const f = level.fillBG[i];
       ctx.fillStyle = f.color;
@@ -682,7 +880,7 @@ const level = {
   },
 
   fill: [],
-  drawFills: function() {
+  drawFills: function () {
     for (let i = 0, len = level.fill.length; i < len; ++i) {
       const f = level.fill[i];
       ctx.fillStyle = f.color;
@@ -690,7 +888,7 @@ const level = {
     }
   },
   zones: [], //zone do actions when player is in a region   // to effect everything use a query
-  checkZones: function() {
+  checkZones: function () {
     for (let i = 0, len = this.zones.length; i < len; ++i) {
       if (
         player.position.x > this.zones[i].x1 &&
@@ -703,7 +901,7 @@ const level = {
       }
     }
   },
-  addZone: function(x, y, width, height, action, info) {
+  addZone: function (x, y, width, height, action, info) {
     this.zones[this.zones.length] = {
       x1: x,
       y1: y - 150,
@@ -714,19 +912,19 @@ const level = {
     };
   },
   zoneActions: {
-    fling: function(i) {
+    fling: function (i) {
       Matter.Body.setVelocity(player, {
         x: level.zones[i].info.Vx,
         y: level.zones[i].info.Vy
       });
     },
-    nextLevel: function() {
+    nextLevel: function () {
       //enter when player isn't falling
       if (player.velocity.y < 0.1) {
         //increases difficulty
         game.levelsCleared++;
-        game.dmgScale += 0.3; //damage done by mobs increases each level
-        b.dmgScale *= 0.92; //damage done by player decreases each level
+        game.dmgScale += 0.25; //damage done by mobs increases each level
+        b.dmgScale *= 0.93; //damage done by player decreases each level
         //cycles map to next level
         level.onLevel++;
         if (level.onLevel > level.levels.length - 1) level.onLevel = 0;
@@ -734,14 +932,14 @@ const level = {
         game.clearNow = true; //triggers in the physics engine to remove all physics bodies
       }
     },
-    death: function() {
+    death: function () {
       mech.death();
     },
-    laser: function(i) {
+    laser: function (i) {
       //draw these in game with spawn.background
       mech.damage(level.zones[i].info.dmg);
     },
-    slow: function() {
+    slow: function () {
       Matter.Body.setVelocity(player, {
         x: player.velocity.x * 0.5,
         y: player.velocity.y * 0.5
@@ -749,7 +947,7 @@ const level = {
     }
   },
   queryList: [], //queries do actions on many objects in regions  (for only player use a zone)
-  checkQuery: function() {
+  checkQuery: function () {
     let bounds, action, info;
 
     function isInZone(targetArray) {
@@ -768,7 +966,9 @@ const level = {
     }
   },
   //oddly query regions can't get smaller than 50 width?
-  addQueryRegion: function(x, y, width, height, action, groups = [[player], body, mob, powerUp, bullet], info) {
+  addQueryRegion: function (x, y, width, height, action, groups = [
+    [player], body, mob, powerUp, bullet
+  ], info) {
     this.queryList[this.queryList.length] = {
       bounds: {
         min: {
@@ -786,7 +986,7 @@ const level = {
     };
   },
   queryActions: {
-    bounce: function(target, info) {
+    bounce: function (target, info) {
       //jerky fling upwards
       Matter.Body.setVelocity(target, {
         x: info.Vx + (Math.random() - 0.5) * 6,
@@ -794,7 +994,7 @@ const level = {
       });
       target.torque = (Math.random() - 0.5) * 2 * target.mass;
     },
-    boost: function(target, info) {
+    boost: function (target, info) {
       if (target.velocity.y < 0) {
         mech.buttonCD_jump = 0; //reset short jump counter to pre vent short jumps on boosts
         Matter.Body.setVelocity(target, {
@@ -803,7 +1003,7 @@ const level = {
         });
       }
     },
-    force: function(target, info) {
+    force: function (target, info) {
       if (target.velocity.y < 0) {
         //gently force up if already on the way up
         target.force.x += info.Vx * target.mass;
@@ -812,14 +1012,14 @@ const level = {
         target.force.y -= 0.0007 * target.mass; //gently fall in on the way down
       }
     },
-    antiGrav: function(target) {
+    antiGrav: function (target) {
       target.force.y -= 0.0011 * target.mass;
     },
-    death: function(target) {
+    death: function (target) {
       target.death();
     }
   },
-  levelAnnounce: function() {
+  levelAnnounce: function () {
     let text = "L" + (game.levelsCleared + 1) + " " + level.levels[level.onLevel];
     // text = "Level " + (game.levelsCleared + 1) + ": " + spawn.pickList[0] + "s + " + spawn.pickList[1] + "s";
     game.makeTextLog(text, 300);
@@ -834,7 +1034,7 @@ const level = {
     // this.speech(text);
     // game.makeTextLog(text, 360);
   },
-  addToWorld: function(mapName) {
+  addToWorld: function (mapName) {
     //needs to be run to put bodies into the world
     for (let i = 0; i < body.length; i++) {
       //body[i].collisionFilter.group = 0;
