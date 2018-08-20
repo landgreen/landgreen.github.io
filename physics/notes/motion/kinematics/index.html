@@ -101,16 +101,9 @@
 			</details>
 		</div>
 
-
 		<div class='example'>
-			<strong>Example:</strong> A bullet aimed straight
-			<span class='highlight'>up</span> leaves the barrel of a gun at
-			<span class='highlight'>400 m/s</span>. It accelerates
-			<span class='highlight'>down</span> at
-			<span class='highlight'>9.8 m/s²</span>. If the bullet travels for
-			<span class='highlight'>40.8 s</span> before stopping how
-			<span class='highlight'>far</span> up did it go?
-			<br>(In the real world a bullet would stop quicker because of air friction.)
+			<strong>Example:</strong> A bullet aimed straight up leaves the barrel of a gun at 400 m/s. It accelerates down at 9.8 m/s². If
+			the bullet travels for 40.8 s before stopping how far up did it go? Ignore air friction.
 			<details>
 				<summary>solution</summary>
 				$$\text{list known and unknown variables}$$ $$u = 400 \, \mathrm{\tfrac{m}{s}}$$ $$a = -9.8 \, \mathrm{\tfrac{m}{s^{2}}}$$
@@ -309,10 +302,10 @@ https://vuejs.org/v2/guide/components.html
 						<td colspan="2">
 							<div>
 								<vue-slider v-model="t" v-on:input="calcT" event-type="auto" width="auto" :height="6" :dot-size="20" :min="-5" :max="30"
-								 :interval="0.1"></vue-slider>
+								    :interval="0.1"></vue-slider>
 							</div>
 							<div class="center">Δt =
-								<input v-on:input="calcT" v-model.number="t" type="number"> s</div>
+								<input v-on:input="calcT" v-model.number="t" type="number" step="0.01"> s</div>
 						</td>
 					</tr>
 					<tr>
@@ -326,11 +319,11 @@ https://vuejs.org/v2/guide/components.html
 					<tr>
 						<td class='cyan-color'>
 							↔ u =
-							<input v-on:input="calcX" v-model.number="ux" type="number"> m/s
+							<input v-on:input="calcX" v-model.number="ux" type="number" step="0.1"> m/s
 						</td>
 						<td class='pink-color'>
 							↕ u =
-							<input v-on:input="calc" v-model.number="uy" type="number"> m/s
+							<input v-on:input="calc" v-model.number="uy" type="number" step="0.1"> m/s
 						</td>
 					</tr>
 					<tr>
@@ -340,11 +333,11 @@ https://vuejs.org/v2/guide/components.html
 					<tr>
 						<td>
 							↔ a =
-							<input v-on:input="calcX" v-model.number="ax" type="number"> m/s²
+							<input v-on:input="calcX" v-model.number="ax" type="number" step="0.1"> m/s²
 						</td>
 						<td>
 							↕ a =
-							<input v-on:input="calc" v-model.number="ay" type="number"> m/s²
+							<input v-on:input="calc" v-model.number="ay" type="number" step="0.1"> m/s²
 						</td>
 					</tr>
 				</table>
@@ -511,7 +504,7 @@ https://vuejs.org/v2/guide/components.html
 			<svg viewbox='-25 0 600 250'>
 				<rect x="-50" y="200" width="700" height="100" fill='#cdc' stroke='none' />
 				<path d="M2 200 Q 276 -195 550 200" fill='none' stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-dasharray="0, 30"
-				 stroke-linecap="round" />
+				    stroke-linecap="round" />
 				<path d="M1 215 v11 v-5 h550 v5 v-11" fill='none' stroke="#000" stroke-width="2" stroke-linejoin="round" />
 				<text x="276" y="243" text-anchor="middle" font-size="20" fill='#000'>Δx</text>
 				<text x="42" y="130" text-anchor="middle" font-size="20" fill='#000'>v</text>

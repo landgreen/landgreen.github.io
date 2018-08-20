@@ -532,7 +532,6 @@ const b = {
       ammoPack: 3,
       have: false,
       fire: function () {
-        // b.muzzleFlash();
         const me = bullet.length;
         const dir = mech.angle;
         bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 22, b.fireAttributes(dir));
@@ -541,7 +540,7 @@ const b = {
         b.drawOneBullet(bullet[me].vertices);
         Matter.Body.setDensity(bullet[me], 0.000001);
         bullet[me].endCycle = game.cycle + 140;
-        bullet[me].restitution = 0.5;
+        bullet[me].restitution = 0.3;
         // bullet[me].frictionAir = 0.01;
         bullet[me].friction = 0.15;
         bullet[me].explodeRad = 350;
@@ -554,73 +553,51 @@ const b = {
           //extra gravity for harder arcs
           this.force.y += this.mass * 0.0022;
           //draw timer
-          // if (!(game.cycle % 10)) {
-          //   if (this.isFlashOn) {
-          //     this.isFlashOn = false;
-          //   } else {
-          //     this.isFlashOn = true;
-          //   }
-          // }
-          // if (this.isFlashOn) {
-          //   ctx.fillStyle = "#000";
-          //   ctx.beginPath();
-          //   ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-          //   ctx.fill();
-          //   //draw clock on timer
-          //   ctx.fillStyle = "#f12";
-          //   ctx.beginPath();
-          //   ctx.arc(this.position.x, this.position.y, this.radius * (1 - (this.endCycle - game.cycle) / 140), 0, 2 * Math.PI);
-          //   ctx.fill();
-          // }
+          if (!(game.cycle % 10)) {
+            if (this.isFlashOn) {
+              this.isFlashOn = false;
+            } else {
+              this.isFlashOn = true;
+            }
+          }
+          if (this.isFlashOn) {
+            ctx.fillStyle = "#000";
+            ctx.beginPath();
+            ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
+            ctx.fill();
+            //draw clock on timer
+            ctx.fillStyle = "#f12";
+            ctx.beginPath();
+            ctx.arc(this.position.x, this.position.y, this.radius * (1 - (this.endCycle - game.cycle) / 140), 0, 2 * Math.PI);
+            ctx.fill();
+          }
         };
       }
     },
     {
       name: "M80",
       ammo: 0,
-      ammoPack: 20,
+      ammoPack: 50,
       have: false,
       fire: function () {
-        // b.muzzleFlash();
         const me = bullet.length;
         const dir = mech.angle; // + Math.random() * 0.05;
-        bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 15, b.fireAttributes(dir));
-        bullet[me].radius = 15; //used from drawing timer
-        b.fireProps(10, 26 + Math.floor(Math.random() * 4), dir, me); //cd , speed
+        bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 10, b.fireAttributes(dir));
+        b.fireProps(9, 16 + Math.floor(Math.random() * 4), dir, me); //cd , speed
         b.drawOneBullet(bullet[me].vertices);
         Matter.Body.setDensity(bullet[me], 0.000001);
         bullet[me].totalCycles = 85 + Math.floor(Math.random() * 20);
         bullet[me].endCycle = game.cycle + bullet[me].totalCycles;
-        bullet[me].restitution = 0.6;
-        bullet[me].explodeRad = 135;
+        bullet[me].restitution = 0.5;
+        bullet[me].explodeRad = 100;
         bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
         bullet[me].minDmgSpeed = 1;
         bullet[me].onDmg = function () {
           this.endCycle = 0; //bullet ends cycle after doing damage  //this triggers explosion
         };
-        bullet[me].isFlashOn = true;
         bullet[me].do = function () {
           //extra gravity for harder arcs
-          this.force.y += this.mass * 0.0022;
-          //draw timer
-          // if (!(game.cycle % 10)) {
-          //   if (this.isFlashOn) {
-          //     this.isFlashOn = false;
-          //   } else {
-          //     this.isFlashOn = true;
-          //   }
-          // }
-          // if (this.isFlashOn) {
-          //   ctx.fillStyle = "#000";
-          //   ctx.beginPath();
-          //   ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-          //   ctx.fill();
-          //   //draw clock on timer
-          //   ctx.fillStyle = "#f12";
-          //   ctx.beginPath();
-          //   ctx.arc(this.position.x, this.position.y, this.radius * (1 - (this.endCycle - game.cycle) / this.totalCycles), 0, 2 * Math.PI);
-          //   ctx.fill();
-          // }
+          this.force.y += this.mass * 0.0025;
         };
       }
     },
@@ -657,7 +634,7 @@ const b = {
           bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 7, b.fireAttributes(dir));
           b.fireProps(20, 30, dir, me); //cd , speed
           Matter.Body.setDensity(bullet[me], 0.0001);
-          bullet[me].endCycle = game.cycle + 300;
+          bullet[me].endCycle = game.cycle + 360;
           bullet[me].dmg = 0.5;
           bullet[me].minDmgSpeed = 0;
           bullet[me].restitution = 0.96;
