@@ -1,22 +1,4 @@
 //http://newwestcharter.org/high-school-daily-bell-schedule/
-
-// var canvas = document.getElementById("canvas");
-// var ctx = canvas.getContext("2d");
-
-// function trianglify() {
-//   colors = ["Greys", "Pastel1", "PuBu"];
-//   var pattern = Trianglify({
-//     width: window.innerWidth,
-//     height: window.innerHeight,
-//     cell_size: Math.floor(50 + 300 * Math.random()), //150, //75
-//     variance: 0.75
-//     //https://bl.ocks.org/mbostock/5577023
-//     // x_colors: "RdGy" //"PuBuGn" //"Greys", //"Pastel1" //"PuBu",
-//     //y_colors: "Greys" //"Pastel1" //"PuBu",
-//   });
-//   pattern.canvas(canvas);
-// }
-
 let todayMinutes = 0;
 let startMinutes = 440;
 let timeMode = 0;
