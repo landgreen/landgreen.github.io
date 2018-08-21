@@ -350,48 +350,6 @@
 			</script>
 		</div>
 		<div class='example'>
-			<strong>Graph:</strong> Draw the position vs. time and velocity vs. time graphs for an object moving at 2 m/s for 10 s.
-			<details id="example0">
-				<summary>solution</summary>
-				<svg id="SVG-graph-12" width="280" height="250"></svg> &nbsp;
-				<svg id="SVG-graph-13" width="280" height="250"></svg>
-				<script defer>
-					// funGraphSVG() don't work inside <details>
-					// this is my workaround
-					document.getElementById("example0").addEventListener("toggle", handler0);
-
-					function handler0(e) {
-						e.target.removeEventListener(e.type, arguments.callee); // remove this handler
-						funGraphSVG("SVG-graph-12", x => 2 * x, {
-							x0: 20,
-							y0: 230,
-							stroke: "rgba(255,0,50,1)",
-							step: 10,
-							gridSize: 50,
-							strokeWidth: 3,
-							xLabel: "time (s)",
-							yLabel: "position (m)",
-							positiveOnly: true,
-							showMouseCoords: true
-						});
-						funGraphSVG("SVG-graph-13", x => 2, {
-							x0: 20,
-							y0: 230,
-							stroke: "rgba(150,30,255,1)",
-							step: 10,
-							gridSize: 50,
-							strokeWidth: 3,
-							xLabel: "time (s)",
-							yLabel: "velocity (m/s)",
-							positiveOnly: true,
-							showMouseCoords: true
-						});
-					}
-				</script>
-			</details>
-		</div>
-
-		<div class='example'>
 			<svg id="SVG-graph-16" viewBox="0 0 600 240"> </svg>
 			<script defer>
 				funGraphSVG("SVG-graph-16", x => 1 / 4 * x, {
@@ -407,7 +365,6 @@
 					yLabel: "velocity (m/s)",
 				});
 			</script>
-
 			<strong>Graph:</strong> Use this graph of velocity vs. time to determine acceleration.
 			<details>
 				<summary>solution</summary>
@@ -463,6 +420,47 @@
 							step: 10,
 							xScale: 50,
 							yScale: 2.5,
+							gridSize: 50,
+							strokeWidth: 3,
+							xLabel: "time (s)",
+							yLabel: "velocity (m/s)",
+							positiveOnly: true,
+							showMouseCoords: true
+						});
+					}
+				</script>
+			</details>
+		</div>
+		<div class='example'>
+			<strong>Graph:</strong> Draw the position vs. time and velocity vs. time graphs for an object moving at 2 m/s for 10 s.
+			<details id="example0">
+				<summary>solution</summary>
+				<svg id="SVG-graph-12" width="280" height="250"></svg> &nbsp;
+				<svg id="SVG-graph-13" width="280" height="250"></svg>
+				<script defer>
+					// funGraphSVG() don't work inside <details>
+					// this is my workaround
+					document.getElementById("example0").addEventListener("toggle", handler0);
+
+					function handler0(e) {
+						e.target.removeEventListener(e.type, arguments.callee); // remove this handler
+						funGraphSVG("SVG-graph-12", x => 2 * x, {
+							x0: 20,
+							y0: 230,
+							stroke: "rgba(255,0,50,1)",
+							step: 10,
+							gridSize: 50,
+							strokeWidth: 3,
+							xLabel: "time (s)",
+							yLabel: "position (m)",
+							positiveOnly: true,
+							showMouseCoords: true
+						});
+						funGraphSVG("SVG-graph-13", x => 2, {
+							x0: 20,
+							y0: 230,
+							stroke: "rgba(150,30,255,1)",
+							step: 10,
 							gridSize: 50,
 							strokeWidth: 3,
 							xLabel: "time (s)",
