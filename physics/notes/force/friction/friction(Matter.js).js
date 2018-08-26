@@ -21,7 +21,7 @@ function MotionSimulation() {
   const engine = Engine.create();
   const scale = 1;
   //adjust gravity to fit simulation
-  engine.world.gravity.scale = 0.000001 * scale;
+  engine.world.gravity.scale = 0.000002 * scale;
   engine.world.gravity.y = 9.8 * 25;
 
   let mass = []
@@ -32,12 +32,13 @@ function MotionSimulation() {
   //   mass = []; //clear mass array
   //   spawnMass(0, 30, 300, 0, 20, 0.04);
   // });
-
-  spawnMass(0, 0, 0, 0, 20, 0.00003);
-  spawnMass(100, 0, 0, 0, 20, 0.00003);
-  spawnMass(200, 0, 0, 0, 20, 0.00003);
-  spawnMass(300, 0, 0, 0, 20, 0.00003);
-  spawnMass(400, 0, 0, 0, 20, 0.00003);
+  for (let i = 0; i < 5; ++i) {
+    spawnMass(i * 100, 0, 0, 0, 20, 0.0002);
+  }
+  // spawnMass(100, 0, 0, 0, 20, 0.00006);
+  // spawnMass(200, 0, 0, 0, 20, 0.00006);
+  // spawnMass(300, 0, 0, 0, 20, 0.00006);
+  // spawnMass(400, 0, 0, 0, 20, 0.00006);
 
   function spawnMass(xIn, yIn, VxIn, VyIn, radius, friction) {
     //spawn mass
@@ -70,12 +71,16 @@ function MotionSimulation() {
   function teleport() {
     const goto = {
       x: 0,
-      y: 0
+      y: -100
     }
-    const floor = canvas.height + 100
+    const floor = canvas.height + 200
     for (let i = 0, len = mass.length; i < len; ++i) {
       if (mass[i].position.y > floor) {
         Matter.Body.setPosition(mass[i], goto)
+        Body.setVelocity(mass[i], {
+          x: 0,
+          y: 0
+        });
       }
     }
 

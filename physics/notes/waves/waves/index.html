@@ -174,7 +174,7 @@
 					<line x1="0" y1="200" x2="3000" y2="200" />
 				</g>
 				<path filter="url(#displacementFilter)" id="sine_wave" stroke-width='9' fill='rgba(0,0,255,0.4)' stroke='rgba(255,255,255,0.5)'
-				 stroke-miterlimit="10" />
+				    stroke-miterlimit="10" />
 				<g>
 					<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;'
 					/>
@@ -210,6 +210,7 @@
 					// funGraphSVG() don't work inside <details>
 					// this is my workaround
 					document.getElementById("example0").addEventListener("toggle", handler0);
+
 					function handler0(e) {
 						e.target.removeEventListener(e.type, arguments.callee); // remove this handler
 						funGraphSVG("SVG-graph-0", x => 1 / x, {
@@ -247,7 +248,7 @@
 			</details>
 		</div>
 
-		<div class='example'>
+		<div class='example hide-on-mobile'>
 			<style>
 				.slider-wrapper {
 					display: inline-block;

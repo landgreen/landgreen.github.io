@@ -94,7 +94,7 @@ const spawn = {
     mobs.spawn(x, y, 4, radius, "#777");
     let me = mob[mob.length - 1];
     me.g = 0.0002; //required if using 'gravity'
-    me.accelMag = 0.0008;
+    me.accelMag = 0.0007;
     me.groupingRangeMax = 250000 + Math.random() * 100000;
     me.groupingRangeMin = (radius * 8) * (radius * 8);
     me.groupingStrength = 0.0005
@@ -114,8 +114,6 @@ const spawn = {
                 const forceMag = this.groupingStrength * mob[i].mass;
                 mob[i].force.x -= forceMag * Math.cos(angle);
                 mob[i].force.y -= forceMag * Math.sin(angle);
-                // this.force.x += forceMag * Math.cos(angle);
-                // this.force.y += forceMag * Math.sin(angle);
               }
               //draw attraction
               ctx.beginPath();
