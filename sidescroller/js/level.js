@@ -79,8 +79,8 @@ const level = {
     spawn.bodyRect(700, -200, 50, 50);
     spawn.bodyRect(-100, -260, 250, 10);
 
-    spawn.group(-600, -550);
-    for (let i = 0; i < 4; ++i) {
+    // spawn.group(-600, -550);
+    for (let i = 0; i < 1; ++i) {
       spawn.chaser(800, -1150);
     }
     // spawn.nodeBoss(900, -1070, "shooter", 9);

@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,700");
-
 /************Reset**************/
 
 * {
   box-sizing: border-box;
 }
+
 html,
 body,
 div,
@@ -15,16 +15,19 @@ fieldset {
   padding: 0;
   border: 0;
 }
+
 ol,
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
 header,
 article,
 figure {
@@ -38,6 +41,7 @@ svg:not(:root) {
 /************End Reset**************/
 
 /*global elements____________________________________*/
+
 body {
   font-family: "Roboto", "Helvetica Neue", "Arial", sans-serif;
   font-size: 105%;
@@ -45,6 +49,7 @@ body {
   line-height: 1.4;
   overflow-x: hidden;
 }
+
 article {
   padding: 5px;
   margin: 0 auto;
@@ -70,12 +75,15 @@ input {
   margin: 0.2em;
   width: 80px;
 }
+
 input[type="number"] {
   background: #eee;
 }
+
 input[type="text"] {
   background: #eee;
 }
+
 input:focus {
   outline: 0;
 }
@@ -95,14 +103,17 @@ a {
   text-decoration: none;
   color: #2793c7;
 }
+
 a:hover {
   text-decoration: underline;
   color: #000;
 }
+
 summary {
   cursor: pointer;
   outline: none;
 }
+
 hr {
   border: 0;
   border-bottom: 1px solid #aaa;
@@ -136,12 +147,14 @@ td {
   padding: 0.25rem;
   border-collapse: collapse;
 }
+
 th {
   background: #444;
   color: #fff;
 }
 
 /*classes_________________________________________*/
+
 .underlined {
   margin-top: 2em;
   margin-bottom: 0em;
@@ -176,6 +189,7 @@ th {
   line-height: 1.6;
   font-size: 110%;
 }
+
 .definition em {
   color: #888;
   font-weight: 300;
@@ -198,29 +212,33 @@ th {
 }
 
 /*2 Equal-Width Columns that combine in the article________________*/
+
 @media screen and (min-width: 43em) {
   .col-group {
     overflow: hidden;
   }
-  .col-group > div {
+  .col-group>div {
     float: left;
     width: 50%;
   }
 }
 
 /* Grid with auto placement ______________________________________*/
+
 .listing {
   list-style: none;
   display: grid;
   grid-gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
 }
+
 .listing li {
   display: flex;
   flex-direction: column;
 }
 
 /* front page grid ________________________________________________*/
+
 .listing-style {
   overflow: hidden;
   padding: 0.5em 0 0 0.5em;
@@ -228,6 +246,7 @@ th {
   margin: 0 auto;
   line-height: 1.6;
 }
+
 .listing-style li {
   padding: 0 0.5em 0.5em 0;
 }
@@ -247,13 +266,14 @@ th {
 }
 
 /* fake Grid ________________________________________________*/
+
 .wrapper {
   display: grid;
   grid-template-columns: 292px 292px;
   grid-gap: 16px;
 }
 
-.wrapper > div {
+.wrapper>div {
   /* border: 1px solid #aaa; */
   background: #fff;
   border-radius: 5px;
@@ -282,6 +302,7 @@ th {
 }
 
 /* Header setup_________________________________*/
+
 header {
   /* background: linear-gradient(to left, #9bb, #bb9, #b9b); */
   background-color: #222;
@@ -308,6 +329,7 @@ header h1 a:hover {
 }
 
 /* footer setup_________________________________*/
+
 .back {
   text-align: center;
   padding: 2em;

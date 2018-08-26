@@ -104,6 +104,7 @@ const spawn = {
       this.seePlayerByDistAndLOS();
       this.attraction();
       //attraction to mobs
+      ctx.beginPath();
       if (this.seePlayer.recall) {
         for (let i = 0, len = mob.length; i < len; i++) {
           if (mob[i] != this) {
@@ -116,16 +117,16 @@ const spawn = {
                 mob[i].force.y -= forceMag * Math.sin(angle);
               }
               //draw attraction
-              ctx.beginPath();
+
               ctx.moveTo(this.position.x, this.position.y);
               ctx.lineTo(mob[i].position.x, mob[i].position.y);
-              ctx.strokeStyle = "#000";
-              ctx.lineWidth = 1;
-              ctx.stroke();
             }
           }
         }
       }
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 1;
+      ctx.stroke();
     };
   },
   starter: function (x, y, radius = 30) {
@@ -142,8 +143,8 @@ const spawn = {
   chaser: function (x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
     mobs.spawn(x, y, 4, radius, "rgb(110,150,200)");
     let me = mob[mob.length - 1];
-    me.g = 0.0005; //required if using 'gravity'
-    me.accelMag = 0.0012;
+    me.g = 0.0004; //required if using 'gravity'
+    me.accelMag = 0.0006;
     me.memory = 240;
     if (Math.random() < Math.min(game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
     me.do = function () {
@@ -151,6 +152,34 @@ const spawn = {
       this.gravity();
       this.seePlayerCheck();
       this.attraction();
+
+      //suck and blow
+      // if (this.seePlayer.recall) {
+      //   ctx.beginPath();
+      //   for (let i = 0, len = body.length; i < len; i++) {
+      //     const distance2 = Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, body[i].position))
+      //     if (distance2 < 150 * 150) {
+      //       //repulse hard in close
+      //       const angle = Math.atan2(body[i].position.y - this.position.y, body[i].position.x - this.position.x);
+      //       const forceMag = 0.2 * body[i].mass;
+      //       body[i].force.x += forceMag * Math.cos(angle);
+      //       body[i].force.y += forceMag * Math.sin(angle);
+      //       //draw attraction
+      //     } else if (distance2 < 2000 * 2000) {
+      //       //gently pull at a meidum distance
+      //       const angle = Math.atan2(body[i].position.y - this.position.y, body[i].position.x - this.position.x);
+      //       const forceMag = 0.001 * body[i].mass;
+      //       body[i].force.x -= forceMag * Math.cos(angle);
+      //       body[i].force.y -= forceMag * Math.sin(angle);
+      //       //draw attraction
+      //       ctx.moveTo(this.position.x, this.position.y);
+      //       ctx.lineTo(body[i].position.x, body[i].position.y);
+      //     }
+      //   }
+      //   ctx.strokeStyle = "#000";
+      //   ctx.lineWidth = 1;
+      //   ctx.stroke();
+      // }
     };
   },
   grower: function (x, y, radius = 15) {
