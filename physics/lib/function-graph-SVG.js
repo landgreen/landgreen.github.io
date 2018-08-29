@@ -1,7 +1,6 @@
 function funGraphSVG(
   id,
-  func,
-  {
+  func, {
     x0 = 0, // center point x, unscaled
     y0 = 0, // center point y, unscaled
     step = 2,
@@ -42,12 +41,18 @@ function funGraphSVG(
   if (bounds === null) {
     //if viewBox doesn't exist, like for non-scaling SVG
     const bounding = target.getBoundingClientRect();
-    bounds = { width: bounding.width, height: bounding.height };
+    bounds = {
+      width: bounding.width,
+      height: bounding.height
+    };
   }
   if (bounds.width === 0) {
     //if viewBox doesn't exist, like for non-scaling SVG
     const bounding = target.getBoundingClientRect();
-    bounds = { width: bounding.width, height: bounding.height };
+    bounds = {
+      width: bounding.width,
+      height: bounding.height
+    };
   }
 
   if (!updatePath) {
@@ -131,14 +136,18 @@ function funGraphSVG(
         const xPos = x;
         const yPos = y - i * gridSize;
         path += `M ${xPos} ${yPos}  h -3`;
-        addText((x0 + (i * gridSize) / yScale - x0).toFixed(yDecimals), xPos - 5, yPos + 4, { textAnchor: "end" });
+        addText((x0 + (i * gridSize) / yScale - x0).toFixed(yDecimals), xPos - 5, yPos + 4, {
+          textAnchor: "end"
+        });
       }
       // negative vertical marks
       for (let i = -1; i * gridSize > -bounds.height + y; --i) {
         const xPos = x;
         const yPos = y - i * gridSize;
         path += `M ${xPos} ${yPos}  h -3`;
-        addText((x0 + (i * gridSize) / yScale - x0).toFixed(yDecimals), xPos - 5, yPos + 4, { textAnchor: "end" });
+        addText((x0 + (i * gridSize) / yScale - x0).toFixed(yDecimals), xPos - 5, yPos + 4, {
+          textAnchor: "end"
+        });
       }
       const newElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
       newElement.setAttribute("d", path);
@@ -151,18 +160,28 @@ function funGraphSVG(
     if (showLabels) {
       if (x0 > (2 * bounds.width) / 3) {
         //left of x-axis
-        addText(xLabel, +2, y0 - 4, { textAnchor: "start" });
+        addText(xLabel, +2, y0 - 4, {
+          textAnchor: "start"
+        });
       } else {
         //right of x-axis
-        addText(xLabel, bounds.width - 2, y0 - 4, { textAnchor: "end" });
+        addText(xLabel, bounds.width - 2, y0 - 4, {
+          textAnchor: "end"
+        });
       }
 
       if (y0 > bounds.height / 3) {
         //top of y-axis
-        addText(yLabel, x0 + 13, 0, { textAnchor: "end", rotation: -90 });
+        addText(yLabel, x0 + 13, 0, {
+          textAnchor: "end",
+          rotation: -90
+        });
       } else {
         //bottom of y-axis
-        addText(yLabel, x0 + 13, bounds.height, { textAnchor: "start", rotation: -90 });
+        addText(yLabel, x0 + 13, bounds.height, {
+          textAnchor: "start",
+          rotation: -90
+        });
       }
     }
   }
@@ -305,7 +324,12 @@ function funGraphSVG(
     }
   }
 
-  function addText(text, x, y, { textAnchor = "middle", fontSize = "12px", rotation = 0, fill = "#000" } = {}) {
+  function addText(text, x, y, {
+    textAnchor = "middle",
+    fontSize = "12px",
+    rotation = 0,
+    fill = "#000"
+  } = {}) {
     const newElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
     newElement.setAttribute("x", x);
     newElement.setAttribute("y", y);
