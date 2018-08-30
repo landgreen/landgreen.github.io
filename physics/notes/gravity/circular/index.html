@@ -46,7 +46,7 @@
 			<div class="center" style="position: relative; width: 300px; height: 200px;">
 				<a href="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_en.html" style="text-decoration: none;">
 					<img src="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits-600.png" alt="Gravity And Orbits"
-					 style="border: none;" width="300" height="200" />
+					    style="border: none;" width="300" height="200" />
 					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.8; filter: alpha(opacity = 60);"></div>
 					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
 						<tr>
@@ -209,7 +209,8 @@
 			</svg>
 			<h1>$$v^{2} = \frac{GM}{r} $$</h1>
 			<br>\(v\) = orbital tangential velocity [m/s]
-			<br>\(G\) = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N m²/kg²]
+			<br>\(G\) = 6.67408 × 10
+			<sup>-11</sup> = universal gravitation constant [N m²/kg²]
 			<br>\(r\) = radius of the circular orbit [m]
 			<br>\(M\) = mass of the central body being orbited [kg]
 			<p> The orbiting body needs to be much smaller than the central body!
@@ -220,8 +221,7 @@
 			large planets, and satellites.</p>
 
 		<div class="hide-on-mobile">
-			<p>Take a look at the simulation below to see circular orbits at different distances. Click and drag to move. Double click
-				for full screen.</p>
+			<p onclick="orbitals(this)" style="border-radius: 25px;background: #ddd; padding: 20px; margin: 20px;">Click to load a simulation of circular orbits at different distances. Click and drag to move. Double click for full screen.</p>
 			<style>
 				.full-page {
 					position: fixed;
@@ -245,61 +245,71 @@
 				</tr>
 				<tr align=center>
 					<td align=left>Sun</td>
-					<td>2.00 × 10<sup>30</sup>
+					<td>2.00 × 10
+						<sup>30</sup>
 					</td>
 					<td>695&#8239;700</td>
 				</tr>
 				<tr align=center>
 					<td align=left>Mercury</td>
-					<td>3.301 × 10<sup>23</sup>
+					<td>3.301 × 10
+						<sup>23</sup>
 					</td>
 					<td>2&#8239;440</td>
 				</tr>
 				<tr align=center>
 					<td align=left>Venus</td>
-					<td>4.867 × 10<sup>24</sup>
+					<td>4.867 × 10
+						<sup>24</sup>
 					</td>
 					<td>6&#8239;052</td>
 				</tr>
 				<tr align=center>
 					<td align=left>Earth</td>
-					<td>5.972 × 10<sup>24</sup>
+					<td>5.972 × 10
+						<sup>24</sup>
 					</td>
 					<td>6&#8239;371</td>
 				</tr>
 				<tr align=center>
 					<td align=left>Moon</td>
-					<td>7.346 × 10<sup>22</sup>
+					<td>7.346 × 10
+						<sup>22</sup>
 					</td>
 					<td>1737</td>
 				</tr>
 				<tr align=center>
 					<td align=left>Mars</td>
-					<td>6.417 × 10<sup>23</sup>
+					<td>6.417 × 10
+						<sup>23</sup>
 					</td>
 					<td>3390</td>
 				</tr>
 				<tr align=center>
 					<td align=left>Jupiter</td>
-					<td>1.899 × 10<sup>27</sup>
+					<td>1.899 × 10
+						<sup>27</sup>
 					</td>
 					<td>70&#8239;000</td>
 				</tr>
 				<tr align=center>
 					<td align=left>Saturn</td>
-					<td>5.685 × 10<sup>26</sup>
+					<td>5.685 × 10
+						<sup>26</sup>
 					</td>
 					<td>58&#8239;232</td>
 				</tr>
 				<tr align=center>
 					<td align=left>Uranus</td>
-					<td>8.68 × 10<sup>25</sup>
+					<td>8.68 × 10
+						<sup>25</sup>
 					</td>
 					<td>25&#8239;362</td>
 				</tr>
 				<tr align=center>
 					<td align=left>Neptune</td>
-					<td>1.024 × 10<sup>26</sup>
+					<td>1.024 × 10
+						<sup>26</sup>
 					</td>
 					<td>24&#8239;622</td>
 				</tr>
@@ -369,15 +379,17 @@
 
 	<script src="../../../lib/katex/katex.min.js"></script>
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
-	<script> renderMathInElement(document.body); </script>
+	<script>
+		renderMathInElement(document.body);
+	</script>
 
 	<script src='../../../lib/randomColor.min.js'></script>
 	<script src='../../../lib/gravityClass.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js'></script>
 	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
-	<script defer src="grav1.js"></script>
-	<script defer src="grav2.js"></script>
-	<script defer src="orbits.js"></script>
+	<script src="grav1.js"></script>
+	<script src="grav2.js"></script>
+	<script src="orbits.js"></script>
 </body>
 
 </html>

@@ -1,4 +1,6 @@
-const orbitals = function() {
+const orbitals = function (el) {
+  el.onclick = null; //stops the function from running on button click
+
   settings = {
     range: 100,
     planetNumber: 25,
@@ -10,10 +12,10 @@ const orbitals = function() {
   const target = document.getElementById("three-orbit");
 
   let pause = true;
-  target.addEventListener("mouseleave", function() {
+  target.addEventListener("mouseleave", function () {
     pause = true;
   });
-  target.addEventListener("mouseenter", function() {
+  target.addEventListener("mouseenter", function () {
     if (pause) {
       pause = false;
       requestAnimationFrame(animationLoop);
@@ -21,6 +23,7 @@ const orbitals = function() {
   });
 
   window.addEventListener("resize", onWindowResize, false);
+
   function onWindowResize() {
     if (settings.fullView) {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -29,7 +32,7 @@ const orbitals = function() {
     }
   }
 
-  let requestFullscreen = function(ele) {
+  let requestFullscreen = function (ele) {
     if (ele.requestFullscreen) {
       ele.requestFullscreen();
     } else if (ele.webkitRequestFullscreen) {
@@ -43,7 +46,7 @@ const orbitals = function() {
     }
   };
 
-  let exitFullscreen = function() {
+  let exitFullscreen = function () {
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.webkitExitFullscreen) {
@@ -58,7 +61,7 @@ const orbitals = function() {
   };
 
   //full screen mode
-  target.addEventListener("dblclick", function() {
+  target.addEventListener("dblclick", function () {
     if (settings.fullView) {
       settings.fullView = false;
       //not full screen
@@ -306,6 +309,7 @@ const orbitals = function() {
   /////////////////////////////////////////
   renderer.render(scene, camera);
   let cycle = 0;
+
   function animationLoop() {
     cycle++;
     if (!pause) requestAnimationFrame(animationLoop);
@@ -333,6 +337,6 @@ const orbitals = function() {
 //   scene.add(mesh);
 // });
 
-window.onload = function() {
-  orbitals();
-};
+// window.onload = function() {
+//   orbitals();
+// };
