@@ -42,9 +42,9 @@ svg:not(:root) {
 
 /*global elements____________________________________*/
 
-html {
+/* html {
   background-color: #222;
-}
+} */
 
 body {
   font-family: "Roboto", "Helvetica Neue", "Arial", sans-serif;
@@ -52,7 +52,7 @@ body {
   color: #333;
   line-height: 1.4;
   overflow-x: hidden;
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 
 article {
@@ -222,7 +222,7 @@ th {
   .col-group {
     overflow: hidden;
   }
-  .col-group > div {
+  .col-group>div {
     float: left;
     width: 50%;
   }
@@ -278,7 +278,7 @@ th {
   grid-gap: 16px;
 }
 
-.wrapper > div {
+.wrapper>div {
   /* border: 1px solid #aaa; */
   background: #fff;
   border-radius: 5px;
