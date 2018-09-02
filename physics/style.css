@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,700");
-/************Reset**************/
 
+/************Reset**************/
 * {
   box-sizing: border-box;
 }
@@ -39,13 +39,10 @@ svg:not(:root) {
 }
 
 /************End Reset**************/
-
 /*global elements____________________________________*/
-
 /* html {
   background-color: #222;
 } */
-
 body {
   font-family: "Roboto", "Helvetica Neue", "Arial", sans-serif;
   font-size: 105%;
@@ -159,7 +156,6 @@ th {
 }
 
 /*classes_________________________________________*/
-
 .underlined {
   margin-top: 2em;
   margin-bottom: 0em;
@@ -211,17 +207,16 @@ th {
 }
 
 /*math tex rendering __________________________*/
-
 .katex {
   font-size: 1.5em;
 }
 
 /*2 Equal-Width Columns that combine in the article________________*/
-
 @media screen and (min-width: 43em) {
   .col-group {
     overflow: hidden;
   }
+
   .col-group>div {
     float: left;
     width: 50%;
@@ -229,7 +224,6 @@ th {
 }
 
 /* Grid with auto placement ______________________________________*/
-
 .listing {
   list-style: none;
   display: grid;
@@ -243,7 +237,6 @@ th {
 }
 
 /* front page grid ________________________________________________*/
-
 .listing-style {
   overflow: hidden;
   padding: 0.5em 0 0 0.5em;
@@ -271,7 +264,6 @@ th {
 }
 
 /* fake Grid ________________________________________________*/
-
 .wrapper {
   display: grid;
   grid-template-columns: 292px 292px;
@@ -286,7 +278,6 @@ th {
 }
 
 /* 3 column flex Grid ________________________________________________*/
-
 .flex-grid-thirds {
   display: flex;
   justify-content: space-between;
@@ -300,6 +291,7 @@ th {
   .flex-grid-thirds {
     display: block;
   }
+
   .flex-grid-thirds .col {
     width: 100%;
     margin: 0 0 10px 0;
@@ -307,7 +299,6 @@ th {
 }
 
 /* Header setup_________________________________*/
-
 header {
   /* background: linear-gradient(to left, #9bb, #bb9, #b9b); */
   background-color: #222;
@@ -334,7 +325,6 @@ header h1 a:hover {
 }
 
 /* footer setup_________________________________*/
-
 .back {
   text-align: center;
   padding: 2em;
@@ -352,25 +342,29 @@ header h1 a:hover {
 }
 
 /* responsive media rules for mobile________________________________ */
-
 @media screen and (max-width: 650px) {
   header h1 {
     font-size: 3em;
   }
+
   .underlined {
     font-size: 1.8em;
   }
+
   .definition {
     padding: 10px;
     font-size: 100%;
   }
+
   .katex {
     font-size: 1.2em;
   }
+
   canvas {
     max-width: 100%;
     height: auto;
   }
+
   .hide-on-mobile {
     display: none;
   }
