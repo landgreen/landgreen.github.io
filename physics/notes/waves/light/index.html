@@ -95,9 +95,10 @@
 			reach us?
 			<details>
 				<summary>solution</summary>
-				$$v = \frac{\Delta x}{\Delta t} $$ $$\Delta t = \frac{\Delta x}{v} $$ $$\Delta t = \frac{1.50 \times 10^{11}}{3.0
+				$$v = \frac{\Delta x}{\Delta t} $$ $$\Delta t = \frac{\Delta x}{v} $$ $$\Delta t = \frac{1.50 \times
+				10^{11}\,\mathrm{m}}{3.0
 				\times
-				10^{8}} $$ $$\Delta t = 500\, \mathrm{s} $$ $$\Delta t = 8.33 \, \mathrm{min} $$
+				10^{8}\,\mathrm{\frac{m}{s}}} $$ $$\Delta t = 500\, \mathrm{s} $$ $$\Delta t = 8.33 \, \mathrm{min} $$
 			</details>
 		</div>
 
@@ -111,14 +112,22 @@
 			is 4.37 light-years away. How far away in meters is Alpha
 			Centauri?
 			<details>
+				<summary>hint</summary>
+				<p>
+					<li>Use velocity equals distance over time.</li>
+					<li>Convert the light years to seconds to get travel time.</li>
+					<li>Use the speed of light for the velocity.</li>
+				</p>
+			</details>
+			<details>
 				<summary>solution</summary>
 				$$\small \mathrm{4.37 \,year \left(\frac{365 \,day}{1 \,year}\right) \left(\frac{24 \,hour}{1 \,day}\right)
 				\left(\frac{60
 				\,min}{1 \,hour}\right) \left(\frac{60 \,s}{1 \,min}\right)}$$ $$ = 1.378 \times 10^{8} \, \mathrm{s}$$
-				<br> $$v = \frac{\Delta x}{\Delta t} $$ $$\Delta x = v \Delta t$$ $$\Delta x = \left(3 \times 10^{8}\right)
+				<br> $$v = \frac{\Delta x}{\Delta t} $$ $$\Delta x = v \Delta t$$ $$\Delta x = \left(3 \times 10^{8} \,
+				\mathrm{\tfrac{m}{s}} \right)
 				\left(1.378 \times
-				10^{8}\right)$$ $$\Delta x = 4.143 \times 10^{16}\, \mathrm{m}$$
-
+				10^{8} \, \mathrm{s}\right)$$ $$\Delta x = 4.143 \times 10^{16}\, \mathrm{m}$$
 			</details>
 		</div>
 
@@ -140,18 +149,20 @@
 				.region {
 					text-align: right;
 					width: 50%;
-					font-size: 1.2em;
 				}
 				.rainbow {
 					background: linear-gradient(violet, blue, cyan, green, yellow ,orange, red);
-					font-weight: 900;
-					color: #fff;
 				}
 				.down-half {
 					height: 60px;
 					border: 0px;
     				position: relative;
 					top: -30px;
+				}
+				.region-title{
+					background:#fff;
+					padding:8px;
+					border-radius: 15px;
 				}
 			</style>
 			<tr>
@@ -172,7 +183,8 @@
 				<td class="down-half">3 × 10<sup>16</sup></td>
 			</tr>
 			<tr>
-				<td class='rainbow region'>visible light</td>
+				<td class='rainbow region'><span class="region-title">visible
+						light</span></td>
 				<td class="down-half">4 × 10<sup>-7</sup></td>
 				<td class="down-half">7.5 × 10<sup>14</sup></td>
 			</tr>
@@ -193,7 +205,7 @@
 			</tr>
 		</table>
 		<p>
-			Some classify the microwave as subregion inside radio. Also, the x-ray and gamma-ray
+			Some classify microwaves as a subregion inside radio. Also, the x-ray and gamma-ray
 			regions are starting to blend as the technology that produces x-rays improves.
 		</p>
 
