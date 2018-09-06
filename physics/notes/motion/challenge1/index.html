@@ -20,10 +20,11 @@
 
 <body>
     <article>
-        <h2 class='underlined'>
+        <!-- <h2 class='underlined'>
             2-D Motion Challenge #1
-        </h2>
-        <br>
+        </h2> -->
+        <p>Solve this 2-D projectile motion problem. Enter your answer for initial vertical velocity and click fire to see
+            fi you are right. Reload page for a new random problem.</p>
         <canvas id="canvas" width='700' height='600'></canvas>
         <br>The gap starts at
         <span id='ypos' class="highlight"></span> m high and
@@ -35,7 +36,7 @@
         <input class='number' id='num1' type="number" step="1" min='1' max='500' value='10'>m/s
         <button id="fire1" onclick='settings.fire()'>fire</button>
         <button id="clear1" onclick='settings.clear()'>clear</button>
-        <p>Reload to try a new random problem.</p>
+
     </article>
     <div class='back'>
         <a href="../../../index.html">Back</a>

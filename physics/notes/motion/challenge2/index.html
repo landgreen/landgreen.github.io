@@ -21,10 +21,8 @@
 
 <body>
     <article>
-        <h2 class='underlined'>
-            2-D Motion Challenge #2
-        </h2>
-        <br>
+        <p>Solve this 2-D projectile motion problem. Enter your answer for initial vertical velocity and click fire to see
+            fi you are right. Reload page for a new random problem.</p>
         <canvas id="canvas" width='700' height='600'></canvas>
         <br>The gap is
         <span id='xpos' class="highlight"></span> m away horizontally.
@@ -34,10 +32,9 @@
         <span id='Vy' class="highlight"></span> m/s.
         <br> I think the correct
         <b>height</b> is
-        <input class='number' id='num1' type="number" step="1" min='1' max='500' value='10'>m/s
+        <input class='number' id='num1' type="number" step="1" min='1' max='500' value='10'>m
         <button id="fire1" onclick='settings.fire()'>Fire</button>
         <button id="clear1" onclick='settings.clear()'>clear</button>
-        <p>Reload to try a new random problem.</p>
     </article>
     <div class='back'>
         <a href="../../../index.html">Back</a>
