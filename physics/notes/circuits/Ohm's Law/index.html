@@ -30,15 +30,43 @@
 		</h1>
 	</header>
 	<article>
-		<p>In 1827, German physicist Georg Ohm published his work on the relationship between electrical current and voltage. Ohm
-			discovered his law after measuring the voltage on wires of different length. Longer wires had more resistance and less
-			current for the same voltage.</p>
+		<p>
+			In 1827, German physicist Georg Ohm published his work on the relationship between electrical current and voltage.
+			Ohm discovered his law after measuring the voltage on wires of different length. He found that as wires got longer
+			they had less current for the same voltage.
+		</p>
+
+		<h2 class='underlined'>Charge Speed and Direction</h2>
+		<p>Electric current can be thought of as the average motion of a huge number of charges. As the charges travel they
+			don't
+			just move in a straight line. They drift through the material in a random walk as they bounce off other charges.
+			Statistically
+			more charge will move forward than backwards.</p>
+
+		<p>The forward speed of electrons in a typical wire is around 0.0002 m/s. If the speed of electrons in is so slow how
+			can
+			we explain the near instantaneous speed of communication on telegraph, phone, and internet lines?</p>
+
+		<p>The direction of current is defined as the direction of positive charge flow. Since electrons have a negative
+			charge they
+			always move in the opposite direction of the current. Why don't the nuclei move?</p>
+		<p>What direction is the current in these simulations?</p>
+		<canvas id='charge7' width="600" height='150' onclick="charges7(this)"> </canvas>
+		<p>A small imbalance in net charge produces an electric field. The electric field points in the same direction as the
+			current.</p>
+		<canvas id='charge8' width="600" height='150' onclick="charges8(this)"> </canvas>
+		<p>Positive charge flows from positive(red) potential to negative(blue) potential. Negative charge does the opposite.</p>
+		<canvas id='charge9' width="600" height='150' onclick="charges9(this)"> </canvas>
+
 		<h2 class='underlined'>Electric Current</h2>
-		<p>Current measures the flow of charge over a period of time. Current is not a substance. Current is a rate, like dollars
+		<p>Current measures the flow of charge over a period of time. Current is not a substance. Current is a rate, like
+			dollars
 			per hour is a rate.</p>
-		<p>It can be helpful, and accurate, to think of electric current like water current. Free electrons flow through metals just
-			like H₂O flows through pipes.</p>
+		<p>It can be helpful, and accurate, to think of electric current like water current. Free electrons flow through
+			metals like H₂O flows through pipes.</p>
 		<div class='definition'>
+			<!-- <svg viewBox="0 0 600 200">
+			</svg> -->
 			<h1>$$I = \frac{q}{\Delta t}$$</h1> \(I\) = electric current [A, amps, Amperes]
 			<br>\(q\) = charge that passes a point on a wire [C, coulombs]
 			<br>\(\Delta t\) = a period of time [s]
@@ -46,12 +74,9 @@
 		<div class='example'>
 			<svg class="center" width="100" height="400">
 				<g>
-					<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 25,45 c 0,-40 50,-40 50,0 L 75,100 l -55,0 l 0,-8 l 5,0 z"
-					/>
-					<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 35,380 l 5,0 l 0,-260 l 2,0 l 0,-10 l -2,0 l 0,-18 l -5,-5 l 0,-5 l 10,0 l 0,-5 l -10,-7 l 0,-5 l -5,0 l 0,25 l 5,5 l 0,15 l -2,0 l 0,10 l 2,0 l 0,260 z"
-					/>
-					<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 60,360 l 5,0 l 0,-240 l 2,0 l 0,-10 l -2,0 l 0,-15 l 5,-5 l 0,-15 l -5,0 l 0,-10 l -23,0 l 0,5 l 18,12 l 5,0 l 0,5 l -5,5 l 0,18 l -2,0 l 0,10 l 2,0 l 0,240 z"
-					/>
+					<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 25,45 c 0,-40 50,-40 50,0 L 75,100 l -55,0 l 0,-8 l 5,0 z" />
+					<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 35,380 l 5,0 l 0,-260 l 2,0 l 0,-10 l -2,0 l 0,-18 l -5,-5 l 0,-5 l 10,0 l 0,-5 l -10,-7 l 0,-5 l -5,0 l 0,25 l 5,5 l 0,15 l -2,0 l 0,10 l 2,0 l 0,260 z" />
+					<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 60,360 l 5,0 l 0,-240 l 2,0 l 0,-10 l -2,0 l 0,-15 l 5,-5 l 0,-15 l -5,0 l 0,-10 l -23,0 l 0,5 l 18,12 l 5,0 l 0,5 l -5,5 l 0,18 l -2,0 l 0,10 l 2,0 l 0,240 z" />
 					<path style="fill: none; stroke: #000000; stroke-width: 1;" d="M 32,65 c 7,-8 13,-8 20,0" />
 					<path style="fill: none; stroke: #000000; stroke-width: 1;" d="M 45,65 c 2,5 10,5 12,0" />
 				</g>
@@ -68,8 +93,10 @@
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> Two wires of cross-sectional area 1.6 mm² connect the terminals of a battery to the circuitry in a clock.
-			After 0.04 seconds, 5.0 x 10¹⁴ electrons move to the right through the cross section. What is the magnitude and direction
+			<strong>Example:</strong> Two wires of cross-sectional area 1.6 mm² connect the terminals of a battery to the
+			circuitry in a clock.
+			After 0.04 seconds, 5.0 x 10¹⁴ electrons move to the right through the cross section. What is the magnitude and
+			direction
 			of the current?
 			<details>
 				<summary>hint</summary>
@@ -77,48 +104,38 @@
 			</details>
 			<details>
 				<summary>solution</summary>
-				$$q = 5.0 \times 10^{14} \, e^{-} \left(\frac{1.6 \times 10^{-19} \, \mathrm{C}}{1 \, e^{-}}\right) = 0.00008\, \mathrm{C}$$
-				<br> $$I = \frac{q}{\Delta t}$$ $$I = \frac{0.00008\, \mathrm{C}}{0.04 \, \mathrm{s}}$$ $$I = 0.002 \, \mathrm{A} $$
+				$$q = 5.0 \times 10^{14} \, e^{-} \left(\frac{1.6 \times 10^{-19} \, \mathrm{C}}{1 \, e^{-}}\right) = 0.00008\,
+				\mathrm{C}$$
+				<br> $$I = \frac{q}{\Delta t}$$ $$I = \frac{0.00008\, \mathrm{C}}{0.04 \, \mathrm{s}}$$ $$I = 0.002 \, \mathrm{A}
+				$$
 				<p>If electrons are moving to the right the current is to the
 					<strong>left</strong>.
 				</p>
 			</details>
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> If 0.320 mA of charge flow through a calculator, how many electrons pass through per second?
+			<strong>Example:</strong> If 0.320 mA of charge flow through a calculator, how many electrons pass through per
+			second?
 			<details>
 				<summary>solution</summary>
 				$$ I = \frac{q}{\Delta t}$$ $$ q = I\Delta t$$ $$ q = (0.320 \times 10^{-3}\, \mathrm{A}) (1\, \mathrm{s})$$
-				<br>$$ q = 0.000320 \, \mathrm{C} \left(\frac{1 \, e^{-}} {1.6 \times 10^{-19}\, \mathrm{C}}\right) $$ $$ q = 2 \times 10^{15}
+				<br>$$ q = 0.000320 \, \mathrm{C} \left(\frac{1 \, e^{-}} {1.6 \times 10^{-19}\, \mathrm{C}}\right) $$ $$ q = 2
+				\times 10^{15}
 				\, e^{-}$$
 
 			</details>
 		</div>
 
-		<h2 class='underlined'>Charge Speed and Direction</h2>
-		<p>Electric current can be thought of as the average motion of a huge number of charges. As the charges travel they don't
-			just move in a straight line. They drift through the material in a random walk as they bounce off other charges. Statistically
-			more charge will move forward than backwards.</p>
-
-		<p>The forward speed of electrons in a typical wire is around 0.0002 m/s. If the speed of electrons in is so slow how can
-			we explain the near instantaneous speed of communication on telegraph, phone, and internet lines?</p>
-
-		<p>The direction of current is defined as the direction of positive charge flow. Since electrons have a negative charge they
-			always move in the opposite direction of the current. Why don't the nuclei move?</p>
-		<p>What direction is the current in these simulations?</p>
-		<canvas id='charge7' width="600" height='150' onclick="charges7(this)"> </canvas>
-		<p>A small imbalance in net charge produces an electric field. The electric field points in the same direction as the current.</p>
-		<canvas id='charge8' width="600" height='150' onclick="charges8(this)"> </canvas>
-		<p>Positive charge flows from positive(red) potential to negative(blue) potential. Negative charge does the opposite.</p>
-		<canvas id='charge9' width="600" height='150' onclick="charges9(this)"> </canvas>
-
 		<h2 class='underlined'>Voltage (Potential Difference)</h2>
-		<p>Voltage is a measure of the difference in electrical potential between two points. Voltage is defined so that negatively
-			charged objects are pulled towards higher voltages, while positively charged objects are pulled towards lower voltages.
+		<p>Voltage is a measure of the difference in electrical potential between two points. Voltage is defined so that
+			negatively
+			charged objects are pulled towards higher voltages, while positively charged objects are pulled towards lower
+			voltages.
 			You can review the notes on
 			<a href="../../electromagnetism/potential/index.html#voltage">voltage</a> from the last section</p>
 
-		<p>Common sources of differences in potential (voltage) are the two terminals in a wall socket and the positive and negative
+		<p>Common sources of differences in potential (voltage) are the two terminals in a wall socket and the positive and
+			negative
 			terminals on a
 			<a href='https://en.wikipedia.org/wiki/Battery_(electricity)'>battery</a>.</p>
 
@@ -138,17 +155,19 @@
 				<strong>circuit</strong> is a looping path that guides the electrons back to the start, like a race track.
 			</p>
 		</div>
-		<h2 class='underlined'>AC⚡DC</h2>
+		<h2 class='underlined'>AC⚡DC Circuits</h2>
 		<p>In
-			<strong>DC (direct current)</strong> circuits current is defined to flow out of the longer, positive end of the battery, but electrons
-			actually move in the opposite direction. Below is an animated
-			<a href="https://en.wikipedia.org/wiki/Electronic_symbol">circuit diagram</a> of a battery providing DC voltage and a resistor dropping the voltage:</p>
+			<strong>DC (direct current)</strong> circuits, current is defined to flow out of the longer, positive end of the
+			battery. The direction of current is defined to be the opposite of the flow of electrons. Below is an animated
+			<a href="https://en.wikipedia.org/wiki/Electronic_symbol">circuit diagram</a> of a battery providing DC voltage and
+			a resistor dropping the voltage:</p>
 		<!-- for svg path animation -->
 		<style type="text/css">
 			@keyframes marching_ants {
 				0% {
 					stroke-dashoffset: 0;
 				}
+
 				100% {
 					stroke-dashoffset: 20;
 				}
@@ -168,28 +187,32 @@
 			<path d="M 50 68 v-63 h 265
 			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
 			h -265
-			v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
+			v-60 m-40 0 h 80 m-20 -15 h-40"
+			    fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
 			<path d="M 50 68 v-63 h 265
 			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-			h -265  v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants"
-			/>
+			h -265  v-58"
+			    fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants" />
 			<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
 			<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
 			<text x="65" y="57" text-anchor="start" font-size="18" fill='#888'>battery</text>
 			<text x="290" y="80" text-anchor="end" font-size="18" fill='#888'>resistor</text>
 		</svg>
+		<br><br>
 		<p>In
-			<strong>AC (alternating current)</strong> circuits the current pushes the electrons forward and backwards about 60 times a second.
+			<strong>AC (alternating current)</strong> circuits the current pushes the electrons forward and backwards about 60
+			times a second.
 			Current from a wall socket is AC.</p>
 		<svg viewBox="-75 0 550 150">
 			<path d="M 50 58 v-53 h 265
 			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
 			h -265
-			v-50" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
+			v-50"
+			    fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
 			<path d="M 50 58 v-53 h 265
 			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-			h -265 v-48" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants_ac"
-			/>
+			h -265 v-48"
+			    fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants_ac" />
 			<circle cx="50" cy="77" r="19" fill='none' stroke="#333" stroke-width="5" />
 			<text x="50" y="79" text-anchor="middle" dominant-baseline="middle" font-size="45" fill='#333'>~</text>
 			<text x="63" y="50" text-anchor="start" font-size="18" fill='#888'>AC voltage</text>
@@ -202,14 +225,17 @@
 		<h2 class='underlined'>Ohm's Law</h2>
 		<p>
 			Play with this
-			<a href="https://codepen.io/lilgreenland/full/xprGvr/">circuit simulator</a> for resistance. Adjust the wiggle of the resistor to see how it changes the voltage and current.
+			<a href="https://codepen.io/lilgreenland/full/xprGvr/">circuit simulator</a> for resistance. Adjust the wiggle of
+			the resistor to see how it changes the voltage and current.
 		</p>
 		<p>
-			Ohm's Law says that the voltage in a conductor is proportional to the current. This means we can build an equation where
+			Ohm's Law says that the voltage in a conductor is proportional to the current. This means we can build an equation
+			where
 			V = I times a constant. The constant is called
 			<strong>resistance</strong> and it measures how current responds to a change in voltage.</p>
 		<p>The resistance of a material is the inverse of its conductivity.
-			<a href="../../electromagnetism/coulomb/index.html#conductivity">Conductors</a> have nearly zero resistance and insulators have very high resistance.
+			<a href="../../electromagnetism/coulomb/index.html#conductivity">Conductors</a> have nearly zero resistance and
+			insulators have very high resistance.
 		</p>
 		<div class="example">
 			<div class="center">
@@ -278,7 +304,8 @@
 					<span class="underlined-normal">small</span> voltage produces a
 					<span class="underlined-normal">large</span> current.</em>
 
-				<p>Voltage is directly proportional to current. This means that we can make an equation where voltage = current x resistance.</p>
+				<p>Voltage is directly proportional to current. This means that we can make an equation where voltage = current x
+					resistance.</p>
 
 			</details>
 		</div>
@@ -296,7 +323,8 @@
 		</div>
 
 		<p>Semiconductive elements, called
-			<a href='https://en.wikipedia.org/wiki/Resistor'>resistors</a>, have medium resistance. They are added to a circuit for precise control over current. If the current is
+			<a href='https://en.wikipedia.org/wiki/Resistor'>resistors</a>, have medium resistance. They are added to a circuit
+			for precise control over current. If the current is
 			too high, the circuit will get hot. If the current is too low the circuit can't do its job.
 		</p>
 		<a href="https://en.wikipedia.org/wiki/Electronic_color_code">
@@ -308,8 +336,7 @@
 					<path id="rect3796" transform="translate(0,-27.6403)" d="M 798.5625 228.5625 C 794.83997 228.5625 791.30046 228.67303 787.90625 228.90625 L 787.90625 511.1875 C 791.31332 511.35148 794.85648 511.4375 798.5625 511.4375 C 799.29806 511.4375 800.09011 511.404 800.875 511.375 C 802.30233 511.404 803.74224 511.4375 805.21875 511.4375 C 817.35302 511.4375 836.39057 507.29016 856.625 502.34375 L 856.625 237.65625 C 836.39057 232.70984 817.35302 228.5625 805.21875 228.5625 C 803.72122 228.5625 802.2599 228.597 800.8125 228.625 C 800.04576 228.596 799.28581 228.5625 798.5625 228.5625 z "
 					    style="fill:#fdca01;fill-opacity:1;stroke:#986601" />
 					<path id="rect3798" transform="translate(0,-27.6403)" d="M 901.0625 248.5625 L 901.0625 491.4375 C 915.3171 488.17202 927.92103 485.8125 936.40625 485.8125 L 969.75 485.8125 L 969.75 254.1875 L 936.40625 254.1875 C 927.92103 254.1875 915.3171 251.82798 901.0625 248.5625 z "
-					    style="fill:#9e0097;fill-opacity:1;stroke:#430086;stroke-width:0.99000000000000021;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-					/>
+					    style="fill:#9e0097;fill-opacity:1;stroke:#430086;stroke-width:0.99000000000000021;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
 					<path id="rect3800" transform="translate(0,-27.6403)" d="M 1014.1875 254.1875 L 1014.1875 485.8125 L 1082.875 485.8125 L 1082.875 254.1875 L 1014.1875 254.1875 z "
 					    style="fill:#f44800;fill-opacity:1;stroke:#980101" />
 					<path id="rect3819" transform="translate(0,-27.6403)" d="M 1252.8438 228.5625 C 1246.3558 228.5625 1237.9014 229.76927 1228.3438 231.625 L 1228.3438 508.375 C 1237.9014 510.23073 1246.3558 511.4375 1252.8438 511.4375 C 1254.3202 511.4375 1255.7602 511.403 1257.1875 511.375 C 1257.9724 511.405 1258.7644 511.4375 1259.5 511.4375 C 1274.3045 511.4375 1286.6423 510.09139 1297.0312 507.6875 L 1297.0312 234 C 1286.8423 230.56088 1274.5655 228.5625 1259.5 228.5625 C 1258.7767 228.5625 1258.0167 228.597 1257.25 228.625 C 1255.8026 228.596 1254.3411 228.5625 1252.8438 228.5625 z "
@@ -324,8 +351,8 @@
 					c -10 -50, 200 -150, 200 -37
 					l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 
 					c 10 100, -200 200, -200 -27
-					m-40 0 h 80 m-20 -15 h-40 m20 0" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"
-				/>
+					m-40 0 h 80 m-20 -15 h-40 m20 0"
+				    fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
 				<text x="230" y="115" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
 				<text x="230" y="145" text-anchor="end" font-size="20" fill='#333'>300 Ω</text>
 				<text x="147" y="256" text-anchor="middle" font-size="20" fill='#333'>0.05 A</text>
@@ -334,7 +361,8 @@
 					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
 				</g>
 			</svg>
-			<strong>Example:</strong> Find the voltage for a resistor that has 300&nbsp;Ω of resistance and a current of 0.05&nbsp;A.
+			<strong>Example:</strong> Find the voltage for a resistor that has 300&nbsp;Ω of resistance and a current of
+			0.05&nbsp;A.
 			<details>
 				<summary>solution</summary>
 				$$ V = IR$$ $$ V = (0.05\, \mathrm{A}) (300 \, \Omega)$$ $$ V = 15 \, \mathrm{V}$$
@@ -345,7 +373,8 @@
 				<path d="M 50 10 h 200
 					v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
 					h -200
-					v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+					v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87"
+				    fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
 				<text x="230" y="90" text-anchor="end" font-size="20" fill='#333'>2 V</text>
 				<text x="230" y="120" text-anchor="end" font-size="20" fill='#333'>100 Ω</text>
 				<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>I = ?</text>
@@ -363,12 +392,14 @@
 		</div>
 
 		<div class='example'>
-			<b>Example:</b> If I double the voltage in a circuit while keeping the resistance the same, what happens to the current?
+			<b>Example:</b> If I double the voltage in a circuit while keeping the resistance the same, what happens to the
+			current?
 			Use
 			<a href="../../review/solving/index.html#proportions">proportions</a>.
 			<details>
 				<summary>solution</summary>
-				$$ \text{R is constant}$$ $$ \text{V and I are directly proportional}$$ $${ \Uparrow \atop V} {\atop =} { \Uparrow \atop
+				$$ \text{R is constant}$$ $$ \text{V and I are directly proportional}$$ $${ \Uparrow \atop V} {\atop =} { \Uparrow
+				\atop
 				I} { \atop R} $$ $$ \text{doubling V will double I}$$
 			</details>
 		</div>
@@ -378,7 +409,8 @@
 				<path transform="rotate(180, 150, 100)" d="M 50 10 h 200
 							v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
 							h -200
-							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+							v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87"
+				    fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
 				<text x="110" y="90" text-anchor="end" font-size="20" fill='#333'>1.5&thinsp;V</text>
 				<text x="110" y="120" text-anchor="end" font-size="20" fill='#333'>R = ?</text>
 				<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>0.001&thinsp;A</text>
@@ -399,8 +431,8 @@
 						c -20 -100, 140 -100, 200 -37
 						l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 
 						c -70 80, -190 80, -200 -27
-						m-40 0 h 80 m-20 -15 h-40 m20 0" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"
-				/>
+						m-40 0 h 80 m-20 -15 h-40 m20 0"
+				    fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
 				<text x="230" y="117" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
 				<text x="230" y="150" text-anchor="end" font-size="20" fill='#333'>10 Ω</text>
 				<text x="147" y="256" text-anchor="middle" font-size="20" fill='#333'>I = ?</text>
@@ -409,7 +441,8 @@
 					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
 				</g>
 			</svg>
-			<strong>Example:</strong> What voltage would cause 0.02&nbsp;C of charge to pass through a 10&nbsp;Ω resistor every 10&nbsp;s?
+			<strong>Example:</strong> What voltage would cause 0.02&nbsp;C of charge to pass through a 10&nbsp;Ω resistor every
+			10&nbsp;s?
 			<details>
 				<summary>solution</summary>
 				$$ I = \frac{q}{\Delta t}$$ $$ I = \frac{0.02}{10}$$ $$ I = 0.002 \, \mathrm{A}$$
