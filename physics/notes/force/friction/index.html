@@ -29,16 +29,19 @@
         </h1>
     </header>
     <article>
-        <p>We are going to focus on the two types of dry friction: static and kinetic. Dry friction is a complex interaction,
+        <p>We are going to focus on the two types of dry friction: static and kinetic. Dry friction is a complex
+            interaction,
             but we have equations that are a good approximation for most situations.</p>
         <canvas id="canvas" width='600' height='285'></canvas>
         <h1 class='underlined'>Kinetic Friction</h1>
-        <p>Kinetic means motion. Kinetic friction is a force that occurs when two surfaces in contact slide against each other.
-            Friction generally occurs because rough surfaces get caught on each other. Friction can also be caused by chemical
+        <p>Kinetic means motion. Kinetic friction is a force that occurs when two surfaces in contact slide against
+            each other.
+            Friction generally occurs because rough surfaces get caught on each other. Friction can also be caused by
+            chemical
             bonding between surfaces.
         </p>
         <div class='definition'>
-            <svg viewBox="0 0 500 250">
+            <svg viewBox="0 0 500 250" class="on-edge">
                 <rect x="0" y="190" width="500" height="110" fill="#bcd" />
                 <g stroke="#000" stroke-width="2" fill="none">
                     <path d="M0 190 h500 " />
@@ -75,12 +78,15 @@
             <br>
         </div>
         <h1 class='underlined'>Static Friction</h1>
-        <p>Static means not moving. Static friction is friction between two or more solid objects that are not moving relative
-            to each other. For example, static friction can prevent an object from sliding down a sloped surface. We can
-            estimate the maximum static friction force. Up to that point the friction force will match any applied forces
+        <p>Static means not moving. Static friction is friction between two or more solid objects that are not moving
+            relative
+            to each other. For example, static friction can prevent an object from sliding down a sloped surface. We
+            can
+            estimate the maximum static friction force. Up to that point the friction force will match any applied
+            forces
             to keep the object stationary.</p>
         <div class='definition'>
-            <svg viewBox="0 0 500 285">
+            <svg class="on-edge" viewBox="0 0 500 285">
                 <g transform='rotate(20) translate(150 -90)'>
                     <rect x="-150" y="190" width="700" height="300" style="fill:#bcd" />
 
@@ -138,24 +144,28 @@
                 <text x="393" y="85" fill="#000" font-size='18px'>F = ?</text>
                 <g transform='translate(260 0) rotate(0)'>
                     <!-- <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fff" /> -->
-                    <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='18px'>0.42 kg</text>
+                    <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='18px'>0.42
+                        kg</text>
                 </g>
             </svg>
 
             <strong>Example:</strong> You place a 0.42 kg glass IKEA calls
-            <a href="http://www.ikea.com/us/en/catalog/products/10270478/">POKAL</a> on a flat copper pan. How much horizontal force will you have to apply to get the glass to move?
+            <a href="http://www.ikea.com/us/en/catalog/products/10270478/">POKAL</a> on a flat copper pan. How much
+            horizontal force will you have to apply to get the glass to move?
             <br>Look up the coefficient on
             <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&cad=rja&uact=8&ved=0ahUKEwjtkditxILOAhUEKGMKHUn6DoQQygQIPzAF&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FFriction%23Coefficient_of_friction&usg=AFQjCNGO2TSwOa4dIcV4s9smoZGIuXZptA&sig2=rFYYOCz4zKKfafD-t5Yd-Q&bvm=bv.127521224,d.cGc">wikipedia</a>
             <details>
                 <summary>solution</summary>
-                $$F_{\mathrm{max}}= \mu_{s}F_{N}$$ $$F_{N}=mg$$ $$F_{\mathrm{max}}= \mu_{s}mg$$ $$F_{\mathrm{max}}= (0.68)(0.42)(9.8)$$ $$F_{\mathrm{max}}=
+                $$F_{\mathrm{max}}= \mu_{s}F_{N}$$ $$F_{N}=mg$$ $$F_{\mathrm{max}}= \mu_{s}mg$$ $$F_{\mathrm{max}}=
+                (0.68)(0.42)(9.8)$$ $$F_{\mathrm{max}}=
                 2.80 \, \mathrm{N}$$
             </details>
         </div>
     </article>
     <div class='example'>
         <div class='center'>
-            speed &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;friction
+            speed &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;friction
             <br>
             <input type="range" id='speed-slider' min="1" max="10" step="0.01" value="3"> &nbsp; &nbsp;
             <input type="range" id='friction-slider' min="0" max="0.25" step="0.01" value="0.02">
@@ -165,7 +175,8 @@
         <div style="margin: 0 auto;
         max-width: 600px;">
             <strong>Example:</strong> You slide the 0.42 kg
-            <a href="http://www.ikea.com/us/en/catalog/products/10270478/">POKAL</a> glass cup on a glass table at 3.0 m/s.
+            <a href="http://www.ikea.com/us/en/catalog/products/10270478/">POKAL</a> glass cup on a glass table at 3.0
+            m/s.
             <br>
             <br> Look up the coefficient on
             <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&cad=rja&uact=8&ved=0ahUKEwjtkditxILOAhUEKGMKHUn6DoQQygQIPzAF&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FFriction%23Coefficient_of_friction&usg=AFQjCNGO2TSwOa4dIcV4s9smoZGIuXZptA&sig2=rFYYOCz4zKKfafD-t5Yd-Q&bvm=bv.127521224,d.cGc">wikipedia</a>
@@ -173,10 +184,13 @@
             <br>Find how long it will take the cup to come to a stop.
             <details>
                 <summary>solution</summary>
-                $$F_{k}= \mu_{k}F_{N}$$ $$F_{N}=mg$$ $$F_{k}= \mu_{k}mg$$ $$F_{k}= (0.4)(0.42)(9.8)$$ $$F_{k}= 1.64 \, \mathrm{N}$$
+                $$F_{k}= \mu_{k}F_{N}$$ $$F_{N}=mg$$ $$F_{k}= \mu_{k}mg$$ $$F_{k}= (0.4)(0.42)(9.8)$$ $$F_{k}= 1.64 \,
+                \mathrm{N}$$
                 <br> $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1.64}{0.42}=a$$ $$3.90 \mathrm{\tfrac{m}{s^{2}}} = a$$
-                <br> $$a=-3.90 \mathrm{\tfrac{m}{s^{2}}} \quad \Delta t=? \quad v_{i}=3.0 \mathrm{\tfrac{m}{s}}\quad v_{f}=0$$
-                $$v_{f} = v_{i}+a \Delta t$$ $$\frac{v_{f} - v_{i}}{a}=\Delta t$$ $$\frac{0 - 3}{-3.90}=\Delta t$$ $$0.77
+                <br> $$a=-3.90 \mathrm{\tfrac{m}{s^{2}}} \quad \Delta t=? \quad v_{i}=3.0 \mathrm{\tfrac{m}{s}}\quad
+                v_{f}=0$$
+                $$v_{f} = v_{i}+a \Delta t$$ $$\frac{v_{f} - v_{i}}{a}=\Delta t$$ $$\frac{0 - 3}{-3.90}=\Delta t$$
+                $$0.77
                 \mathrm{s}=\Delta t$$
             </details>
         </div>
@@ -191,7 +205,8 @@
 
                 <g transform='translate(260 100) rotate(0)'>
                     <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#c96" />
-                    <text x="40" y="40" fill="white" text-anchor="middle" dominant-baseline="middle" font-size='18px'>10 kg</text>
+                    <text x="40" y="40" fill="white" text-anchor="middle" dominant-baseline="middle" font-size='18px'>10
+                        kg</text>
                 </g>
                 <text x="190" y="225" fill="#000" font-size='18px'>Fs</text>
                 <g transform='translate(340 220) rotate(-90)'>
@@ -201,7 +216,8 @@
                 <text x="393" y="225" fill="#000" font-size='18px'>F=?</text>
                 <g transform='translate(260 180) rotate(0)'>
                     <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#c96" />
-                    <text x="40" y="40" fill="white" text-anchor="middle" dominant-baseline="middle" font-size='18px'>10 kg</text>
+                    <text x="40" y="40" fill="white" text-anchor="middle" dominant-baseline="middle" font-size='18px'>10
+                        kg</text>
                 </g>
                 <g transform='translate(260 220) rotate(90)'>
                     <line x1="0" y1="0" x2="0" y2="45" stroke="#000" stroke-width="2" />
@@ -213,14 +229,18 @@
                     <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#000" />
                 </g>
             </svg>
-            <strong>Example:</strong> A 10 kg wood block is at rest on top of another 10 kg wood block which is resting on a concrete
+            <strong>Example:</strong> A 10 kg wood block is at rest on top of another 10 kg wood block which is resting
+            on a concrete
             slab. How much force will it take to overcome the static friction between the ground and the lower box?
             <a href="http://www.engineeringtoolbox.com/friction-coefficients-d_778.html">engineeringtoolbox</a>
             <details>
                 <summary>solution</summary>
-                <br>Include both masses in the total mass. $$F_g = mg$$ $$F_g = (20)(9.8)$$ $$F_g = 196\,\mathrm{N}$$ Since the
-                block isn't accelerating in the vertical the normal force equals the force of gravity for both blocks. $$F_s
-                = \mu_s F_N$$ $$F_s = \mu_s F_g$$ $$F_{\mathrm{max}} = \mu_s 196$$ The coefficient of static friction for
+                <br>Include both masses in the total mass. $$F_g = mg$$ $$F_g = (20)(9.8)$$ $$F_g = 196\,\mathrm{N}$$
+                Since the
+                block isn't accelerating in the vertical the normal force equals the force of gravity for both blocks.
+                $$F_s
+                = \mu_s F_N$$ $$F_s = \mu_s F_g$$ $$F_{\mathrm{max}} = \mu_s 196$$ The coefficient of static friction
+                for
                 concrete and wood is 0.62. $$F_s = (0.62) (196)$$ $$F_s = 122 \, \mathrm{N}$$
             </details>
         </div>

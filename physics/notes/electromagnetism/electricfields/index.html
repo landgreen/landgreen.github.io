@@ -31,10 +31,12 @@
 	<article>
 		<p>A
 			<strong>field</strong> has a value for each point in space and time. For example, on a weather map, the
-			<a href='https://earth.nullschool.net/'>surface wind velocity</a> is described by assigning a vector to each point on the map.</p>
+			<a href='https://earth.nullschool.net/'>surface wind velocity</a> is described by assigning a vector to each point
+			on the map.</p>
 		<!-- <h2 class='underlined'>Electric Fields</h2> -->
 		<p>
-			<a href='https://www.youtube.com/watch?v=63FnT0W-Hxc'>Electric fields</a> predict the electric force of an imaginary +1 C test charge at a location. This is useful when you
+			<a href='https://www.youtube.com/watch?v=63FnT0W-Hxc'>Electric fields</a> predict the electric force of an imaginary
+			+1 C test charge at a location. This is useful when you
 			only know about one charge instead of the pair, but remember the test charge doesn't exist.</p>
 		<p>Click the simulations to push the electrons out of position.</p>
 		<canvas id='charge3' height='300' onclick="charges3(this)"> </canvas>
@@ -70,7 +72,8 @@
 				<br>\(q\) = charge [C, Coulomb]
 				<br>\(r\) = distance between the charge and a location [m]
 		</div>
-		<p>We can figure out the direction of the electric field by imagining what a positive +1 C charge would do at each location.</p>
+		<p>We can figure out the direction of the electric field by imagining what a positive +1 C charge would do at each
+			location.</p>
 		<svg viewBox="-100 0 600 400">
 			<g transform="translate(200 200)">
 				<g transform="rotate(0)">
@@ -307,8 +310,10 @@
 			<details>
 				<summary>solution</summary>
 				$$\mu = \text{micro} = 10^{-6}$$
-				<br> $$E = \frac{k_{e}q}{r^{2}}$$ $$E = \frac{(8.987 \times 10^{9})(-3 \times 10^{-6})}{(2)^{2}}$$ $$E = -6740 \, \mathrm{\tfrac{N}{C}}$$
-				<p>The test charge is always positive and the charge that generates this field is negative. Opposites attract, so the field
+				<br> $$E = \frac{k_{e}q}{r^{2}}$$ $$E = \frac{(8.987 \times 10^{9})(-3 \times 10^{-6})}{(2)^{2}}$$ $$E = -6740 \,
+				\mathrm{\tfrac{N}{C}}$$
+				<p>The test charge is always positive and the charge that generates this field is negative. Opposites attract, so
+					the field
 					is pointed towards the -3.0 μC charge</p>
 				<svg viewBox="-100 0 600 400">
 					<g transform="translate(200 200)">
@@ -431,55 +436,57 @@
 			<details>
 				<summary>solution</summary>
 				$$n = \text{nano} = 10^{-9}$$
-				<br> $$E = \frac{k_{e}q}{r^{2}}$$ $$r^{2} = \frac{k_{e}q}{E}$$ $$r^{2} = \frac{(8.987 \times 10^{9})(10 \times 10^{-9})}{10}$$
+				<br> $$E = \frac{k_{e}q}{r^{2}}$$ $$r^{2} = \frac{k_{e}q}{E}$$ $$r^{2} = \frac{(8.987 \times 10^{9})(10 \times
+				10^{-9})}{10}$$
 				$$r^{2} = 8.987$$ $$r = 2.998\, \mathrm{m}$$
 			</details>
 		</div>
 
 
 		<h2 class='underlined'>Finding Force in an Electric Field</h2>
-		<p>Knowing the direction and strength of an electric field makes it easy to find the force felt by a charge placed in the
+		<p>Knowing the direction and strength of an electric field makes it easy to find the force felt by a charge placed in
+			the
 			field.
 		</p>
 		<div class='definition'>
-			<svg viewBox="-50 0 600 210">
+			<svg viewBox="0 0 600 210" class="on-edge">
 				<g transform="translate(0 50) rotate(0)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#888;stroke-width:2" />
-					<g transform="translate(127 0)">
+					<line x1="0" y1="0" x2="600" y2="0" style="stroke:#888;stroke-width:2" />
+					<g transform="translate(150 0)">
 						<polygon points="0,0 12,5 12,-5" style="fill:#888;" />
 					</g>
-					<g transform="translate(260 0)">
+					<g transform="translate(450 0)">
 						<polygon points="0,0 12,5 12,-5" style="fill:#888;" />
 					</g>
 				</g>
 				<g transform="translate(0 100) rotate(0)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#888;stroke-width:2" />
-					<g transform="translate(127 0)">
+					<line x1="0" y1="0" x2="600" y2="0" style="stroke:#888;stroke-width:2" />
+					<g transform="translate(150 0)">
 						<polygon points="0,0 12,5 12,-5" style="fill:#888;" />
 					</g>
-					<g transform="translate(260 0)">
+					<g transform="translate(450 0)">
 						<polygon points="0,0 12,5 12,-5" style="fill:#888;" />
 					</g>
 				</g>
 				<g transform="translate(0 150) rotate(0)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#888;stroke-width:2" />
-					<g transform="translate(127 0)">
+					<line x1="0" y1="0" x2="600" y2="0" style="stroke:#888;stroke-width:2" />
+					<g transform="translate(150 0)">
 						<polygon points="0,0 12,5 12,-5" style="fill:#888;" />
 					</g>
-					<g transform="translate(260 0)">
+					<g transform="translate(450 0)">
 						<polygon points="0,0 12,5 12,-5" style="fill:#888;" />
 					</g>
 				</g>
 				<g transform="translate(0 200) rotate(0)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#888;stroke-width:2" />
-					<g transform="translate(127 0)">
+					<line x1="0" y1="0" x2="600" y2="0" style="stroke:#888;stroke-width:2" />
+					<g transform="translate(150 0)">
 						<polygon points="0,0 12,5 12,-5" style="fill:#888;" />
 					</g>
-					<g transform="translate(260 0)">
+					<g transform="translate(450 0)">
 						<polygon points="0,0 12,5 12,-5" style="fill:#888;" />
 					</g>
 				</g>
-				<g transform="translate(200 125)">
+				<g transform="translate(260 125)">
 					<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 					<g transform="translate(105 0) rotate(180)">
 						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
@@ -500,7 +507,8 @@
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> A positive 0.005 μC charge is placed in a uniform 200 N/C field pointed to the right. What force does
+			<strong>Example:</strong> A positive 0.005 μC charge is placed in a uniform 200 N/C field pointed to the right. What
+			force does
 			the charge feel?
 			<details>
 				<summary>solution</summary>
@@ -548,21 +556,25 @@
 					</g>
 				</svg>
 
-				$$F = Eq$$ $$F = (200\, \mathrm{\tfrac{N}{C}})(0.005 \times 10^{-6}\,\mathrm{C})$$ $$F = 10^{-6} \, \mathrm{N} \ \rightarrow$$
-				The electric field shows the force a positive charge would experience. Our charge is positive so it will go in the same
+				$$F = Eq$$ $$F = (200\, \mathrm{\tfrac{N}{C}})(0.005 \times 10^{-6}\,\mathrm{C})$$ $$F = 10^{-6} \, \mathrm{N} \
+				\rightarrow$$
+				The electric field shows the force a positive charge would experience. Our charge is positive so it will go in the
+				same
 				direction as the field,
 				<strong>right</strong>.
 			</details>
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> Find the strength and direction for an electric field that would make a proton accelerate to the right
+			<strong>Example:</strong> Find the strength and direction for an electric field that would make a proton accelerate
+			to the right
 			at 2 m/s²?
 			<details>
 				<summary>solution</summary>
 				$$m_{p} = 1.672 \times 10^{-27} \, \mathrm{kg} \quad q_{p} = 1.602 \times 10^{-19}\, \mathrm{C}$$
 				<br> $$F=ma$$ $$F=(1.672 \times 10^{-27})(2)$$ $$F=3.344 \times 10^{-27} N$$
-				<br> $$F = Eq$$ $$\frac{F}{q} = E$$ $$\frac{3.344 \times 10^{-27}N}{1.602 \times 10^{-19}\, \mathrm{C}} = E$$ $$2.087 \times
+				<br> $$F = Eq$$ $$\frac{F}{q} = E$$ $$\frac{3.344 \times 10^{-27}N}{1.602 \times 10^{-19}\, \mathrm{C}} = E$$
+				$$2.087 \times
 				10^{-8} \, \mathrm{\tfrac{N}{C}} = E$$
 				<p>The field is directed right so a positive charge will go right.</p>
 				$$E = 2.087 \times 10^{-8} \, \mathrm{\tfrac{N}{C}} \rightarrow$$
@@ -570,10 +582,12 @@
 		</div>
 
 		<h2 class='underlined'>Solving for Multiple Charges</h2>
-		<p>To find the field from multiple charges, we need to add each individual field contribution from each charge. Be mindful
+		<p>To find the field from multiple charges, we need to add each individual field contribution from each charge. Be
+			mindful
 			of the direction of each field contribution to see which are negative or positive.</p>
 		<div class='example'>
-			<strong>Example:</strong> A positive 1 μC charge is 50 mm away from a -2 μC charge. Find the magnitude and direction of the electric
+			<strong>Example:</strong> A positive 1 μC charge is 50 mm away from a -2 μC charge. Find the magnitude and direction
+			of the electric
 			field halfway in between these charges.
 			<details>
 				<summary>solution</summary>
@@ -592,17 +606,20 @@
 					</g>
 				</svg>
 				<p>Find the electric field from each charge at the location.</p>
-				$$\mu = 10^{-6}$$ $$E = \frac{k_{e}q}{r^{2}}$$ $$E = \frac{(8.987 \times 10^{9})(10^{-6})}{(0.025)^{2}}$$ $$E = 14,379,200
+				$$\mu = 10^{-6}$$ $$E = \frac{k_{e}q}{r^{2}}$$ $$E = \frac{(8.987 \times 10^{9})(10^{-6})}{(0.025)^{2}}$$ $$E =
+				14,379,200
 				\, \mathrm{\tfrac{N}{C}} \rightarrow$$
 
-				<br> $$E = \frac{(8.987 \times 10^{9})(-2 \times 10^{-6})}{(0.025)^{2}}$$ $$E = 28,758,400 \, \mathrm{\tfrac{N}{C}} \rightarrow$$
+				<br> $$E = \frac{(8.987 \times 10^{9})(-2 \times 10^{-6})}{(0.025)^{2}}$$ $$E = 28,758,400 \, \mathrm{\tfrac{N}{C}}
+				\rightarrow$$
 				<p>Add the fields and keep in mind direction</p>
 				$$14,379,200 + 28,758,400 = 43,137,600 \, \mathrm{\tfrac{N}{C}} \rightarrow $$
 			</details>
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> A 0.03 μC charge is 2 m East of a -0.01 μC charge. Find the magnitude and direction of the electric
+			<strong>Example:</strong> A 0.03 μC charge is 2 m East of a -0.01 μC charge. Find the magnitude and direction of the
+			electric
 			field 1 m West of the -0.01 μC charge.
 			<details>
 				<summary>solution</summary>
@@ -627,9 +644,11 @@
 					</g>
 				</svg>
 				<p>Find the electric field from each charge at the location.</p>
-				$$E = \frac{k_{e}q}{r^{2}}$$ $$E = \frac{(8.987 \times 10^{9})(-0.01 \times 10^{-6})}{(1)^{2}}$$ $$E = 89.87 \, \mathrm{
+				$$E = \frac{k_{e}q}{r^{2}}$$ $$E = \frac{(8.987 \times 10^{9})(-0.01 \times 10^{-6})}{(1)^{2}}$$ $$E = 89.87 \,
+				\mathrm{
 				\tfrac{N}{C}} \rightarrow$$
-				<br> $$E = \frac{(8.987 \times 10^{9})(0.03 \times 10^{-6})}{(3)^{2}}$$ $$E = 29.96 \, \mathrm{ \tfrac{N}{C}} \leftarrow$$
+				<br> $$E = \frac{(8.987 \times 10^{9})(0.03 \times 10^{-6})}{(3)^{2}}$$ $$E = 29.96 \, \mathrm{ \tfrac{N}{C}}
+				\leftarrow$$
 				<p>Add the fields and keep in mind direction.</p>
 				$$89.87-29.96 =59.91 \, \mathrm{\tfrac{N}{C}} \rightarrow $$
 			</details>

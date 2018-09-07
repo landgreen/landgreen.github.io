@@ -171,6 +171,11 @@ th {
   display: block;
 }
 
+.on-edge {
+  margin-left: -1em;
+  margin-right: -1em;
+}
+
 .highlight {
   color: #fff;
   background-color: #2793c7;
@@ -354,6 +359,11 @@ header h1 a:hover {
   .definition {
     padding: 10px;
     font-size: 100%;
+  }
+
+  .on-edge {
+    margin-left: -10px;
+    margin-right: -10px;
   }
 
   .katex {
