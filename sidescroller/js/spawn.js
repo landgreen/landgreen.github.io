@@ -989,6 +989,9 @@ const spawn = {
     me.restitution = 0;
     me.stroke = "transparent"
     me.freeOfWires = false;
+    me.frictionStatic = 1;
+    me.friction = 1;
+    // me.frictionAir = 0.01;
 
     me.do = function () {
       //intro text message
@@ -1012,10 +1015,10 @@ const spawn = {
         })
 
         //player friction from the wires
-        if (mech.pos.x > 1000) {
+        if (mech.pos.x > 700) {
           const distanceToBrake = breakingPoint - mech.pos.x;
           Matter.Body.setVelocity(player, {
-            x: player.velocity.x - Math.min(0.65, Math.max(0, 250 / distanceToBrake)),
+            x: player.velocity.x - Math.min(0.65, Math.max(0, 150 / distanceToBrake)),
             y: player.velocity.y * 0.93 + 0.5
           })
         }
@@ -1043,6 +1046,9 @@ const spawn = {
     // me.restitution = 0;
     me.stroke = "transparent"
     me.freeOfWires = false;
+    me.frictionStatic = 1;
+    me.friction = 1;
+    // me.frictionAir = 0.01;
 
     me.do = function () {
       ctx.strokeStyle = "#222";
@@ -1089,6 +1095,9 @@ const spawn = {
     me.restitution = 0;
     me.stroke = "transparent"
     me.freeOfWires = false;
+    me.frictionStatic = 1;
+    me.friction = 1;
+    // me.frictionAir = 0.01;
 
     me.do = function () {
       ctx.strokeStyle = "#222";

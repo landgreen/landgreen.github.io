@@ -31,22 +31,26 @@ const level = {
   //******************************************************************************************************************
   //empty map for testing mobs
   intro: function () {
-    mech.setPosToSpawn(0, -360); //normal spawn
+    mech.setPosToSpawn(460, -100); //normal spawn
     level.enter.x = -10000; //offscreen
     level.enter.y = -400;
 
-    level.exit.x = 2500;
+    level.exit.x = 2800;
     level.exit.y = -335;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
     document.body.style.backgroundColor = "#444";
-    // game.makeTextLog("move = WASD <br> look + fire = MOUSE <br> cycle weapon = Q or E", Infinity);
+    game.makeTextLog(
+      "<span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span>",
+      Infinity
+    );
+
 
     level.fill.push({
       x: -150,
       y: -950,
-      width: 2450,
+      width: 2750,
       height: 1000,
-      color: "rgba(0,0,0,0.1)"
+      color: "rgba(0,80,80,0.1)"
     });
 
     level.fillBG.push({
@@ -57,7 +61,7 @@ const level = {
       color: "#fff"
     });
     level.fillBG.push({
-      x: 2300,
+      x: 2600,
       y: -600,
       width: 400,
       height: 500,
@@ -89,50 +93,47 @@ const level = {
       wallWire(100 - 10 * i, -850 - 10 * i, 5, 600);
       wallWire(100 - 10 * i, -255 - 10 * i, -300, 5);
     }
-
     for (let i = 0; i < 5; i++) {
       wallWire(1000 + 10 * i, -850 - 10 * i, 5, 400);
       wallWire(1000 + 10 * i, -450 - 10 * i, 150, 5);
       wallWire(1150 + 10 * i, -450 - 10 * i, 5, 500);
     }
-    // wallWire(1150 + 10 * 5, -850, 5, 1000);
-    // wallWire(1150 + 10 * 6, -850, 5, 1000);
-    // wallWire(1150 + 10 * 7, -850, 5, 1000);
-
     for (let i = 0; i < 3; i++) {
-      wallWire(2350 - 10 * i, -700 - 10 * i, -300, 5);
-      wallWire(2050 - 10 * i, -700 - 10 * i, 5, 800);
+      wallWire(2650 - 10 * i, -700 - 10 * i, -300, 5);
+      wallWire(2350 - 10 * i, -700 - 10 * i, 5, 800);
     }
-
     for (let i = 0; i < 3; i++) {
       wallWire(-200 - i * 10, -245 + i * 10, 1340, 5);
       wallWire(1140 - i * 10, -245 + i * 10, 5, 300);
     }
-    // wallWire(-200, -240, 1350, 5);
 
     spawn.mapRect(-250, 0, 3000, 200); //ground
-    spawn.mapRect(-350, -1000, 200, 1100); //left wall
-    spawn.mapRect(2700, -1000, 200, 1100); //right wall
+    spawn.mapRect(-350, -1000, 200, 1200); //left wall
+    spawn.mapRect(3000, -1000, 200, 1200); //right wall
     spawn.mapRect(-250, -1000, 3000, 200); //roof
-    spawn.mapRect(2300, -300, 500, 350); //exit shelf
-    spawn.mapRect(2300, -1000, 500, 400); //exit roof
+    spawn.mapRect(2600, -300, 500, 500); //exit shelf
+    spawn.mapRect(2600, -1000, 500, 400); //exit roof
     spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 100); //exit bump
+    spawn.mapRect(260, -900, 80, 110); //wire source
 
-    spawn.bodyRect(-135, -50, 50, 50);
-    spawn.bodyRect(-140, -100, 50, 50);
-    spawn.bodyRect(-145, -150, 60, 50);
-    spawn.bodyRect(-140, -200, 50, 50);
-    spawn.bodyRect(-95, -50, 40, 50);
-    spawn.bodyRect(-90, -100, 60, 50);
-    spawn.bodyRect(-110, -150, 40, 50);
-    spawn.bodyRect(-45, -100, 40, 50);
+    spawn.bodyRect(-35, -50, 50, 50);
+    spawn.bodyRect(-40, -100, 50, 50);
+    spawn.bodyRect(-45, -150, 60, 50);
+    spawn.bodyRect(-40, -200, 50, 50);
+    spawn.bodyRect(5, -50, 40, 50);
+    spawn.bodyRect(10, -100, 60, 50);
+    spawn.bodyRect(-10, -150, 40, 50);
+    spawn.bodyRect(55, -100, 40, 50);
+    spawn.bodyRect(-150, -300, 100, 100);
+    spawn.bodyRect(-150, -200, 100, 100);
+    spawn.bodyRect(-150, -100, 100, 100);
 
-    spawn.bodyRect(1790, -50, 40, 50);
-    spawn.bodyRect(1875, -100, 200, 90);
-    spawn.bodyRect(2075, -120, 70, 50);
-    spawn.bodyRect(2050, -100, 100, 60);
-    spawn.bodyRect(2150, -150, 150, 150); //exit step
-    powerUps.spawn(1750, -200, "gun", false); //starting gun
+    // spawn.bodyRect(1790, -50, 40, 50);
+    // spawn.bodyRect(1875, -100, 200, 90);
+    spawn.bodyRect(2375, -120, 70, 50);
+    spawn.bodyRect(2350, -100, 100, 60);
+    spawn.bodyRect(2450, -150, 150, 150); //exit step
+    powerUps.spawn(2250, -350, "gun", false); //starting gun
 
 
     spawn.wireFoot();
