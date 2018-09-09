@@ -114,31 +114,31 @@ function setupCanvas() {
   game.setZoom();
 }
 setupCanvas();
-window.onresize = function() {
+window.onresize = function () {
   setupCanvas();
 };
 
 //mouse move input
-window.onmousemove = function(e) {
+window.onmousemove = function (e) {
   game.mouse.x = e.clientX;
   game.mouse.y = e.clientY;
 };
 
 //normal mouse click events
-window.onmousedown = function(e) {
+window.onmousedown = function (e) {
   //mouse down gets reset in the run function below
   game.mouseDown = true;
   game.mouse.x = e.clientX;
   game.mouse.y = e.clientY;
 };
-window.onmouseup = function(e) {
+window.onmouseup = function (e) {
   // game.buildingUp(e); //uncomment when building levels
   game.mouseDown = false;
 };
 
 //keyboard input
 const keys = [];
-document.body.addEventListener("keydown", function(e) {
+document.body.addEventListener("keydown", function (e) {
   keys[e.keyCode] = true;
   game.keyPress();
   //full screen toggle
@@ -147,20 +147,21 @@ document.body.addEventListener("keydown", function(e) {
   }
 });
 
-document.body.addEventListener("keyup", function(e) {
+document.body.addEventListener("keyup", function (e) {
   keys[e.keyCode] = false;
 });
 
 document.body.addEventListener(
   "wheel",
-  function(e) {
+  function (e) {
     if (e.deltaY > 0) {
       game.nextGun();
     } else {
       game.previousGun();
     }
-  },
-  { passive: true }
+  }, {
+    passive: true
+  }
 );
 
 function toggleFullScreen(el) {
@@ -213,7 +214,7 @@ function cycle() {
   if (game.clearNow) {
     game.clearNow = false;
     game.clearMap();
-    game.startZoomIn();
+    if (game.levelsCleared != 0) game.startZoomIn();
     level.start();
   }
   game.gravity();

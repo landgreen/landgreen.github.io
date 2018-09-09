@@ -28,7 +28,7 @@ const spawn = {
     spawn.pickList.push(spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]);
   },
   randomMob: function (x, y, chance = 1) {
-    if (Math.random() < chance + 0.1 * game.levelsCleared && mob.length < 5 + game.levelsCleared * 2) {
+    if (Math.random() < chance + 0.1 * (game.levelsCleared - 1) && mob.length < 4 + game.levelsCleared * 2) {
       const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       this[pick](x, y);
     }
@@ -36,11 +36,11 @@ const spawn = {
   randomSmallMob: function (
     x,
     y,
-    num = Math.max(Math.min(Math.round(Math.random() * game.levelsCleared * 0.5 - 0.4), 4), 0),
+    num = Math.max(Math.min(Math.round(Math.random() * (game.levelsCleared - 1) * 0.5 - 0.4), 4), 0),
     size = 16 + Math.ceil(Math.random() * 15),
     chance = 1
   ) {
-    if (Math.random() < chance + game.levelsCleared * 0.03 && mob.length < 5 + game.levelsCleared * 2) {
+    if (Math.random() < chance + (game.levelsCleared - 1) * 0.03 && mob.length < 4 + game.levelsCleared * 2) {
       for (let i = 0; i < num; ++i) {
         const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
         this[pick](x + Math.round((Math.random() - 0.5) * 20) + i * size * 2.5, y + Math.round((Math.random() - 0.5) * 20), size);
@@ -48,7 +48,7 @@ const spawn = {
     }
   },
   randomBoss: function (x, y, chance = 1) {
-    if (Math.random() < chance + game.levelsCleared * 0.15 && game.levelsCleared !== 0 && mob.length < 5 + game.levelsCleared * 2.1) {
+    if (Math.random() < chance + (game.levelsCleared - 1) * 0.15 && game.levelsCleared !== 1 && mob.length < 4 + game.levelsCleared * 2.1) {
       //choose from the possible picklist
       let pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       //is the pick able to be a boss?
@@ -146,7 +146,7 @@ const spawn = {
     me.g = 0.0004; //required if using 'gravity'
     me.accelMag = 0.0006;
     me.memory = 240;
-    if (Math.random() < Math.min(game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
+    if (Math.random() < Math.min((game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
     me.do = function () {
       this.healthBar();
       this.gravity();
@@ -236,7 +236,7 @@ const spawn = {
     me.onDeath = function () {
       this.removeCons();
     };
-    if (Math.random() < Math.min(game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
+    if (Math.random() < Math.min((game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
     me.do = function () {
       this.healthBar();
       this.gravity();
@@ -399,7 +399,7 @@ const spawn = {
     me.accelMag = 0.0005;
     me.frictionStatic = 0;
     me.friction = 0;
-    if (Math.random() < Math.min(0.2 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
+    if (Math.random() < Math.min(0.2 + (game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
     me.do = function () {
       this.healthBar();
       this.seePlayerByLookingAt();
@@ -711,7 +711,7 @@ const spawn = {
     // me.memory = 300;
     // Matter.Body.setDensity(me, 0.0015); //extra dense //normal is 0.001
     me.collisionFilter.mask = 0x001100; //move through walls
-    if (Math.random() < Math.min(0.3 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
+    if (Math.random() < Math.min(0.3 + (game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
     me.do = function () {
       this.healthBar();
       this.seePlayerCheckByDistance();
@@ -735,7 +735,7 @@ const spawn = {
       x: 0,
       y: 0
     };
-    if (Math.random() < Math.min(0.15 + game.levelsCleared * 0.1, 0.7)) spawn.shield(me, x, y);
+    if (Math.random() < Math.min(0.15 + (game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
     me.do = function () {
       this.healthBar();
       this.seePlayerByLookingAt();
@@ -780,7 +780,7 @@ const spawn = {
         });
       }
     };
-    if (Math.random() < Math.min(game.levelsCleared * 0.1, 0.5)) spawn.shield(me, x, y);
+    if (Math.random() < Math.min((game.levelsCleared - 1) * 0.1, 0.5)) spawn.shield(me, x, y);
     me.do = function () {
       this.healthBar();
       this.gravity();
@@ -856,7 +856,7 @@ const spawn = {
     x,
     y,
     spawn = "striker",
-    nodes = Math.min(2 + Math.round(Math.random() * (game.levelsCleared + 1)), 8),
+    nodes = Math.min(2 + Math.round(Math.random() * game.levelsCleared), 8),
     //Math.ceil(Math.random() * 3) + Math.min(4,Math.ceil(game.levelsCleared/2)),
     radius = Math.ceil(Math.random() * 10) + 17,
     l = Math.ceil(Math.random() * 100) + 70,
@@ -888,7 +888,7 @@ const spawn = {
     x,
     y,
     spawn = "striker",
-    nodes = Math.min(2 + Math.round(Math.random() * (game.levelsCleared + 1)), 8),
+    nodes = Math.min(2 + Math.round(Math.random() * game.levelsCleared), 8),
     //Math.ceil(Math.random() * 3) + Math.min(4,Math.ceil(game.levelsCleared/2)),
     radius = Math.ceil(Math.random() * 10) + 17,
     l = Math.ceil(Math.random() * 80) + 30,
@@ -977,6 +977,152 @@ const spawn = {
   },
   // body and map spawns ******************************************************************************
   //**********************************************************************************************
+  wireHead: function () {
+    //not a mob, just a graphic for level 1
+    const breakingPoint = 1400
+    mobs.spawn(breakingPoint, -100, 0, 7.5, "transparent");
+    let me = mob[mob.length - 1];
+    //touch only walls
+    me.collisionFilter.category = 0x100000;
+    me.collisionFilter.mask = 0x100001;
+    me.g = 0.0003; //required for gravity
+    me.restitution = 0;
+    me.stroke = "transparent"
+    me.freeOfWires = false;
+
+    me.do = function () {
+      //intro text message
+      ctx.strokeStyle = "#000";
+      ctx.fillStyle = "#000";
+      let wireX = 300;
+      let wireY = -800;
+
+      if (this.freeOfWires) {
+        this.gravity();
+      } else {
+        if (mech.pos.x > breakingPoint) {
+          this.freeOfWires = true;
+          this.force.x += -0.003
+          this.fill = "#000"
+        }
+        //move mob to player
+        Matter.Body.setPosition(this, {
+          x: mech.pos.x + (42 * Math.cos(mech.angle + Math.PI)),
+          y: mech.pos.y + (42 * Math.sin(mech.angle + Math.PI))
+        })
+
+        //player friction from the wires
+        if (mech.pos.x > 1000) {
+          const distanceToBrake = breakingPoint - mech.pos.x;
+          Matter.Body.setVelocity(player, {
+            x: player.velocity.x - Math.min(0.65, Math.max(0, 250 / distanceToBrake)),
+            y: player.velocity.y * 0.93 + 0.5
+          })
+        }
+      }
+      //draw wire
+      ctx.beginPath();
+      ctx.moveTo(wireX, wireY);
+      ctx.quadraticCurveTo(wireX, 0, this.position.x, this.position.y);
+      if (!this.freeOfWires) ctx.lineTo(mech.pos.x + (30 * Math.cos(mech.angle + Math.PI)), mech.pos.y + (30 * Math.sin(mech.angle + Math.PI)));
+      ctx.lineWidth = 15;
+      ctx.lineCap = "butt";
+      ctx.stroke();
+      ctx.lineCap = "round";
+    };
+  },
+  wireKnee: function () {
+    //not a mob, just a graphic for level 1
+    const breakingPoint = 1400
+    mobs.spawn(breakingPoint, -100, 0, 2, "transparent");
+    let me = mob[mob.length - 1];
+    //touch only walls
+    me.collisionFilter.category = 0x100000;
+    me.collisionFilter.mask = 0x100001;
+    me.g = 0.0004; //required for gravity
+    // me.restitution = 0;
+    me.stroke = "transparent"
+    me.freeOfWires = false;
+
+    me.do = function () {
+      ctx.strokeStyle = "#222";
+      let wireX = 300 - 20;
+      let wireY = -800;
+
+      if (this.freeOfWires) {
+        this.gravity();
+      } else {
+        if (mech.pos.x > breakingPoint) {
+          this.freeOfWires = true;
+          this.force.x += -0.0006;
+          this.fill = "#222";
+        }
+        //move mob to player
+        let flipLegs = -1;
+        if (game.mouseInGame.x > mech.pos.x) {
+          flipLegs = 1;
+        }
+        Matter.Body.setPosition(this, {
+          x: mech.pos.x + flipLegs * mech.knee.x - 4,
+          y: mech.pos.y + mech.knee.y
+        })
+      }
+      //draw wire
+      ctx.beginPath();
+      ctx.moveTo(wireX, wireY);
+      ctx.quadraticCurveTo(wireX, 0, this.position.x, this.position.y);
+      ctx.lineWidth = 5;
+      ctx.lineCap = "butt";
+      ctx.stroke();
+      ctx.lineCap = "round";
+    };
+  },
+  wireFoot: function () {
+    //not a mob, just a graphic for level 1
+    const breakingPoint = 1400
+    mobs.spawn(breakingPoint, -100, 0, 2, "transparent");
+    let me = mob[mob.length - 1];
+    //touch only walls
+    me.collisionFilter.category = 0x100000;
+    me.collisionFilter.mask = 0x100001;
+    me.g = 0.0004; //required for gravity
+    me.restitution = 0;
+    me.stroke = "transparent"
+    me.freeOfWires = false;
+
+    me.do = function () {
+      ctx.strokeStyle = "#222";
+      let wireX = 300 + 16;
+      let wireY = -800;
+
+      if (this.freeOfWires) {
+        this.gravity();
+      } else {
+        if (mech.pos.x > breakingPoint) {
+          this.freeOfWires = true;
+          this.force.x += -0.0008;
+          this.fill = "#222";
+        }
+        //move mob to player
+        let flipLegs = -1;
+        if (game.mouseInGame.x > mech.pos.x) {
+          flipLegs = 1;
+        }
+        Matter.Body.setPosition(this, {
+          x: mech.pos.x + flipLegs * mech.foot.x - 4,
+          y: mech.pos.y + mech.foot.y
+        })
+      }
+      //draw wire
+      ctx.beginPath();
+      ctx.moveTo(wireX, wireY);
+      ctx.quadraticCurveTo(wireX, 0, this.position.x, this.position.y);
+      ctx.lineWidth = 5;
+      ctx.lineCap = "butt";
+      ctx.stroke();
+      ctx.lineCap = "round";
+    };
+  },
   boost: function (x, y, height = 1000) {
     spawn.mapVertex(x + 50, y + 35, "120 40 -120 40 -50 -40 50 -40");
     // level.addZone(x, y, 100, 30, "fling", {Vx:Vx, Vy: Vy});

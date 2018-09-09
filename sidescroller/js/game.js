@@ -310,7 +310,6 @@ const game = {
     if (this.firstRun) mech.spawn(); //spawns the player
     level.levels = shuffle(level.levels); //shuffles order of maps
     game.reset();
-    // if (game.firstRun) Engine.run(engine); //starts game engine
     game.firstRun = false;
     requestAnimationFrame(cycle); //starts game loop
     game.lastLogTime = game.cycle + 360;

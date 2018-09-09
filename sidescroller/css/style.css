@@ -22,6 +22,7 @@ svg {
   width: 100%;
   height: 100%;
 }
+
 #dmg {
   position: absolute;
   z-index: 2;
@@ -67,6 +68,7 @@ svg {
   from {
     opacity: 0.9;
   }
+
   to {
     opacity: 0.2;
   }
@@ -78,7 +80,7 @@ svg {
   width: 100%;
   height: 100%;
   background-color: #fff;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 5s;
   pointer-events: none;
 }
