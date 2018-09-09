@@ -985,6 +985,7 @@ const spawn = {
     //touch only walls
     me.collisionFilter.category = 0x100000;
     me.collisionFilter.mask = 0x100001;
+    me.inertia = Infinity;
     me.g = 0.0003; //required for gravity
     me.restitution = 0;
     me.stroke = "transparent"
@@ -1005,8 +1006,10 @@ const spawn = {
       } else {
         if (mech.pos.x > breakingPoint) {
           this.freeOfWires = true;
-          this.force.x += -0.003
           this.fill = "#000"
+          this.force.x += -0.003;
+          player.force.x += 0.05;
+          // player.force.y -= 0.05;
         }
         //move mob to player
         Matter.Body.setPosition(this, {
@@ -1045,6 +1048,7 @@ const spawn = {
     me.g = 0.0004; //required for gravity
     // me.restitution = 0;
     me.stroke = "transparent"
+    me.inertia = Infinity;
     me.freeOfWires = false;
     me.frictionStatic = 1;
     me.friction = 1;
@@ -1068,8 +1072,60 @@ const spawn = {
         if (game.mouseInGame.x > mech.pos.x) {
           flipLegs = 1;
         }
+        mech.calcLeg(0, 0);
         Matter.Body.setPosition(this, {
-          x: mech.pos.x + flipLegs * mech.knee.x - 4,
+          x: mech.pos.x + flipLegs * mech.knee.x - 5,
+          y: mech.pos.y + mech.knee.y
+        })
+      }
+      //draw wire
+      ctx.beginPath();
+      ctx.moveTo(wireX, wireY);
+      ctx.quadraticCurveTo(wireX, 0, this.position.x, this.position.y);
+      ctx.lineWidth = 5;
+      ctx.lineCap = "butt";
+      ctx.stroke();
+      ctx.lineCap = "round";
+    };
+  },
+  wireKneeLeft: function () {
+    //not a mob, just a graphic for level 1
+    const breakingPoint = 1400
+    mobs.spawn(breakingPoint, -100, 0, 2, "transparent");
+    let me = mob[mob.length - 1];
+    //touch only walls
+    me.collisionFilter.category = 0x100000;
+    me.collisionFilter.mask = 0x100001;
+    me.g = 0.0004; //required for gravity
+    // me.restitution = 0;
+    me.stroke = "transparent"
+    me.inertia = Infinity;
+    me.freeOfWires = false;
+    me.frictionStatic = 1;
+    me.friction = 1;
+    // me.frictionAir = 0.01;
+
+    me.do = function () {
+      ctx.strokeStyle = "#333";
+      let wireX = 300 - 20;
+      let wireY = -800;
+
+      if (this.freeOfWires) {
+        this.gravity();
+      } else {
+        if (mech.pos.x > breakingPoint) {
+          this.freeOfWires = true;
+          this.force.x += -0.0006;
+          this.fill = "#333";
+        }
+        //move mob to player
+        let flipLegs = -1;
+        if (game.mouseInGame.x > mech.pos.x) {
+          flipLegs = 1;
+        }
+        mech.calcLeg(Math.PI, -3);
+        Matter.Body.setPosition(this, {
+          x: mech.pos.x + flipLegs * mech.knee.x - 5,
           y: mech.pos.y + mech.knee.y
         })
       }
@@ -1094,6 +1150,7 @@ const spawn = {
     me.g = 0.0004; //required for gravity
     me.restitution = 0;
     me.stroke = "transparent"
+    me.inertia = Infinity;
     me.freeOfWires = false;
     me.frictionStatic = 1;
     me.friction = 1;
@@ -1117,9 +1174,61 @@ const spawn = {
         if (game.mouseInGame.x > mech.pos.x) {
           flipLegs = 1;
         }
+        mech.calcLeg(0, 0);
         Matter.Body.setPosition(this, {
-          x: mech.pos.x + flipLegs * mech.foot.x - 4,
-          y: mech.pos.y + mech.foot.y
+          x: mech.pos.x + flipLegs * mech.foot.x - 5,
+          y: mech.pos.y + mech.foot.y - 1
+        })
+      }
+      //draw wire
+      ctx.beginPath();
+      ctx.moveTo(wireX, wireY);
+      ctx.quadraticCurveTo(wireX, 0, this.position.x, this.position.y);
+      ctx.lineWidth = 5;
+      ctx.lineCap = "butt";
+      ctx.stroke();
+      ctx.lineCap = "round";
+    };
+  },
+  wireFootLeft: function () {
+    //not a mob, just a graphic for level 1
+    const breakingPoint = 1400
+    mobs.spawn(breakingPoint, -100, 0, 2, "transparent");
+    let me = mob[mob.length - 1];
+    //touch only walls
+    me.collisionFilter.category = 0x100000;
+    me.collisionFilter.mask = 0x100001;
+    me.g = 0.0004; //required for gravity
+    me.restitution = 0;
+    me.stroke = "transparent"
+    me.inertia = Infinity;
+    me.freeOfWires = false;
+    me.frictionStatic = 1;
+    me.friction = 1;
+    // me.frictionAir = 0.01;
+
+    me.do = function () {
+      ctx.strokeStyle = "#333";
+      let wireX = 300 + 16;
+      let wireY = -800;
+
+      if (this.freeOfWires) {
+        this.gravity();
+      } else {
+        if (mech.pos.x > breakingPoint) {
+          this.freeOfWires = true;
+          this.force.x += -0.0008;
+          this.fill = "#333";
+        }
+        //move mob to player
+        let flipLegs = -1;
+        if (game.mouseInGame.x > mech.pos.x) {
+          flipLegs = 1;
+        }
+        mech.calcLeg(Math.PI, -3);
+        Matter.Body.setPosition(this, {
+          x: mech.pos.x + flipLegs * mech.foot.x - 5,
+          y: mech.pos.y + mech.foot.y - 1
         })
       }
       //draw wire

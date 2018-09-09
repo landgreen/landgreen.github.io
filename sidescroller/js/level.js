@@ -44,7 +44,6 @@ const level = {
       Infinity
     );
 
-
     level.fill.push({
       x: -150,
       y: -950,
@@ -66,6 +65,14 @@ const level = {
       width: 400,
       height: 500,
       color: "#edf9f9"
+    });
+
+    level.fillBG.push({
+      x: 1600,
+      y: -500,
+      width: 100,
+      height: 100,
+      color: "#eee"
     });
 
     //faster way to draw a wire
@@ -102,6 +109,16 @@ const level = {
       wallWire(2650 - 10 * i, -700 - 10 * i, -300, 5);
       wallWire(2350 - 10 * i, -700 - 10 * i, 5, 800);
     }
+
+    for (let i = 0; i < 5; i++) {
+      wallWire(1625 + 10 * i, -850, 5, 1000);
+    }
+
+    for (let i = 0; i < 4; i++) {
+      wallWire(1650, -470 + i * 10, 670 - i * 10, 5);
+      wallWire(1650 + 670 - i * 10, -470 + i * 10, 5, 600);
+    }
+
     for (let i = 0; i < 3; i++) {
       wallWire(-200 - i * 10, -245 + i * 10, 1340, 5);
       wallWire(1140 - i * 10, -245 + i * 10, 5, 300);
@@ -137,7 +154,9 @@ const level = {
 
 
     spawn.wireFoot();
+    spawn.wireFootLeft();
     spawn.wireKnee();
+    spawn.wireKneeLeft();
     spawn.wireHead();
   },
   testingMap: function () {
