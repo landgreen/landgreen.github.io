@@ -221,17 +221,17 @@ const mech = {
       //on ground **********************
       if (this.crouch) {
         //crouch
-        if (!keys[83] && this.isHeadClear) {
+        if (!(keys[83] || keys[40]) && this.isHeadClear) {
           //not pressing crouch anymore
           this.undoCrouch();
           player.frictionAir = this.friction.ground;
         }
-      } else if (keys[83]) {
+      } else if (keys[83] || keys[40]) {
         //on ground && not crouched and pressing s or down
         this.doCrouch();
         player.frictionAir = this.friction.crouch;
       } else if (
-        (keys[87] || keys[32]) &&
+        (keys[87] || keys[38] || keys[32]) &&
         this.buttonCD_jump + 20 < game.cycle
       ) {
         this.buttonCD_jump = game.cycle; //can't jump again until 20 cycles pass
@@ -250,7 +250,7 @@ const mech = {
       }
       //horizontal move on ground
       const stoppingFriction = 0.9;
-      if (keys[65]) {
+      if (keys[65] || keys[37]) {
         //left / a
         player.force.x -=
           this.Fx * (1 - Math.sqrt(Math.abs(player.velocity.x) / this.VxMax));
@@ -263,7 +263,7 @@ const mech = {
             y: player.velocity.y * stoppingFriction
           });
         }
-      } else if (keys[68]) {
+      } else if (keys[68] || keys[39]) {
         //right / d
         player.force.x +=
           this.Fx * (1 - Math.sqrt(Math.abs(player.velocity.x) / this.VxMax));
@@ -288,7 +288,7 @@ const mech = {
       //check for short jumps
       if (
         this.buttonCD_jump + 60 > game.cycle && //just pressed jump
-        !(keys[87] || keys[32]) && //but not pressing jump key
+        !(keys[87] || keys[38] || keys[32]) && //but not pressing jump key
         this.Vy < 0 //moving up
       ) {
         Matter.Body.setVelocity(player, {
@@ -297,12 +297,12 @@ const mech = {
           y: player.velocity.y * 0.94
         });
       }
-      if (keys[65]) {
+      if (keys[65] || keys[37]) {
         // move player   left / a
         if (player.velocity.x > -6) {
           player.force.x += -this.FxAir;
         }
-      } else if (keys[68]) {
+      } else if (keys[68] || keys[39]) {
         //move player  right / d
         if (player.velocity.x < 6) {
           player.force.x += this.FxAir;
