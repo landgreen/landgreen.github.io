@@ -2,23 +2,23 @@
 const spawn = {
   pickList: ["starter", "starter"],
   fullPickList: [
-    "chaser",
-    "striker",
-    "spinner",
-    "hopper",
-    "grower",
-    "springer",
-    "zoomer",
-    "shooter",
-    "beamer",
-    "focuser",
-    "laser",
-    "blinker",
-    "sucker",
-    "exploder",
-    "spawner",
+    // "chaser",
+    // "striker",
+    // "spinner",
+    // "hopper",
+    // "grower",
+    // "springer",
+    // "zoomer",
+    // "shooter",
+    // "beamer",
+    // "focuser",
+    // "laser",
+    // "blinker",
+    // "sucker",
+    // "exploder",
+    // "spawner",
     "ghoster",
-    "sneaker",
+    // "sneaker",
   ],
   bossPickList: ["zoomer", "chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner"],
   setSpawnList: function () {
@@ -590,19 +590,27 @@ const spawn = {
       }
     };
   },
-  ghoster: function (x, y, radius = 50 + Math.ceil(Math.random() * 60)) {
+  ghoster: function (x, y, radius = 35 + Math.ceil(Math.random() * 90)) {
     let me;
     mobs.spawn(x, y, 7, radius, "transparent");
     me = mob[mob.length - 1];
-    me.seeAtDistance2 = 1500000;
-    me.accelMag = 0.0002;
+    me.seeAtDistance2 = 1000000;
+    me.accelMag = 0.00014;
     me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
     me.stroke = "transparent"; //used for drawGhost
     me.alpha = 1; //used in drawGhost
     me.canTouchPlayer = false; //used in drawGhost
     me.collisionFilter.mask = 0x000100; //move through walls and player
-    me.memory = 420;
+    me.memory = 480;
     me.do = function () {
+      //cap max speed
+      if (this.speed > 5) {
+        console.log(this.speed)
+        Matter.Body.setVelocity(mob[mob.length - 1], {
+          x: this.velocity.x * 0.8,
+          y: this.velocity.y * 0.8
+        });
+      }
       this.seePlayerCheckByDistance();
       this.attraction();
       this.search();

@@ -7,7 +7,7 @@ mech = {
 }
 
 const mech = {
-    spawn: function() {
+    spawn: function () {
         //player as a series of vertices
         let vector = Vertices.fromPath('0 40  0 115  20 130  30 130  50 115  50 40');
         playerBody = Matter.Bodies.fromVertices(0, 0, vector);
@@ -100,7 +100,7 @@ const mech = {
         x: this.spawnPos.x,
         y: this.spawnPos.y
     },
-    setPosToSpawn = function(xPos, yPos) {
+    setPosToSpawn = function (xPos, yPos) {
         this.spawnPos.x = xPos
         this.spawnPos.y = yPos
         this.pos.x = xPos;
@@ -146,11 +146,11 @@ const mech = {
         x: canvas.width / 3,
         y: canvas.height
     };
-    this.getMousePos = function(x, y) {
+    this.getMousePos = function (x, y) {
         this.mouse.x = x;
         this.mouse.y = y;
     };
-    this.testingMoveLook = function() {
+    this.testingMoveLook = function () {
         //move
         this.pos.x = player.position.x;
         this.pos.y = playerBody.position.y - this.yOff;
@@ -164,13 +164,13 @@ const mech = {
         this.angle = Math.atan2(this.mouse.y - this.canvasY, this.mouse.x - this.canvasX);
     }
 
-    this.move = function() {
+    this.move = function () {
         this.pos.x = player.position.x;
         this.pos.y = playerBody.position.y - this.yOff;
         this.Vx = player.velocity.x;
         this.Vy = player.velocity.y;
     };
-    this.look = function() {
+    this.look = function () {
         //set a max on mouse look
         let mX = this.mouse.x;
         if (mX > canvas.width * 0.8) {
@@ -204,7 +204,7 @@ const mech = {
         //this.angle = Math.atan2(this.mouse.y - this.canvasY, this.mouse.x - this.canvasX);
         this.angle = Math.atan2(this.mouse.y + (this.Sy - this.pos.y) * game.zoom - this.canvasY, this.mouse.x - this.canvasX);
     };
-    this.doCrouch = function() {
+    this.doCrouch = function () {
         if (!this.crouch) {
             this.crouch = true;
             this.yOffGoal = this.yOffWhen.crouch;
@@ -214,7 +214,7 @@ const mech = {
             })
         }
     }
-    this.undoCrouch = function() {
+    this.undoCrouch = function () {
         this.crouch = false;
         this.yOffGoal = this.yOffWhen.stand;
         Matter.Body.translate(playerHead, {
@@ -222,7 +222,7 @@ const mech = {
             y: -40
         })
     }
-    this.enterAir = function() {
+    this.enterAir = function () {
         this.onGround = false;
         player.frictionAir = 0.001;
         if (this.isHeadClear) {
@@ -232,7 +232,7 @@ const mech = {
             this.yOffGoal = this.yOffWhen.jump;
         };
     }
-    this.enterLand = function() {
+    this.enterLand = function () {
         this.onGround = true;
         if (this.crouch) {
             if (this.isHeadClear) {
@@ -248,7 +248,7 @@ const mech = {
         }
     };
     this.buttonCD_jump = 0; //cooldown for player buttons
-    this.keyMove = function() {
+    this.keyMove = function () {
         if (this.onGround) { //on ground **********************
             if (this.crouch) { //crouch
                 if (!(keys[40] || keys[83]) && this.isHeadClear) { //not pressing crouch anymore
@@ -300,7 +300,7 @@ const mech = {
         //smoothly move height towards height goal ************
         this.yOff = this.yOff * 0.85 + this.yOffGoal * 0.15
     };
-    this.death = function() {
+    this.death = function () {
         location.reload();
         //Matter.Body.setPosition(player, this.spawnPos);
         //Matter.Body.setVelocity(player, this.spawnVel);
@@ -309,12 +309,12 @@ const mech = {
         //this.health = 1;
     }
     this.health = 1;
-    this.regen = function() {
+    this.regen = function () {
         if (this.health < 1 && game.cycle % 15 === 0) {
             this.addHealth(0.01);
         }
     };
-    this.drawHealth = function() {
+    this.drawHealth = function () {
         if (this.health < 1) {
             ctx.fillStyle = 'rgba(100, 100, 100, 0.5)';
             ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60, 10);
@@ -322,22 +322,22 @@ const mech = {
             ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60 * this.health, 10);
         }
     };
-    this.addHealth = function(heal) {
+    this.addHealth = function (heal) {
         this.health += heal;
         if (this.health > 1) this.health = 1;
     }
-    this.damage = function(dmg) {
+    this.damage = function (dmg) {
         this.health -= dmg;
         if (this.health <= 0) {
             this.death();
         }
     }
-    this.deathCheck = function() {
+    this.deathCheck = function () {
         if (this.pos.y > game.fallHeight) { // if player is 4000px deep reset to spawn Position and Velocity
             this.death();
         }
     };
-    this.hitMob = function(i, dmg) {
+    this.hitMob = function (i, dmg) {
         this.damage(dmg);
         playSound("dmg" + Math.floor(Math.random() * 4));
         //extra kick between player and mob
@@ -355,7 +355,7 @@ const mech = {
 
     this.buttonCD = 0; //cooldown for player buttons
     this.eaten = [];
-    this.eat = function() {
+    this.eat = function () {
         if (keys[81] && this.buttonCD < game.cycle) {
             this.buttonCD = game.cycle + 5;
             this.findClosestBody();
@@ -385,8 +385,8 @@ const mech = {
                     y: 0
                 });
                 Matter.Body.setAngularVelocity(body[i], 0.08) //(Math.random()*0.5-1)*0.1)
-                    //Matter.World.remove(engine.world, body[i]);
-                    //body.splice(i, 1);
+                //Matter.World.remove(engine.world, body[i]);
+                //body.splice(i, 1);
                 this.eaten[this.eaten.length] = {
                     index: i,
                     cycle: game.cycle
@@ -432,7 +432,7 @@ const mech = {
     };
 
     this.holdKeyDown = 0;
-    this.keyHold = function() { //checks for holding/dropping/picking up bodies
+    this.keyHold = function () { //checks for holding/dropping/picking up bodies
         if (this.isHolding) {
             //give the constaint more length and less stiffness if it is pulled out of position
             const Dx = body[this.holdingBody].position.x - holdConstraint.pointA.x;
@@ -477,10 +477,10 @@ const mech = {
             }
         }
     };
-    this.dropBody = function() {
+    this.dropBody = function () {
         let timer; //reset player collision
         function resetPlayerCollision() {
-            timer = setTimeout(function() {
+            timer = setTimeout(function () {
                 const dx = mech.pos.x - body[mech.holdingBody].position.x
                 const dy = mech.pos.y - body[mech.holdingBody].position.y
                 if (dx * dx + dy * dy > 15000) {
@@ -498,7 +498,7 @@ const mech = {
         holdConstraint.bodyB = jumpSensor; //set on sensor to get the constaint on somethign else
     };
     this.throwMax = 150;
-    this.throwBody = function() {
+    this.throwBody = function () {
         let throwMag = 0;
         if (this.holdKeyDown > 20) {
             if (this.holdKeyDown > this.throwMax) this.holdKeyDown = this.throwMax;
@@ -514,14 +514,14 @@ const mech = {
         dist: 1000,
         index: 0
     };
-    this.lookingAtMob = function(mob, threshold) {
+    this.lookingAtMob = function (mob, threshold) {
         //calculate a vector from mob to player and make it length 1
         const diff = Matter.Vector.normalise(Matter.Vector.sub(mob.position, player.position));
         const dir = { //make a vector for the player's direction of length 1
-                x: Math.cos(mech.angle),
-                y: Math.sin(mech.angle)
-            }
-            //the dot prodcut of diff and dir will return how much over lap between the vectors
+            x: Math.cos(mech.angle),
+            y: Math.sin(mech.angle)
+        }
+        //the dot prodcut of diff and dir will return how much over lap between the vectors
         const dot = Matter.Vector.dot(dir, diff);
         if (dot > threshold) {
             return true;
@@ -529,14 +529,14 @@ const mech = {
             return false;
         }
     }
-    this.lookingAt = function(i) {
+    this.lookingAt = function (i) {
         //calculate a vector from mob to player and make it length 1
         const diff = Matter.Vector.normalise(Matter.Vector.sub(body[i].position, player.position));
         const dir = { //make a vector for the player's direction of length 1
-                x: Math.cos(mech.angle),
-                y: Math.sin(mech.angle)
-            }
-            //the dot prodcut of diff and dir will return how much over lap between the vectors
+            x: Math.cos(mech.angle),
+            y: Math.sin(mech.angle)
+        }
+        //the dot prodcut of diff and dir will return how much over lap between the vectors
         const dot = Matter.Vector.dot(dir, diff);
         //console.log(dot);
         if (dot > 0.9) {
@@ -545,13 +545,13 @@ const mech = {
             return false;
         }
     }
-    this.findClosestBody = function() {
+    this.findClosestBody = function () {
         let mag = 100000;
         let index = 0;
         for (let i = 0; i < body.length; i++) {
             let isLooking = this.lookingAt(i);
             let collisionM = Matter.Query.ray(map, body[i].position, this.pos)
-                //let collisionB = Matter.Query.ray(body, body[i].position, this.pos)
+            //let collisionB = Matter.Query.ray(body, body[i].position, this.pos)
             if (collisionM.length) isLooking = false;
             //magnitude of the distance between the poistion vectors of player and each body
             const dist = Matter.Vector.magnitude(Matter.Vector.sub(body[i].position, this.pos));
@@ -563,27 +563,27 @@ const mech = {
         this.closest.dist = mag;
         this.closest.index = index;
     };
-    this.exit = function() {
-		game.nextLevel();
+    this.exit = function () {
+        game.nextLevel();
         window.location.reload(false);
     }
-    this.standingOnActions = function() {
+    this.standingOnActions = function () {
         if (this.onBody.type === 'map') {
             var that = this; //brings the thisness of the player deeper into the actions object
             var actions = {
-                'death': function() {
+                'death': function () {
                     that.death();
                 },
-                'exit': function() {
+                'exit': function () {
                     that.exit();
                 },
-                'slow': function() {
+                'slow': function () {
                     Matter.Body.setVelocity(player, { //reduce player velocity every cycle until not true
                         x: player.velocity.x * 0.5,
                         y: player.velocity.y * 0.5
                     });
                 },
-                'launch': function() {
+                'launch': function () {
                     //that.dropBody();
                     Matter.Body.setVelocity(player, { //zero player velocity for consistant jumps
                         x: player.velocity.x,
@@ -591,12 +591,12 @@ const mech = {
                     });
                     player.force.y = -0.1 * that.mass / game.delta;
                 },
-                'default': function() {}
+                'default': function () {}
             };
             (actions[map[this.onBody.index].action] || actions['default'])();
         }
     }
-    this.drawLeg = function(stroke) {
+    this.drawLeg = function (stroke) {
         ctx.save();
         ctx.scale(this.flipLegs, 1); //leg lines
         ctx.strokeStyle = stroke;
@@ -634,7 +634,7 @@ const mech = {
         ctx.stroke();
         ctx.restore();
     };
-    this.calcLeg = function(cycle_offset, offset) {
+    this.calcLeg = function (cycle_offset, offset) {
         this.hip.x = 12 + offset;
         this.hip.y = 24 + offset;
         //stepSize goes to zero if Vx is zero or not on ground (make this transition cleaner)
@@ -654,7 +654,7 @@ const mech = {
         this.knee.x = l / d * (this.foot.x - this.hip.x) - h / d * (this.foot.y - this.hip.y) + this.hip.x + offset;
         this.knee.y = l / d * (this.foot.y - this.hip.y) + h / d * (this.foot.x - this.hip.x) + this.hip.y;
     };
-    this.draw = function() {
+    this.draw = function () {
         ctx.fillStyle = this.fillColor;
         if (this.mouse.x > canvas.width / 2) {
             this.flipLegs = 1;
@@ -715,8 +715,8 @@ const mech = {
 let player, jumpSensor, playerBody, playerHead, headSensor;
 
 // player Object Prototype *********************************************
-const mechProto = function() {
-    this.spawn = function() {
+const mechProto = function () {
+    this.spawn = function () {
         //player as a series of vertices
         let vector = Vertices.fromPath('0 40  0 115  20 130  30 130  50 115  50 40');
         playerBody = Matter.Bodies.fromVertices(0, 0, vector);
@@ -834,7 +834,7 @@ const mechProto = function() {
         x: this.spawnPos.x,
         y: this.spawnPos.y
     };
-    this.setPosToSpawn = function(xPos, yPos) {
+    this.setPosToSpawn = function (xPos, yPos) {
         this.spawnPos.x = xPos
         this.spawnPos.y = yPos
         this.pos.x = xPos;
@@ -880,11 +880,11 @@ const mechProto = function() {
         x: canvas.width / 3,
         y: canvas.height
     };
-    this.getMousePos = function(x, y) {
+    this.getMousePos = function (x, y) {
         this.mouse.x = x;
         this.mouse.y = y;
     };
-    this.testingMoveLook = function() {
+    this.testingMoveLook = function () {
         //move
         this.pos.x = player.position.x;
         this.pos.y = playerBody.position.y - this.yOff;
@@ -898,13 +898,13 @@ const mechProto = function() {
         this.angle = Math.atan2(this.mouse.y - this.canvasY, this.mouse.x - this.canvasX);
     }
 
-    this.move = function() {
+    this.move = function () {
         this.pos.x = player.position.x;
         this.pos.y = playerBody.position.y - this.yOff;
         this.Vx = player.velocity.x;
         this.Vy = player.velocity.y;
     };
-    this.look = function() {
+    this.look = function () {
         //set a max on mouse look
         let mX = this.mouse.x;
         if (mX > canvas.width * 0.8) {
@@ -938,7 +938,7 @@ const mechProto = function() {
         //this.angle = Math.atan2(this.mouse.y - this.canvasY, this.mouse.x - this.canvasX);
         this.angle = Math.atan2(this.mouse.y + (this.Sy - this.pos.y) * game.zoom - this.canvasY, this.mouse.x - this.canvasX);
     };
-    this.doCrouch = function() {
+    this.doCrouch = function () {
         if (!this.crouch) {
             this.crouch = true;
             this.yOffGoal = this.yOffWhen.crouch;
@@ -948,7 +948,7 @@ const mechProto = function() {
             })
         }
     }
-    this.undoCrouch = function() {
+    this.undoCrouch = function () {
         this.crouch = false;
         this.yOffGoal = this.yOffWhen.stand;
         Matter.Body.translate(playerHead, {
@@ -956,7 +956,7 @@ const mechProto = function() {
             y: -40
         })
     }
-    this.enterAir = function() {
+    this.enterAir = function () {
         this.onGround = false;
         player.frictionAir = 0.001;
         if (this.isHeadClear) {
@@ -966,7 +966,7 @@ const mechProto = function() {
             this.yOffGoal = this.yOffWhen.jump;
         };
     }
-    this.enterLand = function() {
+    this.enterLand = function () {
         this.onGround = true;
         if (this.crouch) {
             if (this.isHeadClear) {
@@ -982,7 +982,7 @@ const mechProto = function() {
         }
     };
     this.buttonCD_jump = 0; //cooldown for player buttons
-    this.keyMove = function() {
+    this.keyMove = function () {
         if (this.onGround) { //on ground **********************
             if (this.crouch) { //crouch
                 if (!(keys[40] || keys[83]) && this.isHeadClear) { //not pressing crouch anymore
@@ -1034,7 +1034,7 @@ const mechProto = function() {
         //smoothly move height towards height goal ************
         this.yOff = this.yOff * 0.85 + this.yOffGoal * 0.15
     };
-    this.death = function() {
+    this.death = function () {
         location.reload();
         //Matter.Body.setPosition(player, this.spawnPos);
         //Matter.Body.setVelocity(player, this.spawnVel);
@@ -1043,12 +1043,12 @@ const mechProto = function() {
         //this.health = 1;
     }
     this.health = 1;
-    this.regen = function() {
+    this.regen = function () {
         if (this.health < 1 && game.cycle % 15 === 0) {
             this.addHealth(0.01);
         }
     };
-    this.drawHealth = function() {
+    this.drawHealth = function () {
         if (this.health < 1) {
             ctx.fillStyle = 'rgba(100, 100, 100, 0.5)';
             ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60, 10);
@@ -1056,22 +1056,22 @@ const mechProto = function() {
             ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60 * this.health, 10);
         }
     };
-    this.addHealth = function(heal) {
+    this.addHealth = function (heal) {
         this.health += heal;
         if (this.health > 1) this.health = 1;
     }
-    this.damage = function(dmg) {
+    this.damage = function (dmg) {
         this.health -= dmg;
         if (this.health <= 0) {
             this.death();
         }
     }
-    this.deathCheck = function() {
+    this.deathCheck = function () {
         if (this.pos.y > game.fallHeight) { // if player is 4000px deep reset to spawn Position and Velocity
             this.death();
         }
     };
-    this.hitMob = function(i, dmg) {
+    this.hitMob = function (i, dmg) {
         this.damage(dmg);
         playSound("dmg" + Math.floor(Math.random() * 4));
         //extra kick between player and mob
@@ -1089,7 +1089,7 @@ const mechProto = function() {
 
     this.buttonCD = 0; //cooldown for player buttons
     this.eaten = [];
-    this.eat = function() {
+    this.eat = function () {
         if (keys[81] && this.buttonCD < game.cycle) {
             this.buttonCD = game.cycle + 5;
             this.findClosestBody();
@@ -1119,8 +1119,8 @@ const mechProto = function() {
                     y: 0
                 });
                 Matter.Body.setAngularVelocity(body[i], 0.08) //(Math.random()*0.5-1)*0.1)
-                    //Matter.World.remove(engine.world, body[i]);
-                    //body.splice(i, 1);
+                //Matter.World.remove(engine.world, body[i]);
+                //body.splice(i, 1);
                 this.eaten[this.eaten.length] = {
                     index: i,
                     cycle: game.cycle
@@ -1166,7 +1166,7 @@ const mechProto = function() {
     };
 
     this.holdKeyDown = 0;
-    this.keyHold = function() { //checks for holding/dropping/picking up bodies
+    this.keyHold = function () { //checks for holding/dropping/picking up bodies
         if (this.isHolding) {
             //give the constaint more length and less stiffness if it is pulled out of position
             const Dx = body[this.holdingBody].position.x - holdConstraint.pointA.x;
@@ -1211,10 +1211,10 @@ const mechProto = function() {
             }
         }
     };
-    this.dropBody = function() {
+    this.dropBody = function () {
         let timer; //reset player collision
         function resetPlayerCollision() {
-            timer = setTimeout(function() {
+            timer = setTimeout(function () {
                 const dx = mech.pos.x - body[mech.holdingBody].position.x
                 const dy = mech.pos.y - body[mech.holdingBody].position.y
                 if (dx * dx + dy * dy > 15000) {
@@ -1232,7 +1232,7 @@ const mechProto = function() {
         holdConstraint.bodyB = jumpSensor; //set on sensor to get the constaint on somethign else
     };
     this.throwMax = 150;
-    this.throwBody = function() {
+    this.throwBody = function () {
         let throwMag = 0;
         if (this.holdKeyDown > 20) {
             if (this.holdKeyDown > this.throwMax) this.holdKeyDown = this.throwMax;
@@ -1248,14 +1248,14 @@ const mechProto = function() {
         dist: 1000,
         index: 0
     };
-    this.lookingAtMob = function(mob, threshold) {
+    this.lookingAtMob = function (mob, threshold) {
         //calculate a vector from mob to player and make it length 1
         const diff = Matter.Vector.normalise(Matter.Vector.sub(mob.position, player.position));
         const dir = { //make a vector for the player's direction of length 1
-                x: Math.cos(mech.angle),
-                y: Math.sin(mech.angle)
-            }
-            //the dot prodcut of diff and dir will return how much over lap between the vectors
+            x: Math.cos(mech.angle),
+            y: Math.sin(mech.angle)
+        }
+        //the dot prodcut of diff and dir will return how much over lap between the vectors
         const dot = Matter.Vector.dot(dir, diff);
         if (dot > threshold) {
             return true;
@@ -1263,14 +1263,14 @@ const mechProto = function() {
             return false;
         }
     }
-    this.lookingAt = function(i) {
+    this.lookingAt = function (i) {
         //calculate a vector from mob to player and make it length 1
         const diff = Matter.Vector.normalise(Matter.Vector.sub(body[i].position, player.position));
         const dir = { //make a vector for the player's direction of length 1
-                x: Math.cos(mech.angle),
-                y: Math.sin(mech.angle)
-            }
-            //the dot prodcut of diff and dir will return how much over lap between the vectors
+            x: Math.cos(mech.angle),
+            y: Math.sin(mech.angle)
+        }
+        //the dot prodcut of diff and dir will return how much over lap between the vectors
         const dot = Matter.Vector.dot(dir, diff);
         //console.log(dot);
         if (dot > 0.9) {
@@ -1279,13 +1279,13 @@ const mechProto = function() {
             return false;
         }
     }
-    this.findClosestBody = function() {
+    this.findClosestBody = function () {
         let mag = 100000;
         let index = 0;
         for (let i = 0; i < body.length; i++) {
             let isLooking = this.lookingAt(i);
             let collisionM = Matter.Query.ray(map, body[i].position, this.pos)
-                //let collisionB = Matter.Query.ray(body, body[i].position, this.pos)
+            //let collisionB = Matter.Query.ray(body, body[i].position, this.pos)
             if (collisionM.length) isLooking = false;
             //magnitude of the distance between the poistion vectors of player and each body
             const dist = Matter.Vector.magnitude(Matter.Vector.sub(body[i].position, this.pos));
@@ -1297,27 +1297,27 @@ const mechProto = function() {
         this.closest.dist = mag;
         this.closest.index = index;
     };
-    this.exit = function() {
-		game.nextLevel();
+    this.exit = function () {
+        game.nextLevel();
         window.location.reload(false);
     }
-    this.standingOnActions = function() {
+    this.standingOnActions = function () {
         if (this.onBody.type === 'map') {
             var that = this; //brings the thisness of the player deeper into the actions object
             var actions = {
-                'death': function() {
+                'death': function () {
                     that.death();
                 },
-                'exit': function() {
+                'exit': function () {
                     that.exit();
                 },
-                'slow': function() {
+                'slow': function () {
                     Matter.Body.setVelocity(player, { //reduce player velocity every cycle until not true
                         x: player.velocity.x * 0.5,
                         y: player.velocity.y * 0.5
                     });
                 },
-                'launch': function() {
+                'launch': function () {
                     //that.dropBody();
                     Matter.Body.setVelocity(player, { //zero player velocity for consistant jumps
                         x: player.velocity.x,
@@ -1325,12 +1325,12 @@ const mechProto = function() {
                     });
                     player.force.y = -0.1 * that.mass / game.delta;
                 },
-                'default': function() {}
+                'default': function () {}
             };
             (actions[map[this.onBody.index].action] || actions['default'])();
         }
     }
-    this.drawLeg = function(stroke) {
+    this.drawLeg = function (stroke) {
         ctx.save();
         ctx.scale(this.flipLegs, 1); //leg lines
         ctx.strokeStyle = stroke;
@@ -1368,7 +1368,7 @@ const mechProto = function() {
         ctx.stroke();
         ctx.restore();
     };
-    this.calcLeg = function(cycle_offset, offset) {
+    this.calcLeg = function (cycle_offset, offset) {
         this.hip.x = 12 + offset;
         this.hip.y = 24 + offset;
         //stepSize goes to zero if Vx is zero or not on ground (make this transition cleaner)
@@ -1388,7 +1388,7 @@ const mechProto = function() {
         this.knee.x = l / d * (this.foot.x - this.hip.x) - h / d * (this.foot.y - this.hip.y) + this.hip.x + offset;
         this.knee.y = l / d * (this.foot.y - this.hip.y) + h / d * (this.foot.x - this.hip.x) + this.hip.y;
     };
-    this.draw = function() {
+    this.draw = function () {
         ctx.fillStyle = this.fillColor;
         if (this.mouse.x > canvas.width / 2) {
             this.flipLegs = 1;
