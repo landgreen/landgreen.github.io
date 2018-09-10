@@ -215,6 +215,7 @@ function cycle() {
     game.clearNow = false;
     game.clearMap();
     if (game.levelsCleared != 0) game.startZoomIn();
+    // game.startZoomIn();
     level.start();
   }
   game.gravity();

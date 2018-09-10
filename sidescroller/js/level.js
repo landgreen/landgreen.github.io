@@ -39,24 +39,31 @@ const level = {
     level.exit.y = -335;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
     document.body.style.backgroundColor = "#444";
+    // game.makeTextLog(
+    //   "<br><br><span class = 'box'>mouse️</span><br><br><br>",
+    //   Infinity
+    // );
     game.makeTextLog(
-      "<span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span>",
+      "<br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span></div> <div class = 'grid-box'> <span class = 'mouse'>️</span></div></div>",
+      // "<br><br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span><div>move and jump</div> </div> <div class = 'grid-box'> <span class = 'mouse'>️</span><br><div style='margin-top:38px;'>look and fire</div> </div></div>",
+      // "<br><br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span><div>move and jump</div> </div> <div class = 'grid-box'> <span style='font-size: 4em;'>🖱️</span><br><div style='margin-top:12px;'>look and fire</div> </div></div>",
       Infinity
     );
 
+
     level.fill.push({
       x: -150,
-      y: -950,
+      y: -1150,
       width: 2750,
-      height: 1000,
+      height: 1200,
       color: "rgba(0,80,80,0.1)"
     });
 
     level.fillBG.push({
       x: -150,
-      y: -950,
+      y: -1150,
       width: 2900,
-      height: 1000,
+      height: 1200,
       color: "#fff"
     });
     level.fillBG.push({
@@ -97,11 +104,11 @@ const level = {
     }
 
     for (let i = 0; i < 3; i++) {
-      wallWire(100 - 10 * i, -850 - 10 * i, 5, 600);
+      wallWire(100 - 10 * i, -1050 - 10 * i, 5, 800);
       wallWire(100 - 10 * i, -255 - 10 * i, -300, 5);
     }
     for (let i = 0; i < 5; i++) {
-      wallWire(1000 + 10 * i, -850 - 10 * i, 5, 400);
+      wallWire(1000 + 10 * i, -1050 - 10 * i, 5, 600);
       wallWire(1000 + 10 * i, -450 - 10 * i, 150, 5);
       wallWire(1150 + 10 * i, -450 - 10 * i, 5, 500);
     }
@@ -111,7 +118,7 @@ const level = {
     }
 
     for (let i = 0; i < 5; i++) {
-      wallWire(1625 + 10 * i, -850, 5, 1000);
+      wallWire(1625 + 10 * i, -1050, 5, 1200);
     }
 
     for (let i = 0; i < 4; i++) {
@@ -125,13 +132,13 @@ const level = {
     }
 
     spawn.mapRect(-250, 0, 3000, 200); //ground
-    spawn.mapRect(-350, -1000, 200, 1200); //left wall
-    spawn.mapRect(3000, -1000, 200, 1200); //right wall
-    spawn.mapRect(-250, -1000, 3000, 200); //roof
+    spawn.mapRect(-350, -1200, 200, 1400); //left wall
+    spawn.mapRect(3000, -1200, 200, 1400); //right wall
+    spawn.mapRect(-250, -1200, 3000, 200); //roof
     spawn.mapRect(2600, -300, 500, 500); //exit shelf
-    spawn.mapRect(2600, -1000, 500, 400); //exit roof
+    spawn.mapRect(2600, -1200, 500, 600); //exit roof
     spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 100); //exit bump
-    spawn.mapRect(260, -900, 80, 110); //wire source
+    spawn.mapRect(260, -1100, 80, 110); //wire source
 
     spawn.bodyRect(-35, -50, 50, 50);
     spawn.bodyRect(-40, -100, 50, 50);

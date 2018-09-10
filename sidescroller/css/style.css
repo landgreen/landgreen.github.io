@@ -127,3 +127,36 @@ svg {
 .intro {
   z-index: 2;
 }
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 360px 10px;
+  align-self: center;
+  justify-content: center;
+}
+
+.grid-box {
+  align-self: center;
+  justify-self: center;
+}
+
+.mouse {
+  color: #ccc;
+  position: relative;
+  padding: 37px 30px 37px 30px;
+  border-radius: 35px;
+  border: 3px solid #444;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.mouse:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 12px;
+  left: 27.5px;
+  width: 4px;
+  height: 20px;
+  border-radius: 8px;
+  background: #444;
+}

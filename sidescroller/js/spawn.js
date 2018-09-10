@@ -986,7 +986,7 @@ const spawn = {
     me.collisionFilter.category = 0x100000;
     me.collisionFilter.mask = 0x100001;
     me.inertia = Infinity;
-    me.g = 0.0003; //required for gravity
+    me.g = 0.0006; //required for gravity
     me.restitution = 0;
     me.stroke = "transparent"
     me.freeOfWires = false;
@@ -995,14 +995,16 @@ const spawn = {
     // me.frictionAir = 0.01;
 
     me.do = function () {
-      //intro text message
-      ctx.strokeStyle = "#000";
-      ctx.fillStyle = "#000";
       let wireX = 300;
-      let wireY = -800;
-
+      let wireY = -1000;
       if (this.freeOfWires) {
         this.gravity();
+        // if (Math.random() < 0.02) {
+        //   ctx.beginPath();
+        //   ctx.arc(this.position.x, this.position.y, 12, 0, 2 * Math.PI);
+        //   ctx.fillStyle = "#ff0";
+        //   ctx.fill();
+        // }
       } else {
         if (mech.pos.x > breakingPoint) {
           this.freeOfWires = true;
@@ -1022,7 +1024,7 @@ const spawn = {
           const distanceToBrake = breakingPoint - mech.pos.x;
           Matter.Body.setVelocity(player, {
             x: player.velocity.x - Math.min(0.65, Math.max(0, 150 / distanceToBrake)),
-            y: player.velocity.y * 0.93 + 0.5
+            y: player.velocity.y
           })
         }
       }
@@ -1031,8 +1033,9 @@ const spawn = {
       ctx.moveTo(wireX, wireY);
       ctx.quadraticCurveTo(wireX, 0, this.position.x, this.position.y);
       if (!this.freeOfWires) ctx.lineTo(mech.pos.x + (30 * Math.cos(mech.angle + Math.PI)), mech.pos.y + (30 * Math.sin(mech.angle + Math.PI)));
-      ctx.lineWidth = 15;
       ctx.lineCap = "butt";
+      ctx.lineWidth = 15;
+      ctx.strokeStyle = "#000";
       ctx.stroke();
       ctx.lineCap = "round";
     };
@@ -1055,9 +1058,8 @@ const spawn = {
     // me.frictionAir = 0.01;
 
     me.do = function () {
-      ctx.strokeStyle = "#222";
       let wireX = 300 - 20;
-      let wireY = -800;
+      let wireY = -1000;
 
       if (this.freeOfWires) {
         this.gravity();
@@ -1083,6 +1085,7 @@ const spawn = {
       ctx.moveTo(wireX, wireY);
       ctx.quadraticCurveTo(wireX, 0, this.position.x, this.position.y);
       ctx.lineWidth = 5;
+      ctx.strokeStyle = "#222";
       ctx.lineCap = "butt";
       ctx.stroke();
       ctx.lineCap = "round";
@@ -1106,9 +1109,8 @@ const spawn = {
     // me.frictionAir = 0.01;
 
     me.do = function () {
-      ctx.strokeStyle = "#333";
-      let wireX = 300 - 20;
-      let wireY = -800;
+      let wireX = 300 - 35;
+      let wireY = -1000;
 
       if (this.freeOfWires) {
         this.gravity();
@@ -1135,6 +1137,7 @@ const spawn = {
       ctx.quadraticCurveTo(wireX, 0, this.position.x, this.position.y);
       ctx.lineWidth = 5;
       ctx.lineCap = "butt";
+      ctx.strokeStyle = "#333";
       ctx.stroke();
       ctx.lineCap = "round";
     };
@@ -1157,9 +1160,8 @@ const spawn = {
     // me.frictionAir = 0.01;
 
     me.do = function () {
-      ctx.strokeStyle = "#222";
       let wireX = 300 + 16;
-      let wireY = -800;
+      let wireY = -1000;
 
       if (this.freeOfWires) {
         this.gravity();
@@ -1186,6 +1188,7 @@ const spawn = {
       ctx.quadraticCurveTo(wireX, 0, this.position.x, this.position.y);
       ctx.lineWidth = 5;
       ctx.lineCap = "butt";
+      ctx.strokeStyle = "#222";
       ctx.stroke();
       ctx.lineCap = "round";
     };
@@ -1208,9 +1211,8 @@ const spawn = {
     // me.frictionAir = 0.01;
 
     me.do = function () {
-      ctx.strokeStyle = "#333";
-      let wireX = 300 + 16;
-      let wireY = -800;
+      let wireX = 300 + 26;
+      let wireY = -1000;
 
       if (this.freeOfWires) {
         this.gravity();
@@ -1236,6 +1238,7 @@ const spawn = {
       ctx.moveTo(wireX, wireY);
       ctx.quadraticCurveTo(wireX, 0, this.position.x, this.position.y);
       ctx.lineWidth = 5;
+      ctx.strokeStyle = "#333";
       ctx.lineCap = "butt";
       ctx.stroke();
       ctx.lineCap = "round";
