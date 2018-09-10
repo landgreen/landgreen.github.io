@@ -1013,11 +1013,6 @@ const spawn = {
           player.force.x += 0.05;
           // player.force.y -= 0.05;
         }
-        //move mob to player
-        Matter.Body.setPosition(this, {
-          x: mech.pos.x + (42 * Math.cos(mech.angle + Math.PI)),
-          y: mech.pos.y + (42 * Math.sin(mech.angle + Math.PI))
-        })
 
         //player friction from the wires
         if (mech.pos.x > 700) {
@@ -1027,6 +1022,10 @@ const spawn = {
             y: player.velocity.y
           })
         }
+        Matter.Body.setPosition(this, {
+          x: mech.pos.x + (42 * Math.cos(mech.angle + Math.PI)),
+          y: mech.pos.y + (42 * Math.sin(mech.angle + Math.PI))
+        })
       }
       //draw wire
       ctx.beginPath();
