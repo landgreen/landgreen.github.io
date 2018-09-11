@@ -1007,12 +1007,6 @@ const spawn = {
       let wireY = -1000;
       if (this.freeOfWires) {
         this.gravity();
-        // if (Math.random() < 0.02) {
-        //   ctx.beginPath();
-        //   ctx.arc(this.position.x, this.position.y, 12, 0, 2 * Math.PI);
-        //   ctx.fillStyle = "#ff0";
-        //   ctx.fill();
-        // }
       } else {
         if (mech.pos.x > breakingPoint) {
           this.freeOfWires = true;
@@ -1022,14 +1016,24 @@ const spawn = {
           // player.force.y -= 0.05;
         }
 
+        //player is extra heavy from wires
+        Matter.Body.setVelocity(player, {
+          x: player.velocity.x,
+          y: player.velocity.y + 0.3
+        })
+
         //player friction from the wires
-        if (mech.pos.x > 700) {
-          const distanceToBrake = breakingPoint - mech.pos.x;
+        if (mech.pos.x > 700 && player.velocity.x > -2) {
+          let wireFriction = Math.min(0.65, Math.max(0, 150 / (breakingPoint - mech.pos.x)));
+          if (!mech.onGround) {
+            wireFriction *= 1.7
+          }
           Matter.Body.setVelocity(player, {
-            x: player.velocity.x - Math.min(0.65, Math.max(0, 150 / distanceToBrake)),
+            x: player.velocity.x - wireFriction,
             y: player.velocity.y
           })
         }
+        //move to player
         Matter.Body.setPosition(this, {
           x: mech.pos.x + (42 * Math.cos(mech.angle + Math.PI)),
           y: mech.pos.y + (42 * Math.sin(mech.angle + Math.PI))
