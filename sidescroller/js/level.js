@@ -44,7 +44,7 @@ const level = {
     //   Infinity
     // );
     game.makeTextLog(
-      "<br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span></div> <div class = 'grid-box'> <span class = 'mouse'>️</span></div></div>",
+      "<br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span></div> <div class = 'grid-box'> <span class = 'mouse'>️</span> <span class='mouse-line'></span> </div></div>",
       // "<br><br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span><div>move and jump</div> </div> <div class = 'grid-box'> <span class = 'mouse'>️</span><br><div style='margin-top:38px;'>look and fire</div> </div></div>",
       // "<br><br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span><div>move and jump</div> </div> <div class = 'grid-box'> <span style='font-size: 4em;'>🖱️</span><br><div style='margin-top:12px;'>look and fire</div> </div></div>",
       Infinity

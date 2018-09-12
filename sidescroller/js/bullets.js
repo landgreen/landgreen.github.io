@@ -48,7 +48,7 @@ const b = {
     ctx.fill();
   },
   explode: function (me) {
-    //  typically explode is used as some bullets are .onEnd
+    // typically explode is used as some bullets are .onEnd
     game.drawList.push({
       //add dmg to draw queue
       x: bullet[me].position.x,
@@ -59,7 +59,7 @@ const b = {
     });
     let dist, sub, knock;
     const dmg = b.dmgScale * bullet[me].explodeRad * 0.01;
-    //body knockbacks
+    //body knock backs
     for (let i = 0, len = body.length; i < len; ++i) {
       sub = Matter.Vector.sub(bullet[me].position, body[i].position);
       dist = Matter.Vector.magnitude(sub);
@@ -69,7 +69,7 @@ const b = {
         body[i].force.y += knock.y;
       }
     }
-    //power up knockbacks
+    //power up knock backs
     for (let i = 0, len = powerUp.length; i < len; ++i) {
       sub = Matter.Vector.sub(bullet[me].position, powerUp[i].position);
       dist = Matter.Vector.magnitude(sub);
@@ -77,6 +77,18 @@ const b = {
         knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * powerUp[i].mass / 26);
         powerUp[i].force.x += knock.x;
         powerUp[i].force.y += knock.y;
+      }
+    }
+    //bullet knock backs
+    for (let i = 0, len = bullet.length; i < len; ++i) {
+      if (me !== i) {
+        sub = Matter.Vector.sub(bullet[me].position, bullet[i].position);
+        dist = Matter.Vector.magnitude(sub);
+        if (dist < bullet[me].explodeRad) {
+          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * bullet[i].mass / 10);
+          bullet[i].force.x += knock.x;
+          bullet[i].force.y += knock.y;
+        }
       }
     }
     //destroy all bullets in range
@@ -90,14 +102,14 @@ const b = {
     //     }
     // }
     const alertRange2 = Math.pow(300 + bullet[me].explodeRad * 1.3, 2); //alert range
-    // game.drawList.push({
-    //     //add alert to draw queue
-    //     x: bullet[me].position.x,
-    //     y: bullet[me].position.y,
-    //     radius: Math.sqrt(alertRange2),
-    //     color: "rgba(0,0,0,0.02)",
-    //     time: game.drawTime
-    // });
+    game.drawList.push({
+      //add alert to draw queue
+      x: bullet[me].position.x,
+      y: bullet[me].position.y,
+      radius: Math.sqrt(alertRange2),
+      color: "rgba(0,0,0,0.02)",
+      time: game.drawTime
+    });
     for (let i = 0, len = mob.length; i < len; ++i) {
       if (mob[i].alive) {
         let vertices = mob[i].vertices;
@@ -115,21 +127,21 @@ const b = {
         }
       }
     }
-    // for (let i = 0, len = mob.length; i < len; ++i) {
-    //   if (mob[i].alive) {
-    //     sub = Matter.Vector.sub(bullet[me].position, mob[i].position);
-    //     dist = Matter.Vector.magnitude(sub);
-    //     if (dist < bullet[me].explodeRad) {
-    //       mob[i].damage(dmg);
-    //       mob[i].locatePlayer();
-    //       knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * mob[i].mass / 18);
-    //       mob[i].force.x += knock.x;
-    //       mob[i].force.y += knock.y;
-    //     } else if (!mob[i].seePlayer.recall && Matter.Vector.magnitudeSquared(Matter.Vector.sub(bullet[me].position, mob[i].position)) < alertRange2) {
-    //       mob[i].locatePlayer();
-    //     }
-    //   }
-    // }
+    for (let i = 0, len = mob.length; i < len; ++i) {
+      if (mob[i].alive) {
+        sub = Matter.Vector.sub(bullet[me].position, mob[i].position);
+        dist = Matter.Vector.magnitude(sub);
+        if (dist < bullet[me].explodeRad) {
+          mob[i].damage(dmg);
+          mob[i].locatePlayer();
+          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * mob[i].mass / 18);
+          mob[i].force.x += knock.x;
+          mob[i].force.y += knock.y;
+        } else if (!mob[i].seePlayer.recall && Matter.Vector.magnitudeSquared(Matter.Vector.sub(bullet[me].position, mob[i].position)) < alertRange2) {
+          mob[i].locatePlayer();
+        }
+      }
+    }
 
     //damage and knock back player in range
     sub = Matter.Vector.sub(bullet[me].position, player.position);

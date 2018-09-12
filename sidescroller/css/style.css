@@ -144,8 +144,8 @@ svg {
   color: #ccc;
   position: relative;
   padding: 37px 30px 37px 30px;
-  border-radius: 35px;
-  border: 3px solid #444;
+  border-radius: 25px;
+  border: 2px solid #444;
   background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -153,10 +153,29 @@ svg {
   content: "";
   position: absolute;
   z-index: 1;
-  top: 12px;
-  left: 27.5px;
-  width: 4px;
+  top: 5px;
+  left: 25px;
+  border-radius: 25px;
+  /* background: #fff; */
+  border: 2px solid #444;
+
+  width: 5px;
   height: 20px;
+  border-radius: 15px / 25px;
+}
+
+.mouse-line {
+  position: relative;
+}
+
+.mouse-line:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: -32px;
+  left: -30px;
+  width: 60px;
+  height: 2px;
   border-radius: 8px;
   background: #444;
 }

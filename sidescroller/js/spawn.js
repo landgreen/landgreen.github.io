@@ -605,7 +605,6 @@ const spawn = {
     me.do = function () {
       //cap max speed
       if (this.speed > 5) {
-        console.log(this.speed)
         Matter.Body.setVelocity(mob[mob.length - 1], {
           x: this.velocity.x * 0.8,
           y: this.velocity.y * 0.8
