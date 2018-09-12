@@ -107,7 +107,8 @@ const b = {
       x: bullet[me].position.x,
       y: bullet[me].position.y,
       radius: Math.sqrt(alertRange2),
-      color: "rgba(0,0,0,0.02)",
+      // color: "rgba(255,255,255,0.05)",
+      color: "rgba(100,20,0,0.03)",
       time: game.drawTime
     });
     for (let i = 0, len = mob.length; i < len; ++i) {
