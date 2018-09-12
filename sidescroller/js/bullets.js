@@ -49,8 +49,9 @@ const b = {
   },
   explode: function (me) {
     // typically explode is used as some bullets are .onEnd
+
+    //add dmg to draw queue
     game.drawList.push({
-      //add dmg to draw queue
       x: bullet[me].position.x,
       y: bullet[me].position.y,
       radius: bullet[me].explodeRad,
@@ -59,12 +60,27 @@ const b = {
     });
     let dist, sub, knock;
     const dmg = b.dmgScale * bullet[me].explodeRad * 0.01;
+
+    const alertRange = 300 + bullet[me].explodeRad * 1.3; //alert range
+    //add alert to draw queue
+    game.drawList.push({
+      x: bullet[me].position.x,
+      y: bullet[me].position.y,
+      radius: alertRange,
+      color: "rgba(100,20,0,0.03)",
+      time: game.drawTime
+    });
+
     //body knock backs
     for (let i = 0, len = body.length; i < len; ++i) {
       sub = Matter.Vector.sub(bullet[me].position, body[i].position);
       dist = Matter.Vector.magnitude(sub);
       if (dist < bullet[me].explodeRad) {
         knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * body[i].mass / 18);
+        body[i].force.x += knock.x;
+        body[i].force.y += knock.y;
+      } else if (dist < alertRange) {
+        knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * body[i].mass / 40);
         body[i].force.x += knock.x;
         body[i].force.y += knock.y;
       }
@@ -75,6 +91,10 @@ const b = {
       dist = Matter.Vector.magnitude(sub);
       if (dist < bullet[me].explodeRad) {
         knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * powerUp[i].mass / 26);
+        powerUp[i].force.x += knock.x;
+        powerUp[i].force.y += knock.y;
+      } else if (dist < alertRange) {
+        knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * powerUp[i].mass / 40);
         powerUp[i].force.x += knock.x;
         powerUp[i].force.y += knock.y;
       }
@@ -88,9 +108,14 @@ const b = {
           knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * bullet[i].mass / 10);
           bullet[i].force.x += knock.x;
           bullet[i].force.y += knock.y;
+        } else if (dist < alertRange) {
+          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * bullet[i].mass / 20);
+          bullet[i].force.x += knock.x;
+          bullet[i].force.y += knock.y;
         }
       }
     }
+
     //destroy all bullets in range
     // for (let i = 0, len = bullet.length; i < len; ++i) {
     //     if (me != i) {
@@ -101,33 +126,27 @@ const b = {
     //         }
     //     }
     // }
-    const alertRange2 = Math.pow(300 + bullet[me].explodeRad * 1.3, 2); //alert range
-    game.drawList.push({
-      //add alert to draw queue
-      x: bullet[me].position.x,
-      y: bullet[me].position.y,
-      radius: Math.sqrt(alertRange2),
-      // color: "rgba(255,255,255,0.05)",
-      color: "rgba(100,20,0,0.03)",
-      time: game.drawTime
-    });
-    for (let i = 0, len = mob.length; i < len; ++i) {
-      if (mob[i].alive) {
-        let vertices = mob[i].vertices;
-        for (let j = 0, len = vertices.length; j < len; j++) {
-          sub = Matter.Vector.sub(bullet[me].position, vertices[j]);
-          dist = Matter.Vector.magnitude(sub);
-          if (dist < bullet[me].explodeRad) {
-            mob[i].damage(dmg);
-            mob[i].locatePlayer();
-            knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * mob[i].mass / 18);
-            mob[i].force.x += knock.x;
-            mob[i].force.y += knock.y;
-            break;
-          }
-        }
-      }
-    }
+
+    //mob damage and knock back with no alert
+    // for (let i = 0, len = mob.length; i < len; ++i) {
+    //   if (mob[i].alive) {
+    //     let vertices = mob[i].vertices;
+    //     for (let j = 0, len = vertices.length; j < len; j++) {
+    //       sub = Matter.Vector.sub(bullet[me].position, vertices[j]);
+    //       dist = Matter.Vector.magnitude(sub);
+    //       if (dist < bullet[me].explodeRad) {
+    //         mob[i].damage(dmg);
+    //         mob[i].locatePlayer();
+    //         knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * mob[i].mass / 18);
+    //         mob[i].force.x += knock.x;
+    //         mob[i].force.y += knock.y;
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
+
+    //mob damage and knock back with alert
     for (let i = 0, len = mob.length; i < len; ++i) {
       if (mob[i].alive) {
         sub = Matter.Vector.sub(bullet[me].position, mob[i].position);
@@ -138,18 +157,27 @@ const b = {
           knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * mob[i].mass / 18);
           mob[i].force.x += knock.x;
           mob[i].force.y += knock.y;
-        } else if (!mob[i].seePlayer.recall && Matter.Vector.magnitudeSquared(Matter.Vector.sub(bullet[me].position, mob[i].position)) < alertRange2) {
+        } else if (!mob[i].seePlayer.recall && dist < alertRange) {
           mob[i].locatePlayer();
+          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * mob[i].mass / 35);
+          mob[i].force.x += knock.x;
+          mob[i].force.y += knock.y;
         }
       }
     }
+
+    // Matter.Vector.magnitudeSquared(Matter.Vector.sub(bullet[me].position, mob[i].position))
 
     //damage and knock back player in range
     sub = Matter.Vector.sub(bullet[me].position, player.position);
     dist = Matter.Vector.magnitude(sub);
     if (dist < bullet[me].explodeRad) {
       mech.damage(bullet[me].explodeRad * 0.0005);
-      knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * player.mass / 33);
+      knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * player.mass / 30);
+      player.force.x += knock.x;
+      player.force.y += knock.y;
+    } else if (dist < alertRange) {
+      knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * player.mass / 55);
       player.force.x += knock.x;
       player.force.y += knock.y;
     }
@@ -599,9 +627,9 @@ const b = {
         b.fireProps(9, 16 + Math.floor(Math.random() * 4), dir, me); //cd , speed
         b.drawOneBullet(bullet[me].vertices);
         Matter.Body.setDensity(bullet[me], 0.000001);
-        bullet[me].totalCycles = 85 + Math.floor(Math.random() * 20);
+        bullet[me].totalCycles = 80 + Math.floor(Math.random() * 50);
         bullet[me].endCycle = game.cycle + bullet[me].totalCycles;
-        bullet[me].restitution = 0.5;
+        bullet[me].restitution = 0.6;
         bullet[me].explodeRad = 100;
         bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
         bullet[me].minDmgSpeed = 1;

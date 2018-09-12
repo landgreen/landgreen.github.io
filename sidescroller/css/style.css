@@ -118,7 +118,6 @@ svg {
 
 .box {
   padding: 3px 8px 3px 8px;
-  /*margin: 0px 5px 0px 5px;*/
   border: 2px solid #444;
   border-radius: 4px;
   background-color: rgba(255, 255, 255, 0.5);
@@ -153,15 +152,15 @@ svg {
   content: "";
   position: absolute;
   z-index: 1;
-  top: 5px;
+  top: 4px;
   left: 25px;
   border-radius: 25px;
-  /* background: #fff; */
+  /* background: #444; */
   border: 2px solid #444;
 
-  width: 5px;
+  width: 4px;
   height: 20px;
-  border-radius: 15px / 25px;
+  border-radius: 10px / 25px;
 }
 
 .mouse-line {
@@ -172,7 +171,7 @@ svg {
   content: "";
   position: absolute;
   z-index: 1;
-  top: -32px;
+  top: -35px;
   left: -30px;
   width: 60px;
   height: 2px;

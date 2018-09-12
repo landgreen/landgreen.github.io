@@ -291,7 +291,7 @@ const spawn = {
       }
     };
   },
-  spinner: function (x, y, radius = 45 + Math.ceil(Math.random() * 40)) {
+  spinner: function (x, y, radius = 35 + Math.ceil(Math.random() * 35)) {
     mobs.spawn(x, y, 5, radius, "#000000");
     let me = mob[mob.length - 1];
     me.fill = "#28b";
