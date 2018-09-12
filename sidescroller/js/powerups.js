@@ -30,7 +30,7 @@ const powerUps = {
         target = b.guns[Math.ceil(Math.random() * b.guns.length - 1)];
       }
       //ammo given scales as mobs take more hits to kill
-      const ammo = Math.ceil(target.ammoPack * (0.65 + 0.5 * Math.random()) / b.dmgScale);
+      const ammo = Math.ceil((target.ammoPack * (0.65 + 0.5 * Math.random())) / b.dmgScale);
       target.ammo += ammo;
       game.updateGunHUD();
       game.makeTextLog("+" + ammo + " ammo: " + target.name, 180);
@@ -106,6 +106,7 @@ const powerUps = {
       powerUps.spawn(x, y, "gun", false); //starting gun
     } else {
       powerUps.spawnRandomPowerUp(x, y);
+      powerUps.spawnRandomPowerUp(x, y);
     }
   },
   spawn: function(x, y, target, moving = true) {
@@ -148,8 +149,8 @@ const powerUps = {
         if (dist2 < 2000) {
           //knock back from grabbing power up
           Matter.Body.setVelocity(player, {
-            x: player.velocity.x + powerUp[i].velocity.x * powerUp[i].mass / player.mass * 0.25,
-            y: player.velocity.y + powerUp[i].velocity.y * powerUp[i].mass / player.mass * 0.25
+            x: player.velocity.x + ((powerUp[i].velocity.x * powerUp[i].mass) / player.mass) * 0.25,
+            y: player.velocity.y + ((powerUp[i].velocity.y * powerUp[i].mass) / player.mass) * 0.25
           });
           mech.usePowerUp(i);
           break;
@@ -165,8 +166,8 @@ const powerUps = {
             y: powerUp[i].velocity.y * 0.97
           });
           //float towards player
-          powerUp[i].force.x += dxP / dist2 * powerUp[i].mass * 1.6;
-          powerUp[i].force.y += dyP / dist2 * powerUp[i].mass * 1.6 - powerUp[i].mass * game.g; //negate gravity
+          powerUp[i].force.x += (dxP / dist2) * powerUp[i].mass * 1.6;
+          powerUp[i].force.y += (dyP / dist2) * powerUp[i].mass * 1.6 - powerUp[i].mass * game.g; //negate gravity
           //draw the pulling effect
           ctx.globalAlpha = 0.2;
           mech.drawHold(powerUp[i], false);
