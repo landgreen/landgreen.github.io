@@ -618,19 +618,19 @@ const b = {
     {
       name: "M80",
       ammo: 0,
-      ammoPack: 50,
+      ammoPack: 60,
       have: false,
       fire: function () {
         const me = bullet.length;
         const dir = mech.angle; // + Math.random() * 0.05;
         bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 10, b.fireAttributes(dir));
-        b.fireProps(9, 16 + Math.floor(Math.random() * 4), dir, me); //cd , speed
+        b.fireProps(9, 18 + Math.floor(Math.random() * 4), dir, me); //cd , speed
         b.drawOneBullet(bullet[me].vertices);
         Matter.Body.setDensity(bullet[me], 0.000001);
-        bullet[me].totalCycles = 80 + Math.floor(Math.random() * 50);
+        bullet[me].totalCycles = 70 + Math.floor(Math.random() * 70);
         bullet[me].endCycle = game.cycle + bullet[me].totalCycles;
         bullet[me].restitution = 0.6;
-        bullet[me].explodeRad = 100;
+        bullet[me].explodeRad = 110;
         bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
         bullet[me].minDmgSpeed = 1;
         bullet[me].onDmg = function () {
@@ -638,7 +638,7 @@ const b = {
         };
         bullet[me].do = function () {
           //extra gravity for harder arcs
-          this.force.y += this.mass * 0.0025;
+          this.force.y += this.mass * 0.0027;
         };
       }
     },
