@@ -76,11 +76,11 @@ const b = {
       sub = Matter.Vector.sub(bullet[me].position, body[i].position);
       dist = Matter.Vector.magnitude(sub);
       if (dist < bullet[me].explodeRad) {
-        knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * body[i].mass / 18);
+        knock = Matter.Vector.mult(Matter.Vector.normalise(sub), (-Math.sqrt(dmg) * body[i].mass) / 18);
         body[i].force.x += knock.x;
         body[i].force.y += knock.y;
       } else if (dist < alertRange) {
-        knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * body[i].mass / 40);
+        knock = Matter.Vector.mult(Matter.Vector.normalise(sub), (-Math.sqrt(dmg) * body[i].mass) / 40);
         body[i].force.x += knock.x;
         body[i].force.y += knock.y;
       }
@@ -90,11 +90,11 @@ const b = {
       sub = Matter.Vector.sub(bullet[me].position, powerUp[i].position);
       dist = Matter.Vector.magnitude(sub);
       if (dist < bullet[me].explodeRad) {
-        knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * powerUp[i].mass / 26);
+        knock = Matter.Vector.mult(Matter.Vector.normalise(sub), (-Math.sqrt(dmg) * powerUp[i].mass) / 26);
         powerUp[i].force.x += knock.x;
         powerUp[i].force.y += knock.y;
       } else if (dist < alertRange) {
-        knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * powerUp[i].mass / 40);
+        knock = Matter.Vector.mult(Matter.Vector.normalise(sub), (-Math.sqrt(dmg) * powerUp[i].mass) / 40);
         powerUp[i].force.x += knock.x;
         powerUp[i].force.y += knock.y;
       }
@@ -105,11 +105,11 @@ const b = {
         sub = Matter.Vector.sub(bullet[me].position, bullet[i].position);
         dist = Matter.Vector.magnitude(sub);
         if (dist < bullet[me].explodeRad) {
-          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * bullet[i].mass / 10);
+          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), (-Math.sqrt(dmg) * bullet[i].mass) / 10);
           bullet[i].force.x += knock.x;
           bullet[i].force.y += knock.y;
         } else if (dist < alertRange) {
-          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * bullet[i].mass / 20);
+          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), (-Math.sqrt(dmg) * bullet[i].mass) / 20);
           bullet[i].force.x += knock.x;
           bullet[i].force.y += knock.y;
         }
@@ -154,12 +154,12 @@ const b = {
         if (dist < bullet[me].explodeRad) {
           mob[i].damage(dmg);
           mob[i].locatePlayer();
-          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * mob[i].mass / 18);
+          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), (-Math.sqrt(dmg) * mob[i].mass) / 18);
           mob[i].force.x += knock.x;
           mob[i].force.y += knock.y;
         } else if (!mob[i].seePlayer.recall && dist < alertRange) {
           mob[i].locatePlayer();
-          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * mob[i].mass / 35);
+          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), (-Math.sqrt(dmg) * mob[i].mass) / 35);
           mob[i].force.x += knock.x;
           mob[i].force.y += knock.y;
         }
@@ -172,7 +172,7 @@ const b = {
     sub = Matter.Vector.sub(bullet[me].position, player.position);
     dist = Matter.Vector.magnitude(sub);
     if (dist < bullet[me].explodeRad) {
-      mech.damage(bullet[me].explodeRad * 0.0005);
+      mech.damage(bullet[me].explodeRad * 0.00035);
       knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * player.mass / 30);
       player.force.x += knock.x;
       player.force.y += knock.y;
