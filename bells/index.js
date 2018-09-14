@@ -648,26 +648,26 @@ function update() {
 
 
   //ring bell on new period
-  for (let i = 0, len = schedule[schedule.current].length; i < len; ++i) {
-    if (schedule[schedule.current][i].start === todayMinutes) {
-      var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+  // for (let i = 0, len = schedule[schedule.current].length; i < len; ++i) {
+  //   if (schedule[schedule.current][i].start === todayMinutes) {
+  //     var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
-      var oscillator1 = audioCtx.createOscillator();
-      var gainNode1 = audioCtx.createGain();
-      gainNode1.gain.value = 1; //controls volume
-      oscillator1.connect(gainNode1);
-      gainNode1.connect(audioCtx.destination);
+  //     var oscillator1 = audioCtx.createOscillator();
+  //     var gainNode1 = audioCtx.createGain();
+  //     gainNode1.gain.value = 1; //controls volume
+  //     oscillator1.connect(gainNode1);
+  //     gainNode1.connect(audioCtx.destination);
 
-      oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
-      oscillator1.frequency.value = 300; // value in hertz
-      oscillator1.start();
+  //     oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
+  //     oscillator1.frequency.value = 300; // value in hertz
+  //     oscillator1.start();
 
-      setTimeout(() => {
-        gainNode1.gain.value = 0;
-        // oscillator1.stop();
-      }, 2000);
-    }
-  }
+  //     setTimeout(() => {
+  //       gainNode1.gain.value = 0;
+  //       oscillator1.stop();
+  //     }, 2000);
+  //   }
+  // }
 }
 
 //run once at start, then run when the next minute begins, then run every minute.
