@@ -663,6 +663,7 @@ function update() {
       oscillator1.start();
 
       setTimeout(() => {
+        gainNode1.gain.value = 0;
         oscillator1.stop();
       }, 2000);
     }
