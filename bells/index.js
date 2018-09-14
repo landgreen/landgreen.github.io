@@ -1,11 +1,12 @@
 //http://newwestcharter.org/high-school-daily-bell-schedule/
+
 let todayMinutes = 0;
 let startMinutes = 440;
 let timeMode = 0;
 let date = new Date();
 let stopwatchStart;
 const MinutesInDay = 7 * 60 + 10 + 10;
-let scale = (200 / MinutesInDay) * 2.5;
+let scale = 200 / MinutesInDay * 2.5;
 let centerOnNow = true;
 
 const color = {
@@ -16,7 +17,7 @@ const color = {
 const schedule = {
   current: "regular",
   mouse: 0,
-  setCurrentByDate: function() {
+  setCurrentByDate: function () {
     if (schedule.current != "rally" || date.getHours() > 22) {
       if (date.getDay() === 5) {
         schedule.current = "advisory";
@@ -25,7 +26,7 @@ const schedule = {
       }
     }
   },
-  cycleCurrent: function() {
+  cycleCurrent: function () {
     if (schedule.current === "regular") {
       schedule.current = "advisory";
     } else if (schedule.current === "advisory") {
@@ -35,59 +36,344 @@ const schedule = {
     }
     update();
   },
-  regular: [
-    { start: 0, long: 7 * 60 + 30, name: "", showName: false, fill: color.passing },
-    { start: 7 * 60 + 30, long: 60, name: "P1", showName: true, fill: color.period },
-    { start: 8 * 60 + 30, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 8 * 60 + 33, long: 60, name: "P2", showName: true, fill: color.period },
-    { start: 9 * 60 + 33, long: 15, name: "snack", showName: false, fill: color.lunch },
-    { start: 9 * 60 + 48, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 9 * 60 + 51, long: 60, name: "P3", showName: true, fill: color.period },
-    { start: 10 * 60 + 51, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 10 * 60 + 54, long: 60, name: "P4", showName: true, fill: color.period },
-    { start: 11 * 60 + 54, long: 30, name: "lunch", showName: false, fill: color.lunch },
-    { start: 12 * 60 + 24, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 12 * 60 + 27, long: 60, name: "P5", showName: true, fill: color.period },
-    { start: 13 * 60 + 27, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 13 * 60 + 30, long: 60, name: "P6", showName: true, fill: color.period },
-    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "", showName: false, fill: color.passing }
+  regular: [{
+      start: 0,
+      long: 7 * 60 + 30,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 7 * 60 + 30,
+      long: 60,
+      name: "P1",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 8 * 60 + 30,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 8 * 60 + 33,
+      long: 60,
+      name: "P2",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 9 * 60 + 33,
+      long: 15,
+      name: "snack",
+      showName: false,
+      fill: color.lunch
+    },
+    {
+      start: 9 * 60 + 48,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 9 * 60 + 51,
+      long: 60,
+      name: "P3",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 10 * 60 + 51,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 10 * 60 + 54,
+      long: 60,
+      name: "P4",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 11 * 60 + 54,
+      long: 30,
+      name: "lunch",
+      showName: false,
+      fill: color.lunch
+    },
+    {
+      start: 12 * 60 + 24,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 12 * 60 + 27,
+      long: 60,
+      name: "P5",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 13 * 60 + 27,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 13 * 60 + 30,
+      long: 60,
+      name: "P6",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 14 * 60 + 30,
+      long: 9 * 60 + 30,
+      name: "",
+      showName: false,
+      fill: color.passing
+    }
   ],
-  advisory: [
-    { start: 0, long: 7 * 60 + 30, name: "", showName: false, fill: color.passing },
-    { start: 7 * 60 + 30, long: 55, name: "P1", showName: true, fill: color.period },
-    { start: 8 * 60 + 25, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 8 * 60 + 28, long: 55, name: "P2", showName: true, fill: color.period },
-    { start: 9 * 60 + 23, long: 15, name: "snack", showName: false, fill: color.lunch },
-    { start: 9 * 60 + 38, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 9 * 60 + 41, long: 26, name: "A", showName: true, fill: color.period },
-    { start: 10 * 60 + 07, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 10 * 60 + 10, long: 55, name: "P3", showName: true, fill: color.period },
-    { start: 11 * 60 + 5, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 11 * 60 + 8, long: 55, name: "P4", showName: true, fill: color.period },
-    { start: 12 * 60 + 03, long: 27, name: "lunch", showName: false, fill: color.lunch },
-    { start: 12 * 60 + 30, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 12 * 60 + 33, long: 58, name: "P5", showName: true, fill: color.period },
-    { start: 13 * 60 + 31, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 13 * 60 + 34, long: 56, name: "P6", showName: true, fill: color.period },
-    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "", showName: false, fill: color.passing }
+  advisory: [{
+      start: 0,
+      long: 7 * 60 + 30,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 7 * 60 + 30,
+      long: 55,
+      name: "P1",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 8 * 60 + 25,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 8 * 60 + 28,
+      long: 55,
+      name: "P2",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 9 * 60 + 23,
+      long: 15,
+      name: "snack",
+      showName: false,
+      fill: color.lunch
+    },
+    {
+      start: 9 * 60 + 38,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 9 * 60 + 41,
+      long: 26,
+      name: "A",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 10 * 60 + 07,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 10 * 60 + 10,
+      long: 55,
+      name: "P3",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 11 * 60 + 5,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 11 * 60 + 8,
+      long: 55,
+      name: "P4",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 12 * 60 + 03,
+      long: 27,
+      name: "lunch",
+      showName: false,
+      fill: color.lunch
+    },
+    {
+      start: 12 * 60 + 30,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 12 * 60 + 33,
+      long: 58,
+      name: "P5",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 13 * 60 + 31,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 13 * 60 + 34,
+      long: 56,
+      name: "P6",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 14 * 60 + 30,
+      long: 9 * 60 + 30,
+      name: "",
+      showName: false,
+      fill: color.passing
+    }
   ],
-  rally: [
-    { start: 0, long: 7 * 60 + 30, name: "", showName: false, fill: color.passing },
-    { start: 7 * 60 + 30, long: 50, name: "P1", showName: true, fill: color.period },
-    { start: 8 * 60 + 20, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 8 * 60 + 23, long: 50, name: "P2", showName: true, fill: color.period },
-    { start: 9 * 60 + 13, long: 15, name: "snack", showName: false, fill: color.lunch },
-    { start: 9 * 60 + 28, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 9 * 60 + 31, long: 50, name: "P3", showName: true, fill: color.period },
-    { start: 10 * 60 + 21, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 10 * 60 + 24, long: 50, name: "P4", showName: true, fill: color.period },
-    { start: 11 * 60 + 14, long: 30, name: "lunch", showName: false, fill: color.lunch },
-    { start: 11 * 60 + 44, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 11 * 60 + 47, long: 50, name: "P5", showName: true, fill: color.period },
-    { start: 12 * 60 + 37, long: 3, name: "", showName: false, fill: color.passing },
-    { start: 12 * 60 + 40, long: 50, name: "P6", showName: true, fill: color.period },
-    { start: 13 * 60 + 30, long: 60, name: "Rally", showName: true, fill: color.period },
-    { start: 14 * 60 + 30, long: 9 * 60 + 30, name: "", showName: false, fill: color.passing }
+  rally: [{
+      start: 0,
+      long: 7 * 60 + 30,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 7 * 60 + 30,
+      long: 50,
+      name: "P1",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 8 * 60 + 20,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 8 * 60 + 23,
+      long: 50,
+      name: "P2",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 9 * 60 + 13,
+      long: 15,
+      name: "snack",
+      showName: false,
+      fill: color.lunch
+    },
+    {
+      start: 9 * 60 + 28,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 9 * 60 + 31,
+      long: 50,
+      name: "P3",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 10 * 60 + 21,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 10 * 60 + 24,
+      long: 50,
+      name: "P4",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 11 * 60 + 14,
+      long: 30,
+      name: "lunch",
+      showName: false,
+      fill: color.lunch
+    },
+    {
+      start: 11 * 60 + 44,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 11 * 60 + 47,
+      long: 50,
+      name: "P5",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 12 * 60 + 37,
+      long: 3,
+      name: "",
+      showName: false,
+      fill: color.passing
+    },
+    {
+      start: 12 * 60 + 40,
+      long: 50,
+      name: "P6",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 13 * 60 + 30,
+      long: 60,
+      name: "Rally",
+      showName: true,
+      fill: color.period
+    },
+    {
+      start: 14 * 60 + 30,
+      long: 9 * 60 + 30,
+      name: "",
+      showName: false,
+      fill: color.passing
+    }
   ]
 };
 
@@ -99,24 +385,28 @@ function toggleMode() {
     stopwatchStart = Date.now();
   }
 }
+
 function drawDigitalClock() {
   date = new Date();
+  document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`;
   // document.getElementById("week-day").textContent = dayOfWeekAsString(date.getDay());
   // document.getElementById("date").textContent = nameOfMonthAsString(date.getMonth()) + " " + date.getDate();
-  if (timeMode === 0) {
-    //time no seconds
-    document.getElementById("time").textContent = `${((date.getHours() - 1) % 12) + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`;
-  } else if (timeMode === 1) {
-    //time with seconds
-    document.getElementById("time").textContent = `${((date.getHours() - 1) % 12) + 1}:${
-      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
-    }:${date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()}`;
-  } else if (timeMode === 2) {
-    //stopwatch
-    let end = Date.now();
-    let d = new Date(end - stopwatchStart);
-    document.getElementById("time").textContent = d.toLocaleTimeString("en-GB").slice(3, 8);
-  }
+  // if (timeMode === 0) {
+  //   //time no seconds
+  //   document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`;
+  // } else if (timeMode === 1) {
+  //   //time with seconds
+  //   document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}:${
+  //     date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
+  //   }`;
+  // } else if (timeMode === 2) {
+  //   //stopwatch
+  //   let end = Date.now();
+  //   let d = new Date(end - stopwatchStart);
+  //   document.getElementById("time").textContent = d.toLocaleTimeString("en-GB").slice(3, 8);
+  // }
+
+
   // else {
   //   document.getElementById("time").textContent = "";
   //   //analog clock
@@ -144,9 +434,11 @@ function drawDigitalClock() {
 function dayOfWeekAsString(dayIndex) {
   return ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"][dayIndex];
 }
+
 function nameOfMonthAsString(MonthIndex) {
   return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][MonthIndex];
 }
+
 function nameOfSeasonAsString(MonthIndex) {
   return ["spring", "summer", "fall", "winter"][MonthIndex];
 }
@@ -164,12 +456,12 @@ function findCurrentPeriod(b) {
 function drawCurrentPeriod(b) {
   const period = b[findCurrentPeriod(b)];
   let startTime = {
-    hour: Math.floor(((period.start / 60 - 1) % 12) + 1),
+    hour: Math.floor((period.start / 60 - 1) % 12 + 1),
     minute: period.start % 60
   };
   if (startTime.minute < 10) startTime.minute = "0" + startTime.minute; //add zero for single digit minutes
   let endTime = {
-    hour: Math.floor((((period.start + period.long) / 60 - 1) % 12) + 1),
+    hour: Math.floor(((period.start + period.long) / 60 - 1) % 12 + 1),
     minute: (period.start + period.long) % 60
   };
   if (endTime.minute < 10) endTime.minute = "0" + endTime.minute; //add zero for single digit minutes
@@ -177,12 +469,13 @@ function drawCurrentPeriod(b) {
   // document.getElementById("period-time").textContent = startTime + " - " + endTime;
   document.getElementById(schedule.mouse).setAttribute("fill", schedule[schedule.current][schedule.mouse].fill);
   //color now line
-  if (period.showName && (todayMinutes - period.start < 10 || todayMinutes - period.start > period.long - 10)) {
+  if (period.showName && (todayMinutes - period.start < 15 || todayMinutes - period.start > period.long - 15)) {
     document.getElementById("now").setAttribute("stroke", "#f05");
   } else {
     document.getElementById("now").setAttribute("stroke", "#000");
   }
 }
+
 function enterBlock(target) {
   let id = target.id;
   if (id.charAt(0) === "n") {
@@ -191,12 +484,12 @@ function enterBlock(target) {
   schedule.mouse = id;
   period = schedule[schedule.current][id];
   let startTime = {
-    hour: Math.floor(((period.start / 60 - 1) % 12) + 1),
+    hour: Math.floor((period.start / 60 - 1) % 12 + 1),
     minute: period.start % 60
   };
   if (startTime.minute < 10) startTime.minute = "0" + startTime.minute; //add zero for single digit minutes
   let endTime = {
-    hour: Math.floor((((period.start + period.long) / 60 - 1) % 12) + 1),
+    hour: Math.floor(((period.start + period.long) / 60 - 1) % 12 + 1),
     minute: (period.start + period.long) % 60
   };
   if (endTime.minute < 10) endTime.minute = "0" + endTime.minute; //add zero for single digit minutes
@@ -260,7 +553,7 @@ function toggleZoom() {
     scale = 200 / MinutesInDay;
   } else {
     centerOnNow = true;
-    scale = (200 / MinutesInDay) * 2.5;
+    scale = 200 / MinutesInDay * 2.5;
   }
   moveSVGPeriods(schedule[schedule.current]);
 }
@@ -282,6 +575,7 @@ function slowUpdate() {
     localStorage.setItem("latitude", position.coords.latitude);
     localStorage.setItem("longitude", position.coords.longitude);
   }
+
   function error() {
     console.log("Unable to retrieve your location");
   }
@@ -296,7 +590,7 @@ function slowUpdate() {
   //generic function to get JSON
   function loadJSON(path, success, error) {
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
           if (success) success(JSON.parse(xhr.responseText));
@@ -316,11 +610,11 @@ function slowUpdate() {
     const APPID = "258f642b3c9947c0eeae26f4a1ef22a3";
     loadJSON(
       "https://api.openweathermap.org/data/2.5/weather?&units=imperial&lat=" + lat + "&lon=" + long + "&APPID=" + APPID,
-      function(data) {
+      function (data) {
         // console.log(data);
         setWeather(data.main.temp, data.weather[0].description);
       },
-      function(xhr) {
+      function (xhr) {
         console.error(xhr);
       }
     );
@@ -335,8 +629,9 @@ function slowUpdate() {
     document.getElementById("weather").setAttribute("font-size", size + "px");
   }
 }
+
 function noWeather() {
-  document.getElementById("temp").textContent = "20" + (date.getYear() % 100);
+  document.getElementById("temp").textContent = "20" + date.getYear() % 100;
   document.getElementById("weather").textContent = nameOfSeasonAsString(Math.floor(date.getMonth() / 4));
 }
 
@@ -346,10 +641,32 @@ function update() {
   date = new Date();
   todayMinutes = date.getHours() * 60 + date.getMinutes();
   // todayMinutes = Math.round(450 + Math.random() * 420); //set to random time during class
-  // todayMinutes = 7.5 * 60 + 60 + 82;
+  // todayMinutes = 7.5 * 60 + 60 - 2;
   // todayMinutes = 14.5 * 60;
   drawCurrentPeriod(schedule[schedule.current]);
   moveSVGPeriods(schedule[schedule.current]);
+
+
+  //ring bell on new period
+  for (let i = 0, len = schedule[schedule.current].length; i < len; ++i) {
+    if (schedule[schedule.current][i].start === todayMinutes) {
+      var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+
+      var oscillator1 = audioCtx.createOscillator();
+      var gainNode1 = audioCtx.createGain();
+      gainNode1.gain.value = 1; //controls volume
+      oscillator1.connect(gainNode1);
+      gainNode1.connect(audioCtx.destination);
+
+      oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
+      oscillator1.frequency.value = 300; // value in hertz
+      oscillator1.start();
+
+      setTimeout(() => {
+        oscillator1.stop();
+      }, 2000);
+    }
+  }
 }
 
 //run once at start, then run when the next minute begins, then run every minute.
@@ -362,17 +679,17 @@ drawDigitalClock();
 // window.setInterval(drawDigitalClock, 100); //update every 1/10 of second
 // window.setInterval(slowUpdate, 10 * 60 * 1000); //update weather every 10 min
 
-setTimeout(function() {
+setTimeout(function () {
   update();
   window.setInterval(slowUpdate, 10 * 60 * 1000); //update weather every 10 min
   window.setInterval(update, 60 * 1000); //update every minute
 }, (60 - date.getSeconds()) * 1000);
 
-window.addEventListener("focus", function() {
+window.addEventListener("focus", function () {
   update();
 });
 
-const cycle = function() {
+const cycle = function () {
   drawDigitalClock();
   window.requestAnimationFrame(cycle);
 };
