@@ -664,7 +664,7 @@ function update() {
 
       setTimeout(() => {
         gainNode1.gain.value = 0;
-        oscillator1.stop();
+        // oscillator1.stop();
       }, 2000);
     }
   }
