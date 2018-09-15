@@ -29,6 +29,72 @@ const level = {
   },
   //******************************************************************************************************************
   //******************************************************************************************************************
+  testingMap: function () {
+    game.levelsCleared = 7; //for testing to simulate all possible mobs spawns
+    for (let i = 0; i < 7; i++) {
+      game.dmgScale += 0.4; //damage done by mobs increases each level
+      b.dmgScale *= 0.9; //damage done by player decreases each level
+    }
+    mech.setPosToSpawn(-75, -60); //normal spawn
+    level.enter.x = mech.spawnPos.x - 50;
+    level.enter.y = mech.spawnPos.y + 20;
+
+    level.exit.x = 3500;
+    level.exit.y = -870;
+    this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
+    // this.addZone(250, -1000, 500, 1500, "laser");
+    //spawn.debris(0, -900, 4500, 10); //15 debris per level
+    // setTimeout(function() {
+    //   document.body.style.backgroundColor = "#eee";
+    // }, 1);
+    document.body.style.backgroundColor = "#fff";
+    // document.body.style.backgroundColor = "#fafcff";
+    // document.body.style.backgroundColor = "#bbb";
+    // document.body.style.backgroundColor = "#eee4e4";
+    // document.body.style.backgroundColor = "#dcdcde";
+    // document.body.style.backgroundColor = "#e0e5e0";
+
+    // this.addQueryRegion(550, -25, 100, 50, "bounce", { Vx: 0, Vy: -25 });
+    // level.fillBG.push({ x: 550, y: -25, width: 100, height: 50, color: "#ff0" });
+
+    spawn.mapRect(-1200, 0, 2200, 300); //left ground
+    spawn.mapRect(3500, -860, 100, 50); //ground bump wall
+    spawn.mapVertex(1250, 0, "0 0 0 300 -500 600 -500 300");
+    spawn.mapRect(1500, -300, 2000, 300); //upper ground
+    spawn.mapVertex(3750, 0, "0 600 0 300 -500 0 -500 300");
+    spawn.mapRect(4000, 0, 1000, 300); //right lower ground
+    spawn.mapRect(2200, -600, 600, 50); //center platform
+    spawn.mapRect(1300, -850, 700, 50); //center platform
+    spawn.mapRect(3000, -850, 700, 50); //center platform
+    // spawn.mapRect(0, -2000, 3000, 50); //center platform
+    spawn.spawnBuilding(-200, -250, 275, 240, false, true, "left"); //far left; player spawns in side
+    // spawn.boost(350, 0, -1000);
+    for (let i = 0; i < 10; i++) {
+      powerUps.spawn(950, -425, "gun", false);
+    }
+    for (let i = 0; i < 5; i++) {
+      powerUps.spawn(2500 + i * 20, -1300, "gun", false);
+      powerUps.spawn(2500 + i * 20, -1100, "ammo", false);
+    }
+    spawn.nodeBoss(-500, -600, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
+    // spawn.lineBoss(-500, -600, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
+    // spawn.bodyRect(-135, -50, 50, 50);
+    // spawn.bodyRect(-140, -100, 50, 50);
+    // spawn.bodyRect(-145, -150, 60, 50);
+    // spawn.bodyRect(-140, -200, 50, 50);
+    // spawn.bodyRect(-95, -50, 40, 50);
+    // spawn.bodyRect(-90, -100, 60, 50);
+    // spawn.bodyRect(-110, -150, 40, 50);
+    // spawn.bodyRect(-45, -100, 40, 50);
+
+    // spawn.group(-600, -550);
+    // for (let i = 0; i < 1; ++i) {
+    //   spawn.chaser(800, -1150);
+    // }
+    // spawn.nodeBoss(900, -1070, "shooter", 9);
+    // spawn.randomBoss(-100, -1470);
+  },
+
   //empty map for testing mobs
   intro: function () {
     mech.setPosToSpawn(460, -100); //normal spawn
@@ -166,69 +232,7 @@ const level = {
     spawn.wireKneeLeft();
     spawn.wireHead();
   },
-  testingMap: function () {
-    // game.levelsCleared = 5; //for testing to simulate all possible mobs spawns
-    // for (let i = 0; i < 5; i++) {
-    //   game.dmgScale += 0.4; //damage done by mobs increases each level
-    //   b.dmgScale *= 0.9; //damage done by player decreases each level
-    // }
-    mech.setPosToSpawn(-75, -60); //normal spawn
-    level.enter.x = mech.spawnPos.x - 50;
-    level.enter.y = mech.spawnPos.y + 20;
 
-    level.exit.x = 3500;
-    level.exit.y = -870;
-    this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
-    // this.addZone(250, -1000, 500, 1500, "laser");
-    //spawn.debris(0, -900, 4500, 10); //15 debris per level
-    // setTimeout(function() {
-    //   document.body.style.backgroundColor = "#eee";
-    // }, 1);
-    document.body.style.backgroundColor = "#fff";
-    // document.body.style.backgroundColor = "#fafcff";
-    // document.body.style.backgroundColor = "#bbb";
-    // document.body.style.backgroundColor = "#eee4e4";
-    // document.body.style.backgroundColor = "#dcdcde";
-    // document.body.style.backgroundColor = "#e0e5e0";
-
-    // this.addQueryRegion(550, -25, 100, 50, "bounce", { Vx: 0, Vy: -25 });
-    // level.fillBG.push({ x: 550, y: -25, width: 100, height: 50, color: "#ff0" });
-
-    spawn.mapRect(-1200, 0, 2200, 300); //left ground
-    spawn.mapRect(3500, -860, 100, 50); //ground bump wall
-    spawn.mapVertex(1250, 0, "0 0 0 300 -500 600 -500 300");
-    spawn.mapRect(1500, -300, 2000, 300); //upper ground
-    spawn.mapVertex(3750, 0, "0 600 0 300 -500 0 -500 300");
-    spawn.mapRect(4000, 0, 1000, 300); //right lower ground
-    spawn.mapRect(2200, -600, 600, 50); //center platform
-    spawn.mapRect(1300, -850, 700, 50); //center platform
-    spawn.mapRect(3000, -850, 700, 50); //center platform
-    // spawn.mapRect(0, -2000, 3000, 50); //center platform
-    spawn.spawnBuilding(-200, -250, 275, 240, false, true, "left"); //far left; player spawns in side
-    // spawn.boost(350, 0, -1000);
-    for (let i = 0; i < 17; i++) {
-      powerUps.spawn(450, -125, "gun", false);
-    }
-    for (let i = 0; i < 5; i++) {
-      powerUps.spawn(2500 + i * 20, -1300, "gun", false);
-      powerUps.spawn(2500 + i * 20, -1100, "ammo", false);
-    }
-    spawn.bodyRect(-135, -50, 50, 50);
-    spawn.bodyRect(-140, -100, 50, 50);
-    spawn.bodyRect(-145, -150, 60, 50);
-    spawn.bodyRect(-140, -200, 50, 50);
-    spawn.bodyRect(-95, -50, 40, 50);
-    spawn.bodyRect(-90, -100, 60, 50);
-    spawn.bodyRect(-110, -150, 40, 50);
-    spawn.bodyRect(-45, -100, 40, 50);
-
-    // spawn.group(-600, -550);
-    for (let i = 0; i < 1; ++i) {
-      spawn.chaser(800, -1150);
-    }
-    // spawn.nodeBoss(900, -1070, "shooter", 9);
-    // spawn.randomBoss(-100, -1470);
-  },
   rooftops: function () {
     document.body.style.backgroundColor = "#eee4e4";
     // this.addZone(-700, -50, 4100, 100, "death");

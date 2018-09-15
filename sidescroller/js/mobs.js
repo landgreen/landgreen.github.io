@@ -2,7 +2,7 @@
 let mob = [];
 //method to populate the array above
 const mobs = {
-  loop: function() {
+  loop: function () {
     let i = mob.length;
     while (i--) {
       if (mob[i].alive) {
@@ -12,7 +12,7 @@ const mobs = {
       }
     }
   },
-  draw: function() {
+  draw: function () {
     ctx.lineWidth = 2;
     let i = mob.length;
     while (i--) {
@@ -29,13 +29,13 @@ const mobs = {
       ctx.stroke();
     }
   },
-  alert: function(range) {
+  alert: function (range) {
     range = range * range;
     for (let i = 0; i < mob.length; i++) {
       if (mob[i].distanceToPlayer2() < range) mob[i].locatePlayer();
     }
   },
-  startle: function(amount) {
+  startle: function (amount) {
     for (let i = 0; i < mob.length; i++) {
       if (!mob[i].seePlayer.yes) {
         mob[i].force.x += amount * mob[i].mass * (Math.random() - 0.5);
@@ -45,7 +45,7 @@ const mobs = {
   },
   //**********************************************************************************************
   //**********************************************************************************************
-  spawn: function(xPos, yPos, sides, radius, color) {
+  spawn: function (xPos, yPos, sides, radius, color) {
     let i = mob.length;
     mob[i] = Matter.Bodies.polygon(xPos, yPos, sides, radius, {
       //inertia: Infinity, //prevents rotation
@@ -83,45 +83,45 @@ const mobs = {
         y: yPos
       },
       seeAtDistance2: 4000000, //sqrt(4000000) = 2000 = max seeing range
-      distanceToPlayer: function() {
+      distanceToPlayer: function () {
         const dx = this.position.x - player.position.x;
         const dy = this.position.y - player.position.y;
         return Math.sqrt(dx * dx + dy * dy);
       },
-      distanceToPlayer2: function() {
+      distanceToPlayer2: function () {
         const dx = this.position.x - player.position.x;
         const dy = this.position.y - player.position.y;
         return dx * dx + dy * dy;
       },
-      gravity: function() {
+      gravity: function () {
         this.force.y += this.mass * this.g;
       },
       seePlayerFreq: 20 + Math.round(Math.random() * 20), //how often NPC checks to see where player is, lower numbers have better vision
-      foundPlayer: function() {
+      foundPlayer: function () {
         this.locatePlayer();
         if (!this.seePlayer.yes) {
           this.alertNearByMobs();
           this.seePlayer.yes = true;
         }
       },
-      lostPlayer: function() {
+      lostPlayer: function () {
         this.seePlayer.yes = false;
         this.seePlayer.recall -= this.seePlayerFreq;
         if (this.seePlayer.recall < 0) this.seePlayer.recall = 0;
       },
       memory: 120, //default time to remember player's location
-      locatePlayer: function() {
+      locatePlayer: function () {
         // updates mob's memory of player location
         this.seePlayer.recall = this.memory + Math.round(this.memory * Math.random()); //seconds before mob falls a sleep
         this.seePlayer.position.x = player.position.x;
         this.seePlayer.position.y = player.position.y;
       },
-      locatePlayerByDist: function() {
+      locatePlayerByDist: function () {
         if (this.distanceToPlayer2() < this.locateRange) {
           this.locatePlayer();
         }
       },
-      seePlayerCheck: function() {
+      seePlayerCheck: function () {
         if (!(game.cycle % this.seePlayerFreq)) {
           if (
             this.distanceToPlayer2() < this.seeAtDistance2 &&
@@ -134,7 +134,7 @@ const mobs = {
           }
         }
       },
-      seePlayerCheckByDistance: function() {
+      seePlayerCheckByDistance: function () {
         if (!(game.cycle % this.seePlayerFreq)) {
           if (this.distanceToPlayer2() < this.seeAtDistance2) {
             this.foundPlayer();
@@ -143,7 +143,7 @@ const mobs = {
           }
         }
       },
-      seePlayerByDistOrLOS: function() {
+      seePlayerByDistOrLOS: function () {
         if (!(game.cycle % this.seePlayerFreq)) {
           if (
             this.distanceToPlayer2() < this.seeAtDistance2 ||
@@ -155,7 +155,7 @@ const mobs = {
           }
         }
       },
-      seePlayerByDistAndLOS: function() {
+      seePlayerByDistAndLOS: function () {
         if (!(game.cycle % this.seePlayerFreq)) {
           if (
             this.distanceToPlayer2() < this.seeAtDistance2 &&
@@ -167,7 +167,7 @@ const mobs = {
           }
         }
       },
-      isLookingAtPlayer: function(threshold) {
+      isLookingAtPlayer: function (threshold) {
         const diff = Matter.Vector.normalise(Matter.Vector.sub(player.position, this.position));
         //make a vector for the mob's direction of length 1
         const dir = {
@@ -185,7 +185,7 @@ const mobs = {
       },
       lookRange: 0.2 + Math.random() * 0.2,
       lookTorque: 0.0000004 * (Math.random() > 0.5 ? -1 : 1),
-      seePlayerByLookingAt: function() {
+      seePlayerByLookingAt: function () {
         if (!(game.cycle % this.seePlayerFreq) && (this.seePlayer.recall || this.isLookingAtPlayer(this.lookRange))) {
           if (
             this.distanceToPlayer2() < this.seeAtDistance2 &&
@@ -209,7 +209,7 @@ const mobs = {
           ctx.fill();
         }
       },
-      mechPosRange: function() {
+      mechPosRange: function () {
         return {
           x: player.position.x, // + (Math.random() - 0.5) * 50,
           y: player.position.y + (Math.random() - 0.5) * 110
@@ -223,8 +223,8 @@ const mobs = {
         // ctx.stroke();
         // return targetPos;
       },
-      laser: function() {
-        const vertexCollision = function(v1, v1End, domain) {
+      laser: function () {
+        const vertexCollision = function (v1, v1End, domain) {
           for (let i = 0; i < domain.length; ++i) {
             let vertices = domain[i].vertices;
             const len = vertices.length - 1;
@@ -285,7 +285,7 @@ const mobs = {
           vertexCollision(this.position, look, [player]);
           // hitting player
           if (best.who === player) {
-            dmg = 0.006 * game.dmgScale;
+            dmg = 0.004 * game.dmgScale;
             mech.damage(dmg);
             //draw damage
             ctx.fillStyle = color;
@@ -307,7 +307,7 @@ const mobs = {
           ctx.setLineDash([0, 0]);
         }
       },
-      searchSpring: function() {
+      searchSpring: function () {
         ctx.beginPath();
         ctx.arc(this.cons.pointA.x, this.cons.pointA.y, 6, 0, 2 * Math.PI);
         ctx.arc(this.cons2.pointA.x, this.cons2.pointA.y, 6, 0, 2 * Math.PI);
@@ -349,7 +349,7 @@ const mobs = {
           ctx.fillStyle = "rgba(0,0,0,0.07)";
           ctx.fill();
           //spring to random place on map
-          const vertexCollision = function(v1, v1End, domain) {
+          const vertexCollision = function (v1, v1End, domain) {
             for (let i = 0; i < domain.length; ++i) {
               let vertices = domain[i].vertices;
               const len = vertices.length - 1;
@@ -434,7 +434,7 @@ const mobs = {
           }
         }
       },
-      alertNearByMobs: function() {
+      alertNearByMobs: function () {
         //this.alertRange2 is set at the very bottom of this mobs, after mob is made
         for (let i = 0; i < mob.length; i++) {
           if (!mob[i].seePlayer.recall && Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, mob[i].position)) < this.alertRange2) {
@@ -450,7 +450,7 @@ const mobs = {
         //     time: game.drawTime
         // });
       },
-      zoom: function() {
+      zoom: function () {
         this.zoomMode--;
         if (this.zoomMode > 150) {
           this.drawTrail();
@@ -466,7 +466,7 @@ const mobs = {
           this.setupTrail();
         }
       },
-      setupTrail: function() {
+      setupTrail: function () {
         this.trail = [];
         for (let i = 0; i < this.trailLength; ++i) {
           this.trail.push({
@@ -475,7 +475,7 @@ const mobs = {
           });
         }
       },
-      drawTrail: function() {
+      drawTrail: function () {
         //dont' forget to run setupTrail() after mob spawn
         const t = this.trail;
         const len = t.length;
@@ -501,7 +501,7 @@ const mobs = {
         }
         ctx.globalAlpha = 1;
       },
-      darkness: function() {
+      darkness: function () {
         // var grd = ctx.createRadialGradient(this.position.x, this.position.y, this.eventHorizon/3, this.position.x, this.position.y, this.eventHorizon);
         // grd.addColorStop(0, "rgba(0,0,0,1)");
         // grd.addColorStop(1, "rgba(0,0,0,0)");
@@ -523,7 +523,7 @@ const mobs = {
         ctx.fillStyle = "rgba(0,0,0,0.1)";
         ctx.fill();
       },
-      pullPlayer: function() {
+      pullPlayer: function () {
         if (this.seePlayer.yes && Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position)) < 1000000) {
           const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
           player.force.x -= 1.3 * Math.cos(angle) * (mech.onGround ? 2 * player.mass * game.g : player.mass * game.g);
@@ -541,7 +541,7 @@ const mobs = {
           ctx.fill();
         }
       },
-      repelBullets: function() {
+      repelBullets: function () {
         if (this.seePlayer.yes) {
           ctx.lineWidth = "8";
           ctx.strokeStyle = this.fill;
@@ -562,7 +562,7 @@ const mobs = {
           ctx.stroke();
         }
       },
-      attraction: function() {
+      attraction: function () {
         //accelerate towards the player
         if (this.seePlayer.recall) {
           // && dx * dx + dy * dy < 2000000) {
@@ -573,7 +573,7 @@ const mobs = {
         }
       },
       repulsionRange: 500000,
-      repulsion: function() {
+      repulsion: function () {
         //accelerate towards the player
         if (this.seePlayer.recall && this.distanceToPlayer2() < this.repulsionRange) {
           // && dx * dx + dy * dy < 2000000) {
@@ -583,7 +583,7 @@ const mobs = {
           this.force.y -= 2 * forceMag * Math.sin(angle); // - 0.0007 * this.mass; //antigravity
         }
       },
-      hop: function() {
+      hop: function () {
         //accelerate towards the player after a delay
         if (this.cd < game.cycle && this.seePlayer.recall && this.speed < 1) {
           this.cd = game.cycle + this.delay;
@@ -593,7 +593,7 @@ const mobs = {
           this.force.y += forceMag * Math.sin(angle) - 0.04 * this.mass; //antigravity
         }
       },
-      hoverOverPlayer: function() {
+      hoverOverPlayer: function () {
         if (this.seePlayer.recall) {
           // vertical positioning
           const rangeY = 250;
@@ -614,7 +614,7 @@ const mobs = {
         //   this.gravity();
         // }
       },
-      grow: function() {
+      grow: function () {
         if (this.seePlayer.recall) {
           if (this.radius < 80) {
             const scale = 1.01;
@@ -632,11 +632,11 @@ const mobs = {
           }
         }
       },
-      search: function() {
+      search: function () {
         //be sure to declare searchTarget in mob spawn
         //accelerate towards the searchTarget
         if (!this.seePlayer.recall) {
-          const newTarget = function(that) {
+          const newTarget = function (that) {
             if (Math.random() < 0.05) {
               that.searchTarget = player.position; //chance to target player
             } else {
@@ -664,7 +664,7 @@ const mobs = {
           }
         }
       },
-      strike: function() {
+      strike: function () {
         //teleport to player when close enough on CD
         if (this.seePlayer.recall && this.cd < game.cycle) {
           const dist = Matter.Vector.sub(this.seePlayer.position, this.position);
@@ -681,7 +681,7 @@ const mobs = {
           }
         }
       },
-      blink: function() {
+      blink: function () {
         //teleport towards player as a way to move
         if (this.seePlayer.recall && !(game.cycle % this.blinkRate)) {
           ctx.beginPath();
@@ -701,7 +701,7 @@ const mobs = {
           ctx.stroke();
         }
       },
-      drift: function() {
+      drift: function () {
         //teleport towards player as a way to move
         if (this.seePlayer.recall && !(game.cycle % this.blinkRate)) {
           // && !mech.lookingAtMob(this,0.5)){
@@ -727,7 +727,7 @@ const mobs = {
           ctx.stroke();
         }
       },
-      bomb: function() {
+      bomb: function () {
         //throw a mob/bullet at player
         if (
           !(game.cycle % this.fireFreq) &&
@@ -746,7 +746,7 @@ const mobs = {
           Matter.Body.setAngularVelocity(this, (Math.random() - 0.5) * 0.25);
         }
       },
-      fire: function() {
+      fire: function () {
         const setNoseShape = () => {
           const mag = this.radius + this.radius * this.noseLength;
           this.vertices[1].x = this.position.x + Math.cos(this.angle) * mag;
@@ -788,7 +788,7 @@ const mobs = {
           setNoseShape();
         }
       },
-      turnToFacePlayer: function() {
+      turnToFacePlayer: function () {
         //turn to face player
         const dx = player.position.x - this.position.x;
         const dy = -player.position.y + this.position.y;
@@ -806,24 +806,24 @@ const mobs = {
           this.torque -= 0.002 * this.mass;
         }
       },
-      facePlayer: function() {
+      facePlayer: function () {
         const unitVector = Matter.Vector.normalise(Matter.Vector.sub(this.seePlayer.position, this.position));
         const angle = Math.atan2(unitVector.y, unitVector.x);
         Matter.Body.setAngle(this, angle - Math.PI);
       },
-      explode: function() {
+      explode: function () {
         mech.damage(Math.min(Math.max(0.02 * Math.sqrt(this.mass), 0.05), 0.35) * game.dmgScale);
         this.dropPowerUp = false;
         this.death(); //death with no power up or body
       },
-      timeLimit: function() {
+      timeLimit: function () {
         this.timeLeft--;
         if (this.timeLeft < 0) {
           this.dropPowerUp = false;
           this.death(); //death with no power up
         }
       },
-      healthBar: function() {
+      healthBar: function () {
         //draw health bar
         if (this.seePlayer.recall) {
           // && this.health < 1
@@ -837,23 +837,23 @@ const mobs = {
           ctx.fillRect(x, y, w * this.health, h);
         }
       },
-      damage: function(dmg) {
+      damage: function (dmg) {
         this.health -= dmg / Math.sqrt(this.mass);
         //this.fill = this.color + this.health + ')';
         if (this.health < 0.1) this.death();
         this.onDamage(this); //custom damage effects
       },
-      onDamage: function() {
+      onDamage: function () {
         // a placeholder for custom effects on mob damage
         //to use delare custon method in mob spawn
       },
-      onDeath: function() {
+      onDeath: function () {
         // a placeholder for custom effects on mob death
         //to use delare custon method in mob spawn
       },
       leaveBody: true,
       dropPowerUp: true,
-      death: function() {
+      death: function () {
         this.onDeath(this); //custom death effects
         this.removeConsBB();
         this.alive = false;
@@ -861,11 +861,11 @@ const mobs = {
           powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
         }
       },
-      removeConsBB: function() {
+      removeConsBB: function () {
         for (let i = 0, len = consBB.length; i < len; ++i) {
           if (consBB[i].bodyA === this) {
             if (consBB[i].bodyB.shield) {
-              consBB[i].bodyB.do = function() {
+              consBB[i].bodyB.do = function () {
                 this.death();
               };
             }
@@ -875,7 +875,7 @@ const mobs = {
             break;
           } else if (consBB[i].bodyB === this) {
             if (consBB[i].bodyA.shield) {
-              consBB[i].bodyA.do = function() {
+              consBB[i].bodyA.do = function () {
                 this.death();
               };
             }
@@ -886,7 +886,7 @@ const mobs = {
           }
         }
       },
-      removeCons: function() {
+      removeCons: function () {
         for (let i = 0, len = cons.length; i < len; ++i) {
           if (cons[i].bodyA === this) {
             cons[i].bodyA = cons[i].bodyB;
@@ -902,7 +902,7 @@ const mobs = {
         }
       },
       //replace dead mob with a regular body
-      replace: function(i) {
+      replace: function (i) {
         if (this.leaveBody) {
           const len = body.length;
           body[len] = Matter.Bodies.fromVertices(this.position.x, this.position.y, this.vertices);

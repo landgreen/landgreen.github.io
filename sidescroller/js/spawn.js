@@ -64,20 +64,21 @@ const spawn = {
           //one extra large mob
           this[pick](x, y, 90 + Math.random() * 40);
           return;
-        } else if (Math.random() < 0.25) {
+        } else if (Math.random() < 0.2) {
           //hidden grouping blocks
           this.group(x, y)
           return;
-        } else if (Math.random() < 0.5) {
-          pick = "randomList";
-        } else {
-          pick = "random";
         }
       }
+      if (Math.random() < 0.75) {
+        pick = "randomList";
+      } else {
+        pick = "random";
+      }
       //spawn random boss
-      if (Math.random() < 0.4) {
+      if (Math.random() < 0.55) {
         this.nodeBoss(x, y, pick);
-      } else if (Math.random < 0.8) {
+      } else {
         this.lineBoss(x, y, pick);
       }
     }
@@ -834,9 +835,9 @@ const spawn = {
       mobs.spawn(x, y, 9, target.radius + 20, "rgba(220,220,255,0.6)");
       let me = mob[mob.length - 1];
       me.stroke = "rgb(220,220,255)";
-      me.density = 0.0001; //very low density to not mess with the original mob's motion
+      Matter.Body.setDensity(me, 0.0001) //very low density to not mess with the original mob's motion
       me.shield = true;
-      me.collisionFilter.mask = 0x001100; //don't collide with bodies, map, and mobs, onyl bullets and player
+      me.collisionFilter.mask = 0x001100; //don't collide with bodies, map, and mobs, only bullets and player
       consBB[consBB.length] = Constraint.create({
         //attach shield to last spawned mob
         bodyA: me,
@@ -856,6 +857,33 @@ const spawn = {
       me.do = function () {};
     }
   },
+  bossShield: function (nodes, x, y, radius) {
+    mobs.spawn(x, y, 9, radius, "rgba(220,220,255,0.85)");
+    let me = mob[mob.length - 1];
+    me.stroke = "rgb(220,220,255)";
+    Matter.Body.setDensity(me, 0.00005) //very low density to not mess with the original mob's motion
+    me.frictionAir = 0;
+    me.shield = true;
+    me.collisionFilter.mask = 0x001100; //don't collide with bodies, map, and mobs, only bullets and player
+    //constrain to all mob nodes in boss
+    for (let i = 0; i < nodes; ++i) {
+      consBB[consBB.length] = Constraint.create({
+        bodyA: me,
+        bodyB: mob[mob.length - i - 2],
+        stiffness: 0.4,
+        damping: 0.1
+      });
+    }
+    me.onDamage = function () {
+      //make sure the mob that owns the shield can tell when damage is done
+      this.alertNearByMobs();
+    };
+    me.leaveBody = false;
+    me.dropPowerUp = false;
+    mob[mob.length - 1] = mob[mob.length - 1 - nodes];
+    mob[mob.length - 1 - nodes] = me;
+    me.do = function () {};
+  },
   //complex constrained mob templates**********************************************************************
   //*******************************************************************************************************
   allowShields: true,
@@ -863,39 +891,72 @@ const spawn = {
     x,
     y,
     spawn = "striker",
-    nodes = Math.min(2 + Math.round(Math.random() * game.levelsCleared), 8),
+    nodes = Math.min(2 + Math.ceil(Math.random() * (game.levelsCleared + 2)), 8),
     //Math.ceil(Math.random() * 3) + Math.min(4,Math.ceil(game.levelsCleared/2)),
-    radius = Math.ceil(Math.random() * 10) + 17,
-    l = Math.ceil(Math.random() * 100) + 70,
+    radius = Math.ceil(Math.random() * 10) + 17, // radius of each node mob
+    sideLength = Math.ceil(Math.random() * 100) + 70, // distance between each node mob
     stiffness = Math.random() * 0.03 + 0.005
   ) {
     this.allowShields = false; //dont' want shields on boss mobs
-    let px = 0;
-    let py = 0;
-    let a = (2 * Math.PI) / nodes;
+    const angle = 2 * Math.PI / nodes
     for (let i = 0; i < nodes; ++i) {
-      px += l * Math.cos(a * i);
-      py += l * Math.sin(a * i);
       let whoSpawn = spawn;
       if (spawn === "random") {
         whoSpawn = this.fullPickList[Math.floor(Math.random() * this.fullPickList.length)];
       } else if (spawn === "randomList") {
         whoSpawn = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       }
-      this[whoSpawn](x + px, y + py, radius);
+      this[whoSpawn](x + sideLength * Math.sin(i * angle), y + sideLength * Math.cos(i * angle), radius);
     }
     if (Math.random() < 0.3) {
       this.constrain2AdjacentMobs(nodes, stiffness * 2, true);
     } else {
       this.constrainAllMobCombos(nodes, stiffness);
     }
+    //spawn shield for entire boss
+    if (nodes > 2 && Math.random() < 0.998) {
+      this.bossShield(nodes, x, y, sideLength + 2.5 * radius + nodes * 6 - 25);
+      // this.bossShield(nodes, x, y, sideLength / (2 * Math.sin(Math.PI / nodes)));
+    }
     this.allowShields = true;
   },
+  // nodeBoss: function (
+  //   x,
+  //   y,
+  //   spawn = "striker",
+  //   nodes = Math.min(2 + Math.round(Math.random() * game.levelsCleared), 8),
+  //   //Math.ceil(Math.random() * 3) + Math.min(4,Math.ceil(game.levelsCleared/2)),
+  //   radius = Math.ceil(Math.random() * 10) + 17, // radius of each node mob
+  //   l = Math.ceil(Math.random() * 100) + 70, // distance between each node mob
+  //   stiffness = Math.random() * 0.03 + 0.005
+  // ) {
+  //   this.allowShields = false; //dont' want shields on boss mobs
+  //   let px = 0;
+  //   let py = 0;
+  //   let a = (2 * Math.PI) / nodes;
+  //   for (let i = 0; i < nodes; ++i) {
+  //     px += l * Math.cos(a * i);
+  //     py += l * Math.sin(a * i);
+  //     let whoSpawn = spawn;
+  //     if (spawn === "random") {
+  //       whoSpawn = this.fullPickList[Math.floor(Math.random() * this.fullPickList.length)];
+  //     } else if (spawn === "randomList") {
+  //       whoSpawn = this.pickList[Math.floor(Math.random() * this.pickList.length)];
+  //     }
+  //     this[whoSpawn](x + px, y + py, radius);
+  //   }
+  //   if (Math.random() < 0.3) {
+  //     this.constrain2AdjacentMobs(nodes, stiffness * 2, true);
+  //   } else {
+  //     this.constrainAllMobCombos(nodes, stiffness);
+  //   }
+  //   this.allowShields = true;
+  // },
   lineBoss: function (
     x,
     y,
     spawn = "striker",
-    nodes = Math.min(2 + Math.round(Math.random() * game.levelsCleared), 8),
+    nodes = Math.min(3 + Math.ceil(Math.random() * game.levelsCleared + 2), 8),
     //Math.ceil(Math.random() * 3) + Math.min(4,Math.ceil(game.levelsCleared/2)),
     radius = Math.ceil(Math.random() * 10) + 17,
     l = Math.ceil(Math.random() * 80) + 30,

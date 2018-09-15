@@ -549,7 +549,7 @@ const b = {
           bullet[me] = Bodies.rectangle(mech.pos.x + 50 * Math.cos(mech.angle), mech.pos.y + 50 * Math.sin(mech.angle), 17, 4, b.fireAttributes(dir));
           b.fireProps(25, 32 + (Math.random() - 0.5) * 8, dir, me); //cd , speed
           //Matter.Body.setDensity(bullet[me], 0.00001);
-          bullet[me].endCycle = game.cycle + 15 + Math.floor(Math.random() * 11);
+          bullet[me].endCycle = game.cycle + 16 + Math.floor(Math.random() * 7);
           // bullet[me].restitution = 0.2;
           bullet[me].explodeRad = 90 + (Math.random() - 0.5) * 75;
           bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
