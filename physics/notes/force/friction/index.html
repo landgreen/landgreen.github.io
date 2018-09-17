@@ -42,6 +42,16 @@
         </p>
         <div class='definition'>
             <svg viewBox="0 0 500 250" class="on-edge">
+
+                <g transform="translate(210 110)" style="stroke:#666;stroke-width:1">
+                    <line x1="0" y1="10" x2="-80" y2="10" />
+                    <line x1="0" y1="20" x2="-125" y2="20" />
+
+                    <line x1="0" y1="60" x2="-115" y2="60" />
+                    <line x1="0" y1="70" x2="-65" y2="70" />
+                    <line x1="0" y1="80" x2="-90" y2="80" />
+                </g>
+
                 <rect x="0" y="190" width="500" height="110" fill="#bcd" />
                 <g stroke="#000" stroke-width="2" fill="none">
                     <path d="M0 190 h500 " />
@@ -70,13 +80,15 @@
                 <br>pointed opposite the direction of motion</p>
             <p>\(F_N\) = normal force [N,Newtons]</p>
             <p>\(\mu _k\) = mu, coefficient of friction [no units]
-                <br>μ is different for every pair of surfaces, but you can look the values up:
-
-                <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&cad=rja&uact=8&ved=0ahUKEwjtkditxILOAhUEKGMKHUn6DoQQygQIPzAF&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FFriction%23Coefficient_of_friction&usg=AFQjCNGO2TSwOa4dIcV4s9smoZGIuXZptA&sig2=rFYYOCz4zKKfafD-t5Yd-Q&bvm=bv.127521224,d.cGc">wikipedia</a>
+                <br>Look up the values for every pair of surfaces:
+                <br><a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&cad=rja&uact=8&ved=0ahUKEwjtkditxILOAhUEKGMKHUn6DoQQygQIPzAF&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FFriction%23Coefficient_of_friction&usg=AFQjCNGO2TSwOa4dIcV4s9smoZGIuXZptA&sig2=rFYYOCz4zKKfafD-t5Yd-Q&bvm=bv.127521224,d.cGc">wikipedia</a>
                 <a href="http://www.engineeringtoolbox.com/friction-coefficients-d_778.html">engineeringtoolbox</a>
             </p>
             <br>
         </div>
+        <p>In most situations, the friction force doesn't depend on the amount of contact between surfaces. This is
+            because a larger contact area spreads out the normal force.</p>
+
         <h1 class='underlined'>Static Friction</h1>
         <p>Static means not moving. Static friction is friction between two or more solid objects that are not moving
             relative
@@ -274,9 +286,9 @@
             <details>
                 <summary>coefficient of static friction solution</summary>
                 <p>
-                    click the reset icon to make sure the simulation is at the default friction
-                    <br>check the masses box
-                    <br>slowly increase the force until the mass moves.
+                    Click the reset icon to make sure the simulation is at the default friction.
+                    <br>Check the "Masses" box.
+                    <br>Slowly increase the force until the mass moves.
                     <br>This is the maximum force of static friction. I got 125 N. $$F_{\mathrm{max}}= \mu_{s}F_{N}$$
                     $$F_{\mathrm{max}}=
                     \mu_{s}mg$$ $$\frac{F_{\mathrm{max}}}{mg} = \mu_{s}$$ $$\frac{125}{(50)(9.8)} = \mu_{s}$$ $$0.255 =
@@ -286,14 +298,13 @@
             <details>
                 <summary>coefficient of kinetic friction solution</summary>
                 <p>
-                    click the reset icon to make sure the simulation is at the default friction
-                    <br>check the masses and values boxes
-                    <br>set the applied force to be 150 N
-                    <br>be sure to unpause the simulation
-                    <br>you should be able to see the value of the friction force (94 N)
+                    Click the reset icon to make sure the simulation is at the default friction.
+                    <br>Check the "Forces" and "Values" boxes.
+                    <br>Set the applied force to be enough to keep the box moving.
+                    <br>You should be able to see the value of the friction force. (94 N)
                     <div class="col-group">
                         <div>
-                            $$F_k = 94 \, \mathrm{N}$$ $$F_N = mg$$ $$F_N = (50)(9.8)$$ $$F_N = 490 \, \mathrm{N}$$
+                            $$F_N = mg$$ $$F_N = (50)(9.8)$$ $$F_N = 490 \, \mathrm{N}$$
                         </div>
                         <div>
                             $$F_{k}=\mu_{k} F_{N}$$ $$\frac{F_{k}}{F_{N}}=\mu_{k}$$ $$\frac{94\, \mathrm{N}}{490\,
