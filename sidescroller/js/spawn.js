@@ -858,7 +858,7 @@ const spawn = {
     }
   },
   bossShield: function (nodes, x, y, radius) {
-    mobs.spawn(x, y, 9, radius, "rgba(220,220,255,0.85)");
+    mobs.spawn(x, y, 9, radius, "rgba(220,220,255,0.65)");
     let me = mob[mob.length - 1];
     me.stroke = "rgb(220,220,255)";
     Matter.Body.setDensity(me, 0.00005) //very low density to not mess with the original mob's motion
