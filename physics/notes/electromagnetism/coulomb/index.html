@@ -33,86 +33,11 @@
 			bonds, magnetism, and light!</p>
 
 
-		<h2 class='underlined' id='Electric-Charge'>Electric Charge</h2>
-		<p>
-			<strong>Electric charge</strong> determines the magnitude and direction of the electrostatic force. Charge has a
-			role in the electrostatic force similar to mass's role in gravity. To measure charge we use units called
-			<a href="https://en.wikipedia.org/wiki/Orders_of_magnitude_(charge)">Coulombs [C]</a>.</p>
-
-		<br>
-		<p class='center'>opposite charges have an attractive force</p>
-		<svg viewBox="0 0 400 50">
-			<g transform='translate(0,-80)'>
-				<line x1="100" y1="100" x2="177" y2="100" style="stroke:#000;stroke-width:2" />
-				<polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
-				<line x1="300" y1="100" x2="223" y2="100" style="stroke:#000;stroke-width:2" />
-				<polygon points="0,0 8,5 8,-5" transform="translate(220 100)" style="fill:#000;" />
-				<circle cx="105" cy="100" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
-				<text x="105" y="99" fill="black" text-anchor="middle" dominant-baseline="central" font-size="35">-</text>
-				<circle cx="295" cy="100" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
-				<text x="295" y="100" fill="black" text-anchor="middle" dominant-baseline="central" font-size="20">+</text>
-			</g>
-		</svg>
-		<br>
-		<p class='center'>negative charges have a repulsive force</p>
-		<svg viewBox="0 0 400 50">
-			<g transform='translate(0,-80)'>
-				<line x1="100" y1="100" x2="23" y2="100" style="stroke:#000;stroke-width:2" />
-				<polygon points="0,0 -8,5 -8,-5" transform="translate(20 100) rotate(180)" style="fill:#000;" />
-				<line x1="300" y1="100" x2="377" y2="100" style="stroke:#000;stroke-width:2" />
-				<polygon points="0,0 8,5 8,-5" transform="translate(380 100) rotate(180)" style="fill:#000;" />
-
-				<circle cx="105" cy="100" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
-				<text x="105" y="99" fill="black" text-anchor="middle" dominant-baseline="central" font-size="35">-</text>
-				<circle cx="295" cy="100" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
-				<text x="295" y="99" fill="black" text-anchor="middle" dominant-baseline="central" font-size="35">-</text>
-			</g>
-		</svg>
-		<br>
-		<p class='center'>positive charges have a repulsive force</p>
-		<svg viewBox="0 0 400 50">
-			<g transform='translate(0,-80)'>
-				<line x1="100" y1="100" x2="23" y2="100" style="stroke:#000;stroke-width:2" />
-				<polygon points="0,0 -8,5 -8,-5" transform="translate(20 100) rotate(180)" style="fill:#000;" />
-				<line x1="300" y1="100" x2="377" y2="100" style="stroke:#000;stroke-width:2" />
-				<polygon points="0,0 8,5 8,-5" transform="translate(380 100) rotate(180)" style="fill:#000;" />
-
-				<circle cx="105" cy="100" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
-				<text x="105" y="99" fill="black" text-anchor="middle" dominant-baseline="central" font-size="20">+</text>
-				<circle cx="295" cy="100" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
-				<text x="295" y="100" fill="black" text-anchor="middle" dominant-baseline="central" font-size="20">+</text>
-			</g>
-		</svg>
-		<br>
-		<p class='center'>neutral charges have no force</p>
-		<svg viewBox="0 0 400 50">
-			<g transform='translate(0,-80)'>
-				<circle cx="105" cy="100" r="15" fill='#ccc' stroke-width="2" stroke="#222" />
-				<circle cx="295" cy="100" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
-				<text x="295" y="100" fill="black" text-anchor="middle" dominant-baseline="central" font-size="20">+</text>
-			</g>
-		</svg>
-		<p>This simulation runs Coulomb's law (like charges repel, opposites attract). You can see the randomly placed
-			charges spontaneously form "atoms".
-		</p>
-
-		<canvas id='charge0' height='300' onclick="charges0(this)"> </canvas>
-		<p>Try poking the simulations with your mouse.</p>
-		<canvas id='charge1' height='300' onclick="charges1(this)"> </canvas>
-		<div class="hide-on-mobile">
-			<p>
-				This one is organized in a hexagon pattern, like
-				<a href="https://en.wikipedia.org/wiki/Graphene">graphene</a>.
-			</p>
-			<canvas id='charge6' height='500' onclick="charges6(this)"> </canvas>
-		</div>
-		<p>Keep in mind these simulations only approximate how protons and electrons interact. They aren't perfectly
-			accurate.</p>
-
 
 		<h2 class='underlined' id='Coulombs-Law'>Coulomb's Law</h2>
 		<p>After the success of Newton's
-			<a href='../../gravity/gravitation/index.html'>universal gravitation</a> in 1687 several scientists hypothesized
+			<a href='../../gravity/gravitation/index.html#universal-gravitation'>universal gravitation</a> in 1687 several
+			scientists hypothesized
 			that
 			static electricity worked in a similar fashion, but the French physicist Charles-Augustin de Coulomb is given credit
 			for
@@ -186,20 +111,97 @@
 			</details>
 		</div>
 
+		<h2 class='underlined' id='Electric-Charge'>Electric Charge</h2>
+		<p>
+			<strong>Electric charge</strong> determines the magnitude and direction of the electrostatic force. Charge has a
+			role in the electrostatic force similar to mass's role in gravity.</p>
+
+		<br>
+		<p class='center'>opposite charges have an attractive force</p>
+		<svg viewBox="0 0 400 50">
+			<g transform='translate(0,-80)'>
+				<line x1="100" y1="100" x2="177" y2="100" style="stroke:#000;stroke-width:2" />
+				<polygon points="0,0 -8,5 -8,-5" transform="translate(180 100)" style="fill:#000;" />
+				<line x1="300" y1="100" x2="223" y2="100" style="stroke:#000;stroke-width:2" />
+				<polygon points="0,0 8,5 8,-5" transform="translate(220 100)" style="fill:#000;" />
+				<circle cx="105" cy="100" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
+				<text x="105" y="99" fill="black" text-anchor="middle" dominant-baseline="central" font-size="35">-</text>
+				<circle cx="295" cy="100" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
+				<text x="295" y="100" fill="black" text-anchor="middle" dominant-baseline="central" font-size="20">+</text>
+			</g>
+		</svg>
+		<br>
+		<p class='center'>negative charges have a repulsive force</p>
+		<svg viewBox="0 0 400 50">
+			<g transform='translate(0,-80)'>
+				<line x1="100" y1="100" x2="23" y2="100" style="stroke:#000;stroke-width:2" />
+				<polygon points="0,0 -8,5 -8,-5" transform="translate(20 100) rotate(180)" style="fill:#000;" />
+				<line x1="300" y1="100" x2="377" y2="100" style="stroke:#000;stroke-width:2" />
+				<polygon points="0,0 8,5 8,-5" transform="translate(380 100) rotate(180)" style="fill:#000;" />
+
+				<circle cx="105" cy="100" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
+				<text x="105" y="99" fill="black" text-anchor="middle" dominant-baseline="central" font-size="35">-</text>
+				<circle cx="295" cy="100" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
+				<text x="295" y="99" fill="black" text-anchor="middle" dominant-baseline="central" font-size="35">-</text>
+			</g>
+		</svg>
+		<br>
+		<p class='center'>positive charges have a repulsive force</p>
+		<svg viewBox="0 0 400 50">
+			<g transform='translate(0,-80)'>
+				<line x1="100" y1="100" x2="23" y2="100" style="stroke:#000;stroke-width:2" />
+				<polygon points="0,0 -8,5 -8,-5" transform="translate(20 100) rotate(180)" style="fill:#000;" />
+				<line x1="300" y1="100" x2="377" y2="100" style="stroke:#000;stroke-width:2" />
+				<polygon points="0,0 8,5 8,-5" transform="translate(380 100) rotate(180)" style="fill:#000;" />
+
+				<circle cx="105" cy="100" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
+				<text x="105" y="99" fill="black" text-anchor="middle" dominant-baseline="central" font-size="20">+</text>
+				<circle cx="295" cy="100" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
+				<text x="295" y="100" fill="black" text-anchor="middle" dominant-baseline="central" font-size="20">+</text>
+			</g>
+		</svg>
+		<br>
+		<p class='center'>neutral charges have no force</p>
+		<svg viewBox="0 0 400 50">
+			<g transform='translate(0,-80)'>
+				<circle cx="105" cy="100" r="15" fill='#ccc' stroke-width="2" stroke="#222" />
+				<circle cx="295" cy="100" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
+				<text x="295" y="100" fill="black" text-anchor="middle" dominant-baseline="central" font-size="20">+</text>
+			</g>
+		</svg>
+		<p>This simulation runs Coulomb's law (like charges repel, opposites attract). You can see the randomly placed
+			charges spontaneously form "atoms".
+		</p>
+
+		<canvas id='charge0' height='300' onclick="charges0(this)"> </canvas>
+		<p>Try poking the simulations with your mouse.</p>
+		<canvas id='charge1' height='300' onclick="charges1(this)"> </canvas>
+		<div class="hide-on-mobile">
+			<p>
+				This one is organized in a hexagon pattern, like
+				<a href="https://en.wikipedia.org/wiki/Graphene">graphene</a>.
+			</p>
+			<canvas id='charge6' height='500' onclick="charges6(this)"> </canvas>
+		</div>
+		<p>Keep in mind these simulations only approximate how protons and electrons interact. They aren't perfectly
+			accurate.</p>
+
+
+
 		<h2 class='underlined'>Elementary Electric Charge</h2>
 		<p>In 1909 Robert Millikan and Harvey Fletcher performed the <a href="https://www.youtube.com/watch?v=UFiPWv03f6g">oil
 				drop experiment</a> to investigate electric charge. They sprayed a fine mist of oil into an uniform electric field.
 			The electric field produced a force on some of the oil droplets. Based on that force, they found that charge only
 			came in even multiples of about 1.6 × 10<sup>−19</sup> C.</p>
-		<p>All charge comes from electrons, protons, or rare
+		<p>All charge comes from electrons, protons, or other
 			<a href='https://en.wikipedia.org/wiki/List_of_particles'>exotic particles</a>.
 		</p>
-		<div class="col-group">
+		<div class="col-group definition">
 			<div class='center'>
 				<svg class="center" width="50" height="40">
 					<g transform='translate(20,20)'>
-						<circle cx="5" cy="0" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
-						<text x="5" y="-1" fill="black" text-anchor="middle" dominant-baseline="central" font-size="35">-</text>
+						<circle cx="5" cy="0" r="17" fill='#ccf' stroke-width="2" stroke="#222" />
+						<text x="5" y="-2" fill="black" text-anchor="middle" dominant-baseline="central" font-size="45">-</text>
 					</g>
 				</svg>
 				<strong>electron</strong>:
@@ -209,8 +211,8 @@
 			<div class='center'>
 				<svg class="center" width="50" height="40">
 					<g transform='translate(20,20)'>
-						<circle cx="5" cy="0" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
-						<text x="5" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="20">+</text>
+						<circle cx="5" cy="0" r="17" fill='#fcc' stroke-width="2" stroke="#222" />
+						<text x="5" y="-1" fill="black" text-anchor="middle" dominant-baseline="central" font-size="27">+</text>
 					</g>
 				</svg>
 				<strong>proton</strong>:
@@ -219,19 +221,20 @@
 			</div>
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> Which of these charges are probably false? Why?
+			<strong>Example:</strong> These 6 values were recorded for electric charge. Which of the measurements are probably
+			inaccurate? Why?
 			<style>
 				.multple-choice {
-					padding: 0.4em;
+					padding: 0.2em;
 				}
 			</style>
-			<div class="col-group center" style="padding: 0.4em;">
+			<div class="col-group center">
 				<div class="multple-choice"> +3.2 × 10<sup>−19</sup> C </div>
-				<div class="multple-choice"> -2.4 × 10<sup>−19</sup> C </div>
-				<div class="multple-choice"> -8.0 × 10<sup>−19</sup> C </div>
+				<div class="multple-choice"> −2.4 × 10<sup>−19</sup> C </div>
+				<div class="multple-choice"> −8.0 × 10<sup>−19</sup> C </div>
 				<div class="multple-choice"> +1.6 × 10<sup>−19</sup> C </div>
 				<div class="multple-choice"> +5.2 × 10<sup>−19</sup> C </div>
-				<div class="multple-choice"> -0.4 × 10<sup>−19</sup> C </div>
+				<div class="multple-choice"> −0.4 × 10<sup>−19</sup> C </div>
 			</div>
 			<details>
 				<summary>solution</summary>
