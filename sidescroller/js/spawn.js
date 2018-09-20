@@ -1047,7 +1047,7 @@ const spawn = {
   //**********************************************************************************************
   wireHead: function () {
     //not a mob, just a graphic for level 1
-    const breakingPoint = 1400
+    const breakingPoint = 1300
     mobs.spawn(breakingPoint, -100, 0, 7.5, "transparent");
     let me = mob[mob.length - 1];
     //touch only walls
@@ -1113,7 +1113,7 @@ const spawn = {
   },
   wireKnee: function () {
     //not a mob, just a graphic for level 1
-    const breakingPoint = 1400
+    const breakingPoint = 1425
     mobs.spawn(breakingPoint, -100, 0, 2, "transparent");
     let me = mob[mob.length - 1];
     //touch only walls
@@ -1137,7 +1137,7 @@ const spawn = {
       } else {
         if (mech.pos.x > breakingPoint) {
           this.freeOfWires = true;
-          this.force.x += -0.0006;
+          this.force.x -= 0.0006;
           this.fill = "#222";
         }
         //move mob to player
@@ -1215,7 +1215,7 @@ const spawn = {
   },
   wireFoot: function () {
     //not a mob, just a graphic for level 1
-    const breakingPoint = 1400
+    const breakingPoint = 1350
     mobs.spawn(breakingPoint, -100, 0, 2, "transparent");
     let me = mob[mob.length - 1];
     //touch only walls
@@ -1266,7 +1266,7 @@ const spawn = {
   },
   wireFootLeft: function () {
     //not a mob, just a graphic for level 1
-    const breakingPoint = 1400
+    const breakingPoint = 1325
     mobs.spawn(breakingPoint, -100, 0, 2, "transparent");
     let me = mob[mob.length - 1];
     //touch only walls

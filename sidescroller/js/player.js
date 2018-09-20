@@ -234,14 +234,15 @@ const mech = {
         (keys[87] || keys[38] || keys[32]) &&
         this.buttonCD_jump + 20 < game.cycle
       ) {
-        this.buttonCD_jump = game.cycle; //can't jump again until 20 cycles pass
-        player.force.y = -this.jumpForce; //jump force
-        //apply a fraction of the jump force to the thing the player is jumping off of
+        //can't jump again until 20 cycles pass
+        this.buttonCD_jump = game.cycle;
+        //apply a fraction of the jump force to the body the player is jumping off of
         Matter.Body.applyForce(mech.standingOn, mech.pos, {
           x: 0,
-          y: this.jumpForce * 0.2 * Math.min(mech.standingOn.mass, 1)
+          y: this.jumpForce * 0.2 * Math.min(mech.standingOn.mass, 5)
         });
-
+        //player jump force
+        player.force.y = -this.jumpForce;
         //zero player y-velocity for consistent jumps
         Matter.Body.setVelocity(player, {
           x: player.velocity.x,
