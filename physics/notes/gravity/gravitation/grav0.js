@@ -15,30 +15,39 @@
     ctx.globalAlpha = 0.7;
   }
   setupCanvas();
-  window.onresize = function() {
+  window.onresize = function () {
     setupCanvas();
   };
 
   //___________________get mouse input___________________
-  canvas.addEventListener("mousedown", function(event) {
+  canvas.addEventListener("mousedown", function (event) {
     Particle.repulse(q, {
       x: (event.offsetX * canvas.width) / canvas.clientWidth,
       y: (event.offsetY * canvas.height) / canvas.clientHeight
     });
   });
 
-  document.getElementById("num").addEventListener(
-    "input",
-    function() {
-      reset();
+
+
+  document.getElementById("masses").addEventListener("input", () => {
+      const number = Math.floor(Math.min(document.getElementById("masses").value, 999))
+      document.getElementById("masses-slider").value = Math.log10(number)
+      reset(number);
+    },
+    false
+  );
+
+  document.getElementById("masses-slider").addEventListener("input", () => {
+      convertLog = Math.pow(10, document.getElementById("masses-slider").value)
+      const number = Math.floor(Math.min(convertLog, 999))
+      document.getElementById("masses").value = number
+      reset(number);
     },
     false
   );
 
   let q = []; //holds the Particles
-  const reset = function() {
-    // q = [];
-    const numberRequested = Math.floor(Math.min(document.getElementById("num").value, 1000));
+  const reset = (numberRequested) => {
     const diff = numberRequested - q.length;
     if (diff > 0) {
       //add
@@ -48,7 +57,7 @@
       q.length = q.length + diff;
     }
   };
-  reset();
+  reset(Math.floor(Math.min(document.getElementById("masses").value, 1000)));
 
   function cycle() {
     if (window.pageYOffset < height) {

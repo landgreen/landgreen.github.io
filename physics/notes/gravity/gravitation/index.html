@@ -37,9 +37,15 @@
         </h1>
     </header>
     <div style="position: absolute;top: 0px; left: 0px; z-index: 1; color: #fff;">
-        <input id='num' type="number" step="1" min='1' max='999' value='10' style="width: 60px;"> particles
+        <!-- <input id='num' type="number" step="1" min='1' max='999' value='10' style="width: 60px;"> particles -->
+
     </div>
     <article>
+        <div class='center'>
+            masses =
+            <input id='masses-slider' type="range" step="0.001" value="1" min="0" max="3" style="width: 150px;">
+            <input id='masses' type="number" step="1" value="10" min="0" max="999" style="width: 42px;">
+        </div>
         <p>
             Things fall. Pencils, buildings, people, everything falls. The Earth is falling towards the Sun. Luckily,
             it is falling in
