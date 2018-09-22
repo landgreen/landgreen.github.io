@@ -39,7 +39,7 @@
         <canvas id="canvas" width='600' height='285'></canvas>
         <h1 class='underlined'>Kinetic Friction</h1>
         <p>Kinetic means motion. Kinetic friction is a force that occurs when two surfaces in contact slide against
-            each other. Kinetic friction force is constant for a range of speeds.
+            each other. The kinetic friction force remains constant over a wide range of speeds.
         </p>
         <div class='definition'>
             <svg viewBox="0 0 500 250" class="on-edge">
@@ -92,63 +92,51 @@
 
         <h1 class='underlined'>Static Friction</h1>
         <p>Static means not moving. Static friction is friction between two or more solid objects that are not moving
-            relative
-            to each other. For example, static friction can prevent an object from sliding down a sloped surface. We
-            can
-            estimate the maximum static friction force. Up to that point the friction force will match any applied
-            forces
-            to keep the object stationary.</p>
+            relative to each other. For example, static friction can prevent an object from sliding down a sloped
+            surface. </p>
+        <p>We can estimate the maximum static friction force. Up to that point the friction force will match
+            any applied forces to keep the object stationary.</p>
         <div class='definition'>
-            <svg class='on-edge' viewBox="0 -70 500 290">
-
+            <svg class='on-edge' viewBox="0 -70 500 255">
                 <defs>
                     <g id="vector">
                         <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
                         <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
                     </g>
                 </defs>
-
                 <g stroke="#000" fill="#fff" stroke-width="2">
                     <rect x="150" y="10" width="50" height="50" />
-
                     <rect x="0" y="60" width="300" height="160" fill="#bcd" stroke="none" />
                     <path d="M0 60 h300 v160" fill="none" />
-
                     <path d="M200 35 h117 m8 8 v100" fill="none" />
                     <path d="M300 60 l 12 -12" fill="none" />
                     <circle cx="317" cy="43" r="8" fill="#bcd" />
                     <rect x="310" y="140" width="30" height="30" />
                 </g>
                 <g font-size="19" fill="#000" text-anchor="middle">
-                    <text x="175" y="190" fill="#000">v = 0</text>
-
-                    <g transform='translate(200 35) rotate(-90)'>
+                    <text x="175" y="100" fill="#000">v = 0</text>
+                    <!-- <g transform='translate(200 35) rotate(-90)'>
                         <use xlink:href="#vector" />
                     </g>
-                    <text x="255" y="30">T</text>
-
-
+                    <text x="255" y="30">T</text> -->
                     <g transform='translate(150 35) rotate(90)'>
                         <use xlink:href="#vector" />
                     </g>
                     <text x="90" y="40">F
                         <tspan font-size="0.7em" dy="5" dx="-5">s</tspan>
                     </text>
-
-
                     <g transform='translate(175 10) rotate(-180)'>
                         <use xlink:href="#vector" />
                     </g>
                     <text x="175" y="-50">F
                         <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
                     </text>
-
-                    <g transform='translate(175 60)'>
+                    <!-- <g transform='translate(175 60)'>
                         <use xlink:href="#vector" />
                     </g>
                     <text x="175" y="130">F
                         <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
-                    </text>
+                    </text> -->
                 </g>
             </svg>
 
@@ -156,46 +144,250 @@
                 $$ F_s \leq \mu_{s} F_{N}$$
             </h1>
             <p>\(F_s\) = force of static friction [N,Newtons]
-                <br>pointed opposite to potential motion, but parallel to surface
+                <br>directed against an applied force, but parallel to the surface
                 <br>matches applied forces up to the maximum value
             </p>
             <p>\(F_N\) = normal force [N,Newtons]</p>
             <p>\(\mu_s\) = mu, coefficient of friction [no units]
-                <br>μ is different for every pair of surfaces, but you can look the values up:
-                <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&cad=rja&uact=8&ved=0ahUKEwjtkditxILOAhUEKGMKHUn6DoQQygQIPzAF&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FFriction%23Coefficient_of_friction&usg=AFQjCNGO2TSwOa4dIcV4s9smoZGIuXZptA&sig2=rFYYOCz4zKKfafD-t5Yd-Q&bvm=bv.127521224,d.cGc">wikipedia</a>,
-                <a href="http://www.engineeringtoolbox.com/friction-coefficients-d_778.html">engineeringtoolbox</a>
-            </p>
-            <svg class="on-edge" viewBox="0 0 500 285" style="margin-bottom: -1.5em; border-radius: 1em;">
-                <g transform='rotate(20) translate(150 -90)'>
-                    <rect x="-150" y="190" width="700" height="300" style="fill:#bcd" />
+                <svg class="on-edge" viewBox="0 0 500 285" style="margin-bottom: -2.5em; border-radius: 1em;">
+                    <g transform='rotate(20) translate(150 -90)'>
+                        <rect x="-150" y="190" width="700" height="300" style="fill:#bcd" />
+                        <g stroke="#000" stroke-width="2" fill="none">
+                            <path d="M-150 190 h700 " />
+                        </g>
+                        <rect x="110" y="110" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fff" />
+                        <line x1="150" y1="110" x2="150" y2="55" style="stroke:black;stroke-width:2" />
+                        <polygon points="0,0 -6,12 0,10 6,12" transform='translate(150 50)' style="fill:black;" />
+                        <text text-anchor="middle" x="153" y="44" fill="black">F
+                            <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+                        </text>
 
-                    <g stroke="#000" stroke-width="2" fill="none">
-                        <path d="M-150 190 h700 " />
+                        <line x1="110" y1="150" x2="75" y2="150" style="stroke:black;stroke-width:2" />
+                        <polygon points="0,0 -6,12 0,10 6,12" transform='translate(70 150) rotate(-90)' style="fill:black;" />
+                        <!-- <text x="45" y="156" fill="black">Fs</text> -->
+                        <text x="51" y="154" fill="black">F
+                            <tspan font-size="0.7em" dy="5" dx="-5">s</tspan>
+                        </text>
                     </g>
-
-                    <rect x="110" y="110" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fff" />
-                    <line x1="150" y1="110" x2="150" y2="55" style="stroke:black;stroke-width:2" />
-                    <polygon points="0,0 -6,12 0,10 6,12" transform='translate(150 50)' style="fill:black;" />
-                    <text text-anchor="middle" x="153" y="44" fill="black">F
-                        <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
-                    </text>
-
-                    <line x1="110" y1="150" x2="75" y2="150" style="stroke:black;stroke-width:2" />
-                    <polygon points="0,0 -6,12 0,10 6,12" transform='translate(70 150) rotate(-90)' style="fill:black;" />
-                    <!-- <text x="45" y="156" fill="black">Fs</text> -->
-                    <text x="51" y="154" fill="black">F
-                        <tspan font-size="0.7em" dy="5" dx="-5">s</tspan>
-                    </text>
-                </g>
-                <text x="235" y="230" fill="#000">v = 0</text>
-            </svg>
+                    <text x="235" y="230" fill="#000">v = 0</text>
+                </svg>
         </div>
+        The coefficients of friction(μ) are different for each pair of surfaces.
+        <details>
+            <summary>Friction Coefficient Data Table (<a href="https://en.wikipedia.org/wiki/Friction#Approximate_coefficients_of_friction">wikipedia</a>)
+            </summary>
+            <table>
+                <tr>
+                    <th colspan="2" rowspan="2">Materials</th>
+                    <th colspan="2">Static Friction</th>
+                    <th colspan="2">Kinetic/Sliding Friction </th>
+                </tr>
+                <tr>
+                    <th>Dry and clean</td>
+                    <th>Lubricated </td>
+                    <th>Dry and clean</td>
+                    <th>Lubricated </td>
+                </tr>
+                <tr>
+                    <td>Aluminium </td>
+                    <td>Steel </td>
+                    <td>0.61 </td>
+                    <td> </td>
+                    <td>0.47 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Aluminum </td>
+                    <td>Aluminum </td>
+                    <td> </td>
+                    <td> </td>
+                    <td>1.5 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Gold </td>
+                    <td>Gold </td>
+                    <td> </td>
+                    <td> </td>
+                    <td>2.5 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Platinum </td>
+                    <td>Platinum </td>
+                    <td> </td>
+                    <td> </td>
+                    <td>3.0 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Silver </td>
+                    <td>Silver </td>
+                    <td> </td>
+                    <td> </td>
+                    <td>1.5 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Alumina ceramic </td>
+                    <td>Silicon Nitride ceramic </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td>0.004 (wet) </td>
+                </tr>
+                <tr>
+                    <td>BAM (Ceramic
+                        alloy AlMgB<sub>14</sub>) </td>
+                    <td>Titanium boride (TiB<sub>2</sub>) </td>
+                    <td>0.04–0.05 </td>
+                    <td>0.02 </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Brass </td>
+                    <td>Steel </td>
+                    <td>0.35-0.51 </td>
+                    <td>0.19 </td>
+                    <td>0.44 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Cast iron </td>
+                    <td>Copper </td>
+                    <td>1.05 </td>
+                    <td> </td>
+                    <td>0.29 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Cast iron </td>
+                    <td>Zinc </td>
+                    <td>0.85 </td>
+                    <td> </td>
+                    <td>0.21 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Concrete </td>
+                    <td>Rubber </td>
+                    <td>1.0 </td>
+                    <td>0.30 (wet) </td>
+                    <td>0.6-0.85 </td>
+                    <td>0.45-0.75 (wet) </td>
+                </tr>
+                <tr>
+                    <td>Concrete </td>
+                    <td>Wood </td>
+                    <td>0.62 </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Copper </td>
+                    <td>Glass </td>
+                    <td>0.68 </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Copper </td>
+                    <td>Steel </td>
+                    <td>0.53 </td>
+                    <td> </td>
+                    <td>0.36 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Glass </td>
+                    <td>Glass </td>
+                    <td>0.9-1.0 </td>
+                    <td> </td>
+                    <td>0.4 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Human synovial fluid </td>
+                    <td>Cartilage </td>
+                    <td> </td>
+                    <td>0.01 </td>
+                    <td> </td>
+                    <td>0.003 </td>
+                </tr>
+                <tr>
+                    <td>Ice </td>
+                    <td>Ice </td>
+                    <td>0.02-0.09 </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Polyethene </td>
+                    <td>Steel </td>
+                    <td>0.2 </td>
+                    <td>0.2 </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>(Teflon) </td>
+                    <td>PTFE (Teflon) </td>
+                    <td>0.04 </td>
+                    <td>0.04 </td>
+                    <td> </td>
+                    <td>0.04 </td>
+                </tr>
+                <tr>
+                    <td>Steel </td>
+                    <td>Ice </td>
+                    <td>0.03 </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Steel </td>
+                    <td>PTFE (Teflon) </td>
+                    <td>0.04 </td>
+                    <td>0.04 </td>
+                    <td> </td>
+                    <td>0.04 </td>
+                </tr>
+                <tr>
+                    <td>Steel </td>
+                    <td>Steel </td>
+                    <td>0.74 </td>
+                    <td>0.16 </td>
+                    <td>0.42-0.62 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Wood </td>
+                    <td>Metal </td>
+                    <td>0.2–0.6 </td>
+                    <td>0.2 (wet) </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Wood </td>
+                    <td>Wood </td>
+                    <td>0.25–0.5 </td>
+                    <td>0.2 (wet) </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+            </table>
+        </details>
+
 
         <div class='example'>
             <svg viewBox="0 0 600 150">
-
                 <image xlink:href="../../../media/pokal-glass__cropped_alpha.png" x="260" y="15" width="80px" />
-
                 <g stroke="#000" stroke-width="2" fill="none">
                     <path d="M0 140 h700 " />
                 </g>
@@ -221,12 +413,9 @@
                 </g>
             </svg>
 
-            <strong>Example:</strong> You place a 0.42 kg glass IKEA calls
+            <strong>Example:</strong> You place a 0.42 kg glass from IKEA called
             <a href="http://www.ikea.com/us/en/catalog/products/10270478/">POKAL</a> on a flat copper pan. How much
-            horizontal
-            force will you have to apply to get the glass to move?
-            <br>Look up the coefficient on
-            <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&cad=rja&uact=8&ved=0ahUKEwjtkditxILOAhUEKGMKHUn6DoQQygQIPzAF&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FFriction%23Coefficient_of_friction&usg=AFQjCNGO2TSwOa4dIcV4s9smoZGIuXZptA&sig2=rFYYOCz4zKKfafD-t5Yd-Q&bvm=bv.127521224,d.cGc">wikipedia</a>
+            horizontal force will you have to apply to get the glass to move?
             <details>
                 <summary>solution</summary>
                 $$ F_s \leq \mu_{s} F_{N} $$
@@ -251,11 +440,7 @@
         <strong>Example:</strong> You slide the 0.42 kg
         <a href="http://www.ikea.com/us/en/catalog/products/10270478/">POKAL</a> glass cup on a glass table at 3.0
         m/s.
-        <br>
-        <br> Look up the coefficient on
-        <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&cad=rja&uact=8&ved=0ahUKEwjtkditxILOAhUEKGMKHUn6DoQQygQIPzAF&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FFriction%23Coefficient_of_friction&usg=AFQjCNGO2TSwOa4dIcV4s9smoZGIuXZptA&sig2=rFYYOCz4zKKfafD-t5Yd-Q&bvm=bv.127521224,d.cGc">wikipedia</a>
-        <br>Find the force of kinetic friction.
-        <br>Find how long it will take the cup to come to a stop.
+        <br>Find the force of kinetic friction, and the time for the cup to come to a stop.
         <details>
             <summary>solution</summary>
             $$F_{k}= \mu_{k}F_{N}$$ $$F_{N}=mg$$ $$F_{k}= \mu_{k}mg$$ $$F_{k}= (0.4)(0.42)(9.8)$$ $$F_{k}= 1.64 \,
@@ -275,7 +460,6 @@
                 <g stroke="#000" stroke-width="2" fill="none">
                     <path d="M0 260 h600 " />
                 </g>
-
                 <g transform='translate(260 100) rotate(0)'>
                     <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#964" />
                     <text x="40" y="40" fill="white" text-anchor="middle" dominant-baseline="middle" font-size='18px'>10
@@ -286,7 +470,6 @@
                     <line x1="0" y1="0" x2="0" y2="45" stroke="#000" stroke-width="2" />
                     <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#000" />
                 </g>
-
                 <g transform='translate(260 180) rotate(0)'>
                     <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#964" />
                     <text x="40" y="40" fill="white" text-anchor="middle" dominant-baseline="middle" font-size='18px'>10
@@ -297,12 +480,10 @@
                     <line x1="0" y1="0" x2="0" y2="45" stroke="#000" stroke-width="2" />
                     <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#000" />
                 </g>
-
                 <g transform='translate(300 260) rotate(0)'>
                     <line x1="0" y1="0" x2="0" y2="45" stroke="#000" stroke-width="2" />
                     <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#000" />
                 </g>
-
                 <g fill="#000" font-size='21px' text-anchor="middle" dominant-baseline="middle">
                     <text x="300" y="324">F
                         <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
@@ -312,25 +493,16 @@
                         <tspan font-size="0.7em" dy="5" dx="-5">s</tspan>
                     </text>
                 </g>
-
             </svg>
             <strong>Example:</strong> A 10 kg wood block is at rest on top of another 10 kg wood block which is resting
-            on
-            a concrete slab. How much force will it take to overcome the static friction between the ground and the
-            lower
-            box?
-            <a href="http://www.engineeringtoolbox.com/friction-coefficients-d_778.html">engineeringtoolbox</a>
-            <details>
+            on a concrete slab. How much force will it take to overcome the static friction between the ground and the
+            lower box? <details>
                 <summary>solution</summary>
                 <br>Include both masses in the total mass. $$F_g = mg$$ $$F_g = (20)(9.8)$$ $$F_g = 196\,\mathrm{N}$$
-                Since
-                the block isn't accelerating in the vertical the normal force equals the force of gravity for both
-                blocks.
-                $$F_{s\mathrm{\,max}} = \mu_s F_N$$ $$F_{s\mathrm{\,max}} = \mu_s F_g$$ $$F_{s\mathrm{\,max}} = \mu_s
-                196$$ The coefficient of static
-                friction
-                for concrete and wood is 0.62. $$F_{s\mathrm{\,max}} = (0.62) (196)$$ $$F_{s\mathrm{\,max}} = 122 \,
-                \mathrm{N}$$
+                Since the block isn't accelerating in the vertical the normal force equals the force of gravity for
+                both blocks. $$F_{s\mathrm{\,max}} = \mu_s F_N$$ $$F_{s\mathrm{\,max}} = \mu_s F_g$$
+                $$F_{s\mathrm{\,max}} = \mu_s 196$$ The coefficient of static friction for concrete and wood is 0.62.
+                $$F_{s\mathrm{\,max}} = (0.62) (196)$$ $$F_{s\mathrm{\,max}} = 122 \, \mathrm{N}$$
             </details>
         </div>
 
@@ -347,8 +519,8 @@
             <svg id="SVG-graph-1" viewBox="0 0 600 315">
                 <!-- <line x1="25" y1="385" x2="225" y2="185" stroke="#f50" stroke-width="3" /> -->
                 <path d="M25 285 l198 -198 l 1 0.5 l 1 0 v50
-                    l10 10 l10 -5 l10 5 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3"
-                    fill="none" stroke="#f30" stroke-width="3" stroke-linejoin="miter" />
+                        l10 10 l10 -5 l10 5 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3 l10 -3 l10 3"
+                    fill="none" stroke="#f30" stroke-width="4" stroke-linejoin="miter" />
                 <path d="M30 85.5 h600" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="2 7" />
 
                 <g font-size="14px" fill="#000" text-anchor="middle" font-family="monospace">
@@ -400,6 +572,333 @@
                 $$ \mu_{s} = 0.51$$
             </details>
         </div>
+
+
+
+        <div class='example'>
+            <svg viewBox="0 -70 500 250">
+                <defs>
+                    <g id="vector">
+                        <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
+                        <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
+                    </g>
+                </defs>
+                <g stroke="#000" fill="#fff" stroke-width="2">
+                    <rect x="150" y="10" width="50" height="50" />
+                    <rect x="0" y="60" width="300" height="160" fill="#bcd" stroke="none" />
+                    <path d="M0 60 h300 v160" fill="none" />
+                    <path d="M200 35 h117 m8 8 v100" fill="none" />
+                    <path d="M300 60 l 12 -12" fill="none" />
+                    <circle cx="317" cy="43" r="8" fill="#bcd" />
+                    <rect x="310" y="140" width="30" height="30" />
+                </g>
+                <g font-size="19" fill="#000" text-anchor="middle" dominant-baseline="middle">
+                    <text x="175" y="35">5 kg</text>
+                    <text x="325" y="155">m</text>
+                </g>
+            </svg>
+            <p><strong>Example:</strong> How heavy can the mass on the right be before it starts to fall?
+                <br>(the 5 kg block is made of ice and the table is made of steel)</p>
+
+            <details>
+                <summary>Friction Coefficient Data Table (<a href="https://en.wikipedia.org/wiki/Friction#Approximate_coefficients_of_friction">wikipedia</a>)
+                </summary>
+                <table>
+                    <tr>
+                        <th colspan="2" rowspan="2">Materials</th>
+                        <th colspan="2">Static Friction</th>
+                        <th colspan="2">Kinetic/Sliding Friction </th>
+                    </tr>
+                    <tr>
+                        <th>Dry and clean</td>
+                        <th>Lubricated </td>
+                        <th>Dry and clean</td>
+                        <th>Lubricated </td>
+                    </tr>
+                    <tr>
+                        <td>Aluminium </td>
+                        <td>Steel </td>
+                        <td>0.61 </td>
+                        <td> </td>
+                        <td>0.47 </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Aluminum </td>
+                        <td>Aluminum </td>
+                        <td> </td>
+                        <td> </td>
+                        <td>1.5 </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Gold </td>
+                        <td>Gold </td>
+                        <td> </td>
+                        <td> </td>
+                        <td>2.5 </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Platinum </td>
+                        <td>Platinum </td>
+                        <td> </td>
+                        <td> </td>
+                        <td>3.0 </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Silver </td>
+                        <td>Silver </td>
+                        <td> </td>
+                        <td> </td>
+                        <td>1.5 </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Alumina ceramic </td>
+                        <td>Silicon Nitride ceramic </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td>0.004 (wet) </td>
+                    </tr>
+                    <tr>
+                        <td>BAM (Ceramic
+                            alloy AlMgB<sub>14</sub>) </td>
+                        <td>Titanium boride (TiB<sub>2</sub>) </td>
+                        <td>0.04–0.05 </td>
+                        <td>0.02 </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Brass </td>
+                        <td>Steel </td>
+                        <td>0.35-0.51 </td>
+                        <td>0.19 </td>
+                        <td>0.44 </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Cast iron </td>
+                        <td>Copper </td>
+                        <td>1.05 </td>
+                        <td> </td>
+                        <td>0.29 </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Cast iron </td>
+                        <td>Zinc </td>
+                        <td>0.85 </td>
+                        <td> </td>
+                        <td>0.21 </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Concrete </td>
+                        <td>Rubber </td>
+                        <td>1.0 </td>
+                        <td>0.30 (wet) </td>
+                        <td>0.6-0.85 </td>
+                        <td>0.45-0.75 (wet) </td>
+                    </tr>
+                    <tr>
+                        <td>Concrete </td>
+                        <td>Wood </td>
+                        <td>0.62 </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Copper </td>
+                        <td>Glass </td>
+                        <td>0.68 </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Copper </td>
+                        <td>Steel </td>
+                        <td>0.53 </td>
+                        <td> </td>
+                        <td>0.36 </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Glass </td>
+                        <td>Glass </td>
+                        <td>0.9-1.0 </td>
+                        <td> </td>
+                        <td>0.4 </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Human synovial fluid </td>
+                        <td>Cartilage </td>
+                        <td> </td>
+                        <td>0.01 </td>
+                        <td> </td>
+                        <td>0.003 </td>
+                    </tr>
+                    <tr>
+                        <td>Ice </td>
+                        <td>Ice </td>
+                        <td>0.02-0.09 </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Polyethene </td>
+                        <td>Steel </td>
+                        <td>0.2 </td>
+                        <td>0.2 </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>(Teflon) </td>
+                        <td>PTFE (Teflon) </td>
+                        <td>0.04 </td>
+                        <td>0.04 </td>
+                        <td> </td>
+                        <td>0.04 </td>
+                    </tr>
+                    <tr>
+                        <td>Steel </td>
+                        <td>Ice </td>
+                        <td>0.03 </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Steel </td>
+                        <td>PTFE (Teflon) </td>
+                        <td>0.04 </td>
+                        <td>0.04 </td>
+                        <td> </td>
+                        <td>0.04 </td>
+                    </tr>
+                    <tr>
+                        <td>Steel </td>
+                        <td>Steel </td>
+                        <td>0.74 </td>
+                        <td>0.16 </td>
+                        <td>0.42-0.62 </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Wood </td>
+                        <td>Metal </td>
+                        <td>0.2–0.6 </td>
+                        <td>0.2 (wet) </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Wood </td>
+                        <td>Wood </td>
+                        <td>0.25–0.5 </td>
+                        <td>0.2 (wet) </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                </table>
+            </details>
+            <details>
+                <summary>Free Body Diagram</summary>
+
+                <svg viewBox="0 -70 500 290">
+                    <defs>
+                        <g id="vector">
+                            <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
+                            <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
+                        </g>
+                    </defs>
+                    <g stroke="#000" fill="#fff" stroke-width="2">
+                        <rect x="150" y="10" width="50" height="50" />
+                        <rect x="0" y="60" width="300" height="160" fill="#bcd" stroke="none" />
+                        <path d="M0 60 h300 v160" fill="none" />
+                        <path d="M200 35 h117 m8 8 v100" fill="none" />
+                        <path d="M300 60 l 12 -12" fill="none" />
+                        <circle cx="317" cy="43" r="8" fill="#bcd" />
+                        <rect x="310" y="140" width="30" height="30" />
+                    </g>
+                    <g font-size="19" fill="#000" text-anchor="middle" dominant-baseline="middle">
+                        <text x="175" y="35">5 kg</text>
+
+                        <g transform='translate(200 35) rotate(-90)'>
+                            <use xlink:href="#vector" />
+                        </g>
+                        <text x="255" y="25">T</text>
+                        <g transform='translate(150 35) rotate(90)'>
+                            <use xlink:href="#vector" />
+                        </g>
+                        <text x="90" y="35">F
+                            <tspan font-size="0.7em" dy="5" dx="-5">s</tspan>
+                        </text>
+                        <g transform='translate(175 10) rotate(-180)'>
+                            <use xlink:href="#vector" />
+                        </g>
+                        <text x="175" y="-53">F
+                            <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+                        </text>
+
+                        <g transform='translate(175 60)'>
+                            <use xlink:href="#vector" />
+                        </g>
+                        <text x="175" y="125">F
+                            <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+                        </text>
+
+                        <g transform='translate(325 140) rotate(-180)'>
+                            <use xlink:href="#vector" />
+                        </g>
+                        <text x="340" y="100">T</text>
+                        <text x="325" y="155">m</text>
+                        <g transform='translate(325 170)'>
+                            <use xlink:href="#vector" />
+                        </g>
+                        <text x="342" y="205">F
+                            <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+                        </text>
+                    </g>
+                </svg>
+            </details>
+            <details>
+                <summary>solution</summary>
+                <div class="col-group">
+                    <div>
+                        $$\text{ice on steel}$$
+                        $$\mu_s = 0.03$$
+                    </div>
+                    <div>
+                        $$F_N = F_g = mg$$
+                        $$F_N = (5) (9.8)$$
+                        $$F_N = 49 \, \mathrm{N}$$
+                    </div>
+                </div>
+
+
+                $$ F_{s\mathrm{\,max}} = \mu_{s} F_{N} $$
+                $$ F_{s\mathrm{\,max}} = (0.03)(49 \, \mathrm{N}) $$
+                $$ F_{s\mathrm{\,max}} = 1.47 \, \mathrm{N} $$
+                <p>As long as the system isn't moving, the friction force equals the tension force, which also equals
+                    the force of gravity on the right block.</p>
+                $$F_{s\mathrm{\,max}} = T = F_g = mg$$
+                $$F_{s\mathrm{\,max}} = mg$$
+                $$1.47 = m(9.8)$$
+                $$m = 0.15 \, \mathrm{kg}$$
+
+
+            </details>
+        </div>
+
 
         <div class='example'>
             <div class="center" style="position: relative; width: 300px; height: 200px;">
