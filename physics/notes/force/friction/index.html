@@ -37,52 +37,6 @@
             caused by chemical bonding between surfaces.
         </p>
         <canvas id="canvas" width='600' height='285'></canvas>
-        <h1 class='underlined'>Kinetic Friction</h1>
-        <p>Kinetic means motion. Kinetic friction is a force that occurs when two surfaces in contact slide against
-            each other. The kinetic friction force remains constant over a wide range of speeds.
-        </p>
-        <div class='definition'>
-            <h1>$$F_{k}=\mu_{k} F_{N}$$</h1>
-            <p>\(F_k\) = force of kinetic friction [N,Newtons]
-                <br>pointed opposite the direction of motion</p>
-            <p>\(F_N\) = normal force [N,Newtons]</p>
-            <p>\(\mu _k\) = mu, coefficient of friction [no units] </p>
-            <svg viewBox="0 0 500 250" class="on-edge" style="margin-bottom: -1.5em; border-radius: 1em;">
-
-                <g transform="translate(210 110)" style="stroke:#666;stroke-width:1">
-                    <line x1="0" y1="10" x2="-80" y2="10" />
-                    <line x1="0" y1="20" x2="-125" y2="20" />
-
-                    <line x1="0" y1="60" x2="-115" y2="60" />
-                    <line x1="0" y1="70" x2="-65" y2="70" />
-                    <line x1="0" y1="80" x2="-90" y2="80" />
-                </g>
-
-                <rect x="0" y="190" width="500" height="110" fill="#bcd" />
-                <g stroke="#000" stroke-width="2" fill="none">
-                    <path d="M0 190 h500 " />
-                </g>
-                <rect x="210" y="110" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fff" />
-                <line x1="250" y1="110" x2="250" y2="55" style="stroke:black;stroke-width:2" />
-                <polygon points="0,0 -6,12 0,10 6,12" transform='translate(250 50)' style="fill:black;" />
-                <g fill="black" stroke="none">
-                    <text x="245" y="45">F
-                        <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
-                    </text>
-                    <text x="150" y="156">F
-                        <tspan font-size="0.7em" dy="5" dx="-5">k</tspan>
-                    </text>
-                </g>
-                <line x1="210" y1="150" x2="175" y2="150" style="stroke:black;stroke-width:2" />
-                <polygon points="0,0 -6,12 0,10 6,12" transform='translate(170 150) rotate(-90)' style="fill:black;" />
-
-                <!-- <line x1="250" y1="205" x2="287" y2="205" style="stroke:#000;stroke-width:2" />
-                    <polygon points="0,0 -6,12 0,10 6,12" transform='translate(290 205) rotate(90)' style="fill:#000;" />
-                    <text x="292" y="210" fill="#000">v</text> -->
-            </svg>
-        </div>
-        <p>In most situations, the friction force doesn't depend on the amount of contact between surfaces. This is
-            because a larger contact area spreads out the normal force.</p>
 
         <h1 class='underlined'>Static Friction</h1>
         <p>Static means not moving. Static friction is friction between two or more solid objects that are not moving
@@ -138,8 +92,8 @@
                 $$ F_s \leq \mu_{s} F_{N}$$
             </h1>
             <p>\(F_s\) = force of static friction [N,Newtons]
-                <br>directed against an applied force, but parallel to the surface
-                <br>matches applied forces up to the maximum value
+                <br>direction and magnitude change to keep acceleration zero
+                <br>but only up to the maximum value
             </p>
             <p>\(F_N\) = normal force [N,Newtons]</p>
             <p>\(\mu_s\) = mu, coefficient of friction [no units]
@@ -174,12 +128,12 @@
                 <tr>
                     <th colspan="2" rowspan="2">Materials</th>
                     <th colspan="2">Static Friction</th>
-                    <th colspan="2">Kinetic/Sliding Friction </th>
+                    <th colspan="2">Kinetic Friction </th>
                 </tr>
                 <tr>
-                    <th>Dry and clean</td>
+                    <th>Dry</td>
                     <th>Lubricated </td>
-                    <th>Dry and clean</td>
+                    <th>Dry</td>
                     <th>Lubricated </td>
                 </tr>
                 <tr>
@@ -420,35 +374,6 @@
         </div>
 
         <div class='example'>
-    </article> <canvas id="canvasGlass" width='600' height='170'></canvas>
-    <article>
-        <div class="col-group center">
-            <div>
-                speed <input type="range" id='speed-slider' min="1" max="10" step="0.01" value="3" style="width: 200px;">
-            </div>
-            <div>
-                friction <input type="range" id='friction-slider' min="0" max="0.25" step="0.01" value="0.02" style="width: 195px;">
-            </div>
-        </div>
-        <br>
-        <strong>Example:</strong> You slide the 0.42 kg
-        <a href="http://www.ikea.com/us/en/catalog/products/10270478/">POKAL</a> glass cup on a glass table at 3.0
-        m/s.
-        <br>Find the force of kinetic friction, and the time for the cup to come to a stop.
-        <details>
-            <summary>solution</summary>
-            $$F_{k}= \mu_{k}F_{N}$$ $$F_{N}=mg$$ $$F_{k}= \mu_{k}mg$$ $$F_{k}= (0.4)(0.42)(9.8)$$ $$F_{k}= 1.64 \,
-            \mathrm{N}$$
-            <br> $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1.64}{0.42}=a$$ $$3.90 \mathrm{\tfrac{m}{s^{2}}} = a$$
-            <br> $$a=-3.90 \mathrm{\tfrac{m}{s^{2}}} \quad \Delta t=? \quad v_{i}=3.0 \mathrm{\tfrac{m}{s}}\quad
-            v_{f}=0$$
-            $$v_{f} = v_{i}+a \Delta t$$ $$\frac{v_{f} - v_{i}}{a}=\Delta t$$ $$\frac{0 - 3}{-3.90}=\Delta t$$
-            $$0.77
-            \mathrm{s}=\Delta t$$
-        </details>
-        </div>
-
-        <div class='example'>
             <svg viewBox="0 0 600 340">
                 <rect x="0" y="260" width="600" height="80" stroke='none' fill="#bcc" />
                 <g stroke="#000" stroke-width="2" fill="none">
@@ -501,74 +426,6 @@
         </div>
 
         <div class='example'>
-            <p>
-                Static friction will match an applied force until the applied force exceeds the maximum value of static
-                friction. Forces above that point will cause motion.
-            </p>
-            <p>
-                Once the body is moving, friction transitions to kinetic. Kinetic friction is lower and less precise.
-                This transition often causes a jerky motion as the friction force quickly drops to the lower value.
-            </p>
-            <svg id="SVG-graph-1" viewBox="0 0 600 315">
-                <!-- <line x1="25" y1="385" x2="225" y2="185" stroke="#f50" stroke-width="3" /> -->
-                <path d="M25 285 l198 -198 l 1 0.5 l 1 0 v50
-                        l10 10 l10 -5 l10 5 l5 -2 l20 2 l10 -2 l10 2 l8 -7 l11 7 l10 -4 l10 2 l10 -2 l10 3 l10 -3 l10 4 l7 -3 l8 3 l10 -3 l12 3 l13 -1 l10 2 l10 -2 l10 2 l10 -5 l10 3 l10 -5 l10 5 l10 -2 l6 3 l9 -1 l10 5 l15 -4 l20 2 l10 -4 l10 0 l10 -1 l10 3"
-                    fill="none" stroke="#f30" stroke-width="4" stroke-linejoin="miter" />
-                <path d="M30 85.5 h600" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="2 7" />
-
-                <g font-size="14px" fill="#000" text-anchor="middle" font-family="monospace">
-                    <g transform='translate(125 175) rotate(-45)'>
-                        <text x="0" y="0">static</text>
-                    </g>
-                    <text x="400" y="165">kinetic</text>
-                </g>
-
-            </svg>
-            <script defer>
-                funGraphSVG("SVG-graph-1", x => 0, {
-                    x0: 25,
-                    y0: 285,
-                    stroke: "rgba(0,0,0,0)",
-                    positiveOnly: true,
-                    showGrid: false,
-                    step: 10,
-                    scale: 2,
-                    gridSize: 50,
-                    strokeWidth: 4,
-                    xLabel: "applied force (N)",
-                    yLabel: "friction (N)",
-                });
-            </script>
-            <strong>Example:</strong> Imagine the graph above is for a 20 kg box. Calculate the
-            coefficients of kinetic and static friction.
-            <details>
-                <summary>kinetic friction solution</summary>
-                $$F_N = F_g = mg$$
-                $$F_N = (20 \, \mathrm{kg})(9.8 \, \mathrm{ \tfrac{m}{s^2}}) $$
-                $$F_N = 196 \, \mathrm{N}$$
-                <p>We can tell from the graph that the force of kinetic friction is about 70 N.</p>
-                $$F_k = \mu_{k} F_{N} $$
-                $$70 \, \mathrm{N}= \mu_{k} 196 \, \mathrm{N}$$
-                $$\frac{70 \, \mathrm{N}}{196 \, \mathrm{N}} = \mu_{s} $$
-                $$ \mu_{s} = 0.36$$
-            </details>
-            <details>
-                <summary>static friction solution</summary>
-                $$F_N = F_g = mg$$
-                $$F_N = (20 \, \mathrm{kg})(9.8 \, \mathrm{ \tfrac{m}{s^2}}) $$
-                $$F_N = 196 \, \mathrm{N}$$
-                <p>We can tell from the dotted line that the max value of static friction is 100 N.</p>
-                $$ F_s \leq \mu_{s} F_{N} $$
-                $$ F_{s\mathrm{\,max}} = \mu_{s} F_{N} $$
-                $$ 100 \, \mathrm{N} = \mu_{s} 196 \, \mathrm{N}$$
-                $$\frac{100 \, \mathrm{N}}{196 \, \mathrm{N}} = \mu_{s} $$
-                $$ \mu_{s} = 0.51$$
-            </details>
-        </div>
-
-
-
-        <div class='example'>
             <svg viewBox="0 -70 500 250">
                 <defs>
                     <g id="vector">
@@ -592,7 +449,6 @@
             </svg>
             <p><strong>Example:</strong> How heavy can the mass on the right be before it starts to fall?
                 <br>(the 5 kg block is made of ice and the table is made of steel)</p>
-
             <details>
                 <summary>Friction Coefficient Data Table (<a href="https://en.wikipedia.org/wiki/Friction#Approximate_coefficients_of_friction">wikipedia</a>)
                 </summary>
@@ -600,12 +456,12 @@
                     <tr>
                         <th colspan="2" rowspan="2">Materials</th>
                         <th colspan="2">Static Friction</th>
-                        <th colspan="2">Kinetic/Sliding Friction </th>
+                        <th colspan="2">Kinetic Friction </th>
                     </tr>
                     <tr>
-                        <th>Dry and clean</td>
+                        <th>Dry</td>
                         <th>Lubricated </td>
-                        <th>Dry and clean</td>
+                        <th>Dry</td>
                         <th>Lubricated </td>
                     </tr>
                     <tr>
@@ -877,8 +733,6 @@
                         $$F_N = 49 \, \mathrm{N}$$
                     </div>
                 </div>
-
-
                 $$ F_{s\mathrm{\,max}} = \mu_{s} F_{N} $$
                 $$ F_{s\mathrm{\,max}} = (0.03)(49 \, \mathrm{N}) $$
                 $$ F_{s\mathrm{\,max}} = 1.47 \, \mathrm{N} $$
@@ -888,11 +742,365 @@
                 $$F_{s\mathrm{\,max}} = mg$$
                 $$1.47 = m(9.8)$$
                 $$m = 0.15 \, \mathrm{kg}$$
-
-
             </details>
         </div>
 
+
+
+        <h1 class='underlined'>Kinetic Friction</h1>
+        <p>Kinetic means motion. Kinetic friction is a force that occurs when two surfaces in contact slide against
+            each other. The kinetic friction force remains constant over a wide range of speeds.
+        </p>
+        <div class='definition'>
+            <h1>$$F_{k}=\mu_{k} F_{N}$$</h1>
+            <p>\(F_k\) = force of kinetic friction [N,Newtons]
+                <br>pointed opposite the direction of motion</p>
+            <p>\(F_N\) = normal force [N,Newtons]</p>
+            <p>\(\mu _k\) = mu, coefficient of friction [no units] </p>
+            <svg viewBox="0 0 500 250" class="on-edge" style="margin-bottom: -1.5em; border-radius: 1em;">
+
+                <g transform="translate(210 110)" style="stroke:#666;stroke-width:1">
+                    <line x1="0" y1="10" x2="-80" y2="10" />
+                    <line x1="0" y1="20" x2="-125" y2="20" />
+
+                    <line x1="0" y1="60" x2="-115" y2="60" />
+                    <line x1="0" y1="70" x2="-65" y2="70" />
+                    <line x1="0" y1="80" x2="-90" y2="80" />
+                </g>
+
+                <rect x="0" y="190" width="500" height="110" fill="#bcd" />
+                <g stroke="#000" stroke-width="2" fill="none">
+                    <path d="M0 190 h500 " />
+                </g>
+                <rect x="210" y="110" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fff" />
+                <line x1="250" y1="110" x2="250" y2="55" style="stroke:black;stroke-width:2" />
+                <polygon points="0,0 -6,12 0,10 6,12" transform='translate(250 50)' style="fill:black;" />
+                <g fill="black" stroke="none">
+                    <text x="245" y="45">F
+                        <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+                    </text>
+                    <text x="150" y="156">F
+                        <tspan font-size="0.7em" dy="5" dx="-5">k</tspan>
+                    </text>
+                </g>
+                <line x1="210" y1="150" x2="175" y2="150" style="stroke:black;stroke-width:2" />
+                <polygon points="0,0 -6,12 0,10 6,12" transform='translate(170 150) rotate(-90)' style="fill:black;" />
+
+                <!-- <line x1="250" y1="205" x2="287" y2="205" style="stroke:#000;stroke-width:2" />
+                    <polygon points="0,0 -6,12 0,10 6,12" transform='translate(290 205) rotate(90)' style="fill:#000;" />
+                    <text x="292" y="210" fill="#000">v</text> -->
+            </svg>
+        </div>
+        <p>In most situations, the friction force doesn't depend on the amount of contact between surfaces. This is
+            because a larger contact area spreads out the normal force.</p>
+
+
+
+
+        <div class='example'>
+    </article> <canvas id="canvasGlass" width='600' height='170'></canvas>
+    <article>
+        <div class="col-group center">
+            <div>
+                speed <input type="range" id='speed-slider' min="1" max="10" step="0.01" value="3" style="width: 200px;">
+            </div>
+            <div>
+                friction <input type="range" id='friction-slider' min="0" max="0.25" step="0.01" value="0.02" style="width: 195px;">
+            </div>
+        </div>
+        <br>
+        <strong>Example:</strong> You slide the 0.42 kg
+        <a href="http://www.ikea.com/us/en/catalog/products/10270478/">POKAL</a> glass cup on a glass table at 3.0
+        m/s.
+        <br>Find the force of kinetic friction, and the time for the cup to come to a stop.
+        <details>
+            <summary>Friction Coefficient Data Table (<a href="https://en.wikipedia.org/wiki/Friction#Approximate_coefficients_of_friction">wikipedia</a>)
+            </summary>
+            <table>
+                <tr>
+                    <th colspan="2" rowspan="2">Materials</th>
+                    <th colspan="2">Static Friction</th>
+                    <th colspan="2">Kinetic Friction </th>
+                </tr>
+                <tr>
+                    <th>Dry</td>
+                    <th>Lubricated </td>
+                    <th>Dry</td>
+                    <th>Lubricated </td>
+                </tr>
+                <tr>
+                    <td>Aluminium </td>
+                    <td>Steel </td>
+                    <td>0.61 </td>
+                    <td> </td>
+                    <td>0.47 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Aluminum </td>
+                    <td>Aluminum </td>
+                    <td> </td>
+                    <td> </td>
+                    <td>1.5 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Gold </td>
+                    <td>Gold </td>
+                    <td> </td>
+                    <td> </td>
+                    <td>2.5 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Platinum </td>
+                    <td>Platinum </td>
+                    <td> </td>
+                    <td> </td>
+                    <td>3.0 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Silver </td>
+                    <td>Silver </td>
+                    <td> </td>
+                    <td> </td>
+                    <td>1.5 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Alumina ceramic </td>
+                    <td>Silicon Nitride ceramic </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td>0.004 (wet) </td>
+                </tr>
+                <tr>
+                    <td>BAM (Ceramic
+                        alloy AlMgB<sub>14</sub>) </td>
+                    <td>Titanium boride (TiB<sub>2</sub>) </td>
+                    <td>0.04–0.05 </td>
+                    <td>0.02 </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Brass </td>
+                    <td>Steel </td>
+                    <td>0.35-0.51 </td>
+                    <td>0.19 </td>
+                    <td>0.44 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Cast iron </td>
+                    <td>Copper </td>
+                    <td>1.05 </td>
+                    <td> </td>
+                    <td>0.29 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Cast iron </td>
+                    <td>Zinc </td>
+                    <td>0.85 </td>
+                    <td> </td>
+                    <td>0.21 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Concrete </td>
+                    <td>Rubber </td>
+                    <td>1.0 </td>
+                    <td>0.30 (wet) </td>
+                    <td>0.6-0.85 </td>
+                    <td>0.45-0.75 (wet) </td>
+                </tr>
+                <tr>
+                    <td>Concrete </td>
+                    <td>Wood </td>
+                    <td>0.62 </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Copper </td>
+                    <td>Glass </td>
+                    <td>0.68 </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Copper </td>
+                    <td>Steel </td>
+                    <td>0.53 </td>
+                    <td> </td>
+                    <td>0.36 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Glass </td>
+                    <td>Glass </td>
+                    <td>0.9-1.0 </td>
+                    <td> </td>
+                    <td>0.4 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Human synovial fluid </td>
+                    <td>Cartilage </td>
+                    <td> </td>
+                    <td>0.01 </td>
+                    <td> </td>
+                    <td>0.003 </td>
+                </tr>
+                <tr>
+                    <td>Ice </td>
+                    <td>Ice </td>
+                    <td>0.02-0.09 </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Polyethene </td>
+                    <td>Steel </td>
+                    <td>0.2 </td>
+                    <td>0.2 </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>(Teflon) </td>
+                    <td>PTFE (Teflon) </td>
+                    <td>0.04 </td>
+                    <td>0.04 </td>
+                    <td> </td>
+                    <td>0.04 </td>
+                </tr>
+                <tr>
+                    <td>Steel </td>
+                    <td>Ice </td>
+                    <td>0.03 </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Steel </td>
+                    <td>PTFE (Teflon) </td>
+                    <td>0.04 </td>
+                    <td>0.04 </td>
+                    <td> </td>
+                    <td>0.04 </td>
+                </tr>
+                <tr>
+                    <td>Steel </td>
+                    <td>Steel </td>
+                    <td>0.74 </td>
+                    <td>0.16 </td>
+                    <td>0.42-0.62 </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Wood </td>
+                    <td>Metal </td>
+                    <td>0.2–0.6 </td>
+                    <td>0.2 (wet) </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Wood </td>
+                    <td>Wood </td>
+                    <td>0.25–0.5 </td>
+                    <td>0.2 (wet) </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+            </table>
+        </details>
+        <details>
+            <summary>solution</summary>
+            $$F_{k}= \mu_{k}F_{N}$$ $$F_{N}=mg$$ $$F_{k}= \mu_{k}mg$$ $$F_{k}= (0.4)(0.42)(9.8)$$ $$F_{k}= 1.64 \,
+            \mathrm{N}$$
+            <br> $$F=ma$$ $$\frac{F}{m}=a$$ $$\frac{1.64}{0.42}=a$$ $$3.90 \mathrm{\tfrac{m}{s^{2}}} = a$$
+            <br> $$a=-3.90 \mathrm{\tfrac{m}{s^{2}}} \quad \Delta t=? \quad v_{i}=3.0 \mathrm{\tfrac{m}{s}}\quad
+            v_{f}=0$$
+            $$v_{f} = v_{i}+a \Delta t$$ $$\frac{v_{f} - v_{i}}{a}=\Delta t$$ $$\frac{0 - 3}{-3.90}=\Delta t$$
+            $$0.77
+            \mathrm{s}=\Delta t$$
+        </details>
+        </div>
+
+        <div class='example'>
+            <p>
+                Static friction will match an applied force until the applied force exceeds the maximum value of static
+                friction. Forces above that point will cause motion.
+            </p>
+            <p>
+                Once the body is moving, friction transitions to kinetic. Kinetic friction is lower and less precise.
+                This transition often causes a jerky motion as the friction force quickly drops to the lower value.
+            </p>
+            <svg id="SVG-graph-1" viewBox="0 0 600 315">
+                <!-- <line x1="25" y1="385" x2="225" y2="185" stroke="#f50" stroke-width="3" /> -->
+                <path d="M25 285 l198 -198 l 1 0.5 l 1 0 v50
+                        l10 10 l10 -5 l10 5 l5 -2 l20 2 l10 -2 l10 2 l8 -7 l11 7 l10 -4 l10 2 l10 -2 l10 3 l10 -3 l10 4 l7 -3 l8 3 l10 -3 l12 3 l13 -1 l10 2 l10 -2 l10 2 l10 -5 l10 3 l10 -5 l10 5 l10 -2 l6 3 l9 -1 l10 5 l15 -4 l20 2 l10 -4 l10 0 l10 -1 l10 3"
+                    fill="none" stroke="#f30" stroke-width="4" stroke-linejoin="miter" />
+                <path d="M30 85.5 h600" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="2 7" />
+
+                <g font-size="14px" fill="#000" text-anchor="middle" font-family="monospace">
+                    <g transform='translate(125 175) rotate(-45)'>
+                        <text x="0" y="0">static</text>
+                    </g>
+                    <text x="400" y="165">kinetic</text>
+                </g>
+
+            </svg>
+            <script defer>
+                funGraphSVG("SVG-graph-1", x => 0, {
+                    x0: 25,
+                    y0: 285,
+                    stroke: "rgba(0,0,0,0)",
+                    positiveOnly: true,
+                    showGrid: false,
+                    step: 10,
+                    scale: 2,
+                    gridSize: 50,
+                    strokeWidth: 4,
+                    xLabel: "applied force (N)",
+                    yLabel: "friction (N)",
+                });
+            </script>
+            <strong>Example:</strong> Imagine the graph above is for a 20 kg box. Calculate the
+            coefficients of kinetic and static friction.
+            <details>
+                <summary>kinetic friction solution</summary>
+                $$F_N = F_g = mg$$
+                $$F_N = (20 \, \mathrm{kg})(9.8 \, \mathrm{ \tfrac{m}{s^2}}) $$
+                $$F_N = 196 \, \mathrm{N}$$
+                <p>We can tell from the graph that the force of kinetic friction is about 70 N.</p>
+                $$F_k = \mu_{k} F_{N} $$
+                $$70 \, \mathrm{N}= \mu_{k} 196 \, \mathrm{N}$$
+                $$\frac{70 \, \mathrm{N}}{196 \, \mathrm{N}} = \mu_{s} $$
+                $$ \mu_{s} = 0.36$$
+            </details>
+            <details>
+                <summary>static friction solution</summary>
+                $$F_N = F_g = mg$$
+                $$F_N = (20 \, \mathrm{kg})(9.8 \, \mathrm{ \tfrac{m}{s^2}}) $$
+                $$F_N = 196 \, \mathrm{N}$$
+                <p>We can tell from the dotted line that the max value of static friction is 100 N.</p>
+                $$ F_s \leq \mu_{s} F_{N} $$
+                $$ F_{s\mathrm{\,max}} = \mu_{s} F_{N} $$
+                $$ 100 \, \mathrm{N} = \mu_{s} 196 \, \mathrm{N}$$
+                $$\frac{100 \, \mathrm{N}}{196 \, \mathrm{N}} = \mu_{s} $$
+                $$ \mu_{s} = 0.51$$
+            </details>
+        </div>
 
         <div class='example'>
             <div class="center" style="position: relative; width: 300px; height: 200px;">
