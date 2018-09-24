@@ -335,7 +335,7 @@
 
         <div class='example'>
             <svg viewBox="0 0 400 150">
-                <image xlink:href="../../../media/pokal-glass__cropped_alpha.png" x="160" y="15" width="80px" />
+                <image xlink:href="../../../media/pokal-glass__cropped_alpha.png" x="160" y="15" width="80px" height="126px" />
                 <g stroke="#000" stroke-width="2" fill="none">
                     <path d="M0 140 h700 " />
                 </g>
@@ -374,7 +374,7 @@
         </div>
 
         <div class='example'>
-            <svg viewBox="0 0 400 340">
+            <svg viewBox="0 98 400 240">
                 <rect x="0" y="260" width="400" height="80" stroke='none' fill="#bcc" />
                 <g stroke="#000" stroke-width="2" fill="none">
                     <path d="M0 260 h400 " />
@@ -399,14 +399,14 @@
                     <line x1="0" y1="0" x2="0" y2="45" stroke="#000" stroke-width="2" />
                     <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#000" />
                 </g>
-                <g transform='translate(200 260) rotate(0)'>
+                <!-- <g transform='translate(200 260) rotate(0)'>
                     <line x1="0" y1="0" x2="0" y2="45" stroke="#000" stroke-width="2" />
                     <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#000" />
-                </g>
+                </g> -->
                 <g fill="#000" font-size='21px' text-anchor="middle" dominant-baseline="middle">
-                    <text x="200" y="324">F
+                    <!-- <text x="200" y="324">F
                         <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
-                    </text>
+                    </text> -->
                     <text x="310" y="222">F=?</text>
                     <text x="97" y="222">F
                         <tspan font-size="0.7em" dy="5" dx="-5">s</tspan>
@@ -417,7 +417,54 @@
             on a concrete slab. How much force will it take to overcome the static friction between the ground and the
             lower box? <details>
                 <summary>solution</summary>
-                <br>Include both masses in the total mass. $$F_g = mg$$ $$F_g = (20)(9.8)$$ $$F_g = 196\,\mathrm{N}$$
+                <p>Include both masses in the total mass.</p>
+                <svg viewBox="0 98 400 240">
+                    <rect x="0" y="260" width="400" height="80" stroke='none' fill="#bcc" />
+                    <g stroke="#000" stroke-width="2" fill="none">
+                        <path d="M0 260 h400 " />
+                    </g>
+                    <!-- <g transform='translate(160 100) rotate(0)'>
+                        <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#964" />
+                        <text x="40" y="40" fill="white" text-anchor="middle" dominant-baseline="middle" font-size='18px'>10
+                            kg
+                        </text>
+                    </g> -->
+                    <g transform='translate(200 180) rotate(180)'>
+                        <line x1="0" y1="0" x2="0" y2="45" stroke="#000" stroke-width="2" />
+                        <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#000" />
+                    </g>
+                    <g transform='translate(240 220) rotate(-90)'>
+                        <line x1="0" y1="0" x2="0" y2="45" stroke="#000" stroke-width="2" />
+                        <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#000" />
+                    </g>
+                    <g transform='translate(160 180) rotate(0)'>
+                        <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#964" />
+                        <text x="40" y="40" fill="white" text-anchor="middle" dominant-baseline="middle" font-size='18px'>20
+                            kg
+                        </text>
+                    </g>
+                    <g transform='translate(160 220) rotate(90)'>
+                        <line x1="0" y1="0" x2="0" y2="45" stroke="#000" stroke-width="2" />
+                        <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#000" />
+                    </g>
+                    <g transform='translate(200 260) rotate(0)'>
+                        <line x1="0" y1="0" x2="0" y2="45" stroke="#000" stroke-width="2" />
+                        <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' fill="#000" />
+                    </g>
+                    <g fill="#000" font-size='21px' text-anchor="middle" dominant-baseline="middle">
+                        <text x="200" y="116">F
+                            <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+                        </text>
+                        <text x="200" y="324">F
+                            <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+                        </text>
+                        <text x="310" y="222">F=?</text>
+                        <text x="97" y="222">F
+                            <tspan font-size="0.7em" dy="5" dx="-5">s</tspan>
+                        </text>
+                    </g>
+                </svg>
+                $$F_g = mg$$ $$F_g = (20)(9.8)$$ $$F_g = 196\,\mathrm{N}$$
                 Since the block isn't accelerating in the vertical the normal force equals the force of gravity for
                 both blocks. $$F_{s\mathrm{\,max}} = \mu_s F_N$$ $$F_{s\mathrm{\,max}} = \mu_s F_g$$
                 $$F_{s\mathrm{\,max}} = \mu_s 196$$ The coefficient of static friction for concrete and wood is 0.62.
@@ -1114,7 +1161,7 @@
                 $$F_k = \mu_{k} F_{N} $$
                 $$70 \, \mathrm{N}= \mu_{k} 196 \, \mathrm{N}$$
                 $$\frac{70 \, \mathrm{N}}{196 \, \mathrm{N}} = \mu_{s} $$
-                $$ \mu_{s} = 0.36$$
+                $$0.36 = \mu_{s}$$
             </details>
             <details>
                 <summary>static friction solution</summary>
@@ -1126,7 +1173,7 @@
                 $$ F_{s\mathrm{\,max}} = \mu_{s} F_{N} $$
                 $$ 100 \, \mathrm{N} = \mu_{s} 196 \, \mathrm{N}$$
                 $$\frac{100 \, \mathrm{N}}{196 \, \mathrm{N}} = \mu_{s} $$
-                $$ \mu_{s} = 0.51$$
+                $$0.51 = \mu_{s}$$
             </details>
         </div>
 

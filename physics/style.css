@@ -94,6 +94,10 @@ input[type="range"] {
   height: 12px;
 }
 
+input[type=range]::-moz-focus-outer {
+  border: 0;
+}
+
 canvas {
   margin: 0px;
   box-shadow: 2px 2px 8px #aaa;
