@@ -38,7 +38,7 @@
   );
 
   document.getElementById("masses-slider").addEventListener("input", () => {
-      convertLog = Math.pow(10, document.getElementById("masses-slider").value)
+      const convertLog = Math.pow(10, document.getElementById("masses-slider").value)
       const number = Math.floor(Math.min(convertLog, 999))
       document.getElementById("masses").value = number
       reset(number);
