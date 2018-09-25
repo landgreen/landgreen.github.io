@@ -770,12 +770,8 @@
       force you feel from the elevator?
       <details>
         <summary>solution</summary>
-        $$F_{g}=mg$$ $$F_{g}=(100)(-9.8)$$ $$F_{g}=-980\, \mathrm{N}$$
-        <br> $$\sum F=ma$$ $$F_{N}-F_{g}=ma$$ $$F_{N} - 980=(100)(2)$$ $$F_{N}=1180\, \mathrm{N}$$
         <svg class='center' width="280" height="200">
-          <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
           <line x1="0" y1="140" x2="280" y2="140" stroke="#000" stroke-width="2" />
-
           <g transform='translate(100 60) rotate(0)'>
             <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#eaa" />
             <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>100 kg</text>
@@ -788,9 +784,12 @@
           <use xlink:href="#vector" transform='translate(140 60) rotate(180)' />
           <text x="150" y="23" fill="black">F
             <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
-            <tspan dy="-5">= 1180 N</tspan>
+            <tspan dy="-5">= ?</tspan>
           </text>
         </svg>
+        $$F_{g}=mg$$ $$F_{g}=(100)(-9.8)$$ $$F_{g}=-980\, \mathrm{N}$$
+        <br> $$\sum F=ma$$ $$F_{N}-F_{g}=ma$$ $$F_{N} - 980=(100)(2)$$ $$F_{N}=1180\, \mathrm{N}$$
+
       </details>
     </div>
     <div class='example'>
@@ -801,20 +800,24 @@
         <summary>solution</summary>
         <p>In the simple case of a flat horizontal surface with no vertical acceleration the force of gravity will
           always be equal and opposite to the normal force.</p>
-        $$F_{g}=mg$$ $$F_{g}=(20)(9.8)$$ $$F_{g}=196\, \mathrm{N}$$
-        <br> $$\sum F=ma$$ $$F_{N}-F_{g}=ma$$ $$F_{N}=ma+F_{g}$$ $$F_{N} - 196=(20)(0) $$ $$F_{N}=196 \, \mathrm{N}$$
         <svg class="center" width="240" height="225">
           <line x1="0" y1="150" x2="200" y2="150" stroke="#000" stroke-width="2" />
           <rect x="60" y="70" width="80" height="80" style="stroke:black;stroke-width:2;fill:#ccf " />
           <text x="100" y="110" fill="black" text-anchor="middle" dominant-baseline="middle">20 kg</text>
           <use xlink:href="#vector" transform='translate(100 70) rotate(-180)' />
-          <text x="100" y="15" text-anchor="middle" fill="black">F
-            <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
-            <tspan dy="-5">= 196 N</tspan>
-          </text>
-          <use xlink:href="#vector" transform='translate(100 150) rotate(0)' />
-          <text x="100" y="216" text-anchor="middle" fill="black">Fg = 196 N</text>
+          <g fill="black" font-size="1.1em">
+            <text x="100" y="15" text-anchor="middle">F
+              <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+            </text>
+            <use xlink:href="#vector" transform='translate(100 150) rotate(0)' />
+            <text x="100" y="216" text-anchor="middle">F
+              <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+            </text>
+          </g>
         </svg>
+
+        $$F_{g}=mg$$ $$F_{g}=(20)(9.8)$$ $$F_{g}=196\, \mathrm{N}$$
+        <br> $$\sum F=ma$$ $$F_{N}-F_{g}=ma$$ $$F_{N} - 196=(20)(0) $$ $$F_{N}=196 \, \mathrm{N}$$
       </details>
     </div>
 
@@ -1181,7 +1184,8 @@
         $$\text{gravity only pulls on the 10kg part}$$ $$F_g = m g$$ $$F_g = (10 \, \mathrm{kg})(9.8\,
         \mathrm{\tfrac{m}{s^2}})$$
         $$F_g = \color{#d3a}98 \, \mathrm{N}$$
-        <br> $$\text{20 kg+10 kg box(es): vertical}$$ $$\sum F=ma$$ $$F_g = (10\, \mathrm{kg}+20\, \mathrm{kg}) a$$
+        <br> $$\text{use both masses to find acceleration in the vertical}$$ $$\sum F=ma$$ $$F_g = (10\,
+        \mathrm{kg}+20\, \mathrm{kg}) a$$
         $$F_g = (30\,
         \mathrm{kg}) a$$ $$98\, \mathrm{N} = (30\,\mathrm{kg}) a$$ $$-3.2\overline{6} \, \mathrm{\tfrac{m}{s^2}}= a$$
       </details>
