@@ -165,6 +165,8 @@ svg {
 
 .mouse-line {
   position: relative;
+  top: 30px;
+  left: 0px;
 }
 
 .mouse-line:after {
