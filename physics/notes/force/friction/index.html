@@ -30,8 +30,11 @@
         </h1>
     </header>
     <article>
-        <p>We are going to focus on the two types of dry friction: static and kinetic. Dry friction is a complex
-            interaction, but we have equations that are a good approximation for most situations.</p>
+        <p>
+            We are going to focus on the two types of dry <a href="https://en.wikipedia.org/wiki/Friction">friction</a>:
+            static and kinetic. Dry friction occurs when two solid surfaces are in contact. Dry friction is a complex
+            interaction, but we have equations that are a good approximation for most situations.
+        </p>
         <p>
             Friction generally occurs because rough surfaces get caught on each other. Friction can also be
             caused by chemical bonding between surfaces.
@@ -484,6 +487,18 @@
              #reset-blocks:active { 
                fill:  #fff;
             }
+            /* .sliders {
+                position: relative;
+                top: -108px;
+                margin-bottom: -100px;
+            }
+            @media screen and (max-width: 600px) {
+                .sliders {
+                    position: static;
+                    top: 0px;
+                    margin-bottom: 0px;
+                }
+            } */
         </style>
 
         <div class='example'>
@@ -507,17 +522,30 @@
                     <text x="175" y="35" id="leftBlock-text" dominant-baseline="middle">5 kg</text>
                     <text x="325" y="85" id="rightBlock-text" dominant-baseline="middle">m</text>
                 </g>
-                <rect rx="3" ry="3" x="6" y="175" width="50" height="29" fill="#fff" stroke="none" stroke-width="1" id="reset-blocks" />
+                <rect rx="3" ry="3" x="6" y="175" width="50" height="29" fill="#fff" stroke="none" id="reset-blocks" />
                 <text x="12" y="195" fill="#467" id="reset-text">reset</text>
+                <!-- <rect rx="3" ry="3" x="70" y="144" width="210" height="60" fill="#fff" stroke="none" /> -->
             </svg>
-            <div class="center">
-                m =
-                <input id='mass-slider' type="range" step="0.005" value="0.01" min="0" max="2" style="width: 200px;">
-                <input id='mass' type="number" step="0.005" value="0.01" min="0" max="2" style="width: 63px;"> kg
-                <!-- <button id="reset-blocks" style="float: right">reset </button> -->
+            <div class="sliders">
+                <div class="center">
+                    μ<sub>k</sub> =
+                    <input id='mu-k-slider' type="range" step="0.005" value="0.47" min="0" max="1" style="width: 220px;">
+                    <input id='mu-k' type="number" step="0.005" value="0.47" min="0" max="1" style="width: 63px;">
+                </div>
+                <div class="center">
+                    μ<sub>s</sub> =
+                    <input id='mu-slider' type="range" step="0.005" value="0.61" min="0" max="1" style="width: 220px;">
+                    <input id='mu' type="number" step="0.005" value="0.61" min="0" max="1" style="width: 63px;">
+                </div>
+                <div class="center">
+                    m =
+                    <input id='mass-slider' type="range" step="0.005" value="0" min="0" max="6" style="width: 200px;">
+                    <input id='mass' type="number" step="0.005" value="0" min="0" max="6" style="width: 63px;">
+                    kg
+                </div>
             </div>
             <p><strong>Example:</strong> How heavy can the mass on the right be before it starts to fall?
-                <br>The 5 kg block is made of ice and the table is made of steel.</p>
+                <br>The 5 kg block is made of aluminium and the table is made of steel.</p>
             <details>
                 <summary>Friction Coefficient Data Table (<a href="https://en.wikipedia.org/wiki/Friction#Approximate_coefficients_of_friction">wikipedia</a>)
                 </summary>
@@ -798,8 +826,8 @@
                 <summary>solution</summary>
                 <div class="col-group">
                     <div>
-                        $$\text{ice on steel}$$
-                        $$\mu_s = 0.03$$
+                        $$\text{aluminium on steel}$$
+                        $$\mu_s = 0.61$$
                         <br>
                     </div>
                     <div>
@@ -809,14 +837,14 @@
                     </div>
                 </div>
                 $$ F_{s\mathrm{\,max}} = \mu_{s} F_{N} $$
-                $$ F_{s\mathrm{\,max}} = (0.03)(49 \, \mathrm{N}) $$
-                $$ F_{s\mathrm{\,max}} = 1.47 \, \mathrm{N} $$
+                $$ F_{s\mathrm{\,max}} = (0.61)(49 \, \mathrm{N}) $$
+                $$ F_{s\mathrm{\,max}} = 29.89 \, \mathrm{N} $$
                 <p>As long as the system isn't moving, the friction force equals the tension force, which also equals
                     the force of gravity on the right block.</p>
                 $$F_{s\mathrm{\,max}} = T = F_g = mg$$
                 $$F_{s\mathrm{\,max}} = mg$$
-                $$1.47 = m(9.8)$$
-                $$m = 0.15 \, \mathrm{kg}$$
+                $$29.89 = m(9.8)$$
+                $$m = 3.05 \, \mathrm{kg}$$
             </details>
         </div>
 
