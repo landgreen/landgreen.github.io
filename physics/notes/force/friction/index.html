@@ -498,18 +498,20 @@
              #reset-blocks:active { 
                fill:  #fff;
             }
-            /* .sliders {
-                position: relative;
-                top: -108px;
-                margin-bottom: -100px;
+            .sliders {
+                margin-top: -100px;
             }
-            @media screen and (max-width: 600px) {
+            .white-fill {
+                fill: #fff;
+            }
+            @media screen and (max-width: 620px) {
                 .sliders {
-                    position: static;
-                    top: 0px;
-                    margin-bottom: 0px;
+                   margin-top: 0px;
                 }
-            } */
+                .white-fill {
+                    fill: none;
+                }
+              }
         </style>
 
         <div class='example'>
@@ -533,9 +535,10 @@
                     <text x="175" y="35" id="leftBlock-text" dominant-baseline="middle">5 kg</text>
                     <text x="325" y="85" id="rightBlock-text" dominant-baseline="middle">m</text>
                 </g>
-                <rect rx="3" ry="3" x="6" y="175" width="50" height="29" fill="#fff" stroke="none" id="reset-blocks" />
+                <rect x="6" y="175" rx="3" ry="3" width="50" height="29" fill="#fff" stroke="none" id="reset-blocks" />
                 <text x="12" y="195" fill="#467" id="reset-text">reset</text>
-                <!-- <rect rx="3" ry="3" x="70" y="144" width="210" height="60" fill="#fff" stroke="none" /> -->
+
+                <rect rx="3" ry="3" x="70" y="144" width="210" height="60" stroke="none" class="white-fill" />
             </svg>
             <div class="sliders">
                 <div class="center">
