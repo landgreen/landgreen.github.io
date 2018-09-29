@@ -13,6 +13,7 @@ const level = {
     // game.levelsCleared = 3; //for testing to simulate all possible mobs spawns
     if (game.levelsCleared === 0) {
       this.intro();
+      // this.bosses();
       // this.testingMap();
       // this.skyscrapers();
       // this.rooftops();
@@ -94,25 +95,104 @@ const level = {
     // spawn.nodeBoss(900, -1070, "shooter", 9);
     // spawn.randomBoss(-100, -1470);
   },
+  bosses: function () {
+    // spawn.setSpawnList();
+    // spawn.setSpawnList();
+    // game.levelsCleared = 7; //for testing to simulate all possible mobs spawns
+    // for (let i = 0; i < game.levelsCleared; i++) {
+    //   game.dmgScale += 0.4; //damage done by mobs increases each level
+    //   b.dmgScale *= 0.9; //damage done by player decreases each level
+    // }
 
+    document.body.style.backgroundColor = "#444";
+
+    level.fillBG.push({
+      x: -150,
+      y: -1150,
+      width: 7000,
+      height: 1200,
+      color: "#eee"
+    });
+
+    level.fill.push({
+      x: 6400,
+      y: -550,
+      width: 300,
+      height: 350,
+      color: "rgba(0,255,255,0.1)"
+    });
+
+    mech.setPosToSpawn(0, -750); //normal spawn
+    level.enter.x = mech.spawnPos.x - 50;
+    level.enter.y = mech.spawnPos.y + 20;
+    level.exit.x = 6500;
+    level.exit.y = -230;
+    this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
+
+
+    spawn.mapRect(-250, 0, 7000, 200); //ground
+    spawn.mapRect(-350, -1200, 200, 1400); //left wall
+    spawn.mapRect(-250, -1200, 7000, 200); //roof
+    spawn.mapRect(-250, -700, 1000, 900); // shelf
+    spawn.mapRect(-250, -1200, 1000, 250); // shelf roof
+    powerUps.spawnStartingPowerUps(600, -800);
+
+    function blockDoor(x, y, blockSize = 58) {
+      spawn.mapRect(x, y - 290, 40, 60); // door lip
+      spawn.mapRect(x, y, 40, 50); // door lip
+      for (let i = 0; i < 4; ++i) {
+        spawn.bodyRect(x + 5, y - 260 + i * blockSize, 30, blockSize);
+      }
+    }
+    blockDoor(710, -710);
+    spawn[spawn.pickList[0]](1500, -200, 100 + game.levelsCleared * 8);
+    spawn.randomBoss(2000, -800, -1);
+    spawn.randomBoss(2000, -800, -1.5);
+    spawn.randomBoss(2000, -800, -2);
+    spawn.randomBoss(2000, -600, -2.5);
+    spawn.randomBoss(2000, -600, -3);
+
+    spawn.mapRect(2500, -1200, 200, 750); //right wall
+    blockDoor(2585, -210)
+    spawn.mapRect(2500, -200, 200, 300); //right wall
+
+    spawn.nodeBoss(3500, -200, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
+    spawn.randomBoss(3500, -800, -1);
+    spawn.randomBoss(3500, -800, -1.5);
+    spawn.randomBoss(3500, -800, -2);
+    spawn.randomBoss(3500, -600, -2.5);
+    spawn.randomBoss(3500, -600, -3);
+
+    spawn.mapRect(4500, -1200, 200, 750); //right wall
+    blockDoor(4585, -210)
+    spawn.mapRect(4500, -200, 200, 300); //right wall
+
+    spawn.lineBoss(5000, -200, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
+    spawn.randomBoss(5900, -600, 0);
+    spawn.randomBoss(5000, -600, -1);
+    spawn.randomBoss(5000, -600, -1.5);
+    spawn.randomBoss(5000, -600, -2);
+    spawn.randomBoss(5000, -600, -2.5);
+    spawn.randomBoss(5000, -600, -3);
+
+    spawn.mapRect(6400, -1200, 400, 750); //right wall
+    spawn.mapRect(6400, -200, 400, 300); //right wall
+    spawn.mapRect(6700, -1200, 200, 1400); //right wall
+    spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 100); //exit bump
+
+  },
   //empty map for testing mobs
   intro: function () {
     mech.setPosToSpawn(460, -100); //normal spawn
     level.enter.x = -10000; //offscreen
     level.enter.y = -400;
-
     level.exit.x = 2800;
     level.exit.y = -335;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
     document.body.style.backgroundColor = "#444";
-    // game.makeTextLog(
-    //   "<br><br><span class = 'box'>mouse️</span><br><br><br>",
-    //   Infinity
-    // );
+    //controls instructions
     game.makeTextLog(
       "<br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span></div> <div class = 'grid-box'> <span class = 'mouse'>️<span class='mouse-line'></span></span> </div></div>",
-      // "<br><br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span><div>move and jump</div> </div> <div class = 'grid-box'> <span class = 'mouse'>️</span><br><div style='margin-top:38px;'>look and fire</div> </div></div>",
-      // "<br><br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span><div>move and jump</div> </div> <div class = 'grid-box'> <span style='font-size: 4em;'>🖱️</span><br><div style='margin-top:12px;'>look and fire</div> </div></div>",
       Infinity
     );
 

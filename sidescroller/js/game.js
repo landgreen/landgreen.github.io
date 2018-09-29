@@ -309,6 +309,7 @@ const game = {
     document.body.style.cursor = "none";
     if (this.firstRun) mech.spawn(); //spawns the player
     level.levels = shuffle(level.levels); //shuffles order of maps
+    level.levels.unshift("bosses"); //add bosses level to the end of the randomized levels list
     game.reset();
     game.firstRun = false;
     requestAnimationFrame(cycle); //starts game loop
