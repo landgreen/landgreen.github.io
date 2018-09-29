@@ -33,7 +33,7 @@ let blocks = () => {
     document.getElementById("mass").addEventListener("input", () => {
             rightBlock.mass = Number(document.getElementById("mass").value)
             document.getElementById("mass-slider").value = rightBlock.mass
-            // if (!leftBlock.moving && rightBlock.mass > leftBlock.muStatic && rightBlock.mass > leftBlock.muKinetic) requestAnimationFrame(cycle);
+            document.getElementById("rightBlock-text").textContent = rightBlock.mass.toFixed(1) + " kg";
             if (!leftBlock.moving && rightBlock.mass > leftBlock.muStatic * leftBlock.mass && rightBlock.mass > leftBlock.muKinetic * leftBlock.mass) requestAnimationFrame(cycle);
         },
         false
@@ -41,6 +41,7 @@ let blocks = () => {
     document.getElementById("mass-slider").addEventListener("input", () => {
             rightBlock.mass = Number(document.getElementById("mass-slider").value)
             document.getElementById("mass").value = rightBlock.mass
+            document.getElementById("rightBlock-text").textContent = rightBlock.mass.toFixed(1) + " kg";
             if (!leftBlock.moving && rightBlock.mass > leftBlock.muStatic * leftBlock.mass && rightBlock.mass > leftBlock.muKinetic * leftBlock.mass) requestAnimationFrame(cycle);
         },
         false
@@ -86,6 +87,7 @@ let blocks = () => {
             leftBlock.muStatic = 0.61
             document.getElementById("mass").value = rightBlock.mass
             document.getElementById("mass-slider").value = rightBlock.mass
+            document.getElementById("rightBlock-text").textContent = rightBlock.mass.toFixed(1) + " kg";
             document.getElementById("mu").value = leftBlock.muStatic
             document.getElementById("mu-slider").value = leftBlock.muStatic
             document.getElementById("mu-k").value = leftBlock.muKinetic
@@ -111,9 +113,9 @@ let blocks = () => {
 
     function draw() {
         leftBlock.target.setAttribute("x", leftBlock.position.x);
-        leftBlock.textTarget.setAttribute("x", leftBlock.position.x + 25);
+        leftBlock.textTarget.setAttribute("x", leftBlock.position.x + 26);
         rightBlock.target.setAttribute("y", rightBlock.position.y);
-        rightBlock.textTarget.setAttribute("y", rightBlock.position.y + 15);
+        rightBlock.textTarget.setAttribute("y", rightBlock.position.y + 16);
         document.getElementById("rope").setAttribute("d", `M${(leftBlock.position.x+50)} 35 h${267-leftBlock.position.x} m8 8 v${rightBlock.position.y-43}`);
     }
 
