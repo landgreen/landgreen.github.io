@@ -1204,6 +1204,63 @@
       </details>
     </div>
 
+
+    <div class='example'>
+      <svg viewBox="0 0 450 295">
+        <g stroke="#000" fill="none" stroke-width="2">
+          <rect x="125" y="160" width="50" height="50" />
+          <rect x="210" y="210" width="80" height="80" />
+          <circle cx="200" cy="60" r="50" fill="#bcd" stroke="#000" stroke-width="2" />
+          <circle cx="200" cy="60" r="3" fill="#789" stroke="none" stroke-width="2" />
+          <path d="M150 60 v100 M 250 60 v150" fill="none" />
+        </g>
+        <g fill="black" fill="#000" stroke="none">
+          <text x="150" y="185" font-size="17" dominant-baseline="middle" text-anchor="middle">10 kg</text>
+          <text x="250" y="250" font-size="22" dominant-baseline="middle" text-anchor="middle">25 kg</text>
+        </g>
+      </svg>
+      <strong>Example:</strong> Find the acceleration of each body. Ignore friction. Assume the wheel has a very low
+      mass, and it is free to rotate.
+      <details>
+        <summary>solution</summary>
+        <div class="col-group">
+          <div>
+            $$\text{10 kg block}$$
+            $$\sum F = ma$$
+            $$T-mg = ma$$
+            $$T-(10)(9.8) = ma$$
+            $$T-98 = 10a$$
+            $$T = 10a+98$$
+          </div>
+          <div>
+            $$\text{25 kg block}$$
+            $$\sum F = ma$$
+            $$T-mg = ma$$
+            $$T-(25)(9.8) = 25a$$
+            $$T-245 = 25a$$
+            $$T = 25a+245$$
+          </div>
+        </div>
+        <p>We have two variables and two equations, this means we can plug one equation into the other. The Tension is
+          the same for each body. The accelerations are the same, but in opposite directions, so we
+          need to make one acceleration negative.</p>
+        <div class="col-group">
+          <div>
+            $$T = 10({\color{#f05}-a})+98$$
+          </div>
+          <div>
+            $$T = 25a+245$$
+          </div>
+        </div>
+        $$10({\color{#f05}-a})+98 = 25a+245 $$
+        $$-35a = 147$$
+        $$a = -4.2 \, \tfrac{m}{s^2}$$
+        <p>The 25kg object is falling down at 4.2 m/s². The 10kg is rising up at 4.2 m/s².</p>
+      </details>
+
+    </div>
+
+
   </article>
   <div class='back'>
     <a href="../../../index.html">Back</a>

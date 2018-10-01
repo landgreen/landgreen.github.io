@@ -82,7 +82,7 @@ let blocks = () => {
             leftBlock.moving = false
             rightBlock.position.y = 70
             rightBlock.velocity.y = 0
-            rightBlock.mass = 0.01
+            rightBlock.mass = 0
             leftBlock.muKinetic = 0.47
             leftBlock.muStatic = 0.61
             document.getElementById("mass").value = rightBlock.mass
