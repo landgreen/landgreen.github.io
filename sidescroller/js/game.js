@@ -210,9 +210,11 @@ const game = {
     this.mouseInGame.y = (this.mouse.y - canvas.height2) / this.zoom + canvas.height2 - mech.transY;
   },
   zoomInFactor: 0,
-  startZoomIn: function (time = 250) {
+  startZoomIn: function (time = 180) {
     game.zoom = 0;
     let count = 0;
+
+    requestAnimationFrame(zLoop);
 
     function zLoop() {
       game.zoom += canvas.height / game.zoomScale / time;
@@ -223,7 +225,6 @@ const game = {
         game.setZoom();
       }
     }
-    requestAnimationFrame(zLoop);
   },
   wipe: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);

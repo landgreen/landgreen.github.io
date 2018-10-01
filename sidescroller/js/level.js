@@ -146,34 +146,34 @@ const level = {
     }
     blockDoor(710, -710);
     spawn[spawn.pickList[0]](1500, -200, 100 + game.levelsCleared * 8);
-    spawn.randomBoss(2000, -800, -1);
-    spawn.randomBoss(2000, -800, -1.5);
-    spawn.randomBoss(2000, -800, -2);
-    spawn.randomBoss(2000, -600, -2.5);
-    spawn.randomBoss(2000, -600, -3);
+    spawn.randomBoss(2000 + 500 * (Math.random() - 0.5), -800, -1);
+    spawn.randomBoss(2000 + 500 * (Math.random() - 0.5), -800, -1.5);
+    spawn.randomBoss(2000 + 500 * (Math.random() - 0.5), -800, -2);
+    spawn.randomBoss(2000 + 500 * (Math.random() - 0.5), -600, -2.5);
+    spawn.randomBoss(2000 + 500 * (Math.random() - 0.5), -600, -3);
 
     spawn.mapRect(2500, -1200, 200, 750); //right wall
     blockDoor(2585, -210)
     spawn.mapRect(2500, -200, 200, 300); //right wall
 
     spawn.nodeBoss(3500, -200, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
-    spawn.randomBoss(3500, -800, -1);
-    spawn.randomBoss(3500, -800, -1.5);
-    spawn.randomBoss(3500, -800, -2);
-    spawn.randomBoss(3500, -600, -2.5);
-    spawn.randomBoss(3500, -600, -3);
+    spawn.randomBoss(3500 + 500 * (Math.random() - 0.5), -800, -1);
+    spawn.randomBoss(3500 + 500 * (Math.random() - 0.5), -800, -1.5);
+    spawn.randomBoss(3500 + 500 * (Math.random() - 0.5), -800, -2);
+    spawn.randomBoss(3500 + 500 * (Math.random() - 0.5), -600, -2.5);
+    spawn.randomBoss(3500 + 500 * (Math.random() - 0.5), -600, -3);
 
     spawn.mapRect(4500, -1200, 200, 750); //right wall
     blockDoor(4585, -210)
     spawn.mapRect(4500, -200, 200, 300); //right wall
 
     spawn.lineBoss(5000, -200, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
-    spawn.randomBoss(5900, -600, 0);
-    spawn.randomBoss(5000, -600, -1);
-    spawn.randomBoss(5000, -600, -1.5);
-    spawn.randomBoss(5000, -600, -2);
-    spawn.randomBoss(5000, -600, -2.5);
-    spawn.randomBoss(5000, -600, -3);
+    spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -600, 0);
+    spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -600, -1);
+    spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -600, -1.5);
+    spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -600, -2);
+    spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -600, -2.5);
+    spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -600, -3);
 
     spawn.mapRect(6400, -1200, 400, 750); //right wall
     spawn.mapRect(6400, -200, 400, 300); //right wall
@@ -314,28 +314,50 @@ const level = {
   },
 
   rooftops: function () {
+    if (game.levelsCleared < level.levels.length) game.startZoomIn();
     document.body.style.backgroundColor = "#eee4e4";
-    // this.addZone(-700, -50, 4100, 100, "death");
-    mech.setPosToSpawn(-450, -2050); //normal spawn
-    //mech.setPosToSpawn(4600, -900); //normal spawn
-    //mech.setPosToSpawn(4400, -400); //normal spawn
+
+    if (Math.random() < 0.6) {
+      //normal direction start in top left
+      mech.setPosToSpawn(-450, -2050);
+      level.exit.x = 3600;
+      level.exit.y = -300;
+      spawn.mapRect(3600, -285, 100, 50); //ground bump wall
+      //mobs that spawn in exit room
+      spawn.randomSmallMob(4100, -100);
+      spawn.randomSmallMob(4600, -100);
+      spawn.randomMob(3765, -450, 0.3);
+      level.fill.push({
+        x: -650,
+        y: -2300,
+        width: 450,
+        height: 300,
+        color: "rgba(0,0,0,0.15)"
+      });
+    } else {
+      //reverse direction, start in bottom right
+      mech.setPosToSpawn(3650, -310);
+      level.exit.x = -550;
+      level.exit.y = -2030;
+      spawn.mapRect(-550, -2015, 100, 50); //ground bump wall
+      spawn.boost(4950, 0, 1400);
+      level.fillBG.push({
+        x: -650,
+        y: -2300,
+        width: 450,
+        height: 300,
+        color: "#d4f4f4"
+      });
+    }
     level.enter.x = mech.spawnPos.x - 50;
     level.enter.y = mech.spawnPos.y + 20;
-    level.exit.x = 3600;
-    level.exit.y = -300;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
 
     spawn.debris(1650, -1800, 3800, 20); //20 debris per level
     powerUps.spawnStartingPowerUps(2450, -1675);
 
     //foreground
-    level.fill.push({
-      x: -650,
-      y: -2300,
-      width: 450,
-      height: 300,
-      color: "rgba(0,0,0,0.15)"
-    });
+
     level.fill.push({
       x: 3450,
       y: -1250,
@@ -430,7 +452,7 @@ const level = {
     spawn.bodyRect(3500, -850, 75, 125, 0.8); //
     spawn.mapRect(3400, -1000, 100, 1100); //left building wall
     spawn.mapRect(5450, -775, 100, 875); //right building wall
-    spawn.bodyRect(4850, -750, 300, 25, 0.8, spawn.propsIsNotHoldable); //
+    spawn.bodyRect(4850, -750, 300, 25, 0.8); //
     spawn.bodyRect(3925, -1400, 100, 150, 0.8); //
     spawn.mapRect(3450, -1250, 1100, 50); //
     spawn.mapRect(3450, -1225, 50, 75); //
@@ -439,16 +461,14 @@ const level = {
     spawn.mapRect(5100, -725, 400, 50); //
     spawn.mapRect(4500, -700, 50, 600); //
     spawn.bodyRect(4500, -100, 50, 100, 0.8); //
-    if (Math.random() < 0.3) spawn.boost(4950, 0, 800);
+
 
     spawn.spawnStairs(3800, 0, 3, 150, 206); //stairs top exit
     spawn.mapRect(3500, -275, 350, 275); //exit platform
-    spawn.mapRect(3600, -285, 100, 50); //ground bump wall
+
 
     spawn.randomSmallMob(2200, -1775); //
     spawn.randomSmallMob(4000, -825); //
-    spawn.randomSmallMob(4100, -100);
-    spawn.randomSmallMob(4600, -100);
     spawn.randomSmallMob(-350, -2400); //
     spawn.randomMob(4250, -1350, 0.8); //
     spawn.randomMob(2550, -1350, 0.8); //
@@ -461,7 +481,6 @@ const level = {
     spawn.randomMob(3600, -1800, 0.1); //
     spawn.randomMob(5200, -100, 0.3);
     spawn.randomMob(5275, -900, 0.2);
-    spawn.randomMob(3765, -450, 0.3); //
     spawn.randomMob(900, -2125, 0.3); //
     spawn.randomBoss(600, -1575, 0);
     spawn.randomBoss(2225, -1325, 0.4); //
@@ -469,6 +488,7 @@ const level = {
     //spawn.randomBoss(4850, -1250,0.7);
   },
   skyscrapers: function () {
+    if (game.levelsCleared < level.levels.length) game.startZoomIn();
     mech.setPosToSpawn(-50, -50); //normal spawn
     //mech.setPosToSpawn(1550, -1200); //spawn left high
     //mech.setPosToSpawn(1800, -2000); //spawn near exit
@@ -616,6 +636,7 @@ const level = {
     spawn.randomBoss(1700, -900, 0.4);
   },
   highrise: function () {
+    if (game.levelsCleared < level.levels.length) game.startZoomIn();
     document.body.style.backgroundColor = "#fafcff";
     mech.setPosToSpawn(0, -700); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
@@ -759,6 +780,7 @@ const level = {
     spawn.randomBoss(-2450, -1100, 0);
   },
   warehouse: function () {
+    if (game.levelsCleared < level.levels.length) game.startZoomIn();
     document.body.style.backgroundColor = "#bbb";
     mech.setPosToSpawn(25, -60); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
@@ -922,11 +944,24 @@ const level = {
     //spawn.randomSmallMob(2200, -1775); //
   },
   towers: function () {
-    mech.setPosToSpawn(1375, -1550); //normal spawn
+    if (game.levelsCleared < level.levels.length) game.startZoomIn();
+
+    if (Math.random() < 0.6) {
+      //normal direction start in top left
+      mech.setPosToSpawn(1375, -1550); //normal spawn
+      level.exit.x = 3250;
+      level.exit.y = -530;
+      spawn.randomSmallMob(3550, -550);
+    } else {
+      //reverse direction, start in bottom right
+      mech.setPosToSpawn(3250, -530); //normal spawn
+      level.exit.x = 1375;
+      level.exit.y = -1530;
+      spawn.bodyRect(3655, -650, 40, 150); //door
+    }
+    spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 50); //ground bump wall
     level.enter.x = mech.spawnPos.x - 50;
     level.enter.y = mech.spawnPos.y + 20;
-    level.exit.x = 3250;
-    level.exit.y = -530;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
 
     document.body.style.backgroundColor = "#e0e5e0";
@@ -1030,7 +1065,7 @@ const level = {
     spawn.mapRect(4150, -600, 350, 150); //table
     spawn.mapRect(3650, -1300, 50, 650); //exit wall
     spawn.mapRect(3650, -1300, 1350, 50); //exit wall
-    spawn.mapRect(3000 + 250, -510, 100, 50); //ground bump wall
+
     spawn.mapRect(3000, -2000 * 0.5, 700, 50); //exit roof
     spawn.mapRect(3000, -2000 * 0.25, 2000 - 300, 50); //1st floor
     spawn.spawnStairs(3000 + 2000 - 50, 0, 4, 250, 350, true); //stairs ground
@@ -1044,7 +1079,7 @@ const level = {
       bodyB: mob[mob.length - 1],
       stiffness: 0.0004
     });
-    spawn.randomSmallMob(3550, -550);
+
     spawn.randomSmallMob(4575, -560, 1);
     spawn.randomSmallMob(1315, -880, 1);
     spawn.randomSmallMob(800, -600);

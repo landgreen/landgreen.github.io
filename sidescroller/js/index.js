@@ -214,7 +214,7 @@ function cycle() {
   if (game.clearNow) {
     game.clearNow = false;
     game.clearMap();
-    if (game.levelsCleared != 0) game.startZoomIn();
+    // if (game.levelsCleared != 0) game.startZoomIn();
     // game.startZoomIn();
     level.start();
   }
