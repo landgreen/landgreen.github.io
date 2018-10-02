@@ -358,7 +358,7 @@ const spawn = {
     me.accelMag = 0.00009;
     // me.frictionAir = 0.005;
     me.memory = 600;
-    Matter.Body.setDensity(me, 0.008); //extra dense //normal is 0.001
+    Matter.Body.setDensity(me, 0.006); //extra dense //normal is 0.001 //makes effective life much larger
     // me.collisionFilter.mask = 0x001100; //move through walls
     me.do = function () {
       this.seePlayerByDistOrLOS();
