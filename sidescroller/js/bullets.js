@@ -538,7 +538,7 @@ const b = {
     {
       name: "flak",
       ammo: 0,
-      ammoPack: 5,
+      ammoPack: 6,
       have: false,
       fire: function () {
         b.muzzleFlash(30);
@@ -581,9 +581,12 @@ const b = {
         b.drawOneBullet(bullet[me].vertices);
         Matter.Body.setDensity(bullet[me], 0.000001);
         bullet[me].endCycle = game.cycle + 140;
-        bullet[me].restitution = 0.3;
+        // bullet[me].restitution = 0.3;
         // bullet[me].frictionAir = 0.01;
-        bullet[me].friction = 0.15;
+        // bullet[me].friction = 0.15;
+        bullet[me].restitution = 0;
+        bullet[me].friction = 1;
+
         bullet[me].explodeRad = 350;
         bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
         bullet[me].minDmgSpeed = 1;
@@ -618,13 +621,13 @@ const b = {
     {
       name: "M80",
       ammo: 0,
-      ammoPack: 50,
+      ammoPack: 40,
       have: false,
       fire: function () {
         const me = bullet.length;
         const dir = mech.angle; // + Math.random() * 0.05;
         bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 10, b.fireAttributes(dir));
-        b.fireProps(12, 26, dir, me); //cd , speed
+        b.fireProps(8, 26, dir, me); //cd , speed
         b.drawOneBullet(bullet[me].vertices);
         Matter.Body.setDensity(bullet[me], 0.000001);
         bullet[me].totalCycles = 120;

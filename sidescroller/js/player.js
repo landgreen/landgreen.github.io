@@ -146,31 +146,13 @@ const mech = {
       game.mouseInGame.y - this.pos.y,
       game.mouseInGame.x - this.pos.x
     );
-    //smoothed translations
+    //smoothed mouse look translations
     const scale = 1.4;
-    this.transSmoothX =
-      canvas.width2 - this.pos.x - (game.mouse.x - canvas.width2) * scale;
-    this.transSmoothY =
-      canvas.height2 - this.pos.y - (game.mouse.y - canvas.height2) * scale;
+    this.transSmoothX = canvas.width2 - this.pos.x - (game.mouse.x - canvas.width2) * scale;
+    this.transSmoothY = canvas.height2 - this.pos.y - (game.mouse.y - canvas.height2) * scale;
 
-    // only track vertical camera if player is on ground   //or going past 50% of screen?
-    // if (this.onGround) {
-    //   this.lastGroundedPositionY += (this.pos.y - this.lastGroundedPositionY) * 0.05;
-    //   this.transSmoothX = canvas.width2 - this.pos.x - (game.mouse.x - canvas.width2) * scale;
-    //   this.transSmoothY = canvas.height2 - this.lastGroundedPositionY - (game.mouse.y - canvas.height2) * scale;
-    // } else {
-    //   this.transSmoothX = canvas.width2 - this.pos.x - (game.mouse.x - canvas.width2) * scale;
-    //   this.transSmoothY = canvas.height2 - this.lastGroundedPositionY - (game.mouse.y - canvas.height2) * scale;
-    // }
-
-    // this.transX = this.transX * 0.93 + this.transSmoothX * 0.07;
-    // this.transY = this.transY * 0.93 + this.transSmoothY * 0.07;
     this.transX += (this.transSmoothX - this.transX) * 0.07;
     this.transY += (this.transSmoothY - this.transY) * 0.07;
-    //zoom in/out based on mouse distance from player
-    //very cool, but too distracting and makes aiming even harder
-    // this.mouseZoom = this.mouseZoom*0.97 + (Math.sqrt(mX*mX+mY*mY)*0.5)*0.03
-    // game.zoom = canvas.height / (game.zoomScale + this.mouseZoom )
   },
   doCrouch: function () {
     if (!this.crouch) {

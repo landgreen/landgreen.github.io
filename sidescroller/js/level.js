@@ -10,6 +10,8 @@ const level = {
   levels: ["skyscrapers", "rooftops", "warehouse", "highrise", "towers"],
   onLevel: 0,
   start: function () {
+    game.zoomScale = 1400 //1400
+    game.setZoom(); //reset zoom
     // game.levelsCleared = 3; //for testing to simulate all possible mobs spawns
     if (game.levelsCleared === 0) {
       this.intro();
@@ -96,6 +98,8 @@ const level = {
     // spawn.randomBoss(-100, -1470);
   },
   bosses: function () {
+    game.zoomScale = 1600 //1400
+    game.setZoom();
     // spawn.setSpawnList();
     // spawn.setSpawnList();
     // game.levelsCleared = 7; //for testing to simulate all possible mobs spawns
@@ -183,6 +187,8 @@ const level = {
   },
   //empty map for testing mobs
   intro: function () {
+    game.zoomScale = 1200 //1400
+    game.setZoom();
     mech.setPosToSpawn(460, -100); //normal spawn
     level.enter.x = -10000; //offscreen
     level.enter.y = -400;
@@ -314,7 +320,7 @@ const level = {
   },
 
   rooftops: function () {
-    if (game.levelsCleared < level.levels.length) game.startZoomIn();
+    // if (game.levelsCleared < level.levels.length) game.startZoomIn();
     document.body.style.backgroundColor = "#eee4e4";
 
     if (Math.random() < 0.6) {
@@ -488,7 +494,8 @@ const level = {
     //spawn.randomBoss(4850, -1250,0.7);
   },
   skyscrapers: function () {
-    if (game.levelsCleared < level.levels.length) game.startZoomIn();
+    // if (game.levelsCleared < level.levels.length) game.startZoomIn();
+
     mech.setPosToSpawn(-50, -50); //normal spawn
     //mech.setPosToSpawn(1550, -1200); //spawn left high
     //mech.setPosToSpawn(1800, -2000); //spawn near exit
@@ -636,7 +643,8 @@ const level = {
     spawn.randomBoss(1700, -900, 0.4);
   },
   highrise: function () {
-    if (game.levelsCleared < level.levels.length) game.startZoomIn();
+    // if (game.levelsCleared < level.levels.length) game.startZoomIn();
+
     document.body.style.backgroundColor = "#fafcff";
     mech.setPosToSpawn(0, -700); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
@@ -780,7 +788,8 @@ const level = {
     spawn.randomBoss(-2450, -1100, 0);
   },
   warehouse: function () {
-    if (game.levelsCleared < level.levels.length) game.startZoomIn();
+    // if (game.levelsCleared < level.levels.length) game.startZoomIn();
+
     document.body.style.backgroundColor = "#bbb";
     mech.setPosToSpawn(25, -60); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
@@ -944,7 +953,7 @@ const level = {
     //spawn.randomSmallMob(2200, -1775); //
   },
   towers: function () {
-    if (game.levelsCleared < level.levels.length) game.startZoomIn();
+    // if (game.levelsCleared < level.levels.length) game.startZoomIn();
 
     if (Math.random() < 0.6) {
       //normal direction start in top left
