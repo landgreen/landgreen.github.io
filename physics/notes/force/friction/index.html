@@ -1324,46 +1324,41 @@
         <div class='example'>
             <svg viewBox="50 0 400 280">
                 <g transform='rotate(20) translate(150 -90)'>
-                    <rect x="-150" y="190" width="700" height="300" fill="none" />
                     <g stroke="#000" stroke-width="2" fill="none">
                         <path d="M-150 190 h700 " />
                     </g>
-
                     <rect x="110" y="110" width="80" height="80" rx="5" ry="5" fill="#bcd" stroke="#000" stroke-width="2" />
                     <text x="150" y="150" fill="black" text-anchor="middle" dominant-baseline="middle">m</text>
-
                     <line x1="150" y1="110" x2="150" y2="75" stroke="#000" stroke-width="2" />
                     <polygon points="0,0 -6,12 0,10 6,12" transform='translate(150 70)' style="fill:black;" />
                     <text text-anchor="middle" dominant-baseline="middle" x="153" y="60" fill="black">F
                         <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
                     </text>
-
                     <line x1="110" y1="150" x2="75" y2="150" stroke="#000" stroke-width="2" />
                     <polygon points="0,0 -6,12 0,10 6,12" transform='translate(70 150) rotate(-90)' style="fill:black;" />
                     <text x="51" y="154" fill="black">F
                         <tspan font-size="0.7em" dy="5" dx="-5">s</tspan>
                     </text>
-                    <!-- 
-                    <line x1="190" y1="150" x2="225" y2="150" stroke="#000" stroke-width="2" />
-                    <polygon points="0,0 -6,12 0,10 6,12" transform='translate(230 150) rotate(90)' style="fill:black;" />
-                    <text x="235" y="154" fill="black">mg sin Θ</text>
-
-                    <line x1="150" y1="190" x2="150" y2="225" stroke="#000" stroke-width="2" />
-                    <polygon points="0,0 -6,12 0,10 6,12" transform='translate(150 230) rotate(180)' style="fill:black;" />
-                    <text x="150" y="240" fill="black" text-anchor="middle" dominant-baseline="middle">mg cos Θ</text> -->
                 </g>
+                <line x1="250" y1="198" x2="250" y2="240" stroke="#000" stroke-width="2" />
+                <polygon points="0,0 -6,12 0,10 6,12" transform='translate(250 245) rotate(180)' style="fill:black;" />
+                <text x="250" y="257" fill="black" text-anchor="middle" dominant-baseline="middle">F
+                    <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+                </text>
                 <line x1="0" y1="270" x2="500" y2="270" stroke-width="2" stroke="#000" stroke-dasharray="8 8" />
                 <text x="370" y="263" fill="black">Θ</text>
             </svg>
-            <strong>Investigation:</strong> As we increase the angle of an incline, the masses on the incline will
-            begin to slide. What factors determine that angle? Mass, friction, gravity, ...
+            <strong>Example:</strong> As we increase the angle of an incline, a mass on the incline
+            will begin to slide.
+            <br><br>
+            What variables determine the coefficient of static friction?
             <details>
-                <summary>Solution</summary>
-                <p>We need to separate the gravity
+                <summary>coefficient of static friction solution</summary>
+                <p>
+                    We need to separate the gravity
                     <a href="..\..\review\vectors\index.html">vector</a> into components parallel and
                     perpendicular to the ground. Acceleration is zero in the perpendicular direction.
                 </p>
-
                 $$F_{g}=mg$$
                 <svg class="center" width="200" height="120">
                     <g transform='translate(100 1) rotate(0)'>
@@ -1383,9 +1378,7 @@
                     </g>
                 </svg>
 
-
                 <ul class="listing">
-
                     <li>
                         <div>
                             <p>
@@ -1408,7 +1401,6 @@
                 <p>Since the acceleration is zero all opposite forces must be the same.</p>
                 <svg viewBox="50 50 400 223">
                     <g transform='rotate(20) translate(150 -90)'>
-                        <rect x="-150" y="190" width="700" height="300" fill="none" />
                         <g stroke="#000" stroke-width="2" fill="none">
                             <path d="M-150 190 h700 " />
                         </g>
@@ -1446,8 +1438,102 @@
                 $$ \sin{\theta}= \mu_s \cos{\theta}$$
                 $$ \frac{\sin{\theta}}{\cos{\theta}}= \mu_s $$
                 $$ \tan{\theta}= \mu_s $$
-                <p>Interesting, the maximum angle before an object starts to slide is only dependant on the coefficient
-                    of static friction.</p>
+                <p>The coefficient of static friction is dependent on the maximum angle before an object starts to
+                    slide, not the mass or the acceleration of gravity!</p>
+            </details>
+            <br>
+            What variables determine the coefficient of kinetic friction?
+            <details>
+                <summary>coefficient of kinetic friction solution</summary>
+                <p>
+                    We need to separate the gravity
+                    <a href="..\..\review\vectors\index.html">vector</a> into components parallel and
+                    perpendicular to the ground. Acceleration is zero in the perpendicular direction.
+                </p>
+                $$F_{g}=mg$$
+                <svg class="center" width="200" height="120">
+                    <g transform='translate(100 1) rotate(0)'>
+                        <line x1="0" y1="0" x2="0" y2="95" style="stroke:#000;stroke-width:2" />
+                        <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 100)' />
+                        <text x="0" y="115" text-anchor="middle" fill="black">Fg</text>
+                    </g>
+                    <g transform='translate(100 1) rotate(20)'>
+                        <line x1="0" y1="0" x2="0" y2="89" style="stroke:#000;stroke-width:2" />
+                        <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 94)' />
+                        <text x="0" y="109" text-anchor="middle" fill="black">Fg⊥</text>
+                    </g>
+                    <g transform='translate(100 1) rotate(-70)'>
+                        <line x1="0" y1="0" x2="0" y2="29" style="stroke:#000;stroke-width:2" />
+                        <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 34)' />
+                        <text x="0" y="49" text-anchor="middle" fill="black">Fg∥</text>
+                    </g>
+                </svg>
+
+                <ul class="listing">
+                    <li>
+                        <div>
+                            <p>
+                                $$\text{perpendicular to ground}$$
+                            </p>
+                            $$F_{g\perp}=F_{g}\cos(\theta)$$
+                            $$F_{g\perp}=mg\cos(\theta)$$
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p>
+                                $$\text{parallel to ground}$$
+                            </p>
+                            $$F_{g\parallel}=F_{g}\sin(\theta)$$
+                            $$F_{g\parallel}=mg\sin(\theta)$$
+                        </div>
+                    </li>
+                </ul>
+                <p>Since the object isn't accelerating perpendicular to the ground, we can set the normal force equal
+                    to the gravity component.</p>
+                <svg viewBox="50 50 400 223">
+                    <g transform='rotate(20) translate(150 -90)'>
+                        <g stroke="#000" stroke-width="2" fill="none">
+                            <path d="M-150 190 h700 " />
+                        </g>
+
+                        <rect x="110" y="110" width="80" height="80" rx="5" ry="5" fill="#bcd" stroke="#000"
+                            stroke-width="2" />
+                        <text x="150" y="150" fill="black" text-anchor="middle" dominant-baseline="middle">m</text>
+
+                        <line x1="150" y1="110" x2="150" y2="75" stroke="#000" stroke-width="2" />
+                        <polygon points="0,0 -6,12 0,10 6,12" transform='translate(150 70)' style="fill:black;" />
+                        <text text-anchor="middle" dominant-baseline="middle" x="153" y="60" fill="black">mg cos Θ</text>
+
+                        <line x1="110" y1="150" x2="75" y2="150" stroke="#000" stroke-width="2" />
+                        <polygon points="0,0 -6,12 0,10 6,12" transform='translate(70 150) rotate(-90)' style="fill:black;" />
+                        <!-- <text x="65" y="150" fill="black" text-anchor="end" dominant-baseline="middle">mg sin Θ</text> -->
+                        <text x="62" y="150" fill="black" text-anchor="middle" dominant-baseline="middle">F
+                            <tspan font-size="0.7em" dy="5" dx="-5">k</tspan>
+                        </text>
+
+
+                        <line x1="190" y1="150" x2="225" y2="150" stroke="#000" stroke-width="2" />
+                        <polygon points="0,0 -6,12 0,10 6,12" transform='translate(230 150) rotate(90)' style="fill:black;" />
+                        <text x="235" y="150" fill="black" dominant-baseline="middle">mg sin Θ</text>
+
+                        <line x1="150" y1="190" x2="150" y2="225" stroke="#000" stroke-width="2" />
+                        <polygon points="0,0 -6,12 0,10 6,12" transform='translate(150 230) rotate(180)' style="fill:black;" />
+                        <text x="150" y="240" fill="black" text-anchor="middle" dominant-baseline="middle">mg cos Θ</text>
+                    </g>
+                    <line x1="0" y1="270" x2="500" y2="270" stroke-width="2" stroke="#000" stroke-dasharray="8 8" />
+                    <text x="370" y="263" fill="black">Θ</text>
+                </svg>
+                $$\sum F = ma$$
+                $$-F_k + mg \sin{\theta} = ma$$
+                $$-\mu_kF_N + mg \sin{\theta} = ma$$
+                $$-\mu_k m g \cos{\theta} + mg \sin{\theta} = ma$$
+                $$-\mu_k g \cos{\theta} + g \sin{\theta} = a$$
+                $$-\mu_k g \cos{\theta} = a - g \sin{\theta}$$
+                $$\mu_k g \cos{\theta} = g \sin{\theta}-a$$
+                $$\mu_k = \frac{g \sin{\theta}-a}{g \cos{\theta}}$$
+                <p>The coefficient of kinetic friction is dependent on the acceleration of the body, the acceleration
+                    of gravity and the angle of the incline.</p>
             </details>
         </div>
     </article>
