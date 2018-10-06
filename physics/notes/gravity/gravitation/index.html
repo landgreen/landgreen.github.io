@@ -423,9 +423,14 @@
     </article>
     <canvas class='center' id='grav1' height='400' width='600' onclick="grav1(this)"> </canvas>
     <article>
-        Click the mouse to push the masses around. Number of particles =
-        <input id='num1' type="number" step="1" min='1' max='200' value='6' style="width:60px;">
-        </p>
+        <div class='center'>
+            masses =
+            <input id='num1-slider' type="range" step="0.001" value="1" min="0" max="2" style="width: 200px;">
+            <input id='num1' type="number" step="1" value="10" min="0" max="99" style="width: 42px;">
+        </div>
+
+        <!-- <input id='num1' type="number" step="1" min='1' max='200' value='6' style="width:60px;">
+        </p> -->
 
         <div class='example'>
             <strong>Example:</strong> Find the acceleration of gravity for an object on the surface of Earth.
@@ -466,210 +471,7 @@
             </details>
         </div>
 
-        <div class='example'>
-            <button id="random-mass" type="button">Randomize Planet</button>
-            <table border>
-                <tr align=center>
-                    <th align=left>Planet</th>
-                    <th>mass (kg)</th>
-                    <th>radius (km)</th>
-                    <th>g (m/s²)</th>
-                </tr>
-                <tr align=center>
-                    <td align=left>Mercury</td>
-                    <td>3.301 × 10<sup>23</sup>
-                    </td>
-                    <td>2440</td>
-                    <td>3.7</td>
-                </tr>
-                <tr align=center>
-                    <td align=left>Venus</td>
-                    <td>4.867 × 10<sup>24</sup>
-                    </td>
-                    <td>6052</td>
-                    <td>8.9</td>
-                </tr>
-                <tr align=center>
-                    <td align=left>Earth</td>
-                    <td>5.972 × 10<sup>24</sup>
-                    </td>
-                    <td>6371</td>
-                    <td>9.8</td>
-                </tr>
-                <!-- <tr align=center>
-                    <td align=left>Moon</td>
-                    <td>7.346 × 10<sup>22</sup>
-                    </td>
-                    <td>1737</td>
-                    <td>1.6</td>
-                </tr> -->
-                <tr align=center>
-                    <td align=left>Mars</td>
-                    <td>6.417 × 10<sup>23</sup>
-                    </td>
-                    <td>3390</td>
-                    <td>3.7</td>
-                </tr>
-            </table>
-            <svg id="SVG-graph-1" viewBox="0 0 600 300"> </svg>
-            <strong>Example:</strong> Which terrestrial planet is being graphed?
-            <details>
-                <summary>hint</summary>
-                <p>Hover your mouse over the graph. Move your mouse horizontally to check the radius for each planet in
-                    the
-                    chart above. If the acceleration and the radius match it is the correct planet.</p>
-            </details>
-            <details>
-                <summary>answer</summary>
-                <p id="random-mass-name"></p>
-            </details>
-            <script defer>
-                (function () {
-                    const GConst = 6.674e-11;
-                    const masses = [{
-                        mass: 3.301e23,
-                        name: "Mercury"
-                    }, {
-                        mass: 4.867e24,
-                        name: "Venus"
-                    }, {
-                        mass: 5.972e24,
-                        name: "Earth"
-                    }, {
-                        mass: 6.417e23,
-                        name: "Mars"
-                    }]; //{ mass: 7.346e22, name: "The Moon" },
-                    let currentPlanet = Math.floor(masses.length * Math.random());
-                    let Mass = masses[currentPlanet].mass;
-                    document.getElementById("random-mass-name").innerHTML = masses[currentPlanet].name;
-                    let settings = {
-                        x0: 20,
-                        y0: 280,
-                        // stroke: "rgba(0,100,120,1)",
-                        stroke: "none",
-                        fill: "rgba(200,50,0,0.3)",
-                        positiveOnly: true,
-                        strokeWidth: 4,
-                        xScale: 0.05,
-                        yScale: 10,
-                        gridSize: 100,
-                        xLabel: "distance (km)",
-                        yLabel: "gravity (m/s²)",
-                        showMouseCoords: true,
-                    }
 
-                    funGraphSVG("SVG-graph-1", x => GConst * Mass / x / x / 1000000, settings);
-                    document.getElementById("random-mass").addEventListener("click", event => {
-                        let newPlanet = Math.floor(masses.length * Math.random())
-                        while (newPlanet === currentPlanet) {
-                            newPlanet = Math.floor(masses.length * Math.random())
-                        }
-                        currentPlanet = newPlanet
-                        Mass = masses[currentPlanet].mass;
-                        document.getElementById("random-mass-name").innerHTML = masses[currentPlanet].name;
-                        settings.updatePath = true
-                        funGraphSVG("SVG-graph-1", x => GConst * Mass / x / x / 1000000, settings);
-                    });
-                })()
-            </script>
-        </div>
-        <div class='example'>
-            <button id="random-mass-2" type="button">Randomize Planet</button>
-            <table border>
-                <tr align=center>
-                    <th align=left>Planet</th>
-                    <th>mass (kg)</th>
-                    <th>radius (km)</th>
-                    <th>g (m/s²)</th>
-                </tr>
-                <tr align=center>
-                    <td align=left>Jupiter</td>
-                    <td>1.899 × 10<sup>27</sup>
-                    </td>
-                    <td>69&#8239;911</td>
-                    <td>?</td>
-                    <!-- 24.79 -->
-                </tr>
-                <tr align=center>
-                    <td align=left>Saturn</td>
-                    <td>5.685 × 10<sup>26</sup>
-                    </td>
-                    <td>58&#8239;232</td>
-                    <td>?</td>
-                    <!-- 10.44 -->
-                </tr>
-                <tr align=center>
-                    <td align=left>Uranus</td>
-                    <td>8.68 × 10<sup>25</sup>
-                    </td>
-                    <td>25&#8239;362</td>
-                    <td>?</td>
-                    <!-- 8.87 -->
-                </tr>
-                <tr align=center>
-                    <td align=left>Neptune</td>
-                    <td>1.024 × 10<sup>26</sup>
-                    </td>
-                    <td>24&#8239;622</td>
-                    <td>?</td>
-                    <!-- 11.15 -->
-                </tr>
-            </table>
-            <svg id="SVG-graph-2" viewBox="0 0 600 300"> </svg>
-            <strong>Example:</strong> Which gas giant is being graphed? You need to do math for this one.
-            <details>
-                <summary>answer</summary>
-                <p id="random-mass-name-2"></p>
-            </details>
-            <script defer>
-                (function () {
-                    const GConst = 6.674e-11;
-                    const masses = [{
-                        mass: 1.899e27,
-                        name: "Jupiter"
-                    }, {
-                        mass: 5.685e26,
-                        name: "Saturn"
-                    }, {
-                        mass: 8.68e25,
-                        name: "Uranus"
-                    }, {
-                        mass: 1.024e26,
-                        name: "Neptune"
-                    }]
-                    let currentPlanet = Math.floor(masses.length * Math.random())
-                    let Mass = masses[currentPlanet].mass;
-                    document.getElementById("random-mass-name-2").innerHTML = masses[currentPlanet].name;
-                    let settings = {
-                        x0: 20,
-                        y0: 280,
-                        stroke: "none",
-                        fill: "rgba(0,100,120,0.3)",
-                        positiveOnly: true,
-                        strokeWidth: 4,
-                        xScale: 0.005,
-                        yScale: 5,
-                        gridSize: 100,
-                        xLabel: "distance (km)",
-                        yLabel: "gravity (m/s²)",
-                        showMouseCoords: true,
-                    }
-                    funGraphSVG("SVG-graph-2", x => GConst * Mass / x / x / 1000000, settings);
-                    document.getElementById("random-mass-2").addEventListener("click", event => {
-                        let newPlanet = Math.floor(masses.length * Math.random())
-                        while (newPlanet === currentPlanet) {
-                            newPlanet = Math.floor(masses.length * Math.random())
-                        }
-                        currentPlanet = newPlanet
-                        Mass = masses[currentPlanet].mass;
-                        document.getElementById("random-mass-name-2").innerHTML = masses[currentPlanet].name;
-                        settings.updatePath = true
-                        funGraphSVG("SVG-graph-2", x => GConst * Mass / x / x / 1000000, settings);
-
-                    });
-                })()
-            </script>
-        </div>
         <h2 class="underlined ">Inverse-Square Law</h2>
         <h1>$$\frac{1}{r^2}$$</h1>
         <p>
@@ -1197,6 +999,210 @@
             </details>
         </div>
 
+        <div class='example'>
+            <button id="random-mass" type="button">Randomize Planet</button>
+            <table border>
+                <tr align=center>
+                    <th align=left>Planet</th>
+                    <th>mass (kg)</th>
+                    <th>radius (km)</th>
+                    <th>g (m/s²)</th>
+                </tr>
+                <tr align=center>
+                    <td align=left>Mercury</td>
+                    <td>3.301 × 10<sup>23</sup>
+                    </td>
+                    <td>2440</td>
+                    <td>3.7</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Venus</td>
+                    <td>4.867 × 10<sup>24</sup>
+                    </td>
+                    <td>6052</td>
+                    <td>8.9</td>
+                </tr>
+                <tr align=center>
+                    <td align=left>Earth</td>
+                    <td>5.972 × 10<sup>24</sup>
+                    </td>
+                    <td>6371</td>
+                    <td>9.8</td>
+                </tr>
+                <!-- <tr align=center>
+                    <td align=left>Moon</td>
+                    <td>7.346 × 10<sup>22</sup>
+                    </td>
+                    <td>1737</td>
+                    <td>1.6</td>
+                </tr> -->
+                <tr align=center>
+                    <td align=left>Mars</td>
+                    <td>6.417 × 10<sup>23</sup>
+                    </td>
+                    <td>3390</td>
+                    <td>3.7</td>
+                </tr>
+            </table>
+            <svg id="SVG-graph-1" viewBox="0 0 600 300"> </svg>
+            <strong>Example:</strong> Which terrestrial planet is being graphed?
+            <details>
+                <summary>hint</summary>
+                <p>Hover your mouse over the graph. Move your mouse horizontally to check the radius for each planet in
+                    the
+                    chart above. If the acceleration and the radius match it is the correct planet.</p>
+            </details>
+            <details>
+                <summary>answer</summary>
+                <p id="random-mass-name"></p>
+            </details>
+            <script defer>
+                (function () {
+                    const GConst = 6.674e-11;
+                    const masses = [{
+                        mass: 3.301e23,
+                        name: "Mercury"
+                    }, {
+                        mass: 4.867e24,
+                        name: "Venus"
+                    }, {
+                        mass: 5.972e24,
+                        name: "Earth"
+                    }, {
+                        mass: 6.417e23,
+                        name: "Mars"
+                    }]; //{ mass: 7.346e22, name: "The Moon" },
+                    let currentPlanet = Math.floor(masses.length * Math.random());
+                    let Mass = masses[currentPlanet].mass;
+                    document.getElementById("random-mass-name").innerHTML = masses[currentPlanet].name;
+                    let settings = {
+                        x0: 20,
+                        y0: 280,
+                        // stroke: "rgba(0,100,120,1)",
+                        stroke: "none",
+                        fill: "rgba(200,50,0,0.3)",
+                        positiveOnly: true,
+                        strokeWidth: 4,
+                        xScale: 0.05,
+                        yScale: 10,
+                        gridSize: 100,
+                        xLabel: "distance (km)",
+                        yLabel: "gravity (m/s²)",
+                        showMouseCoords: true,
+                    }
+
+                    funGraphSVG("SVG-graph-1", x => GConst * Mass / x / x / 1000000, settings);
+                    document.getElementById("random-mass").addEventListener("click", event => {
+                        let newPlanet = Math.floor(masses.length * Math.random())
+                        while (newPlanet === currentPlanet) {
+                            newPlanet = Math.floor(masses.length * Math.random())
+                        }
+                        currentPlanet = newPlanet
+                        Mass = masses[currentPlanet].mass;
+                        document.getElementById("random-mass-name").innerHTML = masses[currentPlanet].name;
+                        settings.updatePath = true
+                        funGraphSVG("SVG-graph-1", x => GConst * Mass / x / x / 1000000, settings);
+                    });
+                })()
+            </script>
+        </div>
+        <div class='example'>
+            <button id="random-mass-2" type="button">Randomize Planet</button>
+            <table border>
+                <tr align=center>
+                    <th align=left>Planet</th>
+                    <th>mass (kg)</th>
+                    <th>radius (km)</th>
+                    <th>g (m/s²)</th>
+                </tr>
+                <tr align=center>
+                    <td align=left>Jupiter</td>
+                    <td>1.899 × 10<sup>27</sup>
+                    </td>
+                    <td>69&#8239;911</td>
+                    <td>?</td>
+                    <!-- 24.79 -->
+                </tr>
+                <tr align=center>
+                    <td align=left>Saturn</td>
+                    <td>5.685 × 10<sup>26</sup>
+                    </td>
+                    <td>58&#8239;232</td>
+                    <td>?</td>
+                    <!-- 10.44 -->
+                </tr>
+                <tr align=center>
+                    <td align=left>Uranus</td>
+                    <td>8.68 × 10<sup>25</sup>
+                    </td>
+                    <td>25&#8239;362</td>
+                    <td>?</td>
+                    <!-- 8.87 -->
+                </tr>
+                <tr align=center>
+                    <td align=left>Neptune</td>
+                    <td>1.024 × 10<sup>26</sup>
+                    </td>
+                    <td>24&#8239;622</td>
+                    <td>?</td>
+                    <!-- 11.15 -->
+                </tr>
+            </table>
+            <svg id="SVG-graph-2" viewBox="0 0 600 300"> </svg>
+            <strong>Example:</strong> Which gas giant is being graphed? You need to do math for this one.
+            <details>
+                <summary>answer</summary>
+                <p id="random-mass-name-2"></p>
+            </details>
+            <script defer>
+                (function () {
+                    const GConst = 6.674e-11;
+                    const masses = [{
+                        mass: 1.899e27,
+                        name: "Jupiter"
+                    }, {
+                        mass: 5.685e26,
+                        name: "Saturn"
+                    }, {
+                        mass: 8.68e25,
+                        name: "Uranus"
+                    }, {
+                        mass: 1.024e26,
+                        name: "Neptune"
+                    }]
+                    let currentPlanet = Math.floor(masses.length * Math.random())
+                    let Mass = masses[currentPlanet].mass;
+                    document.getElementById("random-mass-name-2").innerHTML = masses[currentPlanet].name;
+                    let settings = {
+                        x0: 20,
+                        y0: 280,
+                        stroke: "none",
+                        fill: "rgba(0,100,120,0.3)",
+                        positiveOnly: true,
+                        strokeWidth: 4,
+                        xScale: 0.005,
+                        yScale: 5,
+                        gridSize: 100,
+                        xLabel: "distance (km)",
+                        yLabel: "gravity (m/s²)",
+                        showMouseCoords: true,
+                    }
+                    funGraphSVG("SVG-graph-2", x => GConst * Mass / x / x / 1000000, settings);
+                    document.getElementById("random-mass-2").addEventListener("click", event => {
+                        let newPlanet = Math.floor(masses.length * Math.random())
+                        while (newPlanet === currentPlanet) {
+                            newPlanet = Math.floor(masses.length * Math.random())
+                        }
+                        currentPlanet = newPlanet
+                        Mass = masses[currentPlanet].mass;
+                        document.getElementById("random-mass-name-2").innerHTML = masses[currentPlanet].name;
+                        settings.updatePath = true
+                        funGraphSVG("SVG-graph-2", x => GConst * Mass / x / x / 1000000, settings);
+
+                    });
+                })()
+            </script>
+        </div>
 
         <p id='gpe' class='underlined'> Gravitational Potential Energy</p>
         <p>Our old gravitational potential energy equation (U=mgh) can be made more accurate if we replace g = 9.8 with
@@ -1261,10 +1267,17 @@
             deeper into the
             <a href='https://xkcd.com/681/'>gravity well</a>.
         </p>
+        <div class='center'>
+            masses =
+            <input id='num2-slider' type="range" step="0.001" value="1" min="0" max="2" style="width: 200px;">
+            <input id='num2' type="number" step="1" value="10" min="0" max="99" style="width: 42px;">
+        </div>
         <canvas class='center' id='grav2' height='400' width='600' onclick="grav2(this)"> </canvas>
-        <p> Poke around with your mouse. Number of particles =
-            <input id='num2' type="number" step="1" min='1' max='100' value='6' style="width:60px;">
-        </p>
+
+
+
+
+
 
         <div class='example'>
             <strong>Example:</strong> Calculate the gravitational potential energy between two 100&#8239;000 kg masses

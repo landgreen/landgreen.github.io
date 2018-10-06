@@ -15,7 +15,7 @@
 	<title>Conservation of Energy</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
-	<script defer src='../../../lib/randomColor.min.js'></script>
+	<!-- <script defer src='../../../lib/randomColor.min.js'></script> -->
 	<script defer src="spring-gravity.js"></script>
 	<script defer src="spring.js"></script>
 
@@ -59,7 +59,8 @@
 			</div>
 			<div>
 				<p>
-					This spring simulation is aligned vertically. It has gravitational potential energy in addition to kinetic and spring energy.
+					This spring simulation is aligned vertically. It has gravitational potential energy in addition to kinetic and
+					spring energy.
 				</p>
 				<br>
 				<br> When is kinetic energy the highest?
@@ -79,8 +80,10 @@
 		</div>
 
 		<h1 class='underlined'>Conservation of Energy</h1>
-		<p>Energy is conserved. This means it can't be reduced or increased, but as systems change, the energy changes form. Since
-			total energy is always the same value, we can build an equation that sets the total energy at one time equal to the total
+		<p>Energy is conserved. This means it can't be reduced or increased, but as systems change, the energy changes form.
+			Since
+			total energy is always the same value, we can build an equation that sets the total energy at one time equal to the
+			total
 			energy at any other time.
 		</p>
 		<div class='definition'>
@@ -89,7 +92,8 @@
 			\( E_i \) = initial energy[J]
 			<br>\( E_f \) = final energy [J]
 		</div>
-		<p>This equation is bare bones right now. We need to change it for each situation. We should only include energy types that
+		<p>This equation is bare bones right now. We need to change it for each situation. We should only include energy
+			types that
 			are changed. For now we can calculate three types of energy.</p>
 
 		<li>If an object
@@ -100,22 +104,29 @@
 			<strong>spring is compressed</strong>, include spring potential energy.</li>
 
 
-		<p>For example, if a ball at rest starts high up and falls down, the conservation of energy equation should only include kinetic
+		<p>For example, if a ball at rest starts high up and falls down, the conservation of energy equation should only
+			include kinetic
 			and gravitational energy.</p>
 		$$K_i + U_i = K_f + U_f$$ $$\frac{1}{2}mu^2 + mgh_i = \frac{1}{2}mv^2 + mgh_f$$
-		<p>We can often set some the initial or final energies to zero as well. Initial kinetic energy is zero because the ball starts
+		<p>We can often set some the initial or final energies to zero as well. Initial kinetic energy is zero because the
+			ball starts
 			at rest. Choosing the final height to be zero will set the final gravitational potential energy to zero.</p>
 		$$mgh_i = \frac{1}{2}mv^2$$
-		<p>Also, look for variables that show up in every term. In this case mass can be ignored by dividing everything by mass.</p>
+		<p>Also, look for variables that show up in every term. In this case mass can be ignored by dividing everything by
+			mass.</p>
 		$$gh_i = \frac{1}{2}v^2$$
 
 		<div class='example'>
-			<b>Example:</b> A ball falls from rest off a 0.80 m table. How fast is the ball going just before it hits the ground?
+			<b>Example:</b> A ball falls from rest off a 0.80 m table. How fast is the ball going just before it hits the
+			ground?
 			<details>
 				<summary>solution</summary>
-				$$U_g = K$$ $$mgh_{i} = \tfrac{1}{2}mv^{2}$$ $$\text{m is in every term.}$$ $$ \frac{{\color{#f08}m}gh_{i}}{\color{#f08}m}
-				= \frac{\tfrac{1}{2}{\color{#f08}m}v^{2}}{\color{#f08}m}$$ $$gh_{i} = \tfrac{1}{2}v^{2}$$ $$(9.8 \, \mathrm{\tfrac{m}{s^2}})(0.80\,
-				\mathrm{m}) = \tfrac{1}{2}v^{2}$$ $$15.68\, \mathrm{\tfrac{m^2}{s^2}} = v^{2}$$ $$\pm 3.959\, \mathrm{ \tfrac{m}{s} }
+				$$U_g = K$$ $$mgh_{i} = \tfrac{1}{2}mv^{2}$$ $$\text{m is in every term.}$$ $$
+				\frac{{\color{#f08}m}gh_{i}}{\color{#f08}m}
+				= \frac{\tfrac{1}{2}{\color{#f08}m}v^{2}}{\color{#f08}m}$$ $$gh_{i} = \tfrac{1}{2}v^{2}$$ $$(9.8 \,
+				\mathrm{\tfrac{m}{s^2}})(0.80\,
+				\mathrm{m}) = \tfrac{1}{2}v^{2}$$ $$15.68\, \mathrm{\tfrac{m^2}{s^2}} = v^{2}$$ $$\pm 3.959\, \mathrm{ \tfrac{m}{s}
+				}
 				= v$$
 			</details>
 		</div>
@@ -123,45 +134,56 @@
 			<b>Example:</b> If you throw a half-filled water bottle straight up at 10 m/s, how high will it go?
 			<details>
 				<summary>solution</summary>
-				$$K = U_g$$ $$\tfrac{1}{2}mv^{2} = mgh$$ $$\tfrac{1}{2}v^{2} = gh$$ $$\tfrac{1}{2}(10)^{2} = 9.8h$$ $$50 = 9.8h$$ $$5.10
+				$$K = U_g$$ $$\tfrac{1}{2}mv^{2} = mgh$$ $$\tfrac{1}{2}v^{2} = gh$$ $$\tfrac{1}{2}(10)^{2} = 9.8h$$ $$50 = 9.8h$$
+				$$5.10
 				\, \mathrm{m} = h$$
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> A 0.43 kg soccer ball kicked at 10 m/s rolls down a 30 m tall hill. How fast will the ball be moving at the
+			<b>Example:</b> A 0.43 kg soccer ball kicked at 10 m/s rolls down a 30 m tall hill. How fast will the ball be moving
+			at the
 			bottom of the hill?
 			<details>
 				<summary>solution</summary>
-				$$U_{i} + K_{i} = U_{f} + K_{f}$$ $$mgh_{i} + \tfrac{1}{2}mu^{2} = mgh_{f} +\tfrac{1}{2}mv^{2}$$ $$gh_{i} + \tfrac{1}{2}u^{2}
-				= gh_{f} +\tfrac{1}{2}v^{2}$$ $$(9.8)(30) + \frac{1}{2}(10)^{2} = (9.8)(0) + \frac{1}{2}v^{2}$$ $$294 + 50 = \tfrac{1}{2}v^{2}$$
+				$$U_{i} + K_{i} = U_{f} + K_{f}$$ $$mgh_{i} + \tfrac{1}{2}mu^{2} = mgh_{f} +\tfrac{1}{2}mv^{2}$$ $$gh_{i} +
+				\tfrac{1}{2}u^{2}
+				= gh_{f} +\tfrac{1}{2}v^{2}$$ $$(9.8)(30) + \frac{1}{2}(10)^{2} = (9.8)(0) + \frac{1}{2}v^{2}$$ $$294 + 50 =
+				\tfrac{1}{2}v^{2}$$
 				$$344 = \tfrac{1}{2}v^{2}$$ $$\pm 26.2 \mathrm{\tfrac{m}{s}} = v$$
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your spring has a spring
+			<b>Example:</b> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your spring has
+			a spring
 			constant of 200.0 kg/s². How high could the ball go just using the energy stored in the spring?
 			<details>
 				<summary>solution</summary>
-				$$U_{s} = U_{g}$$ $$\tfrac{1}{2}kx^{2} = mgh$$ $$\text{Can't divide by mass}$$ $$\tfrac{1}{2}(200)(0.15)^{2} = (0.2)(9.8)h$$
+				$$U_{s} = U_{g}$$ $$\tfrac{1}{2}kx^{2} = mgh$$ $$\text{Can't divide by mass}$$ $$\tfrac{1}{2}(200)(0.15)^{2} =
+				(0.2)(9.8)h$$
 				$$1.15 \, \mathrm{m} = h$$
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> A roller coaster cart starts at rest 126 m high on the top of the first drop on "Superman: Escape from Krypton"
+			<b>Example:</b> A roller coaster cart starts at rest 126 m high on the top of the first drop on "Superman: Escape
+			from Krypton"
 			at Six Flags Magic Mountain. How fast is the cart going at the bottom of the hill?
 			<details>
 				<summary>solution</summary>
-				$$U_{i} + K_{i} = U_{f} + K_{f}$$ $$mgh_{i} + \tfrac{1}{2}mu^{2} = mgh_{f} +\tfrac{1}{2}mv^{2}$$ $$gh_{i} + \tfrac{1}{2}u^{2}
-				= gh_{f} +\tfrac{1}{2}v^{2}$$ $$(9.8)(126) + \tfrac{1}{2}(0)^{2} = (9.8)(0) +\tfrac{1}{2}v^{2}$$ $$1234.8 = \tfrac{1}{2}v^{2}$$
+				$$U_{i} + K_{i} = U_{f} + K_{f}$$ $$mgh_{i} + \tfrac{1}{2}mu^{2} = mgh_{f} +\tfrac{1}{2}mv^{2}$$ $$gh_{i} +
+				\tfrac{1}{2}u^{2}
+				= gh_{f} +\tfrac{1}{2}v^{2}$$ $$(9.8)(126) + \tfrac{1}{2}(0)^{2} = (9.8)(0) +\tfrac{1}{2}v^{2}$$ $$1234.8 =
+				\tfrac{1}{2}v^{2}$$
 				$$\pm 49.69 \, \mathrm{\tfrac{m}{s}} = v$$
 			</details>
 		</div>
 		<div class='example'>
-			<b>Example:</b> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your spring has a spring
+			<b>Example:</b> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your spring has
+			a spring
 			constant of 200.0 kg/s². How fast should the ball be moving right after it leaves the spring?
 			<details>
 				<summary>solution</summary>
-				$$U_{s} = K$$ $$\tfrac{1}{2}kx^{2} = \tfrac{1}{2}mv^{2}$$ $$\tfrac{1}{2}(200)(0.15)^{2} = \tfrac{1}{2}(0.2)v^{2}$$ $$22.5
+				$$U_{s} = K$$ $$\tfrac{1}{2}kx^{2} = \tfrac{1}{2}mv^{2}$$ $$\tfrac{1}{2}(200)(0.15)^{2} = \tfrac{1}{2}(0.2)v^{2}$$
+				$$22.5
 				= v^{2}$$ $$\pm 4.74 \, \mathrm{\tfrac{m}{s}} = v$$
 			</details>
 		</div>
@@ -169,7 +191,9 @@
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
 	</div>
-	<script> renderMathInElement(document.body); </script>
+	<script>
+		renderMathInElement(document.body);
+	</script>
 </body>
 
 </html>

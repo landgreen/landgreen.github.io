@@ -1,4 +1,4 @@
-const setup2 = function() {
+const setup2 = function () {
   var canvas = document.getElementById("grav2");
   var ctx = canvas.getContext("2d");
   ctx.font = "300 30px Arial";
@@ -14,38 +14,36 @@ function grav2(el) {
   var ctx = canvas.getContext("2d");
 
   //___________________get mouse input___________________
-  canvas.addEventListener("mousedown", function(event) {
+  canvas.addEventListener("mousedown", function (event) {
     Particle.repulse(q, {
       x: (event.offsetX * canvas.width) / canvas.clientWidth,
       y: (event.offsetY * canvas.height) / canvas.clientHeight
     });
   });
 
-  let pause = false;
-  el.addEventListener("mouseleave", function() {
-    pause = true;
-    // setTimeout(function() {
-    //   Particle.scalarField(q, 1, fMag);
-    // }, 100);
-  });
-  el.addEventListener("mouseenter", function() {
-    pause = false;
-    if (!pause) requestAnimationFrame(cycle);
-  });
-
-  let q = []; //holds the Particles
-
-  document.getElementById("num2").addEventListener(
-    "input",
-    function() {
-      reset();
+  document.getElementById("num2").addEventListener("input", () => {
+      const number = Math.floor(Math.min(document.getElementById("num2").value, 999))
+      document.getElementById("num2-slider").value = Math.log10(number)
+      reset(number);
     },
     false
   );
 
+  document.getElementById("num2-slider").addEventListener("input", () => {
+      const convertLog = Math.pow(10, document.getElementById("num2-slider").value)
+      const number = Math.floor(Math.min(convertLog, 999))
+      document.getElementById("num2").value = number
+      reset(number);
+    },
+    false
+  );
+
+  document.getElementById("num2").addEventListener("input", () => reset(), false);
+
+  let q = []; //holds the Particles
   let fMag;
 
-  const reset = function() {
+  const reset = function () {
     // q = [];
     const numberRequested = Math.floor(Math.min(document.getElementById("num2").value, 100));
     const diff = numberRequested - q.length;
@@ -59,15 +57,18 @@ function grav2(el) {
     fMag = -15000 / Particle.totalMass(q); //calibrate color magnitude.
   };
 
-  reset();
+  reset(Math.floor(Math.min(document.getElementById("num2").value, 99)));
+
 
   function cycle() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    Particle.integration(q, 0.1);
-    Particle.scalarField(q, ctx, canvas, fMag);
-    // Particle.vectorColorField(q, ctx, canvas, fMag);
-    Particle.bounds(q, canvas);
-    if (!pause) requestAnimationFrame(cycle);
+    if (checkVisible(canvas)) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      Particle.integration(q, 0.1);
+      Particle.scalarField(q, ctx, canvas, fMag);
+      // Particle.vectorColorField(q, ctx, canvas, fMag);
+      Particle.bounds(q, canvas);
+    }
+    requestAnimationFrame(cycle);
   }
   requestAnimationFrame(cycle);
 }
