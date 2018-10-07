@@ -10,7 +10,7 @@
 
 //___________________get mouse input___________________
 
-var particles = function(button) {
+var particles = function (button) {
   button.onclick = null; //stops the function from running after first run
   // canvas setup
   var canvasID = "canvas0";
@@ -32,7 +32,7 @@ var particles = function(button) {
     airFriction: 1
   };
 
-  document.getElementById("energy").addEventListener("click", function() {
+  document.getElementById("energy").addEventListener("click", function () {
     if (physics.restitution === 1) {
       physics.restitution = 0.8;
       physics.airFriction = 0.9995;
@@ -44,7 +44,7 @@ var particles = function(button) {
     }
   });
 
-  document.getElementById("pause").addEventListener("click", function() {
+  document.getElementById("pause").addEventListener("click", function () {
     if (pause) {
       pause = false;
       render();
@@ -65,23 +65,24 @@ var particles = function(button) {
     this.ke = 0;
     this.pe = 0;
     this.fillColor = fillColor;
-    this.draw = function() {
+    this.draw = function () {
+      ctx.lineWidth = 1.5;
       ctx.shadowColor = "#999";
       ctx.shadowBlur = 6;
       ctx.fillStyle = this.fillColor;
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
       ctx.fill();
-      // ctx.stroke();
+      ctx.stroke();
       ctx.shadowColor = "transparent";
     };
-    this.move = function() {
+    this.move = function () {
       this.x += this.Vx;
       this.y += this.Vy;
       this.Vx *= physics.airFriction;
       this.Vy *= physics.airFriction;
     };
-    this.edges = function() {
+    this.edges = function () {
       if (this.x > canvas.width - this.r) {
         this.Vx *= -physics.restitution;
         this.x = canvas.width - this.r;
@@ -97,23 +98,24 @@ var particles = function(button) {
         this.y = this.r;
       }
     };
-    this.gravity = function() {
+    this.gravity = function () {
       this.Vx += physics.gravX;
       this.Vy += physics.gravY;
     };
-    this.calcEnergy = function() {
+    this.calcEnergy = function () {
       var speed2 = this.Vx * this.Vx + this.Vy * this.Vy;
       this.ke = 0.5 * this.mass * speed2;
       var height = canvas.height - this.r - this.y;
       this.pe = this.mass * physics.gravY * height;
     };
-    this.info = function() {
+    this.info = function () {
       this.calcEnergy();
       //bars
-      ctx.fillStyle = "rgba(255, 0, 255, 0.3)";
+      ctx.fillStyle = "rgba(255, 102, 85, 0.8)" //"#f65" //"rgba(255, 0, 255, 0.3)";
       ctx.fillRect(0, 0, canvas.width * (this.ke / this.energy), 25);
-      ctx.fillStyle = "rgba(0, 255, 255, 0.3)";
+      ctx.fillStyle = "rgba(85, 204, 204, 0.8)" //"#5cc" //"rgba(0, 255, 255, 0.3)";
       ctx.fillRect(0, 25, canvas.width * (this.pe / this.energy), 25);
+
       //heat bar
       if (physics.restitution != 1) {
         ctx.fillStyle = "lightgrey";
@@ -137,12 +139,12 @@ var particles = function(button) {
   };
 
   function spawn() {
-    box = new mass(mouse.x, mouse.y, 1, 0, 20, randomColor());
+    box = new mass(mouse.x, mouse.y, 1, 0, 20, "#bbb");
     box.calcEnergy();
     box.energy = box.pe + box.ke;
   }
   spawn();
-  document.getElementById(canvasID).addEventListener("mousedown", function(event) {
+  document.getElementById(canvasID).addEventListener("mousedown", function (event) {
     //gets mouse position, even when canvas is scaled by CSS
     function getMousePos(canvas, event) {
       const mouse = {

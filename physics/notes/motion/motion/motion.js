@@ -31,9 +31,7 @@ var motion = function (canvasID, showPos, showTime, showVel, showAccel, position
 
   var physics = {
     gravX: 0,
-    gravY: 0,
-    restitution: 1,
-    equalibrium: 400
+    gravY: 0
   };
   if (acceleration) {
     physics.gravX = acceleration;
@@ -63,28 +61,21 @@ var motion = function (canvasID, showPos, showTime, showVel, showAccel, position
     };
     this.timeCycle = function () {
       if (showTime) {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+        ctx.fillStyle = "rgba(255,255,255,0.4)" //"rgba(0, 0, 0, 0.3)";
         ctx.beginPath();
         ctx.moveTo(this.x, this.y);
-        ctx.arc(this.x, this.y, this.r, -Math.PI / 2, (this.t % 60) / 3 / Math.PI - Math.PI / 2);
+        ctx.arc(this.x, this.y, this.r - 3, -Math.PI / 2, (this.t % 60) / 3 / Math.PI - Math.PI / 2);
         //ctx.stroke();
         ctx.fill();
       }
     };
     this.edges = function () {
       if (this.x > canvas.width - this.r) {
-        this.Vx *= -physics.restitution;
+        this.Vx = -Math.abs(this.Vx);
         this.x = canvas.width - this.r;
       } else if (this.x < this.r) {
-        this.Vx *= -physics.restitution;
+        this.Vx = Math.abs(this.Vx);
         this.x = this.r;
-      }
-      if (this.y > canvas.height - this.r) {
-        this.Vy *= -physics.restitution;
-        this.y = canvas.height - this.r;
-      } else if (this.y < this.r) {
-        this.Vy *= -physics.restitution;
-        this.y = this.r;
       }
     };
     this.gravity = function () {
@@ -117,19 +108,19 @@ var motion = function (canvasID, showPos, showTime, showVel, showAccel, position
       var line = 0;
       if (showPos) {
         line += lineHeight;
-        ctx.fillText("x = " + (this.x - this.r).toFixed(0) + " m", canvas.width - 5, line);
+        ctx.fillText(((this.x - this.r) / 10).toFixed(0) + " m = Δx", canvas.width - 5, line);
       }
       if (showTime) {
         line += lineHeight;
-        ctx.fillText("t = " + this.t.toFixed(1) + " s", canvas.width - 5, line);
+        ctx.fillText(this.t.toFixed(0) + " s = Δt", canvas.width - 5, line);
       }
       if (showVel) {
         line += lineHeight;
-        ctx.fillText("v = " + this.Vx.toFixed(0) + " m/s", canvas.width - 5, line);
+        ctx.fillText((this.Vx / 10).toFixed(0) + " m/s = v", canvas.width - 5, line);
       }
       if (showAccel) {
         line += lineHeight;
-        ctx.fillText("a = " + physics.gravX.toFixed(1) + " m/s²", canvas.width - 5, line);
+        ctx.fillText((physics.gravX / 10).toFixed(1) + " m/s² = a", canvas.width - 5, line);
       }
     };
   }
@@ -139,7 +130,7 @@ var motion = function (canvasID, showPos, showTime, showVel, showAccel, position
   function spawn() {
     //mass(x, y, Vx, Vy ,r, fillColor)
     // box = new mass(canvas.width / 2, canvas.height / 2, velocity, 0, 50, randomColor() );
-    box = new mass(mousePos.x, canvas.height / 2, velocity, 0, 50, "#abc");
+    box = new mass(mousePos.x, canvas.height / 2, velocity, 0, 50, "#f65");
   }
   spawn();
 
@@ -149,8 +140,8 @@ var motion = function (canvasID, showPos, showTime, showVel, showAccel, position
     //repeating animation function
     if (!pause) window.requestAnimationFrame(render);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (edges) box.edges();
     box.move();
+    if (edges) box.edges();
     box.gravity();
     box.distance();
     box.draw();
@@ -160,8 +151,8 @@ var motion = function (canvasID, showPos, showTime, showVel, showAccel, position
   }
 };
 motion("canvas1", true, false, false, false, 300, 0, 0, false);
-motion("canvas2", true, true, false, false, 300, 0, 0, false);
+motion("canvas2", false, true, false, false, 300, 0, 0, false);
 motion("canvas3", true, true, true, false, 300, -80, 0, true);
 motion("canvas5", true, true, true, false, 50, 20, 0, false);
-motion("canvas4", true, true, true, true, 300, 0, -9.8, true);
-motion("canvas0", false, true, true, true, 300, 0, 4.5, true);
+motion("canvas4", true, true, true, true, 300, 0, -98, true);
+motion("canvas0", false, true, true, true, 50, 0, 118, true);
