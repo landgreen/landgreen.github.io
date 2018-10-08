@@ -152,7 +152,15 @@ class Charge {
     return count;
   }
 
-  static uniformField(who, fieldVector = { x: 0.05, y: 0 }, range = { x: 0, y: 0, width: 600, height: 250 }) {
+  static uniformField(who, fieldVector = {
+    x: 0.05,
+    y: 0
+  }, range = {
+    x: 0,
+    y: 0,
+    width: 600,
+    height: 250
+  }) {
     for (let i = 0, len = who.length; i < len; ++i) {
       who[i].velocity.x += fieldVector.x;
       who[i].velocity.y += fieldVector.y;
