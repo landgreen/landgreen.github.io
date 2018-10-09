@@ -47,6 +47,21 @@ const b = {
     ctx.fillStyle = "#000";
     ctx.fill();
   },
+  removeConsBB: function (me) {
+    for (let i = 0, len = consBB.length; i < len; ++i) {
+      if (consBB[i].bodyA === me) {
+        consBB[i].bodyA = consBB[i].bodyB;
+        consBB.splice(i, 1);
+        // b.removeConsBB(me);
+        break;
+      } else if (consBB[i].bodyB === me) {
+        consBB[i].bodyB = consBB[i].bodyA;
+        consBB.splice(i, 1);
+        // b.removeConsBB(me);
+        break;
+      }
+    }
+  },
   explode: function (me) {
     // typically explode is used as some bullets are .onEnd
 
@@ -689,7 +704,70 @@ const b = {
           };
         }
       }
-    }
+    },
+    // {
+    //   name: "bolo",
+    //   ammo: 0,
+    //   ammoPack: 9,
+    //   have: false,
+    //   fire: function () {
+    //     //first bullet
+    //     let dir = mech.angle + Math.PI / 4
+    //     const me = bullet.length;
+    //     bullet[me] = Bodies.circle(mech.pos.x + 40 * Math.cos(mech.angle), mech.pos.y + 40 * Math.sin(mech.angle), 10, b.fireAttributes(dir));
+    //     b.fireProps(40, 30, dir, me); //cd , speed
+    //     Matter.Body.setDensity(bullet[me], 0.0001);
+    //     bullet[me].endCycle = game.cycle + 120;
+    //     bullet[me].dmg = 0.5;
+    //     bullet[me].minDmgSpeed = 0;
+    //     bullet[me].restitution = 0.96;
+    //     bullet[me].friction = 0;
+    //     bullet[me].explodeRad = 150;
+    //     bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
+    //     bullet[me].onDmg = function () {
+    //       b.removeConsBB(this)
+    //       this.endCycle = 0; //bullet ends cycle after doing damage  //this triggers explosion
+    //     };
+    //     bullet[me].do = function () {
+    //       this.force.y += this.mass * 0.0001;
+    //       if (game.cycle === this.endCycle - 60) {
+    //         b.removeConsBB(this)
+    //       }
+    //     };
+    //     //second bullet
+    //     dir = mech.angle - Math.PI / 4
+    //     const me2 = bullet.length;
+    //     bullet[me2] = Bodies.circle(mech.pos.x + 40 * Math.cos(mech.angle), mech.pos.y + 40 * Math.sin(mech.angle), 10, b.fireAttributes(dir));
+    //     b.fireProps(40, 30, dir, me2); //cd , speed
+    //     Matter.Body.setDensity(bullet[me2], 0.0001);
+    //     bullet[me2].endCycle = game.cycle + 120;
+    //     bullet[me2].dmg = 0.5;
+    //     bullet[me2].minDmgSpeed = 0;
+    //     bullet[me2].restitution = 0.96;
+    //     bullet[me2].friction = 0;
+    //     bullet[me2].explodeRad = 150;
+    //     bullet[me2].onEnd = b.explode; //makes bullet do explosive damage before despawn
+    //     bullet[me2].onDmg = function () {
+    //       b.removeConsBB(this)
+    //       this.endCycle = 0; //bullet ends cycle after doing damage  //this triggers explosion
+    //     };
+    //     bullet[me2].do = function () {
+    //       this.force.y += this.mass * 0.0001;
+    //       if (game.cycle === this.endCycle - 60) {
+    //         b.removeConsBB(this)
+    //       }
+    //     };
+
+    //     //constraint
+    //     const meCons = consBB.length
+    //     consBB[meCons] = Constraint.create({
+    //       bodyA: bullet[me],
+    //       bodyB: bullet[me2],
+    //       stiffness: 0.003
+    //     });
+    //     World.add(engine.world, consBB[meCons]);
+    //   }
+    // }
   ],
   fire: function () {
     if (game.mouseDown && mech.fireCDcycle < game.cycle) {
