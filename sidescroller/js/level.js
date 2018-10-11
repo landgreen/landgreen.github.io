@@ -1,8 +1,8 @@
 //global game variables
 let body = []; //non static bodies
 let map = []; //all static bodies
-let cons = []; //all constaints between a point and a body
-let consBB = []; //all constaints between two bodies
+let cons = []; //all constraints between a point and a body
+let consBB = []; //all constraints between two bodies
 //main object for spawning levels
 const level = {
   maxJump: 390,
@@ -321,7 +321,7 @@ const level = {
 
   rooftops: function () {
     // if (game.levelsCleared < level.levels.length) game.startZoomIn();
-    document.body.style.backgroundColor = "#eee4e4";
+    document.body.style.backgroundColor = "#dcdcde";
 
     if (Math.random() < 0.6) {
       //normal direction start in top left

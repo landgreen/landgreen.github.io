@@ -2,23 +2,23 @@
 const spawn = {
   pickList: ["starter", "starter"],
   fullPickList: [
-    "chaser",
-    "striker",
-    "spinner",
-    "hopper",
-    "grower",
-    "springer",
-    "zoomer",
-    "shooter",
-    "beamer",
-    "focuser",
-    "laser",
-    "blinker",
-    "sucker",
-    "exploder",
-    "spawner",
+    // "chaser",
+    // "striker",
+    // "spinner",
+    // "hopper",
+    // "grower",
+    // "springer",
+    // "zoomer",
+    // "shooter",
+    // "beamer",
+    // "focuser",
+    // "laser",
+    // "blinker",
+    // "sucker",
+    // "exploder",
+    // "spawner",
     "ghoster",
-    "sneaker",
+    // "sneaker",
   ],
   bossPickList: ["zoomer", "chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner"],
   setSpawnList: function () {
@@ -597,7 +597,8 @@ const spawn = {
     me = mob[mob.length - 1];
     me.seeAtDistance2 = 1000000;
     me.accelMag = 0.00014;
-    me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
+    if (map.length) me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
+
     me.stroke = "transparent"; //used for drawGhost
     me.alpha = 1; //used in drawGhost
     me.canTouchPlayer = false; //used in drawGhost
