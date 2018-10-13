@@ -708,7 +708,7 @@ const b = {
     {
       name: "wave beam",
       ammo: 0,
-      ammoPack: 110,
+      ammoPack: 140,
       have: false,
       fire: function () {
         const endCycle = game.cycle + 125
