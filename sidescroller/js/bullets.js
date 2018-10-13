@@ -671,7 +671,7 @@ const b = {
         // mobs.alert(800);
         const me = bullet.length;
         const dir = mech.angle;
-        bullet[me] = Bodies.rectangle(mech.pos.x + 50 * Math.cos(mech.angle), mech.pos.y + 50 * Math.sin(mech.angle), 54, 20, b.fireAttributes(dir));
+        bullet[me] = Bodies.rectangle(mech.pos.x + 50 * Math.cos(mech.angle), mech.pos.y + 50 * Math.sin(mech.angle), 60, 25, b.fireAttributes(dir));
         b.fireProps(30, 54, dir, me); //cd , speed
         bullet[me].endCycle = game.cycle + 180;
         bullet[me].do = function () {
@@ -708,62 +708,79 @@ const b = {
     {
       name: "wave beam",
       ammo: 0,
-      ammoPack: 75,
+      ammoPack: 110,
       have: false,
       fire: function () {
-        const totalCycles = 100;
-        const splitCycle = 20;
+        const endCycle = game.cycle + 125
+        const splitCycle = endCycle - 1;
         const speed = 30;
-        const radius = 45;
-        const cd = 2;
-        const spread = Math.PI / 2 * 0.5
+        const radius = 55;
+        const bulletRadius = 5;
+        const spread = Math.PI / 2 * 0.65 // smaller = faster speed, larger = faster rotation?
         const dmg = 0.1
+        const dir = mech.angle
+        mech.fireCDcycle = game.cycle + 3; // cool down
 
         //first bullet
-        let dir = mech.angle
         const me = bullet.length;
-        bullet[me] = Bodies.circle(mech.pos.x + radius * Math.cos(mech.angle), mech.pos.y + radius * Math.sin(mech.angle), 7, b.fireAttributes(mech.angle));
-        b.fireProps(cd, speed, dir + spread, me); //cd , speed
+        bullet[me] = Bodies.circle(mech.pos.x + radius * Math.cos(mech.angle), mech.pos.y + radius * Math.sin(mech.angle), bulletRadius, {
+          angle: dir,
+          endCycle: endCycle,
+          inertia: Infinity,
+          restitution: 0,
+          friction: 1,
+          frictionAir: -0.003,
+          dmg: dmg, //damage done in addition to the damage from momentum
+          classType: "bullet",
+          collisionFilter: {
+            category: 0x000100,
+            mask: 0x000010 //mask: 0x000111,  //for self collision
+          },
+          minDmgSpeed: 0,
+          onDmg: function () {}, //this.endCycle = 0  //triggers despawn
+          onEnd: function () {}
+        });
+
+        Matter.Body.setVelocity(bullet[me], {
+          x: speed * Math.cos(dir + spread),
+          y: speed * Math.sin(dir + spread)
+        });
+        World.add(engine.world, bullet[me]); //add bullet to world
         Matter.Body.setDensity(bullet[me], 0.0001);
-        bullet[me].endCycle = game.cycle + totalCycles;
-        bullet[me].dmg = dmg;
-        bullet[me].minDmgSpeed = 0;
-        bullet[me].restitution = 1;
-        bullet[me].friction = 0;
-        bullet[me].frictionAir = 0;
-        // bullet[me].explodeRad = 80;
-        // bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
-        // bullet[me].onDmg = function () {
-        // b.removeConsBB(this)
-        // this.endCycle = 0; //bullet ends cycle after doing damage  //this triggers explosion
-        // };
         bullet[me].do = function () {
-          this.force.y += this.mass * 0.0001;
-          if (game.cycle === this.endCycle - splitCycle) {
+          if (game.cycle === splitCycle) {
             b.removeConsBB(this)
           }
         };
 
         //second bullet
         const me2 = bullet.length;
-        bullet[me2] = Bodies.circle(mech.pos.x - radius * Math.cos(mech.angle), mech.pos.y - radius * Math.sin(mech.angle), 7, b.fireAttributes(mech.angle));
-        b.fireProps(cd, speed, dir - spread, me2); //cd , speed
+        bullet[me2] = Bodies.circle(mech.pos.x - radius * Math.cos(mech.angle), mech.pos.y - radius * Math.sin(mech.angle), bulletRadius, {
+          angle: dir,
+          endCycle: endCycle,
+          inertia: Infinity,
+          restitution: 0,
+          friction: 1,
+          frictionAir: -0.003,
+          dmg: dmg, //damage done in addition to the damage from momentum
+          classType: "bullet",
+          collisionFilter: {
+            category: 0x000100,
+            mask: 0x000010 //mask: 0x000111,  //for self collision
+          },
+          minDmgSpeed: 0,
+          onDmg: function () {}, //this.endCycle = 0  //triggers despawn
+          onEnd: function () {}
+        });
+
+        Matter.Body.setVelocity(bullet[me2], {
+          x: speed * Math.cos(dir - spread),
+          y: speed * Math.sin(dir - spread)
+        });
+        World.add(engine.world, bullet[me2]); //add bullet to world
         Matter.Body.setDensity(bullet[me2], 0.0001);
-        bullet[me2].endCycle = game.cycle + totalCycles;
-        bullet[me2].dmg = dmg;
-        bullet[me2].minDmgSpeed = 0;
-        bullet[me2].restitution = 1;
-        bullet[me2].friction = 0;
-        bullet[me2].frictionAir = 0;
-        // bullet[me2].explodeRad = 80;
-        // bullet[me2].onEnd = b.explode; //makes bullet do explosive damage before despawn
-        // bullet[me2].onDmg = function () {
-        // b.removeConsBB(this)
-        // this.endCycle = 0; //bullet ends cycle after doing damage  //this triggers explosion
-        // };
         bullet[me2].do = function () {
-          this.force.y += this.mass * 0.0001;
-          if (game.cycle === this.endCycle - splitCycle) {
+          if (game.cycle === splitCycle) {
             b.removeConsBB(this)
           }
         };
@@ -773,7 +790,7 @@ const b = {
         consBB[meCons] = Constraint.create({
           bodyA: bullet[me],
           bodyB: bullet[me2],
-          stiffness: 0.2
+          stiffness: 0.5
         });
         World.add(engine.world, consBB[meCons]);
       }

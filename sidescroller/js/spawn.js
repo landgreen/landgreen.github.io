@@ -8,7 +8,7 @@ const spawn = {
     "hopper",
     "grower",
     "springer",
-    "zoomer",
+    // "zoomer",
     "shooter",
     "beamer",
     "focuser",
@@ -20,7 +20,7 @@ const spawn = {
     "ghoster",
     "sneaker",
   ],
-  bossPickList: ["zoomer", "chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner"],
+  bossPickList: ["chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner"], //"zoomer", 
   setSpawnList: function () {
     //this is run at the start of each new level to determine the possible mobs for the level
     //each level has 2 mobs: one new mob and one from the the last level
