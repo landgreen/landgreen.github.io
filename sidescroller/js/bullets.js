@@ -708,89 +708,67 @@ const b = {
     {
       name: "wave beam",
       ammo: 0,
-      ammoPack: 140,
+      ammoPack: 220,
       have: false,
       fire: function () {
+        mech.fireCDcycle = game.cycle + 3; // cool down
         const endCycle = game.cycle + 125
         const splitCycle = endCycle - 1;
-        const speed = 30;
-        const radius = 55;
         const bulletRadius = 5;
-        const spread = Math.PI / 2 * 0.65 // smaller = faster speed, larger = faster rotation?
-        const dmg = 0.1
+        const speed = 30;
+        const spread = Math.PI / 2 * 0.70 // smaller = faster speed, larger = faster rotation?
         const dir = mech.angle
-        mech.fireCDcycle = game.cycle + 3; // cool down
-
-        //first bullet
-        const me = bullet.length;
-        bullet[me] = Bodies.circle(mech.pos.x + radius * Math.cos(mech.angle), mech.pos.y + radius * Math.sin(mech.angle), bulletRadius, {
+        const pos = {
+          x: mech.pos.x + 20 * Math.cos(mech.angle),
+          y: mech.pos.y + 20 * Math.sin(mech.angle)
+        }
+        const props = {
           angle: dir,
           endCycle: endCycle,
           inertia: Infinity,
-          restitution: 0,
+          restitution: 1,
           friction: 1,
           frictionAir: -0.003,
-          dmg: dmg, //damage done in addition to the damage from momentum
+          minDmgSpeed: 0,
+          dmg: 0, //damage done in addition to the damage from momentum
           classType: "bullet",
           collisionFilter: {
             category: 0x000100,
-            mask: 0x000010 //mask: 0x000111,  //for self collision
+            mask: 0x000010
           },
-          minDmgSpeed: 0,
           onDmg: function () {}, //this.endCycle = 0  //triggers despawn
-          onEnd: function () {}
-        });
+          onEnd: function () {},
+          do: function () {
+            if (game.cycle === splitCycle) b.removeConsBB(this)
+          }
+        }
 
+        //first bullet
+        const me = bullet.length;
+        bullet[me] = Bodies.circle(pos.x, pos.y, bulletRadius, props);
         Matter.Body.setVelocity(bullet[me], {
           x: speed * Math.cos(dir + spread),
           y: speed * Math.sin(dir + spread)
         });
         World.add(engine.world, bullet[me]); //add bullet to world
-        Matter.Body.setDensity(bullet[me], 0.0001);
-        bullet[me].do = function () {
-          if (game.cycle === splitCycle) {
-            b.removeConsBB(this)
-          }
-        };
+        // Matter.Body.setDensity(bullet[me], 0.0005);  //0.001 is normal
 
         //second bullet
         const me2 = bullet.length;
-        bullet[me2] = Bodies.circle(mech.pos.x - radius * Math.cos(mech.angle), mech.pos.y - radius * Math.sin(mech.angle), bulletRadius, {
-          angle: dir,
-          endCycle: endCycle,
-          inertia: Infinity,
-          restitution: 0,
-          friction: 1,
-          frictionAir: -0.003,
-          dmg: dmg, //damage done in addition to the damage from momentum
-          classType: "bullet",
-          collisionFilter: {
-            category: 0x000100,
-            mask: 0x000010 //mask: 0x000111,  //for self collision
-          },
-          minDmgSpeed: 0,
-          onDmg: function () {}, //this.endCycle = 0  //triggers despawn
-          onEnd: function () {}
-        });
-
+        bullet[me2] = Bodies.circle(pos.x, pos.y, bulletRadius, props);
         Matter.Body.setVelocity(bullet[me2], {
           x: speed * Math.cos(dir - spread),
           y: speed * Math.sin(dir - spread)
         });
         World.add(engine.world, bullet[me2]); //add bullet to world
-        Matter.Body.setDensity(bullet[me2], 0.0001);
-        bullet[me2].do = function () {
-          if (game.cycle === splitCycle) {
-            b.removeConsBB(this)
-          }
-        };
+        // Matter.Body.setDensity(bullet[me2], 0.0005); //0.001 is normal
 
         //constraint
         const meCons = consBB.length
         consBB[meCons] = Constraint.create({
           bodyA: bullet[me],
           bodyB: bullet[me2],
-          stiffness: 0.5
+          stiffness: 0.007
         });
         World.add(engine.world, consBB[meCons]);
       }

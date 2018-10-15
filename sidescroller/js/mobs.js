@@ -908,12 +908,15 @@ const mobs = {
           body[len] = Matter.Bodies.fromVertices(this.position.x, this.position.y, this.vertices);
           Matter.Body.setVelocity(body[len], this.velocity);
           Matter.Body.setAngularVelocity(body[len], this.angularVelocity);
-          body[len].collisionFilter.category = this.collisionFilter.category; // 0x000001;
-          body[len].collisionFilter.mask = this.collisionFilter.mask; // 0x011111;
-          //let some of the dead bodies just fall to prevent build up also let all large mobs fall
-          // if (Math.random() < 1 - body.length * 0.004 || body[len].mass > 7) {
-          //   body[len].collisionFilter.mask = 0x000100;
-          // }
+          body[len].collisionFilter.category = 0x000001;
+          body[len].collisionFilter.mask = 0x011111;
+          // body[len].collisionFilter.category = body[len].collisionFilter.category //0x000001;
+          // body[len].collisionFilter.mask = body[len].collisionFilter.mask //0x011111;
+
+          //large mobs go intangible
+          if (body[len].mass > 7) {
+            body[len].collisionFilter.mask = 0x000100;
+          }
           body[len].classType = "body";
           World.add(engine.world, body[len]); //add to world
         }
