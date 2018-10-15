@@ -21,12 +21,13 @@ function stickyCollision0(el) {
 
   var mass = [];
 
-  canvas.addEventListener("mousedown", function() {
+  canvas.addEventListener("mousedown", function () {
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
     spawnList();
   });
   spawnList();
+
   function spawnList() {
     var Ypos = canvas.height / 2;
     spawnMass(100, Ypos, Math.ceil(Math.random() * 10) * 15, 0, 25 + Math.ceil(Math.random() * 60), 8, 0.1);
@@ -49,7 +50,7 @@ function stickyCollision0(el) {
       " m/s. What is the velocity of the objects after they collide?";
 
     katex.render(
-      String.raw`\begin{gathered} m_{1}u_{1}+m_{2}u_{2}=(m_{1}+m_{2})v \\ (${mass[0].mass.toFixed(2)})( ${mass[0].velocity.x.toFixed(
+      String.raw `\begin{gathered} m_{1}u_{1}+m_{2}u_{2}=(m_{1}+m_{2})v \\ (${mass[0].mass.toFixed(2)})( ${mass[0].velocity.x.toFixed(
         2
       )}) + (${mass[1].mass.toFixed(2)}) (${mass[1].velocity.x.toFixed(2)}) = (${mass[0].mass.toFixed(2)} + ${mass[1].mass.toFixed(2)}) v \\ ${vel.toFixed(
         2
@@ -75,6 +76,7 @@ function stickyCollision0(el) {
     // vel.toFixed(2) +
     // " \\mathrm{\\tfrac{m}{s}}= v$$";
   }
+
   function spawnMass(xIn, yIn, VxIn, VyIn, length, sides, angle) {
     //spawn mass
     var i = mass.length;
@@ -165,6 +167,7 @@ function stickyCollision0(el) {
     ctx.textAlign = "center";
     ctx.fillStyle = "#000";
     ctx.font = "18px Arial";
+
     var px = 0;
     var py = 0;
     for (var k = 0, length = mass.length; k < length; k++) {

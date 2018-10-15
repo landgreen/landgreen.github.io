@@ -21,17 +21,19 @@ function collision2d(el) {
 
   var mass = [];
 
-  document.getElementById(el.id).addEventListener("mousedown", function() {
+  document.getElementById(el.id).addEventListener("mousedown", function () {
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
     spawnList();
   });
   spawnList();
+
   function spawnList() {
     var Ypos = canvas.height / 2;
     spawnMass(-100, Ypos, 120, 0, 44.72135955, "pink", 6, 0.1);
     spawnMass(500, Ypos - 50, -60, -20, 30, "cyan", 3, 1.5);
   }
+
   function spawnMass(xIn, yIn, VxIn, VyIn, length, color, sides, angle) {
     //spawn mass
     var i = mass.length;
@@ -54,44 +56,6 @@ function collision2d(el) {
     World.add(engine.world, mass[i]);
   }
 
-  //add walls flush with the edges of the canvas
-  // var offset = 25;
-  // World.add(engine.world, [
-  //   Bodies.rectangle(canvas.width*0.5, -offset-1, canvas.width * 2 + 2 * offset, 50, { //top
-  //     isStatic: true,
-  //     friction: 1,
-  //     frictionStatic: 1,
-  //   }),
-  //   Bodies.rectangle(canvas.width * 0.5, canvas.height + offset + 1, canvas.width * 2 + 2 * offset, 50, { //bottom
-  //     isStatic: true,
-  //     friction: 1,
-  //     frictionStatic: 1,
-  //   }),
-  //   Bodies.rectangle(canvas.width + offset + 1, canvas.height * 0.5, 50, canvas.height * 2 + 2 * offset, { //right
-  //     isStatic: true,
-  //     friction: 1,
-  //     frictionStatic: 1,
-  //   }),
-  //   Bodies.rectangle(-offset-1, canvas.height*0.5, 50, canvas.height * 2 + 2 * offset, {  //left
-  //     isStatic: true,
-  //     friction: 1,
-  //     frictionStatic: 1,
-  //   })
-  // ]);
-
-  function edgeBounce() {
-    for (var k = 0, length = mass.length; k < length; k++) {
-      if (mass[k].position.x - mass[k].length / 2 < 0) {
-        Matter.Body.setPosition(mass[k], { x: mass[k].length / 2, y: mass[k].position.y });
-        Matter.Body.setVelocity(mass[k], { x: Math.abs(mass[k].velocity.x), y: 0 });
-      }
-      if (mass[k].position.x + mass[k].length / 2 > canvas.width) {
-        Matter.Body.setPosition(mass[k], { x: canvas.width - mass[k].length / 2, y: mass[k].position.y });
-        Matter.Body.setVelocity(mass[k], { x: -Math.abs(mass[k].velocity.x), y: 0 });
-      }
-    }
-  }
-
   // run the engine
   Engine.run(engine);
 
@@ -100,10 +64,7 @@ function collision2d(el) {
     var bodies = Composite.allBodies(engine.world);
     window.requestAnimationFrame(render);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // ctx.fillStyle = 'rgba(255,255,255,0.4)';  //trails
-    // ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 1.5;
     ctx.strokeStyle = "#000";
     for (var i = 0; i < bodies.length; i += 1) {
       var vertices = bodies[i].vertices;
@@ -119,19 +80,13 @@ function collision2d(el) {
         ctx.fillStyle = "#ccc";
       }
       ctx.fill();
-      ctx.stroke();
+      // ctx.stroke();
     }
 
-    //draw lines
-    // ctx.beginPath();
-    // for (var k = 0, length = mass.length; k<length; k++){
-    //   ctx.moveTo(mass[k].position.x,mass[k].position.y);
-    //   ctx.lineTo(mass[k].vertices[0].x, mass[k].vertices[0].y);
-    // }
-    // ctx.stroke();
     //labels
     ctx.textAlign = "center";
-    ctx.font = "300 20px Roboto";
+    // ctx.font = "300 20px Roboto";
+    ctx.font = "20px Arial";
     ctx.fillStyle = "#000";
     var px = 0;
     var py = 0;
@@ -145,15 +100,15 @@ function collision2d(el) {
     ctx.fillText("mv + mv = total horizontal momentum ", 5, 15);
     ctx.fillText(
       "(" +
-        mass[0].mass.toFixed(2) +
-        ")(" +
-        mass[0].velocity.x.toFixed(2) +
-        ") + (" +
-        mass[1].mass.toFixed(2) +
-        ") (" +
-        mass[1].velocity.x.toFixed(2) +
-        ") = " +
-        px.toFixed(2),
+      mass[0].mass.toFixed(2) +
+      ")(" +
+      mass[0].velocity.x.toFixed(2) +
+      ") + (" +
+      mass[1].mass.toFixed(2) +
+      ") (" +
+      mass[1].velocity.x.toFixed(2) +
+      ") = " +
+      px.toFixed(2),
       // Math.floor(px).toFixed(5),
       5,
       37
@@ -162,15 +117,15 @@ function collision2d(el) {
     ctx.fillText("mv + mv = total vertical momentum", 5, canvas.height - 33);
     ctx.fillText(
       "(" +
-        mass[0].mass.toFixed(2) +
-        ")(" +
-        -mass[0].velocity.y.toFixed(2) +
-        ") + (" +
-        mass[1].mass.toFixed(2) +
-        ") (" +
-        -mass[1].velocity.y.toFixed(2) +
-        ") = " +
-        py.toFixed(2),
+      mass[0].mass.toFixed(2) +
+      ")(" +
+      -mass[0].velocity.y.toFixed(2) +
+      ") + (" +
+      mass[1].mass.toFixed(2) +
+      ") (" +
+      -mass[1].velocity.y.toFixed(2) +
+      ") = " +
+      py.toFixed(2),
       5,
       canvas.height - 10
     );

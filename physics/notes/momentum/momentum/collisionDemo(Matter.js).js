@@ -1,4 +1,5 @@
 window.onload = setup;
+
 function setup() {
   //writes a message onload for all canvases
   var canvas;
@@ -49,14 +50,14 @@ function collision0(el) {
   spawnMass(0, 150, 100, 0);
   spawnMass(700, 150, -100, 0);
 
-  document.getElementById(el.id).addEventListener("mousedown", function() {
+  document.getElementById(el.id).addEventListener("mousedown", function () {
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
     spawnMass(0, 150, 150, 0);
     spawnMass(700, 150, -150, 0);
   });
 
-  function spawnMass(xIn, yIn, VxIn, VyIn, length = 40 + Math.round(Math.random() * 30), rest = Math.random()) {
+  function spawnMass(xIn, yIn, VxIn, VyIn, length = 40 + Math.round(Math.random() * 25), rest = Math.random()) {
     var i = mass.length;
     mass.push();
     mass[i] = Bodies.polygon(xIn * scale, yIn * scale, 3 + Math.floor(Math.random() * 3), length * scale, {
@@ -140,7 +141,8 @@ function collision0(el) {
     // ctx.stroke();
     //labels
     ctx.textAlign = "center";
-    ctx.font = "300 20px Roboto";
+    // ctx.font = "300 20px Roboto";
+    ctx.font = "20px Arial";
     ctx.fillStyle = "#000";
     var p = 0;
     for (var k = 0, length = mass.length; k < length; k++) {
@@ -149,25 +151,13 @@ function collision0(el) {
       p += mass[k].mass * mass[k].velocity.x;
     }
     ctx.textAlign = "left";
-    ctx.fillText("mv + mv = total momentum", 5, 15);
-    ctx.fillText(
-      "(" +
-        mass[0].mass.toFixed(2) +
-        ")(" +
-        mass[0].velocity.x.toFixed(2) +
-        ") + (" +
-        mass[1].mass.toFixed(2) +
-        ") (" +
-        mass[1].velocity.x.toFixed(2) +
-        ") = " +
-        p.toFixed(2),
-      5,
-      37
-    );
+    // ctx.fillText("    m      v     +     m      v       =  total momentum", 5, canvas.height - 5);
+    ctx.fillText("mv  +  mv  =  total momentum", 5, canvas.height - 5);
+    ctx.fillText("(" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") + (" + mass[1].mass.toFixed(2) + ") (" + mass[1].velocity.x.toFixed(2) + ") = " + p.toFixed(2), 5, 22);
     //color underlines
     ctx.fillStyle = mass[0].color;
-    ctx.fillRect(5, 45, 103, 10);
+    ctx.fillRect(5, 30, 105, 10);
     ctx.fillStyle = mass[1].color;
-    ctx.fillRect(135, 45, 103, 10);
+    ctx.fillRect(138, 30, 105, 10);
   })();
 }

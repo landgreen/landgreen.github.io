@@ -21,17 +21,19 @@ function collision4(el) {
 
   var mass = [];
 
-  document.getElementById(el.id).addEventListener("mousedown", function() {
+  document.getElementById(el.id).addEventListener("mousedown", function () {
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
     spawnList();
   });
   spawnList();
+
   function spawnList() {
     var Ypos = canvas.height / 2;
     spawnMass(-100, Ypos, 120, 0, 44.72135955, "pink", 6, 0.1);
     spawnMass(500, Ypos - 50, -60, -20, 30, "cyan", 3, 1.5);
   }
+
   function spawnMass(xIn, yIn, VxIn, VyIn, length, color, sides, angle) {
     //spawn mass
     var i = mass.length;
@@ -82,12 +84,24 @@ function collision4(el) {
   function edgeBounce() {
     for (var k = 0, length = mass.length; k < length; k++) {
       if (mass[k].position.x - mass[k].length / 2 < 0) {
-        Matter.Body.setPosition(mass[k], { x: mass[k].length / 2, y: mass[k].position.y });
-        Matter.Body.setVelocity(mass[k], { x: Math.abs(mass[k].velocity.x), y: 0 });
+        Matter.Body.setPosition(mass[k], {
+          x: mass[k].length / 2,
+          y: mass[k].position.y
+        });
+        Matter.Body.setVelocity(mass[k], {
+          x: Math.abs(mass[k].velocity.x),
+          y: 0
+        });
       }
       if (mass[k].position.x + mass[k].length / 2 > canvas.width) {
-        Matter.Body.setPosition(mass[k], { x: canvas.width - mass[k].length / 2, y: mass[k].position.y });
-        Matter.Body.setVelocity(mass[k], { x: -Math.abs(mass[k].velocity.x), y: 0 });
+        Matter.Body.setPosition(mass[k], {
+          x: canvas.width - mass[k].length / 2,
+          y: mass[k].position.y
+        });
+        Matter.Body.setVelocity(mass[k], {
+          x: -Math.abs(mass[k].velocity.x),
+          y: 0
+        });
       }
     }
   }
@@ -131,47 +145,17 @@ function collision4(el) {
     // ctx.stroke();
     //labels
     ctx.textAlign = "center";
-    ctx.font = "300 20px Roboto";
+    ctx.textAlign = "center";
+    ctx.font = "17px Arial";
     ctx.fillStyle = "#000";
-    var px = 0;
-    var py = 0;
+    var p = 0;
     for (var k = 0, length = mass.length; k < length; k++) {
-      ctx.fillText(mass[k].mass.toFixed(2) + "kg", mass[k].position.x, mass[k].position.y);
-      //ctx.fillText(mass[k].velocity.x.toFixed(2)+'m/s',mass[k].position.x,mass[k].position.y+9);
-      px += mass[k].mass * mass[k].velocity.x;
-      py += mass[k].mass * -mass[k].velocity.y;
+      ctx.fillText(mass[k].mass.toFixed(2) + " kg", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 22);
+      ctx.fillText(mass[k].velocity.x.toFixed(2) + " m/s", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 2);
+      p += mass[k].mass * mass[k].velocity.x;
     }
     ctx.textAlign = "left";
-    ctx.fillText("mv + mv = total horizontal momentum ", 5, 15);
-    ctx.fillText(
-      "(" +
-        mass[0].mass.toFixed(2) +
-        ")(" +
-        mass[0].velocity.x.toFixed(2) +
-        ") + (" +
-        mass[1].mass.toFixed(2) +
-        ") (" +
-        mass[1].velocity.x.toFixed(2) +
-        ") = " +
-        px.toFixed(2),
-      5,
-      37
-    );
-
-    ctx.fillText("mv + mv = total vertical momentum", 5, canvas.height - 33);
-    ctx.fillText(
-      "(" +
-        mass[0].mass.toFixed(2) +
-        ")(" +
-        -mass[0].velocity.y.toFixed(2) +
-        ") + (" +
-        mass[1].mass.toFixed(2) +
-        ") (" +
-        -mass[1].velocity.y.toFixed(2) +
-        ") = " +
-        py.toFixed(2),
-      5,
-      canvas.height - 10
-    );
+    ctx.fillText("mv  +  mv  =  total momentum", 5, canvas.height - 5);
+    ctx.fillText("(" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") + (" + mass[1].mass.toFixed(2) + ") (" + mass[1].velocity.x.toFixed(2) + ") = " + p.toFixed(2), 5, 22);
   })();
 }

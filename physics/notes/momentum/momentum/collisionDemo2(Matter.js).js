@@ -21,7 +21,7 @@ function collision1(el) {
 
   var mass = [];
 
-  document.getElementById(el.id).addEventListener("mousedown", function() {
+  document.getElementById(el.id).addEventListener("mousedown", function () {
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
     spawn();
@@ -32,6 +32,7 @@ function collision1(el) {
     spawnMass(500, 130, -120, 0, 20 + Math.round(Math.random() * 70), 0.8 + Math.random() * 0.2);
   }
   spawn();
+
   function spawnMass(xIn, yIn, VxIn, VyIn, length, rest) {
     var i = mass.length;
     mass.push();
@@ -137,39 +138,25 @@ function collision1(el) {
       ctx.stroke();
     }
 
-    //draw lines
-    // ctx.beginPath();
-    // for (var k = 0, length = mass.length; k<length; k++){
-    //   ctx.moveTo(mass[k].position.x,mass[k].position.y);
-    //   ctx.lineTo(mass[k].vertices[0].x, mass[k].vertices[0].y);
-    // }
-    // ctx.stroke();
     //labels
     ctx.textAlign = "center";
-    ctx.font = "300 20px Roboto";
+
+    ctx.font = "20px Arial";
     ctx.fillStyle = "#000";
     var p = 0;
     for (var k = 0, length = mass.length; k < length; k++) {
-      ctx.fillText(mass[k].mass.toFixed(2) + "kg", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 22);
-      ctx.fillText(mass[k].velocity.x.toFixed(2) + "m/s", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 2);
+      // ctx.fillText(mass[k].mass.toFixed(2) + "kg", mass[k].position.x, mass[k].position.y - 12);
+      // ctx.fillText(mass[k].velocity.x.toFixed(2) + "m/s", mass[k].position.x, mass[k].position.y + 12);
       p += mass[k].mass * mass[k].velocity.x;
     }
     ctx.textAlign = "left";
-    ctx.fillText("mv + mv = total momentum", 57, 15);
-    ctx.fillText(
-      "(" +
-        mass[0].mass.toFixed(2) +
-        ")(" +
-        mass[0].velocity.x.toFixed(2) +
-        ") + (" +
-        mass[1].mass.toFixed(2) +
-        ") (" +
-        mass[1].velocity.x.toFixed(2) +
-        ") = " +
-        p.toFixed(2),
-      57,
-      37
-    );
-    //edgeBounce();
+    // ctx.fillText("    m      v     +     m      v       =  total momentum", 5, canvas.height - 5);
+    ctx.fillText("mv  +  mv  =  total momentum", 60, canvas.height - 5);
+    ctx.fillText("(" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") + (" + mass[1].mass.toFixed(2) + ") (" + mass[1].velocity.x.toFixed(2) + ") = " + p.toFixed(2), 55, 22);
+    //color underlines
+    ctx.fillStyle = mass[0].color;
+    ctx.fillRect(57, 30, 105, 10);
+    ctx.fillStyle = mass[1].color;
+    ctx.fillRect(190, 30, 105, 10);
   })();
 }

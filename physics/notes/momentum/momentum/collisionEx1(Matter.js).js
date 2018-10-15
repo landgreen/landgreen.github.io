@@ -9,7 +9,6 @@ function collision2(el) {
     World = Matter.World,
     Body = Matter.Body,
     Bodies = Matter.Bodies,
-    Composites = Matter.Composites,
     Composite = Matter.Composite;
 
   // create an engine
@@ -21,7 +20,7 @@ function collision2(el) {
 
   var mass = [];
 
-  document.getElementById(el.id).addEventListener("mousedown", function() {
+  document.getElementById(el.id).addEventListener("mousedown", function () {
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
     spawnMass(100, 140, 180, 0, 44.72135955, "lightgreen");
@@ -29,6 +28,7 @@ function collision2(el) {
   });
   spawnMass(100, 140, 180, 0, 44.72135955, "lightgreen");
   spawnMass(600, 140, -60, 0, 100, "#eee");
+
   function spawnMass(xIn, yIn, VxIn, VyIn, length, color) {
     //spawn mass
     var i = mass.length;
@@ -50,44 +50,6 @@ function collision2(el) {
     World.add(engine.world, mass[i]);
   }
 
-  //add walls flush with the edges of the canvas
-  // var offset = 25;
-  // World.add(engine.world, [
-  //   Bodies.rectangle(canvas.width*0.5, -offset-1, canvas.width * 2 + 2 * offset, 50, { //top
-  //     isStatic: true,
-  //     friction: 1,
-  //     frictionStatic: 1,
-  //   }),
-  //   Bodies.rectangle(canvas.width * 0.5, canvas.height + offset + 1, canvas.width * 2 + 2 * offset, 50, { //bottom
-  //     isStatic: true,
-  //     friction: 1,
-  //     frictionStatic: 1,
-  //   }),
-  //   Bodies.rectangle(canvas.width + offset + 1, canvas.height * 0.5, 50, canvas.height * 2 + 2 * offset, { //right
-  //     isStatic: true,
-  //     friction: 1,
-  //     frictionStatic: 1,
-  //   }),
-  //   Bodies.rectangle(-offset-1, canvas.height*0.5, 50, canvas.height * 2 + 2 * offset, {  //left
-  //     isStatic: true,
-  //     friction: 1,
-  //     frictionStatic: 1,
-  //   })
-  // ]);
-
-  function edgeBounce() {
-    for (var k = 0, length = mass.length; k < length; k++) {
-      if (mass[k].position.x - mass[k].length / 2 < 0) {
-        Matter.Body.setPosition(mass[k], { x: mass[k].length / 2, y: mass[k].position.y });
-        Matter.Body.setVelocity(mass[k], { x: Math.abs(mass[k].velocity.x), y: 0 });
-      }
-      if (mass[k].position.x + mass[k].length / 2 > canvas.width) {
-        Matter.Body.setPosition(mass[k], { x: canvas.width - mass[k].length / 2, y: mass[k].position.y });
-        Matter.Body.setVelocity(mass[k], { x: -Math.abs(mass[k].velocity.x), y: 0 });
-      }
-    }
-  }
-
   // run the engine
   Engine.run(engine);
 
@@ -96,8 +58,6 @@ function collision2(el) {
     var bodies = Composite.allBodies(engine.world);
     window.requestAnimationFrame(render);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // ctx.fillStyle = 'rgba(255,255,255,0.4)';  //trails
-    // ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.lineWidth = 1;
     ctx.strokeStyle = "#000000";
@@ -127,30 +87,16 @@ function collision2(el) {
     // ctx.stroke();
     //labels
     ctx.textAlign = "center";
-    ctx.font = "300 20px Roboto";
+    ctx.font = "18px Arial";
     ctx.fillStyle = "#000";
     var p = 0;
     for (var k = 0, length = mass.length; k < length; k++) {
-      ctx.fillText(mass[k].mass.toFixed(2) + "kg", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 22);
-      ctx.fillText(mass[k].velocity.x.toFixed(2) + "m/s", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 2);
+      ctx.fillText(mass[k].mass.toFixed(2) + " kg", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 22);
+      ctx.fillText(mass[k].velocity.x.toFixed(2) + " m/s", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 2);
       p += mass[k].mass * mass[k].velocity.x;
     }
     ctx.textAlign = "left";
-    ctx.fillText("mv + mv = total momentum", 5, 15);
-    ctx.fillText(
-      "(" +
-        mass[0].mass.toFixed(2) +
-        ")(" +
-        mass[0].velocity.x.toFixed(2) +
-        ") + (" +
-        mass[1].mass.toFixed(2) +
-        ") (" +
-        mass[1].velocity.x.toFixed(2) +
-        ") = " +
-        p.toFixed(2),
-      5,
-      37
-    );
-    //edgeBounce();
+    ctx.fillText("mv  +  mv  =  total momentum", 5, canvas.height - 5);
+    ctx.fillText("(" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") + (" + mass[1].mass.toFixed(2) + ") (" + mass[1].velocity.x.toFixed(2) + ") = " + p.toFixed(2), 5, 22);
   })();
 }
