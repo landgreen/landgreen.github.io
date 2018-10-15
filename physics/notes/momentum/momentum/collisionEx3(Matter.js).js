@@ -111,8 +111,7 @@ function collision3(el) {
       p += mass[k].mass * mass[k].velocity.x;
     }
     ctx.textAlign = "left";
-    ctx.fillText("mv  +  mv  =  total momentum", 5, canvas.height - 5);
-    ctx.fillText("(" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") + (" + mass[1].mass.toFixed(2) + ") (" + mass[1].velocity.x.toFixed(2) + ") = " + p.toFixed(2), 5, 22);
-
+    ctx.fillText("mv  +  mv  + mv  =  total momentum", 5, canvas.height - 5);
+    ctx.fillText("(" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") + (" + mass[1].mass.toFixed(2) + ") (" + mass[1].velocity.x.toFixed(2) + ") + (" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") = " + p.toFixed(2), 5, 22);
   })();
 }
