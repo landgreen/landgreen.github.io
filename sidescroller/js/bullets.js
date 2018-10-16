@@ -708,12 +708,11 @@ const b = {
     {
       name: "wave beam",
       ammo: 0,
-      ammoPack: 220,
+      ammoPack: 200,
       have: false,
       fire: function () {
-        mech.fireCDcycle = game.cycle + 3; // cool down
-        const endCycle = game.cycle + 125
-        const splitCycle = endCycle - 1;
+        mech.fireCDcycle = game.cycle + 4; // cool down
+        const endCycle = game.cycle + 110
         const bulletRadius = 5;
         const speed = 30;
         const spread = Math.PI / 2 * 0.70 // smaller = faster speed, larger = faster rotation?
@@ -730,17 +729,27 @@ const b = {
           friction: 1,
           frictionAir: -0.003,
           minDmgSpeed: 0,
+          isConstrained: true,
           dmg: 0, //damage done in addition to the damage from momentum
           classType: "bullet",
           collisionFilter: {
             category: 0x000100,
             mask: 0x000010
           },
-          onDmg: function () {}, //this.endCycle = 0  //triggers despawn
-          onEnd: function () {},
-          do: function () {
-            if (game.cycle === splitCycle) b.removeConsBB(this)
-          }
+          onDmg: function () {
+            if (this.isConstrained) {
+              this.isConstrained = false
+              b.removeConsBB(this)
+              // this.endCycle = 0 //triggers despawn
+            }
+          },
+          onEnd: function () {
+            if (this.isConstrained) {
+              this.isConstrained = false
+              b.removeConsBB(this)
+            }
+          },
+          do: function () {}
         }
 
         //first bullet
@@ -768,7 +777,7 @@ const b = {
         consBB[meCons] = Constraint.create({
           bodyA: bullet[me],
           bodyB: bullet[me2],
-          stiffness: 0.007
+          stiffness: 0.008
         });
         World.add(engine.world, consBB[meCons]);
       }

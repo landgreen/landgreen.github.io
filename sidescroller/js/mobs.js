@@ -914,7 +914,7 @@ const mobs = {
           // body[len].collisionFilter.mask = body[len].collisionFilter.mask //0x011111;
 
           //large mobs go intangible
-          if (body[len].mass > 7) {
+          if (body[len].mass > 10) {
             body[len].collisionFilter.mask = 0x000100;
           }
           body[len].classType = "body";
