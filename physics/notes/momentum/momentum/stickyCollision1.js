@@ -1,4 +1,9 @@
 function stickyCollision1(el) {
+
+  function round(number, factor = 100) {
+    return (Math.floor(number * factor) / factor)
+  }
+
   //set up canvas
   el.onclick = null; //stops the function from running on button click
   var canvas = el;
@@ -21,7 +26,7 @@ function stickyCollision1(el) {
 
   var mass = [];
 
-  canvas.addEventListener("mousedown", function() {
+  canvas.addEventListener("mousedown", function () {
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
     spawnList();
@@ -31,6 +36,7 @@ function stickyCollision1(el) {
     explodeTimer = setTimeout(explode, 2000);
   });
   spawnList();
+
   function spawnList() {
     var Ypos = canvas.height * 0.5;
     var v = Math.ceil((Math.random() - 0.5) * 3 * 60);
@@ -52,6 +58,7 @@ function stickyCollision1(el) {
       "'><strong>square</strong></span> has a velocity of  ???" +
       "&nbsp;m/s. What was the velocity of the two squares before the explosion?";
   }
+
   function spawnMass(xIn, yIn, VxIn, VyIn, length, sides, angle) {
     //spawn mass
     var i = mass.length;
@@ -66,43 +73,56 @@ function stickyCollision1(el) {
         luminosity: "bright"
       })
     });
-
+    mass[i].mass = round(mass[i].mass)
     Body.setVelocity(mass[i], {
-      x: (VxIn / 60) * scale,
+      x: round((VxIn / 60) * scale),
       y: (-VyIn / 60) * scale
     });
+
     //Matter.Body.setAngle(mass[i], angle)
     //Matter.Body.setAngularVelocity(mass[i], -0.004   );
     World.add(engine.world, mass[i]);
   }
 
   var explodeTimer = setTimeout(explode, 2000);
+
+
+
   function explode() {
-    mass[0].force = { x: -0.03, y: 0 };
-    mass[1].force = { x: 0.03, y: 0 };
-    setTimeout(function() {
+    mass[0].force = {
+      x: -0.03,
+      y: 0
+    };
+    mass[1].force = {
+      x: 0.03,
+      y: 0
+    };
+    setTimeout(function () {
+      mass[0].mass = round(mass[0].mass)
+      mass[1].mass = round(mass[1].mass)
+      mass[0].velocity.x = round(mass[1].velocity.x)
+      mass[1].velocity.x = round(mass[1].velocity.x)
+
       document.getElementById("ex1-question").innerHTML =
         "<strong>Click to Randomize Problem:</strong> Two masses are stuck until an explosion causes them to separate. After the explosion the " +
-        mass[0].mass.toFixed(2) +
+        mass[0].mass +
         "&nbsp;kg <span style='color: " +
         mass[0].color +
         "'><strong>square</strong></span> has a velocity of " +
-        mass[0].velocity.x.toFixed(2) +
+        mass[0].velocity.x +
         "&nbsp;m/s, and the " +
-        mass[1].mass.toFixed(2) +
+        mass[1].mass +
         "&nbsp;kg <span style='color: " +
         mass[1].color +
         "'><strong>square</strong></span> has a velocity of  " +
-        mass[1].velocity.x.toFixed(2) +
+        mass[1].velocity.x +
         "&nbsp;m/s. What was the velocity of the two squares before the explosion?";
 
       katex.render(
-        String.raw`\begin{gathered} (m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}
-        \\ (${mass[0].mass.toFixed(2)} + ${mass[1].mass.toFixed(2)})u=(${mass[0].mass.toFixed(2)})(${mass[0].velocity.x.toFixed(2)}) + (${mass[1].mass.toFixed(
-          2
-        )})(${mass[1].velocity.x.toFixed(2)})
-        \\(${(mass[0].mass + mass[1].mass).toFixed(2)})u = ${(mass[0].mass * mass[0].velocity.x + mass[1].mass * mass[1].velocity.x).toFixed(2)}
-        \\u= ${((mass[0].mass * mass[0].velocity.x + mass[1].mass * mass[1].velocity.x) / (mass[0].mass + mass[1].mass)).toFixed(2)} \, \mathrm{\tfrac{m}{s}}
+        String.raw `\begin{gathered} (m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}
+        \\ (${mass[0].mass} + ${mass[1].mass})u=(${mass[0].mass})(${mass[0].velocity.x}) + (${mass[1].mass.toFixed(2)})(${mass[1].velocity.x.toFixed(2)})
+        \\ (${(mass[0].mass + mass[1].mass).toFixed(2)})u = ${(mass[0].mass * mass[0].velocity.x + mass[1].mass * mass[1].velocity.x).toFixed(2)}
+        \\ u= ${((mass[0].mass * mass[0].velocity.x + mass[1].mass * mass[1].velocity.x) / (mass[0].mass + mass[1].mass)).toFixed(2)} \, \mathrm{\tfrac{m}{s}}
         \end{gathered}`,
         document.getElementById("ex1-math")
       );

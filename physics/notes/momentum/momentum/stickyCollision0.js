@@ -1,4 +1,9 @@
 function stickyCollision0(el) {
+
+  function round(number, factor = 100) {
+    return (Math.floor(number * factor) / factor)
+  }
+
   //set up canvas
   el.onclick = null; //stops the function from running on button click
   var canvas = el;
@@ -50,11 +55,7 @@ function stickyCollision0(el) {
       " m/s. What is the velocity of the objects after they collide?";
 
     katex.render(
-      String.raw `\begin{gathered} m_{1}u_{1}+m_{2}u_{2}=(m_{1}+m_{2})v \\ (${mass[0].mass.toFixed(2)})( ${mass[0].velocity.x.toFixed(
-        2
-      )}) + (${mass[1].mass.toFixed(2)}) (${mass[1].velocity.x.toFixed(2)}) = (${mass[0].mass.toFixed(2)} + ${mass[1].mass.toFixed(2)}) v \\ ${vel.toFixed(
-        2
-      )} \, \mathrm{\tfrac{m}{s}}= v \end{gathered}`,
+      String.raw `\begin{gathered} m_{1}u_{1}+m_{2}u_{2}=(m_{1}+m_{2})v \\ (${mass[0].mass.toFixed(2)})( ${mass[0].velocity.x.toFixed(2)}) + (${mass[1].mass.toFixed(2)}) (${mass[1].velocity.x.toFixed(2)}) = (${mass[0].mass.toFixed(2)} + ${mass[1].mass.toFixed(2)}) v \\ ${vel.toFixed(2)} \, \mathrm{\tfrac{m}{s}}= v \end{gathered}`,
       document.getElementById("ex0-math")
     );
 
@@ -91,14 +92,15 @@ function stickyCollision0(el) {
         luminosity: "light"
       })
     });
-
+    mass[i].mass = round(mass[i].mass)
     Body.setVelocity(mass[i], {
-      x: (VxIn / 60) * scale,
+      x: round((VxIn / 60) * scale),
       y: (-VyIn / 60) * scale
     });
     //Matter.Body.setAngle(mass[i], angle)
     //Matter.Body.setAngularVelocity(mass[i], -0.004   );
     World.add(engine.world, mass[i]);
+
   }
 
   //add walls flush with the edges of the canvas
