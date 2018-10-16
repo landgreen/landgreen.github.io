@@ -99,7 +99,8 @@
 						 L551,573 L560,561 L570,548 L579,533 L588,516 L597,498 L607,479 L616,459 L625,438 L634,417 L644,395 L653,373 L662,351 L672,329
 						 L681,308 L690,287 L699,267 L709,248 L718,230 L727,213 L736,198 L746,185 L755,173 L764,163 L774,154 L783,148 L792,144 L801,142
 						 L811,142 L820,144 L829,148 L838,154 L848,163 L857,173 L866,185 L876,198 L885,213 L894,230 L903,248 L913,267 L922,287 L931,308
-						 L940,329 L950,351 L959,373 " stroke-width='4' fill='none' stroke='#000' />
+						 L940,329 L950,351 L959,373 "
+				 stroke-width='4' fill='none' stroke='#000' />
 				<g fill='#000' font-size="30" text-anchor="middle">
 					<text x="190" y="120">crest</text>
 					<text x="500" y="640">trough</text>
@@ -140,22 +141,27 @@
 			<br>
 			<strong>Frequency, f</strong> = number of cycles that pass per second [Hz, 1/s]
 		</div>
-		<p>Play around with the settings in the sine wave simulation below.
-			<br> Which of the properties seem related?</p>
+		<div class='example'>
 	</article>
 	<div id="sine-wave-zone">
 		<div class="flex-grid-thirds">
 			<div class="col">
 				<span class='center'>amplitude =
-					<input id='amplitude' type="number" step="5" min="-1000" max="1000" style="width:40px;">m</span>
+					<input id='amplitude' type="number" step="5" min="-1000" max="1000" style="width:50px;">m
+					<br><input id='amplitude-slider' type="range" step="1" value="60" min="-500" max="500" style="width: 160px;">
+				</span>
 			</div>
 			<div class="col">
 				<span class='center'>velocity =
-					<input id='velocity' type="number" step="5" min="-1000" max="1000" style="width:40px;">m/s</span>
+					<input id='velocity' type="number" step="5" min="-999" max="999" style="width:50px;">m/s
+					<br><input id='velocity-slider' type="range" step="1" value="60" min="-999" max="999" style="width: 160px;">
+				</span>
 			</div>
 			<div class="col">
 				<span class='center'>wavelength =
-					<input id='wavelength' type="number" min="0" step="20" min="-1000" max="1000" style="width:40px;">m</span>
+					<input id='wavelength' type="number" min="0" step="20" max="999" style="width:50px;">m
+					<br><input id='wavelength-slider' type="range" step="0.1" value="300" min="0" max="999" style="width: 160px;">
+				</span>
 			</div>
 		</div>
 		<div class='center' id='wave_animation'>
@@ -174,10 +180,9 @@
 					<line x1="0" y1="200" x2="3000" y2="200" />
 				</g>
 				<path filter="url(#displacementFilter)" id="sine_wave" stroke-width='9' fill='rgba(0,0,255,0.4)' stroke='rgba(255,255,255,0.5)'
-				    stroke-miterlimit="10" />
+				 stroke-miterlimit="10" />
 				<g>
-					<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;'
-					/>
+					<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;' />
 					<text x="50" y="391" text-anchor="middle" font-size="15" fill='#000'>100 m</text>
 				</g>
 
@@ -197,17 +202,18 @@
 	</div>
 	<article>
 
-		<div class='example'>
-			<strong>Graphing:</strong> Let's see if we can find a relationship between frequency and period. Change the wavelength and record
-			about five different pairs of frequency and period. Graph the pairs with period as the x-coordinate and frequency as the
-			y-coordinate. What does the graph look like?
+		<strong>Graphing:</strong> Let's see if we can find a relationship between frequency and period. Change the
+		wavelength and record
+		about five different pairs of frequency and period. Graph the pairs with period as the x-coordinate and frequency as
+		the
+		y-coordinate. What does the graph look like?
 
-			<details id="example0">
-				<summary>solution</summary>
-				<p>It's an inverse function.</p>
-				<svg id="SVG-graph-0" viewBox="0 0 600 400"></svg>
-				<script>
-					// funGraphSVG() don't work inside <details>
+		<details id="example0">
+			<summary>solution</summary>
+			<p>It's an inverse function.</p>
+			<svg id="SVG-graph-0" viewBox="0 0 600 400"></svg>
+			<script>
+				// funGraphSVG() don't work inside <details>
 					// this is my workaround
 					document.getElementById("example0").addEventListener("toggle", handler0);
 
@@ -228,7 +234,7 @@
 						});
 					}
 				</script>
-			</details>
+		</details>
 		</div>
 		<h2 class='underlined'>Frequency and Period</h2>
 		<div class='definition'>
@@ -241,7 +247,8 @@
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> An air horn sounds at a frequency of 220 Hz. How many seconds pass between each wave crest?
+			<strong>Example:</strong> An air horn sounds at a frequency of 220 Hz. How many seconds pass between each wave
+			crest?
 			<details>
 				<summary>solution</summary>
 				$$T = \frac{1}{f}$$ $$T = \frac{1}{220}$$ $$T = 0.0045 \, \mathrm{s}$$
@@ -366,11 +373,13 @@
 
 
 		<div class='example'>
-			<strong>Example:</strong> The Los Angles Metro Expo Line has a train arrive at 6:50am, 6:56am, and 7:02. What is the period and
+			<strong>Example:</strong> The Los Angles Metro Expo Line has a train arrive at 6:50am, 6:56am, and 7:02. What is the
+			period and
 			frequency of the trains?
 			<details>
 				<summary>solution</summary>
-				$$6:56-6:50 = 6\, \mathrm{min}$$ $$T = 6\, \mathrm{min} \left(\frac{60\, \mathrm{s}}{1\, \mathrm{min}}\right) = 360\, \mathrm{s}$$
+				$$6:56-6:50 = 6\, \mathrm{min}$$ $$T = 6\, \mathrm{min} \left(\frac{60\, \mathrm{s}}{1\, \mathrm{min}}\right) =
+				360\, \mathrm{s}$$
 				$$f = \frac{1}{360}$$ $$f=0.0027 \, \mathrm{Hz}$$
 			</details>
 		</div>
@@ -387,9 +396,11 @@
 		<h2 class='underlined'>Media and Wave Speed</h2>
 		<p>When a wave moves, what is moving is energy, not matter.</p>
 
-		<p>The speed of propagation is determined by the medium. Properties like frequency, amplitude, or wavelength generally don't
+		<p>The speed of propagation is determined by the medium. Properties like frequency, amplitude, or wavelength
+			generally don't
 			have an effect.</p>
-		<p>Each type of wave has a different mechanism of propagation. The speed and possibility of a wave propagating through a medium
+		<p>Each type of wave has a different mechanism of propagation. The speed and possibility of a wave propagating
+			through a medium
 			is different for each wave type.</p>
 		<!-- <style>
 			@media screen and (max-width: 650px) {
@@ -408,33 +419,37 @@
 			</tr>
 			<tr>
 				<th>sound</td>
-					<td>N/A</td>
-					<td>340</td>
-					<td>1484</td>
-					<td>4540</td>
+				<td>N/A</td>
+				<td>340</td>
+				<td>1484</td>
+				<td>4540</td>
 			</tr>
 			<tr>
 				<th>light</td>
-					<td>299&thinsp;792&thinsp;458</td>
-					<td>299&thinsp;700&thinsp;000</td>
-					<td>220&thinsp;000&thinsp;000</td>
-					<td>200&thinsp;000&thinsp;000</td>
+				<td>299&thinsp;792&thinsp;458</td>
+				<td>299&thinsp;700&thinsp;000</td>
+				<td>220&thinsp;000&thinsp;000</td>
+				<td>200&thinsp;000&thinsp;000</td>
 			</tr>
 		</table>
 		<p>
 			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo">Sound</a> travels faster in dense media because the atoms are
-			<a href='https://www.youtube.com/watch?v=w6Q15GZpSUY'>closer</a> together. This means the atoms don't have to move as far to collide.
+			<a href='https://www.youtube.com/watch?v=w6Q15GZpSUY'>closer</a> together. This means the atoms don't have to move
+			as far to collide.
 		</p>
 		<p>
-			A light wave moves slower in dense media because as the light wave propagates through a medium it produces ripples that interfere
+			A light wave moves slower in dense media because as the light wave propagates through a medium it produces ripples
+			that interfere
 			in a way that slows the group velocity of the light wave.
 		</p>
 		<div class='example'>
-			<strong>Investigation:</strong> Can you figure out what factors affect the speed of a string wave? Go experiment with a string,
+			<strong>Investigation:</strong> Can you figure out what factors affect the speed of a string wave? Go experiment
+			with a string,
 			or slinky to find out.
 			<details>
 				<summary>solution</summary>
-				<br> Tension is probably the easiest way to control the speed of a string wave. The equation below shows that string mass
+				<br> Tension is probably the easiest way to control the speed of a string wave. The equation below shows that
+				string mass
 				and length are also factors. $$ v = \sqrt{\frac{T}{mL}}$$
 				<div class="col-group ">
 					<div class='center'>
@@ -447,12 +462,14 @@
 						<br>L = string length (m)
 					</div>
 				</div>
-				<br>Changing wave speed is used to change the pitch of stringed instruments. Notes from a guitar or harp are changed through
+				<br>Changing wave speed is used to change the pitch of stringed instruments. Notes from a guitar or harp are
+				changed through
 				tension, length, or string mass.
 			</details>
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> Two students are holding a slinky while standing 3.6 m apart. The first student sends a pulse which
+			<strong>Example:</strong> Two students are holding a slinky while standing 3.6 m apart. The first student sends a
+			pulse which
 			travels all the way down and back again. It takes 2.4 s for the wave to return. What is the speed of the wave?
 			<details>
 				<summary>solution</summary>
@@ -470,7 +487,8 @@
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> A medium sized air horn sounds at a frequency of 220 Hz. What is the wavelength of the sound wave?
+			<strong>Example:</strong> A medium sized air horn sounds at a frequency of 220 Hz. What is the wavelength of the
+			sound wave?
 			<details>
 				<summary>solution</summary>
 				<p>speed of sound at sea level = 340 m/s</p>
@@ -479,65 +497,79 @@
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> A cell phone sends and receives light in the microwave range, at wavelengths around 1 cm. How many cycles
+			<strong>Example:</strong> A cell phone sends and receives light in the microwave range, at wavelengths around 1 cm.
+			How many cycles
 			pass through the phone in one second?
 			<details>
 				<summary>solution</summary>
 				$$v = 3.0 \times 10^{8} \, \mathrm{\tfrac{m}{s}}$$ $$\lambda = 1\, \mathrm{cm} = 0.01\, \mathrm{m}$$
-				<br> $$v = f \lambda$$ $$f = \frac{v}{\lambda}$$ $$f = \frac{(3.0 \times 10^{8})}{0.01}$$ $$f=3\times 10^{10}\, \mathrm{Hz}$$
+				<br> $$v = f \lambda$$ $$f = \frac{v}{\lambda}$$ $$f = \frac{(3.0 \times 10^{8})}{0.01}$$ $$f=3\times 10^{10}\,
+				\mathrm{Hz}$$
 				$$f=30 \, \mathrm{GHz}$$
 			</details>
 		</div>
 
 
 		<div class='example'>
-			<b>Example:</b> If I triple the wavelength of a sound wave while keeping the wave speed the same, what happens to the frequency?
+			<b>Example:</b> If I triple the wavelength of a sound wave while keeping the wave speed the same, what happens to
+			the frequency?
 			Use
 			<a href="../../review/solving/index.html#proportions">proportions</a>.
 			<details>
 				<summary>solution</summary>
-				$$ \text{v is constant}$$ $$ \text{λ and f are inversely proportional}$$ $${ \atop v} {\atop =} { \Downarrow \atop f} { \Uparrow
+				$$ \text{v is constant}$$ $$ \text{λ and f are inversely proportional}$$ $${ \atop v} {\atop =} { \Downarrow \atop
+				f} { \Uparrow
 				\atop \lambda} $$ $$ \text{tripling λ will reduce f by a third}$$
 			</details>
 		</div>
 
 		<div class='example'>
-			<b>Example:</b> As a wave enters a new medium its speed decreases. The frequency of the wave stays the same, but how does
+			<b>Example:</b> As a wave enters a new medium its speed decreases. The frequency of the wave stays the same, but how
+			does
 			the wavelength change? Use
 			<a href="../../review/solving/index.html#proportions">proportions</a>.
 			<details>
 				<summary>solution</summary>
-				$$ \text{f is constant}$$ $$ \text{v and λ are directly proportional}$$ $${\Downarrow \atop v} {\atop =} { \atop f} {\Downarrow
+				$$ \text{f is constant}$$ $$ \text{v and λ are directly proportional}$$ $${\Downarrow \atop v} {\atop =} { \atop f}
+				{\Downarrow
 				\atop \lambda} $$ $$ \text{decreasing v will decrease λ}$$
 			</details>
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> AC (alternating current) electricity in the U.S. has a frequency of 60 Hz. In most other countries it
-			is 50 Hz. An electrical signal propagates through a wire at about 2/3 the speed of light. What is the wavelength for an
+			<strong>Example:</strong> AC (alternating current) electricity in the U.S. has a frequency of 60 Hz. In most other
+			countries it
+			is 50 Hz. An electrical signal propagates through a wire at about 2/3 the speed of light. What is the wavelength for
+			an
 			AC wave in the United States?
 			<details>
 				<summary>solution</summary>
-				$$v = f \lambda$$ $$\lambda = \frac{v}{f} $$ $$\lambda = \frac{(\tfrac{2}{3})(3.0 \times 10^8)}{60} $$ $$\lambda = \frac{2.0
+				$$v = f \lambda$$ $$\lambda = \frac{v}{f} $$ $$\lambda = \frac{(\tfrac{2}{3})(3.0 \times 10^8)}{60} $$ $$\lambda =
+				\frac{2.0
 				\times 10^8}{60} $$ $$\lambda = 0.033 \times 10^8 \, \mathrm{m} $$ $$\lambda = 3,300\, \mathrm{km} $$
 			</details>
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> Gravity waves are ripples in spacetime that move at the speed of light. The first detected gravity wave
-			was on 11 February 2016 when the LIGO and Virgo Scientific Collaboration observed gravitational waves originated from
+			<strong>Example:</strong> Gravity waves are ripples in spacetime that move at the speed of light. The first detected
+			gravity wave
+			was on 11 February 2016 when the LIGO and Virgo Scientific Collaboration observed gravitational waves originated
+			from
 			a pair of merging black holes. If you convert the gravity wave into a sound wave you can hear a
 			<a href='https://www.youtube.com/watch?v=TWqhUANNFXw'>chirp</a>.
 			<br>
-			<br>How big are gravity waves? Over the 0.2 second detection, the frequency increased from 35 Hz to 250 Hz. Calculate the
+			<br>How big are gravity waves? Over the 0.2 second detection, the frequency increased from 35 Hz to 250 Hz.
+			Calculate the
 			starting and ending wavelength.
 			<details>
 				<summary>solution</summary>
-				$$ v = 3 \times 10^{8} \, \mathrm{\tfrac{m}{s} }$$ $$v = f \lambda$$ $$\lambda = \frac{v}{f}$$ $$\lambda = \frac{3 \times
+				$$ v = 3 \times 10^{8} \, \mathrm{\tfrac{m}{s} }$$ $$v = f \lambda$$ $$\lambda = \frac{v}{f}$$ $$\lambda = \frac{3
+				\times
 				10^{8}}{35}$$ $$\lambda = \frac{3 \times 10^{8}}{35}$$ $$\lambda = 8,500,000\, \mathrm{m}$$
 				<br> $$\lambda = \frac{3 \times 10^{8}}{250}$$ $$\lambda = 1,200,000\, \mathrm{m}$$
 				<p>The wavelength ranged from 8,500 km to 1,200 km. We can also find the length of the entire signal.</p>
-				$$v = \frac{\Delta x}{\Delta t}$$ $$\Delta x = v\Delta t$$ $$\Delta x = (3 \times 10^{8}) (0.2)$$ $$\Delta x = 0.6 \times
+				$$v = \frac{\Delta x}{\Delta t}$$ $$\Delta x = v\Delta t$$ $$\Delta x = (3 \times 10^{8}) (0.2)$$ $$\Delta x = 0.6
+				\times
 				10^{8} \, \mathrm{m}$$
 				<p>The entire signal was 60,000 km long. That's about 5 Earths long.</p>
 			</details>
@@ -545,8 +577,10 @@
 
 		<h2 class='underlined' id='sound-waves'>How Waves Propagate</h2>
 		<p>
-			<strong>Propagate</strong> is the word we use to describe waves moving. We try not to say move, because waves are a signal transmitting
-			through the medium. The medium doesn't move, just the signal. Each medium has their own mechanism of propagation, but
+			<strong>Propagate</strong> is the word we use to describe waves moving. We try not to say move, because waves are a
+			signal transmitting
+			through the medium. The medium doesn't move, just the signal. Each medium has their own mechanism of propagation,
+			but
 			there are some general principles.
 		</p>
 
@@ -556,11 +590,13 @@
 			<li>The restorative force also pushes the disruptions forward through the medium.</li>
 		</p> -->
 		<p> A medium at rest is in
-			<strong>equilibrium</strong>; the forces are in balance. A disruption spreads through the medium bringing it out of equilibrium.
+			<strong>equilibrium</strong>; the forces are in balance. A disruption spreads through the medium bringing it out of
+			equilibrium.
 		</p>
 
 		<p>
-			<a href="https://waveforms.surge.sh/waveforms-intro ">Sound waves</a> are vibrations that propagate through matter. They are produced from changes in pressure and velocity.
+			<a href="https://waveforms.surge.sh/waveforms-intro ">Sound waves</a> are vibrations that propagate through matter.
+			They are produced from changes in pressure and velocity.
 			Your
 			<a href="https://www.youtube.com/watch?v=qgdqp-oPb1Q ">ear</a> senses the amplitude and frequency of the vibrations.
 		</p>
@@ -569,19 +605,22 @@
 	</article>
 	<canvas class='center' id='sound1' height='50' width='600' onclick="sound(this,2, false) "> </canvas>
 	<article>
-		<p>I've graphed the density and highlighted the particles with higher speeds. You can see the wave trading between kinetic
+		<p>I've graphed the density and highlighted the particles with higher speeds. You can see the wave trading between
+			kinetic
 			energy and pressure.
 		</p>
 	</article>
 	<canvas class='center' id='sound2' height='50' width='600' onclick="sound(this, 1, true) "> </canvas>
 	<article>
-		<p>Waves don't transmit matter, just energy. In the simulation below one particle is highlighted. Watch how it moves when
+		<p>Waves don't transmit matter, just energy. In the simulation below one particle is highlighted. Watch how it moves
+			when
 			it becomes part of the wave, but over time it stays in the same area.</p>
 	</article>
 	<canvas class='center' id='sound3' height='50' width='600' onclick="sound(this, 1, false, true) "> </canvas>
 	<article>
 		<h2 class='underlined'>Transverse and Longitudinal</h2>
-		<p>Sound waves are vibrations that move in the same direction the wave moves. Most other waves are produced by vibration perpendicular
+		<p>Sound waves are vibrations that move in the same direction the wave moves. Most other waves are produced by
+			vibration perpendicular
 			to the direction the wave moves, like waves on strings </p>
 		<div class='definition'>
 			<p>

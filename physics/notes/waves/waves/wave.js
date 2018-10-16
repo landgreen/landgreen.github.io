@@ -1,6 +1,6 @@
 // https://github.com/josephg/noisejs
 
-const wave = function() {
+const wave = function () {
   const sineWaveTarget = document.getElementById("sine_wave");
   var origin = {
     //origin of x,y axes
@@ -24,10 +24,10 @@ const wave = function() {
 
   let pause = true;
   const elZone = document.getElementById("sine-wave-zone");
-  elZone.addEventListener("mouseleave", function() {
+  elZone.addEventListener("mouseleave", function () {
     pause = true;
   });
-  elZone.addEventListener("mouseenter", function() {
+  elZone.addEventListener("mouseenter", function () {
     if (pause) {
       pause = false;
       requestAnimationFrame(render);
@@ -49,8 +49,10 @@ const wave = function() {
       sineWaveTarget.setAttribute("stroke-width", "5");
     }
   }
-  document.getElementById("sin-wave").addEventListener("click", toggleWater);
+
+  // document.getElementById("sin-wave").addEventListener("click", toggleWater);
   toggleWater();
+
   (function setup() {
     document.getElementById("amplitude").value = settings.amplitude;
     document.getElementById("velocity").value = settings.velocity;
@@ -60,41 +62,68 @@ const wave = function() {
     settings.phase = settings.phase % settings.wavelength; //makes the switch smoother
   })();
 
-  document.getElementById("amplitude").addEventListener(
-    "input",
-    function() {
-      settings.amplitude = Number(document.getElementById("amplitude").value);
-      drawSineWave();
-    },
-    false
-  );
+  document.getElementById("amplitude").addEventListener("input", function () {
+    settings.amplitude = Number(document.getElementById("amplitude").value);
+    document.getElementById("amplitude-slider").value = settings.amplitude
+    drawSineWave();
+  }, false);
 
-  document.getElementById("velocity").addEventListener(
-    "input",
-    function() {
-      settings.velocity = Number(document.getElementById("velocity").value);
-      settings.frequency = settings.velocity / settings.wavelength;
-      settings.period = 1 / settings.frequency;
-      document.getElementById("frequency").innerHTML = "frequency = " + settings.frequency.toFixed(3) + " Hz";
-      document.getElementById("period").innerHTML = "period = " + settings.period.toFixed(3) + " s";
-      drawSineWave();
-    },
-    false
-  );
+  document.getElementById("amplitude-slider").addEventListener("input", function () {
+    settings.amplitude = Number(document.getElementById("amplitude-slider").value);
+    document.getElementById("amplitude").value = settings.amplitude
+    drawSineWave();
+  }, false);
 
-  document.getElementById("wavelength").addEventListener(
-    "input",
-    function() {
-      settings.wavelength = Math.max(Number(document.getElementById("wavelength").value), 1);
-      settings.phase = settings.phase % settings.wavelength; //makes the switch smoother
-      settings.frequency = settings.velocity / settings.wavelength;
-      settings.period = 1 / settings.frequency;
-      document.getElementById("frequency").innerHTML = "frequency = " + settings.frequency.toFixed(3) + " Hz";
-      document.getElementById("period").innerHTML = "period = " + settings.period.toFixed(3) + " s";
-      drawSineWave();
-    },
-    false
-  );
+
+
+  document.getElementById("velocity").addEventListener("input", function () {
+    settings.velocity = Number(document.getElementById("velocity").value);
+    document.getElementById("velocity-slider").value = settings.velocity
+    settings.frequency = settings.velocity / settings.wavelength;
+    settings.period = 1 / settings.frequency;
+    document.getElementById("frequency").innerHTML = "frequency = " + settings.frequency.toFixed(3) + " Hz";
+    document.getElementById("period").innerHTML = "period = " + settings.period.toFixed(3) + " s";
+    drawSineWave();
+  }, false);
+
+  document.getElementById("velocity-slider").addEventListener("input", function () {
+    settings.velocity = Number(document.getElementById("velocity-slider").value);
+    document.getElementById("velocity").value = settings.velocity
+    settings.frequency = settings.velocity / settings.wavelength;
+    settings.period = 1 / settings.frequency;
+    document.getElementById("frequency").innerHTML = "frequency = " + settings.frequency.toFixed(3) + " Hz";
+    document.getElementById("period").innerHTML = "period = " + settings.period.toFixed(3) + " s";
+    drawSineWave();
+  }, false);
+
+
+
+  document.getElementById("wavelength").addEventListener("input", function () {
+    settings.wavelength = Math.max(Number(document.getElementById("wavelength").value), 1);
+    document.getElementById("wavelength-slider").value = settings.wavelength
+    settings.phase = settings.phase % settings.wavelength; //makes the switch smoother
+    settings.frequency = settings.velocity / settings.wavelength;
+    settings.period = 1 / settings.frequency;
+    document.getElementById("frequency").innerHTML = "frequency = " + settings.frequency.toFixed(3) + " Hz";
+    document.getElementById("period").innerHTML = "period = " + settings.period.toFixed(3) + " s";
+    drawSineWave();
+  }, false);
+
+  document.getElementById("wavelength-slider").addEventListener("input", function () {
+    settings.wavelength = Math.max(Number(document.getElementById("wavelength-slider").value), 1);
+    document.getElementById("wavelength").value = settings.wavelength
+    settings.phase = settings.phase % settings.wavelength; //makes the switch smoother
+    settings.frequency = settings.velocity / settings.wavelength;
+    settings.period = 1 / settings.frequency;
+    document.getElementById("frequency").innerHTML = "frequency = " + settings.frequency.toFixed(3) + " Hz";
+    document.getElementById("period").innerHTML = "period = " + settings.period.toFixed(3) + " s";
+    drawSineWave();
+  }, false);
+
+
+
+
+
 
   function drawSineWave() {
     let d = "M-1 " + (-Math.sin(((2 * Math.PI) / settings.wavelength) * (-1 + settings.phase)) * settings.amplitude + origin.y);
@@ -105,6 +134,7 @@ const wave = function() {
     sineWaveTarget.setAttribute("d", d);
   }
   drawSineWave();
+
   function render() {
     //repeating animation function
     settings.phase -= settings.velocity / 60;
