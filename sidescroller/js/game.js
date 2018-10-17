@@ -274,6 +274,7 @@ const game = {
     mech.drop();
     mech.addHealth(1);
     mech.alive = true;
+    level.onLevel = 0;
     game.levelsCleared = 0;
     // level.onLevel = Math.floor(Math.random() * level.levels.length); //picks a random starting level
     game.clearNow = true;
@@ -308,9 +309,11 @@ const game = {
       // mech.throw();
     };
     document.body.style.cursor = "none";
-    if (this.firstRun) mech.spawn(); //spawns the player
-    level.levels = shuffle(level.levels); //shuffles order of maps
-    level.levels.unshift("bosses"); //add bosses level to the end of the randomized levels list
+    if (this.firstRun) {
+      mech.spawn(); //spawns the player
+      level.levels = shuffle(level.levels); //shuffles order of maps
+      level.levels.unshift("bosses"); //add bosses level to the end of the randomized levels list
+    }
     game.reset();
     game.firstRun = false;
     requestAnimationFrame(cycle); //starts game loop
