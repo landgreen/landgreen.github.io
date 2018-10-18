@@ -781,7 +781,7 @@ const spawn = {
     let me = mob[mob.length - 1];
     me.g = 0.0004; //required if using 'gravity'
     me.leaveBody = false;
-    me.dropPowerUp = false;
+    // me.dropPowerUp = false;
     me.onDeath = function () {
       //run this function on death
       for (let i = 0; i < Math.ceil(this.mass * 0.2 + Math.random() * 3); ++i) {
@@ -810,6 +810,7 @@ const spawn = {
     me.g = 0.0001; //required if using 'gravity'
     me.accelMag = 0.0003;
     me.memory = 30;
+    me.leaveBody = false;
     me.seePlayerFreq = 80 + Math.round(Math.random() * 50);
     me.frictionAir = 0.002;
     me.do = function () {
@@ -1088,7 +1089,7 @@ const spawn = {
 
         //player friction from the wires
         if (mech.pos.x > 700 && player.velocity.x > -2) {
-          let wireFriction = Math.min(0.65, Math.max(0, 150 / (breakingPoint - mech.pos.x)));
+          let wireFriction = 0.85 * Math.min(0.65, Math.max(0, 150 / (breakingPoint - mech.pos.x)));
           if (!mech.onGround) {
             wireFriction *= 1.7
           }
