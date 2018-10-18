@@ -42,13 +42,20 @@ if (!localSettings) {
 } else {
   document.getElementById("language").selectedIndex = localSettings.selectedIndex;
 }
-document.getElementById("language").addEventListener("change", function() {
+document.getElementById("language").addEventListener("change", function () {
   p.saveToLocalSettings();
 });
 let local = JSON.parse(localStorage.getItem("allPeriods"));
 if (!local) {
   console.log("No local period rosters found. Resetting to empty classes.");
-  local = [[], [], [], [], [], []];
+  local = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ];
   document.getElementById("add").classList.add("blue");
   document.getElementById("first-time").innerHTML = "Click add to fill up your period.";
 } else {
@@ -101,7 +108,7 @@ let p = new Vue({
     //   };
     //   fr.readAsText(files.item(0));
     // },
-    importIn: function() {
+    importIn: function () {
       var files = document.getElementById("selectFiles").files;
       if (files.length <= 0) {
         return false;
@@ -115,7 +122,7 @@ let p = new Vue({
       };
       fr.readAsText(files.item(0));
     },
-    exportOut: function() {
+    exportOut: function () {
       let dataStr = JSON.stringify(localStorage.getItem("allPeriods"));
       let dataUri = "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
       let linkElement = document.createElement("a");
@@ -123,13 +130,13 @@ let p = new Vue({
       linkElement.setAttribute("download", "data.json");
       linkElement.click();
     },
-    movedEvent: function(i, newX, newY) {
+    movedEvent: function (i, newX, newY) {
       this.saveToLocal();
     },
-    resizedEvent: function(i, newX, newY) {
+    resizedEvent: function (i, newX, newY) {
       this.saveToLocal();
     },
-    undoLastedCalled: function() {
+    undoLastedCalled: function () {
       for (let i = 0, len = this.layout.length; i < len; ++i) {
         if (this.layout[i].focus) {
           this.layout[i].focus = false;
@@ -139,14 +146,14 @@ let p = new Vue({
         }
       }
     },
-    reset: function() {
+    reset: function () {
       if (prompt("WARNING THIS WILL REMOVE ALL NAMES FROM ALL PERIODS.  Type yes to remove all names", "no") === "yes") {
         this.allPeriods = defaultPeriods;
         this.layout = this.allPeriods[this.period - 1];
         this.saveToLocal();
       }
     },
-    resetCount: function() {
+    resetCount: function () {
       if (prompt("To reset all counts for only this period type yes", "no") === "yes") {
         for (let i = 0, len = this.layout.length; i < len; ++i) {
           this.layout[i].num = 0;
@@ -154,7 +161,7 @@ let p = new Vue({
         this.saveToLocal();
       }
     },
-    tidy: function() {
+    tidy: function () {
       // for (let i = 0, len = this.layout.length; i < len; ++i) {
       //   this.layout[i].x = (i % 4) * 3;
       //   this.layout[i].y = 0;
@@ -175,9 +182,10 @@ let p = new Vue({
       this.saveToLocal();
       location.reload();
     },
-    shrink: function() {
+    shrink: function () {
       var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
       var context = canvas.getContext("2d");
+
       function getTextWidth(text, font) {
         context.font = font;
         var metrics = context.measureText(text);
@@ -190,11 +198,11 @@ let p = new Vue({
 
       this.saveToLocal();
     },
-    saveToLocal: function() {
+    saveToLocal: function () {
       this.allPeriods[this.period - 1] = this.layout;
       localStorage.setItem("allPeriods", JSON.stringify(this.allPeriods)); //update classes to local storage
     },
-    saveToLocalSettings: function() {
+    saveToLocalSettings: function () {
       const localSettings = {
         draggable: this.draggable,
         resizable: this.resizable,
@@ -204,7 +212,7 @@ let p = new Vue({
       };
       localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update classes to local storage
     },
-    showSettings: function() {
+    showSettings: function () {
       if (this.isSettingsSeen) {
         this.isSettingsSeen = false;
       } else {
@@ -212,7 +220,7 @@ let p = new Vue({
       }
       this.saveToLocalSettings();
     },
-    nextPeriod: function() {
+    nextPeriod: function () {
       this.unFocusAll();
       this.saveToLocal();
       if (this.period > this.allPeriods.length - 1) {
@@ -222,12 +230,12 @@ let p = new Vue({
       }
       this.layout = this.allPeriods[this.period - 1];
     },
-    unFocusAll: function() {
+    unFocusAll: function () {
       for (let i = 0, len = this.layout.length; i < len; ++i) {
         this.layout[i].focus = false;
       }
     },
-    removeItem: function(item) {
+    removeItem: function (item) {
       let removeName = prompt("enter name of student to remove", this.layout[0].name);
       for (let i = 0, len = this.layout.length; i < len; ++i) {
         if (this.layout[i].name === removeName) {
@@ -243,13 +251,13 @@ let p = new Vue({
       // document.body.style.userSelect = "auto";
       // document.body.style.userSelect = "none";
     },
-    reIndex: function() {
+    reIndex: function () {
       for (let j = 0, len = this.layout.length; j < len; ++j) {
         // console.log(this.layout[j].i);
         this.layout[j].i = j.toString();
       }
     },
-    addItem: function() {
+    addItem: function () {
       this.unFocusAll();
       let name = prompt("name");
       if (name) {
@@ -267,14 +275,22 @@ let p = new Vue({
         this.saveToLocal();
       }
     },
-    callRandom: function() {
+    callRandom: function () {
       this.unFocusAll();
       let say = "";
       let pool = [];
       let totalCalled = 0;
-      this.layout.forEach(function(element) {
+      this.layout.forEach(function (element) {
         totalCalled += element.num;
       });
+
+      // function cycle(who) {
+      //   this.layout[Math.floor(Math.random() * this.layout.length)].focus = true;
+      //   requestAnimationFrame(cycle);
+      // }
+      // requestAnimationFrame(cycle);
+
+
       const AVGCALLED = totalCalled / this.layout.length;
       for (let i = 0, len = this.layout.length; i < len; ++i) {
         if (this.layout[i].num > AVGCALLED) {
@@ -287,6 +303,7 @@ let p = new Vue({
       }
       const PICK = pool[Math.floor(Math.random() * pool.length)];
       const callOn = this.layout[PICK];
+
       callOn.focus = true;
       callOn.num++;
 

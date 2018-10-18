@@ -91,7 +91,7 @@ function collision2d(el) {
     var px = 0;
     var py = 0;
     for (var k = 0, length = mass.length; k < length; k++) {
-      ctx.fillText(mass[k].mass.toFixed(2) + "kg", mass[k].position.x, mass[k].position.y);
+      // ctx.fillText(mass[k].mass.toFixed(2) + "kg", mass[k].position.x, mass[k].position.y);
       //ctx.fillText(mass[k].velocity.x.toFixed(2)+'m/s',mass[k].position.x,mass[k].position.y+9);
       px += mass[k].mass * mass[k].velocity.x;
       py += mass[k].mass * -mass[k].velocity.y;
