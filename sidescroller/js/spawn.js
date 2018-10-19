@@ -8,7 +8,6 @@ const spawn = {
     "hopper",
     "grower",
     "springer",
-    // "zoomer",
     "shooter",
     "beamer",
     "focuser",
@@ -20,6 +19,7 @@ const spawn = {
     "ghoster",
     "sneaker",
   ],
+  // "zoomer",
   bossPickList: ["chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner"], //"zoomer", 
   setSpawnList: function () {
     //this is run at the start of each new level to determine the possible mobs for the level
@@ -141,12 +141,12 @@ const spawn = {
       this.attraction();
     };
   },
-  chaser: function (x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
+  chaser: function (x, y, radius = 30 + Math.ceil(Math.random() * 50)) {
     mobs.spawn(x, y, 4, radius, "rgb(110,150,200)");
     let me = mob[mob.length - 1];
     me.g = 0.0004; //required if using 'gravity'
-    me.accelMag = 0.0006;
-    me.memory = 240;
+    me.accelMag = 0.0007;
+    me.memory = 300;
     if (Math.random() < Math.min((game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
     me.do = function () {
       this.healthBar();
@@ -187,7 +187,7 @@ const spawn = {
     mobs.spawn(x, y, 7, radius, "hsl(144, 15%, 50%)");
     let me = mob[mob.length - 1];
     me.big = false; //required for grow
-    me.accelMag = 0.0005;
+    me.accelMag = 0.00045;
     me.do = function () {
       this.healthBar();
       this.seePlayerByLookingAt();
@@ -265,7 +265,7 @@ const spawn = {
       this.gravity();
     };
   },
-  hopper: function (x, y, radius = 25 + Math.ceil(Math.random() * 30)) {
+  hopper: function (x, y, radius = 30 + Math.ceil(Math.random() * 30)) {
     mobs.spawn(x, y, 5, radius, "rgb(0,200,180)");
     let me = mob[mob.length - 1];
     me.accelMag = 0.04;
@@ -292,7 +292,7 @@ const spawn = {
       }
     };
   },
-  spinner: function (x, y, radius = 35 + Math.ceil(Math.random() * 35)) {
+  spinner: function (x, y, radius = 30 + Math.ceil(Math.random() * 35)) {
     mobs.spawn(x, y, 5, radius, "#000000");
     let me = mob[mob.length - 1];
     me.fill = "#28b";
@@ -361,36 +361,59 @@ const spawn = {
     Matter.Body.setDensity(me, 0.006); //extra dense //normal is 0.001 //makes effective life much larger
     // me.collisionFilter.mask = 0x001100; //move through walls
     me.do = function () {
-      this.seePlayerByDistOrLOS();
-      this.attraction();
-      this.darkness();
-      this.healthBar();
-      //black hole        //keep it slow, most to stop issues from explosion knockbacks
+      //keep it slow, to stop issues from explosion knock backs
       if (this.speed > 5) {
         Matter.Body.setVelocity(this, {
           x: this.velocity.x * 0.99,
           y: this.velocity.y * 0.99
         });
       }
-      //when player is inside event horizon
-      if (Matter.Vector.magnitude(Matter.Vector.sub(this.position, player.position)) < this.eventHorizon) {
-        mech.damage(0.00015 * game.dmgScale);
-        const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
-        player.force.x -= 1.25 * Math.cos(angle) * player.mass * game.g * (mech.onGround ? 1.8 : 1);
-        player.force.y -= 0.96 * player.mass * game.g * Math.sin(angle);
+      this.seePlayerByDistOrLOS();
+      if (this.seePlayer.recall) {
+        //eventHorizon waves in and out
+        eventHorizon = this.eventHorizon * (0.95 + 0.1 * Math.sin(game.cycle * 0.01))
 
+        //accelerate towards the player
+        const forceMag = this.accelMag * this.mass;
+        const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x);
+        this.force.x += forceMag * Math.cos(angle);
+        this.force.y += forceMag * Math.sin(angle);
+
+        //draw darkness
         ctx.beginPath();
-        ctx.moveTo(this.position.x, this.position.y);
-        ctx.lineTo(mech.pos.x, mech.pos.y);
-        ctx.lineWidth = Math.min(60, this.radius * 2);
-        ctx.strokeStyle = "rgba(0,0,0,0.5)";
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
-        ctx.fillStyle = "rgba(0,0,0,0.3)";
+        ctx.arc(this.position.x, this.position.y, eventHorizon * 0.33, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(0,0,0,0.7)";
         ctx.fill();
+        ctx.beginPath();
+        ctx.arc(this.position.x, this.position.y, eventHorizon * 0.66, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(0,0,0,0.4)";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(this.position.x, this.position.y, eventHorizon, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(0,0,0,0.1)";
+        ctx.fill();
+
+        this.healthBar();
+        //when player is inside event horizon
+        if (Matter.Vector.magnitude(Matter.Vector.sub(this.position, player.position)) < eventHorizon) {
+          mech.damage(0.00015 * game.dmgScale);
+          const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
+          player.force.x -= 1.25 * Math.cos(angle) * player.mass * game.g * (mech.onGround ? 1.8 : 1);
+          player.force.y -= 0.96 * player.mass * game.g * Math.sin(angle);
+          //draw line to player
+          ctx.beginPath();
+          ctx.moveTo(this.position.x, this.position.y);
+          ctx.lineTo(mech.pos.x, mech.pos.y);
+          ctx.lineWidth = Math.min(60, this.radius * 2);
+          ctx.strokeStyle = "rgba(0,0,0,0.5)";
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
+          ctx.fillStyle = "rgba(0,0,0,0.3)";
+          ctx.fill();
+        }
       }
-    };
+    }
   },
   beamer: function (x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
     mobs.spawn(x, y, 4, radius, "rgb(255,0,190)");
@@ -549,7 +572,7 @@ const spawn = {
     let me;
     mobs.spawn(x, y, 5, radius, "transparent");
     me = mob[mob.length - 1];
-    me.accelMag = 0.0006;
+    me.accelMag = 0.0007;
     me.g = 0.0002; //required if using 'gravity'
     me.stroke = "transparent"; //used for drawSneaker
     me.alpha = 1; //used in drawSneaker
@@ -592,7 +615,7 @@ const spawn = {
       }
     };
   },
-  ghoster: function (x, y, radius = 35 + Math.ceil(Math.random() * 90)) {
+  ghoster: function (x, y, radius = 30 + Math.ceil(Math.random() * 90)) {
     let me;
     mobs.spawn(x, y, 7, radius, "transparent");
     me = mob[mob.length - 1];
@@ -648,9 +671,10 @@ const spawn = {
       }
     };
   },
-  blinker: function (x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
+  blinker: function (x, y, radius = 45 + Math.ceil(Math.random() * 70)) {
     mobs.spawn(x, y, 6, radius, "transparent");
     let me = mob[mob.length - 1];
+    Matter.Body.setDensity(me, 0.0005); //normal is 0.001 //makes effective life much lower
     me.stroke = "rgb(0,200,255)"; //used for drawGhost
     Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
     me.blinkRate = 40 + Math.round(Math.random() * 60); //required for blink

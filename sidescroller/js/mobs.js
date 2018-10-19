@@ -501,28 +501,28 @@ const mobs = {
         }
         ctx.globalAlpha = 1;
       },
-      darkness: function () {
-        // var grd = ctx.createRadialGradient(this.position.x, this.position.y, this.eventHorizon/3, this.position.x, this.position.y, this.eventHorizon);
-        // grd.addColorStop(0, "rgba(0,0,0,1)");
-        // grd.addColorStop(1, "rgba(0,0,0,0)");
-        // ctx.fillStyle=grd;
-        // ctx.beginPath();
-        // ctx.arc(this.position.x, this.position.y, this.eventHorizon, 0, 2 * Math.PI);
-        // ctx.fill();
+      // darkness: function () {
+      //   // var grd = ctx.createRadialGradient(this.position.x, this.position.y, this.eventHorizon/3, this.position.x, this.position.y, this.eventHorizon);
+      //   // grd.addColorStop(0, "rgba(0,0,0,1)");
+      //   // grd.addColorStop(1, "rgba(0,0,0,0)");
+      //   // ctx.fillStyle=grd;
+      //   // ctx.beginPath();
+      //   // ctx.arc(this.position.x, this.position.y, this.eventHorizon, 0, 2 * Math.PI);
+      //   // ctx.fill();
 
-        ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, this.eventHorizon * 0.33, 0, 2 * Math.PI);
-        ctx.fillStyle = "rgba(0,0,0,0.7)";
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, this.eventHorizon * 0.66, 0, 2 * Math.PI);
-        ctx.fillStyle = "rgba(0,0,0,0.4)";
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, this.eventHorizon, 0, 2 * Math.PI);
-        ctx.fillStyle = "rgba(0,0,0,0.1)";
-        ctx.fill();
-      },
+      //   ctx.beginPath();
+      //   ctx.arc(this.position.x, this.position.y, this.eventHorizon * 0.33, 0, 2 * Math.PI);
+      //   ctx.fillStyle = "rgba(0,0,0,0.7)";
+      //   ctx.fill();
+      //   ctx.beginPath();
+      //   ctx.arc(this.position.x, this.position.y, this.eventHorizon * 0.66, 0, 2 * Math.PI);
+      //   ctx.fillStyle = "rgba(0,0,0,0.4)";
+      //   ctx.fill();
+      //   ctx.beginPath();
+      //   ctx.arc(this.position.x, this.position.y, this.eventHorizon, 0, 2 * Math.PI);
+      //   ctx.fillStyle = "rgba(0,0,0,0.1)";
+      //   ctx.fill();
+      // },
       pullPlayer: function () {
         if (this.seePlayer.yes && Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position)) < 1000000) {
           const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
@@ -913,8 +913,8 @@ const mobs = {
           // body[len].collisionFilter.category = body[len].collisionFilter.category //0x000001;
           // body[len].collisionFilter.mask = body[len].collisionFilter.mask //0x011111;
 
-          //large mobs go intangible
-          if (body[len].mass > 10) {
+          //large mobs or too many bodyes go intangible and fall until removed from game to help performance
+          if (body[len].mass > 10 || 40 + 30 * Math.random() < body.length) {
             body[len].collisionFilter.mask = 0x000100;
           }
           body[len].classType = "body";
