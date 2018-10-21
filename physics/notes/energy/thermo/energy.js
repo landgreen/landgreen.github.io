@@ -18,9 +18,7 @@ var particles = function (button) {
   var ctx = canvas.getContext("2d");
   ctx.font = "18px Arial";
   ctx.textAlign = "left";
-  ctx.shadowBlur = 5;
-  ctx.shadowOffsetX = 5;
-  ctx.shadowOffsetY = 5;
+
 
   var pause = false;
 
@@ -34,7 +32,7 @@ var particles = function (button) {
 
   document.getElementById("energy").addEventListener("click", function () {
     if (physics.restitution === 1) {
-      physics.restitution = 0.8;
+      physics.restitution = 0.6;
       physics.airFriction = 0.9995;
       document.getElementById("energy").innerHTML = "friction: ON";
     } else {
@@ -67,14 +65,11 @@ var particles = function (button) {
     this.fillColor = fillColor;
     this.draw = function () {
       ctx.lineWidth = 1.5;
-      ctx.shadowColor = "#999";
-      ctx.shadowBlur = 6;
       ctx.fillStyle = this.fillColor;
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
       ctx.fill();
       ctx.stroke();
-      ctx.shadowColor = "transparent";
     };
     this.move = function () {
       this.x += this.Vx;
@@ -146,19 +141,12 @@ var particles = function (button) {
   spawn();
   document.getElementById(canvasID).addEventListener("mousedown", function (event) {
     //gets mouse position, even when canvas is scaled by CSS
-    function getMousePos(canvas, event) {
-      const mouse = {
-        x: event.clientX - ctx.canvas.offsetLeft,
-        y: event.clientY - ctx.canvas.offsetTop
-      };
-      return {
-        x: (mouse.x * canvas.width) / canvas.clientWidth,
-        y: (mouse.y * canvas.height) / canvas.clientHeight
-      };
-    }
-
-    mouse = getMousePos(canvas, event);
-    spawn();
+    box.x = mouse.x = event.offsetX * canvas.width / canvas.clientWidth;
+    box.y = mouse.y = event.offsetY * canvas.height / canvas.clientHeight;
+    box.Vx = 1
+    box.Vy = 0
+    box.calcEnergy();
+    box.energy = box.pe + box.ke;
   });
 
   window.requestAnimationFrame(render);
@@ -171,8 +159,8 @@ var particles = function (button) {
       box.edges();
       box.gravity();
       box.move();
-      box.draw();
       box.info();
+      box.draw();
     }
   }
 };
