@@ -141,10 +141,6 @@ const keys = [];
 document.body.addEventListener("keydown", function (e) {
   keys[e.keyCode] = true;
   game.keyPress();
-  //full screen toggle
-  if (e.keyCode == 13) {
-    toggleFullScreen(canvas);
-  }
 });
 
 document.body.addEventListener("keyup", function (e) {
@@ -164,20 +160,6 @@ document.body.addEventListener(
   }
 );
 
-function toggleFullScreen(el) {
-  var doc = window.document;
-  var docEl = doc.documentElement;
-
-  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-
-  if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-    requestFullScreen.call(docEl);
-  } else {
-    cancelFullScreen.call(doc);
-  }
-  setupCanvas();
-}
 
 // function playSound(id) {
 //   //play sound

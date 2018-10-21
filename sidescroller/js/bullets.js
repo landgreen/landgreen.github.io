@@ -368,7 +368,7 @@ const b = {
     {
       name: "rapid fire",
       ammo: 0,
-      ammoPack: 60,
+      ammoPack: 80,
       have: false,
       fire: function () {
         const me = bullet.length;
@@ -387,7 +387,7 @@ const b = {
     {
       name: "spray",
       ammo: 0,
-      ammoPack: 6,
+      ammoPack: 8,
       have: false,
       fire: function () {
         b.muzzleFlash(35);
@@ -414,7 +414,7 @@ const b = {
     {
       name: "needles",
       ammo: 0,
-      ammoPack: 15,
+      ammoPack: 17,
       have: false,
       fire: function () {
         const me = bullet.length;
@@ -433,7 +433,7 @@ const b = {
     {
       name: "missiles",
       ammo: 0,
-      ammoPack: 3,
+      ammoPack: 4,
       have: false,
       fire: function () {
         // b.muzzleFlash();
@@ -553,7 +553,7 @@ const b = {
     {
       name: "flak",
       ammo: 0,
-      ammoPack: 6,
+      ammoPack: 9,
       have: false,
       fire: function () {
         b.muzzleFlash(30);
@@ -585,7 +585,7 @@ const b = {
     {
       name: "grenade",
       ammo: 0,
-      ammoPack: 3,
+      ammoPack: 4,
       have: false,
       fire: function () {
         const me = bullet.length;
@@ -664,7 +664,7 @@ const b = {
     {
       name: "one shot",
       ammo: 0,
-      ammoPack: 3,
+      ammoPack: 4,
       have: false,
       fire: function () {
         b.muzzleFlash(45);
@@ -682,7 +682,7 @@ const b = {
     {
       name: "super balls",
       ammo: 0,
-      ammoPack: 9,
+      ammoPack: 10,
       have: false,
       fire: function () {
         b.muzzleFlash(20);

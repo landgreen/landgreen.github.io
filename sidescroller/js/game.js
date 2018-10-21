@@ -128,15 +128,77 @@ const game = {
   },
   keyPress: function () {
     //runs on key press event
+    if (keys[49]) {
+      // press 1
+      b.inventoryGun = 0;
+      game.switchGun();
+    } else if (keys[50]) {
+      // press 2
+      b.inventoryGun = 1;
+      game.switchGun();
+    } else if (keys[51]) {
+      // press 3
+      b.inventoryGun = 2;
+      game.switchGun();
+    } else if (keys[52]) {
+      // press 4
+      b.inventoryGun = 3;
+      game.switchGun();
+    } else if (keys[53]) {
+      // press 5
+      b.inventoryGun = 4;
+      game.switchGun();
+    } else if (keys[54]) {
+      // press 6
+      b.inventoryGun = 5;
+      game.switchGun();
+    } else if (keys[55]) {
+      // press 7
+      b.inventoryGun = 6;
+      game.switchGun();
+    } else if (keys[56]) {
+      // press 8
+      b.inventoryGun = 7;
+      game.switchGun();
+    } else if (keys[57]) {
+      // press 9
+      b.inventoryGun = 8;
+      game.switchGun();
+    } else if (keys[48]) {
+      // press 0
+      b.inventoryGun = 9;
+      game.switchGun();
+    }
+
+
     if (keys[189]) {
-      // -
+      // - key
       game.zoomScale /= 0.9;
       game.setZoom();
     } else if (keys[187]) {
-      // -
+      // = key
       game.zoomScale *= 0.9;
       game.setZoom();
     }
+
+    //full screen toggle
+    if (keys[13]) {
+      //enter key
+      var doc = window.document;
+      var docEl = doc.documentElement;
+
+      var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+      var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+      if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+        requestFullScreen.call(docEl);
+      } else {
+        cancelFullScreen.call(doc);
+      }
+      setupCanvas();
+    }
+
+
     if (keys[69]) {
       // e    swap to next active gun
       game.nextGun();
@@ -144,33 +206,19 @@ const game = {
       //q    swap to previous active gun
       game.previousGun();
     }
-    // else if (keys[32]) {
-    //   //space to toggle back to field emitter gun
-    //   if (b.activeGun === 0) {
-    //     b.activeGun = b.lastActiveGun;
-    //     game.switchGun();
-    //   } else {
-    //     b.lastActiveGun = b.activeGun;
-    //     b.activeGun = 0;
-    //     game.switchGun();
-    //   }
-    // }
 
     if (keys[80]) {
       //p  for pause
       if (game.paused) {
         game.paused = false;
-        // engine.timing.timeScale = 1;
         requestAnimationFrame(cycle);
       } else {
-        // engine.timing.timeScale = 0.001;
         game.paused = true;
         game.makeTextLog("<h1>PAUSED</h1>", 1);
-
-        // ctx.fillText("paused", canvas.width / 2, canvas.height / 2);
       }
     }
 
+    //toggle testing mode
     if (keys[84]) {
       // 84 = t
       if (this.testing) {
@@ -179,14 +227,15 @@ const game = {
         this.testing = true;
       }
     } else if (this.testing) {
-      if (keys[57]) {
-        //9
+      //only in testing mode
+      if (keys[70]) {
+        // f for power ups
         for (let i = 0; i < 16; ++i) {
           powerUps.spawnRandomPowerUp(game.mouseInGame.x, game.mouseInGame.y, 0, 0);
         }
       }
-      if (keys[79]) {
-        //o
+      if (keys[82]) {
+        // r to teleport to mouse
         Matter.Body.setPosition(player, this.mouseInGame);
         Matter.Body.setVelocity(player, {
           x: 0,
@@ -411,8 +460,13 @@ const game = {
     ctx.fillStyle = "#000";
     let line = 100;
     const x = canvas.width - 5;
-    ctx.fillText("Press T to exit testing mode", x, line);
+    ctx.fillText("T: exit testing mode", x, line);
+    line += 20;
+    ctx.fillText("R: teleport to mouse", x, line);
+    line += 20;
+    ctx.fillText("F: spawn power ups", x, line);
     line += 30;
+
     ctx.fillText("cycle: " + game.cycle, x, line);
     line += 20;
     ctx.fillText("x: " + player.position.x.toFixed(0), x, line);

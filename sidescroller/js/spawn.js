@@ -354,12 +354,13 @@ const spawn = {
     radius = 9 + radius / 8; //extra small
     mobs.spawn(x, y, 6, radius, "#000");
     let me = mob[mob.length - 1];
+    me.stroke = "transparent"; //used for drawSneaker
     me.eventHorizon = radius * 23; //required for blackhole
     me.seeAtDistance2 = (me.eventHorizon + 500) * (me.eventHorizon + 500); //vision limit is event horizon
     me.accelMag = 0.00009;
     // me.frictionAir = 0.005;
     me.memory = 600;
-    Matter.Body.setDensity(me, 0.006); //extra dense //normal is 0.001 //makes effective life much larger
+    Matter.Body.setDensity(me, 0.004); //extra dense //normal is 0.001 //makes effective life much larger
     // me.collisionFilter.mask = 0x001100; //move through walls
     me.do = function () {
       //keep it slow, to stop issues from explosion knock backs
@@ -372,7 +373,7 @@ const spawn = {
       this.seePlayerByDistOrLOS();
       if (this.seePlayer.recall) {
         //eventHorizon waves in and out
-        eventHorizon = this.eventHorizon * (0.95 + 0.1 * Math.sin(game.cycle * 0.01))
+        eventHorizon = this.eventHorizon * (0.93 + 0.14 * Math.sin(game.cycle * 0.01))
 
         //accelerate towards the player
         const forceMag = this.accelMag * this.mass;
@@ -382,12 +383,12 @@ const spawn = {
 
         //draw darkness
         ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, eventHorizon * 0.33, 0, 2 * Math.PI);
-        ctx.fillStyle = "rgba(0,0,0,0.7)";
+        ctx.arc(this.position.x, this.position.y, eventHorizon * 0.25, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(0,0,0,0.9)";
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, eventHorizon * 0.66, 0, 2 * Math.PI);
-        ctx.fillStyle = "rgba(0,0,0,0.4)";
+        ctx.arc(this.position.x, this.position.y, eventHorizon * 0.55, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(0,0,0,0.5)";
         ctx.fill();
         ctx.beginPath();
         ctx.arc(this.position.x, this.position.y, eventHorizon, 0, 2 * Math.PI);
