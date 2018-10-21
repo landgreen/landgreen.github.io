@@ -48,7 +48,7 @@ const spawn = {
     }
   },
   randomBoss: function (x, y, chance = 1) {
-    if (Math.random() < chance + (game.levelsCleared - 1) * 0.15 && game.levelsCleared !== 1 && mob.length < 4 + game.levelsCleared * 2.1) {
+    if (Math.random() < chance + (game.levelsCleared - 1) * 0.15 && game.levelsCleared !== 1 && mob.length < 4 + game.levelsCleared * 2.1 || chance == Infinity) {
       //choose from the possible picklist
       let pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       //is the pick able to be a boss?
@@ -83,6 +83,7 @@ const spawn = {
       }
     }
   },
+
   //mob templates *********************************************************************************************
   //***********************************************************************************************************
   group: function (x, y, num = 5 + Math.random() * 8) {
@@ -615,14 +616,14 @@ const spawn = {
       }
     };
   },
-  ghoster: function (x, y, radius = 30 + Math.ceil(Math.random() * 90)) {
+  ghoster: function (x, y, radius = 40 + Math.ceil(Math.random() * 100)) {
     let me;
     mobs.spawn(x, y, 7, radius, "transparent");
     me = mob[mob.length - 1];
     me.seeAtDistance2 = 1000000;
     me.accelMag = 0.00014;
     if (map.length) me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
-
+    Matter.Body.setDensity(me, 0.00065); //normal is 0.001 //makes effective life much lower
     me.stroke = "transparent"; //used for drawGhost
     me.alpha = 1; //used in drawGhost
     me.canTouchPlayer = false; //used in drawGhost
@@ -1083,13 +1084,13 @@ const spawn = {
     me.collisionFilter.category = 0x100000;
     me.collisionFilter.mask = 0x100001;
     me.inertia = Infinity;
-    me.g = 0.0006; //required for gravity
+    me.g = 0.0004; //required for gravity
     me.restitution = 0;
     me.stroke = "transparent"
     me.freeOfWires = false;
     me.frictionStatic = 1;
     me.friction = 1;
-    // me.frictionAir = 0.01;
+    me.frictionAir = 0.01;
 
     me.do = function () {
       let wireX = 300;
@@ -1101,8 +1102,8 @@ const spawn = {
           this.freeOfWires = true;
           this.fill = "#000"
           this.force.x += -0.003;
-          player.force.x += 0.05;
-          // player.force.y -= 0.05;
+          player.force.x += 0.06;
+          // player.force.y -= 0.15;
         }
 
         //player is extra heavy from wires
@@ -1113,7 +1114,7 @@ const spawn = {
 
         //player friction from the wires
         if (mech.pos.x > 700 && player.velocity.x > -2) {
-          let wireFriction = 0.85 * Math.min(0.65, Math.max(0, 150 / (breakingPoint - mech.pos.x)));
+          let wireFriction = 0.75 * Math.min(0.65, Math.max(0, 150 / (breakingPoint - mech.pos.x)));
           if (!mech.onGround) {
             wireFriction *= 1.7
           }
@@ -1148,14 +1149,15 @@ const spawn = {
     //touch only walls
     me.collisionFilter.category = 0x100000;
     me.collisionFilter.mask = 0x100001;
-    me.g = 0.0004; //required for gravity
+    me.g = 0.0003; //required for gravity
     // me.restitution = 0;
     me.stroke = "transparent"
-    me.inertia = Infinity;
+    // me.inertia = Infinity;
+    me.restitution = 0;
     me.freeOfWires = false;
     me.frictionStatic = 1;
     me.friction = 1;
-    // me.frictionAir = 0.01;
+    me.frictionAir = 0.01;
 
     me.do = function () {
       let wireX = 300 - 20;
@@ -1166,7 +1168,7 @@ const spawn = {
       } else {
         if (mech.pos.x > breakingPoint) {
           this.freeOfWires = true;
-          this.force.x -= 0.0006;
+          this.force.x -= 0.0004;
           this.fill = "#222";
         }
         //move mob to player
@@ -1199,14 +1201,15 @@ const spawn = {
     //touch only walls
     me.collisionFilter.category = 0x100000;
     me.collisionFilter.mask = 0x100001;
-    me.g = 0.0004; //required for gravity
+    me.g = 0.0003; //required for gravity
     // me.restitution = 0;
     me.stroke = "transparent"
-    me.inertia = Infinity;
+    // me.inertia = Infinity;
+    me.restitution = 0;
     me.freeOfWires = false;
     me.frictionStatic = 1;
     me.friction = 1;
-    // me.frictionAir = 0.01;
+    me.frictionAir = 0.01;
 
     me.do = function () {
       let wireX = 300 - 35;
@@ -1217,7 +1220,7 @@ const spawn = {
       } else {
         if (mech.pos.x > breakingPoint) {
           this.freeOfWires = true;
-          this.force.x += -0.0006;
+          this.force.x += -0.0003;
           this.fill = "#333";
         }
         //move mob to player
@@ -1250,14 +1253,14 @@ const spawn = {
     //touch only walls
     me.collisionFilter.category = 0x100000;
     me.collisionFilter.mask = 0x100001;
-    me.g = 0.0004; //required for gravity
+    me.g = 0.0003; //required for gravity
     me.restitution = 0;
     me.stroke = "transparent"
-    me.inertia = Infinity;
+    // me.inertia = Infinity;
     me.freeOfWires = false;
-    me.frictionStatic = 1;
-    me.friction = 1;
-    // me.frictionAir = 0.01;
+    // me.frictionStatic = 1;
+    // me.friction = 1;
+    me.frictionAir = 0.01;
 
     me.do = function () {
       let wireX = 300 + 16;
@@ -1268,7 +1271,7 @@ const spawn = {
       } else {
         if (mech.pos.x > breakingPoint) {
           this.freeOfWires = true;
-          this.force.x += -0.0008;
+          this.force.x += -0.0006;
           this.fill = "#222";
         }
         //move mob to player
@@ -1301,14 +1304,14 @@ const spawn = {
     //touch only walls
     me.collisionFilter.category = 0x100000;
     me.collisionFilter.mask = 0x100001;
-    me.g = 0.0004; //required for gravity
+    me.g = 0.0003; //required for gravity
     me.restitution = 0;
     me.stroke = "transparent"
-    me.inertia = Infinity;
+    // me.inertia = Infinity;
     me.freeOfWires = false;
-    me.frictionStatic = 1;
-    me.friction = 1;
-    // me.frictionAir = 0.01;
+    // me.frictionStatic = 1;
+    // me.friction = 1;
+    me.frictionAir = 0.01;
 
     me.do = function () {
       let wireX = 300 + 26;
@@ -1319,7 +1322,7 @@ const spawn = {
       } else {
         if (mech.pos.x > breakingPoint) {
           this.freeOfWires = true;
-          this.force.x += -0.0008;
+          this.force.x += -0.0005;
           this.fill = "#333";
         }
         //move mob to player

@@ -12,9 +12,9 @@ const level = {
   start: function () {
     game.zoomScale = 1400 //1400
     game.setZoom(); //reset zoom
-    // game.levelsCleared = 3; //for testing to simulate all possible mobs spawns
     if (game.levelsCleared === 0) {
       this.intro();
+      // game.levelsCleared = 6; //for testing to simulate all possible mobs spawns
       // this.bosses();
       // this.testingMap();
       // this.skyscrapers();
@@ -149,41 +149,37 @@ const level = {
       }
     }
     blockDoor(710, -710);
-    spawn[spawn.pickList[0]](1500, -200, 100 + game.levelsCleared * 8);
-    spawn.randomBoss(2000 + 500 * (Math.random() - 0.5), -800, -1);
-    spawn.randomBoss(2000 + 500 * (Math.random() - 0.5), -800, -1.5);
-    spawn.randomBoss(2000 + 500 * (Math.random() - 0.5), -800, -2);
-    spawn.randomBoss(2000 + 500 * (Math.random() - 0.5), -600, -2.5);
-    spawn.randomBoss(2000 + 500 * (Math.random() - 0.5), -600, -3);
 
+
+    spawn[spawn.pickList[0]](1500, -200, 100 + game.levelsCleared * 8);
     spawn.mapRect(2500, -1200, 200, 750); //right wall
     blockDoor(2585, -210)
     spawn.mapRect(2500, -200, 200, 300); //right wall
 
-    spawn.nodeBoss(3500, -200, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
-    spawn.randomBoss(3500 + 500 * (Math.random() - 0.5), -800, -1);
-    spawn.randomBoss(3500 + 500 * (Math.random() - 0.5), -800, -1.5);
-    spawn.randomBoss(3500 + 500 * (Math.random() - 0.5), -800, -2);
-    spawn.randomBoss(3500 + 500 * (Math.random() - 0.5), -600, -2.5);
-    spawn.randomBoss(3500 + 500 * (Math.random() - 0.5), -600, -3);
 
+    spawn.nodeBoss(3500, -200, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
     spawn.mapRect(4500, -1200, 200, 750); //right wall
     blockDoor(4585, -210)
     spawn.mapRect(4500, -200, 200, 300); //right wall
 
-    spawn.lineBoss(5000, -200, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
-    spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -600, 0);
-    spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -600, -1);
-    spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -600, -1.5);
-    spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -600, -2);
-    spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -600, -2.5);
-    spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -600, -3);
 
+    spawn.lineBoss(5000, -200, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
     spawn.mapRect(6400, -1200, 400, 750); //right wall
     spawn.mapRect(6400, -200, 400, 300); //right wall
     spawn.mapRect(6700, -1200, 200, 1400); //right wall
     spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 100); //exit bump
 
+    for (let i = 0; i < 5; ++i) {
+      if (game.levelsCleared * Math.random() > 3 * i) {
+        spawn.randomBoss(2000 + 500 * (Math.random() - 0.5), -800 + 200 * (Math.random() - 0.5), Infinity);
+      }
+      if (game.levelsCleared * Math.random() > 2.6 * i) {
+        spawn.randomBoss(3500 + 500 * (Math.random() - 0.5), -800 + 200 * (Math.random() - 0.5), Infinity);
+      }
+      if (game.levelsCleared * Math.random() > 2.4 * i) {
+        spawn.randomBoss(5000 + 500 * (Math.random() - 0.5), -800 + 200 * (Math.random() - 0.5), Infinity);
+      }
+    }
   },
   //empty map for testing mobs
   intro: function () {
@@ -960,7 +956,7 @@ const level = {
       mech.setPosToSpawn(1375, -1550); //normal spawn
       level.exit.x = 3250;
       level.exit.y = -530;
-      spawn.randomSmallMob(3550, -550);
+      // spawn.randomSmallMob(3550, -550);
     } else {
       //reverse direction, start in bottom right
       mech.setPosToSpawn(3250, -530); //normal spawn
