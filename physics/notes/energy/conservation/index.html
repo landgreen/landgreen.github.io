@@ -34,12 +34,39 @@
 	</header>
 	<article>
 		<p>Take a look at the simulated spring and mass system below.</p>
-
+		<style>
+			.spring-KE-bar {
+				background-color: rgba(255, 102, 85, 0.8);
+				width: 0%;
+				margin-top: -23px;
+			}
+			.spring-Us-bar {
+				background-color: rgba(85, 204, 204, 0.8);
+				width: 0%;
+				margin-top: -23px;
+			}
+			.spring-Ug-bar {
+				background-color: rgba(0,0,0,0.2);
+				width: 0%;
+				margin-top: -23px;
+			}
+			.data-text-out {
+				padding-left: 5px;
+				text-align: left;
+			}
+		</style>
 		<button id="pause1">pause </button>
-		k =
-		<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 60px;"> &nbsp;&nbsp;&nbsp; m =
-		<input id='spring-m' type="number" min="1" max="100" value=0 step=1 style="width: 60px;">
-		<canvas id="canvas1" width='600' height='200' onclick="spring(this)"></canvas>
+		k = <input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 60px;">
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		m = <input id='spring-m' type="number" min="1" max="100" value=0 step=1 style="width: 60px;"> kg
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<!-- <span id="spring-F"></span> -->
+		<span id="spring-x" class="hide-on-mobile" style="text-align: right;"></span>
+		<div id="spring-KE" class="data-text-out"></div>
+		<div id="spring-KE-bar" class="spring-KE-bar">&nbsp;</div>
+		<div id="spring-Us" class="data-text-out"></div>
+		<div id="spring-Us-bar" class="spring-Us-bar">&nbsp;</div>
+		<canvas id="canvas1" width='590' height='100' onclick="spring(this)"></canvas>
 		<p>
 			What types of energy are being traded?
 			<br>
@@ -47,38 +74,51 @@
 			<br>
 			<br>What is the effect of a higher spring constant?
 		</p>
-
-		<div class="example col-group">
-			<div class="center">
-				<br> &nbsp;
-				<canvas id="canvas2" width='270' height='500' onclick="springGravity(this)"> </canvas>
-				<br>
-				<button id="pause2"> pause </button> &nbsp; k =
-				<input id='spring-k2' type="number" min="0" max="10" value=3 step=1 style="width: 60px;"> m =
-				<input id='spring-m2' type="number" min="1" max="100" value=0 step=1 style="width: 60px;">
+		<div class="example">
+			<div class="col-group">
+				<div class="center">
+					<br>
+					<canvas id="canvas2" width='275' height='400' onclick="springGravity(this)"> </canvas>
+				</div>
+				<div class="data-text-out">
+					<br>
+					<p>
+						This spring simulation is aligned vertically. It has gravitational potential energy in addition to kinetic and
+						spring energy.
+					</p>
+					<div id="spring-KE2" class="data-text-out"></div>
+					<div id="spring-KE-bar2" class="spring-KE-bar">&nbsp;</div>
+					<div id="spring-Us2" class="data-text-out"></div>
+					<div id="spring-Us-bar2" class="spring-Us-bar">&nbsp;</div>
+					<div id="spring-Ug2" class="data-text-out"></div>
+					<div id="spring-Ug-bar2" class="spring-Ug-bar">&nbsp;</div>
+					<div id="spring-E2" class="data-text-out"></div>
+					<div id="spring-v2" class="data-text-out"></div>
+					<div id="spring-y2" class="data-text-out"></div>
+					<div id="spring-h2" class="data-text-out"></div>
+					<div class="data-text-out">k = <input id='spring-k2' type="number" min="0" max="10" value=3 step=1 style="width: 35px;"></div>
+					<div class="data-text-out">m = <input id='spring-m2' type="number" min="1" max="100" value=0 step=1 style="width: 35px;">
+						kg</div>
+					<div><button id="pause2"> pause </button></div>
+					<!-- <div id="spring-g2" class="data-text-out">9.8 m/s²</div> -->
+				</div>
 			</div>
-			<div>
-				<p>
-					This spring simulation is aligned vertically. It has gravitational potential energy in addition to kinetic and
-					spring energy.
-				</p>
-				<br>
-				<br> When is kinetic energy the highest?
-				<br>
-				<br>
-				<br> When is gravitational energy the lowest?
-				<br>
-				<br>
-				<br> When is spring energy the lowest?
-				<br>
-				<br>
-				<br> What is the effect of a lower mass?
-				<br>
-				<br>
-				<br>Why does the total energy stay the same?
-			</div>
+			<p>
+				When is kinetic energy the highest?
+			</p>
+			<p>
+				When is gravitational energy the lowest?
+			</p>
+			<p>
+				When is spring energy the lowest?
+			</p>
+			<p>
+				What is the effect of a lower mass?
+			</p>
+			<p>
+				Why does the total energy stay the same?
+			</p>
 		</div>
-
 		<h1 class='underlined'>Conservation of Energy</h1>
 		<p>Energy is conserved. This means it can't be reduced or increased, but as systems change, the energy changes form.
 			Since

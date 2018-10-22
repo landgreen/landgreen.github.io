@@ -8,8 +8,6 @@
   ctx.fillText("click to start", canvas.width / 2, canvas.height / 2);
 })();
 
-//___________________get mouse input___________________
-
 var particles = function (button) {
   button.onclick = null; //stops the function from running after first run
   // canvas setup
@@ -126,19 +124,10 @@ var particles = function (button) {
     };
   }
 
-  var box;
-
   let mouse = {
     x: 0,
     y: 0
   };
-
-  function spawn() {
-    box = new mass(mouse.x, mouse.y, 1, 0, 20, "#bbb");
-    box.calcEnergy();
-    box.energy = box.pe + box.ke;
-  }
-  spawn();
   document.getElementById(canvasID).addEventListener("mousedown", function (event) {
     //gets mouse position, even when canvas is scaled by CSS
     box.x = mouse.x = event.offsetX * canvas.width / canvas.clientWidth;
@@ -148,6 +137,15 @@ var particles = function (button) {
     box.calcEnergy();
     box.energy = box.pe + box.ke;
   });
+
+  var box;
+
+  function spawn() {
+    box = new mass(mouse.x, mouse.y, 1, 0, 20, "#bbb");
+    box.calcEnergy();
+    box.energy = box.pe + box.ke;
+  }
+  spawn();
 
   window.requestAnimationFrame(render);
 

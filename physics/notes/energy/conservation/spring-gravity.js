@@ -65,27 +65,27 @@ var springGravity = function (button) {
     this.Ug = 0;
     this.fillColor = fillColor;
     this.draw = function () {
-      // ctx.shadowColor = "#ccc";
+      ctx.shadowColor = "#ccc";
       ctx.fillStyle = this.fillColor;
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
       ctx.fill();
       ctx.stroke();
-      // ctx.shadowColor = "transparent";
+      ctx.shadowColor = "transparent";
     };
 
     this.drawSpring = function () {
       ctx.lineWidth = 1.5;
       ctx.strokeStyle = "black";
-      // ctx.shadowColor = "#999";
+      ctx.shadowColor = "#999";
       ctx.beginPath();
       ctx.moveTo(box.x, box.y - this.r);
       for (var i = 1; i < physics.turns + 1; i++) {
         ctx.lineTo(box.x + (i % 2 === 0 ? 10 : -10), (box.y - this.r) * (1 - i / physics.turns));
       }
       ctx.stroke();
-      // ctx.shadowColor = "transparent";
+      ctx.shadowColor = "transparent";
     };
     this.move = function () {
       //this.x += this.Vx;
@@ -123,25 +123,39 @@ var springGravity = function (button) {
       this.energy = this.Us + this.Ug + this.ke;
       //draw energy bars
 
-      // ctx.fillStyle = "rgba(255, 0, 255, 0.4)";
-      ctx.fillStyle = "rgba(255, 102, 85, 0.8)" //"#f65" //"rgba(255, 0, 255, 0.3)";
-      ctx.fillRect(0, 0, canvas.width * (this.ke / this.energy), 25);
-      // ctx.fillStyle = "rgba(0, 255, 255, 0.4)";
-      ctx.fillStyle = "rgba(85, 204, 204, 0.8)" //"#5cc" //"rgba(0, 255, 255, 0.3)";
-      ctx.fillRect(0, 25, canvas.width * (this.Us / this.energy), 25);
-      // ctx.fillStyle = "rgba(0, 255, 70, 0.4)";
-      ctx.fillStyle = "rgba(0,0,0,0.2)";
-      ctx.fillRect(0, 50, canvas.width * (this.Ug / this.energy), 25);
-      //draw energy text
-      ctx.fillStyle = "#000";
-      ctx.fillText("KE = ½mv² = " + (this.ke / 1000).toFixed(0) + "kJ", 5, 20);
-      ctx.fillText("Us = ½ky² = " + (this.Us / 1000).toFixed(0) + "kJ", 5, 44);
-      ctx.fillText("Ug = mgh = " + (this.Ug / 1000).toFixed(0) + "kJ", 5, 69);
-      ctx.fillText("E = " + (this.energy / 1000).toFixed(0) + "kJ", 5, 92); //total energy doesn't stay still, probably because of onyl calculating 60 times a second?
-      ctx.fillText("g = " + physics.gravY.toFixed(1) + "m/s²", 5, canvas.height - 5);
-      ctx.fillText("h = " + height.toFixed(0) + "m", 5, canvas.height - 30);
-      ctx.fillText("y = " + (this.y - physics.equalibrium).toFixed(0) + "m", 5, canvas.height - 55);
-      ctx.fillText("v = " + this.Vy.toFixed(0) + "m/s", 5, canvas.height - 80);
+      // // ctx.fillStyle = "rgba(255, 0, 255, 0.4)";
+      // ctx.fillStyle = "rgba(255, 102, 85, 0.8)" //"#f65" //"rgba(255, 0, 255, 0.3)";
+      // ctx.fillRect(0, 0, canvas.width * (this.ke / this.energy), 25);
+      // // ctx.fillStyle = "rgba(0, 255, 255, 0.4)";
+      // ctx.fillStyle = "rgba(85, 204, 204, 0.8)" //"#5cc" //"rgba(0, 255, 255, 0.3)";
+      // ctx.fillRect(0, 25, canvas.width * (this.Us / this.energy), 25);
+      // // ctx.fillStyle = "rgba(0, 255, 70, 0.4)";
+      // ctx.fillStyle = "rgba(0,0,0,0.2)";
+      // ctx.fillRect(0, 50, canvas.width * (this.Ug / this.energy), 25);
+      // //draw energy text
+      // ctx.fillStyle = "#000";
+      // ctx.fillText("KE = ½mv² = " + (this.ke / 1000).toFixed(0) + "kJ", 5, 20);
+      // ctx.fillText("Us = ½ky² = " + (this.Us / 1000).toFixed(0) + "kJ", 5, 44);
+      // ctx.fillText("Ug = mgh = " + (this.Ug / 1000).toFixed(0) + "kJ", 5, 69);
+      // ctx.fillText("E = " + (this.energy / 1000).toFixed(0) + "kJ", 5, 92); //total energy doesn't stay still, probably because of onyl calculating 60 times a second?
+      // ctx.fillText("g = " + physics.gravY.toFixed(1) + "m/s²", 5, canvas.height - 5);
+      // ctx.fillText("h = " + height.toFixed(0) + "m", 5, canvas.height - 30);
+      // ctx.fillText("y = " + (this.y - physics.equalibrium).toFixed(0) + "m", 5, canvas.height - 55);
+      // ctx.fillText("v = " + this.Vy.toFixed(0) + "m/s", 5, canvas.height - 80);
+
+      document.getElementById("spring-KE-bar2").style.width = 100 * (this.ke / this.energy) + "%"
+      document.getElementById("spring-Us-bar2").style.width = 100 * (this.Us / this.energy) + "%"
+      document.getElementById("spring-Ug-bar2").style.width = 100 * (this.Ug / this.energy) + "%"
+
+      document.getElementById("spring-KE2").innerHTML = " KE = ½mv² = " + (this.ke / 1000).toFixed(1) + " kJ"
+      document.getElementById("spring-Us2").innerHTML = " Us = ½ky² = " + (this.Us / 1000).toFixed(0) + " kJ"
+      document.getElementById("spring-Ug2").innerHTML = " Ug = mgh = " + (this.Ug / 1000).toFixed(0) + " kJ"
+      document.getElementById("spring-E2").innerHTML = "E = " + (this.energy / 1000).toFixed(0) + " kJ"
+      // document.getElementById("spring-g2").innerHTML =
+      document.getElementById("spring-h2").innerHTML = "h = " + height.toFixed(0) + " m"
+      document.getElementById("spring-y2").innerHTML = "y = " + (this.y - physics.equalibrium).toFixed(0) + " m"
+      document.getElementById("spring-v2").innerHTML = "v = " + this.Vy.toFixed(0) + " m/s"
+
 
       // //force vector
       // ctx.lineWidth = 2;
@@ -167,7 +181,7 @@ var springGravity = function (button) {
   var box;
 
   function spawn() {
-    box = new mass((3 * canvas.width) / 4, 70, 0, 0, 5, "#bbb");
+    box = new mass(canvas.width / 2, 80, 0, 0, 5, "#bbb");
     document.getElementById("spring-m2").value = box.mass;
     document.getElementById("spring-k2").value = physics.k;
   }
@@ -182,31 +196,44 @@ var springGravity = function (button) {
     }
   });
 
-  //mouse controls
-  var mousePos = {
-    x: window.innerWidth * 0.5,
-    y: window.innerHeight * 0.5
+  let mouse = {
+    x: 0,
+    y: 0
   };
-
-  //gets mouse position, even when canvas is scaled by CSS
-  function getMousePos(canvas, event) {
-    const mouse = {
-      x: event.clientX - ctx.canvas.offsetLeft,
-      y: event.clientY - ctx.canvas.offsetTop
-    };
-    return {
-      x: (mouse.x * canvas.width) / canvas.clientWidth,
-      y: (mouse.y * canvas.height) / canvas.clientHeight
-    };
-  }
-  //on click move to mouse
-  document.getElementById(canvasID).addEventListener("mousedown", function (evt) {
-    mousePos = getMousePos(canvas, evt);
-    box.x = mousePos.x;
-    box.y = mousePos.y;
+  document.getElementById(canvasID).addEventListener("mousedown", function (event) {
+    //gets mouse position, even when canvas is scaled by CSS
+    box.x = mouse.x = event.offsetX * canvas.width / canvas.clientWidth;
+    box.y = mouse.y = event.offsetY * canvas.height / canvas.clientHeight;
     box.Vx = 0;
     box.Vy = 0;
   });
+
+
+  //mouse controls
+  // let mousePos = {
+  //   x: window.innerWidth * 0.5,
+  //   y: window.innerHeight * 0.5
+  // };
+
+  // //gets mouse position, even when canvas is scaled by CSS
+  // function getMousePos(canvas, event) {
+  //   const mouse = {
+  //     x: event.clientX - ctx.canvas.offsetLeft,
+  //     y: event.clientY - ctx.canvas.offsetTop
+  //   };
+  //   return {
+  //     x: (mouse.x * canvas.width) / canvas.clientWidth,
+  //     y: (mouse.y * canvas.height) / canvas.clientHeight
+  //   };
+  // }
+  //on click move to mouse
+  // document.getElementById(canvasID).addEventListener("mousedown", function (evt) {
+  //   mousePos = getMousePos(canvas, evt);
+  //   box.x = mousePos.x;
+  //   box.y = mousePos.y;
+  //   box.Vx = 0;
+  //   box.Vy = 0;
+  // });
   //get values for spring constant
   document.getElementById("spring-k2").addEventListener("input", function () {
     physics.k = document.getElementById("spring-k2").value;

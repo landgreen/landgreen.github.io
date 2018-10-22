@@ -56,25 +56,25 @@ var spring = function (button) {
     this.fillColor = fillColor;
     this.draw = function () {
       ctx.fillStyle = this.fillColor;
-      // ctx.shadowColor = "#ccc";
+      ctx.shadowColor = "#ccc";
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
       ctx.fill();
       ctx.stroke();
-      // ctx.shadowColor = "transparent";
+      ctx.shadowColor = "transparent";
     };
     this.drawSpring = function () {
       ctx.lineWidth = 1.5;
       ctx.strokeStyle = "black";
-      // ctx.shadowColor = "#ccc";
+      ctx.shadowColor = "#ccc";
       ctx.beginPath();
       ctx.moveTo(box.x - this.r, box.y);
       for (var i = 1; i < physics.turns + 1; i++) {
         ctx.lineTo((box.x - this.r) * (1 - i / physics.turns), box.y + (i % 2 === 0 ? 10 : -10));
       }
       ctx.stroke();
-      // ctx.shadowColor = "transparent";
+      ctx.shadowColor = "transparent";
     };
     this.move = function () {
       this.x += this.Vx;
@@ -134,22 +134,32 @@ var spring = function (button) {
       //ctx.fillText('Vy = ' + this.Vy.toFixed(1) + 'm/s', 5, 75);
     };
     this.springInfo = function () {
+
+
       var F = -physics.k * (this.x - physics.equalibrium);
       this.u = 0.5 * physics.k * (this.x - physics.equalibrium) * (this.x - physics.equalibrium);
       this.ke = 0.5 * this.mass * this.Vx * this.Vx * 60;
       var E = this.ke + this.u;
       //draw energy bars
-      ctx.fillStyle = "rgba(255, 102, 85, 0.8)" //"#f65" //"rgba(255, 0, 255, 0.3)";
-      ctx.fillRect(0, 0, canvas.width * (this.ke / E), 25);
-      ctx.fillStyle = "rgba(85, 204, 204, 0.8)" //"#5cc" //"rgba(0, 255, 255, 0.3)";
-      ctx.fillRect(0, 25, canvas.width * (this.u / E), 30);
+      // ctx.fillStyle = "rgba(255, 102, 85, 0.8)" //"#f65" //"rgba(255, 0, 255, 0.3)";
+      // ctx.fillRect(0, 0, canvas.width * (this.ke / E), 25);
+      // ctx.fillStyle = "rgba(85, 204, 204, 0.8)" //"#5cc" //"rgba(0, 255, 255, 0.3)";
+      // ctx.fillRect(0, 25, canvas.width * (this.u / E), 30);
+      document.getElementById("spring-KE-bar").style.width = 100 * (this.ke / E) + "%"
+      document.getElementById("spring-Us-bar").style.width = 100 * (this.u / E) + "%"
+
+
       //draw energy text
       ctx.fillStyle = "#000";
-      ctx.fillText("KE = ½mv² = " + (this.ke / 1000).toFixed(1) + "kJ", 5, 20);
-      ctx.fillText("Us = ½kx² = " + (this.u / 1000).toFixed(1) + "kJ", 5, 46);
-      ctx.fillText("F = -kx = " + F.toFixed(0) + "N", 5, canvas.height - 5);
+      // ctx.fillText("KE = ½mv² = " + (this.ke / 1000).toFixed(1) + "kJ", 5, 20);
+      // ctx.fillText("Us = ½kx² = " + (this.u / 1000).toFixed(1) + "kJ", 5, 46);
+      // ctx.fillText("F = -kx = " + F.toFixed(0) + "N", 5, canvas.height - 5);
       //ctx.fillText('k = ' + (physics.k), 5, canvas.height - 25);
-      ctx.fillText("x = " + (this.x - physics.equalibrium).toFixed(0) + "m", 5, canvas.height - 25);
+      // ctx.fillText("x = " + (this.x - physics.equalibrium).toFixed(0) + "m", 5, canvas.height - 25);
+      // document.getElementById("spring-F").innerHTML = "F = -kx = " + F.toFixed(0) + "N"
+      document.getElementById("spring-KE").innerHTML = " KE = ½mv² = " + (this.ke / 1000).toFixed(1) + " kJ"
+      document.getElementById("spring-Us").innerHTML = " Us = ½kx² = " + (this.u / 1000).toFixed(1) + " kJ"
+      document.getElementById("spring-x").innerHTML = "x = " + (this.x - physics.equalibrium).toFixed(0) + " m"
       //force vector
       // ctx.lineWidth = 2;
       // ctx.strokeStyle = "black";
