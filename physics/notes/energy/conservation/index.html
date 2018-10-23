@@ -58,7 +58,7 @@
 				text-align: left;
 			}
 		</style>
-		<button style="float: right;" id="pause1">play</button>
+		<button style="float: right; width: 60px;" id="pause1">play</button>
 		k = <input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 60px;">
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		m = <input id='spring-m' type="number" min="1" max="100" value=13 step=1 style="width: 60px;">&nbsp;kg
@@ -82,48 +82,48 @@
 		<div class="example">
 			<div class="col-group">
 				<div class="center">
-					<svg viewBox="0 0 300 400" id="spring-SVG-2" style="border: 0.5px solid #000;">
-						<line x1="0" y1="200" x2="300" y2="200" stroke="#000" stroke-width="1" stroke-dasharray="4" />
+					<svg class="center" viewBox="0 0 300 400" id="spring-SVG-2" style="border: 0.5px solid #000;">
+						<line x1="0" y1="200.5" x2="300" y2="200.5" stroke="#000" stroke-width="1" stroke-dasharray="4" />
 						<circle id="spring-ball-2" cx="150" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
 						<path id="spring-wire-2" d="M 0 0" stroke="#000" fill="transparent" />
 					</svg>
 				</div>
 				<div class="data-text-out">
-					<p>
-						This spring simulation is aligned vertically. It has gravitational potential energy in addition to kinetic and
-						spring energy.
-					</p>
-					<div id="spring-KE2" class="data-text-out"></div>
+					<!-- <div>This spring simulation has gravitational potential energy in addition to kinetic and
+						spring energy.</div>
+					<br> -->
+					<div><button id="pause2" style="float: right; width: 60px;"> pause </button></div>
+					<div class="data-text-out">k = <input id='spring-k2' type="number" min="0" max="99" value=10 step=1 style="width: 50px;"></div>
+					<div class="data-text-out">m = <input id='spring-m2' type="number" min="1" max="100" value=13 step=1 style="width: 50px;">&nbsp;kg</div>
+					<div id="spring-KE2" class="data-text-out">KE = ½mv²</div>
 					<div id="spring-KE-bar2" class="spring-KE-bar">&nbsp;</div>
-					<div id="spring-Us2" class="data-text-out"></div>
+					<div id="spring-Us2" class="data-text-out">Us = ½kx²</div>
 					<div id="spring-Us-bar2" class="spring-Us-bar">&nbsp;</div>
-					<div id="spring-Ug2" class="data-text-out"></div>
+					<div id="spring-Ug2" class="data-text-out">Ug = mgh</div>
 					<div id="spring-Ug-bar2" class="spring-Ug-bar">&nbsp;</div>
-					<div id="spring-E2" class="data-text-out"></div>
+					<!-- <div id="spring-E2" class="data-text-out"></div>
 					<div id="spring-v2" class="data-text-out"></div>
 					<div id="spring-y2" class="data-text-out"></div>
-					<div id="spring-h2" class="data-text-out"></div>
-					<div class="data-text-out">k = <input id='spring-k2' type="number" min="0" max="10" value=0.1 step=0.1 style="width: 50px;"></div>
-					<div class="data-text-out">m = <input id='spring-m2' type="number" min="1" max="100" value=13 step=1 style="width: 50px;">&nbsp;kg</div>
-					<div><button id="pause2"> pause </button></div>
+					<div id="spring-h2" class="data-text-out"></div> -->
 					<!-- <div id="spring-g2" class="data-text-out">9.8 m/s²</div> -->
+					<p>
+						When is kinetic energy the highest?
+					</p>
+					<p>
+						When is gravitational energy the lowest?
+					</p>
+					<p>
+						When is spring energy the lowest?
+					</p>
+					<p>
+						What is the effect of a lower mass?
+					</p>
+					<p>
+						Why does the total energy stay the same?
+					</p>
 				</div>
 			</div>
-			<p>
-				When is kinetic energy the highest?
-			</p>
-			<p>
-				When is gravitational energy the lowest?
-			</p>
-			<p>
-				When is spring energy the lowest?
-			</p>
-			<p>
-				What is the effect of a lower mass?
-			</p>
-			<p>
-				Why does the total energy stay the same?
-			</p>
+
 		</div>
 		<h1 class='underlined'>Conservation of Energy</h1>
 		<p>Energy is conserved. This means it can't be reduced or increased, but as systems change, the energy changes form.

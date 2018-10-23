@@ -1,6 +1,7 @@
 var springGravity = function () {
   var pause = true;
   var physics = {
+    rate: 60,
     gravX: 0,
     gravY: 9.8,
     width: 300,
@@ -8,8 +9,8 @@ var springGravity = function () {
     equilibrium: 400 / 2,
     restitution: 0,
     airFriction: 1,
-    k: 0.1,
-    turns: 3 + 25 * Math.sqrt(0.1)
+    k: 10,
+    turns: 3 + 12 * Math.sqrt(10)
   };
 
   function mass(x, y, Vx, Vy, r, fillColor) {
@@ -40,24 +41,25 @@ var springGravity = function () {
         d += `L ${box.x + (i % 2 === 0 ? 10 : -10)} ${ (box.y - this.r) * (1 - i / physics.turns)}`;
       }
       document.getElementById("spring-wire-2").setAttribute("d", d);
-
-
-      // for (var i = 1; i < physics.turns + 1; i++) {
-      //   ctx.lineTo(box.x + (i % 2 === 0 ? 10 : -10), (box.y - this.r) * (1 - i / physics.turns));
-      // }
-
     };
     this.move2 = function () {
-      //this.x += this.Vx;
-      this.y += this.Vy;
-      //this.Vx *= physics.airFriction;
+      this.y += this.Vy / physics.rate;
       this.Vy *= physics.airFriction;
     };
+    this.edge = function () {
+      if (this.y > physics.height - this.r) {
+        this.Vy *= -physics.restitution;
+        this.y = physics.height - this.r;
+      } else if (this.y < this.r) {
+        this.Vy *= -physics.restitution;
+        this.y = this.r;
+      }
+    };
     this.gravity = function () {
-      this.Vy += physics.gravY / 10; //mass cancels out from F=mg, f=ma, ma=mg, a=g, v+=g
+      this.Vy += physics.gravY / physics.rate; //mass cancels out from F=mg, f=ma, ma=mg, a=g, v+=g
     };
     this.spring = function () {
-      this.Vy += (physics.k * (physics.equilibrium - this.y)) / this.mass / 10;
+      this.Vy += (physics.k * (physics.equilibrium - this.y)) / this.mass / physics.rate;
     };
     this.springInfo = function () {
       var height = physics.height - this.r - this.y;
@@ -69,21 +71,19 @@ var springGravity = function () {
       document.getElementById("spring-KE-bar2").style.width = 100 * (this.ke / this.energy) + "%"
       document.getElementById("spring-Us-bar2").style.width = 100 * (this.Us / this.energy) + "%"
       document.getElementById("spring-Ug-bar2").style.width = 100 * (this.Ug / this.energy) + "%"
-
-      document.getElementById("spring-KE2").innerHTML = " KE = ½mv² = " + (this.ke / 1000).toFixed(1) + " kJ"
-      document.getElementById("spring-Us2").innerHTML = " Us = ½ky² = " + (this.Us / 1000).toFixed(0) + " kJ"
-      document.getElementById("spring-Ug2").innerHTML = " Ug = mgh = " + (this.Ug / 1000).toFixed(0) + " kJ"
-      document.getElementById("spring-E2").innerHTML = "E = " + (this.energy / 1000).toFixed(0) + " kJ"
-      document.getElementById("spring-h2").innerHTML = "h = " + height.toFixed(0) + " m"
-      document.getElementById("spring-y2").innerHTML = "y = " + (this.y - physics.equilibrium).toFixed(0) + " m"
-      document.getElementById("spring-v2").innerHTML = "v = " + this.Vy.toFixed(0) + " m/s"
+      // document.getElementById("spring-KE2").innerHTML = " KE = ½mv² = " + (this.ke / 1000).toFixed(0) + " kJ"
+      // document.getElementById("spring-Us2").innerHTML = " Us = ½ky² = " + (this.Us / 1000).toFixed(0) + " kJ"
+      // document.getElementById("spring-Ug2").innerHTML = " Ug = mgh = " + (this.Ug / 1000).toFixed(0) + " kJ"
+      // document.getElementById("spring-E2").innerHTML = "E = " + (this.energy / 1000).toFixed(0) + " kJ"
+      // document.getElementById("spring-h2").innerHTML = "h = " + height.toFixed(0) + " m"
+      // document.getElementById("spring-y2").innerHTML = "y = " + (this.y - physics.equilibrium).toFixed(0) + " m"
+      // document.getElementById("spring-v2").innerHTML = "v = " + this.Vy.toFixed(0) + " m/s"
     };
   }
 
   var box = new mass(physics.width / 2, 80, 0, 0, 20, "#bbb");
   document.getElementById("spring-m2").value = Math.round(box.mass);
   document.getElementById("spring-k2").value = physics.k;
-
 
   const pauseID = document.getElementById("pause2")
   pauseID.addEventListener("click", function () {
@@ -111,7 +111,7 @@ var springGravity = function () {
   document.getElementById("spring-k2").addEventListener("input", function () {
     physics.k = document.getElementById("spring-k2").value;
     box.Vx = 0;
-    physics.turns = 3 + 25 * Math.sqrt(physics.k);
+    physics.turns = 3 + 12 * Math.sqrt(physics.k);
   });
 
   //gets values for mass
@@ -124,6 +124,7 @@ var springGravity = function () {
   function cycle() {
     box.spring();
     box.move2();
+    box.edge();
     box.springInfo();
     box.drawSpring();
     box.draw();
