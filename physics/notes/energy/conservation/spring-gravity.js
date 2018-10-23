@@ -263,7 +263,6 @@ var springGravity = function (button) {
         box.spring();
         box.gravity();
       }
-
       box.springInfo();
       drawEqualibrium();
       box.drawSpring();

@@ -38,35 +38,40 @@
 			.spring-KE-bar {
 				background-color: rgba(255, 102, 85, 0.8);
 				width: 0%;
-				margin-top: -23px;
+				margin-top: -23.5px;
+				/* border-radius: 4px; */
 			}
 			.spring-Us-bar {
 				background-color: rgba(85, 204, 204, 0.8);
 				width: 0%;
-				margin-top: -23px;
+				margin-top: -23.5px;
+				/* border-radius: 15px; */
 			}
 			.spring-Ug-bar {
 				background-color: rgba(0,0,0,0.2);
 				width: 0%;
-				margin-top: -23px;
+				margin-top: -23.5px;
+				/* border-radius: 10px; */
 			}
 			.data-text-out {
 				padding-left: 5px;
 				text-align: left;
 			}
 		</style>
-		<button id="pause1">pause </button>
+		<button style="float: right;" id="pause1">play</button>
 		k = <input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 60px;">
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		m = <input id='spring-m' type="number" min="1" max="100" value=0 step=1 style="width: 60px;"> kg
-		&nbsp;&nbsp;&nbsp;&nbsp;
-		<!-- <span id="spring-F"></span> -->
-		<span id="spring-x" class="hide-on-mobile" style="text-align: right;"></span>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spring-x" class="hide-on-mobile" style="text-align: right;"></span>
+		<svg viewBox="0 0 590 100" id="spring-SVG" style="border: 1px solid #000;">
+			<line x1="400" y1="0" x2="400" y2="100" stroke="#000" stroke-width="1" stroke-dasharray="4" />
+			<circle id="spring-ball" cx="50" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
+			<path id="spring-wire" d="M 0 0" stroke="#000" fill="transparent" />
+		</svg>
 		<div id="spring-KE" class="data-text-out"></div>
 		<div id="spring-KE-bar" class="spring-KE-bar">&nbsp;</div>
 		<div id="spring-Us" class="data-text-out"></div>
 		<div id="spring-Us-bar" class="spring-Us-bar">&nbsp;</div>
-		<canvas id="canvas1" width='590' height='100' onclick="spring(this)"></canvas>
 		<p>
 			What types of energy are being traded?
 			<br>
@@ -81,7 +86,6 @@
 					<canvas id="canvas2" width='275' height='400' onclick="springGravity(this)"> </canvas>
 				</div>
 				<div class="data-text-out">
-					<br>
 					<p>
 						This spring simulation is aligned vertically. It has gravitational potential energy in addition to kinetic and
 						spring energy.
