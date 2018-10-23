@@ -61,7 +61,7 @@
 		<button style="float: right;" id="pause1">play</button>
 		k = <input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 60px;">
 		&nbsp;&nbsp;&nbsp;&nbsp;
-		m = <input id='spring-m' type="number" min="1" max="100" value=0 step=1 style="width: 60px;"> kg
+		m = <input id='spring-m' type="number" min="1" max="100" value=13 step=1 style="width: 60px;">&nbsp;kg
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spring-x" class="hide-on-mobile" style="text-align: right;"></span>
 		<svg viewBox="0 0 590 100" id="spring-SVG" style="border: 1px solid #000;">
 			<line x1="400" y1="0" x2="400" y2="100" stroke="#000" stroke-width="1" stroke-dasharray="4" />
@@ -82,8 +82,11 @@
 		<div class="example">
 			<div class="col-group">
 				<div class="center">
-					<br>
-					<canvas id="canvas2" width='275' height='400' onclick="springGravity(this)"> </canvas>
+					<svg viewBox="0 0 300 400" id="spring-SVG-2" style="border: 0.5px solid #000;">
+						<line x1="0" y1="200" x2="300" y2="200" stroke="#000" stroke-width="1" stroke-dasharray="4" />
+						<circle id="spring-ball-2" cx="150" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
+						<path id="spring-wire-2" d="M 0 0" stroke="#000" fill="transparent" />
+					</svg>
 				</div>
 				<div class="data-text-out">
 					<p>
@@ -100,9 +103,8 @@
 					<div id="spring-v2" class="data-text-out"></div>
 					<div id="spring-y2" class="data-text-out"></div>
 					<div id="spring-h2" class="data-text-out"></div>
-					<div class="data-text-out">k = <input id='spring-k2' type="number" min="0" max="10" value=3 step=1 style="width: 35px;"></div>
-					<div class="data-text-out">m = <input id='spring-m2' type="number" min="1" max="100" value=0 step=1 style="width: 35px;">
-						kg</div>
+					<div class="data-text-out">k = <input id='spring-k2' type="number" min="0" max="10" value=0.1 step=0.1 style="width: 50px;"></div>
+					<div class="data-text-out">m = <input id='spring-m2' type="number" min="1" max="100" value=13 step=1 style="width: 50px;">&nbsp;kg</div>
 					<div><button id="pause2"> pause </button></div>
 					<!-- <div id="spring-g2" class="data-text-out">9.8 m/s²</div> -->
 				</div>

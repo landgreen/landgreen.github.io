@@ -67,7 +67,7 @@ var spring = function () {
     };
     this.springInfo = function () {
       this.calcEnergy();
-      var F = -physics.k * (this.x - physics.equalibrium);
+      // var F = -physics.k * (this.x - physics.equalibrium);
       this.u = 0.5 * physics.k * (this.x - physics.equalibrium) * (this.x - physics.equalibrium);
       this.ke = 0.5 * this.mass * this.Vx * this.Vx * 60;
       var E = this.ke + this.u;
@@ -77,17 +77,12 @@ var spring = function () {
       document.getElementById("spring-KE").innerHTML = " KE = ½mv² = " + (this.ke / 1000).toFixed(1) + " kJ"
       document.getElementById("spring-Us").innerHTML = " Us = ½kx² = " + (this.u / 1000).toFixed(1) + " kJ"
       document.getElementById("spring-x").innerHTML = "x = " + (this.x - physics.equalibrium).toFixed(0) + " m"
-
     };
   }
 
-  var box;
-
-  function spawn() {
-    box = new mass(230, physics.height / 2, 1, 0, 20, "#bbb");
-    document.getElementById("spring-m").value = Math.round(box.mass);
-  }
-  spawn();
+  var box = new mass(230, physics.height / 2, 1, 0, 20, "#bbb");
+  document.getElementById("spring-m").value = Math.round(box.mass);
+  document.getElementById("spring-k").value = physics.k;
 
   const pauseID = document.getElementById("pause1")
   pauseID.addEventListener("click", function () {
