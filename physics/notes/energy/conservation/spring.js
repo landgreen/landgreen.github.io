@@ -7,6 +7,7 @@ var spring = function () {
     restitution: 0,
     airFriction: 1,
     equalibrium: 400,
+    width: 590,
     height: 100,
     k: 0.1, //document.getElementById("spring-k").value,
     turns: 3 + 25 * Math.sqrt(0.1)
@@ -100,10 +101,15 @@ var spring = function () {
   const SVGID = document.getElementById("spring-SVG");
   SVGID.addEventListener("mousedown", (event) => {
     //gets mouse position, even when scaled by CSS
-    box.x = event.offsetX * 590 / SVGID.clientWidth;
+    const cWidth = SVGID.clientWidth || SVGID.parentNode.clientWidth
+    box.x = event.offsetX * physics.width / cWidth;
     box.Vx = 0;
     cycle();
   });
+
+
+
+
 
   //get values for spring constant
   document.getElementById("spring-k").addEventListener("input", () => {

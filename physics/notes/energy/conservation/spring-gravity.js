@@ -86,26 +86,35 @@ var springGravity = function () {
   document.getElementById("spring-m2").value = Math.round(box.mass);
   document.getElementById("spring-k2").value = physics.k;
 
-  const pauseID = document.getElementById("pause2")
-  pauseID.addEventListener("click", () => {
+  document.getElementById("pause2").addEventListener("click", () => {
+    pauseIt()
+  });
+  document.getElementById("pause2-text").addEventListener("click", () => {
+    pauseIt()
+  });
+
+  function pauseIt() {
     if (pause) {
       pause = false;
-      pauseID.innerText = "pause"
+      document.getElementById("pause2-text").textContent = "pause";
+
       render();
     } else {
       pause = true;
-      pauseID.innerText = "play"
+      document.getElementById("pause2-text").textContent = "play";
     }
-  });
+  }
 
   //on click move to mouse
-  const SVGID = document.getElementById("spring-SVG-2");
-  SVGID.addEventListener("mousedown", (event) => {
-    //gets mouse position, even when scaled by CSS
-    box.x = event.offsetX * physics.width / SVGID.clientWidth;
-    box.y = event.offsetY * physics.height / SVGID.clientHeight;
-    box.Vy = 0;
-    cycle();
+  document.getElementById("spring-SVG-2").addEventListener("mousedown", (event) => {
+    const x = event.offsetX //* physics.width / cWidth;
+    const y = event.offsetY //* physics.height / cHeight;
+    if (x > 80 || y > 40) {
+      box.x = x;
+      box.y = y;
+      box.Vy = 0;
+      cycle();
+    }
   });
 
   //get values for spring constant
