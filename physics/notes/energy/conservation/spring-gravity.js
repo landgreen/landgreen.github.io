@@ -4,7 +4,7 @@ var springGravity = function () {
     rate: 60,
     gravX: 0,
     gravY: 9.8,
-    width: 300,
+    width: 280,
     height: 400,
     equilibrium: 400 / 2,
     restitution: 0,
@@ -47,10 +47,11 @@ var springGravity = function () {
       this.Vy *= physics.airFriction;
     };
     this.edge = function () {
-      if (this.y > physics.height - this.r) {
-        this.Vy *= -physics.restitution;
-        this.y = physics.height - this.r;
-      } else if (this.y < this.r) {
+      // if (this.y > physics.height - this.r) {
+      //   this.Vy *= -physics.restitution;
+      //   this.y = physics.height - this.r;
+      // } 
+      if (this.y < this.r) {
         this.Vy *= -physics.restitution;
         this.y = this.r;
       }
@@ -81,12 +82,12 @@ var springGravity = function () {
     };
   }
 
-  var box = new mass(physics.width / 2, 80, 0, 0, 20, "#bbb");
+  var box = new mass(physics.width / 2, 350, 0, 0, 20, "#bbb");
   document.getElementById("spring-m2").value = Math.round(box.mass);
   document.getElementById("spring-k2").value = physics.k;
 
   const pauseID = document.getElementById("pause2")
-  pauseID.addEventListener("click", function () {
+  pauseID.addEventListener("click", () => {
     if (pause) {
       pause = false;
       pauseID.innerText = "pause"
@@ -99,7 +100,7 @@ var springGravity = function () {
 
   //on click move to mouse
   const SVGID = document.getElementById("spring-SVG-2");
-  SVGID.addEventListener("mousedown", function (event) {
+  SVGID.addEventListener("mousedown", (event) => {
     //gets mouse position, even when scaled by CSS
     box.x = event.offsetX * physics.width / SVGID.clientWidth;
     box.y = event.offsetY * physics.height / SVGID.clientHeight;
@@ -108,18 +109,38 @@ var springGravity = function () {
   });
 
   //get values for spring constant
-  document.getElementById("spring-k2").addEventListener("input", function () {
+  document.getElementById("spring-k2").addEventListener("input", () => {
     physics.k = document.getElementById("spring-k2").value;
+    document.getElementById("spring-k-slider2").value = physics.k;
     box.Vx = 0;
     physics.turns = 3 + 12 * Math.sqrt(physics.k);
+    box.drawSpring();
+    box.draw();
+  });
+  document.getElementById("spring-k-slider2").addEventListener("input", () => {
+    physics.k = document.getElementById("spring-k-slider2").value;
+    document.getElementById("spring-k2").value = physics.k;
+    box.Vx = 0;
+    physics.turns = 3 + 12 * Math.sqrt(physics.k);
+    box.drawSpring();
+    box.draw();
   });
 
   //gets values for mass
-  document.getElementById("spring-m2").addEventListener("input", function () {
+  document.getElementById("spring-m2").addEventListener("input", () => {
     box.mass = document.getElementById("spring-m2").value;
+    document.getElementById("spring-m-slider2").value = box.mass;
     box.r = Math.sqrt(box.mass / Math.PI / 0.01);
+    box.drawSpring();
+    box.draw();
   });
-
+  document.getElementById("spring-m-slider2").addEventListener("input", () => {
+    box.mass = document.getElementById("spring-m-slider2").value;
+    document.getElementById("spring-m2").value = box.mass;
+    box.r = Math.sqrt(box.mass / Math.PI / 0.01);
+    box.drawSpring();
+    box.draw();
+  });
 
   function cycle() {
     box.spring();

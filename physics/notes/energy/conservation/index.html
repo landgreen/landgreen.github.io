@@ -58,12 +58,17 @@
 				text-align: left;
 			}
 		</style>
-		<button style="float: right; width: 60px;" id="pause1">play</button>
-		k = <input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 60px;">
-		&nbsp;&nbsp;&nbsp;&nbsp;
-		m = <input id='spring-m' type="number" min="1" max="100" value=13 step=1 style="width: 60px;">&nbsp;kg
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spring-x" class="hide-on-mobile" style="text-align: right;"></span>
-		<svg viewBox="0 0 590 100" id="spring-SVG" style="border: 1px solid #000;">
+
+
+		k = <input id='spring-k-slider' type="range" step="0.1" value="0.1" min="0" max="10" style="width: 180px;">
+		<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 45px;">
+		<button style="float: right; width: 60px; margin-top: 20px;" id="pause1">play</button>
+		<br>
+		m = <input id='spring-m-slider' type="range" step="1" value="13" min="1" max="75" style="width: 175px;">
+		<input id='spring-m' type="number" min="1" max="75" value=13 step=1 style="width: 45px;">
+		<span class="hide-on-mobile">kg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		<span id="spring-x" class="hide-on-mobile" style="text-align: right;"></span>
+		<svg viewBox="0 0 590 100" id="spring-SVG" style="border: 1px solid #000; background-color: #f6f6f6;border-radius: 0px;">
 			<line x1="400" y1="0" x2="400" y2="100" stroke="#000" stroke-width="1" stroke-dasharray="4" />
 			<circle id="spring-ball" cx="50" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
 			<path id="spring-wire" d="M 0 0" stroke="#000" fill="transparent" />
@@ -81,8 +86,9 @@
 		</p>
 		<div class="example">
 			<div class="col-group">
-				<div class="center">
-					<svg class="center" viewBox="0 0 300 400" id="spring-SVG-2" style="border: 0.5px solid #000;">
+				<div class="center" style="padding-right: 5px; padding-left: 5px;">
+					<button id="pause2" style="float: left; width: 60px;margin-bottom: -30px;"> play </button>
+					<svg class="center" viewBox="0 0 280 400" id="spring-SVG-2" style="border: 0.5px solid #000; background-color: #f6f6f6;">
 						<line x1="0" y1="200.5" x2="300" y2="200.5" stroke="#000" stroke-width="1" stroke-dasharray="4" />
 						<circle id="spring-ball-2" cx="150" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
 						<path id="spring-wire-2" d="M 0 0" stroke="#000" fill="transparent" />
@@ -92,9 +98,15 @@
 					<!-- <div>This spring simulation has gravitational potential energy in addition to kinetic and
 						spring energy.</div>
 					<br> -->
-					<div><button id="pause2" style="float: right; width: 60px;"> pause </button></div>
-					<div class="data-text-out">k = <input id='spring-k2' type="number" min="0" max="99" value=10 step=1 style="width: 50px;"></div>
-					<div class="data-text-out">m = <input id='spring-m2' type="number" min="1" max="100" value=13 step=1 style="width: 50px;">&nbsp;kg</div>
+					<div class="data-text-out">
+						k = <input id='spring-k-slider2' type="range" step="1" value="10" min="0" max="99" style="width: 157px;">
+						<input id='spring-k2' type="number" min="0" max="99" value=10 step=1 style="width: 50px;">
+					</div>
+					<div class="data-text-out">
+						m = <input id='spring-m-slider2' type="range" step="1" value="13" min="1" max="99" style="width: 150px;">
+						<input id='spring-m2' type="number" min="1" max="99" value=13 step=1 style="width: 50px;">&nbsp;kg
+					</div>
+					<br>
 					<div id="spring-KE2" class="data-text-out">KE = ½mv²</div>
 					<div id="spring-KE-bar2" class="spring-KE-bar">&nbsp;</div>
 					<div id="spring-Us2" class="data-text-out">Us = ½kx²</div>

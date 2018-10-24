@@ -85,7 +85,7 @@ var spring = function () {
   document.getElementById("spring-k").value = physics.k;
 
   const pauseID = document.getElementById("pause1")
-  pauseID.addEventListener("click", function () {
+  pauseID.addEventListener("click", () => {
     if (pause) {
       pause = false;
       pauseID.innerText = "pause"
@@ -98,7 +98,7 @@ var spring = function () {
 
   //on click move to mouse
   const SVGID = document.getElementById("spring-SVG");
-  SVGID.addEventListener("mousedown", function (event) {
+  SVGID.addEventListener("mousedown", (event) => {
     //gets mouse position, even when scaled by CSS
     box.x = event.offsetX * 590 / SVGID.clientWidth;
     box.Vx = 0;
@@ -106,16 +106,38 @@ var spring = function () {
   });
 
   //get values for spring constant
-  document.getElementById("spring-k").addEventListener("input", function () {
+  document.getElementById("spring-k").addEventListener("input", () => {
     physics.k = document.getElementById("spring-k").value;
+    document.getElementById("spring-k-slider").value = physics.k
     // box.Vx = 0;
     physics.turns = 3 + 25 * Math.sqrt(physics.k);
+    box.drawSpring();
+    box.draw();
+  });
+  document.getElementById("spring-k-slider").addEventListener("input", () => {
+    physics.k = document.getElementById("spring-k-slider").value;
+    document.getElementById("spring-k").value = physics.k
+    // box.Vx = 0;
+    physics.turns = 3 + 25 * Math.sqrt(physics.k);
+    box.drawSpring();
+    box.draw();
   });
 
+
   //gets values for mass
-  document.getElementById("spring-m").addEventListener("input", function () {
+  document.getElementById("spring-m").addEventListener("input", () => {
     box.mass = document.getElementById("spring-m").value;
+    document.getElementById("spring-m-slider").value = box.mass
     box.r = Math.sqrt(box.mass / Math.PI / 0.01);
+    box.drawSpring();
+    box.draw();
+  });
+  document.getElementById("spring-m-slider").addEventListener("input", () => {
+    box.mass = document.getElementById("spring-m-slider").value;
+    document.getElementById("spring-m").value = box.mass
+    box.r = Math.sqrt(box.mass / Math.PI / 0.01);
+    box.drawSpring();
+    box.draw();
   });
 
   function cycle() {
