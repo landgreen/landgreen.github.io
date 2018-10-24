@@ -80,7 +80,7 @@ var spring = function () {
     };
   }
 
-  var box = new mass(230, physics.height / 2, 1, 0, 20, "#bbb");
+  var box = new mass(230, physics.height / 2, 0, 0, 20, "#bbb");
   document.getElementById("spring-m").value = Math.round(box.mass);
   document.getElementById("spring-k").value = physics.k;
 

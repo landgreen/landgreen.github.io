@@ -129,14 +129,14 @@ var springGravity = function () {
   //gets values for mass
   document.getElementById("spring-m2").addEventListener("input", () => {
     box.mass = document.getElementById("spring-m2").value;
-    document.getElementById("spring-m-slider2").value = box.mass;
+    document.getElementById("spring-m-slider2").value = Math.log10(box.mass);
     box.r = Math.sqrt(box.mass / Math.PI / 0.01);
     box.drawSpring();
     box.draw();
   });
   document.getElementById("spring-m-slider2").addEventListener("input", () => {
-    box.mass = document.getElementById("spring-m-slider2").value;
-    document.getElementById("spring-m2").value = box.mass;
+    box.mass = Math.pow(10, document.getElementById("spring-m-slider2").value);
+    document.getElementById("spring-m2").value = Math.floor(box.mass);
     box.r = Math.sqrt(box.mass / Math.PI / 0.01);
     box.drawSpring();
     box.draw();
