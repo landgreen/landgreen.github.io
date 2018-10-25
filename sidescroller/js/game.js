@@ -128,47 +128,47 @@ const game = {
   },
   keyPress: function () {
     //runs on key press event
-    if (keys[49]) {
-      // press 1
-      b.inventoryGun = 0;
-      game.switchGun();
-    } else if (keys[50]) {
-      // press 2
-      b.inventoryGun = 1;
-      game.switchGun();
-    } else if (keys[51]) {
-      // press 3
-      b.inventoryGun = 2;
-      game.switchGun();
-    } else if (keys[52]) {
-      // press 4
-      b.inventoryGun = 3;
-      game.switchGun();
-    } else if (keys[53]) {
-      // press 5
-      b.inventoryGun = 4;
-      game.switchGun();
-    } else if (keys[54]) {
-      // press 6
-      b.inventoryGun = 5;
-      game.switchGun();
-    } else if (keys[55]) {
-      // press 7
-      b.inventoryGun = 6;
-      game.switchGun();
-    } else if (keys[56]) {
-      // press 8
-      b.inventoryGun = 7;
-      game.switchGun();
-    } else if (keys[57]) {
-      // press 9
-      b.inventoryGun = 8;
-      game.switchGun();
-    } else if (keys[48]) {
-      // press 0
-      b.inventoryGun = 9;
-      game.switchGun();
-    }
+    // if (keys[49]) {
+    //   // press 1
+    //   b.inventoryGun = 0;
+    //   game.switchGun();
+    // } else if (keys[50]) {
+    //   // press 2
+    //   b.inventoryGun = 1;
+    //   game.switchGun();
+    // } else if (keys[51]) {
+    //   // press 3
+    //   b.inventoryGun = 2;
+    //   game.switchGun();
+    // } else if (keys[52]) {
+    //   // press 4
+    //   b.inventoryGun = 3;
+    //   game.switchGun();
+    // } else if (keys[53]) {
+    //   // press 5
+    //   b.inventoryGun = 4;
+    //   game.switchGun();
+    // } else if (keys[54]) {
+    //   // press 6
+    //   b.inventoryGun = 5;
+    //   game.switchGun();
+    // } else if (keys[55]) {
+    //   // press 7
+    //   b.inventoryGun = 6;
+    //   game.switchGun();
+    // } else if (keys[56]) {
+    //   // press 8
+    //   b.inventoryGun = 7;
+    //   game.switchGun();
+    // } else if (keys[57]) {
+    //   // press 9
+    //   b.inventoryGun = 8;
+    //   game.switchGun();
+    // } else if (keys[48]) {
+    //   // press 0
+    //   b.inventoryGun = 9;
+    //   game.switchGun();
+    // }
 
 
     if (keys[189]) {
