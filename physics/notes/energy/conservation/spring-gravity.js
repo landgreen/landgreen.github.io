@@ -10,7 +10,7 @@ var springGravity = function () {
     restitution: 0,
     airFriction: 1,
     k: 10,
-    turns: 3 + 12 * Math.sqrt(10)
+    turns: 3 + 4 * Math.sqrt(10)
   };
 
   function mass(x, y, Vx, Vy, r, fillColor) {
@@ -69,6 +69,7 @@ var springGravity = function () {
       this.ke = 0.5 * this.mass * this.Vy * this.Vy;
       this.energy = this.Us + this.Ug + this.ke;
 
+      document.getElementById("x-2").textContent = "x = " + (this.y - physics.equilibrium).toFixed(0) + " m";
       document.getElementById("spring-KE-bar2").style.width = 100 * (this.ke / this.energy) + "%"
       document.getElementById("spring-Us-bar2").style.width = 100 * (this.Us / this.energy) + "%"
       document.getElementById("spring-Ug-bar2").style.width = 100 * (this.Ug / this.energy) + "%"
@@ -122,7 +123,7 @@ var springGravity = function () {
     physics.k = document.getElementById("spring-k2").value;
     document.getElementById("spring-k-slider2").value = physics.k;
     box.Vx = 0;
-    physics.turns = 3 + 12 * Math.sqrt(physics.k);
+    physics.turns = 3 + 4 * Math.sqrt(physics.k);
     box.drawSpring();
     box.draw();
   });
@@ -130,7 +131,7 @@ var springGravity = function () {
     physics.k = document.getElementById("spring-k-slider2").value;
     document.getElementById("spring-k2").value = physics.k;
     box.Vx = 0;
-    physics.turns = 3 + 12 * Math.sqrt(physics.k);
+    physics.turns = 3 + 4 * Math.sqrt(physics.k);
     box.drawSpring();
     box.draw();
   });

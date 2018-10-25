@@ -9,8 +9,8 @@ var spring = function () {
     equalibrium: 400,
     width: 590,
     height: 100,
-    k: 0.1, //document.getElementById("spring-k").value,
-    turns: 3 + 25 * Math.sqrt(0.1)
+    k: 0.5, //document.getElementById("spring-k").value,
+    turns: 3 + 6 * Math.sqrt(0.5)
   };
 
   function mass(x, y, Vx, Vy, r, fillColor) {
@@ -116,7 +116,7 @@ var spring = function () {
     physics.k = document.getElementById("spring-k").value;
     document.getElementById("spring-k-slider").value = physics.k
     // box.Vx = 0;
-    physics.turns = 3 + 25 * Math.sqrt(physics.k);
+    physics.turns = 3 + 6 * Math.sqrt(physics.k);
     box.drawSpring();
     box.draw();
   });
@@ -124,7 +124,7 @@ var spring = function () {
     physics.k = document.getElementById("spring-k-slider").value;
     document.getElementById("spring-k").value = physics.k
     // box.Vx = 0;
-    physics.turns = 3 + 25 * Math.sqrt(physics.k);
+    physics.turns = 3 + 6 * Math.sqrt(physics.k);
     box.drawSpring();
     box.draw();
   });
