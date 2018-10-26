@@ -43,6 +43,7 @@ var springGravity = function () {
         d += `L ${box.x + (i % 2 === 0 ? 10 : -10)} ${ (box.y - this.r) * (1 - i / physics.turns)}`;
       }
       document.getElementById("spring-wire-2").setAttribute("d", d);
+      document.getElementById("spring-wire-2").setAttribute("stroke-width", 0.4 + physics.turns * 0.04);
     };
     this.move2 = function () {
       this.y += this.Vy / physics.rate;
@@ -118,7 +119,7 @@ var springGravity = function () {
   document.getElementById("spring-SVG-2").addEventListener("mousedown", (event) => {
     const x = event.offsetX //* physics.width / cWidth;
     const y = event.offsetY //* physics.height / cHeight;
-    if (x > 80 && y > 40) {
+    if (x > 80) {
       box.x = x;
       box.y = y;
       box.Vy = 0;
@@ -150,6 +151,11 @@ var springGravity = function () {
     physics.turns = 3 + 4 * Math.sqrt(physics.k);
     box.drawSpring();
     box.draw();
+  });
+
+  //get dampening slider values for physics.friction
+  document.getElementById("spring-d-slider2").addEventListener("input", () => {
+    physics.airFriction = 1 - document.getElementById("spring-d-slider2").value;
   });
 
   //gets values for mass

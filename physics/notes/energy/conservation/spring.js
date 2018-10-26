@@ -38,7 +38,7 @@ var spring = function () {
         d += `L ${(box.x - this.r) * (1 - i / physics.turns)} ${ box.y + (i % 2 === 0 ? 10 : -10)}`;
       }
       document.getElementById("spring-wire").setAttribute("d", d);
-
+      document.getElementById("spring-wire").setAttribute("stroke-width", 0.3 + physics.turns * 0.12);
     };
     this.move = function () {
       this.x += this.Vx;

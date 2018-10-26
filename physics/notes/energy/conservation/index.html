@@ -67,7 +67,7 @@
 		<svg viewBox="0 0 590 100" id="spring-SVG" style="border: 1px solid #000; background-color: #f6f6f6;border-radius: 0px;">
 			<line x1="400" y1="0" x2="400" y2="100" stroke="#000" stroke-width="1" stroke-dasharray="4" />
 			<circle id="spring-ball" cx="50" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
-			<path id="spring-wire" d="M 0 0" stroke="#000" fill="transparent" />
+			<path id="spring-wire" d="M 0 0" stroke="#000" stroke-width="1" fill="transparent" />
 		</svg>
 		<div id="spring-KE" class="data-text-out"></div>
 		<div id="spring-KE-bar" class="spring-KE-bar">&nbsp;</div>
@@ -192,17 +192,18 @@
 			<div class="center">
 				k = <input id='spring-k-slider2' type="range" step="1" value="10" min="0" max="99" style="width: 157px;">
 				<input id='spring-k2' type="number" min="0" max="99" value=10 step=1 style="width: 50px;">&nbsp;kg/s²
-				<div>
-					m = <input id='spring-m-slider2' type="range" step="0.001" value="1.1139" min="0" max="3" style="width: 170px;">
-					<input id='spring-m2' type="number" min="1" max="999" value=13 step=1 style="width: 50px;">&nbsp;kg
-				</div>
+				<br>
+				m = <input id='spring-m-slider2' type="range" step="0.001" value="1.1139" min="0" max="3" style="width: 175px;">
+				<input id='spring-m2' type="number" min="1" max="999" value=13 step=1 style="width: 50px;">&nbsp;kg
+				<br>
+				dampening = <input id='spring-d-slider2' type="range" step="0.001" value="0" min="0" max="0.05" style="width: 200px;">
 			</div>
 
 			<svg class="center" width="330" height="400" id="spring-SVG-2" style="border: 0.5px solid #000; background-color: #f8f8f8;">
 				<g stroke="none">
-					<rect id="spring-KE-bar2" x="255" y="400" height="400" width="26" fill="#fa96a0" />
-					<rect id="spring-Us-bar2" x="280" y="400" height="400" width="26" fill="#96d2d2" />
-					<rect id="spring-Ug-bar2" x="304" y="400" height="400" width="26" fill="#bbb" />
+					<rect id="spring-KE-bar2" x="255" y="400" height="1000" width="26" fill="#fa96a0" />
+					<rect id="spring-Us-bar2" x="280" y="400" height="1000" width="26" fill="#96d2d2" />
+					<rect id="spring-Ug-bar2" x="304" y="400" height="1000" width="26" fill="#bbb" />
 				</g>
 				<g stroke="none" transform="rotate(-90)">
 					<text id="spring-KE-text2" x="-390" y="274">KE = ½mv²</text>
@@ -241,6 +242,62 @@
 				$$6.5v^2 = 131610$$
 				$$v = 142.3 \tfrac{m}{s}$$
 			</details>
+			<br>
+			<strong>Example:</strong> When the dampening is on the spring system slowly settles on a single position. Write an
+			equation to predict that position in terms of the mass and spring constant.
+			<details>
+				<summary>solution</summary>
+				<p>We can use Newton's second law to build the equation.</p>
+				<div class="col-group">
+					<div>
+						$$\sum F = ma $$
+						$$F_s-F_g = ma $$
+						$$kx-mg = 0 $$
+						$$kx = mg $$
+						$$x = \frac{mg}{k} $$
+					</div>
+					<div>
+						<svg viewBox="0 -10 300 250" class="on-edge">
+							<defs>
+								<g id="vector">
+									<line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
+									<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
+								</g>
+								<g id="box">
+									<rect x="0" y="0" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fff " />
+									<text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="23px">m</text>
+								</g>
+							</defs>
+							<!-- <rect x="0" y="150" width="600" height="500" fill="#bcd" stroke="none" /> -->
+							<!-- <line x1="0" y1="150" x2="600" y2="150" stroke="#000" stroke-width="2" /> -->
+							<use x='110' y='70' xlink:href="#box" />
+							<use xlink:href="#vector" transform='translate(150 70) rotate(-180)' />
+							<text x="150" y="13" text-anchor="middle" fill="#000" font-size="21px">F
+								<tspan font-size="0.7em" dy="5" dx="-5">s</tspan>
+							</text>
+							<use xlink:href="#vector" transform='translate(150 150) rotate(0)' />
+							<text x="150" y="220" text-anchor="middle" fill="#000" font-size="21px">F
+								<tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+							</text>
+						</svg>
+					</div>
+
+				</div>
+				<p>Is this equation correct? Test it out in the simulation.</p>
+				<div class="col-group">
+					<div>
+						$$x = \frac{(13)(9.8)}{10}$$
+						$$x = 12.7 \, \mathrm{m}$$
+						<p>This agrees with the simulation.</p>
+					</div>
+					<div>
+						$$x = \frac{(82)(9.8)}{23}$$
+						$$x = 34.9 \, \mathrm{m}$$
+						<p>This agrees with the simulation.</p>
+					</div>
+				</div>
+
+			</details>
 		</div>
 
 		<div class='example'>
@@ -249,14 +306,11 @@
 			<details>
 				<summary>solution</summary>
 				$$U_{s} = K$$ $$\tfrac{1}{2}kx^{2} = \tfrac{1}{2}mv^{2}$$ $$\tfrac{1}{2}(200)(0.15)^{2} = \tfrac{1}{2}(0.2)v^{2}$$
-				$$22.5
-				= v^{2}$$ $$\pm 4.74 \, \mathrm{\tfrac{m}{s}} = v$$
+				$$22.5 = v^{2}$$ $$\pm 4.74 \, \mathrm{\tfrac{m}{s}} = v$$
 			</details>
 		</div>
 
-
 		<div class='example'>
-
 			<div class="center" style="position: relative; width: 300px; height: 200px;"><a href="https://phet.colorado.edu/sims/html/masses-and-springs/latest/masses-and-springs_en.html"
 				 style="text-decoration: none;"><img src="https://phet.colorado.edu/sims/html/masses-and-springs/latest/masses-and-springs-600.png"
 					 alt="Masses and Springs" style="border: none;" width="300" height="200" />
