@@ -1,6 +1,7 @@
 var springGravity = function () {
   var pause = true;
   var physics = {
+    count: 0,
     rate: 60,
     gravX: 0,
     gravY: 9.8,
@@ -70,31 +71,18 @@ var springGravity = function () {
       this.ke = 0.5 * this.mass * this.Vy * this.Vy;
       this.energy = this.Us + this.Ug + this.ke;
 
-      document.getElementById("x-2").textContent = "x = " + (this.y - physics.equilibrium).toFixed(0) + " m";
-      document.getElementById("h-2").textContent = "h = " + (physics.y - this.y).toFixed(0) + " m";
-
       document.getElementById("spring-KE-bar2").setAttribute("y", physics.height - 400 * (this.ke / this.energy));
       document.getElementById("spring-Us-bar2").setAttribute("y", physics.height - 400 * (this.Us / this.energy));
       document.getElementById("spring-Ug-bar2").setAttribute("y", physics.height - 400 * (this.Ug / this.energy));
 
-      document.getElementById("spring-KE-text2").textContent = "KE = ½mv² = " + (this.ke / 1000).toFixed(0) + " kJ"
-      document.getElementById("spring-Us-text2").textContent = "Us = ½ky² = " + (this.Us / 1000).toFixed(0) + " kJ"
-      document.getElementById("spring-Ug-text2").textContent = "Ug = mgh = " + (this.Ug / 1000).toFixed(0) + " kJ"
-
-      // document.getElementById("E-2").textContent = "E = " + (this.energy / 1000).toFixed(0) + " kJ"
-
-      // document.getElementById("spring-KE-bar2").setAttribute("height", "400");
-
-      // document.getElementById("spring-KE-bar2").style.width = 100 * (this.ke / this.energy) + "%"
-      // document.getElementById("spring-Us-bar2").style.width = 100 * (this.Us / this.energy) + "%"
-      // document.getElementById("spring-Ug-bar2").style.width = 100 * (this.Ug / this.energy) + "%"
-      // document.getElementById("spring-KE2").innerHTML = " KE = ½mv² = " + (this.ke / 1000).toFixed(0) + " kJ"
-      // document.getElementById("spring-Us2").innerHTML = " Us = ½ky² = " + (this.Us / 1000).toFixed(0) + " kJ"
-      // document.getElementById("spring-Ug2").innerHTML = " Ug = mgh = " + (this.Ug / 1000).toFixed(0) + " kJ"
-      // document.getElementById("spring-E2").innerHTML = "E = " + (this.energy / 1000).toFixed(0) + " kJ"
-      // document.getElementById("spring-h2").innerHTML = "h = " + height.toFixed(0) + " m"
-      // document.getElementById("spring-y2").innerHTML = "y = " + (this.y - physics.equilibrium).toFixed(0) + " m"
-      // document.getElementById("spring-v2").innerHTML = "v = " + this.Vy.toFixed(0) + " m/s"
+      //update text less to make animation smoother
+      if (!(physics.count % 2)) {
+        document.getElementById("x-2").textContent = "x = " + (this.y - physics.equilibrium).toFixed(0) + " m";
+        document.getElementById("h-2").textContent = "h = " + (physics.y - this.y).toFixed(0) + " m";
+        document.getElementById("spring-KE-text2").textContent = "KE = ½mv² = " + (this.ke / 1000).toFixed(0) + " kJ"
+        document.getElementById("spring-Us-text2").textContent = "Us = ½ky² = " + (this.Us / 1000).toFixed(0) + " kJ"
+        document.getElementById("spring-Ug-text2").textContent = "Ug = mgh = " + (this.Ug / 1000).toFixed(0) + " kJ"
+      }
     };
   }
 
@@ -181,6 +169,7 @@ var springGravity = function () {
   });
 
   function cycle() {
+    physics.count++
     box.spring();
     box.gravity();
     box.move2();
@@ -190,7 +179,6 @@ var springGravity = function () {
     box.draw();
   }
   cycle()
-
 
   function render() {
     //repeating animation function
