@@ -70,9 +70,9 @@ const spawn = {
           return;
         }
       }
-      if (Math.random() < 0.75) {
+      if (Math.random() < 0.85) {
         pick = "randomList";
-      } else {
+      } else if (Math.random() < 0.85) {
         pick = "random";
       }
       //spawn random boss
