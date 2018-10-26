@@ -190,32 +190,42 @@
 		</div>
 
 		<div class="example">
-			<div id="spring-KE2" class="data-text-out">KE = ½mv²</div>
+			<!-- <div id="spring-KE2" class="data-text-out">KE = ½mv²</div>
 			<div id="spring-KE-bar2" class="spring-KE-bar">&nbsp;</div>
 			<div id="spring-Us2" class="data-text-out">Us = ½kx²</div>
 			<div id="spring-Us-bar2" class="spring-Us-bar">&nbsp;</div>
 			<div id="spring-Ug2" class="data-text-out">Ug = mgh</div>
-			<div id="spring-Ug-bar2" class="spring-Ug-bar">&nbsp;</div>
-			<svg class="center" width="280" height="400" id="spring-SVG-2" style="border: 0.5px solid #000; background-color: #f6f6f6;">
-				<line x1="0" y1="200.5" x2="300" y2="200.5" stroke="#000" stroke-width="1" stroke-dasharray="4" />
+			<div id="spring-Ug-bar2" class="spring-Ug-bar">&nbsp;</div> -->
+			<div class="center">
+				k = <input id='spring-k-slider2' type="range" step="1" value="10" min="0" max="99" style="width: 157px;">
+				<input id='spring-k2' type="number" min="0" max="99" value=10 step=1 style="width: 50px;">&nbsp;kg/s²
+				<div>
+					m = <input id='spring-m-slider2' type="range" step="0.001" value="1.1139" min="0" max="3" style="width: 170px;">
+					<input id='spring-m2' type="number" min="1" max="999" value=13 step=1 style="width: 50px;">&nbsp;kg
+				</div>
+			</div>
+			<svg class="center" width="330" height="400" id="spring-SVG-2" style="border: 0.5px solid #000; background-color: #f6f6f6;">
+				<line x1="0" y1="200.5" x2="330" y2="200.5" stroke="#000" stroke-width="1" stroke-dasharray="4" />
+				<g stroke="none">
+					<rect id="spring-Ug-bar2" x="305" y="400" height="400" width="25" fill="rgba(0, 0, 0, 0.2)" />
+					<rect id="spring-Us-bar2" x="280" y="400" height="400" width="25" fill="rgba(85, 204, 204, 0.8)" />
+					<rect id="spring-KE-bar2" x="255" y="400" height="400" width="25" fill="rgba(255, 102, 85, 0.8)" />
+				</g>
+				<g stroke="none" transform="rotate(-90)">
+					<text id="spring-KE-text2" x="-390" y="270">KE = ½mv²</text>
+					<text id="spring-Us-text2" x="-390" y="295">Us = ½kx²</text>
+					<text id="spring-Ug-text2" x="-390" y="320">Ug = mgh</text>
+				</g>
 				<circle id="spring-ball-2" cx="150" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
 				<path id="spring-wire-2" d="M 0 0" stroke="#000" fill="transparent" />
 				<rect id="pause2" x="10" y="10" rx="3" ry="3" width="60" height="25" fill="#eee" stroke="#000" />
 				<text id="pause2-text" x="40" y="22.5" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text>
-				<text id="x-2" x="10" y="390" stroke="none" text-anchor="left">0
-					m</text>
+				<text id="x-2" x="10" y="216" stroke="none" text-anchor="left">0 m</text>
+				<text id="h-2" x="10" y="216" stroke="none" text-anchor="left">0 m</text>
 			</svg>
-
-			<div class="center">
-				k = <input id='spring-k-slider2' type="range" step="1" value="10" min="0" max="99" style="width: 137px;">
-				<input id='spring-k2' type="number" min="0" max="99" value=10 step=1 style="width: 50px;">&nbsp;kg/s²
-				<div>
-					m = <input id='spring-m-slider2' type="range" step="0.001" value="1.1139" min="0" max="3" style="width: 150px;">
-					<input id='spring-m2' type="number" min="1" max="999" value=13 step=1 style="width: 50px;">&nbsp;kg
-				</div>
-			</div>
-			<strong>Example:</strong> How fast is the mass moving at the spring equilibrium.
-			<br> (At the default values of k&nbsp;=&nbsp;10&nbsp;kg/s² and m&nbsp;=&nbsp;13&nbsp;kg)
+			<br>
+			<strong>Example:</strong> How fast is the mass moving when at the spring equilibrium (x = 0).
+			<br> Use the default values of k&nbsp;=&nbsp;10&nbsp;kg/s² and m&nbsp;=&nbsp;13&nbsp;kg.
 			<details>
 				<summary>solution</summary>
 				$$\tfrac{1}{2}mv^2 + mgh + \tfrac{1}{2}kx^2$$
@@ -226,13 +236,12 @@
 				$$\tfrac{1}{2}mv^2 + mg{\color{#f05}x} + \tfrac{1}{2}kx^2$$
 				<p>The first point in time will be when the spring is at equilibrium. Our second point will be when the
 					spring system is at rest at it's lowest point.</p>
-				$$\text{initial[x = 0, v = ?]}$$
-				$$\text{final[x = 150, v = 0]}$$
+				$$\text{initial}[x = 0, v = ?]$$
+				$$\text{final}[x = 150, v = 0]$$
 				$$\tfrac{1}{2}mv^2 + mgx + \tfrac{1}{2}kx^2 = \tfrac{1}{2}mv^2 + mgx + \tfrac{1}{2}kx^2$$
-				$$\tfrac{1}{2}(13)v^2 + (13)(9.8)(0) + \tfrac{1}{2}(10)(0)^2 = \tfrac{1}{2}(13)(0)^2 + (13)(9.8)(150) +
+				$$\small \tfrac{1}{2}(13)v^2 + (13)(9.8)(0) + \tfrac{1}{2}(10)(0)^2 = \tfrac{1}{2}(13)(0)^2 + (13)(9.8)(150) +
 				\tfrac{1}{2}(10)(150)^2$$
 				$$6.5v^2 + 0 + 0 = 0 + 19110 + 112500$$
-				$$6.5v^2 = 131610$$
 				$$6.5v^2 = 131610$$
 				$$v = 142.3 \tfrac{m}{s}$$
 			</details>
