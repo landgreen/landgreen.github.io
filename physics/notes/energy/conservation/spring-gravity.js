@@ -6,10 +6,10 @@ var springGravity = function () {
     gravY: 9.8,
     width: 330,
     height: 400,
-    y: 0,
+    y: 350,
     equilibrium: 400 / 2,
     restitution: 0,
-    airFriction: 1,
+    airFriction: 1, //0.99,
     k: 10,
     turns: 3 + 4 * Math.sqrt(10)
   };
@@ -99,8 +99,15 @@ var springGravity = function () {
   }
 
   var box = new mass(physics.width / 2, 350, 0, 0, 20, "#bbb");
+  physics.y = box.y
   document.getElementById("spring-m2").value = Math.round(box.mass);
   document.getElementById("spring-k2").value = physics.k;
+  document.getElementById("h-2").setAttribute("y", physics.y - 5);
+  document.getElementById("h-2").textContent = "h = " + (physics.y - box.y).toFixed(0) + " m";
+  document.getElementById("h-line-2").setAttribute("y1", physics.y);
+  document.getElementById("h-line-2").setAttribute("y2", physics.y);
+
+
   document.getElementById("pause2").addEventListener("click", () => {
     pauseIt()
   });
@@ -132,7 +139,10 @@ var springGravity = function () {
       // document.getElementById("h-2").setAttribute("y", physics.y);
     } else if (y > 40) {
       physics.y = y
-      document.getElementById("h-2").setAttribute("y", physics.y);
+      document.getElementById("h-2").setAttribute("y", physics.y - 5);
+      document.getElementById("h-2").textContent = "h = " + (physics.y - box.y).toFixed(0) + " m";
+      document.getElementById("h-line-2").setAttribute("y1", physics.y);
+      document.getElementById("h-line-2").setAttribute("y2", physics.y);
     }
   });
 
@@ -179,8 +189,6 @@ var springGravity = function () {
     box.drawSpring();
     box.draw();
   }
-  physics.y = box.y
-  document.getElementById("h-2").setAttribute("y", physics.y);
   cycle()
 
 

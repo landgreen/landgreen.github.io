@@ -36,25 +36,18 @@
 		<p>Take a look at the simulated spring and mass system below.</p>
 		<style>
 			.spring-KE-bar {
-				background-color: rgba(255, 102, 85, 0.8);
+				background-color: #fa96a0;
 				width: 0%;
 				margin-top: -23.5px;
 				height: 23.5px;
 				/* border-radius: 4px; */
 			}
 			.spring-Us-bar {
-				background-color: rgba(85, 204, 204, 0.8);
+				background-color: #96d2d2;
 				width: 0%;
 				margin-top: -23.5px;
 				height: 23.5px;
 				/* border-radius: 15px; */
-			}
-			.spring-Ug-bar {
-				background-color: rgba(0,0,0,0.2);
-				width: 0%;
-				margin-top: -23.5px;
-				height: 23.5px;
-				/* border-radius: 10px; */
 			}
 			.data-text-out {
 				padding-left: 5px;
@@ -204,28 +197,31 @@
 					<input id='spring-m2' type="number" min="1" max="999" value=13 step=1 style="width: 50px;">&nbsp;kg
 				</div>
 			</div>
-			<svg class="center" width="330" height="400" id="spring-SVG-2" style="border: 0.5px solid #000; background-color: #f6f6f6;">
-				<line x1="0" y1="200.5" x2="330" y2="200.5" stroke="#000" stroke-width="1" stroke-dasharray="4" />
+
+			<svg class="center" width="330" height="400" id="spring-SVG-2" style="border: 0.5px solid #000; background-color: #f4f4f4;">
 				<g stroke="none">
-					<rect id="spring-Ug-bar2" x="305" y="400" height="400" width="25" fill="rgba(0, 0, 0, 0.2)" />
-					<rect id="spring-Us-bar2" x="280" y="400" height="400" width="25" fill="rgba(85, 204, 204, 0.8)" />
-					<rect id="spring-KE-bar2" x="255" y="400" height="400" width="25" fill="rgba(255, 102, 85, 0.8)" />
+					<rect id="spring-Ug-bar2" x="304" y="400" height="400" width="25" fill="#bbb" />
+					<rect id="spring-Us-bar2" x="280" y="400" height="400" width="25" fill="#96d2d2" />
+					<rect id="spring-KE-bar2" x="255" y="400" height="400" width="25" fill="#fa96a0" />
 				</g>
 				<g stroke="none" transform="rotate(-90)">
-					<text id="spring-KE-text2" x="-390" y="270">KE = ½mv²</text>
-					<text id="spring-Us-text2" x="-390" y="295">Us = ½kx²</text>
-					<text id="spring-Ug-text2" x="-390" y="320">Ug = mgh</text>
+					<text id="spring-KE-text2" x="-390" y="274">KE = ½mv²</text>
+					<text id="spring-Us-text2" x="-390" y="299">Us = ½kx²</text>
+					<text id="spring-Ug-text2" x="-390" y="324">Ug = mgh</text>
 				</g>
 				<circle id="spring-ball-2" cx="150" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
 				<path id="spring-wire-2" d="M 0 0" stroke="#000" fill="transparent" />
 				<rect id="pause2" x="10" y="10" rx="3" ry="3" width="60" height="25" fill="#eee" stroke="#000" />
 				<text id="pause2-text" x="40" y="22.5" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text>
-				<text id="x-2" x="10" y="216" stroke="none" text-anchor="left">0 m</text>
-				<text id="h-2" x="10" y="216" stroke="none" text-anchor="left">0 m</text>
+				<line x1="0" y1="200" x2="248" y2="200" stroke="#666" stroke-width="1" stroke-dasharray="6" />
+				<line id="h-line-2" x1="0" y1="200" x2="248" y2="200" stroke="#666" stroke-width="1" stroke-dasharray="6" />
+				<text id="x-2" x="10" y="195" stroke="none" text-anchor="left">0 m</text>
+				<text id="h-2" x="10" y="345" stroke="none" text-anchor="left">0 m</text>
 			</svg>
+
 			<br>
-			<strong>Example:</strong> How fast is the mass moving when at the spring equilibrium (x = 0).
-			<br> Use the default values of k&nbsp;=&nbsp;10&nbsp;kg/s² and m&nbsp;=&nbsp;13&nbsp;kg.
+			<strong>Example:</strong> How fast is the mass moving at the spring equilibrium (x = 0).
+			<br> Use the default values.
 			<details>
 				<summary>solution</summary>
 				$$\tfrac{1}{2}mv^2 + mgh + \tfrac{1}{2}kx^2$$
@@ -260,6 +256,7 @@
 
 
 		<div class='example'>
+			Open the PhET simulation, switch to the energy lab mode on the bottom right.
 			<div class="center" style="position: relative; width: 300px; height: 200px;"><a href="https://phet.colorado.edu/sims/html/masses-and-springs/latest/masses-and-springs_en.html"
 				 style="text-decoration: none;"><img src="https://phet.colorado.edu/sims/html/masses-and-springs/latest/masses-and-springs-600.png"
 					 alt="Masses and Springs" style="border: none;" width="300" height="200" />
@@ -271,9 +268,11 @@
 					</table>
 				</a>
 			</div>
-			<br>
-			<strong>Example:</strong> Open the PhET simulation and switch to the energy lab mode, it the the fourth mode on the
-			bottom. Find the mass of red and blue weights.
+			<br><strong>Example:</strong> What is the value of the spring constant? Use Newton's second law.
+			<details>
+				<summary>solution</summary>
+			</details>
+			<br><strong>Example:</strong> What is the value of the spring constant? Use conservation of energy.
 			<details>
 				<summary>solution</summary>
 			</details>
