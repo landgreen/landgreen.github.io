@@ -33,9 +33,9 @@
 		</h1>
 	</header>
 	<article>
-		<p>Take a look at the simulated spring and mass system below.</p>
-		<style>
-			.spring-KE-bar {
+		<div class='example-small'>
+			<style>
+				.spring-KE-bar {
 				background-color: #fa96a0;
 				width: 0%;
 				margin-top: -23.5px;
@@ -55,50 +55,70 @@
 				height: 23.5px;
 			}
 		</style>
-
-		k = <input id='spring-k-slider' type="range" step="0.1" value="0.1" min="0" max="10" style="width: 200px;">
-		<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 45px;"><span class="hide-on-mobile">&nbsp;kg/s²</span>
-		<button style="float: right; width: 60px; margin-top: 20px; text-align: center; padding: 0px;" id="pause1">play</button>
-		<br>
-		m = <input id='spring-m-slider' type="range" step="1" value="13" min="1" max="75" style="width: 195px;">
-		<input id='spring-m' type="number" min="1" max="75" value=13 step=1 style="width: 45px;">
-		<span class="hide-on-mobile">kg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-		<span id="spring-x" class="hide-on-mobile" style="text-align: right;"></span>
-		<svg viewBox="0 0 590 100" id="spring-SVG" style="border: 1px solid #000; background-color: #f6f6f6;border-radius: 0px;">
-			<line x1="400" y1="0" x2="400" y2="100" stroke="#000" stroke-width="1" stroke-dasharray="4" />
-			<circle id="spring-ball" cx="50" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
-			<path id="spring-wire" d="M 0 0" stroke="#000" stroke-width="1" fill="transparent" />
-		</svg>
-		<div id="spring-KE" class="data-text-out"></div>
-		<div id="spring-KE-bar" class="spring-KE-bar">&nbsp;</div>
-		<div id="spring-Us" class="data-text-out"></div>
-		<div id="spring-Us-bar" class="spring-Us-bar">&nbsp;</div>
-
-		<p>
-			What types of energy are being traded?
+			k = <input id='spring-k-slider' type="range" step="0.1" value="0.1" min="0" max="10" style="width: 200px;">
+			<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 45px;"><span class="hide-on-mobile">&nbsp;kg/s²</span>
+			<button style="float: right; width: 60px; margin-top: 20px; text-align: center; padding: 0px;" id="pause1">play</button>
 			<br>
-			<br>When is the velocity the highest?
-			<br>
-			<br>What is the effect of a higher spring constant?
-		</p>
+			m = <input id='spring-m-slider' type="range" step="1" value="13" min="1" max="75" style="width: 195px;">
+			<input id='spring-m' type="number" min="1" max="75" value=13 step=1 style="width: 45px;">
+			<span class="hide-on-mobile">kg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<span id="spring-x" class="hide-on-mobile" style="text-align: right;"></span>
 
+			<svg viewBox="0 0 590 120" id="spring-SVG" style="border: 1px solid #000; background-color: #f6f6f6;border-radius: 0px;">
+				<line x1="385" y1="3" x2="385" y2="120" stroke="#000" stroke-width="1" stroke-dasharray="6" />
+				<circle id="spring-ball" cx="50" cy="60" r="20" fill="#bbb" stroke-width="2" stroke="#000" />
+				<path id="spring-wire" d="M 0 0" stroke="#000" stroke-width="1" fill="none" stroke-linejoin="bevel" />
+			</svg>
+
+			<div id="spring-KE" class="data-text-out"></div>
+			<div id="spring-KE-bar" class="spring-KE-bar">&nbsp;</div>
+			<div id="spring-Us" class="data-text-out"></div>
+			<div id="spring-Us-bar" class="spring-Us-bar">&nbsp;</div>
+
+			<div class='example-small'><strong>Question:</strong> What energies are being traded in the spring and mass system?
+				<details>
+					<summary>answer</summary>
+					<p>elastic potential energy and kinetic energy</p>
+				</details>
+			</div>
+
+			<div class='example-small'><strong>Question:</strong> When is the velocity the highest?
+				<details>
+					<summary>answer</summary>
+					<p>The kinetic energy and velocity are highest when the spring energy is lowest, at the point of equilibrium. (The
+						dotted line)</p>
+				</details>
+			</div>
+
+			<div class='example-small'><strong>Question:</strong> Compare the total energy at different points on the spring's
+				cycle.
+				<details>
+					<summary>answer</summary>
+					<p>The total energy is always the same for the same mass and spring constant.</p>
+					<p>With an actual spring system the energy would eventually change forms into thermal energy, but this simulation
+						doesn't include heat loss.</p>
+				</details>
+			</div>
 		</div>
+
 		<h1 class='underlined'>Conservation of Energy</h1>
 		<p>Energy is conserved. This means it can't be reduced or increased, but as systems change, the energy changes form.
-			Since
-			total energy is always the same value, we can build an equation that sets the total energy at one time equal to the
-			total
-			energy at any other time.
+			Since total energy is always the same value, we can build an equation that sets the total energy at one time equal
+			to the total energy at any other time.
 		</p>
 		<div class='definition'>
 			Energy cannot be created or destroyed, but it can change forms.
-			<h1>$$E_i=E_f$$</h1>
-			\( E_i \) = initial energy[J]
-			<br>\( E_f \) = final energy [J]
+			<h1>
+				<!-- $$E_i=E_f$$ -->
+				$$K_i + U_i = K_f + U_f$$
+			</h1>
+			<!-- \( E_i \) = initial energy[J] -->
+			<!-- <br>\( E_f \) = final energy [J] -->
+			\( K \) = kinetic energy [J]
+			<br>\( U \) = potential energy [J]
 		</div>
 		<p>This equation is bare bones right now. We need to change it for each situation. We should only include energy
-			types that
-			are changed. For now we can calculate three types of energy.</p>
+			types that are changed. For now we can calculate three types of energy.</p>
 
 		<li>If an object
 			<strong>changes speed</strong>, include kinetic energy.</li>
@@ -107,28 +127,48 @@
 		<li>If a
 			<strong>spring is compressed</strong>, include spring potential energy.</li>
 
+		<div class='example'>
+			<svg viewBox="-200 0 400 190">
+				<circle cx="0" cy="32" r="30" stroke-width="1.5" stroke="#000" fill="#abc" />
+				<text x="0" y="32" fill="black" text-anchor="middle" dominant-baseline="middle">m</text>
+				<circle cx="0" cy="128" r="30" stroke-width="1" stroke-dasharray="4" stroke="#000" fill="none" />
 
-		<p>For example, if a ball at rest starts high up and falls down, the conservation of energy equation should only
-			include kinetic
-			and gravitational energy.</p>
-		$$K_i + U_i = K_f + U_f$$ $$\frac{1}{2}mu^2 + mgh_i = \frac{1}{2}mv^2 + mgh_f$$
-		<p>We can often set some the initial or final energies to zero as well. Initial kinetic energy is zero because the
-			ball starts
-			at rest. Choosing the final height to be zero will set the final gravitational potential energy to zero.</p>
-		$$mgh_i = \frac{1}{2}mv^2$$
-		<p>Also, look for variables that show up in every term. In this case mass can be ignored by dividing everything by
-			mass.</p>
-		$$gh_i = \frac{1}{2}v^2$$
+				<g transform="translate(0 130) rotate(90)">
+					<line x1="0" y1="0" x2="50" y2="0" stroke="#000" stroke-width="1.5" />
+					<polygon points="0,0 -8,5 -8,-5" fill="#000" transform="translate(55 0)" />
+				</g>
+				<text x="-12" y="185" stroke="none" text-anchor="middle">v</text>
+
+				<line x1="40" y1="60" x2="40" y2="157" style="stroke:#000;stroke-width:2" />
+				<line x1="35" y1="157" x2="45" y2="157" style="stroke:#000;stroke-width:2" />
+				<line x1="35" y1="60" x2="45" y2="60" style="stroke:#000;stroke-width:2" />
+				<text x="45" y="114" fill="black">h</text>
+
+				<line x1="-500" y1="160" x2="1500" y2="160" stroke="#000" stroke-width="2" />
+			</svg>
+			<strong>Example:</strong> Build a conservation of energy equation for dropping a ball.
+			<br> Assume no energy loss to friction.
+			<details>
+				<summary>solution</summary>
+				<p>This equation only needs to include kinetic and gravitational potential energy.</p>
+				$$K_i + U_i = K_f + U_f$$
+				<!-- $$\frac{1}{2}mu^2 + mgh_i = \frac{1}{2}mv^2 + mgh_f$$ -->
+				<p>Initial kinetic energy is zero because the ball starts at rest. Choosing the final height to be zero will set
+					the final gravitational potential energy to zero.</p>
+				$$U_g = K$$
+				$$mgh = \frac{1}{2}mv^2$$
+				<p>We can divide every term by mass.</p>
+				$$\boxed{gh = \frac{1}{2}v^2}$$
+			</details>
+		</div>
+
 
 		<div class='example'>
 			<strong>Example:</strong> A ball falls from rest off a 0.80 m table. How fast is the ball going just before it hits
 			the ground?
 			<details>
 				<summary>solution</summary>
-				$$U_g = K$$ $$mgh_{i} = \tfrac{1}{2}mv^{2}$$ $$\text{m is in every term.}$$ $$
-				\frac{{\color{#f08}m}gh_{i}}{\color{#f08}m}
-				= \frac{\tfrac{1}{2}{\color{#f08}m}v^{2}}{\color{#f08}m}$$ $$gh_{i} = \tfrac{1}{2}v^{2}$$ $$(9.8 \,
-				\mathrm{\tfrac{m}{s^2}})(0.80\,
+				$$U_g = K$$ $$mgh = \tfrac{1}{2}mv^{2}$$ $$gh = \tfrac{1}{2}v^{2}$$ $$(9.8 \, \mathrm{\tfrac{m}{s^2}})(0.80\,
 				\mathrm{m}) = \tfrac{1}{2}v^{2}$$ $$15.68\, \mathrm{\tfrac{m^2}{s^2}} = v^{2}$$ $$\pm 3.959\, \mathrm{ \tfrac{m}{s}
 				}
 				= v$$
@@ -145,16 +185,12 @@
 		</div>
 		<div class='example'>
 			<strong>Example:</strong> A 0.43 kg soccer ball kicked at 10 m/s rolls down a 30 m tall hill. How fast will the ball
-			be moving
-			at the
-			bottom of the hill?
+			be moving at the bottom of the hill?
 			<details>
 				<summary>solution</summary>
-				$$U_{i} + K_{i} = U_{f} + K_{f}$$ $$mgh_{i} + \tfrac{1}{2}mu^{2} = mgh_{f} +\tfrac{1}{2}mv^{2}$$ $$gh_{i} +
-				\tfrac{1}{2}u^{2}
-				= gh_{f} +\tfrac{1}{2}v^{2}$$ $$(9.8)(30) + \frac{1}{2}(10)^{2} = (9.8)(0) + \frac{1}{2}v^{2}$$ $$294 + 50 =
-				\tfrac{1}{2}v^{2}$$
-				$$344 = \tfrac{1}{2}v^{2}$$ $$\pm 26.2 \mathrm{\tfrac{m}{s}} = v$$
+				$$U_{g} + K_{i} = K_{f}$$ $$mgh + \tfrac{1}{2}mu^{2} = \tfrac{1}{2}mv^{2}$$ $$gh +
+				\tfrac{1}{2}u^{2} = \tfrac{1}{2}v^{2}$$ $$(9.8)(30) + \frac{1}{2}(10)^{2} = \frac{1}{2}v^{2}$$ $$294 + 50 =
+				\tfrac{1}{2}v^{2}$$ $$344 = \tfrac{1}{2}v^{2}$$ $$\pm 26.2 \mathrm{\tfrac{m}{s}} = v$$
 			</details>
 		</div>
 		<div class='example'>
@@ -162,7 +198,7 @@
 			spring has a spring constant of 200.0 kg/s². How high could the ball go just using the energy stored in the spring?
 			<details>
 				<summary>solution</summary>
-				$$U_{s} = U_{g}$$ $$\tfrac{1}{2}kx^{2} = mgh$$ $$\text{Can't divide by mass}$$ $$\tfrac{1}{2}(200)(0.15)^{2} =
+				$$U_{s} = U_{g}$$ $$\tfrac{1}{2}kx^{2} = mgh$$ $$\tfrac{1}{2}(200)(0.15)^{2} =
 				(0.2)(9.8)h$$
 				$$1.15 \, \mathrm{m} = h$$
 			</details>
@@ -174,11 +210,18 @@
 			at Six Flags Magic Mountain. How fast is the cart going at the bottom of the hill?
 			<details>
 				<summary>solution</summary>
-				$$U_{i} + K_{i} = U_{f} + K_{f}$$ $$mgh_{i} + \tfrac{1}{2}mu^{2} = mgh_{f} +\tfrac{1}{2}mv^{2}$$ $$gh_{i} +
-				\tfrac{1}{2}u^{2}
-				= gh_{f} +\tfrac{1}{2}v^{2}$$ $$(9.8)(126) + \tfrac{1}{2}(0)^{2} = (9.8)(0) +\tfrac{1}{2}v^{2}$$ $$1234.8 =
-				\tfrac{1}{2}v^{2}$$
-				$$\pm 49.69 \, \mathrm{\tfrac{m}{s}} = v$$
+				$$U_{g} = K$$ $$mgh = \tfrac{1}{2}mv^{2}$$ $$gh = \tfrac{1}{2}v^{2}$$ $$(9.8)(126) = \tfrac{1}{2}v^{2}$$
+				$$1234.8 = \tfrac{1}{2}v^{2}$$ $$\pm 49.69 \, \mathrm{\tfrac{m}{s}} = v$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your
+			spring has a spring constant of 200.0 kg/s². How fast should the ball be moving right after it leaves the spring?
+			<details>
+				<summary>solution</summary>
+				$$U_{s} = K$$ $$\tfrac{1}{2}kx^{2} = \tfrac{1}{2}mv^{2}$$ $$\tfrac{1}{2}(200)(0.15)^{2} = \tfrac{1}{2}(0.2)v^{2}$$
+				$$22.5 = v^{2}$$ $$\pm 4.74 \, \mathrm{\tfrac{m}{s}} = v$$
 			</details>
 		</div>
 
@@ -190,71 +233,80 @@
 			<div id="spring-Ug2" class="data-text-out">Ug = mgh</div>
 			<div id="spring-Ug-bar2" class="spring-Ug-bar">&nbsp;</div> -->
 			<div class="center">
-				k = <input id='spring-k-slider2' type="range" step="1" value="10" min="0" max="99" style="width: 157px;">
-				<input id='spring-k2' type="number" min="0" max="99" value=10 step=1 style="width: 50px;">&nbsp;kg/s²
-				<br>
-				m = <input id='spring-m-slider2' type="range" step="0.001" value="1.1139" min="0" max="3" style="width: 175px;">
-				<input id='spring-m2' type="number" min="1" max="999" value=13 step=1 style="width: 50px;">&nbsp;kg
-				<br>
-				dampening = <input id='spring-d-slider2' type="range" step="0.001" value="0" min="0" max="0.05" style="width: 200px;">
+				dampening:&nbsp;&nbsp; off <input id='spring-d-slider2' type="range" step="0.001" value="0" min="0" max="0.03"
+				 style="width: 40px;">
+				on
 			</div>
 
 			<svg class="center" width="330" height="400" id="spring-SVG-2" style="border: 0.5px solid #000; background-color: #f8f8f8;">
+				<!-- <path d="M 255 0 v400 M280 0 v400 M305 0 v400" stroke="#000" stroke-width="1" fill="none" /> -->
 				<g stroke="none">
-					<rect id="spring-KE-bar2" x="255" y="400" height="1000" width="26" fill="#fa96a0" />
-					<rect id="spring-Us-bar2" x="280" y="400" height="1000" width="26" fill="#96d2d2" />
-					<rect id="spring-Ug-bar2" x="304" y="400" height="1000" width="26" fill="#bbb" />
+					<rect id="spring-KE-bar2" x="255" y="400" height="1000" width="25.5" fill="#fa96a0" />
+					<rect id="spring-Us-bar2" x="280" y="400" height="1000" width="25.5" fill="#96d2d2" />
+					<rect id="spring-Ug-bar2" x="305" y="400" height="1000" width="25.5" fill="#abc" />
 				</g>
 				<g stroke="none" transform="rotate(-90)">
 					<text id="spring-KE-text2" x="-390" y="274">KE = ½mv²</text>
 					<text id="spring-Us-text2" x="-390" y="299">Us = ½kx²</text>
 					<text id="spring-Ug-text2" x="-390" y="324">Ug = mgh</text>
 				</g>
-				<circle id="spring-ball-2" cx="150" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
-				<path id="spring-wire-2" d="M 0 0" stroke="#000" fill="transparent" />
-				<rect id="pause2" x="10" y="10" rx="3" ry="3" width="60" height="25" fill="#eee" stroke="#000" />
-				<text id="pause2-text" x="40" y="22.5" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text>
-				<line x1="0" y1="200" x2="248" y2="200" stroke="#666" stroke-width="1" stroke-dasharray="6" />
-				<line id="h-line-2" x1="0" y1="200" x2="248" y2="200" stroke="#666" stroke-width="1" stroke-dasharray="6" />
+				<line x1="4" y1="200" x2="252" y2="200" stroke="#666" stroke-width="1" stroke-dasharray="6" />
+				<line id="h-line-2" x1="4" y1="200" x2="252" y2="200" stroke="#666" stroke-width="1" stroke-dasharray="6" />
 				<text id="x-2" x="10" y="195" stroke="none" text-anchor="left">0 m</text>
 				<text id="h-2" x="10" y="345" stroke="none" text-anchor="left">0 m</text>
+
+				<circle id="spring-ball-2" cx="150" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
+				<path id="spring-wire-2" d="M 0 0" stroke="#000" fill="none" stroke-linejoin="bevel" />
+				<rect id="pause2" x="10" y="10" rx="3" ry="3" width="60" height="25" fill="#eee" stroke="#000" />
+				<text id="pause2-text" x="40" y="22.5" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text>
 			</svg>
 
+			<div class="center">
+				k = <input id='spring-k-slider2' type="range" step="1" value="10" min="0" max="99" style="width: 157px;">
+				<input id='spring-k2' type="number" min="0" max="99" value=10 step=1 style="width: 50px;">&nbsp;kg/s²
+				<br>
+				m = <input id='spring-m-slider2' type="range" step="0.001" value="1.1139" min="0" max="2.699" style="width: 175px;">
+				<input id='spring-m2' type="number" min="1" max="500" value=13 step=1 style="width: 50px;">&nbsp;kg
+			</div>
 			<br>
 			<strong>Example:</strong> How fast is the mass moving at the spring equilibrium (x = 0).
 			<br> Use the default values.
 			<details>
 				<summary>solution</summary>
-				$$\tfrac{1}{2}mv^2 + mgh + \tfrac{1}{2}kx^2$$
 				<p>
 					To start we need to make sure that the gravitational energy and the spring energy use the same variable for
 					height. We will say that the height is zero at the spring equilibrium.
 				</p>
+				$$\tfrac{1}{2}mv^2 + mgh + \tfrac{1}{2}kx^2$$
 				$$\tfrac{1}{2}mv^2 + mg{\color{#f05}x} + \tfrac{1}{2}kx^2$$
 				<p>The first point in time will be when the spring is at equilibrium. Our second point will be when the
 					spring system is at rest at it's lowest point.</p>
-				$$\text{initial}[x = 0, v = ?]$$
-				$$\text{final}[x = 150, v = 0]$$
+				<!-- $$\text{initial:} \quad x = 0 \quad v = \,?$$
+				$$\text{final:}\quad x = 150 \quad v = 0$$ -->
+				$$v_i = \, ? \quad x_i =0 \quad \quad \quad \quad v_f = 0 \quad x_f = 150$$
 				$$\tfrac{1}{2}mv^2 + mgx + \tfrac{1}{2}kx^2 = \tfrac{1}{2}mv^2 + mgx + \tfrac{1}{2}kx^2$$
-				$$\small \tfrac{1}{2}(13)v^2 + (13)(9.8)(0) + \tfrac{1}{2}(10)(0)^2 = \tfrac{1}{2}(13)(0)^2 + (13)(9.8)(150) +
-				\tfrac{1}{2}(10)(150)^2$$
-				$$6.5v^2 + 0 + 0 = 0 + 19110 + 112500$$
-				$$6.5v^2 = 131610$$
-				$$v = 142.3 \tfrac{m}{s}$$
+				$$\tfrac{1}{2}mv^2 = mgx + \tfrac{1}{2}kx^2$$
+				$$\tfrac{1}{2}(13)v^2 = (13)(9.8)(-150) + \tfrac{1}{2}(10)(150)^2$$
+				$$6.5v^2 = -19110 + 112500$$
+				$$6.5v^2 = 93390$$
+				$$v = \pm 119.9 \tfrac{m}{s}$$
 			</details>
 			<br>
 			<strong>Example:</strong> When the dampening is on the spring system slowly settles on a single position. Write an
 			equation to predict that position in terms of the mass and spring constant.
 			<details>
+				<summary>hint</summary>
+				<p>To build the equation, solve Newton's second law for an acceleration of zero.</p>
+			</details>
+			<details>
 				<summary>solution</summary>
-				<p>We can use Newton's second law to build the equation.</p>
 				<div class="col-group">
 					<div>
 						$$\sum F = ma $$
 						$$F_s-F_g = ma $$
 						$$kx-mg = 0 $$
 						$$kx = mg $$
-						$$x = \frac{mg}{k} $$
+						$$\boxed{x = \frac{mg}{k} }$$
 					</div>
 					<div>
 						<svg viewBox="0 -10 300 250" class="on-edge">
@@ -283,8 +335,8 @@
 					</div>
 
 				</div>
-				<p>Is this equation correct? Test it out in the simulation.</p>
-				<div class="col-group">
+				<p>Is this equation correct? Test it out with the simulation.</p>
+				<!-- <div class="col-group">
 					<div>
 						$$x = \frac{(13)(9.8)}{10}$$
 						$$x = 12.7 \, \mathrm{m}$$
@@ -295,18 +347,7 @@
 						$$x = 34.9 \, \mathrm{m}$$
 						<p>This agrees with the simulation.</p>
 					</div>
-				</div>
-
-			</details>
-		</div>
-
-		<div class='example'>
-			<strong>Example:</strong> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your
-			spring has a spring constant of 200.0 kg/s². How fast should the ball be moving right after it leaves the spring?
-			<details>
-				<summary>solution</summary>
-				$$U_{s} = K$$ $$\tfrac{1}{2}kx^{2} = \tfrac{1}{2}mv^{2}$$ $$\tfrac{1}{2}(200)(0.15)^{2} = \tfrac{1}{2}(0.2)v^{2}$$
-				$$22.5 = v^{2}$$ $$\pm 4.74 \, \mathrm{\tfrac{m}{s}} = v$$
+				</div> -->
 			</details>
 		</div>
 

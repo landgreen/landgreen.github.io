@@ -209,6 +209,10 @@ th {
   margin: 8em 0em 8em 0em;
 }
 
+.example-small {
+  margin: 3em 0em 3em 0em;
+}
+
 .derive {
   background-color: #e6f9f0;
   padding: 1.3em;

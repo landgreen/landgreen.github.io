@@ -1,4 +1,4 @@
-var spring = function() {
+var spring = function () {
   var canvas = document.getElementById("canvas1");
   var ctx = canvas.getContext("2d");
   ctx.font = "18px Arial";
@@ -42,7 +42,7 @@ var spring = function() {
     this.u = 0;
     this.lineWidth = 0.5 + Math.sqrt(physics.k) / 3;
     this.fillColor = fillColor;
-    this.draw = function() {
+    this.draw = function () {
       ctx.fillStyle = this.fillColor;
       ctx.shadowColor = "#ccc";
       ctx.beginPath();
@@ -51,7 +51,7 @@ var spring = function() {
       ctx.fill();
       ctx.shadowColor = "transparent";
     };
-    this.drawSpring = function() {
+    this.drawSpring = function () {
       ctx.lineWidth = box.lineWidth;
       ctx.strokeStyle = "black";
       ctx.shadowColor = "#ccc";
@@ -63,13 +63,13 @@ var spring = function() {
       ctx.stroke();
       ctx.shadowColor = "transparent";
     };
-    this.move = function() {
+    this.move = function () {
       this.x += this.Vx;
       this.y += this.Vy;
       this.Vx *= physics.airFriction;
       this.Vy *= physics.airFriction;
     };
-    this.edges = function() {
+    this.edges = function () {
       // if (this.x > canvas.width - this.r) {
       //   this.Vx *= -physics.restitution;
       //   this.x = canvas.width - this.r;
@@ -86,22 +86,22 @@ var spring = function() {
       //   this.y = this.r;
       // }
     };
-    this.gravity = function() {
+    this.gravity = function () {
       this.Vx += physics.gravX;
       this.Vy += physics.gravY;
     };
-    this.spring = function() {
+    this.spring = function () {
       const displacement = (physics.equalibrium - this.x) / 50;
       this.Vx += (physics.k * displacement) / this.mass / 60;
     };
 
-    this.calcEnergy = function() {
+    this.calcEnergy = function () {
       var speed2 = this.Vx * this.Vx + this.Vy * this.Vy;
       this.ke = 0.5 * this.mass * speed2;
       var height = canvas.height - this.r - this.y;
       this.pe = this.mass * physics.gravY * height;
     };
-    this.info = function() {
+    this.info = function () {
       this.calcEnergy();
       //bars
       ctx.fillStyle = "violet";
@@ -121,7 +121,7 @@ var spring = function() {
       //ctx.fillText('Vx = ' + (this.Vx).toFixed(0) + 'm/s', 5, 30);
       //ctx.fillText('Vy = ' + this.Vy.toFixed(1) + 'm/s', 5, 75);
     };
-    this.springInfo = function() {
+    this.springInfo = function () {
       const xScaled = (this.x - 300) / 50;
       var F = -physics.k * xScaled;
       this.u = 0.5 * physics.k * xScaled * xScaled;
@@ -140,7 +140,7 @@ var spring = function() {
       //ctx.fillText('k = ' + (physics.k), 5, canvas.height - 25);
       ctx.fillText("x = " + xScaled.toFixed(1) + " m", 270, canvas.height - 5);
     };
-    this.forceArrow = function() {
+    this.forceArrow = function () {
       //force vector
       var F = (-physics.k * (this.x - physics.equalibrium)) / 50;
       ctx.lineWidth = 2;
@@ -171,7 +171,7 @@ var spring = function() {
   }
   spawn();
 
-  document.getElementById("pause1").addEventListener("click", function() {
+  document.getElementById("pause1").addEventListener("click", function () {
     if (pause) {
       pause = false;
       document.getElementById("pause1").innerHTML = "pause";
@@ -183,7 +183,7 @@ var spring = function() {
   });
 
   //on click move to mouse
-  canvas.addEventListener("mousedown", function(event) {
+  canvas.addEventListener("mousedown", function (event) {
     (box.x = (event.offsetX * canvas.width) / canvas.clientWidth), (box.Vx = 0);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -194,7 +194,7 @@ var spring = function() {
   });
   //get values for spring constant
 
-  document.getElementById("spring-k").addEventListener("input", function() {
+  document.getElementById("spring-k").addEventListener("input", function () {
     physics.k = document.getElementById("spring-k").value;
     box.lineWidth = 0.5 + Math.sqrt(physics.k) / 3;
     // box.Vx = 0;
@@ -207,7 +207,7 @@ var spring = function() {
     }
   });
 
-  document.getElementById("spring-k-slider").addEventListener("input", function() {
+  document.getElementById("spring-k-slider").addEventListener("input", function () {
     physics.k = document.getElementById("spring-k-slider").value;
     box.lineWidth = 0.5 + Math.sqrt(physics.k) / 3;
     // box.Vx = 0;
@@ -233,7 +233,7 @@ var spring = function() {
     }
   }
   //gets values for mass
-  document.getElementById("spring-m").addEventListener("input", function() {
+  document.getElementById("spring-m").addEventListener("input", function () {
     document.getElementById("spring-m-slider").value = document.getElementById("spring-m").value;
     newMass();
   });

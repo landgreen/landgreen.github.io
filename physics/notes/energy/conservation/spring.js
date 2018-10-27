@@ -6,11 +6,11 @@ var spring = function () {
     gravY: 0,
     restitution: 0,
     airFriction: 1,
-    equalibrium: 400,
+    equalibrium: 385,
     width: 590,
-    height: 100,
-    k: 0.5, //document.getElementById("spring-k").value,
-    turns: 3 + 6 * Math.sqrt(0.5)
+    height: 120,
+    k: 0.8,
+    turns: 3 + 6 * Math.sqrt(0.8)
   };
 
   function mass(x, y, Vx, Vy, r, fillColor) {
@@ -33,7 +33,7 @@ var spring = function () {
       document.getElementById("spring-ball").setAttribute("cy", this.y);
     };
     this.drawSpring = function () {
-      let d = `M ${box.x-this.r} 50`;
+      let d = `M ${box.x-this.r} ${physics.height/2}`;
       for (var i = 1; i < physics.turns + 1; i++) {
         d += `L ${(box.x - this.r) * (1 - i / physics.turns)} ${ box.y + (i % 2 === 0 ? 10 : -10)}`;
       }
@@ -75,15 +75,15 @@ var spring = function () {
       //draw energy bars
       document.getElementById("spring-KE-bar").style.width = 100 * (this.ke / E) + "%"
       document.getElementById("spring-Us-bar").style.width = 100 * (this.u / E) + "%"
-      document.getElementById("spring-KE").innerHTML = " KE = ½mv² = " + (this.ke / 1000).toFixed(1) + " kJ"
+      document.getElementById("spring-KE").innerHTML = " K = ½mv² = " + (this.ke / 1000).toFixed(1) + " kJ"
       document.getElementById("spring-Us").innerHTML = " Us = ½kx² = " + (this.u / 1000).toFixed(1) + " kJ"
       document.getElementById("spring-x").innerHTML = "x = " + (this.x - physics.equalibrium).toFixed(0) + " m"
     };
   }
 
-  var box = new mass(230, physics.height / 2, 0, 0, 20, "#bbb");
-  document.getElementById("spring-m").value = Math.round(box.mass);
-  document.getElementById("spring-k").value = physics.k;
+  var box = new mass(230, physics.height / 2, 0, 0, 45, "#bbb");
+  document.getElementById("spring-m-slider").value = document.getElementById("spring-m").value = Math.round(box.mass);
+  document.getElementById("spring-k-slider").value = document.getElementById("spring-k").value = physics.k;
 
   const pauseID = document.getElementById("pause1")
   pauseID.addEventListener("click", () => {
@@ -108,15 +108,13 @@ var spring = function () {
   });
 
 
-
-
-
   //get values for spring constant
   document.getElementById("spring-k").addEventListener("input", () => {
     physics.k = document.getElementById("spring-k").value;
     document.getElementById("spring-k-slider").value = physics.k
     // box.Vx = 0;
     physics.turns = 3 + 6 * Math.sqrt(physics.k);
+    box.springInfo();
     box.drawSpring();
     box.draw();
   });
@@ -125,6 +123,7 @@ var spring = function () {
     document.getElementById("spring-k").value = physics.k
     // box.Vx = 0;
     physics.turns = 3 + 6 * Math.sqrt(physics.k);
+    box.springInfo();
     box.drawSpring();
     box.draw();
   });
@@ -135,6 +134,7 @@ var spring = function () {
     box.mass = document.getElementById("spring-m").value;
     document.getElementById("spring-m-slider").value = box.mass
     box.r = Math.sqrt(box.mass / Math.PI / 0.01);
+    box.springInfo();
     box.drawSpring();
     box.draw();
   });
@@ -142,6 +142,7 @@ var spring = function () {
     box.mass = document.getElementById("spring-m-slider").value;
     document.getElementById("spring-m").value = box.mass
     box.r = Math.sqrt(box.mass / Math.PI / 0.01);
+    box.springInfo();
     box.drawSpring();
     box.draw();
   });
