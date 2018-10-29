@@ -126,6 +126,9 @@
 			<strong>moves vertically</strong>, include gravitational potential energy.</li>
 		<li>If a
 			<strong>spring is compressed</strong>, include spring potential energy.</li>
+		<p>
+			For now we will assume no thermal energy loss, but we will explore it in the next section, thermodynamics.
+		</p>
 
 		<div class='example'>
 			<svg viewBox="-200 0 400 190">
@@ -134,7 +137,7 @@
 				<circle cx="0" cy="128" r="30" stroke-width="1" stroke-dasharray="4" stroke="#000" fill="none" />
 
 				<g transform="translate(0 130) rotate(90)">
-					<line x1="0" y1="0" x2="50" y2="0" stroke="#000" stroke-width="1.5" />
+					<line x1="0" y1="0" x2="50" y2="0" stroke="#000" stroke-width="1.5" stroke-linecap="round" />
 					<polygon points="0,0 -8,5 -8,-5" fill="#000" transform="translate(55 0)" />
 				</g>
 				<text x="-12" y="185" stroke="none" text-anchor="middle">v</text>
@@ -147,7 +150,6 @@
 				<line x1="-500" y1="160" x2="1500" y2="160" stroke="#000" stroke-width="2" />
 			</svg>
 			<strong>Example:</strong> Build a conservation of energy equation for dropping a ball.
-			<br> Assume no energy loss to friction.
 			<details>
 				<summary>solution</summary>
 				<p>This equation only needs to include kinetic and gravitational potential energy.</p>
@@ -157,21 +159,31 @@
 					the final gravitational potential energy to zero.</p>
 				$$U_g = K$$
 				$$mgh = \frac{1}{2}mv^2$$
-				<p>We can divide every term by mass.</p>
-				$$\boxed{gh = \frac{1}{2}v^2}$$
+				$$gh = \frac{1}{2}v^2$$
+				$$\boxed{v^2 = 2gh}$$
+				<p>This energy equation happens to be the same as one of the equations of motion.</p>
+				$$v^2 = u^2 + 2a\Delta x$$
 			</details>
 		</div>
 
 
 		<div class='example'>
-			<strong>Example:</strong> A ball falls from rest off a 0.80 m table. How fast is the ball going just before it hits
-			the ground?
+			<strong>Example:</strong> A ball falls from rest off a 0.80 m table. Before we solve this problem, what final and
+			initial energies can we set to zero?
 			<details>
 				<summary>solution</summary>
-				$$U_g = K$$ $$mgh = \tfrac{1}{2}mv^{2}$$ $$gh = \tfrac{1}{2}v^{2}$$ $$(9.8 \, \mathrm{\tfrac{m}{s^2}})(0.80\,
-				\mathrm{m}) = \tfrac{1}{2}v^{2}$$ $$15.68\, \mathrm{\tfrac{m^2}{s^2}} = v^{2}$$ $$\pm 3.959\, \mathrm{ \tfrac{m}{s}
-				}
-				= v$$
+				<p>The velocity is at rest initially. This means that the initial kinetic energy will be zero as well.</p>
+				<p>We can decided to make height zero at the bottom of the table. This means there is no final gravitational
+					potential energy.</p>
+			</details>
+			<br>How fast is the ball going just before it hits the ground?
+			<details>
+				<summary>solution</summary>
+				$$K_i + U_i = K_f + U_f$$
+				$$0+U_g = K+0$$ $$mgh = \tfrac{1}{2}mv^{2}$$ $$gh = \tfrac{1}{2}v^{2}$$
+				$$(9.8 \, \mathrm{\tfrac{m}{s^2}})(0.80\,\mathrm{m}) = \tfrac{1}{2}v^{2}$$
+				$$15.68\, \mathrm{\tfrac{m^2}{s^2}} = v^{2}$$
+				$$\pm 3.959\, \mathrm{ \tfrac{m}{s} } = v$$
 			</details>
 		</div>
 		<div class='example'>
@@ -195,7 +207,8 @@
 		</div>
 		<div class='example'>
 			<strong>Example:</strong> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your
-			spring has a spring constant of 200.0 kg/s². How high could the ball go just using the energy stored in the spring?
+			spring has a spring constant of 200.0 kg/s². How high could the ball go if the spring energy converted into the
+			motion of the ball with no energy loss?
 			<details>
 				<summary>solution</summary>
 				$$U_{s} = U_{g}$$ $$\tfrac{1}{2}kx^{2} = mgh$$ $$\tfrac{1}{2}(200)(0.15)^{2} =
@@ -204,24 +217,140 @@
 			</details>
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> A roller coaster cart starts at rest 126 m high on the top of the first drop on "Superman:
-			Escape
-			from Krypton"
-			at Six Flags Magic Mountain. How fast is the cart going at the bottom of the hill?
+			<strong>Example:</strong> A roller coaster cart starts at rest 413 ft high on the top of the first drop on
+			"Superman: Escape from Krypton" at Six Flags Magic Mountain. How fast is the cart going at the bottom of the hill?
 			<details>
 				<summary>solution</summary>
+				$$413\,\mathrm{ft} \left(\frac{0.3048 \,\mathrm{m}}{1 \,\mathrm{ft}} \right) = 126 \,\mathrm{m}$$
+				<br>
 				$$U_{g} = K$$ $$mgh = \tfrac{1}{2}mv^{2}$$ $$gh = \tfrac{1}{2}v^{2}$$ $$(9.8)(126) = \tfrac{1}{2}v^{2}$$
-				$$1234.8 = \tfrac{1}{2}v^{2}$$ $$\pm 49.69 \, \mathrm{\tfrac{m}{s}} = v$$
+				$$1230 = \tfrac{1}{2}v^{2}$$ $$\pm 49.6 \, \mathrm{\tfrac{m}{s}} = v$$
+			</details>
+		</div>
+		<div class='example'>
+			<svg viewBox="0 0 400 166">
+				<g stroke-dasharray="4" fill="none" stroke-width="1" stroke="#000">
+					<circle cx="200" cy="0" r="150" stroke="#bbb" />
+					<path d="M 200 0 v150" />
+					<circle cx="200" cy="150" r="15" fill="#fff" />
+					<path d="M 200 2 l105 105" />
+					<circle cx="306" cy="105" r="15" fill="#fff" />
+				</g>
+				<path d="M 200 2 l-129 75" stroke="#000" stroke-width="2" />
+				<circle cx="71" cy="75" r="15" fill="#abc" stroke-width="1.5" stroke="#000" />
+				<g fill="#000" font-size="12px" dominant-baseline="middle">
+					<text x="220" y="160">θ = 90°</text>
+					<text x="326" y="107">θ = 45°</text>
+					<text x="52" y="70" text-anchor="end">θ = 30°</text>
+					<text x="15" y="85">v = 0</text>
+				</g>
+				<path d="M 0 2 h400" stroke="#000" stroke-width="4" />
+			</svg>
+			<strong>Example:</strong> A ball on a 1.0 meter long string is let go at a 30° angle. Calculate the velocity at
+			45° and 90° as it swings back and forth.
+			<details>
+				<summary>convert angles into heights</summary>
+				$$h = (1.0)sin(30) = 0.5 \,\mathrm{m}$$
+				$$h = (1.0)sin(90) = 1\,\mathrm{m}$$
+				$$h = (1.0)sin(45) = 0.71\,\mathrm{m}$$
+				<svg viewBox="0 0 400 166">
+					<g stroke-dasharray="0" fill="none" stroke-width="1" stroke="#000">
+						<circle cx="200" cy="0" r="150" stroke-dasharray="4" stroke="#666" stroke-width="1" />
+						<path d="M 200 0 v150" />
+						<circle cx="200" cy="150" r="3" fill="#fff" />
+
+						<path d="M 200 2 l106 105 v-105" fill="#eee" />
+						<circle cx="306" cy="106" r="3" fill="#fff" />
+
+						<path d="M 200 2 l-129 74 v -75" fill="#eee" />
+						<circle cx="71" cy="75" r="3" fill="#fff" />
+					</g>
+
+					<g fill="#000" font-size="12px" dominant-baseline="middle">
+						<text x="200" y="160" text-anchor="middle">h = -1.00 m</text>
+						<text x="304" y="120">h = -0.71 m</text>
+						<text x="69" y="86" text-anchor="end">h = -0.5 m</text>
+					</g>
+					<path d="M 0 2 h400" stroke="#000" stroke-width="4" />
+				</svg>
+			</details>
+			<details>
+				<summary>solution 90°</summary>
+				$$K_i + U_i = K_f + U_f$$
+				$$U_{gi} = K +U_{gf}$$
+				$$mgh_i = \tfrac{1}{2}mv^2 + mgh_f$$
+				$$gh_i = \tfrac{1}{2}v^2 + gh_f$$
+				$$(9.8)(-0.5) = \tfrac{1}{2}v^2 + (9.8)(-1)$$
+				$$(9.8)(0.5) = \tfrac{1}{2}v^2$$
+				$$3.13 \, \tfrac{m}{s} = v $$
+			</details>
+			<details>
+				<summary>solution 45°</summary>
+				$$K_i + U_i = K_f + U_f$$
+				$$U_{gi} = K +U_{gf}$$
+				$$mgh_i = \tfrac{1}{2}mv^2 + mgh_f$$
+				$$gh_i = \tfrac{1}{2}v^2 + gh_f$$
+				$$(9.8)(-0.5) = \tfrac{1}{2}v^2 + (9.8)(-0.71)$$
+				$$(9.8)(0.21) = \tfrac{1}{2}v^2$$
+				$$2.03 \, \tfrac{m}{s} = v $$
 			</details>
 		</div>
 
 		<div class='example'>
+			<svg class="center" viewBox="0 -20 350 275">
+				<defs>
+					<g id="vector">
+						<line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" stroke-linecap="round" />
+						<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
+					</g>
+				</defs>
+				<!-- <rect x="144" y="250" height="120" width="32" fill="#def" stroke="#000" stroke-width="1.5" /> -->
+				<path d="M 140 150 v 98 h40 v-98" stroke="#666" fill="#eee" stroke-width="6" stroke-linejoin="round" />
+				<!-- <path d="M 124 248 h72" stroke="#999" fill="#eee" stroke-width="1" stroke-dasharray="3" /> -->
+				<g fill="#000" font-size="12px">
+					<text x="185" y="205">x = -0.15 m</text>
+					<text x="185" y="188">v = 0</text>
+
+					<text x="185" y="152">x = 0</text>
+					<text x="185" y="135">v = ?</text>
+
+					<text x="185" y="17">x = ?</text>
+					<text x="185" y="0">v = 0</text>
+				</g>
+				<path d="M 155 200 l15 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3"
+				 stroke="#000" fill="none" stroke-linejoin="bevel" />
+				<circle cx="160" cy="187" r="15" fill="#abc" stroke-width="1.5" stroke="#000" />
+				<circle cx="160" cy="0" r="15" fill="none" stroke-width="1" stroke="#000" stroke-dasharray="4" />
+				<circle cx="160" cy="132" r="15" fill="none" stroke-width="1" stroke="#000" stroke-dasharray="4" />
+				<use xlink:href="#vector" transform='translate(160 132) rotate(-180)' />
+				<!-- <text x="160" y="77" fill="#000" text-anchor="middle">v = ?</text> -->
+
+
+
+				<!-- <rect x="2" y="350" height="20" width="296" fill="#999" stroke="#000" stroke-width="2" /> -->
+			</svg>
 			<strong>Example:</strong> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your
-			spring has a spring constant of 200.0 kg/s². How fast should the ball be moving right after it leaves the spring?
+			spring has a spring constant of 200.0 kg/s².
+			<br><br>How fast should the ball be moving right after it leaves the spring?
 			<details>
 				<summary>solution</summary>
-				$$U_{s} = K$$ $$\tfrac{1}{2}kx^{2} = \tfrac{1}{2}mv^{2}$$ $$\tfrac{1}{2}(200)(0.15)^{2} = \tfrac{1}{2}(0.2)v^{2}$$
-				$$22.5 = v^{2}$$ $$\pm 4.74 \, \mathrm{\tfrac{m}{s}} = v$$
+				<p>If we define h to be zero at the spring equilibrium, then h=x.</p>
+				$$U_s + U_g = K$$
+				$$\tfrac{1}{2}kx^{2} + mgh= \tfrac{1}{2}mv^{2}$$
+				$$\tfrac{1}{2}kx^{2} + mg {\color{#f05}x}= \tfrac{1}{2}mv^{2}$$
+				$$\tfrac{1}{2}(200)(0.15)^{2} + (0.2)(9.8)(-0.15)= \tfrac{1}{2}(0.2)v^{2}$$
+				$$1.956 = 0.1v^{2}$$
+				$$4.42 \, \mathrm{\tfrac{m}{s}} = v$$
+			</details>
+			<br>How high will the ball go?
+			<details>
+				<summary>solution</summary>
+				$$K = U_g$$
+				$$\tfrac{1}{2}mv^{2} = mgh$$
+				<p>We know from the previous question that the total energy is 1.956 J.</p>
+				$$1.956 = (0.20)(9.8)h$$
+				$$1.956 = 1.96h$$
+				$$1.00 \, \mathrm{m} = h$$
 			</details>
 		</div>
 
@@ -279,8 +408,9 @@
 				</p>
 				$$\tfrac{1}{2}mv^2 + mgh + \tfrac{1}{2}kx^2$$
 				$$\tfrac{1}{2}mv^2 + mg{\color{#f05}x} + \tfrac{1}{2}kx^2$$
-				<p>The first point in time will be when the spring is at equilibrium. Our second point will be when the
-					spring system is at rest at it's lowest point.</p>
+				<p>The initial energy will be when the spring and height are at equilibrium (x&nbsp;=&nbsp;0). The final energy
+					will
+					be at the lowest point, when the spring is at rest (v&nbsp;=&nbsp;0).</p>
 				<!-- $$\text{initial:} \quad x = 0 \quad v = \,?$$
 				$$\text{final:}\quad x = 150 \quad v = 0$$ -->
 				$$v_i = \, ? \quad x_i =0 \quad \quad \quad \quad v_f = 0 \quad x_f = 150$$
@@ -316,13 +446,15 @@
 									<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
 								</g>
 								<g id="box">
-									<rect x="0" y="0" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fff " />
+									<rect x="0" y="0" width="80" height="80" style="stroke:black;stroke-width:2;fill:#abc " />
 									<text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="23px">m</text>
 								</g>
 							</defs>
 							<!-- <rect x="0" y="150" width="600" height="500" fill="#bcd" stroke="none" /> -->
 							<!-- <line x1="0" y1="150" x2="600" y2="150" stroke="#000" stroke-width="2" /> -->
-							<use x='110' y='70' xlink:href="#box" />
+							<!-- <use x='110' y='70' xlink:href="#box" /> -->
+							<circle id="spring-ball" cx="150" cy="110" r="40" fill="#bbb" stroke-width="2" stroke="#000" />
+							<text x="150" y="110" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="23px">m</text>
 							<use xlink:href="#vector" transform='translate(150 70) rotate(-180)' />
 							<text x="150" y="13" text-anchor="middle" fill="#000" font-size="21px">F
 								<tspan font-size="0.7em" dy="5" dx="-5">s</tspan>
