@@ -229,7 +229,21 @@
 		</div>
 
 		<div class='example'>
-			<svg viewBox="0 0 700 300" style="background-color: #f9f9f9;">
+			<style>
+				@keyframes dash {
+					to {
+						stroke-dashoffset: 0;
+					}
+				}
+				.roller-coaster:hover {
+					stroke: #f04;
+					stroke-dasharray: 1000;
+					stroke-dashoffset: 1000;
+					animation: dash 5s ease-in forwards;
+					stroke-linecap: round;
+				}
+				</style>
+			<svg viewBox="0 0 700 300" style="background-color: #f8f8f8;">
 				<g stroke="#bbb" stroke-dasharray="0.5,24,0.5,0" stroke-width="1000">
 					<line x1="0" y1="500" x2="1000" y2="500" />
 					<line x1="500" y1="0" x2="500" y2="1000" />
@@ -237,6 +251,10 @@
 				<!-- https://codepen.io/anthonydugois/pen/mewdyZ -->
 				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="#fff"
 				 stroke-width="4" stroke="#000" />
+
+				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="#fff"
+				 class="roller-coaster" stroke-width="7" stroke="none" />
+
 				<g fill="#f04" stroke="none">
 					<circle cx="25" cy="50" r="8" />
 					<circle cx="291" cy="283" r="8" />
@@ -250,31 +268,31 @@
 					<text x="675" y="225">D</text>
 				</g>
 			</svg>
-			<strong>Example:</strong> A frictionless roller coster starts from rest at point A. What is the velocity of the
-			roller coster at points B, C, and D. Assume each grid square is 10&nbsp;m x 10&nbsp;m.
+			<strong>Example:</strong> A frictionless roller coaster starts from rest at point A. What is the velocity of the
+			roller coaster at points B, C, and D. Assume each grid square is 10&nbsp;m x 10&nbsp;m.
 			<details>
 				<summary>solution</summary>
-				<p>We can ignore the mass of the coaster since it doesn't matter when dealing with only gravitational energy and
-					kinetic energy.</p>
+				<p>Conservation of energy for gravitational and kinetic energy is independent of mass. I'll choose the
+					mass to be 1 kg.</p>
 				$$\text{point A}$$
-				$$E_A = \cancel{m}gh$$
-				$$E_A = (9.8)(100)$$
+				$$E_A = mgh$$
+				$$E_A = (1)(9.8)(100)$$
 				$$E_A = 980 \, \mathrm{J}$$
 				<p>Now we can set the energy at point A equal to the energy at points B,C,D.</p>
 				$$\text{point B}$$
 				$$E_A = E_B$$
-				$$980 = \cancel{m}gh + \tfrac{1}{2}\cancel{m}v^2$$
-				$$980 = (9.8)(8) + \tfrac{1}{2}v^2$$
+				$$980 = mgh + \tfrac{1}{2}mv^2$$
+				$$980 = (1)(9.8)(8) + \tfrac{1}{2}(1)v^2$$
 				$$980 - 78.4 = \tfrac{1}{2}v^2$$
 				$$1803.2 = v^2$$
 				$$v = 42.5 \, \mathrm{\tfrac{m}{s}}$$
 				<br>
 				$$\text{point C}$$
-				$$980 = (9.8)(47) + \tfrac{1}{2}v^2$$
+				$$980 = (1)(9.8)(47) + \tfrac{1}{2}(1)v^2$$
 				$$v = 32.2 \, \mathrm{\tfrac{m}{s}}$$
 				<br>
 				$$\text{point D}$$
-				$$980 = (9.8)(20) + \tfrac{1}{2}v^2$$
+				$$980 = (1)(9.8)(20) + \tfrac{1}{2}(1)v^2$$
 				$$v = 39.6 \, \mathrm{\tfrac{m}{s}}$$
 			</details>
 		</div>
