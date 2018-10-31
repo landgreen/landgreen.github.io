@@ -138,7 +138,7 @@
 
 				<g transform="translate(0 130) rotate(90)">
 					<line x1="0" y1="0" x2="50" y2="0" stroke="#000" stroke-width="1.5" stroke-linecap="round" />
-					<polygon points="0,0 -8,5 -8,-5" fill="#000" transform="translate(55 0)" />
+					<polygon points="0,0 -8,4  -7,0 -8,-4" fill="#000" transform="translate(55 0)" />
 				</g>
 				<text x="-12" y="185" stroke="none" text-anchor="middle">v</text>
 
@@ -252,7 +252,7 @@
 				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="#fff"
 				 stroke-width="4" stroke="#000" />
 
-				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="#fff"
+				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="rgba(0,0,0,0)"
 				 class="roller-coaster" stroke-width="7" stroke="none" />
 
 				<g fill="#f04" stroke="none">
@@ -327,15 +327,15 @@
 				$$h = (1.0)sin(90) = 1\,\mathrm{m}$$
 				$$h = (1.0)sin(45) = 0.71\,\mathrm{m}$$
 				<svg viewBox="0 0 400 166">
-					<g stroke-dasharray="0" fill="none" stroke-width="1" stroke="#000">
+					<g fill="none" stroke-width="1" stroke="#000">
 						<circle cx="200" cy="0" r="150" stroke-dasharray="4" stroke="#666" stroke-width="1" />
 						<path d="M 200 0 v150" />
 						<circle cx="200" cy="150" r="3" fill="#fff" />
 
-						<path d="M 200 2 l106 105 v-105" fill="#eee" />
+						<path d="M 200 2 l106 105 v-105 v11 h-10 v-11" fill="#eee" />
 						<circle cx="306" cy="106" r="3" fill="#fff" />
 
-						<path d="M 200 2 l-129 74 v -75" fill="#eee" />
+						<path d="M 200 2 l-129 74 v -75 v12 h10 v-12" fill="#eee" />
 						<circle cx="71" cy="75" r="3" fill="#fff" />
 					</g>
 
@@ -343,6 +343,9 @@
 						<text x="200" y="160" text-anchor="middle">h = -1.00 m</text>
 						<text x="304" y="120">h = -0.71 m</text>
 						<text x="69" y="86" text-anchor="end">h = -0.5 m</text>
+
+						<text x="217" y="13">45°</text>
+						<text x="160" y="13">30°</text>
 					</g>
 					<path d="M 0 2 h400" stroke="#000" stroke-width="4" />
 				</svg>
