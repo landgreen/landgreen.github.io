@@ -2,10 +2,10 @@
 <html lang="en-US">
 
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
 
         function gtag() {
             dataLayer.push(arguments);
@@ -14,98 +14,134 @@
         gtag('config', 'UA-113454647-1');
     </script>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#222" />
-    <meta name="description" content="Arduino based projects">
-    <meta name="author" content="Ross Landgreen">
-    <meta property="og:description" content="Arduino based projects">
-    <meta property="og:title" content="Arduino Projects">
-    <meta name="twitter:title" content="Arduino Projects">
-    <meta name="twitter:description" content="Arduino based projects">
-    <title>Arduino Projects</title>
-    <link rel='shortcut icon' href='../physics/media/favicon.ico' type='image/x-icon' />
-    <link rel="stylesheet" type="text/css" href="../physics/style.css">
-    <link href="prism.css" rel="stylesheet" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#222" />
+  <meta name="description" content="Arduino based projects">
+  <meta name="author" content="Ross Landgreen">
+  <meta property="og:description" content="Arduino based projects">
+  <meta property="og:title" content="Arduino Projects">
+  <meta name="twitter:title" content="Arduino Projects">
+  <meta name="twitter:description" content="Arduino based projects">
+  <title>Arduino Projects</title>
+  <link rel='shortcut icon' href='../physics/media/favicon.ico' type='image/x-icon' />
+  <link rel="stylesheet" type="text/css" href="../physics/style.css">
+  <link href="prism.css" rel="stylesheet" />
 
 </head>
 
 <body>
-    <header>
-        <h1>Arduino Projects</h1>
-    </header>
-    <article>
-        <p>This page has information about my electronics projects using the Arduino microcontroller. </p>
+  <header>
+    <h1>Arduino Projects</h1>
+  </header>
+  <article>
+    <p>This page has information about my electronics projects using the Arduino microcontroller. </p>
 
-        <h1 class='underlined'>The Floor is Lava</h1>
-        <p>This project makes shoes that light up when you apply force to your heal.</p>
+    <h1 class='underlined'>Lava Shoes</h1>
+    <p>
+      A pressure sensor in the heel of the shoes controls the number of LEDs that light up with an Arduino
+      microcontroller. I used these for my Halloween costume, called "The floor is lava".
+    </p>
+    <p>
+      <a href="https://photos.app.goo.gl/egKJhWRKJrZuTyK29">walking video 1</a>
+      <br><a href="https://photos.app.goo.gl/WeLShuqNnBxzpxVq7">walking video 2</a>
+    </p>
 
-        <details>
-            <summary>Arduino Code</summary>
-            <h1><a href="ardunio\lavashoes.ino">lavashoes.ino</a></h1>
-            <pre><code class="language-arduino">#include &lt;Adafruit_NeoPixel.h&gt;
-  // Analog input pin for potentiometer
-  const int analogInPin = A11;
-  const int NUM_LEDS = 23;
-  const int PIN  = 9;
-  const int WAIT = 10;
-  const int THRESHOLD = 65;
-  
-  Adafruit_NeoPixel strip =
-    Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);
-  
-  int sensorValue = 0; // value read from the pot
-  float stripLength = 0;
-  int color[NUM_LEDS][3];
-  
-  void setup() {
-    // initialize serial communications at 9600 bps:
-    Serial.begin(9600);
-    digitalWrite(analogInPin, HIGH);
-    strip.begin();
-    strip.show(); // Initialize all pixels to 'off'
-      
-    // set up colors array
-    for (uint16_t i = 0; i &lt; NUM_LEDS; i++) {
-      color[i][0] = 255;
-      color[i][1] = 0;
-      color[i][2] = 0;
-    }
-  }
+    <p>
+      <li>a pair of shoes</li>
+      <li>duct tape</li>
+      <li>Adafruit FLORA - Wearable electronic platform: Arduino-compatible</li>
+      <li>ALITOVE 16.4FT 300 Pixels WS2812B Programmable Addressable LED Strip</li>
+      <li>velostat: ADAFRUIT INDUSTRIES 1361 Accessory Type:Conductive Sheet</li>
+      <li>thin non-insulated copper wire</li>
+      <li>Adafruit 328 Battery, Lithium Ion Polymer, 3.7V, 2500mAh</li>
+      <li>Adafruit Micro Lipo w/MicroUSB Jack - USB LiIon/LiPoly charger</li>
+      <li>Soldering required</li>
+    </p>
 
-  void fireColors() {
+    <img src="lavashoes.jpg" width="600">
+
+    <!-- <details>
+      <summary>Arduino Code</summary> -->
+    <p>The lights are LED strips controlled by an Arduino Flora using the <a href="https://learn.adafruit.com/adafruit-neopixel-uberguide/the-magic-of-neopixels">NeoPixels</a>
+      library. The flora probably isn't the best microcontroller for this project, but I had them on hand, and they
+      worked great.</p>
+
+    <p>
+      The project is powered by a 3.7V 2500mA Lithium battery that lasted all day with out fading color. I tested a
+      1200mAh current battery and it also worked fine. I used a small
+      charger to that took about 8 hours to charge off my computer's USB.
+    </p>
+
+    <p>The project reads the sensorValue from a <a href="https://www.google.com/search?q=velostat">velostat</a> with a
+      wire on each side. As pressure is applied, the velostat changes conductivity. These values are a bit jerky so
+      they get smoothed out with by only adding 10% of the new value to the old. value = value * 0.9 + newValue * 0.1;
+    </p>
+
+    <p>
+      The lava colors are stored in an array as just red. To make yellow sparks, green LEDs randomly light up and fade
+      out.
+    </p>
+
+    <a href="https://github.com/landgreen/arduino/tree/master/lavashoes">Github - lavashoes.ino</a>
+    <!-- <h1><a href="ardunio\lavashoes.ino">lavashoes.ino</a></h1> -->
+    <pre><code class="language-arduino">#include &lt;Adafruit_NeoPixel.h&gt;
+
+const int analogInPin = A11;  // A11 is called #12 on the Flora
+const int NUM_LEDS = 30;
+const int PIN  = 9;
+const int WAIT = 10;
+// adjust SENSITIVITY first, then adjust LED_OFFSET until no LEDs light up with no pressure
+const int SENSITIVITY = 160;  // smaller means less lights,  bigger means more lights
+const int LED_OFFSET = 56;  // adjust this to remove LEDs that stay lit up after changing sensitivity
+
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);
+
+int sensorValue = 0;
+float stripLength = 0;
+int color[NUM_LEDS][3];
+
+void setup() {
+  // Serial.begin(9600);
+  digitalWrite(analogInPin, HIGH);
+  strip.begin();
+  strip.show();
+
+  // set up colors array as red
   for (uint16_t i = 0; i &lt; NUM_LEDS; i++) {
-    // yellow spark
-    if (random(400) == 0 ) {
-      color[i][1] = 150;
-    } else {
-      //green fade out
-      if (color[i][1] > 10) {
-        color[i][1] -= 3;
-      } else {
-        color[i][1] = 0;
-      }
-    }
+    color[i][0] = 255;
+    color[i][1] = 0;
+    color[i][2] = 0;
   }
-}        
+}
 
 void loop() {
   // read the analog in value:
   sensorValue = analogRead(analogInPin);
-  // print the results to the serial monitor:
   // Serial.print("sensor = " );
   // Serial.println(sensorValue);
 
-  // smoothing
-  stripLength = stripLength * 0.9  +
-    (THRESHOLD * NUM_LEDS / sensorValue - 11) * 0.1;
-  // light up full strip for testing
-  // stripLength = NUM_LEDS;
+  // smooth the sensorValue and scale to number of LEDs
+  stripLength = stripLength * 0.9 +
+    (SENSITIVITY * NUM_LEDS / sensorValue - LED_OFFSET) * 0.1;
+  //  stripLength = NUM_LEDS;//light up full strip for testing
 
-  fireColors();
+  // green spark
+  for (uint16_t i = 0; i &lt; NUM_LEDS; i++) {
+    if (random(400) == 0 ) {
+      color[i][1] = 125;
+    } else if (color[i][1] &gt; 1) {
+      //green fade out
+      color[i][1] -= 2;
+    } else {
+      color[i][1] = 0;
+    }
+  }
+  //light up LEDs up to stripLength
   for (uint16_t i = 0; i &lt; stripLength; i++) {
     strip.setPixelColor(i, color[i][0], color[i][1], color[i][2]);
   }
+  //turn off the rest of the LEDs
   for (uint16_t i = stripLength; i &lt; NUM_LEDS; i++) {
     strip.setPixelColor(i, 0, 0, 0);
   }
@@ -113,30 +149,15 @@ void loop() {
   delay(WAIT);
 }
        </code></pre>
-        </details>
+    <!-- </details> -->
 
-
-        <h1 class='underlined'>Infinity Box</h1>
-        <h1 class='underlined'>Tron: Lightcycles</h1>
-
-
-
-
-    </article>
-
-
-    <!-- <pre><code class="language-javascript">&lt;canvas id="canvas-pong"&gt;&lt;/canvas&gt;</code></pre> -->
-    <!-- <pre><code class="language-css">canvas {
-border: 1px solid grey;
-margin: auto;
-display: block;
-}</code></pre> -->
-
-
-    <div class='back'>
-        <!-- <a href="../index.html">Back</a> -->
-    </div>
-    <script src="prism.js"></script>
+    <!-- <h1 class='underlined'>Infinity Box</h1>
+    <h1 class='underlined'>Tron: Lightcycles</h1> -->
+  </article>
+  <div class='back'>
+    <!-- <a href="../index.html">Back</a> -->
+  </div>
+  <script src="prism.js"></script>
 </body>
 
 </html>
