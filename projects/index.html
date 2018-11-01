@@ -39,13 +39,16 @@
 
     <h1 class='underlined'>Lava Shoes</h1>
     <p>
-      A pressure sensor in the heel of the shoes controls the number of LEDs that light up with an Arduino
-      microcontroller. I used these for my Halloween costume, called "The floor is lava".
+      A pressure sensor in the heel of the shoes controls the number of LEDs that light up. I used these shoes for my
+      "The floor is lava" Halloween costume.
     </p>
+    <p>Inspired by these <a href="https://learn.adafruit.com/firewalker-led-sneakers/overview">firewalker-led-sneakers</a>.</p>
+
     <p>
-      <a href="https://photos.app.goo.gl/egKJhWRKJrZuTyK29">walking video 1</a>
-      <br><a href="https://photos.app.goo.gl/WeLShuqNnBxzpxVq7">walking video 2</a>
+      <a href="https://photos.app.goo.gl/egKJhWRKJrZuTyK29">video1</a>
+      <br> <a href="https://photos.app.goo.gl/WeLShuqNnBxzpxVq7">video2</a>
     </p>
+    <img src="lavashoes.jpg" width="600">
 
     <p>
       <li>a pair of shoes</li>
@@ -59,33 +62,30 @@
       <li>Soldering required</li>
     </p>
 
-    <img src="lavashoes.jpg" width="600">
-
-    <!-- <details>
-      <summary>Arduino Code</summary> -->
     <p>The lights are LED strips controlled by an Arduino Flora using the <a href="https://learn.adafruit.com/adafruit-neopixel-uberguide/the-magic-of-neopixels">NeoPixels</a>
       library. The flora probably isn't the best microcontroller for this project, but I had them on hand, and they
       worked great.</p>
-
     <p>
       The project is powered by a 3.7V 2500mA Lithium battery that lasted all day with out fading color. I tested a
-      1200mAh current battery and it also worked fine. I used a small
-      charger to that took about 8 hours to charge off my computer's USB.
+      1200mAh current battery and it also worked fine. I bought a small microUSB charger board that worked well with
+      the battery.
     </p>
-
-    <p>The project reads the sensorValue from a <a href="https://www.google.com/search?q=velostat">velostat</a> with a
-      wire on each side. As pressure is applied, the velostat changes conductivity. These values are a bit jerky so
-      they get smoothed out with by only adding 10% of the new value to the old. value = value * 0.9 + newValue * 0.1;
+    <p>The project reads the sensorValue from a <a href="https://www.google.com/search?q=velostat">velostat</a> with
+      a wire on each side. As pressure is applied, the velostat changes conductivity. These values from the sensor
+      dance around, so they get smoothed out with by only adding 10% of the new value to the old. (value = value * 0.9
+      +
+      newValue * 0.1;)
     </p>
-
     <p>
-      The lava colors are stored in an array as just red. To make yellow sparks, green LEDs randomly light up and fade
-      out.
+      The lava colors are stored in an array as just red. To make yellow sparks, green LEDs randomly light up and
+      fade out.
     </p>
 
     <a href="https://github.com/landgreen/arduino/tree/master/lavashoes">Github - lavashoes.ino</a>
     <!-- <h1><a href="ardunio\lavashoes.ino">lavashoes.ino</a></h1> -->
-    <pre><code class="language-arduino">#include &lt;Adafruit_NeoPixel.h&gt;
+    <details>
+      <summary>Code</summary>
+      <pre><code class="language-arduino">#include &lt;Adafruit_NeoPixel.h&gt;
 
 const int analogInPin = A11;  // A11 is called #12 on the Flora
 const int NUM_LEDS = 30;
@@ -149,7 +149,7 @@ void loop() {
   delay(WAIT);
 }
        </code></pre>
-    <!-- </details> -->
+    </details>
 
     <!-- <h1 class='underlined'>Infinity Box</h1>
     <h1 class='underlined'>Tron: Lightcycles</h1> -->
