@@ -6,7 +6,6 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-
         function gtag() {
             dataLayer.push(arguments);
         }
@@ -32,7 +31,7 @@
 
 <body>
   <header>
-    <h1>Arduino Projects</h1>
+    <h1><a href="../index.html">Arduino Projects</a></h1>
   </header>
   <article>
     <p>This page has information about my electronics projects using the Arduino microcontroller. </p>
@@ -40,28 +39,12 @@
     <h1 class='underlined'>Lava Shoes</h1>
     <p>
       A pressure sensor in the heel of the shoes controls the number of LEDs that light up. I used these shoes for my
-      "The floor is lava" Halloween costume.
+      "The floor is lava" Halloween costume. This project was inspired by these <a href="https://learn.adafruit.com/firewalker-led-sneakers/overview">firewalker-led-sneakers</a>.
     </p>
-    <p>Inspired by these <a href="https://learn.adafruit.com/firewalker-led-sneakers/overview">firewalker-led-sneakers</a>.</p>
-
-    <p>
-      <a href="https://photos.app.goo.gl/egKJhWRKJrZuTyK29">video1</a>
-      <br> <a href="https://photos.app.goo.gl/WeLShuqNnBxzpxVq7">video2</a>
+    <p class="center">
+      <a href="https://photos.app.goo.gl/egKJhWRKJrZuTyK29">video1</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://photos.app.goo.gl/WeLShuqNnBxzpxVq7">video2</a>
     </p>
     <img src="lavashoes.jpg" width="600">
-
-    <p>
-      <li>a pair of shoes</li>
-      <li>duct tape</li>
-      <li>Adafruit FLORA - Wearable electronic platform: Arduino-compatible</li>
-      <li>ALITOVE 16.4FT 300 Pixels WS2812B Programmable Addressable LED Strip</li>
-      <li>velostat: ADAFRUIT INDUSTRIES 1361 Accessory Type:Conductive Sheet</li>
-      <li>thin non-insulated copper wire</li>
-      <li>Adafruit 328 Battery, Lithium Ion Polymer, 3.7V, 2500mAh</li>
-      <li>Adafruit Micro Lipo w/MicroUSB Jack - USB LiIon/LiPoly charger</li>
-      <li>Soldering required</li>
-    </p>
-
     <p>The lights are LED strips controlled by an Arduino Flora using the <a href="https://learn.adafruit.com/adafruit-neopixel-uberguide/the-magic-of-neopixels">NeoPixels</a>
       library. The flora probably isn't the best microcontroller for this project, but I had them on hand, and they
       worked great.</p>
@@ -73,18 +56,28 @@
     <p>The project reads the sensorValue from a <a href="https://www.google.com/search?q=velostat">velostat</a> with
       a wire on each side. As pressure is applied, the velostat changes conductivity. These values from the sensor
       dance around, so they get smoothed out with by only adding 10% of the new value to the old. (value = value * 0.9
-      +
-      newValue * 0.1;)
+      + newValue * 0.1;)
     </p>
     <p>
       The lava colors are stored in an array as just red. To make yellow sparks, green LEDs randomly light up and
       fade out.
     </p>
-
-    <a href="https://github.com/landgreen/arduino/tree/master/lavashoes">Github - lavashoes.ino</a>
+    <details>
+      <summary>materials:</summary>
+      <li>a pair of shoes</li>
+      <li>duct tape</li>
+      <li>Adafruit FLORA - Wearable electronic platform: Arduino-compatible</li>
+      <li>ALITOVE 16.4FT 300 Pixels WS2812B Programmable Addressable LED Strip</li>
+      <li>velostat: ADAFRUIT INDUSTRIES 1361 Accessory Type:Conductive Sheet</li>
+      <li>thin non-insulated copper wire</li>
+      <li>Adafruit 328 Battery, Lithium Ion Polymer, 3.7V, 2500mAh</li>
+      <li>Adafruit Micro Lipo w/MicroUSB Jack - USB LiIon/LiPoly charger</li>
+      <li>Soldering required</li>
+    </details>
     <!-- <h1><a href="ardunio\lavashoes.ino">lavashoes.ino</a></h1> -->
     <details>
-      <summary>Code</summary>
+      <summary>code</summary>
+      <a href="https://github.com/landgreen/arduino/tree/master/lavashoes">Github - lavashoes.ino</a>
       <pre><code class="language-arduino">#include &lt;Adafruit_NeoPixel.h&gt;
 
 const int analogInPin = A11;  // A11 is called #12 on the Flora
@@ -151,8 +144,363 @@ void loop() {
        </code></pre>
     </details>
 
-    <!-- <h1 class='underlined'>Infinity Box</h1>
-    <h1 class='underlined'>Tron: Lightcycles</h1> -->
+    <h1 class='underlined'>Tron: Lightcycles</h1>
+    <p>
+      This project reproduces the tron lightcycles game. Each player controls a line of color that moves through the
+      grid. If a player hits a location that is already lit up they die. The players will move 4x faster if the
+      joysticks are pressed in.
+    </p>
+    <p>After building the project I mounted it on plexiglass with screws and hotglue.</p>
+    <p class="center">
+      <a href="https://photos.app.goo.gl/VFGDnRwknKMFZLBY9">video1</a>
+    </p>
+    <p>The game state is stored in a 2D array of 16 x 16. The array is checked to see if a player will collide after
+      each move.</p>
+    <p>The 16 x 16 LED matrix is organized in a zig zag pattern. I wrote a function that converts to the zigzag
+      pattern.
+      The NeoPixel library is used to send the final signal to light up each LED.
+    </p>
+
+    <details>
+      <summary>more pictures:</summary>
+      <!-- <img src="lightcycle1.jpg" width="600"> -->
+      <img src="lightcycle2.jpg" width="600">
+      <img src="lightcycle3.jpg" width="600">
+    </details>
+    <details>
+      <summary>materials:</summary>
+      <li>Arduino Uno microcontroller</li>
+      <li>flexible 16 x 16 NeoPixel RGB LED Matrix</li>
+      <li>Arduino <a href="https://www.arduino.cc/en/Tutorial/JoyStick">Joy Stick</a> </li>
+      <li>1 small breadboard</li>
+      <li>jumper wires (male => female and male => male)</li>
+    </details>
+
+
+    <details>
+      <summary>code</summary>
+      <a href="https://github.com/landgreen/arduino/blob/master/lightcycle/lightcycle.ino">Github - lightcycle.ino</a>
+      <pre><code class="language-arduino">#include &lt;Adafruit_NeoPixel.h&gt;
+
+const int WAIT = 250;         // how many cycles to look for player joystick input
+const int LEDPIN = 6;         // pin for LEDS
+const int SWITCH_PIN_1 = 2;   // pin for P1 switch
+const int SWITCH_PIN_2 = 4;   // pin for P2 switch
+const int NUM_LEDS = 256;     // 16x16 = 256
+const int BRIGHTNESS = 30;     // 0-100 LED brightness
+
+//player 1 is blue
+//player 2 is orange
+
+int p1[2] = {8, -1};  //player location
+int p2[2] = {8, 16};   //player location
+int p1Input[2] = {0, 0};
+int p2Input[2] = {0, 0};
+int p1Velocity[2] = {0, -1};
+int p2Velocity[2] = {0, 1};
+bool isP1Move = true;
+bool isP2Move = true;
+
+// locations where the players have been
+bool on[16][16] = {
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+};
+
+// Parameter 1 = number of pixels in strip
+// Parameter 2 = pin number (most are valid)
+// Parameter 3 = pixel type flags, add together as needed:
+//   NEO_KHZ800  800 KHz bitstream (most NeoPixel products w/WS2812 LEDs)
+//   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
+//   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
+//   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, LEDPIN, NEO_GRB + NEO_KHZ800);
+
+void setup() {
+  Serial.begin(9600);
+  //activate pull-up resistor on the push-button pin
+  pinMode(SWITCH_PIN_1, INPUT_PULLUP);
+  pinMode(SWITCH_PIN_2, INPUT_PULLUP);
+  strip.setBrightness(BRIGHTNESS);
+  strip.begin();
+  for (int i = 0; i &lt; NUM_LEDS; i += 4) {
+    for (int j = 0; j &lt; 4; j++) {
+      strip.setPixelColor(i + j, 255,50, 0);
+      strip.setPixelColor(NUM_LEDS - i - j, 0, 150, 200);
+    }
+    strip.show();
+  }
+  // clear all pixels
+  for (int i = 0; i &lt; NUM_LEDS; i++) {
+    strip.setPixelColor(i, 0, 0, 0);
+  }
+  strip.show();
+}
+
+void loop() {
+  isP1Move = true;
+  isP2Move = true;
+  for (int i = 0; i &lt; 4; i++) {
+    //player moves extra if button is down
+    if (!digitalRead(SWITCH_PIN_1)) {
+      isP1Move = true;
+      Serial.print(1);
+      Serial.println();
+    }
+    if (!digitalRead(SWITCH_PIN_2)) {
+      isP2Move = true;
+      Serial.print(2);
+      Serial.println();
+    }
+    if (isP1Move) P1Move();
+    if (isP2Move) P2Move();
+    playerJoystickInput(); //extra check for player input to smooth control sensing
+    playerCollisions();
+    updateGameState();
+    drawPlayers();
+
+    //check for player input
+    for (int i = 0; i &lt; WAIT; i++) {
+      playerJoystickInput(); //consider placing playerJoystickInput() in more places in the loop to get more twitch response
+    }
+  }
+}
+
+void updateGameState() {
+  on[p1[0]][p1[1]] = true;
+  on[p2[0]][p2[1]] = true;
+}
+
+void playerJoystickInput() {
+  //read input from game controllers
+  int p1x = map(analogRead(0), 0, 1023, -3, 4);
+  int p1y = map(analogRead(1), 0, 1023, -3, 4);
+  int p2x = map(analogRead(2), 0, 1023, -3, 4);
+  int p2y = map(analogRead(3), 0, 1023, -3, 4);
+
+  // log the input if it is not zero
+  if (!(p1x == 0 && p1y == 0)) {
+    p1Input[0] = p1x;
+    p1Input[1] = p1y;
+  }
+  if (!(p2x == 0 && p2y == 0)) {
+    p2Input[0] = p2x;
+    p2Input[1] = p2y;
+  }
+}
+
+void P1Move() {
+  // change player velocity from inputs
+  // don't let player go backwards and die
+  if (p1Input[0] &gt; 0 && p1Velocity[0] != -1) {
+    p1Velocity[0] = 1;
+    p1Velocity[1] = 0;
+  } else if (p1Input[0] &lt; 0 && p1Velocity[0] != 1) {
+    p1Velocity[0] = -1;
+    p1Velocity[1] = 0;
+  } else if (p1Input[1] &gt; 0 && p1Velocity[1] != -1) {
+    p1Velocity[1] = 1;
+    p1Velocity[0] = 0;
+  } else if (p1Input[1] &lt; 0 && p1Velocity[1] != 1) {
+    p1Velocity[1] = -1;
+    p1Velocity[0] = 0;
+  }
+
+  //move player 1
+  p1[0] += p1Velocity[0];
+  p1[1] += p1Velocity[1];
+
+  //edge around the world
+  if (p1[0] &lt; 0) {
+    p1[0] = 15;
+  } else if (p1[0] &gt; 15) {
+    p1[0] = 0;
+  }
+  if (p1[1] &lt; 0) {
+    p1[1] = 15;
+  } else if (p1[1] &gt; 15) {
+    p1[1] = 0;
+  }
+}
+
+void P2Move() {
+  // change player velocity from inputs
+  // don't let player go backwards and die
+  if (p2Input[0] &gt; 0 && p2Velocity[0] != -1) {
+    p2Velocity[0] = 1;
+    p2Velocity[1] = 0;
+  } else if (p2Input[0] &lt; 0  && p2Velocity[0] != 1) {
+    p2Velocity[0] = -1;
+    p2Velocity[1] = 0;
+  } else if (p2Input[1] &gt; 0  && p2Velocity[1] != -1) {
+    p2Velocity[1] = 1;
+    p2Velocity[0] = 0;
+  } else if (p2Input[1] &lt; 0  && p2Velocity[1] != 1) {
+    p2Velocity[1] = -1;
+    p2Velocity[0] = 0;
+  }
+
+  //move player 2
+  p2[0] += p2Velocity[0];
+  p2[1] += p2Velocity[1];
+
+  //edge around the world
+  if (p2[0] &lt; 0) {
+    p2[0] = 15;
+  } else if (p2[0] &gt; 15) {
+    p2[0] = 0;
+  }
+  if (p2[1] &lt; 0) {
+    p2[1] = 15;
+  } else if (p2[1] &gt; 15) {
+    p2[1] = 0;
+  }
+}
+
+void playerCollisions() {
+  //check for player + player tip collision
+  if (p1[0] == p2[0] && p1[1] == p2[1]) {
+    tie();
+  }
+  //check for player1 + wall collision
+  if (isP1Move && on[p1[0]][p1[1]]) {
+    p2Wins();
+  }
+  //check for player2 + wall collision
+  if (isP2Move && on[p2[0]][p2[1]]) {
+    p1Wins();
+  }
+  //reset player moved to false
+  isP1Move = false;
+  isP2Move = false;
+}
+
+void p1Wins() {
+  if (isP1Move && on[p1[0]][p1[1]]) {
+    tie();
+  }
+  //  Serial.println("p1/blue wins!");
+  //  GameStateDump();
+  strip.setBrightness(20);
+  FillEmpty(0, 15, 20);
+  ZigZagPixel(p2[0], p2[1], 255, 255, 255);
+  strip.show();
+
+  endGame();
+}
+
+void p2Wins() {
+  if (isP2Move && on[p2[0]][p2[1]]) {
+    tie();
+  }
+  //  Serial.println("p2/orange, wins!");
+  //  GameStateDump();
+  strip.setBrightness(20);
+  FillEmpty(25, 15, 0);
+  ZigZagPixel(p1[0], p1[1], 255, 255, 255);
+  strip.show();
+  endGame();
+}
+
+void tie() {
+  //  Serial.println("tie game");
+  //  GameStateDump();
+  strip.setBrightness(20);
+  FillEmpty(15, 15, 15);
+  ZigZagPixel(p1[0], p1[1], 255, 255,255);
+  strip.show();
+  endGame();
+}
+
+void drawPlayers() {
+  //draw players
+  ZigZagPixel(p1[0], p1[1], 0, 150, 200);
+  ZigZagPixel(p2[0], p2[1], 255,50, 0);
+  strip.show();
+}
+
+void ZigZagPixel(int x, int y, int r, int g, int b) {
+  if (y % 2) {
+    strip.setPixelColor(y * 16 + x, r, g,  b);
+  } else {
+    strip.setPixelColor(y * 16 + 15 - x, r, g,  b);
+  }
+}
+
+void getZigZagPixel(int x, int y) {
+  if (y % 2) {
+    Serial.println(strip.getPixelColor(y * 16 + x) );
+  } else {
+    Serial.println(strip.getPixelColor(y * 16 + 15 - x));
+  }
+}
+
+void GameStateDump() {
+  for (int i = 0; i &lt; 16; i++) {
+    for (int j = 0; j &lt; 16; j++)
+    {
+      Serial.print(on[j][i]);
+      Serial.print(",");
+    }
+    Serial.println();
+  }
+  Serial.print("p1 = ");
+  Serial.print(p1[0]);
+  Serial.print(", ");
+  Serial.print(p1[1]);
+  Serial.println();
+  Serial.print("p2 = ");
+  Serial.print(p2[0]);
+  Serial.print(", ");
+  Serial.print(p2[1]);
+  Serial.println();
+  Serial.print("p1 Velocity = ");
+  Serial.print(p1Velocity[0]);
+  Serial.print(", ");
+  Serial.print(p1Velocity[1]);
+  Serial.println();
+  Serial.print("p2 Velocity = ");
+  Serial.print(p2Velocity[0]);
+  Serial.print(",");
+  Serial.print(p2Velocity[1]);
+  Serial.println();
+  Serial.println();
+}
+
+void FillEmpty(int r, int g, int b) {
+  for (int i = 0; i &lt; 16; i++) {
+    for (int j = 0; j &lt; 16; j++)
+    {
+      if (!on[i][j]) {
+        ZigZagPixel(i, j, r, g, b);
+      }
+    }
+  }
+}
+
+void(* resetFunc) (void) = 0; //declare reset function @ address 0
+void endGame() {
+  delay(5000);
+  resetFunc();  //call reset
+}
+         </code></pre>
+    </details>
+    <h1 class='underlined'>Infinity Box</h1>
+    <p>Coming soon, probably.</p>
   </article>
   <div class='back'>
     <!-- <a href="../index.html">Back</a> -->
