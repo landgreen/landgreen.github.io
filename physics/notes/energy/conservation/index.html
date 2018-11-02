@@ -572,18 +572,64 @@
 
 			<br> <br><strong>Investigation:</strong> What is the value of the spring constant?
 			<br> Use Newton's second law to find the solution.
-			<!-- <details>
+			<details>
 				<summary>solution</summary>
-			</details> -->
+				<p>Add a known mass to the hook and click stop to get the velocity and acceleration to zero. We need to solve a
+					Newton's second law equation.</p>
+				$$\sum F = ma$$
+				$$kx-mg = ma$$
+				$$kx-mg = 0$$
+				$$kx=mg$$
+				$$k=\frac{mg}{x}$$
+				<p>We can read mass and gravity directly from the simulation. We can measure the displacement with the ruler. This
+					is easier if you check the displacement box in the top right.</p>
+				$$m=0.100 \,\mathrm{kg} \quad g=9.8\,\mathrm{\tfrac{m}{s^2}} \quad x=0.17\,\mathrm{m} $$
+				$$k=\frac{(0.100)(9.8)}{0.17}$$
+				$$k=5.8 \, \mathrm{\tfrac{kg}{s^2}}$$
+			</details>
 			<br><br><strong>Investigation:</strong> What is the value of the spring constant?
 			<br> Use conservation of energy to find the solution.
-			<!-- <details>
+			<details>
 				<summary>solution</summary>
-			</details> -->
+				<p>Conservation of energy requires two different moments in time. This simulation makes velocity impossible to
+					measure, so we must choose two moments where v=0.</p>
+				<p>Place the 100 kg mass on the hook and let it get exactly at the point of spring equilibrium. This is easier if
+					you check the displacement box in the top right.</p>
+				<p>Point two will be at the bottom of the springs drop. Make sure dampening is off so we don't lose energy to heat.</p>
+				$$K_i + U_{gi} + U_{si} = K_f + U_{gf} + U_{sf}$$
+				<p>The velocity is zero at both moments. If we define height to be zero at the spring equilibrium, then both
+					potential energies are zero at the start.</p>
+				$$0 = U_g + U_s$$
+				$$0 = mgx + \tfrac{1}{2}kx^2$$
+				$$0 = mg + \tfrac{1}{2}kx$$
+				$$-\tfrac{1}{2}kx = mg$$
+				$$k=\frac{-2mg}{x}$$
+				<p>We can read mass and gravity directly from the simulation. We can measure the displacement with the ruler. This
+					is easier if you check the displacement box in the top right. Also slow motion and pause help.</p>
+				$$m=0.100 \,\mathrm{kg} \quad g=9.8\,\mathrm{\tfrac{m}{s^2}} \quad x=34\,\mathrm{m} $$
+				$$k=\frac{-2(0.100)(9.8)}{34}$$
+				$$k=5.8 \, \mathrm{\tfrac{kg}{s^2}}$$
+			</details>
 			<br><br><strong>Investigation:</strong> Calculate the mass of the red and blue weights.
 			<details>
 				<summary>solution</summary>
-
+				<p>We can just reuse our method for getting the spring constant, but with an unknown mass. The force method seems a
+					bit faster, so I'll use that here.</p>
+				$$k=\frac{mg}{x}$$
+				$$m=\frac{kx}{g}$$
+				<p>Place each mas on the hook with dampening on high and measure how much it displaces the spring.</p>
+				<div class="col-group">
+					<div>
+						$$\text{blue mass}$$
+						$$m=\frac{(5.8)(0.38)}{(9.8)}$$
+						$$m=224\, \mathrm{kg}$$
+					</div>
+					<div>
+						$$\text{red mass}$$
+						$$m=\frac{(5.8)(0.61)}{(9.8)}$$
+						$$m=361\, \mathrm{kg}$$
+					</div>
+				</div>
 			</details>
 		</div>
 
