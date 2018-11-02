@@ -59,6 +59,42 @@
 			<p>The graph above shows the distribution of kinetics energy for particles at various temperatures.
 			</p>
 		</div>
+		<h1 class='underlined'>Heat</h1>
+		<p><strong>Heat</strong> is energy leaving a system. A system doesn't "have" heat, it has internal energy. When
+			energy leaves a system we call the exiting energy heat.</p>
+		<svg viewBox="0 0 200 102">
+			<rect x="15" y="2" width="80" height="80" fill="#f50" />
+			<rect x="95" y="2" width="80" height="80" fill="#58f" />
+			<g transform="translate(69 90) rotate(0)">
+				<line x1="0" y1="0" x2="50" y2="0" stroke="#000" stroke-width="1.5" stroke-linecap="round" />
+				<polygon points="0,0 -8,4  -7,0 -8,-4" fill="#000" transform="translate(55 0)" />
+			</g>
+			<text x="97" y="102" stroke="none" font-size="10" text-anchor="middle">heat</text>
+			<!-- <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
+						<line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#000" />
+	
+						<path d="M1 0 v80 h500" fill="none" />
+						<text x="130" y="40" stroke="none" text-anchor="middle">k = 250 kg/s²</text>
+						<text x="290" y="40" stroke="none" text-anchor="middle">U = 20 J</text>
+						<path stroke-linejoin="round" d="M0 55 l 15 10 l 15 -10 l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 5 -5"
+							fill="none" />
+						<g transform="translate(230,90)">
+							<line x1="0" y1="0" x2="120" y2="0" />
+							<line x1="0" y1="-5" x2="0" y2="5" />
+							<line x1="120" y1="-5" x2="120" y2="5" />
+							<text x="60" y="19" stroke="none" text-anchor="middle">x = ?</text>
+						</g>
+	
+						<rect x="350" y="30" width="50" height="50" fill="#09d" />
+						
+					</g> -->
+		</svg>
+		<p>
+			When two systems with different temperatures are put in contact they will exchange heat until they reach the same
+			temperature. Heat flows from high temperature systems into low temperature systems.
+			<!-- This principle is called <strong>The Zeroeth Law of Thermodynamics</strong>. -->
+		</p>
+
 
 		<h1 class='underlined'>Energy Loss and Gain in a System</h1>
 		<br>
@@ -78,13 +114,14 @@
 					unless
 					some energy enters or leaves the system we are tracking.</p>
 				<p>Turn friction on and observe what happens.</p>
-				<br>
+
 				<p>The kinetic energy gradually leaves the ball. We describe energy that leaves a system as <strong>heat</strong>.
 					Heat can leave in many forms, often heat leaves a system as thermal energy. Thermal energy is the kinetic energy
 					of many particles at a microscopic scale.</p>
 			</div>
 		</div>
-		<p>So the internal energy of a system is always conserved, unless energy leaves or enters. We
+		<p>So the internal energy of a system is always <a href="https://www.youtube.com/watch?v=4b8ZsFszE8I">conserved</a>,
+			unless energy leaves or enters. We
 			call energy leaving the system heat and energy entering work.</p>
 		<div class='definition'>
 			<p>The
@@ -98,7 +135,7 @@
 		</div>
 
 		<div class='example'>
-			<b>Example:</b> Compressing a volume of gas does 100 J of work, but at the same time the gas
+			<strong>Example:</strong> Compressing a volume of gas does 100 J of work, but at the same time the gas
 			<strong>losses</strong> 200 J of heat to the surroundings. What is the change in the internal energy of the gas?
 			Will the gas increase or decrease in temperature?
 			<details>
@@ -108,42 +145,71 @@
 			</details>
 		</div>
 
-		<b>Example:</b> A 0.43 kg soccer ball kicked at 10 m/s rolls down a 30 m tall hill. We already solved this problem
-		and got
-		a final velocity of 26.2 m/s for the ball.
-		<br>
-		<br>When actually performing the experiment we found at the bottom of the hill the ball only has a speed of 20.0 m/s.
-		Calculate
-		the energy loss for the ball. How could the ball have lost energy?
-		<details>
-			<summary>solution</summary>
-			$$\text{energy difference = calculated - experimental}$$ $$\Delta E = \tfrac{1}{2}mv^{2} - \tfrac{1}{2}mv^{2}$$
-			$$\Delta
-			E = \tfrac{1}{2}(0.43)(26.2)^{2} - \tfrac{1}{2}(0.43)(20.0)^{2}$$ $$\Delta E = 147.6\, \mathrm{J} - 86\,
-			\mathrm{J}$$
-			$$\Delta E = 61.6 \, \mathrm{J}$$ $$\text{The energy loss was probably from friction.}$$
-		</details>
+		<p>
+			We can add the concepts of heat and work to our conservation of energy equations to keep track of energy entering
+			and leaving a system. A Q or W added to the final side means that energy has left the system. A Q or W on the
+			initial side represents energy added to the system.
+		</p>
+		$$K_i + U_i = K_f + U_f + Q_f$$
+
+		<div class='example'>
+			<strong>Example:</strong>
+			<details>
+				<summary>solution</summary>
+
+			</details>
 		</div>
+		<div class='example'>
+			<strong>Example:</strong> A 0.43 kg soccer ball kicked at 10 m/s rolls down a 30 m tall hill. We already solved this
+			problem and got a final velocity of 26.2 m/s for the ball.
+			<br>
+			<br>When actually performing the experiment we found at the bottom of the hill the ball only has a speed of 20.0
+			m/s. Calculate the heat that left the ball as if rolled down the hill.
+			<details>
+				<summary>solution</summary>
+				$$K_i + U_i = K_f + Q_f$$
+				$$\tfrac{1}{2}mu^2 + mgh_i = \tfrac{1}{2}mv^2 + Q_f$$
+				$$\tfrac{1}{2}(0.43)(10.0)^2 + (0.43)(9.8)(30) = \tfrac{1}{2}(0.43)(20)^2 + Q_f$$
+				$$55.47 \,\mathrm{J} = Q_f$$
+			</details>
+		</div>
+
+		<!-- <div class='example'>
+			<strong>Example:</strong> A 0.43 kg soccer ball kicked at 10 m/s rolls down a 30 m tall hill. We already solved this
+			problem
+			and got a final velocity of 26.2 m/s for the ball.
+			<br>
+			<br>When actually performing the experiment we found at the bottom of the hill the ball only has a speed of 20.0
+			m/s.
+			Calculate the energy loss for the ball. How could the ball have lost energy?
+			<details>
+				<summary>solution</summary>
+				$$\text{energy difference = calculated - experimental}$$ $$\Delta E = \tfrac{1}{2}mv^{2} - \tfrac{1}{2}mv^{2}$$
+				$$\Delta E = \tfrac{1}{2}(0.43)(26.2)^{2} - \tfrac{1}{2}(0.43)(20.0)^{2}$$
+				$$\Delta E = 147.6\, \mathrm{J} - 86\, \mathrm{J}$$
+				$$\Delta E = 61.6 \, \mathrm{J}$$
+				$$\text{The energy loss was probably from friction.}$$
+			</details>
+		</div> -->
+
+
 		<h1 class='underlined' id="entropy">Entropy</h1>
 		<p>
 			<strong>Entropy</strong> is hard to define because different fields use the term to describe slightly different
 			ideas. The definitions
 			of entropy are all loosely centered around disorder. A high entropy system of particles is not organized. A low
-			entropy
-			system is very orderly, but how do you measure order?
+			entropy system is very orderly, but how do you measure order?
 		</p>
 		<p>
 			Well, order is whatever you decide. Often order is defined as a concentration of temperature, pressure, volume, or
-			density.
-			Many of these concentrations are able to do
+			density. Many of these concentrations are able to do
 			<a href="../../energy/energy/index.html#work">work</a>. In the simulation below, the work we want done is rotating
 			the rotor. What state of the system would make the
 			rotor turn?
 		</p>
 		<p>
 			Click the clear button to remove the particles. Click inside the simulation to add some particles. Try to place the
-			particles
-			in a state that will turn the rotor.
+			particles in a state that will turn the rotor.
 		</p>
 		<canvas class='center' id='entropy1' height='300' width='600'> </canvas>
 		<div class="flex-grid-thirds">
@@ -164,11 +230,10 @@
 		</div>
 		<p>
 			The system is in high entropy when the particles are evenly spread out. If your system gets in this state, adjust
-			the slider
-			to power the rotor from an external power source. The spinning rotor lowers entropy and puts the system back in a
-			state
-			that can do work.
+			the slider to power the rotor from an external power source. The spinning rotor lowers entropy and puts the system
+			back in a state that can do work.
 		</p>
+
 		<p>
 			<a href="https://en.wikipedia.org/wiki/Entropy">Entropy</a> plays an important role in thermochemistry, heat
 			transfer, and information theory.</p>
@@ -207,37 +272,31 @@
 		</p>
 		<p>
 			The laws of physics are time reversible. Nature behaves the same moving forwards or backwards in time. The only
-			exception
-			is entropy.
+			exception is entropy.
 		</p>
 		<div class="definition">
-			The second law of thermodynamics states that entropy of an isolated system doesn't decrease over time.
+			The <strong>second law of thermodynamics</strong> states that entropy of an isolated system doesn't decrease over
+			time.
 		</div>
 		<p>
 			The second law is true for all the different formulations of entropy. As time moves forward entropy either increases
-			or stays
-			the same. Over time things spread out and move towards a balanced equilibrium. These high entropy states have less
-			ability
-			to do work.
+			or stays the same. Over time things spread out and move towards a balanced equilibrium. These high entropy states
+			have less ability to do work.
 		</p>
 		<p>
 			A human body as a thermodynamic system keeps it's ability to do work by adding low entropy substances, like food,
-			oxygen,
-			and water. We also lower our entropy by releasing high entropy substances, like carbon dioxide, urine, and feces.
+			oxygen, and water. We also lower our entropy by releasing high entropy substances, like carbon dioxide, urine, and
+			feces.
 		</p>
 		<p>
 			The Earth can be viewed as a thermodynamic system. As time goes on the energy density of Earth spreads out and loses
-			the
-			ability to do work. But the Earth isn't isolated. Low entropy light from the sun is added to our system and lowers
-			our
-			entropy. High entropy infrared light exits our system as the Earth cools.
+			the ability to do work. But the Earth isn't isolated. Low entropy light from the sun is added to our system and
+			lowers our entropy. High entropy infrared light exits our system as the Earth cools.
 		</p>
 		<p>
 			Inside the Sun, nuclear fusion converts hydrogen into helium and heat. Heat in the form of light strikes the Earth.
-			Sunlight
-			is a low entropy source that is harnessed by plants to produce work. We are able to order our world because the
-			system
-			of Earth is able to get work out of sunlight.
+			Sunlight is a low entropy source that is harnessed by plants to produce work. We are able to order our world because
+			the system of Earth is able to get work out of sunlight.
 		</p>
 
 

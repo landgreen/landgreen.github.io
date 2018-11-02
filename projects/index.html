@@ -77,7 +77,7 @@
     <!-- <h1><a href="ardunio\lavashoes.ino">lavashoes.ino</a></h1> -->
     <details>
       <summary>code</summary>
-      <a href="https://github.com/landgreen/arduino/tree/master/lavashoes">Github - lavashoes.ino</a>
+      <h3><a href="https://github.com/landgreen/arduino/tree/master/lavashoes">Github - lavashoes.ino</a></h3>
       <pre><code class="language-arduino">#include &lt;Adafruit_NeoPixel.h&gt;
 
 const int analogInPin = A11;  // A11 is called #12 on the Flora
@@ -154,6 +154,7 @@ void loop() {
     <p class="center">
       <a href="https://photos.app.goo.gl/VFGDnRwknKMFZLBY9">video1</a>
     </p>
+    <img src="lightcycle0.jpg" width="600">
     <p>The game state is stored in a 2D array of 16 x 16. The array is checked to see if a player will collide after
       each move.</p>
     <p>The 16 x 16 LED matrix is organized in a zig zag pattern. I wrote a function that converts to the zigzag
@@ -163,23 +164,24 @@ void loop() {
 
     <details>
       <summary>more pictures:</summary>
-      <!-- <img src="lightcycle1.jpg" width="600"> -->
       <img src="lightcycle2.jpg" width="600">
       <img src="lightcycle3.jpg" width="600">
     </details>
     <details>
       <summary>materials:</summary>
-      <li>Arduino Uno microcontroller</li>
-      <li>flexible 16 x 16 NeoPixel RGB LED Matrix</li>
-      <li>Arduino <a href="https://www.arduino.cc/en/Tutorial/JoyStick">Joy Stick</a> </li>
-      <li>1 small breadboard</li>
-      <li>jumper wires (male => female and male => male)</li>
+      <p>
+        <li>Arduino Uno microcontroller</li>
+        <li>flexible 16 x 16 NeoPixel RGB LED Matrix</li>
+        <li>Arduino <a href="https://www.arduino.cc/en/Tutorial/JoyStick">Joy Stick</a> </li>
+        <li>1 small breadboard</li>
+        <li>jumper wires (male => female and male => male)</li>
+      </p>
     </details>
 
 
     <details>
       <summary>code</summary>
-      <a href="https://github.com/landgreen/arduino/blob/master/lightcycle/lightcycle.ino">Github - lightcycle.ino</a>
+      <h3><a href="https://github.com/landgreen/arduino/blob/master/lightcycle/lightcycle.ino">Github - lightcycle.ino</a></h3>
       <pre><code class="language-arduino">#include &lt;Adafruit_NeoPixel.h&gt;
 
 const int WAIT = 250;         // how many cycles to look for player joystick input
