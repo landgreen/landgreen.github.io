@@ -708,7 +708,7 @@ const b = {
     {
       name: "wave beam",
       ammo: 0,
-      ammoPack: 200,
+      ammoPack: 160,
       have: false,
       fire: function () {
         mech.fireCDcycle = game.cycle + 4; // cool down
