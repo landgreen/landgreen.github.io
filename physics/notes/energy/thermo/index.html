@@ -60,35 +60,32 @@
 			</p>
 		</div>
 		<h1 class='underlined'>Heat</h1>
-		<p><strong>Heat</strong> is energy leaving a system. A system doesn't "have" heat, it has internal energy. When
-			energy leaves a system we call the exiting energy heat.</p>
-		<svg viewBox="0 0 200 102">
-			<rect x="15" y="2" width="80" height="80" fill="#f50" />
-			<rect x="95" y="2" width="80" height="80" fill="#58f" />
+		<p><strong>Heat</strong> is energy leaving a system. A system doesn't "have" heat, it has internal energy, which is
+			called heat only as it exits the system. </p>
+		<style>
+			.fade {
+				transition: fill 4s ease-out;
+			}
+		</style>
+		<svg viewBox="0 0 200 102" id="heat">
+			<rect id="fade1" class="fade" x="15" y="2" width="81" height="80" fill="#f20" />
+			<rect id="fade2" class="fade" x="95" y="2" width="80" height="80" fill="#08f" />
 			<g transform="translate(69 90) rotate(0)">
 				<line x1="0" y1="0" x2="50" y2="0" stroke="#000" stroke-width="1.5" stroke-linecap="round" />
 				<polygon points="0,0 -8,4  -7,0 -8,-4" fill="#000" transform="translate(55 0)" />
 			</g>
 			<text x="97" y="102" stroke="none" font-size="10" text-anchor="middle">heat</text>
-			<!-- <g font-size="19" stroke="#000" fill="#000" stroke-width="2">
-						<line x1="230" y1="0" x2="230" y2="80" stroke-dasharray="4,4" stroke="#000" />
-	
-						<path d="M1 0 v80 h500" fill="none" />
-						<text x="130" y="40" stroke="none" text-anchor="middle">k = 250 kg/s²</text>
-						<text x="290" y="40" stroke="none" text-anchor="middle">U = 20 J</text>
-						<path stroke-linejoin="round" d="M0 55 l 15 10 l 15 -10 l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 15 -10l 15 10 l 5 -5"
-							fill="none" />
-						<g transform="translate(230,90)">
-							<line x1="0" y1="0" x2="120" y2="0" />
-							<line x1="0" y1="-5" x2="0" y2="5" />
-							<line x1="120" y1="-5" x2="120" y2="5" />
-							<text x="60" y="19" stroke="none" text-anchor="middle">x = ?</text>
-						</g>
-	
-						<rect x="350" y="30" width="50" height="50" fill="#09d" />
-						
-					</g> -->
 		</svg>
+		<script>
+			document.getElementById('heat').addEventListener('mouseover', function() {
+				document.getElementById("fade1").setAttribute("fill", "#bbb");
+				document.getElementById("fade2").setAttribute("fill", "#bbb");
+			});
+			document.getElementById('heat').addEventListener('mouseout', function() {
+				document.getElementById("fade1").setAttribute("fill", "#f20");
+				document.getElementById("fade2").setAttribute("fill", "#08f");
+			});
+		</script>
 		<p>
 			When two systems with different temperatures are put in contact they will exchange heat until they reach the same
 			temperature. Heat flows from high temperature systems into low temperature systems.
@@ -102,6 +99,19 @@
 			<div>
 				<br>&nbsp;
 				<canvas id="canvas0" width='250' height='445' onclick="particles(this)"> </canvas>
+				<!-- <svg viewBox="0 0 250 445" id="energy-SVG" style="border: 0.5px solid #000; background-color: #f8f8f8; margin: 30px;">
+					<g stroke="none">
+						<rect id="spring-KE-bar2" x="255" y="400" height="1000" width="25.5" fill="#fa96a0" />
+						<rect id="spring-Ug-bar2" x="305" y="400" height="1000" width="25.5" fill="#abc" />
+					</g>
+					<g stroke="none" transform="rotate(-90)">
+						<text id="spring-KE-text" x="-390" y="274">KE = ½mv²</text>
+						<text id="spring-Ug-text" x="-390" y="324">Ug = mgh</text>
+					</g>
+					<circle id="spring-ball-2" cx="150" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
+					<rect id="pause" x="10" y="10" rx="3" ry="3" width="60" height="25" fill="#eee" stroke="#000" />
+					<text id="pause-text" x="40" y="22.5" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text>
+				</svg> -->
 				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<button id="pause">pause</button>&nbsp;&nbsp;&nbsp;
 				<button id="energy">friction: OFF</button>
@@ -145,26 +155,18 @@
 			</details>
 		</div>
 
-		<p>
-			We can add the concepts of heat and work to our conservation of energy equations to keep track of energy entering
-			and leaving a system. A Q or W added to the final side means that energy has left the system. A Q or W on the
-			initial side represents energy added to the system.
-		</p>
-		$$K_i + U_i = K_f + U_f + Q_f$$
-
 		<div class='example'>
-			<strong>Example:</strong>
-			<details>
-				<summary>solution</summary>
-
-			</details>
-		</div>
-		<div class='example'>
-			<strong>Example:</strong> A 0.43 kg soccer ball kicked at 10 m/s rolls down a 30 m tall hill. We already solved this
-			problem and got a final velocity of 26.2 m/s for the ball.
+			<p>
+				We can add the concepts of heat and work to our conservation of energy equations to keep track of energy entering
+				and leaving a system. A Q or W added to the final side means that energy has left the system. A Q or W on the
+				initial side represents energy added to the system.
+			</p>
+			$$K_i + U_i = K_f + U_f + Q_f$$
+			<br> <strong>Example:</strong> A 0.43 kg soccer ball, kicked at 10 m/s, rolls down a 30 m tall hill. If there was no
+			energy loss, the ball would have a final velocity of 26.2 m/s.
 			<br>
-			<br>When actually performing the experiment we found at the bottom of the hill the ball only has a speed of 20.0
-			m/s. Calculate the heat that left the ball as if rolled down the hill.
+			<br>When actually performing the experiment we found the ball only has a speed of 20.0 m/s a the bottom. Calculate
+			the heat that left the ball as if rolled down the hill.
 			<details>
 				<summary>solution</summary>
 				$$K_i + U_i = K_f + Q_f$$
@@ -174,24 +176,73 @@
 			</details>
 		</div>
 
-		<!-- <div class='example'>
-			<strong>Example:</strong> A 0.43 kg soccer ball kicked at 10 m/s rolls down a 30 m tall hill. We already solved this
-			problem
-			and got a final velocity of 26.2 m/s for the ball.
-			<br>
-			<br>When actually performing the experiment we found at the bottom of the hill the ball only has a speed of 20.0
-			m/s.
-			Calculate the energy loss for the ball. How could the ball have lost energy?
+		<div class='example'>
+			<svg viewBox="80 0 500 285">
+				<g transform="translate(210 110)" style="stroke:#666;stroke-width:1">
+					<line x1="0" y1="10" x2="-80" y2="10" />
+					<line x1="0" y1="20" x2="-125" y2="20" />
+					<line x1="0" y1="60" x2="-115" y2="60" />
+					<line x1="0" y1="70" x2="-65" y2="70" />
+					<line x1="0" y1="80" x2="-90" y2="80" />
+				</g>
+				<rect x="0" y="190" width="800" height="110" fill="#bcd" />
+				<g stroke="#000" stroke-width="2" fill="none">
+					<path d="M0 190 h800" />
+					<path d="M292 208 v10 v-10 v5 h200 v5 v-10 " stroke-width="1.5" />
+				</g>
+				<rect x="210" y="110" width="80" height="80" style="stroke:black;stroke-width:2;fill:#fff" />
+
+				<line x1="250" y1="110" x2="250" y2="55" style="stroke:black;stroke-width:2" />
+				<polygon points="0,0 -6,12 0,10 6,12" transform='translate(250 50)' style="fill:black;" />
+
+				<line x1="250" y1="190" x2="250" y2="245" style="stroke:black;stroke-width:2" />
+				<polygon points="0,0 -6,12 0,10 6,12" transform='translate(250 250) rotate(180)' style="fill:black;" />
+
+				<line x1="210" y1="150" x2="175" y2="150" style="stroke:black;stroke-width:2" />
+				<polygon points="0,0 -6,12 0,10 6,12" transform='translate(170 150) rotate(-90)' style="fill:black;" />
+
+				<g fill="black" stroke="none" font-size="17px">
+					<text x="245" y="45">F
+						<tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+					</text>
+					<text x="150" y="156">F
+						<tspan font-size="0.7em" dy="5" dx="-5">k</tspan>
+					</text>
+					<text x="245" y="267">F
+						<tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+					</text>
+					<text x="385" y="208">Δx</text>
+					<text x="292" y="235" text-anchor="start">v = 30 m/s</text>
+					<text x="492" y="235" text-anchor="end">v = 0</text>
+					<text x="250" y="150" text-anchor="middle" dominant-baseline="middle">2000 kg</text>
+				</g>
+			</svg>
+			<strong>Example:</strong> A 2000 kg car moving at 30 m/s skids to a stop on level ground. How much heat left the
+			car's wheels and entered the road?
 			<details>
 				<summary>solution</summary>
-				$$\text{energy difference = calculated - experimental}$$ $$\Delta E = \tfrac{1}{2}mv^{2} - \tfrac{1}{2}mv^{2}$$
-				$$\Delta E = \tfrac{1}{2}(0.43)(26.2)^{2} - \tfrac{1}{2}(0.43)(20.0)^{2}$$
-				$$\Delta E = 147.6\, \mathrm{J} - 86\, \mathrm{J}$$
-				$$\Delta E = 61.6 \, \mathrm{J}$$
-				$$\text{The energy loss was probably from friction.}$$
+				$$K_i + U_i = K_f + U_f + Q_f$$
+				$$K = Q$$
+				$$\tfrac{1}{2}mv^2 = Q$$
+				$$\tfrac{1}{2}(2000)(30)^2 = Q$$
+				$$900000 \, \mathrm{J} = Q$$
 			</details>
-		</div> -->
+			<br>
+			<strong>Example:</strong> If the coefficient of kinetic friction is 0.7, how far did the car skid? Think of the heat
+			as <a href="..\energy\index.html#work">work</a> done by the <a href="..\..\force\friction\index.html#kinetic">friction
+				force</a>.
+			<details>
+				<summary>solution</summary>
+				$$W=F\Delta x$$
+				$$Q=F_k\Delta x$$
+				$$Q=F_N\mu_k\Delta x$$
+				$$Q=mg\mu_k\Delta x$$
+				$$\Delta x = \frac{Q}{mg\mu_k}$$
+				$$\Delta x = \frac{900000}{(2000)(9.8)(0.7)}$$
+				$$\Delta x = 65.6\,\mathrm{m}$$
 
+			</details>
+		</div>
 
 		<h1 class='underlined' id="entropy">Entropy</h1>
 		<p>
