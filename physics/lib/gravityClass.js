@@ -23,14 +23,12 @@ class Particle {
 
   static spawnRandom(who, canvas, len = 1) {
     for (let i = 0; i < len; ++i) {
-      who[who.length] = new Particle(
-        {
+      who[who.length] = new Particle({
           x: 30 + Math.random() * (canvas.width - 60),
           y: 30 + Math.random() * (canvas.height - 60)
         },
         30 + Math.floor(Math.random() * 220),
-        0,
-        {
+        0, {
           x: Math.random() - 0.5,
           y: Math.random() - 0.5
         }
@@ -520,9 +518,8 @@ class Particle {
       [0x00, 0x00, 0x8c],
       [0x00, 0x00, 0x88]
     ];
-
     let imgData = ctx.createImageData(canvas.width, canvas.height);
-    for (var i = 0; i < imgData.data.length; i += 8) {
+    for (var i = 0; i < imgData.data.length; i += 4) {
       const x = (i / 4) % canvas.width;
       const y = Math.floor(i / 4 / canvas.width);
       let mag = 0;
@@ -531,19 +528,11 @@ class Particle {
         const dy = who[j].position.y - y;
         mag -= who[j].mass / (Math.sqrt(dx * dx + dy * dy) + 1);
       }
-      let hue = Math.min(Math.max(Math.round(256 - mag * fieldMag), 0), 255);
-      // imgData.data[i + 0] = chromaBytes[hue][0]; // red
-      // imgData.data[i + 1] = chromaBytes[hue][1]; // green
-      // imgData.data[i + 2] = chromaBytes[hue][2]; // blue
-      // imgData.data[i + 3] = 255; // alpha
-
-      for (let k = 0; k < 8; k += 4) {
-        //make pixels bigger, is this really worth it?
-        imgData.data[i + k + 0] = chromaBytes[hue][0]; // red
-        imgData.data[i + k + 1] = chromaBytes[hue][1]; // green
-        imgData.data[i + k + 2] = chromaBytes[hue][2]; // blue
-        imgData.data[i + k + 3] = 255; // alpha
-      }
+      const hue = Math.min(Math.max(Math.round(256 - mag * fieldMag), 0), 255);
+      imgData.data[i + 0] = chromaBytes[hue][0]; // red
+      imgData.data[i + 1] = chromaBytes[hue][1]; // green
+      imgData.data[i + 2] = chromaBytes[hue][2]; // blue
+      imgData.data[i + 3] = 255; // alpha
     }
     ctx.putImageData(imgData, 0, 0);
   }
