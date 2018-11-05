@@ -101,6 +101,11 @@ var canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 document.body.style.backgroundColor = "#fff";
 
+//disable pop up menu on right click
+document.oncontextmenu = function () {
+  return false;
+}
+
 function setupCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -126,7 +131,8 @@ window.onmousemove = function (e) {
 
 //normal mouse click events
 window.onmousedown = function (e) {
-  //mouse down gets reset in the run function below
+  //mouse down gets reset in game.startGame
+  //dont' make changes here
   game.mouseDown = true;
   game.mouse.x = e.clientX;
   game.mouse.y = e.clientY;
@@ -134,6 +140,12 @@ window.onmousedown = function (e) {
 window.onmouseup = function (e) {
   // game.buildingUp(e); //uncomment when building levels
   game.mouseDown = false;
+  // console.log(e)
+  if (e.which === 3) {
+    game.mouseDownRight = false;
+  } else {
+    game.mouseDown = false;
+  }
 };
 
 //keyboard input

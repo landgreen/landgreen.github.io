@@ -4,10 +4,10 @@ const powerUps = {
   heal: {
     name: "heal",
     color: "#0f9",
-    size: function() {
+    size: function () {
       return 40 * Math.sqrt(0.1 + Math.random() * 0.5);
     },
-    effect: function() {
+    effect: function () {
       let heal = this.size / 40;
       mech.addHealth(heal * heal);
       //game.makeTextLog('heal for '+(heal*100).toFixed(0)+'%',80)
@@ -16,18 +16,18 @@ const powerUps = {
   ammo: {
     name: "ammo",
     color: "#467",
-    size: function() {
+    size: function () {
       return 17;
     },
-    effect: function() {
+    effect: function () {
       //only get ammo for guns player has
       let target;
       if (b.inventory.length > 1) {
         //add ammo to a gun in inventory, but not ammo-less guns
-        target = b.guns[b.inventory[Math.ceil(Math.random() * (b.inventory.length - 1))]];
+        target = b.guns[b.inventory[Math.floor(Math.random() * (b.inventory.length))]];
       } else {
         //if you don't have a gun just add ammo to a random gun, but not the basic gun
-        target = b.guns[Math.ceil(Math.random() * b.guns.length - 1)];
+        target = b.guns[Math.floor(Math.random() * b.guns.length)];
       }
       //ammo given scales as mobs take more hits to kill
       const ammo = Math.ceil((target.ammoPack * (0.65 + 0.5 * Math.random())) / b.dmgScale);
@@ -39,10 +39,10 @@ const powerUps = {
   gun: {
     name: "gun",
     color: "#0cf",
-    size: function() {
+    size: function () {
       return 30;
     },
-    effect: function() {
+    effect: function () {
       //find what guns I don't have
       let options = [];
       for (let i = 0; i < b.guns.length; ++i) {
@@ -50,12 +50,11 @@ const powerUps = {
       }
       //give player a gun they don't already have if possible
       if (options.length > 0) {
-        // if (b.activeGun = 0) mech.drop();
-        // b.activeGun = options[Math.floor(Math.random() * options.length)];
         let newGun = options[Math.floor(Math.random() * options.length)];
         // newGun = 4; //makes every gun you pick up this type  //enable for testing one gun
         b.guns[newGun].have = true;
         b.inventory.push(newGun);
+        if (!b.activeGun) b.activeGun = newGun //if no active gun switch to new gun
         // b.inventory.sort();
         b.guns[newGun].ammo += b.guns[newGun].ammoPack * 2;
         game.makeGunHUD();
@@ -65,7 +64,7 @@ const powerUps = {
         );
       } else {
         //if you have all guns then get ammo
-        const ammoTarget = Math.ceil(Math.random() * (b.guns.length - 1));
+        const ammoTarget = Math.floor(Math.random() * (b.guns.length));
         const ammo = Math.ceil(b.guns[ammoTarget].ammoPack * 2);
         b.guns[ammoTarget].ammo += ammo;
         game.updateGunHUD();
@@ -74,7 +73,7 @@ const powerUps = {
     }
   },
   //powerups also come from spawn.debris
-  spawnRandomPowerUp: function(x, y) {
+  spawnRandomPowerUp: function (x, y) {
     //a chance to drop a power up
     //mostly used after mob dies
     //spawn heal chance is higher at low health
@@ -92,7 +91,7 @@ const powerUps = {
       return;
     }
   },
-  chooseRandomPowerUp: function(x, y) {
+  chooseRandomPowerUp: function (x, y) {
     //100% chance to drop a random power up
     //this is mostly used for making power up drops in debris
     if (Math.random() < 0.5) {
@@ -101,7 +100,7 @@ const powerUps = {
       powerUps.spawn(x, y, "ammo", false);
     }
   },
-  spawnStartingPowerUps: function(x, y) {
+  spawnStartingPowerUps: function (x, y) {
     if (b.inventory.length < 3) {
       powerUps.spawn(x, y, "gun", false); //starting gun
     } else {
@@ -109,7 +108,7 @@ const powerUps = {
       powerUps.spawnRandomPowerUp(x, y);
     }
   },
-  spawn: function(x, y, target, moving = true) {
+  spawn: function (x, y, target, moving = true) {
     let i = powerUp.length;
     target = powerUps[target];
     size = target.size();
@@ -139,7 +138,7 @@ const powerUps = {
     }
     World.add(engine.world, powerUp[i]); //add to world
   },
-  attractionLoop: function() {
+  attractionLoop: function () {
     for (let i = 0, len = powerUp.length; i < len; ++i) {
       const dxP = player.position.x - powerUp[i].position.x;
       const dyP = player.position.y - powerUp[i].position.y;

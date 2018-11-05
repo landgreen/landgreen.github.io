@@ -54,20 +54,16 @@ const game = {
   lastLogTime: 0,
   lastLogTimeBig: 0,
   boldActiveGunHUD: function () {
-    for (let i = 0, len = b.inventory.length; i < len; ++i) {
-      // document.getElementById(b.inventory[i]).style.color = '#ccc'
-      document.getElementById(b.inventory[i]).style.opacity = "0.3";
+    if (b.inventory.length > 0) {
+      for (let i = 0, len = b.inventory.length; i < len; ++i) {
+        document.getElementById(b.inventory[i]).style.opacity = "0.3";
+      }
+      document.getElementById(b.activeGun).style.opacity = "1";
     }
-    // document.getElementById(b.activeGun).style.color = '#333'
-    document.getElementById(b.activeGun).style.opacity = "1";
   },
   updateGunHUD: function () {
     for (let i = 0, len = b.inventory.length; i < len; ++i) {
-      if (b.guns[b.inventory[i]].ammo === Infinity) {
-        document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name;
-      } else {
-        document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo;
-      }
+      document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo;
     }
   },
   makeGunHUD: function () {
@@ -80,12 +76,7 @@ const game = {
     for (let i = 0, len = b.inventory.length; i < len; ++i) {
       const node = document.createElement("div");
       node.setAttribute("id", b.inventory[i]);
-      let textnode;
-      if (b.guns[b.inventory[i]].ammo === Infinity) {
-        textnode = document.createTextNode(b.guns[b.inventory[i]].name);
-      } else {
-        textnode = document.createTextNode(b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo);
-      }
+      let textnode = document.createTextNode(b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo);
       node.appendChild(textnode);
       document.getElementById("guns").appendChild(node);
     }
@@ -121,10 +112,9 @@ const game = {
   },
   switchGun: function () {
     b.activeGun = b.inventory[b.inventoryGun];
-    b.lastActiveGun = b.activeGun;
     game.updateGunHUD();
     game.boldActiveGunHUD();
-    mech.drop();
+    // mech.drop();
   },
   keyPress: function () {
     //runs on key press event
@@ -348,7 +338,14 @@ const game = {
     document.getElementById("health-bg").style.display = "inline";
 
     window.onmousedown = function (e) {
-      game.mouseDown = true;
+      //mouse up event in set in index.js
+
+      // game.mouseDown = true;
+      if (e.which === 3) {
+        game.mouseDownRight = true;
+      } else {
+        game.mouseDown = true;
+      }
       // keep this disabled unless building maps
       // if (!game.mouseDown){
       // 	game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;

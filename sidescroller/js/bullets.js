@@ -3,8 +3,7 @@ let bullet = [];
 const b = {
   dmgScale: null, //scales all gun damage from momentum, but not raw .dmg //this is reset in game.reset
   gravity: 0.0006, //most other bodies have   gravity = 0.001
-  activeGun: 0, //current gun in use by player
-  lastActiveGun: 0,
+  activeGun: null, //current gun in use by player
   inventoryGun: 0,
   inventory: [0], //list of what guns player has  // 0 starts with basic gun
   fireProps: function (cd, speed, dir, me) {
@@ -197,13 +196,14 @@ const b = {
       player.force.y += knock.y;
     }
   },
-  guns: [{
-      name: "field emitter",
-      ammo: Infinity,
-      ammoPack: Infinity,
-      have: true,
-      fire: function () {}
-    },
+  guns: [
+    // {
+    //   name: "field emitter",
+    //   ammo: Infinity,
+    //   ammoPack: Infinity,
+    //   have: true,
+    //   fire: function () {}
+    // },
     {
       name: "laser",
       ammo: 0,
@@ -278,7 +278,7 @@ const b = {
         };
         const laserHitMob = function (dmg) {
           if (best.who.alive) {
-            dmg *= b.dmgScale * 0.04;
+            dmg *= b.dmgScale * 0.05;
             best.who.damage(dmg);
             best.who.locatePlayer();
             //draw mob damage circle
@@ -318,7 +318,7 @@ const b = {
               x: best.x,
               y: best.y
             };
-            laserHitMob(0.8);
+            laserHitMob(0.75);
 
             //2nd reflection beam
             //ugly bug fix: this stops the reflection on a bug where the beam gets trapped inside a body
@@ -331,7 +331,7 @@ const b = {
                   x: best.x,
                   y: best.y
                 };
-                laserHitMob(0.6);
+                laserHitMob(0.5);
               }
             }
           }
@@ -368,7 +368,7 @@ const b = {
     {
       name: "rapid fire",
       ammo: 0,
-      ammoPack: 80,
+      ammoPack: 90,
       have: false,
       fire: function () {
         const me = bullet.length;
@@ -708,7 +708,7 @@ const b = {
     {
       name: "wave beam",
       ammo: 0,
-      ammoPack: 160,
+      ammoPack: 130,
       have: false,
       fire: function () {
         mech.fireCDcycle = game.cycle + 4; // cool down
@@ -784,19 +784,19 @@ const b = {
     }
   ],
   fire: function () {
-    if (game.mouseDown && mech.fireCDcycle < game.cycle) {
+    if (game.mouseDown && mech.fireCDcycle < game.cycle && !keys[32] && !mech.isHolding) {
       if (b.guns[this.activeGun].ammo > 0) {
         b.guns[this.activeGun].fire();
         b.guns[this.activeGun].ammo--;
         game.updateGunHUD();
       } else {
         mech.fireCDcycle = game.cycle + 30; //cooldown
-        game.makeTextLog("<div style='font-size:150%;'>NO AMMO</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>", 80);
+        game.makeTextLog("<div style='font-size:140%;'>NO AMMO</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>", 200);
         //switch to throw
-        b.activeGun = 0;
-        b.inventoryGun = 0;
-        game.updateGunHUD();
-        game.boldActiveGunHUD();
+        // b.activeGun = 0;
+        // b.inventoryGun = 0;
+        // game.updateGunHUD();
+        // game.boldActiveGunHUD();
         //mech.drop();
       }
     }
