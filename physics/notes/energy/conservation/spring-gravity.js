@@ -101,10 +101,10 @@ var springGravity = function () {
   physics.y = box.y
   document.getElementById("spring-m2").value = Math.round(box.mass);
   document.getElementById("spring-k2").value = physics.k;
-  document.getElementById("h-2").setAttribute("y", physics.y - 5);
-  document.getElementById("h-2").textContent = "h = " + (physics.y - box.y).toFixed(0) + " m";
-  document.getElementById("h-line-2").setAttribute("y1", physics.y);
-  document.getElementById("h-line-2").setAttribute("y2", physics.y);
+  // document.getElementById("h-2").setAttribute("y", physics.y - 5);
+  // document.getElementById("h-2").textContent = "h = " + (physics.y - box.y).toFixed(0) + " m";
+  // document.getElementById("h-line-2").setAttribute("y1", physics.y);
+  // document.getElementById("h-line-2").setAttribute("y2", physics.y);
 
 
   document.getElementById("pause2").addEventListener("click", () => {
@@ -129,20 +129,21 @@ var springGravity = function () {
   document.getElementById("spring-SVG-2").addEventListener("mousedown", (event) => {
     const x = event.offsetX //* physics.width / cWidth;
     const y = event.offsetY //* physics.height / cHeight;
-    if (x > 80) {
+    if (x > 80 || y > 40) {
       // box.x = x;
       box.y = y;
       box.Vy = 0;
       cycle();
       // physics.y = box.y
       // document.getElementById("h-2").setAttribute("y", physics.y);
-    } else if (y > 40) {
-      physics.y = y
-      document.getElementById("h-2").setAttribute("y", physics.y - 5);
-      document.getElementById("h-2").textContent = "h = " + (physics.y - box.y).toFixed(0) + " m";
-      document.getElementById("h-line-2").setAttribute("y1", physics.y);
-      document.getElementById("h-line-2").setAttribute("y2", physics.y);
     }
+    //  else if (y > 40) {
+    //   physics.y = y
+    //   // document.getElementById("h-2").setAttribute("y", physics.y - 5);
+    //   // document.getElementById("h-2").textContent = "h = " + (physics.y - box.y).toFixed(0) + " m";
+    //   // document.getElementById("h-line-2").setAttribute("y1", physics.y);
+    //   // document.getElementById("h-line-2").setAttribute("y2", physics.y);
+    // }
   });
 
   //get values for spring constant

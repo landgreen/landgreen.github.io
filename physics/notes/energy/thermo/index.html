@@ -97,24 +97,24 @@
 		<br>
 		<div class="col-group">
 			<div>
-				<br>&nbsp;
-				<canvas id="canvas0" width='250' height='445' onclick="particles(this)"> </canvas>
-				<!-- <svg viewBox="0 0 250 445" id="energy-SVG" style="border: 0.5px solid #000; background-color: #f8f8f8; margin: 30px;">
+				<div class="center">
+					<button id="pause" style="width: 60px;">play</button>&nbsp;&nbsp;&nbsp;
+					<button id="energy">friction: OFF</button>
+				</div>
+				<svg class="center" width="250" height="445" id="energy-SVG" style="border: 0.5px solid #000; background-color: #f8f8f8; ">
 					<g stroke="none">
-						<rect id="spring-KE-bar2" x="255" y="400" height="1000" width="25.5" fill="#fa96a0" />
-						<rect id="spring-Ug-bar2" x="305" y="400" height="1000" width="25.5" fill="#abc" />
+						<rect id="KE-bar" x="200" y="400" height="1000" width="25.5" fill="#fa96a0" />
+						<rect id="Ug-bar" x="225" y="400" height="1000" width="25.5" fill="#abc" />
+						<rect id="heat-bar" x="200" y="0" height="0" width="50.5" fill="#ccc" />
 					</g>
 					<g stroke="none" transform="rotate(-90)">
-						<text id="spring-KE-text" x="-390" y="274">KE = ½mv²</text>
-						<text id="spring-Ug-text" x="-390" y="324">Ug = mgh</text>
+						<text id="KE-text" x="-440" y="219">KE = ½mv²</text>
+						<text id="Ug-text" x="-440" y="243">Ug = mgh</text>
 					</g>
-					<circle id="spring-ball-2" cx="150" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
-					<rect id="pause" x="10" y="10" rx="3" ry="3" width="60" height="25" fill="#eee" stroke="#000" />
-					<text id="pause-text" x="40" y="22.5" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text>
-				</svg> -->
-				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button id="pause">pause</button>&nbsp;&nbsp;&nbsp;
-				<button id="energy">friction: OFF</button>
+					<circle id="ball" cx="50" cy="50" r="20" fill="#abc" stroke-width="1.5" stroke="#000" />
+					<!-- <rect id="pause" x="5" y="5" rx="3" ry="3" width="60" height="25" fill="#eee" stroke="#000" />
+					<text id="pause-text" x="35" y="19" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text> -->
+				</svg>
 			</div>
 			<div>
 				As the ball in the simulation falls, energy transfers from gravitational to kinetic. As it rises, energy transfers
@@ -131,8 +131,7 @@
 			</div>
 		</div>
 		<p>So the internal energy of a system is always <a href="https://www.youtube.com/watch?v=4b8ZsFszE8I">conserved</a>,
-			unless energy leaves or enters. We
-			call energy leaving the system heat and energy entering work.</p>
+			unless energy leaves or enters. Energy can leave or enter as work or heat.</p>
 		<div class='definition'>
 			<p>The
 				<strong>first law of thermodynamics</strong> says that the change in internal energy of a system is equal to heat
@@ -143,8 +142,14 @@
 			<br>\( Q \) = Heat, thermal energy added(+) or removed(-) from system [J]
 			<br>\( W \) = work done by a system [J]
 		</div>
+		<p>
+			We can add the concepts of heat and work to our conservation of energy equations to keep track of energy entering
+			and leaving a system. Q or W added to the final side means that energy has left the system. Q or W on the
+			initial side represents energy added to the system.
+		</p>
+		$$K_i + U_i = K_f + U_f + Q_f$$
 
-		<div class='example'>
+		<!-- <div class='example'>
 			<strong>Example:</strong> Compressing a volume of gas does 100 J of work, but at the same time the gas
 			<strong>losses</strong> 200 J of heat to the surroundings. What is the change in the internal energy of the gas?
 			Will the gas increase or decrease in temperature?
@@ -153,16 +158,10 @@
 				$$\Delta E = Q - W$$ $$\Delta E = -200 - 100$$ $$\Delta E = -300\,\mathrm{J}$$ $$\text{The gas will decrease in
 				temperature}$$
 			</details>
-		</div>
+		</div> -->
 
 		<div class='example'>
-			<p>
-				We can add the concepts of heat and work to our conservation of energy equations to keep track of energy entering
-				and leaving a system. A Q or W added to the final side means that energy has left the system. A Q or W on the
-				initial side represents energy added to the system.
-			</p>
-			$$K_i + U_i = K_f + U_f + Q_f$$
-			<br> <strong>Example:</strong> A 0.43 kg soccer ball, kicked at 10 m/s, rolls down a 30 m tall hill. If there was no
+			<strong>Example:</strong> A 0.43 kg soccer ball, kicked at 10 m/s, rolls down a 30 m tall hill. If there was no
 			energy loss, the ball would have a final velocity of 26.2 m/s.
 			<br>
 			<br>When actually performing the experiment we found the ball only has a speed of 20.0 m/s a the bottom. Calculate

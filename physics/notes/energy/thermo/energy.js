@@ -1,34 +1,14 @@
-(function setup() {
-  //writes a message onload
-  var canvas = document.getElementById("canvas0");
-  var ctx = canvas.getContext("2d");
-  ctx.font = "25px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.fillText("click to start", canvas.width / 2, canvas.height / 2);
-})();
-
-var particles = function (button) {
-  button.onclick = null; //stops the function from running after first run
-  // canvas setup
-  var canvasID = "canvas0";
-  var canvas = document.getElementById(canvasID);
-  var ctx = canvas.getContext("2d");
-  ctx.font = "18px Arial";
-  ctx.textAlign = "left";
-
-
-  var pause = false;
-
+var particles = () => {
   var physics = {
-    //settings for all masses
     gravX: 0,
-    gravY: 0.01, //9.81 / 60,
+    gravY: 0.01,
     restitution: 1,
-    airFriction: 1
+    airFriction: 1,
+    height: 445,
+    width: 250
   };
 
-  document.getElementById("energy").addEventListener("click", function () {
+  document.getElementById("energy").addEventListener("click", () => {
     if (physics.restitution === 1) {
       physics.restitution = 0.6;
       physics.airFriction = 0.9995;
@@ -37,15 +17,6 @@ var particles = function (button) {
       physics.restitution = 1;
       physics.airFriction = 1;
       document.getElementById("energy").innerHTML = "friction: OFF";
-    }
-  });
-
-  document.getElementById("pause").addEventListener("click", function () {
-    if (pause) {
-      pause = false;
-      render();
-    } else {
-      pause = true;
     }
   });
 
@@ -59,106 +30,107 @@ var particles = function (button) {
     this.mass = Math.PI * this.r * this.r * 0.01; //pi r squared * density
     this.energy = 0;
     this.ke = 0;
-    this.pe = 0;
+    this.Ug = 0;
     this.fillColor = fillColor;
-    this.draw = function () {
-      ctx.lineWidth = 1.5;
-      ctx.fillStyle = this.fillColor;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-      ctx.fill();
-      ctx.stroke();
+    this.draw = () => {
+      document.getElementById("ball").setAttribute("r", this.r);
+      document.getElementById("ball").setAttribute("cx", this.x);
+      document.getElementById("ball").setAttribute("cy", this.y);
     };
-    this.move = function () {
+    this.move = () => {
       this.x += this.Vx;
       this.y += this.Vy;
       this.Vx *= physics.airFriction;
       this.Vy *= physics.airFriction;
     };
-    this.edges = function () {
-      if (this.x > canvas.width - this.r) {
+    this.edges = () => {
+      if (this.x > physics.width - this.r) {
         this.Vx *= -physics.restitution;
-        this.x = canvas.width - this.r;
+        this.x = physics.width - this.r;
       } else if (this.x < this.r) {
         this.Vx *= -physics.restitution;
         this.x = this.r;
       }
-      if (this.y > canvas.height - this.r) {
+      if (this.y > physics.height - this.r) {
         this.Vy *= -physics.restitution;
-        this.y = canvas.height - this.r;
+        this.y = physics.height - this.r;
       } else if (this.y < this.r) {
         this.Vy *= -physics.restitution;
         this.y = this.r;
       }
     };
-    this.gravity = function () {
+    this.gravity = () => {
       this.Vx += physics.gravX;
       this.Vy += physics.gravY;
     };
     this.calcEnergy = function () {
       var speed2 = this.Vx * this.Vx + this.Vy * this.Vy;
       this.ke = 0.5 * this.mass * speed2;
-      var height = canvas.height - this.r - this.y;
-      this.pe = this.mass * physics.gravY * height;
+      var height = physics.height - this.y;
+      this.Ug = this.mass * physics.gravY * height;
     };
     this.info = function () {
       this.calcEnergy();
-      //bars
-      ctx.fillStyle = "rgba(255, 102, 85, 0.8)" //"#f65" //"rgba(255, 0, 255, 0.3)";
-      ctx.fillRect(0, 0, canvas.width * (this.ke / this.energy), 25);
-      ctx.fillStyle = "rgba(85, 204, 204, 0.8)" //"#5cc" //"rgba(0, 255, 255, 0.3)";
-      ctx.fillRect(0, 25, canvas.width * (this.pe / this.energy), 25);
 
       //heat bar
       if (physics.restitution != 1) {
-        ctx.fillStyle = "lightgrey";
-        ctx.fillRect(canvas.width, 0, -canvas.width * (1 - (this.pe + this.ke) / this.energy), 50);
+        document.getElementById("heat-bar").setAttribute("height", Math.max(0, physics.height * (1 - (this.Ug + this.ke) / this.energy)));
+      } else {
+        document.getElementById("heat-bar").setAttribute("height", 0);
       }
-      //text
-      ctx.fillStyle = "#000";
-      ctx.fillText("KE = ½mv² = " + this.ke.toFixed(0) + "J", 5, 20);
-      ctx.fillText("PE = mgh = " + this.pe.toFixed(0) + "J", 5, 44);
-      //ctx.fillText('PE + KE = ' + (PE + KE).toFixed(0) + 'J', 5, 55);
-      //ctx.fillText('Vx = ' + (this.Vx).toFixed(0) + 'm/s', 5, 30);
-      //ctx.fillText('Vy = ' + this.Vy.toFixed(1) + 'm/s', 5, 75);
+      document.getElementById("KE-bar").setAttribute("y", physics.height * (1 - this.ke / this.energy));
+      document.getElementById("Ug-bar").setAttribute("y", physics.height * (1 - this.Ug / this.energy));
+      document.getElementById("KE-text").textContent = "K = " + (this.ke).toFixed(0).padStart(2, "0") + " J"
+      document.getElementById("Ug-text").textContent = "Ug = " + (this.Ug).toFixed(0).padStart(2, "0") + " J"
     };
   }
 
-  let mouse = {
-    x: 0,
-    y: 0
-  };
-  document.getElementById(canvasID).addEventListener("mousedown", function (event) {
-    //gets mouse position, even when canvas is scaled by CSS
-    box.x = mouse.x = event.offsetX * canvas.width / canvas.clientWidth;
-    box.y = mouse.y = event.offsetY * canvas.height / canvas.clientHeight;
-    box.Vx = 1
-    box.Vy = 0
+  document.getElementById("energy-SVG").addEventListener("mousedown", (event) => {
+    const x = event.offsetX
+    const y = event.offsetY
+    box.x = x;
+    box.y = y;
+
+    box.Vx = 1;
+    box.Vy = 0;
     box.calcEnergy();
-    box.energy = box.pe + box.ke;
+    box.info();
+    box.draw();
+  });
+
+  let pause = true;
+  const pauseID = document.getElementById("pause")
+  pauseID.addEventListener("click", () => {
+    if (pause) {
+      pause = false;
+      pauseID.innerHTML = "pause"
+      render();
+    } else {
+      pause = true;
+      pauseID.innerHTML = "play"
+    }
   });
 
   var box;
 
   function spawn() {
-    box = new mass(mouse.x, mouse.y, 1, 0, 20, "#bbb");
+    box = new mass(50, 50, 1, 0, 20, "#bbb");
     box.calcEnergy();
-    box.energy = box.pe + box.ke;
+    box.energy = box.Ug + box.ke;
   }
   spawn();
-
   window.requestAnimationFrame(render);
 
   function render() {
     //repeating animation function
     if (!pause) {
       window.requestAnimationFrame(render);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
       box.edges();
       box.gravity();
       box.move();
-      box.info();
-      box.draw();
     }
+    box.info();
+    box.draw();
   }
 };
+particles();

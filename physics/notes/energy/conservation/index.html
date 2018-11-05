@@ -56,11 +56,11 @@
 			}
 		</style>
 			k = <input id='spring-k-slider' type="range" step="0.1" value="0.1" min="0" max="10" style="width: 200px;">
-			<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 45px;"><span class="hide-on-mobile">&nbsp;kg/s²</span>
+			<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 55px;"><span class="hide-on-mobile">&nbsp;kg/s²</span>
 			<button style="float: right; width: 60px; margin-top: 20px; text-align: center; padding: 0px;" id="pause1">play</button>
 			<br>
 			m = <input id='spring-m-slider' type="range" step="1" value="13" min="1" max="75" style="width: 195px;">
-			<input id='spring-m' type="number" min="1" max="75" value=13 step=1 style="width: 45px;">
+			<input id='spring-m' type="number" min="1" max="75" value=13 step=1 style="width: 55px;">
 			<span class="hide-on-mobile">kg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 			<span id="spring-x" class="hide-on-mobile" style="text-align: right;"></span>
 
@@ -205,7 +205,7 @@
 				\tfrac{1}{2}v^{2}$$ $$344 = \tfrac{1}{2}v^{2}$$ $$\pm 26.2 \mathrm{\tfrac{m}{s}} = v$$
 			</details>
 		</div>
-		<div class='example'>
+		<!-- <div class='example'>
 			<strong>Example:</strong> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your
 			spring has a spring constant of 200.0 kg/s². How high could the ball go if the spring energy converted into the
 			motion of the ball with no energy loss?
@@ -215,7 +215,7 @@
 				(0.2)(9.8)h$$
 				$$1.15 \, \mathrm{m} = h$$
 			</details>
-		</div>
+		</div> -->
 		<div class='example'>
 			<strong>Example:</strong> A roller coaster cart starts at rest 413 ft high on the top of the first drop on
 			"Superman: Escape from Krypton" at Six Flags Magic Mountain. How fast is the cart going at the bottom of the hill?
@@ -286,14 +286,18 @@
 				$$980 - 78.4 = \tfrac{1}{2}v^2$$
 				$$1803.2 = v^2$$
 				$$v = 42.5 \, \mathrm{\tfrac{m}{s}}$$
-				<br>
-				$$\text{point C}$$
-				$$980 = (9.8)(47) + \tfrac{1}{2}v^2$$
-				$$v = 32.2 \, \mathrm{\tfrac{m}{s}}$$
-				<br>
-				$$\text{point D}$$
-				$$980 = (9.8)(20) + \tfrac{1}{2}v^2$$
-				$$v = 39.6 \, \mathrm{\tfrac{m}{s}}$$
+				<div class="col-group">
+					<div>
+						$$\text{point C}$$
+						$$980 = (9.8)(47) + \tfrac{1}{2}v^2$$
+						$$v = 32.2 \, \mathrm{\tfrac{m}{s}}$$
+					</div>
+					<div>
+						$$\text{point D}$$
+						$$980 = (9.8)(20) + \tfrac{1}{2}v^2$$
+						$$v = 39.6 \, \mathrm{\tfrac{m}{s}}$$
+					</div>
+				</div>
 			</details>
 		</div>
 
@@ -381,7 +385,7 @@
 					</g>
 				</defs>
 				<!-- <rect x="144" y="250" height="120" width="32" fill="#def" stroke="#000" stroke-width="1.5" /> -->
-				<path d="M 140 150 v 98 h40 v-98" stroke="#666" fill="#eee" stroke-width="6" stroke-linejoin="round" />
+				<path d="M 140 150 v 98 h40 v-98" stroke="#000" fill="#eee" stroke-width="6" stroke-linejoin="round" />
 				<!-- <path d="M 124 248 h72" stroke="#999" fill="#eee" stroke-width="1" stroke-dasharray="3" /> -->
 				<g fill="#000" font-size="12px">
 					<text x="185" y="205">x = -0.15 m</text>
@@ -393,7 +397,7 @@
 					<text x="185" y="17">x = ?</text>
 					<text x="185" y="0">v = 0</text>
 				</g>
-				<path d="M 155 200 l15 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3"
+				<path d="M 150 203 l20 0 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 2 l-20 1"
 				 stroke="#000" fill="none" stroke-linejoin="bevel" />
 				<circle cx="160" cy="187" r="15" fill="#9ab" stroke-width="1.5" stroke="#000" />
 				<circle cx="160" cy="0" r="15" fill="none" stroke-width="1" stroke="#000" stroke-dasharray="4" />
@@ -411,7 +415,7 @@
 				$$U_s + U_g = K$$
 				$$\tfrac{1}{2}kx^{2} + mgh= \tfrac{1}{2}mv^{2}$$
 				$$\tfrac{1}{2}kx^{2} + mg {\color{#f05}x}= \tfrac{1}{2}mv^{2}$$
-				$$\tfrac{1}{2}(200)(0.15)^{2} + (0.2)(9.8)(-0.15)= \tfrac{1}{2}(0.2)v^{2}$$
+				$$\tfrac{1}{2}(200)(-0.15)^{2} + (0.2)(9.8)(-0.15)= \tfrac{1}{2}(0.2)v^{2}$$
 				$$1.956 = 0.1v^{2}$$
 				$$4.42 \, \mathrm{\tfrac{m}{s}} = v$$
 			</details>
@@ -448,14 +452,14 @@
 					<rect id="spring-Ug-bar2" x="305" y="400" height="1000" width="25.5" fill="#abc" />
 				</g>
 				<g stroke="none" transform="rotate(-90)">
-					<text id="spring-KE-text2" x="-390" y="274">KE = ½mv²</text>
-					<text id="spring-Us-text2" x="-390" y="299">Us = ½kx²</text>
-					<text id="spring-Ug-text2" x="-390" y="324">Ug = mgh</text>
+					<text id="spring-KE-text2" x="-390" y="274" style="user-select: none;pointer-events: non">KE = ½mv²</text>
+					<text id="spring-Us-text2" x="-390" y="299" style="user-select: none;pointer-events: non">Us = ½kx²</text>
+					<text id="spring-Ug-text2" x="-390" y="324" style="user-select: none;pointer-events: non">Ug = mgh</text>
 				</g>
 				<line x1="4" y1="200" x2="252" y2="200" stroke="#666" stroke-width="1" stroke-dasharray="6" />
-				<line id="h-line-2" x1="4" y1="200" x2="252" y2="200" stroke="#666" stroke-width="1" stroke-dasharray="6" />
+				<!-- <line id="h-line-2" x1="4" y1="200" x2="252" y2="200" stroke="#666" stroke-width="1" stroke-dasharray="6" /> -->
 				<text id="x-2" x="10" y="195" stroke="none" text-anchor="left">0 m</text>
-				<text id="h-2" x="10" y="345" stroke="none" text-anchor="left">0 m</text>
+				<!-- <text id="h-2" x="10" y="345" stroke="none" text-anchor="left">0 m</text> -->
 
 				<circle id="spring-ball-2" cx="150" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
 				<path id="spring-wire-2" d="M 0 0" stroke="#000" fill="none" stroke-linejoin="bevel" />
@@ -476,8 +480,7 @@
 			<details>
 				<summary>solution</summary>
 				<p>
-					To start we need to make sure that the gravitational energy and the spring energy use the same variable for
-					height. We will say that the height is zero at the spring equilibrium.
+					We will define h = 0 at x = 0. This makes x = h.
 				</p>
 				$$\tfrac{1}{2}mv^2 + mgh + \tfrac{1}{2}kx^2$$
 				$$\tfrac{1}{2}mv^2 + mg{\color{#f05}x} + \tfrac{1}{2}kx^2$$
@@ -486,10 +489,10 @@
 					be at the lowest point, when the spring is at rest (v&nbsp;=&nbsp;0).</p>
 				<!-- $$\text{initial:} \quad x = 0 \quad v = \,?$$
 				$$\text{final:}\quad x = 150 \quad v = 0$$ -->
-				$$v_i = \, ? \quad x_i =0 \quad \quad \quad \quad v_f = 0 \quad x_f = 150$$
+				$$v_i = \, ? \quad x_i =0 \quad \quad \quad \quad v_f = 0 \quad x_f = -150$$
 				$$\tfrac{1}{2}mv^2 + mgx + \tfrac{1}{2}kx^2 = \tfrac{1}{2}mv^2 + mgx + \tfrac{1}{2}kx^2$$
 				$$\tfrac{1}{2}mv^2 = mgx + \tfrac{1}{2}kx^2$$
-				$$\tfrac{1}{2}(13)v^2 = (13)(9.8)(-150) + \tfrac{1}{2}(10)(150)^2$$
+				$$\tfrac{1}{2}(13)v^2 = (13)(9.8)(-150) + \tfrac{1}{2}(10)(-150)^2$$
 				$$6.5v^2 = -19110 + 112500$$
 				$$6.5v^2 = 93390$$
 				$$v = \pm 119.9 \tfrac{m}{s}$$
@@ -538,7 +541,6 @@
 							</text>
 						</svg>
 					</div>
-
 				</div>
 				<p>Is this equation correct? Test it out with the simulation.</p>
 				<!-- <div class="col-group">
@@ -574,10 +576,10 @@
 			<br> Use Newton's second law to find the solution.
 			<details>
 				<summary>solution</summary>
-				<p>Add a known mass to the hook and click stop to get the velocity and acceleration to zero. We need to solve a
-					Newton's second law equation.</p>
+				<p>We need to solve a Newton's second law equation. Add a known mass to the hook and click stop to get the velocity
+					and acceleration to zero. </p>
 				$$\sum F = ma$$
-				$$kx-mg = ma$$
+				$$F_s-F_g = ma$$
 				$$kx-mg = 0$$
 				$$kx=mg$$
 				$$k=\frac{mg}{x}$$
@@ -593,8 +595,8 @@
 				<summary>solution</summary>
 				<p>Conservation of energy requires two different moments in time. This simulation makes velocity impossible to
 					measure, so we must choose two moments where v=0.</p>
-				<p>Place the 100 kg mass on the hook and let it get exactly at the point of spring equilibrium. This is easier if
-					you check the displacement box in the top right.</p>
+				<p>Point one will be at spring equilibrium. Place the 100 kg mass on the hook and let it get exactly at the point
+					of spring equilibrium. This is easier if you check the displacement box in the top right.</p>
 				<p>Point two will be at the bottom of the springs drop. Make sure dampening is off so we don't lose energy to heat.</p>
 				$$K_i + U_{gi} + U_{si} = K_f + U_{gf} + U_{sf}$$
 				<p>The velocity is zero at both moments. If we define height to be zero at the spring equilibrium, then both
@@ -613,11 +615,10 @@
 			<br><br><strong>Investigation:</strong> Calculate the mass of the red and blue weights.
 			<details>
 				<summary>solution</summary>
-				<p>We can just reuse our method for getting the spring constant, but with an unknown mass. The force method seems a
-					bit faster, so I'll use that here.</p>
+				<p>We can just reuse our method for getting the spring constant, but for mass.</p>
 				$$k=\frac{mg}{x}$$
 				$$m=\frac{kx}{g}$$
-				<p>Place each mas on the hook with dampening on high and measure how much it displaces the spring.</p>
+				<p>Place each mass on the hook with dampening on high, and measure how much it displaces the spring.</p>
 				<div class="col-group">
 					<div>
 						$$\text{blue mass}$$
