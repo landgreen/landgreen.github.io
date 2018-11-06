@@ -176,21 +176,21 @@ const game = {
     }
 
     //full screen toggle
-    if (keys[13]) {
-      //enter key
-      var doc = window.document;
-      var docEl = doc.documentElement;
+    // if (keys[13]) {
+    //   //enter key
+    //   var doc = window.document;
+    //   var docEl = doc.documentElement;
 
-      var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-      var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+    //   var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+    //   var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
 
-      if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-        requestFullScreen.call(docEl);
-      } else {
-        cancelFullScreen.call(doc);
-      }
-      setupCanvas();
-    }
+    //   if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+    //     requestFullScreen.call(docEl);
+    //   } else {
+    //     cancelFullScreen.call(doc);
+    //   }
+    //   setupCanvas();
+    // }
 
 
     if (keys[69]) {
