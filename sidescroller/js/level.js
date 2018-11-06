@@ -193,10 +193,10 @@ const level = {
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
     document.body.style.backgroundColor = "#444";
     //controls instructions
-    game.makeTextLog(
-      "<br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span></div> <div class = 'grid-box'> <span class = 'mouse'>️<span class='mouse-line'></span></span> </div></div>",
-      Infinity
-    );
+    // game.makeTextLog(
+    //   "<br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span></div> <div class = 'grid-box'> <span class = 'mouse'>️<span class='mouse-line'></span></span> </div></div>",
+    //   Infinity
+    // );
 
 
     level.fill.push({
@@ -302,11 +302,16 @@ const level = {
 
     // spawn.bodyRect(1790, -50, 40, 50);
     // spawn.bodyRect(1875, -100, 200, 90);
-    spawn.bodyRect(2375, -120, 70, 50);
-    spawn.bodyRect(2350, -100, 100, 60);
-    spawn.bodyRect(2450, -150, 150, 150); //exit step
-    powerUps.spawn(2250, -350, "gun", false); //starting gun
+    spawn.bodyRect(2425, -120, 70, 50);
+    spawn.bodyRect(2400, -100, 100, 60);
+    spawn.bodyRect(2500, -150, 100, 150); //exit step
 
+    mech.health = 0.25;
+    mech.displayHealth();
+    powerUps.spawn(1900, -350, "heal", false); //starting gun
+    powerUps.spawn(2000, -350, "heal", false); //starting gun
+    powerUps.spawn(2100, -350, "heal", false); //starting gun
+    powerUps.spawn(2250, -350, "gun", false); //starting gun
 
     spawn.wireFoot();
     spawn.wireFootLeft();
@@ -319,7 +324,7 @@ const level = {
     // if (game.levelsCleared < level.levels.length) game.startZoomIn();
     document.body.style.backgroundColor = "#dcdcde";
 
-    if (Math.random() < 0.6) {
+    if (Math.random() < 0.75) {
       //normal direction start in top left
       mech.setPosToSpawn(-450, -2050);
       level.exit.x = 3600;
@@ -951,7 +956,7 @@ const level = {
   towers: function () {
     // if (game.levelsCleared < level.levels.length) game.startZoomIn();
 
-    if (Math.random() < 0.6) {
+    if (Math.random() < 0.75) {
       //normal direction start in top left
       mech.setPosToSpawn(1375, -1550); //normal spawn
       level.exit.x = 3250;

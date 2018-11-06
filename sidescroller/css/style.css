@@ -23,6 +23,24 @@ svg {
   height: 100%;
 }
 
+*:focus {
+  outline: none;
+}
+
+table {
+  border-collapse: collapse;
+  /* border: 1px solid #eee; */
+  width: 360px;
+  /* background-color: #ddd; */
+}
+
+#controls {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 12;
+}
+
 #dmg {
   position: absolute;
   z-index: 2;

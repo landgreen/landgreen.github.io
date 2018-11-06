@@ -101,14 +101,18 @@ const game = {
   //   this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
   // },
   nextGun: function () {
-    b.inventoryGun++;
-    if (b.inventoryGun > b.inventory.length - 1) b.inventoryGun = 0;
-    game.switchGun();
+    if (b.inventory.length > 0) {
+      b.inventoryGun++;
+      if (b.inventoryGun > b.inventory.length - 1) b.inventoryGun = 0;
+      game.switchGun();
+    }
   },
   previousGun: function () {
-    b.inventoryGun--;
-    if (b.inventoryGun < 0) b.inventoryGun = b.inventory.length - 1;
-    game.switchGun();
+    if (b.inventory.length > 0) {
+      b.inventoryGun--;
+      if (b.inventoryGun < 0) b.inventoryGun = b.inventory.length - 1;
+      game.switchGun();
+    }
   },
   switchGun: function () {
     b.activeGun = b.inventory[b.inventoryGun];
@@ -308,7 +312,7 @@ const game = {
     engine.timing.timeScale = 1;
     game.dmgScale = 1;
     b.dmgScale = 0.7;
-    b.activeGun = 0;
+    b.activeGun = null;
     game.makeGunHUD();
     mech.drop();
     mech.addHealth(1);
@@ -326,12 +330,14 @@ const game = {
     document.getElementById("splash").onclick = function () {
       game.startGame();
     };
+    document.getElementById("controls").style.display = "inline";
     document.getElementById("splash").style.display = "inline";
     document.getElementById("dmg").style.display = "none";
     document.getElementById("health-bg").style.display = "none";
     document.body.style.cursor = "auto";
   },
   startGame: function () {
+    document.getElementById("controls").style.display = "none";
     document.getElementById("splash").onclick = null; //removes the onclick effect so the function only runs once
     document.getElementById("splash").style.display = "none"; //hides the element that spawned the function
     document.getElementById("dmg").style.display = "inline";

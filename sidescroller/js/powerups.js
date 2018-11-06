@@ -54,7 +54,7 @@ const powerUps = {
         // newGun = 4; //makes every gun you pick up this type  //enable for testing one gun
         b.guns[newGun].have = true;
         b.inventory.push(newGun);
-        if (!b.activeGun) b.activeGun = newGun //if no active gun switch to new gun
+        if (b.activeGun === null) b.activeGun = newGun //if no active gun switch to new gun
         // b.inventory.sort();
         b.guns[newGun].ammo += b.guns[newGun].ammoPack * 2;
         game.makeGunHUD();
