@@ -102,16 +102,16 @@
 					<button id="energy">friction: OFF</button>
 				</div>
 				<svg class="center" width="250" height="445" id="energy-SVG" style="border: 0.5px solid #000; background-color: #f8f8f8; ">
-					<g stroke="none">
-						<rect id="KE-bar" x="200" y="400" height="1000" width="25.5" fill="#fa96a0" />
-						<rect id="Ug-bar" x="225" y="400" height="1000" width="25.5" fill="#abc" />
-						<rect id="heat-bar" x="200" y="0" height="0" width="50.5" fill="#ccc" />
+					<g stroke="#000">
+						<rect id="KE-bar" x="200" y="400" height="1000" width="25" fill="#fa96a0" />
+						<rect id="Ug-bar" x="225" y="400" height="1000" width="24" fill="#abc" />
+						<rect id="heat-bar" x="200" y="0" height="0" width="49.5" fill="#ccc" />
 					</g>
 					<g stroke="none" transform="rotate(-90)">
-						<text id="KE-text" x="-440" y="219">KE = ½mv²</text>
+						<text id="KE-text" x="-440" y="218">KE = ½mv²</text>
 						<text id="Ug-text" x="-440" y="243">Ug = mgh</text>
 					</g>
-					<circle id="ball" cx="50" cy="50" r="20" fill="#abc" stroke-width="1.5" stroke="#000" />
+					<circle id="ball" cx="50" cy="50" r="20" fill="#abc" stroke-width="1.25" stroke="#000" />
 					<!-- <rect id="pause" x="5" y="5" rx="3" ry="3" width="60" height="25" fill="#eee" stroke="#000" />
 					<text id="pause-text" x="35" y="19" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text> -->
 				</svg>
@@ -164,14 +164,14 @@
 			<strong>Example:</strong> A 0.43 kg soccer ball, kicked at 10 m/s, rolls down a 30 m tall hill. If there was no
 			energy loss, the ball would have a final velocity of 26.2 m/s.
 			<br>
-			<br>When actually performing the experiment we found the ball only has a speed of 20.0 m/s a the bottom. Calculate
-			the heat that left the ball as if rolled down the hill.
+			<br>When actually performing the experiment we found the ball only has a speed of 20.0 m/s at the bottom. Calculate
+			the heat that left the ball as it rolled down the hill.
 			<details>
 				<summary>solution</summary>
 				$$K_i + U_i = K_f + Q_f$$
-				$$\tfrac{1}{2}mu^2 + mgh_i = \tfrac{1}{2}mv^2 + Q_f$$
-				$$\tfrac{1}{2}(0.43)(10.0)^2 + (0.43)(9.8)(30) = \tfrac{1}{2}(0.43)(20)^2 + Q_f$$
-				$$55.47 \,\mathrm{J} = Q_f$$
+				$$\tfrac{1}{2}mu^2 + mgh_i = \tfrac{1}{2}mv^2 + Q$$
+				$$\tfrac{1}{2}(0.43)(10.0)^2 + (0.43)(9.8)(30) = \tfrac{1}{2}(0.43)(20)^2 + Q$$
+				$$55.47 \,\mathrm{J} = Q$$
 			</details>
 		</div>
 
