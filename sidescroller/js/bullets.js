@@ -784,7 +784,7 @@ const b = {
     }
   ],
   fire: function () {
-    if (game.mouseDown && mech.fireCDcycle < game.cycle && !keys[32] && !mech.isHolding) {
+    if (game.mouseDown && mech.fireCDcycle < game.cycle && !keys[32] && !mech.isHolding && b.inventory.length) {
       if (b.guns[this.activeGun].ammo > 0) {
         b.guns[this.activeGun].fire();
         b.guns[this.activeGun].ammo--;
