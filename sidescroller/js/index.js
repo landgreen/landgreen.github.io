@@ -119,25 +119,25 @@ function setupCanvas() {
   game.setZoom();
 }
 setupCanvas();
-window.onresize = function () {
+window.onresize = () => {
   setupCanvas();
 };
 
 //mouse move input
-window.onmousemove = function (e) {
+window.onmousemove = (e) => {
   game.mouse.x = e.clientX;
   game.mouse.y = e.clientY;
 };
 
 //normal mouse click events
-window.onmousedown = function (e) {
+window.onmousedown = (e) => {
   //mouse down gets reset in game.startGame
   //dont' make changes here
   game.mouseDown = true;
   game.mouse.x = e.clientX;
   game.mouse.y = e.clientY;
 };
-window.onmouseup = function (e) {
+window.onmouseup = (e) => {
   // game.buildingUp(e); //uncomment when building levels
   game.mouseDown = false;
   // console.log(e)
@@ -150,27 +150,24 @@ window.onmouseup = function (e) {
 
 //keyboard input
 const keys = [];
-document.body.addEventListener("keydown", function (e) {
+document.body.addEventListener("keydown", (e) => {
   keys[e.keyCode] = true;
   game.keyPress();
 });
 
-document.body.addEventListener("keyup", function (e) {
+document.body.addEventListener("keyup", (e) => {
   keys[e.keyCode] = false;
 });
 
-document.body.addEventListener(
-  "wheel",
-  function (e) {
-    if (e.deltaY > 0) {
-      game.nextGun();
-    } else {
-      game.previousGun();
-    }
-  }, {
-    passive: true
+document.body.addEventListener("wheel", (e) => {
+  if (e.deltaY > 0) {
+    game.nextGun();
+  } else {
+    game.previousGun();
   }
-);
+}, {
+  passive: true
+});
 
 
 // function playSound(id) {
