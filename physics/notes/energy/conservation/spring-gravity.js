@@ -78,8 +78,8 @@ var springGravity = function () {
 
       //update text less to make animation smoother
       if (!((1 + physics.count) % 3)) {
-        document.getElementById("x-2").textContent = "x = " + (this.y - physics.equilibrium).toFixed(0) + " m";
-        document.getElementById("h-2").textContent = "h = " + (physics.y - this.y).toFixed(0) + " m";
+        document.getElementById("x-2").textContent = (physics.equilibrium - this.y).toFixed(0) + " m";
+        // document.getElementById("h-2").textContent = "h = " + (physics.y - this.y).toFixed(0) + " m";
 
         document.getElementById("spring-KE-text2").textContent = "K = " + ((this.ke / 1000).toFixed(0)).padStart(2, "0") + " kJ"
         document.getElementById("spring-Us-text2").textContent = "Us = " + (this.Us / 1000).toFixed(0).padStart(2, "0") + " kJ"
@@ -199,6 +199,8 @@ var springGravity = function () {
     box.drawSpring();
     box.draw();
   }
+
+  cycle()
   cycle()
 
   function render() {
