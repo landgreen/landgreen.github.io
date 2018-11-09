@@ -59,15 +59,9 @@ var spring = function () {
     this.spring = function () {
       this.Vx += (physics.k * (physics.equalibrium - this.x)) / 60 / this.mass;
     };
-
-    this.calcEnergy = function () {
+    this.springInfo = function () {
       var speed2 = this.Vx * this.Vx + this.Vy * this.Vy;
       this.ke = 0.5 * this.mass * speed2;
-      var height = physics.height - this.r - this.y;
-      this.pe = this.mass * physics.gravY * height;
-    };
-    this.springInfo = function () {
-      this.calcEnergy();
       // var F = -physics.k * (this.x - physics.equalibrium);
       this.u = 0.5 * physics.k * (this.x - physics.equalibrium) * (this.x - physics.equalibrium);
       this.ke = 0.5 * this.mass * this.Vx * this.Vx * 60;

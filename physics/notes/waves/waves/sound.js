@@ -1,4 +1,4 @@
-(function() {
+(function () {
   var canvas = document.getElementById("sound1");
   var ctx = canvas.getContext("2d");
   ctx.font = "24px Arial";
@@ -7,7 +7,7 @@
   ctx.textBaseline = "middle";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
 })();
-(function() {
+(function () {
   var canvas = document.getElementById("sound2");
   var ctx = canvas.getContext("2d");
   ctx.font = "24px Arial";
@@ -16,7 +16,7 @@
   ctx.textBaseline = "middle";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
 })();
-(function() {
+(function () {
   var canvas = document.getElementById("sound3");
   var ctx = canvas.getContext("2d");
   ctx.font = "24px Arial";
@@ -33,14 +33,14 @@ function sound(el, drawMode = 0, waveOut = false, drawOne = false) {
   canvas.width = window.innerWidth - 20;
 
   let pause = false;
-  el.addEventListener("mouseleave", function() {
+  el.addEventListener("mouseleave", function () {
     pause = true;
   });
-  el.addEventListener("mouseenter", function() {
+  el.addEventListener("mouseenter", function () {
     pause = false;
     if (!pause) requestAnimationFrame(cycle);
   });
-  el.addEventListener("click", function() {
+  el.addEventListener("click", function () {
     if (!settings.pusherReady) {
       settings.pusherReady = true;
     }
@@ -129,13 +129,16 @@ function sound(el, drawMode = 0, waveOut = false, drawOne = false) {
   });
   World.add(engine.world, pusher);
 
-  const pusherControl = function() {
+  const pusherControl = function () {
     if (!(settings.pusherCycle % settings.phaseEnd)) {
       settings.pusherReady = false;
       settings.pusherCycle = 1;
     }
     if (settings.pusherReady) settings.pusherCycle++;
-    Matter.Body.setPosition(pusher, { x: settings.pushMag * -Math.cos(settings.pusherCycle * settings.frequency), y: canvas.height / 2 - 50 });
+    Matter.Body.setPosition(pusher, {
+      x: settings.pushMag * -Math.cos(settings.pusherCycle * settings.frequency),
+      y: canvas.height / 2 - 50
+    });
   };
 
   //set up array to store wave velocity for graph
@@ -143,7 +146,7 @@ function sound(el, drawMode = 0, waveOut = false, drawOne = false) {
   for (let i = 0, len = Math.floor(canvas.width / settings.drawStep); i < len; ++i) {
     amp[i] = 0;
   }
-  const waveOutput = function() {
+  const waveOutput = function () {
     //dampen amp
     for (let i = 0, len = amp.length; i < len; ++i) {
       amp[i] *= 0.85;
@@ -170,19 +173,40 @@ function sound(el, drawMode = 0, waveOut = false, drawOne = false) {
     ctx.fill();
   };
 
-  const escapeCheck = function() {
+  const escapeCheck = function () {
     if (!(settings.cycle % 60)) {
       for (let i = 0, len = atom.length; i < len; ++i) {
         if (atom[i].position.y > 50 || atom[i].position.y < -50) {
-          Matter.Body.setPosition(atom[i], { x: canvas.width / 2, y: 2 });
-          Matter.Body.setVelocity(atom[i], { x: 0, y: 0 });
+          Matter.Body.setPosition(atom[i], {
+            x: canvas.width / 2,
+            y: 2
+          });
+          Matter.Body.setVelocity(atom[i], {
+            x: 0,
+            y: 0
+          });
         }
       }
     }
   };
 
-  const draw = function() {
+  const draw = function () {
     if (waveOut) waveOutput();
+
+    // pixel based draw mode  //doesn't seem to be faster
+    // let imgData = ctx.createImageData(canvas.width, canvas.height);
+    // //turn on pixel at ball location
+    // for (let i = 0; i < atom.length; ++i) {
+    //   const index = 4 * Math.floor(atom[i].position.x) + 4 * Math.floor(atom[i].position.y) * canvas.width
+    //   const sideLength = 16
+    //   for (let j = 0; j < sideLength; j += 4) {
+    //     for (let k = 0; k < sideLength; k += 4) {
+    //       imgData.data[index + 3 + j + k * canvas.width] = 255 // alpha
+    //     }
+    //   }
+    // }
+    // ctx.putImageData(imgData, 0, 0);
+
     //draw atoms
     ctx.lineWidth = 0.5;
     ctx.strokeStyle = "#fff";
@@ -218,6 +242,8 @@ function sound(el, drawMode = 0, waveOut = false, drawOne = false) {
         ctx.stroke();
       }
     }
+
+
     //draw pusher
     let vertices = pusher.vertices;
     ctx.beginPath();
@@ -230,7 +256,7 @@ function sound(el, drawMode = 0, waveOut = false, drawOne = false) {
     ctx.fill();
   };
 
-  const drawOneAtom = function() {
+  const drawOneAtom = function () {
     where = atom[Math.floor(atom.length / 3)].position;
     ctx.beginPath();
     ctx.arc(where.x, where.y, settings.radius * 1.2, 0, 2 * Math.PI);
