@@ -428,21 +428,22 @@
 				$$2^{n} = 2^{20} = 1048\,576 $$
 				<p>If we tried a random configuration every second, it would take on average half the number of total states to
 					reach our low entropy state where each color is on a different side.</p>
-				$$\text{time} = \frac{2^{20}}{2} \, \mathrm{s}$$
-				<p>Additionally, we can say that each particle switches states every second. This means our time is divided by the
+				$$\text{average time to separate} = \left(\frac{2^{20}}{2}\right) \mathrm{s}$$
+				<p>Additionally, lets assume that each particle switches states every second. This means our time is divided by the
 					number of particles.</p>
-				$$\frac{2^n}{2n}\, \mathrm{s} = \frac{2^{20}}{40} \, \mathrm{s}=26\,214.4 \, \mathrm{s} = 7.28 \, \mathrm{hr}$$
+				$$\left(\frac{2^n}{2n}\right) \mathrm{s} = \left(\frac{2^{20}}{40}\right) \mathrm{s}=26\,214.4 \, \mathrm{s} =
+				7.28 \, \mathrm{hr}$$
 				<p>This is only a rough estimation of the average time, but it shows how fast total time grows with the number
 					of particles. </p>
 
-				<svg id="SVG-graph-1" viewBox="0 0 580 300"> </svg>
+				<svg id="SVG-graph-1" viewBox="0 0 580 210"> </svg>
 				<script defer>
 					(function () {
 						let settings = {
 							x0: 30,
-							y0: 280,
+							y0: 190,
 							// stroke: "rgba(0,100,120,1)",
-							stroke: "#000",
+							stroke: "rgba(150,40,0,1)",
 							fill: "rgba(200,50,0,0.3)",
 							positiveOnly: true,
 							strokeWidth: 2,
@@ -457,14 +458,14 @@
 					})()
 				</script>
 
-				<svg id="SVG-graph-0" viewBox="0 0 580 300"> </svg>
+				<svg id="SVG-graph-0" viewBox="0 0 580 210"> </svg>
 				<script defer>
 					(function () {
 						let settings = {
 							x0: 30,
-							y0: 280,
+							y0: 190,
 							// stroke: "rgba(0,100,120,1)",
-							stroke: "#000",
+							stroke: "rgba(150,40,0,1)",
 							fill: "rgba(200,50,0,0.3)",
 							positiveOnly: true,
 							strokeWidth: 2,
