@@ -229,19 +229,21 @@
                     .planet{
                         margin: auto;
                         border-radius: 50%;
+                        padding: 0px;
+                        border: 0px solid #000;
                     }
                     .sun{
-                        width: 70px;
-                        height: 70px;
+                        width: 90px;
+                        height: 90px;
                         background-color: #fff;
-                        top: -15px;
-                        left: -15px;
+                        top: -25px;
+                        left: -20px;
                         position: relative;
                     }
                     .sun-div{
                         /* margin: 0px; */
-                        width: 40px;
-                        height: 40px;
+                        width: 50px;
+                        height: 50px;
                     }
                     .mercury{
                         width: 6px;
@@ -274,8 +276,8 @@
                         background-color: rgb(238,236,188);
                     }
                     .saturn{
-                        width: 29px;
-                        height: 29px;
+                        width: 30px;
+                        height: 30px;
                         background-color: rgb(223,229,181);
                     }
                     .uranus{
@@ -291,11 +293,11 @@
 
                     .saturn-ring {
                         border-radius: 50%;
-                        width: 42px;
-                        height: 42px;
+                        width: 44px;
+                        height: 44px;
                         position: relative;
-                        top: -6.5px;
-                        left: -6.5px;
+                        top: -7px;
+                        left: -7px;
                         border: 4px solid rgba(216, 218, 169, 0.7);
                     }
 
@@ -1148,65 +1150,67 @@
         </div>
 
         <div class='example'>
-            <div style="margin-left:18px;">
-                <button id="random-mass" type="button">Randomize Planet</button>
-                <table>
-                    <tr>
-                        <th class="black"></th>
-                        <th>Planet</th>
-                        <th>mass (kg)</th>
-                        <th>radius (km)</th>
-                        <th>g (m/s²)</th>
-                    </tr>
-                    <tr>
-                        <td class="black">
-                            <a href="https://en.wikipedia.org/wiki/Mercury_(planet)">
-                                <div class="planet mercury"></div>
-                            </a>
-                        </td>
-                        <td>Mercury</td>
-                        <td>3.301 × 10<sup>23</sup>
-                        </td>
-                        <td>2440</td>
-                    </tr>
-                    <tr>
-                        <td class="black">
-                            <a href="https://en.wikipedia.org/wiki/Venus">
-                                <div class="planet venus"></div>
-                            </a>
-                        </td>
-                        <td>Venus</td>
-                        <td>4.867 × 10<sup>24</sup>
-                        </td>
-                        <td>6052</td>
-                    </tr>
-                    <tr>
-
-                        <td class="black">
-                            <a href="https://en.wikipedia.org/wiki/Earth">
-                                <div class="planet earth"></div>
-                            </a>
-                            </a>
-                        </td>
-                        <td>Earth</td>
-                        <td>5.972 × 10<sup>24</sup>
-                        </td>
-                        <td>6371</td>
-                    </tr>
-                    <tr>
-                        <td class="black">
-                            <a href="https://en.wikipedia.org/wiki/Mars">
-                                <div class="planet mars"></div>
-                            </a>
-                        </td>
-                        <td>Mars</td>
-                        <td>6.417 × 10<sup>23</sup>
-                        </td>
-                        <td>3390</td>
-                    </tr>
-                </table>
-            </div>
+            <button id="random-mass" type="button">Randomize Planet</button>
             <svg id="SVG-graph-1" viewBox="0 0 600 300"> </svg>
+            <table>
+                <tr>
+                    <th class="black"></th>
+                    <th>Planet</th>
+                    <th>mass (kg)</th>
+                    <th>radius (km)</th>
+                    <th>g (m/s²)</th>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Mercury_(planet)">
+                            <div class="planet mercury"></div>
+                        </a>
+                    </td>
+                    <td>Mercury</td>
+                    <td>3.301 × 10<sup>23</sup></td>
+                    <td>2440</td>
+                    <td>3.7</td>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Venus">
+                            <div class="planet venus"></div>
+                        </a>
+                    </td>
+                    <td>Venus</td>
+                    <td>4.867 × 10<sup>24</sup>
+                    </td>
+                    <td>6052</td>
+                    <td>8.9</td>
+                </tr>
+                <tr>
+
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Earth">
+                            <div class="planet earth"></div>
+                        </a>
+                        </a>
+                    </td>
+                    <td>Earth</td>
+                    <td>5.972 × 10<sup>24</sup>
+                    </td>
+                    <td>6371</td>
+                    <td>9.8</td>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Mars">
+                            <div class="planet mars"></div>
+                        </a>
+                    </td>
+                    <td>Mars</td>
+                    <td>6.417 × 10<sup>23</sup>
+                    </td>
+                    <td>3390</td>
+                    <td>3.7</td>
+                </tr>
+            </table>
+
             <strong>Example:</strong> Which terrestrial planet is being graphed?
             <details>
                 <summary>hint</summary>
@@ -1266,70 +1270,74 @@
                         funGraphSVG("SVG-graph-1", x => GConst * Mass / x / x / 1000000, settings);
                     });
                 })()
-            </script>
+                </script>
         </div>
         <div class='example'>
-            <div style="margin-left:18px;">
-                <button id="random-mass-2" type="button">Randomize Planet</button>
-                <table>
-                    <tr>
-                        <th class="black"></th>
-                        <th>Planet</th>
-                        <th>mass (kg)</th>
-                        <th>radius (km)</th>
-                        <th>g (m/s²)</th>
-                    </tr>
-                    <tr>
-                        <td class="black">
-                            <a href="https://en.wikipedia.org/wiki/Jupiter">
-                                <div class="planet jupiter"></div>
-                            </a>
-                        </td>
-                        <td>Jupiter</td>
-                        <td>1.899 × 10<sup>27</sup>
-                        </td>
-                        <td>70&#8239;000</td>
-                    </tr>
-                    <tr>
-                        <td class="black">
-                            <a href="https://en.wikipedia.org/wiki/Saturn">
-                                <div class="planet saturn">
-                                    <div class="saturn-ring"></div>
-                                </div>
-                            </a>
-                        </td>
-                        <td>Saturn</td>
-                        <td>5.685 × 10<sup>26</sup>
-                        </td>
-                        <td>58&#8239;232</td>
-                    </tr>
-                    <tr>
-                        <td class="black">
-                            <a href="https://en.wikipedia.org/wiki/Uranus">
-                                <div class="planet uranus">
-                                    <div class="uranus-ring"></div>
-                                </div>
-                            </a>
-                        </td>
-                        <td>Uranus</td>
-                        <td>8.68 × 10<sup>25</sup>
-                        </td>
-                        <td>25&#8239;362</td>
-                    </tr>
-                    <tr>
-                        <td class="black">
-                            <a href="https://en.wikipedia.org/wiki/Neptune">
-                                <div class="planet neptune"></div>
-                            </a>
-                        </td>
-                        <td>Neptune</td>
-                        <td>1.024 × 10<sup>26</sup>
-                        </td>
-                        <td>24&#8239;622</td>
-                    </tr>
-                </table>
-            </div>
+            <!-- <div style="margin-left:18px;"> -->
+            <button id="random-mass-2" type="button">Randomize Planet</button>
             <svg id="SVG-graph-2" viewBox="0 0 600 300"> </svg>
+            <table>
+                <tr>
+                    <th class="black"></th>
+                    <th>Planet</th>
+                    <th>mass (kg)</th>
+                    <th>radius (km)</th>
+                    <th>g (m/s²)</th>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Jupiter">
+                            <div class="planet jupiter"></div>
+                        </a>
+                    </td>
+                    <td>Jupiter</td>
+                    <td>1.899 × 10<sup>27</sup>
+                    </td>
+                    <td>70&#8239;000</td>
+                    <td>?</td>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Saturn">
+                            <div class="planet saturn">
+                                <div class="saturn-ring"></div>
+                            </div>
+                        </a>
+                    </td>
+                    <td>Saturn</td>
+                    <td>5.685 × 10<sup>26</sup>
+                    </td>
+                    <td>58&#8239;232</td>
+                    <td>?</td>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Uranus">
+                            <div class="planet uranus">
+                                <div class="uranus-ring"></div>
+                            </div>
+                        </a>
+                    </td>
+                    <td>Uranus</td>
+                    <td>8.68 × 10<sup>25</sup>
+                    </td>
+                    <td>25&#8239;362</td>
+                    <td>?</td>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Neptune">
+                            <div class="planet neptune"></div>
+                        </a>
+                    </td>
+                    <td>Neptune</td>
+                    <td>1.024 × 10<sup>26</sup>
+                    </td>
+                    <td>24&#8239;622</td>
+                    <td>?</td>
+                </tr>
+            </table>
+            <!-- </div> -->
             <strong>Example:</strong> Which gas giant is being graphed? You need to do math for this one.
             <details>
                 <summary>answer</summary>

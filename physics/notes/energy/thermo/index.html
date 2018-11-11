@@ -18,8 +18,10 @@
 	<script defer src='../../../lib/randomColor.min.js'></script>
 	<script defer src="energy.js"></script>
 	<script defer src='../../../lib/matter.min.js'></script>
+	<script defer src="entropy0.js"></script>
 	<script defer src="entropy1.js"></script>
 	<script defer src="temperature.js"></script>
+	<script src='../../../lib/function-graph-SVG.js'></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 	<script src="../../../lib/katex/katex.min.js"></script>
@@ -334,9 +336,9 @@
 				<br>
 				<input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.1" value="0">
 			</div>
-
 		</div>
 		<p>
+
 			The system is in high entropy when the particles are evenly spread out. If your system gets in this state, adjust
 			the slider to power the rotor from an external power source. The spinning rotor lowers entropy and puts the system
 			back in a state that can do work.
@@ -386,27 +388,127 @@
 			The <strong>second law of thermodynamics</strong> states that entropy of an isolated system doesn't decrease over
 			time.
 		</div>
+		<p>In other words: it is much more likely that as time moves forward, a system will get more messy, not more orderly.</p>
 		<p>
-			The second law is true for all the different formulations of entropy. As time moves forward entropy either increases
-			or stays the same. Over time things spread out and move towards a balanced equilibrium. These high entropy states
-			have less ability to do work.
+			Why is the second law of thermodynamics true? The best explanation has to do with how many ways there are achieve a
+			goal. There is a very large number of high entropy, mixed up states. There are much fewer low entropy, unmixed
+			states. As time moves forwards they will almost always be found in a mixed state.
 		</p>
-		<p>
-			A human body as a thermodynamic system keeps it's ability to do work by adding low entropy substances, like food,
-			oxygen, and water. We also lower our entropy by releasing high entropy substances, like carbon dioxide, urine, and
-			feces.
-		</p>
-		<p>
-			The Earth can be viewed as a thermodynamic system. As time goes on the energy density of Earth spreads out and loses
-			the ability to do work. But the Earth isn't isolated. Low entropy light from the sun is added to our system and
-			lowers our entropy. High entropy infrared light exits our system as the Earth cools.
-		</p>
-		<p>
-			Inside the Sun, nuclear fusion converts hydrogen into helium and heat. Heat in the form of light strikes the Earth.
-			Sunlight is a low entropy source that is harnessed by plants to produce work. We are able to order our world because
-			the system of Earth is able to get work out of sunlight.
-		</p>
+		<div class="example">
+			<p>
+				A higher concentration of one color could be considered a low entropy state. As time progresses, the simulation
+				becomes more mixed. Entropy increases.
+			</p>
+			<!-- <p>Adjust the time rate to start the simulation.</p> -->
+			<canvas class='center' id='entropy0' height='258' width='600' style="background-color:#bbc6cc;"> </canvas>
 
+
+			<div class="flex-grid-thirds">
+				<div class="col center">
+					time rate
+					<br>
+					<input type="range" id='time-rate-slider0' min="0" max="10" step="1" value="0" style="width: 120px;">
+				</div>
+				<div class="col center">
+					<button id="clear0">clear</button>
+				</div>
+				<div class="col center">
+					possible states
+					<br>
+					<input type="range" id='bar-number-slider0' min="0" max="9" step="1" value="1" style="width: 120px;">
+				</div>
+			</div>
+
+			<strong>Investigation:</strong> Clear the simulation and click to add 10 particles on each side.
+			Guess how long would we have to wait for each color to separated on opposite sides?
+			<details>
+				<summary>solution</summary>
+				<p>Let's say that each particle can be in one of 2 states: left side or right side.</p>
+				<p> We can count the total number ways to put n particles one of 2 states.</p>
+				$$2^{n} = 2^{20} = 1048\,576 $$
+				<p>If we tried a random configuration every second, it would take on average half the number of total states to
+					reach our low entropy state where each color is on a different side.</p>
+				$$\text{time} = \frac{2^{20}}{2} \, \mathrm{s}$$
+				<p>Additionally, we can say that each particle switches states every second. This means our time is divided by the
+					number of particles.</p>
+				$$\frac{2^n}{2n}\, \mathrm{s} = \frac{2^{20}}{40} \, \mathrm{s}=26\,214.4 \, \mathrm{s} = 7.28 \, \mathrm{hr}$$
+				<p>This is only a rough estimation of the average time, but it shows how fast total time grows with the number
+					of particles. </p>
+
+				<svg id="SVG-graph-1" viewBox="0 0 580 300"> </svg>
+				<script defer>
+					(function () {
+						let settings = {
+							x0: 30,
+							y0: 280,
+							// stroke: "rgba(0,100,120,1)",
+							stroke: "#000",
+							fill: "rgba(200,50,0,0.3)",
+							positiveOnly: true,
+							strokeWidth: 2,
+							xScale: 30,
+							yScale: 0.2,
+							gridSize: 60,
+							xLabel: "n-particles",
+							yLabel: "time (s)",
+							showMouseCoords: true,
+						}
+						funGraphSVG("SVG-graph-1", x => Math.pow(2, x) / 2 / x, settings);
+					})()
+				</script>
+
+				<svg id="SVG-graph-0" viewBox="0 0 580 300"> </svg>
+				<script defer>
+					(function () {
+						let settings = {
+							x0: 30,
+							y0: 280,
+							// stroke: "rgba(0,100,120,1)",
+							stroke: "#000",
+							fill: "rgba(200,50,0,0.3)",
+							positiveOnly: true,
+							strokeWidth: 2,
+							xScale: 12,
+							yScale: 6,
+							gridSize: 60,
+							xLabel: "n-particles",
+							yLabel: "time (year)",
+							showMouseCoords: true,
+						}
+						funGraphSVG("SVG-graph-0", x => Math.pow(2, x) / (2 * x * 31556736), settings);
+					})()
+				</script>
+				<p>How long would to take to get the atoms in a typical room on one side?
+					<br> n = 1&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000 atoms</p>
+			</details>
+		</div>
+
+
+		<div class="example">
+			<p>
+				The second law is true for all the different formulations of entropy. As time moves forward entropy either
+				increases
+				or stays the same. Over time things spread out and move towards a balanced equilibrium. These high entropy states
+				have less ability to do work.
+			</p>
+			<p>
+				A human body as a thermodynamic system keeps it's ability to do work by adding low entropy substances, like food,
+				oxygen, and water. We also lower our entropy by releasing high entropy substances, like carbon dioxide, urine, and
+				feces.
+			</p>
+			<p>
+				The Earth can be viewed as a thermodynamic system. As time goes on the energy density of Earth spreads out and
+				loses
+				the ability to do work. But the Earth isn't isolated. Low entropy light from the sun is added to our system and
+				lowers our entropy. High entropy infrared light exits our system as the Earth cools.
+			</p>
+			<p>
+				Inside the Sun, nuclear fusion converts hydrogen into helium and heat. Heat in the form of light strikes the Earth.
+				Sunlight is a low entropy source that is harnessed by plants to produce work. We are able to order our world
+				because
+				the system of Earth is able to get work out of sunlight.
+			</p>
+		</div>
 
 	</article>
 	<div class='back'>

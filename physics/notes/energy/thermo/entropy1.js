@@ -25,14 +25,8 @@ function entropy1() {
 
   const Engine = Matter.Engine,
     World = Matter.World,
-    Events = Matter.Events,
-    Composites = Matter.Composites,
-    Composite = Matter.Composite,
     Constraint = Matter.Constraint,
-    Vertices = Matter.Vertices,
-    Query = Matter.Query,
-    Body = Matter.Body,
-    Bodies = Matter.Bodies;
+    Body = Matter.Body
 
   // create an engine
   const engine = Engine.create();
@@ -214,7 +208,7 @@ function entropy1() {
     settings.workDoneBySystem = energyInRotor - rotor.angularVelocity * rotor.angularVelocity * rotor.inertia;
   }
 
-  const draw = function() {
+  const draw = function () {
     ctx.clearRect(0, 0, settings.width, settings.height);
 
     //draw walls
@@ -282,7 +276,11 @@ function entropy1() {
       }
 
       const entropy = (left - right) / 200;
-      return { left: left, right: right, entropy: entropy };
+      return {
+        left: left,
+        right: right,
+        entropy: entropy
+      };
     }
 
     settings.workDoneBySystemSmoothed = settings.workDoneBySystemSmoothed * 0.98 + settings.workDoneBySystem * 0.02;
