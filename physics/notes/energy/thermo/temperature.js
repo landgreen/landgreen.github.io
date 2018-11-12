@@ -242,7 +242,7 @@ function entropy1() {
   for (let i = 0, len = Math.floor(canvas.width / barWidth); i < len; ++i) {
     KEBarChart[i] = 0;
   }
-  const outputKE = function() {
+  const outputKE = function () {
     let KEOut = [];
     for (let i = 0, len = Math.floor(canvas.width / barWidth); i < len; ++i) {
       KEOut[i] = 0;
@@ -273,7 +273,7 @@ function entropy1() {
     // console.log(KEOut);
   };
 
-  const draw = function() {
+  const draw = function () {
     ctx.clearRect(0, 0, settings.width, settings.height);
 
     //draw walls

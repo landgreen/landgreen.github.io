@@ -272,10 +272,8 @@
 					<line x1="500" y1="0" x2="500" y2="1000" />
 				</g>
 				<!-- https://codepen.io/anthonydugois/pen/mewdyZ -->
-				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="#fff"
-				 stroke-width="4" stroke="#000" />
-				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="rgba(0,0,0,0)"
-				 class="roller-coaster" stroke-width="7" stroke="none" />
+				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="#fff" stroke-width="4" stroke="#000" />
+				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="rgba(0,0,0,0)" class="roller-coaster" stroke-width="7" stroke="none" />
 				<g fill="#f04" stroke="none">
 					<circle cx="25" cy="50" r="8" />
 					<circle cx="291" cy="283" r="8" />
@@ -314,8 +312,7 @@
 			Well, order is whatever you decide. Often order is defined as a concentration of temperature, pressure, volume, or
 			density. Many of these concentrations are able to do
 			<a href="../../energy/energy/index.html#work">work</a>. In the simulation below, the work we want done is rotating
-			the rotor. What state of the system would make the
-			rotor turn?
+			the rotor. What state of the system would make the rotor turn?
 		</p>
 		<p>
 			Click the clear button to remove the particles. Click inside the simulation to add some particles. Try to place the
@@ -326,7 +323,7 @@
 			<div class="col center">
 				time rate
 				<br>
-				<input type="range" id='time-rate-slider' min="0" max="5" step="1" value="1">
+				<input type="range" id='time-rate-slider' min="0" max="5" step="1" value="0" style="width: 120px;">
 			</div>
 			<div class="col center">
 				<button id="clear1">clear</button>
@@ -334,7 +331,7 @@
 			<div class="col center">
 				rotor external power
 				<br>
-				<input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.1" value="0">
+				<input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.1" value="0" style="width: 120px;">
 			</div>
 		</div>
 		<p>
@@ -371,18 +368,13 @@
 
 		<h1 class='underlined'>Arrow of Time</h1>
 		<p>
-			If you were to watch a video of the Earth orbiting the sun, it would be difficult to tell if the video was running
-			forwards
-			or backwards. Simple physical systems don't have a clear forwards or backwards.
+			The laws of physics are time reversible. Nature behaves the same moving forwards or backwards in time. The only exception is entropy.
 		</p>
 		<p>
-			If you were to watch a glass of water fall off a table, it would be very clear the direction of time. This is
-			because the
-			entropy of the glass of water is rapidly increasing.
+			If you were to watch a video of the Earth orbiting the sun, it would be difficult to tell if the video was running forwards or backwards. Simple physical systems don't have a clear forwards or backwards.
 		</p>
 		<p>
-			The laws of physics are time reversible. Nature behaves the same moving forwards or backwards in time. The only
-			exception is entropy.
+			If you were to watch a glass of water fall off a table, it would be very clear the direction of time. This is because the entropy of the glass of water is rapidly increasing.
 		</p>
 		<div class="definition">
 			The <strong>second law of thermodynamics</strong> states that entropy of an isolated system doesn't decrease over
@@ -390,9 +382,7 @@
 		</div>
 		<p>In other words: it is much more likely that as time moves forward, a system will get more messy, not more orderly.</p>
 		<p>
-			Why is the second law of thermodynamics true? The best explanation has to do with how many ways there are achieve a
-			goal. There is a very large number of high entropy, mixed up states. There are much fewer low entropy, unmixed
-			states. As time moves forwards they will almost always be found in a mixed state.
+			Why is the second law of thermodynamics true? Because there are many ways for the energy of a system to be evenly distributed, but few ways to have energy concentrated. As a system randomly progresses with time, the odds of being in a concentrated, low entropy state is much lower.
 		</p>
 		<div class="example">
 			<p>
@@ -400,7 +390,8 @@
 				becomes more mixed. Entropy increases.
 			</p>
 			<!-- <p>Adjust the time rate to start the simulation.</p> -->
-			<canvas class='center' id='entropy0' height='258' width='600' style="background-color:#bbc6cc;"> </canvas>
+			<canvas class='center' id='entropy0' height='258' width='600' style="background-color:#fff; border: 0px solid #556; box-shadow: none;">
+			</canvas>
 
 
 			<div class="flex-grid-thirds">
@@ -419,22 +410,22 @@
 				</div>
 			</div>
 
-			<strong>Investigation:</strong> Clear the simulation and click to add 10 particles on each side.
-			Guess how long would we have to wait for each color to separated on opposite sides?
+			<strong>Simulation:</strong> Clear the simulation and click to add 10 particles on each side. Guess how long would we have to wait for each color to move to opposite sides?
 			<details>
-				<summary>solution</summary>
-				<p>Let's say that each particle can be in one of 2 states: left side or right side.</p>
+				<summary>Investigation</summary>
+				<p>Let's say that each particle can be in one of 2 states: left or right.</p>
 				<p> We can count the total number ways to put n particles one of 2 states.</p>
 				$$2^{n} = 2^{20} = 1048\,576 $$
-				<p>If we tried a random configuration every second, it would take on average half the number of total states to
+				<p>If we tried random configurations, it would take on average half the number of total states to
 					reach our low entropy state where each color is on a different side.</p>
-				$$\text{average time to separate} = \left(\frac{2^{20}}{2}\right) \mathrm{s}$$
-				<p>Additionally, lets assume that each particle switches states every second. This means our time is divided by the
-					number of particles.</p>
-				$$\left(\frac{2^n}{2n}\right) \mathrm{s} = \left(\frac{2^{20}}{40}\right) \mathrm{s}=26\,214.4 \, \mathrm{s} =
+				$$\left(\frac{2^{n}}{2}\right)$$
+				<p>Additionally, let's assume that each particle switches states every second. This means the time, T, is divided
+					by the number of particles, n.</p>
+				$$T = \left(\frac{2^{n}}{2n}\right) \mathrm{s}$$
+				$$\left(\frac{2^{20}}{40}\right) \mathrm{s}=26\,214.4 \, \mathrm{s} =
 				7.28 \, \mathrm{hr}$$
-				<p>This is only a rough estimation of the average time, but it shows how fast total time grows with the number
-					of particles. </p>
+				<p>This is only a rough estimation of the average time for the particles to separate, but it shows how fast total
+					time grows with the number of particles. </p>
 
 				<svg id="SVG-graph-1" viewBox="0 0 580 210"> </svg>
 				<script defer>
@@ -443,7 +434,7 @@
 							x0: 30,
 							y0: 190,
 							// stroke: "rgba(0,100,120,1)",
-							stroke: "rgba(150,40,0,1)",
+							stroke: "#000",
 							fill: "rgba(200,50,0,0.3)",
 							positiveOnly: true,
 							strokeWidth: 2,
@@ -465,7 +456,7 @@
 							x0: 30,
 							y0: 190,
 							// stroke: "rgba(0,100,120,1)",
-							stroke: "rgba(150,40,0,1)",
+							stroke: "#000",
 							fill: "rgba(200,50,0,0.3)",
 							positiveOnly: true,
 							strokeWidth: 2,
@@ -487,10 +478,12 @@
 
 		<div class="example">
 			<p>
-				The second law is true for all the different formulations of entropy. As time moves forward entropy either
-				increases
-				or stays the same. Over time things spread out and move towards a balanced equilibrium. These high entropy states
-				have less ability to do work.
+				The second law is true for all the different formulations of entropy, not just the mixing of particles. As time
+				moves forward entropy either increases or stays the same. This applies to concentrations of energy, pressure,
+				volume, density, temperature, ...
+			</p>
+			<p>
+				Over time things even out and move towards a balanced equilibrium that has less ability to do work.
 			</p>
 			<p>
 				A human body as a thermodynamic system keeps it's ability to do work by adding low entropy substances, like food,
@@ -499,18 +492,10 @@
 			</p>
 			<p>
 				The Earth can be viewed as a thermodynamic system. As time goes on the energy density of Earth spreads out and
-				loses
-				the ability to do work. But the Earth isn't isolated. Low entropy light from the sun is added to our system and
-				lowers our entropy. High entropy infrared light exits our system as the Earth cools.
-			</p>
-			<p>
-				Inside the Sun, nuclear fusion converts hydrogen into helium and heat. Heat in the form of light strikes the Earth.
-				Sunlight is a low entropy source that is harnessed by plants to produce work. We are able to order our world
-				because
-				the system of Earth is able to get work out of sunlight.
+				loses the ability to do work. But the Earth isn't isolated. Light from the sun is added to our system. Sunlight
+				lowers our entropy by creating differences in temperature.
 			</p>
 		</div>
-
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>

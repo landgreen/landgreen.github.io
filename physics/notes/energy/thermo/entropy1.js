@@ -1,9 +1,3 @@
-function checkVisible(elm) {
-  var rect = elm.getBoundingClientRect();
-  var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
-  return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
-}
-
 entropy1();
 
 function entropy1() {
@@ -12,16 +6,6 @@ function entropy1() {
   ctx.font = "18px sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-
-  // let pause = false;
-  // el.addEventListener("mouseleave", function() {
-  //   pause = true;
-  // });
-  // el.addEventListener("mouseenter", function() {
-  //   pause = false;
-  //   if (!pause) requestAnimationFrame(cycle);
-  // });
-  // el.addEventListener("click", function() {});
 
   const Engine = Matter.Engine,
     World = Matter.World,
@@ -41,8 +25,7 @@ function entropy1() {
     wallWidth: 100,
     edge: 10,
     radius: 7,
-    cycle: 0,
-    timeRate: 1,
+    timeRate: 0,
     rotorTorque: document.getElementById("rotor-slider").value,
     workDoneBySystem: 0,
     workDoneBySystemSmoothed: 0,
@@ -311,17 +294,22 @@ function entropy1() {
   }
 
   function cycle() {
-    if (checkVisible(canvas)) {
-      settings.cycle++;
+    // if (checkVisible(canvas)) {
+    if (settings.timeRate > 0) {
       for (let i = 0; i < settings.timeRate; ++i) {
         Engine.update(engine, 16.666);
         speedControl();
         rotorControl();
       }
       draw();
-      // dataDisplay();
     }
+    // dataDisplay();
+    // }
     requestAnimationFrame(cycle);
   }
+  Engine.update(engine, 16.666);
+  Engine.update(engine, 16.666);
+  Engine.update(engine, 16.666);
+  draw();
   requestAnimationFrame(cycle);
 }

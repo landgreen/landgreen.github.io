@@ -12,7 +12,7 @@ function entropy0() {
   ctx.font = "18px sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 5;
   ctx.lineJoin = "round";
   ctx.lineCap = "round";
 
@@ -43,23 +43,27 @@ function entropy0() {
     height: 150,
     spawnNumber: 150,
     wallWidth: 100,
-    edge: 10,
+    edge: 5,
     radius: 4,
-    cycle: 0,
     // barSize: 20, //needs to be even multiples of width
     // //adjust scale value after adjusting barSize
     // scaleValue: 1800,
     barSize: 300, //needs to be even multiples of width
     maxBarSize: 10,
-    barGap: 300 * 0.05,
+    barGap: 300 * 0.02,
     //adjust scale value after adjusting barSize
     scaleValue: 100,
     timeRate: 0,
     lowestSpeed: 0.4,
-    // colorA: "#257",
-    // colorB: "#d09",
-    colorA: "#06a",
-    colorB: "#e04",
+    // colorA: "#099",
+    // colorB: "#045",
+    colorA: "#8ab",
+    colorB: "#f04",
+    // colorA: "#000",
+    // colorAFill: "#2af",
+    // colorB: "#fff",
+    // cavityFill: "#fff",
+    // colorBFill: "#e04",
     count: {
       left: 0,
       right: 0
@@ -77,7 +81,7 @@ function entropy0() {
   document.getElementById("bar-number-slider0").addEventListener("input", event => {
     const options = [600, 300, 200, 150, 100, 60, 50, 40, 30, 15]
     settings.barSize = options[document.getElementById("bar-number-slider0").value];
-    settings.barGap = settings.barSize * 0.05
+    settings.barGap = settings.barSize * 0.02
     draw();
   });
 
@@ -180,7 +184,7 @@ function entropy0() {
           x: atom[i].velocity.x * factor,
           y: atom[i].velocity.y * factor
         });
-      } else if (atom[i].speed > 10) {
+      } else if (atom[i].speed > 20) {
         Matter.Body.setVelocity(atom[i], {
           x: atom[i].velocity.x / factor,
           y: atom[i].velocity.y / factor
@@ -193,8 +197,25 @@ function entropy0() {
     ctx.clearRect(0, 0, settings.width, canvas.height);
 
     //draw ball cavity
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(settings.edge, settings.edge, settings.width - 2 * settings.edge, settings.height - 2 * settings.edge)
+    // ctx.fillStyle = "#ddd";
+    // ctx.fillRect(0, settings.height + 2, canvas.width, canvas.height - settings.height)
+    // ctx.fillRect(settings.edge, settings.edge, settings.width - 2 * settings.edge, settings.height - 2 * settings.edge)
+
+    // ctx.strokeStyle = "#556";
+    // ctx.beginPath();
+    // ctx.moveTo(0, settings.height + 2);
+    // ctx.lineTo(canvas.width, settings.height + 2);
+    // ctx.stroke();
+
+    ctx.strokeStyle = "#556";
+    ctx.beginPath();
+    const edge = settings.edge / 2
+    ctx.moveTo(edge, settings.height - edge);
+    ctx.lineTo(canvas.width - edge, settings.height - edge);
+    ctx.lineTo(canvas.width - edge, edge);
+    ctx.lineTo(edge, edge);
+    ctx.lineTo(edge, settings.height - edge);
+    ctx.stroke();
 
     //draw atoms
     for (let i = 0, len = atom.length; i < len; ++i) {
@@ -208,7 +229,7 @@ function entropy0() {
     //atom distribution visualization
     //collect position data
     for (let i = 0; i < chartA.length; ++i) {
-      const dropRate = 0.95;
+      const dropRate = 0.9;
       const threshold = 1;
       if (chartA[i] > threshold) {
         chartA[i] *= dropRate
@@ -229,34 +250,52 @@ function entropy0() {
         chartB[index]++
       }
     }
-    //draw bar graph
-    ctx.strokeStyle = settings.colorA
-    ctx.fillStyle = settings.colorA;
-    ctx.beginPath();
-    for (let i = 0; i < chartA.length; ++i) {
-      const total = chartA[i] + chartB[i]
-      const heightA = chartA[i] / total * settings.scaleValue
-      ctx.rect(1 + settings.barGap + i * settings.barSize, canvas.height - heightA - 5, settings.barSize - settings.barGap * 2, heightA)
-    }
-    ctx.globalAlpha = 1;
-    ctx.stroke();
-    ctx.globalAlpha = 0.3;
-    ctx.fill();
 
-    ctx.strokeStyle = settings.colorB
-    ctx.fillStyle = settings.colorB;
-    ctx.beginPath();
-    for (let i = 0; i < chartB.length; ++i) {
-      const total = chartA[i] + chartB[i]
-      const heightA = chartA[i] / total * settings.scaleValue
-      const heightB = chartB[i] / total * settings.scaleValue
-      ctx.rect(1 + settings.barGap + i * settings.barSize, canvas.height - heightB - heightA - 10, settings.barSize - settings.barGap * 2, heightB)
+    for (let i = 0; i < chartA.length; ++i) {
+      const total = ((chartA[i] - 1) + (chartB[i] - 1)) / settings.scaleValue
+      const heightA = Math.min(settings.scaleValue, (chartA[i] - 1) / total)
+      const heightB = Math.min(settings.scaleValue, (chartB[i] - 1) / total)
+      const topGap = 0;
+      if (heightA > 1) {
+        ctx.fillStyle = settings.colorA;
+        ctx.fillRect(settings.barGap + i * settings.barSize, canvas.height - topGap, settings.barSize - settings.barGap * 2, -heightA)
+      }
+      if (heightB > 1) {
+        ctx.fillStyle = settings.colorB;
+        ctx.fillRect(settings.barGap + i * settings.barSize, canvas.height - settings.scaleValue - topGap, settings.barSize - settings.barGap * 2, heightB)
+      }
     }
-    ctx.globalAlpha = 1;
-    ctx.stroke();
-    ctx.globalAlpha = 0.3;
-    ctx.fill();
-    ctx.globalAlpha = 1;
+
+
+
+    //draw bar graph
+    // ctx.strokeStyle = settings.colorA
+    // ctx.fillStyle = settings.colorA;
+    // ctx.beginPath();
+    // for (let i = 0; i < chartA.length; ++i) {
+    //   const total = chartA[i] + chartB[i]
+    //   const heightA = (chartA[i] - 1) / total * settings.scaleValue
+    //   ctx.rect(1 + settings.barGap + i * settings.barSize, canvas.height - heightA - 5, settings.barSize - settings.barGap * 2, heightA)
+    // }
+    // // ctx.globalAlpha = 1;
+    // // ctx.stroke();
+    // // ctx.globalAlpha = 0.3;
+    // ctx.fill();
+
+    // ctx.strokeStyle = settings.colorB
+    // ctx.fillStyle = settings.colorB;
+    // ctx.beginPath();
+    // for (let i = 0; i < chartB.length; ++i) {
+    //   const total = chartA[i] + chartB[i]
+    //   const heightA = (chartA[i] - 1) / total * settings.scaleValue
+    //   const heightB = (chartB[i] - 1) / total * settings.scaleValue
+    //   ctx.rect(settings.barGap + i * settings.barSize, canvas.height - heightB - heightA - 10, settings.barSize - settings.barGap * 2, heightB)
+    // }
+    // // ctx.globalAlpha = 1;
+    // // ctx.stroke();
+    // // ctx.globalAlpha = 0.3;
+    // ctx.fill();
+    // ctx.globalAlpha = 1;
 
     // ctx.strokeStyle = settings.colorB
     // ctx.fillStyle = settings.colorB;
@@ -313,15 +352,14 @@ function entropy0() {
   };
 
   function cycle() {
-    if (checkVisible(canvas)) {
-      settings.cycle++;
-      if (settings.timeRate) {
-        for (let i = 0; i < settings.timeRate; ++i) {
-          Engine.update(engine, 16.666);
-          speedControl();
-        }
-        draw();
+    // if (checkVisible(canvas)) {
+    if (settings.timeRate > 0) {
+      for (let i = 0; i < settings.timeRate; ++i) {
+        Engine.update(engine, 16.666);
+        speedControl();
       }
+      draw();
+      // }
     }
     requestAnimationFrame(cycle);
   }
