@@ -286,7 +286,7 @@ function entropy1() {
       }
       ctx.lineTo(vertices[0].x, vertices[0].y);
     }
-    ctx.fillStyle = "#8ab";
+    ctx.fillStyle = "#678";
     ctx.fill();
 
     //draw atoms

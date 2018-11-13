@@ -366,7 +366,7 @@
 			state as defined by each system. Low entropy for a car is gasoline. A human will not get work from gasoline, we need tacos.
 		</p> -->
 
-		<h1 class='underlined'>Arrow of Time</h1>
+		<h1 class='underlined' id="arrow-of-time">Arrow of Time</h1>
 		<p>
 			The laws of physics are time reversible. Nature behaves the same moving forwards or backwards in time. The only exception is entropy.
 		</p>
@@ -386,8 +386,7 @@
 		</p>
 		<div class="example">
 			<p>
-				A higher concentration of one color could be considered a low entropy state. As time progresses, the simulation
-				becomes more mixed. Entropy increases.
+				The second law of thermodynamics says that the simulation below will only become more evenly mixed as time progresses forwards.
 			</p>
 			<!-- <p>Adjust the time rate to start the simulation.</p> -->
 			<canvas class='center' id='entropy0' height='258' width='600' style="background-color:#fff; border: 0px solid #556; box-shadow: none;">
@@ -409,23 +408,20 @@
 					<input type="range" id='bar-number-slider0' min="0" max="9" step="1" value="1" style="width: 120px;">
 				</div>
 			</div>
-
+			<p>The odds of the 300 particles above separating by chance is so unlikely that it would take longer than the age of the universe.</p>
 			<strong>Simulation:</strong> Clear the simulation and click to add 10 particles on each side. Guess how long would we have to wait for each color to move to opposite sides?
 			<details>
 				<summary>Investigation</summary>
 				<p>Let's say that each particle can be in one of 2 states: left or right.</p>
 				<p> We can count the total number ways to put n particles one of 2 states.</p>
-				$$2^{n} = 2^{20} = 1048\,576 $$
-				<p>If we tried random configurations, it would take on average half the number of total states to
-					reach our low entropy state where each color is on a different side.</p>
-				$$\left(\frac{2^{n}}{2}\right)$$
-				<p>Additionally, let's assume that each particle switches states every second. This means the time, T, is divided
+				$$2^{n} = 2^{20} = 1\,048\,576 $$
+				<p>Trying random configurations would take on average half the number of total states to reach our unique unmixed state.</p>
+				$$\frac{2^{n}}{2}$$
+				<p>Let's make a rough approximation that each particle switches states every second. This means the time, T, is divided
 					by the number of particles, n.</p>
-				$$T = \left(\frac{2^{n}}{2n}\right) \mathrm{s}$$
-				$$\left(\frac{2^{20}}{40}\right) \mathrm{s}=26\,214.4 \, \mathrm{s} =
-				7.28 \, \mathrm{hr}$$
-				<p>This is only a rough estimation of the average time for the particles to separate, but it shows how fast total
-					time grows with the number of particles. </p>
+				$$T \approx \left(\frac{2^{n}}{2n}\right) \mathrm{s}$$
+				$$\left(\frac{2^{20}}{40}\right) \mathrm{s} \approx 26\,000 \, \mathrm{s} \approx 7 \, \mathrm{hr}$$
+				<p>This answer isn't exact, but it shows how fast the average time to separate grows with the number of particles. </p>
 
 				<svg id="SVG-graph-1" viewBox="0 0 580 210"> </svg>
 				<script defer>
@@ -470,8 +466,10 @@
 						funGraphSVG("SVG-graph-0", x => Math.pow(2, x) / (2 * x * 31556736), settings);
 					})()
 				</script>
-				<p>How long would to take to get the atoms in a typical room on one side?
-					<br> n = 1&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000 atoms</p>
+				<p>For up to about n = 15 particles, the estimated time to separate takes seconds. Waiting for n = 35 particles to spontaneously separate takes years.</p>
+				<p>How long would it take n = 300 particles to randomly separate?
+					<br> How long would it take all the air molecules in a typical room?
+					<br>(n = 1&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000 air molecules)</p>
 			</details>
 		</div>
 
@@ -479,11 +477,11 @@
 		<div class="example">
 			<p>
 				The second law is true for all the different formulations of entropy, not just the mixing of particles. As time
-				moves forward entropy either increases or stays the same. This applies to concentrations of energy, pressure,
+				moves forward, entropy either increases or stays the same. This applies to concentrations of energy, pressure,
 				volume, density, temperature, ...
 			</p>
 			<p>
-				Over time things even out and move towards a balanced equilibrium that has less ability to do work.
+				Over time things even out and move towards a balanced equilibrium.
 			</p>
 			<p>
 				A human body as a thermodynamic system keeps it's ability to do work by adding low entropy substances, like food,
