@@ -85,6 +85,22 @@ const b = {
       time: game.drawTime
     });
 
+    //damage and knock back player in range
+    sub = Matter.Vector.sub(bullet[me].position, player.position);
+    dist = Matter.Vector.magnitude(sub);
+    if (dist < bullet[me].explodeRad) {
+      mech.damage(bullet[me].explodeRad * 0.00035);
+      knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * player.mass / 30);
+      player.force.x += knock.x;
+      player.force.y += knock.y;
+      mech.drop();
+    } else if (dist < alertRange) {
+      knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * player.mass / 55);
+      player.force.x += knock.x;
+      player.force.y += knock.y;
+      mech.drop();
+    }
+
     //body knock backs
     for (let i = 0, len = body.length; i < len; ++i) {
       sub = Matter.Vector.sub(bullet[me].position, body[i].position);
@@ -99,6 +115,7 @@ const b = {
         body[i].force.y += knock.y;
       }
     }
+
     //power up knock backs
     for (let i = 0, len = powerUp.length; i < len; ++i) {
       sub = Matter.Vector.sub(bullet[me].position, powerUp[i].position);
@@ -113,6 +130,7 @@ const b = {
         powerUp[i].force.y += knock.y;
       }
     }
+
     //bullet knock backs
     for (let i = 0, len = bullet.length; i < len; ++i) {
       if (me !== i) {
@@ -181,20 +199,6 @@ const b = {
     }
 
     // Matter.Vector.magnitudeSquared(Matter.Vector.sub(bullet[me].position, mob[i].position))
-
-    //damage and knock back player in range
-    sub = Matter.Vector.sub(bullet[me].position, player.position);
-    dist = Matter.Vector.magnitude(sub);
-    if (dist < bullet[me].explodeRad) {
-      mech.damage(bullet[me].explodeRad * 0.00035);
-      knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * player.mass / 30);
-      player.force.x += knock.x;
-      player.force.y += knock.y;
-    } else if (dist < alertRange) {
-      knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * player.mass / 55);
-      player.force.x += knock.x;
-      player.force.y += knock.y;
-    }
   },
   guns: [
     // {

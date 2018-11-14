@@ -661,22 +661,15 @@ const mech = {
       } else {
         this.holdingTarget = null;
       }
-    } else if (!(keys[32] || game.mouseDownRight) &&
-      this.holdingTarget &&
-      this.fireCDcycle < game.cycle
-    ) {
+    } else if (!(keys[32] || game.mouseDownRight) && this.holdingTarget && this.fireCDcycle < game.cycle) {
       this.isHolding = true;
       if (this.holdingTarget) {
         this.holdingTarget.collisionFilter.category = 0x000001;
         this.holdingTarget.collisionFilter.mask = 0x111111;
       }
       //combine momentum
-      const px =
-        player.velocity.x * player.mass +
-        this.holdingTarget.velocity.x * this.holdingTarget.mass;
-      const py =
-        player.velocity.y * player.mass -
-        this.holdingTarget.velocity.y * this.holdingTarget.mass;
+      const px = player.velocity.x * player.mass + this.holdingTarget.velocity.x * this.holdingTarget.mass;
+      const py = player.velocity.y * player.mass - this.holdingTarget.velocity.y * this.holdingTarget.mass;
       Matter.Body.setVelocity(player, {
         x: px / (player.mass + this.holdingTarget.mass),
         y: py / (player.mass + this.holdingTarget.mass)
