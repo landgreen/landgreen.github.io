@@ -146,8 +146,8 @@ function entropy0() {
   //add atoms
   let atom = [];
   for (let i = 0; i < settings.spawnNumber; ++i) {
-    addAtom((Math.random() * settings.width) / 2.8 + settings.edge, Math.random() * (settings.height - settings.edge * 2) + settings.edge);
-    addAtom(settings.width - (Math.random() * settings.width) / 2.8 - settings.edge, Math.random() * (settings.height - settings.edge * 2) + settings.edge);
+    addAtom((Math.random() * settings.width) / 2.1 + settings.edge, Math.random() * (settings.height - settings.edge * 2) + settings.edge);
+    addAtom(settings.width - (Math.random() * settings.width) / 2.1 - settings.edge, Math.random() * (settings.height - settings.edge * 2) + settings.edge);
   }
 
   function addAtom(x, y, speed = 0.1, radius = settings.radius) {
@@ -352,17 +352,17 @@ function entropy0() {
   };
 
   function cycle() {
-    // if (checkVisible(canvas)) {
     if (settings.timeRate > 0) {
       for (let i = 0; i < settings.timeRate; ++i) {
         Engine.update(engine, 16.666);
         speedControl();
       }
       draw();
-      // }
     }
     requestAnimationFrame(cycle);
   }
+  Engine.update(engine, 16.666);
+  Engine.update(engine, 16.666);
   Engine.update(engine, 16.666);
   Engine.update(engine, 16.666);
   draw();
