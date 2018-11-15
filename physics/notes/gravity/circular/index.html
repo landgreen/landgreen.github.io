@@ -51,8 +51,7 @@
 		<div class="example">
 			<div class="center" style="position: relative; width: 300px; height: 200px;">
 				<a href="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_en.html" style="text-decoration: none;">
-					<img src="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits-600.png" alt="Gravity And Orbits"
-					 style="border: none;" width="300" height="200" />
+					<img src="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits-600.png" alt="Gravity And Orbits" style="border: none;" width="300" height="200" />
 					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.8; filter: alpha(opacity = 60);"></div>
 					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
 						<tr>
@@ -177,8 +176,25 @@
 		</p>
 		<p>
 			<strong>The orbits of objects in space are elliptical. They are never perfectly circular,</strong> but many orbits
-			come close
-			enough to circular motion to make a rough approximation useful.</p>
+			come close enough to circular motion to make a rough approximation useful.</p>
+
+		<div class="hide-on-mobile">
+			<p onclick="orbitals(this)" style="border-radius: 25px;background: #ddd; padding: 20px; margin: 20px;">Click to load
+				a simulation of circular orbits at different distances. Click and drag to move. Double click for full screen.</p>
+			<style>
+				.full-page {
+					position: fixed;
+					top: -5px;
+					left: -5px;
+					z-index: 0;
+					margin: 0;
+					padding: 0;
+				}
+			</style>
+
+			<div id='three-orbit'></div>
+		</div>
+
 		<details class='derive'>
 			<summary>derivation of orbital velocity</summary>
 			<br>If we assume that the central mass is much larger and doesn't move, we can combine the equations for circular
@@ -235,23 +251,6 @@
 		<p>Situations where there is circular motion and a much larger central body include: planets orbiting the sun, moons
 			orbiting
 			large planets, and satellites.</p>
-
-		<div class="hide-on-mobile">
-			<p onclick="orbitals(this)" style="border-radius: 25px;background: #ddd; padding: 20px; margin: 20px;">Click to load
-				a simulation of circular orbits at different distances. Click and drag to move. Double click for full screen.</p>
-			<style>
-				.full-page {
-					position: fixed;
-					top: -5px;
-					left: -5px;
-					z-index: 0;
-					margin: 0;
-					padding: 0;
-				}
-			</style>
-
-			<div id='three-orbit'></div>
-		</div>
 
 		<div class='example'>
 			<style>
@@ -501,6 +500,9 @@
 				\,\mathrm{\tfrac{m}{s}}$$
 			</details>
 		</div>
+
+
+
 		<div class='example'>
 			<p class="center">Radius Vs. Orbital Velocity
 				<br>(for satellites in circular motion around Earth)</p>
