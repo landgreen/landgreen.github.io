@@ -166,6 +166,8 @@ const orbitals = function (el) {
   scene.add(corona);
 
   //random planets
+
+  const colors = [0xffffff, 0xc7c3c0, 0xffff00, 0xff00ff]
   const planet = [];
   for (let i = 0; i < 200; ++i) {
     const radius = 0.5 + Math.random() * Math.random() * Math.random() * Math.random() * Math.random() * 4;
@@ -174,6 +176,7 @@ const orbitals = function (el) {
       // transparent: true,
       // opacity: 0.7,
       color: 0xffffff
+      // color: colors[Math.floor(Math.random() * colors.length)]
       // color: randomColor({
       //   luminosity: "light",
       //   hue: "monochrome"
