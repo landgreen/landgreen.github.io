@@ -16,7 +16,7 @@
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 
-	<script defer src="motion.js"></script>
+	<script defer src="motionSVG.js"></script>
 
 	<link rel="stylesheet" href="../../../style.css">
 	<script src='../../../lib/function-graph-SVG.js'></script>
@@ -38,7 +38,7 @@
 		<p>In physics we use the symbol x for position in space with meters for units. You might be used to using 'x' in
 			other
 			ways, but in physics it is reserved for position to keep things from getting confusing.</p>
-		<p>To represent a displacement we subtract the inital position from the final position. We use the Δ symbol to show
+		<p>To represent a displacement we subtract the initial position from the final position. We use the Δ symbol to show
 			change.</p>
 		<div class='definition'>
 			<h1>$$ \Delta x = x_f-x_i$$</h1>
@@ -52,14 +52,27 @@
 				<em>vector</em>
 			</p>
 		</div>
-		<canvas class='center' id="canvas1" width='580' height='150'> </canvas>
+
+		<svg id="motion-1" class="SVG-shadow" viewBox="0 0 580 100">
+			<g font-size="16" stroke="none" fill="#444">
+				<text id="x-1" x="578" y="20" text-anchor="end">Δx=0</text>
+				<text id="t-1" x="578" y="45" text-anchor="end">Δt=0</text>
+				<text id="v-1" x="578" y="70" text-anchor="end">v=0</text>
+				<text id="a-1" x="578" y="95" text-anchor="end">a=0</text>
+			</g>
+			<g stroke-width="2" stroke-linejoin="square" stroke-linecap="square">
+				<circle id="circle-1" cx="-290" cy="50" r="40" stroke="none" fill="#f65" />
+				<path id="distance-1" d="" stroke="#666" fill="none" />
+			</g>
+		</svg>
+
 		<div class='example'>
 			<strong>Example:</strong> Mount Everest is 8848 m above sea level. The base camp, where most mountain climbers begin
 			their
 			trek, is 5150 m above sea level. What is the vertical distance between the base camp and the peak?
 			<details>
 				<summary>solution</summary>
-				$$ \text{final position} = 8848\,\mathrm{m} $$ $$\text{inital position} = 5150\,\mathrm{m}$$
+				$$ \text{final position} = 8848\,\mathrm{m} $$ $$\text{initial position} = 5150\,\mathrm{m}$$
 				<br> $$ \Delta x = x_{f}-x_{i}$$ $$ \Delta x = 8848\,\mathrm{m}-5150\,\mathrm{m}$$ $$ \Delta x = 3698\,\mathrm{m}$$
 			</details>
 		</div>
@@ -90,7 +103,20 @@
 			<p>\(t_i\) = initial time [s, seconds]</p>
 			<p>\(t_f\) = final time [s, seconds]</p>
 		</div>
-		<canvas class='center' id="canvas2" width='580' height='150'> </canvas>
+		<svg id="motion-2" class="SVG-shadow" viewBox="0 0 580 100">
+			<g font-size="16" stroke="none" fill="#444">
+				<text id="x-2" x="578" y="20" text-anchor="end">Δx=0</text>
+				<text id="t-2" x="578" y="45" text-anchor="end">Δt=0</text>
+				<text id="v-2" x="578" y="70" text-anchor="end">v=0</text>
+				<text id="a-2" x="578" y="95" text-anchor="end">a=0</text>
+			</g>
+			<g stroke-width="2" stroke-linejoin="square" stroke-linecap="square">
+				<circle id="circle-2" cx="-290" cy="50" r="40" stroke="none" fill="#f65" />
+				<path id="distance-2" d="" stroke="#666" fill="none" />
+				<path id="arc-2" d="" stroke="none" fill="rgba(255,255,255,0.4)" />
+			</g>
+		</svg>
+
 		<div class='example'>
 			<strong>Example:</strong> School ends at 2:30 PM. I got home today at 2:49 PM. How long did it take me to get home
 			in
@@ -117,7 +143,21 @@
 				<em>vector</em>
 			</p>
 		</div>
-		<canvas class='center' id="canvas3" width='580' height='150'> </canvas>
+
+		<svg id="motion-3" class="SVG-shadow" viewBox="0 0 580 100">
+			<g font-size="16" stroke="none" fill="#444">
+				<text id="x-3" x="578" y="20" text-anchor="end">Δx=0</text>
+				<text id="t-3" x="578" y="45" text-anchor="end">Δt=0</text>
+				<text id="v-3" x="578" y="70" text-anchor="end">v=0</text>
+				<text id="a-3" x="578" y="95" text-anchor="end">a=0</text>
+			</g>
+			<g stroke-width="2" stroke-linejoin="square" stroke-linecap="square">
+				<circle id="circle-3" cx="-290" cy="50" r="40" stroke="none" fill="#f65" />
+				<path id="distance-3" d="" stroke="#666" fill="none" />
+				<path id="arc-3" d="" stroke="none" fill="rgba(255,255,255,0.4)" />
+			</g>
+		</svg>
+
 		<div class='example'>
 			<strong>Example:</strong> A car is traveling at 20 m/s for 80 seconds. How far does the car travel?
 			<details>
@@ -125,7 +165,21 @@
 				$$ v = \frac{\Delta x}{\Delta t} $$ $$ v \Delta t= \Delta x$$ $$ (20 \mathrm{\tfrac{m}{s}}) (80\, \mathrm{s}) =
 				\Delta x
 				$$ $$ 1600\, \mathrm{m} = \Delta x $$
-				<canvas class='center' id="canvas5" width='580' height='150'> </canvas>
+
+				<svg id="motion-5" class="SVG-shadow" viewBox="0 0 580 100">
+					<g font-size="16" stroke="none" fill="#444">
+						<text id="x-5" x="578" y="20" text-anchor="end">Δx=0</text>
+						<text id="t-5" x="578" y="45" text-anchor="end">Δt=0</text>
+						<text id="v-5" x="578" y="70" text-anchor="end">v=0</text>
+						<text id="a-5" x="578" y="95" text-anchor="end">a=0</text>
+					</g>
+					<g stroke-width="2" stroke-linejoin="square" stroke-linecap="square">
+						<circle id="circle-5" cx="290" cy="50" r="40" stroke="none" fill="#f65" />
+						<path id="distance-5" d="" stroke="#666" fill="none" />
+						<path id="arc-5" d="" stroke="none" fill="rgba(255,255,255,0.4)" />
+					</g>
+				</svg>
+
 			</details>
 		</div>
 		<div class='example'>
@@ -207,7 +261,21 @@
 				<em>vector</em>
 			</p>
 		</div>
-		<canvas class='center' id="canvas4" width='580' height='150'> </canvas>
+
+		<svg id="motion-4" class="SVG-shadow" viewBox="0 0 580 100">
+			<g font-size="16" stroke="none" fill="#444">
+				<text id="x-4" x="578" y="20" text-anchor="end">Δx=0</text>
+				<text id="t-4" x="578" y="45" text-anchor="end">Δt=0</text>
+				<text id="v-4" x="578" y="70" text-anchor="end">v=0</text>
+				<text id="a-4" x="578" y="95" text-anchor="end">a=0</text>
+			</g>
+			<g stroke-width="2" stroke-linejoin="square" stroke-linecap="square">
+				<circle id="circle-4" cx="-290" cy="50" r="40" stroke="none" fill="#f65" />
+				<path id="distance-4" d="" stroke="#666" fill="none" />
+				<path id="arc-4" d="" stroke="none" fill="rgba(255,255,255,1)" />
+			</g>
+		</svg>
+
 		<div class='example'>
 			<strong>Example:</strong> A basketball falls off a table and hits the floor in 0.45 s. The ball has a velocity of
 			4.43
@@ -233,7 +301,21 @@
 				= \frac{\Delta v}{\Delta t}$$ $$a = \frac{26.8\,\mathrm{ \tfrac{m}{s}}} {2.28\, \mathrm{s}}$$ $$a = 11.8\, \mathrm{
 				\tfrac{m}{s^{2}}
 				}$$
-				<canvas class='center' id="canvas0" width='580' height='150'> </canvas>
+
+				<svg id="motion-0" class="SVG-shadow" viewBox="0 0 580 100">
+					<g font-size="16" stroke="none" fill="#000">
+						<text id="x-0" x="578" y="20" text-anchor="end">Δx=0</text>
+						<text id="t-0" x="578" y="45" text-anchor="end">Δt=0</text>
+						<text id="v-0" x="578" y="70" text-anchor="end">v=0</text>
+						<text id="a-0" x="578" y="95" text-anchor="end">a=0</text>
+					</g>
+					<g stroke-width="2" stroke-linejoin="square" stroke-linecap="square">
+						<circle id="circle-0" cx="290" cy="75" r="50" stroke="none" fill="#f65" />
+						<path id="distance-0" d="" stroke="#666" fill="none" />
+						<path id="arc-0" d="" stroke="none" fill="rgba(255,255,255,0.4)" />
+					</g>
+				</svg>
+
 			</details>
 		</div>
 

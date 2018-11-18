@@ -98,12 +98,14 @@ input[type=range]::-moz-focus-outer {
   border: 0;
 }
 
-canvas {
+canvas,
+.SVG-shadow {
   margin: 0px;
   box-shadow: 2px 2px 8px #aaa;
   border-radius: 5px;
   user-select: none;
 }
+
 
 a {
   text-decoration: none;
