@@ -36,9 +36,18 @@ table {
 
 #controls {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: 0px;
+  left: 1px;
   z-index: 12;
+  font-size: 1.3em;
+  /* background-color: #ccc; */
+  /* border-radius: 5px; */
+}
+
+#controls-div {
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #ddd;
 }
 
 #dmg {

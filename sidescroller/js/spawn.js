@@ -373,7 +373,7 @@ const spawn = {
       this.seePlayerByDistOrLOS();
       if (this.seePlayer.recall) {
         //eventHorizon waves in and out
-        eventHorizon = this.eventHorizon * (0.93 + 0.14 * Math.sin(game.cycle * 0.01))
+        eventHorizon = this.eventHorizon * (0.93 + 0.17 * Math.sin(game.cycle * 0.011))
 
         //accelerate towards the player
         const forceMag = this.accelMag * this.mass;

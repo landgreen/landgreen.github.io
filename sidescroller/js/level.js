@@ -186,7 +186,7 @@ const level = {
     game.zoomScale = 1200 //1400
     game.setZoom();
     mech.setPosToSpawn(460, -100); //normal spawn
-    level.enter.x = -10000; //offscreen
+    level.enter.x = -1000000; //offscreen
     level.enter.y = -400;
     level.exit.x = 2800;
     level.exit.y = -335;
@@ -701,6 +701,20 @@ const level = {
       color: "rgba(10,10,0,0.12)"
     });
 
+    //hidden zone
+    level.fill.push({
+      x: -4450,
+      y: -955,
+      width: 1025,
+      height: 360,
+      color: "#444"
+    });
+    powerUps.spawnStartingPowerUps(-4300, -700);
+    powerUps.spawnStartingPowerUps(-4200, -700);
+    powerUps.spawnStartingPowerUps(-4100, -700);
+    spawn.mapRect(-4450, -1000, 100, 500);
+
+
     //building 1
     spawn.bodyRect(-1000, -675, 25, 25);
     spawn.mapRect(-2225, 0, 2475, 150);
@@ -731,7 +745,7 @@ const level = {
     spawn.bodyRect(-1200, -75, 75, 75);
 
     //building 2
-    spawn.mapRect(-3450, -600, 1300, 750);
+    spawn.mapRect(-4450, -600, 2300, 750);
     spawn.mapRect(-2225, -500, 175, 550);
     spawn.boost(-2800, -600, 900);
     spawn.mapRect(-3450, -1325, 550, 50);
@@ -745,7 +759,7 @@ const level = {
     spawn.bodyRect(-3305, -1425, 100, 100);
 
     //building 3
-    spawn.mapRect(-4450, -1750, 1025, 1900);
+    spawn.mapRect(-4450, -1750, 1025, 1000);
     spawn.mapRect(-3750, -2000, 175, 275);
     spawn.mapRect(-4000, -2350, 275, 675);
     // spawn.mapRect(-4450, -2650, 475, 1000);

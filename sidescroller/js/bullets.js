@@ -557,7 +557,7 @@ const b = {
     {
       name: "flak",
       ammo: 0,
-      ammoPack: 9,
+      ammoPack: 10,
       have: false,
       fire: function () {
         b.muzzleFlash(30);
@@ -568,20 +568,19 @@ const b = {
           bullet[me] = Bodies.rectangle(mech.pos.x + 50 * Math.cos(mech.angle), mech.pos.y + 50 * Math.sin(mech.angle), 17, 4, b.fireAttributes(dir));
           b.fireProps(25, 32 + (Math.random() - 0.5) * 8, dir, me); //cd , speed
           //Matter.Body.setDensity(bullet[me], 0.00001);
-          bullet[me].endCycle = game.cycle + 16 + Math.floor(Math.random() * 7);
-          // bullet[me].restitution = 0.2;
-          bullet[me].explodeRad = 90 + (Math.random() - 0.5) * 75;
+          bullet[me].endCycle = game.cycle + 15 + Math.floor(Math.random() * 5);
+          bullet[me].restitution = 0;
+          bullet[me].friction = 1;
+          bullet[me].explodeRad = 95 + (Math.random() - 0.5) * 75;
           bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
           bullet[me].onDmg = function () {
             this.endCycle = 0; //bullet ends cycle after doing damage  //this triggers explosion
           };
           bullet[me].do = function () {
-            // this.force.y += this.mass * 0.001
-            //draw
-            // ctx.beginPath();
-            // ctx.arc(this.position.x, this.position.y, 9, 0, 2 * Math.PI);
-            // ctx.fillStyle = "rgba(255,100,0,1)";
-            // ctx.fill();
+            //if slow explode
+            if (this.speed < 2) {
+              this.endCycle = 0
+            }
           };
         }
       }
@@ -606,7 +605,7 @@ const b = {
         bullet[me].restitution = 0;
         bullet[me].friction = 1;
 
-        bullet[me].explodeRad = 350;
+        bullet[me].explodeRad = 350 + Math.floor(Math.random() * 60);
         bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
         bullet[me].minDmgSpeed = 1;
         bullet[me].onDmg = function () {
@@ -716,7 +715,7 @@ const b = {
       have: false,
       fire: function () {
         mech.fireCDcycle = game.cycle + 4; // cool down
-        const endCycle = game.cycle + 110
+        const endCycle = game.cycle + 108
         const bulletRadius = 5;
         const speed = 30;
         const spread = Math.PI / 2 * 0.70 // smaller = faster speed, larger = faster rotation?
