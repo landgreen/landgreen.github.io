@@ -351,12 +351,48 @@ function entropy0() {
 
   };
 
+
+  // let lastCountA = new Array(Math.floor(canvas.width / settings.maxBarSize)).fill(0)
+  // let lastCountB = new Array(Math.floor(canvas.width / settings.maxBarSize)).fill(0)
+  // let countB = new Array(Math.floor(canvas.width / settings.maxBarSize)).fill(0)
+  // let countA = new Array(Math.floor(canvas.width / settings.maxBarSize)).fill(0)
+  // let diff = -20; //set to -20 to account for starting with 20
+  // let countCycle = 0;
+
+  // function countSwitches() {
+  //   countCycle++;
+  //   //reset counts
+  //   for (let i = 0; i < countA.length; ++i) {
+  //     lastCountA[i] = countA[i];
+  //     lastCountB[i] = countB[i];
+  //     countA[i] = 0;
+  //     countB[i] = 0;
+  //   }
+  //   //rebuild counts
+  //   for (let i = 0; i < atom.length; ++i) {
+  //     index = Math.floor(atom[i].position.x / settings.barSize)
+  //     if (atom[i].isGroupA) {
+  //       countA[index]++
+  //     } else {
+  //       countB[index]++
+  //     }
+  //   }
+  //   //look for diffs
+  //   for (let i = 0; i < chartA.length; ++i) {
+  //     diff += Math.abs(lastCountA[i] - countA[i])
+  //     diff += Math.abs(lastCountB[i] - countB[i])
+  //   }
+  //   console.log(diff, diff / countCycle * 60)
+  // }
+
+
   function cycle() {
     if (settings.timeRate > 0) {
       for (let i = 0; i < settings.timeRate; ++i) {
         Engine.update(engine, 16.666);
         speedControl();
       }
+      // countSwitches();
       draw();
     }
     requestAnimationFrame(cycle);
