@@ -1,4 +1,4 @@
-(function() {
+(function () {
   var canvas = document.getElementById("charge9");
   var ctx = canvas.getContext("2d");
   // canvas.width = document.getElementsByTagName("article")[0].clientWidth;
@@ -9,6 +9,10 @@
 })();
 
 function charges9(el) {
+  //disable pop up menu on right click
+  el.oncontextmenu = function () {
+    return false;
+  }
   el.onclick = null; //stops the function from running on button click
   Charge.setCanvas(el);
   // var canvas = el
@@ -39,18 +43,25 @@ function charges9(el) {
   });
 
   //___________________get mouse input___________________
-  canvas.addEventListener("mousedown", function(event) {
-    Charge.repulse(q, {
-      x: (event.offsetX * canvas.width) / canvas.clientWidth,
-      y: (event.offsetY * canvas.height) / canvas.clientHeight
-    });
+  canvas.addEventListener("mousedown", function (event) {
+    if (event.which === 3) {
+      Charge.mouseCharge(q, {
+        x: (event.offsetX * canvas.width) / canvas.clientWidth,
+        y: (event.offsetY * canvas.height) / canvas.clientHeight
+      });
+    } else {
+      Charge.repulse(q, {
+        x: (event.offsetX * canvas.width) / canvas.clientWidth,
+        y: (event.offsetY * canvas.height) / canvas.clientHeight
+      });
+    }
   });
   let pause = false;
-  el.addEventListener("mouseleave", function() {
+  el.addEventListener("mouseleave", function () {
     pause = true;
     // setTimeout(function(){ Charge.scalarField(q,1) }, 100);
   });
-  el.addEventListener("mouseenter", function() {
+  el.addEventListener("mouseenter", function () {
     pause = false;
     Charge.setCanvas(el);
     if (!pause) requestAnimationFrame(cycle);
@@ -76,28 +87,31 @@ function charges9(el) {
   }
   for (let i = 0; i < Math.ceil((canvas.width + off * 2) / separation); ++i) {
     q[q.length] = new Charge(
-      "e",
-      {
+      "e", {
         x: separation * i - off,
         y: canvas.height / 2 + separation
-      },
-      { x: 2, y: 0 }
+      }, {
+        x: 2,
+        y: 0
+      }
     );
     q[q.length] = new Charge(
-      "e",
-      {
+      "e", {
         x: separation * i - off,
         y: canvas.height / 2
-      },
-      { x: 2, y: 0 }
+      }, {
+        x: 2,
+        y: 0
+      }
     );
     q[q.length] = new Charge(
-      "e",
-      {
+      "e", {
         x: separation * i - off,
         y: canvas.height / 2 - separation
-      },
-      { x: 2, y: 0 }
+      }, {
+        x: 2,
+        y: 0
+      }
     );
   }
   // Charge.spawnCharges(q, 25, 'e')

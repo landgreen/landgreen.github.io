@@ -7,7 +7,7 @@ function checkVisible(elm) {
   return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
 }
 
-const setup0 = function() {
+const setup0 = function () {
   var canvas = document.getElementById("cloud-chamber");
   var ctx = canvas.getContext("2d");
   ctx.font = "26px Arial";
@@ -18,16 +18,27 @@ const setup0 = function() {
 setup0();
 
 function charges15(el) {
+  //disable pop up menu on right click
+  el.oncontextmenu = function () {
+    return false;
+  }
   el.onclick = null; //stops the function from running on button click
   Charge.setCanvas(el);
   canvas.height = 400;
 
   //___________________get mouse input___________________
-  canvas.addEventListener("mousedown", function(event) {
-    Charge.repulse(q, {
-      x: (event.offsetX * canvas.width) / canvas.clientWidth,
-      y: (event.offsetY * canvas.height) / canvas.clientHeight
-    });
+  canvas.addEventListener("mousedown", function (event) {
+    if (event.which === 3) {
+      Charge.mouseCharge(q, {
+        x: (event.offsetX * canvas.width) / canvas.clientWidth,
+        y: (event.offsetY * canvas.height) / canvas.clientHeight
+      });
+    } else {
+      Charge.repulse(q, {
+        x: (event.offsetX * canvas.width) / canvas.clientWidth,
+        y: (event.offsetY * canvas.height) / canvas.clientHeight
+      });
+    }
   });
 
   const q = []; //holds the charges
@@ -41,11 +52,23 @@ function charges15(el) {
       const y = 30 + Math.random() * (canvas.width - 60);
       const mag = (0.08 + 0.01 * (Math.random() - 0.5)) * c;
       const angle = Math.random() * Math.PI * 2;
-      q[q.length] = new Charge("alpha", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
+      q[q.length] = new Charge("alpha", {
+        x: x,
+        y: y
+      }, {
+        x: mag * Math.cos(angle),
+        y: mag * Math.sin(angle)
+      });
       //sometimes spawn two alpha particles in the same location
       if (Math.random() < 0.1) {
         const off = Math.PI / 6 + (Math.random() * Math.PI) / 2;
-        q[q.length] = new Charge("alpha", { x: x, y: y }, { x: mag * Math.cos(angle + off), y: mag * Math.sin(angle + off) });
+        q[q.length] = new Charge("alpha", {
+          x: x,
+          y: y
+        }, {
+          x: mag * Math.cos(angle + off),
+          y: mag * Math.sin(angle + off)
+        });
       }
     }
 
@@ -54,10 +77,22 @@ function charges15(el) {
       const y = 30 + Math.random() * (canvas.width - 60);
       const mag = (0.16 + 0.8 * (Math.random() - 0.5)) * c;
       const angle = Math.random() * Math.PI * 2;
-      if (Math.random() < 0.8) q[q.length] = new Charge("e", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
+      if (Math.random() < 0.8) q[q.length] = new Charge("e", {
+        x: x,
+        y: y
+      }, {
+        x: mag * Math.cos(angle),
+        y: mag * Math.sin(angle)
+      });
       if (Math.random() < 0.05) {
         const magOff = mag * 6 * Math.random();
-        q[q.length] = new Charge("e", { x: x, y: y }, { x: magOff * Math.cos(angle), y: magOff * Math.sin(angle) });
+        q[q.length] = new Charge("e", {
+          x: x,
+          y: y
+        }, {
+          x: magOff * Math.cos(angle),
+          y: magOff * Math.sin(angle)
+        });
       }
       // if (Math.random() < 0.2) {
       //   const angleOff = angle + Math.random();
@@ -71,10 +106,22 @@ function charges15(el) {
       const y = 30 + Math.random() * (canvas.width - 60);
       const mag = (0.16 + 0.8 * (Math.random() - 0.5)) * c;
       const angle = Math.random() * Math.PI * 2;
-      q[q.length] = new Charge("e", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
+      q[q.length] = new Charge("e", {
+        x: x,
+        y: y
+      }, {
+        x: mag * Math.cos(angle),
+        y: mag * Math.sin(angle)
+      });
       const angleOff = angle + 3 * (Math.random() - 0.5);
       const magOff = mag + (Math.random() - 0.5) * c * 0.7;
-      q[q.length] = new Charge("positron", { x: x, y: y }, { x: magOff * Math.cos(angleOff), y: magOff * Math.sin(angleOff) });
+      q[q.length] = new Charge("positron", {
+        x: x,
+        y: y
+      }, {
+        x: magOff * Math.cos(angleOff),
+        y: magOff * Math.sin(angleOff)
+      });
     }
 
     if (settings.proton && Math.random() < spawnRate) {
@@ -82,7 +129,13 @@ function charges15(el) {
       const y = 30 + Math.random() * (canvas.width - 60);
       const mag = (0.43 + 0.1 * (Math.random() - 0.5)) * c;
       const angle = Math.random() * Math.PI * 2;
-      q[q.length] = new Charge("proton", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
+      q[q.length] = new Charge("proton", {
+        x: x,
+        y: y
+      }, {
+        x: mag * Math.cos(angle),
+        y: mag * Math.sin(angle)
+      });
     }
 
     if (settings.muon && Math.random() < spawnRate) {
@@ -90,7 +143,13 @@ function charges15(el) {
       const y = 30 + Math.random() * (canvas.width - 60);
       const mag = 0.99 * c;
       const angle = Math.random() * Math.PI * 2;
-      q[q.length] = new Charge("muon", { x: x, y: y }, { x: mag * Math.cos(angle), y: mag * Math.sin(angle) });
+      q[q.length] = new Charge("muon", {
+        x: x,
+        y: y
+      }, {
+        x: mag * Math.cos(angle),
+        y: mag * Math.sin(angle)
+      });
     }
     //add decays and additions spawned by active particles
     //    https://www.nuledo.com/en/cloud-chambers/#alfa-castice

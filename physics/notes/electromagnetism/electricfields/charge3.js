@@ -1,4 +1,4 @@
-const setup3 = function() {
+const setup3 = function () {
   var canvas = document.getElementById("charge3");
   var ctx = canvas.getContext("2d");
   canvas.width = document.getElementsByTagName("article")[0].clientWidth;
@@ -10,6 +10,9 @@ const setup3 = function() {
 setup3();
 
 function charges3(el) {
+  el.oncontextmenu = function () {
+    return false;
+  }
   el.onclick = null; //stops the function from running on button click
   Charge.setCanvas(el);
   // var canvas = el
@@ -40,17 +43,24 @@ function charges3(el) {
   });
 
   //___________________get mouse input___________________
-  canvas.addEventListener("mousedown", function(event) {
-    Charge.repulse(q, {
-      x: (event.offsetX * canvas.width) / canvas.clientWidth,
-      y: (event.offsetY * canvas.height) / canvas.clientHeight
-    });
+  canvas.addEventListener("mousedown", function (event) {
+    if (event.which === 3) {
+      Charge.mouseCharge(q, {
+        x: (event.offsetX * canvas.width) / canvas.clientWidth,
+        y: (event.offsetY * canvas.height) / canvas.clientHeight
+      });
+    } else {
+      Charge.repulse(q, {
+        x: (event.offsetX * canvas.width) / canvas.clientWidth,
+        y: (event.offsetY * canvas.height) / canvas.clientHeight
+      });
+    }
   });
   let pause = false;
-  el.addEventListener("mouseleave", function() {
+  el.addEventListener("mouseleave", function () {
     pause = true;
   });
-  el.addEventListener("mouseenter", function() {
+  el.addEventListener("mouseenter", function () {
     pause = false;
     Charge.setCanvas(el);
     if (!pause) requestAnimationFrame(cycle);

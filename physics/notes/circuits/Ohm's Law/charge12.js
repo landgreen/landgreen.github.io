@@ -1,4 +1,4 @@
-(function() {
+(function () {
   var canvas = document.getElementById("charge12");
   var ctx = canvas.getContext("2d");
   ctx.font = "22px Arial";
@@ -8,6 +8,10 @@
 })();
 
 function charges12(el) {
+  //disable pop up menu on right click
+  el.oncontextmenu = function () {
+    return false;
+  }
   el.onclick = null; //stops the function from running on button click
   Charge.setCanvas(el);
   ctx.textBaseline = "middle";
@@ -39,14 +43,21 @@ function charges12(el) {
   });
 
   //___________________get mouse input___________________
-  canvas.addEventListener("mousedown", function(event) {
-    Charge.repulse(q, {
-      x: (event.offsetX * canvas.width) / canvas.clientWidth,
-      y: (event.offsetY * canvas.height) / canvas.clientHeight
-    });
+  canvas.addEventListener("mousedown", function (event) {
+    if (event.which === 3) {
+      Charge.mouseCharge(q, {
+        x: (event.offsetX * canvas.width) / canvas.clientWidth,
+        y: (event.offsetY * canvas.height) / canvas.clientHeight
+      });
+    } else {
+      Charge.repulse(q, {
+        x: (event.offsetX * canvas.width) / canvas.clientWidth,
+        y: (event.offsetY * canvas.height) / canvas.clientHeight
+      });
+    }
   });
   let pause = false;
-  el.addEventListener("mouseleave", function() {
+  el.addEventListener("mouseleave", function () {
     pause = true;
     // setTimeout(function(){
     // 	Charge.scalarField(q,1)
@@ -54,7 +65,7 @@ function charges12(el) {
     // 	Charge.pushZone(q,offx)
     // }, 100);
   });
-  el.addEventListener("mouseenter", function() {
+  el.addEventListener("mouseenter", function () {
     pause = false;
     Charge.setCanvas(el);
     ctx.textBaseline = "middle";
@@ -73,20 +84,56 @@ function charges12(el) {
   const v = 1.8;
 
   for (let i = 0; i < lenX; ++i) {
-    q[q.length] = new Charge("p", { x: offx + i * separation, y: offy });
-    q[q.length] = new Charge("p", { x: offx + i * separation, y: canvas.height - offy });
+    q[q.length] = new Charge("p", {
+      x: offx + i * separation,
+      y: offy
+    });
+    q[q.length] = new Charge("p", {
+      x: offx + i * separation,
+      y: canvas.height - offy
+    });
   }
   for (let i = 0; i < lenY; ++i) {
-    q[q.length] = new Charge("p", { x: offx, y: offy + i * separation });
-    q[q.length] = new Charge("p", { x: canvas.width - offx, y: offy + i * separation });
+    q[q.length] = new Charge("p", {
+      x: offx,
+      y: offy + i * separation
+    });
+    q[q.length] = new Charge("p", {
+      x: canvas.width - offx,
+      y: offy + i * separation
+    });
   }
   for (let i = 0; i < lenX; ++i) {
-    q[q.length] = new Charge("e", { x: offx + i * separation, y: offy }, { x: -v, y: 0 });
-    q[q.length] = new Charge("e", { x: offx + i * separation, y: canvas.height - offy }, { x: v, y: 0 });
+    q[q.length] = new Charge("e", {
+      x: offx + i * separation,
+      y: offy
+    }, {
+      x: -v,
+      y: 0
+    });
+    q[q.length] = new Charge("e", {
+      x: offx + i * separation,
+      y: canvas.height - offy
+    }, {
+      x: v,
+      y: 0
+    });
   }
   for (let i = 0; i < lenY; ++i) {
-    q[q.length] = new Charge("e", { x: offx, y: offy + i * separation }, { x: 0, y: v });
-    q[q.length] = new Charge("e", { x: canvas.width - offx, y: offy + i * separation }, { x: 0, y: -v });
+    q[q.length] = new Charge("e", {
+      x: offx,
+      y: offy + i * separation
+    }, {
+      x: 0,
+      y: v
+    });
+    q[q.length] = new Charge("e", {
+      x: canvas.width - offx,
+      y: offy + i * separation
+    }, {
+      x: 0,
+      y: -v
+    });
   }
 
   //voltmeter
@@ -100,6 +147,7 @@ function charges12(el) {
     x: 110,
     y: 325
   };
+
   function voltmeter() {
     p1.value = p1.value * 0.995 + Charge.potential(q, p1) * 0.005;
     p2.value = p2.value * 0.995 + Charge.potential(q, p2) * 0.005;
@@ -111,6 +159,7 @@ function charges12(el) {
   }
 
   let inZone = [];
+
   function cycle() {
     Charge.physicsAll(q);
     Charge.bounds(q);

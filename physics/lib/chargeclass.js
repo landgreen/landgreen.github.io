@@ -1,6 +1,5 @@
-var canvas, ctx;
+let canvas, ctx;
 class Charge {
-  //charge class
   constructor(
     type,
     position,
@@ -102,10 +101,73 @@ class Charge {
     }
   }
 
+  static clickStart(id, message = "click to start simulation", font = "30px Arial") {
+    var canvas = document.getElementById(id);
+    var ctx = canvas.getContext("2d");
+    canvas.width = document.getElementsByTagName("article")[0].clientWidth;
+    ctx.font = font;
+    ctx.fillStyle = "#aaa";
+    ctx.textAlign = "center";
+    ctx.fillText(message, canvas.width / 2, canvas.height / 2);
+  }
+
   static setCanvas(el) {
     canvas = el;
     ctx = canvas.getContext("2d");
     ctx.font = "300 20px Roboto";
+  }
+
+  static setup(el, q) {
+    Charge.setCanvas(el);
+    el.onclick = null; //stops the function from running on button click
+
+    // disable right click menu 
+    el.oncontextmenu = function () {
+      return false;
+    }
+    // disable mouse wheel scroll 
+    el.onwheel = function (event) {
+      event.preventDefault();
+    };
+    el.onmousewheel = function (event) {
+      event.preventDefault();
+    };
+    // disable middle mouse click scroll
+    el.onmousedown = function (event) {
+      if (event.button === 1) return false;
+    }
+
+    el.addEventListener("mousedown", function (event) {
+      const mouse = {
+        x: (event.offsetX * el.width) / el.clientWidth,
+        y: (event.offsetY * el.height) / el.clientHeight
+      }
+      switch (event.which) {
+        case 1:
+          Charge.repulse(q, {
+            x: mouse.x,
+            y: mouse.y
+          });
+          break;
+        case 2:
+          q[q.length] = new Charge("p", {
+            x: mouse.x,
+            y: mouse.y
+          });
+          break;
+        case 3:
+          Charge.mouseCharge(q, {
+            x: mouse.x,
+            y: mouse.y
+          });
+          break;
+        default:
+          Charge.mouseCharge(q, {
+            x: mouse.x,
+            y: mouse.y
+          });
+      }
+    });
   }
 
   static drawAll(who) {
@@ -412,14 +474,14 @@ class Charge {
     }
   }
 
-  static mouseCharge(who, pos, charge = 1) {
+  static mouseCharge(who, pos, charge = -16) {
     for (let i = 0, len = who.length; i < len; ++i) {
       if (who[i].canMove) {
         const dx = who[i].position.x - pos.x;
         const dy = who[i].position.y - pos.y;
         const a = Math.atan2(dy, dx);
         //the +4000 keeps r from being zero
-        const r = dx * dx + dy * dy + 4000;
+        const r = dx * dx + dy * dy + 10000;
         const mag = (charge * 1000) / r;
         who[i].velocity.x += mag * Math.cos(a);
         who[i].velocity.y += mag * Math.sin(a);
