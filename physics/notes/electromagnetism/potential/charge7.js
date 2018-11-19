@@ -1,146 +1,80 @@
-(function () {
-  var canvas = document.getElementById("charge7");
-  var ctx = canvas.getContext("2d");
-  canvas.width = document.getElementsByTagName("article")[0].clientWidth;
-  ctx.font = "30px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-})();
+  Charge.clickStart("charge7")
 
-function charges7(el) {
-  //disable pop up menu on right click
-  el.oncontextmenu = function () {
-    return false;
-  }
-  el.onclick = null; //stops the function from running on button click
-  Charge.setCanvas(el);
-  // var canvas = el
-  // var ctx = canvas.getContext("2d");
+  function charges7(el) {
+    const q = []; //holds the charges
+    Charge.setup(el, q);
 
-  //switch between draw modes
-  let drawMode = 3;
-  document.addEventListener("keypress", event => {
-    if (!pause) {
-      if (event.charCode === 49) {
-        drawMode = 1; //particle
-        el.style.background = "#fff";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      } else if (event.charCode === 50) {
-        drawMode = 2; //particles + electric vector field
-        el.style.background = "#fff";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      } else if (event.charCode === 51) {
-        drawMode = 3; //electric potential scalar field
-        el.style.background = "#fff";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      } else if (event.charCode === 52) {
-        drawMode = 4; //cloud chamber
-        el.style.background = "#000";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let pause = false;
+    el.addEventListener("mouseleave", function () {
+      pause = true;
+    });
+    el.addEventListener("mouseenter", function () {
+      Charge.setCanvas(el);
+      if (pause) requestAnimationFrame(cycle);
+      pause = false;
+    });
+
+
+    //spawn p before e to avoid a bug in the class method allPhysics
+    const side = 30;
+    const apothem = side * 0.866; //vertical distance between rows
+    const rows = 6; // y
+    const columns = 4; // x
+
+    const hexLeft = canvas.width / 2 - side * ((columns * 3) / 4);
+    const hexTop = canvas.height / 2 - apothem * (rows / 2);
+
+    for (let y = 1; y < rows; ++y) {
+      let xOff = 0;
+      if (y % 2) {} else {
+        xOff = 0.5; //odd
+      }
+      for (let x = -1, i = 0; i < columns; ++i) {
+        if (i % 2) {
+          //even
+          x++;
+          xOff = Math.abs(xOff);
+        } else {
+          //odd
+          x += 2;
+          xOff = -Math.abs(xOff);
+        }
+
+        q[q.length] = new Charge("p", {
+          x: hexLeft + (x + xOff) * side,
+          y: hexTop + y * apothem
+        });
       }
     }
-  });
 
-  //___________________get mouse input___________________
-  canvas.addEventListener("mousedown", function (event) {
-    if (event.which === 3) {
-      Charge.mouseCharge(q, {
-        x: (event.offsetX * canvas.width) / canvas.clientWidth,
-        y: (event.offsetY * canvas.height) / canvas.clientHeight
-      });
-    } else {
-      Charge.repulse(q, {
-        x: (event.offsetX * canvas.width) / canvas.clientWidth,
-        y: (event.offsetY * canvas.height) / canvas.clientHeight
-      });
-    }
-  });
-  let pause = false;
-  el.addEventListener("mouseleave", function () {
-    pause = true;
-  });
-  el.addEventListener("mouseenter", function () {
-    Charge.setCanvas(el);
-    if (pause) requestAnimationFrame(cycle);
-    pause = false;
-  });
-
-  const q = []; //holds the charges
-  //spawn p before e to avoid a bug in the class method allPhysics
-  const side = 30;
-  const apothem = side * 0.866; //vertical distance between rows
-  const rows = 6; // y
-  const columns = 10; // x
-
-  const hexLeft = canvas.width / 2 - side * ((columns * 3) / 4);
-  const hexTop = canvas.height / 2 - apothem * (rows / 2);
-
-  for (let y = 1; y < rows; ++y) {
-    let xOff = 0;
-    if (y % 2) {} else {
-      xOff = 0.5; //odd
-    }
-    for (let x = -1, i = 0; i < columns; ++i) {
-      if (i % 2) {
-        //even
-        x++;
-        xOff = Math.abs(xOff);
-      } else {
-        //odd
-        x += 2;
-        xOff = -Math.abs(xOff);
+    for (let y = 1; y < rows; ++y) {
+      let xOff = 0;
+      if (y % 2) {} else {
+        xOff = 0.5; //odd
       }
+      for (let x = -1, i = 0; i < columns; ++i) {
+        if (i % 2) {
+          //even
+          x++;
+          xOff = Math.abs(xOff);
+        } else {
+          //odd
+          x += 2;
+          xOff = -Math.abs(xOff);
+        }
 
-      q[q.length] = new Charge("p", {
-        x: hexLeft + (x + xOff) * side,
-        y: hexTop + y * apothem
-      });
-    }
-  }
-
-  for (let y = 1; y < rows; ++y) {
-    let xOff = 0;
-    if (y % 2) {} else {
-      xOff = 0.5; //odd
-    }
-    for (let x = -1, i = 0; i < columns; ++i) {
-      if (i % 2) {
-        //even
-        x++;
-        xOff = Math.abs(xOff);
-      } else {
-        //odd
-        x += 2;
-        xOff = -Math.abs(xOff);
+        q[q.length] = new Charge("e", {
+          x: hexLeft + (x + xOff) * side + 10 * (Math.random() - 0.5),
+          y: hexTop + y * apothem
+        });
       }
-
-      q[q.length] = new Charge("e", {
-        x: hexLeft + (x + xOff) * side + 10 * (Math.random() - 0.5),
-        y: hexTop + y * apothem
-      });
     }
-  }
 
-  function cycle() {
-    Charge.physicsAll(q);
-    Charge.bounds(q);
-    //choose a draw mode
-    if (drawMode === 1) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      Charge.drawAll(q);
-    } else if (drawMode === 2) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      Charge.vectorField(q);
-      ctx.globalAlpha = 0.5;
-      Charge.drawAll(q);
-      ctx.globalAlpha = 1;
-    } else if (drawMode === 3) {
-      Charge.scalarField(q);
-    } else if (drawMode === 4) {
-      Charge.drawCloudChamber(q);
+    function cycle() {
+      Charge.physicsAll(q);
+      Charge.bounds(q);
+      Charge.scalarField(q, true);
+      if (!pause) requestAnimationFrame(cycle);
     }
-    if (!pause) requestAnimationFrame(cycle);
+    requestAnimationFrame(cycle);
   }
-  requestAnimationFrame(cycle);
-}

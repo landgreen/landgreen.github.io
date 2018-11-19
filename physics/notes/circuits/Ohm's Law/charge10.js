@@ -8,62 +8,16 @@
 })();
 
 function charges10(el) {
-  //disable pop up menu on right click
-  el.oncontextmenu = function () {
-    return false;
-  }
-  el.onclick = null; //stops the function from running on button click
-  Charge.setCanvas(el);
+
+  const q = []; //holds the charges
+  Charge.setup(el, q);
   ctx.textBaseline = "middle";
   ctx.textAlign = "left";
   ctx.font = "300 18px Roboto";
 
-  //switch between draw modes
-  let drawMode = 3;
-  document.addEventListener("keypress", event => {
-    if (!pause) {
-      if (event.charCode === 49) {
-        drawMode = 1; //particle
-        el.style.background = "#fff";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      } else if (event.charCode === 50) {
-        drawMode = 2; //particles + electric vector field
-        el.style.background = "#fff";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      } else if (event.charCode === 51) {
-        drawMode = 3; //electric potential scalar field
-        el.style.background = "#fff";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      } else if (event.charCode === 52) {
-        drawMode = 4; //cloud chamber
-        el.style.background = "#000";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-    }
-  });
-
-  //___________________get mouse input___________________
-  canvas.addEventListener("mousedown", function (event) {
-    if (event.which === 3) {
-      Charge.mouseCharge(q, {
-        x: (event.offsetX * canvas.width) / canvas.clientWidth,
-        y: (event.offsetY * canvas.height) / canvas.clientHeight
-      });
-    } else {
-      Charge.repulse(q, {
-        x: (event.offsetX * canvas.width) / canvas.clientWidth,
-        y: (event.offsetY * canvas.height) / canvas.clientHeight
-      });
-    }
-  });
   let pause = false;
   el.addEventListener("mouseleave", function () {
     pause = true;
-    // setTimeout(function(){
-    // 	Charge.scalarField(q,1)
-    // 	voltmeter()
-    // 	Charge.pushZone(q,offx)
-    // }, 100);
   });
   el.addEventListener("mouseenter", function () {
     pause = false;
@@ -74,7 +28,6 @@ function charges10(el) {
     if (!pause) requestAnimationFrame(cycle);
   });
 
-  const q = []; //holds the charges
   //spawn p before e to avoid a bug in the class method allPhysics
   const separation = 10;
   let lenX = 17;
@@ -154,21 +107,7 @@ function charges10(el) {
   function cycle() {
     Charge.physicsAll(q);
     Charge.bounds(q);
-    //choose a draw mode
-    if (drawMode === 1) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      Charge.drawAll(q);
-    } else if (drawMode === 2) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      Charge.vectorField(q);
-      ctx.globalAlpha = 0.5;
-      Charge.drawAll(q);
-      ctx.globalAlpha = 1;
-    } else if (drawMode === 3) {
-      Charge.scalarField(q);
-    } else if (drawMode === 4) {
-      Charge.drawCloudChamber(q);
-    }
+    Charge.scalarField(q);
     voltmeter();
     Charge.pushZone(q, offx);
     if (!pause) requestAnimationFrame(cycle);

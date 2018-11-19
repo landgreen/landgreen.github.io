@@ -15,8 +15,10 @@ class Charge {
       this.name = "electron";
       this.mass = 1;
       this.charge = -1;
-      this.radius = 15;
-      this.color = "rgba(0,100,255,0.4)";
+      this.radius = 7;
+      this.color = "rgba(0,100,255,0.6)";
+      // this.radius = 15;
+      // this.color = "rgba(0,100,255,0.4)";
       this.life = 100 + Math.floor(Math.random() * 500);
       this.wide = 0;
       this.speed = 0.13; // % of speed of light, c
@@ -125,13 +127,15 @@ class Charge {
     el.oncontextmenu = function () {
       return false;
     }
+
     // disable mouse wheel scroll 
-    el.onwheel = function (event) {
-      event.preventDefault();
-    };
-    el.onmousewheel = function (event) {
-      event.preventDefault();
-    };
+    // el.onwheel = function (event) {
+    //   event.preventDefault();
+    // };
+    // el.onmousewheel = function (event) {
+    //   event.preventDefault();
+    // };
+
     // disable middle mouse click scroll
     el.onmousedown = function (event) {
       if (event.button === 1) return false;
@@ -150,16 +154,22 @@ class Charge {
           });
           break;
         case 2:
-          q[q.length] = new Charge("p", {
+          q[q.length] = new Charge("e", {
             x: mouse.x,
             y: mouse.y
           });
           break;
         case 3:
-          Charge.mouseCharge(q, {
-            x: mouse.x,
-            y: mouse.y
-          });
+          if (mouse.x < 10 && mouse.y < 10) {
+            // clear all charges if mouse in top left
+            q.length = 0
+          } else {
+            q[q.length] = new Charge("p", {
+              x: mouse.x,
+              y: mouse.y
+            });
+          }
+
           break;
         default:
           Charge.mouseCharge(q, {
@@ -560,7 +570,7 @@ class Charge {
     }
     ctx.globalAlpha = 1;
   }
-  static scalarField(who) {
+  static scalarField(who, fullResolution = false) {
     const fieldMag = 1000;
     const chromaBytes = [
       [0x88, 0x00, 0x00],
@@ -828,43 +838,47 @@ class Charge {
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
 
-    for (let y = 0; y < canvasHeight; ++y) {
-      for (let x = 0; x < canvasWidth; x += 2) {
-        const index = (y * canvasWidth + x) * 4;
-        let mag = 0;
-        for (let j = 0, len = who.length; j < len; j++) {
-          const dx = who[j].position.x - x;
-          const dy = who[j].position.y - y;
-          mag -= who[j].charge / (Math.sqrt(dx * dx + dy * dy) + 1);
+    if (fullResolution) {
+      for (let y = 0; y < canvasHeight; ++y) {
+        for (let x = 0; x < canvasWidth; x += 1) {
+          const index = (y * canvasWidth + x) * 4;
+          let mag = 0;
+          for (let j = 0, len = who.length; j < len; j++) {
+            const dx = who[j].position.x - x;
+            const dy = who[j].position.y - y;
+            mag -= who[j].charge / (Math.sqrt(dx * dx + dy * dy) + 1);
+          }
+          let hue = Math.min(Math.max(Math.round(mag * fieldMag) + 128, 0), 255);
+          data[index + 0] = chromaBytes[hue][0]; // red
+          data[index + 1] = chromaBytes[hue][1]; // green
+          data[index + 2] = chromaBytes[hue][2]; // blue
+          data[index + 3] = 255; // alpha
         }
-        let hue = Math.min(Math.max(Math.round(mag * fieldMag) + 128, 0), 255);
-        for (let k = 0; k < 8; k += 4) {
-          //make pixels 2 wide
-          data[index + k + 0] = chromaBytes[hue][0]; // red
-          data[index + k + 1] = chromaBytes[hue][1]; // green
-          data[index + k + 2] = chromaBytes[hue][2]; // blue
-          data[index + k + 3] = 255; // alpha
+      }
+    } else {
+      for (let y = 0; y < canvasHeight; ++y) {
+        for (let x = 0; x < canvasWidth; x += 2) {
+          const index = (y * canvasWidth + x) * 4;
+          let mag = 0;
+          for (let j = 0, len = who.length; j < len; j++) {
+            const dx = who[j].position.x - x;
+            const dy = who[j].position.y - y;
+            mag -= who[j].charge / (Math.sqrt(dx * dx + dy * dy) + 1);
+          }
+          let hue = Math.min(Math.max(Math.round(mag * fieldMag) + 128, 0), 255);
+          for (let k = 0; k < 8; k += 4) {
+            //make pixels 2 wide
+            data[index + k + 0] = chromaBytes[hue][0]; // red
+            data[index + k + 1] = chromaBytes[hue][1]; // green
+            data[index + k + 2] = chromaBytes[hue][2]; // blue
+            data[index + k + 3] = 255; // alpha
+          }
         }
       }
     }
-    // for (var i = 0; i < data.length; i += 8) {
-    //   const x = (i / 4) % canvasWidth;
-    //   const y = Math.floor(i / 4 / canvasWidth);
-    //   let mag = 0;
-    //   for (let j = 0, len = who.length; j < len; j++) {
-    //     const dx = who[j].position.x - x;
-    //     const dy = who[j].position.y - y;
-    //     mag -= who[j].charge / (Math.sqrt(dx * dx + dy * dy) + 1);
-    //   }
-    //   let hue = Math.min(Math.max(Math.round(mag * fieldMag) + 128, 0), 255);
-    //   for (let k = 0; k < 8; k += 4) {
-    //     //make pixels bigger, is this really worth it?
-    //     data[i + k + 0] = chromaBytes[hue][0]; // red
-    //     data[i + k + 1] = chromaBytes[hue][1]; // green
-    //     data[i + k + 2] = chromaBytes[hue][2]; // blue
-    //     data[i + k + 3] = 255; // alpha
-    //   }
-    // }
+
+
+
     ctx.putImageData(imageData, 0, 0);
   }
 }
