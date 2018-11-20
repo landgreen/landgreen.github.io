@@ -29,15 +29,11 @@
 		</h1>
 	</header>
 	<article>
-		<p>A
-			<strong>field</strong> has a value for each point in space and time. For example, on a weather map, the
-			<a href='https://earth.nullschool.net/'>surface wind velocity</a> is described by assigning a vector to each point
-			on the map.</p>
-		<!-- <h2 class='underlined'>Electric Fields</h2> -->
 		<p>
-			<a href='https://www.youtube.com/watch?v=63FnT0W-Hxc'>Electric fields</a> predict the electric force of an imaginary
-			+1 C test charge at a location. This is useful when you
-			only know about one charge instead of the pair, but remember the test charge doesn't exist.</p>
+			A <strong>field</strong> has a value for each point in space and time. For example, on a weather map, the <a href='https://earth.nullschool.net/'>surface wind velocity</a> is described by assigning a vector to each point on the map.</p>
+		<p>
+			<a href='https://www.youtube.com/watch?v=63FnT0W-Hxc'>Electric fields</a> predict the electric force of an imaginary +1 C test charge at a location. This is useful when you only know about one charge instead of the pair, but remember the test charge doesn't exist.
+		</p>
 		<p>Click the simulations to push the electrons out of position.</p>
 		<canvas id='charge3' height='300' onclick="charges3(this)"> </canvas>
 		<p>Why does the field go to zero when the protons and electrons are in atoms?</p>
@@ -72,237 +68,232 @@
 				<br>\(q\) = charge [C, Coulomb]
 				<br>\(r\) = distance between the charge and a location [m]
 		</div>
-		<p>We can figure out the direction of the electric field by imagining what a positive +1 C charge would do at each
-			location.</p>
-		<svg viewBox="-100 0 600 400">
-			<g transform="translate(200 200)">
-				<g transform="rotate(0)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
+		<p>We can figure out the direction of the electric field by imagining what a positive +1 C charge would do at each location.</p>
+		<svg viewBox="-300 -300 600 600" style="border-radius: 50%;">
+			<g transform="rotate(0)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
 				</g>
-				<g transform="rotate(30)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
+				<g transform="translate(150 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
 				</g>
-				<g transform="rotate(60)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(90)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(120)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(150)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(180)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(210)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(240)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(270)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(300)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(330)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<circle cx="0" cy="0" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
-				<line x1="-5" y1="0" x2="5" y2="0" style="stroke:#000;stroke-width:2" />
 			</g>
+			<g transform="rotate(30)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(60)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(90)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(120)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(150)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(180)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(210)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(240)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(270)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(300)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(330)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<circle cx="0" cy="0" r="15" fill='#ccf' stroke-width="2" stroke="#222" />
+			<line x1="-5" y1="0" x2="5" y2="0" style="stroke:#000;stroke-width:2" />
 		</svg>
 		<p>Negative charges produce an inward electric field.</p>
 		<br>
-		<svg viewBox="-100 0 600 400">
-			<g transform="translate(200 200)">
-				<g transform="rotate(0)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
+		<svg viewBox="-300 -300 600 600" style="border-radius: 50%;">
+			<g transform="rotate(0)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
 				</g>
-				<g transform="rotate(30)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
+				<g transform="translate(150 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
 				</g>
-				<g transform="rotate(60)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(90)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(120)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(150)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(180)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(210)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(240)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(270)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(300)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<g transform="rotate(330)">
-					<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
-					<g transform="translate(50 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-					<g transform="translate(150 0)">
-						<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
-					</g>
-				</g>
-				<circle cx="0" cy="0" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
-				<text x="0" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="20">+</text>
 			</g>
+			<g transform="rotate(30)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(60)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(90)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(120)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(150)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(180)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(210)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(240)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(270)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(300)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<g transform="rotate(330)">
+				<line x1="5" y1="0" x2="500" y2="0" style="stroke:#000;stroke-width:2" />
+				<g transform="translate(50 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+				<g transform="translate(150 0)">
+					<polygon points="12,0 0,5 0,-5" style="fill:#000;" />
+				</g>
+			</g>
+			<circle cx="0" cy="0" r="15" fill='#fcc' stroke-width="2" stroke="#222" />
+			<text x="0" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="20">+</text>
 		</svg>
 		<p>Positive charges produce an outward electric field.</p>
 		<div class='example'>
@@ -312,9 +303,7 @@
 				$$\mu = \text{micro} = 10^{-6}$$
 				<br> $$E = \frac{k_{e}q}{r^{2}}$$ $$E = \frac{(8.987 \times 10^{9})(-3 \times 10^{-6})}{(2)^{2}}$$ $$E = -6740 \,
 				\mathrm{\tfrac{N}{C}}$$
-				<p>The test charge is always positive and the charge that generates this field is negative. Opposites attract, so
-					the field
-					is pointed towards the -3.0 μC charge</p>
+				<p>The test charge is always positive and the charge that generates this field is negative. Opposites attract, so the field is pointed towards the -3.0 μC charge</p>
 				<svg viewBox="-100 0 600 400">
 					<g transform="translate(200 200)">
 						<g transform="rotate(0)">
@@ -507,9 +496,7 @@
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> A positive 0.005 μC charge is placed in a uniform 200 N/C field pointed to the right. What
-			force does
-			the charge feel?
+			<strong>Example:</strong> A positive 0.005 μC charge is placed in a uniform 200 N/C field pointed to the right. What force does the charge feel?
 			<details>
 				<summary>solution</summary>
 				<svg viewBox="-25 0 600 160">
@@ -556,19 +543,14 @@
 					</g>
 				</svg>
 
-				$$F = Eq$$ $$F = (200\, \mathrm{\tfrac{N}{C}})(0.005 \times 10^{-6}\,\mathrm{C})$$ $$F = 10^{-6} \, \mathrm{N} \
-				\rightarrow$$
-				The electric field shows the force a positive charge would experience. Our charge is positive so it will go in the
-				same
-				direction as the field,
+				$$F = Eq$$ $$F = (200\, \mathrm{\tfrac{N}{C}})(0.005 \times 10^{-6}\,\mathrm{C})$$ $$F = 10^{-6} \, \mathrm{N} \, \rightarrow$$
+				The electric field shows the force a positive charge would experience. Our charge is positive so it will go in the same direction as the field,
 				<strong>right</strong>.
 			</details>
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> Find the strength and direction for an electric field that would make a proton accelerate
-			to the right
-			at 2 m/s²?
+			<strong>Example:</strong> Find the strength and direction for an electric field that would make a proton accelerate to the right at 2 m/s²?
 			<details>
 				<summary>solution</summary>
 				$$m_{p} = 1.672 \times 10^{-27} \, \mathrm{kg} \quad q_{p} = 1.602 \times 10^{-19}\, \mathrm{C}$$
@@ -582,13 +564,9 @@
 		</div>
 
 		<h2 class='underlined'>Solving for Multiple Charges</h2>
-		<p>To find the field from multiple charges, we need to add each individual field contribution from each charge. Be
-			mindful
-			of the direction of each field contribution to see which are negative or positive.</p>
+		<p>To find the field from multiple charges, we need to add each individual field contribution from each charge. Be mindful of the direction of each field contribution to see which are negative or positive.</p>
 		<div class='example'>
-			<strong>Example:</strong> A positive 1 μC charge is 50 mm away from a -2 μC charge. Find the magnitude and direction
-			of the electric
-			field halfway in between these charges.
+			<strong>Example:</strong> A positive 1 μC charge is 50 mm away from a -2 μC charge. Find the magnitude and direction of the electric field halfway in between these charges.
 			<details>
 				<summary>solution</summary>
 				<p>Draw a picture</p>
