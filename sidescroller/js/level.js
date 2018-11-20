@@ -14,7 +14,7 @@ const level = {
     game.setZoom(); //reset zoom
     if (game.levelsCleared === 0) {
       this.intro();
-      // game.levelsCleared = 6; //for testing to simulate all possible mobs spawns
+      // game.levelsCleared = 5; //for testing to simulate all possible mobs spawns
       // this.bosses();
       // this.testingMap();
       // this.skyscrapers();
@@ -469,10 +469,8 @@ const level = {
     spawn.mapRect(4500, -700, 50, 600); //
     spawn.bodyRect(4500, -100, 50, 100, 0.8); //
 
-
     spawn.spawnStairs(3800, 0, 3, 150, 206); //stairs top exit
     spawn.mapRect(3500, -275, 350, 275); //exit platform
-
 
     spawn.randomSmallMob(2200, -1775); //
     spawn.randomSmallMob(4000, -825); //
@@ -493,6 +491,7 @@ const level = {
     spawn.randomBoss(2225, -1325, 0.4); //
     spawn.randomBoss(4900, -1200, 0); //
     //spawn.randomBoss(4850, -1250,0.7);
+    if (game.levelsCleared > 3) spawn.bomber(2500, -2400, 100);
   },
   skyscrapers: function () {
     // if (game.levelsCleared < level.levels.length) game.startZoomIn();
@@ -962,10 +961,39 @@ const level = {
     spawn.randomMob(900, -200, -0.1);
     spawn.randomBoss(-125, 275, -0.2);
     spawn.randomBoss(-825, 1000, 0.2);
-    spawn.randomBoss(-1300, -1100, 0.1);
+    spawn.randomBoss(-1300, -1100, -0.3);
     //spawn.randomBoss(600, -1575, 0);
     //spawn.randomMob(1120, -1200, 0.3);
-    //spawn.randomSmallMob(2200, -1775); //
+    //spawn.randomSmallMob(2200, -1775);
+
+    //snake with head
+    if (game.levelsCleared > 2) {
+      const snake = {
+        x: -2000,
+        y: -900
+      }
+      spawn.snakeHeader(snake.x, snake.y, 70)
+      if (game.levelsCleared > 3) {
+        const nodes = Math.min(3 + Math.ceil(Math.random() * game.levelsCleared + 2), 8)
+        spawn.lineBoss(snake.x + 90, snake.y - 20, "spawns", nodes);
+        //constraint boss with first 4 mobs in lineboss
+        consBB[consBB.length] = Constraint.create({
+          bodyA: mob[mob.length - nodes],
+          bodyB: mob[mob.length - 1 - nodes],
+          stiffness: 0.05
+        });
+        consBB[consBB.length] = Constraint.create({
+          bodyA: mob[mob.length - nodes + 1],
+          bodyB: mob[mob.length - 1 - nodes],
+          stiffness: 0.05
+        });
+        consBB[consBB.length] = Constraint.create({
+          bodyA: mob[mob.length - nodes + 2],
+          bodyB: mob[mob.length - 1 - nodes],
+          stiffness: 0.05
+        });
+      }
+    }
   },
   towers: function () {
     // if (game.levelsCleared < level.levels.length) game.startZoomIn();
@@ -1025,20 +1053,14 @@ const level = {
       height: 1300,
       color: "rgba(0,0,0,0.1)"
     });
-    //background
-    level.fillBG.push({
-      x: 2495,
-      y: -500,
-      width: 10,
-      height: 525,
-      color: "#ccc"
-    });
 
     //mech.setPosToSpawn(600, -1200); //normal spawn
     //mech.setPosToSpawn(525, -150); //ground first building
     //mech.setPosToSpawn(3150, -700); //near exit spawn
-    spawn.debris(-300, -200, 4800, 10); //ground debris //20 debris per level
-    spawn.debris(-300, -650, 4800, 10); //1st floor debris //20 debris per level
+    spawn.debris(-300, -200, 1000, 5); //ground debris //20 debris per level
+    spawn.debris(3500, -200, 800, 5); //ground debris //20 debris per level
+    spawn.debris(-300, -650, 1200, 5); //1st floor debris //20 debris per level
+    spawn.debris(3500, -650, 800, 5); //1st floor debris //20 debris per level
     powerUps.spawnStartingPowerUps(-525, -700);
 
     spawn.mapRect(-600, 25, 5600, 300); //ground
@@ -1093,16 +1115,28 @@ const level = {
     spawn.mapRect(3000, -2000 * 0.5, 700, 50); //exit roof
     spawn.mapRect(3000, -2000 * 0.25, 2000 - 300, 50); //1st floor
     spawn.spawnStairs(3000 + 2000 - 50, 0, 4, 250, 350, true); //stairs ground
-    //teatherball
-    spawn[spawn.pickList[0]](2850, -80, 40 + game.levelsCleared * 8);
-    cons[cons.length] = Constraint.create({
-      pointA: {
-        x: 2500,
-        y: -500
-      },
-      bodyB: mob[mob.length - 1],
-      stiffness: 0.0004
-    });
+
+    // teatherball
+    if (game.levelsCleared > 2) {
+      level.fillBG.push({
+        x: 2495,
+        y: -500,
+        width: 10,
+        height: 525,
+        color: "#ccc"
+      });
+      spawn.tether(2850, -80)
+      cons[cons.length] = Constraint.create({
+        pointA: {
+          x: 2500,
+          y: -500
+        },
+        bodyB: mob[mob.length - 1],
+        stiffness: 0.0001
+      });
+      //chance to spawn a ring of exploding mobs around this boss
+      if (game.levelsCleared > 4) spawn.nodeBoss(2850, -80, "spawns", 8, 20, 105);
+    }
 
     spawn.randomSmallMob(4575, -560, 1);
     spawn.randomSmallMob(1315, -880, 1);
@@ -1118,7 +1152,7 @@ const level = {
     spawn.randomMob(450, -225, 0.15);
     spawn.randomMob(100, -1200, 1);
     spawn.randomMob(950, -1150, -0.1);
-    spawn.randomBoss(1800, -800, 0.4);
+    spawn.randomBoss(1800, -800, -0.2);
     spawn.randomBoss(4150, -1000, 0.6);
   },
   //*****************************************************************************************************************

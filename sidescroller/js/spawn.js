@@ -154,34 +154,6 @@ const spawn = {
       this.gravity();
       this.seePlayerCheck();
       this.attraction();
-
-      //suck and blow
-      // if (this.seePlayer.recall) {
-      //   ctx.beginPath();
-      //   for (let i = 0, len = body.length; i < len; i++) {
-      //     const distance2 = Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, body[i].position))
-      //     if (distance2 < 150 * 150) {
-      //       //repulse hard in close
-      //       const angle = Math.atan2(body[i].position.y - this.position.y, body[i].position.x - this.position.x);
-      //       const forceMag = 0.2 * body[i].mass;
-      //       body[i].force.x += forceMag * Math.cos(angle);
-      //       body[i].force.y += forceMag * Math.sin(angle);
-      //       //draw attraction
-      //     } else if (distance2 < 2000 * 2000) {
-      //       //gently pull at a meidum distance
-      //       const angle = Math.atan2(body[i].position.y - this.position.y, body[i].position.x - this.position.x);
-      //       const forceMag = 0.001 * body[i].mass;
-      //       body[i].force.x -= forceMag * Math.cos(angle);
-      //       body[i].force.y -= forceMag * Math.sin(angle);
-      //       //draw attraction
-      //       ctx.moveTo(this.position.x, this.position.y);
-      //       ctx.lineTo(body[i].position.x, body[i].position.y);
-      //     }
-      //   }
-      //   ctx.strokeStyle = "#000";
-      //   ctx.lineWidth = 1;
-      //   ctx.stroke();
-      // }
     };
   },
   grower: function (x, y, radius = 15) {
@@ -421,6 +393,7 @@ const spawn = {
     mobs.spawn(x, y, 4, radius, "rgb(255,0,190)");
     let me = mob[mob.length - 1];
     me.repulsionRange = 73000; //squared
+    me.laserRange = 370;
     // me.seePlayerFreq = 2 + Math.round(Math.random() * 5);
     me.accelMag = 0.0005;
     me.frictionStatic = 0;
@@ -432,33 +405,7 @@ const spawn = {
       this.attraction();
       this.repulsion();
       //laser beam
-      if (game.cycle % 7 && this.seePlayer.yes) {
-        ctx.setLineDash([125 * Math.random(), 125 * Math.random()]);
-        // ctx.lineDashOffset = 6*(game.cycle % 215);
-        const range = 370;
-        if (this.distanceToPlayer() < range) {
-          //if (Math.random()>0.2 && this.seePlayer.yes && this.distanceToPlayer2()<800000) {
-          mech.damage(0.0004 * game.dmgScale);
-          ctx.beginPath();
-          ctx.moveTo(this.position.x, this.position.y);
-          ctx.lineTo(mech.pos.x, mech.pos.y);
-          ctx.lineTo(mech.pos.x + (Math.random() - 0.5) * 3000, mech.pos.y + (Math.random() - 0.5) * 3000);
-          ctx.lineWidth = 2;
-          ctx.strokeStyle = "rgb(255,0,170)";
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
-          ctx.fillStyle = "rgba(255,0,170,0.15)";
-          ctx.fill();
-        }
-        ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, range * 0.9, 0, 2 * Math.PI);
-        ctx.strokeStyle = "rgba(255,0,170,0.5)";
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        ctx.setLineDash([]);
-      }
+      this.laserBeam();
     };
   },
   focuser: function (x, y, radius = 30 + Math.ceil(Math.random() * 10)) {
@@ -715,28 +662,31 @@ const spawn = {
       }
     };
   },
-  drifter: function (x, y, radius = 15 + Math.ceil(Math.random() * 40)) {
-    mobs.spawn(x, y, 4.5, radius, "transparent");
+  // drifter: function (x, y, radius = 15 + Math.ceil(Math.random() * 40)) {
+  //   mobs.spawn(x, y, 4.5, radius, "transparent");
+  //   let me = mob[mob.length - 1];
+  //   me.stroke = "rgb(0,200,255)"; //used for drawGhost
+  //   Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
+  //   me.blinkRate = 30 + Math.round(Math.random() * 30); //required for blink/drift
+  //   me.blinkLength = 160; //required for blink/drift
+  //   //me.collisionFilter.mask = 0x001100; //move through walls
+  //   me.isStatic = true;
+  //   me.memory = 360;
+  //   me.seePlayerFreq = 40 + Math.round(Math.random() * 30);
+  //   me.do = function () {
+  //     this.healthBar();
+  //     this.seePlayerCheck();
+  //     this.drift();
+  //   };
+  // },
+  bomber: function (x, y, radius = 120 + Math.ceil(Math.random() * 70)) {
+    //boss that drops bombs from above and holds a set distance from player
+    mobs.spawn(x, y, 3, radius, "transparent");
     let me = mob[mob.length - 1];
-    me.stroke = "rgb(0,200,255)"; //used for drawGhost
-    Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
-    me.blinkRate = 30 + Math.round(Math.random() * 30); //required for blink/drift
-    me.blinkLength = 160; //required for blink/drift
-    //me.collisionFilter.mask = 0x001100; //move through walls
-    me.isStatic = true;
-    me.memory = 360;
-    me.seePlayerFreq = 40 + Math.round(Math.random() * 30);
-    me.do = function () {
-      this.healthBar();
-      this.seePlayerCheck();
-      this.drift();
-    };
-  },
-  bomber: function (x, y, radius = 15 + Math.ceil(Math.random() * 25)) {
-    mobs.spawn(x, y, 4, radius, "transparent");
-    let me = mob[mob.length - 1];
-    me.stroke = "rgba(0,0,80,0.7)"; //used for drawGhost
-    me.seeAtDistance2 = 800000;
+    Matter.Body.setDensity(me, 0.0015 + 0.0005 * Math.sqrt(game.levelsCleared)); //extra dense //normal is 0.001 //makes effective life much larger
+
+    me.stroke = "rgba(255,0,200)"; //used for drawGhost
+    me.seeAtDistance2 = 2000000;
     me.fireFreq = Math.ceil(30 + 2000 / radius);
     me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
     me.hoverElevation = 400 + (Math.random() - 0.5) * 200; //squared
@@ -749,7 +699,7 @@ const spawn = {
     // me.memory = 300;
     // Matter.Body.setDensity(me, 0.0015); //extra dense //normal is 0.001
     me.collisionFilter.mask = 0x001100; //move through walls
-    if (Math.random() < Math.min(0.3 + (game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
+    spawn.shield(me, x, y);
     me.do = function () {
       this.healthBar();
       this.seePlayerCheckByDistance();
@@ -861,6 +811,48 @@ const spawn = {
       this.attraction();
     };
   },
+  snakeHeader: function (x, y, radius = 90) {
+    // head of snake boss
+    // often has a tail of mobs
+    mobs.spawn(x, y, 4, radius, "rgb(255,50,130)");
+    let me = mob[mob.length - 1];
+    me.accelMag = 0.0012;
+    me.memory = 200;
+    me.laserRange = 500;
+    Matter.Body.setDensity(me, 0.001 + 0.0005 * Math.sqrt(game.levelsCleared)); //extra dense //normal is 0.001 //makes effective life much larger
+    spawn.shield(me, x, y);
+    if (Math.random() < Math.min((game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
+
+    me.do = function () {
+      this.healthBar();
+      this.seePlayerCheck();
+      this.attraction();
+      this.laserBeam();
+    };
+  },
+  tether: function (x, y, radius = 90) {
+    // constrained mob boss for the towers level
+    // often has a ring of mobs around it
+    mobs.spawn(x, y, 8, radius, "rgb(0,60,80)");
+    let me = mob[mob.length - 1];
+    me.g = 0.0001; //required if using 'gravity'
+    me.accelMag = 0.002;
+    me.memory = 20;
+    Matter.Body.setDensity(me, 0.002 + 0.0005 * Math.sqrt(game.levelsCleared)); //extra dense //normal is 0.001 //makes effective life much larger
+    spawn.shield(me, x, y);
+    if (Math.random() < Math.min((game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
+
+    me.onDeath = function () {
+      this.removeCons(); //remove constraint
+    };
+
+    me.do = function () {
+      this.healthBar();
+      this.gravity();
+      this.seePlayerCheck();
+      this.attraction();
+    };
+  },
   shield: function (target, x, y, stiffness = 0.4) {
     if (this.allowShields) {
       mobs.spawn(x, y, 9, target.radius + 20, "rgba(220,220,255,0.6)");
@@ -868,7 +860,7 @@ const spawn = {
       me.stroke = "rgb(220,220,255)";
       Matter.Body.setDensity(me, 0.0001) //very low density to not mess with the original mob's motion
       me.shield = true;
-      me.collisionFilter.mask = 0x001100; //don't collide with bodies, map, and mobs, only bullets and player
+      me.collisionFilter.mask = 0x000100; //don't collide with bodies, map, player, and mobs, only bullets
       consBB[consBB.length] = Constraint.create({
         //attach shield to last spawned mob
         bodyA: me,
@@ -895,7 +887,7 @@ const spawn = {
     Matter.Body.setDensity(me, 0.00005) //very low density to not mess with the original mob's motion
     me.frictionAir = 0;
     me.shield = true;
-    me.collisionFilter.mask = 0x001100; //don't collide with bodies, map, and mobs, only bullets and player
+    me.collisionFilter.mask = 0x000100; //don't collide with bodies, map, and mobs, only bullets and player
     //constrain to all mob nodes in boss
     for (let i = 0; i < nodes; ++i) {
       consBB[consBB.length] = Constraint.create({
@@ -928,7 +920,7 @@ const spawn = {
     sideLength = Math.ceil(Math.random() * 100) + 70, // distance between each node mob
     stiffness = Math.random() * 0.03 + 0.005
   ) {
-    this.allowShields = false; //dont' want shields on boss mobs
+    this.allowShields = false; //don't want shields on boss mobs
     const angle = 2 * Math.PI / nodes
     for (let i = 0; i < nodes; ++i) {
       let whoSpawn = spawn;

@@ -601,16 +601,18 @@ const mech = {
             player.position.y - mob[i].position.y,
             player.position.x - mob[i].position.x
           );
+          const mass = Math.min(Math.sqrt(mob[i].mass), 6);
+          // console.log(mob[i].mass, Math.sqrt(mob[i].mass), mass)
           Matter.Body.setVelocity(mob[i], {
             x: player.velocity.x -
-              (15 * Math.cos(angle)) / Math.sqrt(mob[i].mass),
+              (15 * Math.cos(angle)) / mass,
             y: player.velocity.y -
-              (15 * Math.sin(angle)) / Math.sqrt(mob[i].mass)
+              (15 * Math.sin(angle)) / mass
           });
           Matter.Body.setVelocity(player, {
             x: player.velocity.x +
-              5 * Math.cos(angle) * Math.sqrt(mob[i].mass),
-            y: player.velocity.y + 5 * Math.sin(angle) * Math.sqrt(mob[i].mass)
+              5 * Math.cos(angle) * mass,
+            y: player.velocity.y + 5 * Math.sin(angle) * mass
           });
         }
       }
