@@ -169,7 +169,6 @@ class Charge {
               y: mouse.y
             });
           }
-
           break;
         default:
           Charge.mouseCharge(q, {
@@ -477,7 +476,7 @@ class Charge {
         const a = Math.atan2(dy, dx);
         //the +4000 keeps r from being zero
         const r = dx * dx + dy * dy + 4000;
-        const mag = 30000 / r;
+        const mag = 20000 / r;
         who[i].velocity.x += mag * Math.cos(a);
         who[i].velocity.y += mag * Math.sin(a);
       }
