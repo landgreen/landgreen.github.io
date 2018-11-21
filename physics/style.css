@@ -120,6 +120,7 @@ a:hover {
 summary {
   cursor: pointer;
   outline: none;
+  /* font-weight: bold; */
 }
 
 hr {
@@ -207,6 +208,13 @@ th {
   font-weight: 300;
 }
 
+.derive {
+  /* background-color: #e6f9f0; */
+  background-color: #eee;
+  padding: 1.3em;
+  border-radius: 1em;
+}
+
 .example {
   margin: 8em 0em 8em 0em;
 }
@@ -215,13 +223,6 @@ th {
   margin: 3em 0em 3em 0em;
 }
 
-.derive {
-  background-color: #e6f9f0;
-  padding: 1.3em;
-  border-radius: 1em;
-}
-
-/*math tex rendering __________________________*/
 .katex {
   font-size: 1.5em;
 }

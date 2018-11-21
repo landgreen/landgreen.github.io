@@ -180,14 +180,28 @@ class Charge {
   }
 
   static drawAll(who) {
+    // draw protons
+    ctx.fillStyle = "rgb(255,0,100)";
+    ctx.beginPath();
     for (let i = 0, len = who.length; i < len; ++i) {
-      ctx.fillStyle = who[i].color;
-      ctx.beginPath();
-      ctx.arc(who[i].position.x, who[i].position.y, who[i].radius, 0, 2 * Math.PI);
-      ctx.fill();
+      if (who[i].charge > 0) {
+        ctx.moveTo(who[i].position.x, who[i].position.y)
+        ctx.arc(who[i].position.x, who[i].position.y, who[i].radius, 0, 2 * Math.PI);
+      }
     }
-  }
+    ctx.fill();
 
+    // draw electrons
+    ctx.fillStyle = "rgba(0,100,255,0.6)";
+    ctx.beginPath();
+    for (let i = 0, len = who.length; i < len; ++i) {
+      if (!(who[i].charge > 0)) {
+        ctx.moveTo(who[i].position.x, who[i].position.y)
+        ctx.arc(who[i].position.x, who[i].position.y, who[i].radius, 0, 2 * Math.PI);
+      }
+    }
+    ctx.fill();
+  }
   static teleport(who, off = 200) {
     let count = 0;
     for (let i = 0, len = who.length; i < len; ++i) {
