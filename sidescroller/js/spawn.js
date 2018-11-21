@@ -859,7 +859,7 @@ const spawn = {
     me.g = 0.0001; //required if using 'gravity'
     me.accelMag = 0.002;
     me.memory = 20;
-    Matter.Body.setDensity(me, 0.002 + 0.0005 * Math.sqrt(game.levelsCleared)); //extra dense //normal is 0.001 //makes effective life much larger
+    Matter.Body.setDensity(me, 0.001 + 0.0005 * Math.sqrt(game.levelsCleared)); //extra dense //normal is 0.001 //makes effective life much larger
     spawn.shield(me, x, y);
     if (Math.random() < Math.min((game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
 

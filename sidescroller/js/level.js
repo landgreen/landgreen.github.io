@@ -491,7 +491,7 @@ const level = {
     spawn.randomBoss(2225, -1325, 0.4); //
     spawn.randomBoss(4900, -1200, 0); //
     //spawn.randomBoss(4850, -1250,0.7);
-    if (game.levelsCleared > 3) spawn.bomber(2500, -2400, 100);
+    if (game.levelsCleared > 5) spawn.bomber(2500, -2400, 100);
   },
   skyscrapers: function () {
     // if (game.levelsCleared < level.levels.length) game.startZoomIn();
@@ -967,7 +967,7 @@ const level = {
     //spawn.randomSmallMob(2200, -1775);
 
     //snake with head
-    spawn.snaker(-2000, -900);
+    if (game.levelsCleared > 3) spawn.snaker(-2000, -900);
     // if (game.levelsCleared > 2) {
     //   const snake = {
     //     x: -2000,
@@ -1117,8 +1117,8 @@ const level = {
     spawn.mapRect(3000, -2000 * 0.25, 2000 - 300, 50); //1st floor
     spawn.spawnStairs(3000 + 2000 - 50, 0, 4, 250, 350, true); //stairs ground
 
-    // teatherball
-    if (game.levelsCleared > 2) {
+    // tether ball
+    if (game.levelsCleared > 3) {
       level.fillBG.push({
         x: 2495,
         y: -500,
@@ -1133,10 +1133,10 @@ const level = {
           y: -500
         },
         bodyB: mob[mob.length - 1],
-        stiffness: 0.0001
+        stiffness: 0.00012
       });
       //chance to spawn a ring of exploding mobs around this boss
-      if (game.levelsCleared > 4) spawn.nodeBoss(2850, -80, "spawns", 8, 20, 105);
+      if (game.levelsCleared > 5) spawn.nodeBoss(2850, -80, "spawns", 8, 20, 105);
     }
 
     spawn.randomSmallMob(4575, -560, 1);
