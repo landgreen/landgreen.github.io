@@ -14,7 +14,7 @@ const level = {
     game.setZoom(); //reset zoom
     if (game.levelsCleared === 0) {
       this.intro();
-      // game.levelsCleared = 5; //for testing to simulate all possible mobs spawns
+      // game.levelsCleared = 2; //for testing to simulate all possible mobs spawns
       // this.bosses();
       // this.testingMap();
       // this.skyscrapers();
@@ -967,33 +967,34 @@ const level = {
     //spawn.randomSmallMob(2200, -1775);
 
     //snake with head
-    if (game.levelsCleared > 2) {
-      const snake = {
-        x: -2000,
-        y: -900
-      }
-      spawn.snakeHeader(snake.x, snake.y, 70)
-      if (game.levelsCleared > 3) {
-        const nodes = Math.min(3 + Math.ceil(Math.random() * game.levelsCleared + 2), 8)
-        spawn.lineBoss(snake.x + 90, snake.y - 20, "spawns", nodes);
-        //constraint boss with first 4 mobs in lineboss
-        consBB[consBB.length] = Constraint.create({
-          bodyA: mob[mob.length - nodes],
-          bodyB: mob[mob.length - 1 - nodes],
-          stiffness: 0.05
-        });
-        consBB[consBB.length] = Constraint.create({
-          bodyA: mob[mob.length - nodes + 1],
-          bodyB: mob[mob.length - 1 - nodes],
-          stiffness: 0.05
-        });
-        consBB[consBB.length] = Constraint.create({
-          bodyA: mob[mob.length - nodes + 2],
-          bodyB: mob[mob.length - 1 - nodes],
-          stiffness: 0.05
-        });
-      }
-    }
+    spawn.snaker(-2000, -900);
+    // if (game.levelsCleared > 2) {
+    //   const snake = {
+    //     x: -2000,
+    //     y: -900
+    //   }
+    //   spawn.snakeHeader(snake.x, snake.y, 70)
+    //   if (game.levelsCleared > 3) {
+    //     const nodes = Math.min(3 + Math.ceil(Math.random() * game.levelsCleared + 2), 8)
+    //     spawn.lineBoss(snake.x + 90, snake.y - 20, "spawns", nodes);
+    //     //constraint boss with first 4 mobs in lineboss
+    //     consBB[consBB.length] = Constraint.create({
+    //       bodyA: mob[mob.length - nodes],
+    //       bodyB: mob[mob.length - 1 - nodes],
+    //       stiffness: 0.05
+    //     });
+    //     consBB[consBB.length] = Constraint.create({
+    //       bodyA: mob[mob.length - nodes + 1],
+    //       bodyB: mob[mob.length - 1 - nodes],
+    //       stiffness: 0.05
+    //     });
+    //     consBB[consBB.length] = Constraint.create({
+    //       bodyA: mob[mob.length - nodes + 2],
+    //       bodyB: mob[mob.length - 1 - nodes],
+    //       stiffness: 0.05
+    //     });
+    //   }
+    // }
   },
   towers: function () {
     // if (game.levelsCleared < level.levels.length) game.startZoomIn();

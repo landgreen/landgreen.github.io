@@ -811,10 +811,9 @@ const spawn = {
       this.attraction();
     };
   },
-  snakeHeader: function (x, y, radius = 90) {
-    // head of snake boss
-    // often has a tail of mobs
-    mobs.spawn(x, y, 4, radius, "rgb(255,50,130)");
+  snaker: function (x, y, radius = 80) {
+    //snake boss with a laser head
+    mobs.spawn(x, y, 8, radius, "rgb(255,50,130)");
     let me = mob[mob.length - 1];
     me.accelMag = 0.0012;
     me.memory = 200;
@@ -828,7 +827,29 @@ const spawn = {
       this.seePlayerCheck();
       this.attraction();
       this.laserBeam();
+      // this.curl();
     };
+
+    //snake tail
+    const nodes = Math.min(3 + Math.ceil(Math.random() * game.levelsCleared + 2), 8)
+    spawn.lineBoss(x + 105, y, "spawns", nodes);
+    //constraint boss with first 3 mobs in lineboss
+    consBB[consBB.length] = Constraint.create({
+      bodyA: mob[mob.length - nodes],
+      bodyB: mob[mob.length - 1 - nodes],
+      stiffness: 0.05
+    });
+    consBB[consBB.length] = Constraint.create({
+      bodyA: mob[mob.length - nodes + 1],
+      bodyB: mob[mob.length - 1 - nodes],
+      stiffness: 0.05
+    });
+    consBB[consBB.length] = Constraint.create({
+      bodyA: mob[mob.length - nodes + 2],
+      bodyB: mob[mob.length - 1 - nodes],
+      stiffness: 0.05
+    });
+
   },
   tether: function (x, y, radius = 90) {
     // constrained mob boss for the towers level

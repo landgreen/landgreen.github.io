@@ -551,6 +551,46 @@ const mobs = {
       //   ctx.fillStyle = "rgba(0,0,0,0.1)";
       //   ctx.fill();
       // },
+      curl: function () {
+        //cause all mobs, and bodies to rotate in a circle
+        const range = 1000
+
+        applyCurl = function (center, array) {
+          for (let i = 0; i < array.length; ++i) {
+            const sub = Matter.Vector.sub(center, array[i].position)
+            const radius2 = Matter.Vector.magnitudeSquared(sub);
+
+            //if too close, like center mob or shield, don't curl   // if too far don't curl
+            if (radius2 < range * range && radius2 > 10000) {
+              const curlVector = Matter.Vector.perp(Matter.Vector.normalise(sub))
+
+              //apply curl force
+              const mag = Matter.Vector.mult(curlVector, 10)
+              Matter.Body.setVelocity(array[i], {
+                x: array[i].velocity.x * 0.99 + mag.x * 0.01,
+                y: array[i].velocity.y * 0.99 + mag.y * 0.01
+              })
+
+              //draw curl
+              ctx.beginPath();
+              ctx.moveTo(array[i].position.x, array[i].position.y);
+              ctx.lineTo(array[i].position.x + curlVector.x * 100, array[i].position.y + curlVector.y * 100);
+              ctx.lineWidth = 2;
+              ctx.strokeStyle = "#000";
+              ctx.stroke();
+            }
+          }
+        }
+        applyCurl(this.position, mob);
+        applyCurl(this.position, body);
+
+
+        //draw limit
+        ctx.beginPath();
+        ctx.arc(this.position.x, this.position.y, range, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(55,255,255, 0.1)";
+        ctx.fill();
+      },
       pullPlayer: function () {
         if (this.seePlayer.yes && Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position)) < 1000000) {
           const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
