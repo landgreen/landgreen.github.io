@@ -23,12 +23,12 @@
     <script src='../../../lib/function-graph-SVG.js'></script>
     <script defer src='../../../lib/randomColor.min.js'></script>
     <script defer src='../../../lib/gravityClass.js'></script>
-    <script defer src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js'></script>
+    <script defer src='https://cdnjs.cloudflare.com/ajax/libs/three.js/98/three.min.js'></script>
     <script defer src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
     <script defer src="grav0.js "></script>
     <script defer src="grav1.js "></script>
     <script defer src="grav2.js "></script>
-    <!-- <script defer src="fabric.js "></script> -->
+    <script defer src="fabric.js "></script>
 </head>
 
 <body>
@@ -878,18 +878,6 @@
             a calculated gravitational acceleration. This version of gravitational potential energy now works beyond Earth's surface.
         </p>
 
-        <!-- <style>
-            .full-page {
-               position: fixed;
-               top: -5px;
-               left: -5px;
-               z-index: 0;
-               margin: 0;
-               padding: 0;
-             }
-        </style>
-        <div id='three-fabric'></div> -->
-
         <details class='derive'>
             <summary>derivation of universal gravitational potential energy</summary>
             $$U_{g} = mgh \quad g = \color{blue}{\frac{GM}{r^{2}}} $$ $$U_{g} = m{\color{blue}{\frac{GM}{r^{2}}}}h $$
@@ -936,15 +924,17 @@
         </div>
         <p>What is the gravitational potential energy when two masses are at zero distance away?</p>
         <p>What is the gravitational potential energy when two masses are at an infinite distance away?</p>
-        <p>
-            Energy is a scalar, not a vector. This means that when we calculate gravitational potential energy it has no direction. You can see the potential energy in the simulation below as a scalar field. Think of the reddish regions as being deeper into the <a href='https://xkcd.com/681/'>gravity well</a>.
-        </p>
-        <div class='center'>
-            masses =
-            <input id='num2-slider' type="range" step="0.001" value="1" min="0" max="2" style="width: 200px;">
-            <input id='num2' type="number" step="1" value="10" min="0" max="99" style="width: 42px;">
+        <div class="example-small">
+            <div class='center'>
+                masses =
+                <input id='num2-slider' type="range" step="0.001" value="1" min="0" max="2" style="width: 200px;">
+                <input id='num2' type="number" step="1" value="10" min="0" max="99" style="width: 42px;">
+            </div>
+            <canvas class='center' id='grav2' height='400' width='600' onclick="grav2(this)"> </canvas>
+            <p>
+                Energy is a scalar, not a vector. This means that when we calculate gravitational potential energy it has no direction. You can see the potential energy in the simulation below as a scalar field. Think of the reddish regions as being deeper into the <a href='https://xkcd.com/681/'>gravity well</a>.
+            </p>
         </div>
-        <canvas class='center' id='grav2' height='400' width='600' onclick="grav2(this)"> </canvas>
 
         <div class='example'>
             <strong>Example:</strong> Calculate the gravitational potential energy between two 100&#8239;000 kg masses when there is only 2 m between the center of each mass.
@@ -973,7 +963,6 @@
                 \mathrm{J}$$
             </details>
         </div>
-
 
         <div class='example'>
             <strong>Example:</strong> A 2000 kg space ship starts at rest 20&#8239;000&nbsp;km from the surface of Earth. How much kinetic energy will the ship have after it falls down to 10&#8239;000&nbsp;km from the surface of Earth?
@@ -1015,6 +1004,24 @@
                 $$v = 11\,183 \, \mathrm{\tfrac{m}{s}}$$
             </details>
         </div>
+
+        <div class="example-small">
+            In <a href="..\..\relativity\general\index.html">general relativity</a>, gravity is thought of as warping 3-D space and time.
+            In this simulation gravitational potential energy is represented as warping of 2-D space into a 3rd dimension.
+            <style>
+                .full-page {
+                    position: fixed;
+                    top: -5px;
+                    left: -5px;
+                    z-index: 0;
+                    margin: 0;
+                    padding: 0;
+                }
+            </style>
+            <div id='three-fabric'></div>
+            Use the mouse to move the camera. Double click for full screen.
+        </div>
+
     </article>
     <div class='back'>
         <a href="../../../index.html ">Back</a>

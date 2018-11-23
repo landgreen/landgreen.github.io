@@ -6,16 +6,15 @@ const fabric = function () {
   // el.onclick = null; //stops the function from running on button click
 
   settings = {
-    range: 50,
-    totalPlanets: 10,
-    planetRadius: 1,
+    range: 500,
+    edgeBuffer: 100,
+    totalCharges: 15,
     fullView: false,
-    cameraRange: 200,
+    cameraRange: 1000,
     resolution: 256
   };
-  settings.totalMass = settings.totalPlanets * settings.planetRadius;
 
-  const target = document.getElementById("three-fabric");
+  const target = document.getElementById("three-potential");
 
   let pause = true;
   target.addEventListener("mouseleave", function () {
@@ -77,9 +76,9 @@ const fabric = function () {
   // camera and controls
   /////////////////////////////////////////
 
-  const camera = new THREE.PerspectiveCamera(45, 600 / 400, 10, settings.cameraRange);
+  const camera = new THREE.PerspectiveCamera(50, 600 / 400, 10, settings.cameraRange);
 
-  camera.position.set(0, -45, 30);
+  camera.position.set(0, -450, -350);
 
   // camera.lookAt(new THREE.Vector3(-settings.range / 2, -settings.range / 2, settings.range));
   // camera.position.y -= 10;
@@ -122,47 +121,33 @@ const fabric = function () {
   // scene.add(dirLight);
 
   // scene.fog = new THREE.FogExp2(0x000000, 0.01);
-  // scene.fog = new THREE.Fog(0x000000, settings.range * 0.9, settings.range * 1.6);
+  scene.fog = new THREE.Fog(0x000000, settings.range * 0.9, settings.range * 1.6);
+
 
 
   /////////////////////////////////////////
-  // spawn things
+  // spawn charges 
   /////////////////////////////////////////
-  let mesh, material, geometry
 
-  //random planets
-  const planet = [];
-  for (let i = 0; i < settings.totalPlanets; ++i) {
-    const radius = settings.planetRadius + settings.planetRadius * (Math.random() - 0.5)
-    geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
-    material = new THREE.MeshLambertMaterial({
-      // color: 0xadc8d3,
-      color: 0xffffff,
-      // color: 0xaa6633,
-      // wireframe: true,
-      transparent: true,
-      opacity: 0,
+  const q = []; //holds the charges
+
+  function spawnCharge(type) {
+    q[q.length] = new Charge(type, {
+      x: (settings.range - settings.edgeBuffer / 2) * (Math.random() - 0.5),
+      y: (settings.range - settings.edgeBuffer / 2) * (Math.random() - 0.5)
     });
-    planet[i] = new THREE.Mesh(geometry, material);
-    planet[i].radius = radius
-    planet[i].position.set(settings.range * (Math.random() - 0.5), settings.range * (Math.random() - 0.5), -5);
-    planet[i].velocity = {
-      x: 0.1 * (Math.random() - 0.5),
-      y: 0.1 * (Math.random() - 0.5),
-      z: 0
-    };
-    scene.add(planet[i]);
+  }
+  for (let i = 0; i < Math.floor(settings.totalCharges / 2); ++i) {
+    spawnCharge("p");
+    spawnCharge("e");
   }
 
-  // potential energy plane
+  /////////////////////////////////////////
+  // spawn potential plane
+  /////////////////////////////////////////
+
   let potentialEnergy = new THREE.PlaneGeometry(settings.range, settings.range, settings.resolution, settings.resolution);
-
-  // material = new THREE.MeshNormalMaterial({
-  //   flatShading: true,
-  //   side: THREE.DoubleSide,
-  // })
-
-  material = new THREE.MeshNormalMaterial({
+  let material = new THREE.MeshNormalMaterial({
     //ambient: 0x44B8ED,
     // color: 0xffffff,
     // wireframe: true,
@@ -180,59 +165,12 @@ const fabric = function () {
   scene.add(potentialEnergyMesh);
 
 
-  // let potentialEnergy = new THREE.PlaneBufferGeometry(settings.range, settings.range, settings.resolution, settings.resolution);
-
-  // let zMin = -10;
-  // let zMax = 0;
-  // let colors = [];
-  // for (let i = 0; i < potentialEnergy.attributes.position.count; i++) {
-  //   const zVal = THREE.Math.randInt(zMin, zMax);
-  //   const zNorm = (zVal - zMin) / (zMax - zMin);
-  //   potentialEnergy.attributes.position.setZ(i, zVal);
-  //   colors.push(zNorm, zNorm, 1);
-  // }
-  // potentialEnergy.addAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
-  // potentialEnergy.computeVertexNormals();
-
-  // let potentialEnergyMesh = new THREE.Mesh(potentialEnergy, new THREE.MeshStandardMaterial({
-  //   vertexColors: THREE.VertexColors
-  // }));
-
-  // scene.add(potentialEnergyMesh)
-
-
-  // material = new THREE.MeshLambertMaterial({
-  //   //ambient: 0x44B8ED,
-  //   color: 0xffffff,
-  //   wireframe: true,
-  //   // emissive: 0xffffff,
-  //   // side: THREE.DoubleSide,
-  //   // shading: THREE.FlatShading,
-  //   // transparent: true,
-  //   // opacity: 0.5,
-  // });
-
-  // let potentialEnergyMesh = new THREE.Mesh(potentialEnergy, material);
-  // potentialEnergyMesh.position.set(0, 0, 0);
-  // // potentialEnergyMesh.rotation.z = ath.PI / 2;
-  // scene.add(potentialEnergyMesh);
-
-
   /////////////////////////////////////////
-  // Physics
+  // Bounds
   /////////////////////////////////////////
-  function physics(who) {
-    const gravityConst = 0.05;
-    const minDistance2 = 10;
-    const edge = settings.range / 2
-    //change position from velocity
-    const len = who.length;
-    for (let i = 0; i < len; ++i) {
-      // move
-      who[i].position.x += who[i].velocity.x;
-      who[i].position.y += who[i].velocity.y;
-
-      // walls
+  function bounds(who) {
+    const edge = (settings.range - settings.edgeBuffer) / 2
+    for (let i = 0, len = who.length; i < len; ++i) {
       if (who[i].position.x > edge) {
         who[i].position.x = edge
         who[i].velocity.x = -Math.abs(who[i].velocity.x);
@@ -247,37 +185,25 @@ const fabric = function () {
         who[i].position.y = -edge
         who[i].velocity.y = Math.abs(who[i].velocity.y);
       }
-
-      //accelerate velocity from gravity
-      for (let j = i + 1; j < len; ++j) {
-        const dx = who[i].position.x - who[j].position.x;
-        const dy = who[i].position.y - who[j].position.y;
-        const d2 = Math.max(dx * dx + dy * dy, minDistance2);
-        const mag = gravityConst / d2 / Math.sqrt(d2);
-        who[i].velocity.x -= mag * dx;
-        who[i].velocity.y -= mag * dy;
-        who[j].velocity.x += mag * dx;
-        who[j].velocity.y += mag * dy;
-      }
     }
   }
 
 
   /////////////////////////////////////////
-  // move potentialEnergyMesh
+  // update potentialEnergyMesh
   /////////////////////////////////////////
-  function dynamicPlane() {
-    const depth = 100 / settings.totalMass
+  function dynamicPlane(who) {
+    const depth = 3000 / settings.totalCharges
     for (let i = 0, len = potentialEnergyMesh.geometry.vertices.length; i < len; i++) {
       let v = potentialEnergyMesh.geometry.vertices[i];
-      let mag = depth; //this should be zero but I'm using depth as 0 to center the energy mesh with the camera
-      for (let j = 0, len = planet.length; j < len; j++) {
-        const dx = planet[j].position.x - v.x;
-        const dy = planet[j].position.y - v.y;
-        mag -= depth * planet[j].radius * planet[j].radius / (Math.max(Math.sqrt(dx * dx + dy * dy), planet[j].radius));
+      let mag = 0; //this should be zero but I'm using depth as 0 to center the energy mesh with the camera
+      for (let j = 0, len = who.length; j < len; j++) {
+        const dx = who[j].position.x - v.x;
+        const dy = who[j].position.y - v.y;
+        mag -= depth * who[j].charge / (Math.sqrt(dx * dx + dy * dy) + 1);
       }
       v.z = mag;
-      // v.z = v.z * 0.9 + mag * 0.1; // smooth changes
+      // v.z = v.z * 0.5 + mag * 0.5; // smooth changes
     }
     potentialEnergyMesh.geometry.computeFaceNormals();
     potentialEnergyMesh.geometry.normalsNeedUpdate = true;
@@ -287,15 +213,16 @@ const fabric = function () {
   /////////////////////////////////////////
   // Render Loop
   /////////////////////////////////////////
-  dynamicPlane()
+  dynamicPlane(q)
   renderer.render(scene, camera);
 
   function animationLoop() {
     if (!pause) requestAnimationFrame(animationLoop);
     controls.update();
     renderer.render(scene, camera);
-    physics(planet)
-    dynamicPlane()
+    Charge.physicsAll(q);
+    bounds(q)
+    dynamicPlane(q)
   }
   animationLoop();
 };

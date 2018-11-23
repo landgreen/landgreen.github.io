@@ -184,11 +184,9 @@
 
 		</details>
 		<h2 class='underlined'>Electric Potential</h2>
-		<p>Electric potential is similar to electric potential energy, with one difference. We assume one of the charges is a
-			+1C
-			test charge. The potential is the energy needed to bring the +1C test charge from very far away to some distance
-			from
-			the other charge.</p>
+		<p>
+			Electric potential is similar to electric potential energy, with one difference. We assume one of the charges is a +1C test charge. The potential is the energy needed to bring the +1C test charge from very far away to some distance from the other charge.
+		</p>
 
 		<p>Electric potential has units of volts.</p>
 
@@ -238,6 +236,18 @@
 		<canvas class='center' id='charge7' height='300' onclick="charges7(this)"> </canvas>
 
 		<div class='example'>
+			Use the mouse to move the camera. Double click for full screen.
+			<style>
+				.full-page {
+					position: fixed;
+					top: -5px;
+					left: -5px;
+					z-index: 0;
+					margin: 0;
+					padding: 0;
+				}
+			</style>
+			<div id='three-potential'></div>
 			<strong>Example:</strong> A <a href="https://en.wikipedia.org/wiki/Scanning_electron_microscope">scanning electron microscope</a> can achieve resolution better than 1 nanometer. It produces <a href="https://www.youtube.com/watch?v=2bZoR3z-R6I">images</a> by scanning with a focused beam of electrons. The electrons are propelled at a sample target with a voltage between 5,000 V and 25,000 V. Generally the higher voltage gives better resolution.
 			<br>
 			<br>Let's estimate the voltage needed for a 1 nanometer resolution. We can start by finding the energy to potentially bring an electron very close to another electron. What is the potential at 1 nanometer from an electron?
@@ -321,6 +331,7 @@
 				- \frac{2}{4} \right) $$ $$\Delta V = 1.5k_{e} $$ $$\Delta V = 1.348 \times 10^{10} \, \mathrm{volts} $$
 			</details>
 		</div>
+
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
@@ -333,6 +344,9 @@
 	<script src="charge6.js"></script>
 	<script src="charge7.js"></script>
 
+	<script defer src='https://cdnjs.cloudflare.com/ajax/libs/three.js/98/three.min.js'></script>
+	<script defer src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
+	<script defer src="potential.js"></script>
 </body>
 
 </html>
