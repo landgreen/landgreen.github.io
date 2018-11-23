@@ -23,9 +23,12 @@
     <script src='../../../lib/function-graph-SVG.js'></script>
     <script defer src='../../../lib/randomColor.min.js'></script>
     <script defer src='../../../lib/gravityClass.js'></script>
+    <script defer src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js'></script>
+    <script defer src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
     <script defer src="grav0.js "></script>
     <script defer src="grav1.js "></script>
     <script defer src="grav2.js "></script>
+    <!-- <script defer src="fabric.js "></script> -->
 </head>
 
 <body>
@@ -875,6 +878,18 @@
             a calculated gravitational acceleration. This version of gravitational potential energy now works beyond Earth's surface.
         </p>
 
+        <!-- <style>
+            .full-page {
+               position: fixed;
+               top: -5px;
+               left: -5px;
+               z-index: 0;
+               margin: 0;
+               padding: 0;
+             }
+        </style>
+        <div id='three-fabric'></div> -->
+
         <details class='derive'>
             <summary>derivation of universal gravitational potential energy</summary>
             $$U_{g} = mgh \quad g = \color{blue}{\frac{GM}{r^{2}}} $$ $$U_{g} = m{\color{blue}{\frac{GM}{r^{2}}}}h $$
@@ -930,11 +945,6 @@
             <input id='num2' type="number" step="1" value="10" min="0" max="99" style="width: 42px;">
         </div>
         <canvas class='center' id='grav2' height='400' width='600' onclick="grav2(this)"> </canvas>
-
-
-
-
-
 
         <div class='example'>
             <strong>Example:</strong> Calculate the gravitational potential energy between two 100&#8239;000 kg masses when there is only 2 m between the center of each mass.

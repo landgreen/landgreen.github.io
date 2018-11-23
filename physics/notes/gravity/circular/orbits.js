@@ -167,7 +167,7 @@ const orbitals = function (el) {
 
   //random planets
 
-  const colors = [0xffffff, 0xc7c3c0, 0xffff00, 0xff00ff]
+
   const planet = [];
   for (let i = 0; i < 200; ++i) {
     const radius = 0.5 + Math.random() * Math.random() * Math.random() * Math.random() * Math.random() * 4;
