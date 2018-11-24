@@ -1005,9 +1005,7 @@
             </details>
         </div>
 
-        <div class="example-small">
-            In <a href="..\..\relativity\general\index.html">general relativity</a>, gravity is thought of as warping 3-D space and time.
-            In this simulation gravitational potential energy is represented as warping of 2-D space into a 3rd dimension.
+        <div class="example-small" style="min-height: 498px;">
             <style>
                 .full-page {
                     position: fixed;
@@ -1018,8 +1016,11 @@
                     padding: 0;
                 }
             </style>
-            <div id='three-fabric'></div>
             Use the mouse to move the camera. Double click for full screen.
+            <canvas id='three-fabric-load' width='600' height='400' onclick="fabric('three-fabric')"></canvas>
+            <canvas id='three-fabric' width='600' height='0'></canvas>
+            In the simulation above, gravitational potential energy is represented as warping a 2-D fabric into a 3rd dimension.
+            In <a href="..\..\relativity\general\index.html">general relativity</a>, gravity is thought of as warping space and time.
         </div>
 
     </article>

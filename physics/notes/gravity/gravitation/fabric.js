@@ -1,9 +1,17 @@
-window.onload = function () {
-  fabric();
-};
+(() => {
+  var canvas = document.getElementById("three-fabric-load");
+  var ctx = canvas.getContext("2d");
+  canvas.width = document.getElementsByTagName("article")[0].clientWidth;
+  ctx.font = "30px Arial";
+  ctx.fillStyle = "#aaa";
+  ctx.textAlign = "center";
+  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
+})()
 
-const fabric = function () {
-  // el.onclick = null; //stops the function from running on button click
+
+const fabric = function (id) {
+  const el = document.getElementById(id);
+  document.getElementById("three-fabric-load").remove()
 
   settings = {
     range: 50,
@@ -15,13 +23,11 @@ const fabric = function () {
   };
   settings.totalMass = settings.totalPlanets * settings.planetRadius;
 
-  const target = document.getElementById("three-fabric");
-
   let pause = true;
-  target.addEventListener("mouseleave", function () {
+  el.addEventListener("mouseleave", function () {
     pause = true;
   });
-  target.addEventListener("mouseenter", function () {
+  el.addEventListener("mouseenter", function () {
     if (pause) {
       pause = false;
       requestAnimationFrame(animationLoop);
@@ -39,12 +45,12 @@ const fabric = function () {
   }
 
   //full screen mode
-  target.addEventListener("dblclick", function () {
+  el.addEventListener("dblclick", function () {
     if (settings.fullView) {
       settings.fullView = false;
       //not full screen
       // exitFullscreen();
-      target.classList.remove("full-page");
+      el.classList.remove("full-page");
       camera.aspect = 600 / 400;
       camera.updateProjectionMatrix();
       renderer.setSize(600, 400);
@@ -52,8 +58,8 @@ const fabric = function () {
     } else {
       settings.fullView = true;
       //full screen
-      // requestFullscreen(target);
-      target.classList.add("full-page");
+      // requestFullscreen(el);
+      el.classList.add("full-page");
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -65,13 +71,14 @@ const fabric = function () {
   /////////////////////////////////////////
   const scene = new THREE.Scene();
   const renderer = new THREE.WebGLRenderer({
+    canvas: el,
     alpha: true,
     antialias: true
   });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(600, 400);
-  target.appendChild(renderer.domElement);
-  renderer.domElement.style.background = "#000";
+  // el.appendChild(renderer.domElement);
+  renderer.domElement.style.background = "#fff";
 
   /////////////////////////////////////////
   // camera and controls
@@ -118,7 +125,7 @@ const fabric = function () {
   // let dirLight = new THREE.DirectionalLight(0xffffff, 1);
   // dirLight.color.setHSL(0.1, 1, 0.95);
   // dirLight.position.set(500, 500, 500);
-  // dirLight.target = new THREE.Object3D(0, 0, 0);
+  // dirLight.el = new THREE.Object3D(0, 0, 0);
   // scene.add(dirLight);
 
   // scene.fog = new THREE.FogExp2(0x000000, 0.01);

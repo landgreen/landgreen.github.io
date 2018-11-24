@@ -232,11 +232,9 @@
 			</p>
 		</div>
 		<p>Situations where there is circular motion and a much larger central body include: planets orbiting the sun, moons orbiting large planets, and satellites.</p>
-
-		<div class="hide-on-mobile example-small">
-			<p onclick="orbitals(this)" style="border-radius: 25px;background: #ddd; padding: 20px; margin: 20px;">
-				Click to load a simulation of circular orbits at different distances. Click and drag to move. Double click for full screen.
-			</p>
+		<!-- 
+		<div class="example-small">
+			Click and drag to move. Double click for full screen.
 			<style>
 				.full-page {
 					position: fixed;
@@ -247,9 +245,9 @@
 					padding: 0;
 				}
 			</style>
-
-			<div id='three-orbit'></div>
-		</div>
+			<canvas id='three-orbit-load' width='590' height='300' onclick="orbit('three-orbit')"></canvas>
+			<canvas id='three-orbit' width='590' height='0'></canvas>
+		</div> -->
 
 		<div class='example'>
 			<style>
@@ -560,11 +558,11 @@
 
 	<script src='../../../lib/randomColor.min.js'></script>
 	<script src='../../../lib/gravityClass.js'></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js'></script>
-	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
 	<script src="grav1.js"></script>
 	<script src="grav2.js"></script>
-	<script src="orbits.js"></script>
+	<!-- <script defer src='https://cdnjs.cloudflare.com/ajax/libs/three.js/98/three.min.js'></script> -->
+	<!-- <script defer src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script> -->
+	<!-- <script defer src="orbit.js"></script> -->
 </body>
 
 </html>

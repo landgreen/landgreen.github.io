@@ -1,7 +1,18 @@
-const orbitals = function (el) {
-  el.onclick = null; //stops the function from running on button click
+(() => {
+  let canvas = document.getElementById("three-orbit-load");
+  let ctx = canvas.getContext("2d");
+  canvas.width = document.getElementsByTagName("article")[0].clientWidth;
+  ctx.font = "30px Arial";
+  ctx.fillStyle = "#aaa";
+  ctx.textAlign = "center";
+  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
+})()
 
-  settings = {
+const orbit = function (id) {
+  const el = document.getElementById(id);
+  document.getElementById("three-orbit-load").remove()
+
+  const settings = {
     range: 100,
     planetNumber: 25,
     planetSize: 3,
@@ -9,13 +20,12 @@ const orbitals = function (el) {
     fullView: false,
     cameraRange: 2000
   };
-  const target = document.getElementById("three-orbit");
 
   let pause = true;
-  target.addEventListener("mouseleave", function () {
+  el.addEventListener("mouseleave", function () {
     pause = true;
   });
-  target.addEventListener("mouseenter", function () {
+  el.addEventListener("mouseenter", function () {
     if (pause) {
       pause = false;
       requestAnimationFrame(animationLoop);
@@ -32,41 +42,12 @@ const orbitals = function (el) {
     }
   }
 
-  let requestFullscreen = function (ele) {
-    if (ele.requestFullscreen) {
-      ele.requestFullscreen();
-    } else if (ele.webkitRequestFullscreen) {
-      ele.webkitRequestFullscreen();
-    } else if (ele.mozRequestFullScreen) {
-      ele.mozRequestFullScreen();
-    } else if (ele.msRequestFullscreen) {
-      ele.msRequestFullscreen();
-    } else {
-      console.log("Fullscreen API is not supported.");
-    }
-  };
-
-  let exitFullscreen = function () {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    } else {
-      console.log("Fullscreen API is not supported.");
-    }
-  };
-
   //full screen mode
-  target.addEventListener("dblclick", function () {
+  el.addEventListener("dblclick", function () {
     if (settings.fullView) {
       settings.fullView = false;
       //not full screen
-      // exitFullscreen();
-      target.classList.remove("full-page");
+      el.classList.remove("full-page");
       camera.aspect = 600 / 400;
       camera.updateProjectionMatrix();
       renderer.setSize(600, 400);
@@ -74,8 +55,7 @@ const orbitals = function (el) {
     } else {
       settings.fullView = true;
       //full screen
-      // requestFullscreen(target);
-      target.classList.add("full-page");
+      el.classList.add("full-page");
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -87,12 +67,13 @@ const orbitals = function (el) {
   /////////////////////////////////////////
   const scene = new THREE.Scene();
   const renderer = new THREE.WebGLRenderer({
+    canvas: id,
     alpha: true,
     antialias: true
   });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(600, 400);
-  target.appendChild(renderer.domElement);
+  // el.appendChild(renderer.domElement);
   renderer.domElement.style.background = "#000";
 
   /////////////////////////////////////////
@@ -166,13 +147,11 @@ const orbitals = function (el) {
   scene.add(corona);
 
   //random planets
-
-
   const planet = [];
   for (let i = 0; i < 200; ++i) {
     const radius = 0.5 + Math.random() * Math.random() * Math.random() * Math.random() * Math.random() * 4;
     geometry = new THREE.SphereGeometry(radius, 16, 16);
-    material = new THREE.MeshLambertMaterial({
+    material = new THREE.MeshToonMaterial({
       // transparent: true,
       // opacity: 0.7,
       color: 0xffffff

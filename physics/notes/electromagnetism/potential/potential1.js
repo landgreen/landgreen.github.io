@@ -1,28 +1,35 @@
-window.onload = function () {
-  fabric();
-};
+(() => {
+  var canvas = document.getElementById("three-potential-1-load");
+  var ctx = canvas.getContext("2d");
+  canvas.width = document.getElementsByTagName("article")[0].clientWidth;
+  ctx.font = "30px Arial";
+  ctx.fillStyle = "#aaa";
+  ctx.textAlign = "center";
+  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
+})()
 
-const fabric = function () {
+const potential1 = function (id) {
+  const el = document.getElementById(id);
+  document.getElementById("three-potential-1-load").remove()
   // el.onclick = null; //stops the function from running on button click
 
-  settings = {
-    range: 500,
-    edgeBuffer: 100,
-    totalCharges: 15,
+  const settings = {
+    totalCharges: 30,
+    resolution: 256,
+    range: 300, // total size of space the charges can move in range x range
+    edgeBuffer: 30, // how far are walls and spawns from the edge of the fabric, the range
+    minimumRadius: 6, //larger means less spiky peaks
     fullView: false,
-    cameraRange: 1000,
-    resolution: 256
+    cameraRange: 2000,
+    pause: false
   };
 
-  const target = document.getElementById("three-potential");
-
-  let pause = true;
-  target.addEventListener("mouseleave", function () {
-    pause = true;
+  el.addEventListener("mouseleave", function () {
+    settings.pause = true;
   });
-  target.addEventListener("mouseenter", function () {
-    if (pause) {
-      pause = false;
+  el.addEventListener("mouseenter", function () {
+    if (settings.pause) {
+      settings.pause = false;
       requestAnimationFrame(animationLoop);
     }
   });
@@ -38,12 +45,11 @@ const fabric = function () {
   }
 
   //full screen mode
-  target.addEventListener("dblclick", function () {
+  el.addEventListener("dblclick", function () {
     if (settings.fullView) {
       settings.fullView = false;
       //not full screen
-      // exitFullscreen();
-      target.classList.remove("full-page");
+      el.classList.remove("full-page");
       camera.aspect = 600 / 400;
       camera.updateProjectionMatrix();
       renderer.setSize(600, 400);
@@ -51,40 +57,34 @@ const fabric = function () {
     } else {
       settings.fullView = true;
       //full screen
-      // requestFullscreen(target);
-      target.classList.add("full-page");
+      el.classList.add("full-page");
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.style.overflow = "hidden";
     }
   });
+
   /////////////////////////////////////////
   // Scene Setup
   /////////////////////////////////////////
   const scene = new THREE.Scene();
   const renderer = new THREE.WebGLRenderer({
+    canvas: el,
     alpha: true,
     antialias: true
   });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(600, 400);
-  target.appendChild(renderer.domElement);
-  renderer.domElement.style.background = "#000";
+  // el.appendChild(renderer.domElement);
+  renderer.domElement.style.background = "#fff";
 
   /////////////////////////////////////////
   // camera and controls
   /////////////////////////////////////////
 
   const camera = new THREE.PerspectiveCamera(50, 600 / 400, 10, settings.cameraRange);
-
-  camera.position.set(0, -450, -350);
-
-  // camera.lookAt(new THREE.Vector3(-settings.range / 2, -settings.range / 2, settings.range));
-  // camera.position.y -= 10;
-  // camera.position.z += 30;
-
-
+  camera.position.set(0, -settings.range * 0.9, -settings.range * 0.6);
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableZoom = true;
@@ -96,34 +96,17 @@ const fabric = function () {
   // lights and fog
   /////////////////////////////////////////
 
-  // scene.add(new THREE.AmbientLight(0x111111));
-  // var directionalLight = new THREE.DirectionalLight(0xffffff, 0.125);
-  // directionalLight.position.x = Math.random() - 0.5;
-  // directionalLight.position.y = Math.random() - 0.5;
-  // directionalLight.position.z = Math.random() - 0.5;
-  // directionalLight.position.normalize();
-  // scene.add(directionalLight);
-  // pointLight = new THREE.PointLight(0xffffff, 1);
-  // scene.add(pointLight);
-  // pointLight.add(new THREE.Mesh(new THREE.SphereBufferGeometry(4, 8, 8), new THREE.MeshBasicMaterial({
-  //   color: 0xffffff
-  // })));
-
-
-  let lightA = new THREE.AmbientLight(0xffffff);
-  scene.add(lightA);
-
+  // let lightA = new THREE.AmbientLight(0xffffff);
+  // scene.add(lightA);
 
   // let dirLight = new THREE.DirectionalLight(0xffffff, 1);
   // dirLight.color.setHSL(0.1, 1, 0.95);
   // dirLight.position.set(500, 500, 500);
-  // dirLight.target = new THREE.Object3D(0, 0, 0);
+  // dirLight.el = new THREE.Object3D(0, 0, 0);
   // scene.add(dirLight);
 
   // scene.fog = new THREE.FogExp2(0x000000, 0.01);
-  scene.fog = new THREE.Fog(0x000000, settings.range * 0.9, settings.range * 1.6);
-
-
+  // scene.fog = new THREE.Fog(0x000000, settings.range * 0.9, settings.range * 1.6);
 
   /////////////////////////////////////////
   // spawn charges 
@@ -131,16 +114,46 @@ const fabric = function () {
 
   const q = []; //holds the charges
 
-  function spawnCharge(type) {
+  function spawnRandomCharge(type) {
     q[q.length] = new Charge(type, {
-      x: (settings.range - settings.edgeBuffer / 2) * (Math.random() - 0.5),
-      y: (settings.range - settings.edgeBuffer / 2) * (Math.random() - 0.5)
+      x: 0.8 * (settings.range - settings.edgeBuffer / 2) * (Math.random() - 0.5),
+      y: 0.8 * (settings.range - settings.edgeBuffer / 2) * (Math.random() - 0.5)
     });
   }
   for (let i = 0; i < Math.floor(settings.totalCharges / 2); ++i) {
-    spawnCharge("p");
-    spawnCharge("e");
+    spawnRandomCharge("p");
+    spawnRandomCharge("e");
   }
+  // const side = 30;
+  // const apothem = side * 0.866; //vertical distance between rows
+  // const rows = 6; // y
+  // const columns = 4; // x
+  // const hexLeft = 0 - side * ((columns * 3) / 4);
+  // const hexTop = 0 - apothem * (rows / 2);
+  // for (let y = 1; y < rows; ++y) {
+  //   let xOff = 0;
+  //   if (y % 2) {} else {
+  //     xOff = 0.5; //odd
+  //   }
+  //   for (let x = -1, i = 0; i < columns; ++i) {
+  //     if (i % 2) {
+  //       //even
+  //       x++;
+  //       xOff = Math.abs(xOff);
+  //     } else {
+  //       //odd
+  //       x += 2;
+  //       xOff = -Math.abs(xOff);
+  //     }
+  //     q[q.length] = new Charge("p", {
+  //       x: hexLeft + (x + xOff) * side,
+  //       y: hexTop + y * apothem
+  //     });
+  //   }
+  // }
+
+
+
 
   /////////////////////////////////////////
   // spawn potential plane
@@ -153,11 +166,10 @@ const fabric = function () {
     // wireframe: true,
     // emissive: 0xffffff,
     side: THREE.DoubleSide,
-    shading: THREE.FlatShading,
+    flatShading: true,
     // transparent: true,
     // opacity: 0.5,
   });
-
 
   let potentialEnergyMesh = new THREE.Mesh(potentialEnergy, material);
   potentialEnergyMesh.position.set(0, 0, 0);
@@ -192,17 +204,19 @@ const fabric = function () {
   /////////////////////////////////////////
   // update potentialEnergyMesh
   /////////////////////////////////////////
-  function dynamicPlane(who) {
-    const depth = 3000 / settings.totalCharges
+  function renderDynamicPlane(who) {
+    const depth = 10000 / settings.totalCharges
     for (let i = 0, len = potentialEnergyMesh.geometry.vertices.length; i < len; i++) {
       let v = potentialEnergyMesh.geometry.vertices[i];
       let mag = 0; //this should be zero but I'm using depth as 0 to center the energy mesh with the camera
       for (let j = 0, len = who.length; j < len; j++) {
         const dx = who[j].position.x - v.x;
         const dy = who[j].position.y - v.y;
-        mag -= depth * who[j].charge / (Math.sqrt(dx * dx + dy * dy) + 1);
+        const radius = Math.max(Math.sqrt(dx * dx + dy * dy), 1) + settings.minimumRadius;
+        mag -= depth * who[j].charge / radius
       }
       v.z = mag;
+      // v.z = Math.max(Math.min(mag, limit), -limit);
       // v.z = v.z * 0.5 + mag * 0.5; // smooth changes
     }
     potentialEnergyMesh.geometry.computeFaceNormals();
@@ -213,16 +227,16 @@ const fabric = function () {
   /////////////////////////////////////////
   // Render Loop
   /////////////////////////////////////////
-  dynamicPlane(q)
+  renderDynamicPlane(q)
   renderer.render(scene, camera);
 
   function animationLoop() {
-    if (!pause) requestAnimationFrame(animationLoop);
+    if (!settings.pause) requestAnimationFrame(animationLoop);
     controls.update();
     renderer.render(scene, camera);
     Charge.physicsAll(q);
     bounds(q)
-    dynamicPlane(q)
+    renderDynamicPlane(q)
   }
   animationLoop();
 };

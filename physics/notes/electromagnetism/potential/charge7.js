@@ -44,25 +44,6 @@
           x: hexLeft + (x + xOff) * side,
           y: hexTop + y * apothem
         });
-      }
-    }
-
-    for (let y = 1; y < rows; ++y) {
-      let xOff = 0;
-      if (y % 2) {} else {
-        xOff = 0.5; //odd
-      }
-      for (let x = -1, i = 0; i < columns; ++i) {
-        if (i % 2) {
-          //even
-          x++;
-          xOff = Math.abs(xOff);
-        } else {
-          //odd
-          x += 2;
-          xOff = -Math.abs(xOff);
-        }
-
         q[q.length] = new Charge("e", {
           x: hexLeft + (x + xOff) * side + 10 * (Math.random() - 0.5),
           y: hexTop + y * apothem
