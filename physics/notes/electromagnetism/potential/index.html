@@ -339,7 +339,20 @@
 			<canvas id='three-potential-2-load' width='590' height='300' onclick="potential2('three-potential-2')"></canvas>
 			<canvas id='three-potential-2' width='590' height='0'></canvas>
 			This is a Coulomb's law based simulation of the flow of charges with electric potential shown as height. Electric potential difference is the difference in height between two points.
-			<br><br><strong>Question:</strong> Before you move the camera, the left side is higher. Why would electrons move "uphill"?
+			<br><br><strong>Question:</strong> Are the electrons the peaks or the valleys?
+			<details>
+				<summary>answer</summary>
+				<p>
+					Since electrons are negative, they are have a lower potential. They are the valleys. The protons are the peaks.
+				</p>
+				<p>In this simulation the protons also don't move.</p>
+			</details>
+		</div>
+		<div class="example">
+			<!-- This one looks best upside down. Hold down the mouse and drag right to flip. -->
+			<canvas id='three-potential-3-load' width='590' height='300' onclick="potential3('three-potential-3')"></canvas>
+			<canvas id='three-potential-3' width='590' height='0'></canvas>
+			<strong>Question:</strong> The potential is higher on the left and lower on the right. Why would electrons move "uphill"?
 			<details>
 				<summary>answer</summary>
 				<p>
@@ -347,7 +360,6 @@
 				</p>
 			</details>
 		</div>
-
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
@@ -364,6 +376,7 @@
 	<script defer src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
 	<script defer src="potential1.js"></script>
 	<script defer src="potential2.js"></script>
+	<script defer src="potential3.js"></script>
 </body>
 
 </html>
