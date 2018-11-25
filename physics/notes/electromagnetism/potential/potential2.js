@@ -88,7 +88,7 @@ const potential2 = function (id) {
   /////////////////////////////////////////
 
   const camera = new THREE.PerspectiveCamera(50, settings.window.width / settings.window.height, 10, settings.cameraRange);
-  camera.position.set(0, -settings.width * 0.6, -settings.height * 0.6);
+  camera.position.set(0, -settings.width * 0.2, -settings.height * 1.2);
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableZoom = true;
