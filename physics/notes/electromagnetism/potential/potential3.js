@@ -1,5 +1,5 @@
 (() => {
-  var canvas = document.getElementById("three-potential-2-load");
+  var canvas = document.getElementById("three-potential-3-load");
   var ctx = canvas.getContext("2d");
   canvas.width = document.getElementsByTagName("article")[0].clientWidth;
   ctx.font = "30px Arial";
@@ -8,16 +8,16 @@
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
 })()
 
-const potential2 = function (id) {
+const potential3 = function (id) {
   const el = document.getElementById(id);
-  document.getElementById("three-potential-2-load").remove()
+  document.getElementById("three-potential-3-load").remove()
 
   const settings = {
     totalCharges: 30,
-    resolutionWidth: 256,
-    resolutionHeight: 128,
-    width: 256 * 2, // total size of space the charges can move in range x range
-    height: 128 * 2,
+    resolutionWidth: 200,
+    resolutionHeight: 100,
+    width: 600, // total size of space the charges can move in range x range
+    height: 250,
     window: {
       height: 300,
       width: 590
@@ -88,7 +88,7 @@ const potential2 = function (id) {
   /////////////////////////////////////////
 
   const camera = new THREE.PerspectiveCamera(50, settings.window.width / settings.window.height, 10, settings.cameraRange);
-  camera.position.set(0, -settings.width * 0.6, -settings.height * 0.6);
+  camera.position.set(0, -settings.width * 0.4, -settings.height * 1);
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableZoom = true;
@@ -120,48 +120,64 @@ const potential2 = function (id) {
 
   const separation = 40;
   const off = settings.width - separation / 2;
-  for (let i = 0; i < Math.ceil((settings.width * 2) / separation); ++i) {
-    q[q.length] = new Charge("p", {
-      x: separation * i - off,
-      y: separation
-    });
-    q[q.length] = new Charge("p", {
-      x: separation * i - off,
-      y: 0
-    });
-    q[q.length] = new Charge("p", {
-      x: separation * i - off,
-      y: -separation
-    });
 
-    q[q.length] = new Charge(
-      "e", {
-        x: separation * i - off,
-        y: separation
-      }, {
-        x: 0,
-        y: 0
-      }
-    );
-    q[q.length] = new Charge(
-      "e", {
-        x: separation * i - off,
-        y: 0
-      }, {
-        x: 0,
-        y: 0
-      }
-    );
-    q[q.length] = new Charge(
-      "e", {
-        x: separation * i - off,
-        y: -separation
-      }, {
-        x: 0,
-        y: 0
-      }
-    );
+  const side = 30;
+  const apothem = side * 0.866; //vertical distance between rows
+  const rows = 7; // y
+  const columns = 26; // x
 
+  const hexLeft = -side * ((columns * 3) / 4) - 60;
+  const hexTop = -apothem * (rows / 2);
+
+  for (let y = 1; y < rows; ++y) {
+    let xOff = 0;
+    if (y % 2) {} else {
+      xOff = 0.5; //odd
+    }
+    for (let x = -1, i = 0; i < columns; ++i) {
+      if (i % 2) {
+        //even
+        x++;
+        xOff = Math.abs(xOff);
+      } else {
+        //odd
+        x += 2;
+        xOff = -Math.abs(xOff);
+      }
+
+      q[q.length] = new Charge("p", {
+        x: hexLeft + (x + xOff) * side,
+        y: hexTop + y * apothem
+      });
+    }
+  }
+  const Vx = 0;
+  for (let y = 1; y < rows; ++y) {
+    let xOff = 0;
+    if (y % 2) {} else {
+      xOff = 0.5; //odd
+    }
+    for (let x = -1, i = 0; i < columns + 1; ++i) {
+      if (i % 2) {
+        //even
+        x++;
+        xOff = Math.abs(xOff);
+      } else {
+        //odd
+        x += 2;
+        xOff = -Math.abs(xOff);
+      }
+
+      q[q.length] = new Charge(
+        "e-small", {
+          x: hexLeft + (x + xOff) * side,
+          y: hexTop + y * apothem
+        }, {
+          x: Vx,
+          y: 0
+        }
+      );
+    }
   }
 
   // function spawnRandomCharge(type) {
@@ -244,7 +260,7 @@ const potential2 = function (id) {
   // update potentialEnergyMesh
   /////////////////////////////////////////
   function renderDynamicPlane(who) {
-    const depth = 11000 / settings.totalCharges //scale of the z-direction
+    const depth = 40000 / settings.totalCharges //scale of the z-direction
     const minimumRadius = 6 //larger means less spiky peaks //how much of the center of a spike do we skip?
     for (let i = 0, len = potentialEnergyMesh.geometry.vertices.length; i < len; i++) {
       let v = potentialEnergyMesh.geometry.vertices[i];
@@ -257,7 +273,7 @@ const potential2 = function (id) {
       }
       // v.z = mag;
       // v.z = v.z * 0.5 + mag * 0.5; // smooth changes
-      v.z = v.z * 0.7 + mag * 0.3; // smooth changes
+      v.z = v.z * 0.9 + mag * 0.1; // smooth changes
     }
     potentialEnergyMesh.geometry.computeFaceNormals(); //not sure why this command is needed, but I think it helps performance //I think it smooths out flat shading?
     potentialEnergyMesh.geometry.normalsNeedUpdate = true; //not sure why this command is needed, but I think it helps performance //I think it smooths out flat shading?
@@ -275,7 +291,8 @@ const potential2 = function (id) {
     controls.update();
     renderer.render(scene, camera);
     // Charge.physicsAll(q);
-    Charge.physicsAll(q, 0.99, 300, 50);
+    Charge.physicsAll(q, 0.95, 150, 110);
+    Charge.uniformField(q);
     teleport(q)
     // bounds(q)
     renderDynamicPlane(q)
