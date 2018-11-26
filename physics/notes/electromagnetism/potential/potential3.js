@@ -16,9 +16,9 @@ const potential3 = function (id) {
   const settings = {
     totalCharges: 30,
     resolutionWidth: 200,
-    resolutionHeight: 100,
+    resolutionHeight: 80,
     width: 600, // total size of space the charges can move in range x range
-    height: 250,
+    height: 240,
     window: {
       height: 300,
       width: 590
@@ -89,7 +89,7 @@ const potential3 = function (id) {
   /////////////////////////////////////////
 
   const camera = new THREE.PerspectiveCamera(50, settings.window.width / settings.window.height, 10, settings.cameraRange);
-  camera.position.set(0, -settings.width * 0.4, -settings.height * 1);
+  camera.position.set(0, -settings.width * 0.5, -settings.height * 1.2);
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableZoom = true;

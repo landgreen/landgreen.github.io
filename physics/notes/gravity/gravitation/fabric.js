@@ -19,7 +19,7 @@ const fabric = function (id) {
     totalPlanets: 10,
     planetRadius: 1,
     fullView: false,
-    cameraRange: 200,
+    cameraRange: 400,
     resolution: 256
   };
   settings.totalMass = settings.totalPlanets * settings.planetRadius;
