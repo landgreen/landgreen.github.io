@@ -13,6 +13,16 @@ const powerUps = {
       //game.makeTextLog('heal for '+(heal*100).toFixed(0)+'%',80)
     }
   },
+  shield: {
+    name: "shield",
+    color: "#f9f",
+    size: function () {
+      return 70;
+    },
+    effect: function () {
+
+    }
+  },
   ammo: {
     name: "ammo",
     color: "#467",
@@ -72,7 +82,7 @@ const powerUps = {
       }
     }
   },
-  //powerups also come from spawn.debris
+  //power ups also come from spawn.debris
   spawnRandomPowerUp: function (x, y) {
     //a chance to drop a power up
     //mostly used after mob dies
@@ -81,10 +91,17 @@ const powerUps = {
       powerUps.spawn(x, y, "heal");
       return;
     }
-    if (Math.random() < 0.18) {
+
+    // if (Math.random() < 0.10) {
+    //   powerUps.spawn(x, y, "shield");
+    //   return;
+    // }
+
+    if (Math.random() < 0.16) {
       if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
       return;
     }
+
     //a new gun has a low chance for each not acquired gun to drop
     if (Math.random() < 0.006 * (b.guns.length - b.inventory.length)) {
       powerUps.spawn(x, y, "gun");
@@ -99,6 +116,13 @@ const powerUps = {
     } else {
       powerUps.spawn(x, y, "ammo", false);
     }
+    // if (Math.random() < 0.33) {
+    //   powerUps.spawn(x, y, "heal", false);
+    // } else if (Math.random() < 0.5) {
+    //   powerUps.spawn(x, y, "ammo", false);
+    // }else {
+    //   powerUps.spawn(x, y, "shield", false);
+    // }
   },
   spawnStartingPowerUps: function (x, y) {
     if (b.inventory.length < 3) {
