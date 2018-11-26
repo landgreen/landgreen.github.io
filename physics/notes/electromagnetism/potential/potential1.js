@@ -5,6 +5,7 @@
   ctx.font = "30px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
 })()
 
