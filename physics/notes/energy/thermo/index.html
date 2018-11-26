@@ -416,12 +416,12 @@
 				$$2^{n} = 2^{20} = 1\,048\,576 $$
 				<p>Trying random configurations would take on average half the number of total states to reach our unique unmixed state.</p>
 				$$\frac{2^{n}}{2}$$
-				<p>I wrote a program that counts how often a particle switches states. For ten particles on each sides, at the fastest time rate, there are about 18.75 switches per second. </p>
+				<p>I wrote a program that counts how often a particle switches states. For ten particles on each sides, at the fastest time rate, there are about 18.75 switches per second or one every 1/18.75 seconds. </p>
 				<!-- Let's make a rough approximation that each particle switches states every 1.4 second. This means the time, T, is divided
 					by the number of particles, n, times 1.4. -->
-				$$T \approx \left(\frac{2^{n}}{(2)(18.75)}\right) \mathrm{s}$$
-				$$\left(\frac{2^{20}}{(2)(18.75)}\right) \mathrm{s} \approx 27\,960 \, \mathrm{s} \approx 7.767 \, \mathrm{hr}$$
-				<p>The graphs below generously assume that each particle switches states once a second. You can see the time increases very very fast as the number of particles goes up.</p>
+				$$T_{avg} \approx \left(\frac{2^{20}}{(2)(18.75)}\right) \mathrm{s}$$
+				$$T_{avg} \approx 27\,960 \, \mathrm{s} = 7.767 \, \mathrm{hr}$$
+				<p>The graphs below generously assume that each particle switches states once a second. You can see the time increases very fast as the number of particles goes up.</p>
 				<!-- <p>If we assume the number of transistions holds his answer isn't exact, but it shows how fast the average time to separate grows with the number of particles. </p> -->
 				<svg id="SVG-graph-1" viewBox="0 0 580 210"> </svg>
 				<script defer>
@@ -441,7 +441,7 @@
 							yLabel: "time (s)",
 							showMouseCoords: true,
 						}
-						funGraphSVG("SVG-graph-1", x => Math.pow(2, x) / 2 / x, settings);
+						funGraphSVG("SVG-graph-1", x => Math.pow(2, x) / (2 * x), settings);
 					})()
 				</script>
 
