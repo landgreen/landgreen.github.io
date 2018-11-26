@@ -5,6 +5,7 @@
   ctx.font = "30px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
 })()
 
@@ -140,7 +141,8 @@ const fabric = function (id) {
   //random planets
   const planet = [];
   for (let i = 0; i < settings.totalPlanets; ++i) {
-    const radius = settings.planetRadius + settings.planetRadius * (Math.random() - 0.5)
+    let radius = settings.planetRadius * (0.2 + 3 * Math.random() * Math.random() * Math.random())
+    if (i === 0) radius = settings.planetRadius * 2.5
     geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
     material = new THREE.MeshLambertMaterial({
       // color: 0xadc8d3,
@@ -240,18 +242,18 @@ const fabric = function (id) {
       who[i].position.y += who[i].velocity.y;
 
       // walls
-      if (who[i].position.x > edge) {
-        who[i].position.x = edge
+      if (who[i].position.x > edge - who[i].radius) {
+        who[i].position.x = edge - who[i].radius
         who[i].velocity.x = -Math.abs(who[i].velocity.x);
-      } else if (who[i].position.x < -edge) {
-        who[i].position.x = -edge
+      } else if (who[i].position.x < -edge + who[i].radius) {
+        who[i].position.x = -edge + who[i].radius
         who[i].velocity.x = Math.abs(who[i].velocity.x);
       }
-      if (who[i].position.y > edge) {
-        who[i].position.y = edge
+      if (who[i].position.y > edge - who[i].radius) {
+        who[i].position.y = edge - who[i].radius
         who[i].velocity.y = -Math.abs(who[i].velocity.y);
-      } else if (who[i].position.y < -edge) {
-        who[i].position.y = -edge
+      } else if (who[i].position.y < -edge + who[i].radius) {
+        who[i].position.y = -edge + who[i].radius
         who[i].velocity.y = Math.abs(who[i].velocity.y);
       }
 

@@ -29,6 +29,7 @@
     <script defer src="grav1.js "></script>
     <script defer src="grav2.js "></script>
     <script defer src="fabric.js "></script>
+    <!-- <script defer src="gravity3d.js "></script> -->
 </head>
 
 <body>
@@ -52,7 +53,6 @@
         <p>
             Things fall. Pencils, buildings, people, everything falls. The Earth is falling towards the Sun. Luckily, it is falling in a way that doesn't hit the Sun.
         </p>
-
         <p class='underlined'>Early Theories of Gravity</p>
         <p>
             The history of gravity tells the story of humanity realizing we aren't the center of the universe.
@@ -64,18 +64,15 @@
         <p>
             Like many early philosophers, Aristotle organized the sky into a geocentric model. Moving planetary spheres surrounded a stationary and spherical Earth.
         </p>
-
         <a href="https://en.wikipedia.org/wiki/Almagest#Ptolemy's_planetary_model">
             <img src="..\..\..\media\Ptolemaicsystem-small.png" title="Ptolemaic geocentric planetary spheres model" style='height: 100%; width: 100%; object-fit: contain'>
         </a>
-
         <p>
             The geocentric models showed flaws. Planets would inexplicably change in speed and direction. To correct these flaws several small circles called epicycles were added to the path of the planets. As telescopes and data collection methods improved, the number of epicycles grew to correct for flaws in the geocentric model.
         </p>
         <p>In 1543, Polish astronomer, <a href="https://en.wikipedia.org/wiki/Nicolaus_Copernicus">Nicolaus Copernicus</a> published a book on
             the heliocentric theory, the idea that the planets revolved around the Sun, not the Earth. His heliocentric theory marks the beginning of the scientific revolution.
         </p>
-
         <a href="https://en.wikipedia.org/wiki/Copernican_Revolution">
             <img src="..\..\..\media\Copernican_heliocentrism_theory_diagram.svg" title="Copernican heliocentric model">
         </a>
@@ -87,7 +84,6 @@
         <p>
             Italian natural philosopher, Galileo Galilei, discovered that falling objects all accelerate at the same rate as long as air resistance isn't a significant factor.
         </p>
-
         <p>
             Galileo also championed Copernican the heliocentric model. The idea of the Earth going around the Sun was blasphemous in the eyes of the Catholic church. They found him guilty of heresy. The Church forced him to recant his findings, they banned his work, and they sentenced him to house arrest from 1633 until his death in 1642.
         </p>
@@ -160,10 +156,16 @@
                     <text x="310" y="130" fill="black" text-anchor="middle" font-size="25 ">r</text> -->
             </svg>
         </div>
-        <p>In 1916 universal gravitation was improved on by Einstein's
-            <a href="../../relativity/general/index.html">general relativity</a>, but universal gravitation is
-            still used for low mass and low speed situations, like
-            the Earth and its satellites.</p>
+        <p>
+            In 1916 universal gravitation was improved on by Einstein's <a href="../../relativity/general/index.html">general relativity</a>, but universal gravitation is still used for low mass and low speed situations, like the Earth and its satellites.
+        </p>
+
+        <!-- <div class="example-small">
+            Use the mouse to move the camera. Double click for full screen.
+            <canvas id='gravity3d-load' width='590' height='100' onclick="gravity3d('gravity3d')"></canvas>
+            <canvas id='gravity3d' width='590' height='0'></canvas>
+            You can get a feel for universal gravity from this 3-D simulation.
+        </div> -->
 
         <div class='example'>
             <strong>Question:</strong> Each mass feels an equal but opposite force as predicted by Newton's 3rd law. This means that the same force of gravity you feel towards the Earth the Earth feels towards you. So why don't we notice the Earth accelerate towards you?
@@ -480,7 +482,7 @@
                 <circle cx="50" cy="100" r="20" fill='#fff' stroke-width="2" stroke="#222" />
                 <circle cx="250" cy="100" r="50" fill='#bcd' stroke-width="2" stroke="#222" />
 
-                <text x="250" y="105" fill="black" text-anchor="middle" font-size="25 ">M</text>
+                <text x="250" y="108" fill="black" text-anchor="middle" font-size="25 ">M</text>
 
                 <line x1="50" y1="100" x2="130" y2="100" style="stroke:#000;stroke-width:2" />
                 <polygon points="0,0 -8,5 -8,-5" transform="translate(135 100)" style="fill:#000;" />
