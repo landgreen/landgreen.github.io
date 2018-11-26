@@ -279,11 +279,18 @@ const fabric = function (id) {
     const depth = 100 / settings.totalMass
     for (let i = 0, len = potentialEnergyMesh.geometry.vertices.length; i < len; i++) {
       let v = potentialEnergyMesh.geometry.vertices[i];
-      let mag = depth; //this should be zero but I'm using depth as 0 to center the energy mesh with the camera
+      let mag = depth; //this should be zero but I'm using depth as 0 to center the energy mesh higher up with the camera
       for (let j = 0, len = planet.length; j < len; j++) {
         const dx = planet[j].position.x - v.x;
         const dy = planet[j].position.y - v.y;
-        mag -= depth * planet[j].radius * planet[j].radius / (Math.max(Math.sqrt(dx * dx + dy * dy), planet[j].radius));
+        const dist = Math.sqrt(dx * dx + dy * dy)
+        mag -= depth * planet[j].radius * planet[j].radius / (Math.max(dist, planet[j].radius));
+        //below code is technically more accurate, but it just looks really confusing ...
+        // if (dist > planet[j].radius) {
+        //   mag -= depth * planet[j].radius * planet[j].radius / dist; //outside planet
+        // } else {
+        //   mag -= depth * planet[j].radius * planet[j].radius / (planet[j].radius + planet[j].radius / dist - 1);//inside planet
+        // }
       }
       v.z = mag;
       // v.z = v.z * 0.9 + mag * 0.1; // smooth changes

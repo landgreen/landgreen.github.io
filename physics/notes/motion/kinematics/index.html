@@ -2,6 +2,16 @@
 <html>
 
 <head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+		gtag('config', 'UA-113454647-1');
+	</script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="theme-color" content="#222" />
@@ -305,8 +315,7 @@ https://vuejs.org/v2/guide/components.html
 					<tr>
 						<td colspan="2">
 							<div>
-								<vue-slider v-model="t" v-on:input="calcT" event-type="auto" width="auto" :height="6" :dot-size="20" :min="-5" :max="30"
-								 :interval="0.1"></vue-slider>
+								<vue-slider v-model="t" v-on:input="calcT" event-type="auto" width="auto" :height="6" :dot-size="20" :min="-5" :max="30" :interval="0.1"></vue-slider>
 							</div>
 							<div class="center">Δt =
 								<input v-on:input="calcT" v-model.number="t" type="number" step="0.01"> s</div>
@@ -507,8 +516,7 @@ https://vuejs.org/v2/guide/components.html
 		<div class='example'>
 			<svg viewbox='-25 0 600 250'>
 				<rect x="-25" y="200" width="600" height="50" fill='#cdd' stroke='none' rx="10" ry="10" />
-				<path d="M2 200 Q 276 -195 550 200" fill='none' stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-dasharray="0, 30"
-				 stroke-linecap="round" />
+				<path d="M2 200 Q 276 -195 550 200" fill='none' stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-dasharray="0, 30" stroke-linecap="round" />
 				<path d="M1 215 v11 v-5 h550 v5 v-11" fill='none' stroke="#000" stroke-width="2" stroke-linejoin="round" />
 				<text x="276" y="243" text-anchor="middle" font-size="20" fill='#000'>Δx</text>
 				<text x="42" y="130" text-anchor="middle" font-size="20" fill='#000'>v</text>

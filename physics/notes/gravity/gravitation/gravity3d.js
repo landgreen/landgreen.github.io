@@ -143,6 +143,34 @@ const gravity3d = function (id) {
   let radius, index;
   const mass = [];
 
+  const line = [];
+
+  function addLine(pos) {
+    material = new THREE.LineBasicMaterial({
+      color: 0xffffff
+    });
+    geometry = new THREE.Geometry();
+    geometry.vertices.push(new THREE.Vector3(pos.x, pos.y, pos.z));
+    const lineIndex = line.length
+    line[lineIndex] = new THREE.Line(geometry, material);
+    scene.add(line[lineIndex]);
+  }
+
+  function updateLine() {
+    // for (let i = 0; i < line.length; i++) {
+    console.log(line[0].geometry.vertices)
+    const where = mass[0 + 1].position //plus one on i to skip the sun
+    console.log(line[0].geometry.vertices)
+    // console.log(where)
+    // const v = THREE.Vector3(where.x, where.y, where.z)
+    // console.log(v)
+    line[0].geometry.vertices.push(where)
+    line[0].geometry.verticesNeedUpdate = true;
+
+    // }
+    // geometry.vertices.push(new THREE.Vector3(pos.x, pos.y, pos.z));
+  }
+
   //sun
   index = mass.length
   radius = 10
@@ -175,7 +203,7 @@ const gravity3d = function (id) {
     // color: 0xadc8d3,    // color: 0xaa6633,    // wireframe: true,    // shading: THREE.FlatShading,    // transparent: true,    // opacity: 0.7,
   });
 
-  for (let i = 0; i < 17; i++) {
+  for (let i = 0; i < 3; i++) {
     index = mass.length
     radius = 1 + 0.9 * (Math.random() - 0.5)
     geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
@@ -189,6 +217,8 @@ const gravity3d = function (id) {
       z: 0.03 * (Math.random() - 0.5),
     };
     scene.add(mass[index]);
+
+    addLine(mass[index].position) //  add a new line for the planet
   }
   // index = mass.length
   // mass[index] = new THREE.Mesh(geometry, material);
@@ -268,8 +298,8 @@ const gravity3d = function (id) {
   geometry.vertices.push(new THREE.Vector3(-side, side, -side));
   geometry.vertices.push(new THREE.Vector3(side, side, -side));
   geometry.vertices.push(new THREE.Vector3(side, side, side));
-  var line = new THREE.Line(geometry, material);
-  scene.add(line);
+  var box = new THREE.Line(geometry, material);
+  scene.add(box);
 
   /////////////////////////////////////////
   // Physics
@@ -322,6 +352,18 @@ const gravity3d = function (id) {
       }
     }
   }
+  /////////////////////////////////////////
+  // trace path of masses
+  /////////////////////////////////////////
+
+  //spawn
+
+
+
+  //update
+
+
+
 
   /////////////////////////////////////////
   // Render Loop
@@ -331,6 +373,7 @@ const gravity3d = function (id) {
     controls.update();
     renderer.render(scene, camera);
     physics(mass)
+    updateLine()
   }
   animationLoop();
 };
