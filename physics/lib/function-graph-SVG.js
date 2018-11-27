@@ -172,7 +172,7 @@ function funGraphSVG(
 
       if (y0 > bounds.height / 3) {
         //top of y-axis
-        addText(yLabel, x0 + 13, 0, {
+        addText(yLabel, x0 + 13, 3, {
           textAnchor: "end",
           rotation: -90
         });
