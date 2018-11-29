@@ -38,7 +38,7 @@ function grav2(el) {
     false
   );
 
-  document.getElementById("num2").addEventListener("input", () => reset(), false);
+  // document.getElementById("num2").addEventListener("input", () => reset(), false);
 
   let q = []; //holds the Particles
   let fMag;
