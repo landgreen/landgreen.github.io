@@ -29,6 +29,20 @@ const potential3 = function (id) {
     pause: true
   };
 
+  let raycaster = new THREE.Raycaster();
+  let mouse = new THREE.Vector2();
+
+  el.addEventListener("mousemove", event => {
+    // mouse.x = event.clientX;
+    // mouse.y = event.clientY;
+
+    //not sure why this is the correct values for mouse, only works in full screen
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    // mouse.x = (event.offsetX * canvas.width) / canvas.clientWidth
+    // mouse.y = (event.offsetY * canvas.height) / canvas.clientHeight
+  });
+
   el.addEventListener("mouseleave", function () {
     settings.pause = true;
   });
@@ -208,7 +222,7 @@ const potential3 = function (id) {
   let material = new THREE.MeshNormalMaterial({
     // map: texture,
     //ambient: 0x44B8ED,
-    // color: 0xffffff,
+    color: 0xffffff,
     // wireframe: true,
     // emissive: 0xffffff,
     side: THREE.DoubleSide, //oddly, double sided has better performance
@@ -322,6 +336,14 @@ const potential3 = function (id) {
     teleport(q)
     // bounds(q)
     renderDynamicPlane(q)
+
+
+    // update the picking ray with the camera and mouse position
+    raycaster.setFromCamera(mouse, camera);
+
+    // calculate objects intersecting the picking ray
+    var intersects = raycaster.intersectObjects(scene.children);
+    console.log(intersects)
   }
   animationLoop();
 };
