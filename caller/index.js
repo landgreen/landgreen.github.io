@@ -234,6 +234,7 @@ let p = new Vue({
       for (let i = 0, len = this.layout.length; i < len; ++i) {
         this.layout[i].focus = false;
       }
+      document.getElementById("speech").innerHTML = "";
     },
     removeItem: function (item) {
       let removeName = prompt("enter name of student to remove", this.layout[0].name);
