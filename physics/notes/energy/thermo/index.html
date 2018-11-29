@@ -377,10 +377,10 @@
 
 		<h1 class='underlined' id="arrow-of-time">Arrow of Time</h1>
 		<p>
-			The laws of physics are time reversible. Nature behaves the same moving forwards or backwards in time. The only exception is entropy.
+			If you were to watch a video of the Earth orbiting the sun, it would be difficult to tell if the video was running forwards or backwards. Simple physical systems don't have a clear forwards or backwards.
 		</p>
 		<p>
-			If you were to watch a video of the Earth orbiting the sun, it would be difficult to tell if the video was running forwards or backwards. Simple physical systems don't have a clear forwards or backwards.
+			The laws of physics are time reversible. Nature behaves the same moving forwards or backwards in time. The only exception is entropy.
 		</p>
 		<p>
 			If you were to watch a glass of water fall off a table, it would be very clear the direction of time. This is because the entropy of the glass of water is rapidly increasing.
@@ -418,7 +418,7 @@
 				</div>
 			</div>
 			<p>The odds of the 300 particles above separating by chance is so unlikely that it would take longer than the age of the universe.</p>
-			<strong>Simulation:</strong> Clear the simulation and click to add 10 particles on each side. Guess how long would we have to wait for the colors to separate on the left and right sides?
+			<strong>Simulation:</strong> Clear the simulation and click to add 10 particles on each side. Guess how long we would have to wait for the colors to separate, with the red and blue particles on opposite sides.
 			<details>
 				<summary>Investigation</summary>
 				<p>Let's say that each particle can be in one of 2 states: left or right.</p>
@@ -427,12 +427,9 @@
 				<p>Trying random configurations would take on average half the number of total states to reach our unique unmixed state.</p>
 				$$\frac{2^{n}}{2}$$
 				<p>I wrote a program that counts how often a particle switches states. For ten particles on each sides, at the fastest time rate, there are about 18.75 switches per second or one every 1/18.75 seconds. </p>
-				<!-- Let's make a rough approximation that each particle switches states every 1.4 second. This means the time, T, is divided
-					by the number of particles, n, times 1.4. -->
 				$$T_{avg} \approx \left(\frac{2^{20}}{(2)(18.75)}\right) \mathrm{s}$$
 				$$T_{avg} \approx 27\,960 \, \mathrm{s} = 7.767 \, \mathrm{hr}$$
 				<p>The graphs below generously assume that each particle switches states once a second. You can see the time increases very fast as the number of particles goes up.</p>
-				<!-- <p>If we assume the number of transistions holds his answer isn't exact, but it shows how fast the average time to separate grows with the number of particles. </p> -->
 				<svg id="SVG-graph-1" viewBox="0 0 580 210"> </svg>
 				<script defer>
 					(function () {
