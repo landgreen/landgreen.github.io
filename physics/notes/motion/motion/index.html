@@ -27,9 +27,12 @@
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 
 	<script defer src="motionSVG.js"></script>
+	<script defer src='../../../lib/matter.min.js'></script>
 
+	<script defer src="mattersim.js"></script>
 	<link rel="stylesheet" href="../../../style.css">
 	<script src='../../../lib/function-graph-SVG.js'></script>
+
 </head>
 
 <body>
@@ -40,8 +43,11 @@
 	</header>
 	<article>
 		<p>
-			Physics explores where things are in things are in both space and time.
+			Physics explores how things change in both space and time.
 		</p>
+		<canvas id='matter' height='150' width='590'></canvas>
+
+
 		<!-- <p>
 			Physics calls the rate that position changes as time changes velocity.
 			<br>Physics calls the rate that velocity changes as time changes acceleration.
