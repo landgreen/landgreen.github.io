@@ -25,12 +25,12 @@
 	<title>Motion</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+	<link rel="stylesheet" href="../../../style.css">
 
 	<script defer src="motionSVG.js"></script>
-	<script defer src='../../../lib/matter.min.js'></script>
 
+	<script defer src='../../../lib/matter.min.js'></script>
 	<script defer src="mattersim.js"></script>
-	<link rel="stylesheet" href="../../../style.css">
 	<script src='../../../lib/function-graph-SVG.js'></script>
 
 </head>
@@ -43,15 +43,64 @@
 	</header>
 	<article>
 		<p>
-			Physics explores how things change in both space and time.
+			Physics explores how objects move through space and time.
 		</p>
-		<canvas id='matter' height='150' width='590'></canvas>
+		<style>
+			.wrapper {
+				display: grid;
+				grid-gap: 10px;
+				grid-template-columns: [col] 495px [col] 100px;
+				grid-template-rows: [row] auto;
+			}
+
+			.a {
+				grid-column: col / span 2;
+				grid-row: row ;
+			}
+			.b {
+				grid-column: col 2 / span 1 ;
+				grid-row: row ;
+			}
+
+			.box{
+				padding-top:40px;
+			}
+			.result{
+				text-align: left;
+				padding-bottom:2px;
+				padding-top:2px;
+			}
+			.circle{
+				height: 20px;
+				width: 20px;
+				border-radius: 50%;
+				background-color: #f65;
+				left: 15px;
+                position: relative;
+			}
+		</style>
+		<div class="hide-on-mobile">
+			<div class="wrapper">
+				<div class="a">
+					<canvas id='matter' height='158' width='495'></canvas>
+				</div>
+				<div class="box b">
+					<div class="circle"></div>
+					<div class="result" id="x">x</div>
+					<div class="result" id="y">y</div>
+					<div class="result" id="Vx">Vx</div>
+					<div class="result" id="Vy">Vy</div>
+					<!-- <div class="result" id="a">a</div> -->
+					<div class="result" id="m">m</div>
+					<!-- <div class="result" id="t">t</div> -->
+				</div>
+			</div>
+		</div>
 
 
-		<!-- <p>
-			Physics calls the rate that position changes as time changes velocity.
-			<br>Physics calls the rate that velocity changes as time changes acceleration.
-		</p> -->
+
+
+
 		<h1 class='underlined'>Position</h1>
 		<p>In physics we use the symbol x for position in space with meters for units. You might be used to using 'x' in other ways, but in physics it is reserved for position to keep things from getting confusing.</p>
 		<p>To represent a displacement we subtract the initial position from the final position. We use the Δ symbol to show change.</p>

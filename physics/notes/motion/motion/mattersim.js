@@ -15,6 +15,7 @@ function matter() {
   ctx.lineWidth = 5;
   ctx.lineJoin = "round";
   ctx.lineCap = "round";
+  ctx.strokeStyle = "#556";
 
 
   let pause = true;
@@ -25,7 +26,7 @@ function matter() {
     pause = false;
     if (!pause) requestAnimationFrame(cycle);
   });
-  canvas.addEventListener("click", function () {});
+  // canvas.addEventListener("click", function () {});
 
   const Engine = Matter.Engine,
     World = Matter.World
@@ -41,39 +42,84 @@ function matter() {
   const settings = {
     width: canvas.width,
     height: canvas.height,
-    spawnNumber: 50,
+    spawnNumber: 15,
     wallWidth: 100,
     edge: 5,
-    radius: 4,
-    barSize: 300, //needs to be even multiples of width
+    radius: 8,
     maxBarSize: 10,
     barGap: 300 * 0.02,
     scaleValue: 100,
     timeRate: 0,
-    lowestSpeed: 0.4,
-    colorA: "#8ab",
-    colorB: "#f04",
-    count: {
-      left: 0,
-      right: 0
-    }
+    lowestSpeed: 0.5,
+    highlightIndex: 0,
   };
 
   canvas.addEventListener("mousedown", event => {
     if (!settings.pause) {
+
       //gets mouse position, even when canvas is scaled by CSS
       const mouse = {
         x: (event.offsetX * canvas.width) / canvas.clientWidth,
         y: (event.offsetY * canvas.height) / canvas.clientHeight
       };
-      const spread = 10;
-      for (let i = 0; i < 1; ++i) {
-        addAtom(mouse.x + spread * (Math.random() - 0.5), mouse.y + spread * (Math.random() - 0.5));
+
+
+      switch (event.which) {
+        case 1:
+          //find which atom the mouse is over
+          for (let i = 0, len = atom.length; i < len; ++i) {
+            const dx = mouse.x - atom[i].position.x
+            const dy = mouse.y - atom[i].position.y
+            const distance = Math.sqrt(dx * dx + dy * dy)
+            if (distance < atom[i].radius) settings.highlightIndex = i
+          }
+          break;
+        case 2:
+          addAtom(mouse.x, mouse.y);
+          break;
+        case 3:
+          //repel
+          for (let i = 0, len = atom.length; i < len; ++i) {
+            const dx = mouse.x - atom[i].position.x
+            const dy = mouse.y - atom[i].position.y
+            // const distance = Math.sqrt(dx * dx + dy * dy)
+            const a = Math.atan2(dy, dx);
+            const r = dx * dx + dy * dy + 4000; //the +4000 keeps r from being zero
+            const mag = -10000 / r;
+            Matter.Body.setVelocity(atom[i], {
+              x: atom[i].velocity.x + mag * Math.cos(a),
+              y: atom[i].velocity.y + mag * Math.sin(a)
+            });
+          }
+          break;
       }
-      Engine.update(engine, 16.666);
-      draw();
+
+
+      //find which atom the mouse is over
+      // for (let i = 0, len = atom.length; i < len; ++i) {
+      //   const dx = mouse.x - atom[i].position.x
+      //   const dy = mouse.y - atom[i].position.y
+      //   const distance = Math.sqrt(dx * dx + dy * dy)
+      //   if (distance < atom[i].radius) settings.highlightIndex = i
+      // }
     }
   });
+
+  // disable right click menu 
+  canvas.oncontextmenu = function () {
+    return false;
+  }
+
+  // disable middle mouse click scroll
+  canvas.onmousedown = function (event) {
+    if (event.button === 1) return false;
+  }
+
+
+
+
+
+
 
   // add walls
   const wall = [];
@@ -107,12 +153,11 @@ function matter() {
     addAtom(settings.width - (Math.random() * settings.width) / 2.1 - settings.edge, Math.random() * (settings.height - settings.edge * 2) + settings.edge);
   }
 
-  function addAtom(x, y, speed = 0.1, radius = settings.radius + 0.8 * settings.radius * (Math.random() - 0.5)) {
+  function addAtom(x, y, speed = 1, radius = settings.radius + 0.6 * settings.radius * (Math.random() - 0.5)) {
     const len = atom.length;
     atom[len] = Matter.Bodies.polygon(x, y, 0, radius, {
       radius: radius,
       // color: (x > canvas.width / 2) ? "#f08" : "#07c",
-      color: "#f65",
       isGroupA: (x > canvas.width / 2) ? false : true,
       friction: 0,
       frictionAir: 0,
@@ -129,17 +174,16 @@ function matter() {
   }
 
   // particles tend to lose speed, but they also sometimes get moving too fast
-  function speedControl(factor = 1.1) {
+  function speedControl() {
+    let speedTotal = 0
     for (let i = 0, len = atom.length; i < len; ++i) {
-      if (atom[i].speed < settings.lowestSpeed) {
+      speedTotal += atom[i].speed
+    }
+    if (speedTotal / atom.length < settings.lowestSpeed) {
+      for (let i = 0, len = atom.length; i < len; ++i) {
         Matter.Body.setVelocity(atom[i], {
-          x: atom[i].velocity.x * factor,
-          y: atom[i].velocity.y * factor
-        });
-      } else if (atom[i].speed > 20) {
-        Matter.Body.setVelocity(atom[i], {
-          x: atom[i].velocity.x / factor,
-          y: atom[i].velocity.y / factor
+          x: atom[i].velocity.x * 1.01,
+          y: atom[i].velocity.y * 1.01
         });
       }
     }
@@ -148,7 +192,8 @@ function matter() {
   const draw = function () {
     ctx.clearRect(0, 0, settings.width, canvas.height);
 
-    ctx.strokeStyle = "#556";
+    // ctx.strokeStyle = "#555";
+    // ctx.lineWidth = 5;
     ctx.beginPath();
     const edge = settings.edge / 2
     ctx.moveTo(edge, settings.height - edge);
@@ -159,20 +204,49 @@ function matter() {
     ctx.stroke();
 
     //draw atoms
+    ctx.fillStyle = "#8ab"
+    ctx.beginPath();
     for (let i = 0, len = atom.length; i < len; ++i) {
-      ctx.beginPath();
-      ctx.fillStyle = atom[i].color;
       ctx.moveTo(atom[i].position.x, atom[i].position.y);
       ctx.arc(atom[i].position.x, atom[i].position.y, atom[i].radius, 0, 2 * Math.PI);
-      ctx.fill();
     }
+    ctx.fill();
+
+    //highlight one
+    // ctx.strokeStyle = "#000";
+    // ctx.lineWidth = 1;
+    ctx.fillStyle = "#f65"
+    ctx.beginPath();
+    // ctx.moveTo(atom[settings.highlightIndex].position.x, atom[settings.highlightIndex].position.y);
+    ctx.arc(atom[settings.highlightIndex].position.x, atom[settings.highlightIndex].position.y, atom[settings.highlightIndex].radius, 0, 2 * Math.PI);
+    ctx.fill();
+    // ctx.stroke();
   };
 
+  function report() {
+    const scale = 0.05;
+    // document.getElementById("t").innerHTML = "t &nbsp;&nbsp;&nbsp;=&nbsp;&nbsp; " + (time / 60).toFixed(1);
+    document.getElementById("x").innerHTML = "x &nbsp;&nbsp;=&nbsp;&nbsp; " + (atom[settings.highlightIndex].position.x * scale).toFixed(1)
+    document.getElementById("y").innerHTML = "y &nbsp;&nbsp;=&nbsp;&nbsp; " + ((canvas.height - atom[settings.highlightIndex].position.y) * scale).toFixed(1)
+    document.getElementById("Vx").innerHTML = "Vx =&nbsp; " + (atom[settings.highlightIndex].velocity.x * 60 * scale).toFixed(1)
+    document.getElementById("Vy").innerHTML = "Vy =&nbsp; " + (-atom[settings.highlightIndex].velocity.y * 60 * scale).toFixed(1)
+    // document.getElementById("a").innerHTML = "a &nbsp;&nbsp;=&nbsp; " + "---";
+    document.getElementById("m").innerHTML = "m &nbsp;=&nbsp;&nbsp; " + atom[settings.highlightIndex].mass.toFixed(2)
+  }
+
+  let time = 0
+
   function cycle() {
+    time++
     Engine.update(engine, 16.666);
     speedControl();
     draw();
+    report();
     if (!pause) requestAnimationFrame(cycle);
   }
+  Engine.update(engine, 16.666);
+  Engine.update(engine, 16.666);
+  Engine.update(engine, 16.666);
+  Engine.update(engine, 16.666);
   requestAnimationFrame(cycle);
 }
