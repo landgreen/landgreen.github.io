@@ -2,6 +2,9 @@
   var canvas = document.getElementById("three-potential-1-load");
   var ctx = canvas.getContext("2d");
   canvas.width = document.getElementsByTagName("article")[0].clientWidth;
+  ctx.fillStyle = "#000";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
   ctx.font = "30px Arial";
   ctx.fillStyle = "#aaa";
   ctx.textAlign = "center";
@@ -78,7 +81,7 @@ const potential1 = function (id) {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(600, 400);
   // el.appendChild(renderer.domElement);
-  renderer.domElement.style.background = "#fff";
+  renderer.domElement.style.background = "#000";
 
   /////////////////////////////////////////
   // camera and controls

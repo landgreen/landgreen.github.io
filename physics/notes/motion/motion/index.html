@@ -63,35 +63,40 @@
 			}
 
 			.box{
-				padding-top:40px;
+				/* padding-top:40px; */
 			}
 			.result{
 				text-align: left;
-				padding-bottom:2px;
-				padding-top:2px;
 			}
-			.circle{
+			/* .circle{
 				height: 20px;
 				width: 20px;
 				border-radius: 50%;
 				background-color: #f65;
 				left: 15px;
                 position: relative;
-			}
+			} */
 		</style>
 		<div class="hide-on-mobile">
 			<div class="wrapper">
 				<div class="a">
-					<canvas id='matter' height='158' width='495'></canvas>
+					<canvas id='matter' height='159' width='495'></canvas>
 				</div>
 				<div class="box b">
-					<div class="circle"></div>
+					<!-- <div class="circle"></div> -->
+					<svg width="80" height="50">
+						<circle cx="30" cy="25" r="12" fill="#f65" stroke="none" />
+						<g id="vector" transform="translate(30 25) rotate(180)">
+							<line x1="0" y1="0" x2="0" y2="20" fill="none" stroke="#000" stroke-width="1.4" stroke-linecap="round" />
+							<polygon points="0,0 -4,-8.5 0,-8 4,-8.5" transform='translate(0 26)' stroke="none" fill="#000" />
+						</g>
+					</svg>
 					<div class="result" id="x">x</div>
 					<div class="result" id="y">y</div>
 					<div class="result" id="Vx">Vx</div>
 					<div class="result" id="Vy">Vy</div>
 					<!-- <div class="result" id="a">a</div> -->
-					<div class="result" id="m">m</div>
+					<!-- <div class="result" id="m">m</div> -->
 					<!-- <div class="result" id="t">t</div> -->
 				</div>
 			</div>
@@ -102,7 +107,7 @@
 
 
 		<h1 class='underlined'>Position</h1>
-		<p>In physics we use the symbol x for position in space with meters for units. You might be used to using 'x' in other ways, but in physics it is reserved for position to keep things from getting confusing.</p>
+		<p>We use the symbol <strong>x</strong> for position in space with meters for units. You might be used to using <strong>x</strong> in other ways, but in physics it is reserved for position.</p>
 		<p>To represent a displacement we subtract the initial position from the final position. We use the Δ symbol to show change.</p>
 		<div class='definition'>
 			<h1>$$ \Delta x = x_f-x_i$$</h1>
@@ -183,7 +188,7 @@
 			</details>
 		</div>
 		<h1 class='underlined'>Velocity</h1>
-		<p>Velocity measures how much position changes, Δx, over a period of time, Δt. We use this relationship more than any other in physics.</p>
+		<p>Velocity measures how much position changes, Δx, over a period of time, Δt.</p>
 		<div class='definition'>
 			<h1>$$v_{\mathrm{avg}} = \frac{\Delta x}{\Delta t}$$</h1>
 			<p>\(\Delta x\) = change in position, displacement [m, meters]

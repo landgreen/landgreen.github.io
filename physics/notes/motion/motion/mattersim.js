@@ -52,6 +52,7 @@ function matter() {
     timeRate: 0,
     lowestSpeed: 0.5,
     highlightIndex: 0,
+    smoothAngle: 0,
   };
 
   canvas.addEventListener("mousedown", event => {
@@ -149,8 +150,8 @@ function matter() {
   //add atoms
   let atom = [];
   for (let i = 0; i < settings.spawnNumber; ++i) {
-    addAtom((Math.random() * settings.width) / 2.1 + settings.edge, Math.random() * (settings.height - settings.edge * 2) + settings.edge);
-    addAtom(settings.width - (Math.random() * settings.width) / 2.1 - settings.edge, Math.random() * (settings.height - settings.edge * 2) + settings.edge);
+    addAtom(settings.edge + Math.random() * (settings.width - settings.edge * 2), settings.edge + Math.random() * (settings.height - settings.edge * 2));
+    // addAtom(settings.width - (Math.random() * settings.width) / 2.1 - settings.edge, Math.random() * (settings.height - settings.edge * 2) + settings.edge);
   }
 
   function addAtom(x, y, speed = 1, radius = settings.radius + 0.6 * settings.radius * (Math.random() - 0.5)) {
@@ -231,7 +232,14 @@ function matter() {
     document.getElementById("Vx").innerHTML = "Vx =&nbsp; " + (atom[settings.highlightIndex].velocity.x * 60 * scale).toFixed(1)
     document.getElementById("Vy").innerHTML = "Vy =&nbsp; " + (-atom[settings.highlightIndex].velocity.y * 60 * scale).toFixed(1)
     // document.getElementById("a").innerHTML = "a &nbsp;&nbsp;=&nbsp; " + "---";
-    document.getElementById("m").innerHTML = "m &nbsp;=&nbsp;&nbsp; " + atom[settings.highlightIndex].mass.toFixed(2)
+    // document.getElementById("m").innerHTML = "m &nbsp;=&nbsp;&nbsp; " + atom[settings.highlightIndex].mass.toFixed(2)
+
+    let angle = Math.atan2(atom[settings.highlightIndex].velocity.y, atom[settings.highlightIndex].velocity.x);
+    angle = (angle * 180 / Math.PI - 90)
+    settings.smoothAngle = settings.smoothAngle * 0.85 + angle * 0.15
+    document.getElementById("vector").setAttribute("transform", "translate(30 25) rotate(" + settings.smoothAngle + ")");
+
+
   }
 
   let time = 0
