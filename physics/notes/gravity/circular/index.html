@@ -144,7 +144,7 @@
 			<li>charged particles in a uniform magnetic field</li>
 		</p>
 		<div class='example'>
-			<strong>Example:</strong> A 20 kg dog is riding on a carousel 5 m away from the center. If the dog is moving at 3 m/s, what magnitude and direction force will it have to exert to stay on the ride?
+			<strong>Example:</strong> A 20 kg box is placed 5m from the center of a rotating carousel. If the box has a 3 m/s tangential velocity, what magnitude and direction friction force will it have to exert to stay on the ride?
 			<details>
 				<summary>solution</summary>
 				$$F = \frac{mv^{2}}{r}$$ $$F = \frac{(20)(3)^{2}}{5}$$ $$F = 36\,\mathrm{N}$$ $$\text{towards the center of the carousel}$$
@@ -153,11 +153,11 @@
 		<div class='example'>
 			<style>
 				#gear{
-					animation: 25s infinite linear ckw;
+					animation: 10s infinite linear rotation;
 					transform-origin: 300px 200px;
 					display: inline-block;
 				}
-				@keyframes ckw {
+				@keyframes rotation {
 					0% {
 						transform: rotate(360deg);
 					}
@@ -197,17 +197,21 @@
 
 					<!-- free body diagram -->
 					<g transform="translate(430 200) rotate(0)">
-						<g transform="translate(0 -100) rotate(90)">
-							<line x1="5" y1="0" x2="100" y2="0" style="stroke:#fff;stroke-width:2" />
-							<polygon points="0,0 8,5 8,-5" style="fill:#fff;" />
-						</g>
-						<text x="0" y="-115" fill="#fff" text-anchor="middle" dominant-baseline="central" font-size="25">v</text>
-						<g transform="translate(50 0) rotate(180)">
+						<!-- <g transform="translate(30 -50) rotate(90)">
 							<line x1="5" y1="0" x2="50" y2="0" style="stroke:#fff;stroke-width:2" />
 							<polygon points="0,0 8,5 8,-5" style="fill:#fff;" />
 						</g>
-						<text x="63" y="-2" fill="#fff" text-anchor="middle" dominant-baseline="central" font-size="25">a</text>
-						<circle cx="0" cy="0" r="20" fill='#fff' stroke-width="2" stroke="none" />
+						<text x="30" y="-65" fill="#fff" text-anchor="middle" dominant-baseline="central" font-size="25">v</text> -->
+
+						<g transform="translate(-50 0) rotate(0)">
+							<line x1="5" y1="0" x2="50" y2="0" style="stroke:#fff;stroke-width:2" />
+							<polygon points="0,0 8,5 8,-5" style="fill:#fff;" />
+						</g>
+						<text transform="translate(-63 -2) rotate(-90)" x="0" y="0" fill="#fff" text-anchor="middle" dominant-baseline="central" font-size="25">F
+							<tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+						</text>
+						<!-- <circle cx="0" cy="0" r="20" fill='#fff' stroke-width="2" stroke="none" /> -->
+						<rect x="-2" y="-10" width="20" height="20" rx="1" ry="1" fill="#fff" stroke="none" />
 					</g>
 				</g>
 			</svg>
@@ -227,16 +231,48 @@
 			</script>
 
 			<p>
-				It's possible to produce an acceleration in space similar to the acceleration on the surface of Earth. It's done by rotating a ring shaped spaceship to produce a centripetal acceleration.
+				It's possible to produce an acceleration similar to gravity without a gravitational field. It's done by rotating a ring to produce a centripetal acceleration.
 			</p>
-			<strong>Example:</strong> You are designing a rotating spaceship. In your plans, the ship is shaped like a wheel with a diameter of 50.0 m.
-			How fast does the edge have to move to produce centripetal acceleration equal to the gravitational acceleration on Earth's surface?
+			<strong>Example:</strong> You are designing a rotating spaceship with artificial gravity. In your plans, the ship is shaped like a wheel with a diameter of 50.0 m.
+			How fast does the outer edge have to move to produce a centripetal acceleration equal to the gravity felt on Earth's surface?
 			<details>
 				<summary>solution</summary>
 				$$d = 2r \quad \quad r = 25\,\mathrm{m}$$ $$a = \frac{v^{2}}{r}$$ $$\sqrt{ar} = v$$ $$\sqrt{(9.8)(25)} = v$$
 				$$15.7 \,\mathrm{\tfrac{m}{s}} =v$$
 			</details>
 			<br>
+			<strong>Example:</strong> Use the circumference of a circle and the tangential velocity of the ship to calculate how long one rotation will take.
+			<details>
+				<summary>hint</summary>
+				$$C = 2 \pi r$$
+				$$v=\frac{\Delta x}{\Delta t}$$
+				$$v=\frac{2 \pi r}{\Delta t}$$
+			</details>
+			<details>
+				<summary>solution</summary>
+				<div class="col-group">
+					<div>
+						$$C = 2 \pi r$$
+						$$C = 2 \pi (25)$$
+						$$C = 157 \, \mathrm{m}$$
+					</div>
+					<div>
+						$$v=\frac{\Delta x}{\Delta t}$$
+						$$\Delta t=\frac{\Delta x}{v}$$
+						$$\Delta t=\frac{157}{15.7}$$
+						$$\Delta t=10\, \mathrm{s}$$
+					</div>
+				</div>
+			</details>
+			<!-- <br>
+			<strong>Example:</strong> Earth's full gravity put too much stress on the structural support. You must limit your design to these new constraints: your ship can't rotate faster then 5 m/s, and it has a diameter limited to 20 m. How much centripetal acceleration can this new design produce?
+			<details>
+				<summary>solution</summary>
+				$$a = \frac{v^{2}}{r}$$ $$a = \frac{5^{2}}{10}$$
+				$$a = 2.5\,\mathrm{\tfrac{m}{s^2}}$$
+			</details> -->
+		</div>
+		<div class="example">
 			<strong>Example:</strong> You got your space ship built! But people are complaining their heads feel heavy when standing up. What acceleration would a person feel at their head if they were 2 meters tall? Compare that to the acceleration felt at their feet.
 			<details>
 				<summary>solution</summary>
@@ -258,13 +294,13 @@
 				$$\frac{10.7}{9.85} = 1.09$$
 				<p>A person's head feels 9% heavier than their feet.</p>
 			</details>
-			<!-- <br>
-			<strong>Example:</strong> Earth's full gravity put too much stress on the structural support. You must limit your design to these new constraints: your ship can't rotate faster then 5 m/s, and it has a diameter limited to 20 m. How much centripetal acceleration can this new design produce?
+			<br>
+			<strong>Question:</strong> What changes could be made to the spaceship design to reduce the difference in forces felt on the head and feet?
 			<details>
-				<summary>solution</summary>
-				$$a = \frac{v^{2}}{r}$$ $$a = \frac{5^{2}}{10}$$
-				$$a = 2.5\,\mathrm{\tfrac{m}{s^2}}$$
-			</details> -->
+				<summary>answer</summary>
+				<p>The ship's radius could be increased.</p>
+				<p>The ship could produce a lower acceleration, maybe half of Earth's gravity.</p>
+			</details>
 		</div>
 		<p class='underlined'>Circular Orbits</p>
 		<p>Each satellite below starts with a different velocity. Simulation speed =
@@ -623,13 +659,16 @@
 					showMouseCoords: true,
 				});
 			</script>
-			<strong>Example:</strong> A geosynchronous orbit can stay above the same point on the Earth. To be able to do this the orbit must
-			equal one Earth day, which requires a velocity of 3070 m/s. Calculate how far away a geosynchronous satellite needs to be from the center of the earth.
+			<strong>Example:</strong> A geosynchronous orbit can stay above the same point on the Earth. To be able to do this, the orbit must equal one Earth day, which requires a velocity of 3070 m/s. Calculate how far away a geosynchronous satellite needs to be from the center of the earth.
 			<details>
 				<summary>solution</summary>
-				$$v^{2} = \frac{GM}{r}$$ $$r = \frac{GM}{v^{2}}$$ $$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(3070)^{2}}$$
+				$$v^{2} = \frac{GM}{r}$$
+				$$r = \frac{GM}{v^{2}}$$
+				$$r = \frac{(6.67 \times 10^{-11})(5.972 \times 10^{24})}{(3070)^{2}}$$
 				$$r = 4.22 \times 10^{7} \,\mathrm{m} = 42\,200 \,\mathrm{km}$$
-				<br>$$\text{altitude = orbital radius - Earth's surface radius}$$ $$\text{altitude} = 42\,200 \,\mathrm{km} - 6371 \,\mathrm{km}$$ $$\text{altitude} = 35\,829 \,\mathrm{km}$$
+				<br>$$\text{altitude = orbital radius - Earth's surface radius}$$
+				$$\text{altitude} = 42\,200 \,\mathrm{km} - 6371 \,\mathrm{km}$$
+				$$\text{altitude} = 35\,829 \,\mathrm{km}$$
 			</details>
 		</div>
 		<div class='example'>
