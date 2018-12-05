@@ -144,94 +144,15 @@
 			<li>charged particles in a uniform magnetic field</li>
 		</p>
 		<div class='example'>
-			<strong>Example:</strong> A 20 kg box is placed 5m from the center of a rotating carousel. If the box has a 3 m/s tangential velocity, what magnitude and direction friction force will it have to exert to stay on the ride?
+			<strong>Example:</strong> A 20 kg box is placed 5 m from the center of a rotating carousel. If the box has a 3 m/s tangential velocity, what magnitude and direction friction force will it have to exert to stay on the ride?
 			<details>
 				<summary>solution</summary>
 				$$F = \frac{mv^{2}}{r}$$ $$F = \frac{(20)(3)^{2}}{5}$$ $$F = 36\,\mathrm{N}$$ $$\text{towards the center of the carousel}$$
 			</details>
 		</div>
 		<div class='example'>
-			<style>
-				#gear{
-					animation: 10s infinite linear rotation;
-					transform-origin: 300px 200px;
-					display: inline-block;
-				}
-				@keyframes rotation {
-					0% {
-						transform: rotate(360deg);
-					}
-					100% {
-						transform: rotate(0deg);
-					}
-				}
-			</style>
-
-			<svg id="station" viewBox="0 0 600 400" style="background-color: #000; border-radius: 10px;">
-				<defs>
-					<mask id="bigmask">
-						<rect width="100%" height="100%" fill="white" />
-						<circle cx="300" cy="200" r="99" />
-					</mask>
-				</defs>
-
-				<g id="stars" fill="#fff" stroke="none">
-					<!-- added with js below-->
-				</g>
-
-				<g id="gear">
-					<!-- station -->
-					<circle cx="300" cy="200" r="150" fill='#99a' stroke-width="3" stroke="#556" mask="url(#bigmask)" />
-					<circle cx="300" cy="200" r="100" fill='none' stroke-width="3" stroke="#556" />
-					<path d="M 300 200 l70 70
-					M 300 200 l-70 70
-					M 300 200 l-70 -70 
-					M 300 200 l70 -70" stroke="#556" stroke-width="18" fill='none' />
-					<circle cx="300" cy="200" r="18" fill='#778' stroke-width="5" stroke="#556" />
-
-					<!-- station details -->
-					<g fill="#889" stroke="none">
-						<rect x="290" y="60" width="20" height="10" rx="3" ry="3" />
-						<rect x="290" y="330" width="20" height="10" rx="3" ry="3" />
-					</g>
-
-					<!-- free body diagram -->
-					<g transform="translate(430 200) rotate(0)">
-						<!-- <g transform="translate(30 -50) rotate(90)">
-							<line x1="5" y1="0" x2="50" y2="0" style="stroke:#fff;stroke-width:2" />
-							<polygon points="0,0 8,5 8,-5" style="fill:#fff;" />
-						</g>
-						<text x="30" y="-65" fill="#fff" text-anchor="middle" dominant-baseline="central" font-size="25">v</text> -->
-
-						<g transform="translate(-50 0) rotate(0)">
-							<line x1="5" y1="0" x2="50" y2="0" style="stroke:#fff;stroke-width:2" />
-							<polygon points="0,0 8,5 8,-5" style="fill:#fff;" />
-						</g>
-						<text transform="translate(-63 -2) rotate(-90)" x="0" y="0" fill="#fff" text-anchor="middle" dominant-baseline="central" font-size="25">F
-							<tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
-						</text>
-						<!-- <circle cx="0" cy="0" r="20" fill='#fff' stroke-width="2" stroke="none" /> -->
-						<rect x="-2" y="-10" width="20" height="20" rx="1" ry="1" fill="#fff" stroke-width="2" stroke="#000" />
-					</g>
-				</g>
-			</svg>
-			<script>
-				//place random stars
-				var svgns = "http://www.w3.org/2000/svg";
-
-				for (var i = 0; i < 250; i++ ) {
-					var rect = document.createElementNS(svgns, 'rect');
-					rect.setAttributeNS(null, 'x', Math.floor(Math.random()*600));
-					rect.setAttributeNS(null, 'y', Math.floor(Math.random()*400));
-					rect.setAttributeNS(null, 'height', '1');
-					rect.setAttributeNS(null, 'width', '1');
-					rect.setAttributeNS(null, 'fill', '#fff');
-					document.getElementById('stars').appendChild(rect);
-				}
-			</script>
-
 			<p>
-				It's possible to produce an acceleration similar to gravity without a gravitational field. It's done by rotating a <a href="https://www.youtube.com/watch?v=A0H7TYzcMaY">room</a> to produce a centripetal acceleration.
+				It's possible to produce an <a href="https://en.wikipedia.org/wiki/Artificial_gravity">acceleration</a> similar to gravity without a gravitational field. It's done by rotating a <a href="https://www.youtube.com/watch?v=A0H7TYzcMaY">room</a> to produce a centripetal acceleration.
 			</p>
 			<strong>Example:</strong> You are designing a rotating spaceship with artificial gravity. In your plans, the ship is shaped like a wheel with a diameter of 50.0 m.
 			How fast does the outer edge have to move to produce a centripetal acceleration equal to the gravity felt on Earth's surface?
@@ -264,41 +185,113 @@
 					</div>
 				</div>
 			</details>
-			<!-- <br>
-			<strong>Example:</strong> Earth's full gravity put too much stress on the structural support. You must limit your design to these new constraints: your ship can't rotate faster then 5 m/s, and it has a diameter limited to 20 m. How much centripetal acceleration can this new design produce?
-			<details>
-				<summary>solution</summary>
-				$$a = \frac{v^{2}}{r}$$ $$a = \frac{5^{2}}{10}$$
-				$$a = 2.5\,\mathrm{\tfrac{m}{s^2}}$$
-			</details> -->
 		</div>
 		<div class="example">
-			<strong>Example:</strong> You got your space ship built! But people are complaining their heads feel heavy when standing up. What acceleration would a person feel at their head if they were 2 meters tall? Compare that to the acceleration felt at their feet.
+			<style>
+				#gear{
+							animation: 10s infinite linear rotation;
+							transform-origin: 300px 200px;
+							display: inline-block;
+						}
+						@keyframes rotation {
+							0% {
+								transform: rotate(360deg);
+							}
+							100% {
+								transform: rotate(0deg);
+							}
+						}
+					</style>
+
+			<svg id="station" viewBox="0 0 600 400" style="background-color: #000; border-radius: 10px;">
+				<defs>
+					<mask id="bigmask">
+						<rect width="100%" height="100%" fill="white" />
+						<circle cx="300" cy="200" r="99" />
+					</mask>
+				</defs>
+
+				<g id="stars" fill="#fff" stroke="none">
+					<!-- added with js below-->
+				</g>
+
+				<g id="gear">
+					<!-- station -->
+					<circle cx="300" cy="200" r="150" fill='#99a' stroke-width="3" stroke="#556" mask="url(#bigmask)" />
+					<circle cx="300" cy="200" r="100" fill='none' stroke-width="3" stroke="#556" />
+					<path d="M 300 200 l70 70
+							M 300 200 l-70 70
+							M 300 200 l-70 -70 
+							M 300 200 l70 -70" stroke="#556" stroke-width="18" fill='none' />
+					<circle cx="300" cy="200" r="18" fill='#778' stroke-width="5" stroke="#556" />
+
+					<!-- station details -->
+					<g fill="#889" stroke="none">
+						<rect x="290" y="60" width="20" height="10" rx="3" ry="3" />
+						<rect x="290" y="330" width="20" height="10" rx="3" ry="3" />
+					</g>
+
+					<!-- free body diagram -->
+					<g transform="translate(430 200) rotate(0)">
+						<!-- <g transform="translate(30 -50) rotate(90)">
+									<line x1="5" y1="0" x2="50" y2="0" style="stroke:#fff;stroke-width:2" />
+									<polygon points="0,0 8,5 8,-5" style="fill:#fff;" />
+								</g>
+								<text x="30" y="-65" fill="#fff" text-anchor="middle" dominant-baseline="central" font-size="25">v</text> -->
+
+						<g transform="translate(-50 0) rotate(0)">
+							<line x1="5" y1="0" x2="50" y2="0" style="stroke:#fff;stroke-width:2" />
+							<polygon points="0,0 8,5 8,-5" style="fill:#fff;" />
+						</g>
+						<text transform="translate(-63 -2) rotate(-90)" x="0" y="0" fill="#fff" text-anchor="middle" dominant-baseline="central" font-size="25">F
+							<tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
+						</text>
+						<!-- <circle cx="0" cy="0" r="20" fill='#fff' stroke-width="2" stroke="none" /> -->
+						<rect x="-2" y="-10" width="20" height="20" rx="1" ry="1" fill="#fff" stroke-width="2" stroke="#000" />
+					</g>
+				</g>
+			</svg>
+			<script>
+				//place random stars
+				var svgns = "http://www.w3.org/2000/svg";
+
+				for (var i = 0; i < 250; i++ ) {
+					var rect = document.createElementNS(svgns, 'rect');
+					rect.setAttributeNS(null, 'x', Math.floor(Math.random()*600));
+					rect.setAttributeNS(null, 'y', Math.floor(Math.random()*400));
+					rect.setAttributeNS(null, 'height', '1');
+					rect.setAttributeNS(null, 'width', '1');
+					rect.setAttributeNS(null, 'fill', '#fff');
+					document.getElementById('stars').appendChild(rect);
+				}
+			</script>
+			<p>You got your 50 meter spaceship built, and it produced the illusion of 9.8 m/s² of gravity! But people are complaining their heads feel strange when standing up.</p>
+			<strong>Example:</strong> Calculate the velocity at the top of a 2 meter tall person's head. You may use information from the previous problems.
 			<details>
 				<summary>solution</summary>
-				<!-- $$v = 15.7 \,\mathrm{\tfrac{m}{s}}$$ -->
-				<div class="col-group">
-					<div>
-						$$\text{\underline{head}}$$
-						$$r = 25 - 2 = 23 \, \mathrm{m}$$
-						$$a = \frac{v^{2}}{r}$$ $$a = \frac{15.7^{2}}{23}$$
-						$$a = 10.7\,\mathrm{\tfrac{m}{s^2}}$$
-					</div>
-					<div>
-						$$\text{\underline{feet}}$$
-						$$r = 25 \, \mathrm{m}$$
-						$$a = \frac{v^{2}}{r}$$ $$a = \frac{15.7^{2}}{25}$$
-						$$a = 9.8\,\mathrm{\tfrac{m}{s^2}}$$
-					</div>
-				</div>
-				$$\frac{10.7}{9.85} = 1.09$$
-				<p>A person's head feels 9% heavier than their feet.</p>
+				<p>We already calculated that one rotation takes 10 seconds.</p>
+				$$d = 2r \quad d = 50 \, \mathrm{m}$$
+				$$r = 25-2 = 23\, \mathrm{m}$$
+				<br>
+				$$v=\frac{\Delta x}{\Delta t} \quad C = 2 \pi r$$
+				$$v=\frac{2 \pi r}{\Delta t}$$
+				$$v=\frac{2 \pi (23)}{(10)}$$
+				$$v=14.45\, \mathrm{\tfrac{m}{s}}$$
+			</details>
+			<br> <strong>Example:</strong> What acceleration would a 2 meter tall person feel at their head? Compare that to the acceleration felt at their feet.
+			<details>
+				<summary>solution</summary>
+				$$a = \frac{v^{2}}{r}$$ $$a = \frac{14.45^{2}}{23}$$
+				$$a = 9.07\,\mathrm{\tfrac{m}{s^2}}$$
+				<br>
+				$$\frac{9.07}{9.8} = 0.92$$
+				<p>A person's head only feels 92% of the gravity at their feet.</p>
 			</details>
 			<br>
 			<strong>Question:</strong> What changes could be made to the spaceship design to reduce the difference in forces felt on the head and feet?
-			<details>
+			<details id="solution-1">
 				<summary>answer</summary>
-				<p>The ship's radius could be increased.</p>
+				<p>The ship's radius could be increased, but that would increase the costs.</p>
 				<p>The ship could produce a lower acceleration, maybe half of Earth's gravity.</p>
 			</details>
 		</div>
