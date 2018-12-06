@@ -265,8 +265,19 @@
 					document.getElementById('stars').appendChild(rect);
 				}
 			</script>
-			<p>You got your 50 meter spaceship built, and it produced the illusion of 9.8 m/s² of gravity! But people are complaining their heads feel strange when standing up.</p>
-			<strong>Example:</strong> Calculate the velocity at the top of a 2 meter tall person's head. You may use information from the previous problems.
+			<p>You got your 50 meter spaceship built! It produced the illusion of 9.8 m/s² of gravity, but people are complaining their heads feel strange when standing up.</p>
+			<strong>Example:</strong> Use circumference of a circle at a person's head and the time for one rotation to calculate the velocity at the top of a 2 meter tall person's head.
+			<details>
+				<summary>hint</summary>
+				<p>
+					A person on the rotating spaceship will have their feet on the outer edge, and their heads pointed towards the center. This means the head will have a shorter radius and a slower speed.
+				</p>
+				$$d = 2r \quad d = 50 \, \mathrm{m}$$
+				$$r = 25-2 = 23\, \mathrm{m}$$
+				<p>
+					We also know that the total time for one rotation must be the same at any distance from the center. We calculated the time for one rotation in the previous example.
+				</p>
+			</details>
 			<details>
 				<summary>solution</summary>
 				<p>We already calculated that one rotation takes 10 seconds.</p>
@@ -619,6 +630,14 @@
 		</div>
 
 		<div class='example'>
+			<strong>Question:</strong> A 100 kg satellite and a 200 kg satellite are both in a circular orbit around the Earth at an orbital radius of 10&#8239;000&#8239;000 m. Compare the velocities of the two satellites. Which is faster?
+			<details>
+				<summary>answer</summary>
+				<p>They both have the same velocity. The mass of the satellite doesn't matter, only the mass of the Earth.</p>
+			</details>
+		</div>
+
+		<div class='example'>
 			<p class="center">Radius Vs. Orbital Velocity
 				<br>(for satellites in circular motion around Earth)</p>
 			<svg id="SVG-graph-0" viewBox="0 0 600 300">
@@ -627,13 +646,12 @@
 				<path d="M 446.5 -1 v 381" stroke="#999" stroke-width="1" fill='none' stroke-dasharray="4" />
 
 				<a xlink:href="https://en.wikipedia.org/wiki/Geosynchronous_orbit">
-					<text x="438" y="75" fill="black" text-anchor="middle" dominant-baseline="central" font-size="13" transform="rotate(-90 438 75)">geosynchronous
-						orbit</text>
+					<text x="438" y="75" fill="black" text-anchor="middle" dominant-baseline="central" font-size="13" transform="rotate(-90 438 75)">geosynchronous orbit</text>
 				</a>
 				<a xlink:href="https://en.wikipedia.org/wiki/Low_Earth_orbit">
-					<text x="98" y="190" fill="black" text-anchor="middle" dominant-baseline="central" font-size="13" transform="rotate(-90 98 190)">low
-						Earth orbits</text>
+					<text x="98" y="190" fill="black" text-anchor="middle" dominant-baseline="central" font-size="13" transform="rotate(-90 98 190)">low Earth orbits</text>
 				</a>
+				<text x="57" y="195" fill="black" text-anchor="middle" dominant-baseline="central" font-size="20" transform="rotate(-90 57 195)">Earth</text>
 			</svg>
 			<script defer>
 				funGraphSVG("SVG-graph-0", x => Math.sqrt(398576 / x), {
@@ -662,13 +680,7 @@
 				$$\text{altitude} = 35\,829 \,\mathrm{km}$$
 			</details>
 		</div>
-		<div class='example'>
-			<strong>Example:</strong> A 100 kg satellite and a 200 kg satellite are both in a circular orbit around the Earth at an orbital radius of 10&#8239;000&#8239;000 m. Which satellite has the higher velocity?
-			<details>
-				<summary>solution</summary>
-				<p>They both have the same velocity. The mass of the satellite doesn't matter, only the mass of the Earth.</p>
-			</details>
-		</div>
+
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
