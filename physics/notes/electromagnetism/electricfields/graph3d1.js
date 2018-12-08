@@ -20,7 +20,7 @@ const graph3d1 = function (id) {
   const settings = {
     totalCharges: 30,
     resolution: 256,
-    range: 300, // total size of space the charges can move in range x range
+    range: 100, // total size of space the charges can move in range x range
     edgeBuffer: 30, // how far are walls and spawns from the edge of the fabric, the range
     minimumRadius: 6, //larger means less spiky peaks
     fullView: false,
@@ -125,28 +125,40 @@ const graph3d1 = function (id) {
   geometry = new THREE.Geometry();
 
 
-  //x-axis
+  //axis
   geometry.vertices.push(new THREE.Vector3(0, 0, 0));
   geometry.vertices.push(new THREE.Vector3(settings.range, 0, 0));
-
   geometry.vertices.push(new THREE.Vector3(0, 0, 0));
   geometry.vertices.push(new THREE.Vector3(0, settings.range, 0));
-
   geometry.vertices.push(new THREE.Vector3(0, 0, 0));
   geometry.vertices.push(new THREE.Vector3(0, 0, settings.range));
   // geometry.vertices.push(new THREE.Vector3(0, 0, settings.range));
-  var axis = new THREE.Line(geometry, material);
-  scene.add(axis);
+  scene.add(new THREE.Line(geometry, material));
 
   //x letter
-  letterScale = 10
-  geometry.vertices.push(new THREE.Vector3(settings.range + 10, letterScale, 0));
-  geometry.vertices.push(new THREE.Vector3(settings.range + 10, 0, letterScale));
-  geometry.vertices.push(new THREE.Vector3(settings.range + 10, -letterScale, 0));
-  geometry.vertices.push(new THREE.Vector3(settings.range + 10, 0, -letterScale));
-  var letterX = new THREE.Line(geometry, material);
-  scene.add(letterX);
+  a = 4
+  geometry = new THREE.Geometry();
+  geometry.vertices.push(new THREE.Vector3(settings.range + a, a / 2, 0));
+  geometry.vertices.push(new THREE.Vector3(settings.range + a + a, -a / 2, 0));
+  scene.add(new THREE.Line(geometry, material));
 
+  geometry = new THREE.Geometry();
+  geometry.vertices.push(new THREE.Vector3(settings.range + a, -a / 2, 0));
+  geometry.vertices.push(new THREE.Vector3(settings.range + a + a, a / 2, 0));
+  scene.add(new THREE.Line(geometry, material));
+
+  //y letter
+  geometry = new THREE.Geometry();
+  geometry.vertices.push(new THREE.Vector3(0, settings.range + a, a / 2));
+  geometry.vertices.push(new THREE.Vector3(0, settings.range + a + a / 2, 0));
+  scene.add(new THREE.Line(geometry, material));
+
+  geometry = new THREE.Geometry();
+  // geometry.vertices.push(new THREE.Vector3(0, settings.range + a, -a / 2));
+  // geometry.vertices.push(new THREE.Vector3(0, settings.range + a + a, 0));
+  // geometry.vertices.push(new THREE.Vector3(settings.range + a, -a / 2, 0));
+  // geometry.vertices.push(new THREE.Vector3(settings.range + a + a, a / 2, 0));
+  scene.add(new THREE.Line(geometry, material));
   /////////////////////////////////////////
   // spawn potential plane
   /////////////////////////////////////////
@@ -164,7 +176,7 @@ const graph3d1 = function (id) {
   });
 
   let potentialEnergyMesh = new THREE.Mesh(potentialEnergy, material);
-  potentialEnergyMesh.position.set(settings.range / 2, settings.range / 2, 0);
+  potentialEnergyMesh.position.set(0, 0, 0);
   // potentialEnergyMesh.rotation.z = Math.PI / 2;
   scene.add(potentialEnergyMesh);
 
@@ -181,7 +193,7 @@ const graph3d1 = function (id) {
       // v.z = 50 * Math.sin(v.y * 0.1)
       // v.z = 50 * Math.sin(v.x * 0.1)
       // v.z = 50 * Math.sin(v.x * 0.05) + 50 * Math.sin(v.y * 0.1)
-      const k = 5000;
+      const k = 150;
       result = k * v.y / v.x / v.x
       result = Math.max(Math.min(result, settings.range), -settings.range)
       v.z = result
