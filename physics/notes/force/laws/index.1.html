@@ -122,12 +122,12 @@
 							x: 0,
 							y: 0
 						},
-						thrustMag: 0.1,
+						thrustMag: 0.08,
 						thrust: {
 							x: 0,
 							y: 0
 						},
-						dragMag: 0.02,
+						dragMag: 0.03,
 						drag: {
 							x: 0,
 							y: 0
@@ -192,7 +192,7 @@
 								down: 0,
 								scale: 1500
 							}
-							//drag force calculation, modeled after kinetic friction
+							//drag force calculation  //kinetic friction
 							a.speed = Math.sqrt(a.velocity.x * a.velocity.x + a.velocity.y * a.velocity.y)
 							if (a.speed > a.dragMag * 2) {
 								const angle = Math.atan2(a.velocity.y, a.velocity.x)
@@ -215,24 +215,32 @@
 								a.velocity.y = 0;
 							}
 
-							//normal force calculation
+
+							//normal force calculation //walls
 							if (a.position.x < 0) {
 								a.normal.x = -a.velocity.x
 								a.position.x = 0
-								arrow.right += a.normal.x * arrow.scale
 							} else if (a.position.x > s.width - a.width) {
 								a.normal.x = -a.velocity.x
 								a.position.x = s.width - a.width
-								arrow.left += a.normal.x * arrow.scale
 							}
 							if (a.position.y < 0) {
 								a.normal.y = -a.velocity.y
 								a.position.y = 0
-								arrow.down += a.normal.y * arrow.scale
 							} else if (a.position.y > s.height - a.height) {
 								a.normal.y = -a.velocity.y
 								a.position.y = s.height - a.height
+							}
+
+							if (a.normal.x > 0) {
+								arrow.right += a.normal.x * arrow.scale
+							} else {
+								arrow.left += a.normal.x * arrow.scale
+							}
+							if (a.normal.y < 0) {
 								arrow.up += a.normal.y * arrow.scale
+							} else {
+								arrow.down += a.normal.y * arrow.scale
 							}
 
 							//thrust force key checks
@@ -250,6 +258,7 @@
 								a.thrust.y = -a.thrustMag
 								arrow.up += a.thrust.y * arrow.scale
 							}
+
 
 							//apply forces
 							a.acceleration.x += a.thrust.x + a.drag.x + a.normal.x
@@ -283,14 +292,14 @@
 			<p>
 				Press <strong>enter</strong> to activate the mass. Press <strong>WASD</strong> to apply a force to the mass.
 			</p>
-			<strong>Question:</strong> What causes the mass to stop when you aren't pressing a key?
+			<strong>Question:</strong> Why does the mass come to a stop without you applying a force?
 			<details>
 				<summary>answer</summary>
 				<p>
 					Objects only change velocity if there is a force. In this case friction applies a force opposite its velocity.
 				</p>
 			</details>
-			<br><strong>Question:</strong> Newton's Laws explain how forces determine the acceleration of a mass. What kinds of forces does the box experience?
+			<br><strong>Question:</strong> Newton's Laws explain how forces determine the acceleration of a mass. What kinds of simulated forces does the box experience?
 			<details>
 				<summary>answer</summary>
 				<p>A thrust force is applied when you press WASD.</p>
