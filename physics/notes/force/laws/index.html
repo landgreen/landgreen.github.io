@@ -85,7 +85,7 @@
 						<path id="left-vector" d="M0 20 h 0" />
 						<path id="up-vector" d="M20 0 v 0" />
 						<path id="down-vector" d="M20 40 v 0" />
-						<rect x="0" y="0" width="60" height="60" rx="0" ry="0" fill="#f45" />
+						<rect x="0" y="0" width="60" height="60" fill="#f45" />
 						<text x="30" y="30" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-size='25px' stroke='none'>m</text>
 					</g>
 				</svg>
@@ -111,7 +111,7 @@
 						height: 60,
 						position: {
 							x: 20,
-							y: window.innerHeight - 80
+							y: window.innerHeight / 2 - 30
 						},
 						velocity: {
 							x: 0,
@@ -127,7 +127,7 @@
 							x: 0,
 							y: 0
 						},
-						dragMag: 0.02,
+						dragMag: 0.03,
 						drag: {
 							x: 0,
 							y: 0
@@ -143,13 +143,13 @@
 					document.onkeydown = event => {
 						keys[event.keyCode] = true;
 						// console.log(event.keyCode);
-						if (keys[13]) {
+						if (keys[69]) {
 							if (pause) {
 								pause = false
 								a.SVGID.classList.add('fixed')
 								a.SVGID.classList.remove('static')
-								a.position.x = 20
-								a.position.y = window.innerHeight / 2
+								a.position.x = 30
+								a.position.y = window.innerHeight / 2 - 30
 
 								// const b = a.SVGID.getBoundingClientRect();
 								// console.log(b)
@@ -195,9 +195,9 @@
 							//drag force calculation, modeled after kinetic friction
 							a.speed = Math.sqrt(a.velocity.x * a.velocity.x + a.velocity.y * a.velocity.y)
 							if (a.speed > a.dragMag * 2) {
-								const angle = Math.atan2(a.velocity.y, a.velocity.x)
-								a.drag.x = -a.dragMag * Math.cos(angle)
-								a.drag.y = -a.dragMag * Math.sin(angle)
+
+								a.drag.x = -a.dragMag * a.velocity.x / a.speed
+								a.drag.y = -a.dragMag * a.velocity.y / a.speed
 
 								if (a.drag.x > 0) {
 									arrow.right += a.drag.x * arrow.scale //* (0.05 * Math.random() + 0.95)
@@ -281,7 +281,7 @@
 			</script>
 
 			<p>
-				Press <strong>enter</strong> to activate the mass. Press <strong>WASD</strong> to apply a force to the mass.
+				Press <strong>E</strong> to activate the mass. Press <strong>WASD</strong> to apply forces to the mass.
 			</p>
 			<strong>Question:</strong> What causes the mass to stop when you aren't pressing a key?
 			<details>
