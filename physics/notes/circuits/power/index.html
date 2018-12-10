@@ -47,6 +47,7 @@
 			<br> \(E\) = energy [J, joules]
 			<br> \(\Delta t\) = time period [s, second]
 		</div>
+		<p>Power is analogous to velocity. Velocity measures how position changes over time. Power measures how energy changes over time.</p>
 		<h2 class='underlined'>Electrical Power</h2>
 		<p>Watt is the unit of power. The wattage of an electrical appliance gives you an idea of how much electrical energy the appliance
 			converts. An 800 W microwave uses 800 J per second. A 1600 W microwave will heat food much faster because it uses up twice
@@ -67,7 +68,37 @@
 			<br> \(V\) = voltage [V, volt]
 			<br>\(R\) = resistance [Ω, ohm]
 		</div>
-
+		<div class='example'>
+			<svg viewBox="-125 0 550 193">
+				<path d="M 50 10 h 200
+				v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
+				h -200
+				v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+				<text x="60" y="85" text-anchor="start" font-size="20" fill='#333'>9 V</text>
+				<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>0.095 A</text>
+				<g transform="translate(195 180) rotate(180)">
+					<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
+				</g>
+			</svg>
+			<strong>Example:</strong> Find the power output of the battery.
+			<details>
+				<summary>solution</summary>
+				$$P=IV$$ $$P=(0.095)(9)$$ $$P=0.855\, \mathrm{W}$$
+			</details>
+		</div>
+		<div class='example'>
+			<svg viewBox="0 0 400 220">
+				<path transform="translate(0 0) rotate(90 200 85)" d="M 165 10 h 60
+					 h 90 v 30 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v30
+					h -90 h -60 v-57 m-40 0 h 80 m-20 -15 h-40 m20 0 v -70" fill='none' stroke="#333" stroke-width="3" stroke-linejoin="round" />
+			</svg>
+			<strong>Question:</strong> A battery and a resistor in a simple looping circuit will drain the chemical energy of the battery. Energy can't be created or destroyed, but it can change forms. What form does the battery's energy change into?
+			<details>
+				<summary>answer</summary>
+				<p>The resistor gets hot, and the heat energy dissipates into the air.</p>
+			</details>
+		</div>
 
 		<div class='example'>
 			<svg viewBox="-30 0 600 300">
@@ -138,25 +169,6 @@
 		</div>
 
 		<div class='example'>
-			<svg viewBox="-125 0 550 193">
-				<path d="M 50 10 h 200
-			v 50 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
-			h -200
-			v-80 m-40 0 h 80 m-20 -15 h-40 m20 0 v -87" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-				<text x="60" y="85" text-anchor="start" font-size="20" fill='#333'>9 V</text>
-				<text x="150" y="172" text-anchor="middle" font-size="20" fill='#333'>0.095 A</text>
-				<g transform="translate(195 180) rotate(180)">
-					<line x1="5" y1="0" x2="80" y2="0" style="stroke:#333;stroke-width:2" />
-					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
-				</g>
-			</svg>
-			<strong>Example:</strong> Find the power output of the battery.
-			<details>
-				<summary>solution</summary>
-				$$P=IV$$ $$P=(0.095)(9)$$ $$P=0.855\, \mathrm{W}$$
-			</details>
-		</div>
-		<div class='example'>
 			<svg viewBox="-125 0 550 170">
 				<path d="M 50 10 h 200
 			v 25 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v50
@@ -177,12 +189,12 @@
 				\mathrm{s}}{1\, \mathrm{min}}\right)$$ $$E = (0.036 \frac{J}{s})(300s)$$ $$E = 10.8\, \mathrm{J}$$
 			</details>
 		</div>
-		<h2 class='underlined'>Kilowatt Hour</h2>
+		<!-- <h2 class='underlined'>Kilowatt Hour</h2> -->
 
-		<p>Power bills in America use a unit called kiloWatt hour. This is actually a unit of energy, not power. $$\text{(kilo)(watt)(hour)}$$
-			$$(1000) \left(\mathrm{\frac{J}{s}}\right)(3600\, \mathrm{s})$$ $$3,600,000\, \left(\mathrm{\frac{J}{s}}\right)(\mathrm{s})$$
-			$$1\, \mathrm{kWh} = 3,600,000\, \mathrm{J}$$</p>
 		<div class='example'>
+			<p>Power bills in America use a unit called kiloWatt hour. This is actually a unit of energy, not power. $$\text{(kilo)(watt)(hour)}$$
+				$$(1000) \left(\mathrm{\frac{J}{s}}\right)(3600\, \mathrm{s})$$ $$3,600,000\, \left(\mathrm{\frac{J}{s}}\right)(\mathrm{s})$$
+				$$1\, \mathrm{kWh} = 3,600,000\, \mathrm{J}$$</p>
 			<strong>Example:</strong> The average price in America for 1 kiloWatt hour is $0.12. How much would it cost to run an 800 Watt
 			microwave for 3 hours?
 			<details>
