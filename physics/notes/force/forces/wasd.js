@@ -34,7 +34,7 @@
             x: 0,
             y: 0
         },
-        dragMag: 0.001,
+        dragMag: 0.0005,
         drag: {
             x: 0,
             y: 0
@@ -53,18 +53,18 @@
             if (Math.abs(a.velocity.y) > mag) {
                 if (a.velocity.y < 0) {
                     a.friction.y += mag
-                    arrow.up += a.friction.y * arrow.scale
+                    arrow.down += a.friction.y * arrow.scale
                 } else {
                     a.friction.y -= mag
-                    arrow.down += a.friction.y * arrow.scale
+                    arrow.up += a.friction.y * arrow.scale
                 }
             } else {
                 //zero when too slow
                 a.friction.y = -a.velocity.y
                 if (a.velocity.y < 0) {
-                    arrow.up += a.friction.y * arrow.scale
-                } else {
                     arrow.down += a.friction.y * arrow.scale
+                } else {
+                    arrow.up += a.friction.y * arrow.scale
                 }
             }
         },
@@ -161,27 +161,28 @@
             a.dragForce(arrow, a.dragMag)
 
             //normal force calculation
+            const kineticFriction = 0.05
             if (a.position.x < 0) {
                 a.normal.x = -a.velocity.x * a.restitution
                 a.position.x = 0
                 arrow.right += a.normal.x * arrow.scale
-                a.frictionForceY(arrow, 0.3)
+                a.frictionForceY(arrow, kineticFriction)
             } else if (a.position.x > s.width - a.width) {
                 a.normal.x = -a.velocity.x * a.restitution
                 a.position.x = s.width - a.width
                 arrow.left += a.normal.x * arrow.scale
-                a.frictionForceY(arrow, 0.3)
+                a.frictionForceY(arrow, kineticFriction)
             }
             if (a.position.y < 0) {
                 a.normal.y = -a.velocity.y * a.restitution
                 a.position.y = 0
                 arrow.down += a.normal.y * arrow.scale
-                a.frictionForceX(arrow, 0.3)
+                a.frictionForceX(arrow, kineticFriction)
             } else if (a.position.y > s.height - a.height) {
                 a.normal.y = -a.velocity.y * a.restitution
                 a.position.y = s.height - a.height
                 arrow.up += a.normal.y * arrow.scale
-                a.frictionForceX(arrow, 0.3)
+                a.frictionForceX(arrow, kineticFriction)
             }
 
             //thrust force key checks

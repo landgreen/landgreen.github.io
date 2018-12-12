@@ -43,7 +43,50 @@
             x: 0,
             y: 0
         },
-        friction(arrow) {
+        restitution: 1 + 0.4,
+        friction: {
+            x: 0,
+            y: 0
+        },
+        frictionForceY(arrow, mag) {
+            if (Math.abs(a.velocity.y) > mag) {
+                if (a.velocity.y < 0) {
+                    a.friction.y += mag
+                    arrow.down += a.friction.y * arrow.scale
+                } else {
+                    a.friction.y -= mag
+                    arrow.up += a.friction.y * arrow.scale
+                }
+            } else {
+                //zero when too slow
+                a.friction.y = -a.velocity.y
+                if (a.velocity.y < 0) {
+                    arrow.down += a.friction.y * arrow.scale
+                } else {
+                    arrow.up += a.friction.y * arrow.scale
+                }
+            }
+        },
+        frictionForceX(arrow, mag) {
+            if (Math.abs(a.velocity.x) > mag) {
+                if (a.velocity.x < 0) {
+                    a.friction.x += mag
+                    arrow.right += a.friction.x * arrow.scale
+                } else {
+                    a.friction.x -= mag
+                    arrow.left += a.friction.x * arrow.scale
+                }
+            } else {
+                //zero when too slow
+                a.friction.x = -a.velocity.x
+                if (a.velocity.x < 0) {
+                    arrow.right += a.friction.x * arrow.scale
+                } else {
+                    arrow.left += a.friction.x * arrow.scale
+                }
+            }
+        },
+        frictionForceTop(arrow) {
             a.speed = Math.sqrt(a.velocity.x * a.velocity.x + a.velocity.y * a.velocity.y)
             if (a.speed > a.dragMag * 2) {
                 a.drag.x = -a.dragMag * a.velocity.x / a.speed
@@ -112,6 +155,7 @@
             a.thrust.x = a.thrust.y = 0
             a.drag.x = a.drag.y = 0
             a.normal.x = a.normal.y = 0
+            a.friction.x = a.friction.y = 0
 
             const arrow = {
                 left: 0,
@@ -120,27 +164,31 @@
                 down: 0,
                 scale: 1000
             }
-            //friction force calculation, modeled after kinetic friction
-            a.friction(arrow)
+            //friction force calculation, modeled after kinetic friction with gravity going into the screen
+            a.frictionForceTop(arrow)
 
             //normal force calculation
             if (a.position.x < 0) {
-                a.normal.x = -a.velocity.x
+                a.normal.x = -a.velocity.x * a.restitution
                 a.position.x = 0
                 arrow.right += a.normal.x * arrow.scale
+                a.frictionForceY(arrow, 0.3)
             } else if (a.position.x > s.width - a.width) {
-                a.normal.x = -a.velocity.x
+                a.normal.x = -a.velocity.x * a.restitution
                 a.position.x = s.width - a.width
                 arrow.left += a.normal.x * arrow.scale
+                a.frictionForceY(arrow, 0.3)
             }
             if (a.position.y < 0) {
-                a.normal.y = -a.velocity.y
+                a.normal.y = -a.velocity.y * a.restitution
                 a.position.y = 0
                 arrow.down += a.normal.y * arrow.scale
+                a.frictionForceX(arrow, 0.3)
             } else if (a.position.y > s.height - a.height) {
-                a.normal.y = -a.velocity.y
+                a.normal.y = -a.velocity.y * a.restitution
                 a.position.y = s.height - a.height
                 arrow.up += a.normal.y * arrow.scale
+                a.frictionForceX(arrow, 0.3)
             }
 
             //thrust force key checks
@@ -162,8 +210,8 @@
             }
 
             //apply forces
-            a.acceleration.x += a.thrust.x + a.drag.x + a.normal.x
-            a.acceleration.y += a.thrust.y + a.drag.y + a.normal.y
+            a.acceleration.x += a.thrust.x + a.drag.x + a.normal.x + a.friction.x
+            a.acceleration.y += a.thrust.y + a.drag.y + a.normal.y + a.friction.y
 
             //apply acceleration
             a.velocity.x += a.acceleration.x
