@@ -162,25 +162,26 @@
 
             //normal force calculation
             const kineticFriction = 0.05
-            if (a.position.x < 0) {
+            const edge = 0
+            if (a.position.x < edge) {
                 a.normal.x = -a.velocity.x * a.restitution
-                a.position.x = 0
+                a.position.x = edge
                 arrow.right += a.normal.x * arrow.scale
                 a.frictionForceY(arrow, kineticFriction)
-            } else if (a.position.x > s.width - a.width) {
+            } else if (a.position.x > s.width - a.width - edge) {
                 a.normal.x = -a.velocity.x * a.restitution
-                a.position.x = s.width - a.width
+                a.position.x = s.width - a.width - edge
                 arrow.left += a.normal.x * arrow.scale
                 a.frictionForceY(arrow, kineticFriction)
             }
-            if (a.position.y < 0) {
+            if (a.position.y < edge) {
                 a.normal.y = -a.velocity.y * a.restitution
-                a.position.y = 0
+                a.position.y = edge
                 arrow.down += a.normal.y * arrow.scale
                 a.frictionForceX(arrow, kineticFriction)
-            } else if (a.position.y > s.height - a.height) {
+            } else if (a.position.y > s.height - a.height - edge) {
                 a.normal.y = -a.velocity.y * a.restitution
-                a.position.y = s.height - a.height
+                a.position.y = s.height - a.height - edge
                 arrow.up += a.normal.y * arrow.scale
                 a.frictionForceX(arrow, kineticFriction)
             }
