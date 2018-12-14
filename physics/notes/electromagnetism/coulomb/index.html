@@ -42,6 +42,18 @@
 		<p>
 			Some particles have an electric charge. The rules that govern these charges can explain electricity, chemical bonds, magnetism, and light!
 		</p>
+		<div class="example">
+			<p>
+				<strong>Experiment:</strong> If you rub two materials together, sometimes the materials get opposite charges. This effect is longer lasting in dry weather because the water in the air allows the charges to return to equilibrium.
+			</p>
+			<p>
+				Try <a href="https://www.exploratorium.edu/snacks/electroscope">sticking</a> two strips of scotch tape together and quickly pealing them apart. The strips should now be oppositely charged. As you bring them near each other, they should be attracted.
+			</p>
+			<p>
+				Try repeating the experiment again to make 4 strips of tape. Put the newly charged tape near the old and some will repel instead of attract.
+			</p>
+		</div>
+
 		<h2 class='underlined' id='Coulombs-Law'>Coulomb's Law</h2>
 		<p>
 			After the success of Newton's <a href='../../gravity/gravitation/index.html#universal-gravitation'>universal gravitation</a> in 1687 several scientists hypothesized that
@@ -72,15 +84,17 @@
 				</g>
 			</svg>
 			<h2>$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}}$$</h2>
-			<p>\(F\) = electrostatic force [N, Newton, kg m/s²]
-				<em>vector</em>
-				<br>\(k_e\) = 8.987 × 10<sup>9</sup> = Coulomb's constant [N m²/C²]
-				<br>\(q\) = charge [C, Coulomb]
-				<br>\(r\) = distance between the center of each charge [m, meters]
-				<p>Valid for stationary point source charges at macroscopic sizes</p>
+			\(F\) = electrostatic force [N, Newton, kg m/s²]
+			<em>vector</em>
+			<br>\(k_e\) = 8.987 × 10<sup>9</sup> = Coulomb's constant [N m²/C²]
+			<br>\(q\) = charge [C, Coulomb]
+			<br>\(r\) = distance between the center of each charge [m, meters]
+			<p>Valid for stationary point source charges at macroscopic sizes</p>
 		</div>
 
-		<p>Coulomb's law is a good approximation of nature, but like most classical equations it has it's limits.</p>
+		<p>
+			Coulomb's law is a good approximation of nature, but like most classical equations it has it's limits.
+		</p>
 		<p>
 			Coulomb's law assumes that force is applied instantly at a distance. This works fine for stationary charges, but when a charge is moving it doesn't take into account the delay we see from the speed of light. This issue was fixed by Maxwell's equations in 1861.
 		</p>
@@ -99,13 +113,37 @@
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> You rub a balloon on a dry erase board and pull 20 nC off the board onto the balloon. The balloon sticks to the board. Estimate the maximum possible mass of the balloon if the centers of the charges are 5mm apart?
+			<svg viewBox="0 0 600 200">
+				<g transform="translate(130 190) scale(0.014 -0.014)" fill="#ff0" stroke="#000" stroke-width="120">
+					<path d="M4430 12789 c-921 -59 -1769 -370 -2480 -908 -1067 -807 -1758 -2084
+					-1914 -3536 -69 -641 -34 -1378 100 -2105 192 -1039 624 -2084 1222 -2955 536
+					-781 1225 -1439 1919 -1834 140 -79 424 -214 558 -264 215 -80 439 -136 648
+					-162 60 -7 111 -16 115 -19 8 -9 -15 -237 -34 -326 -35 -167 -134 -411 -198
+					-487 -33 -40 -33 -73 2 -105 59 -57 173 -82 372 -83 213 0 331 25 393 83 36
+					34 34 62 -7 116 -114 150 -225 522 -226 758 0 54 -15 47 150 68 889 116 1919
+					814 2751 1865 480 607 892 1332 1182 2085 466 1210 624 2521 441 3659 -214
+					1337 -881 2491 -1874 3242 -876 663 -1971 982 -3120 908z" />
+				</g>
+				<rect x="350" y="2" width="246" height="194" fill="#fff" stroke-width="2" stroke="#000" />
+				<path d="M348 196 h 250" fill="none" stroke-width="3.5" stroke="#000" stroke-linecap="round" />
+				<g fill="none" stroke="#000" stroke-width="2">
+					<path d="M240 80 h 10" />
+					<path d="M230 90 h 10" />
+					<path d="M240 102 h 10" />
+					<path d="M225 110 h 10" />
+					<path d="M240 120 h 10" />
+					<path d="M371 80 h 10 m -5 -5 v 10" />
+					<path d="M356 90 h 10 m -5 -5 v 10" />
+					<path d="M360 104 h 10 m -5 -5 v 10" />
+					<path d="M375 110 h 10 m -5 -5 v 10" />
+					<path d="M358 120 h 10 m -5 -5 v 10" />
+				</g>
+			</svg>
+			<strong>Example:</strong> You rub a balloon on a dry erase board and pull 20 nC off the board onto the balloon. Estimate the attractive force between the balloon and the board if the centers of the charges are 5mm apart?
 			<details>
 				<summary>solution</summary>
 				$$ n=\text{nano}=10^{-9} \quad \quad m=\text{milli} = 10^{-3}$$ $$ F = \frac{k_{e}q_{1}q_{2}}{r^2} $$
 				$$ F = \frac{(8.987 \times 10^{9}) (20 \times 10^{-9})(-20 \times 10^{-9})}{(5 \times 10^{-3})^{2}} $$ $$ F = 0.144\, \mathrm{N}$$
-				<p>The maximum mass would be when the force of gravity is balanced with the electrostatic force.</p>
-				$$\sum F=ma$$ $$F_{e}-F_{g}=ma$$ $$0.144-m(9.8)=0$$ $$m(9.8)=0.144$$ $$m=0.0147\, \mathrm{kg}$$
 			</details>
 		</div>
 
