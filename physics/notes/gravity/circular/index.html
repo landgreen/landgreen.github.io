@@ -30,6 +30,21 @@
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 
 	<script src='../../../lib/function-graph-SVG.js'></script>
+	<style>
+		.gear{
+			animation: 10s infinite linear rotation;
+			transform-origin: 300px 200px;
+			display: inline-block;
+		}
+		@keyframes rotation {
+			0% {
+				transform: rotate(360deg);
+			}
+			100% {
+				transform: rotate(0deg);
+			}
+		}
+	</style>
 </head>
 
 <body>
@@ -67,6 +82,21 @@
 			<p>What happens to the path of a satellite when you turn off gravity?</p>
 			<p>How would you describe the direction of the velocity compared to the force?</p>
 			<p>How does the orbital path change as you increase the mass of either object?</p>
+		</div>
+
+		<div class='example'>
+			<svg viewBox="0 0 600 365">
+				<circle cx="300" cy="200" r="4" fill='#000' stroke="none" />
+				<circle cx="300" cy="200" r="143" fill='none' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
+				<g class="gear">
+					<circle cx="200" cy="100" r="20" fill='#f77' stroke-width="2" stroke="#222" />
+				</g>
+			</svg>
+			<strong>Question:</strong> The ball above maintains a constant speed while moving in a circle. Is it accelerating?
+			<details>
+				<summary>answer</summary>
+				<p>Yes, the ball is accelerating towards the center of the circle.</p>
+			</details>
 		</div>
 
 		<p class='underlined' id="circular">Circular Motion</p>
@@ -187,22 +217,6 @@
 			</details>
 		</div>
 		<div class="example">
-			<style>
-				#gear{
-							animation: 10s infinite linear rotation;
-							transform-origin: 300px 200px;
-							display: inline-block;
-						}
-						@keyframes rotation {
-							0% {
-								transform: rotate(360deg);
-							}
-							100% {
-								transform: rotate(0deg);
-							}
-						}
-					</style>
-
 			<svg id="station" viewBox="0 0 600 400" style="background-color: #000; border-radius: 10px;">
 				<defs>
 					<mask id="bigmask">
@@ -215,7 +229,7 @@
 					<!-- added with js below-->
 				</g>
 
-				<g id="gear">
+				<g class="gear">
 					<!-- station -->
 					<circle cx="300" cy="200" r="150" fill='#99a' stroke-width="3" stroke="#556" mask="url(#bigmask)" />
 					<circle cx="300" cy="200" r="100" fill='none' stroke-width="3" stroke="#556" />
@@ -266,7 +280,7 @@
 				}
 			</script>
 			<p>You got your 50 meter spaceship built! It produced the illusion of 9.8 m/s² of gravity, but people are complaining their heads feel strange when standing up.</p>
-			<strong>Example:</strong> Use circumference of a circle at a person's head and the time for one rotation to calculate the velocity at the top of a 2 meter tall person's head.
+			<strong>Example:</strong> Use the circumference of a circle at a person's head and the time for one rotation to calculate the velocity at the top of a 2 meter tall person's head.
 			<details>
 				<summary>hint</summary>
 				<p>
