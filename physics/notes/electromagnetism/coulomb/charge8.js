@@ -92,12 +92,14 @@ function charges8(el) {
 
 
   function cycle() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    Charge.physicsAll(q, 0.95, 150, 110);
-    Charge.uniformField(q);
-    Charge.drawAll(q);
-    ammeter();
-    if (!pause) requestAnimationFrame(cycle);
+    if (!pause) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      Charge.physicsAll(q, 0.95, 150, 110);
+      Charge.uniformField(q);
+      Charge.drawAll(q);
+      ammeter();
+      requestAnimationFrame(cycle);
+    }
   }
   requestAnimationFrame(cycle);
 }

@@ -14,7 +14,6 @@
       pause = false;
     });
 
-    //spawn p before e to avoid a bug in the class method allPhysics
     const side = 30;
     const apothem = side * 0.866; //vertical distance between rows
     const rows = 22; // y
@@ -70,11 +69,13 @@
     }
 
     function cycle() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      Charge.physicsAll(q);
-      Charge.drawAll(q);
-      Charge.bounds(q);
-      if (!pause) requestAnimationFrame(cycle);
+      if (!pause) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        Charge.physicsAll(q);
+        Charge.drawAll(q);
+        Charge.bounds(q, 140);
+        requestAnimationFrame(cycle);
+      }
     }
     requestAnimationFrame(cycle);
   }

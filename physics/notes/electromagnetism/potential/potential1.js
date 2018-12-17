@@ -16,17 +16,29 @@ const potential1 = function (id) {
   const el = document.getElementById(id);
   document.getElementById("three-potential-1-load").remove()
   // el.onclick = null; //stops the function from running on button click
-
   const settings = {
-    totalCharges: 30,
+    totalCharges: 8,
     resolution: 256,
-    range: 300, // total size of space the charges can move in range x range
-    edgeBuffer: 30, // how far are walls and spawns from the edge of the fabric, the range
+    range: 400, // total size of space the charges can move in range x range
+    edgeBuffer: 15, // how far are walls and spawns from the edge of the fabric, the range
     minimumRadius: 6, //larger means less spiky peaks
     fullView: false,
     cameraRange: 2000,
     pause: false
   };
+
+  let mouse = new THREE.Vector2();
+
+  el.addEventListener("mousemove", event => {
+    // mouse.x = event.clientX;
+    // mouse.y = event.clientY;
+
+    //not sure why this is the correct values for mouse, only works in full screen
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    // mouse.x = (event.offsetX * canvas.width) / canvas.clientWidth
+    // mouse.y = (event.offsetY * canvas.height) / canvas.clientHeight
+  });
 
   el.addEventListener("mouseleave", function () {
     settings.pause = true;
@@ -204,6 +216,58 @@ const potential1 = function (id) {
     }
   }
 
+  /////////////////////////////////////////
+  // mouse push (with space)
+  /////////////////////////////////////////
+
+  // // _______get keyboard input__________
+  // const keys = [];
+  // document.onkeydown = event => {
+  //   keys[event.keyCode] = true;
+  //   // console.log(event.keyCode);
+  // }
+  // document.onkeyup = event => {
+  //   keys[event.keyCode] = false;
+  // }
+
+  const raycaster = new THREE.Raycaster();
+
+  function push() {
+    // update the picking ray with the camera and mouse position
+    raycaster.setFromCamera(mouse, camera);
+    // calculate objects intersecting the picking ray
+    var intersects = raycaster.intersectObjects(scene.children);
+    if (intersects[0]) {
+      var pos = intersects[0].point
+      //push electrons
+      // Charge.mouseCharge(q, {
+      //   x: pos.x,
+      //   y: pos.y
+      // }, 1);
+      //update dynamics plane for mouse charge
+      for (let i = 0, len = potentialEnergyMesh.geometry.vertices.length; i < len; i++) {
+        let v = potentialEnergyMesh.geometry.vertices[i];
+        const dx = pos.x - v.x;
+        const dy = pos.y - v.y;
+        const radius = Math.max(Math.sqrt(dx * dx + dy * dy), 1) + settings.minimumRadius;
+        v.z += Math.min(8000 / settings.totalCharges / radius, 50)
+      }
+      for (let i = 0, len = q.length; i < len; ++i) {
+        if (q[i].canMove) {
+          const dx = pos.x - q[i].position.x;
+          const dy = pos.y - q[i].position.y;
+          const a = Math.atan2(dy, dx);
+          //the +4000 keeps r from being zero
+          const r = dx * dx + dy * dy + 10000;
+          const mag = (charge * 1000) / r;
+          q[i].velocity.x += mag * Math.cos(a);
+          q[i].velocity.y += mag * Math.sin(a);
+        }
+      }
+    }
+  }
+
+
 
   /////////////////////////////////////////
   // update potentialEnergyMesh
@@ -235,12 +299,15 @@ const potential1 = function (id) {
   renderer.render(scene, camera);
 
   function animationLoop() {
-    if (!settings.pause) requestAnimationFrame(animationLoop);
-    controls.update();
-    renderer.render(scene, camera);
-    Charge.physicsAll(q);
-    bounds(q)
-    renderDynamicPlane(q)
+    if (!settings.pause) {
+      controls.update();
+      renderer.render(scene, camera);
+      Charge.physicsAll(q);
+      bounds(q)
+      renderDynamicPlane(q)
+      requestAnimationFrame(animationLoop);
+      // push();
+    }
   }
   animationLoop();
 };

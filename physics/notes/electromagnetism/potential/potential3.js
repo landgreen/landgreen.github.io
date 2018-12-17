@@ -32,7 +32,6 @@ const potential3 = function (id) {
     pause: true
   };
 
-  let raycaster = new THREE.Raycaster();
   let mouse = new THREE.Vector2();
 
   el.addEventListener("mousemove", event => {
@@ -100,6 +99,7 @@ const potential3 = function (id) {
   renderer.setSize(settings.window.width, settings.window.height);
   // el.appendChild(renderer.domElement);
   renderer.domElement.style.background = "#000";
+  let raycaster = new THREE.Raycaster();
 
   /////////////////////////////////////////
   // camera and controls
@@ -330,23 +330,17 @@ const potential3 = function (id) {
   renderer.render(scene, camera);
 
   function animationLoop() {
-    if (!settings.pause) requestAnimationFrame(animationLoop);
-    controls.update();
-    renderer.render(scene, camera);
-    // Charge.physicsAll(q);
-    Charge.physicsAll(q, 0.95, 150, 110);
-    Charge.uniformField(q);
-    teleport(q)
-    // bounds(q)
-    renderDynamicPlane(q)
-
-
-    // update the picking ray with the camera and mouse position
-    raycaster.setFromCamera(mouse, camera);
-
-    // calculate objects intersecting the picking ray
-    var intersects = raycaster.intersectObjects(scene.children);
-    console.log(intersects)
+    if (!settings.pause) {
+      requestAnimationFrame(animationLoop);
+      controls.update();
+      renderer.render(scene, camera);
+      // Charge.physicsAll(q);
+      Charge.physicsAll(q, 0.95, 150, 110);
+      Charge.uniformField(q);
+      teleport(q)
+      // bounds(q)
+      renderDynamicPlane(q)
+    }
   }
   animationLoop();
 };

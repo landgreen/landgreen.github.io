@@ -773,7 +773,7 @@
 		</div>
 		<div class='example'>
 			<svg viewBox="30 0 550 310">
-				<path d="M 100 120 v60 M 155 250 h60" fill='none' stroke="rgba(0,200,255,0.2)" stroke-width="35" stroke-linejoin="round" stroke-linecap="round" />
+				<path d="M 100 120 v60 M 155 250 h60" fill='none' stroke="rgba(0,200,255,0.3)" stroke-width="35" stroke-linejoin="round" stroke-linecap="round" />
 				<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 80
 					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
 					v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
@@ -788,16 +788,12 @@
 				<text x="140" y="155" text-anchor="middle" font-size="20" fill='#333'>100 Ω</text>
 				<text x="310" y="155" text-anchor="middle" font-size="20" fill='#333'>100 Ω</text>
 			</svg>
-			<strong>Example:</strong> Identify groups of resistors that are in series or parallel. Combine them to shrink the
-			circuit until
-			you reduce the circuit to just one resistor.
+			<strong>Example:</strong> Identify groups of resistors that are in series or parallel. Combine them to shrink the circuit until you reduce the circuit to just one resistor.
 			<br>(Start with the highlighted resistors in series.)
 			<details>
 				<summary>solution</summary>
-				<div class="col-group">
-					<div class='center'>
-						<svg viewbox="40 0 560 310">
-							<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 80
+				<svg viewbox="-80 30 800 270">
+					<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 80
 							l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
 							v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
 							h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
@@ -805,14 +801,14 @@
 							M 290 50 h45 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 45
 							v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
 							h-170" fill='none' stroke="#333" stroke-width="5" stroke-linejoin="round" />
-							<text x="390" y="90" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
-							<text x="390" y="291" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
-							<text x="185" y="291" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
-							<text x="152" y="155" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
-							<text x="320" y="155" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
-						</svg>
-						<svg viewbox="40 0 560 310">
-							<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 80
+					<text x="390" y="90" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
+					<text x="390" y="291" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
+					<text x="185" y="291" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
+					<text x="152" y="155" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
+					<text x="320" y="155" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
+				</svg>
+				<svg viewbox="-80 30 800 270">
+					<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 80
 						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
 						v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
 						h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
@@ -820,32 +816,27 @@
 						M 290 50 h45 h 125
 						v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
 						h-170" fill='none' stroke="#333" stroke-width="5" stroke-linejoin="round" />
-							<text x="390" y="90" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
-							<text x="390" y="291" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
-							<text x="152" y="155" text-anchor="middle" font-size="30" fill='#0bb'>200 Ω</text>
-							<text x="320" y="155" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
-						</svg>
-
-					</div>
-					<div class='center'>
-						<svg viewbox="40 0 560 310">
-							<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 80
+					<text x="390" y="90" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
+					<text x="390" y="291" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
+					<text x="152" y="155" text-anchor="middle" font-size="30" fill='#f04'>200 Ω</text>
+					<text x="320" y="155" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
+				</svg>
+				<svg viewbox="-80 30 800 270">
+					<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 80
 					   l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
 					   v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
 					   h -80 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
 					   h -80 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="5" stroke-linejoin="round" />
-							<text x="390" y="90" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
-							<text x="390" y="291" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
-							<text x="325" y="155" text-anchor="middle" font-size="30" fill='#0bb'>66.6 Ω</text>
-						</svg>
-						<svg viewbox="40 0 560 310">
-							<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 240					  
+					<text x="390" y="90" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
+					<text x="390" y="291" text-anchor="middle" font-size="30" fill='#333'>100 Ω</text>
+					<text x="325" y="155" text-anchor="middle" font-size="30" fill='#f04'>66.6 Ω</text>
+				</svg>
+				<svg viewbox="-80 30 800 270">
+					<path transform="translate(0) rotate(180 280 150)" d="M 50 50 h 240					  
 					  v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
 					  h -240 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="5" stroke-linejoin="round" />
-							<text x="335" y="155" text-anchor="middle" font-size="30" fill='#0bb'>266.6 Ω</text>
-						</svg>
-					</div>
-				</div>
+					<text x="335" y="155" text-anchor="middle" font-size="30" fill='#f04'>266.6 Ω</text>
+				</svg>
 				$$ \text{Equivalent Resistance} = 266.6 \, \Omega $$
 			</details>
 		</div>
@@ -896,20 +887,20 @@
 				<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
 				<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600 Ω</text>
 				<text x="274" y="157" text-anchor="end" font-size="16" fill='#999'>Req</text>
-				<text x="305" y="157" text-anchor="start" font-size="20" fill='#0aa'>420 Ω</text>
+				<text x="305" y="157" text-anchor="start" font-size="20" fill='#f06'>420 Ω</text>
 				<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
 				<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500 Ω</text>
 			</svg>
 			<p>Next we can combine the 3 resistors in series.</p>
 			$$R_{eq} = 600+420+500$$ $$R_{eq} = 1520 \, \Omega$$
-			<svg viewbox="-130 0 600 210">
+			<svg viewbox="-130 40 600 140">
 				<path d="M 50 50 h 80 h 160
 				v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v20
 				h -160
 				h -80 v-47 m-40 0 h 80 m-20 -15 h-40 m20 0 v -60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
 				<text x="45" y="100" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
 				<text x="274" y="117" text-anchor="end" font-size="16" fill='#999'>Req</text>
-				<text x="305" y="117" text-anchor="start" font-size="20" fill='#0aa'>1520 Ω</text>
+				<text x="305" y="117" text-anchor="start" font-size="20" fill='#f06'>1520 Ω</text>
 			</svg>
 
 		</details>
@@ -921,7 +912,7 @@
 				voltage
 				drop on the resistor is the same as the battery.</p>
 			$$V_{bat} + V_1 = 0$$ $$6.0 \, \mathrm{V}+ V_1 = 0$$ $$V_1 = -6.0 \, \mathrm{V}$$
-			<svg viewbox="-130 0 600 210">
+			<svg viewbox="-130 40 600 140">
 				<path d="M 50 50 h 80 h 160
 					v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v20
 					h -160
@@ -929,18 +920,18 @@
 				<text x="45" y="100" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
 				<text x="274" y="117" text-anchor="end" font-size="16" fill='#999'>Req</text>
 				<text x="305" y="117" text-anchor="start" font-size="20" fill='#333'>1520 Ω</text>
-				<text x="305" y="147" text-anchor="start" font-size="20" fill='#0aa'>-6.0 V</text>
+				<text x="305" y="147" text-anchor="start" font-size="20" fill='#f06'>-6.0 V</text>
 			</svg>
 			<p>We can solve for current through the resistor with Ohm's law.</p>
 			$$V=IR$$ $$I = \frac{V}{R}$$ $$I = \frac{6.0\, \mathrm{V}}{1530\, \Omega}$$ $$I = 0.0039\, \mathrm{A}$$
-			<svg viewbox="-130 0 600 210">
+			<svg viewbox="-130 40 600 140">
 				<path d="M 50 50 h 80 h 160
 						v 20 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v20
 						h -160
 						h -80 v-47 m-40 0 h 80 m-20 -15 h-40 m20 0 v -60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
 				<text x="45" y="100" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
 				<text x="274" y="117" text-anchor="end" font-size="16" fill='#999'>Req</text>
-				<text x="305" y="87" text-anchor="start" font-size="20" fill='#0aa'>0.0039 A</text>
+				<text x="305" y="87" text-anchor="start" font-size="20" fill='#f06'>0.0039 A</text>
 				<text x="305" y="117" text-anchor="start" font-size="20" fill='#333'>1523 Ω</text>
 				<text x="305" y="147" text-anchor="start" font-size="20" fill='#333'>-6.0 V</text>
 			</svg>
@@ -957,13 +948,13 @@
 				<text x="45" y="140" text-anchor="end" font-size="20" fill='#333'>6.0 V</text>
 				<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
 				<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600 Ω</text>
-				<text x="170" y="110" text-anchor="middle" font-size="20" fill='#0aa'>0.0039 A</text>
+				<text x="170" y="110" text-anchor="middle" font-size="20" fill='#f06'>0.0039 A</text>
 				<text x="245" y="157" text-anchor="start" font-size="16" fill='#999'>Req</text>
 				<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>420 Ω</text>
-				<text x="305" y="182" text-anchor="start" font-size="20" fill='#0aa'>0.0039 A</text>
+				<text x="305" y="182" text-anchor="start" font-size="20" fill='#f06'>0.0039 A</text>
 				<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
 				<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500 Ω</text>
-				<text x="170" y="307" text-anchor="middle" font-size="20" fill='#0aa'>0.0039 A</text>
+				<text x="170" y="307" text-anchor="middle" font-size="20" fill='#f06'>0.0039 A</text>
 			</svg>
 			<p>We can use Ohm's law to find voltages.</p>
 			<div class="col-group">
@@ -985,16 +976,16 @@
 				<text x="170" y="33" text-anchor="middle" font-size="16" fill='#999'>R1</text>
 				<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600 Ω</text>
 				<text x="170" y="110" text-anchor="middle" font-size="20" fill='#333'>0.0039 A</text>
-				<text x="170" y="135" text-anchor="middle" font-size="20" fill='#0aa'>-2.3 V</text>
+				<text x="170" y="135" text-anchor="middle" font-size="20" fill='#f06'>-2.3 V</text>
 				<text x="245" y="157" text-anchor="start" font-size="16" fill='#999'>Req</text>
 				<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>420 Ω</text>
 				<text x="305" y="182" text-anchor="start" font-size="20" fill='#333'>0.0039 A</text>
-				<text x="305" y="207" text-anchor="start" font-size="20" fill='#0aa'>-1.7 V</text>
+				<text x="305" y="207" text-anchor="start" font-size="20" fill='#f06'>-1.7 V</text>
 
 				<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
 				<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500 Ω</text>
 				<text x="170" y="307" text-anchor="middle" font-size="20" fill='#333'>0.0039 A</text>
-				<text x="170" y="332" text-anchor="middle" font-size="20" fill='#0aa'>-2.0 V</text>
+				<text x="170" y="332" text-anchor="middle" font-size="20" fill='#f06'>-2.0 V</text>
 			</svg>
 			<p>Resistors in parallel have the same voltage, but not the same current. Let's expand back to our full size circuit
 				and
@@ -1015,10 +1006,10 @@
 				<text x="170" y="135" text-anchor="middle" font-size="20" fill='#333'>-2.3 V</text>
 				<text x="254" y="157" text-anchor="start" font-size="16" fill='#999'>R2</text>
 				<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>800 Ω</text>
-				<text x="305" y="182" text-anchor="start" font-size="20" fill='#0aa'>-1.7 V</text>
+				<text x="305" y="182" text-anchor="start" font-size="20" fill='#f06'>-1.7 V</text>
 				<text x="424" y="157" text-anchor="start" font-size="16" fill='#999'>R3</text>
 				<text x="475" y="157" text-anchor="start" font-size="20" fill='#333'>900 Ω</text>
-				<text x="475" y="182" text-anchor="start" font-size="20" fill='#0aa'>-1.7 V</text>
+				<text x="475" y="182" text-anchor="start" font-size="20" fill='#f06'>-1.7 V</text>
 				<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
 				<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500 Ω</text>
 				<text x="170" y="307" text-anchor="middle" font-size="20" fill='#333'>0.0039 A</text>
@@ -1050,11 +1041,11 @@
 				<text x="254" y="157" text-anchor="start" font-size="16" fill='#999'>R2</text>
 				<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>800 Ω</text>
 				<text x="305" y="182" text-anchor="start" font-size="20" fill='#333'>-1.7 V</text>
-				<text x="305" y="207" text-anchor="start" font-size="20" fill='#0aa'>0.0021 A</text>
+				<text x="305" y="207" text-anchor="start" font-size="20" fill='#f06'>0.0021 A</text>
 				<text x="424" y="157" text-anchor="start" font-size="16" fill='#999'>R3</text>
 				<text x="475" y="157" text-anchor="start" font-size="20" fill='#333'>900 Ω</text>
 				<text x="475" y="182" text-anchor="start" font-size="20" fill='#333'>-1.7 V</text>
-				<text x="475" y="207" text-anchor="start" font-size="20" fill='#0aa'>0.0019 A</text>
+				<text x="475" y="207" text-anchor="start" font-size="20" fill='#f06'>0.0019 A</text>
 				<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
 				<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500 Ω</text>
 				<text x="170" y="307" text-anchor="middle" font-size="20" fill='#333'>0.0039 A</text>
@@ -1065,21 +1056,25 @@
 			<summary>
 				<strong>solving for power dissipated</strong>
 			</summary>
-			<p>We can calculate the power dissipated by each element with P=IV.</p>
+			<p>We can calculate the power dissipated by each element.</p>
 			<div class="col-group">
 				<div>
-					$$P = IV_1$$ $$P = (0.0039)(2.3)$$ $$P = 0.0090\, \mathrm{W}$$
+					$$ \quad P = IV$$
+					$$P = (0.0039)(2.3)$$ $$P = 0.0090\, \mathrm{W}$$
 				</div>
 				<div>
-					$$P = IV_4$$ $$P = (0.0039)(2.0)$$ $$P = 0.0078\, \mathrm{W}$$
+					$$\text{\color{#f06}{(R4)}} \quad P = IV$$ $$P = (0.0039)(2.0)$$
+					$$P = 0.0078\, \mathrm{W}$$
 				</div>
 			</div>
 			<div class="col-group">
 				<div>
-					$$P = IV_2$$ $$P = (0.0021)(1.7)$$ $$P = 0.0036\, \mathrm{W}$$
+					$$\text{\color{#f06}{(R2)}} \quad P = IV$$ $$P = (0.0021)(1.7)$$
+					$$P = 0.0036\, \mathrm{W}$$
 				</div>
 				<div>
-					$$P = IV_3$$ $$P = (0.0019)(1.7)$$ $$P = 0.0032\, \mathrm{W}$$
+					$$\text{\color{#f06}{(R3)}} \quad P = IV$$ $$P = (0.0019)(1.7)$$
+					$$P = 0.0032\, \mathrm{W}$$
 				</div>
 			</div>
 			<svg viewbox="-20 0 600 370">
@@ -1096,22 +1091,22 @@
 				<text x="170" y="85" text-anchor="middle" font-size="20" fill='#333'>600 Ω</text>
 				<text x="170" y="110" text-anchor="middle" font-size="20" fill='#333'>0.0039 A</text>
 				<text x="170" y="135" text-anchor="middle" font-size="20" fill='#333'>-2.3 V</text>
-				<text x="170" y="160" text-anchor="middle" font-size="20" fill='#0aa'>0.0090 W</text>
+				<text x="170" y="160" text-anchor="middle" font-size="20" fill='#f06'>0.0090 W</text>
 				<text x="254" y="157" text-anchor="start" font-size="16" fill='#999'>R2</text>
 				<text x="305" y="157" text-anchor="start" font-size="20" fill='#333'>800 Ω</text>
 				<text x="305" y="182" text-anchor="start" font-size="20" fill='#333'>-1.7 V</text>
 				<text x="305" y="207" text-anchor="start" font-size="20" fill='#333'>0.0021 A</text>
-				<text x="305" y="232" text-anchor="start" font-size="20" fill='#0aa'>0.0036 W</text>
+				<text x="305" y="232" text-anchor="start" font-size="20" fill='#f06'>0.0036 W</text>
 				<text x="424" y="157" text-anchor="start" font-size="16" fill='#999'>R3</text>
 				<text x="475" y="157" text-anchor="start" font-size="20" fill='#333'>900 Ω</text>
 				<text x="475" y="182" text-anchor="start" font-size="20" fill='#333'>-1.7 V</text>
 				<text x="475" y="207" text-anchor="start" font-size="20" fill='#333'>0.0019 A</text>
-				<text x="475" y="232" text-anchor="start" font-size="20" fill='#0aa'>0.0032 W</text>
+				<text x="475" y="232" text-anchor="start" font-size="20" fill='#f06'>0.0032 W</text>
 				<text x="170" y="233" text-anchor="middle" font-size="16" fill='#999'>R4</text>
 				<text x="170" y="283" text-anchor="middle" font-size="20" fill='#333'>500 Ω</text>
 				<text x="170" y="307" text-anchor="middle" font-size="20" fill='#333'>0.0039 A</text>
 				<text x="170" y="332" text-anchor="middle" font-size="20" fill='#333'>-2.0 V</text>
-				<text x="170" y="357" text-anchor="middle" font-size="20" fill='#0aa'>0.0078 W</text>
+				<text x="170" y="357" text-anchor="middle" font-size="20" fill='#f06'>0.0078 W</text>
 			</svg>
 		</details>
 		<details>

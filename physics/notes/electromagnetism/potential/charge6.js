@@ -26,17 +26,19 @@ function charges6(el) {
         y: j * separation + offy
       });
       q[q.length] = new Charge("e", {
-        x: i * separation + offx + 10 * (Math.random() - 0.5),
-        y: j * separation + offy
+        x: i * separation + offx + 15 * (Math.random() - 0.5),
+        y: j * separation + offy + 15 * (Math.random() - 0.5)
       });
     }
   }
 
   function cycle() {
-    Charge.physicsAll(q);
-    Charge.bounds(q);
-    Charge.scalarField(q, true);
-    if (!pause) requestAnimationFrame(cycle);
+    if (!pause) {
+      Charge.physicsAll(q);
+      Charge.bounds(q);
+      Charge.scalarField(q, true);
+      requestAnimationFrame(cycle);
+    }
   }
   requestAnimationFrame(cycle);
 }

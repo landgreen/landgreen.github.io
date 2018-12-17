@@ -19,10 +19,12 @@ function charges5(el) {
   Charge.spawnCharges(q, 8, "e");
 
   function cycle() {
-    Charge.physicsAll(q);
-    Charge.bounds(q);
-    Charge.scalarField(q, true);
-    if (!pause) requestAnimationFrame(cycle);
+    if (!pause) {
+      Charge.physicsAll(q);
+      Charge.bounds(q);
+      Charge.scalarField(q, true);
+      requestAnimationFrame(cycle);
+    }
   }
   requestAnimationFrame(cycle);
 }

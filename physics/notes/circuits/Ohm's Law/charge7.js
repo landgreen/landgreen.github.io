@@ -76,11 +76,13 @@ function charges7(el) {
   }
 
   function cycle() {
-    Charge.physicsAll(q);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    Charge.drawAll(q);
-    ammeter();
-    if (!pause) requestAnimationFrame(cycle);
+    if (!pause) {
+      Charge.physicsAll(q);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      Charge.drawAll(q);
+      ammeter();
+      requestAnimationFrame(cycle);
+    }
   }
   requestAnimationFrame(cycle);
 }

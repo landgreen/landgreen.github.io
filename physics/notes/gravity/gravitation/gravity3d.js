@@ -369,11 +369,13 @@ const gravity3d = function (id) {
   // Render Loop
   /////////////////////////////////////////
   function animationLoop() {
-    if (!settings.pause) requestAnimationFrame(animationLoop);
-    controls.update();
-    renderer.render(scene, camera);
-    physics(mass)
-    updateLine()
+    if (!settings.pause) {
+      requestAnimationFrame(animationLoop);
+      controls.update();
+      renderer.render(scene, camera);
+      physics(mass)
+      updateLine()
+    }
   }
   animationLoop();
 };

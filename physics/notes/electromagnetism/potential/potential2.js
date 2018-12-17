@@ -275,14 +275,16 @@ const potential2 = function (id) {
   renderer.render(scene, camera);
 
   function animationLoop() {
-    if (!settings.pause) requestAnimationFrame(animationLoop);
-    controls.update();
-    renderer.render(scene, camera);
-    // Charge.physicsAll(q);
-    Charge.physicsAll(q, 0.99, 300, 50);
-    teleport(q)
-    // bounds(q)
-    renderDynamicPlane(q)
+    if (!settings.pause) {
+      requestAnimationFrame(animationLoop);
+      controls.update();
+      renderer.render(scene, camera);
+      // Charge.physicsAll(q);
+      Charge.physicsAll(q, 0.99, 300, 50);
+      teleport(q)
+      // bounds(q)
+      renderDynamicPlane(q)
+    }
   }
   animationLoop();
 };

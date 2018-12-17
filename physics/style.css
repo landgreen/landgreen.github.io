@@ -79,11 +79,11 @@ input {
 }
 
 input[type="number"] {
-  background: #eee;
+  background-color: #eee;
 }
 
 input[type="text"] {
-  background: #eee;
+  background-color: #eee;
 }
 
 input:focus {
@@ -130,7 +130,7 @@ hr {
 
 ::selection {
   color: white;
-  background: #2793c7;
+  background-color: #2793c7;
 }
 
 pre {
@@ -146,7 +146,7 @@ table {
 }
 
 tr:hover {
-  background: #f4f4f4;
+  background-color: #f4f4f4;
 }
 
 th,
@@ -158,7 +158,7 @@ td {
 }
 
 th {
-  background: #444;
+  background-color: #444;
   color: #fff;
 }
 
@@ -288,7 +288,7 @@ th {
 
 .wrapper>div {
   /* border: 1px solid #aaa; */
-  background: #fff;
+  background-color: #fff;
   border-radius: 5px;
   padding: 5px;
 }

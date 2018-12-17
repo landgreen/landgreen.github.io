@@ -252,7 +252,7 @@ class Charge {
     }
   }
 
-  static bounds(who, range = 50) {
+  static bounds(who, range = -7) {
     //range = how far outside of canvas,  0 is at canvas edge
     for (let i = 0, len = who.length; i < len; ++i) {
       if (who[i].canMove) {

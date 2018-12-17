@@ -36,11 +36,13 @@ function charges1(el) {
   }
 
   function cycle() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    Charge.physicsAll(q);
-    Charge.drawAll(q);
-    Charge.bounds(q);
-    if (!pause) requestAnimationFrame(cycle);
+    if (!pause) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      Charge.physicsAll(q);
+      Charge.drawAll(q);
+      Charge.bounds(q);
+      requestAnimationFrame(cycle);
+    }
   }
   requestAnimationFrame(cycle);
 }

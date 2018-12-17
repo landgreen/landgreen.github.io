@@ -62,11 +62,13 @@ function charges9(el) {
   }
 
   function cycle() {
-    Charge.physicsAll(q);
-    Charge.teleport(q, 50);
-    Charge.teleport(q, 200);
-    Charge.scalarField(q);
-    if (!pause) requestAnimationFrame(cycle);
+    if (!pause) {
+      Charge.physicsAll(q);
+      Charge.teleport(q, 50);
+      Charge.teleport(q, 200);
+      Charge.scalarField(q);
+      requestAnimationFrame(cycle);
+    }
   }
   requestAnimationFrame(cycle);
 }

@@ -63,15 +63,16 @@ function charges8(el) {
   }
 
   function cycle() {
-    Charge.physicsAll(q);
-    Charge.teleport(q, 200);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    Charge.vectorField(q, 33);
-    ctx.globalAlpha = 0.5;
-    Charge.drawAll(q);
-    ctx.globalAlpha = 1;
-
-    if (!pause) requestAnimationFrame(cycle);
+    if (!pause) {
+      Charge.physicsAll(q);
+      Charge.teleport(q, 200);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      Charge.vectorField(q, 33);
+      ctx.globalAlpha = 0.5;
+      Charge.drawAll(q);
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(cycle);
+    }
   }
   requestAnimationFrame(cycle);
 }

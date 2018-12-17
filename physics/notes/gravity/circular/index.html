@@ -36,6 +36,10 @@
 			transform-origin: 300px 200px;
 			display: inline-block;
 		}
+		.circle-motion{
+			animation: 10s infinite linear rotation;
+			transform-origin: 300px 200px;
+		}
 		@keyframes rotation {
 			0% {
 				transform: rotate(360deg);
@@ -87,9 +91,9 @@
 		<div class='example'>
 			<svg viewBox="0 0 600 365">
 				<circle cx="300" cy="200" r="4" fill='#000' stroke="none" />
-				<circle cx="300" cy="200" r="143" fill='none' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
-				<g class="gear">
-					<circle cx="200" cy="100" r="20" fill='#f77' stroke-width="2" stroke="#222" />
+				<circle cx="300" cy="200" r="140" fill='none' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
+				<g class="circle-motion">
+					<circle cx="200" cy="100" r="20" fill='#f04' stroke-width="1.5" stroke="#000" />
 				</g>
 			</svg>
 			<strong>Question:</strong> The ball above maintains a constant speed while moving in a circle. Is it accelerating?
@@ -102,7 +106,7 @@
 		<p class='underlined' id="circular">Circular Motion</p>
 		<p>Any object moving in a circular path has a net force pointed at the center of the circle. The velocity of the object will always be perpendicular to the force.</p>
 		<div class='definition'>
-			<svg viewBox="-60 0 550 360">
+			<svg viewBox="-60 45 550 307">
 				<circle cx="200" cy="200" r="150" fill='rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
 				<g transform="translate(53 200)">
 					<line x1="0" y1="0" x2="150" y2="0" style="stroke:#000;stroke-width:2" />
@@ -121,9 +125,9 @@
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
 					<text x="-85" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">F</text>
-					<circle cx="0" cy="0" r="20" fill='#f77' stroke-width="2" stroke="#222" />
+					<circle cx="0" cy="0" r="20" fill='#fff' stroke-width="2" stroke="#222" />
 				</g>
-				<g transform="translate(306 94) rotate(-45)" opacity=0.25>
+				<!-- <g transform="translate(306 94) rotate(-45)" opacity=0.25>
 					<g transform="translate(0 -100) rotate(90)">
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
@@ -132,7 +136,7 @@
 						<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
-					<circle cx="0" cy="0" r="20" fill='#f77' stroke-width="2" stroke="#222" />
+					<circle cx="0" cy="0" r="20" fill='#fff' stroke-width="2" stroke="#222" />
 				</g>
 				<g transform="translate(200 50) rotate(-90)" opacity=0.07>
 					<g transform="translate(0 -100) rotate(90)">
@@ -143,8 +147,8 @@
 						<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
-					<circle cx="0" cy="0" r="20" fill='#f77' stroke-width="2" stroke="#222" />
-				</g>
+					<circle cx="0" cy="0" r="20" fill='#fff' stroke-width="2" stroke="#222" />
+				</g> -->
 			</svg>
 			<h2>$$F = \frac{mv^{2}}{r} \quad \quad a = \frac{v^{2}}{r} $$</h2>
 			<p>
@@ -337,7 +341,7 @@
 			$$v^{2} = \frac{GM_{2}}{r} $$
 		</details>
 		<div class='definition'>
-			<svg viewBox="-60 0 550 360">
+			<svg viewBox="-60 45 550 307">
 				<circle cx="200" cy="200" r="50" fill='#fff' stroke-width="2" stroke="#222" />
 				<text x="203" y="224" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">M</text>
 				<circle cx="200" cy="200" r="150" fill='rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
@@ -353,22 +357,22 @@
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
 					<text x="0" y="-115" fill="black" text-anchor="middle" dominant-baseline="central" font-size="23">v</text>
-					<circle cx="0" cy="0" r="6" fill='#f77' stroke-width="2" stroke="#222" />
+					<circle cx="0" cy="0" r="6" fill='#fff' stroke-width="2" stroke="#222" />
 				</g>
-				<g transform="translate(306 94) rotate(-45)" opacity=0.25>
+				<!-- <g transform="translate(306 94) rotate(-45)" opacity=0.25>
 					<g transform="translate(0 -100) rotate(90)">
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
-					<circle cx="0" cy="0" r="6" fill='#f77' stroke-width="2" stroke="#222" />
+					<circle cx="0" cy="0" r="6" fill='#fff' stroke-width="2" stroke="#222" />
 				</g>
 				<g transform="translate(200 50) rotate(-90)" opacity=0.07>
 					<g transform="translate(0 -100) rotate(90)">
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
 					</g>
-					<circle cx="0" cy="0" r="6" fill='#f77' stroke-width="2" stroke="#222" />
-				</g>
+					<circle cx="0" cy="0" r="6" fill='#fff' stroke-width="2" stroke="#222" />
+				</g> -->
 			</svg>
 			<h1>$$v^{2} = \frac{GM}{r} $$</h1>
 			<br>\(v\) = orbital tangential velocity [m/s]

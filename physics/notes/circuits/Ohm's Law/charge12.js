@@ -114,12 +114,14 @@ function charges12(el) {
   let inZone = [];
 
   function cycle() {
-    Charge.physicsAll(q);
-    Charge.bounds(q);
-    Charge.scalarField(q);
-    voltmeter();
-    Charge.pushZone(q, offx);
-    if (!pause) requestAnimationFrame(cycle);
+    if (!pause) {
+      Charge.physicsAll(q);
+      Charge.bounds(q, 50);
+      Charge.scalarField(q);
+      voltmeter();
+      Charge.pushZone(q, offx);
+      requestAnimationFrame(cycle);
+    }
   }
   requestAnimationFrame(cycle);
 }
