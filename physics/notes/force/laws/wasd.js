@@ -48,6 +48,13 @@
             x: 0,
             y: 0
         },
+        arrowSmoothed: {
+            left: 0,
+            right: 0,
+            up: 0,
+            down: 0,
+            scale: 1000
+        },
         frictionForceY(arrow, mag) {
             if (Math.abs(a.velocity.y) > mag) {
                 if (a.velocity.y < 0) {
@@ -224,36 +231,42 @@
             //move SVG
             a.el.setAttribute("transform", `translate(${a.position.x} ${a.position.y})`);
 
-            //draw force vectors
+            //smooth arrow changes
+            const old = 0.5;
+            const newer = 1 - old;
+            a.arrowSmoothed.left = a.arrowSmoothed.left * old + arrow.left * newer;
+            a.arrowSmoothed.right = a.arrowSmoothed.right * old + arrow.right * newer;
+            a.arrowSmoothed.up = a.arrowSmoothed.up * old + arrow.up * newer;
+            a.arrowSmoothed.down = a.arrowSmoothed.down * old + arrow.down * newer;
+
+            //update arrow vectors to smooth value
             const plus = 5
-            //hide if arrow is zero
-            if (arrow.right > 0) {
+            //hide if arrow is too small
+            const threshold = 0.1
+            if (a.arrowSmoothed.right > threshold) {
                 document.getElementById("right-vector").setAttribute("visibility", "visible");
-                document.getElementById("right-vector").setAttribute("d", `M60 30 h ${arrow.right+plus} l-1 3 l6 -3 l-6 -3 l1 3`);
+                document.getElementById("right-vector").setAttribute("d", `M60 30 h ${a.arrowSmoothed.right+plus} l-1 3 l6 -3 l-6 -3 l1 3`);
             } else {
                 document.getElementById("right-vector").setAttribute("visibility", "hidden");
             }
-            if (arrow.left < 0) {
+            if (a.arrowSmoothed.left < -threshold) {
                 document.getElementById("left-vector").setAttribute("visibility", "visible");
-                document.getElementById("left-vector").setAttribute("d", `M0 30 h ${arrow.left-plus} l1 3 l-6 -3 l6 -3 l-1 3`);
+                document.getElementById("left-vector").setAttribute("d", `M0 30 h ${a.arrowSmoothed.left-plus} l1 3 l-6 -3 l6 -3 l-1 3`);
             } else {
                 document.getElementById("left-vector").setAttribute("visibility", "hidden");
             }
-            if (arrow.up < 0) {
+            if (a.arrowSmoothed.up < -threshold) {
                 document.getElementById("up-vector").setAttribute("visibility", "visible");
-                document.getElementById("up-vector").setAttribute("d", `M30 0 v ${arrow.up-plus} l3 1 l-3 -6 l-3 6 l3 -1`);
+                document.getElementById("up-vector").setAttribute("d", `M30 0 v ${a.arrowSmoothed.up-plus} l3 1 l-3 -6 l-3 6 l3 -1`);
             } else {
                 document.getElementById("up-vector").setAttribute("visibility", "hidden");
             }
-            if (arrow.down > 0) {
+            if (a.arrowSmoothed.down > threshold) {
                 document.getElementById("down-vector").setAttribute("visibility", "visible");
-                document.getElementById("down-vector").setAttribute("d", `M30 60 v ${arrow.down+plus} l3 -1 l-3 6 l-3 -6 l3 1`);
+                document.getElementById("down-vector").setAttribute("d", `M30 60 v ${a.arrowSmoothed.down+plus} l3 -1 l-3 6 l-3 -6 l3 1`);
             } else {
                 document.getElementById("down-vector").setAttribute("visibility", "hidden");
             }
         }
-
-
     }
-    // requestAnimationFrame(cycle);
 })()

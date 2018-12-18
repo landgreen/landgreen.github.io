@@ -94,10 +94,10 @@
       <svg class='center' width="225" height="200">
         <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
         <g transform='translate(75 60) rotate(0)'>
-          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#e50" />
+          <rect x="0.5" y="0.5" width="80" height="80" stroke='black' stroke-width='2.5' fill="#f45" />
           <text x="40" y="40" fill="white" text-anchor="middle" dominant-baseline="middle" font-size='20px'>0.09 kg</text>
         </g>
-        <line x1="0" y1="140" x2="225" y2="140" stroke="#000" stroke-width="2" />
+        <line x1="0" y1="141" x2="225" y2="140" stroke="#000" stroke-width="3" />
         <use xlink:href="#vector" transform='translate(115 140) rotate(0)' />
         <text x="125" y="187" fill="black">0.34 N</text>
         <use xlink:href="#vector" transform='translate(115 60) rotate(180)' />
@@ -133,7 +133,7 @@
     <div class='example'>
       <svg class='center' width="300" height="200">
         <g transform='translate(100 60) rotate(0)'>
-          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fffa66" />
+          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#bcd" />
           <text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>16 kg</text>
         </g>
         <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
@@ -709,8 +709,8 @@
       <svg class="center" width="230" height="226">
         <g transform='translate(50 -50) rotate(20)'>
           <line x1="-100" y1="170" x2="200" y2="170" stroke="#000" stroke-width="2" />
-          <rect x="60" y="90" width="80" height="80" style="stroke:black;stroke-width:2;fill:#f65" />
-          <text x="100" y="130" fill="black" text-anchor="middle" dominant-baseline="middle">20 kg</text>
+          <rect x="60" y="90" width="80" height="80" style="stroke:black;stroke-width:2;fill:#f45" />
+          <text x="100" y="130" fill="#fff" text-anchor="middle" dominant-baseline="middle">20 kg</text>
           <use xlink:href="#vector" transform='translate(100 90) rotate(-180)' />
           <text x="100" y="33" text-anchor="middle" fill="black">F
             <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
@@ -908,8 +908,8 @@
         <line x1="60" y1="80" x2="100" y2="120" style="stroke:#000;stroke-width:2" />
         <polygon points="0,10 -6,-2 0,0 6,-2" transform='translate(60 80) rotate(135)' />
         <g transform='translate(100 80) rotate(0)'>
-          <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#f65" />
-          <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>10 kg</text>
+          <rect x="0.5" y="0.5" width="80" height="80" stroke='black' stroke-width='2.5' fill="#cbb" />
+          <text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>10 kg</text>
         </g>
         <text x="46" y="67" fill="black">T
           <!-- <tspan font-size="0.7em" dy="5" dx="-5">Tension</tspan> -->
@@ -939,16 +939,16 @@
       <svg viewBox="20 0 500 120">
         <line x1="180" y1="70" x2="400" y2="70" stroke-width="2" stroke="#000" />
         <g transform='translate(100 20) rotate(0)'>
-          <rect x="0" y="0" width="80" height="80" stroke='#000' stroke-width='2' fill="#f95" />
-          <text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>0.4 kg</text>
+          <rect x="20" y="10" width="60" height="60" stroke='#000' stroke-width='2' fill="#f45" />
+          <text x="50" y="40" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-size='17px'>0.4 kg</text>
         </g>
-        <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-        <text x="35" y="65" fill="#000">F</text>
+        <use xlink:href="#vector" transform='translate(120 60) rotate(90)' />
+        <text x="55" y="65" fill="#000">F</text>
         <use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
         <!-- <text x="237" y="66" fill="#000">F</text> -->
         <g transform='translate(400 20) rotate(0)'>
-          <rect x="0" y="0" width="80" height="80" stroke='#000' stroke-width='2' fill="#bbb" />
-          <text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>10 kg</text>
+          <rect x="0" y="-10" width="100" height="100" stroke='#000' stroke-width='2' fill="#cbb" />
+          <text x="50" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='25px'>10 kg</text>
         </g>
         <use xlink:href="#vector" transform='translate(400 60) rotate(90)' />
         <!-- <text x="336" y="66" fill="#000">F</text> -->
@@ -972,14 +972,16 @@
     <div class='example'>
       <svg viewBox="0 0 500 200">
         <g font-size="19" stroke="#000" fill="#fff" stroke-width="2">
-          <rect x="50" y="10" width="50" height="50" />
-          <rect x="0" y="60" width="300" height="140" fill="#bcd" stroke="none" />
+          <rect x="0" y="60" width="300" height="140" fill="#abc" stroke="none" />
           <path d="M0 60 h300 v140" fill="none" />
           <path d="M100 35 h217 m8 8 v100" fill="none" />
           <path d="M300 60 l 12 -12" fill="none" />
-          <circle cx="317" cy="43" r="8" fill="#bcd" />
+          <circle cx="317" cy="43" r="8" fill="#abc" />
+
+          <rect x="50" y="10" width="50" height="50" />
           <rect x="300" y="140" width="50" height="50" />
         </g>
+
         <g transform='translate(100 35) rotate(-90)'>
           <use xlink:href="#vector" />
         </g>
@@ -1125,9 +1127,9 @@
           l128.7,108.7C638.1,747.5,614.5,770.2,588.1,789.3z" />
         </g>
 
-        <g stroke="#000" fill="none" stroke-width="2">
-          <rect x="125" y="160" width="50" height="50" rx="2" ry="2" />
-          <rect x="210" y="210" width="80" height="80" rx="4" ry="4" />
+        <g stroke="#000" stroke-width="2">
+          <rect x="125" y="160" width="50" height="50" rx="2" ry="2" fill="#cbb" />
+          <rect x="210" y="210" width="80" height="80" rx="4" ry="4" fill="#cbb" />
 
           <!-- <circle cx="200" cy="60" r="50" fill="none" stroke="#000" stroke-width="4" />
           <path d="M200 10 l-3 50 M200 110 l3 -50
