@@ -1,4 +1,5 @@
 glassSlide();
+
 function glassSlide() {
   //get id for sliders
   frictionElem = document.getElementById("friction-slider");
@@ -8,6 +9,24 @@ function glassSlide() {
   let canvas = document.getElementById("canvasGlass");
   let ctx = canvas.getContext("2d");
   canvas.width = window.innerWidth;
+  const height = 170;
+
+
+  function resizeCanvas() {
+    //fit canvas to window and fix issues with canvas blur on zoom
+    canvas.style.width = window.innerWidth; + "px";
+    canvas.style.height = height + "px";
+    const scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+    canvas.width = window.innerWidth * scale;
+    canvas.height = height * scale;
+    ctx.scale(scale, scale);
+
+    console.log('tst')
+  }
+  window.addEventListener("load", resizeCanvas);
+  window.addEventListener("resize", resizeCanvas);
+
+
 
   // module aliases
   let Engine = Matter.Engine,
@@ -37,19 +56,20 @@ function glassSlide() {
 
   let mass = [];
 
-  canvas.addEventListener("mousedown", function() {
+  canvas.addEventListener("mousedown", () => {
     World.clear(engine.world, true); //clear matter engine, leave static
     mass = []; //clear mass array
-    spawnMass(-100, 0, glass.width * glass.size * glass.scaleBodyW, glass.height * glass.size * glass.scaleBodyH);
+    spawnMass(-100, -35, glass.width * glass.size * glass.scaleBodyW, glass.height * glass.size * glass.scaleBodyH);
   });
 
-  spawnMass(-100, 0, glass.width * glass.size * glass.scaleBodyW, glass.height * glass.size * glass.scaleBodyH);
+  spawnMass(-100, -35, glass.width * glass.size * glass.scaleBodyW, glass.height * glass.size * glass.scaleBodyH);
+
   function spawnMass(xIn, yIn, width, height) {
     //spawn mass
     let i = mass.length;
     mass.push();
     let vector = Vertices.fromPath("0 0   83 0  70 120  55 125  28 125  13 120");
-    mass[i] = Matter.Bodies.fromVertices(xIn * scale, canvas.height - (yIn + height * 0.5) * scale, vector, {
+    mass[i] = Matter.Bodies.fromVertices(xIn * scale, height - (yIn + height * 0.5) * scale, vector, {
       friction: frictionElem.value,
       frictionStatic: 0.5,
       frictionAir: 0.001,
@@ -66,24 +86,24 @@ function glassSlide() {
   //add walls flush with the edges of the canvas
   let offset = 25;
   World.add(engine.world, [
-    /* Bodies.rectangle(canvas.width*0.5, -offset-1, canvas.width * 2 + 2 * offset, 50, { //top
+    /* Bodies.rectangle(width*0.5, -offset-1, width * 2 + 2 * offset, 50, { //top
       isStatic: true,
       friction: 1,
       frictionStatic: 1,
     }), */
-    Bodies.rectangle(canvas.width * 0.5, canvas.height + offset + 1, canvas.width * 2 + 2 * offset, 50, {
+    Bodies.rectangle(window.innerWidth * 0.5, height + offset + 1, window.innerWidth * 2 + 2 * offset, 50, {
       //bottom
       isStatic: true,
       friction: 1,
       frictionStatic: 1
     }),
-    Bodies.rectangle(canvas.width + offset + 1, canvas.height * 0.5, 50, canvas.height * 2 + 2 * offset, {
+    Bodies.rectangle(window.innerWidth + offset + 1, height * 0.5, 50, height * 2 + 2 * offset, {
       //right
       isStatic: true,
       friction: 1,
       frictionStatic: 1
     })
-    /* Bodies.rectangle(-offset-1, canvas.height*0.5, 50, canvas.height * 2 + 2 * offset, {  //left
+    /* Bodies.rectangle(-offset-1, height*0.5, 50, height * 2 + 2 * offset, {  //left
       isStatic: true,
       friction: 1,
       frictionStatic: 1,
@@ -96,14 +116,13 @@ function glassSlide() {
   //setup image
   base_image = new Image();
   base_image.src = "../../../media/pokal-glass__cropped_alpha.png";
-  base_image.onload = function() {
+  base_image.onload = function () {
     renderGlass();
   };
 
   function renderGlass() {
-    let bodies = Composite.allBodies(engine.world);
     window.requestAnimationFrame(renderGlass);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, window.innerWidth, height);
     //draw image
     ctx.save();
     ctx.translate(mass[0].position.x, mass[0].position.y); //move to center of body

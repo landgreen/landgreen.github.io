@@ -6,8 +6,29 @@ function MotionSimulation() {
   const canvasID = "canvas";
   const canvas = document.getElementById(canvasID);
   const ctx = canvas.getContext("2d");
-  const id = document.getElementById(canvasID).parentNode.id;
+  // const id = document.getElementById(canvasID).parentNode.id;
   ctx.lineWidth = 1;
+
+  const width = 585;
+  const height = 300;
+
+  function resizeCanvas() {
+    //fit canvas to window and fix issues with canvas blur on zoom
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    const scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+    ctx.scale(scale, scale);
+
+    ctx.lineWidth = 1;
+  }
+  window.addEventListener("load", resizeCanvas);
+  window.addEventListener("resize", resizeCanvas);
+
+
+
+
 
   // module aliases
   const Engine = Matter.Engine,
@@ -92,8 +113,8 @@ function MotionSimulation() {
   canvas.addEventListener("mousedown", event => {
     //gets mouse position, even when canvas is scaled by CSS
     const mouse = {
-      x: (event.offsetX * canvas.width) / canvas.clientWidth,
-      y: (event.offsetY * canvas.height) / canvas.clientHeight
+      x: event.offsetX,
+      y: event.offsetY
     };
     for (let i = 0; i < mass.length; ++i) {
       const dx = mass[i].position.x - mouse.x;
@@ -117,17 +138,19 @@ function MotionSimulation() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     //draw just blocks
-    ctx.beginPath();
+
     for (let i = 0; i < mass.length; i += 1) {
+      ctx.beginPath();
       const vertices = mass[i].vertices;
       ctx.moveTo(vertices[0].x, vertices[0].y);
       for (let j = 1; j < vertices.length; j += 1) {
         ctx.lineTo(vertices[j].x, vertices[j].y);
       }
       ctx.lineTo(vertices[0].x, vertices[0].y);
+      ctx.fillStyle = "#bcd";
+      ctx.fill();
     }
-    ctx.fillStyle = "#bcd";
-    ctx.fill();
+
 
     //draw all
     ctx.beginPath();
