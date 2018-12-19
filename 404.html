@@ -10,7 +10,10 @@ permalink: /404.html
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
         gtag('js', new Date());
 
         gtag('config', 'UA-113454647-1');
@@ -64,4 +67,11 @@ permalink: /404.html
         <a href="https://landgreen.github.io/physics/index.html"> physics </a>
     </p>
     </div>
+    <!-- <script>
+        // similar behavior as an HTTP redirect
+        window.location.replace("http://landgreen.github.io");
+
+        // similar behavior as clicking on a link
+        // window.location.href = "http://stackoverflow.com";
+    </script> -->
 </body>
