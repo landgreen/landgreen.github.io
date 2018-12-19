@@ -1,47 +1,10 @@
-// function checkVisible(elm) {
-//   var rect = elm.getBoundingClientRect();
-//   var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
-//   return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
-// }
-
 matter();
 
 function matter() {
-  const canvas = document.getElementById("matter");
-  const ctx = canvas.getContext("2d");
-  ctx.font = "18px sans-serif";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.lineWidth = 5;
-  ctx.lineJoin = "round";
-  ctx.lineCap = "round";
-  ctx.strokeStyle = "#556";
-
-
-  let pause = true;
-  canvas.addEventListener("mouseleave", function () {
-    pause = true;
-  });
-  canvas.addEventListener("mouseenter", function () {
-    pause = false;
-    if (!pause) requestAnimationFrame(cycle);
-  });
-  // canvas.addEventListener("click", function () {});
-
-  const Engine = Matter.Engine,
-    World = Matter.World
-
-
-  // create an engine
-  const engine = Engine.create();
-  engine.world.gravity.scale = 0; //turn off gravity
-  engine.constraintIterations = 1;
-  engine.positionIterations = 1;
-  engine.velocityIterations = 1;
 
   const settings = {
-    width: canvas.width,
-    height: canvas.height,
+    width: 495,
+    height: 159,
     spawnNumber: 15,
     wallWidth: 100,
     edge: 5,
@@ -55,15 +18,59 @@ function matter() {
     smoothAngle: 0,
   };
 
+  const canvas = document.getElementById("matter");
+  const ctx = canvas.getContext("2d");
+
+  function resizeCanvas() {
+    //fit canvas to window and fix issues with canvas blur on zoom
+    canvas.style.width = settings.width + "px";
+    canvas.style.height = settings.height + "px";
+    const scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+    canvas.width = settings.width * scale;
+    canvas.height = settings.height * scale;
+    ctx.scale(scale, scale);
+
+    ctx.font = "18px sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.lineWidth = 5;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "#556";
+    draw();
+  }
+  window.addEventListener("load", resizeCanvas);
+  window.addEventListener("resize", resizeCanvas);
+
+  let pause = true;
+  canvas.addEventListener("mouseleave", () => {
+    pause = true;
+  });
+  canvas.addEventListener("mouseenter", () => {
+    pause = false;
+    if (!pause) requestAnimationFrame(cycle);
+  });
+  // canvas.addEventListener("click", () => {});
+
+  const Engine = Matter.Engine,
+    World = Matter.World
+
+
+  // create an engine
+  const engine = Engine.create();
+  engine.world.gravity.scale = 0; //turn off gravity
+  engine.constraintIterations = 1;
+  engine.positionIterations = 1;
+  engine.velocityIterations = 1;
+
   canvas.addEventListener("mousedown", event => {
     if (!settings.pause) {
 
       //gets mouse position, even when canvas is scaled by CSS
       const mouse = {
-        x: (event.offsetX * canvas.width) / canvas.clientWidth,
-        y: (event.offsetY * canvas.height) / canvas.clientHeight
+        x: event.offsetX,
+        y: event.offsetY
       };
-
 
       switch (event.which) {
         case 1:
@@ -94,15 +101,6 @@ function matter() {
           }
           break;
       }
-
-
-      //find which atom the mouse is over
-      // for (let i = 0, len = atom.length; i < len; ++i) {
-      //   const dx = mouse.x - atom[i].position.x
-      //   const dy = mouse.y - atom[i].position.y
-      //   const distance = Math.sqrt(dx * dx + dy * dy)
-      //   if (distance < atom[i].radius) settings.highlightIndex = i
-      // }
     }
   });
 
@@ -115,11 +113,6 @@ function matter() {
   canvas.onmousedown = function (event) {
     if (event.button === 1) return false;
   }
-
-
-
-
-
 
 
   // add walls
@@ -190,16 +183,16 @@ function matter() {
     }
   }
 
-  const draw = function () {
-    ctx.clearRect(0, 0, settings.width, canvas.height);
+  function draw() {
+    ctx.clearRect(0, 0, settings.width, settings.height);
 
     // ctx.strokeStyle = "#555";
     // ctx.lineWidth = 5;
     ctx.beginPath();
     const edge = settings.edge / 2
     ctx.moveTo(edge, settings.height - edge);
-    ctx.lineTo(canvas.width - edge, settings.height - edge);
-    ctx.lineTo(canvas.width - edge, edge);
+    ctx.lineTo(settings.width - edge, settings.height - edge);
+    ctx.lineTo(settings.width - edge, edge);
     ctx.lineTo(edge, edge);
     ctx.lineTo(edge, settings.height - edge);
     ctx.stroke();
@@ -238,14 +231,9 @@ function matter() {
     angle = (angle * 180 / Math.PI - 90)
     settings.smoothAngle = settings.smoothAngle * 0.85 + angle * 0.15
     document.getElementById("vector").setAttribute("transform", "translate(30 25) rotate(" + settings.smoothAngle + ")");
-
-
   }
 
-  let time = 0
-
   function cycle() {
-    time++
     Engine.update(engine, 16.666);
     speedControl();
     draw();
