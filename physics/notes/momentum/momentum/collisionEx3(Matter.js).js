@@ -1,6 +1,6 @@
 (() => {
-  const width = 580;
-  const height = 180;
+  let width = 580;
+  let height = 180;
 
   const canvas = document.getElementById("canvas3");
   const ctx = canvas.getContext("2d");
@@ -8,6 +8,7 @@
   window.addEventListener("resize", resizeCanvas);
 
   function resizeCanvas() {
+    width = Math.min(580, document.body.clientWidth) //shrink width on small screens
     //fit canvas to window and fix issues with canvas blur on zoom
     canvas.style.width = width + "px";
     canvas.style.height = height + "px";
@@ -17,15 +18,19 @@
     ctx.scale(scale, scale);
   }
 
-  ctx.font = "300 30px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.fillText("click to start simulation", width / 2, height / 2);
-
+  function intro() {
+    ctx.font = "300 30px Arial";
+    ctx.fillStyle = "#aaa";
+    ctx.textAlign = "center";
+    ctx.fillText("click to start simulation", width / 2, height / 2);
+  }
+  window.addEventListener("load", intro);
+  window.addEventListener("resize", intro);
   canvas.addEventListener("click", collisionSim);
 
   function collisionSim() {
     canvas.removeEventListener('click', collisionSim);
+    window.removeEventListener("resize", intro);
 
     // module aliases
     var Engine = Matter.Engine,

@@ -1,6 +1,6 @@
 (() => {
-  const width = 580;
-  const height = 200;
+  let width = 580;
+  let height = 200;
 
   const canvas = document.getElementById("canvas4");
   const ctx = canvas.getContext("2d");
@@ -8,6 +8,7 @@
   window.addEventListener("resize", resizeCanvas);
 
   function resizeCanvas() {
+    width = Math.min(580, document.body.clientWidth) //shrink width on small screens
     //fit canvas to window and fix issues with canvas blur on zoom
     canvas.style.width = width + "px";
     canvas.style.height = height + "px";
@@ -22,11 +23,9 @@
     ctx.fillStyle = "#aaa";
     ctx.textAlign = "center";
     ctx.fillText("click to start simulation", width / 2, height / 2);
-    console.log('hi')
   }
+  window.addEventListener("load", intro);
   window.addEventListener("resize", intro);
-
-
   canvas.addEventListener("click", collisionSim);
 
   function collisionSim() {
