@@ -207,16 +207,24 @@
 		</div>
 
 		<div class='example'>
-			<svg viewBox="0 0 670 210">
+			<svg viewBox="0 -20 670 230">
+				<g stroke="none" fill="#000">
+					<circle cx="15" cy="-7" r="8" />
+					<circle cx="235" cy="-7" r="8" />
+					<circle cx="465" cy="-7" r="8" />
+					<!-- <circle cx="25" cy="50" r="8" /> -->
+					<!-- <circle cx="25" cy="50" r="8" /> -->
+				</g>
+
 				<g stroke="none" stroke-linejoin="round">
 					<path d="M 5 5 c0 200, 200 200, 200 200  h-200" fill="#f65" />
 					<path d="M 230 5 l200 200 h-200 z" fill="#5cc" />
 					<path d="M 460 5 c200 0, 200 200, 200 200  h-200" fill="#fffa66" />
 				</g>
-				<g stroke="#000" fill="none" stroke-width="8" stroke-linecap="round">
-					<path d="M 5 5 c0 200, 200 200, 200 200" />
-					<path d="M 230 5 l200 200" />
-					<path d="M 460 5 c200 0, 200 200, 200 200" />
+				<g fill="none" stroke-width="8" stroke-linecap="round">
+					<path d="M 5 5 c0 200, 200 200, 200 200" stroke="#732" />
+					<path d="M 230 5 l200 200" stroke="#055" />
+					<path d="M 460 5 c200 0, 200 200, 200 200" stroke="#998344" />
 				</g>
 			</svg>
 			<strong>Question:</strong> Which frictionless slope will give you the highest speed at the bottom? Explain your
@@ -471,10 +479,14 @@
 			<div id="spring-Ug2" class="data-text-out">Ug = mgh</div>
 			<div id="spring-Ug-bar2" class="spring-Ug-bar">&nbsp;</div> -->
 			<div class="center">
-				dampening:&nbsp;&nbsp; off <input id='spring-d-slider2' type="range" step="0.001" value="0" min="0" max="0.03" style="width: 40px;">
-				on
+				dampening:&nbsp;&nbsp; none <input id='spring-d-slider2' type="range" step="0.001" value="0" min="0" max="0.03" style="width: 40px;">
+				full
 			</div>
-
+			<style>
+				#pause2:hover {
+					fill: rgba(0,0,0,0.2);
+				}
+			</style>
 			<svg class="center" width="330" height="400" id="spring-SVG-2" style="border: 0.5px solid #000; background-color: #f8f8f8;">
 				<!-- <path d="M 255 0 v400 M280 0 v400 M305 0 v400" stroke="#000" stroke-width="1" fill="none" /> -->
 				<g stroke="none">
@@ -494,8 +506,8 @@
 
 				<circle id="spring-ball-2" cx="150" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
 				<path id="spring-wire-2" d="M 0 0" stroke="#000" fill="none" stroke-linejoin="bevel" />
-				<rect id="pause2" x="10" y="10" rx="3" ry="3" width="60" height="25" fill="#eee" stroke="#000" />
 				<text id="pause2-text" x="40" y="22.5" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text>
+				<rect id="pause2" x="10" y="10" rx="3" ry="3" width="60" height="25.5" fill="rgba(0,0,0,0.1)" stroke="#000" />
 			</svg>
 
 			<div class="center">

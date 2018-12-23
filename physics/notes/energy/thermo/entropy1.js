@@ -52,7 +52,7 @@ function entropy1() {
   });
 
   canvas.addEventListener("mousedown", event => {
-    if (!settings.pause) {
+    if (settings.timeRate > 0) {
       //gets mouse position, even when canvas is scaled by CSS
       const mouse = {
         x: (event.offsetX * canvas.width) / canvas.clientWidth,

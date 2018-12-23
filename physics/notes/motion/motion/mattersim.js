@@ -63,6 +63,16 @@ function matter() {
   engine.positionIterations = 1;
   engine.velocityIterations = 1;
 
+  let mouse = {
+    down: false,
+    x: 0,
+    y: 0
+  };
+  canvas.addEventListener("mousemove", event => {
+    mouse.x = event.offsetX
+    mouse.y = event.offsetY
+  });
+
   canvas.addEventListener("mousedown", event => {
     if (!settings.pause) {
 
@@ -186,23 +196,31 @@ function matter() {
   function draw() {
     ctx.clearRect(0, 0, settings.width, settings.height);
 
+    //draw lines to highlighted atom
+    ctx.beginPath();
+    ctx.moveTo(0, atom[settings.highlightIndex].position.y);
+    ctx.lineTo(atom[settings.highlightIndex].position.x, atom[settings.highlightIndex].position.y);
+    ctx.moveTo(atom[settings.highlightIndex].position.x, settings.height);
+    ctx.lineTo(atom[settings.highlightIndex].position.x, atom[settings.highlightIndex].position.y);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#daa";
+    ctx.setLineDash([2, 7]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+
     // ctx.strokeStyle = "#555";
     // ctx.lineWidth = 5;
-    ctx.beginPath();
-    const edge = settings.edge / 2
-    ctx.moveTo(edge, settings.height - edge);
-    ctx.lineTo(settings.width - edge, settings.height - edge);
-    ctx.lineTo(settings.width - edge, edge);
-    ctx.lineTo(edge, edge);
-    ctx.lineTo(edge, settings.height - edge);
-    ctx.stroke();
+
 
     //draw atoms
     ctx.fillStyle = "#8ab"
     ctx.beginPath();
     for (let i = 0, len = atom.length; i < len; ++i) {
-      ctx.moveTo(atom[i].position.x, atom[i].position.y);
-      ctx.arc(atom[i].position.x, atom[i].position.y, atom[i].radius, 0, 2 * Math.PI);
+      if (i !== settings.highlightIndex) {
+        ctx.moveTo(atom[i].position.x, atom[i].position.y);
+        ctx.arc(atom[i].position.x, atom[i].position.y, atom[i].radius, 0, 2 * Math.PI);
+      }
     }
     ctx.fill();
 
@@ -215,6 +233,19 @@ function matter() {
     ctx.arc(atom[settings.highlightIndex].position.x, atom[settings.highlightIndex].position.y, atom[settings.highlightIndex].radius, 0, 2 * Math.PI);
     ctx.fill();
     // ctx.stroke();
+
+    //draw walls
+    ctx.beginPath();
+    for (var i = 0; i < wall.length; i += 1) {
+      var vertices = wall[i].vertices;
+      ctx.moveTo(vertices[0].x, vertices[0].y);
+      for (var j = 1; j < vertices.length; j += 1) {
+        ctx.lineTo(vertices[j].x, vertices[j].y);
+      }
+      ctx.lineTo(vertices[0].x, vertices[0].y);
+    }
+    ctx.fillStyle = '#556';
+    ctx.fill();
   };
 
   function report() {
@@ -230,13 +261,29 @@ function matter() {
     let angle = Math.atan2(atom[settings.highlightIndex].velocity.y, atom[settings.highlightIndex].velocity.x);
     angle = (angle * 180 / Math.PI - 90)
     settings.smoothAngle = settings.smoothAngle * 0.85 + angle * 0.15
-    document.getElementById("vector").setAttribute("transform", "translate(30 25) rotate(" + settings.smoothAngle + ")");
+    document.getElementById("vector").setAttribute("transform", "translate(30 28) rotate(" + settings.smoothAngle + ")");
+  }
+
+
+  function mouseOver() {
+    for (let i = 0, len = atom.length; i < len; ++i) {
+      const dx = atom[i].position.x - mouse.x
+      const dy = atom[i].position.y - mouse.y
+      const dist2 = dx * dx + dy * dy
+      if (atom[i].radius * atom[i].radius > dist2 && i !== settings.highlightIndex) {
+        ctx.fillStyle = "#689"
+        ctx.beginPath();
+        ctx.arc(atom[i].position.x, atom[i].position.y, atom[i].radius, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+    }
   }
 
   function cycle() {
     Engine.update(engine, 16.666);
     speedControl();
     draw();
+    mouseOver()
     report();
     if (!pause) requestAnimationFrame(cycle);
   }

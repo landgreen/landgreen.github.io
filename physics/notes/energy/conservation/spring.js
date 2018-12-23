@@ -38,7 +38,8 @@ var spring = function () {
         d += `L ${(box.x - this.r) * (1 - i / physics.turns)} ${ box.y + (i % 2 === 0 ? 10 : -10)}`;
       }
       document.getElementById("spring-wire").setAttribute("d", d);
-      document.getElementById("spring-wire").setAttribute("stroke-width", 0.3 + physics.turns * 0.12);
+      document.getElementById("spring-wire").setAttribute("stroke-width", 1 + physics.k * 0.5);
+      // document.getElementById("spring-wire-2").setAttribute("stroke-width", 0.7 + physics.k * 0.04);
     };
     this.move = function () {
       this.x += this.Vx;
@@ -107,7 +108,7 @@ var spring = function () {
     physics.k = document.getElementById("spring-k").value;
     document.getElementById("spring-k-slider").value = physics.k
     // box.Vx = 0;
-    physics.turns = 3 + 6 * Math.sqrt(physics.k);
+    // physics.turns = 3 + 6 * Math.sqrt(physics.k);
     box.springInfo();
     box.drawSpring();
     box.draw();
@@ -116,7 +117,7 @@ var spring = function () {
     physics.k = document.getElementById("spring-k-slider").value;
     document.getElementById("spring-k").value = physics.k
     // box.Vx = 0;
-    physics.turns = 3 + 6 * Math.sqrt(physics.k);
+    // physics.turns = 3 + 6 * Math.sqrt(physics.k);
     box.springInfo();
     box.drawSpring();
     box.draw();

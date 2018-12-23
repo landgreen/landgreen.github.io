@@ -67,6 +67,7 @@
 			}
 			.result{
 				text-align: left;
+				color: #556;
 			}
 			/* .circle{
 				height: 20px;
@@ -83,21 +84,18 @@
 					<canvas id='matter' height='159' width='495'></canvas>
 				</div>
 				<div class="box b">
-					<!-- <div class="circle"></div> -->
-					<svg width="80" height="50">
-						<circle cx="30" cy="25" r="12" fill="#f65" stroke="none" />
-						<g id="vector" transform="translate(30 25) rotate(180)">
-							<line x1="0" y1="0" x2="0" y2="20" fill="none" stroke="#000" stroke-width="1.4" stroke-linecap="round" />
-							<polygon points="0,0 -4,-8.5 0,-8 4,-8.5" transform='translate(0 26)' stroke="none" fill="#000" />
-						</g>
-					</svg>
 					<div class="result" id="x">x</div>
 					<div class="result" id="y">y</div>
+					<svg width="80" height="56">
+						<circle cx="30" cy="28" r="12" fill="#f65" stroke="none" />
+						<g id="vector" transform="translate(30 28) rotate(180)">
+							<line x1="0" y1="0" x2="0" y2="24" fill="none" stroke="#445" stroke-width="1.4" stroke-linecap="round" />
+							<polygon points="0,0 -3,-6.5 0,-6 3,-6.5" transform='translate(0 26)' stroke="none" fill="#445" />
+						</g>
+						<circle cx="30" cy="28" r="1.2" fill="#445" stroke="none" />
+					</svg>
 					<div class="result" id="Vx">Vx</div>
 					<div class="result" id="Vy">Vy</div>
-					<!-- <div class="result" id="a">a</div> -->
-					<!-- <div class="result" id="m">m</div> -->
-					<!-- <div class="result" id="t">t</div> -->
 				</div>
 			</div>
 		</div>
