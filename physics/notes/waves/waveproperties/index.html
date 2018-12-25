@@ -32,6 +32,7 @@
 	<script src="wave.js "></script>
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 	<script src='../../../lib/function-graph-SVG.js'></script>
+	<script defer src='beats.js'></script>
 </head>
 
 <body>
@@ -67,13 +68,6 @@
 		<p>
 			<a href="https://www.youtube.com/watch?v=VOXbeRGVhaY">The Wedge</a> is a famous surf spot that has some dangerously fun waves because of constructive interference from a wave reflected off a jetty.
 		</p>
-
-
-
-
-
-
-
 
 		<!-- <div class="example">
 			<svg id="SVG-graph-0" viewBox="0 0 600 299"></svg>
@@ -114,13 +108,6 @@
 				}
 			</script>
 		</div> -->
-
-
-
-
-
-
-
 
 
 		<div class='example'>
@@ -198,15 +185,50 @@
 				{ wavelength: 44, amplitude: 35, phase: 0,  color: '#f37', opacity: 0.15 },
 				], true, true)" height='150'></svg>
 			</details>
+			<p>
+				You can hear how horrible beats sound by clicking <button id="beats-play" style="width: 60px;">start</button>
+			</p>
+			<style>
+				#hide-beats{
+					display:none
+				}
+				.beats-slider {
+					width: 420px;
+				}
+				@media screen and (max-width: 650px) {
+					.beats-slider {
+						width: 150px;
+					}
+				}
+			</style>
+			<span id="hide-beats">
+
+				frequency = <input class="beats-slider" id='beats-f1-slider' type="range" step="1" value="372" min="350" max="400">
+				<input id='beats-f1' type="number" min="1" max="20000" value=372 step=1 style="width: 55px;">
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;volume = <input class="beats-slider" id='beats-vol-slider' type="range" step="0.01" value="0.2" min="0" max="1">
+				<input id='beats-vol' type="number" step="0.05" value="0.2" min="0" max="1" style="width: 55px;">
+				<br>
+				<br>frequency = <input class="beats-slider" id='beats-f2-slider' type="range" step="1" value="375" min="350" max="400">
+				<input id='beats-f2' type="number" min="1" max="20000" value=375 step=1 style="width: 55px;">
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;volume = <input class="beats-slider" id='beats-vol-slider-2' type="range" step="0.01" value="0.2" min="0" max="1">
+				<input id='beats-vol-2' type="number" step="0.05" value="0.2" min="0" max="1" style="width: 55px;">
+				<br>
+				<br>&nbsp;&nbsp;&nbsp;analyser = <input class="beats-slider" id='beats-analyser-slider' type="range" step="1" value="3" min="1" max="8">
+				<canvas id="beats-canvas" width="590" height="100"></canvas>
+				<p>
+					The pattern in the graph above is sent as an electrical wave into your speakers. In the speaker, magnets convert the electrical wave into vibrations. The vibrations spread through the air as a wave of pressure. Ears can sense some frequencies of these pressure waves.
+				</p>
+			</span>
 		</div>
-	</article>
+
+		<!-- </article>
 	<p data-height="400" data-theme-id="light" data-slug-hash="MymppX" data-default-tab="result" data-user="lilgreenland" data-embed-version="2" data-pen-title="Beats by Landgreen" data-preview="true" class="codepen">See the Pen
 		<a href="https://codepen.io/lilgreenland/pen/MymppX/">Beats by Landgreen</a> by Landgreen (
 		<a href="https://codepen.io/lilgreenland">@lilgreenland</a>) on
 		<a href="https://codepen.io">CodePen</a>.</p>
 	<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-	<article>
+	<article> -->
 		<p>Adding many sine waves together can produce some interesting <a href="https://en.wikipedia.org/wiki/Waveform">waveforms</a>. The two below are starting to look like sawtooth and triangle, but they need more contributing sine waves.</p>
 		<svg onload="drawSineWavesArray(this, [
 		{ wavelength: 400, amplitude: 128, phase: 0,  color: '#f08', opacity: 0.35 },
