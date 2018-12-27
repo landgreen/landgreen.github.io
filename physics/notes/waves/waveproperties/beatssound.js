@@ -1,7 +1,8 @@
 startBeats()
 
 function startBeats() {
-    buttonEl = document.getElementById("beats-play")
+    let audioCtx, oscillator1, gainNode1, oscillator2, gainNode2
+    const buttonEl = document.getElementById("beats-play")
 
     const beats = {
         started: false,
@@ -11,52 +12,49 @@ function startBeats() {
         volume1: 0.2,
         volume2: 0.2,
         analSize: 2,
-        analOut: 2048,
-        play: function () {
-
-        }
+        analOut: 2048
     };
-
-    //setup audio context
-    let audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-
-    let oscillator1 = audioCtx.createOscillator();
-    let gainNode1 = audioCtx.createGain();
-    gainNode1.gain.value = beats.volume1; //controls volume
-    oscillator1.connect(gainNode1);
-    gainNode1.connect(audioCtx.destination);
-    oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
-    oscillator1.frequency.value = beats.frequency1; // value in hertz
-
-    let oscillator2 = audioCtx.createOscillator();
-    let gainNode2 = audioCtx.createGain();
-    gainNode2.gain.value = beats.volume2; //controls volume
-    oscillator2.connect(gainNode2);
-    gainNode2.connect(audioCtx.destination);
-    oscillator2.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
-    oscillator2.frequency.value = beats.frequency2; // value in hertz
 
     // start -> play/pause  button events
     buttonEl.addEventListener("click", function () {
         if (!beats.started) {
             beats.started = true
             beats.paused = false
-            oscillator1.start();
-            oscillator2.start();
-            buttonEl.textContent = 'pause';
-            beatsCanvas()
             document.getElementById("hide-beats").style.display = "inline"; //show hidden interface
+            buttonEl.textContent = 'pause';
+
+            //setup audio context
+            audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+
+            oscillator1 = audioCtx.createOscillator();
+            gainNode1 = audioCtx.createGain();
+            gainNode1.gain.value = beats.volume1; //controls volume
+            oscillator1.connect(gainNode1);
+            gainNode1.connect(audioCtx.destination);
+            oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
+            oscillator1.frequency.value = beats.frequency1; // value in hertz
+            oscillator1.start();
+
+            oscillator2 = audioCtx.createOscillator();
+            gainNode2 = audioCtx.createGain();
+            gainNode2.gain.value = beats.volume2; //controls volume
+            oscillator2.connect(gainNode2);
+            gainNode2.connect(audioCtx.destination);
+            oscillator2.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
+            oscillator2.frequency.value = beats.frequency2; // value in hertz
+            oscillator2.start();
+
+            beatsCanvas()
         } else {
-            if (audioCtx.state === 'running') {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume().then(function () {
+                    buttonEl.textContent = 'pause';
+                    beatsCanvas()
+                });
+            } else if (audioCtx.state === 'running') {
                 audioCtx.suspend().then(function () {
                     buttonEl.textContent = 'play';
                     beats.paused = true
-                });
-            } else if (audioCtx.state === 'suspended') {
-                audioCtx.resume().then(function () {
-                    buttonEl.textContent = 'pause';
-                    beats.paused = false
-                    beatsCanvas()
                 });
             }
         }
@@ -84,7 +82,6 @@ function startBeats() {
         gainNode2.gain.value = beats.volume2 / 2; //controls volume
     });
 
-
     document.getElementById("beats-f1").addEventListener("input", () => {
         beats.frequency1 = document.getElementById("beats-f1").value;
         document.getElementById("beats-f1-slider").value = beats.frequency1
@@ -106,8 +103,6 @@ function startBeats() {
         document.getElementById("beats-f2").value = beats.frequency2
         oscillator2.frequency.value = beats.frequency2; // value in hertz
     });
-
-
 
     document.getElementById("beats-analyser-slider").addEventListener("input", () => {
         beats.analSize = document.getElementById("beats-analyser-slider").value;
@@ -140,7 +135,6 @@ function startBeats() {
         }
 
         function restartCanvas() {
-            beats.paused = false
             beatsCanvas()
         }
         window.setTimeout(restartCanvas, 100);
@@ -154,6 +148,8 @@ function startBeats() {
         function setupCanvas() {
             ctx.lineWidth = 2;
             ctx.strokeStyle = "#000";
+            ctx.lineJoin = 'bevel'; //miter
+            ctx.miterLimit = 1;
         }
         setupCanvas();
         window.onresize = function () {
@@ -197,6 +193,7 @@ function startBeats() {
                 ctx.stroke();
             }
         }
+        beats.paused = false
         draw();
     }
 }

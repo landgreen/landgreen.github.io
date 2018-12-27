@@ -29,7 +29,7 @@
 	<script src="../../../lib/katex/katex.min.js"></script>
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
-	<script src="wave.js "></script>
+	<script src="wave.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 	<script src='../../../lib/function-graph-SVG.js'></script>
 	<script defer src='beatssound.js'></script>
@@ -45,73 +45,80 @@
 		<p>Waves have some properties that aren't always intuitive.</p>
 		<li>Waves only transmit energy, not matter.</li>
 		<li>Multiple waves can be in the same position at the same time.</li>
-		<li>Waves move at a constant speed determined by their medium.</li>
-		<li>Waves expand in all directions.</li>
+		<li>Waves move at a set speed determined by their medium.</li>
+		<li>Waves spread through their medium in all directions.</li>
 
 		<h2 class='underlined'>Interference</h2>
-		<svg onload="drawSineWave(this, 25, 10, 0,'#39f',0.7, true, 563); drawSineWave(this, 280, 55, 0,'#f37',0.7, true, 563);" height='120'></svg>
-		<svg onload="drawSineWaves(this, 30, 10, 0,'#f80', 280, 55, 0, '#08b', '#000', false, true, 563);" width="100" height='160'></svg>
+		<p>Multiple waves can be in the same position at the same time.</p>
+		<div class="col-group">
+			<div>
+				blue wave speed = <input id='super-slider-1' type="range" step="0.5" value="0" min="-4" max="4" style="width: 120px;">
+			</div>
+			<div>
+				&nbsp; red wave speed = <input id='super-slider-2' type="range" step="0.5" value="0" min="-4" max="4" style="width: 120px;">
+			</div>
+		</div>
+		<svg id="SVG1" height='120'></svg>
+		<svg id="SVG2" width="100" height='160'></svg>
+		<script>
+			function checkVisible(elm) {
+				const rect = elm.getBoundingClientRect();
+				const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+				return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+			}
+
+			let phase1 = 0;
+			let phaseSpeed1 = 0;
+			let phase2 = 0;
+			let phaseSpeed2 = 0;
+			document.getElementById("super-slider-1").addEventListener("input", () => {
+				phaseSpeed1 = parseFloat(document.getElementById("super-slider-1").value);
+			});
+			document.getElementById("super-slider-2").addEventListener("input", () => {
+				phaseSpeed2 = parseFloat(document.getElementById("super-slider-2").value);
+			});
+			(() => {
+					const SVG1 = document.getElementById("SVG1")
+					const SVG2 = document.getElementById("SVG2")
+					drawSineWave(SVG1, 30, 10, phase1,'#39f',0.7, true, 563); drawSineWave(SVG1, 280, 55, phase2,'#f37',0.7, true, 563);
+					drawSineWaves(SVG2, 30, 10, phase1,'#f80', 280, 55, phase2, '#08b', '#000', false, true, 563);
+					//animation
+					function draw() {
+						if ((phaseSpeed1 !== 0 || phaseSpeed2 !== 0) && checkVisible(SVG1)) {
+							phase1 -= phaseSpeed1
+							phase2 -= phaseSpeed2
+
+							while (SVG1.lastChild) {
+								SVG1.removeChild(SVG1.lastChild);
+							}
+							drawSineWave(SVG1, 30, 10, phase1,'#39f',0.7, true, 563); drawSineWave(SVG1, 280, 55, phase2,'#f37',0.7, true, 563);
+
+							while (SVG2.lastChild) {
+								SVG2.removeChild(SVG2.lastChild);
+							}
+							drawSineWaves(SVG2, 30, 10, phase1,'#39f', 280, 55, phase2, '#f37', '#000', false, true, 563);
+						}
+						requestAnimationFrame(draw);
+			        }	
+	        		draw();
+			})()
+		</script>
+
 		<div class="definition">
-			<p>Unlike particles, waves pass through each other without any effect. When two waves are in the same position we say they are in
-				<strong>superposition</strong>.</p>
+			<p>Unlike particles, waves pass through each other without interacting. When two waves are in the same position we say they are in <strong>superposition</strong>.</p>
 			<p>The observed amplitude for waves in superposition is the sum of each wave's amplitude.</p>
 		</div>
-		<p>Ears are able to detect separate sound frequencies, even though they enter the ear in a superposition. This
-			<a href="https://musiclab.chromeexperiments.com/Spectrogram ">spectrogram</a> lets you visualize the frequencies that make up various sounds. </p>
+		<p>Ears are able to detect separate sound frequencies, even though they enter the ear in a superposition. This <a href="https://musiclab.chromeexperiments.com/Spectrogram">spectrogram</a> lets you visualize the frequencies that make up various sounds. </p>
 		<!-- <a href="https://www.youtube.com/watch?time_continue=157&v=XBP0jmpjzBw"></a> -->
 
-		<p>Waves add <strong>constructively</strong> when both wave amplitudes are positive or both are negative. This produces a higher
-			observed amplitude. Constructive interference is how two speakers playing the same song are louder than just one.</p>
-		<p>Waves add <strong>destructively</strong> when one wave amplitude is positive and the other is negative. This produces a lower
-			observed amplitude. Destructive interference is put to use in
-			<a href="https://www.youtube.com/watch?v=HOdEvhEjO2I">noise cancelling headphones</a>.</p>
+		<p>Waves add <strong>constructively</strong> when both wave amplitudes are positive or both are negative. This produces a higher observed amplitude. Constructive interference is how two speakers playing the same song are louder than just one.</p>
+		<p>Waves add <strong>destructively</strong> when one wave amplitude is positive and the other is negative. This produces a lower observed amplitude. Destructive interference is put to use in <a href="https://www.youtube.com/watch?v=HOdEvhEjO2I">noise cancelling headphones</a>.</p>
 		<p>
-			<a href="https://www.youtube.com/watch?v=VOXbeRGVhaY">The Wedge</a> is a famous surf spot that has some dangerously fun waves because of constructive interference from a wave reflected off a jetty.
+			<a href="https://www.youtube.com/watch?v=VOXbeRGVhaY">The Wedge</a> is a famous surf spot that has some dangerously fun waves because of constructive interference from waves reflected off a jetty.
 		</p>
 
-		<!-- <div class="example">
-			<svg id="SVG-graph-0" viewBox="0 0 600 299"></svg>
-			<script>
-				{
-					let settings = {
-						x0: 299,
-						y0: 149,
-						// stroke: "none",
-						stroke: "#000",
-						strokeWidth: 3,
-						// fill: "rgba(255,0,100,0.2)",
-						// positiveOnly: true,
-						gridSize: 50,
-						xLabel: "current (A)",
-						yLabel: "voltage (V)",
-						step: 1,
-						showMouseCoords: true,
-					}
-					let xOff1 = 0;
-					let xOff2 = 0;
-					funGraphSVG("SVG-graph-0", x => Math.sin(x + xOff1), settings);
-					settings.showAxis = false;
-					settings.stroke = "#3be"
-					settings.fill = "none"
-					funGraphSVG("SVG-graph-0", x => Math.sin(x + xOff1), settings);
-					settings.stroke = "#f09"
-					funGraphSVG("SVG-graph-0", x => 0.5 * Math.sin(x * 10 + xOff2), settings);
-					settings.updatePath = true
-
-					function cycle() {
-						xOff1 += 0.01
-						xOff2 -= 0.01
-						funGraphSVG("SVG-graph-0", x => Math.sin(x + xOff1) + 0.5 * Math.sin(x * 10 + xOff2), settings);
-						requestAnimationFrame(cycle)
-					}
-					cycle()
-				}
-			</script>
-		</div> -->
-
-
 		<div class='example'>
-			<strong>Question:</strong> A wave is created on each side of a rope with an amplitude of 0.3m. The waves <a href="http://ophysics.com/waves3b.html ">interfere</a> as they pass through each other.
+			<strong>Question:</strong> A wave is created on each side of a rope with an amplitude of 0.3m. The waves <a href="http://ophysics.com/waves3b.html">interfere</a> as they pass through each other.
 			<br>
 			<br>What is the amplitude of the rope when a crest lines up with a crest?
 			<br>What is the amplitude of the rope when a crest lines up with a trough?
@@ -133,14 +140,14 @@
 			</details>
 		</div>
 		<div class='example'>
-			<svg onload="drawSineWave(this, 200, 40, 100, '#f80'); drawSineWave(this,200, 40, 0, '#08f'); centerLine(this)" height='85'></svg>
+			<svg onload="drawSineWave(this, 200, 40, 100, '#0f8'); drawSineWave(this,200, 40, 0, '#80f'); centerLine(this)" height='85'></svg>
 			<strong>Example:</strong> Draw the superposition of these waves. They have the same wavelength but they are out of phase with each other. They can only add destructively.
 			<details>
 				<summary>solution</summary>
-				<svg onload="drawSineWaves(this, 200, 40, 100, '#f80', 200, 40, 0, '#08f'); centerLine(this)" height='125'></svg>
+				<svg onload="drawSineWaves(this, 200, 40, 100, '#0f8', 200, 40, 0, '#80f'); centerLine(this)" height='125'></svg>
 			</details>
 		</div>
-		<div class='example'>
+		<!-- <div class='example'>
 			<svg onload="drawSineWave(this, 200, 20, 100, '#0f8'); drawSineWave(this,200, 40, 0, '#80f'); centerLine(this)" height='85'></svg>
 			<strong>Example:</strong> Draw the superposition of these waves.
 			<details>
@@ -153,25 +160,61 @@
 			<strong>Example:</strong> Draw the superposition of these waves.
 			<details>
 				<summary>solution</summary>
-				<svg onload="drawSineWaves(this, 40, 20,0, '#f88',200, 40,0, '#88f'); centerLine(this) " height='125'></svg>
+				<svg onload="drawSineWaves(this, 40, 20,0, '#f88',200, 40,0, '#88f'); centerLine(this)" height='125'></svg>
 			</details>
-		</div>
+		</div> -->
 		<div class='example'>
-			<svg onload="drawSineWave(this, 400, 30, 0, '#f80'); drawSineWave(this,100, 80, 0, '#08f'); centerLine(this) " height='170'></svg>
+
+			<svg id="sine-interference" onload="drawSineWave(this, 400, 30, 0, '#f80'); drawSineWave(this,100, 80, 0, '#08f'); centerLine(this)" height='170'></svg>
+			<strong>Example:</strong> Draw the superposition of these waves. <button id="sine-random">randomize</button>
+			<details>
+				<summary>solution</summary>
+				<svg id="sine-interference-solution" onload="drawSineWaves(this, 400, 30, 0, '#f80', 100, 80, 0, '#08f'); centerLine(this)" height='280'></svg>
+			</details>
+
+			<script>
+
+				document.getElementById("sine-random").addEventListener("click", () => {
+					//produce randomized values
+					const wavelength1 = Math.floor(40+Math.random()*500 );
+					const amplitude1 = Math.floor(20+Math.random()*60 );
+					let phase1 = Math.floor(20+Math.random()*60 );
+					const wavelength2 = Math.floor(40+Math.random()*500 );
+					const amplitude2 = Math.floor(20+Math.random()*60 );
+					let phase2 = Math.floor(20+Math.random()*60 );
+					
+					//question
+					const SVG = document.getElementById("sine-interference")
+					//clear SVG
+					while (SVG.lastChild) {
+    					SVG.removeChild(SVG.lastChild);
+					}
+					//add new wave
+					drawSineWave(SVG, wavelength1, amplitude1, phase1, '#f80');
+					drawSineWave(SVG, wavelength2, amplitude2, phase2, '#08f');
+					centerLine(SVG)
+					
+					//solution
+					const SVGSolution = document.getElementById("sine-interference-solution")
+					//clear SVG
+					while (SVGSolution.lastChild) {
+    					SVGSolution.removeChild(SVGSolution.lastChild);
+					}
+					//add new wave
+					drawSineWaves(SVGSolution, wavelength1, amplitude1, phase1, '#f80', wavelength2, amplitude2, phase2, '#08f');
+					centerLine(SVGSolution)
+				});
+			</script>
+		</div>
+		<!-- <div class='example'>
+			<svg onload="drawSineWave(this, 200, 40, 50, '#f88'); drawSineWave(this,200, 40, 0, '#8f8'); centerLine(this)" height='85'></svg>
 			<strong>Example:</strong> Draw the superposition of these waves.
 			<details>
 				<summary>solution</summary>
-				<svg onload="drawSineWaves(this, 400, 30, 0, '#f80', 100, 80, 0, '#08f'); centerLine(this) " height='280'></svg>
+				<svg onload="drawSineWaves(this, 200, 40, 50, '#f88', 200, 40, 0, '#8f8'); centerLine(this)" height='125'></svg>
 			</details>
-		</div>
-		<div class='example'>
-			<svg onload="drawSineWave(this, 200, 40, 50, '#f88'); drawSineWave(this,200, 40, 0, '#8f8'); centerLine(this) " height='85'></svg>
-			<strong>Example:</strong> Draw the superposition of these waves.
-			<details>
-				<summary>solution</summary>
-				<svg onload="drawSineWaves(this, 200, 40, 50, '#f88', 200, 40, 0, '#8f8'); centerLine(this) " height='125'></svg>
-			</details>
-		</div>
+		</div> -->
+
 		<div class='example'>
 			<svg onload="drawSineWavesArray(this, [
 				{ wavelength: 40, amplitude: 35, phase: 0,  color: '#39f', opacity: 0.4 },
@@ -202,7 +245,6 @@
 				}
 			</style>
 			<span id="hide-beats">
-
 				frequency = <input class="beats-slider" id='beats-f1-slider' type="range" step="1" value="372" min="350" max="400">
 				<input id='beats-f1' type="number" min="1" max="20000" value=372 step=1 style="width: 55px;">
 				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;volume = <input class="beats-slider" id='beats-vol-slider' type="range" step="0.01" value="0.2" min="0" max="1">
@@ -216,27 +258,25 @@
 				<br>&nbsp;&nbsp;&nbsp;analyser = <input class="beats-slider" id='beats-analyser-slider' type="range" step="1" value="3" min="1" max="8">
 				<canvas id="beats-canvas" width="590" height="100"></canvas>
 				<p>
-					The pattern in the graph above is sent as an electrical wave into your speakers. In the speaker, magnets convert the electrical wave into vibrations. The vibrations spread through the air as a wave of pressure. Ears can sense some frequencies of these pressure waves.
+					The pattern in the graph above is sent as an electrical wave into your speakers. In the speaker, magnets convert the electrical wave into vibrations. The vibrations spread through the air as an audible wave of pressure.
 				</p>
 			</span>
 		</div>
-
-		<p>Adding many sine waves together can produce some interesting <a href="https://en.wikipedia.org/wiki/Waveform">waveforms</a>. The two below are starting to look like sawtooth and triangle, but they need more contributing sine waves.</p>
-		<svg onload="drawSineWavesArray(this, [
-		{ wavelength: 400, amplitude: 128, phase: 0,  color: '#f08', opacity: 0.35 },
-		{ wavelength: 200, amplitude: 64*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.3 },
-		{ wavelength: 133.333, amplitude: 32*2/Math.PI, phase: 0, color: '#f08', opacity: 0.25 },
-		{ wavelength: 100, amplitude: 16*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.2 },
-		{ wavelength: 80, amplitude: 8*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.15 },
-		{ wavelength: 66.666, amplitude: 4*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.1 },
-		{ wavelength: 57.1, amplitude: 2*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.07 },
-		{ wavelength: 50, amplitude: 1*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.05 },
-		{ wavelength: 44.4, amplitude: 0.5*2/Math.PI,  phase: 0, color: '#f08', opacity: 0 },
-		{ wavelength: 40, amplitude: 0.25*2/Math.PI,  phase: 0, color: '#f08', opacity: 0 },
-		{ wavelength: 36.36, amplitude: 0.125*2/Math.PI,  phase: 0, color: '#f08', opacity: 0 },
+		<div class="example">
+			<p>Adding many sine waves together can produce some interesting <a href="https://en.wikipedia.org/wiki/Waveform">waveforms</a>. The two below are starting to look like sawtooth and triangle, but they need more contributing sine waves.</p>
+			<svg onload="drawSineWavesArray(this, [
+		{ wavelength: 400, amplitude: 128, phase: 0,  color: '#f08', opacity: 0.45 },
+		{ wavelength: 200, amplitude: 64*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.4 },
+		{ wavelength: 133.333, amplitude: 32*2/Math.PI, phase: 0, color: '#f08', opacity: 0.35 },
+		{ wavelength: 100, amplitude: 16*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.3 },
+		{ wavelength: 80, amplitude: 8*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.25 },
+		{ wavelength: 66.666, amplitude: 4*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.2 },
+		{ wavelength: 57.1, amplitude: 2*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.15 },
+		{ wavelength: 50, amplitude: 1*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.10 },
+		{ wavelength: 44.4, amplitude: 0.5*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.05 },
 		], true, true)" height='290'></svg>
 
-		<svg onload="drawSineWavesArray(this, [
+			<svg onload="drawSineWavesArray(this, [
 		{ wavelength: 200, amplitude: 20, phase: 0, color: '#08f', opacity: 0.2 },
 		{ wavelength: 200, amplitude: 20, phase: 8, color: '#08f', opacity: 0.2 },
 		{ wavelength: 200, amplitude: 20, phase: 16, color: '#08f', opacity: 0.2 },
@@ -250,18 +290,24 @@
 		{ wavelength: 200, amplitude: 20, phase: 80, color: '#08f', opacity: 0.2 },
 		{ wavelength: 200, amplitude: 20, phase: 88, color: '#08f', opacity: 0.2 },
 		], true, true)" height='350'></svg>
-
-		<p>Interference is even more complex and interesting in higher dimensions. Take a look at these 2-D ripple tank simulations:</p>
-		<p>
-			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+0+640+0.048828125%0As+0+256+226+2+0.46680807839388144+0+10+100%0As+0+256+298+2+0.46680807839388144+0+10+100%0A">Dipole
-				source</a>: Two wave sources interfere.
-			<br>
-			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+0+477+0.048828125%0AS+0+1+0+511+0+0+0.466666+0+10+100%0AS+0+0+1+0+511+0+0.466666+0+10+100%0A">Intersecting
-				Planes</a>: Two wave planes interfere at 90°.
-			<br>
-			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+0+660+0.048828125%0As+0+257+256+0+1.0670481861888113+0+10+100%0As+0+272+256+0+1.2164354639141013+0+10+100%0A">Beats</a>:
-			Two wave sources with slightly different frequencies.
-		</p>
+		</div>
+		<div class="example">
+			<p>
+				Interference is even more complex and interesting in higher dimensions.
+			</p>
+			<p>
+				Take a look at these 2-D ripple tank simulations:
+				<br>
+				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+0+640+0.048828125%0As+0+256+226+2+0.46680807839388144+0+10+100%0As+0+256+298+2+0.46680807839388144+0+10+100%0A">Dipole
+					source</a>: Two wave sources interfere.
+				<br>
+				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+0+477+0.048828125%0AS+0+1+0+511+0+0+0.466666+0+10+100%0AS+0+0+1+0+511+0+0.466666+0+10+100%0A">Intersecting
+					Planes</a>: Two wave planes interfere at 90°.
+				<br>
+				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+0+660+0.048828125%0As+0+257+256+0+1.0670481861888113+0+10+100%0As+0+272+256+0+1.2164354639141013+0+10+100%0A">Beats</a>:
+				Two wave sources with slightly different frequencies.
+			</p>
+		</div>
 
 		<h2 class='underlined'>Polarization</h2>
 		<div class="definition">
@@ -415,20 +461,26 @@
 			<path d="M619.186,279.57" />
 			<path class="st1" d="M619.186,210.551v39.91v39.91" />
 		</svg>
-		<p>Most light sources are unpolarized. They oscillate a bit in every direction. Light can become polarized after passing through a polarization filter that only removes the light that oscillates at a certain angle. </p>
-		<p>A
-			<a href="https://www.youtube.com/watch?v=CSu0cV3fqi8">polarization filter</a> that blocks vertical light will let horizontally polarized light through. Polarization filters are often used in sunglasses or 3-D movies.</p>
-		<p>Unpolarized light can also become partially polarized after reflecting off some shiny surfaces. The reflected light becomes polarized parallel to the surface. For example, a flat road reflects horizontally polarized light. </p>
+		<p>
+			Most light sources are unpolarized. They oscillate a bit in every direction. Light can become polarized after passing through a polarization filter that only removes the light that oscillates at a certain angle.
+		</p>
+		<p>
+			A <a href="https://www.youtube.com/watch?v=CSu0cV3fqi8">polarization filter</a> that blocks vertical light will let horizontally polarized light through. Polarization filters are often used in sunglasses or 3-D movies.
+		</p>
+		<p>
+			Unpolarized light can also become partially polarized after reflecting off some shiny surfaces. The reflected light becomes polarized parallel to the surface. For example, a flat road reflects horizontally polarized light.
+		</p>
 
 		<div class='example'>
 			<strong>Question:</strong> What polarization does the sun have?
 			<details>
 				<summary>answer</summary>
-				<br> Most light sources, including the sun, don't have one polarization. They have a bunch of random polarizations.
-				<br>
-				<br>Although, the refracted blue sun light from
-				<a href="https://en.wikipedia.org/wiki/Rayleigh_scattering#Cause_of_the_blue_color_of_the_sky">Rayleigh scattering
-				</a> is polarized towards the sun.
+				<p>
+					Most light sources, including the sun, don't have one polarization. They have a bunch of random polarizations.
+				</p>
+				<p>
+					Although, the refracted blue sun light from <a href="https://en.wikipedia.org/wiki/Rayleigh_scattering#Cause_of_the_blue_color_of_the_sky">Rayleigh scattering </a> is polarized towards the sun.
+				</p>
 			</details>
 		</div>
 
@@ -436,10 +488,13 @@
 			<strong>Question:</strong> What classifications of waves can and can't be polarized?
 			<details>
 				<summary>answer</summary>
-				<br>Transverse wave, like light, can be polarized.
-				<br>
-				<br>Longitudinal waves, like sound, can't be polarized.
-				<br>(except for sound waves in solids, which can be transverse)
+				<p>
+					Transverse wave, like light, can be polarized.
+				</p>
+				<p>
+					Longitudinal waves, like sound, can't be polarized.
+					<br>(except for sound waves in solids, which can be transverse)
+				</p>
 			</details>
 		</div>
 
@@ -447,7 +502,7 @@
 			<strong>Question:</strong> What angle would a polarization filter need to be to block the glare from a highway road?
 			<details>
 				<summary>answer</summary>
-				<br> A horizontal polarization filter will block the glare from a road.
+				<p> A horizontal polarization filter will block the glare from a road.</p>
 			</details>
 		</div>
 
@@ -455,14 +510,17 @@
 			<strong>Question:</strong> Imagine looking at sunlight through a horizontal polarization filter and a vertical polarization filter. What color would you see?
 			<details>
 				<summary>answer</summary>
-				<br>It would just be black, since all the light would be blocked.
+				<p>It would just be black, since all the light would be blocked.</p>
 			</details>
 		</div>
 
 		<h2 class='underlined'>Diffraction</h2>
-		<p>Waves tend to spread out in every direction possible within their medium. <strong>Diffraction</strong> is when a wave spreads out after some of the wave hits a barrier. This explains how
-			sound can be heard through an open door even when there is no line of sight.</p>
-		<p>Diffraction can be explained by thinking of every point on a wavefront as the source of spherical waves.</p>
+		<p>
+			Waves tend to spread out in every direction possible within their medium. <strong>Diffraction</strong> is when a wave spreads out after some of the wave hits a barrier. This explains how sound can be heard through an open door even when there is no line of sight.
+		</p>
+		<p>
+			Diffraction can be explained by thinking of every point on a wavefront as the source of spherical waves.
+		</p>
 		<svg viewBox="0 0 500 320">
 			<g transform="matrix(1.1071035,0,0,1.1071035,-4.2837428,-418.671)">
 				<path d="M 132.1875,495.6875 C 132.61944,505.8429 140.98893,513.93751 151.25,513.9375 C 161.51108,513.9375 169.88056,505.84288 170.3125,495.6875" style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#babdb6;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.53333285" id="path30917" />
@@ -531,22 +589,22 @@
 				<path d="M 62.5,428.36218 L 400,428.36218" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#204a87;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" id="path29890" />
 				<g transform="matrix(0.9321865,0.3619783,-0.3619783,0.9321865,88.949539,-4.3115986)" id="g30909">
 					<path d="M 275.45426,316.49844 L 301.13855,383.36758" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#204a87;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6, 3;stroke-dashoffset:0;stroke-opacity:1" id="path30911" />
-					<path d="M 295.08587,379.91343 L 303.70623,376.68023 L 303.02501,388.09451 L 295.08587,379.91343 z " style="fill:#204a87;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" id="path30913" />
+					<path d="M 295.08587,379.91343 L 303.70623,376.68023 L 303.02501,388.09451 L 295.08587,379.91343 z" style="fill:#204a87;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" id="path30913" />
 				</g>
 			</g>
 			<g transform="matrix(1.1071035,0,0,1.1071035,-4.2837428,-418.671)" id="g45674">
 				<path d="M 39.59375,494.8125 C 39.59375,556.48352 89.641476,606.53125 151.3125,606.53125 C 189.01047,606.53125 306.875,606.1875 306.875,606.1875 C 368.35087,606.1875 418.25,556.28837 418.25,494.8125" style="opacity:1;fill:none;fill-opacity:0.77777782;fill-rule:evenodd;stroke:#4e9a06;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="path27942" />
 				<g transform="matrix(0.9334115,0.3588077,-0.3588077,0.9334115,86.062871,186.01799)" id="g30884">
 					<path d="M 258.59789,272.60062 L 301.13855,383.36758" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#4e9a06;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6, 3;stroke-dashoffset:0;stroke-opacity:1" id="path30886" />
-					<path d="M 295.08587,379.91343 L 303.70623,376.68023 L 303.02501,388.09451 L 295.08587,379.91343 z " style="fill:#4e9a06;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" id="path30888" />
+					<path d="M 295.08587,379.91343 L 303.70623,376.68023 L 303.02501,388.09451 L 295.08587,379.91343 z" style="fill:#4e9a06;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" id="path30888" />
 				</g>
 				<g transform="matrix(0.4031981,0.9151127,-0.9151127,0.4031981,257.2703,180.75916)" id="g30890">
 					<path d="M 258.59789,272.60062 L 301.13855,383.36758" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#4e9a06;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6, 3;stroke-dashoffset:0;stroke-opacity:1" id="path30892" />
-					<path d="M 295.08587,379.91343 L 303.70623,376.68023 L 303.02501,388.09451 L 295.08587,379.91343 z " style="fill:#4e9a06;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" id="path30894" />
+					<path d="M 295.08587,379.91343 L 303.70623,376.68023 L 303.02501,388.09451 L 295.08587,379.91343 z" style="fill:#4e9a06;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" id="path30894" />
 				</g>
 				<g transform="matrix(-0.4031981,0.9151127,0.9151127,0.4031981,200.60508,180.75916)" id="g30896">
 					<path d="M 258.59789,272.60062 L 301.13855,383.36758" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#4e9a06;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6, 3;stroke-dashoffset:0;stroke-opacity:1" id="path30898" />
-					<path d="M 295.08587,379.91343 L 303.70623,376.68023 L 303.02501,388.09451 L 295.08587,379.91343 z " style="fill:#4e9a06;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" id="path30900" />
+					<path d="M 295.08587,379.91343 L 303.70623,376.68023 L 303.02501,388.09451 L 295.08587,379.91343 z" style="fill:#4e9a06;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" id="path30900" />
 				</g>
 				<path d="M 18.721316,496.70414 C 18.721316,567.32712 74.286541,624.63961 142.75647,624.63961 C 187.1243,624.63961 278.67479,624.24597 315.46893,624.24597 C 383.72219,624.24597 439.12242,567.10365 439.12242,496.70414" style="opacity:1;fill:none;fill-opacity:0.77777782;fill-rule:evenodd;stroke:#4e9a06;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="path44651" />
 			</g>
@@ -555,23 +613,19 @@
 
 		<p>You can see examples of diffraction in these 2-D ripple tank simulations:</p>
 		<p>
-			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+578+1.5625e-8%0AS+0+0+1+511+1+0+2.2166635+0+10+100%0A203+0+-63+13+571+13+1+20+10%0A">Single
-				Slit</a>: Waves spread out in a circle as they pass through a gap.
+			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+578+1.5625e-8%0AS+0+0+1+511+1+0+2.2166635+0+10+100%0A203+0+-63+13+571+13+1+20+10%0A">Single Slit</a>: Waves spread out in a circle as they pass through a gap.
 			<br>
-			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+578+1.5625e-8%0AS+0+0+1+511+1+0+1.633331+0+10+100%0A203+0+-63+13+571+13+2+6+15%0A">Double
-				Slit</a>: Notice the pattern of constructive and destructive interference.
+			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+578+1.5625e-8%0AS+0+0+1+511+1+0+1.633331+0+10+100%0A203+0+-63+13+571+13+2+6+15%0A">Double Slit</a>: Notice the pattern of constructive and destructive interference.
 			<br>
-			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+489+1.5625e-8%0Aw+0+261+23+516+23%0AS+0+0+1+511+1+0+1.399998+0+10+100%0Ab+0+511+6+516+26+0%0A">Half
-				Plane</a>: Waves curve around a wall.
+			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+489+1.5625e-8%0Aw+0+261+23+516+23%0AS+0+0+1+511+1+0+1.399998+0+10+100%0Ab+0+511+6+516+26+0%0A">Half Plane</a>: Waves curve around a wall.
 			<br>
-			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+112+10+1+1015+4.6875e-8%0As+0+256+1+2+1.3999976106707446+0+10+100%0Aw+0+228+29+283+29%0A">Obstacle</a>:
-			Waves of the right wavelength can almost ignore a small barrier.
+			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+112+10+1+1015+4.6875e-8%0As+0+256+1+2+1.3999976106707446+0+10+100%0Aw+0+228+29+283+29%0A">Obstacle</a>: Waves of the right wavelength can almost ignore a small barrier.
 		</p>
 
 		<div class='example'>
 			<svg viewBox="100,0,600,200">
 				<g fill="none">
-					<path d="M300 0 v95 M300 105 v95 " stroke="#000" stroke-width="10" />
+					<path d="M300 0 v95 M300 105 v95" stroke="#000" stroke-width="10" />
 					<path d="M60 0 v200 M110 0 v200 M170 0 v200 M230 0 v200 M280 0 v200" stroke="#f08" opacity="0.6" stroke-width="20" />
 				</g>
 			</svg>
@@ -601,16 +655,17 @@
 		<div class='example'>
 			<svg viewBox="100,0,600,200">
 				<g fill="none">
-					<path d="M300 0 v70 M300 80 v45 M300 135 v95 " stroke="#000" stroke-width="10" />
+					<path d="M300 0 v70 M300 80 v45 M300 135 v95" stroke="#000" stroke-width="10" />
 					<path d="M60 0 v200 M110 0 v200 M170 0 v200 M230 0 v200 M280 0 v200" stroke="#f08" opacity="0.6" stroke-width="20" />
 				</g>
 			</svg>
 			<strong>Example:</strong> Draw the pattern of the waves that would pass through the gap as the waves propagate to the right.
 			<details>
 				<summary>solution</summary>
-				<br>This is the famous
-				<a href="https://www.youtube.com/watch?v=Iuv6hY6zsd0">double slit experiment</a>.
-				<br>Notice the alternating constructive and destructive interference pattern.
+				<p>
+					This is the famous quantum mechanical <a href="https://www.youtube.com/watch?v=p-MNSLsjjdo">double slit experiment</a>.
+					<br>Notice the alternating constructive and destructive interference pattern.
+				</p>
 				<svg viewBox="100,0,600,600">
 					<g fill="none">
 						<g stroke="#f08" stroke-width="20">
@@ -648,7 +703,7 @@
 						</g>
 						<rect x="-300" width="600" height="600" fill="#fff" stroke="none" />
 						<path d="M60 0 v600 M110 0 v600 M170 0 v600 M230 0 v600 M280 0 v600" stroke="#f08" opacity="0.6" stroke-width="20" />
-						<path d="M300 0 v195 M300 205 v190 M300 405 v200 " stroke="#000" stroke-width="10" />
+						<path d="M300 0 v195 M300 205 v190 M300 405 v200" stroke="#000" stroke-width="10" />
 					</g>
 				</svg>
 			</details>
@@ -706,16 +761,18 @@
 			$$\theta_i = \theta_r$$
 		</p>
 
-		<p> Most substances are bumpy at the molecular level. Because of the bumpiness, they scatter reflected light in many directions. Scattered light is called <strong>diffuse</strong> light. Materials like dirt, skin, and wallpaper reflect diffuse light.</p>
+		<p>
+			Most substances are bumpy at the molecular level. Because of the bumpiness, they scatter reflected light in many directions. Scattered light is called <strong>diffuse</strong> light. Materials like dirt, skin, and wallpaper reflect diffuse light.
+		</p>
 
-		<p>Smooth materials produce a clear mirror image, called a
-			<strong>specular</strong> reflection. Specular reflections are found in materials like metal, glass, and water.
-			Mirrors are typically made by coating one side of a plate of glass with metal.</p>
+		<p>
+			Smooth materials produce a clear mirror image, called a <strong>specular</strong> reflection. Specular reflections are found in materials like metal, glass, and water. Mirrors are typically made by coating one side of a plate of glass with metal.
+		</p>
 
 		<!-- <p>When you shine a light on a substance the color coming from the substance is reflected light.</p> -->
-		<p>When a wave is reflected the
-			<a href="https://www.youtube.com/watch?v=wYoxOJDrZzw">interference pattern</a> can produce
-			<a href="https://www.youtube.com/watch?v=XpNbyfxxkWE">standing waves</a>.</p>
+		<p>
+			When a wave is reflected the <a href="https://www.youtube.com/watch?v=wYoxOJDrZzw">interference pattern</a> can produce <a href="https://www.youtube.com/watch?v=XpNbyfxxkWE">standing waves</a>.
+		</p>
 
 		<div class='example'>
 			<svg viewBox="-25,0,500,210">
@@ -723,8 +780,7 @@
 				<path d="M0 80 h 250" fill="none" stroke="#f00" stroke-width="3" />
 				<path d="M 245 80 v-6 l 10 6 l -10 6 v6" fill="#f00" stroke="none" />
 			</svg>
-			<strong>Example:</strong> How will the light ray bend as it enters the denser media? Complete the path of light in
-			the diagram above.
+			<strong>Example:</strong> How will the light ray bend as it enters the denser media? Complete the path of light in the diagram above.
 			<details>
 				<summary>solution</summary>
 				<p>It will refract up, towards the normal.</p>
@@ -741,27 +797,23 @@
 			</details>
 		</div>
 
-
-
 		<div class='example'>
 			<div class='center' style="position: relative; width: 300px; height: 200px;">
-				<a href="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light_en.html " style="text-decoration: none;">
-					<img src="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light-600.png " alt="Bending Light" style="border: none;" width="300" height="200" />
-					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity:
-										 0.9; filter: alpha(opacity=8 0);"></div>
+				<a href="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light_en.html" style="text-decoration: none;">
+					<img src="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light-600.png" alt="Bending Light" style="border: none;" width="300" height="200" />
+					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity:										 0.9; filter: alpha(opacity=8 0);"></div>
 					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
 						<tr>
-							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif; ">Click to Run</td>
+							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
 						</tr>
 					</table>
 				</a>
 			</div>
 			<br>
-			<strong>Simulation:</strong> Try out this light bending simulation. Can you figure out how to produce total internal reflection?
-			This is when the light only reflects and doesn't refract.
+			<strong>Simulation:</strong> Try out this light bending simulation. Can you figure out how to produce total internal reflection? This is when the light only reflects and doesn't refract.
 			<details>
 				<summary>answer</summary>
-				<br> Total internal reflection occurs when the light starts in the slower media and hit the faster media at a small angle.
+				<p> Total internal reflection occurs when the light starts in the slower media and hit the faster media at a small angle.</p>
 			</details>
 		</div>
 
@@ -769,7 +821,7 @@
 			<strong>Simulation:</strong> Use the simulation to find out how the angle of incidence relates to the angle of reflection? These are the angles between the wave and the line normal to the media barrier.
 			<details>
 				<summary>answer</summary>
-				<br>They are equal.
+				<p>They are equal.</p>
 			</details>
 		</div>
 
@@ -777,48 +829,41 @@
 			<strong>Simulation:</strong> Dispersion is a phenomenon where different frequencies refract different amounts. Use the simulation to see how refraction works differently for high vs. low frequency?
 			<details>
 				<summary>answer</summary>
-				<br> The wavelength/color/frequency of the light changes the refraction. A blue light has a shorter wavelength and it will refract more.
+				<p> The wavelength/color/frequency of the light changes the refraction. A blue light has a shorter wavelength and it will refract more.</p>
 			</details>
 		</div>
-
-		<p> Light slows down in dense media. As a gas increases in temperature, it expands and becomes less dense. This allows light to speed up when it enters a hot pocket of gas. As light changes speed it will refract and bend.
-			This <a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+688+1.5625e-8%0As+0+7+69+2+0.8166655+0+100+100%0Ag+0+-66+136+570+286+0+0.25+1%0Am+0+-11+-41+625+138+0+0.25%0A">phenomena</a>
-			produces a <a href="https://en.wikipedia.org/wiki/Mirage">mirage</a> effect when you look down a hot road.</p>
-
-
-		<p>Here are some examples of reflection and refraction in a 2-D ripple tank:</p>
+		<p>
+			Light slows down in dense media. As a gas increases in temperature, it expands and becomes less dense. This allows light to speed up when it enters a hot pocket of gas. As light changes speed it will refract and bend. This <a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+688+1.5625e-8%0As+0+7+69+2+0.8166655+0+100+100%0Ag+0+-66+136+570+286+0+0.25+1%0Am+0+-11+-41+625+138+0+0.25%0A">phenomena</a> produces a <a href="https://en.wikipedia.org/wiki/Mirage">mirage</a> effect when you look down a hot road.
+		</p>
+		<p>
+			Here are some examples of reflection and refraction in a 2-D ripple tank:
+		</p>
 		<ul class="listing">
 			<li class='center'>
-				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+112+10+1+752+1.5625e-8%0Am+0+-64+256+575+575+0+0.25%0As+0+256+1+2+0.3499995+0+100+100%0A">slow
-					medium</a>
+				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+112+10+1+752+1.5625e-8%0Am+0+-64+256+575+575+0+0.25%0As+0+256+1+2+0.3499995+0+100+100%0A">slow medium</a>
 				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+112+10+1+565+1.5625e-8%0Am+0+-112+256+623+623+0+0.25%0AS+1+1+127+172+0+2+0.699999+0+75+150%0A">refraction</a>
-				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+112+10+1+688+1.5625e-8%0Am+0+-112+256+623+623+0+0.25%0AS+1+0+341+170+511+2+0.8166655+0+75+200%0A">internal
-					reflection</a>
-				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+128+10+3+628+0.1171875%0As+0+258+479+0+0.3499995+0+10+100%0Ap+0+136+248+381+494+0%0A">parabolic
-					mirror</a>
+				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+112+10+1+688+1.5625e-8%0Am+0+-112+256+623+623+0+0.25%0AS+1+0+341+170+511+2+0.8166655+0+75+200%0A">internal reflection</a>
+				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+128+10+3+628+0.1171875%0As+0+258+479+0+0.3499995+0+10+100%0Ap+0+136+248+381+494+0%0A">parabolic mirror</a>
 			</li>
 			<li class='center'>
 				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+496+1.5625e-8%0AS+0+0+1+511+1+0+1.166665+0+10+100%0Aw+0+-50+115+108+115%0Aw+0+381+114+539+114%0Al+0+107+113+387+149+-3.141592653589793+0.25%0A">lens</a>
 				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+496+1.5625e-8%0AS+0+0+1+511+1+0+0.466666+0+10+100%0Aw+0+-50+115+108+115%0Aw+0+381+114+539+114%0At+0+106+112+381+387+-1.5708+0.25%0A">prism</a>
-				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+569+1.5625e-8%0AS+0+0+1+511+1+0+0.466666+0+10+100%0AE+0+81+85+423+427+0+0.25%0Aw+0+-77+256+81+256%0Aw+0+423+254+581+254%0A">circular
-					prism</a>
-				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+688+1.5625e-8%0As+0+14+499+2+0.233333+0+100+100%0Ag+0+-64+256+572+406+-3.14159+0.25+1%0Am+0+-61+405+575+584+0+0.25%0Aw+0+253+452+254+555%0A">temperature
-					gradient</a>
+				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+569+1.5625e-8%0AS+0+0+1+511+1+0+0.466666+0+10+100%0AE+0+81+85+423+427+0+0.25%0Aw+0+-77+256+81+256%0Aw+0+423+254+581+254%0A">circular prism</a>
+				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+688+1.5625e-8%0As+0+14+499+2+0.233333+0+100+100%0Ag+0+-64+256+572+406+-3.14159+0.25+1%0Am+0+-61+405+575+584+0+0.25%0Aw+0+253+452+254+555%0A">temperature gradient</a>
 			</li>
 		</ul>
 
 		<h2 class='underlined'>Snell's Law</h2>
 		<p>When a wave enters a new medium several ratios have equal proportions.</p>
 
-		<!-- border-radius: 20px; -->
 		<svg viewBox="-200 25 800 590" style="margin-bottom: -40px;">
 			<rect style="opacity:1;fill:#ddeef6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;" width="950" height="315" x="-300" y="305" />
 			<path style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000;stroke-width:1.7648809;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 100.90501,135.34564 A 83.986809,83.986809 0 0 1 125.50417,75.958001" transform="matrix(0,1.115239,1.347179,0,4.294728,40.864305)" />
 			<path d="M 268.9,135.3 A 84,84 0 0 1 264.9,160.9" style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000;stroke-width:1.20000005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" transform="matrix(0,1.8,1.8,0,-57.37,-29.7)" />
 			<path style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000;stroke-width:1.80272937;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:10, 10;stroke-dashoffset:0;stroke-opacity:1" d="M 186.62939,0.90136468 L 186.62939,616.11549" />
 			<g style="fill:#ff0000;fill-opacity:1;stroke:none" transform="matrix(-0.347849,1.768803,1.768896,0.347867,11.871731,-68.279614)">
-				<path style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 62.40625,11.3125 L 60.84375,12.875 L 103.15625,55.15625 L 184.125,136.125 L 185.65625,134.5625 L 104.71875,53.59375 L 62.40625,11.3125 z " />
-				<path style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.88000002pt;marker-start:none" d="M 97.70358,48.157407 L 91.48104,48.157407 L 105.48175,55.935582 L 97.70358,41.934867 L 97.70358,48.157407 z " />
+				<path style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 62.40625,11.3125 L 60.84375,12.875 L 103.15625,55.15625 L 184.125,136.125 L 185.65625,134.5625 L 104.71875,53.59375 L 62.40625,11.3125 z" />
+				<path style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.88000002pt;marker-start:none" d="M 97.70358,48.157407 L 91.48104,48.157407 L 105.48175,55.935582 L 97.70358,41.934867 L 97.70358,48.157407 z" />
 			</g>
 			<text style="font-family: Arial,sans-serif">
 				<tspan x="-180" y="270" style="font-size:36px;">n</tspan>
@@ -832,14 +877,14 @@
 				<tspan x="200.68474" y="492.00119" style="font-size:36px;">θ</tspan>
 			</text>
 			<g opacity="0.6">
-				<path d="M 184.76699,305.38841 L 188.54156,304.2054 L 283.30002,599.39474 L 279.52546,600.57775 L 184.76699,305.38841 z " style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-				<path d="M 278.20464,589.84518 L 283.33258,579.86852 L 284.26621,608.72562 L 268.22744,584.7175 L 278.20464,589.84518 z " style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.88000002pt;marker-start:none" />
+				<path d="M 184.76699,305.38841 L 188.54156,304.2054 L 283.30002,599.39474 L 279.52546,600.57775 L 184.76699,305.38841 z" style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+				<path d="M 278.20464,589.84518 L 283.33258,579.86852 L 284.26621,608.72562 L 268.22744,584.7175 L 278.20464,589.84518 z" style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.88000002pt;marker-start:none" />
 			</g>
 			<g opacity="0.1">
 				<path d="M 188 305 L 400 0" fill="none" stroke="#f00" stroke-width="5" />
 			</g>
 		</svg>
-		<div class="definition ">
+		<div class="definition">
 			<h1>$$\frac{sin \theta_1}{sin \theta_2} = \frac{v_1}{v_2} = \frac{ \lambda_1}{\lambda_2} =\frac{n_2}{n_1} $$</h1>
 			\( \theta_1 \) = angle of incidence
 			<br>\( \theta_2 \) = angle of refraction
@@ -848,29 +893,57 @@
 			<br>\(n\) =
 			<a href="https://en.wikipedia.org/wiki/Refractive_index#Typical_values">index of refraction</a> [no units]
 		</div>
-		<p>
-			It helps to draw a quick diagram for each problem.
-			<br>Label which medium is going to be 1 and which is 2.
-			<br>Focus on just two ratios, and set them equal to each other.
-		</p>
-
-		<div class='example'>
-			<strong>Example:</strong> 7.0 mm light travels from air to water. Use the <a href="https://en.wikipedia.org/wiki/Refractive_index#Typical_values">index of refraction</a> to find the wavelength of the light in water.
-			<details>
-				<summary>solution</summary>
-				$$\text{1 = air} \quad \quad \text{ 2 = water}$$ $$\frac{n_2}{n_1} = \frac{\lambda_1}{\lambda_2}$$
-				$$\frac{n_1}{n_2} = \frac{\lambda_2}{\lambda_1}$$
-				$$\lambda_2 = \frac{\lambda_1 n_1}{n_2} $$ $$\lambda_2 = \frac{(0.0070) (1)}{1.33} $$ $$\lambda_2 = 0.0053\,
-				\mathrm{m}$$
-				$$\lambda_2 = 5.3\, \mathrm{mm}$$
-			</details>
-		</div>
 
 		<div class='example'>
 			<strong>Example:</strong> Why can't we compare the ratio of the frequencies in each medium?
 			<details>
 				<summary>solution</summary>
-				<br>Wavelength, speed, and angle change in each medium, yet frequency doesn't change.
+				<p>Wavelength, speed, and angle change in each medium, yet frequency doesn't change.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<p>
+				It helps to draw a rough diagram for each problem.
+				<br>Label which medium is 1 and which is 2.
+				<br>Focus on two ratios, and set them equal to each other.
+			</p>
+			<strong>Example:</strong> 7.0 mm light travels from air to water. Use the <a href="https://en.wikipedia.org/wiki/Refractive_index#Typical_values">index of refraction</a> to find the wavelength of the light in water.
+			<details>
+				<summary>solution</summary>
+				<div class="col-group">
+					<div>
+						<svg viewBox="-50 25 400 560" style="margin-bottom: -40px;">
+							<rect style="opacity:1;fill:#ddeef6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;" width="950" height="315" x="-300" y="305" />
+							<path style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000;stroke-width:1.80272937;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:10, 10;stroke-dashoffset:0;stroke-opacity:1" d="M 186.62939,0.90136468 L 186.62939,616.11549" />
+							<g style="fill:#ff0000;fill-opacity:1;stroke:none" transform="matrix(-0.347849,1.768803,1.768896,0.347867,11.871731,-68.279614)">
+								<path style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 62.40625,11.3125 L 60.84375,12.875 L 103.15625,55.15625 L 184.125,136.125 L 185.65625,134.5625 L 104.71875,53.59375 L 62.40625,11.3125 z" />
+							</g>
+
+							<g fill="#000" style="font-family: Arial,sans-serif" font-size="25">
+								<text x="-50" y="243" font-size="45">①</text>
+
+								<text x="0" y="200">air</text>
+								<text x="0" y="235">n = 1.0</text>
+								<text x="0" y="270">λ = 0.007 m</text>
+
+								<text x="-50" y="393" font-size="45">②</text>
+								<text x="0" y="350">water</text>
+								<text x="0" y="385">n = 1.33</text>
+								<text x="0" y="420">λ = ?</text>
+							</g>
+							<path d="M 184.76699,305.38841 L 188.54156,304.2054 L 283.30002,599.39474 L 279.52546,600.57775 L 184.76699,305.38841 z" style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+						</svg>
+					</div>
+					<div>
+						$$\frac{n_2}{n_1} = \frac{\lambda_1}{\lambda_2}$$
+						$$\frac{n_1}{n_2} = \frac{\lambda_2}{\lambda_1}$$
+						$$\lambda_2 = \frac{\lambda_1 n_1}{n_2} $$
+						$$\lambda_2 = \frac{(0.007) (1)}{1.33} $$
+						$$\lambda_2 = 0.0053\, \mathrm{m}$$
+						$$\lambda_2 = 5.3\, \mathrm{mm}$$
+					</div>
+				</div>
 			</details>
 		</div>
 
@@ -878,12 +951,47 @@
 			<strong>Example:</strong> Light enters air from glass at 36.0º to the normal. This glass has an index of 1.52. What angle does the light leave relative to the normal?
 			<details>
 				<summary>solution</summary>
-				$$\text{1 = glass} \quad \quad \text{ 2 = air}$$
-				$$\frac{\mathrm{sin} \theta_1}{\mathrm{sin} \theta_2} = \frac{n_2}{n_1} $$
-				$$n_1 \mathrm{sin} (\theta_1) = n_2 \mathrm{sin} (\theta_2) $$
-				$$(1.52) \mathrm{sin} (36.0) = (1) \mathrm{sin} (\theta_2) $$
-				$$ \mathrm{sin}^{-1} (0.893) = \mathrm{sin}^{-1}(\mathrm{sin} (\theta_2)) $$
-				$$63.3^{\circ} = \theta_2 $$
+				<div class="col-group">
+					<div>
+						<svg viewBox="-50 25 400 560" style="margin-bottom: -40px;">
+							<rect style="opacity:1;fill:#ddeeef;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;" width="950" height="315" x="-300" y="305" />
+							<path style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000;stroke-width:1.7648809;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" d="M 100.90501,135.34564 A 83.986809,83.986809 0 0 1 125.50417,75.958001" transform="matrix(0,1.115239,1.347179,0,4.294728,40.864305)" />
+							<path d="M 268.9,135.3 A 84,84 0 0 1 264.9,160.9" style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000;stroke-width:1.20000005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" transform="matrix(0,1.8,1.8,0,-57.37,-29.7)" />
+							<path style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000;stroke-width:1.80272937;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:10, 10;stroke-dashoffset:0;stroke-opacity:1" d="M 186.62939,0.90136468 L 186.62939,616.11549" />
+							<g style="fill:#ff0000;fill-opacity:1;stroke:none" transform="matrix(-0.347849,1.768803,1.768896,0.347867,11.871731,-68.279614)">
+								<path style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 62.40625,11.3125 L 60.84375,12.875 L 103.15625,55.15625 L 184.125,136.125 L 185.65625,134.5625 L 104.71875,53.59375 L 62.40625,11.3125 z" />
+							</g>
+
+							<g fill="#000" style="font-family: Arial,sans-serif" font-size="25">
+								<text x="-50" y="243" font-size="45">②</text>
+
+								<text x="0" y="200">air</text>
+								<text x="0" y="235">n = 1.0</text>
+								<text x="0" y="270">θ = ?</text>
+
+								<text x="-50" y="393" font-size="45">①</text>
+								<text x="0" y="350">glass</text>
+								<text x="0" y="385">n = 1.52</text>
+								<text x="0" y="420">θ = 36</text>
+							</g>
+							<text style="font-family: Arial,sans-serif">
+								<tspan x="130.18707" y="137.11411" style="font-size:36px;">θ</tspan>
+								<tspan x="146.77075" y="147.62106" style="font-size:24px;">2</tspan>
+								<tspan x="200.68474" y="492.00119" style="font-size:36px;">θ</tspan>
+								<tspan x="215.28835" y="505.75424" style="font-size:24px;">1</tspan>
+							</text>
+							<path d="M 184.76699,305.38841 L 188.54156,304.2054 L 283.30002,599.39474 L 279.52546,600.57775 L 184.76699,305.38841 z" style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+						</svg>
+					</div>
+					<div>
+						<!-- $$\text{1 = glass} \quad \quad \text{ 2 = air}$$ -->
+						$$\frac{\mathrm{sin} \theta_1}{\mathrm{sin} \theta_2} = \frac{n_2}{n_1} $$
+						$$n_1 \mathrm{sin} (\theta_1) = n_2 \mathrm{sin} (\theta_2) $$
+						$$(1.52) \mathrm{sin} (36.0) = \mathrm{sin} (\theta_2) $$
+						$$ 0.893 = \mathrm{sin} (\theta_2)$$
+						$$63.3^{\circ} = \theta_2 $$
+					</div>
+				</div>
 			</details>
 		</div>
 
@@ -893,118 +1001,136 @@
 			why they seem sparkly. How fast does light move through a diamond?
 			<details>
 				<summary>hint</summary>
-				<br>Setup a situation where the light goes from air to diamonds.
-				<br>Build an equation with the index of refractions and the velocities.
-				<br>
-				<br>
+				<p>Setup a situation where the light goes from air to diamonds.
+					<br>Build an equation with the index of refractions and the velocities.
+				</p>
 			</details>
 			<details>
 				<summary>solution</summary>
-				$$\text{1 = diamond} \quad \quad \text{ 2 = air}$$ $$\frac{v_1}{v_2} = \frac{n_2}{n_1} $$
-				$$v_1 = \frac{n_2 v_2}{n_1}$$
-				$$v_1 = \frac{(1)(3\times 10^8)}{2.42}$$
-				$$v_1 = 1.24\times 10^8 \mathrm{\tfrac{m}{s}}$$
+				<div class="col-group">
+					<div>
+						<svg viewBox="-50 25 400 560" style="margin-bottom: -40px;">
+							<rect style="opacity:1;fill:#eee;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;" width="950" height="315" x="-300" y="305" />
+							<path style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000;stroke-width:1.80272937;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:10, 10;stroke-dashoffset:0;stroke-opacity:1" d="M 186.62939,0.90136468 L 186.62939,616.11549" />
+							<g style="fill:#ff0000;fill-opacity:1;stroke:none" transform="matrix(-0.347849,1.768803,1.768896,0.347867,11.871731,-68.279614)">
+								<path style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 62.40625,11.3125 L 60.84375,12.875 L 103.15625,55.15625 L 184.125,136.125 L 185.65625,134.5625 L 104.71875,53.59375 L 62.40625,11.3125 z" />
+							</g>
+
+							<g fill="#000" style="font-family: Arial,sans-serif" font-size="25">
+								<text x="-50" y="243" font-size="45">②</text>
+
+								<text x="0" y="200">air</text>
+								<text x="0" y="235">n = 1.0</text>
+								<text x="0" y="270">v = 3 x 10⁸</text>
+
+								<text x="-50" y="393" font-size="45">①</text>
+								<text x="0" y="350">diamond</text>
+								<text x="0" y="385">n = 2.42</text>
+								<text x="0" y="420">v = ?</text>
+							</g>
+							<path d="M 184.76699,305.38841 L 188.54156,304.2054 L 283.30002,599.39474 L 279.52546,600.57775 L 184.76699,305.38841 z" style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+						</svg>
+					</div>
+					<div>
+						$$\frac{v_1}{v_2} = \frac{n_2}{n_1} $$
+						$$v_1 = \frac{n_2 v_2}{n_1}$$
+						$$v_1 = \frac{(1)(3\times 10^8)}{2.42}$$
+						$$v_1 = 1.24\times 10^8 \mathrm{\tfrac{m}{s}}$$
+					</div>
+				</div>
 			</details>
 		</div>
-		<p>As the light wave enters a new medium some of the light is reflected, and some is refracted. If the angle of refraction is 90º or higher, the light will only reflect. This is called
-			<strong>total internal reflection</strong>. The angle of incidence that produces a 90º angle of refraction is called the <strong>critical angle. </strong>
+		<p>
+			As the light wave enters a new medium some of the light is reflected, and some is refracted. If the angle of refraction is 90º or higher, the light will only reflect. This is called <strong>total internal reflection</strong>. The angle of incidence that produces a 90º angle of refraction is called the <strong>critical angle</strong>.
 		</p>
 		<svg class='center' viewbox='60,0,2200,750'>
 			<g transform="translate(-2.2857318,-301.00481)">
 				<rect width="2440.5742" height="382.36691" x="2.2857318" y="678.07648" style="opacity:1;fill:#ddeef6;fill-opacity:1;stroke:none" />
-				<path d="m 504.42859,309.75482 0,752.85738" style="fill:none;stroke:#000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:18,
-				 18;stroke-dashoffset:0 " />
-				<path d="m 1189.4287,700 0,756.85735" style="fill:none;stroke:#000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:18,
-				 18;stroke-dashoffset:0 " />
-				<path d="m 1928.7144,700 0,756.85739" style="fill:none;stroke:#000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:18,
-				 18;stroke-dashoffset:0 " />
-				<text x="94.909042" y="391.50513" id="text3613 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-					<tspan x="94.909042 " y="391.50513 " id="tspan3615 ">Air</tspan>
+				<path d="m 504.42859,309.75482 0,752.85738" style="fill:none;stroke:#000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:18,18;stroke-dashoffset:0" />
+				<path d="m 1189.4287,700 0,756.85735" style="fill:none;stroke:#000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:18,18;stroke-dashoffset:0" />
+				<path d="m 1928.7144,700 0,756.85739" style="fill:none;stroke:#000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:18,18;stroke-dashoffset:0" />
+				<text x="94.909042" y="391.50513" id="text3613" xml:space="preserve" style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+					<tspan x="94.909042" y="391.50513" id="tspan3615">Air</tspan>
 				</text>
-				<text x="81.428574" y="1010.3622" id="text3617 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-					<tspan x="81.428574 " y="1010.3622 " id="tspan3619 ">Water</tspan>
+				<text x="81.428574" y="1010.3622" id="text3617" xml:space="preserve" style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+					<tspan x="81.428574" y="1010.3622" id="tspan3619">Water</tspan>
 				</text>
-				<text x="116.29911" y="795.89911" id="text3621 " xml:space="preserve " style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-					<tspan x="116.29911 " y="795.89911 " id="tspan3623 ">n</tspan>
+				<text x="116.29911" y="795.89911" id="text3621" xml:space="preserve" style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+					<tspan x="116.29911" y="795.89911" id="tspan3623">n</tspan>
 				</text>
-				<text x="150.87053" y="814.18481" id="text3625 " xml:space="preserve " style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-					<tspan x="150.87053 " y="814.18481 " id="tspan3627 " style="font-size:40px ">1</tspan>
+				<text x="150.87053" y="814.18481" id="text3625" xml:space="preserve" style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+					<tspan x="150.87053" y="814.18481" id="tspan3627" style="font-size:40px">1</tspan>
 				</text>
-				<text x="115.71024" y="587.51251" id="text3629 " xml:space="preserve " style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-					<tspan x="115.71024 " y="587.51251 " id="tspan3631 ">n</tspan>
+				<text x="115.71024" y="587.51251" id="text3629" xml:space="preserve" style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+					<tspan x="115.71024" y="587.51251" id="tspan3631">n</tspan>
 				</text>
-				<text x="152.28166" y="605.79822" id="text3633 " xml:space="preserve " style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-					<tspan x="152.28166 " y="605.79822 " id="tspan3635 " style="font-size:40px ">2</tspan>
+				<text x="152.28166" y="605.79822" id="text3633" xml:space="preserve" style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+					<tspan x="152.28166" y="605.79822" id="tspan3635" style="font-size:40px">2</tspan>
 				</text>
-				<path d="M 355.20378,996.83356 503.69508,677.20021 820,353.21941" style="fill:none;stroke:#f00;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lend);marker-mid:none;marker-end:url(#Arrow1Lend) " sodipodi:nodetypes="ccc" />
-				<path d="m 917.18594,1002.596 272.21646,-322.90684 453.2484,-1.37503" id="path7353 " style="fill:none;stroke:#f00;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lend);marker-mid:none;marker-end:url(#Arrow1Lend) " sodipodi:nodetypes="ccc" />
-				<path d="m 1506.6444,916.12009 423.4812,-239.01163 423.4813,239.01163" id="path12499 " style="opacity:0.98999999;fill:none;stroke:#f00;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lend);marker-mid:none;marker-end:url(#Arrow1Lend) " />
-				<text x="1179.8596" y="507.2356" style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream
-				 Vera Sans ">
-					<tspan x="1179.8596 " y="607.2356" id="tspan12511 ">Critical angle</tspan>
+				<path d="M 355.20378,996.83356 503.69508,677.20021 820,353.21941" style="fill:none;stroke:#f00;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lend);marker-mid:none;marker-end:url(#Arrow1Lend)" sodipodi:nodetypes="ccc" />
+				<path d="m 917.18594,1002.596 272.21646,-322.90684 453.2484,-1.37503" id="path7353" style="fill:none;stroke:#f00;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lend);marker-mid:none;marker-end:url(#Arrow1Lend)" sodipodi:nodetypes="ccc" />
+				<path d="m 1506.6444,916.12009 423.4812,-239.01163 423.4813,239.01163" id="path12499" style="opacity:0.98999999;fill:none;stroke:#f00;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lend);marker-mid:none;marker-end:url(#Arrow1Lend)" />
+				<text x="1179.8596" y="507.2356" style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans">
+					<tspan x="1179.8596" y="607.2356" id="tspan12511">Critical angle</tspan>
 				</text>
-				<text x="63.945057" y="869.64319" id="text12515 " xml:space="preserve " style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream
-				 Vera Sans " transform="matrix(0.6839677,-0.72951229,0.72951229,0.6839677,0,0) ">
-					<tspan x="72.859116 " y="869.64319 " id="tspan12517 " style="font-size:36px ">Refracted ray</tspan>
+				<text x="63.945057" y="869.64319" id="text12515" xml:space="preserve" style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream	Vera Sans" transform="matrix(0.6839677,-0.72951229,0.72951229,0.6839677,0,0)">
+					<tspan x="72.859116" y="869.64319" id="tspan12517" style="font-size:36px">Refracted ray</tspan>
 				</text>
-				<path d="M 2069.3107,648.98372 A 133.34013,133.34013 0 0 1 1953.5476,582.71335 " transform="translate(-153.46197,179.81763) " style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none " />
-				<path d="m 2077.188,648.72016 c -31.9734,2.01714 -42.0902,1.01814 -67.4425,-18.56829 " transform="translate(-897.17626,163.10335)" id="path12523 " style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" sodipodi:nodetypes="cc " />
-				<path d="m 2083.0346,383.06725 a 133.34013,133.34013 0 0 1 73.9046,32.52859 " transform="translate(-1571.462,163.10335)" style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none " />
-				<path d="M 2069.3107,648.98372 A 133.34013,133.34013 0 0 1 1953.5476,582.71335 " transform="matrix(-1,0,0,1,4007.9677,179.81763)" style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none " />
-				<path d="m 1999.275,629.42909 a 133.34013,133.34013 0 0 1 -45.7274,-46.71574 " transform="matrix(0.80923823,-0.58748062,0.58748062,0.80923823,-1492.8483,1524.2097)" style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none " />
-				<g transform="translate(-772.61485,89.267765) " id="g12535 ">
-					<g transform="translate(2509.1783,175.74624) " id="g12559 ">
-						<text x="60 " y="595.21942 " id="text12537 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-							<tspan x="60 " y="595.21942 " id="tspan12539 ">θ</tspan>
+				<path d="M 2069.3107,648.98372 A 133.34013,133.34013 0 0 1 1953.5476,582.71335" transform="translate(-153.46197,179.81763)" style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+				<path d="m 2077.188,648.72016 c -31.9734,2.01714 -42.0902,1.01814 -67.4425,-18.56829" transform="translate(-897.17626,163.10335)" id="path12523" style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" sodipodi:nodetypes="cc" />
+				<path d="m 2083.0346,383.06725 a 133.34013,133.34013 0 0 1 73.9046,32.52859" transform="translate(-1571.462,163.10335)" style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+				<path d="M 2069.3107,648.98372 A 133.34013,133.34013 0 0 1 1953.5476,582.71335" transform="matrix(-1,0,0,1,4007.9677,179.81763)" style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+				<path d="m 1999.275,629.42909 a 133.34013,133.34013 0 0 1 -45.7274,-46.71574" transform="matrix(0.80923823,-0.58748062,0.58748062,0.80923823,-1492.8483,1524.2097)" style="opacity:0.7;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+				<g transform="translate(-772.61485,89.267765)" id="g12535">
+					<g transform="translate(2509.1783,175.74624)" id="g12559">
+						<text x="60" y="595.21942" id="text12537" xml:space="preserve" style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+							<tspan x="60" y="595.21942" id="tspan12539">θ</tspan>
 						</text>
-						<text x="90.571426 " y="609.50513 " id="text12541 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-							<tspan x="90.571426 " y="609.50513 " id="tspan12543 " style="font-size:36px ">1</tspan>
+						<text x="90.571426" y="609.50513" id="text12541" xml:space="preserve" style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+							<tspan x="90.571426" y="609.50513" id="tspan12543" style="font-size:36px">1</tspan>
 						</text>
 					</g>
-					<g transform="translate(810.08143,-125.21831) " id="g12553 ">
-						<text x="391.33005 " y="946.7525 " id="text12545 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-							<tspan x="391.33005 " y="946.7525 " id="tspan12547 ">θ</tspan>
+					<g transform="translate(810.08143,-125.21831)" id="g12553">
+						<text x="391.33005" y="946.7525" id="text12545" xml:space="preserve" style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+							<tspan x="391.33005" y="946.7525" id="tspan12547">θ</tspan>
 						</text>
-						<text x="421.90146 " y="961.03821 " id="text12549 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-							<tspan x="421.90146 " y="961.03821 " id="tspan12551 " style="font-size:36px ">1</tspan>
+						<text x="421.90146" y="961.03821" id="text12549" xml:space="preserve" style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+							<tspan x="421.90146" y="961.03821" id="tspan12551" style="font-size:36px">1</tspan>
 						</text>
 					</g>
-					<g transform="translate(-10.162436,-343.41126) " id="g12579 ">
-						<g transform="translate(2398.1022,173.74624) " id="g12589 ">
-							<text x="391.33005 " y="946.7525 " id="text12581 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-								<tspan x="391.33005 " y="946.7525 " id="tspan12583 ">θ</tspan>
+					<g transform="translate(-10.162436,-343.41126)" id="g12579">
+						<g transform="translate(2398.1022,173.74624)" id="g12589">
+							<text x="391.33005" y="946.7525" id="text12581" xml:space="preserve" style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+								<tspan x="391.33005" y="946.7525" id="tspan12583">θ</tspan>
 							</text>
-							<text x="421.90146 " y="961.03821 " id="text12585 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-								<tspan x="421.90146 " y="961.03821 " id="tspan12587 " style="font-size:36px ">2</tspan>
+							<text x="421.90146" y="961.03821" id="text12585" xml:space="preserve" style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+								<tspan x="421.90146" y="961.03821" id="tspan12587" style="font-size:36px">2</tspan>
 							</text>
 						</g>
-						<g transform="translate(927.36065,-153.54319) " id="g12595 ">
-							<text x="391.33005 " y="946.7525 " id="text12597 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-								<tspan x="391.33005 " y="946.7525 " id="tspan12599 ">θ</tspan>
+						<g transform="translate(927.36065,-153.54319)" id="g12595">
+							<text x="391.33005" y="946.7525" id="text12597" xml:space="preserve" style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+								<tspan x="391.33005" y="946.7525" id="tspan12599">θ</tspan>
 							</text>
-							<text x="421.90146 " y="961.03821 " id="text12601 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-								<tspan x="421.90146 " y="961.03821 " id="tspan12603 " style="font-size:36px ">2</tspan>
+							<text x="421.90146" y="961.03821" id="text12601" xml:space="preserve" style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+								<tspan x="421.90146" y="961.03821" id="tspan12603" style="font-size:36px">2</tspan>
 							</text>
 						</g>
 					</g>
-					<g transform="translate(2369.7163,-503.05597) " id="g12605 ">
-						<text x="-495.58389 " y="1278.0825 " id="text12607 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-							<tspan x="-495.58389 " y="1278.0825 " id="tspan12609 ">θ</tspan>
+					<g transform="translate(2369.7163,-503.05597)" id="g12605">
+						<text x="-495.58389" y="1278.0825" id="text12607" xml:space="preserve" style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+							<tspan x="-495.58389" y="1278.0825" id="tspan12609">θ</tspan>
 						</text>
-						<text x="-465.01248 " y="1292.3683 " id="text12611 " xml:space="preserve " style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma ">
-							<tspan x="-465.01248 " y="1292.3683 " id="tspan12613 " style="font-size:36px ">c</tspan>
+						<text x="-465.01248" y="1292.3683" id="text12611" xml:space="preserve" style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Tahoma;-inkscape-font-specification:Tahoma">
+							<tspan x="-465.01248" y="1292.3683" id="tspan12613" style="font-size:36px">c</tspan>
 						</text>
 					</g>
 				</g>
-				<text xml:space="preserve " style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream
-				 Vera Sans " x="1930.4741 " y="574.09497 " id="text2894 ">
-					<tspan sodipodi:role="line " x="1930.4741 " y="574.09497 " id="tspan2898 ">Total internal</tspan>
-					<tspan sodipodi:role="line " x="1930.4741 " y="644.09497 " id="tspan3060 ">reflection</tspan>
+				<text xml:space="preserve" style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans" x="1930.4741" y="574.09497" id="text2894">
+					<tspan sodipodi:role="line" x="1930.4741" y="574.09497" id="tspan2898">Total internal</tspan>
+					<tspan sodipodi:role="line" x="1930.4741" y="644.09497" id="tspan3060">reflection</tspan>
 				</text>
-				<text x="-577.61652 " y="723.16687 " id="text12515-1 " xml:space="preserve " style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream
-				 Vera Sans " transform="matrix(0.4237924,-0.90575935,0.90575935,0.4237924,0,0) " inkscape:transform-center-y="-11.233951
-				 " inkscape:transform-center-x="0.10730641 ">
-					<tspan x="-568.70245 " y="723.16687 " id="tspan12517-7 " style="font-size:36px ">Incident ray</tspan>
+				<text x="-577.61652" y="723.16687" id="text12515-1" xml:space="preserve" style="font-size:56px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans" transform="matrix(0.4237924,-0.90575935,0.90575935,0.4237924,0,0)" inkscape:transform-center-y="-11.233951" inkscape:transform-center-x="0.10730641">
+					<tspan x="-568.70245" y="723.16687" id="tspan12517-7" style="font-size:36px">Incident ray</tspan>
 				</text>
 			</g>
 		</svg>
@@ -1013,32 +1139,55 @@
 			<strong>Example:</strong> A 600 nm wave of red light starts in water and enters air. What is the critical angle for total internal reflection?
 			<details>
 				<summary>hint</summary>
-				<br>Look up the index of refraction for air and water.
-				<br>Set the angle of refraction to 90º.
-				<br>Solve for the angle of incidence.
-				<br>
-				<br>
+				<p>Look up the index of refraction for air and water.
+					<br>Set the angle of refraction to 90º.
+					<br>Solve for the angle of incidence.
+				</p>
 			</details>
 			<details>
 				<summary>solution</summary>
-				$$\text{1 = water} \quad \quad \text{ 2 = air}$$
-				$$\frac{\mathrm{sin} \theta_1}{\mathrm{sin}\theta_2} = \frac{n_2}{n_1} $$
-				$$n_1\mathrm{sin} \theta_1 = n_2\mathrm{sin} \theta_2$$
-				$$(1.33)\mathrm{sin} \theta_1 = (1)\mathrm{sin}(90)$$
-				$$\mathrm{sin} \theta_1 = \frac{1}{1.33}$$
-				$$\mathrm{sin}^{-1}\mathrm{sin} \theta_1 = \mathrm{sin}^{-1}(0.751)$$ $$\theta_1 = 48.6 \degree$$
+				<div class="col-group">
+					<div>
+						<svg viewBox="-50 100 400 450" style="margin-bottom: -40px;">
+							<rect style="opacity:1;fill:#ddeef6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;" width="950" height="315" x="-300" y="305" />
+							<path d="M 268.9,135.3 A 84,84 0 0 1 264.9,160.9" style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000;stroke-width:1.20000005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" transform="matrix(0,1.8,1.8,0,-57.37,-29.7)" />
+							<path style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000;stroke-width:1.80272937;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:10, 10;stroke-dashoffset:0;stroke-opacity:1" d="M 186.62939,0.90136468 L 186.62939,616.11549" />
+							<g fill="#000" style="font-family: Arial,sans-serif" font-size="25">
+								<text x="-50" y="243" font-size="45">②</text>
+
+								<text x="0" y="200">air</text>
+								<text x="0" y="235">n = 1.0</text>
+								<text x="0" y="270">θ = 90</text>
+
+								<text x="-50" y="393" font-size="45">①</text>
+								<text x="0" y="350">water</text>
+								<text x="0" y="385">n = 1.33</text>
+								<text x="0" y="420">θ = ?</text>
+							</g>
+							<path d="M 184.76699,305.38841 L 188.54156,304.2054 L 283.30002,599.39474 L 279.52546,600.57775 L 184.76699,305.38841 z" style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+							<path d="M 184.76699,305.38841 L 188.54156,304.2054 L 283.30002,599.39474 L 279.52546,600.57775 L 184.76699,305.38841 z" style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+						</svg>
+					</div>
+					<div>
+						$$\frac{\mathrm{sin} \theta_1}{\mathrm{sin}\theta_2} = \frac{n_2}{n_1} $$
+						$$n_1\mathrm{sin} \theta_1 = n_2\mathrm{sin} \theta_2$$
+						$$(1.33)\mathrm{sin} \theta_1 = (1)\mathrm{sin}(90)$$
+						$$\mathrm{sin} \theta_1 = \frac{1}{1.33}$$
+						$$\mathrm{sin}^{-1}\mathrm{sin} \theta_1 = \mathrm{sin}^{-1}(0.751)$$ $$\theta_1 = 48.6 \degree$$
+					</div>
+				</div>
 			</details>
 		</div>
 
 		<div class='example'>
 			<div class='center' style="position: relative; width: 300px; height: 200px;">
-				<a href="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light_en.html " style="text-decoration: none;">
-					<img src="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light-600.png " alt="Bending Light" style="border: none;" width="300" height="200" />
+				<a href="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light_en.html" style="text-decoration: none;">
+					<img src="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light-600.png" alt="Bending Light" style="border: none;" width="300" height="200" />
 					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity:
 											 0.9; filter: alpha(opacity=8 0);"></div>
 					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 36px;">
 						<tr>
-							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif; ">Click to Run</td>
+							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
 						</tr>
 					</table>
 				</a>
@@ -1046,46 +1195,60 @@
 			substances A and B. Use the simulated protractor to measure the angles or use the speed tool.
 			<details>
 				<summary>solution A</summary>
-				$$\text{1 = air} \quad \quad \text{ 2 = mystery A}$$ $$\theta_1 = 39.0^{\circ} \quad \quad \quad n_1 = 1.0$$
-				$$\theta_2 = 15.0^{\circ} \quad \quad \quad n_2 = \ ?$$ $$\frac{\mathrm{sin} \theta_1}{\mathrm{sin} \theta_2} =\frac{n_2}{n_1} $$
-				$$n_2 = \frac{n_1 \mathrm{sin} \theta_1}{\mathrm{sin} \theta_2} $$ $$n_2 = \frac{(1.0) \mathrm{sin} (39.0)}{\mathrm{sin} (15.0)} $$ $$ n_2 = 2.43 $$
+				$$\text{1 = air} \quad \quad \text{ 2 = mystery A}$$
+				$$\theta_1 = 39.0^{\circ} \quad \quad \quad n_1 = 1.0$$
+				$$\theta_2 = 15.0^{\circ} \quad \quad \quad n_2 = \ ?$$
+				$$\frac{\mathrm{sin} \theta_1}{\mathrm{sin} \theta_2} =\frac{n_2}{n_1} $$
+				$$n_2 = \frac{n_1 \mathrm{sin} \theta_1}{\mathrm{sin} \theta_2} $$
+				$$n_2 = \frac{(1.0) \mathrm{sin} (39.0)}{\mathrm{sin} (15.0)} $$
+				$$ n_2 = 2.43 $$
 			</details>
 			<details>
 				<summary>solution B</summary>
-				$$\text{1 = air} \quad \quad \text{ 2 = mystery B}$$ $$\theta_1 = 39.0^{\circ} \quad \quad \quad n_1 = 1.0$$
-				$$\theta_2 = 26.5^{\circ} \quad \quad \quad n_2 = \ ?$$ $$\frac{\mathrm{sin} \theta_1}{\mathrm{sin} \theta_2} =\frac{n_2}{n_1} $$
-				$$n_2 = \frac{n_1 \mathrm{sin} \theta_1}{\mathrm{sin} \theta_2} $$ $$n_2 = \frac{(1.0) \mathrm{sin} (39.0)}{\mathrm{sin} (26.5)} $$ $$ n_2 = 1.41 $$
+				$$\text{1 = air} \quad \quad \text{ 2 = mystery B}$$
+				$$\theta_1 = 39.0^{\circ} \quad \quad \quad n_1 = 1.0$$
+				$$\theta_2 = 26.5^{\circ} \quad \quad \quad n_2 = \ ?$$
+				$$\frac{\mathrm{sin} \theta_1}{\mathrm{sin} \theta_2} =\frac{n_2}{n_1} $$
+				$$n_2 = \frac{n_1 \mathrm{sin} \theta_1}{\mathrm{sin} \theta_2} $$
+				$$n_2 = \frac{(1.0) \mathrm{sin} (39.0)}{\mathrm{sin} (26.5)} $$
+				$$ n_2 = 1.41 $$
 			</details>
 		</div>
 
 		<h2 class='underlined'>The Doppler Effect</h2>
 		<p>The Doppler effect is heard when a car moves past a stationary observer as a "vvvVVVRRROOOMMMmmm". The observed sound drops in frequency very quickly as the car zooms past.</p>
 		<div class="definition">
-			<p>When an observer is moving
-				<strong>towards</strong> a wave source, the observer will see the wave's frequency as
-				<strong>higher</strong> and the wavelength as
-				<strong>shorter</strong>.</p>
-			<p>When an observer is moving
-				<strong>away from</strong> a wave source, the observer will see the wave's frequency as
-				<strong>lower</strong> and the wavelength as
-				<strong>longer</strong>.</p>
+			<p>
+				When an observer is moving <strong>towards</strong> a wave source, the observer will see the wave's frequency as <strong>higher</strong> and the wavelength as <strong>shorter</strong>.
+			</p>
+			<p>
+				When an observer is moving <strong>away from</strong> a wave source, the observer will see the wave's frequency as <strong>lower</strong> and the wavelength as <strong>longer</strong>.
+			</p>
 		</div>
-		<p>A <strong> <a href="https://www.youtube.com/watch?v=JO4_VHM69oI">sonic boom</a> </strong> occurs when the source of sound is moving at the speed of sound. Can you produce a sonic boom in the simulation below?</p>
+		<p>
+			A <strong> <a href="https://www.youtube.com/watch?v=JO4_VHM69oI">sonic boom</a> </strong> occurs when the source of sound is moving at the speed of sound. Can you produce a sonic boom in the simulation below?
+		</p>
 	</article>
-	<p data-height="400" data-theme-id="light" data-slug-hash="35251b27d58161dd6cece4e4981c1236" data-default-tab="result" data-user="lilgreenland" data-embed-version="2" data-pen-title="doppler effect" data-preview="true" class="codepen">See
-		the Pen
-		<a href="https://codepen.io/lilgreenland/pen/35251b27d58161dd6cece4e4981c1236/">Doppler effect</a> by Landgreen (
-		<a href="https://codepen.io/lilgreenland">@lilgreenland</a>) on
-		<a href="https://codepen.io">CodePen</a>.</p>
+	<p data-height="400" data-theme-id="light" data-slug-hash="35251b27d58161dd6cece4e4981c1236" data-default-tab="result" data-user="lilgreenland" data-embed-version="2" data-pen-title="doppler effect" data-preview="true" class="codepen">
+		See the Pen <a href="https://codepen.io/lilgreenland/pen/35251b27d58161dd6cece4e4981c1236/">Doppler effect</a> by Landgreen ( <a href="https://codepen.io/lilgreenland">@lilgreenland</a>) on <a href="https://codepen.io">CodePen</a>.
+	</p>
 	<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 	<article>
-		<p>Light can also be Doppler shifted, but it is harder to notice because light moves so fast. A light source near the speed of light will noticeably shift in color.</p>
-		<p>The convention is to say that light is <strong>blueshifted</strong> as it moves towards you and <strong>redshifted</strong> as it moves away.</p>
+		<p>
+			Light can also be Doppler shifted, but it is harder to notice because light moves so fast. A light source near the speed of light will noticeably shift in color.
+		</p>
+		<p>
+			The convention is to say that light is <strong>blueshifted</strong> as it moves towards you and <strong>redshifted</strong> as it moves away.
+		</p>
 		<p>
 			Astronomers use this color shifting to calculate the relative motion of far away objects. In 1929 Edwin Hubble published the observation that almost all galaxies are <strong>redshifted</strong>. This was the initial evidence that the universe is expanding.
 		</p>
-		<p>Redshifted light from stars expanding away from us is actually the main reason why the sky is <a href="https://www.youtube.com/watch?v=gxJ4M7tyLRE">dark at night</a>.</p>
-		<p>The Doppler effect is used in <a href="https://www.youtube.com/watch?v=hFkiMWrA2Bc">laser cooling</a> to produce temperatures near absolute zero.</p>
+		<p>
+			Redshifted light from stars expanding away from us is actually the main reason why the sky is <a href="https://www.youtube.com/watch?v=gxJ4M7tyLRE">dark at night</a>.
+		</p>
+		<p>
+			The Doppler effect is used in <a href="https://www.youtube.com/watch?v=hFkiMWrA2Bc">laser cooling</a> to produce temperatures near absolute zero.
+		</p>
 
 		<div class='example'>
 			Radar guns use the Doppler effect to measure relative speed. They bounce radio waves off moving objects to measure the frequency shift of the reflected waves. The frequency shift indicates the relative speed.
@@ -1094,7 +1257,7 @@
 			<strong>Question:</strong> Imagine you are driving towards a cop with a radar gun. How will your motion affect how they see your reflected radio waves?
 			<details>
 				<summary>answer</summary>
-				<br>The cop will observe your light at a higher frequency and a shorter wavelength.
+				<p>The cop will observe your light at a higher frequency and a shorter wavelength.</p>
 			</details>
 		</div>
 	</article>

@@ -48,13 +48,13 @@ function sound(el, drawMode = 0, waveOut = false, drawOne = false) {
 
   const Engine = Matter.Engine,
     World = Matter.World,
-    Events = Matter.Events,
-    Composites = Matter.Composites,
-    Composite = Matter.Composite,
-    Constraint = Matter.Constraint,
-    Vertices = Matter.Vertices,
-    Query = Matter.Query,
-    Body = Matter.Body,
+    // Events = Matter.Events,
+    // Composites = Matter.Composites,
+    // Composite = Matter.Composite,
+    // Constraint = Matter.Constraint,
+    // Vertices = Matter.Vertices,
+    // Query = Matter.Query,
+    // Body = Matter.Body,
     Bodies = Matter.Bodies;
 
   // create an engine
