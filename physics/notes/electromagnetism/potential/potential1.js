@@ -17,6 +17,8 @@ const potential1 = function (id) {
   document.getElementById("three-potential-1-load").remove()
   // el.onclick = null; //stops the function from running on button click
   const settings = {
+    width: 600,
+    height: 400,
     totalCharges: 8,
     resolution: 256,
     range: 400, // total size of space the charges can move in range x range
@@ -27,17 +29,24 @@ const potential1 = function (id) {
     pause: false
   };
 
-  let mouse = new THREE.Vector2();
+  let mouse = {
+    x: -2,
+    y: 2
+  }
 
   el.addEventListener("mousemove", event => {
-    // mouse.x = event.clientX;
-    // mouse.y = event.clientY;
-
-    //not sure why this is the correct values for mouse, only works in full screen
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    // mouse.x = (event.offsetX * canvas.width) / canvas.clientWidth
-    // mouse.y = (event.offsetY * canvas.height) / canvas.clientHeight
+    //only works if the user doesn't zoom 
+    if (settings.fullView) {
+      mouse = {
+        x: event.clientX / window.innerWidth * 2 - 1,
+        y: -event.clientY / window.innerHeight * 2 + 1
+      }
+    } else {
+      mouse = {
+        x: event.offsetX * el.width / el.clientWidth / settings.width / window.devicePixelRatio * 2 - 1,
+        y: -event.offsetY * el.height / el.clientHeight / settings.height / window.devicePixelRatio * 2 + 1
+      }
+    }
   });
 
   el.addEventListener("mouseleave", function () {
@@ -66,9 +75,9 @@ const potential1 = function (id) {
       settings.fullView = false;
       //not full screen
       el.classList.remove("full-page");
-      camera.aspect = 600 / 400;
+      camera.aspect = settings.width / settings.height;
       camera.updateProjectionMatrix();
-      renderer.setSize(600, 400);
+      renderer.setSize(settings.width, settings.height);
       document.body.style.overflow = "auto";
     } else {
       settings.fullView = true;
@@ -91,7 +100,7 @@ const potential1 = function (id) {
     antialias: true
   });
   renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(600, 400);
+  renderer.setSize(settings.width, settings.height);
   // el.appendChild(renderer.domElement);
   renderer.domElement.style.background = "#000";
 
@@ -99,7 +108,7 @@ const potential1 = function (id) {
   // camera and controls
   /////////////////////////////////////////
 
-  const camera = new THREE.PerspectiveCamera(50, 600 / 400, 10, settings.cameraRange);
+  const camera = new THREE.PerspectiveCamera(50, settings.width / settings.height, 10, settings.cameraRange);
   camera.position.set(0, -settings.range * 0.9, -settings.range * 0.6);
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -140,36 +149,6 @@ const potential1 = function (id) {
     spawnRandomCharge("p");
     spawnRandomCharge("e");
   }
-  // const side = 30;
-  // const apothem = side * 0.866; //vertical distance between rows
-  // const rows = 6; // y
-  // const columns = 4; // x
-  // const hexLeft = 0 - side * ((columns * 3) / 4);
-  // const hexTop = 0 - apothem * (rows / 2);
-  // for (let y = 1; y < rows; ++y) {
-  //   let xOff = 0;
-  //   if (y % 2) {} else {
-  //     xOff = 0.5; //odd
-  //   }
-  //   for (let x = -1, i = 0; i < columns; ++i) {
-  //     if (i % 2) {
-  //       //even
-  //       x++;
-  //       xOff = Math.abs(xOff);
-  //     } else {
-  //       //odd
-  //       x += 2;
-  //       xOff = -Math.abs(xOff);
-  //     }
-  //     q[q.length] = new Charge("p", {
-  //       x: hexLeft + (x + xOff) * side,
-  //       y: hexTop + y * apothem
-  //     });
-  //   }
-  // }
-
-
-
 
   /////////////////////////////////////////
   // spawn potential plane
@@ -217,18 +196,8 @@ const potential1 = function (id) {
   }
 
   /////////////////////////////////////////
-  // mouse push (with space)
+  // mouse acts as a charge
   /////////////////////////////////////////
-
-  // // _______get keyboard input__________
-  // const keys = [];
-  // document.onkeydown = event => {
-  //   keys[event.keyCode] = true;
-  //   // console.log(event.keyCode);
-  // }
-  // document.onkeyup = event => {
-  //   keys[event.keyCode] = false;
-  // }
 
   const raycaster = new THREE.Raycaster();
 
@@ -236,14 +205,9 @@ const potential1 = function (id) {
     // update the picking ray with the camera and mouse position
     raycaster.setFromCamera(mouse, camera);
     // calculate objects intersecting the picking ray
-    var intersects = raycaster.intersectObjects(scene.children);
+    let intersects = raycaster.intersectObjects(scene.children);
     if (intersects[0]) {
-      var pos = intersects[0].point
-      //push electrons
-      // Charge.mouseCharge(q, {
-      //   x: pos.x,
-      //   y: pos.y
-      // }, 1);
+      let pos = intersects[0].point
       //update dynamics plane for mouse charge
       for (let i = 0, len = potentialEnergyMesh.geometry.vertices.length; i < len; i++) {
         let v = potentialEnergyMesh.geometry.vertices[i];
@@ -259,7 +223,7 @@ const potential1 = function (id) {
           const a = Math.atan2(dy, dx);
           //the +4000 keeps r from being zero
           const r = dx * dx + dy * dy + 10000;
-          const mag = (charge * 1000) / r;
+          const mag = -1500 / r;
           q[i].velocity.x += mag * Math.cos(a);
           q[i].velocity.y += mag * Math.sin(a);
         }
@@ -306,7 +270,7 @@ const potential1 = function (id) {
       bounds(q)
       renderDynamicPlane(q)
       requestAnimationFrame(animationLoop);
-      // push();
+      push();
     }
   }
   animationLoop();

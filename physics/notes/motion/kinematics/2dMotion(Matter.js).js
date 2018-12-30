@@ -8,12 +8,16 @@ function MotionSimulation() {
 
   function resizeCanvas() {
     //fit canvas to window and fix issues with canvas blur on zoom
-    canvas.style.width = width + "px";
-    canvas.style.height = height + "px";
-    const scale = window.devicePixelRatio;
-    canvas.width = width * scale;
-    canvas.height = height * scale;
-    ctx.scale(scale, scale);
+
+    if (document.body.clientWidth > width) {
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+
+      const scale = window.devicePixelRatio;
+      canvas.width = width * scale;
+      canvas.height = height * scale;
+      ctx.scale(scale, scale);
+    }
 
     ctx.font = "18px sans-serif";
     ctx.textAlign = "center";

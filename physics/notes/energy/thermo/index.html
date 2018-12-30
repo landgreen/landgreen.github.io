@@ -316,10 +316,10 @@
 			<strong>Entropy</strong> is hard to define because different fields use the term to describe slightly different ideas. The definitions of entropy are all loosely centered around disorder. A high entropy system of particles is not organized. A low entropy system is very orderly, but how do you measure order?
 		</p>
 		<p>
-			Well, order is whatever you decide. A common definition is a concentration of energy, like temperature or pressure. This would mean a concentration of temperature or pressure would have lower entropy then an evenly spread out distribution.
+			Well, order is whatever you decide. A common definition is a concentration of something measurable, like energy, temperature, or pressure. This would mean a concentration of energy would have lower entropy then an evenly spread out distribution.
 		</p>
 		<p>
-			A engine can be built to convert concentrations of energy into <a href="../../energy/energy/index.html#work">work</a>. In the simulation below, the work we want done is rotating the rotor. What state of the system would make the rotor turn?
+			An engine can be built to convert concentrations of energy into <a href="../../energy/energy/index.html#work">work</a>. In the simulation below, the work we want done is rotating the rotor. What state of the system would make the rotor turn?
 		</p>
 		<p>
 			Click the clear button to remove the particles. Click inside the simulation to add some particles. Try to place the particles in a state that will turn the rotor.
@@ -328,16 +328,14 @@
 		<div class="flex-grid-thirds">
 			<div class="col center">
 				time rate
-				<br>
-				<input type="range" id='time-rate-slider' min="0" max="5" step="1" value="0" style="width: 120px;">
+				<br> <input type="range" id='time-rate-slider' min="0" max="5" step="1" value="0" style="width: 120px;">
 			</div>
 			<div class="col center">
 				<button id="clear1">clear</button>
 			</div>
 			<div class="col center">
 				rotor external power
-				<br>
-				<input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.1" value="0" style="width: 120px;">
+				<br> <input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.1" value="0" style="width: 120px;">
 			</div>
 		</div>
 		<p>
@@ -403,27 +401,53 @@
 
 		<h1 class='underlined' id="arrow-of-time">The Arrow of Time</h1>
 		<p>
-			If you were to watch a video of the Earth orbiting the sun, it would be difficult to tell if the video was running forwards or backwards. Simple physical systems don't have a clear forwards or backwards.
-		</p>
-		<p>
 			The laws of physics are time reversible. Nature behaves the same moving forwards or backwards in time. The only exception is entropy.
 		</p>
 		<p>
-			If you were to watch a glass of water fall off a table, it would be very clear the direction of time. This is because the entropy of the glass of water is rapidly increasing.
+			If you were to watch a video of the Earth orbiting the sun, it would be difficult to tell if the video was running forwards or backwards. Simple physical systems don't have a clear forwards or backwards.
+		</p>
+		<p>
+			Sometimes it is very easy to tell the direction of time. A glass of water falling off a table has a clear direction in time.
+			It would be very strange to see broken glass and spilled water spontaneously come together and jump up onto a table.
 		</p>
 		<div class="definition">
 			The <strong>second law of thermodynamics</strong> states that entropy of an isolated system doesn't decrease over time.
 		</div>
 		<p>
-			In other words: it is much more likely that as time moves forward, a system will get more messy, not more orderly.
+			As time moves forward, a system will either stay the same or get messier but never more orderly.
 		</p>
 		<p>
-			Why is the second law of thermodynamics true? Because there are many ways for the energy of a system to be evenly distributed, but few ways to have energy concentrated. As a system randomly progresses with time, the odds of being in a concentrated, low entropy state is much lower.
+			Why is the second law of thermodynamics true? Because there are many ways for the energy of a system to be evenly distributed, but few ways to have energy concentrated. As a system randomly progresses forwards in time, the odds of evolving into a concentrated low entropy state is very low.
+		</p>
+
+		<svg id="SVG-graph-2" viewBox="0 0 600 220"></svg>
+		<script defer>
+			funGraphSVG("SVG-graph-2", x => Math.log(x + 1) + 0.1 * Math.random()* (Math.random()-0.5), {
+				x0: 10,
+				y0: 210,
+				fill: "rgba(50, 120, 180,0.2)",
+				stroke: "#123",
+				strokeWidth: 2,
+				scale: 100,
+				positiveOnly: true,
+				showAxisNumbers: false,
+				showGrid: false,
+				xLabel: "time",
+				yLabel: "entropy",
+				showMouseCoords: false,
+			});
+		</script>
+		<p>
+			The entropy of a system always evolves from low to high.
+			Our universe has its lowest entropy point at the big bang. The far future is the highest entropy.
 		</p>
 
 		<div class="example">
 			<p>
 				<a href="https://en.wikipedia.org/wiki/Diffusion">Diffusion</a> is a good example of the second law of thermodynamics. The simulation below will become more evenly mixed as time progresses.
+			</p>
+			<p>
+				The odds of the 300 particles below separating by chance is so unlikely that it would take longer than the age of the universe.
 			</p>
 			<!-- <p>Adjust the time rate to start the simulation.</p> -->
 			<canvas class='center' id='entropy0' height='258' width='600' style="background-color:#fff; border: 0px solid #556; box-shadow: none;">
@@ -444,19 +468,59 @@
 					<input type="range" id='bar-number-slider0' min="0" max="9" step="1" value="1" style="width: 120px;">
 				</div>
 			</div>
-			<p>The odds of the 300 particles above separating by chance is so unlikely that it would take longer than the age of the universe.</p>
 			<strong>Simulation:</strong> Clear the simulation and click to add 10 particles on each side. Guess how long we would have to wait for the colors to separate, with the red and blue particles on opposite sides.
 			<details>
 				<summary>Investigation</summary>
-				<p>Let's say that each particle can be in one of 2 states: left or right.</p>
-				<p> We can count the total number ways to put n particles one of 2 states.</p>
-				$$2^{n} = 2^{20} = 1\,048\,576 $$
+				<p>
+					Let's say that each particle can be in only 2 states: left or right.
+					<br>We can count the total number ways to put particles in one of 2 states.
+				</p>
+
+				<table>
+					<tr>
+						<th>number of particles</th>
+						<th>total possible states</th>
+					</tr>
+					<tr>
+						<td>\(0\)</td>
+						<td>\(1\)</td>
+					</tr>
+					<tr>
+						<td>\(1\)</td>
+						<td>\(2 = 2\)</td>
+					</tr>
+					<tr>
+						<td>\(2\)</td>
+						<td>\(2 \times 2 = 4\)</td>
+					</tr>
+					<tr>
+						<td>\(3\)</td>
+						<td>\(2 \times 2 \times 2 = 8\)</td>
+					</tr>
+					<tr>
+						<td>\(4\)</td>
+						<td>\(2 \times 2 \times 2 \times 2 = 16\)</td>
+					</tr>
+					<tr>
+						<td>\(5\)</td>
+						<td>\(2 \times 2 \times 2 \times 2 \times 2 = 32\)</td>
+					</tr>
+					<tr>
+						<td>\(\text{\color{#f04}n}\)</td>
+						<td>\(2^{\color{#f04}n}\)</td>
+					</tr>
+					<tr>
+						<td>\(20\)</td>
+						<td>\(2^{20} = 1\,048\,576\)</td>
+					</tr>
+				</table>
+				<!-- $$2^{n} = 2^{20} = 1\,048\,576 $$ -->
 				<p>Trying random configurations would take on average half the number of total states to reach our unique unmixed state.</p>
 				$$\frac{2^{n}}{2}$$
-				<p>I wrote a program that counts how often a particle switches states. For ten particles on each sides, at the fastest time rate, there are about 18.75 switches per second or one every 1/18.75 seconds. </p>
+				<p>I wrote a program that counts how often a particle in the simulation switches states at the fastest time rate. For ten particles on each sides there are about 18.75 switches per second or one every 1/18.75 seconds. </p>
 				$$T_{avg} \approx \left(\frac{2^{20}}{2}\right) \left(\frac{1}{18.75}\right) \mathrm{s}$$
 				$$T_{avg} \approx 27\,960 \, \mathrm{s} = 7.767 \, \mathrm{hr}$$
-				<p>The graphs below generously assume that each particle switches states once a second. You can see the time increases very fast as the number of particles goes up.</p>
+				<p>The graphs below assume that each particle switches states once a second. The time to separate increases very fast as the number of particles goes up.</p>
 				<svg id="SVG-graph-1" viewBox="0 0 580 210"> </svg>
 				<script defer>
 					(function () {
@@ -506,6 +570,45 @@
 					<br>(n = 1&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000 air molecules)</p>
 			</details>
 		</div>
+
+
+
+
+		<!-- <p>
+				A low entropy state will evolve into a predictable higher entropy state, but a high entropy state could have come from countless different states.
+			</p> -->
+		<!-- <p>
+				The predictability allows machines that harness that flow of entropy to function. It wouldn't be possible for a machine to do work backwards in time because the flow of entropy from high to low isn't predictable.
+			</p>
+			<p>
+				A machine can store low entropy information in the past and remember it in the present by creating a space where entropy stays constant. A memory.
+			</p>
+			<p>
+				We can't store information in the future and remember it in the present because from the point of view of the future the past isn't predictable.
+			</p> -->
+
+		<!-- This section needs work:   -->
+		<!-- <h1 class='underlined'>Why can't we remember the future?</h1> -->
+
+		<!-- <p>
+				We call states with high predictive ability <strong>information</strong>.
+				Low entropy states predictably evolve into higher entropy states.
+				Because they have predictive ability, low entropy states have information about the higher entropy states they will evolve into.
+			</p>
+			<p>
+				High entropy states don't predictably evolve into lower entropy states.
+				There is no information in a high entropy state about the low entropy state it evolved from.
+			</p>
+			<p>
+				We can store low entropy information in the past and remember it in the present by creating a space where entropy stays constant. A memory.
+			</p>
+			<p>
+				We can't store information in the future and remember it in the present because the future has higher entropy and therefore it no information about the present.
+			</p>
+			<p>
+				The past has information about the future, but the future has very little information about the past.
+			</p> -->
+
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>

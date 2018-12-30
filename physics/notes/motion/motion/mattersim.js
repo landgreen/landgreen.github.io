@@ -25,7 +25,8 @@ function matter() {
     //fit canvas to window and fix issues with canvas blur on zoom
     canvas.style.width = settings.width + "px";
     canvas.style.height = settings.height + "px";
-    const scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+
+    const scale = window.devicePixelRatio;
     canvas.width = settings.width * scale;
     canvas.height = settings.height * scale;
     ctx.scale(scale, scale);

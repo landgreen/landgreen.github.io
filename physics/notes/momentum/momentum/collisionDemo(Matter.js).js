@@ -8,14 +8,16 @@
   window.addEventListener("resize", resizeCanvas);
 
   function resizeCanvas() {
-    width = Math.min(580, document.body.clientWidth) //shrink width on small screens
     //fit canvas to window and fix issues with canvas blur on zoom
-    canvas.style.width = width + "px";
-    canvas.style.height = height + "px";
-    const scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-    canvas.width = width * scale;
-    canvas.height = height * scale;
-    ctx.scale(scale, scale);
+    if (document.body.clientWidth > width) {
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+
+      const scale = window.devicePixelRatio;
+      canvas.width = width * scale;
+      canvas.height = height * scale;
+      ctx.scale(scale, scale);
+    }
   }
 
   function intro() {

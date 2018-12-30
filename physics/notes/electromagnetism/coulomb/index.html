@@ -52,9 +52,9 @@
 			<p>
 				Try repeating the experiment again to make 4 strips of tape. Put the newly charged tape near the old and some will repel instead of attract.
 			</p>
-			<strong>Example:</strong> After playing with the tape what factors determine the strength of the force?
+			<strong>Question:</strong> After playing with the tape what factors determine the strength of the force?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>The force between the tape strips is strong when they are closer.</p>
 				<p>The force also varies with how much charges is separated. Separating more charge is easier when the humidity is lower.</p>
 			</details>
@@ -334,9 +334,6 @@
 			</details>
 		</div>
 
-
-
-
 		<h2 class='underlined' id='conductivity'>Conductivity</h2>
 		<p>
 			<strong>Conductive</strong> materials allow electric charges to easily move through them. If a charge is applied to one part of a conductive material the charge will quickly spread out because like charges repel.
@@ -353,45 +350,106 @@
 			<canvas id='charge9' height='250' onclick="charges9(this)"> </canvas>
 		</div>
 
-
 		<div class="example">
 			<p>
-				In chemistry, elements are roughly divided into metals, metalloids and nonmetals. Metals are held together by loosely sharing their outer valence electrons. The cloud of free flowing electrons give metals most of their shared characteristics, like conductivity.
+				In chemistry, elements are roughly divided into metals, metalloids and nonmetals. Metals are held together by loosely sharing their outer valence electrons. The cloud of free flowing electrons give metals most of their shared characteristics, like <a href='https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity#Resistivity_and_conductivity_of_various_materials'>conductivity</a>.
 			</p>
 
-			<p>The ease of electron flow is loosely ranked below. Check out
-				<a href='https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity#Resistivity_and_conductivity_of_various_materials'>wikipedia</a>
-				for more detail on conductivity.</p>
+			<style>
+				.wrapper {
+					display: grid;
+					grid-gap: 10px;
+					grid-template-columns: [col] 50px [col] 80%;
+					grid-template-rows: [row] auto;
+				}
 
-			<p>
-				<strong>insulators</strong> - very high resistance
-				<br>vacuum, nonmetals: gases, plastics, silk, fur
-			</p>
-			<p>
-				<strong>semi-conductors</strong> - medium resistance
-				<br>metalloids: carbon and silicon
-			</p>
-			<p>
-				<strong>electrolytes</strong> - medium resistance
-				<br>a solvent with dissolved ions: sea water, drinking water, soda water
-			</p>
-			<p>
-				<strong>conductors</strong> - very low resistance
-				<br>metals, plasma
-			</p>
-			<p>
-				<strong>superconductors</strong> - zero resistance!
-				<br>certain low temperature ceramics
-			</p>
+				.a {
+					grid-column: col / span 1;
+					grid-row: row;
+				}
+
+				.b {
+					grid-column: col 2 / span 1;
+					grid-row: row;
+				}
+
+				/* @media screen and (max-width: 650px) {
+					.a {
+						display: none;
+					}
+
+					.wrapper {
+						display: block;
+					}
+				} */
+			</style>
+
+			<div class="wrapper">
+				<div class="a">
+					<svg width="50" height="350">
+						<g fill="#f06" stroke="#f06" stroke-width="2">
+							<path d="M15 60 V 295" fill="none" />
+							<path d="M15 55 l 5 8 l-5 -1 l -5 1 l 5 -8" stroke="none" />
+							<path d="M15 300 l 5 -8 l-5 1 l -5 -1 l 5 8" stroke="none" />
+						</g>
+						<g fill="#f06" font-size="17" text-anchor="middle">
+							<text x="15" y="45">low</text>
+							<text x="15" y="320">high</text>
+						</g>
+					</svg>
+				</div>
+				<div class="b">
+					<p>
+						<strong>insulators</strong>
+						<br>vacuum, nonmetals: gases, plastics, silk, fur
+					</p>
+					<p>
+						<strong>semi-conductors</strong>
+						<br>metalloids: carbon and silicon
+					</p>
+					<p>
+						<strong>electrolytes</strong>
+						<br>solvents with dissolved ions:
+						<br>sea water, drinking water, soda water
+					</p>
+					<p>
+						<strong>conductors</strong>
+						<br>metals, plasma
+					</p>
+					<p>
+						<strong>superconductors</strong>
+						<br>certain low temperature ceramics
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> Rank these substances by to conductivity.
+			<p> (air, coca cola, copper, carbon, plastic fork) </p>
+			<details>
+				<summary>answer</summary>
+				<p class="center">
+					<span style="color:#f05; font-weight: bold;">high</span>
+					<br>copper
+					<br>coca cola
+					<br>carbon
+					<br>plastic fork
+					<br>air
+					<br><span style="color:#50f; font-weight: bold;">low</span>
+				</p>
+			</details>
 		</div>
 
 		<div class='example'>
 			<strong>Question:</strong> Why are metals more conductive than nonmetals?
 			<details>
-				<summary>solution</summary>
-				<br> In metals some electrons are free to move between atoms. In nonmetals the electrons are locked up in covalent bonds so they resist the electrostatic force.
-				<br>
-				<br>If you heat a nonmetal up so much that electrons can leave the nucleus you get a plasma. A plasma is very conductive.
+				<summary>answer</summary>
+				<p>
+					In metals some electrons are free to move between atoms. In nonmetals the electrons are locked up in covalent bonds so they resist the electrostatic force.
+					<br>
+					<br>If you heat a nonmetal up so much that electrons can leave the nucleus you get a plasma. A plasma is very conductive.
+				</p>
 			</details>
 		</div>
 
@@ -406,6 +464,25 @@
 			It is quite easy to separate a couple trillion electrons from their protons by walking with socks on a carpet. Lightning is produced in a similar way when a cloud with rising air ends up with an unbalanced distribution of charge.
 		</p>
 
+		<div id="charge5-zone" class="example hide-on-mobile">
+			<p>
+				The positive charges pulls the electrons closer, but not enough to to get them to jump over. This leaves the grouping on the right with an
+				<strong>induced charge</strong>. Substances with an induced charge are slightly negative on one side and slightly positive on the other side. This small difference in charge is why static electricity makes things sticky.
+			</p>
+			<canvas id='charge5' height="290" width="600" onclick="charges5(this)"> </canvas>
+			<br>
+			<strong>Question:</strong> Why can't the electrons get to the positive charge group?
+			<details>
+				<summary>answer</summary>
+				<p>
+					The electrostatic force follows a 1/r² rule, so it is weaker with distance. The electrons want to spread out into the positive charge, but the short distance attraction to nearby protons is a stronger force.
+				</p>
+				<p>
+					Add a conductive path and the electrons will spread out evenly. <button id="add-path">add path</button>
+				</p>
+			</details>
+		</div>
+
 		<div class="example">
 			<p>Play around with this PhET simulation for static electricity. </p>
 			<div class='center' style="position: relative; width: 300px; height: 200px;">
@@ -419,36 +496,46 @@
 					</table>
 				</a>
 			</div>
-
-			<p>Which are conductors and which are insulators:
-				<br> (balloons, sweater, wall, air)</p>
-			<p>Why do some electrons jump to the balloon from the sweater?
-				<br> Why not the other way around?</p>
-			<p>Why is the balloon attracted to the sweater after it gains some electrons?</p>
-			<p>Why is the balloon attracted to the wall after it gains some electrons?</p>
-
-
-		</div>
-
-
-
-		<div id="charge5-zone" class="example hide-on-mobile">
-			<p>
-				The positive charges on the left pull the electrons on the right closer, but not enough to to get them to jump over. This leaves the grouping on the right with an
-				<strong>induced charge</strong>. Substances with an induced charge are slightly negative on one side and slightly positive on the other side. This small difference in charge is why static electricity makes things sticky.
-			</p>
-			<canvas id='charge5' height="290" width="600" onclick="charges5(this)"> </canvas>
 			<br>
-			<strong>Question:</strong> Why can't the electrons get to the positive charge group?
+			<strong>Question:</strong> Which are conductors and which are insulators:
+			<br>(balloons, sweater, wall, air)
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>
-					The electrostatic force follows a 1/r² rule, so it is weaker with distance. The electrons want to spread out into the positive charge, but the short distance attraction to nearby protons is a stronger force.
-				</p>
-				<p>
-					Add a conductive path and the electrons will spread out evenly. <button id="add-path">add path</button>
+					conductors: nothing in this simulation
+					<br>insulators: balloon, sweater, wall, air
 				</p>
 			</details>
+			<div class="example-small">
+				<strong>Question:</strong> Why do some electrons jump to the balloon from the sweater?
+				<br> Why not the other way around?
+				<details>
+					<summary>answer</summary>
+					<p>Some materials are better at holding onto extra electrons for complex quantum mechanical reasons.</p>
+				</details>
+			</div>
+			<div class="example-small">
+				<strong>Question:</strong> Why is the balloon attracted to the sweater after it gains some electrons?
+				<details>
+					<summary>answer</summary>
+					<p>After rubbing, the balloon has unpaired negative charge, and the sweater has unpaired positive charge. Opposite charges attract.</p>
+				</details>
+			</div>
+			<div class="example-small">
+				<strong>Question:</strong> Why is the balloon attracted to the wall after it gains some electrons?
+				<details>
+					<summary>answer</summary>
+					<p>
+						After rubbing, the balloon has unpaired negative charge.
+						When charge is near another insulator it repels the electrons enough that they are slightly farther away,
+						but not enough to cause them to leave the nucleus. This charge separation is called <strong>polarization</strong>.
+					</p>
+					<p>
+						The polarization of the positive and negative pairs creates an <strong>induced charge</strong>.
+						The charged balloon causes the wall to polarize, which increases the attraction and decreases the repulsion between the balloon and wall.
+					</p>
+				</details>
+			</div>
 		</div>
 
 		<div class='example'>
@@ -456,7 +543,7 @@
 			<strong>Question:</strong> If you rubbed polystyrene foam (styrofoam) on a
 			<a href="https://en.wikipedia.org/wiki/File:Cat_demonstrating_static_cling_with_styrofoam_peanuts.jpg">cat</a>, static electricity would cause them stick together. Which would gain a positive charge?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p> The cat would end up with a positive charge. This means the cat would lose electrons to the styrofoam.</p>
 			</details>
 		</div>
@@ -464,7 +551,7 @@
 		<div class='example'>
 			<strong>Question:</strong> Rubbing glass on plastic wrap can get super staticky. Use the <a href="https://en.wikipedia.org/wiki/Triboelectric_effect#Triboelectric_series">TriboElectric series</a> to decide which gets the positive charge.
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p> The glass would get the positive charge.</p>
 			</details>
 		</div>

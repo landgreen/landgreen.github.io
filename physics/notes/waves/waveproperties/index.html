@@ -164,16 +164,13 @@
 			</details>
 		</div> -->
 		<div class='example'>
-
 			<svg id="sine-interference" onload="drawSineWave(this, 400, 30, 0, '#f80'); drawSineWave(this,100, 80, 0, '#08f'); centerLine(this)" height='170'></svg>
 			<strong>Example:</strong> Draw the superposition of these waves. <button id="sine-random">randomize</button>
 			<details>
 				<summary>solution</summary>
 				<svg id="sine-interference-solution" onload="drawSineWaves(this, 400, 30, 0, '#f80', 100, 80, 0, '#08f'); centerLine(this)" height='280'></svg>
 			</details>
-
 			<script>
-
 				document.getElementById("sine-random").addEventListener("click", () => {
 					//produce randomized values
 					const wavelength1 = Math.floor(40+Math.random()*500 );
@@ -254,9 +251,8 @@
 				<input id='beats-f2' type="number" min="1" max="20000" value=375 step=1 style="width: 55px;">
 				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;volume = <input class="beats-slider" id='beats-vol-slider-2' type="range" step="0.01" value="0.2" min="0" max="1">
 				<input id='beats-vol-2' type="number" step="0.05" value="0.2" min="0" max="1" style="width: 55px;">
-				<br>
-				<br>&nbsp;&nbsp;&nbsp;analyser = <input class="beats-slider" id='beats-analyser-slider' type="range" step="1" value="3" min="1" max="8">
 				<canvas id="beats-canvas" width="590" height="100"></canvas>
+				<br>&nbsp;&nbsp;&nbsp;analyser = <input class="beats-slider" id='beats-analyser-slider' type="range" step="1" value="3" min="1" max="8">
 				<p>
 					The pattern in the graph above is sent as an electrical wave into your speakers. In the speaker, magnets convert the electrical wave into vibrations. The vibrations spread through the air as an audible wave of pressure.
 				</p>
@@ -776,16 +772,18 @@
 
 		<div class='example'>
 			<svg viewBox="-25,0,500,210">
-				<path d="M200 2 h200 v200 l-200 -200" fill="#ddeef6" stroke="#000" stroke-width="1" />
+				<path d="M200 2 h200 v200 l-200 -200" fill="#ddeef6" stroke="#000" stroke-width="1.5" />
 				<path d="M0 80 h 250" fill="none" stroke="#f00" stroke-width="3" />
 				<path d="M 245 80 v-6 l 10 6 l -10 6 v6" fill="#f00" stroke="none" />
 			</svg>
 			<strong>Example:</strong> How will the light ray bend as it enters the denser media? Complete the path of light in the diagram above.
 			<details>
 				<summary>solution</summary>
-				<p>It will refract up, towards the normal.</p>
+				<p>
+					It will refract up, towards the normal.
+				</p>
 				<svg viewBox="-25,0,500,210">
-					<path d="M200 2 h200 v200 l-200 -200" fill="#ddeef6" stroke="#000" stroke-width="1" />
+					<path d="M200 2 h200 v200 l-200 -200" fill="#ddeef6" stroke="#000" stroke-width="1.5" />
 					<path d="M0 80 h 278" fill="none" stroke="#f00" stroke-width="3" />
 					<g opacity="0.66">
 						<path d="M278 80 l 100 -30" fill="none" stroke="#f00" stroke-width="3" />

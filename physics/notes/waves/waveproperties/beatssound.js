@@ -145,7 +145,19 @@ function startBeats() {
         const canvas = document.getElementById("beats-canvas");
         const ctx = canvas.getContext("2d");
 
+        const width = 590
+        const height = 100
+
         function setupCanvas() {
+            if (document.body.clientWidth > width) {
+                canvas.style.width = width + "px";
+                canvas.style.height = height + "px";
+
+                const scale = window.devicePixelRatio;
+                canvas.width = width * scale;
+                canvas.height = height * scale;
+                ctx.scale(scale, scale);
+            }
             ctx.lineWidth = 2;
             ctx.strokeStyle = "#000";
             ctx.lineJoin = 'bevel'; //miter
@@ -167,21 +179,21 @@ function startBeats() {
         analyser2.fftSize = beats.analOut
         const dataArray2 = new Uint8Array(bufferLength);
 
-        const WIDTH = canvas.width;
-        const HEIGHT = canvas.height;
+        // const WIDTH = canvas.width;
+        // const HEIGHT = canvas.height;
 
         function draw() {
             if (!beats.paused) {
                 drawVisual = requestAnimationFrame(draw);
                 analyser1.getByteTimeDomainData(dataArray1);
                 analyser2.getByteTimeDomainData(dataArray2);
-                ctx.clearRect(0, 0, WIDTH, HEIGHT);
+                ctx.clearRect(0, 0, width, height);
                 ctx.beginPath();
-                const sliceWidth = WIDTH * 1.0 / bufferLength;
+                const sliceWidth = width / bufferLength;
                 let x = 0;
                 for (let i = 0; i < bufferLength; i++) {
                     const v = (dataArray1[i] + dataArray2[i]) / 256.0;
-                    const y = v * HEIGHT - HEIGHT / 2;
+                    const y = v * height - height / 2;
                     if (i === 0) {
                         ctx.moveTo(x, y);
                     } else {
@@ -189,7 +201,7 @@ function startBeats() {
                     }
                     x += sliceWidth;
                 }
-                ctx.lineTo(canvas.width, canvas.height / 2);
+                // ctx.lineTo(width, height / 2);
                 ctx.stroke();
             }
         }

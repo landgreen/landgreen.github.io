@@ -4,24 +4,21 @@
 
   const canvas = document.getElementById("canvas6");
   const ctx = canvas.getContext("2d");
+
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
   function resizeCanvas() {
-    // if (document.body.clientWidth < width) {
-    //   width = document.body.clientWidth
-    //   height = document.body.clientWidth * 300 / 580
-    // } else {
-    //   width = 580;
-    //   height = 300;
-    // }
     //fit canvas to window and fix issues with canvas blur on zoom
-    canvas.style.width = width + "px";
-    canvas.style.height = height + "px";
-    const scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-    canvas.width = width * scale;
-    canvas.height = height * scale;
-    ctx.scale(scale, scale);
+    if (document.body.clientWidth > width) {
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+
+      const scale = window.devicePixelRatio;
+      canvas.width = width * scale;
+      canvas.height = height * scale;
+      ctx.scale(scale, scale);
+    }
   }
 
   function intro() {
