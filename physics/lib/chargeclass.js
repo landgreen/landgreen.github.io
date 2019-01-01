@@ -284,7 +284,6 @@ class Charge {
 
   static boundsRemove(who, range = 50) {
     //range = how far outside of canvas,  0 is at canvas edge
-
     for (let i = 0, len = who.length; i < len; ++i) {
       if (who[i]) {
         if (

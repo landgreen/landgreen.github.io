@@ -33,6 +33,8 @@
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 	<script src='../../../lib/function-graph-SVG.js'></script>
 	<script defer src='beatssound.js'></script>
+	<script defer src='../../../lib/matter.min.js'></script>
+	<script defer src="resonance.js"></script>
 </head>
 
 <body>
@@ -1258,6 +1260,24 @@
 				<p>The cop will observe your light at a higher frequency and a shorter wavelength.</p>
 			</details>
 		</div>
+
+		<h2 class='underlined'>Resonance</h2>
+		<p>
+			When a repeated force is applied with just the right frequency each push <a href="https://www.youtube.com/watch?v=3mclp9QmCGs">builds</a> up a greater amplitude. This phenomena is call <a href="https://www.youtube.com/watch?v=Oc27GxSD_bI">resonance</a>.
+		</p>
+		<canvas id='resonance' class='center' width='580' height='150' onclick="resonance(this)"></canvas>
+		<span class="center">
+			frequency = <input id='charge-in-slider' type="range" step="0.01" value="1" min="0" max="2" style="width: 200px;">
+			<input id='charge-in' type="number" step="0.01" value="1" min="0" max="2" style="width: 60px;"> Hz
+		</span>
+		<br><strong>Question:</strong> Adjust the frequency of the force on the pendulum.
+		Can you find the resonant frequency?
+		<details>
+			<summary>answer</summary>
+			<p>
+				A frequency of about 0.25 Hz has a good resonance.
+			</p>
+		</details>
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>

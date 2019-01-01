@@ -359,7 +359,7 @@
 				.wrapper {
 					display: grid;
 					grid-gap: 10px;
-					grid-template-columns: [col] 50px [col] 80%;
+					grid-template-columns: [col] 90px [col] 75%;
 					grid-template-rows: [row] auto;
 				}
 
@@ -386,15 +386,26 @@
 
 			<div class="wrapper">
 				<div class="a">
-					<svg width="50" height="350">
-						<g fill="#f06" stroke="#f06" stroke-width="2">
-							<path d="M15 60 V 295" fill="none" />
-							<path d="M15 55 l 5 8 l-5 -1 l -5 1 l 5 -8" stroke="none" />
-							<path d="M15 300 l 5 -8 l-5 1 l -5 -1 l 5 8" stroke="none" />
+					<svg width="80" height="350">
+						<g fill="#79a" stroke="#79a" stroke-width="2">
+							<path d="M20 60 V 295" fill="none" />
+							<path d="M20 55 l 5 8 l-5 -1 l -5 1 l 5 -8" stroke="none" />
+							<path d="M20 300 l 5 -8 l-5 1 l -5 -1 l 5 8" stroke="none" />
+							<g stroke="none" font-size="17" text-anchor="middle">
+								<text x="20" y="45">low</text>
+								<text x="20" y="320">high</text>
+								<text x="19" y="180" transform="rotate(-90 14 180)">conductivity</text>
+							</g>
 						</g>
-						<g fill="#f06" font-size="17" text-anchor="middle">
-							<text x="15" y="45">low</text>
-							<text x="15" y="320">high</text>
+						<g fill="#d36" stroke="#d36" stroke-width="2">
+							<path d="M60 60 V 295" fill="none" />
+							<path d="M60 55 l 5 8 l-5 -1 l -5 1 l 5 -8" stroke="none" />
+							<path d="M60 300 l 5 -8 l-5 1 l -5 -1 l 5 8" stroke="none" />
+							<g stroke="none" font-size="17" text-anchor="middle">
+								<text x="60" y="45">high</text>
+								<text x="60" y="320">low</text>
+								<text x="60" y="180" transform="rotate(-90 55 180)">resistance</text>
+							</g>
 						</g>
 					</svg>
 				</div>
