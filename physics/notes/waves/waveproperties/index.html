@@ -1263,13 +1263,44 @@
 
 		<h2 class='underlined'>Resonance</h2>
 		<p>
-			When a repeated force is applied with just the right frequency each push <a href="https://www.youtube.com/watch?v=3mclp9QmCGs">builds</a> up a greater amplitude. This phenomena is call <a href="https://www.youtube.com/watch?v=Oc27GxSD_bI">resonance</a>.
+			Most systems that <a href="https://www.google.com/search?q=oscillate">oscillate</a> find a natural frequency for their vibrations.
+			Rigid solids, like <a href="../../energy/conservation/index.html">springs</a>, <a href="https://www.youtube.com/watch?v=3mclp9QmCGs">bridges</a>, buildings, <a href="https://www.youtube.com/watch?v=Oc27GxSD_bI">wine glasses</a>, and musical instruments, oscillate.
+			We also see oscillation in lasers, atoms, electric circuits, orbits, swing sets, and pendulums.
 		</p>
-		<canvas id='resonance' class='center' width='580' height='150' onclick="resonance(this)"></canvas>
-		<span class="center">
-			frequency = <input id='charge-in-slider' type="range" step="0.01" value="1" min="0" max="2" style="width: 200px;">
-			<input id='charge-in' type="number" step="0.01" value="1" min="0" max="2" style="width: 60px;"> Hz
-		</span>
+		<p>
+			Applying a force to a system at a <strong>resonant frequency</strong> will increase the amplitude of the system's oscillations by supporting the natural frequency of the system.
+		</p>
+		<p>
+			A force at the resonant frequency works with the natural frequency of a system. You push left as the system moves left, and right as the system moves right. This way you don't fight the natural motion of the system.
+		</p>
+		<svg id="res" viewBox="0 0 600 150" style="border: 2px solid #345;">
+			<circle cx="300" cy="0" r="3" fill="#345" />
+			<g id="res-arrow" transform='translate(102 0)'>
+				<path d="M-10 125 h-150" stroke="#f58" stroke-width="4" />
+				<polygon points="0,0 -16,-8 -14,0 -16,8" fill="#f58" transform='translate(0 125)' />
+				<path d="M610 125 h150" stroke="#f58" stroke-width="4" />
+				<polygon points="600,0 616,-8 614,0 616,8" fill="#f58" transform='translate(0 125)' />
+
+				<path d="M-10 75 h-150" stroke="#f58" stroke-width="4" />
+				<polygon points="0,0 -16,-8 -14,0 -16,8" fill="#f58" transform='translate(0 75)' />
+				<path d="M610 75 h150" stroke="#f58" stroke-width="4" />
+				<polygon points="600,0 616,-8 614,0 616,8" fill="#f58" transform='translate(0 75)' />
+
+				<path d="M-10 25 h-150" stroke="#f58" stroke-width="4" />
+				<polygon points="0,0 -16,-8 -14,0 -16,8" fill="#f58" transform='translate(0 25)' />
+				<path d="M610 25 h150" stroke="#f58" stroke-width="4" />
+				<polygon points="600,0 616,-8 614,0 616,8" fill="#f58" transform='translate(0 25)' />
+			</g>
+			<g id="res-ball" stroke="none" transform='translate(300 120)'>
+				<circle cx="0" cy="0" r="20" fill="#abc" />
+				<circle cx="0" cy="0" r="3" fill="#345" />
+			</g>
+			<path id="res-string" d="M 300 0 v120" stroke="#345" stroke-width="2" />
+		</svg>
+		<p class="center" style="margin-top: 0.5em;">
+			frequency = <input id='charge-in-slider' type="range" step="0.01" value="0" min="0" max="2" style="width: 200px;">
+			<input id='charge-in' type="number" step="0.01" value="0" min="0" max="2" style="width: 60px;"> Hz
+		</p>
 		<br><strong>Question:</strong> Adjust the frequency of the force on the pendulum.
 		Can you find the resonant frequency?
 		<details>

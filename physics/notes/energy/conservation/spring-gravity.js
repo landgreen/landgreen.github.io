@@ -97,7 +97,7 @@ var springGravity = function () {
     };
   }
 
-  var box = new mass(physics.width / 2, 350, 0, 0, 20, "#bbb");
+  var box = new mass(140, 350, 0, 0, 20, "#bbb");
   physics.y = box.y
   document.getElementById("spring-m2").value = Math.round(box.mass);
   document.getElementById("spring-k2").value = physics.k;

@@ -181,7 +181,7 @@ class Charge {
 
   static drawAll(who) {
     // draw protons
-    ctx.fillStyle = "rgb(255,0,100)";
+    ctx.fillStyle = "rgb(255,10,140)";
     ctx.beginPath();
     for (let i = 0, len = who.length; i < len; ++i) {
       if (who[i].charge > 0) {
@@ -192,7 +192,7 @@ class Charge {
     ctx.fill();
 
     // draw electrons
-    ctx.fillStyle = "rgba(0,100,255,0.6)";
+    ctx.fillStyle = "rgba(60,120,180,0.5)";
     ctx.beginPath();
     for (let i = 0, len = who.length; i < len; ++i) {
       if (!(who[i].charge > 0)) {
@@ -210,7 +210,7 @@ class Charge {
         who[i].position.x = -off;
       }
     }
-    return count;
+    return count
   }
 
   static teleportHoles(who, off = 200) {
@@ -233,7 +233,6 @@ class Charge {
         }
       }
     }
-
     return count;
   }
 

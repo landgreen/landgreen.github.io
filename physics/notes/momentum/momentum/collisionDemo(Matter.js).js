@@ -1,6 +1,6 @@
 (() => {
   let width = 580;
-  let height = 300;
+  let height = 270;
 
   const canvas = document.getElementById("canvas0");
   const ctx = canvas.getContext("2d");
