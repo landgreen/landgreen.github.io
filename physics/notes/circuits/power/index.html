@@ -40,16 +40,58 @@
 	</header>
 	<article>
 		<p>
-			Power is defined as the rate that energy changes over time. Power measures the rate that voltage sources, like batteries, convert energy into electrical energy. Power could also measure the rate that electrical components convert electrical energy in other forms, like heat or light.
+			Power is defined as work done over time. Power measures the rate that voltage sources, like batteries, convert energy into electrical energy. Power could also measure the rate that electrical components convert electrical energy in other forms, like heat or light.
 		</p>
 		<div class='definition'>
-			<h1>$$P = \frac{E}{\Delta t}$$</h1> \(P\) = power [W, J/s, watt]
-			<br> \(E\) = energy [J, joules]
+			<h1>$$P = \frac{W}{\Delta t}$$</h1> \(P\) = power [W, J/s, watt]
+			<br> \(W\) = work, change in energy [J, joules]
 			<br> \(\Delta t\) = time period [s, second]
 		</div>
 		<p>
 			Power is analogous to velocity. Velocity measures how position changes over time. Power measures how energy changes over time.
 		</p>
+
+		<div class='example'>
+			<strong>Example:</strong> My electric heater says it is 1500&nbsp;Watts. It can convert 1500 Joules of electrical energy into heat energy in a second. How many joules of heat can it add to a room in a hour?
+			<details>
+				<summary>solution</summary>
+				$$P = \frac{W}{\Delta t}$$
+				$$W = P\Delta t$$
+				$$W = (1500)(3600)$$
+				$$W = 5\,400\,000 \, \mathrm{J}$$
+			</details>
+		</div>
+		<div class='example'>
+			<p>
+				Power bills in America use a unit called kiloWatt hour. This is actually a unit of energy, not power.
+			</p>
+			$$\text{(kilo)(watt)(hour)}$$
+			$$(1000) \left(\mathrm{\frac{J}{s}}\right)(3600\, \mathrm{s})$$ $$3\,600\,000\, \left(\mathrm{\frac{J}{s}}\right)(\mathrm{s})$$
+			$$1\, \mathrm{kWh} = 3\,600\,000\, \mathrm{J}$$
+			<strong>Example:</strong> How many kiloWatt hours of energy would I consume if I ran my 1500&nbsp;W electric heat at full power for 4&nbsp;weeks?
+			<details>
+				<summary>solution</summary>
+				$$\Delta t = 4 \, {\color{#f54}\mathrm{week} } \left(\frac{7 {\color{#28b}\,\mathrm{day}} }{1 \, {\color{#f54}\mathrm{week}} }\right) \left(\frac{24 \, {\color{#f08}\mathrm{hour}}}{1 \, {\color{#28b}\mathrm{day}}}\right) \left(\frac{3600 \,\mathrm{s}}{1 \, {\color{#f08}\mathrm{hour}}}\right)$$
+				$$\Delta t = 2\,419\,200 \, \mathrm{s}$$
+				<br>
+				$$P = \frac{W}{\Delta t}$$
+				$$W = P\Delta t$$
+				$$W = (1500)(2\,419\,200) $$
+				$$W = 3\,628\,800\,000 \left( \frac{1\, \mathrm{kWh}}{3\,600\,000\, \mathrm{J}} \right) = 1008 \, \mathrm{kWh}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> The average price in America for 1 kiloWatt hour is $0.12. How much would the kiloWatt hours from the previous problem cost in dollars?
+			<details>
+				<summary>solution</summary>
+				$$W = 1008 \, \mathrm{kWh}$$
+				$$W = 1008 \, \mathrm{kWh} \left( \frac{\$0.12}{1\, \mathrm{kWh}} \right) = \$120.96$$
+			</details>
+		</div>
+
+
+
 		<h2 class='underlined'>Electrical Power</h2>
 		<p>
 			Watt is the unit of power. The wattage of an electrical appliance gives you an idea of how much electrical energy the appliance converts. An 800 W microwave uses 800 J per second. A 1600 W microwave will heat food much faster because it uses up twice that much energy per second.
@@ -59,9 +101,9 @@
 			<p>
 				We can convert power into electrical terms with some substitution.
 			</p>
-			$$P = \frac{E}{\Delta t} \quad \quad \quad E = {\color{#00f}Vq} \quad \quad \quad I = \color{#f00} \frac{q}{\Delta t}$$
-			$$P = \frac{{\color{#00f}Vq}}{\Delta t}$$
-			$$P = {\color{#f00}\frac{q}{\Delta t}}V$$
+			$$P = \frac{W}{\Delta t} \quad \quad \quad W = {\color{#07c}Vq} \quad \quad \quad I = \color{#f53} \frac{q}{\Delta t}$$
+			$$P = \frac{{\color{#07c}Vq}}{\Delta t}$$
+			$$P = {\color{#f53}\frac{q}{\Delta t}}V$$
 			$$P = IV$$
 			<p>
 				If we combine P=IV with Ohm's law we can get another power equation.
@@ -108,7 +150,9 @@
 			<strong>Question:</strong> A battery and a resistor in a simple looping circuit will drain the chemical energy of the battery. Energy can't be created or destroyed, but it can change forms. What form does the battery's energy change into?
 			<details>
 				<summary>answer</summary>
-				<p>The resistor gets hot, and the heat energy dissipates into the air.</p>
+				<p>
+					As resistor converts electrical energy into heat energy it does work. The heat energy dissipates into the air.
+				</p>
 			</details>
 		</div>
 
@@ -176,7 +220,7 @@
 			<details>
 				<summary>solution</summary>
 				$$P=0.75\, \mathrm{W}$$
-				<br> $$P = \frac{E}{\Delta t}$$ $$E = P \Delta t$$ $$E = (0.75\, \mathrm{W})(10\, \mathrm{s})$$ $$E = 7.5\, \mathrm{J}$$
+				<br> $$P = \frac{W}{\Delta t}$$ $$W = P \Delta t$$ $$W = (0.75\, \mathrm{W})(10\, \mathrm{s})$$ $$W = 7.5\, \mathrm{J}$$
 			</details>
 		</div>
 
@@ -197,22 +241,10 @@
 			<details>
 				<summary>solution</summary>
 				$$P=IV$$ $$P=(0.024)(1.5)$$ $$P=0.036\, \mathrm{W}$$
-				<br> $$P = \frac{E}{\Delta t}$$ $$E = P\Delta t$$ $$E = (0.036 \, \mathrm{\frac{J}{s}})(5\, \mathrm{min})\left(\frac{60\,
-				\mathrm{s}}{1\, \mathrm{min}}\right)$$ $$E = (0.036 \frac{J}{s})(300s)$$ $$E = 10.8\, \mathrm{J}$$
-			</details>
-		</div>
-		<!-- <h2 class='underlined'>Kilowatt Hour</h2> -->
-
-		<div class='example'>
-			<p>Power bills in America use a unit called kiloWatt hour. This is actually a unit of energy, not power. $$\text{(kilo)(watt)(hour)}$$
-				$$(1000) \left(\mathrm{\frac{J}{s}}\right)(3600\, \mathrm{s})$$ $$3,600,000\, \left(\mathrm{\frac{J}{s}}\right)(\mathrm{s})$$
-				$$1\, \mathrm{kWh} = 3,600,000\, \mathrm{J}$$</p>
-			<strong>Example:</strong> The average price in America for 1 kiloWatt hour is $0.12. How much would it cost to run an 800 Watt
-			microwave for 3 hours?
-			<details>
-				<summary>solution</summary>
-				$$800\, \mathrm{W} \left( \frac{\mathrm{k}}{1000} \right) = 0.8\, \mathrm{kW}$$ $$(0.8\, \mathrm{kW})(3\, \mathrm{h})\left(\frac{\$0.12}{\mathrm{kWh}}\right)
-				= \$0.28$$
+				<br> $$P = \frac{W}{\Delta t}$$ $$W = P\Delta t$$
+				$$W = (0.036 \, \mathrm{\frac{J}{s}})(5\, \mathrm{min})\left(\frac{60\, \mathrm{s}}{1\, \mathrm{min}}\right)$$
+				$$W = (0.036 \frac{J}{s})(300s)$$
+				$$W = 10.8\, \mathrm{J}$$
 			</details>
 		</div>
 	</article>
