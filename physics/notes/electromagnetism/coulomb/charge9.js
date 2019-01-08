@@ -14,10 +14,8 @@ function charges9(el) {
     pause = false;
   });
 
-
   ctx.textAlign = "right";
 
-  //spawn p before e to avoid a bug in the class method allPhysics
   const side = 30;
   const apothem = side * 0.866; //vertical distance between rows
   const rows = 7; // y

@@ -14,7 +14,6 @@ function charges5(el) {
     pause = false;
   });
 
-  //spawn p before e to avoid a bug in the class method allPhysics
   const separation = 30;
   const lenX = 13
   const lenY = 4;

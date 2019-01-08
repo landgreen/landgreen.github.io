@@ -44,16 +44,25 @@
 		<p>
 			<a href='https://www.youtube.com/watch?v=63FnT0W-Hxc'>Electric fields</a> predict the electric force of an imaginary +1 C test charge at a location. This is useful when you only know about one charge instead of the pair, but remember the test charge doesn't exist.
 		</p>
-		<p>
-			Click the simulations to push the electrons out of position.
-		</p>
-		<canvas id='charge3' height='300' onclick="charges3(this)"> </canvas>
-		<p>Why does the field go to zero when the protons and electrons are in atoms?</p>
-		<canvas id='charge4' height='300' onclick="charges4(this)"> </canvas>
+		<div class="example" id="charge3-example">
+			<select id="charge-preset" style="user-select: none;">
+				<option value="triangle">triangle</option>
+				<option value="square">square</option>
+				<option value="hexagon">hexagon</option>
+				<option value="random">random</option>
+				<option value="clear">clear</option>
+			</select>
+			<canvas id='charge3' height='300' onclick="charges3(this)"> </canvas>
+			<p>
+				Click the simulations to push the electrons out of position.
+			</p>
+			<p>Why does the field go to zero when the protons and electrons are in atoms?</p>
+		</div>
+		<!-- <canvas id='charge4' height='300' onclick="charges4(this)"> </canvas>
 		<p>
 			Note that these classical simulations don't include the predictions of quantum mechanics or relativity.
 		</p>
-		<canvas id='charge5' height='300' onclick="charges5(this)"> </canvas>
+		<canvas id='charge5' height='300' onclick="charges5(this)"> </canvas> -->
 
 		<h2 class='underlined'>Electric Field Equation</h2>
 		<p>We get the electric field equation by simply setting one q to +1 C in the electrostatic force equation.</p>
@@ -651,8 +660,8 @@
 	</script>
 	<script src='../../../lib/chargeclass.js'></script>
 	<script src="charge3.js"></script>
-	<script src="charge4.js"></script>
-	<script src="charge5.js"></script>
+	<!-- <script src="charge4.js"></script> -->
+	<!-- <script src="charge5.js"></script> -->
 </body>
 
 </html>
