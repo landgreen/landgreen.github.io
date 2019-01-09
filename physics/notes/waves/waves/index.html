@@ -101,7 +101,7 @@
 		</table>
 		<div class='definition'>
 			<p>
-				A wave is a disturbance that propagates through a medium.
+				A wave is a disturbance that <strong id="propagates">propagates</strong> through a <strong id="medium">medium</strong>.
 			</p>
 			<br>
 			<svg viewBox="0 100 1000 550">
@@ -122,38 +122,56 @@
 					<circle cx="193" cy="142" r="10" />
 					<circle cx="500" cy="604" r="10" />
 				</g>
-				<!-- <rect x="-10" y="350" width="164" height="40" fill="#ddeef6" stroke="none" /> -->
 				<g fill='#000' font-size="30" text-anchor="middle">
-					<text x="190" y="123">crest</text>
-					<text x="500" y="640">trough</text>
-					<text x="500" y="120">amplitude</text>
-					<text x="500" y="430">wavelength</text>
-					<text x="5" y="383" text-anchor="start">equilibrium</text>
+					<text x="190" y="123" id="crest">crest</text>
+					<text x="500" y="640" id="trough">trough</text>
+					<text x="500" y="120" id="amplitude">amplitude</text>
+					<text x="500" y="430" id="wavelength">wavelength</text>
+					<text x="5" y="383" id="equilibrium" text-anchor="start">equilibrium</text>
 				</g>
-
 			</svg>
-			<strong>Medium</strong> = substance that carries the wave
-			<br>
-			<strong>Propagate</strong> = transmit through the medium, how waves move
-			<br>
-			<strong>Equilibrium</strong> = resting state of a medium
+			<p id="definition"><strong>Medium</strong> = substance that carries the wave</p>
+			<script>
+				const el = document.getElementById("definition")
+				document.getElementById("crest").addEventListener("mouseover", () => {
+					el.innerHTML = "<strong>Crest</strong> = high point on a wave"					
+				});
+				document.getElementById("trough").addEventListener("mouseover", () => {
+					el.innerHTML = "<strong>Trough</strong> = low point on a wave"					
+				});
+				document.getElementById("amplitude").addEventListener("mouseover", () => {
+					el.innerHTML = "<strong>Amplitude</strong> = maximum displacement from equilibrium (m)"					
+				});
+				document.getElementById("wavelength").addEventListener("mouseover", () => {
+					el.innerHTML = "<strong>Wavelength, λ</strong> = distance between adjacent crests or troughs [m]"					
+				});
+				document.getElementById("equilibrium").addEventListener("mouseover", () => {
+					el.innerHTML = "<strong>Equilibrium</strong> = resting state of a medium"					
+				});
+				document.getElementById("medium").addEventListener("mouseover", () => {
+					el.innerHTML = "<strong>Medium</strong> = substance that carries the wave"					
+				});
+				document.getElementById("propagates").addEventListener("mouseover", () => {
+					el.innerHTML = "<strong>Propagate</strong> = transmit through the medium, how waves move"					
+				});
+			</script>
+			<!-- <strong>Medium</strong> = substance that carries the wave
+			<br> -->
+			<!-- <strong>Propagate</strong> = transmit through the medium, how waves move -->
+			<!-- <strong>Equilibrium</strong> = resting state of a medium
 			<br>
 			<strong>Amplitude</strong> = maximum displacement from equilibrium (m)
 			<br>
 			<strong>Crest</strong> = high point on a wave
 			<br>
 			<strong>Trough</strong> = low point on a wave
-			<br>
+			<br> -->
 			<!-- <strong>Pulse</strong> = a single disturbance
 			<br> -->
 			<!-- <strong>Cycle</strong> = a disturbance that repeats over and over again.
 			<br> -->
-			<br>
-			<strong>Wavelength, λ</strong> = distance between adjacent crests or troughs [m]
-			<br>
-			<strong>Period, T</strong> = time for one complete wave cycle to pass a point [s]
-			<br>
-			<strong>Frequency, f</strong> = number of cycles that pass per second [Hz, 1/s]
+			<!-- <br>
+			<strong>Wavelength, λ</strong> = distance between adjacent crests or troughs [m] -->
 		</div>
 		<div class='example'>
 	</article>
@@ -214,6 +232,11 @@
 		</div>
 	</div>
 	<article>
+		<p>
+			<strong>Period, T</strong> = time for one complete wave cycle to pass a point [s]
+			<br>
+			<strong>Frequency, f</strong> = number of cycles that pass per second [Hz, 1/s]
+		</p>
 		<strong>Graphing:</strong> Let's see if we can find a relationship between frequency and period. Change the wavelength and record about five different pairs of frequency and period. Graph the pairs with period as the x-coordinate and frequency as the y-coordinate. What does the graph look like?
 		<details id="example0">
 			<summary>solution</summary>

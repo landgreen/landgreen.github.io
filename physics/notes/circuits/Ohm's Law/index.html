@@ -157,7 +157,7 @@
 
 		<h2 class='underlined'>Voltage (Potential Difference)</h2>
 		<p>
-			Voltage is a measure of the difference in electrical potential between two points. Voltage is defined so that negatively charged objects are pulled towards higher voltages, while positively charged objects are pulled towards lower voltages.
+			Voltage is a measure of the difference in <a href="..\..\electromagnetism\potential\index.html#potential">electrical potential</a> between two points. Voltage is defined so that negatively charged objects are pulled towards higher voltages, while positively charged objects are pulled towards lower voltages.
 		</p>
 		<p>
 			Common sources of differences in potential (voltage) are the two terminals in a wall socket and the positive and negative terminals on a <a href='https://en.wikipedia.org/wiki/Battery_(electricity)'>battery</a>.
@@ -204,7 +204,7 @@
 			}
 
 			.ants-slow {
-				animation: marching_ants 1s linear infinite;
+				animation: marching_ants 1.5s linear infinite;
 				stroke-dasharray: 0.1 19.9;
 			}
 
@@ -269,18 +269,6 @@
 				<p>Adding more resistors slows the electrons down.</p>
 				<svg viewBox="-75 0 550 170">
 					<path d="M 50 68 v-63 h 265
-								v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-								h -92  l-10 15 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -15 h -92.5
-								v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
-					<path d="M 50 68 v-63 h 265
-								v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-								h -92  l-10 15 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -15 h -92.5
-								v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants-slow" />
-					<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
-					<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
-				</svg>
-				<svg viewBox="-75 0 550 170">
-					<path d="M 50 68 v-63 h 265
 						v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
 						h -265
 						v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
@@ -290,7 +278,21 @@
 					<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
 					<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
 				</svg>
-				<p>Removing all the resistors speeds the electrons up. This can cause problems in the circuit, like over heating.</p>
+				<svg viewBox="-75 -15 550 180">
+					<path d="M 50 68 v-63
+						h 92  l10 15 l10 -30 l10 30 l10 -30 l10 30 l10 -30 l10 30 l10 -15 h92.5
+						v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
+						h -92  l-10 15 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -15 h -92.5
+						v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
+					<path d="M 50 68 v-63
+						h 92  l10 15 l10 -30 l10 30 l10 -30 l10 30 l10 -30 l10 30 l10 -15 h92.5
+						v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
+						h -92  l-10 15 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -15 h -92.5
+						v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants-slow" />
+					<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
+					<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
+				</svg>
+				<p>Removing most of the resistance in a circuit produces whats called a short circuit. This causes the electrons to speed up producing dangerously large amounts of heat.</p>
 				<svg viewBox="-75 0 550 170">
 					<path d="M 50 68 v-63 h 265
 								v 140 h-265

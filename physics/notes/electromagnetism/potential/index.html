@@ -128,42 +128,41 @@
 			</details>
 		</div>
 		<div class='example'>
-			<h2 class='underlined'>Chemistry and Coulomb's Law</h2>
+			<!-- <h2 class='underlined'>Chemistry and Coulomb's Law</h2> -->
 			<p>
-				Chemistry is most accurately described by quantum mechanics, but chemical <a href="http://www.testtubegames.com/bondbreaker.html">bonds</a> and chemical reactions can be loosely explained with electrostatic forces. Let's see how far classical physics will take us.
+				Chemistry is most accurately described by quantum mechanics, but chemical <a href="http://www.testtubegames.com/bondbreaker.html">bonds</a> and chemical reactions can be loosely explained with electrostatic potential energy. Let's see how far classical physics will take us.
 			</p>
-			<strong>Example</strong>: Calculate what Coulomb's law predicts for the energy holding together regular table salt, NaCl.
-			<details>
-				<summary>lengthy investigation</summary>
-				<div class="col-group center">
-					<div>
-						<svg class="center" width="110" height="110">
-							<g transform='translate(55,55)'>
-								<circle cx="0" cy="0" r="50" fill='#fff' stroke-width="2" stroke="#222" />
-								<text x="0" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25px">Na</text>
-							</g>
-						</svg>
-						<p>
-							<strong>Na: Sodium</strong>
-							<br>1 valence electron
-							<br>mass = 3.8 x 10<sup>-26</sup> kg
-							<br>ionic radius = 227 x 10<sup>-12</sup> m</p>
-					</div>
-					<div>
-						<svg class="center" width="110" height="110">
-							<g transform='translate(55,55)'>
-								<circle cx="0" cy="0" r="35" fill='#fff' stroke-width="2" stroke="#222" />
-								<text x="0" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25px">Cl</text>
-							</g>
-						</svg>
-						<p>
-							<strong>Cl: Chlorine</strong>
-							<br>7 valence electrons
-							<br>mass = 5.9 x 10<sup>-26</sup> kg
-							<br>ionic radius = 175 x 10<sup>-12</sup> m</p>
-					</div>
+			<div class="col-group center">
+				<div>
+					<svg class="center" width="110" height="110">
+						<g transform='translate(55,55)'>
+							<circle cx="0" cy="0" r="50" fill='#fff' stroke-width="2" stroke="#222" />
+							<text x="0" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25px">Na</text>
+						</g>
+					</svg>
+					<p>
+						<strong>Na: Sodium</strong>
+						<br>1 valence electron
+						<br>mass = 3.8 x 10<sup>-26</sup> kg
+						<br>ionic radius = 227 x 10<sup>-12</sup> m</p>
 				</div>
-				<p>In nonionic atoms the numbers of electrons and protons are equal so the electrostatic forces are balanced to zero. When NaCl ionically bond one electron leaves Na and joins Cl. Na gains a +1 charge and Cl gains a -1 charge. The unbalanced charges produce an attractive force.</p>
+				<div>
+					<svg class="center" width="110" height="110">
+						<g transform='translate(55,55)'>
+							<circle cx="0" cy="0" r="35" fill='#fff' stroke-width="2" stroke="#222" />
+							<text x="0" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25px">Cl</text>
+						</g>
+					</svg>
+					<p>
+						<strong>Cl: Chlorine</strong>
+						<br>7 valence electrons
+						<br>mass = 5.9 x 10<sup>-26</sup> kg
+						<br>ionic radius = 175 x 10<sup>-12</sup> m</p>
+				</div>
+			</div>
+			<strong>Example</strong>: Calculate what Coulomb's law predicts for the energy holding together an atom of sodium and chlorine, NaCl.
+			<details>
+				<summary>strategy</summary>
 				<svg class="center" width="210" height="105">
 					<g transform='translate(105,52)'>
 						<circle cx="-50" cy="0" r="50" fill='#f8a					' stroke-width="2" stroke="#222" />
@@ -174,6 +173,10 @@
 						<text x="55" y="-5" fill="black" text-anchor="middle" dominant-baseline="central" font-size="15px">-1</text>
 					</g>
 				</svg>
+				<p>In nonionic atoms the numbers of electrons and protons are equal so the electrostatic forces are balanced to zero. When NaCl ionically bond one electron leaves Na and joins Cl. Na gains a +1 charge and Cl gains a -1 charge. The unbalanced charges produce an attractive force.</p>
+			</details>
+			<details>
+				<summary>solution</summary>
 				$$ U_{e} = \frac{k_{e}q_{1}q_{2}}{r} $$
 				$$ U_{e} = \frac{(8.987 \times 10^{9})(1.602 \times 10^{-19})(-1.602 \times 10^{-19})}{402 \times 10^{-12}} $$
 				$$ U_{e} = -5.737 \times 10^{-19} \, \mathrm{J}$$
@@ -181,8 +184,7 @@
 				<p> The measured NaCl dissociation energy is slightly higher at -6.82 x 10<sup>-19</sup> J. Coulomb's law isn't perfect, but it is a close approximation.</p>
 		</div>
 
-		</details>
-		<h2 class='underlined'>Electric Potential</h2>
+		<h2 class='underlined' id="potential">Electric Potential</h2>
 		<p>Electric potential is mathematically similar to electric fields. Electric fields are the force per unit charge, and electric potential is the energy per unit charge.</p>
 		$$ V = \frac{U_e}{q}$$
 		<p>
@@ -242,7 +244,7 @@
 			Here is a Coulomb's law simulation of electric potential as a scalar field. You can think of the protons like mountains and the electrons like valleys.
 		</div>
 		<div class="example" id="charge5-example">
-			This 2-D simulation uses color to show electric potential. Right click adds positive charge, middle mouse adds negative charge.
+			This 2D simulation uses color to show electric potential. Right click adds positive charge, middle mouse adds negative charge.
 			<select id="charge-preset" style="float: right;">
 				<option value="triangle">triangle</option>
 				<option value="square">square</option>
@@ -253,7 +255,7 @@
 			<canvas class='center' id='charge5' height='250' onclick="charges5(this)"></canvas>
 			<p>Click the simulations a few times to push the charges around.</p>
 		</div>
-		<!-- <p>These 2-D simulations use color to show electric potential. </p>
+		<!-- <p>These 2D simulations use color to show electric potential. </p>
 		<canvas class='center' id='charge6' height='300' onclick="charges6(this)"> </canvas>
 		<p>Click the simulations a few times to push the charges around. Right click adds positive charge, middle mouse adds negative charge.</p>
 		<canvas class='center' id='charge7' height='250' onclick="charges7(this)"> </canvas> -->
@@ -350,7 +352,7 @@
 			Use the mouse to move the camera. Double click for full screen.
 			<canvas id='three-potential-2-load' width='590' height='300' onclick="potential2('three-potential-2')"></canvas>
 			<canvas id='three-potential-2' width='590' height='0'></canvas>
-			This is a Coulomb's law based simulation of the flow of charges with electric potential shown as height. Electric potential difference is the difference in height between two points.
+			This is a Coulomb's law based simulation of the flow of charges with electric potential shown as height.
 			<br><br><strong>Question:</strong> Are the electrons the peaks or the valleys?
 			<details>
 				<summary>answer</summary>
