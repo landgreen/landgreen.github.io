@@ -100,15 +100,24 @@
 			</tr>
 		</table>
 		<div class='definition'>
+			<style>
+				.def-underlined{
+					text-decoration: underline;
+				}
+				.def-underlined:hover {
+					color: #f05;
+					fill: #f05;
+				}
+			</style>
 			<p>
-				A wave is a disturbance that <strong id="propagates">propagates</strong> through a <strong id="medium">medium</strong>.
+				A wave is a disturbance that <span id="def-propagates" class="def-underlined">propagates</span> through a <span id="def-medium" class="def-underlined">medium</span>.
 			</p>
 			<br>
 			<svg viewBox="0 100 1000 550">
 				<g stroke-width='3' fill="none" stroke="#678">
-					<path d='M502 362 h10 h-20 h10 v-225 h10 h-20' />
+					<path d='M804 362 h10 h-20 h10 v-200 h10 h-20' />
 					<path d='M195 400 v10 v-20 v10 h605 v10 v-20' />
-					<path d="M170 375 h780" stroke-dasharray="19, 20" />
+					<path d="M170 375 h780" stroke-dasharray="19, 20" stroke="#9ab" />
 				</g>
 				<path d="M60,329 L69,308 L78,287 L87,267 L97,248 L106,230 L115,213 L124,198 L134,185 L143,173 L152,163
 					L162,154 L171,148 L180,144 L189,142 L199,142 L208,144 L217,148 L226,154 L236,163 L245,173 L254,185 L264,198 L273,213 L282,230
@@ -122,58 +131,53 @@
 					<circle cx="193" cy="142" r="10" />
 					<circle cx="500" cy="604" r="10" />
 				</g>
-				<g fill='#000' font-size="30" text-anchor="middle">
-					<text x="190" y="123" id="crest">crest</text>
-					<text x="500" y="640" id="trough">trough</text>
-					<text x="500" y="120" id="amplitude">amplitude</text>
-					<text x="500" y="430" id="wavelength">wavelength</text>
-					<text x="5" y="383" id="equilibrium" text-anchor="start">equilibrium</text>
+				<g fill='#333' font-size="32" text-anchor="middle">
+					<text x="190" y="120" id="def-crest" class="def-underlined">crest</text>
+					<text x="500" y="643" id="def-trough" class="def-underlined">trough</text>
+					<text x="800" y="120" id="def-amplitude" class="def-underlined">amplitude</text>
+					<text x="500" y="430" id="def-wavelength" class="def-underlined">wavelength</text>
+					<text x="0" y="383" id="def-equilibrium" text-anchor="start" class="def-underlined">equilibrium</text>
 				</g>
 			</svg>
-			<p id="definition"><strong>Medium</strong> = substance that carries the wave</p>
+			<p id="def-definition" style="background-color: #fff; border-radius: 10px; padding:0.5em;">Click the <span id="def-underlined" style="text-decoration: underline;">underlined</span> words for their definition.</p>
 			<script>
-				const el = document.getElementById("definition")
-				document.getElementById("crest").addEventListener("mouseover", () => {
+				const el = document.getElementById("def-definition")
+				document.getElementById("def-crest").addEventListener("click", () => {
 					el.innerHTML = "<strong>Crest</strong> = high point on a wave"					
 				});
-				document.getElementById("trough").addEventListener("mouseover", () => {
+				document.getElementById("def-trough").addEventListener("click", () => {
 					el.innerHTML = "<strong>Trough</strong> = low point on a wave"					
 				});
-				document.getElementById("amplitude").addEventListener("mouseover", () => {
+				document.getElementById("def-amplitude").addEventListener("click", () => {
 					el.innerHTML = "<strong>Amplitude</strong> = maximum displacement from equilibrium (m)"					
 				});
-				document.getElementById("wavelength").addEventListener("mouseover", () => {
+				document.getElementById("def-wavelength").addEventListener("click", () => {
 					el.innerHTML = "<strong>Wavelength, λ</strong> = distance between adjacent crests or troughs [m]"					
 				});
-				document.getElementById("equilibrium").addEventListener("mouseover", () => {
+				document.getElementById("def-equilibrium").addEventListener("click", () => {
 					el.innerHTML = "<strong>Equilibrium</strong> = resting state of a medium"					
 				});
-				document.getElementById("medium").addEventListener("mouseover", () => {
+				document.getElementById("def-medium").addEventListener("click", () => {
 					el.innerHTML = "<strong>Medium</strong> = substance that carries the wave"					
 				});
-				document.getElementById("propagates").addEventListener("mouseover", () => {
+				document.getElementById("def-propagates").addEventListener("click", () => {
 					el.innerHTML = "<strong>Propagate</strong> = transmit through the medium, how waves move"					
 				});
+				document.getElementById("def-underlined").addEventListener("click", () => {
+					el.innerHTML = "<strong>Underline</strong> = draw a line under (a word or phrase) to give emphasis or indicate special type."					
+				});
 			</script>
-			<!-- <strong>Medium</strong> = substance that carries the wave
-			<br> -->
-			<!-- <strong>Propagate</strong> = transmit through the medium, how waves move -->
-			<!-- <strong>Equilibrium</strong> = resting state of a medium
-			<br>
-			<strong>Amplitude</strong> = maximum displacement from equilibrium (m)
-			<br>
-			<strong>Crest</strong> = high point on a wave
-			<br>
-			<strong>Trough</strong> = low point on a wave
-			<br> -->
-			<!-- <strong>Pulse</strong> = a single disturbance
-			<br> -->
-			<!-- <strong>Cycle</strong> = a disturbance that repeats over and over again.
-			<br> -->
-			<!-- <br>
-			<strong>Wavelength, λ</strong> = distance between adjacent crests or troughs [m] -->
 		</div>
-		<div class='example'>
+		<p>Waves don't have to look like sine and cosine functions. They tend to be drawn that way because any wave can represented as a sum of sine waves.</p>
+		<p>A wave doesn't have to be repeating either, although many wave do repeat.</p>
+
+		<h2 class='underlined'>Frequency and Period</h2>
+		<p>
+			<strong>Period, T</strong> = time for one complete wave cycle to pass a point [s]
+			<br>
+			<strong>Frequency, f</strong> = number of cycles that pass per second [Hz, 1/s]
+		</p>
+		<br>
 	</article>
 	<div id="sine-wave-zone">
 		<div class="flex-grid-thirds">
@@ -216,7 +220,6 @@
 					<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;' />
 					<text x="50" y="391" text-anchor="middle" font-size="15" fill='#000'>100 m</text>
 				</g>
-
 			</svg>
 		</div>
 		<div class="flex-grid-thirds">
@@ -232,11 +235,6 @@
 		</div>
 	</div>
 	<article>
-		<p>
-			<strong>Period, T</strong> = time for one complete wave cycle to pass a point [s]
-			<br>
-			<strong>Frequency, f</strong> = number of cycles that pass per second [Hz, 1/s]
-		</p>
 		<strong>Graphing:</strong> Let's see if we can find a relationship between frequency and period. Change the wavelength and record about five different pairs of frequency and period. Graph the pairs with period as the x-coordinate and frequency as the y-coordinate. What does the graph look like?
 		<details id="example0">
 			<summary>solution</summary>
@@ -264,9 +262,7 @@
 					}
 				</script>
 		</details>
-		<br><br><br><br><br><br><br><br>
-
-		<h2 class='underlined'>Frequency and Period</h2>
+		<br><br><br><br><br>
 		<div class='definition'>
 			<h1>$$f = \frac{1}{T}$$</h1>
 			\(f\) = frequency [Hz, 1/s, hertz]
@@ -330,11 +326,11 @@
 				@keyframes pulsate {
 					from {
 						transform: scale(1);
-						background-color: #666;
+						background-color: #89a;
 					}
 					to {
 						transform: scale(.1);
-						background-color: #222;
+						background-color: #123;
 					}
 				}
 			</style>
@@ -394,7 +390,7 @@
 			</script>
 			<strong>Interactive:</strong> Click the circle to start; click again to pause after it gets annoying.
 			<br>
-			<br>Think about the definition of period and frequency. Which slider controls period and which controls frequency?
+			<br>Which slider controls period and which controls frequency?
 			<details>
 				<summary>solution</summary>
 				<p>Period is controlled by the left slider and frequency by the right.</p>
