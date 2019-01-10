@@ -247,21 +247,6 @@
 			</details>
 		</div>
 
-		<p>
-			This simulation runs Coulomb's law (like charges repel, opposites attract). You can see the randomly placed charges spontaneously form "atoms".
-		</p>
-		<canvas id='charge0' height='300' onclick="charges0(this)"> </canvas>
-		<p>Try poking the simulations with your mouse. Right click adds positive charge, middle mouse adds negative charge. </p>
-		<canvas id='charge1' height='300' onclick="charges1(this)"> </canvas>
-		<div class="hide-on-mobile">
-			<p>
-				This one is organized in a hexagon pattern, like
-				<a href="https://en.wikipedia.org/wiki/Graphene">graphene</a>.
-			</p>
-			<canvas id='charge6' height='470' onclick="charges6(this)"> </canvas>
-		</div>
-		<p>These simulations only approximate how protons and electrons interact. A more accurate model would include the predictions of quantum mechanics.</p>
-
 		<div class='example'>
 			<svg viewBox="40 -5 500 80">
 				<g fill="none" stroke="none" stroke-width="2">
@@ -374,6 +359,9 @@
 					Forces from multiple charges have to be calculated separately with Coulomb's law and summed with Newton's law.
 				</p>
 				$$\sum F = ma $$
+				<p>
+					Dont' forget to convert the μ = micro = 10<sup>-6</sup>
+				</p>
 			</details>
 			<details>
 				<summary>solution: q1</summary>
@@ -421,6 +409,22 @@
 				$$a = 1.46 \, \mathrm{\frac{m}{s^2}} \quad \text{left}$$
 			</details>
 		</div>
+
+		<p>
+			This simulation runs Coulomb's law (like charges repel, opposites attract). You can see the randomly placed charges spontaneously form "atoms".
+		</p>
+		<canvas id='charge0' height='300' onclick="charges0(this)"> </canvas>
+		<p>Try poking the simulations with your mouse. Right click adds positive charge, middle mouse adds negative charge. </p>
+		<canvas id='charge1' height='300' onclick="charges1(this)"> </canvas>
+		<div class="hide-on-mobile">
+			<p>
+				This one is organized in a hexagon pattern, like
+				<a href="https://en.wikipedia.org/wiki/Graphene">graphene</a>.
+			</p>
+			<canvas id='charge6' height='470' onclick="charges6(this)"> </canvas>
+		</div>
+		<p>These simulations only approximate how protons and electrons interact. A more accurate model would include the predictions of quantum mechanics.</p>
+
 		<h2 class='underlined'>Elementary Electric Charge</h2>
 		<p>
 			In 1909 Robert Millikan and Harvey Fletcher performed the <a href="https://www.youtube.com/watch?v=UFiPWv03f6g">oil drop experiment</a> to investigate electric charge. They sprayed a fine mist of oil into an uniform electric field.
@@ -526,8 +530,9 @@
 
 		<div class="hide-on-mobile">
 			<canvas id='charge8' height='250' onclick="charges8(this)"> </canvas>
-			<p>In some materials the current can be thought of as the flow of an electron hole. This model of current helps to understand the semiconductors in solar panels, LEDs, and transistors.</p>
+			<p>In some materials the current can be thought of as the flow of an electron hole. This model of current helps explain the semiconductors used in solar panels, LEDs, and transistors.</p>
 			<canvas id='charge9' height='250' onclick="charges9(this)"> </canvas>
+			<p>These simulations help develop an vague intuition for electric current, but they don't capture the nuances of quantum mechanics.</p>
 		</div>
 
 		<div class="example">
