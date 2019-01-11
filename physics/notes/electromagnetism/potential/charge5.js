@@ -16,15 +16,15 @@ function charges5(el) {
     pause = false;
   });
   const spread = 10
-  triangle()
 
-  const presetEl = document.getElementById("charge-preset")
-  presetEl.addEventListener("change", () => {
+
+  function chooseMode() {
     q.length = 0; //reset charges
-    switch (presetEl.value) {
+    mode = presetEl.value
+    switch (mode) {
       case 'random':
-        Charge.spawnCharges(q, 8, "p");
-        Charge.spawnCharges(q, 8, "e");
+        Charge.spawnCharges(q, 25, "p");
+        Charge.spawnCharges(q, 25, "e");
         break;
       case 'square':
         square()
@@ -35,10 +35,14 @@ function charges5(el) {
       case 'hexagon':
         hexagon();
         break;
-        // default:
-        //   console.log('error');
     }
+  }
+  const presetEl = document.getElementById("charge-preset")
+  chooseMode()
+  presetEl.addEventListener("change", () => {
+    chooseMode()
   });
+
 
 
   function hexagon() {

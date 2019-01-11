@@ -14,14 +14,10 @@ function charges3(el) {
     pause = false;
   });
 
-  // Charge.spawnCharges(q, 25, "p");
-  // Charge.spawnCharges(q, 25, "e");
-  triangle()
-
-  const presetEl = document.getElementById("charge-preset")
-  presetEl.addEventListener("change", () => {
+  function chooseMode() {
     q.length = 0; //reset charges
-    switch (presetEl.value) {
+    mode = presetEl.value
+    switch (mode) {
       case 'random':
         Charge.spawnCharges(q, 25, "p");
         Charge.spawnCharges(q, 25, "e");
@@ -35,9 +31,12 @@ function charges3(el) {
       case 'hexagon':
         hexagon();
         break;
-        // default:
-        //   console.log('error');
     }
+  }
+  const presetEl = document.getElementById("charge-preset")
+  chooseMode()
+  presetEl.addEventListener("change", () => {
+    chooseMode()
   });
 
   function hexagon() {
@@ -83,7 +82,7 @@ function charges3(el) {
           x += 2;
           xOff = -Math.abs(xOff);
         }
-        q[q.length] = new Charge("e-small", {
+        q[q.length] = new Charge("e", {
           x: hexLeft + (x + xOff) * side,
           y: hexTop + y * apothem
         });
