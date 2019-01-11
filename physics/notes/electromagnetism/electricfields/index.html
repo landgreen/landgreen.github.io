@@ -55,8 +55,18 @@
 			<canvas id='charge3' height='300' onclick="charges3(this)"> </canvas>
 			<p>
 				Click the simulations to push the electrons out of position.
+				This simulation helps develop an vague intuition for electric fields, but it doesn't capture the nuances of quantum mechanics.
 			</p>
-			<p>Why does the field go to zero when the protons and electrons are in atoms?</p>
+			<div class="example-small">
+				<strong>Question:</strong> Why does the field go to zero when the negative and position charges are matched up, as if they are atoms?
+				<details>
+					<summary>answer</summary>
+					<p>
+						When a proton and electron are in the same position the attractive and repulsive contributions to the electric field cancel each other out.
+					</p>
+				</details>
+			</div>
+
 		</div>
 		<!-- <canvas id='charge4' height='300' onclick="charges4(this)"> </canvas>
 		<p>
@@ -591,8 +601,8 @@
 		<div class='example'>
 			<strong>Example:</strong> A positive 1 μC charge is 50 mm away from a -2 μC charge. Find the magnitude and direction of the electric field halfway in between these charges.
 			<details>
-				<summary>solution</summary>
-				<p>Draw a picture</p>
+				<summary>draw a diagram</summary>
+				<br>
 				<svg viewBox="0 0 200 60">
 					<circle cx="100" cy="15" r="2" fill='#000' stroke-width="1" stroke="#222" />
 					<circle cx="25" cy="15" r="14" fill='#f8a' stroke-width="1" stroke="#222" />
@@ -606,7 +616,11 @@
 						<text x="75" y="15" fill="black" text-anchor="middle" font-size="9">50 mm</text>
 					</g>
 				</svg>
-				<p>Find the electric field from each charge at the location.</p>
+
+			</details>
+			<details>
+				<summary>solution</summary>
+				<p>Calculate the electric field from each charge at the location.</p>
 				$$\mu = 10^{-6}$$ $$E = \frac{k_{e}q}{r^{2}}$$
 				$$E = \frac{(8.987 \times 10^{9})(10^{-6})}{(0.025)^{2}}$$
 				$$E = 14,379,200 \, \mathrm{\tfrac{N}{C}} \rightarrow$$
@@ -620,8 +634,8 @@
 		<div class='example'>
 			<strong>Example:</strong> A 0.03 μC charge is 2 m East of a -0.01 μC charge. Find the magnitude and direction of the electric field 1 m West of the -0.01 μC charge.
 			<details>
-				<summary>solution</summary>
-				<p>Draw a picture.</p>
+				<summary>draw a diagram</summary>
+				<br>
 				<svg viewBox="0 0 200 60">
 					<circle cx="3" cy="15" r="2" fill='#000' stroke-width="1" stroke="#222" />
 					<circle cx="75" cy="15" r="14" fill='#abc' stroke-width="1" stroke="#222" />
@@ -641,7 +655,10 @@
 						<text x="36" y="15" fill="black" text-anchor="middle" font-size="8">1 m</text>
 					</g>
 				</svg>
-				<p>Find the electric field from each charge at the location.</p>
+			</details>
+			<details>
+				<summary>solution</summary>
+				<p>Calculate the electric field from each charge at the location.</p>
 				$$E = \frac{k_{e}q}{r^{2}}$$
 				$$E = \frac{(8.987 \times 10^{9})(-0.01 \times 10^{-6})}{(1)^{2}}$$
 				$$E = 89.87 \, \mathrm{ \tfrac{N}{C}} \rightarrow$$

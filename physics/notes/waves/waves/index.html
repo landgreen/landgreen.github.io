@@ -99,9 +99,10 @@
 				<td>The Wave</td>
 			</tr>
 		</table>
-		<div class='definition'>
-			<style>
-				.def-underlined{
+		<div class='example'>
+			<div class='definition'>
+				<style>
+					.def-underlined{
 					text-decoration: underline;
 				}
 				.def-underlined:hover {
@@ -109,17 +110,17 @@
 					fill: #f05;
 				}
 			</style>
-			<p>
-				A wave is a disturbance that <span id="def-propagates" class="def-underlined">propagates</span> through a <span id="def-medium" class="def-underlined">medium</span>.
-			</p>
-			<br>
-			<svg viewBox="0 100 1000 550">
-				<g stroke-width='3' fill="none" stroke="#678">
-					<path d='M804 362 h10 h-20 h10 v-200 h10 h-20' />
-					<path d='M195 400 v10 v-20 v10 h605 v10 v-20' />
-					<path d="M170 375 h780" stroke-dasharray="19, 20" stroke="#9ab" />
-				</g>
-				<path d="M60,329 L69,308 L78,287 L87,267 L97,248 L106,230 L115,213 L124,198 L134,185 L143,173 L152,163
+				<p>
+					A wave is a disturbance that <span id="def-propagates" class="def-underlined">propagates</span> through a <span id="def-medium" class="def-underlined">medium</span>.
+				</p>
+				<br>
+				<svg viewBox="0 100 1000 550">
+					<g stroke-width='3' fill="none" stroke="#678">
+						<path d='M804 362 h10 h-20 h10 v-200 h10 h-20' />
+						<path d='M195 400 v10 v-20 v10 h605 v10 v-20' />
+						<path d="M170 375 h780" stroke-dasharray="19, 20" stroke="#9ab" />
+					</g>
+					<path d="M60,329 L69,308 L78,287 L87,267 L97,248 L106,230 L115,213 L124,198 L134,185 L143,173 L152,163
 					L162,154 L171,148 L180,144 L189,142 L199,142 L208,144 L217,148 L226,154 L236,163 L245,173 L254,185 L264,198 L273,213 L282,230
 					L291,248 L301,267 L310,287 L319,308 L328,329 L338,351 L347,373 L356,395 L366,417 L375,438 L384,459 L393,479 L403,498 L412,516
 					L421,533 L430,548 L440,561 L449,573 L458,583 L468,592 L477,598 L486,602 L495,604 L505,604 L514,602 L523,598 L532,592 L542,583
@@ -127,21 +128,21 @@
 					L681,308 L690,287 L699,267 L709,248 L718,230 L727,213 L736,198 L746,185 L755,173 L764,163 L774,154 L783,148 L792,144 L801,142
 					L811,142 L820,144 L829,148 L838,154 L848,163 L857,173 L866,185 L876,198 L885,213 L894,230 L903,248 L913,267 L922,287 L931,308
 					L940,329 L950,351 L959,373 " stroke-width='20' stroke-linecap="round" fill='none' stroke='#234' />
-				<g fill='#fff' stroke="none">
-					<circle cx="193" cy="142" r="10" />
-					<circle cx="500" cy="604" r="10" />
-				</g>
-				<g fill='#333' font-size="32" text-anchor="middle">
-					<text x="190" y="120" id="def-crest" class="def-underlined">crest</text>
-					<text x="500" y="643" id="def-trough" class="def-underlined">trough</text>
-					<text x="800" y="120" id="def-amplitude" class="def-underlined">amplitude</text>
-					<text x="500" y="430" id="def-wavelength" class="def-underlined">wavelength</text>
-					<text x="0" y="383" id="def-equilibrium" text-anchor="start" class="def-underlined">equilibrium</text>
-				</g>
-			</svg>
-			<p id="def-definition" style="background-color: #fff; border-radius: 10px; padding:0.5em;">Click the <span id="def-underlined" style="text-decoration: underline;">underlined</span> words for their definition.</p>
-			<script>
-				const el = document.getElementById("def-definition")
+					<g fill='#fff' stroke="none">
+						<circle cx="193" cy="142" r="10" />
+						<circle cx="500" cy="604" r="10" />
+					</g>
+					<g fill='#333' font-size="32" text-anchor="middle">
+						<text x="190" y="120" id="def-crest" class="def-underlined">crest</text>
+						<text x="500" y="643" id="def-trough" class="def-underlined">trough</text>
+						<text x="800" y="120" id="def-amplitude" class="def-underlined">amplitude</text>
+						<text x="500" y="430" id="def-wavelength" class="def-underlined">wavelength</text>
+						<text x="0" y="383" id="def-equilibrium" text-anchor="start" class="def-underlined">equilibrium</text>
+					</g>
+				</svg>
+				<p id="def-definition" style="background-color: #fff; border-radius: 10px; padding:0.5em;">Click the <span class="def-underlined" id="def-underlined">underlined</span> words for their definition.</p>
+				<script>
+					const el = document.getElementById("def-definition")
 				document.getElementById("def-crest").addEventListener("click", () => {
 					el.innerHTML = "<strong>Crest</strong> = high point on a wave"					
 				});
@@ -167,9 +168,10 @@
 					el.innerHTML = "<strong>Underline</strong> = draw a line under (a word or phrase) to give emphasis or indicate special type."					
 				});
 			</script>
+			</div>
+			<p>Waves aren't limited to just sine and cosine functions. A wave doesn't have to be repeating either, although many wave do repeat.</p>
 		</div>
-		<p>Waves don't have to look like sine and cosine functions. They tend to be drawn that way because any wave can represented as a sum of sine waves.</p>
-		<p>A wave doesn't have to be repeating either, although many wave do repeat.</p>
+
 
 		<h2 class='underlined'>Frequency and Period</h2>
 		<p>
@@ -683,6 +685,7 @@
 	</article>
 	<canvas class='center' id='sound3' height='50' width='600' onclick="sound(this, 1, false, true) "> </canvas>
 	<article>
+		<br> <br>
 		<h2 class='underlined'>Transverse and Longitudinal</h2>
 		<p>
 			Sound waves are vibrations that move in the same direction the wave moves. Most other waves are produced by vibration perpendicular to the direction the wave moves, like waves on strings.
