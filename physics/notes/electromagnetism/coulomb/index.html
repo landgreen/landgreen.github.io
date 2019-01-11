@@ -545,6 +545,7 @@
 			</details>
 		</div>
 
+<<<<<<< HEAD
 		<div id="charge0-example">
 			<select id="charge-preset" style="user-select: none;">
 				<option value="random">random</option>
@@ -560,6 +561,8 @@
 			<p>These simulations only approximate how protons and electrons interact. A more accurate model would include the predictions of quantum mechanics.</p>
 		</div>
 
+=======
+>>>>>>> 0f29c8be0ad6b6737e108074a18c1babdf784e10
 		<div class='example'>
 			<svg viewBox="40 -5 500 80">
 				<g fill="none" stroke="none" stroke-width="2">
@@ -672,6 +675,9 @@
 					Forces from multiple charges have to be calculated separately with Coulomb's law and summed with Newton's law.
 				</p>
 				$$\sum F = ma $$
+				<p>
+					Dont' forget to convert the μ = micro = 10<sup>-6</sup>
+				</p>
 			</details>
 			<details>
 				<summary>solution: q1</summary>
@@ -717,6 +723,89 @@
 				$$a = \frac{\sum F}{m} $$
 				$$a = \frac{0.660-3.59}{2} $$
 				$$a = 1.46 \, \mathrm{\frac{m}{s^2}} \quad \text{left}$$
+<<<<<<< HEAD
+=======
+			</details>
+		</div>
+
+		<p>
+			This simulation runs Coulomb's law (like charges repel, opposites attract). You can see the randomly placed charges spontaneously form "atoms".
+		</p>
+		<canvas id='charge0' height='300' onclick="charges0(this)"> </canvas>
+		<p>Try poking the simulations with your mouse. Right click adds positive charge, middle mouse adds negative charge. </p>
+		<canvas id='charge1' height='300' onclick="charges1(this)"> </canvas>
+		<div class="hide-on-mobile">
+			<p>
+				This one is organized in a hexagon pattern, like
+				<a href="https://en.wikipedia.org/wiki/Graphene">graphene</a>.
+			</p>
+			<canvas id='charge6' height='470' onclick="charges6(this)"> </canvas>
+		</div>
+		<p>These simulations only approximate how protons and electrons interact. A more accurate model would include the predictions of quantum mechanics.</p>
+
+		<h2 class='underlined'>Elementary Electric Charge</h2>
+		<p>
+			In 1909 Robert Millikan and Harvey Fletcher performed the <a href="https://www.youtube.com/watch?v=UFiPWv03f6g">oil drop experiment</a> to investigate electric charge. They sprayed a fine mist of oil into an uniform electric field.
+			The electric field produced a force on some of the oil droplets. Based on that force, they found that charge only came in even multiples of about 1.6 × 10<sup>−19</sup> C.
+		</p>
+		<p>
+			This evidence helped build our modern model of the atom: negative electrons bound to a nucleus of positive protons
+			and neutral neutrons. Most charge comes from electrons or protons, but there are also more <a href='https://en.wikipedia.org/wiki/List_of_particles'>exotic particles</a>.
+		</p>
+		<div class="col-group definition">
+			<div class='center'>
+				<svg class="center" width="50" height="40">
+					<g transform='translate(20,20)'>
+						<circle cx="5" cy="0" r="17" fill='#abc' stroke-width="2" stroke="#222" />
+						<!-- <path d="M2 0 h8" fill="none" stroke="#222" stroke-linecap="round" stroke-width="4" /> -->
+						<text x="5" y="-1" fill="#222" text-anchor="middle" dominant-baseline="central" font-size="45" stroke-linecap="round">-</text>
+					</g>
+				</svg>
+				<strong>electron</strong>:
+				<br>charge = −1.602 × 10<sup>−19</sup> C
+				<br>mass = 9.109 × 10<sup>−31</sup> kg
+			</div>
+			<div class='center'>
+				<svg class="center" width="50" height="40">
+					<g transform='translate(20,20)'>
+						<circle cx="5" cy="0" r="17" fill='#f8a' stroke-width="2" stroke="#222" />
+						<text x="5" y="0" fill="#222" text-anchor="middle" dominant-baseline="central" font-size="27">+</text>
+					</g>
+				</svg>
+				<strong>proton</strong>:
+				<br>charge = +1.602 × 10<sup>−19</sup> C
+				<br>mass = 1.672 × 10<sup>−27</sup> kg
+			</div>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> These 6 values were recorded for electric charge. Which of the measurements are probably inaccurate? Why?
+			<style>
+				.multple-choice {
+					padding: 0.2em;
+				}
+			</style>
+			<div class="col-group center">
+				<div class="multple-choice"> +3.2 × 10<sup>−19</sup> C </div>
+				<div class="multple-choice"> −2.4 × 10<sup>−19</sup> C </div>
+				<div class="multple-choice"> −8.0 × 10<sup>−19</sup> C </div>
+				<div class="multple-choice"> +1.6 × 10<sup>−19</sup> C </div>
+				<div class="multple-choice"> +5.2 × 10<sup>−19</sup> C </div>
+				<div class="multple-choice"> −0.4 × 10<sup>−19</sup> C </div>
+			</div>
+			<details>
+				<summary>solution</summary>
+				<p>Charge has only been observed in packets of 1.602 × 10<sup>−19</sup> C. Any recorded charge must be an even multiple of this value.</p>
+				<div class="col-group">
+					<div> $$\frac{3.2 \times 10^{−19} \, \mathrm{C}}{1.6 \times 10^{−19} \, \mathrm{C}} = 2.0$$ </div>
+					<div> $$\frac{2.4 \times 10^{−19} \, \mathrm{C}}{1.6 \times 10^{−19} \, \mathrm{C}} = \cancel{1.5}$$ </div>
+					<div> $$\frac{8.0 \times 10^{−19} \, \mathrm{C}}{1.6 \times 10^{−19} \, \mathrm{C}} = 5.0$$ </div>
+					<div> $$\frac{1.6 \times 10^{−19} \, \mathrm{C}}{1.6 \times 10^{−19} \, \mathrm{C}} = 1.0$$ </div>
+					<div> $$\frac{5.2 \times 10^{−19} \, \mathrm{C}}{1.6 \times 10^{−19} \, \mathrm{C}} = \cancel{3.25}$$ </div>
+					<div> $$\frac{0.4 \times 10^{−19} \, \mathrm{C}}{1.6 \times 10^{−19} \, \mathrm{C}} = \cancel{0.\overline{66}}$$
+					</div>
+				</div>
+>>>>>>> 0f29c8be0ad6b6737e108074a18c1babdf784e10
 			</details>
 		</div>
 		<div class='example'>
@@ -748,6 +837,242 @@
 			</details>
 		</div>
 
+<<<<<<< HEAD
+=======
+		<h2 class='underlined' id='conductivity'>Conductivity</h2>
+		<p>
+			<strong>Conductive</strong> materials allow electric charges to easily move through them. If a charge is applied to one part of a conductive material the charge will quickly spread out because like charges repel.
+		</p>
+		<p>
+			In this simulation negative charges are removed from the right and added to the left to produce a messy looking flow of charge.
+		</p>
+		<canvas id='charge2' height='250' onclick="charges2(this)"> </canvas>
+		<p>The flow of electric charge is called <strong>electric current</strong>.</p>
+
+		<div class="hide-on-mobile">
+			<canvas id='charge8' height='250' onclick="charges8(this)"> </canvas>
+			<p>In some materials the current can be thought of as the flow of an electron hole. This model of current helps explain the semiconductors used in solar panels, LEDs, and transistors.</p>
+			<canvas id='charge9' height='250' onclick="charges9(this)"> </canvas>
+			<p>These simulations help develop an vague intuition for electric current, but they don't capture the nuances of quantum mechanics.</p>
+		</div>
+
+		<div class="example">
+			<p>
+				In chemistry, elements are roughly divided into metals, metalloids and nonmetals. Metals are held together by loosely sharing their outer valence electrons. The cloud of free flowing electrons give metals most of their shared characteristics, like <a href='https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity#Resistivity_and_conductivity_of_various_materials'>conductivity</a>.
+			</p>
+
+			<style>
+				.wrapper {
+					display: grid;
+					grid-gap: 10px;
+					grid-template-columns: [col] 90px [col] 75%;
+					grid-template-rows: [row] auto;
+				}
+
+				.a {
+					grid-column: col / span 1;
+					grid-row: row;
+				}
+
+				.b {
+					grid-column: col 2 / span 1;
+					grid-row: row;
+				}
+
+				/* @media screen and (max-width: 650px) {
+					.a {
+						display: none;
+					}
+
+					.wrapper {
+						display: block;
+					}
+				} */
+			</style>
+
+			<div class="wrapper">
+				<div class="a">
+					<svg width="80" height="350">
+						<g fill="#79a" stroke="#79a" stroke-width="2">
+							<path d="M20 60 V 295" fill="none" />
+							<path d="M20 55 l 5 8 l-5 -1 l -5 1 l 5 -8" stroke="none" />
+							<path d="M20 300 l 5 -8 l-5 1 l -5 -1 l 5 8" stroke="none" />
+							<g stroke="none" font-size="17" text-anchor="middle">
+								<text x="20" y="45">low</text>
+								<text x="20" y="320">high</text>
+								<text x="19" y="180" transform="rotate(-90 14 180)">conductivity</text>
+							</g>
+						</g>
+						<g fill="#d36" stroke="#d36" stroke-width="2">
+							<path d="M60 60 V 295" fill="none" />
+							<path d="M60 55 l 5 8 l-5 -1 l -5 1 l 5 -8" stroke="none" />
+							<path d="M60 300 l 5 -8 l-5 1 l -5 -1 l 5 8" stroke="none" />
+							<g stroke="none" font-size="17" text-anchor="middle">
+								<text x="60" y="45">high</text>
+								<text x="60" y="320">low</text>
+								<text x="60" y="180" transform="rotate(-90 55 180)">resistance</text>
+							</g>
+						</g>
+					</svg>
+				</div>
+				<div class="b">
+					<p>
+						<strong>insulators</strong>
+						<br>vacuum, nonmetals: gases, plastics, silk, fur
+					</p>
+					<p>
+						<strong>semi-conductors</strong>
+						<br>metalloids: carbon and silicon
+					</p>
+					<p>
+						<strong>electrolytes</strong>
+						<br>solvents with dissolved ions:
+						<br>salt water, tap water, soda water
+					</p>
+					<p>
+						<strong>conductors</strong>
+						<br>metals, plasma
+					</p>
+					<p>
+						<strong>superconductors</strong>
+						<br>certain low temperature ceramics
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> Rank these substances by to conductivity:
+			<h3> air, coca cola, copper, carbon, plastic fork </h3>
+			<details>
+				<summary>answer</summary>
+				<p>
+					<span style="color:#79a; font-weight: bold;">high conductivity</span>
+					<br>copper (conductor)
+					<br>coca cola (electrolyte)
+					<br>carbon (semi-conductor)
+					<br>plastic fork (insulator)
+					<br>air (insulator)
+					<br><span style="color:#d36; font-weight: bold;">low conductivity</span>
+				</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> Why are metals more conductive than nonmetals?
+			<details>
+				<summary>answer</summary>
+				<p>
+					In metals some electrons are free to move between atoms. In nonmetals the electrons are locked up in covalent bonds so they resist the electrostatic force.
+					<br>
+					<br>If you heat a nonmetal up so much that electrons can leave the nucleus you get a plasma. A plasma is very conductive.
+				</p>
+			</details>
+		</div>
+
+		<h2 class='underlined' id='Static-Electricity'>Static Electricity</h2>
+		<p>
+			<strong>Static electricity occurs when there is an imbalance of electrons and protons.</strong> A lasting charge separation can only occur in insulating materials, because in conductors the charges pair up very quickly.
+		</p>
+		<p>
+			Static electricity effects are much stronger and longer lasting in low humidity. This is because water molecules increase the conductivity of air, allowing more separated charges to return.
+		</p>
+		<p>
+			It is quite easy to separate a couple trillion electrons from their protons by walking with socks on a carpet. Lightning is produced in a similar way when a cloud with rising air ends up with an unbalanced distribution of charge.
+		</p>
+
+		<div id="charge5-zone" class="example hide-on-mobile">
+			<p>
+				The positive charges on the left pull the electrons closer, but not enough to to get them to jump over. We say that the atoms on the right are <strong>polarized</strong>.
+				They have a negative pole and a positive pole.
+			</p>
+			<canvas id='charge5' height="290" width="600" onclick="charges5(this)"> </canvas>
+			<br>
+			<strong>Question:</strong> Why can't the electrons get to the positive charge group?
+			<details>
+				<summary>answer</summary>
+				<p>
+					The electrostatic force follows a 1/r² rule, so it is weaker with distance. The electrons want to spread out into the positive charge, but the short distance attraction to nearby protons is a stronger force.
+				</p>
+				<p>
+					Add a conductive path and the electrons will spread out evenly. <button id="add-path">add path</button>
+				</p>
+			</details>
+		</div>
+
+		<div class="example">
+			<p>Play around with this PhET simulation for static electricity. </p>
+			<div class='center' style="position: relative; width: 300px; height: 200px;">
+				<a href="https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity_en.html" style="text-decoration: none;" target="_blank">
+					<img src="https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity-600.png" alt="Balloons and Static Electricity" style="border: none;" width="300" height="200" />
+					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.6; filter: alpha(opacity = 60);"></div>
+					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
+						<tr>
+							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
+						</tr>
+					</table>
+				</a>
+			</div>
+			<br>
+			<strong>Question:</strong> Which are conductors and which are insulators:
+			<br>(balloons, sweater, wall, air)
+			<details>
+				<summary>answer</summary>
+				<p>
+					conductors: nothing in this simulation
+					<br>insulators: balloon, sweater, wall, air
+				</p>
+			</details>
+			<div class="example-small">
+				<strong>Question:</strong> Why do some electrons jump to the balloon from the sweater?
+				<br> Why not the other way around?
+				<details>
+					<summary>answer</summary>
+					<p>Some materials are better at holding onto extra electrons for complex quantum mechanical reasons.</p>
+				</details>
+			</div>
+			<div class="example-small">
+				<strong>Question:</strong> Why is the balloon attracted to the sweater after it gains some electrons?
+				<details>
+					<summary>answer</summary>
+					<p>After rubbing, the balloon has unpaired negative charge, and the sweater has unpaired positive charge. Opposite charges attract.</p>
+				</details>
+			</div>
+			<div class="example-small">
+				<strong>Question:</strong> Why is the balloon attracted to the wall after it gains some electrons?
+				<details>
+					<summary>answer</summary>
+					<p>
+						After rubbing, the balloon has unpaired negative charge.
+						When charge is near another insulator it repels the electrons enough that they are slightly farther away,
+						but not enough to cause them to leave the nucleus. This charge separation is called <strong>polarization</strong>.
+					</p>
+					<p>
+						The polarization of the positive and negative pairs creates an <strong>induced charge</strong>.
+						The charged balloon causes the wall to polarize, which increases the attraction and decreases the repulsion between the balloon and wall.
+					</p>
+				</details>
+			</div>
+		</div>
+
+		<div class='example'>
+			<p>A <a href="https://en.wikipedia.org/wiki/Triboelectric_effect#Triboelectric_series">TriboElectric Series </a> lists which materials will become electrically charged after they are rubbed together.</p>
+			<strong>Question:</strong> If you rubbed polystyrene foam (styrofoam) on a
+			<a href="https://en.wikipedia.org/wiki/File:Cat_demonstrating_static_cling_with_styrofoam_peanuts.jpg">cat</a>, static electricity would cause them stick together. Which would gain a positive charge?
+			<details>
+				<summary>answer</summary>
+				<p> The cat would end up with a positive charge. This means the cat would lose electrons to the styrofoam.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> Rubbing glass on plastic wrap can get super staticky. Use the <a href="https://en.wikipedia.org/wiki/Triboelectric_effect#Triboelectric_series">TriboElectric series</a> to decide which gets the positive charge.
+			<details>
+				<summary>answer</summary>
+				<p> The glass would get the positive charge.</p>
+			</details>
+		</div>
+>>>>>>> 0f29c8be0ad6b6737e108074a18c1babdf784e10
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
