@@ -122,8 +122,8 @@
 			<line x1="100" y1="100" x2="23" y2="100" style="stroke:#ddd;stroke-width:2" />
 			<polygon points="0,0 -8,5 -7,0 -8,-5" transform="translate(20 100) rotate(180)" style="fill:#ddd;" />
 
-			<circle cx="92" cy="100" r="8" fill='#f8a' stroke-width="1.5" stroke="#222" />
-			<circle cx="108" cy="100" r="8" fill='#abc' stroke-width="1.5" stroke="#222" />
+			<circle cx="92" cy="100" r="8" fill='#abc' stroke-width="1.5" stroke="#222" />
+			<circle cx="108" cy="100" r="8" fill='#f8a' stroke-width="1.5" stroke="#222" />
 			<circle cx="100" cy="100" r="18" fill='rgba(240,240,240,0.7)' stroke-width="1.5" stroke="#444" stroke-dasharray="4" />
 
 			<line x1="223" y1="100" x2="300" y2="100" style="stroke:#ddd;stroke-width:2" />
@@ -252,13 +252,118 @@
 		</p>
 
 		<div class='example'>
-			<strong>Example:</strong> What is the electrostatic force between a 4.30 μC charge and a 10.08 μC charge at a distance of 0.03 m?
+			<strong>Example:</strong> What is the electrostatic force between a 4.30&nbsp;μC charge and a 10.08&nbsp;μC charge at a distance of 0.03&nbsp;m?
+			<details class="hide-on-mobile">
+				<summary>metric prefixes</summary>
+				<table>
+					<tr>
+						<th>Name</th>
+						<th>Symbol</th>
+						<th colspan="2">Factor</th>
+						<th>Power</th>
+					</tr>
+					<tr>
+						<td>tera</td>
+						<td>T</td>
+						<td style="text-align: right;">1 000 000 000 000</td>
+						<td></td>
+						<td>10<sup>12</sup></td>
+					</tr>
+					<tr>
+						<td>giga</td>
+						<td>G</td>
+						<td style="text-align: right;"> 1 000 000 000</td>
+						<td></td>
+						<td>10<sup>9</sup> </td>
+					</tr>
+					<tr>
+						<td>mega</td>
+						<td>M</td>
+						<td style="text-align: right;"> 1 000 000 </td>
+						<td></td>
+						<td>10<sup>6</sup> </td>
+					</tr>
+					<tr>
+						<td>kilo</td>
+						<td>k</td>
+						<td style="text-align: right;"> 1 000 </td>
+						<td></td>
+						<td>10<sup>3</sup> </td>
+					</tr>
+					<tr>
+						<td>centi</td>
+						<td>c</td>
+						<td></td>
+						<td style="text-align: left;">0.01</td>
+						<td>10<sup>-2</sup> </td>
+					</tr>
+					<tr>
+						<td>milli</td>
+						<td>m</td>
+						<td></td>
+						<td style="text-align: left;">0.001</td>
+						<td>10<sup>-3</sup> </td>
+					</tr>
+					<tr>
+						<td>micro</td>
+						<td>μ</td>
+						<td></td>
+						<td style="text-align: left;"> 0.000 001 </td>
+						<td>10<sup>-6</sup> </td>
+					</tr>
+					<tr>
+						<td>nano</td>
+						<td>n</td>
+						<td></td>
+						<td style="text-align: left;"> 0.000 000 001 </td>
+						<td>10<sup>-9</sup> </td>
+					</tr>
+					<tr>
+						<td>pico</td>
+						<td>p</td>
+						<td></td>
+						<td style="text-align: left;"> 0.000 000 000 001 </td>
+						<td>10<sup>-12</sup> </td>
+					</tr>
+				</table>
+			</details>
 			<details>
 				<summary>solution</summary>
-				$$ \mu=\text{micro}=10^{-6}$$
-				$$ F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$ $$ F = \frac{(8.987 \times 10^{9})(4.30 \times 10^{-6})(10.08 \times
-				10^{-6})}{0.03^{2}}
-				$$ $$F = 432.8 \, \mathrm{N}$$
+				$$\mu=\text{micro}=10^{-6}$$
+				$$F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$
+				$$F = \frac{(8.987 \times 10^{9})(4.30 \times 10^{-6})(10.08 \times 10^{-6})}{0.03^{2}} $$
+				$$F = 432.8 \, \mathrm{N}$$
+			</details>
+			<br> What direction is the force?
+			<details>
+				<summary>solution</summary>
+				<p>The force will push the charges away from each other.</p>
+			</details>
+		</div>
+
+		<div class='example-small'>
+			<strong>Example:</strong> What is the electrostatic force between an electron and a proton at 1&nbsp;meter?
+			<details>
+				<summary>solution</summary>
+				$$F = \frac{k_{e}q_{1}q_{2}}{r^{2}} $$
+				$$F = \frac{(8.987 \times 10^{9})(1.6 \times 10^{-19})(1.6 \times 10^{-19})}{1^{2}} $$
+				$$F = 2.3 \times 10^{-28} \, \mathrm{N} $$
+				$$\text{towards each other}$$
+			</details>
+		</div>
+		<div class="example-small">
+			<strong>Example:</strong> How does this compare to the force of gravity? What is the force of gravity between a proton and an electron at 1&nbsp;m?
+			<details>
+				<summary>universal gravitation equation</summary>
+				$$F = \frac{GM_{1}M_{2}}{r^{2}}$$
+				$$G = 6.674 \times 10^{-11}$$
+			</details>
+			<details>
+				<summary>solution</summary>
+				$$F = \frac{(6.674\times 10^{-11})(9.1\times 10^{-31})(1.672\times 10^{-27})}{(1)^{2}}$$
+				$$F = 1.01 \times 10^{-67} \, \mathrm{N}$$
+				$$ 10^{-28} > 10^{-67} $$
+				<p>The gravity between a proton and electron is weaker than the electrostatic force by about 39 orders of magnitude!</p>
 			</details>
 		</div>
 
@@ -290,7 +395,7 @@
 					<path d="M328 120 h 10 m -5 -5 v 10" />
 				</g>
 			</svg>
-			<strong>Example:</strong> You rub a 4 gram balloon on a dry erase board and pull -20 nC off the board onto the balloon. Estimate the attractive force between the balloon and the board if the centers of the charges are 5mm apart?
+			<strong>Example:</strong> You rub a 4 gram balloon on a dry erase board and pull -20 nC off the board onto the balloon. Estimate the attractive force between the balloon and the board if the centers of the charges are 5 mm apart?
 			<details>
 				<summary>solution</summary>
 				$$ n=\text{nano}=10^{-9} \quad \quad m=\text{milli} = 10^{-3}$$ $$ F = \frac{k_{e}q_{1}q_{2}}{r^2} $$
