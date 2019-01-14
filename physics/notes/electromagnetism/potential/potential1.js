@@ -17,9 +17,10 @@ const potential1 = function (id) {
   document.getElementById("three-potential-1-load").remove()
   // el.onclick = null; //stops the function from running on button click
   const settings = {
+    spawn: document.getElementById("three-spawn").value,
+    depth: 4000 / Math.sqrt(document.getElementById("three-spawn").value),
     width: 600,
     height: 400,
-    totalCharges: 8,
     resolution: 256,
     range: 400, // total size of space the charges can move in range x range
     edgeBuffer: 15, // how far are walls and spawns from the edge of the fabric, the range
@@ -49,10 +50,10 @@ const potential1 = function (id) {
     }
   });
 
-  el.addEventListener("mouseleave", function () {
+  document.getElementById("three-potential-example").addEventListener("mouseleave", function () {
     settings.pause = true;
   });
-  el.addEventListener("mouseenter", function () {
+  document.getElementById("three-potential-example").addEventListener("mouseenter", function () {
     if (settings.pause) {
       settings.pause = false;
       requestAnimationFrame(animationLoop);
@@ -89,6 +90,13 @@ const potential1 = function (id) {
       document.body.style.overflow = "hidden";
     }
   });
+
+  document.getElementById("three-spawn").addEventListener("change", () => {
+    settings.spawn = document.getElementById("three-spawn").value;
+    settings.depth = 4000 / Math.sqrt(settings.spawn)
+    chooseMode()
+  });
+
 
   /////////////////////////////////////////
   // Scene Setup
@@ -139,15 +147,112 @@ const potential1 = function (id) {
 
   const q = []; //holds the charges
 
+  function chooseMode() {
+    q.length = 0; //reset charges
+    const mode = presetEl.value
+    switch (mode) {
+      case 'random':
+        for (let i = 0; i < settings.spawn; ++i) {
+          if (!(i % 2)) {
+            spawnRandomCharge("e");
+          } else {
+            spawnRandomCharge("p");
+          }
+        }
+        break;
+      case 'square':
+        square()
+        break;
+      case 'hexagon':
+        hexagon();
+        break;
+    }
+  }
+  const presetEl = document.getElementById("three-preset")
+  chooseMode()
+  presetEl.addEventListener("change", () => {
+    chooseMode()
+  });
+
   function spawnRandomCharge(type) {
     q[q.length] = new Charge(type, {
-      x: 0.8 * (settings.range - settings.edgeBuffer / 2) * (Math.random() - 0.5),
-      y: 0.8 * (settings.range - settings.edgeBuffer / 2) * (Math.random() - 0.5)
+      x: 1.25 * settings.resolution * (Math.random() - 0.5),
+      y: 1.25 * settings.resolution * (Math.random() - 0.5)
     });
   }
-  for (let i = 0; i < Math.floor(settings.totalCharges / 2); ++i) {
-    spawnRandomCharge("p");
-    spawnRandomCharge("e");
+
+  function square() {
+    const spread = 10;
+    const separation = 55 - Math.sqrt(settings.spawn) * 2;
+    const len = Math.floor(Math.sqrt(settings.spawn) + 1);
+    const off = -len / 2 * separation + settings.edgeBuffer
+    for (let i = 0; i < len; ++i) {
+      for (let j = 0; j < len; ++j) {
+        q[q.length] = new Charge("p", {
+          x: i * separation + off,
+          y: j * separation + off
+        });
+        q[q.length] = new Charge("e", {
+          x: i * separation + off + spread * (Math.random() - 0.5),
+          y: j * separation + off + spread * (Math.random() - 0.5)
+        });
+      }
+    }
+  }
+
+  function hexagon() {
+    const columns = 2 * (1 + Math.floor(settings.spawn / 32))
+    const spawn = Math.floor(settings.spawn / columns / 2) * columns * 2
+    const rows = Math.floor(spawn / (columns)); // y
+
+    const side = 37 - Math.sqrt(spawn);
+    const apothem = side * 0.866; //vertical distance between rows
+
+    const hexLeft = -side * ((columns * 3) / 4);
+    const hexTop = -apothem * (rows / 2);
+    for (let y = 1; y < rows; ++y) {
+      let xOff = 0;
+      if (y % 2) {} else {
+        xOff = 0.5; //odd
+      }
+      for (let x = -1, i = 0; i < columns; ++i) {
+        if (i % 2) {
+          //even
+          x++;
+          xOff = Math.abs(xOff);
+        } else {
+          //odd
+          x += 2;
+          xOff = -Math.abs(xOff);
+        }
+        q[q.length] = new Charge("p", {
+          x: hexLeft + (x + xOff) * side,
+          y: hexTop + y * apothem
+        });
+      }
+    }
+    for (let y = 1; y < rows; ++y) {
+      let xOff = 0;
+      if (y % 2) {} else {
+        xOff = 0.5; //odd
+      }
+      for (let x = -1, i = 0; i < columns; ++i) {
+        if (i % 2) {
+          //even
+          x++;
+          xOff = Math.abs(xOff);
+        } else {
+          //odd
+          x += 2;
+          xOff = -Math.abs(xOff);
+        }
+        const spread = 10;
+        q[q.length] = new Charge("e", {
+          x: hexLeft + (x + xOff) * side + spread * (Math.random() - 0.5),
+          y: hexTop + y * apothem + spread * (Math.random() - 0.5)
+        });
+      }
+    }
   }
 
   /////////////////////////////////////////
@@ -214,7 +319,7 @@ const potential1 = function (id) {
         const dx = pos.x - v.x;
         const dy = pos.y - v.y;
         const radius = Math.max(Math.sqrt(dx * dx + dy * dy), 1) + settings.minimumRadius;
-        v.z += Math.min(8000 / settings.totalCharges / radius, 50)
+        v.z += Math.min(1000 / radius, 50)
       }
       for (let i = 0, len = q.length; i < len; ++i) {
         if (q[i].canMove) {
@@ -237,7 +342,6 @@ const potential1 = function (id) {
   // update potentialEnergyMesh
   /////////////////////////////////////////
   function renderDynamicPlane(who) {
-    const depth = 10000 / settings.totalCharges
     for (let i = 0, len = potentialEnergyMesh.geometry.vertices.length; i < len; i++) {
       let v = potentialEnergyMesh.geometry.vertices[i];
       let mag = 0; //this should be zero but I'm using depth as 0 to center the energy mesh with the camera
@@ -245,7 +349,7 @@ const potential1 = function (id) {
         const dx = who[j].position.x - v.x;
         const dy = who[j].position.y - v.y;
         const radius = Math.max(Math.sqrt(dx * dx + dy * dy), 1) + settings.minimumRadius;
-        mag -= depth * who[j].charge / radius
+        mag -= settings.depth * who[j].charge / radius
       }
       v.z = mag;
       // v.z = Math.max(Math.min(mag, limit), -limit);

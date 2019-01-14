@@ -227,7 +227,7 @@
 		</div>
 		<p>Electric potential has units of volts, a unit that shows up again when dealing with electric circuits.</p>
 
-		<div class="example-small">
+		<div class="example-small" id="three-potential-example">
 			<style>
 				.full-page {
 					position: fixed;
@@ -239,6 +239,13 @@
 				}
 			</style>
 			Use the mouse to move the camera. Double click for full screen.
+			<br>charges ≈ <input id="three-spawn" type="range" min="1" max="125" value="25" step="1" style="width: 200px;">
+			<select id="three-preset" style="float: right;">
+				<option value="square">square</option>
+				<option value="hexagon">hexagon</option>
+				<option value="random">random</option>
+				<option value="clear">clear</option>
+			</select>
 			<canvas id='three-potential-1-load' width='600' height='400' onclick="potential1('three-potential-1')"></canvas>
 			<canvas id='three-potential-1' width='600' height='0'></canvas>
 			Here is a Coulomb's law simulation of electric potential as a scalar field. The mountains indicate positive potential, and the valleys indicate negative potential.

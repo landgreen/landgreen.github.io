@@ -427,14 +427,7 @@
 
 		<p>The speed of propagation is determined by the medium. Properties like frequency, amplitude, or wavelength generally don't effect the speed.</p>
 		<p>Each type of wave has a different mechanism of propagation. The speed and possibility of a wave propagating through a medium is different for each wave type.</p>
-		<!-- <style>
-			@media screen and (max-width: 650px) {
-				.smol {
-					font-size: 0.6em;
-				}
-			}
-		</style> -->
-		<table class="smol">
+		<table>
 			<tr>
 				<th>speed (m/s)</th>
 				<th>vacuum</th>
@@ -502,6 +495,19 @@
 		</div>
 
 		<div class='example'>
+			<strong>Example:</strong> If I triple the wavelength of a sound wave while keeping the wave speed the same, what happens to the frequency?
+			Use
+			<a href="../../review/solving/index.html#proportions">proportions</a>.
+			<details>
+				<summary>solution</summary>
+				$$ \text{v is constant}$$
+				$$ \text{λ and f are inversely proportional}$$
+				$${ \atop v} {\atop =} { \Downarrow \atop f} { \Uparrow \atop \lambda} $$
+				$$ \text{tripling λ will reduce f by a third}$$
+			</details>
+		</div>
+
+		<div class='example'>
 			<style>
 				#sound-f-slider {
 					width: 300px;
@@ -516,16 +522,73 @@
 			<button id="sound-play" style="width: 60px;">listen</button>
 			frequency = <input id='sound-f-slider' type="range" step="0.001" value="2.34242" min="0" max="4">
 			<input id='sound-f' type="number" min="1" max="9999" value="220" step="1" style="width: 50px;"> Hz
+			<br><strong>Example:</strong> Click listen to hear a sound wave at different frequencies. Calculate the length of sound waves at that frequency in both air and water.
+			<details>
+				<summary>table of wave speeds</summary>
+				<table>
+					<tr>
+						<th>speed (m/s)</th>
+						<th>vacuum</th>
+						<th>air</th>
+						<th>water</th>
+						<th>glass</th>
+					</tr>
+					<tr>
+						<th>sound</td>
+						<td>N/A</td>
+						<td>340</td>
+						<td>1484</td>
+						<td>4540</td>
+					</tr>
+					<tr>
+						<th>light</td>
+						<td>299&thinsp;792&thinsp;458</td>
+						<td>299&thinsp;700&thinsp;000</td>
+						<td>220&thinsp;000&thinsp;000</td>
+						<td>200&thinsp;000&thinsp;000</td>
+					</tr>
+				</table>
 
-			<br><strong>Example:</strong> A medium sized air horn sounds at a frequency of 220 Hz. What is the wavelength of the sound wave?
+			</details>
+			<details>
+				<summary>solution</summary>
+				<div class="col-group">
+					<div>
+						$$\text{air}$$
+						$$v = f \lambda$$
+						$$\lambda = \frac{v}{f}$$
+						<div class="center" id='ex0-math-air'></div>
+					</div>
+					<div>
+						$$\text{water}$$
+						$$v = f \lambda$$
+						$$\lambda = \frac{v}{f}$$
+						<div class="center" id='ex0-math-water'></div>
+					</div>
+				</div>
+
+			</details>
 			<script>
 				(() => {
 					const buttonEl = document.getElementById("sound-play")
 					let audioCtx, oscillator1, gainNode1, oscillator2, gainNode2
 					let started = false;
 					let paused = false;
-					let freq = 220;
+					let freq = Math.floor(200 + Math.random() * 1000);
+					document.getElementById("sound-f").value = freq;
+					document.getElementById("sound-f-slider").value = Math.log10(freq)
 
+					function renderMath() {
+						katex.render(
+							String.raw `\begin{gathered} \lambda = \frac{340}{${freq.toFixed(0)}}  \\ \lambda = ${(340 / freq).toPrecision(3)}\, \mathrm{m} \end{gathered}`,
+							document.getElementById("ex0-math-air")
+						);
+						katex.render(
+							String.raw `\begin{gathered} \lambda = \frac{1484}{${freq.toFixed(0)}}  \\ \lambda = ${(1484 / freq).toPrecision(3)}\, \mathrm{m} \end{gathered}`,
+							document.getElementById("ex0-math-water")
+						);
+					}
+					renderMath()
 					// start -> play/pause  button events
 					buttonEl.addEventListener("click", function () {
 						if (!started) {
@@ -561,22 +624,17 @@
 						freq = parseInt(document.getElementById("sound-f").value);
 						document.getElementById("sound-f-slider").value = Math.log10(freq)
 						if (audioCtx) oscillator1.frequency.value = freq; // value in hertz
+						renderMath()
 					});
 					document.getElementById("sound-f-slider").addEventListener("input", () => {
 						const convertLog = Math.pow(10, document.getElementById("sound-f-slider").value);
 						freq = Math.floor(Math.min(convertLog, 9999))
 						document.getElementById("sound-f").value = freq
 						if (audioCtx) oscillator1.frequency.value = freq // value in hertz
+						renderMath()
 					});
 				})()
 			</script>
-			<details>
-				<summary>solution</summary>
-				<p>speed of sound at sea level = 340 m/s</p>
-				$$v = f \lambda$$ $$\lambda = \frac{v}{f}$$
-				$$\lambda = \frac{340}{220}$$
-				$$\lambda = 1.54\, \mathrm{m}$$
-			</details>
 		</div>
 
 		<div class='example'>
@@ -589,20 +647,6 @@
 				$$f = \frac{(3.0 \times 10^{8})}{0.01}$$
 				$$f=3\times 10^{10}\, \mathrm{Hz}$$
 				$$f=30 \, \mathrm{GHz}$$
-			</details>
-		</div>
-
-
-		<div class='example'>
-			<strong>Example:</strong> If I triple the wavelength of a sound wave while keeping the wave speed the same, what happens to the frequency?
-			Use
-			<a href="../../review/solving/index.html#proportions">proportions</a>.
-			<details>
-				<summary>solution</summary>
-				$$ \text{v is constant}$$
-				$$ \text{λ and f are inversely proportional}$$
-				$${ \atop v} {\atop =} { \Downarrow \atop f} { \Uparrow \atop \lambda} $$
-				$$ \text{tripling λ will reduce f by a third}$$
 			</details>
 		</div>
 
@@ -627,7 +671,7 @@
 				$$\lambda = \frac{(\tfrac{2}{3})(3.0 \times 10^8)}{60} $$
 				$$\lambda = \frac{2.0 \times 10^8}{60} $$
 				$$\lambda = 0.033 \times 10^8 \, \mathrm{m} $$
-				$$\lambda = 3,300\, \mathrm{km} $$
+				$$\lambda = 3300\, \mathrm{km} $$
 			</details>
 		</div>
 
@@ -642,15 +686,15 @@
 				$$v = f \lambda$$
 				$$\lambda = \frac{v}{f}$$ $$\lambda = \frac{3 \times 10^{8}}{35}$$
 				$$\lambda = \frac{3 \times 10^{8}}{35}$$
-				$$\lambda = 8,500,000\, \mathrm{m}$$
+				$$\lambda = 8\,500\,000\, \mathrm{m}$$
 				<br> $$\lambda = \frac{3 \times 10^{8}}{250}$$
-				$$\lambda = 1,200,000\, \mathrm{m}$$
-				<p>The wavelength ranged from 8,500 km to 1,200 km. We can also find the length of the entire signal.</p>
+				$$\lambda = 1\,200\,000\, \mathrm{m}$$
+				<p>The wavelength ranged from 8500 km to 1200 km. We can also find the length of the entire signal.</p>
 				$$v = \frac{\Delta x}{\Delta t}$$
 				$$\Delta x = v\Delta t$$
 				$$\Delta x = (3 \times 10^{8}) (0.2)$$
 				$$\Delta x = 0.6 \times 10^{8} \, \mathrm{m}$$
-				<p>The entire signal was 60,000 km long. That's about 5 Earths long.</p>
+				<p>The entire signal was 60&#8239;000&#8239;000 m long. That's about 5 Earths long.</p>
 			</details>
 		</div>
 

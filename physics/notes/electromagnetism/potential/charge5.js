@@ -20,7 +20,7 @@ function charges5(el) {
 
   function chooseMode() {
     q.length = 0; //reset charges
-    mode = presetEl.value
+    const mode = presetEl.value
     switch (mode) {
       case 'random':
         Charge.spawnCharges(q, 25, "p");

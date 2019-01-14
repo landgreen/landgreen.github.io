@@ -31,7 +31,7 @@ function charges0(el) {
         square()
         break;
       case 'triangle':
-        boundsRange = -7;
+        boundsRange = 150;
         triangle()
         break;
       case 'hexagon':
@@ -98,14 +98,14 @@ function charges0(el) {
   }
 
   function triangle() {
-    // const lenX = 12
-    const lenY = 13;
-    const separationX = 32;
-    const separationY = 27;
+    const separationX = 41 //32;
+    const separationY = separationX * 0.84 //27;
+    const lenX = canvas.width / separationX + 2;
+    const lenY = canvas.height / separationY + 2;
     for (let j = 0; j < lenY; ++j) {
-      for (let i = 0; i < j; ++i) {
-        const offX = canvas.width / 2 - (j - 1) * separationX / 2;
-        const offY = canvas.height / 2 - lenY * separationY / 2;
+      for (let i = 0; i < lenX; ++i) {
+        const offX = (j % 2 - 1) * separationX / 2;
+        const offY = -separationY;
         q[q.length] = new Charge("p", {
           x: i * separationX + offX,
           y: j * separationY + offY
@@ -117,6 +117,25 @@ function charges0(el) {
       }
     }
   }
+  // function triangle() {
+  //   const lenY = 10;
+  //   const separationX = 47 //32;
+  //   const separationY = 40 //27;
+  //   for (let j = 0; j < lenY; ++j) {
+  //     for (let i = 0; i < j; ++i) {
+  //       const offX = canvas.width / 2 - (j - 1) * separationX / 2;
+  //       const offY = canvas.height / 2 - lenY * separationY / 2;
+  //       q[q.length] = new Charge("p", {
+  //         x: i * separationX + offX,
+  //         y: j * separationY + offY
+  //       });
+  //       q[q.length] = new Charge("e", {
+  //         x: i * separationX + offX + spread * (Math.random() - 0.5),
+  //         y: j * separationY + offY + spread * (Math.random() - 0.5)
+  //       });
+  //     }
+  //   }
+  // }
 
   function square() {
     const separation = 30;
