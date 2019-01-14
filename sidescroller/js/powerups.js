@@ -33,14 +33,14 @@ const powerUps = {
       //only get ammo for guns player has
       let target;
       if (b.inventory.length > 1) {
-        //add ammo to a gun in inventory, but not ammo-less guns
+        //add ammo to a gun in inventory
         target = b.guns[b.inventory[Math.floor(Math.random() * (b.inventory.length))]];
       } else {
-        //if you don't have a gun just add ammo to a random gun, but not the basic gun
+        //if you don't have a gun just add ammo to a random gun
         target = b.guns[Math.floor(Math.random() * b.guns.length)];
       }
       //ammo given scales as mobs take more hits to kill
-      const ammo = Math.ceil((target.ammoPack * (0.65 + 0.5 * Math.random())) / b.dmgScale);
+      const ammo = Math.ceil((target.ammoPack * (0.60 + 0.5 * Math.random())) / b.dmgScale);
       target.ammo += ammo;
       game.updateGunHUD();
       game.makeTextLog("+" + ammo + " ammo: " + target.name, 180);
