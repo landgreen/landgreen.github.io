@@ -706,12 +706,20 @@ const level = {
       y: -955,
       width: 1025,
       height: 360,
-      color: "#444"
+      color: "rgba(64,64,64,0.97)"
     });
+    // level.fill.push({
+    //   x: -4050,
+    //   y: -955,
+    //   width: 625,
+    //   height: 360,
+    //   color: "#444"
+    // });
     powerUps.spawnStartingPowerUps(-4300, -700);
     powerUps.spawnStartingPowerUps(-4200, -700);
     powerUps.spawnStartingPowerUps(-4100, -700);
-    spawn.mapRect(-4450, -1000, 100, 500);
+    // spawn.mapRect(-4450, -1000, 100, 500);
+    spawn.bodyRect(-3701, -750, 275, 150);
 
 
     //building 1
