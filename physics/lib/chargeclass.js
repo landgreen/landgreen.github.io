@@ -112,6 +112,7 @@ class Charge {
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(message, canvas.width / 2, canvas.height / 2);
+    ctx.textBaseline = "alphabetic";
   }
 
   static setCanvas(el) {
