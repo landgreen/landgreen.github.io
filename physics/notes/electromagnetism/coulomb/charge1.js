@@ -97,8 +97,8 @@ function charges1(el) {
       ctx.lineTo(canvas.width, canvas.height / 2);
       ctx.stroke();
 
-      Charge.physicsAll(q);
-      Charge.physicsAll(q2);
+      Charge.physicsAll(q, 0.995);
+      Charge.physicsAll(q2, 0.995);
       Charge.drawAll(q);
       Charge.drawAll(q2);
       bounds(q, 7, 7, canvas.width - 7, canvas.height / 2 - 7);
