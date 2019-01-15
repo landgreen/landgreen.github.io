@@ -110,6 +110,7 @@ class Charge {
     ctx.font = font;
     ctx.fillStyle = "#aaa";
     ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
     ctx.fillText(message, canvas.width / 2, canvas.height / 2);
   }
 
