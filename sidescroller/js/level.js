@@ -714,11 +714,11 @@ const level = {
     //   width: 625,
     //   height: 360,
     //   color: "#444"
-    // });
-    powerUps.spawnStartingPowerUps(-4300, -700);
-    powerUps.spawnStartingPowerUps(-4200, -700);
-    powerUps.spawnStartingPowerUps(-4100, -700);
-    // spawn.mapRect(-4450, -1000, 100, 500);
+    // }); 
+    powerUps.spawn(-4300, -700, "heal");
+    powerUps.spawn(-4200, -700, "ammo");
+    powerUps.spawn(-4100, -700, "gun");
+    spawn.mapRect(-4450, -1000, 100, 500);
     spawn.bodyRect(-3701, -750, 275, 150);
 
 
