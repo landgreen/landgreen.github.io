@@ -27,7 +27,6 @@ function charges3(el) {
     });
   }
 
-  document.getElementById("add-charge")
   q[q.length] = new Charge("e", {
     x: 0.3 * separation,
     y: canvas.height / 2

@@ -22,7 +22,7 @@
 	<meta name="twitter:title" content="High School Physics Notes">
 	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
 
-	<title>Electric Charge</title>
+	<title>Electrostatics</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
@@ -35,7 +35,7 @@
 <body>
 	<header>
 		<h1>
-			<a href="../../../index.html">Electric Charge</a>
+			<a href="../../../index.html">Electrostatics</a>
 		</h1>
 	</header>
 	<article>
@@ -577,7 +577,7 @@
 				<br>
 				$$\sum F = ma $$
 				$$a = \frac{\sum F}{m} $$
-				$$a = \frac{3.59-2.02}{2}$$
+				$$a = \frac{2.02+3.59}{2}$$
 				$$a = 0.785 \, \mathrm{\frac{m}{s^2}} \quad \text{right}$$
 			</details>
 			<details>
@@ -602,12 +602,9 @@
 		</p>
 		<div class="example-small" id="charge1-div">
 			<button id="charge1-reset">reset</button>
-			<canvas id='charge1' height='200' onclick="charges1(this)"></canvas>
+			<canvas id='charge1' height='400' onclick="charges1(this)"></canvas>
 			<p>
-				In the lower section the negative charge on the left pushes the paired electrons away, and the positive charge on the right draws in the electrons.
-			</p>
-			<p>
-				The <strong>polarization</strong> of the neutral charges in the middle allows the electrostatic force to be effective at a greater distance.
+				As you can see above, the conductivity of a material is related to the density of it's free charges.
 			</p>
 		</div>
 		<br>
@@ -708,7 +705,7 @@
 		</div>
 
 		<div class='example'>
-			<strong>Question:</strong> Rank these substances by conductivity:
+			<strong>Question:</strong> Rank these substances by to conductivity:
 			<h3> air, coca cola, copper, carbon, plastic fork </h3>
 			<details>
 				<summary>answer</summary>
@@ -742,14 +739,14 @@
 			</p>
 			<canvas id='charge5' height="290" width="600" onclick="charges5(this)"> </canvas>
 			<br>
-			<strong>Question:</strong> Why can't the electrons get to the positive charge group?
+			<strong>Question:</strong> Why can't the negative charges spread out into the positive charge group on the left?
 			<details>
 				<summary>answer</summary>
 				<p>
-					The electrostatic force follows a 1/r² rule, so it is weaker with distance. The electrons want to spread out into the positive charge, but the short distance attraction to nearby protons is a stronger force.
+					The electrostatic force follows a 1/r² rule, so it is weaker with distance. The negative charges want to spread out into the positive charge, but the short distance attraction to the nearby positive charge is a stronger force.
 				</p>
 				<p>
-					Add a conductive path and the electrons will spread out evenly. <button id="add-path">add path</button>
+					Add a conductive path for the negative charges. <button id="add-path">add path</button>
 				</p>
 			</details>
 		</div>

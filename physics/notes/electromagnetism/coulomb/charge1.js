@@ -1,12 +1,6 @@
 Charge.clickStart("charge1")
 
 function charges1(el) {
-  const q = []; //holds the charges
-  Charge.setup(el, q);
-
-  const q2 = []; //holds the charges
-  Charge.setup(el, q2);
-
   let pause = false;
   document.getElementById("charge1-div").addEventListener("mouseleave", () => {
     pause = true;
@@ -18,54 +12,91 @@ function charges1(el) {
   });
 
 
+
+  const q = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ]; //holds the charges
+  for (let i = 0, len = q.length; i < len - 1; ++i) {
+    Charge.setup(el, q[i]);
+    spawnLine(q[i], 20 + i * 3, canvas.height * (i + 0.5) / len)
+  }
+
+  Charge.setup(el, q[q.length - 1]);
+
+  q[q.length - 1][q[q.length - 1].length] = new Charge("e", {
+    x: 10,
+    y: canvas.height * (q.length - 0.5) / q.length
+  });
+
+  q[q.length - 1][q[q.length - 1].length] = new Charge("p", {
+    x: canvas.width - 10,
+    y: canvas.height * (q.length - 0.5) / q.length
+  });
+
+
+
+
+
+
   document.getElementById("charge1-reset").addEventListener("click", () => {
-    q.length = 0;
-    q2.length = 0;
-    spawn()
+    for (let i = 0, len = q.length; i < len - 1; ++i) {
+      q[i].length = 0
+      spawnLine(q[i], 20 + i * 3, canvas.height * (i + 0.5) / len)
+    }
+    q[q.length - 1].length = 0
+    q[q.length - 1][q[q.length - 1].length] = new Charge("e", {
+      x: 10,
+      y: canvas.height * (q.length - 0.5) / q.length
+    });
+
+    q[q.length - 1][q[q.length - 1].length] = new Charge("p", {
+      x: canvas.width - 10,
+      y: canvas.height * (q.length - 0.5) / q.length
+    });
   })
 
-  spawn()
 
-  function spawn() {
-    const separation = 30;
-    const len = 18
-    for (let i = 2; i < len; ++i) {
-      q2[q2.length] = new Charge("p", {
-        x: i * separation + separation / 2,
-        y: 3 * canvas.height / 4
+  function spawnLine(who, separation, height) {
+    const len = Math.ceil((canvas.width - 150) / separation)
+    for (let i = 0; i < len; ++i) {
+      who[who.length] = new Charge("p", {
+        x: i * separation + 80,
+        y: height
       });
-      q2[q2.length] = new Charge("e", {
-        x: i * separation + separation / 2,
-        y: 3 * canvas.height / 4
+      who[who.length] = new Charge("e", {
+        x: i * separation + 80,
+        y: height
       });
     }
-
-    document.getElementById("add-charge")
-    q2[q2.length] = new Charge("e", {
-      x: 0.3 * separation,
-      y: 3 * canvas.height / 4
+    who[who.length] = new Charge("p", {
+      x: canvas.width - 10,
+      y: height
     });
 
-    q2[q2.length] = new Charge("p", {
-      x: (len + 1) * separation + separation / 2,
-      y: 3 * canvas.height / 4
-    });
-
-    document.getElementById("add-charge")
-    q[q.length] = new Charge("e", {
-      x: 0.3 * separation,
-      y: canvas.height / 4
-    });
-
-    q[q.length] = new Charge("p", {
-      x: (len + 1) * separation + separation / 2,
-      y: canvas.height / 4
+    who[who.length] = new Charge("e", {
+      x: 10,
+      y: height
     });
   }
 
 
 
   function bounds(who, x1, y1, x2, y2) {
+    x1 += 7
+    y1 += 7
+    x2 -= 7
+    y2 -= 7
     for (let i = 0, len = who.length; i < len; ++i) {
       if (who[i].canMove) {
         if (who[i].position.x > x2) {
@@ -84,6 +115,12 @@ function charges1(el) {
         }
       }
     }
+    ctx.beginPath();
+    ctx.moveTo(x1 - 7.5, y1 - 8.5);
+    ctx.lineTo(x2 + 7.5, y1 - 8.5);
+    ctx.strokeStyle = "#678"
+    ctx.lineWidth = 2;
+    ctx.stroke();
   }
 
 
@@ -91,18 +128,12 @@ function charges1(el) {
   function cycle() {
     if (!pause) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      ctx.beginPath();
-      ctx.moveTo(0, canvas.height / 2);
-      ctx.lineTo(canvas.width, canvas.height / 2);
-      ctx.stroke();
-
-      Charge.physicsAll(q, 0.995);
-      Charge.physicsAll(q2, 0.995);
-      Charge.drawAll(q);
-      Charge.drawAll(q2);
-      bounds(q, 7, 7, canvas.width - 7, canvas.height / 2 - 7);
-      bounds(q2, 7, canvas.height / 2 + 7, canvas.width - 7, canvas.height - 7);
+      for (let i = 0, len = q.length; i < len; ++i) {
+        Charge.physicsAll(q[i], 0.995);
+        Charge.drawAll(q[i]);
+        const h = canvas.height
+        bounds(q[i], 0, h * i / len, canvas.width, h * (i + 1) / len);
+      }
       requestAnimationFrame(cycle);
     }
   }
