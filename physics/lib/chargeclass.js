@@ -393,7 +393,6 @@ class Charge {
     ctx.fillStyle = "black";
     ctx.globalAlpha = 0.3;
     var steps = 30 / Math.pow(Math.abs(B), 0.2);
-    var text;
     if (B < 0) {
       for (var i = 0; i < canvas.width; i += steps) {
         for (var j = 0; j < canvas.height; j += steps) {

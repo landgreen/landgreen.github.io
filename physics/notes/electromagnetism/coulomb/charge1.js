@@ -68,7 +68,8 @@ function charges1(el) {
 
 
   function spawnLine(who, separation, height) {
-    const len = Math.ceil((canvas.width - 150) / separation)
+    // const len = Math.ceil((canvas.width - 150 + separation / 2 - 15) / separation)
+    const len = Math.ceil((canvas.width - 150 + separation / 2 - 15) / separation)
     for (let i = 0; i < len; ++i) {
       who[who.length] = new Charge("p", {
         x: i * separation + 80,
