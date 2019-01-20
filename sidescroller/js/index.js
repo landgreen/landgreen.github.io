@@ -12,7 +12,7 @@ mutators (as a power up)
   vampire damage
   double jumps
   higher speed?
-  shield
+  shield (recharges fast, but only upto 10% of life)
 
 game mechanics
   mechanics that support the physics engine
@@ -132,7 +132,7 @@ window.onmousemove = (e) => {
 //normal mouse click events
 window.onmousedown = (e) => {
   //mouse down gets reset in game.startGame
-  //dont' make changes here
+  //don't make changes here
   game.mouseDown = true;
   game.mouse.x = e.clientX;
   game.mouse.y = e.clientY;

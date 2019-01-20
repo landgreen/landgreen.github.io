@@ -347,7 +347,7 @@ const level = {
       level.exit.x = -550;
       level.exit.y = -2030;
       spawn.mapRect(-550, -2015, 100, 50); //ground bump wall
-      spawn.boost(4950, 0, 1400);
+      spawn.boost(4950, 0, 1600);
       level.fillBG.push({
         x: -650,
         y: -2300,
@@ -439,7 +439,7 @@ const level = {
     spawn.bodyRect(200, -2150, 200, 220, 0.8); //
     spawn.mapRect(700, -2275, 700, 50); //
     spawn.bodyRect(1050, -2350, 30, 30, 0.8); //
-    spawn.boost(1800, -1000, 1000);
+    spawn.boost(1800, -1000, 1100);
     spawn.bodyRect(1625, -1100, 100, 75); //
     spawn.bodyRect(1350, -1025, 400, 25, 1, spawn.propsIsNotHoldable); // ground plank
     spawn.mapRect(-700, -1000, 2100, 100); //lower left ledge
@@ -583,7 +583,7 @@ const level = {
     spawn.mapRect(-300, -350, 500, 50); //far left starting ceiling
     spawn.mapRect(150, -350, 50, 200); //far left starting right part of wall
     spawn.bodyRect(170, -130, 14, 140, 1, spawn.propsFriction); //door to starting room
-    spawn.boost(475, 0, 1200);
+    spawn.boost(475, 0, 1300);
     spawn.mapRect(700, -1100, 400, 990); //far left building
     spawn.mapRect(1600, -400, 1500, 500); //long center building
     spawn.mapRect(1345, -1100, 250, 25); //left platform
@@ -600,7 +600,7 @@ const level = {
     spawn.mapRect(3300, -850, 150, 25); //ledge by far right building
     spawn.mapRect(3300, -1350, 150, 25); //higher ledge by far right building
     spawn.mapRect(3600, -1100, 400, 990); //far right building
-    spawn.boost(4150, 0, 1200);
+    spawn.boost(4150, 0, 1300);
 
     spawn.bodyRect(3200, -1375, 300, 25, 0.9);
     spawn.bodyRect(1825, -1875, 400, 25, 0.9);
@@ -735,7 +735,7 @@ const level = {
     spawn.bodyRect(-75, -300, 50, 50);
 
     // spawn.boost(-750, 0, 0, -0.01);
-    spawn.boost(-750, 0, 1600);
+    spawn.boost(-750, 0, 1700);
     spawn.bodyRect(-425, -1375, 400, 225);
     spawn.mapRect(-1125, -1575, 50, 475);
     spawn.bodyRect(-1475, -1275, 250, 125);
@@ -754,7 +754,7 @@ const level = {
     //building 2
     spawn.mapRect(-4450, -600, 2300, 750);
     spawn.mapRect(-2225, -500, 175, 550);
-    spawn.boost(-2800, -600, 900);
+    spawn.boost(-2800, -600, 1000);
     spawn.mapRect(-3450, -1325, 550, 50);
     spawn.mapRect(-3425, -2200, 525, 50);
     spawn.mapRect(-2600, -1750, 450, 50);
@@ -1326,13 +1326,17 @@ const level = {
       target.torque = (Math.random() - 0.5) * 2 * target.mass;
     },
     boost: function (target, info) {
-      if (target.velocity.y < 0) {
-        mech.buttonCD_jump = 0; //reset short jump counter to pre vent short jumps on boosts
-        Matter.Body.setVelocity(target, {
-          x: target.velocity.x + (Math.random() - 0.5) * 2,
-          y: info
-        });
-      }
+      // if (target.velocity.y < 0) {
+      mech.undoCrouch();
+      mech.enterAir();
+      mech.buttonCD_jump = 0; // reset short jump counter to prevent short jumps on boosts
+      mech.hardLandCD = 0 // disable hard landing
+      Matter.Body.setVelocity(target, {
+        x: target.velocity.x + (Math.random() - 0.5) * 2,
+        y: info
+      });
+      // player.frictionAir = player.friction.air;
+      // }
     },
     force: function (target, info) {
       if (target.velocity.y < 0) {

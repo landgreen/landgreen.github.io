@@ -1364,7 +1364,7 @@ const spawn = {
   boost: function (x, y, height = 1000) {
     spawn.mapVertex(x + 50, y + 35, "120 40 -120 40 -50 -40 50 -40");
     // level.addZone(x, y, 100, 30, "fling", {Vx:Vx, Vy: Vy});
-    level.addQueryRegion(x, y - 120, 100, 120, "boost", [
+    level.addQueryRegion(x, y - 20, 100, 20, "boost", [
       [player], body, mob, powerUp, bullet
     ], -1.1 * Math.sqrt(Math.abs(height)));
     let color = "rgba(200,0,255,";

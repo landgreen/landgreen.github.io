@@ -159,15 +159,15 @@ function mobCollisionChecks(event) {
 }
 
 //determine if player is on the ground
-Events.on(engine, "collisionStart", function(event) {
+Events.on(engine, "collisionStart", function (event) {
   playerOnGroundCheck(event);
   playerHeadCheck(event);
   mobCollisionChecks(event);
 });
-Events.on(engine, "collisionActive", function(event) {
+Events.on(engine, "collisionActive", function (event) {
   playerOnGroundCheck(event);
   playerHeadCheck(event);
 });
-Events.on(engine, "collisionEnd", function(event) {
+Events.on(engine, "collisionEnd", function (event) {
   playerOffGroundCheck(event);
 });
