@@ -79,63 +79,49 @@
 				<circle id="spring-ball" cx="50" cy="60" r="20" fill="#bbb" stroke-width="2" stroke="#000" />
 				<path id="spring-wire" d="M 0 0" stroke="#000" stroke-width="1" fill="none" stroke-linejoin="bevel" />
 			</svg>
-
 			<div id="spring-KE" class="data-text-out"></div>
 			<div id="spring-KE-bar" class="spring-KE-bar">&nbsp;</div>
 			<div id="spring-Us" class="data-text-out"></div>
 			<div id="spring-Us-bar" class="spring-Us-bar">&nbsp;</div>
-
 			<div class='example-small'><strong>Question:</strong> What energies are being traded in the spring and mass system?
 				<details>
 					<summary>answer</summary>
 					<p>elastic potential energy and kinetic energy</p>
 				</details>
 			</div>
-
 			<div class='example-small'><strong>Question:</strong> When is the velocity the highest?
 				<details>
 					<summary>answer</summary>
-					<p>The kinetic energy and velocity are highest when the spring energy is lowest, at the point of equilibrium. (The
-						dotted line)</p>
+					<p>The kinetic energy and velocity are highest when the spring energy is lowest, at the point of equilibrium. (The dotted line)</p>
 				</details>
 			</div>
-
 			<div class='example-small'><strong>Question:</strong> Compare the total energy at different points on the spring's
 				cycle.
 				<details>
 					<summary>answer</summary>
 					<p>The total energy is always the same for the same mass and spring constant.</p>
-					<p>With an actual spring system the energy would eventually change forms into thermal energy, but this simulation
-						doesn't include heat loss.</p>
+					<p>With an actual spring system the energy would eventually change forms into thermal energy, but this simulation doesn't include heat loss.</p>
 				</details>
 			</div>
 		</div>
 
 		<h1 class='underlined'>Conservation of Energy</h1>
-		<p>Energy is conserved. This means it can't be reduced or increased, but as systems change, the energy changes form.
-			Since total energy is always the same value, we can build an equation that sets the total energy at one time equal
-			to the total energy at any other time.
+		<p>
+			Energy is conserved. This means it can't be reduced or increased, but as systems change, the energy changes form. Since total energy is always the same value, we can build an equation that sets the total energy at one time equal to the total energy at any other time.
 		</p>
 		<div class='definition'>
 			Energy cannot be created or destroyed, but it can change forms.
 			<h1>
-				<!-- $$E_i=E_f$$ -->
 				$$K_i + U_i = K_f + U_f$$
 			</h1>
-			<!-- \( E_i \) = initial energy[J] -->
-			<!-- <br>\( E_f \) = final energy [J] -->
 			\( K \) = kinetic energy [J]
 			<br>\( U \) = potential energy [J]
 		</div>
-		<p>This equation is bare bones right now. We need to change it for each situation. We should only include energy
-			types that are changed. For now we can calculate three types of energy.</p>
+		<p>This equation is bare bones right now. We need to change it for each situation. We should only include energy types that are changed. For now we can calculate three types of energy.</p>
 
-		<li>If an object
-			<strong>changes speed</strong>, include kinetic energy.</li>
-		<li>If an object
-			<strong>moves vertically</strong>, include gravitational potential energy.</li>
-		<li>If a
-			<strong>spring is compressed</strong>, include spring potential energy.</li>
+		<li>If an object <strong>changes speed</strong>, include kinetic energy.</li>
+		<li>If an object <strong>moves vertically</strong>, include gravitational potential energy.</li>
+		<li>If a <strong>spring is compressed</strong>, include spring potential energy.</li>
 		<p>
 			For now we will assume no thermal energy loss, but we will explore it in the next section, thermodynamics.
 		</p>
@@ -164,9 +150,7 @@
 				<summary>solution</summary>
 				<p>This equation only needs to include kinetic and gravitational potential energy.</p>
 				$$K_i + U_i = K_f + U_f$$
-				<!-- $$\frac{1}{2}mu^2 + mgh_i = \frac{1}{2}mv^2 + mgh_f$$ -->
-				<p>Initial kinetic energy is zero because the ball starts at rest. Choosing the final height to be zero will set
-					the final gravitational potential energy to zero.</p>
+				<p>Initial kinetic energy is zero because the ball starts at rest. Choosing the final height to be zero will set the final gravitational potential energy to zero.</p>
 				$$U_g = K$$
 				$$mgh = \frac{1}{2}mv^2$$
 				$$gh = \frac{1}{2}v^2$$
@@ -175,16 +159,12 @@
 				$$v^2 = u^2 + 2a\Delta x$$
 			</details>
 		</div>
-
-
 		<div class='example'>
-			<strong>Example:</strong> A ball falls from rest off a 0.80 m table. Before we solve this problem, what final and
-			initial energies can we set to zero?
+			<strong>Example:</strong> A ball falls from rest off a 0.80 m table. Before we solve this problem, what final and initial energies can we set to zero?
 			<details>
 				<summary>solution</summary>
 				<p>The velocity is at rest initially. This means that the initial kinetic energy will be zero as well.</p>
-				<p>We can decided to make height zero at the bottom of the table. This means there is no final gravitational
-					potential energy.</p>
+				<p>We can decided to make height zero at the bottom of the table. This means there is no final gravitational potential energy.</p>
 			</details>
 			<br>How fast is the ball going just before it hits the ground?
 			<details>
@@ -200,22 +180,21 @@
 			<strong>Example:</strong> If you throw a ball straight up at 10 m/s, how high will it go?
 			<details>
 				<summary>solution</summary>
-				$$K = U_g$$ $$\tfrac{1}{2}mv^{2} = mgh$$ $$\tfrac{1}{2}v^{2} = gh$$ $$\tfrac{1}{2}(10)^{2} = 9.8h$$ $$50 = 9.8h$$
-				$$5.10
-				\, \mathrm{m} = h$$
+				$$K = U_g$$
+				$$\tfrac{1}{2}mv^{2} = mgh$$
+				$$\tfrac{1}{2}v^{2} = gh$$
+				$$\tfrac{1}{2}(10)^{2} = 9.8h$$
+				$$50 = 9.8h$$
+				$$5.10 \, \mathrm{m} = h$$
 			</details>
 		</div>
-
 		<div class='example'>
 			<svg viewBox="0 -20 670 230">
 				<g stroke="none" fill="#000">
 					<circle cx="15" cy="-7" r="8" />
 					<circle cx="235" cy="-7" r="8" />
 					<circle cx="465" cy="-7" r="8" />
-					<!-- <circle cx="25" cy="50" r="8" /> -->
-					<!-- <circle cx="25" cy="50" r="8" /> -->
 				</g>
-
 				<g stroke="none" stroke-linejoin="round">
 					<path d="M 5 5 c0 200, 200 200, 200 200  h-200" fill="#f65" />
 					<path d="M 230 5 l200 200 h-200 z" fill="#5cc" />
@@ -227,47 +206,39 @@
 					<path d="M 460 5 c200 0, 200 200, 200 200" stroke="#998344" />
 				</g>
 			</svg>
-			<strong>Question:</strong> Which frictionless slope will give you the highest speed at the bottom? Explain your
-			choice.
+			<strong>Question:</strong> Which frictionless slope will give you the highest speed at the bottom? Explain your choice.
 			<details>
 				<summary>solution</summary>
 				<p>
-					Each path starts with the same gravitational potential energy. This energy is converted to the same kinetic
-					energy. So, they will all have the same velocity.
+					Each path starts with the same gravitational potential energy. This energy is converted to the same kinetic energy. So, they will all have the same velocity.
 				</p>
 			</details>
 		</div>
-
 		<div class='example'>
-			<strong>Example:</strong> A 0.43 kg soccer ball kicked at 10 m/s rolls down a 30 m tall hill. How fast will the ball
-			be moving at the bottom of the hill?
+			<strong>Example:</strong> A 0.43 kg soccer ball kicked at 10 m/s rolls down a 30 m tall hill. How fast will the ball be moving at the bottom of the hill?
 			<details>
 				<summary>solution</summary>
-				$$U_{g} + K_{i} = K_{f}$$ $$mgh + \tfrac{1}{2}mu^{2} = \tfrac{1}{2}mv^{2}$$ $$gh +
-				\tfrac{1}{2}u^{2} = \tfrac{1}{2}v^{2}$$ $$(9.8)(30) + \frac{1}{2}(10)^{2} = \frac{1}{2}v^{2}$$ $$294 + 50 =
-				\tfrac{1}{2}v^{2}$$ $$344 = \tfrac{1}{2}v^{2}$$ $$\pm 26.2 \mathrm{\tfrac{m}{s}} = v$$
+				$$U_{g} + K_{i} = K_{f}$$
+				$$mgh + \tfrac{1}{2}mu^{2} = \tfrac{1}{2}mv^{2}$$
+				$$gh + \tfrac{1}{2}u^{2} = \tfrac{1}{2}v^{2}$$
+				$$(9.8)(30) + \frac{1}{2}(10)^{2} = \frac{1}{2}v^{2}$$
+				$$294 + 50 = \tfrac{1}{2}v^{2}$$
+				$$344 = \tfrac{1}{2}v^{2}$$
+				$$\pm 26.2 \mathrm{\tfrac{m}{s}} = v$$
 			</details>
 		</div>
-		<!-- <div class='example'>
-			<strong>Example:</strong> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your
-			spring has a spring constant of 200.0 kg/s². How high could the ball go if the spring energy converted into the
-			motion of the ball with no energy loss?
-			<details>
-				<summary>solution</summary>
-				$$U_{s} = U_{g}$$ $$\tfrac{1}{2}kx^{2} = mgh$$ $$\tfrac{1}{2}(200)(0.15)^{2} =
-				(0.2)(9.8)h$$
-				$$1.15 \, \mathrm{m} = h$$
-			</details>
-		</div> -->
 		<div class='example'>
-			<strong>Example:</strong> A roller coaster cart starts at rest 413 ft high on the top of the first drop on
-			"Superman: Escape from Krypton" at Six Flags Magic Mountain. How fast is the cart going at the bottom of the hill?
+			<strong>Example:</strong> A roller coaster cart starts at rest 413 ft high on the top of the first drop on "Superman: Escape from Krypton" at Six Flags Magic Mountain. How fast is the cart going at the bottom of the hill?
 			<details>
 				<summary>solution</summary>
 				$$413\,\mathrm{ft} \left(\frac{0.3048 \,\mathrm{m}}{1 \,\mathrm{ft}} \right) = 126 \,\mathrm{m}$$
 				<br>
-				$$U_{g} = K$$ $$mgh = \tfrac{1}{2}mv^{2}$$ $$gh = \tfrac{1}{2}v^{2}$$ $$(9.8)(126) = \tfrac{1}{2}v^{2}$$
-				$$1230 = \tfrac{1}{2}v^{2}$$ $$\pm 49.6 \, \mathrm{\tfrac{m}{s}} = v$$
+				$$U_{g} = K$$
+				$$mgh = \tfrac{1}{2}mv^{2}$$
+				$$gh = \tfrac{1}{2}v^{2}$$
+				$$(9.8)(126) = \tfrac{1}{2}v^{2}$$
+				$$1230 = \tfrac{1}{2}v^{2}$$
+				$$\pm 49.6 \, \mathrm{\tfrac{m}{s}} = v$$
 			</details>
 		</div>
 
@@ -293,9 +264,7 @@
 				</g>
 				<!-- https://codepen.io/anthonydugois/pen/mewdyZ -->
 				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="#fff" stroke-width="4" stroke="#000" />
-
 				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="rgba(0,0,0,0)" class="roller-coaster" stroke-width="7" stroke="none" />
-
 				<g fill="#f04" stroke="none">
 					<circle cx="25" cy="50" r="8" />
 					<circle cx="291" cy="283" r="8" />
@@ -309,8 +278,7 @@
 					<text x="675" y="225">D</text>
 				</g>
 			</svg>
-			<strong>Example:</strong> A frictionless roller coaster starts from rest at point A. What is the velocity of the
-			roller coaster at points B, C, and D. Assume each grid square is 10&nbsp;m x 10&nbsp;m.
+			<strong>Example:</strong> A frictionless roller coaster starts from rest at point A. What is the velocity of the roller coaster at points B, C, and D. Assume each grid square is 10&nbsp;m x 10&nbsp;m.
 			<details>
 				<summary>solution</summary>
 				<p>Conservation of energy for gravitational and kinetic energy is independent of mass.</p>
@@ -364,8 +332,7 @@
 				</g>
 				<path d="M 0 2 h400" stroke="#000" stroke-width="4" />
 			</svg>
-			<strong>Example:</strong> A ball on a 1.0 meter long string is let go at a 30° angle. Calculate the velocity at
-			45° and 90° as it swings back and forth.
+			<strong>Example:</strong> A ball on a 1.0 meter long string is let go at a 30° angle. Calculate the velocity at 45° and 90° as it swings back and forth.
 			<details>
 				<summary>convert angles into heights</summary>
 				$$h = (1.0)sin(30) = 0.5 \,\mathrm{m}$$
@@ -383,12 +350,10 @@
 						<path d="M 200 2 l-129 74 v -75 v12 h10 v-12" fill="#eee" />
 						<circle cx="71" cy="75" r="3" fill="#fff" />
 					</g>
-
 					<g fill="#000" font-size="12px" dominant-baseline="middle">
 						<text x="200" y="160" text-anchor="middle">h = -1.00 m</text>
 						<text x="304" y="120">h = -0.71 m</text>
 						<text x="69" y="86" text-anchor="end">h = -0.5 m</text>
-
 						<text x="217" y="13">45°</text>
 						<text x="160" y="13">30°</text>
 					</g>
@@ -425,16 +390,12 @@
 						<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
 					</g>
 				</defs>
-				<!-- <rect x="144" y="250" height="120" width="32" fill="#def" stroke="#000" stroke-width="1.5" /> -->
 				<path d="M 140 150 v 98 h40 v-98" stroke="#000" fill="#eee" stroke-width="6" stroke-linejoin="round" />
-				<!-- <path d="M 124 248 h72" stroke="#999" fill="#eee" stroke-width="1" stroke-dasharray="3" /> -->
 				<g fill="#000" font-size="12px">
 					<text x="185" y="205">x = -0.15 m</text>
 					<text x="185" y="188">v = 0</text>
-
 					<text x="185" y="152">x = 0</text>
 					<text x="185" y="135">v = ?</text>
-
 					<text x="185" y="17">x = ?</text>
 					<text x="185" y="0">v = 0</text>
 				</g>
@@ -443,11 +404,8 @@
 				<circle cx="160" cy="0" r="15" fill="none" stroke-width="1" stroke="#000" stroke-dasharray="4" />
 				<circle cx="160" cy="132" r="15" fill="none" stroke-width="1" stroke="#000" stroke-dasharray="4" />
 				<use xlink:href="#vector" transform='translate(160 132) rotate(-180)' />
-				<!-- <text x="160" y="77" fill="#000" text-anchor="middle">v = ?</text> -->
-				<!-- <rect x="2" y="350" height="20" width="296" fill="#999" stroke="#000" stroke-width="2" /> -->
 			</svg>
-			<strong>Example:</strong> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your
-			spring has a spring constant of 200.0 kg/s².
+			<strong>Example:</strong> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your spring has a spring constant of 200.0 kg/s².
 			<br><br>How fast should the ball be moving right after it leaves the spring?
 			<details>
 				<summary>solution</summary>
@@ -472,23 +430,13 @@
 		</div>
 
 		<div class="example">
-			<!-- <div id="spring-KE2" class="data-text-out">KE = ½mv²</div>
-			<div id="spring-KE-bar2" class="spring-KE-bar">&nbsp;</div>
-			<div id="spring-Us2" class="data-text-out">Us = ½kx²</div>
-			<div id="spring-Us-bar2" class="spring-Us-bar">&nbsp;</div>
-			<div id="spring-Ug2" class="data-text-out">Ug = mgh</div>
-			<div id="spring-Ug-bar2" class="spring-Ug-bar">&nbsp;</div> -->
-			<div class="center">
-				dampening:&nbsp;&nbsp; none <input id='spring-d-slider2' type="range" step="0.001" value="0" min="0" max="0.03" style="width: 40px;">
-				full
-			</div>
+			<div class="center"> dampening:&nbsp;&nbsp; none <input id='spring-d-slider2' type="range" step="0.001" value="0" min="0" max="0.03" style="width: 40px;"> full </div>
 			<style>
 				#pause2:hover {
 					fill: rgba(0,0,0,0.2);
 				}
 			</style>
 			<svg class="center" width="330" height="400" id="spring-SVG-2" style="border: 0.5px solid #000; background-color: #fff;">
-				<!-- <path d="M 255 0 v400 M280 0 v400 M305 0 v400" stroke="#000" stroke-width="1" fill="none" /> -->
 				<g stroke="none">
 					<rect id="background" x="255" y="0" height="400" width="150" fill="#f2f2f2" />
 					<rect id="spring-KE-bar2" x="255" y="400" height="1000" width="25.5" fill="#fa96a0" />
@@ -501,10 +449,7 @@
 					<text id="spring-Ug-text2" x="-390" y="324" style="user-select: none;pointer-events: non">Ug = mgh</text>
 				</g>
 				<line x1="4" y1="200" x2="252" y2="200" stroke="#666" stroke-width="1" stroke-dasharray="6" />
-				<!-- <line id="h-line-2" x1="4" y1="200" x2="252" y2="200" stroke="#666" stroke-width="1" stroke-dasharray="6" /> -->
 				<text id="x-2" x="10" y="195" stroke="none" text-anchor="left">0 m</text>
-				<!-- <text id="h-2" x="10" y="345" stroke="none" text-anchor="left">0 m</text> -->
-
 				<circle id="spring-ball-2" cx="100" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
 				<path id="spring-wire-2" d="M 0 0" stroke="#000" fill="none" stroke-linejoin="bevel" />
 				<text id="pause2-text" x="40" y="22.5" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text>
@@ -512,11 +457,9 @@
 			</svg>
 
 			<div class="center">
-				k = <input id='spring-k-slider2' type="range" step="1" value="10" min="0" max="99" style="width: 157px;">
-				<input id='spring-k2' type="number" min="0" max="99" value=10 step=1 style="width: 50px;">&nbsp;kg/s²
+				k = <input id='spring-k-slider2' type="range" step="1" value="10" min="0" max="99" style="width: 157px;"> <input id='spring-k2' type="number" min="0" max="99" value=10 step=1 style="width: 50px;">&nbsp;kg/s²
 				<br>
-				m = <input id='spring-m-slider2' type="range" step="0.001" value="1.1139" min="0" max="2.699" style="width: 175px;">
-				<input id='spring-m2' type="number" min="1" max="500" value=13 step=1 style="width: 50px;">&nbsp;kg
+				m = <input id='spring-m-slider2' type="range" step="0.001" value="1.1139" min="0" max="2.699" style="width: 175px;"> <input id='spring-m2' type="number" min="1" max="500" value=13 step=1 style="width: 50px;">&nbsp;kg
 			</div>
 			<br>
 			<strong>Example:</strong> How fast is the mass moving at the spring equilibrium (x = 0).
@@ -528,11 +471,7 @@
 				</p>
 				$$\tfrac{1}{2}mv^2 + mgh + \tfrac{1}{2}kx^2$$
 				$$\tfrac{1}{2}mv^2 + mg{\color{#f05}x} + \tfrac{1}{2}kx^2$$
-				<p>The initial energy will be when the spring and height are at equilibrium (x&nbsp;=&nbsp;0). The final energy
-					will
-					be at the lowest point, when the spring is at rest (v&nbsp;=&nbsp;0).</p>
-				<!-- $$\text{initial:} \quad x = 0 \quad v = \,?$$
-				$$\text{final:}\quad x = 150 \quad v = 0$$ -->
+				<p>The initial energy will be when the spring and height are at equilibrium (x&nbsp;=&nbsp;0). The final energy will be at the lowest point, when the spring is at rest (v&nbsp;=&nbsp;0).</p>
 				$$v_i = \, ? \quad x_i =0 \quad \quad \quad \quad v_f = 0 \quad x_f = -150$$
 				$$\tfrac{1}{2}mv^2 + mgx + \tfrac{1}{2}kx^2 = \tfrac{1}{2}mv^2 + mgx + \tfrac{1}{2}kx^2$$
 				$$\tfrac{1}{2}mv^2 = mgx + \tfrac{1}{2}kx^2$$
@@ -542,8 +481,7 @@
 				$$v = \pm 119.9 \tfrac{m}{s}$$
 			</details>
 			<br>
-			<strong>Example:</strong> When the dampening is on the spring system slowly settles on a single position. Write an
-			equation to predict that position in terms of the mass and spring constant.
+			<strong>Example:</strong> When the dampening is turned on, the spring system slowly settles on a single position. Write an equation to predict that position in terms of the mass and spring constant.
 			<details>
 				<summary>hint</summary>
 				<p>To build the equation, solve Newton's second law for an acceleration of zero.</p>
@@ -570,9 +508,6 @@
 									<text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="23px">m</text>
 								</g>
 							</defs>
-							<!-- <rect x="0" y="150" width="600" height="500" fill="#bcd" stroke="none" /> -->
-							<!-- <line x1="0" y1="150" x2="600" y2="150" stroke="#000" stroke-width="2" /> -->
-							<!-- <use x='110' y='70' xlink:href="#box" /> -->
 							<circle id="spring-ball" cx="150" cy="110" r="40" fill="#bbb" stroke-width="2" stroke="#000" />
 							<text x="150" y="110" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="23px">m</text>
 							<use xlink:href="#vector" transform='translate(150 70) rotate(-180)' />
@@ -587,18 +522,6 @@
 					</div>
 				</div>
 				<p>Is this equation correct? Test it out with the simulation.</p>
-				<!-- <div class="col-group">
-					<div>
-						$$x = \frac{(13)(9.8)}{10}$$
-						$$x = 12.7 \, \mathrm{m}$$
-						<p>This agrees with the simulation.</p>
-					</div>
-					<div>
-						$$x = \frac{(82)(9.8)}{23}$$
-						$$x = 34.9 \, \mathrm{m}$$
-						<p>This agrees with the simulation.</p>
-					</div>
-				</div> -->
 			</details>
 		</div>
 
@@ -613,20 +536,18 @@
 				</a>
 			</div>
 			Open the PhET simulation, switch to the energy lab mode on the bottom right.
-
-			<br> <br><strong>Investigation:</strong> What is the value of the spring constant?
+			<br>
+			<br><strong>Investigation:</strong> What is the value of the spring constant?
 			<br> Use Newton's second law to find the solution.
 			<details>
 				<summary>solution</summary>
-				<p>We need to solve a Newton's second law equation. Add a known mass to the hook and click stop to get the velocity
-					and acceleration to zero. </p>
+				<p>We need to solve a Newton's second law equation. Add a known mass to the hook and click stop to get the velocity and acceleration to zero. </p>
 				$$\sum F = ma$$
 				$$F_s-F_g = ma$$
 				$$kx-mg = 0$$
 				$$kx=mg$$
 				$$k=\frac{mg}{x}$$
-				<p>We can read mass and gravity directly from the simulation. We can measure the displacement with the ruler. This
-					is easier if you check the displacement box in the top right.</p>
+				<p>We can read mass and gravity directly from the simulation. We can measure the displacement with the ruler. This is easier if you check the displacement box in the top right.</p>
 				$$m=0.100 \,\mathrm{kg} \quad g=9.8\,\mathrm{\tfrac{m}{s^2}} \quad x=0.17\,\mathrm{m} $$
 				$$k=\frac{(0.100)(9.8)}{0.17}$$
 				$$k=5.8 \, \mathrm{\tfrac{kg}{s^2}}$$
@@ -635,21 +556,17 @@
 			<br> Use conservation of energy to find the solution.
 			<details>
 				<summary>solution</summary>
-				<p>Conservation of energy requires two different moments in time. This simulation makes velocity impossible to
-					measure, so we must choose two moments where v=0.</p>
-				<p>Point one will be at spring equilibrium. Place the 100 kg mass on the hook and let it get exactly at the point
-					of spring equilibrium. This is easier if you check the displacement box in the top right.</p>
+				<p>Conservation of energy requires two different moments in time. This simulation makes velocity impossible to measure, so we must choose two moments where v=0.</p>
+				<p>Point one will be at spring equilibrium. Place the 100 kg mass on the hook and let it get exactly at the point of spring equilibrium. This is easier if you check the displacement box in the top right.</p>
 				<p>Point two will be at the bottom of the springs drop. Make sure dampening is off so we don't lose energy to heat.</p>
 				$$K_i + U_{gi} + U_{si} = K_f + U_{gf} + U_{sf}$$
-				<p>The velocity is zero at both moments. If we define height to be zero at the spring equilibrium, then both
-					potential energies are zero at the start.</p>
+				<p>The velocity is zero at both moments. If we define height to be zero at the spring equilibrium, then both potential energies are zero at the start.</p>
 				$$0 = U_g + U_s$$
 				$$0 = mgx + \tfrac{1}{2}kx^2$$
 				$$0 = mg + \tfrac{1}{2}kx$$
 				$$-\tfrac{1}{2}kx = mg$$
 				$$k=\frac{-2mg}{x}$$
-				<p>We can read mass and gravity directly from the simulation. We can measure the displacement with the ruler. This
-					is easier if you check the displacement box in the top right. Also slow motion and pause help.</p>
+				<p>We can read mass and gravity directly from the simulation. We can measure the displacement with the ruler. This is easier if you check the displacement box in the top right. Also slow motion and pause help.</p>
 				$$m=0.100 \,\mathrm{kg} \quad g=9.8\,\mathrm{\tfrac{m}{s^2}} \quad x=-0.34\,\mathrm{m} $$
 				$$k=\frac{-2(0.100)(9.8)}{-0.34}$$
 				$$k=5.8 \, \mathrm{\tfrac{kg}{s^2}}$$
@@ -675,7 +592,6 @@
 				</div>
 			</details>
 		</div>
-
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
