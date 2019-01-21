@@ -5,7 +5,6 @@ let player, jumpSensor, playerBody, playerHead, headSensor;
 const mech = {
   spawn: function () {
     //load player in matter.js physic engine
-    //let vector = Vertices.fromPath('0 40  0 115  20 130  30 130  50 115  50 40');//player as a series of vertices
     let vector = Vertices.fromPath("0 40  50 40 50 115 0 115 30 130 20 130"); //player as a series of vertices
     playerBody = Matter.Bodies.fromVertices(0, 0, vector);
     jumpSensor = Bodies.rectangle(0, 46, 36, 6, {
@@ -13,8 +12,7 @@ const mech = {
       sleepThreshold: 99999999999,
       isSensor: true
     });
-    vector = Vertices.fromPath("2 -66 18 -82  2 -37 43 -37 43 -66 32 -82");
-    // vector = Vertices.fromPath("0 -66 18 -82  0 -37 50 -37 50 -66 32 -82");
+    vector = Vertices.fromPath("16 -82  2 -66  2 -37  43 -37  43 -66  30 -82");
     playerHead = Matter.Bodies.fromVertices(0, -55, vector); //this part of the player lowers on crouch
     headSensor = Bodies.rectangle(0, -57, 48, 45, {
       //senses if the player's head is empty and can return after crouching
@@ -26,6 +24,7 @@ const mech = {
       parts: [playerBody, playerHead, jumpSensor, headSensor],
       inertia: Infinity, //prevents player rotation
       friction: 0.002,
+      frictionAir: 0.001,
       //frictionStatic: 0.5,
       restitution: 0,
       sleepThreshold: Infinity,
@@ -63,6 +62,15 @@ const mech = {
     stand: 49,
     jump: 70
   },
+  definePlayerMass: function (mass = 5) {
+    Matter.Body.setMass(player, mass);
+    //reduce air and ground move forces
+    this.Fx = 0.0875 / mass
+    this.FxAir = 0.375 / mass / mass
+    //make player stand a bit lower when holding heavy masses
+    this.yOffWhen.stand = Math.max(this.yOffWhen.crouch, Math.min(49, 49 - (mass - 5) * 5))
+    if (this.onGround && !this.crouch) this.yOffGoal = this.yOffWhen.stand;
+  },
   yOff: 70,
   yOffGoal: 70,
   onGround: false, //checks if on ground or in air
@@ -97,15 +105,13 @@ const mech = {
   Sy: 0, //adds a smoothing effect to vertical only
   Vx: 0,
   Vy: 0,
-  VxMax: 10,
   mass: 5,
-  Fx: 0.025, //run Force on ground
+  Fx: 0.0175, //run Force on ground
   FxAir: 0.015, //run Force in Air
   jumpForce: 0.38,
   gravity: 0.0019,
   friction: {
     ground: 0.01,
-    crouch: 0.2,
     air: 0.0025
   },
   angle: 0,
@@ -178,7 +184,6 @@ const mech = {
   enterAir: function () {
     //triggered in engine.js on collision
     this.onGround = false;
-    player.frictionAir = this.friction.air;
     this.hardLandCD = 0 // disable hard landing
     if (this.isHeadClear) {
       if (this.crouch) {
@@ -187,32 +192,26 @@ const mech = {
       this.yOffGoal = this.yOffWhen.jump;
     }
   },
+  //triggered in engine.js on collision
   enterLand: function () {
-    //triggered in engine.js on collision
     this.onGround = true;
     if (this.crouch) {
       if (this.isHeadClear) {
         this.undoCrouch();
-        player.frictionAir = this.friction.ground;
       } else {
         this.yOffGoal = this.yOffWhen.crouch;
-        player.frictionAir = this.friction.crouch;
-      }
-    } else if (player.velocity.y > 20) {
-      //sets a hard land where player stays in a crouch for a bit and can't jump
-      //crouch is forced in keyMove() on ground section below
-      this.doCrouch();
-      player.frictionAir = this.friction.crouch;
-      if (player.velocity.y > 27) {
-        this.hardLandCD = game.cycle + 22
-        this.yOff = this.yOffWhen.stand;
-      } else {
-        this.hardLandCD = game.cycle + 10
-        this.yOff = this.yOffWhen.jump;
       }
     } else {
-      this.yOffGoal = this.yOffWhen.stand;
-      player.frictionAir = this.friction.ground;
+      //sets a hard land where player stays in a crouch for a bit and can't jump
+      //crouch is forced in keyMove() on ground section below
+      const momentum = player.velocity.y * player.mass //player mass is 5 so this triggers at 20 down velocity, unless the player is holding something
+      if (momentum > 100) {
+        this.doCrouch();
+        this.yOff = this.yOffWhen.jump;
+        this.hardLandCD = game.cycle + Math.min(momentum / 6 - 6, 40)
+      } else {
+        this.yOffGoal = this.yOffWhen.stand;
+      }
     }
   },
   buttonCD_jump: 0, //cool down for player buttons
@@ -224,18 +223,12 @@ const mech = {
         if (!(keys[83] || keys[40]) && this.isHeadClear) {
           //not pressing crouch anymore
           this.undoCrouch();
-          player.frictionAir = this.friction.ground;
         }
         //hold a crouch after a hard land
       } else if (keys[83] || keys[40]) {
         //on ground && not crouched and pressing s or down
         this.doCrouch();
-        player.frictionAir = this.friction.crouch;
-      } else if (
-        (keys[87] || keys[38]) &&
-        this.buttonCD_jump + 20 < game.cycle &&
-        this.hardLandCD < game.cycle
-      ) {
+      } else if ((keys[87] || keys[38]) && this.buttonCD_jump + 20 < game.cycle && this.hardLandCD < game.cycle && this.yOffWhen.stand > 23) {
         //can't jump again until 20 cycles pass
         this.buttonCD_jump = game.cycle;
         //apply a fraction of the jump force to the body the player is jumping off of
@@ -251,36 +244,24 @@ const mech = {
           y: 0
         });
       }
+
+      //standing on ground but not crouched
+      if (this.hardLandCD > game.cycle) this.doCrouch();
+
       //horizontal move on ground
-      const stoppingFriction = 0.9;
-      if (keys[65] || keys[37]) {
-        //left / a
-        player.force.x -= this.Fx * (1 - Math.sqrt(Math.abs(player.velocity.x) / this.VxMax));
-        if (player.velocity.x > 0) {
-          Matter.Body.setVelocity(player, {
-            x: player.velocity.x * stoppingFriction,
-            y: player.velocity.y * stoppingFriction
-          });
-        }
-      } else if (keys[68] || keys[39]) {
-        //right / d
-        player.force.x += this.Fx * (1 - Math.sqrt(Math.abs(player.velocity.x) / this.VxMax));
-        if (player.velocity.x < 0) {
-          Matter.Body.setVelocity(player, {
-            x: player.velocity.x * stoppingFriction,
-            y: player.velocity.y * stoppingFriction
-          });
-        }
-      } else {
-        //come to a stop
-        Matter.Body.setVelocity(player, {
-          x: player.velocity.x * stoppingFriction,
-          y: player.velocity.y * stoppingFriction
-        });
-      }
-      if (this.hardLandCD > game.cycle) {
-        this.doCrouch();
-        player.frictionAir = this.friction.crouch;
+      const stoppingFriction = (this.crouch) ? 0.75 : 0.9;
+
+      //come to a stop
+      Matter.Body.setVelocity(player, {
+        x: player.velocity.x * stoppingFriction,
+        y: player.velocity.y * stoppingFriction
+      });
+
+      //apply a force to move
+      if (keys[65] || keys[37]) { //left / a
+        player.force.x -= this.Fx
+      } else if (keys[68] || keys[39]) { //right / d
+        player.force.x += this.Fx
       }
     } else {
       // in air **********************************
@@ -296,18 +277,14 @@ const mech = {
           y: player.velocity.y * 0.94
         });
       }
+      const limit = 125 / player.mass / player.mass
       if (keys[65] || keys[37]) {
-        // move player   left / a
-        if (player.velocity.x > -6) {
-          player.force.x += -this.FxAir;
-        }
+        if (player.velocity.x > -limit) player.force.x -= this.FxAir; // move player   left / a
       } else if (keys[68] || keys[39]) {
-        //move player  right / d
-        if (player.velocity.x < 6) {
-          player.force.x += this.FxAir;
-        }
+        if (player.velocity.x < limit) player.force.x += this.FxAir; //move player  right / d
       }
     }
+
     //smoothly move leg height towards height goal
     this.yOff = this.yOff * 0.85 + this.yOffGoal * 0.15;
   },
@@ -323,17 +300,6 @@ const mech = {
       setTimeout(function () {
         game.splashReturn();
       }, 5000);
-
-      // setTimeout(
-      //     function() {
-      //         document.getElementById("fade-out").style.opacity = 0;
-      //         engine.timing.timeScale = 1;
-      //         game.reset();
-      //         game.paused = false;
-      //         requestAnimationFrame(cycle);
-      //     },
-      //     5000
-      // ); //the time here needs to match the css transition time  3s = 3000
     }
   },
   health: 0,
@@ -372,6 +338,7 @@ const mech = {
     this.displayHealth();
   },
   damage: function (dmg) {
+    if (dmg * player.mass > 0.35) this.drop();
     this.health -= dmg;
     if (this.health < 0) {
       this.health = 0;
@@ -429,7 +396,7 @@ const mech = {
   drop: function () {
     if (this.isHolding) {
       this.isHolding = false;
-      Matter.Body.setMass(player, 5);
+      this.definePlayerMass()
       this.holdingTarget.collisionFilter.category = 0x000001;
       this.holdingTarget.collisionFilter.mask = 0x011111;
       this.holdingTarget = null;
@@ -468,7 +435,6 @@ const mech = {
   throwCharge: 0,
   throwChargeMax: 50,
   hold: function () {
-    // if (b.activeGun === 0) {
     if (this.isHolding) {
       //hold blocks
       this.drawHold(this.holdingTarget);
@@ -524,11 +490,7 @@ const mech = {
         const solid = function (that) {
           const dx = that.position.x - player.position.x;
           const dy = that.position.y - player.position.y;
-          if (
-            dx * dx + dy * dy > 10000 &&
-            that.speed < 3 &&
-            that !== mech.holdingTarget
-          ) {
+          if (dx * dx + dy * dy > 10000 && that.speed < 3 && that !== mech.holdingTarget) {
             that.collisionFilter.category = 0x000001; //make solid
             that.collisionFilter.mask = 0x011111;
           } else {
@@ -537,10 +499,7 @@ const mech = {
         };
         setTimeout(solid, 1000, this.holdingTarget);
         //throw speed scales a bit with mass
-        const speed =
-          (Math.min(54 / this.holdingTarget.mass + 5, 48) *
-            Math.min(this.throwCharge, this.throwChargeMax)) /
-          this.throwChargeMax;
+        const speed = (Math.min(54 / this.holdingTarget.mass + 5, 48) * Math.min(this.throwCharge, this.throwChargeMax)) / this.throwChargeMax;
         this.throwCharge = 0;
         Matter.Body.setVelocity(this.holdingTarget, {
           x: player.velocity.x * 0.5 + Math.cos(this.angle) * speed,
@@ -552,7 +511,7 @@ const mech = {
           y: player.velocity.y - Math.sin(this.angle) * 0.4
         });
         //return to normal player mass
-        Matter.Body.setMass(player, 5);
+        this.definePlayerMass()
       }
     } else if ((keys[32] || game.mouseDownRight) && this.fireCDcycle < game.cycle) {
       //pick up blocks with field
@@ -634,8 +593,7 @@ const mech = {
           ctx.lineTo(vertices[j].x, vertices[j].y);
         }
         ctx.lineTo(vertices[0].x, vertices[0].y);
-        ctx.fillStyle =
-          "rgba(190,215,230," + (0.3 + 0.7 * Math.random()) + ")";
+        ctx.fillStyle = "rgba(190,215,230," + (0.3 + 0.7 * Math.random()) + ")";
         ctx.fill();
 
         ctx.globalAlpha = 0.2;
@@ -657,7 +615,7 @@ const mech = {
         x: px / (player.mass + this.holdingTarget.mass),
         y: py / (player.mass + this.holdingTarget.mass)
       });
-      Matter.Body.setMass(player, 5 + this.holdingTarget.mass / 2);
+      this.definePlayerMass(5 + this.holdingTarget.mass / 2)
       //collide with nothing
       this.holdingTarget.collisionFilter.category = 0x000000;
       this.holdingTarget.collisionFilter.mask = 0x000000;
@@ -721,10 +679,7 @@ const mech = {
     if (this.foot.y > Ymax) this.foot.y = Ymax;
 
     //calculate knee position as intersection of circle from hip and foot
-    const d = Math.sqrt(
-      (this.hip.x - this.foot.x) * (this.hip.x - this.foot.x) +
-      (this.hip.y - this.foot.y) * (this.hip.y - this.foot.y)
-    );
+    const d = Math.sqrt((this.hip.x - this.foot.x) * (this.hip.x - this.foot.x) + (this.hip.y - this.foot.y) * (this.hip.y - this.foot.y));
     const l = (this.legLength1 * this.legLength1 - this.legLength2 * this.legLength2 + d * d) / (2 * d);
     const h = Math.sqrt(this.legLength1 * this.legLength1 - l * l);
     this.knee.x = (l / d) * (this.foot.x - this.hip.x) - (h / d) * (this.foot.y - this.hip.y) + this.hip.x + offset;

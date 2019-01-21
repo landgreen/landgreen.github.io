@@ -5,14 +5,18 @@ mutators (as a power up)
   infinite ammo
     or just more ammo from drops?
     or 50% chance to not use up a bullet?
-  flying
+  increased fire rate for guns
+    how to make laser fire faster?
+  orbiting orb fires at random targets
+    missiles at random targets
+
   low gravity
-  more damage done and taken
-  larger bullets
-  vampire damage
   double jumps
-  higher speed?
+  higher horizontal run speed?
+
+  vampire damage
   shield (recharges fast, but only upto 10% of life)
+  can eat blocks to recharge shield / 
 
 game mechanics
   mechanics that support the physics engine

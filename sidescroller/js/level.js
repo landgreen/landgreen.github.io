@@ -72,14 +72,14 @@ const level = {
     // spawn.mapRect(0, -2000, 3000, 50); //center platform
     spawn.spawnBuilding(-200, -250, 275, 240, false, true, "left"); //far left; player spawns in side
     // spawn.boost(350, 0, -1000);
-    for (let i = 0; i < 10; i++) {
-      powerUps.spawn(950, -425, "gun", false);
-    }
-    for (let i = 0; i < 5; i++) {
-      powerUps.spawn(2500 + i * 20, -1300, "gun", false);
-      powerUps.spawn(2500 + i * 20, -1100, "ammo", false);
-    }
-    spawn.nodeBoss(-500, -600, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
+    // for (let i = 0; i < 10; i++) {
+    //   powerUps.spawn(950, -425, "gun", false);
+    // }
+    // for (let i = 0; i < 5; i++) {
+    //   powerUps.spawn(2500 + i * 20, -1300, "gun", false);
+    //   powerUps.spawn(2500 + i * 20, -1100, "ammo", false);
+    // }
+    // spawn.nodeBoss(-500, -600, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
     // spawn.lineBoss(-500, -600, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
     // spawn.bodyRect(-135, -50, 50, 50);
     // spawn.bodyRect(-140, -100, 50, 50);
@@ -87,7 +87,8 @@ const level = {
     // spawn.bodyRect(-140, -200, 50, 50);
     // spawn.bodyRect(-95, -50, 40, 50);
     // spawn.bodyRect(-90, -100, 60, 50);
-    // spawn.bodyRect(-110, -150, 40, 50);
+    spawn.bodyRect(200, -150, 140, 50);
+    spawn.bodyRect(200, -150, 40, 40);
     // spawn.bodyRect(-45, -100, 40, 50);
 
     // spawn.group(-600, -550);
@@ -595,7 +596,7 @@ const level = {
     spawn.mapRect(2400, -850, 600, 300); //center floating large square
     //spawn.bodyRect(2500, -1100, 25, 250); //wall before chasers
     spawn.mapRect(2500, -1450, 450, 350); //higher center floating large square
-    spawn.mapRect(2500, -1700, 50, 300); //left wall on higher center floating large square
+    spawn.mapRect(2500, -1675, 50, 300); //left wall on higher center floating large square
     spawn.mapRect(2500, -1700, 300, 50); //roof on higher center floating large square
     spawn.mapRect(3300, -850, 150, 25); //ledge by far right building
     spawn.mapRect(3300, -1350, 150, 25); //higher ledge by far right building
@@ -1327,16 +1328,14 @@ const level = {
     },
     boost: function (target, info) {
       // if (target.velocity.y < 0) {
-      mech.undoCrouch();
-      mech.enterAir();
+      // mech.undoCrouch();
+      // mech.enterAir();
       mech.buttonCD_jump = 0; // reset short jump counter to prevent short jumps on boosts
       mech.hardLandCD = 0 // disable hard landing
       Matter.Body.setVelocity(target, {
         x: target.velocity.x + (Math.random() - 0.5) * 2,
         y: info
       });
-      // player.frictionAir = player.friction.air;
-      // }
     },
     force: function (target, info) {
       if (target.velocity.y < 0) {

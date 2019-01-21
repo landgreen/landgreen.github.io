@@ -88,33 +88,318 @@
 				<summary>solution</summary>
 				$$v = \frac{\Delta x}{\Delta t} $$
 				$$\Delta t = \frac{\Delta x}{v} $$
-				$$\Delta t = \frac{1.50 \times 10^{11}\,\mathrm{m}}{3.0 \times 10^{8}\,\mathrm{\frac{m}{s}}} $$
+				$$\Delta t = \frac{1.50 \times 10^{8}\times10^{3}\,\mathrm{m}}{3.0 \times 10^{8}\,\mathrm{\frac{m}{s}}} $$
 				$$\Delta t = 500\, \mathrm{s} $$
 				$$\Delta t = 8.33 \, \mathrm{min} $$
 			</details>
 		</div>
+		<div class='example'>
+			<!--
+		384400 km to moon / 555 px    (between centers)
+		693 km = 1 px 
+		Earth radius = 6371.0 km = 9.2 px
+		Moon radius = 1737.1 km  = 2.5 px
+		-->
+			<style>
+				@keyframes lightspeed {
+					0% { transform: translateX(4.5%); }
+					100% { transform: translateX(94%); }
+				} 
+				#light-wave-1 {
+					transform: translateX(4%);
+					animation: lightspeed 1.25s linear alternate infinite;
+				}
+				.stopped {
+				animation: none;
+				}
+			</style>
+
+	</article>
+	<svg viewBox="0 0 600 40" style="background-color: #000;" onclick="hideLightWave1()">
+		<g stroke="none">
+			<rect id="light-wave-1" x="0" y="19" width="10" height="2" rx="1" ry="1" fill="#fff" />
+			<circle cx="20" cy="20" r="9.2" fill="rgb(150,150,210)" />
+			<circle cx="575" cy="20" r="2.5" fill="rgb(179,175,172)" />
+		</g>
+	</svg>
+	<article>
+		<script>
+			function hideLightWave1(){
+				if (document.getElementById("light-wave-1").style.display === "none"){
+					document.getElementById("light-wave-1").style.display = "block";
+				}else{
+					document.getElementById("light-wave-1").style.display = "none";
+				}
+			}
+		</script>
+		<strong>Example:</strong> The center of the Earth is 384 400 km from the center of the Moon. What is the shortest amount of time it takes light to travel from the Moon to the Earth?
+		<details>
+			<summary>Local Massive Objects Data Table</summary>
+			<style>
+				th {
+					background: #fff;
+					border: 0px solid #000;
+					color: #000;
+				}
+				.black{
+					background-color: #000;
+					border: 0px solid #000;
+					padding: 7px;
+				}
+				.planet{
+					margin: auto;
+					border-radius: 50%;
+					padding: 0px;
+					border: 0px solid #000;
+				}
+				.sun{
+					width: 90px;
+					height: 90px;
+					background-color: #fff;
+					top: -25px;
+					left: -20px;
+					position: relative;
+				}
+				.sun-div{
+					/* margin: 0px; */
+					width: 50px;
+					height: 50px;
+				}
+				.mercury{
+					width: 6px;
+					height: 6px;
+					background-color: rgb(199,195,192);
+				}
+				.venus{
+					width: 11px;
+					height: 11px;
+					background-color: rgb(216,209,203);
+				}
+				.earth{
+					width: 11.5px;
+					height: 11.5px;
+					background-color: rgb(130,137,179);
+				}
+				.moon{
+					width: 4px;
+					height: 4px;
+					background-color: rgb(159,155,152);
+				}
+				.mars{
+					width: 8px;
+					height: 8px;
+					background-color: rgb(207,187,137);
+				}
+				.jupiter{
+					width: 35px;
+					height: 35px;
+					background-color: rgb(238,236,188);
+				}
+				.saturn{
+					width: 30px;
+					height: 30px;
+					background-color: rgb(223,229,181);
+				}
+				.uranus{
+					width: 18px;
+					height: 18px;
+					background-color: rgb(173,200,211);
+				}
+				.neptune{
+					width: 17px;
+					height: 17px;
+					background-color: rgb(160,183,214);
+				}
+				.saturn-ring {
+					border-radius: 50%;
+					width: 44px;
+					height: 44px;
+					position: relative;
+					top: -7px;
+					left: -7px;
+					border: 4px solid rgba(216, 218, 169, 0.7);
+				}
+				.uranus-ring {
+					border-radius: 50%;
+					width: 28px;
+					height: 28px;
+					position: relative;
+					top: -5px;
+					left: -5px;
+					border: 1px solid rgba(255, 255, 230, 0.2);
+				}
+			</style>
+			<table>
+				<tr>
+					<th class="black"></th>
+					<th>Planet</th>
+					<th>mass (kg)</th>
+					<th>radius (km)</th>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Sun">
+							<div class="planet sun-div">
+								<div class="planet sun"></div>
+							</div>
+						</a>
+					</td>
+					<td>Sun</td>
+					<td>2.00 × 10<sup>30</sup>
+					</td>
+					<td>695&#8239;700</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Mercury_(planet)">
+							<div class="planet mercury"></div>
+						</a>
+					</td>
+					<td>Mercury</td>
+					<td>3.301 × 10<sup>23</sup>
+					</td>
+					<td>2440</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Venus">
+							<div class="planet venus"></div>
+						</a>
+					</td>
+					<td>Venus</td>
+					<td>4.867 × 10<sup>24</sup>
+					</td>
+					<td>6052</td>
+				</tr>
+				<tr>
+
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Earth">
+							<div class="planet earth"></div>
+						</a>
+					</td>
+					<td>Earth</td>
+					<td>5.972 × 10<sup>24</sup>
+					</td>
+					<td>6371</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Moon">
+							<div class="planet moon"></div>
+						</a>
+					</td>
+					<td>Moon</td>
+					<td>7.346 × 10<sup>22</sup>
+					</td>
+					<td>1737</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Mars">
+							<div class="planet mars"></div>
+						</a>
+					</td>
+					<td>Mars</td>
+					<td>6.417 × 10<sup>23</sup>
+					</td>
+					<td>3390</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Jupiter">
+							<div class="planet jupiter"></div>
+						</a>
+					</td>
+					<td>Jupiter</td>
+					<td>1.899 × 10<sup>27</sup>
+					</td>
+					<td>70&#8239;000</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Saturn">
+							<div class="planet saturn">
+								<div class="saturn-ring"></div>
+							</div>
+						</a>
+					</td>
+					<td>Saturn</td>
+					<td>5.685 × 10<sup>26</sup>
+					</td>
+					<td>58&#8239;232</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Uranus">
+							<div class="planet uranus">
+								<div class="uranus-ring"></div>
+							</div>
+						</a>
+					</td>
+					<td>Uranus</td>
+					<td>8.68 × 10<sup>25</sup>
+					</td>
+					<td>25&#8239;362</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Neptune">
+							<div class="planet neptune"></div>
+						</a>
+					</td>
+					<td>Neptune</td>
+					<td>1.024 × 10<sup>26</sup>
+					</td>
+					<td>24&#8239;622</td>
+				</tr>
+			</table>
+		</details>
+		<details>
+			<summary>solution</summary>
+			$$\Delta x = 384\,400\,\mathrm{km} - 6371\,\mathrm{km} -1737\,\mathrm{km} = 376\,000\,\mathrm{km}$$
+			<br>
+			$$v = \frac{\Delta x}{\Delta t} $$
+			$$\Delta t = \frac{\Delta x}{v} $$
+			$$\Delta t = \frac{3.76 \times 10^8 \,\mathrm{m}}{3.0 \times 10^8\,\mathrm{\frac{m}{s}}} $$
+			$$\Delta t = 1.25\, \mathrm{s} $$
+		</details>
+		</div>
 
 		<div class='example'>
 			<p>A <strong>light-year [ly]</strong> is a unit of distance. 1 light year is the distance that light can travel in one year. It is mostly used to measure distances to objects outside the solar system.</p>
-			<strong>Example:</strong> <a href='https://en.wikipedia.org/wiki/Alpha_Centauri'>Alpha Centauri </a> is the nearest solar system to ours. It is 4.37 light-years away. How far away in meters is Alpha Centauri?
-			<details>
-				<summary>hint</summary>
-				<p>
-					<li>Use velocity equals distance over time.</li>
-					<li>Convert the light years to seconds to get travel time.</li>
-					<li>Use the speed of light for the velocity.</li>
-				</p>
-			</details>
-			<details>
-				<summary>solution</summary>
-				$$\small \mathrm{4.37 \,year \left(\frac{365 \,day}{1 \,year}\right) \left(\frac{24 \,hour}{1 \,day}\right) \left(\frac{60 \,min}{1 \,hour}\right) \left(\frac{60 \,s}{1 \,min}\right)}$$
-				$$ = 1.378 \times 10^{8} \, \mathrm{s}$$
-				<br> $$v = \frac{\Delta x}{\Delta t} $$ $$\Delta x = v \Delta t$$
-				$$\Delta x = \left(3 \times 10^{8} \, \mathrm{\tfrac{m}{s}} \right) \left(1.378 \times 10^{8} \, \mathrm{s}\right)$$
-				$$\Delta x = 4.143 \times 10^{16}\, \mathrm{m}$$
-			</details>
+			<div class='example-small'>
+				<strong>Example:</strong> How far is one light year in meters?
+				<details>
+					<summary>strategy</summary>
+					<p>
+						$$v = \frac{\Delta x}{\Delta t} $$
+						$$\Delta x = v \Delta t$$
+						<li>Use the velocity equals distance over time equation.</li>
+						<li>The time is 1 year, but convert it to seconds.</li>
+						<li>The velocity is the speed of light.</li>
+					</p>
+				</details>
+				<details>
+					<summary>solution</summary>
+					$$\small \mathrm{\left(\frac{365 \,day}{1 \,year}\right) \left(\frac{24 \,hour}{1 \,day}\right) \left(\frac{60 \,min}{1 \,hour}\right) \left(\frac{60 \,s}{1 \,min}\right)}$$
+					$$ = 3.15 \times 10^{7} \, \mathrm{s}$$
+					<br>
+					$$v = \frac{\Delta x}{\Delta t} $$
+					$$\Delta x = v \Delta t$$
+					$$\Delta x = \left(3 \times 10^{8} \, \mathrm{\tfrac{m}{s}} \right) \left(3.15 \times 10^{7} \, \mathrm{s}\right)$$
+					$$\Delta x = 9.46 \times 10^{15} \, \mathrm{m}$$
+				</details>
+			</div>
+			<div class='example-small'>
+				<strong>Example:</strong> <a href='https://en.wikipedia.org/wiki/Alpha_Centauri'>Alpha Centauri </a> is the nearest solar system to ours. It is 4.37 light-years away. How far away in meters is Alpha Centauri?
+				<details>
+					<summary>solution</summary>
+					$$\Delta x = 4.37 \, \mathrm{ly} \left( \frac{9.46 \times 10^{15} \, \mathrm{m}}{1 \, \mathrm{ly}} \right)$$
+					$$\Delta x = 4.143 \times 10^{16}\, \mathrm{m}$$
+				</details>
+			</div>
 		</div>
-
 		<h2 class='underlined'>The Electromagnetic Spectrum</h2>
 		<p>
 			Light can be viewed as a spectrum.
