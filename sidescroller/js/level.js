@@ -205,7 +205,7 @@ const level = {
       y: -1150,
       width: 2750,
       height: 1200,
-      color: "rgba(0,80,80,0.1)"
+      color: "rgba(0,70,80,0.1)"
     });
 
     level.fillBG.push({
@@ -227,6 +227,14 @@ const level = {
       x: 1600,
       y: -500,
       width: 100,
+      height: 100,
+      color: "#eee"
+    });
+
+    level.fillBG.push({
+      x: -55,
+      y: -283,
+      width: 12,
       height: 100,
       color: "#eee"
     });
@@ -265,21 +273,19 @@ const level = {
       wallWire(2650 - 10 * i, -700 - 10 * i, -300, 5);
       wallWire(2350 - 10 * i, -700 - 10 * i, 5, 800);
     }
-
     for (let i = 0; i < 5; i++) {
       wallWire(1625 + 10 * i, -1050, 5, 1200);
     }
-
     for (let i = 0; i < 4; i++) {
       wallWire(1650, -470 + i * 10, 670 - i * 10, 5);
       wallWire(1650 + 670 - i * 10, -470 + i * 10, 5, 600);
     }
-
     for (let i = 0; i < 3; i++) {
       wallWire(-200 - i * 10, -245 + i * 10, 1340, 5);
       wallWire(1140 - i * 10, -245 + i * 10, 5, 300);
+      wallWire(-200 - i * 10, -215 + i * 10, 660, 5);
+      wallWire(460 - i * 10, -215 + i * 10, 5, 300);
     }
-
     spawn.mapRect(-250, 0, 3000, 200); //ground
     spawn.mapRect(-350, -1200, 200, 1400); //left wall
     spawn.mapRect(3000, -1200, 200, 1400); //right wall
@@ -287,19 +293,20 @@ const level = {
     spawn.mapRect(2600, -300, 500, 500); //exit shelf
     spawn.mapRect(2600, -1200, 500, 600); //exit roof
     spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 100); //exit bump
-    spawn.mapRect(260, -1100, 80, 110); //wire source
+    spawn.mapRect(-95, -1100, 80, 110); //wire source
+    spawn.mapRect(410, -10, 90, 20); //small platform for player
 
-    spawn.bodyRect(-35, -50, 50, 50);
-    spawn.bodyRect(-40, -100, 50, 50);
-    spawn.bodyRect(-45, -150, 60, 50);
-    spawn.bodyRect(-40, -200, 50, 50);
-    spawn.bodyRect(5, -50, 40, 50);
-    spawn.bodyRect(10, -100, 60, 50);
-    spawn.bodyRect(-10, -150, 40, 50);
-    spawn.bodyRect(55, -100, 40, 50);
-    spawn.bodyRect(-150, -300, 100, 100);
-    spawn.bodyRect(-150, -200, 100, 100);
-    spawn.bodyRect(-150, -100, 100, 100);
+    // spawn.bodyRect(-35, -50, 50, 50);
+    // spawn.bodyRect(-40, -100, 50, 50);
+    // spawn.bodyRect(-45, -150, 60, 50);
+    // spawn.bodyRect(-40, -200, 50, 50);
+    // spawn.bodyRect(5, -50, 40, 50);
+    // spawn.bodyRect(10, -100, 60, 50);
+    // spawn.bodyRect(-10, -150, 40, 50);
+    // spawn.bodyRect(55, -100, 40, 50);
+    // spawn.bodyRect(-150, -300, 100, 100);
+    // spawn.bodyRect(-150, -200, 100, 100);
+    // spawn.bodyRect(-150, -100, 100, 100);
 
     // spawn.bodyRect(1790, -50, 40, 50);
     // spawn.bodyRect(1875, -100, 200, 90);
@@ -309,10 +316,10 @@ const level = {
 
     mech.health = 0.25;
     mech.displayHealth();
-    powerUps.spawn(1900, -350, "heal", false); //starting gun
-    powerUps.spawn(2000, -350, "heal", false); //starting gun
-    powerUps.spawn(2100, -350, "heal", false); //starting gun
-    powerUps.spawn(2250, -350, "gun", false); //starting gun
+    powerUps.spawn(-100, 0, "heal", false); //starting gun
+    powerUps.spawn(2000, -150, "heal", false); //starting gun
+    powerUps.spawn(2100, -150, "heal", false); //starting gun
+    powerUps.spawn(2250, -150, "gun", false); //starting gun
 
     spawn.wireFoot();
     spawn.wireFootLeft();
@@ -720,7 +727,7 @@ const level = {
     powerUps.spawn(-4200, -700, "ammo");
     powerUps.spawn(-4100, -700, "gun");
     spawn.mapRect(-4450, -1000, 100, 500);
-    spawn.bodyRect(-3701, -750, 275, 150);
+    spawn.bodyRect(-3576, -750, 150, 150);
 
 
     //building 1

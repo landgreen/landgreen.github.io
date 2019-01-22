@@ -1107,7 +1107,7 @@ const spawn = {
     me.frictionAir = 0.01;
 
     me.do = function () {
-      let wireX = 300;
+      let wireX = -50;
       let wireY = -1000;
       if (this.freeOfWires) {
         this.gravity();
@@ -1174,7 +1174,7 @@ const spawn = {
     me.frictionAir = 0.01;
 
     me.do = function () {
-      let wireX = 300 - 20;
+      let wireX = -50 - 20;
       let wireY = -1000;
 
       if (this.freeOfWires) {
@@ -1226,7 +1226,7 @@ const spawn = {
     me.frictionAir = 0.01;
 
     me.do = function () {
-      let wireX = 300 - 35;
+      let wireX = -50 - 35;
       let wireY = -1000;
 
       if (this.freeOfWires) {
@@ -1277,7 +1277,7 @@ const spawn = {
     me.frictionAir = 0.01;
 
     me.do = function () {
-      let wireX = 300 + 16;
+      let wireX = -50 + 16;
       let wireY = -1000;
 
       if (this.freeOfWires) {
@@ -1328,7 +1328,7 @@ const spawn = {
     me.frictionAir = 0.01;
 
     me.do = function () {
-      let wireX = 300 + 26;
+      let wireX = -50 + 26;
       let wireY = -1000;
 
       if (this.freeOfWires) {

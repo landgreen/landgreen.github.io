@@ -150,10 +150,25 @@
 			animation: dash 5s ease-in forwards;
 		}
 
-		.draw-lines2 {
+		.draw-lines-box-1 {
 			stroke-dasharray: 1000;
 			stroke-dashoffset: 1000;
-			animation: dash 5s ease-in forwards;
+			animation: dash 8s ease-in forwards;
+			animation-delay: 0s;
+		}
+
+		.draw-lines-box-2 {
+			stroke-dasharray: 1000;
+			stroke-dashoffset: 1000;
+			animation: dash 6s ease-in forwards;
+			animation-delay: 1.5s;
+		}
+
+		.draw-lines-box-3 {
+			stroke-dasharray: 1000;
+			stroke-dashoffset: 1000;
+			animation: dash 3.5s ease-in forwards;
+			animation-delay: 2.6s;
 		}
 
 		.draw-lines3 {
@@ -203,13 +218,13 @@
 		</g>
 		<!-- keys -->
 		<g transform="translate(195,480) scale(0.8)">
-			<g class="draw-lines2" fill='none' stroke='#222' stroke-width="3.5" stroke-linejoin="round">
-				<path d="M0 60 h60 v-60 h-60 v60" />
-				<path d="M140 60 h60 v-60 h-60 v60" />
-				<path d="M70 60 h60 v-60 h-60 v60" />
-				<path d="M0 70 h60 v60 h-60 v-60" />
-				<path d="M70 70 h60 v60 h-60 v-60" />
-				<path d="M140 70 h60 v60 h-60 v-60" />
+			<g fill='none' stroke='#222' stroke-width="3.5" stroke-linejoin="round">
+				<path d="M0 60 h60 v-60 h-60 v60" class="draw-lines-box-1" />
+				<path d="M70 60 h60 v-60 h-60 v60" class="draw-lines-box-2" />
+				<path d="M140 60 h60 v-60 h-60 v60" class="draw-lines-box-3" />
+				<path d="M0 70 h60 v60 h-60 v-60" class="draw-lines-box-1" />
+				<path d="M70 70 h60 v60 h-60 v-60" class="draw-lines-box-2" />
+				<path d="M140 70 h60 v60 h-60 v-60" class="draw-lines-box-3" />
 				<!-- <rect x="0" y="0" width="60" height="60" rx='3' /> -->
 				<!-- <rect x="140" y="0" width="60" height="60" rx='3' /> -->
 				<!-- <rect x="0" y="70" width="60" height="60" rx='3' /> -->

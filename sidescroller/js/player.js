@@ -62,10 +62,13 @@ const mech = {
     stand: 49,
     jump: 70
   },
+  mass: 5,
+  Fx: 0.015, //run Force on ground
+  FxAir: 0.015, //run Force in Air
   definePlayerMass: function (mass = 5) {
     Matter.Body.setMass(player, mass);
     //reduce air and ground move forces
-    this.Fx = 0.0875 / mass
+    this.Fx = 0.075 / mass
     this.FxAir = 0.375 / mass / mass
     //make player stand a bit lower when holding heavy masses
     this.yOffWhen.stand = Math.max(this.yOffWhen.crouch, Math.min(49, 49 - (mass - 5) * 5))
@@ -105,9 +108,6 @@ const mech = {
   Sy: 0, //adds a smoothing effect to vertical only
   Vx: 0,
   Vy: 0,
-  mass: 5,
-  Fx: 0.0175, //run Force on ground
-  FxAir: 0.015, //run Force in Air
   jumpForce: 0.38,
   gravity: 0.0019,
   friction: {
