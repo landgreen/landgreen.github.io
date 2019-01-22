@@ -33,7 +33,7 @@ function charges3(el) {
         break;
     }
   }
-  const presetEl = document.getElementById("charge-preset")
+  const presetEl = document.getElementById("charge-preset-3")
   chooseMode()
   presetEl.addEventListener("change", () => {
     chooseMode()
