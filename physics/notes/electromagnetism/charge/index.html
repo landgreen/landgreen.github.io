@@ -274,7 +274,7 @@
 			</div>
 			<details>
 				<summary>solution</summary>
-				<p>Charge has only been observed in packets of 1.602 × 10<sup>−19</sup> C. Any recorded charge must be an even multiple of this value.</p>
+				<p>Charge has only been observed in packets of 1.602 × 10<sup>−19</sup> C. Any recorded charge must be a multiple of this value.</p>
 				<div class="col-group">
 					<div> $$\frac{3.2 \times 10^{−19} \, \mathrm{C}}{1.6 \times 10^{−19} \, \mathrm{C}} = 2.0$$ </div>
 					<div> $$\frac{2.4 \times 10^{−19} \, \mathrm{C}}{1.6 \times 10^{−19} \, \mathrm{C}} = \cancel{1.5}$$ </div>
@@ -291,18 +291,14 @@
 		<p>
 			<strong>Conductive</strong> materials allow electric charges to easily move through them. If a charge is applied to one part of a conductive material the charge will quickly spread out because like charges repel.
 		</p>
-		<div class="example-small" id="charge1-div">
-			<button id="charge1-reset">reset</button>
-			<canvas id='charge1' height='400' onclick="charges1(this)"></canvas>
+
+		<div class="example">
 			<p>
-				As you can see above, the conductivity of a material is related to the density of it's free charges.
+				These simulations don't include the nuances of quantum mechanics, they only show a cartoony approximation of conductivity at the atomic level.
 			</p>
-		</div>
-		<br>
-		<div class="example-small">
 			<canvas id='charge2' height='250' onclick="charges2(this)"></canvas>
 			<p>
-				In these simulations negative charges are removed from the right and added to the left to produce a messy looking flow of charge.
+				Negative charges are removed from the right and added to the left to produce a messy looking flow of charge.
 			</p>
 			<div class="hide-on-mobile">
 				<canvas id='charge8' height='250' onclick="charges8(this)"></canvas>
@@ -310,6 +306,7 @@
 				<canvas id='charge9' height='250' onclick="charges9(this)"></canvas>
 			</div>
 		</div>
+
 		<div class="example">
 			<p>
 				In chemistry, elements are roughly divided into metals, metalloids and nonmetals. Metals are held together by loosely sharing their outer valence electrons. The cloud of free flowing electrons give metals most of their shared characteristics, like <a href='https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity#Resistivity_and_conductivity_of_various_materials'>conductivity</a>.
@@ -408,6 +405,24 @@
 					<br>plastic fork (insulator)
 					<br>air (insulator)
 					<br><span style="color:#d36; font-weight: bold;">low conductivity</span>
+				</p>
+			</details>
+		</div>
+
+		<div class="example" id="charge1-div">
+			<button id="charge1-reset">reset</button>
+			<canvas id='charge1' height='400' onclick="charges1(this)"></canvas>
+			<p>
+				As you can see above, the conductivity of a material is related to the density of it's free charges. The distinction between conductors, semi-conductors, and insulators is a continuum with no clear division into groups.
+			</p>
+			<strong>Question:</strong> For each row, decide if they resemble a conductor or an insulator.
+			<details>
+				<summary>answer</summary>
+				<p>
+					The top rows act like conductors / semiconductors.
+				</p>
+				<p>
+					The bottom 3 rows act like insulators / semiconductors. The last row acts like a vacuum.
 				</p>
 			</details>
 		</div>
