@@ -124,6 +124,25 @@ function charges1(el) {
     ctx.stroke();
   }
 
+  function teleportCharges() {
+    let count = 0
+    for (let i = 0, len = q.length; i < len; ++i) {
+      for (let j = 0, jen = q[i].length; j < jen; ++j) {
+        if (q[i][j].canMove && q[i][j].position.x > canvas.width - 11) count++
+      }
+    }
+    if (count > 8) {
+      for (let i = 0, len = q.length; i < len; ++i) {
+        for (let j = 0, jen = q[i].length; j < jen; ++j) {
+          if (q[i][j].canMove && q[i][j].position.x > canvas.width - 30) {
+            q[i][j].position.x = 10;
+            q[i][j].velocity.x = 0;
+          }
+        }
+      }
+
+    }
+  }
 
 
   function cycle() {
@@ -132,8 +151,8 @@ function charges1(el) {
       for (let i = 0, len = q.length; i < len; ++i) {
         Charge.physicsAll(q[i], 0.995);
         Charge.drawAll(q[i]);
-        const h = canvas.height
-        bounds(q[i], 0, h * i / len, canvas.width, h * (i + 1) / len);
+        // teleportCharges()
+        bounds(q[i], 0, canvas.height * i / len, canvas.width, canvas.height * (i + 1) / len);
       }
       requestAnimationFrame(cycle);
     }
