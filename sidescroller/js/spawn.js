@@ -3,24 +3,24 @@ const spawn = {
   pickList: ["starter", "starter"],
   fullPickList: [
     "chaser",
-    "striker",
+    "striker", "striker",
     "spinner",
-    "hopper",
+    "hopper", "hopper",
     "grower",
-    "springer",
-    "shooter",
+    "springer", "springer",
+    "shooter", "shooter",
     "beamer",
     "focuser",
-    "laser",
+    "laser", "laser",
     "blinker",
     "sucker",
-    "exploder",
+    "exploder", "exploder",
     "spawner",
     "ghoster",
     "sneaker",
   ],
   // "zoomer",
-  bossPickList: ["chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner"], //"zoomer", 
+  allowedBossList: ["chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner", "shooter"], //"zoomer", 
   setSpawnList: function () {
     //this is run at the start of each new level to determine the possible mobs for the level
     //each level has 2 mobs: one new mob and one from the the last level
@@ -53,33 +53,31 @@ const spawn = {
       let pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       //is the pick able to be a boss?
       let canBeBoss = false;
-      for (let i = 0, len = this.bossPickList.length; i < len; ++i) {
-        if (this.bossPickList[i] === pick) {
+      for (let i = 0, len = this.allowedBossList.length; i < len; ++i) {
+        if (this.allowedBossList[i] === pick) {
           canBeBoss = true;
           break;
         }
       }
-      if (!canBeBoss) {
-        if (Math.random() < 0.10) {
-          //one extra large mob
-          this[pick](x, y, 90 + Math.random() * 40);
-          return;
-        } else if (Math.random() < 0.2) {
-          //hidden grouping blocks
-          this.group(x, y)
-          return;
+      if (canBeBoss) {
+        if (Math.random() < 0.55) {
+          this.nodeBoss(x, y, pick);
+        } else {
+          this.lineBoss(x, y, pick);
         }
-      }
-      if (Math.random() < 0.85) {
-        pick = "randomList";
-      } else if (Math.random() < 0.85) {
-        pick = "random";
-      }
-      //spawn random boss
-      if (Math.random() < 0.55) {
-        this.nodeBoss(x, y, pick);
       } else {
-        this.lineBoss(x, y, pick);
+        if (Math.random() < 0.10) {
+          this[pick](x, y, 90 + Math.random() * 40); //one extra large mob
+        } else if (Math.random() < 0.2) {
+          this.group(x, y) //hidden grouping blocks
+        } else {
+          pick = (Math.random() < 0.5) ? "randomList" : "random";
+          if (Math.random() < 0.55) {
+            this.nodeBoss(x, y, pick);
+          } else {
+            this.lineBoss(x, y, pick);
+          }
+        }
       }
     }
   },
