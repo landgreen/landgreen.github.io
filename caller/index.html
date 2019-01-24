@@ -37,6 +37,8 @@
         <button v-on:click="removeItem">remove</button>
         <button v-on:click="resetCount">reset count</button>
         <button v-on:click="reset">reset all</button>
+        <button v-on:click="editCount">edit count</button>
+        <button v-on:click="editName">edit name</button>
         <!-- <button v-on:click="tidy">tidy</button> -->
         <br>
         <button v-on:click="exportOut">save to JSON file</button>
@@ -46,11 +48,9 @@
       </div>
     </header>
     <br>
-    <grid-layout :layout="layout" :col-num="12" :row-height="40" :is-draggable="draggable" :is-resizable="resizable" :vertical-compact="false"
-      :margin="[15, 20]" :use-css-transforms="true">
+    <grid-layout :layout="layout" :col-num="12" :row-height="40" :is-draggable="draggable" :is-resizable="resizable" :vertical-compact="false" :margin="[15, 20]" :use-css-transforms="true">
 
-      <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" @resized="resizedEvent" @moved="movedEvent"
-        v-bind:class="item.focus ? 'focus' : 'not-focus' ">
+      <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" @resized="resizedEvent" @moved="movedEvent" v-bind:class="item.focus ? 'focus' : 'not-focus' ">
         <span class="text">{{item.name}}</span>
         <span class="num">{{item.num}}</span>
       </grid-item>

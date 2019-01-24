@@ -1,4 +1,5 @@
 @import "https://fonts.googleapis.com/css?family=Roboto:400";
+
 body {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   /* font-size: 100%; */
@@ -54,6 +55,7 @@ select {
   top: 11px;
   left: 11px;
 }
+
 .focus {
   background-color: #4aa;
   color: #fff;
@@ -74,7 +76,7 @@ button {
   border-radius: 4px;
   color: #fff;
   background: #444;
-  padding: 10px 20px 10px 20px;
+  padding: 9px 18px;
   margin: 10px;
   text-decoration: none;
   border: none;
@@ -83,9 +85,11 @@ button {
 button:hover {
   background: #555;
 }
+
 button:active {
   background: #777;
 }
+
 button:focus {
   outline: 0;
 }
@@ -96,7 +100,7 @@ button:focus {
   color: #000;
   background: #fff;
   border: 1px solid black;
-  padding: 10px;
+  padding: 5px 10px;
   margin: 5px;
   text-decoration: none;
 }
@@ -104,9 +108,11 @@ button:focus {
 .blue {
   background: #4aa;
 }
+
 .blue:hover {
   background: #5bb;
 }
+
 .blue:active {
   background: #6cc;
 }
@@ -115,9 +121,11 @@ button:focus {
   background: transparent;
   color: #333;
 }
+
 .white:hover {
   background: #ddd;
 }
+
 .white:active {
   background: #bbb;
 }
