@@ -14,6 +14,7 @@ const level = {
     game.setZoom(); //reset zoom
     if (game.levelsCleared === 0) {
       this.intro();
+      // spawn.setSpawnList();
       // game.levelsCleared = 2; //for testing to simulate all possible mobs spawns
       // this.bosses();
       // this.testingMap();
@@ -33,6 +34,7 @@ const level = {
   //******************************************************************************************************************
   //******************************************************************************************************************
   testingMap: function () {
+    spawn.setSpawnList();
     game.levelsCleared = 7; //for testing to simulate all possible mobs spawns
     for (let i = 0; i < 7; i++) {
       game.dmgScale += 0.4; //damage done by mobs increases each level
@@ -96,7 +98,9 @@ const level = {
     //   spawn.chaser(800, -1150);
     // }
     // spawn.nodeBoss(900, -1070, "shooter", 9);
-    // spawn.randomBoss(-100, -1470);
+    for (let i = 0; i < 20; i++) {
+      spawn.randomBoss(-100, -1470);
+    }
   },
   bosses: function () {
     game.zoomScale = 1600 //1400
@@ -629,8 +633,9 @@ const level = {
       spawn.bodyRect(1400, -75, 200, 75); //block to get up ledge from ground
       spawn.bodyRect(1525, -125, 50, 50); //block to get up ledge from ground
     }
-    spawn.bodyRect(1025, -1110, 400, 10, 0.9); //block on far left building
-    spawn.bodyRect(1550, -1110, 250, 10, 0.9); //block on far left building
+    spawn.bodyRect(1025, -1110, 400, 25, 0.9); //block on far left building
+    spawn.bodyRect(1425, -1110, 115, 25, 0.9); //block on far left building
+    spawn.bodyRect(1540, -1110, 300, 25, 0.9); //block on far left building
 
     spawn.randomSmallMob(1300, -70);
     spawn.randomSmallMob(3200, -100);
