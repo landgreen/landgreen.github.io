@@ -16,7 +16,31 @@ mutators (as a power up)
 
   vampire damage
   shield (recharges fast, but only upto 10% of life)
+  freeze aura (could activate on damage)
   can eat blocks to recharge shield / 
+
+Active use abilities (can get ideas from spacetime)
+  blink (short distance teleport)
+    would reverse if they end up in solid wall
+  slow time aura (high friction around player)
+  beacon teleport
+  push (push blocks, mobs, and bullets away from player)
+  invulnerability (force field that stops mobs and bullets)
+  burst of speed
+  intangible (can move through bodies, bullets, and mobs.  Not map elements)
+  
+add power ups for the field generator
+  add ability to fire blocks harder and faster with less CD
+    or allow player to hold heavier blocks with less weight penalty
+  add ability to eat blocks to heal, but can't fire blocks
+  add ability to do directly damage mobs with field
+    narrow the width of the field to be more sword-like
+    field can only stay active for 1 second then a 1 second CD.
+  widen the field and remove repel mob CD
+  remove the repel mob ability replace with a slow time aura when field is active.
+    greatly increase field radius
+  
+
 
 game mechanics
   mechanics that support the physics engine
@@ -40,9 +64,6 @@ game mechanics
  	this might be not worth it, but it might look really cool
 
 track foot positions with velocity better as the player walks/crouch/runs
-
-brief forced crouch after landing at a high speed
- 	you could just set the crouch keys[] to true for a few cycles if velocity.y is large
 
 add bullet on damage effects
 	effects could:
@@ -247,7 +268,7 @@ function cycle() {
     game.draw.body();
     mech.draw();
     mech.hold();
-    powerUps.attractionLoop();
+    // powerUps.attractionLoop();
     level.drawFills();
     game.draw.drawMapPath();
     // mech.drawHealth();

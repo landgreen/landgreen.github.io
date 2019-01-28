@@ -216,37 +216,26 @@ const mech = {
   },
   buttonCD_jump: 0, //cool down for player buttons
   keyMove: function () {
-    if (this.onGround) {
-      //on ground **********************
+    if (this.onGround) { //on ground **********************
       if (this.crouch) {
-        //crouch
-        if (!(keys[83] || keys[40]) && this.isHeadClear) {
-          //not pressing crouch anymore
-          this.undoCrouch();
-        }
-        //hold a crouch after a hard land
-      } else if (keys[83] || keys[40]) {
-        //on ground && not crouched and pressing s or down
-        this.doCrouch();
-      } else if ((keys[87] || keys[38]) && this.buttonCD_jump + 20 < game.cycle && this.hardLandCD < game.cycle && this.yOffWhen.stand > 23) {
-        //can't jump again until 20 cycles pass
-        this.buttonCD_jump = game.cycle;
+        if (!(keys[83] || keys[40]) && this.isHeadClear && this.hardLandCD < game.cycle) this.undoCrouch();
+      } else if (keys[83] || keys[40] || this.hardLandCD > game.cycle) {
+        this.doCrouch(); //on ground && not crouched and pressing s or down
+      } else if ((keys[87] || keys[38]) && this.buttonCD_jump + 20 < game.cycle && this.yOffWhen.stand > 23) {
+        this.buttonCD_jump = game.cycle; //can't jump again until 20 cycles pass
+
         //apply a fraction of the jump force to the body the player is jumping off of
         Matter.Body.applyForce(mech.standingOn, mech.pos, {
           x: 0,
           y: this.jumpForce * 0.2 * Math.min(mech.standingOn.mass, 5)
         });
-        //player jump force
-        player.force.y = -this.jumpForce;
-        //zero player y-velocity for consistent jumps
-        Matter.Body.setVelocity(player, {
+
+        player.force.y = -this.jumpForce; //player jump force
+        Matter.Body.setVelocity(player, { //zero player y-velocity for consistent jumps
           x: player.velocity.x,
           y: 0
         });
       }
-
-      //standing on ground but not crouched
-      if (this.hardLandCD > game.cycle) this.doCrouch();
 
       //horizontal move on ground
       const stoppingFriction = (this.crouch) ? 0.75 : 0.9;
@@ -263,8 +252,7 @@ const mech = {
       } else if (keys[68] || keys[39]) { //right / d
         player.force.x += this.Fx
       }
-    } else {
-      // in air **********************************
+    } else { // in air **********************************
       //check for short jumps
       if (
         this.buttonCD_jump + 60 > game.cycle && //just pressed jump
@@ -374,25 +362,29 @@ const mech = {
     dist: 1000,
     index: 0
   },
-  lookingAt: function (who, threshold) {
+  lookingAt: function (who) {
     //calculate a vector from body to player and make it length 1
-    const diff = Matter.Vector.normalise(
-      Matter.Vector.sub(who.position, player.position)
-    );
+    const diff = Matter.Vector.normalise(Matter.Vector.sub(who.position, player.position));
     //make a vector for the player's direction of length 1
     const dir = {
       x: Math.cos(mech.angle),
       y: Math.sin(mech.angle)
     };
     //the dot product of diff and dir will return how much over lap between the vectors
-    if (Matter.Vector.dot(dir, diff) > threshold) {
+    // console.log(Matter.Vector.dot(dir, diff))
+    if (Matter.Vector.dot(dir, diff) > this.fieldThreshold) {
       return true;
     }
     return false;
   },
   isHolding: false,
-  grabRange: 175,
   holding: null,
+  throwCharge: 0,
+  throwChargeMax: 50,
+
+  grabRange: 175,
+  fieldArc: 0.2,
+  fieldThreshold: 0.87,
   drop: function () {
     if (this.isHolding) {
       this.isHolding = false;
@@ -430,10 +422,6 @@ const mech = {
       if (stroke) ctx.stroke();
     }
   },
-  fieldArc: 0.2,
-  fieldThreshold: 0.87,
-  throwCharge: 0,
-  throwChargeMax: 50,
   hold: function () {
     if (this.isHolding) {
       //hold blocks
@@ -538,9 +526,39 @@ const mech = {
       ctx.strokeStyle = "rgba(120,170,255,0.4)";
       ctx.stroke();
 
+      //look for power ups to grab
+      const grabPowerUpRange2 = (this.grabRange * 1.5) * (this.grabRange * 1.5)
+      for (let i = 0, len = powerUp.length; i < len; ++i) {
+        const dxP = mech.pos.x - powerUp[i].position.x;
+        const dyP = mech.pos.y - powerUp[i].position.y;
+        const dist2 = dxP * dxP + dyP * dyP;
+
+        // float towards player    if looking at and in range  or  if very close to player
+        if (dist2 < grabPowerUpRange2 && this.lookingAt(powerUp[i]) || dist2 < 14000) {
+          powerUp[i].force.x += 7 * (dxP / dist2) * powerUp[i].mass;
+          powerUp[i].force.y += 7 * (dyP / dist2) * powerUp[i].mass - powerUp[i].mass * game.g; //negate gravity
+          //extra friction
+          Matter.Body.setVelocity(powerUp[i], {
+            x: powerUp[i].velocity.x * 0.4,
+            y: powerUp[i].velocity.y * 0.4
+          });
+          if (dist2 < 5000) { //use power up if it is close enough
+            //player knockback
+            Matter.Body.setVelocity(player, {
+              x: player.velocity.x + ((powerUp[i].velocity.x * powerUp[i].mass) / player.mass) * 0.2,
+              y: player.velocity.y + ((powerUp[i].velocity.y * powerUp[i].mass) / player.mass) * 0.2
+            });
+            mech.usePowerUp(i);
+            this.fireCDcycle = game.cycle + 10; //cool down
+            break;
+          }
+        }
+      }
+
+
       // push all mobs in range
       for (let i = 0, len = mob.length; i < len; ++i) {
-        if (this.lookingAt(mob[i], this.fieldThreshold) && Matter.Vector.magnitude(Matter.Vector.sub(mob[i].position, this.pos)) < this.grabRange && Matter.Query.ray(map, mob[i].position, this.pos).length === 0) {
+        if (this.lookingAt(mob[i]) && Matter.Vector.magnitude(Matter.Vector.sub(mob[i].position, this.pos)) < this.grabRange && Matter.Query.ray(map, mob[i].position, this.pos).length === 0) {
           this.fireCDcycle = game.cycle + 30; //cool down
           // const dmg = b.dmgScale * 0.1;
           // mob[i].damage(dmg);
@@ -573,7 +591,7 @@ const mech = {
           const dist = Matter.Vector.magnitude(
             Matter.Vector.sub(body[i].position, this.pos)
           );
-          const looking = this.lookingAt(body[i], this.fieldThreshold);
+          const looking = this.lookingAt(body[i]);
           if (dist < grabbing.targetRange && (looking || !grabbing.lookingAt) && !body[i].isNotHoldable) {
             grabbing.targetRange = dist;
             grabbing.targetIndex = i;

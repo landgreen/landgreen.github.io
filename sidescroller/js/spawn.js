@@ -1126,10 +1126,8 @@ const spawn = {
 
         //player friction from the wires
         if (mech.pos.x > 700 && player.velocity.x > -2) {
-          let wireFriction = 0.75 * Math.min(0.65, Math.max(0, 150 / (breakingPoint - mech.pos.x)));
-          if (!mech.onGround) {
-            wireFriction *= 1.7
-          }
+          let wireFriction = 0.75 * Math.min(0.6, Math.max(0, 100 / (breakingPoint - mech.pos.x)));
+          if (!mech.onGround) wireFriction *= 3
           Matter.Body.setVelocity(player, {
             x: player.velocity.x - wireFriction,
             y: player.velocity.y

@@ -62,16 +62,22 @@ const powerUps = {
       if (options.length > 0) {
         let newGun = options[Math.floor(Math.random() * options.length)];
         // newGun = 4; //makes every gun you pick up this type  //enable for testing one gun
+        if (b.activeGun === null) {
+          b.activeGun = newGun //if no active gun switch to new gun
+          game.makeTextLog(
+            "<br><br><div class='wrapper'> <div class = 'grid-box'><strong>left mouse</strong>: fire weapon</div> <div class = 'grid-box'> <span class = 'mouse'>️<span class='mouse-line'></span></span> </div></div>",
+            Infinity
+          );
+        } else {
+          game.makeTextLog(
+            "<div style='font-size:120%;' >new gun: " + b.guns[newGun].name + "</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>",
+            360
+          );
+        }
         b.guns[newGun].have = true;
         b.inventory.push(newGun);
-        if (b.activeGun === null) b.activeGun = newGun //if no active gun switch to new gun
-        // b.inventory.sort();
         b.guns[newGun].ammo += b.guns[newGun].ammoPack * 2;
         game.makeGunHUD();
-        game.makeTextLog(
-          "<div style='font-size:120%;' >new gun: " + b.guns[newGun].name + "</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>",
-          360
-        );
       } else {
         //if you have all guns then get ammo
         const ammoTarget = Math.floor(Math.random() * (b.guns.length));
@@ -179,10 +185,7 @@ const powerUps = {
           break;
         }
         //power up needs to be able to see player to gravitate
-        if (
-          Matter.Query.ray(map, powerUp[i].position, player.position).length === 0
-          // && Matter.Query.ray(body, powerUp[i].position, player.position).length === 0
-        ) {
+        if (Matter.Query.ray(map, powerUp[i].position, player.position).length === 0) { // && Matter.Query.ray(body, powerUp[i].position, player.position).length === 0
           //extra friction
           Matter.Body.setVelocity(powerUp[i], {
             x: powerUp[i].velocity.x * 0.97,

@@ -81,8 +81,8 @@ const level = {
     //   powerUps.spawn(2500 + i * 20, -1300, "gun", false);
     //   powerUps.spawn(2500 + i * 20, -1100, "ammo", false);
     // }
-    // spawn.nodeBoss(-500, -600, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
-    // spawn.lineBoss(-500, -600, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
+    // spawn.nodeBoss(-500, -600, spawn.allowedBossList[Math.floor(Math.random() * spawn.allowedBossList.length)]);
+    // spawn.lineBoss(-500, -600, spawn.allowedBossList[Math.floor(Math.random() * spawn.allowedBossList.length)]);
     // spawn.bodyRect(-135, -50, 50, 50);
     // spawn.bodyRect(-140, -100, 50, 50);
     // spawn.bodyRect(-145, -150, 60, 50);
@@ -138,7 +138,6 @@ const level = {
     level.exit.y = -230;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
 
-
     spawn.mapRect(-250, 0, 7000, 200); //ground
     spawn.mapRect(-350, -1200, 200, 1400); //left wall
     spawn.mapRect(-250, -1200, 7000, 200); //roof
@@ -155,20 +154,17 @@ const level = {
     }
     blockDoor(710, -710);
 
-
     spawn[spawn.pickList[0]](1500, -200, 100 + game.levelsCleared * 8);
     spawn.mapRect(2500, -1200, 200, 750); //right wall
     blockDoor(2585, -210)
     spawn.mapRect(2500, -200, 200, 300); //right wall
 
-
-    spawn.nodeBoss(3500, -200, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
+    spawn.nodeBoss(3500, -200, spawn.allowedBossList[Math.floor(Math.random() * spawn.allowedBossList.length)]);
     spawn.mapRect(4500, -1200, 200, 750); //right wall
     blockDoor(4585, -210)
     spawn.mapRect(4500, -200, 200, 300); //right wall
 
-
-    spawn.lineBoss(5000, -200, spawn.bossPickList[Math.floor(Math.random() * spawn.bossPickList.length)]);
+    spawn.lineBoss(5000, -200, spawn.allowedBossList[Math.floor(Math.random() * spawn.allowedBossList.length)]);
     spawn.mapRect(6400, -1200, 400, 750); //right wall
     spawn.mapRect(6400, -200, 400, 300); //right wall
     spawn.mapRect(6700, -1200, 200, 1400); //right wall
@@ -203,7 +199,10 @@ const level = {
     //   Infinity
     // );
 
-
+    game.makeTextLog(
+      "<br><br><div class='wrapper'> <div class = 'grid-box'><strong>right mouse / space bar:</strong><br>pick up things</div> <div class = 'grid-box'> <span class = 'mouse'>️<span class='mouse-line'></span></span> </div></div>",
+      Infinity
+    );
     level.fill.push({
       x: -150,
       y: -1150,
@@ -321,9 +320,9 @@ const level = {
     mech.health = 0.25;
     mech.displayHealth();
     powerUps.spawn(-100, 0, "heal", false); //starting gun
-    powerUps.spawn(2000, -150, "heal", false); //starting gun
-    powerUps.spawn(2100, -150, "heal", false); //starting gun
-    powerUps.spawn(2250, -150, "gun", false); //starting gun
+    powerUps.spawn(1900, -150, "heal", false); //starting gun
+    powerUps.spawn(2050, -150, "heal", false); //starting gun
+    powerUps.spawn(2300, -150, "gun", false); //starting gun
 
     spawn.wireFoot();
     spawn.wireFootLeft();
