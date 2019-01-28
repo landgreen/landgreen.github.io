@@ -321,20 +321,19 @@
 			<strong>Example:</strong> A basketball falls off a table and hits the floor in 0.45 s. The ball has a velocity of 4.43 m/s right before it hits the ground. What is the acceleration of the basketball as it falls?
 			<details>
 				<summary>solution</summary>
-				$$a = \frac{\Delta v}{\Delta t}$$ $$a = \frac{4.43\, \mathrm{\tfrac{m}{s}}} {0.45\, \mathrm{s}}$$ $$a = 9.84\, \mathrm{\tfrac{m}{s^{2}} }$$
-
+				$$a = \frac{\Delta v}{\Delta t}$$
+				$$a = \frac{4.43\, \mathrm{\tfrac{m}{s}}} {0.45\, \mathrm{s}}$$
+				$$a = 9.84\, \mathrm{\tfrac{m}{s^{2}} }$$
 			</details>
 		</div>
 		<div class='example'>
 			<strong>Example:</strong> A <a href="https://en.wikipedia.org/wiki/List_of_fastest_production_cars_by_acceleration">Tesla</a> can go from 0 to 60 miles per hour in 2.28 s. What is the acceleration in m/s²? (1 mile = 1609 meters)
 			<details>
 				<summary>solution</summary>
-				<!-- $$ 60\left(\frac{miles}{hour}\right)\left(\frac{1609 m}{1 mile}\right)\left(\frac{1 hour}{3600s}\right) = 26.8\small\frac{m}{s} $$ -->
-				$$ 60\left( \mathrm{ \frac{\color{red}{mile}}{\color{blue}{hour}}} \right)\left(\frac{1609\,\mathrm{ m}}{1 \,\color{red}{\mathrm{mile} }}\right)\left(\frac{1\, \color{blue}{ \mathrm{hour} }}{3600\, \mathrm{s} }\right) = 26.8 \mathrm{\tfrac{m}{s}} $$
+				$$ 60\left( \mathrm{ \frac{\color{#f05}{mile}}{\color{#07b}{hour}}} \right)\left(\frac{1609\,\mathrm{ m}}{1 \,\color{#f05}{\mathrm{mile} }}\right)\left(\frac{1\, \color{#07b}{ \mathrm{hour} }}{3600\, \mathrm{s} }\right) = 26.8 \mathrm{\tfrac{m}{s}} $$
 				$$a = \frac{\Delta v}{\Delta t}$$
 				$$a = \frac{26.8\,\mathrm{ \tfrac{m}{s}}} {2.28\, \mathrm{s}}$$
 				$$a = 11.8\, \mathrm{ \tfrac{m}{s^{2}} }$$
-
 				<svg id="motion-0" class="SVG-shadow" viewBox="0 0 580 100">
 					<g font-size="16" stroke="none" fill="#000">
 						<text id="x-0" x="578" y="20" text-anchor="end">Δx=0</text>
@@ -343,12 +342,11 @@
 						<text id="a-0" x="578" y="95" text-anchor="end">a=0</text>
 					</g>
 					<g stroke-width="2" stroke-linejoin="square" stroke-linecap="square">
-						<circle id="circle-0" cx="290" cy="75" r="50" stroke="none" fill="#f65" />
+						<circle id="circle-0" cx="290" cy="50" r="40" stroke="none" fill="#f65" />
 						<path id="distance-0" d="" stroke="#666" fill="none" />
-						<path id="arc-0" d="" stroke="none" fill="rgba(255,255,255,0.4)" />
+						<path id="arc-0" d="" stroke="none" fill="rgba(255,255,255,1)" />
 					</g>
 				</svg>
-
 			</details>
 		</div>
 
@@ -385,9 +383,9 @@
 			<details>
 				<summary>answer</summary>
 				<p>acceleration</p>
-				<p>Acceleration is defined as the change in velocity every second. This is the same as the rise over the run, which is slope.
+				<p>
+					Acceleration is defined as the change in velocity every second. This is the same as the rise over the run, which is slope.
 				</p>
-
 			</details>
 		</div>
 
@@ -408,9 +406,7 @@
 			<svg id="SVG-graph-4" class="graph-box" width="290" height="250"></svg>
 			<svg id="SVG-graph-5" class="graph-box" width="290" height="250"></svg>
 			<div class="center">
-				acceleration =
-				<input id='acceleration-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5" style="width:125px;">
-				<input id='acceleration' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
+				acceleration = <input id='acceleration-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5" style="width:125px;"> <input id='acceleration' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
 			</div>
 			<svg id="SVG-graph-6" class="graph-box center" width="290" height="250"></svg>
 			<script defer>
@@ -534,7 +530,7 @@
 						funGraphSVG("SVG-graph-14", x => -9.8 / 2 * x * x, {
 							x0: 35,
 							y0: 15,
-							stroke: "rgba(255,0,50,1)",
+							stroke: "rgba(255,0,50,0.7)",
 							step: 10,
 							xScale: 50,
 							yScale: 0.5,
@@ -542,13 +538,12 @@
 							strokeWidth: 3,
 							xLabel: "time (s)",
 							yLabel: "position (m)",
-							positiveOnly: true,
 							showMouseCoords: true
 						});
 						funGraphSVG("SVG-graph-15", x => -9.8 * x, {
 							x0: 35,
 							y0: 15,
-							stroke: "rgba(150,30,255,1)",
+							stroke: "rgba(150,30,255,0.7)",
 							step: 10,
 							xScale: 50,
 							yScale: 2.5,
@@ -556,7 +551,6 @@
 							strokeWidth: 3,
 							xLabel: "time (s)",
 							yLabel: "velocity (m/s)",
-							positiveOnly: true,
 							showMouseCoords: true
 						});
 					}

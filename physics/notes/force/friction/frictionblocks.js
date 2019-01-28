@@ -1,5 +1,4 @@
 let blocks = () => {
-    const maxStaticFriction = 0.15
     let leftBlock = {
         target: document.getElementById("leftBlock"),
         textTarget: document.getElementById("leftBlock-text"),

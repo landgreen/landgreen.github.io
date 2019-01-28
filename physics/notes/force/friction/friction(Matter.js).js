@@ -2,27 +2,40 @@ MotionSimulation();
 
 function MotionSimulation() {
 
-  //set up canvas
-  const canvasID = "canvas";
-  const canvas = document.getElementById(canvasID);
-  const ctx = canvas.getContext("2d");
-  // const id = document.getElementById(canvasID).parentNode.id;
-  ctx.lineWidth = 1;
 
-  const width = 585;
-  const height = 300;
+  let width = 580;
+  let height = 300;
+  //set up canvas
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
 
   function resizeCanvas() {
     //fit canvas to window and fix issues with canvas blur on zoom
-    canvas.style.width = width + "px";
-    canvas.style.height = height + "px";
-    const scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-    canvas.width = width * scale;
-    canvas.height = height * scale;
-    ctx.scale(scale, scale);
+    if (document.body.clientWidth > width) {
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
 
-    ctx.lineWidth = 1;
+      const scale = window.devicePixelRatio;
+      canvas.width = width * scale;
+      canvas.height = height * scale;
+      ctx.scale(scale, scale);
+    }
   }
+
+  // function resizeCanvas() {
+  //   //fit canvas to window and fix issues with canvas blur on zoom
+  //   canvas.style.width = width + "px";
+  //   canvas.style.height = height + "px";
+  //   const scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+  //   canvas.width = width * scale;
+  //   canvas.height = height * scale;
+  //   ctx.scale(scale, scale);
+
+  //   ctx.lineWidth = 1;
+  // }
   window.addEventListener("load", resizeCanvas);
   window.addEventListener("resize", resizeCanvas);
 

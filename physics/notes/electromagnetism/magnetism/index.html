@@ -142,16 +142,9 @@
 			Magnetic fields are an addition to electric fields that accounts for Einstein's theory of <a href="../../relativity/special/index.html#specialrelativity">special relativity</a>.
 			Like electric fields, <a href='https://www.youtube.com/watch?v=1TKSfAkWWN0'>magnetic fields</a> are produced by charged particles, but only when the charged particle is moving.
 		</p>
-		<br>
-		<br>
-		<p class='definition'>
-			Charges moving perpendicular to an external magnetic field experience a force.
-		</p>
+		<p class='definition'>Magnetic fields apply a force on moving charges.</p>
 		<p>
-			Imagine two wires with electrons moving through them. Each wire will produce a magnetic field. Each wire's magnetic field applies a force on the other wire.
-		</p>
-		<p>
-			Observable magnetic forces are produced in several different ways: electromagnetism, dimagnetism, paramagnetism, ferromagnetism, ...
+			Strong magnetic forces are produced through <a href="#electromagnetism">electromagnetism</a> and <a href="#ferromagnetism">ferromagnetism</a>. Weaker forms of magnetism also exist, like <a href="https://en.wikipedia.org/wiki/Diamagnetism">diamagnetism</a> and <a href="https://en.wikipedia.org/wiki/Paramagnetism">paramagnetism</a>.
 		</p>
 
 		<h2 class='underlined'>Magnetic Force on a Particle</h2>
@@ -166,9 +159,7 @@
 		</div>
 
 		<div class='definition'>
-			<!-- <p>
-				A charged particle will experience a force when it moves in a magnetic field.
-			</p> -->
+			Charges moving perpendicular to an external magnetic field experience a force.
 			<svg viewBox="-40 0 400 170">
 				<g stroke="none" fill="none" stroke-width="2">
 					<g transform='translate(10,10)'>
@@ -663,15 +654,10 @@
 			</details>
 		</div>
 
-		<h1 class='underlined'>Electromagnets</h1>
+		<h1 class='underlined' id="electromagnetism">Electromagnets</h1>
 		<p>
-			<a href="..\..\electromagnetism\coulomb\index.html#conductivity">Electric current</a> measures the the flow of charge. A flow of charge in a wire produces a magnetic field that curves around the wire.
+			<a href="..\..\electromagnetism\charge\index.html#conductivity">Electric current</a> measures the the flow of charge. A flow of charge in a wire produces a magnetic field that curves around the wire.
 		</p>
-		<div class="col-group">
-			<div class='center'><span style="font-size: 150%;">⊙</span> = <strong>out</strong> of the page </div>
-			<div class='center'> <span style="font-size: 150%;">⨂</span> = <strong>into</strong> the page </div>
-		</div>
-
 		<svg viewBox="-25 -30 650 315">
 			<defs>
 				<linearGradient id="vert-fade" x1="0" x2="0" y1="0" y2="1">
@@ -687,7 +673,6 @@
 					<path d="M6 6 L -6 -6  M6 -6 L -6 6" />
 				</g>
 			</defs>
-
 			<g transform="translate(315 200)">
 				<line x1="0" y1="0" x2="0" y2="-80" style="stroke:#000;stroke-width:2" />
 				<g transform="translate(0 -85) rotate(90)">
@@ -695,7 +680,6 @@
 				</g>
 				<text x="0" y="-102" fill="#000" dominant-baseline="central" text-anchor="middle" font-size="25" font-family="Times New Roman">I</text>
 			</g>
-
 			<g stroke="#CB6D51" stroke-width="10" fill="none">
 				<path d="M300 -25 v 305" />
 			</g>
@@ -707,7 +691,6 @@
 			<g stroke="#CB6D51" stroke-width="9.5" fill="none">
 				<path d="M300 -25 v 50 M300 75 v 50 M300 175 v 50" />
 			</g>
-
 			<ellipse cx="300" cy="-25" rx="5" ry="2" fill="#d97" stroke="none" />
 			<ellipse cx="300" cy="280" rx="5" ry="2" fill="#CB6D51" stroke="none" />
 			<g opacity="0.4">
@@ -738,6 +721,29 @@
 				<use xlink:href="#in" x="600" y="225" />
 			</g>
 		</svg>
+		<details>
+			<summary>What does ⨂ and ⊙ mean?</summary>
+			<div class="col-group">
+				<div class='center'> <span style="font-size: 150%;">⨂</span> = <strong>into</strong> the page </div>
+				<div class='center'><span style="font-size: 150%;">⊙</span> = <strong>out</strong> of the page </div>
+			</div>
+			<svg viewBox="0 0 600 85">
+				<ellipse cx="65" cy="50" rx="15" ry="30" fill="none" stroke="#789" stroke-width="3" />
+				<path d="M65 50 l -5 20 l 10 -40 m -10 0 l 10 40" fill="none" stroke="#789" stroke-width="3" stroke-linecap="round" />
+				<ellipse cx="435" cy="50" rx="15" ry="30" fill="none" stroke="#789" stroke-width="3" />
+				<circle cx="435" cy="50" r="4" fill="#789" stroke="none" />
+				<path d="M100 50 l -15 -15 h 30 l15 15  M100 50 l -15 15 h 30 l15 -15" fill="#456" stroke="none" />
+				<g stroke-width="7">
+					<g transform="translate(405 50) rotate(180)">
+						<polygon points="0,0 12,5 11,0 12,-5" fill="#456" stroke="#456" />
+					</g>
+					<path d="M100 50 h 290" stroke="#222" fill="none" stroke-linecap="round" />
+				</g>
+			</svg>
+			<p>To show 3D vectors we will use these symbols for into and out of the page. I think of the cross as the feathers on the back of an arrow, and the dot as the tip of an arrow.</p>
+			<br>
+			<br>
+		</details>
 		<p>
 			The electric current from a long wire forms a magnetic field in the shape of concentric circles around the wire. The field strength diminishes with distance at 1/r not 1/r². The field strength can be calculated with <a href="http://hyperphysics.phy-astr.gsu.edu/hbase/magnetic/magcur.html#c2">Ampere's law</a>.
 		</p>
@@ -764,9 +770,8 @@
 					<text x="100" y="10" fill="#345" dominant-baseline="central" text-anchor="middle" font-size="18" font-family="Times New Roman">I</text>
 				</svg>
 			</div>
+		</div>
 
-		</div>
-		</div>
 		<div class='example'>
 			<svg viewBox="-25 -30 650 315">
 				<g>
@@ -814,6 +819,7 @@
 						<use xlink:href="#out" x="600" y="225" />
 					</g>
 			</svg>
+
 			<strong>Example:</strong> Curl the fingers on your right hand with the magnetic field to determine the direction of the current?
 			<details>
 				<summary>solution</summary>
@@ -993,7 +999,7 @@
 			<strong>Example:</strong> Use each wire's magnetic field to determine the direction of the forces between the wires.
 			<details>
 				<summary>solution</summary>
-				<p>Wires with current in the same direction are be pulled towards each other.</p>
+				<p>Wires with current in the same direction are pulled towards each other.</p>
 				<svg viewBox="0 -5 600 260">
 					<g stroke="#CB6D51" stroke-width="10" fill="none">
 						<path d="M200 0 v 250" />
@@ -1075,10 +1081,10 @@
 			The magnetic field from one wire can be increased by <a href="https://www.youtube.com/watch?v=Wm9_DqQKmd0">wrapping</a> the wire in many loops. The strength can increased again by wrapping the wire around a ferromagnetic material, like a nail.
 		</p>
 		<p>
-			<a href="https://www.youtube.com/watch?v=VB55RwvoPi4">Electromagnets</a> are used in most devices that produce <a href="https://www.reddit.com/r/physicsgifs/comments/9mcn5l/selfpropelled_homopolar_motor_on_aluminum_foil/">motion</a> from electricity. Electric motors, speakers, microphones, MRI machines, transformers ...
+			<a href="https://www.youtube.com/watch?v=VB55RwvoPi4">Electromagnets</a> are used in most devices that produce <a href="https://www.reddit.com/r/physicsgifs/comments/9mcn5l/selfpropelled_homopolar_motor_on_aluminum_foil/">motion</a> from electricity: electric motors, speakers, microphones, valves, ...
 		</p>
+		<p>They are also used in generators, MRI machines, transformers, induction heating, magnetic levitation ...</p>
 
-		<!-- <h2 class='underlined'>Electromagnetic Induction</h2> -->
 		<div class="example">
 			<p>Electromagnetic <a href="https://www.youtube.com/watch?v=sENgdSF8ppA">induction</a> is the production of voltage from a conductor moving past a magnetic field. </p>
 			<p>
@@ -1098,7 +1104,7 @@
 			</div>
 		</div>
 
-		<h1 class='underlined'>Ferromagnetism</h1>
+		<h1 class='underlined' id="ferromagnetism">Ferromagnetism</h1>
 		<p>
 			Ferromagnetic metals produce a lasting magnetic field after they are <a href="https://www.youtube.com/watch?v=URIkH1CTmLE">exposed</a> to an external magnetic field.
 			Ferromagnetic metals include: iron, nickel, cobalt, most of their alloys, and rare earth metals.
@@ -1129,7 +1135,7 @@
 		</div>
 
 		<p>
-			You can see a 2D slice of the <a href="https://www.google.com/search?q=iron+filings+magnetic+field&tbm=isch">field</a> from a magnet by sprinkling small bits of iron around the magnet. The field has north and south poles just like electromagnet.
+			You can see a <a href="https://www.google.com/search?q=iron+filings+magnetic+field&tbm=isch">2D slice</a> of the <a href="https://www.youtube.com/watch?v=75wrs0PLl_s">3D field</a> from a magnet by sprinkling small bits of iron around the magnet. The field has north and south poles just like electromagnet.
 		</p>
 		<svg viewBox="-100 0 800 600">
 			<defs>
@@ -1267,9 +1273,118 @@
 				<p>
 					Using the right hand rule:
 					<br>
-					<br>the magnetic field is to the right
-					<br>the current is up
+					<br>the magnetic field is out of the north pole, to the right
+					<br>the electric current is up
 					<br>the force is <strong>into</strong> the page
+				</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<svg viewBox="0 0 300 125">
+				<g stroke="#CB6D51" stroke-width="5" fill="none">
+					<path d="M200 10 v 110" />
+				</g>
+				<ellipse cx="200" cy="10" rx="2.5" ry="1" fill="#d97" stroke="none" />
+				<ellipse cx="200" cy="120" rx="2.5" ry="1" fill="#CB6D51" stroke="none" />
+
+				<g transform="translate(215 30) rotate(180)">
+					<line x1="0" y1="-50" x2="0" y2="0" style="stroke:#012;stroke-width:1.5" />
+					<g transform="translate(0 -55) rotate(90)">
+						<polygon points="0,0 10,4 9,0 10,-4" fill="#012" stroke="none" />
+					</g>
+					<text x="0" y="-65" stroke="none" fill="#012" dominant-baseline="central" text-anchor="middle" font-size="14" font-family="Times New Roman">I</text>
+				</g>
+				<rect x="75" y="50" width="100" height="25" rx="1" ry="1" fill="#345" stroke="none" stroke-width="2" />
+				<g stroke="none" fill="#eee" font-size="15" text-anchor="middle">
+					<text x="90" y="68">S</text>
+					<text x="160" y="68">N</text>
+				</g>
+			</svg>
+			<strong>Question:</strong> What direction is the force the magnet is exerting on the wire?
+			<details>
+				<summary>answer</summary>
+				<p>
+					Using the right hand rule:
+					<br>
+					<br>the magnetic field is out of the north pole, to the right
+					<br>the electric current is down
+					<br>the force is <strong>out of</strong> the page
+				</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<svg viewBox="0 0 300 125">
+				<g transform="translate(-110 0)">
+					<g stroke="#CB6D51" stroke-width="5" fill="none">
+						<path d="M200 10 v 110" />
+					</g>
+					<ellipse cx="200" cy="10" rx="2.5" ry="1" fill="#d97" stroke="none" />
+					<ellipse cx="200" cy="120" rx="2.5" ry="1" fill="#CB6D51" stroke="none" />
+				</g>
+
+				<g transform="translate(73 95)">
+					<line x1="0" y1="-50" x2="0" y2="0" style="stroke:#012;stroke-width:1.5" />
+					<g transform="translate(0 -55) rotate(90)">
+						<polygon points="0,0 10,4 9,0 10,-4" fill="#012" stroke="none" />
+					</g>
+					<text x="0" y="-65" stroke="none" fill="#012" dominant-baseline="central" text-anchor="middle" font-size="14" font-family="Times New Roman">I</text>
+				</g>
+				<g transform="translate(40 0)">
+					<rect x="75" y="50" width="100" height="25" rx="1" ry="1" fill="#345" stroke="none" stroke-width="2" />
+					<g stroke="none" fill="#eee" font-size="15" text-anchor="middle">
+						<text x="90" y="68">S</text>
+						<text x="160" y="68">N</text>
+					</g>
+				</g>
+			</svg>
+			<strong>Question:</strong> What direction is the force the magnet is exerting on the wire?
+			<details>
+				<summary>answer</summary>
+				<p>
+					Using the right hand rule:
+					<br>
+					<br>the magnetic field is into the south pole, to the right
+					<br>the electric current is up
+					<br>the force is <strong>into</strong> the page
+				</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<svg viewBox="0 0 300 125">
+				<g transform="translate(190 -105) rotate(90)">
+					<g stroke="#CB6D51" stroke-width="5" fill="none">
+						<path d="M200 10 v 110" />
+					</g>
+					<ellipse cx="200" cy="10" rx="2.5" ry="1" fill="#d97" stroke="none" />
+					<ellipse cx="200" cy="120" rx="2.5" ry="1" fill="#CB6D51" stroke="none" />
+
+					<g transform="translate(215 100)">
+						<line x1="0" y1="-50" x2="0" y2="0" style="stroke:#012;stroke-width:1.5" />
+						<g transform="translate(0 -55) rotate(90)">
+							<polygon points="0,0 10,4 9,0 10,-4" fill="#012" stroke="none" />
+						</g>
+					</g>
+				</g>
+				<text x="152" y="110" stroke="none" fill="#012" dominant-baseline="central" text-anchor="middle" font-size="14" font-family="Times New Roman">I</text>
+
+				<rect x="75" y="50" width="100" height="25" rx="1" ry="1" fill="#345" stroke="none" stroke-width="2" />
+				<g stroke="none" fill="#eee" font-size="15" text-anchor="middle">
+					<text x="90" y="68">S</text>
+					<text x="160" y="68">N</text>
+				</g>
+			</svg>
+			<strong>Question:</strong> What direction is the force the magnet is exerting on the wire?
+			<details>
+				<summary>answer</summary>
+				<p>
+					Using the right hand rule:
+					<br>
+					<br>the magnetic field is into the south and out of the north pole, to the right
+					<br>the electric current is also right
+					<br>the magnetic force is <strong>zero</strong>
 				</p>
 			</details>
 		</div>
@@ -1328,7 +1443,7 @@
 			The Earth's magnetic field slows down charged particles. This shields the Earth from the solar wind's ionizing radiation. This slowing down can be seen at the north and south poles as an <a href='https://en.wikipedia.org/wiki/Aurora'>aurora</a>.
 		</p>
 		<p>
-			We have strong evidence that the North and South poles experience periodic <a href="https://en.wikipedia.org/wiki/Earth's_magnetic_field#Magnetic_field_reversals">reversals</a>. About 780&#8239;000 years a compass would have pointed in the opposite direction it points now. The reversals are unpredictable, but generally there is thousands of years of stability between flips.
+			We have strong evidence that the North and South poles experience periodic <a href="https://en.wikipedia.org/wiki/Earth's_magnetic_field#Magnetic_field_reversals">reversals</a>. About 780&#8239;000 years ago a compass would have pointed in the opposite direction it points now. The reversals are unpredictable, but typically there is thousands of years of stability between flips.
 		</p>
 
 		<div class='example'>
