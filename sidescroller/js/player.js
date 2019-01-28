@@ -55,7 +55,6 @@ const mech = {
   radius: 30,
   fillColor: "#fff",
   fillColorDark: "#ccc",
-  fireCDcycle: 0,
   height: 42,
   yOffWhen: {
     crouch: 22,
@@ -71,7 +70,7 @@ const mech = {
     this.Fx = 0.075 / mass
     this.FxAir = 0.375 / mass / mass
     //make player stand a bit lower when holding heavy masses
-    this.yOffWhen.stand = Math.max(this.yOffWhen.crouch, Math.min(49, 49 - (mass - 5) * 5))
+    this.yOffWhen.stand = Math.max(this.yOffWhen.crouch, Math.min(49, 49 - (mass - 5) * 6))
     if (this.onGround && !this.crouch) this.yOffGoal = this.yOffWhen.stand;
   },
   yOff: 70,
@@ -362,9 +361,24 @@ const mech = {
     dist: 1000,
     index: 0
   },
+  isHolding: false,
+  holding: null,
+  throwCharge: 0,
+  throwChargeMax: 50,
+  fireCDcycle: 0,
+  //these values can be adjusted for field power ups
+  fieldCD: 30,
+  fieldDamage: 0, // a value of 1.0 kills a small mob in 2-3 hits on level 1
+  grabRange: 175,
+  fieldArc: 0.2,
+  fieldThreshold: Math.cos(0.2 * Math.PI), //0.87,
+  calculateFieldThreshold: function () {
+    this.fieldThreshold = Math.cos(this.fieldArc * Math.PI)
+  },
+
   lookingAt: function (who) {
     //calculate a vector from body to player and make it length 1
-    const diff = Matter.Vector.normalise(Matter.Vector.sub(who.position, player.position));
+    const diff = Matter.Vector.normalise(Matter.Vector.sub(who.position, mech.pos));
     //make a vector for the player's direction of length 1
     const dir = {
       x: Math.cos(mech.angle),
@@ -377,14 +391,6 @@ const mech = {
     }
     return false;
   },
-  isHolding: false,
-  holding: null,
-  throwCharge: 0,
-  throwChargeMax: 50,
-
-  grabRange: 175,
-  fieldArc: 0.2,
-  fieldThreshold: 0.87,
   drop: function () {
     if (this.isHolding) {
       this.isHolding = false;
@@ -469,7 +475,7 @@ const mech = {
         }
       } else if (this.throwCharge > 0) {
         //throw the body
-        this.fireCDcycle = game.cycle + 15;
+        this.fireCDcycle = game.cycle + this.fieldCD;
         this.isHolding = false;
         //bullet-like collisions
         this.holdingTarget.collisionFilter.category = 0x000100;
@@ -549,7 +555,7 @@ const mech = {
               y: player.velocity.y + ((powerUp[i].velocity.y * powerUp[i].mass) / player.mass) * 0.2
             });
             mech.usePowerUp(i);
-            this.fireCDcycle = game.cycle + 10; //cool down
+            this.fireCDcycle = game.cycle + Math.floor(this.fieldCD / 3); //cool down
             break;
           }
         }
@@ -559,9 +565,8 @@ const mech = {
       // push all mobs in range
       for (let i = 0, len = mob.length; i < len; ++i) {
         if (this.lookingAt(mob[i]) && Matter.Vector.magnitude(Matter.Vector.sub(mob[i].position, this.pos)) < this.grabRange && Matter.Query.ray(map, mob[i].position, this.pos).length === 0) {
-          this.fireCDcycle = game.cycle + 30; //cool down
-          // const dmg = b.dmgScale * 0.1;
-          // mob[i].damage(dmg);
+          this.fireCDcycle = game.cycle + this.fieldCD; //cool down
+          if (this.fieldDamage) mob[i].damage(b.dmgScale * this.fieldDamage);
           mob[i].locatePlayer();
           this.drawHold(mob[i]);
           //mob and player knock back
