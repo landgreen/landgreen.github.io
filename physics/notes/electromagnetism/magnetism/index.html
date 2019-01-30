@@ -105,8 +105,7 @@
 				</label>
 			</div>
 		</form>
-		<canvas class="cloud" id='cloud-chamber' height='100' width='600' onclick="charges15(this)" style="background: #000;">
-		</canvas>
+		<canvas class="cloud" id='cloud-chamber' height='100' width='600' onclick="charges15(this)" style="background: #000;"></canvas>
 		<div id="observations" style="display:none">
 			<strong>Simulation:</strong> Select the radiation type beta and adjust the strength of the magnetic field. Beta radiation is high speed electrons. What do you observe?
 			<details>
@@ -152,17 +151,12 @@
 			<ellipse cx="100" cy="125" rx="50" ry="20" fill="none" stroke-width="2" stroke="url(#vert-fade-2)" />
 			<path d="M100 135 v15 h33 l-10 -20 z" fill="#fff" stroke="none" stroke-width="1" />
 			<path d="M107 145 l-10 4 l1 -4 l-1 -4 z" fill="#345" stroke="none" />
-
 			<text x="116" y="145" fill="#345" dominant-baseline="central" text-anchor="middle" font-size="16" font-family="Times New Roman">B</text>
-
 			<path d="M100 125 v -30" stroke="#345" fill="none" stroke-width="1.5" />
 			<path d="M100 90 l3 8 l-3 -1 l -3 1 z" fill="#345" stroke="none" />
 			<text x="100" y="83" fill="#345" dominant-baseline="central" text-anchor="middle" font-size="10" font-family="Times New Roman">v</text>
-
 			<circle cx="100" cy="125" r="6" fill="#345" stroke="none" />
-
 		</svg>
-
 		<p>
 			A moving charge produces a magnetic field, but a moving charge also experience a force from external magnetic fields.
 		</p>
@@ -468,7 +462,31 @@
 			<p>
 				A wire in a magnetic field will experience a force when current runs through it.
 			</p>
-			<svg viewBox="-40 -50 400 260">
+			<style type="text/css">
+				@keyframes marching_ants {
+					0% {
+						stroke-dashoffset: 0;
+					}
+
+					100% {
+						stroke-dashoffset: 20;
+					}
+				}
+
+				#ants {
+					display: none;
+				}
+
+				#ants-2 {
+					display: none;
+				}
+
+				.ants {
+					animation: marching_ants 1.0s linear infinite reverse;
+					stroke-dasharray: 0.1 19.9;
+				}
+			</style>
+			<svg viewBox="-40 -50 400 260" id="magnetic-wire">
 				<g stroke="none" stroke-width="2">
 					<g transform='translate(10,10)'>
 						<circle cx="0" cy="0" r="9" stroke="#abc" fill='none' />
@@ -584,9 +602,9 @@
 					</g>
 				</g>
 				<line x1="130" y1="-45" x2="130" y2="205" stroke="#CB6D51" stroke-width="10" />
-				<ellipse cx="130" cy="-45" rx="5" ry="2" fill="#d97" stroke="none" />
 				<ellipse cx="130" cy="205" rx="5" ry="2" fill="#CB6D51" stroke="none" />
-
+				<path id="ants" class="ants" d="M 130 -45 v250" fill='none' stroke="#ddeef6" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+				<ellipse cx="130" cy="-45" rx="5" ry="2" fill="#d97" stroke="none" />
 				<g transform="translate(143 90)">
 					<line x1="0" y1="0" x2="0" y2="-60" style="stroke:#000;stroke-width:2" />
 					<g transform="translate(0 -65) rotate(90)">
@@ -609,6 +627,14 @@
 					<text x="-10" y="90" fill="#000" text-anchor="middle" font-size="18" font-family="Times New Roman">l</text>
 				</g>
 			</svg>
+			<script>
+				document.getElementById("magnetic-wire").addEventListener("mouseleave", () => {
+					document.getElementById("ants").style.display = "none";
+				});
+				document.getElementById("magnetic-wire").addEventListener("mouseenter", () => {
+					document.getElementById("ants").style.display = "block";
+				});
+			</script>
 			<h2>$$ F=IlB \sin \theta $$</h2>
 			<p>\(F\) = magnetic force [N, Newton, kg m/s²]
 				<em>vector</em>
@@ -619,6 +645,7 @@
 				<em>vector</em>
 				<br>\(\theta\) = angle between the magnetic field and the current
 		</div>
+		<p>Note that current is in the opposite direction of the flow of electrons, since electrons are negative.</p>
 		<p>The magnetic force can be used to build a <a href="https://www.youtube.com/watch?v=NJRDclzi5Vg">rail gun</a>. </p>
 
 		<div class='example'>
@@ -685,7 +712,7 @@
 		<p>
 			<a href="..\..\electromagnetism\charge\index.html#conductivity">Electric current</a> measures the the flow of charge. A flow of charge in a wire produces a magnetic field that curves around the wire.
 		</p>
-		<svg viewBox="-25 -30 650 315">
+		<svg viewBox="-25 -30 650 315" id="magnetic-wire-2">
 			<defs>
 				<linearGradient id="vert-fade" x1="0" x2="0" y1="0" y2="1">
 					<stop offset="0%" stop-color="#abc" stop-opacity="0.2" />
@@ -718,8 +745,6 @@
 			<g stroke="#CB6D51" stroke-width="9.5" fill="none">
 				<path d="M300 -25 v 50 M300 75 v 50 M300 175 v 50" />
 			</g>
-			<ellipse cx="300" cy="-25" rx="5" ry="2" fill="#d97" stroke="none" />
-			<ellipse cx="300" cy="280" rx="5" ry="2" fill="#CB6D51" stroke="none" />
 			<g opacity="0.4">
 				<use xlink:href="#out" x="0" y="25" />
 				<use xlink:href="#out" x="0" y="125" />
@@ -747,7 +772,18 @@
 				<use xlink:href="#in" x="600" y="125" />
 				<use xlink:href="#in" x="600" y="225" />
 			</g>
+			<ellipse cx="300" cy="280" rx="5" ry="2" fill="#CB6D51" stroke="none" />
+			<path id="ants-2" class="ants" d="M 300 -25 v305" fill='none' stroke="#fed" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+			<ellipse cx="300" cy="-25" rx="5" ry="2" fill="#d97" stroke="none" />
 		</svg>
+		<script>
+			document.getElementById("magnetic-wire-2").addEventListener("mouseleave", () => {
+				document.getElementById("ants-2").style.display = "none";
+			});
+			document.getElementById("magnetic-wire-2").addEventListener("mouseenter", () => {
+				document.getElementById("ants-2").style.display = "block";
+			});
+		</script>
 		<details>
 			<summary>What does ⨂ and ⊙ mean?</summary>
 			<div class="col-group">
@@ -1343,6 +1379,43 @@
 
 		<div class='example'>
 			<svg viewBox="0 0 300 125">
+				<g transform="translate(190 -105) rotate(90)">
+					<g stroke="#CB6D51" stroke-width="5" fill="none">
+						<path d="M200 10 v 110" />
+					</g>
+					<ellipse cx="200" cy="10" rx="2.5" ry="1" fill="#d97" stroke="none" />
+					<ellipse cx="200" cy="120" rx="2.5" ry="1" fill="#CB6D51" stroke="none" />
+
+					<g transform="translate(215 100)">
+						<line x1="0" y1="-50" x2="0" y2="0" style="stroke:#012;stroke-width:1.5" />
+						<g transform="translate(0 -55) rotate(90)">
+							<polygon points="0,0 10,4 9,0 10,-4" fill="#012" stroke="none" />
+						</g>
+					</g>
+				</g>
+				<text x="152" y="110" stroke="none" fill="#012" dominant-baseline="central" text-anchor="middle" font-size="14" font-family="Times New Roman">I</text>
+
+				<rect x="75" y="50" width="100" height="25" rx="1" ry="1" fill="#345" stroke="none" stroke-width="2" />
+				<g stroke="none" fill="#eee" font-size="15" text-anchor="middle">
+					<text x="90" y="68">S</text>
+					<text x="160" y="68">N</text>
+				</g>
+			</svg>
+			<strong>Question:</strong> What direction is the force the magnet is exerting on the wire?
+			<details>
+				<summary>answer</summary>
+				<p>
+					Using the right hand rule:
+					<br>
+					<br>the magnetic field is into the south and out of the north pole, to the right
+					<br>the electric current is also right
+					<br>the magnetic force is <strong>zero</strong>
+				</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<svg viewBox="0 0 300 125">
 				<g transform="translate(-110 0)">
 					<g stroke="#CB6D51" stroke-width="5" fill="none">
 						<path d="M200 10 v 110" />
@@ -1375,43 +1448,6 @@
 					<br>the magnetic field is into the south pole, to the right
 					<br>the electric current is up
 					<br>the force is <strong>into</strong> the page
-				</p>
-			</details>
-		</div>
-
-		<div class='example'>
-			<svg viewBox="0 0 300 125">
-				<g transform="translate(190 -105) rotate(90)">
-					<g stroke="#CB6D51" stroke-width="5" fill="none">
-						<path d="M200 10 v 110" />
-					</g>
-					<ellipse cx="200" cy="10" rx="2.5" ry="1" fill="#d97" stroke="none" />
-					<ellipse cx="200" cy="120" rx="2.5" ry="1" fill="#CB6D51" stroke="none" />
-
-					<g transform="translate(215 100)">
-						<line x1="0" y1="-50" x2="0" y2="0" style="stroke:#012;stroke-width:1.5" />
-						<g transform="translate(0 -55) rotate(90)">
-							<polygon points="0,0 10,4 9,0 10,-4" fill="#012" stroke="none" />
-						</g>
-					</g>
-				</g>
-				<text x="152" y="110" stroke="none" fill="#012" dominant-baseline="central" text-anchor="middle" font-size="14" font-family="Times New Roman">I</text>
-
-				<rect x="75" y="50" width="100" height="25" rx="1" ry="1" fill="#345" stroke="none" stroke-width="2" />
-				<g stroke="none" fill="#eee" font-size="15" text-anchor="middle">
-					<text x="90" y="68">S</text>
-					<text x="160" y="68">N</text>
-				</g>
-			</svg>
-			<strong>Question:</strong> What direction is the force the magnet is exerting on the wire?
-			<details>
-				<summary>answer</summary>
-				<p>
-					Using the right hand rule:
-					<br>
-					<br>the magnetic field is into the south and out of the north pole, to the right
-					<br>the electric current is also right
-					<br>the magnetic force is <strong>zero</strong>
 				</p>
 			</details>
 		</div>
