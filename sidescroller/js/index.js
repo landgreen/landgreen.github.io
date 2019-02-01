@@ -32,11 +32,11 @@ Active use abilities (can get ideas from spacetime)
 add power ups for the field generator
   add ability to fire blocks harder and faster with less CD
     or allow player to hold heavier blocks with less weight penalty
-  add ability to eat blocks to heal, but can't fire blocks
-  add ability to do directly damage mobs with field
+  add ability to eat large blocks to heal
+    have this only work for very large blocks, so player can still hold things. 
+  add ability to damage mobs with field
     narrow the width of the field to be more sword-like
     field can only stay active for 1 second then a 1 second CD.
-  widen the field and remove repel mob CD
   remove the repel mob ability replace with a slow time aura when field is active.
     greatly increase field radius
   
@@ -224,7 +224,7 @@ function shuffle(array) {
 }
 
 
-// mech.setHold(1);
+// mech.setHold(3);
 
 //main loop ************************************************************
 //**********************************************************************

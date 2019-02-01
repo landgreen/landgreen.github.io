@@ -437,6 +437,83 @@ const mech = {
     Matter.Body.setVelocity(this.holdingTarget, player.velocity);
     Matter.Body.rotate(this.holdingTarget, 0.01 / this.holdingTarget.mass); //gently spin the block
   },
+  eat: function () {
+    if (keys[32] || game.mouseDownRight) {
+      this.throwCharge += 2;
+      //draw charge
+      const x = mech.pos.x + 15 * Math.cos(this.angle);
+      const y = mech.pos.y + 15 * Math.sin(this.angle);
+      const len = this.holdingTarget.vertices.length - 1;
+      const edge = this.throwCharge * this.throwCharge * 0.02;
+      const grd = ctx.createRadialGradient(x, y, edge, x, y, edge + 5);
+      grd.addColorStop(0, "rgba(255,50,150,0.3)");
+      grd.addColorStop(1, "transparent");
+      ctx.fillStyle = grd;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(
+        this.holdingTarget.vertices[len].x,
+        this.holdingTarget.vertices[len].y
+      );
+      ctx.lineTo(
+        this.holdingTarget.vertices[0].x,
+        this.holdingTarget.vertices[0].y
+      );
+      ctx.fill();
+      for (let i = 0; i < len; i++) {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(
+          this.holdingTarget.vertices[i].x,
+          this.holdingTarget.vertices[i].y
+        );
+        ctx.lineTo(
+          this.holdingTarget.vertices[i + 1].x,
+          this.holdingTarget.vertices[i + 1].y
+        );
+        ctx.fill();
+      }
+    } else if (this.throwCharge > 0) {
+      console.log(this.holdingTarget.mass)
+      if (this.holdingTarget.mass > 6) { //eat the body
+        Matter.World.remove(engine.world, this.holdingTarget);
+        // body.splice(i, 1);
+      } else { //throw the body
+        this.fireCDcycle = game.cycle + this.fieldFireCD;
+        this.isHolding = false;
+        //bullet-like collisions
+        this.holdingTarget.collisionFilter.category = 0x000100;
+        this.holdingTarget.collisionFilter.mask = 0x111111;
+        //check every second to see if player is away from thrown body, and make solid
+        const solid = function (that) {
+          const dx = that.position.x - player.position.x;
+          const dy = that.position.y - player.position.y;
+          if (dx * dx + dy * dy > 10000 && that.speed < 3 && that !== mech.holdingTarget) {
+            that.collisionFilter.category = 0x000001; //make solid
+            that.collisionFilter.mask = 0x011111;
+          } else {
+            setTimeout(solid, 250, that);
+          }
+        };
+        setTimeout(solid, 1000, this.holdingTarget);
+        //throw speed scales a bit with mass
+        const speed = (Math.min(54 / this.holdingTarget.mass + 5, 48) * Math.min(this.throwCharge, this.throwChargeMax)) / this.throwChargeMax;
+        this.throwCharge = 0;
+        Matter.Body.setVelocity(this.holdingTarget, {
+          x: player.velocity.x * 0.5 + Math.cos(this.angle) * speed,
+          y: player.velocity.y * 0.5 + Math.sin(this.angle) * speed
+        });
+        //player recoil //stronger in x-dir to prevent jump hacking
+        Matter.Body.setVelocity(player, {
+          x: player.velocity.x - Math.cos(this.angle) * 2,
+          y: player.velocity.y - Math.sin(this.angle) * 0.4
+        });
+        //return to normal player mass
+        this.definePlayerMass()
+      }
+    }
+
+  },
   throw: function () {
     if (keys[32] || game.mouseDownRight) {
       this.throwCharge += 2;
@@ -585,24 +662,22 @@ const mech = {
       }
     }
   },
-  lookForPickUp: function (range = this.grabRange) {
-    //find body to pickup
+  lookForPickUp: function (range = this.grabRange) { //find body to pickup
     const grabbing = {
       targetIndex: null,
       targetRange: range,
-      lookingAt: false
+      // lookingAt: false //false to pick up object in range, but not looking at
     };
     for (let i = 0, len = body.length; i < len; ++i) {
       if (Matter.Query.ray(map, body[i].position, this.pos).length === 0) {
         //is this next body a better target then my current best
-        const dist = Matter.Vector.magnitude(
-          Matter.Vector.sub(body[i].position, this.pos)
-        );
+        const dist = Matter.Vector.magnitude(Matter.Vector.sub(body[i].position, this.pos));
         const looking = this.lookingAt(body[i]);
-        if (dist < grabbing.targetRange && (looking || !grabbing.lookingAt) && !body[i].isNotHoldable) {
+        // if (dist < grabbing.targetRange && (looking || !grabbing.lookingAt) && !body[i].isNotHoldable) {
+        if (dist < grabbing.targetRange && looking && !body[i].isNotHoldable) {
           grabbing.targetRange = dist;
           grabbing.targetIndex = i;
-          grabbing.lookingAt = looking;
+          // grabbing.lookingAt = looking;
         }
       }
     }
@@ -678,7 +753,7 @@ const mech = {
         } else if ((keys[32] || game.mouseDownRight) && this.fireCDcycle < game.cycle) { //not hold but field button is pressed
           this.drawField();
           this.grabPowerUp();
-          this.lookForPickUp(175);
+          this.lookForPickUp(130);
 
           function slow(who, friction = 0.7) {
             for (let i = 0, len = who.length; i < len; ++i) {
@@ -694,6 +769,55 @@ const mech = {
           }
           slow(mob);
           slow(body);
+          slow(bullet);
+        } else if (this.holdingTarget && this.fireCDcycle < game.cycle) { //holding, but field button is released
+          this.pickUp();
+        } else {
+          this.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
+        }
+      }
+    }
+    if (type === 2) { //sword field
+      this.fieldFireCD = 30;
+      this.fieldPushCD = 60;
+      this.fieldDamage = 1;
+      this.grabRange = 300;
+      this.fieldArc = 0.03;
+      this.calculateFieldThreshold()
+      this.hold = function () {
+        if (this.isHolding) {
+          this.drawHold(this.holdingTarget);
+          this.holding();
+          this.throw();
+        } else if ((keys[32] || game.mouseDownRight) && this.fireCDcycle < game.cycle) { //not hold but field button is pressed
+          this.drawField();
+          this.grabPowerUp();
+          this.pushMobs();
+          this.lookForPickUp();
+        } else if (this.holdingTarget && this.fireCDcycle < game.cycle) { //holding, but field button is released
+          this.pickUp();
+        } else {
+          this.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
+        }
+      }
+    }
+    if (type === 3) { //eat blocks field
+      this.fieldFireCD = 30;
+      this.fieldPushCD = 40;
+      this.fieldDamage = 0;
+      this.grabRange = 175;
+      this.fieldArc = 0.2;
+      this.calculateFieldThreshold()
+      this.hold = function () {
+        if (this.isHolding) {
+          this.drawHold(this.holdingTarget);
+          this.holding();
+          this.eat();
+        } else if ((keys[32] || game.mouseDownRight) && this.fireCDcycle < game.cycle) { //not hold but field button is pressed
+          this.drawField();
+          this.grabPowerUp();
+          this.pushMobs();
+          this.lookForPickUp();
         } else if (this.holdingTarget && this.fireCDcycle < game.cycle) { //holding, but field button is released
           this.pickUp();
         } else {
