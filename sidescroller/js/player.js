@@ -437,7 +437,7 @@ const mech = {
     Matter.Body.setVelocity(this.holdingTarget, player.velocity);
     Matter.Body.rotate(this.holdingTarget, 0.01 / this.holdingTarget.mass); //gently spin the block
   },
-  eat: function () {
+  throwOrEat: function () {
     if (keys[32] || game.mouseDownRight) {
       this.throwCharge += 2;
       //draw charge
@@ -474,10 +474,18 @@ const mech = {
         ctx.fill();
       }
     } else if (this.throwCharge > 0) {
-      console.log(this.holdingTarget.mass)
-      if (this.holdingTarget.mass > 6) { //eat the body
+      if (this.holdingTarget.mass > 4 && this.health < 1) { //eat the body if it is big and player is low on life
+        this.fireCDcycle = game.cycle + this.fieldFireCD;
+        this.isHolding = false;
+        this.definePlayerMass() //return to normal player mass
+        this.addHealth(this.holdingTarget.mass / 20);
         Matter.World.remove(engine.world, this.holdingTarget);
-        // body.splice(i, 1);
+        for (let i = 0, len = body.length; i < len; i++) {
+          if (body[i] === this.holdingTarget) {
+            body.splice(i, 1);
+            return
+          }
+        }
       } else { //throw the body
         this.fireCDcycle = game.cycle + this.fieldFireCD;
         this.isHolding = false;
@@ -581,8 +589,7 @@ const mech = {
         x: player.velocity.x - Math.cos(this.angle) * 2,
         y: player.velocity.y - Math.sin(this.angle) * 0.4
       });
-      //return to normal player mass
-      this.definePlayerMass()
+      this.definePlayerMass() //return to normal player mass
     }
   },
   drawField: function () {
@@ -812,7 +819,7 @@ const mech = {
         if (this.isHolding) {
           this.drawHold(this.holdingTarget);
           this.holding();
-          this.eat();
+          this.throwOrEat();
         } else if ((keys[32] || game.mouseDownRight) && this.fireCDcycle < game.cycle) { //not hold but field button is pressed
           this.drawField();
           this.grabPowerUp();
