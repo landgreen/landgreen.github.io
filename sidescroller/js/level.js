@@ -322,6 +322,7 @@ const level = {
     powerUps.spawn(-100, 0, "heal", false); //starting gun
     powerUps.spawn(1900, -150, "heal", false); //starting gun
     powerUps.spawn(2050, -150, "heal", false); //starting gun
+    // powerUps.spawn(2050, -150, "field", false); //starting gun
     powerUps.spawn(2300, -150, "gun", false); //starting gun
 
     spawn.wireFoot();

@@ -1,6 +1,12 @@
 "use strict";
 /* TODO:  *******************************************
 *****************************************************
+
+bugs:
+  set colors for each field type
+  use global composting
+
+
 mutators (as a power up)
   infinite ammo
     or just more ammo from drops?
@@ -16,32 +22,16 @@ mutators (as a power up)
 
   vampire damage
   shield (recharges fast, but only upto 10% of life)
-  freeze aura (could activate on damage)
-  can eat blocks to recharge shield / 
 
 Active use abilities (can get ideas from spacetime)
   blink (short distance teleport)
     would reverse if they end up in solid wall
-  slow time aura (high friction around player)
   beacon teleport
   push (push blocks, mobs, and bullets away from player)
   invulnerability (force field that stops mobs and bullets)
   burst of speed
   intangible (can move through bodies, bullets, and mobs.  Not map elements)
   
-add power ups for the field generator
-  add ability to fire blocks harder and faster with less CD
-    or allow player to hold heavier blocks with less weight penalty
-  add ability to eat large blocks to heal
-    have this only work for very large blocks, so player can still hold things. 
-  add ability to damage mobs with field
-    narrow the width of the field to be more sword-like
-    field can only stay active for 1 second then a 1 second CD.
-  remove the repel mob ability replace with a slow time aura when field is active.
-    greatly increase field radius
-  
-
-
 game mechanics
   mechanics that support the physics engine
     add rope/constraint
@@ -89,35 +79,37 @@ add bullet on damage effects
 			replace with check if player feet are in an area.
 
 
+add power ups for the field generator  (use L and R mouse at same time for active abilities)
+  slow time aura when field is active.
+    passive: player can jump higher and move faster
+
+  add ability to fire blocks harder, with no charge up
+    passive: field damages mobs
+
+  add ability to eat blocks to heal
+    passive: allow player to hold and fire heavier blocks with less weight penalty
+
+  push everything away from player
+    passive: increase field radius, radius pulses in and out, increase arc to full
+
+unused ideas
+passive: walk through blocks  (difficult to implement)
+
+
+
 //collision info:
          category    mask
-powerUp: 0x 100000   0x 001001
+powerUp: 0x 100000   0x 100001
 mobBull: 0x 010000   0x 001001
-player:  0x 001000   0x 110011
+player:  0x 001000   0x 010011
 bullet:  0x 000100   0x 000011
 mob:     0x 000010   0x 001101
 map:     0x 000001   0x 111111
 body:    0x 000001   0x 011111
-// ? holding: 0x 000001   0x 000001
+
+? hold:  0x 000001   0x 000001
 
 
-//makes the SVG title screen tripy
-(function() {
-    document.getElementById("turb").setAttribute('seed', Math.floor(Math.random() * 1000)) //randomize the turbulence seed
-    document.getElementById("turb").setAttribute('baseFrequency', 0.015 + Math.random() * Math.random() * 0.4)
-    let f = 400;
-    const turb = function() {
-        const end = 0.05
-        if (f > end) {
-            f = f * 0.98 - 0.02
-            document.getElementById('turbulence').setAttribute('scale', f) //randomize the noise
-            requestAnimationFrame(turb);
-        } else {
-            document.getElementById('turbulence').setAttribute('scale', 0) //randomize the noise
-        }
-    }
-    requestAnimationFrame(turb);
-})()
 */
 
 //set up canvas
@@ -223,9 +215,6 @@ function shuffle(array) {
   return array;
 }
 
-
-// mech.setHold(3);
-
 //main loop ************************************************************
 //**********************************************************************
 function cycle() {
@@ -233,13 +222,10 @@ function cycle() {
   if (game.clearNow) {
     game.clearNow = false;
     game.clearMap();
-    // if (game.levelsCleared != 0) game.startZoomIn();
-    // game.startZoomIn();
     level.start();
   }
   game.gravity();
   Engine.update(engine, game.delta);
-  // game.timing();
   game.wipe();
   game.textLog();
   mech.keyMove();
@@ -261,7 +247,6 @@ function cycle() {
     game.getCoords.out();
     game.testingOutput();
   } else {
-    // game.draw.see();
     level.drawFillBGs();
     level.exit.draw();
     level.enter.draw();
@@ -271,15 +256,12 @@ function cycle() {
     game.draw.body();
     mech.draw();
     mech.hold();
-    // powerUps.attractionLoop();
     level.drawFills();
     game.draw.drawMapPath();
-    // mech.drawHealth();
     mobs.loop();
     b.draw();
     b.fire();
     game.drawCircle();
-    // game.draw.seeEdges();
     ctx.restore();
   }
   game.drawCursor();

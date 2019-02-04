@@ -7,7 +7,7 @@ const spawn = {
     "spinner",
     "hopper", "hopper",
     "grower",
-    "springer", "springer",
+    "springer",
     "shooter", "shooter",
     "beamer",
     "focuser",

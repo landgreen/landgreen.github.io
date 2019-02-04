@@ -13,14 +13,19 @@ const powerUps = {
       //game.makeTextLog('heal for '+(heal*100).toFixed(0)+'%',80)
     }
   },
-  shield: {
-    name: "shield",
+  field: {
+    name: "field",
     color: "#f9f",
     size: function () {
-      return 70;
+      return 40;
     },
     effect: function () {
-
+      let mode = player.fieldMode
+      while (mode === player.fieldMode) {
+        mode = Math.ceil(Math.random() * (mech.fieldUpgrades.length - 1))
+      }
+      mech.fieldUpgrades[mode]();
+      // mech.fieldUpgrades[2]();
     }
   },
   ammo: {
@@ -98,11 +103,6 @@ const powerUps = {
       return;
     }
 
-    // if (Math.random() < 0.10) {
-    //   powerUps.spawn(x, y, "shield");
-    //   return;
-    // }
-
     if (Math.random() < 0.16) {
       if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
       return;
@@ -111,6 +111,10 @@ const powerUps = {
     //a new gun has a low chance for each not acquired gun to drop
     if (Math.random() < 0.006 * (b.guns.length - b.inventory.length)) {
       powerUps.spawn(x, y, "gun");
+      return;
+    }
+    if (Math.random() < 0.01) {
+      powerUps.spawn(x, y, "field");
       return;
     }
   },
@@ -133,7 +137,10 @@ const powerUps = {
   spawnStartingPowerUps: function (x, y) {
     if (b.inventory.length < 3) {
       powerUps.spawn(x, y, "gun", false); //starting gun
+    } else if (mech.fieldMode === 0) {
+      powerUps.spawn(x, y, "field");
     } else {
+      powerUps.spawnRandomPowerUp(x, y);
       powerUps.spawnRandomPowerUp(x, y);
       powerUps.spawnRandomPowerUp(x, y);
     }

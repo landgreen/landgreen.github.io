@@ -316,6 +316,7 @@ const game = {
     game.makeGunHUD();
     mech.drop();
     mech.addHealth(1);
+    // mech.fieldUpgrades[0]();  //reset to starting field?   or let them keep the field
     mech.alive = true;
     level.onLevel = 0;
     game.levelsCleared = 0;

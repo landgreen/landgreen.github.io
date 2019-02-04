@@ -364,10 +364,16 @@ const mech = {
   isHolding: false,
   holding: null,
   throwCharge: 0,
-  throwChargeMax: 50,
   fireCDcycle: 0,
+  fieldCDcycle: 0,
+  fieldMode: 0, //basic field mode before upgrades
   //these values can be adjusted for field power ups
-  fieldFireCD: 30,
+  fieldMeter: 1,
+  fieldMode: 0,
+  holdingMassScale: 0.5,
+  throwChargeRate: 2,
+  throwChargeMax: 50,
+  fieldFireCD: 15,
   fieldPushCD: 40,
   fieldDamage: 0, // a value of 1.0 kills a small mob in 2-3 hits on level 1
   grabRange: 175,
@@ -376,7 +382,38 @@ const mech = {
   calculateFieldThreshold: function () {
     this.fieldThreshold = Math.cos(this.fieldArc * Math.PI)
   },
-
+  setHoldDefaults: function () {
+    this.fieldMeter = 1;
+    this.fieldCDcycle = 0;
+    this.holdingMassScale = 0.5;
+    this.throwChargeRate = 2;
+    this.throwChargeMax = 50;
+    this.fieldFireCD = 15;
+    this.fieldPushCD = 40;
+    this.fieldDamage = 0;
+    this.grabRange = 175;
+    this.fieldArc = 0.2;
+    this.calculateFieldThreshold();
+    this.jumpForce = 0.38;
+    this.Fx = 0.015; //run Force on ground
+    this.FxAir = 0.015; //run Force in Air
+    this.gravity = 0.0019;
+    // this.phaseBlocks(0x011111)
+  },
+  drawFieldMeter: function () {
+    if (this.fieldMeter < 1) {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+      ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60, 10);
+      110, 170, 200
+      ctx.fillStyle = "rgb(50,220,255)";
+      ctx.fillRect(
+        this.pos.x - this.radius,
+        this.pos.y - 50,
+        60 * this.fieldMeter,
+        10
+      );
+    }
+  },
   lookingAt: function (who) {
     //calculate a vector from body to player and make it length 1
     const diff = Matter.Vector.normalise(Matter.Vector.sub(who.position, mech.pos));
@@ -437,94 +474,9 @@ const mech = {
     Matter.Body.setVelocity(this.holdingTarget, player.velocity);
     Matter.Body.rotate(this.holdingTarget, 0.01 / this.holdingTarget.mass); //gently spin the block
   },
-  throwOrEat: function () {
-    if (keys[32] || game.mouseDownRight) {
-      this.throwCharge += 2;
-      //draw charge
-      const x = mech.pos.x + 15 * Math.cos(this.angle);
-      const y = mech.pos.y + 15 * Math.sin(this.angle);
-      const len = this.holdingTarget.vertices.length - 1;
-      const edge = this.throwCharge * this.throwCharge * 0.02;
-      const grd = ctx.createRadialGradient(x, y, edge, x, y, edge + 5);
-      grd.addColorStop(0, "rgba(255,50,150,0.3)");
-      grd.addColorStop(1, "transparent");
-      ctx.fillStyle = grd;
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(
-        this.holdingTarget.vertices[len].x,
-        this.holdingTarget.vertices[len].y
-      );
-      ctx.lineTo(
-        this.holdingTarget.vertices[0].x,
-        this.holdingTarget.vertices[0].y
-      );
-      ctx.fill();
-      for (let i = 0; i < len; i++) {
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(
-          this.holdingTarget.vertices[i].x,
-          this.holdingTarget.vertices[i].y
-        );
-        ctx.lineTo(
-          this.holdingTarget.vertices[i + 1].x,
-          this.holdingTarget.vertices[i + 1].y
-        );
-        ctx.fill();
-      }
-    } else if (this.throwCharge > 0) {
-      if (this.holdingTarget.mass > 4 && this.health < 1) { //eat the body if it is big and player is low on life
-        this.fireCDcycle = game.cycle + this.fieldFireCD;
-        this.isHolding = false;
-        this.definePlayerMass() //return to normal player mass
-        this.addHealth(this.holdingTarget.mass / 20);
-        Matter.World.remove(engine.world, this.holdingTarget);
-        for (let i = 0, len = body.length; i < len; i++) {
-          if (body[i] === this.holdingTarget) {
-            body.splice(i, 1);
-            return
-          }
-        }
-      } else { //throw the body
-        this.fireCDcycle = game.cycle + this.fieldFireCD;
-        this.isHolding = false;
-        //bullet-like collisions
-        this.holdingTarget.collisionFilter.category = 0x000100;
-        this.holdingTarget.collisionFilter.mask = 0x111111;
-        //check every second to see if player is away from thrown body, and make solid
-        const solid = function (that) {
-          const dx = that.position.x - player.position.x;
-          const dy = that.position.y - player.position.y;
-          if (dx * dx + dy * dy > 10000 && that.speed < 3 && that !== mech.holdingTarget) {
-            that.collisionFilter.category = 0x000001; //make solid
-            that.collisionFilter.mask = 0x011111;
-          } else {
-            setTimeout(solid, 250, that);
-          }
-        };
-        setTimeout(solid, 1000, this.holdingTarget);
-        //throw speed scales a bit with mass
-        const speed = (Math.min(54 / this.holdingTarget.mass + 5, 48) * Math.min(this.throwCharge, this.throwChargeMax)) / this.throwChargeMax;
-        this.throwCharge = 0;
-        Matter.Body.setVelocity(this.holdingTarget, {
-          x: player.velocity.x * 0.5 + Math.cos(this.angle) * speed,
-          y: player.velocity.y * 0.5 + Math.sin(this.angle) * speed
-        });
-        //player recoil //stronger in x-dir to prevent jump hacking
-        Matter.Body.setVelocity(player, {
-          x: player.velocity.x - Math.cos(this.angle) * 2,
-          y: player.velocity.y - Math.sin(this.angle) * 0.4
-        });
-        //return to normal player mass
-        this.definePlayerMass()
-      }
-    }
-
-  },
   throw: function () {
     if (keys[32] || game.mouseDownRight) {
-      this.throwCharge += 2;
+      this.throwCharge += this.throwChargeRate;;
       //draw charge
       const x = mech.pos.x + 15 * Math.cos(this.angle);
       const y = mech.pos.y + 15 * Math.sin(this.angle);
@@ -536,26 +488,14 @@ const mech = {
       ctx.fillStyle = grd;
       ctx.beginPath();
       ctx.moveTo(x, y);
-      ctx.lineTo(
-        this.holdingTarget.vertices[len].x,
-        this.holdingTarget.vertices[len].y
-      );
-      ctx.lineTo(
-        this.holdingTarget.vertices[0].x,
-        this.holdingTarget.vertices[0].y
-      );
+      ctx.lineTo(this.holdingTarget.vertices[len].x, this.holdingTarget.vertices[len].y);
+      ctx.lineTo(this.holdingTarget.vertices[0].x, this.holdingTarget.vertices[0].y);
       ctx.fill();
       for (let i = 0; i < len; i++) {
         ctx.beginPath();
         ctx.moveTo(x, y);
-        ctx.lineTo(
-          this.holdingTarget.vertices[i].x,
-          this.holdingTarget.vertices[i].y
-        );
-        ctx.lineTo(
-          this.holdingTarget.vertices[i + 1].x,
-          this.holdingTarget.vertices[i + 1].y
-        );
+        ctx.lineTo(this.holdingTarget.vertices[i].x, this.holdingTarget.vertices[i].y);
+        ctx.lineTo(this.holdingTarget.vertices[i + 1].x, this.holdingTarget.vertices[i + 1].y);
         ctx.fill();
       }
     } else if (this.throwCharge > 0) {
@@ -578,16 +518,17 @@ const mech = {
       };
       setTimeout(solid, 1000, this.holdingTarget);
       //throw speed scales a bit with mass
-      const speed = (Math.min(54 / this.holdingTarget.mass + 5, 48) * Math.min(this.throwCharge, this.throwChargeMax)) / this.throwChargeMax;
+      const speed = Math.min(85, Math.min(54 / this.holdingTarget.mass + 5, 48) * Math.min(this.throwCharge, this.throwChargeMax) / 50);
+
       this.throwCharge = 0;
       Matter.Body.setVelocity(this.holdingTarget, {
-        x: player.velocity.x * 0.5 + Math.cos(this.angle) * speed,
-        y: player.velocity.y * 0.5 + Math.sin(this.angle) * speed
+        x: player.velocity.x + Math.cos(this.angle) * speed,
+        y: player.velocity.y + Math.sin(this.angle) * speed
       });
       //player recoil //stronger in x-dir to prevent jump hacking
       Matter.Body.setVelocity(player, {
-        x: player.velocity.x - Math.cos(this.angle) * 2,
-        y: player.velocity.y - Math.sin(this.angle) * 0.4
+        x: player.velocity.x - Math.cos(this.angle) * speed / 10 * Math.sqrt(this.holdingTarget.mass),
+        y: player.velocity.y - Math.sin(this.angle) * speed / 80 * Math.sqrt(this.holdingTarget.mass)
       });
       this.definePlayerMass() //return to normal player mass
     }
@@ -604,7 +545,6 @@ const mech = {
     } else {
       ctx.fillStyle = "rgba(110,170,200," + (0.15 + 0.15 * Math.random()) + ")";
     }
-
     ctx.fill();
     //draw random lines in field for cool effect
     let offAngle = this.angle + 2 * Math.PI * this.fieldArc * (Math.random() - 0.5);
@@ -718,12 +658,12 @@ const mech = {
     }
     //combine momentum
     const px = player.velocity.x * player.mass + this.holdingTarget.velocity.x * this.holdingTarget.mass;
-    const py = player.velocity.y * player.mass - this.holdingTarget.velocity.y * this.holdingTarget.mass;
+    const py = player.velocity.y * player.mass + this.holdingTarget.velocity.y * this.holdingTarget.mass;
     Matter.Body.setVelocity(player, {
       x: px / (player.mass + this.holdingTarget.mass),
       y: py / (player.mass + this.holdingTarget.mass)
     });
-    this.definePlayerMass(5 + this.holdingTarget.mass / 2)
+    this.definePlayerMass(5 + this.holdingTarget.mass * this.holdingMassScale)
     //collide with nothing
     this.holdingTarget.collisionFilter.category = 0x000000;
     this.holdingTarget.collisionFilter.mask = 0x000000;
@@ -744,95 +684,292 @@ const mech = {
       this.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
     }
   },
-  setHold: function (type) {
-    if (type === 1) { //slow field
-      this.fieldFireCD = 30;
-      this.fieldPushCD = 40;
-      this.fieldDamage = 0;
-      this.grabRange = 500;
-      this.fieldArc = 1;
-      this.calculateFieldThreshold()
-      this.hold = function () {
-        if (this.isHolding) {
-          this.drawHold(this.holdingTarget);
-          this.holding();
-          this.throw();
-        } else if ((keys[32] || game.mouseDownRight) && this.fireCDcycle < game.cycle) { //not hold but field button is pressed
-          this.drawField();
-          this.grabPowerUp();
-          this.lookForPickUp(130);
+  // phaseBlocks: function (mask = 0x010111) {
+  //   level.bodyCollisionFilterMask = mask;
+  //   for (let i = 0, len = body.length; i < len; i++) {
+  //     body[i].collisionFilter.category = 0x0000001;
+  //     body[i].collisionFilter.mask = mask;
+  //   }
+  // },
+  fieldUpgrades: [
+    () => {
+      mech.fieldMode = 0;
+      mech.setHoldDefaults();
+      mech.hold = function () {
+        if (mech.isHolding) {
+          mech.drawHold(mech.holdingTarget);
+          mech.holding();
+          mech.throw();
+        } else if ((keys[32] || game.mouseDownRight) && mech.fireCDcycle < game.cycle) { //not hold but field button is pressed
+          mech.drawField();
+          mech.grabPowerUp();
+          mech.pushMobs();
+          mech.lookForPickUp();
+        } else if (mech.holdingTarget && mech.fireCDcycle < game.cycle) { //holding, but field button is released
+          mech.pickUp();
+        } else {
+          mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
+        }
+      }
+    },
+    () => {
+      mech.fieldMode = 1;
+      game.makeTextLog("<h2>Time Dilation Field</h2><br><strong>active ability:</strong> hold left and right mouse to slow time<br><strong>passive bonus:</strong> -player gravity", 1000); //<br><strong>passive bonus:</strong> can phase through blocks
+      mech.setHoldDefaults();
+      //passive reduce gravity
+      mech.gravity = 0.0013;
+      mech.hold = function () {
+        if (mech.isHolding) {
+          mech.drawHold(mech.holdingTarget);
+          mech.holding();
+          mech.throw();
+        } else if (game.mouseDown && (keys[32] || game.mouseDownRight) && mech.fieldCDcycle < game.cycle) { //both mouse keys down
+          if (mech.fieldMeter > 0) {
+            mech.fieldMeter -= 0.004;
+            const range = 550;
+            //draw slow field
+            ctx.beginPath();
+            ctx.arc(mech.pos.x, mech.pos.y, range, 0, 2 * Math.PI);
+            ctx.fillStyle = "#fff";
+            ctx.globalCompositeOperation = "difference";
+            ctx.fill();
+            ctx.globalCompositeOperation = "source-over";
 
-          function slow(who, friction = 0.7) {
-            for (let i = 0, len = who.length; i < len; ++i) {
-              dist = Matter.Vector.magnitude(Matter.Vector.sub(who[i].position, mech.pos))
-              if (dist < mech.grabRange) {
-                Matter.Body.setAngularVelocity(who[i], who[i].angularVelocity * friction)
-                Matter.Body.setVelocity(who[i], {
-                  x: who[i].velocity.x * friction,
-                  y: who[i].velocity.y * friction
-                });
+            function slow(who, friction = 0) {
+              for (let i = 0, len = who.length; i < len; ++i) {
+                dist = Matter.Vector.magnitude(Matter.Vector.sub(who[i].position, mech.pos))
+                if (dist < range) {
+                  Matter.Body.setAngularVelocity(who[i], who[i].angularVelocity * friction)
+                  Matter.Body.setVelocity(who[i], {
+                    x: who[i].velocity.x * friction,
+                    y: who[i].velocity.y * friction
+                  });
+                }
               }
             }
+            slow(mob);
+            slow(body);
+            slow(bullet);
+          } else {
+            mech.fieldCDcycle = game.cycle + 120;
           }
-          slow(mob);
-          slow(body);
-          slow(bullet);
-        } else if (this.holdingTarget && this.fireCDcycle < game.cycle) { //holding, but field button is released
-          this.pickUp();
+        } else if ((keys[32] || game.mouseDownRight) && mech.fireCDcycle < game.cycle) { //field button is pressed
+          mech.drawField();
+          mech.grabPowerUp();
+          mech.pushMobs();
+          mech.lookForPickUp(130);
+        } else if (mech.holdingTarget && mech.fireCDcycle < game.cycle) { //holding, but field button is released
+          mech.pickUp();
         } else {
-          this.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
+          mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
+        }
+        if (mech.fieldMeter < 1) mech.fieldMeter += 0.001;
+        mech.drawFieldMeter()
+      }
+    },
+    () => {
+      mech.fieldMode = 2;
+      game.makeTextLog("<h2>Kinetic Energy Field</h2><br><strong>passive bonus:</strong> +field emitter damage<br><strong>passive bonus:</strong> +throw energy", 1000);
+      mech.setHoldDefaults();
+      //throw quicker and harder
+      mech.throwChargeRate = 6;
+      mech.throwChargeMax = 300;
+      //passive field does extra damage
+      mech.fieldDamage = 2;
+
+      mech.hold = function () {
+        if (mech.isHolding) {
+          mech.drawHold(mech.holdingTarget);
+          mech.holding();
+          mech.throw();
+        } else if ((keys[32] || game.mouseDownRight) && mech.fireCDcycle < game.cycle) { //not hold but field button is pressed
+          //draw field
+          const range = mech.grabRange - 20;
+          ctx.beginPath();
+          ctx.arc(mech.pos.x, mech.pos.y, range, mech.angle - Math.PI * mech.fieldArc, mech.angle + Math.PI * mech.fieldArc, false);
+          let eye = 13;
+          ctx.lineTo(mech.pos.x + eye * Math.cos(mech.angle), mech.pos.y + eye * Math.sin(mech.angle));
+          if (mech.holdingTarget) {
+            ctx.fillStyle = "rgba(255,50,150," + (0.05 + 0.1 * Math.random()) + ")";
+          } else {
+            ctx.fillStyle = "rgba(255,50,150," + (0.15 + 0.15 * Math.random()) + ")";
+          }
+          ctx.fill();
+          //draw random lines in field for cool effect
+          let offAngle = mech.angle + 2 * Math.PI * mech.fieldArc * (Math.random() - 0.5);
+          ctx.beginPath();
+          eye = 15;
+          ctx.moveTo(mech.pos.x + eye * Math.cos(mech.angle), mech.pos.y + eye * Math.sin(mech.angle));
+          ctx.lineTo(mech.pos.x + range * Math.cos(offAngle), mech.pos.y + range * Math.sin(offAngle));
+          ctx.strokeStyle = "rgba(120,170,255,0.4)";
+          ctx.stroke();
+
+          mech.grabPowerUp();
+          mech.pushMobs();
+          mech.lookForPickUp();
+        } else if (mech.holdingTarget && mech.fireCDcycle < game.cycle) { //holding, but field button is released
+          mech.pickUp();
+        } else {
+          mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
       }
-    }
-    if (type === 2) { //sword field
-      this.fieldFireCD = 30;
-      this.fieldPushCD = 60;
-      this.fieldDamage = 1;
-      this.grabRange = 300;
-      this.fieldArc = 0.03;
-      this.calculateFieldThreshold()
-      this.hold = function () {
-        if (this.isHolding) {
-          this.drawHold(this.holdingTarget);
-          this.holding();
-          this.throw();
-        } else if ((keys[32] || game.mouseDownRight) && this.fireCDcycle < game.cycle) { //not hold but field button is pressed
-          this.drawField();
-          this.grabPowerUp();
-          this.pushMobs();
-          this.lookForPickUp();
-        } else if (this.holdingTarget && this.fireCDcycle < game.cycle) { //holding, but field button is released
-          this.pickUp();
+    },
+    () => {
+      mech.fieldMode = 3;
+      game.makeTextLog("<h2>Mass Recycler</h2><br><strong>active ability:</strong> when holding a block, click left mouse to heal<br><strong>passive bonus:</strong> +hold larger blocks", 1000);
+      mech.setHoldDefaults();
+      mech.holdingMassScale = 0.02;
+
+      mech.hold = function () {
+        if (mech.isHolding) {
+          mech.drawHold(mech.holdingTarget);
+          mech.holding();
+          //fire or eat
+          if (game.mouseDown) { //this.health < 1  //eat if left mouse is down
+            mech.fieldMeter = 0; //drop meter to 0 only to give a visual indication of eating.
+            mech.fireCDcycle = game.cycle + mech.fieldFireCD;
+            mech.isHolding = false;
+            mech.definePlayerMass() //return to normal player mass
+            mech.addHealth(mech.holdingTarget.mass / 20);
+            Matter.World.remove(engine.world, mech.holdingTarget);
+            for (let i = 0, len = body.length; i < len; i++) {
+              if (body[i] === mech.holdingTarget) {
+                body.splice(i, 1);
+                return
+              }
+            }
+          } else if (keys[32] || game.mouseDownRight) {
+            mech.throwCharge += mech.throwChargeRate;;
+            //draw charge
+            const x = mech.pos.x + 15 * Math.cos(mech.angle);
+            const y = mech.pos.y + 15 * Math.sin(mech.angle);
+            const len = mech.holdingTarget.vertices.length - 1;
+            const edge = mech.throwCharge * mech.throwCharge * 0.02;
+            const grd = ctx.createRadialGradient(x, y, edge, x, y, edge + 5);
+            grd.addColorStop(0, "rgba(255,50,150,0.3)");
+            grd.addColorStop(1, "transparent");
+            ctx.fillStyle = grd;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(mech.holdingTarget.vertices[len].x, mech.holdingTarget.vertices[len].y);
+            ctx.lineTo(mech.holdingTarget.vertices[0].x, mech.holdingTarget.vertices[0].y);
+            ctx.fill();
+            for (let i = 0; i < len; i++) {
+              ctx.beginPath();
+              ctx.moveTo(x, y);
+              ctx.lineTo(mech.holdingTarget.vertices[i].x, mech.holdingTarget.vertices[i].y);
+              ctx.lineTo(mech.holdingTarget.vertices[i + 1].x, mech.holdingTarget.vertices[i + 1].y);
+              ctx.fill();
+            }
+          } else if (mech.throwCharge > 0) {
+            //throw the body
+            mech.fireCDcycle = game.cycle + mech.fieldFireCD;
+            mech.isHolding = false;
+            //bullet-like collisions
+            mech.holdingTarget.collisionFilter.category = 0x000100;
+            mech.holdingTarget.collisionFilter.mask = 0x111111;
+            //check every second to see if player is away from thrown body, and make solid
+            const solid = function (that) {
+              const dx = that.position.x - player.position.x;
+              const dy = that.position.y - player.position.y;
+              if (dx * dx + dy * dy > 10000 && that.speed < 3 && that !== mech.holdingTarget) {
+                that.collisionFilter.category = 0x000001; //make solid
+                that.collisionFilter.mask = 0x011111;
+              } else {
+                setTimeout(solid, 250, that);
+              }
+            };
+            setTimeout(solid, 1000, mech.holdingTarget);
+            //throw speed scales a bit with mass
+            const speed = Math.min(85, Math.min(54 / this.holdingTarget.mass + 5, 48) * Math.min(this.throwCharge, this.throwChargeMax) / 50);
+            mech.throwCharge = 0;
+            Matter.Body.setVelocity(mech.holdingTarget, {
+              x: player.velocity.x + Math.cos(mech.angle) * speed,
+              y: player.velocity.y + Math.sin(mech.angle) * speed
+            });
+            //player recoil //stronger in x-dir to prevent jump hacking
+            Matter.Body.setVelocity(player, {
+              x: player.velocity.x - Math.cos(mech.angle) * 2,
+              y: player.velocity.y - Math.sin(mech.angle) * 0.4
+            });
+            mech.definePlayerMass() //return to normal player mass
+          }
+        } else if ((keys[32] || game.mouseDownRight) && mech.fireCDcycle < game.cycle) { //not hold but field button is pressed
+          mech.drawField();
+          mech.grabPowerUp();
+          mech.pushMobs();
+          mech.lookForPickUp();
+        } else if (mech.holdingTarget && mech.fireCDcycle < game.cycle) { //holding, but field button is released
+          mech.pickUp();
         } else {
-          this.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
+          mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
+        if (mech.fieldMeter < 1) mech.fieldMeter += 0.025;
+        mech.drawFieldMeter()
       }
-    }
-    if (type === 3) { //eat blocks field
-      this.fieldFireCD = 30;
-      this.fieldPushCD = 40;
-      this.fieldDamage = 0;
-      this.grabRange = 175;
-      this.fieldArc = 0.2;
-      this.calculateFieldThreshold()
-      this.hold = function () {
-        if (this.isHolding) {
-          this.drawHold(this.holdingTarget);
-          this.holding();
-          this.throwOrEat();
-        } else if ((keys[32] || game.mouseDownRight) && this.fireCDcycle < game.cycle) { //not hold but field button is pressed
-          this.drawField();
-          this.grabPowerUp();
-          this.pushMobs();
-          this.lookForPickUp();
-        } else if (this.holdingTarget && this.fireCDcycle < game.cycle) { //holding, but field button is released
-          this.pickUp();
+    },
+    () => {
+      mech.fieldMode = 4;
+      game.makeTextLog("<h2>Negative Mass Field</h2><br><strong>active ability:</strong> hold left and right mouse to push things away<br><strong>passive bonus:</strong> +field size, -field cool down", 1000); //<br><strong>passive bonus:</strong> can phase through blocks
+      mech.setHoldDefaults();
+      mech.fieldPushCD = 20;
+      mech.fieldArc = 1;
+      mech.calculateFieldThreshold();
+
+      mech.hold = function () {
+        if (mech.isHolding) {
+          mech.drawHold(mech.holdingTarget);
+          mech.holding();
+          mech.throw();
+        } else if (game.mouseDown && (keys[32] || game.mouseDownRight) && mech.fieldCDcycle < game.cycle) { //both mouse keys down           //push away
+          if (mech.fieldMeter > 0) {
+            mech.fieldMeter -= 0.01;
+            const range = 450 + 100 * Math.sin(game.cycle / 20)
+
+            //draw push
+            ctx.beginPath();
+            ctx.arc(mech.pos.x, mech.pos.y, range, 0, 2 * Math.PI);
+            ctx.globalCompositeOperation = "xor";
+            ctx.fillStyle = "rgba(100,170,200,0.5)";
+            ctx.fill();
+            ctx.globalCompositeOperation = "source-over";
+
+            function pushAway(who) {
+              for (let i = 0, len = who.length; i < len; ++i) {
+                sub = Matter.Vector.sub(who[i].position, mech.pos);
+                dist = Matter.Vector.magnitude(sub);
+                if (dist < range) {
+                  knock = Matter.Vector.mult(Matter.Vector.normalise(sub), Math.sqrt(who[i].mass) / 100);
+                  who[i].force.x += knock.x;
+                  who[i].force.y += knock.y;
+                  // player.force.x -= knock.x / 10;
+                  // player.force.y -= knock.y / 10;
+                }
+              }
+            }
+            pushAway(body);
+            pushAway(mob);
+            pushAway(bullet);
+            pushAway(powerUp);
+          } else {
+            mech.fieldCDcycle = game.cycle + 120;
+          }
+        } else if ((keys[32] || game.mouseDownRight) && mech.fireCDcycle < game.cycle) { //not hold but field button is pressed
+          mech.grabRange = 200 + 50 * Math.sin(game.cycle / 20)
+          mech.drawField();
+          mech.grabPowerUp();
+          mech.pushMobs();
+          mech.lookForPickUp();
+        } else if (mech.holdingTarget && mech.fireCDcycle < game.cycle) { //holding, but field button is released
+          mech.pickUp();
         } else {
-          this.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
+          mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
+        if (mech.fieldMeter < 1) mech.fieldMeter += 0.001;
+        mech.drawFieldMeter()
       }
-    }
-  },
+    },
+  ],
   drawLeg: function (stroke) {
     if (game.mouseInGame.x > this.pos.x) {
       this.flipLegs = 1;
