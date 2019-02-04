@@ -2,6 +2,14 @@
 /* TODO:  *******************************************
 *****************************************************
 
+fieldMeter
+  repulse uses up field
+    no more cool down on repulse
+  throw uses up field relative to mass and speed
+  holing and activation field inhibit field regen
+    holding very large masses 6+ slowly drains field
+
+
 bugs:
   set colors for each field type
   use global composting

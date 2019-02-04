@@ -37,7 +37,7 @@ const powerUps = {
     effect: function () {
       //only get ammo for guns player has
       let target;
-      if (b.inventory.length > 1) {
+      if (b.inventory.length > 0) {
         //add ammo to a gun in inventory
         target = b.guns[b.inventory[Math.floor(Math.random() * (b.inventory.length))]];
       } else {
@@ -104,7 +104,7 @@ const powerUps = {
     }
 
     if (Math.random() < 0.16) {
-      if (b.inventory.length > 1) powerUps.spawn(x, y, "ammo");
+      if (b.inventory.length > 0) powerUps.spawn(x, y, "ammo");
       return;
     }
 

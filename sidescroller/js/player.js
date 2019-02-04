@@ -939,7 +939,7 @@ const mech = {
                 sub = Matter.Vector.sub(who[i].position, mech.pos);
                 dist = Matter.Vector.magnitude(sub);
                 if (dist < range) {
-                  knock = Matter.Vector.mult(Matter.Vector.normalise(sub), Math.sqrt(who[i].mass) / 100);
+                  knock = Matter.Vector.mult(Matter.Vector.normalise(sub), Math.sqrt(who[i].mass) / 70);
                   who[i].force.x += knock.x;
                   who[i].force.y += knock.y;
                   // player.force.x -= knock.x / 10;
