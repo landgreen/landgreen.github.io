@@ -401,7 +401,7 @@ let p = new Vue({
           `${n} secretly loves fidget spinners`,
           `Everyone make eye contact with ${n} for 5 seconds.`,
           `${n} is the type of student to remind the teacher to collect the homework.`,
-          `I'm thinking of a name that starts with the letter ${n[0]}... It's ${n}`,
+          // `I'm thinking of a name that starts with the letter ${n[0]}... It's ${n}`,
           `The name’s ${n}... James ${n}.`,
           `${n} doesn't look like they're paying attention.`,
           `I know what you did ${n}. You can't hide it forever.`,
