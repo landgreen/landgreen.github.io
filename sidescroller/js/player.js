@@ -481,7 +481,7 @@ const mech = {
   },
   throw () {
     if (keys[32] || game.mouseDownRight && this.fieldMeter > 0.007) {
-      this.fieldMeter -= 0.007;
+      this.fieldMeter -= 0.0015;
       this.throwCharge += this.throwChargeRate;;
       //draw charge
       const x = mech.pos.x + 15 * Math.cos(this.angle);
@@ -597,7 +597,7 @@ const mech = {
     // push all mobs in range
     for (let i = 0, len = mob.length; i < len; ++i) {
       if (this.lookingAt(mob[i]) && Matter.Vector.magnitude(Matter.Vector.sub(mob[i].position, this.pos)) < this.grabRange && Matter.Query.ray(map, mob[i].position, this.pos).length === 0) {
-        const fieldBlockCost = Math.min(Math.max(0.05, mob[i].mass * 0.03), 0.3)
+        const fieldBlockCost = Math.min(Math.max(0.05, mob[i].mass * 0.02), 0.25)
         if (this.fieldMeter > fieldBlockCost) {
           this.fieldMeter -= fieldBlockCost;
           if (this.fieldDamage) mob[i].damage(b.dmgScale * this.fieldDamage);
@@ -705,10 +705,11 @@ const mech = {
     },
     () => {
       mech.fieldMode = 1;
-      game.makeTextLog("<h2>Time Dilation Field</h2><br><strong>active ability:</strong> hold left and right mouse to slow time<br><strong>passive bonus:</strong> -player gravity", 1000); //<br><strong>passive bonus:</strong> can phase through blocks
+      game.makeTextLog("<h2>Time Dilation Field</h2><br><strong>active ability:</strong> hold left and right mouse to slow time<br><strong>passive bonus:</strong> +field regeneration", 1000); //<br><strong>passive bonus:</strong> can phase through blocks
       mech.setHoldDefaults();
       //passive reduce gravity
-      mech.gravity = 0.0014;
+      // mech.gravity = 0.0014;
+      mech.fieldRegen = 0.006;
       mech.hold = function () {
         if (mech.isHolding) {
           mech.drawHold(mech.holdingTarget);
@@ -717,7 +718,7 @@ const mech = {
         } else if (game.mouseDown && (keys[32] || game.mouseDownRight) && mech.fieldCDcycle < game.cycle) { //both mouse keys down
           if (mech.fieldMeter > 0.004) {
             mech.fieldMeter -= 0.004;
-            const range = 750;
+            const range = 900;
             //draw slow field
             ctx.beginPath();
             ctx.arc(mech.pos.x, mech.pos.y, range, 0, 2 * Math.PI);
@@ -832,7 +833,7 @@ const mech = {
                 return
               }
             }
-          } else if (keys[32] || game.mouseDownRight) {
+          } else if (keys[32] || game.mouseDownRight && this.fieldMeter > 0.004) {
             mech.fieldMeter -= 0.004;
             mech.throwCharge += mech.throwChargeRate;;
             //draw charge
