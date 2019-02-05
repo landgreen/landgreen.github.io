@@ -21,19 +21,19 @@ const spawn = {
   ],
   // "zoomer",
   allowedBossList: ["chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner", "shooter"], //"zoomer", 
-  setSpawnList: function () {
+  setSpawnList() {
     //this is run at the start of each new level to determine the possible mobs for the level
     //each level has 2 mobs: one new mob and one from the the last level
     spawn.pickList.splice(0, 1);
     spawn.pickList.push(spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]);
   },
-  randomMob: function (x, y, chance = 1) {
+  randomMob(x, y, chance = 1) {
     if (Math.random() < chance + 0.1 * (game.levelsCleared - 1) && mob.length < 4 + game.levelsCleared * 2) {
       const pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
       this[pick](x, y);
     }
   },
-  randomSmallMob: function (
+  randomSmallMob(
     x,
     y,
     num = Math.max(Math.min(Math.round(Math.random() * (game.levelsCleared - 1) * 0.5 - 0.4), 4), 0),
@@ -47,7 +47,7 @@ const spawn = {
       }
     }
   },
-  randomBoss: function (x, y, chance = 1) {
+  randomBoss(x, y, chance = 1) {
     if (Math.random() < chance + (game.levelsCleared - 1) * 0.15 && game.levelsCleared !== 1 && mob.length < 4 + game.levelsCleared * 2.1 || chance == Infinity) {
       //choose from the possible picklist
       let pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
@@ -84,13 +84,13 @@ const spawn = {
 
   //mob templates *********************************************************************************************
   //***********************************************************************************************************
-  group: function (x, y, num = 5 + Math.random() * 8) {
+  group(x, y, num = 5 + Math.random() * 8) {
     for (let i = 0; i < num; i++) {
       const radius = 25 + Math.floor(Math.random() * 20)
       spawn.grouper(x + Math.random() * radius, y + Math.random() * radius, radius);
     }
   },
-  grouper: function (x, y, radius = 27 + Math.floor(Math.random() * 10)) {
+  grouper(x, y, radius = 27 + Math.floor(Math.random() * 10)) {
     mobs.spawn(x, y, 4, radius, "#777");
     let me = mob[mob.length - 1];
     me.g = 0.0002; //required if using 'gravity'
@@ -129,7 +129,7 @@ const spawn = {
       ctx.stroke();
     };
   },
-  starter: function (x, y, radius = 30) {
+  starter(x, y, radius = 30) {
     //only on level 1
     mobs.spawn(x, y, 8, radius, "#9ccdc6");
     let me = mob[mob.length - 1];
@@ -140,7 +140,7 @@ const spawn = {
       this.attraction();
     };
   },
-  chaser: function (x, y, radius = 30 + Math.ceil(Math.random() * 50)) {
+  chaser(x, y, radius = 30 + Math.ceil(Math.random() * 50)) {
     mobs.spawn(x, y, 4, radius, "rgb(110,150,200)");
     let me = mob[mob.length - 1];
     me.g = 0.0004; //required if using 'gravity'
@@ -154,7 +154,7 @@ const spawn = {
       this.attraction();
     };
   },
-  grower: function (x, y, radius = 15) {
+  grower(x, y, radius = 15) {
     mobs.spawn(x, y, 7, radius, "hsl(144, 15%, 50%)");
     let me = mob[mob.length - 1];
     me.big = false; //required for grow
@@ -166,7 +166,7 @@ const spawn = {
       this.grow();
     };
   },
-  springer: function (x, y, radius = 20 + Math.ceil(Math.random() * 35)) {
+  springer(x, y, radius = 20 + Math.ceil(Math.random() * 35)) {
     mobs.spawn(x, y, 8, radius, "#b386e8");
     let me = mob[mob.length - 1];
     me.friction = 0;
@@ -215,7 +215,7 @@ const spawn = {
       this.searchSpring();
     };
   },
-  zoomer: function (x, y, radius = 20 + Math.ceil(Math.random() * 30)) {
+  zoomer(x, y, radius = 20 + Math.ceil(Math.random() * 30)) {
     mobs.spawn(x, y, 6, radius, "#ffe2fd");
     let me = mob[mob.length - 1];
     me.trailLength = 20; //required for trails
@@ -236,7 +236,7 @@ const spawn = {
       this.gravity();
     };
   },
-  hopper: function (x, y, radius = 30 + Math.ceil(Math.random() * 30)) {
+  hopper(x, y, radius = 30 + Math.ceil(Math.random() * 30)) {
     mobs.spawn(x, y, 5, radius, "rgb(0,200,180)");
     let me = mob[mob.length - 1];
     me.accelMag = 0.04;
@@ -263,7 +263,7 @@ const spawn = {
       }
     };
   },
-  spinner: function (x, y, radius = 30 + Math.ceil(Math.random() * 35)) {
+  spinner(x, y, radius = 30 + Math.ceil(Math.random() * 35)) {
     mobs.spawn(x, y, 5, radius, "#000000");
     let me = mob[mob.length - 1];
     me.fill = "#28b";
@@ -320,7 +320,7 @@ const spawn = {
       }
     };
   },
-  sucker: function (x, y, radius = 30 + Math.ceil(Math.random() * 70)) {
+  sucker(x, y, radius = 30 + Math.ceil(Math.random() * 70)) {
     radius = 9 + radius / 8; //extra small
     mobs.spawn(x, y, 6, radius, "#000");
     let me = mob[mob.length - 1];
@@ -387,7 +387,7 @@ const spawn = {
       }
     }
   },
-  beamer: function (x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
+  beamer(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
     mobs.spawn(x, y, 4, radius, "rgb(255,0,190)");
     let me = mob[mob.length - 1];
     me.repulsionRange = 73000; //squared
@@ -406,7 +406,7 @@ const spawn = {
       this.laserBeam();
     };
   },
-  focuser: function (x, y, radius = 30 + Math.ceil(Math.random() * 10)) {
+  focuser(x, y, radius = 30 + Math.ceil(Math.random() * 10)) {
     radius = Math.ceil(radius * 0.7);
     mobs.spawn(x, y, 4, radius, "rgb(0,0,255)");
     let me = mob[mob.length - 1];
@@ -477,7 +477,7 @@ const spawn = {
       }
     };
   },
-  laser: function (x, y, radius = 30) {
+  laser(x, y, radius = 30) {
     //only on level 1
     mobs.spawn(x, y, 3, radius, "#f00");
     let me = mob[mob.length - 1];
@@ -495,7 +495,7 @@ const spawn = {
       this.laser();
     };
   },
-  striker: function (x, y, radius = 15 + Math.ceil(Math.random() * 25)) {
+  striker(x, y, radius = 15 + Math.ceil(Math.random() * 25)) {
     mobs.spawn(x, y, 5, radius, "rgb(221,102,119)");
     let me = mob[mob.length - 1];
     me.accelMag = 0.0004;
@@ -515,7 +515,7 @@ const spawn = {
       this.strike();
     };
   },
-  sneaker: function (x, y, radius = 15 + Math.ceil(Math.random() * 25)) {
+  sneaker(x, y, radius = 15 + Math.ceil(Math.random() * 25)) {
     let me;
     mobs.spawn(x, y, 5, radius, "transparent");
     me = mob[mob.length - 1];
@@ -562,7 +562,7 @@ const spawn = {
       }
     };
   },
-  ghoster: function (x, y, radius = 40 + Math.ceil(Math.random() * 100)) {
+  ghoster(x, y, radius = 40 + Math.ceil(Math.random() * 100)) {
     let me;
     mobs.spawn(x, y, 7, radius, "transparent");
     me = mob[mob.length - 1];
@@ -618,7 +618,7 @@ const spawn = {
       }
     };
   },
-  blinker: function (x, y, radius = 45 + Math.ceil(Math.random() * 70)) {
+  blinker(x, y, radius = 45 + Math.ceil(Math.random() * 70)) {
     mobs.spawn(x, y, 6, radius, "transparent");
     let me = mob[mob.length - 1];
     Matter.Body.setDensity(me, 0.0005); //normal is 0.001 //makes effective life much lower
@@ -660,7 +660,7 @@ const spawn = {
       }
     };
   },
-  // drifter: function (x, y, radius = 15 + Math.ceil(Math.random() * 40)) {
+  // drifter(x, y, radius = 15 + Math.ceil(Math.random() * 40)) {
   //   mobs.spawn(x, y, 4.5, radius, "transparent");
   //   let me = mob[mob.length - 1];
   //   me.stroke = "rgb(0,200,255)"; //used for drawGhost
@@ -677,7 +677,7 @@ const spawn = {
   //     this.drift();
   //   };
   // },
-  bomber: function (x, y, radius = 120 + Math.ceil(Math.random() * 70)) {
+  bomber(x, y, radius = 120 + Math.ceil(Math.random() * 70)) {
     //boss that drops bombs from above and holds a set distance from player
     mobs.spawn(x, y, 3, radius, "transparent");
     let me = mob[mob.length - 1];
@@ -706,7 +706,7 @@ const spawn = {
       this.search();
     };
   },
-  shooter: function (x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
+  shooter(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
     mobs.spawn(x, y, 3, radius, "rgb(255,100,150)");
     let me = mob[mob.length - 1];
     me.vertices = Matter.Vertices.rotate(me.vertices, Math.PI, me.position); //make the pointy side of triangle the front
@@ -728,7 +728,7 @@ const spawn = {
       this.fire();
     };
   },
-  bullet: function (x, y, radius = 6, sides = 0) {
+  bullet(x, y, radius = 6, sides = 0) {
     //bullets
     mobs.spawn(x, y, sides, radius, "rgb(255,0,0)");
     let me = mob[mob.length - 1];
@@ -750,7 +750,7 @@ const spawn = {
       this.timeLimit();
     };
   },
-  spawner: function (x, y, radius = 55 + Math.ceil(Math.random() * 50)) {
+  spawner(x, y, radius = 55 + Math.ceil(Math.random() * 50)) {
     mobs.spawn(x, y, 4, radius, "rgb(255,150,0)");
     let me = mob[mob.length - 1];
     me.g = 0.0004; //required if using 'gravity'
@@ -774,7 +774,7 @@ const spawn = {
       this.attraction();
     };
   },
-  spawns: function (x, y, radius = 15 + Math.ceil(Math.random() * 5)) {
+  spawns(x, y, radius = 15 + Math.ceil(Math.random() * 5)) {
     mobs.spawn(x, y, 4, radius, "rgb(255,0,0)");
     let me = mob[mob.length - 1];
     me.onHit = function () {
@@ -794,7 +794,7 @@ const spawn = {
       this.attraction();
     };
   },
-  exploder: function (x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
+  exploder(x, y, radius = 25 + Math.ceil(Math.random() * 50)) {
     mobs.spawn(x, y, 4, radius, "rgb(255,0,0)");
     let me = mob[mob.length - 1];
     me.onHit = function () {
@@ -809,7 +809,7 @@ const spawn = {
       this.attraction();
     };
   },
-  snaker: function (x, y, radius = 80) {
+  snaker(x, y, radius = 80) {
     //snake boss with a laser head
     mobs.spawn(x, y, 8, radius, "rgb(255,50,130)");
     let me = mob[mob.length - 1];
@@ -849,7 +849,7 @@ const spawn = {
     });
 
   },
-  tether: function (x, y, radius = 90) {
+  tether(x, y, radius = 90) {
     // constrained mob boss for the towers level
     // often has a ring of mobs around it
     mobs.spawn(x, y, 8, radius, "rgb(0,60,80)");
@@ -872,7 +872,7 @@ const spawn = {
       this.attraction();
     };
   },
-  shield: function (target, x, y, stiffness = 0.4) {
+  shield(target, x, y, stiffness = 0.4) {
     if (this.allowShields) {
       mobs.spawn(x, y, 9, target.radius + 20, "rgba(220,220,255,0.6)");
       let me = mob[mob.length - 1];
@@ -899,7 +899,7 @@ const spawn = {
       me.do = function () {};
     }
   },
-  bossShield: function (nodes, x, y, radius) {
+  bossShield(nodes, x, y, radius) {
     mobs.spawn(x, y, 9, radius, "rgba(220,220,255,0.65)");
     let me = mob[mob.length - 1];
     me.stroke = "rgb(220,220,255)";
@@ -929,7 +929,7 @@ const spawn = {
   //complex constrained mob templates**********************************************************************
   //*******************************************************************************************************
   allowShields: true,
-  nodeBoss: function (
+  nodeBoss(
     x,
     y,
     spawn = "striker",
@@ -962,7 +962,7 @@ const spawn = {
     }
     this.allowShields = true;
   },
-  // nodeBoss: function (
+  // nodeBoss(
   //   x,
   //   y,
   //   spawn = "striker",
@@ -994,7 +994,7 @@ const spawn = {
   //   }
   //   this.allowShields = true;
   // },
-  lineBoss: function (
+  lineBoss(
     x,
     y,
     spawn = "striker",
@@ -1019,7 +1019,7 @@ const spawn = {
   },
   //constraints ************************************************************************************************
   //*************************************************************************************************************
-  constrainAllMobCombos: function (nodes, stiffness) {
+  constrainAllMobCombos(nodes, stiffness) {
     //runs through every combination of last 'num' bodies and constrains them
     for (let i = 1; i < nodes + 1; ++i) {
       for (let j = i + 1; j < nodes + 1; ++j) {
@@ -1031,7 +1031,7 @@ const spawn = {
       }
     }
   },
-  constrain2AdjacentMobs: function (nodes, stiffness, loop = false) {
+  constrain2AdjacentMobs(nodes, stiffness, loop = false) {
     //runs through every combination of last 'num' bodies and constrains them
     for (let i = 0; i < nodes - 1; ++i) {
       consBB[consBB.length] = Constraint.create({
@@ -1068,7 +1068,7 @@ const spawn = {
       });
     }
   },
-  constraintPB: function (x, y, bodyIndex, stiffness) {
+  constraintPB(x, y, bodyIndex, stiffness) {
     cons[cons.length] = Constraint.create({
       pointA: {
         x: x,
@@ -1078,7 +1078,7 @@ const spawn = {
       stiffness: stiffness
     });
   },
-  constraintBB: function (bodyIndexA, bodyIndexB, stiffness) {
+  constraintBB(bodyIndexA, bodyIndexB, stiffness) {
     consBB[consBB.length] = Constraint.create({
       bodyA: body[bodyIndexA],
       bodyB: body[bodyIndexB],
@@ -1087,7 +1087,7 @@ const spawn = {
   },
   // body and map spawns ******************************************************************************
   //**********************************************************************************************
-  wireHead: function () {
+  wireHead() {
     //not a mob, just a graphic for level 1
     const breakingPoint = 1300
     mobs.spawn(breakingPoint, -100, 0, 7.5, "transparent");
@@ -1151,7 +1151,7 @@ const spawn = {
       ctx.lineCap = "round";
     };
   },
-  wireKnee: function () {
+  wireKnee() {
     //not a mob, just a graphic for level 1
     const breakingPoint = 1425
     mobs.spawn(breakingPoint, -100, 0, 2, "transparent");
@@ -1203,7 +1203,7 @@ const spawn = {
       ctx.lineCap = "round";
     };
   },
-  wireKneeLeft: function () {
+  wireKneeLeft() {
     //not a mob, just a graphic for level 1
     const breakingPoint = 1400
     mobs.spawn(breakingPoint, -100, 0, 2, "transparent");
@@ -1255,7 +1255,7 @@ const spawn = {
       ctx.lineCap = "round";
     };
   },
-  wireFoot: function () {
+  wireFoot() {
     //not a mob, just a graphic for level 1
     const breakingPoint = 1350
     mobs.spawn(breakingPoint, -100, 0, 2, "transparent");
@@ -1306,7 +1306,7 @@ const spawn = {
       ctx.lineCap = "round";
     };
   },
-  wireFootLeft: function () {
+  wireFootLeft() {
     //not a mob, just a graphic for level 1
     const breakingPoint = 1325
     mobs.spawn(breakingPoint, -100, 0, 2, "transparent");
@@ -1357,7 +1357,7 @@ const spawn = {
       ctx.lineCap = "round";
     };
   },
-  boost: function (x, y, height = 1000) {
+  boost(x, y, height = 1000) {
     spawn.mapVertex(x + 50, y + 35, "120 40 -120 40 -50 -40 50 -40");
     // level.addZone(x, y, 100, 30, "fling", {Vx:Vx, Vy: Vy});
     level.addQueryRegion(x, y - 20, 100, 20, "boost", [
@@ -1386,7 +1386,7 @@ const spawn = {
       color: color + "0.05)"
     });
   },
-  laserZone: function (x, y, width, height, dmg) {
+  laserZone(x, y, width, height, dmg) {
     level.addZone(x, y, width, height, "laser", {
       dmg
     });
@@ -1398,7 +1398,7 @@ const spawn = {
       color: "#f00"
     });
   },
-  deathQuery: function (x, y, width, height) {
+  deathQuery(x, y, width, height) {
     level.addQueryRegion(x, y, width, height, "death", [
       [player], mob
     ]);
@@ -1410,7 +1410,7 @@ const spawn = {
       color: "#f00"
     });
   },
-  platform: function (x, y, width, height) {
+  platform(x, y, width, height) {
     const size = 20;
     spawn.mapRect(x, y + height, width, 30);
     level.fillBG.push({
@@ -1421,7 +1421,7 @@ const spawn = {
       color: "#f0f0f3"
     });
   },
-  debris: function (x, y, width, number = Math.floor(3 + Math.random() * 11)) {
+  debris(x, y, width, number = Math.floor(3 + Math.random() * 11)) {
     for (let i = 0; i < number; ++i) {
       if (Math.random() < 0.15) {
         powerUps.chooseRandomPowerUp(x + Math.random() * width, y);
@@ -1432,7 +1432,7 @@ const spawn = {
       }
     }
   },
-  bodyRect: function (
+  bodyRect(
     x,
     y,
     width,
@@ -1447,22 +1447,22 @@ const spawn = {
       body[body.length] = Bodies.rectangle(x + width / 2, y + height / 2, width, height, properties);
     }
   },
-  bodyVertex: function (x, y, vector, properties) {
+  bodyVertex(x, y, vector, properties) {
     //addes shape to body array
     body[body.length] = Matter.Bodies.fromVertices(x, y, Vertices.fromPath(vector), properties);
   },
-  mapRect: function (x, y, width, height, properties) {
+  mapRect(x, y, width, height, properties) {
     //addes reactangles to map array
     var len = map.length;
     map[len] = Bodies.rectangle(x + width / 2, y + height / 2, width, height, properties);
   },
-  mapVertex: function (x, y, vector, properties) {
+  mapVertex(x, y, vector, properties) {
     //addes shape to map array
     var len = map.length;
     map[len] = Matter.Bodies.fromVertices(x, y, Vertices.fromPath(vector), properties);
   },
   //complex map templates
-  spawnBuilding: function (x, y, w, h, leftDoor, rightDoor, walledSide) {
+  spawnBuilding(x, y, w, h, leftDoor, rightDoor, walledSide) {
     this.mapRect(x, y, w, 25); //roof
     this.mapRect(x, y + h, w, 35); //ground
     if (walledSide === "left") {
@@ -1482,7 +1482,7 @@ const spawn = {
       }
     }
   },
-  spawnStairs: function (x, y, num, w, h, stepRight) {
+  spawnStairs(x, y, num, w, h, stepRight) {
     w += 50;
     if (stepRight) {
       for (let i = 0; i < num; i++) {

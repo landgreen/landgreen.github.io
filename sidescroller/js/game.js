@@ -20,7 +20,7 @@ const game = {
   lastTimeStamp: 0, //tracks time stamps for measuing delta
   delta: 1000 / 60, //speed of game engine //looks like it has to be 16 to match player input
   buttonCD: 0,
-  drawCursor: function () {
+  drawCursor() {
     const size = 10;
     ctx.beginPath();
     ctx.moveTo(game.mouse.x - size, game.mouse.y);
@@ -35,7 +35,7 @@ const game = {
   drawTime: 8, //how long circles are drawn.  use to push into drawlist.time
   mobDmgColor: "rgba(255,0,0,0.7)", //used top push into drawList.color
   playerDmgColor: "rgba(0,0,0,0.7)", //used top push into drawList.color
-  drawCircle: function () {
+  drawCircle() {
     //draws a circle for two cycles, used for showing damage mostly
     let i = this.drawList.length;
     while (i--) {
@@ -53,7 +53,7 @@ const game = {
   },
   lastLogTime: 0,
   lastLogTimeBig: 0,
-  boldActiveGunHUD: function () {
+  boldActiveGunHUD() {
     if (b.inventory.length > 0) {
       for (let i = 0, len = b.inventory.length; i < len; ++i) {
         document.getElementById(b.inventory[i]).style.opacity = "0.3";
@@ -61,12 +61,12 @@ const game = {
       document.getElementById(b.activeGun).style.opacity = "1";
     }
   },
-  updateGunHUD: function () {
+  updateGunHUD() {
     for (let i = 0, len = b.inventory.length; i < len; ++i) {
       document.getElementById(b.inventory[i]).innerHTML = b.guns[b.inventory[i]].name + " - " + b.guns[b.inventory[i]].ammo;
     }
   },
-  makeGunHUD: function () {
+  makeGunHUD() {
     //remove all nodes
     const myNode = document.getElementById("guns");
     while (myNode.firstChild) {
@@ -82,12 +82,12 @@ const game = {
     }
     game.boldActiveGunHUD();
   },
-  makeTextLog: function (text, time = 180) {
+  makeTextLog(text, time = 180) {
     document.getElementById("text-log").innerHTML = text;
     document.getElementById("text-log").style.opacity = 1;
     game.lastLogTime = game.cycle + time;
   },
-  textLog: function () {
+  textLog() {
     if (game.lastLogTime && game.lastLogTime < game.cycle) {
       game.lastLogTime = 0;
       // document.getElementById("text-log").innerHTML = " ";
@@ -100,27 +100,27 @@ const game = {
   //   this.delta = (engine.timing.timestamp - this.lastTimeStamp) / 16.666666666666;
   //   this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
   // },
-  nextGun: function () {
+  nextGun() {
     if (b.inventory.length > 0) {
       b.inventoryGun++;
       if (b.inventoryGun > b.inventory.length - 1) b.inventoryGun = 0;
       game.switchGun();
     }
   },
-  previousGun: function () {
+  previousGun() {
     if (b.inventory.length > 0) {
       b.inventoryGun--;
       if (b.inventoryGun < 0) b.inventoryGun = b.inventory.length - 1;
       game.switchGun();
     }
   },
-  switchGun: function () {
+  switchGun() {
     b.activeGun = b.inventory[b.inventoryGun];
     game.updateGunHUD();
     game.boldActiveGunHUD();
     // mech.drop();
   },
-  keyPress: function () {
+  keyPress() {
     //runs on key press event
     // if (keys[49]) {
     //   // press 1
@@ -240,11 +240,11 @@ const game = {
   },
   zoom: null,
   zoomScale: 1400,
-  setZoom: function () {
+  setZoom() {
     //use in window resize in index.js
     this.zoom = canvas.height / game.zoomScale; //sets starting zoom scale
   },
-  camera: function () {
+  camera() {
     ctx.translate(canvas.width2, canvas.height2); //center
     ctx.scale(this.zoom, this.zoom); //zoom in once centered
     ctx.translate(-canvas.width2 + mech.transX, -canvas.height2 + mech.transY); //uncenter, translate
@@ -253,7 +253,7 @@ const game = {
     this.mouseInGame.y = (this.mouse.y - canvas.height2) / this.zoom + canvas.height2 - mech.transY;
   },
   zoomInFactor: 0,
-  startZoomIn: function (time = 180) {
+  startZoomIn(time = 180) {
     game.zoom = 0;
     let count = 0;
 
@@ -269,7 +269,7 @@ const game = {
       }
     }
   },
-  wipe: function () {
+  wipe() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // ctx.fillStyle = "#000";
     // ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -287,7 +287,7 @@ const game = {
     //ctx.fillStyle = "rgba(255,255,255,0.4)";
     //ctx.fillRect(0, 0, canvas.width, canvas.height);
   },
-  gravity: function () {
+  gravity() {
     function addGravity(bodies, magnitude) {
       for (var i = 0; i < bodies.length; i++) {
         bodies[i].force.y += bodies[i].mass * magnitude;
@@ -297,7 +297,7 @@ const game = {
     addGravity(body, game.g);
     player.force.y += player.mass * mech.gravity;
   },
-  reset: function () {
+  reset() {
     //removes guns and ammo
     b.inventory = [];
     for (let i = 0, len = b.guns.length; i < len; ++i) {
@@ -316,7 +316,7 @@ const game = {
     game.makeGunHUD();
     mech.drop();
     mech.addHealth(1);
-    // mech.fieldUpgrades[0]();  //reset to starting field?   or let them keep the field
+    mech.fieldUpgrades[0](); //reset to starting field?   or let them keep the field
     mech.alive = true;
     level.onLevel = 0;
     game.levelsCleared = 0;
@@ -326,7 +326,7 @@ const game = {
     document.getElementById("fade-out").style.opacity = 0;
   },
   firstRun: true,
-  splashReturn: function () {
+  splashReturn() {
     // document.getElementById('splash').onclick = 'run(this)';
     document.getElementById("splash").onclick = function () {
       game.startGame();
@@ -337,7 +337,7 @@ const game = {
     document.getElementById("health-bg").style.display = "none";
     document.body.style.cursor = "auto";
   },
-  startGame: function () {
+  startGame() {
     document.getElementById("controls").style.display = "none";
     document.getElementById("splash").onclick = null; //removes the onclick effect so the function only runs once
     document.getElementById("splash").style.display = "none"; //hides the element that spawned the function
@@ -373,7 +373,7 @@ const game = {
     game.lastLogTime = game.cycle + 360;
   },
   clearNow: false,
-  clearMap: function () {
+  clearMap() {
     //if player is holding something this remembers it before it gets deleted
     let holdTarget;
     if (mech.holdingTarget) {
@@ -424,7 +424,7 @@ const game = {
       x: 0,
       y: 0
     },
-    out: function () {
+    out() {
       if (keys[49]) {
         this.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
         this.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
@@ -443,7 +443,7 @@ const game = {
       }
     }
   },
-  fallChecks: function () {
+  fallChecks() {
     if (!(game.cycle % 420)) {
       remove = function (who) {
         let i = who.length;
@@ -459,7 +459,7 @@ const game = {
       remove(powerUp);
     }
   },
-  testingOutput: function () {
+  testingOutput() {
     ctx.textAlign = "right";
     ctx.fillStyle = "#000";
     let line = 100;
@@ -507,7 +507,7 @@ const game = {
     ctx.fillText(`(${this.mouseInGame.x.toFixed(1)}, ${this.mouseInGame.y.toFixed(1)})`, this.mouse.x, this.mouse.y - 20);
   },
   draw: {
-    powerUp: function () {
+    powerUp() {
       // draw power up
       // ctx.globalAlpha = 0.4 * Math.sin(game.cycle * 0.15) + 0.6;
       // for (let i = 0, len = powerUp.length; i < len; ++i) {
@@ -545,7 +545,7 @@ const game = {
     //     ctx.fill();
     // },
     mapPath: null, //holds the path for the map to speed up drawing
-    setPaths: function () {
+    setPaths() {
       //runs at each new level to store the path for the map since the map doesn't change
       this.mapPath = new Path2D();
       for (let i = 0, len = map.length; i < len; ++i) {
@@ -560,12 +560,12 @@ const game = {
     mapFill: "#444",
     bodyFill: "#999",
     bodyStroke: "#222",
-    drawMapPath: function () {
+    drawMapPath() {
       ctx.fillStyle = this.mapFill;
       ctx.fill(this.mapPath);
     },
 
-    seeEdges: function () {
+    seeEdges() {
       const eye = {
         x: mech.pos.x + 20 * Math.cos(mech.angle),
         y: mech.pos.y + 20 * Math.sin(mech.angle)
@@ -604,7 +604,7 @@ const game = {
       }
       ctx.stroke();
     },
-    see: function () {
+    see() {
       const vertexCollision = function (
         v1,
         v1End,
@@ -692,7 +692,7 @@ const game = {
       ctx.fill();
       ctx.clip();
     },
-    body: function () {
+    body() {
       ctx.beginPath();
       for (let i = 0, len = body.length; i < len; ++i) {
         let vertices = body[i].vertices;
@@ -708,7 +708,7 @@ const game = {
       ctx.strokeStyle = this.bodyStroke;
       ctx.stroke();
     },
-    cons: function () {
+    cons() {
       ctx.beginPath();
       for (let i = 0, len = cons.length; i < len; ++i) {
         ctx.moveTo(cons[i].pointA.x, cons[i].pointA.y);
@@ -723,7 +723,7 @@ const game = {
       ctx.strokeStyle = "rgba(0,0,0,0.15)";
       ctx.stroke();
     },
-    wireFrame: function () {
+    wireFrame() {
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillStyle = "#999";
@@ -742,7 +742,7 @@ const game = {
       ctx.strokeStyle = "#000";
       ctx.stroke();
     },
-    testing: function () {
+    testing() {
       //zones
       ctx.beginPath();
       for (let i = 0, len = level.zones.length; i < len; ++i) {
@@ -840,7 +840,7 @@ const game = {
     return result;
   },
   //was used in level design
-  buildingUp: function (e) {
+  buildingUp(e) {
     if (game.mouseDown) {
       game.getCoords.pos2.x = Math.round(game.mouseInGame.x / 25) * 25;
       game.getCoords.pos2.y = Math.round(game.mouseInGame.y / 25) * 25;

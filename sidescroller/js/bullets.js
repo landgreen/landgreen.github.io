@@ -6,7 +6,7 @@ const b = {
   activeGun: null, //current gun in use by player
   inventoryGun: 0,
   inventory: [0], //list of what guns player has  // 0 starts with basic gun
-  fireProps: function (cd, speed, dir, me) {
+  fireProps(cd, speed, dir, me) {
     mech.fireCDcycle = game.cycle + cd; //cooldown
     Matter.Body.setVelocity(bullet[me], {
       x: mech.Vx / 2 + speed * Math.cos(dir),
@@ -14,7 +14,7 @@ const b = {
     });
     World.add(engine.world, bullet[me]); //add bullet to world
   },
-  fireAttributes: function (dir) {
+  fireAttributes(dir) {
     return {
       // density: 0.0015,			//frictionAir: 0.01,			//restitution: 0,
       angle: dir,
@@ -27,17 +27,17 @@ const b = {
         mask: 0x000011 //mask: 0x000101,  //for self collision
       },
       minDmgSpeed: 10,
-      onDmg: function () {}, //this.endCycle = 0  //triggers despawn
-      onEnd: function () {}
+      onDmg() {}, //this.endCycle = 0  //triggers despawn
+      onEnd() {}
     };
   },
-  muzzleFlash: function (radius = 10) {
+  muzzleFlash(radius = 10) {
     ctx.fillStyle = "#fb0";
     ctx.beginPath();
     ctx.arc(mech.pos.x + 35 * Math.cos(mech.angle), mech.pos.y + 35 * Math.sin(mech.angle), radius, 0, 2 * Math.PI);
     ctx.fill();
   },
-  drawOneBullet: function (vertices) {
+  drawOneBullet(vertices) {
     ctx.moveTo(vertices[0].x, vertices[0].y);
     for (let j = 1; j < vertices.length; j += 1) {
       ctx.lineTo(vertices[j].x, vertices[j].y);
@@ -46,7 +46,7 @@ const b = {
     ctx.fillStyle = "#000";
     ctx.fill();
   },
-  removeConsBB: function (me) {
+  removeConsBB(me) {
     for (let i = 0, len = consBB.length; i < len; ++i) {
       if (consBB[i].bodyA === me) {
         consBB[i].bodyA = consBB[i].bodyB;
@@ -61,7 +61,7 @@ const b = {
       }
     }
   },
-  explode: function (me) {
+  explode(me) {
     // typically explode is used as some bullets are .onEnd
 
     //add dmg to draw queue
@@ -206,14 +206,14 @@ const b = {
     //   ammo: Infinity,
     //   ammoPack: Infinity,
     //   have: true,
-    //   fire: function () {}
+    //   fire() {}
     // },
     {
       name: "laser",
       ammo: 0,
       ammoPack: 400,
       have: false,
-      fire: function () {
+      fire() {
         //mech.fireCDcycle = game.cycle + 1
         let best;
         const color = "#f00";
@@ -374,7 +374,7 @@ const b = {
       ammo: 0,
       ammoPack: 90,
       have: false,
-      fire: function () {
+      fire() {
         const me = bullet.length;
         b.muzzleFlash(15);
         // if (Math.random() > 0.2) mobs.alert(500);
@@ -393,7 +393,7 @@ const b = {
       ammo: 0,
       ammoPack: 8,
       have: false,
-      fire: function () {
+      fire() {
         b.muzzleFlash(35);
         // mobs.alert(650);
         for (let i = 0; i < 9; i++) {
@@ -420,7 +420,7 @@ const b = {
       ammo: 0,
       ammoPack: 17,
       have: false,
-      fire: function () {
+      fire() {
         const me = bullet.length;
         const dir = mech.angle;
         bullet[me] = Bodies.rectangle(mech.pos.x + 40 * Math.cos(mech.angle), mech.pos.y + 40 * Math.sin(mech.angle), 31, 2, b.fireAttributes(dir));
@@ -439,7 +439,7 @@ const b = {
       ammo: 0,
       ammoPack: 4,
       have: false,
-      fire: function () {
+      fire() {
         // b.muzzleFlash();
         const twist = 0.05 + Math.random() * 0.05;
         let dir = mech.angle - twist * 2;
@@ -559,7 +559,7 @@ const b = {
       ammo: 0,
       ammoPack: 10,
       have: false,
-      fire: function () {
+      fire() {
         b.muzzleFlash(30);
         let dir = mech.angle - 0.1;
         for (let i = 0; i < 5; i++) {
@@ -590,7 +590,7 @@ const b = {
       ammo: 0,
       ammoPack: 4,
       have: false,
-      fire: function () {
+      fire() {
         const me = bullet.length;
         const dir = mech.angle;
         bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 22, b.fireAttributes(dir));
@@ -641,7 +641,7 @@ const b = {
       ammo: 0,
       ammoPack: 40,
       have: false,
-      fire: function () {
+      fire() {
         const me = bullet.length;
         const dir = mech.angle; // + Math.random() * 0.05;
         bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 10, b.fireAttributes(dir));
@@ -669,7 +669,7 @@ const b = {
       ammo: 0,
       ammoPack: 4,
       have: false,
-      fire: function () {
+      fire() {
         b.muzzleFlash(45);
         // mobs.alert(800);
         const me = bullet.length;
@@ -687,7 +687,7 @@ const b = {
       ammo: 0,
       ammoPack: 10,
       have: false,
-      fire: function () {
+      fire() {
         b.muzzleFlash(20);
         // mobs.alert(450);
         let dir = mech.angle - 0.05;
@@ -713,7 +713,7 @@ const b = {
       ammo: 0,
       ammoPack: 130,
       have: false,
-      fire: function () {
+      fire() {
         mech.fireCDcycle = game.cycle + 4; // cool down
         const endCycle = game.cycle + 108
         const bulletRadius = 5;
@@ -739,20 +739,20 @@ const b = {
             category: 0x000100,
             mask: 0x000010
           },
-          onDmg: function () {
+          onDmg() {
             if (this.isConstrained) {
               this.isConstrained = false
               b.removeConsBB(this)
               // this.endCycle = 0 //triggers despawn
             }
           },
-          onEnd: function () {
+          onEnd() {
             if (this.isConstrained) {
               this.isConstrained = false
               b.removeConsBB(this)
             }
           },
-          do: function () {}
+          do() {}
         }
 
         //first bullet
@@ -786,7 +786,7 @@ const b = {
       }
     }
   ],
-  fire: function () {
+  fire() {
     if (game.mouseDown && mech.fireCDcycle < game.cycle && !(keys[32] || game.mouseDownRight) && !mech.isHolding && b.inventory.length) {
       if (b.guns[this.activeGun].ammo > 0) {
         b.guns[this.activeGun].fire();
@@ -804,7 +804,7 @@ const b = {
       }
     }
   },
-  draw: function () {
+  draw() {
     ctx.beginPath();
     let i = bullet.length;
     while (i--) {

@@ -4,10 +4,10 @@ const powerUps = {
   heal: {
     name: "heal",
     color: "#0f9",
-    size: function () {
+    size() {
       return 40 * Math.sqrt(0.1 + Math.random() * 0.5);
     },
-    effect: function () {
+    effect() {
       let heal = this.size / 40;
       mech.addHealth(heal * heal);
       //game.makeTextLog('heal for '+(heal*100).toFixed(0)+'%',80)
@@ -16,25 +16,25 @@ const powerUps = {
   field: {
     name: "field",
     color: "#f9f",
-    size: function () {
+    size() {
       return 40;
     },
-    effect: function () {
-      let mode = player.fieldMode
-      while (mode === player.fieldMode) {
+    effect() {
+      let mode = mech.fieldMode
+      while (mode === mech.fieldMode) {
         mode = Math.ceil(Math.random() * (mech.fieldUpgrades.length - 1))
       }
       mech.fieldUpgrades[mode]();
-      // mech.fieldUpgrades[2]();
+      // mech.fieldUpgrades[4]();
     }
   },
   ammo: {
     name: "ammo",
     color: "#467",
-    size: function () {
+    size() {
       return 17;
     },
-    effect: function () {
+    effect() {
       //only get ammo for guns player has
       let target;
       if (b.inventory.length > 0) {
@@ -54,10 +54,10 @@ const powerUps = {
   gun: {
     name: "gun",
     color: "#0cf",
-    size: function () {
+    size() {
       return 30;
     },
-    effect: function () {
+    effect() {
       //find what guns I don't have
       let options = [];
       for (let i = 0; i < b.guns.length; ++i) {
@@ -94,7 +94,7 @@ const powerUps = {
     }
   },
   //power ups also come from spawn.debris
-  spawnRandomPowerUp: function (x, y) {
+  spawnRandomPowerUp(x, y) {
     //a chance to drop a power up
     //mostly used after mob dies
     //spawn heal chance is higher at low health
@@ -118,7 +118,7 @@ const powerUps = {
       return;
     }
   },
-  chooseRandomPowerUp: function (x, y) {
+  chooseRandomPowerUp(x, y) {
     //100% chance to drop a random power up
     //this is mostly used for making power up drops in debris
     if (Math.random() < 0.5) {
@@ -134,7 +134,7 @@ const powerUps = {
     //   powerUps.spawn(x, y, "shield", false);
     // }
   },
-  spawnStartingPowerUps: function (x, y) {
+  spawnStartingPowerUps(x, y) {
     if (b.inventory.length < 3) {
       powerUps.spawn(x, y, "gun", false); //starting gun
     } else if (mech.fieldMode === 0) {
@@ -145,7 +145,7 @@ const powerUps = {
       powerUps.spawnRandomPowerUp(x, y);
     }
   },
-  spawn: function (x, y, target, moving = true) {
+  spawn(x, y, target, moving = true) {
     let i = powerUp.length;
     target = powerUps[target];
     size = target.size();
@@ -175,7 +175,7 @@ const powerUps = {
     }
     World.add(engine.world, powerUp[i]); //add to world
   },
-  attractionLoop: function () {
+  attractionLoop() {
     for (let i = 0, len = powerUp.length; i < len; ++i) {
       const dxP = player.position.x - powerUp[i].position.x;
       const dyP = player.position.y - powerUp[i].position.y;
