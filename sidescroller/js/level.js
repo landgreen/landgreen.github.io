@@ -10,8 +10,7 @@ const level = {
   levels: ["skyscrapers", "rooftops", "warehouse", "highrise", "towers"],
   onLevel: 0,
   start() {
-    game.zoomScale = 1400 //1400
-    game.setZoom(); //reset zoom
+    // game.zoomScale = 1400 //1400
     if (game.levelsCleared === 0) {
       this.intro();
       // spawn.setSpawnList();
@@ -28,6 +27,7 @@ const level = {
       this[this.levels[this.onLevel]](); //picks the current map from the the levels array
       this.levelAnnounce();
     }
+    game.setZoom();
     this.addToWorld(); //add map to world
     game.draw.setPaths();
   },
@@ -103,8 +103,8 @@ const level = {
     }
   },
   bosses() {
-    game.zoomScale = 1600 //1400
-    game.setZoom();
+    game.zoomScale = 1500 //1400
+
     // spawn.setSpawnList();
     // spawn.setSpawnList();
     // game.levelsCleared = 7; //for testing to simulate all possible mobs spawns
@@ -184,8 +184,8 @@ const level = {
   },
   //empty map for testing mobs
   intro() {
-    game.zoomScale = 1200 //1400
-    game.setZoom();
+    game.zoomScale = 1100 //1400
+
     mech.setPosToSpawn(460, -100); //normal spawn
     level.enter.x = -1000000; //offscreen
     level.enter.y = -400;
@@ -334,6 +334,9 @@ const level = {
 
   rooftops() {
     // if (game.levelsCleared < level.levels.length) game.startZoomIn();
+    game.zoomScale = 1700 //1400
+
+
     document.body.style.backgroundColor = "#dcdcde";
 
     if (Math.random() < 0.75) {
@@ -437,8 +440,8 @@ const level = {
     //spawn.mapRect(-700, 0, 6250, 100); //ground
     spawn.mapRect(3400, 0, 2150, 100); //ground
     spawn.mapRect(-700, -2000, 2100, 100); //Top left ledge
-    spawn.bodyRect(1350, -2125, 50, 125, 0.8); //
-    spawn.bodyRect(1350, -2225, 50, 100, 0.8); //
+    spawn.bodyRect(1300, -2125, 50, 125, 0.8); //
+    spawn.bodyRect(1307, -2225, 50, 100, 0.8); //
     spawn.mapRect(-700, -2350, 50, 400); //far left starting left wall
     spawn.mapRect(-700, -2010, 500, 50); //far left starting ground
     spawn.mapRect(-700, -2350, 500, 50); //far left starting ceiling
@@ -451,7 +454,7 @@ const level = {
     spawn.bodyRect(200, -2150, 200, 220, 0.8); //
     spawn.mapRect(700, -2275, 700, 50); //
     spawn.bodyRect(1050, -2350, 30, 30, 0.8); //
-    spawn.boost(1800, -1000, 1100);
+    spawn.boost(1800, -1000, 1200);
     spawn.bodyRect(1625, -1100, 100, 75); //
     spawn.bodyRect(1350, -1025, 400, 25, 1, spawn.propsIsNotHoldable); // ground plank
     spawn.mapRect(-700, -1000, 2100, 100); //lower left ledge
@@ -506,6 +509,8 @@ const level = {
     if (game.levelsCleared > 5) spawn.bomber(2500, -2400, 100);
   },
   skyscrapers() {
+    game.zoomScale = 1700 //1400
+
     // if (game.levelsCleared < level.levels.length) game.startZoomIn();
 
     mech.setPosToSpawn(-50, -50); //normal spawn
@@ -656,6 +661,8 @@ const level = {
     spawn.randomBoss(1700, -900, 0.4);
   },
   highrise() {
+    game.zoomScale = 1500 //1400
+
     // if (game.levelsCleared < level.levels.length) game.startZoomIn();
 
     document.body.style.backgroundColor = "#dcdcde" //"#fafcff";
@@ -825,6 +832,8 @@ const level = {
     spawn.randomBoss(-2450, -1100, 0);
   },
   warehouse() {
+    game.zoomScale = 1200 //1400
+
     // if (game.levelsCleared < level.levels.length) game.startZoomIn();
 
     document.body.style.backgroundColor = "#bbb";
@@ -1020,6 +1029,8 @@ const level = {
     // }
   },
   towers() {
+    game.zoomScale = 1300 //1400
+
     // if (game.levelsCleared < level.levels.length) game.startZoomIn();
 
     if (Math.random() < 0.75) {

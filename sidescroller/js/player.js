@@ -597,7 +597,7 @@ const mech = {
     // push all mobs in range
     for (let i = 0, len = mob.length; i < len; ++i) {
       if (this.lookingAt(mob[i]) && Matter.Vector.magnitude(Matter.Vector.sub(mob[i].position, this.pos)) < this.grabRange && Matter.Query.ray(map, mob[i].position, this.pos).length === 0) {
-        const fieldBlockCost = Math.min(Math.max(0.05, mob[i].mass * 0.02), 0.25)
+        const fieldBlockCost = Math.max(0.05, mob[i].mass * 0.03)
         if (this.fieldMeter > fieldBlockCost) {
           this.fieldMeter -= fieldBlockCost;
           if (this.fieldDamage) mob[i].damage(b.dmgScale * this.fieldDamage);
@@ -767,6 +767,8 @@ const mech = {
       mech.throwChargeRate = 4; //0.5
       mech.throwChargeMax = 300; //50
       //passive field does extra damage
+      mech.grabRange = 185;
+      mech.fieldArc = 0.15;
       mech.fieldDamage = 2;
 
       mech.hold = function () {
