@@ -25,7 +25,7 @@ const powerUps = {
         mode = Math.ceil(Math.random() * (mech.fieldUpgrades.length - 1))
       }
       mech.fieldUpgrades[mode]();
-      // mech.fieldUpgrades[4]();
+      // mech.fieldUpgrades[2]();
     }
   },
   ammo: {
