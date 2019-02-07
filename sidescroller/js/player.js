@@ -480,8 +480,8 @@ const mech = {
     Matter.Body.rotate(this.holdingTarget, 0.01 / this.holdingTarget.mass); //gently spin the block
   },
   throw () {
-    if (keys[32] || game.mouseDownRight && this.fieldMeter > 0.007) {
-      this.fieldMeter -= 0.0015;
+    if (keys[32] || game.mouseDownRight && this.fieldMeter > 0.004) {
+      this.fieldMeter -= 0.004;
       this.throwCharge += this.throwChargeRate;;
       //draw charge
       const x = mech.pos.x + 15 * Math.cos(this.angle);
