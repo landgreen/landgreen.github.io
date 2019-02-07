@@ -398,6 +398,8 @@ let p = new Vue({
 
         const n = this.layout[PICK].name; //focus student's name
         const sayThis = [
+          `${n} is burnin' through the sky... yeah... Two hundred degrees, that's why they call ${n} Mister Fahrenheit`,
+          `SWEET, ${n}, bum bum bum.  Good times never felt so good!`,
           `${n} has ascended to New West Plus.`,
           `${n} is never gonna give you up. Never gonna let you down. Never gonna run around and desert you. Never gonna make you cry. Never gonna say goodbye. Never gonna tell a lie and hurt you.`,
           `${n} blessed the rains down in Africa.`,
