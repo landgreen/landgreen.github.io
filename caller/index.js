@@ -398,6 +398,12 @@ let p = new Vue({
 
         const n = this.layout[PICK].name; //focus student's name
         const sayThis = [
+          `${n} has ascended to New West Plus.`,
+          `${n} is never gonna give you up. Never gonna let you down. Never gonna run around and desert you. Never gonna make you cry. Never gonna say goodbye. Never gonna tell a lie and hurt you.`,
+          `${n} blessed the rains down in Africa.`,
+          `${n} went sicko mode.`,
+          `${n} has doodoo bref.`,
+          `${n}, Do you remember... the 21st night of September?`,
           `${n} secretly loves fidget spinners`,
           `Everyone make eye contact with ${n} for 5 seconds.`,
           `${n} is the type of student to remind the teacher to collect the homework.`,
