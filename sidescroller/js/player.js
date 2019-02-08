@@ -406,6 +406,7 @@ const mech = {
   },
   drawFieldMeter() {
     if (this.fieldMeter < 1) {
+      mech.fieldMeter += mech.fieldRegen;
       ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
       ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, 60, 10);
       110, 170, 200
@@ -416,6 +417,8 @@ const mech = {
         60 * this.fieldMeter,
         10
       );
+    } else {
+      mech.fieldMeter = 1
     }
   },
   lookingAt(who) {
@@ -699,7 +702,6 @@ const mech = {
         } else {
           mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
-        if (mech.fieldMeter < 1) mech.fieldMeter += mech.fieldRegen;
         mech.drawFieldMeter()
       }
     },
@@ -755,7 +757,6 @@ const mech = {
         } else {
           mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
-        if (mech.fieldMeter < 1) mech.fieldMeter += mech.fieldRegen;
         mech.drawFieldMeter()
       }
     },
@@ -806,22 +807,20 @@ const mech = {
         } else {
           mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
-        if (mech.fieldMeter < 1) mech.fieldMeter += mech.fieldRegen;
         mech.drawFieldMeter()
       }
     },
     () => {
       mech.fieldMode = 3;
-      game.makeTextLog("<h2>Mass Recycler</h2><br><strong>active ability:</strong> when holding a block, click left mouse to heal<br><strong>passive bonus:</strong> +hold larger blocks", 1000);
+      game.makeTextLog("<h2>Mass Recycler</h2><br><strong>active ability:</strong> when holding a block, click left mouse to heal<br><strong>negative effect:</strong> -field regeneration", 1000);
       mech.setHoldDefaults();
-      mech.holdingMassScale = 0.02;
-
+      mech.fieldRegen = 0.001;
       mech.hold = function () {
         if (mech.isHolding) {
           mech.drawHold(mech.holdingTarget);
           mech.holding();
           //fire or eat
-          const heal = 0.1 + mech.holdingTarget.mass / 30
+          const heal = Math.min(0.95, 0.1 + mech.holdingTarget.mass / 60)
           if (game.mouseDown && mech.fieldMeter > heal) { //this.health < 1  //eat if left mouse is down
             mech.fireCDcycle = game.cycle + mech.fieldFireCD;
             mech.addHealth(heal);
@@ -902,17 +901,17 @@ const mech = {
         } else {
           mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
-        if (mech.fieldMeter < 1) mech.fieldMeter += mech.fieldRegen;
         mech.drawFieldMeter()
       }
     },
     () => {
       mech.fieldMode = 4;
-      game.makeTextLog("<h2>Negative Mass Field</h2><br><strong>active ability:</strong> hold left and right mouse to push things away<br><strong>passive bonus:</strong> +field size, -field cool down", 1000); //<br><strong>passive bonus:</strong> can phase through blocks
+      game.makeTextLog("<h2>Negative Mass Field</h2><br><strong>active ability:</strong> hold left and right mouse to push things away<br><strong>passive bonuses:</strong> +field size, +hold larger blocks", 1000); //<br><strong>passive bonus:</strong> can phase through blocks
       mech.setHoldDefaults();
       mech.fieldPushCD = 20;
       mech.fieldArc = 1;
       mech.calculateFieldThreshold();
+      mech.holdingMassScale = 0.05;
 
       mech.hold = function () {
         if (mech.isHolding) {
@@ -963,7 +962,6 @@ const mech = {
         } else {
           mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
-        if (mech.fieldMeter < 1) mech.fieldMeter += mech.fieldRegen;
         mech.drawFieldMeter()
       }
     },
