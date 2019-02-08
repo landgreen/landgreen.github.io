@@ -925,9 +925,7 @@ const mobs = {
         this.onDeath(this); //custom death effects
         this.removeConsBB();
         this.alive = false;
-        if (this.dropPowerUp) {
-          powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
-        }
+        if (this.dropPowerUp) powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
       },
       removeConsBB() {
         for (let i = 0, len = consBB.length; i < len; ++i) {

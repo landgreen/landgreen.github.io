@@ -24,8 +24,8 @@ const powerUps = {
       while (mode === mech.fieldMode) {
         mode = Math.ceil(Math.random() * (mech.fieldUpgrades.length - 1))
       }
-      mech.fieldUpgrades[mode]();
-      // mech.fieldUpgrades[2]();
+      mech.fieldUpgrades[mode](); //choose random field upgrade that you don't already have
+      // mech.fieldUpgrades[3]();
     }
   },
   ammo: {
@@ -75,7 +75,8 @@ const powerUps = {
           );
         } else {
           game.makeTextLog(
-            "<div style='font-size:120%;' >new gun: " + b.guns[newGun].name + "</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>",
+            // "<div style='font-size:120%;' >new gun: " + b.guns[newGun].name + "</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>",
+            "<div style='font-size:120%;' >new gun: " + b.guns[newGun].name + "</div>",
             360
           );
         }
@@ -137,13 +138,20 @@ const powerUps = {
   spawnStartingPowerUps(x, y) {
     if (b.inventory.length < 3) {
       powerUps.spawn(x, y, "gun", false); //starting gun
-    } else if (mech.fieldMode === 0) {
-      powerUps.spawn(x, y, "field");
     } else {
       powerUps.spawnRandomPowerUp(x, y);
       powerUps.spawnRandomPowerUp(x, y);
       powerUps.spawnRandomPowerUp(x, y);
     }
+    // if (mech.fieldMode === 0 && game.levelsCleared > 2) {
+    //   powerUps.spawn(x, y, "field");
+    // } else if (b.inventory.length < 3) {
+    //   powerUps.spawn(x, y, "gun", false); //starting gun
+    // } else {
+    //   powerUps.spawnRandomPowerUp(x, y);
+    //   powerUps.spawnRandomPowerUp(x, y);
+    //   powerUps.spawnRandomPowerUp(x, y);
+    // }
   },
   spawn(x, y, target, moving = true) {
     let i = powerUp.length;

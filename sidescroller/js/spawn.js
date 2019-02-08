@@ -698,6 +698,9 @@ const spawn = {
     // Matter.Body.setDensity(me, 0.0015); //extra dense //normal is 0.001
     me.collisionFilter.mask = 0x001100; //move through walls
     spawn.shield(me, x, y);
+    me.onDeath = function () {
+      if (Math.random() < 0.2 || mech.fieldMode === 0) powerUps.spawn(this.position.x, this.position.y, "field"); //bosss spawn field upgrades
+    };
     me.do = function () {
       this.healthBar();
       this.seePlayerCheckByDistance();
@@ -722,6 +725,33 @@ const spawn = {
       y: 0
     };
     if (Math.random() < Math.min(0.15 + (game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
+    me.do = function () {
+      this.healthBar();
+      this.seePlayerByLookingAt();
+      this.fire();
+    };
+  },
+  shooterBoss(x, y, radius = 85 + Math.ceil(Math.random() * 50)) {
+    //boss spawns on skyscraper level
+    mobs.spawn(x, y, 3, radius, "rgb(255,70,180)");
+    let me = mob[mob.length - 1];
+    me.vertices = Matter.Vertices.rotate(me.vertices, Math.PI, me.position); //make the pointy side of triangle the front
+    me.memory = 240;
+    me.fireFreq = 0.02;
+    me.noseLength = 0;
+    me.fireAngle = 0;
+    me.accelMag = 0.005;
+    me.frictionAir = 0.1;
+    me.lookTorque = 0.000005 * (Math.random() > 0.5 ? -1 : 1);
+    me.fireDir = {
+      x: 0,
+      y: 0
+    };
+    Matter.Body.setDensity(me, 0.001 + 0.0005 * Math.sqrt(game.levelsCleared)); //extra dense //normal is 0.001 //makes effective life much larger
+    spawn.shield(me, x, y);
+    me.onDeath = function () {
+      if (Math.random() < 0.2 || mech.fieldMode === 0) powerUps.spawn(this.position.x, this.position.y, "field"); //boss spawns field upgrades
+    };
     me.do = function () {
       this.healthBar();
       this.seePlayerByLookingAt();
@@ -819,7 +849,9 @@ const spawn = {
     Matter.Body.setDensity(me, 0.001 + 0.0005 * Math.sqrt(game.levelsCleared)); //extra dense //normal is 0.001 //makes effective life much larger
     spawn.shield(me, x, y);
     if (Math.random() < Math.min((game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
-
+    me.onDeath = function () {
+      if (Math.random() < 0.2 || mech.fieldMode === 0) powerUps.spawn(this.position.x, this.position.y, "field"); //boss spawns field upgrades
+    };
     me.do = function () {
       this.healthBar();
       this.seePlayerCheck();
@@ -862,9 +894,9 @@ const spawn = {
     if (Math.random() < Math.min((game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
 
     me.onDeath = function () {
+      if (Math.random() < 0.2 || mech.fieldMode === 0) powerUps.spawn(this.position.x, this.position.y, "field"); //boss spawns field upgrades
       this.removeCons(); //remove constraint
     };
-
     me.do = function () {
       this.healthBar();
       this.gravity();
