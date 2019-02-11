@@ -103,7 +103,7 @@ const level = {
     }
   },
   bosses() {
-    game.zoomScale = 1500 //1400
+    game.zoomTransition(1500)
 
     // spawn.setSpawnList();
     // spawn.setSpawnList();
@@ -184,7 +184,8 @@ const level = {
   },
   //empty map for testing mobs
   intro() {
-    game.zoomScale = 1100 //1400
+    game.zoomScale = 1000 //1400 is normal
+    game.zoomTransition(2000, 1)
 
     mech.setPosToSpawn(460, -100); //normal spawn
     level.enter.x = -1000000; //offscreen
@@ -333,9 +334,7 @@ const level = {
   },
 
   rooftops() {
-    // if (game.levelsCleared < level.levels.length) game.startZoomIn();
-    game.zoomScale = 1700 //1400
-
+    game.zoomTransition(1700)
 
     document.body.style.backgroundColor = "#dcdcde";
 
@@ -509,9 +508,7 @@ const level = {
     if (game.levelsCleared > 4) spawn.bomber(2500, -2400, 100);
   },
   skyscrapers() {
-    game.zoomScale = 2200 //1400
-
-    // if (game.levelsCleared < level.levels.length) game.startZoomIn();
+    game.zoomTransition(2200)
 
     mech.setPosToSpawn(-50, -50); //normal spawn
     //mech.setPosToSpawn(1550, -1200); //spawn left high
@@ -662,13 +659,8 @@ const level = {
     spawn.randomBoss(1700, -900, 0.4);
   },
   highrise() {
-    game.zoomScale = 1500 //1400
-
-    // if (game.levelsCleared < level.levels.length) game.startZoomIn();
-
+    game.zoomTransition(1500)
     document.body.style.backgroundColor = "#dcdcde" //"#fafcff";
-
-
     mech.setPosToSpawn(0, -700); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
     level.enter.x = mech.spawnPos.x - 50;
@@ -833,10 +825,7 @@ const level = {
     spawn.randomBoss(-2450, -1100, 0);
   },
   warehouse() {
-    game.zoomScale = 1200 //1400
-
-    // if (game.levelsCleared < level.levels.length) game.startZoomIn();
-
+    game.zoomTransition(1200)
     document.body.style.backgroundColor = "#bbb";
     mech.setPosToSpawn(25, -60); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
@@ -1030,10 +1019,7 @@ const level = {
     // }
   },
   towers() {
-    game.zoomScale = 1300 //1400
-
-    // if (game.levelsCleared < level.levels.length) game.startZoomIn();
-
+    game.zoomTransition(1300)
     if (Math.random() < 0.75) {
       //normal direction start in top left
       mech.setPosToSpawn(1375, -1550); //normal spawn

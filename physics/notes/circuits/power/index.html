@@ -94,7 +94,10 @@
 
 		<h2 class='underlined'>Electrical Power</h2>
 		<p>
-			Watt is the unit of power. The wattage of an electrical appliance gives you an idea of how much electrical energy the appliance converts. An 800 W microwave uses 800 J per second. A 1600 W microwave will heat food much faster because it uses up twice that much energy per second.
+			Circuit elements, like resistors, convert electrical energy into heat. Too much power can overheat sensitive circuit elements, like LEDs.
+		</p>
+		<p>
+			The rate of the heat output is controlled by the voltage multiplied by the current going through the element.
 		</p>
 		<details class='derive'>
 			<summary>derivation of electrical power</summary>
@@ -105,21 +108,19 @@
 			$$P = \frac{{\color{#07c}Vq}}{\Delta t}$$
 			$$P = {\color{#f53}\frac{q}{\Delta t}}V$$
 			$$P = IV$$
-			<p>
-				If we combine P=IV with Ohm's law we can get another power equation.
-			</p>
-			$$P=IV \quad \quad \quad V=IR$$
-			$$P=I(IR)$$
-			$$P=I^2R$$
 		</details>
-
 		<div class='definition'>
-			<h1> $$P = IV$$ $$P = I^2R$$</h1>
+			<h1> $$P = IV$$</h1>
 			\(P\) = power [W, watt, J/s]
 			<br> \(I\) = current [A, amp]
 			<br> \(V\) = voltage [V, volt]
 			<br>\(R\) = resistance [Ω, ohm]
 		</div>
+		<p>
+			Watt is the unit of power. The wattage of an electrical appliance gives you an idea of how much electrical energy the appliance converts. An 800 W microwave uses 800 J per second. A 1600 W microwave will heat food much faster because it converts twice the electrical energy into heat each second.
+		</p>
+
+
 		<div class='example'>
 			<svg viewBox="-125 0 550 193">
 				<path d="M 50 10 h 200
@@ -157,6 +158,20 @@
 		</div>
 
 		<div class='example'>
+			<!-- <details class='derive'>
+				<summary>derivation of more electrical power equations</summary>
+				$$P=IV \quad \quad \quad V=IR$$
+				$$P=I(IR)$$
+				$$P=I^2R$$
+				<br>
+				$$V=IR$$
+				$$I = \frac{V}{R}$$
+				$$P=IV$$
+				$$P=\frac{V}{R}V$$
+				$$P=\frac{V^2}{R}$$
+			</details> -->
+			$$P=I^2R \quad \quad \quad P=\frac{V^2}{R}$$
+			<p>If we combine P=IV with Ohm's law we can get more power equations.</p>
 			<svg viewBox="-30 0 600 300">
 				<path d="M 100 50 h 110
 				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110

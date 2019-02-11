@@ -2,17 +2,16 @@
 /* TODO:  *******************************************
 *****************************************************
 
-fieldMeter
-  repulse uses up field
-    no more cool down on repulse
-  throw uses up field relative to mass and speed
-  holing and activation field inhibit field regen
-    holding very large masses 6+ slowly drains field
-
-
-bugs:
-  set colors for each field type
-  use global composting
+try dropping fpsCap for a second after taking a large amount of damage
+  it probably feels bad, but it might work, some other games have this.
+run fast when shift is down
+  drains fieldMeter
+player has too much momentum?
+  give more player movement control at slow speeds?
+    add more player horizontal force at very slow speeds
+throttle fps for 60HZ+ monitors
+slow time field needs to drain some fieldMeter so it doesn't flicker
+fix game.zoomTransitions to work with the frame per second throttling
 
 
 mutators (as a power up)
@@ -223,55 +222,26 @@ function shuffle(array) {
   return array;
 }
 
+
+
 //main loop ************************************************************
 //**********************************************************************
+
+let fpsInterval, then;
+// startAnimating();
+
+function startAnimating() {
+  fpsInterval = 1000 / game.fpsCap;
+  then = Date.now();
+  cycle();
+}
+
 function cycle() {
-  game.cycle++; //tracks game cycles
-  if (game.clearNow) {
-    game.clearNow = false;
-    game.clearMap();
-    level.start();
-  }
-  game.gravity();
-  Engine.update(engine, game.delta);
-  game.wipe();
-  game.textLog();
-  mech.keyMove();
-  level.checkZones();
-  level.checkQuery();
-  mech.move();
-  mech.look();
-  mech.deathCheck();
-  game.fallChecks();
-  ctx.save();
-  game.camera();
-  if (game.testing) {
-    mech.draw();
-    game.draw.wireFrame();
-    game.draw.cons();
-    game.draw.testing();
-    game.drawCircle();
-    ctx.restore();
-    game.getCoords.out();
-    game.testingOutput();
-  } else {
-    level.drawFillBGs();
-    level.exit.draw();
-    level.enter.draw();
-    game.draw.powerUp();
-    mobs.draw();
-    game.draw.cons();
-    game.draw.body();
-    mech.draw();
-    mech.hold();
-    level.drawFills();
-    game.draw.drawMapPath();
-    mobs.loop();
-    b.draw();
-    b.fire();
-    game.drawCircle();
-    ctx.restore();
-  }
-  game.drawCursor();
   if (!game.paused) requestAnimationFrame(cycle);
+  const now = Date.now();
+  const elapsed = now - then; // calc elapsed time since last loop
+  if (elapsed > fpsInterval) { // if enough time has elapsed, draw the next frame
+    then = now - (elapsed % fpsInterval); // Get ready for next frame by setting then=now.   Also, adjust for fpsInterval not being multiple of 16.67
+    game.loop();
+  }
 }

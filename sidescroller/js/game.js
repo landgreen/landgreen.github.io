@@ -15,11 +15,61 @@ const game = {
   paused: false,
   testing: false, //testing mode: shows wireframe and some variables
   cycle: 0, //total cycles, 60 per second
+  fpsCap: 72, //limits frames per second to 144/2=72+1=73,  on most monitors the fps is capped at 60fps by the hardware
   cyclePaused: 0,
   fallHeight: 3000, //below this y position the player dies
   lastTimeStamp: 0, //tracks time stamps for measuing delta
   delta: 1000 / 60, //speed of game engine //looks like it has to be 16 to match player input
   buttonCD: 0,
+  loop() {
+    game.cycle++; //tracks game cycles
+    if (game.clearNow) {
+      game.clearNow = false;
+      game.clearMap();
+      level.start();
+    }
+    game.gravity();
+    Engine.update(engine, game.delta);
+    game.wipe();
+    game.textLog();
+    mech.keyMove();
+    level.checkZones();
+    level.checkQuery();
+    mech.move();
+    mech.look();
+    mech.deathCheck();
+    game.fallChecks();
+    ctx.save();
+    game.camera();
+    if (game.testing) {
+      mech.draw();
+      game.draw.wireFrame();
+      game.draw.cons();
+      game.draw.testing();
+      game.drawCircle();
+      ctx.restore();
+      game.getCoords.out();
+      game.testingOutput();
+    } else {
+      level.drawFillBGs();
+      level.exit.draw();
+      level.enter.draw();
+      game.draw.powerUp();
+      mobs.draw();
+      game.draw.cons();
+      game.draw.body();
+      mech.draw();
+      mech.hold();
+      level.drawFills();
+      game.draw.drawMapPath();
+      mobs.loop();
+      b.draw();
+      b.fire();
+      game.drawCircle();
+      ctx.restore();
+    }
+    game.drawCursor();
+  },
   drawCursor() {
     const size = 10;
     ctx.beginPath();
@@ -239,15 +289,41 @@ const game = {
     }
   },
   zoom: null,
-  zoomScale: 1400,
-  setZoom() {
-    //use in window resize in index.js
-    this.zoom = canvas.height / game.zoomScale; //sets starting zoom scale
+  zoomScale: 1000,
+  setZoom(zoomScale = game.zoomScale) { //use in window resize in index.js
+    game.zoomScale = zoomScale
+    game.zoom = canvas.height / zoomScale; //sets starting zoom scale
+  },
+  zoomTransition(newZoomScale, step = 2) {
+    const isBigger = (newZoomScale - game.zoomScale > 0) ? true : false;
+    requestAnimationFrame(zLoop);
+    const currentLevel = level.onLevel
+
+    function zLoop() {
+      if (currentLevel != level.onLevel) return //stop the zoom if player goes to a new level
+
+      if (isBigger) {
+        game.zoomScale += step
+        if (game.zoomScale >= newZoomScale) {
+          game.setZoom(newZoomScale);
+          return
+        }
+      } else {
+        game.zoomScale -= step
+        if (game.zoomScale <= newZoomScale) {
+          game.setZoom(newZoomScale);
+          return
+        }
+      }
+
+      game.setZoom();
+      requestAnimationFrame(zLoop);
+    }
   },
   camera() {
     ctx.translate(canvas.width2, canvas.height2); //center
     ctx.scale(this.zoom, this.zoom); //zoom in once centered
-    ctx.translate(-canvas.width2 + mech.transX, -canvas.height2 + mech.transY); //uncenter, translate
+    ctx.translate(-canvas.width2 + mech.transX, -canvas.height2 + mech.transY); //translate
     //calculate in game mouse position by undoing the zoom and translations
     this.mouseInGame.x = (this.mouse.x - canvas.width2) / this.zoom + canvas.width2 - mech.transX;
     this.mouseInGame.y = (this.mouse.y - canvas.height2) / this.zoom + canvas.height2 - mech.transY;
@@ -256,7 +332,6 @@ const game = {
   startZoomIn(time = 180) {
     game.zoom = 0;
     let count = 0;
-
     requestAnimationFrame(zLoop);
 
     function zLoop() {
@@ -369,6 +444,9 @@ const game = {
     }
     game.reset();
     game.firstRun = false;
+
+    fpsInterval = 1000 / game.fpsCap;
+    then = Date.now();
     requestAnimationFrame(cycle); //starts game loop
     game.lastLogTime = game.cycle + 360;
   },
