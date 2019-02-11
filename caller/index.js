@@ -398,6 +398,7 @@ let p = new Vue({
 
         const n = this.layout[PICK].name; //focus student's name
         const sayThis = [
+          `${n} is trapped in the Quantum Realm`,
           `${n} is burnin' through the sky... yeah... Two hundred degrees, that's why they call ${n} Mister Fahrenheit`,
           `SWEET, ${n}, bum bum bum.  Good times never felt so good!`,
           `${n} has ascended to New West Plus.`,
