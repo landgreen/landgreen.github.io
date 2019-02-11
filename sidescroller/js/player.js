@@ -377,7 +377,6 @@ const mech = {
   throwChargeRate: 0,
   throwChargeMax: 0,
   fieldFireCD: 0,
-  fieldPushCD: 0,
   fieldDamage: 0,
   grabRange: 0,
   fieldArc: 0,
@@ -393,7 +392,6 @@ const mech = {
     this.throwChargeRate = 2;
     this.throwChargeMax = 50;
     this.fieldFireCD = 15;
-    this.fieldPushCD = 40;
     this.fieldDamage = 0; // a value of 1.0 kills a small mob in 2-3 hits on level 1
     this.grabRange = 175;
     this.fieldArc = 0.2;
@@ -709,8 +707,6 @@ const mech = {
       mech.fieldMode = 1;
       game.makeTextLog("<h2>Time Dilation Field</h2><br><strong>active ability:</strong> hold left and right mouse to slow time<br><strong>passive bonus:</strong> +field regeneration", 1000); //<br><strong>passive bonus:</strong> can phase through blocks
       mech.setHoldDefaults();
-      //passive reduce gravity
-      // mech.gravity = 0.0014;
       mech.fieldRegen = 0.006;
       mech.hold = function () {
         if (mech.isHolding) {
@@ -906,12 +902,12 @@ const mech = {
     },
     () => {
       mech.fieldMode = 4;
-      game.makeTextLog("<h2>Negative Mass Field</h2><br><strong>active ability:</strong> hold left and right mouse to push things away<br><strong>passive bonuses:</strong> +field size, +hold larger blocks", 1000); //<br><strong>passive bonus:</strong> can phase through blocks
+      game.makeTextLog("<h2>Negative Mass Field</h2><br><strong>active ability:</strong> hold left and right mouse to push things away<br><strong>passive bonuses:</strong> +field size, -player gravity", 1000); //<br><strong>passive bonus:</strong> can phase through blocks
       mech.setHoldDefaults();
-      mech.fieldPushCD = 20;
       mech.fieldArc = 1;
       mech.calculateFieldThreshold();
       mech.holdingMassScale = 0.05;
+      mech.gravity = 0.0015; //passive reduce gravity  from default 0.0019
 
       mech.hold = function () {
         if (mech.isHolding) {
