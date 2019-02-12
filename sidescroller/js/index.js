@@ -4,15 +4,22 @@
 
 try dropping fpsCap for a second after taking a large amount of damage
   it probably feels bad, but it might work, some other games have this.
-run fast when shift is down
-  drains fieldMeter
-player has too much momentum?
-  give more player movement control at slow speeds?
-    add more player horizontal force at very slow speeds
-throttle fps for 60HZ+ monitors
-slow time field needs to drain some fieldMeter so it doesn't flicker
-fix game.zoomTransitions to work with the frame per second throttling
 
+run fast when shift is pressed
+  drains fieldMeter
+
+give mobs more animal-like behaviors
+  like rainworld
+  give mobs something to do when they don't see player
+    explore map
+    eat power ups
+      drop power up (if killed after eating one)
+  mobs some times aren't aggressive
+    when low on life or after taking a large hit
+  mobs can fight each other
+    this might be hard to code
+  when not near other mobs they try to group up.
+    
 
 mutators (as a power up)
   infinite ammo
@@ -85,22 +92,11 @@ add bullet on damage effects
 		remove standing on player actions
 			replace with check if player feet are in an area.
 
-
-add power ups for the field generator  (use L and R mouse at same time for active abilities)
-  slow time aura when field is active.
-    passive: player can jump higher and move faster
-
-  add ability to fire blocks harder, with no charge up
-    passive: field damages mobs
-
-  add ability to eat blocks to heal
-    passive: allow player to hold and fire heavier blocks with less weight penalty
-
-  push everything away from player
-    passive: increase field radius, radius pulses in and out, increase arc to full
-
 unused ideas
 passive: walk through blocks  (difficult to implement)
+
+
+
 
 
 

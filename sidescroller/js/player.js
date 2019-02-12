@@ -226,7 +226,7 @@ const mech = {
         //apply a fraction of the jump force to the body the player is jumping off of
         Matter.Body.applyForce(mech.standingOn, mech.pos, {
           x: 0,
-          y: this.jumpForce * 0.2 * Math.min(mech.standingOn.mass, 5)
+          y: this.jumpForce * 0.12 * Math.min(mech.standingOn.mass, 5)
         });
 
         player.force.y = -this.jumpForce; //player jump force
@@ -237,20 +237,29 @@ const mech = {
       }
 
       //horizontal move on ground
-      const stoppingFriction = (this.crouch) ? 0.75 : 0.9;
-
-      //come to a stop
-      Matter.Body.setVelocity(player, {
-        x: player.velocity.x * stoppingFriction,
-        y: player.velocity.y * stoppingFriction
-      });
-
       //apply a force to move
       if (keys[65] || keys[37]) { //left / a
         player.force.x -= this.Fx
+        if (player.velocity.x > -2) player.force.x -= this.Fx * 0.5
       } else if (keys[68] || keys[39]) { //right / d
         player.force.x += this.Fx
+        if (player.velocity.x < 2) player.force.x += this.Fx * 0.5
+      } else {
+        const stoppingFriction = 0.92;
+        Matter.Body.setVelocity(player, {
+          x: player.velocity.x * stoppingFriction,
+          y: player.velocity.y * stoppingFriction
+        });
       }
+      //come to a stop if fast or if no move key is pressed
+      if (player.speed > 4) {
+        const stoppingFriction = (this.crouch) ? 0.7 : 0.89;
+        Matter.Body.setVelocity(player, {
+          x: player.velocity.x * stoppingFriction,
+          y: player.velocity.y * stoppingFriction
+        });
+      }
+
     } else { // in air **********************************
       //check for short jumps
       if (
@@ -357,13 +366,13 @@ const mech = {
     Matter.World.remove(engine.world, powerUp[i]);
     powerUp.splice(i, 1);
   },
+  // *********************************************
+  // **************** holding ********************
+  // *********************************************
   closest: {
     dist: 1000,
     index: 0
   },
-  // *********************************************
-  // **************** holding ********************
-  // *********************************************
   isHolding: false,
   throwCharge: 0,
   fireCDcycle: 0,
@@ -714,8 +723,8 @@ const mech = {
           mech.holding();
           mech.throw();
         } else if (game.mouseDown && (keys[32] || game.mouseDownRight) && mech.fieldCDcycle < game.cycle) { //both mouse keys down
-          if (mech.fieldMeter > 0.004) {
-            mech.fieldMeter -= 0.004;
+          if (mech.fieldMeter > mech.fieldRegen * 1.15) {
+            mech.fieldMeter -= mech.fieldRegen * 1.15;
             const range = 900;
             //draw slow field
             ctx.beginPath();
