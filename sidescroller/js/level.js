@@ -34,6 +34,8 @@ const level = {
   //******************************************************************************************************************
   //******************************************************************************************************************
   testingMap() {
+    game.zoomScale = 1400 //1400 is normal
+    game.zoomTransition(1400)
     spawn.setSpawnList();
     game.levelsCleared = 7; //for testing to simulate all possible mobs spawns
     for (let i = 0; i < 7; i++) {
@@ -95,12 +97,12 @@ const level = {
 
     // spawn.group(-600, -550);
     // for (let i = 0; i < 1; ++i) {
-    //   spawn.chaser(800, -1150);
+    spawn.chaser(800, -1150);
     // }
     // spawn.nodeBoss(900, -1070, "shooter", 9);
-    for (let i = 0; i < 20; i++) {
-      spawn.randomBoss(-100, -1470);
-    }
+    // for (let i = 0; i < 20; i++) {
+    //   spawn.randomBoss(-100, -1470);
+    // }
   },
   bosses() {
     game.zoomTransition(1500)

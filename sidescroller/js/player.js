@@ -346,13 +346,14 @@ const mech = {
     }
     this.displayHealth();
 
-    // reduce fpsCap and display a full screen red color
-    game.fpsCap = 45 - Math.min(30, 200 * dmg)
-    game.fpsInterval = 1000 / game.fpsCap;
+    // freeze game and display a full screen red color
+    if (dmg > 0.1) {
+      game.fpsCap = 4 //40 - Math.min(25, 100 * dmg)
+      game.fpsInterval = 1000 / game.fpsCap;
+    }
     document.getElementById("dmg").style.transition = "opacity 0s";
-    document.getElementById("dmg").style.opacity = 0.1 + Math.min(0.7, dmg * 4);
-    mech.defaultFPSCycle = game.cycle + 10
-
+    document.getElementById("dmg").style.opacity = 0.1 + Math.min(0.6, dmg * 4);
+    mech.defaultFPSCycle = game.cycle
     const normalFPS = function () {
       if (mech.defaultFPSCycle < game.cycle) { //back to default values
         game.fpsCap = 72
