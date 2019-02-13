@@ -1,26 +1,6 @@
 // game Object ********************************************************
 //*********************************************************************
 const game = {
-  mouse: {
-    x: canvas.width / 2,
-    y: canvas.height / 2
-  },
-  mouseInGame: {
-    x: 0,
-    y: 0
-  },
-  levelsCleared: 0,
-  g: 0.001,
-  dmgScale: 1,
-  paused: false,
-  testing: false, //testing mode: shows wireframe and some variables
-  cycle: 0, //total cycles, 60 per second
-  fpsCap: 72, //limits frames per second to 144/2=72+1=73,  on most monitors the fps is capped at 60fps by the hardware
-  cyclePaused: 0,
-  fallHeight: 3000, //below this y position the player dies
-  lastTimeStamp: 0, //tracks time stamps for measuing delta
-  delta: 1000 / 60, //speed of game engine //looks like it has to be 16 to match player input
-  buttonCD: 0,
   loop() {
     game.cycle++; //tracks game cycles
     if (game.clearNow) {
@@ -37,7 +17,6 @@ const game = {
     level.checkQuery();
     mech.move();
     mech.look();
-    mech.deathCheck();
     game.fallChecks();
     ctx.save();
     game.camera();
@@ -70,6 +49,40 @@ const game = {
     }
     game.drawCursor();
   },
+  mouse: {
+    x: canvas.width / 2,
+    y: canvas.height / 2
+  },
+  mouseInGame: {
+    x: 0,
+    y: 0
+  },
+  levelsCleared: 0,
+  g: 0.001,
+  dmgScale: 1,
+  paused: false,
+  testing: false, //testing mode: shows wireframe and some variables
+  cycle: 0, //total cycles, 60 per second
+  fpsCap: 72, //limits frames per second to 144/2=72+1=73,  on most monitors the fps is capped at 60fps by the hardware
+  cyclePaused: 0,
+  fallHeight: 3000, //below this y position the player dies
+  lastTimeStamp: 0, //tracks time stamps for measuing delta
+  delta: 1000 / 60, //speed of game engine //looks like it has to be 16 to match player input
+  buttonCD: 0,
+  // dropFPS(cap = 40, time = 15) {
+  //   game.fpsCap = cap
+  //   game.fpsInterval = 1000 / game.fpsCap;
+  //   game.defaultFPSCycle = game.cycle + time
+  //   const normalFPS = function () {
+  //     if (game.defaultFPSCycle < game.cycle) {
+  //       game.fpsCap = 72
+  //       game.fpsInterval = 1000 / game.fpsCap;
+  //     } else {
+  //       requestAnimationFrame(normalFPS);
+  //     }
+  //   };
+  //   requestAnimationFrame(normalFPS);
+  // },
   drawCursor() {
     const size = 10;
     ctx.beginPath();
@@ -412,6 +425,8 @@ const game = {
     document.getElementById("health-bg").style.display = "none";
     document.body.style.cursor = "auto";
   },
+  fpsInterval: 0, //set in startGame
+  then: null,
   startGame() {
     document.getElementById("controls").style.display = "none";
     document.getElementById("splash").onclick = null; //removes the onclick effect so the function only runs once
@@ -445,8 +460,10 @@ const game = {
     game.reset();
     game.firstRun = false;
 
-    fpsInterval = 1000 / game.fpsCap;
-    then = Date.now();
+
+    //setup FPS cap
+    game.fpsInterval = 1000 / game.fpsCap;
+    game.then = Date.now();
     requestAnimationFrame(cycle); //starts game loop
     game.lastLogTime = game.cycle + 360;
   },
@@ -522,6 +539,9 @@ const game = {
     }
   },
   fallChecks() {
+    // if 4000px deep
+    if (mech.pos.y > game.fallHeight) mech.death();
+
     if (!(game.cycle % 420)) {
       remove = function (who) {
         let i = who.length;

@@ -333,8 +333,11 @@ const mech = {
     // document.getElementById("health").setAttribute("width", 225 * this.health);
     this.displayHealth();
   },
+  defaultFPSCycle: 0, //tracks when to return to normal fps
   damage(dmg) {
-    if (dmg * player.mass > 0.35) this.drop();
+    if (dmg * player.mass > 0.35) {
+      this.drop(); //drop block if holding
+    }
     this.health -= dmg;
     if (this.health < 0) {
       this.health = 0;
@@ -342,19 +345,26 @@ const mech = {
       return;
     }
     this.displayHealth();
+
+    // reduce fpsCap and display a full screen red color
+    game.fpsCap = 45 - Math.min(30, 200 * dmg)
+    game.fpsInterval = 1000 / game.fpsCap;
     document.getElementById("dmg").style.transition = "opacity 0s";
-    document.getElementById("dmg").style.opacity = 0.1 + dmg * 5;
-    setTimeout(function () {
-      document.getElementById("dmg").style.transition = "opacity 1s";
-      document.getElementById("dmg").style.opacity = "0";
-    }, 1);
-    // document.getElementById("health").setAttribute("width", 225 * this.health);
-  },
-  deathCheck() {
-    if (this.pos.y > game.fallHeight) {
-      // if player is 4000px deep
-      this.death();
-    }
+    document.getElementById("dmg").style.opacity = 0.1 + Math.min(0.7, dmg * 4);
+    mech.defaultFPSCycle = game.cycle + 10
+
+    const normalFPS = function () {
+      if (mech.defaultFPSCycle < game.cycle) { //back to default values
+        game.fpsCap = 72
+        game.fpsInterval = 1000 / game.fpsCap;
+        document.getElementById("dmg").style.transition = "opacity 1s";
+        document.getElementById("dmg").style.opacity = "0";
+      } else {
+        requestAnimationFrame(normalFPS);
+      }
+    };
+    requestAnimationFrame(normalFPS);
+
   },
   damageImmune: 0,
   hitMob(i, dmg) {
@@ -395,7 +405,7 @@ const mech = {
   },
   setHoldDefaults() {
     this.fieldMeter = 1;
-    this.fieldRegen = 0.002;
+    this.fieldRegen = 0.001;
     this.fieldCDcycle = 0;
     this.holdingMassScale = 0.5;
     this.throwChargeRate = 2;
@@ -581,7 +591,7 @@ const mech = {
 
       // float towards player    if looking at and in range  or  if very close to player
       if (dist2 < grabPowerUpRange2 && this.lookingAt(powerUp[i]) || dist2 < 14000) {
-        this.fieldMeter -= this.fieldRegen;
+        this.fieldMeter -= this.fieldRegen * 0.5;
         powerUp[i].force.x += 7 * (dxP / dist2) * powerUp[i].mass;
         powerUp[i].force.y += 7 * (dyP / dist2) * powerUp[i].mass - powerUp[i].mass * game.g; //negate gravity
         //extra friction
@@ -607,7 +617,7 @@ const mech = {
     // push all mobs in range
     for (let i = 0, len = mob.length; i < len; ++i) {
       if (this.lookingAt(mob[i]) && Matter.Vector.magnitude(Matter.Vector.sub(mob[i].position, this.pos)) < this.grabRange && Matter.Query.ray(map, mob[i].position, this.pos).length === 0) {
-        const fieldBlockCost = Math.max(0.05, mob[i].mass * 0.03)
+        const fieldBlockCost = Math.max(0.02, mob[i].mass * 0.02)
         if (this.fieldMeter > fieldBlockCost) {
           this.fieldMeter -= fieldBlockCost;
           if (this.fieldDamage) mob[i].damage(b.dmgScale * this.fieldDamage);
@@ -819,7 +829,7 @@ const mech = {
       mech.fieldMode = 3;
       game.makeTextLog("<h2>Mass Recycler</h2><br><strong>active ability:</strong> when holding a block, click left mouse to heal<br><strong>negative effect:</strong> -field regeneration", 1000);
       mech.setHoldDefaults();
-      mech.fieldRegen = 0.001;
+      mech.fieldRegen = 0.0005;
       mech.hold = function () {
         if (mech.isHolding) {
           mech.drawHold(mech.holdingTarget);

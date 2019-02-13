@@ -2,9 +2,6 @@
 /* TODO:  *******************************************
 *****************************************************
 
-try dropping fpsCap for a second after taking a large amount of damage
-  it probably feels bad, but it might work, some other games have this.
-
 run fast when shift is pressed
   drains fieldMeter
 
@@ -49,7 +46,7 @@ Active use abilities (can get ideas from spacetime)
 game mechanics
   mechanics that support the physics engine
     add rope/constraint
-  store/spawn bodies in player (like starfall)
+  store/spawn bodies in player (like the game Starfall)
   get ideas from game: limbo / inside
   environmental hazards
     laser
@@ -222,22 +219,12 @@ function shuffle(array) {
 
 //main loop ************************************************************
 //**********************************************************************
-
-let fpsInterval, then;
-// startAnimating();
-
-function startAnimating() {
-  fpsInterval = 1000 / game.fpsCap;
-  then = Date.now();
-  cycle();
-}
-
 function cycle() {
   if (!game.paused) requestAnimationFrame(cycle);
   const now = Date.now();
-  const elapsed = now - then; // calc elapsed time since last loop
-  if (elapsed > fpsInterval) { // if enough time has elapsed, draw the next frame
-    then = now - (elapsed % fpsInterval); // Get ready for next frame by setting then=now.   Also, adjust for fpsInterval not being multiple of 16.67
+  const elapsed = now - game.then; // calc elapsed time since last loop
+  if (elapsed > game.fpsInterval) { // if enough time has elapsed, draw the next frame
+    game.then = now - (elapsed % game.fpsInterval); // Get ready for next frame by setting then=now.   Also, adjust for fpsInterval not being multiple of 16.67
     game.loop();
   }
 }
