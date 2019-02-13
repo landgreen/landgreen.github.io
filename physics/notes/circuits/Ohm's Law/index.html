@@ -41,11 +41,12 @@
 	</header>
 	<article>
 		<!-- <h2 class='underlined'>Charge Speed and Direction</h2> -->
-		<p><a href="..\..\electromagnetism\charge\index.html#conductivity">Conductors</a> have free electrons that allow the flow of electric charge. Electric current can be thought of as the average motion of a huge number of charges through a conductor. </p>
+
+		<p>Metals conduct electricity because they have free electrons that carry electric electric charge. Electric current is the average motion of a huge number of charges through a <a href="..\..\electromagnetism\charge\index.html#conductivity">conductor</a>. </p>
 
 		<p>The direction of current is defined as the direction of positive charge flow. Since electrons have a negative charge they always move in the opposite direction of the current. </p>
 		<canvas id='charge7' width="600" height='150' onclick="charges7(this)"> </canvas>
-		<p>As the charges travel they don't just move in a straight line. They drift through the material in a random walk as they bounce off other charges. Statistically more charge will move forward than backwards.</p>
+		<p>As the charges travel through metal, they don't just move in a straight line. They drift through the conductor in a random walk bouncing off other charges.</p>
 		<canvas id='charge8' width="600" height='150' onclick="charges8(this)"> </canvas>
 		<p>A small imbalance in net charge produces an electric field. The electric field points in the same direction as the current.</p>
 		<canvas id='charge9' width="600" height='150' onclick="charges9(this)"> </canvas>
@@ -98,35 +99,36 @@
 		<h2 class='underlined' id="current">Electric Current</h2>
 		<p>Current measures the flow of charge over a period of time. Current is not a substance. Current is a rate, like dollars per hour is a rate.</p>
 		<div class='definition'>
-			<h1>$$I = \frac{q}{\Delta t}$$</h1> \(I\) = electric current [A, amps, Amperes]
+			<h1>$$I = \frac{q}{\Delta t}$$</h1> \(I\) = electric current [A, amps, amperes, C/s]
 			<br>\(q\) = charge that passes a point on a wire [C, coulombs]
 			<br>\(\Delta t\) = a period of time [s]
 		</div>
 		<p>It can be helpful, and accurate, to think of electric current like water current. Free electrons flow through metals like H₂O flows through pipes.</p>
+		<svg class="center" width="80" height="382" style="float: right;">
+			<g>
+				<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 25,45 c 0,-40 50,-40 50,0 L 75,100 l -55,0 l 0,-8 l 5,0 z" />
+				<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 35,380 l 5,0 l 0,-260 l 2,0 l 0,-10 l -2,0 l 0,-18 l -5,-5 l 0,-5 l 10,0 l 0,-5 l -10,-7 l 0,-5 l -5,0 l 0,25 l 5,5 l 0,15 l -2,0 l 0,10 l 2,0 l 0,260 z" />
+				<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 60,360 l 5,0 l 0,-240 l 2,0 l 0,-10 l -2,0 l 0,-15 l 5,-5 l 0,-15 l -5,0 l 0,-10 l -23,0 l 0,5 l 18,12 l 5,0 l 0,5 l -5,5 l 0,18 l -2,0 l 0,10 l 2,0 l 0,240 z" />
+				<path style="fill: none; stroke: #000000; stroke-width: 1;" d="M 32,65 c 7,-8 13,-8 20,0" />
+				<path style="fill: none; stroke: #000000; stroke-width: 1;" d="M 45,65 c 2,5 10,5 12,0" />
+			</g>
+		</svg>
+
 		<div class='example'>
-			<svg class="center" width="100" height="400">
-				<g>
-					<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 25,45 c 0,-40 50,-40 50,0 L 75,100 l -55,0 l 0,-8 l 5,0 z" />
-					<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 35,380 l 5,0 l 0,-260 l 2,0 l 0,-10 l -2,0 l 0,-18 l -5,-5 l 0,-5 l 10,0 l 0,-5 l -10,-7 l 0,-5 l -5,0 l 0,25 l 5,5 l 0,15 l -2,0 l 0,10 l 2,0 l 0,260 z" />
-					<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 60,360 l 5,0 l 0,-240 l 2,0 l 0,-10 l -2,0 l 0,-15 l 5,-5 l 0,-15 l -5,0 l 0,-10 l -23,0 l 0,5 l 18,12 l 5,0 l 0,5 l -5,5 l 0,18 l -2,0 l 0,10 l 2,0 l 0,240 z" />
-					<path style="fill: none; stroke: #000000; stroke-width: 1;" d="M 32,65 c 7,-8 13,-8 20,0" />
-					<path style="fill: none; stroke: #000000; stroke-width: 1;" d="M 45,65 c 2,5 10,5 12,0" />
-				</g>
-			</svg>
-			<strong>Example:</strong> Every minute 1.2 coulombs of charge passes through a typical <a href="https://en.wikipedia.org/wiki/Light-emitting_diode">LED</a>.
-			<br>What is the current in the LED?
+			<strong>Example:</strong> Every minute 1.2 coulombs of charge passes through a typical <a href="https://en.wikipedia.org/wiki/Light-emitting_diode">LED</a>. What is the current in the LED?
 			<details>
 				<summary>solution</summary>
 				$$I = \frac{q}{\Delta t}$$
 				$$I = \frac{1.2\, \mathrm{C}}{60\, \mathrm{s}}$$
 				$$ I= 0.02 \, \mathrm{\tfrac{C}{s}}$$
+				$$ I= 0.02 \, \mathrm{A}$$
 			</details>
 		</div>
 
 		<div class='example'>
 			<strong>Example:</strong> Two wires of cross-sectional area 1.6 mm² connect the terminals of a battery to the circuitry in a clock. After 0.04 seconds, 5.0 x 10¹⁴ electrons move to the right through the cross section. What is the magnitude and direction of the current?
 			<details>
-				<summary>hint</summary>
+				<summary>strategy</summary>
 				<p>Build a conversion fraction with the charge of an electron divided by one electron.</p>
 			</details>
 			<details>
