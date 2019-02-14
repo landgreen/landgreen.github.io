@@ -159,21 +159,51 @@
 			Voltage is a measure of the difference in <a href="..\..\electromagnetism\potential\index.html#potential">electrical potential</a> between two points. Voltage is defined so that negatively charged objects are pulled towards higher voltages, while positively charged objects are pulled towards lower voltages.
 		</p>
 		<p>
-			Common sources of differences in potential (voltage) are the two terminals in a wall socket and the positive and negative terminals on a <a href='https://en.wikipedia.org/wiki/Battery_(electricity)'>battery</a>.
+			The two terminals in a wall socket are sources of voltage. The positive and negative terminals on a <a href='https://en.wikipedia.org/wiki/Battery_(electricity)'>battery</a> also provide voltage.
 		</p>
-		<div class="hide-on-mobile">
-			<p>In these simulations I added a "battery" that pushes the electrons down.
-				<br>Areas with more negative charge have negative potential, shown as
-				<span style="color:#05d;">blue</span>.
-				<br>Areas with more positive charge have positive potential, shown as
-				<span style="color:#d50;">red</span>.</p>
+		<p>
+			In the water analogy, electric potential is similar to the concept of water pressure. A water gun with high pressure will fire very far. An electric circuit with high potential will push the charges through the circuit with more force.
+		</p>
+		<div class="hide-on-mobile example-small">
+			<p>
+				These simulations model a "circuit" with a "battery". The battery pushes the negative charges down, which produces a difference in electric potential.
+			</p>
 			<div class='center'>
 				<canvas id='charge10' height='400' width='270' onclick="charges10(this)"> </canvas>
 				<canvas id='charge12' height='400' width='270' onclick="charges12(this)"> </canvas>
 			</div>
 			<p>
-				The simulation on the right is a <strong>circuit</strong>. A <strong>circuit</strong> is a looping path that guides the electrons back to the start, like a race track.
+				Areas with more negative charge have negative potential, in <span style="color:#05d;">blue</span>.
+				<br>Areas with more positive charge have positive potential, in <span style="color:#d50;">red</span>.
 			</p>
+			<div class='example-small'>
+				<strong>Question:</strong> Why does only the right simulation produce a flow of charges.
+				<details>
+					<summary>answer</summary>
+					<p>
+						When the circuit isn't connected electric charge builds up at each end point. Connecting the ends to form a loop guides the charges back to the start to complete another cycle.
+					</p>
+				</details>
+			</div>
+			<div class='example-small'>
+				<strong>Question:</strong> Let each sim run until they settle on a voltage. Record that voltage.
+				<details>
+					<summary>answer</summary>
+					<p>
+						The <strong>left</strong> simulation has a voltage around <strong>7.2 V</strong>.
+						<br>The <strong>right</strong> simulation has a voltage around <strong>4.6 V</strong>.
+					</p>
+					<br>
+					<strong>Follow Up Question:</strong> Why is the voltage lower for the circuit on the right?
+					<details>
+						<summary>answer</summary>
+						<p>
+							Connecting the ends of the circuit allows the build up of potential to equalize.
+						</p>
+					</details>
+
+				</details>
+			</div>
 		</div>
 
 		<h2 class='underlined'>AC⚡DC Circuits</h2>
@@ -244,6 +274,55 @@
 			Check <a href="https://en.wikipedia.org/wiki/Electronic_symbol">here</a> to see what the different circuit diagram symbols mean.
 			<br>(we will use mostly resistors or DC voltage sources)
 		</p>
+
+		<div class='example'>
+			<strong>Question:</strong> Predict what happens to the speed of the electrons after adding more resistors?
+			<details>
+				<summary>answer</summary>
+				<p>Adding more resistors slows the electrons down.</p>
+				<svg viewBox="-75 0 550 170">
+					<path d="M 50 68 v-63 h 265
+							v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
+							h -265
+							v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
+					<path d="M 50 68 v-63 h 265
+							v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
+							h -265  v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants" />
+					<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
+					<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
+				</svg>
+				<svg viewBox="-75 -15 550 180">
+					<path d="M 50 68 v-63
+							h 92  l10 15 l10 -30 l10 30 l10 -30 l10 30 l10 -30 l10 30 l10 -15 h92.5
+							v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
+							h -92  l-10 15 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -15 h -92.5
+							v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
+					<path d="M 50 68 v-63
+							h 92  l10 15 l10 -30 l10 30 l10 -30 l10 30 l10 -30 l10 30 l10 -15 h92.5
+							v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
+							h -92  l-10 15 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -15 h -92.5
+							v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants-slow" />
+					<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
+					<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
+				</svg>
+			</details>
+			<br>
+			<strong>Question:</strong> What would happen if we removed all the resistors?
+			<details>
+				<summary>answer</summary>
+				<p>Removing most of the resistance in a circuit leads to a <strong>short circuit</strong>. This causes the electrons to speed up producing dangerously large amounts of heat.</p>
+				<svg viewBox="-75 0 550 170">
+					<path d="M 50 68 v-63 h 265
+									v 140 h-265
+									v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
+					<path d="M 50 68 v-63 h 265
+									v 140 h-265 v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants-fast" />
+					<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
+					<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
+				</svg>
+			</details>
+		</div>
+
 		<div class='example'>
 			<a href="https://en.wikipedia.org/wiki/Electric_battery">
 				<svg viewBox="0 0 300 100">
@@ -261,53 +340,7 @@
 				<p>Wall sockets are sources of AC voltage.</p>
 			</details>
 		</div>
-		<div class='example'>
-			<strong>Question:</strong> Predict what happens to the speed of the electrons after adding more resistors?
-			<details>
-				<summary>answer</summary>
-				<p>Adding more resistors slows the electrons down.</p>
-				<svg viewBox="-75 0 550 170">
-					<path d="M 50 68 v-63 h 265
-						v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-						h -265
-						v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
-					<path d="M 50 68 v-63 h 265
-						v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-						h -265  v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants" />
-					<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
-					<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
-				</svg>
-				<svg viewBox="-75 -15 550 180">
-					<path d="M 50 68 v-63
-						h 92  l10 15 l10 -30 l10 30 l10 -30 l10 30 l10 -30 l10 30 l10 -15 h92.5
-						v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-						h -92  l-10 15 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -15 h -92.5
-						v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
-					<path d="M 50 68 v-63
-						h 92  l10 15 l10 -30 l10 30 l10 -30 l10 30 l10 -30 l10 30 l10 -15 h92.5
-						v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-						h -92  l-10 15 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -15 h -92.5
-						v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants-slow" />
-					<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
-					<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
-				</svg>
-			</details>
-			<br>
-			<strong>Question:</strong> What would happen if we removed all the resistors?
-			<details>
-				<summary>answer</summary>
-				<p>Removing most of the resistance in a circuit leads to a <strong>short circuit</strong>. This causes the electrons to speed up producing dangerously large amounts of heat.</p>
-				<svg viewBox="-75 0 550 170">
-					<path d="M 50 68 v-63 h 265
-								v 140 h-265
-								v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
-					<path d="M 50 68 v-63 h 265
-								v 140 h-265 v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants-fast" />
-					<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
-					<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
-				</svg>
-			</details>
-		</div>
+
 
 		<h2 class='underlined'>Ohm's Law</h2>
 		<p>
