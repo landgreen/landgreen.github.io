@@ -223,6 +223,13 @@ th {
   margin: 3em 0em 3em 0em;
 }
 
+.details {
+  margin: 0;
+  padding: 1em;
+  background-color: #eee;
+  border-radius: 15px;
+}
+
 .katex {
   font-size: 1.5em;
 }
