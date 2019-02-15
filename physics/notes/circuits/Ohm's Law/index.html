@@ -104,7 +104,7 @@
 			<br>\(\Delta t\) = a period of time [s]
 		</div>
 		<p>It can be helpful, and accurate, to think of electric current like water current. Free electrons flow through metals like H₂O flows through pipes.</p>
-		<svg class="center" width="80" height="382" style="float: right;">
+		<svg class="center" width="80" height="392" style="float: right;">
 			<g>
 				<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 25,45 c 0,-40 50,-40 50,0 L 75,100 l -55,0 l 0,-8 l 5,0 z" />
 				<path style="fill: #ffffff; stroke: #000000; stroke-width: 1;" d="M 35,380 l 5,0 l 0,-260 l 2,0 l 0,-10 l -2,0 l 0,-18 l -5,-5 l 0,-5 l 10,0 l 0,-5 l -10,-7 l 0,-5 l -5,0 l 0,25 l 5,5 l 0,15 l -2,0 l 0,10 l 2,0 l 0,260 z" />
@@ -186,9 +186,9 @@
 				</details>
 			</div>
 			<div class='example-small'>
-				<strong>Question:</strong> Let each sim run until they settle on a voltage. Record that voltage.
+				<strong>Measure:</strong> Let each sim run until they settle on a voltage. Record that voltage.
 				<details>
-					<summary>answer</summary>
+					<summary>results</summary>
 					<p>
 						The <strong>left</strong> simulation has a voltage around <strong>7.2 V</strong>.
 						<br>The <strong>right</strong> simulation has a voltage around <strong>4.6 V</strong>.
@@ -198,19 +198,17 @@
 					<details>
 						<summary>answer</summary>
 						<p>
-							Connecting the ends of the circuit allows the build up of potential to equalize.
+							Connecting the ends of the circuit gives the charges a conductive path. This path allows some of the built up potential to equalize.
 						</p>
 					</details>
 
 				</details>
 			</div>
 		</div>
-
+		<br>
 		<h2 class='underlined'>AC⚡DC Circuits</h2>
 		<p>
-			In <strong>DC (direct current)</strong> circuits, current is defined to flow out of the longer, positive end of the battery. The direction of current is defined to be the opposite of the flow of electrons. Below is an animated <a href="https://en.wikipedia.org/wiki/Electronic_symbol">circuit diagram</a> of a battery providing DC voltage and a resistor dropping the voltage:
-		</p>
-
+			In <strong>DC (direct current)</strong> circuits, electrons always flow in the same direction around the circuit.</p>
 		<style type="text/css">
 			@keyframes marching_ants {
 				0% {
@@ -242,7 +240,7 @@
 				stroke-dasharray: 0.1 19.9;
 			}
 		</style>
-		<svg viewBox="-75 0 550 170">
+		<svg viewBox="-75 0 550 150">
 			<path d="M 50 68 v-63 h 265
 			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
 			h -265
@@ -255,26 +253,30 @@
 			<text x="65" y="57" text-anchor="start" font-size="18" fill='#888'>battery</text>
 			<text x="290" y="80" text-anchor="end" font-size="18" fill='#888'>resistor</text>
 		</svg>
-		<p>In <strong>AC (alternating current)</strong> circuits the current pushes the electrons forward and backwards about 60 times a second. Current from a wall socket is AC.</p>
-		<svg viewBox="-75 0 550 150">
-			<path d="M 50 58 v-53 h 265
+		<p>
+			Above is an animated <a href="https://en.wikipedia.org/wiki/Electronic_symbol">circuit diagram</a> of a battery providing DC voltage and a resistor dropping the voltage. Current is defined to flow out of the longer, positive end of the battery. The direction of current is defined to be the opposite of the flow of electrons.
+		</p>
+		<div class='example-small'>
+			<p>In <strong>AC (alternating current)</strong> circuits the current pushes the electrons forward and backwards about 60 times a second. Current from a wall socket is AC.</p>
+			<svg viewBox="-75 0 550 150">
+				<path d="M 50 58 v-53 h 265
 			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
 			h -265
 			v-50" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
-			<path d="M 50 58 v-53 h 265
+				<path d="M 50 58 v-53 h 265
 			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
 			h -265 v-48" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants_ac" />
-			<circle cx="50" cy="77" r="19" fill='none' stroke="#333" stroke-width="5" />
-			<text x="50" y="79" text-anchor="middle" dominant-baseline="middle" font-size="45" fill='#333'>~</text>
-			<text x="63" y="50" text-anchor="start" font-size="18" fill='#888'>AC voltage</text>
-			<text x="79" y="70" text-anchor="start" font-size="18" fill='#888'>source</text>
-			<text x="290" y="80" text-anchor="end" font-size="18" fill='#888'>resistor</text>
-		</svg>
-		<p>
-			Check <a href="https://en.wikipedia.org/wiki/Electronic_symbol">here</a> to see what the different circuit diagram symbols mean.
-			<br>(we will use mostly resistors or DC voltage sources)
-		</p>
-
+				<circle cx="50" cy="77" r="19" fill='none' stroke="#333" stroke-width="5" />
+				<text x="50" y="79" text-anchor="middle" dominant-baseline="middle" font-size="45" fill='#333'>~</text>
+				<text x="63" y="50" text-anchor="start" font-size="18" fill='#888'>AC voltage</text>
+				<text x="79" y="70" text-anchor="start" font-size="18" fill='#888'>source</text>
+				<text x="290" y="80" text-anchor="end" font-size="18" fill='#888'>resistor</text>
+			</svg>
+			<p>
+				Check <a href="https://en.wikipedia.org/wiki/Electronic_symbol">here</a> to see what the different circuit diagram symbols mean.
+				<br>(we will use mostly resistors or DC voltage sources)
+			</p>
+		</div>
 		<div class='example'>
 			<strong>Question:</strong> Predict what happens to the speed of the electrons after adding more resistors?
 			<details>
@@ -310,7 +312,7 @@
 			<strong>Question:</strong> What would happen if we removed all the resistors?
 			<details>
 				<summary>answer</summary>
-				<p>Removing most of the resistance in a circuit leads to a <strong>short circuit</strong>. This causes the electrons to speed up producing dangerously large amounts of heat.</p>
+				<p>Removing most of the resistance in a circuit leads to a <strong>short circuit</strong>. This causes the electrons to speed up, producing dangerous amounts of heat.</p>
 				<svg viewBox="-75 0 550 170">
 					<path d="M 50 68 v-63 h 265
 									v 140 h-265
