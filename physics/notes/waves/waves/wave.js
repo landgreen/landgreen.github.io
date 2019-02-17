@@ -30,7 +30,7 @@ const wave = function () {
   elZone.addEventListener("mouseenter", function () {
     if (pause) {
       pause = false;
-      requestAnimationFrame(render);
+      requestAnimationFrame(cycle);
     }
   });
 
@@ -135,13 +135,35 @@ const wave = function () {
   }
   drawSineWave();
 
-  function render() {
-    //repeating animation function
-    settings.phase -= settings.velocity / 60;
-    settings.time += 1 / 60;
-    document.getElementById("time").innerHTML = settings.time.toFixed(1) + " s";
-    drawSineWave();
-    if (!pause) window.requestAnimationFrame(render);
+  // function render() {
+  //   //repeating animation function
+  //   settings.phase -= settings.velocity / 60;
+  //   settings.time += 1 / 60;
+  //   document.getElementById("time").innerHTML = settings.time.toFixed(1) + " s";
+  //   drawSineWave();
+  //   if (!pause) window.requestAnimationFrame(render);
+  // }
+
+
+
+  const fpsCap = 60;
+  const fpsInterval = 1000 / fpsCap;
+  let then = Date.now();
+  requestAnimationFrame(cycle); //starts game loop
+
+  function cycle() {
+    if (!pause) requestAnimationFrame(cycle);
+    const now = Date.now();
+    const elapsed = now - then; // calc elapsed time since last loop
+    if (elapsed > fpsInterval) { // if enough time has elapsed, draw the next frame
+      then = now - (elapsed % fpsInterval); // Get ready for next frame by setting then=now.   Also, adjust for fpsInterval not being multiple of 16.67
+
+      //frame capped code here
+      settings.phase -= settings.velocity / 60;
+      settings.time += 1 / 60;
+      document.getElementById("time").innerHTML = settings.time.toFixed(1) + " s";
+      drawSineWave();
+    }
   }
 };
 wave();

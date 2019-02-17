@@ -198,18 +198,18 @@
 			<div class="col">
 				<span class='center'>wavelength =
 					<input id='wavelength' type="number" min="0" step="20" max="999" style="width:50px;">m
-					<br><input id='wavelength-slider' type="range" step="0.1" value="300" min="0" max="999" style="width: 160px;">
+					<br><input id='wavelength-slider' type="range" step="1" value="300" min="10" max="999" style="width: 160px;">
 				</span>
 			</div>
 		</div>
 		<div class='center' id='wave_animation'>
 			<svg id='sin-wave' height='400'>
-				<filter id="displacementFilter">
+				<!-- <filter id="displacementFilter">
 					<feTurbulence id='fe-turb' type="turbulence" baseFrequency="0.02" numOctaves="3" />
 					<feDisplacementMap id='fe-disp' in="SourceGraphic" scale="17" xChannelSelector="R" yChannelSelector="G" />
 					<feGaussianBlur stdDeviation="0.5" />
 					<feOffset dx="0" dy="-6" />
-				</filter>
+				</filter> -->
 				<g stroke="#d9dfdf" style="stroke-dasharray:1,98,1,0;stroke-width:4000;">
 					<line x1="0" y1="0" x2="2000" y2="0" />
 					<line x1="0" y1="0" x2="0" y2="2000" />
@@ -728,22 +728,21 @@
 	</article>
 	<canvas class='center' id='sound3' height='50' width='600' onclick="sound(this, 1, false, true) "> </canvas>
 	<article>
-		<br> <br>
-		<h2 class='underlined'>Transverse and Longitudinal</h2>
-		<p>
-			Sound waves are vibrations that move in the same direction the wave moves. Most other waves are produced by vibration perpendicular to the direction the wave moves, like waves on strings.
-		</p>
-		<div class='definition'>
+		<!-- <div class="example">
 			<p>
-				<strong>Longitudinal</strong> = a wave that vibrates in the direction of propagation
-				<br>Examples: sound, slinky
+				Sound waves are vibrations that move in the same direction the wave moves. Most other waves are produced by vibration perpendicular to the direction the wave moves, like waves on strings.
 			</p>
-			<p>
-				<strong>Transverse</strong> = a wave that vibrates perpendicular to the direction of propagation
-				<br>Examples: light, string
-			</p>
-		</div>
-		<p>What other waves are transverse?</p>
+			<div>
+				<p>
+					<strong>Longitudinal</strong> = a wave that vibrates in the direction of propagation
+					<br>Examples: sound, slinky
+				</p>
+				<p>
+					<strong>Transverse</strong> = a wave that vibrates perpendicular to the direction of propagation
+					<br>Examples: light, string
+				</p>
+			</div>
+		</div> -->
 	</article>
 	<div class='back'>
 		<a href="../../../index.html ">Back</a>

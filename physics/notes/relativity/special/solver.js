@@ -4,7 +4,7 @@ function checkVisible(elm) {
   return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
 }
 
-function drawRocket(ctx, x, y, time = 0, scale = 1, period = 5) {
+function drawRocket(ctx, x, y, rocketTime = 0, scale = 1, period = 5) {
   //move canvas to the ship and compress in the horizontal direction
   ctx.save();
   ctx.translate(x, y);
@@ -53,13 +53,15 @@ function drawRocket(ctx, x, y, time = 0, scale = 1, period = 5) {
   ctx.fillStyle = "#2B2D42";
   ctx.beginPath();
   ctx.moveTo(80, 50);
-  ctx.arc(80, 50, 45, 0, Math.floor(time % (period * 20 * Math.PI)) / 10 / period);
+  // ctx.arc(80, 50, 45, 0, Math.floor(time % (period * 2 * Math.PI * 10)) / 10 / period);
+  const percentCircle = ((rocketTime / 60) / period) % 1
+  ctx.arc(80, 50, 45, 0, percentCircle * 2 * Math.PI);
   ctx.fill();
   //undo canvas transformations
   ctx.restore();
 }
 
-let solver = function() {
+let solver = function () {
   const rockets = {
     gamma: 0,
     t1: 0,
@@ -102,11 +104,13 @@ let solver = function() {
     // document.getElementById("length1").style.width = dist * 10 + "px";
     // document.getElementById("length2").style.width = vDist * 10 + "px";
   }
+
   function convertVelocity() {
     const v = document.getElementById("velocity2").value / 3;
     document.getElementById("velocity").value = v;
     update();
   }
+
   function convertGamma() {
     const g = document.getElementById("gamma").value;
     document.getElementById("velocity").value = Math.sqrt(1 - (1 / g) * (1 / g));
@@ -127,23 +131,9 @@ let solver = function() {
   //draw the clocks
   var canvas = document.getElementById("rockets");
   var ctx = canvas.getContext("2d");
-  //___________________animation loop ___________________
-  function cycle() {
-    if (checkVisible(canvas) && rockets.isOn) {
-      if (document.getElementById("time").value != 0) {
-        const timeScale = document.getElementById("time").value / 10;
-        rockets.t1 += 1 / rockets.gamma / timeScale;
-        rockets.t2 += 1 / timeScale;
-      }
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawRocket(ctx, 20, 20, rockets.t1, 1 / rockets.gamma);
-      drawRocket(ctx, 320, 20, rockets.t2, 1);
-    }
-    requestAnimationFrame(cycle);
-  }
-  requestAnimationFrame(cycle);
 
-  canvas.addEventListener("click", function() {
+
+  canvas.addEventListener("click", function () {
     if (rockets.isOn) {
       rockets.isOn = false;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -153,12 +143,47 @@ let solver = function() {
       rockets.isOn = true;
     }
   });
+
+  console.log(document.getElementById("time").value)
+  //___________________animation loop ___________________
+  const fpsCap = 60;
+  const fpsInterval = 1000 / fpsCap;
+  let then = Date.now();
+  requestAnimationFrame(cycle); //starts game loop
+
+  function cycle() {
+    requestAnimationFrame(cycle);
+    const now = Date.now();
+    const elapsed = now - then; // calc elapsed time since last loop
+    if (elapsed > fpsInterval) { // if enough time has elapsed, draw the next frame
+      then = now - (elapsed % fpsInterval); // Get ready for next frame by setting then=now.   Also, adjust for fpsInterval not being multiple of 16.67
+
+      //frame capped code here
+      if (checkVisible(canvas) && rockets.isOn) {
+        if (document.getElementById("time").value != 0) {
+          rockets.t1 += 1 / rockets.gamma;
+          rockets.t2 += 1;
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawRocket(ctx, 20, 20, rockets.t1, 1 / rockets.gamma, Number(document.getElementById("v_time").value / rockets.gamma));
+        drawRocket(ctx, 320, 20, rockets.t2, 1, Number(document.getElementById("time").value));
+      }
+    }
+  }
+
 };
 solver();
 
+
+
+
+
+//_____________________________________________________________________
+//_____________________________________________________________________
+//_____________________________________________________________________
 //_____________________________________________________________________
 //relative motion
-const relative = function() {
+const relative = function () {
   var canvas = document.getElementById("relative");
   var ctx = canvas.getContext("2d");
   canvas.width = window.innerWidth;
@@ -170,34 +195,52 @@ const relative = function() {
   };
 
   const rocket1 = {
-    position: { x: canvas.width / 2 - 300, y: 25 },
-    velocity: { x: 0.95, y: 0 },
+    position: {
+      x: canvas.width / 2 - 300,
+      y: 25
+    },
+    velocity: {
+      x: 0.95,
+      y: 0
+    },
     pov: false,
-    wall: function() {
+    wall: function () {
       if (this.position.x < -settings.wallWidth) this.position.x = canvas.width + settings.wallWidth;
       if (this.position.x > canvas.width + settings.wallWidth) this.position.x = -settings.wallWidth;
     }
   };
 
   const rocket2 = {
-    position: { x: canvas.width / 2 - 300, y: 175 },
-    velocity: { x: 0.4, y: 0 },
+    position: {
+      x: canvas.width / 2 - 300,
+      y: 175
+    },
+    velocity: {
+      x: 0.4,
+      y: 0
+    },
     pov: false,
-    wall: function() {
+    wall: function () {
       if (this.position.x < -settings.wallWidth) this.position.x = canvas.width + settings.wallWidth;
       if (this.position.x > canvas.width + settings.wallWidth) this.position.x = -settings.wallWidth;
     }
   };
 
   const earth = {
-    position: { x: canvas.width / 2, y: 350 },
-    velocity: { x: 0, y: 0 },
+    position: {
+      x: canvas.width / 2,
+      y: 350
+    },
+    velocity: {
+      x: 0,
+      y: 0
+    },
     pov: true,
-    wall: function() {
+    wall: function () {
       if (this.position.x < -settings.wallWidth) this.position.x = canvas.width + settings.wallWidth;
       if (this.position.x > canvas.width + settings.wallWidth) this.position.x = -settings.wallWidth;
     },
-    draw: function(x, y, r = 240, color = "#69c") {
+    draw: function (x, y, r = 240, color = "#69c") {
       ctx.fillStyle = color;
       ctx.beginPath();
       ctx.arc(x, y + 200, r, 0, 2 * Math.PI * 60);
@@ -210,7 +253,7 @@ const relative = function() {
     x: 0,
     y: 0
   };
-  canvas.onmousemove = function(e) {
+  canvas.onmousemove = function (e) {
     var rect = canvas.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
     mouse.y = e.clientY - rect.top;
@@ -254,9 +297,18 @@ const relative = function() {
 };
 relative();
 
+
+
+
+
+
+//_____________________________________________________________________
+//_____________________________________________________________________
+//_____________________________________________________________________
+//_____________________________________________________________________
 //_____________________________________________________________________
 //special relativity motion
-const special = function() {
+const special = function () {
   var canvas = document.getElementById("special");
   var ctx = canvas.getContext("2d");
   canvas.width = window.innerWidth;
@@ -268,43 +320,61 @@ const special = function() {
   };
 
   //velocities are in terms of c
-  const gammaCal = function(v1, v2) {
+  const gammaCal = function (v1, v2) {
     const v = v1 - v2;
     return 1 / Math.sqrt(1 - v * v);
   };
 
   const rocket1 = {
-    position: { x: canvas.width / 2 - 300, y: 25 },
-    velocity: { x: 0.95, y: 0 },
+    position: {
+      x: canvas.width / 2 - 300,
+      y: 25
+    },
+    velocity: {
+      x: 0.95,
+      y: 0
+    },
     time: 0,
     pov: false,
-    wall: function() {
+    wall: function () {
       if (this.position.x < -settings.wallWidth) this.position.x = canvas.width + settings.wallWidth;
       if (this.position.x > canvas.width + settings.wallWidth) this.position.x = -settings.wallWidth;
     }
   };
 
   const rocket2 = {
-    position: { x: canvas.width / 2 - 300, y: 175 },
-    velocity: { x: 0.4, y: 0 },
+    position: {
+      x: canvas.width / 2 - 300,
+      y: 175
+    },
+    velocity: {
+      x: 0.4,
+      y: 0
+    },
     time: 0,
     pov: false,
-    wall: function() {
+    wall: function () {
       if (this.position.x < -settings.wallWidth) this.position.x = canvas.width + settings.wallWidth;
       if (this.position.x > canvas.width + settings.wallWidth) this.position.x = -settings.wallWidth;
     }
   };
 
   const earth = {
-    position: { x: canvas.width / 2, y: 350 },
-    velocity: { x: 0, y: 0 },
+    position: {
+      x: canvas.width / 2,
+      y: 350
+    },
+    velocity: {
+      x: 0,
+      y: 0
+    },
     time: 0,
     pov: true,
-    wall: function() {
+    wall: function () {
       if (this.position.x < -settings.wallWidth) this.position.x = canvas.width + settings.wallWidth;
       if (this.position.x > canvas.width + settings.wallWidth) this.position.x = -settings.wallWidth;
     },
-    draw: function(x, y, scale) {
+    draw: function (x, y, scale) {
       ctx.save();
       ctx.translate(x, y + 200);
       ctx.scale(scale, 1);
@@ -321,7 +391,7 @@ const special = function() {
     x: 0,
     y: 0
   };
-  canvas.onmousemove = function(e) {
+  canvas.onmousemove = function (e) {
     const rect = canvas.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
     mouse.y = e.clientY - rect.top;
