@@ -135,7 +135,7 @@
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> Two wires of cross-sectional area 1.6 mm² connect the terminals of a battery to the circuitry in a clock. After 0.04 seconds, 5.0 x 10¹⁴ electrons move through a point on the wire. What the current in the wires?
+			<strong>Example:</strong> Two wires of cross-sectional area 1.6 mm² connect the terminals of a battery to the circuitry in a clock. After 0.04 seconds, 5.0 x 10¹⁴ electrons move through a point on the wire. What is the current in the wires?
 			<details>
 				<summary>strategy</summary>
 				<p>Build a conversion fraction to convert 1 electron into electric charge. Use the charge and the time to calculate the current.</p>
@@ -335,12 +335,20 @@
 
 		<div class='example'>
 			<p>A DC voltage source is represented by one or more pairs of lines.</p>
-
 			<a href="https://en.wikipedia.org/wiki/Electric_battery">
 				<svg viewBox="0 0 300 92">
-					<g fill='none' stroke="#333" stroke-width="1.75">
-						<path d="M 0 21 h 178 v20 v-40 m7 30 v-20 v10 h 93" />
-						<path d="M 0 70 h 88 v20 v-40 m7 30 v-20 v10 m7 0 v20 v-40 m7 30 v-20 v10 h 170" />
+					<text x="102" y="14" text-anchor="middle" font-size="13" fill='#333' font-family="consolas">I</text>
+					<g transform="translate(110 10)">
+						<line x1="5" y1="0" x2="40" y2="0" style="stroke:#333;stroke-width:1.5" />
+						<polygon points="0,0 8,3 8,-3" style="fill:#333;" />
+					</g>
+
+					<g fill='none' stroke="#333">
+						<g fill='none' stroke="#333" stroke-width="3">
+							<path d="M 0 21 h 178 v20 v-40 m7 30 v-20 v10 h 93" />
+							<path d="M 0 70 h 88 v20 v-40 m7 30 v-20 v10 m7 0 v20 v-40 m7 30 v-20 v10 h 170" />
+						</g>
+						<path d="M 0 21 h 176 m11 0 h 91  M 0 70 h 86 m25 0 h 168" fill='none' stroke="#0ff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="ants" />
 					</g>
 				</svg>
 			</a>
