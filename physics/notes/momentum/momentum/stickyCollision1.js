@@ -131,23 +131,14 @@
       setTimeout(function () {
         mass[0].mass = round(mass[0].mass)
         mass[1].mass = round(mass[1].mass)
-        mass[0].velocity.x = round(mass[1].velocity.x)
+        mass[0].velocity.x = round(mass[0].velocity.x)
         mass[1].velocity.x = round(mass[1].velocity.x)
 
         document.getElementById("ex1-question").innerHTML =
           "<strong>Click to Randomize Problem:</strong> Two masses are stuck until an explosion causes them to separate. After the explosion the " +
-          mass[0].mass +
-          "&nbsp;kg <span style='color: " +
-          mass[0].color +
-          "'><strong>square</strong></span> has a velocity of " +
-          mass[0].velocity.x +
-          "&nbsp;m/s, and the " +
-          mass[1].mass +
-          "&nbsp;kg <span style='color: " +
-          mass[1].color +
-          "'><strong>square</strong></span> has a velocity of  " +
-          mass[1].velocity.x +
-          "&nbsp;m/s. What was the velocity of the two squares before the explosion?";
+          mass[0].mass + "&nbsp;kg <span style='color: " + mass[0].color + "'><strong>square</strong></span> has a velocity of " + mass[0].velocity.x +
+          "&nbsp;m/s, and the " + mass[1].mass + "&nbsp;kg <span style='color: " + mass[1].color + "'><strong>square</strong></span> has a velocity of  " +
+          mass[1].velocity.x + "&nbsp;m/s. What was the velocity of the two squares before the explosion?";
 
         katex.render(
           String.raw `\begin{gathered} (m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}
