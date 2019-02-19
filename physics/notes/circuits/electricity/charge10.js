@@ -13,7 +13,7 @@ function charges10(el) {
   Charge.setup(el, q);
   ctx.textBaseline = "middle";
   ctx.textAlign = "left";
-  ctx.font = "300 18px Roboto";
+  ctx.font = "16px Arial";
 
   let pause = false;
   el.addEventListener("mouseleave", function () {
@@ -24,7 +24,7 @@ function charges10(el) {
     Charge.setCanvas(el);
     ctx.textBaseline = "middle";
     ctx.textAlign = "left";
-    ctx.font = "300 18px Roboto";
+    ctx.font = "16px Arial";
     if (!pause) requestAnimationFrame(cycle);
   });
 
@@ -97,21 +97,21 @@ function charges10(el) {
     p2.value = p2.value * 0.995 + Charge.potential(q, p2) * 0.005;
     // *100 to scale the numbers up past the decimal
     ctx.fillStyle = "#000";
+    // ctx.globalCompositeOperation = 'difference' // 'color-burn';
     ctx.fillText("V1 = " + (p1.value * 100).toFixed(2), p1.x, p1.y);
     ctx.fillText("V2 = " + (p2.value * 100).toFixed(2), p2.x, p2.y);
     ctx.fillText("ΔV = " + ((p1.value - p2.value) * 100).toFixed(2), p2.x, 200);
+    // ctx.globalCompositeOperation = 'source-over';
   }
-
-  let inZone = [];
 
   function cycle() {
     if (!pause) {
+      requestAnimationFrame(cycle);
       Charge.physicsAll(q);
       Charge.bounds(q, 50);
       Charge.scalarField(q);
-      voltmeter();
       Charge.pushZone(q, offx);
-      requestAnimationFrame(cycle);
+      voltmeter();
     }
   }
   requestAnimationFrame(cycle);

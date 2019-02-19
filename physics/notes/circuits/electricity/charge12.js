@@ -13,7 +13,7 @@ function charges12(el) {
   Charge.setup(el, q);
   ctx.textBaseline = "middle";
   ctx.textAlign = "left";
-  ctx.font = "300 18px Roboto";
+  ctx.font = "16px Arial";
 
   let pause = false;
   el.addEventListener("mouseleave", function () {
@@ -24,7 +24,7 @@ function charges12(el) {
     Charge.setCanvas(el);
     ctx.textBaseline = "middle";
     ctx.textAlign = "left";
-    ctx.font = "300 18px Roboto";
+    ctx.font = "16px Arial";
     if (!pause) requestAnimationFrame(cycle);
   });
 

@@ -41,24 +41,27 @@
 	</header>
 	<article>
 		<p>
-			In 1799 Alessandro Volta is credited with building the first electric battery. Volta's battery has the same structure as a modern battery, an electrolyte sandwiched between zinc and copper. The copper draws electrons from the zinc. Charges flow from the electrolyte to equalize the built up charge.
+			In 1799 Alessandro Volta is credited with building the first <a href="https://www.youtube.com/watch?v=GhbuhT1GDpI">electric battery</a>. Volta's battery has the same structure as a modern battery, an electrolyte sandwiched between zinc and copper. The copper draws electrons from the zinc. Charges flow from the electrolyte to equalize the built up charge.
 		</p>
 		<p>
-			In 1831 Michael Faraday discovered how to produce voltage from the motion of magnets. Faraday's electromagnetic generator is the source of almost all electricity produced today. Coal, gas, nuclear, hydroelectric, and geothermal power plants all use moving magnets to electricity.
+			In 1831 <a href="https://www.youtube.com/watch?v=32_3Um3a65s">Michael Faraday</a> discovered that voltage is produced by moving a magnet past a wire. Coal, gas, nuclear, hydroelectric, and geothermal power plants all produce electricity by moving magnets past wires.
 		</p>
 		<p>
-			Recently solar panels have become a popular method for producing electricity. Solar panels use the photovoltaic effect to convert light into electricity. Albert Einstein discovered the photovoltaic effect in 1905, but they were first built by Bell Laboratories in the 1950s.
+			Solar panels are growing in popularity as an alternative voltage source. They use the <a href="../../waves/photons/index.html#photo-electric">photovoltaic effect</a> to convert light into electricity. Albert Einstein explained the photovoltaic effect in 1905, but it wasn't until the 1950s that Bell Laboratories developed the first solar panels.
 		</p>
+
 		<h2 class='underlined' id="current">Electric Current</h2>
-		<p>Metals conduct electricity because they have free electrons that carry electric electric charge. Electric current is the average motion of a huge number of charges through a <a href="..\..\electromagnetism\charge\index.html#conductivity">conductor</a>. </p>
-		<p>The direction of current is defined as the direction of positive charge flow. Since electrons have a negative charge they always move in the opposite direction of the current. </p>
+		<!-- <p>Electric current can be produced by a difference in electric potential. This potential difference is called voltage. There are three main ways to produce voltage.</p> -->
+		<!-- Metals conduct electricity because they have free electrons that carry electric electric charge. -->
+		<p>Voltage sources produce electric current in conductors. Electric current is the average motion of a huge number of charges through a <a href="..\..\electromagnetism\charge\index.html#conductivity">conductor</a>. The electrons don't just move in a straight line. They drift through the conductor in a random walk bouncing off other charges.</p>
 		<canvas id='charge7' width="600" height='150' onclick="charges7(this)"> </canvas>
-		<p>As the charges travel through metal, they don't just move in a straight line. They drift through the conductor in a random walk bouncing off other charges.</p>
-		<canvas id='charge8' width="600" height='150' onclick="charges8(this)"> </canvas>
 		<p>A small imbalance in net charge produces an electric field. The electric field points in the same direction as the current.</p>
+		<canvas id='charge8' width="600" height='150' onclick="charges8(this)"> </canvas>
+		<p>
+			In 1746 <a href="https://xkcd.com/567/">Benjamin Franklin</a> mistakenly assigned a negative value to the charge carriers that we now call electrons. This is why the direction of current is the opposite of the direction that electrons actually move.
+		</p>
 		<canvas id='charge9' width="600" height='150' onclick="charges9(this)"> </canvas>
-		<p>Positive charge flows from positive(red) potential to negative(blue) potential. Negative charge does the opposite. </p>
-		<p>You can also visualize how potential produces current in <a href="..\..\electromagnetism\potential\index.html#three-potential-sims">these</a> 3-D simulations</p>
+		<p>Positive charge flows from positive(red) potential to negative(blue) potential. Negative charge does the opposite. You can also visualize how potential produces current in <a href="..\..\electromagnetism\potential\index.html#three-potential-sims">these</a> 3-D simulations</p>
 
 		<div class='example'>
 			<strong>Question:</strong> What direction is the current in the above simulations?
@@ -103,7 +106,7 @@
 			</details>
 		</div>
 
-		<p>Current measures the flow of charge over a period of time. Current is not a substance. Current is a rate, like dollars per hour is a rate.</p>
+		<p><strong>Current</strong> measures the flow of charge over a period of time. Current is not a substance. Current is a rate, like dollars per hour is a rate.</p>
 		<div class='definition'>
 			<h1>$$I = \frac{q}{\Delta t}$$</h1> \(I\) = electric current [A, amps, amperes, C/s]
 			<br>\(q\) = charge that passes a point on a wire [C, coulombs]
@@ -132,10 +135,10 @@
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> Two wires of cross-sectional area 1.6 mm² connect the terminals of a battery to the circuitry in a clock. After 0.04 seconds, 5.0 x 10¹⁴ electrons move to the right through the cross section. What is the magnitude and direction of the current?
+			<strong>Example:</strong> Two wires of cross-sectional area 1.6 mm² connect the terminals of a battery to the circuitry in a clock. After 0.04 seconds, 5.0 x 10¹⁴ electrons move through a point on the wire. What the current in the wires?
 			<details>
 				<summary>strategy</summary>
-				<p>Build a conversion fraction with the charge of an electron divided by one electron.</p>
+				<p>Build a conversion fraction to convert 1 electron into electric charge. Use the charge and the time to calculate the current.</p>
 			</details>
 			<details>
 				<summary>solution</summary>
@@ -143,9 +146,6 @@
 				<br> $$I = \frac{q}{\Delta t}$$
 				$$I = \frac{0.00008\, \mathrm{C}}{0.04 \, \mathrm{s}}$$
 				$$I = 0.002 \, \mathrm{A} $$
-				<p>
-					If electrons are moving to the right the current is to the <strong>left</strong>.
-				</p>
 			</details>
 		</div>
 		<div class='example'>
@@ -162,7 +162,7 @@
 
 		<h2 class='underlined' id="voltage">Voltage (Potential Difference)</h2>
 		<p>
-			Voltage is a measure of the difference in <a href="..\..\electromagnetism\potential\index.html#potential">electrical potential</a> between two points. Voltage is defined so that negatively charged objects are pulled towards higher voltages, while positively charged objects are pulled towards lower voltages.
+			<strong>Voltage</strong> is a measure of the difference in <a href="..\..\electromagnetism\potential\index.html#potential">electrical potential</a> between two points. Voltage is defined so that negatively charged objects are pulled towards higher voltages, while positively charged objects are pulled towards lower voltages.
 		</p>
 		<p>
 			The two terminals in a wall socket are sources of voltage. The positive and negative terminals on a <a href='https://en.wikipedia.org/wiki/Battery_(electricity)'>battery</a> also provide voltage.
@@ -212,9 +212,17 @@
 			</div>
 		</div>
 		<br>
-		<h2 class='underlined'>AC⚡DC Circuits</h2>
+		<br>
+		<!-- <h2 class='underlined'>AC⚡DC Circuits</h2> -->
+		<svg id="ac-dc" xmlns="http://www.w3.org/2000/svg" width="2500" viewBox="0 0 3000 140">
+			<path fill="#fff" d="M0 0h192.756v192.756H0V0z" />
+			<path d="M45.918 118.979l-9.228 9.228-9.156-9.228 4.109-4.109v-8.435h-8.867v8.435l4.109 4.109-9.228 9.228-9.155-9.228 4.108-4.109V77.671l15.211-15.067 13.985 13.985v38.28l4.112 4.11zM31.644 95.837V82.646l-8.867-8.868v22.059h8.867zM77.962 77.383l-7.714 7.569L59.29 73.778v37.847l2.668 2.595 8.29-8.363 7.425 7.281-15.138 15.068-13.409-13.337v-38.28l14.13-14.056 14.706 14.85zM112.062 93.17l-26.601 37.054 9.3-26.818h-9.3l12.111-27.825h11.463l-6.488 17.589h9.515zM148.092 116.166l-11.896 12.04h-13.623l-8.002-8.219 4.324-4.254V75.147l-4.396-4.397 8.074-8.074h13.623l11.896 12.038v41.452zm-10.166-5.767V80.482l-8.867-8.579v47.075l8.867-8.579zM184.252 77.383l-7.715 7.569-10.957-11.174v37.847l2.668 2.595 8.289-8.363 7.426 7.281-15.139 15.068-13.408-13.337v-38.28l14.129-14.056 14.707 14.85z" />
+			<path d="M0 139.5 h 700" fill="none" stroke="#888" stroke-width="1" />
+		</svg>
 		<p>
-			In <strong>DC (direct current)</strong> circuits, electrons always flow in the same direction around the circuit.</p>
+			Electric circuits have either direct current or alternating current depending on the source of the voltage.
+		</p>
+		<br>
 		<style type="text/css">
 			@keyframes marching_ants {
 				0% {
@@ -248,40 +256,35 @@
 		</style>
 		<svg viewBox="-75 0 550 150">
 			<path d="M 50 68 v-63 h 265
-			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-			h -265
+			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30 h -265
 			v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
 			<path d="M 50 68 v-63 h 265
-			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-			h -265  v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants" />
+			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30 h -265  v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants" />
 			<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
 			<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
 			<text x="65" y="57" text-anchor="start" font-size="18" fill='#888'>battery</text>
 			<text x="290" y="80" text-anchor="end" font-size="18" fill='#888'>resistor</text>
 		</svg>
 		<p>
-			Above is an animated <a href="https://en.wikipedia.org/wiki/Electronic_symbol">circuit diagram</a> of a battery providing DC voltage and a resistor dropping the voltage. Current is defined to flow out of the longer, positive end of the battery. The direction of current is defined to be the opposite of the flow of electrons.
-		</p>
+			In <strong>DC (direct current)</strong> <a href="https://en.wikipedia.org/wiki/Electronic_symbol">circuits</a>, a constant voltage source pushes the electrons around the circuit in one direction.
+			Batteries are common source of DC.</p>
+		<br>
 		<div class='example-small'>
-			<p>In <strong>AC (alternating current)</strong> circuits the current pushes the electrons forward and backwards about 60 times a second. Current from a wall socket is AC.</p>
 			<svg viewBox="-75 0 550 150">
 				<path d="M 50 58 v-53 h 265
-			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-			h -265
-			v-50" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
+				v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
+				h -265
+				v-50" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
 				<path d="M 50 58 v-53 h 265
-			v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-			h -265 v-48" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants_ac" />
+				v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
+				h -265 v-48" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants_ac" />
 				<circle cx="50" cy="77" r="19" fill='none' stroke="#333" stroke-width="5" />
 				<text x="50" y="79" text-anchor="middle" dominant-baseline="middle" font-size="45" fill='#333'>~</text>
 				<text x="63" y="50" text-anchor="start" font-size="18" fill='#888'>AC voltage</text>
 				<text x="79" y="70" text-anchor="start" font-size="18" fill='#888'>source</text>
 				<text x="290" y="80" text-anchor="end" font-size="18" fill='#888'>resistor</text>
 			</svg>
-			<p>
-				Check <a href="https://en.wikipedia.org/wiki/Electronic_symbol">here</a> to see what the different circuit diagram symbols mean.
-				<br>(we will use mostly resistors or DC voltage sources)
-			</p>
+			<p>In <strong>AC (alternating current)</strong> circuits, a rapidly changing potential pushes the electrons forward and backwards about 60 times a second. A <a href="https://www.youtube.com/watch?v=S7C5sSde9e4">wall socket</a> is an source of AC.</p>
 		</div>
 		<div class='example'>
 			<strong>Question:</strong> Predict what happens to the speed of the electrons after adding more resistors?
@@ -290,8 +293,7 @@
 				<p>Adding more resistors slows the electrons down.</p>
 				<svg viewBox="-75 0 550 170">
 					<path d="M 50 68 v-63 h 265
-							v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-							h -265
+							v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30 h -265
 							v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
 					<path d="M 50 68 v-63 h 265
 							v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
@@ -332,16 +334,19 @@
 		</div>
 
 		<div class='example'>
+			<p>A DC voltage source is represented by one or more pairs of lines.</p>
+
 			<a href="https://en.wikipedia.org/wiki/Electric_battery">
-				<svg viewBox="0 0 300 100">
+				<svg viewBox="0 0 300 92">
 					<g fill='none' stroke="#333" stroke-width="1.75">
-						<path d="M 10 25 h 178 v20 v-40 m7 30 v-20 v10 h 78" />
-						<path d="M 10 70 h 88 v20 v-40 m7 30 v-20 v10 m7 0 v20 v-40 m7 30 v-20 v10 h 155" />
+						<path d="M 0 21 h 178 v20 v-40 m7 30 v-20 v10 h 93" />
+						<path d="M 0 70 h 88 v20 v-40 m7 30 v-20 v10 m7 0 v20 v-40 m7 30 v-20 v10 h 170" />
 					</g>
 				</svg>
 			</a>
-			A DC (direct current) voltage source is represented by one or more long and short lines. The longer line is the positive side. Current is directed out of the positive side, although electrons actually flow out of the negative side.
-			<br> <br><strong>Question:</strong> What is one example of a DC voltage source?
+			<p>The positive terminal is called the <strong>cathode</strong>. The cathode is drawn as the longer line in the symbol.</p>
+			<p>The negative terminal is called the <strong>anode</strong>. The andode is drawn as the shorter line in the symbol. Electrons flow out of the anode, but the current is defined as coming out of the cathode.</p>
+			<strong>Question:</strong> What's an example of a DC voltage source?
 			<details>
 				<summary>answer</summary>
 				<p>Batteries, solar panels, and DC motors are DC voltage sources.</p>
