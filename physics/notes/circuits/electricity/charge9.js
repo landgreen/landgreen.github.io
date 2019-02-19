@@ -14,24 +14,27 @@ function charges9(el) {
     pause = false;
   });
 
-  //spawn p before e to avoid a bug in the class method allPhysics
   const separation = 40;
-  const off = 100;
-  for (let i = 0; i < Math.ceil((canvas.width + off * 2) / separation); ++i) {
-    q[q.length] = new Charge("p", {
-      x: separation * i - off,
-      y: canvas.height / 2 + separation
-    });
-    q[q.length] = new Charge("p", {
-      x: separation * i - off,
-      y: canvas.height / 2
-    });
-    q[q.length] = new Charge("p", {
-      x: separation * i - off,
-      y: canvas.height / 2 - separation
-    });
+  const off = 250;
+
+  function wiggle(mag = 10) {
+    return (Math.random() - 0.5) * mag
   }
+
   for (let i = 0; i < Math.ceil((canvas.width + off * 2) / separation); ++i) {
+    q[q.length] = new Charge("p", {
+      x: separation * i - off + wiggle(),
+      y: canvas.height / 2 + separation + wiggle()
+    });
+    q[q.length] = new Charge("p", {
+      x: separation * i - off + wiggle(),
+      y: canvas.height / 2 + wiggle()
+    });
+    q[q.length] = new Charge("p", {
+      x: separation * i - off + wiggle(),
+      y: canvas.height / 2 - separation + wiggle()
+    });
+
     q[q.length] = new Charge(
       "e", {
         x: separation * i - off,

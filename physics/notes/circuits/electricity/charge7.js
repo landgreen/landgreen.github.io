@@ -17,35 +17,37 @@ function charges7(el) {
   });
 
   let current = 1 / 60;
+  let currentOut = current;
 
   function ammeter() {
     current = current * 0.99 + Charge.teleport(q, 200) * 0.01;
     // console.log((current*60).toFixed(2))
     ctx.fillStyle = "#000";
-    ctx.fillText((current * 60).toFixed(1) + " e⁻/s", canvas.width - 3, canvas.height - 3);
+    if (!(count % 60)) currentOut = current
+    ctx.fillText((currentOut * 60).toFixed(1) + " e⁻/s", canvas.width - 3, canvas.height - 3);
   }
 
-  //spawn p before e to avoid a bug in the class method allPhysics
-  //spawn p before e to avoid a bug in the class method allPhysics
   const separation = 40;
   const off = 250;
 
-  for (let i = 0; i < Math.ceil((canvas.width + off * 2) / separation); ++i) {
-    q[q.length] = new Charge("p", {
-      x: separation * i - off,
-      y: canvas.height / 2 + separation
-    });
-    q[q.length] = new Charge("p", {
-      x: separation * i - off,
-      y: canvas.height / 2
-    });
-    q[q.length] = new Charge("p", {
-      x: separation * i - off,
-      y: canvas.height / 2 - separation
-    });
+  function wiggle(mag = 10) {
+    return (Math.random() - 0.5) * mag
   }
 
   for (let i = 0; i < Math.ceil((canvas.width + off * 2) / separation); ++i) {
+    q[q.length] = new Charge("p", {
+      x: separation * i - off + wiggle(),
+      y: canvas.height / 2 + separation + wiggle()
+    });
+    q[q.length] = new Charge("p", {
+      x: separation * i - off + wiggle(),
+      y: canvas.height / 2 + wiggle()
+    });
+    q[q.length] = new Charge("p", {
+      x: separation * i - off + wiggle(),
+      y: canvas.height / 2 - separation + wiggle()
+    });
+
     q[q.length] = new Charge(
       "e", {
         x: separation * i - off,
@@ -75,8 +77,11 @@ function charges7(el) {
     );
   }
 
+  let count = 0
+
   function cycle() {
     if (!pause) {
+      count++
       Charge.physicsAll(q);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       Charge.drawAll(q);
