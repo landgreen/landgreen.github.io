@@ -141,20 +141,12 @@ window.onresize = () => {
 };
 
 //mouse move input
-window.onmousemove = (e) => {
+document.body.addEventListener("mousemove", (e) => {
   game.mouse.x = e.clientX;
   game.mouse.y = e.clientY;
-};
+});
 
-//normal mouse click events
-window.onmousedown = (e) => {
-  //mouse down gets reset in game.startGame
-  //don't make changes here
-  game.mouseDown = true;
-  game.mouse.x = e.clientX;
-  game.mouse.y = e.clientY;
-};
-window.onmouseup = (e) => {
+document.body.addEventListener("mouseup", (e) => {
   // game.buildingUp(e); //uncomment when building levels
   game.mouseDown = false;
   // console.log(e)
@@ -163,7 +155,15 @@ window.onmouseup = (e) => {
   } else {
     game.mouseDown = false;
   }
-};
+});
+
+document.body.addEventListener("mousedown", (e) => {
+  if (e.which === 3) {
+    game.mouseDownRight = true;
+  } else {
+    game.mouseDown = true;
+  }
+});
 
 //keyboard input
 const keys = [];

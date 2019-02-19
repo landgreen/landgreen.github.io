@@ -91,13 +91,26 @@ const level = {
     // spawn.bodyRect(-140, -200, 50, 50);
     // spawn.bodyRect(-95, -50, 40, 50);
     // spawn.bodyRect(-90, -100, 60, 50);
-    spawn.bodyRect(200, -150, 140, 50);
-    spawn.bodyRect(200, -150, 40, 40);
+    spawn.bodyRect(300, -150, 140, 50);
+    spawn.bodyRect(300, -150, 30, 30);
+    spawn.bodyRect(300, -150, 20, 20);
+    spawn.bodyRect(300, -150, 40, 100);
+    spawn.bodyRect(300, -150, 40, 90);
+    spawn.bodyRect(300, -150, 30, 60);
+    spawn.bodyRect(300, -150, 40, 70);
+    spawn.bodyRect(300, -150, 40, 60);
+    spawn.bodyRect(300, -150, 20, 20);
+    spawn.bodyRect(500, -150, 140, 110);
+    spawn.bodyRect(600, -150, 140, 100);
+    spawn.bodyRect(400, -150, 140, 160);
+    spawn.bodyRect(500, -150, 110, 110);
+    powerUps.spawn(400, -400, "field", false);
+    powerUps.spawn(400, -400, "gun", false);
     // spawn.bodyRect(-45, -100, 40, 50);
 
     // spawn.group(-600, -550);
     // for (let i = 0; i < 1; ++i) {
-    spawn.chaser(800, -1150);
+    // spawn.chaser(800, -1150);
     // }
     // spawn.nodeBoss(900, -1070, "shooter", 9);
     // for (let i = 0; i < 20; i++) {

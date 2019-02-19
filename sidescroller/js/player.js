@@ -299,11 +299,11 @@ const mech = {
     }
   },
   health: 0,
-  regen() {
-    if (this.health < 1 && game.cycle % 15 === 0) {
-      this.addHealth(0.01);
-    }
-  },
+  // regen() {
+  //   if (this.health < 1 && game.cycle % 15 === 0) {
+  //     this.addHealth(0.01);
+  //   }
+  // },
   drawHealth() {
     if (this.health < 1) {
       ctx.fillStyle = "rgba(100, 100, 100, 0.5)";
@@ -347,7 +347,7 @@ const mech = {
     this.displayHealth();
 
     // freeze game and display a full screen red color
-    if (dmg > 0.1) {
+    if (dmg > 0.05) {
       game.fpsCap = 4 //40 - Math.min(25, 100 * dmg)
       game.fpsInterval = 1000 / game.fpsCap;
     }
@@ -365,7 +365,6 @@ const mech = {
       }
     };
     requestAnimationFrame(normalFPS);
-
   },
   damageImmune: 0,
   hitMob(i, dmg) {
@@ -501,29 +500,33 @@ const mech = {
     Matter.Body.rotate(this.holdingTarget, 0.01 / this.holdingTarget.mass); //gently spin the block
   },
   throw () {
-    if ((keys[32] || game.mouseDownRight) && this.fieldMeter > 0.004) {
-      this.fieldMeter -= 0.004;
-      this.throwCharge += this.throwChargeRate;;
-      //draw charge
-      const x = mech.pos.x + 15 * Math.cos(this.angle);
-      const y = mech.pos.y + 15 * Math.sin(this.angle);
-      const len = this.holdingTarget.vertices.length - 1;
-      const edge = this.throwCharge * this.throwCharge * 0.02;
-      const grd = ctx.createRadialGradient(x, y, edge, x, y, edge + 5);
-      grd.addColorStop(0, "rgba(255,50,150,0.3)");
-      grd.addColorStop(1, "transparent");
-      ctx.fillStyle = grd;
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(this.holdingTarget.vertices[len].x, this.holdingTarget.vertices[len].y);
-      ctx.lineTo(this.holdingTarget.vertices[0].x, this.holdingTarget.vertices[0].y);
-      ctx.fill();
-      for (let i = 0; i < len; i++) {
+    if ((keys[32] || game.mouseDownRight)) {
+      if (this.fieldMeter > 0.004) {
+        this.fieldMeter -= 0.004;
+        this.throwCharge += this.throwChargeRate;;
+        //draw charge
+        const x = mech.pos.x + 15 * Math.cos(this.angle);
+        const y = mech.pos.y + 15 * Math.sin(this.angle);
+        const len = this.holdingTarget.vertices.length - 1;
+        const edge = this.throwCharge * this.throwCharge * 0.02;
+        const grd = ctx.createRadialGradient(x, y, edge, x, y, edge + 5);
+        grd.addColorStop(0, "rgba(255,50,150,0.3)");
+        grd.addColorStop(1, "transparent");
+        ctx.fillStyle = grd;
         ctx.beginPath();
         ctx.moveTo(x, y);
-        ctx.lineTo(this.holdingTarget.vertices[i].x, this.holdingTarget.vertices[i].y);
-        ctx.lineTo(this.holdingTarget.vertices[i + 1].x, this.holdingTarget.vertices[i + 1].y);
+        ctx.lineTo(this.holdingTarget.vertices[len].x, this.holdingTarget.vertices[len].y);
+        ctx.lineTo(this.holdingTarget.vertices[0].x, this.holdingTarget.vertices[0].y);
         ctx.fill();
+        for (let i = 0; i < len; i++) {
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(this.holdingTarget.vertices[i].x, this.holdingTarget.vertices[i].y);
+          ctx.lineTo(this.holdingTarget.vertices[i + 1].x, this.holdingTarget.vertices[i + 1].y);
+          ctx.fill();
+        }
+      } else {
+        this.drop()
       }
     } else if (this.throwCharge > 0) {
       //throw the body
@@ -828,90 +831,60 @@ const mech = {
     },
     () => {
       mech.fieldMode = 3;
-      game.makeTextLog("<h2>Mass Recycler</h2><br><strong>active ability:</strong> when holding a block, click left mouse to heal<br><strong>negative effect:</strong> -field regeneration", 1000);
+      game.makeTextLog("<h2>Mass Recycler</h2><br><strong>active ability:</strong> hold left and right mouse to convert small blocks into health<br><strong>negative effect:</strong> -life decay", 1000);
       mech.setHoldDefaults();
-      mech.fieldRegen = 0.0005;
       mech.hold = function () {
+        if (game.cycle % 360 === 0) {
+          // mech.damage(0.02)
+          mech.health = mech.health * 0.97 - 0.01;
+          if (mech.health < 0) {
+            mech.health = 0;
+            mech.death();
+            return;
+          }
+          mech.displayHealth();
+        }
         if (mech.isHolding) {
           mech.drawHold(mech.holdingTarget);
           mech.holding();
-          //fire or eat
-          const heal = Math.min(0.95, 0.1 + mech.holdingTarget.mass / 60)
-          if (game.mouseDown && mech.fieldMeter > heal) { //this.health < 1  //eat if left mouse is down
-            mech.fireCDcycle = game.cycle + mech.fieldFireCD;
-            mech.addHealth(heal);
-            mech.fieldMeter -= heal
-            mech.isHolding = false;
-            mech.definePlayerMass() //return to normal player mass
-            Matter.World.remove(engine.world, mech.holdingTarget);
-            for (let i = 0, len = body.length; i < len; i++) {
-              if (body[i] === mech.holdingTarget) {
-                body.splice(i, 1);
-                return
-              }
-            }
-          } else if ((keys[32] || game.mouseDownRight) && this.fieldMeter > 0.004) {
-            mech.fieldMeter -= 0.004;
-            mech.throwCharge += mech.throwChargeRate;;
-            //draw charge
-            const x = mech.pos.x + 15 * Math.cos(mech.angle);
-            const y = mech.pos.y + 15 * Math.sin(mech.angle);
-            const len = mech.holdingTarget.vertices.length - 1;
-            const edge = mech.throwCharge * mech.throwCharge * 0.02;
-            const grd = ctx.createRadialGradient(x, y, edge, x, y, edge + 5);
-            grd.addColorStop(0, "rgba(255,50,150,0.3)");
-            grd.addColorStop(1, "transparent");
-            ctx.fillStyle = grd;
+          mech.throw();
+        } else if (game.mouseDown && (keys[32] || game.mouseDownRight) && mech.fieldCDcycle < game.cycle) { //both mouse keys down
+          if (mech.fieldMeter > mech.fieldRegen) {
+            mech.fieldMeter -= mech.fieldRegen
+            const range = 300;
+            //draw range
+            ctx.globalCompositeOperation = "lighter" //  "destination-atop" //"difference" //"color-burn";
             ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.lineTo(mech.holdingTarget.vertices[len].x, mech.holdingTarget.vertices[len].y);
-            ctx.lineTo(mech.holdingTarget.vertices[0].x, mech.holdingTarget.vertices[0].y);
+            ctx.arc(mech.pos.x, mech.pos.y, range, 0, 2 * Math.PI);
+            ctx.lineWidth = 1;
+            ctx.fillStyle = "rgba(150,200,180," + (0.9 + Math.random() * 0.1) + ")";
             ctx.fill();
-            for (let i = 0; i < len; i++) {
-              ctx.beginPath();
-              ctx.moveTo(x, y);
-              ctx.lineTo(mech.holdingTarget.vertices[i].x, mech.holdingTarget.vertices[i].y);
-              ctx.lineTo(mech.holdingTarget.vertices[i + 1].x, mech.holdingTarget.vertices[i + 1].y);
-              ctx.fill();
-            }
-          } else if (mech.throwCharge > 0) {
-            //throw the body
-            mech.fireCDcycle = game.cycle + mech.fieldFireCD;
-            mech.isHolding = false;
-            //bullet-like collisions
-            mech.holdingTarget.collisionFilter.category = 0x000100;
-            mech.holdingTarget.collisionFilter.mask = 0x111111;
-            //check every second to see if player is away from thrown body, and make solid
-            const solid = function (that) {
-              const dx = that.position.x - player.position.x;
-              const dy = that.position.y - player.position.y;
-              if (dx * dx + dy * dy > 10000 && that.speed < 3 && that !== mech.holdingTarget) {
-                that.collisionFilter.category = 0x000001; //make solid
-                that.collisionFilter.mask = 0x011111;
-              } else {
-                setTimeout(solid, 250, that);
+            ctx.globalCompositeOperation = "source-over";
+            ctx.strokeStyle = "#333";
+            ctx.stroke();
+            //find all blocks in range
+            for (let i = 0, len = body.length; i < len; i++) {
+              if (!body[i].isNotHoldable) {
+                dist = Matter.Vector.magnitude(Matter.Vector.sub(body[i].position, mech.pos))
+                const healCost = Math.sqrt(0.003 * body[i].mass) + 0.04
+                if (dist < range && mech.fieldMeter > healCost + 0.2) { // convert block to heal power up
+                  // mech.fieldCDcycle = game.cycle + 4;
+                  mech.fieldMeter -= healCost
+                  powerUps.spawnHeal(body[i].position.x, body[i].position.y, 120 * healCost);
+                  Matter.World.remove(engine.world, body[i]);
+                  body.splice(i, 1);
+                  break
+                }
               }
-            };
-            setTimeout(solid, 1000, mech.holdingTarget);
-            //throw speed scales a bit with mass
-            const speed = Math.min(85, Math.min(54 / this.holdingTarget.mass + 5, 48) * Math.min(this.throwCharge, this.throwChargeMax) / 50);
-            mech.throwCharge = 0;
-            Matter.Body.setVelocity(mech.holdingTarget, {
-              x: player.velocity.x + Math.cos(mech.angle) * speed,
-              y: player.velocity.y + Math.sin(mech.angle) * speed
-            });
-            //player recoil //stronger in x-dir to prevent jump hacking
-            Matter.Body.setVelocity(player, {
-              x: player.velocity.x - Math.cos(mech.angle) * 2,
-              y: player.velocity.y - Math.sin(mech.angle) * 0.4
-            });
-            mech.definePlayerMass() //return to normal player mass
+            }
+          } else {
+            mech.fieldCDcycle = game.cycle + 120;
           }
-        } else if ((keys[32] || game.mouseDownRight) && mech.fieldMeter > 0.2) { //not hold but field button is pressed
+        } else if ((keys[32] || game.mouseDownRight) && mech.fieldMeter > 0.2) { //field button is pressed
           mech.drawField();
           mech.grabPowerUp();
           mech.pushMobs();
-          mech.lookForPickUp();
+          mech.lookForPickUp(130);
         } else if (mech.holdingTarget && mech.fireCDcycle < game.cycle) { //holding, but field button is released
           mech.pickUp();
         } else {

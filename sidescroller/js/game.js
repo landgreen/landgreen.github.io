@@ -434,23 +434,24 @@ const game = {
     document.getElementById("dmg").style.display = "inline";
     document.getElementById("health-bg").style.display = "inline";
 
-    window.onmousedown = function (e) {
-      //mouse up event in set in index.js
+    // window.onmousedown = function (e) {
+    //   //mouse up event in set in index.js
 
-      // game.mouseDown = true;
-      if (e.which === 3) {
-        game.mouseDownRight = true;
-      } else {
-        game.mouseDown = true;
-      }
-      // keep this disabled unless building maps
-      // if (!game.mouseDown){
-      // 	game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
-      // 	game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
-      // }
+    //   // game.mouseDown = true;
+    //   if (e.which === 3) {
+    //     game.mouseDownRight = true;
+    //   } else {
+    //     game.mouseDown = true;
+    //   }
+    //   // keep this disabled unless building maps
+    //   // if (!game.mouseDown){
+    //   // 	game.getCoords.pos1.x = Math.round(game.mouseInGame.x / 25) * 25;
+    //   // 	game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
+    //   // }
 
-      // mech.throw();
-    };
+    //   // mech.throw();
+    // };
+
     document.body.style.cursor = "none";
     if (this.firstRun) {
       mech.spawn(); //spawns the player
