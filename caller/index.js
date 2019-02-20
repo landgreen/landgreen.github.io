@@ -464,13 +464,19 @@ let p = new Vue({
   }
 });
 p.unFocusAll(); //clear all after load
+
 function speech(say) {
   if ("speechSynthesis" in window) {
     let utterance = new SpeechSynthesisUtterance(say);
     //msg.voice = voices[10]; // Note: some voices don't support altering params
     //msg.voiceURI = 'native';
     //utterance.volume = 1; // 0 to 1
-    utterance.rate = 1; // 0.1 to 10
+    if (say.length > 75) {
+      utterance.rate = Math.min(1.35, 1 + (say.length - 75) * 0.007); // 0.1 to 10
+    } else {
+      utterance.rate = 1; // 0.1 to 10
+    }
+
     //utterance.pitch = 0.8; //0 to 2
     //utterance.text = 'Hello World';
     // utterance.lang = "en-GB";
@@ -481,6 +487,7 @@ function speech(say) {
     //   for(var i = 0; i < voices.length; i++ ) {
     //     console.log("Voice " + i.toString() + ' ' + voices[i].name + ' ' + voices[i].uri);
     //   }
+    console.log(utterance)
     speechSynthesis.speak(utterance);
   }
 }
