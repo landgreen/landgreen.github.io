@@ -44,7 +44,7 @@
 			In 1799 Alessandro Volta is credited with building the first <a href="https://www.youtube.com/watch?v=GhbuhT1GDpI">electric battery</a>. Volta's battery has the same structure as a modern battery, an electrolyte sandwiched between zinc and copper. The copper draws electrons from the zinc. Charges flow from the electrolyte to equalize the built up charge.
 		</p>
 		<p>
-			In 1831 <a href="https://www.youtube.com/watch?v=32_3Um3a65s">Michael Faraday</a> discovered that voltage is produced by moving a magnet past a wire. Coal, gas, nuclear, hydroelectric, and geothermal power plants all produce electricity by moving magnets past wires.
+			In 1831 Michael Faraday discovered that voltage is produced by moving a magnet past a wire. Coal, gas, nuclear, hydroelectric, and geothermal power plants all produce electricity by moving magnets past wires.
 		</p>
 		<p>
 			Solar panels are growing in popularity as an alternative voltage source. They use the <a href="../../waves/photons/index.html#photo-electric">photovoltaic effect</a> to convert light into electricity. Albert Einstein explained the photovoltaic effect in 1905, but it wasn't until the 1950s that Bell Laboratories developed the first solar panels.
@@ -214,7 +214,7 @@
 		<br>
 		<br>
 		<!-- <h2 class='underlined'>AC⚡DC Circuits</h2> -->
-		<svg id="ac-dc" xmlns="http://www.w3.org/2000/svg" width="2500" viewBox="0 0 3000 140">
+		<svg id="ac-dc" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 140">
 			<path fill="#fff" d="M0 0h192.756v192.756H0V0z" />
 			<path d="M45.918 118.979l-9.228 9.228-9.156-9.228 4.109-4.109v-8.435h-8.867v8.435l4.109 4.109-9.228 9.228-9.155-9.228 4.108-4.109V77.671l15.211-15.067 13.985 13.985v38.28l4.112 4.11zM31.644 95.837V82.646l-8.867-8.868v22.059h8.867zM77.962 77.383l-7.714 7.569L59.29 73.778v37.847l2.668 2.595 8.29-8.363 7.425 7.281-15.138 15.068-13.409-13.337v-38.28l14.13-14.056 14.706 14.85zM112.062 93.17l-26.601 37.054 9.3-26.818h-9.3l12.111-27.825h11.463l-6.488 17.589h9.515zM148.092 116.166l-11.896 12.04h-13.623l-8.002-8.219 4.324-4.254V75.147l-4.396-4.397 8.074-8.074h13.623l11.896 12.038v41.452zm-10.166-5.767V80.482l-8.867-8.579v47.075l8.867-8.579zM184.252 77.383l-7.715 7.569-10.957-11.174v37.847l2.668 2.595 8.289-8.363 7.426 7.281-15.139 15.068-13.408-13.337v-38.28l14.129-14.056 14.707 14.85z" />
 			<path d="M0 139.5 h 700" fill="none" stroke="#888" stroke-width="1" />
@@ -234,6 +234,16 @@
 				}
 			}
 
+			@keyframes marching_ants_slow {
+				0% {
+					stroke-dashoffset: 0;
+				}
+
+				100% {
+					stroke-dashoffset: 6;
+				}
+			}
+
 			.ants-fast {
 				animation: marching_ants 0.07s linear infinite reverse;
 				stroke-dasharray: 0.1 19.9;
@@ -247,6 +257,11 @@
 			.ants-slow {
 				animation: marching_ants 1.5s linear infinite reverse;
 				stroke-dasharray: 0.1 19.9;
+			}
+
+			.ants-very-slow {
+				animation: marching_ants_slow 6s linear infinite reverse;
+				stroke-dasharray: 0 6;
 			}
 
 			.ants_ac {
@@ -334,32 +349,36 @@
 		</div>
 
 		<div class='example'>
-			<p>A DC voltage source is represented by one or more pairs of lines.</p>
-			<a href="https://en.wikipedia.org/wiki/Electric_battery">
-				<svg viewBox="0 0 300 92">
-					<text x="102" y="14" text-anchor="middle" font-size="13" fill='#333' font-family="consolas">I</text>
-					<g transform="translate(110 10)">
-						<line x1="5" y1="0" x2="40" y2="0" style="stroke:#333;stroke-width:1.5" />
-						<polygon points="0,0 8,3 8,-3" style="fill:#333;" />
-					</g>
+	</article>
 
-					<g fill='none' stroke="#333">
-						<g fill='none' stroke="#333" stroke-width="3">
-							<path d="M 0 21 h 178 v20 v-40 m7 30 v-20 v10 h 93" />
-							<path d="M 0 70 h 88 v20 v-40 m7 30 v-20 v10 m7 0 v20 v-40 m7 30 v-20 v10 h 170" />
-						</g>
-						<path d="M 0 21 h 176 m11 0 h 91  M 0 70 h 86 m25 0 h 168" fill='none' stroke="#0ff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="ants" />
-					</g>
-				</svg>
-			</a>
-			<p>The positive terminal is called the <strong>cathode</strong>. The cathode is drawn as the longer line in the symbol.</p>
-			<p>The negative terminal is called the <strong>anode</strong>. The andode is drawn as the shorter line in the symbol. Electrons flow out of the anode, but the current is defined as coming out of the cathode.</p>
-			<strong>Question:</strong> What's an example of a DC voltage source?
-			<details>
-				<summary>answer</summary>
-				<p>Batteries, solar panels, and DC motors are DC voltage sources.</p>
-				<p>Wall sockets are sources of AC voltage.</p>
-			</details>
+	<br>
+	<a href="https://en.wikipedia.org/wiki/Electric_battery">
+		<svg viewBox="0 0 300 76">
+			<text x="102" y="14" text-anchor="middle" font-size="13" fill='#333' font-family="consolas">I</text>
+			<g transform="translate(110 10)">
+				<line x1="5" y1="0" x2="40" y2="0" style="stroke:#333;stroke-width:1.5" />
+				<polygon points="0,0 8,3 8,-3" style="fill:#333;" />
+			</g>
+
+			<g fill='none' stroke="#333">
+				<g fill='none' stroke="#333" stroke-width="3">
+					<path d="M 0 21 h 178 v20 v-40 m7 30 v-20 v10 h 120" />
+					<path d="M 0 55 h 88 v20 v-40 m7 30 v-20 v10 m7 0 v20 v-40 m7 30 v-20 v10 h 200" />
+				</g>
+				<path d="M 0 21 h 175 m13 0 h 118" fill='none' stroke="#0ff" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" class="ants-very-slow" />
+				<path d="M 0 55 h 85 m27 0 h 198" fill='none' stroke="#0ff" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" class="ants-very-slow" />
+			</g>
+		</svg>
+	</a>
+	<article>
+		<p>A DC voltage source is represented by one or more pairs of lines.</p>
+		<p>The longer line in the symbol represents the positive terminal, and it is called the <strong>cathode</strong>. The shorter line is the negative terminal, called the <strong>anode</strong>. Electrons flow out of the anode, but the current is defined as coming out of the cathode.</p>
+		<strong>Question:</strong> What's an example of a DC voltage source?
+		<details>
+			<summary>answer</summary>
+			<p>Batteries, solar panels, and DC motors are DC voltage sources.</p>
+			<p>Wall sockets are sources of AC voltage.</p>
+		</details>
 		</div>
 
 
