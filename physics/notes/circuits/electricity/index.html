@@ -264,6 +264,11 @@
 				stroke-dasharray: 0 6;
 			}
 
+			.ants-slowish {
+				animation: marching_ants_slow 3s linear infinite reverse;
+				stroke-dasharray: 0 6;
+			}
+
 			.ants_ac {
 				animation: marching_ants 1s ease-in-out infinite alternate;
 				stroke-dasharray: 0.1 19.9;
@@ -354,10 +359,10 @@
 	<br>
 	<a href="https://en.wikipedia.org/wiki/Electric_battery">
 		<svg viewBox="0 0 300 76">
-			<text x="102" y="14" text-anchor="middle" font-size="13" fill='#333' font-family="consolas">I</text>
+			<text x="102" y="14" text-anchor="middle" font-size="13" fill='#777' font-family="consolas">I</text>
 			<g transform="translate(110 10)">
-				<line x1="5" y1="0" x2="40" y2="0" style="stroke:#333;stroke-width:1.5" />
-				<polygon points="0,0 8,3 8,-3" style="fill:#333;" />
+				<line x1="5" y1="0" x2="40" y2="0" style="stroke:#777;stroke-width:1.5" />
+				<polygon points="0,0 8,3 8,-3" style="fill:#777;" />
 			</g>
 
 			<g fill='none' stroke="#333">
@@ -366,7 +371,7 @@
 					<path d="M 0 55 h 88 v20 v-40 m7 30 v-20 v10 m7 0 v20 v-40 m7 30 v-20 v10 h 200" />
 				</g>
 				<path d="M 0 21 h 175 m13 0 h 118" fill='none' stroke="#0ff" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" class="ants-very-slow" />
-				<path d="M 0 55 h 85 m27 0 h 198" fill='none' stroke="#0ff" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" class="ants-very-slow" />
+				<path d="M 0 55 h 85 m27 0 h 198" fill='none' stroke="#0ff" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" class="ants-slowish" />
 			</g>
 		</svg>
 	</a>
