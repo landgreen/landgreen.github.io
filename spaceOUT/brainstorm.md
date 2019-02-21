@@ -1,10 +1,6 @@
 
-
-style
-    name
-        space out
-    tone
-        pixely, messy, distracted, goofy, creative
+name
+    space out
 
 controls
     two players on the same keyboard
