@@ -350,6 +350,9 @@ const mech = {
     if (dmg > 0.05) {
       game.fpsCap = 4 //40 - Math.min(25, 100 * dmg)
       game.fpsInterval = 1000 / game.fpsCap;
+    } else {
+      game.fpsCap = 72
+      game.fpsInterval = 1000 / game.fpsCap;
     }
     document.getElementById("dmg").style.transition = "opacity 0s";
     document.getElementById("dmg").style.opacity = 0.1 + Math.min(0.6, dmg * 4);
