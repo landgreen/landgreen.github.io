@@ -68,7 +68,6 @@ function draw() {
     data[imgIndex + 2] = 0; // blue
     data[imgIndex + 3] = 255; // alpha
 
-
     ctx.putImageData(imageData, 0, 0);
 }
 
