@@ -78,7 +78,6 @@ const fabric = function (id) {
   });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(600, 400);
-  // el.appendChild(renderer.domElement);
   renderer.domElement.style.background = "#000";
 
   /////////////////////////////////////////
@@ -89,54 +88,17 @@ const fabric = function (id) {
 
   camera.position.set(0, -45, 30);
 
-  // camera.lookAt(new THREE.Vector3(-settings.range / 2, -settings.range / 2, settings.range));
-  // camera.position.y -= 10;
-  // camera.position.z += 30;
-
-
-
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableZoom = true;
   controls.enableKeys = false;
-  // controls.enableDamping = true;
-  // controls.dampingFactor = 0.1;
-
-  /////////////////////////////////////////
-  // lights and fog
-  /////////////////////////////////////////
-
-  // scene.add(new THREE.AmbientLight(0x111111));
-  // var directionalLight = new THREE.DirectionalLight(0xffffff, 0.125);
-  // directionalLight.position.x = Math.random() - 0.5;
-  // directionalLight.position.y = Math.random() - 0.5;
-  // directionalLight.position.z = Math.random() - 0.5;
-  // directionalLight.position.normalize();
-  // scene.add(directionalLight);
-  // pointLight = new THREE.PointLight(0xffffff, 1);
-  // scene.add(pointLight);
-  // pointLight.add(new THREE.Mesh(new THREE.SphereBufferGeometry(4, 8, 8), new THREE.MeshBasicMaterial({
-  //   color: 0xffffff
-  // })));
-
 
   let lightA = new THREE.AmbientLight(0xffffff);
   scene.add(lightA);
 
-
-  // let dirLight = new THREE.DirectionalLight(0xffffff, 1);
-  // dirLight.color.setHSL(0.1, 1, 0.95);
-  // dirLight.position.set(500, 500, 500);
-  // dirLight.el = new THREE.Object3D(0, 0, 0);
-  // scene.add(dirLight);
-
-  // scene.fog = new THREE.FogExp2(0x000000, 0.01);
-  // scene.fog = new THREE.Fog(0x000000, settings.range * 0.9, settings.range * 1.6);
-
-
   /////////////////////////////////////////
   // spawn things
   /////////////////////////////////////////
-  let mesh, material, geometry
+  let material, geometry
 
   //random planets
   const planet = [];
@@ -145,10 +107,7 @@ const fabric = function (id) {
     if (i === 0) radius = settings.planetRadius * 2.5
     geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
     material = new THREE.MeshLambertMaterial({
-      // color: 0xadc8d3,
       color: 0xffffff,
-      // color: 0xaa6633,
-      // wireframe: true,
       transparent: true,
       opacity: 0,
     });
@@ -166,65 +125,15 @@ const fabric = function (id) {
   // potential energy plane
   let potentialEnergy = new THREE.PlaneGeometry(settings.range, settings.range, settings.resolution, settings.resolution);
 
-  // material = new THREE.MeshNormalMaterial({
-  //   flatShading: true,
-  //   side: THREE.DoubleSide,
-  // })
-
   material = new THREE.MeshNormalMaterial({
-    //ambient: 0x44B8ED,
-    // color: 0xffffff,
-    // wireframe: true,
-    // emissive: 0xffffff,
     side: THREE.DoubleSide,
     shading: THREE.FlatShading,
-    // transparent: true,
-    // opacity: 0.5,
   });
 
 
   let potentialEnergyMesh = new THREE.Mesh(potentialEnergy, material);
   potentialEnergyMesh.position.set(0, 0, 0);
-  // potentialEnergyMesh.rotation.z = ath.PI / 2;
   scene.add(potentialEnergyMesh);
-
-
-  // let potentialEnergy = new THREE.PlaneBufferGeometry(settings.range, settings.range, settings.resolution, settings.resolution);
-
-  // let zMin = -10;
-  // let zMax = 0;
-  // let colors = [];
-  // for (let i = 0; i < potentialEnergy.attributes.position.count; i++) {
-  //   const zVal = THREE.Math.randInt(zMin, zMax);
-  //   const zNorm = (zVal - zMin) / (zMax - zMin);
-  //   potentialEnergy.attributes.position.setZ(i, zVal);
-  //   colors.push(zNorm, zNorm, 1);
-  // }
-  // potentialEnergy.addAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
-  // potentialEnergy.computeVertexNormals();
-
-  // let potentialEnergyMesh = new THREE.Mesh(potentialEnergy, new THREE.MeshStandardMaterial({
-  //   vertexColors: THREE.VertexColors
-  // }));
-
-  // scene.add(potentialEnergyMesh)
-
-
-  // material = new THREE.MeshLambertMaterial({
-  //   //ambient: 0x44B8ED,
-  //   color: 0xffffff,
-  //   wireframe: true,
-  //   // emissive: 0xffffff,
-  //   // side: THREE.DoubleSide,
-  //   // shading: THREE.FlatShading,
-  //   // transparent: true,
-  //   // opacity: 0.5,
-  // });
-
-  // let potentialEnergyMesh = new THREE.Mesh(potentialEnergy, material);
-  // potentialEnergyMesh.position.set(0, 0, 0);
-  // // potentialEnergyMesh.rotation.z = ath.PI / 2;
-  // scene.add(potentialEnergyMesh);
 
 
   /////////////////////////////////////////
