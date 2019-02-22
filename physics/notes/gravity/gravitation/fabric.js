@@ -16,7 +16,7 @@ const fabric = function (id) {
 
   settings = {
     range: 50,
-    totalPlanets: 10,
+    totalPlanets: 4,
     planetRadius: 1,
     fullView: false,
     cameraRange: 400,
@@ -276,7 +276,7 @@ const fabric = function (id) {
   // move potentialEnergyMesh
   /////////////////////////////////////////
   function dynamicPlane() {
-    const depth = 100 / settings.totalMass
+    const depth = 30 / settings.totalMass
     for (let i = 0, len = potentialEnergyMesh.geometry.vertices.length; i < len; i++) {
       let v = potentialEnergyMesh.geometry.vertices[i];
       let mag = depth; //this should be zero but I'm using depth as 0 to center the energy mesh higher up with the camera

@@ -55,6 +55,21 @@
 		<h3 class="definition">
 			Spacetime is <a href="https://www.youtube.com/watch?v=DdC0QN6f3G4">curved</a> by energy. Curved spacetime produces gravity.
 		</h3>
+		<div class="example-small" style="min-height: 498px;">
+			<style>
+				.full-page {
+					position: fixed;
+					top: -5px;
+					left: -5px;
+					z-index: 0;
+					margin: 0;
+					padding: 0;
+				}
+			</style>
+			<canvas id='three-fabric-load' width='600' height='400' onclick="fabric('three-fabric')"></canvas>
+			<canvas id='three-fabric' width='600' height='0'></canvas>
+			In the classical gravity simulation above, gravitational potential energy is represented as warping a 2-D space into a 3rd dimension.
+		</div>
 		<p>
 			The math behind general relativity is beyond the scope of this page, but we will explore some of the predictions:
 			<li>
@@ -78,23 +93,6 @@
 		<p>
 			The theory of general relativity suggests a significant change to fundamental aspects of physics, but there is overwhelming <a href="https://en.wikipedia.org/wiki/Tests_of_general_relativity">evidence</a> in its favor.
 		</p>
-
-		<div class="example-small" style="min-height: 498px;">
-			<style>
-				.full-page {
-					position: fixed;
-					top: -5px;
-					left: -5px;
-					z-index: 0;
-					margin: 0;
-					padding: 0;
-				}
-			</style>
-			Use the mouse to move the camera. Double click for full screen.
-			<canvas id='three-fabric-load' width='600' height='400' onclick="fabric('three-fabric')"></canvas>
-			<canvas id='three-fabric' width='600' height='0'></canvas>
-			In the classical gravity simulation above, gravitational potential energy is represented as warping a 2-D space into a 3rd dimension.
-		</div>
 
 		<h2 class='underlined' id="time">Gravitational Time Dilation</h2>
 		<p> General relativity explains that gravity slows down time. </p>
