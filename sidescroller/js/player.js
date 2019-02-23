@@ -590,33 +590,35 @@ const mech = {
   },
   grabPowerUp() {
     //look for power ups to grab
-    const grabPowerUpRange2 = (this.grabRange + 200) * (this.grabRange + 200)
-    for (let i = 0, len = powerUp.length; i < len; ++i) {
-      const dxP = mech.pos.x - powerUp[i].position.x;
-      const dyP = mech.pos.y - powerUp[i].position.y;
-      const dist2 = dxP * dxP + dyP * dyP;
+    if (mech.fieldCDcycle < game.cycle) {
+      const grabPowerUpRange2 = (this.grabRange + 200) * (this.grabRange + 200)
+      for (let i = 0, len = powerUp.length; i < len; ++i) {
+        const dxP = mech.pos.x - powerUp[i].position.x;
+        const dyP = mech.pos.y - powerUp[i].position.y;
+        const dist2 = dxP * dxP + dyP * dyP;
 
-      // float towards player    if looking at and in range  or  if very close to player
-      if (dist2 < grabPowerUpRange2 && this.lookingAt(powerUp[i]) || dist2 < 14000) {
-        this.fieldMeter -= this.fieldRegen * 0.5;
-        powerUp[i].force.x += 7 * (dxP / dist2) * powerUp[i].mass;
-        powerUp[i].force.y += 7 * (dyP / dist2) * powerUp[i].mass - powerUp[i].mass * game.g; //negate gravity
-        //extra friction
-        Matter.Body.setVelocity(powerUp[i], {
-          x: powerUp[i].velocity.x * 0.4,
-          y: powerUp[i].velocity.y * 0.4
-        });
-        if (dist2 < 5000) { //use power up if it is close enough
-          //player knockback
-          Matter.Body.setVelocity(player, {
-            x: player.velocity.x + ((powerUp[i].velocity.x * powerUp[i].mass) / player.mass) * 0.2,
-            y: player.velocity.y + ((powerUp[i].velocity.y * powerUp[i].mass) / player.mass) * 0.2
+        // float towards player    if looking at and in range  or  if very close to player
+        if (dist2 < grabPowerUpRange2 && this.lookingAt(powerUp[i]) || dist2 < 14000) {
+          this.fieldMeter -= this.fieldRegen * 0.5;
+          powerUp[i].force.x += 7 * (dxP / dist2) * powerUp[i].mass;
+          powerUp[i].force.y += 7 * (dyP / dist2) * powerUp[i].mass - powerUp[i].mass * game.g; //negate gravity
+          //extra friction
+          Matter.Body.setVelocity(powerUp[i], {
+            x: powerUp[i].velocity.x * 0.4,
+            y: powerUp[i].velocity.y * 0.4
           });
-          mech.usePowerUp(i);
-          // this.fireCDcycle = game.cycle + 10; //cool down
-          return;
+          if (dist2 < 5000) { //use power up if it is close enough
+            //player knockback
+            Matter.Body.setVelocity(player, {
+              x: player.velocity.x + ((powerUp[i].velocity.x * powerUp[i].mass) / player.mass) * 0.2,
+              y: player.velocity.y + ((powerUp[i].velocity.y * powerUp[i].mass) / player.mass) * 0.2
+            });
+            mech.usePowerUp(i);
+            // this.fireCDcycle = game.cycle + 10; //cool down
+            return;
+          }
+          // return;
         }
-        // return;
       }
     }
   },
@@ -834,7 +836,7 @@ const mech = {
     },
     () => {
       mech.fieldMode = 3;
-      game.makeTextLog("<h2>Mass Recycler</h2><br><strong>active ability:</strong> hold left and right mouse to convert small blocks into health<br><strong>negative effect:</strong> -life decay", 1000);
+      game.makeTextLog("<h2>Mass Recycler</h2><br><strong>active ability:</strong> hold left and right mouse to convert blocks into health<br><strong>negative effect:</strong> -life decay", 1000);
       mech.setHoldDefaults();
       mech.hold = function () {
         if (game.cycle % 360 === 0) {
@@ -853,8 +855,8 @@ const mech = {
           mech.throw();
         } else if (game.mouseDown && (keys[32] || game.mouseDownRight) && mech.fieldCDcycle < game.cycle) { //both mouse keys down
           if (mech.fieldMeter > mech.fieldRegen) {
-            mech.fieldMeter -= mech.fieldRegen
-            const range = 300;
+            // mech.fieldMeter -= mech.fieldRegen
+            const range = 165;
             //draw range
             ctx.globalCompositeOperation = "lighter" //  "destination-atop" //"difference" //"color-burn";
             ctx.beginPath();
@@ -865,6 +867,7 @@ const mech = {
             ctx.globalCompositeOperation = "source-over";
             ctx.strokeStyle = "#333";
             ctx.stroke();
+
             //find all blocks in range
             for (let i = 0, len = body.length; i < len; i++) {
               if (!body[i].isNotHoldable) {

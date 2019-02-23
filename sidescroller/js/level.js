@@ -12,11 +12,11 @@ const level = {
   start() {
     // game.zoomScale = 1400 //1400
     if (game.levelsCleared === 0) {
-      this.intro();
+      // this.intro();
       // spawn.setSpawnList();
       // game.levelsCleared = 3; //for testing to simulate all possible mobs spawns
       // this.bosses();
-      // this.testingMap();
+      this.testingMap();
       // this.skyscrapers();
       // this.rooftops();
       // this.warehouse();
@@ -104,7 +104,7 @@ const level = {
     spawn.bodyRect(600, -150, 140, 100);
     spawn.bodyRect(400, -150, 140, 160);
     spawn.bodyRect(500, -150, 110, 110);
-    powerUps.spawn(400, -400, "field", false);
+    powerUps.spawn(400, -400, "field", false, '3');
     powerUps.spawn(400, -400, "gun", false);
     // spawn.bodyRect(-45, -100, 40, 50);
 

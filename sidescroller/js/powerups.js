@@ -20,11 +20,25 @@ const powerUps = {
       return 40;
     },
     effect() {
-      let mode = mech.fieldMode
-      while (mode === mech.fieldMode) {
-        mode = Math.ceil(Math.random() * (mech.fieldUpgrades.length - 1))
+      const previousMode = mech.fieldMode
+
+      if (!this.mode) { //this.mode is set if the power up has been ejected from player
+        mode = mech.fieldMode
+        while (mode === mech.fieldMode) {
+          mode = Math.ceil(Math.random() * (mech.fieldUpgrades.length - 1))
+        }
+        mech.fieldUpgrades[mode](); //choose random field upgrade that you don't already have
+      } else {
+        mech.fieldUpgrades[this.mode](); //set a predetermined power up
       }
-      mech.fieldUpgrades[mode](); //choose random field upgrade that you don't already have
+
+      if (previousMode !== 0) { //pop the old field out in case player wants to swap back
+        // mech.fieldMeter = 0 //drop field meter to zero to prevent automatic pickup
+        mech.fieldCDcycle = game.cycle + 60; //trigger fieldCD to stop power up grab automatic pick up of spawn
+        powerUps.spawn(mech.pos.x, mech.pos.y, "field", false, previousMode);
+      }
+
+
       // mech.fieldUpgrades[3]();
 
       //pause game so player can read above the new field
@@ -138,13 +152,6 @@ const powerUps = {
     } else {
       powerUps.spawn(x, y, "ammo", false);
     }
-    // if (Math.random() < 0.33) {
-    //   powerUps.spawn(x, y, "heal", false);
-    // } else if (Math.random() < 0.5) {
-    //   powerUps.spawn(x, y, "ammo", false);
-    // }else {
-    //   powerUps.spawn(x, y, "shield", false);
-    // }
   },
   spawnStartingPowerUps(x, y) {
     if (b.inventory.length < 3) {
@@ -154,25 +161,14 @@ const powerUps = {
       powerUps.spawnRandomPowerUp(x, y);
       powerUps.spawnRandomPowerUp(x, y);
     }
-    // if (mech.fieldMode === 0 && game.levelsCleared > 2) {
-    //   powerUps.spawn(x, y, "field");
-    // } else if (b.inventory.length < 3) {
-    //   powerUps.spawn(x, y, "gun", false); //starting gun
-    // } else {
-    //   powerUps.spawnRandomPowerUp(x, y);
-    //   powerUps.spawnRandomPowerUp(x, y);
-    //   powerUps.spawnRandomPowerUp(x, y);
-    // }
   },
-  spawn(x, y, target, moving = true) {
+  spawn(x, y, target, moving = true, mode) {
     let i = powerUp.length;
     target = powerUps[target];
     size = target.size();
     powerUp[i] = Matter.Bodies.polygon(x, y, 0, size, {
       density: 0.001,
-      //friction: 0,
       frictionAir: 0.01,
-      //frictionStatic: 0,
       restitution: 0.8,
       collisionFilter: {
         group: 0,
@@ -183,6 +179,7 @@ const powerUps = {
       color: target.color,
       sat: 1,
       effect: target.effect,
+      mode: mode,
       name: target.name,
       size: size
     });
