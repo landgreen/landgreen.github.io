@@ -802,7 +802,7 @@
 		</p>
 
 		<div class="center">
-			<svg id="SVG-graph-0" viewBox="0 0 580 600">
+			<svg id="SVG-graph-0" viewBox="0 0 580 400">
 				<defs>
 					<linearGradient id="rainbow" x2="1">
 						<stop id="stop380nm" offset="0.000000" style="stop-color:#020005;" />
@@ -876,7 +876,7 @@
 				const BBColor = Math.ceil((T - 0.01) * blackBody.length * 2)
 				let settings = {
 					x0: 0,
-					y0: 580,
+					y0: 400,
 					stroke: blackBody[BBColor],
 					// stroke: "none",
 					strokeWidth: 3,
@@ -896,7 +896,7 @@
 					// showMouseCoords: true,
 				}
 
-				const normalize = 15 / Math.PI * Math.PI * Math.PI * Math.PI;
+				const normalize = 3 / Math.PI * Math.PI * Math.PI * Math.PI;
 				funGraphSVG("SVG-graph-0", x => normalize / (x * x * x * x * x * (Math.exp(1 / x / T) - 1)), settings); //normalized version
 				settings.updatePath = true
 				document.getElementById("temperature-slider").addEventListener("input", event => {

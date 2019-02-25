@@ -1211,10 +1211,20 @@
 					<text x="55" y="180" text-anchor="end">1.5 V</text>
 				</g>
 			</svg>
-			<p>
-				The <a href="https://www.adafruit.com/product/299">red LED</a> in the circuit above needs a voltage drop between 1.85 and 2.5 V. The LED's ideal current is 20 mA.
-			</p>
-			<strong>Example:</strong> How much resistance will produce a current of 20 mA?
+
+
+			<strong>Example:</strong> How much resistance is needed to safely lite the <a href="https://www.adafruit.com/product/299">red LED</a>?
+			<details>
+				<summary>LED specs</summary>
+				<p>
+					<li>5 mm diameter</li>
+					<li>660 nm wavelength </li>
+					<li>1.85-2.5 V Forward Voltage </li>
+					<li> 20 mA current </li>
+					<li> 250 mcd typical brightness </li>
+					<li><a href="https://cdn-shop.adafruit.com/datasheets/WP7113SRD-D.pdf">datasheet</a></li>
+				</p>
+			</details>
 			<details>
 				<summary>strategy</summary>
 				<p>
@@ -1226,6 +1236,7 @@
 			</details>
 			<details>
 				<summary>solution</summary>
+				<p>The Voltage can be between 1.85 and 2.5 Volts. Let's set a target at 2.1 V.</p>
 				$$0 = V_{\mathrm{bat1}} +V_{\mathrm{bat2}}+ V_{R}+V_{\mathrm{LED}}$$
 				$$0 = 1.5\,\mathrm{V}+1.5\,\mathrm{V}+ V_{R}-2.1\,\mathrm{V}$$
 				$$V_{R} = -0.9\,\mathrm{V}$$

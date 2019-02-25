@@ -40,7 +40,7 @@
 	</header>
 	<article>
 		<p>
-			Power is defined as work done over time. Power measures the rate that voltage sources, like batteries, convert energy into electrical energy. Power could also measure the rate that electrical components convert electrical energy in other forms, like heat or light.
+			Power is defined as work done over time. Power measures the rate that voltage sources, like batteries, convert energy into electrical energy. Power could also measure the rate that electrical components convert electrical energy in other forms.
 		</p>
 		<div class='definition'>
 			<h1>$$P = \frac{W}{\Delta t}$$</h1> \(P\) = power [W, J/s, watt]
@@ -52,12 +52,13 @@
 		</p>
 
 		<div class='example'>
-			<strong>Example:</strong> My electric heater says it is 1500&nbsp;Watts. It can convert 1500 Joules of electrical energy into heat energy in a second. How many joules of heat can it add to a room in a hour?
+			<strong>Example:</strong> The label on my electric space heater says 1500&nbsp;Watts. It can convert 1500 Joules of electrical energy into heat energy in a second. How many joules of heat can it add to a room in a hour?
 			<details>
 				<summary>solution</summary>
 				$$P = \frac{W}{\Delta t}$$
 				$$W = P\Delta t$$
-				$$W = (1500)(3600)$$
+				$$W = (1500\,\mathrm{W})(3600\,\mathrm{s})$$
+				$$W = (1500\,\mathrm{\tfrac{J}{s}})(3600\,\mathrm{s})$$
 				$$W = 5\,400\,000 \, \mathrm{J}$$
 			</details>
 		</div>
@@ -76,8 +77,8 @@
 				<br>
 				$$P = \frac{W}{\Delta t}$$
 				$$W = P\Delta t$$
-				$$W = (1500)(2\,419\,200) $$
-				$$W = 3\,628\,800\,000 \left( \frac{1\, \mathrm{kWh}}{3\,600\,000\, \mathrm{J}} \right) = 1008 \, \mathrm{kWh}$$
+				$$W = (1500 \, \mathrm{\tfrac{J}{s}})(2\,419\,200\,\mathrm{s})$$
+				$$W = 3\,628\,800\,000 \, \mathrm{J} \left( \frac{1\, \mathrm{kWh}}{3\,600\,000\, \mathrm{J}} \right) = 1008 \, \mathrm{kWh}$$
 			</details>
 		</div>
 
@@ -92,12 +93,58 @@
 
 
 
-		<h2 class='underlined'>Electrical Power</h2>
+		<h2 class='underlined'>DC Electric Power </h2>
 		<p>
-			<a href="https://www.youtube.com/watch?v=u4FpbaMW5sk">Circuit</a> elements, like resistors, convert electrical energy into heat. Too much power can overheat sensitive circuit elements, like LEDs.
+			<a href="https://www.youtube.com/watch?v=u4FpbaMW5sk">Circuit</a> components get their energy to do work from dropping voltage.
+			When the voltage decreases it converts electrical energy into heat. <strong>Heat</strong> is defined as energy exiting a system. Heat could exit the system in many different forms: light, sound, thermal energy, ...
 		</p>
+		<style type="text/css">
+			@keyframes marching_ants {
+				0% {
+					stroke-dashoffset: 0;
+				}
+
+				100% {
+					stroke-dashoffset: 20;
+				}
+			}
+
+			.ants {
+				animation: marching_ants 1s linear infinite reverse;
+				stroke-dasharray: 0.1 19.9;
+			}
+		</style>
+		<svg viewBox="0 0 600 160">
+			<defs>
+				<linearGradient id="Gradient2" x1="0" x2="1">
+					<stop offset="15%" stop-color="#0ff" />
+					<stop offset="65%" stop-color="#999" />
+				</linearGradient>
+			</defs>
+			<text x="300" y="15" text-anchor="middle" font-size="22" fill='#333' font-family="arial">Heat</text>
+			<g fill="#f30" stroke-width="2.5" stroke="#f30">
+				<g transform="translate(240 27) rotate(90)">
+					<line x1="5" y1="0" x2="45" y2="0" fill="none" />
+					<polygon points="0,0 16,6 14,0  16,-6" stroke="none" />
+				</g>
+				<g transform="translate(280 27) rotate(90)">
+					<line x1="5" y1="0" x2="45" y2="0" fill="none" />
+					<polygon points="0,0 16,6 14,0  16,-6" stroke="none" />
+				</g>
+				<g transform="translate(320 27) rotate(90)">
+					<line x1="5" y1="0" x2="45" y2="0" fill="none" />
+					<polygon points="0,0 16,6 14,0  16,-6" stroke="none" />
+				</g>
+				<g transform="translate(360 27) rotate(90)">
+					<line x1="5" y1="0" x2="45" y2="0" fill="none" />
+					<polygon points="0,0 16,6 14,0  16,-6" stroke="none" />
+				</g>
+			</g>
+			<path d="M 0 120 h 220  l20 30 l20 -60 l20 60 l20 -60 l20 60 l20 -60 l20 60 l20 -30 h 220" fill='none' stroke="#333" stroke-width="11" stroke-linejoin="round" />
+			<path d="M 0 120 h 220  l20 30 l20 -60 l20 60 l20 -60 l20 60 l20 -60 l20 60 l20 -30 h 220" fill='none' stroke="url(#Gradient2)" stroke-width="6" stroke-linecap="round" class="ants" />
+		</svg>
 		<p>
-			The rate of the heat output is controlled by the voltage multiplied by the current going through the element.
+			The rate of the heat output is equal to the voltage multiplied by the current going through the element.
 		</p>
 		<details class='derive'>
 			<summary>derivation of electrical power</summary>
@@ -110,6 +157,7 @@
 			$$P = IV$$
 		</details>
 		<div class='definition'>
+
 			<h1> $$P = IV$$</h1>
 			\(P\) = power [W, watt, J/s]
 			<br> \(I\) = current [A, amp]
@@ -154,26 +202,49 @@
 			<details>
 				<summary>answer</summary>
 				<p>
-					As resistor converts electrical energy into heat energy it does work. The heat energy dissipates into the air.
+					The battery converts chemical energy into electric potential energy.
+				</p>
+				<p>
+					The resistor converts the electric potential energy into thermal energy.
 				</p>
 			</details>
 		</div>
 
+
 		<div class='example'>
-			<!-- <details class='derive'>
-				<summary>derivation of more electrical power equations</summary>
-				$$P=IV \quad \quad \quad V=IR$$
-				$$P=I(IR)$$
-				$$P=I^2R$$
-				<br>
-				$$V=IR$$
-				$$I = \frac{V}{R}$$
-				$$P=IV$$
-				$$P=\frac{V}{R}V$$
-				$$P=\frac{V^2}{R}$$
-			</details> -->
-			$$P=I^2R \quad \quad \quad P=\frac{V^2}{R}$$
-			<p>If we combine P=IV with Ohm's law we can get more power equations.</p>
+			$$P=IV \quad \quad V=IR$$
+			<p>Combine the electric power equation with ohm's law to derive two more relationships.</p>
+			<strong>Derive:</strong> What is the relationship between Power, Current, and Resistance?
+			What is the relationship between Power, Voltage, and Resistance?
+			<details>
+				<summary>strategy</summary>
+				<p>Use substitution.</p>
+				<p>
+					V=IR means we can substitute V with IR in the power equation.
+				</p>
+				<p>
+					V=IR also means that I = V/R. Substitute I for V/R in the power equation.
+				</p>
+			</details>
+			<details>
+				<summary>derivation</summary>
+				<div class="col-group">
+					<div><br>
+						$$V={\color{#2aa}IR}$$
+						$$P=IV$$
+						$$P=I({\color{#2aa}IR})$$
+						$$\boxed{P=I^2R}$$</div>
+					<div>
+						$$V=IR \quad I = {\color{#f30}\frac{V}{R}}$$
+
+						$$P=IV$$
+						$$P={\color{#f30}\frac{V}{R}}V$$
+						$$\boxed{P=\frac{V^2}{R}}$$</div>
+				</div>
+			</details>
+		</div>
+
+		<div class='example'>
 			<svg viewBox="-30 0 600 300">
 				<path d="M 100 50 h 110
 				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
@@ -193,7 +264,7 @@
 			<details>
 				<summary>solution</summary>
 				$$I = 0.02\, \mathrm{A}$$ $$P=(0.02)^2 (6000)$$ $$P=2.4 \, \mathrm{W}$$
-				<br> $$P=(0.02)^2 (20000)$$ $$P=8.0\, \mathrm{W}$$
+				<br> $$P=(0.02)^2 (20\,000)$$ $$P=8.0\, \mathrm{W}$$
 				<br> $$P=(0.02)^2 (5000)$$ $$P=2.0\, \mathrm{W}$$
 
 				<svg viewBox="-30 0 600 300">
@@ -232,8 +303,7 @@
 				<summary>solution</summary>
 				$$P=I^2R$$ $$P=(0.05)^2(300)$$ $$P=0.75\, \mathrm{W}$$
 			</details>
-			<br>Find the
-			<strong>heat</strong> dissipated by the resistor in 10 seconds.
+			<br>Find the heat dissipated by the resistor over 10 seconds.
 			<details>
 				<summary>solution</summary>
 				$$P=0.75\, \mathrm{W}$$
@@ -254,7 +324,7 @@
 					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
 				</g>
 			</svg>
-			<strong>Example:</strong> Find the total energy converted to electrical energy over 5 minutes by the battery?
+			<strong>Example:</strong> How much chemical energy does the battery convert into electrical energy over 5 minutes?
 			<details>
 				<summary>solution</summary>
 				$$P=IV$$ $$P=(0.024)(1.5)$$ $$P=0.036\, \mathrm{W}$$
