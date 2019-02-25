@@ -858,14 +858,14 @@ const mech = {
             // mech.fieldMeter -= mech.fieldRegen
             const range = 165;
             //draw range
-            ctx.globalCompositeOperation = "lighter" //  "destination-atop" //"difference" //"color-burn";
+            ctx.globalCompositeOperation = "screen" //"lighter" //  "destination-atop" //"difference" //"color-burn";
             ctx.beginPath();
             ctx.arc(mech.pos.x, mech.pos.y, range, 0, 2 * Math.PI);
             ctx.lineWidth = 1;
-            ctx.fillStyle = "rgba(150,200,180," + (0.9 + Math.random() * 0.1) + ")";
+            ctx.fillStyle = "rgba(150,210,180," + (0.9 + Math.random() * 0.1) + ")";
             ctx.fill();
             ctx.globalCompositeOperation = "source-over";
-            ctx.strokeStyle = "#333";
+            ctx.strokeStyle = "#364";
             ctx.stroke();
 
             //find all blocks in range
