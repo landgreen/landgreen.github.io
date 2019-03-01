@@ -447,12 +447,12 @@
 
 		<h2 class='underlined'>Kirchhoff’s Law: Current</h2>
 		<p>
-			This next law is true because charge is conserved. The total charge can't increase or decrease.
+			Kirchhoff’s current law is true because charge is conserved. Total charge can't increase or decrease.
 		</p>
 		<style type="text/css">
 			@keyframes marching_ants_merge {
 				0% {
-					stroke-dashoffset: 40;
+					stroke-dashoffset: 20;
 				}
 
 				100% {
@@ -461,19 +461,18 @@
 			}
 
 			.ants-merge {
-				animation: marching_ants_merge 4s linear infinite;
-				animation-delay: -2s;
-				stroke-dasharray: 0.1 39.9;
+				animation: marching_ants_merge 2s linear infinite;
+				animation-delay: -1s;
+				stroke-dasharray: 0.1 19.9;
 			}
 
 			.ants-merge-2 {
-				animation: marching_ants_merge 4s linear infinite;
-				stroke-dasharray: 0.1 39.9;
+				animation: marching_ants_merge 2s linear infinite;
+				stroke-dasharray: 0.1 19.9;
 			}
 		</style>
 		<div class='definition'>
-			<p>For any point on a circuit: the total charge flowing into the point equals the total charge flowing out.</p>
-
+			<p>At any point on a circuit, the total charge flowing in equals the total charge flowing out.</p>
 			<svg viewBox="0 0 400 130">
 				<defs>
 					<linearGradient id="fade-in" x1="0" x2="1" y1="0" y2="0">
@@ -510,7 +509,6 @@
 				<rect x="0" y="0" width="25" height="130" fill="url(#fade-in)" stroke="none" />
 				<rect x="375" y="0" width="25" height="130" fill="url(#fade-out)" stroke="none" />
 				<rect x="150" y="115" width="100" height="15" fill="url(#fade-down)" stroke="none" />
-
 			</svg>
 			<h1>$$ \sum I _{in} = \sum I_{out} $$</h1>
 			\(I_{in}\) = charge
@@ -518,7 +516,7 @@
 			<br>\(I_{out}\) = charge
 			<strong>exiting</strong> a point per second [A, amps]
 		</div>
-		<p>If a circuit doesn't branch it will have the same current at every point.</p>
+		<p>Sections of a circuit that don't branch will have the same current everywhere.</p>
 		<div class='example'>
 			<svg viewBox="-100 0 600 200">
 				<path d="M 10 10 L 390 10  M 200 10 L 200 190" fill='none' stroke="#333" stroke-width="4" />
@@ -684,7 +682,7 @@
 
 		<div class='definition'>
 			<p>
-				The total equivalent resistance for resistors in a series is the sum of the resistors. This means you can replace several resistors in a series with just one and the circuit will be the same.
+				The total equivalent resistance for resistors in a series is the sum of the resistors.
 			</p>
 			<svg viewBox="0 0 550 100">
 				<path d="M 10 50 h40
@@ -706,6 +704,9 @@
 			\(R_{n}\) = A single resistor in a series [ohms, Ω]
 			<br>\(R_{eq}\) = Equivalent resistance. The resistance of a single resistor that could replace several resistors. [ohms, Ω]
 		</div>
+		<p>
+			You can replace several resistors in a series with just one without changing the behavior of the circuit.
+		</p>
 
 		<div class='example'>
 			<svg viewBox="0 0 550 100">
