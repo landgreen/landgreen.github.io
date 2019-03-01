@@ -1,4 +1,4 @@
-animals = [
+const animals = [
   "baboon",
   "badger",
   "bandicoot",
@@ -17,7 +17,7 @@ animals = [
   "beetle",
   "beta fish",
   "bigmouth bass",
-  "billygoat",
+  "billy goat",
   "bird",
   "bird of paradise",
   "bison",

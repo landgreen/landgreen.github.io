@@ -392,12 +392,16 @@ let p = new Vue({
           "is in charge for the next 30 seconds",
           "is super cool"
         ];
+        const colors = ["red", "pink", "purple", "deep-purple", "indigo", "blue", "light-blue", "cyan", "teal", "green", "light-green", "lime", "yellow", "amber", "orange", "deep-orange", "brown", "grey", "blue-grey"]
         const oh = ["oh", "hey", "what?", "oh wow"];
         const great = ["good news", "good news everyone", "great", "wow!", "amazing! ", "fantastic", "superb", "excellent", "magnificent"];
         const nextTo = PICK === this.layout.length - 1 ? this.layout[0].name : this.layout[PICK + 1].name; //name of another student
 
         const n = this.layout[PICK].name; //focus student's name
         const sayThis = [
+          `${n} just caught a ` + pokemon[Math.floor(Math.random() * pokemon.length)] + ". You gotta catch them all!",
+          `${n}'s favorite pokemon is ` + pokemon[Math.floor(Math.random() * pokemon.length)],
+          `${n} thinks that a ` + pokemon[Math.floor(Math.random() * pokemon.length)] + " would beat a " + pokemon[Math.floor(Math.random() * pokemon.length)] + " in a pokemon battle.",
           `${n} is just a city boy. Born and raised in South Detroit.`,
           `${n} is just a small town girl, living in a lonely world.`,
           `${n} eats tide pods...`,
@@ -423,6 +427,7 @@ let p = new Vue({
           oh[Math.floor(Math.random() * oh.length)] + " " + n + " ... hi!",
           "This " + animals[Math.floor(Math.random() * animals.length)] + " thinks " + n + " is really cool.",
           n + " tell me your favorite color.",
+          n + "  is your favorite color " + colors[Math.floor(Math.random() * colors.length)] + "?",
           n + " has a pet " + animals[Math.floor(Math.random() * animals.length)],
           oh[Math.floor(Math.random() * oh.length)] + ", The time is " + time.hour + ":" + time.min + " " + time.noon + ", also I pick " + n,
           n + " " + thing[Math.floor(Math.random() * thing.length)],
@@ -487,7 +492,7 @@ function speech(say) {
     //   for(var i = 0; i < voices.length; i++ ) {
     //     console.log("Voice " + i.toString() + ' ' + voices[i].name + ' ' + voices[i].uri);
     //   }
-    console.log(utterance)
+    // console.log(utterance)
     speechSynthesis.speak(utterance);
   }
 }
