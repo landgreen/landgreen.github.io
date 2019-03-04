@@ -296,7 +296,7 @@
 				</svg>
 		</div>
 
-		<h2 class='underlined'>Kirchhoff’s Law: Voltage</h2>
+		<h2 class='underlined' id="kirchhoff-voltage">Kirchhoff’s Law: Voltage</h2>
 		<p>
 			If it is possible for the current to take a looping path through the circuit, the total change in potential is zero. Otherwise the potential would keep getting higher.
 		</p>
@@ -473,7 +473,7 @@
 		</style>
 		<div class='definition'>
 			<p>At any point on a circuit, the total charge flowing in equals the total charge flowing out.</p>
-			<svg viewBox="0 0 400 130">
+			<svg viewBox="0 0 400 130" class="on-edge">
 				<defs>
 					<linearGradient id="fade-in" x1="0" x2="1" y1="0" y2="0">
 						<stop offset="0%" stop-color="#ddeef6" stop-opacity="1" />
@@ -733,7 +733,7 @@
 				$$R_{eq} = 400\, \Omega$$
 			</details>
 		</div>
-		<h2 class='underlined'>Resistors in Parallel</h2>
+		<h2 class='underlined' id="parallel">Resistors in Parallel</h2>
 		<p>
 			Electrical components are in <strong>parallel</strong> when the path branches, and charges take different paths. The equation for replacing resistors in parallel is a bit more complex.
 		</p>
@@ -1197,160 +1197,6 @@
 			<p>Looks good!</p>
 		</details>
 
-
-
-
-		<h2 class='underlined'>Light Emitting Diodes</h2>
-		<svg width="80" height="385" style="float: right;" viewBox="15 70 90 300">
-			<g stroke="#333" fill="#fff" stroke-width="2">
-				<path d="M 25,45 c 0,-40 50,-40 50,0 L 75,100 l -55,0 l 0,-8 l 5,0 z" />
-				<path d="M 35,380 l 5,0 l 0,-260 l 2,0 l 0,-10 l -2,0 l 0,-18 l -5,-5 l 0,-5 l 10,0 l 0,-5 l -10,-7 l 0,-5 l -5,0 l 0,25 l 5,5 l 0,15 l -2,0 l 0,10 l 2,0 l 0,260 z" />
-				<path d="M 60,360 l 5,0 l 0,-240 l 2,0 l 0,-10 l -2,0 l 0,-15 l 5,-5 l 0,-15 l -5,0 l 0,-10 l -23,0 l 0,5 l 18,12 l 5,0 l 0,5 l -5,5 l 0,18 l -2,0 l 0,10 l 2,0 l 0,240 z" />
-				<path style="fill: none; stroke: #000000;" d="M 32,65 c 7,-8 13,-8 20,0" />
-				<path style="fill: none; stroke: #000000;" d="M 45,65 c 2,5 10,5 12,0" />
-			</g>
-		</svg>
-		<p>A <strong>Light emitting Diode</strong> is a power efficient circuit element that produces light. LEDs are a <strong>diode</strong>. This means they only allows current to flow in one direction.</p>
-		<p>Like resistors, LEDs have resistance and they cause a voltage drop.</p>
-		<p>An LED's resistance decreases with temperature. This can lead to a positive feedback loop, called thermal runaway. Thermal runaway is when a small temperature increases lowers resistance, and the lower resistance leads to increased current with leads to more temperature increases.</p>
-		<div class='example'>
-			<svg viewBox="0 5 300 50">
-				<path d="M 0 30 h130 m0 20 v-40 l40 20 l-40 20 v-40 m40 0 v40 l0 -20 h 120" fill='none' stroke="#333" stroke-width="1.5" stroke-linejoin="round" />
-				<g transform="translate(60 40) rotate(180)">
-					<line x1="5" y1="0" x2="50" y2="0" stroke-width="1.5" fill="none" stroke="#333" />
-					<polygon points="0,0 7,3 7,-3" fill="#333" stroke="none" />
-				</g>
-				<text x="62" y="44" font-size="14" fill='#333' font-family="Courier New">I</text>
-			</svg>
-			<p>In circuit diagrams a diode is represented by a triangle pointing at a line. Because diodes only allow current in one direction you have to draw them with the triangle pointing with the current.</p>
-			<svg viewBox="0 -10 300 60">
-				<path d="M 0 30 h130 m0 20 v-40 l40 20 l-40 20 v-40 m40 0 v40 l0 -20 h 120" fill='none' stroke="#333" stroke-width="1.5" stroke-linejoin="round" />
-				<g transform="translate(165 0) rotate(115)">
-					<line x1="1" y1="0" x2="20" y2="0" stroke-width="1" fill="none" stroke="#333" />
-					<polygon points="0,0 5,2.5 5,-2.5" fill="#333" stroke="none" />
-				</g>
-				<g transform="translate(155 -5) rotate(115)">
-					<line x1="1" y1="0" x2="20" y2="0" stroke-width="1" fill="none" stroke="#333" />
-					<polygon points="0,0 5,2.5 5,-2.5" fill="#333" stroke="none" />
-				</g>
-			</svg>
-			<p>
-				A diode that emits light, an LED, is draw with arrows.
-			</p>
-		</div>
-		<div class='example'>
-			<svg viewBox="-20 -50 600 340">
-				<!-- <path d="M 240 27 l-20 -20 l10 2 m-10 -2 l 2 10
-						 M 255 15 l-20 -20 l10 2 m-10 -2 l 2 10" fill='none' stroke="#f00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" /> -->
-
-				<g transform="translate(228 8) rotate(65)">
-					<line x1="1" y1="0" x2="25" y2="0" stroke-width="2" fill="none" stroke="#f00" />
-					<polygon points="0,0 8,4 8,-4" fill="#f00" stroke="none" />
-				</g>
-				<g transform="translate(238 3) rotate(65)">
-					<line x1="1" y1="0" x2="25" y2="0" stroke-width="2" fill="none" stroke="#f00" />
-					<polygon points="0,0 8,4 8,-4" fill="#f00" stroke="none" />
-				</g>
-
-				<path d="M 100 50 h 125
-						m0 20 v-40 m0 20 l40 20 m-40 -20 l40 -20 v40 m0 -20 h135
-						v 200
-						h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10	h -110
-						v-70 m-40 0 h 80 m-20 -15 h-40 m20 0 v -50  m-40 0 h 80 m-20 -15 h-40 m20 0 v-50" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
-				<g font-size="20" fill='#333'>
-					<text x="250" y="283" text-anchor="middle">R = ?</text>
-					<text x="55" y="115" text-anchor="end">1.5 V</text>
-					<text x="55" y="180" text-anchor="end">1.5 V</text>
-				</g>
-			</svg>
-
-
-			<strong>Example:</strong> How much resistance is needed to safely lite the <a href="https://www.adafruit.com/product/299">red LED</a>?
-			<details>
-				<summary>LED specs</summary>
-				<p>
-					<li>5 mm diameter</li>
-					<li>660 nm wavelength </li>
-					<li>1.85-2.5 V Forward Voltage </li>
-					<li> 20 mA current </li>
-					<li> 250 mcd typical brightness </li>
-					<li><a href="https://cdn-shop.adafruit.com/datasheets/WP7113SRD-D.pdf">datasheet</a></li>
-				</p>
-			</details>
-			<details>
-				<summary>strategy</summary>
-				<p>
-					The Voltage across the LED can be between 1.85 and 2.5&nbsp;Volts. Set a safe target in the middle at 2.1&nbsp;V.
-				</p>
-				<p>
-					Use Kirchoff's voltage law to find the voltage drop across the resistor.
-				</p>
-				<p>
-					Use the voltage across the resistor to predict the resistance that will yield 20&nbsp;mA of current with Ohm's law.
-				</p>
-			</details>
-			<details>
-				<summary>solution</summary>
-				$$0 = V_{\mathrm{bat1}} +V_{\mathrm{bat2}}+ V_{R}+V_{\mathrm{LED}}$$
-				$$0 = 1.5\,\mathrm{V}+1.5\,\mathrm{V}+ V_{R}-2.1\,\mathrm{V}$$
-				$$V_{R} = -0.9\,\mathrm{V}$$
-				<br>
-				$$V=IR$$
-				$$R = \frac{V}{I}$$
-				$$R = \frac{0.9\,\mathrm{V}}{0.020 \,\mathrm{A}}$$
-				$$R = 45 \,\Omega$$
-			</details>
-			<br>
-			<strong>Example:</strong> How much power is used by the circuit when the LED is lit?
-			<details>
-				<summary>solution</summary>
-				<p>We can find the total power used by focusing on the batteries.</p>
-				$$P=IV$$
-				$$P=(0.020 \,\mathrm{A})(3.0 \,\mathrm{V})$$
-				$$P=0.060 \,\mathrm{W}$$
-			</details>
-		</div>
-
-		<!-- <div class='example'>
-			<svg viewBox="-20 -50 600 340">
-				<g transform="translate(228 8) rotate(65)">
-					<line x1="1" y1="0" x2="25" y2="0" stroke-width="2" fill="none" stroke="#f00" />
-					<polygon points="0,0 8,4 8,-4" fill="#f00" stroke="none" />
-				</g>
-				<g transform="translate(238 3) rotate(65)">
-					<line x1="1" y1="0" x2="25" y2="0" stroke-width="2" fill="none" stroke="#f00" />
-					<polygon points="0,0 8,4 8,-4" fill="#f00" stroke="none" />
-				</g>
-
-				<path d="M 100 50 h 125
-						m0 20 v-40 m0 20 l40 20 m-40 -20 l40 -20 v40 m0 -20 h135
-						v 200
-						h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10	h -110
-						v-70 m-40 0 h 80 m-20 -15 h-40 m20 0 v -50  m-40 0 h 80 m-20 -15 h-40 m20 0 v-50" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
-				<g font-size="20" fill='#333'>
-					<text x="250" y="283" text-anchor="middle">R = ?</text>
-					<text x="55" y="115" text-anchor="end">1.5 V</text>
-					<text x="55" y="180" text-anchor="end">1.5 V</text>
-				</g>
-			</svg>
-			<strong>Example:</strong>
-			<details>
-				<summary>solution</summary>
-
-			</details>
-		</div> -->
-		<h2 class='underlined'>Integrated Circuits</h2>
-		<p>
-			Complex circuits, called <strong>logic gates</strong> can be linked together to perform logical operations, like "A and B" or "A or B". These logical circuits can be linked together to perform more complex operations like addition and subtraction.
-		</p>
-		<div class="example-small">
-			<p>
-				Computer <a href="http://visual6502.org/sim/varm/armgl.html">processors</a> are very <a href="http://www.righto.com/2015/12/reverse-engineering-arm1-ancestor-of.html">complex</a> circuits.
-				Data stored in memory is loaded at the terminals on the edge of the chip as on or off voltage.
-				The chip performs different logic operations based on the imputed voltages from the memory.
-			</p>
-		</div>
-
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
@@ -1358,8 +1204,6 @@
 	<script>
 		renderMathInElement(document.body);
 	</script>
-	<!-- <script src="charge11.js"></script> -->
-	<!-- <script src="charge13.js"></script> -->
 </body>
 
 </html>

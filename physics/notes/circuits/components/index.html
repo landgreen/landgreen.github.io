@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+			gtag('config', 'UA-113454647-1');
+	</script>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
+	<meta property="og:title" content="Physics Notes">
+	<meta name="twitter:title" content="High School Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
+	<title>Electronic Components</title>
+	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+
+	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+	<script src="../../../lib/katex/katex.min.js"></script>
+	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<script src='../../../lib/chargeclass.js'></script>
+</head>
+
+<body>
+	<header>
+		<h1>
+			<a href="../../../index.html">Electronic Components</a>
+		</h1>
+	</header>
+	<article>
+		<p>
+			This page covers just a few of the hundreds of electronic components that can be added to a circuit.
+		</p>
+
+		<h2 class='underlined'>Resistor</h2>
+		<p>
+			Semiconductive <a href='https://en.wikipedia.org/wiki/Resistor'>elements</a>, called <strong>resistors</strong>, have more resistance than a metal wire, but still much less resistance than an insulator, like air or plastic.
+		</p>
+		<a href="https://en.wikipedia.org/wiki/Electronic_color_code">
+			<svg viewBox="-50,150,2280,350">
+				<rect y="318.12" x="32.32" height="48.487" width="2010" fill="#555" stroke="none" />
+				<path transform="translate(0,-1107.6403)" d="m 798.5625,1308.5625 c -21.47944,0 -37.32619,4.0094 -49.46875,10.5625 -0.0526,0.028 -0.10377,0.065 -0.15625,0.094 -18.04664,8.9915 -27.35769,22.7119 -33.90625,37.4374 -14.51122,27.7533 -22.11341,59.0945 -55.8125,69.0938 -1.31397,0.3899 -2.62206,0.7469 -3.9375,1.125 l 0,46.2188 c 1.31639,0.3788 2.62251,0.766 3.9375,1.1562 64.74738,19.2121 12.93753,117.1875 139.34375,117.1875 0.73556,0 1.52761,-0.033 2.3125,-0.062 1.42733,0.029 2.86724,0.062 4.34375,0.062 30.2139,0 103.1066,-25.625 131.1875,-25.625 l 185.24995,0 c 28.081,0 100.9736,25.625 131.1876,25.625 1.4764,0 2.9164,-0.034 4.3437,-0.062 0.7849,0.03 1.5769,0.062 2.3125,0.062 126.4062,0 74.5964,-97.9754 139.3438,-117.1875 1.3149,-0.3902 2.6211,-0.7774 3.9374,-1.1562 l 0,-46.2188 c -1.3154,-0.3781 -2.6235,-0.7351 -3.9374,-1.125 -33.6993,-9.9993 -41.3013,-41.3405 -55.8126,-69.0938 -6.5485,-14.7255 -15.8596,-28.4459 -33.9062,-37.4374 -0.053,-0.029 -0.1037,-0.065 -0.1562,-0.094 -12.1426,-6.5531 -27.9894,-10.5625 -49.4688,-10.5625 -0.7233,0 -1.4833,0.034 -2.25,0.062 -1.4474,-0.029 -2.9088,-0.062 -4.4062,-0.062 -30.214,0 -103.1066,25.625 -131.1876,25.625 l -185.24995,0 c -28.0809,0 -100.9736,-25.625 -131.1875,-25.625 -1.49753,0 -2.95885,0.034 -4.40625,0.062 -0.76674,-0.029 -1.52669,-0.062 -2.25,-0.062 z" style="fill:#d9bb7a;stroke:#565248" />
+				<path transform="translate(0,-27.6403)" d="M 798.5625 228.5625 C 794.83997 228.5625 791.30046 228.67303 787.90625 228.90625 L 787.90625 511.1875 C 791.31332 511.35148 794.85648 511.4375 798.5625 511.4375 C 799.29806 511.4375 800.09011 511.404 800.875 511.375 C 802.30233 511.404 803.74224 511.4375 805.21875 511.4375 C 817.35302 511.4375 836.39057 507.29016 856.625 502.34375 L 856.625 237.65625 C 836.39057 232.70984 817.35302 228.5625 805.21875 228.5625 C 803.72122 228.5625 802.2599 228.597 800.8125 228.625 C 800.04576 228.596 799.28581 228.5625 798.5625 228.5625 z " style="fill:#fdca01;stroke:#986601" />
+				<path transform="translate(0,-27.6403)" d="M 901.0625 248.5625 L 901.0625 491.4375 C 915.3171 488.17202 927.92103 485.8125 936.40625 485.8125 L 969.75 485.8125 L 969.75 254.1875 L 936.40625 254.1875 C 927.92103 254.1875 915.3171 251.82798 901.0625 248.5625 z " style="fill:#9e0097;stroke:#430086;stroke-width:1;" />
+				<path transform="translate(0,-27.6403)" d="M 1014.1875 254.1875 L 1014.1875 485.8125 L 1082.875 485.8125 L 1082.875 254.1875 L 1014.1875 254.1875 z " style="fill:#f44800;stroke:#980101" />
+				<path transform="translate(0,-27.6403)" d="M 1252.8438 228.5625 C 1246.3558 228.5625 1237.9014 229.76927 1228.3438 231.625 L 1228.3438 508.375 C 1237.9014 510.23073 1246.3558 511.4375 1252.8438 511.4375 C 1254.3202 511.4375 1255.7602 511.403 1257.1875 511.375 C 1257.9724 511.405 1258.7644 511.4375 1259.5 511.4375 C 1274.3045 511.4375 1286.6423 510.09139 1297.0312 507.6875 L 1297.0312 234 C 1286.8423 230.56088 1274.5655 228.5625 1259.5 228.5625 C 1258.7767 228.5625 1258.0167 228.597 1257.25 228.625 C 1255.8026 228.596 1254.3411 228.5625 1252.8438 228.5625 z " style="fill:#c68401;stroke:none" />
+			</svg>
+		</a>
+		<p>
+			Resistors are added to a circuit for precise control over current. If the current is too high, the circuit will get hot. If the current is too low the circuit can't do its job.
+		</p>
+		<br>
+		<svg viewBox="0 0 300 23">
+			<g fill='none' stroke="#333" stroke-width="1.75" stroke-linejoin="round" stroke-linecap="round">
+				<path d="M 13 15 h 90 h80 h 90" />
+				<rect y="8" x="103" height="14" width="80" fill="#fff" />
+			</g>
+		</svg>
+		<p>The IEC symbol for a resistor is this rectangle.</p>
+		<br>
+		<br>
+		<svg viewBox="0 0 300 27">
+			<path d="M 13 15 h 90 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90" fill='none' stroke="#333" stroke-width="1.75" stroke-linejoin="round" stroke-linecap="round" />
+		</svg>
+		<p>The American representation of a resistor is this squiggle, which I use because I like the way it looks.</p>
+
+
+
+		<h2 class='underlined'>Diode</h2>
+		<p>
+			A <a href="https://en.wikipedia.org/wiki/Diode">diode</a> only allows current in one direction.
+		</p>
+
+		<svg viewBox="0 5 300 50">
+			<path d="M 0 30 h130 m0 20 v-40 l40 20 l-40 20 v-40 m40 0 v40 l0 -20 h 120" fill='none' stroke="#333" stroke-width="1.5" stroke-linejoin="round" />
+			<g transform="translate(60 40) rotate(180)">
+				<line x1="5" y1="0" x2="50" y2="0" stroke-width="1.5" fill="none" stroke="#333" />
+				<polygon points="0,0 7,3 7,-3" fill="#333" stroke="none" />
+			</g>
+			<text x="62" y="44" font-size="14" fill='#333' font-family="Courier New">I</text>
+		</svg>
+		<p>
+			In circuit diagrams a diode is represented by a triangle pointing at a line. Because diodes only allow current in one direction you have to draw them with the triangle pointing with the current.
+		</p>
+
+		<h2 class='underlined'>Light Emitting Diode</h2>
+		<svg width="90" height="330" style="float: right;" viewBox="-15 70 120 300">
+			<g stroke="#333" fill="#fff" stroke-width="2">
+				<path d="M 25,45 c 0,-40 50,-40 50,0 L 75,100 l -55,0 l 0,-8 l 5,0 z" />
+				<path d="M 35,380 l 5,0 l 0,-260 l 2,0 l 0,-10 l -2,0 l 0,-18 l -5,-5 l 0,-5 l 10,0 l 0,-5 l -10,-7 l 0,-5 l -5,0 l 0,25 l 5,5 l 0,15 l -2,0 l 0,10 l 2,0 l 0,260 z" />
+				<path d="M 60,360 l 5,0 l 0,-240 l 2,0 l 0,-10 l -2,0 l 0,-15 l 5,-5 l 0,-15 l -5,0 l 0,-10 l -23,0 l 0,5 l 18,12 l 5,0 l 0,5 l -5,5 l 0,18 l -2,0 l 0,10 l 2,0 l 0,240 z" />
+				<path style="fill: none; stroke: #000000;" d="M 32,65 c 7,-8 13,-8 20,0" />
+				<path style="fill: none; stroke: #000000;" d="M 45,65 c 2,5 10,5 12,0" />
+			</g>
+		</svg>
+		<p>A Light Emitting Diode is an efficient circuit element that produces light. LEDs are a diode. This means they only allows current to flow in one direction.</p>
+		<p>Like resistors, LEDs have resistance and cause a voltage drop.</p>
+		<p>An LED's resistance decreases with temperature. This can lead to a positive feedback loop, called thermal runaway. Thermal runaway is when a small temperature increases lowers resistance, and the lower resistance leads to increased current with leads to more temperature increases.</p>
+
+		<svg viewBox="0 -10 300 60">
+			<path d="M 0 30 h130 m0 20 v-40 l40 20 l-40 20 v-40 m40 0 v40 l0 -20 h 120" fill='none' stroke="#333" stroke-width="1.5" stroke-linejoin="round" />
+			<g transform="translate(165 0) rotate(115)">
+				<line x1="1" y1="0" x2="20" y2="0" stroke-width="1" fill="none" stroke="#333" />
+				<polygon points="0,0 5,2.5 5,-2.5" fill="#333" stroke="none" />
+			</g>
+			<g transform="translate(155 -5) rotate(115)">
+				<line x1="1" y1="0" x2="20" y2="0" stroke-width="1" fill="none" stroke="#333" />
+				<polygon points="0,0 5,2.5 5,-2.5" fill="#333" stroke="none" />
+			</g>
+		</svg>
+		<p>
+			An LED is draw as a diode with arrows.
+		</p>
+		</div>
+		<div class='example'>
+			<svg viewBox="-20 -50 600 340">
+				<!-- <path d="M 240 27 l-20 -20 l10 2 m-10 -2 l 2 10
+						 M 255 15 l-20 -20 l10 2 m-10 -2 l 2 10" fill='none' stroke="#f00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" /> -->
+
+				<g transform="translate(228 8) rotate(65)">
+					<line x1="1" y1="0" x2="25" y2="0" stroke-width="2" fill="none" stroke="#f00" />
+					<polygon points="0,0 8,4 8,-4" fill="#f00" stroke="none" />
+				</g>
+				<g transform="translate(238 3) rotate(65)">
+					<line x1="1" y1="0" x2="25" y2="0" stroke-width="2" fill="none" stroke="#f00" />
+					<polygon points="0,0 8,4 8,-4" fill="#f00" stroke="none" />
+				</g>
+
+				<path d="M 100 50 h 125
+						m0 20 v-40 m0 20 l40 20 m-40 -20 l40 -20 v40 m0 -20 h135
+						v 200
+						h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10	h -110
+						v-70 m-40 0 h 80 m-20 -15 h-40 m20 0 v -50  m-40 0 h 80 m-20 -15 h-40 m20 0 v-50" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+				<g font-size="20" fill='#333'>
+					<text x="250" y="283" text-anchor="middle">R = ?</text>
+					<text x="55" y="115" text-anchor="end">1.5 V</text>
+					<text x="55" y="180" text-anchor="end">1.5 V</text>
+				</g>
+			</svg>
+
+
+			<strong>Example:</strong> How much resistance is needed to safely light the <a href="https://www.adafruit.com/product/299">red LED</a>?
+			<details>
+				<summary>LED specs</summary>
+				<p>
+					<li>5 mm diameter</li>
+					<li>660 nm wavelength </li>
+					<li>1.85-2.5 V Forward Voltage </li>
+					<li> 20 mA current </li>
+					<li> 250 mcd typical brightness </li>
+					<li><a href="https://cdn-shop.adafruit.com/datasheets/WP7113SRD-D.pdf">datasheet</a></li>
+				</p>
+			</details>
+			<details>
+				<summary>strategy</summary>
+				<p>
+					The Voltage across the LED can be between 1.85 and 2.5&nbsp;Volts. Set a safe target in the middle at 2.1&nbsp;V.
+				</p>
+				<p>
+					Use <a href="..\kirchoff\index.html#kirchhoff-voltage">Kirchoff's voltage law</a> to find the voltage drop across the resistor.
+				</p>
+				<p>
+					Use the voltage across the resistor to predict the resistance that will yield 20&nbsp;mA of current with <a href="..\electricity\index.html#ohms-law">Ohm's law</a>.
+				</p>
+			</details>
+			<details>
+				<summary>solution</summary>
+				$$0 = V_{\mathrm{bat1}} +V_{\mathrm{bat2}}+ V_{R}+V_{\mathrm{LED}}$$
+				$$0 = 1.5\,\mathrm{V}+1.5\,\mathrm{V}+ V_{R}-2.1\,\mathrm{V}$$
+				$$V_{R} = -0.9\,\mathrm{V}$$
+				<br>
+				$$V=IR$$
+				$$R = \frac{V}{I}$$
+				$$R = \frac{0.9\,\mathrm{V}}{0.020 \,\mathrm{A}}$$
+				$$R = 45 \,\Omega$$
+			</details>
+			<br>
+			<strong>Example:</strong> How much power is used by the circuit when the LED is lit?
+			<details>
+				<summary>solution</summary>
+				<p>We can find the total power used by focusing on the batteries.</p>
+				$$P=IV$$
+				$$P=(0.020 \,\mathrm{A})(3.0 \,\mathrm{V})$$
+				$$P=0.060 \,\mathrm{W}$$
+			</details>
+			<br>
+			<strong>Question:</strong> Why couldn't we use one 1.5&nbsp;V battery to turn on this LED?
+			<details>
+				<summary>answer</summary>
+				<p>The LED requires a voltage drop of at least 1.85&nbsp;V.</p>
+				<p>One 1.5&nbsp;V Battery doesn't have enough voltage.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<svg viewBox="-20 -50 600 340">
+				<g transform="translate(228 8) rotate(65)">
+					<line x1="1" y1="0" x2="25" y2="0" stroke-width="2" fill="none" stroke="#888" />
+					<polygon points="0,0 8,4 8,-4" fill="#888" stroke="none" />
+				</g>
+				<g transform="translate(238 3) rotate(65)">
+					<line x1="1" y1="0" x2="25" y2="0" stroke-width="2" fill="none" stroke="#888" />
+					<polygon points="0,0 8,4 8,-4" fill="#888" stroke="none" />
+				</g>
+
+				<path d="M 100 50 h 125
+						m0 20 v-40 m0 20 l40 20 m-40 -20 l40 -20 v40 m0 -20 h135
+						v 200
+						h -110 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10	h -110
+						v-90 m-40 0 h 80 m-20 -15 h-40 m20 0 v -94" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+				<g font-size="20" fill='#333'>
+					<text x="250" y="283" text-anchor="middle">R = ?</text>
+					<text x="47" y="160" text-anchor="end">9 V</text>
+				</g>
+			</svg>
+			<strong>Example:</strong> What resistor should we use with a 9&nbsp;volt battery and <a href="https://www.adafruit.com/product/518">this</a> white LED?
+			<details>
+				<summary>LED specs</summary>
+				<p>
+					<li>ultra white 6000 Kelvin emitted color temperature</li>
+					<li>typical forward voltage 3.2 V</li>
+					<li>max forward voltage 3.8 V</li>
+					<li>forward current 350 mA</li>
+					<li>LED Junction Temperature 120 C</li>
+					<li>viewing angle 140º</li>
+					<li><a href="https://cdn-shop.adafruit.com/datasheets/BL-HP20AxxxL.pdf">datasheet</a></li>
+				</p>
+			</details>
+			<details>
+				<summary>solution</summary>
+				$$0 = V_{\mathrm{bat1}} + V_{R} + V_{\mathrm{LED}}$$
+				$$0 = 9\,\mathrm{V} + V_{R} - 3.2\,\mathrm{V}$$
+				$$V_{R} = -5.8\,\mathrm{V}$$
+				<br>
+				$$V=IR$$
+				$$R = \frac{V}{I}$$
+				$$R = \frac{5.8\,\mathrm{V}}{0.350 \,\mathrm{A}}$$
+				$$R = 16 \,\Omega$$
+				<br>
+				<strong>Example:</strong> We can to light up the LED, but we only have 100&nbsp;Ω resistors. How can we get a resistance near 16&nbsp;Ω?
+				<details>
+					<summary>strategy</summary>
+					<p>
+						We need to wire the resistors in <a href="..\kirchoff\index.html#parallel">parallel</a>. As we add more resistors in parallel the equivalent resistance will drop.
+					</p>
+					<svg viewBox="0 0 550 300">
+						<path d="M 10 150 h220
+								l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220
+								M 100 150 l 50 100 h 80
+								l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 -100
+								M 100 150 l 50 -100 h 80
+								l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+						<text x="280" y="25" text-anchor="end" font-size="20">R1</text>
+						<text x="280" y="125" text-anchor="end" font-size="20">R2</text>
+						<text x="280" y="225" text-anchor="end" font-size="20">R3</text>
+					</svg>
+					$$\frac{1}{R_{eq}} = \frac{1}{R_{1}}+\frac{1}{R_{2}}+ \frac{1}{R_{3}}+\cdots$$
+				</details>
+				<details>
+					<summary>solution</summary>
+					<p>Let's try 3 resistors in parallel.</p>
+					$$\frac{1}{R_{eq}} = \frac{1}{100}+\frac{1}{100}+ \frac{1}{100}$$
+					$$\frac{1}{R_{eq}} = \frac{3}{100}$$
+					$$R_{eq} = \frac{100}{3}$$
+					$$R_{eq} = 33 \, \mathrm{\Omega}$$
+					<p>Thats not enough resistance. Let's add more resistors until we get near 16&nbsp;Ω</p>
+					<div class="col-group">
+						<div>
+							$$R_{eq} = \frac{100}{3} = 33 \, \mathrm{\Omega}$$
+							$$R_{eq} = \frac{100}{4} = 25 \, \mathrm{\Omega}$$
+							$$R_{eq} = \frac{100}{5} = 20 \, \mathrm{\Omega}$$
+						</div>
+						<div>
+							$$R_{eq} = \frac{100}{6} = 16.7 \, \mathrm{\Omega}$$
+							$$R_{eq} = \frac{100}{7} = 14.2 \, \mathrm{\Omega}$$
+							$$R_{eq} = \frac{100}{8} = 12.5 \, \mathrm{\Omega}$$
+						</div>
+					</div>
+					<p>Six 100&nbsp;Ω resistors in parallel are equivalent to 16.7&nbsp;Ω.</p>
+				</details>
+			</details>
+		</div>
+
+
+		<h2 class='underlined'>Transistor</h2>
+		<p>
+			A transistor can amplify current. A transistors can also function as a switch. Input voltage can be set to on or off with voltage at the base terminal. Transistor based switches are used to produce logic gates used in integrated circuits.
+		</p>
+		<svg viewBox="-100 0 400 108">
+			<g fill="#efeeef">
+				<polygon points="111.707,52.969 111.707,55.609 111.707,56.51 111.707,56.51 106.656,59.43 106.007,59.81 106.007,56.209 111.656,52.939 " />
+				<polygon points="96.227,50.509 96.227,50.569 96.227,54.109 13.307,101.989 13.307,98.39 13.307,98.39 " />
+				<polygon points="97.066,51.049 96.227,50.569 96.227,50.509 13.307,98.39 10.066,96.529 92.087,49.08 92.087,49.08 92.877,48.619 92.087,48.169 92.087,48.129 96.517,45.649 96.517,45.639 97.786,44.929 97.797,44.909 98.627,45.409 109.177,39.209 112.486,41.129 101.887,47.259 102.656,47.719 " />
+				<polygon points="111.656,52.939 106.007,56.209 105.167,55.729 105.167,55.669 22.307,103.609 19.066,101.689 19.066,101.689 101.087,54.3 101.877,53.839 101.087,53.389 101.087,53.359 106.727,50.089 106.736,50.069 107.627,50.569 118.187,44.419 118.196,44.419 121.116,46.109 121.417,46.29 110.887,52.479 " />
+				<polygon points="103.477,35.909 103.547,35.959 103.547,39.469 95.807,44.029 93.767,45.229 93.767,42.589 93.767,42.529 93.717,42.56 92.887,42.1 92.887,42.1 103.467,35.909 " />
+				<polygon points="93.227,29.989 93.227,29.989 100.247,34.049 93.877,37.729 93.467,35.75 93.227,33.77 93.167,31.85 " fill="#424242" />
+				<polygon points="102.656,47.719 101.887,47.259 112.486,41.129 112.547,41.159 112.547,44.689 112.547,44.689 102.707,50.389 102.707,47.75 102.707,47.689 " />
+				<polygon points="111.707,52.909 111.656,52.939 110.887,52.479 121.417,46.29 121.427,46.29 121.486,46.33 121.486,49.85 121.486,49.85 111.707,55.609 111.707,52.969 " />
+				<polygon points="13.307,101.989 10.066,100.1 10.066,100.1 10.066,96.529 13.307,98.39 " />
+				<polygon points="1.066,94.939 1.066,91.369 1.066,91.369 4.367,93.229 4.367,96.829 " />
+				<path d="m 125.057,37.889 35.43,-20.44 c 1.851,3.92 3.09,8.15 3.48,12.48 l -35.46,20.42 c -0.21,-4.24 -1.7,-8.6 -3.42,-12.44 l -0.03,-0.02 z" fill="#424242" />
+				<polygon points="88.066,45.889 88.066,45.889 93.717,42.56 93.767,42.589 93.767,45.229 93.767,46.129 88.066,49.489 " />
+				<polygon points="1.066,91.369 83.146,43.919 83.937,43.459 83.146,43.009 83.146,42.979 83.146,42.979 88.786,39.709 88.797,39.689 89.627,40.189 93.877,37.729 100.247,34.049 103.467,35.909 92.887,42.1 93.717,42.56 88.066,45.889 87.227,45.35 87.227,45.29 4.367,93.229 " />
+				<polygon points="96.696,21.5 96.696,21.5 132.167,1.069 132.177,1.049 160.486,17.449 125.057,37.889 96.717,21.509 " fill="#424242" />
+				<path d="m 93.227,29.969 c 0.271,-3.06 1.24,-6.23 3.48,-8.44 l 0.01,-0.02 28.34,16.38 0.03,0.02 c 1.72,3.84 3.21,8.2 3.42,12.44 l -0.03,0.02 -6.99,-4.04 0,-0.02 -0.05,-0.03 -3.22,-1.87 -0.021,0.01 -0.01,0 -0.43,-0.25 -5.21,-3.02 -0.05,-0.03 -0.431,-0.25 -2.85,-1.68 -0.03,0.01 -5.64,-3.26 0,-0.01 -0.021,-0.01 -0.029,-0.02 -0.011,0 -0.43,-0.25 -2.78,-1.62 -0.02,0.01 -7.027,-4.07 z" fill="#424242" />
+				<path d="m 106.656,59.43 5.051,-2.92 0,-0.9 9.779,-5.76 0,-3.52 6.99,4.04 0.03,0.02 c 0.46,6.89 -1.61,11.27 -4.99,13.24 -4.34,2.53 -10.84,1.07 -16.85,-4.18 l -0.01,-0.02 z" fill="#424242" />
+				<polygon points="87.227,45.29 87.227,45.35 87.227,48.889 4.367,96.829 4.367,93.229 4.367,93.229 " />
+				<polygon points="98.627,45.409 97.797,44.909 97.786,44.929 96.517,45.639 95.807,44.029 95.807,44.029 103.547,39.469 103.547,35.959 109.177,39.209 " fill="#424242" />
+				<path d="m 123.517,63.629 c 3.38,-1.97 5.45,-6.35 4.99,-13.24 0,-0.01 0,-0.03 0,-0.04 l 35.46,-20.42 c 0.3,4.87 -0.57,10.52 -5.07,13.3 l -0.03,-0.04 -35.34,20.45 -0.01,-0.01 z" fill="#424242" />
+				<polygon points="22.307,103.609 105.167,55.669 105.167,55.729 105.167,59.27 22.307,107.209 22.307,107.209 " />
+				<polygon points="102.707,47.75 102.707,50.389 102.707,51.29 102.707,51.29 100.536,52.589 97.066,54.649 97.066,51.049 102.656,47.719 " />
+				<polygon points="101.087,53.359 101.087,53.359 101.066,53.359 100.547,52.609 100.536,52.589 102.707,51.29 102.707,50.389 112.547,44.689 112.547,41.159 117.757,44.169 118.187,44.419 107.627,50.569 106.736,50.069 106.727,50.089 " fill="#424242" />
+			</g>
+			<g stroke-miterlimit="10" style="fill:none;stroke:#000000;stroke-width:1.01999998;stroke-linecap:round;stroke-linejoin:round;">
+				<polyline points="102.707,47.75 102.656,47.719 101.887,47.259 101.807,47.209" />
+				<polyline points="97.066,51.049 102.656,47.719 102.707,47.689" />
+				<polyline points="102.707,51.35 102.707,51.29 102.707,50.389 102.707,47.75 102.707,47.689" />
+				<polyline points="97.066,54.649 97.066,51.049 97.066,50.989" />
+				<polyline points="97.066,54.649 100.536,52.589 102.707,51.29" />
+				<line x1="96.226997" y1="54.168999" x2="97.066002" y2="54.648998" />
+				<polyline points="96.517,45.649 92.087,48.129 92.017,48.169" />
+				<line x1="97.786003" y1="44.929001" x2="96.516998" y2="45.639" />
+				<polyline points="98.627,45.409 97.797,44.909 97.727,44.869" />
+				<polyline points="92.087,49.189 92.087,49.08 92.087,48.169 92.087,48.129 92.087,48.109" />
+				<polyline points="92.087,48.169 92.877,48.619 92.927,48.649" />
+				<polyline points="96.227,54.169 96.227,54.109 96.227,50.569 96.227,50.509" />
+				<polyline points="112.547,41.149 112.547,41.159 112.547,44.689 112.547,44.75" />
+				<line x1="10.066" y1="96.528999" x2="13.307" y2="98.389999" />
+				<polyline points="101.866,47.27 101.887,47.259 112.486,41.129 112.497,41.119 112.547,41.089" />
+				<line x1="13.307" y1="98.389999" x2="13.307" y2="101.989" />
+				<polyline points="13.307,101.989 10.066,100.1 10.007,100.069" />
+				<line x1="13.307" y1="101.989" x2="96.226997" y2="54.109001" />
+				<line x1="102.707" y1="50.389" x2="112.547" y2="44.688999" />
+				<line x1="96.226997" y1="50.569" x2="97.066002" y2="51.049" />
+				<line x1="13.307" y1="98.389999" x2="96.226997" y2="50.508999" />
+				<polyline points="10.066,96.529 92.087,49.08 92.877,48.619 92.927,48.589" />
+				<polyline points="98.627,45.409 109.177,39.209 109.187,39.199 109.217,39.189 109.247,39.169" />
+				<polyline points="10.066,100.129 10.066,100.1 10.066,96.529 10.066,96.47" />
+				<polyline points="106.007,59.81 106.656,59.43 111.707,56.51" />
+				<polyline points="111.707,52.969 111.656,52.939 110.887,52.479 110.807,52.429" />
+				<line x1="22.306999" y1="103.609" x2="105.167" y2="55.668999" />
+				<polyline points="111.707,56.569 111.707,56.51 111.707,55.609 111.707,52.969 111.707,52.909" />
+				<line x1="111.707" y1="55.609001" x2="121.486" y2="49.849998" />
+				<polyline points="107.627,50.569 106.736,50.069 106.667,50.029" />
+				<polyline points="121.427,46.29 121.437,46.279 121.486,46.25" />
+				<polyline points="110.866,52.489 110.887,52.479 121.417,46.29" />
+				<polyline points="121.486,46.31 121.486,46.33 121.486,49.85 121.486,49.909" />
+				<polyline points="121.486,46.31 121.437,46.279 118.217,44.409 118.177,44.389" />
+				<polyline points="93.767,46.189 93.767,46.129 93.767,45.229 93.767,42.589 93.767,42.529" />
+				<polyline points="88.066,49.489 88.066,45.889 88.066,45.83" />
+				<line x1="88.066002" y1="49.488998" x2="93.766998" y2="46.129002" />
+				<line x1="87.226997" y1="48.949001" x2="88.066002" y2="49.488998" />
+				<polyline points="112.066,40.869 109.217,39.189 109.177,39.169" />
+				<polyline points="83.146,43.969 83.146,43.919 83.146,43.009 83.146,42.979 83.146,42.949" />
+				<line x1="4.3670001" y1="96.829002" x2="87.226997" y2="48.889" />
+				<line x1="4.3670001" y1="93.228996" x2="4.3670001" y2="96.829002" />
+				<polyline points="87.227,48.949 87.227,48.889 87.227,45.35 87.227,45.29" />
+				<polyline points="4.367,96.829 1.066,94.939 1.007,94.909" />
+				<polyline points="1.066,91.369 83.146,43.919 83.937,43.459 83.986,43.429" />
+				<polyline points="83.146,43.009 83.937,43.459 83.986,43.489" />
+				<polyline points="88.786,39.709 83.146,42.979 83.087,43.009" />
+				<polyline points="1.066,94.97 1.066,94.939 1.066,91.369 1.066,91.31" />
+				<polyline points="93.767,42.589 93.717,42.56 92.887,42.1 92.807,42.049" />
+				<polyline points="88.066,45.889 93.717,42.56 93.767,42.529" />
+				<line x1="87.226997" y1="45.349998" x2="88.066002" y2="45.889" />
+				<line x1="4.3670001" y1="93.228996" x2="87.226997" y2="45.290001" />
+				<line x1="1.066" y1="91.369003" x2="4.3670001" y2="93.228996" />
+				<polyline points="89.627,40.189 88.797,39.689 88.727,39.649" />
+				<polyline points="89.627,40.189 93.877,37.729 100.247,34.049 100.257,34.04 100.276,34.029 100.307,34.009" />
+				<line x1="103.497" y1="35.898998" x2="103.547" y2="35.868999" />
+				<line x1="103.477" y1="35.909" x2="103.486" y2="35.898998" />
+				<polyline points="92.866,42.109 92.887,42.1 103.467,35.909" />
+				<polyline points="93.767,45.229 95.807,44.029 103.547,39.469" />
+				<polyline points="103.057,35.649 100.276,34.029 100.247,34.009" />
+				<line x1="103.547" y1="35.929001" x2="103.526" y2="35.918999" />
+				<polyline points="103.547,35.929 103.547,35.939 103.547,35.959 103.547,39.469 103.547,39.529" />
+				<polyline points="118.196,44.419 118.217,44.409 118.247,44.389" />
+				<line x1="107.627" y1="50.569" x2="118.187" y2="44.418999" />
+				<line x1="22.306999" y1="107.209" x2="105.167" y2="59.27" />
+				<polyline points="22.307,107.209 19.066,105.27 19.007,105.229" />
+				<polyline points="19.066,105.289 19.066,105.27 19.066,101.689 19.066,101.629" />
+				<polyline points="101.087,54.35 101.087,54.3 101.087,53.389 101.087,53.359 101.087,53.33" />
+				<polyline points="19.066,101.689 101.087,54.3 101.877,53.839 101.927,53.81" />
+				<polyline points="101.087,53.389 101.877,53.839 101.927,53.869" />
+				<line x1="101.066" y1="53.368999" x2="101.026" y2="53.389" />
+				<polyline points="106.727,50.089 101.087,53.359 101.066,53.359" />
+				<line x1="22.306999" y1="103.609" x2="22.306999" y2="107.209" />
+				<polyline points="105.167,59.329 105.167,59.27 105.167,55.729 105.167,55.669" />
+				<polyline points="106.007,56.209 111.656,52.939 111.707,52.909" />
+				<line x1="19.066" y1="101.689" x2="22.306999" y2="103.609" />
+				<line x1="105.167" y1="55.729" x2="106.007" y2="56.209" />
+				<polyline points="106.007,59.81 106.007,56.209 106.007,56.149" />
+				<line x1="105.167" y1="59.328999" x2="106.007" y2="59.810001" />
+				<polyline points="123.406,63.709 123.526,63.64 158.866,43.189" />
+				<path d="m 106.667,59.449 c 6.01,5.25 12.51,6.71 16.85,4.18 3.38,-1.97 5.45,-6.35 4.99,-13.24" />
+				<polyline points="100.547,52.609 101.066,53.359 101.066,53.369 101.087,53.389" />
+				<polyline points="95.807,44.029 96.517,45.639 96.517,45.649" />
+				<polyline points="93.227,29.989 93.167,31.85 93.227,33.77 93.467,35.75 93.877,37.729 93.887,37.79" />
+				<path d="m 158.866,43.25 c 0.011,-0.01 0.021,-0.01 0.03,-0.02 4.5,-2.78 5.37,-8.43 5.07,-13.3" />
+				<polyline points="117.757,44.169 112.547,41.149 112.497,41.119 112.066,40.869 109.187,39.199 103.547,35.939 103.526,35.919 103.497,35.899 103.486,35.899 103.057,35.649 100.257,34.04 93.227,29.969 93.167,29.929" />
+				<polyline points="160.486,17.449 132.177,1.049 132.106,1.009" />
+				<path d="m 96.707,21.529 c -2.24,2.21 -3.21,5.38 -3.48,8.44 0,0.01 0,0.01 0,0.02" />
+				<polyline points="125.087,37.909 125.057,37.889 96.717,21.509 96.696,21.5 96.646,21.469" />
+				<path d="m 128.507,50.389 c 0,-0.01 0,-0.03 0,-0.04 -0.21,-4.24 -1.7,-8.6 -3.42,-12.44" />
+				<polyline points="163.967,29.929 128.507,50.35 128.477,50.369 128.437,50.389" />
+				<path d="m 163.967,29.929 c -0.391,-4.33 -1.63,-8.56 -3.48,-12.48" />
+				<polyline points="132.167,1.069 96.696,21.5 96.646,21.529" />
+				<polyline points="93.227,29.989 100.247,34.049 103.467,35.909 103.477,35.909 103.547,35.959 109.177,39.209 112.486,41.129 112.547,41.159 117.757,44.169 118.187,44.419 118.196,44.419 121.116,46.109 121.417,46.29 121.427,46.29 121.486,46.33 128.477,50.369 128.507,50.389" />
+				<polyline points="160.486,17.449 125.057,37.889 125.026,37.909" />
+			</g>
+		</svg>
+
+		<div class="col-group">
+			<div>
+				<p>
+					A typical <a href="https://en.wikipedia.org/wiki/Transistor">transistor</a> has terminals called base, collector, and emitter.
+				</p>
+				<p>
+					Current at the base terminal controls the flow of charge between the emitter and the collector terminal.
+				</p>
+			</div>
+			<div>
+				<svg viewBox="-400 -100 1500 1100">
+					<defs id="defs4">
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="TriangleInL">
+							<path d="M 5.77,0 L -2.88,5 L -2.88,-5 L 5.77,0 z " transform="scale(-0.8,-0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none" id="path4922" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="TriangleOutL">
+							<path d="M 5.77,0 L -2.88,5 L -2.88,-5 L 5.77,0 z " transform="scale(0.8,0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none" id="path4913" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow1Mend">
+							<path d="M 0,0 L 5,-5 L -12.5,0 L 5,5 L 0,0 z " transform="scale(-0.4,-0.4)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none" id="path5005" />
+						</marker>
+						<marker refX="0" refY="0" orient="auto" style="overflow:visible" id="Arrow1Lend">
+							<path d="M 0,0 L 5,-5 L -12.5,0 L 5,5 L 0,0 z " transform="scale(-0.8,-0.8)" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none" id="path5011" />
+						</marker>
+					</defs>
+					<g id="layer1">
+						<path d="M 800 500 A 300 300 0 1 1  200,500 A 300 300 0 1 1  800 500 z" transform="translate(0,-2.541351e-5)" style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:10;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="path1309" />
+						<path d="M 50,500 L 350,500" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" id="path2184" />
+						<path d="M 350,325 L 350,675" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" id="path2186" />
+						<path d="M 550,250 L 550,50" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" id="path2188" />
+						<text x="34.285713" y="460" style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" id="text3938" xml:space="preserve">
+							<tspan x="34.285713" y="460" style="font-size:144px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;stroke-linecap:round;font-family:Arial" id="tspan3940">B</tspan>
+						</text>
+						<text x="570" y="122" style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" id="text3942" xml:space="preserve">
+							<tspan x="570" y="122" style="font-size:144px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;stroke-linecap:round;font-family:Arial" id="tspan3944">E</tspan>
+						</text>
+						<text x="570" y="972.57141" style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" id="text3946" xml:space="preserve">
+							<tspan x="570" y="972.57141" style="font-size:144px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;stroke-linecap:round;font-family:Arial" id="tspan3948">C</tspan>
+						</text>
+						<path d="M 350,600 L 550,750 L 550,950" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:round;stroke-linejoin:miter;marker-start:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" id="path5022" />
+						<g id="g1941">
+							<path id="path1947" style="fill-rule:evenodd;stroke:black;stroke-width:8pt;marker-start:none" d="M 413.072,352.696 L 444.432,279.176 L 492.432,343.176 L 413.072,352.696 z " />
+						</g>
+						<path id="path1939" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:round;stroke-linejoin:miter;marker-mid:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 350,400 L 550,250" sodipodi:nodetypes="cc" />
+					</g>
+				</svg>
+			</div>
+		</div>
+
+		<h2 class='underlined'>Logic Gate</h2>
+		<p>
+			Logic gates perform basic logical operations. They can be produced from a composite of elements like diodes or transistors acting like switches.
+		</p>
+
+		<div class="col-group  example-small">
+			<div>
+				<svg xmlns="http://www.w3.org/2000/svg" width="100" height="50" class="center">
+					<path fill="none" stroke="#000" stroke-width="2" d="M79.15691 25H95M29.043478 25h-24" />
+					<path d="M28.96875 2.59375v44.8125l2.15625-1.0625 41.03125-20v-2.6875l-41.03125-20-2.15625-1.0625zm3 4.8125L68.09375 25l-36.125 17.59375V7.40625z" style="marker:none" />
+					<path fill="none" stroke="#000" stroke-width="3" d="M79 25a4 4 0 1 1-8 0 4 4 0 1 1 8 0z" style="marker:none" />
+				</svg>
+				<p style="margin: 10px;">A <strong>NOT gate</strong> takes in a voltage and outputs the opposite voltage. </p>
+			</div>
+			<div>
+				<table>
+					<tr>
+						<th>Input</th>
+						<th>Output</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<td>0</td>
+						<td>1</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div class="col-group example-small">
+			<div>
+				<svg xmlns="http://www.w3.org/2000/svg" width="100" height="50" class="center">
+					<path fill="none" stroke="#000" stroke-width="2" d="M70 25h25M31 15H5M32 35H5" />
+					<path d="M30 5V45H50.47619c11.267908 0 20-9.000045 20-20s-8.732091-20-20-20H30zm2.857143 2.857143H50.47619c9.760663 0 16.666667 7.639955 16.666667 17.142857 0 9.502902-7.382195 17.142857-17.142857 17.142857H32.857143V7.857143z" />
+				</svg>
+				<p style="margin: 10px;">An <strong>AND gate</strong> takes in two voltages and outputs one. If input A and input B both have high voltage, then the output will also have high voltage.</p>
+			</div>
+			<div>
+				<table>
+					<tr>
+						<th>Input A</th>
+						<th>Input B</th>
+						<th>Output</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>1</td>
+						<td>1</td>
+					</tr>
+					<tr>
+						<td>0</td>
+						<td>1</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>0</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div class="col-group  example-small">
+			<div>
+				<svg xmlns="http://www.w3.org/2000/svg" width="100" height="50" class="center">
+					<path fill="none" stroke="#000" stroke-width="2" d="M70 25h25M31 15H5M32 35H5" />
+					<path fill-rule="evenodd" d="M24.09375 5l2 2.4375S31.75 14.437549 31.75 25s-5.65625 17.5625-5.65625 17.5625l-2 2.4375H41.25c2.408076.000001 7.689699.024514 13.625-2.40625s12.536536-7.343266 17.6875-16.875L71.25 25l1.3125-.71875C62.259387 5.21559 46.006574 5 41.25 5H24.09375zm5.875 3H41.25c4.684173 0 18.28685-.130207 27.96875 17C64.451964 33.429075 58.697469 37.68391 53.5 39.8125 48.139339 42.007924 43.658075 42.000001 41.25 42H30c1.873588-3.108434 4.75-9.04935 4.75-17 0-7.973354-2.908531-13.900185-4.78125-17z" />
+				</svg>
+				<p style="margin: 10px;">An <strong>OR gate</strong> takes in two voltages and outputs one. If input A, input B, or both have high voltage, then the output will also have high voltage.</p>
+			</div>
+			<div>
+				<table>
+					<tr>
+						<th>Input A</th>
+						<th>Input B</th>
+						<th>Output</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>1</td>
+						<td>1</td>
+					</tr>
+					<tr>
+						<td>0</td>
+						<td>1</td>
+						<td>1</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>0</td>
+						<td>1</td>
+					</tr>
+					<tr>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div class="col-group  example-small">
+			<div>
+				<svg xmlns="http://www.w3.org/2000/svg" width="100" height="50" class="center">
+					<path fill="none" stroke="#000" stroke-width="2" d="M70 25h25M30.38572 15H5M31.3621 35H5" />
+					<g fill-rule="evenodd">
+						<path d="M24.25 42C22.65263 44.6444 22 45 22 45h-3.65625l2-2.4375S26 35.56245 26 25 20.34375 7.4375 20.34375 7.4375l-2-2.4375H22c.78125.9375 1.42188 1.65625 2.21875 3C26.09147 11.09981 29 17.02665 29 25c0 7.95065-2.8967 13.87942-4.75 17z" />
+						<path d="M24.09375 5l2 2.4375S31.75 14.43755 31.75 25s-5.65625 17.5625-5.65625 17.5625l-2 2.4375H41.25c2.40808 0 7.6897.02451 13.625-2.40625s12.53654-7.34327 17.6875-16.875L71.25 25l1.3125-.71875C62.25939 5.21559 46.00657 5 41.25 5H24.09375zm5.875 3H41.25c4.68417 0 18.28685-.1302 27.96875 17C64.45196 33.42907 58.69747 37.68391 53.5 39.8125 48.13934 42.00792 43.65808 42 41.25 42H30c1.87359-3.10843 4.75-9.04935 4.75-17 0-7.97335-2.90853-13.90019-4.78125-17z" />
+					</g>
+				</svg>
+				<p style="margin: 10px;">An <strong>XOR gate</strong> takes in two voltages and outputs one. If either input A or input B have high voltage, then the output will also have high voltage.</p>
+			</div>
+			<div>
+				<table>
+					<tr>
+						<th>Input A</th>
+						<th>Input B</th>
+						<th>Output</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>1</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<td>0</td>
+						<td>1</td>
+						<td>1</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>0</td>
+						<td>1</td>
+					</tr>
+					<tr>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<p>Multiple logic circuits can be linked together to perform more complex <a href="https://www.youtube.com/watch?v=D5h8bdWcLA8">operations</a> like the <a href="https://en.wikipedia.org/wiki/Adder_(electronics)">addition</a> of binary numbers.</p>
+
+		<h2 class='underlined'>Integrated Circuit</h2>
+		<p>
+			Integrated circuits are made by etching patterns in silicon wafers. These patterns form transistors and other electronic components. Transistors are linked to form logic gates directly on the silicon.
+		</p>
+		<p>
+			<a href="http://visual6502.org/sim/varm/armgl.html">Computer</a> <a href="http://www.righto.com/2015/12/reverse-engineering-arm1-ancestor-of.html">processors</a> are complex integrated circuits that perform logic and math operations.
+			Data stored in memory is loaded at the terminals on the edge of the chip as high or low voltage.
+			The chip performs different operations based on the imputed voltages from the memory.
+		</p>
+		<br>
+		<p>
+			Because of improvements in manufacturing, the density of integrated circuits has doubled about every 16 months.
+			This trend, called <a href="https://en.wikipedia.org/wiki/Moore%27s_law">Moore's law</a>, led to smaller processors with more transistors and lower energy consumption.
+			Moore's law and other miniaturization trends are largely responsible for the exponential increase in computing power starting in the 1970s.
+		</p>
+		<p>
+			In 2018, production began on 7 nm scale computer chips. This is nearing silicon's atomic radius of 0.1 nm. At this scale quantum effects are starting to cause problems like electrons quantum tunneling to other parts of the circuit.
+		</p>
+
+		<!-- <h2 class='underlined'>Potentiometer</h2>
+		<h2 class='underlined'>Photoresistor</h2>
+		<h2 class='underlined'>Solar Panel</h2>
+		<h2 class='underlined'>Battery</h2>
+		<h2 class='underlined'>Capacitor</h2>
+		<h2 class='underlined'>Inductor</h2>
+		<h2 class='underlined'>Transformer</h2>
+		<h2 class='underlined'>Motor / Generator</h2> -->
+	</article>
+	<div class='back'>
+		<a href="../../../index.html">Back</a>
+	</div>
+	<script>
+		renderMathInElement(document.body);
+	</script>
+</body>
+
+</html>
