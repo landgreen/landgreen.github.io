@@ -792,9 +792,9 @@ const mech = {
       mech.throwChargeRate = 4; //0.5
       mech.throwChargeMax = 300; //50
       //passive field does extra damage
-      mech.grabRange = 185;
-      mech.fieldArc = 0.15;
-      mech.fieldDamage = 2;
+      mech.grabRange = 180;
+      mech.fieldArc = 0.08;
+      mech.fieldDamage = 2.5;
 
       mech.hold = function () {
         if (mech.isHolding) {
