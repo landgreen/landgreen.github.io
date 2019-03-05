@@ -408,7 +408,7 @@ const mech = {
   },
   setHoldDefaults() {
     this.fieldMeter = 1;
-    this.fieldRegen = 0.001;
+    this.fieldRegen = 0.0015;
     this.fieldCDcycle = 0;
     this.holdingMassScale = 0.5;
     this.throwChargeRate = 2;
@@ -718,7 +718,7 @@ const mech = {
           mech.drawHold(mech.holdingTarget);
           mech.holding();
           mech.throw();
-        } else if ((keys[32] || game.mouseDownRight && mech.fieldMeter > 0.2)) { //not hold but field button is pressed
+        } else if ((keys[32] || game.mouseDownRight && mech.fieldMeter > 0.1)) { //not hold but field button is pressed
           mech.drawField();
           mech.grabPowerUp();
           mech.pushMobs();
@@ -771,7 +771,7 @@ const mech = {
           } else {
             mech.fieldCDcycle = game.cycle + 120;
           }
-        } else if ((keys[32] || game.mouseDownRight) && mech.fieldMeter > 0.2) { //field button is pressed
+        } else if ((keys[32] || game.mouseDownRight) && mech.fieldMeter > 0.1) { //field button is pressed
           mech.drawField();
           mech.grabPowerUp();
           mech.pushMobs();
