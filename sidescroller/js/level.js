@@ -432,7 +432,7 @@ const level = {
     level.fill.push({
       x: 1600,
       y: -900,
-      width: 1600,
+      width: 1650,
       height: 1900,
       color: "rgba(0,0,0,0.1)"
     });
@@ -470,36 +470,38 @@ const level = {
     spawn.bodyRect(1050, -2350, 30, 30, 0.8); //
     spawn.boost(1800, -1000, 1200);
     spawn.bodyRect(1625, -1100, 100, 75); //
-    spawn.bodyRect(1350, -1025, 400, 25, 1, spawn.propsIsNotHoldable); // ground plank
+    spawn.bodyRect(1350, -1025, 400, 25); // ground plank
     spawn.mapRect(-700, -1000, 2100, 100); //lower left ledge
     spawn.bodyRect(350, -1100, 200, 100, 0.8); //
     spawn.bodyRect(370, -1200, 100, 100, 0.8); //
     spawn.bodyRect(360, -1300, 100, 100, 0.8); //
     spawn.bodyRect(950, -1050, 300, 50, 0.8); //
     spawn.bodyRect(-600, -1250, 400, 250, 0.8); //
-    spawn.mapRect(1600, -1000, 1600, 100); //middle ledge
+    spawn.mapRect(1600, -1000, 1650, 100); //middle ledge
     spawn.bodyRect(2600, -1950, 100, 250, 0.8); //
     spawn.bodyRect(2700, -1125, 125, 125, 0.8); //
     spawn.bodyRect(2710, -1250, 125, 125, 0.8); //
     spawn.bodyRect(2705, -1350, 75, 100, 0.8); //
     spawn.mapRect(3450, -1600, 350, 50); //
     spawn.mapRect(1950, -1600, 1025, 50); //
-    spawn.bodyRect(3100, -1015, 375, 15, 0.8, spawn.propsIsNotHoldable); //
+    spawn.bodyRect(3100, -1015, 375, 15); //
     spawn.bodyRect(3500, -850, 75, 125, 0.8); //
-    spawn.mapRect(3400, -1000, 100, 1100); //left building wall
+    spawn.mapRect(3450, -1000, 50, 580); //left building wall
+    spawn.bodyRect(3460, -420, 30, 144); //
+
+
     spawn.mapRect(5450, -775, 100, 875); //right building wall
     spawn.bodyRect(4850, -750, 300, 25, 0.8); //
     spawn.bodyRect(3925, -1400, 100, 150, 0.8); //
     spawn.mapRect(3450, -1250, 1100, 50); //
     spawn.mapRect(3450, -1225, 50, 75); //
     spawn.mapRect(4500, -1225, 50, 350); //
-    spawn.mapRect(3450, -725, 1450, 50); //
+    spawn.mapRect(3450, -725, 1500, 50); //
     spawn.mapRect(5100, -725, 400, 50); //
     spawn.mapRect(4500, -700, 50, 600); //
     spawn.bodyRect(4500, -100, 50, 100, 0.8); //
-
     spawn.spawnStairs(3800, 0, 3, 150, 206); //stairs top exit
-    spawn.mapRect(3500, -275, 350, 275); //exit platform
+    spawn.mapRect(3400, -275, 450, 275); //exit platform
 
     spawn.randomSmallMob(2200, -1775); //
     spawn.randomSmallMob(4000, -825); //
