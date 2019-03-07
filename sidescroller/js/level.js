@@ -28,7 +28,7 @@ const level = {
       this.levelAnnounce();
     }
     game.setZoom();
-    this.addToWorld(); //add map to world
+    this.addToWorld(); //add bodies to game engine
     game.draw.setPaths();
   },
   //******************************************************************************************************************
@@ -200,7 +200,7 @@ const level = {
   //empty map for testing mobs
   intro() {
     game.zoomScale = 1000 //1400 is normal
-    game.zoomTransition(2000, 1)
+    game.zoomTransition(1600, 1)
 
     mech.setPosToSpawn(460, -100); //normal spawn
     level.enter.x = -1000000; //offscreen
@@ -349,7 +349,7 @@ const level = {
   },
 
   rooftops() {
-    game.zoomTransition(1700)
+    game.zoomTransition(1700) //1400 is normal
 
     document.body.style.backgroundColor = "#dcdcde";
 
@@ -417,11 +417,20 @@ const level = {
     });
     level.fill.push({
       x: -700,
-      y: -1900,
+      y: -1950,
       width: 2100,
-      height: 2900,
+      height: 2950,
       color: "rgba(0,0,0,0.1)"
     });
+
+    level.fill.push({
+      x: 1950,
+      y: -1950,
+      width: 600,
+      height: 350,
+      color: "rgba(0,0,0,0.1)"
+    });
+
     level.fill.push({
       x: 1950,
       y: -1550,
@@ -453,9 +462,9 @@ const level = {
 
     //spawn.mapRect(-700, 0, 6250, 100); //ground
     spawn.mapRect(3400, 0, 2150, 100); //ground
-    spawn.mapRect(-700, -2000, 2100, 100); //Top left ledge
-    spawn.bodyRect(1300, -2125, 50, 125, 0.8); //
-    spawn.bodyRect(1307, -2225, 50, 100, 0.8); //
+    spawn.mapRect(-700, -2000, 2100, 50); //Top left ledge
+    spawn.bodyRect(1300, -2125, 50, 125, 0.8);
+    spawn.bodyRect(1307, -2225, 50, 100, 0.8);
     spawn.mapRect(-700, -2350, 50, 400); //far left starting left wall
     spawn.mapRect(-700, -2010, 500, 50); //far left starting ground
     spawn.mapRect(-700, -2350, 500, 50); //far left starting ceiling
@@ -465,67 +474,74 @@ const level = {
     spawn.bodyRect(-240, -2080, 30, 35); //door to starting room
     spawn.bodyRect(-240, -2045, 30, 35); //door to starting room
 
-    spawn.bodyRect(200, -2150, 200, 220, 0.8); //
-    spawn.mapRect(700, -2275, 700, 50); //
-    spawn.bodyRect(1050, -2350, 30, 30, 0.8); //
+
+    spawn.mapRect(1950, -2000, 600, 50);
+
+
+    spawn.bodyRect(200, -2150, 200, 220, 0.8);
+    spawn.mapRect(700, -2275, 700, 50);
+    spawn.bodyRect(1050, -2350, 30, 30, 0.8);
     spawn.boost(1800, -1000, 1200);
-    spawn.bodyRect(1625, -1100, 100, 75); //
+    spawn.bodyRect(1625, -1100, 100, 75);
     spawn.bodyRect(1350, -1025, 400, 25); // ground plank
     spawn.mapRect(-700, -1000, 2100, 100); //lower left ledge
-    spawn.bodyRect(350, -1100, 200, 100, 0.8); //
-    spawn.bodyRect(370, -1200, 100, 100, 0.8); //
-    spawn.bodyRect(360, -1300, 100, 100, 0.8); //
-    spawn.bodyRect(950, -1050, 300, 50, 0.8); //
-    spawn.bodyRect(-600, -1250, 400, 250, 0.8); //
+    spawn.bodyRect(350, -1100, 200, 100, 0.8);
+    spawn.bodyRect(370, -1200, 100, 100, 0.8);
+    spawn.bodyRect(360, -1300, 100, 100, 0.8);
+    spawn.bodyRect(950, -1050, 300, 50, 0.8);
+    spawn.bodyRect(-600, -1250, 400, 250, 0.8);
     spawn.mapRect(1600, -1000, 1650, 100); //middle ledge
-    spawn.bodyRect(2600, -1950, 100, 250, 0.8); //
-    spawn.bodyRect(2700, -1125, 125, 125, 0.8); //
-    spawn.bodyRect(2710, -1250, 125, 125, 0.8); //
-    spawn.bodyRect(2705, -1350, 75, 100, 0.8); //
-    spawn.mapRect(3450, -1600, 350, 50); //
-    spawn.mapRect(1950, -1600, 1025, 50); //
-    spawn.bodyRect(3100, -1015, 375, 15); //
-    spawn.bodyRect(3500, -850, 75, 125, 0.8); //
+    spawn.bodyRect(2600, -1950, 100, 250, 0.8);
+    spawn.bodyRect(2700, -1125, 125, 125, 0.8);
+    spawn.bodyRect(2710, -1250, 125, 125, 0.8);
+    spawn.bodyRect(2705, -1350, 75, 100, 0.8);
+    spawn.mapRect(3450, -1600, 350, 50);
+    spawn.mapRect(1950, -1600, 1025, 50);
+    spawn.bodyRect(3100, -1015, 375, 15);
+    spawn.bodyRect(3500, -850, 75, 125, 0.8);
     spawn.mapRect(3450, -1000, 50, 580); //left building wall
-    spawn.bodyRect(3460, -420, 30, 144); //
+    spawn.bodyRect(3460, -420, 30, 144);
 
 
     spawn.mapRect(5450, -775, 100, 875); //right building wall
-    spawn.bodyRect(4850, -750, 300, 25, 0.8); //
-    spawn.bodyRect(3925, -1400, 100, 150, 0.8); //
-    spawn.mapRect(3450, -1250, 1100, 50); //
-    spawn.mapRect(3450, -1225, 50, 75); //
-    spawn.mapRect(4500, -1225, 50, 350); //
-    spawn.mapRect(3450, -725, 1500, 50); //
-    spawn.mapRect(5100, -725, 400, 50); //
-    spawn.mapRect(4500, -700, 50, 600); //
-    spawn.bodyRect(4500, -100, 50, 100, 0.8); //
+    spawn.bodyRect(4850, -750, 300, 25, 0.8);
+    spawn.bodyRect(3925, -1400, 100, 150, 0.8);
+    spawn.mapRect(3450, -1250, 1100, 50);
+    spawn.mapRect(3450, -1225, 50, 75);
+    spawn.mapRect(4500, -1225, 50, 350);
+    spawn.mapRect(3450, -725, 1500, 50);
+    spawn.mapRect(5100, -725, 400, 50);
+    spawn.mapRect(4500, -700, 50, 600);
+    spawn.bodyRect(4510, -100, 30, 100, 0.8);
+    spawn.mapRect(4500, -925, 100, 50);
+
     spawn.spawnStairs(3800, 0, 3, 150, 206); //stairs top exit
     spawn.mapRect(3400, -275, 450, 275); //exit platform
 
-    spawn.randomSmallMob(2200, -1775); //
-    spawn.randomSmallMob(4000, -825); //
-    spawn.randomSmallMob(-350, -2400); //
-    spawn.randomMob(4250, -1350, 0.8); //
-    spawn.randomMob(2550, -1350, 0.8); //
-    spawn.randomMob(1225, -2400, 0.3); //
+
+    spawn.randomSmallMob(2200, -1775);
+    spawn.randomSmallMob(4000, -825);
+    spawn.randomSmallMob(-350, -2400);
+    spawn.randomMob(4250, -1350, 0.8);
+    spawn.randomMob(2550, -1350, 0.8);
+    spawn.randomMob(1225, -2400, 0.3);
     spawn.randomMob(1120, -1200, 0.3);
-    spawn.randomMob(3000, -1150, 0.2); //
-    spawn.randomMob(3200, -1150, 0.3); //
-    spawn.randomMob(3300, -1750, 0.3); //
-    spawn.randomMob(3650, -1350, 0.3); //
-    spawn.randomMob(3600, -1800, 0.1); //
+    spawn.randomMob(3000, -1150, 0.2);
+    spawn.randomMob(3200, -1150, 0.3);
+    spawn.randomMob(3300, -1750, 0.3);
+    spawn.randomMob(3650, -1350, 0.3);
+    spawn.randomMob(3600, -1800, 0.1);
     spawn.randomMob(5200, -100, 0.3);
     spawn.randomMob(5275, -900, 0.2);
-    spawn.randomMob(900, -2125, 0.3); //
+    spawn.randomMob(900, -2125, 0.3);
     spawn.randomBoss(600, -1575, 0);
-    spawn.randomBoss(2225, -1325, 0.4); //
-    spawn.randomBoss(4900, -1200, 0); //
+    spawn.randomBoss(2225, -1325, 0.4);
+    spawn.randomBoss(4900, -1200, 0);
     //spawn.randomBoss(4850, -1250,0.7);
     if (game.levelsCleared > 4) spawn.bomber(2500, -2400, 100);
   },
   skyscrapers() {
-    game.zoomTransition(2200)
+    game.zoomTransition(2000) //1400 is normal
 
     mech.setPosToSpawn(-50, -50); //normal spawn
     //mech.setPosToSpawn(1550, -1200); //spawn left high
@@ -676,7 +692,7 @@ const level = {
     spawn.randomBoss(1700, -900, 0.4);
   },
   highrise() {
-    game.zoomTransition(1500)
+    game.zoomTransition(1500) //1400 is normal
     document.body.style.backgroundColor = "#dcdcde" //"#fafcff";
     mech.setPosToSpawn(0, -700); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
@@ -842,7 +858,7 @@ const level = {
     spawn.randomBoss(-2450, -1100, 0);
   },
   warehouse() {
-    game.zoomTransition(1200)
+    game.zoomTransition(1300)
     document.body.style.backgroundColor = "#bbb";
     mech.setPosToSpawn(25, -60); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
@@ -1008,7 +1024,7 @@ const level = {
     if (game.levelsCleared > 2) spawn.snaker(-1300 + Math.random() * 2000, -2200); //boss snake with head
   },
   towers() {
-    game.zoomTransition(1300)
+    game.zoomTransition(1400)
     if (Math.random() < 0.75) {
       //normal direction start in top left
       mech.setPosToSpawn(1375, -1550); //normal spawn

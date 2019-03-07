@@ -152,7 +152,7 @@ const mech = {
       game.mouseInGame.x - this.pos.x
     );
     //smoothed mouse look translations
-    const scale = 1.4;
+    const scale = 0.8;
     this.transSmoothX = canvas.width2 - this.pos.x - (game.mouse.x - canvas.width2) * scale;
     this.transSmoothY = canvas.height2 - this.pos.y - (game.mouse.y - canvas.height2) * scale;
 
