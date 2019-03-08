@@ -12,14 +12,14 @@ const level = {
   start() {
     // game.zoomScale = 1400 //1400
     if (game.levelsCleared === 0) {
-      this.intro();
+      // this.intro();
       // spawn.setSpawnList();
       // game.levelsCleared = 3; //for testing to simulate all possible mobs spawns
       // this.bosses();
       // this.testingMap();
       // this.skyscrapers();
       // this.rooftops();
-      // this.warehouse();
+      this.warehouse();
       // this.highrise();
       // this.towers();
     } else {
@@ -890,9 +890,16 @@ const level = {
     level.fillBG.push({
       x: -1800,
       y: -500,
-      width: 1975,
+      width: 1625,
       height: 555,
       color: BGColor
+    });
+    level.fillBG.push({
+      x: -177,
+      y: -250,
+      width: 350,
+      height: 300,
+      color: "#e3e3da"
     });
     level.fillBG.push({
       x: -2600,
@@ -909,8 +916,8 @@ const level = {
       color: "#cff"
     });
     spawn.mapRect(-1500, 0, 2750, 100);
-    spawn.mapRect(175, -600, 125, 700);
-    spawn.mapRect(-1900, -600, 2200, 100);
+    spawn.mapRect(175, -270, 125, 300);
+    spawn.mapRect(-1900, -600, 1775, 100);
     spawn.mapRect(-1900, -600, 100, 1300);
     //house
     spawn.mapRect(-175, -550, 50, 400);
@@ -921,8 +928,8 @@ const level = {
     // spawn.bodyRect(-170, -175, 14, 160, 1, spawn.propsFriction); //door to starting room
     //exit house
     spawn.mapRect(300, -15, 350, 50);
-    spawn.mapRect(300, -275, 350, 25);
-    spawn.mapRect(625, -250, 25, 75);
+    spawn.mapRect(-150, -300, 800, 50);
+    spawn.mapRect(600, -275, 50, 75);
     spawn.mapRect(425, -25, 100, 25);
     // spawn.mapRect(-1900, 600, 2700, 100);
     spawn.mapRect(1100, 0, 150, 1500);
@@ -935,7 +942,7 @@ const level = {
     spawn.mapRect(-3050, 1100, 150, 400);
     spawn.mapRect(-3150, 50, 125, 1450);
     spawn.mapRect(-2375, 600, 3175, 100);
-    spawn.mapRect(-2125, 350, 250, 325);
+    spawn.mapRect(-2125, 400, 250, 275);
     // spawn.mapRect(-1950, -400, 100, 25);
     spawn.mapRect(-3150, 50, 775, 100);
     spawn.mapRect(-2600, -250, 775, 100);
