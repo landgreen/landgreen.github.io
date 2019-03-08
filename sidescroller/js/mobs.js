@@ -850,11 +850,10 @@ const mobs = {
             this.force.y -= 0.005 * this.fireDir.y * this.mass;
           }
           if (this.noseLength < 1.5) this.noseLength += this.fireFreq;
-          setNoseShape();
         } else if (this.noseLength > 0) {
           this.noseLength -= this.fireFreq / 2;
-          setNoseShape();
         }
+        setNoseShape();
       },
       turnToFacePlayer() {
         //turn to face player
