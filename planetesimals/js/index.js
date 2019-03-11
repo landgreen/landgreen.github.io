@@ -40,16 +40,16 @@ function planetesimals() {
     game.height = 2000 * game.level; //shapes walls and spawn locations
     game.scale = 1.2 / (Math.log(game.level + 1)); //0.6 + 1.0 / (game.level); //controls map zoom
     game.totalMass = 3 + game.level * 1; //how many masses to spawn at start of level
-    game.massSize = 3 + game.level * 3; //adds the the average length of a segment on a masses's vertices
+    game.massSize = 3 + game.level * 3; //adds the average length of a segment on a masses's vertices
     game.massSegment = 0.1 + 0.1 / game.level;
   }
 
   //looks for key presses and logs them
   var keys = [];
-  document.body.addEventListener("keydown", function(e) {
+  document.body.addEventListener("keydown", function (e) {
     keys[e.keyCode] = true;
   });
-  document.body.addEventListener("keyup", function(e) {
+  document.body.addEventListener("keyup", function (e) {
     keys[e.keyCode] = false;
   });
 
@@ -176,7 +176,7 @@ function planetesimals() {
 
   function clearMasses() {
     World.clear(engine.world, false);
-	console.log('clear')
+    console.log('clear')
     mass = [];
   }
 
@@ -402,7 +402,7 @@ function planetesimals() {
   }
 
   //bullet collision event
-  Events.on(engine, 'collisionStart', function(event) {
+  Events.on(engine, 'collisionStart', function (event) {
 
     //slice the polygon up into sections
     function slicePoly(m, start, end) { //cut a mass into two sectons
@@ -556,7 +556,7 @@ function planetesimals() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   document.body.appendChild(canvas);
-  window.onresize = function(event) {
+  window.onresize = function (event) {
     ctx.canvas.width = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
     starsMoveRandom();

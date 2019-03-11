@@ -208,3 +208,7 @@ summary {
   border-radius: 8px;
   background: #444;
 }
+
+.right {
+  text-align: right;
+}

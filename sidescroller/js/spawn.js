@@ -23,7 +23,7 @@ const spawn = {
   allowedBossList: ["chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner", "shooter"], //"zoomer", 
   setSpawnList() {
     //this is run at the start of each new level to determine the possible mobs for the level
-    //each level has 2 mobs: one new mob and one from the the last level
+    //each level has 2 mobs: one new mob and one from the last level
     spawn.pickList.splice(0, 1);
     spawn.pickList.push(spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]);
   },

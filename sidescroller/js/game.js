@@ -119,8 +119,10 @@ const game = {
   boldActiveGunHUD() {
     if (b.inventory.length > 0) {
       for (let i = 0, len = b.inventory.length; i < len; ++i) {
+        // document.getElementById(b.inventory[i]).style.fontSize = "25px";
         document.getElementById(b.inventory[i]).style.opacity = "0.3";
       }
+      // document.getElementById(b.activeGun).style.fontSize = "30px";
       document.getElementById(b.activeGun).style.opacity = "1";
     }
   },
