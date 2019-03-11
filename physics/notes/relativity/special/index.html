@@ -41,13 +41,10 @@
 	</header>
 	<article>
 		<p>
-			Speed and velocity have no meaning without something to
-			<a href="https://www.youtube.com/watch?v=Y75kEf8xLxI">reference</a>. If I said we are moving at 230,000 m/s, your
-			first question should be relative to what. A plane? The Earth?
-			The Sun?
+			Speed and velocity have no meaning without something to <a href="https://www.youtube.com/watch?v=Y75kEf8xLxI">reference</a>. If I said we are moving at 230&nbsp;000 m/s, your first question should be relative to what. A plane? The Earth? The Sun?
 		</p>
 		<p>
-			We are moving at 230,000 m/s relative to our galaxy, the Milky Way.
+			We are moving at 230&nbsp;000 m/s relative to our galaxy, the Milky Way.
 		</p>
 
 		<div class="definition">
@@ -476,7 +473,7 @@
 		<div class='example'>
 			<strong>Example:</strong> Find the relative velocity of a clock that runs at one-half the rate of a clock at rest.
 			<details>
-				<summary>hint</summary>
+				<summary>strategy</summary>
 				<br>Use the time dilation equation to solve for the Lorentz factor.
 				<br>Use the Lorentz factor to find the velocity.
 				<br>
@@ -822,7 +819,7 @@
 				</table>
 			</details>
 			<details>
-				<summary>hint</summary>
+				<summary>strategy</summary>
 				<p>
 					Matter antimatter annihilation converts <strong>all</strong> the mass of a particle into energy. Find the energy of an electron at rest. That energy will be the same for a photon produced by electron and position annihilation.
 				</p>
@@ -1010,7 +1007,7 @@
 				</table>
 			</details>
 			<details>
-				<summary>hint</summary>
+				<summary>strategy</summary>
 				<br> Convert the masses of each particle into energy. Conservation of energy holds if the left side of the reaction equals the right side plus the kinetic energy.
 				<br>
 				<br>The antineutrino has such a low mass it can be ignored
@@ -1025,31 +1022,45 @@
 					$$E_0=mc^2$$
 					$$E_p = (1.672621 \times 10^{-27})(9 \times 10 ^{16}) = 1.5053589 \times 10^{-10} \, \mathrm{J}$$
 					$$E_e = (9.109383 \times 10^{-31})(9 \times 10 ^{16}) = 8.1984447 \times 10^{-14} \, \mathrm{J}$$
-					$$KE = 0.78 \, \mathrm{MeV} \left(\frac{1.602 \times 10^{-19} \, \mathrm{J}}{ \, \mathrm{eV}}\right) = 1.24 \times 10^{-13} \, \mathrm{J} $$
-					$$ E_p + E_e + KE$$
+					$$K = 0.78 \, \mathrm{MeV} \left(\frac{1.602 \times 10^{-19} \, \mathrm{J}}{ \, \mathrm{eV}}\right) = 1.24 \times 10^{-13} \, \mathrm{J} $$
+					<br>
+					$$ E_p + E_e + K$$
 					$$ \small 1.5053589 \times 10^{-10} \, \mathrm{J} + 8.1984447 \times 10^{-14} \, \mathrm{J} + 1.24 \times 10^{-13} \, \mathrm{J} = $$
-					$$ \color{blue} 1.507418 \times 10^{-10} \, \mathrm{J} $$
-					$$ E_n = (1.674927 \times 10^{-27})(9 \times 10 ^{16}) = \color{blue} 1.5074343 \times 10^{-10} \, \mathrm{J}$$
+					$$ \color{#f02} 1.507418 \times 10^{-10} \, \mathrm{J} $$
+					<br>
+					$$ E_n = (1.674927 \times 10^{-27})(9 \times 10 ^{16}) = \color{#f02} 1.5074343 \times 10^{-10} \, \mathrm{J}$$
 				</span>
 				<br>The energy of a neutron is very close to the total energy of its products. The small difference can be attributed to the detail in the measurements.
 			</details>
 		</div>
 
 		<div class='example' id="kinetic-energy">
-			<p>Kinetic energy is the energy an object has because of its velocity. We can find a relativistic equation for kinetic energy by subtracting the energy of an object at rest from the energy at a relative velocity.</p>
-			$$KE = E - E_0$$
-			$$KE = \gamma mc^2 - mc^2 $$
-			$$KE = (\gamma -1)mc^2$$
+			<p>Kinetic energy is the energy an object has because of its velocity. We can find a relativistic equation for kinetic energy by finding the difference between the energy of an object at a relative velocity and at rest.</p>
+			$$K = E - E_0$$
+			$$K = \gamma mc^2 - mc^2 $$
+			$$K = (\gamma -1)mc^2$$
 			<strong>Example:</strong> How much kinetic energy would an observer measure for a 1 kg object moving at half the speed of light?
-			<details>
-				<summary>solution</summary>
-				$$ \gamma = 1.15$$
-				<br>$$KE = (\gamma -1)mc^2$$
-				$$KE = (1.1547 -1)(1)(3 \times 10^8)^2$$
-				$$KE = (0.15)(1)(9 \times 10^{16})$$
-				$$KE = 1.35 \times 10^{16} \, \mathrm{J}$$
-				<br>It would take that much energy to accelerate 1 kg to half the speed of light.
-			</details>
+			<div class="col-group">
+				<div>
+					<details>
+						<summary>relativistic solution</summary>
+						$$ \gamma = 1.15$$
+						<br>
+						$$K = (\gamma -1)mc^2$$
+						$$K = (1.15-1)(1)(3 \times 10^8)^2$$
+						$$K = (0.15)(1)(9 \times 10^{16})$$
+						$$K = 1.35 \times 10^{16} \, \mathrm{J}$$
+					</details>
+				</div>
+				<div>
+					<details>
+						<summary>classical solution</summary>
+						$$K = \tfrac{1}{2}mv^2$$
+						$$K = \tfrac{1}{2}(1)(1.5 \times 10^8)^2$$
+						$$K = 1.125 \times 10^{16} \, \mathrm{J}$$
+					</details>
+				</div>
+			</div>
 		</div>
 
 		<h2 class='underlined'>Spacetime</h2>

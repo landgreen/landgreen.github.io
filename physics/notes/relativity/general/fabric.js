@@ -1,12 +1,31 @@
-(() => {
-  var canvas = document.getElementById("three-fabric-load");
-  var ctx = canvas.getContext("2d");
+(function clickStart(id = "three-fabric-load", color = "#012", colorBG = "#fff") {
+  let canvas = document.getElementById(id);
+  let ctx = canvas.getContext("2d");
   canvas.width = document.getElementsByTagName("article")[0].clientWidth;
-  ctx.font = "30px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
+  ctx.lineJoin = "round"
+  ctx.lineCap = "round"
+  ctx.lineWidth = 1;
+  ctx.fillStyle = colorBG;
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
+  let scale
+  if (canvas.width > canvas.height) {
+    scale = canvas.height / 10 + 7
+  } else {
+    scale = canvas.width / 10 + 7
+  }
+  ctx.strokeStyle = color;
+  ctx.beginPath()
+  ctx.arc(cx, cy, scale * 1.8, 0, Math.PI * 2);
+  ctx.moveTo(cx - scale * 0.8, cy - scale);
+  ctx.lineTo(cx + scale * 1.2, cy);
+  ctx.lineTo(cx - scale * 0.8, cy + scale);
+  ctx.lineTo(cx - scale * 0.8, cy - scale);
+  ctx.stroke();
+  ctx.lineJoin = "miter"
+  ctx.lineCap = "butt"
+  ctx.lineWidth = 1;
 })()
 
 

@@ -22,10 +22,28 @@
   }
 
   function intro() {
-    ctx.font = "300 30px Arial";
-    ctx.fillStyle = "#aaa";
-    ctx.textAlign = "center";
-    ctx.fillText("click to start simulation", width / 2, height / 2);
+    ctx.lineJoin = "round"
+    ctx.lineCap = "round"
+    ctx.lineWidth = 1;
+    const cx = width / 2;
+    const cy = height / 2;
+    let scale
+    if (width > height) {
+      scale = height / 10 + 7
+    } else {
+      scale = width / 10 + 7
+    }
+    ctx.strokeStyle = "#012";
+    ctx.beginPath()
+    ctx.arc(cx, cy, scale * 1.8, 0, Math.PI * 2);
+    ctx.moveTo(cx - scale * 0.8, cy - scale);
+    ctx.lineTo(cx + scale * 1.2, cy);
+    ctx.lineTo(cx - scale * 0.8, cy + scale);
+    ctx.lineTo(cx - scale * 0.8, cy - scale);
+    ctx.stroke();
+    ctx.lineJoin = "miter"
+    ctx.lineCap = "butt"
+    ctx.lineWidth = 1;
   }
   window.addEventListener("load", intro);
   window.addEventListener("resize", intro);

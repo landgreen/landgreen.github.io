@@ -7,15 +7,17 @@ function checkVisible(elm) {
   return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
 }
 
-const setup0 = function () {
-  var canvas = document.getElementById("cloud-chamber");
-  var ctx = canvas.getContext("2d");
-  ctx.font = "26px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2 + 5);
-};
-setup0();
+// const setup0 = function () {
+//   var canvas = document.getElementById("cloud-chamber");
+//   var ctx = canvas.getContext("2d");
+//   ctx.font = "26px Arial";
+//   ctx.fillStyle = "#aaa";
+//   ctx.textAlign = "center";
+//   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2 + 5);
+// };
+// setup0();
+
+Charge.clickStart("cloud-chamber", false)
 
 function charges15(el) {
   //disable pop up menu on right click

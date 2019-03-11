@@ -77,27 +77,12 @@ function charges8(el) {
     }
   }
 
-  let current = 1 / 60;
-
-  function ammeter() {
-    current = current * 0.995 + Charge.teleport(q, 200) * 0.005;
-    // console.log((current*60).toFixed(2))
-    ctx.fillStyle = "#000";
-    ctx.fillText(
-      (current * 60).toFixed(1) + " e⁻/s",
-      canvas.width - 5,
-      canvas.height - 3
-    );
-  }
-
-
   function cycle() {
     if (!pause) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       Charge.physicsAll(q, 0.95, 150, 110);
       Charge.uniformField(q);
       Charge.drawAll(q);
-      ammeter();
       requestAnimationFrame(cycle);
     }
   }

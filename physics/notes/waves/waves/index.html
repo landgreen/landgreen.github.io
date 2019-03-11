@@ -42,10 +42,12 @@
 	</header>
 	<article>
 		<p>
-			If you throw a pebble into a pond, you see a wave spread out along the surface of the water. When you a tree falls in the forest you can hear the sound waves spread out through the air. When you look at a star you see light waves from long ago and far far away.
+			If you throw a pebble into a pond you see a wave spread out along the surface of the water.
+			When a tree falls in the forest you can hear the sound waves spread out through the air.
+			When you look at a star you see electro-magnetic waves from long ago and far far away.
 		</p>
 		<p>
-			Waves have different properties determined by the medium they travel through.
+			Waves are disturbances that move through various media. The nature of each medium gives their waves different properties.
 		</p>
 		<table>
 			<tr>
@@ -153,7 +155,7 @@
 					el.innerHTML = "<strong>Amplitude</strong> = maximum displacement from equilibrium (m)"					
 				});
 				document.getElementById("def-wavelength").addEventListener("click", () => {
-					el.innerHTML = "<strong>Wavelength, λ</strong> = distance between adjacent crests or troughs [m]"					
+					el.innerHTML = "<strong>Wavelength, λ</strong> = distance over which the wave's shape repeats [m]"					
 				});
 				document.getElementById("def-equilibrium").addEventListener("click", () => {
 					el.innerHTML = "<strong>Equilibrium</strong> = resting state of a medium"					
@@ -169,47 +171,166 @@
 				});
 			</script>
 			</div>
-			<p>Waves aren't limited to just sine and cosine functions. A wave doesn't have to be repeating either, although many wave do repeat.</p>
 		</div>
+
+		<h2 class='underlined'>Media and Wave Speed</h2>
+		<p>When a wave moves, what is moving is energy, not matter.</p>
+
+		<p>The speed of propagation is determined by the medium. Properties like frequency, amplitude, or wavelength generally don't effect the speed.</p>
+		<p>Each type of wave has a different mechanism of propagation. The speed and possibility of a wave propagating through a medium is different for each wave type.</p>
+		<table>
+			<tr>
+				<th>speed (m/s)</th>
+				<th>vacuum</th>
+				<th>air</th>
+				<th>water</th>
+				<th>glass</th>
+			</tr>
+			<tr>
+				<th>sound</td>
+				<td>N/A</td>
+				<td>340</td>
+				<td>1484</td>
+				<td>4540</td>
+			</tr>
+			<tr>
+				<th>light</td>
+				<td>299&thinsp;792&thinsp;458</td>
+				<td>299&thinsp;700&thinsp;000</td>
+				<td>220&thinsp;000&thinsp;000</td>
+				<td>200&thinsp;000&thinsp;000</td>
+			</tr>
+		</table>
+		<p>
+			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo">Sound</a> travels faster in dense media because the atoms are <a href='https://www.youtube.com/watch?v=w6Q15GZpSUY'>closer</a> together. This means the atoms don't have to move as far to collide.
+		</p>
+		<p>
+			A light wave moves slower in dense media because as the light wave propagates through a medium it produces ripples that interfere in a way that slows the group velocity of the light wave.
+		</p>
+		<div class='example'>
+			<strong>Example:</strong> Two students are holding a slinky while standing 3.6 m apart. The first student sends a pulse which travels all the way down and back again. It takes 2.4 s for the wave to return. What is the speed of the wave?
+			<details>
+				<summary>solution</summary>
+				$$v = \frac{\Delta x}{\Delta t}$$
+				$$v = \frac{3.6 \times 2}{2.4} $$
+				$$v = 3 \, \mathrm{\tfrac{m}{s}}$$
+			</details>
+		</div>
+		<div class='example'>
+			<strong>Investigation:</strong> Can you figure out what factors affect the speed of a string wave? Go experiment with a string, or slinky to find out.
+			<details>
+				<summary>results</summary>
+				<br> Tension is probably the easiest way to control the speed of a string wave. The equation below shows that string mass and length are also factors.
+				$$ v = \sqrt{\frac{T}{mL}}$$
+				<div class="col-group ">
+					<div class='center'>
+						v = velocity (m/s)
+						<br>T = tension (N)
+					</div>
+					<div class='center'>
+						m = mass (kg)
+						<br>L = string length (m)
+					</div>
+				</div>
+				<p>Changing wave speed is used to change the pitch of stringed instruments. Notes from a guitar or harp are changed through tension, length, or string mass.</p>
+			</details>
+		</div>
+
+		<h2 class='underlined' id='sound-waves'>How Waves Propagate</h2>
+		<p>
+			<strong>Propagate</strong> is the word we use to describe waves moving. We try not to say move, because waves are a disturbance transmitting through the medium. The medium doesn't move. Each medium has their own mechanism of propagation, but they share some common principles.
+		</p>
+		<!-- <p>Each medium has their own mechanism of propagation, but there are some general principles.
+			<li>A medium is brought out of equilibrium by a disruption.</li>
+			<li>The medium is brought back to equilibrium by a restorative force.</li>
+			<li>The restorative force also pushes the disruptions forward through the medium.</li>
+		</p> -->
+		<p>
+			A medium at rest is in <strong>equilibrium</strong>; the forces are in balance. A disruption spreads through a medium bringing it out of equilibrium.
+		</p>
+		<p>
+			<a href="https://waveforms.surge.sh/waveforms-intro ">Sound waves</a> are vibrations that propagate through matter. They are produced by changes in pressure and velocity. Your <a href="https://www.youtube.com/watch?v=qgdqp-oPb1Q ">ear</a> senses the amplitude and frequency of the vibrations.
+		</p>
+		<p>Each time you click the simulations below you will send a pulse of compressed particles, sound!</p>
+		<!-- <p>
+			A disturbance that produces one or only a few waves is called a <strong>pulse</strong>.
+		</p> -->
+	</article>
+	<canvas class='center' id='sound1' height='50' width='600' onclick="sound(this,2, false) "> </canvas>
+	<article>
+		<p>
+			I've graphed the density and highlighted the particles with higher speeds. You can see the wave trading between kinetic energy and pressure.
+		</p>
+	</article>
+	<canvas class='center' id='sound2' height='50' width='600' onclick="sound(this, 1, true) "> </canvas>
+	<article>
+		<p>
+			Waves don't transmit matter, just energy. In the simulation below one particle is highlighted. Watch how it moves when it becomes part of the wave, but over time it stays in the same area.
+		</p>
+	</article>
+	<canvas class='center' id='sound3' height='50' width='600' onclick="sound(this, 1, false, true) "> </canvas>
+	<article>
+		<!-- <div class="example">
+			<p>
+				Sound waves are vibrations that move in the same direction the wave moves. Most other waves are produced by vibration perpendicular to the direction the wave moves, like waves on strings.
+			</p>
+			<div>
+				<p>
+					<strong>Longitudinal</strong> = a wave that vibrates in the direction of propagation
+					<br>Examples: sound, slinky
+				</p>
+				<p>
+					<strong>Transverse</strong> = a wave that vibrates perpendicular to the direction of propagation
+					<br>Examples: light, string
+				</p>
+			</div>
+		</div> -->
 
 
 		<h2 class='underlined'>Frequency and Period</h2>
+
 		<p>
+			When waves repeat at a regular interval they have measurable properties:
+		</p>
+		<p>
+			<strong>Frequency, f</strong> = number of cycles that pass per second [Hz, 1/s]
+			<br>
 			<strong>Period, T</strong> = time for one complete wave cycle to pass a point [s]
 			<br>
-			<strong>Frequency, f</strong> = number of cycles that pass per second [Hz, 1/s]
+			<strong>Wavelength, λ</strong> = distance over which the wave's shape repeats [m]
 		</p>
-		<br>
+		<p>Waves can have different shapes. The waveform below is a
+			<select id="waveform-select">
+				<option value="sine">sine</option>
+				<option value="square">square</option>
+				<option value="triangle">triangle</option>
+				<option value="sawtooth">sawtooth</option>
+			</select> wave.
+		</p>
 	</article>
 	<div id="sine-wave-zone">
 		<div class="flex-grid-thirds">
 			<div class="col">
 				<span class='center'>amplitude =
-					<input id='amplitude' type="number" step="5" min="-1000" max="1000" style="width:50px;">m
-					<br><input id='amplitude-slider' type="range" step="1" value="60" min="-500" max="500" style="width: 160px;">
+					<input id='amplitude' type="number" step="0.05" value="0.6" min="-2" max="2" style="width:50px;">m
+					<br><input id='amplitude-slider' type="range" step="0.01" value="0.6" min="-2" max="2" style="width: 160px;">
 				</span>
 			</div>
 			<div class="col">
 				<span class='center'>velocity =
-					<input id='velocity' type="number" step="5" min="-999" max="999" style="width:50px;">m/s
-					<br><input id='velocity-slider' type="range" step="1" value="60" min="-999" max="999" style="width: 160px;">
+					<input id='velocity' type="number" step="0.1" min="-9.99" max="9.99" value="0.6" style="width:50px;">m/s
+					<br><input id='velocity-slider' type="range" step="0.05" value="0.6" min="-9.99" max="9.99" style="width: 160px;">
 				</span>
 			</div>
 			<div class="col">
 				<span class='center'>wavelength =
-					<input id='wavelength' type="number" min="0" step="20" max="999" style="width:50px;">m
-					<br><input id='wavelength-slider' type="range" step="1" value="300" min="10" max="999" style="width: 160px;">
+					<input id='wavelength' type="number" min="0" step="0.2" max="9.99" style="width:50px;">m
+					<br><input id='wavelength-slider' type="range" step="0.1" value="3" min="0.2" max="9.99" style="width: 160px;">
 				</span>
 			</div>
 		</div>
 		<div class='center' id='wave_animation'>
 			<svg id='sin-wave' height='400'>
-				<!-- <filter id="displacementFilter">
-					<feTurbulence id='fe-turb' type="turbulence" baseFrequency="0.02" numOctaves="3" />
-					<feDisplacementMap id='fe-disp' in="SourceGraphic" scale="17" xChannelSelector="R" yChannelSelector="G" />
-					<feGaussianBlur stdDeviation="0.5" />
-					<feOffset dx="0" dy="-6" />
-				</filter> -->
 				<g stroke="#d9dfdf" style="stroke-dasharray:1,98,1,0;stroke-width:4000;">
 					<line x1="0" y1="0" x2="2000" y2="0" />
 					<line x1="0" y1="0" x2="0" y2="2000" />
@@ -217,10 +338,10 @@
 				<g stroke-dasharray='10,10' stroke='#777' stroke-width='2'>
 					<line x1="0" y1="200" x2="3000" y2="200" />
 				</g>
-				<path filter="url(#displacementFilter)" id="sine_wave" stroke-width='9' fill='rgba(0,0,255,0.4)' stroke='rgba(255,255,255,0.5)' stroke-miterlimit="10" />
+				<path id="wave-form-path" stroke-width='2' fill='none' stroke='#000' stroke-miterlimit="10" />
 				<g>
 					<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;' />
-					<text x="50" y="391" text-anchor="middle" font-size="15" fill='#000'>100 m</text>
+					<text x="50" y="391" text-anchor="middle" font-size="15" fill='#000'>1.0 m</text>
 				</g>
 			</svg>
 		</div>
@@ -239,7 +360,7 @@
 	<article>
 		<strong>Graphing:</strong> Let's see if we can find a relationship between frequency and period. Change the wavelength and record about five different pairs of frequency and period. Graph the pairs with period as the x-coordinate and frequency as the y-coordinate. What does the graph look like?
 		<details id="example0">
-			<summary>solution</summary>
+			<summary>result</summary>
 			<p>It's an inverse function.</p>
 			<svg id="SVG-graph-0" viewBox="0 0 600 400"></svg>
 			<script>
@@ -336,7 +457,7 @@
 					}
 				}
 			</style>
-			<p>Click the circle to start; click again to pause after it gets annoying.</p>
+			<p>Click the circle to start. After it gets annoying click again to pause.</p>
 			<div class="wrapper">
 				<div style="grid-column: 1 / span 1;" class="slider-wrapper">
 					<input type="range" id='per-slider' min="0.5" max="2" step="0.01" value="4">
@@ -421,68 +542,6 @@
 			</details>
 		</div>
 
-		<h2 class='underlined'>Media and Wave Speed</h2>
-		<p>When a wave moves, what is moving is energy, not matter.</p>
-
-		<p>The speed of propagation is determined by the medium. Properties like frequency, amplitude, or wavelength generally don't effect the speed.</p>
-		<p>Each type of wave has a different mechanism of propagation. The speed and possibility of a wave propagating through a medium is different for each wave type.</p>
-		<table>
-			<tr>
-				<th>speed (m/s)</th>
-				<th>vacuum</th>
-				<th>air</th>
-				<th>water</th>
-				<th>glass</th>
-			</tr>
-			<tr>
-				<th>sound</td>
-				<td>N/A</td>
-				<td>340</td>
-				<td>1484</td>
-				<td>4540</td>
-			</tr>
-			<tr>
-				<th>light</td>
-				<td>299&thinsp;792&thinsp;458</td>
-				<td>299&thinsp;700&thinsp;000</td>
-				<td>220&thinsp;000&thinsp;000</td>
-				<td>200&thinsp;000&thinsp;000</td>
-			</tr>
-		</table>
-		<p>
-			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo">Sound</a> travels faster in dense media because the atoms are <a href='https://www.youtube.com/watch?v=w6Q15GZpSUY'>closer</a> together. This means the atoms don't have to move as far to collide.
-		</p>
-		<p>
-			A light wave moves slower in dense media because as the light wave propagates through a medium it produces ripples that interfere in a way that slows the group velocity of the light wave.
-		</p>
-		<div class='example'>
-			<strong>Example:</strong> Two students are holding a slinky while standing 3.6 m apart. The first student sends a pulse which travels all the way down and back again. It takes 2.4 s for the wave to return. What is the speed of the wave?
-			<details>
-				<summary>solution</summary>
-				$$v = \frac{\Delta x}{\Delta t}$$
-				$$v = \frac{3.6 \times 2}{2.4} $$
-				$$v = 3 \, \mathrm{\tfrac{m}{s}}$$
-			</details>
-		</div>
-		<div class='example'>
-			<strong>Investigation:</strong> Can you figure out what factors affect the speed of a string wave? Go experiment with a string, or slinky to find out.
-			<details>
-				<summary>solution</summary>
-				<br> Tension is probably the easiest way to control the speed of a string wave. The equation below shows that string mass and length are also factors.
-				$$ v = \sqrt{\frac{T}{mL}}$$
-				<div class="col-group ">
-					<div class='center'>
-						v = velocity (m/s)
-						<br>T = tension (N)
-					</div>
-					<div class='center'>
-						m = mass (kg)
-						<br>L = string length (m)
-					</div>
-				</div>
-				<p>Changing wave speed is used to change the pitch of stringed instruments. Notes from a guitar or harp are changed through tension, length, or string mass.</p>
-			</details>
-		</div>
 		<h2 class='underlined'>The Wave Equation</h2>
 		<p>For regularly repeating waves the product of the frequency and wavelength is equal to the wave's velocity.</p>
 		<div class='definition'>
@@ -499,10 +558,11 @@
 			<a href="../../review/solving/index.html#proportions">proportions</a>.
 			<details>
 				<summary>solution</summary>
-				$$ \text{v is constant}$$
-				$$ \text{λ and f are inversely proportional}$$
 				$${ \atop v} {\atop =} { \Downarrow \atop f} { \Uparrow \atop \lambda} $$
-				$$ \text{tripling λ will reduce f by a third}$$
+				<p>
+					λ and f are inversely proportional, and v is constant.
+				</p>
+				<p>Tripling λ will reduce f by a third.</p>
 			</details>
 		</div>
 
@@ -654,10 +714,10 @@
 			<a href="../../review/solving/index.html#proportions">proportions</a>.
 			<details>
 				<summary>solution</summary>
-				$$ \text{f is constant}$$
-				$$ \text{v and λ are directly proportional}$$
-				$${\Downarrow \atop v} {\atop =} { \atop f} {\Downarrow \atop \lambda} $$
-				$$ \text{decreasing v will decrease λ}$$
+				$${\Downarrow \atop v} {\atop =} { \atop f} {\Downarrow \atop \lambda} $$ <p>
+					v and λ are directly proportional.
+				</p>
+				<p>decreasing v will decrease λ</p>
 			</details>
 		</div>
 
@@ -697,52 +757,6 @@
 			</details>
 		</div>
 
-		<h2 class='underlined' id='sound-waves'>How Waves Propagate</h2>
-		<p>
-			<strong>Propagate</strong> is the word we use to describe waves moving. We try not to say move, because waves are a signal transmitting through the medium. The medium doesn't move, just the signal. Each medium has their own mechanism of propagation, but there are some general principles.
-		</p>
-		<!-- <p>Each medium has their own mechanism of propagation, but there are some general principles.
-			<li>A medium is brought out of equilibrium by a disruption.</li>
-			<li>The medium is brought back to equilibrium by a restorative force.</li>
-			<li>The restorative force also pushes the disruptions forward through the medium.</li>
-		</p> -->
-		<p>
-			A medium at rest is in <strong>equilibrium</strong>; the forces are in balance. A disruption spreads through the medium bringing it out of equilibrium.
-		</p>
-		<p>
-			<a href="https://waveforms.surge.sh/waveforms-intro ">Sound waves</a> are vibrations that propagate through matter. They are produced from changes in pressure and velocity. Your <a href="https://www.youtube.com/watch?v=qgdqp-oPb1Q ">ear</a> senses the amplitude and frequency of the vibrations.
-		</p>
-		<p>Each time you click the simulations below you will send a pulse of compressed particles, sound!</p>
-	</article>
-	<canvas class='center' id='sound1' height='50' width='600' onclick="sound(this,2, false) "> </canvas>
-	<article>
-		<p>
-			I've graphed the density and highlighted the particles with higher speeds. You can see the wave trading between kinetic energy and pressure.
-		</p>
-	</article>
-	<canvas class='center' id='sound2' height='50' width='600' onclick="sound(this, 1, true) "> </canvas>
-	<article>
-		<p>
-			Waves don't transmit matter, just energy. In the simulation below one particle is highlighted. Watch how it moves when it becomes part of the wave, but over time it stays in the same area.
-		</p>
-	</article>
-	<canvas class='center' id='sound3' height='50' width='600' onclick="sound(this, 1, false, true) "> </canvas>
-	<article>
-		<!-- <div class="example">
-			<p>
-				Sound waves are vibrations that move in the same direction the wave moves. Most other waves are produced by vibration perpendicular to the direction the wave moves, like waves on strings.
-			</p>
-			<div>
-				<p>
-					<strong>Longitudinal</strong> = a wave that vibrates in the direction of propagation
-					<br>Examples: sound, slinky
-				</p>
-				<p>
-					<strong>Transverse</strong> = a wave that vibrates perpendicular to the direction of propagation
-					<br>Examples: light, string
-				</p>
-			</div>
-		</div> -->
 	</article>
 	<div class='back'>
 		<a href="../../../index.html ">Back</a>

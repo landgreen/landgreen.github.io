@@ -36,6 +36,36 @@
     <script defer src='../../../lib/gravityClass.js'></script>
     <script defer src='https://cdnjs.cloudflare.com/ajax/libs/three.js/98/three.min.js'></script>
     <script defer src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
+    <script>
+        function clickStart(id, color = "#012", colorBG = "#fff") {
+            let canvas = document.getElementById(id);
+            let ctx = canvas.getContext("2d");
+            ctx.lineJoin = "round"
+            ctx.lineCap = "round"
+            ctx.lineWidth = 1;
+            ctx.fillStyle = colorBG;
+            ctx.fillRect(0, 0, canvas.width, canvas.height)
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            let scale
+            if (canvas.width > canvas.height) {
+                scale = canvas.height / 10 + 7
+            } else {
+                scale = canvas.width / 10 + 7
+            }
+            ctx.strokeStyle = color;
+            ctx.beginPath()
+            ctx.arc(cx, cy, scale * 1.8, 0, Math.PI * 2);
+            ctx.moveTo(cx - scale * 0.8, cy - scale);
+            ctx.lineTo(cx + scale * 1.2, cy);
+            ctx.lineTo(cx - scale * 0.8, cy + scale);
+            ctx.lineTo(cx - scale * 0.8, cy - scale);
+            ctx.stroke();
+            ctx.lineJoin = "miter"
+            ctx.lineCap = "butt"
+            ctx.lineWidth = 1;
+       }
+    </script>
     <script defer src="grav0.js "></script>
     <script defer src="grav1.js "></script>
     <script defer src="grav2.js "></script>
@@ -717,7 +747,7 @@
 
             <strong>Example:</strong> Which terrestrial planet is being graphed?
             <details>
-                <summary>hint</summary>
+                <summary>strategy</summary>
                 <p>
                     Hover your mouse over the graph. Move your mouse horizontally to check the radius for each planet in the chart above. If the acceleration and the radius match it is the correct planet.
                 </p>
@@ -980,7 +1010,7 @@
         <div class='example'>
             <strong>Example:</strong> Two 100&#8239;000 kg masses are 2 meters apart. How much work would it take to bring them to 10&nbsp;m apart?
             <details>
-                <summary>hint</summary>
+                <summary>strategy</summary>
                 <p>Calculate the gravitational potential energy at each distance. The change in energy is the work.</p>
             </details>
             <details>
@@ -1000,7 +1030,7 @@
             </svg> -->
             <strong>Example:</strong> A 2000 kg spaceship starts at rest 20&#8239;000&nbsp;km from the surface of Earth. How much kinetic energy will the ship have after it falls down to 10&#8239;000&nbsp;km from the surface of Earth?
             <details>
-                <summary>hint</summary>
+                <summary>strategy</summary>
                 <p>
                     Use conservation of energy. Set the initial kinetic and gravitational potential equal to the final kinetic and gravitational potential.
                 </p>
@@ -1019,7 +1049,7 @@
         <div class='example'>
             <strong>Example:</strong> Find the minimum escape velocity for a 100&nbsp;kg person on Earth.
             <details>
-                <summary>hint</summary>
+                <summary>strategy</summary>
                 <p>
                     Use conservation of energy to find the energy needed to bring both the kinetic and potential energy to zero.
                 </p>

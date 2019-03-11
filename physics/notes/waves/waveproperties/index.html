@@ -51,15 +51,8 @@
 		<li>Waves spread through their medium in all directions.</li>
 
 		<h2 class='underlined'>Interference</h2>
-		<p>Multiple waves can be in the same position at the same time.</p>
-		<div class="col-group">
-			<div>
-				blue wave speed = <input id='super-slider-1' type="range" step="0.5" value="0" min="-4" max="4" style="width: 120px;">
-			</div>
-			<div>
-				&nbsp; red wave speed = <input id='super-slider-2' type="range" step="0.5" value="0" min="-4" max="4" style="width: 120px;">
-			</div>
-		</div>
+		<p>Multiple waves can be in the same position at the same time.
+			<br>wave speed = <input id='super-slider' type="range" step="0.01" value="0" min="0" max="3" style="width: 250px;"></p>
 		<svg id="SVG1" height='120'></svg>
 		<svg id="SVG2" width="100" height='160'></svg>
 		<script>
@@ -68,37 +61,42 @@
 				const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
 				return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
 			}
-
-			let phase1 = 0;
-			let phaseSpeed1 = 0;
-			let phase2 = 0;
-			let phaseSpeed2 = 0;
-			document.getElementById("super-slider-1").addEventListener("input", () => {
-				phaseSpeed1 = parseFloat(document.getElementById("super-slider-1").value);
+			const waveA = {
+				phase: 0,
+				speed: 0,
+				frequency: 30
+			}
+			const waveB = {
+				phase: 0,
+				speed: 0,
+				frequency: 280
+			}
+			document.getElementById("super-slider").addEventListener("input", () => {
+				const s = parseFloat(document.getElementById("super-slider").value);
+				waveA.speed = s
+				waveB.speed = -s
 			});
-			document.getElementById("super-slider-2").addEventListener("input", () => {
-				phaseSpeed2 = parseFloat(document.getElementById("super-slider-2").value);
-			});
+			
 			(() => {
 					const SVG1 = document.getElementById("SVG1")
 					const SVG2 = document.getElementById("SVG2")
-					drawSineWave(SVG1, 30, 10, phase1,'#39f',0.7, true, 563); drawSineWave(SVG1, 280, 55, phase2,'#f37',0.7, true, 563);
-					drawSineWaves(SVG2, 30, 10, phase1,'#f80', 280, 55, phase2, '#08b', '#000', false, true, 563);
+					drawSineWave(SVG1, waveA.frequency, 10, waveA.phase,'#39f',0.7, true, 563); drawSineWave(SVG1, waveB.frequency, 55, waveB.phase,'#f37',0.7, true, 563);
+					drawSineWaves(SVG2, waveA.frequency, 10, waveA.phase,'#f80', waveB.frequency, 55, waveB.phase, '#08b', '#000', false, true, 563);
 					//animation
 					function draw() {
-						if ((phaseSpeed1 !== 0 || phaseSpeed2 !== 0) && checkVisible(SVG1)) {
-							phase1 -= phaseSpeed1
-							phase2 -= phaseSpeed2
+						if (waveA.speed !== 0) {
+							waveA.phase -= waveA.speed
+							waveB.phase -= waveB.speed
 
 							while (SVG1.lastChild) {
 								SVG1.removeChild(SVG1.lastChild);
 							}
-							drawSineWave(SVG1, 30, 10, phase1,'#39f',0.7, true, 563); drawSineWave(SVG1, 280, 55, phase2,'#f37',0.7, true, 563);
+							drawSineWave(SVG1,  waveA.frequency, 10, waveA.phase,'#39f',0.7, true, 563); drawSineWave(SVG1,  waveB.frequency, 55, waveB.phase,'#f37',0.7, true, 563);
 
 							while (SVG2.lastChild) {
 								SVG2.removeChild(SVG2.lastChild);
 							}
-							drawSineWaves(SVG2, 30, 10, phase1,'#39f', 280, 55, phase2, '#f37', '#000', false, true, 563);
+							drawSineWaves(SVG2,  waveA.frequency, 10, waveA.phase,'#39f',  waveB.frequency, 55, waveB.phase, '#f37', '#000', false, true, 563);
 						}
 						requestAnimationFrame(draw);
 			        }	
@@ -107,20 +105,27 @@
 		</script>
 
 		<div class="definition">
-			<p>Unlike particles, waves pass through each other without interacting. When two waves are in the same position we say they are in <strong>superposition</strong>.</p>
-			<p>The observed amplitude for waves in superposition is the sum of each wave's amplitude.</p>
+			<p>
+				Unlike particles, waves pass through each other without interacting.
+			</p>
+			<p>
+				When two waves are in the same position we say they are in <strong>superposition</strong>. The observed amplitude for waves in superposition is the sum of each wave's amplitude.
+			</p>
 		</div>
-		<p>Ears are able to detect separate sound frequencies, even though they enter the ear in a superposition. This <a href="https://musiclab.chromeexperiments.com/Spectrogram">spectrogram</a> lets you visualize the frequencies that make up various sounds. </p>
-		<!-- <a href="https://www.youtube.com/watch?time_continue=157&v=XBP0jmpjzBw"></a> -->
-
-		<p>Waves add <strong>constructively</strong> when both wave amplitudes are positive or both are negative. This produces a higher observed amplitude. Constructive interference is how two speakers playing the same song are louder than just one.</p>
-		<p>Waves add <strong>destructively</strong> when one wave amplitude is positive and the other is negative. This produces a lower observed amplitude. Destructive interference is put to use in <a href="https://www.youtube.com/watch?v=HOdEvhEjO2I">noise cancelling headphones</a>.</p>
+		<p>
+			Ears are able to detect separate sound frequencies, even though they enter the ear in a superposition. This <a href="https://musiclab.chromeexperiments.com/Spectrogram">spectrogram</a> lets you visualize the frequencies that make up various sounds.
+		</p>
+		<p>
+			Waves add <strong>constructively</strong> when both wave amplitudes are positive or both are negative. This produces a higher observed amplitude. Constructive interference is how two speakers playing the same song are louder than just one.
+		</p>
+		<p>
+			Waves add <strong>destructively</strong> when one wave amplitude is positive and the other is negative. This produces a lower observed amplitude. Destructive interference is put to use in <a href="https://www.youtube.com/watch?v=HOdEvhEjO2I">noise cancelling headphones</a>.
+		</p>
 		<p>
 			<a href="https://www.youtube.com/watch?v=VOXbeRGVhaY">The Wedge</a> is a famous surf spot that has some dangerously fun waves because of constructive interference from waves reflected off a jetty.
 		</p>
-
 		<div class='example'>
-			<strong>Question:</strong> A wave is created on each side of a rope with an amplitude of 0.3m. The waves <a href="http://ophysics.com/waves3b.html">interfere</a> as they pass through each other.
+			<strong>Question:</strong> A wave is created on each side of a rope with an amplitude of 0.3&nbsp;m. The waves <a href="http://ophysics.com/waves3b.html">interfere</a> as they pass through each other.
 			<br>
 			<br>What is the amplitude of the rope when a crest lines up with a crest?
 			<br>What is the amplitude of the rope when a crest lines up with a trough?
@@ -805,7 +810,7 @@
 			<a href="https://en.wikipedia.org/wiki/Refractive_index#Typical_values">index of refraction</a>. Its high index is
 			why they seem sparkly. How fast does light move through a diamond?
 			<details>
-				<summary>hint</summary>
+				<summary>strategy</summary>
 				<p>Setup a situation where the light goes from air to diamonds.
 					<br>Build an equation with the index of refractions and the velocities.
 				</p>
@@ -943,7 +948,7 @@
 		<div class='example'>
 			<strong>Example:</strong> A 600 nm wave of red light starts in water and enters air. What is the critical angle for total internal reflection?
 			<details>
-				<summary>hint</summary>
+				<summary>strategy</summary>
 				<p>Look up the index of refraction for air and water.
 					<br>Set the angle of refraction to 90º.
 					<br>Solve for the angle of incidence.

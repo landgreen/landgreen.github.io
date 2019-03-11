@@ -1,16 +1,20 @@
-(() => {
-  var canvas = document.getElementById("three-potential-1-load");
-  var ctx = canvas.getContext("2d");
-  canvas.width = document.getElementsByTagName("article")[0].clientWidth;
-  ctx.fillStyle = "#000";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+// (() => {
+//   var canvas = document.getElementById("three-potential-1-load");
+//   var ctx = canvas.getContext("2d");
+//   canvas.width = document.getElementsByTagName("article")[0].clientWidth;
+//   ctx.fillStyle = "#000";
+//   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.font = "30px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-})()
+//   ctx.font = "30px Arial";
+//   ctx.fillStyle = "#aaa";
+//   ctx.textAlign = "center";
+//   ctx.textBaseline = "middle";
+//   ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
+// })()
+
+
+Charge.clickStart("three-potential-1-load")
+
 
 const potential1 = function (id) {
   const el = document.getElementById(id);

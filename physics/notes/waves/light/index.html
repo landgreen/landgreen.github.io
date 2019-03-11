@@ -847,11 +847,12 @@
 				</defs>
 				<rect x="0" y="0" width="600" height="580" fill="#000" />
 				<rect x="70" y="0" width="150" height="580" fill="url(#rainbow)" />
-				<g font-size="19" stroke="none" fill="#000" stroke-width="2">
-					<text x="40" y="600" text-anchor="middle">UV</text>
-					<text x="140" y="600" text-anchor="middle">visible</text>
-					<text x="300" y="600" text-anchor="middle">infrared</text>
+				<g font-size="16" stroke="none" fill="#fff" stroke-width="2">
+					<text x="40" y="20" text-anchor="middle">UV</text>
+					<text x="140" y="20" fill="#000" text-anchor="middle">visible</text>
+					<text x="380" y="20" text-anchor="middle">infrared</text>
 				</g>
+				<!-- <circle id="BB-color" cx="530" cy="50" r="20" fill="#fff" /> -->
 			</svg>
 			<p>temperature =
 				<input id='temperature-slider' type="range" min="0.01" max="0.51" step="0.001" value="0.31" style="width: 200px;">
@@ -884,7 +885,7 @@
 					positiveOnly: true,
 					gridSize: 100,
 					xScale: 200,
-					yScale: 35,
+					yScale: 150,
 					xDecimals: 1,
 					yDecimals: 0,
 					xLabel: "wavelength",
@@ -905,6 +906,7 @@
 					const BBColor = Math.ceil((T - 0.01) * blackBody.length * 2)
 					document.getElementById('SVG-graph-0-path').style.stroke = blackBody[BBColor];
 					document.getElementById('SVG-graph-0-fill').style.fill = blackBody[BBColor];
+					// document.getElementById('BB-color').style.fill = blackBody[BBColor];
 					document.getElementById('SVG-graph-0-fill').style.opacity = 0.7
 				});
 			}
@@ -916,9 +918,7 @@
 		<div class='example'>
 			<svg viewBox="0 0 710 600">
 				<rect x="0" y="0" width="720" height="600" fill="#FFFFFF" />
-
 				<rect x="114.0" y="19.5" width="536.8" height="513.3" fill="#E0E0E0" />
-
 				<g style="fill:none; stroke:black; stroke-width:2; stroke-linecap:butt; stroke-linejoin:miter">
 					<path d='M114.0,532.8 h15.0 m521.8,0 h-15' />
 					<path d='M114.0,424.7 h15.0 m521.8,0 h-15' />

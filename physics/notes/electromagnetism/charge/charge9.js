@@ -77,16 +77,6 @@ function charges9(el) {
     }
   }
 
-  let current = 1 / 60;
-
-  function ammeter() {
-    current = current * 0.995 + Charge.teleportHoles(q, 100) * 0.005;
-    // console.log((current*60).toFixed(2))
-    ctx.fillStyle = "#000";
-    ctx.fillText((current * 60).toFixed(1) + " e⁻/s", canvas.width - 5, canvas.height - 3);
-  }
-
-
   function cycle() {
     if (!pause) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -96,7 +86,6 @@ function charges9(el) {
         y: 0
       });
       Charge.drawAll(q);
-      ammeter();
       requestAnimationFrame(cycle);
     }
   }

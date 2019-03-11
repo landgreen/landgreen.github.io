@@ -1,11 +1,4 @@
-(function () {
-  var canvas = document.getElementById("charge12");
-  var ctx = canvas.getContext("2d");
-  ctx.font = "22px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-})();
+Charge.clickStart("charge12", false)
 
 function charges12(el) {
 

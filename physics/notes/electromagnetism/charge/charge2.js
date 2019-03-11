@@ -65,17 +65,22 @@ function charges2(el) {
   }
   // Charge.spawnCharges(q, 25, 'e')
   // Charge.spawnCharges(q, 25, 'p')
+
   let current = 8.2 / 60;
+  let currentOut = current;
 
   function ammeter() {
-    current = current * 0.995 + Charge.teleport(q, 200) * 0.005;
-    // console.log((current*60).toFixed(2))
+    current = current * 0.99 + Charge.teleport(q, 200) * 0.01;
     ctx.fillStyle = "#000";
-    ctx.fillText((current * 60).toFixed(1) + " e⁻/s", canvas.width - 5, canvas.height - 3);
+    if (!(count % 60)) currentOut = current
+    ctx.fillText((currentOut * 60).toFixed(1) + " e⁻/s", canvas.width - 3, canvas.height - 3);
   }
+
+  let count = 0;
 
   function cycle() {
     if (!pause) {
+      count++
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       Charge.physicsAll(q);
       Charge.drawAll(q);
