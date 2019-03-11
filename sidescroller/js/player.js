@@ -504,8 +504,8 @@ const mech = {
   },
   throw () {
     if ((keys[32] || game.mouseDownRight)) {
-      if (this.fieldMeter > 0.004) {
-        this.fieldMeter -= 0.004;
+      if (this.fieldMeter > 0.002) {
+        this.fieldMeter -= 0.002;
         this.throwCharge += this.throwChargeRate;;
         //draw charge
         const x = mech.pos.x + 15 * Math.cos(this.angle);
@@ -801,7 +801,7 @@ const mech = {
           mech.drawHold(mech.holdingTarget);
           mech.holding();
           mech.throw();
-        } else if ((keys[32] || game.mouseDownRight) && mech.fieldMeter > 0.2) { //not hold but field button is pressed
+        } else if ((keys[32] || game.mouseDownRight) && mech.fieldMeter > 0.15) { //not hold but field button is pressed
           //draw field
           const range = mech.grabRange - 20;
           ctx.beginPath();
