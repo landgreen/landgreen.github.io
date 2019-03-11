@@ -1,30 +1,35 @@
-(function () {
-  var canvas = document.getElementById("sound1");
-  var ctx = canvas.getContext("2d");
-  ctx.font = "24px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-})();
-(function () {
-  var canvas = document.getElementById("sound2");
-  var ctx = canvas.getContext("2d");
-  ctx.font = "24px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-})();
-(function () {
-  var canvas = document.getElementById("sound3");
-  var ctx = canvas.getContext("2d");
-  ctx.font = "24px Arial";
-  ctx.fillStyle = "#aaa";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText("click to start simulation", canvas.width / 2, canvas.height / 2);
-})();
+function clickStart(id, color = "#012", colorBG = "#fff") {
+  let canvas = document.getElementById(id);
+  let ctx = canvas.getContext("2d");
+  ctx.lineJoin = "round"
+  ctx.lineCap = "round"
+  ctx.lineWidth = 1;
+  ctx.fillStyle = colorBG;
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
+  let scale
+  if (canvas.width > canvas.height) {
+    scale = canvas.height / 10 + 7
+  } else {
+    scale = canvas.width / 10 + 7
+  }
+  ctx.strokeStyle = color;
+  ctx.beginPath()
+  ctx.arc(cx, cy, scale * 1.8, 0, Math.PI * 2);
+  ctx.moveTo(cx - scale * 0.8, cy - scale);
+  ctx.lineTo(cx + scale * 1.2, cy);
+  ctx.lineTo(cx - scale * 0.8, cy + scale);
+  ctx.lineTo(cx - scale * 0.8, cy - scale);
+  ctx.stroke();
+  ctx.lineJoin = "miter"
+  ctx.lineCap = "butt"
+  ctx.lineWidth = 1;
+}
+clickStart("sound1")
+clickStart("sound2")
+clickStart("sound3")
+
 
 function sound(el, drawMode = 0, waveOut = false, drawOne = false) {
   el.onclick = null; //stops the function from running on button click
