@@ -1196,6 +1196,130 @@
 			<p>Looks good!</p>
 		</details>
 
+		<div class='example'>
+			<svg viewBox="-30 0 600 290">
+				<path d="M 50 50 h 400
+				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+				h -270 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+				h -50 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100
+				M 220 50
+				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+				M 330 50
+				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+				<text x="38" y="138" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+				<text x="205" y="147" text-anchor="end" font-size="20" fill='#333'>80 kΩ</text>
+				<text x="205" y="173" text-anchor="end" font-size="20" fill='#333'>3.0 V</text>
+				<text x="315" y="157" text-anchor="end" font-size="20" fill='#333'>90 kΩ</text>
+				<text x="435" y="157" text-anchor="end" font-size="20" fill='#333'>90 kΩ</text>
+				<text x="140" y="283" text-anchor="middle" font-size="20" fill='#333'>30 kΩ</text>
+			</svg>
+			<strong>Example:</strong> Find the voltage of the battery.
+			<details>
+				<summary>strategy</summary>
+				<p>
+					Replace the three resistors in parallel with one equivalent resistor. The equivalent resistor will have the same voltage as each resistor in parallel.
+				</p>
+				<p>
+					Use Ohm's law to find the current through the equivalent resistor. That will be the same current that flows through the 30 kΩ resistor. We will then be able to find the voltage in that resistor with Ohm's law.
+				</p>
+				<p>
+					The battery's voltage is equal to the sum of the voltages across each resistor because of Kirchoff's law.
+				</p>
+			</details>
+			<details>
+				<summary>solution</summary>
+				<div class="col-group">
+					<div>
+						$$ \frac{1}{R_{\mathrm{eq}}} = \frac{1}{R_1}+\frac{1}{R_2}+\frac{1}{R_3}$$
+						$$ \frac{1}{R_{\mathrm{eq}}} = \frac{1}{80}+\frac{1}{90}+\frac{1}{90}$$
+						$$ R_{\mathrm{eq}} = {\color{#f30}28.8 \, \mathrm{k} \Omega}$$
+						<p>
+							Voltage is the same in parallel. The equivalent resistance has 3.0 V because the 80 kΩ resistor has 3.0 V.
+						</p>
+					</div>
+					<div><svg viewBox="-30 40 300 250">
+							<path d="M 50 50 h 180
+						v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+						h -50 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+						h -50 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+							<text x="38" y="138" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+							<text x="215" y="134" text-anchor="end" font-size="20" fill='#f30'>28.8 kΩ</text>
+							<text x="215" y="160" text-anchor="end" font-size="20" fill='#333'>3.0 V</text>
+							<text x="140" y="283" text-anchor="middle" font-size="20" fill='#333'>30 kΩ</text>
+						</svg></div>
+				</div>
+				<div class="col-group">
+					<div>
+						$$V = I R_{\mathrm{eq}}$$
+						$$I= \frac{V}{R_{\mathrm{eq}}}$$
+						$$I= \frac{3.0 \, \mathrm{A}}{28\,800 \, \Omega}$$
+						$$I= 0.000104 \, \mathrm{A}= {\color{#09d}0.104 \, \mathrm{mA}}$$
+					</div>
+					<div>
+						<svg viewBox="-30 30 300 295">
+							<path d="M 50 50 h 180
+									v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+									h -50 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+									h -50 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+							<text x="38" y="138" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+							<text x="215" y="134" text-anchor="end" font-size="20" fill='#333'>28.8 kΩ</text>
+							<text x="215" y="160" text-anchor="end" font-size="20" fill='#333'>3.0 V</text>
+							<text x="215" y="186" text-anchor="end" font-size="20" fill='#09d'>0.104 mA</text>
+							<text x="140" y="280" text-anchor="middle" font-size="20" fill='#333'>30 kΩ</text>
+							<text x="140" y="301" text-anchor="middle" font-size="20" fill='#09d'>0.104 mA</text>
+						</svg>
+					</div>
+				</div>
+				<div class="col-group">
+					<div>
+
+						<p>
+							The current in a series is the same, so we also know the current in the 30 kΩ resistor. With current and resistance we can calculate the voltage too.
+						</p>
+						$$V=IR$$
+						$$V=(0.000104 \, \mathrm{A})(30\,000 \, \Omega)$$
+						$$V= {\color{#0a7}3.125 \, \mathrm{V}}$$
+					</div>
+					<div>
+						<svg viewBox="-30 30 300 305">
+							<path d="M 50 50 h 180
+							v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+							h -50 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+							h -50 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+							<text x="38" y="138" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
+							<text x="215" y="134" text-anchor="end" font-size="20" fill='#333'>28.8 kΩ</text>
+							<text x="215" y="160" text-anchor="end" font-size="20" fill='#333'>3.0 V</text>
+							<text x="215" y="186" text-anchor="end" font-size="20" fill='#333'>0.104 mA</text>
+							<text x="140" y="280" text-anchor="middle" font-size="20" fill='#333'>30 kΩ</text>
+							<text x="140" y="301" text-anchor="middle" font-size="20" fill='#333'>0.104 mA</text>
+							<text x="140" y="323" text-anchor="middle" font-size="20" fill='#0a7'>3.125 V</text>
+						</svg>
+					</div>
+				</div>
+				<div class="col-group">
+					<div>
+						<p>We can use Kirchhoff’s voltage law to find the voltage in the battery.</p>
+						$$0=V_{\mathrm{bat}} + V_1 + V_2$$
+						$$V_{\mathrm{bat}} = -V_1 - V_2$$
+						$$V_{\mathrm{bat}} = 3.0 \, \mathrm{V} + 3.125 \, \mathrm{V}$$
+						$$V_{\mathrm{bat}} = {\color{#c09} 6.125 \, \mathrm{V}} $$
+					</div>
+					<div>
+						<svg viewBox="-30 0 300 290">
+							<path d="M 50 50 h 180
+									v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
+									h -50 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
+									h -50 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
+							<text x="38" y="138" text-anchor="end" font-size="20" fill='#c09'>6.125 V</text>
+							<text x="215" y="160" text-anchor="end" font-size="20" fill='#333'>3.0 V</text>
+							<text x="140" y="280" text-anchor="middle" font-size="20" fill='#333'>3.125 V</text>
+						</svg>
+					</div>
+				</div>
+			</details>
+		</div>
+
+
 	</article>
 	<div class='back'>
 		<a href="../../../index.html">Back</a>
