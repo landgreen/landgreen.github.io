@@ -58,15 +58,15 @@
 			<br>Across a battery the potential increases, so the voltage is positive.
 		</p>
 		<div class='example'>
-			<svg viewBox="0 0 600 70">
+			<svg viewBox="0 -5 600 70">
 				<g stroke-width="45" stroke-linejoin="round" fill='none' opacity="0.2">
-					<path d="M 0 20 h 260" stroke="#f00" />
-					<path d="M 340 20 h 260" stroke="#b88" />
+					<path d="M 340 20 h 260" stroke="#b88" stroke-width="40" />
+					<path d="M 0 20 h 260" stroke="#f00" stroke-width="50" />
 				</g>
 				<path d="M 0 20 h 260 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 260" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
 				<g text-anchor="end" font-size="20" font-weight="bold">
 					<text x="150" y="40" fill='#d55'>4 V</text>
-					<text x="500" y="40" fill='#777'>2 V</text>
+					<text x="500" y="37" fill='#777' font-size="18">2 V</text>
 				</g>
 			</svg>
 			<strong>Example:</strong> In the diagram above the potential in red is 4 V. The potential in grey is 2 V. What is the potential difference across the resistor?
@@ -89,12 +89,12 @@
 		<div class='example'>
 			<svg viewBox="0 0 600 80">
 				<g stroke-width="45" stroke-linejoin="round" fill='none' opacity="0.2">
-					<path d="M 0 30 h 288" stroke="#b88" />
-					<path d="M 305 30 h 290" stroke="#f00" />
+					<path d="M 0 30 h 288" stroke="#b88" stroke-width="40" />
+					<path d="M 305 30 h 290" stroke="#f00" stroke-width="50" />
 				</g>
 				<path d="M 0 30 h 290 m0 -15 v30 m15 -45 v60 m0 -30 h 290" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
 				<g text-anchor="end" font-size="20" font-weight="bold">
-					<text x="150" y="50" fill='#777'>0 V</text>
+					<text x="150" y="47" fill='#777' font-size="18">0 V</text>
 					<text x="500" y="50" fill='#d55'>1.50 V</text>
 				</g>
 			</svg>
@@ -106,15 +106,15 @@
 		</div>
 
 		<div class='example'>
-			<svg viewBox="0 0 600 90">
+			<svg viewBox="0 -5 600 90">
 				<g stroke-width="45" stroke-linejoin="round" fill='none' opacity="0.2">
-					<path d="M 0 20 h 260" stroke="#f00" />
-					<path d="M 340 20 h 260" stroke="#b88" />
+					<path d="M 340 20 h 260" stroke="#b88" stroke-width="40" />
+					<path d="M 0 20 h 260" stroke="#f00" stroke-width="50" />
 				</g>
 				<path d="M 0 20 h 260 l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 260" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
 				<g text-anchor="end" font-size="20" font-weight="bold">
 					<text x="150" y="40" fill='#d55'>1.50 V</text>
-					<text x="500" y="40" fill='#777'>0.70 V</text>
+					<text x="500" y="37" fill='#777' font-size="18">0.70 V</text>
 				</g>
 				<text x="300" y="80" text-anchor="middle" font-size="20" fill='#333'>0.0020 A</text>
 				<g transform="translate(337 60) rotate(180)">
@@ -136,13 +136,23 @@
 		</div>
 		<div class='example'>
 			<svg viewBox="0 0 540 300">
+				<defs>
+					<linearGradient id="fade-in-white" x1="0" x2="1" y1="0" y2="0">
+						<stop offset="0%" stop-color="#fff" stop-opacity="1" />
+						<stop offset="100%" stop-color="#fff" stop-opacity="0" />
+					</linearGradient>
+					<linearGradient id="fade-out-white" x1="1" x2="0" y1="0" y2="0">
+						<stop offset="0%" stop-color="#fff" stop-opacity="1" />
+						<stop offset="100%" stop-color="#fff" stop-opacity="0" />
+					</linearGradient>
+				</defs>
 				<g stroke-width="30" stroke-linejoin="round" fill='none' opacity="0.3">
 					<path d="M 10 150 h220
 						 M 100 150 l 50 100 h 80
-						 M 100 150 l 50 -100 h 80" stroke="#b88" />
+						 M 100 150 l 50 -100 h 80" stroke="#b88" stroke-width="27" />
 					<path d="M 310 150 h 220
 						 M 310 250 h 90 l50 -100
-						 M 310 50 h 90 l50 100" stroke="#f00" />
+						 M 310 50 h 90 l50 100" stroke="#f00" stroke-width="33" />
 				</g>
 				<path d="M 10 150 h220
 						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220
@@ -152,12 +162,14 @@
 						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 100" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
 				<g text-anchor="end" font-size="20" font-weight="bold">
 					<text x="90" y="130" fill='#777'>5.5 V</text>
-					<text x="502" y="130" fill='#d55'>9.0 V</text>
+					<text x="509" y="125" fill='#d55'>9.0 V</text>
 				</g>
 				<g transform="translate(231 20) rotate(0)">
 					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
 					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
 				</g>
+				<rect x="10" y="0" width="25" height="300" fill="url(#fade-in-white)" stroke="none" />
+				<rect x="505" y="0" width="25" height="300" fill="url(#fade-out-white)" stroke="none" />
 			</svg>
 			<strong>Example:</strong> When a wire branches, the potential is the same for an uninterrupted section. Use the potential to find the potential difference, or voltage, across each resistor.
 			<details>
@@ -168,10 +180,10 @@
 					<g stroke-width="30" stroke-linejoin="round" fill='none' opacity="0.3">
 						<path d="M 10 150 h220
 							 M 100 150 l 50 100 h 80
-							 M 100 150 l 50 -100 h 80" stroke="#b88" />
+							 M 100 150 l 50 -100 h 80" stroke="#b88" stroke-width="27" />
 						<path d="M 310 150 h 220
 							 M 310 250 h 90 l50 -100
-							 M 310 50 h 90 l50 100" stroke="#f00" />
+							 M 310 50 h 90 l50 100" stroke="#f00" stroke-width="33" />
 					</g>
 					<path d="M 10 150 h220
 							l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 220
@@ -181,11 +193,13 @@
 							l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10 h 90 l50 100" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
 					<g text-anchor="end" font-size="20" font-weight="bold">
 						<text x="90" y="130" fill='#777'>5.5 V</text>
-						<text x="502" y="130" fill='#d55'>9.0 V</text>
+						<text x="509" y="125" fill='#d55'>9.0 V</text>
 					</g>
 					<text x="270" y="25" text-anchor="middle" font-size="20">ΔV = -3.5 V</text>
 					<text x="270" y="125" text-anchor="middle" font-size="20">ΔV = -3.5 V</text>
 					<text x="270" y="225" text-anchor="middle" font-size="20">ΔV = -3.5 V</text>
+					<rect x="10" y="0" width="25" height="300" fill="url(#fade-in-white)" stroke="none" />
+					<rect x="505" y="0" width="25" height="300" fill="url(#fade-out-white)" stroke="none" />
 				</svg>
 				<p>The current is to the left, because the potential is dropping from right to left and resistors always decrease voltage.</p>
 			</details>
@@ -199,13 +213,13 @@
 					M 25 143
 					c 0 100, 100 40, 205 147
 					M 100 138
-					c 0 -100, 100 0, 130 -100" stroke="#b88" />
+					c 0 -100, 100 0, 130 -100" stroke="#b88" stroke-width="27" />
 					<path d="M 300 150 
 					c 50 15, 170 15, 300 0
 					M 310 290
 					c 0 50, 100 -40, 140 -128
 					M 310 38
-					c 0 100, 100 0, 150 122" stroke="#f00" />
+					c 0 100, 100 0, 150 122" stroke="#f00" stroke-width="33" />
 				</g>
 				<path d="M -10 150 
 			c 50 -15, 170 -15, 220 0
@@ -224,6 +238,8 @@
 				<text x="295" y="20" text-anchor="end" font-size="20">400 Ω</text>
 				<text x="295" y="130" text-anchor="end" font-size="20">200 Ω</text>
 				<text x="295" y="271" text-anchor="end" font-size="20">100 Ω</text>
+				<rect x="0" y="0" width="25" height="330" fill="url(#fade-in-white)" stroke="none" />
+				<rect x="525" y="0" width="25" height="330" fill="url(#fade-out-white)" stroke="none" />
 			</svg>
 			<strong>Question:</strong> Explain why resistors in parallel must all have the same voltage.
 			<details>
@@ -236,9 +252,9 @@
 		<div class='example'>
 			<svg viewbox="0 0 510 270">
 				<g stroke-width="50" stroke-linejoin="round" fill='none' opacity="0.3">
-					<path d="M 50 146 v-96 h80" stroke="#ccc" />
-					<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#d99" />
-					<path d="M 290 190 v60 h -160 h -80 v-87 M 460 190 v60 h-170" stroke="#f00" />
+					<path d="M 50 146 v-96 h80" stroke="#ccc" stroke-width="40" />
+					<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#d99" stroke-width="45" />
+					<path d="M 290 190 v60 h -160 h -80 v-87 M 460 190 v60 h-170" stroke="#f00" stroke-width="50" />
 				</g>
 				<path d="M 50 50 h 80
 						l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
@@ -249,12 +265,12 @@
 						v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
 						h-170" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
 				<g text-anchor="end" font-size="20" font-weight="bold">
-					<text x="101" y="70" fill='#999'>0.0 V</text>
+					<text x="95" y="67" fill='#999' font-size="17">0.0 V</text>
 					<text x="455" y="245" fill='#c33'>6.0 V</text>
 					<text x="101" y="245" fill='#c33'>6.0 V</text>
 					<text x="285" y="245" fill='#c33'>6.0 V</text>
 					<text x="285" y="70" fill='#955'>2.0 V</text>
-					<text x="455" y="70" fill='#955'>2.0 V</text>
+					<text x="455" y="68" fill='#955'>2.0 V</text>
 				</g>
 			</svg>
 			<strong>Example:</strong> The electric potential for each uninterrupted section of wire is shown in the circuit diagram above. Use the potential to find the potential difference, or voltage, across each element in the circuit.
@@ -267,9 +283,9 @@
 				$$6\, \mathrm{V}-0\, \mathrm{V} = 6\, \mathrm{V}$$
 				<svg viewbox="0 0 540 270">
 					<g stroke-width="50" stroke-linejoin="round" fill='none' opacity="0.3">
-						<path d="M 50 146 v-96 h80" stroke="#ccc" />
-						<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#d99" />
-						<path d="M 290 190 v60 h -160 h -80 v-87 M 460 190 v60 h-170" stroke="#f00" />
+						<path d="M 50 146 v-96 h80" stroke="#ccc" stroke-width="40" />
+						<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#d99" stroke-width="45" />
+						<path d="M 290 190 v60 h -160 h -80 v-87 M 460 190 v60 h-170" stroke="#f00" stroke-width="50" />
 					</g>
 					<path d="M 50 50 h 80
 						   l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
@@ -280,12 +296,12 @@
 						   v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
 						   h-170" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
 					<g text-anchor="end" font-size="17">
-						<text x="95" y="70" fill='#999'>0.0 V</text>
+						<text x="95" y="68" fill='#999'>0.0 V</text>
 						<text x="455" y="245" fill='#c33'>6.0 V</text>
 						<text x="95" y="245" fill='#c33'>6.0 V</text>
 						<text x="285" y="245" fill='#c33'>6.0 V</text>
-						<text x="285" y="70" fill='#955'>2.0 V</text>
-						<text x="455" y="70" fill='#955'>2.0 V</text>
+						<text x="285" y="68" fill='#955'>2.0 V</text>
+						<text x="455" y="68" fill='#955'>2.0 V</text>
 					</g>
 					<g font-size="21" fill='#000' font-weight="bold">
 						<text x="135" y="155" text-anchor="end">+6.0 V</text>
@@ -322,10 +338,10 @@
 		<div class='example'>
 			<svg viewBox="0 0 500 300" onmouseover="document.getElementById('volts1').style.opacity = '0.4';" onmouseout="document.getElementById('volts1').style.opacity='0';">
 				<g id="volts1" stroke-width="50" stroke-linejoin="round" fill='none' opacity="0">
-					<path d="M 100 146 v-96 h110" stroke="#ccc" />
-					<path d="M 290 50 h110 v60" stroke="#d99" />
-					<path d="M 400 190 v60 h-110" stroke="#e55" />
-					<path d="M 100 165 v85 h110" stroke="#f00" />
+					<path d="M 100 146 v-96 h110" stroke="#ccc" stroke-width="40" />
+					<path d="M 290 50 h110 v60" stroke="#d99" stroke-width="45" />
+					<path d="M 400 190 v60 h-110" stroke="#e55" stroke-width="50" />
+					<path d="M 100 165 v85 h110" stroke="#f00" stroke-width="55" />
 				</g>
 				<path d="M 100 50 h 110
 				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
@@ -348,10 +364,10 @@
 		<div class='example'>
 			<svg viewBox="0 0 500 300" onmouseover="document.getElementById('volts2').style.opacity = '0.4';" onmouseout="document.getElementById('volts2').style.opacity='0';">
 				<g id="volts2" stroke-width="50" stroke-linejoin="round" fill='none' opacity="0">
-					<path d="M 100 146 v-96 h110" stroke="#ccc" />
-					<path d="M 290 50 h110 v60" stroke="#caa" />
-					<path d="M 400 190 v60 h-110" stroke="#e44" />
-					<path d="M 100 165 v85 h110" stroke="#f00" />
+					<path d="M 100 146 v-96 h110" stroke="#ccc" stroke-width="40" />
+					<path d="M 290 50 h110 v60" stroke="#caa" stroke-width="45" />
+					<path d="M 400 190 v60 h-110" stroke="#e44" stroke-width="50" />
+					<path d="M 100 165 v85 h110" stroke="#f00" stroke-width="55" />
 				</g>
 				<path d="M 100 50 h 110
 				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 110
@@ -406,10 +422,10 @@
 
 		<div class='example'>
 			<svg viewbox="0,0,530,270" onmouseover="document.getElementById('volts3').style.opacity = '0.4';" onmouseout="document.getElementById('volts3').style.opacity='0';"> >
-				<g id="volts3" stroke-width="50" stroke-linejoin="round" fill='none' opacity="0">
-					<path d="M 50 146 v-96 h80" stroke="#ccc" />
-					<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#d99" />
-					<path d="M 290 190 v60 h -160 h -80 v-87 M 460 190 v60 h-170" stroke="#f00" />
+				<g id="volts3" stroke-linejoin="round" fill='none' opacity="0">
+					<path d="M 50 146 v-96 h80" stroke="#ccc" stroke-width="40" />
+					<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#d99" stroke-width="45" />
+					<path d="M 290 190 v60 h -160 h -80 v-87 M 460 190 v60 h-170" stroke="#f00" stroke-width="50" />
 				</g>
 				<path d="M 50 50 h 80
 						   l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
@@ -904,11 +920,11 @@
 		</div>
 		<h2 class='underlined'>Solving Complex Circuits</h2>
 		<svg viewBox="-30 0 600 290" onmouseover="document.getElementById('volts9').style.opacity = '0.5';" onmouseout="document.getElementById('volts9').style.opacity='0';">
-			<g id="volts9" stroke-width="50" stroke-linejoin="round" fill='none' opacity="0">
-				<path d="M 50 146 v-96 h80" stroke="#ccc" />
-				<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#d99" />
-				<path d="M 290 190 v60 h -80 M 460 190 v60 h-170" stroke="#e55" />
-				<path d="M 50 162 v88 h 80" stroke="#f00" />
+			<g id="volts9" stroke-linejoin="round" fill='none' opacity="0">
+				<path d="M 50 146 v-96 h80" stroke="#ccc" stroke-width="40" />
+				<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#d99" stroke-width="45" />
+				<path d="M 290 190 v60 h -80 M 460 190 v60 h-170" stroke="#e55" stroke-width="50" />
+				<path d="M 50 162 v88 h 80" stroke="#f00" stroke-width="55" />
 			</g>
 			<path d="M 50 50 h 80
 			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 80
@@ -1197,7 +1213,12 @@
 		</details>
 
 		<div class='example'>
-			<svg viewBox="-30 0 600 290">
+			<svg viewBox="-30 0 600 290" onmouseover="document.getElementById('volts10').style.opacity = '0.5';" onmouseout="document.getElementById('volts10').style.opacity='0';">
+				<g id="volts10" stroke-linejoin="round" fill='none' opacity="0">
+					<path d="M 50 146 v-96 h 400 v60  M 220 50 v60 M 330 50 v60" stroke="#ccc" stroke-width="40" />
+					<path d="M 180 250 h 270 v-60  M 220 250 v-60 M 330 250 v-60" stroke="#d77" stroke-width="45" />
+					<path d="M 50 162 v88 h 50" stroke="#f00" stroke-width="50" />
+				</g>
 				<path d="M 50 50 h 400
 				v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
 				h -270 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
@@ -1232,7 +1253,7 @@
 					<div>
 						$$ \frac{1}{R_{\mathrm{eq}}} = \frac{1}{R_1}+\frac{1}{R_2}+\frac{1}{R_3}$$
 						$$ \frac{1}{R_{\mathrm{eq}}} = \frac{1}{80}+\frac{1}{90}+\frac{1}{90}$$
-						$$ R_{\mathrm{eq}} = {\color{#f30}28.8 \, \mathrm{k} \Omega}$$
+						$$ R_{\mathrm{eq}} = {\color{#e30}28.8 \, \mathrm{k} \Omega}$$
 						<p>
 							Voltage is the same in parallel. The equivalent resistance has 3.0 V because the 80 kΩ resistor has 3.0 V.
 						</p>
@@ -1243,7 +1264,7 @@
 						h -50 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
 						h -50 v-87 m-40 0 h 80 m-20 -15 h-40 m20 0 v -100" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
 							<text x="38" y="138" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
-							<text x="215" y="134" text-anchor="end" font-size="20" fill='#f30'>28.8 kΩ</text>
+							<text x="215" y="134" text-anchor="end" font-size="20" fill='#e30'>28.8 kΩ</text>
 							<text x="215" y="160" text-anchor="end" font-size="20" fill='#333'>3.0 V</text>
 							<text x="140" y="283" text-anchor="middle" font-size="20" fill='#333'>30 kΩ</text>
 						</svg></div>
@@ -1253,10 +1274,10 @@
 						$$V = I R_{\mathrm{eq}}$$
 						$$I= \frac{V}{R_{\mathrm{eq}}}$$
 						$$I= \frac{3.0 \, \mathrm{A}}{28\,800 \, \Omega}$$
-						$$I= 0.000104 \, \mathrm{A}= {\color{#09d}0.104 \, \mathrm{mA}}$$
+						$$I= 0.000104 \, \mathrm{A}= {\color{#08c}0.104 \, \mathrm{mA}}$$
 					</div>
 					<div>
-						<svg viewBox="-30 30 300 295">
+						<svg viewBox="-30 30 300 285">
 							<path d="M 50 50 h 180
 									v 60 l10 10 l-20 10 l20 10 l-20 10 l20 10 l-20 10 l20 10 l-10 10 v60
 									h -50 l-10 10 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -20 l-10 20 l-10 -10
@@ -1264,9 +1285,8 @@
 							<text x="38" y="138" text-anchor="end" font-size="20" fill='#333'>V = ?</text>
 							<text x="215" y="134" text-anchor="end" font-size="20" fill='#333'>28.8 kΩ</text>
 							<text x="215" y="160" text-anchor="end" font-size="20" fill='#333'>3.0 V</text>
-							<text x="215" y="186" text-anchor="end" font-size="20" fill='#09d'>0.104 mA</text>
+							<text x="215" y="186" text-anchor="end" font-size="20" fill='#08c'>0.104 mA</text>
 							<text x="140" y="280" text-anchor="middle" font-size="20" fill='#333'>30 kΩ</text>
-							<text x="140" y="301" text-anchor="middle" font-size="20" fill='#09d'>0.104 mA</text>
 						</svg>
 					</div>
 				</div>
@@ -1291,7 +1311,7 @@
 							<text x="215" y="160" text-anchor="end" font-size="20" fill='#333'>3.0 V</text>
 							<text x="215" y="186" text-anchor="end" font-size="20" fill='#333'>0.104 mA</text>
 							<text x="140" y="280" text-anchor="middle" font-size="20" fill='#333'>30 kΩ</text>
-							<text x="140" y="301" text-anchor="middle" font-size="20" fill='#333'>0.104 mA</text>
+							<text x="140" y="301" text-anchor="middle" font-size="20" fill='#08c'>0.104 mA</text>
 							<text x="140" y="323" text-anchor="middle" font-size="20" fill='#0a7'>3.125 V</text>
 						</svg>
 					</div>
