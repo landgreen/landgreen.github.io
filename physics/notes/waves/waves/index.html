@@ -397,11 +397,126 @@
 
 		<div class='example'>
 			<strong>Example:</strong> An air horn sounds at a frequency of 220 Hz. How many seconds pass between each wave crest?
+			<button id="sound-play-2" style="width: 60px;">listen</button>
 			<details>
 				<summary>solution</summary>
 				$$T = \frac{1}{f}$$
 				$$T = \frac{1}{220}$$
 				$$T = 0.0045 \, \mathrm{s}$$
+			</details>
+			<canvas id="horn-canvas" width="590" height="100" style="display: none;"></canvas>
+
+			<script>
+				(() => {
+						const buttonEl = document.getElementById("sound-play-2")
+						let audioCtx, oscillator1, gainNode1, oscillator2, gainNode2
+						let started = false;
+						let paused = false;
+						const analOut = 2048 //4096 //8192 //16384 //32768;
+						const freq = 220
+
+						// start -> play/pause  button events
+						buttonEl.addEventListener("click", function () {
+							if (!started) {
+								started = true
+								paused = false
+								buttonEl.textContent = 'pause';
+								//setup audio context
+								audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+	
+								oscillator1 = audioCtx.createOscillator();
+								gainNode1 = audioCtx.createGain();
+								gainNode1.gain.value = 0.5; //controls volume
+								oscillator1.connect(gainNode1);
+								gainNode1.connect(audioCtx.destination);
+								oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
+								oscillator1.frequency.value = freq; // value in hertz
+								oscillator1.start();
+
+								document.getElementById("horn-canvas").style.display = "inline";  //show canvas element
+								beatsCanvas();
+							} else {
+								if (audioCtx.state === 'suspended') {
+									audioCtx.resume().then(function () {
+										buttonEl.textContent = 'pause';
+										beatsCanvas()
+									});
+								} else if (audioCtx.state === 'running') {
+									audioCtx.suspend().then(function () {
+										buttonEl.textContent = 'play';
+										paused = true
+										// beatsCanvas()
+									});
+								}
+							}
+						});
+						function beatsCanvas() {
+							const canvas = document.getElementById("horn-canvas");
+							const ctx = canvas.getContext("2d");
+							const width = 600
+							const height = 100
+							function setupCanvas() {
+								if (document.body.clientWidth > width) {
+									canvas.style.width = width + "px";
+									canvas.style.height = height + "px";
+
+									const scale = window.devicePixelRatio;
+									canvas.width = width * scale;
+									canvas.height = height * scale;
+									ctx.scale(scale, scale);
+								}
+								ctx.lineWidth = 2;
+								ctx.strokeStyle = "#123";
+								ctx.lineJoin = 'bevel'; //miter
+								ctx.miterLimit = 1;
+							}
+							setupCanvas();
+							window.onresize = function () {
+								setupCanvas();
+							};
+
+							const analyser1 = audioCtx.createAnalyser();
+							gainNode1.connect(analyser1);
+							analyser1.fftSize = analOut;
+							const bufferLength = analyser1.frequencyBinCount;
+							const dataArray1 = new Uint8Array(bufferLength);
+							
+							paused = false
+							draw();
+
+							function draw() {
+								if (!paused) {
+									drawVisual = requestAnimationFrame(draw);
+									analyser1.getByteTimeDomainData(dataArray1);
+									ctx.clearRect(0, 0, width, height);
+									ctx.beginPath();
+									const sliceWidth = width / bufferLength;
+									let x = 0;
+									for (let i = 0; i < bufferLength; i++) {
+										const v = dataArray1[i] / 256.0;
+										const y = v * height;
+										if (i === 0) {
+											ctx.moveTo(x, y);
+										} else {
+											ctx.lineTo(x, y);
+										}
+										x += sliceWidth;
+									}
+									ctx.stroke();
+								}
+							}
+						}
+					})()
+				</script>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> The Los Angles Metro Expo Line has a train arrive at 6:50am, 6:56am, and 7:02. What is the period and frequency of the trains?
+			<details>
+				<summary>solution</summary>
+				$$6:56-6:50 = 6\, \mathrm{min}$$
+				$$T = 6\, \mathrm{min} \left(\frac{60\, \mathrm{s}}{1\, \mathrm{min}}\right) = 360\, \mathrm{s}$$
+				$$f = \frac{1}{360}$$ $$f=0.0027 \, \mathrm{Hz}$$
 			</details>
 		</div>
 
@@ -457,7 +572,6 @@
 					}
 				}
 			</style>
-			<p>Click the circle to start. After it gets annoying click again to pause.</p>
 			<div class="wrapper">
 				<div style="grid-column: 1 / span 1;" class="slider-wrapper">
 					<input type="range" id='per-slider' min="0.5" max="2" step="0.01" value="4">
@@ -512,25 +626,13 @@
 				}
 				sliderControl();
 			</script>
-			<br><strong>Question:</strong> Which slider controls period and which controls frequency?
+			<p>Click the circle to start. After it gets annoying click again to pause.</p>
+			<strong>Question:</strong> Which slider controls period and which controls frequency?
 			<details>
 				<summary>answer</summary>
 				<p>Period is controlled by the left slider and frequency by the right.</p>
 			</details>
 		</div>
-
-
-
-		<div class='example'>
-			<strong>Example:</strong> The Los Angles Metro Expo Line has a train arrive at 6:50am, 6:56am, and 7:02. What is the period and frequency of the trains?
-			<details>
-				<summary>solution</summary>
-				$$6:56-6:50 = 6\, \mathrm{min}$$
-				$$T = 6\, \mathrm{min} \left(\frac{60\, \mathrm{s}}{1\, \mathrm{min}}\right) = 360\, \mathrm{s}$$
-				$$f = \frac{1}{360}$$ $$f=0.0027 \, \mathrm{Hz}$$
-			</details>
-		</div>
-
 
 		<div class='example'>
 			<strong>Example:</strong> Red light has a frequency of 450 THz. What is the period of red light? (THz = 10¹² Hz)
@@ -607,7 +709,6 @@
 						<td>200&thinsp;000&thinsp;000</td>
 					</tr>
 				</table>
-
 			</details>
 			<details>
 				<summary>solution</summary>
@@ -625,14 +726,15 @@
 						<div class="center" id='ex0-math-water'></div>
 					</div>
 				</div>
-
 			</details>
+			<canvas id="sound-wave-canvas" width="590" height="100" style="display: none;"></canvas>
 			<script>
 				(() => {
 					const buttonEl = document.getElementById("sound-play")
 					let audioCtx, oscillator1, gainNode1, oscillator2, gainNode2
 					let started = false;
 					let paused = false;
+					const analOut = 2048 //4096 //8192 //16384 //32768;
 					let freq = Math.floor(200 + Math.random() * 1000);
 					document.getElementById("sound-f").value = freq;
 					document.getElementById("sound-f-slider").value = Math.log10(freq)
@@ -659,17 +761,22 @@
 
 							oscillator1 = audioCtx.createOscillator();
 							gainNode1 = audioCtx.createGain();
-							gainNode1.gain.value = 0.25; //controls volume
+							gainNode1.gain.value = 0.5; //controls volume
 							oscillator1.connect(gainNode1);
 							gainNode1.connect(audioCtx.destination);
 							oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
 							oscillator1.frequency.value = freq; // value in hertz
 							oscillator1.start();
+
+							document.getElementById("sound-wave-canvas").style.display = "inline"; //show canvas element
+							beatsCanvas2();
+
 						} else {
 							if (audioCtx.state === 'suspended') {
 								audioCtx.resume().then(function () {
 									oscillator1.frequency.value = freq;
 									buttonEl.textContent = 'pause';
+									beatsCanvas2()
 								});
 							} else if (audioCtx.state === 'running') {
 								audioCtx.suspend().then(function () {
@@ -692,6 +799,64 @@
 						if (audioCtx) oscillator1.frequency.value = freq // value in hertz
 						renderMath()
 					});
+
+					function beatsCanvas2() {
+						const canvas = document.getElementById("sound-wave-canvas");
+						const ctx = canvas.getContext("2d");
+						const width = 600
+						const height = 100
+
+						function setupCanvas() {
+							if (document.body.clientWidth > width) {
+								canvas.style.width = width + "px";
+								canvas.style.height = height + "px";
+
+								const scale = window.devicePixelRatio;
+								canvas.width = width * scale;
+								canvas.height = height * scale;
+								ctx.scale(scale, scale);
+							}
+							ctx.lineWidth = 2;
+							ctx.strokeStyle = "#123";
+							ctx.lineJoin = 'bevel'; //miter
+							ctx.miterLimit = 1;
+						}
+						setupCanvas();
+						window.onresize = function () {
+							setupCanvas();
+						};
+
+						const analyser1 = audioCtx.createAnalyser();
+						gainNode1.connect(analyser1);
+						analyser1.fftSize = analOut;
+						const bufferLength = analyser1.frequencyBinCount;
+						const dataArray1 = new Uint8Array(bufferLength);
+
+						paused = false
+						draw();
+
+						function draw() {
+							if (!paused) {
+								drawVisual = requestAnimationFrame(draw);
+								analyser1.getByteTimeDomainData(dataArray1);
+								ctx.clearRect(0, 0, width, height);
+								ctx.beginPath();
+								const sliceWidth = width / bufferLength;
+								let x = 0;
+								for (let i = 0; i < bufferLength; i++) {
+									const v = dataArray1[i] / 256.0;
+									const y = v * height;
+									if (i === 0) {
+										ctx.moveTo(x, y);
+									} else {
+										ctx.lineTo(x, y);
+									}
+									x += sliceWidth;
+								}
+								ctx.stroke();
+							}
+						}
+					}
 				})()
 			</script>
 		</div>
