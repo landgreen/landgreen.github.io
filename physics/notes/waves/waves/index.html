@@ -401,10 +401,10 @@
 			<details>
 				<summary>solution</summary>
 				$$T = \frac{1}{f}$$
-				$$T = \frac{1}{220}$$
+				$$T = \frac{1}{220 \, \mathrm{Hz}}$$
 				$$T = 0.0045 \, \mathrm{s}$$
 			</details>
-			<canvas id="horn-canvas" width="590" height="100" style="display: none;"></canvas>
+			<canvas id="horn-canvas" class="no-shadow" width="590" height="100" style="display: none;"></canvas>
 
 			<script>
 				(() => {
@@ -516,7 +516,9 @@
 				<summary>solution</summary>
 				$$6:56-6:50 = 6\, \mathrm{min}$$
 				$$T = 6\, \mathrm{min} \left(\frac{60\, \mathrm{s}}{1\, \mathrm{min}}\right) = 360\, \mathrm{s}$$
-				$$f = \frac{1}{360}$$ $$f=0.0027 \, \mathrm{Hz}$$
+				<br>
+				$$f = \frac{1}{T}$$
+				$$f = \frac{1}{360 \, \mathrm{s}}$$ $$f=0.0027 \, \mathrm{Hz}$$
 			</details>
 		</div>
 
@@ -626,7 +628,7 @@
 				}
 				sliderControl();
 			</script>
-			<p>Click the circle to start. After it gets annoying click again to pause.</p>
+			<p>Click the circle to start. Click again to pause if it gets annoying.</p>
 			<strong>Question:</strong> Which slider controls period and which controls frequency?
 			<details>
 				<summary>answer</summary>
@@ -727,7 +729,7 @@
 					</div>
 				</div>
 			</details>
-			<canvas id="sound-wave-canvas" width="590" height="100" style="display: none;"></canvas>
+			<canvas id="sound-wave-canvas" class="no-shadow" width="590" height="100" style="display: none;"></canvas>
 			<script>
 				(() => {
 					const buttonEl = document.getElementById("sound-play")
@@ -879,10 +881,10 @@
 			<a href="../../review/solving/index.html#proportions">proportions</a>.
 			<details>
 				<summary>solution</summary>
-				$${\Downarrow \atop v} {\atop =} { \atop f} {\Downarrow \atop \lambda} $$ <p>
-					v and λ are directly proportional.
+				$${\Downarrow \atop v} {\atop =} { \atop f} {\Downarrow \atop \lambda} $$
+				<p>
+					v and λ are directly proportional. This means decreasing v will decrease λ.
 				</p>
-				<p>decreasing v will decrease λ</p>
 			</details>
 		</div>
 
@@ -908,11 +910,15 @@
 				<summary>solution</summary>
 				$$ v = 3 \times 10^{8} \, \mathrm{\tfrac{m}{s} }$$
 				$$v = f \lambda$$
-				$$\lambda = \frac{v}{f}$$ $$\lambda = \frac{3 \times 10^{8}}{35}$$
-				$$\lambda = \frac{3 \times 10^{8}}{35}$$
-				$$\lambda = 8\,500\,000\, \mathrm{m}$$
-				<br> $$\lambda = \frac{3 \times 10^{8}}{250}$$
-				$$\lambda = 1\,200\,000\, \mathrm{m}$$
+				$$\lambda = \frac{v}{f}$$
+				<div class="col-group">
+					<div>$$\lambda = \frac{3 \times 10^{8}}{35}$$
+						$$\lambda = 8\,500\,000\, \mathrm{m}$$</div>
+					<div>$$\lambda = \frac{3 \times 10^{8}}{250}$$
+						$$\lambda = 1\,200\,000\, \mathrm{m}$$</div>
+				</div>
+
+
 				<p>The wavelength ranged from 8500 km to 1200 km. We can also find the length of the entire signal.</p>
 				$$v = \frac{\Delta x}{\Delta t}$$
 				$$\Delta x = v\Delta t$$

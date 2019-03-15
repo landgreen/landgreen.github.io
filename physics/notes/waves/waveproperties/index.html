@@ -258,7 +258,7 @@
 				<input id='beats-f2' type="number" min="1" max="20000" value=375 step=1 style="width: 55px;">
 				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;volume = <input class="beats-slider" id='beats-vol-slider-2' type="range" step="0.01" value="0.2" min="0" max="1">
 				<input id='beats-vol-2' type="number" step="0.05" value="0.2" min="0" max="1" style="width: 55px;">
-				<canvas id="beats-canvas" width="590" height="100"></canvas>
+				<canvas id="beats-canvas" width="590" height="100" class="no-shadow"></canvas>
 				<br>&nbsp;&nbsp;&nbsp;analyser = <input class="beats-slider" id='beats-analyser-slider' type="range" step="1" value="3" min="1" max="8">
 				<p>
 					The pattern in the graph above is sent as an electrical wave into your speakers. In the speaker, magnets convert the electrical wave into vibrations. The vibrations spread through the air as an audible wave of pressure.
@@ -440,7 +440,7 @@
 			<strong>Example:</strong> Draw the pattern of the waves that would pass through the gap as the waves propagate to the right.
 			<details>
 				<summary>solution</summary>
-				<svg viewBox="100,0,600,400" viewBox="100,0,1000,400">
+				<svg viewBox="100,0,600,400">
 					<g fill="none" stroke-width="20" stroke="#f08">
 						<circle cx="300" cy="200" r="40" opacity="0.6" />
 						<circle cx="300" cy="200" r="100" opacity="0.6" />
