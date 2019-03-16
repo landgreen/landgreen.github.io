@@ -7,6 +7,9 @@
  * @link http://chikuyonok.ru
  */
 function waterRipple(img) {
+
+    img.style.display = "none" //hide original image
+
     var canvas = document.createElement('canvas'),
         /** @type {CanvasRenderingContext2D} */
         ctx = canvas.getContext('2d'),
