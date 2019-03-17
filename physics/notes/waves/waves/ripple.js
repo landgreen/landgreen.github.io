@@ -140,9 +140,9 @@ function waterRipple(img) {
     setInterval(run, delay);
 
     // generate random ripples
-    var rnd = Math.random;
-    setInterval(function () {
-        disturb(rnd() * width, rnd() * height);
-    }, 700);
+    // var rnd = Math.random;
+    // setInterval(function () {
+    //     disturb(rnd() * width, rnd() * height);
+    // }, 700);
 
 };
