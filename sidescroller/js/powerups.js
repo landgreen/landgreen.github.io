@@ -119,34 +119,25 @@ const powerUps = {
       }
     }
   },
-  //power ups also come from spawn.debris
-  spawnRandomPowerUp(x, y) {
-    //a chance to drop a power up
-    //mostly used after mob dies
-    //spawn heal chance is higher at low health
-    if (Math.random() * Math.random() - 0.25 > Math.sqrt(mech.health) || Math.random() < 0.03) {
+  spawnRandomPowerUp(x, y) { //mostly used after mob dies 
+    if (Math.random() * Math.random() - 0.25 > Math.sqrt(mech.health) || Math.random() < 0.04) { //spawn heal chance is higher at low health
       powerUps.spawn(x, y, "heal");
       return;
     }
-
-    if (Math.random() < 0.16) {
+    if (Math.random() < 0.18) {
       if (b.inventory.length > 0) powerUps.spawn(x, y, "ammo");
       return;
     }
-
-    //a new gun has a low chance for each not acquired gun to drop
-    if (Math.random() < 0.006 * (b.guns.length - b.inventory.length)) {
+    if (Math.random() < 0.005 * (8 - b.inventory.length)) { //a new gun has a low chance for each not acquired gun to drop
       powerUps.spawn(x, y, "gun");
       return;
     }
-    if (Math.random() < 0.01) {
+    if (Math.random() < 0.006) {
       powerUps.spawn(x, y, "field");
       return;
     }
   },
-  chooseRandomPowerUp(x, y) {
-    //100% chance to drop a random power up
-    //this is mostly used for making power up drops in debris
+  chooseRandomPowerUp(x, y) { //100% chance to drop a random power up    //used in spawn.debris
     if (Math.random() < 0.5) {
       powerUps.spawn(x, y, "heal", false);
     } else {
@@ -157,6 +148,7 @@ const powerUps = {
     if (b.inventory.length < 3) {
       powerUps.spawn(x, y, "gun", false); //starting gun
     } else {
+      powerUps.spawnRandomPowerUp(x, y);
       powerUps.spawnRandomPowerUp(x, y);
       powerUps.spawnRandomPowerUp(x, y);
       powerUps.spawnRandomPowerUp(x, y);

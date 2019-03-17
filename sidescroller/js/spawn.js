@@ -2,24 +2,23 @@
 const spawn = {
   pickList: ["starter", "starter"],
   fullPickList: [
-    "chaser",
+    "chaser", "chaser", "chaser",
     "striker", "striker",
     "spinner",
-    "hopper", "hopper",
+    "hopper", "hopper", "hopper", "hopper",
     "grower",
     "springer",
-    "shooter", "shooter",
+    "shooter", "shooter", "shooter", "shooter", "shooter",
     "beamer",
     "focuser",
     "laser", "laser",
     "blinker",
     "sucker",
-    "exploder", "exploder",
+    "exploder", "exploder", "exploder",
     "spawner",
     "ghoster",
     "sneaker",
   ],
-  // "zoomer",
   allowedBossList: ["chaser", "spinner", "striker", "springer", "laser", "focuser", "beamer", "exploder", "spawner", "shooter"], //"zoomer", 
   setSpawnList() {
     //this is run at the start of each new level to determine the possible mobs for the level
@@ -133,19 +132,22 @@ const spawn = {
     //only on level 1
     mobs.spawn(x, y, 8, radius, "#9ccdc6");
     let me = mob[mob.length - 1];
-    me.accelMag = 0.0007;
+    me.accelMag = 0.00065;
     me.do = function () {
       this.healthBar();
       this.seePlayerByLookingAt();
       this.attraction();
     };
   },
-  chaser(x, y, radius = 30 + Math.ceil(Math.random() * 50)) {
-    mobs.spawn(x, y, 4, radius, "rgb(110,150,200)");
+  chaser(x, y, radius = 35 + Math.ceil(Math.random() * 40)) {
+    mobs.spawn(x, y, 8, radius, "#2c9790");
     let me = mob[mob.length - 1];
-    me.g = 0.0004; //required if using 'gravity'
-    me.accelMag = 0.0007;
-    me.memory = 300;
+    // Matter.Body.setDensity(me, 0.0007); //extra dense //normal is 0.001 //makes effective life much lower
+    me.friction = 0;
+    me.frictionAir = 0;
+    me.accelMag = 0.001;
+    me.g = me.accelMag * 0.6; //required if using 'gravity'
+    me.memory = 50;
     if (Math.random() < Math.min((game.levelsCleared - 1) * 0.1, 0.7)) spawn.shield(me, x, y);
     me.do = function () {
       this.healthBar();
@@ -715,7 +717,7 @@ const spawn = {
     let me = mob[mob.length - 1];
     me.vertices = Matter.Vertices.rotate(me.vertices, Math.PI, me.position); //make the pointy side of triangle the front
     me.memory = 120;
-    me.fireFreq = 0.005 + Math.random() * 0.04;
+    me.fireFreq = 0.007 + Math.random() * 0.005;
     me.noseLength = 0;
     me.fireAngle = 0;
     me.accelMag = 0.0005;
