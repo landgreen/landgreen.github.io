@@ -51,10 +51,12 @@
 		<li>Waves spread through their medium in all directions.</li>
 
 		<h2 class='underlined'>Interference</h2>
-		<p>Multiple waves can be in the same position at the same time.
-			<br>wave speed = <input id='super-slider' type="range" step="0.01" value="0" min="0" max="3" style="width: 250px;"></p>
-		<svg id="SVG1" height='120'></svg>
-		<svg id="SVG2" width="100" height='160'></svg>
+		<p>Multiple waves can be in the same position at the same time. Unlike particles, waves pass through each other without interacting.
+
+			<div class="center">wave speed = <input id='super-slider' type="range" step="0.01" value="0" min="0" max="3" style="width: 250px;"></div>
+			<svg id="SVG1" height='120'></svg>
+			<svg id="SVG2" width="100" height='160'></svg>
+		</p>
 		<script>
 			function checkVisible(elm) {
 				const rect = elm.getBoundingClientRect();
@@ -105,9 +107,6 @@
 		</script>
 
 		<div class="definition">
-			<p>
-				Unlike particles, waves pass through each other without interacting.
-			</p>
 			<p>
 				When two waves are in the same position we say they are in <strong>superposition</strong>. The observed amplitude for waves in superposition is the sum of each wave's amplitude.
 			</p>

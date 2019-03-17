@@ -27,12 +27,25 @@
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 	<script src="../../../lib/katex/katex.min.js"></script>
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 	<script src='../../../lib/function-graph-SVG.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>  -->
 	<script src="ripple.js"></script>
+	<script>
+		window.addEventListener("load", (event)=> {
+		$('.a').ripples({
+				resolution: 512,
+				perturbance: 0.04
+			});
+	  });
+	</script>
 </head>
 
 <body>
@@ -48,9 +61,20 @@
 			When you look at a star you see electro-magnetic waves from long ago and far far away.
 		</p>
 	</article>
-	<div class="center">
+	<!-- <div class="center hide-on-mobile">
 		<img src="..\..\..\media\800px-Tsunami_by_hokusai_19th_century.jpg" onload="waterRipple(this);" />
-	</div>
+	</div> -->
+	<div class="a center" style="background-image:url(../../../media/800px-Tsunami_by_hokusai_19th_century.jpg); width: 800px; height: 537px;"></div>
+	<!-- <style>
+		#ripple-div {
+		  background-image: 
+		  	/* linear-gradient(to bottom, rgba(255,255,0,0.5), rgba(0,0,255,0.5)), */
+			url('../../../media/800px-Tsunami_by_hokusai_19th_century.jpg');
+		  height: 537px;
+		  width: 800px;
+		}
+	</style>
+	<div class="center" id="ripple-div"> </div> -->
 	<article>
 		<p>
 			Waves are disturbances that move through various media. The nature of each medium gives their waves different properties.
@@ -945,6 +969,10 @@
 	<script src='../../../lib/matter.min.js'></script>
 	<script src="wave.js "></script>
 	<script src="sound.js "></script>
+	<script src="jripples.js"></script>
+	<script>
+		$("ripple-div").ripples();
+	</script>
 </body>
 
 </html>
