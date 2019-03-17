@@ -110,7 +110,7 @@ const level = {
 
     // spawn.group(-600, -550);
     // for (let i = 0; i < 1; ++i) {
-    spawn.sucker(800, -1150);
+    spawn.chaser(800, -1150);
     // }
     // spawn.nodeBoss(900, -1070, "shooter", 9);
     // for (let i = 0; i < 20; i++) {

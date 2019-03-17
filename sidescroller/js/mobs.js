@@ -837,23 +837,28 @@ const mobs = {
           } else if (c < -threshold) {
             this.torque -= 0.000004 * this.inertia;
           } else if (this.noseLength > 1.5) {
-            //fire!
+            //fire
             spawn.bullet(this.vertices[1].x, this.vertices[1].y, 5 + Math.ceil(this.radius / 15), 5);
             const v = 15;
             Matter.Body.setVelocity(mob[mob.length - 1], {
               x: this.velocity.x + this.fireDir.x * v + Math.random(),
               y: this.velocity.y + this.fireDir.y * v + Math.random()
             });
-            this.noseLength = 0;
-            // recoil  ?
+            this.noseLength = -0.5;
+            // recoil
             this.force.x -= 0.005 * this.fireDir.x * this.mass;
             this.force.y -= 0.005 * this.fireDir.y * this.mass;
           }
           if (this.noseLength < 1.5) this.noseLength += this.fireFreq;
-        } else if (this.noseLength > 0) {
-          this.noseLength -= this.fireFreq / 2;
+          setNoseShape();
+        } else if (this.noseLength > 0.1) {
+          this.noseLength -= this.fireFreq / 4;
+          setNoseShape();
+        } else if (this.noseLength < -0.1) {
+          this.noseLength += this.fireFreq / 4;
+          setNoseShape();
         }
-        setNoseShape();
+
       },
       turnToFacePlayer() {
         //turn to face player
