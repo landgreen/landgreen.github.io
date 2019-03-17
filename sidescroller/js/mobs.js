@@ -844,7 +844,7 @@ const mobs = {
               x: this.velocity.x + this.fireDir.x * v + Math.random(),
               y: this.velocity.y + this.fireDir.y * v + Math.random()
             });
-            this.noseLength = -0.5;
+            this.noseLength = 0;
             // recoil
             this.force.x -= 0.005 * this.fireDir.x * this.mass;
             this.force.y -= 0.005 * this.fireDir.y * this.mass;
@@ -852,13 +852,13 @@ const mobs = {
           if (this.noseLength < 1.5) this.noseLength += this.fireFreq;
           setNoseShape();
         } else if (this.noseLength > 0.1) {
-          this.noseLength -= this.fireFreq / 4;
-          setNoseShape();
-        } else if (this.noseLength < -0.1) {
-          this.noseLength += this.fireFreq / 4;
+          this.noseLength -= this.fireFreq / 2;
           setNoseShape();
         }
-
+        // else if (this.noseLength < -0.1) {
+        //   this.noseLength += this.fireFreq / 4;
+        //   setNoseShape();
+        // }
       },
       turnToFacePlayer() {
         //turn to face player
