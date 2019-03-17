@@ -7,9 +7,7 @@
  * @link http://chikuyonok.ru
  */
 function waterRipple(img) {
-
     img.style.display = "none" //hide original image
-
     var canvas = document.createElement('canvas'),
         /** @type {CanvasRenderingContext2D} */
         ctx = canvas.getContext('2d'),
@@ -25,10 +23,10 @@ function waterRipple(img) {
         ripplemap = [],
         last_map = [],
         ripple,
-        texture,
-        line_width = 20,
-        step = line_width * 2,
-        count = height / line_width;
+        texture;
+    // line_width = 20,
+    // step = line_width * 2,
+    // count = height / line_width;
 
     canvas.width = width;
     canvas.height = height;

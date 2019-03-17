@@ -32,7 +32,8 @@
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 	<script src='../../../lib/function-graph-SVG.js'></script>
-	<script src="ripple.js"></script>
+	<!-- <script src="ripple.js"></script> -->
+	<script src="watercanvas.js"></script>
 </head>
 
 <body>
@@ -47,8 +48,37 @@
 			When a tree falls in the forest you can hear the sound waves spread out through the air.
 			When you look at a star you see electro-magnetic waves from long ago and far far away.
 		</p>
-		<!-- style="display: none;" -->
-		<img src="..\..\..\media\800px-Tsunami_by_hokusai_19th_century.jpg" width="600" onload="waterRipple(this);" />
+		<!-- style="display: none;"   width="600"-->
+	</article>
+	<div class="center">
+		<div id="waterHolder"></div>
+		<script>
+			var width = 350;
+				var height = 275;
+				
+				function init(){
+					var waterModel = new WaterModel(width, height, {
+							resolution:2.0,
+							interpolate:false,
+							damping:0.985,
+							clipping:5,
+							evolveThreshold:0.05,
+							maxFps:30,
+							showStats:true
+						});
+					var waterCanvas = new WaterCanvas(width, height,
+						"waterHolder", waterModel, {
+							backgroundImageUrl:"..\..\..\media\800px-Tsunami_by_hokusai_19th_century.jpg",
+							lightRefraction:9.0,
+							lightReflection:0.1,
+							maxFps:20,
+							showStats:true
+						});
+				}
+		</script>
+		<!-- <img src="..\..\..\media\800px-Tsunami_by_hokusai_19th_century.jpg" onload="waterRipple(this);" /> -->
+	</div>
+	<article>
 		<p>
 			Waves are disturbances that move through various media. The nature of each medium gives their waves different properties.
 		</p>
