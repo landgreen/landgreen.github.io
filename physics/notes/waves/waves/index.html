@@ -47,28 +47,24 @@
 		<p>
 			If you throw a pebble into a pond you see a wave spread out along the surface of the water.
 			When a tree falls in the forest you can hear the sound waves spread out through the air.
-			When you look at a star you see electro-magnetic waves from long ago and far far away.
+			When you look at the sky you see electro-magnetic waves made by stars.
 		</p>
-		<!-- </article>
-			<div class="rippled" style="background-image:url('../../../media/800px-Tsunami_by_hokusai_19th_century.jpg'); width: 800px; height: 537px; margin: auto;"></div>
-			<div class="rippled" style="background-image:url(https://en.wikipedia.org/wiki/The_Great_Wave_off_Kanagawa#/media/File:Tsunami_by_hokusai_19th_century.jpg); width: 800px; height: 537px; margin: auto;"></div>
-		<article> -->
-	</article>
-	<style>
-		#tsunami {
-			/* background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/800px-Tsunami_by_hokusai_19th_century.jpg); */
-			background-image:url(../../../media/800px-Tsunami_by_hokusai_19th_century.jpg);
-			width: 100%;
-			height: 400px;
-			margin: auto;
-		}
-		@media screen and (min-width: 800px) {
+		<style>
 			#tsunami {
-				width: 800px;
-				height: 537px;
-			}
-		}
+					/* background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/800px-Tsunami_by_hokusai_19th_century.jpg); */
+					background-image:url(../../../media/800px-Tsunami_by_hokusai_19th_century.jpg);
+					width: 100%;
+					height: 400px;
+					margin: auto;
+				}
+				@media screen and (min-width: 800px) {
+					#tsunami {
+						width: 800px;
+						height: 537px;
+					}
+				}
 		</style>
+	</article>
 	<div id="tsunami"></div>
 	<p class="center" id="hide-after-click">Click the image to make waves.</p>
 	<article>
@@ -970,7 +966,7 @@
 	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
 	<!-- <script defer src="jquery.ripples-min.js"></script> -->
-	<script>
+	<script defer>
 		target = document.getElementById("tsunami")
 		target.addEventListener("click", startRipple);
 
@@ -978,8 +974,10 @@
 			target.removeEventListener('click', startRipple, false);
 			document.getElementById("hide-after-click").style.visibility = "hidden"
 			$('#tsunami').ripples({
+				dropRadius: 20,
 				resolution: 512,
-				perturbance: 0.04
+				perturbance: 0.03,
+				interactive: true
 			});
 		}
 	</script>
