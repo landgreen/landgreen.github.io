@@ -125,7 +125,7 @@
 				<td>The Wave</td>
 			</tr>
 		</table>
-		<div class='example'>
+		<div class='example-small'>
 			<div class='definition'>
 				<style>
 					.def-underlined{
@@ -200,7 +200,7 @@
 		<h2 class='underlined'>Media and Wave Speed</h2>
 		<p>When a wave moves, what is moving is energy, not matter.</p>
 
-		<p>The speed of propagation is determined by the medium. Properties like frequency, amplitude, or wavelength generally don't effect the speed.</p>
+		<p>The speed of propagation is determined by the medium. Properties like frequency, amplitude, or wavelength generally don't affect the speed.</p>
 		<p>Each type of wave has a different mechanism of propagation. The speed and possibility of a wave propagating through a medium is different for each wave type.</p>
 		<table>
 			<tr>
@@ -661,7 +661,82 @@
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> Red light has a frequency of 450 THz. What is the period of red light? (THz = 10¹² Hz)
+			<strong>Example:</strong> <span style="color:#f00;">Red light</span> has a frequency of 450 THz. What is its period?
+			<details>
+				<summary>table of metric prefixes</summary>
+				<table class="hide-on-mobile">
+					<tr>
+						<th>Name</th>
+						<th>Symbol</th>
+						<th colspan="2">Factor</th>
+						<th>Power</th>
+					</tr>
+					<tr>
+						<td>tera</td>
+						<td>T</td>
+						<td style="text-align: right;"> 1 000 000 000 000 </td>
+						<td></td>
+						<td>10<sup>12</sup> </td>
+					</tr>
+					<tr>
+						<td>giga</td>
+						<td>G</td>
+						<td style="text-align: right;"> 1 000 000 000 </td>
+						<td></td>
+						<td>10<sup>9</sup> </td>
+					</tr>
+					<tr>
+						<td>mega</td>
+						<td>M</td>
+						<td style="text-align: right;"> 1 000 000 </td>
+						<td></td>
+						<td>10<sup>6</sup> </td>
+					</tr>
+					<tr>
+						<td>kilo</td>
+						<td>k</td>
+						<td style="text-align: right;"> 1 000 </td>
+						<td></td>
+						<td>10<sup>3</sup> </td>
+					</tr>
+
+					<tr>
+						<td>centi</td>
+						<td>c</td>
+						<td></td>
+						<td style="text-align: left;">0.01</td>
+						<td>10<sup>-2</sup> </td>
+					</tr>
+					<tr>
+						<td>milli</td>
+						<td>m</td>
+						<td></td>
+						<td style="text-align: left;">0.001</td>
+						<td>10<sup>-3</sup> </td>
+					</tr>
+					<tr>
+						<td>micro</td>
+						<td>μ</td>
+						<td></td>
+						<td style="text-align: left;"> 0.000 001 </td>
+						<td>10<sup>-6</sup> </td>
+					</tr>
+					<tr>
+						<td>nano</td>
+						<td>n</td>
+						<td></td>
+						<td style="text-align: left;"> 0.000 000 001 </td>
+						<td>10<sup>-9</sup> </td>
+					</tr>
+					<tr>
+						<td>pico</td>
+						<td>p</td>
+						<td></td>
+						<td style="text-align: left;"> 0.000 000 000 001 </td>
+						<td>10<sup>-12</sup> </td>
+					</tr>
+				</table>
+			</details>
 			<details>
 				<summary>solution</summary>
 				$$T = \frac{1}{f}$$
@@ -787,7 +862,7 @@
 
 							oscillator1 = audioCtx.createOscillator();
 							gainNode1 = audioCtx.createGain();
-							gainNode1.gain.value = 0.5; //controls volume
+							gainNode1.gain.value = 0.97; //controls volume
 							oscillator1.connect(gainNode1);
 							gainNode1.connect(audioCtx.destination);
 							oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
