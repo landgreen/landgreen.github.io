@@ -430,41 +430,116 @@
 
 
 		<div class='example'>
+			<!-- <style>
+				.move-right {
+							animation: move_right 1s 0s linear infinite;
+							transform: translateX(0px);
+						}
+		
+						@keyframes move_right {
+							0% {
+								transform: translateX(0px);
+							}
+		
+							100% {
+								transform: translateX(50px);
+							}
+						}
+					</style> -->
 			<svg viewBox="100,0,600,200">
-				<g fill="none">
-					<path d="M300 0 v95 M300 105 v95" stroke="#000" stroke-width="10" />
-					<path d="M60 0 v200 M110 0 v200 M170 0 v200 M230 0 v200 M280 0 v200" stroke="#f08" opacity="0.6" stroke-width="20" />
+				<!-- <g stroke="#f08" opacity="0.6" stroke-width="20" class="move-right" fill="none">
+					<path d="M50 0 v200" />
+					<path d="M100 0 v200" />
+					<path d="M150 0 v200" />
+					<path d="M200 0 v200" />
+					<path d="M250 0 v200" />
+					<path d="M300 0 v200" />
+				</g> -->
+				<g stroke="#f08" opacity="1" stroke-width="20" fill="none">
+					<path d="M75 0 v200" />
+					<path d="M125 0 v200" />
+					<path d="M175 0 v200" />
+					<path d="M225 0 v200" />
+					<path d="M275 0 v200" />
 				</g>
+				<rect x="309" width="300" height="200" fill="#fff" stroke="none" />
+				<path d="M304 0 v95 M304 105 v95" stroke="#000" stroke-width="10" />
 			</svg>
 			<strong>Example:</strong> Draw the pattern of the waves that would pass through the gap as the waves propagate to the right.
 			<details>
 				<summary>solution</summary>
-				<svg viewBox="100,0,600,400">
-					<g fill="none" stroke-width="20" stroke="#f08">
-						<circle cx="300" cy="200" r="40" opacity="0.6" />
-						<circle cx="300" cy="200" r="100" opacity="0.6" />
-						<circle cx="300" cy="200" r="160" opacity="0.6" />
-						<circle cx="300" cy="200" r="220" opacity="0.6" />
-						<circle cx="300" cy="200" r="280" opacity="0.6" />
-						<circle cx="300" cy="200" r="340" opacity="0.6" />
-						<circle cx="300" cy="200" r="400" opacity="0.6" />
-						<circle cx="300" cy="200" r="460" opacity="0.6" />
-						<circle cx="300" cy="200" r="520" opacity="0.6" />
+				<svg viewBox="100 0 600 400">
+					<radialGradient id="radGrad2">
+						<stop offset="0" stop-color="#fff" stop-opacity="1" />
+						<stop offset="1" stop-color="#fff" stop-opacity="0" />
+					</radialGradient>
+
+					<mask id="circle-t21">
+						<circle cx="40" cy="0" r="45" fill="url(#radGrad2)" />
+					</mask>
+					<mask id="circle-t22">
+						<circle cx="100" cy=" 0" r="110" fill="url(#radGrad2)" />
+					</mask>
+					<mask id="circle-t23">
+						<circle cx="160" cy="0" r="180" fill="url(#radGrad2)" />
+					</mask>
+					<mask id="circle-t24">
+						<circle cx="220" cy="0" r="242" fill="url(#radGrad2)" />
+					</mask>
+					<mask id="circle-t25">
+						<circle cx="280" cy="0" r="304" fill="url(#radGrad2)" />
+					</mask>
+					<mask id="circle-t26">
+						<circle cx="340" cy="0" r="368" fill="url(#radGrad2)" />
+					</mask>
+					<mask id="circle-t27">
+						<circle cx="400" cy="0" r="430" fill="url(#radGrad2)" />
+					</mask>
+					<g transform="translate(300, 200)" fill="none" stroke-width="20" stroke="#f08">
+						<circle r="40" opacity="0.8" mask="url(#circle-t21)" stroke-width="17" />
+						<circle r="100" opacity="0.7" mask="url(#circle-t22)" />
+						<circle r="160" opacity="0.6" mask="url(#circle-t23)" />
+						<circle r="220" opacity="0.5" mask="url(#circle-t24)" />
+						<circle r="280" opacity="0.41" mask="url(#circle-t25)" />
+						<circle r="340" opacity="0.33" mask="url(#circle-t26)" />
+						<circle r="400" opacity="0.25" mask="url(#circle-t27)" />
 					</g>
 					<g fill="none">
 						<rect width="300" height="400" fill="#fff" stroke="none" />
-						<path d="M60 0 v400 M110 0 v400 M170 0 v400 M230 0 v400 M280 0 v400" stroke="#f08" opacity="0.6" stroke-width="20" />
+						<path d="M60 0 v400 M110 0 v400 M170 0 v400 M230 0 v400 M280 0 v400" stroke="#f08" opacity="1" stroke-width="20" />
 						<path d="M300 0 v195 M300 205 v200" stroke="#000" stroke-width="10" />
 					</g>
 				</svg>
 			</details>
 		</div>
 		<div class='example'>
-			<svg viewBox="100,0,600,200">
-				<g fill="none">
-					<path d="M300 0 v70 M300 80 v45 M300 135 v95" stroke="#000" stroke-width="10" />
-					<path d="M60 0 v200 M110 0 v200 M170 0 v200 M230 0 v200 M280 0 v200" stroke="#f08" opacity="0.6" stroke-width="20" />
+			<style>
+				.move-right {
+					animation: move_right 1s 0s linear infinite;
+					transform: translateX(0px);
+				}
+
+				@keyframes move_right {
+					0% {
+						transform: translateX(0px);
+					}
+
+					100% {
+						transform: translateX(50px);
+					}
+				}
+			</style>
+			<svg viewBox="100 0 600 200">
+				<g stroke="#f08" opacity="1" stroke-width="20" fill="none">
+					<path d="M75 0 v200" />
+					<path d="M125 0 v200" />
+					<path d="M175 0 v200" />
+					<path d="M225 0 v200" />
+					<path d="M275 0 v200" />
+					<!-- <path d="M300 0 v200" /> -->
 				</g>
+				<rect x="309" width="300" height="200" fill="#fff" stroke="none" />
+				<path d="M304 0 v70 M304 80 v45 M304 135 v95" stroke="#000" stroke-width="10" fill="none" />
 			</svg>
 			<strong>Example:</strong> Draw the pattern of the waves that would pass through the gap as the waves propagate to the right.
 			<details>
@@ -473,46 +548,101 @@
 					This is the famous quantum mechanical <a href="https://www.youtube.com/watch?v=p-MNSLsjjdo">double slit experiment</a>.
 					<br>Notice the alternating constructive and destructive interference pattern.
 				</p>
-				<svg viewBox="100,0,600,600">
-					<g fill="none">
-						<g stroke="#f08" stroke-width="20">
-							<g transform="translate(300, 200)">
-								<circle r="40" opacity="0.6" />
-								<circle r="100" opacity="0.6" />
-								<circle r="160" opacity="0.6" />
-								<circle r="220" opacity="0.6" />
-								<circle r="280" opacity="0.6" />
-								<circle r="340" opacity="0.6" />
-								<circle r="400" opacity="0.6" />
-								<circle r="460" opacity="0.6" />
-								<circle r="520" opacity="0.6" />
-								<circle r="580" opacity="0.6" />
-								<circle r="640" opacity="0.6" />
-								<circle r="700" opacity="0.6" />
-								<circle r="760" opacity="0.6" />
-							</g>
-							<g transform="translate(300, 400)">
-								<circle r="40" opacity="0.6" />
-								<circle r="100" opacity="0.6" />
-								<circle r="160" opacity="0.6" />
-								<circle r="220" opacity="0.6" />
-								<circle r="280" opacity="0.6" />
-								<circle r="340" opacity="0.6" />
-								<circle r="400" opacity="0.6" />
-								<circle r="460" opacity="0.6" />
-								<circle r="520" opacity="0.6" />
-								<circle r="580" opacity="0.6" />
-								<circle r="640" opacity="0.6" />
-								<circle r="700" opacity="0.6" />
-								<circle r="760" opacity="0.6" />
-							</g>
-
+				<div>gap separation = <input id='slit-width-slider' type="range" step="1" value="100" min="5" max="290" style="width: 165px;"></div>
+				<svg viewBox="100 0 600 600">
+					<radialGradient id="radGrad">
+						<stop offset="0" stop-color="#fff" stop-opacity="1" />
+						<stop offset="1" stop-color="#fff" stop-opacity="0" />
+					</radialGradient>
+					<mask id="circle-t1">
+						<circle cx="40" cy="0" r="45" fill="url(#radGrad)" />
+					</mask>
+					<mask id="circle-t2">
+						<circle cx="100" cy=" 0" r="110" fill="url(#radGrad)" />
+					</mask>
+					<mask id="circle-t3">
+						<circle cx="160" cy="0" r="180" fill="url(#radGrad)" />
+					</mask>
+					<mask id="circle-t4">
+						<circle cx="220" cy="0" r="242" fill="url(#radGrad)" />
+					</mask>
+					<mask id="circle-t5">
+						<circle cx="280" cy="0" r="304" fill="url(#radGrad)" />
+					</mask>
+					<mask id="circle-t6">
+						<circle cx="340" cy="0" r="368" fill="url(#radGrad)" />
+					</mask>
+					<mask id="circle-t7">
+						<circle cx="400" cy="0" r="430" fill="url(#radGrad)" />
+					</mask>
+					<mask id="circle-t8">
+						<circle cx="460" cy="0" r="492" fill="url(#radGrad)" />
+					</mask>
+					<mask id="circle-t9">
+						<circle cx="520" cy="0" r="554" fill="url(#radGrad)" />
+					</mask>
+					<mask id="circle-t10">
+						<circle cx="580" cy="0" r="616" fill="url(#radGrad)" />
+					</mask>
+					<mask id="circle-t11">
+						<circle cx="640" cy="0" r="678" fill="url(#radGrad)" />
+					</mask>
+					<mask id="circle-t12">
+						<circle cx="700" cy="0" r="740" fill="url(#radGrad)" />
+					</mask>
+					<g stroke="#f08" stroke-width="20" fill="none">
+						<g id="slit-1" transform="translate(300, 200)">
+							<circle r="40" opacity="0.9" mask="url(#circle-t1)" stroke-width="17" />
+							<circle r="100" opacity="0.83" mask="url(#circle-t2)" />
+							<circle r="160" opacity="0.76" mask="url(#circle-t3)" />
+							<circle r="220" opacity="0.69" mask="url(#circle-t4)" />
+							<circle r="280" opacity="0.62" mask="url(#circle-t5)" />
+							<circle r="340" opacity="0.55" mask="url(#circle-t6)" />
+							<circle r="400" opacity="0.48" mask="url(#circle-t7)" />
+							<circle r="460" opacity="0.41" mask="url(#circle-t8)" />
+							<circle r="520" opacity="0.35" mask="url(#circle-t9)" />
+							<circle r="580" opacity="0.28" mask="url(#circle-t10)" />
+							<circle r="640" opacity="0.23" mask="url(#circle-t11)" />
+							<circle r="700" opacity="0.19" mask="url(#circle-t12)" />
 						</g>
-						<rect x="-300" width="600" height="600" fill="#fff" stroke="none" />
-						<path d="M60 0 v600 M110 0 v600 M170 0 v600 M230 0 v600 M280 0 v600" stroke="#f08" opacity="0.6" stroke-width="20" />
-						<path d="M300 0 v195 M300 205 v190 M300 405 v200" stroke="#000" stroke-width="10" />
+						<g id="slit-2" transform="translate(300, 400)">
+							<circle r="40" opacity="0.9" mask="url(#circle-t1)" stroke-width="17" />
+							<circle r="100" opacity="0.83" mask="url(#circle-t2)" />
+							<circle r="160" opacity="0.76" mask="url(#circle-t3)" />
+							<circle r="220" opacity="0.69" mask="url(#circle-t4)" />
+							<circle r="280" opacity="0.62" mask="url(#circle-t5)" />
+							<circle r="340" opacity="0.55" mask="url(#circle-t6)" />
+							<circle r="400" opacity="0.48" mask="url(#circle-t7)" />
+							<circle r="460" opacity="0.41" mask="url(#circle-t8)" />
+							<circle r="520" opacity="0.35" mask="url(#circle-t9)" />
+							<circle r="580" opacity="0.28" mask="url(#circle-t10)" />
+							<circle r="640" opacity="0.23" mask="url(#circle-t11)" />
+							<circle r="700" opacity="0.19" mask="url(#circle-t12)" />
+						</g>
 					</g>
+					<!-- <rect x="-300" width="600" height="600" fill="#fff" stroke="none" /> -->
+					<path d="M60 0 v600 M110 0 v600 M170 0 v600 M230 0 v600 M280 0 v600" stroke="#f08" opacity="1" stroke-width="20" fill="none" />
+					<path id="wall" d="M300 0 v195 M300 205 v190 M300 405 v200" stroke="#000" stroke-width="10" fill="none" />
 				</svg>
+				<script>
+					(function twoSlit() {
+						const slit1 = document.getElementById("slit-1")
+						const slit2 = document.getElementById("slit-2")
+						const wall = document.getElementById("wall")
+
+						document.getElementById("slit-width-slider").addEventListener("input", () => {
+							slitSeparation = Number(document.getElementById("slit-width-slider").value);
+							const slit1Vertical = 300 - slitSeparation
+							const slit2Vertical = 300 + slitSeparation
+							
+							slit1.setAttribute("transform", `translate(300, ${slit1Vertical})`)
+							slit2.setAttribute("transform", `translate(300, ${slit2Vertical})`)
+							wall.setAttribute("d", `M300 0 v${slit1Vertical-5} M300 ${slit1Vertical+5}
+													v${Math.abs(slitSeparation*2 - 10)}
+													M300 ${slit2Vertical-5} M300 ${slit2Vertical+5} v400`)
+						});
+					})()
+				</script>
 			</details>
 		</div>
 		<h2 class='underlined'>Reflection and Refraction</h2>
