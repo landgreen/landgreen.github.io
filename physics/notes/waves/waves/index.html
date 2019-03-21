@@ -245,7 +245,7 @@
 			<details>
 				<summary>results</summary>
 				<br> Tension is probably the easiest way to control the speed of a string wave. The equation below shows that string mass and length are also factors.
-				$$ v = \sqrt{\frac{T}{mL}}$$
+				$$ v = \sqrt{\frac{T}{\tfrac{m}{L}}}$$
 				<div class="col-group ">
 					<div class='center'>
 						v = velocity (m/s)
@@ -275,40 +275,46 @@
 		<p>
 			<a href="https://waveforms.surge.sh/waveforms-intro ">Sound waves</a> are vibrations that propagate through matter. They are produced by changes in pressure and velocity. Your <a href="https://www.youtube.com/watch?v=qgdqp-oPb1Q ">ear</a> senses the amplitude and frequency of the vibrations.
 		</p>
-		<p>Each time you click the simulations below you will send a pulse of compressed particles, sound!</p>
+		<br><br>
 		<!-- <p>
 			A disturbance that produces one or only a few waves is called a <strong>pulse</strong>.
 		</p> -->
 	</article>
 	<canvas class='center' id='sound1' height='50' width='600' onclick="sound(this,2, false) "> </canvas>
 	<article>
-		<p>
-			I've graphed the density and highlighted the particles with higher speeds. You can see the wave trading between kinetic energy and pressure.
-		</p>
+		<p>Each time you click these simulations you will send a pulse of compressed particles, sound!</p>
+
 	</article>
 	<canvas class='center' id='sound2' height='50' width='600' onclick="sound(this, 1, true) "> </canvas>
 	<article>
 		<p>
-			Waves don't transmit matter, just energy. In the simulation below one particle is highlighted. Watch how it moves when it becomes part of the wave, but over time it stays in the same area.
+			I've graphed the density and highlighted the particles with higher speeds. You can see the wave trading between kinetic energy and pressure.
 		</p>
 	</article>
 	<canvas class='center' id='sound3' height='50' width='600' onclick="sound(this, 1, false, true) "> </canvas>
 	<article>
-		<!-- <div class="example">
-			<p>
-				Sound waves are vibrations that move in the same direction the wave moves. Most other waves are produced by vibration perpendicular to the direction the wave moves, like waves on strings.
-			</p>
-			<div>
-				<p>
-					<strong>Longitudinal</strong> = a wave that vibrates in the direction of propagation
-					<br>Examples: sound, slinky
-				</p>
-				<p>
-					<strong>Transverse</strong> = a wave that vibrates perpendicular to the direction of propagation
-					<br>Examples: light, string
-				</p>
-			</div>
-		</div> -->
+		<p>
+			Waves don't transmit matter, just energy. In the simulation above one particle is highlighted. Watch how it <a href="https://en.wikipedia.org/wiki/Oscillation">oscillates</a> when it becomes part of the wave, but over time it stays in the same area.
+
+			Sound waves oscillate parallel to propagation, but most waves oscillate <a href="https://www.acs.psu.edu/drussell/demos/waves/wavemotion.html">perpendicular</a> to propagation.
+		</p>
+		<p>
+			<strong>Longitudinal</strong> = a wave that oscillates parallel to the direction of propagation
+			<br>Examples: sound, slinky
+		</p>
+		<p>
+			<strong>Transverse</strong> = a wave that oscillates perpendicular to the direction of propagation
+			<br>Examples: light, string, slinky, sound (in solids), gravity
+		</p>
+
+		<div class="center" style="position: relative; width: 300px; height: 200px;"><a href="https://phet.colorado.edu/sims/html/wave-on-a-string/latest/wave-on-a-string_en.html" style="text-decoration: none;"><img src="https://phet.colorado.edu/sims/html/wave-on-a-string/latest/wave-on-a-string-600.png" alt="Wave on a String" style="border: none;" width="300" height="200" />
+				<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.6; filter: alpha(opacity = 60);"></div>
+				<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
+					<tr>
+						<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
+					</tr>
+				</table>
+			</a></div>
 
 
 		<h2 class='underlined'>Frequency and Period</h2>
