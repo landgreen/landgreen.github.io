@@ -735,7 +735,7 @@ const mech = {
       mech.fieldMode = 1;
       game.makeTextLog("<h2>Time Dilation Field</h2><br><strong>active ability:</strong> hold left and right mouse to slow time<br><strong>passive bonus:</strong> +field regeneration", 1000); //<br><strong>passive bonus:</strong> can phase through blocks
       mech.setHoldDefaults();
-      mech.fieldRegen = 0.006;
+      mech.fieldRegen = 0.01; //0.0015
       mech.hold = function () {
         if (mech.isHolding) {
           mech.drawHold(mech.holdingTarget);
@@ -788,6 +788,7 @@ const mech = {
       mech.fieldMode = 2;
       game.makeTextLog("<h2>Kinetic Energy Field</h2><br><strong>passive bonus:</strong> +field emitter damage<br><strong>passive bonus:</strong> +throw energy", 1000);
       mech.setHoldDefaults();
+      // mech.fieldRegen = 0.0008; // 0.0015 is normal
       //throw quicker and harder
       mech.throwChargeRate = 4; //0.5
       mech.throwChargeMax = 300; //50
