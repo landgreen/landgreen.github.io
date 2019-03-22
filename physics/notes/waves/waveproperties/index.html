@@ -45,7 +45,7 @@
 	</header>
 	<article>
 		<p>Waves have some properties that aren't always intuitive.</p>
-		<li>Waves only transmit energy, not matter.</li>
+		<li>Waves transmit energy, but not matter.</li>
 		<li>Multiple waves can be in the same position at the same time.</li>
 		<li>Waves move at a set speed determined by their medium.</li>
 		<li>Waves spread through their medium in all directions.</li>
@@ -469,43 +469,22 @@
 			<details>
 				<summary>solution</summary>
 				<svg viewBox="100 0 600 400">
-					<radialGradient id="radGrad2">
-						<stop offset="0" stop-color="#fff" stop-opacity="1" />
-						<stop offset="1" stop-color="#fff" stop-opacity="0" />
-					</radialGradient>
-
-					<mask id="circle-t21">
-						<circle cx="40" cy="0" r="45" fill="url(#radGrad2)" />
-					</mask>
-					<mask id="circle-t22">
-						<circle cx="100" cy=" 0" r="110" fill="url(#radGrad2)" />
-					</mask>
-					<mask id="circle-t23">
-						<circle cx="160" cy="0" r="180" fill="url(#radGrad2)" />
-					</mask>
-					<mask id="circle-t24">
-						<circle cx="220" cy="0" r="242" fill="url(#radGrad2)" />
-					</mask>
-					<mask id="circle-t25">
-						<circle cx="280" cy="0" r="304" fill="url(#radGrad2)" />
-					</mask>
-					<mask id="circle-t26">
-						<circle cx="340" cy="0" r="368" fill="url(#radGrad2)" />
-					</mask>
-					<mask id="circle-t27">
-						<circle cx="400" cy="0" r="430" fill="url(#radGrad2)" />
-					</mask>
+					<linearGradient id="lineGrad1">
+						<stop offset="0%" stop-color="#fff" stop-opacity="1" />
+						<stop offset="85%" stop-color="#fff" stop-opacity="1" />
+						<stop offset="100%" stop-color="#fff" stop-opacity="0" />
+					</linearGradient>
 					<g transform="translate(300, 200)" fill="none" stroke-width="20" stroke="#f08">
-						<circle r="40" opacity="0.8" mask="url(#circle-t21)" stroke-width="17" />
-						<circle r="100" opacity="0.7" mask="url(#circle-t22)" />
-						<circle r="160" opacity="0.6" mask="url(#circle-t23)" />
-						<circle r="220" opacity="0.5" mask="url(#circle-t24)" />
-						<circle r="280" opacity="0.41" mask="url(#circle-t25)" />
-						<circle r="340" opacity="0.33" mask="url(#circle-t26)" />
-						<circle r="400" opacity="0.25" mask="url(#circle-t27)" />
+						<circle r="40" opacity="0.8" stroke-width="17" />
+						<circle r="100" opacity="0.7" />
+						<circle r="160" opacity="0.6" />
+						<circle r="220" opacity="0.5" />
+						<circle r="280" opacity="0.41" />
+						<circle r="340" opacity="0.33" />
+						<circle r="400" opacity="0.25" />
 					</g>
 					<g fill="none">
-						<rect width="300" height="400" fill="#fff" stroke="none" />
+						<rect x="0" y="0" width="340" height="400" fill="url(#lineGrad1)" stroke="none" />
 						<path d="M60 0 v400 M110 0 v400 M170 0 v400 M230 0 v400 M280 0 v400" stroke="#f08" opacity="1" stroke-width="20" />
 						<path d="M300 0 v195 M300 205 v200" stroke="#000" stroke-width="10" />
 					</g>
@@ -550,77 +529,42 @@
 				</p>
 				<div>gap separation = <input id='slit-width-slider' type="range" step="1" value="100" min="5" max="290" style="width: 165px;"></div>
 				<svg viewBox="100 0 600 600">
-					<radialGradient id="radGrad">
-						<stop offset="0" stop-color="#fff" stop-opacity="1" />
-						<stop offset="1" stop-color="#fff" stop-opacity="0" />
-					</radialGradient>
-					<mask id="circle-t1">
-						<circle cx="40" cy="0" r="45" fill="url(#radGrad)" />
-					</mask>
-					<mask id="circle-t2">
-						<circle cx="100" cy=" 0" r="110" fill="url(#radGrad)" />
-					</mask>
-					<mask id="circle-t3">
-						<circle cx="160" cy="0" r="180" fill="url(#radGrad)" />
-					</mask>
-					<mask id="circle-t4">
-						<circle cx="220" cy="0" r="242" fill="url(#radGrad)" />
-					</mask>
-					<mask id="circle-t5">
-						<circle cx="280" cy="0" r="304" fill="url(#radGrad)" />
-					</mask>
-					<mask id="circle-t6">
-						<circle cx="340" cy="0" r="368" fill="url(#radGrad)" />
-					</mask>
-					<mask id="circle-t7">
-						<circle cx="400" cy="0" r="430" fill="url(#radGrad)" />
-					</mask>
-					<mask id="circle-t8">
-						<circle cx="460" cy="0" r="492" fill="url(#radGrad)" />
-					</mask>
-					<mask id="circle-t9">
-						<circle cx="520" cy="0" r="554" fill="url(#radGrad)" />
-					</mask>
-					<mask id="circle-t10">
-						<circle cx="580" cy="0" r="616" fill="url(#radGrad)" />
-					</mask>
-					<mask id="circle-t11">
-						<circle cx="640" cy="0" r="678" fill="url(#radGrad)" />
-					</mask>
-					<mask id="circle-t12">
-						<circle cx="700" cy="0" r="740" fill="url(#radGrad)" />
-					</mask>
+					<linearGradient id="lineGrad2">
+						<stop offset="0%" stop-color="#fff" stop-opacity="1" />
+						<stop offset="88%" stop-color="#fff" stop-opacity="1" />
+						<stop offset="100%" stop-color="#fff" stop-opacity="0" />
+					</linearGradient>
 					<g stroke="#f08" stroke-width="20" fill="none">
 						<g id="slit-1" transform="translate(300, 200)">
-							<circle r="40" opacity="0.9" mask="url(#circle-t1)" stroke-width="17" />
-							<circle r="100" opacity="0.83" mask="url(#circle-t2)" />
-							<circle r="160" opacity="0.76" mask="url(#circle-t3)" />
-							<circle r="220" opacity="0.69" mask="url(#circle-t4)" />
-							<circle r="280" opacity="0.62" mask="url(#circle-t5)" />
-							<circle r="340" opacity="0.55" mask="url(#circle-t6)" />
-							<circle r="400" opacity="0.48" mask="url(#circle-t7)" />
-							<circle r="460" opacity="0.41" mask="url(#circle-t8)" />
-							<circle r="520" opacity="0.35" mask="url(#circle-t9)" />
-							<circle r="580" opacity="0.28" mask="url(#circle-t10)" />
-							<circle r="640" opacity="0.23" mask="url(#circle-t11)" />
-							<circle r="700" opacity="0.19" mask="url(#circle-t12)" />
+							<circle r="40" opacity="0.9" stroke-width="17" />
+							<circle r="100" opacity="0.83" />
+							<circle r="160" opacity="0.76" />
+							<circle r="220" opacity="0.69" />
+							<circle r="280" opacity="0.62" />
+							<circle r="340" opacity="0.55" />
+							<circle r="400" opacity="0.48" />
+							<circle r="460" opacity="0.41" />
+							<circle r="520" opacity="0.35" />
+							<circle r="580" opacity="0.28" />
+							<circle r="640" opacity="0.23" />
+							<circle r="700" opacity="0.19" />
 						</g>
 						<g id="slit-2" transform="translate(300, 400)">
-							<circle r="40" opacity="0.9" mask="url(#circle-t1)" stroke-width="17" />
-							<circle r="100" opacity="0.83" mask="url(#circle-t2)" />
-							<circle r="160" opacity="0.76" mask="url(#circle-t3)" />
-							<circle r="220" opacity="0.69" mask="url(#circle-t4)" />
-							<circle r="280" opacity="0.62" mask="url(#circle-t5)" />
-							<circle r="340" opacity="0.55" mask="url(#circle-t6)" />
-							<circle r="400" opacity="0.48" mask="url(#circle-t7)" />
-							<circle r="460" opacity="0.41" mask="url(#circle-t8)" />
-							<circle r="520" opacity="0.35" mask="url(#circle-t9)" />
-							<circle r="580" opacity="0.28" mask="url(#circle-t10)" />
-							<circle r="640" opacity="0.23" mask="url(#circle-t11)" />
-							<circle r="700" opacity="0.19" mask="url(#circle-t12)" />
+							<circle r="40" opacity="0.9" />
+							<circle r="100" opacity="0.83" />
+							<circle r="160" opacity="0.76" />
+							<circle r="220" opacity="0.69" />
+							<circle r="280" opacity="0.62" />
+							<circle r="340" opacity="0.55" />
+							<circle r="400" opacity="0.48" />
+							<circle r="460" opacity="0.41" />
+							<circle r="520" opacity="0.35" />
+							<circle r="580" opacity="0.28" />
+							<circle r="640" opacity="0.23" />
+							<circle r="700" opacity="0.19" />
 						</g>
 					</g>
-					<!-- <rect x="-300" width="600" height="600" fill="#fff" stroke="none" /> -->
+					<rect x="-101" y="0" width="440" height="600" fill="url(#lineGrad2)" stroke="none" />
 					<path d="M60 0 v600 M110 0 v600 M170 0 v600 M230 0 v600 M280 0 v600" stroke="#f08" opacity="1" stroke-width="20" fill="none" />
 					<path id="wall" d="M300 0 v195 M300 205 v190 M300 405 v200" stroke="#000" stroke-width="10" fill="none" />
 				</svg>
