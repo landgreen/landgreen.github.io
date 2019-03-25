@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 
 <head>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
+
 		function gtag() {
 			dataLayer.push(arguments);
 		}
@@ -51,18 +52,19 @@
 		</p>
 		<style>
 			#tsunami {
-					/* background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/800px-Tsunami_by_hokusai_19th_century.jpg); */
-					background-image:url(../../../media/800px-Tsunami_by_hokusai_19th_century.jpg);
-					width: 100%;
-					height: 400px;
-					margin: auto;
+				/* background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/800px-Tsunami_by_hokusai_19th_century.jpg); */
+				background-image: url(../../../media/800px-Tsunami_by_hokusai_19th_century.jpg);
+				width: 100%;
+				height: 400px;
+				margin: auto;
+			}
+
+			@media screen and (min-width: 800px) {
+				#tsunami {
+					width: 800px;
+					height: 537px;
 				}
-				@media screen and (min-width: 800px) {
-					#tsunami {
-						width: 800px;
-						height: 537px;
-					}
-				}
+			}
 		</style>
 	</article>
 	<div id="tsunami"></div>
@@ -128,14 +130,15 @@
 		<div class='example-small'>
 			<div class='definition'>
 				<style>
-					.def-underlined{
-					text-decoration: underline;
-				}
-				.def-underlined:hover {
-					color: #f05;
-					fill: #f05;
-				}
-			</style>
+					.def-underlined {
+						text-decoration: underline;
+					}
+
+					.def-underlined:hover {
+						color: #f05;
+						fill: #f05;
+					}
+				</style>
 				<p>
 					A wave is a disturbance that <span id="def-propagates" class="def-underlined">propagates</span> through a <span id="def-medium" class="def-underlined">medium</span>.
 				</p>
@@ -169,31 +172,31 @@
 				<p id="def-definition" style="background-color: #fff; border-radius: 10px; padding:0.5em;">Click the <span class="def-underlined" id="def-underlined">underlined</span> words for their definition.</p>
 				<script>
 					const el = document.getElementById("def-definition")
-				document.getElementById("def-crest").addEventListener("click", () => {
-					el.innerHTML = "<strong>Crest</strong> = high point on a wave"					
-				});
-				document.getElementById("def-trough").addEventListener("click", () => {
-					el.innerHTML = "<strong>Trough</strong> = low point on a wave"					
-				});
-				document.getElementById("def-amplitude").addEventListener("click", () => {
-					el.innerHTML = "<strong>Amplitude</strong> = maximum displacement from equilibrium (m)"					
-				});
-				document.getElementById("def-wavelength").addEventListener("click", () => {
-					el.innerHTML = "<strong>Wavelength, λ</strong> = distance over which the wave's shape repeats [m]"					
-				});
-				document.getElementById("def-equilibrium").addEventListener("click", () => {
-					el.innerHTML = "<strong>Equilibrium</strong> = resting state of a medium"					
-				});
-				document.getElementById("def-medium").addEventListener("click", () => {
-					el.innerHTML = "<strong>Medium</strong> = substance that carries the wave"					
-				});
-				document.getElementById("def-propagates").addEventListener("click", () => {
-					el.innerHTML = "<strong>Propagate</strong> = transmit through the medium, how waves move"					
-				});
-				document.getElementById("def-underlined").addEventListener("click", () => {
-					el.innerHTML = "<strong>Underline</strong> = draw a line under (a word or phrase) to give emphasis or indicate special type."					
-				});
-			</script>
+					document.getElementById("def-crest").addEventListener("click", () => {
+						el.innerHTML = "<strong>Crest</strong> = high point on a wave"
+					});
+					document.getElementById("def-trough").addEventListener("click", () => {
+						el.innerHTML = "<strong>Trough</strong> = low point on a wave"
+					});
+					document.getElementById("def-amplitude").addEventListener("click", () => {
+						el.innerHTML = "<strong>Amplitude</strong> = maximum displacement from equilibrium (m)"
+					});
+					document.getElementById("def-wavelength").addEventListener("click", () => {
+						el.innerHTML = "<strong>Wavelength, λ</strong> = distance over which the wave's shape repeats [m]"
+					});
+					document.getElementById("def-equilibrium").addEventListener("click", () => {
+						el.innerHTML = "<strong>Equilibrium</strong> = resting state of a medium"
+					});
+					document.getElementById("def-medium").addEventListener("click", () => {
+						el.innerHTML = "<strong>Medium</strong> = substance that carries the wave"
+					});
+					document.getElementById("def-propagates").addEventListener("click", () => {
+						el.innerHTML = "<strong>Propagate</strong> = transmit through the medium, how waves move"
+					});
+					document.getElementById("def-underlined").addEventListener("click", () => {
+						el.innerHTML = "<strong>Underline</strong> = draw a line under (a word or phrase) to give emphasis or indicate special type."
+					});
+				</script>
 			</div>
 		</div>
 
@@ -397,25 +400,26 @@
 			<svg id="SVG-graph-0" viewBox="0 0 600 400"></svg>
 			<script>
 				// funGraphSVG() don't work inside <details>
-					// this is my workaround
-					document.getElementById("example0").addEventListener("toggle", handler0);
-					function handler0(e) {
-						e.target.removeEventListener(e.type, arguments.callee); // remove this handler
-						funGraphSVG("SVG-graph-0", x => 1 / x, {
-							x0: 15,
-							y0: 385,
-							precision: 1,
-							scale: 100,
-							gridSize: 100,
-							positiveOnly: true,
-							xLabel: "frequency (Hz)",
-							yLabel: "period (s)",
-							showMouseCoords: true,
-							stroke: "none",
-							fill: "rgba(255,0,50,0.3)",
-						});
-					}
-				</script>
+				// this is my workaround
+				document.getElementById("example0").addEventListener("toggle", handler0);
+
+				function handler0(e) {
+					e.target.removeEventListener(e.type, arguments.callee); // remove this handler
+					funGraphSVG("SVG-graph-0", x => 1 / x, {
+						x0: 15,
+						y0: 385,
+						precision: 1,
+						scale: 100,
+						gridSize: 100,
+						positiveOnly: true,
+						xLabel: "frequency (Hz)",
+						yLabel: "period (s)",
+						showMouseCoords: true,
+						stroke: "none",
+						fill: "rgba(255,0,50,0.3)",
+					});
+				}
+			</script>
 		</details>
 		<br><br><br><br><br>
 		<div class='definition'>
@@ -440,106 +444,108 @@
 
 			<script>
 				(() => {
-						const buttonEl = document.getElementById("sound-play-2")
-						let audioCtx, oscillator1, gainNode1, oscillator2, gainNode2
-						let started = false;
-						let paused = false;
-						const analOut = 2048 //4096 //8192 //16384 //32768;
-						const freq = 220
+					const buttonEl = document.getElementById("sound-play-2")
+					let audioCtx, oscillator1, gainNode1, oscillator2, gainNode2
+					let started = false;
+					let paused = false;
+					const analOut = 2048 //4096 //8192 //16384 //32768;
+					const freq = 220
 
-						// start -> play/pause  button events
-						buttonEl.addEventListener("click", function () {
-							if (!started) {
-								started = true
-								paused = false
-								buttonEl.textContent = 'pause';
-								//setup audio context
-								audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-	
-								oscillator1 = audioCtx.createOscillator();
-								gainNode1 = audioCtx.createGain();
-								gainNode1.gain.value = 0.5; //controls volume
-								oscillator1.connect(gainNode1);
-								gainNode1.connect(audioCtx.destination);
-								oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
-								oscillator1.frequency.value = freq; // value in hertz
-								oscillator1.start();
-
-								document.getElementById("horn-canvas").style.display = "inline";  //show canvas element
-								beatsCanvas();
-							} else {
-								if (audioCtx.state === 'suspended') {
-									audioCtx.resume().then(function () {
-										buttonEl.textContent = 'pause';
-										beatsCanvas()
-									});
-								} else if (audioCtx.state === 'running') {
-									audioCtx.suspend().then(function () {
-										buttonEl.textContent = 'play';
-										paused = true
-										// beatsCanvas()
-									});
-								}
-							}
-						});
-						function beatsCanvas() {
-							const canvas = document.getElementById("horn-canvas");
-							const ctx = canvas.getContext("2d");
-							const width = 600
-							const height = 100
-							function setupCanvas() {
-								if (document.body.clientWidth > width) {
-									canvas.style.width = width + "px";
-									canvas.style.height = height + "px";
-
-									const scale = window.devicePixelRatio;
-									canvas.width = width * scale;
-									canvas.height = height * scale;
-									ctx.scale(scale, scale);
-								}
-								ctx.lineWidth = 2;
-								ctx.strokeStyle = "#123";
-								ctx.lineJoin = 'bevel'; //miter
-								ctx.miterLimit = 1;
-							}
-							setupCanvas();
-							window.onresize = function () {
-								setupCanvas();
-							};
-
-							const analyser1 = audioCtx.createAnalyser();
-							gainNode1.connect(analyser1);
-							analyser1.fftSize = analOut;
-							const bufferLength = analyser1.frequencyBinCount;
-							const dataArray1 = new Uint8Array(bufferLength);
-							
+					// start -> play/pause  button events
+					buttonEl.addEventListener("click", function () {
+						if (!started) {
+							started = true
 							paused = false
-							draw();
+							buttonEl.textContent = 'pause';
+							//setup audio context
+							audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
-							function draw() {
-								if (!paused) {
-									drawVisual = requestAnimationFrame(draw);
-									analyser1.getByteTimeDomainData(dataArray1);
-									ctx.clearRect(0, 0, width, height);
-									ctx.beginPath();
-									const sliceWidth = width / bufferLength;
-									let x = 0;
-									for (let i = 0; i < bufferLength; i++) {
-										const v = dataArray1[i] / 256.0;
-										const y = v * height;
-										if (i === 0) {
-											ctx.moveTo(x, y);
-										} else {
-											ctx.lineTo(x, y);
-										}
-										x += sliceWidth;
-									}
-									ctx.stroke();
-								}
+							oscillator1 = audioCtx.createOscillator();
+							gainNode1 = audioCtx.createGain();
+							gainNode1.gain.value = 0.5; //controls volume
+							oscillator1.connect(gainNode1);
+							gainNode1.connect(audioCtx.destination);
+							oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
+							oscillator1.frequency.value = freq; // value in hertz
+							oscillator1.start();
+
+							document.getElementById("horn-canvas").style.display = "inline"; //show canvas element
+							beatsCanvas();
+						} else {
+							if (audioCtx.state === 'suspended') {
+								audioCtx.resume().then(function () {
+									buttonEl.textContent = 'pause';
+									beatsCanvas()
+								});
+							} else if (audioCtx.state === 'running') {
+								audioCtx.suspend().then(function () {
+									buttonEl.textContent = 'play';
+									paused = true
+									// beatsCanvas()
+								});
 							}
 						}
-					})()
-				</script>
+					});
+
+					function beatsCanvas() {
+						const canvas = document.getElementById("horn-canvas");
+						const ctx = canvas.getContext("2d");
+						const width = 600
+						const height = 100
+
+						function setupCanvas() {
+							if (document.body.clientWidth > width) {
+								canvas.style.width = width + "px";
+								canvas.style.height = height + "px";
+
+								const scale = window.devicePixelRatio;
+								canvas.width = width * scale;
+								canvas.height = height * scale;
+								ctx.scale(scale, scale);
+							}
+							ctx.lineWidth = 2;
+							ctx.strokeStyle = "#123";
+							ctx.lineJoin = 'bevel'; //miter
+							ctx.miterLimit = 1;
+						}
+						setupCanvas();
+						window.onresize = function () {
+							setupCanvas();
+						};
+
+						const analyser1 = audioCtx.createAnalyser();
+						gainNode1.connect(analyser1);
+						analyser1.fftSize = analOut;
+						const bufferLength = analyser1.frequencyBinCount;
+						const dataArray1 = new Uint8Array(bufferLength);
+
+						paused = false
+						draw();
+
+						function draw() {
+							if (!paused) {
+								drawVisual = requestAnimationFrame(draw);
+								analyser1.getByteTimeDomainData(dataArray1);
+								ctx.clearRect(0, 0, width, height);
+								ctx.beginPath();
+								const sliceWidth = width / bufferLength;
+								let x = 0;
+								for (let i = 0; i < bufferLength; i++) {
+									const v = dataArray1[i] / 256.0;
+									const y = v * height;
+									if (i === 0) {
+										ctx.moveTo(x, y);
+									} else {
+										ctx.lineTo(x, y);
+									}
+									x += sliceWidth;
+								}
+								ctx.stroke();
+							}
+						}
+					}
+				})()
+			</script>
 		</div>
 
 		<div class='example'>
@@ -600,6 +606,7 @@
 						transform: scale(1);
 						background-color: #89a;
 					}
+
 					to {
 						transform: scale(.1);
 						background-color: #123;
@@ -782,17 +789,22 @@
 				#sound-f-slider {
 					width: 300px;
 				}
-			
+
 				@media screen and (max-width: 650px) {
 					#sound-f-slider {
 						width: 100px;
 					}
-				}			
+				}
 			</style>
 			<button id="sound-play" style="width: 60px;">listen</button>
 			frequency = <input id='sound-f-slider' type="range" step="0.001" value="2.34242" min="0" max="4">
 			<input id='sound-f' type="number" min="1" max="9999" value="220" step="1" style="width: 50px;"> Hz
-			<br><strong>Example:</strong> Click to hear a sound wave. Calculate the length of the sound wave at the frequency you hear for both air and water.
+			<br><strong>Example:</strong> Click to hear a <select id="sound-waveform-select">
+				<option value="sine">sine</option>
+				<option value="square">square</option>
+				<option value="triangle">triangle</option>
+				<option value="sawtooth">sawtooth</option>
+			</select> wave. Calculate the length of the sound wave at the frequency you hear for both air and water.
 			<details>
 				<summary>table of wave speeds</summary>
 				<table>
@@ -845,6 +857,7 @@
 					let paused = false;
 					const analOut = 2048 //4096 //8192 //16384 //32768;
 					let freq = Math.floor(200 + Math.random() * 1000);
+					let type = "sine";
 					document.getElementById("sound-f").value = freq;
 					document.getElementById("sound-f-slider").value = Math.log10(freq)
 
@@ -873,13 +886,12 @@
 							gainNode1.gain.value = 0.97; //controls volume
 							oscillator1.connect(gainNode1);
 							gainNode1.connect(audioCtx.destination);
-							oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
+							oscillator1.type = document.getElementById("sound-waveform-select").value; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
 							oscillator1.frequency.value = freq; // value in hertz
 							oscillator1.start();
 
 							document.getElementById("sound-wave-canvas").style.display = "inline"; //show canvas element
 							beatsCanvas2();
-
 						} else {
 							if (audioCtx.state === 'suspended') {
 								audioCtx.resume().then(function () {
@@ -908,6 +920,10 @@
 						if (audioCtx) oscillator1.frequency.value = freq // value in hertz
 						renderMath()
 					});
+
+					document.getElementById("sound-waveform-select").addEventListener("input", () => {
+						oscillator1.type = document.getElementById("sound-waveform-select").value;
+					}, false);
 
 					function beatsCanvas2() {
 						const canvas = document.getElementById("sound-wave-canvas");
