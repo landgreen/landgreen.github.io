@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 
 <head>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -54,12 +54,16 @@
 		<p>
 			A person on a train is at rest from the reference frame of an observer on that train. An observer at the train station will see the same person as moving.
 		</p>
-		<p>Each observer only sees motion in others. They see themselves at rest.
-			<br> Move the mouse vertically to change observers in the simulation below.
-			<br> (note: This simulation doesn't include special relativity yet.)</p>
+		<br>
+		<br>
+		<br>
 	</article>
 	<canvas class='center' id="relative" width='600' height='400' style="background: url(../../../media/Space.jpg); border-radius: 0px;"></canvas>
 	<article>
+		<p>Each observer only sees motion in others. They see themselves at rest.
+			<br> Move the mouse vertically to change observers in the simulation below.
+			<br> (note: This simulation doesn't include special relativity yet.)</p>
+
 		<div class='example'>
 			<strong>Question:</strong> Imagine two cars. One is moving at 15 m/s relative to the Earth and the other at 20 m/s relative to the Earth. How fast are they moving relative to each other?
 			<details>
@@ -103,8 +107,14 @@
 		</ul>
 		<p>How can they both see the speed of light as the same? Shouldn't one of the observers see the speed of light as 3 x 10⁸ m/s + 20 m/s?</p>
 		<div class='example'>
-			<p>Sound moves through air at around 342 m/s relative to the air. Observers moving at a relative velocity to each other will measure the speed of sound as different.</p>
-			<strong>Question:</strong> A train moving at 20 m/s makes a sound with it's steam whistles. How fast would each observer measure the speed of sound?
+			<p>
+				Unlike light, observers moving at a relative velocity to each other will measure the speed of sound as different.
+			</p>
+			<p>
+				<strong>Question:</strong> A train moving at 20 m/s makes a sound with it's steam whistles.
+				Sound moves through air at around 342 m/s relative to the air.
+				How fast would each observer measure the speed of sound?
+			</p>
 			<li> A person at the back of the train.
 			<li> A person on the ground watching the train go by.
 				<details>
@@ -138,15 +148,18 @@
 			</p>
 
 			<p>
-				Because of the high speeds needed, special relativity is difficult to observe. So far all <a href="https://en.wikipedia.org/wiki/Tests_of_special_relativity">tests</a> support the theory to a high degree of precision.
+				Because of the high speeds needed, special relativity is difficult to observe, but so far all <a href="https://en.wikipedia.org/wiki/Tests_of_special_relativity">tests</a> support the theory to a high degree of precision.
 			</p>
 			<!-- <p>For more on special relativity, check out this <a href="https://www.lucify.com/inside-einsteins-head/">explorable explanation</a>.</p> -->
-			<p>
-				Here is the relative velocity simulation with modifications for special relativity. Move the mouse vertically to change observers.
-			</p>
+			<br>
+			<br>
+			<br>
 	</article>
 	<canvas class='center' id="special" width='600' height='400' style="background: url(../../../media/Space.jpg); border-radius: 0px;"></canvas>
 	<article>
+		<p>
+			Here is the relative velocity simulation with modifications for special relativity. Move the mouse vertically to change observers.
+		</p>
 		<p>
 			For simplicity, the doppler effect and a few other quirks of relativity aren't part of this simulation. Try this <a href="http://gamelab.mit.edu/games/a-slower-speed-of-light/">game</a> or this <a href="http://captaineinstein.org/">video</a> for a more accurate experience.
 		</p>
@@ -164,12 +177,12 @@
 			<strong>Question:</strong> Does special relativity mean time travel might be possible one day?
 			<details>
 				<summary>answer</summary>
-				<h3>YES!</h3>
+				<h3>YES! <span style="font-size: 10px;">and no</span></h3>
 				<p>
 					You can already go forwards in time by just waiting, but you will get old.
 				</p>
 				<p>
-					If you can get up to a high speed relative to the Earth you will age slow as the Earth ages fast. You could use this to see the far future, but right now we don't have a safe way to get a person up to relativistic speeds.
+					If you have a velocity near the speed of light light relative to the Earth, you will age slow as the Earth ages fast. You could use this to see the far future, but right now we don't have a safe way to get a person up to relativistic speeds.
 				</p>
 				<p>
 					It is probably impossible to go backwards in time, but the equations don't completely rule it out.
@@ -182,7 +195,7 @@
 			We will use the <strong>Lorentz factor</strong> in equations that convert between two non-accelerating reference frames. These equations predict how two observers at a relative velocity disagree on space and time.
 		</p>
 		$$ \Delta t = \gamma \Delta t_0 \quad \quad \quad \quad L = \frac{L_0}{\gamma}$$
-		<p>We will explore each of the above equations, but first we will learn how to calculate the Lorentz factor.</p>
+		<p>We will explore each of the above equations, but first we need to learn how to calculate the Lorentz factor.</p>
 		<div class="definition">
 			<h1>$$ \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2} } }$$</h1>
 			\( \gamma \) = Lorentz factor, gamma [no units]
