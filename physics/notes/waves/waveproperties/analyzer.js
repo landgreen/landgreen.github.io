@@ -54,12 +54,18 @@
     ctx.lineWidth = 1;
 })();
 
+
+
+
 function analyzer(el) {
     el.onclick = null; //stops the function from running on button click
 
     const canvas = document.getElementById("analyzer-canvas");
     const ctx = canvas.getContext("2d");
     canvas.height = 256;
+    canvas.style.background = "#000"
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#0ff";
 
     let audioContext, analyser, dataArray, bufferLength
     let pause = false
@@ -74,17 +80,6 @@ function analyzer(el) {
     }).catch(err => {
         console.log(err);
     });
-
-
-    // const microphoneZone = document.getElementById("microphone-zone")
-    // microphoneZone.addEventListener("mouseleave", () => {
-    //     pause = true;
-    // });
-    // microphoneZone.addEventListener("mouseenter", () => {
-    //     pause = false;
-    //     if (!pause) startDrawing()
-    // });
-
 
     canvas.addEventListener("click", () => {
         if (pause) {
@@ -107,7 +102,6 @@ function analyzer(el) {
         analyser.fftSize = 1024;
         bufferLength = analyser.frequencyBinCount + 100;
         dataArray = new Uint8Array(bufferLength);
-        ctx.lineWidth = 2;
         pause = false
         draw();
     }
@@ -135,8 +129,9 @@ function barGraph(el) {
 
     const canvas = document.getElementById("barGraph-canvas");
     const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#000";
-    canvas.height = 128;
+    canvas.height = 256;
+    canvas.style.background = "#000"
+    ctx.fillStyle = "#0ff";
 
     let audioContext, analyser, dataArray, bufferLength
     let pause = false
@@ -151,17 +146,6 @@ function barGraph(el) {
     }).catch(err => {
         console.log(err);
     });
-
-
-    // const microphoneZone = document.getElementById("barGraph-zone")
-    // microphoneZone.addEventListener("mouseleave", () => {
-    //     pause = true;
-    // });
-    // microphoneZone.addEventListener("mouseenter", () => {
-    //     pause = false;
-    //     if (!pause) startDrawing()
-    // });
-
 
     canvas.addEventListener("click", () => {
         if (pause) {
@@ -191,15 +175,17 @@ function barGraph(el) {
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (!pause) requestAnimationFrame(draw);
-        analyser.getByteFrequencyData(dataArray);
 
-        var barWidth = canvas.width / bufferLength;
-        var barHeight;
-        var x = 0;
-        for (var i = 0; i < bufferLength; i++) {
-            barHeight = dataArray[i];
-            // ctx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
-            ctx.fillRect(x, canvas.height - barHeight / 2, barWidth + 1, barHeight);
+        analyser.getByteFrequencyData(dataArray);
+        let barWidth = canvas.width / bufferLength * 2;
+        let x = 0;
+        for (let i = 0, len = bufferLength / 2; i < len; i++) {
+            const barHeight = dataArray[i];
+            const red = 256 - barHeight;
+            const green = barHeight;
+            const blue = barHeight;
+            ctx.fillStyle = `rgb(${red},${green},${blue})`
+            ctx.fillRect(x, (canvas.height - barHeight) / 2, barWidth + 1, barHeight);
             x += barWidth;
         }
     };
