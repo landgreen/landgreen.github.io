@@ -1,6 +1,6 @@
 (() => {
-    var canvas = document.getElementById("doppler-canvas");
-    var ctx = canvas.getContext("2d");
+    const canvas = document.getElementById("doppler-canvas");
+    const ctx = canvas.getContext("2d");
     canvas.width = document.getElementsByTagName("article")[0].clientWidth;
     ctx.lineJoin = "round"
     ctx.lineCap = "round"
@@ -30,8 +30,8 @@
 function doppler(el) {
     el.onclick = null; //stops the function from running on button click
     document.getElementById("doppler-input").style.display = "inline"
-    var canvas = el
-    var ctx = canvas.getContext("2d");
+    const canvas = el
+    const ctx = canvas.getContext("2d");
 
     function setupCanvas() {
         canvas.width = window.innerWidth;
@@ -40,7 +40,6 @@ function doppler(el) {
         ctx.fillStyle = "#f05";
         ctx.lineWidth = 1;
     }
-
     setupCanvas();
     window.onresize = function () {
         setupCanvas();
@@ -97,12 +96,13 @@ function doppler(el) {
             ctx.fill();
         },
         draw: function () {
-            for (let i = this.waves.length - 1; i > 0; --i) {
+            for (let i = this.waves.length - 1; i > -1; --i) {
                 this.waves[i].color += 1;
                 //remove from array if color goes to white (255)
-                if (this.waves[i].color > 255) this.waves.shift();
+                if (this.waves[i].color > 254) this.waves.shift();
             }
 
+            ctx.clearRect(0, 0, canvas.width, canvas.height); //clear
             for (let i = 0, len = this.waves.length; i < len; i++) {
                 this.waves[i].r += this.waveSpeed;
                 ctx.beginPath();
@@ -110,6 +110,7 @@ function doppler(el) {
                 ctx.strokeStyle = `rgb(${this.waves[i].color},${this.waves[i].color},${this.waves[i].color})`;
                 ctx.stroke();
             }
+            this.drawSource();
         },
         observer: {
             position: {
@@ -165,14 +166,12 @@ function doppler(el) {
     });
 
     const cycle = function () {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); //clear
+        if (!one.pause) window.requestAnimationFrame(cycle);
         one.cycle++;
         one.addCrest();
         one.move();
         one.walls();
         one.draw();
-        one.drawSource();
-        if (!one.pause) window.requestAnimationFrame(cycle);
     };
     window.requestAnimationFrame(cycle);
 }

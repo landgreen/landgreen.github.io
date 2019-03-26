@@ -6,12 +6,13 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				dataLayer.push(arguments);
-			}
-			gtag('js', new Date());
-			gtag('config', 'UA-113454647-1');
-		</script>
+
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+		gtag('config', 'UA-113454647-1');
+	</script>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,19 +32,22 @@
 
 	<script src='../../../lib/function-graph-SVG.js'></script>
 	<style>
-		.gear{
+		.gear {
 			animation: 10s infinite linear rotation;
 			transform-origin: 300px 200px;
 			display: inline-block;
 		}
-		.circle-motion{
+
+		.circle-motion {
 			animation: 10s infinite linear rotation;
 			transform-origin: 300px 200px;
 		}
+
 		@keyframes rotation {
 			0% {
 				transform: rotate(360deg);
 			}
+
 			100% {
 				transform: rotate(0deg);
 			}
@@ -273,10 +277,10 @@
 				//place random stars
 				var svgns = "http://www.w3.org/2000/svg";
 
-				for (var i = 0; i < 250; i++ ) {
+				for (var i = 0; i < 250; i++) {
 					var rect = document.createElementNS(svgns, 'rect');
-					rect.setAttributeNS(null, 'x', Math.floor(Math.random()*600));
-					rect.setAttributeNS(null, 'y', Math.floor(Math.random()*400));
+					rect.setAttributeNS(null, 'x', Math.floor(Math.random() * 600));
+					rect.setAttributeNS(null, 'y', Math.floor(Math.random() * 400));
 					rect.setAttributeNS(null, 'height', '1');
 					rect.setAttributeNS(null, 'width', '1');
 					rect.setAttributeNS(null, 'fill', '#fff');
