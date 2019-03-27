@@ -76,12 +76,25 @@ function charges8(el) {
       );
     }
   }
+  /////////////////////////////////////////
+  // teleport
+  /////////////////////////////////////////
+  function teleport(who) {
+    const off = 100
+    for (let i = 0, len = who.length; i < len; ++i) {
+      if (who[i].canMove && who[i].position.x > settings.width - off) {
+        who[i].position.x = -settings.width;
+      }
+    }
+  }
+
 
   function cycle() {
     if (!pause) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       Charge.physicsAll(q, 0.95, 150, 110);
       Charge.uniformField(q);
+      Charge.teleport(q);
       Charge.drawAll(q);
       requestAnimationFrame(cycle);
     }

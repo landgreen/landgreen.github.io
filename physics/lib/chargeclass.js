@@ -254,7 +254,7 @@ class Charge {
     return count
   }
 
-  static teleportHoles(who, off = 200) {
+  static teleportHoles(who, off = 100) {
     //measure the charge imbalance to find holes on the left side
     let totalCharge = 0;
     for (let i = 0, len = who.length; i < len; ++i) {

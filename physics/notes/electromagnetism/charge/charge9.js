@@ -85,6 +85,7 @@ function charges9(el) {
         x: 0.076,
         y: 0
       });
+      Charge.teleportHoles(q);
       Charge.drawAll(q);
       requestAnimationFrame(cycle);
     }
