@@ -64,8 +64,8 @@ function analyzer(el) {
     const ctx = canvas.getContext("2d");
     canvas.height = 256;
     canvas.style.background = "#000"
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "#0ff";
+    ctx.lineJoin = "bevel"
+    ctx.lineCap = "round"
 
     let audioContext, analyser, dataArray, bufferLength
     let pause = false
@@ -115,6 +115,16 @@ function analyzer(el) {
             let y = 255 - dataArray[x];
             ctx.lineTo(x, y);
         }
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#0ff";
+        ctx.stroke();
+
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "rgba(0,255,255,0.2)";
+        ctx.stroke();
+
+        ctx.lineWidth = 9;
+        ctx.strokeStyle = "rgba(0,255,255,0.1)";
         ctx.stroke();
     }
 }
@@ -165,7 +175,7 @@ function barGraph(el) {
     }
 
     function startDrawing() {
-        analyser.fftSize = 2048 //1024;
+        analyser.fftSize = 8192 //2048 //1024;
         bufferLength = analyser.frequencyBinCount;
         dataArray = new Uint8Array(bufferLength);
         pause = false
@@ -177,12 +187,12 @@ function barGraph(el) {
         if (!pause) requestAnimationFrame(draw);
 
         analyser.getByteFrequencyData(dataArray);
-        let barWidth = canvas.width / bufferLength * 2;
+        let barWidth = canvas.width / bufferLength * 5;
         let x = 0;
-        for (let i = 0, len = bufferLength / 2; i < len; i++) {
+        for (let i = 0, len = bufferLength / 5; i < len; i++) {
             const barHeight = dataArray[i];
-            const red = 256 - barHeight;
-            const green = barHeight;
+            const red = 180 - barHeight * 0.75;
+            const green = barHeight * 1.5 - 128;
             const blue = barHeight;
             ctx.fillStyle = `rgb(${red},${green},${blue})`
             ctx.fillRect(x, (canvas.height - barHeight) / 2, barWidth + 1, barHeight);
