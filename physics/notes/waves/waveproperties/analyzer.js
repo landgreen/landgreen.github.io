@@ -191,12 +191,105 @@ function barGraph(el) {
         let x = 0;
         for (let i = 0, len = bufferLength / 5; i < len; i++) {
             const barHeight = dataArray[i];
-            const red = 180 - barHeight * 0.75;
-            const green = barHeight * 1.5 - 128;
-            const blue = barHeight;
+            const red = 180 - barHeight;
+            const green = barHeight * 1.5 - 72;
+            const blue = barHeight + 56;
             ctx.fillStyle = `rgb(${red},${green},${blue})`
             ctx.fillRect(x, (canvas.height - barHeight) / 2, barWidth + 1, barHeight);
             x += barWidth;
         }
     };
 }
+// function barGraph(el) {
+//     el.onclick = null; //stops the function from running on button click
+
+//     const canvas = document.getElementById("barGraph-canvas");
+//     const ctx = canvas.getContext("2d");
+//     canvas.height = 256;
+//     canvas.style.background = "#000"
+//     ctx.fillStyle = "#0ff";
+
+//     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+//     let data = imageData.data;
+
+//     let audioContext, analyser, dataArray, bufferLength
+//     let pause = false
+
+//     let constraints = {
+//         audio: true
+//     };
+//     navigator.mediaDevices.getUserMedia(constraints).then(stream => {
+//         initAudio(stream);
+//         startDrawing();
+//         document.getElementById("barGraph-text").style.display = "inline";
+//     }).catch(err => {
+//         console.log(err);
+//     });
+
+//     canvas.addEventListener("click", () => {
+//         if (pause) {
+//             pause = false;
+//             draw();
+//         } else {
+//             pause = true;
+//         }
+//     });
+
+//     function initAudio(stream) {
+//         audioContext = new(window.AudioContext || window.webkitAudioContext)();
+//         let mediaStreamSource = audioContext.createMediaStreamSource(stream);
+//         analyser = audioContext.createAnalyser();
+//         analyser.smoothingTimeConstant = 0.9;
+//         mediaStreamSource.connect(analyser);
+//     }
+
+//     function startDrawing() {
+//         analyser.fftSize = 8192 //2048 //1024;
+//         bufferLength = analyser.frequencyBinCount;
+//         dataArray = new Uint8Array(bufferLength);
+//         pause = false
+//         setBaseColor();
+//         draw();
+//     }
+
+//     function setBaseColor(color = 0) {
+//         for (var i = 0; i < data.length; i += 4) {
+//             //Math.random() > 0.5 ? 255 : 0;
+//             data[i] = color; // red
+//             data[i + 1] = color; // green
+//             data[i + 2] = color; // blue
+//             data[i + 3] = 255; // alpha
+//         }
+//     }
+
+//     function draw() {
+//         if (!pause) requestAnimationFrame(draw);
+
+
+//         //move data up
+//         for (var i = 0; i < data.length; i += 4) {
+//             const index = i + canvas.width * 4
+//             data[i] = data[index];
+//             data[i + 1] = data[index + 1];
+//             data[i + 2] = data[index + 2];
+//         }
+
+//         //draw microphone data
+//         analyser.getByteFrequencyData(dataArray);
+//         for (let i = 0, len = canvas.width; i < len; i++) {
+//             const barHeight = dataArray[i];
+//             const red = 0 //Math.floor(180 - barHeight * 0.75);
+//             const green = Math.floor(barHeight * 1.5 - 128);
+//             const blue = Math.floor(barHeight);
+
+//             const x = i
+//             const y = canvas.height - 1
+//             const index = 4 * (x + y * canvas.width)
+
+//             data[index] = red;
+//             data[index + 1] = green;
+//             data[index + 2] = blue;
+//         }
+//         ctx.putImageData(imageData, 0, 0);
+//     };
+// }
