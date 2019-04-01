@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,700");
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 
 /************Reset**************/
 * {
@@ -329,7 +329,7 @@ th {
 /* Header setup_________________________________*/
 header {
   /* background: linear-gradient(to left, #9bb, #bb9, #b9b); */
-  background-color: #222;
+  background-color: #111;
   color: #fff;
   padding: 0.1em 0em 0.1em 0em;
   text-align: center;
@@ -358,7 +358,7 @@ header h1 a:hover {
   padding: 2em;
   margin: 10em 0em 0em 0em;
   width: 100%;
-  background-color: #222;
+  background-color: #000;
 }
 
 .back a {

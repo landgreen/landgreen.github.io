@@ -38,7 +38,7 @@ function doppler(el) {
         canvas.height = 300;
         ctx.strokeStyle = "#000";
         ctx.fillStyle = "#f05";
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 2;
     }
     setupCanvas();
     window.onresize = function () {
@@ -53,13 +53,13 @@ function doppler(el) {
             y: canvas.height / 2
         },
         velocity: {
-            x: -2,
+            x: -1,
             y: 0
         }, //velocity should be below the wave speed
-        waveSpeed: 4,
+        waveSpeed: 2,
         move: function () {
-            this.position.x += this.velocity.x;
-            this.position.y += this.velocity.y;
+            if (this.velocity.x !== 0) this.position.x += this.velocity.x;
+            // this.position.y += this.velocity.y;
         },
         wallGap: 200,
         walls: function () {
@@ -93,21 +93,31 @@ function doppler(el) {
         drawSource: function () {
             ctx.beginPath();
             ctx.arc(this.position.x, this.position.y, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = "#f05";
             ctx.fill();
         },
         draw: function () {
             for (let i = this.waves.length - 1; i > -1; --i) {
-                this.waves[i].color += 1;
+                this.waves[i].color += 0.5;
                 //remove from array if color goes to white (255)
                 if (this.waves[i].color > 254) this.waves.shift();
             }
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height); //clear
+            // ctx.clearRect(0, 0, canvas.width, canvas.height); //clear
+            ctx.fillStyle = "rgba(255,255,255,0.4)"
+            ctx.fillRect(0, 0, canvas.width, canvas.height); //clear
+
             for (let i = 0, len = this.waves.length; i < len; i++) {
                 this.waves[i].r += this.waveSpeed;
                 ctx.beginPath();
                 ctx.arc(this.waves[i].x, this.waves[i].y, this.waves[i].r, 0, 2 * Math.PI);
                 ctx.strokeStyle = `rgb(${this.waves[i].color},${this.waves[i].color},${this.waves[i].color})`;
+                ctx.stroke();
+
+                //faded out version to smooth out gradient
+                ctx.beginPath();
+                ctx.arc(this.waves[i].x, this.waves[i].y, this.waves[i].r - this.waveSpeed / 2, 0, 2 * Math.PI);
+                ctx.strokeStyle = `rgba(${this.waves[i].color},${this.waves[i].color},${this.waves[i].color}, 0.6)`;
                 ctx.stroke();
             }
             this.drawSource();
@@ -154,14 +164,22 @@ function doppler(el) {
 
     document.getElementById("doppler-source-speed").addEventListener("input", () => {
         const speed = Number(document.getElementById("doppler-source-speed").value)
-        const sign = one.velocity.x / Math.abs(one.velocity.x)
-        one.velocity.x = sign * speed
+        const sign = Math.sign(one.velocity.x)
+        if (sign !== 0) {
+            one.velocity.x = speed * sign
+        } else {
+            one.velocity.x = speed
+        }
         document.getElementById("doppler-source-speed-slider").value = speed
     });
     document.getElementById("doppler-source-speed-slider").addEventListener("input", () => {
         const speed = Number(document.getElementById("doppler-source-speed-slider").value)
-        const sign = one.velocity.x / Math.abs(one.velocity.x)
-        one.velocity.x = sign * speed;
+        const sign = Math.sign(one.velocity.x)
+        if (sign !== 0) {
+            one.velocity.x = speed * sign
+        } else {
+            one.velocity.x = speed
+        }
         document.getElementById("doppler-source-speed").value = speed
     });
 

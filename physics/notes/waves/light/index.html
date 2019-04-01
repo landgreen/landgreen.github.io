@@ -6,6 +6,7 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
+
 		function gtag() {
 			dataLayer.push(arguments);
 		}
@@ -30,6 +31,7 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<script defer src="EMwave.js"></script>
 </head>
 
 <body>
@@ -43,17 +45,25 @@
 			The spectrum of light extends far beyond the visible light that our eyes evolved to detect. Cell phones and Wi-Fi use microwave light to transmit digital information. CT scans use x-ray light to look inside a person's body. Thermometers use infrared light to read temperature. All of these different types of light are produced in the same way.
 		</p>
 		<div class="definition">
-			When a charged particle moves, its electric field and magnetic field updates to the new position. We call this change in the electric and magnetic field an electromagnetic wave or light!
+			When a charged particle accelerates, its electric field and magnetic field change.
+			This change propagates as a wave in the electro-magnetic field. The wave is light.
 		</div>
-		<p>
-			Try moving around in this <a href='http://codepen.io/lilgreenland/full/grqvNG/'>simulation</a> to see how the electric field updates as a charged particle moves. The ripples in the field lines are what we call light.
-		</p>
+		<br>
+		<br>
+		In the simulation below a charged particle will follow your mouse.
+	</article>
+	<canvas class="center" id="EMwave" width="600" height='100' onclick="EMwave(this)"></canvas>
+	<article>
+		The white lines show the electric field from a charged particle. The ripples in the field lines are light.
+		A quick acceleration makes high frequency light. Slow acceleration makes low frequency light.
+		<br>
+		<br>
 		<h2 class='underlined'>The Speed of Light</h2>
 		<p>
-			Changes in an electric and magnetic field don't happen immediately. It takes time for changes in an electromagnetic field to propagate through space. The speed of these changes to the E-M field is the <a href="https://www.youtube.com/watch?v=b9F8Wn4vf5Y">speed of light</a>.
+			Changes in an electric and magnetic field don't happen immediately. It takes time for changes in an electromagnetic field to propagate through space. The speed of these changes to the E-M field is the speed of light.
 		</p>
 		<p>
-			The speed of light in a vacuum is the fastest possible speed! No object has ever been recorded moving faster. As objects approach the <a href="../../relativity/special/index.html#specialrelativity">speed of light</a> their time dilates and length contracts.
+			The speed of light in a vacuum is the fastest possible speed! No object has ever been recorded moving faster. As objects approach the <a href="../../relativity/special/index.html#speed">speed of light</a> their time dilates and length contracts.
 		</p>
 		<p>
 			We can use the speed of light as the velocity in the wave equation.
@@ -64,14 +74,40 @@
 			<br>\(f\) = frequency [Hz, 1/s]
 			<br>\(\lambda\) = wavelength [m]
 		</div>
+		<!-- as the light wave propagates through a medium it produces ripples that interfere in a way that slows the group velocity of the light wave. -->
 		<p>
-			A light wave moves slower in dense media because as the light wave propagates through a medium it produces ripples that interfere in a way that slows the group velocity of the light wave.
+			A light wave moves slower in dense media because light induces electric polarization in matter, and the polarized matter radiates new light that interferes with the original light wave to form a delayed wave.
 		</p>
-		<p>
+		<style>
+			.normal-table tr th {
+				border: 1px solid #fff;
+				background-color: #444;
+				color: #fff;
+			}
+		</style>
+
+		<table class="normal-table">
+			<tr>
+				<th>speed of light</th>
+				<th>vacuum</th>
+				<th>air</th>
+				<th>water</th>
+				<th>diamond</th>
+			</tr>
+			<tr>
+				<th>(m/s)</th>
+				<td>299&thinsp;792&thinsp;458</td>
+				<td>299&thinsp;700&thinsp;000</td>
+				<td>225&thinsp;000&thinsp;000</td>
+				<td>120&thinsp;000&thinsp;000</td>
+			</tr>
+		</table>
+
+		<!-- <p>
 			The speed of light in a vacuum is 3.0 × 10<sup>8</sup> m/s.
 			<br>The speed of light in water is 2.3 × 10<sup>8</sup> m/s.
 			<br>The speed of light in diamond is 1.2 × 10<sup>8</sup> m/s.
-		</p>
+		</p> -->
 		<p>When we say "the speed of light" we generally mean the vacuum speed.</p>
 		<div class='example'>
 			<strong>Example:</strong> Find the wavelength of light that has a frequency of 10<sup>9</sup> Hz.
@@ -102,15 +138,22 @@
 		-->
 			<style>
 				@keyframes lightspeed {
-					0% { transform: translateX(4.5%); }
-					100% { transform: translateX(94%); }
-				} 
+					0% {
+						transform: translateX(4.5%);
+					}
+
+					100% {
+						transform: translateX(94%);
+					}
+				}
+
 				#light-wave-1 {
 					transform: translateX(4%);
 					animation: lightspeed 1.25s linear alternate infinite;
 				}
+
 				.stopped {
-				animation: none;
+					animation: none;
 				}
 			</style>
 
@@ -124,10 +167,10 @@
 	</svg>
 	<article>
 		<script>
-			function hideLightWave1(){
-				if (document.getElementById("light-wave-1").style.display === "none"){
+			function hideLightWave1() {
+				if (document.getElementById("light-wave-1").style.display === "none") {
 					document.getElementById("light-wave-1").style.display = "block";
-				}else{
+				} else {
 					document.getElementById("light-wave-1").style.display = "none";
 				}
 			}
@@ -141,18 +184,21 @@
 					border: 0px solid #000;
 					color: #000;
 				}
-				.black{
+
+				.black {
 					background-color: #000;
 					border: 0px solid #000;
 					padding: 7px;
 				}
-				.planet{
+
+				.planet {
 					margin: auto;
 					border-radius: 50%;
 					padding: 0px;
 					border: 0px solid #000;
 				}
-				.sun{
+
+				.sun {
 					width: 90px;
 					height: 90px;
 					background-color: #fff;
@@ -160,56 +206,67 @@
 					left: -20px;
 					position: relative;
 				}
-				.sun-div{
+
+				.sun-div {
 					/* margin: 0px; */
 					width: 50px;
 					height: 50px;
 				}
-				.mercury{
+
+				.mercury {
 					width: 6px;
 					height: 6px;
-					background-color: rgb(199,195,192);
+					background-color: rgb(199, 195, 192);
 				}
-				.venus{
+
+				.venus {
 					width: 11px;
 					height: 11px;
-					background-color: rgb(216,209,203);
+					background-color: rgb(216, 209, 203);
 				}
-				.earth{
+
+				.earth {
 					width: 11.5px;
 					height: 11.5px;
-					background-color: rgb(130,137,179);
+					background-color: rgb(130, 137, 179);
 				}
-				.moon{
+
+				.moon {
 					width: 4px;
 					height: 4px;
-					background-color: rgb(159,155,152);
+					background-color: rgb(159, 155, 152);
 				}
-				.mars{
+
+				.mars {
 					width: 8px;
 					height: 8px;
-					background-color: rgb(207,187,137);
+					background-color: rgb(207, 187, 137);
 				}
-				.jupiter{
+
+				.jupiter {
 					width: 35px;
 					height: 35px;
-					background-color: rgb(238,236,188);
+					background-color: rgb(238, 236, 188);
 				}
-				.saturn{
+
+				.saturn {
 					width: 30px;
 					height: 30px;
-					background-color: rgb(223,229,181);
+					background-color: rgb(223, 229, 181);
 				}
-				.uranus{
+
+				.uranus {
 					width: 18px;
 					height: 18px;
-					background-color: rgb(173,200,211);
+					background-color: rgb(173, 200, 211);
 				}
-				.neptune{
+
+				.neptune {
 					width: 17px;
 					height: 17px;
-					background-color: rgb(160,183,214);
+					background-color: rgb(160, 183, 214);
 				}
+
 				.saturn-ring {
 					border-radius: 50%;
 					width: 44px;
@@ -219,6 +276,7 @@
 					left: -7px;
 					border: 4px solid rgba(216, 218, 169, 0.7);
 				}
+
 				.uranus-ring {
 					border-radius: 50%;
 					width: 28px;
@@ -397,84 +455,117 @@
 				</details>
 			</div>
 		</div>
+
 		<h2 class='underlined'>The Electromagnetic Spectrum</h2>
 		<p>
 			Light can be viewed as a spectrum. The lowest energy, lowest frequency, and longest wavelength are on one end. The highest energy, highest frequency, and shortest wavelength are on the other.
 		</p>
-		<p>The Electromagnetic spectrum is very loosely divided in these regions based on the
-			<a href='https://en.wikipedia.org/wiki/Electromagnetic_spectrum#Rationale_for_spectrum_regional_names'>source of
-				that light</a>.</p>
 		<table style="border: 0px;">
 			<tr>
-				<th style="text-align: right;">region</th>
-				<th>wavelength (m)</th>
-				<th>frequency (Hz)</th>
+				<th> </th>
+				<th style="text-align: left;">region</th>
+				<th style="text-align: left;">wavelength&nbsp;(m)</th>
+				<th style="text-align: left;">frequency&nbsp;(Hz)</th>
 			</tr>
 			<style>
-				tr:hover {
-  					background: #fff;
-				}
 				.region {
-					text-align: right;
-					width: 50%;
-					/* border: 0px; */
-				}
-				.down-half {
-					height: 60px;
+					text-align: left;
+					/* width: 40%; */
 					border: 0px;
-    				position: relative;
-					top: -30px;
 				}
-				.region-title{
-					background:#fff;
-					padding:8px;
-					border-radius: 15px;
+
+				.lines {
+					border-top: 1px solid;
+					border-bottom: 1px solid;
+					border-left: 0px solid;
+					border-right: 0px solid;
+					border-color: #aaa;
 				}
+
+				.no-lines {
+					border: 0px;
+				}
+
+				.down-half {
+					height: 70px;
+					text-align: left;
+				}
+
+				.down-60 {
+					position: relative;
+					top: -35px;
+					background-color: #fff;
+					padding: 2px 15px;
+					border: 1px solid #aaa;
+					border-radius: 5px;
+				}
+
+				.black {
+					padding: 25px 20px;
+					background: #000;
+				}
+
 				.rainbow {
-					/* background: linear-gradient(violet, blue, cyan, green, yellow ,orange, red); */
-					background:linear-gradient(#b5f, #66f, #1ef, #6f6, #ff0, #f93, #f33);
+					padding: 25px 20px;
+					margin: 0;
+					background: linear-gradient(rgb(0, 0, 0), rgb(73, 0, 140), rgb(38, 4, 235), rgb(1, 148, 227), rgb(0, 216, 136), rgb(1, 183, 0), rgb(221, 204, 0), rgb(255, 95, 0), rgb(235, 38, 0), rgb(200, 12, 0), rgb(0, 0, 0));
 				}
 			</style>
 			<tr>
-				<td class="region"><a href="https://www.youtube.com/watch?v=RLykC1VN7NY">gamma rays</a></td>
-				<td class="down-half"></td>
-				<td class="down-half"></td>
-			</tr>
-			<tr>
-				<td class="region"><a href="https://www.youtube.com/watch?v=gsV7SJDDCY4">x-rays</a></td>
-				<td class="down-half">2 × 10<sup>-11</sup></td>
-				<td class="down-half">1.5 × 10<sup>19</sup>
+				<td class='no-lines'>
+					<span class="black hide-on-mobile"></span>
 				</td>
+				<td class="region lines"><a href="https://www.youtube.com/watch?v=RLykC1VN7NY">gamma ray</a></td>
+				<td class="down-half lines"></td>
+				<td class="down-half lines"></td>
 			</tr>
 			<tr>
-				<td class="region"> <a href="https://www.youtube.com/watch?v=V9K6gjR07Po">ultraviolet</a></td>
-				<td class="down-half">1 × 10<sup>-8</sup></td>
-				<td class="down-half">3 × 10<sup>16</sup></td>
+				<td class='no-lines'> <span class="black hide-on-mobile"></span> </td>
+				<td class="region lines"><a href="https://www.youtube.com/watch?v=gsV7SJDDCY4">x-ray</a></td>
+				<td class="down-half lines"><span class="down-60">2 × 10<sup>-11</sup></span></td>
+				<td class="down-half lines"><span class="down-60">1.5 × 10<sup>19</sup></span></td>
 			</tr>
 			<tr>
-				<td class='rainbow region'><span class="region-title">visible light</span></td>
-				<td class="down-half">4 × 10<sup>-7</sup></td>
-				<td class="down-half">7.5 × 10<sup>14</sup></td>
+				<td class='no-lines'> <span class="black hide-on-mobile"></span> </td>
+				<td class="region lines"> <a href="https://www.youtube.com/watch?v=V9K6gjR07Po">ultraviolet</a></td>
+				<td class="down-half lines"><span class="down-60">1 × 10<sup>-8</sup></span></td>
+				<td class="down-half lines"><span class="down-60">3 × 10<sup>16</sup></span></td>
 			</tr>
 			<tr>
-				<td class="region"><a href="https://www.youtube.com/watch?v=1DiqL8iFD8g">infrared</a></td>
-				<td class="down-half">7.5 × 10<sup>-7</sup></td>
-				<td class="down-half">4 × 10<sup>14</sup></td>
+				<td class='no-lines'> <span class="rainbow hide-on-mobile"></span> </td>
+				<td class='region lines'> <a href="https://www.youtube.com/watch?v=9udYi7exojk">visible light </td>
+				<td class="down-half lines"><span class="down-60">4 × 10<sup>-7</sup></span></td>
+				<td class="down-half lines"><span class="down-60">7.5 × 10<sup>14</sup></span></td>
 			</tr>
 			<tr>
-				<td class="region"><a href="https://www.youtube.com/watch?v=nqTDCkuVADw">microwave</a></td>
-				<td class="down-half">1 × 10<sup>-2</sup></td>
-				<td class="down-half">3 × 10<sup>10</sup></td>
+				<td class='no-lines'> <span class="black hide-on-mobile"></span> </td>
+				<td class="region lines"><a href="https://www.youtube.com/watch?v=1DiqL8iFD8g">infrared</a></td>
+				<td class="down-half lines"><span class="down-60">7.5 × 10<sup>-7</sup></span></td>
+				<td class="down-half lines"><span class="down-60">4 × 10<sup>14</sup></span></td>
 			</tr>
 			<tr>
-				<td class="region"><a href="https://www.youtube.com/watch?v=NGGVy_M0zBY">radio waves</a></td>
-				<td class="down-half">1</td>
-				<td class="down-half">3 × 10<sup>8</sup></td>
+				<td class='no-lines'> <span class="black hide-on-mobile"></span> </td>
+				<td class="region lines"><a href="https://www.youtube.com/watch?v=nqTDCkuVADw">microwave</a></td>
+				<td class="down-half lines"><span class="down-60">1 × 10<sup>-2</sup></span></td>
+				<td class="down-half lines"><span class="down-60">3 × 10<sup>10</sup></span></td>
+			</tr>
+			<tr>
+				<td class='no-lines'> <span class="black hide-on-mobile"></span> </td>
+				<td class="region lines"><a href="https://www.youtube.com/watch?v=NGGVy_M0zBY">radio wave</a></td>
+				<td class="down-half lines"><span class="down-60">1</span></td>
+				<td class="down-half lines"><span class="down-60">3 × 10<sup>8</sup></span></td>
 			</tr>
 		</table>
 		<p>
+			The Electromagnetic spectrum is very loosely divided in these regions based on the <a href='https://en.wikipedia.org/wiki/Electromagnetic_spectrum#Rationale_for_spectrum_regional_names'>source of that light</a>.
+		</p>
+
+		<p>
 			Some classify microwaves as a subregion inside radio. Also, the x-ray and gamma-ray regions are starting to blend as the technology that produces x-rays improves.
 		</p>
+
+
+
 		<div class='example'>
 			<strong>Question:</strong> Hydrogen is the most common element in the universe, making up about 75% of all normal mass. It floods the universe with light at its signature wavelength of
 			<a href='https://en.wikipedia.org/wiki/Hydrogen_line'>21 cm</a>. What region of the electromagnetic spectrum would this light be in?
@@ -485,12 +576,186 @@
 			</details>
 		</div>
 
+
 		<div class='example'>
 			<strong>Question:</strong> In human skin, vitamin D production occurs when the precursor molecule reacts with light at wavelengths between 270 and 300 nm. What range of the E-M spectrum includes that wavelength?
 			<details>
 				<summary>answer</summary>
 				<p>
 					Ultraviolet, specifically <a href='https://en.wikipedia.org/wiki/Ultraviolet#Subtypes'>UVB</a>.
+				</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<svg viewBox="0 0 605 115">
+				<defs>
+					<linearGradient id="spectrumGradient">
+						<!-- <stop offset="0%" style="stop-color:rgb(0,0,0);" />
+						<stop offset="20.6%" style="stop-color:rgb(73,0,140);" />
+						<stop offset="29%" style="stop-color:rgb(38,4,235);" />
+						<stop offset="36%" style="stop-color:rgb(1,148,227);" />
+						<stop offset="40.2%" style="stop-color:rgb(0,216,136);" />
+						<stop offset="50%" style="stop-color:rgb(1,183,0);" />
+						<stop offset="62.6%" style="stop-color:rgb(221,204,0);" />
+						<stop offset="68.9%" style="stop-color:rgb(255,95,0);" />
+						<stop offset="73.8%" style="stop-color:rgb(235,38,0);" />
+						<stop offset="78%" style="stop-color:rgb(200,12,0);" />
+						<stop offset="100%" style="stop-color:rgb(0,0,0);" /> -->
+						<stop id="stop380nm" offset="0.000000" style="stop-color:#020005;" />
+						<stop id="stop385nm" offset="0.013514" style="stop-color:#020006;" />
+						<stop id="stop390nm" offset="0.027027" style="stop-color:#030008;" />
+						<stop id="stop395nm" offset="0.040541" style="stop-color:#04000A;" />
+						<stop id="stop400nm" offset="0.054054" style="stop-color:#06000D;" />
+						<stop id="stop405nm" offset="0.067568" style="stop-color:#080110;" />
+						<stop id="stop410nm" offset="0.081081" style="stop-color:#0C0117;" />
+						<stop id="stop415nm" offset="0.094595" style="stop-color:#11021F;" />
+						<stop id="stop420nm" offset="0.108108" style="stop-color:#17032A;" />
+						<stop id="stop425nm" offset="0.121622" style="stop-color:#1F053A;" />
+						<stop id="stop430nm" offset="0.135135" style="stop-color:#25084B;" />
+						<stop id="stop435nm" offset="0.148649" style="stop-color:#290A5C;" />
+						<stop id="stop440nm" offset="0.162162" style="stop-color:#2B0E6F;" />
+						<stop id="stop445nm" offset="0.175676" style="stop-color:#291380;" />
+						<stop id="stop450nm" offset="0.189189" style="stop-color:#1F237B;" />
+						<stop id="stop455nm" offset="0.202703" style="stop-color:#132E74;" />
+						<stop id="stop460nm" offset="0.216216" style="stop-color:#09376C;" />
+						<stop id="stop465nm" offset="0.229730" style="stop-color:#0A3E66;" />
+						<stop id="stop470nm" offset="0.243243" style="stop-color:#0C4667;" />
+						<stop id="stop475nm" offset="0.256757" style="stop-color:#0E4F6A;" />
+						<stop id="stop480nm" offset="0.270270" style="stop-color:#10596C;" />
+						<stop id="stop485nm" offset="0.283784" style="stop-color:#11636D;" />
+						<stop id="stop490nm" offset="0.297297" style="stop-color:#146E6F;" />
+						<stop id="stop495nm" offset="0.310811" style="stop-color:#177970;" />
+						<stop id="stop500nm" offset="0.324324" style="stop-color:#178672;" />
+						<stop id="stop505nm" offset="0.337838" style="stop-color:#1A9574;" />
+						<stop id="stop510nm" offset="0.351351" style="stop-color:#1DA375;" />
+						<stop id="stop515nm" offset="0.364865" style="stop-color:#1DB273;" />
+						<stop id="stop520nm" offset="0.378378" style="stop-color:#20C070;" />
+						<stop id="stop525nm" offset="0.391892" style="stop-color:#22CB6B;" />
+						<stop id="stop530nm" offset="0.405405" style="stop-color:#21D662;" />
+						<stop id="stop535nm" offset="0.418919" style="stop-color:#23E054;" />
+						<stop id="stop540nm" offset="0.432432" style="stop-color:#36E842;" />
+						<stop id="stop545nm" offset="0.445946" style="stop-color:#50ED28;" />
+						<stop id="stop550nm" offset="0.459459" style="stop-color:#73EB22;" />
+						<stop id="stop555nm" offset="0.472973" style="stop-color:#8FE722;" />
+						<stop id="stop560nm" offset="0.486486" style="stop-color:#A5E221;" />
+						<stop id="stop565nm" offset="0.500000" style="stop-color:#B9DC22;" />
+						<stop id="stop570nm" offset="0.513514" style="stop-color:#CBD621;" />
+						<stop id="stop575nm" offset="0.527027" style="stop-color:#DCCE20;" />
+						<stop id="stop580nm" offset="0.540541" style="stop-color:#ECC420;" />
+						<stop id="stop585nm" offset="0.554054" style="stop-color:#F2B735;" />
+						<stop id="stop590nm" offset="0.567568" style="stop-color:#F5AB42;" />
+						<stop id="stop595nm" offset="0.581081" style="stop-color:#F69F49;" />
+						<stop id="stop600nm" offset="0.594595" style="stop-color:#F7944B;" />
+						<stop id="stop605nm" offset="0.608108" style="stop-color:#F98848;" />
+						<stop id="stop610nm" offset="0.621622" style="stop-color:#FA7B42;" />
+						<stop id="stop615nm" offset="0.635135" style="stop-color:#FB6C39;" />
+						<stop id="stop620nm" offset="0.648649" style="stop-color:#FD5B2E;" />
+						<stop id="stop625nm" offset="0.662162" style="stop-color:#FC471F;" />
+						<stop id="stop630nm" offset="0.675676" style="stop-color:#F7300F;" />
+						<stop id="stop635nm" offset="0.689189" style="stop-color:#EA220D;" />
+						<stop id="stop640nm" offset="0.702703" style="stop-color:#D42215;" />
+						<stop id="stop645nm" offset="0.716216" style="stop-color:#BF2318;" />
+						<stop id="stop650nm" offset="0.729730" style="stop-color:#A92309;" />
+						<stop id="stop655nm" offset="0.743243" style="stop-color:#981F07;" />
+						<stop id="stop660nm" offset="0.756757" style="stop-color:#871B06;" />
+						<stop id="stop665nm" offset="0.770270" style="stop-color:#771805;" />
+						<stop id="stop670nm" offset="0.783784" style="stop-color:#671504;" />
+						<stop id="stop675nm" offset="0.797297" style="stop-color:#591303;" />
+						<stop id="stop680nm" offset="0.810811" style="stop-color:#4D1103;" />
+						<stop id="stop685nm" offset="0.824324" style="stop-color:#420E02;" />
+						<stop id="stop690nm" offset="0.837838" style="stop-color:#370C01;" />
+						<stop id="stop695nm" offset="0.851351" style="stop-color:#2E0A01;" />
+						<stop id="stop700nm" offset="0.864865" style="stop-color:#270801;" />
+						<stop id="stop705nm" offset="0.878378" style="stop-color:#210600;" />
+						<stop id="stop710nm" offset="0.891892" style="stop-color:#1E0400;" />
+						<stop id="stop715nm" offset="0.905405" style="stop-color:#1A0300;" />
+						<stop id="stop720nm" offset="0.918919" style="stop-color:#170200;" />
+						<stop id="stop725nm" offset="0.932432" style="stop-color:#130100;" />
+						<stop id="stop730nm" offset="0.945946" style="stop-color:#100100;" />
+						<stop id="stop735nm" offset="0.959459" style="stop-color:#0C0100;" />
+						<stop id="stop740nm" offset="0.972973" style="stop-color:#080100;" />
+						<stop id="stop745nm" offset="0.986486" style="stop-color:#060100;" />
+						<stop id="stop750nm" offset="1.000000" style="stop-color:#040100;" />
+					</linearGradient>
+					<linearGradient xlink:href="#spectrumGradient" id="linearGradient3161" x1="192.78572" y1="378.07645" x2="652.92859" y2="378.07645" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.31031, 0, 0, 0.339394, -252.075, -49.3168)" />
+				</defs>
+				<rect style="fill: url(#linearGradient3161) rgb(0, 0, 0); fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 1; stroke-linecap: square; stroke-linejoin: round; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0pt; stroke-opacity: 1;" id="rect2383" width="599" height="64" x="2.5" y="47" />
+				<path style="fill: none; fill-rule: evenodd; stroke: rgb(0, 0, 0); stroke-width: 1px; stroke-linecap: square; stroke-linejoin: miter; stroke-opacity: 1;" d="M 2.5,3.99989 L 2.5,43" />
+				<path d="M 116.5,4 L 116.5,43" style="fill: none; fill-rule: evenodd; stroke: rgb(0, 0, 0); stroke-width: 1px; stroke-linecap: square; stroke-linejoin: miter; stroke-opacity: 1;" />
+				<path style="fill: none; fill-rule: evenodd; stroke: rgb(0, 0, 0); stroke-width: 1px; stroke-linecap: square; stroke-linejoin: miter; stroke-opacity: 1;" d="M 188.5,3.999478 L 188.5,42.999588" />
+				<path d="M 308.5,4 L 308.5,43" style="fill: none; fill-rule: evenodd; stroke: rgb(0, 0, 0); stroke-width: 1px; stroke-linecap: square; stroke-linejoin: miter; stroke-opacity: 1;" />
+				<path style="fill: none; fill-rule: evenodd; stroke: rgb(0, 0, 0); stroke-width: 1px; stroke-linecap: square; stroke-linejoin: miter; stroke-opacity: 1;" d="M 344.50001,3.99989 L 344.50001,43" />
+				<path d="M 392.5,3.999478 L 392.5,42.999588" style="fill: none; fill-rule: evenodd; stroke: rgb(0, 0, 0); stroke-width: 1px; stroke-linecap: square; stroke-linejoin: miter; stroke-opacity: 1;" />
+				<path style="fill: none; fill-rule: evenodd; stroke: rgb(0, 0, 0); stroke-width: 1px; stroke-linecap: square; stroke-linejoin: miter; stroke-opacity: 1;" d="M 602.5,3.99989 L 602.5,43" />
+				<g style="font-size: 20px; text-align: center; text-anchor: middle; fill: rgb(0, 0, 0); stroke: none;">
+					<text x="497.007" y="30.7897">R</text>
+					<text x="368.473" y="30.6797">O</text>
+					<text x="321.28" y="30.7899">Y</text>
+					<text x="248.743" y="30.6797">G</text>
+					<text x="152.16" y="30.7897">B</text>
+					<text x="59.4297" y="30.7899">V</text>
+				</g>
+				<g style="font-size: 10px; text-align: center; text-anchor: middle; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="matrix(0, -1, 1, 0, 0, 0)">
+					<text x="-23.4117" y="13.09">380</text>
+					<text x="-23.3917" y="112.77">450</text>
+					<text x="-23.4213" y="184.77">495</text>
+					<text x="-23.4267" y="304.77">570</text>
+					<text x="-23.4267" y="340.77">590</text>
+					<text x="-23.4663" y="388.77">620</text>
+					<text x="-23.4817" y="598.77">750</text>
+				</g>
+			</svg>
+			<strong>Question:</strong> What color in the visible spectrum has the longest wavelength
+			<details>
+				<summary>answer</summary>
+				<p>
+					Red has the longest wavelength.
+				</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			Light slows down in denser media, which causes it to refract.
+			Refraction causes the various frequencies that make up white light to <strong>disperse</strong> because each frequency slows to a different speed.
+			<a href="https://en.wikipedia.org/wiki/The_Dark_Side_of_the_Moon">
+				<svg viewBox="0 500 1600 600" style="background-color: #000;">
+					<defs>
+						<linearGradient id="g">
+							<stop stop-color="#ddf" />
+							<stop stop-color="#003" stop-opacity="0" offset="1" />
+						</linearGradient>
+						<linearGradient xlink:href="#g" id="gg" x1="662" y1="787" x2="900" y2="737" gradientUnits="userSpaceOnUse" />
+					</defs>
+					<path d="m920,724 680,96 0,40 -680,-110z" fill="#f00" />
+					<path d="m920,743 680,105 0,42 -680,-120z" fill="#f90" />
+					<path d="m920,760 680,119 0,36 -680,-135z" fill="#fff500" />
+					<path d="m920,773 680,132 0,35 -680,-140z" fill="#00ff00" />
+					<path d="m920,789 680,143 0,33 -680,-150z" fill="#00aaff" />
+					<path d="m920,804 680,154 0,27 -680,-164z" fill="#96f" />
+					<g stroke-width="3px">
+						<path d="M821.5,548 1112,1053.5 527,1053.5z" stroke="#ccc" fill="#88c" />
+						<path d="M821.5,560 1102,1047.5 537,1047.5z" stroke="#555" fill="#000004" />
+					</g>
+					<path d="M0,958 682,776 923,726 981,835 682,786 0,968z" fill="url(#gg)" />
+				</svg>
+			</a>
+			Use the image above to determine how frequency affects the speed of light.
+			<br>
+			<br>
+			<style>
+				.choice {
+					text-decoration: underline;
+				}
+			</style>
+			<strong>Question:</strong> High frequency light waves move <strong class="choice">(faster / slower)</strong> through glass.
+			<details>
+				<summary>answer</summary>
+				<p>
+					Blue light has a higher frequency and it <a href="https://en.wikipedia.org/wiki/File:Light_dispersion_conceptual_waves.gif">refracts</a> at the most extreme angle. The blue light is propagating through the glass slower than the other colors.
+				</p>
+				<p>
+					High frequency light waves move <strong style="text-decoration: underline;">slower</strong> through glass.
 				</p>
 			</details>
 		</div>
@@ -568,7 +833,7 @@
 				<path d="M0,297C3,296 5,295 8,293C14,287 18,279 21,270C25,258 27,245 30,232C36,203 40,172 45,142C49,120 54,98 58,76C61,61 65,46 69,31C70,27 72,21 73,17C74,15 75,12 77,11C79,9 81,11 83,12C86,15 88,19 90,23C93,30 94,37 96,44C98,53 101,63 105,72C107,77 111,81 113,86C119,103 122,122 126,141C130,164 134,187 141,209C144,221 147,232 152,243C156,252 162,261 169,269C173,275 177,280 182,284C204,301 232,299 259,300C284,301 309,300 334,300C383,300 431,300 480,300" />
 				<line x1="0" y1="300" x2="480" y2="300" stroke="white" />
 			</g>
-			<g font-family="Nimbus Roman No9 L, Times, serif" font-size="20" text-anchor="middle" stroke="none" fill="black">
+			<g font-size="17" text-anchor="middle" stroke="none" fill="black">
 				<text x="55.5" y="350">400</text>
 				<text x="130.5" y="350">450</text>
 				<text x="205.5" y="350">500</text>
@@ -587,7 +852,7 @@
 			<path stroke="black" stroke-width="1" d="M30.5,10.5l499,0l0,319l-499,0l0,-319M40.5,10.5l0,3M40.5,326.5l0,3M55.5,10.5l0,6M55.5,323.5l0,6M70.5,10.5l0,3M70.5,326.5l0,3M85.5,10.5l0,3M85.5,326.5l0,3M100.5,10.5l0,3M100.5,326.5l0,3M115.5,10.5l0,3M115.5,326.5l0,3M130.5,10.5l0,6M130.5,323.5l0,6M145.5,10.5l0,3M145.5,326.5l0,3M160.5,10.5l0,3M160.5,326.5l0,3M175.5,10.5l0,3M175.5,326.5l0,3M190.5,10.5l0,3M190.5,326.5l0,3M205.5,10.5l0,6M205.5,323.5l0,6M220.5,10.5l0,3M220.5,326.5l0,3M235.5,10.5l0,3M235.5,326.5l0,3M250.5,10.5l0,3M250.5,326.5l0,3M265.5,10.5l0,3M265.5,326.5l0,3M280.5,10.5l0,6M280.5,323.5l0,6M295.5,10.5l0,3M295.5,326.5l0,3M310.5,10.5l0,3M310.5,326.5l0,3M325.5,10.5l0,3M325.5,326.5l0,3M340.5,10.5l0,3M340.5,326.5l0,3M355.5,10.5l0,6M355.5,323.5l0,6M370.5,10.5l0,3M370.5,326.5l0,3M385.5,10.5l0,3M385.5,326.5l0,3M400.5,10.5l0,3M400.5,326.5l0,3M415.5,10.5l0,3M415.5,326.5l0,3M430.5,10.5l0,6M430.5,323.5l0,6M445.5,10.5l0,3M445.5,326.5l0,3M460.5,10.5l0,3M460.5,326.5l0,3M475.5,10.5l0,3M475.5,326.5l0,3M490.5,10.5l0,3M490.5,326.5l0,3M505.5,10.5l0,6M505.5,323.5l0,6M520.5,10.5l0,3M520.5,326.5l0,3" />
 		</svg>
 		<p>
-			Information from our <a href="https://www.youtube.com/watch?v=Xp6bxCh_p7c">eyes</a> is processed in our brains to build a guess about what we are seeing. Our brain's interpretation isn't perfect. We call these mistakes optical illusions.
+			Information from our <a href="https://www.youtube.com/watch?v=Xp6bxCh_p7c">eyes</a> is processed in our brains to build a guess about what we are seeing. Our brain's interpretation isn't perfect. We call these mistakes <a href="https://www.youtube.com/watch?v=Iw8idyw_N6Q">optical illusions</a>.
 		</p>
 
 		<div class="example">
@@ -612,17 +877,17 @@
 				</svg>
 			</a>
 			<p>
-				One source of confusion comes from similar terms for subtractive and additive colors. Light sources work by <a href="https://en.wikipedia.org/wiki/Additive_color">adding color</a>. Adding more colors of light will bring the color we see closer to white.
+				One source of confusion comes from similar terms for subtractive and additive colors. Light sources work by <a href="https://www.youtube.com/watch?v=uNOKWoDtbSk">adding color</a>. Adding more colors of light will bring the color we see closer to white.
 			</p>
 			<style>
 				.color-background {
-				border-radius: 15px;
-				border: 3px solid #000;
-				background-color: #aaa;
-				padding: 15px;
-				line-height: 2;
-			}
-		</style>
+					border-radius: 15px;
+					border: 3px solid #000;
+					background-color: #aaa;
+					padding: 15px;
+					line-height: 2;
+				}
+			</style>
 			<p class="color-background">
 				<span style="color:#0f0">
 					<strong>green light</strong>
@@ -804,8 +1069,32 @@
 		<div class="center">
 			<svg id="SVG-graph-0" viewBox="0 0 580 400">
 				<defs>
+					<!-- background: linear-gradient(#fff, #8b00ff, #00f, #0ff, #0f0, #ff0, #ff7f00, #f00, #fff); -->
 					<linearGradient id="rainbow" x2="1">
-						<stop id="stop380nm" offset="0.000000" style="stop-color:#020005;" />
+						<stop offset="0%" style="stop-color:rgb(0,0,0);" />
+						<stop offset="8%" style="stop-color:rgb(73,0,140);" />
+						<stop offset="20%" style="stop-color:rgb(38,4,235);" />
+						<stop offset="30%" style="stop-color:rgb(1,148,227);" />
+						<stop offset="36%" style="stop-color:rgb(0,216,136);" />
+						<stop offset="50%" style="stop-color:rgb(1,183,0);" />
+						<stop offset="68%" style="stop-color:rgb(221,204,0);" />
+						<stop offset="77%" style="stop-color:rgb(255,95,0);" />
+						<stop offset="84%" style="stop-color:rgb(235,38,0);" />
+						<stop offset="90%" style="stop-color:rgb(200,12,0);" />
+						<stop offset="100%" style="stop-color:rgb(0,0,0);" />
+
+
+						<!-- <stop offset="0.000" style="stop-color:#000;" />
+						<stop offset="0.125" style="stop-color:#8b00ff;" />
+						<stop offset="0.25" style="stop-color:#00f;" />
+						<stop offset="0.375" style="stop-color:#0ff;" />
+						<stop offset="0.5" style="stop-color:#0f0;" />
+						<stop offset="0.625" style="stop-color:#ff0;" />
+						<stop offset="0.75" style="stop-color:#ff7f00;" />
+						<stop offset="0.875" style="stop-color:#f00;" />
+						<stop offset="1.000" style="stop-color:#000;" /> -->
+
+						<!-- <stop id="stop380nm" offset="0.000000" style="stop-color:#020005;" />
 						<stop id="stop390nm" offset="0.027027" style="stop-color:#030008;" />
 						<stop id="stop400nm" offset="0.054054" style="stop-color:#06000D;" />
 						<stop id="stop410nm" offset="0.081081" style="stop-color:#0C0117;" />
@@ -842,14 +1131,14 @@
 						<stop id="stop720nm" offset="0.918919" style="stop-color:#170200;" />
 						<stop id="stop735nm" offset="0.959459" style="stop-color:#0C0100;" />
 						<stop id="stop745nm" offset="0.986486" style="stop-color:#060100;" />
-						<stop id="stop750nm" offset="1.000000" style="stop-color:#040100;" />
+						<stop id="stop750nm" offset="1.000000" style="stop-color:#040100;" /> -->
 					</linearGradient>
 				</defs>
 				<rect x="0" y="0" width="600" height="580" fill="#000" />
-				<rect x="70" y="0" width="150" height="580" fill="url(#rainbow)" />
+				<rect x="90" y="0" width="100" height="580" fill="url(#rainbow)" />
 				<g font-size="16" stroke="none" fill="#fff" stroke-width="2">
 					<text x="40" y="20" text-anchor="middle">UV</text>
-					<text x="140" y="20" fill="#000" text-anchor="middle">visible</text>
+					<text x="140" y="20" fill="#000" font-weight="900" text-anchor="middle">visible</text>
 					<text x="380" y="20" text-anchor="middle">infrared</text>
 				</g>
 				<!-- <circle id="BB-color" cx="530" cy="50" r="20" fill="#fff" /> -->
@@ -1325,8 +1614,6 @@
 				<p>It would just be black, since all the light would be blocked.</p>
 			</details>
 		</div>
-
-
 
 	</article>
 	<div class='back'>
