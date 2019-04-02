@@ -358,13 +358,13 @@ header h1 a:hover {
   padding: 2em;
   margin: 10em 0em 0em 0em;
   width: 100%;
-  background-color: #000;
+  background-color: #111;
 }
 
 .back a {
   background-color: #fff;
   font-size: 1.3em;
-  color: #000;
+  color: #111;
   padding: 0.3em 1em;
   border-radius: 1em;
 }
