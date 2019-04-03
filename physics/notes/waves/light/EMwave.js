@@ -42,9 +42,11 @@ function EMwave(el) {
         ctx.lineWidth = 6;
     }
     setupCanvas();
-    window.onresize = function () {
+
+    window.addEventListener("resize", () => {
+        console.log("test")
         setupCanvas();
-    };
+    });
 
     const mouse = {
         x: canvas.width / 2,
@@ -66,7 +68,7 @@ function EMwave(el) {
     const physics = {
         cycle: 0, //keeps track of cycle
         pause: false, // pauses the simulation
-        speed: Math.round(window.innerWidth / 250), //speed of waves and max speed of source
+        speed: 2 + Math.round(window.innerWidth / 300), //speed of waves and max speed of source
         totalNodes: 275, //spawns stars at start
         xOffset: 0.5 * canvas.width,
         yOffset: 0.5 * canvas.height,
@@ -148,15 +150,16 @@ function EMwave(el) {
 
     function smoothMouseWave() {
         //gravitate towards mouse
-        const dir = Math.atan2(physics.yOffset - mouse.y, physics.xOffset - mouse.x)
         const dist = Math.sqrt((physics.xOffset - mouse.x) * (physics.xOffset - mouse.x) + (physics.yOffset - mouse.y) * (physics.yOffset - mouse.y));
         if (dist > physics.speed) {
+            const range = canvas.width / 4
             let speed;
-            if ((dist) < 100) {
-                speed = dist / 100 * physics.speed;
+            if ((dist) < range) {
+                speed = dist / range * physics.speed;
             } else {
                 speed = physics.speed;
             }
+            const dir = Math.atan2(physics.yOffset - mouse.y, physics.xOffset - mouse.x)
             physics.xOffset -= speed * Math.cos(dir);
             physics.yOffset -= speed * Math.sin(dir);
         }
