@@ -6,11 +6,12 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date());
-		gtag('config', 'UA-113454647-1');
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-113454647-1');
     </script>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -62,11 +63,11 @@
                 </defs>
                 <g stroke="#000" fill="#fff" stroke-width="2">
                     <rect x="150" y="10" width="50" height="50" rx="5" ry="5" />
-                    <rect x="0" y="60" width="300" height="160" fill="#bcd" stroke="none" />
+                    <rect x="0" y="60" width="300" height="160" fill="var(--def-accent-color)" stroke="none" />
                     <path d="M0 60 h300 v160" fill="none" />
                     <path d="M200 35 h117 m8 8 v100" fill="none" />
                     <path d="M300 60 l 12 -12" fill="none" />
-                    <circle cx="317" cy="43" r="8" fill="#bcd" />
+                    <circle cx="317" cy="43" r="8" fill="var(--def-accent-color)" />
                     <rect x="310" y="140" width="30" height="30" rx="5" ry="5" />
                 </g>
                 <g font-size="19" fill="#000" text-anchor="middle" dominant-baseline="middle">
@@ -107,7 +108,7 @@
             <p>\(\mu_s\) = mu, coefficient of friction [no units]
                 <svg class="on-edge" viewBox="0 0 500 285" style="margin-bottom: -2.5em; border-radius: 1em;">
                     <g transform='rotate(20) translate(150 -90)'>
-                        <rect x="-150" y="190" width="700" height="300" style="fill:#bcd" />
+                        <rect x="-150" y="190" width="700" height="300" style="fill:var(--def-accent-color)" />
                         <g stroke="#000" stroke-width="2" fill="none">
                             <path d="M-150 190 h700 " />
                         </g>
@@ -479,31 +480,37 @@
         </div>
 
         <style>
-            #reset-text{
+            #reset-text {
                 user-select: none;
                 pointer-events: none;
             }
+
             #reset-blocks:hover {
                 fill: #eee;
                 /* stroke: #bbb; */
-             }
-             #reset-blocks:active { 
-               fill:  #fff;
             }
+
+            #reset-blocks:active {
+                fill: #fff;
+            }
+
             .sliders {
                 margin-top: -100px;
             }
+
             .white-fill {
                 fill: #fff;
             }
+
             @media screen and (max-width: 620px) {
                 .sliders {
-                   margin-top: 0px;
+                    margin-top: 0px;
                 }
+
                 .white-fill {
                     fill: none;
                 }
-              }
+            }
         </style>
 
         <div class='example'>
@@ -518,10 +525,10 @@
                     <path d="M200 35 h117 m8 8 v27" fill="none" stroke="#f53" id="rope" />
                     <rect x="150" y="10" width="50" height="50" id="leftBlock" rx="5" ry="5" />
                     <rect x="305" y="70" width="40" height="30" id="rightBlock" rx="3" ry="3" />
-                    <rect x="0" y="60" width="300" height="160" fill="#bcd" stroke="none" />
+                    <rect x="0" y="60" width="300" height="160" fill="var(--def-accent-color)" stroke="none" />
                     <path d="M0 60 h300 v160" fill="none" />
                     <path d="M300 60 l 12 -12" fill="none" />
-                    <circle cx="317" cy="43" r="8" fill="#bcd" />
+                    <circle cx="317" cy="43" r="8" fill="var(--def-accent-color)" />
                 </g>
                 <g fill="#000" text-anchor="middle" dominant-baseline="middle">
                     <text x="176" y="35" id="leftBlock-text" font-size="15" dominant-baseline="middle">5.0 kg</text>
@@ -779,10 +786,10 @@
                     <g stroke="#000" fill="#fff" stroke-width="2">
                         <path d="M200 35 h117 m8 8 v100" fill="none" stroke="#f53" />
                         <rect x="150" y="10" width="50" height="50" rx="5" ry="5" />
-                        <rect x="0" y="60" width="300" height="160" fill="#bcd" stroke="none" />
+                        <rect x="0" y="60" width="300" height="160" fill="var(--def-accent-color)" stroke="none" />
                         <path d="M0 60 h300 v160" fill="none" />
                         <path d="M300 60 l 12 -12" fill="none" />
-                        <circle cx="317" cy="43" r="8" fill="#bcd" />
+                        <circle cx="317" cy="43" r="8" fill="var(--def-accent-color)" />
                         <rect x="310" y="140" width="30" height="30" rx="5" ry="5" />
                     </g>
                     <g font-size="19" fill="#000" text-anchor="middle" dominant-baseline="middle">
@@ -856,10 +863,10 @@
                     <g stroke="#000" fill="#fff" stroke-width="2">
                         <path d="M200 35 h117 m8 8 v100" fill="none" stroke="#000" />
                         <rect x="150" y="10" width="50" height="50" rx="5" ry="5" />
-                        <rect x="0" y="60" width="300" height="160" fill="#bcd" stroke="none" />
+                        <rect x="0" y="60" width="300" height="160" fill="var(--def-accent-color)" stroke="none" />
                         <path d="M0 60 h300 v160" fill="none" />
                         <path d="M300 60 l 12 -12" fill="none" />
-                        <circle cx="317" cy="43" r="8" fill="#bcd" />
+                        <circle cx="317" cy="43" r="8" fill="var(--def-accent-color)" />
                         <rect x="310" y="140" width="30" height="30" rx="5" ry="5" />
                     </g>
                     <g font-size="19" fill="#000" text-anchor="middle" dominant-baseline="middle">
@@ -922,7 +929,7 @@
                     <line x1="0" y1="70" x2="-65" y2="70" />
                     <line x1="0" y1="80" x2="-90" y2="80" />
                 </g>
-                <rect x="0" y="190" width="500" height="110" fill="#bcd" />
+                <rect x="0" y="190" width="500" height="110" fill="var(--def-accent-color)" />
                 <g stroke="#000" stroke-width="2" fill="none">
                     <path d="M0 190 h500 " />
                 </g>
@@ -1295,7 +1302,7 @@
                     <g stroke="#000" stroke-width="2" fill="none">
                         <path d="M-150 190 h700 " />
                     </g>
-                    <rect x="110" y="110" width="80" height="80" rx="5" ry="5" fill="#bcd" stroke="#000" stroke-width="2" />
+                    <rect x="110" y="110" width="80" height="80" rx="5" ry="5" fill="var(--def-accent-color)" stroke="#000" stroke-width="2" />
                     <text x="150" y="150" fill="black" text-anchor="middle" dominant-baseline="middle">m</text>
                     <line x1="150" y1="110" x2="150" y2="75" stroke="#000" stroke-width="2" />
                     <polygon points="0,0 -6,12 0,10 6,12" transform='translate(150 70)' style="fill:black;" />
@@ -1370,7 +1377,7 @@
                             <path d="M-150 190 h700 " />
                         </g>
 
-                        <rect x="110" y="110" width="80" height="80" rx="5" ry="5" fill="#bcd" stroke="#000" stroke-width="2" />
+                        <rect x="110" y="110" width="80" height="80" rx="5" ry="5" fill="var(--def-accent-color)" stroke="#000" stroke-width="2" />
                         <text x="150" y="150" fill="black" text-anchor="middle" dominant-baseline="middle">m</text>
 
                         <line x1="150" y1="110" x2="150" y2="75" stroke="#000" stroke-width="2" />
@@ -1456,7 +1463,7 @@
                             <path d="M-150 190 h700 " />
                         </g>
 
-                        <rect x="110" y="110" width="80" height="80" rx="5" ry="5" fill="#bcd" stroke="#000" stroke-width="2" />
+                        <rect x="110" y="110" width="80" height="80" rx="5" ry="5" fill="var(--def-accent-color)" stroke="#000" stroke-width="2" />
                         <text x="150" y="150" fill="black" text-anchor="middle" dominant-baseline="middle">m</text>
 
                         <line x1="150" y1="110" x2="150" y2="75" stroke="#000" stroke-width="2" />

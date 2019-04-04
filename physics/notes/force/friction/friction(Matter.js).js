@@ -160,7 +160,7 @@ function MotionSimulation() {
         ctx.lineTo(vertices[j].x, vertices[j].y);
       }
       ctx.lineTo(vertices[0].x, vertices[0].y);
-      ctx.fillStyle = "#bcd";
+      ctx.fillStyle = "#bbb";
       ctx.fill();
     }
 
