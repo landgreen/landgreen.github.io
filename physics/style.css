@@ -8,10 +8,12 @@
 --def-color: #d0e9e6;
 --def-accent-color: #98beba;
 --link-color: #e25; */
+/* --def-color: #ddeef6;
+--def-accent-color: #bcd; */
 :root {
   --bg-color: #000;
-  --def-color: #ddeef6;
-  --def-accent-color: #bcd;
+  --def-color: #e2e9f3;
+  --def-accent-color: #fcd;
   --link-color: #2793c7;
 }
 
