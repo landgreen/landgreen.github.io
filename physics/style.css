@@ -11,7 +11,7 @@
 /* --def-color: #ddeef6;
 --def-accent-color: #bcd; */
 :root {
-  --bg-color: #000;
+  --bg-color: #fff;
   --def-color: #e2e9f3;
   --def-accent-color: #fcd;
   --link-color: #2793c7;
@@ -339,25 +339,28 @@ th {
 /* Header setup_________________________________*/
 header {
   background-color: var(--bg-color);
-  padding: 0.1em 0em 0.1em 0em;
-  text-align: center;
+  padding: 0;
+  /* text-align: center; */
   width: 100%;
+  margin: 0 auto;
+  max-width: 585px;
+  border-bottom: 1px solid #999;
 }
 
 header h1 {
-  margin: 0.2em;
-  font-size: 4em;
+  font-size: 75px;
   font-weight: 300;
-  color: #fff;
+  margin: 0;
+  color: #222;
 }
 
 header h1 a {
-  color: #fff;
+  color: #222;
   text-decoration: none;
 }
 
 header h1 a:hover {
-  color: #fff;
+  color: #222;
   text-decoration: none;
 }
 
@@ -372,9 +375,9 @@ header h1 a:hover {
 }
 
 .back a {
-  background-color: #fff;
+  /* background-color: #222; */
   font-size: 1.3em;
-  color: #000;
+  /* color: #fff; */
   padding: 0.3em 1em;
   border-radius: 1em;
 }

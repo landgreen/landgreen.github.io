@@ -6,6 +6,7 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
+
 		function gtag() {
 			dataLayer.push(arguments);
 		}
@@ -39,32 +40,34 @@
 <body>
 	<header>
 		<h1>
-			<a href="../../../index.html">Conservation of Energy</a>
+			<a href="../../../index.html" style="font-size: 75%;">Conservation of Energy</a>
 		</h1>
 	</header>
 	<article>
 		<div class='example-small'>
 			<style>
 				.spring-KE-bar {
-				background-color: #fa96a0;
-				width: 0%;
-				margin-top: -23.5px;
-				height: 23.5px;
-				/* border-radius: 4px; */
-			}
-			.spring-Us-bar {
-				background-color: #96d2d2;
-				width: 0%;
-				margin-top: -23.5px;
-				height: 23.5px;
-				/* border-radius: 15px; */
-			}
-			.data-text-out {
-				padding-left: 5px;
-				text-align: left;
-				height: 23.5px;
-			}
-		</style>
+					background-color: #fa96a0;
+					width: 0%;
+					margin-top: -23.5px;
+					height: 23.5px;
+					/* border-radius: 4px; */
+				}
+
+				.spring-Us-bar {
+					background-color: #96d2d2;
+					width: 0%;
+					margin-top: -23.5px;
+					height: 23.5px;
+					/* border-radius: 15px; */
+				}
+
+				.data-text-out {
+					padding-left: 5px;
+					text-align: left;
+					height: 23.5px;
+				}
+			</style>
 			k = <input id='spring-k-slider' type="range" step="0.1" value="0.1" min="0" max="10" style="width: 200px;">
 			<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 55px;"><span class="hide-on-mobile">&nbsp;kg/s²</span>
 			<button style="float: right; width: 60px; margin-top: 20px; text-align: center; padding: 0px;" id="pause1">play</button>
@@ -249,6 +252,7 @@
 						stroke-dashoffset: 0;
 					}
 				}
+
 				.roller-coaster:hover {
 					stroke: #f04;
 					stroke-dasharray: 1000;
@@ -256,7 +260,7 @@
 					animation: dash 5s ease-in forwards;
 					stroke-linecap: round;
 				}
-				</style>
+			</style>
 			<svg viewBox="0 0 700 300" style="background-color: #f8f8f8;">
 				<g stroke="#bbb" stroke-dasharray="0.5,24,0.5,0" stroke-width="1000">
 					<line x1="0" y1="500" x2="1000" y2="500" />
