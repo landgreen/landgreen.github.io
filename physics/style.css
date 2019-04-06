@@ -12,9 +12,9 @@
 --def-accent-color: #bcd; */
 :root {
   --bg-color: #fff;
-  --def-color: #e2e9f3;
-  --def-accent-color: #fcd;
-  --link-color: #2793c7;
+  --def-color: #dde7f7;
+  --def-accent-color: #abc;
+  --link-color: #08c;
 }
 
 /************Reset**************/
@@ -134,7 +134,7 @@ a {
 
 a:hover {
   text-decoration: underline;
-  color: #000;
+  /* color: #000; */
 }
 
 summary {
@@ -187,7 +187,7 @@ th {
   margin-bottom: 0em;
   border-bottom: 1px solid #aaa;
   font-weight: 300;
-  font-size: 2.2em;
+  font-size: 1.7em;
 }
 
 .center {
@@ -348,7 +348,8 @@ header {
 }
 
 header h1 {
-  font-size: 75px;
+  /* font-size: 65px; */
+  font-size: 3em;
   font-weight: 300;
   margin: 0;
   color: #222;
@@ -385,11 +386,11 @@ header h1 a:hover {
 /* responsive media rules for mobile________________________________ */
 @media screen and (max-width: 650px) {
   header h1 {
-    font-size: 3em;
+    font-size: 2.5em;
   }
 
   .underlined {
-    font-size: 1.8em;
+    font-size: 1.4em;
   }
 
   .definition {
