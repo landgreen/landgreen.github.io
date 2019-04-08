@@ -12,7 +12,7 @@
 --def-accent-color: #bcd; */
 :root {
   --bg-color: #fff;
-  --def-color: #dde7f7;
+  --def-color: #d3e6f1;
   --def-accent-color: #abc;
   --link-color: #08c;
 }
@@ -183,11 +183,12 @@ th {
 
 /*classes_________________________________________*/
 .underlined {
+  color: #000;
   margin-top: 2em;
   margin-bottom: 0em;
   border-bottom: 1px solid #aaa;
   font-weight: 300;
-  font-size: 1.7em;
+  font-size: 1.75em;
 }
 
 .center {
@@ -339,28 +340,28 @@ th {
 /* Header setup_________________________________*/
 header {
   background-color: var(--bg-color);
-  padding: 0;
+  padding: 0px 0px;
   /* text-align: center; */
   width: 100%;
   margin: 0 auto;
   max-width: 585px;
-  border-bottom: 1px solid #999;
+  /* border-bottom: 1px solid #999; */
 }
 
 header h1 {
   font-size: 3em;
   font-weight: 300;
   margin: 0;
-  color: #222;
+  color: #000;
 }
 
 header h1 a {
-  color: #222;
+  color: #000;
   text-decoration: none;
 }
 
 header h1 a:hover {
-  color: #222;
+  color: #000;
   text-decoration: none;
 }
 
@@ -368,8 +369,8 @@ header h1 a:hover {
 /* footer setup_________________________________*/
 .back {
   text-align: center;
-  padding: 2em;
-  margin: 10em 0em 0em 0em;
+  padding: 1em;
+  margin: 6em 0em 0em 0em;
   width: 100%;
   background-color: var(--bg-color);
 }
@@ -386,6 +387,8 @@ header h1 a:hover {
 @media screen and (max-width: 650px) {
   header h1 {
     font-size: 2.5em;
+    /* padding: 0px 10px; */
+    margin: 0px 10px;
   }
 
   .underlined {

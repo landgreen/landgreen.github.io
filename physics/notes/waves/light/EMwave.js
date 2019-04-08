@@ -34,7 +34,7 @@ function EMwave(el) {
 
     const canvas = el
     const ctx = canvas.getContext("2d");
-    canvas.height = 400;
+    canvas.height = window.innerHeight * 2 / 3
 
     function setupCanvas() {
         canvas.width = window.innerWidth;
@@ -42,6 +42,12 @@ function EMwave(el) {
         ctx.lineWidth = 6;
     }
     setupCanvas();
+
+    canvas.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center"
+    });
 
     window.addEventListener("resize", () => {
         console.log("test")
