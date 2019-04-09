@@ -158,7 +158,7 @@ function EMwave(el) {
         //gravitate towards mouse
         const dist = Math.sqrt((physics.xOffset - mouse.x) * (physics.xOffset - mouse.x) + (physics.yOffset - mouse.y) * (physics.yOffset - mouse.y));
         if (dist > physics.speed) {
-            const range = canvas.width / 4
+            const range = canvas.width * 0.1
             let speed;
             if ((dist) < range) {
                 speed = dist / range * physics.speed;
