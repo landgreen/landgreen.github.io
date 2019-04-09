@@ -100,7 +100,7 @@ function doppler(el) {
             for (let i = this.waves.length - 1; i > -1; --i) {
                 this.waves[i].color += 0.5;
                 //remove from array if color goes to white (255)
-                if (this.waves[i].color > 254) this.waves.shift();
+                if (this.waves[i].color > 255) this.waves.shift();
             }
 
             // ctx.clearRect(0, 0, canvas.width, canvas.height); //clear
