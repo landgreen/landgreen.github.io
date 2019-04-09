@@ -340,8 +340,8 @@ th {
 /* Header setup_________________________________*/
 header {
   background-color: var(--bg-color);
-  padding: 0px 0px;
-  /* text-align: center; */
+  padding: 20px 0px;
+  text-align: center;
   width: 100%;
   margin: 0 auto;
   max-width: 585px;
