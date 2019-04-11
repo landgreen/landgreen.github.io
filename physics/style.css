@@ -339,7 +339,7 @@ th {
 
 /* Header setup_________________________________*/
 header {
-  background-color: var(--bg-color);
+  /* background-color: var(--bg-color); */
   padding: 20px 0px;
   text-align: center;
   width: 100%;
@@ -372,7 +372,7 @@ header h1 a:hover {
   padding: 1em;
   margin: 6em 0em 0em 0em;
   width: 100%;
-  background-color: var(--bg-color);
+  /* background-color: var(--bg-color); */
 }
 
 .back a {

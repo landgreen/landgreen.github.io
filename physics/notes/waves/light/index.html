@@ -755,22 +755,21 @@
 					text-decoration: underline;
 				}
 			</style>
-			<strong>Question:</strong> High frequency light waves move <strong class="choice">(faster / slower)</strong> through glass.
+			<strong>Question:</strong> What color in the visible spectrum moves the slowest in glass?
 			<details>
 				<summary>answer</summary>
 				<p>
-					Blue light has a higher frequency and it <a href="https://en.wikipedia.org/wiki/File:Light_dispersion_conceptual_waves.gif">refracts</a> at the most extreme angle. The blue light is propagating through the glass slower than the other colors.
+					Violet light <a href="https://en.wikipedia.org/wiki/File:Light_dispersion_conceptual_waves.gif">refracts</a> at the most extreme angle. This must be because it slows down the most in glass.
 				</p>
 				<p>
-					High frequency light waves move <strong style="text-decoration: underline;">slower</strong> through glass.
+					In the visible spectrum, violet light moves the slowest through glass.
 				</p>
 			</details>
 		</div>
 
 		<h2 class='underlined'>Color Vision</h2>
-		<p>Our
-			<a href="https://en.wikipedia.org/wiki/Color_vision">eyes</a> have two types of cells, called rods and cones, that can detect electro-magnetic waves.
-			<strong>Rods</strong> detect visible light with a high sensitivity. <strong>Cones</strong> specialize in detecting the wavelength of the light. From the cones come color vision.</p>
+		<p>
+			Our <a href="https://en.wikipedia.org/wiki/Color_vision">eyes</a> have two types of cells, called rods and cones, that can detect electro-magnetic waves. <strong>Rods</strong> detect visible light with a high sensitivity. <strong>Cones</strong> specialize in detecting the wavelength of the light. From the cones come color vision.</p>
 		</p>
 		<p>
 			The number of colors that are detectable has varied as life has evolved. Most birds and reptiles have 4 different colors they can detect. Mammals have 2 color vision, with the exception of
@@ -1329,6 +1328,47 @@
 		</div>
 
 		<div class='example'>
+			<style>
+				.color-slider {
+					width: 60%;
+				}
+
+				.color-box {
+					background-color: #fff;
+					padding: 1em;
+					margin: 1em 0em 1em 0em;
+					border-radius: 1em
+				}
+			</style>
+			<div class="color-box">
+				<span style="color:#f00;">Red:</span> &nbsp;&nbsp; <input id='red-slider' class="color-slider" type="range" min="0" max="255" step="1" value="255">
+				<br><span style="color:#0f0;">Green:</span> <input id='green-slider' class="color-slider" type="range" min="0" max="255" step="1" value="255">
+				<br><span style="color:#00f;">Blue:</span> &nbsp; <input id='blue-slider' class="color-slider" type="range" min="0" max="255" step="1" value="255">
+			</div>
+			<script>
+				const colorBG = {
+					red: 255,
+					green: 255,
+					blue: 255
+				}
+
+				function setBackGroundColor() {
+					document.body.style.backgroundColor = `rgb(${colorBG.red},${colorBG.green},${colorBG.blue})`
+				}
+
+				document.getElementById("red-slider").addEventListener("input", () => {
+					colorBG.red = document.getElementById("red-slider").value
+					setBackGroundColor()
+				});
+				document.getElementById("green-slider").addEventListener("input", () => {
+					colorBG.green = document.getElementById("green-slider").value
+					setBackGroundColor()
+				});
+				document.getElementById("blue-slider").addEventListener("input", () => {
+					colorBG.blue = document.getElementById("blue-slider").value
+					setBackGroundColor()
+				});
+			</script>
 			<strong>Question:</strong> What combination of colors do we call pink light?
 			<details>
 				<summary>answer</summary>
@@ -1526,7 +1566,7 @@
 
 		<div class='example'>
 			<svg viewBox="0 0 710 600">
-				<rect x="0" y="0" width="720" height="600" fill="#FFFFFF" />
+				<!-- <rect x="0" y="0" width="720" height="600" fill="#FFFFFF" /> -->
 				<rect x="114.0" y="19.5" width="536.8" height="513.3" fill="#E0E0E0" />
 				<g style="fill:none; stroke:black; stroke-width:2; stroke-linecap:butt; stroke-linejoin:miter">
 					<path d='M114.0,532.8 h15.0 m521.8,0 h-15' />
@@ -1808,7 +1848,7 @@
 					stroke-width: 3;
 				}
 			</style>
-			<path class="st8" d="M679.998,349.332H0V0h679.998V349.332z" />
+			<!-- <path class="st8" d="M679.998,349.332H0V0h679.998V349.332z" /> -->
 			<path class="st10" d="M103.895,134.301l-86.969,50.211V67.176l86.969-50.211V134.301z" />
 			<path class="st10" d="M16.926,125.844l86.969-50.211" />
 			<path class="st10" d="M60.412,42.07v117.336" />
