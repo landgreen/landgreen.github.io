@@ -747,15 +747,13 @@
 					<path d="M0,958 682,776 923,726 981,835 682,786 0,968z" fill="url(#gg)" />
 				</svg>
 			</a>
-			Use the image above to determine how frequency affects the speed of light.
-			<br>
 			<br>
 			<style>
 				.choice {
 					text-decoration: underline;
 				}
 			</style>
-			<strong>Question:</strong> What color in the visible spectrum moves the slowest in glass?
+			<strong>Question:</strong> Use the image to decide what color moves the slowest in glass?
 			<details>
 				<summary>answer</summary>
 				<p>
@@ -1337,10 +1335,12 @@
 					background-color: #fff;
 					padding: 1em;
 					margin: 1em 0em 1em 0em;
+					border: 2px #000 solid;
 					border-radius: 1em
 				}
 			</style>
 			<div class="flex-grid-thirds center color-box">
+				<h3 style="color: #000;">light</h3>
 				<div class="col">
 					<span style="color:#f00; font-weight: 800;">Red</span>
 					<br><input id='red-slider' class="color-slider" type="range" min="0" max="255" step="1" value="255">
@@ -1388,9 +1388,79 @@
 						<br>blue = 0.7
 					</p>
 				</p>
-
 			</details>
 		</div>
+
+		<div class='example'>
+			<style>
+				.color-slider {
+					width: 60%;
+				}
+
+				.color-box-CMY {
+					background-color: #000;
+					padding: 1em;
+					margin: 1em 0em 1em 0em;
+					border: 2px #fff solid;
+					border-radius: 1em
+				}
+			</style>
+			<div class="flex-grid-thirds center color-box-CMY">
+				<h3 style="color: #fff;">filters</h3>
+				<div class="col">
+					<span style="color:#0ff; font-weight: 800;">Cyan</span>
+					<br><input id='cyan-slider' class="color-slider" type="range" min="0" max="255" step="1" value="0">
+				</div>
+				<div class="col">
+					<span style="color:#f0f; font-weight: 800;">Magenta</span>
+					<br><input id='magenta-slider' class="color-slider" type="range" min="0" max="255" step="1" value="0">
+				</div>
+				<div class="col">
+					<span style="color:#ff0; font-weight: 800;">Yellow</span>
+					<br><input id='yellow-slider' class="color-slider" type="range" min="0" max="255" step="1" value="0">
+				</div>
+			</div>
+			<script>
+				const CMYK = {
+					c: 0,
+					m: 0,
+					y: 0
+				}
+
+				function CMYtoRGB() {
+					const c = CMYK.c / 255;
+					const m = CMYK.m / 255;
+					const y = CMYK.y / 255;
+					const k = 0;
+					let r = 1 - Math.min(1, c * (1 - k) + k);
+					let g = 1 - Math.min(1, m * (1 - k) + k);
+					let b = 1 - Math.min(1, y * (1 - k) + k);
+					r = Math.round(r * 255);
+					g = Math.round(g * 255);
+					b = Math.round(b * 255);
+					document.body.style.backgroundColor = `rgb(${r},${g},${b})`
+				}
+
+				document.getElementById("cyan-slider").addEventListener("input", () => {
+					CMYK.c = Number(document.getElementById("cyan-slider").value)
+					CMYtoRGB()
+				});
+				document.getElementById("magenta-slider").addEventListener("input", () => {
+					CMYK.m = Number(document.getElementById("magenta-slider").value)
+					CMYtoRGB()
+				});
+				document.getElementById("yellow-slider").addEventListener("input", () => {
+					CMYK.y = Number(document.getElementById("yellow-slider").value)
+					CMYtoRGB()
+				});
+			</script>
+			<strong>Question:</strong> What combination of filters make the color <span style="color:#0f0;">green</span> from white light?
+			<details>
+				<summary>answer</summary>
+				<p>Green light can be produced by filtering Cyan and Yellow light.</p>
+			</details>
+		</div>
+
 
 		<div class='example'>
 			<strong>Question:</strong> What type of light makes the color black?

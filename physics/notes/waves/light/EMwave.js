@@ -39,6 +39,9 @@ function EMwave(el) {
 
     function setupCanvas() {
         canvas.width = window.innerWidth;
+        ctx.lineJoin = "miter";
+        ctx.miterLimit = 4;
+
     }
     setupCanvas();
 
