@@ -30,6 +30,7 @@
 function EMwave(el) {
     el.onclick = null; //stops the function from running on button click
     el.style.backgroundColor = "#000"
+    el.style.cursor = "none";
     el.className += " no-shadow";
 
     const canvas = el
@@ -38,20 +39,17 @@ function EMwave(el) {
 
     function setupCanvas() {
         canvas.width = window.innerWidth;
-        ctx.strokeStyle = "#fff";
-        ctx.lineWidth = 6;
     }
     setupCanvas();
+
+    window.addEventListener("resize", () => {
+        setupCanvas();
+    });
 
     canvas.scrollIntoView({
         behavior: "smooth",
         block: "center",
         inline: "center"
-    });
-
-    window.addEventListener("resize", () => {
-        console.log("test")
-        setupCanvas();
     });
 
     const mouse = {
@@ -78,6 +76,11 @@ function EMwave(el) {
         totalNodes: 275, //spawns stars at start
         xOffset: 0.5 * canvas.width,
         yOffset: 0.5 * canvas.height,
+        distance: 0,
+        drawSpeed: {
+            x: 0,
+            y: 0
+        }
     };
     const node = [
         [],
@@ -143,31 +146,70 @@ function EMwave(el) {
                 }
             }
         }
-
+        //draw 16 legs
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         ctx.beginPath();
         for (let i = 0; i < 16; i++) {
             fieldLineLoop(node[i]);
         }
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 6;
         ctx.stroke();
+
+        const lastIndex = node[0].length - 1
+        const x = node[0][lastIndex].x + physics.drawSpeed.x * 3
+        const y = node[0][lastIndex].y + physics.drawSpeed.y * 3
+        const scale = 1;
+        const radius = 1.2 * scale
+        //mouth
+        ctx.beginPath();
+        ctx.moveTo(x - 5 * scale, y + 3 * scale)
+        ctx.lineTo(x + 5 * scale, y + 3 * scale)
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 1 * scale;
+        ctx.stroke();
+
+        ctx.beginPath();
+        //left eye
+        ctx.arc(x - 2 * scale, y - 2 * scale, radius, 0, 2 * Math.PI);
+        //right eye
+        ctx.arc(x + 2 * scale, y - 2 * scale, radius, 0, 2 * Math.PI);
+        //left fang
+        ctx.moveTo(x - 3 * scale, y + 3 * scale)
+        ctx.lineTo(x - 2 * scale, y + 5.5 * scale)
+        ctx.lineTo(x - 1 * scale, y + 3 * scale)
+        //right fang
+        ctx.moveTo(x + 3 * scale, y + 3 * scale)
+        ctx.lineTo(x + 2 * scale, y + 5.5 * scale)
+        ctx.lineTo(x + 1 * scale, y + 3 * scale)
+        ctx.fillStyle = "#000";
+        ctx.fill();
+
+        //draw mouse
+        if (physics.distance > 17) {
+            ctx.beginPath();
+            ctx.arc(mouse.x, mouse.y, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = "#f00";
+            ctx.fill();
+        }
     }
-
-
 
     function smoothMouseWave() {
         //gravitate towards mouse
-        const dist = Math.sqrt((physics.xOffset - mouse.x) * (physics.xOffset - mouse.x) + (physics.yOffset - mouse.y) * (physics.yOffset - mouse.y));
-        if (dist > physics.speed) {
+        physics.distance = Math.sqrt((physics.xOffset - mouse.x) * (physics.xOffset - mouse.x) + (physics.yOffset - mouse.y) * (physics.yOffset - mouse.y));
+        if (physics.distance > physics.speed) {
             const range = canvas.width * 0.1
             let speed;
-            if ((dist) < range) {
-                speed = dist / range * physics.speed;
+            if ((physics.distance) < range) {
+                speed = physics.distance / range * physics.speed;
             } else {
                 speed = physics.speed;
             }
             const dir = Math.atan2(physics.yOffset - mouse.y, physics.xOffset - mouse.x)
             physics.xOffset -= speed * Math.cos(dir);
             physics.yOffset -= speed * Math.sin(dir);
+            physics.drawSpeed.x = speed * Math.cos(dir)
+            physics.drawSpeed.y = speed * Math.sin(dir)
         }
     }
 
