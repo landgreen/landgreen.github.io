@@ -54,7 +54,7 @@
 	</article>
 	<canvas class="center" id="EMwave" width="600" height='100' onclick="EMwave(this)"></canvas>
 	<article>
-		A quick acceleration makes high frequency light. Slow acceleration makes low frequency light. You can't quite make a "sonic boom" with light because a charged particle can't move faster than the speed that light waves propagate.
+		A quick acceleration makes high frequency light. Slow acceleration makes low frequency light. You can't <a href="https://en.wikipedia.org/wiki/Cherenkov_radiation">quite</a> make a "sonic boom" with light because a charged particle can't move faster than the speed that light waves propagate.
 		<br>
 		<br>
 		<h2 class='underlined'>The Speed of Light</h2>
@@ -1340,10 +1340,19 @@
 					border-radius: 1em
 				}
 			</style>
-			<div class="color-box">
-				<span style="color:#f00;">Red:</span> &nbsp;&nbsp; <input id='red-slider' class="color-slider" type="range" min="0" max="255" step="1" value="255">
-				<br><span style="color:#0f0;">Green:</span> <input id='green-slider' class="color-slider" type="range" min="0" max="255" step="1" value="255">
-				<br><span style="color:#00f;">Blue:</span> &nbsp; <input id='blue-slider' class="color-slider" type="range" min="0" max="255" step="1" value="255">
+			<div class="flex-grid-thirds center color-box">
+				<div class="col">
+					<span style="color:#f00; font-weight: 800;">Red</span>
+					<br><input id='red-slider' class="color-slider" type="range" min="0" max="255" step="1" value="255">
+				</div>
+				<div class="col">
+					<span style="color:#0e0; font-weight: 800;">Green</span>
+					<br><input id='green-slider' class="color-slider" type="range" min="0" max="255" step="1" value="255">
+				</div>
+				<div class="col">
+					<span style="color:#00f; font-weight: 800;">Blue</span>
+					<br><input id='blue-slider' class="color-slider" type="range" min="0" max="255" step="1" value="255">
+				</div>
 			</div>
 			<script>
 				const colorBG = {
@@ -1369,7 +1378,7 @@
 					setBackGroundColor()
 				});
 			</script>
-			<strong>Question:</strong> What combination of colors do we call pink light?
+			<strong>Question:</strong> What combination of light do we call the color <span style="color:#ff66b2;">pink</span>?
 			<details>
 				<summary>answer</summary>
 				<p>Pink can be produced by adding colors. The ratios for pink are:
@@ -1566,8 +1575,6 @@
 
 		<div class='example'>
 			<svg viewBox="0 0 710 600">
-				<!-- <rect x="0" y="0" width="720" height="600" fill="#FFFFFF" /> -->
-				<rect x="114.0" y="19.5" width="536.8" height="513.3" fill="#E0E0E0" />
 				<g style="fill:none; stroke:black; stroke-width:2; stroke-linecap:butt; stroke-linejoin:miter">
 					<path d='M114.0,532.8 h15.0 m521.8,0 h-15' />
 					<path d='M114.0,424.7 h15.0 m521.8,0 h-15' />
