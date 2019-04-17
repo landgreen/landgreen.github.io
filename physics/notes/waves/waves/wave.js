@@ -42,6 +42,13 @@ const wave = function () {
     settings.phase = settings.phase % settings.wavelength; //makes the switch smoother
   })();
 
+  function waveEquation() {
+    const a = (settings.amplitude / 100).toFixed(1)
+    const w = (settings.wavelength / 100).toFixed(1)
+    const p = (settings.phase / 100).toFixed(1)
+    document.getElementById("wave-equation").innerHTML = `(${a})sin((2π/${w})(x-${p})   )`
+  }
+
   document.getElementById("amplitude").addEventListener("input", () => {
     settings.amplitude = Number(document.getElementById("amplitude").value) * 100;
     document.getElementById("amplitude-slider").value = settings.amplitude / 100
