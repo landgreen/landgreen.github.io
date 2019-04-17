@@ -17,6 +17,17 @@ give mobs more animal-like behaviors
     this might be hard to code
   when not near other mobs they try to group up.
     
+gun power ups
+  +explosion radius
+  +dmg
+  life steal
+  +bullet size
+  get bonus ammo / reduced ammo use
+  bullets pass through walls
+  unlimited ammo capacity
+    add in a max ammo capacity
+
+
 
 mutators (as a power up)
   infinite ammo
@@ -185,6 +196,40 @@ document.body.addEventListener("wheel", (e) => {
 }, {
   passive: true
 });
+
+
+// window.addEventListener("gamepadconnected", function (e) {
+//   console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
+//     e.gamepad.index, e.gamepad.id,
+//     e.gamepad.buttons.length, e.gamepad.axes.length);
+
+// });
+
+game.loop = game.mouseLoop;
+window.addEventListener("gamepadconnected", function (e) {
+  console.log('gamepad connected')
+  document.getElementById("gamepad").style.display = "inline";
+  game.gamepad.connected = true;
+  polGamepadCycle();
+  game.loop = game.gamepadLoop;
+});
+window.addEventListener("gamepaddisconnected", function (e) {
+  disconnectGamepad()
+});
+
+function disconnectGamepad() {
+  console.log('gamepad disconnected')
+  document.getElementById("gamepad").style.display = "none";
+  game.gamepad.connected = false;
+  game.loop = game.mouseLoop;
+}
+
+//this runs to get gamepad data even when paused
+function polGamepadCycle() {
+  game.gamepad.cycle++
+  if (game.gamepad.connected) requestAnimationFrame(polGamepadCycle);
+  game.polGamepad()
+}
 
 
 // function playSound(id) {

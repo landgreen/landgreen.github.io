@@ -795,12 +795,18 @@ const b = {
       } else {
         mech.fireCDcycle = game.cycle + 30; //cooldown
         game.makeTextLog("<div style='font-size:140%;'>NO AMMO</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>", 200);
-        //switch to throw
-        // b.activeGun = 0;
-        // b.inventoryGun = 0;
-        // game.updateGunHUD();
-        // game.boldActiveGunHUD();
-        //mech.drop();
+      }
+    }
+  },
+  gamepadFire() {
+    if (game.gamepad.rightTrigger && mech.fireCDcycle < game.cycle && !(keys[32] || game.gamepad.leftTrigger) && !mech.isHolding && b.inventory.length) {
+      if (b.guns[this.activeGun].ammo > 0) {
+        b.guns[this.activeGun].fire();
+        b.guns[this.activeGun].ammo--;
+        game.updateGunHUD();
+      } else {
+        mech.fireCDcycle = game.cycle + 30; //cooldown
+        game.makeTextLog("<div style='font-size:140%;'>NO AMMO</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>", 200);
       }
     }
   },

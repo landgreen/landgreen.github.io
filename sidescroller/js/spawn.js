@@ -1217,13 +1217,9 @@ const spawn = {
           this.fill = "#222";
         }
         //move mob to player
-        let flipLegs = -1;
-        if (game.mouseInGame.x > mech.pos.x) {
-          flipLegs = 1;
-        }
         mech.calcLeg(0, 0);
         Matter.Body.setPosition(this, {
-          x: mech.pos.x + flipLegs * mech.knee.x - 5,
+          x: mech.pos.x + mech.flipLegs * mech.knee.x - 5,
           y: mech.pos.y + mech.knee.y
         })
       }
@@ -1269,13 +1265,9 @@ const spawn = {
           this.fill = "#333";
         }
         //move mob to player
-        let flipLegs = -1;
-        if (game.mouseInGame.x > mech.pos.x) {
-          flipLegs = 1;
-        }
         mech.calcLeg(Math.PI, -3);
         Matter.Body.setPosition(this, {
-          x: mech.pos.x + flipLegs * mech.knee.x - 5,
+          x: mech.pos.x + mech.flipLegs * mech.knee.x - 5,
           y: mech.pos.y + mech.knee.y
         })
       }
@@ -1320,13 +1312,9 @@ const spawn = {
           this.fill = "#222";
         }
         //move mob to player
-        let flipLegs = -1;
-        if (game.mouseInGame.x > mech.pos.x) {
-          flipLegs = 1;
-        }
         mech.calcLeg(0, 0);
         Matter.Body.setPosition(this, {
-          x: mech.pos.x + flipLegs * mech.foot.x - 5,
+          x: mech.pos.x + mech.flipLegs * mech.foot.x - 5,
           y: mech.pos.y + mech.foot.y - 1
         })
       }
@@ -1371,13 +1359,9 @@ const spawn = {
           this.fill = "#333";
         }
         //move mob to player
-        let flipLegs = -1;
-        if (game.mouseInGame.x > mech.pos.x) {
-          flipLegs = 1;
-        }
         mech.calcLeg(Math.PI, -3);
         Matter.Body.setPosition(this, {
-          x: mech.pos.x + flipLegs * mech.foot.x - 5,
+          x: mech.pos.x + mech.flipLegs * mech.foot.x - 5,
           y: mech.pos.y + mech.foot.y - 1
         })
       }

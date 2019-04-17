@@ -159,6 +159,16 @@ const mech = {
     this.transX += (this.transSmoothX - this.transX) * 0.07;
     this.transY += (this.transSmoothY - this.transY) * 0.07;
   },
+  gamepadLook() {
+    this.angle = Math.atan2(
+      game.gamepad.rightAxis.y,
+      game.gamepad.rightAxis.x
+    );
+    // this.transX += (canvas.width2 - this.pos.x - this.transX) * 0.07 - game.gamepad.rightAxis.x * 12;
+    // this.transY += (canvas.height2 - this.pos.y - this.transY) * 0.03 - game.gamepad.rightAxis.y * 6;
+    this.transX += (canvas.width2 - this.pos.x - this.transX) * 0.02 - game.gamepad.leftAxis.x * 6;
+    this.transY += (canvas.height2 - this.pos.y - this.transY) * 0.02 + game.gamepad.leftAxis.y * 8;
+  },
   doCrouch() {
     if (!this.crouch) {
       this.crouch = true;
@@ -277,6 +287,76 @@ const mech = {
       if (keys[65] || keys[37]) {
         if (player.velocity.x > -limit) player.force.x -= this.FxAir; // move player   left / a
       } else if (keys[68] || keys[39]) {
+        if (player.velocity.x < limit) player.force.x += this.FxAir; //move player  right / d
+      }
+    }
+
+    //smoothly move leg height towards height goal
+    this.yOff = this.yOff * 0.85 + this.yOffGoal * 0.15;
+  },
+  gamepadMove() {
+    if (this.onGround) { //on ground **********************
+      if (this.crouch) {
+        if (game.gamepad.leftAxis.y !== -1 && this.isHeadClear && this.hardLandCD < game.cycle) this.undoCrouch();
+      } else if (game.gamepad.leftAxis.y === -1 || this.hardLandCD > game.cycle) {
+        this.doCrouch(); //on ground && not crouched and pressing s or down
+      } else if (game.gamepad.jump && this.buttonCD_jump + 20 < game.cycle && this.yOffWhen.stand > 23) {
+        this.buttonCD_jump = game.cycle; //can't jump again until 20 cycles pass
+
+        //apply a fraction of the jump force to the body the player is jumping off of
+        Matter.Body.applyForce(mech.standingOn, mech.pos, {
+          x: 0,
+          y: this.jumpForce * 0.12 * Math.min(mech.standingOn.mass, 5)
+        });
+
+        player.force.y = -this.jumpForce; //player jump force
+        Matter.Body.setVelocity(player, { //zero player y-velocity for consistent jumps
+          x: player.velocity.x,
+          y: 0
+        });
+      }
+
+      //horizontal move on ground
+      //apply a force to move
+      if (game.gamepad.leftAxis.x === -1) { //left / a
+        player.force.x -= this.Fx
+        if (player.velocity.x > -2) player.force.x -= this.Fx * 0.5
+      } else if (game.gamepad.leftAxis.x === 1) { //right / d
+        player.force.x += this.Fx
+        if (player.velocity.x < 2) player.force.x += this.Fx * 0.5
+      } else {
+        const stoppingFriction = 0.92;
+        Matter.Body.setVelocity(player, {
+          x: player.velocity.x * stoppingFriction,
+          y: player.velocity.y * stoppingFriction
+        });
+      }
+      //come to a stop if fast or if no move key is pressed
+      if (player.speed > 4) {
+        const stoppingFriction = (this.crouch) ? 0.7 : 0.89;
+        Matter.Body.setVelocity(player, {
+          x: player.velocity.x * stoppingFriction,
+          y: player.velocity.y * stoppingFriction
+        });
+      }
+
+    } else { // in air **********************************
+      //check for short jumps
+      if (
+        this.buttonCD_jump + 60 > game.cycle && //just pressed jump
+        !game.gamepad.jump && //but not pressing jump key
+        this.Vy < 0 //moving up
+      ) {
+        Matter.Body.setVelocity(player, {
+          //reduce player y-velocity every cycle
+          x: player.velocity.x,
+          y: player.velocity.y * 0.94
+        });
+      }
+      const limit = 125 / player.mass / player.mass
+      if (game.gamepad.leftAxis.x === -1) {
+        if (player.velocity.x > -limit) player.force.x -= this.FxAir; // move player   left / a
+      } else if (game.gamepad.leftAxis.x === 1) {
         if (player.velocity.x < limit) player.force.x += this.FxAir; //move player  right / d
       }
     }
@@ -970,7 +1050,8 @@ const mech = {
   //   }
   // },
   drawLeg(stroke) {
-    if (game.mouseInGame.x > this.pos.x) {
+    // if (game.mouseInGame.x > this.pos.x) {
+    if (mech.angle > -Math.PI / 2 && mech.angle < Math.PI / 2) {
       this.flipLegs = 1;
     } else {
       this.flipLegs = -1;
