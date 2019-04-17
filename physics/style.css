@@ -11,7 +11,7 @@
 /* --def-color: #ddeef6;
 --def-accent-color: #bcd; */
 :root {
-  --bg-color: #fff;
+  --bg-color: #333;
   --def-color: #d3e6f1;
   --def-accent-color: #abc;
   --link-color: #08c;
@@ -129,7 +129,6 @@ canvas,
 a {
   text-decoration: none;
   color: var(--link-color);
-  ;
 }
 
 a:hover {
@@ -268,7 +267,7 @@ th {
   list-style: none;
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 }
 
 .listing li {
@@ -339,29 +338,30 @@ th {
 
 /* Header setup_________________________________*/
 header {
-  /* background-color: var(--bg-color); */
+  background-color: var(--bg-color);
   padding: 20px 0px;
   text-align: center;
   width: 100%;
   margin: 0 auto;
-  max-width: 585px;
-  /* border-bottom: 1px solid #999; */
+  /* max-width: 585px; */
+  /* border-bottom: 2px solid #000; */
 }
 
 header h1 {
   font-size: 3em;
   font-weight: 300;
   margin: 0;
-  color: #000;
+  color: #fff;
 }
 
 header h1 a {
-  color: #000;
+  color: #fff;
   text-decoration: none;
 }
 
-header h1 a:hover {
-  color: #000;
+header h1 a:hover,
+.back a:hover {
+  color: #ccc;
   text-decoration: none;
 }
 
@@ -372,16 +372,17 @@ header h1 a:hover {
   padding: 1em;
   margin: 6em 0em 0em 0em;
   width: 100%;
-  /* background-color: var(--bg-color); */
+  background-color: var(--bg-color);
 }
 
 .back a {
   /* background-color: #222; */
   font-size: 1.3em;
-  /* color: #fff; */
+  color: #fff;
   padding: 0.3em 1em;
   border-radius: 1em;
 }
+
 
 /* responsive media rules for mobile________________________________ */
 @media screen and (max-width: 650px) {
