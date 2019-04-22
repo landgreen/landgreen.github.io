@@ -1,5 +1,3 @@
-// https://github.com/josephg/noisejs
-
 const wave = function () {
   const sineWaveTarget = document.getElementById("wave-form-path");
   var origin = {
@@ -33,14 +31,12 @@ const wave = function () {
     }
   });
 
-  (function setup() {
-    document.getElementById("amplitude").value = settings.amplitude / 100;
-    document.getElementById("velocity").value = settings.velocity / 100;
-    document.getElementById("wavelength").value = settings.wavelength / 100;
-    document.getElementById("frequency").innerHTML = "frequency = " + settings.frequency.toFixed(3) + " Hz";
-    document.getElementById("period").innerHTML = "period = " + settings.period.toFixed(3) + " s";
-    settings.phase = settings.phase % settings.wavelength; //makes the switch smoother
-  })();
+  document.getElementById("amplitude").value = settings.amplitude / 100;
+  document.getElementById("velocity").value = settings.velocity / 100;
+  document.getElementById("wavelength").value = settings.wavelength / 100;
+  document.getElementById("frequency").innerHTML = "frequency = " + settings.frequency.toFixed(3) + " Hz";
+  document.getElementById("period").innerHTML = "period = " + settings.period.toFixed(3) + " s";
+  settings.phase = settings.phase % settings.wavelength; //makes the switch smoother
 
   function waveEquation() {
     const a = (settings.amplitude / 100).toFixed(1)
