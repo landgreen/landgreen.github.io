@@ -31,12 +31,10 @@ const wave = function () {
     document.getElementById("standing-wave-border").setAttribute("d", "M0 0 v400 M" + width + " 0 v400");
     //update answer to question based on width
     let out = "λ = "
-    for (let i = 1; i < 25; i++) {
+    for (let i = 1; i < 23; i++) {
         out += Math.round(2 * width / 100 / i * 1000) / 1000 + ", &nbsp;"
     }
     document.getElementById("list-standing").innerHTML = out + "..."
-    // document.getElementById("list-standing").innerHTML = `λ = ${(L).toFixed(0)}, ${(L/2).toFixed(0)}, ${(L/3).toFixed(1)}, ${(L/4).toFixed(1)}, ${(L/5).toFixed(2)}, ${(L/6).toFixed(2)}, ${(L/7).toFixed(2)}, ${(L/8).toFixed(2)}, ${(L/9).toFixed(2)}, ${(L/10).toFixed(2)}, ${(L/11).toFixed(2)}, ${(L/12).toFixed(2)}, ${(L/13).toFixed(3)}, ${(L/14).toFixed(3)}, ${(L/16).toFixed(3)}, ${(L/17).toFixed(3)}, ${(L/18).toFixed(3)}, ${(L/19).toFixed(3)}, ${(L/20).toFixed(3)}, ${(L/21).toFixed(3)}, ${(L/22).toFixed(3)}, ${(L/23).toFixed(4)}, ${(L/24).toFixed(4)}, ${Math.round(L/23*1000)/1000},  ...`
-
 
     document.getElementById("wavelength").addEventListener("input", () => {
         wavelength = Math.max(Number(document.getElementById("wavelength").value) * 100, 1);
