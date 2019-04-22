@@ -90,32 +90,47 @@ function checkVisible(elm) {
   // }
   // requestAnimationFrame(cycle);
 
+  let pause = true;
+  const elZone = document.getElementById("resonance-zone");
+  elZone.addEventListener("mouseleave", () => {
+    pause = true;
+  });
+  elZone.addEventListener("mouseenter", () => {
+    if (pause) {
+      pause = false;
+      requestAnimationFrame(cycle);
+    }
+  });
 
   const fpsCap = 60;
   const fpsInterval = 1000 / fpsCap;
   let then = Date.now();
   requestAnimationFrame(cycle); //starts game loop
 
+  function loop() {
+    Engine.update(engine, 16.666);
+    pendulum.force.y += 0.0001 //gravity down
+    //draw
+    document.getElementById("res-ball").setAttribute("transform", `translate(${pendulum.position.x} ${pendulum.position.y})`);
+    document.getElementById("res-string").setAttribute("d", `M300 0 L${pendulum.position.x} ${pendulum.position.y}`);
+    //apply force
+    if (frequency > 0) count += 1 * frequency
+    mag = 0.00001 * Math.sin(count / 60 * 2 * Math.PI)
+    pendulum.force.x += mag
+    document.getElementById("res-arrow").setAttribute("transform", `translate(${10000000 * mag} ${viewBoxY-150})`);
+  }
+
   function cycle() {
-    requestAnimationFrame(cycle);
+    if (!pause) requestAnimationFrame(cycle);
     const now = Date.now();
     const elapsed = now - then; // calc elapsed time since last loop
     if (elapsed > fpsInterval) { // if enough time has elapsed, draw the next frame
       then = now - (elapsed % fpsInterval); // Get ready for next frame by setting then=now.   Also, adjust for fpsInterval not being multiple of 16.67
 
       //frame capped code here
-      if (checkVisible(document.getElementById("res"))) {
-        Engine.update(engine, 16.666);
-        pendulum.force.y += 0.0001 //gravity down
-        //draw
-        document.getElementById("res-ball").setAttribute("transform", `translate(${pendulum.position.x} ${pendulum.position.y})`);
-        document.getElementById("res-string").setAttribute("d", `M300 0 L${pendulum.position.x} ${pendulum.position.y}`);
-        //apply force
-        if (frequency > 0) count += 1 * frequency
-        mag = 0.00001 * Math.sin(count / 60 * 2 * Math.PI)
-        pendulum.force.x += mag
-        document.getElementById("res-arrow").setAttribute("transform", `translate(${10000000 * mag} ${viewBoxY-150})`);
-      }
+      // if (checkVisible(document.getElementById("res"))) {
+      loop()
+      // }
     }
   }
 })()
