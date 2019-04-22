@@ -302,6 +302,41 @@ th {
   margin-bottom: -0.3em;
 }
 
+/* footer grid ________________________________________________*/
+.listing-footer {
+  background-color: var(--bg-color);
+  padding-top: 2em;
+  padding-bottom: 3em;
+
+}
+
+.listing-dark {
+  overflow: hidden;
+  padding: 0.5em 0 0 0.5em;
+  max-width: 1300px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.listing-dark li {
+  padding: 0 0.5em 0.5em 0;
+}
+
+.listing-dark a {
+  color: #999;
+}
+
+.listing-dark a:hover {
+  color: var(--link-color);
+}
+
+.listing-dark h2 {
+  color: #eee;
+  border-bottom: 1px solid #eee;
+  font-weight: 400;
+  margin-bottom: -0.3em;
+}
+
 /* fake Grid ________________________________________________*/
 .wrapper {
   display: grid;

@@ -6,6 +6,7 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
+
 		function gtag() {
 			dataLayer.push(arguments);
 		}
@@ -47,18 +48,40 @@
 		</h1>
 	</header>
 	<article>
-		<p>Thermodynamics looks for patterns in the statistical behavior of a very very large number of particles. A group of
-			particles are called a <strong>system</strong>. Systems have measurable properties like temperature, pressure,
-			volume, density, and entropy.</p>
-		<p>It is easy to say that since thermodynamics is statistical it isn't always true. This is correct, but
-			thermodynamic predictions
-			become more accurate with more particles. A typical room has roughly $$\small
-			1\,000\,000\,000\,000\,000\,000\,000\,000\,000=
-			10^{27}$$ atoms of air.
+		<p>
+			Thermodynamics looks for patterns in the statistical behavior in groups of particles. A group of particles are called a <strong>system</strong>. Systems have properties that single particles don't, like temperature, pressure, volume, density, and entropy.
 		</p>
+		<p>
+			It is easy to say that since thermodynamics is statistical it isn't always true. This is correct, but thermodynamic predictions become more accurate with more particles.
+		</p>
+
+		<div class='example-small'>
+			<strong>Example:</strong> Estimate the number of gas particles in a room (10&nbsp;m&nbsp;×&nbsp;10&nbsp;m&nbsp;×&nbsp;4&nbsp;m).
+			<details>
+				<summary>strategy</summary>
+				<p>Calculate the volume into cubic meters (width × height × depth).
+					<br>Convert the cubic meters into moles with a conversion fraction.
+					<br>Convert the moles into particles with another conversion fraction.</p>
+			</details>
+			<details>
+				<summary>mol conversions</summary>
+				<p>
+					<li>1 mol = 0.0224 m³ of gas at STP</li>
+					<li>1 mol = 6.02 × 10<sup>23</sup> particles</li>
+					<li>0.0224 m³ of gas at STP = 6.02 × 10<sup>23</sup> particles</li>
+				</p>
+			</details>
+			<details>
+				<summary>solution</summary>
+				$$\text{volume} = 10\,\mathrm{m} \times 10\,\mathrm{m} \times 4\,\mathrm{m}= 400 \, \mathrm{m^3}$$
+				$$ 400 \, \mathrm{m^3} \left( \frac{1 \, \mathrm{mol}}{0.0224 \, \mathrm{m^3}} \right) = 18\,000 \, \mathrm{mol}$$
+				$$ 18\,000 \, \mathrm{mol} \left( \frac{ 6.02 \times 10^{23}}{1 \, \mathrm{mol}} \right) = 1.08 \times 10^{28}$$
+				$$\small 10\,000\,000\,000\,000\,000\,000\,000\,000\,000\,\,\,\text{gas particles}$$
+			</details>
+		</div>
+
 		<h1 class='underlined'>Temperature</h1>
-		<p>Temperature is a measure of the average kinetic energy in a system of particles. Kinetic energy can be stored in
-			spin, vibrations between particles, and normal movement.</p>
+		<p>Temperature is proportional to the average kinetic energy of a system of particles. The kinetic energies that contribute to temperature can be stored in spin, vibrations between particles, and normal movement.</p>
 		<div>
 			<div id="kinetic-energy"></div>
 			<canvas class='center' id='temperature' height='150' width='600'> </canvas>
@@ -67,15 +90,14 @@
 				<input type="range" id='time-rate-slider-temp' min="0.01" max="1" step="0.01" value="0.05">
 				<button id="clear-temp" style="float: right;">clear</button>
 			</p>
-			<p>The graph above shows the distribution of kinetics energy for particles at various temperatures. You can click on
-				the simulation to add more particles. Notice that with more particles the distribution becomes more consistent and
-				predictable.
+			<p>
+				The graph above shows the distribution of kinetics energy for particles at various temperatures. You can click on the simulation to add more particles. Notice that with more particles the distribution becomes more consistent and predictable.
 			</p>
 		</div>
 		<h1 class='underlined'>Heat</h1>
-		<p><strong>Heat</strong> is energy transferred from one system to another as a result of thermal interactions. A
-			system doesn't "have" heat, it has internal energy, which is
-			called heat only as it transfers between systems.</p>
+		<p>
+			<strong>Heat</strong> is energy transferred from one system to another as a result of thermal interactions. A system doesn't "have" heat, it has internal energy, which is called heat only as it transfers between systems.
+		</p>
 		<style>
 			.fade {
 				transition: fill 4s ease-out;
@@ -91,28 +113,25 @@
 			<text x="97" y="102" stroke="none" font-size="10" text-anchor="middle">heat</text>
 		</svg>
 		<script>
-			document.getElementById('heat').addEventListener('mouseover', function() {
+			document.getElementById('heat').addEventListener('mouseover', function () {
 				document.getElementById("fade1").setAttribute("fill", "#bbb");
 				document.getElementById("fade2").setAttribute("fill", "#bbb");
 			});
-			document.getElementById('heat').addEventListener('mouseout', function() {
+			document.getElementById('heat').addEventListener('mouseout', function () {
 				document.getElementById("fade1").setAttribute("fill", "#f20");
 				document.getElementById("fade2").setAttribute("fill", "#08f");
 			});
 		</script>
 		<p>
-			When two systems with different temperatures are put in contact they will exchange heat until they reach the same
-			temperature. Heat flows from high temperature systems into low temperature systems.
+			When two systems with different temperatures are put in contact they will exchange heat until they reach the same temperature. Heat flows from high temperature systems into low temperature systems.
 			<!-- This principle is called <strong>The Zeroeth Law of Thermodynamics</strong>. -->
 		</p>
 		<p>
-			Another example of heat exiting a system is through friction. For example, if you throw a foam
-			ball, heat will leave the ball and enter the air. The ball's kinetic energy converts into the thermal energy of the
-			air.
+			Another example of heat exiting a system is through friction. For example, if you throw a foam ball, heat will leave the ball and enter the air. The ball's kinetic energy converts into the thermal energy of the air.
 		</p>
-
-		<p>The concept of heat is important in understanding machines, like engines and <a href="https://www.youtube.com/watch?v=EIP3pSio7-M">refrigerators</a>.</p>
-
+		<p>
+			The concept of heat is important in understanding machines, like engines and <a href="https://www.youtube.com/watch?v=EIP3pSio7-M">refrigerators</a>.
+		</p>
 		<h1 class='underlined'>Energy Loss and Gain in a System</h1>
 		<br>
 		<div class="col-group">
@@ -137,26 +156,25 @@
 				</svg>
 			</div>
 			<div>
-				As the ball in the simulation falls, energy transfers from gravitational to kinetic. As it rises, energy transfers
-				from kinetic to gravitational.
-				<p>Energy is conserved. This means that if we add up the total energy of a system it will always be the same value,
-					unless some energy enters or leaves the system we are tracking.</p>
-				<p>Turn friction on and observe what happens.</p>
-
+				As the ball in the simulation falls, energy transfers from gravitational to kinetic. As it rises, energy transfers from kinetic to gravitational.
 				<p>
-					The kinetic energy gradually leaves the ball. We describe energy that leaves a system as <strong>heat</strong>.
-					Heat can leave in many forms, often heat leaves a system as thermal energy. Thermal energy is the kinetic energy
-					of many particles at a microscopic scale.
+					Energy is conserved. This means that if we add up the total energy of a system it will always be the same value, unless some energy enters or leaves the system we are tracking.
+				</p>
+				<p>
+					Turn friction on and observe what happens.
+				</p>
+				<p>
+					The kinetic energy gradually leaves the ball. We describe energy that leaves a system as <strong>heat</strong>. Heat can leave in many forms, often heat leaves a system as thermal energy. Thermal energy is the kinetic energy of many particles at a microscopic scale.
 				</p>
 			</div>
 		</div>
-		<p>The internal energy of a system is always <a href="https://www.youtube.com/watch?v=4b8ZsFszE8I">conserved</a>,
-			unless energy leaves or enters. Energy can leave or enter as work or heat.</p>
+		<p>
+			The internal energy of a system is always <a href="https://www.youtube.com/watch?v=4b8ZsFszE8I">conserved</a>, unless energy leaves or enters. Energy can leave or enter as work or heat.
+		</p>
 		<div class='definition'>
-			<p>The
-				<strong>first law of thermodynamics</strong> says that the change in internal energy of a system is equal to heat
-				flow into a
-				system plus work done by the system.</p>
+			<p>
+				The <strong>first law of thermodynamics</strong> says that the change in internal energy of a system is equal to heat flow into a system plus work done by the system.
+			</p>
 			<h1>$$\Delta E = Q - W$$</h1>
 			\( E \) = total internal energy of a system [J]
 			<br>\( Q \) = Heat, thermal energy added(+) or removed(-) from system [J]
@@ -180,11 +198,9 @@
 				put Q on the right to track the loss.
 			</p>
 			$$K_i + U_i = K_f + U_f + Q_f$$
-			<strong>Example:</strong> A 0.43 kg soccer ball, kicked at 10 m/s, rolls down a 30 m tall hill. If there was no
-			energy loss, the ball would have a final velocity of 26.2 m/s.
+			<strong>Example:</strong> A 0.43 kg soccer ball, kicked at 10 m/s, rolls down a 30 m tall hill. If there was no energy loss, the ball would have a final velocity of 26.2 m/s.
 			<br>
-			<br>When actually performing the experiment we found the ball only has a speed of 20.0 m/s at the bottom. Calculate
-			the heat that left the ball as it rolled down the hill.
+			<br>When actually performing the experiment we found the ball only has a speed of 20.0 m/s at the bottom. Calculate the heat that left the ball as it rolled down the hill.
 			<details>
 				<summary>solution</summary>
 				$$K_i + U_i = K_f + Q_f$$
@@ -235,8 +251,7 @@
 					<text x="250" y="150" text-anchor="middle" dominant-baseline="middle">2000 kg</text>
 				</g>
 			</svg>
-			<strong>Example:</strong> A 2000 kg car moving at 30 m/s skids to a stop on level ground. How much heat left the
-			car's wheels and entered the road?
+			<strong>Example:</strong> A 2000 kg car moving at 30 m/s skids to a stop on level ground. How much heat left the car's wheels and entered the road?
 			<details>
 				<summary>solution</summary>
 				$$K_i + U_i = K_f + U_f + Q_f$$
@@ -246,9 +261,7 @@
 				$$900000 \, \mathrm{J} = Q$$
 			</details>
 			<br>
-			<strong>Example:</strong> If the coefficient of kinetic friction is 0.7, how far did the car skid? Think of the heat
-			as <a href="..\energy\index.html#work">work</a> done by the <a href="..\..\force\friction\index.html#kinetic">friction
-				force</a>.
+			<strong>Example:</strong> If the coefficient of kinetic friction is 0.7, how far did the car skid? Think of the heat as <a href="..\energy\index.html#work">work</a> done by the <a href="..\..\force\friction\index.html#kinetic">friction force</a>.
 			<details>
 				<summary>solution</summary>
 				$$W=F\Delta x$$
@@ -297,8 +310,7 @@
 					<text x="675" y="225">D</text>
 				</g>
 			</svg>
-			<strong>Example:</strong> A 1000 kg cart is at rest at point A. The cart loses 57000 J of energy to friction as it
-			rolls to point C. How fast is the cart moving at point C? <br>(Each grid square is 10 m x 10 m.)
+			<strong>Example:</strong> A 1000 kg cart is at rest at point A. The cart loses 57000 J of energy to friction as it rolls to point C. How fast is the cart moving at point C? <br>(Each grid square is 10 m x 10 m.)
 			<details>
 				<summary>solution</summary>
 				$$E_{\mathrm{point \, A}} = E_{\mathrm{point \, C}}$$
@@ -407,8 +419,7 @@
 			If you were to watch a video of the Earth orbiting the sun, it would be difficult to tell if the video was running forwards or backwards. Simple physical systems don't have a clear forwards or backwards.
 		</p>
 		<p>
-			Sometimes it is very easy to tell the direction of time. A glass of water falling off a table has a clear direction in time.
-			It would be very strange to see broken glass and spilled water spontaneously come together and jump up onto a table.
+			Sometimes it is very easy to tell the direction of time. A glass of water falling off a table has a clear direction in time. It would be very strange to see broken glass and spilled water spontaneously come together and jump up onto a table.
 		</p>
 		<div class="definition">
 			The <strong>second law of thermodynamics</strong> states that entropy of an isolated system doesn't decrease over time.
@@ -422,7 +433,7 @@
 
 		<svg id="SVG-graph-2" viewBox="0 0 600 220"></svg>
 		<script defer>
-			funGraphSVG("SVG-graph-2", x => Math.log(x + 1) + 0.1 * Math.random()* (Math.random()-0.5), {
+			funGraphSVG("SVG-graph-2", x => Math.log(x + 1) + 0.1 * Math.random() * (Math.random() - 0.5), {
 				x0: 10,
 				y0: 210,
 				fill: "rgba(50, 120, 180,0.2)",
@@ -438,8 +449,7 @@
 			});
 		</script>
 		<p>
-			The entropy of a system always evolves from low to high.
-			Our universe has its lowest entropy point at the big bang. The far future is the highest entropy.
+			The entropy of a system always evolves from low to high. Our universe has its lowest entropy point at the big bang. The far future is the highest entropy.
 		</p>
 
 		<div class="example">
@@ -674,7 +684,7 @@
 				<p>For up to about n = 15 particles, the estimated time to separate takes seconds. Waiting for n = 35 particles to spontaneously separate takes years.</p>
 				<p>How long would it take n = 300 particles to randomly separate?
 					<br> How long would it take all the air molecules in a typical room?
-					<br>(n = 1&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000 air molecules)</p>
+					<br>(n = 10&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000 air molecules)</p>
 			</details>
 		</div>
 
@@ -717,8 +727,107 @@
 			</p> -->
 
 	</article>
-	<div class='back'>
-		<a href="../../../index.html">Back</a>
+	<div class="listing-footer">
+		<ul class="listing listing-dark" id="footer">
+			<li>
+				<h2>Motion</h2>
+				<p>
+					<a href="../../motion/motion/index.html">Motion</a>
+					<br>
+					<a href="../../motion/kinematics/index.html">Kinematics</a>
+				</p>
+			</li>
+			<li>
+				<h2>Force</h2>
+				<p>
+					<a href="../../force/laws/index.html">Newton's Laws</a>
+					<br>
+					<a href="../../force/forces/index.html">Forces</a>
+					<br>
+					<a href="../../force/friction/index.html">Friction</a>
+				</p>
+			</li>
+			<li>
+				<h2>Momentum</h2>
+				<p>
+					<a href="../../momentum/momentum/index.html">Momentum</a>
+					<br>
+					<a href="../../momentum/impulse/index.html">Impulse</a>
+				</p>
+			</li>
+			<li>
+				<h2>Energy</h2>
+				<p>
+					<a href="../../energy/energy/index.html">Energy</a>
+					<br>
+					<a href="../../energy/conservation/index.html">Conservation of Energy</a>
+					<br>
+					<a href="../../energy/thermo/index.html">Thermodynamics</a>
+				</p>
+			</li>
+			<li>
+				<h2>Gravity</h2>
+				<p>
+					<a href="../../gravity/gravitation/index.html">Universal Gravitation</a>
+					<br>
+					<a href="../../gravity/circular/index.html">Orbits</a>
+				</p>
+			</li>
+			<li>
+				<h2>Electromagnetism</h2>
+				<p>
+					<a href="../../electromagnetism/charge/index.html">Electric Charge</a>
+					<br>
+					<a href="../../electromagnetism/electrostatics/index.html">Electrostatics</a>
+					<br>
+					<a href="../../electromagnetism/potential/index.html">Electric Potential</a>
+					<br>
+					<a href="../../electromagnetism/magnetism/index.html">Magnetism</a>
+				</p>
+			</li>
+			<li>
+				<h2>Circuits</h2>
+				<p>
+					<a href="../../circuits/electricity/index.html">Electricity</a>
+					<br>
+					<a href="../../circuits/power/index.html">Power</a>
+					<br>
+					<a href="../../circuits/kirchoff/index.html">Kirchhoff’s Laws</a>
+					<br>
+					<a href="../../circuits/components/index.html">Components</a>
+				</p>
+			</li>
+			<li>
+				<h2>Waves</h2>
+				<p>
+					<a href="../../waves/waves/index.html">Waves</a>
+					<br>
+					<a href="../../waves/waveproperties/index.html">Wave Properties</a>
+					<br>
+					<a href="../../waves/light/index.html">Light</a>
+					<br>
+					<a href="../../waves/photons/index.html">Photons</a>
+				</p>
+			</li>
+			<li>
+				<h2>Relativity</h2>
+				<p>
+					<a href="../../relativity/special/index.html">Special Relativity</a>
+					<br>
+					<a href="../../relativity/general/index.html">General Relativity</a>
+				</p>
+			</li>
+			<li>
+				<h2>Reference</h2>
+				<p>
+					<a href="../../review/units/index.html">Units</a>
+					<br>
+					<a href="../../review/vectors/index.html">Vectors & Scalars</a>
+					<br>
+					<a href="../../review/solving/index.html">Problem Solving</a>
+				</p>
+			</li>
+		</ul>
 	</div>
 
 	<script>

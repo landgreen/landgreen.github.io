@@ -38,6 +38,7 @@
 	<script defer src="resonance.js"></script>
 	<script defer src="doppler.js"></script>
 	<script defer src="analyzer.js"></script>
+	<script defer src="standingwave.js "></script>
 </head>
 
 <body>
@@ -625,6 +626,7 @@
 				</script>
 			</details>
 		</div>
+
 		<h2 class='underlined'>Reflection and Refraction</h2>
 		<p>
 			<a href="https://ricktu288.github.io/ray-optics/simulator/">Reflection and refraction</a> occur when the wave speed changes as it enters a new medium. Part of the wave refracts into the new medium, and part of the wave reflects back into the old medium.
@@ -1191,6 +1193,7 @@
 			</details>
 		</div>
 
+
 		<h2 class='underlined'>Resonance</h2>
 		<p>
 			Most systems that <a href="https://www.google.com/search?q=oscillate">oscillate</a> find a natural frequency for their vibrations.
@@ -1203,65 +1206,478 @@
 		<p>
 			You push left as the system moves left, and right as the system moves right. This way you don't fight the natural motion of the system.
 		</p>
-		<p class="center" style="margin-top: 0.5em;">
-			length = <input id='res-length-slider' type="range" step="1" value="120" min="25" max="500" style="width: 165px;">
-			<!-- <input id='res-length' type="number" step="1" value="120" min="25" max="500" style="width: 60px;"> Hz -->
-		</p>
-		<!-- <p class="center" style="margin-top: 0.5em;">
+		<div id="resonance-zone">
+			<p class="center" style="margin-top: 0.5em;">
+				length = <input id='res-length-slider' type="range" step="1" value="120" min="25" max="500" style="width: 165px;">
+				<!-- <input id='res-length' type="number" step="1" value="120" min="25" max="500" style="width: 60px;"> Hz -->
+			</p>
+			<!-- <p class="center" style="margin-top: 0.5em;">
 			mass = <input id='res-mass-slider' type="range" step="0.01" value="0.30" min="0.01" max="3" style="width: 165px;">
 		</p> -->
-		<svg id="res" viewBox="0 0 600 150" style="border: 2px solid #345;">
-			<circle cx="300" cy="0" r="3" fill="#345" />
-			<g id="res-arrow" transform='translate(102 0)'>
-				<path d="M-10 125 h-150" stroke="#f58" stroke-width="4" />
-				<polygon points="0,0 -16,-8 -14,0 -16,8" fill="#f58" transform='translate(0 125)' />
-				<path d="M610 125 h150" stroke="#f58" stroke-width="4" />
-				<polygon points="600,0 616,-8 614,0 616,8" fill="#f58" transform='translate(0 125)' />
+			<svg id="res" viewBox="0 0 600 150" style="border: 2px solid #345;">
+				<circle cx="300" cy="0" r="3" fill="#345" />
+				<g id="res-arrow" transform='translate(102 0)'>
+					<path d="M-10 125 h-150" stroke="#f58" stroke-width="4" />
+					<polygon points="0,0 -16,-8 -14,0 -16,8" fill="#f58" transform='translate(0 125)' />
+					<path d="M610 125 h150" stroke="#f58" stroke-width="4" />
+					<polygon points="600,0 616,-8 614,0 616,8" fill="#f58" transform='translate(0 125)' />
 
-				<path d="M-10 75 h-150" stroke="#f58" stroke-width="4" />
-				<polygon points="0,0 -16,-8 -14,0 -16,8" fill="#f58" transform='translate(0 75)' />
-				<path d="M610 75 h150" stroke="#f58" stroke-width="4" />
-				<polygon points="600,0 616,-8 614,0 616,8" fill="#f58" transform='translate(0 75)' />
+					<path d="M-10 75 h-150" stroke="#f58" stroke-width="4" />
+					<polygon points="0,0 -16,-8 -14,0 -16,8" fill="#f58" transform='translate(0 75)' />
+					<path d="M610 75 h150" stroke="#f58" stroke-width="4" />
+					<polygon points="600,0 616,-8 614,0 616,8" fill="#f58" transform='translate(0 75)' />
 
-				<path d="M-10 25 h-150" stroke="#f58" stroke-width="4" />
-				<polygon points="0,0 -16,-8 -14,0 -16,8" fill="#f58" transform='translate(0 25)' />
-				<path d="M610 25 h150" stroke="#f58" stroke-width="4" />
-				<polygon points="600,0 616,-8 614,0 616,8" fill="#f58" transform='translate(0 25)' />
-			</g>
-			<g id="res-ball" stroke="none" transform='translate(300 120)'>
-				<circle cx="0" cy="0" r="20" fill="#abc" />
-				<circle cx="0" cy="0" r="3" fill="#345" />
-			</g>
-			<path id="res-string" d="M 300 0 v120" stroke="#345" stroke-width="2" />
-		</svg>
-		<p class="center" style="margin-top: 0.5em;">
-			frequency = <input id='res-freq-slider' type="range" step="0.01" value="0" min="0" max="2" style="width: 150px;">
-			<input id='res-freq' type="number" step="0.01" value="0" min="0" max="2" style="width: 60px;"> Hz
-		</p>
-		<br><strong>Simulation:</strong> Adjust the frequency of the force on the pendulum to find the resonant frequency? (at the default length)
-		<details>
-			<summary>result</summary>
-			<p>
-				A frequency of about 0.25 Hz has a good resonance.
+					<path d="M-10 25 h-150" stroke="#f58" stroke-width="4" />
+					<polygon points="0,0 -16,-8 -14,0 -16,8" fill="#f58" transform='translate(0 25)' />
+					<path d="M610 25 h150" stroke="#f58" stroke-width="4" />
+					<polygon points="600,0 616,-8 614,0 616,8" fill="#f58" transform='translate(0 25)' />
+				</g>
+				<g id="res-ball" stroke="none" transform='translate(300 120)'>
+					<circle cx="0" cy="0" r="20" fill="#abc" />
+					<circle cx="0" cy="0" r="3" fill="#345" />
+				</g>
+				<path id="res-string" d="M 300 0 v120" stroke="#345" stroke-width="2" />
+			</svg>
+			<p class="center" style="margin-top: 0.5em;">
+				frequency = <input id='res-freq-slider' type="range" step="0.01" value="0" min="0" max="2" style="width: 150px;">
+				<input id='res-freq' type="number" step="0.01" value="0" min="0" max="2" style="width: 60px;"> Hz
 			</p>
-		</details>
-		<div class="example-small">
-			<strong>Simulation:</strong> Adjust the length of the pendulum. How does the length affect the resonant frequency?
+			<br><strong>Simulation:</strong> Adjust the frequency of the force on the pendulum to find a resonant frequency. (use the default length)
 			<details>
 				<summary>result</summary>
 				<p>
-					A shorter length has a higher resonant frequency and a longer period.
-					<br>A longer length has a lower resonant frequency and a shorter period.
+					A frequency of about 0.25 Hz has a good resonance.
+				</p>
+			</details>
+			<div class="example-small">
+				<strong>Simulation:</strong> Adjust the length of the pendulum. How does the length affect the resonant frequency?
+				<details>
+					<summary>result</summary>
+					<p>
+						A shorter length has a higher resonant frequency and a longer period.
+						<br>A longer length has a lower resonant frequency and a shorter period.
+					</p>
+					<p>
+						The period of a pendulum can be calculated with <a href="http://hyperphysics.phy-astr.gsu.edu/hbase/pend.html">this</a> equation.
+					</p>
+				</details>
+			</div>
+		</div>
+
+
+		<h2 class='underlined' id="standing-waves">Standing Waves</h2>
+		<p>
+			A <strong>standing wave</strong> is a wave that oscillates in time, but does not move through space.
+			Standing waves occur in most musical instruments in the form of vibrating <a href="https://www.youtube.com/watch?v=to_dtcZP1EE">strings</a> or columns of air.
+			You can produce a standing wave if you shake a string at just the right frequency while someone else holds the other end still.
+		</p>
+		<p>
+			<a href="https://en.wikipedia.org/wiki/Standing_wave">Standing waves</a> occur when two waves moving in opposite directions interfere each other.
+			This often happens in between reflected waves in a cavity, like a pipe. You can see standing wave clearly in a <a href="https://www.youtube.com/watch?v=HpovwbPGEoo">Reben's</a> <a href="https://www.youtube.com/watch?v=pWekXMZJ2zM&t=82s">Tube</a>.
+		</p>
+		<p>
+			In a bounded region the waves reflect off the walls. The numerous reflected waves interfere destructively to produce a superposition of zero.
+			Except when the wavelength fits evenly into a closed region the reflected waves resonate with each other to produce a standing wave.
+			he wave looks like an alternating constructive then destructive interference pattern.
+		</p>
+		<p>
+			This simulation calculates the superposition of 32 reflections in a bounded region.
+			Only certain wavelengths resonate to produce a standing wave.
+		</p>
+	</article>
+	<div id="standing-wave-zone">
+		<div class='center' id='wave_animation'>
+			<svg id='standing-wave' height='400'>
+				<g stroke="#d9dfdf" style="stroke-dasharray:1,98,1,0;stroke-width:4000;">
+					<line x1="0" y1="0" x2="2000" y2="0" />
+					<line x1="0" y1="0" x2="0" y2="2000" />
+				</g>
+				<line x1="0" y1="200" x2="3000" y2="200" stroke-dasharray='10,10' stroke='#777' stroke-width='2' />
+				<path d='M103 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;' />
+				<text x="150" y="391" text-anchor="middle" font-size="15" fill='#000'>1.0 m</text>
+				<g stroke-miterlimit="10" opacity="1" stroke-dasharray="4" stroke-width='3' fill='none'>
+					<g stroke='#f05'>
+						<path id="wave-form-path-0" stroke-dashoffset="0" opacity="1" />
+						<path id="wave-form-path-2" stroke-dashoffset="2" opacity="0.9" />
+						<path id="wave-form-path-4" stroke-dashoffset="4" opacity="0.8" />
+						<path id="wave-form-path-6" stroke-dashoffset="0" opacity="0.7" />
+						<path id="wave-form-path-8" stroke-dashoffset="2" opacity="0.6" />
+						<path id="wave-form-path-10" stroke-dashoffset="4" opacity="0.5" />
+						<path id="wave-form-path-12" stroke-dashoffset="0" opacity="0.4" />
+						<path id="wave-form-path-14" stroke-dashoffset="2" opacity="0.3" />
+						<path id="wave-form-path-16" stroke-dashoffset="4" opacity="0.2" />
+					</g>
+					<g stroke='#0ac'>
+						<path id="wave-form-path-1" stroke-dashoffset="0" opacity="1" />
+						<path id="wave-form-path-3" stroke-dashoffset="2" opacity="0.9" />
+						<path id="wave-form-path-5" stroke-dashoffset="4" opacity="0.8" />
+						<path id="wave-form-path-7" stroke-dashoffset="0" opacity="0.7" />
+						<path id="wave-form-path-9" stroke-dashoffset="2" opacity="0.6" />
+						<path id="wave-form-path-11" stroke-dashoffset="4" opacity="0.5" />
+						<path id="wave-form-path-13" stroke-dashoffset="0" opacity="0.4" />
+						<path id="wave-form-path-15" stroke-dashoffset="2" opacity="0.3" />
+						<path id="wave-form-path-17" stroke-dashoffset="4 " opacity="0.2" />
+					</g>
+				</g>
+				<path id="superposition-wave-form-path" stroke-width='4' fill='none' stroke='#000' stroke-miterlimit="10" opacity="1" />
+				<path id="standing-wave-border" d="M0 0 v400" stroke='#000' stroke-width='4' fill="none" />
+			</svg>
+		</div>
+		<div class="center">
+			<style>
+				.slider {
+					width: 380px
+				}
+
+				@media screen and (max-width: 650px) {
+					.slider {
+						width: 120px
+					}
+				}
+			</style>
+			wavelength = <input class="slider" id='wavelength-slider' type="range" step="0.01" value="6" min="0.5" max="20">
+			<input id='wavelength' type="number" step="0.01" value="6" min="0.5" max="20" style="width:60px;">m
+		</div>
+		<!-- <details class="center">
+			<summary>more settings</summary>
+			<p>
+				calculated reflections = <input id='reflections-slider' type="range" step="1" value="128" min="18" max="512" style="width:120px;">
+				<input id='reflections' type="number" step="1" value="128" min="18" max="512" style="width:50px;">
+			</p>
+			<p>
+				reflection dampening = <input id='dampening-slider' type="range" step="0.01" value="1" min="0.5" max="1" style="width:120px;">
+				<input id='dampening' type="number" step="0.01" value="1" min="0.5" max="1" style="width:50px;">
+			</p>
+		</details> -->
+	</div>
+	<article>
+
+
+		<div class='example-small'>
+			<strong>Simulation:</strong> Change the wavelength and identify at least 4 wavelengths that resonate to produce standing waves.
+			<details>
+				<summary>results</summary>
+				<p id="list-standing"></p>
+				<details>
+					<summary><strong>Extra Credit:</strong> can you figure out an equation that produces those results? Use λ for the resonate wavelengths and L for the length of the region.</summary>
+					<p>
+						Standing wave resonance in a bounded region occurs when the wavelength is even multiples of twice the length of the region.
+					</p>
+					<p>
+						$$2L = n \lambda $$
+						$$n = 1,2,3,4,5 \, \dots $$
+						\( \lambda \) = resonance wavelengths [m]
+						<br>\( L \) = length of bounded region [m]
+						<br>\( n \) = positive integers
+					</p>
+				</details>
+			</details>
+		</div>
+
+		<!-- <div class='example'>
+			<strong>Question:</strong> How does the length of the bounded region relate to possible wavelengths that produce standing waves?
+			<details>
+				<summary>answer</summary>
+				<p>
+
+				</p>
+			</details>
+		</div> -->
+
+
+		<div class='example'>
+			<a href="https://en.wikipedia.org/wiki/Harmonic">
+
+				<svg viewBox="0 0 1000 1110">
+					<path d="m7.8872 355.39c149.73-56.148 181.61-55.455 326.95 0 137.02 54.992 182.81 57.072 325.1 0s191.16-54.068 326.26 0c-136.63 55.917-191.87 54.819-326.26 0-134.38-54.819-181.07-55.833-326.03 0-144.95 55.833-176.3 57.072-326.03 0z" fill="#fffef7" stroke="#000" stroke-width="3.2677" />
+					<path d="m252.81 507.89c102.73-56.095 144.25-54.33 244.92 0.48931s135.64 55.833 244.23 0 132.07-57.072 244.23 0c-112.16 56.148-136.05 55.455-244.92 0-102.64-54.992-136.94-57.072-243.54 0s-143.72 53.579-244.92-0.48931-145.97-54.312-243.48 0c99.203 51.698 140.75 56.095 243.48 0z" fill="#fffef7" stroke="#000" stroke-width="3.2677" />
+					<path d="m567.05 965.39c-59.72-54.989-81.637-55.453-139.07 0-57.097 55.132-81.822 56.256-140.85 0-58.691-55.938-80.968-55.906-139.63 0-57.504 54.806-81.385 54.806-139.63 0 62.163-54.989 77.779-55.454 140.02 0 58.681 54.992 82.539 55.459 139.23 0 57.174-55.93 82.014-54.068 139.87 0s81.601 55.054 140.04 0c58.442-55.054 82.046-55.551 139.56 0 57.515 55.551 84.307 54.662 140.02 0 55.715-54.662 84.202-55.132 139.56 0-56.397 55.786-82.541 55.315-139.56 0-57.02-55.316-84.476-55.786-140.02 0-55.547 55.786-80.558 54.328-139.56 0z" fill="#fffef7" stroke="#000" stroke-width="3.2677" />
+					<path d="m333.99 813c69.657 54.989 94.33 56.465 163.28-0.089 68.634-56.292 95.64-55.88 163.21 0.089 67.531 55.94 94.44 55.906 162.86 0 67.073-54.806 94.927-54.806 162.86 0-72.506 54.989-90.721 55.455-163.32 0-68.445-54.992-96.272-55.459-162.4 0-66.687 55.93-96.468 55.17-163.21-0.089-67.463-55.86-95.117-54.965-163.28 0.089-68.166 55.054-95.698 55.551-162.78 0-67.085-55.551-98.335-54.662-163.32 0 65.219 54.378 96.454 55.685 163.32 0 64.79-55.786 93.962-54.328 162.78 0z" fill="#fffef7" stroke="#000" stroke-width="3.2677" />
+					<path d="m986.2 660.23c-77.773 55.786-112.79 54.328-195.4 0-83.616-54.989-111.94-56.554-194.71 0-82.388 56.292-116.1 55.969-197.2 0-81.064-55.94-113.37-55.906-195.5 0-80.514 54.806-113.95 54.806-195.5 0 87.036-54.989 108.9-55.455 196.05 0 82.161 54.992 115.57 55.459 194.94 0 80.051-55.931 117.09-55.259 197.2 0 80.982 55.86 112.88 55.054 194.71 0 81.826-55.054 114.88-55.551 195.4 0z" fill="#fffef7" stroke="#000" stroke-width="3.2677" />
+					<path d="m986.2 202.89c-202.83 55.94-283.65 55.906-489.16 0-201.46-54.806-285.12-54.806-489.16 0 217.78 54.989 272.48 55.455 490.54 0 205.58-54.992 289.16-55.459 487.77 0z" fill="#fffef7" stroke="#000" stroke-width="3.2677" />
+					<path d="m986.2 50.911c-401.16 55.459-563.08 59.077-978.31 0 415.08-59.991 568.63-55.94 978.31 0z" fill="#fffef7" stroke="#000" stroke-width="3.2677" />
+					<text class="st20" x="486.4458" y="183.1088" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 1/2</text>
+					<text class="st20" x="318.25195" y="335.23267" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 1/3</text>
+					<text class="st20" x="648.11505" y="335.23267" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 2/3</text>
+					<text class="st20" x="240.21138" y="487.35635" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 1/4</text>
+					<text class="st20" x="730.35376" y="487.35635" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 3/4</text>
+					<text class="st20" x="190.63869" y="639.48016" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 1/5</text>
+					<text class="st20" x="385.66794" y="639.48016" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 2/5</text>
+					<text class="st20" x="581.5144" y="639.48016" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 3/5</text>
+					<text class="st20" x="778.98975" y="639.48016" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 4/5</text>
+					<text class="st20" x="156.58279" y="791.60388" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 1/6</text>
+					<text class="st20" x="812.35162" y="791.60388" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 5/6</text>
+					<text class="st20" x="135.81294" y="943.72766" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 1/7</text>
+					<text class="st20" x="276.01752" y="943.72766" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 2/7</text>
+					<text class="st20" x="419.72388" y="943.72766" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 3/7</text>
+					<text class="st20" x="555.73163" y="943.72766" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 4/7</text>
+					<text class="st20" x="696.87231" y="943.72766" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 5/7</text>
+					<text class="st20" x="835.44751" y="943.72766" fill="#000000" font-family="Arial" font-size="20px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 6/7</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="495.55835" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 1/2</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="327.67068" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 1/3</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="665.9505" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 2/3</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="245.33427" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 1/4</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="748.40875" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 3/4</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="196.28864" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 1/5</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="393.29977" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 2/5</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="599.48712" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 3/5</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="796.49646" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 4/5</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="163.95404" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 1/6</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="828.95483" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 5/6</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="130.78281" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 1/7</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="282.79794" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 2/7</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="424.80206" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 3/7</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="567.27264" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 4/7</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="711.65741" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 5/7</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="862.83777" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 6/7</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="1004.5053" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1033"> 1</text>
+					<text class="st30" transform="scale(.97741 1.0231)" x="6.9411092" y="1078.8337" fill="#000000" font-family="Arial" font-size="18px" stroke-linecap="square" stroke-miterlimit="3" line-height="125%" v:langID="1049"> 0</text>
+					<g transform="matrix(1.8155 0 0 1.8155 8.0433 -447.89)" fill="none" font-size="12px" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="101">
+						<path class="st1" d="m0 841.89h538.79" stroke="#0c0c0c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 2025.5 1045.5)" fill="none" font-size="12px" stroke="#AAA" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="81">
+						<path class="st22" d="m0 841.89h17.01" stroke="#AAA" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 1781 1045.5)" fill="none" font-size="12px" stroke="#ff961a" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="88">
+						<path class="st23" d="m0 841.89h17.01" stroke="#ff961a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 2270.1 1045.5)" fill="none" font-size="12px" stroke="#ff961a" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="89">
+						<path class="st23" d="m0 841.89h17.01" stroke="#ff961a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 1927.7 1045.5)" fill="none" font-size="12px" stroke="#ffd619" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="97">
+						<path class="st24" d="m0 841.89h17.01" stroke="#ffd619" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 1732.1 1045.5)" fill="none" font-size="12px" stroke="#ffd619" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="98">
+						<path class="st24" d="m0 841.89h17.01" stroke="#ffd619" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 2318.9 1045.5)" fill="none" font-size="12px" stroke="#ffd619" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="99">
+						<path class="st24" d="m0 841.89h17.01" stroke="#ffd619" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 2123.3 1045.5)" fill="none" font-size="12px" stroke="#ffd619" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="100">
+						<path class="st24" d="m0 841.89h17.01" stroke="#ffd619" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 2188.6 1045.5)" fill="none" font-size="12px" stroke="#ff3623" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="102">
+						<path class="st25" d="m0 841.89h17.01" stroke="#ff3623" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 1862.5 1045.5)" fill="none" font-size="12px" stroke="#ff3623" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="103">
+						<path class="st25" d="m0 841.89h17.01" stroke="#ff3623" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 1699.5 1045.5)" fill="none" font-size="12px" stroke="#00cd00" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="104">
+						<path class="st26" d="m0 841.89h17.01" stroke="#00cd00" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 2351.6 1045.5)" fill="none" font-size="12px" stroke="#00cd00" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="105">
+						<path class="st26" d="m0 841.89h17.01" stroke="#00cd00" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 2374.9 1045.5)" fill="none" font-size="12px" stroke="#2dabff" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="106">
+						<path class="st27" d="m0 841.89h17.01" stroke="#2dabff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 1676.2 1045.5)" fill="none" font-size="12px" stroke="#2dabff" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="107">
+						<path class="st27" d="m0 841.89h17.01" stroke="#2dabff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 1536.5 1045.5)" fill="none" font-size="12px" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="108">
+						<path class="st28" d="m0 841.89h17.01" stroke="#0c0c0c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 2514.6 1045.5)" fill="none" font-size="12px" stroke="#464646" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="109">
+						<path class="st29" d="m0 841.89h17.01" stroke="#464646" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 2234.9 1045.5)" fill="none" font-size="12px" stroke="#2dabff" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="110">
+						<path class="st27" d="m0 841.89h17.01" stroke="#2dabff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 2095.4 1045.5)" fill="none" font-size="12px" stroke="#2dabff" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="111">
+						<path class="st27" d="m0 841.89h17.01" stroke="#2dabff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 1955.4 1045.5)" fill="none" font-size="12px" stroke="#2dabff" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="112">
+						<path class="st27" d="m0 841.89h17.01" stroke="#2dabff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8155 -1.8155 0 1815.9 1045.5)" fill="none" font-size="12px" stroke="#2dabff" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="113">
+						<path class="st27" d="m0 841.89h17.01" stroke="#2dabff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 2026.2 202.72)" fill="none" font-size="12px" stroke="#AAA" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="44">
+						<path class="st4" d="m0 841.89h462.08" stroke="#AAA" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 2270.8 507.89)" fill="none" font-size="12px" stroke="#ff961a" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="46">
+						<path class="st5" d="m0 841.89h294.05" stroke="#ff961a" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 1928.4 660.47)" fill="none" font-size="12px" stroke="#ffd619" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="47">
+						<path class="st6" d="m0 841.89h210.04" stroke="#ffd619" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 2319.7 660.48)" fill="none" font-size="12px" stroke="#ffd619" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="49">
+						<path class="st6" d="m0 841.89h210.03" stroke="#ffd619" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 2124 660.47)" fill="none" font-size="12px" stroke="#ffd619" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="50">
+						<path class="st6" d="m0 841.89h210.04" stroke="#ffd619" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 2189.3 355.31)" fill="none" font-size="12px" stroke="#ff3623" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="51">
+						<path class="st7" d="m0 841.89h378.07" stroke="#ff3623" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 1700 813.06)" fill="none" font-size="12px" stroke="#00cd00" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="53">
+						<path class="st8" d="m0 841.89h126.02" stroke="#00cd00" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 2352.4 813.06)" fill="none" font-size="12px" stroke="#00cd00" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="54">
+						<path class="st8" d="m0 841.89h126.02" stroke="#00cd00" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 2375.7 965.64)" fill="none" font-size="12px" stroke="#2dabff" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="55">
+						<path class="st9" d="m0 841.89h42.01" stroke="#2dabff" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 1536.9 50.138)" fill="none" font-size="12px" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="57">
+						<path class="st3" d="m0 841.89h546.09" stroke="#0c0c0c" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 2235.6 965.39)" fill="none" font-size="12px" stroke="#2dabff" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="73">
+						<path class="st9" d="m0 841.89h42.01" stroke="#2dabff" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 2096.1 965.64)" fill="none" font-size="12px" stroke="#2dabff" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="74">
+						<path class="st9" d="m0 841.89h42.01" stroke="#2dabff" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 1956 965.64)" fill="none" font-size="12px" stroke="#2dabff" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="75">
+						<path class="st9" d="m0 841.89h42.01" stroke="#2dabff" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 1816.5 965.64)" fill="none" font-size="12px" stroke="#2dabff" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="76">
+						<path class="st9" d="m0 841.89h42.01" stroke="#2dabff" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(1.8155 0 0 1.8155 8.0433 -486.99)" fill="none" font-size="12px" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="43">
+						<path class="st1" d="m0 841.89h538.79" stroke="#0c0c0c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+					</g>
+					<path transform="matrix(.51374 0 0 .51374 348.1 -416.71)" d="m314.66 1206a24.749 24.749 0 1 1 -49.497 0 24.749 24.749 0 1 1 49.497 0z" fill="#bcbcbc" stroke="#000" stroke-width="2.4528" />
+					<g transform="matrix(0 1.8162 -1.8162 0 1781.6 507.89)" fill="none" font-size="12px" stroke="#ff961a" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="45">
+						<path class="st5" d="m0 841.89h294.05" stroke="#ff961a" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 1732.6 660.48)" fill="none" font-size="12px" stroke="#ffd619" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="48">
+						<path class="st6" d="m0 841.89h210.03" stroke="#ffd619" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 1863.1 355.31)" fill="none" font-size="12px" stroke="#ff3623" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="52">
+						<path class="st7" d="m0 841.89h378.06" stroke="#ff3623" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<g transform="matrix(0 1.8162 -1.8162 0 1676.7 965.64)" fill="none" font-size="12px" stroke="#2dabff" stroke-linecap="square" stroke-miterlimit="3" v:groupContext="shape" v:layerMember="2" v:mID="56">
+						<path class="st9" d="m0 841.89h42.01" stroke="#2dabff" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75" />
+					</g>
+					<path d="m986.46 50.139v1029.9" fill="none" stroke="#464646" stroke-miterlimit="3" stroke-width="1.4529px" />
+					<path transform="matrix(.51374 0 0 .51374 184.97 -264.21)" d="m314.66 1206a24.749 24.749 0 1 1 -49.497 0 24.749 24.749 0 1 1 49.497 0z" fill="#ff2323" stroke="#000" stroke-width="2.4528" />
+					<path transform="matrix(.51374 0 0 .51374 103.87 -111.71)" d="m314.66 1206a24.749 24.749 0 1 1 -49.497 0 24.749 24.749 0 1 1 49.497 0z" fill="#ff961a" stroke="#000" stroke-width="2.4528" />
+					<path transform="matrix(.51374 0 0 .51374 54.711 40.454)" d="m314.66 1206a24.749 24.749 0 1 1 -49.497 0 24.749 24.749 0 1 1 49.497 0z" fill="#ffd619" stroke="#000" stroke-width="2.4528" />
+					<path transform="matrix(.51374 0 0 .51374 22.268 193.4)" d="m314.66 1206a24.749 24.749 0 1 1 -49.497 0 24.749 24.749 0 1 1 49.497 0z" fill="#00cd00" stroke="#000" stroke-width="2.4528" />
+					<path transform="matrix(.51374 0 0 .51374 -1.235 345.61)" d="m314.66 1206a24.749 24.749 0 1 1 -49.497 0 24.749 24.749 0 1 1 49.497 0z" fill="#2dabff" stroke="#000" stroke-width="2.4528" />
+					<path transform="matrix(.51374 0 0 .51374 837.26 -568.68)" d="m306.16 1206a16.246 16.246 0 1 1 -32.493 0 16.246 16.246 0 1 1 32.493 0z" stroke="#000" stroke-width="2.4528" />
+				</svg>
+			</a>
+			<p>
+				The locations where the amplitude stays at zero are called <strong>nodes</strong>. Some of them are marked in the diagram above with a &#9899;.
+				The locations between the nodes with the maximum amplitude are called <strong>anti-nodes</strong>.
+			</p>
+			<strong>Question:</strong> How many nodes and anti-nodes are in the bottom standing wave?
+			<details>
+				<summary>answer</summary>
+				<p>
+					There are 8 nodes if you count the edges.
 				</p>
 				<p>
-					The period of a pendulum can be calculated with <a href="http://hyperphysics.phy-astr.gsu.edu/hbase/pend.html">this</a> equation.
+					There are 7 anti-nodes.
 				</p>
 			</details>
 		</div>
 
+
 	</article>
-	<div class='back'>
-		<a href="../../../index.html">Back</a>
+	<div class="listing-footer">
+		<ul class="listing listing-dark" id="footer">
+			<li>
+				<h2>Motion</h2>
+				<p>
+					<a href="../../motion/motion/index.html">Motion</a>
+					<br>
+					<a href="../../motion/kinematics/index.html">Kinematics</a>
+				</p>
+			</li>
+			<li>
+				<h2>Force</h2>
+				<p>
+					<a href="../../force/laws/index.html">Newton's Laws</a>
+					<br>
+					<a href="../../force/forces/index.html">Forces</a>
+					<br>
+					<a href="../../force/friction/index.html">Friction</a>
+				</p>
+			</li>
+			<li>
+				<h2>Momentum</h2>
+				<p>
+					<a href="../../momentum/momentum/index.html">Momentum</a>
+					<br>
+					<a href="../../momentum/impulse/index.html">Impulse</a>
+				</p>
+			</li>
+			<li>
+				<h2>Energy</h2>
+				<p>
+					<a href="../../energy/energy/index.html">Energy</a>
+					<br>
+					<a href="../../energy/conservation/index.html">Conservation of Energy</a>
+					<br>
+					<a href="../../energy/thermo/index.html">Thermodynamics</a>
+				</p>
+			</li>
+			<li>
+				<h2>Gravity</h2>
+				<p>
+					<a href="../../gravity/gravitation/index.html">Universal Gravitation</a>
+					<br>
+					<a href="../../gravity/circular/index.html">Orbits</a>
+				</p>
+			</li>
+			<li>
+				<h2>Electromagnetism</h2>
+				<p>
+					<a href="../../electromagnetism/charge/index.html">Electric Charge</a>
+					<br>
+					<a href="../../electromagnetism/electrostatics/index.html">Electrostatics</a>
+					<br>
+					<a href="../../electromagnetism/potential/index.html">Electric Potential</a>
+					<br>
+					<a href="../../electromagnetism/magnetism/index.html">Magnetism</a>
+				</p>
+			</li>
+			<li>
+				<h2>Circuits</h2>
+				<p>
+					<a href="../../circuits/electricity/index.html">Electricity</a>
+					<br>
+					<a href="../../circuits/power/index.html">Power</a>
+					<br>
+					<a href="../../circuits/kirchoff/index.html">Kirchhoff’s Laws</a>
+					<br>
+					<a href="../../circuits/components/index.html">Components</a>
+				</p>
+			</li>
+			<li>
+				<h2>Waves</h2>
+				<p>
+					<a href="../../waves/waves/index.html">Waves</a>
+					<br>
+					<a href="../../waves/waveproperties/index.html">Wave Properties</a>
+					<br>
+					<a href="../../waves/light/index.html">Light</a>
+					<br>
+					<a href="../../waves/photons/index.html">Photons</a>
+				</p>
+			</li>
+			<li>
+				<h2>Relativity</h2>
+				<p>
+					<a href="../../relativity/special/index.html">Special Relativity</a>
+					<br>
+					<a href="../../relativity/general/index.html">General Relativity</a>
+				</p>
+			</li>
+			<li>
+				<h2>Reference</h2>
+				<p>
+					<a href="../../review/units/index.html">Units</a>
+					<br>
+					<a href="../../review/vectors/index.html">Vectors & Scalars</a>
+					<br>
+					<a href="../../review/solving/index.html">Problem Solving</a>
+				</p>
+			</li>
+		</ul>
 	</div>
 	<script>
 		renderMathInElement(document.body);
