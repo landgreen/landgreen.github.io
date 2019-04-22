@@ -15,7 +15,7 @@ const wave = function () {
         x: 0,
         y: 200
     };
-    const velocity = 200;
+    const velocity = 400;
     let reflections = 32
     const totalPaths = 18 //how many paths are drawn in the SVG, the rest are just calculated for the superposition path
     let dampening = -1 //lower values simulate energy loss, but don't make the standing waves as distinct
@@ -30,8 +30,12 @@ const wave = function () {
     document.getElementById("standing-wave").setAttribute("width", width);
     document.getElementById("standing-wave-border").setAttribute("d", "M0 0 v400 M" + width + " 0 v400");
     //update answer to question based on width
-    const L = 2 * width / 100
-    document.getElementById("list-standing").innerHTML = `λ = ${(L).toFixed(0)}, ${(L/2).toFixed(0)}, ${(L/3).toFixed(1)}, ${(L/4).toFixed(1)}, ${(L/5).toFixed(1)}, ${(L/6).toFixed(1)}, ${(L/7).toFixed(1)}, ${(L/8).toFixed(1)}, ${(L/9).toFixed(1)}, ${(L/10).toFixed(1)}, ${(L/11).toFixed(1)}, ${(L/12).toFixed(2)}, ${(L/13).toFixed(2)}, ${(L/14).toFixed(2)}, ${(L/16).toFixed(2)}, ${(L/17).toFixed(2)}, ${(L/18).toFixed(2)}, ${(L/19).toFixed(2)}, ${(L/20).toFixed(2)}, ${(L/21).toFixed(3)}, ${(L/22).toFixed(3)}, ${(L/23).toFixed(3)}, ${(L/24).toFixed(3)}, ${(L/25).toFixed(3)},  ...`
+    let out = "λ = "
+    for (let i = 1; i < 25; i++) {
+        out += Math.round(2 * width / 100 / i * 1000) / 1000 + ", &nbsp;"
+    }
+    document.getElementById("list-standing").innerHTML = out + "..."
+    // document.getElementById("list-standing").innerHTML = `λ = ${(L).toFixed(0)}, ${(L/2).toFixed(0)}, ${(L/3).toFixed(1)}, ${(L/4).toFixed(1)}, ${(L/5).toFixed(2)}, ${(L/6).toFixed(2)}, ${(L/7).toFixed(2)}, ${(L/8).toFixed(2)}, ${(L/9).toFixed(2)}, ${(L/10).toFixed(2)}, ${(L/11).toFixed(2)}, ${(L/12).toFixed(2)}, ${(L/13).toFixed(3)}, ${(L/14).toFixed(3)}, ${(L/16).toFixed(3)}, ${(L/17).toFixed(3)}, ${(L/18).toFixed(3)}, ${(L/19).toFixed(3)}, ${(L/20).toFixed(3)}, ${(L/21).toFixed(3)}, ${(L/22).toFixed(3)}, ${(L/23).toFixed(4)}, ${(L/24).toFixed(4)}, ${Math.round(L/23*1000)/1000},  ...`
 
 
     document.getElementById("wavelength").addEventListener("input", () => {
