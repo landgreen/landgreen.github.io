@@ -323,15 +323,15 @@ th {
 }
 
 .listing-dark a {
-  color: #999;
+  color: #bbb;
 }
 
 .listing-dark a:hover {
-  color: var(--link-color);
+  color: #fff;
 }
 
 .listing-dark h2 {
-  color: #eee;
+  color: #fff;
   border-bottom: 1px solid #eee;
   font-weight: 400;
   margin-bottom: -0.3em;
