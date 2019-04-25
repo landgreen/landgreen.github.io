@@ -4,7 +4,7 @@ function centerLine(el) {
   const height = el.getAttribute("height") / 2;
   const d = "M0 " + height + " L" + width + " " + height;
   newpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  newpath.setAttributeNS(null, "id", "pathIdD");
+  // newpath.setAttributeNS(null, "id", "pathIdD");
   newpath.setAttributeNS(null, "d", d);
   newpath.setAttributeNS(null, "stroke", "#000");
   newpath.setAttributeNS(null, "stroke-width", 1);
@@ -35,7 +35,7 @@ function drawSineWave(el, wavelength, amplitude, phase = 0, color = "#000", opac
   }
 
   newpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  newpath.setAttributeNS(null, "id", "pathIdD");
+  // newpath.setAttributeNS(null, "id", "pathIdD");
   newpath.setAttributeNS(null, "d", d);
   newpath.setAttributeNS(null, "stroke", color);
   newpath.setAttributeNS(null, "stroke-width", 4);
@@ -91,7 +91,7 @@ function drawSineWaves(
   }
 
   newpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  newpath.setAttributeNS(null, "id", "pathIdD");
+  // newpath.setAttributeNS(null, "id", "pathIdD");
   newpath.setAttributeNS(null, "d", d);
   newpath.setAttributeNS(null, "stroke", color);
   newpath.setAttributeNS(null, "stroke-width", 6);
@@ -115,7 +115,7 @@ function AppendSinePath(el, wavelength, amplitude, phase = 0, color = "#000", op
   }
 
   newpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  newpath.setAttributeNS(null, "id", "pathIdD");
+  // newpath.setAttributeNS(null, "id", "pathIdD");
   newpath.setAttributeNS(null, "d", d);
   newpath.setAttributeNS(null, "stroke", color);
   newpath.setAttributeNS(null, "stroke-width", 4);
@@ -157,7 +157,7 @@ function drawSineWavesArray(el, waves, superposition = true, autoWidth = true, w
     }
     //set wave  position
     newpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    newpath.setAttributeNS(null, "id", "pathIdD");
+    // newpath.setAttributeNS(null, "id", "pathIdD");
     newpath.setAttributeNS(null, "d", d);
     newpath.setAttributeNS(null, "stroke", "#000");
     newpath.setAttributeNS(null, "stroke-width", 6);
