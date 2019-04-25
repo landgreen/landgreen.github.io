@@ -530,8 +530,8 @@
       <p>
         Energy at the atomic level is often calculated in <strong>electron volts (eV)</strong>. We can convert between eV and J by multiplying or dividing by the charge of an electron.
       </p>
-      $${\color{#f25} 1 \, \mathrm{eV}} = {\color{#08b}1.6 \times 10^{-19} \, \mathrm{J} }$$
-      $$32 \times 10^{-19} \, \mathrm{J} \left( \frac{ \color{#f25}1 \, \mathrm{eV}}{ \color{#08b} 1.6 \times 10^{-19} \, \mathrm{J}} \right)= 20 \, \mathrm{eV}$$
+      $$1 \, \mathrm{eV} = 1.6 \times 10^{-19} \, \mathrm{J} $$
+      $$32 \times 10^{-19} \, \mathrm{J} \left( \frac{ 1 \, \mathrm{eV}}{ 1.6 \times 10^{-19} \, \mathrm{J}} \right)= 20 \, \mathrm{eV}$$
       <strong>Example:</strong> After being hit by light with 7.0 eV per photon, the rare earth metal terbium releases electrons. The electrons have a maximum kinetic energy of 4.0 eV. What is the work function of terbium in electron-volts?
       <details>
         <summary>solution</summary>
@@ -667,7 +667,7 @@
     </div>
 
     <div class='example'>
-      <strong>Example:</strong> Use the <a href='https://en.wikipedia.org/wiki/Work_function#Work_functions_of_elements.5B11.5D'>work function</a> table to decide which elements would release electrons from  427 nm wavelength light.
+      <strong>Example:</strong> Use the <a href='https://en.wikipedia.org/wiki/Work_function#Work_functions_of_elements.5B11.5D'>work function</a> table to decide which elements would release electrons from 427 nm wavelength light.
       <details>
         <summary>strategy</summary>
         <p>
@@ -702,16 +702,9 @@
     <p>
       <strong>Non-ionizing radiation is generally below 1.60 × 10<sup>-18</sup> J</strong>&nbsp;(10 eV). This "safe" radiation doesn't have enough energy to directly cause cellular damage.
     </p>
-    <!-- <li>radio waves</li>
-    <li>microwaves,</li>
-    <li>infrared</li>
-    <li>visible light</li> -->
     <p>
       <strong>Ionizing radiation is generally above 1.60 × 10<sup>-18</sup> J</strong>&nbsp;(10 eV). This "unsafe" radiation can potentially ionize an atom.
     </p>
-    <!-- <li>ultraviolet</li>
-    <li>x-ray</li>
-    <li>gamma-ray</li> -->
   </article>
   <table style="border: none; max-width: 800px;">
     <tr>
@@ -842,170 +835,190 @@
 
     <h2 class='underlined'>Atomic Orbitals</h2>
     <p>
-      Electrons in an atom are limited to the exact wavelengths that allow <a href = "..\waveproperties\index.html#standing-waves">standing wave</a> to form.
-      We say that the allowed wavelengths are quantized. 
-      <strong>Quantizing</strong> means to restrict the number of possible values of a variable to specific values.
-      These quantized wavelengths also limit the allowed frequency and energy of electrons in atoms.
+      Electrons in an atom are limited to specific wavelengths that allow <a href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
+      We say that the allowed wavelengths are quantized.
+      <strong>Quantizing</strong> means to restrict a variable to specific values.
     </p>
-<a href = "https://commons.wikimedia.org/wiki/File:S-p-Orbitals.svg">
-  <svg viewBox="0 0 1800 420">
-    <defs>
-      <linearGradient id="c">
-      <stop stop-color="#bad8ff" offset="0"/>
-      <stop stop-color="#828c98" offset="1"/>
-      </linearGradient>
-      <linearGradient id="a">
-      <stop stop-color="#fff4f4" stop-opacity=".43607" offset="0"/>
-      <stop stop-color="#9e7f7f" stop-opacity="0" offset="1"/>
-      </linearGradient>
-      <linearGradient id="d">
-      <stop stop-color="#eca6a6" offset="0"/>
-      <stop stop-color="#9e7f7f" offset="1"/>
-      </linearGradient>
-      <radialGradient id="r" cx="-759.54" cy="298.92" r="61.619" gradientTransform="matrix(.58271 .87264 -.78676 .52536 -54.596 815.67)" gradientUnits="userSpaceOnUse" xlink:href="#c"/>
-      <radialGradient id="q" cx="-756.34" cy="309.09" r="15.657" gradientTransform="matrix(-1.4682 .22463 -.18014 -1.1772 -1800.3 848.71)" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#5a8b52" offset="0"/>
-      <stop stop-color="#2d4f34" offset="1"/>
-      </radialGradient>
-      <radialGradient id="f" cx="-402.97" cy="257.37" r="172.14" gradientTransform="matrix(-.90127 .41077 -.41472 -.90995 -651.3 638.64)" gradientUnits="userSpaceOnUse" xlink:href="#d"/>
-      <radialGradient id="e" cx="-309.92" cy="187.25" r="172.14" gradientTransform="matrix(.53843 -.2202 .20938 .51198 -388.42 208.14)" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
-      <radialGradient id="p" cx="-842.36" cy="137.52" r="172.14" gradientTransform="matrix(-.77829 .29258 -.24462 -.6507 -586.82 264.86)" gradientUnits="userSpaceOnUse" xlink:href="#d"/>
-      <radialGradient id="o" cx="640.74" cy="-94.029" r="172.14" gradientTransform="matrix(.76349 -3.1151e-7 -5.6573e-6 .55314 -574.91 61.517)" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
-      <radialGradient id="n" cx="-416.26" cy="-517.82" r="61.619" gradientTransform="matrix(-2.4575 1.7623e-5 7.9566e-6 -1.5952 -985.81 -705.09)" gradientUnits="userSpaceOnUse" xlink:href="#c"/>
-      <radialGradient id="m" cx="629.51" cy="-207.67" r="172.14" gradientTransform="matrix(.59372 .15896 .12941 -.48339 -436.88 -9.6628)" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
-      <radialGradient id="l" cx="-622.2" cy="-25.187" r="61.619" gradientTransform="matrix(-3.3287 .021114 -.018565 -2.9269 -2470.5 186.24)" gradientUnits="userSpaceOnUse" xlink:href="#c"/>
-      <radialGradient id="k" cx="-341.04" cy="201.19" r="172.14" gradientTransform="matrix(.58692 .18604 -.13736 .43335 -302.12 362.51)" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
-      <radialGradient id="j" cx="-822.17" cy="14.873" r="172.14" gradientTransform="matrix(-.83061 .037788 -.028847 -.6341 -649.2 28.866)" gradientUnits="userSpaceOnUse" xlink:href="#d"/>
-      <radialGradient id="i" cx="599.92" cy="-211.37" r="172.14" gradientTransform="matrix(.1532 .2582 -.4757 .28226 -302.42 -180.68)" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
-      <radialGradient id="h" cx="-425.56" cy="-573.35" r="61.619" gradientTransform="matrix(-.053479 -1.8081 3.032 -.089625 1758.5 -618.5)" gradientUnits="userSpaceOnUse" xlink:href="#c"/>
-      <radialGradient id="g" cx="556.16" cy="-89.686" r="172.14" gradientTransform="matrix(.47636 -.12271 -.12484 -.48459 -411.55 139.74)" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
-    </defs>
-    <g transform="matrix(.88525 0 0 .88525 718.17 476.32)">
-    <g transform="translate(228.57 -606.92)">
-    <path transform="translate(-152.53 -5.0508)" d="m-690.94 321.01a61.619 61.619 0 1 1 -123.24 0 61.619 61.619 0 1 1 123.24 0z" color="#000000" fill="url(#r)" fill-rule="evenodd" sodipodi:cx="-752.56366" sodipodi:cy="321.01175" sodipodi:rx="61.619305" sodipodi:ry="61.619305" sodipodi:type="arc"/>
-    <path id="b" transform="translate(-149.5 -3.0305)" d="m-739.43 321.52a15.657 15.657 0 1 1 -31.315 0 15.657 15.657 0 1 1 31.315 0z" color="#000000" fill="url(#q)" fill-rule="evenodd" sodipodi:cx="-755.08905" sodipodi:cy="321.51682" sodipodi:rx="15.657365" sodipodi:ry="15.657365" sodipodi:type="arc"/>
-    </g>
-    <g transform="translate(313.28 -313.02)">
-    <g fill-rule="evenodd">
-    <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#f)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc"/>
-    <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#e)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc"/>
-    </g>
-    <use transform="translate(239.92 -292.39)" width="744.09448" height="1052.3622" xlink:href="#b"/>
-    </g>
-    <g transform="translate(97.361 -358.89)">
-    <g fill-rule="evenodd">
-    <path d="m129.29-11.831c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#p)" sodipodi:nodetypes="csssc"/>
-    <path d="m129.29-11.831c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#o)" sodipodi:nodetypes="csssc"/>
-    </g>
-    <g transform="translate(-4.2857 -1.5772)" fill-rule="evenodd">
-    <path d="m133.57 149.26c0-66.686-71.36-79.758-159.29-79.758-87.926 0-155.25 20.841-155.25 79.758 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#n)" sodipodi:nodetypes="csssc"/>
-    <path d="m133.57 149.26c0-66.686-71.36-79.759-159.29-79.759-87.926 0-155.25 20.841-155.25 79.759 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#m)" sodipodi:nodetypes="csssc"/>
-    </g>
-    <use transform="translate(878.83 -250.52)" width="744.09448" height="1052.3622" opacity=".70978" xlink:href="#b"/>
-    </g>
-    <g transform="translate(64.451 -373.65)">
-    <g transform="translate(62.857 -171.43)" fill-rule="evenodd">
-    <g transform="matrix(.88264 0 0 .88264 965.42 230.55)">
-    <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#f)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc"/>
-    <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#e)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc"/>
-    </g>
-    <g transform="matrix(.93658 0 0 .93658 977.72 221.48)">
-    <path transform="translate(-216.73 -276.8)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#l)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc"/>
-    <path transform="translate(-216.73 -276.8)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#k)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc"/>
-    </g>
-    </g>
-    <use transform="translate(1331.4 -240)" width="744.09448" height="1052.3622" xlink:href="#b"/>
-    </g>
-    <g transform="matrix(6.7166e-17 -1 1 6.7166e-17 914.7 -335.1)">
-    <g fill-rule="evenodd">
-    <path d="m113.12-38.095c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#j)" sodipodi:nodetypes="csssc"/>
-    <path d="m113.12-38.095c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#i)" sodipodi:nodetypes="csssc"/>
-    </g>
-    <g transform="translate(-3.3053 -20.998)" fill-rule="evenodd">
-    <path d="m116.43 142.12c0-66.686-71.36-79.758-159.29-79.758-87.926 0-155.25 20.841-155.25 79.758 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#h)" sodipodi:nodetypes="csssc"/>
-    <path d="m116.43 142.12c0-66.686-71.36-79.759-159.29-79.759-87.926 0-155.25 20.841-155.25 79.759 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#g)" sodipodi:nodetypes="csssc"/>
-    </g>
-    <use transform="translate(858.83 -276.95)" width="744.09448" height="1052.3622" opacity=".70978" xlink:href="#b"/>
-    </g>
-    <text x="-746.5293" y="67.918854" fill="#000000" font-family="Arial" font-size="132.37px" stroke-width="1px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve"><tspan x="-746.5293" y="67.918854" sodipodi:role="line">1s</tspan></text>
-    <text x="-396.55194" y="67.918854" fill="#000000" font-family="Arial" font-size="132.37px" stroke-width="1px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve"><tspan x="-396.55194" y="67.918854" sodipodi:role="line">2s</tspan></text>
-    <g transform="translate(15.258 15.138)" fill="#000000" font-family="Arial" stroke-width="1px">
-    <text x="2.1670492" y="52.403351" font-size="132.37px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve"><tspan x="2.1670492" y="52.403351" sodipodi:role="line">2p</tspan></text>
-    <text x="145.41223" y="73.501373" font-size="79.394px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve"><tspan x="145.41223" y="73.501373" sodipodi:role="line">x</tspan></text>
-    </g>
-    <g transform="translate(444.83 9.388)" fill="#000000" font-family="Arial" stroke-width="1px">
-    <text x="2.1670492" y="52.403351" font-size="132.37px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve"><tspan x="2.1670492" y="52.403351" sodipodi:role="line">2p</tspan></text>
-    <text x="145.41223" y="73.501373" font-size="79.394px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve"><tspan x="145.41223" y="73.501373" sodipodi:role="line">y</tspan></text>
-    </g>
-    <g transform="translate(874.29 15.138)" fill="#000000" font-family="Arial" stroke-width="1px">
-    <text x="2.1670492" y="52.403351" font-size="132.37px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve"><tspan x="2.1670492" y="52.403351" sodipodi:role="line">2p</tspan></text>
-    <text x="145.41223" y="73.501373" font-size="79.394px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve"><tspan x="145.41223" y="73.501373" sodipodi:role="line">z</tspan></text>
-    </g>
-    </g>
-  </svg>
-</a>
-<p>
-    Two electrons can't have the exact same state due to a statistical quantum mechanical interaction between the electrons called the <a href="https://en.wikipedia.org/wiki/Pauli_exclusion_principle">Pauli exclusion principle</a>.
-    Each electron added to an atom must have different properties, like wavelength or spin.
-  </p>
-<a href="https://en.wikipedia.org/wiki/Atomic_orbital">
-  <img src="Hydrogen_Density_Plots.png" width="100%" >
-</a>
-<p>
-  To achieve the later standing wave states requires the electron to have a shorter wavelength and therefore a higher energy.
-  Electrons can transition between states if they gain or lose the exact energy difference between the states.
-</p>
+    <a href="https://commons.wikimedia.org/wiki/File:S-p-Orbitals.svg">
+      <svg viewBox="0 0 1800 420">
+        <defs>
+          <linearGradient id="c">
+            <stop stop-color="#bad8ff" offset="0" />
+            <stop stop-color="#828c98" offset="1" />
+          </linearGradient>
+          <linearGradient id="a">
+            <stop stop-color="#fff4f4" stop-opacity=".43607" offset="0" />
+            <stop stop-color="#9e7f7f" stop-opacity="0" offset="1" />
+          </linearGradient>
+          <linearGradient id="d">
+            <stop stop-color="#eca6a6" offset="0" />
+            <stop stop-color="#9e7f7f" offset="1" />
+          </linearGradient>
+          <radialGradient id="r" cx="-759.54" cy="298.92" r="61.619" gradientTransform="matrix(.58271 .87264 -.78676 .52536 -54.596 815.67)" gradientUnits="userSpaceOnUse" xlink:href="#c" />
+          <radialGradient id="q" cx="-756.34" cy="309.09" r="15.657" gradientTransform="matrix(-1.4682 .22463 -.18014 -1.1772 -1800.3 848.71)" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#5a8b52" offset="0" />
+            <stop stop-color="#2d4f34" offset="1" />
+          </radialGradient>
+          <radialGradient id="f" cx="-402.97" cy="257.37" r="172.14" gradientTransform="matrix(-.90127 .41077 -.41472 -.90995 -651.3 638.64)" gradientUnits="userSpaceOnUse" xlink:href="#d" />
+          <radialGradient id="e" cx="-309.92" cy="187.25" r="172.14" gradientTransform="matrix(.53843 -.2202 .20938 .51198 -388.42 208.14)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
+          <radialGradient id="p" cx="-842.36" cy="137.52" r="172.14" gradientTransform="matrix(-.77829 .29258 -.24462 -.6507 -586.82 264.86)" gradientUnits="userSpaceOnUse" xlink:href="#d" />
+          <radialGradient id="o" cx="640.74" cy="-94.029" r="172.14" gradientTransform="matrix(.76349 -3.1151e-7 -5.6573e-6 .55314 -574.91 61.517)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
+          <radialGradient id="n" cx="-416.26" cy="-517.82" r="61.619" gradientTransform="matrix(-2.4575 1.7623e-5 7.9566e-6 -1.5952 -985.81 -705.09)" gradientUnits="userSpaceOnUse" xlink:href="#c" />
+          <radialGradient id="m" cx="629.51" cy="-207.67" r="172.14" gradientTransform="matrix(.59372 .15896 .12941 -.48339 -436.88 -9.6628)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
+          <radialGradient id="l" cx="-622.2" cy="-25.187" r="61.619" gradientTransform="matrix(-3.3287 .021114 -.018565 -2.9269 -2470.5 186.24)" gradientUnits="userSpaceOnUse" xlink:href="#c" />
+          <radialGradient id="k" cx="-341.04" cy="201.19" r="172.14" gradientTransform="matrix(.58692 .18604 -.13736 .43335 -302.12 362.51)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
+          <radialGradient id="j" cx="-822.17" cy="14.873" r="172.14" gradientTransform="matrix(-.83061 .037788 -.028847 -.6341 -649.2 28.866)" gradientUnits="userSpaceOnUse" xlink:href="#d" />
+          <radialGradient id="i" cx="599.92" cy="-211.37" r="172.14" gradientTransform="matrix(.1532 .2582 -.4757 .28226 -302.42 -180.68)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
+          <radialGradient id="h" cx="-425.56" cy="-573.35" r="61.619" gradientTransform="matrix(-.053479 -1.8081 3.032 -.089625 1758.5 -618.5)" gradientUnits="userSpaceOnUse" xlink:href="#c" />
+          <radialGradient id="g" cx="556.16" cy="-89.686" r="172.14" gradientTransform="matrix(.47636 -.12271 -.12484 -.48459 -411.55 139.74)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
+        </defs>
+        <g transform="matrix(.88525 0 0 .88525 718.17 476.32)">
+          <g transform="translate(228.57 -606.92)">
+            <path transform="translate(-152.53 -5.0508)" d="m-690.94 321.01a61.619 61.619 0 1 1 -123.24 0 61.619 61.619 0 1 1 123.24 0z" color="#000000" fill="url(#r)" fill-rule="evenodd" sodipodi:cx="-752.56366" sodipodi:cy="321.01175" sodipodi:rx="61.619305" sodipodi:ry="61.619305" sodipodi:type="arc" />
+            <path id="b" transform="translate(-149.5 -3.0305)" d="m-739.43 321.52a15.657 15.657 0 1 1 -31.315 0 15.657 15.657 0 1 1 31.315 0z" color="#000000" fill="url(#q)" fill-rule="evenodd" sodipodi:cx="-755.08905" sodipodi:cy="321.51682" sodipodi:rx="15.657365" sodipodi:ry="15.657365" sodipodi:type="arc" />
+          </g>
+          <g transform="translate(313.28 -313.02)">
+            <g fill-rule="evenodd">
+              <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#f)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc" />
+              <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#e)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc" />
+            </g>
+            <use transform="translate(239.92 -292.39)" width="744.09448" height="1052.3622" xlink:href="#b" />
+          </g>
+          <g transform="translate(97.361 -358.89)">
+            <g fill-rule="evenodd">
+              <path d="m129.29-11.831c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#p)" sodipodi:nodetypes="csssc" />
+              <path d="m129.29-11.831c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#o)" sodipodi:nodetypes="csssc" />
+            </g>
+            <g transform="translate(-4.2857 -1.5772)" fill-rule="evenodd">
+              <path d="m133.57 149.26c0-66.686-71.36-79.758-159.29-79.758-87.926 0-155.25 20.841-155.25 79.758 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#n)" sodipodi:nodetypes="csssc" />
+              <path d="m133.57 149.26c0-66.686-71.36-79.759-159.29-79.759-87.926 0-155.25 20.841-155.25 79.759 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#m)" sodipodi:nodetypes="csssc" />
+            </g>
+            <use transform="translate(878.83 -250.52)" width="744.09448" height="1052.3622" opacity=".70978" xlink:href="#b" />
+          </g>
+          <g transform="translate(64.451 -373.65)">
+            <g transform="translate(62.857 -171.43)" fill-rule="evenodd">
+              <g transform="matrix(.88264 0 0 .88264 965.42 230.55)">
+                <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#f)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc" />
+                <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#e)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc" />
+              </g>
+              <g transform="matrix(.93658 0 0 .93658 977.72 221.48)">
+                <path transform="translate(-216.73 -276.8)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#l)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc" />
+                <path transform="translate(-216.73 -276.8)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#k)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc" />
+              </g>
+            </g>
+            <use transform="translate(1331.4 -240)" width="744.09448" height="1052.3622" xlink:href="#b" />
+          </g>
+          <g transform="matrix(6.7166e-17 -1 1 6.7166e-17 914.7 -335.1)">
+            <g fill-rule="evenodd">
+              <path d="m113.12-38.095c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#j)" sodipodi:nodetypes="csssc" />
+              <path d="m113.12-38.095c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#i)" sodipodi:nodetypes="csssc" />
+            </g>
+            <g transform="translate(-3.3053 -20.998)" fill-rule="evenodd">
+              <path d="m116.43 142.12c0-66.686-71.36-79.758-159.29-79.758-87.926 0-155.25 20.841-155.25 79.758 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#h)" sodipodi:nodetypes="csssc" />
+              <path d="m116.43 142.12c0-66.686-71.36-79.759-159.29-79.759-87.926 0-155.25 20.841-155.25 79.759 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#g)" sodipodi:nodetypes="csssc" />
+            </g>
+            <use transform="translate(858.83 -276.95)" width="744.09448" height="1052.3622" opacity=".70978" xlink:href="#b" />
+          </g>
+          <text x="-746.5293" y="67.918854" fill="#000000" font-family="Arial" font-size="132.37px" stroke-width="1px" style="line-height:125%">
+            <tspan x="-746.5293" y="67.918854">1s</tspan>
+          </text>
+          <text x="-396.55194" y="67.918854" fill="#000000" font-family="Arial" font-size="132.37px" stroke-width="1px" style="line-height:125%">
+            <tspan x="-396.55194" y="67.918854">2s</tspan>
+          </text>
+          <g transform="translate(15.258 15.138)" fill="#000000" font-family="Arial" stroke-width="1px">
+            <text x="2.1670492" y="52.403351" font-size="132.37px" style="line-height:125%">
+              <tspan x="2.1670492" y="52.403351">2p</tspan>
+            </text>
+            <text x="145.41223" y="73.501373" font-size="79.394px" style="line-height:125%">
+              <tspan x="145.41223" y="73.501373">x</tspan>
+            </text>
+          </g>
+          <g transform="translate(444.83 9.388)" fill="#000000" font-family="Arial" stroke-width="1px">
+            <text x="2.1670492" y="52.403351" font-size="132.37px" style="line-height:125%">
+              <tspan x="2.1670492" y="52.403351">2p</tspan>
+            </text>
+            <text x="145.41223" y="73.501373" font-size="79.394px" style="line-height:125%">
+              <tspan x="145.41223" y="73.501373">y</tspan>
+            </text>
+          </g>
+          <g transform="translate(874.29 15.138)" fill="#000000" font-family="Arial" stroke-width="1px">
+            <text x="2.1670492" y="52.403351" font-size="132.37px" style="line-height:125%">
+              <tspan x="2.1670492" y="52.403351">2p</tspan>
+            </text>
+            <text x="145.41223" y="73.501373" font-size="79.394px" style="line-height:125%">
+              <tspan x="145.41223" y="73.501373">z</tspan>
+            </text>
+          </g>
+        </g>
+      </svg>
+    </a>
+    <p>
+      In addition to quantizing the electron's wavelength there is another restriction on electrons in atoms.
+      Electrons in the same atom can't have the exact same state due to a quantum interaction called the <a href="https://en.wikipedia.org/wiki/Pauli_exclusion_principle">Pauli exclusion principle</a>.
+      Four quantum numbers are used to describe the quantum state. These numbers must be different for each electron.
+      Possible states for Hydrogen are shown below.
+    </p>
+    <a href="https://en.wikipedia.org/wiki/Atomic_orbital">
+      <img src="Hydrogen_Density_Plots.png" width="100%">
+    </a>
+    <p>
+      The first electron usually takes the state with the lowest energy requirements.
+      Each additional electron usually takes the next lowest energy state that isn't already filled.
+    </p>
 
 
-<h2 class='underlined'>Emission and Absorption Energies</h2>
+    <h2 class='underlined'>Emission and Absorption</h2>
     <p>
-      Electrons tend to occupy the lowest unfilled energy level, but if an electron gains the exact energy needed to jump to a higher energy level it will transition.
+      While electrons tend to occupy the lowest unfilled energy level, they can jump to a higher energy level if an electron gains the exact energy difference.
     </p>
-   
+
     <p>
-      When an electron in an atom collides with a photon with the right energy, the electron can enter a higher unoccupied energy level in the atom. Electrons are unstable at higher energy levels. They will quickly collapse down to an unoccupied energy level and emit a photon. The photon will have an energy equal to the difference in energy levels.
+      When an electron in an atom collides with a photon with the right energy, the electron can enter a higher unoccupied energy level in the atom.
+      Electrons are unstable at higher energy levels.
+      They will quickly collapse down to an unoccupied energy level and emit a photon.
+      The emitted photon will have an energy equal to the difference in energy levels.
     </p>
     <svg viewBox="-80 0 400 270">
       <circle cx="118.5" cy="138.293" r="52.222" stroke-width="2" stroke="#C3C3C3" fill="none" />
       <circle cx="118.5" cy="138.293" r="11.75" stroke-width="2" stroke="#C3C3C3" fill="none" />
-      <path d="M235.444,149.793c-5.779,59.497-55.931,106-116.944,106 c-64.894,0-117.5-52.606-117.5-117.5s52.606-117.5,117.5-117.5c60.838,0,110.876,46.236,116.894,105.486"  stroke-width="2" stroke="#C3C3C3" fill="none" />
+      <path d="M235.444,149.793c-5.779,59.497-55.931,106-116.944,106 c-64.894,0-117.5-52.606-117.5-117.5s52.606-117.5,117.5-117.5c60.838,0,110.876,46.236,116.894,105.486" stroke-width="2" stroke="#C3C3C3" fill="none" />
       <line x1="220.228" y1="79.456" x2="178.787" y2="103.425" stroke-width="2" stroke="#0000FF" fill="none" />
       <path d="M175.726,107.564c3.361-0.791,5.685-1.071,8.512-1.478l-5.051-8.733c-0.597,0.866-3.162,4.123-5.524,6.642
-          c-2.527,2.698-4.938,4.938-6.61,6.205C168.981,109.385,172.126,108.412,175.726,107.564z"  fill="#0000FF" />
+          c-2.527,2.698-4.938,4.938-6.61,6.205C168.981,109.385,172.126,108.412,175.726,107.564z" fill="#0000FF" />
       <circle cx="220.226" cy="79.456" r="3.625" fill="#00f" />
       <circle cx="163.711" cy="112.144" r="3.625" fill="#00f" />
       <path d="M96.652,16.878l2.176-10.391h1.612l-0.368,1.813c0.704-0.714,1.362-1.233,1.974-1.56 c0.612-0.324,1.237-0.487,1.875-0.487c0.849,0,1.515,0.231,1.999,0.694c0.484,0.462,0.726,1.08,0.726,1.854
           c0,0.383-0.09,0.987-0.271,1.813l-1.405,6.265h-1.771l1.456-6.588c0.145-0.64,0.217-1.112,0.217-1.419 c0-0.346-0.121-0.627-0.362-0.842c-0.242-0.216-0.591-0.323-1.047-0.323c-0.92,0-1.739,0.327-2.457,0.981
           s-1.246,1.777-1.583,3.367l-1,4.823H96.652z" fill="#666" />
-      <path d="M123.238,8.456h-9.484V6.815h9.484V8.456z M123.238,12.799h-9.484v-1.641h9.484V12.799z"  fill="#666" />
+      <path d="M123.238,8.456h-9.484V6.815h9.484V8.456z M123.238,12.799h-9.484v-1.641h9.484V12.799z" fill="#666" />
       <path d="M130.74,13.081l1.766-0.234c0.202,0.996,0.544,1.714,1.026,2.153c0.482,0.439,1.074,0.659,1.775,0.659 c0.832,0,1.531-0.286,2.098-0.857c0.567-0.571,0.851-1.279,0.851-2.124c0-0.805-0.264-1.469-0.791-1.992
           c-0.527-0.522-1.197-0.784-2.011-0.784c-0.332,0-0.745,0.065-1.24,0.195l0.195-1.547c0.117,0.013,0.212,0.02,0.283,0.02
           c0.745,0,1.416-0.194,2.013-0.584c0.596-0.39,0.895-0.989,0.895-1.801c0-0.642-0.218-1.174-0.653-1.596 c-0.435-0.422-0.997-0.633-1.686-0.633c-0.683,0-1.251,0.215-1.706,0.645s-0.747,1.074-0.877,1.934l-1.766-0.313
           c0.215-1.181,0.703-2.096,1.466-2.745c0.762-0.648,1.709-0.974,2.843-0.974c0.781,0,1.501,0.167,2.159,0.503 c0.658,0.334,1.161,0.791,1.51,1.37c0.348,0.579,0.522,1.193,0.522,1.844c0,0.618-0.166,1.181-0.498,1.688
           c-0.332,0.507-0.824,0.91-1.475,1.209c0.846,0.195,1.504,0.6,1.973,1.215c0.469,0.613,0.703,1.383,0.703,2.305 c0,1.248-0.456,2.307-1.367,3.174c-0.912,0.868-2.064,1.302-3.457,1.302c-1.257,0-2.3-0.374-3.13-1.122
-          C131.331,15.241,130.857,14.271,130.74,13.081z"  fill="#666" />
+          C131.331,15.241,130.857,14.271,130.74,13.081z" fill="#666" />
       <path d="M96.652,82.377l2.176-10.391h1.612l-0.368,1.813c0.704-0.714,1.362-1.233,1.974-1.56 c0.612-0.324,1.237-0.487,1.875-0.487c0.849,0,1.515,0.231,1.999,0.694c0.484,0.462,0.726,1.08,0.726,1.854
           c0,0.383-0.09,0.987-0.271,1.813l-1.405,6.265h-1.771l1.456-6.588c0.145-0.64,0.217-1.112,0.217-1.419 c0-0.346-0.121-0.627-0.362-0.842c-0.242-0.216-0.591-0.323-1.047-0.323c-0.92,0-1.739,0.327-2.457,0.981
-          s-1.246,1.777-1.583,3.367l-1,4.823H96.652z"  fill="#666" />
-      <path d="M123.238,73.955h-9.484v-1.641h9.484V73.955z M123.238,78.299h-9.484v-1.641h9.484V78.299z"  fill="#666" />
+          s-1.246,1.777-1.583,3.367l-1,4.823H96.652z" fill="#666" />
+      <path d="M123.238,73.955h-9.484v-1.641h9.484V73.955z M123.238,78.299h-9.484v-1.641h9.484V78.299z" fill="#666" />
       <path d="M139.959,80.69v1.688h-9.469c-0.013-0.424,0.056-0.831,0.206-1.222c0.241-0.646,0.629-1.28,1.161-1.904
           c0.533-0.624,1.3-1.346,2.3-2.163c1.553-1.278,2.604-2.291,3.151-3.036s0.822-1.451,0.822-2.117c0-0.696-0.249-1.283-0.747-1.762
           c-0.499-0.479-1.148-0.718-1.949-0.718c-0.847,0-1.524,0.255-2.032,0.763c-0.508,0.509-0.765,1.213-0.771,2.112l-1.813-0.188
           c0.124-1.348,0.59-2.374,1.398-3.081c0.809-0.706,1.895-1.06,3.257-1.06c1.376,0,2.465,0.381,3.267,1.143s1.203,1.706,1.203,2.832
-          c0,0.573-0.118,1.137-0.353,1.69c-0.235,0.553-0.625,1.136-1.17,1.748c-0.545,0.611-1.447,1.451-2.709,2.52 c-1.055,0.886-1.732,1.486-2.032,1.803c-0.3,0.315-0.547,0.633-0.742,0.952H139.959z"  fill="#666" />
+          c0,0.573-0.118,1.137-0.353,1.69c-0.235,0.553-0.625,1.136-1.17,1.748c-0.545,0.611-1.447,1.451-2.709,2.52 c-1.055,0.886-1.732,1.486-2.032,1.803c-0.3,0.315-0.547,0.633-0.742,0.952H139.959z" fill="#666" />
       <path d="M96.652,122.66l2.176-10.391h1.612l-0.368,1.813c0.704-0.714,1.362-1.233,1.974-1.56 c0.612-0.324,1.237-0.487,1.875-0.487c0.849,0,1.515,0.231,1.999,0.694c0.484,0.462,0.726,1.08,0.726,1.854
           c0,0.383-0.09,0.987-0.271,1.813l-1.405,6.265h-1.771l1.456-6.588c0.145-0.64,0.217-1.112,0.217-1.419 c0-0.346-0.121-0.627-0.362-0.842c-0.242-0.216-0.591-0.323-1.047-0.323c-0.92,0-1.739,0.327-2.457,0.981s-1.246,1.777-1.583,3.367
-          l-1,4.823H96.652z"  fill="#666" />
-      <path d="M123.238,114.238h-9.484v-1.641h9.484V114.238z M123.238,118.582h-9.484v-1.641h9.484V118.582z"  fill="#666" />
+          l-1,4.823H96.652z" fill="#666" />
+      <path d="M123.238,114.238h-9.484v-1.641h9.484V114.238z M123.238,118.582h-9.484v-1.641h9.484V118.582z" fill="#666" />
       <path d="M137.35,122.66h-1.766v-11.201c-0.423,0.403-0.979,0.808-1.665,1.211c-0.687,0.403-1.304,0.706-1.851,0.908
-          v-1.699c0.983-0.462,1.844-1.022,2.58-1.68c0.736-0.657,1.257-1.296,1.563-1.914h1.138V122.66z"  fill="#666" />
+          v-1.699c0.983-0.462,1.844-1.022,2.58-1.68c0.736-0.657,1.257-1.296,1.563-1.914h1.138V122.66z" fill="#666" />
 
       <path d="M291.392,109.41c-3.308-0.999-5.457-1.919-8.107-2.983v10.089c0.947-0.451,4.802-1.985,8.107-2.983 c3.539-1.069,6.748-1.801,8.828-2.062C298.14,111.21,294.931,110.479,291.392,109.41z" fill="#FF0B0B" />
       <path d="M262.005,111.46c0,0-4.001,17-8.334,0s-8.334,0-8.334,0s-4.001,17-8.334,0 s-8.334,0-8.334,0s-4.001,17-8.334,0s-8.334,0-8.334,0s-4.001,17-8.334,0s-8.334,0-8.334,0" stroke-width="2" stroke="#FF0B0B" fill="none" />
       <line x1="277.999" y1="111.46" x2="286.667" y2="111.46" stroke-width="2" stroke="#FF0B0B" fill="none" />
       <path d="M277.999,111.46h-7.66c-4.333-17-8.334,0-8.334,0" stroke-width="2" stroke="#FF0B0B" fill="none" />
-      <path d="M200.476,145.229l5.488-14.328h2.04l5.862,14.328H200.476z M203.101,143.541h7.955l-3.092-8.159 c-0.467-1.213-0.809-2.193-1.024-2.942c-0.177,0.878-0.434,1.781-0.772,2.711L203.101,143.541z"  fill="#FF0B0B" />
-      <path d="M214.702,145.229l3-14.328h10.391l-0.339,1.625h-8.493l-0.936,4.469h8.314l-0.344,1.625h-8.311 l-1.045,4.984h9.066l-0.344,1.625H214.702z"  fill="#FF0B0B" />
+      <path d="M200.476,145.229l5.488-14.328h2.04l5.862,14.328H200.476z M203.101,143.541h7.955l-3.092-8.159 c-0.467-1.213-0.809-2.193-1.024-2.942c-0.177,0.878-0.434,1.781-0.772,2.711L203.101,143.541z" fill="#FF0B0B" />
+      <path d="M214.702,145.229l3-14.328h10.391l-0.339,1.625h-8.493l-0.936,4.469h8.314l-0.344,1.625h-8.311 l-1.045,4.984h9.066l-0.344,1.625H214.702z" fill="#FF0B0B" />
       <path d="M243.317,136.807h-9.484v-1.641h9.484V136.807z M243.317,141.15h-9.484v-1.641h9.484V141.15z" fill="#FF0B0B" />
       <path d="M250.647,145.229l3-14.328h1.771l-1.154,5.513c0.647-0.646,1.249-1.109,1.807-1.39 c0.557-0.28,1.13-0.42,1.719-0.42c0.846,0,1.502,0.229,1.97,0.687c0.467,0.457,0.701,1.061,0.701,1.811
           c0,0.364-0.109,1.034-0.327,2.01l-1.34,6.118h-1.771l1.376-6.294c0.197-0.914,0.296-1.488,0.296-1.723 c0-0.34-0.115-0.617-0.344-0.832c-0.23-0.216-0.562-0.323-0.994-0.323c-0.625,0-1.221,0.169-1.788,0.506s-1.012,0.798-1.333,1.384
@@ -1019,164 +1032,164 @@
       </g>
     </svg>
     <div class="example-small">
-    <p>
+      <p>
         Photon <strong>emission</strong> occurs when electrons transition to <strong>lower</strong> energy levels. Each electron transition emits a photon with an energy equal to the energy difference between energy levels.
       </p>
- 
-    <svg viewBox="0 0 336 25">
-      <rect x="0" y="0" width="335" height="40" style="fill:#000000;stroke:none;" />
-      <rect x="32" y="0" width="2" height="40" style="fill:#4b0095;stroke:none;" />
-      <rect x="61" y="0" width="2" height="40" style="fill:#3600e0;stroke:none;" />
-      <rect x="125" y="0" width="3" height="40" style="fill:#00d97f;stroke:none;" />
-      <rect x="305" y="0" width="3" height="40" style="fill:#d60f00;stroke:none;" />
-    </svg>
-    <p>Hydrogen has a very simple emission spectrum because it doesn't have very many possible energy states and therefore few energy state transitions.</p>
+      <br>
+      <svg viewBox="0 0 336 25">
+        <rect x="0" y="0" width="335" height="40" style="fill:#000000;stroke:none;" />
+        <rect x="32" y="0" width="2" height="40" style="fill:#4b0095;stroke:none;" />
+        <rect x="61" y="0" width="2" height="40" style="fill:#3600e0;stroke:none;" />
+        <rect x="125" y="0" width="3" height="40" style="fill:#00d97f;stroke:none;" />
+        <rect x="305" y="0" width="3" height="40" style="fill:#d60f00;stroke:none;" />
+      </svg>
 
-    <svg viewBox="0 0 690 55" xmlns="http://www.w3.org/2000/svg">
-    <path d="m0 0h3v99h-3v-99z" fill="#a100ff"/>
-    <path d="m3 0h1v99h-1v-99z"/>
-    <path d="m4 0h4v99h-4v-99z" fill="#9f00ff"/>
-    <path d="m8 0h2v99h-2v-99z"/>
-    <path d="m10 0h3.99v99h-3.99v-99z" fill="#9400ff"/>
-    <path d="m13.99 0h1.01v99h-1.01v-99z"/>
-    <path d="m15 0h5.99c0 33-0.01 66 0 99h-5.99v-99z" fill="#8e00ff"/>
-    <path d="m20.99 0h5.01v99h-5.01c-0.01-33 0-66 0-99z"/>
-    <path d="m26 0h2v99h-2v-99z" fill="#7e00ff"/>
-    <path d="m28 0h2v99h-2v-99z"/>
-    <path d="m30 0h2v99h-2v-99z" fill="#7000ff"/>
-    <path d="m32 0h1v99h-1v-99z"/>
-    <path d="m33 0h7.99v99h-7.99v-99z" fill="#6f00ff"/>
-    <path d="m40.99 0h3.01v99h-3.01v-99z"/>
-    <path d="m44 0h5.02c0.02 33 0.04 66-0.01 99h-5.01v-99z" fill="#5e00ff"/>
-    <path d="m49.02 0h12.96c0 33-0.01 66 0 99h-12.97c0.05-33 0.03-66 0.01-99z" fill="#4f00ff"/>
-    <path d="m61.98 0h1.02v99h-1.02c-0.01-33 0-66 0-99z"/>
-    <path d="m63 0h5.01c0 33 0.01 66 0 99h-5.01v-99z" fill="#3e00ff"/>
-    <path d="m68.01 0h9.99c0 33 0.02 66 0 99h-9.99c0.01-33 0-66 0-99z" fill="#3000ff"/>
-    <path d="m78 0h7v99h-7c0.02-33 0-66 0-99z" fill="#1f00ff"/>
-    <path d="m85 0h5v99h-5v-99z"/>
-    <path d="m90 0h2v99h-2v-99z" fill="#1000ff"/>
-    <path d="m92 0h2v99h-2v-99z"/>
-    <path d="m94 0h6v99h-6v-99z" fill="#0f00ff"/>
-    <path d="m100 0h2v99h-2v-99z"/>
-    <path d="m102 0h9v99h-9v-99z" fill="#000fff"/>
-    <path d="m111 0h6v99h-6v-99z"/>
-    <path d="m117 0h9v99h-9v-99z" fill="#0023ff"/>
-    <path d="m126 0h9v99h-9v-99z"/>
-    <path d="m135 0h1v99h-1v-99z" fill="#0042ff"/>
-    <path d="m136 0h29v99h-29v-99z"/>
-    <path d="m165 0h1v99h-1v-99z" fill="#007bff"/>
-    <path d="m166 0h22v99h-22v-99z"/>
-    <path d="m188 0h1v99h-1v-99z" fill="#00adff"/>
-    <path d="m189 0h30v99h-30v-99z"/>
-    <path d="m219 0h1v99h-1v-99z" fill="#00efff"/>
-    <path d="m220 0h2v99h-2v-99z"/>
-    <path d="m222 0h3v99h-3v-99z" fill="#00f0ff"/>
-    <path d="m225 0h1v99h-1v-99z"/>
-    <path d="m226 0h3v99h-3v-99z" fill="#0ff"/>
-    <path d="m229 0h1v99h-1v-99z"/>
-    <path d="m230 0h1v99h-1v-99z" fill="#0ff"/>
-    <path d="m231 0h3v99h-3v-99z"/>
-    <path d="m234 0h3v99h-3v-99z" fill="#00ffe7"/>
-    <path d="m237 0h6v99h-6v-99z"/>
-    <path d="m243 0h3v99h-3v-99z" fill="#00ffb5"/>
-    <path d="m246 0h9c0 33-0.01 66 0 99h-9v-99z"/>
-    <path d="m255 0h4.99c0 33-0.01 66 0 99h-4.99c-0.01-33 0-66 0-99z" fill="#00ff75"/>
-    <path d="m259.99 0h3.01v99h-3.01c-0.01-33 0-66 0-99z"/>
-    <path d="m263 0h1v99h-1v-99z" fill="#00ff52"/>
-    <path d="m264 0h2v99h-2v-99z"/>
-    <path d="m266 0h3v99h-3v-99z" fill="#00ff40"/>
-    <path d="m269 0h5v99h-5v-99z"/>
-    <path d="m274 0h1v99h-1v-99z" fill="#00ff18"/>
-    <path d="m275 0h8v99h-8v-99z"/>
-    <path d="m283 0h2v99h-2v-99z" fill="#0eff00"/>
-    <path d="m285 0h4v99h-4v-99z"/>
-    <path d="m289 0h1v99h-1v-99z" fill="#0eff00"/>
-    <path d="m290 0h1v99h-1v-99z"/>
-    <path d="m291 0h2v99h-2v-99z" fill="#0eff00"/>
-    <path d="m293 0h1v99h-1v-99z"/>
-    <path d="m294 0h1v99h-1v-99z" fill="#10ff00"/>
-    <path d="m295 0h1.01c0 33 0 66-0.01 99h-1v-99z"/>
-    <path d="m296.01 0h4.99v99h-5c0.01-33 0.01-66 0.01-99z" fill="#1dff00"/>
-    <path d="m301 0h3v99h-3v-99z"/>
-    <path d="m304 0h4v99h-4v-99z" fill="#20ff00"/>
-    <path d="m308 0h2c0.01 33 0 66 0 99h-2v-99z"/>
-    <path d="m310 0h6v99h-6c0-33 0.01-66 0-99z" fill="#2fff00"/>
-    <path d="m316 0h7v99h-7v-99z"/>
-    <path d="m323 0h3v99h-3v-99z" fill="#3eff00"/>
-    <path d="m326 0h1v99h-1v-99z"/>
-    <path d="m327 0h1v99h-1v-99z" fill="#41ff00"/>
-    <path d="m328 0h4v99h-4v-99z"/>
-    <path d="m332 0h1v99h-1v-99z" fill="#4eff00"/>
-    <path d="m333 0h5v99h-5v-99z"/>
-    <path d="m338 0h6v99h-6v-99z" fill="#50ff00"/>
-    <path d="m344 0h4v99h-4v-99z"/>
-    <path d="m348 0h4v99h-4v-99z" fill="#60ff00"/>
-    <path d="m352 0h1v99h-1v-99z"/>
-    <path d="m353 0h1v99h-1v-99z" fill="#63ff00"/>
-    <path d="m354 0h1.01v99h-1.01v-99z"/>
-    <path d="m355.01 0h6.99v99h-6.99v-99z" fill="#6fff00"/>
-    <path d="m362 0h1.02c0.01 33 0.01 66 0 99h-1.02v-99z"/>
-    <path d="m363.02 0h9.98v99h-9.98c0.01-33 0.01-66 0-99z" fill="#7eff00"/>
-    <path d="m373 0h9v99h-9v-99z"/>
-    <path d="m382 0h3v99h-3v-99z" fill="#90ff00"/>
-    <path d="m385 0h15v99h-15v-99z"/>
-    <path d="m400 0h2v99h-2v-99z" fill="#afff00"/>
-    <path d="m402 0h3v99h-3v-99z"/>
-    <path d="m405 0h2v99h-2v-99z" fill="#b1ff00"/>
-    <path d="m407 0h4c0 33 0.01 66 0 99h-4v-99z"/>
-    <path d="m411 0h4v99h-4c0.01-33 0-66 0-99z" fill="#beff00"/>
-    <path d="m415 0h9v99h-9v-99z"/>
-    <path d="m424 0h1v99h-1v-99z" fill="#ceff00"/>
-    <path d="m425 0h25v99h-25v-99z"/>
-    <path d="m450 0h1v99h-1v-99z" fill="#f7ff00"/>
-    <path d="m451 0h24v99h-24v-99z"/>
-    <path d="m475 0h1v99h-1v-99z" fill="#ffdf00"/>
-    <path d="m476 0h12v99h-12v-99z"/>
-    <path d="m488 0h1v99h-1v-99z" fill="#ffd600"/>
-    <path d="m489 0h18v99h-18v-99z"/>
-    <path d="m507 0h1v99h-1v-99z" fill="#ffb500"/>
-    <path d="m508 0h19v99h-19v-99z"/>
-    <path d="m527 0h1v99h-1v-99z" fill="#ff8f00"/>
-    <path d="m528 0h8v99h-8v-99z"/>
-    <path d="m536 0h1v99h-1v-99z" fill="#ff8100"/>
-    <path d="m537 0h8v99h-8v-99z"/>
-    <path d="m545 0h1v99h-1v-99z" fill="#ff7f00"/>
-    <path d="m546 0h13v99h-13v-99z"/>
-    <path d="m559 0h1v99h-1v-99z" fill="#ff6300"/>
-    <path d="m560 0h4v99h-4v-99z"/>
-    <path d="m564 0h1v99h-1v-99z" fill="#ff5e00"/>
-    <path d="m565 0h1v99h-1v-99z"/>
-    <path d="m566 0h1v99h-1v-99z" fill="#ff5e00"/>
-    <path d="m567 0h2v99h-2v-99z"/>
-    <path d="m569 0h1v99h-1v-99z" fill="#ff5200"/>
-    <path d="m570 0h3v99h-3v-99z"/>
-    <path d="m573 0h2v99h-2v-99z" fill="#ff4e00"/>
-    <path d="m575 0h35v99h-35v-99z"/>
-    <path d="m610 0h1v99h-1v-99z" fill="#ff1000"/>
-    <path d="m611 0h1v99h-1v-99z"/>
-    <path d="m612 0h1v99h-1v-99z" fill="#ff1000"/>
-    <path d="m613 0h2v99h-2v-99z"/>
-    <path d="m615 0h1v99h-1v-99z" fill="#ff0e00"/>
-    <path d="m616 0h1v99h-1v-99z"/>
-    <path d="m617 0h1v99h-1v-99z" fill="#ff0e00"/>
-    <path d="m618 0h2v99h-2v-99z"/>
-    <path d="m620 0h1v99h-1v-99z" fill="#ff0d00"/>
-    <path d="m621 0h15v99h-15v-99z"/>
-    <path d="m636 0h1v99h-1v-99z" fill="#f30000"/>
-    <path d="m637 0h12v99h-12v-99z"/>
-    <path d="m649 0h1c0 33-0.01 66 0 99h-1v-99z" fill="#ef0000"/>
-    <path d="m650 0h11v99h-11c-0.01-33 0-66 0-99z"/>
-    <path d="m661 0h1c0 33-0.01 66 0 99h-1v-99z" fill="#df0000"/>
-    <path d="m662 0h21v99h-21c-0.01-33 0-66 0-99z"/>
-    <path d="m683 0h1c-0.01 33 0 66 0 99h-1v-99z" fill="#d60000"/>
-    <path d="m684 0h44c-0.01 33 0 66 0 99h-44c0-33-0.01-66 0-99z"/>
-    <path d="m728 0h1v99h-1c0-33-0.01-66 0-99z" fill="#b00000"/>
-    <path d="m729 0h22v99h-22v-99z"/>
-    <path d="m751 0h1v99h-1v-99z" fill="#a50000"/>
-    <path d="m752 0h5v99h-5v-99z"/>
-    </svg>
-    
-    Iron has more electrons and more possible energy transitions.
+      Hydrogen has a very simple emission spectrum because it doesn't have very many possible energy states and therefore few energy state transitions.
+      <br> <br>
+      <svg viewBox="0 0 690 55" xmlns="http://www.w3.org/2000/svg">
+        <path d="m0 0h3v99h-3v-99z" fill="#a100ff" />
+        <path d="m3 0h1v99h-1v-99z" />
+        <path d="m4 0h4v99h-4v-99z" fill="#9f00ff" />
+        <path d="m8 0h2v99h-2v-99z" />
+        <path d="m10 0h3.99v99h-3.99v-99z" fill="#9400ff" />
+        <path d="m13.99 0h1.01v99h-1.01v-99z" />
+        <path d="m15 0h5.99c0 33-0.01 66 0 99h-5.99v-99z" fill="#8e00ff" />
+        <path d="m20.99 0h5.01v99h-5.01c-0.01-33 0-66 0-99z" />
+        <path d="m26 0h2v99h-2v-99z" fill="#7e00ff" />
+        <path d="m28 0h2v99h-2v-99z" />
+        <path d="m30 0h2v99h-2v-99z" fill="#7000ff" />
+        <path d="m32 0h1v99h-1v-99z" />
+        <path d="m33 0h7.99v99h-7.99v-99z" fill="#6f00ff" />
+        <path d="m40.99 0h3.01v99h-3.01v-99z" />
+        <path d="m44 0h5.02c0.02 33 0.04 66-0.01 99h-5.01v-99z" fill="#5e00ff" />
+        <path d="m49.02 0h12.96c0 33-0.01 66 0 99h-12.97c0.05-33 0.03-66 0.01-99z" fill="#4f00ff" />
+        <path d="m61.98 0h1.02v99h-1.02c-0.01-33 0-66 0-99z" />
+        <path d="m63 0h5.01c0 33 0.01 66 0 99h-5.01v-99z" fill="#3e00ff" />
+        <path d="m68.01 0h9.99c0 33 0.02 66 0 99h-9.99c0.01-33 0-66 0-99z" fill="#3000ff" />
+        <path d="m78 0h7v99h-7c0.02-33 0-66 0-99z" fill="#1f00ff" />
+        <path d="m85 0h5v99h-5v-99z" />
+        <path d="m90 0h2v99h-2v-99z" fill="#1000ff" />
+        <path d="m92 0h2v99h-2v-99z" />
+        <path d="m94 0h6v99h-6v-99z" fill="#0f00ff" />
+        <path d="m100 0h2v99h-2v-99z" />
+        <path d="m102 0h9v99h-9v-99z" fill="#000fff" />
+        <path d="m111 0h6v99h-6v-99z" />
+        <path d="m117 0h9v99h-9v-99z" fill="#0023ff" />
+        <path d="m126 0h9v99h-9v-99z" />
+        <path d="m135 0h1v99h-1v-99z" fill="#0042ff" />
+        <path d="m136 0h29v99h-29v-99z" />
+        <path d="m165 0h1v99h-1v-99z" fill="#007bff" />
+        <path d="m166 0h22v99h-22v-99z" />
+        <path d="m188 0h1v99h-1v-99z" fill="#00adff" />
+        <path d="m189 0h30v99h-30v-99z" />
+        <path d="m219 0h1v99h-1v-99z" fill="#00efff" />
+        <path d="m220 0h2v99h-2v-99z" />
+        <path d="m222 0h3v99h-3v-99z" fill="#00f0ff" />
+        <path d="m225 0h1v99h-1v-99z" />
+        <path d="m226 0h3v99h-3v-99z" fill="#0ff" />
+        <path d="m229 0h1v99h-1v-99z" />
+        <path d="m230 0h1v99h-1v-99z" fill="#0ff" />
+        <path d="m231 0h3v99h-3v-99z" />
+        <path d="m234 0h3v99h-3v-99z" fill="#00ffe7" />
+        <path d="m237 0h6v99h-6v-99z" />
+        <path d="m243 0h3v99h-3v-99z" fill="#00ffb5" />
+        <path d="m246 0h9c0 33-0.01 66 0 99h-9v-99z" />
+        <path d="m255 0h4.99c0 33-0.01 66 0 99h-4.99c-0.01-33 0-66 0-99z" fill="#00ff75" />
+        <path d="m259.99 0h3.01v99h-3.01c-0.01-33 0-66 0-99z" />
+        <path d="m263 0h1v99h-1v-99z" fill="#00ff52" />
+        <path d="m264 0h2v99h-2v-99z" />
+        <path d="m266 0h3v99h-3v-99z" fill="#00ff40" />
+        <path d="m269 0h5v99h-5v-99z" />
+        <path d="m274 0h1v99h-1v-99z" fill="#00ff18" />
+        <path d="m275 0h8v99h-8v-99z" />
+        <path d="m283 0h2v99h-2v-99z" fill="#0eff00" />
+        <path d="m285 0h4v99h-4v-99z" />
+        <path d="m289 0h1v99h-1v-99z" fill="#0eff00" />
+        <path d="m290 0h1v99h-1v-99z" />
+        <path d="m291 0h2v99h-2v-99z" fill="#0eff00" />
+        <path d="m293 0h1v99h-1v-99z" />
+        <path d="m294 0h1v99h-1v-99z" fill="#10ff00" />
+        <path d="m295 0h1.01c0 33 0 66-0.01 99h-1v-99z" />
+        <path d="m296.01 0h4.99v99h-5c0.01-33 0.01-66 0.01-99z" fill="#1dff00" />
+        <path d="m301 0h3v99h-3v-99z" />
+        <path d="m304 0h4v99h-4v-99z" fill="#20ff00" />
+        <path d="m308 0h2c0.01 33 0 66 0 99h-2v-99z" />
+        <path d="m310 0h6v99h-6c0-33 0.01-66 0-99z" fill="#2fff00" />
+        <path d="m316 0h7v99h-7v-99z" />
+        <path d="m323 0h3v99h-3v-99z" fill="#3eff00" />
+        <path d="m326 0h1v99h-1v-99z" />
+        <path d="m327 0h1v99h-1v-99z" fill="#41ff00" />
+        <path d="m328 0h4v99h-4v-99z" />
+        <path d="m332 0h1v99h-1v-99z" fill="#4eff00" />
+        <path d="m333 0h5v99h-5v-99z" />
+        <path d="m338 0h6v99h-6v-99z" fill="#50ff00" />
+        <path d="m344 0h4v99h-4v-99z" />
+        <path d="m348 0h4v99h-4v-99z" fill="#60ff00" />
+        <path d="m352 0h1v99h-1v-99z" />
+        <path d="m353 0h1v99h-1v-99z" fill="#63ff00" />
+        <path d="m354 0h1.01v99h-1.01v-99z" />
+        <path d="m355.01 0h6.99v99h-6.99v-99z" fill="#6fff00" />
+        <path d="m362 0h1.02c0.01 33 0.01 66 0 99h-1.02v-99z" />
+        <path d="m363.02 0h9.98v99h-9.98c0.01-33 0.01-66 0-99z" fill="#7eff00" />
+        <path d="m373 0h9v99h-9v-99z" />
+        <path d="m382 0h3v99h-3v-99z" fill="#90ff00" />
+        <path d="m385 0h15v99h-15v-99z" />
+        <path d="m400 0h2v99h-2v-99z" fill="#afff00" />
+        <path d="m402 0h3v99h-3v-99z" />
+        <path d="m405 0h2v99h-2v-99z" fill="#b1ff00" />
+        <path d="m407 0h4c0 33 0.01 66 0 99h-4v-99z" />
+        <path d="m411 0h4v99h-4c0.01-33 0-66 0-99z" fill="#beff00" />
+        <path d="m415 0h9v99h-9v-99z" />
+        <path d="m424 0h1v99h-1v-99z" fill="#ceff00" />
+        <path d="m425 0h25v99h-25v-99z" />
+        <path d="m450 0h1v99h-1v-99z" fill="#f7ff00" />
+        <path d="m451 0h24v99h-24v-99z" />
+        <path d="m475 0h1v99h-1v-99z" fill="#ffdf00" />
+        <path d="m476 0h12v99h-12v-99z" />
+        <path d="m488 0h1v99h-1v-99z" fill="#ffd600" />
+        <path d="m489 0h18v99h-18v-99z" />
+        <path d="m507 0h1v99h-1v-99z" fill="#ffb500" />
+        <path d="m508 0h19v99h-19v-99z" />
+        <path d="m527 0h1v99h-1v-99z" fill="#ff8f00" />
+        <path d="m528 0h8v99h-8v-99z" />
+        <path d="m536 0h1v99h-1v-99z" fill="#ff8100" />
+        <path d="m537 0h8v99h-8v-99z" />
+        <path d="m545 0h1v99h-1v-99z" fill="#ff7f00" />
+        <path d="m546 0h13v99h-13v-99z" />
+        <path d="m559 0h1v99h-1v-99z" fill="#ff6300" />
+        <path d="m560 0h4v99h-4v-99z" />
+        <path d="m564 0h1v99h-1v-99z" fill="#ff5e00" />
+        <path d="m565 0h1v99h-1v-99z" />
+        <path d="m566 0h1v99h-1v-99z" fill="#ff5e00" />
+        <path d="m567 0h2v99h-2v-99z" />
+        <path d="m569 0h1v99h-1v-99z" fill="#ff5200" />
+        <path d="m570 0h3v99h-3v-99z" />
+        <path d="m573 0h2v99h-2v-99z" fill="#ff4e00" />
+        <path d="m575 0h35v99h-35v-99z" />
+        <path d="m610 0h1v99h-1v-99z" fill="#ff1000" />
+        <path d="m611 0h1v99h-1v-99z" />
+        <path d="m612 0h1v99h-1v-99z" fill="#ff1000" />
+        <path d="m613 0h2v99h-2v-99z" />
+        <path d="m615 0h1v99h-1v-99z" fill="#ff0e00" />
+        <path d="m616 0h1v99h-1v-99z" />
+        <path d="m617 0h1v99h-1v-99z" fill="#ff0e00" />
+        <path d="m618 0h2v99h-2v-99z" />
+        <path d="m620 0h1v99h-1v-99z" fill="#ff0d00" />
+        <path d="m621 0h15v99h-15v-99z" />
+        <path d="m636 0h1v99h-1v-99z" fill="#f30000" />
+        <path d="m637 0h12v99h-12v-99z" />
+        <path d="m649 0h1c0 33-0.01 66 0 99h-1v-99z" fill="#ef0000" />
+        <path d="m650 0h11v99h-11c-0.01-33 0-66 0-99z" />
+        <path d="m661 0h1c0 33-0.01 66 0 99h-1v-99z" fill="#df0000" />
+        <path d="m662 0h21v99h-21c-0.01-33 0-66 0-99z" />
+        <path d="m683 0h1c-0.01 33 0 66 0 99h-1v-99z" fill="#d60000" />
+        <path d="m684 0h44c-0.01 33 0 66 0 99h-44c0-33-0.01-66 0-99z" />
+        <path d="m728 0h1v99h-1c0-33-0.01-66 0-99z" fill="#b00000" />
+        <path d="m729 0h22v99h-22v-99z" />
+        <path d="m751 0h1v99h-1v-99z" fill="#a50000" />
+        <path d="m752 0h5v99h-5v-99z" />
+      </svg>
+      Iron has more protons, so it can support more possible electron energy transitions.
     </div>
 
     <div class=" example-small col-group">
@@ -1300,129 +1313,129 @@
     </div>
 
     <div class="example-small">
-    <p>
-      <strong>Absorption</strong> is the reverse of emission. A single photon is absorbed by a single electron, causing the electron to transition to <strong>higher</strong> energy levels.
-    </p>
-    <p>
-      If there isn't an energy difference that matches the energy of the colliding photon, the material is <a href='https://www.youtube.com/watch?v=VwRLIt6jgdM'>transparent</a> to that frequency. A substance may be clear in one range of the spectrum but not in others. For example: glass is mostly transparent to visible light, but it has many absorption frequencies in the infrared.
-    </p>
-    <p>
+      <p>
+        <strong>Absorption</strong> is the reverse of emission. A single photon is absorbed by a single electron, causing the electron to transition to <strong>higher</strong> energy levels.
+      </p>
+      <p>
+        If there isn't an energy difference that matches the energy of the colliding photon, the material is <a href='https://www.youtube.com/watch?v=VwRLIt6jgdM'>transparent</a> to that frequency. A substance may be clear in one range of the spectrum but not in others. For example: glass is mostly transparent to visible light, but it has many absorption frequencies in the infrared.
+      </p>
+      <p>
         Exposing atoms to a full spectrum of light will produce an absorption spectrum that also match the energy difference between electron energy levels.
-    </p>
-    <svg viewBox="0 0 336 25">
-      <rect x="0" y="0" width="335" height="40" style="fill:#000000;stroke:none;" />
-      <rect x="32" y="0" width="2" height="40" style="fill:#4b0095;stroke:none;" />
-      <!-- <text x="32" y="50" fill="black" >410 nm</text> -->
-      <rect x="61" y="0" width="2" height="40" style="fill:#3600e0;stroke:none;" />
-      <rect x="125" y="0" width="3" height="40" style="fill:#00d97f;stroke:none;" />
-      <rect x="305" y="0" width="3" height="40" style="fill:#d60f00;stroke:none;" />
-    </svg>
-    <svg viewBox="0 0 336 25">
-      <defs>
-        <linearGradient id="s" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
-          <stop offset="8%" style="stop-color:rgb(73,0,140);stop-opacity:1" />
-          <stop offset="20%" style="stop-color:rgb(38,4,235);stop-opacity:1" />
-          <stop offset="30%" style="stop-color:rgb(1,148,227);stop-opacity:1" />
-          <stop offset="36%" style="stop-color:rgb(0,216,136);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:rgb(1,183,0);stop-opacity:1" />
-          <stop offset="68%" style="stop-color:rgb(221,204,0);stop-opacity:1" />
-          <stop offset="77%" style="stop-color:rgb(255,95,0);stop-opacity:1" />
-          <stop offset="84%" style="stop-color:rgb(235,38,0);stop-opacity:1" />
-          <stop offset="90%" style="stop-color:rgb(200,12,0);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
-        </linearGradient>
-      </defs>
-      <rect x="0" y="0" width="335" height="40" style="fill:url(#s);stroke:none;" />
-      <rect x="32" y="0" width="2" height="40" style="fill:#000000;stroke:none;" />
-      <rect x="61" y="0" width="2" height="40" style="fill:#000000;stroke:none;" />
-      <rect x="125" y="0" width="3" height="40" style="fill:#000000;stroke:none;" />
-      <rect x="305" y="0" width="3" height="40" style="fill:#000000;stroke:none;" />
-    </svg>
+      </p>
+      <svg viewBox="0 0 336 25">
+        <rect x="0" y="0" width="335" height="40" style="fill:#000000;stroke:none;" />
+        <rect x="32" y="0" width="2" height="40" style="fill:#4b0095;stroke:none;" />
+        <!-- <text x="32" y="50" fill="black" >410 nm</text> -->
+        <rect x="61" y="0" width="2" height="40" style="fill:#3600e0;stroke:none;" />
+        <rect x="125" y="0" width="3" height="40" style="fill:#00d97f;stroke:none;" />
+        <rect x="305" y="0" width="3" height="40" style="fill:#d60f00;stroke:none;" />
+      </svg>
+      <svg viewBox="0 0 336 25">
+        <defs>
+          <linearGradient id="s" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
+            <stop offset="8%" style="stop-color:rgb(73,0,140);stop-opacity:1" />
+            <stop offset="20%" style="stop-color:rgb(38,4,235);stop-opacity:1" />
+            <stop offset="30%" style="stop-color:rgb(1,148,227);stop-opacity:1" />
+            <stop offset="36%" style="stop-color:rgb(0,216,136);stop-opacity:1" />
+            <stop offset="50%" style="stop-color:rgb(1,183,0);stop-opacity:1" />
+            <stop offset="68%" style="stop-color:rgb(221,204,0);stop-opacity:1" />
+            <stop offset="77%" style="stop-color:rgb(255,95,0);stop-opacity:1" />
+            <stop offset="84%" style="stop-color:rgb(235,38,0);stop-opacity:1" />
+            <stop offset="90%" style="stop-color:rgb(200,12,0);stop-opacity:1" />
+            <stop offset="100%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="335" height="40" style="fill:url(#s);stroke:none;" />
+        <rect x="32" y="0" width="2" height="40" style="fill:#000000;stroke:none;" />
+        <rect x="61" y="0" width="2" height="40" style="fill:#000000;stroke:none;" />
+        <rect x="125" y="0" width="3" height="40" style="fill:#000000;stroke:none;" />
+        <rect x="305" y="0" width="3" height="40" style="fill:#000000;stroke:none;" />
+      </svg>
 
-        Light absorption occurs at the same energies as emission. Hydrogen's absorption frequencies are the same as its emission frequencies.
-    <br>
-    <p>
-      <a href='https://www.youtube.com/watch?v=pxC6F7bK8CU'>Analyzing the spectrum</a> of emission or absorption can actually be used like a <a href="https://en.wikipedia.org/wiki/Spectral_line#Spectral_lines_of_chemical_elements">fingerprint</a> to identify the elements or molecules being observed. This technique is used in fields like forensics and astronomy.
-    </p>
-  </div>
+      Light absorption occurs at the same energies as emission. Hydrogen's absorption frequencies are the same as its emission frequencies.
+      <br>
+      <p>
+        <a href='https://www.youtube.com/watch?v=pxC6F7bK8CU'>Analyzing the spectrum</a> of emission or absorption can actually be used like a <a href="https://en.wikipedia.org/wiki/Spectral_line#Spectral_lines_of_chemical_elements">fingerprint</a> to identify the elements or molecules being observed. This technique is used in fields like forensics and astronomy.
+      </p>
+    </div>
     <div class='example'>
       <p>
         <a href="https://apod.nasa.gov/apod/ap180926.html">Sunlight</a> is mostly thermal radiation with large sections of absorption from the molecules in earth's atmosphere.
       </p>
       <svg viewbox='25 0 800 600'>
         <g transform="translate(66.009356,-172.95341)">
-          <g >
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="37.170357" y="712.49231" >
-              <tspan   x="37.170357" y="712.49231">250</tspan>
+          <g>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="37.170357" y="712.49231">
+              <tspan x="37.170357" y="712.49231">250</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="108.02484" y="712.49231" >
-              <tspan   x="108.02484" y="712.49231">500</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="108.02484" y="712.49231">
+              <tspan x="108.02484" y="712.49231">500</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="179.43109" y="712.49231" >
-              <tspan   x="179.43109" y="712.49231">750</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="179.43109" y="712.49231">
+              <tspan x="179.43109" y="712.49231">750</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="244.85098" y="712.49231" >
-              <tspan   x="244.85098" y="712.49231">1000</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="244.85098" y="712.49231">
+              <tspan x="244.85098" y="712.49231">1000</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="316.05215" y="712.49231" >
-              <tspan   x="316.05215" y="712.49231">1250</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="316.05215" y="712.49231">
+              <tspan x="316.05215" y="712.49231">1250</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="387.25333" y="712.49231" >
-              <tspan   x="387.25333" y="712.49231">1500</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="387.25333" y="712.49231">
+              <tspan x="387.25333" y="712.49231">1500</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="458.43494" y="712.49231" >
-              <tspan   x="458.43494" y="712.49231">1750</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="458.43494" y="712.49231">
+              <tspan x="458.43494" y="712.49231">1750</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="530.34412" y="712.49231" >
-              <tspan   x="530.34412" y="712.49231">2000</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="530.34412" y="712.49231">
+              <tspan x="530.34412" y="712.49231">2000</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="601.54529" y="712.49231" >
-              <tspan   x="601.54529" y="712.49231">2250</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="601.54529" y="712.49231">
+              <tspan x="601.54529" y="712.49231">2250</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="672.74646" y="712.49231" >
-              <tspan   x="672.74646" y="712.49231">2500</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="672.74646" y="712.49231">
+              <tspan x="672.74646" y="712.49231">2500</tspan>
             </text>
           </g>
-          <text   y="750" x="380" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:middle;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Trebuchet MS" >
-            <tspan y="750" x="380"  >Wavelength (nm)</tspan>
+          <text y="750" x="380" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:middle;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Trebuchet MS">
+            <tspan y="750" x="380">Wavelength (nm)</tspan>
           </text>
         </g>
-        <text  style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36px;line-height:125%;font-family: 'Trebuchet MS';-inkscape-font-specification: 'Trebuchet MS';text-align:middle;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none" x="443" y="50"  >
-          <tspan   x="443" y="50">Spectrum of Solar Radiation (Earth)</tspan>
+        <text style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36px;line-height:125%;font-family: 'Trebuchet MS';-inkscape-font-specification: 'Trebuchet MS';text-align:middle;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none" x="443" y="50">
+          <tspan x="443" y="50">Spectrum of Solar Radiation (Earth)</tspan>
         </text>
-        <g  transform="translate(38.009356,-192.95341)">
-          <g transform="translate(28,20)" >
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="19.722553" y="694.72571" >
-              <tspan   x="19.722553" y="694.72571">0</tspan>
+        <g transform="translate(38.009356,-192.95341)">
+          <g transform="translate(28,20)">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="19.722553" y="694.72571">
+              <tspan x="19.722553" y="694.72571">0</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="2.4178658" y="607.20966" >
-              <tspan   x="2.4178658" y="607.20966">0.5</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="2.4178658" y="607.20966">
+              <tspan x="2.4178658" y="607.20966">0.5</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="22.798725" y="519.88892" >
-              <tspan   x="22.798725" y="519.88892">1</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="22.798725" y="519.88892">
+              <tspan x="22.798725" y="519.88892">1</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="2.4178658" y="432.17758" >
-              <tspan   x="2.4178658" y="432.17758">1.5</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="2.4178658" y="432.17758">
+              <tspan x="2.4178658" y="432.17758">1.5</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="20.152241" y="344.85687" >
-              <tspan   x="20.152241" y="344.85687">2</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="20.152241" y="344.85687">
+              <tspan x="20.152241" y="344.85687">2</tspan>
             </text>
-            <text  style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="2.4178658" y="257.14554" >
-              <tspan   x="2.4178658" y="257.14554">2.5</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" x="2.4178658" y="257.14554">
+              <tspan x="2.4178658" y="257.14554">2.5</tspan>
             </text>
           </g>
-          <g >
-            <text transform="matrix(0,-1,1,0,0,0)" sodipodi:linespacing="-5.7583923e+029%"  y="16" x="-495" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28px;line-height:-575839229844696810000000000000%;font-family: 'Trebuchet MS';-inkscape-font-specification: 'Trebuchet MS';text-align:middle;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none" >
-              <tspan y="16" x="-495"  >Irradiance (W/m²/nm)</tspan>
+          <g>
+            <text transform="matrix(0,-1,1,0,0,0)" sodipodi:linespacing="-5.7583923e+029%" y="16" x="-495" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28px;line-height:-575839229844696810000000000000%;font-family: 'Trebuchet MS';-inkscape-font-specification: 'Trebuchet MS';text-align:middle;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none">
+              <tspan y="16" x="-495">Irradiance (W/m²/nm)</tspan>
             </text>
           </g>
         </g>
-        <g  transform="translate(38.009356,-192.95341)">
-          <g transform="translate(28,20)" >
-            <g >
-              <g >
-                <path  style="fill:#ffe61a;fill-opacity:1" d="m 50.098083,688.15399
+        <g transform="translate(38.009356,-192.95341)">
+          <g transform="translate(28,20)">
+            <g>
+              <g>
+                <path style="fill:#ffe61a;fill-opacity:1" d="m 50.098083,688.15399
           c 3.899603,-4.25738 8.4852,-19.29773 10.194345,-33.43656 0.29919,-2.475 0.97469,-5.03592 1.50112,-5.69094 0.52644,-0.65502
           1.15909,-8.98002 1.40589,-18.5 0.486,-18.74652 1.41712,-36.13687 1.90755,-35.62729 0.16845,0.17503 0.58542,2.09199
           0.92658,4.25992 0.98954,6.28792 1.57027,5.45186 1.57027,-2.26067 0,-3.93378 0.45363,-9.07128 1.00807,-11.41667 2.25584,-9.54265
@@ -1481,7 +1494,7 @@
           13.75,0.97006 25.25507,2.14177 25.56682,2.60379 0.31175,0.46202 2.44843,0.69119 4.74819,0.50927 2.29975,-0.18192
           9.69468,0.0109 16.43318,0.42859 26.49005,1.64181 56.48644,3.08533 61.00181,2.93558 4.66266,-0.15462 4.75,-0.10145
           4.75,2.89192 l 0,3.04943 -336.38487,0 -336.384863,0 3.263986,-3.56344 z" />
-                <path  style="fill:#ff3333;fill-opacity:1;stroke:#000000;stroke-width:0.30000001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" d="m 65.478423,690.92189 c 1.04278,-1.68724 4.60954,-21.56396 5.25208,-29.26855 0.37125,-4.45157 1.21327,-8.63203
+                <path style="fill:#ff3333;fill-opacity:1;stroke:#000000;stroke-width:0.30000001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" d="m 65.478423,690.92189 c 1.04278,-1.68724 4.60954,-21.56396 5.25208,-29.26855 0.37125,-4.45157 1.21327,-8.63203
           1.87115,-9.28992 0.65789,-0.65788 1.51062,-2.87236 1.89496,-4.92107 0.38434,-2.0487 1.07089,-3.72491 1.52567,-3.72491
           0.45479,0 1.1181,-1.82118 1.47403,-4.04706 0.35594,-2.22589 1.05183,-3.79696 1.54644,-3.49128 1.09046,0.67394 1.72212,-2.42905
           2.63857,-12.96166 0.38284,-4.4 0.89817,-7.4347 1.14518,-6.74377 0.247,0.69093 0.89095,0.98315 1.431,0.64938 0.54004,-0.33376
@@ -1552,15 +1565,15 @@
           2.87623,-0.13535 1.06103,-0.59378 2.55431,-0.45773 4.25791,0.38793 1.44309,0.71634 4.2879,1.16805 6.32183,1.00379
           2.41561,-0.19507 3.87857,0.17181 4.21861,1.05796 0.43516,1.13402 -10.77224,1.35659 -68.31203,1.35659 l -68.8326,0
           2.3355,-4.61322 z m 138.09609,3.5096 c 0.79096,-0.79095 1.62674,-0.79957 2.95,-0.0304 1.61863,0.94083 1.48249,1.07696
-          -1.10362,1.10362 -2.15133,0.0222 -2.6512,-0.26838 -1.84638,-1.07321 z"  />
+          -1.10362,1.10362 -2.15133,0.0222 -2.6512,-0.26838 -1.84638,-1.07321 z" />
               </g>
-              <path  d="M381,6721C426,6607 456,6488 484,6368C519,6213 549,6057 578,5900C663,5435 734,4966
+              <path d="M381,6721C426,6607 456,6488 484,6368C519,6213 549,6057 578,5900C663,5435 734,4966
           842,4506C868,4399 895,4293 928,4188C954,4104 983,4021 1022,3943C1045,3896 1072,3849 1107,3810C1129,3786 1154,3765
           1184,3754C1261,3725 1335,3775 1389,3825C1444,3877 1491,3937 1534,3999C1589,4076 1639,4155 1688,4236C1841,4486 1986,4742
           2149,4987C2375,5325 2634,5643 2952,5899C3141,6051 3348,6178 3567,6281C3971,6471 4409,6578 4848,6651C5213,6711 5582,6748
           5950,6776C6368,6808 6787,6827 7206,6842" transform="scale(0.1)" style="stroke:#7f7f7f;stroke-width:20;fill:none" />
             </g>
-            <g >
+            <g>
               <path d="m 94.484367,252.30052 0,438.10662" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0" />
               <path d="m 180.03738,252.53556 0,438.81173" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0" />
               <rect ry="1.528919" y="253.89284" x="37.56905" height="437.90384" width="681.57623" style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
@@ -1582,101 +1595,101 @@
               <path d="m 692.08076,692.71 0,2.91681" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
             </g>
           </g>
-              <g>
-                <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="706.53387" y="701.68475" >
-                  <tspan x="706.53387" y="701.68475" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
-                </text>
-                <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="693.87659" y="694.45203" >
-                  <tspan x="693.87659" y="694.45203">H O</tspan>
-                </text>
-              </g>
-              <text y="621.43933" x="531.90747" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" >
-                <tspan style="fill:#2700a0;fill-opacity:1" y="621.43933" x="531.90747">Atmospheric</tspan>
-                <tspan style="fill:#2700a0;fill-opacity:1" y="646.43933" x="531.90747">absorption bands</tspan>
-              </text>
-              <g transform="translate(-443.93562,-59.560028)" >
-                <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325" >
-                  <tspan x="831.40668" y="690.77325">H O</tspan>
-                </text>
-                <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="844.06396" y="698.00598"  >
-                  <tspan x="844.06396" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
-                </text>
-              </g>
-              <g  transform="translate(-575.93291,3.726346)">
-                <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325" >
-                  <tspan x="831.40668" y="690.77325">H O</tspan>
-                </text>
-                <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="844.06396" y="698.00598"  >
-                  <tspan x="844.06396" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
-                </text>
-              </g>
-              <g transform="translate(-523.49562,-110.18915)">
-                <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325" >
-                  <tspan x="831.40668" y="690.77325">H O</tspan>
-                </text>
-                <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="844.06396" y="698.00598"  >
-                  <tspan x="844.06396" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
-                </text>
-              </g>
-              <g transform="translate(-316.40373,-14.163664)">
-                <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325" >
-                  <tspan x="831.40668" y="690.77325">H O</tspan>
-                </text>
-                <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="844.06396" y="698.00598"  >
-                  <tspan x="844.06396" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
-                </text>
-              </g>
-              <g transform="translate(-247.22733,-7.122752)" >
-                <text  y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" >
-                  <tspan y="690.77325" x="819.40668"  >CO</tspan>
-                </text>
-                <text y="698.00598" x="844.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" >
-                  <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS" y="698.00598" x="844.06396"  >2</tspan>
-                </text>
-              </g>
-              <g transform="translate(-604.68495,-32.437307)" >
-                <text  y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" >
-                  <tspan y="690.77325" x="819.40668"  >O</tspan>
-                </text>
-                <text y="698.00598" x="832.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" >
-                  <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS" y="698.00598" x="832.06396"  >2</tspan>
-                </text>
-              </g>
-              <g transform="translate(-745.14773,7.342707)" >
-                <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" >
-                  <tspan y="690.77325" x="819.40668"  >O</tspan>
-                </text>
-                <text y="698.00598" x="832.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" >
-                  <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS" y="698.00598" x="832.06396"  >3</tspan>
-                </text>
-              </g>
-              <text  y="300.26828" x="78.820923" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" >
-                <tspan y="300.26828" x="78.820923"  >UV</tspan>
-              </text>
-              <text  y="300.70773" x="133.53186" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" >
-                <tspan y="300.70773" x="133.53186"  >Visible</tspan>
-              </text>
-              <text y="300.70773" x="227.36552" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial" >
-                <tspan y="300.70773" x="227.36552"  >Infrared</tspan>
-              </text>
-              <path d="m 328.65927,293.50063 371.35191,-0.83514" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none"  />
-              <path  d="m 695.72271,283.72134 14.67784,8.86337 -14.3919,9.38751 c 2.23766,-5.42953 2.1088,-12.80054 -0.28594,-18.25088 z" style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"  />
-                <path style="fill:#aa9800;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 237.74916,405.14286 -68.71093,41.5882" />
-                <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#aa9800;fill-opacity:1;stroke:none;font-family:Trebuchet          MS" x="226.98189" y="400.6774" >
-                  <tspan   x="226.98189" y="400.6774">Sunlight without atmospheric absorption</tspan>
-                </text>
-                <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="m 177.76248,451.05923 -17.0798,1.5096 6.0758,-16.07286 c 1.39873,5.70355 5.85373,11.57734 11.004,14.56326 z" />
-                <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 319.11741,504.92164 -47.01278,32.21854" />
-                <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2b0000;fill-opacity:1;stroke:none;font-family:Arial" x="320" y="500" >
-                  <tspan   x="320" y="500">5778K blackbody</tspan>
-                </text>
-                <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="m 285.28487,539.26218 -17.10355,1.21115 6.35551,-15.96433 c 1.29893,5.72711 5.65069,11.67779 10.74804,14.75318 z" />
-                <path style="fill:none;stroke:#000000;stroke-width:1.54598403px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 479.1968,579.65061 0.92684,106.19219" />
-                <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#7f3333;fill-opacity:1;stroke:none;font-family:Arial" x="394.15558" y="569.68744" >
-                  <tspan x="394.15558" y="569.68744">Sunlight at sea level</tspan>
-                </text>
-                <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="m 489.11884,683.21578 -8.96271,14.6174 -9.28969,-14.45523 c 5.41423,2.27443 12.78595,2.19556 18.2524,-0.16217 z" />
+          <g>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="706.53387" y="701.68475">
+              <tspan x="706.53387" y="701.68475" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
+            </text>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="693.87659" y="694.45203">
+              <tspan x="693.87659" y="694.45203">H O</tspan>
+            </text>
           </g>
+          <text y="621.43933" x="531.90747" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
+            <tspan style="fill:#2700a0;fill-opacity:1" y="621.43933" x="531.90747">Atmospheric</tspan>
+            <tspan style="fill:#2700a0;fill-opacity:1" y="646.43933" x="531.90747">absorption bands</tspan>
+          </text>
+          <g transform="translate(-443.93562,-59.560028)">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
+              <tspan x="831.40668" y="690.77325">H O</tspan>
+            </text>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="844.06396" y="698.00598">
+              <tspan x="844.06396" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
+            </text>
+          </g>
+          <g transform="translate(-575.93291,3.726346)">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
+              <tspan x="831.40668" y="690.77325">H O</tspan>
+            </text>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="844.06396" y="698.00598">
+              <tspan x="844.06396" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
+            </text>
+          </g>
+          <g transform="translate(-523.49562,-110.18915)">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
+              <tspan x="831.40668" y="690.77325">H O</tspan>
+            </text>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="844.06396" y="698.00598">
+              <tspan x="844.06396" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
+            </text>
+          </g>
+          <g transform="translate(-316.40373,-14.163664)">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
+              <tspan x="831.40668" y="690.77325">H O</tspan>
+            </text>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="844.06396" y="698.00598">
+              <tspan x="844.06396" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
+            </text>
+          </g>
+          <g transform="translate(-247.22733,-7.122752)">
+            <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial">
+              <tspan y="690.77325" x="819.40668">CO</tspan>
+            </text>
+            <text y="698.00598" x="844.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial">
+              <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS" y="698.00598" x="844.06396">2</tspan>
+            </text>
+          </g>
+          <g transform="translate(-604.68495,-32.437307)">
+            <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial">
+              <tspan y="690.77325" x="819.40668">O</tspan>
+            </text>
+            <text y="698.00598" x="832.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial">
+              <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS" y="698.00598" x="832.06396">2</tspan>
+            </text>
+          </g>
+          <g transform="translate(-745.14773,7.342707)">
+            <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial">
+              <tspan y="690.77325" x="819.40668">O</tspan>
+            </text>
+            <text y="698.00598" x="832.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial">
+              <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS" y="698.00598" x="832.06396">3</tspan>
+            </text>
+          </g>
+          <text y="300.26828" x="78.820923" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
+            <tspan y="300.26828" x="78.820923">UV</tspan>
+          </text>
+          <text y="300.70773" x="133.53186" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
+            <tspan y="300.70773" x="133.53186">Visible</tspan>
+          </text>
+          <text y="300.70773" x="227.36552" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
+            <tspan y="300.70773" x="227.36552">Infrared</tspan>
+          </text>
+          <path d="m 328.65927,293.50063 371.35191,-0.83514" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" />
+          <path d="m 695.72271,283.72134 14.67784,8.86337 -14.3919,9.38751 c 2.23766,-5.42953 2.1088,-12.80054 -0.28594,-18.25088 z" style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" />
+          <path style="fill:#aa9800;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 237.74916,405.14286 -68.71093,41.5882" />
+          <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#aa9800;fill-opacity:1;stroke:none;font-family:Trebuchet          MS" x="226.98189" y="400.6774">
+            <tspan x="226.98189" y="400.6774">Sunlight without atmospheric absorption</tspan>
+          </text>
+          <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="m 177.76248,451.05923 -17.0798,1.5096 6.0758,-16.07286 c 1.39873,5.70355 5.85373,11.57734 11.004,14.56326 z" />
+          <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 319.11741,504.92164 -47.01278,32.21854" />
+          <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2b0000;fill-opacity:1;stroke:none;font-family:Arial" x="320" y="500">
+            <tspan x="320" y="500">5778K blackbody</tspan>
+          </text>
+          <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="m 285.28487,539.26218 -17.10355,1.21115 6.35551,-15.96433 c 1.29893,5.72711 5.65069,11.67779 10.74804,14.75318 z" />
+          <path style="fill:none;stroke:#000000;stroke-width:1.54598403px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 479.1968,579.65061 0.92684,106.19219" />
+          <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#7f3333;fill-opacity:1;stroke:none;font-family:Arial" x="394.15558" y="569.68744">
+            <tspan x="394.15558" y="569.68744">Sunlight at sea level</tspan>
+          </text>
+          <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="m 489.11884,683.21578 -8.96271,14.6174 -9.28969,-14.45523 c 5.41423,2.27443 12.78595,2.19556 18.2524,-0.16217 z" />
+        </g>
       </svg>
 
       <strong>Question:</strong> What molecules are absorbing most of the Sun's infrared rays?
@@ -1699,164 +1712,164 @@
     <div class='example'>
       <svg viewBox="0 0 600 450">
         <g transform="translate(-47.689941,-20.119128)">
-          <path d="M 184.60538,223.53202 L 446.73996,61.528805"  style="fill:none;fill-rule:evenodd;stroke:#99a366;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
-          <path d="M 183.72149,221.89052 L 365.04387,86.277542"  style="fill:none;fill-rule:evenodd;stroke:#99a366;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 182.45881,220.3753 L 297.6162,115.31943"  style="fill:none;fill-rule:evenodd;stroke:#99a366;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 180.81731,218.35499 L 241.679,148.27566"  style="fill:none;fill-rule:evenodd;stroke:#99a366;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 177.28177,216.33469 L 196.09587,181.73696"  style="fill:none;fill-rule:evenodd;stroke:#99a366;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 225.6407,220.10023 L 278.1407,208.85023"  style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
-          <path d="M 227.06927,227.42166 L 342.06927,217.24309"  style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
-          <path d="M 414.56927,232.42166 L 226.71212,232.42166"  style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
-          <path d="M 226.89069,237.95737 L 495.81926,261.88594"  style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
-          <path d="M 272.42641,274.56451 L 332.06927,296.35023"  style="fill:none;fill-rule:evenodd;stroke:#9a1439;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 268.85498,283.13594 L 388.1407,345.99309"  style="fill:none;fill-rule:evenodd;stroke:#9a1439;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 263.1407,293.13594 L 445.28355,408.13594"  style="fill:none;fill-rule:evenodd;stroke:#9a1439;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 184.60538,223.53202 L 446.73996,61.528805" style="fill:none;fill-rule:evenodd;stroke:#99a366;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
+          <path d="M 183.72149,221.89052 L 365.04387,86.277542" style="fill:none;fill-rule:evenodd;stroke:#99a366;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 182.45881,220.3753 L 297.6162,115.31943" style="fill:none;fill-rule:evenodd;stroke:#99a366;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 180.81731,218.35499 L 241.679,148.27566" style="fill:none;fill-rule:evenodd;stroke:#99a366;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 177.28177,216.33469 L 196.09587,181.73696" style="fill:none;fill-rule:evenodd;stroke:#99a366;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 225.6407,220.10023 L 278.1407,208.85023" style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
+          <path d="M 227.06927,227.42166 L 342.06927,217.24309" style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
+          <path d="M 414.56927,232.42166 L 226.71212,232.42166" style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
+          <path d="M 226.89069,237.95737 L 495.81926,261.88594" style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
+          <path d="M 272.42641,274.56451 L 332.06927,296.35023" style="fill:none;fill-rule:evenodd;stroke:#9a1439;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 268.85498,283.13594 L 388.1407,345.99309" style="fill:none;fill-rule:evenodd;stroke:#9a1439;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 263.1407,293.13594 L 445.28355,408.13594" style="fill:none;fill-rule:evenodd;stroke:#9a1439;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         </g>
         <g transform="translate(-47.689941,-20.119128)" id="layer1" style="display:inline">
           <path d="M 144.45181,198.78328 A 20.203051,20.203051 0 1 1 104.04571,198.78328 A 20.203051,20.203051 0 1 1 144.45181,198.78328
-          z" transform="translate(43.436569,35.355349)"  style="fill:none;fill-opacity:1;stroke:#2682a9;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 91.336155,148.0861 A 59.598999,59.598999 0 1 1 91.526055,247.58544" transform="translate(43.436569,36.365496)"  style="fill:none;fill-opacity:1;stroke:#2682a9;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 92.599403,89.452523 A 113.13708,113.13708 0 1 1 92.879967,306.17794" transform="translate(42.426407,36.365496)"  style="fill:none;fill-opacity:1;stroke:#2682a9;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 93.785149,27.054704 A 175.76654,175.76654 0 1 1 93.570428,372.49166" transform="translate(41.416252,34.345187)"  style="fill:none;fill-opacity:1;stroke:#2682a9;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 295.63955,20.678086 A 246.47722,246.47722 0 0 1 282.61464,388.4941" transform="translate(42.426407,35.355349)"  style="fill:none;fill-opacity:1;stroke:#2682a9;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 400.6788,21.119128 A 328.29959,328.29959 0 0 1 392.84936,389.99327" transform="translate(42.426407,34.345187)"  style="fill:none;fill-opacity:1;stroke:#2682a9;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          z" transform="translate(43.436569,35.355349)" style="fill:none;fill-opacity:1;stroke:#2682a9;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 91.336155,148.0861 A 59.598999,59.598999 0 1 1 91.526055,247.58544" transform="translate(43.436569,36.365496)" style="fill:none;fill-opacity:1;stroke:#2682a9;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 92.599403,89.452523 A 113.13708,113.13708 0 1 1 92.879967,306.17794" transform="translate(42.426407,36.365496)" style="fill:none;fill-opacity:1;stroke:#2682a9;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 93.785149,27.054704 A 175.76654,175.76654 0 1 1 93.570428,372.49166" transform="translate(41.416252,34.345187)" style="fill:none;fill-opacity:1;stroke:#2682a9;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 295.63955,20.678086 A 246.47722,246.47722 0 0 1 282.61464,388.4941" transform="translate(42.426407,35.355349)" style="fill:none;fill-opacity:1;stroke:#2682a9;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 400.6788,21.119128 A 328.29959,328.29959 0 0 1 392.84936,389.99327" transform="translate(42.426407,34.345187)" style="fill:none;fill-opacity:1;stroke:#2682a9;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
           <path d="M 129.01786,199.14789 A 3.8392856,3.8392856 0 1 1 121.33929,199.14789 A 3.8392856,3.8392856 0 1 1 129.01786,199.14789
-          z" transform="translate(42.506752,34.99074)"  style="fill:#d30536;fill-opacity:1;stroke:none;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          z" transform="translate(42.506752,34.99074)" style="fill:#d30536;fill-opacity:1;stroke:none;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         </g>
         <g id="layer2" style="display:inline">
           <text x="-17.793283" y="224.92747" transform="matrix(0.658191,-0.752851,0.752851,0.658191,0,0)" id="text2460
-         "  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
+         " style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">
-            <tspan >103 nm</tspan>
+            <tspan>103 nm</tspan>
           </text>
-          <text x="89.773575" y="242.42165" transform="translate(-47.689941,-20.119128)"  xml:space="preserve
+          <text x="89.773575" y="242.42165" transform="translate(-47.689941,-20.119128)" xml:space="preserve
          " style="font-size:40px;font-style:italic;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream
           Vera Sans">
-            <tspan x="89.773575" y="242.42165"  style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+            <tspan x="89.773575" y="242.42165" style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman Italic">n
-              <tspan  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+              <tspan style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">=
                 1</tspan>
             </tspan>
           </text>
-          <text x="89.773575" y="291.25537" transform="translate(-47.689941,-20.119128)"  xml:space="preserve
+          <text x="89.773575" y="291.25537" transform="translate(-47.689941,-20.119128)" xml:space="preserve
          " style="font-size:40px;font-style:italic;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream
           Vera Sans">
-            <tspan x="89.773575" y="291.25537"  style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+            <tspan x="89.773575" y="291.25537" style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman Italic">n
-              <tspan  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+              <tspan style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">=
                 2</tspan>
             </tspan>
           </text>
-          <text x="89.773575" y="348.39822" transform="translate(-47.689941,-20.119128)"  xml:space="preserve
+          <text x="89.773575" y="348.39822" transform="translate(-47.689941,-20.119128)" xml:space="preserve
          " style="font-size:40px;font-style:italic;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream
           Vera Sans">
-            <tspan x="89.773575" y="348.39822"  style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+            <tspan x="89.773575" y="348.39822" style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman Italic">n
-              <tspan  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+              <tspan style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">=
                 3</tspan>
             </tspan>
           </text>
-          <text x="89.773575" y="410.39822" transform="translate(-47.689941,-20.119128)"  xml:space="preserve
+          <text x="89.773575" y="410.39822" transform="translate(-47.689941,-20.119128)" xml:space="preserve
          " style="font-size:40px;font-style:italic;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream
           Vera Sans">
-            <tspan x="89.773575" y="410.39822"  style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+            <tspan x="89.773575" y="410.39822" style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman Italic">n
-              <tspan  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+              <tspan style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">=
                 4</tspan>
             </tspan>
           </text>
-          <text x="415.48788" y="438.39822" transform="translate(-47.689941,-20.119128)"  xml:space="preserve
+          <text x="415.48788" y="438.39822" transform="translate(-47.689941,-20.119128)" xml:space="preserve
          " style="font-size:40px;font-style:italic;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream
           Vera Sans">
-            <tspan x="415.48788" y="438.39822"  style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+            <tspan x="415.48788" y="438.39822" style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman Italic">n
-              <tspan  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+              <tspan style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">=
                 6</tspan>
             </tspan>
           </text>
-          <text x="304.77359" y="438.39822" transform="translate(-47.689941,-20.119128)"  xml:space="preserve
+          <text x="304.77359" y="438.39822" transform="translate(-47.689941,-20.119128)" xml:space="preserve
          " style="font-size:40px;font-style:italic;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream
           Vera Sans">
-            <tspan x="304.77359" y="438.39822"  style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+            <tspan x="304.77359" y="438.39822" style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman Italic">n
-              <tspan  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+              <tspan style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">=
                 5</tspan>
             </tspan>
           </text>
-          <text x="353.14072" y="228.99309" transform="translate(-47.689941,-20.119128)"  xml:space="preserve
+          <text x="353.14072" y="228.99309" transform="translate(-47.689941,-20.119128)" xml:space="preserve
          " style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">
-            <tspan x="353.14072" y="228.99309" >434 nm</tspan>
+            <tspan x="353.14072" y="228.99309">434 nm</tspan>
           </text>
           <text x="-103.10676" y="252.18472" transform="matrix(0.4827052,-0.8757829,0.8757829,0.4827052,-47.689941,-20.119128)
-         "   style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
+         " style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">
-            <tspan x="-103.10676" y="252.18472" >122 nm</tspan>
+            <tspan x="-103.10676" y="252.18472">122 nm</tspan>
           </text>
-          <text x="475.99783" y="83.850227" transform="translate(-47.689941,-20.119128)"  xml:space="preserve
+          <text x="475.99783" y="83.850227" transform="translate(-47.689941,-20.119128)" xml:space="preserve
          " style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#99a366;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Arial;-inkscape-font-specification:Arial">
-            <tspan x="475.99783" y="83.850227" >Lyman series</tspan>
+            <tspan x="475.99783" y="83.850227">Lyman series</tspan>
           </text>
-          <text x="508.14072" y="244.56451" transform="translate(-47.689941,-20.119128)"  xml:space="preserve
+          <text x="508.14072" y="244.56451" transform="translate(-47.689941,-20.119128)" xml:space="preserve
          " style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Arial;-inkscape-font-specification:Arial">
-            <tspan x="508.14072" y="244.56451" >Balmer series</tspan>
+            <tspan x="508.14072" y="244.56451">Balmer series</tspan>
           </text>
-          <text x="483.14072" y="387.42166" transform="translate(-47.689941,-20.119128)"  xml:space="preserve
+          <text x="483.14072" y="387.42166" transform="translate(-47.689941,-20.119128)" xml:space="preserve
          " style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#9a1438;fill-opacity:0.78039216;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Arial;-inkscape-font-specification:Arial">
-            <tspan x="483.14072" y="387.42166" >Paschen series</tspan>
+            <tspan x="483.14072" y="387.42166">Paschen series</tspan>
           </text>
           <text x="254.30499" y="237.96738" transform="matrix(0.8517118,-0.5240106,0.5240106,0.8517118,0,0)" id="text2546
-         "  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
+         " style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">
-            <tspan >94 nm</tspan>
+            <tspan>94 nm</tspan>
           </text>
           <text x="400.81927" y="195.54292" transform="matrix(0.9964057,8.4709925e-2,-8.4709925e-2,0.9964057,0,0)
-         "   style="font-size:40px;font-style:italic;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream
+         " style="font-size:40px;font-style:italic;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream
           Vera Sans">
-            <tspan  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
+            <tspan style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">410
               nm</tspan>
           </text>
           <text x="215.96419" y="218.1532" transform="matrix(0.9960388,-8.8919897e-2,8.8919897e-2,0.9960388,0,0)
-         "   style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
+         " style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">
-            <tspan >486 nm</tspan>
+            <tspan>486 nm</tspan>
           </text>
           <text x="136.1274" y="229.1953" transform="matrix(0.9769956,-0.2132596,0.2132596,0.9769956,0,0)" id="text2510
-         "  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
+         " style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">
-            <tspan >656 nm</tspan>
+            <tspan>656 nm</tspan>
           </text>
           <text x="304.76813" y="152.63977" transform="matrix(0.9357326,0.3527101,-0.3527101,0.9357326,0,0)" id="text2516
-         "  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
+         " style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">
-            <tspan >1875 nm</tspan>
+            <tspan>1875 nm</tspan>
           </text>
           <text x="384.86206" y="128.71977" transform="matrix(0.8883491,0.4591687,-0.4591687,0.8883491,0,0)" id="text2522
-         "  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
+         " style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">
-            <tspan >1282 nm</tspan>
+            <tspan>1282 nm</tspan>
           </text>
           <text x="470.38263" y="112.54699" transform="matrix(0.8478854,0.5301795,-0.5301795,0.8478854,0,0)" id="text2528
-         "  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
+         " style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">
-            <tspan >1094 nm</tspan>
+            <tspan>1094 nm</tspan>
           </text>
           <text x="68.284698" y="232.38795" transform="matrix(0.7440782,-0.6680925,0.6680925,0.7440782,0,0)" id="text2534
-         "  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
+         " style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">
-            <tspan >97 nm</tspan>
+            <tspan>97 nm</tspan>
           </text>
           <text x="158.18701" y="233.19705" transform="matrix(0.808155,-0.5889698,0.5889698,0.808155,0,0)" id="text2540
-         "  style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
+         " style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times
           New Roman;-inkscape-font-specification:Times New Roman">
-            <tspan >95 nm</tspan>
+            <tspan>95 nm</tspan>
           </text>
         </g>
       </svg>
@@ -1879,108 +1892,108 @@
       </details>
     </div>
   </article>
-	<div class="listing-footer">
-		<ul class="listing listing-dark" id="footer">
-			<li>
-				<h2>Motion</h2>
-				<p>
-					<a href="../../motion/motion/index.html">Motion</a>
-					<br>
-					<a href="../../motion/kinematics/index.html">Kinematics</a>
-				</p>
-			</li>
-			<li>
-				<h2>Force</h2>
-				<p>
-					<a href="../../force/laws/index.html">Newton's Laws</a>
-					<br>
-					<a href="../../force/forces/index.html">Forces</a>
-					<br>
-					<a href="../../force/friction/index.html">Friction</a>
-				</p>
-			</li>
-			<li>
-				<h2>Momentum</h2>
-				<p>
-					<a href="../../momentum/momentum/index.html">Momentum</a>
-					<br>
-					<a href="../../momentum/impulse/index.html">Impulse</a>
-				</p>
-			</li>
-			<li>
-				<h2>Energy</h2>
-				<p>
-					<a href="../../energy/energy/index.html">Energy</a>
-					<br>
-					<a href="../../energy/conservation/index.html">Conservation of Energy</a>
-					<br>
-					<a href="../../energy/thermo/index.html">Thermodynamics</a>
-				</p>
-			</li>
-			<li>
-				<h2>Gravity</h2>
-				<p>
-					<a href="../../gravity/gravitation/index.html">Universal Gravitation</a>
-					<br>
-					<a href="../../gravity/circular/index.html">Orbits</a>
-				</p>
-			</li>
-			<li>
-				<h2>Electromagnetism</h2>
-				<p>
-					<a href="../../electromagnetism/charge/index.html">Electric Charge</a>
-					<br>
-					<a href="../../electromagnetism/electrostatics/index.html">Electrostatics</a>
-					<br>
-					<a href="../../electromagnetism/potential/index.html">Electric Potential</a>
-					<br>
-					<a href="../../electromagnetism/magnetism/index.html">Magnetism</a>
-				</p>
-			</li>
-			<li>
-				<h2>Circuits</h2>
-				<p>
-					<a href="../../circuits/electricity/index.html">Electricity</a>
-					<br>
-					<a href="../../circuits/power/index.html">Power</a>
-					<br>
-					<a href="../../circuits/kirchoff/index.html">Kirchhoff’s Laws</a>
-					<br>
-					<a href="../../circuits/components/index.html">Components</a>
-				</p>
-			</li>
-			<li>
-				<h2>Waves</h2>
-				<p>
-					<a href="../../waves/waves/index.html">Waves</a>
-					<br>
-					<a href="../../waves/waveproperties/index.html">Wave Properties</a>
-					<br>
-					<a href="../../waves/light/index.html">Light</a>
-					<br>
-					<a href="../../waves/photons/index.html">Photons</a>
-				</p>
-			</li>
-			<li>
-				<h2>Relativity</h2>
-				<p>
-					<a href="../../relativity/special/index.html">Special Relativity</a>
-					<br>
-					<a href="../../relativity/general/index.html">General Relativity</a>
-				</p>
-			</li>
-			<li>
-				<h2>Reference</h2>
-				<p>
-					<a href="../../review/units/index.html">Units</a>
-					<br>
-					<a href="../../review/vectors/index.html">Vectors & Scalars</a>
-					<br>
-					<a href="../../review/solving/index.html">Problem Solving</a>
-				</p>
-			</li>
-		</ul>
-	</div>
+  <div class="listing-footer">
+    <ul class="listing listing-dark" id="footer">
+      <li>
+        <h2>Motion</h2>
+        <p>
+          <a href="../../motion/motion/index.html">Motion</a>
+          <br>
+          <a href="../../motion/kinematics/index.html">Kinematics</a>
+        </p>
+      </li>
+      <li>
+        <h2>Force</h2>
+        <p>
+          <a href="../../force/laws/index.html">Newton's Laws</a>
+          <br>
+          <a href="../../force/forces/index.html">Forces</a>
+          <br>
+          <a href="../../force/friction/index.html">Friction</a>
+        </p>
+      </li>
+      <li>
+        <h2>Momentum</h2>
+        <p>
+          <a href="../../momentum/momentum/index.html">Momentum</a>
+          <br>
+          <a href="../../momentum/impulse/index.html">Impulse</a>
+        </p>
+      </li>
+      <li>
+        <h2>Energy</h2>
+        <p>
+          <a href="../../energy/energy/index.html">Energy</a>
+          <br>
+          <a href="../../energy/conservation/index.html">Conservation of Energy</a>
+          <br>
+          <a href="../../energy/thermo/index.html">Thermodynamics</a>
+        </p>
+      </li>
+      <li>
+        <h2>Gravity</h2>
+        <p>
+          <a href="../../gravity/gravitation/index.html">Universal Gravitation</a>
+          <br>
+          <a href="../../gravity/circular/index.html">Orbits</a>
+        </p>
+      </li>
+      <li>
+        <h2>Electromagnetism</h2>
+        <p>
+          <a href="../../electromagnetism/charge/index.html">Electric Charge</a>
+          <br>
+          <a href="../../electromagnetism/electrostatics/index.html">Electrostatics</a>
+          <br>
+          <a href="../../electromagnetism/potential/index.html">Electric Potential</a>
+          <br>
+          <a href="../../electromagnetism/magnetism/index.html">Magnetism</a>
+        </p>
+      </li>
+      <li>
+        <h2>Circuits</h2>
+        <p>
+          <a href="../../circuits/electricity/index.html">Electricity</a>
+          <br>
+          <a href="../../circuits/power/index.html">Power</a>
+          <br>
+          <a href="../../circuits/kirchoff/index.html">Kirchhoff’s Laws</a>
+          <br>
+          <a href="../../circuits/components/index.html">Components</a>
+        </p>
+      </li>
+      <li>
+        <h2>Waves</h2>
+        <p>
+          <a href="../../waves/waves/index.html">Waves</a>
+          <br>
+          <a href="../../waves/waveproperties/index.html">Wave Properties</a>
+          <br>
+          <a href="../../waves/light/index.html">Light</a>
+          <br>
+          <a href="../../waves/photons/index.html">Photons</a>
+        </p>
+      </li>
+      <li>
+        <h2>Relativity</h2>
+        <p>
+          <a href="../../relativity/special/index.html">Special Relativity</a>
+          <br>
+          <a href="../../relativity/general/index.html">General Relativity</a>
+        </p>
+      </li>
+      <li>
+        <h2>Reference</h2>
+        <p>
+          <a href="../../review/units/index.html">Units</a>
+          <br>
+          <a href="../../review/vectors/index.html">Vectors & Scalars</a>
+          <br>
+          <a href="../../review/solving/index.html">Problem Solving</a>
+        </p>
+      </li>
+    </ul>
+  </div>
   <script>
     renderMathInElement(document.body);
   </script>
