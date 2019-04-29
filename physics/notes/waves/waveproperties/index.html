@@ -1327,23 +1327,21 @@
 		<div class="center">
 			<style>
 				.slider {
-					width: 380px
+					width: 360px
 				}
 
 				@media screen and (max-width: 650px) {
 					.slider {
-						width: 120px
+						width: 100px
 					}
 				}
 			</style>
 			wavelength = <input class="slider" id='wavelength-slider' type="range" step="0.01" value="6" min="0.5" max="20">
-			<input id='wavelength' type="number" step="0.01" value="6" min="0.5" max="20" style="width:60px;">m
+			<input id='wavelength' type="number" step="0.01" value="6" min="0.5" max="20" style="width:80px;">m
 		</div>
-	</div>
-	<article>
-
-		<div class='example-small'>
-			<strong>Simulation:</strong> Change the wavelength and identify at least 4 wavelengths that resonate to produce standing waves.
+		<br>
+		<div style="max-width: 600px; margin: 0 auto;">
+			<strong>Simulation:</strong> <button id="wave-search">Search</button> for at least 5 wavelengths that resonate to produce standing waves.
 			<details>
 				<summary>results</summary>
 				<h3 id="list-standing"></h3>
@@ -1365,6 +1363,9 @@
 				</details>
 			</details>
 		</div>
+	</div>
+	<article>
+
 		<div class='example'>
 			<a href="https://en.wikipedia.org/wiki/Harmonic">
 				<svg viewBox="0 0 635 590">

@@ -417,7 +417,7 @@
 				<p>If we define h to be zero at the spring equilibrium, then h=x.</p>
 				$$U_s + U_g = K$$
 				$$\tfrac{1}{2}kx^{2} + mgh= \tfrac{1}{2}mv^{2}$$
-				$$\tfrac{1}{2}kx^{2} + mg {\color{#f05}x}= \tfrac{1}{2}mv^{2}$$
+				$$\tfrac{1}{2}kx^{2} + mg x= \tfrac{1}{2}mv^{2}$$
 				$$\tfrac{1}{2}(200)(-0.15)^{2} + (0.2)(9.8)(-0.15)= \tfrac{1}{2}(0.2)v^{2}$$
 				$$1.956 = 0.1v^{2}$$
 				$$4.42 \, \mathrm{\tfrac{m}{s}} = v$$
@@ -438,7 +438,7 @@
 			<div class="center"> dampening:&nbsp;&nbsp; none <input id='spring-d-slider2' type="range" step="0.001" value="0" min="0" max="0.03" style="width: 40px;"> full </div>
 			<style>
 				#pause2:hover {
-					fill: rgba(0,0,0,0.2);
+					fill: rgba(0, 0, 0, 0.2);
 				}
 			</style>
 			<svg class="center" width="330" height="400" id="spring-SVG-2" style="border: 0.5px solid #000; background-color: #fff;">
@@ -475,7 +475,7 @@
 					We will define h = 0 at x = 0. This makes x = h.
 				</p>
 				$$\tfrac{1}{2}mv^2 + mgh + \tfrac{1}{2}kx^2$$
-				$$\tfrac{1}{2}mv^2 + mg{\color{#f05}x} + \tfrac{1}{2}kx^2$$
+				$$\tfrac{1}{2}mv^2 + mgx + \tfrac{1}{2}kx^2$$
 				<p>The initial energy will be when the spring and height are at equilibrium (x&nbsp;=&nbsp;0). The final energy will be at the lowest point, when the spring is at rest (v&nbsp;=&nbsp;0).</p>
 				$$v_i = \, ? \quad x_i =0 \quad \quad \quad \quad v_f = 0 \quad x_f = -150$$
 				$$\tfrac{1}{2}mv^2 + mgx + \tfrac{1}{2}kx^2 = \tfrac{1}{2}mv^2 + mgx + \tfrac{1}{2}kx^2$$
@@ -597,6 +597,54 @@
 				</div>
 			</details>
 		</div>
+
+		<!-- 
+		<h1 class='underlined' id="elastic-collisions">Elastic Collisions</h1>
+		<p>
+			When objects collide the total <a href="..\..\momentum\momentum\index.html#conservation">momentum</a> is conserved.
+			A collision that doesn't lose any kinetic energy is called an <strong>elastic collision</strong>.
+			This means that for perfectly bouncy collisions we can use two conservation equations.
+		</p>
+		$$m_1u_1 + m_2u = m_1v_1 + m_2v_2$$
+		$$\frac{1}{2}m_1u_1^2 + \frac{1}{2}m_2u_2^2 = \frac{1}{2}m_1v_1^2 + \frac{1}{2}m_2v_2^2$$
+
+		<details class='derive'>
+			<summary>derivation of elastic of collisions</summary>
+
+		</details>
+		<div class='definition'>
+			<svg viewBox="-25 0 500 70">
+				<g transform="translate(75.5 15.5)" stroke="#000" stroke-width="1" fill="none">
+					<rect x="0.5" y="0.5" width="50" height="50" fill="#fff" stroke-width="1" />
+					<text x="25" y="25" fill="#000" stroke="none" text-anchor="middle" dominant-baseline="middle">m</text>
+					<line x1="0" y1="5" x2="-35" y2="5" />
+					<line x1="0" y1="15" x2="-65" y2="15" />
+					<line x1="0" y1="25" x2="-35" y2="25" />
+					<line x1="0" y1="35" x2="-75" y2="35" />
+					<line x1="0" y1="45" x2="-40" y2="45" />
+				</g>
+				<g transform="translate(375.5 15.5)" stroke="#000" stroke-width="1" fill="none">
+					<rect x="-50.5" y="0.5" width="50" height="50" fill="#fff" stroke-width="1" />
+					<text x="-25" y="25" fill="#000" stroke="none" text-anchor="middle" dominant-baseline="middle">m</text>
+					<line x1="0" y1="5" x2="35" y2="5" />
+					<line x1="0" y1="15" x2="45" y2="15" />
+					<line x1="0" y1="25" x2="85" y2="25" />
+					<line x1="0" y1="35" x2="55" y2="35" />
+					<line x1="0" y1="45" x2="30" y2="45" />
+				</g>
+			</svg>
+			\( m \) = mass [kg]
+			<br>\( u \) = initial velocity [m/s]
+			<br>\( v \) = final velocity [m/s]
+		</div>
+		<div class='example'><strong>Example:</strong>
+			<details>
+				<summary>solution</summary>
+
+			</details>
+		</div> -->
+
+
 	</article>
 	<div class="listing-footer">
 		<ul class="listing listing-dark" id="footer">
