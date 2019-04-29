@@ -99,18 +99,22 @@ function entropy0() {
   });
 
   canvas.addEventListener("mousedown", event => {
-    if (!settings.pause) {
-      //gets mouse position, even when canvas is scaled by CSS
-      const mouse = {
-        x: (event.offsetX * canvas.width) / canvas.clientWidth,
-        y: (event.offsetY * canvas.height) / canvas.clientHeight
-      };
+    if (settings.timeRate < 1) {
+      settings.timeRate = 1
+      document.getElementById("time-rate-slider0").value = settings.timeRate
+    }
+
+    //gets mouse position, even when canvas is scaled by CSS
+    const mouse = {
+      x: (event.offsetX * canvas.width) / canvas.clientWidth,
+      y: (event.offsetY * canvas.height) / canvas.clientHeight
+    };
+
+    if (mouse.y < settings.height) {
       const spread = 10;
       for (let i = 0; i < 1; ++i) {
         addAtom(mouse.x + spread * (Math.random() - 0.5), mouse.y + spread * (Math.random() - 0.5));
       }
-      Engine.update(engine, 16.666);
-      draw();
     }
   });
 

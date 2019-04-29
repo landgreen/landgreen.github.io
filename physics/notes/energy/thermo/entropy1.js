@@ -35,15 +35,15 @@ function entropy1() {
     }
   };
 
-  document.getElementById("rotor-slider").addEventListener("input", event => {
+  document.getElementById("rotor-slider").addEventListener("input", () => {
     settings.rotorTorque = -document.getElementById("rotor-slider").value;
   });
 
-  document.getElementById("time-rate-slider").addEventListener("input", event => {
+  document.getElementById("time-rate-slider").addEventListener("input", () => {
     settings.timeRate = document.getElementById("time-rate-slider").value;
   });
 
-  document.getElementById("clear1").addEventListener("click", event => {
+  document.getElementById("clear1").addEventListener("click", () => {
     function removeAll(array) {
       for (let i = 0; i < array.length; ++i) Matter.World.remove(engine.world, array[i]);
     }
@@ -52,16 +52,18 @@ function entropy1() {
   });
 
   canvas.addEventListener("mousedown", event => {
-    if (settings.timeRate > 0) {
-      //gets mouse position, even when canvas is scaled by CSS
-      const mouse = {
-        x: (event.offsetX * canvas.width) / canvas.clientWidth,
-        y: (event.offsetY * canvas.height) / canvas.clientHeight
-      };
-      const spread = 10;
-      for (let i = 0; i < 10; ++i) {
-        addAtom(mouse.x + spread * (Math.random() - 0.5), mouse.y + spread * (Math.random() - 0.5));
-      }
+    if (settings.timeRate < 1) {
+      settings.timeRate = 1
+      document.getElementById("time-rate-slider").value = settings.timeRate
+    }
+    //gets mouse position, even when canvas is scaled by CSS
+    const mouse = {
+      x: (event.offsetX * canvas.width) / canvas.clientWidth,
+      y: (event.offsetY * canvas.height) / canvas.clientHeight
+    };
+    const spread = 10;
+    for (let i = 0; i < 10; ++i) {
+      addAtom(mouse.x + spread * (Math.random() - 0.5), mouse.y + spread * (Math.random() - 0.5));
     }
   });
 
