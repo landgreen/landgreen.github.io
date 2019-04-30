@@ -14,7 +14,7 @@ function checkVisible(elm) {
   const engine = Engine.create();
   engine.world.gravity.scale = 0; //turn off gravity
 
-  const pendulum = Matter.Bodies.polygon(300, 0, 0, 10, {
+  const pendulum = Matter.Bodies.polygon(300, 120, 0, 10, {
     length: 120,
     radius: 20,
     friction: 0,
@@ -121,16 +121,15 @@ function checkVisible(elm) {
   }
 
   function cycle() {
-    if (!pause) requestAnimationFrame(cycle);
-    const now = Date.now();
-    const elapsed = now - then; // calc elapsed time since last loop
-    if (elapsed > fpsInterval) { // if enough time has elapsed, draw the next frame
-      then = now - (elapsed % fpsInterval); // Get ready for next frame by setting then=now.   Also, adjust for fpsInterval not being multiple of 16.67
-
-      //frame capped code here
-      // if (checkVisible(document.getElementById("res"))) {
-      loop()
-      // }
+    if (!pause) {
+      requestAnimationFrame(cycle);
+      const now = Date.now();
+      const elapsed = now - then; // calc elapsed time since last loop
+      if (elapsed > fpsInterval) { // if enough time has elapsed, draw the next frame
+        then = now - (elapsed % fpsInterval); // Get ready for next frame by setting then=now.   Also, adjust for fpsInterval not being multiple of 16.67
+        //frame capped code here
+        loop()
+      }
     }
   }
 })()
