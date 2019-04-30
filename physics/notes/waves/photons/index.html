@@ -30,6 +30,8 @@
   <script src="../../../lib/katex/katex.min.js"></script>
   <script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
+  <script defer src="standingwave.js"></script>
+
   <link rel="stylesheet" type="text/css" href="../../../style.css">
 </head>
 
@@ -943,6 +945,112 @@
       The first electron in an atom usually takes the state with the lowest energy requirements.
       Each additional electron usually takes the next lowest energy state that isn't already filled.
     </p>
+
+    <div id="standing-wave-zone">
+      <canvas class="center" id="standing-wave-canvas" width="600" height='300' onclick="standing(this)"></canvas>
+      <div class="center">
+        <style>
+          .slider {
+            width: 360px
+          }
+
+          @media screen and (max-width: 650px) {
+            .slider {
+              width: 100px
+            }
+          }
+        </style>
+        wavelength = <input class="slider" id='wavelength-slider' type="range" step="0.01" value="6" min="0.5" max="20">
+        <input id='wavelength' type="number" step="0.01" value="6" min="0.5" max="20" style="width:80px;">m
+      </div>
+    </div>
+
+
+    <!-- </article>
+  <div id="standing-wave-zone">
+    <div class='center' id='wave_animation'>
+      <svg id='standing-wave' height='400'>
+        <g stroke="#d9dfdf" style="stroke-dasharray:1,98,1,0;stroke-width:4000;">
+          <line x1="0" y1="0" x2="2000" y2="0" />
+          <line x1="0" y1="0" x2="0" y2="2000" />
+        </g>
+        <line x1="0" y1="200" x2="3000" y2="200" stroke-dasharray='10,10' stroke='#777' stroke-width='2' />
+        <path d='M103 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;' />
+        <text x="150" y="391" text-anchor="middle" font-size="15" fill='#000'>1.0 m</text>
+        <g stroke-miterlimit="10" opacity="1" stroke-dasharray="4" stroke-width='3' fill='none'>
+          <g stroke='#f06'>
+            <path id="wave-form-path-0" stroke-dashoffset="0" opacity="1" />
+            <path id="wave-form-path-2" stroke-dashoffset="2" opacity="0.9" />
+            <path id="wave-form-path-4" stroke-dashoffset="4" opacity="0.8" />
+            <path id="wave-form-path-6" stroke-dashoffset="0" opacity="0.7" />
+            <path id="wave-form-path-8" stroke-dashoffset="2" opacity="0.6" />
+            <path id="wave-form-path-10" stroke-dashoffset="4" opacity="0.5" />
+            <path id="wave-form-path-12" stroke-dashoffset="0" opacity="0.4" />
+            <path id="wave-form-path-14" stroke-dashoffset="2" opacity="0.3" />
+            <path id="wave-form-path-16" stroke-dashoffset="4" opacity="0.2" />
+          </g>
+          <g stroke='#0ac'>
+            <path id="wave-form-path-1" stroke-dashoffset="0" opacity="1" />
+            <path id="wave-form-path-3" stroke-dashoffset="2" opacity="0.9" />
+            <path id="wave-form-path-5" stroke-dashoffset="4" opacity="0.8" />
+            <path id="wave-form-path-7" stroke-dashoffset="0" opacity="0.7" />
+            <path id="wave-form-path-9" stroke-dashoffset="2" opacity="0.6" />
+            <path id="wave-form-path-11" stroke-dashoffset="4" opacity="0.5" />
+            <path id="wave-form-path-13" stroke-dashoffset="0" opacity="0.4" />
+            <path id="wave-form-path-15" stroke-dashoffset="2" opacity="0.3" />
+            <path id="wave-form-path-17" stroke-dashoffset="4 " opacity="0.2" />
+          </g>
+        </g>
+        <path id="superposition-wave-form-path" stroke-width='4' fill='none' stroke='#000' stroke-miterlimit="10" opacity="1" />
+        <path id="standing-wave-border" d="M0 0 v400" stroke='#000' stroke-width='4' fill="none" />
+      </svg>
+    </div>
+    <div class="center">
+      <style>
+        .slider {
+          width: 360px
+        }
+
+        @media screen and (max-width: 650px) {
+          .slider {
+            width: 100px
+          }
+        }
+      </style>
+      wavelength = <input class="slider" id='wavelength-slider' type="range" step="0.01" value="6" min="0.5" max="20">
+      <input id='wavelength' type="number" step="0.01" value="6" min="0.5" max="20" style="width:80px;">m
+    </div>
+    <br>
+    <div style="max-width: 600px; margin: 0 auto;">
+      <strong>Simulation:</strong> <button id="wave-search">Search</button> for at least 5 wavelengths that resonate to produce standing waves.
+      <details>
+        <summary>results</summary>
+        <h3 id="list-standing"></h3>
+        <details>
+          <summary><strong>Extra Credit:</strong> Can you figure out an equation that produces those results?
+            <br>Use λ for the resonate wavelengths,
+            <br>L for the length of the region,
+            <br>n for any positive integer.</summary>
+          <p>
+            Standing wave resonance in a bounded region occurs when the wavelength is even multiples of twice the length of the region.
+          </p>
+          <p>
+            $$2L = n \lambda $$
+            $$n = 1,2,3,4,5 \, \dots $$
+            \( \lambda \) = resonance wavelengths [m]
+            <br>\( L \) = length of bounded region [m]
+            <br>\( n \) = positive integers
+          </p>
+        </details>
+      </details>
+    </div>
+  </div>
+  <article> -->
+
+
+
+
+
 
 
     <h2 class='underlined'>Emission and Absorption</h2>
