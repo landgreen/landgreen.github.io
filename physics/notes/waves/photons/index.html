@@ -461,16 +461,16 @@
       <svg viewBox="-73 -20  200 84">
         <defs>
           <g id="vector">
-            <line x1="0" y1="0" x2="0" y2="25" stroke="#345" stroke-width="1" />
-            <polygon points="0,0 -3,-6 0,-5 3,-6" transform='translate(0 28)' fill="#345" />
+            <line x1="0" y1="0" x2="0" y2="25" stroke="#234" stroke-width="1" />
+            <polygon points="0,0 -3,-6 0,-5 3,-6" transform='translate(0 28)' fill="#234" />
           </g>
-          <g id="electron">
-            <circle cx="0" cy="0" r="3" fill="#fff" stroke="#345" stroke-width="0.7" />
-            <path d="M -1 0 h2" fill="none" stroke="#345" stroke-width="0.7" />
+          <g id="electron" stroke="#234">
+            <circle cx="0" cy="0" r="3" fill="#fff" stroke-width="0.9" />
+            <path d="M -1 0 h2" fill="none" stroke-width="0.8" />
           </g>
         </defs>
 
-        <rect width="154" height="28.5" x="-52" y="34" rx="5" ry="5" fill="#789" stroke="none" stroke-width="2" />
+        <rect width="154" height="28.5" x="-52" y="34" rx="5" ry="5" fill="#89a" stroke="none" stroke-width="2" />
 
         <use xlink:href="#vector" transform='translate(20 14) rotate(220)' />
         <use xlink:href="#electron" transform='translate(20 14)' />
@@ -542,7 +542,7 @@
     </div>
 
     <div class='example'>
-      <strong>Question:</strong> How could a low luminosity UV light produce the photoelectric effect, but even when much brighter red light doesn't? The red light has more total energy. Shouldn't it have a better chance to dislodge electrons?
+      <strong>Question:</strong> Why does dim ultraviolet light produce the photoelectric effect, yet very bright red light doesn't?
       <details>
         <summary>answer</summary>
         <p>
@@ -642,7 +642,7 @@
     </div>
 
     <div class='example'>
-      <strong>Example:</strong> A 100 nm photon strikes a lump of magnesium. How much kinetic energy could the released electrons have?
+      <strong>Example:</strong> A 100 nm photon strikes a lump of magnesium. How much kinetic energy could the released electron have?
       <details>
         <summary>solution</summary>
         $$ c = f \lambda $$
@@ -680,7 +680,7 @@
         $$E=\frac{(6.626 \times 10^{-34})(3 \times 10^8)}{427 \times 10^{-9}}$$
         $$ E = 4.66 \times 10^{-19} \, \mathrm{J}$$
         $$ E = 4.66 \times 10^{-19} \, \mathrm{J} \left( \frac{1 eV}{1.602 \times 10^{-19} \, \mathrm{J}} \right)= 2.91 \, \mathrm{eV}$$
-        <p>Any element with a work function above 2.91 eV. Like: Ce, Gd, Li</p>
+        <p>Any element with a work function below 2.91 eV. Like: Ce, Gd, Li</p>
       </details>
     </div>
 
@@ -842,7 +842,8 @@
 
     <h2 class='underlined'>Atomic Orbitals</h2>
     <p>
-      Electrons in an atom are limited to specific wavelengths that allow <a href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
+      Electrons, like photons, have a probability wave that represents the odds of finding the electron in a given state.
+      In an atom, this probability wave is limited to specific wavelengths that allow <a href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
       We say that the allowed wavelengths are quantized.
       <strong>Quantizing</strong> means to restrict a variable to specific values.
     </p>
@@ -863,8 +864,8 @@
           </linearGradient>
           <radialGradient id="r" cx="-759.54" cy="298.92" r="61.619" gradientTransform="matrix(.58271 .87264 -.78676 .52536 -54.596 815.67)" gradientUnits="userSpaceOnUse" xlink:href="#c" />
           <radialGradient id="q" cx="-756.34" cy="309.09" r="15.657" gradientTransform="matrix(-1.4682 .22463 -.18014 -1.1772 -1800.3 848.71)" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#5a8b52" offset="0" />
-            <stop stop-color="#2d4f34" offset="1" />
+            <stop stop-color="#555" offset="0" />
+            <stop stop-color="#333" offset="1" />
           </radialGradient>
           <radialGradient id="f" cx="-402.97" cy="257.37" r="172.14" gradientTransform="matrix(-.90127 .41077 -.41472 -.90995 -651.3 638.64)" gradientUnits="userSpaceOnUse" xlink:href="#d" />
           <radialGradient id="e" cx="-309.92" cy="187.25" r="172.14" gradientTransform="matrix(.53843 -.2202 .20938 .51198 -388.42 208.14)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
@@ -881,80 +882,50 @@
         </defs>
         <g transform="matrix(.88525 0 0 .88525 718.17 476.32)">
           <g transform="translate(228.57 -606.92)">
-            <path transform="translate(-152.53 -5.0508)" d="m-690.94 321.01a61.619 61.619 0 1 1 -123.24 0 61.619 61.619 0 1 1 123.24 0z" color="#000000" fill="url(#r)" fill-rule="evenodd" sodipodi:cx="-752.56366" sodipodi:cy="321.01175" sodipodi:rx="61.619305" sodipodi:ry="61.619305" sodipodi:type="arc" />
-            <path id="b" transform="translate(-149.5 -3.0305)" d="m-739.43 321.52a15.657 15.657 0 1 1 -31.315 0 15.657 15.657 0 1 1 31.315 0z" color="#000000" fill="url(#q)" fill-rule="evenodd" sodipodi:cx="-755.08905" sodipodi:cy="321.51682" sodipodi:rx="15.657365" sodipodi:ry="15.657365" sodipodi:type="arc" />
+            <path transform="translate(-152.53 -5.0508)" d="m-690.94 321.01a61.619 61.619 0 1 1 -123.24 0 61.619 61.619 0 1 1 123.24 0z" color="#000000" fill="url(#r)" fill-rule="evenodd" />
+            <path id="b" transform="translate(-149.5 -3.0305)" d="m-739.43 321.52a15.657 15.657 0 1 1 -31.315 0 15.657 15.657 0 1 1 31.315 0z" color="#000000" fill="url(#q)" fill-rule="evenodd" />
           </g>
           <g transform="translate(313.28 -313.02)">
             <g fill-rule="evenodd">
-              <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#f)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc" />
-              <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#e)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc" />
+              <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#f)" />
+              <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#e)" />
             </g>
             <use transform="translate(239.92 -292.39)" width="744.09448" height="1052.3622" xlink:href="#b" />
           </g>
           <g transform="translate(97.361 -358.89)">
             <g fill-rule="evenodd">
-              <path d="m129.29-11.831c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#p)" sodipodi:nodetypes="csssc" />
-              <path d="m129.29-11.831c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#o)" sodipodi:nodetypes="csssc" />
+              <path d="m129.29-11.831c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#p)" />
+              <path d="m129.29-11.831c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#o)" />
             </g>
             <g transform="translate(-4.2857 -1.5772)" fill-rule="evenodd">
-              <path d="m133.57 149.26c0-66.686-71.36-79.758-159.29-79.758-87.926 0-155.25 20.841-155.25 79.758 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#n)" sodipodi:nodetypes="csssc" />
-              <path d="m133.57 149.26c0-66.686-71.36-79.759-159.29-79.759-87.926 0-155.25 20.841-155.25 79.759 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#m)" sodipodi:nodetypes="csssc" />
+              <path d="m133.57 149.26c0-66.686-71.36-79.758-159.29-79.758-87.926 0-155.25 20.841-155.25 79.758 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#n)" />
+              <path d="m133.57 149.26c0-66.686-71.36-79.759-159.29-79.759-87.926 0-155.25 20.841-155.25 79.759 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#m)" />
             </g>
             <use transform="translate(878.83 -250.52)" width="744.09448" height="1052.3622" opacity=".70978" xlink:href="#b" />
           </g>
           <g transform="translate(64.451 -373.65)">
             <g transform="translate(62.857 -171.43)" fill-rule="evenodd">
               <g transform="matrix(.88264 0 0 .88264 965.42 230.55)">
-                <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#f)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc" />
-                <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#e)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc" />
+                <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#f)" />
+                <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#e)" />
               </g>
               <g transform="matrix(.93658 0 0 .93658 977.72 221.48)">
-                <path transform="translate(-216.73 -276.8)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#l)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc" />
-                <path transform="translate(-216.73 -276.8)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#k)" sodipodi:cx="-451.42856" sodipodi:cy="311.64789" sodipodi:rx="172.14285" sodipodi:ry="172.14285" sodipodi:type="arc" />
+                <path transform="translate(-216.73 -276.8)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#l)" />
+                <path transform="translate(-216.73 -276.8)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#k)" />
               </g>
             </g>
             <use transform="translate(1331.4 -240)" width="744.09448" height="1052.3622" xlink:href="#b" />
           </g>
           <g transform="matrix(6.7166e-17 -1 1 6.7166e-17 914.7 -335.1)">
             <g fill-rule="evenodd">
-              <path d="m113.12-38.095c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#j)" sodipodi:nodetypes="csssc" />
-              <path d="m113.12-38.095c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#i)" sodipodi:nodetypes="csssc" />
+              <path d="m113.12-38.095c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#j)" />
+              <path d="m113.12-38.095c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#i)" />
             </g>
             <g transform="translate(-3.3053 -20.998)" fill-rule="evenodd">
-              <path d="m116.43 142.12c0-66.686-71.36-79.758-159.29-79.758-87.926 0-155.25 20.841-155.25 79.758 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#h)" sodipodi:nodetypes="csssc" />
-              <path d="m116.43 142.12c0-66.686-71.36-79.759-159.29-79.759-87.926 0-155.25 20.841-155.25 79.759 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#g)" sodipodi:nodetypes="csssc" />
+              <path d="m116.43 142.12c0-66.686-71.36-79.758-159.29-79.758-87.926 0-155.25 20.841-155.25 79.758 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#h)" />
+              <path d="m116.43 142.12c0-66.686-71.36-79.759-159.29-79.759-87.926 0-155.25 20.841-155.25 79.759 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#g)" />
             </g>
             <use transform="translate(858.83 -276.95)" width="744.09448" height="1052.3622" opacity=".70978" xlink:href="#b" />
-          </g>
-          <text x="-746.5293" y="67.918854" fill="#000000" font-family="Arial" font-size="132.37px" stroke-width="1px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve">
-            <tspan x="-746.5293" y="67.918854" sodipodi:role="line">1s</tspan>
-          </text>
-          <text x="-396.55194" y="67.918854" fill="#000000" font-family="Arial" font-size="132.37px" stroke-width="1px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve">
-            <tspan x="-396.55194" y="67.918854" sodipodi:role="line">2s</tspan>
-          </text>
-          <g transform="translate(15.258 15.138)" fill="#000000" font-family="Arial" stroke-width="1px">
-            <text x="2.1670492" y="52.403351" font-size="132.37px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve">
-              <tspan x="2.1670492" y="52.403351" sodipodi:role="line">2p</tspan>
-            </text>
-            <text x="145.41223" y="73.501373" font-size="79.394px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve">
-              <tspan x="145.41223" y="73.501373" sodipodi:role="line">x</tspan>
-            </text>
-          </g>
-          <g transform="translate(444.83 9.388)" fill="#000000" font-family="Arial" stroke-width="1px">
-            <text x="2.1670492" y="52.403351" font-size="132.37px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve">
-              <tspan x="2.1670492" y="52.403351" sodipodi:role="line">2p</tspan>
-            </text>
-            <text x="145.41223" y="73.501373" font-size="79.394px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve">
-              <tspan x="145.41223" y="73.501373" sodipodi:role="line">y</tspan>
-            </text>
-          </g>
-          <g transform="translate(874.29 15.138)" fill="#000000" font-family="Arial" stroke-width="1px">
-            <text x="2.1670492" y="52.403351" font-size="132.37px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve">
-              <tspan x="2.1670492" y="52.403351" sodipodi:role="line">2p</tspan>
-            </text>
-            <text x="145.41223" y="73.501373" font-size="79.394px" style="line-height:125%" sodipodi:linespacing="125%" xml:space="preserve">
-              <tspan x="145.41223" y="73.501373" sodipodi:role="line">z</tspan>
-            </text>
           </g>
         </g>
       </svg>
@@ -1328,7 +1299,7 @@
           <g transform="translate(28,20)">
             <g>
               <g>
-                <path style="fill:#ffe61a;fill-opacity:1" d="m 50.098083,688.15399
+                <path fill="#f9d" d="m 50.098083,688.15399
           c 3.899603,-4.25738 8.4852,-19.29773 10.194345,-33.43656 0.29919,-2.475 0.97469,-5.03592 1.50112,-5.69094 0.52644,-0.65502
           1.15909,-8.98002 1.40589,-18.5 0.486,-18.74652 1.41712,-36.13687 1.90755,-35.62729 0.16845,0.17503 0.58542,2.09199
           0.92658,4.25992 0.98954,6.28792 1.57027,5.45186 1.57027,-2.26067 0,-3.93378 0.45363,-9.07128 1.00807,-11.41667 2.25584,-9.54265
@@ -1387,7 +1358,7 @@
           13.75,0.97006 25.25507,2.14177 25.56682,2.60379 0.31175,0.46202 2.44843,0.69119 4.74819,0.50927 2.29975,-0.18192
           9.69468,0.0109 16.43318,0.42859 26.49005,1.64181 56.48644,3.08533 61.00181,2.93558 4.66266,-0.15462 4.75,-0.10145
           4.75,2.89192 l 0,3.04943 -336.38487,0 -336.384863,0 3.263986,-3.56344 z" />
-                <path style="fill:#ff3333;fill-opacity:1;stroke:#000000;stroke-width:0.30000001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" d="m 65.478423,690.92189 c 1.04278,-1.68724 4.60954,-21.56396 5.25208,-29.26855 0.37125,-4.45157 1.21327,-8.63203
+                <path fill="#f08" d="m 65.478423,690.92189 c 1.04278,-1.68724 4.60954,-21.56396 5.25208,-29.26855 0.37125,-4.45157 1.21327,-8.63203
           1.87115,-9.28992 0.65789,-0.65788 1.51062,-2.87236 1.89496,-4.92107 0.38434,-2.0487 1.07089,-3.72491 1.52567,-3.72491
           0.45479,0 1.1181,-1.82118 1.47403,-4.04706 0.35594,-2.22589 1.05183,-3.79696 1.54644,-3.49128 1.09046,0.67394 1.72212,-2.42905
           2.63857,-12.96166 0.38284,-4.4 0.89817,-7.4347 1.14518,-6.74377 0.247,0.69093 0.89095,0.98315 1.431,0.64938 0.54004,-0.33376
@@ -1464,11 +1435,11 @@
           842,4506C868,4399 895,4293 928,4188C954,4104 983,4021 1022,3943C1045,3896 1072,3849 1107,3810C1129,3786 1154,3765
           1184,3754C1261,3725 1335,3775 1389,3825C1444,3877 1491,3937 1534,3999C1589,4076 1639,4155 1688,4236C1841,4486 1986,4742
           2149,4987C2375,5325 2634,5643 2952,5899C3141,6051 3348,6178 3567,6281C3971,6471 4409,6578 4848,6651C5213,6711 5582,6748
-          5950,6776C6368,6808 6787,6827 7206,6842" transform="scale(0.1)" style="stroke:#7f7f7f;stroke-width:20;fill:none" />
+          5950,6776C6368,6808 6787,6827 7206,6842" transform="scale(0.1)" style="stroke:#000;stroke-width:20;fill:none" />
             </g>
             <g>
-              <path d="m 94.484367,252.30052 0,438.10662" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0" />
-              <path d="m 180.03738,252.53556 0,438.81173" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3, 3;stroke-dashoffset:0" />
+              <path d="m 94.484367,252.30052 0,438.10662" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:7;stroke-dashoffset:0" />
+              <path d="m 180.03738,252.53556 0,438.81173" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:7;stroke-dashoffset:0" />
               <rect ry="1.528919" y="253.89284" x="37.56905" height="437.90384" width="681.57623" style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
               <path d="m 37.034718,603.26099 -5.745243,0.0884" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
               <path d="m 37.476659,515.2262 -5.391689,0" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
@@ -1489,71 +1460,71 @@
             </g>
           </g>
           <g>
-            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="706.53387" y="701.68475">
-              <tspan x="706.53387" y="701.68475" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="706.53387" y="701.68475">
+              <tspan x="706.53387" y="701.68475" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
             </text>
-            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="693.87659" y="694.45203">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="693.87659" y="694.45203">
               <tspan x="693.87659" y="694.45203">H O</tspan>
             </text>
           </g>
           <text y="621.43933" x="531.90747" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
-            <tspan style="fill:#2700a0;fill-opacity:1" y="621.43933" x="531.90747">Atmospheric</tspan>
-            <tspan style="fill:#2700a0;fill-opacity:1" y="646.43933" x="531.90747">absorption bands</tspan>
+            <tspan style="fill:#000;fill-opacity:1" y="621.43933" x="531.90747">Atmospheric</tspan>
+            <tspan style="fill:#000;fill-opacity:1" y="646.43933" x="531.90747">absorption bands</tspan>
           </text>
           <g transform="translate(-443.93562,-59.560028)">
-            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
               <tspan x="831.40668" y="690.77325">H O</tspan>
             </text>
-            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="844.06396" y="698.00598">
-              <tspan x="844.06396" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="845" y="698.00598">
+              <tspan x="846" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
             </text>
           </g>
           <g transform="translate(-575.93291,3.726346)">
-            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
               <tspan x="831.40668" y="690.77325">H O</tspan>
             </text>
-            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="844.06396" y="698.00598">
-              <tspan x="844.06396" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="845" y="698.00598">
+              <tspan x="845" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
             </text>
           </g>
           <g transform="translate(-523.49562,-110.18915)">
-            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
               <tspan x="831.40668" y="690.77325">H O</tspan>
             </text>
-            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="844.06396" y="698.00598">
-              <tspan x="844.06396" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="845" y="698.00598">
+              <tspan x="845" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
             </text>
           </g>
           <g transform="translate(-316.40373,-14.163664)">
-            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
               <tspan x="831.40668" y="690.77325">H O</tspan>
             </text>
-            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial" x="844.06396" y="698.00598">
-              <tspan x="844.06396" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="845" y="698.00598">
+              <tspan x="845" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS">2</tspan>
             </text>
           </g>
           <g transform="translate(-247.22733,-7.122752)">
-            <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial">
+            <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
               <tspan y="690.77325" x="819.40668">CO</tspan>
             </text>
-            <text y="698.00598" x="844.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial">
-              <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS" y="698.00598" x="844.06396">2</tspan>
+            <text y="698.00598" x="845" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
+              <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS" y="698.00598" x="849">2</tspan>
             </text>
           </g>
           <g transform="translate(-604.68495,-32.437307)">
-            <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial">
+            <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
               <tspan y="690.77325" x="819.40668">O</tspan>
             </text>
-            <text y="698.00598" x="832.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial">
-              <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS" y="698.00598" x="832.06396">2</tspan>
+            <text y="698.00598" x="832.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
+              <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS" y="698.00598" x="832.06396">2</tspan>
             </text>
           </g>
           <g transform="translate(-745.14773,7.342707)">
-            <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial">
+            <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
               <tspan y="690.77325" x="819.40668">O</tspan>
             </text>
-            <text y="698.00598" x="832.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#2700a0;fill-opacity:1;stroke:none;font-family:Arial">
-              <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#2700a0;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS" y="698.00598" x="832.06396">3</tspan>
+            <text y="698.00598" x="832.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
+              <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Trebuchet MS" y="698.00598" x="832.06396">3</tspan>
             </text>
           </g>
           <text y="300.26828" x="78.820923" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
@@ -1565,20 +1536,18 @@
           <text y="300.70773" x="227.36552" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
             <tspan y="300.70773" x="227.36552">Infrared</tspan>
           </text>
-          <path d="m 328.65927,293.50063 371.35191,-0.83514" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" />
-          <path d="m 695.72271,283.72134 14.67784,8.86337 -14.3919,9.38751 c 2.23766,-5.42953 2.1088,-12.80054 -0.28594,-18.25088 z" style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" />
-          <path style="fill:#aa9800;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 237.74916,405.14286 -68.71093,41.5882" />
-          <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#aa9800;fill-opacity:1;stroke:none;font-family:Trebuchet          MS" x="226.98189" y="400.6774">
+          <path style="fill:#000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 237.74916,405.14286 -68.71093,41.5882" />
+          <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Trebuchet MS" x="226.98189" y="400.6774">
             <tspan x="226.98189" y="400.6774">Sunlight without atmospheric absorption</tspan>
           </text>
           <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="m 177.76248,451.05923 -17.0798,1.5096 6.0758,-16.07286 c 1.39873,5.70355 5.85373,11.57734 11.004,14.56326 z" />
           <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 319.11741,504.92164 -47.01278,32.21854" />
-          <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#2b0000;fill-opacity:1;stroke:none;font-family:Arial" x="320" y="500">
+          <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="320" y="500">
             <tspan x="320" y="500">5778K blackbody</tspan>
           </text>
           <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="m 285.28487,539.26218 -17.10355,1.21115 6.35551,-15.96433 c 1.29893,5.72711 5.65069,11.67779 10.74804,14.75318 z" />
           <path style="fill:none;stroke:#000000;stroke-width:1.54598403px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 479.1968,579.65061 0.92684,106.19219" />
-          <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#7f3333;fill-opacity:1;stroke:none;font-family:Arial" x="394.15558" y="569.68744">
+          <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="394.15558" y="569.68744">
             <tspan x="394.15558" y="569.68744">Sunlight at sea level</tspan>
           </text>
           <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="m 489.11884,683.21578 -8.96271,14.6174 -9.28969,-14.45523 c 5.41423,2.27443 12.78595,2.19556 18.2524,-0.16217 z" />
@@ -1766,6 +1735,9 @@
           </text>
         </g>
       </svg>
+      <p>
+        The diagram above shows the wavelengths of photons emitted or absorbed when an electron transitions between energy levels.
+      </p>
       <strong>Question:</strong> What wavelength of light could make an electron jump from energy level n = 1 to n = 5?
       <details>
         <summary>answer</summary>
