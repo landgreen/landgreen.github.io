@@ -58,7 +58,6 @@ function standing(el) {
             }
         }
 
-
         ctx.globalAlpha = 0.1
         ctx.beginPath();
         for (let i = 0; i < distance; i += 0.1) {
@@ -69,7 +68,6 @@ function standing(el) {
             const index = Math.floor((i * 100) % 628)
             sum[index].x += x
             sum[index].y += y
-
         }
         ctx.strokeStyle = "#f05"
         ctx.stroke();
