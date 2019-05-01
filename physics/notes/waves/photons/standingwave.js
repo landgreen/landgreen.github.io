@@ -45,51 +45,57 @@ function standing(el) {
     let phase = 0
 
     function drawWave() {
-        phase += 1 / 100
-        const frequency = 0.1 / wavelength
-        const distance = 1024
-        let wave = 0
-        let amplitude = 150
-        let offset = 0
-        const resolution = 0.1
+        phase += 0.05
+        const distance = 100
+        const amplitude = 150
+        const horizontalCenter = width / 2
+        const verticalCenter = height / 2
         let sum = []; //array that stores the superposition data from reflected and incident waves
-        for (let i = 0; i < 360; i++) {
-            sum[i] = 1
+        for (let i = 0; i < 628; i++) {
+            sum[i] = {
+                x: 0,
+                y: 0
+            }
         }
 
 
-        ctx.globalAlpha = 0.2
-        // ctx.lineDashOffset = j
-        ctx.setLineDash([5, 5]);
-
+        ctx.globalAlpha = 0.1
         ctx.beginPath();
-        for (let i = 0; i < distance; i++) {
-            wave = Math.sin(frequency * i + phase) * amplitude
-            ctx.lineTo(width / 2 + wave * Math.cos(i * resolution), height / 2 + wave * Math.sin(i * resolution))
+        for (let i = 0; i < distance; i += 0.1) {
+            const wave = Math.sin(i / wavelength + phase) * amplitude
+            const x = wave * Math.cos(i)
+            const y = wave * Math.sin(i)
+            ctx.lineTo(x + horizontalCenter, y + verticalCenter)
+            const index = Math.floor((i * 100) % 628)
+            sum[index].x += x
+            sum[index].y += y
+
         }
         ctx.strokeStyle = "#f05"
         ctx.stroke();
 
         ctx.beginPath();
-        for (let i = 0; i < distance; i++) {
-            wave = Math.sin(frequency * i - phase) * amplitude
-            ctx.lineTo(width / 2 + wave * Math.cos(i * resolution), height / 2 + wave * Math.sin(i * resolution))
+        for (let i = 0; i < distance; i += 0.1) {
+            const wave = Math.sin(i / wavelength - phase) * amplitude
+            const x = wave * Math.cos(i)
+            const y = wave * Math.sin(i)
+            ctx.lineTo(x + horizontalCenter, y + verticalCenter)
+            const index = Math.floor((i * 100) % 628)
+            sum[index].x += x
+            sum[index].y += y
         }
         ctx.strokeStyle = "#0ac"
         ctx.stroke();
 
-
-
-        // ctx.beginPath();
-        // for (let i = 0, len = sum.length; i < len; i++) {
-
-        //     ctx.lineTo(width / 2 + sum[i].x, height / 2 + sum[i].y)
-        // }
-        // ctx.globalAlpha = 1
-        // ctx.setLineDash([0, 0]);
-        // ctx.strokeStyle = "#000"
-        // ctx.stroke();
-
+        ctx.beginPath();
+        const scale = 25
+        for (let i = 0, len = sum.length; i < len; i++) {
+            ctx.lineTo(horizontalCenter + sum[i].x / distance * scale, verticalCenter + sum[i].y / distance * scale)
+        }
+        ctx.globalAlpha = 0.5
+        ctx.strokeStyle = "#000"
+        ctx.stroke();
+        // console.log(sum)
     }
 
 
