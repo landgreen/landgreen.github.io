@@ -140,9 +140,11 @@ const game = {
         game.gamepad.leftAxis.y = 0
       }
       //right d-pad
-      const limit = 0.03
-      if (Math.abs(gp.axes[2]) > limit) game.gamepad.rightAxis.x = gp.axes[2] * 0.05 + game.gamepad.rightAxis.x * 0.95 //smoothing the input
-      if (Math.abs(gp.axes[3]) > limit) game.gamepad.rightAxis.y = gp.axes[3] * 0.05 + game.gamepad.rightAxis.y * 0.95 //smoothing the input
+      const limit = 0.08
+      if (Math.abs(gp.axes[2]) > limit) game.gamepad.rightAxis.x = gp.axes[2] * 0.08 + game.gamepad.rightAxis.x * 0.92 //smoothing the input
+      if (Math.abs(gp.axes[3]) > limit) game.gamepad.rightAxis.y = gp.axes[3] * 0.08 + game.gamepad.rightAxis.y * 0.92 //smoothing the input
+      // if (Math.abs(gp.axes[0]) > limit) game.gamepad.rightAxis.x = gp.axes[0] * 0.2 + game.gamepad.rightAxis.x * 0.8 //smoothing the input
+      // if (Math.abs(gp.axes[1]) > limit) game.gamepad.rightAxis.y = gp.axes[1] * 0.2 + game.gamepad.rightAxis.y * 0.8 //smoothing the input
       // if (Math.abs(gp.axes[2]) > limit) game.gamepad.rightAxis.x = gp.axes[2]
       // if (Math.abs(gp.axes[3]) > limit) game.gamepad.rightAxis.y = gp.axes[3]
 
