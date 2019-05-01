@@ -26,7 +26,6 @@
     ctx.lineWidth = 1;
 })()
 
-
 function standing(el) {
     el.onclick = null; //stops the function from running on button click
     const canvas = el
@@ -40,111 +39,68 @@ function standing(el) {
         x: 0,
         y: height / 2
     }
-    let search = false; //how much the wavelength changes each cycle
-    let target = 600;
-    let searchStep = 1;
-    const velocity = 400;
-    let reflections = 64;
-    const totalPaths = 18; //how many paths are drawn in the SVG, the rest are just calculated for the superposition path
-    let dampening = -1; //lower values simulate energy loss, but don't make the standing waves as distinct
-    let wavelength = 6 * 100;
-    document.getElementById("wavelength").value = wavelength / 100;
-    let phase = 100;
-    phase = phase % wavelength; //makes the switch smoother
-
-
-
-    function drawGrid() {
-        const gridSize = 100
-        ctx.beginPath();
-        for (let i = 0; i < width; i += gridSize) {
-            ctx.moveTo(i, 0);
-            ctx.lineTo(i, height);
-        }
-        for (let i = 0; i < height; i += gridSize) {
-            ctx.moveTo(0, i);
-            ctx.lineTo(width, i);
-        }
-        ctx.strokeStyle = "#ccc"
-        ctx.stroke()
-        //center line
-        ctx.beginPath();
-        ctx.moveTo(0, height / 2);
-        ctx.lineTo(width, height / 2);
-        ctx.strokeStyle = "#333"
-        ctx.stroke();
-    }
+    let wavelength = 0.5;
+    document.getElementById("wavelength").value = wavelength;
+    document.getElementById("wavelength-slider").value = wavelength;
+    let phase = 0
 
     function drawWave() {
-        phase += velocity / 60; //move the waves forward in time
-        const frequency = 2 * Math.PI / wavelength
-        let wave, d
-        let amplitude = 50
+        phase += 1 / 100
+        const frequency = 0.1 / wavelength
+        const distance = 1024
+        let wave = 0
+        let amplitude = 150
         let offset = 0
+        const resolution = 0.1
         let sum = []; //array that stores the superposition data from reflected and incident waves
-        sum[0] = Math.sin(frequency * phase) * amplitude //populate sum array
-        for (let i = 1; i < width; i++) {
+        for (let i = 0; i < 360; i++) {
             sum[i] = 1
         }
 
-        for (let j = 0; j < reflections; j += 2) {
-            //reflected wave (starts on left)
-            amplitude *= dampening
-            offset += width
 
-            wave = amplitude * Math.sin(frequency * (offset - phase))
-            sum[0] += wave //adding wave contribution to superposition wave
-            ctx.beginPath();
-            for (let x = 0; x < width; x++) {
-                wave = Math.sin(frequency * (x + offset - phase)) * amplitude
-                sum[x] += wave //adding wave contribution to superposition wave
-                ctx.lineTo(x, wave + origin.y)
-            }
-            ctx.strokeStyle = "#f05"
-            ctx.setLineDash([5, 5]);
-            ctx.lineDashOffset = j * 2
-            ctx.globalAlpha = 0.4
-            ctx.stroke();
+        ctx.globalAlpha = 0.2
+        // ctx.lineDashOffset = j
+        ctx.setLineDash([5, 5]);
 
-            //reflected wave (starts on right)
-            amplitude *= dampening
-            offset += width
-            wave = amplitude * Math.sin(frequency * (offset - phase))
-            ctx.beginPath();
-            for (let i = 0, x = width; i < width; i++, x++) {
-                wave = Math.sin(frequency * (x + offset - width - phase)) * amplitude
-                sum[width - i] += wave; //adding wave contribution to superposition wave
-                ctx.lineTo(width - i, wave + origin.y)
-            }
-            ctx.strokeStyle = "#0ac"
-            ctx.setLineDash([5, 5]);
-            ctx.stroke();
+        ctx.beginPath();
+        for (let i = 0; i < distance; i++) {
+            wave = Math.sin(frequency * i + phase) * amplitude
+            ctx.lineTo(width / 2 + wave * Math.cos(i * resolution), height / 2 + wave * Math.sin(i * resolution))
         }
+        ctx.strokeStyle = "#f05"
+        ctx.stroke();
 
-        //draw interference patter superposition
-        const scale = 3.5 / reflections
-        ctx.beginPath()
-        ctx.moveTo(1, origin.y)
-        for (let x = 1; x < width; ++x) {
-            ctx.lineTo(x, sum[x] * scale + origin.y)
+        ctx.beginPath();
+        for (let i = 0; i < distance; i++) {
+            wave = Math.sin(frequency * i - phase) * amplitude
+            ctx.lineTo(width / 2 + wave * Math.cos(i * resolution), height / 2 + wave * Math.sin(i * resolution))
         }
-        ctx.strokeStyle = "#000"
-        ctx.setLineDash([0, 0]);
-        ctx.globalAlpha = 1
-        ctx.stroke()
+        ctx.strokeStyle = "#0ac"
+        ctx.stroke();
+
+
+
+        // ctx.beginPath();
+        // for (let i = 0, len = sum.length; i < len; i++) {
+
+        //     ctx.lineTo(width / 2 + sum[i].x, height / 2 + sum[i].y)
+        // }
+        // ctx.globalAlpha = 1
+        // ctx.setLineDash([0, 0]);
+        // ctx.strokeStyle = "#000"
+        // ctx.stroke();
+
     }
 
 
     document.getElementById("wavelength").addEventListener("input", () => {
-        wavelength = Math.max(Number(document.getElementById("wavelength").value) * 100, 1);
-        document.getElementById("wavelength-slider").value = wavelength / 100
-        phase = phase % wavelength; //makes the switch smoother
+        wavelength = Number(document.getElementById("wavelength").value)
+        document.getElementById("wavelength-slider").value = wavelength
     }, false);
 
     document.getElementById("wavelength-slider").addEventListener("input", () => {
-        wavelength = Math.max(Number(document.getElementById("wavelength-slider").value) * 100, 1);
-        document.getElementById("wavelength").value = wavelength / 100
-        phase = phase % wavelength; //makes the switch smoother
+        wavelength = Number(document.getElementById("wavelength-slider").value)
+        document.getElementById("wavelength").value = wavelength
     }, false);
 
     let pause = false;
@@ -164,11 +120,156 @@ function standing(el) {
         time++
         if (!pause) requestAnimationFrame(cycle);
         ctx.clearRect(0, 0, width, height)
-        drawGrid();
         drawWave();
     }
     requestAnimationFrame(cycle); //starts game loop
 }
+
+
+
+
+// function standing(el) {
+//     el.onclick = null; //stops the function from running on button click
+//     const canvas = el
+//     const ctx = canvas.getContext("2d");
+//     ctx.lineWidth = 2
+//     const width = 600;
+//     canvas.width = width
+//     const height = 400;
+//     canvas.height = height
+//     const origin = {
+//         x: 0,
+//         y: height / 2
+//     }
+//     let search = false; //how much the wavelength changes each cycle
+//     let target = 600;
+//     let searchStep = 1;
+//     const velocity = 100;
+//     let reflections = 64;
+//     const totalPaths = 18; //how many paths are drawn in the SVG, the rest are just calculated for the superposition path
+//     let dampening = -1; //lower values simulate energy loss, but don't make the standing waves as distinct
+//     let wavelength = 6 * 100;
+//     document.getElementById("wavelength").value = wavelength / 100;
+//     let phase = 100;
+//     phase = phase % wavelength; //makes the switch smoother
+
+
+
+//     function drawGrid() {
+//         const gridSize = 100
+//         ctx.beginPath();
+//         for (let i = 0; i < width; i += gridSize) {
+//             ctx.moveTo(i, 0);
+//             ctx.lineTo(i, height);
+//         }
+//         for (let i = 0; i < height; i += gridSize) {
+//             ctx.moveTo(0, i);
+//             ctx.lineTo(width, i);
+//         }
+//         ctx.strokeStyle = "#ccc"
+//         ctx.stroke()
+//         //center line
+//         ctx.beginPath();
+//         ctx.moveTo(0, height / 2);
+//         ctx.lineTo(width, height / 2);
+//         ctx.strokeStyle = "#333"
+//         ctx.stroke();
+//     }
+
+//     function drawWave() {
+//         phase += velocity / 60; //move the waves forward in time
+//         const frequency = 2 * Math.PI / wavelength
+//         let wave = 0
+//         let amplitude = 50
+//         let offset = 0
+//         let sum = []; //array that stores the superposition data from reflected and incident waves
+//         sum[0] = Math.sin(frequency * phase) * amplitude //populate sum array
+//         for (let i = 1; i < width; i++) {
+//             sum[i] = 1
+//         }
+
+//         for (let j = 0; j < reflections; j += 2) {
+//             //reflected wave (starts on left)
+//             amplitude *= dampening
+//             offset += width
+
+//             ctx.lineDashOffset = j * 7
+//             ctx.setLineDash([5, 5]);
+//             ctx.globalAlpha = 0.6
+
+//             wave = amplitude * Math.sin(frequency * (offset - phase))
+//             sum[0] += wave //adding wave contribution to superposition wave
+//             ctx.beginPath();
+//             for (let x = 0; x < width; x++) {
+//                 wave = Math.sin(frequency * (x + offset - phase)) * amplitude
+//                 sum[x] += wave //adding wave contribution to superposition wave
+//                 ctx.lineTo(x, wave + origin.y)
+//             }
+//             ctx.strokeStyle = "#f05"
+//             ctx.stroke();
+
+//             //reflected wave (starts on right)
+//             amplitude *= dampening
+//             offset += width
+//             wave = amplitude * Math.sin(frequency * (offset - phase))
+//             ctx.beginPath();
+//             for (let i = 0, x = width; i < width; i++, x++) {
+//                 wave = Math.sin(frequency * (x + offset - width - phase)) * amplitude
+//                 sum[width - i] += wave; //adding wave contribution to superposition wave
+//                 ctx.lineTo(width - i, wave + origin.y)
+//             }
+//             ctx.strokeStyle = "#0ac"
+//             ctx.stroke();
+//         }
+
+//         //draw interference patter superposition
+//         const scale = 3.5 / reflections
+//         ctx.beginPath()
+//         ctx.moveTo(1, origin.y)
+//         for (let x = 1; x < width; ++x) {
+//             ctx.lineTo(x, sum[x] * scale + origin.y)
+//         }
+//         ctx.strokeStyle = "#000"
+//         ctx.setLineDash([0, 0]);
+//         ctx.globalAlpha = 1
+//         ctx.stroke()
+//     }
+
+
+//     document.getElementById("wavelength").addEventListener("input", () => {
+//         wavelength = Math.max(Number(document.getElementById("wavelength").value) * 100, 1);
+//         document.getElementById("wavelength-slider").value = wavelength / 100
+//         phase = phase % wavelength; //makes the switch smoother
+//     }, false);
+
+//     document.getElementById("wavelength-slider").addEventListener("input", () => {
+//         wavelength = Math.max(Number(document.getElementById("wavelength-slider").value) * 100, 1);
+//         document.getElementById("wavelength").value = wavelength / 100
+//         phase = phase % wavelength; //makes the switch smoother
+//     }, false);
+
+//     let pause = false;
+//     const elZone = document.getElementById("standing-wave-zone");
+//     elZone.addEventListener("mouseleave", () => {
+//         pause = true;
+//     });
+//     elZone.addEventListener("mouseenter", () => {
+//         if (pause) {
+//             pause = false;
+//             requestAnimationFrame(cycle);
+//         }
+//     });
+//     time = 0
+
+//     function cycle() {
+//         time++
+//         if (!pause) requestAnimationFrame(cycle);
+//         ctx.clearRect(0, 0, width, height)
+//         drawGrid();
+//         drawWave();
+//     }
+//     requestAnimationFrame(cycle); //starts game loop
+// }
 
 
 
