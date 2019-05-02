@@ -30,7 +30,7 @@
   <script src="../../../lib/katex/katex.min.js"></script>
   <script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
-  <!-- <script defer src="standingwave.js"></script> -->
+  <script defer src="standingwave.js"></script>
 
   <link rel="stylesheet" type="text/css" href="../../../style.css">
 </head>
@@ -842,170 +842,22 @@
       </details>
     </div>
 
-    <h2 class='underlined'>Atomic Orbitals</h2>
+
+    <h2 class='underlined' id="atomic-orbitals">Atomic Orbitals</h2>
+    <p>
+      In atoms, negatively charged electrons are attracted to the positively charged nucleus.
+      If it worked like gravity this would cause the electrons to orbit the nucleus, but it's more complicated because of quantum mechanics.
+    </p>
     <p>
       Electrons, like photons, have a probability wave that represents the odds of finding the electron in a given state.
-      In an atom, this probability wave is limited to specific wavelengths that allow <a href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
+      As the electron tries to orbit the nucleus in both clockwise and counterclockwise directions, the electron's probability wave destructively interferes with itself.
+      This limits the wavelengths to values that allow <a href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
       We say that the allowed wavelengths are quantized.
       <strong>Quantizing</strong> means to restrict a variable to specific values.
     </p>
-    <a href="https://commons.wikimedia.org/wiki/File:S-p-Orbitals.svg">
-      <svg viewBox="0 0 1800 420">
-        <defs>
-          <linearGradient id="c">
-            <stop stop-color="#bad8ff" offset="0" />
-            <stop stop-color="#828c98" offset="1" />
-          </linearGradient>
-          <linearGradient id="a">
-            <stop stop-color="#fff4f4" stop-opacity=".43607" offset="0" />
-            <stop stop-color="#9e7f7f" stop-opacity="0" offset="1" />
-          </linearGradient>
-          <linearGradient id="d">
-            <stop stop-color="#eca6a6" offset="0" />
-            <stop stop-color="#9e7f7f" offset="1" />
-          </linearGradient>
-          <radialGradient id="r" cx="-759.54" cy="298.92" r="61.619" gradientTransform="matrix(.58271 .87264 -.78676 .52536 -54.596 815.67)" gradientUnits="userSpaceOnUse" xlink:href="#c" />
-          <radialGradient id="q" cx="-756.34" cy="309.09" r="15.657" gradientTransform="matrix(-1.4682 .22463 -.18014 -1.1772 -1800.3 848.71)" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#555" offset="0" />
-            <stop stop-color="#333" offset="1" />
-          </radialGradient>
-          <radialGradient id="f" cx="-402.97" cy="257.37" r="172.14" gradientTransform="matrix(-.90127 .41077 -.41472 -.90995 -651.3 638.64)" gradientUnits="userSpaceOnUse" xlink:href="#d" />
-          <radialGradient id="e" cx="-309.92" cy="187.25" r="172.14" gradientTransform="matrix(.53843 -.2202 .20938 .51198 -388.42 208.14)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
-          <radialGradient id="p" cx="-842.36" cy="137.52" r="172.14" gradientTransform="matrix(-.77829 .29258 -.24462 -.6507 -586.82 264.86)" gradientUnits="userSpaceOnUse" xlink:href="#d" />
-          <radialGradient id="o" cx="640.74" cy="-94.029" r="172.14" gradientTransform="matrix(.76349 -3.1151e-7 -5.6573e-6 .55314 -574.91 61.517)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
-          <radialGradient id="n" cx="-416.26" cy="-517.82" r="61.619" gradientTransform="matrix(-2.4575 1.7623e-5 7.9566e-6 -1.5952 -985.81 -705.09)" gradientUnits="userSpaceOnUse" xlink:href="#c" />
-          <radialGradient id="m" cx="629.51" cy="-207.67" r="172.14" gradientTransform="matrix(.59372 .15896 .12941 -.48339 -436.88 -9.6628)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
-          <radialGradient id="l" cx="-622.2" cy="-25.187" r="61.619" gradientTransform="matrix(-3.3287 .021114 -.018565 -2.9269 -2470.5 186.24)" gradientUnits="userSpaceOnUse" xlink:href="#c" />
-          <radialGradient id="k" cx="-341.04" cy="201.19" r="172.14" gradientTransform="matrix(.58692 .18604 -.13736 .43335 -302.12 362.51)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
-          <radialGradient id="j" cx="-822.17" cy="14.873" r="172.14" gradientTransform="matrix(-.83061 .037788 -.028847 -.6341 -649.2 28.866)" gradientUnits="userSpaceOnUse" xlink:href="#d" />
-          <radialGradient id="i" cx="599.92" cy="-211.37" r="172.14" gradientTransform="matrix(.1532 .2582 -.4757 .28226 -302.42 -180.68)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
-          <radialGradient id="h" cx="-425.56" cy="-573.35" r="61.619" gradientTransform="matrix(-.053479 -1.8081 3.032 -.089625 1758.5 -618.5)" gradientUnits="userSpaceOnUse" xlink:href="#c" />
-          <radialGradient id="g" cx="556.16" cy="-89.686" r="172.14" gradientTransform="matrix(.47636 -.12271 -.12484 -.48459 -411.55 139.74)" gradientUnits="userSpaceOnUse" xlink:href="#a" />
-        </defs>
-        <g transform="matrix(.88525 0 0 .88525 718.17 476.32)">
-          <g transform="translate(228.57 -606.92)">
-            <path transform="translate(-152.53 -5.0508)" d="m-690.94 321.01a61.619 61.619 0 1 1 -123.24 0 61.619 61.619 0 1 1 123.24 0z" color="#000000" fill="url(#r)" fill-rule="evenodd" />
-            <path id="b" transform="translate(-149.5 -3.0305)" d="m-739.43 321.52a15.657 15.657 0 1 1 -31.315 0 15.657 15.657 0 1 1 31.315 0z" color="#000000" fill="url(#q)" fill-rule="evenodd" />
-          </g>
-          <g transform="translate(313.28 -313.02)">
-            <g fill-rule="evenodd">
-              <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#f)" />
-              <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#e)" />
-            </g>
-            <use transform="translate(239.92 -292.39)" width="744.09448" height="1052.3622" xlink:href="#b" />
-          </g>
-          <g transform="translate(97.361 -358.89)">
-            <g fill-rule="evenodd">
-              <path d="m129.29-11.831c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#p)" />
-              <path d="m129.29-11.831c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#o)" />
-            </g>
-            <g transform="translate(-4.2857 -1.5772)" fill-rule="evenodd">
-              <path d="m133.57 149.26c0-66.686-71.36-79.758-159.29-79.758-87.926 0-155.25 20.841-155.25 79.758 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#n)" />
-              <path d="m133.57 149.26c0-66.686-71.36-79.759-159.29-79.759-87.926 0-155.25 20.841-155.25 79.759 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#m)" />
-            </g>
-            <use transform="translate(878.83 -250.52)" width="744.09448" height="1052.3622" opacity=".70978" xlink:href="#b" />
-          </g>
-          <g transform="translate(64.451 -373.65)">
-            <g transform="translate(62.857 -171.43)" fill-rule="evenodd">
-              <g transform="matrix(.88264 0 0 .88264 965.42 230.55)">
-                <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#f)" />
-                <path transform="translate(-213.25 -289.59)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#e)" />
-              </g>
-              <g transform="matrix(.93658 0 0 .93658 977.72 221.48)">
-                <path transform="translate(-216.73 -276.8)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#l)" />
-                <path transform="translate(-216.73 -276.8)" d="m-279.29 311.65a172.14 172.14 0 1 1 -344.29 0 172.14 172.14 0 1 1 344.29 0z" color="#000000" fill="url(#k)" />
-              </g>
-            </g>
-            <use transform="translate(1331.4 -240)" width="744.09448" height="1052.3622" xlink:href="#b" />
-          </g>
-          <g transform="matrix(6.7166e-17 -1 1 6.7166e-17 914.7 -335.1)">
-            <g fill-rule="evenodd">
-              <path d="m113.12-38.095c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#j)" />
-              <path d="m113.12-38.095c0 66.686-71.36 79.759-159.29 79.759-87.926 0-155.25-20.841-155.25-79.759 0-64.674 67.319-127.24 155.25-127.24 87.926 0 159.29 64.46 159.29 127.24z" color="#000000" fill="url(#i)" />
-            </g>
-            <g transform="translate(-3.3053 -20.998)" fill-rule="evenodd">
-              <path d="m116.43 142.12c0-66.686-71.36-79.758-159.29-79.758-87.926 0-155.25 20.841-155.25 79.758 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#h)" />
-              <path d="m116.43 142.12c0-66.686-71.36-79.759-159.29-79.759-87.926 0-155.25 20.841-155.25 79.759 0 64.674 67.319 127.24 155.25 127.24 87.926 0 159.29-64.46 159.29-127.24z" color="#000000" fill="url(#g)" />
-            </g>
-            <use transform="translate(858.83 -276.95)" width="744.09448" height="1052.3622" opacity=".70978" xlink:href="#b" />
-          </g>
-        </g>
-      </svg>
-    </a>
-    <p>
-      In addition to quantizing the electron's wavelength there is another restriction.
-      Electrons in the same atom can't have the exact same state due to a quantum interaction called the <a href="https://en.wikipedia.org/wiki/Pauli_exclusion_principle">Pauli exclusion principle</a>.
-      Four quantum numbers are used to describe the quantum state.
-      These numbers must be different for each electron. Possible states for Hydrogen are shown below.
-    </p>
-    <a href="https://en.wikipedia.org/wiki/Atomic_orbital">
-      <img src="Hydrogen_Density_Plots.png" width="100%">
-    </a>
-    <p>
-      The first electron in an atom usually takes the state with the lowest energy requirements.
-      Each additional electron usually takes the next lowest energy state that isn't already filled.
-    </p>
 
-    <!-- <div id="standing-wave-zone">
-      <canvas class="center" id="standing-wave-canvas" width="600" height='300' onclick="standing(this)"></canvas>
-      <div class="center">
-        <style>
-          .slider {
-            width: 360px
-          }
-
-          @media screen and (max-width: 650px) {
-            .slider {
-              width: 100px
-            }
-          }
-        </style>
-        wavelength = <input class="slider" id='wavelength-slider' type="range" step="0.001" value="0.5" min="0" max="1">
-        <input id='wavelength' type="number" step="0.001" value="0.5" min="0" max="1" style="width:80px;">m
-      </div>
-    </div> -->
-
-
-    <!-- </article>
-  <div id="standing-wave-zone">
-    <div class='center' id='wave_animation'>
-      <svg id='standing-wave' height='400'>
-        <g stroke="#d9dfdf" style="stroke-dasharray:1,98,1,0;stroke-width:4000;">
-          <line x1="0" y1="0" x2="2000" y2="0" />
-          <line x1="0" y1="0" x2="0" y2="2000" />
-        </g>
-        <line x1="0" y1="200" x2="3000" y2="200" stroke-dasharray='10,10' stroke='#777' stroke-width='2' />
-        <path d='M103 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;' />
-        <text x="150" y="391" text-anchor="middle" font-size="15" fill='#000'>1.0 m</text>
-        <g stroke-miterlimit="10" opacity="1" stroke-dasharray="4" stroke-width='3' fill='none'>
-          <g stroke='#f06'>
-            <path id="wave-form-path-0" stroke-dashoffset="0" opacity="1" />
-            <path id="wave-form-path-2" stroke-dashoffset="2" opacity="0.9" />
-            <path id="wave-form-path-4" stroke-dashoffset="4" opacity="0.8" />
-            <path id="wave-form-path-6" stroke-dashoffset="0" opacity="0.7" />
-            <path id="wave-form-path-8" stroke-dashoffset="2" opacity="0.6" />
-            <path id="wave-form-path-10" stroke-dashoffset="4" opacity="0.5" />
-            <path id="wave-form-path-12" stroke-dashoffset="0" opacity="0.4" />
-            <path id="wave-form-path-14" stroke-dashoffset="2" opacity="0.3" />
-            <path id="wave-form-path-16" stroke-dashoffset="4" opacity="0.2" />
-          </g>
-          <g stroke='#0ac'>
-            <path id="wave-form-path-1" stroke-dashoffset="0" opacity="1" />
-            <path id="wave-form-path-3" stroke-dashoffset="2" opacity="0.9" />
-            <path id="wave-form-path-5" stroke-dashoffset="4" opacity="0.8" />
-            <path id="wave-form-path-7" stroke-dashoffset="0" opacity="0.7" />
-            <path id="wave-form-path-9" stroke-dashoffset="2" opacity="0.6" />
-            <path id="wave-form-path-11" stroke-dashoffset="4" opacity="0.5" />
-            <path id="wave-form-path-13" stroke-dashoffset="0" opacity="0.4" />
-            <path id="wave-form-path-15" stroke-dashoffset="2" opacity="0.3" />
-            <path id="wave-form-path-17" stroke-dashoffset="4 " opacity="0.2" />
-          </g>
-        </g>
-        <path id="superposition-wave-form-path" stroke-width='4' fill='none' stroke='#000' stroke-miterlimit="10" opacity="1" />
-        <path id="standing-wave-border" d="M0 0 v400" stroke='#000' stroke-width='4' fill="none" />
-      </svg>
-    </div>
-    <div class="center">
+    <div id="standing-wave-zone">
+      <canvas class="center" id="standing-wave-canvas" width="600" height='100' onclick="standing(this)"></canvas>
       <style>
         .slider {
           width: 360px
@@ -1017,39 +869,35 @@
           }
         }
       </style>
-      wavelength = <input class="slider" id='wavelength-slider' type="range" step="0.01" value="6" min="0.5" max="20">
-      <input id='wavelength' type="number" step="0.01" value="6" min="0.5" max="20" style="width:80px;">m
+      <div class="center" id="standing-wave-input" style="display:none;">
+        wavelength = <input class="slider" id='wavelength-slider' type="range" step="0.001" value="0.5" min="0" max="1">
+        <input id='wavelength' type="number" step="0.001" value="0.5" min="0" max="1" style="width:80px;">m
+      </div>
+      <p>
+        This simulator shows how simple circular 2-D standing waves form.
+        The red and blue are possible clockwise and counterclockwise paths. For most wavelengths, these paths interfere destructively.
+        When the paths interfere constructively, we get a standing wave, shown in white.
+        Standing waves only form at these quantized values:
+        $$\lambda = \left[ 1,\,\frac{1}{2},\,\frac{1}{3},\,\frac{1}{4}, \, \frac{1}{5} \,\, \dots \,\, \right] = \frac{1}{n}$$
+      </p>
     </div>
-    <br>
-    <div style="max-width: 600px; margin: 0 auto;">
-      <strong>Simulation:</strong> <button id="wave-search">Search</button> for at least 5 wavelengths that resonate to produce standing waves.
-      <details>
-        <summary>results</summary>
-        <h3 id="list-standing"></h3>
-        <details>
-          <summary><strong>Extra Credit:</strong> Can you figure out an equation that produces those results?
-            <br>Use λ for the resonate wavelengths,
-            <br>L for the length of the region,
-            <br>n for any positive integer.</summary>
-          <p>
-            Standing wave resonance in a bounded region occurs when the wavelength is even multiples of twice the length of the region.
-          </p>
-          <p>
-            $$2L = n \lambda $$
-            $$n = 1,2,3,4,5 \, \dots $$
-            \( \lambda \) = resonance wavelengths [m]
-            <br>\( L \) = length of bounded region [m]
-            <br>\( n \) = positive integers
-          </p>
-        </details>
-      </details>
+
+    <div class="example">
+      The actual allowed 3-D states for Hydrogen are more complicated.
+      <a href="https://en.wikipedia.org/wiki/Atomic_orbital">
+        <img src="Hydrogen_Density_Plots.png" width="100%">
+      </a>
+      <p>
+        In addition to quantizing the electron's wavelength there is another restriction.
+        Electrons in the same atom can't have the exact same state due to a quantum interaction called the <a href="https://en.wikipedia.org/wiki/Pauli_exclusion_principle">Pauli exclusion principle</a>.
+        Four quantum numbers are used to describe the quantum state.
+        These numbers must be different for each electron.
+      </p>
+      <p>
+        The first electron in an atom usually takes the state with the lowest energy requirements.
+        Each additional electron usually takes the next lowest energy state that isn't already filled.
+      </p>
     </div>
-  </div>
-  <article> -->
-
-
-
-
 
 
 
