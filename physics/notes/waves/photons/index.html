@@ -554,7 +554,7 @@
     </div>
 
     <div class='example'>
-      <strong>Example:</strong> Find the max kinetic energy of a magnesium electron after being hit by a photon with a frequency of 600 THz. Look up the <a href='https://en.wikipedia.org/wiki/Work_function#Work_functions_of_elements.5B11.5D'>work function</a> for Magnesium and convert it into Joules.
+      <strong>Example:</strong> Find the max kinetic energy of a magnesium electron after being hit by a photon with a frequency of 600 THz. Look up the <a href='https://en.wikipedia.org/wiki/Work_function#Work_functions_of_elements.5B11.5D'>work function</a> for magnesium and convert it into Joules.
       <details class="hide-on-mobile">
         <summary>metric prefixes</summary>
         <table>
@@ -800,7 +800,7 @@
       <details>
         <summary>answer</summary>
         <br>
-        <strong>CO | CO₂ | H₂O | NO₂ | O₃ </strong>all could deflect infrared light as it leaves the earth, preventing the earth from cooling.
+        <strong>CO | CO₂ | H₂O | NO₂ | O₃ </strong>all could deflect infrared light as it leaves the Earth, preventing the Earth from cooling.
       </details>
     </div>
 
@@ -845,11 +845,15 @@
 
     <h2 class='underlined' id="atomic-orbitals">Atomic Orbitals</h2>
     <p>
-      In atoms, negatively charged electrons are attracted to the positively charged nucleus.
-      If it worked like gravity this would cause the electrons to orbit the nucleus, but it's more complicated because of quantum mechanics.
+      Two bodies can <a href="../../gravity/circular/index.html#circular-orbits">orbit</a> each other if they experience an attractive force.
+      Gravitational attraction keeps the Earth orbiting the Sun and the Moon orbiting the Earth.
     </p>
     <p>
-      Electrons, like photons, have a probability wave that represents the odds of finding the electron in a given state.
+      The nucleus of an atom attracts electrons because it has an opposite electric charge.
+      This attraction can also lead to an orbit, but it works differently because atoms are isolated enough that quantum mechanics plays a role.
+    </p>
+    <p>
+      Electrons have a probability wave that represents the odds of finding the electron in a given state.
       As the electron tries to orbit the nucleus in both clockwise and counterclockwise directions, the electron's probability wave destructively interferes with itself.
       This limits the wavelengths to values that allow <a href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
       We say that the allowed wavelengths are quantized.
@@ -873,28 +877,32 @@
         wavelength = <input class="slider" id='wavelength-slider' type="range" step="0.001" value="0.5" min="0" max="1">
         <input id='wavelength' type="number" step="0.001" value="0.5" min="0" max="1" style="width:80px;">m
       </div>
-      <p>
-        This simulator shows how simple circular 2-D standing waves form.
-        The red and blue are possible clockwise and counterclockwise paths. For most wavelengths, these paths interfere destructively.
-        When the paths interfere constructively, we get a standing wave, shown in white.
-        Standing waves only form at these quantized values:
-        $$\lambda = \left[ 1,\,\frac{1}{2},\,\frac{1}{3},\,\frac{1}{4}, \, \frac{1}{5} \,\, \dots \,\, \right] = \frac{1}{n}$$
-      </p>
     </div>
+    <p>
+      This simulator shows how simple circular 2-D standing waves form.
+      The red and blue are possible clockwise and counterclockwise paths. For most wavelengths, these paths interfere destructively.
+      When the paths interfere constructively, we get a standing wave, shown in white.
 
-    <div class="example">
+      $$\lambda = \left[ 1,\,\frac{1}{2},\,\frac{1}{3},\,\frac{1}{4}, \, \frac{1}{5}, \,\, \dots \,\, \right] = \frac{1}{n}$$
+      Circular 2-D standing waves only form at these quantized values.
+    </p>
+    <div class="example-small">
       The actual allowed 3-D states for Hydrogen are more complicated.
       <a href="https://en.wikipedia.org/wiki/Atomic_orbital">
         <img src="Hydrogen_Density_Plots.png" width="100%">
       </a>
       <p>
-        In addition to quantizing the electron's wavelength there is another restriction.
-        Electrons in the same atom can't have the exact same state due to a quantum interaction called the <a href="https://en.wikipedia.org/wiki/Pauli_exclusion_principle">Pauli exclusion principle</a>.
-        Four quantum numbers are used to describe the quantum state.
+        Quantum mechanics puts another restriction on electrons.
+        Two electrons can't form the exact same wave due to a quantum interaction called the <a href="https://en.wikipedia.org/wiki/Pauli_exclusion_principle">Pauli exclusion principle</a>.
+        Four quantum numbers are used to describe the electron's wave.
         These numbers must be different for each electron.
       </p>
+      <!-- <p>
+        The combination of quantizing the wavelength and not letting electrons have identical waves is comparable to people occupying seats in a theatre.
+        Every person must sit in a seat, and two people can't sit in the same seat.
+      </p> -->
       <p>
-        The first electron in an atom usually takes the state with the lowest energy requirements.
+        The first electron in an atom is usually takes the state with the lowest energy requirements.
         Each additional electron usually takes the next lowest energy state that isn't already filled.
       </p>
     </div>
@@ -1181,7 +1189,7 @@
     </div>
     <div class='example'>
       <p>
-        <a href="https://apod.nasa.gov/apod/ap180926.html">Sunlight</a> is mostly thermal radiation with large sections of absorption from the molecules in earth's atmosphere.
+        <a href="https://apod.nasa.gov/apod/ap180926.html">Sunlight</a> is mostly thermal radiation with large sections of absorption from the molecules in Earth's atmosphere.
       </p>
       <svg viewbox='25 0 800 600'>
         <g transform="translate(66.009356,-172.95341)">
@@ -1514,7 +1522,7 @@
       <details>
         <summary>answer</summary>
         <p>H₂O, CO₂ and O₂ absorb infrared light and then re-emit the light in a random direction.</p>
-        <p>High H₂O and CO₂ concentrations lead to a <a href="https://en.wikipedia.org/wiki/File:Mauna_Loa_CO2_monthly_mean_concentration.svg">warmer</a> earth. This happens because incoming sunlight is mostly visible and is not absorbed by these gases, but light leaving the earth is mostly infrared and is absorbed.</p>
+        <p>High H₂O and CO₂ concentrations lead to a <a href="https://en.wikipedia.org/wiki/File:Mauna_Loa_CO2_monthly_mean_concentration.svg">warmer</a> Earth. This happens because incoming sunlight is mostly visible and is not absorbed by these gases, but light leaving the Earth is mostly infrared and is absorbed.</p>
       </details>
     </div>
 
