@@ -42,20 +42,29 @@ function standing(canvas) {
     function drawWave() {
         phase += 0.01
         const distance = 500
-        const amplitude = 180
-        const horizontalCenter = width / 2
-        const verticalCenter = height / 2
+        const amplitude = 170
+        const widthCenter = width / 2
+        const heightCenter = height / 2
 
-        ctx.globalAlpha = 0.05
+        let sum = []; //array that stores the superposition data from reflected and incident waves
+        const sumLength = 360
+        for (let i = 0; i < sumLength; i++) {
+            sum[i] = 0
+        }
+
         ctx.lineWidth = 1
         ctx.beginPath();
         for (let i = 0; i < distance; i += 0.1) {
             const wave = Math.sin(i / wavelength + phase) * amplitude
             const x = wave * Math.cos(i)
             const y = wave * Math.sin(i)
-            ctx.lineTo(x + horizontalCenter, y + verticalCenter)
+            ctx.lineTo(x + widthCenter, y + heightCenter)
+
+            const angle = Math.floor(Math.atan2(y, x) * 180 / Math.PI + 180)
+            const mag = x * x + y * y
+            sum[angle] += mag
         }
-        ctx.strokeStyle = "#f05"
+        ctx.strokeStyle = "rgba(255,0,80,0.1)" // "#f05"
         ctx.stroke();
 
         ctx.beginPath();
@@ -63,13 +72,63 @@ function standing(canvas) {
             const wave = Math.sin(i / wavelength - phase) * amplitude
             const x = wave * Math.cos(i)
             const y = wave * Math.sin(i)
-            ctx.lineTo(x + horizontalCenter, y + verticalCenter)
+            ctx.lineTo(x + widthCenter, y + heightCenter)
+
+            const angle = Math.floor(Math.atan2(y, x) * 180 / Math.PI + 180)
+            const mag = x * x + y * y
+            sum[angle] += mag
         }
-        ctx.strokeStyle = "#0ac"
+        ctx.strokeStyle = "rgba(0,175,207,0.1)" //"#0ac"
+        ctx.stroke();
+
+        ctx.beginPath();
+        const scale = 0.1 / distance
+        for (let a = 0; a < sumLength; a++) {
+            const angle = (a - 180) * Math.PI / 180
+            const x = scale * sum[a] * Math.cos(angle)
+            const y = scale * sum[a] * Math.sin(angle)
+            ctx.lineTo(widthCenter + x, heightCenter + y)
+        }
+        ctx.fillStyle = "rgba(255,255,255,0.5)"
+        ctx.fill();
+        ctx.strokeStyle = "#fff"
+        ctx.stroke();
+        // console.log(sum)
+    }
+
+
+
+
+    function drawWavePhaseInterference() {
+        phase += 0.01
+        const distance = 500
+        const amplitude = 170
+        const widthCenter = width / 2
+        const heightCenter = height / 2
+
+        ctx.lineWidth = 1
+        ctx.beginPath();
+        for (let i = 0; i < distance; i += 0.1) {
+            const wave = Math.sin(i / wavelength + phase) * amplitude
+            const x = wave * Math.cos(i)
+            const y = wave * Math.sin(i)
+            ctx.lineTo(x + widthCenter, y + heightCenter)
+        }
+        ctx.strokeStyle = "rgba(255,0,80,0.1)" // "#f05"
+        ctx.stroke();
+
+        ctx.beginPath();
+        for (let i = 0; i < distance; i += 0.1) {
+            const wave = Math.sin(i / wavelength - phase) * amplitude
+            const x = wave * Math.cos(i)
+            const y = wave * Math.sin(i)
+            ctx.lineTo(x + widthCenter, y + heightCenter)
+        }
+        ctx.strokeStyle = "rgba(0,175,207,0.1)" //"#0ac"
         ctx.stroke();
 
         let sum = []; //array that stores the superposition data from reflected and incident waves
-        const sumLength = Math.round(2 * Math.PI * 10)
+        const sumLength = Math.round(2 * Math.PI * 10) + 1
         for (let i = 0; i < sumLength; i++) {
             sum[i] = {
                 x: 0,
@@ -81,23 +140,21 @@ function standing(canvas) {
             const wave2 = Math.sin(i / wavelength - phase) * amplitude
             const x = (wave1 + wave2) * Math.cos(i)
             const y = (wave1 + wave2) * Math.sin(i)
-            const index = Math.floor(i % (2 * Math.PI) * 10)
+            const index = Math.round(i % (2 * Math.PI) * 10)
             sum[index].x += x
             sum[index].y += y
         }
 
 
         ctx.beginPath();
-        const scale = Math.PI / distance
+        const scale = 1.4 * Math.PI / distance
         for (let i = 0; i < sumLength; i++) {
-            ctx.lineTo(horizontalCenter + scale * sum[i].x, verticalCenter + scale * sum[i].y)
+            ctx.lineTo(widthCenter + scale * sum[i].x, heightCenter + scale * sum[i].y)
         }
-        ctx.globalAlpha = 0.4
-        ctx.fillStyle = "#fff"
+        ctx.fillStyle = "rgba(255,255,255,0.5)"
         ctx.fill();
-        ctx.globalAlpha = 1
-        ctx.strokeStyle = "#fff"
-        ctx.stroke();
+        // ctx.strokeStyle = "#fff"
+        // ctx.stroke();
     }
 
 
@@ -128,7 +185,8 @@ function standing(canvas) {
         time++
         if (!pause) requestAnimationFrame(cycle);
         ctx.clearRect(0, 0, width, height)
-        drawWave();
+        // drawWave();
+        drawWavePhaseInterference();
     }
     requestAnimationFrame(cycle); //starts loop
 }
