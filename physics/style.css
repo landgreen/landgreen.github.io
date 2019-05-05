@@ -1,15 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 
-/* highlight and links #2793c7 */
-/* definition #ddeef6; */
-
-
-/* --bg-color: #99d4cc;
---def-color: #d0e9e6;
---def-accent-color: #98beba;
---link-color: #e25; */
-/* --def-color: #ddeef6;
---def-accent-color: #bcd; */
 :root {
   --bg-color: #333;
   --def-color: #d3e6f1;
@@ -56,7 +46,6 @@ svg:not(:root) {
 }
 
 /************End Reset**************/
-/*global elements____________________________________*/
 
 body {
   font-family: "Roboto", "Helvetica Neue", "Arial", sans-serif;
@@ -112,20 +101,6 @@ input[type=range]::-moz-focus-outer {
   border: 0;
 }
 
-canvas,
-.SVG-shadow {
-  margin: 0px;
-  box-shadow: 2px 2px 8px #aaa;
-  border-radius: 5px;
-  user-select: none;
-}
-
-.no-shadow {
-  box-shadow: none;
-  border-radius: 0px;
-}
-
-
 a {
   text-decoration: none;
   color: var(--link-color);
@@ -180,7 +155,26 @@ th {
   color: #fff;
 }
 
-/*classes_________________________________________*/
+canvas,
+.SVG-shadow {
+  margin: 0px;
+  box-shadow: 2px 2px 8px #aaa;
+  border-radius: 5px;
+  user-select: none;
+}
+
+.no-shadow {
+  box-shadow: none;
+  border-radius: 0px;
+}
+
+.book-cover {
+  box-shadow: 3px 3px 10px #666;
+  margin: 20px auto;
+  display: block;
+  border-radius: 3px;
+}
+
 .underlined {
   color: #000;
   margin-top: 6em;
