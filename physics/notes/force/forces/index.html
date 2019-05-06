@@ -92,17 +92,21 @@
     </div>
 
     <div class='example'>
-      <svg class='center' width="225" height="200">
+      <svg class='center' width="225" height="300" viewBox="0 -70 225 250">
         <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
-        <g transform='translate(75 60) rotate(0)'>
-          <rect x="0.5" y="0.5" width="80" height="80" stroke='black' stroke-width='2.5' fill="#f45" />
+        <!-- <g transform='translate(75 60) rotate(0)'>
           <text x="40" y="40" fill="white" text-anchor="middle" dominant-baseline="middle" font-size='20px'>0.09 kg</text>
-        </g>
-        <line x1="0" y1="141" x2="225" y2="140" stroke="#000" stroke-width="3" />
+        </g> -->
+        <rect x="64.5" y="-10" width="100" height="150px" stroke='black' stroke-width='4' fill="none" />
+        <image xlink:href="themartian.jpg" x="65" y="-10" height="150px" />
+        <text x="116" y="100" fill="#fafada" text-anchor="middle" dominant-baseline="middle" font-size='15px' font-family="Lucida Console">0.09 kg</text>
+        <!-- height="450px" width="684px" -->
+
+        <line x1="0" y1="142" x2="225" y2="142" stroke="#000" stroke-width="3" />
         <use xlink:href="#vector" transform='translate(115 140) rotate(0)' />
         <text x="125" y="187" fill="black">0.34 N</text>
-        <use xlink:href="#vector" transform='translate(115 60) rotate(180)' />
-        <text x="125" y="23" fill="black">F= ? </text>
+        <use xlink:href="#vector" transform='translate(115 -10) rotate(180)' />
+        <text x="125" y="-47" fill="black">F= ? </text>
       </svg>
       <strong>Example:</strong> The book <a href='https://www.amazon.com/Martian-Novel-Andy-Weir-ebook/dp/B00EMXBDMA'>The Martian</a> by Andy Weir (mass = 0.09 kg) is resting on a table (acceleration = zero). The force of gravity produces a downwards force of 0.34 N. What force is required to keep the book at rest on the table?
       <details>
@@ -172,7 +176,7 @@
         <svg class='center' width="300" height="200">
           <!-- <rect x="0" y="100" width="300" height="110" style="fill:#ccc" /> -->
           <g transform='translate(100 60) rotate(0)'>
-            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#eaa" />
+            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#f46" />
             <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>m = ?</text>
           </g>
           <use xlink:href="#vector" transform='translate(140 140) rotate(0)' />
@@ -446,8 +450,10 @@
       <p>Why would the acceleration of gravity seem lower near the equator? </p>
     </div>
     <div class='example'>
-      <img class="book-cover" src="thethreebodyproblem.jpg" alt="The Three-Body Problem" width = "150" height = "237"/>
-      <strong>Example:</strong> Amazon says the book <a href="https://www.amazon.com/Three-Body-Problem-Cixin-Liu/dp/0765382032">The Three-Body Problem</a> by Cixin Liu has a mass of 0.44 kg. What force of gravity does the book have?
+      <a href="https://www.amazon.com/Three-Body-Problem-Cixin-Liu/dp/0765382032">
+        <img class="book-cover" src="thethreebodyproblem.jpg" alt="The Three-Body Problem" width = "150" height = "237"/>
+      </a>
+      <strong>Example:</strong> The Three-Body Problem by Cixin Liu has a mass of 0.44 kg. What force of gravity does the book have?
       <details>
         <summary>solution</summary>
         $$F_g=mg$$ $$F_g=(0.44 \, \mathrm{kg} )(9.8\, \mathrm{\tfrac{m}{s^2}})$$ $$F_g=4.3 \, \mathrm{N}$$
@@ -455,8 +461,10 @@
     </div>
 
     <div class='example'>
-      <img class="book-cover" src="catscradle.jpg" alt="Cat's Cradle" width = "150" height = "241"/>
-      <strong>Example:</strong> How much mass does the book <a href="https://www.amazon.com/Cats-Cradle-Novel-Kurt-Vonnegut/dp/038533348X">Cat's Cradle</a> by Kurt Vonnegut have if it feels a force of gravity of 1.8 N?
+        <a href="https://www.amazon.com/Cats-Cradle-Novel-Kurt-Vonnegut/dp/038533348X">
+          <img class="book-cover" src="catscradle.jpg" alt="Cat's Cradle" width = "150" height = "241"/>
+        </a>
+      <strong>Example:</strong> How much mass does the book Cat's Cradle by Kurt Vonnegut have if it feels a force of gravity of 1.8 N?
       <details>
         <summary>solution</summary>
         $$F_g=mg$$ $$\frac{F_g}{g}=m$$
@@ -476,8 +484,10 @@
       <strong>Freefall</strong> means that you are just letting gravity accelerate you without any opposing forces. To keep from falling we are careful to always counter the force of gravity. This can be done with a parachute, or a jet pack, or just the ground.
     </p>
     <div class='example'>
-        <img class="book-cover" src="thenameofthewind.jpg" alt="The Name of the Wind" width = "150" height = "221"/>
-      <strong>Example:</strong> The book <a href="https://www.amazon.com/Name-Wind-Patrick-Rothfuss/dp/0756404746/">The Name of the Wind</a> by Patrick Rothfuss has a mass of 0.34 kg. How does its mass and weight change in a freefall on Earth?
+        <a href="https://www.amazon.com/Name-Wind-Patrick-Rothfuss/dp/0756404746/">
+          <img class="book-cover" src="thenameofthewind.jpg" alt="The Name of the Wind" width = "150" height = "221"/>
+        </a>
+      <strong>Example:</strong> The Name of the Wind by Patrick Rothfuss has a mass of 0.34 kg. How does its mass and weight change in a freefall on Earth?
       <details>
         <summary>solution</summary>
         <p>An object's mass doesn't change when it is falling.</p>
@@ -486,10 +496,10 @@
       </details>
     </div>
     <div class='example'>
-      <img class="book-cover" src="seveneves.png" alt="Seveneves" width = "150" height = "225"/>
-      <strong>Example:</strong> The hardcover version of the book
-      <a href="https://www.amazon.com/Seveneves-Neal-Stephenson/dp/0062334514/ref=sr_1_1?s=books&ie=UTF8&qid=1469380084&sr=1-1&keywords=Seveneves">Seveneves</a>
-      by Neal Stephenson has a mass of 0.95 kg. What is the force of gravity felt by the book on Earth? What about on the <a href="https://www.google.com/search?q=gravity+on+moon">Moon</a>?
+        <a href="https://www.amazon.com/Seveneves-Neal-Stephenson/dp/0062334514/">
+          <img class="book-cover" src="seveneves.png" alt="Seveneves" width = "150" height = "225"/>
+        </a>
+      <strong>Example:</strong> The hardcover version of Seveneves by Neal Stephenson has a mass of 0.95 kg. What is the force of gravity felt by the book on Earth? What about on the <a href="https://www.google.com/search?q=gravity+on+moon">Moon</a>?
       <details>
         <summary>solution</summary>
         <p>Weight and force of gravity mean the same thing. A planet's gravity field determines your weight, but not your mass.</p>
@@ -508,8 +518,10 @@
       </details>
     </div>
     <div class='example'>
-      <img class="book-cover" src="uprooted.jpg" alt="Uprooted" width = "150" height = "228"/>
-      <strong>Example:</strong> The book <a href="https://www.amazon.com/Uprooted-Naomi-Novik/dp/0804179034">Uprooted by Naomi Novik</a> is resting on a table. Amazon says the shipping weight is 1.2 pounds. What is the book's mass in kilograms on Earth? On Mars?
+      <a href="https://www.amazon.com/Uprooted-Naomi-Novik/dp/0804179034">
+        <img class="book-cover" src="uprooted.jpg" alt="Uprooted" width = "150" height = "228"/>
+      </a>
+      <strong>Example:</strong> Uprooted by Naomi Novik is resting on a table. The shipping weight is 1.2 pounds. What is the book's mass in kilograms on Earth? On Mars?
       <details>
         <summary>solution</summary>
         <p>
@@ -555,12 +567,12 @@
         <line x1="0" y1="150" x2="600" y2="150" stroke="#000" stroke-width="2" />
         <use x='260' y='70' xlink:href="#box" />
         <use xlink:href="#vector" transform='translate(300 70) rotate(-180)' />
-        <text x="300" y="13" text-anchor="middle" fill="#000" font-size="21px">F
+        <text x="304" y="13" text-anchor="middle" fill="#000" font-size="21px">F
           <tspan font-size="0.7em" dy="5" dx="-5">N</tspan>
         </text>
         <use xlink:href="#vector" transform='translate(300 150) rotate(0)' />
         <text x="300" y="220" text-anchor="middle" fill="#000" font-size="21px">F
-          <tspan font-size="0.7em" dy="5" dx="-5">g</tspan>
+          <tspan font-size="0.7em" dy="5" dx="-7">g</tspan>
         </text>
       </svg>
 
@@ -584,8 +596,7 @@
       The <a href="..\..\electromagnetism\electrostatics\index.html">electromagnetic force</a> allows chemical bonds to form. These bonds give solid matter its rigid structure, which is required for normal forces.
     </p>
     <p>
-      At the atomic scale, particles can't pass through each other primarily because of a quantum mechanical effect
-      called the <a href="https://en.wikipedia.org/wiki/Pauli_exclusion_principle">Pauli exclusion principle </a>. A very rough summary of the principle is that particles act like waves, and similar waves can cancel out at close distances. The Pauli exclusion principle is mostly responsible for keeping particles, like electrons, separate.
+      At the atomic scale, particles can't pass through each other primarily because of a quantum mechanical effect called the <a href="https://en.wikipedia.org/wiki/Pauli_exclusion_principle">Pauli exclusion principle </a>. The Pauli exclusion principle is mostly responsible for keeping particles, like electrons, separate.
     </p>
 
     <div class="example hide-on-mobile">
@@ -918,7 +929,7 @@
         <line x1="60" y1="80" x2="100" y2="120" style="stroke:#000;stroke-width:2" />
         <polygon points="0,10 -6,-2 0,0 6,-2" transform='translate(60 80) rotate(135)' />
         <g transform='translate(100 80) rotate(0)'>
-          <rect x="0.5" y="0.5" width="80" height="80" stroke='black' stroke-width='2.5' fill="#cbb" />
+          <rect x="0.5" y="0.5" width="80" height="80" stroke='black' stroke-width='2.5' fill="var(--def-accent-color)" />
           <text x="40" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='20px'>10 kg</text>
         </g>
         <text x="46" y="67" fill="black">T
@@ -957,7 +968,7 @@
         <use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
         <!-- <text x="237" y="66" fill="#000">F</text> -->
         <g transform='translate(400 20) rotate(0)'>
-          <rect x="0" y="-10" width="100" height="100" stroke='#000' stroke-width='2' fill="#cbb" />
+          <rect x="0" y="-10" width="100" height="100" stroke='#000' stroke-width='2' fill="var(--def-accent-color)" />
           <text x="50" y="40" fill="#000" text-anchor="middle" dominant-baseline="middle" font-size='25px'>10 kg</text>
         </g>
         <use xlink:href="#vector" transform='translate(400 60) rotate(90)' />
@@ -1138,8 +1149,8 @@
         </g>
 
         <g stroke="#000" stroke-width="2">
-          <rect x="125" y="160" width="50" height="50" rx="2" ry="2" fill="#cbb" />
-          <rect x="210" y="210" width="80" height="80" rx="4" ry="4" fill="#cbb" />
+          <rect x="125" y="160" width="50" height="50" rx="2" ry="2" fill="var(--def-accent-color)" />
+          <rect x="210" y="210" width="80" height="80" rx="4" ry="4" fill="var(--def-accent-color)" />
 
           <!-- <circle cx="200" cy="60" r="50" fill="none" stroke="#000" stroke-width="4" />
           <path d="M200 10 l-3 50 M200 110 l3 -50
