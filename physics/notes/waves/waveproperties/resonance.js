@@ -14,7 +14,7 @@ function checkVisible(elm) {
   const engine = Engine.create();
   engine.world.gravity.scale = 0; //turn off gravity
 
-  const pendulum = Matter.Bodies.polygon(300, 120, 0, 10, {
+  const pendulum = Matter.Bodies.polygon(238.4, 103, 0, 10, {
     length: 120,
     radius: 20,
     friction: 0,
