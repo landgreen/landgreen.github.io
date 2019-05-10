@@ -57,7 +57,7 @@
 			<li>The same train is stationary relative to a passenger on the train.</li>
 		</ul>
 	</article>
-	<canvas class='center' id="relative" width='600' height='400' style="background: url(../../../media/Space.jpg); border-radius: 0px;"></canvas>
+	<canvas class='center' id="relative" width='600' height='400' style="background: #111; border-radius: 0px;"></canvas>
 	<article>
 		<p>Each observer only sees motion in others. They see themselves at rest.
 			<br> Move the mouse vertically to change observers in the animation above.
@@ -154,7 +154,8 @@
 			<br>
 			<br>
 	</article>
-	<canvas class='center' id="special" width='600' height='400' style="background: url(../../../media/Space.jpg); border-radius: 0px;"></canvas>
+	<!-- url(../../../media/Space.jpg) -->
+	<canvas class='center' id="special" width='600' height='400' style="background: #111; border-radius: 0px;"></canvas>
 	<article>
 		<p>
 			Here is the relative velocity simulation with modifications for special relativity. Move the mouse vertically to change observers.
@@ -620,7 +621,7 @@
 		</div>
 		<p>The mass of an object is not conserved, but energy is. A massive object can convert some, or all, of its mass into a different type of energy. This process is noticeable in high energy nuclear reactions.</p>
 		<p>
-			At rest the Lorentz factor is one. This gives us that famous equation for the mass-energy equivalence of an object at rest.
+			At rest the Lorentz factor is one. This gives us that famous equation for the mass-energy equivalence of a mass at rest.
 		</p>
 		$$E_0 = mc^2$$
 
@@ -784,7 +785,7 @@
 					<tr>
 						<th>name</th>
 						<th>symbol</th>
-						<th>charge (C)</th>
+						<!-- <th>charge (C)</th> -->
 						<th>charge (e)</th>
 						<th>mass (kg)</th>
 					</tr>
@@ -793,7 +794,7 @@
 							<a href="https://en.wikipedia.org/wiki/Proton">proton</a>
 						</td>
 						<td> \(p^+\) </td>
-						<td>+1.602 × 10<sup>-19</sup> </td>
+						<!-- <td>+1.602 × 10<sup>-19</sup> </td> -->
 						<td>+1</td>
 						<td>1.6726 × 10<sup>-27</sup> </td>
 					</tr>
@@ -802,7 +803,7 @@
 							<a href="https://en.wikipedia.org/wiki/Electron">electron</a>
 						</td>
 						<td>\(e^-\) </td>
-						<td>−1.602 × 10<sup>-19</sup> </td>
+						<!-- <td>−1.602 × 10<sup>-19</sup> </td> -->
 						<td>−1</td>
 						<td>9.1094 × 10<sup>-31</sup> </td>
 					</tr>
@@ -811,7 +812,7 @@
 							<a href="https://en.wikipedia.org/wiki/Positron">positron</a>
 						</td>
 						<td>\(e^+\) </td>
-						<td>+1.602 × 10<sup>-19</sup> </td>
+						<!-- <td>+1.602 × 10<sup>-19</sup> </td> -->
 						<td>+1</td>
 						<td>9.1094 × 10<sup>-31</sup> </td>
 					</tr>
@@ -820,7 +821,7 @@
 							<a href="https://en.wikipedia.org/wiki/Neutron">neutron</a>
 						</td>
 						<td>\(n\) </td>
-						<td>0</td>
+						<!-- <td>0</td> -->
 						<td>0</td>
 						<td>‎1.6749 × 10<sup>-27</sup> </td>
 					</tr>
@@ -829,7 +830,7 @@
 							<a href="https://en.wikipedia.org/wiki/Neutrino">neutrino</a>
 						</td>
 						<td>\(v_e\) </td>
-						<td>0</td>
+						<!-- <td>0</td> -->
 						<td>0</td>
 						<td>1.78 × 10<sup>-36</sup> </td>
 					</tr>
@@ -838,7 +839,7 @@
 							<a href="https://en.wikipedia.org/wiki/Neutrino">antineutrino</a>
 						</td>
 						<td>\(\bar{v}_e\) </td>
-						<td>0</td>
+						<!-- <td>0</td> -->
 						<td>0</td>
 						<td>1.78 × 10<sup>-36</sup> </td>
 					</tr>
@@ -847,7 +848,7 @@
 							<a href="https://en.wikipedia.org/wiki/Muon">muon</a>
 						</td>
 						<td>\( \mu^-\) </td>
-						<td>−1.602 × 10<sup>-19</sup> </td>
+						<!-- <td>−1.602 × 10<sup>-19</sup> </td> -->
 						<td>−1</td>
 						<td>1.8835 × 10<sup>-28</sup> </td>
 					</tr>
@@ -856,7 +857,7 @@
 							<a href="https://en.wikipedia.org/wiki/Alpha_particle">alpha</a>
 						</td>
 						<td>\( \small{}^4_2 \normalsize \alpha\) </td>
-						<td>+3.204 × 10<sup>-19</sup> </td>
+						<!-- <td>+3.204 × 10<sup>-19</sup> </td> -->
 						<td>+2</td>
 						<td>6.6447 × 10<sup>-27</sup> </td>
 					</tr>
@@ -946,12 +947,12 @@
 			</p>
 			<strong>Example:</strong> The beta decay products are measured to have a total kinetic energy of 0.78 MeV. Show that conservation of energy holds for beta decay.
 			<details>
-				<summary>Subatomic Particles Data Table</summary>
+					<summary>Subatomic Particles Data Table</summary>
 				<table border>
 					<tr>
 						<th>name</th>
 						<th>symbol</th>
-						<th>charge (C)</th>
+						<!-- <th>charge (C)</th> -->
 						<th>charge (e)</th>
 						<th>mass (kg)</th>
 					</tr>
@@ -959,94 +960,73 @@
 						<td>
 							<a href="https://en.wikipedia.org/wiki/Proton">proton</a>
 						</td>
-						<td> \(p^+\)
-						</td>
-						<td>+1.602 × 10<sup>-19</sup>
-						</td>
+						<td> \(p^+\) </td>
+						<!-- <td>+1.602 × 10<sup>-19</sup> </td> -->
 						<td>+1</td>
-						<td>1.6726 × 10<sup>-27</sup>
-						</td>
+						<td>1.6726 × 10<sup>-27</sup> </td>
 					</tr>
 					<tr>
 						<td>
 							<a href="https://en.wikipedia.org/wiki/Electron">electron</a>
 						</td>
-						<td>\(e^-\)
-						</td>
-						<td>−1.602 × 10<sup>-19</sup>
-						</td>
+						<td>\(e^-\) </td>
+						<!-- <td>−1.602 × 10<sup>-19</sup> </td> -->
 						<td>−1</td>
-						<td>9.1094 × 10<sup>-31</sup>
-						</td>
+						<td>9.1094 × 10<sup>-31</sup> </td>
 					</tr>
 					<tr>
 						<td>
 							<a href="https://en.wikipedia.org/wiki/Positron">positron</a>
 						</td>
-						<td>\(e^+\)
-						</td>
-						<td>+1.602 × 10<sup>-19</sup>
-						</td>
+						<td>\(e^+\) </td>
+						<!-- <td>+1.602 × 10<sup>-19</sup> </td> -->
 						<td>+1</td>
-						<td>9.1094 × 10<sup>-31</sup>
-						</td>
+						<td>9.1094 × 10<sup>-31</sup> </td>
 					</tr>
 					<tr>
 						<td>
 							<a href="https://en.wikipedia.org/wiki/Neutron">neutron</a>
 						</td>
-						<td>\(n\)
-						</td>
+						<td>\(n\) </td>
+						<!-- <td>0</td> -->
 						<td>0</td>
-						<td>0</td>
-						<td>‎1.6749 × 10<sup>-27</sup>
-						</td>
+						<td>‎1.6749 × 10<sup>-27</sup> </td>
 					</tr>
 					<tr>
 						<td>
 							<a href="https://en.wikipedia.org/wiki/Neutrino">neutrino</a>
 						</td>
-						<td>\(v_e\)
-						</td>
+						<td>\(v_e\) </td>
+						<!-- <td>0</td> -->
 						<td>0</td>
-						<td>0</td>
-						<td>1.78 × 10<sup>-36</sup>
-						</td>
+						<td>1.78 × 10<sup>-36</sup> </td>
 					</tr>
 					<tr>
 						<td>
 							<a href="https://en.wikipedia.org/wiki/Neutrino">antineutrino</a>
 						</td>
-						<td>\(\bar{v}_e\)
-						</td>
+						<td>\(\bar{v}_e\) </td>
+						<!-- <td>0</td> -->
 						<td>0</td>
-						<td>0</td>
-						<td>1.78 × 10<sup>-36</sup>
-						</td>
+						<td>1.78 × 10<sup>-36</sup> </td>
 					</tr>
 					<tr>
 						<td>
 							<a href="https://en.wikipedia.org/wiki/Muon">muon</a>
 						</td>
-						<td>\( \mu^-\)
-						</td>
-						<td>−1.602 × 10<sup>-19</sup>
-						</td>
+						<td>\( \mu^-\) </td>
+						<!-- <td>−1.602 × 10<sup>-19</sup> </td> -->
 						<td>−1</td>
-						<td>1.8835 × 10<sup>-28</sup>
-						</td>
+						<td>1.8835 × 10<sup>-28</sup> </td>
 					</tr>
 					<tr>
 						<td>
 							<a href="https://en.wikipedia.org/wiki/Alpha_particle">alpha</a>
 						</td>
-						<td>\( \small{}^4_2 \normalsize \alpha\)
-						</td>
-						<td>+3.204 × 10<sup>-19</sup>
-						</td>
+						<td>\( \small{}^4_2 \normalsize \alpha\) </td>
+						<!-- <td>+3.204 × 10<sup>-19</sup> </td> -->
 						<td>+2</td>
-						<td>6.6447 × 10<sup>-27</sup>
-						</td>
+						<td>6.6447 × 10<sup>-27</sup> </td>
 					</tr>
 				</table>
 			</details>
@@ -2067,8 +2047,39 @@
 					<p>$$ \Delta s < 0$$ $$ c^2 \Delta t^2 < \Delta x^2 $$ A <strong>space-like</strong> interval is negative. This means that there could <strong>not</strong> be a causal relationship between two events.
 					</p>
 				</li>
-
 			</ul>
+
+			<div class='example'>
+				<p>
+					The nearest star, not counting the sun, is Proxima Centauri. It is 4.22 light-years away from Earth.
+				</p>
+				<strong>Example:</strong>
+				If the current date is January 1st 2049,
+				could you make it to Proxima Centauri by the year 2052?
+				Use the spacetime interval to prove your answer.
+				<details>
+					<summary>relativistic solution</summary>
+					$$\Delta t = t_f - t_i $$
+					$$\Delta t = 2052 \, \mathrm{yr}- 2049 \, \mathrm{yr}$$
+					$$\Delta t = 3 \, \mathrm{yr} $$
+					<br>
+					$$ \Delta s^2 = c^2 \Delta t^2 - \Delta x^2 $$
+					$$ \Delta s^2 = c^2 (3 \, \mathrm{yr})^2 - (4.22 \, \mathrm{ly})^2 $$
+					$$ \Delta s^2 = (3 \, \mathrm{ly})^2 - (4.22 \, \mathrm{ly})^2 $$
+					$$ \Delta s^2 = 9 \, \mathrm{ly}^2 - 17.8 \, \mathrm{ly}^2 $$
+					$$ \Delta s^2 = -8.8 \, \mathrm{ly}^2 $$
+					$$ \Delta s = \sqrt{-8.8} \, \mathrm{ly} $$
+					<p>
+						The spacetime interval between Earth in 2049 and Proxima Centauri in 2052 is negative.
+						The interval is space-like.
+					</p>
+					<p>
+						This means that these two locations in spacetime are not casually linked and one body could not travel between the events.
+					</p>
+				</details>
+			</div>
+
+
 
 			<h2 class='underlined' id="solver">Lorentz Transformation Solver</h2>
 			<br>

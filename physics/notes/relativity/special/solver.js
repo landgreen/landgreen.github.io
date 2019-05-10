@@ -144,7 +144,6 @@ let solver = function () {
     }
   });
 
-  console.log(document.getElementById("time").value)
   //___________________animation loop ___________________
   const fpsCap = 60;
   const fpsInterval = 1000 / fpsCap;
@@ -193,6 +192,26 @@ const relative = function () {
     time: 0,
     moveScale: 2
   };
+
+  const stars = [];
+  for (let i = 0; i < 50; i++) {
+    stars[i] = {
+      x: canvas.width * Math.random(),
+      y: canvas.height * Math.random()
+    }
+  }
+
+  function drawStars() {
+    ctx.globalCompositeOperation = "destination-over";
+    ctx.beginPath();
+    for (let i = 0, len = stars.length; i < len; i++) {
+      ctx.moveTo(stars[i].x, stars[i].x)
+      ctx.arc(stars[i].x, stars[i].y, 1, 0, 2 * Math.PI);
+    }
+    ctx.fillStyle = "#fff"
+    ctx.fill();
+    ctx.globalCompositeOperation = "source-over";
+  }
 
   const rocket1 = {
     position: {
@@ -274,6 +293,32 @@ const relative = function () {
       earth.pov = false;
     }
   };
+
+  function drawFocus() {
+    if (rocket1.pov) {
+      ctx.strokeStyle = "#2B2D42" //"#D90429"
+      ctx.lineWidth = 3
+      ctx.beginPath();
+      ctx.arc(rocket1.position.x + 80, rocket1.position.y + 50, 45, 0, 2 * Math.PI);
+      ctx.stroke();
+    }
+    if (rocket2.pov) {
+      ctx.strokeStyle = "#2B2D42" //"#D90429"
+      ctx.lineWidth = 3
+      ctx.beginPath();
+      ctx.arc(rocket2.position.x + 80, rocket2.position.y + 50, 45, 0, 2 * Math.PI);
+      ctx.stroke();
+    }
+    if (earth.pov) {
+      ctx.strokeStyle = "#9cf"
+      ctx.lineWidth = 5
+      ctx.beginPath();
+      ctx.arc(earth.position.x, earth.position.y + 200, 240, 0, 2 * Math.PI);
+      ctx.stroke();
+    }
+  }
+
+
   //___________________animation loop ___________________
   function cycle() {
     if (checkVisible(canvas)) {
@@ -281,6 +326,7 @@ const relative = function () {
       drawRocket(ctx, rocket1.position.x, rocket1.position.y, settings.time);
       drawRocket(ctx, rocket2.position.x, rocket2.position.y, settings.time);
       earth.draw(earth.position.x, earth.position.y);
+      drawStars();
       //move
       settings.time++;
       rocket1.position.x += settings.moveScale * (rocket1.velocity.x * !rocket1.pov - rocket2.velocity.x * rocket2.pov - earth.velocity.x * earth.pov);
@@ -290,6 +336,7 @@ const relative = function () {
       rocket1.wall();
       rocket2.wall();
       earth.wall();
+      drawFocus();
     }
     requestAnimationFrame(cycle);
   }
@@ -324,6 +371,27 @@ const special = function () {
     const v = v1 - v2;
     return 1 / Math.sqrt(1 - v * v);
   };
+
+
+  const stars = [];
+  for (let i = 0; i < 50; i++) {
+    stars[i] = {
+      x: canvas.width * Math.random(),
+      y: canvas.height * Math.random()
+    }
+  }
+
+  function drawStars() {
+    ctx.globalCompositeOperation = "destination-over";
+    ctx.beginPath();
+    for (let i = 0, len = stars.length; i < len; i++) {
+      ctx.moveTo(stars[i].x, stars[i].x)
+      ctx.arc(stars[i].x, stars[i].y, 1, 0, 2 * Math.PI);
+    }
+    ctx.fillStyle = "#fff"
+    ctx.fill();
+    ctx.globalCompositeOperation = "source-over";
+  }
 
   const rocket1 = {
     position: {
@@ -412,6 +480,32 @@ const special = function () {
       earth.pov = false;
     }
   };
+
+  function drawFocus() {
+    if (rocket1.pov) {
+      ctx.strokeStyle = "#2B2D42" //"#D90429"
+      ctx.lineWidth = 3
+      ctx.beginPath();
+      ctx.arc(rocket1.position.x + 80, rocket1.position.y + 50, 45, 0, 2 * Math.PI);
+      ctx.stroke();
+    }
+    if (rocket2.pov) {
+      ctx.strokeStyle = "#2B2D42" //"#D90429"
+      ctx.lineWidth = 3
+      ctx.beginPath();
+      ctx.arc(rocket2.position.x + 80, rocket2.position.y + 50, 45, 0, 2 * Math.PI);
+      ctx.stroke();
+    }
+    if (earth.pov) {
+      ctx.strokeStyle = "#9cf"
+      ctx.lineWidth = 5
+      ctx.beginPath();
+      ctx.arc(earth.position.x, earth.position.y + 200, 240, 0, 2 * Math.PI);
+      ctx.stroke();
+    }
+  }
+
+
   //___________________animation loop ___________________
   function cycle() {
     if (checkVisible(canvas)) {
@@ -448,6 +542,8 @@ const special = function () {
         earth.position.y,
         1 / gammaCal(earth.velocity.x * !earth.pov, rocket2.velocity.x * rocket2.pov + rocket1.velocity.x * rocket1.pov)
       );
+      drawStars();
+      drawFocus();
     }
     requestAnimationFrame(cycle);
   }
