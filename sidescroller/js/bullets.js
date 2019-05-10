@@ -711,14 +711,14 @@ const b = {
     {
       name: "wave beam",
       ammo: 0,
-      ammoPack: 130,
+      ammoPack: 95,
       have: false,
       fire() {
-        mech.fireCDcycle = game.cycle + 4; // cool down
-        const endCycle = game.cycle + 108
+        mech.fireCDcycle = game.cycle + 7; // cool down
+        const endCycle = game.cycle + 94
         const bulletRadius = 5;
-        const speed = 30;
-        const spread = Math.PI / 2 * 0.70 // smaller = faster speed, larger = faster rotation?
+        const speed = 35;
+        const spread = Math.PI / 2 * 0.65 // smaller = faster speed, larger = faster rotation?
         const dir = mech.angle
         const pos = {
           x: mech.pos.x + 20 * Math.cos(mech.angle),
