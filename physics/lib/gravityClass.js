@@ -175,14 +175,14 @@ class Particle {
     }
   }
 
-  static repulse(who, pos) {
+  static repulse(who, pos, scale = 1) {
     for (let i = 0, len = who.length; i < len; ++i) {
       const dx = who[i].position.x - pos.x;
       const dy = who[i].position.y - pos.y;
       const a = Math.atan2(dy, dx);
       //the +4000 keeps r from being zero
       const r = dx * dx + dy * dy + 2000;
-      const mag = 10000 / r; // / who[i].mass;
+      const mag = scale * 10000 / r; // / who[i].mass;
       who[i].velocity.x += mag * Math.cos(a);
       who[i].velocity.y += mag * Math.sin(a);
     }
