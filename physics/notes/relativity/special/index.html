@@ -167,9 +167,9 @@
 		</div>
 		<p>
 			It seems like a constant speed of light for all observers leads to a paradox.
-			How can two observers moving relative to each other both see the speed of light as the same?
+			How can two observers moving relative to each other both see the speed of something as the same?
 		</p>
- 
+
 		<!-- <ul class="listing">
 			<li>An observer on a 20 m/s train measures the speed of light as 3&nbsp;x&nbsp;10⁸&nbsp;m/s.</li>
 			<li>An observer at rest on the ground also sees the speed of light as 3&nbsp;x&nbsp;10⁸&nbsp;m/s.</li>
@@ -179,21 +179,38 @@
 
 		<!-- <div class='example'>
 			<svg viewBox="0 0 600 200">
-					<defs>
-						<g id = "train">
-								<rect  x="0" y="0"  rx="3" width="90" height="20"  stroke = "#333" stroke-width="2"/>		
-								<circle cx="75" cy="20" r="6" fill = "#333" stroke = "none"/>
-								<circle cx="15" cy="20" r="6" fill = "#333" stroke = "none"/>
-								<text x = "45" y = "16" fill="#000" font-size="12" text-anchor="middle">train</text>
+				<defs>
+					<g id="train-freight">
+						<g fill="#555" stroke="none">
+							<circle cx="6" cy="20" r="3.5" />
+							<circle cx="14" cy="20" r="3.5" />
+							<circle cx="76" cy="20" r="3.5" />
+							<circle cx="84" cy="20" r="3.5" />
 						</g>
-							
-					</defs>
+						<rect x="0" y="0" rx="1" width="90" height="20" stroke="#333" stroke-width="1.5" />
+						<path d="M10 0 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20" fill="none" stroke="#000" opacity="0.1" />
+					</g>
+					<g id="train-engine">
+						<g fill="#555" stroke="none">
+							<circle cx="6" cy="20" r="3.5" />
+							<circle cx="14" cy="20" r="3.5" />
+							<circle cx="22" cy="20" r="3.5" />
+							<circle cx="68" cy="20" r="3.5" />
+							<circle cx="76" cy="20" r="3.5" />
+							<circle cx="84" cy="20" r="3.5" />
+						</g>
+						<path d="M0 2 h50 v-2 h30 l 2 7 l 8 1 v12 h-90 v-18z" stroke="#333" stroke-width="1.5" stroke-linejoin="round" />
+						<path d="M72 3 h5 v5 h-5 v-5 M66 3 h3 v5 h-3 v-5 " fill="#333" stroke="#333" opacity="0.6" />
+						<path d="M0 12 h93 M 10 12 v8 m10 -8 v8 m10 -8 v8 m10 -8 v8 m10 -8 v8 m10 -8 v8 m10 -8 v8 m10 -8 v8 m10 -8 v8 m3 -8 v8 h-3" fill="none" stroke="#000" opacity="0.15" />
+					</g>
+				</defs>
 
-					<use x="50" y="100" xlink:href="#train" fill = "#ff0"/>
-					<use x="150" y="100" xlink:href="#train" fill = "#d63"/>
-					<use x="250" y="100" xlink:href="#train" fill = "#5b9"/>
-					<use x="350" y="100" xlink:href="#train" fill = "#fff"/>
-					<use x="450" y="100" xlink:href="#train" fill = "#89d"/>
+				<path d="M140 117 h 10 m90 0 h10 m90 0 h10 m90 0 h10" fill="none" stroke="#555" stroke-width="2" />
+				<use x="50" y="100" xlink:href="#train-freight" fill="#f0f600" />
+				<use x="150" y="100" xlink:href="#train-freight" fill="#e74" />
+				<use x="250" y="100" xlink:href="#train-freight" fill="#5b9" />
+				<use x="350" y="100" xlink:href="#train-freight" fill="#ddd" />
+				<use x="450" y="100" xlink:href="#train-engine" fill="#89d" />
 			</svg>
 			<p>
 				Lighting strikes the front and back of a moving train.
