@@ -108,8 +108,97 @@
 			</details>
 		</div>
 
-		<h2 class='underlined' id="speed">A Constant Speed of Light</h2>
+	</article>
+	<div class='example' style="margin: auto;">
+		<svg viewBox="30 0 740 124">
+			<defs>
+				<g id="tree">
+					<rect x="-3" y="-50" width="6" height="50" fill="#cca" stroke="none" />
+					<circle cx="0" cy="-50" r="18" fill="#ded" stroke="none" />
+				</g>
+				<g id="train-freight">
+					<g fill="#333" stroke="none">
+						<circle cx="6" cy="20" r="3.5" />
+						<circle cx="14" cy="20" r="3.5" />
+						<circle cx="76" cy="20" r="3.5" />
+						<circle cx="84" cy="20" r="3.5" />
+					</g>
+					<rect x="0" y="0" rx="1" width="90" height="20" stroke="#333" stroke-width="1.5" />
+					<path d="M10 0 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20" fill="none" stroke="#000" opacity="0.1" stroke-width="1.5" />
+				</g>
+				<g id="train-engine">
+					<g fill="#333" stroke="none">
+						<circle cx="6" cy="20" r="3.5" />
+						<circle cx="14" cy="20" r="3.5" />
+						<circle cx="22" cy="20" r="3.5" />
+						<circle cx="68" cy="20" r="3.5" />
+						<circle cx="76" cy="20" r="3.5" />
+						<circle cx="84" cy="20" r="3.5" />
+					</g>
+					<path d="M0 2 h50 v-2 h30 l 2 7 l 8 1 v12 h-90 v-18z" stroke="#333" stroke-width="1.5" stroke-linejoin="round" />
+					<g fill="#333" stroke="none">
+						<rect x="72" y="3" width="5" height="5" />
+						<rect x="66" y="3" width="3" height="5" />
+					</g>
+					<path d="M0 12 h93 v8 h-3 M7 12 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8" fill="none" stroke="#000" opacity="0.2" stroke-width="0.75" />
+				</g>
+			</defs>
+			<path d="M0 124 h 800" fill="none" stroke="#ddd" stroke-width="2" />
+			<g id = "sound-trees">
+				
+				<use x="35" y="126" xlink:href="#tree"  />
+				<use x="80" y="126" xlink:href="#tree"  />
+				<use x="200" y="126" xlink:href="#tree"  />
+				<use x="300" y="126" xlink:href="#tree"  />
+				<use x="340" y="126" xlink:href="#tree"  />
+				<use x="515" y="126" xlink:href="#tree"  />
+				<use x="650" y="126" xlink:href="#tree"  />
+				<use x="700" y="126" xlink:href="#tree"  />
+				<use x="725" y="126" xlink:href="#tree"  />
+				<use x="760" y="126" xlink:href="#tree"  />
+				<use x="830" y="126" xlink:href="#tree"  />
+				<use x="800" y="126" xlink:href="#tree"  />
+			</g>
+			<g id="sound-train">
+				<path d="M140 117 h 10 m90 0 h10 m90 0 h10 m90 0 h10 m90 0 h10 m90 0 h10" fill="none" stroke="#333" stroke-width="2" />
+				<use x="50" y="100" xlink:href="#train-freight" fill="#dd5" />
+				<use x="150" y="100" xlink:href="#train-freight" fill="#d85" />
+				<use x="250" y="100" xlink:href="#train-freight" fill="#ccc" />
+				<use x="350" y="100" xlink:href="#train-freight" fill="#5b9" />
+				<use x="450" y="100" xlink:href="#train-freight" fill="#a85" />
+				<use x="550" y="100" xlink:href="#train-freight" fill="#c88" />
+				<use x="650" y="100" xlink:href="#train-engine" fill="#89d" />
+			</g>
+			<g fill="rgba(0,0,0,0.05)" stroke="#000" stroke-width="2">
+				<circle cx="50" cy="100" r="5" id="sound-left" style="display: none;" />
+				<circle cx="740" cy="100" r="5" id="sound-right" style="display: none;" />
+			</g>
+		</svg>
+		<div style="margin: 0 auto; max-width: 605px; padding:5px;">
+				<strong>Thought experiment:</strong> Imagine a whistle at the front and at the back of a moving train.
+				Each whistles blows simultaneously. Where on the train will the sound waves meet?
+				&nbsp;&nbsp;&nbsp; <strong>(back,&nbsp;&nbsp;&nbsp;&nbsp;middle,&nbsp;&nbsp;&nbsp;&nbsp;front)</strong>
+			<details>
+				<summary>results</summary>
+				<ul class="listing">
+					<li>
+						<button type="button" onclick="passengerSound()" style="width:60px;margin-left:38%;">train</button>
+						The train passenger sees the sound from the front of the train as moving faster, and the sound from the back as moving slower.
+					</li>
+					<li>
+						<button type="button" onclick="observerSound()" style="width:65px;margin-left:38%;">ground</button>
+						Both sound waves are moving at the same speed, but the train is moving to the right.
+					</li>
+				</ul>
+				<p>
+					Both observers agree that the sound waves meet towards the back of the train.
+				</p>
+			</details>
+		</div>
+	</div>
+	<article>
 
+		<h2 class='underlined' id="speed">A Constant Speed of Light</h2>
 		<p>
 			Waves are a disruption that propagates through a medium. The speed of a wave is constant and determined by the medium.
 			Sound's medium is atoms. Light's medium is electric and magnetic fields.
@@ -172,40 +261,21 @@
 	</article>
 	<div class='example' style="margin: auto;">
 		<svg viewBox="30 0 740 124">
-			<defs>
-				<!-- <g id="tree">
-					<rect x="-3" y="-50" width="6" height="50" fill="#662" stroke="none" />
-					<circle cx="0" cy="-50" r="18" fill="#0a0" stroke="none" />
-				</g> -->
-				<g id="train-freight">
-					<g fill="#333" stroke="none">
-						<circle cx="6" cy="20" r="3.5" />
-						<circle cx="14" cy="20" r="3.5" />
-						<circle cx="76" cy="20" r="3.5" />
-						<circle cx="84" cy="20" r="3.5" />
-					</g>
-					<rect x="0" y="0" rx="1" width="90" height="20" stroke="#333" stroke-width="1.5" />
-					<path d="M10 0 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20" fill="none" stroke="#000" opacity="0.1" stroke-width="1.5" />
-				</g>
-				<g id="train-engine">
-					<g fill="#333" stroke="none">
-						<circle cx="6" cy="20" r="3.5" />
-						<circle cx="14" cy="20" r="3.5" />
-						<circle cx="22" cy="20" r="3.5" />
-						<circle cx="68" cy="20" r="3.5" />
-						<circle cx="76" cy="20" r="3.5" />
-						<circle cx="84" cy="20" r="3.5" />
-					</g>
-					<path d="M0 2 h50 v-2 h30 l 2 7 l 8 1 v12 h-90 v-18z" stroke="#333" stroke-width="1.5" stroke-linejoin="round" />
-					<g fill="#333" stroke="none">
-						<rect x="72" y="3" width="5" height="5" />
-						<rect x="66" y="3" width="3" height="5" />
-					</g>
-					<path d="M0 12 h93 v8 h-3 M7 12 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8" fill="none" stroke="#000" opacity="0.2" stroke-width="0.75" />
-				</g>
-			</defs>
-			<!-- <path id="mountain" d="M0 125 l 100 -50 l20 50 l 100 -50  z" fill="#ccc" stroke="#888" stroke-width="2" /> -->
-
+			<path d="M0 124 h 800" fill="none" stroke="#ddd" stroke-width="2" />
+			<g id = "trees">
+				<use x="35" y="126" xlink:href="#tree"  />
+				<use x="80" y="126" xlink:href="#tree"  />
+				<use x="200" y="126" xlink:href="#tree"  />
+				<use x="300" y="126" xlink:href="#tree"  />
+				<use x="340" y="126" xlink:href="#tree"  />
+				<use x="515" y="126" xlink:href="#tree"  />
+				<use x="650" y="126" xlink:href="#tree"  />
+				<use x="700" y="126" xlink:href="#tree"  />
+				<use x="725" y="126" xlink:href="#tree"  />
+				<use x="760" y="126" xlink:href="#tree"  />
+				<use x="830" y="126" xlink:href="#tree"  />
+				<use x="800" y="126" xlink:href="#tree"  />
+			</g>
 			<g id="train">
 				<path d="M140 117 h 10 m90 0 h10 m90 0 h10 m90 0 h10 m90 0 h10 m90 0 h10" fill="none" stroke="#333" stroke-width="2" />
 				<use x="50" y="100" xlink:href="#train-freight" fill="#dd5" />
@@ -216,7 +286,7 @@
 				<use x="550" y="100" xlink:href="#train-freight" fill="#c88" />
 				<use x="650" y="100" xlink:href="#train-engine" fill="#89d" />
 			</g>
-			<g fill="rgba(255,255,0,0.2)" stroke="#000" stroke-width="1">
+			<g fill="rgba(255,255,0,0.1)" stroke="#000" stroke-width="2">
 				<circle cx="50" cy="100" r="5" id="light-left" style="display: none;" />
 				<circle cx="740" cy="100" r="5" id="light-right" style="display: none;" />
 			</g>
@@ -224,13 +294,18 @@
 		<div style="margin: 0 auto; max-width: 605px; padding:5px;">
 			<p>
 				<strong>Thought experiment:</strong> Imagine two lighting strikes simultaneously hit the front and back of a train moving near the speed of light.
-				Where on the train does the light from each strike meet? Answer from two perspectives:
+				Where on the train does the light from each strike meet? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>(back,&nbsp;&nbsp;&nbsp;&nbsp;middle,&nbsp;&nbsp;&nbsp;&nbsp;front)</strong> 
+				<br>Answer from two perspectives:
 			</p>
 
 
 			<div class="col-group">
-				<div>A passenger on the train</div>
-				<div>An observer on the ground.</div>
+				<div>
+					A passenger on the train
+				</div>
+				<div>
+					An observer on the ground.
+				</div>
 			</div>
 			<details>
 				<summary>results</summary>
@@ -247,8 +322,8 @@
 					</li>
 				</ul>
 				<p>
+					They don't agree on the order of events because they have a relative velocity between them.
 					Thought experiments like this produce contradictory results when viewed from a classical physics perspective.
-					In this case the observers don't agree on the order of events because they have a relative velocity between them.
 				</p>
 			</details>
 		</div>
