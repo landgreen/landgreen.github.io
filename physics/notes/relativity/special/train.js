@@ -19,17 +19,17 @@ function passenger() {
     let trainPos = 0;
 
     function cycle() {
-        if(stopTrainPassenger){
+        if (stopTrainPassenger) {
 
-        }else{
-            time++
-            trainPos -= 0.2;
-    
+        } else {
+            time += 0.5
             lightLeft.setAttribute("r", time);
             lightRight.setAttribute("r", time);
+
+            trainPos -= 0.25;
             trees.setAttribute("transform", "translate(" + trainPos + ")");
-    
-            if (time < 344) requestAnimationFrame(cycle);
+
+            if (time < 244) requestAnimationFrame(cycle);
         }
     }
     requestAnimationFrame(cycle);
@@ -53,19 +53,18 @@ function observer() {
     let trainPos = 0;
 
     function cycle() {
-        if (stopTrainObserver){
+        if (stopTrainObserver) {
             train.setAttribute("transform", "translate(0)");
             trees.setAttribute("transform", "translate(0)");
-        }else{
-            time++
-
+        } else {
+            time += 0.5
             lightLeft.setAttribute("r", time);
             lightRight.setAttribute("r", time);
-    
-            trainPos += 0.2;
+
+            trainPos += 0.25;
             train.setAttribute("transform", "translate(" + trainPos + ")");
-    
-            if (time < 344) requestAnimationFrame(cycle);
+
+            if (time < 244) requestAnimationFrame(cycle);
         }
     }
     requestAnimationFrame(cycle);
@@ -97,24 +96,24 @@ function passengerSound() {
     let trainPos = 0;
 
     function cycle() {
-        if(stopTrainPassengerSound){
+        if (stopTrainPassengerSound) {
             train.setAttribute("transform", "translate(0)");
             trees.setAttribute("transform", "translate(0)");
             soundLeft.setAttribute("transform", "translate(0)");
             soundRight.setAttribute("transform", "translate(0)");
-        }else{
-            time++
-            trainPos -= 0.2;
-    
+        } else {
+            time += 0.5
             soundLeft.setAttribute("r", time);
             soundRight.setAttribute("r", time);
+
+            trainPos -= 0.2;
             trees.setAttribute("transform", "translate(" + trainPos + ")");
             soundLeft.setAttribute("transform", "translate(" + (trainPos) + ")");
             soundRight.setAttribute("transform", "translate(" + (trainPos) + ")");
-    
-            if (time < 344) requestAnimationFrame(cycle);
+
+            if (time < 244) requestAnimationFrame(cycle);
         }
-        
+
     }
     requestAnimationFrame(cycle);
 }
@@ -138,18 +137,20 @@ function observerSound() {
     let trainPos = 0;
 
     function cycle() {
-        if (stopTrainObserverSound){
+        if (stopTrainObserverSound) {
             train.setAttribute("transform", "translate(0)");
             trees.setAttribute("transform", "translate(0)");
             soundLeft.setAttribute("transform", "translate(0)");
             soundRight.setAttribute("transform", "translate(0)");
         } else {
-            time++
+            time += 0.5
             soundLeft.setAttribute("r", time);
             soundRight.setAttribute("r", time);
+
             trainPos += 0.2;
             train.setAttribute("transform", "translate(" + trainPos + ")");
-            if (time < 344) requestAnimationFrame(cycle);
+
+            if (time < 244) requestAnimationFrame(cycle);
         }
     }
     requestAnimationFrame(cycle);

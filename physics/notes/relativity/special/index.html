@@ -110,11 +110,11 @@
 
 	</article>
 	<div class='example' style="margin: auto;">
-		<svg viewBox="30 0 740 124">
+		<svg viewBox="30 0 540 124">
 			<defs>
 				<g id="tree">
 					<rect x="-3" y="-50" width="6" height="50" fill="#cca" stroke="none" />
-					<circle cx="0" cy="-50" r="18" fill="#ded" stroke="none" />
+					<circle cx="0" cy="-50" r="20" fill="#ded" stroke="none" />
 				</g>
 				<g id="train-freight">
 					<g fill="#333" stroke="none">
@@ -126,6 +126,7 @@
 					<rect x="0" y="0" rx="1" width="90" height="20" stroke="#333" stroke-width="1.5" />
 					<path d="M10 0 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20 m10 -20 v20" fill="none" stroke="#000" opacity="0.1" stroke-width="1.5" />
 				</g>
+
 				<g id="train-engine">
 					<g fill="#333" stroke="none">
 						<circle cx="6" cy="20" r="3.5" />
@@ -144,40 +145,33 @@
 				</g>
 			</defs>
 			<path d="M0 124 h 800" fill="none" stroke="#ddd" stroke-width="2" />
-			<g id = "sound-trees">
-				
-				<use x="35" y="126" xlink:href="#tree"  />
-				<use x="80" y="126" xlink:href="#tree"  />
-				<use x="200" y="126" xlink:href="#tree"  />
-				<use x="300" y="126" xlink:href="#tree"  />
-				<use x="340" y="126" xlink:href="#tree"  />
-				<use x="515" y="126" xlink:href="#tree"  />
-				<use x="650" y="126" xlink:href="#tree"  />
-				<use x="700" y="126" xlink:href="#tree"  />
-				<use x="725" y="126" xlink:href="#tree"  />
-				<use x="760" y="126" xlink:href="#tree"  />
-				<use x="830" y="126" xlink:href="#tree"  />
-				<use x="800" y="126" xlink:href="#tree"  />
+			<g id="sound-trees">
+				<use x="35" y="126" xlink:href="#tree" />
+				<use x="80" y="126" xlink:href="#tree" />
+				<use x="200" y="126" xlink:href="#tree" />
+				<use x="340" y="126" xlink:href="#tree" />
+				<use x="390" y="126" xlink:href="#tree" />
+				<use x="425" y="126" xlink:href="#tree" />
+				<use x="550" y="126" xlink:href="#tree" />
+				<use x="610" y="126" xlink:href="#tree" />
 			</g>
 			<g id="sound-train">
-				<path d="M140 117 h 10 m90 0 h10 m90 0 h10 m90 0 h10 m90 0 h10 m90 0 h10" fill="none" stroke="#333" stroke-width="2" />
+				<path d="M140 117 h 10 m90 0 h10 m90 0 h10 m90 0 h10" fill="none" stroke="#333" stroke-width="2" />
 				<use x="50" y="100" xlink:href="#train-freight" fill="#dd5" />
 				<use x="150" y="100" xlink:href="#train-freight" fill="#d85" />
-				<use x="250" y="100" xlink:href="#train-freight" fill="#ccc" />
-				<use x="350" y="100" xlink:href="#train-freight" fill="#5b9" />
-				<use x="450" y="100" xlink:href="#train-freight" fill="#a85" />
-				<use x="550" y="100" xlink:href="#train-freight" fill="#c88" />
-				<use x="650" y="100" xlink:href="#train-engine" fill="#89d" />
+				<use x="250" y="100" xlink:href="#train-freight" fill="#5b9" />
+				<use x="350" y="100" xlink:href="#train-freight" fill="#c88" />
+				<use x="450" y="100" xlink:href="#train-engine" fill="#89d" />
 			</g>
 			<g fill="rgba(0,0,0,0.05)" stroke="#000" stroke-width="2">
 				<circle cx="50" cy="100" r="5" id="sound-left" style="display: none;" />
-				<circle cx="740" cy="100" r="5" id="sound-right" style="display: none;" />
+				<circle cx="540" cy="100" r="5" id="sound-right" style="display: none;" />
 			</g>
 		</svg>
 		<div style="margin: 0 auto; max-width: 605px; padding:5px;">
-				<strong>Thought experiment:</strong> Imagine a whistle at the front and back of a moving train.
-				If each whistles blows simultaneously, where on the train do the sound waves meet?
-				&nbsp;&nbsp;&nbsp; <strong>(back,&nbsp;&nbsp;&nbsp;&nbsp;middle,&nbsp;&nbsp;&nbsp;&nbsp;front)</strong>
+			<strong>Thought Experiment:</strong> Imagine a whistle at the front and back of a fast moving train.
+			If each whistles blows simultaneously, where on the train do the sound waves meet?
+			&nbsp;&nbsp;&nbsp; <strong>(back,&nbsp;&nbsp;&nbsp;&nbsp;middle,&nbsp;&nbsp;&nbsp;&nbsp;front)</strong>
 			<details>
 				<summary>results</summary>
 				<ul class="listing">
@@ -191,7 +185,7 @@
 					</li>
 				</ul>
 				<p>
-					Both observers agree that the sound waves meet towards the back of the train.
+					Both frames of reference agree that the sound waves meet towards the back of the train.
 				</p>
 			</details>
 		</div>
@@ -263,71 +257,63 @@
 		<br>
 	</article>
 	<div class='example' style="margin: auto;">
-		<svg viewBox="30 0 740 124">
+		<svg viewBox="30 0 540 124">
 			<path d="M0 124 h 800" fill="none" stroke="#ddd" stroke-width="2" />
-			<g id = "trees">
-				<use x="35" y="126" xlink:href="#tree"  />
-				<use x="80" y="126" xlink:href="#tree"  />
-				<use x="200" y="126" xlink:href="#tree"  />
-				<use x="300" y="126" xlink:href="#tree"  />
-				<use x="340" y="126" xlink:href="#tree"  />
-				<use x="515" y="126" xlink:href="#tree"  />
-				<use x="650" y="126" xlink:href="#tree"  />
-				<use x="700" y="126" xlink:href="#tree"  />
-				<use x="725" y="126" xlink:href="#tree"  />
-				<use x="760" y="126" xlink:href="#tree"  />
-				<use x="830" y="126" xlink:href="#tree"  />
-				<use x="800" y="126" xlink:href="#tree"  />
+			<g id="trees">
+				<use x="35" y="126" xlink:href="#tree" />
+				<use x="80" y="126" xlink:href="#tree" />
+				<use x="200" y="126" xlink:href="#tree" />
+				<use x="340" y="126" xlink:href="#tree" />
+				<use x="390" y="126" xlink:href="#tree" />
+				<use x="425" y="126" xlink:href="#tree" />
+				<use x="550" y="126" xlink:href="#tree" />
+				<use x="610" y="126" xlink:href="#tree" />
 			</g>
 			<g id="train">
-				<path d="M140 117 h 10 m90 0 h10 m90 0 h10 m90 0 h10 m90 0 h10 m90 0 h10" fill="none" stroke="#333" stroke-width="2" />
+				<path d="M140 117 h 10 m90 0 h10 m90 0 h10 m90 0 h10" fill="none" stroke="#333" stroke-width="2" />
 				<use x="50" y="100" xlink:href="#train-freight" fill="#dd5" />
 				<use x="150" y="100" xlink:href="#train-freight" fill="#d85" />
-				<use x="250" y="100" xlink:href="#train-freight" fill="#ccc" />
-				<use x="350" y="100" xlink:href="#train-freight" fill="#5b9" />
-				<use x="450" y="100" xlink:href="#train-freight" fill="#a85" />
-				<use x="550" y="100" xlink:href="#train-freight" fill="#c88" />
-				<use x="650" y="100" xlink:href="#train-engine" fill="#89d" />
+				<use x="250" y="100" xlink:href="#train-freight" fill="#5b9" />
+				<use x="350" y="100" xlink:href="#train-freight" fill="#c88" />
+				<use x="450" y="100" xlink:href="#train-engine" fill="#89d" />
 			</g>
 			<g fill="rgba(255,255,0,0.1)" stroke="#000" stroke-width="2">
 				<circle cx="50" cy="100" r="5" id="light-left" style="display: none;" />
-				<circle cx="740" cy="100" r="5" id="light-right" style="display: none;" />
+				<circle cx="540" cy="100" r="5" id="light-right" style="display: none;" />
 			</g>
 		</svg>
 		<div style="margin: 0 auto; max-width: 605px; padding:5px;">
 			<p>
-				<strong>Thought experiment:</strong>
-				Imagine lighting simultaneously strikes the front and back of a moving train.
-				Where on the train does the light from the lighting meet?
-				Answer with either back, middle, or front for two perspectives.
+				<strong>Thought Experiment:</strong>
+				Imagine lighting simultaneously strikes the front and back of a train that is moving at half the speed of light.
 			</p>
+			<!-- &nbsp;&nbsp;&nbsp; <strong>(back,&nbsp;&nbsp;&nbsp;&nbsp;middle,&nbsp;&nbsp;&nbsp;&nbsp;front)</strong> -->
+			<ul class="listing">
+				<li>
+					Where does a passenger on the train see the light waves meet?
 
-			<div class="col-group">
-				<div>
-					A passenger on the train
-				</div>
-				<div>
-					An observer on the ground.
-				</div>
-			</div>
+				</li>
+				<li>
+					Where does an observer on the ground see the light waves meet?
+
+				</li>
+			</ul>
 			<details>
 				<summary>results</summary>
 				<ul class="listing">
 					<li>
 						<button type="button" onclick="passenger()" style="width:60px;margin-left:38%;">train</button>
-						The passenger on the train sees all light as moving at the same speed.
-						The train isn't moving from the passenger's perspective. This means the light meets in the middle of the train.
+						The train isn't moving from the passenger's frame of reference. This means they see the light meet in the middle of the train.
 					</li>
 					<li>
 						<button type="button" onclick="observer()" style="width:65px;margin-left:38%;">ground</button>
-						The observer on the ground also sees all light as moving at the same speed,
-						but from their perspective the train is moving to the right.
-						This means the observer sees the light meet closer to the back of the train.
+						A frames of reference on the ground sees the train moving to the right.
+						They see the light waves meet closer to the back of the train.
 					</li>
 				</ul>
 				<p>
-					They don't agree on the order of events because they have a relative velocity between them.
-					Thought experiments like this produce contradictory results when viewed from a classical physics perspective.
+					The frames of reference don't agree on the location of events. This happens when two frames of reference have a relative velocity between them.
+					These contradictory results indicate there is a problem with our model of physics.
 				</p>
 			</details>
 		</div>
@@ -620,7 +606,7 @@
 		</ul>
 
 		<div class='example'>
-			<strong>Thought experiment:</strong> You are on Earth, and a spaceship zooms past near the speed of light. When the ship is overhead, will you see the ship in slow motion or fast forward?
+			<strong>Thought Experiment:</strong> You are on Earth, and a spaceship zooms past near the speed of light. When the ship is overhead, will you see the ship in slow motion or fast forward?
 			<details>
 				<summary>results</summary>
 				<br>You will see them in slow motion. Observers always see moving objects in slow motion.
@@ -1341,7 +1327,7 @@
 				could you make it to Proxima Centauri by the year 2052?
 				Use the spacetime interval to prove your answer.
 				<details>
-					<summary>relativistic solution</summary>
+					<summary>solution</summary>
 					$$\Delta t = t_f - t_i $$
 					$$\Delta t = 2052 \, \mathrm{yr}- 2049 \, \mathrm{yr}$$
 					$$\Delta t = 3 \, \mathrm{yr} $$
