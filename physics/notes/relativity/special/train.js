@@ -1,5 +1,6 @@
 let stopTrainObserver = false;
 let stopTrainPassenger = false;
+const endCycle = 245
 
 function passenger() {
     stopTrainObserver = true;
@@ -18,6 +19,7 @@ function passenger() {
     let time = 0;
     let trainPos = 0;
 
+    
     function cycle() {
         if (stopTrainPassenger) {
 
@@ -25,11 +27,13 @@ function passenger() {
             time += 0.5
             lightLeft.setAttribute("r", time);
             lightRight.setAttribute("r", time);
+            lightLeft.setAttribute("r", time);
+            lightRight.setAttribute("r", time);
 
             trainPos -= 0.25;
             trees.setAttribute("transform", "translate(" + trainPos + ")");
 
-            if (time < 244) requestAnimationFrame(cycle);
+            if (time < endCycle) requestAnimationFrame(cycle);
         }
     }
     requestAnimationFrame(cycle);
@@ -64,7 +68,7 @@ function observer() {
             trainPos += 0.25;
             train.setAttribute("transform", "translate(" + trainPos + ")");
 
-            if (time < 244) requestAnimationFrame(cycle);
+            if (time < endCycle) requestAnimationFrame(cycle);
         }
     }
     requestAnimationFrame(cycle);
@@ -111,7 +115,7 @@ function passengerSound() {
             soundLeft.setAttribute("transform", "translate(" + (trainPos) + ")");
             soundRight.setAttribute("transform", "translate(" + (trainPos) + ")");
 
-            if (time < 244) requestAnimationFrame(cycle);
+            if (time < endCycle) requestAnimationFrame(cycle);
         }
 
     }
@@ -150,7 +154,7 @@ function observerSound() {
             trainPos += 0.2;
             train.setAttribute("transform", "translate(" + trainPos + ")");
 
-            if (time < 244) requestAnimationFrame(cycle);
+            if (time < endCycle) requestAnimationFrame(cycle);
         }
     }
     requestAnimationFrame(cycle);

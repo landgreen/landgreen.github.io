@@ -89,21 +89,27 @@
 				How fast would each observer measure the speed of sound?
 			</p>
 			<ul class="listing">
-				<li><strong>Observer 1:</strong> A person at the back of the train. </li>
-				<li><strong>Observer 2:</strong> A person at the train station.</li>
+				<li><strong>Observer 1:</strong> A person at the train station.</li>
+				<li><strong>Observer 2:</strong> A person at the back of the train. </li>
 			</ul>
 
 			<details>
 				<summary>answer</summary>
 				<br>
 				<ul class="listing">
-					<li> <strong>Observer 1:</strong>343 m/s - 20 m/s = 323 m/s</li>
-					<li><strong>Observer 2:</strong>343 m/s.</li>
+					<li>
+						<strong>Observer 1:</strong>343 m/s.
+						<br><br>The person on the ground measures the speed of sound as normal because they are at rest relative to the air.
+					</li>
+					<li>
+						<strong>Observer 2:</strong>343 m/s - 20 m/s = 323 m/s
+						<br><br>The person on the train is moving relative to the air so they will measure the speed of sound as either higher or lower.
+					</li>
 				</ul>
 
 				<p>
-					The speed of sound is relative to the air it moves through. The person on the ground measures the speed of sound as normal because they are at rest relative to the air.
-					The person on the train is moving relative to the air so they will measure the speed of sound as either higher or lower.
+
+					
 				</p>
 			</details>
 		</div>
@@ -112,10 +118,19 @@
 	<div class='example' style="margin: auto;">
 		<svg viewBox="30 0 540 124">
 			<defs>
-				<g id="tree">
+				<g id="tree-old">
 					<rect x="-3" y="-50" width="6" height="50" fill="#cca" stroke="none" />
 					<circle cx="0" cy="-50" r="20" fill="#ded" stroke="none" />
 				</g>
+				<g id="tree">
+						<rect x="-3" y="-20" width="6" height="35" fill="#cca" stroke="none" />
+						<path d="M-20 -20 h 40 l-8 -10 h4   l-7 -8 h4   l-6 -6 h3   l-5 -5 h3   l-5 -5 h2   l-5 -7
+								l-5 7 h2  l-5 5 h3   l-5 5 h3   l-6 6 h3   l-7 8 h4  l-8 10z" fill="#ded" stroke="none"/>
+					</g>
+					<g id="tree-small">
+							<rect x="-2" y="-20" width="4" height="35" fill="#ddb" stroke="none" />
+							<path d="M-11 -15 h 22  l-6 -8 h4   l-5 -6 h3   l-4 -5 h3   l-4 -4 h2   l-4 -6     l-4 6 h2  l-4 4 h2   l-4 5 h3   l-5 6 h3   l-6 8z" fill="#e5f5e5" stroke="none"/>
+						</g>
 				<g id="train-freight">
 					<g fill="#333" stroke="none">
 						<circle cx="6" cy="20" r="3.5" />
@@ -136,6 +151,7 @@
 						<circle cx="76" cy="20" r="3.5" />
 						<circle cx="84" cy="20" r="3.5" />
 					</g>
+					<path d="M89.5 1 v 10" fill="none" stroke="#bbb" stroke-width="1"/>
 					<path d="M0 2 h50 v-2 h30 l 2 7 l 8 1 v12 h-90 v-18z" stroke="#333" stroke-width="1.5" stroke-linejoin="round" />
 					<g fill="#333" stroke="none">
 						<rect x="72" y="3" width="5" height="5" />
@@ -144,32 +160,38 @@
 					<path d="M0 12 h93 v8 h-3 M7 12 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8 m11 -8 v8" fill="none" stroke="#000" opacity="0.2" stroke-width="0.75" />
 				</g>
 			</defs>
-			<path d="M0 124 h 800" fill="none" stroke="#ddd" stroke-width="2" />
+			<circle cx="100" cy="31" r="18" fill="#fcb" stroke="none"/>
 			<g id="sound-trees">
-				<use x="35" y="126" xlink:href="#tree" />
-				<use x="80" y="126" xlink:href="#tree" />
-				<use x="200" y="126" xlink:href="#tree" />
-				<use x="340" y="126" xlink:href="#tree" />
-				<use x="390" y="126" xlink:href="#tree" />
-				<use x="425" y="126" xlink:href="#tree" />
-				<use x="550" y="126" xlink:href="#tree" />
-				<use x="610" y="126" xlink:href="#tree" />
+				<use x="60" y="133" xlink:href="#tree-small" />
+				<use x="315" y="132" xlink:href="#tree-small" />
+				<use x="360" y="134" xlink:href="#tree-small" />
+				<use x="562" y="131" xlink:href="#tree-small" />
+				<use x="630" y="133" xlink:href="#tree-small" />
+				<use x="35" y="132" xlink:href="#tree" />			
+				<use x="80" y="134" xlink:href="#tree" />
+				<use x="200" y="130" xlink:href="#tree" />
+				<use x="340" y="132" xlink:href="#tree" />
+				<use x="390" y="128" xlink:href="#tree" />
+				<use x="425" y="133" xlink:href="#tree" />
+				<use x="500" y="130" xlink:href="#tree" />
+				<use x="610" y="131" xlink:href="#tree" />
 			</g>
+			<path d="M0 124 h 800" fill="none" stroke="#333" stroke-width="2" />
 			<g id="sound-train">
 				<path d="M140 117 h 10 m90 0 h10 m90 0 h10 m90 0 h10" fill="none" stroke="#333" stroke-width="2" />
 				<use x="50" y="100" xlink:href="#train-freight" fill="#dd5" />
 				<use x="150" y="100" xlink:href="#train-freight" fill="#d85" />
 				<use x="250" y="100" xlink:href="#train-freight" fill="#5b9" />
-				<use x="350" y="100" xlink:href="#train-freight" fill="#c88" />
+				<use x="350" y="100" xlink:href="#train-freight" fill="#ccc" />
 				<use x="450" y="100" xlink:href="#train-engine" fill="#89d" />
 			</g>
-			<g fill="rgba(0,0,0,0.05)" stroke="#000" stroke-width="2">
-				<circle cx="50" cy="100" r="5" id="sound-left" style="display: none;" />
-				<circle cx="540" cy="100" r="5" id="sound-right" style="display: none;" />
+			<g fill="rgba(0,0,0,0.05)" stroke="#000" stroke-width="1">
+				<circle cx="50" cy="100" r="0" id="sound-left"  />
+				<circle cx="540" cy="100" r="0" id="sound-right" />
 			</g>
 		</svg>
 		<div style="margin: 0 auto; max-width: 605px; padding:5px;">
-			<strong>Thought Experiment:</strong> Imagine a whistle at the front and back of a fast moving train.
+			<strong>Thought Experiment:</strong> Imagine a whistle at the front and back of a train moving at half the speed of sound.
 			If each whistles blows simultaneously, where on the train do the sound waves meet?
 			&nbsp;&nbsp;&nbsp; <strong>(back,&nbsp;&nbsp;&nbsp;&nbsp;middle,&nbsp;&nbsp;&nbsp;&nbsp;front)</strong>
 			<details>
@@ -198,8 +220,8 @@
 			Sound's medium is atoms. Light's medium is electric and magnetic fields.
 		</p>
 		<p>
-			<a href="..\..\waves\light\index.html#speed-of-light">Light</a> was different from other waves.
-			It moved faster than any known object, and it was able to propagate through the vacuum of space.
+			<a href="..\..\waves\light\index.html#speed-of-light">Light</a> is different from other waves.
+			It moves faster than any known object, and it is able to propagate through the vacuum of space.
 
 			How can a wave exist in seemingly empty space?
 			Is space filled with a medium? What is the velocity of that medium relative to Earth?
@@ -238,8 +260,8 @@
 			By looking at the interference pattern of the combined beams, they could tell with a high accuracy if either path took less time.
 		</p>
 		<p>
-			They tested the speeds at different times of day and year to measure the relative velocity between the Earth and light's medium.
-			They always measured a constant speed of light in every direction. Earth's velocity had no effect.
+			They tested at different times of day and year to measure the effect of Earth's relative velocity on the speed of light.
+			They always measured a constant speed of light in every direction. Earth's motion had no effect.
 		</p>
 		<div class="definition">
 			<h1>$$c = 3 \times 10^8 \, \mathrm{\tfrac{m}{s}} $$</h1>
@@ -257,29 +279,35 @@
 		<br>
 	</article>
 	<div class='example' style="margin: auto;">
-		<svg viewBox="30 0 540 124">
-			<path d="M0 124 h 800" fill="none" stroke="#ddd" stroke-width="2" />
+		<svg viewBox="30 0 540 124" id="light-train-SVG">
+			<circle cx="130" cy="34" r="16" fill="#fcb" stroke="none"/>
 			<g id="trees">
-				<use x="35" y="126" xlink:href="#tree" />
-				<use x="80" y="126" xlink:href="#tree" />
-				<use x="200" y="126" xlink:href="#tree" />
-				<use x="340" y="126" xlink:href="#tree" />
-				<use x="390" y="126" xlink:href="#tree" />
-				<use x="425" y="126" xlink:href="#tree" />
-				<use x="550" y="126" xlink:href="#tree" />
-				<use x="610" y="126" xlink:href="#tree" />
+					<use x="60" y="133" xlink:href="#tree-small" />
+					<use x="315" y="132" xlink:href="#tree-small" />
+					<use x="360" y="134" xlink:href="#tree-small" />
+					<use x="562" y="131" xlink:href="#tree-small" />
+					<use x="630" y="133" xlink:href="#tree-small" />
+					<use x="35" y="132" xlink:href="#tree" />			
+					<use x="80" y="134" xlink:href="#tree" />
+					<use x="200" y="130" xlink:href="#tree" />
+					<use x="340" y="132" xlink:href="#tree" />
+					<use x="390" y="128" xlink:href="#tree" />
+					<use x="425" y="133" xlink:href="#tree" />
+					<use x="500" y="130" xlink:href="#tree" />
+					<use x="610" y="131" xlink:href="#tree" />
 			</g>
+			<path d="M0 124 h 800" fill="none" stroke="#333" stroke-width="2" />
 			<g id="train">
 				<path d="M140 117 h 10 m90 0 h10 m90 0 h10 m90 0 h10" fill="none" stroke="#333" stroke-width="2" />
-				<use x="50" y="100" xlink:href="#train-freight" fill="#dd5" />
-				<use x="150" y="100" xlink:href="#train-freight" fill="#d85" />
-				<use x="250" y="100" xlink:href="#train-freight" fill="#5b9" />
-				<use x="350" y="100" xlink:href="#train-freight" fill="#c88" />
-				<use x="450" y="100" xlink:href="#train-engine" fill="#89d" />
+				<use x="50" y="100" xlink:href="#train-freight" fill="#d85" />
+				<use x="150" y="100" xlink:href="#train-freight" fill="#5b9" />
+				<use x="250" y="100" xlink:href="#train-freight" fill="#89d" />
+				<use x="350" y="100" xlink:href="#train-freight" fill="#dd5" />
+				<use x="450" y="100" xlink:href="#train-engine" fill="#ccc" />
 			</g>
-			<g fill="rgba(255,255,0,0.1)" stroke="#000" stroke-width="2">
-				<circle cx="50" cy="100" r="5" id="light-left" style="display: none;" />
-				<circle cx="540" cy="100" r="5" id="light-right" style="display: none;" />
+			<g fill="rgba(255,255,0,0.1)" stroke="#000" stroke-width="1">
+				<circle cx="50" cy="100" r="0" id="light-left" />
+				<circle cx="540" cy="100" r="0" id="light-right" />
 			</g>
 		</svg>
 		<div style="margin: 0 auto; max-width: 605px; padding:5px;">
