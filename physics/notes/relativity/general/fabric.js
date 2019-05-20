@@ -34,7 +34,7 @@ const fabric = function (id) {
   document.getElementById("three-fabric-load").remove()
 
   settings = {
-    range: 50,
+    range: 60,
     totalPlanets: 10,
     planetRadius: 1,
     fullView: false,
@@ -119,11 +119,10 @@ const fabric = function (id) {
   /////////////////////////////////////////
   let material, geometry
 
-  //random planets
   const planet = [];
   //central body
   let index = 0;
-  let radius = 3;
+  let radius = 3.5;
   geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
   material = new THREE.MeshLambertMaterial({
     color: 0xffffff,
@@ -142,7 +141,7 @@ const fabric = function (id) {
 
   //orbiting body
   index++
-  radius = 0.5;
+  radius = 0.4;
   geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
   material = new THREE.MeshLambertMaterial({
     color: 0xffffff,
@@ -154,29 +153,48 @@ const fabric = function (id) {
   planet[index].position.set(13, 0, -5);
   planet[index].velocity = {
     x: 0,
-    y: 0.06,
+    y: -0.055,
     z: 0
   };
   scene.add(planet[index]);
 
-  //orbiting body
-  // index++
-  // radius = 0.4;
-  // geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
-  // material = new THREE.MeshLambertMaterial({
-  //   color: 0xffffff,
-  //   transparent: true,
-  //   opacity: 0,
-  // });
-  // planet[index] = new THREE.Mesh(geometry, material);
-  // planet[index].radius = radius
-  // planet[index].position.set(-13, 0, -5);
-  // planet[index].velocity = {
-  //   x: 0,
-  //   y: -0.06,
-  //   z: 0
-  // };
-  // scene.add(planet[index]);
+  // orbiting body
+  index++
+  radius = 0.25;
+  geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
+  material = new THREE.MeshLambertMaterial({
+    color: 0xffffff,
+    transparent: true,
+    opacity: 0,
+  });
+  planet[index] = new THREE.Mesh(geometry, material);
+  planet[index].radius = radius
+  planet[index].position.set(6.5, 0, -5);
+  planet[index].velocity = {
+    x: 0,
+    y: -0.075,
+    z: 0
+  };
+  scene.add(planet[index]);
+
+  // orbiting body
+  index++
+  radius = 0.75;
+  geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
+  material = new THREE.MeshLambertMaterial({
+    color: 0xffffff,
+    transparent: true,
+    opacity: 0,
+  });
+  planet[index] = new THREE.Mesh(geometry, material);
+  planet[index].radius = radius
+  planet[index].position.set(24, 0, -5);
+  planet[index].velocity = {
+    x: 0,
+    y: -0.041,
+    z: 0
+  };
+  scene.add(planet[index]);
 
 
   // for (let i = 0; i < settings.totalPlanets; ++i) {
@@ -217,9 +235,9 @@ const fabric = function (id) {
   // Physics
   /////////////////////////////////////////
   function physics(who) {
-    const gravityConst = 0.05;
+    const gravityConst = 0.04;
     const minDistance2 = 10;
-    const edge = settings.range / 2
+    // const edge = settings.range / 2
     //change position from velocity
     const len = who.length;
     for (let i = 0; i < len; ++i) {
@@ -229,32 +247,42 @@ const fabric = function (id) {
         who[i].position.y += who[i].velocity.y;
 
         // walls
-        if (who[i].position.x > edge - who[i].radius) {
-          who[i].position.x = edge - who[i].radius
-          who[i].velocity.x = -Math.abs(who[i].velocity.x);
-        } else if (who[i].position.x < -edge + who[i].radius) {
-          who[i].position.x = -edge + who[i].radius
-          who[i].velocity.x = Math.abs(who[i].velocity.x);
-        }
-        if (who[i].position.y > edge - who[i].radius) {
-          who[i].position.y = edge - who[i].radius
-          who[i].velocity.y = -Math.abs(who[i].velocity.y);
-        } else if (who[i].position.y < -edge + who[i].radius) {
-          who[i].position.y = -edge + who[i].radius
-          who[i].velocity.y = Math.abs(who[i].velocity.y);
-        }
+        // if (who[i].position.x > edge - who[i].radius) {
+        //   who[i].position.x = edge - who[i].radius
+        //   who[i].velocity.x = -Math.abs(who[i].velocity.x);
+        // } else if (who[i].position.x < -edge + who[i].radius) {
+        //   who[i].position.x = -edge + who[i].radius
+        //   who[i].velocity.x = Math.abs(who[i].velocity.x);
+        // }
+        // if (who[i].position.y > edge - who[i].radius) {
+        //   who[i].position.y = edge - who[i].radius
+        //   who[i].velocity.y = -Math.abs(who[i].velocity.y);
+        // } else if (who[i].position.y < -edge + who[i].radius) {
+        //   who[i].position.y = -edge + who[i].radius
+        //   who[i].velocity.y = Math.abs(who[i].velocity.y);
+        // }
       }
-      //accelerate velocity from gravity
-      for (let j = i + 1; j < len; ++j) {
-        const dx = who[i].position.x - who[j].position.x;
-        const dy = who[i].position.y - who[j].position.y;
-        const d2 = Math.max(dx * dx + dy * dy, minDistance2);
-        const mag = gravityConst / d2 / Math.sqrt(d2);
-        who[i].velocity.x -= mag * dx;
-        who[i].velocity.y -= mag * dy;
-        who[j].velocity.x += mag * dx;
-        who[j].velocity.y += mag * dy;
-      }
+      //accelerate velocity from gravity, only towards center body
+
+      const dx = who[0].position.x - who[i].position.x;
+      const dy = who[0].position.y - who[i].position.y;
+      const d2 = Math.max(dx * dx + dy * dy, minDistance2);
+      const mag = gravityConst / d2 / Math.sqrt(d2);
+      who[i].velocity.x += mag * dx;
+      who[i].velocity.y += mag * dy;
+
+
+
+      // for (let j = i + 1; j < len; ++j) {
+      //   const dx = who[i].position.x - who[j].position.x;
+      //   const dy = who[i].position.y - who[j].position.y;
+      //   const d2 = Math.max(dx * dx + dy * dy, minDistance2);
+      //   const mag = gravityConst / d2 / Math.sqrt(d2);
+      //   who[i].velocity.x -= mag * dx;
+      //   who[i].velocity.y -= mag * dy;
+      //   who[j].velocity.x += mag * dx;
+      //   who[j].velocity.y += mag * dy;
+      // }
     }
   }
 
