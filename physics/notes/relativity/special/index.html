@@ -84,7 +84,7 @@
 
 		<div class='example'>
 			<p>
-				<strong>Question:</strong> A train moving at 20 m/s makes a sound with it's steam whistle.
+				<strong>Question:</strong> A train moving at 20 m/s makes a sound with its steam whistle.
 				Sound moves through air at around 343 m/s relative to the air.
 				How fast would each observer measure the speed of sound?
 			</p>
@@ -281,7 +281,8 @@
 	</article>
 	<div class='example' style="margin: auto;">
 		<svg viewBox="30 -25 540 149">
-			<circle cx="105" cy="23" r="17" fill="#fcb" stroke="none" />
+			<!-- <circle cx="105" cy="23" r="17" fill="#fcb" stroke="none" /> -->
+			<circle cx="73" cy="70" r="20" fill="#fba" stroke="none" />
 			<g id="trees">
 				<use x="44" y="137" xlink:href="#tree-small" />
 				<use x="62" y="139" xlink:href="#tree-small" />
@@ -417,14 +418,17 @@
 			These equations predict how observers in two non-accelerating reference frames can disagree on space and time if they have a relative velocity.
 		</p>
 		$$ \Delta t = \gamma \Delta t_0 \quad \quad \quad \quad L = \frac{L_0}{\gamma}$$
-		<p>We will explore each of the above equations, but first we need to learn how to calculate the <strong>Lorentz factor</strong>.</p>
+		<p>
+			Before we can solve these equations, we need to calculate the <strong>Lorentz factor</strong>, written as γ (gamma).
+			The Lorentz factor is used in special relativity equations to scale how different reference frames measure space and time.
+		</p>
 		<div class="definition">
 			<h1>$$ \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2} } }$$</h1>
 			\( \gamma \) = Lorentz factor, gamma [no units]
 			<br>\(v\) = relative velocity [m/s]
-			<br>\(c\) = speed of light, 3 x 10⁸ [m/s]
+			<br>\(c\) = speed of light, 3 × 10⁸ [m/s]
 		</div>
-		<p>Gamma is always greater than 1, but it grows towards infinity as the relative velocity approaches the speed of light.</p>
+		<p>The Lorentz factor is always greater than 1, but it grows towards infinity as the relative velocity approaches the speed of light.</p>
 		<div class='example'>
 			<strong>Example:</strong> Calculate the Lorentz factor for two reference frames at rest relative to each other.
 			<br>
@@ -765,6 +769,81 @@
 		</div>
 		<p>The rest length is always longer. An object will look contracted from a moving reference frame. </p>
 
+
+
+	<!-- </article>
+	<div class='example' style="margin: auto;">
+		<svg viewBox="30 -25 540 149">
+			<circle cx="73" cy="70" r="20" fill="#fa9" stroke="none" />
+			<g id="length-trees">
+				<use x="44" y="137" xlink:href="#tree-small" />
+				<use x="62" y="139" xlink:href="#tree-small" />
+				<use x="289" y="140" xlink:href="#tree-small" />
+				<use x="315" y="137" xlink:href="#tree-small" />
+				<use x="360" y="139" xlink:href="#tree-small" />
+				<use x="562" y="136" xlink:href="#tree-small" />
+				<use x="630" y="136" xlink:href="#tree-small" />
+				<use x="660" y="138" xlink:href="#tree-small" />
+				<use x="85" y="135" xlink:href="#tree" />
+				<use x="200" y="131" xlink:href="#tree" />
+				<use x="340" y="133" xlink:href="#tree" />
+				<use x="390" y="130" xlink:href="#tree" />
+				<use x="425" y="134" xlink:href="#tree" />
+				<use x="500" y="131" xlink:href="#tree" />
+				<use x="610" y="133" xlink:href="#tree" />
+			</g>
+			<path d="M0 124 h 800" fill="none" stroke="#333" stroke-width="2" />
+			<g id="length-train">
+				<path d="M140 117 h 10 m90 0 h10 m90 0 h10 m90 0 h10" fill="none" stroke="#333" stroke-width="2" />
+				<use x="50" y="100" xlink:href="#train-freight" fill="#d85" />
+				<use x="150" y="100" xlink:href="#train-freight" fill="#5b9" />
+				<use x="250" y="100" xlink:href="#train-freight" fill="#89d" />
+				<use x="350" y="100" xlink:href="#train-freight" fill="#dd5" />
+				<use x="450" y="100" xlink:href="#train-engine" fill="#ccc" />
+			</g>
+			<g fill="rgba(255,255,0,0.1)" stroke="#000" stroke-width="1">
+				<circle cx="50" cy="100" r="0" id="length-left" />
+				<circle cx="540" cy="100" r="0" id="length-right" />
+			</g>
+		</svg>
+		<div style="margin: 0 auto; max-width: 605px; padding:5px;">
+			<p>
+				<strong>Thought Experiment:</strong>
+				Imagine a train moving at half the speed of light.
+				Imagine lights on the front and back of the train flash simultaneously.
+			</p>
+			<ul class="listing">
+				<li>
+					Where would a passenger on the train see the lights flash at the same time?
+				</li>
+				<li>
+					Where would an observer on the ground see the lights flash at the same time?
+				</li>
+			</ul>
+			<details>
+				<summary>results</summary>
+				<ul class="listing">
+					<li>
+						<button type="button" onclick="passengerLength()" style="width:60px;margin-left:38%;">train</button>
+						The train isn't moving from the passenger's frame of reference. This means they see the light meet in the middle of the train.
+					</li>
+					<li>
+						<button type="button" onclick="observerLength()" style="width:65px;margin-left:38%;">ground</button>
+						A frames of reference on the ground sees the train moving to the right.
+						They see the light waves meet closer to the back of the train.
+					</li>
+				</ul>
+				<p>
+					The frames of reference don't agree on the location and timing of events. This happens when two frames of reference have a relative velocity between them.
+					These contradictory results indicate there is a problem with our model of physics.
+				</p>
+			</details>
+		</div>
+	</div>
+	<article> -->
+
+
+
 		<div class='example'>
 			<strong>Example:</strong> When you are holding a meter stick it looks like it is 1 meter long. How long would the meter stick look if it was moving lengthwise at 0.5c relative to you?
 			<details>
@@ -809,7 +888,7 @@
 		</div>
 
 		<!-- <h2 class='underlined'>Relativistic Mass</h2>
-		<p>As a massive object gains velocity it's mass increases.</p>
+		<p>As a massive object gains velocity its mass increases.</p>
 		<div class="definition">
 			<h1>$$ m = \gamma m_0 $$ </h1>
 			<br>\( m \) = mass, as seen by an observer with a relative velocity
@@ -846,7 +925,7 @@
 			\( E\) = Energy [J]
 			<br>\( \gamma \) = Lorentz factor, gamma [no units]
 			<br>\( m \) = mass [kg]
-			<br>\(c\) = speed of light, 3 x 10⁸ [m/s]
+			<br>\(c\) = speed of light, 3 × 10⁸ [m/s]
 		</div>
 		<p>
 			At rest the Lorentz factor is one. This gives us that famous equation for the mass-energy equivalence at rest.
@@ -1398,7 +1477,7 @@
 				<li>
 					<div>Relative Velocity
 						<br>v = <input id='velocity' type="number" value='0.9' min="0" max="1" step="0.01" style="width:80px;"> c
-						<br>v = <input id='velocity2' type="number" value='2.7' min="0" max="3" step="0.1" style="width:80px;"> x 10<sup>8</sup> m/s
+						<br>v = <input id='velocity2' type="number" value='2.7' min="0" max="3" step="0.1" style="width:80px;"> × 10<sup>8</sup> m/s
 					</div>
 				</li>
 				<li>
