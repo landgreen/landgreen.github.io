@@ -71,38 +71,42 @@ let solver = function () {
 
   function update() {
     const v = document.getElementById("velocity").value;
-    const time = Number(document.getElementById("time").value);
-    const dist = Number(document.getElementById("length").value);
-    const mass = Number(document.getElementById("mass").value);
-    rockets.gamma = 1 / Math.sqrt(1 - v * v);
-    const vTime = time * rockets.gamma;
-    const vDist = dist / rockets.gamma;
-    const vMass = mass * rockets.gamma;
-    document.getElementById("velocity2").value = v * 3;
-    document.getElementById("gamma").value = Math.round(rockets.gamma * 1000000000000) / 1000000000000;
-    document.getElementById("v_time").value = vTime.toFixed(4);
-    document.getElementById("v_length").value = vDist.toFixed(4);
-    document.getElementById("v_mass").value = vMass.toFixed(4);
-    // document.getElementById("length1").style.width = dist * 10 + "px";
-    // document.getElementById("length2").style.width = vDist * 10 + "px";
+    if (1 - v * v != 0) {
+      const time = Number(document.getElementById("time").value);
+      const dist = Number(document.getElementById("length").value);
+      const mass = Number(document.getElementById("mass").value);
+      rockets.gamma = 1 / Math.sqrt(1 - v * v);
+      const vTime = time * rockets.gamma;
+      const vDist = dist / rockets.gamma;
+      const vMass = mass * rockets.gamma;
+      document.getElementById("velocity2").value = v * 3;
+      document.getElementById("gamma").value = Math.round(rockets.gamma * 1000000000000) / 1000000000000;
+      document.getElementById("v_time").value = vTime.toFixed(4);
+      document.getElementById("v_length").value = vDist.toFixed(4);
+      document.getElementById("v_mass").value = vMass.toFixed(4);
+      // document.getElementById("length1").style.width = dist * 10 + "px";
+      // document.getElementById("length2").style.width = vDist * 10 + "px";
+    }
   }
 
   function updateMoving() {
     const v = document.getElementById("velocity").value;
-    rockets.gamma = 1 / Math.sqrt(1 - v * v);
-    const vTime = Number(document.getElementById("v_time").value);
-    const vDist = Number(document.getElementById("v_length").value);
-    const vMass = Number(document.getElementById("v_mass").value);
-    const time = vTime / rockets.gamma;
-    const dist = vDist * rockets.gamma;
-    const mass = vMass / rockets.gamma;
-    document.getElementById("velocity2").value = v * 3;
-    document.getElementById("gamma").value = Math.round(rockets.gamma * 1000000000000) / 1000000000000;
-    document.getElementById("time").value = time.toFixed(4);
-    document.getElementById("length").value = dist.toFixed(4);
-    document.getElementById("mass").value = mass.toFixed(4);
-    // document.getElementById("length1").style.width = dist * 10 + "px";
-    // document.getElementById("length2").style.width = vDist * 10 + "px";
+    if (1 - v * v != 0) {
+      rockets.gamma = 1 / Math.sqrt(1 - v * v);
+      const vTime = Number(document.getElementById("v_time").value);
+      const vDist = Number(document.getElementById("v_length").value);
+      const vMass = Number(document.getElementById("v_mass").value);
+      const time = vTime / rockets.gamma;
+      const dist = vDist * rockets.gamma;
+      const mass = vMass / rockets.gamma;
+      document.getElementById("velocity2").value = v * 3;
+      document.getElementById("gamma").value = Math.round(rockets.gamma * 1000000000000) / 1000000000000;
+      document.getElementById("time").value = time.toFixed(4);
+      document.getElementById("length").value = dist.toFixed(4);
+      document.getElementById("mass").value = mass.toFixed(4);
+      // document.getElementById("length1").style.width = dist * 10 + "px";
+      // document.getElementById("length2").style.width = vDist * 10 + "px";
+    }
   }
 
   function convertVelocity() {
