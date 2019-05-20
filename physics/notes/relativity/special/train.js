@@ -1,6 +1,7 @@
+const endCycle = 245
+
 let stopTrainObserver = false;
 let stopTrainPassenger = false;
-const endCycle = 245
 
 function passenger() {
     stopTrainObserver = true;
@@ -19,7 +20,7 @@ function passenger() {
     let time = 0;
     let trainPos = 0;
 
-    
+
     function cycle() {
         if (stopTrainPassenger) {
 
@@ -159,3 +160,86 @@ function observerSound() {
     }
     requestAnimationFrame(cycle);
 }
+
+
+
+
+
+
+// //length contraction  
+
+// let stopTrainObserverLength = false;
+// let stopTrainPassengerLength = false;
+// let gammaFactor = 0.5
+
+// function passengerLength() {
+//     stopTrainObserverLength = true;
+//     stopTrainPassengerLength = false;
+
+//     const lightLeft = document.getElementById("length-left")
+//     const lightRight = document.getElementById("length-right")
+//     const train = document.getElementById("length-train")
+//     const trees = document.getElementById("length-trees")
+
+//     trees.setAttribute("transform", "translate(0)")
+//     train.setAttribute("transform", "translate(0)")
+//     lightLeft.style.display = "inline"
+//     lightRight.style.display = "inline"
+
+//     let time = 0;
+//     let trainPos = 0;
+
+
+//     function cycle() {
+//         if (stopTrainPassengerLength) {
+
+//         } else {
+//             time += 0.5
+//             lightLeft.setAttribute("r", time);
+//             lightRight.setAttribute("r", time);
+//             lightLeft.setAttribute("r", time);
+//             lightRight.setAttribute("r", time);
+
+//             trainPos -= 0.25 / 1.1547;
+//             trees.setAttribute("transform", "translate(" + trainPos + ") scale(0.866,1)");
+
+//             if (time < endCycle) requestAnimationFrame(cycle);
+//         }
+//     }
+//     requestAnimationFrame(cycle);
+// }
+
+// function observerLength() {
+//     stopTrainObserverLength = false;
+//     stopTrainPassengerLength = true;
+
+//     const lightLeft = document.getElementById("length-left")
+//     const lightRight = document.getElementById("length-right")
+//     const train = document.getElementById("length-train")
+//     const trees = document.getElementById("length-trees")
+
+//     trees.setAttribute("transform", "translate(0)")
+//     lightLeft.style.display = "inline"
+//     lightRight.style.display = "inline"
+
+
+//     let time = 0;
+//     let trainPos = 0;
+
+//     function cycle() {
+//         if (stopTrainObserverLength) {
+//             train.setAttribute("transform", "translate(0)");
+//             trees.setAttribute("transform", "translate(0)");
+//         } else {
+//             time += 0.5
+//             lightLeft.setAttribute("r", time);
+//             lightRight.setAttribute("r", time);
+
+//             trainPos += 0.25 // / 1.1547;
+//             train.setAttribute("transform", "translate(" + (trainPos + 50) + ") scale(0.866,1)");
+
+//             if (time < endCycle) requestAnimationFrame(cycle);
+//         }
+//     }
+//     requestAnimationFrame(cycle);
+// }
