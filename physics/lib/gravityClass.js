@@ -175,6 +175,37 @@ class Particle {
     }
   }
 
+  static mergeOnCollision(who) {
+    const len = who.length;
+    for (let i = 0; i < len; ++i) {
+      for (let j = i + 1; j < len; ++j) {
+        const dx = who[i].position.x - who[j].position.x;
+        const dy = who[i].position.y - who[j].position.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < who[i].radius) {
+          //overwrite second particle with merged properties
+          const totalMass = who[j].mass + who[i].mass
+          who[i].position.x -= dx * who[j].mass / totalMass
+          who[i].position.y -= dy * who[j].mass / totalMass
+
+          who[i].velocity.x = (who[i].mass * who[i].velocity.x + who[j].mass * who[j].velocity.x) / (who[i].mass + who[j].mass)
+          who[i].velocity.y = (who[i].mass * who[i].velocity.y + who[j].mass * who[j].velocity.y) / (who[i].mass + who[j].mass)
+
+          if (who[i].mass < who[j].mass) {
+            who[i].color = who[j].color //take the color of the largest body
+          }
+          if (who[i].mass + who[j].mass < 6000) {
+            who[i].mass += who[j].mass
+            who[i].radius = Math.sqrt(who[i].mass)
+          }
+          who.splice(j, 1); //remove j particle
+          Particle.mergeOnCollision(who) //recursive call after splice
+          return; //to prevent an array location error.
+        }
+      }
+    }
+  }
+
   static repulse(who, pos, scale = 1) {
     for (let i = 0, len = who.length; i < len; ++i) {
       const dx = who[i].position.x - pos.x;

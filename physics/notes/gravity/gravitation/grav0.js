@@ -65,6 +65,7 @@
       Particle.integration(q, 0.1);
       Particle.drawAll(q, ctx);
       Particle.bounds(q, canvas);
+      // Particle.mergeOnCollision(q);
     }
     requestAnimationFrame(cycle);
   }

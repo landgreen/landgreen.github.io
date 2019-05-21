@@ -94,6 +94,7 @@ function grav1(el) {
       Particle.vectorField(q, ctx, canvas, vMag);
       Particle.drawAll(q, ctx);
       Particle.bounds(q, canvas);
+      // Particle.mergeOnCollision(q);
     }
     requestAnimationFrame(cycle);
   }
