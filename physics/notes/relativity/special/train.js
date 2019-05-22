@@ -227,7 +227,7 @@ function observerLength() {
 
     let time = 0;
     let trainPos = 5;
-    let secondFlashTime = 278
+    let secondFlashTime = 280
 
     function cycle() {
         if (!stopTrainObserverLength) {
@@ -240,7 +240,7 @@ function observerLength() {
             trainPos += 0.25 // / 1.1547;
             train.setAttribute("transform", "translate(" + (trainPos) + ") scale(0.866,1)");
 
-            if (time < 420) requestAnimationFrame(cycle);
+            if (time < 421) requestAnimationFrame(cycle);
         }
     }
     requestAnimationFrame(cycle);
