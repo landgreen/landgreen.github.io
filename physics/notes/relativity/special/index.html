@@ -455,7 +455,7 @@
 				<use x="450" y="100" xlink:href="#train-engine" fill="#5b9" />
 				<circle cx="50" cy="100" r="1" stroke="none" fill="#f50" />
 			</g>
-			<g fill="rgba(255,255,0,0.1)" stroke="#000" stroke-width="1">
+			<g fill="rgba(255,255,0,0.1)" stroke="#333" stroke-width="1">
 				<circle cx="50" cy="100" r="0" id="length-left" />
 				<circle cx="540" cy="100" r="0" id="length-right" />
 			</g>
@@ -463,13 +463,12 @@
 		<div style="margin: 0 auto; max-width: 605px; padding:5px;">
 			<p>
 				<strong>Thought Experiment:</strong> Remember the <a href="#train-2">train paradox</a>?
-				A ground based frame of reference and a train based frame of reference disagreed on where the flashes of light meet.
-				Special relativity resolves this inconsistency because different frames of reference don't agree on simultaneity.
+				The ground based frame of reference and the train based frame of reference disagreed on where the flashes of light met.
+				Special relativity removes this inconsistency by not letting different frames agree on simultaneity.
 			</p>
 			<ul class="listing">
 				<li>
 					<button type="button" onclick="passengerLength()" style="width:60px;margin-left:38%;">train</button>
-
 				</li>
 				<li>
 					<button type="button" onclick="observerLength()" style="width:65px;margin-left:38%;">ground</button>
@@ -479,6 +478,18 @@
 				It is only possible for the light flashes to be simultaneous for one of the observers.
 				If the flashes occur at the same time for the train observer, the ground observer will see the flashes at different times.
 			</p>
+			<br>
+			<strong>Question</strong>: What relativistic effects are present in the the simulation in addition to simultaneity.
+			<details>
+				<summary>answer</summary>
+				<p>
+					length contraction
+				</p>
+				<p>
+					The trees are narrow from the train's reference frame.
+					The train is shorter from the ground's reference frame.
+				</p>
+			</details>
 		</div>
 	</div>
 	<article>
@@ -1176,7 +1187,11 @@
 			<details>
 				<summary>strategy</summary>
 				<p>
-					Matter antimatter annihilation converts <strong>all</strong> the mass of a particle into energy. Find the energy of an electron at rest. That energy will be the same for a photon produced by electron and position annihilation.
+					Matter antimatter annihilation converts <strong>all</strong> the mass of a particle into energy.
+				</p>
+				<p>
+					Calculate the energy for an electron and positron.  You can look up their mass on the data table.
+					The electron and positron energy will equal the energy of the 2 gamma rays produced by the annihilation.
 				</p>
 			</details>
 			<details>
