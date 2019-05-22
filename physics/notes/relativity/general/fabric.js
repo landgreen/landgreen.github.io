@@ -34,7 +34,7 @@ const fabric = function (id) {
   document.getElementById("three-fabric-load").remove()
 
   settings = {
-    range: 60,
+    range: 55,
     totalPlanets: 10,
     planetRadius: 1,
     fullView: false,
@@ -122,7 +122,7 @@ const fabric = function (id) {
   const planet = [];
   //central body
   let index = 0;
-  let radius = 3.5;
+  let radius = 4;
   geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
   material = new THREE.MeshLambertMaterial({
     color: 0xffffff,
@@ -141,7 +141,7 @@ const fabric = function (id) {
 
   //orbiting body
   index++
-  radius = 0.4;
+  radius = 0.7;
   geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
   material = new THREE.MeshLambertMaterial({
     color: 0xffffff,
@@ -160,7 +160,7 @@ const fabric = function (id) {
 
   // orbiting body
   index++
-  radius = 0.25;
+  radius = 0.5;
   geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
   material = new THREE.MeshLambertMaterial({
     color: 0xffffff,
@@ -179,7 +179,7 @@ const fabric = function (id) {
 
   // orbiting body
   index++
-  radius = 0.75;
+  radius = 1;
   geometry = new THREE.IcosahedronBufferGeometry(radius, 1);
   material = new THREE.MeshLambertMaterial({
     color: 0xffffff,
@@ -224,7 +224,6 @@ const fabric = function (id) {
     side: THREE.DoubleSide,
     shading: THREE.FlatShading,
   });
-
 
   let potentialEnergyMesh = new THREE.Mesh(potentialEnergy, material);
   potentialEnergyMesh.position.set(0, 0, 0);
@@ -291,24 +290,24 @@ const fabric = function (id) {
   // move potentialEnergyMesh
   /////////////////////////////////////////
   function dynamicPlane() {
-    const depth = 100 / settings.totalMass
+    const depth = 12
     for (let i = 0, len = potentialEnergyMesh.geometry.vertices.length; i < len; i++) {
       let v = potentialEnergyMesh.geometry.vertices[i];
-      let mag = depth; //this should be zero but I'm using depth as 0 to center the energy mesh higher up with the camera
+      let mag = 0 + depth; //this should be zero but I'm using depth as 0 to center the energy mesh higher up with the camera
       for (let j = 0, len = planet.length; j < len; j++) {
         const dx = planet[j].position.x - v.x;
         const dy = planet[j].position.y - v.y;
         const dist = Math.sqrt(dx * dx + dy * dy)
         mag -= depth * planet[j].radius * planet[j].radius / (Math.max(dist, planet[j].radius));
-        //below code is technically more accurate, but it just looks really confusing ...
+        //below code is technically more accurate, but it just looks really confusing with spikes in the middle of the wells
         // if (dist > planet[j].radius) {
         //   mag -= depth * planet[j].radius * planet[j].radius / dist; //outside planet
         // } else {
         //   mag -= depth * planet[j].radius * planet[j].radius / (planet[j].radius + planet[j].radius / dist - 1);//inside planet
         // }
       }
-      v.z = mag;
-      // v.z = v.z * 0.9 + mag * 0.1; // smooth changes
+      // v.z = mag; // no smoothing
+      v.z = v.z * 0.8 + mag * 0.2; // smooth changes
     }
     potentialEnergyMesh.geometry.computeFaceNormals();
     potentialEnergyMesh.geometry.normalsNeedUpdate = true;
