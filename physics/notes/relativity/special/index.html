@@ -479,16 +479,17 @@
 				If the flashes occur at the same time for the train observer, the ground observer will see the flashes at different times.
 			</p>
 			<br>
-			<strong>Question</strong>: What relativistic effects are present in the the simulation in addition to simultaneity.
+			<strong>Question</strong>: What relativistic effects can you observe in the the simulation.
 			<details>
 				<summary>answer</summary>
 				<p>
-					length contraction
+					simultaneity and length contraction
 				</p>
 				<p>
 					The trees are narrow from the train's reference frame.
 					The train is shorter from the ground's reference frame.
 				</p>
+				<p>Time dilation should also be present, but there isn't a way to see it in the simulation.</p>
 			</details>
 		</div>
 	</div>
@@ -880,7 +881,7 @@
 			<br>
 			<ul class="listing">
 				<li>width (side to side) = 40 m</li>
-				<li>windows = 25</li>
+				<li>windows = 87</li>
 				<li>length (front to back) = 134 m</li>
 				<li>relative velocity = 0.99c</li>
 				<li>color = fuchsia</li>
@@ -896,26 +897,102 @@
 			</details>
 		</div>
 
-		<!-- <h2 class='underlined'>Relativistic Mass</h2>
-		<p>As a massive object gains velocity its mass increases.</p>
-		<div class="definition">
-			<h1>$$ m = \gamma m_0 $$ </h1>
-			<br>\( m \) = mass, as seen by an observer with a relative velocity
-			<br>\( m_0\) =
-			<strong>rest mass</strong>, as seen by an observer at rest
-			<br>\( \gamma \) = Lorentz factor, gamma [no units]
-		</div>
-		<p>The rest mass is
-			<strong>lower</strong> than the mass seen in motion. The observed mass increases as the relative velocity increases.</p>
 
-		<div class='example'>
-			<strong>Example:</strong> My rest mass is 77kg. What would an observer at relative velocity of 0.94c measure mass as?
-			<details>
-				<summary>solution</summary>
-				$$\gamma = 2.93$$
-				<br> $$ m = \gamma m_0 $$ $$ m = (2.93)(77) $$ $$ m = 225.6kg $$
-			</details>
-		</div> -->
+		<!-- <h2 class='underlined' id="twin-paradox">Twin Paradox</h2>
+		<p>
+			Imagine there is a pair of twins names Apollo and Artemis.
+			On the day they are born Artemis is taken to a spaceship destined for Alpha Centauri 4.37 light-years away.
+			The spaceship travels at 0.8c.
+			Meanwhile, Apollo lives a normal life on Earth.
+		</p>
+		<p>
+			Let's calculate the ages of each twin.  We need to consider the Earth's frame of reference and the spaceship's frame of reference.
+		</p>
+
+		<div class="col-group">
+				<div>
+					$$\text{Earth}$$
+				</div>
+				<div>
+					$$\text{Spaceship}$$
+				</div>
+			</div>
+
+<style>
+.frames {
+
+}
+.frames>div {
+   border: #333 solid 1px;
+   text-align: center;
+  }
+@media screen and (min-width: 43em) {
+  .frames {
+    overflow: hidden;
+  }
+  .frames>div {
+    float: left;
+    width: 50%;
+  }
+}
+</style>
+
+<div class="frames" style = "background-color: #fef;">
+		$$\text{Earth to Alpha Centauri at v = 0.8c}$$
+	<div>
+		distance from Earth to star
+		$$L_0 = 4.37 \, \mathrm{ly}$$
+		<br><br><br><br><br>
+		time passed on Earth
+		$$v=\frac{L_0}{\Delta t}$$
+		$$\Delta t=\frac{L_0}{v}$$
+		$$\Delta t=\frac{4.37\, \mathrm{ly}}{0.8c}$$
+		$$\Delta t= 5.46 \, \mathrm{yr}$$
+		<br>
+		time passed on spaceship
+		$$\Delta t = \gamma \Delta t_0$$
+		$$\Delta t_0 = \frac{\Delta t}{\gamma}$$
+		$$\Delta t_0 = \frac{5.46\, \mathrm{yr}}{1.66}$$
+		$$\Delta t_0 = 3.29 \, \mathrm{yr}$$
+	</div>
+	<div>
+		distance from Earth to star
+		$$L = \frac{L_0}{\gamma}$$
+		$$L = \frac{4.37\,\mathrm{ly}}{1.66} = 2.63 \, \mathrm{ly}$$
+		<br>
+		time passed on ship
+		$$v=\frac{L_0}{\Delta t}$$
+		$$\Delta t=\frac{L}{v}$$
+		$$\Delta t=\frac{2.63\, \mathrm{ly}}{0.8c}$$
+		$$\Delta t= 3.29 \, \mathrm{yr}$$
+		<br>
+		time passed on Earth
+		$$\Delta t = \gamma \Delta t_0$$
+		$$\Delta t_0 = \frac{\Delta t}{\gamma}$$
+		$$\Delta t_0 = \frac{3.29\, \mathrm{yr}}{1.66}$$
+		$$\Delta t_0 = 1.98\, \mathrm{yr}$$
+	</div>
+</div>
+
+<div class="frames" style = "background-color: #eee;">
+		$$\text{ship accelerates while turning around}$$
+	<div></div>
+	<div></div>
+</div>
+
+
+<div class="frames" style = "background-color: #eff;">
+		$$\text{return trip}$$
+	<div></div>
+	<div></div>
+</div>
+ -->
+
+
+
+
+
+		
 
 		<h2 class='underlined' id="mass-energy">Mass–Energy Equivalence</h2>
 		<p>
@@ -1100,6 +1177,7 @@
 				<br> <em>(The symbol gamma is used to represent a photon, not the Lorentz factor.)</em>
 			</p>
 			<strong>Example:</strong> The antimatter version of an electron is a positron. Calculate the energy of a photon produced by the annihilation of an electron and positron.
+			<em>(Assume the electron and positron aren't moving at relativistic speeds.)</em>
 			<details>
 				<summary>Subatomic Particles Data Table</summary>
 				<table border>
