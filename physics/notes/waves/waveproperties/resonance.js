@@ -108,7 +108,7 @@ function checkVisible(elm) {
   requestAnimationFrame(cycle); //starts game loop
 
   function loop() {
-    Engine.update(engine, 16.666);
+    Engine.update(engine, 33);
     pendulum.force.y += 0.0001 //gravity down
     //draw
     document.getElementById("res-ball").setAttribute("transform", `translate(${pendulum.position.x} ${pendulum.position.y})`);
