@@ -11,15 +11,13 @@ function grav1(el) {
   var canvas = el;
   var ctx = canvas.getContext("2d");
 
-  let height, width;
-
   function setupCanvas() {
     // canvas.width = window.innerWidth;
     // canvas.width = Math.min(document.body.clientWidth, 1200); //window.innerWidth; //document.body.scrollWidth;
     // canvas.height = 400;
     width = canvas.width;
     height = canvas.height;
-    // ctx.globalCompositeOperation = "lighter";
+    // ctx.globalCompositeOperation = "darken";
     // ctx.globalAlpha = 0.7;
   }
   setupCanvas();
@@ -91,6 +89,7 @@ function grav1(el) {
     if (checkVisible(canvas)) {
       Particle.integration(q, 0.1);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
       Particle.vectorField(q, ctx, canvas, vMag);
       Particle.drawAll(q, ctx);
       Particle.bounds(q, canvas);
