@@ -180,7 +180,9 @@ function passengerLength() {
     const lightRight = document.getElementById("length-right")
     const train = document.getElementById("length-train")
     const trees = document.getElementById("length-trees")
+    const sun = document.getElementById("sunset")
 
+    sun.setAttribute("transform", "translate(11) scale(0.866,1)");
     trees.setAttribute("transform", "translate(0)")
     train.setAttribute("transform", "translate(0)")
     lightRight.setAttribute("transform", "translate(0)");
@@ -217,7 +219,9 @@ function observerLength() {
     const lightRight = document.getElementById("length-right")
     const train = document.getElementById("length-train")
     const trees = document.getElementById("length-trees")
+    const sun = document.getElementById("sunset")
 
+    sun.setAttribute("transform", "translate(0) scale(1,1)");
     trees.setAttribute("transform", "translate(0)")
     lightLeft.style.display = "inline"
     lightRight.style.display = "inline"
