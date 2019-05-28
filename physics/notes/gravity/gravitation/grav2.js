@@ -54,11 +54,12 @@ function grav2(el) {
 
   function cycle() {
     if (checkVisible(canvas)) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // ctx.clearRect(0, 0, canvas.width, canvas.height);
       Particle.integration(q, 0.1);
       Particle.scalarField(q, ctx, canvas, fMag);
       // Particle.vectorColorField(q, ctx, canvas, fMag);
       Particle.bounds(q, canvas);
+      // Particle.mergeOnCollision(q);
     }
     requestAnimationFrame(cycle);
   }

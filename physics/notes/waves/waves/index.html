@@ -46,8 +46,24 @@
 	</header>
 	<article>
 		<p>
-			If you throw a pebble into a pond you see a wave spread out along the surface of the water. When a tree falls in the forest you can hear the sound waves spread out through the air. When you look at the sky you see electro-magnetic waves made by stars. When you click on the image below you should see a two dimensional wave simulation.
+			Physics uses basic models to simplify complex systems.
+			A common model is the particle.
+			<strong>Particles</strong> are point-like objects with no internal structure, just properties like mass and velocity.
+			More complicated properties like rotation, and friction are often ignored.
+			We've used the particle model to understand phenomena, like:
+			<a href="..\..\momentum\momentum\index.html">momentum</a>,
+			<a href="..\..\gravity\gravitation\index.html#universal-gravitation">gravitation</a>,
+			<a href="..\..\electromagnetism\electrostatics\index.html">Coulomb's law</a>,
+			and <a href="..\..\circuits\electricity\index.html#current">current</a>.
+			<!-- The model of a particle can be applied to things like electrons, gases, or stars. -->
 		</p>
+		<p>
+			Another commonly used model is the <strong>wave</strong>.
+			Waves are different from the particle model in some interesting ways.
+			They don't exist at a point. They spread out in every direction at a constant speed.
+			They have zero mass, and they can overlap with each other without interacting.
+		</p>
+
 		<style>
 			#tsunami {
 				/* background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/800px-Tsunami_by_hokusai_19th_century.jpg); */
@@ -66,10 +82,13 @@
 		</style>
 	</article>
 	<div id="tsunami"></div>
-	<p class="center" id="hide-after-click">Click the image to make waves.</p>
+	<p class="center" id="hide-after-click">Click the image to make a two dimensional wave.</p>
 	<article>
 		<p>
-			Waves are disturbances that travel through various media. The nature of each medium gives their waves different properties.
+			The nature of each medium gives waves different properties.
+			If you throw a pebble into a pond you see a wave spread out along the surface of the water.
+			When a tree falls in the forest you can hear the sound waves spread out through the air.
+			When you look at the sky you see electro-magnetic waves made by stars.
 		</p>
 		<table>
 			<tr>
@@ -104,7 +123,7 @@
 			</tr>
 			<tr>
 				<td>electrical</td>
-				<td>wires</td>
+				<td>conductors</td>
 				<td>cable TV, phone lines</td>
 			</tr>
 			<tr>
@@ -123,6 +142,13 @@
 				<td>The Wave</td>
 			</tr>
 		</table>
+
+		<h2 class='underlined'>Media and Wave Speed</h2>
+		<p>
+			When a wave propagates, what is moving is energy, not matter.
+			The speed of propagation is determined by the medium.
+			Properties like frequency, amplitude, or wavelength generally don't affect the speed.
+		</p>
 		<div class='example-small'>
 			<div class='definition'>
 				<style>
@@ -146,13 +172,13 @@
 						<path d="M170 375 h780" stroke-dasharray="19, 20" stroke="#9ab" />
 					</g>
 					<path d="M60,329 L69,308 L78,287 L87,267 L97,248 L106,230 L115,213 L124,198 L134,185 L143,173 L152,163
-					L162,154 L171,148 L180,144 L189,142 L199,142 L208,144 L217,148 L226,154 L236,163 L245,173 L254,185 L264,198 L273,213 L282,230
-					L291,248 L301,267 L310,287 L319,308 L328,329 L338,351 L347,373 L356,395 L366,417 L375,438 L384,459 L393,479 L403,498 L412,516
-					L421,533 L430,548 L440,561 L449,573 L458,583 L468,592 L477,598 L486,602 L495,604 L505,604 L514,602 L523,598 L532,592 L542,583
-					L551,573 L560,561 L570,548 L579,533 L588,516 L597,498 L607,479 L616,459 L625,438 L634,417 L644,395 L653,373 L662,351 L672,329
-					L681,308 L690,287 L699,267 L709,248 L718,230 L727,213 L736,198 L746,185 L755,173 L764,163 L774,154 L783,148 L792,144 L801,142
-					L811,142 L820,144 L829,148 L838,154 L848,163 L857,173 L866,185 L876,198 L885,213 L894,230 L903,248 L913,267 L922,287 L931,308
-					L940,329 L950,351 L959,373 " stroke-width='20' fill='none' stroke='#234' stroke-linecap="round" />
+						L162,154 L171,148 L180,144 L189,142 L199,142 L208,144 L217,148 L226,154 L236,163 L245,173 L254,185 L264,198 L273,213 L282,230
+						L291,248 L301,267 L310,287 L319,308 L328,329 L338,351 L347,373 L356,395 L366,417 L375,438 L384,459 L393,479 L403,498 L412,516
+						L421,533 L430,548 L440,561 L449,573 L458,583 L468,592 L477,598 L486,602 L495,604 L505,604 L514,602 L523,598 L532,592 L542,583
+						L551,573 L560,561 L570,548 L579,533 L588,516 L597,498 L607,479 L616,459 L625,438 L634,417 L644,395 L653,373 L662,351 L672,329
+						L681,308 L690,287 L699,267 L709,248 L718,230 L727,213 L736,198 L746,185 L755,173 L764,163 L774,154 L783,148 L792,144 L801,142
+						L811,142 L820,144 L829,148 L838,154 L848,163 L857,173 L866,185 L876,198 L885,213 L894,230 L903,248 L913,267 L922,287 L931,308
+						L940,329 L950,351 L959,373 " stroke-width='20' fill='none' stroke='#234' stroke-linecap="round" />
 
 					<g fill='#fff' stroke="none">
 						<circle cx="193" cy="142" r="10" />
@@ -197,10 +223,6 @@
 				</script>
 			</div>
 		</div>
-
-		<h2 class='underlined'>Media and Wave Speed</h2>
-		<p>When a wave propagates, what is moving is energy, not matter.</p>
-		<p>The speed of propagation is determined by the medium. Properties like frequency, amplitude, or wavelength generally don't affect the speed.</p>
 		<p>Each type of wave has a different mechanism of propagation. The speed and possibility of a wave propagating through a medium is different for each wave type.</p>
 		<table>
 			<tr>
