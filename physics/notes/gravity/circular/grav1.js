@@ -45,8 +45,8 @@ function grav1() {
     },
     1,
     0, {
-      x: -0.02,
-      y: -0.5
+      x: 0,
+      y: -0.75
     },
     "#fff"
   );
@@ -93,7 +93,7 @@ function grav1() {
     Particle.integration(q);
     Particle.drawAll(q, ctx);
     // Particle.bounds(q, canvas);
-    circularBounds()
+    // circularBounds()
     requestAnimationFrame(cycle);
   }
   requestAnimationFrame(cycle);
