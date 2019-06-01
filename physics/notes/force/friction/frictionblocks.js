@@ -2,6 +2,7 @@ let blocks = () => {
     let leftBlock = {
         target: document.getElementById("leftBlock"),
         textTarget: document.getElementById("leftBlock-text"),
+        fillTarget: document.getElementById("leftBlock-fill"),
         position: {
             x: 150,
             y: 10
@@ -18,6 +19,7 @@ let blocks = () => {
     let rightBlock = {
         target: document.getElementById("rightBlock"),
         textTarget: document.getElementById("rightBlock-text"),
+        fillTarget: document.getElementById("rightBlock-fill"),
         position: {
             x: 310,
             y: 70
@@ -31,6 +33,9 @@ let blocks = () => {
 
     document.getElementById("mass").addEventListener("input", () => {
             rightBlock.mass = Number(document.getElementById("mass").value)
+            rightBlock.fillTarget.setAttribute("height", 30 * rightBlock.mass / 6);
+            rightBlock.fillTarget.setAttribute("y", rightBlock.position.y + 30 * (1 - rightBlock.mass / 6));
+
             document.getElementById("mass-slider").value = rightBlock.mass
             document.getElementById("rightBlock-text").textContent = rightBlock.mass.toFixed(1) + " kg";
             if (!leftBlock.moving && rightBlock.mass > leftBlock.muStatic * leftBlock.mass && rightBlock.mass > leftBlock.muKinetic * leftBlock.mass) requestAnimationFrame(cycle);
@@ -39,6 +44,9 @@ let blocks = () => {
     );
     document.getElementById("mass-slider").addEventListener("input", () => {
             rightBlock.mass = Number(document.getElementById("mass-slider").value)
+            rightBlock.fillTarget.setAttribute("height", 30 * rightBlock.mass / 6);
+            rightBlock.fillTarget.setAttribute("y", rightBlock.position.y + 30 * (1 - rightBlock.mass / 6));
+
             document.getElementById("mass").value = rightBlock.mass
             document.getElementById("rightBlock-text").textContent = rightBlock.mass.toFixed(1) + " kg";
             if (!leftBlock.moving && rightBlock.mass > leftBlock.muStatic * leftBlock.mass && rightBlock.mass > leftBlock.muKinetic * leftBlock.mass) requestAnimationFrame(cycle);
@@ -91,6 +99,7 @@ let blocks = () => {
             document.getElementById("mu-slider").value = leftBlock.muStatic
             document.getElementById("mu-k").value = leftBlock.muKinetic
             document.getElementById("mu-k-slider").value = leftBlock.muKinetic
+            rightBlock.fillTarget.setAttribute("height", 30 * rightBlock.mass / 6);
             draw()
         },
         false
@@ -113,9 +122,13 @@ let blocks = () => {
     function draw() {
         leftBlock.target.setAttribute("x", leftBlock.position.x);
         leftBlock.textTarget.setAttribute("x", leftBlock.position.x + 26);
+        leftBlock.fillTarget.setAttribute("x", leftBlock.position.x);
+
         rightBlock.target.setAttribute("y", rightBlock.position.y);
         rightBlock.textTarget.setAttribute("y", rightBlock.position.y + 16);
         document.getElementById("rope").setAttribute("d", `M${(leftBlock.position.x+50)} 35 h${267-leftBlock.position.x} m8 8 v${rightBlock.position.y-43}`);
+        //water
+        rightBlock.fillTarget.setAttribute("y", rightBlock.position.y + 30 * (1 - rightBlock.mass / 6));
     }
 
     function cycle() {

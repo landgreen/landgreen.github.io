@@ -521,18 +521,23 @@
                         <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
                     </g>
                 </defs>
-                <g stroke="#000" fill="#fff" stroke-width="2">
-                    <path d="M200 35 h117 m8 8 v27" fill="none" stroke="#f53" id="rope" />
-                    <rect x="150" y="10" width="50" height="50" id="leftBlock" rx="5" ry="5" />
-                    <rect x="305" y="70" width="40" height="30" id="rightBlock" rx="3" ry="3" />
-                    <rect x="0" y="60" width="300" height="160" fill="var(--def-accent-color)" stroke="none" />
-                    <path d="M0 60 h300 v160" fill="none" />
-                    <path d="M300 60 l 12 -12" fill="none" />
-                    <circle cx="317" cy="43" r="8" fill="var(--def-accent-color)" />
-                </g>
                 <g fill="#000" text-anchor="middle" dominant-baseline="middle">
                     <text x="176" y="35" id="leftBlock-text" font-size="15" dominant-baseline="middle">5.0 kg</text>
                     <text x="325" y="86" id="rightBlock-text" font-size="12" dominant-baseline="middle">0.0 kg</text>
+                </g>
+                <g stroke="#000" fill="none" stroke-width="2">
+
+                    <rect x="150" y="42" width="50" height="18" id="leftBlock-fill" rx="3" ry="3" fill="#5bf" opacity="0.6" stroke="none" />
+                    <path d="M200 35 h117 m8 8 v27" fill="none" stroke="#f53" id="rope" />
+                    <rect x="150" y="10" width="50" height="50" id="leftBlock" rx="5" ry="5" />
+
+                    <rect x="305" y="100" width="40" height="0" id="rightBlock-fill" rx="3" ry="3" fill="#5bf" opacity="0.6" stroke="none" />
+                    <rect x="0" y="60" width="300" height="160" fill="var(--def-accent-color)" stroke="none" />
+                    <rect x="305" y="70" width="40" height="30" id="rightBlock" rx="3" ry="3" />
+
+                    <path d="M0 60 h300 v160" fill="none" />
+                    <path d="M300 60 l 12 -12" fill="none" />
+                    <circle cx="317" cy="43" r="8" fill="var(--def-accent-color)" />
                 </g>
                 <rect x="6" y="175" rx="3" ry="3" width="50" height="29" fill="#fff" stroke="none" id="reset-blocks" />
                 <text x="12" y="195" fill="#467" id="reset-text">reset</text>
