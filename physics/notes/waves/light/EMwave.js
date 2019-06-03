@@ -70,6 +70,13 @@ function EMwave(el) {
         physics.pause = false;
         if (!physics.pause) requestAnimationFrame(cycle);
     });
+    canvas.addEventListener("mousedown", () => {
+        if (drawField === drawCircles) {
+            drawField = drawLines;
+        } else {
+            drawField = drawCircles;
+        }
+    });
 
 
     const physics = {
@@ -117,25 +124,24 @@ function EMwave(el) {
     //initialize data in node
     for (let i = 0; i < physics.totalNodes; i++) {
         pushNode(i, 1, 0, node[0]);
-        pushNode(i, -1, 0, node[1]);
-        pushNode(i, 0, 1, node[2]);
-        pushNode(i, 0, -1, node[3]);
-        pushNode(i, 0.7, 0.7, node[4]);
-        pushNode(i, -0.7, -0.7, node[5]);
-        pushNode(i, 0.7, -0.7, node[6]);
-        pushNode(i, -0.7, 0.7, node[7]);
-        pushNode(i, 0.92, 0.38, node[8]);
-        pushNode(i, -0.92, 0.38, node[9]);
-        pushNode(i, 0.92, -0.38, node[10]);
-        pushNode(i, -0.92, -0.38, node[11]);
-        pushNode(i, 0.38, 0.92, node[12]);
-        pushNode(i, -0.38, 0.92, node[13]);
-        pushNode(i, 0.38, -0.92, node[14]);
-        pushNode(i, -0.38, -0.92, node[15]);
+        pushNode(i, 0.92, 0.38, node[1]);
+        pushNode(i, 0.7, 0.7, node[2]);
+        pushNode(i, 0.38, 0.92, node[3]);
+        pushNode(i, 0, 1, node[4]);
+        pushNode(i, -0.38, 0.92, node[5]);
+        pushNode(i, -0.7, 0.7, node[6]);
+        pushNode(i, -0.92, 0.38, node[7]);
+        pushNode(i, -1, 0, node[8]);
+        pushNode(i, -0.92, -0.38, node[9]);
+        pushNode(i, -0.7, -0.7, node[10]);
+        pushNode(i, -0.38, -0.92, node[11]);
+        pushNode(i, 0, -1, node[12]);
+        pushNode(i, 0.38, -0.92, node[13]);
+        pushNode(i, 0.7, -0.7, node[14]);
+        pushNode(i, 0.92, -0.38, node[15]);
     }
 
-
-    function draw() {
+    function drawLines() {
         function fieldLineLoop(node) { //lines
             i = node.length;
             ctx.moveTo(node[i - 1].x, node[i - 1].y);
@@ -158,7 +164,43 @@ function EMwave(el) {
         ctx.strokeStyle = "#fff";
         ctx.lineWidth = 6;
         ctx.stroke();
+    }
 
+    function drawCircles() {
+        function fieldLineLoop(node) { //lines
+            i = node.length;
+            while (i--) {
+                node[i].x += node[i].Vx * physics.speed; //move node
+                node[i].y += node[i].Vy * physics.speed; //move node
+                if (node[i].returnCycle < physics.cycle) { //check for return
+                    node.splice(i, 1);
+                    pushNode(physics.cycle + physics.totalNodes - 1, node[i].Vx, node[i].Vy, node);
+                }
+            }
+        }
+        for (let i = 0; i < 16; i++) {
+            fieldLineLoop(node[i]);
+        }
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        ctx.beginPath();
+        const len = node[0].length - 1
+        for (let j = 0; j < len; j++) {
+            if (!(j % 2)) {
+                ctx.moveTo(node[15][j].x, node[15][j].y)
+                for (let i = 0; i < 16; i++) {
+                    ctx.lineTo(node[i][j].x, node[i][j].y)
+                }
+            }
+        }
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    }
+    drawField = drawCircles;
+
+    function draw() {
+
+        drawField();
         const lastIndex = node[0].length - 1
         const x = node[0][lastIndex].x + physics.drawSpeed.x * 3
         const y = node[0][lastIndex].y + physics.drawSpeed.y * 3
