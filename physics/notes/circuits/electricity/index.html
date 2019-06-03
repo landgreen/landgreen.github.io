@@ -52,9 +52,15 @@
 		</p>
 
 		<h2 class='underlined' id="current">Electric Current</h2>
-		<!-- <p>Electric current can be produced by a difference in electric potential. This potential difference is called voltage. There are three main ways to produce voltage.</p> -->
-		<!-- Metals conduct electricity because they have free electrons that carry electric electric charge. -->
-		<p>Voltage sources produce electric current in conductors. Electric current is the average motion of a huge number of charges through a <a href="..\..\electromagnetism\charge\index.html#conductivity">conductor</a>. The electrons don't just move in a straight line. They drift through the conductor in a random walk bouncing off other charges.</p>
+		<p>
+			Voltage sources produce electric current in conductors.
+			Electric current is the average motion of a huge number of charges through a <a href="..\..\electromagnetism\charge\index.html#conductivity">conductor</a>.
+			The electrons don't just move in a straight line.
+			They drift through the conductor in a random walk bouncing off other charges.
+		</p>
+		<p>
+			These simulations model electric current with Coulomb's law. They don't include the nuances of quantum mechanics.
+		</p>
 		<canvas id='charge7' width="600" height='150' onclick="charges7(this)"> </canvas>
 		<p>A small imbalance in net charge produces an electric field. The electric field points in the same direction as the current.</p>
 		<canvas id='charge8' width="600" height='150' onclick="charges8(this)"> </canvas>
@@ -256,7 +262,7 @@
 			}
 
 			.ants-slow {
-				animation: marching_ants 1.5s linear infinite reverse;
+				animation: marching_ants 3s linear infinite reverse;
 				stroke-dasharray: 0.1 19.9;
 			}
 
@@ -308,17 +314,19 @@
 			<p>In <strong>AC (alternating current)</strong> circuits, a rapidly changing potential pushes the electrons forward and backwards about 60 times a second. A <a href="https://www.youtube.com/watch?v=S7C5sSde9e4">wall socket</a> is a source of AC.</p>
 		</div>
 		<div class='example'>
-			<strong>Question:</strong> Predict what happens to the speed of the electrons after adding more resistors.
+			<strong>Question:</strong> Predict what happens to the flow of electrons after adding resistors.
 			<details>
 				<summary>answer</summary>
-				<p>Adding more resistors slows the electrons down.</p>
+				<p>
+					Adding more resistors will cause the electron's average forward progress to be slower because the resistors cause "traffic jams".
+				</p>
 				<svg viewBox="-75 0 550 170">
 					<path d="M 50 68 v-63 h 265
 							v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30 h -265
 							v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
-					<path d="M 50 68 v-63 h 265
+					<path class="ants" d="M 50 68 v-63 h 265
 							v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
-							h -265  v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants" />
+							h -265  v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
 					<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
 					<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
 				</svg>
@@ -328,11 +336,11 @@
 							v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
 							h -92  l-10 15 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -15 h -92.5
 							v-60 m-40 0 h 80 m-20 -15 h-40" fill='none' stroke="#333" stroke-width="8" stroke-linejoin="round" />
-					<path d="M 50 68 v-63
+					<path class="ants-slow" d="M 50 68 v-63
 							h 92  l10 15 l10 -30 l10 30 l10 -30 l10 30 l10 -30 l10 30 l10 -15 h92.5
 							v 30 l15 10 l-30 10 l30 10 l-30 10 l30 10 l-30 10 l30 10 l-15 10 v30
 							h -92  l-10 15 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -30 l-10 30 l-10 -15 h -92.5
-							v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" class="ants-slow" />
+							v-58" fill='none' stroke="#0ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
 					<path d='M32 60 h 10' fill='none' stroke="#88f" stroke-width="2" />
 					<path d='M32 97 h 10 m -5 -5 v 10' fill='none' stroke="#f88" stroke-width="2" />
 				</svg>
@@ -341,7 +349,10 @@
 			<strong>Question:</strong> What would happen if we removed all the resistors?
 			<details>
 				<summary>answer</summary>
-				<p>Removing most of the resistance in a circuit leads to a <strong>short circuit</strong>. This causes the electrons to speed up, producing dangerous amounts of heat.</p>
+				<p>
+					Removing most of the resistance in a circuit leads to a <strong>short circuit</strong>.
+					This causes the average electron flow to increase, producing dangerous amounts of heat.
+				</p>
 				<svg viewBox="-75 0 550 170">
 					<path d="M 50 68 v-63 h 265
 									v 140 h-265
