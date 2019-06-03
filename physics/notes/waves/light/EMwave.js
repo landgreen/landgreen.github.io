@@ -26,7 +26,6 @@
     ctx.lineWidth = 1;
 })()
 
-
 function EMwave(el) {
     el.onclick = null; //stops the function from running on button click
     el.style.backgroundColor = "#000"
@@ -41,7 +40,6 @@ function EMwave(el) {
         canvas.width = window.innerWidth;
         ctx.lineJoin = "miter";
         ctx.miterLimit = 4;
-
     }
     setupCanvas();
 
@@ -54,7 +52,6 @@ function EMwave(el) {
         block: "center",
         inline: "center"
     });
-
     const mouse = {
         x: canvas.width / 2,
         y: canvas.height / 2
@@ -83,7 +80,7 @@ function EMwave(el) {
         cycle: 0, //keeps track of cycle
         pause: false, // pauses the simulation
         speed: 2 + Math.round(window.innerWidth / 300), //speed of waves and max speed of source
-        totalNodes: 275, //spawns stars at start
+        totalNodes: 200, //spawns stars at start
         xOffset: 0.5 * canvas.width,
         yOffset: 0.5 * canvas.height,
         distance: 0,
@@ -196,39 +193,39 @@ function EMwave(el) {
         ctx.lineWidth = 2;
         ctx.stroke();
     }
-    drawField = drawCircles;
+    drawField = drawLines;
 
     function draw() {
 
         drawField();
-        const lastIndex = node[0].length - 1
-        const x = node[0][lastIndex].x + physics.drawSpeed.x * 3
-        const y = node[0][lastIndex].y + physics.drawSpeed.y * 3
-        const scale = 1;
-        const radius = 1.2 * scale
-        //mouth
-        ctx.beginPath();
-        ctx.moveTo(x - 5 * scale, y + 3 * scale)
-        ctx.lineTo(x + 5 * scale, y + 3 * scale)
-        ctx.strokeStyle = "#000";
-        ctx.lineWidth = 1 * scale;
-        ctx.stroke();
+        // const lastIndex = node[0].length - 1
+        // const x = node[0][lastIndex].x + physics.drawSpeed.x * 3
+        // const y = node[0][lastIndex].y + physics.drawSpeed.y * 3
+        // const scale = 1;
+        // const radius = 1.2 * scale
+        // //mouth
+        // ctx.beginPath();
+        // ctx.moveTo(x - 5 * scale, y + 3 * scale)
+        // ctx.lineTo(x + 5 * scale, y + 3 * scale)
+        // ctx.strokeStyle = "#000";
+        // ctx.lineWidth = 1 * scale;
+        // ctx.stroke();
 
-        ctx.beginPath();
-        //left eye
-        ctx.arc(x - 2 * scale, y - 2 * scale, radius, 0, 2 * Math.PI);
-        //right eye
-        ctx.arc(x + 2 * scale, y - 2 * scale, radius, 0, 2 * Math.PI);
-        //left fang
-        ctx.moveTo(x - 3 * scale, y + 3 * scale)
-        ctx.lineTo(x - 2 * scale, y + 5.5 * scale)
-        ctx.lineTo(x - 1 * scale, y + 3 * scale)
-        //right fang
-        ctx.moveTo(x + 3 * scale, y + 3 * scale)
-        ctx.lineTo(x + 2 * scale, y + 5.5 * scale)
-        ctx.lineTo(x + 1 * scale, y + 3 * scale)
-        ctx.fillStyle = "#000";
-        ctx.fill();
+        // ctx.beginPath();
+        // //left eye
+        // ctx.arc(x - 2 * scale, y - 2 * scale, radius, 0, 2 * Math.PI);
+        // //right eye
+        // ctx.arc(x + 2 * scale, y - 2 * scale, radius, 0, 2 * Math.PI);
+        // //left fang
+        // ctx.moveTo(x - 3 * scale, y + 3 * scale)
+        // ctx.lineTo(x - 2 * scale, y + 5.5 * scale)
+        // ctx.lineTo(x - 1 * scale, y + 3 * scale)
+        // //right fang
+        // ctx.moveTo(x + 3 * scale, y + 3 * scale)
+        // ctx.lineTo(x + 2 * scale, y + 5.5 * scale)
+        // ctx.lineTo(x + 1 * scale, y + 3 * scale)
+        // ctx.fillStyle = "#000";
+        // ctx.fill();
 
         //draw mouse
         if (physics.distance > 17) {
