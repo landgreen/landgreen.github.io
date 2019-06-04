@@ -67,11 +67,14 @@ function EMwave(el) {
         physics.pause = false;
         if (!physics.pause) requestAnimationFrame(cycle);
     });
-    canvas.addEventListener("mousedown", () => {
+
+    canvas.addEventListener("click", () => {
         if (drawField === drawCircles) {
             drawField = drawLines;
+            el.style.backgroundColor = "#000"
         } else {
             drawField = drawCircles;
+            el.style.backgroundColor = "#fff"
         }
     });
 
@@ -80,7 +83,7 @@ function EMwave(el) {
         cycle: 0, //keeps track of cycle
         pause: false, // pauses the simulation
         speed: 2 + Math.round(window.innerWidth / 300), //speed of waves and max speed of source
-        totalNodes: 200, //spawns stars at start
+        totalNodes: 225, //spawns stars at start
         xOffset: 0.5 * canvas.width,
         yOffset: 0.5 * canvas.height,
         distance: 0,
@@ -178,9 +181,10 @@ function EMwave(el) {
         for (let i = 0; i < 16; i++) {
             fieldLineLoop(node[i]);
         }
+
+        const len = node[0].length - 1
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         ctx.beginPath();
-        const len = node[0].length - 1
         for (let j = 0; j < len; j++) {
             if (!(j % 2)) {
                 ctx.moveTo(node[15][j].x, node[15][j].y)
@@ -189,8 +193,8 @@ function EMwave(el) {
                 }
             }
         }
-        ctx.strokeStyle = "#fff";
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 1;
         ctx.stroke();
     }
     drawField = drawLines;
