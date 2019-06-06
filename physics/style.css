@@ -244,18 +244,6 @@ canvas,
   font-size: 1.5em;
 }
 
-/*2 Equal-Width Columns that combine in the article________________*/
-@media screen and (min-width: 43em) {
-  .col-group {
-    overflow: hidden;
-  }
-
-  .col-group>div {
-    float: left;
-    width: 50%;
-  }
-}
-
 /* Grid with auto placement ______________________________________*/
 .listing {
   list-style: none;
@@ -268,6 +256,24 @@ canvas,
   display: flex;
   flex-direction: column;
 }
+
+
+@media screen and (max-width: 490px) {
+  .listing {
+    grid-column-gap: 3px;
+    grid-row-gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    font-size: 0.95em;
+  }
+}
+
+/* @media screen and (max-width: 390px) {
+  .listing {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    font-size: 0.8em;
+  }
+} */
+
 
 /* front page grid ________________________________________________*/
 .listing-style {
@@ -301,7 +307,6 @@ canvas,
   background-color: var(--bg-color);
   padding-top: 4em;
   padding-bottom: 3em;
-
 }
 
 .listing-dark {
@@ -412,12 +417,26 @@ header h1 a:hover,
   border-radius: 1em;
 }
 
+@media screen and (min-width: 650px) {
+  .col-group {
+    overflow: hidden;
+  }
+
+  .col-group>div {
+    float: left;
+    width: 50%;
+  }
+}
 
 /* responsive media rules for mobile________________________________ */
 @media screen and (max-width: 650px) {
+
+  .col-group>div {
+    padding-bottom: 20px;
+  }
+
   header h1 {
     font-size: 2.5em;
-    /* padding: 0px 10px; */
     margin: 0px 10px;
   }
 
