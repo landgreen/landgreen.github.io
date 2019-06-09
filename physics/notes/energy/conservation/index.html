@@ -2,17 +2,7 @@
 <html lang="en-US">
 
 <head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
 
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date());
-		gtag('config', 'UA-113454647-1');
-	</script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="theme-color" content="#222" />
@@ -70,20 +60,26 @@
 					text-align: left;
 					height: 23.5px;
 				}
+
+				#spring-SVG {
+					border: 1px solid #333;
+					background-color: #f6f6f6;
+					border-radius: 0px;
+				}
 			</style>
-			k = <input id='spring-k-slider' type="range" step="0.1" value="0.1" min="0" max="10" style="width: 200px;">
-			<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 55px;"><span class="hide-on-mobile">&nbsp;kg/s²</span>
+			k = <input id='spring-k-slider' type="range" step="0.1" value="0.1" min="0" max="10" style="width: 175px;">
+			<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 50px;"><span class="hide-on-mobile">&nbsp;kg/s²</span>
 			<button style="float: right; width: 60px; margin-top: 20px; text-align: center; padding: 0px;" id="pause1">play</button>
 			<br>
-			m = <input id='spring-m-slider' type="range" step="1" value="13" min="1" max="75" style="width: 195px;">
-			<input id='spring-m' type="number" min="1" max="75" value=13 step=1 style="width: 55px;">
+			m = <input id='spring-m-slider' type="range" step="1" value="13" min="1" max="75" style="width: 175px;">
+			<input id='spring-m' type="number" min="1" max="75" value=13 step=1 style="width: 45px;">
 			<span class="hide-on-mobile">kg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 			<span id="spring-x" class="hide-on-mobile" style="text-align: right;"></span>
 
-			<svg viewBox="0 0 590 120" id="spring-SVG" style="border: 1px solid #000; background-color: #f6f6f6;border-radius: 0px;">
-				<line x1="385" y1="3" x2="385" y2="120" stroke="#000" stroke-width="1" stroke-dasharray="6" />
-				<circle id="spring-ball" cx="50" cy="60" r="20" fill="#bbb" stroke-width="2" stroke="#000" />
-				<path id="spring-wire" d="M 0 0" stroke="#000" stroke-width="1" fill="none" stroke-linejoin="bevel" />
+			<svg viewBox="0 0 590 120" id="spring-SVG">
+				<line x1="385" y1="3" x2="385" y2="120" stroke="#999" stroke-width="1" stroke-dasharray="6" />
+				<circle id="spring-ball" cx="50" cy="60" r="20" fill="#aaa" stroke-width="2" stroke="#333" />
+				<path id="spring-wire" d="M 0 0" stroke="#333" stroke-width="1" fill="none" stroke-linejoin="bevel" />
 			</svg>
 			<div id="spring-KE" class="data-text-out"></div>
 			<div id="spring-KE-bar" class="spring-KE-bar">&nbsp;</div>
@@ -214,7 +210,10 @@
 			<details>
 				<summary>answer</summary>
 				<p>
-					Each path starts with the same gravitational potential energy. This energy is converted to the same kinetic energy. So, they will all have the same velocity.
+					Each path starts with the same gravitational potential energy. This energy is converted to the same kinetic energy.
+				</p>
+				<p>
+					They will all have the same speed, but in different directions.
 				</p>
 			</details>
 		</div>

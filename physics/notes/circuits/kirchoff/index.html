@@ -2,17 +2,7 @@
 <html lang="en-US">
 
 <head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
 
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date());
-		gtag('config', 'UA-113454647-1');
-	</script>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -337,8 +327,16 @@
 		</div>
 		<p>Kirchhoff's Voltage law is a consequence of conservation of energy. Voltage is electric potential energy per charge. As current flows through the circuit, total energy doesn't change.</p>
 		<div class='example'>
+			<style>
+				.fade-volts {
+					transition-property: opacity;
+					transition-timing-function: ease-in-out;
+					transition-duration: 0.5s;
+				}
+			</style>
+
 			<svg viewBox="0 0 500 300" onmouseover="document.getElementById('volts1').style.opacity = '0.4';" onmouseout="document.getElementById('volts1').style.opacity='0';">
-				<g id="volts1" stroke-width="50" stroke-linejoin="round" fill='none' opacity="0">
+				<g class="fade-volts" id="volts1" stroke-width="50" stroke-linejoin="round" fill='none' opacity="0">
 					<path d="M 100 146 v-96 h110" stroke="#ccc" stroke-width="40" />
 					<path d="M 290 50 h110 v60" stroke="#d99" stroke-width="45" />
 					<path d="M 400 190 v60 h-110" stroke="#e55" stroke-width="50" />
@@ -364,7 +362,7 @@
 		</div>
 		<div class='example'>
 			<svg viewBox="0 0 500 300" onmouseover="document.getElementById('volts2').style.opacity = '0.4';" onmouseout="document.getElementById('volts2').style.opacity='0';">
-				<g id="volts2" stroke-width="50" stroke-linejoin="round" fill='none' opacity="0">
+				<g class="fade-volts" id="volts2" stroke-width="50" stroke-linejoin="round" fill='none' opacity="0">
 					<path d="M 100 146 v-96 h110" stroke="#ccc" stroke-width="40" />
 					<path d="M 290 50 h110 v60" stroke="#caa" stroke-width="45" />
 					<path d="M 400 190 v60 h-110" stroke="#e44" stroke-width="50" />
@@ -423,7 +421,7 @@
 
 		<div class='example'>
 			<svg viewbox="0,0,530,270" onmouseover="document.getElementById('volts3').style.opacity = '0.4';" onmouseout="document.getElementById('volts3').style.opacity='0';"> >
-				<g id="volts3" stroke-linejoin="round" fill='none' opacity="0">
+				<g class="fade-volts" id="volts3" stroke-linejoin="round" fill='none' opacity="0">
 					<path d="M 50 146 v-96 h80" stroke="#ccc" stroke-width="40" />
 					<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#d99" stroke-width="45" />
 					<path d="M 290 190 v60 h -160 h -80 v-87 M 460 190 v60 h-170" stroke="#f00" stroke-width="50" />
@@ -921,7 +919,7 @@
 		</div>
 		<h2 class='underlined'>Solving Complex Circuits</h2>
 		<svg viewBox="-30 0 600 290" onmouseover="document.getElementById('volts9').style.opacity = '0.5';" onmouseout="document.getElementById('volts9').style.opacity='0';">
-			<g id="volts9" stroke-linejoin="round" fill='none' opacity="0">
+			<g class="fade-volts" id="volts9" stroke-linejoin="round" fill='none' opacity="0">
 				<path d="M 50 146 v-96 h80" stroke="#ccc" stroke-width="40" />
 				<path d="M 210 50 h 80 v 60 M 290 50 h170 v 60 " stroke="#d99" stroke-width="45" />
 				<path d="M 290 190 v60 h -80 M 460 190 v60 h-170" stroke="#e55" stroke-width="50" />
@@ -1215,7 +1213,7 @@
 
 		<div class='example'>
 			<svg viewBox="-30 0 600 290" onmouseover="document.getElementById('volts10').style.opacity = '0.5';" onmouseout="document.getElementById('volts10').style.opacity='0';">
-				<g id="volts10" stroke-linejoin="round" fill='none' opacity="0">
+				<g class="fade-volts" id="volts10" stroke-linejoin="round" fill='none' opacity="0">
 					<path d="M 50 146 v-96 h 400 v60  M 220 50 v60 M 330 50 v60" stroke="#ccc" stroke-width="40" />
 					<path d="M 180 250 h 270 v-60  M 220 250 v-60 M 330 250 v-60" stroke="#d77" stroke-width="45" />
 					<path d="M 50 162 v88 h 50" stroke="#f00" stroke-width="50" />
