@@ -258,22 +258,18 @@ canvas,
 }
 
 
-@media screen and (max-width: 490px) {
+@media screen and (max-width: 500px) {
   .listing {
-    grid-column-gap: 3px;
+    grid-column-gap: 15px;
     grid-row-gap: 15px;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    font-size: 0.95em;
+    font-size: 90%;
+  }
+
+  .listing h2 {
+    font-size: 130%;
   }
 }
-
-/* @media screen and (max-width: 390px) {
-  .listing {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    font-size: 0.8em;
-  }
-} */
-
 
 /* front page grid ________________________________________________*/
 .listing-style {
@@ -299,7 +295,7 @@ canvas,
 .listing-style h2 {
   border-bottom: 1px solid #aaa;
   font-weight: 400;
-  margin-bottom: -0.3em;
+  margin-bottom: -0.5em;
 }
 
 /* footer grid ________________________________________________*/
