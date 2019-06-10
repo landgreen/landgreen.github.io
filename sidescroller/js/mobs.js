@@ -174,7 +174,7 @@ const mobs = {
           x: Math.cos(this.angle),
           y: Math.sin(this.angle)
         };
-        //the dot prodcut of diff and dir will return how much over lap between the vectors
+        //the dot product of diff and dir will return how much over lap between the vectors
         const dot = Matter.Vector.dot(dir, diff);
         // console.log(Math.cos(dot)*180/Math.PI)
         if (dot > threshold) {
@@ -917,11 +917,11 @@ const mobs = {
       },
       onDamage() {
         // a placeholder for custom effects on mob damage
-        //to use delare custon method in mob spawn
+        //to use declare custom method in mob spawn
       },
       onDeath() {
         // a placeholder for custom effects on mob death
-        //to use delare custon method in mob spawn
+        //to use declare custom method in mob spawn
       },
       leaveBody: true,
       dropPowerUp: true,

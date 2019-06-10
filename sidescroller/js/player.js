@@ -626,10 +626,10 @@ const mech = {
           that.collisionFilter.category = 0x000001; //make solid
           that.collisionFilter.mask = 0x011111;
         } else {
-          setTimeout(solid, 250, that);
+          setTimeout(solid, 50, that);
         }
       };
-      setTimeout(solid, 1000, this.holdingTarget);
+      setTimeout(solid, 400, this.holdingTarget);
       //throw speed scales a bit with mass
       const speed = Math.min(85, Math.min(54 / this.holdingTarget.mass + 5, 48) * Math.min(this.throwCharge, this.throwChargeMax) / 50);
 

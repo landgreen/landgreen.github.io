@@ -2,17 +2,7 @@
 <html lang="en-US">
 
 <head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113454647-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
 
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date());
-		gtag('config', 'UA-113454647-1');
-	</script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="theme-color" content="#222" />
@@ -201,13 +191,14 @@
 		</svg>
 
 		<div class='example'>
-			<strong>Example:</strong> A car is traveling at an average of 20 m/s for 80 seconds. How far does the car travel?
+			<strong>Example:</strong> A car is traveling at an average of 2 m/s for 80 seconds. How far does the car travel?
 			<details>
 				<summary>solution</summary>
 				$$ v = \frac{\Delta x}{\Delta t} $$
 				$$ v \Delta t= \Delta x$$
-				$$ (20 \mathrm{\tfrac{m}{s}}) (80\, \mathrm{s}) = \Delta x $$
-				$$ 1600\, \mathrm{m} = \Delta x $$
+				$$ (2 \mathrm{\tfrac{m}{s}}) (80\, \mathrm{s}) = \Delta x $$
+				$$ (2 \mathrm{\tfrac{m}{\cancel{s}}}) (80\, \mathrm{\cancel{s}}) = \Delta x $$
+				$$ 160\, \mathrm{m} = \Delta x $$
 
 				<svg id="motion-5" class="SVG-shadow" viewBox="0 0 580 100">
 					<g font-size="16" stroke="none" fill="#444">
@@ -222,22 +213,27 @@
 						<path id="arc-5" d="" stroke="none" fill="rgba(255,255,255,0.4)" />
 					</g>
 				</svg>
-
 			</details>
 		</div>
 		<div class='example'>
-			<strong>Example:</strong> Someone tells you they can run a 10 km race in about an hour. What velocity is that in m/s? Is that fast? (1 m/s is walking speed)
+			<strong>Example:</strong> Someone tells you they can run 10 km in about an hour. What velocity is that in m/s? Is that fast? (1 m/s is walking speed)
 			<details>
 				<summary>solution</summary>
-				$$10 \, \mathrm{km} = 10(1000) \mathrm{m} = \color{#f07} 10\,000 \, \mathrm{m}$$ $$1\, \mathrm{h} \left(\frac{60\, \mathrm{min}}{1\, \mathrm{h}}\right)\left(\frac{60\, \mathrm{s}}{1\, \mathrm{min}}\right) = \color{#09d} 3600 \,\mathrm{s}$$
-				<br>$$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{\color{#f07}10\,000\, \mathrm{m}}{\color{#09d} 3600\, \mathrm{s}}$$ $$v = 2.7\, \mathrm{\tfrac{m}{s}}$$
+				$$10 \, \mathrm{km} = 10(1000) \mathrm{m} = \color{#f07} 10\,000 \, \mathrm{m}$$
+				$$1\, \mathrm{h} \left(\frac{60\, \mathrm{min}}{1\, \mathrm{h}}\right)\left(\frac{60\, \mathrm{s}}{1\, \mathrm{min}}\right) = \color{#09d} 3600 \,\mathrm{s}$$
+				<br>
+				$$v = \frac{\Delta x}{\Delta t}$$
+				$$v = \frac{\color{#f07}10\,000\, \mathrm{m}}{\color{#09d} 3600\, \mathrm{s}}$$
+				$$v = 2.7\, \mathrm{\tfrac{m}{s}}$$
 			</details>
-		</div>
+		</div> 
 		<div class='example'>
 			<strong>Example:</strong> Google maps says Las Vegas is 4 hours away from Los Angeles. Google says it is 270 miles away. How fast does google think I will drive? Answer this one in miles/hour.
 			<details>
 				<summary>solution</summary>
-				$$v = \frac{\Delta x}{\Delta t}$$ $$v = \frac{270\, \mathrm{miles} }{4\, \mathrm{hour}}$$ $$v = 67.5\, \mathrm{\tfrac{miles}{hour} }$$
+				$$v = \frac{\Delta x}{\Delta t}$$
+				$$v = \frac{270\, \mathrm{miles} }{4\, \mathrm{hour}}$$
+				$$v = 67.5\, \mathrm{\tfrac{miles}{hour} }$$
 				<p>The posted speed limit is 70 mph.</p>
 			</details>
 		</div>
@@ -246,8 +242,11 @@
 			<details>
 				<summary>solution</summary>
 				$$2 \, \mathrm{km} = 2(1000) \mathrm{m} = 2000 \, \mathrm{m}$$
-				<br>$$v = \frac{\Delta x}{\Delta t}$$ $$\Delta t = \frac{\Delta x}{v}$$ $$\Delta t = \frac{2000\, \mathrm{m}}{1.2\, \mathrm{\tfrac{m}{s}}}$$
-				$$\Delta t = \frac{2000}{1.2}\, \mathrm{s}$$ $$\Delta t = 1666.\overline{6} \, \mathrm{s}$$
+				<br>$$v = \frac{\Delta x}{\Delta t}$$
+				$$\Delta t = \frac{\Delta x}{v}$$
+				$$\Delta t = \frac{2000\, \mathrm{m}}{1.2\, \mathrm{\tfrac{m}{s}}}$$
+				$$\Delta t = \frac{2000}{1.2}\, \mathrm{s}$$
+				$$\Delta t = 1666.\overline{6} \, \mathrm{s}$$
 			</details>
 		</div>
 

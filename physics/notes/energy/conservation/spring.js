@@ -70,8 +70,8 @@ var spring = function () {
       //draw energy bars
       document.getElementById("spring-KE-bar").style.width = 100 * (this.ke / E) + "%"
       document.getElementById("spring-Us-bar").style.width = 100 * (this.u / E) + "%"
-      document.getElementById("spring-KE").innerHTML = " K = ½mv² = " + (this.ke / 1000).toFixed(1) + " kJ"
-      document.getElementById("spring-Us").innerHTML = " Us = ½kx² = " + (this.u / 1000).toFixed(1) + " kJ"
+      document.getElementById("spring-KE").innerHTML = "K&nbsp;&nbsp; = ½mv² = " + (this.ke / 1000).toFixed(1) + " kJ"
+      document.getElementById("spring-Us").innerHTML = "Us = ½kx² &nbsp;= " + (this.u / 1000).toFixed(1) + " kJ"
       document.getElementById("spring-x").innerHTML = "x = " + (this.x - physics.equalibrium).toFixed(0) + " m"
     };
   }
