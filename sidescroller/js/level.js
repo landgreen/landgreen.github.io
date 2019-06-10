@@ -107,12 +107,12 @@ const level = {
     // powerUps.spawn(400, -400, "field", false, '2');
     powerUps.spawn(400, -400, "gun", false);
     // spawn.bodyRect(-45, -100, 40, 50);
-    spawn.starter(800, -1150);
+    // spawn.starter(800, -1150);
     // spawn.groupBoss(-600, -550);
     // for (let i = 0; i < 1; ++i) {
     // spawn.chaser(800, -1150);
     // }
-    // spawn.groupBoss(900, -1070);
+    spawn.groupBoss(900, -1070);
     // for (let i = 0; i < 20; i++) {
     //   spawn.randomBoss(-100, -1470);
     // }

@@ -97,25 +97,21 @@ const spawn = {
     me.groupingRangeMax = 250000 + Math.random() * 100000;
     me.groupingRangeMin = (radius * 8) * (radius * 8);
     me.groupingStrength = 0.0005
-    me.memory = Infinity;
+    me.memory = 200;
 
     me.do = function () {
       this.gravity();
-      //attraction to mobs
       if (this.seePlayer.recall) {
+        this.seePlayerByDistAndLOS();
         this.healthBar();
         this.attraction();
-        this.seePlayerByDistAndLOS();
-
         //tether to other blocks
         ctx.beginPath();
-        let numMobsClose = 0;
         for (let i = 0, len = mob.length; i < len; i++) {
           if (mob[i] != this && mob[i].dropPowerUp) { //don't tether to self, bullets, shields, ...
             const distance2 = Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, mob[i].position))
             if (distance2 < this.groupingRangeMax) {
-              numMobsClose++;
-              if (!mob[i].seePlayer.recall) mob[i].foundPlayer(); //wake up sleepy mobs
+              if (!mob[i].seePlayer.recall) mob[i].seePlayerByDistAndLOS(); //wake up sleepy mobs
               if (distance2 > this.groupingRangeMin) {
                 const angle = Math.atan2(mob[i].position.y - this.position.y, mob[i].position.x - this.position.x);
                 const forceMag = this.groupingStrength * mob[i].mass;
@@ -130,11 +126,6 @@ const spawn = {
         ctx.strokeStyle = "#000";
         ctx.lineWidth = 1;
         ctx.stroke();
-        //if all alone go to sleep
-        if (numMobsClose < 1 && this.seePlayer.recall === Infinity) {
-          this.seePlayer.yes = false;
-          this.seePlayer.recall = 120;
-        }
       }
     }
   },

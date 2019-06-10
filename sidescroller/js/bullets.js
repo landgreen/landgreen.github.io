@@ -62,7 +62,7 @@ const b = {
     }
   },
   explode(me) {
-    // typically explode is used as some bullets are .onEnd
+    // typically explode is used for some bullets with .onEnd
 
     //add dmg to draw queue
     game.drawList.push({
@@ -85,7 +85,7 @@ const b = {
       time: game.drawTime
     });
 
-    //damage and knock back player in range
+    //player damage and knock back
     sub = Matter.Vector.sub(bullet[me].position, player.position);
     dist = Matter.Vector.magnitude(sub);
     if (dist < bullet[me].explodeRad) {
@@ -179,19 +179,21 @@ const b = {
     // }
 
     //mob damage and knock back with alert
+    let damageScale = 1; // reduce dmg for each new target to limit total AOE damage
     for (let i = 0, len = mob.length; i < len; ++i) {
       if (mob[i].alive) {
         sub = Matter.Vector.sub(bullet[me].position, mob[i].position);
         dist = Matter.Vector.magnitude(sub);
         if (dist < bullet[me].explodeRad) {
-          mob[i].damage(dmg);
+          mob[i].damage(dmg * damageScale);
           mob[i].locatePlayer();
-          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), (-Math.sqrt(dmg) * mob[i].mass) / 18);
+          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), (-Math.sqrt(dmg * damageScale) * mob[i].mass) / 18);
           mob[i].force.x += knock.x;
           mob[i].force.y += knock.y;
+          damageScale *= 0.9
         } else if (!mob[i].seePlayer.recall && dist < alertRange) {
           mob[i].locatePlayer();
-          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), (-Math.sqrt(dmg) * mob[i].mass) / 35);
+          knock = Matter.Vector.mult(Matter.Vector.normalise(sub), (-Math.sqrt(dmg * damageScale) * mob[i].mass) / 35);
           mob[i].force.x += knock.x;
           mob[i].force.y += knock.y;
         }
