@@ -16,6 +16,7 @@ const wave = function () {
         y: 200
     };
     let search = false; //how much the wavelength changes each cycle
+    const totalSteps = 120
     let target = 600;
     let searchStep = 1;
     const velocity = 400;
@@ -49,7 +50,7 @@ const wave = function () {
             search = true;
 
             // identify the next target
-            const totalSteps = 120
+
             for (let i = standingWavelengths.length; i > -1; i--) {
                 if (standingWavelengths[i] > wavelength) {
                     target = standingWavelengths[i]
@@ -154,7 +155,17 @@ const wave = function () {
 
     function waveSearch() {
         if (search) {
-            wavelength += searchStep
+            const dist = target - wavelength;
+            percentDone = dist / (totalSteps * searchStep)
+
+            //slow in slow out smoothing
+            wavelength += 0.02 * searchStep
+            if (percentDone < 0.5) {
+                wavelength += 3 * searchStep * percentDone
+            } else {
+                wavelength += 3 * searchStep * (1 - percentDone)
+            }
+            // wavelength += 0.02 * searchStep + 0.98 * 2 * searchStep * percentDone
             if (wavelength > target) {
                 wavelength = target
                 search = false;
