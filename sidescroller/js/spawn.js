@@ -65,10 +65,10 @@ const spawn = {
           this.lineBoss(x, y, pick);
         }
       } else {
-        if (Math.random() < 0.10) {
+        if (Math.random() < 0.07) {
           this[pick](x, y, 90 + Math.random() * 40); //one extra large mob
-        } else if (Math.random() < 0.2) {
-          this.group(x, y) //hidden grouping blocks
+        } else if (Math.random() < 0.35) {
+          this.groupBoss(x, y) //hidden grouping blocks
         } else {
           pick = (Math.random() < 0.5) ? "randomList" : "random";
           if (Math.random() < 0.55) {
@@ -83,7 +83,7 @@ const spawn = {
 
   //mob templates *********************************************************************************************
   //***********************************************************************************************************
-  group(x, y, num = 5 + Math.random() * 8) {
+  groupBoss(x, y, num = 5 + Math.random() * 8) {
     for (let i = 0; i < num; i++) {
       const radius = 25 + Math.floor(Math.random() * 20)
       spawn.grouper(x + Math.random() * radius, y + Math.random() * radius, radius);
@@ -97,42 +97,55 @@ const spawn = {
     me.groupingRangeMax = 250000 + Math.random() * 100000;
     me.groupingRangeMin = (radius * 8) * (radius * 8);
     me.groupingStrength = 0.0005
+    me.memory = Infinity;
+
     me.do = function () {
-      this.healthBar();
       this.gravity();
-      this.seePlayerByDistAndLOS();
-      this.attraction();
       //attraction to mobs
-      ctx.beginPath();
       if (this.seePlayer.recall) {
+        this.healthBar();
+        this.attraction();
+        this.seePlayerByDistAndLOS();
+
+        //tether to other blocks
+        ctx.beginPath();
+        let numMobsClose = 0;
         for (let i = 0, len = mob.length; i < len; i++) {
-          if (mob[i] != this) {
+          if (mob[i] != this && mob[i].dropPowerUp) { //don't tether to self, bullets, shields, ...
             const distance2 = Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, mob[i].position))
             if (distance2 < this.groupingRangeMax) {
+              numMobsClose++;
+              if (!mob[i].seePlayer.recall) mob[i].foundPlayer(); //wake up sleepy mobs
               if (distance2 > this.groupingRangeMin) {
                 const angle = Math.atan2(mob[i].position.y - this.position.y, mob[i].position.x - this.position.x);
                 const forceMag = this.groupingStrength * mob[i].mass;
                 mob[i].force.x -= forceMag * Math.cos(angle);
                 mob[i].force.y -= forceMag * Math.sin(angle);
               }
-              //draw attraction
-
               ctx.moveTo(this.position.x, this.position.y);
               ctx.lineTo(mob[i].position.x, mob[i].position.y);
             }
           }
         }
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        //if all alone go to sleep
+        if (numMobsClose < 1 && this.seePlayer.recall === Infinity) {
+          this.seePlayer.yes = false;
+          this.seePlayer.recall = 120;
+        }
       }
-      ctx.strokeStyle = "#000";
-      ctx.lineWidth = 1;
-      ctx.stroke();
-    };
+    }
   },
   starter(x, y, radius = 30) {
-    //only on level 1
+    //easy mob for on level 1
     mobs.spawn(x, y, 8, radius, "#9ccdc6");
     let me = mob[mob.length - 1];
-    me.accelMag = 0.00065;
+    me.accelMag = 0.00055;
+    me.memory = 60;
+    Matter.Body.setDensity(me, 0.0005) // normal density is 0.001 // this reduces life by half and decreases knockback
+
     me.do = function () {
       this.healthBar();
       this.seePlayerByLookingAt();

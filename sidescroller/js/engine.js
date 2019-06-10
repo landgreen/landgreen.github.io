@@ -92,7 +92,7 @@ function mobCollisionChecks(event) {
             if (mech.damageImmune < game.cycle) {
               //player is immune to mob collision damage for 30 cycles
               mech.damageImmune = game.cycle + 30;
-              mob[k].locatePlayer();
+              mob[k].foundPlayer();
               let dmg = Math.min(Math.max(0.025 * Math.sqrt(mob[k].mass), 0.05), 0.3) * game.dmgScale; //player damage is capped at 0.3*dmgScale of 1.0
               mech.damage(dmg);
               if (mob[k].onHit) mob[k].onHit(k);
@@ -120,7 +120,7 @@ function mobCollisionChecks(event) {
           }
           //bullet mob collisions
           if (obj.classType === "bullet" && obj.speed > obj.minDmgSpeed) {
-            mob[k].locatePlayer();
+            mob[k].foundPlayer();
             let dmg = b.dmgScale * (obj.dmg + 0.15 * obj.mass * Matter.Vector.magnitude(Matter.Vector.sub(mob[k].velocity, obj.velocity)));
             mob[k].damage(dmg);
             obj.onDmg(); //some bullets do actions when they hits things, like despawn
@@ -140,7 +140,7 @@ function mobCollisionChecks(event) {
             if (v > 8) {
               let dmg = b.dmgScale * v * Math.sqrt(obj.mass) * 0.05;
               mob[k].damage(dmg);
-              if (mob[k].distanceToPlayer2() < 1000000) mob[k].locatePlayer();
+              if (mob[k].distanceToPlayer2() < 1000000) mob[k].foundPlayer();
               game.drawList.push({
                 //add dmg to draw queue
                 x: pairs[i].activeContacts[0].vertex.x,
