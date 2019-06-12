@@ -49,6 +49,11 @@ const level = {
     level.exit.x = 3500;
     level.exit.y = -870;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
+
+    //start with all guns
+    b.giveAllGuns()
+
+
     // this.addZone(250, -1000, 500, 1500, "laser");
     //spawn.debris(0, -900, 4500, 10); //15 debris per level
     // setTimeout(function() {
@@ -105,7 +110,7 @@ const level = {
     // spawn.bodyRect(400, -150, 140, 160);
     // spawn.bodyRect(500, -150, 110, 110);
     // powerUps.spawn(400, -400, "field", false, '2');
-    powerUps.spawn(400, -400, "gun", false);
+    // powerUps.spawn(400, -400, "gun", false);
     // spawn.bodyRect(-45, -100, 40, 50);
     // spawn.starter(800, -1150);
     // spawn.groupBoss(-600, -550);

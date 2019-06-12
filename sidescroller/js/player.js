@@ -920,8 +920,7 @@ const mech = {
       game.makeTextLog("<h2>Mass Recycler</h2><br><strong>active ability:</strong> hold left and right mouse to convert blocks into health<br><strong>negative effect:</strong> -life decay", 1000);
       mech.setHoldDefaults();
       mech.hold = function () {
-        if (game.cycle % 360 === 0) {
-          // mech.damage(0.02)
+        if (game.cycle % 360 === 0 && mech.health > 0.2) {
           mech.health = mech.health * 0.97 - 0.01;
           if (mech.health < 0) {
             mech.health = 0;
