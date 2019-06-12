@@ -6,20 +6,19 @@ const b = {
   activeGun: null, //current gun in use by player
   inventoryGun: 0,
   inventory: [0], //list of what guns player has  // 0 starts with basic gun
-  giveAllGuns() {
-    b.activeGun = 0;
-    for (let i = 0; i < b.guns.length; i++) {
-      b.guns[i].have = true;
-      b.guns[i].ammo = b.guns[i].ammoPack * 2;
-      b.inventory[i] = i;
-    }
-    game.makeGunHUD();
-  },
-  giveAllGunsAndAmmo() {
-    for (let i = 0; i < b.guns.length; i++) {
-      b.guns[i].have = true;
-      b.guns[i].ammo = b.guns[i].ammoPack * 100;
-      b.inventory[i] = i;
+  giveGuns(gun = "all", ammoPacks = 2) {
+    if (gun === "all") {
+      b.activeGun = 0;
+      for (let i = 0; i < b.guns.length; i++) {
+        b.guns[i].have = true;
+        b.guns[i].ammo = b.guns[i].ammoPack * ammoPacks;
+        b.inventory[i] = i;
+      }
+    } else {
+      if (!b.guns[gun].have) b.inventory.push(gun);
+      b.activeGun = gun;
+      b.guns[gun].have = true;
+      b.guns[gun].ammo = b.guns[gun].ammoPack * ammoPacks;
     }
     game.makeGunHUD();
   },
@@ -457,34 +456,36 @@ const b = {
     {
       name: "missiles",
       ammo: 0,
-      ammoPack: 14,
+      ammoPack: 8,
       have: false,
       fireCycle: 0,
       ammoLoaded: 0,
       fire() {
         //calculate how many new missiles have loaded since the last time fired
-        this.ammoLoaded += Math.floor(Math.abs(game.cycle - this.fireCycle) / 30)
-        this.ammoLoaded = Math.min(5, this.ammoLoaded)
+        const ammoLoadTime = 40
+        const maxLoaded = 6
+        this.ammoLoaded += Math.floor(Math.abs(game.cycle - this.fireCycle) / ammoLoadTime)
+        this.ammoLoaded = Math.min(maxLoaded, this.ammoLoaded)
 
         if (this.ammoLoaded < 1) {
-          mech.fireCDcycle = game.cycle + 15; // cool down if no ammo loaded
+          mech.fireCDcycle = game.cycle + ammoLoadTime; // cool down if no ammo loaded
           this.ammo++; //counteract the normal ammo reduction by adding back one if not firing
         } else {
-          this.fireCycle = game.cycle //keep track of last time fired for calculate ammo loaded
+          this.fireCycle = game.cycle //keep track of last time fired to calculate ammo loaded
           this.ammoLoaded--
 
-          const thrust = 0.00025;
+          const thrust = 0.0003;
           let dir = mech.angle + 0.1 * (0.5 - Math.random());
           const me = bullet.length;
           bullet[me] = Bodies.rectangle(mech.pos.x + 40 * Math.cos(mech.angle), mech.pos.y + 40 * Math.sin(mech.angle) - 3, 30, 4, b.fireAttributes(dir));
-          b.fireProps(5, -5 - 3 * (0.5 - Math.random()), dir, me); //cd , speed
+          b.fireProps(6, -5 - 3 * (0.5 - Math.random()), dir, me); //cd , speed
           b.drawOneBullet(bullet[me].vertices);
           // Matter.Body.setDensity(bullet[me], 0.01)  //doesn't help with reducing explosion knock backs
-          bullet[me].force.y += 0.0003; //a small push down at first to make it seem like the missile is briefly falling
+          bullet[me].force.y += 0.00045; //a small push down at first to make it seem like the missile is briefly falling
           bullet[me].frictionAir = 0
           bullet[me].endCycle = game.cycle + Math.floor(260 + Math.random() * 30);
-          bullet[me].explodeRad = 130 + 45 * Math.random();
-          bullet[me].lookFrequency = Math.floor(25 + Math.random() * 20);
+          bullet[me].explodeRad = 140 + 45 * Math.random();
+          bullet[me].lookFrequency = Math.floor(10 + Math.random() * 13);
           bullet[me].onEnd = b.explode; //makes bullet do explosive damage at end
           bullet[me].onDmg = function () {
             this.endCycle = 0; //bullet ends cycle after doing damage  // also triggers explosion
@@ -498,6 +499,7 @@ const b = {
               for (let i = 0, len = mob.length; i < len; ++i) {
                 if (
                   mob[i].alive &&
+                  mob[i].dropPowerUp &&
                   Matter.Query.ray(map, this.position, mob[i].position).length === 0 &&
                   Matter.Query.ray(body, this.position, mob[i].position).length === 0
                 ) {
@@ -513,21 +515,21 @@ const b = {
               if (this.close && closeDist < this.explodeRad * 0.7) {
                 this.endCycle = 0; //bullet ends cycle after doing damage  //this also triggers explosion
               }
-            }
-            //show locked on targeting
-            if (this.lockedOn) {
-              this.frictionAir = 0.028; //extra friction
-              ctx.beginPath();
-              const vertices = this.lockedOn.vertices;
-              ctx.moveTo(this.position.x, this.position.y);
-              const mod = Math.floor((game.cycle / 3) % vertices.length);
-              ctx.lineTo(vertices[mod].x, vertices[mod].y);
 
-              ctx.strokeStyle = "rgba(0,0,255,0.25)"; //"#2f6";
-              ctx.lineWidth = 1;
-              ctx.setLineDash([50 + 120 * Math.random(), 50 * Math.random()]);
-              ctx.stroke();
-              ctx.setLineDash([0, 0]);
+
+              if (this.lockedOn) {
+                this.frictionAir = 0.04; //extra friction
+
+                //show locked on targeting
+                ctx.beginPath();
+                const vertices = this.lockedOn.vertices;
+                ctx.moveTo(this.position.x, this.position.y);
+                const mod = Math.floor((game.cycle / 3) % vertices.length);
+                ctx.lineTo(vertices[mod].x, vertices[mod].y);
+                ctx.strokeStyle = "rgba(0,0,155,0.35)"; //"#2f6";
+                ctx.lineWidth = 1;
+                ctx.stroke();
+              }
             }
             //accelerate in direction bullet is facing
             const dir = this.angle; // + (Math.random() - 0.5);
@@ -535,13 +537,7 @@ const b = {
             this.force.y += Math.sin(dir) * thrust;
             //draw rocket
             ctx.beginPath();
-            ctx.arc(
-              this.position.x - Math.cos(this.angle) * 27 + (Math.random() - 0.5) * 4,
-              this.position.y - Math.sin(this.angle) * 27 + (Math.random() - 0.5) * 4,
-              11,
-              0,
-              2 * Math.PI
-            );
+            ctx.arc(this.position.x - Math.cos(this.angle) * 27 + (Math.random() - 0.5) * 4, this.position.y - Math.sin(this.angle) * 27 + (Math.random() - 0.5) * 4, 11, 0, 2 * Math.PI);
             ctx.fillStyle = "rgba(255,155,0,0.5)";
             ctx.fill();
             if (this.close) {

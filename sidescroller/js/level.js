@@ -51,7 +51,7 @@ const level = {
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
 
     //start with all guns
-    b.giveAllGuns()
+    b.giveGuns()
 
 
     // this.addZone(250, -1000, 500, 1500, "laser");
