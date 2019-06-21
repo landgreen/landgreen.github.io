@@ -230,7 +230,7 @@ const b = {
     {
       name: "laser",
       ammo: 0,
-      ammoPack: 400,
+      ammoPack: 350,
       have: false,
       fire() {
         //mech.fireCDcycle = game.cycle + 1
@@ -301,13 +301,13 @@ const b = {
         };
         const laserHitMob = function (dmg) {
           if (best.who.alive) {
-            dmg *= b.dmgScale * 0.05;
+            dmg *= b.dmgScale * 0.065;
             best.who.damage(dmg);
             best.who.locatePlayer();
             //draw mob damage circle
             ctx.fillStyle = color;
             ctx.beginPath();
-            ctx.arc(path[path.length - 1].x, path[path.length - 1].y, Math.sqrt(dmg) * 60, 0, 2 * Math.PI);
+            ctx.arc(path[path.length - 1].x, path[path.length - 1].y, Math.sqrt(dmg) * 100, 0, 2 * Math.PI);
             ctx.fill();
           }
         };
@@ -359,30 +359,20 @@ const b = {
             }
           }
         }
-        //draw the laser path
-        // ctx.strokeStyle = "#f00";
-        // ctx.lineWidth = 2;
-        // ctx.setLineDash([Math.ceil(120 * Math.random()), Math.ceil(120 * Math.random())]);
-        // ctx.beginPath();
-        // ctx.moveTo(path[0].x, path[0].y);
-        // for (let i = 1, len = path.length; i < len; ++i) {
-        // 	ctx.lineTo(path[i].x, path[i].y);
-        // }
-        // ctx.stroke();
-        // ctx.setLineDash([0, 0]);
         ctx.fillStyle = color;
         ctx.strokeStyle = color;
         ctx.lineWidth = 2;
+        ctx.lineDashOffset = 300 * Math.random()
+        // ctx.setLineDash([200 * Math.random(), 250 * Math.random()]);
+
         ctx.setLineDash([50 + 120 * Math.random(), 50 * Math.random()]);
         for (let i = 1, len = path.length; i < len; ++i) {
           ctx.beginPath();
           ctx.moveTo(path[i - 1].x, path[i - 1].y);
           ctx.lineTo(path[i].x, path[i].y);
           ctx.stroke();
-          ctx.globalAlpha *= 0.6;
-          // ctx.beginPath();
-          // ctx.arc(path[i].x, path[i].y, 5, 0, 2 * Math.PI);
-          // ctx.fill();
+          ctx.globalAlpha *= 0.5; //reflections are less intense
+          // ctx.globalAlpha -= 0.1; //reflections are less intense
         }
         ctx.setLineDash([0, 0]);
         ctx.globalAlpha = 1;
@@ -391,7 +381,7 @@ const b = {
     {
       name: "rapid fire",
       ammo: 0,
-      ammoPack: 90,
+      ammoPack: 100,
       have: false,
       fire() {
         const me = bullet.length;
@@ -462,7 +452,7 @@ const b = {
       ammoLoaded: 0,
       fire() {
         //calculate how many new missiles have loaded since the last time fired
-        const ammoLoadTime = 40
+        const ammoLoadTime = 36
         const maxLoaded = 6
         this.ammoLoaded += Math.floor(Math.abs(game.cycle - this.fireCycle) / ammoLoadTime)
         this.ammoLoaded = Math.min(maxLoaded, this.ammoLoaded)
@@ -483,9 +473,9 @@ const b = {
           // Matter.Body.setDensity(bullet[me], 0.01)  //doesn't help with reducing explosion knock backs
           bullet[me].force.y += 0.00045; //a small push down at first to make it seem like the missile is briefly falling
           bullet[me].frictionAir = 0
-          bullet[me].endCycle = game.cycle + Math.floor(260 + Math.random() * 30);
-          bullet[me].explodeRad = 140 + 45 * Math.random();
-          bullet[me].lookFrequency = Math.floor(10 + Math.random() * 13);
+          bullet[me].endCycle = game.cycle + Math.floor(265 + Math.random() * 20);
+          bullet[me].explodeRad = 145 + 40 * Math.random();
+          bullet[me].lookFrequency = Math.floor(8 + Math.random() * 7);
           bullet[me].onEnd = b.explode; //makes bullet do explosive damage at end
           bullet[me].onDmg = function () {
             this.endCycle = 0; //bullet ends cycle after doing damage  // also triggers explosion
@@ -516,11 +506,10 @@ const b = {
                 this.endCycle = 0; //bullet ends cycle after doing damage  //this also triggers explosion
               }
 
-
               if (this.lockedOn) {
                 this.frictionAir = 0.04; //extra friction
 
-                //show locked on targeting
+                //draw locked on targeting
                 ctx.beginPath();
                 const vertices = this.lockedOn.vertices;
                 ctx.moveTo(this.position.x, this.position.y);
@@ -531,17 +520,9 @@ const b = {
                 ctx.stroke();
               }
             }
-            //accelerate in direction bullet is facing
-            const dir = this.angle; // + (Math.random() - 0.5);
-            this.force.x += Math.cos(dir) * thrust;
-            this.force.y += Math.sin(dir) * thrust;
-            //draw rocket
-            ctx.beginPath();
-            ctx.arc(this.position.x - Math.cos(this.angle) * 27 + (Math.random() - 0.5) * 4, this.position.y - Math.sin(this.angle) * 27 + (Math.random() - 0.5) * 4, 11, 0, 2 * Math.PI);
-            ctx.fillStyle = "rgba(255,155,0,0.5)";
-            ctx.fill();
+
+            //rotate missile towards the target
             if (this.close) {
-              //rotate missile towards the target
               const face = {
                 x: Math.cos(this.angle),
                 y: Math.sin(this.angle)
@@ -549,12 +530,23 @@ const b = {
               const target = Matter.Vector.normalise(Matter.Vector.sub(this.position, this.close));
               if (Matter.Vector.dot(target, face) > -0.98) {
                 if (Matter.Vector.cross(target, face) > 0) {
-                  Matter.Body.rotate(this, 0.09);
+                  Matter.Body.rotate(this, 0.08);
                 } else {
-                  Matter.Body.rotate(this, -0.09);
+                  Matter.Body.rotate(this, -0.08);
                 }
               }
             }
+            //accelerate in direction bullet is facing
+            const dir = this.angle; // + (Math.random() - 0.5);
+            this.force.x += Math.cos(dir) * thrust;
+            this.force.y += Math.sin(dir) * thrust;
+
+            //draw rocket
+            ctx.beginPath();
+            ctx.arc(this.position.x - Math.cos(this.angle) * 27 + (Math.random() - 0.5) * 4, this.position.y - Math.sin(this.angle) * 27 + (Math.random() - 0.5) * 4, 11, 0, 2 * Math.PI);
+            ctx.fillStyle = "rgba(255,155,0,0.5)";
+            ctx.fill();
+
           }
         }
       }
@@ -562,31 +554,35 @@ const b = {
     {
       name: "flak",
       ammo: 0,
-      ammoPack: 10,
+      ammoPack: 11,
       have: false,
       fire() {
         b.muzzleFlash(30);
-        let dir = mech.angle - 0.1;
-        for (let i = 0; i < 5; i++) {
-          dir += 0.05 + (Math.random() - 0.5) * 0.04;
+        const totalBullets = 7
+        const angleStep = 0.08 / totalBullets
+        let dir = mech.angle - angleStep * totalBullets / 2;
+        for (let i = 0; i < totalBullets; i++) { //5 -> 7
+          dir += angleStep
           const me = bullet.length;
           bullet[me] = Bodies.rectangle(mech.pos.x + 50 * Math.cos(mech.angle), mech.pos.y + 50 * Math.sin(mech.angle), 17, 4, b.fireAttributes(dir));
-          b.fireProps(25, 32 + (Math.random() - 0.5) * 8, dir, me); //cd , speed
+          b.fireProps(35, 25 + 25 * Math.random(), dir, me); //cd , speed
           //Matter.Body.setDensity(bullet[me], 0.00001);
-          bullet[me].endCycle = game.cycle + 15 + Math.floor(Math.random() * 5);
+          bullet[me].endCycle = game.cycle + 16 + Math.ceil(7 * Math.random())
           bullet[me].restitution = 0;
           bullet[me].friction = 1;
-          bullet[me].explodeRad = 95 + (Math.random() - 0.5) * 75;
-          bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
+          bullet[me].explodeRad = 90 + (Math.random() - 0.5) * 50;
+          bullet[me].onEnd = b.explode;
           bullet[me].onDmg = function () {
-            this.endCycle = 0; //bullet ends cycle after doing damage  //this triggers explosion
+            this.endCycle = 0; //bullet ends cycle after hitting a mob and triggers explosion
           };
           bullet[me].do = function () {
-            //if slow explode  (helps rocket jumping)
-            if (this.speed < 2) {
-              this.endCycle = 0
-            }
-          };
+            this.force.y += this.mass * 0.0004;
+            // if (this.speed < 10) { //if slow explode
+            //   for (let i = 0, len = bullet.length; i < len; i++) {
+            //     bullet[i].endCycle = 0 //all other bullets explode
+            //   }
+            // }
+          }
         }
       }
     },
@@ -644,7 +640,7 @@ const b = {
     {
       name: "M80",
       ammo: 0,
-      ammoPack: 40,
+      ammoPack: 45,
       have: false,
       fire() {
         const me = bullet.length;
@@ -697,7 +693,6 @@ const b = {
         // mobs.alert(450);
         let dir = mech.angle - 0.05;
         for (let i = 0; i < 3; i++) {
-          dir += 0.05;
           const me = bullet.length;
           bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 7, b.fireAttributes(dir));
           b.fireProps(20, 30, dir, me); //cd , speed
@@ -710,13 +705,14 @@ const b = {
           bullet[me].do = function () {
             this.force.y += this.mass * 0.001;
           };
+          dir += 0.05;
         }
       }
     },
     {
       name: "wave beam",
       ammo: 0,
-      ammoPack: 95,
+      ammoPack: 120,
       have: false,
       fire() {
         mech.fireCDcycle = game.cycle + 7; // cool down
@@ -845,348 +841,3 @@ const b = {
     }
   }
 };
-
-// {
-// 	name: "basic",
-// 	ammo: Infinity,
-// 	ammoPack: Infinity,
-// 	have: true,
-// 	fire: function() {
-// 		const me = bullet.length;
-// 		const dir = (Math.random() - 0.5) * 0.09 + mech.angle;
-// 		bullet[me] = Bodies.rectangle(
-// 			mech.pos.x + 30 * Math.cos(mech.angle),
-// 			mech.pos.y + 30 * Math.sin(mech.angle),
-// 			18,
-// 			6,
-// 			b.fireAttributes(dir)
-// 		);
-// 		b.fireProps(20, 36, dir, me); //cd , speed
-// 		bullet[me].endCycle = game.cycle + 180;
-// 		bullet[me].frictionAir = 0.01;
-// 		bullet[me].do = function() {
-// 			this.force.y += this.mass * 0.001;
-// 		};
-// 	}
-// },
-
-// {
-//   name: "plasma arc",
-//   ammo: 0,
-//   ammoPack: 600,
-//   have: false,
-//   sync: 0,
-//   step: 0,
-//   cd: 0,
-//   fire: function() {
-//     if (this.sync === game.cycle) {
-//       this.sync = game.cycle + 1;
-//       this.step++;
-
-//       //draw
-//       if (this.step < 5) {
-//         let rad = 70;
-//         ctx.beginPath();
-//         ctx.arc(mech.pos.x + rad * Math.cos(mech.angle), mech.pos.y + rad * Math.sin(mech.angle), 50, 0, 2 * Math.PI);
-//         ctx.fillStyle = "rgba(255,0,100,0.3)";
-//         ctx.fill();
-//       } else {
-//         let startRadius = 40;
-//         let endRadius = 250;
-//         // let endRadius = 250 * Math.sin(this.step * 0.1);
-//         // if (endRadius > 0) {
-//         //   endRadius += 60;
-//         // } else {
-//         //   endRadius = 60;
-//         // }
-//         let angleOff = 0.6;
-//         ctx.strokeStyle = "#000";
-//         ctx.fillStyle = "rgba(255,0,100,0.3)";
-//         ctx.beginPath();
-//         ctx.moveTo(mech.pos.x + startRadius * Math.cos(mech.angle + angleOff), mech.pos.y + startRadius * Math.sin(mech.angle + angleOff));
-//         ctx.lineTo(mech.pos.x + endRadius * Math.cos(mech.angle), mech.pos.y + endRadius * Math.sin(mech.angle));
-//         ctx.lineTo(mech.pos.x + startRadius * Math.cos(mech.angle - angleOff), mech.pos.y + startRadius * Math.sin(mech.angle - angleOff));
-//         ctx.fill();
-//         ctx.fillStyle = "rgba(255,0,100,0.6)";
-//         angleOff = 0.3;
-//         ctx.beginPath();
-//         ctx.moveTo(mech.pos.x + startRadius * Math.cos(mech.angle + angleOff), mech.pos.y + startRadius * Math.sin(mech.angle + angleOff));
-//         ctx.lineTo(mech.pos.x + 0.7 * endRadius * Math.cos(mech.angle), mech.pos.y + 0.7 * endRadius * Math.sin(mech.angle));
-//         ctx.lineTo(mech.pos.x + startRadius * Math.cos(mech.angle - angleOff), mech.pos.y + startRadius * Math.sin(mech.angle - angleOff));
-//         ctx.fill();
-//       }
-//       //mob collision check
-//     } else {
-//       this.step = 0;
-//       this.sync = game.cycle + 1;
-//     }
-//   }
-// },
-// {
-//   name: "plasma arc",
-//   ammo: 0,
-//   ammoPack: 200,
-//   have: false,
-//   fire: function() {
-//     const me = bullet.length;
-//     const dir = mech.angle;
-//     bullet[me] = Bodies.rectangle(mech.pos.x + 80 * Math.cos(mech.angle), mech.pos.y + 80 * Math.sin(mech.angle), 0.1, 0.1, {
-//       collisionFilter: {
-//         category: 0x000000,
-//         mask: 0x000000
-//       },
-//       onDmg: function() {}, //this.endCycle = 0  //triggers de-spawn
-//       onEnd: function() {}
-//     });
-//     mech.fireCDcycle = game.cycle + 30; //cool down
-//     World.add(engine.world, bullet[me]); //add bullet to world
-
-//     bullet[me].endCycle = game.cycle + 100;
-//     bullet[me].step = 0;
-//     bullet[me].gunIndex = b.activeGun;
-//     bullet[me].a = mech.angle;
-//     bullet[me].p = { x: mech.pos.x + 100 * Math.cos(mech.angle), y: mech.pos.y + 100 * Math.sin(mech.angle) };
-//     // bullet[me].v = { x: player.velocity.x, y: player.velocity.y };
-//     bullet[me].do = function() {
-//       this.step++;
-//some drift
-// this.p.x += this.v.x / 2;
-// this.p.y += this.v.y / 2;
-
-//graphics
-// const radius = 150;
-// const pRadius = 50;
-// const offAngle = 0.5;
-// ctx.translate(this.p.x, this.p.y);
-// ctx.beginPath();
-// ctx.arc(0, 0, 50, 0, 2 * Math.PI);
-// ctx.fillStyle = "rgba(255,0,100," + (0.6 - this.step * 0.006) + ")";
-// ctx.fill();
-
-// var grd = ctx.createRadialGradient(0, 0, pRadius, 0, 0, radius);
-// grd.addColorStop(0, "rgba(255,50,0,1)");
-// grd.addColorStop(1, "rgba(255,0,50,0.1)");
-
-// ctx.fillStyle = grd; //"rgba(255,0,100," + (0.6 - this.step * 0.006) + ")";
-// ctx.beginPath();
-// ctx.moveTo(pRadius * Math.cos(this.a - offAngle), pRadius * Math.sin(this.a - offAngle));
-// // ctx.arc(pRadius * Math.cos(this.a), pRadius * Math.sin(this.a), 50, 0, 2 * Math.PI);
-// ctx.quadraticCurveTo(
-//   2 * radius * Math.cos(this.a),
-//   2 * radius * Math.sin(this.a),
-//   pRadius * Math.cos(this.a + offAngle),
-//   pRadius * Math.sin(this.a + offAngle)
-// );
-// ctx.fill();
-// //radius marker remove
-// ctx.fillStyle = "#000";
-// ctx.fillRect(radius * Math.cos(this.a), radius * Math.sin(this.a), 3, 3);
-
-// ctx.translate(-this.p.x, -this.p.y);
-
-// let startRadius = 40;
-// let endRadius = 250;
-// let angleOff = 0.6;
-// ctx.strokeStyle = "#000";
-// ctx.fillStyle = "rgba(255,0,100," + (0.3 - this.step * 0.03) + ")";
-// ctx.beginPath();
-// ctx.moveTo(this.p.x + startRadius * Math.cos(this.a + angleOff), this.p.y + startRadius * Math.sin(this.a + angleOff));
-// ctx.lineTo(this.p.x + endRadius * Math.cos(this.a), this.p.y + endRadius * Math.sin(this.a));
-// ctx.lineTo(this.p.x + startRadius * Math.cos(this.a - angleOff), this.p.y + startRadius * Math.sin(this.a - angleOff));
-// ctx.fill();
-// ctx.fillStyle = "rgba(255,0,100," + (0.6 - this.step * 0.06) + ")";
-// angleOff = 0.3;
-// ctx.beginPath();
-// ctx.moveTo(this.p.x + startRadius * Math.cos(this.a + angleOff), this.p.y + startRadius * Math.sin(this.a + angleOff));
-// ctx.lineTo(this.p.x + 0.7 * endRadius * Math.cos(this.a), this.p.y + 0.7 * endRadius * Math.sin(this.a));
-// ctx.lineTo(this.p.x + startRadius * Math.cos(this.a - angleOff), this.p.y + startRadius * Math.sin(this.a - angleOff));
-// ctx.fill();
-
-// const position = {
-//   x: mech.pos.x + 40 * Math.cos(mech.angle),
-//   y: mech.pos.y + 40 * Math.sin(mech.angle)
-// };
-
-// ctx.translate(position.x, position.y);
-// // var grd = ctx.createLinearGradient(0, -20, 50, 20);
-// // grd.addColorStop(0, "rgba(0, 0, 0, 0)");
-// // grd.addColorStop(1, "rgba(160, 192, 255, 1)");
-// ctx.fillStyle = "#000";
-// ctx.beginPath();
-// ctx.moveTo(50, 0);
-// ctx.lineTo(0, 20);
-// ctx.lineTo(0, -20);
-// ctx.fill();
-// ctx.translate(-position.x, -position.y);
-
-//mob collision
-// for (let i = 0, len = mob.length; i < len; ++i) {
-//   if (Matter.Vector.magnitude(Matter.Vector.sub(this.position, mob[i].position)) < 100) {
-//     console.log("hit");
-//   }
-// }
-//     };
-//   }
-// },
-// {
-//   name: "arc-welder",
-//   ammo: 0,
-//   ammoPack: 999999,
-//   have: false,
-//   fire: function() {
-//     //mech.fireCDcycle = game.cycle + 1
-//     let best;
-//     const color = "#0ff";
-//     const range = 200;
-//     const path = [
-//       {
-//         x: mech.pos.x + 20 * Math.cos(mech.angle),
-//         y: mech.pos.y + 20 * Math.sin(mech.angle)
-//       },
-//       {
-//         x: mech.pos.x + range * Math.cos(mech.angle),
-//         y: mech.pos.y + range * Math.sin(mech.angle)
-//       }
-//     ];
-//     const vertexCollision = function(v1, v1End, domain) {
-//       for (let i = 0; i < domain.length; ++i) {
-//         let vertices = domain[i].vertices;
-//         const len = vertices.length - 1;
-//         for (let j = 0; j < len; j++) {
-//           results = game.checkLineIntersection(v1, v1End, vertices[j], vertices[j + 1]);
-//           if (results.onLine1 && results.onLine2) {
-//             const dx = v1.x - results.x;
-//             const dy = v1.y - results.y;
-//             const dist2 = dx * dx + dy * dy;
-//             if (dist2 < best.dist2 && (!domain[i].mob || domain[i].alive)) {
-//               best = {
-//                 x: results.x,
-//                 y: results.y,
-//                 dist2: dist2,
-//                 who: domain[i],
-//                 v1: vertices[j],
-//                 v2: vertices[j + 1]
-//               };
-//             }
-//           }
-//         }
-//         results = game.checkLineIntersection(v1, v1End, vertices[0], vertices[len]);
-//         if (results.onLine1 && results.onLine2) {
-//           const dx = v1.x - results.x;
-//           const dy = v1.y - results.y;
-//           const dist2 = dx * dx + dy * dy;
-//           if (dist2 < best.dist2 && (!domain[i].mob || domain[i].alive)) {
-//             best = {
-//               x: results.x,
-//               y: results.y,
-//               dist2: dist2,
-//               who: domain[i],
-//               v1: vertices[0],
-//               v2: vertices[len]
-//             };
-//           }
-//         }
-//       }
-//     };
-//     const checkforCollisions = function() {
-//       best = {
-//         x: null,
-//         y: null,
-//         dist2: Infinity,
-//         who: null,
-//         v1: null,
-//         v2: null
-//       };
-//       vertexCollision(path[path.length - 2], path[path.length - 1], mob);
-//       vertexCollision(path[path.length - 2], path[path.length - 1], map);
-//       vertexCollision(path[path.length - 2], path[path.length - 1], body);
-//     };
-//     const laserHitMob = function(dmg) {
-//       if (best.who.alive) {
-//         dmg *= b.dmgScale * 0.2;
-//         best.who.damage(dmg);
-//         best.who.locatePlayer();
-//         //draw mob damage circle
-//         ctx.fillStyle = color;
-//         ctx.beginPath();
-//         ctx.arc(path[path.length - 1].x, path[path.length - 1].y, Math.sqrt(dmg) * 60, 0, 2 * Math.PI);
-//         ctx.fill();
-//       }
-//     };
-
-//     const reflection = function() {
-//       // https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector
-//       const n = Matter.Vector.perp(Matter.Vector.normalise(Matter.Vector.sub(best.v1, best.v2)));
-//       const d = Matter.Vector.sub(path[path.length - 1], path[path.length - 2]);
-//       const nn = Matter.Vector.mult(n, 2 * Matter.Vector.dot(d, n));
-//       const r = Matter.Vector.normalise(Matter.Vector.sub(d, nn));
-//       path[path.length] = Matter.Vector.add(Matter.Vector.mult(r, range), path[path.length - 1]);
-//     };
-//     //beam before reflection
-//     checkforCollisions();
-//     if (best.dist2 != Infinity) {
-//       //if hitting something
-//       path[path.length - 1] = {
-//         x: best.x,
-//         y: best.y
-//       };
-//       laserHitMob(1);
-
-//       //1st reflection beam
-//       reflection();
-//       //ugly bug fix: this stops the reflection on a bug where the beam gets trapped inside a body
-//       let who = best.who;
-//       checkforCollisions();
-//       if (best.dist2 != Infinity) {
-//         //if hitting something
-//         path[path.length - 1] = {
-//           x: best.x,
-//           y: best.y
-//         };
-//         laserHitMob(0.8);
-
-//         //2nd reflection beam
-//         //ugly bug fix: this stops the reflection on a bug where the beam gets trapped inside a body
-//         if (who !== best.who) {
-//           reflection();
-//           checkforCollisions();
-//           if (best.dist2 != Infinity) {
-//             //if hitting something
-//             path[path.length - 1] = {
-//               x: best.x,
-//               y: best.y
-//             };
-//             laserHitMob(0.6);
-//           }
-//         }
-//       }
-//     }
-//     //draw the laser path
-//     // ctx.strokeStyle = "#f00";
-//     // ctx.lineWidth = 2;
-//     // ctx.setLineDash([Math.ceil(120 * Math.random()), Math.ceil(120 * Math.random())]);
-//     // ctx.beginPath();
-//     // ctx.moveTo(path[0].x, path[0].y);
-//     // for (let i = 1, len = path.length; i < len; ++i) {
-//     // 	ctx.lineTo(path[i].x, path[i].y);
-//     // }
-//     // ctx.stroke();
-//     // ctx.setLineDash([0, 0]);
-//     ctx.fillStyle = color;
-//     ctx.strokeStyle = color;
-//     ctx.lineWidth = 2;
-//     ctx.setLineDash([50 + 120 * Math.random(), 50 * Math.random()]);
-//     for (let i = 1, len = path.length; i < len; ++i) {
-//       ctx.beginPath();
-//       ctx.moveTo(path[i - 1].x, path[i - 1].y);
-//       ctx.lineTo(path[i].x, path[i].y);
-//       ctx.stroke();
-//       ctx.globalAlpha *= 0.6;
-//       // ctx.beginPath();
-//       // ctx.arc(path[i].x, path[i].y, 5, 0, 2 * Math.PI);
-//       // ctx.fill();
-//     }
-//     ctx.setLineDash([0, 0]);
-//     ctx.globalAlpha = 1;
-//   }
-// },

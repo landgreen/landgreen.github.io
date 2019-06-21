@@ -51,7 +51,7 @@ const level = {
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
 
     //start with all guns
-    b.giveGuns()
+    b.giveGuns("all", 1000)
 
 
     // this.addZone(250, -1000, 500, 1500, "laser");
@@ -109,13 +109,13 @@ const level = {
     // spawn.bodyRect(600, -150, 140, 100);
     // spawn.bodyRect(400, -150, 140, 160);
     // spawn.bodyRect(500, -150, 110, 110);
-    // powerUps.spawn(400, -400, "field", false, '2');
+    powerUps.spawn(400, -400, "field", false, '4');
     // powerUps.spawn(400, -400, "gun", false);
     // spawn.bodyRect(-45, -100, 40, 50);
     // spawn.starter(800, -1150);
     // spawn.groupBoss(-600, -550);
     // for (let i = 0; i < 1; ++i) {
-    // spawn.chaser(800, -1150);
+    //   spawn.chaser(800, -1150);
     // }
     spawn.groupBoss(900, -1070);
     // for (let i = 0; i < 20; i++) {

@@ -917,18 +917,20 @@ const mech = {
     },
     () => {
       mech.fieldMode = 3;
-      game.makeTextLog("<h2>Mass Recycler</h2><br><strong>active ability:</strong> hold left and right mouse to convert blocks into health<br><strong>negative effect:</strong> -life decay", 1000);
+      game.makeTextLog("<h2>Mass Recycler</h2><br><strong>active ability:</strong> hold left and right mouse to convert blocks into health<br><strong>negative effect:</strong> -energy regen", 1000);
       mech.setHoldDefaults();
+      mech.fieldRegen = 0.0005; //0.0015
       mech.hold = function () {
-        if (game.cycle % 360 === 0 && mech.health > 0.2) {
-          mech.health = mech.health * 0.97 - 0.01;
-          if (mech.health < 0) {
-            mech.health = 0;
-            mech.death();
-            return;
-          }
-          mech.displayHealth();
-        }
+        // health drain
+        // if (game.cycle % 360 === 0 && mech.health > 0.2) {
+        //   mech.health = mech.health * 0.97 - 0.01;
+        //   if (mech.health < 0) {
+        //     mech.health = 0;
+        //     mech.death();
+        //     return;
+        //   }
+        //   mech.displayHealth();
+        // }
         if (mech.isHolding) {
           mech.drawHold(mech.holdingTarget);
           mech.holding();
@@ -981,58 +983,62 @@ const mech = {
     },
     () => {
       mech.fieldMode = 4;
-      game.makeTextLog("<h2>Negative Mass Field</h2><br><strong>active ability:</strong> hold left and right mouse to push things away<br><strong>passive bonuses:</strong> +field size, -player gravity", 1000); //<br><strong>passive bonus:</strong> can phase through blocks
+      game.makeTextLog("<h2>Negative Mass Field</h2><br><strong>active ability:</strong> hold left and right mouse to nullify gravity<br><strong>passive bonuses:</strong> +field size, +hold larger blocks", 1000);
       mech.setHoldDefaults();
-      mech.fieldArc = 1;
+      mech.fieldArc = 1; //field covers full 360 degrees
       mech.calculateFieldThreshold();
-      mech.holdingMassScale = 0.05;
-      mech.gravity = 0.0015; //passive reduce gravity  from default 0.0019
+      mech.holdingMassScale = 0.05; //can hold heavier blocks
+      // mech.gravity = 0.0015; //passive reduce gravity  from default 0.0019
 
       mech.hold = function () {
+        const range = 200 + 35 * Math.sin(game.cycle / 20)
         if (mech.isHolding) {
           mech.drawHold(mech.holdingTarget);
           mech.holding();
           mech.throw();
         } else if (game.mouseDown && (keys[32] || game.mouseDownRight) && mech.fieldCDcycle < game.cycle) { //both mouse keys down           //push away
-          if (mech.fieldMeter > 0.004) {
-            mech.fieldMeter -= 0.004;
-            const range = 450 + 100 * Math.sin(game.cycle / 20)
+          if (mech.fieldMeter > 0.005) {
+            mech.fieldMeter -= 0.005;
 
-            //draw push
+            //look for nearby objects to make zero-g
+            function zeroG(who) {
+              for (let i = 0, len = who.length; i < len; ++i) {
+                sub = Matter.Vector.sub(who[i].position, mech.pos);
+                dist = Matter.Vector.magnitude(sub);
+                if (dist < range) {
+                  who[i].force.y -= who[i].mass * game.g;
+                }
+              }
+            }
+            zeroG(powerUp);
+            zeroG(body);
+
+            player.force.y -= player.mass * mech.gravity; // + 0.005 * Math.sin(game.cycle / 10); //wobble
+            //add player vertical friction to reduce map jump craziness
+            Matter.Body.setVelocity(player, {
+              x: player.velocity.x,
+              y: player.velocity.y * 0.99
+            });
+
+            //draw zero-G range
             ctx.beginPath();
-            ctx.arc(mech.pos.x, mech.pos.y, range, 0, 2 * Math.PI);
+            ctx.arc(mech.pos.x, mech.pos.y + 15, range, 0, 2 * Math.PI);
             ctx.globalCompositeOperation = "color-burn";
             ctx.fillStyle = "rgb(90,90,100)";
             ctx.fill();
             ctx.globalCompositeOperation = "source-over";
 
-            function pushAway(who) {
-              for (let i = 0, len = who.length; i < len; ++i) {
-                sub = Matter.Vector.sub(who[i].position, mech.pos);
-                dist = Matter.Vector.magnitude(sub);
-                if (dist < range) {
-                  knock = Matter.Vector.mult(Matter.Vector.normalise(sub), who[i].mass / 200);
-                  who[i].force.x += knock.x;
-                  who[i].force.y += knock.y;
-                  // player.force.x -= knock.x / 10;
-                  // player.force.y -= knock.y / 10;
-                }
-              }
-            }
-            pushAway(body);
-            pushAway(mob);
-            pushAway(bullet);
-            pushAway(powerUp);
           } else {
+            //trigger cooldown
             mech.fieldCDcycle = game.cycle + 120;
           }
-        } else if ((keys[32] || game.mouseDownRight) && mech.fieldMeter > 0.2) { //not hold but field button is pressed
-          mech.grabRange = 200 + 50 * Math.sin(game.cycle / 20)
+        } else if ((keys[32] || game.mouseDownRight) && mech.fieldMeter > 0.2 && mech.fieldCDcycle < game.cycle) { //not hold but field button is pressed
+          mech.grabRange = range
           mech.drawField();
           mech.grabPowerUp();
           mech.pushMobs();
           mech.lookForPickUp();
-        } else if (mech.holdingTarget && mech.fireCDcycle < game.cycle) { //holding, but field button is released
+        } else if (mech.holdingTarget && mech.fireCDcycle < game.cycle && mech.fieldCDcycle < game.cycle) { //holding, but field button is released
           mech.pickUp();
         } else {
           mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
@@ -1041,6 +1047,68 @@ const mech = {
       }
     },
   ],
+  //   () => {
+  //     mech.fieldMode = 4;
+  //     game.makeTextLog("<h2>Negative Mass Field</h2><br><strong>active ability:</strong> hold left and right mouse to push things away<br><strong>passive bonuses:</strong> +field size, -player gravity", 1000); //<br><strong>passive bonus:</strong> can phase through blocks
+  //     mech.setHoldDefaults();
+  //     mech.fieldArc = 1;
+  //     mech.calculateFieldThreshold();
+  //     mech.holdingMassScale = 0.05;
+  //     mech.gravity = 0.0015; //passive reduce gravity  from default 0.0019
+
+  //     mech.hold = function () {
+  //       if (mech.isHolding) {
+  //         mech.drawHold(mech.holdingTarget);
+  //         mech.holding();
+  //         mech.throw();
+  //       } else if (game.mouseDown && (keys[32] || game.mouseDownRight) && mech.fieldCDcycle < game.cycle) { //both mouse keys down           //push away
+  //         if (mech.fieldMeter > 0.004) {
+  //           mech.fieldMeter -= 0.004;
+  //           const range = 450 + 100 * Math.sin(game.cycle / 20)
+
+  //           //draw push
+  //           ctx.beginPath();
+  //           ctx.arc(mech.pos.x, mech.pos.y, range, 0, 2 * Math.PI);
+  //           ctx.globalCompositeOperation = "color-burn";
+  //           ctx.fillStyle = "rgb(90,90,100)";
+  //           ctx.fill();
+  //           ctx.globalCompositeOperation = "source-over";
+
+  //           function pushAway(who) {
+  //             for (let i = 0, len = who.length; i < len; ++i) {
+  //               sub = Matter.Vector.sub(who[i].position, mech.pos);
+  //               dist = Matter.Vector.magnitude(sub);
+  //               if (dist < range) {
+  //                 knock = Matter.Vector.mult(Matter.Vector.normalise(sub), who[i].mass / 200);
+  //                 who[i].force.x += knock.x;
+  //                 who[i].force.y += knock.y;
+  //                 // player.force.x -= knock.x / 10;
+  //                 // player.force.y -= knock.y / 10;
+  //               }
+  //             }
+  //           }
+  //           pushAway(body);
+  //           pushAway(mob);
+  //           pushAway(bullet);
+  //           pushAway(powerUp);
+  //         } else {
+  //           mech.fieldCDcycle = game.cycle + 120;
+  //         }
+  //       } else if ((keys[32] || game.mouseDownRight) && mech.fieldMeter > 0.2) { //not hold but field button is pressed
+  //         mech.grabRange = 200 + 50 * Math.sin(game.cycle / 20)
+  //         mech.drawField();
+  //         mech.grabPowerUp();
+  //         mech.pushMobs();
+  //         mech.lookForPickUp();
+  //       } else if (mech.holdingTarget && mech.fireCDcycle < game.cycle) { //holding, but field button is released
+  //         mech.pickUp();
+  //       } else {
+  //         mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
+  //       }
+  //       mech.drawFieldMeter()
+  //     }
+  //   },
+  // ],
   // phaseBlocks(mask = 0x010111) {
   //   level.bodyCollisionFilterMask = mask;
   //   for (let i = 0, len = body.length; i < len; i++) {
