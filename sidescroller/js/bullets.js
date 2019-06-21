@@ -554,7 +554,7 @@ const b = {
     {
       name: "flak",
       ammo: 0,
-      ammoPack: 11,
+      ammoPack: 9,
       have: false,
       fire() {
         b.muzzleFlash(30);
