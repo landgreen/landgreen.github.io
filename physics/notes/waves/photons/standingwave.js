@@ -1,7 +1,8 @@
 (() => {
     const canvas = document.getElementById("standing-wave-canvas");
     const ctx = canvas.getContext("2d");
-    canvas.width = document.getElementsByTagName("article")[0].clientWidth;
+    canvas.style.backgroundColor = "#fff"
+    canvas.width = 500 //document.getElementsByTagName("article")[0].clientWidth;
     ctx.lineJoin = "round"
     ctx.lineCap = "round"
     ctx.lineWidth = 1;
@@ -31,7 +32,7 @@ function standing(canvas) {
     canvas.onclick = null; //stops the function from running on button click
     canvas.style.backgroundColor = "#000"
     const ctx = canvas.getContext("2d");
-    const width = canvas.width = 600;
+    const width = canvas.width = 500;
     const height = canvas.height = 400;
 
     let wavelength = 1 / 3;
