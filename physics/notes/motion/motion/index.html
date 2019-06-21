@@ -33,63 +33,28 @@
 	</header>
 	<article>
 		<p>
-			Physics explores how objects move through space and time.
+			Physics builds models that approximate how objects move.
 		</p>
-		<style>
-			.wrapper {
-				display: grid;
-				grid-gap: 10px;
-				grid-template-columns: [col] 495px [col] 100px;
-				grid-template-rows: [row] auto;
-			}
+		<svg id="matter-SVG" viewBox="0 0 585 150">
+			<rect y="2.5" x="2.5" height="145" width="500" fill="none" stroke="#556" stroke-width="5" rx="5" />
+			<path id="matter-measure" d="" stroke="#f65" fill="none" stroke-dasharray="3 6" stroke-width="1.5" opacity="0.4" />
 
-			.a {
-				grid-column: col / span 2;
-				grid-row: row;
-			}
+			<circle id="matter-target" cx="550" cy="75" r="12" fill="#f65" stroke="none" />
+			<g id="matter-vector" transform="translate(550 75) rotate(180)">
+				<line x1="0" y1="0" x2="0" y2="24" fill="none" stroke="#445" stroke-width="1.4" stroke-linecap="round" />
+				<polygon points="0,0 -3,-6.5 0,-6 3,-6.5" transform='translate(0 26)' stroke="none" fill="#556" />
+			</g>
+			<circle cx="550" cy="75" r="1.7" fill="#445" stroke="none" />
 
-			.b {
-				grid-column: col 2 / span 1;
-				grid-row: row;
-			}
-
-			.result {
-				text-align: left;
-				color: #556;
-			}
-
-			/* .circle{
-				height: 20px;
-				width: 20px;
-				border-radius: 50%;
-				background-color: #f65;
-				left: 15px;
-                position: relative;
-			} */
-		</style>
-		<div class="hide-on-mobile">
-			<div class="wrapper">
-				<div class="a">
-					<canvas id='matter' height='159' width='495'></canvas>
-				</div>
-				<div class="b">
-					<div class="result" id="x">x</div>
-					<div class="result" id="y">y</div>
-					<svg width="80" height="56">
-						<circle cx="30" cy="28" r="12" fill="#f65" stroke="none" />
-						<g id="vector" transform="translate(30 28) rotate(180)">
-							<line x1="0" y1="0" x2="0" y2="24" fill="none" stroke="#445" stroke-width="1.4" stroke-linecap="round" />
-							<polygon points="0,0 -3,-6.5 0,-6 3,-6.5" transform='translate(0 26)' stroke="none" fill="#445" />
-						</g>
-						<circle cx="30" cy="28" r="1.2" fill="#445" stroke="none" />
-					</svg>
-					<div class="result" id="Vx">Vx</div>
-					<div class="result" id="Vy">Vy</div>
-				</div>
-			</div>
-		</div>
+			<g font-size="18" stroke="none" fill="#556">
+				<text id="matter-x" x="513" y="15">x</text>
+				<text id="matter-y" x="513" y="45">y</text>
+				<text id="matter-Vx" x="513" y="115">Vx</text>
+				<text id="matter-Vy" x="513" y="145">Vy</text>
+			</g>
+		</svg>
 		<h1 class='underlined'>Position</h1>
-		<p>We use the symbol <strong>x</strong> for position in space with meters for units. You might be used to using <strong>x</strong> in other ways, but in physics it is reserved for position.</p>
+		<p>We use the symbol <strong>x</strong> for position with meters for units. You might be used to using <strong>x</strong> in other ways, but in physics it is reserved for position.</p>
 		<p>To represent a displacement we subtract the initial position from the final position. We use the Δ symbol to show change.</p>
 		<div class='definition'>
 			<h1>$$ \Delta x = x_f-x_i$$</h1>
