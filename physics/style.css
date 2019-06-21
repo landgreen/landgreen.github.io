@@ -395,6 +395,9 @@ header h1 a:hover,
   text-decoration: none;
 }
 
+header p {
+  color: #fff;
+}
 
 /* footer setup_________________________________*/
 .back {
