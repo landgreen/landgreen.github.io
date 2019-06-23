@@ -17,10 +17,31 @@ function matter() {
   let pause = true;
   SVGTarget.addEventListener("mouseleave", () => {
     pause = true;
+
+    //show info
+    // const x = atom[settings.highlightIndex].position.x;
+    // const y = atom[settings.highlightIndex].position.y;
+    // const displayLimit = 40
+    // const radius = atom[settings.highlightIndex].radius
+    // // document.getElementById("matter-measure").setAttribute("d", `M8 ${y} h${x - 8}  M${x} ${settings.height-8} V${y}`);
+
+    // document.getElementById("matter-x-label").setAttribute("x", (x - radius) / 2);
+    // document.getElementById("matter-x-label").setAttribute("y", y);
+    // if (x - radius > displayLimit) document.getElementById("matter-x-label").style.display = "inline"
+
+    // document.getElementById("matter-y-label").setAttribute("x", x);
+    // document.getElementById("matter-y-label").setAttribute("y", (settings.height + y + radius) / 2);
+    // if (settings.height - y - radius > displayLimit) document.getElementById("matter-y-label").style.display = "inline"
   });
+
   SVGTarget.addEventListener("mouseenter", () => {
     pause = false;
     if (!pause) requestAnimationFrame(cycle);
+
+    //hide info
+    // document.getElementById("matter-x-label").style.display = "none"
+    // document.getElementById("matter-y-label").style.display = "none"
+
   });
 
   let mouse = {
