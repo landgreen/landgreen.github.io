@@ -184,6 +184,15 @@ canvas,
   font-size: 1.75em;
 }
 
+.underlined-small {
+  color: #000;
+  margin-top: 2.5em;
+  margin-bottom: 0em;
+  border-bottom: 1px solid #aaa;
+  font-weight: 300;
+  font-size: 1.3em;
+}
+
 .center {
   text-align: center;
   padding: 0;
