@@ -44,6 +44,11 @@ function doppler(el) {
     window.onresize = function () {
         setupCanvas();
     };
+    canvas.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center"
+    });
 
     const one = {
         cycle: 0,
