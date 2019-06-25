@@ -1318,6 +1318,16 @@
 				<path id="superposition-wave-form-path" stroke-width='4' fill='none' stroke='#000' stroke-miterlimit="10" opacity="1" />
 				<path id="standing-wave-border" d="M0 0 v400" stroke='#000' stroke-width='4' fill="none" />
 			</svg>
+			<style>
+				#standing-wave-canvas {
+					/* background-color: rgba(255, 0, 0, 0.1); */
+					position: relative;
+					top: -425px;
+					left: 0px;
+					margin-bottom: -400px;
+				}
+			</style>
+			<canvas class="no-shadow" width="0" height="400" id="standing-wave-canvas"></canvas>
 		</div>
 		<div class="center">
 			<style>
@@ -1340,22 +1350,27 @@
 			<details>
 				<summary>results</summary>
 				<h3 id="list-standing"></h3>
-				<details>
-					<summary><strong>Extra Credit:</strong> Can you figure out an equation that produces those results?
-						<br>Use λ for the resonate wavelengths,
-						<br>L for the length of the region,
-						<br>n for any positive integer.</summary>
+				<div class="example-small">
 					<p>
-						Standing wave resonance in a bounded region occurs when the wavelength is even multiples of twice the length of the region.
+						Can you figure out an equation that produces those results?
 					</p>
-					<p>
-						$$2L = n \lambda $$
-						$$n = 1,2,3,4,5 \, \dots $$
-						\( \lambda \) = resonance wavelengths [m]
-						<br>\( L \) = length of bounded region [m]
-						<br>\( n \) = positive integers
-					</p>
-				</details>
+					Use λ for the resonate wavelengths
+					<br>L for the length of the region
+					<br>n for any positive integer
+					<details>
+						<summary><strong>Extra Credit:</strong></summary>
+						<p>
+							Standing wave resonance in a bounded region occurs when the wavelength is even multiples of twice the length of the region.
+						</p>
+						<p>
+							$$2L = n \lambda $$
+							$$n = 1,2,3,4,5 \, \dots $$
+							\( \lambda \) = resonance wavelengths [m]
+							<br>\( L \) = length of bounded region [m]
+							<br>\( n \) = positive integers
+						</p>
+					</details>
+				</div>
 			</details>
 		</div>
 	</div>

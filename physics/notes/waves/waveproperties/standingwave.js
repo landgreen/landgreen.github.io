@@ -1,7 +1,6 @@
 /*
 ---Todo-----
 add option for open on left or right (not negating the amplitude after a reflection)
-add option for circular cavity (not negating the amplitude after a reflection, plus starting every wave on the left)
 
 show a single wave reflecting
     show how it flips amplitude
@@ -21,19 +20,26 @@ const wave = function () {
     let searchStep = 1;
     const velocity = 400;
     let reflections = 64;
-    const totalPaths = 18; //how many paths are drawn in the SVG, the rest are just calculated for the superposition path
+    const totalPaths = 16; //how many paths are drawn in the SVG, the rest are just calculated for the superposition path
     let dampening = -1; //lower values simulate energy loss, but don't make the standing waves as distinct
     let wavelength = 6 * 100;
-    document.getElementById("wavelength").value = wavelength / 100;
 
 
     let phase = 100;
     phase = phase % wavelength; //makes the switch smoother
 
-    const width = Math.floor((document.body.clientWidth - 20) / 100) * 100 //scale width to even multiples of 100 pixels plus ten for borders
+    let width = Math.floor((document.body.clientWidth - 20) / 100) * 100 //scale width to even multiples of 100 pixels plus ten for borders
     document.getElementById("standing-wave").setAttribute("width", width);
     document.getElementById("standing-wave-border").setAttribute("d", "M0 0 v400 M" + width + " 0 v400");
-    //update answer to question based on width
+
+    if (width < 400) wavelength = 200
+    document.getElementById("wavelength").value = wavelength / 100;
+
+    const canvas = document.getElementById("standing-wave-canvas")
+    const ctx = canvas.getContext("2d");
+    canvas.width = width
+
+
     let out = "λ = "
     let standingWavelengths = []
     for (let i = 1; i < 50; i++) {
@@ -46,11 +52,12 @@ const wave = function () {
     document.getElementById("wave-search").addEventListener("click", () => {
         if (search) {
             search = false;
+            document.getElementById("wave-search").style.color = "#333"
         } else {
+            document.getElementById("wave-search").style.color = "#f06"
+
             search = true;
-
             // identify the next target
-
             for (let i = standingWavelengths.length; i > -1; i--) {
                 if (standingWavelengths[i] > wavelength) {
                     target = standingWavelengths[i]
@@ -64,6 +71,30 @@ const wave = function () {
             searchStep = (target - wavelength) / totalSteps;
         }
     }, false);
+
+    function waveSearch() {
+        if (search) {
+            const dist = target - wavelength;
+            percentDone = dist / (totalSteps * searchStep)
+
+            //slow in slow out smoothing
+            wavelength += 0.02 * searchStep
+            if (percentDone < 0.5) {
+                wavelength += 3 * searchStep * percentDone
+            } else {
+                wavelength += 3 * searchStep * (1 - percentDone)
+            }
+            // wavelength += 0.02 * searchStep + 0.98 * 2 * searchStep * percentDone
+            if (wavelength > target) {
+                wavelength = target
+                search = false;
+                document.getElementById("wave-search").style.color = "#333"
+            }
+            document.getElementById("wavelength-slider").value = wavelength / 100
+            document.getElementById("wavelength").value = wavelength / 100
+            phase = phase % wavelength; //makes the switch smoother
+        }
+    }
 
 
     document.getElementById("wavelength").addEventListener("input", () => {
@@ -100,7 +131,7 @@ const wave = function () {
     //     document.getElementById("dampening").value = -dampening
     // }, false);
 
-    function draw() {
+    function drawSVG() {
         // document.getElementById("incident-wave-form-path").setAttribute("stroke-dashoffset", -phase * 2);  
         phase += velocity / 60; //move the waves forward in time
         const frequency = 2 * Math.PI / wavelength
@@ -143,7 +174,7 @@ const wave = function () {
             if (draw) document.getElementById("wave-form-path-" + (j + 1)).setAttribute("d", d);
         }
 
-        //draw interference patter superposition
+        //draw interference pattern superposition
         const scale = 3.9 / reflections
         d = "M 1 " + origin.y + " L1 " + (sum[1] * scale + origin.y)
         for (let x = 1; x < width; ++x) {
@@ -153,29 +184,84 @@ const wave = function () {
         document.getElementById("superposition-wave-form-path").setAttribute("d", d);
     }
 
-    function waveSearch() {
-        if (search) {
-            const dist = target - wavelength;
-            percentDone = dist / (totalSteps * searchStep)
+    function drawCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.lineWidth = 3;
+        ctx.setLineDash([4, 4]);
 
-            //slow in slow out smoothing
-            wavelength += 0.02 * searchStep
-            if (percentDone < 0.5) {
-                wavelength += 3 * searchStep * percentDone
-            } else {
-                wavelength += 3 * searchStep * (1 - percentDone)
-            }
-            // wavelength += 0.02 * searchStep + 0.98 * 2 * searchStep * percentDone
-            if (wavelength > target) {
-                wavelength = target
-                search = false;
-            }
-            document.getElementById("wavelength-slider").value = wavelength / 100
-            document.getElementById("wavelength").value = wavelength / 100
-            phase = phase % wavelength; //makes the switch smoother
+        // document.getElementById("incident-wave-form-path").setAttribute("stroke-dashoffset", -phase * 2);  
+        phase += velocity / 60; //move the waves forward in time
+        const frequency = 2 * Math.PI / wavelength
+        let wave
+        let amplitude = 50
+        let offset = 0
+        let sum = []; //array that stores the superposition data from reflected and incident waves
+        sum[0] = Math.sin(frequency * phase) * amplitude //populate sum array
+        for (let i = 1; i < width; i++) {
+            sum[i] = 1
         }
-    }
 
+        for (let j = 0; j < reflections; j += 2) {
+            //reflected wave (starts on left)
+            const draw = (j < totalPaths) ? true : false;
+            amplitude *= dampening
+            offset += width
+
+            wave = amplitude * Math.sin(frequency * (offset - phase))
+            sum[0] += wave //adding wave contribution to superposition wave
+            if (draw) {
+                ctx.beginPath();
+                ctx.moveTo(-1, wave + origin.y)
+            }
+            for (let x = 0; x < width; x++) {
+                wave = Math.sin(frequency * (x + offset - phase)) * amplitude
+                sum[x] += wave //adding wave contribution to superposition wave
+                if (draw) ctx.lineTo(x, wave + origin.y)
+            }
+            if (draw) {
+                ctx.strokeStyle = "#0ac"
+                ctx.stroke();
+            }
+
+            //reflected wave (starts on right)
+            amplitude *= dampening
+            offset += width
+
+            wave = amplitude * Math.sin(frequency * (offset - phase))
+            if (draw) {
+                ctx.beginPath();
+                ctx.moveTo(width, wave + origin.y)
+            }
+            for (let i = 0, x = width; i < width; i++, x++) {
+                wave = Math.sin(frequency * (x + offset - width - phase)) * amplitude
+                sum[width - i] += wave; //adding wave contribution to superposition wave
+                if (draw) ctx.lineTo(width - i, wave + origin.y)
+            }
+            if (draw) {
+                ctx.strokeStyle = "#f06"
+                ctx.stroke();
+            }
+            ctx.globalAlpha -= 1.8 / totalPaths;
+            ctx.lineDashOffset += 2;
+        }
+
+        //draw interference pattern superposition
+        ctx.globalAlpha = 1;
+        ctx.lineDashOffset = 0;
+        ctx.setLineDash([]);
+        const scale = 3.9 / reflections
+        ctx.beginPath();
+        ctx.moveTo(1, origin.y)
+        ctx.lineTo(1, sum[1] * scale + origin.y)
+        for (let x = 1; x < width; ++x) {
+            ctx.lineTo(x, sum[x] * scale + origin.y)
+        }
+        ctx.lineTo(width, origin.y)
+        ctx.lineWidth = 4
+        ctx.strokeStyle = "#000"
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+    }
 
     let pause = true;
     const elZone = document.getElementById("standing-wave-zone");
@@ -193,7 +279,7 @@ const wave = function () {
     function cycle() {
         time++
         if (!pause) requestAnimationFrame(cycle);
-        draw();
+        drawCanvas();
         waveSearch();
     }
     requestAnimationFrame(cycle); //starts game loop
