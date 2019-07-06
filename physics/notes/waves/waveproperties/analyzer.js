@@ -112,7 +112,7 @@ function analyzer(el) {
         analyser.getByteTimeDomainData(dataArray);
         ctx.beginPath();
         for (let x = 0; x < bufferLength; x++) {
-            let y = 255 - dataArray[x];
+            let y = 2 * dataArray[x] - 255 / 2;
             ctx.lineTo(x, y);
         }
         ctx.lineWidth = 2;
