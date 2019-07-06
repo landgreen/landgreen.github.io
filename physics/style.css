@@ -23,7 +23,6 @@ fieldset {
   border: 0;
 }
 
-ol,
 ul {
   list-style: none;
   margin: 0;
@@ -229,7 +228,7 @@ canvas,
 }
 
 .derive {
-  color: #222;
+  color: #111;
   background-color: #eee;
   padding: 1em;
   border-radius: 1em;

@@ -20,7 +20,7 @@
   <script src="../../../lib/katex/katex.min.js"></script>
   <script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 
-  <script defer src="standingwave.js"></script>
+  <!-- <script defer src="standingwave.js"></script> -->
 
   <link rel="stylesheet" type="text/css" href="../../../style.css">
 </head>
@@ -41,7 +41,7 @@
       <!-- They were also surprised to discover that particles could produce wave-like <a href="https://en.wikipedia.org/wiki/Double-slit_experiment">interference patterns</a>. -->
     </p>
     <p>
-      The strangest result was that all these particles produced wave-like <a href="http://toutestquantique.fr/en/duality/">interference patterns</a>.
+      The strangest result was that these particles produced wave-like <a href="http://toutestquantique.fr/en/duality/">interference patterns</a>.
       <strong>The separate wave and particle models weren't accurate.</strong>
     </p>
     <details class="derive">
@@ -79,8 +79,8 @@
         but when applied to repeated experiments they have an unparalleled level of accuracy.
       </p>
       <p>
-        Quantum mechanics is typically understood after years of studying the underlying math.
-        Building an intuition is often a slow and confusing process.
+        An understanding of quantum mechanics is typically achieved after studying the underlying math.
+        Building an intuition without the math can be confusing, but here is a brief description.
       </p>
       <details class="derive">
         <summary>how quantum mechanics makes predictions</summary>
@@ -91,7 +91,7 @@
         </p>
         <p>
           The probability of measuring a particle in a particular state can also be calculated very accurately.
-          This is done by adding the positive and negative amplitudes of every possible wave function the particle could have to produce a <a href="..\waveproperties\index.html#interference">superposition</a>.
+          This is done by adding the positive and negative amplitudes of every <a href="https://www.youtube.com/watch?v=vSFRN-ymfgE">possible</a> wave function the particle could have to produce a <a href="..\waveproperties\index.html#interference">superposition</a>.
           When squared, the amplitude of that superposition predicts the probabilities of measuring the particle in each possible <a href="http://toutestquantique.fr/en/superposition/">state</a>.
         </p>
         <p>
@@ -128,14 +128,17 @@
 
         <h2 class='underlined-small'>The Copenhagen Interpretation</h2>
         <p>
-          An earlier interpretation of quantum mechanics says that after an interaction a single outcome randomly occurs.
-          The other possible outcomes in superposition are <a href="https://www.youtube.com/watch?v=fjZXqdUZDZA">collapsed</a>.
-          This interpretation also includes parallel worlds, but they vanish when the wave function collapses.
+          The Copenhagen interpretation was the first popular explanation of the math behind quantum mechanics.
+          It says that after an interaction a single outcome randomly occurs.
+          The other possible outcomes are used to calculate the superposition,
+          but they are <a href="https://www.youtube.com/watch?v=fjZXqdUZDZA">collapsed</a> after each interaction.
+
+          <!-- This interpretation uses parallel worlds to calculate , but they vanish when the wave function collapses. -->
         </p>
         <p>
           The Copenhagen interpretation sounds less exciting, but it's still very strange.
           After two particles interact, they become entangled.
-          Entangled particles will both collapse with either one is measured.
+          Entangled particles will both collapse when either one is measured.
           Additionally, the collapsed states have random, but matching properties, as if they are in communication.
           This collapse can occur instantly at any distance, but it doesn't allow meaningful information to travel faster than light.
         </p>
@@ -156,19 +159,21 @@
         <p>
           1.
           Atoms are hard to isolate.
-          They are frequently interacting with each other and their surroundings.
+          They are frequently interacting with their surroundings.
           For large groups of atoms this happens so frequently that measurable wave interference patterns don't have time to develop.
         </p>
         <p>
           2.
           A particle's wavelength decreases as mass increases.
-          Cats have a short wavelength because of their large mass.
-          The interference patterns from these short wavelengths are too short to measure.
+          Cats have a short wavelength because of their large mass, too short to measure with current technology.
         </p>
         <br>
         <p>
           We can observe some <a href="https://www.youtube.com/watch?v=xnWxtU2OUTE">quantum phenomena</a> at everyday sizes.
           The color of materials, rigidity of solids, conductivity, <a href="https://www.youtube.com/watch?v=zPqEEZa2Gis">superconductivity</a>, and magnetism are all based in quantum mechanics.
+        </p>
+        <p>
+          Quantum mechanics is behind many technologies like computers, cell phones, LEDs, lasers, MRIs, and GPS.
         </p>
         <p>
           An example of particles in superposition at the macroscopic scale is a <a href="http://toutestquantique.fr/en/bose-einstein-condensate/">Bose-Einstein condensate</a>.
@@ -177,10 +182,7 @@
           As their wavelengths begin to overlap, they enter a shared quantum state.
           A group of particles in this shared state behave as if they had a single wave function.
         </p>
-        <p>
-          Quantum mechanics is behind many technologies like computers, cell phones, LEDs, lasers, MRIs, and GPS.
 
-        </p>
       </details>
       <p>
         It is easy to see quantum effects at everyday scales with photons of light.
@@ -999,12 +1001,242 @@
       </details>
     </div>
 
+    <h2 class='underlined'>Wavelength and Momentum</h2>
+    <p>We can calculate the quantum wavelength of a particle in terms of it's momentum with the equation below.</p>
+    <details id="atomic-orbitals" class="derive">
+      <summary>derivation of particle wavelengths</summary>
+      <p>
+        Special relativity explains the relationship between energy and momentum.
+        We can use that relationship to find how wavelength and momentum relate.
+      </p>
+      $$E^2 = (pc)^2 +(mc^2)^2 $$
+      <p>Photons have no mass, so the equation simplifies.</p>
+      $$E^2 = (pc)^2$$
+      $$E = pc$$
+      <br>
+      $$E = hf$$
+      $$E = \frac{hc}{\lambda}$$
+      $$pc = \frac{hc}{\lambda}$$
+      $$p = \frac{h}{\lambda}$$
+      $$\lambda = \frac{h}{p}$$
+    </details>
+    <div class='definition'>
+      <h1> $$\lambda = \frac{h}{p}$$</h1>
+      \(\lambda\) = wavelength [m, meter]
+      <br>\(h\) = 6.626 × 10<sup>-34</sup> = Planck's constant [J s]
+      <br>\(p\) = momentum [kg m/s]
+    </div>
+    <p>
+      Photons have no mass, but they they still have momentum.
+      You can actually propel a space ship like a sail boat, but with light instead of wind.
+      When photons collide with the <a href="http://www.planetary.org/explore/projects/lightsail-solar-sailing/">light sail</a>, they bounce off pushing the sail forward.
+    </p>
+
+    <div class='example'>
+      <strong>Example:</strong> What is the momentum of a photon of green light? (540 nm)
+      <details>
+        <summary>solution</summary>
+        $$\lambda = \frac{h}{p}$$
+        $$p = \frac{h}{\lambda}$$
+        $$p = \frac{6.626 \times 10^{-34}}{540 \times 10^{-9}}$$
+        $$p = 1.2 \times 10^{-27} \, \mathrm{kg \tfrac{m}{s}}$$
+        <br>
+        <p>
+          If we fired photons at a massive object the photons should transfer their momentum because of conservation of momentum.
+        </p>
+        <strong>Extra Credit:</strong> How many green photons would it take to accelerate a 1 kg body from rest to 1 m/s?
+        (assume the green photons reflect off the 1 kg object)
+        <details>
+          <summary>strategy</summary>
+          <p>Use conservation of momentum. </p>
+          $$p_{\mathrm{(initial)}} = p_{\mathrm{(final)}}$$
+          $$p_{\mathrm{(photons)}} + p_{\mathrm{(body)}} = p_{\mathrm{(photons)}} + p_{\mathrm{(body)}}$$
+          <p>The body is initially at rest. We can set it to zero.</p>
+          $$p_{\mathrm{(photons)}} = p_{\mathrm{(photons)}} + p_{\mathrm{(body)}}$$
+          <p>After the photons are reflected they will have the same momentum but in the opposite direction.</p>
+          $$p_{\mathrm{(photons)}} = -p_{\mathrm{(photons)}} + p_{\mathrm{(body)}}$$
+          $$2p_{\mathrm{(photons)}} = p_{\mathrm{(body)}}$$
+          <p>We can just add in a variable "n" to represent the number of total photons and scale "n" by the momentum of a single photon.</p>
+          $$2np_{\mathrm{(photon)}} = p_{\mathrm{(body)}}$$
+        </details>
+        <details>
+          <summary>solution</summary>
+          $$2np_{\mathrm{(photon)}} = p_{\mathrm{(body)}}$$
+          $$2np_{\mathrm{(photon)}} = mv$$
+          $$2np_{\mathrm{(photon)}} = (1)(1)$$
+          $$np_{\mathrm{(photon)}} = \tfrac{1}{2}$$
+          $$n = \frac{1}{2p_{\mathrm{(photon)}}}$$
+          <br>
+          $$p = 1.2 \times 10^{-27} \, \mathrm{kg \tfrac{m}{s}}$$
+          $$n = \frac{1}{(2)(1.2 \times 10^{-27})}$$
+          $$n= 4.16 \times 10^{26}\,\mathrm{photons}$$
+        </details>
+    </div>
+
+    </details>
+
+    <p>
+      In 1924 Louis de Broglie proposed that particles with mass might have a wavelength similar to a photon's.
+      This turned out to be accurate. Electrons, atoms, even large molecules all have a measurable quantum wavelength based on their momentum.
+    </p>
+    $$\lambda = \frac{h}{p} \quad \quad \lambda = \frac{h}{mv}$$
+
+    <table>
+      <tr>
+        <th>particle</th>
+        <th>mass (kg)</th>
+        <th>speed (m/s)</th>
+        <th>wavelength (m)</th>
+      </tr>
+      <tr>
+        <td>radio photon</td>
+        <td>0</td>
+        <td>c</td>
+        <td>≈ 1 </td>
+      </tr>
+      <tr>
+        <td>electron</td>
+        <td>9.1 × 10<sup>-31</sup></td>
+        <td>1</td>
+        <td>≈ 10<sup>-4</sup> </td>
+      </tr>
+      <tr>
+        <td>visible photon</td>
+        <td>0</td>
+        <td>c</td>
+        <td>≈ 10<sup>-7</sup> </td>
+      </tr>
+      <tr>
+        <td>oxygen atom</td>
+        <td>2.7 × 10<sup>-26</sup></td>
+        <td>1</td>
+        <td>≈ 10<sup>-8</sup> </td>
+      </tr>
+      <tr>
+        <td>gamma ray</td>
+        <td>0</td>
+        <td>c</td>
+        <td>≈ 10<sup>-12</sup> </td>
+      </tr>
+      <tr>
+        <td>electron</td>
+        <td>9.1 × 10<sup>-31</sup></td>
+        <td>0.5c</td>
+        <td>≈ 10<sup>-12</sup> </td>
+      </tr>
+      <tr>
+        <td>cat</td>
+        <td>4</td>
+        <td>1</td>
+        <td>≈ 10<sup>-36</sup> </td>
+      </tr>
+
+    </table>
+    <p>
+      Particles the size of a cat have extremely small wavelengths but, cats aren't exactly a single quantum particle.
+      The equation begins to lose meaning at the macroscopic scale.
+      This agrees with our everyday observations for cats. They don't have a measurable wave-nature, although they are very sneaky.
+    </p>
+
+    <div class='example'>
+      <strong>Example:</strong> Find the wavelength of a proton moving at 30 m/s.
+      <details>
+        <summary>Subatomic Particles Data Table</summary>
+        <table>
+          <tr>
+            <th>name</th>
+            <th>symbol</th>
+            <th>charge (e)</th>
+            <th>mass (kg)</th>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Proton">proton</a>
+            </td>
+            <td> \(p^+\) </td>
+            <td>+1</td>
+            <td>1.6726 × 10<sup>-27</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Electron">electron</a>
+            </td>
+            <td>\(e^-\) </td>
+            <td>−1</td>
+            <td>9.1094 × 10<sup>-31</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Positron">positron</a>
+            </td>
+            <td>\(e^+\) </td>
+            <td>+1</td>
+            <td>9.1094 × 10<sup>-31</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Neutron">neutron</a>
+            </td>
+            <td>\(n\) </td>
+            <!-- <td>0</td> -->
+            <td>0</td>
+            <td>‎1.6749 × 10<sup>-27</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Neutrino">neutrino</a>
+            </td>
+            <td>\(v_e\) </td>
+            <!-- <td>0</td> -->
+            <td>0</td>
+            <td>1.78 × 10<sup>-36</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Neutrino">antineutrino</a>
+            </td>
+            <td>\(\bar{v}_e\) </td>
+            <!-- <td>0</td> -->
+            <td>0</td>
+            <td>1.78 × 10<sup>-36</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Muon">muon</a>
+            </td>
+            <td>\( \mu^-\) </td>
+            <!-- <td>−1.602 × 10<sup>-19</sup> </td> -->
+            <td>−1</td>
+            <td>1.8835 × 10<sup>-28</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Alpha_particle">alpha</a>
+            </td>
+            <td>\( \small{}^4_2 \normalsize \alpha\) </td>
+            <!-- <td>+3.204 × 10<sup>-19</sup> </td> -->
+            <td>+2</td>
+            <td>6.6447 × 10<sup>-27</sup> </td>
+          </tr>
+        </table>
+      </details>
+
+      <details>
+        <summary>solution</summary>
+        $$\lambda = \frac{h}{mv}$$
+        $$\lambda = \frac{6.626 \times 10^{-34}}{(1.67 \times 10^{-27})(30)}$$
+        $$\lambda = 1.32 \times 10^{-8} \, \mathrm{m}$$
+      </details>
+    </div>
+
+
+
     <h2 class='underlined'>Emission and Absorption</h2>
     <p>
       Each electron in an atom can only have an energy that exactly matches an atomic orbital.
     </p>
     <details id="atomic-orbitals" class="derive">
-      <summary>more about atomic orbitals</summary>
+      <summary>quantum mechanics and atomic orbitals</summary>
       <p>
         Two bodies can <a href="../../gravity/circular/index.html#circular-orbits">orbit</a> each other if they experience an attractive force.
         Gravitational attraction keeps the Earth orbiting the Sun every year.
@@ -1016,11 +1248,11 @@
       <p>
         Quantum mechanics tells us that electrons can be described by a probability wave that represents the odds of finding an electron in a given state.
         As an electron tries to orbit the nucleus in both clockwise and counterclockwise directions, the electron's probability wave destructively interferes with itself.
-        This limits the wavelengths to values that allow <a href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
+        This limits the wavelengths to values that allow orbital <a href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
         We say that the allowed wavelengths are <a href="http://toutestquantique.fr/en/quantization/">quantized</a>.
         <strong>Quantizing</strong> means to restrict a variable to specific values.
       </p>
-
+      <!-- 
       <div id="standing-wave-zone">
         <canvas class="center" id="standing-wave-canvas" width="400" height='100' onclick="standing(this)"></canvas>
         <style>
@@ -1043,20 +1275,20 @@
         This simulation of a circular standing wave has some parallels to how electron orbitals form.
         The red and blue are possible clockwise and counterclockwise paths.
         For most wavelengths these paths interfere destructively, but at resonant wavelengths the paths interfere constructively to produce a standing wave.
-      </p>
+      </p> -->
       <p>
-        Another analogy for atomic orbitals is the <a href="https://www.acs.psu.edu/drussell/Demos/MembraneCircle/Circle.html">vibrations of a circular drum</a>.
+        An analogy for atomic orbitals is the <a href="https://www.acs.psu.edu/drussell/Demos/MembraneCircle/Circle.html">vibrations of a circular drum</a>.
       </p>
       <br>
       <p>
         In addition to quantizing the wavelength, there is another restriction.
-        Two electrons can't form the exact same wave due to a quantum interaction called the <a href="https://en.wikipedia.org/wiki/Pauli_exclusion_principle">Pauli exclusion principle</a>.
+        Two electrons can't form the exact same wave due to a quantum interaction called the Pauli exclusion principle.
         Four quantum numbers are used to describe the electron's wave.
         These numbers must be different for each electron.
       </p>
       <a href="https://en.wikipedia.org/wiki/Atomic_orbital"> <img src="Hydrogen_Density_Plots.png" width="100%"> </a>
       <p>
-        These are the actual allowed 3-D <a href="http://toutestquantique.fr/en/atoms/">states</a> for electrons in a Hydrogen atom.
+        This image is a 2-D slice of the allowed 3-D <a href="http://toutestquantique.fr/en/atoms/">states</a> for electrons in a Hydrogen atom.
         Each electron in an atom or molecule must occupy a different wave state. This state determines its wavelength, frequency and energy.
       </p>
     </details>
@@ -1341,7 +1573,7 @@
       <p>
         <a href="https://apod.nasa.gov/apod/ap180926.html">Sunlight</a> is mostly thermal radiation with large sections of absorption from the molecules in Earth's atmosphere.
       </p>
-      <svg viewbox='25 0 800 600'>
+      <svg viewBox='25 0 800 600'>
         <g transform="translate(66.009356,-172.95341)">
           <g style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
             <text x="37.170357" y="712.49231">
