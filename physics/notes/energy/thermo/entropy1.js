@@ -49,6 +49,7 @@ function entropy1() {
     }
     removeAll(atom);
     atom = [];
+    draw();
   });
 
   canvas.addEventListener("mousedown", event => {
@@ -61,8 +62,8 @@ function entropy1() {
       x: (event.offsetX * canvas.width) / canvas.clientWidth,
       y: (event.offsetY * canvas.height) / canvas.clientHeight
     };
-    const spread = 10;
-    for (let i = 0; i < 10; ++i) {
+    const spread = 1;
+    for (let i = 0; i < 20; ++i) {
       addAtom(mouse.x + spread * (Math.random() - 0.5), mouse.y + spread * (Math.random() - 0.5));
     }
   });
