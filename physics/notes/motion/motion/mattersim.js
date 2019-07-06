@@ -57,7 +57,8 @@ function matter() {
 
 
   SVGTarget.addEventListener("mousedown", event => {
-    if (!settings.pause) { // && window.innerWidth > 650
+    if (!pause) { // && window.innerWidth > 650
+      pause = false;
       const cWidth = SVGTarget.clientWidth || SVGTarget.parentNode.clientWidth
       const cHeight = SVGTarget.clientHeight || SVGTarget.parentNode.clientHeight
       mouse.x = event.offsetX * 585 / cWidth
@@ -101,6 +102,9 @@ function matter() {
           }
           break;
       }
+    } else {
+      pause = false;
+      requestAnimationFrame(cycle);
     }
   });
 
@@ -110,9 +114,9 @@ function matter() {
   }
 
   // disable middle mouse click scroll
-  SVGTarget.onmousedown = function (event) {
-    if (event.button === 1) return false;
-  }
+  // SVGTarget.onmousedown = function (event) {
+  //   if (event.button === 1) return false;
+  // }
 
 
   //physics engine
