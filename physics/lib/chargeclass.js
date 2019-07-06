@@ -6,10 +6,12 @@ class Charge {
     velocity = {
       x: 0,
       y: 0
-    }
+    },
+    // history = [],
   ) {
     this.position = position;
     this.velocity = velocity;
+    // this.history = [position, position];
     if (type === "e") {
       this.canMove = true;
       this.name = "electron";
@@ -102,6 +104,7 @@ class Charge {
       });
     }
   }
+
 
   // static clickStart(id, message = "click to start simulation", font = "30px Arial") {
   //   var canvas = document.getElementById(id);
@@ -335,6 +338,124 @@ class Charge {
       }
     }
   }
+
+  // static physicsWave(who) {
+
+  //   //track 2-D position history of particle for last 100ish positions
+  //   for (let i = 0, len = who.length; i < len; ++i) {
+  //     // console.log(who[0].history, who[i].position)
+  //     who[i].history.push(who[i].position)
+  //     if (who[i].history.length > canvas.width) who[i].history.shift();
+  //   }
+
+
+  //   const field = new Array(canvas.width)
+  //   //populate 2D vector field for electric field
+  //   for (let x = 0, width = canvas.width; x < width; x++) {
+  //     field[x] = []
+  //     for (let y = 0, height = canvas.height; y < height; y++) {
+  //       field[x].push({
+  //         x: 0,
+  //         y: 0
+  //       })
+  //     }
+  //   }
+
+  //   const mag = 0.3;
+  //   const waveSpeed = 2;
+  //   const minDistance = 10
+  //   for (let x = 0, width = canvas.width; x < width; x++) {
+  //     for (let y = 0, height = canvas.height; y < height; y++) {
+  //       for (let i = 0, len = who.length; i < len; ++i) {
+  //         // calculate the distance to each charge
+  //         const dxWave = who[i].position.x - x;
+  //         const dyWave = who[i].position.y - y;
+  //         const distanceWave = Math.sqrt((dxWave * dxWave + dyWave * dyWave) / waveSpeed)
+  //         const index = who[i].history.length - Math.ceil(distanceWave)
+  //         // pick a position in the charge's history based on that distance
+  //         if (who[i].history[index]) {
+  //           const position = who[i].history[index]
+  //           const dx = position.x - x
+  //           const dy = position.y - y
+  //           const distance2 = Math.max(dx * dx + dy * dy, minDistance);
+  //           // add to electric field vector array based on older distance
+  //           field[x][y].x += mag * dx * who[i].charge / distance2
+  //           field[x][y].y += mag * dy * who[i].charge / distance2
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   //draw field on canvas
+  //   ctx.beginPath();
+  //   for (let x = 0, width = canvas.width; x < width; x += 10) {
+  //     for (let y = 0, height = canvas.height; y < height; y += 10) {
+  //       ctx.moveTo(x, y);
+  //       ctx.lineTo(x + field[x][y].x / mag * 100, y + field[x][y].y / mag * 100);
+  //     }
+  //   }
+  //   ctx.strokeStyle = "#000"
+  //   ctx.stroke();
+
+
+  //   //accelerate each particle based on the electric field map
+  //   for (let i = 0, len = who.length; i < len; ++i) {
+  //     if (who[i].canMove) {
+
+  //       //change position from velocity
+  //       who[i].position.x += who[i].velocity.x;
+  //       who[i].position.y += who[i].velocity.y;
+
+  //       //friction
+  //       const friction = 0.98
+  //       who[i].velocity.x *= friction;
+  //       who[i].velocity.y *= friction;
+
+  //       //bounds
+  //       const range = -15
+  //       for (let i = 0, len = who.length; i < len; ++i) {
+  //         if (who[i].canMove) {
+  //           if (who[i].position.x > canvas.width + range) {
+  //             who[i].velocity.x = 0; //-Math.abs(who[i].velocity.x)
+  //             who[i].position.x = canvas.width + range;
+  //           } else if (who[i].position.x < -range) {
+  //             who[i].velocity.x = 0; //Math.abs(who[i].velocity.x)
+  //             who[i].position.x = -range;
+  //           }
+  //           if (who[i].position.y > canvas.height + range) {
+  //             who[i].velocity.y = 0; //-Math.abs(who[i].velocity.y)
+  //             who[i].position.y = canvas.height + range;
+  //           } else if (who[i].position.y < -range) {
+  //             who[i].velocity.y = 0; //Math.abs(who[i].velocity.y)
+  //             who[i].position.y = -range;
+  //           }
+  //         }
+  //       }
+
+  //       //remove this charge's contribution to the shared electric field
+  //       const x = Math.round(who[i].position.x)
+  //       const y = Math.round(who[i].position.y)
+  //       const dx = who[i].position.x - x
+  //       const dy = who[i].position.y - y
+  //       const distance2 = Math.max(dx * dx + dy * dy, minDistance);
+  //       const removeField = {
+  //         x: mag * dx / distance2 * who[i].charge,
+  //         y: mag * dy / distance2 * who[i].charge
+  //       }
+  //       // add to electric field vector array based on older distance
+  //       //accelerate from electric field
+  //       const fieldMinusWho = {
+  //         x: field[x][y].x - removeField.x,
+  //         y: field[x][y].y - removeField.y
+  //       }
+  //       who[i].velocity.x -= fieldMinusWho.x * who[i].charge
+  //       who[i].velocity.y -= fieldMinusWho.y * who[i].charge
+  //     }
+  //   }
+  // }
+
+
+
 
   static physicsAll(who, friction = 0.99, minDistance2 = 500, strength = 200) {
     for (let i = 0, len = who.length; i < len; ++i) {
