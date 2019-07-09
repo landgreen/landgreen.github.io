@@ -19,6 +19,7 @@
 	<script src="../../../lib/katex/katex.min.js"></script>
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 	<link rel="stylesheet" href="../../../style.css">
+	<script src='../../../lib/function-graph-SVG.js'></script>
 </head>
 
 <body>
@@ -28,15 +29,18 @@
 		</h1>
 	</header>
 	<article>
-
-		$$v_{\mathrm{avg}} = \frac{\Delta x}{\Delta t} \quad \quad a_{\mathrm{avg}} = \frac{\Delta v}{\Delta t} $$
 		<p>
-			These equations give us the average velocity and acceleration.
-			They are useful because they are simple and easy,
-			but they don't give exact values for velocity or acceleration, just an average.
+			Kinematics is a branch of physics that describes the motion of objects in terms of position, velocity, acceleration, and time.
 		</p>
-
+		<div class="example-small">
+			$$v_{\mathrm{avg}} = \frac{\Delta x}{\Delta t} \quad \quad a_{\mathrm{avg}} = \frac{\Delta v}{\Delta t} $$
+			<p>
+				We've already learned about the equations for <a href="../../motion/motion/index.html#velocity">average velocity</a> and <a href="../../motion/motion/index.html#acceleration">average acceleration</a>.
+				They are useful, but they don't give exact values for velocity or acceleration, just an average.
+			</p>
+		</div>
 		<div class="example">
+			<p>In the position vs. time graph below, each path from A to B has a different acceleration, but they all have some properties in common.</p>
 			<svg id="SVG-graph-0" viewBox="0 0 600 300" title="average velocity paths">
 				<path stroke="#f3f3f3" stroke-width="1" fill="none" d="M 70.5 0  v 300M 120.5 0  v 300M 170.5 0  v 300M 220.5 0  v 300M 270.5 0  v 300M 320.5 0  v 300M 370.5 0  v 300M 420.5 0  v 300M 470.5 0  v 300M 520.5 0  v 300M 570.5 0  v 300M 0 230.5  h 600M 0 180.5  h 600M 0 130.5  h 600M 0 80.5  h 600M 0 30.5  h 600"></path>
 				<g stroke-width="4" fill="none" opacity="0.5">
@@ -66,7 +70,7 @@
 				<text x="33" y="6" transform="rotate(-90, 33, 3)" style="fill: rgb(0, 0, 0); font-size: 16px; text-anchor: end; font-family: monospace;">position (m)</text>
 
 			</svg>
-			<!-- <script src='../../../lib/function-graph-SVG.js'></script>
+			<!-- 
 			<svg id="SVG-graph-0" viewBox="0 0 600 300"></svg>
 			<script defer>
 				funGraphSVG("SVG-graph-0", x => 0, {
@@ -80,8 +84,25 @@
 					yLabel: "position (m)",
 				});
 			</script> -->
-
-			<strong>Example:</strong> What is the average velocity for each path from A to B?
+			<strong>Example:</strong> How much time does each path from A to B take?
+			<details>
+				<summary>solution</summary>
+				<p>They all take the same time.</p>
+				$$\Delta t = t_f - t_i$$
+				$$\Delta t = 55\,\mathrm{s}-5\,\mathrm{s}$$
+				$$\Delta t = 50\,\mathrm{s}$$
+			</details>
+			<br>
+			<strong>Example:</strong> What is the <strong>displacement</strong> for each path.
+			<details>
+				<summary>solution</summary>
+				<p>Each path travels a different distance, but they all have the same displacement.</p>
+				$$\Delta x = x_f - x_i$$
+				$$\Delta x = 25\,\mathrm{m}-5\,\mathrm{m}$$
+				$$\Delta x = 20\,\mathrm{m}$$
+			</details>
+			<br>
+			<strong>Example:</strong> What is the average velocity for each path?
 			<details>
 				<summary>solution</summary>
 				<p>
@@ -119,16 +140,185 @@
 				$$v_{\mathrm{avg}} = \frac{20\, \mathrm{m}}{45\, \mathrm{s}}$$
 				$$v_{\mathrm{avg}} = 0.\overline{44} \, \mathrm{\frac{m}{s}}$$
 			</details>
+			<br>
+			<strong>Question:</strong> What is different about each path?
+			<details>
+				<summary>answer</summary>
+				<p>
+					Each path has a different:
+					<li>acceleration</li>
+					<li>initial velocity</li>
+					<li>final velocity</li>
+					<li>distance traveled</li>
+					<li>color</li>
+				</p>
+			</details>
+		</div>
+
+		<div class="example">
+			<svg id="SVG-graph-3" viewBox="0 0 600 300" style="user-select: none; cursor: crosshair;">
+				<path d="M 70.5 0  v 280.5M 120.5 0  v 280.5M 170.5 0  v 280.5M 220.5 0  v 280.5M 270.5 0  v 280.5M 320.5 0  v 280.5M 370.5 0  v 280.5M 420.5 0  v 280.5M 470.5 0  v 280.5M 520.5 0  v 280.5M 570.5 0  v 280.5M 20.5 230.5  h 600M 20.5 180.5  h 600M 20.5 130.5  h 600M 20.5 80.5  h 600M 20.5 30.5  h 600" style="stroke: rgb(221, 221, 221); fill: none; stroke-width: 1;"></path>
+				<!-- <circle id="point-mouse" fill="#000" stroke="none" cx="70" cy="230" r="6" opacity="0.6" display="none"></circle> -->
+				<g fill="#015" stroke="none">
+					<circle id="point-a" cx="70" cy="230" r="5"></circle>
+					<circle id="point-b" cx="520" cy="30" r="5"></circle>
+				</g>
+				<g font-size="20px" fill="#222" stroke="none">
+					<text id="text-a" x="47" y="237">A</text>
+					<text id="text-b" x="530" y="37">B</text>
+				</g>
+				<path d="M 70.5 280.5  v 3M 120.5 280.5  v 3M 170.5 280.5  v 3M 220.5 280.5  v 3M 270.5 280.5  v 3M 320.5 280.5  v 3M 370.5 280.5  v 3M 420.5 280.5  v 3M 470.5 280.5  v 3M 520.5 280.5  v 3M 570.5 280.5  v 3M 20.5 230.5  h -3M 20.5 180.5  h -3M 20.5 130.5  h -3M 20.5 80.5  h -3M 20.5 30.5  h -3" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path>
+				<text x="598" y="274" style="fill: rgb(0, 0, 0); font-size: 16px; text-anchor: end; font-family: monospace;">time (s)</text>
+				<text x="33" y="6" transform="rotate(-90, 33, 3)" style="fill: rgb(0, 0, 0); font-size: 16px; text-anchor: end; font-family: monospace;">position (m)</text>
+			</svg>
+			<div class="center">
+				<style>
+					#acceleration-slider {
+						width: 300px;
+					}
+
+					@media screen and (max-width: 650px) {
+						#acceleration-slider {
+							width: 100px;
+						}
+					}
+
+					@media screen and (max-width: 400px) {
+						#acceleration-slider {
+							width: 50px;
+						}
+					}
+				</style>
+				acceleration =
+				<input id='acceleration-slider' type="range" min="-0.1" max="0.1" step="0.001" value="0">
+				<input id='acceleration' type="number" step="0.001" value="0" style="width: 80px;"> m/s²
+			</div>
+			<script>
+				accelerationGraph()
+
+				function accelerationGraph() {
+					const SVG_PATH = document.getElementById("SVG-graph-3")
+					const POINT_MOUSE = document.getElementById("point-mouse")
+					const POINT_A_PATH = document.getElementById("point-a");
+					const POINT_B_PATH = document.getElementById("point-b");
+					const TEXT_A_PATH = document.getElementById("text-a");
+					const TEXT_B_PATH = document.getElementById("text-b");
+
+					const WIDTH = 600;
+					const HEIGHT = 300;
+
+					let tf = 50;
+					let ti = 5;
+					let xf = 25;
+					let xi = 5;
+					let u = 0.444444444444444;
+					let v = 0.444444444444444;
+					let a = 0;
+					let settings = {
+						x0: 20,
+						y0: 280,
+						// stroke: "none",
+						stroke: "rgba(0,130,255,0.5)",
+						strokeWidth: 9,
+						// fill: "rgba(255,0,0,0.2)",
+						// positiveOnly: true,
+						// gridSize: 50,
+						showGrid: false,
+						// xLabel: "time (s)",
+						// yLabel: "position (m)",
+						scale: 10
+						// showMouseCoords: true,
+					}
+					graph()
+
+					settings.updatePath = true
+
+					document.getElementById("acceleration").addEventListener("input", event => {
+						a = document.getElementById("acceleration").value
+						document.getElementById("acceleration-slider").value = a;
+						graph()
+					});
+
+					document.getElementById("acceleration-slider").addEventListener("input", event => {
+						a = document.getElementById("acceleration-slider").value
+						document.getElementById("acceleration").value = a
+						graph()
+					});
+
+
+					// SVG_PATH.addEventListener("mouseleave", () => {
+					// 	POINT_MOUSE.style.display = "none"
+					// });
+
+					// SVG_PATH.addEventListener("mouseenter", () => {
+					// 	POINT_MOUSE.style.display = "block"
+					// });
+
+					// SVG_PATH.addEventListener("mousemove", event => {
+					// 	const mouse = {
+					// 		x: event.offsetX * WIDTH / SVG_PATH.clientWidth,
+					// 		y: event.offsetY * HEIGHT / SVG_PATH.clientHeight
+					// 	}
+					// 	POINT_MOUSE.setAttribute("cx", mouse.x);
+					// 	POINT_MOUSE.setAttribute("cy", mouse.y);
+					// });
+					SVG_PATH.addEventListener("mousedown", event => {
+						const mouse = {
+							x: event.offsetX * WIDTH / SVG_PATH.clientWidth,
+							y: event.offsetY * HEIGHT / SVG_PATH.clientHeight
+						}
+
+						if (mouse.x > 320) {
+							xf = (280 - mouse.y) / 10;
+							tf = (mouse.x - 20) / 10;
+							POINT_B_PATH.setAttribute("cy", mouse.y);
+							POINT_B_PATH.setAttribute("cx", mouse.x);
+							TEXT_B_PATH.setAttribute("y", mouse.y + 7);
+							TEXT_B_PATH.setAttribute("x", mouse.x + 10);
+						} else {
+							xi = (280 - mouse.y) / 10;
+							ti = (mouse.x - 20) / 10;
+							POINT_A_PATH.setAttribute("cy", mouse.y);
+							POINT_A_PATH.setAttribute("cx", mouse.x);
+							TEXT_A_PATH.setAttribute("y", mouse.y + 7);
+							TEXT_A_PATH.setAttribute("x", mouse.x - 23);
+						}
+						graph()
+					});
+
+					function graph() {
+						u = (xf - xi) / (tf - ti) - a / 2 * (tf - ti)
+						v = (xf - xi) / (tf - ti) + a / 2 * (tf - ti)
+						funGraphSVG("SVG-graph-3", x => xi + u * (x - ti) + a / 2 * (x - ti) * (x - ti), settings);
+					}
+				}
+			</script>
+			<p>
+				There are many ways to move from A to B, but
+				if the acceleration is limited to a single constant value there is only one possible way.
+			</p>
+			<strong>Question:</strong> Set the acceleration to 0.05 m/s².
+			Write a short description of the object's velocity as it moves from A to B.
+			<details>
+				<summary>answer</summary>
+				<p>(At the default A and B positions)</p>
+				<p>
+					The object starts at point A moving backwards.
+					First it slows down to a stop.
+					Then it moves forward while speeding up until it arrives at B.
+				</p>
+			</details>
 		</div>
 
 		<h1 class='underlined'>Constant Acceleration</h1>
 		<p>
-			If an object's <strong>acceleration is constant</strong> we can predict the exact path,
-			with positions and velocities at any point in time.
+			An object's acceleration determines the way it moves.
+			When acceleration is constant we can predict position and velocity at any point in time.
+			These predictions come from the <strong>equations of motion</strong>.
 		</p>
 		<div class="derive">
 			<details>
-				<summary>derivation of equations of motion for constant acceleration</summary>
+				<summary>derivation of the equations of motion</summary>
 				<p>
 					The first equation is the average acceleration equation rearranged with acceleration as a constant value.
 				</p>
@@ -136,30 +326,65 @@
 				$$a = \frac{v - u}{\Delta t}$$
 				$$a \Delta t = v - u$$
 				$$\large \boxed{v = u + a \Delta t}$$
+				<br>
 				<p>
-					The second equation comes from how average velocity works when acceleration is constant.
+					When acceleration is constant, velocity changes at a constant rate.
+					This means that the average velocity equals half of the initial velocity plus the final velocity.
 				</p>
+				<svg id="SVG-graph-2" viewBox="0 0 580 210">
+					<path d="M 67.5 0  v 190.5M 117.5 0  v 190.5M 167.5 0  v 190.5M 217.5 0  v 190.5M 267.5 0  v 190.5M 317.5 0  v 190.5M 367.5 0  v 190.5M 417.5 0  v 190.5M 467.5 0  v 190.5M 517.5 0  v 190.5M 567.5 0  v 190.5M 17.5 140.5  h 580M 17.5 90.5  h 580M 17.5 40.5  h 580" style="stroke: rgb(221, 221, 221); fill: none; stroke-width: 1;"></path>
+					<path d="M 17.5 0 L 17.5 210 M 0 190.5 L 580 190.5" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path><text x="67.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">2</text><text x="117.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">4</text><text x="167.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">6</text><text x="217.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">8</text><text x="267.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">10</text><text x="317.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">12</text><text x="367.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">14</text><text x="417.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">16</text><text x="467.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">18</text><text x="517.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">20</text><text x="567.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">22</text><text x="12.5" y="144.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">2</text><text x="12.5" y="94.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">4</text><text x="12.5" y="44.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">6</text>
+					<path d="M 67.5 190.5  v 3M 117.5 190.5  v 3M 167.5 190.5  v 3M 217.5 190.5  v 3M 267.5 190.5  v 3M 317.5 190.5  v 3M 367.5 190.5  v 3M 417.5 190.5  v 3M 467.5 190.5  v 3M 517.5 190.5  v 3M 567.5 190.5  v 3M 17.5 140.5  h -3M 17.5 90.5  h -3M 17.5 40.5  h -3" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path><text x="578" y="186" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">time (s)</text><text x="30" y="3" transform="rotate(-90, 30, 3)" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">velocity (m/s)</text>
+					<path d="M167 140 L467 40" style="stroke: #000; fill: none;"></path>
+					<path d="M35 90 h 580" stroke="#000" stroke-width="2" stroke-dasharray="7"></path>
+					<g fill="#000" stroke="none">
+						<circle cx="167" cy="140" r="5"></circle>
+						<circle cx="317" cy="90" r="5" fill="#f06"></circle>
+						<circle cx="467" cy="40" r="5"></circle>
+					</g>
+				</svg>
+				<!-- <script src='../../../lib/function-graph-SVG.js'></script>
+				<svg id="SVG-graph-2" viewBox="0 0 580 210"></svg>
+				<script defer>
+					funGraphSVG("SVG-graph-2", x => x / 3, {
+						x0: 17,
+						y0: 190,
+						fill: "rgba(30, 100, 140,0.3)",
+						stroke: "none",
+						strokeWidth: 2,
+						scale: 25,
+						positiveOnly: true,
+						gridSize: 50,
+						xLabel: "time (s)",
+						yLabel: "velocity (m/s)",
+					});
+				</script> -->
 				$$v_{\mathrm{avg}} = \tfrac{1}{2}(v+u)$$
 				$$\frac{\Delta x}{\Delta t} = \tfrac{1}{2}(v+u)$$
 				$$ \boxed{ \Delta x = \tfrac{1}{2}(v+u)\Delta t}$$
+				<br>
 				<p>
-					The next one also starts with the average velocity for constant motion equation form above. We can plug our previous equation into this to remove the final velocity.
+					The next one also starts with the average velocity for constant motion equation form above.
+					We can plug our previous equation into this to remove the final velocity.
 				</p>
-				$$v_{\mathrm{avg}} = \tfrac{1}{2}(u + a \Delta t+u)$$
+				$$v_{\mathrm{avg}} = \tfrac{1}{2}(v+u)$$
+				$$v_{\mathrm{avg}} = \tfrac{1}{2}((a \Delta t+u)+u)$$
 				$$v_{\mathrm{avg}} = u + \tfrac{1}{2}a \Delta t$$
-				<p>
-					This can be combined with the equation for average velocity.
-				</p>
-				$$v_{\mathrm{avg}} = \frac{\Delta x}{\Delta t}$$
-				$${u + \tfrac{1}{2}a \Delta t}= \frac{\Delta x}{\Delta t}$$
-				$$u\Delta t + \tfrac{1}{2}a \Delta t^2 = \Delta x$$
+				$$\frac{\Delta x}{\Delta t} = {u + \tfrac{1}{2}a \Delta t}$$
 				$$ \boxed{ \Delta x = u\Delta t + \tfrac{1}{2}a \Delta t^2 }$$
+				<br>
 				<p>
-					The rest of the equations of motion are derived by plugging equations into each other to remove a variable.
+					The last equation comes from eliminating time.
 				</p>
-				<p>
-					I followed the derivations <a href="https://physics.info/motion-equations/">here</a> and <a href="http://dev.physicslab.org/document.aspx?doctype=3&filename=kinematics_derivationkinematicsequations.xml">here</a>.
-				</p>
+				$$v = u + a \Delta t$$
+				$$\Delta t = \frac{v-u}{a}$$
+				$$\Delta x = u\Delta t + \tfrac{1}{2}a \Delta t^2 $$
+				$$\Delta x = u \left(\frac{v-u}{a}\right) + \tfrac{1}{2}a \left(\frac{v-u}{a}\right)^2 $$
+				$$a\Delta x = u(v-u)+ \tfrac{1}{2}(v-u)^2 $$
+				$$2a\Delta x = 2u(v-u)+ (v-u)^2 $$
+				$$2a\Delta x = (2uv-2u^2)+ (v^2 - 2uv + u^2) $$
+				$$2a\Delta x = v^2 - u^2 $$
+				$$ \boxed{u^2 = v^2 -2a\Delta x}$$
 			</details>
 		</div>
 		<div class='definition'>
@@ -187,19 +412,19 @@
 
 		<div class='example'>
 			<p>
-				These equations can be overwhelming. It helps to follow steps:
+				Working with multiple equations can be complicated. It helps to follow steps:
 				<ol>
 					<li>
 						List the known and unknown variables.
 					</li>
 					<li>
-						Use the list of variables to identify a matching equation.
+						Find an equation that matches the list of variables.
 					</li>
 					<li>
 						Use algebra to isolate the unknown variable on one side of the equation.
 					</li>
 					<li>
-						Plug the knowns in the equation and simplify.
+						Plug the knowns into the equation and simplify.
 					</li>
 					<li>
 						Check if your answer agrees with your intuition and expected units.
@@ -240,17 +465,17 @@
 			<details>
 				<summary>answer</summary>
 				<br>
-				<li>objects in free fall (a = 9.8 m/s²)</li>
-				<li>objects at rest (v = 0 m/s) (a = 0 m/s²)</li>
-				<li>objects in moving at a constant speed (a = 0 m/s²)</li>
+				<li>free fall (a = 9.8 m/s²)</li>
+				<li>at rest (v = 0 m/s) (a = 0 m/s²)</li>
+				<li>moving at a constant speed (a = 0 m/s²)</li>
 			</details>
 			<br>
 			<strong>Question:</strong> What are some situations when acceleration is <strong>NOT</strong> constant?
 			<details>
 				<summary>answer</summary>
 				<br>
-				<li>objects accelerating from rest (a = 0 → a > 0)</li>
-				<li>objects hitting the ground (a = -9.8 → a > 0 → a = 0)</li>
+				<li>accelerating from rest (a = 0 → a > 0)</li>
+				<li>hitting the ground (a = -9.8 → a > 0 → a = 0)</li>
 
 			</details>
 		</div>
@@ -446,7 +671,7 @@
 
 
 		<div class='example'>
-			<strong>Example</strong>: An object is moving at 3 m/s north, and it is accelerating at 1 m/s² north.
+			<strong>Example:</strong> An object is moving at 3 m/s north, and it is accelerating at 1 m/s² north.
 			It is also moving at 5 m/s east, and accelerating at 2 m/s² west.
 			How far does the object move in 10 seconds?
 			<details>
@@ -529,8 +754,8 @@
 				<td>v = </td>
 			</tr>
 			<tr>
-				<td>a = </td>
-				<td>a = </td>
+				<td>a = <span style="color: #f07;">0</span></td>
+				<td>a = <span style="color: #f07;">-9.8 m/s²</span></td>
 			</tr>
 		</table>
 		<p>
@@ -545,6 +770,13 @@
 			<details>
 				<summary>setup</summary>
 				<table class="table-2d">
+					<p>
+						It's not possible to solve for the horizontal distance without knowing the time.
+						If you aren't sure why try plugging the information into an equation of motion.
+					</p>
+					<p>
+						We can find the time with the vertical information and then use it for the horizontal.
+					</p>
 					<tr>
 						<td colspan="2" style='text-align: center'>Δt = </td>
 					</tr>
@@ -568,11 +800,16 @@
 			</details>
 			<details>
 				<summary>solution</summary>
-
-				<p>There isn't enough information to solve the horizontal side. Let start on the vertical.</p>
-				$$v^{2} = u^{2}+2a \Delta y$$ $$v^{2} = 0^{2}+2(-9.8)(-1.5)$$ $$v^{2} = 29.4$$ $$v = \sqrt{29.4}$$ $$v = \pm5.42 $$ $$v = -5.42 \, \mathrm{\tfrac{m}{s}}$$
+				$$v^{2} = u^{2}+2a \Delta y$$
+				$$v^{2} = 0^{2}+2(-9.8)(-1.5)$$
+				$$v^{2} = 29.4$$
+				$$v = \sqrt{29.4}$$
+				$$v = \pm5.42 $$
+				$$v = -5.42 \, \mathrm{\tfrac{m}{s}}$$
 				<p>We know the final velocity is down so after the square root we choose the negative value. Lets plug final velocity back in and solve for time.</p>
-				<br> $$v = u + a \Delta t$$ $$-5.42 = 0+(-9.8)\Delta t$$ $$0.55 \, \mathrm{s} = \Delta t$$
+				<br> $$v = u + a \Delta t$$
+				$$-5.42 = 0+(-9.8)\Delta t$$
+				$$0.55 \, \mathrm{s} = \Delta t$$
 				<p> With this new information we can use time to solve on the horizontal side.</p>
 				<table class="table-2d">
 					<tr>
@@ -600,15 +837,18 @@
 		</div>
 
 		<div class="example-small" id="ballistics">
+			<p>
+				Aim and click to fire, but be careful not to hit the other tank.
+			</p>
+			<br>
+
 			<style>
 				#tanks {
 					position: relative;
 					top: -225px;
 					left: 0px;
 					margin-bottom: -205px;
-					border-bottom: #000 solid 2px;
-					border-right: #000 solid 2px;
-					border-left: #000 solid 2px;
+					border: #000 solid 2px;
 				}
 			</style>
 			<table class="table-2d ">
@@ -666,13 +906,46 @@
 		</div>
 
 		<div class='example'>
-			<!-- <canvas id="graph2" width='600' height='200'></canvas> -->
-			<!-- <canvas id="myCanvas2" width='600' height='300'></canvas> -->
-			<strong>Example</strong>: A pokéball is thrown at an angle of 60° above the horizon and a speed of 10 m/s. If the ball is thrown from 2.0 meters above the ground how far does the ball go before it misses the charmander and hits the ground.
+			<svg viewBox='-25 -30 600 312'>
+				<rect x="-25" y="230" width="600" height="50" fill='#abc' stroke='none' rx="2" ry="2" />
+				<path d="M2 200 Q 276 -250 551 230" fill='none' stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-dasharray="0, 22.1" stroke-linecap="round" />
+				<path d="M23 240 v11 v-5 h525 v5 v-11" fill='none' stroke="#000" stroke-width="2" stroke-linejoin="round" />
+				<text x="276" y="268" text-anchor="middle" font-size="20" fill='#000'>Δx</text>
+				<text x="64" y="100" text-anchor="middle" font-size="20" fill='#000'>v</text>
+				<text x="45" y="167" text-anchor="middle" font-size="20" fill='#000'>θ</text>
+
+				<g transform="translate(59 105) rotate(120)">
+					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
+					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+				</g>
+				<rect x="-10" y="170" width="60" height="60" fill='#aaa' stroke='#000' stroke-width="2" rx="3" ry="3" />
+			</svg>
+			<strong>Example:</strong> A ball is thrown at an angle of 60° above the horizon and a speed of 10 m/s. If the ball is thrown from 2.0 meters above the ground how far does the ball go before it hits the ground.
 			<br>
-			<a href="../../review/vectors/index.html">vector review</a>
+
+			<details>
+				<summary>strategy</summary>
+				<p>
+					We don't know the initial velocities, but we do know the angle and the initial speed.
+					We can use <a href="../../review/vectors/index.html#trigonometry">trigonometry</a> to find the vector components of the initial speed.
+				</p>
+				<p>
+					The ball travels vertically upward at first, but that doesn't affect Δy.
+					$$\Delta y = y_{f} - y_{i}$$
+					$$\Delta y = 0 - 2\, \mathrm{m}$$
+					$$\Delta y = - 2 \, \mathrm{m}$$
+				</p>
+			</details>
 			<details>
 				<summary>solution</summary>
+				<div class="col-group">
+					<div>
+						$$u_x = (10) \mathrm{cos}(60)$$ $$u_x = (10) (0.5)$$ $$u_x = 5 \, \mathrm{\tfrac{m}{s} }$$
+					</div>
+					<div>
+						$$u_y = (10) \mathrm{sin}(60)$$ $$u_y = (10) (0.87)$$ $$u_y = 8.7 \, \mathrm{\tfrac{m}{s} }$$
+					</div>
+				</div>
 				<table class="table-2d" style="width: 500px;">
 					<tr>
 						<td colspan="2" style='text-align: center;'>Δt = ?</td>
@@ -706,7 +979,7 @@
 						<td colspan="2" style='text-align: center;'>Δt = 1.97 s</td>
 					</tr>
 					<tr>
-						<td>Δx = 9.85</td>
+						<td>Δx = 9.85 m</td>
 						<td>Δy = -2.0 m</td>
 					</tr>
 					<tr>
@@ -726,11 +999,13 @@
 		</div>
 
 		<div class='example'>
-			<svg viewBox='-25 0 600 250'>
-				<rect x="-25" y="200" width="600" height="50" fill='#cdd' stroke='none' rx="10" ry="10" />
-				<path d="M2 200 Q 276 -195 550 200" fill='none' stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-dasharray="0, 30" stroke-linecap="round" />
-				<path d="M1 215 v11 v-5 h550 v5 v-11" fill='none' stroke="#000" stroke-width="2" stroke-linejoin="round" />
-				<text x="276" y="243" text-anchor="middle" font-size="20" fill='#000'>Δx</text>
+			<svg viewBox='-25 -30 600 280'>
+				<rect x="-25" y="200" width="600" height="50" fill='#abc' stroke='none' rx="5" ry="5" />
+				<path d="M2 200 Q 276 -250 550 200" fill='none' stroke-dasharray="0, 16.5" stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+				<rect x="280" y="-40" width="300" height="240" fill='#fff' stroke='none' />
+
+				<path d="M265 197 h11 h-5.5 v-218 h-5.5 h11" fill='none' stroke="#000" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+				<text x="290" y="95" text-anchor="middle" font-size="20" fill='#000'>Δy</text>
 				<text x="42" y="130" text-anchor="middle" font-size="20" fill='#000'>v</text>
 				<text x="23" y="197" text-anchor="middle" font-size="20" fill='#000'>θ</text>
 
@@ -739,18 +1014,23 @@
 					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
 				</g>
 			</svg>
-
-			<strong>Example:</strong> An arrow is fired from ground level 60° above the horizon at 10 m/s. Find the horizontal distance the arrow traveled.
+			<strong>Example:</strong> An arrow is fired from ground level 60° above the horizon at 10 m/s.
+			Find the vertical distance the arrow traveled.
+			<details>
+				<summary>strategy</summary>
+				<p>
+					This problem seems like we don't have enough information, but we do.
+					The trick is to end the problem at the highest point on the arc which makes the final velocity 0.
+				</p>
+			</details>
 			<details>
 				<summary>solution</summary>
-				<p>We know that after the arrow goes up it will land at the same height it started at. This means Δy is 0.</p>
-				<p>We can also use trig identities to change the initial velocity into x and y parts.</p>
 				<div class="col-group">
 					<div>
-						$$u_x = 10 \mathrm{cos}(60)$$ $$u_x = (10) (0.5)$$ $$u_x = 5 \, \mathrm{\tfrac{m}{s} }$$
+						$$u_x = (10) \mathrm{cos}(60)$$ $$u_x = (10) (0.5)$$ $$u_x = 5 \, \mathrm{\tfrac{m}{s} }$$
 					</div>
 					<div>
-						$$u_y = 10 \mathrm{sin}(60)$$ $$u_y = (10) (0.87)$$ $$u_y = 8.7 \, \mathrm{\tfrac{m}{s} }$$
+						$$u_y = (10) \mathrm{sin}(60)$$ $$u_y = (10) (0.87)$$ $$u_y = 8.7 \, \mathrm{\tfrac{m}{s} }$$
 					</div>
 				</div>
 				<table class="table-2d">
@@ -758,80 +1038,29 @@
 					</tr>
 					<tr>
 						<td>Δx</td>
-						<td>Δy = 0</td>
+						<td>Δy = ?</td>
 					</tr>
 					<tr>
 						<td>u = 5 m/s</td>
 						<td>u = 8.7 m/s</td>
 					</tr>
 					<tr>
-						<td>v</td>
-						<td>v</td>
+						<td>v = 5 m/s</td>
+						<td>v = 0</td>
 					</tr>
 					<tr>
 						<td>a = 0</td>
 						<td>a = -9.8 m/s²</td>
 					</tr>
 				</table>
-				<p>We can now solve for the time period with the vertical information.</p>
-				$$\Delta y = u\Delta t + \tfrac{1}{2}a \Delta t^{2}$$ $$0 = 8.7 \Delta t + \tfrac{1}{2}(-9.8) \Delta t^{2}$$
-				<p>We can separate equations equal to zero into two parts.</p>
-				$$0 = \Delta t (8.7 + \tfrac{1}{2}(-9.8) \Delta t)$$
-				<div class="col-group">
-					<div>
-						$$0 = \Delta t $$
-					</div>
-					<div>
-						$$0 = 8.7 + \tfrac{1}{2}(-9.8) \Delta t$$ $$-8.7 = -4.9 \Delta t$$ $$1.93 \, \mathrm{s} = \Delta t$$
-					</div>
-				</div>
-
-				<p>We can throw out the time being zero since that doesn't make sense for the problem.</p>
-				<table class="table-2d">
-					<td colspan="2" style='text-align: center'>Δt = 1.93 s</td>
-					</tr>
-					<tr>
-						<td>Δx</td>
-						<td>Δy = 0</td>
-					</tr>
-					<tr>
-						<td>u = 5 m/s</td>
-						<td>u = 8.7 m/s</td>
-					</tr>
-					<tr>
-						<td>v</td>
-						<td>v</td>
-					</tr>
-					<tr>
-						<td>a = 0</td>
-						<td>a = -9.8 m/s²</td>
-					</tr>
-				</table>
-				<p>With the time we can now use horizontal information to solve for the horizontal distance.</p>
-				$$\Delta x = u\Delta t + \tfrac{1}{2}a \Delta t^{2}$$ $$\Delta x = (5)(1.93) + \tfrac{1}{2}(0)(1.93)^{2}$$ $$\Delta x = (5)(1.93)$$
-				$$\Delta x = 9.65 \, \mathrm{m}$$
-				<table class="table-2d">
-					<td colspan="2" style='text-align: center'>Δt = 1.93 s</td>
-					</tr>
-					<tr>
-						<td>
-							<strong>Δx = 9.65 m</strong>
-						</td>
-						<td>Δy = 0</td>
-					</tr>
-					<tr>
-						<td>u = 5 m/s</td>
-						<td>u = 8.7 m/s</td>
-					</tr>
-					<tr>
-						<td>v</td>
-						<td>v</td>
-					</tr>
-					<tr>
-						<td>a = 0</td>
-						<td>a = -9.8 m/s²</td>
-					</tr>
-				</table>
+				<p>
+					We don't need to use any horizontal information.
+				</p>
+				$$v^2 = u^2 + 2 a \Delta y$$
+				$$v^2 - u^2 = 2 a \Delta y$$
+				$$\Delta y = \frac{v^2 - u^2}{2a}$$
+				$$\Delta y = \frac{(0)^2 - (8.7)^2}{2(-9.8)}$$
+				$$\Delta y = 3.86 \, \mathrm{m}$$
 			</details>
 		</div>
 
@@ -860,7 +1089,7 @@
 						<td>Δy = 0 m</td>
 					</tr>
 					<tr>
-						<td>u = 150 cos(35) = 123.0 m/s</td>
+						<td>u = </td>
 						<td>u = 150 sin(35) = 86.0 m/s</td>
 					</tr>
 					<tr>
@@ -884,7 +1113,7 @@
 			</details>
 		</div>
 
-		<div class='example'>
+		<div class='example hide-on-mobile'>
 			<strong>Challenge:</strong> Test your 2-D motion skills with these randomly generated problems.
 			<p>
 				<a href="../challenge1/index.html">2-D motion challenge #1</a>
@@ -950,8 +1179,10 @@ https://vuejs.org/v2/guide/components.html
 				background: none;
 			}
 		</style>
+
 		<div class="hide-on-mobile">
-			<p>Play around with this ballistics calculator to see how time, velocity and acceleration can change the path of a projectile.</p>
+			<h1 class='underlined'>2-D Motion Calculator</h1>
+			<br>
 			<div id="values">
 				<table class="vue-table">
 					<tr>

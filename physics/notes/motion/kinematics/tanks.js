@@ -72,6 +72,13 @@ function tanks() {
             mouse.x = event.offsetX * WIDTH / SVG_PATH.clientWidth
             mouse.y = event.offsetY * HEIGHT / SVG_PATH.clientHeight
             getTrajectory();
+            document.getElementById("bullet-ux").innerHTML = "u = " + b.velocity.x.toPrecision(3) + " m/s"
+            document.getElementById("bullet-uy").innerHTML = "u = " + b.velocity.y.toPrecision(3) + " m/s"
+            document.getElementById("bullet-vx").innerHTML = "v = ";
+            document.getElementById("bullet-vy").innerHTML = "v = "
+            document.getElementById("bullet-t").innerHTML = "Δt = 0"
+            document.getElementById("bullet-y").innerHTML = "Δy = 0"
+            document.getElementById("bullet-x").innerHTML = "Δx = 0"
         }
     });
 
@@ -99,9 +106,8 @@ function tanks() {
             b.d = `M ${b.position.x} ${b.position.y} `;
 
             // output values that don't change
-            document.getElementById("bullet-ux").innerHTML = "u = " + b.velocity.x.toPrecision(3) + " m/s"
-            document.getElementById("bullet-uy").innerHTML = "u = " + b.velocity.y.toPrecision(3) + " m/s"
             document.getElementById("bullet-vx").innerHTML = "v = " + b.velocity.x.toPrecision(3) + " m/s"
+            draw();
             cycle();
         } else {
             if (isPaused) {
@@ -150,6 +156,7 @@ function tanks() {
         b.velocity.x = distance * Math.cos(angle) * SPEED_SCALE
         b.velocity.y = distance * Math.sin(angle) * SPEED_SCALE
 
+
         //setup path from tank to mouse
         if (whoseTurn === 1) {
             const Tx = p1.position.x + p1.turretRelativePosition.x
@@ -196,12 +203,12 @@ function tanks() {
             const COLLISION_RANGE = 22;
             if (findDistance(p1.position, b.position, COLLISION_RANGE)) {
                 p1.isAlive = false
-                p1.pathTank.style.opacity = 0.05
+                p1.pathTank.style.display = "none"
             }
 
             if (findDistance(p2.position, b.position, COLLISION_RANGE)) {
                 p2.isAlive = false
-                p2.pathTank.style.opacity = 0.05
+                p2.pathTank.style.display = "none"
             }
 
             if (p1.isAlive || p2.isAlive) {
@@ -213,7 +220,7 @@ function tanks() {
                     if (p1.isAlive) whoseTurn = 1
                 }
                 MOUSE_PATH.style.display = "block";
-                getTrajectory()
+
             }
         }
     }
@@ -243,6 +250,12 @@ function tanks() {
         physics(TIME_STEP);
         checkForCollision();
         draw();
-        if (isFiring && !isPaused && (p1.isAlive || p2.isAlive)) requestAnimationFrame(cycle);
+        if (!isPaused) {
+            if (isFiring && (p1.isAlive || p2.isAlive)) {
+                requestAnimationFrame(cycle);
+            } else {
+                getTrajectory();
+            }
+        }
     }
 }
