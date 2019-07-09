@@ -69,33 +69,33 @@ function funGraphSVG(
         // positive horizontal marks
         for (let i = 1; i * gridSize < bounds.width - x; ++i) {
           const xPos = x + i * gridSize;
-          path += `M ${xPos} 0  v ${y}`;
+          path += `M${xPos} 0 v${y}`;
         }
         // positive vertical marks
         for (let i = 1; i * gridSize < y; ++i) {
           const yPos = y - i * gridSize;
-          path += `M ${x} ${yPos}  h ${bounds.width}`;
+          path += `M${x} ${yPos} h${bounds.width}`;
         }
       } else {
         // positive horizontal marks
         for (let i = 1; i * gridSize < bounds.width - x; ++i) {
           const xPos = x + i * gridSize;
-          path += `M ${xPos} 0  v ${bounds.height}`;
+          path += `M${xPos} 0 v${bounds.height}`;
         }
         // negative horizontal marks
         for (let i = -1; i * gridSize > -x; --i) {
           const xPos = x + i * gridSize;
-          path += `M ${xPos} 0  v ${bounds.height}`;
+          path += `M${xPos} 0 v${bounds.height}`;
         }
         // positive vertical marks
         for (let i = 1; i * gridSize < y; ++i) {
           const yPos = y - i * gridSize;
-          path += `M 0 ${yPos}  h ${bounds.width}`;
+          path += `M0 ${yPos} h${bounds.width}`;
         }
         // negative vertical marks
         for (let i = -1; i * gridSize > -bounds.height + y; --i) {
           const yPos = y - i * gridSize;
-          path += `M 0 ${yPos}  h ${bounds.width}`;
+          path += `M0 ${yPos} h${bounds.width}`;
         }
       }
       const newElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -106,7 +106,7 @@ function funGraphSVG(
       target.appendChild(newElement);
     }
     //draw Axis
-    let path = `M ${x} ${0} L ${x} ${bounds.height} M ${0} ${y} L ${bounds.width} ${y}`;
+    let path = `M${x} ${0} L${x} ${bounds.height} M${0} ${y} L${bounds.width} ${y}`;
     //add path to SVG
     const newElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
     newElement.setAttribute("d", path);
@@ -121,21 +121,21 @@ function funGraphSVG(
       for (let i = 1; i * gridSize < bounds.width - x; ++i) {
         const xPos = x + i * gridSize;
         const yPos = y;
-        path += `M ${xPos} ${yPos}  v 3`;
+        path += `M${xPos} ${yPos}  v3`;
         addText((x0 + (i * gridSize) / xScale - x0).toFixed(xDecimals), xPos, yPos + 14);
       }
       // negative horizontal marks
       for (let i = -1; i * gridSize > -x; --i) {
         const xPos = x + i * gridSize;
         const yPos = y;
-        path += `M ${xPos} ${yPos}  v 3`;
+        path += `M${xPos} ${yPos}  v3`;
         addText((x0 + (i * gridSize) / xScale - x0).toFixed(xDecimals), xPos, yPos + 14);
       }
       // positive vertical marks
       for (let i = 1; i * gridSize < y; ++i) {
         const xPos = x;
         const yPos = y - i * gridSize;
-        path += `M ${xPos} ${yPos}  h -3`;
+        path += `M${xPos} ${yPos}  h-3`;
         addText((x0 + (i * gridSize) / yScale - x0).toFixed(yDecimals), xPos - 5, yPos + 4, {
           textAnchor: "end"
         });
@@ -144,7 +144,7 @@ function funGraphSVG(
       for (let i = -1; i * gridSize > -bounds.height + y; --i) {
         const xPos = x;
         const yPos = y - i * gridSize;
-        path += `M ${xPos} ${yPos}  h -3`;
+        path += `M${xPos} ${yPos}  h-3`;
         addText((x0 + (i * gridSize) / yScale - x0).toFixed(yDecimals), xPos - 5, yPos + 4, {
           textAnchor: "end"
         });
