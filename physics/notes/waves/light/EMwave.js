@@ -244,12 +244,12 @@ function EMwave(el) {
         //gravitate towards mouse
         physics.distance = Math.sqrt((physics.xOffset - mouse.x) * (physics.xOffset - mouse.x) + (physics.yOffset - mouse.y) * (physics.yOffset - mouse.y));
         if (physics.distance > physics.speed) {
-            const range = canvas.width * 0.1
+            const range = canvas.width * 0.04
             let speed;
             if ((physics.distance) < range) {
-                speed = physics.distance / range * physics.speed;
+                speed = physics.distance / range * physics.speed * 0.8;
             } else {
-                speed = physics.speed;
+                speed = physics.speed * 0.8;
             }
             const dir = Math.atan2(physics.yOffset - mouse.y, physics.xOffset - mouse.x)
             physics.xOffset -= speed * Math.cos(dir);
