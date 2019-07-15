@@ -173,25 +173,25 @@ function entropy1() {
     //find total kinetic energy
     let totalKE = 0;
     for (let i = 0, len = atom.length; i < len; ++i) {
-      totalKE += (atom[i].mass * atom[i].speed * atom[i].speed + atom[i].inertia * atom[i].angularSpeed * atom[i].angularSpeed) / 2;
+      totalKE += (atom[i].mass * atom[i].speed * atom[i].speed + atom[i].inertia * atom[i].angularSpeed * atom[i].angularSpeed) * 20;
     }
     const avgKE = totalKE / atom.length;
-    // if (avgKE > settings.temp * 5) {
-    //   // console.log("removing energy");
-    //   for (let i = 0, len = atom.length; i < len; ++i) {
-    //     const slowFactor = 1.005
-    //     Matter.Body.setVelocity(atom[i], {
-    //       x: atom[i].velocity.x / slowFactor,
-    //       y: atom[i].velocity.y / slowFactor
-    //     });
-    //     atom[i].torque -= atom[i].angularVelocity * 0.02;
-    //   }
-    // }
+    if (avgKE > settings.temp * 5) {
+      // console.log("removing energy");
+      for (let i = 0, len = atom.length; i < len; ++i) {
+        const slowFactor = 1.005
+        Matter.Body.setVelocity(atom[i], {
+          x: atom[i].velocity.x / slowFactor,
+          y: atom[i].velocity.y / slowFactor
+        });
+        atom[i].torque -= atom[i].angularVelocity * 0.0002;
+      }
+    }
 
     if (avgKE < settings.temp) {
       // console.log("adding energy");
       for (let i = 0, len = atom.length; i < len; ++i) {
-        const speedUpFactor = 1.007;
+        const speedUpFactor = 1.02;
         Matter.Body.setVelocity(atom[i], {
           x: atom[i].velocity.x * speedUpFactor,
           y: atom[i].velocity.y * speedUpFactor
@@ -319,7 +319,7 @@ function entropy1() {
       Engine.update(engine, 16.666);
       speedControl();
       draw();
-      outputKE();
+      // outputKE();
     }
     requestAnimationFrame(cycle);
   }

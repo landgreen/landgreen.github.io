@@ -77,18 +77,19 @@
 		<div>
 			<div id="kinetic-energy"></div>
 			<canvas class='center' id='temperature' height='150' width='600'> </canvas>
-			<canvas class='center' id='temperature-out' height='200' width='600'> </canvas>
+			<!-- <canvas class='center' id='temperature-out' height='200' width='600'> </canvas> -->
 			<p>temperature =
-				<input type="range" id='time-rate-slider-temp' min="0.01" max="1" step="0.01" value="0.05">
+				<input type="range" id='time-rate-slider-temp' min="0.01" max="20" step="0.01" value="0.05">
 				<button id="clear-temp" style="float: right;">clear</button>
 			</p>
-			<p>
+			<!-- <p>
 				The graph above shows the distribution of kinetics energy for particles at various temperatures. You can click on the simulation to add more particles. Notice that with more particles the distribution becomes more consistent and predictable.
-			</p>
+			</p> -->
 		</div>
 		<h1 class='underlined'>Heat</h1>
 		<p>
-			<strong>Heat</strong> is energy transferred from one system to another as a result of thermal interactions. A system doesn't "have" heat, it has internal energy, which is called heat only as it transfers between systems.
+			<strong>Heat</strong> is energy transferred from one system to another as a result of thermal interactions.
+			A system doesn't "have" heat, it has internal energy, which is called heat only when it transfers between systems.
 		</p>
 		<style>
 			.fade {
@@ -175,7 +176,7 @@
 
 		<!-- <div class='example'>
 			<strong>Example:</strong> Compressing a volume of gas does 100 J of work, but at the same time the gas
-			<strong>losses</strong> 200 J of heat to the surroundings. What is the change in the internal energy of the gas?
+			<strong>loses</strong> 200 J of heat to the surroundings. What is the change in the internal energy of the gas?
 			Will the gas increase or decrease in temperature?
 			<details>
 				<summary>solution</summary>
@@ -324,6 +325,9 @@
 		</p>
 
 		<div class="example-small">
+			<p>
+				An engine can be built to convert concentrations of energy into <a href="../../energy/energy/index.html#work">work</a>. In the simulation below, the work we want done is rotating the rotor. What state of the system would make the rotor turn?
+			</p>
 			<canvas class='center' id='entropy1' height='300' width='600'> </canvas>
 			<div class="flex-grid-thirds">
 				<div class="col center">
@@ -338,9 +342,6 @@
 					<br> <input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.1" value="0" style="width: 120px;">
 				</div>
 			</div>
-			<p>
-				An engine can be built to convert concentrations of energy into <a href="../../energy/energy/index.html#work">work</a>. In the simulation below, the work we want done is rotating the rotor. What state of the system would make the rotor turn?
-			</p>
 			<strong>Simulation:</strong> Click the clear button to remove the particles.
 			Click inside the simulation a few times to add some particles.
 			Try to place the particles in a state that will turn the rotor.
