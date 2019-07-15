@@ -98,9 +98,11 @@
         <use xlink:href="#vector" transform='translate(115 -10) rotate(180)' />
         <text x="125" y="-47" fill="black">F= ? </text>
       </svg>
-      <strong>Example:</strong> The book <a href='https://www.amazon.com/Martian-Novel-Andy-Weir-ebook/dp/B00EMXBDMA'>The Martian</a> by Andy Weir (mass = 0.09 kg) is resting on a table (acceleration = zero). The force of gravity produces a downwards force of 0.34 N. What force is required to keep the book at rest on the table?
+      <strong>Example:</strong> The book <a href='https://www.amazon.com/Martian-Novel-Andy-Weir-ebook/dp/B00EMXBDMA'>The Martian</a> by Andy Weir (mass = 0.09 kg) is resting on a table (acceleration = zero). The force of gravity produces a downwards force of 0.34 N.
+      What force is required to keep the book at rest on the table?
       <details>
         <summary>solution</summary>
+        <p>This force is called the <strong>normal force</strong>. We'll learn about it on this page.</p>
         $$\sum F=ma$$ $$F_{N} + F_{g} = ma$$
         $$F_{N} - 0.34\, \mathrm{N} = (0.09\, \mathrm{kg})(0)$$
         $$F_{N} - 0.34\,\mathrm{N} = 0$$
@@ -214,7 +216,17 @@
       The force of gravity depends only on the mass of the object because on the surface of the Earth
       <strong>acceleration from gravity is the same for all objects.</strong>. If you aren't on the surface of the Earth, there is a different way to calculate <a href="..\..\gravity\gravitation\index.html#universal-gravitation">gravity</a>.
     </p>
-    <p>So why do feathers fall slower than bricks?</p>
+    
+    <div class="example">
+        <strong>Question:</strong> Why do feathers fall slower than bricks?
+        <details>
+            <summary>solution</summary>
+            <p>
+              Air friction produces a force that opposes motion.
+              Feathers have a large surface area compared to their small mass so they have more air friction.
+            </p>
+        </details>
+    </div>
 
     <div class='example'>
       <p>
@@ -489,7 +501,224 @@
         <a href="https://www.amazon.com/Seveneves-Neal-Stephenson/dp/0062334514/">
           <img class="book-cover" src="seveneves.png" alt="Seveneves" width = "150" height = "225"/>
         </a>
-      <strong>Example:</strong> The hardcover version of Seveneves by Neal Stephenson has a mass of 0.95 kg. What is the force of gravity felt by the book on Earth? What about on the <a href="https://www.google.com/search?q=gravity+on+moon">Moon</a>?
+      <strong>Example:</strong> The hardcover version of Seveneves by Neal Stephenson has a mass of 0.95 kg.
+      What is the force of gravity felt by the book on Earth? What about on the Moon?
+      <details>
+          <summary>Local Massive Objects Surface Gravity</summary>
+          <style>
+          th {
+            background: #fff;
+            border: 0px solid #000;
+            color: #000;
+          }
+  
+          .black {
+            background-color: #000;
+            border: 0px solid #000;
+            padding: 7px;
+          }
+  
+          .planet {
+            margin: auto;
+            border-radius: 50%;
+            padding: 0px;
+            border: 0px solid #000;
+          }
+  
+          .sun {
+            width: 90px;
+            height: 90px;
+            background-color: #fff;
+            top: -25px;
+            left: -20px;
+            position: relative;
+          }
+  
+          .sun-div {
+            /* margin: 0px; */
+            width: 50px;
+            height: 50px;
+          }
+  
+          .mercury {
+            width: 6px;
+            height: 6px;
+            background-color: rgb(199, 195, 192);
+          }
+  
+          .venus {
+            width: 11px;
+            height: 11px;
+            background-color: rgb(216, 209, 203);
+          }
+  
+          .earth {
+            width: 11.5px;
+            height: 11.5px;
+            background-color: rgb(130, 137, 179);
+          }
+  
+          .moon {
+            width: 4px;
+            height: 4px;
+            background-color: rgb(159, 155, 152);
+          }
+  
+          .mars {
+            width: 8px;
+            height: 8px;
+            background-color: rgb(207, 187, 137);
+          }
+  
+          .jupiter {
+            width: 35px;
+            height: 35px;
+            background-color: rgb(238, 236, 188);
+          }
+  
+          .saturn {
+            width: 30px;
+            height: 30px;
+            background-color: rgb(223, 229, 181);
+          }
+  
+          .uranus {
+            width: 18px;
+            height: 18px;
+            background-color: rgb(173, 200, 211);
+          }
+  
+          .neptune {
+            width: 17px;
+            height: 17px;
+            background-color: rgb(160, 183, 214);
+          }
+  
+          .saturn-ring {
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            position: relative;
+            top: -7px;
+            left: -7px;
+            border: 4px solid rgba(216, 218, 169, 0.7);
+          }
+  
+          .uranus-ring {
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            position: relative;
+            top: -5px;
+            left: -5px;
+            border: 1px solid rgba(255, 255, 230, 0.2);
+          }
+        </style>
+        <table>
+          <tr>
+            <th class="black"></th>
+            <th>name</th>
+            <th>g (m/s²)</th>
+          </tr>
+          <tr>
+            <td class="black">
+              <a href="https://en.wikipedia.org/wiki/Sun">
+                <div class="planet sun-div">
+                  <div class="planet sun"></div>
+                </div>
+              </a>
+            </td>
+            <td>Sun</td>
+            <td>275</td>
+          </tr>
+          <tr>
+            <td class="black">
+              <a href="https://en.wikipedia.org/wiki/Mercury_(planet)">
+                <div class="planet mercury"></div>
+              </a>
+            </td>
+            <td>Mercury</td>
+            <td>3.7</td>
+          </tr>
+          <tr>
+            <td class="black">
+              <a href="https://en.wikipedia.org/wiki/Venus">
+                <div class="planet venus"></div>
+              </a>
+            </td>
+            <td>Venus</td>
+            <td>8.9</td>
+          </tr>
+          <tr>
+  
+            <td class="black">
+              <a href="https://en.wikipedia.org/wiki/Earth">
+                <div class="planet earth"></div>
+              </a>
+            </td>
+            <td>Earth</td>
+            <td>9.8</td>
+          </tr>
+          <tr>
+            <td class="black">
+              <a href="https://en.wikipedia.org/wiki/Moon">
+                <div class="planet moon"></div>
+              </a>
+            </td>
+            <td>Moon</td>
+            <td>1.6</td>
+          </tr>
+          <tr>
+            <td class="black">
+              <a href="https://en.wikipedia.org/wiki/Mars">
+                <div class="planet mars"></div>
+              </a>
+            </td>
+            <td>Mars</td>
+            <td>3.7</td>
+          </tr>
+          <tr>
+            <td class="black">
+              <a href="https://en.wikipedia.org/wiki/Jupiter">
+                <div class="planet jupiter"></div>
+              </a>
+            </td>
+            <td>Jupiter</td>
+            <td>25.8</td>
+          </tr>
+          <tr>
+            <td class="black">
+              <a href="https://en.wikipedia.org/wiki/Saturn">
+                <div class="planet saturn">
+                  <div class="saturn-ring"></div>
+                </div>
+              </a>
+            </td>
+            <td>Saturn</td>
+            <td>10.4</td>
+          </tr>
+          <tr>
+            <td class="black">
+              <a href="https://en.wikipedia.org/wiki/Uranus">
+                <div class="planet uranus">
+                  <div class="uranus-ring"></div>
+                </div>
+              </a>
+            </td>
+            <td>Uranus</td>
+            <td>8.7</td>
+          </tr>
+          <tr>
+            <td class="black">
+              <a href="https://en.wikipedia.org/wiki/Neptune">
+                <div class="planet neptune"></div>
+              </a>
+            </td>
+            <td>Neptune</td>
+            <td>11.2</td>
+          </tr>
+        </table>
+      </details>
       <details>
         <summary>solution</summary>
         <p>Weight and force of gravity mean the same thing. A planet's gravity field determines your weight, but not your mass.</p>
@@ -511,7 +740,8 @@
       <a href="https://www.amazon.com/Uprooted-Naomi-Novik/dp/0804179034">
         <img class="book-cover" src="uprooted.jpg" alt="Uprooted" width = "150" height = "228"/>
       </a>
-      <strong>Example:</strong> Uprooted by Naomi Novik is resting on a table. The shipping weight is 1.2 pounds. What is the book's mass in kilograms on Earth? On Mars?
+      <strong>Example:</strong> Uprooted by Naomi Novik is resting on a table. The shipping weight is 1.2 pounds.
+      What is the book's mass in kilograms on Earth? On Mars?
       <details>
         <summary>solution</summary>
         <p>
@@ -520,8 +750,7 @@
         $$ 1.2\,\mathrm{lbs} \left( \frac{1\,\mathrm{kg}}{2.2\,\mathrm{lbs}} \right)= 0.\overline{54}\,\mathrm{kg}$$
         $$ m = 0. \overline{54} \, \mathrm{kg} $$
       </details>
-      <br>What is the weight of the book in Newtons on Earth (a = 9.8 m/s²)?
-      <br>On Mars (a = 3.7 m/s²)?
+      <br>What is the weight of the book in Newtons on Earth? On Mars?
       <details>
         <summary>solution</summary>
         <ul class="listing">
