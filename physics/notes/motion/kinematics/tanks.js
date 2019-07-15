@@ -6,10 +6,11 @@ function tanks() {
     const WIDTH = 600;
     const HEIGHT = 350;
     const GRAVITY = -9.8;
-    const SPEED_SCALE = 0.4;
+    const SPEED_SCALE = 0.45;
     const TIME_STEP = 4 * 1 / 60;
     const TURRET_RADIUS = 25;
     const MAX_VELOCITY = 197; // so it can almost touch to top of the SVG
+    const MIN_VELOCITY = 30;
     let isFiring = false;
     let whoseTurn = 1; //toggles to 1 or 2
     let time = 0;
@@ -152,7 +153,7 @@ function tanks() {
 
         angle = Math.PI - Math.atan2(dy, dx)
         distance = Math.sqrt(dx * dx + dy * dy)
-        distance = Math.min(distance, MAX_VELOCITY)
+        distance = Math.max(Math.min(distance, MAX_VELOCITY), MIN_VELOCITY)
         b.velocity.x = distance * Math.cos(angle) * SPEED_SCALE
         b.velocity.y = distance * Math.sin(angle) * SPEED_SCALE
 
