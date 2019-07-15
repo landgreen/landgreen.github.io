@@ -51,13 +51,19 @@
 				<text id="matter-y" x="513" y="45">y</text>
 				<text id="matter-Vx" x="513" y="115">Vx</text>
 				<text id="matter-Vy" x="513" y="145">Vy</text>
-
 			</g>
 			<!-- <g font-size="13" stroke="none" fill="#f65" opacity="0.4">
 				<text id="matter-x-label" x="-100" y="0" display="inline">Δx</text>
 				<text id="matter-y-label" x="-100" y="0" display="inline">Δy</text>
 			</g> -->
 		</svg>
+		<p>
+			This model of motion keeps track of each object's position and velocity.
+			As time moves forward, velocity determines how an object's position changes.
+		</p>
+		<!-- <p>
+			The collisions are calculated using <a href="">momentum</a>.
+		</p> -->
 		<h1 class='underlined'>Position</h1>
 		<p>We use the symbol <strong>x</strong> for position with meters for units. You might be used to using <strong>x</strong> in other ways, but in physics it is reserved for position.</p>
 		<p>To represent a displacement we subtract the initial position from the final position. We use the Δ symbol to show change.</p>
@@ -88,8 +94,11 @@
 			<strong>Example:</strong> Mount Everest is 8848 m above sea level. The base camp, where most mountain climbers begin their trek, is 5150 m above sea level. What is the vertical distance between the base camp and the peak?
 			<details>
 				<summary>solution</summary>
-				$$ \text{final position} = 8848\,\mathrm{m} $$ $$\text{initial position} = 5150\,\mathrm{m}$$
-				<br> $$ \Delta x = x_{f}-x_{i}$$ $$ \Delta x = 8848\,\mathrm{m}-5150\,\mathrm{m}$$ $$ \Delta x = 3698\,\mathrm{m}$$
+				$$ \text{final position} = 8848\,\mathrm{m} $$
+				$$\text{initial position} = 5150\,\mathrm{m}$$
+				<br> $$ \Delta x = x_{f}-x_{i}$$
+				$$ \Delta x = 8848\,\mathrm{m}-5150\,\mathrm{m}$$
+				$$ \Delta x = 3698\,\mathrm{m}$$
 			</details>
 		</div>
 
@@ -102,10 +111,64 @@
 				<summary>solution</summary>
 				$$ \Delta x = 3698\,\mathrm{m}$$
 				<br> $$ 3698\,\mathrm{m} \left( \mathrm{ \frac{1 \, mile}{1609.34 \, m}} \right) = 2.297 \, \mathrm{mile} $$
-				<br> $$3698\,\mathrm{m} = 3\overleftarrow{\undergroup{6}\undergroup{9}\undergroup{8}}. \, \mathrm{m}= 3.698 \,
-				\mathrm{km}$$
+				<br> $$3698\,\mathrm{m} = 3\overleftarrow{\undergroup{6}\undergroup{9}\undergroup{8}}. \, \mathrm{m}= 3.698 \,\mathrm{km}$$
 			</details>
 		</div>
+
+
+		<div class='example'>
+			<div class="definition">
+				<svg viewBox="0 0 580 36">
+					<path d="M40 10 h200 c10 0, 10 10, 0 10 h-190 c-10 0,-10 10, 0 10 h490" fill="none" stroke="#000" stroke-width="2.5" />
+					<circle cx="40" cy="10" r="5" stroke="none" fill="#000" />
+					<circle cx="540" cy="30" r="5" stroke="none" fill="#000" />
+				</svg>
+				<strong>Distance traveled</strong> refers to the length of a path.
+				<br> <br><br>
+				<svg viewBox="0 0 580 21">
+					<path d="M40 5 v15 v-7.5 h500 v7.5 v-15" fill="none" stroke="#000" stroke-width="2.5" />
+				</svg>
+
+				<strong>Displacement</strong> is a change in position. The path taken is irrelevant.
+
+
+			</div>
+			<p>
+				My school is only 1.5 km from where I live. I'm able to ride my bike most days.
+				One morning I had biked half a kilometer before I realized I forgot my lunch.
+				So, I rode home, grabbed my lunch, and rushed to school.
+			</p>
+			<div class="col-group">
+				<div style="padding:5px;">
+
+					<strong>Example:</strong> What's my displacement?
+					<details>
+						<summary>solution</summary>
+						<p>
+							Displacement is final position minus initial position.
+							Heading backwards, going slower, or taking a different path doesn't change its value.
+						</p>
+						$$ \Delta x = x_f-x_i$$
+						$$ \Delta x = 1.5 \, \mathrm{km}-0$$
+						$$ \Delta x = 1.5 \, \mathrm{km}$$
+						<br>
+					</details>
+				</div>
+				<div style="padding:5px;">
+					<strong>Example:</strong> What's my distance traveled?
+					<details>
+						<summary>solution</summary>
+						<p>
+							Distance traveled measures the length of the path.
+							It will include heading back home to get my lunch.
+						</p>
+						$$d = 0.5 \, \mathrm{km} + 0.5 \, \mathrm{km} + 1.5 \, \mathrm{km}$$
+						$$d = 2.5 \, \mathrm{km}$$
+					</details>
+				</div>
+			</div>
+		</div>
+
 
 		<h1 class='underlined'>Time</h1>
 		<p> We keep track of time in the same way as position. We use t as the symbol with seconds as our main unit.</p>
@@ -134,9 +197,32 @@
 			<details>
 				<summary>solution</summary>
 				<p>We can just focus on the minutes, since the hours didn't change.</p>
-				$$\Delta t = t_{f}-t_{i}$$ $$\Delta t = 49\,\mathrm{min}-30\, \mathrm{min}$$ $$\Delta t = 19\, \mathrm{min}$$
+				$$\Delta t = t_{f}-t_{i}$$
+				$$\Delta t = 49\,\mathrm{min}-30\, \mathrm{min}$$
+				$$\Delta t = 19\, \mathrm{min}$$
 			</details>
 		</div>
+
+		<div class='example'>
+			<p>
+				<strong>Example:</strong> My school starts early at 7:30 am.
+				Each class is 1 hour long with 3 minutes between classes.
+				What time is it at the end of the second period?
+			</p>
+			You can probably solve this in your head, but try using Δt = tf - ti for practice.
+			<details>
+				<summary>solution</summary>
+
+				$$\Delta t = 1\, \mathrm{hr} + 1 \, \mathrm{hr} + 3\, \mathrm{min}$$
+				$$\Delta t = 2\, \mathrm{hr} + 3\, \mathrm{min}$$
+				<br>
+				$$\Delta t = t_{f}-t_{i}$$
+				$$t_{f} = \Delta t + t_{i}$$
+				$$t_{f} = (2\, \mathrm{hr} + 3\, \mathrm{min}) + (7\, \mathrm{hr} + 30\, \mathrm{min})$$
+				$$t_{f} = 9\, \mathrm{hr} + 33\, \mathrm{min}$$
+			</details>
+		</div>
+
 		<h1 class='underlined' id="velocity">Velocity</h1>
 		<p>Velocity measures how much position changes, Δx, over a period of time, Δt.</p>
 		<div class='definition'>
@@ -353,11 +439,14 @@
 		</div>
 
 		<h1 class='underlined' id="Graphing Motion">Graphing Motion</h1>
-
-		<p>Velocity is the slope of the position vs. time graph.
-			<br>Acceleration is the slope of the velocity vs. time graph.</p>
-		<p>If the acceleration is positive, the velocity increases with time.
-			<br>If the velocity is positive the position increases with time.</p>
+		<p>
+			Velocity is the slope of the position vs. time graph.
+			<br>Acceleration is the slope of the velocity vs. time graph.
+		</p>
+		<p>
+			If the acceleration is positive, the velocity increases with time.
+			<br>If the velocity is positive the position increases with time.
+		</p>
 		<style>
 			.graph-box {
 				border-radius: 10px;
@@ -369,7 +458,7 @@
 			<svg id="SVG-graph-4" class="graph-box" width="290" height="250"></svg>
 			<svg id="SVG-graph-5" class="graph-box" width="290" height="250"></svg>
 			<div class="center">
-				acceleration = <input id='acceleration-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5" style="width:125px;"> <input id='acceleration' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
+				acceleration = <input id='acceleration-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5" style="width:100px;"> <input id='acceleration-input' type="number" step="0.01" value="0.5" style="width: 70px;"> m/s²
 			</div>
 			<svg id="SVG-graph-6" class="graph-box center" width="290" height="250"></svg>
 			<script defer>
@@ -418,7 +507,7 @@
 					settings4.updatePath = true
 					settings5.updatePath = true
 					settings6.updatePath = true
-					const accel = document.getElementById("acceleration").value
+					const accel = document.getElementById("acceleration-input").value
 					funGraphSVG("SVG-graph-6", x => accel, settings4);
 					funGraphSVG("SVG-graph-5", x => accel * x, settings5);
 					funGraphSVG("SVG-graph-4", x => accel / 2 * x * x, settings6);
@@ -434,12 +523,12 @@
 					// katex.render(String.raw `\begin{gathered} a = ${a.toFixed(2)} \end{gathered}`,
 					// 	document.getElementById("graph-equations-accel"));
 				}
-				document.getElementById("acceleration").addEventListener("input", event => {
-					document.getElementById("acceleration-slider").value = document.getElementById("acceleration").value
+				document.getElementById("acceleration-input").addEventListener("input", event => {
+					document.getElementById("acceleration-slider").value = document.getElementById("acceleration-input").value
 					redrawGraphs()
 				});
 				document.getElementById("acceleration-slider").addEventListener("input", event => {
-					document.getElementById("acceleration").value = document.getElementById("acceleration-slider").value
+					document.getElementById("acceleration-input").value = document.getElementById("acceleration-slider").value
 					redrawGraphs()
 				});
 			</script>
@@ -566,9 +655,11 @@
 			<div class='center'>
 				<svg id="SVG-graph-8" class="graph-box" width="290" height="250"></svg>
 				<svg id="SVG-graph-9" class="graph-box" width="290" height="250"></svg>
-				<br>jerk =
-				<input id='jerk-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5" style="width:150px;">
-				<input id='jerk' type="number" step="0.01" value="0.5" style="width: 60px;"> m/s²
+				<div>
+					jerk =
+					<input id='jerk-slider' type="range" min="-2.5" max="2.5" step="0.01" value="0.5" style="width:100px;">
+					<input id='jerk' type="number" step="0.01" value="0.5" style="width: 70px;"> m/s²
+				</div>	
 				<svg id="SVG-graph-10" class="graph-box" width="290" height="250"></svg>
 				<svg id="SVG-graph-11" class="graph-box" width="290" height="250"></svg>
 			</div>
