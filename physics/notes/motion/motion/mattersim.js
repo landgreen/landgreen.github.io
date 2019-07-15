@@ -163,7 +163,7 @@ function matter() {
   document.getElementById("matter-target").setAttribute("r", atom[settings.highlightIndex].radius);
 
 
-  function addAtom(x, y, speed = 1, radius = settings.radius + 0.8 * settings.radius * (Math.random() - 0.5)) {
+  function addAtom(x, y, speed = 1, radius = settings.radius + 1.2 * settings.radius * (Math.random() - 0.5)) {
     const len = atom.length;
     atom[len] = Matter.Bodies.polygon(x, y, 0, radius, {
       radius: radius,
@@ -208,6 +208,12 @@ function matter() {
     }
   }
 
+  function gravity() {
+    for (let i = 0, len = atom.length; i < len; ++i) {
+      atom[i].force.y += 0.00001;
+    }
+  }
+
   function draw() {
     //update SVG balls
     for (let i = 0, len = atom.length; i < len; ++i) {
@@ -220,6 +226,7 @@ function matter() {
     document.getElementById("matter-measure").setAttribute("d", `M8 ${y} h${x - 8}  M${x} ${settings.height-8} V${y}`);
   };
 
+
   function report() {
     const scale = 0.05;
     document.getElementById("matter-x").textContent = "x = " + (atom[settings.highlightIndex].position.x * scale).toFixed(1)
@@ -228,7 +235,20 @@ function matter() {
     document.getElementById("matter-Vy").textContent = "Vy = " + (-atom[settings.highlightIndex].velocity.y * 60 * scale).toFixed(1)
 
     let angle = Math.atan2(atom[settings.highlightIndex].velocity.y, atom[settings.highlightIndex].velocity.x);
-    angle = (angle * 180 / Math.PI - 90)
+    angle = (angle * 180 / Math.PI - 90) + 720
+    // if (angle < 0) angle += 360
+    // if (angle > 360) angle -= 360
+    // console.log(angle, settings.smoothAngle)
+    // if (angle - 360 > settings.smoothAngle) settings.smoothAngle += 360
+
+    // const dot = Matter.Vector.dot(atom[settings.highlightIndex].velocity, diff);
+    // // console.log(Math.cos(dot)*180/Math.PI)
+    // if (dot > threshold) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+
     settings.smoothAngle = settings.smoothAngle * 0.9 + angle * 0.1
     document.getElementById("matter-vector").setAttribute("transform", "translate(550 75) rotate(" + settings.smoothAngle + ")");
   }
@@ -236,6 +256,7 @@ function matter() {
   function cycle() {
     Engine.update(engine, 16.666);
     speedControl();
+    // gravity();
     draw();
     report();
     if (!pause) requestAnimationFrame(cycle);
