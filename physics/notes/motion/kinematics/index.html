@@ -229,9 +229,14 @@
 						scale: 10
 						// showMouseCoords: true,
 					}
-					graph()
 
-					settings.updatePath = true
+					function graph() {
+						u = (xf - xi) / (tf - ti) - a / 2 * (tf - ti)
+						v = (xf - xi) / (tf - ti) + a / 2 * (tf - ti)
+						funGraphSVG("SVG-graph-3", x => xi + u * (x - ti) + a / 2 * (x - ti) * (x - ti), settings);
+					}
+					graph() // first time to define original graph
+					settings.updatePath = true // future calls, just update path
 
 					document.getElementById("acceleration").addEventListener("input", event => {
 						a = document.getElementById("acceleration").value
@@ -285,12 +290,6 @@
 						}
 						graph()
 					});
-
-					function graph() {
-						u = (xf - xi) / (tf - ti) - a / 2 * (tf - ti)
-						v = (xf - xi) / (tf - ti) + a / 2 * (tf - ti)
-						funGraphSVG("SVG-graph-3", x => xi + u * (x - ti) + a / 2 * (x - ti) * (x - ti), settings);
-					}
 				}
 			</script>
 			<p>
@@ -301,12 +300,12 @@
 			Write a short description of the object's velocity as it moves from A to B.
 			<details>
 				<summary>answer</summary>
-				<p>(At the default A and B positions)</p>
-				<p>
-					The object starts at point A moving backwards.
-					First it slows down to a stop.
-					Then it moves forward while speeding up until it arrives at B.
-				</p>
+				<p>(at the default A and B positions)</p>
+
+				<li>The velocity is always increasing by 0.05 m/s every second.</li>
+				<li>The initial velocity directed away from point B.</li>
+				<li>Starting at point A, the object slows down to a stop.</li>
+				<li>The object then speeds up towards point B until it arrives.</li>
 			</details>
 		</div>
 
@@ -520,6 +519,7 @@
 		</div>
 		<p>
 			Effects like air friction, thrust, and buoyancy can change the perceived acceleration of gravity.
+			To keep things simple I will ignore these effect for the example problems.
 		</p>
 		<div class='example'>
 			<strong>Example:</strong> A sleeping cat falls from rest off of a ledge. If the cat hits the ground moving at 6.0 m/s how long was the cat in free fall?
@@ -541,7 +541,225 @@
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> A meteor 4000 m above Europa, a moon of Jupiter, falls from rest. What is the impact velocity of the meteor? How long does it take for the meteor to hit the surface? (look up the gravity on <a href="https://www.google.com/search?q=what+is+the+gravity+on+europa">Europa</a>)
+			<p>
+				The acceleration of gravity comes from massive objects.
+				Every planet, star, moon, and asteroid has a different surface gravity.
+			</p>
+			<style>
+				.grav-title {
+					background: #fff;
+					border: 0px solid #000;
+					color: #000;
+				}
+
+				.black {
+					background-color: #000;
+					border: 0px solid #000;
+					padding: 7px;
+				}
+
+				.planet {
+					margin: auto;
+					border-radius: 50%;
+					padding: 0px;
+					border: 0px solid #000;
+				}
+
+				.sun {
+					width: 90px;
+					height: 90px;
+					background-color: #fff;
+					top: -25px;
+					left: -20px;
+					position: relative;
+				}
+
+				.sun-div {
+					/* margin: 0px; */
+					width: 50px;
+					height: 50px;
+				}
+
+				.mercury {
+					width: 6px;
+					height: 6px;
+					background-color: rgb(199, 195, 192);
+				}
+
+				.venus {
+					width: 11px;
+					height: 11px;
+					background-color: rgb(216, 209, 203);
+				}
+
+				.earth {
+					width: 11.5px;
+					height: 11.5px;
+					background-color: rgb(130, 137, 179);
+				}
+
+				.moon {
+					width: 4px;
+					height: 4px;
+					background-color: rgb(159, 155, 152);
+				}
+
+				.mars {
+					width: 8px;
+					height: 8px;
+					background-color: rgb(207, 187, 137);
+				}
+
+				.jupiter {
+					width: 35px;
+					height: 35px;
+					background-color: rgb(238, 236, 188);
+				}
+
+				.saturn {
+					width: 30px;
+					height: 30px;
+					background-color: rgb(223, 229, 181);
+				}
+
+				.uranus {
+					width: 18px;
+					height: 18px;
+					background-color: rgb(173, 200, 211);
+				}
+
+				.neptune {
+					width: 17px;
+					height: 17px;
+					background-color: rgb(160, 183, 214);
+				}
+
+				.saturn-ring {
+					border-radius: 50%;
+					width: 44px;
+					height: 44px;
+					position: relative;
+					top: -7px;
+					left: -7px;
+					border: 4px solid rgba(216, 218, 169, 0.7);
+				}
+
+				.uranus-ring {
+					border-radius: 50%;
+					width: 28px;
+					height: 28px;
+					position: relative;
+					top: -5px;
+					left: -5px;
+					border: 1px solid rgba(255, 255, 230, 0.2);
+				}
+			</style>
+			<table>
+				<tr>
+					<th class="black grav-title"></th>
+					<th class="grav-title">name</th>
+					<th class="grav-title">g (m/s²)</th>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Sun">
+							<div class="planet sun-div">
+								<div class="planet sun"></div>
+							</div>
+						</a>
+					</td>
+					<td>Sun</td>
+					<td>275</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Mercury_(planet)">
+							<div class="planet mercury"></div>
+						</a>
+					</td>
+					<td>Mercury</td>
+					<td>3.7</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Venus">
+							<div class="planet venus"></div>
+						</a>
+					</td>
+					<td>Venus</td>
+					<td>8.9</td>
+				</tr>
+				<tr>
+
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Earth">
+							<div class="planet earth"></div>
+						</a>
+					</td>
+					<td>Earth</td>
+					<td>9.8</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Moon">
+							<div class="planet moon"></div>
+						</a>
+					</td>
+					<td>Moon</td>
+					<td>1.6</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Mars">
+							<div class="planet mars"></div>
+						</a>
+					</td>
+					<td>Mars</td>
+					<td>3.7</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Jupiter">
+							<div class="planet jupiter"></div>
+						</a>
+					</td>
+					<td>Jupiter</td>
+					<td>25.8</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Saturn">
+							<div class="planet saturn">
+								<div class="saturn-ring"></div>
+							</div>
+						</a>
+					</td>
+					<td>Saturn</td>
+					<td>10.4</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Uranus">
+							<div class="planet uranus">
+								<div class="uranus-ring"></div>
+							</div>
+						</a>
+					</td>
+					<td>Uranus</td>
+					<td>8.7</td>
+				</tr>
+				<tr>
+					<td class="black">
+						<a href="https://en.wikipedia.org/wiki/Neptune">
+							<div class="planet neptune"></div>
+						</a>
+					</td>
+					<td>Neptune</td>
+					<td>11.2</td>
+				</tr>
+			</table>
+			<br>
+			<strong>Example:</strong> Imagine a meteor 4000 m above the Moon falls from rest. What is the impact velocity of the meteor? How long does it take for the meteor to hit the surface?
 			<details>
 				<summary>solution</summary>
 				<div class="listing">
@@ -549,19 +767,22 @@
 						<div>
 							$$\Delta x = -4000\,\mathrm{m}$$
 							$$u = \mathrm{rest} = 0$$
-							$$a = -1.315\, \mathrm{\tfrac{m}{s^{2}}}$$
+							$$a = -1.6 \, \mathrm{\tfrac{m}{s^{2}}}$$
 							$$v = \,?$$ $$\Delta t = \,?$$
 						</div>
 					</li>
 					<li>
 						<div>
 							$$v^{2} = u^{2}+2a \Delta x$$
-							$$v^{2} = 0^{2}+2(-1.315)(-4000)$$
-							$$v^{2} = 10520 $$ $$v = \pm102.6 \, \mathrm{\tfrac{m}{s}} $$
+							$$v^{2} = 0^{2}+2(-1.6)(-4000)$$
+							$$v^{2} = 112800 $$ $$v = \pm113 \, \mathrm{\tfrac{m}{s}} $$
 						</div>
 					</li>
 				</div>
-				<br> $$v = u+a \Delta t$$ $$\frac{v - u}{a} = \Delta t$$ $$ \frac{-102.6 - 0}{-1.315} = \Delta t $$ $$78.0\, \mathrm{s} = \Delta t $$
+				<br> $$v = u+a \Delta t$$
+				$$\frac{v - u}{a} = \Delta t$$
+				$$ \frac{-113 - 0}{-1.6} = \Delta t $$
+				$$70.6\, \mathrm{s} = \Delta t $$
 			</details>
 		</div>
 
@@ -569,7 +790,6 @@
 			<strong>Example:</strong> A flee can jump 18 cm high on Earth.
 			Estimate how high they could jump on Mars?
 			Assume no air friction and similar conditions for Earth and Mars.
-			(look up the gravity on <a href="https://www.google.com/search?q=what+is+the+gravity+on+mars">Mars</a>)
 			<details>
 				<summary>strategy</summary>
 				<p>
@@ -738,6 +958,10 @@
 			This choice puts the acceleration from gravity in only the y-direction.
 		</p>
 		<table class="table-2d">
+			<!-- <tr>
+				<td style="text-align: center;">vertical</td>
+				<td style="text-align: center;">horizontal</td>
+			</tr> -->
 			<tr>
 				<td colspan="2" style='text-align: center;'>Δt = </td>
 			</tr>
@@ -838,17 +1062,16 @@
 
 		<div class="example-small" id="ballistics">
 			<p>
-				Aim and click to fire, but be careful not to hit the other tank.
+				Aim and click to fire. Please be careful not to hit each other.
 			</p>
 			<br>
-
 			<style>
 				#tanks {
 					position: relative;
 					top: -225px;
 					left: 0px;
 					margin-bottom: -205px;
-					border: #000 solid 2px;
+					border: #000 solid 5px;
 				}
 			</style>
 			<table class="table-2d ">
@@ -899,36 +1122,71 @@
 			<details>
 				<summary>solution</summary>
 				<p>
-					The vertical velocity is zero at the top of the projectile's arc.
-					At the highest point.
+					The vertical velocity is zero at the top of the arc, the highest point.
 				</p>
 			</details>
 		</div>
 
+
+
+		<div class='example'>
+			<svg class='center' width="220" height="180">
+				<g id="vector" transform='translate(0 150) rotate(-25)'>
+					<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
+					<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
+					<text x="100" y="-13" fill="black" text-anchor="middle" dominant-baseline="middle">V = 150 m/s</text>
+				</g>
+				<line x1="0" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
+				<line x1="181" y1="150" x2="181" y2="63" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
+				<text x="100" y="165" fill="black" text-anchor="middle" dominant-baseline="middle">Vx</text>
+				<text x="205" y="105" fill="black" text-anchor="middle" dominant-baseline="middle">Vy</text>
+				<text x="67" y="141" fill="black" text-anchor="middle" dominant-baseline="middle">θ = 35°</text>
+			</svg>
+			<strong>Example:</strong> A projectile has a velocity of 150 m/s.
+			It is fired at an angle of 35° above the horizon.
+			Use <a href="../../review/vectors/index.html#trigonometry">trigonometry</a> to find the parts of the velocity in the horizontal and vertical directions.
+			<details>
+				<summary>solution</summary>
+				<div class="col-group">
+					<div>
+						$$\text{horizontal}$$
+						$$v_x = v \, \mathrm{cos}(\theta)$$
+						$$v_x = (150) \, \mathrm{cos}(30)$$
+						$$v_x = (150) (0.87)$$
+						$$v_x = 130 \, \mathrm{\tfrac{m}{s} }$$
+					</div>
+					<div>
+						$$\text{vertical}$$
+						$$v_y = v \, \mathrm{sin}(\theta)$$
+						$$v_y = (150) \, \mathrm{sin}(30)$$
+						$$v_y = (150) (0.50)$$
+						$$v_y = 75 \, \mathrm{\tfrac{m}{s} }$$
+					</div>
+				</div>
+			</details>
+		</div>
+
+
+
 		<div class='example'>
 			<svg viewBox='-25 -30 600 312'>
+				<path d="M2 200 Q 276 -250 551 230" fill='none' stroke="#999" stroke-width="4" stroke-linejoin="round" stroke-dasharray="0, 22.1" stroke-linecap="round" />
 				<rect x="-25" y="230" width="600" height="50" fill='#abc' stroke='none' rx="2" ry="2" />
-				<path d="M2 200 Q 276 -250 551 230" fill='none' stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-dasharray="0, 22.1" stroke-linecap="round" />
+				<rect x="-10" y="180" width="60" height="50" fill='#aaa' stroke='#000' stroke-width="2" rx="3" ry="3" />
 				<path d="M23 240 v11 v-5 h525 v5 v-11" fill='none' stroke="#000" stroke-width="2" stroke-linejoin="round" />
 				<text x="276" y="268" text-anchor="middle" font-size="20" fill='#000'>Δx</text>
-				<text x="64" y="100" text-anchor="middle" font-size="20" fill='#000'>v</text>
+				<text x="57" y="100" text-anchor="middle" font-size="20" fill='#000'>v</text>
 				<text x="45" y="167" text-anchor="middle" font-size="20" fill='#000'>θ</text>
 
 				<g transform="translate(59 105) rotate(120)">
 					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
 					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
 				</g>
-				<rect x="-10" y="170" width="60" height="60" fill='#aaa' stroke='#000' stroke-width="2" rx="3" ry="3" />
+				<circle cx="22" cy="170" r="10" fill="#e60" stroke="#000" stroke-width="2" />
 			</svg>
 			<strong>Example:</strong> A ball is thrown at an angle of 60° above the horizon and a speed of 10 m/s. If the ball is thrown from 2.0 meters above the ground how far does the ball go before it hits the ground.
-			<br>
-
 			<details>
 				<summary>strategy</summary>
-				<p>
-					We don't know the initial velocities, but we do know the angle and the initial speed.
-					We can use <a href="../../review/vectors/index.html#trigonometry">trigonometry</a> to find the vector components of the initial speed.
-				</p>
 				<p>
 					The ball travels vertically upward at first, but that doesn't affect Δy.
 					$$\Delta y = y_{f} - y_{i}$$
@@ -940,10 +1198,14 @@
 				<summary>solution</summary>
 				<div class="col-group">
 					<div>
-						$$u_x = (10) \mathrm{cos}(60)$$ $$u_x = (10) (0.5)$$ $$u_x = 5 \, \mathrm{\tfrac{m}{s} }$$
+						$$u_x = (10) \, \mathrm{cos}(60)$$
+						$$u_x = (10) (0.5)$$
+						$$u_x = 5 \, \mathrm{\tfrac{m}{s} }$$
 					</div>
 					<div>
-						$$u_y = (10) \mathrm{sin}(60)$$ $$u_y = (10) (0.87)$$ $$u_y = 8.7 \, \mathrm{\tfrac{m}{s} }$$
+						$$u_y = (10) \, \mathrm{sin}(60)$$
+						$$u_y = (10) (0.87)$$
+						$$u_y = 8.7 \, \mathrm{\tfrac{m}{s} }$$
 					</div>
 				</div>
 				<table class="table-2d" style="width: 500px;">
@@ -1001,25 +1263,23 @@
 		<div class='example'>
 			<svg viewBox='-25 -30 600 280'>
 				<rect x="-25" y="200" width="600" height="50" fill='#abc' stroke='none' rx="5" ry="5" />
-				<path d="M2 200 Q 276 -250 550 200" fill='none' stroke-dasharray="0, 16.5" stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
-				<rect x="280" y="-40" width="300" height="240" fill='#fff' stroke='none' />
-
-				<path d="M265 197 h11 h-5.5 v-218 h-5.5 h11" fill='none' stroke="#000" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+				<path d="M2 200 Q 276 -250 550 200" fill='none' stroke-dasharray="10.41 30" stroke="#bbb" stroke-width="2.5" />
+				<path d="M270.5 197 h11 h-5.5 v-218 h-5.5 h11" fill='none' stroke="#000" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
 				<text x="290" y="95" text-anchor="middle" font-size="20" fill='#000'>Δy</text>
 				<text x="42" y="130" text-anchor="middle" font-size="20" fill='#000'>v</text>
 				<text x="23" y="197" text-anchor="middle" font-size="20" fill='#000'>θ</text>
-
-				<g transform="translate(39 135) rotate(120)">
+				<g transform="translate(40 135) rotate(120)">
+					<path d="M65 0 l8 8 h8 l-8 -8 z  M65 0 l8 -8 h8 l-8 8 z" stroke="none" fill="#777" />
 					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
-					<polygon points="0,0 12,5 12,-5" style="fill:#000;" />
+					<polygon points="0,0 12,5 12,-5" fill="#333" />
 				</g>
 			</svg>
-			<strong>Example:</strong> An arrow is fired from ground level 60° above the horizon at 10 m/s.
-			Find the vertical distance the arrow traveled.
+			<strong>Example:</strong> An arrow at ground level is fired at 60° above the horizon at 10 m/s.
+			Calculate the maximum height of the arrow.
 			<details>
 				<summary>strategy</summary>
 				<p>
-					This problem seems like we don't have enough information, but we do.
+					At first it might seem like there isn't enough information to find the vertical distance.
 					The trick is to end the problem at the highest point on the arc which makes the final velocity 0.
 				</p>
 			</details>
@@ -1027,10 +1287,14 @@
 				<summary>solution</summary>
 				<div class="col-group">
 					<div>
-						$$u_x = (10) \mathrm{cos}(60)$$ $$u_x = (10) (0.5)$$ $$u_x = 5 \, \mathrm{\tfrac{m}{s} }$$
+						$$u_x = (10) \, \mathrm{cos}(60)$$
+						$$u_x = (10) (0.5)$$
+						$$u_x = 5 \, \mathrm{\tfrac{m}{s} }$$
 					</div>
 					<div>
-						$$u_y = (10) \mathrm{sin}(60)$$ $$u_y = (10) (0.87)$$ $$u_y = 8.7 \, \mathrm{\tfrac{m}{s} }$$
+						$$u_y = (10) \, \mathrm{sin}(60)$$
+						$$u_y = (10) (0.87)$$
+						$$u_y = 8.7 \, \mathrm{\tfrac{m}{s} }$$
 					</div>
 				</div>
 				<table class="table-2d">
@@ -1065,18 +1329,6 @@
 		</div>
 
 		<div class='example'>
-			<svg class='center' width="220" height="175">
-				<g id="vector" transform='translate(0 150) rotate(-25)'>
-					<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
-					<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
-					<text x="100" y="-13" fill="black" text-anchor="middle" dominant-baseline="middle">V = 150 m/s</text>
-				</g>
-				<line x1="0" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
-				<line x1="181" y1="150" x2="181" y2="63" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
-				<text x="100" y="165" fill="black" text-anchor="middle" dominant-baseline="middle">Vx</text>
-				<text x="205" y="105" fill="black" text-anchor="middle" dominant-baseline="middle">Vy</text>
-				<text x="67" y="141" fill="black" text-anchor="middle" dominant-baseline="middle">θ = 35°</text>
-			</svg>
 			<strong>Example:</strong> A ball is thrown at 35° from the horizon from ground level with a speed of 150 m/s. How long will the ball be in the air?
 			<details>
 				<summary>solution</summary>
