@@ -342,39 +342,22 @@ canvas,
   margin-bottom: -0.3em;
 }
 
-/* fake Grid ________________________________________________*/
-.wrapper {
-  display: grid;
-  grid-template-columns: 292px 292px;
-  grid-gap: 16px;
-}
+/* flex grid thirds _________________________________*/
 
-.wrapper>div {
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 5px;
-}
-
-/* 3 column flex Grid ________________________________________________*/
 .flex-grid-thirds {
   display: flex;
-  justify-content: space-between;
 }
 
-.flex-grid-thirds .col {
-  width: 32%;
+.col {
+  flex: 1;
 }
 
 @media (max-width: 500px) {
   .flex-grid-thirds {
     display: block;
   }
-
-  .flex-grid-thirds .col {
-    width: 100%;
-    margin: 0 0 10px 0;
-  }
 }
+
 
 /* Header setup_________________________________*/
 header {
@@ -439,6 +422,10 @@ header p {
   }
 }
 
+.show-on-mobile {
+  display: none;
+}
+
 /* responsive media rules for mobile________________________________ */
 @media screen and (max-width: 650px) {
 
@@ -472,5 +459,9 @@ header p {
 
   .hide-on-mobile {
     display: none;
+  }
+
+  .show-on-mobile {
+    display: block;
   }
 }
