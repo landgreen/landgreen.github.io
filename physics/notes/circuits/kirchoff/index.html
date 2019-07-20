@@ -2,8 +2,6 @@
 <html lang="en-US">
 
 <head>
-
-
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="theme-color" content="#222" />
@@ -16,11 +14,9 @@
 
 	<title>Kirchhoff’s Laws</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
-
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 	<script src="../../../lib/katex/katex.min.js"></script>
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
-
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 	<script src='../../../lib/chargeclass.js'></script>
 </head>
@@ -35,9 +31,9 @@
 		<p>Kirchhoff’s Laws were published in 1845 by German physicist Gustav Kirchhoff. When Kirchhoff's laws are combined with Ohm's law we are able to calculate voltage and current for complex circuits.</p>
 		<h2 class='underlined'>Electric Potential in Circuits</h2>
 		<p>
-			<a href="..\electricity\index.html#voltage">Electric potential</a> roughly represents the concentration of electrical potential energy in a circuit. Potential is also similar to water pressure.
-		</p>
-		<p>
+			<a href="..\electricity\index.html#voltage">Electric potential</a> roughly represents the concentration of electrical potential energy in a circuit.
+			<!-- Potential is analogous to water pressure. -->
+
 			We call a change in electric potential across a circuit element the electric potential difference or more commonly the <a href="https://www.youtube.com/watch?v=-Rb9guSEeVE">voltage</a>.
 		</p>
 		<p>
@@ -50,6 +46,16 @@
 		</p>
 		<div class='example'>
 			<svg viewBox="0 -5 600 70">
+				<defs>
+					<linearGradient id="fade-in-white" x1="0" x2="1" y1="0" y2="0">
+						<stop offset="0%" stop-color="#fff" stop-opacity="1" />
+						<stop offset="100%" stop-color="#fff" stop-opacity="0" />
+					</linearGradient>
+					<linearGradient id="fade-out-white" x1="1" x2="0" y1="0" y2="0">
+						<stop offset="0%" stop-color="#fff" stop-opacity="1" />
+						<stop offset="100%" stop-color="#fff" stop-opacity="0" />
+					</linearGradient>
+				</defs>
 				<g stroke-width="45" stroke-linejoin="round" fill='none' opacity="0.2">
 					<path d="M 340 20 h 260" stroke="#b88" stroke-width="40" />
 					<path d="M 0 20 h 260" stroke="#f00" stroke-width="50" />
@@ -59,6 +65,8 @@
 					<text x="150" y="40" fill='#d55'>4 V</text>
 					<text x="500" y="37" fill='#777' font-size="18">2 V</text>
 				</g>
+				<rect x="0" y="-10" width="35" height="100" fill="url(#fade-in-white)" stroke="none" />
+				<rect x="565" y="0" width="35" height="100" fill="url(#fade-out-white)" stroke="none" />
 			</svg>
 			<strong>Example:</strong> In the diagram above the potential in red is 4 V. The potential in grey is 2 V. What is the potential difference across the resistor?
 			<details>
@@ -80,7 +88,7 @@
 		<div class='example'>
 			<svg viewBox="0 0 600 80">
 				<g stroke-width="45" stroke-linejoin="round" fill='none' opacity="0.2">
-					<path d="M 0 30 h 288" stroke="#b88" stroke-width="40" />
+					<path d="M 0 30 h 288" stroke="#ccc" stroke-width="40" />
 					<path d="M 305 30 h 290" stroke="#f00" stroke-width="50" />
 				</g>
 				<path d="M 0 30 h 290 m0 -15 v30 m15 -45 v60 m0 -30 h 290" fill='none' stroke="#555" stroke-width="4" stroke-linejoin="round" />
@@ -88,6 +96,8 @@
 					<text x="150" y="47" fill='#777' font-size="18">0 V</text>
 					<text x="500" y="50" fill='#d55'>1.50 V</text>
 				</g>
+				<rect x="0" y="-5" width="35" height="100" fill="url(#fade-in-white)" stroke="none" />
+				<rect x="565" y="0" width="35" height="100" fill="url(#fade-out-white)" stroke="none" />
 			</svg>
 			<strong>Example:</strong> What voltage is the battery providing?
 			<details>
@@ -112,6 +122,8 @@
 					<line x1="5" y1="0" x2="75" y2="0" style="stroke:#333;stroke-width:2" />
 					<polygon points="0,0 12,5 12,-5" style="fill:#333;" />
 				</g>
+				<rect x="0" y="-10" width="35" height="100" fill="url(#fade-in-white)" stroke="none" />
+				<rect x="565" y="0" width="35" height="100" fill="url(#fade-out-white)" stroke="none" />
 			</svg>
 			<strong>Example:</strong> Calculate the resistance using the diagram above.
 			<details>
@@ -127,16 +139,6 @@
 		</div>
 		<div class='example'>
 			<svg viewBox="0 0 540 300">
-				<defs>
-					<linearGradient id="fade-in-white" x1="0" x2="1" y1="0" y2="0">
-						<stop offset="0%" stop-color="#fff" stop-opacity="1" />
-						<stop offset="100%" stop-color="#fff" stop-opacity="0" />
-					</linearGradient>
-					<linearGradient id="fade-out-white" x1="1" x2="0" y1="0" y2="0">
-						<stop offset="0%" stop-color="#fff" stop-opacity="1" />
-						<stop offset="100%" stop-color="#fff" stop-opacity="0" />
-					</linearGradient>
-				</defs>
 				<g stroke-width="30" stroke-linejoin="round" fill='none' opacity="0.3">
 					<path d="M 10 150 h220
 						 M 100 150 l 50 100 h 80
@@ -204,7 +206,7 @@
 					M 25 143
 					c 0 100, 100 40, 205 147
 					M 100 138
-					c 0 -100, 100 0, 130 -100" stroke="#b88" stroke-width="27" />
+					c 0 -100, 100 0, 130 -100" stroke="#ccc" stroke-width="27" />
 					<path d="M 300 150 
 					c 50 15, 170 15, 300 0
 					M 310 290
@@ -226,16 +228,44 @@
 			c 0 -100, 100 0, 130 -100
 			l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l10 -10
 			c 0 100, 100 0, 150 122" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+				<g text-anchor="end" font-size="20" font-weight="bold">
+					<text x="70" y="118" fill='#777'>0 V</text>
+					<text x="520" y="133" fill='#d55'>1.5 V</text>
+				</g>
 				<text x="295" y="20" text-anchor="end" font-size="20">400 Ω</text>
-				<text x="295" y="130" text-anchor="end" font-size="20">200 Ω</text>
+				<text x="280" y="130" text-anchor="end" font-size="20">200 Ω</text>
 				<text x="295" y="271" text-anchor="end" font-size="20">100 Ω</text>
 				<rect x="0" y="0" width="25" height="330" fill="url(#fade-in-white)" stroke="none" />
 				<rect x="525" y="0" width="25" height="330" fill="url(#fade-out-white)" stroke="none" />
 			</svg>
-			<strong>Question:</strong> Explain why resistors in parallel must all have the same voltage.
+			<strong>Question:</strong> What direction is the current?
 			<details>
 				<summary>answer</summary>
-				<p> Electric potential is the same for all of an uninterrupted wire, even if it branches. So, each branch has the same potential. This means they must also have the same potential difference.</p>
+				<p>
+					The current is directed to the left.
+					Current is the flow of charge, and charge flows from high potential to low potential.
+				</p>
+			</details>
+			<br>
+			<strong>Question:</strong> Which path do you think will have the highest current? Why?
+			<details>
+				<summary>answer</summary>
+				<p>The 100 Ω resistor has the highest current</p>
+				<p>
+					All three paths have the same voltage, so the only difference is the resistance.
+					Resistance makes it harder for current to flow.
+					The lowest resistor will have the highest current.
+				</p>
+			</details>
+			<br>
+			<strong>Example:</strong> Calculate the current across each resistor.
+			<details>
+				<summary>solution</summary>
+				$$\Delta V = IR$$
+				$$I = \frac{\Delta V}{R}$$
+				$$I = \frac{1.5 \, \mathrm{V}}{400 \, \Omega} \quad \enspace \quad I = \frac{1.5 \, \mathrm{V}}{200 \, \Omega} \quad \enspace \quad I = \frac{1.5 \, \mathrm{V}}{100 \, \Omega}$$
+				$$I = 0.00375 \, \mathrm{A} \quad \quad I = 0.0075 \, \mathrm{A} \quad \quad I = 0.015 \, \mathrm{A} $$
+				$$I = 3.75 \, \mathrm{mA} \quad \quad I = 7.5 \, \mathrm{mA} \quad \quad I = 15 \, \mathrm{mA} $$
 			</details>
 		</div>
 
@@ -719,9 +749,11 @@
 			\(R_{n}\) = A single resistor in a series [ohms, Ω]
 			<br>\(R_{eq}\) = Equivalent resistance. The resistance of a single resistor that could replace several resistors. [ohms, Ω]
 		</div>
-		<p>
-			You can replace several resistors in a series with just one without changing the behavior of the circuit.
-		</p>
+		<div class="example-small">
+			<a href="https://www.tinkercad.com/things/fezh5mKMrBF"> <img src="resistors_in_series2.png" alt="resistors_in_series.png" width="590" /></a>
+			Adding resistors in series increases the total resistance.
+		</div>
+		<!-- <iframe class="hide-on-mobile" width="610" height="430" src="https://www.tinkercad.com/embed/fezh5mKMrBF" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> -->
 
 		<div class='example'>
 			<svg viewBox="0 0 550 100">
@@ -730,22 +762,24 @@
 				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 40
 				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 40
 				l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 40" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-				<text x="90" y="25" text-anchor="middle" font-size="20" fill='#333'>100 Ω</text>
-				<text x="210" y="25" text-anchor="middle" font-size="20" fill='#333'>100 Ω</text>
-				<text x="330" y="25" text-anchor="middle" font-size="20" fill='#333'>100 Ω</text>
+				<text x="90" y="25" text-anchor="middle" font-size="20" fill='#333'>120 Ω</text>
+				<text x="210" y="25" text-anchor="middle" font-size="20" fill='#333'>150 Ω</text>
+				<text x="330" y="25" text-anchor="middle" font-size="20" fill='#333'>200 Ω</text>
 				<text x="450" y="25" text-anchor="middle" font-size="20" fill='#333'>100 Ω</text>
 			</svg>
-			<strong>Example:</strong> What is the equivalent resistance for four 100 Ω resistors in a series?
+
+			<strong>Example:</strong> You can replace resistors in a series with one equivalent resistor.
+			What one resistor could replace these four resistors?
 			<details>
 				<summary>solution</summary>
 				<svg viewBox="0 0 560 100">
 					<path d="M 10 50 h225
 					l10 10 l10 -20 l10 20 l10 -20 l10 20 l10 -20 l10 20 l 10 -10 h 225" fill='none' stroke="#333" stroke-width="4" stroke-linejoin="round" />
-					<text x="275" y="25" text-anchor="middle" font-size="20" fill='#333'>400 Ω</text>
+					<text x="275" y="25" text-anchor="middle" font-size="20" fill='#333'>570 Ω</text>
 				</svg>
 				$$R_{eq} = R_1+R_2+R_3+R_4$$
-				$$R_{eq} = 100\, \Omega+100\, \Omega+100\, \Omega+100\, \Omega$$
-				$$R_{eq} = 400\, \Omega$$
+				$$R_{eq} = 120\, \Omega + 150\, \Omega + 200\, \Omega + 100\, \Omega$$
+				$$R_{eq} = 570\, \Omega$$
 			</details>
 		</div>
 		<h2 class='underlined' id="parallel">Resistors in Parallel</h2>
@@ -777,7 +811,19 @@
 			\(R_{n}\) = A single resistor in parallel [ohms, Ω]
 			<br>\(R_{eq}\) = Equivalent resistance. The resistance of a single resistor that could replace several resistors [ohms, Ω]
 		</div>
-		<p>Wiring more resistors in parallel results in lower equivalent resistance.</p>
+		<!-- <p>
+			Wiring more resistors in parallel lowers the equivalent resistance.
+		</p> -->
+		<div class="example-small">
+			<a href="https://www.tinkercad.com/things/lTq9lGsoz4f"> <img src="resistors_in_parallel3.png" alt="resistors_in_parallel.png" width="590" /></a>
+			Adding resistors in parallel lowers the total resistance.
+			This makes sense if you think of each parallel resistor as a possible path for current.
+			More paths allow more current and less resistance.
+		</div>
+
+
+		<!-- <iframe class="hide-on-mobile" width="610" height="460" src="https://www.tinkercad.com/embed/lTq9lGsoz4f" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> -->
+
 		<div class='example'>
 			<strong>Example:</strong> What is the equivalent resistance for five 100 Ω resistors all in parallel?
 			<details>

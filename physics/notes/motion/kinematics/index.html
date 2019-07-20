@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="theme-color" content="#222" />
@@ -68,7 +67,6 @@
 				<path d="M 70.5 280.5  v 3M 120.5 280.5  v 3M 170.5 280.5  v 3M 220.5 280.5  v 3M 270.5 280.5  v 3M 320.5 280.5  v 3M 370.5 280.5  v 3M 420.5 280.5  v 3M 470.5 280.5  v 3M 520.5 280.5  v 3M 570.5 280.5  v 3M 20.5 230.5  h -3M 20.5 180.5  h -3M 20.5 130.5  h -3M 20.5 80.5  h -3M 20.5 30.5  h -3" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path>
 				<text x="598" y="274" style="fill: rgb(0, 0, 0); font-size: 16px; text-anchor: end; font-family: monospace;">time (s)</text>
 				<text x="33" y="6" transform="rotate(-90, 33, 3)" style="fill: rgb(0, 0, 0); font-size: 16px; text-anchor: end; font-family: monospace;">position (m)</text>
-
 			</svg>
 			<!-- 
 			<svg id="SVG-graph-0" viewBox="0 0 600 300"></svg>
@@ -294,14 +292,13 @@
 			</script>
 			<p>
 				There are many ways to move from A to B, but
-				if the acceleration is limited to a single constant value there is only one possible way.
+				if the acceleration is limited to a single <strong>constant</strong> value the path is a parabola.
 			</p>
 			<strong>Question:</strong> Set the acceleration to 0.05 m/s².
 			Write a short description of the object's velocity as it moves from A to B.
 			<details>
 				<summary>answer</summary>
 				<p>(at the default A and B positions)</p>
-
 				<li>The velocity is always increasing by 0.05 m/s every second.</li>
 				<li>The initial velocity directed away from point B.</li>
 				<li>Starting at point A, the object slows down to a stop.</li>
@@ -454,8 +451,6 @@
 					The units are correct for acceleration.
 					Our answer looks good!
 				</p>
-
-
 			</details>
 		</div>
 
@@ -1072,6 +1067,8 @@
 					left: 0px;
 					margin-bottom: -205px;
 					border: #000 solid 5px;
+					user-select: none;
+					cursor: crosshair;
 				}
 			</style>
 			<table class="table-2d ">
@@ -1364,15 +1361,46 @@
 				$$\Delta t = 17.6 \, \mathrm{s}$$
 			</details>
 		</div>
+		<p style="margin-bottom: -15px;">
+			In the problem below you need to solve a 2-D projectile motion problem to get the projectile through the gap in the wall.
+		</p>
+		<br class="show-on-mobile">
+		<style>
+			#matter-mouse {
+				position: relative;
+				top: 30px;
+				left: 10px;
+				user-select: none;
+				z-index: -2;
+			}
+		</style>
+		<span id="matter-mouse" class="hide-on-mobile" style="text-align: end;">position = (0,0)</span>
+		<canvas id="matter-canvas-0" width='600' height='100' onclick="challenge1(this)" style="user-select: none;"></canvas>
+		<span id="matter-text-0" style="display: none;">
+			<p class="show-on-mobile">
+				The gap starts at <span id='xpos-0'></span> horizontally and <span id='ypos-0'></span> vertically.
+			</p>
+			<span>
+				<strong>initial vertical velocity</strong> = <input class='number' id='num-0' type="number" step="1" min='1' max='500' value='10' style="width:60px;">m/s
+				<button id="fire-0">fire</button>
+				<button id="clear-0">clear</button>
+			</span>
+			<p>
+				The ball starts with a horizontal velocity of <span id='Vx-0'></span>.
+				Calculate the initial vertical velocity that will send the box through the gap in the wall.
+			</p>
+		</span>
 
-		<div class='example hide-on-mobile'>
+
+
+		<!-- <div class='example hide-on-mobile'>
 			<strong>Challenge:</strong> Test your 2-D motion skills with these randomly generated problems.
 			<p>
 				<a href="../challenge1/index.html">2-D motion challenge #1</a>
 				<br>
 				<a href="../challenge2/index.html">2-D motion challenge #2</a>
 			</p>
-		</div>
+		</div> -->
 
 
 
@@ -1631,6 +1659,8 @@ https://vuejs.org/v2/guide/components.html
 	<script src="../../../lib/vue.min.js"></script>
 	<script src="../../../lib/vueslider.js"></script>
 	<script src="ballistics.js"></script>
+	<script src='../../../lib/matter.min.js'></script>
+	<script src="fire.js"></script>
 
 </body>
 
