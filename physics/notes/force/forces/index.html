@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#222" />
@@ -15,11 +14,9 @@
 
   <title>Forces</title>
   <link rel="shortcut icon" href="../../../media/favicon.ico" type="image/x-icon" />
-
   <link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
   <script src="../../../lib/katex/katex.min.js"></script>
   <script src="../../../lib/katex/contrib/auto-render.min.js"></script>
-
   <link rel="stylesheet" href="../../../style.css">
 </head>
 
@@ -32,31 +29,71 @@
 
   <article>
     <p>
-      Free body diagrams are a technique that helps visualize the forces on a mass in order to solve Newton's second law.
+      Free body diagrams are a technique that helps visualize the force vectors used to solve Newton's second law.
     </p>
+    <div class="definition">
+      <svg class='center' viewBox="0 0 500 350">
+        <defs>
+          <g id="vector">
+            <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
+            <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
+          </g>
+        </defs>
+        <g transform='translate(100 80)'>
+          <g transform='translate(0 0)'>
+            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fff" />
+            <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>m</text>
+          </g>
+          <use xlink:href="#vector" transform='translate(0 40) rotate(90)' />
+          <text x="-63" y="45" fill="black">F</text>
+          <use xlink:href="#vector" transform='translate(40 80) rotate(0)' />
+          <text x="35" y="150" fill="black">F</text>
 
-    <svg class='center' width="300" height="120" viewBox="-15 0 285 120">
-      <defs>
-        <g id="vector">
-          <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
-          <polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
         </g>
-      </defs>
-
-      <g transform='translate(100 20) rotate(0)'>
-        <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fff" />
-        <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>m</text>
-      </g>
-      <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-      <text x="37" y="65" fill="black">F</text>
-      <use xlink:href="#vector" transform='translate(180 80) rotate(-90)' />
-      <text x="235" y="85" fill="black">F</text>
-      <use xlink:href="#vector" transform='translate(180 40) rotate(-90)' />
-      <text x="235" y="45" fill="black">F</text>
-    </svg>
-    <p>
-      A <strong>free body diagram</strong> shows all the force vectors on a single mass. Mass is typically written inside a box, with force vectors pointed away from the box.
-    </p>
+        <g transform='translate(313 80)'>
+          <g transform='translate(0 0)'>
+            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fff" />
+            <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>m</text>
+          </g>
+          <use xlink:href="#vector" transform='translate(0 40) rotate(90)' />
+          <text x="-63" y="45" fill="black">F</text>
+          <use xlink:href="#vector" transform='translate(80 60) rotate(-90)' />
+          <text x="135" y="66" fill="black">F</text>
+          <use xlink:href="#vector" transform='translate(80 20) rotate(-90)' />
+          <text x="135" y="26" fill="black">F</text>
+          <use xlink:href="#vector" transform='translate(20 80) rotate(0)' />
+          <text x="15" y="150" fill="black">F</text>
+          <use xlink:href="#vector" transform='translate(60 80) rotate(0)' />
+          <text x="55" y="150" fill="black">F</text>
+          <use xlink:href="#vector" transform='translate(40 0) rotate(180)' />
+          <text x="35" y="-55" fill="black">F</text>
+        </g>
+        <g transform='translate(313 260)'>
+          <g transform='translate(0 0)'>
+            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fff" />
+            <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>m</text>
+          </g>
+          <use xlink:href="#vector" transform='translate(80 40) rotate(-90)' />
+          <text x="135" y="45" fill="black">F</text>
+        </g>
+        <g transform='translate(100 260)'>
+          <g transform='translate(0 0)'>
+            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#fff" />
+            <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>m</text>
+          </g>
+          <use xlink:href="#vector" transform='translate(0 40) rotate(90)' />
+          <text x="-63" y="45" fill="black">F</text>
+          <use xlink:href="#vector" transform='translate(80 60) rotate(-90)' />
+          <text x="135" y="66" fill="black">F</text>
+          <use xlink:href="#vector" transform='translate(80 20) rotate(-90)' />
+          <text x="135" y="26" fill="black">F</text>
+        </g>
+      </svg>
+      <p>
+        A <strong>free body diagram</strong> shows all the force vectors on an object.
+        Mass is typically written inside a box, with force vectors pointed away from the box.
+      </p>
+    </div>
 
     <div class='example'>
       <svg class='center' width="300" height="120" viewBox="-15 0 285 120">
@@ -71,7 +108,7 @@
         <use xlink:href="#vector" transform='translate(180 40) rotate(-90)' />
         <text x="200" y="33" fill="black">300 N</text>
       </svg>
-      <strong>Example:</strong> Find the acceleration for the free body diagram above.
+      <strong>Example:</strong> Use the free body diagram to calculate the mass's acceleration.
       <details>
         <summary>solution</summary>
         $$\sum F=ma$$
@@ -102,7 +139,6 @@
       What force is required to keep the book at rest on the table?
       <details>
         <summary>solution</summary>
-        <p>This force is called the <strong>normal force</strong>. We'll learn about it on this page.</p>
         $$\sum F=ma$$ $$F_{N} + F_{g} = ma$$
         $$F_{N} - 0.34\, \mathrm{N} = (0.09\, \mathrm{kg})(0)$$
         $$F_{N} - 0.34\,\mathrm{N} = 0$$
@@ -145,19 +181,20 @@
         <use xlink:href="#vector" transform='translate(180 80) rotate(-90)' />
         <text x="210" y="73" fill="black">78 N</text>
       </svg>
-      <b>Example:</b> Use the free body diagram to calculate the acceleration for both the horizontal and the vertical.
+      <strong>Example:</strong> Use the free body diagram to calculate the acceleration for both the horizontal and the vertical.
       <details>
         <summary>solution</summary>
-        $$ \text{vertical}$$ $$\sum F=ma$$
-        $$22 {\color{#aaa} \, \mathrm{N}} - 85{\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$
-        $$-63 {\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$
-        $$-3.9{\color{#aaa} \, \mathrm{\tfrac{m}{s^2}}} = a$$
+        $$ \text{vertical}$$
+        $$\sum F=ma$$
+        $$22 \, \mathrm{N} - 85 \, \mathrm{N} = (16 \, \mathrm{kg})a$$
+        $$-63 \, \mathrm{N} = (16 \, \mathrm{kg})a$$
+        $$-3.9 \, \mathrm{\tfrac{m}{s^2}} = a$$
 
         <br> $$ \text{horizontal}$$
         $$\sum F=ma$$
-        $$78{\color{#aaa} \, \mathrm{N}}+55{\color{#aaa} \, \mathrm{N}}-140{\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$
-        $$-7{\color{#aaa} \, \mathrm{N}} = (16 {\color{#aaa} \, \mathrm{kg}})a$$
-        $$-0.43 {\color{#aaa} \, \mathrm{\tfrac{m}{s^2}}} = a$$
+        $$78 \, \mathrm{N}+55 \, \mathrm{N}-140 \, \mathrm{N} = (16 \, \mathrm{kg})a$$
+        $$-7 \, \mathrm{N} = (16 \, \mathrm{kg})a$$
+        $$-0.43 \, \mathrm{\tfrac{m}{s^2}} = a$$
       </details>
     </div>
 
@@ -216,16 +253,16 @@
       The force of gravity depends only on the mass of the object because on the surface of the Earth
       <strong>acceleration from gravity is the same for all objects.</strong>. If you aren't on the surface of the Earth, there is a different way to calculate <a href="..\..\gravity\gravitation\index.html#universal-gravitation">gravity</a>.
     </p>
-    
+
     <div class="example">
-        <strong>Question:</strong> Why do feathers fall slower than bricks?
-        <details>
-            <summary>solution</summary>
-            <p>
-              Air friction produces a force that opposes motion.
-              Feathers have a large surface area compared to their small mass so they have more air friction.
-            </p>
-        </details>
+      <strong>Question:</strong> Why do feathers fall slower than bricks?
+      <details>
+        <summary>solution</summary>
+        <p>
+          Air friction produces a force that opposes motion.
+          Feathers have a large surface area compared to their small mass so they have more air friction.
+        </p>
+      </details>
     </div>
 
     <div class='example'>
@@ -453,7 +490,7 @@
     </div>
     <div class='example'>
       <a href="https://www.amazon.com/Three-Body-Problem-Cixin-Liu/dp/0765382032">
-        <img class="book-cover" src="thethreebodyproblem.jpg" alt="The Three-Body Problem" width = "150" height = "237"/>
+        <img class="book-cover" src="thethreebodyproblem.jpg" alt="The Three-Body Problem" width="150" height="237" />
       </a>
       <strong>Example:</strong> The Three-Body Problem by Cixin Liu has a mass of 0.44 kg. What force of gravity does the book have?
       <details>
@@ -463,9 +500,9 @@
     </div>
 
     <div class='example'>
-        <a href="https://www.amazon.com/Cats-Cradle-Novel-Kurt-Vonnegut/dp/038533348X">
-          <img class="book-cover" src="catscradle.jpg" alt="Cat's Cradle" width = "150" height = "241"/>
-        </a>
+      <a href="https://www.amazon.com/Cats-Cradle-Novel-Kurt-Vonnegut/dp/038533348X">
+        <img class="book-cover" src="catscradle.jpg" alt="Cat's Cradle" width="150" height="241" />
+      </a>
       <strong>Example:</strong> How much mass does the book Cat's Cradle by Kurt Vonnegut have if it feels a force of gravity of 1.8 N?
       <details>
         <summary>solution</summary>
@@ -486,9 +523,9 @@
       <strong>Freefall</strong> means that you are just letting gravity accelerate you without any opposing forces. To keep from falling we are careful to always counter the force of gravity. This can be done with a parachute, or a jet pack, or just the ground.
     </p>
     <div class='example'>
-        <a href="https://www.amazon.com/Name-Wind-Patrick-Rothfuss/dp/0756404746/">
-          <img class="book-cover" src="thenameofthewind.jpg" alt="The Name of the Wind" width = "150" height = "221"/>
-        </a>
+      <a href="https://www.amazon.com/Name-Wind-Patrick-Rothfuss/dp/0756404746/">
+        <img class="book-cover" src="thenameofthewind.jpg" alt="The Name of the Wind" width="150" height="221" />
+      </a>
       <strong>Example:</strong> The Name of the Wind by Patrick Rothfuss has a mass of 0.34 kg. How does its mass and weight change in a freefall on Earth?
       <details>
         <summary>solution</summary>
@@ -498,33 +535,33 @@
       </details>
     </div>
     <div class='example'>
-        <a href="https://www.amazon.com/Seveneves-Neal-Stephenson/dp/0062334514/">
-          <img class="book-cover" src="seveneves.png" alt="Seveneves" width = "150" height = "225"/>
-        </a>
+      <a href="https://www.amazon.com/Seveneves-Neal-Stephenson/dp/0062334514/">
+        <img class="book-cover" src="seveneves.png" alt="Seveneves" width="150" height="225" />
+      </a>
       <strong>Example:</strong> The hardcover version of Seveneves by Neal Stephenson has a mass of 0.95 kg.
       What is the force of gravity felt by the book on Earth? What about on the Moon?
       <details>
-          <summary>Local Massive Objects Surface Gravity</summary>
-          <style>
+        <summary>Local Massive Objects Surface Gravity</summary>
+        <style>
           th {
             background: #fff;
             border: 0px solid #000;
             color: #000;
           }
-  
+
           .black {
             background-color: #000;
             border: 0px solid #000;
             padding: 7px;
           }
-  
+
           .planet {
             margin: auto;
             border-radius: 50%;
             padding: 0px;
             border: 0px solid #000;
           }
-  
+
           .sun {
             width: 90px;
             height: 90px;
@@ -533,67 +570,67 @@
             left: -20px;
             position: relative;
           }
-  
+
           .sun-div {
             /* margin: 0px; */
             width: 50px;
             height: 50px;
           }
-  
+
           .mercury {
             width: 6px;
             height: 6px;
             background-color: rgb(199, 195, 192);
           }
-  
+
           .venus {
             width: 11px;
             height: 11px;
             background-color: rgb(216, 209, 203);
           }
-  
+
           .earth {
             width: 11.5px;
             height: 11.5px;
             background-color: rgb(130, 137, 179);
           }
-  
+
           .moon {
             width: 4px;
             height: 4px;
             background-color: rgb(159, 155, 152);
           }
-  
+
           .mars {
             width: 8px;
             height: 8px;
             background-color: rgb(207, 187, 137);
           }
-  
+
           .jupiter {
             width: 35px;
             height: 35px;
             background-color: rgb(238, 236, 188);
           }
-  
+
           .saturn {
             width: 30px;
             height: 30px;
             background-color: rgb(223, 229, 181);
           }
-  
+
           .uranus {
             width: 18px;
             height: 18px;
             background-color: rgb(173, 200, 211);
           }
-  
+
           .neptune {
             width: 17px;
             height: 17px;
             background-color: rgb(160, 183, 214);
           }
-  
+
           .saturn-ring {
             border-radius: 50%;
             width: 44px;
@@ -603,7 +640,7 @@
             left: -7px;
             border: 4px solid rgba(216, 218, 169, 0.7);
           }
-  
+
           .uranus-ring {
             border-radius: 50%;
             width: 28px;
@@ -650,7 +687,7 @@
             <td>8.9</td>
           </tr>
           <tr>
-  
+
             <td class="black">
               <a href="https://en.wikipedia.org/wiki/Earth">
                 <div class="planet earth"></div>
@@ -738,14 +775,14 @@
     </div>
     <div class='example'>
       <a href="https://www.amazon.com/Uprooted-Naomi-Novik/dp/0804179034">
-        <img class="book-cover" src="uprooted.jpg" alt="Uprooted" width = "150" height = "228"/>
+        <img class="book-cover" src="uprooted.jpg" alt="Uprooted" width="150" height="228" />
       </a>
       <strong>Example:</strong> Uprooted by Naomi Novik is resting on a table. The shipping weight is 1.2 pounds.
       What is the book's mass in kilograms on Earth? On Mars?
       <details>
         <summary>solution</summary>
         <p>
-            Mass doesn't depend on gravity, so it's the same everywhere.
+          Mass doesn't depend on gravity, so it's the same everywhere.
         </p>
         $$ 1.2\,\mathrm{lbs} \left( \frac{1\,\mathrm{kg}}{2.2\,\mathrm{lbs}} \right)= 0.\overline{54}\,\mathrm{kg}$$
         $$ m = 0. \overline{54} \, \mathrm{kg} $$
