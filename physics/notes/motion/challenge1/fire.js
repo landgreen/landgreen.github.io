@@ -10,7 +10,7 @@ var mouse = {
   x: null,
   y: null
 };
-canvas.onmousemove = function(e) {
+canvas.onmousemove = function (e) {
   var rect = canvas.getBoundingClientRect();
   mouse.x = e.clientX - rect.left;
   mouse.y = e.clientY - rect.top;
@@ -36,11 +36,11 @@ var settings = {
   Vy: 15,
   gapY: 150 + Math.round(Math.random() * 300),
   gapX: 250 + Math.round(Math.random() * 250),
-  fire: function() {
+  fire: function () {
     settings.Vy = document.getElementById("num1").value;
     spawnMass(settings.x, settings.y, settings.Vx, settings.Vy, settings.ballRadius);
   },
-  clear: function() {
+  clear: function () {
     World.clear(engine.world, true);
     mass = [];
   }
@@ -55,6 +55,7 @@ document.getElementById("Vx").innerHTML = settings.Vx.toFixed(1);
 var mass = [];
 //fire at the start
 settings.fire();
+
 function spawnMass(xIn, yIn, VxIn, VyIn, radius) {
   //spawn mass
   var i = mass.length;
@@ -119,6 +120,7 @@ engine.world.gravity.y = 9.8;
 
 //render
 render();
+
 function render() {
   var bodies = Composite.allBodies(engine.world);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
