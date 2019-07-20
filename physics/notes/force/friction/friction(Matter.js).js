@@ -1,10 +1,9 @@
 MotionSimulation();
 
 function MotionSimulation() {
-
-
-  let width = 580;
-  let height = 300;
+  const WIDTH = 580;
+  const HEIGHT = 300;
+  let friction = 0.0002;
   //set up canvas
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
@@ -14,34 +13,19 @@ function MotionSimulation() {
 
   function resizeCanvas() {
     //fit canvas to window and fix issues with canvas blur on zoom
-    if (document.body.clientWidth > width) {
-      canvas.style.width = width + "px";
-      canvas.style.height = height + "px";
+    if (document.body.clientWidth > WIDTH) {
+      canvas.style.width = WIDTH + "px";
+      canvas.style.height = HEIGHT + "px";
 
       const scale = window.devicePixelRatio;
-      canvas.width = width * scale;
-      canvas.height = height * scale;
+      canvas.width = WIDTH * scale;
+      canvas.height = HEIGHT * scale;
       ctx.scale(scale, scale);
     }
   }
 
-  // function resizeCanvas() {
-  //   //fit canvas to window and fix issues with canvas blur on zoom
-  //   canvas.style.width = width + "px";
-  //   canvas.style.height = height + "px";
-  //   const scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-  //   canvas.width = width * scale;
-  //   canvas.height = height * scale;
-  //   ctx.scale(scale, scale);
-
-  //   ctx.lineWidth = 1;
-  // }
   window.addEventListener("load", resizeCanvas);
   window.addEventListener("resize", resizeCanvas);
-
-
-
-
 
   // module aliases
   const Engine = Matter.Engine,
@@ -67,7 +51,7 @@ function MotionSimulation() {
   //   spawnMass(0, 30, 300, 0, 20, 0.04);
   // });
   for (let i = 0; i < 5; ++i) {
-    spawnMass(i * 100, 0, 0, 0, 20, 0.0002);
+    spawnMass(i * 100, 0, 0, 0, 20, friction);
   }
   // spawnMass(100, 0, 0, 0, 20, 0.00006);
   // spawnMass(200, 0, 0, 0, 20, 0.00006);
@@ -79,7 +63,7 @@ function MotionSimulation() {
     const i = mass.length;
     mass.push();
     mass[i] = Bodies.rectangle(xIn * scale, (yIn - radius) * scale, 2 * radius * scale, radius * scale, {
-      friction: friction,
+      // friction: friction,
       // frictionStatic: 1,
       // frictionAir: 0,
       restitution: 0
@@ -141,6 +125,24 @@ function MotionSimulation() {
     }
   });
 
+
+  document.getElementById("friction-0").addEventListener("input", event => {
+    friction = document.getElementById("friction-0").value
+    document.getElementById("friction-0-slider").value = friction
+    updateFriction()
+  });
+
+  document.getElementById("friction-0-slider").addEventListener("input", event => {
+    friction = document.getElementById("friction-0-slider").value
+    document.getElementById("friction-0").value = friction
+    updateFriction()
+  });
+
+  function updateFriction() {
+    for (let i = 0; i < mass.length; i++) {
+      mass[i].friction = friction * 0.01
+    }
+  }
 
   //render
   (function render() {

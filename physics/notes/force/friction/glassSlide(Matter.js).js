@@ -20,8 +20,6 @@ function glassSlide() {
     canvas.width = window.innerWidth * scale;
     canvas.height = height * scale;
     ctx.scale(scale, scale);
-
-    console.log('tst')
   }
   window.addEventListener("load", resizeCanvas);
   window.addEventListener("resize", resizeCanvas);
@@ -68,7 +66,7 @@ function glassSlide() {
     //spawn mass
     let i = mass.length;
     mass.push();
-    let vector = Vertices.fromPath("0 0   83 0  70 120  55 125  28 125  13 120");
+    let vector = Vertices.fromPath("0 0  83 0  70 120  55 125  28 125  13 120");
     mass[i] = Matter.Bodies.fromVertices(xIn * scale, height - (yIn + height * 0.5) * scale, vector, {
       friction: frictionElem.value,
       frictionStatic: 0.5,
