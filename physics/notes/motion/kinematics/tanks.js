@@ -243,7 +243,7 @@ function tanks() {
         }
         // data out
         document.getElementById("bullet-t").innerHTML = "Δt = " + (time).toPrecision(3) + " s"
-        document.getElementById("bullet-y").innerHTML = "Δy = " + (HEIGHT - b.position.y - 4).toPrecision(3) + " m"
+        document.getElementById("bullet-y").innerHTML = "Δy = " + (HEIGHT - b.position.y + p1.turretRelativePosition.y).toPrecision(3) + " m"
         document.getElementById("bullet-vy").innerHTML = "v = " + b.velocity.y.toPrecision(3) + " m/s"
     }
 
