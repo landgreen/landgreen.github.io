@@ -415,7 +415,7 @@
 						List the known and unknown variables.
 					</li>
 					<li>
-						Find an equation that matches the list of variables.
+						Choose an equation with only one unknown variable.
 					</li>
 					<li>
 						Use algebra to isolate the unknown variable on one side of the equation.
@@ -1110,13 +1110,26 @@
 				</g>
 				<circle id="bullet" cx="-1000" cy="-1000" r="4" fill='#000' stroke="none" />
 			</svg>
-
 			<strong>Question:</strong> Which variables stay constant as time changes?
 			<details>
 				<summary>solution</summary>
 				<p>
 					The accelerations and initial velocities stay constant.
 					Also the final horizontal velocity is constant.
+				</p>
+			</details>
+			<br>
+			<strong>Question:</strong> Why do all the shots that land on the ground have a Δy below zero?
+			<details>
+				<summary>solution</summary>
+				$$\Delta y = y_f - y_i$$
+				<p>
+					Δy is the vertical displacement. It measures the difference between the starting height and the ending height.
+					It doesn't matter how high the object goes, if it starts on the ground and ends on the ground the vertical displacement is going to be zero.
+				</p>
+				<p>
+					The Δy is negative because the tank's turret is above ground.
+					When the projectile ends up on the ground, it is lower then the starting point on the turret.
 				</p>
 			</details>
 			<br>
@@ -1368,6 +1381,13 @@
 		</div>
 
 		<div class="example">
+			<style>
+				.change {
+					font-weight: 700;
+					transition: opacity .5s ease-in-out;
+					/* transition: color .5s ease-in-out; */
+				}
+			</style>
 			<p style="margin-bottom: -15px;">
 				In this simulation we can fire boxes at a wall.
 				Use 2-D kinematics calculations to predict what height the gap in the wall should be to let a box through.
@@ -1384,12 +1404,12 @@
 				<div class="col-group">
 					<div>
 						<span class="show-on-mobile">
-							wall horizontal distance = <span id='xpos-1'></span> m
+							wall horizontal distance = <span id='xpos-1' class="change"></span> m
 							<br>
 						</span>
-						initial horizontal velocity = <span id='Vx-1'></span> m/s
+						initial horizontal velocity = <span id='Vx-1' class="change"></span> m/s
 						<br>
-						initial vertical velocity = <span id='Vy-1'></span> m/s
+						initial vertical velocity = <span id='Vy-1' class="change"></span> m/s
 						<br>
 						gap vertical midpoint = <input class='number' id='num-1' type="number" step="0.1" min='2.5' max='37.5' value='32.5' style="width:60px;">m
 					</div>
@@ -1406,11 +1426,8 @@
 				<details>
 					<summary>solution</summary>
 					<p id="table-1" class="center"></p>
+					<br>
 					<p id="katex-render-1" class="center"></p>
-					<!-- <p>
-						We solved for the vertical height of the box when is passes through the gap.
-						We should set the gap to be 2 m lower to make sure the box clears the gap.
-					</p> -->
 				</details>
 			</span>
 		</div>
@@ -1438,12 +1455,11 @@
 				<div class="col-group">
 					<div>
 						<span class="show-on-mobile">
-							<!-- center of gap position = (<span id='xpos-0'></span> m, <span id='ypos-0'></span> m). -->
-							wall horizontal distance = <span id='xpos-0'></span> m
-							<br>wall height = <span id='ypos-0'></span> m
+							wall horizontal distance = <span id='xpos-0' class="change"></span> m
+							<br>gap vertical midpoint = <span id='ypos-0' class="change"></span> m
 							<br>
 						</span>
-						initial horizontal velocity = <span id='Vx-0'></span>
+						initial horizontal velocity = <span id='Vx-0' class="change"></span> m/s
 						<br>
 						initial vertical velocity = <input class='number' id='num-0' type="number" step="0.1" min='1' max='100' value='10.0' style="width:60px;">m/s
 					</div>
@@ -1460,10 +1476,7 @@
 				<details>
 					<summary>solution</summary>
 					<p id="table-0" class="center"></p>
-					<p>
-						The gap in the wall is 2 m wide and 5 m tall. The box is around 2 m wide.
-						I'll aim for slightly left and below the center of the gap.
-					</p>
+					<br>
 					<p id="katex-render-0" class="center"></p>
 				</details>
 			</span>
