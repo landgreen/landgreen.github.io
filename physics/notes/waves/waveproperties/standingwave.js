@@ -43,7 +43,7 @@ const wave = function () {
     let out = "λ = "
     let standingWavelengths = []
     for (let i = 1; i < 50; i++) {
-        standingWavelengths.push(Math.round(20 * width / i) / 10)
+        standingWavelengths.push(2 * width / i)
         out += Math.round(2 * width / 100 / i * 1000) / 1000 + ", &nbsp;"
         if (standingWavelengths[standingWavelengths.length - 1] < 80) break
     }
@@ -65,10 +65,17 @@ const wave = function () {
                     return;
                 }
             }
-            //in case it doesn't find anything
-            wavelength = standingWavelengths[standingWavelengths.length - 1]
-            target = standingWavelengths[standingWavelengths.length - 2];
-            searchStep = (target - wavelength) / totalSteps;
+
+            //in case it doesn't find anything reset to 100
+            wavelength = 100
+            // identify the next target
+            for (let i = standingWavelengths.length; i > -1; i--) {
+                if (standingWavelengths[i] > wavelength) {
+                    target = standingWavelengths[i]
+                    searchStep = (target - wavelength) / totalSteps
+                    return;
+                }
+            }
         }
     }, false);
 
