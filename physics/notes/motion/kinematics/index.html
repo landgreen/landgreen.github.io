@@ -19,6 +19,7 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 	<link rel="stylesheet" href="../../../style.css">
 	<script src='../../../lib/function-graph-SVG.js'></script>
+	<script src='../../../lib/randomColor.min.js'></script>
 </head>
 
 <body>
@@ -961,6 +962,10 @@
 				<td colspan="2" style='text-align: center;'>Δt = </td>
 			</tr>
 			<tr>
+				<td>↔ horizontal</td>
+				<td>↕ vertical</td>
+			</tr>
+			<tr>
 				<td>Δx = </td>
 				<td>Δy = </td>
 			</tr>
@@ -1361,47 +1366,108 @@
 				$$\Delta t = 17.6 \, \mathrm{s}$$
 			</details>
 		</div>
-		<p style="margin-bottom: -15px;">
-			In the problem below you need to solve a 2-D projectile motion problem to get the projectile through the gap in the wall.
-		</p>
-		<br class="show-on-mobile">
-		<style>
-			#matter-mouse {
-				position: relative;
-				top: 30px;
-				left: 10px;
-				user-select: none;
-				z-index: -2;
-			}
-		</style>
-		<span id="matter-mouse" class="hide-on-mobile" style="text-align: end;">position = (0,0)</span>
-		<canvas id="matter-canvas-0" width='600' height='100' onclick="challenge1(this)" style="user-select: none;"></canvas>
-		<span id="matter-text-0" style="display: none;">
-			<p class="show-on-mobile">
-				The gap starts at <span id='xpos-0'></span> horizontally and <span id='ypos-0'></span> vertically.
+
+		<div class="example">
+			<p style="margin-bottom: -15px;">
+				In this simulation we can fire boxes at a wall.
+				Use 2-D kinematics calculations to predict what height the gap in the wall should be to let a box through.
 			</p>
-			<span>
-				<strong>initial vertical velocity</strong> = <input class='number' id='num-0' type="number" step="1" min='1' max='500' value='10' style="width:60px;">m/s
-				<button id="fire-0">fire</button>
-				<button id="clear-0">clear</button>
+			<br>
+			<span class="hide-on-mobile">
+				<span class="matter-mouse" id="matter-mouse-1" style="display: none;">mouse position = (0,0)</span>
 			</span>
-			<p>
-				The ball starts with a horizontal velocity of <span id='Vx-0'></span>.
-				Calculate the initial vertical velocity that will send the box through the gap in the wall.
+			<canvas id="matter-canvas-1" width='600' height='100' onclick="challenge1(this)" style="user-select: none;"></canvas>
+			<span id="matter-text-2-1">
+				Click above to begin the simulation.
+			</span>
+			<span id="matter-text-1-1" style="display: none;">
+				<div class="col-group">
+					<div>
+						<span class="show-on-mobile">
+							wall horizontal distance = <span id='xpos-1'></span> m
+							<br>
+						</span>
+						initial horizontal velocity = <span id='Vx-1'></span> m/s
+						<br>
+						initial vertical velocity = <span id='Vy-1'></span> m/s
+						<br>
+						gap vertical midpoint = <input class='number' id='num-1' type="number" step="0.1" min='2.5' max='37.5' value='32.5' style="width:60px;">m
+					</div>
+					<div class="">
+						<button id="fire-1">fire</button>
+						<button id="clear-1">clear</button>
+						<button id="randomize-1">randomize</button>
+					</div>
+				</div>
+				<br class="hide-on-mobile">
+				Use 2-D kinematics equations to calculate the gap height that will allow a box to pass through.
+				<span class="hide-on-mobile">Measure the wall's distance and height by moving your mouse over the simulation.</span>
+				Input your calculation for the vertical midpoint of the gap, and then click fire.
+				<details>
+					<summary>solution</summary>
+					<p id="table-1" class="center"></p>
+					<p id="katex-render-1" class="center"></p>
+					<!-- <p>
+						We solved for the vertical height of the box when is passes through the gap.
+						We should set the gap to be 2 m lower to make sure the box clears the gap.
+					</p> -->
+				</details>
+			</span>
+		</div>
+
+		<div class="example">
+			<p style="margin-bottom: -15px;">
+				We need to send a box through the gap in the wall again.
+				This time we can change the initial vertical velocity to get it through.
 			</p>
-		</span>
-
-
-
-		<!-- <div class='example hide-on-mobile'>
-			<strong>Challenge:</strong> Test your 2-D motion skills with these randomly generated problems.
-			<p>
-				<a href="../challenge1/index.html">2-D motion challenge #1</a>
-				<br>
-				<a href="../challenge2/index.html">2-D motion challenge #2</a>
-			</p>
-		</div> -->
-
+			<style>
+				.matter-mouse {
+					position: relative;
+					top: 30px;
+					left: 10px;
+					user-select: none;
+					z-index: -2;
+				}
+			</style>
+			<br>
+			<span class="hide-on-mobile">
+				<span class="matter-mouse" id="matter-mouse-0" class="hide-on-mobile" style="display: none;">mouse position = (0,0)</span>
+			</span>
+			<canvas id="matter-canvas-0" width='600' height='100' onclick="challenge0(this)" style="user-select: none;"></canvas>
+			<span id="matter-text-1" style="display: none;">
+				<div class="col-group">
+					<div>
+						<span class="show-on-mobile">
+							<!-- center of gap position = (<span id='xpos-0'></span> m, <span id='ypos-0'></span> m). -->
+							wall horizontal distance = <span id='xpos-0'></span> m
+							<br>wall height = <span id='ypos-0'></span> m
+							<br>
+						</span>
+						initial horizontal velocity = <span id='Vx-0'></span>
+						<br>
+						initial vertical velocity = <input class='number' id='num-0' type="number" step="0.1" min='1' max='100' value='10.0' style="width:60px;">m/s
+					</div>
+					<div class="">
+						<button id="fire-0">fire</button>
+						<button id="clear-0">clear</button>
+						<button id="randomize-0">randomize</button>
+					</div>
+				</div>
+				<br class="hide-on-mobile">
+				Use 2-D kinematics equations to calculate the initial vertical velocity.
+				<span class="hide-on-mobile">Measure the wall's distance and height by moving your mouse over the simulation.</span>
+				Input your calculation for the missing initial vertical velocity, and then click fire.
+				<details>
+					<summary>solution</summary>
+					<p id="table-0" class="center"></p>
+					<p>
+						The gap in the wall is 2 m wide and 5 m tall. The box is around 2 m wide.
+						I'll aim for slightly left and below the center of the gap.
+					</p>
+					<p id="katex-render-0" class="center"></p>
+				</details>
+			</span>
+		</div>
 
 
 		<!--
@@ -1530,8 +1596,7 @@ https://vuejs.org/v2/guide/components.html
 				<!--   axis -->
 			</svg>
 		</div>
-
-
+		<br>
 		<!-- <div class="hide-on-mobile">
 		<p>Play around with this 2-D motion solver to get a feel for what paths an object can take. You can also plug in numbers
 			to check your answer on 2-D motion problems.</p>
