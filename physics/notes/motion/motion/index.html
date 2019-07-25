@@ -33,7 +33,7 @@
 	</header>
 	<article>
 		<p>
-			Physics builds models that approximate how objects move.
+			Physics uses mathematical models to approximate how objects move.
 		</p>
 		<svg id="matter-SVG" viewBox="0 0 585 150">
 			<rect y="2.5" x="2.5" height="145" width="500" fill="none" stroke="#556" stroke-width="5" rx="5" />
@@ -58,12 +58,15 @@
 			</g> -->
 		</svg>
 		<p>
-			This model of motion keeps track of each object's position and velocity.
-			As time moves forward, velocity determines how an object's position changes.
+			This model of motion keeps track of a position and velocity for each object.
+			Every second, an object's velocity is added to its position.
+			Since this is a 2-D model the calculations are repeated for each dimension.
 		</p>
-		<!-- <p>
-			The collisions are calculated using <a href="">momentum</a>.
-		</p> -->
+		<p>
+			In order to model collisions, each object needs a mass.
+			When a collision occurs an object's mass is used to calculate a new velocity.
+			The rules for these calculations come from <a href="..\..\momentum\momentum\index.html">momentum</a>.
+		</p>
 		<h1 class='underlined'>Position</h1>
 		<p>We use the symbol <strong>x</strong> for position with meters for units. You might be used to using <strong>x</strong> in other ways, but in physics it is reserved for position.</p>
 		<p>To represent a displacement we subtract the initial position from the final position. We use the Δ symbol to show change.</p>
