@@ -273,40 +273,14 @@ canvas,
     grid-column-gap: 15px;
     grid-row-gap: 15px;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    font-size: 90%;
+    /* font-size: 90%; */
   }
 
-  .listing h2 {
+  /* .listing h2 {
     font-size: 130%;
-  }
+  } */
 }
 
-/* front page grid ________________________________________________*/
-.listing-style {
-  overflow: hidden;
-  padding: 0.5em 0 0 0.5em;
-  max-width: 1300px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-.listing-style li {
-  padding: 0 0.5em 0.5em 0;
-}
-
-.listing-style a {
-  color: #555;
-}
-
-.listing-style a:hover {
-  color: var(--link-color);
-}
-
-.listing-style h2 {
-  border-bottom: 1px solid #aaa;
-  font-weight: 400;
-  margin-bottom: -0.5em;
-}
 
 /* footer grid ________________________________________________*/
 .listing-footer {
@@ -358,6 +332,70 @@ canvas,
   }
 }
 
+footer {
+  padding: 2em;
+  text-align: center;
+  background-color: #333;
+  font-size: 25px;
+}
+
+footer a {
+  color: #fff;
+}
+
+/* Table of contents */
+
+.SVG-title {
+  /* border: #000 solid 1px; */
+  margin: auto;
+  padding-top: 4px;
+}
+
+.table-of-contents {
+  margin: -2px auto;
+  list-style: none;
+  display: grid;
+  max-width: 1700px;
+  grid-template: "a a a a a""b b b b b";
+  grid-gap: 0px;
+  line-height: 1.6;
+  border-bottom: var(--svg-color) solid 4px;
+  border-right: var(--svg-color) solid 4px;
+}
+
+.table-of-contents a {
+  color: var(--svg-color);
+}
+
+.table-of-contents a:hover {
+  color: var(--link-color);
+}
+
+.table-of-contents li {
+  background-color: var(--svg-bg-color);
+  padding: 0px 0px 20px 0px;
+  display: flex;
+  flex-direction: column;
+  border-top: var(--svg-color) solid 4px;
+  border-left: var(--svg-color) solid 4px;
+}
+
+.table-of-contents li p {
+  margin: auto;
+}
+
+@media screen and (max-width: 850px) {
+  .table-of-contents {
+    grid-template: "a a""b b""c c""d d""e e";
+  }
+}
+
+@media screen and (max-width: 365px) {
+  .table-of-contents {
+    font-size: 100%;
+    grid-template: "a""b""c""d""e""f""g""h""i""j""k";
+  }
+}
 
 /* Header setup_________________________________*/
 header {
@@ -434,8 +472,9 @@ header p {
   }
 
   header h1 {
-    font-size: 2.5em;
+    font-size: 50px;
     margin: 0px 10px;
+    letter-spacing: 1px;
   }
 
   .definition {

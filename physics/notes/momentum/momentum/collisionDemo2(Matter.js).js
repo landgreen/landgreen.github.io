@@ -1,6 +1,6 @@
 (() => {
   let width = 580;
-  let height = 200;
+  let height = 235;
 
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
@@ -75,7 +75,7 @@
     });
 
     function spawn() {
-      spawnMass(200, 130, 120, 0, 20 + Math.round(Math.random() * 70), 0.8 + Math.random() * 0.2);
+      spawnMass(100, 130, 120, 0, 20 + Math.round(Math.random() * 70), 0.8 + Math.random() * 0.2);
       spawnMass(500, 130, -120, 0, 20 + Math.round(Math.random() * 70), 0.8 + Math.random() * 0.2);
     }
     spawn();
@@ -198,13 +198,19 @@
       }
       ctx.textAlign = "left";
       // ctx.fillText("    m      v     +     m      v       =  total momentum", 5, height - 5);
-      ctx.fillText("mv  +  mv  =  total momentum", 60, height - 5);
-      ctx.fillText("(" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") + (" + mass[1].mass.toFixed(2) + ") (" + mass[1].velocity.x.toFixed(2) + ") = " + p.toFixed(2), 55, 22);
+      // ctx.fillText("mv  +  mv  =  total momentum", 70, height - 5);
+
+      let space0 = " ";
+      if (mass[0].velocity.x < 0) space0 = "";
+      let space1 = " ";
+      if (mass[1].velocity.x < 0) space1 = "";
+
+      ctx.fillText("(" + mass[0].mass.toFixed(2) + " kg)(" + space0 + mass[0].velocity.x.toFixed(2) + " m/s) + (" + mass[1].mass.toFixed(2) + " kg)(" + space1 + mass[1].velocity.x.toFixed(2) + " m/s) = " + p.toFixed(2), 65, 22);
       //color underlines
       ctx.fillStyle = mass[0].color;
-      ctx.fillRect(57, 30, 105, 10);
+      ctx.fillRect(67, 30, 170, 10);
       ctx.fillStyle = mass[1].color;
-      ctx.fillRect(190, 30, 105, 10);
+      ctx.fillRect(265, 30, 170, 10);
     })();
   }
 })();

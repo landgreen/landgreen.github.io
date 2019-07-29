@@ -75,89 +75,84 @@
 
         <p class='underlined' id="conservation">Conservation of Momentum</p>
         <p>
-            Click the simulation below a few times and watch the sum of the total momentum before and after the collision.
+            Total momentum doesn't change over time, even if two objects <a href="https://www.youtube.com/watch?v=4IYDb6K5UF8">collide</a>. When a property doesn't change over time we say that the property is <strong>conserved</strong>.
         </p>
+
+        <!-- <span class="center" style="font-size: 120%;"> mv + mv = total horizontal momentum</span> -->
+        $$m_1v_1 + m_2v_2 = \text{total horizontal momentum}$$
         <canvas id="canvas0" width='580' height='270'> </canvas>
-        <p>
-            The total <a href="https://www.youtube.com/watch?v=xoUNyGUCzqs">momentum</a> doesn't change over time, even if the objects <a href="https://www.youtube.com/watch?v=4IYDb6K5UF8">collide</a>. When a property doesn't change over time we say that the property is <strong>conserved</strong>.
-        </p>
+        Click the simulation below a few times and watch the sum of the total momentum before and after the collision.
 
-        <p>
-            Conservation of momentum isn't true if one of the objects in the system interacts with an object outside the system. For example: conservation doesn't hold if an object hits the ground, and the ground isn't part of our system.
-        </p>
-        <canvas id="canvas1" width='580' height='200'> </canvas>
-        <br>
-        <br>
-        <br>
-        <p>
-            Conservation of momentum means we can set the total momentums at two points in time equal to each other. (as long as there are no outside forces)
-        </p>
-        <details class='derive'>
-            <summary>derivation of conservation of momentum</summary>
-            <p>First we are going to rewrite force in terms of a change in velocity.</p>
-            $$F = ma $$ $$a = \frac{\Delta v}{\Delta t}$$
-            $$F = m \frac{\Delta v}{\Delta t}$$
-            $$F = {\color{#f05}m \frac{(v-u)}{\Delta t} }$$
+        <div class="example-small">
             <p>
-                When two bodies collide they each experience an equal but opposite force for an equal period of time as explained by Newton's third law.
+                Conservation of momentum means we can set the total momentums at two points in time equal to each other. (as long as there are no outside forces)
             </p>
-            <svg viewBox="-60 0 400 100">
-                <defs>
-                    <g id="vector">
-                        <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
-                        <polygon points="0,50 -5,42 0,43 5,42" style="fill:#000;" />
-                    </g>
-                </defs>
-                <rect x="40" y="1" width="100" height="98" stroke='#000' style="stroke-width:1;fill:#fff;" />
-                <rect x="140" y="15" width="70" height="70" stroke='#000' style="stroke-width:1;fill:#fff;" />
-                <use xlink:href="#vector" transform='translate(192.5 50) rotate(90)' />
-                <use xlink:href="#vector" transform='translate(87.5 50) rotate(-90)' />
-                <text x="110" y="35" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>F
-                    <tspan font-size="0.7em" dy="5" dx="-5">1</tspan>
-                </text>
-                <text x="172" y="37" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>F
-                    <tspan font-size="0.7em" dy="5" dx="-5">2</tspan>
-                </text>
-            </svg>
-            $$ F_1 \Delta t = -F_2 \Delta t $$
-            $${\color{#f05}m_1 \frac{(v_1-u_1)}{\Delta t}} \Delta t= -{\color{#f05}m_2 \frac{(v_2-u_2)}{\Delta t}}\Delta t$$
-            $$m_1 (v_1-u_1) = -m_2 (v_2-u_2)$$
-            $$m_1 v_1- m_1 u_1 = -m_2 v_2 + m_2 u_2$$
-            $$ m_1 u_1 + m_2 u_2= m_2 v_2 + m_1 v_1$$
-        </details>
-        <div class='definition'>
-            <svg viewBox="-25 0 500 70">
-                <g transform="translate(75.5 15.5)" stroke="#000" stroke-width="1" fill="none">
-                    <rect x="0.5" y="0.5" width="50" height="50" fill="#fff" stroke-width="1" />
-                    <text x="25" y="25" fill="#000" stroke="none" text-anchor="middle" dominant-baseline="middle">m</text>
-                    <line x1="0" y1="5" x2="-35" y2="5" />
-                    <line x1="0" y1="15" x2="-65" y2="15" />
-                    <line x1="0" y1="25" x2="-35" y2="25" />
-                    <line x1="0" y1="35" x2="-75" y2="35" />
-                    <line x1="0" y1="45" x2="-40" y2="45" />
-                </g>
-                <g transform="translate(375.5 15.5)" stroke="#000" stroke-width="1" fill="none">
-                    <rect x="-50.5" y="0.5" width="50" height="50" fill="#fff" stroke-width="1" />
-                    <text x="-25" y="25" fill="#000" stroke="none" text-anchor="middle" dominant-baseline="middle">m</text>
-                    <line x1="0" y1="5" x2="35" y2="5" />
-                    <line x1="0" y1="15" x2="45" y2="15" />
-                    <line x1="0" y1="25" x2="85" y2="25" />
-                    <line x1="0" y1="35" x2="55" y2="35" />
-                    <line x1="0" y1="45" x2="30" y2="45" />
-                </g>
-            </svg>
+            <details class='derive'>
+                <summary>derivation of conservation of momentum</summary>
+                <p>
+                    First we are going to rewrite force in terms of a change in velocity.
+                </p>
+                $$F = ma $$ $$a = \frac{\Delta v}{\Delta t}$$
+                $$F = m \frac{\Delta v}{\Delta t}$$
+                $$F = m \frac{(v-u)}{\Delta t}$$
+                <p>
+                    When two bodies collide they each experience an equal but opposite force for an equal period of time as explained by Newton's third law.
+                </p>
+                <svg viewBox="-60 0 400 100">
+                    <defs>
+                        <g id="vector">
+                            <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
+                            <polygon points="0,50 -5,42 0,43 5,42" style="fill:#000;" />
+                        </g>
+                    </defs>
+                    <rect x="40" y="1" width="100" height="98" stroke='#000' style="stroke-width:1;fill:#fff;" />
+                    <rect x="140" y="15" width="70" height="70" stroke='#000' style="stroke-width:1;fill:#fff;" />
+                    <use xlink:href="#vector" transform='translate(192.5 50) rotate(90)' />
+                    <use xlink:href="#vector" transform='translate(87.5 50) rotate(-90)' />
+                    <text x="110" y="35" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>F
+                        <tspan font-size="0.7em" dy="5" dx="-5">1</tspan>
+                    </text>
+                    <text x="172" y="37" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>F
+                        <tspan font-size="0.7em" dy="5" dx="-5">2</tspan>
+                    </text>
+                </svg>
+                $$ F_1 \Delta t = -F_2 \Delta t $$
+                $$m_1 \frac{(v_1-u_1)}{\Delta t} \Delta t= -m_2 \frac{(v_2-u_2)}{\Delta t}\Delta t$$
+                $$m_1 (v_1-u_1) = -m_2 (v_2-u_2)$$
+                $$m_1 v_1- m_1 u_1 = -m_2 v_2 + m_2 u_2$$
+                $$ m_1 u_1 + m_2 u_2= m_2 v_2 + m_1 v_1$$
+            </details>
 
-            $$ \sum p_i = \sum p_f$$ $$m_1 u_1 + m_2u_2 = m_1v_1 + m_2v_2$$ \(p\) = momentum [kg m/s]
-            <em>vector</em>
-            <br> \(u\) = initial velocity [m/s]
-            <em>vector</em>
-            <br>\(v\) = final velocity [m/s]
-            <em>vector</em>
-            <br>\(m\) = mass [kg]
+            <div class='definition'>
+                <svg viewBox="-25 0 500 70">
+                    <g transform="translate(75.5 15.5)" stroke="#000" stroke-width="1" fill="none">
+                        <rect x="0.5" y="0.5" width="50" height="50" fill="#fff" stroke-width="1" />
+                        <text x="25" y="25" fill="#000" stroke="none" text-anchor="middle" dominant-baseline="middle">m</text>
+                        <line x1="0" y1="5" x2="-35" y2="5" />
+                        <line x1="0" y1="15" x2="-65" y2="15" />
+                        <line x1="0" y1="25" x2="-35" y2="25" />
+                        <line x1="0" y1="35" x2="-75" y2="35" />
+                        <line x1="0" y1="45" x2="-40" y2="45" />
+                    </g>
+                    <g transform="translate(375.5 15.5)" stroke="#000" stroke-width="1" fill="none">
+                        <rect x="-50.5" y="0.5" width="50" height="50" fill="#fff" stroke-width="1" />
+                        <text x="-25" y="25" fill="#000" stroke="none" text-anchor="middle" dominant-baseline="middle">m</text>
+                        <line x1="0" y1="5" x2="35" y2="5" />
+                        <line x1="0" y1="15" x2="45" y2="15" />
+                        <line x1="0" y1="25" x2="85" y2="25" />
+                        <line x1="0" y1="35" x2="55" y2="35" />
+                        <line x1="0" y1="45" x2="30" y2="45" />
+                    </g>
+                </svg>
+                $$ \sum p_i = \sum p_f$$ $$m_1 u_1 + m_2u_2 = m_1v_1 + m_2v_2$$ \(p\) = momentum [kg m/s]
+                <em>vector</em>
+                <br> \(u\) = initial velocity [m/s]
+                <em>vector</em>
+                <br>\(v\) = final velocity [m/s]
+                <em>vector</em>
+                <br>\(m\) = mass [kg]
+            </div>
         </div>
-        <p>
-            You can extend conservation of momentum to any number of particles, not just two.
-        </p>
         <div class='example'>
             <canvas id="canvas2" width='580' height='200'> </canvas>
             <strong>Example:</strong> A <span style='color:#0f0'> <strong>green</strong> </span>box and a <span style='color: white;background-color: lightgrey;'> <strong>&nbsp;white</strong> </span>&nbsp;box collide. The green box has a mass of 2&nbsp;kg and is moving to the right at 3&nbsp;m/s. The white box is moving to the left at 1&nbsp;m/s and has a mass of 10&nbsp;kg. If the white box has stopped after the collision what is the velocity of the green box?
@@ -167,6 +162,22 @@
                 $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$
                 $$(2)(3)+(10)(-1)=(2)v_{1}+(1)(0)$$ $$6-10=(2)v_{1}$$
                 $$-4=(2)v_{1}$$ $$-2 \mathrm{\tfrac{m}{s}} =v_{1}$$
+            </details>
+        </div>
+
+        <div class="example">
+            <canvas id="canvas1" width='580' height='200'> </canvas>
+            <strong>Example:</strong> When and why does the total momentum change in this simulation?
+            <details>
+                <summary>solution</summary>
+                <p>
+                    The total momentum changes when one of the objects collides with the walls.
+                </p>
+                <p>
+                    The total momentum is conserved, but we aren't including the walls in our calculations.
+                    It can be very difficult to measure the change in velocity for very massive objects, like the Earth.
+                    This means that the practical application of conservation of momentum fails when objects hit the ground.
+                </p>
             </details>
         </div>
 
@@ -217,23 +228,8 @@
         <p>
             When two object collide and stick together we say the collision is <strong>perfectly inelastic</strong>. In those situations the equations for conservation of momentum simplify a bit.
         </p>
-        $$m_1u_1 + m_2u_2 = m_1v+m_2v$$ $$m_1u_1 + m_2u_2 = \left(m_1+m_2\right)v$$
-        <p>
-            Objects can also start as one mass and separate, like in an explosion.
-        </p>
-        $$\left(m_1+m_2\right)u = m_1v_1 + m_2v_2$$
-
-        <div class='example'>
-            <strong>Example:</strong> A 100.0 kg goalie throws a 1.1 kg soccer ball while jumping forward at 3.2 m/s. If the ball flies out of the goalie's hands at 10.0 m/s what speed is the goalie?
-            <details>
-                <summary>solution</summary>
-                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$
-                $$\text{goalie holding ball = goalie + ball}$$
-                $$(m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}$$
-                $$(100.0+1.1)(3.2)=(100.0)v_{1}+(1.1)(10.0)$$
-                $$323.52=(100.0)v_{1}+11$$ $$3.13 \, \mathrm{\tfrac{m}{s}} = v_{1}$$
-            </details>
-        </div>
+        $$m_1u_1 + m_2u_2 = m_1v_1+m_2v_2$$
+        $$m_1u_1 + m_2u_2 = \left(m_1+m_2\right)v$$
 
         <div class='example'>
             <canvas id="canvas4" width='580' height='200'> </canvas>
@@ -247,6 +243,10 @@
         </div>
 
         <div class='example'>
+                <p>
+                        Objects can also start as one mass and separate, like in an explosion.
+                    </p>
+                    $$\left(m_1+m_2\right)u = m_1v_1 + m_2v_2$$
             <canvas id="canvas5" width='580' height='200'> </canvas>
             <div id='ex1-question'>
                 <strong>Click to Randomize Problem:</strong> Click above to generate a random problem.
@@ -256,6 +256,18 @@
                 <div id='ex1-math'></div>
             </details>
         </div>
+
+        <div class='example'>
+                <strong>Example:</strong> A 100.0 kg goalie throws a 1.1 kg soccer ball while jumping forward at 3.2 m/s. If the ball flies out of the goalie's hands at 10.0 m/s what speed is the goalie?
+                <details>
+                    <summary>solution</summary>
+                    $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$
+                    $$\text{goalie holding ball = goalie + ball}$$
+                    $$(m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}$$
+                    $$(100.0+1.1)(3.2)=(100.0)v_{1}+(1.1)(10.0)$$
+                    $$323.52=(100.0)v_{1}+11$$ $$3.13 \, \mathrm{\tfrac{m}{s}} = v_{1}$$
+                </details>
+            </div>
 
         <h1 class='underlined'>2-D Conservation of Momentum</h1>
         <p>
@@ -286,109 +298,10 @@
         </div>
         </details>
         </div>
-    </article>
-	<div class="listing-footer">
-		<ul class="listing listing-dark" id="footer">
-			<li>
-				<h2>Motion</h2>
-				<p>
-					<a href="../../motion/motion/index.html">Motion</a>
-					<br>
-					<a href="../../motion/kinematics/index.html">Kinematics</a>
-				</p>
-			</li>
-			<li>
-				<h2>Force</h2>
-				<p>
-					<a href="../../force/laws/index.html">Newton's Laws</a>
-					<br>
-					<a href="../../force/forces/index.html">Forces</a>
-					<br>
-					<a href="../../force/friction/index.html">Friction</a>
-				</p>
-			</li>
-			<li>
-				<h2>Momentum</h2>
-				<p>
-					<a href="../../momentum/momentum/index.html">Momentum</a>
-					<br>
-					<a href="../../momentum/impulse/index.html">Impulse</a>
-				</p>
-			</li>
-			<li>
-				<h2>Energy</h2>
-				<p>
-					<a href="../../energy/energy/index.html">Energy</a>
-					<br>
-					<a href="../../energy/conservation/index.html">Conservation of Energy</a>
-					<br>
-					<a href="../../energy/thermo/index.html">Thermodynamics</a>
-				</p>
-			</li>
-			<li>
-				<h2>Gravity</h2>
-				<p>
-					<a href="../../gravity/gravitation/index.html">Universal Gravitation</a>
-					<br>
-					<a href="../../gravity/circular/index.html">Orbits</a>
-				</p>
-			</li>
-			<li>
-				<h2>Electromagnetism</h2>
-				<p>
-					<a href="../../electromagnetism/charge/index.html">Electric Charge</a>
-					<br>
-					<a href="../../electromagnetism/electrostatics/index.html">Electrostatics</a>
-					<br>
-					<a href="../../electromagnetism/potential/index.html">Electric Potential</a>
-					<br>
-					<a href="../../electromagnetism/magnetism/index.html">Magnetism</a>
-				</p>
-			</li>
-			<li>
-				<h2>Circuits</h2>
-				<p>
-					<a href="../../circuits/electricity/index.html">Electricity</a>
-					<br>
-					<a href="../../circuits/power/index.html">Power</a>
-					<br>
-					<a href="../../circuits/kirchoff/index.html">Kirchhoff’s Laws</a>
-					<br>
-					<a href="../../circuits/components/index.html">Components</a>
-				</p>
-			</li>
-			<li>
-				<h2>Waves</h2>
-				<p>
-					<a href="../../waves/waves/index.html">Waves</a>
-					<br>
-					<a href="../../waves/waveproperties/index.html">Wave Properties</a>
-					<br>
-					<a href="../../waves/light/index.html">Light</a>
-					<br>
-					<a href="../../waves/photons/index.html">Photons</a>
-				</p>
-			</li>
-			<li>
-				<h2>Relativity</h2>
-				<p>
-					<a href="../../relativity/special/index.html">Special Relativity</a>
-					<br>
-					<a href="../../relativity/general/index.html">General Relativity</a>
-				</p>
-			</li>
-			<li>
-				<h2>Reference</h2>
-				<p>
-					<a href="../../review/units/index.html">Units</a>
-					<br>
-					<a href="../../review/vectors/index.html">Vectors & Scalars</a>
-					<br>
-					<a href="../../review/solving/index.html">Problem Solving</a>
-				</p>
-			</li>
-		</ul>
-	</div>
+	</article>
+	<footer>
+		<a href="../../../index.html">Back</a>
+	</footer>	
     <script src='../../../lib/matter.min.js'></script>
     <script src='../../../lib/randomColor.min.js'></script>
     <script src="collisionDemo(Matter.js).js"></script>

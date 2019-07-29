@@ -136,7 +136,6 @@
         ctx.stroke();
       }
 
-
       ctx.textAlign = "center";
       ctx.font = "18px Arial";
       ctx.fillStyle = "#000";
@@ -146,9 +145,9 @@
         ctx.fillText(mass[k].velocity.x.toFixed(2) + " m/s", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 2);
         p += mass[k].mass * mass[k].velocity.x;
       }
-      ctx.textAlign = "left";
-      ctx.fillText("mv  +  mv  + mv  =  total momentum", 5, height - 5);
-      ctx.fillText("(" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") + (" + mass[1].mass.toFixed(2) + ") (" + mass[1].velocity.x.toFixed(2) + ") + (" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") = " + p.toFixed(2), 5, 22);
+      // ctx.textAlign = "left";
+      // ctx.fillText("mv  +  mv  + mv  =  total momentum", 5, height - 5);
+      // ctx.fillText("(" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") + (" + mass[1].mass.toFixed(2) + ")(" + mass[1].velocity.x.toFixed(2) + ") + (" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") = " + p.toFixed(2), 5, 22);
     })();
   }
 })();

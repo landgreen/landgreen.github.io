@@ -146,38 +146,12 @@
         py += mass[k].mass * -mass[k].velocity.y;
       }
       ctx.textAlign = "left";
-      ctx.fillText("mv + mv = total horizontal momentum ", 5, 15);
-      ctx.fillText(
-        "(" +
-        mass[0].mass.toFixed(2) +
-        ")(" +
-        mass[0].velocity.x.toFixed(2) +
-        ") + (" +
-        mass[1].mass.toFixed(2) +
-        ") (" +
-        mass[1].velocity.x.toFixed(2) +
-        ") = " +
-        px.toFixed(2),
-        // Math.floor(px).toFixed(5),
-        5,
-        37
-      );
-
-      ctx.fillText("mv + mv = total vertical momentum", 5, height - 33);
-      ctx.fillText(
-        "(" +
-        mass[0].mass.toFixed(2) +
-        ")(" +
-        -mass[0].velocity.y.toFixed(2) +
-        ") + (" +
-        mass[1].mass.toFixed(2) +
-        ") (" +
-        -mass[1].velocity.y.toFixed(2) +
-        ") = " +
-        py.toFixed(2),
-        5,
-        height - 10
-      );
+      ctx.fillText("total horizontal momentum ", 5, 15);
+      // ctx.fillText("(" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") + (" + mass[1].mass.toFixed(2) + ")(" + mass[1].velocity.x.toFixed(2) + ") = " + px.toFixed(2), 5, 37);
+      ctx.fillText("(" + mass[0].mass.toFixed(2) + " kg)(" + mass[0].velocity.x.toFixed(2) + " m/s) + (" + mass[1].mass.toFixed(2) + " kg)(" + mass[1].velocity.x.toFixed(2) + " m/s) = " + px.toFixed(2), 5, 37);
+      ctx.fillText("total vertical momentum", 5, height - 33);
+      // ctx.fillText("(" + mass[0].mass.toFixed(2) + ")(" + -mass[0].velocity.y.toFixed(2) + ") + (" + mass[1].mass.toFixed(2) + ")(" + -mass[1].velocity.y.toFixed(2) + ") = " + py.toFixed(2), 5, height - 10);
+      ctx.fillText("(" + mass[0].mass.toFixed(2) + " kg)(" + mass[0].velocity.y.toFixed(2) + " m/s) + (" + mass[1].mass.toFixed(2) + " kg)(" + mass[1].velocity.y.toFixed(2) + " m/s) = " + py.toFixed(2), 5, height - 10);
     })();
   }
 })()

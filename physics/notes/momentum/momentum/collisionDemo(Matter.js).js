@@ -1,6 +1,6 @@
 (() => {
   let width = 580;
-  let height = 270;
+  let height = 320;
 
   const canvas = document.getElementById("canvas0");
   const ctx = canvas.getContext("2d");
@@ -67,8 +67,8 @@
     engine.world.gravity.y = 0;
 
     var mass = [];
-    spawnMass(0, 150, 100, 0);
-    spawnMass(700, 150, -100, 0);
+    spawnMass(-50, 150, 100, 0);
+    spawnMass(650, 150, -100, 0);
 
     canvas.addEventListener("mousedown", function () {
       World.clear(engine.world, true); //clear matter engine, leave static
@@ -172,13 +172,19 @@
       }
       ctx.textAlign = "left";
       // ctx.fillText("    m      v     +     m      v       =  total momentum", 5, height - 5);
-      ctx.fillText("mv  +  mv  =  total momentum", 5, height - 5);
-      ctx.fillText("(" + mass[0].mass.toFixed(2) + ")(" + mass[0].velocity.x.toFixed(2) + ") + (" + mass[1].mass.toFixed(2) + ") (" + mass[1].velocity.x.toFixed(2) + ") = " + p.toFixed(2), 5, 22);
+      // ctx.fillText("mv  +  mv  =  total momentum", 70, height - 5);
+
+      let space0 = " ";
+      if (mass[0].velocity.x < 0) space0 = "";
+      let space1 = " ";
+      if (mass[1].velocity.x < 0) space1 = "";
+
+      ctx.fillText("(" + mass[0].mass.toFixed(2) + " kg)(" + space0 + mass[0].velocity.x.toFixed(2) + " m/s) + (" + mass[1].mass.toFixed(2) + " kg)(" + space1 + mass[1].velocity.x.toFixed(2) + " m/s) = " + p.toFixed(2), 65, 22);
       //color underlines
       ctx.fillStyle = mass[0].color;
-      ctx.fillRect(5, 30, 105, 10);
+      ctx.fillRect(67, 30, 170, 10);
       ctx.fillStyle = mass[1].color;
-      ctx.fillRect(138, 30, 105, 10);
+      ctx.fillRect(265, 30, 170, 10);
     })();
   }
 })();
