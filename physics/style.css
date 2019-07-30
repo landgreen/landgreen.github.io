@@ -275,46 +275,8 @@ canvas,
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     /* font-size: 90%; */
   }
-
-  /* .listing h2 {
-    font-size: 130%;
-  } */
 }
 
-
-/* footer grid ________________________________________________*/
-.listing-footer {
-  background-color: var(--bg-color);
-  padding-top: 4em;
-  padding-bottom: 3em;
-}
-
-.listing-dark {
-  overflow: hidden;
-  padding: 0.5em 0 0 0.5em;
-  max-width: 1300px;
-  margin: 0 auto;
-  line-height: 1.5;
-}
-
-.listing-dark li {
-  padding: 0 0.5em 0.5em 0;
-}
-
-.listing-dark a {
-  color: #bbb;
-}
-
-.listing-dark a:hover {
-  color: #fff;
-}
-
-.listing-dark h2 {
-  color: #fff;
-  border-bottom: 1px solid #eee;
-  font-weight: 400;
-  margin-bottom: -0.3em;
-}
 
 /* flex grid thirds _________________________________*/
 
@@ -329,71 +291,6 @@ canvas,
 @media (max-width: 500px) {
   .flex-grid-thirds {
     display: block;
-  }
-}
-
-footer {
-  padding: 2em;
-  text-align: center;
-  background-color: #333;
-  font-size: 25px;
-}
-
-footer a {
-  color: #fff;
-}
-
-/* Table of contents */
-
-.SVG-title {
-  /* border: #000 solid 1px; */
-  margin: auto;
-  padding-top: 4px;
-}
-
-.table-of-contents {
-  margin: -2px auto;
-  list-style: none;
-  display: grid;
-  max-width: 1700px;
-  grid-template: "a a a a a""b b b b b";
-  grid-gap: 0px;
-  line-height: 1.6;
-  border-bottom: var(--svg-color) solid 4px;
-  border-right: var(--svg-color) solid 4px;
-}
-
-.table-of-contents a {
-  color: var(--svg-color);
-}
-
-.table-of-contents a:hover {
-  color: var(--link-color);
-}
-
-.table-of-contents li {
-  background-color: var(--svg-bg-color);
-  padding: 0px 0px 20px 0px;
-  display: flex;
-  flex-direction: column;
-  border-top: var(--svg-color) solid 4px;
-  border-left: var(--svg-color) solid 4px;
-}
-
-.table-of-contents li p {
-  margin: auto;
-}
-
-@media screen and (max-width: 850px) {
-  .table-of-contents {
-    grid-template: "a a""b b""c c""d d""e e";
-  }
-}
-
-@media screen and (max-width: 365px) {
-  .table-of-contents {
-    font-size: 100%;
-    grid-template: "a""b""c""d""e""f""g""h""i""j""k";
   }
 }
 
@@ -433,6 +330,18 @@ header p {
 }
 
 /* footer setup_________________________________*/
+footer {
+  margin-top: 4em;
+  padding: 2em;
+  text-align: center;
+  background-color: #333;
+  font-size: 25px;
+}
+
+footer a {
+  color: #fff;
+}
+
 .back {
   text-align: center;
   padding: 1em;
