@@ -106,14 +106,9 @@
 		<p>
 			Ears are able to detect separate sound frequencies, even though they enter the ear in a superposition. This <a href="https://musiclab.chromeexperiments.com/Spectrogram">spectrogram</a> lets you visualize the frequencies that make up various sounds.
 		</p>
+
 		<p>
-			Waves add <strong>constructively</strong> when both wave amplitudes are positive or both are negative. This produces a higher observed amplitude. Constructive interference is how two speakers playing the same song are louder than just one.
-		</p>
-		<p>
-			Waves add <strong>destructively</strong> when one wave amplitude is positive and the other is negative. This produces a lower observed amplitude. Destructive interference is put to use in <a href="https://www.youtube.com/watch?v=HOdEvhEjO2I">noise cancelling headphones</a>.
-		</p>
-		<p>
-			<a href="https://www.youtube.com/watch?v=VOXbeRGVhaY">The Wedge</a> is a famous surf spot that has some dangerously fun waves because of constructive interference from waves reflected off a jetty.
+			<a href="https://www.youtube.com/watch?v=VOXbeRGVhaY">The Wedge</a> is a famous surf spot that has some dangerously fun waves because of interference from waves reflected off a jetty.
 		</p>
 		<div class='example'>
 			<strong>Question:</strong> A wave is created on each side of a rope with an amplitude of 0.3&nbsp;m. The waves <a href="http://ophysics.com/waves3b.html">interfere</a> as they pass through each other.
@@ -128,7 +123,7 @@
 			</details>
 		</div>
 
-		<div id="microphone-zone" class="example">
+		<div id="microphone-zone" class="example-small">
 			Click to see the <strong>waveform</strong> recorded by your microphone.
 			<canvas class="center" width="600" height="100" id="analyzer-canvas" onclick="analyzer(this)"></canvas>
 			<div id="microphone-text" style="display: none;">
@@ -152,7 +147,7 @@
 			</div>
 		</div>
 
-		<div id="barGraph-zone" class="example">
+		<div id="barGraph-zone" class="example-small">
 			Click to see the <strong>spectrum of frequencies</strong> recorded by your microphone.
 			<canvas class="center" width="600" height="100" id="barGraph-canvas" onclick="barGraph(this)"></canvas>
 			<div id="barGraph-text" style="display: none;">
@@ -169,6 +164,10 @@
 		</div>
 
 		<div class='example'>
+			<p>
+				Waves add <strong>constructively</strong> when both wave amplitudes are positive or both are negative.
+				This produces a higher observed amplitude. Constructive interference is how two speakers playing the same song are louder than just one.
+			</p>
 			<svg onload=" drawSineWave(this, 250, 40, 0, '#39f'); drawSineWave(this,250, 80, 0, '#f37'); centerLine(this)" height='170'></svg>
 			<br><strong>Example:</strong> Draw the superposition of these waves. They have the same wavelength, so they only add constructively.
 			<details>
@@ -177,6 +176,10 @@
 			</details>
 		</div>
 		<div class='example'>
+			<p>
+				Waves add <strong>destructively</strong> when one wave amplitude is positive and the other is negative.
+				This produces a lower observed amplitude. Destructive interference is put to use in <a href="https://www.youtube.com/watch?v=HOdEvhEjO2I">noise cancelling headphones</a>.
+			</p>
 			<svg onload="drawSineWave(this, 200, 40, 100, '#0f8'); drawSineWave(this,200, 40, 0, '#80f'); centerLine(this)" height='85'></svg>
 			<br><strong>Example:</strong> Draw the superposition of these waves. They have the same wavelength but they are out of phase with each other. They can only add destructively.
 			<details>
@@ -298,7 +301,6 @@
 			</span>
 		</div>
 		<div class="example">
-			<p>Adding many sine waves together can produce some interesting <a href="https://en.wikipedia.org/wiki/Waveform">waveforms</a>. The two below are starting to look like sawtooth and triangle, but they need more contributing sine waves.</p>
 			<svg onload="drawSineWavesArray(this, [
 		{ wavelength: 400, amplitude: 128, phase: 0,  color: '#f08', opacity: 0.45 },
 		{ wavelength: 200, amplitude: 64*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.4 },
@@ -310,7 +312,10 @@
 		{ wavelength: 50, amplitude: 1*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.10 },
 		{ wavelength: 44.4, amplitude: 0.5*2/Math.PI,  phase: 0, color: '#f08', opacity: 0.05 },
 		], true, true)" height='290'></svg>
-
+			<p>
+				Adding many sine waves together can produce some interesting <a href="https://en.wikipedia.org/wiki/Waveform">waveforms</a>.
+				These waves are starting to look like sawtooth and triangle, but they need more contributing sine waves.
+			</p>
 			<svg onload="drawSineWavesArray(this, [
 		{ wavelength: 200, amplitude: 20, phase: 0, color: '#08f', opacity: 0.2 },
 		{ wavelength: 200, amplitude: 20, phase: 8, color: '#08f', opacity: 0.2 },
@@ -348,9 +353,7 @@
 		<p>
 			Waves tend to spread out in every direction possible within their medium. <strong>Diffraction</strong> is when a wave spreads out after some of the wave hits a barrier. This explains how sound can be heard through an open door even when there is no line of sight.
 		</p>
-		<p>
-			Diffraction can be explained by thinking of every point on a wavefront as the source of spherical waves.
-		</p>
+
 		<svg viewBox="0 0 500 320">
 			<g transform="matrix(1.1071035,0,0,1.1071035,-4.2837428,-418.671)">
 				<path d="M 132.1875,495.6875 C 132.61944,505.8429 140.98893,513.93751 151.25,513.9375 C 161.51108,513.9375 169.88056,505.84288 170.3125,495.6875" style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#babdb6;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.5" />
@@ -439,28 +442,33 @@
 				<path d="M 18.721316,496.70414 C 18.721316,567.32712 74.286541,624.63961 142.75647,624.63961 C 187.1243,624.63961 278.67479,624.24597 315.46893,624.24597 C 383.72219,624.24597 439.12242,567.10365 439.12242,496.70414" style="opacity:1;fill:none;fill-opacity:0.77777782;fill-rule:evenodd;stroke:#579;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
 			</g>
 		</svg>
-
-
-		<p>You can see examples of diffraction in these 2-D ripple tank simulations:</p>
 		<p>
-			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+578+1.5625e-8%0AS+0+0+1+511+1+0+2.2166635+0+10+100%0A203+0+-63+13+571+13+1+20+10%0A">Single Slit</a>: Waves spread out in a circle as they pass through a gap.
-			<br>
-			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+578+1.5625e-8%0AS+0+0+1+511+1+0+1.633331+0+10+100%0A203+0+-63+13+571+13+2+6+15%0A">Double Slit</a>: Notice the pattern of constructive and destructive interference.
-			<br>
-			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+489+1.5625e-8%0Aw+0+261+23+516+23%0AS+0+0+1+511+1+0+1.399998+0+10+100%0Ab+0+511+6+516+26+0%0A">Half Plane</a>: Waves curve around a wall.
-			<br>
-			<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+112+10+1+1015+4.6875e-8%0As+0+256+1+2+1.3999976106707446+0+10+100%0Aw+0+228+29+283+29%0A">Obstacle</a>: Waves of the right wavelength can almost ignore a small barrier.
+			Diffraction can be explained by thinking of every point on a wavefront as the source of spherical waves.
+			These spherical waves interfere with each other to produce different patterns.
 		</p>
 
-		<div class="center" style="position: relative; width: 300px; height: 200px;"><a href="https://phet.colorado.edu/sims/html/wave-interference/latest/wave-interference_en.html" style="text-decoration: none;"><img src="https://phet.colorado.edu/sims/html/wave-interference/latest/wave-interference-600.png" alt="Wave Interference" style="border: none;" width="300" height="200" />
-				<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.6; filter: alpha(opacity = 60);"></div>
-				<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
-					<tr>
-						<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
-					</tr>
-				</table>
-			</a></div>
+		<div class="example">
+			<p>You can see examples of diffraction in these 2-D ripple tank simulations:</p>
+			<p>
+				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+578+1.5625e-8%0AS+0+0+1+511+1+0+2.2166635+0+10+100%0A203+0+-63+13+571+13+1+20+10%0A">Single Slit</a>: Waves spread out in a circle as they pass through a gap.
+				<br>
+				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+578+1.5625e-8%0AS+0+0+1+511+1+0+1.633331+0+10+100%0A203+0+-63+13+571+13+2+6+15%0A">Double Slit</a>: Notice the pattern of constructive and destructive interference.
+				<br>
+				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+64+10+1+489+1.5625e-8%0Aw+0+261+23+516+23%0AS+0+0+1+511+1+0+1.399998+0+10+100%0Ab+0+511+6+516+26+0%0A">Half Plane</a>: Waves curve around a wall.
+				<br>
+				<a href="http://www.falstad.com/ripple/Ripple.html?rol=$+1+512+112+10+1+1015+4.6875e-8%0As+0+256+1+2+1.3999976106707446+0+10+100%0Aw+0+228+29+283+29%0A">Obstacle</a>: Waves of the right wavelength can almost ignore a small barrier.
+			</p>
 
+			<div class="center" style="position: relative; width: 300px; height: 200px;"><a href="https://phet.colorado.edu/sims/html/wave-interference/latest/wave-interference_en.html" style="text-decoration: none;"><img src="https://phet.colorado.edu/sims/html/wave-interference/latest/wave-interference-600.png" alt="Wave Interference" style="border: none;" width="300" height="200" />
+					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.6; filter: alpha(opacity = 60);"></div>
+					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
+						<tr>
+							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
+						</tr>
+					</table>
+				</a>
+			</div>
+		</div>
 
 		<div class='example'>
 			<!-- <style>

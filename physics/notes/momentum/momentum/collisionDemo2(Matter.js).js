@@ -205,12 +205,17 @@
       let space1 = " ";
       if (mass[1].velocity.x < 0) space1 = "";
 
-      ctx.fillText("(" + mass[0].mass.toFixed(2) + " kg)(" + space0 + mass[0].velocity.x.toFixed(2) + " m/s) + (" + mass[1].mass.toFixed(2) + " kg)(" + space1 + mass[1].velocity.x.toFixed(2) + " m/s) = " + p.toFixed(2), 65, 22);
+      function round(value, decimals) {
+        return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals).toFixed(decimals);
+      }
+      ctx.fillText("(" + round(mass[0].mass, 1) + " kg)(" + space0 + round(mass[0].velocity.x, 1) + " m/s) + (" +
+        round(mass[1].mass, 1) + " kg)(" + space1 + round(mass[1].velocity.x, 1) + " m/s) = " + round(p, 1), 85, 22);
+      // ctx.fillText("(" + mass[0].mass.toFixed(2) + " kg)(" + space0 + mass[0].velocity.x.toFixed(2) + " m/s) + (" + mass[1].mass.toFixed(2) + " kg)(" + space1 + mass[1].velocity.x.toFixed(2) + " m/s) = " + p.toFixed(2), 65, 22);
       //color underlines
       ctx.fillStyle = mass[0].color;
-      ctx.fillRect(67, 30, 170, 10);
+      ctx.fillRect(87, 30, 150, 10);
       ctx.fillStyle = mass[1].color;
-      ctx.fillRect(265, 30, 170, 10);
+      ctx.fillRect(265, 30, 150, 10);
     })();
   }
 })();

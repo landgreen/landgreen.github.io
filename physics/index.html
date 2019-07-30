@@ -39,6 +39,59 @@
 			--svg-color: #333;
 			--svg-bg-color: #fff;
 		}
+
+		.SVG-title {
+			/* border: #000 solid 1px; */
+			margin: auto;
+			padding-top: 4px;
+		}
+
+		.table-of-contents {
+			margin: -2px auto;
+			list-style: none;
+			display: grid;
+			max-width: 1700px;
+			grid-template: "a a a a a""b b b b b";
+			grid-gap: 0px;
+			line-height: 1.6;
+			border-bottom: var(--svg-color) solid 4px;
+			border-right: var(--svg-color) solid 4px;
+		}
+
+		.table-of-contents a {
+			color: var(--svg-color);
+		}
+
+		.table-of-contents a:hover {
+			color: var(--link-color);
+			text-decoration: none;
+		}
+
+		.table-of-contents li {
+			background-color: var(--svg-bg-color);
+			padding: 0px 0px 20px 0px;
+			display: flex;
+			flex-direction: column;
+			border-top: var(--svg-color) solid 4px;
+			border-left: var(--svg-color) solid 4px;
+		}
+
+		.table-of-contents li p {
+			margin: auto;
+		}
+
+		@media screen and (max-width: 850px) {
+			.table-of-contents {
+				grid-template: "a a""b b""c c""d d""e e";
+			}
+		}
+
+		@media screen and (max-width: 365px) {
+			.table-of-contents {
+				font-size: 100%;
+				grid-template: "a""b""c""d""e""f""g""h""i""j""k";
+			}
+		}
 	</style>
 	<ul class="table-of-contents">
 		<li>
@@ -54,12 +107,11 @@
 					</g>
 				</g>
 			</svg>
-			<!-- <h2>Motion</h2> -->
 			<p>
 				<a href="notes/motion/motion/index.html">Motion</a>
+				<br> <a href="notes/motion/kinematics/index.html">Kinematics</a>
 				<br>
-				<a href="notes/motion/kinematics/index.html">Kinematics</a>
-				<br> <br>
+				<br>
 			</p>
 		</li>
 		<li>
@@ -78,7 +130,6 @@
 					</g>
 				</g>
 			</svg>
-			<!-- <h2>Force</h2> -->
 			<p>
 				<a href="notes/force/laws/index.html">Newton's Laws</a>
 				<br>
@@ -106,12 +157,11 @@
 					</g>
 				</g>
 			</svg>
-			<!-- <h2>Momentum</h2> -->
 			<p>
 				<a href="notes/momentum/momentum/index.html">Momentum</a>
+				<br> <a href="notes/momentum/impulse/index.html">Impulse</a>
 				<br>
-				<a href="notes/momentum/impulse/index.html">Impulse</a>
-				<br> <br>
+				<br>
 			</p>
 		</li>
 		<li>
@@ -141,13 +191,10 @@
 					</g>
 				</g>
 			</svg>
-			<!-- <h2>Energy</h2> -->
 			<p>
 				<a href="notes/energy/energy/index.html">Energy</a>
-				<br>
-				<a href="notes/energy/conservation/index.html">Conservation</a>
-				<br>
-				<a href="notes/energy/thermo/index.html">Thermodynamics</a>
+				<br> <a href="notes/energy/conservation/index.html">Conservation</a>
+				<br> <a href="notes/energy/thermo/index.html">Thermodynamics</a>
 			</p>
 		</li>
 		<li>
@@ -171,16 +218,73 @@
 					</g>
 				</g>
 			</svg>
-			<!-- <h2>Gravity</h2> -->
 			<p>
 				<a href="notes/gravity/gravitation/index.html">Universal Gravitation</a>
-				<br>
-				<a href="notes/gravity/circular/index.html">Orbits</a>
+				<br> <a href="notes/gravity/circular/index.html">Orbits</a>
 				<br>
 				<br>
 			</p>
 		</li>
 		<li>
+			<!-- <svg class="SVG-title" width="160" height="120">
+				<g fill="var(--svg-color)" stroke="var(--svg-color)" transform="translate(-69,20)" stroke-linecap="round">
+					<g transform="translate(75 70) scale(0.005 -0.005)" fill="none" stroke-width="220">
+						<path d="M4430 12789 c-921 -59 -1769 -370 -2480 -908 -1067 -807 -1758 -2084
+													-1914 -3536 -69 -641 -34 -1378 100 -2105 192 -1039 624 -2084 1222 -2955 536
+													-781 1225 -1439 1919 -1834 140 -79 424 -214 558 -264 215 -80 439 -136 648
+													-162 60 -7 111 -16 115 -19 8 -9 -15 -237 -34 -326 -35 -167 -134 -411 -198
+													-487 -33 -40 -33 -73 2 -105 59 -57 173 -82 372 -83 213 0 331 25 393 83 36
+													34 34 62 -7 116 -114 150 -225 522 -226 758 0 54 -15 47 150 68 889 116 1919
+													814 2751 1865 480 607 892 1332 1182 2085 466 1210 624 2521 441 3659 -214
+													1337 -881 2491 -1874 3242 -876 663 -1971 982 -3120 908z" />
+					</g>
+
+					<rect x="320" y="2" width="246" height="194" stroke-width="2.5" fill="none" />
+					<path d="M318 196 h 250" fill="none" stroke-width="4.5" stroke-linecap="round" />
+					<path d="M520 187.5 h 25 v6 h -25 v-1.5 l-5 1 v-5 l5 1" stroke="none" stroke-linecap="round" stroke-linejoin="round" />
+					<g fill="none" stroke-width="2">
+						<path d="M294 80 h 10" />
+						<path d="M284 90 h 10" />
+						<path d="M294 102 h 10" />
+						<path d="M279 110 h 10" />
+						<path d="M292 116 h 10" />
+						<path d="M341 80 h 10 m -5 -5 v 10" />
+						<path d="M326 90 h 10 m -5 -5 v 10" />
+						<path d="M330 104 h 10 m -5 -5 v 10" />
+						<path d="M345 110 h 10 m -5 -5 v 10" />
+						<path d="M328 120 h 10 m -5 -5 v 10" />
+					</g>
+				</g>
+			</svg>
+			<svg class="SVG-title" width="160" height="120">
+				<g fill="var(--svg-color)" stroke="var(--svg-color)" transform="translate(-69,20) scale(0.39,0.39)" stroke-linecap="round">
+					<g transform="translate(180 190) scale(0.014 -0.014)" fill="none" stroke-width="220">
+						<path d="M4430 12789 c-921 -59 -1769 -370 -2480 -908 -1067 -807 -1758 -2084
+											-1914 -3536 -69 -641 -34 -1378 100 -2105 192 -1039 624 -2084 1222 -2955 536
+											-781 1225 -1439 1919 -1834 140 -79 424 -214 558 -264 215 -80 439 -136 648
+											-162 60 -7 111 -16 115 -19 8 -9 -15 -237 -34 -326 -35 -167 -134 -411 -198
+											-487 -33 -40 -33 -73 2 -105 59 -57 173 -82 372 -83 213 0 331 25 393 83 36
+											34 34 62 -7 116 -114 150 -225 522 -226 758 0 54 -15 47 150 68 889 116 1919
+											814 2751 1865 480 607 892 1332 1182 2085 466 1210 624 2521 441 3659 -214
+											1337 -881 2491 -1874 3242 -876 663 -1971 982 -3120 908z" />
+					</g>
+					<rect x="320" y="2" width="246" height="194" stroke-width="2.5" fill="none" />
+					<path d="M318 196 h 250" fill="none" stroke-width="4.5" stroke-linecap="round" />
+					<path d="M520 187.5 h 25 v6 h -25 v-1.5 l-5 1 v-5 l5 1" stroke="none" stroke-linecap="round" stroke-linejoin="round" />
+					<g fill="none" stroke-width="2">
+						<path d="M294 80 h 10" />
+						<path d="M284 90 h 10" />
+						<path d="M294 102 h 10" />
+						<path d="M279 110 h 10" />
+						<path d="M292 116 h 10" />
+						<path d="M341 80 h 10 m -5 -5 v 10" />
+						<path d="M326 90 h 10 m -5 -5 v 10" />
+						<path d="M330 104 h 10 m -5 -5 v 10" />
+						<path d="M345 110 h 10 m -5 -5 v 10" />
+						<path d="M328 120 h 10 m -5 -5 v 10" />
+					</g>
+				</g>
+			</svg> -->
 			<svg class="SVG-title" width="160" height="120">
 				<g fill="var(--svg-color)" stroke="var(--svg-color)" transform="translate(80,58) scale(20.0,-20.0)" stroke-linecap="round">
 					<g fill="none" stroke-width="0.05">
@@ -201,14 +305,6 @@
 						<path d="M -1.0000,0.0000 L -0.8252,-0.1159 L -0.7248,-0.1800 L -0.6443,-0.2288 L -0.5739,-0.2688 L -0.5102,-0.3024 L -0.4510,-0.3309 L -0.3951,-0.3551 L -0.3417,-0.3757 L -0.2901,-0.3930 L -0.2399,-0.4073 L -0.1908,-0.4188 L -0.1424,-0.4276 L -0.0947,-0.4338 L -0.0472,-0.4375 L -0.0000,-0.4388 L 0.0472,-0.4375 L 0.0946,-0.4338 L 0.1424,-0.4276 L 0.1908,-0.4188 L 0.2399,-0.4073 L 0.2901,-0.3930 L 0.3417,-0.3757 L 0.3951,-0.3551 L 0.4510,-0.3309 L 0.5101,-0.3024 L 0.5739,-0.2688 L 0.6443,-0.2288 L 0.7248,-0.1800 L 0.8252,-0.1159 L 1.0000,0.0000" />
 						<path d="M -1.0000,0.0000 L -0.7255,-0.0539 L -0.5768,-0.0812 L -0.4615,-0.1002 L -0.3626,-0.1143 L -0.2740,-0.1248 L -0.1918,-0.1322 L -0.1137,-0.1370 L -0.0376,-0.1393 L 0.0376,-0.1393 L 0.1136,-0.1370 L 0.1918,-0.1322 L 0.2740,-0.1248 L 0.3626,-0.1143 L 0.4615,-0.1002 L 0.5768,-0.0812 L 0.7255,-0.0539 L 1.0000,0.0000" />
 					</g>
-					<!-- <g stroke="none" fill="var(--svg-bg-color)">
-						<circle cx="-1" cy="0" r="0.25" />
-						<circle cx="1" cy="0" r="0.25" />
-					</g>
-					<g stroke="none">
-						<circle cx="-1" cy="0" r="0.1" />
-						<circle cx="1" cy="0" r="0.1" />
-					</g> -->
 					<g stroke="none" fill="var(--svg-bg-color)">
 						<circle cx="-1" cy="0" r="0.58" />
 						<circle cx="1" cy="0" r="0.58" />
@@ -219,48 +315,16 @@
 					</g>
 				</g>
 			</svg>
-			<!-- <svg class="SVG-title" width="160" height="120">
-				<g fill="var(--svg-color)" stroke="var(--svg-color)" stroke-width="1" transform="translate(55,60)" stroke-linecap="round">
-					<g fill="none">
-						<path d="
-						M0 0 c20 7, 30 7, 50 0
-						M0 0 c20 -7, 30 -7, 50 0
-
-						M0 0 C12 23, 38 23, 50 0
-						M0 0 C12 -23, 38 -23, 50 0
-
-						M0 0 C-5 55, 55 55, 50 0
-						M0 0 C-5 -55, 55 -55, 50 0
-
-						M0 0 C-80 95, 130 95, 50 0
-						M0 0 C-80 -95, 130 -95, 50 0
-
-						M0 0 C-300 95, 350 95, 50 0
-						M0 0 C-300 -95, 350 -95, 50 0
-						"></path>
-					</g>
-					<g stroke="none" fill="var(--svg-bg-color)">
-						<circle cx="0" cy="0" r="2.25" />
-						<circle cx="50" cy="0" r="2.25" />
-					</g>
-				</g>
-			</svg> -->
-
-			<!-- <h2>Electromagnetism</h2> -->
 			<p>
 				<a href="notes/electromagnetism/charge/index.html">Electric Charge</a>
-				<br>
-				<a href="notes/electromagnetism/electrostatics/index.html">Electrostatics</a>
-				<br>
-				<a href="notes/electromagnetism/potential/index.html">Electric Potential</a>
-				<br>
-				<a href="notes/electromagnetism/magnetism/index.html">Magnetism</a>
+				<br> <a href="notes/electromagnetism/electrostatics/index.html">Electrostatics</a>
+				<br> <a href="notes/electromagnetism/potential/index.html">Electric Potential</a>
+				<br> <a href="notes/electromagnetism/magnetism/index.html">Magnetism</a>
 			</p>
 		</li>
 		<li>
-			<!-- <h2>Circuits</h2> -->
 			<svg class="SVG-title" width="160" height="120">
-				<g fill="var(--svg-color)" stroke="var(--svg-color)" stroke-width="1" transform="translate(49,26)" stroke-linecap="round">
+				<g fill="var(--svg-color)" stroke="var(--svg-color)" stroke-width="1" transform="translate(46,26)" stroke-linecap="round">
 					<path fill="none" stroke-linejoin="round" d="M5.5 5.5 h50 m4 4
 					v9 l4 4 l-8 4 l8 4 l-8 4 l8 4 l-8 4 l8 4 l -4 4	v9 m-4 4 
 					h-50 m-4 -4
@@ -275,30 +339,18 @@
 			</svg>
 			<p>
 				<a href="notes/circuits/electricity/index.html">Electricity</a>
-				<br>
-				<a href="notes/circuits/power/index.html">Power</a>
-				<br>
-				<a href="notes/circuits/kirchoff/index.html">Kirchhoff’s Laws</a>
-				<br>
-				<a href="notes/circuits/components/index.html">Components</a>
+				<br> <a href="notes/circuits/power/index.html">Power</a>
+				<br> <a href="notes/circuits/kirchoff/index.html">Kirchhoff’s Laws</a>
+				<br> <a href="notes/circuits/components/index.html">Components</a>
 			</p>
 		</li>
 		<li>
-			<!-- <h2>Waves</h2> -->
 			<svg class="SVG-title" width="160" height="120">
-				<g fill="var(--svg-color)" stroke="var(--svg-color)" stroke-width="1" transform="translate(25,66)" stroke-linecap="round">
+				<g fill="var(--svg-color)" stroke="var(--svg-color)" stroke-width="1" transform="translate(27,66)" stroke-linecap="round">
 					<g fill="none">
 						<path d="M3 2.5 h44 M55 2.5 h44
 								 M0.5 -2 s25.5 -70, 49 0
 								 M52.5 6.5 s25.5 70, 49 0"></path>
-						<!-- <path d="M2.5 0.5 s22.5 -15, 45 0
-								 M54.5 4.5 s22.5 15, 45 0"></path>
-						<path d="M1 -1 s24 -42, 48 0
-								 M53 5.5 s24 42, 48 0"></path>
-						<path d="M-0.5 -2 s25.5 -80, 51 0
-								 M51.5 6.5 s25.5 80, 51 0"></path> -->
-						<!-- <path d="M0 -2 s25 -85, 50 0
-								 M52 4.5 s25 85, 50 0"></path> -->
 					</g>
 					<g stroke="none" stroke-width="2.5">
 						<circle cx="-1" cy="2.5" r="1.5" />
@@ -309,59 +361,50 @@
 			</svg>
 			<p>
 				<a href="notes/waves/waves/index.html">Waves</a>
-				<br>
-				<a href="notes/waves/waveproperties/index.html">Interference</a>
-				<br>
-				<a href="notes/waves/light/index.html">Light</a>
-				<br>
-				<a href="notes/waves/photons/index.html">Photons</a>
+				<br> <a href="notes/waves/waveproperties/index.html">Interference</a>
+				<br> <a href="notes/waves/light/index.html">Light</a>
+				<br> <a href="notes/waves/photons/index.html">Photons</a>
 			</p>
 		</li>
 		<li>
-			<!-- <h2>Relativity</h2> -->
 			<svg class="SVG-title" width="160" height="120">
 				<g fill="var(--svg-color)" stroke="var(--svg-color)" stroke-width="1" transform="translate(78,63)" stroke-linecap="round">
 					<g fill="var(--svg-bg-color)">
-						<path d="M-34 -34 l68 68
-						M34 -34 l-68 68
-						"></path>
+						<path d="M-34 -34 l31 31 m6 6 l31 31
+								 M34 -34 l-31 31 m-6 6 l-31 31"></path>
 					</g>
 					<ellipse cx="0" cy="35" rx="34.5" ry="7" fill="var(--svg-bg-color)" />
-					<ellipse cx="0" cy="-35" rx="34.5" ry="7" pathLength="10" fill="none" />
-					<g stroke="var(--svg-bg-color)" stroke-width="3">
-						<circle cx="0" cy="0" r="3" />
+					<ellipse cx="0" cy="-35" rx="34.5" ry="7" pathLength="10" fill="var(--svg-bg-color)" />
+					<g stroke="none">
+						<circle cx="0" cy="0" r="1.5" />
 					</g>
 			</svg>
 			<p>
 				<a href="notes/relativity/special/index.html">Special Relativity</a>
+				<br> <a href="notes/relativity/general/index.html">General Relativity</a>
 				<br>
-				<a href="notes/relativity/general/index.html">General Relativity</a>
-				<br> <br>
+				<br>
 			</p>
 		</li>
 		<li>
-			<!-- <h2>Reference</h2> -->
 			<svg class="SVG-title" width="160" height="120">
 				<g fill="var(--svg-color)" stroke="var(--svg-color)" stroke-width="1" transform="translate(48,83)" stroke-linecap="round">
 					<g fill="none">
-						<!-- <path d="M0 0 l60 -34"></path> -->
-						<path d="M4.28 -2.57 l51.44 -30.86"></path>
-						<path d="M5 0 h50" stroke-dashoffset="0.7" stroke-dasharray="3"></path>
-						<path d="M60 -5 v-28" stroke-dashoffset="0.8" stroke-dasharray="3"></path>
+						<path d="M4.78 -2.07 l51.44 -30.86"></path>
+						<path d="M5.5 0.5 h50" stroke-dashoffset="0.7" stroke-dasharray="3"></path>
+						<path d="M60.5 -4.5 v-28" stroke-dashoffset="0.8" stroke-dasharray="3"></path>
 					</g>
 					<g stroke="none">
-						<circle cx="0" cy="0" r="1.5" />
-						<circle cx="60" cy="0" r="1.5" />
-						<circle cx="60" cy="-36" r="1.55" />
+						<circle cx="0.5" cy="0.5" r="1.5" />
+						<circle cx="60.5" cy="0.5" r="1.5" />
+						<circle cx="60.5" cy="-35.5" r="1.55" />
 					</g>
 				</g>
 			</svg>
 			<p>
 				<a href="notes/review/units/index.html">Units</a>
-				<br>
-				<a href="notes/review/vectors/index.html">Vectors & Scalars</a>
-				<br>
-				<a href="notes/review/solving/index.html">Problem Solving</a>
+				<br> <a href="notes/review/vectors/index.html">Vectors & Scalars</a>
+				<br> <a href="notes/review/solving/index.html">Problem Solving</a>
 			</p>
 		</li>
 	</ul>
@@ -370,12 +413,6 @@
 		<p>
 			This site contains course notes for algebra based physics with <a href="https://explorabl.es/">explorable</a> <a href="http://worrydream.com/ExplorableExplanations/">explanations</a>.
 			The explorables attempt to instill an intuitive understanding of physical systems, but mostly they are just fun.
-
-
-			<!-- It combines <a href="https://explorabl.es/">explorable</a> <a href="http://worrydream.com/ExplorableExplanations/">explanations</a>
-			 with traditional methods of teaching physics.
-			The explorables attempt to instill an intuitive understanding of physics and how it connects to our everyday experience.
-			Also, they are just fun to play with. -->
 		</p>
 		<p>
 			I'm still adding content for 2019-2020. Let me know if you have any ideas or if you have found one of the numerous mistakes.
@@ -431,9 +468,10 @@
 			</li>
 		</ul>
 	</article>
-	<div class='back'>
-		<a href="../index.html">Home</a>
-	</div>
+
+	<footer>
+		<a href="../index.html">Back</a>
+	</footer>
 </body>
 
 </html>
