@@ -138,8 +138,8 @@
       ctx.fillStyle = "#000";
       var p = 0;
       for (var k = 0, length = mass.length; k < length; k++) {
-        ctx.fillText(mass[k].mass.toFixed(2) + " kg", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 22);
-        ctx.fillText(mass[k].velocity.x.toFixed(2) + " m/s", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 2);
+        ctx.fillText(mass[k].mass.toFixed(1) + " kg", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 22);
+        ctx.fillText(mass[k].velocity.x.toFixed(1) + " m/s", mass[k].position.x, mass[k].position.y - mass[k].length / 2 - 2);
         p += mass[k].mass * mass[k].velocity.x;
       }
       // ctx.textAlign = "left";
