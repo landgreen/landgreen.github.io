@@ -172,7 +172,7 @@ function matter() {
       density: 0.002,
       frictionStatic: 0,
       restitution: 1, //no energy loss on collision
-      inertia: Infinity //no rotation
+      // inertia: Infinity //no rotation
     });
     Matter.Body.setVelocity(atom[len], {
       x: speed * (Math.random() - 0.5),

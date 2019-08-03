@@ -175,6 +175,7 @@ canvas,
 }
 
 .underlined {
+  /* text-transform: uppercase; */
   color: #000;
   margin-top: 6em;
   margin-bottom: 0em;
@@ -306,7 +307,7 @@ header {
 }
 
 header h1 {
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 300;
   letter-spacing: 1px;
   margin: 0;
@@ -332,7 +333,7 @@ header p {
 /* footer setup_________________________________*/
 footer {
   margin-top: 4em;
-  padding: 2em;
+  padding: 1.3em;
   text-align: center;
   background-color: #333;
   font-size: 25px;
@@ -381,7 +382,7 @@ footer a {
   }
 
   header h1 {
-    font-size: 50px;
+    font-size: 38px;
     margin: 0px 10px;
     letter-spacing: 1px;
   }

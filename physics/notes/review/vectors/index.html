@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="theme-color" content="#222" />
@@ -15,16 +14,13 @@
 
 	<title>Vectors & Scalars</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
-
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 	<script src="../../../lib/katex/katex.min.js"></script>
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
-
 	<link rel="stylesheet" href="../../../style.css">
 </head>
 
-<body onload="vectorDiagram()">
-
+<body>
 	<header>
 		<h1>
 			<a href="../../../index.html">Vectors & Scalars</a>
@@ -32,10 +28,38 @@
 	</header>
 
 	<article>
+		<p>
+			Our universe has three dimensions of space and one dimension of time.
+			The three different spacial dimensions make communicating information about space ambiguous.
+		</p>
+		<svg class="center" width="200" height="165">
+			<g fill="#333" stroke="none">
+				<circle cx="100.5" cy="100.5" r="3"></circle>
+			</g>
+			<g stroke="#333" stroke-width="1" fill="none">
+				<path d="M100.5 100.5 v-80    M100.5 100.5 h80    M100.5 100.5 l-57 57" />
+			</g>
+			<g fill="#333" stroke="none" text-anchor="middle">
+				<text x="100" y="10">y</text>
+				<text x="190" y="104">x</text>
+				<text x="36" y="165">z</text>
+			</g>
+		</svg>
+		<p>
+			Information about the three dimensions of space needs a direction in addition to the magnitude.
+			The pairing of direction and magnitude is called a vector.
+		</p>
+
+		<p>
+			If I say "bike 10 km to get to the store", you still can't find the store because you don't know the direction.
+			I should say "bike 10 km West".
+		</p>
+
 		<h1 class='underlined'> Scalars</h1>
-		<p>A scalar is a variable that has a magnitude, but not a direction. Temperature is a scalar. You couldn't say it is
-			50°C
-			to the left.</p>
+		<p>
+			A scalar is a variable that has a magnitude, but not a direction in space.
+			Temperature is a scalar. You couldn't say it is 50°C to the left.
+		</p>
 		<table>
 			<tr>
 				<th>Variable</th>
@@ -64,10 +88,10 @@
 			</tr>
 		</table>
 		<p>
-			Speed and distance seem like they could have a direction, but they are defined as only the magnitude of velocity
-			and displacement
-			vectors.
+			Speed and distance seem like they could have a direction,
+			but they are defined as only the magnitude of velocity and displacement vectors.
 		</p>
+
 		<h1 class='underlined'> Vectors →</h1>
 		<!-- <svg style="float: right;" width="200" height="100" version="1.1" xmlns="http://www.w3.org/2000/svg">
 				<g id="vector" transform='translate(0 90) rotate(-25)'>
@@ -78,13 +102,12 @@
 				<line x1="181" y1="86" x2="181" y2="6" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
 				<path d="M165 90 v-15 h 15" stroke="#bbb" stroke-width="1" fill="none" />
 			</svg> -->
-		<p>A vector is a variable that has a magnitude and direction. Velocity is a vector. You could say the velocity is 50
-			m/s
-			down.
+		<p>
+			A vector is a variable that has a magnitude and direction in space.
+			Velocity is a vector. You could say a velocity is 10 m/s in the west direction.
 		</p>
 		<br>
-
-		<table style="width:100%;text-align:left">
+		<table>
 			<tr>
 				<th>Variable</th>
 				<th>Magnitude</th>
@@ -118,44 +141,47 @@
 		</table>
 		<br>
 		<br>
-		<h1 class='underlined'>Pythagorean Theorem</h1>
-		<p>Think of a vector like the hypotenuse of a right triangle. This makes the other two sides of the triangle the
-			components
-			of the vector. Often the components are horizontal and vertical, but they don't have to be.</p>
-		<svg class="center" width="220" height="120">
-			<g id="vector" transform='translate(0 100) rotate(-25)'>
-				<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
-				<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
-				<text x="100" y="-13" fill="black" text-anchor="middle" dominant-baseline="middle">c</text>
-			</g>
-			<line x1="5" y1="100" x2="181" y2="100" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
-			<line x1="181" y1="97" x2="181" y2="17" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
-			<path d="M165 100 v-15 h 15" stroke="#bbb" stroke-width="1" fill="none" />
-
-			<text x="100" y="115" fill="black" text-anchor="middle" dominant-baseline="middle">a</text>
-			<text x="205" y="55" fill="black" text-anchor="middle" dominant-baseline="middle">b</text>
-		</svg>
-		<p>We can use the
-			<strong>pythagorean theorem</strong> to solve for the magnitude of the sides.</p>
-		$$a^{2} + b^{2} = c^{2}$$
+		<p>
+			Think of a vector like the hypotenuse of a right triangle.
+			This makes the other two sides of the triangle the components of the vector.
+			Often the components are horizontal and vertical, but they don't have to be.
+		</p>
 		<div class='example'>
-			<strong>Example:</strong> You walk 3 miles north and then 4 miles west. How far away are you from your starting
-			location?
+			<svg class="center" width="220" height="120">
+				<g id="vector" transform='translate(0 100) rotate(-25)'>
+					<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
+					<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
+					<text x="100" y="-13" fill="black" text-anchor="middle" dominant-baseline="middle">c</text>
+				</g>
+				<line x1="5" y1="100" x2="181" y2="100" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
+				<line x1="181" y1="97" x2="181" y2="17" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
+				<path d="M165 100 v-15 h 15" stroke="#bbb" stroke-width="1" fill="none" />
+
+				<text x="100" y="115" fill="black" text-anchor="middle" dominant-baseline="middle">a</text>
+				<text x="205" y="55" fill="black" text-anchor="middle" dominant-baseline="middle">b</text>
+			</svg>
+			<p>
+				We can use the <strong>pythagorean theorem</strong> to solve for the magnitude of the sides.
+			</p>
+			$$a^{2} + b^{2} = c^{2}$$
+			<strong>Example:</strong> You walk 3 miles north and then 4 miles west. How far away are you from your starting location?
 			<details>
 				<summary>solution</summary>
-				$$a^{2}+b^{2} = c^{2}$$ $$3^{2}+4^{2} = c^{2}$$ $$25 = c^{2}$$ $$5 \, \mathrm{miles} = c$$
+				$$a^{2}+b^{2} = c^{2}$$
+				$$3^{2}+4^{2} = c^{2}$$
+				$$25 = c^{2}$$
+				$$5 \, \mathrm{miles} = c$$
 			</details>
 		</div>
-		<h1 class='underlined' id="trigonometry">Trigonometry</h1>
+		<h1 class='underlined' id="trigonometry">Vectors and Angles</h1>
 		<p>
-			We can use <a href="https://mathisonian.github.io/trig/etymology/">trig</a> <a href="https://ramesaliyev.com/trigonoparty/">functions</a>
-			(SOH-CAH-TOA) to find how the vector components relate to the angle of the vector.
+			We can use <a href="https://mathisonian.github.io/trig/etymology/">trig</a> <a href="https://ramesaliyev.com/trigonoparty/">functions</a> (SOH-CAH-TOA) to find how the vector components relate to the angle of the vector.
 		</p>
 		<div class="col-group">
 			<div>
 				$$ \sin \theta = \frac{\mathrm{opp}}{\mathrm{hyp}} $$
 				$$ \cos \theta = \frac{\mathrm{adj}}{\mathrm{hyp}} $$
-				$$\tan \theta = \frac{\mathrm{opp}}{\mathrm{adj}} $$
+				$$ \tan \theta = \frac{\mathrm{opp}}{\mathrm{adj}} $$
 			</div>
 			<div>
 				<svg class="center" width="220" height="125">
@@ -176,9 +202,8 @@
 		</div>
 		$$ \mathrm{adj} = (\mathrm{hyp}) \cos \theta \quad \quad \mathrm{opp} = (\mathrm{hyp}) \sin \theta $$
 
-		<p>For a velocity vector the hypotenuse is v. The adjacent and opposite sides of the triangle are the x and y part
-			of
-			v.
+		<p>
+			For a velocity vector the hypotenuse is v. The adjacent and opposite sides of the triangle are the x and y part of v.
 		</p>
 		<div class="col-group">
 			<div>

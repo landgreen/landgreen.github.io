@@ -43,19 +43,18 @@
 		.SVG-title {
 			/* border: #000 solid 1px; */
 			margin: auto;
-			padding-top: 4px;
 		}
 
 		.table-of-contents {
-			margin: -2px auto;
+			line-height: 1.6;
 			list-style: none;
 			display: grid;
-			max-width: 1700px;
 			grid-template: "a a a a a""b b b b b";
-			grid-gap: 0px;
-			line-height: 1.6;
-			border-bottom: var(--svg-color) solid 4px;
-			border-right: var(--svg-color) solid 4px;
+			max-width: 1700px;
+			margin: -4px auto;
+			grid-gap: 4px;
+			border: var(--svg-color) solid 4px;
+			background-color: var(--svg-color);
 		}
 
 		.table-of-contents a {
@@ -72,8 +71,6 @@
 			padding: 0px 0px 20px 0px;
 			display: flex;
 			flex-direction: column;
-			border-top: var(--svg-color) solid 4px;
-			border-left: var(--svg-color) solid 4px;
 		}
 
 		.table-of-contents li p {
@@ -132,10 +129,8 @@
 			</svg>
 			<p>
 				<a href="notes/force/laws/index.html">Newton's Laws</a>
-				<br>
-				<a href="notes/force/forces/index.html">Forces</a>
-				<br>
-				<a href="notes/force/friction/index.html">Friction</a>
+				<br> <a href="notes/force/forces/index.html">Forces</a>
+				<br> <a href="notes/force/friction/index.html">Friction</a>
 			</p>
 		</li>
 		<li>
@@ -286,8 +281,8 @@
 				</g>
 			</svg> -->
 			<svg class="SVG-title" width="160" height="120">
-				<g fill="var(--svg-color)" stroke="var(--svg-color)" transform="translate(80,58) scale(20.0,-20.0)" stroke-linecap="round">
-					<g fill="none" stroke-width="0.05">
+				<g fill="var(--svg-color)" stroke="var(--svg-color)" transform="translate(80,63) scale(20.0,-20.0)" stroke-linecap="round">
+					<g fill="none" stroke-width="0.043">
 						<path d="M -1.0000,0.0000 L -0.7255,0.0539 L -0.5768,0.0812 L -0.4615,0.1002 L -0.3626,0.1143 L -0.2740,0.1248 L -0.1918,0.1322 L -0.1137,0.1370 L -0.0376,0.1393 L 0.0376,0.1393 L 0.1136,0.1370 L 0.1918,0.1322 L 0.2740,0.1248 L 0.3626,0.1143 L 0.4615,0.1002 L 0.5768,0.0812 L 0.7255,0.0539 L 1.0000,0.0000" />
 						<path d="M -1.0000,0.0000 L -0.8252,0.1159 L -0.7248,0.1800 L -0.6443,0.2288 L -0.5739,0.2688 L -0.5102,0.3024 L -0.4510,0.3309 L -0.3951,0.3551 L -0.3417,0.3757 L -0.2901,0.3930 L -0.2399,0.4073 L -0.1908,0.4188 L -0.1424,0.4276 L -0.0947,0.4338 L -0.0472,0.4375 L -0.0000,0.4388 L 0.0472,0.4375 L 0.0946,0.4338 L 0.1424,0.4276 L 0.1908,0.4188 L 0.2399,0.4073 L 0.2901,0.3930 L 0.3417,0.3757 L 0.3951,0.3551 L 0.4510,0.3309 L 0.5101,0.3024 L 0.5739,0.2688 L 0.6443,0.2288 L 0.7248,0.1800 L 0.8252,0.1159 L 1.0000,0.0000" />
 						<path d="M -1.0000,0.0000 L -0.8945,0.1566 L -0.8302,0.2482 L -0.7764,0.3211 L -0.7274,0.3835 L -0.6814,0.4383 L -0.6374,0.4872 L -0.5946,0.5311 L -0.5526,0.5707 L -0.5111,0.6066 L -0.4700,0.6390 L -0.4290,0.6681 L -0.3882,0.6942 L -0.3474,0.7174 L -0.3066,0.7378 L -0.2659,0.7555 L -0.2250,0.7706 L -0.1842,0.7831 L -0.1433,0.7930 L -0.1024,0.8004 L -0.0614,0.8053 L -0.0205,0.8078 L 0.0205,0.8078 L 0.0615,0.8053 L 0.1024,0.8004 L 0.1433,0.7930 L 0.1842,0.7831 L 0.2251,0.7706 L 0.2659,0.7555 L 0.3067,0.7378 L 0.3474,0.7174 L 0.3882,0.6942 L 0.4290,0.6681 L 0.4700,0.6389 L 0.5111,0.6066 L 0.5526,0.5707 L 0.5946,0.5310 L 0.6374,0.4871 L 0.6814,0.4383 L 0.7274,0.3835 L 0.7764,0.3211 L 0.8302,0.2482 L 0.8945,0.1566 L 1.0000,0.0000" />
@@ -309,15 +304,15 @@
 						<circle cx="-1" cy="0" r="0.58" />
 						<circle cx="1" cy="0" r="0.58" />
 					</g>
-					<g stroke="var(--svg-color)" fill="none" stroke-width="0.044">
+					<g stroke="var(--svg-color)" fill="none" stroke-width="0.043">
 						<circle cx="-1" cy="0" r="0.4" />
 						<circle cx="1" cy="0" r="0.4" />
 					</g>
 				</g>
+				<rect x="0" y="3" width="160" height="120" fill="none" stroke-width="28" stroke="#fff" />
 			</svg>
 			<p>
-				<a href="notes/electromagnetism/charge/index.html">Electric Charge</a>
-				<br> <a href="notes/electromagnetism/electrostatics/index.html">Electrostatics</a>
+				<a href=" notes/electromagnetism/charge/index.html">Electric Charge</a> <br> <a href="notes/electromagnetism/electrostatics/index.html">Electrostatics</a>
 				<br> <a href="notes/electromagnetism/potential/index.html">Electric Potential</a>
 				<br> <a href="notes/electromagnetism/magnetism/index.html">Magnetism</a>
 			</p>
@@ -368,7 +363,7 @@
 		</li>
 		<li>
 			<svg class="SVG-title" width="160" height="120">
-				<g fill="var(--svg-color)" stroke="var(--svg-color)" stroke-width="1" transform="translate(78,63)" stroke-linecap="round">
+				<g fill="var(--svg-color)" stroke="var(--svg-color)" stroke-width="1" transform="translate(78,75)" stroke-linecap="round">
 					<g fill="var(--svg-bg-color)">
 						<path d="M-34 -34 l31 31 m6 6 l31 31
 								 M34 -34 l-31 31 m-6 6 l-31 31"></path>
@@ -380,7 +375,8 @@
 					</g>
 			</svg>
 			<p>
-				<a href="notes/relativity/special/index.html">Special Relativity</a>
+
+				<br><a href="notes/relativity/special/index.html">Special Relativity</a>
 				<br> <a href="notes/relativity/general/index.html">General Relativity</a>
 				<br>
 				<br>
@@ -388,7 +384,7 @@
 		</li>
 		<li>
 			<svg class="SVG-title" width="160" height="120">
-				<g fill="var(--svg-color)" stroke="var(--svg-color)" stroke-width="1" transform="translate(48,83)" stroke-linecap="round">
+				<g fill="var(--svg-color)" stroke="var(--svg-color)" stroke-width="1" transform="translate(48,90)" stroke-linecap="round">
 					<g fill="none">
 						<path d="M4.78 -2.07 l51.44 -30.86"></path>
 						<path d="M5.5 0.5 h50" stroke-dashoffset="0.7" stroke-dasharray="3"></path>
@@ -402,33 +398,36 @@
 				</g>
 			</svg>
 			<p>
-				<a href="notes/review/units/index.html">Units</a>
+				<br><a href="notes/review/units/index.html">Units</a>
 				<br> <a href="notes/review/vectors/index.html">Vectors & Scalars</a>
-				<br> <a href="notes/review/solving/index.html">Problem Solving</a>
+				<br>
+				<br>
+				<!-- <br> <a href="notes/review/solving/index.html">Problem Solving</a> -->
 			</p>
 		</li>
 	</ul>
 	<article>
-		<h2 class='underlined'>About</h2>
-		<p>
-			This site contains course notes for algebra based physics with <a href="https://explorabl.es/">explorable</a> <a href="http://worrydream.com/ExplorableExplanations/">explanations</a>.
-			The explorables attempt to instill an intuitive understanding of physical systems, but mostly they are just fun.
-		</p>
-		<p>
-			I'm still adding content for 2019-2020. Let me know if you have any ideas or if you have found one of the numerous mistakes.
-		</p>
-		<p>
-			rlandgreen@newwestcharter.org
-		</p>
-		<p>
-			The code is open source and hosted on <a href="https://github.com/landgreen/physics">github</a>.
-			<br class="hide-on-mobile">It's free to use under the <a href="https://github.com/landgreen/physics/blob/master/LICENSE">GNU General Public License v3.0</a>.
-			<br class="hide-on-mobile">The diagrams are SVG written in a text editor.
-			<br class="hide-on-mobile">The math is rendered with the typesetting library <a href="https://katex.org/">KaTeX</a>.
-			<br class="hide-on-mobile">The simulations are JavaScript outputting to canvas or SVG.
-			<br class="hide-on-mobile">Collision simulations use the <a href="http://brm.io/matter-js/">Matter.js</a> 2-D physics engine.
-		</p>
-
+		<div>
+			<h2 class='underlined'>About</h2>
+			<p>
+				This site contains course notes for algebra based physics with <a href="https://explorabl.es/">explorable</a> <a href="http://worrydream.com/ExplorableExplanations/">explanations</a>.
+				The explorables attempt to instill an intuitive understanding of physical systems, but mostly they are just fun.
+			</p>
+			<p>
+				I'm still adding content for 2019-2020. Let me know if you have any ideas or if you found one of the numerous mistakes.
+			</p>
+			<p>
+				rlandgreen@newwestcharter.org
+			</p>
+			<p>
+				The code is open source and hosted on <a href="https://github.com/landgreen/physics">github</a>.
+				<br class="hide-on-mobile">It's free to use under the <a href="https://github.com/landgreen/physics/blob/master/LICENSE">GNU General Public License v3.0</a>.
+				<br class="hide-on-mobile">The diagrams are SVG written in a text editor.
+				<br class="hide-on-mobile">The math is rendered with the typesetting library <a href="https://katex.org/">KaTeX</a>.
+				<br class="hide-on-mobile">The simulations are JavaScript outputting to canvas or SVG.
+				<br class="hide-on-mobile">Collision simulations use the <a href="http://brm.io/matter-js/">Matter.js</a> 2-D physics engine.
+			</p>
+		</div>
 		<h2 class='underlined'>Links</h2>
 		<br>
 		<ul class="listing">

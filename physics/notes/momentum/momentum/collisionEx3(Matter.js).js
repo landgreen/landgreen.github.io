@@ -80,7 +80,7 @@
     spawn();
 
     function spawn() {
-      spawnMass(100, 125, 180, 0, 40, "lightgreen");
+      spawnMass(100, 125, 180, 0, 40, "lime");
       spawnMass(300, 125, 120, 0, 70, "#419eff");
       spawnMass(600, 125, -60, 0, 60, "orange");
     }

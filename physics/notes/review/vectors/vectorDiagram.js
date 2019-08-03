@@ -6,6 +6,8 @@
     y: window.innerHeight * 0.5,
   }
 }; */
+vectorDiagram()
+
 function vectorDiagram() {
   var canvas = document.getElementById("myCanvas");
   var ctx = canvas.getContext("2d");
@@ -43,7 +45,7 @@ function vectorDiagram() {
   // waits for mouse move and then updates position
   canvas.addEventListener(
     "mousemove",
-    function(evt) {
+    function (evt) {
       mousePos = getMousePos(canvas, evt);
       cycle();
     },

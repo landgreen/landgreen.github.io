@@ -81,9 +81,9 @@ var springGravity = function () {
         document.getElementById("x-2").textContent = (physics.equilibrium - this.y).toFixed(0) + " m";
         // document.getElementById("h-2").textContent = "h = " + (physics.y - this.y).toFixed(0) + " m";
 
-        document.getElementById("spring-KE-text2").textContent = "K = " + ((this.ke / 1000).toFixed(0)).padStart(2, "0") + " kJ"
-        document.getElementById("spring-Us-text2").textContent = "Us = " + (this.Us / 1000).toFixed(0).padStart(2, "0") + " kJ"
-        document.getElementById("spring-Ug-text2").textContent = "Ug = " + (this.Ug / 1000).toFixed(0).padStart(2, "0") + " kJ"
+        // document.getElementById("spring-KE-text2").textContent = "K = " + ((this.ke / 1000).toFixed(0)).padStart(2, "0") + " kJ"
+        // document.getElementById("spring-Us-text2").textContent = "Us = " + (this.Us / 1000).toFixed(0).padStart(2, "0") + " kJ"
+        // document.getElementById("spring-Ug-text2").textContent = "Ug = " + (this.Ug / 1000).toFixed(0).padStart(2, "0") + " kJ"
         // document.getElementById("spring-KE-text2").textContent = "K = ½mv² = " + ((this.ke / 1000).toFixed(0)).padStart(2, "0") + " kJ"
         // document.getElementById("spring-Us-text2").textContent = "Us = ½kx² = " + (this.Us / 1000).toFixed(0).padStart(2, "0") + " kJ"
         // document.getElementById("spring-Ug-text2").textContent = "Ug = mgh = " + (this.Ug / 1000).toFixed(0).padStart(2, "0") + " kJ"
