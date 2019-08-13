@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="theme-color" content="#222" />
@@ -15,16 +14,13 @@
 
 	<title>General Relativity</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
-
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 	<script src="../../../lib/katex/katex.min.js"></script>
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
-
 	<script defer src='../../../lib/gravityClass.js'></script>
 	<script defer src='https://cdnjs.cloudflare.com/ajax/libs/three.js/98/three.min.js'></script>
 	<script defer src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
 	<script defer src="fabric.js "></script>
-
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 </head>
 
@@ -33,23 +29,294 @@
 		<h1>
 			<a href="../../../index.html">General Relativity</a>
 		</h1>
-
 	</header>
-	<article>
 
+	<article>
 		<p>
-			General relativity, published by Einstein in 1915, extended the scope of special relativity to acceleration, specifically gravitational acceleration.
+			In 1907 Einstein published an important <a href="https://www.youtube.com/watch?v=jx3wcdCtL58">thought experiment</a>.
+			Imagine a person in a box with no way to look outside.
+			That person couldn't distinguish between the acceleration of gravity or the acceleration from a rocket.
+			<!-- That person wouldn't be able to distinguish between the acceleration of gravity or floating in space with no acceleration. -->
+			<!-- A free fall feels the same as not accelerating. -->
 		</p>
+		<span class="center">Classical Physics</span>
+		<style>
+			#white-out:hover {
+				opacity: 1;
+			}
+		</style>
+		<svg id="equivalent" viewBox="0 -75 595 275" fill="#222" stroke="#222" stroke-width="2" style="
+		border-radius: 10px;
+		border: 2px solid #000;
+		background-color: #ddf8ff;">
+			<!-- ddf8ff; -->
+			<defs>
+				<g id="vector">
+					<line x1="0" y1="0" x2="0" y2="35" />
+					<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 40)' />
+				</g>
+				<g id="tree">
+					<rect x="-2.5" y="-20" width="5" height="35" fill="#997" stroke="none" />
+					<path d="M-15 -20 h30  l-6 -10 h3   l-5.25 -8 h3   l-4.5 -6 h2.25   l-3.75 -5 h2.25   l-3.75 -5 h1.5   l-3.75 -7
+									l-3.75 7 h1.5  l-3.75 5 h2.25   l-3.75 5 h2.25   l-4.5 6 h2.25   l-5.25 8 h3  l-6 10z" fill="#aba" stroke="none" />
+				</g>
+
+				<g id="tree-small">
+					<rect x="-1.5" y="-20" width="3" height="35" fill="#aa8" stroke="none" />
+					<path d="M-21 -20 h30  l-5 -7.5 h3   l-4.5 -6 h3   l-4 -4.5 h2.25   l-3 -3.75 h1.5   l-2.5 -3.75
+						 l-2.5 3.75 h1.5   l-3 3.75 h2.25   l-3.5 4.5 h2.25   l-4.5 6 h3  l-5 7.5z" fill="#bcb" stroke="none" />
+				</g>
+			</defs>
+
+			<use x="10" y="199" xlink:href="#tree" />
+			<use x="35" y="190" xlink:href="#tree" />
+			<use x="60" y="185" xlink:href="#tree" />
+			<use x="85" y="182" xlink:href="#tree-small" />
+			<use x="215" y="182" xlink:href="#tree-small" />
+			<use x="240" y="185" xlink:href="#tree" />
+			<use x="265" y="190" xlink:href="#tree" />
+			<use x="290" y="199" xlink:href="#tree" />
+
+			<circle r="405" cx="150" cy="565" fill="#876" stroke="none" />
+			<text id="hide-on-click" x="150" y="190" stroke="none" fill="#210" font-size="18" text-anchor="middle">click to animate</text>
+			<path d="M100 155 l50 -80 l50 80  l-50 -10 l-50 10" fill="#aaa" stroke="none" />
+			<path d="M120.5 160.5   q-10 -80, 30 -120  q40 40, 30 120z" fill="#fff" />
+
+			<circle id="earth-ball" r="5" cx="150" cy="70" fill="#f50" stroke="none" />
+			<rect x="300.5" y="-150" width="600" height="600" fill="#000" stroke-width="1" />
+			<g fill="#777" stroke="none">
+				<circle r="1" cx="320" cy="175" />
+				<circle r="1" cx="360" cy="75" />
+				<circle r="1" cx="350" cy="-15" />
+				<circle r="1" cx="420" cy="185" />
+				<circle r="1" cx="460" cy="115" />
+				<circle r="1" cx="500" cy="65" />
+				<circle r="1" cx="510" cy="50" />
+				<circle r="1" cx="530" cy="115" />
+				<circle r="1" cx="580" cy="-5" />
+			</g>
+			<g id="rocket">
+				<path d="M400 155 l50 -80 l50 80  l-50 -10 l-50 10" fill="#777" stroke="none" />
+				<path d="M420.5 160.5   q-10 -80, 30 -120  q40 40, 30 120" fill="#fff" stroke="none" />
+				<path id="rocket-fire" d="" fill="#fa0" stroke="none" />
+			</g>
+			<circle r="5" cx="450" cy="70" fill="#f50" stroke="none" />
+
+			<g id="hide-on-click-11">
+				<rect x="444" y="75" rx="2" ry="2" width="12" height="4" fill="#555" stroke="none" />
+				<rect x="144" y="75" rx="2" ry="2" width="12" height="4" fill="#555" stroke="none" />
+			</g>
+		</svg>
+		<ul class="listing">
+			<li>
+				On Earth, the rocket is at rest and the ball accelerates because of gravity.
+			</li>
+			<li>
+				In space, the ball is at rest and the rocket accelerates because of thrust.
+			</li>
+		</ul>
+		<br><br>
+		<span class="center">Equivalent Acceleration and Gravity</span>
+		<svg id="equivalent-2" viewBox="0 -75 595 275" fill="#222" stroke="#222" stroke-width="2" style="
+		border-radius: 10px;
+		border: 2px solid #000;
+		background-color: #ddf8ff;
+		">
+			<g id="earth-ball-2">
+				<use x="10" y="199" xlink:href="#tree" />
+				<use x="35" y="190" xlink:href="#tree" />
+				<use x="60" y="185" xlink:href="#tree" />
+				<use x="85" y="182" xlink:href="#tree-small" />
+				<use x="215" y="182" xlink:href="#tree-small" />
+				<use x="240" y="185" xlink:href="#tree" />
+				<use x="265" y="190" xlink:href="#tree" />
+				<use x="290" y="199" xlink:href="#tree" />
+				<circle r="405" cx="150" cy="565" fill="#876" stroke="none" />
+				<path d="M100 155 l50 -80 l50 80  l-50 -10 l-50 10" fill="#aaa" stroke="none" />
+				<path d="M120.5 160.5   q-10 -80, 30 -120  q40 40, 30 120z" fill="#fff" />
+			</g>
+			<text id="hide-on-click-2" x="150" y="190" stroke="none" fill="#210" font-size="18" text-anchor="middle">click to animate</text>
+
+			<circle id="earth-ball-2" r="5" cx="150" cy="70" fill="#f50" stroke="none" />
+			<rect x="300.5" y="-100" width="400" height="400" fill="#000" stroke-width="1" />
+			<g fill="#777" stroke="none">
+				<circle r="1" cx="320" cy="175" />
+				<circle r="1" cx="360" cy="75" />
+				<circle r="1" cx="350" cy="-15" />
+				<circle r="1" cx="420" cy="185" />
+				<circle r="1" cx="460" cy="115" />
+				<circle r="1" cx="500" cy="65" />
+				<circle r="1" cx="510" cy="50" />
+				<circle r="1" cx="530" cy="115" />
+				<circle r="1" cx="580" cy="-5" />
+			</g>
+			<g id="rocket-2">
+				<path d="M400 155 l50 -80 l50 80  l-50 -10 l-50 10" fill="#777" stroke="none" />
+				<path d="M420.5 160.5   q-10 -80, 30 -120  q40 40, 30 120" fill="#fff" stroke="none" />
+				<path id="rocket-fire-2" d="" fill="#fa0" stroke="none" />
+			</g>
+			<circle r="5" cx="450" cy="70" fill="#f50" stroke="none" />
+
+			<g id="hide-on-click-22">
+				<rect x="444" y="75" rx="2" ry="2" width="12" height="4" fill="#555" stroke="none" />
+				<rect x="144" y="75" rx="2" ry="2" width="12" height="4" fill="#555" stroke="none" />
+			</g>
+		</svg>
+		In both situations, the ball is at rest and the rocket is accelerating.
 		<p>
-			The theory of general relativity proposed a unified description of gravity as a geometric property of space and time, or spacetime.
-			Energy curves spacetime. <a href="..\special\index.html#mass-energy">Mass</a> is a type of potential energy so it also curves spacetime.
+			Both situations look and feel the same from inside the rocket. Einstein wondered if they are the same.
+			Maybe acceleration and gravity are <a href="https://www.youtube.com/watch?v=NblR01hHK6U">equivalent</a>.
+			Treating gravity and acceleration as equivalent means that the 9.8 m/s² we feel is caused by the Earth accelerating upward!
+		</p>
+		<script>
+			window.addEventListener('load', () => {
+				equivalence()
+				equivalence2()
+			});
+
+			function rocketFlicker(target, reset = false) {
+				if (reset) {
+					target.setAttribute("d", "M420 164 l15 20 l15 -20 l15 20 l15 -20");
+				} else {
+					const SCALE = 13
+					const LX = SCALE * (Math.random() - 0.5)
+					const RX = SCALE * (Math.random() - 0.5)
+					const LY = SCALE * (Math.random() - 0.5) + 6
+					const RY = SCALE * (Math.random() - 0.5) + 6
+					target.setAttribute("d", `M420 164 l${15+LX} ${20+LY} l${15-LX} ${-20-LY} l${15+RX} ${20+LY} l${15-RX} ${-20-LY}`);
+				}
+			}
+
+			function equivalence() {
+				const GRAVITY = 0.007;
+				document.getElementById("equivalent").addEventListener('click', () => {
+					animate();
+				});
+
+				function animate() {
+					document.getElementById("hide-on-click").style.display = "none" //hide click message
+					document.getElementById("hide-on-click-11").style.display = "none" //hide click message
+
+					const ball = {
+						target: document.getElementById("earth-ball"),
+						position: {
+							x: 150,
+							y: 70
+						},
+						velocity: {
+							x: 0,
+							y: 0
+						}
+					}
+
+					const rocket = {
+						target: document.getElementById("rocket"),
+						position: {
+							x: 0,
+							y: 0
+						},
+						velocity: {
+							x: 0,
+							y: 0
+						}
+					}
+
+					function cycle() {
+						if (ball.position.y > 154.5) {
+							rocketFlicker(document.getElementById("rocket-fire"), true)
+						} else {
+							requestAnimationFrame(cycle);
+
+							// calculate motion
+							ball.position.y += ball.velocity.y
+							ball.velocity.y += GRAVITY
+							rocket.position.y += rocket.velocity.y
+							rocket.velocity.y -= GRAVITY
+
+							// draw
+							ball.target.setAttribute("cy", ball.position.y);
+							rocket.target.setAttribute("transform", `translate(0 ${rocket.position.y})`);
+							rocketFlicker(document.getElementById("rocket-fire"))
+						}
+					}
+					requestAnimationFrame(cycle);
+				}
+			}
+
+			function equivalence2() {
+				const GRAVITY = 0.007;
+				document.getElementById("equivalent-2").addEventListener('click', () => {
+					animate();
+				});
+
+				function animate() {
+					document.getElementById("hide-on-click-2").style.display = "none"
+					document.getElementById("hide-on-click-22").style.display = "none"
+
+					const ball = {
+						target: document.getElementById("earth-ball-2"),
+						position: {
+							x: 0,
+							y: 0
+						},
+						velocity: {
+							x: 0,
+							y: 0
+						}
+					}
+
+					const rocket = {
+						target: document.getElementById("rocket-2"),
+						position: {
+							x: 0,
+							y: 0
+						},
+						velocity: {
+							x: 0,
+							y: 0
+						}
+					}
+
+					function cycle() {
+						if (ball.position.y < -84.5) {
+							rocketFlicker(document.getElementById("rocket-fire-2"), true)
+						} else {
+							requestAnimationFrame(cycle);
+
+							// calculate motion
+							ball.position.y += ball.velocity.y
+							ball.velocity.y -= GRAVITY
+							rocket.position.y += rocket.velocity.y
+							rocket.velocity.y -= GRAVITY
+
+							// draw
+							ball.target.setAttribute("transform", `translate(0 ${ball.position.y})`);
+							rocket.target.setAttribute("transform", `translate(0 ${rocket.position.y})`);
+							rocketFlicker(document.getElementById("rocket-fire-2"))
+						}
+					}
+					requestAnimationFrame(cycle);
+				}
+			}
+		</script>
+		<h2 class='underlined' id="general-relativity">General Relativity</h2>
+		<p>
+			The equivalence of acceleration and gravity
+			drove Einstein towards a new theory that would extend the scope of special relativity.
+			In 1915 Einstein completed his theory of general relativity.
+			General relativity describes gravity as the curvature of space and time, or spacetime.
+			<!-- Energy curves the spacetime around it. -->
 
 		</p>
 		<h3 class="definition">
 			Spacetime is <a href="https://www.youtube.com/watch?v=DdC0QN6f3G4">curved</a> by energy.
 			Gravitation occurs when a body tries to move in a straight line through curved spacetime.
 		</h3>
-		<div class="example-small" style="min-height: 498px;">
+		<p>
+			<a href="..\special\index.html#mass-energy">Mass</a> is a type of potential energy so it also curves spacetime.
+		</p>
+
+		<div class="example-small">
 			<style>
 				.full-page {
 					position: fixed;
@@ -60,38 +327,35 @@
 					padding: 0;
 				}
 			</style>
-			<canvas id='three-fabric-load' width='600' height='400' onclick="fabric('three-fabric')"></canvas>
+			<canvas id='three-fabric-load' width='600' height='100' onclick="fabric('three-fabric')"></canvas>
 			<canvas id='three-fabric' width='600' height='0'></canvas>
 			In the simulation above, gravitational potential energy is represented as warping a 2-D surface into a 3rd dimension.
-			This is similar to how our higher dimensional universe is curved in space and time.
+			This is analogous to how energy curves space.
 			<p>
 				As bodies travel through curved space they follow the shortest distance between two points, a straight line.
-				The pull of gravity is what a straight line through curved spacetime looks like.
+				The pull of gravity is what a straight line through curved space looks like.
 				Another example of a straight line through a curved space is the <a href="https://www.greatcirclemap.com/roadmap?routes=%20LAX-SIN%2C%20LAX-ATL%2C%20ATL-LON">great circle routes</a> around a sphere.
 			</p>
 		</div>
 		<p>
 			A full mathematical explanation of general relativity is beyond the scope of this page, but we will explore some of the predictions:
 			<li>
-				<strong> <a href="https://en.wikipedia.org/wiki/Gravitational_lens">Gravitational lensing:</a> </strong>
-				gravity bends the path of light
+				<strong> <a href="https://en.wikipedia.org/wiki/Gravitational_lens">Gravitational lensing:</a> </strong> gravity bends the path of light
 			</li>
 			<li>
 				<strong> <a href="https://www.youtube.com/watch?v=4GbWfNHtHRg">Gravity</a> <a href="https://www.youtube.com/watch?v=YHS9g72npqA">waves:</a> </strong>
-				moving sources of gravity make
-				<a href="https://www.youtube.com/watch?v=dw7U3BYMs4U">waves</a> in spacetime
+				moving sources of gravity make <a href="https://www.youtube.com/watch?v=dw7U3BYMs4U">waves</a> in spacetime
 			</li>
 			<li>
-				<strong> <a href="#time">Gravitational Time Dilation:</a> </strong>
-				gravity slows time
+				<strong> <a href="#time">Gravitational Time Dilation:</a> </strong> gravity slows time
 			</li>
 			<li>
-				<strong> <a href="https://www.youtube.com/watch?v=e-P5IFTqB98">Black holes:</a> </strong>
-				a massive body with gravity so strong that light can't escape
+				<strong> <a href="https://www.youtube.com/watch?v=e-P5IFTqB98">Black holes:</a> </strong> a massive body with gravity so strong that light can't escape
 			</li>
 		</p>
 		<p>
-			The theory of general relativity suggests a significant change to fundamental aspects of physics, but there is overwhelming <a href="https://en.wikipedia.org/wiki/Tests_of_general_relativity">evidence</a> in its favor.
+			The theory of general relativity suggests a significant change to fundamental aspects of physics,
+			but there is overwhelming <a href="https://en.wikipedia.org/wiki/Tests_of_general_relativity">evidence</a> in its favor.
 		</p>
 		<!-- <p>
 			General relativity is currently the best description of gravity, but it doesn't include any quantum mechanical ideas, like wave particle duality.
@@ -106,8 +370,10 @@
 		</p> -->
 
 		<h2 class='underlined' id="time">Gravitational Time Dilation</h2>
-		<p> General relativity explains that gravity slows down time. </p>
-		<p> Time dilation from gravity is less complex than special relativity because both observers agree that time is slower deeper in a gravity well. </p>
+		<p>
+			General relativity predicts that the passage of time is slower in the curved spacetime around massive bodies.
+			Time will progress the fastest in the flat spacetime far from any massive bodies.
+		</p>
 		<div class="definition">
 			<h3>$$ \Delta t_0 = \Delta t_f \sqrt{1 - \left( \frac{2GM}{rc^2} \right) } $$ </h3>
 			\(\Delta t_0\) = slow-ticking time for an observer inside the gravitational field at distance r from the center of the mass
@@ -118,8 +384,11 @@
 			<br>\(c\) = speed of light, 3 × 10⁸ [m/s]
 		</div>
 		<p>
+			Time dilation from gravity is less complex than special relativity because both observers agree that time is slower deeper in a gravity well.
+		</p>
+		<p>
 			Didn't we learn that mass is a type of energy. Why does the time dilation not have an energy component?
-			It technically should include energy, but most of the energy in stars and planets is in the form of mass.
+			Technically, it should include energy, but most of the energy in stars and planets is in the form of mass.
 			The contribution from other energy types is generally too small to be significant.
 		</p>
 
@@ -137,7 +406,7 @@
 		</div>
 
 		<div class='example'>
-			<strong>Example:</strong> If 10 seconds pass on the surface of the sun, how much time passes far from the sun's gravity?
+			<strong>Example:</strong> If 10 seconds pass on the surface of the Sun, how much time passes far from the Sun's gravity?
 			<details>
 				<summary>Local Massive Objects Data Table</summary>
 				<style>
@@ -560,7 +829,7 @@
 			<a href="http://rantonels.github.io/starless/">Black holes</a> are a possible outcome at the end of the <a href="https://en.wikipedia.org/wiki/Stellar_evolution">life</a> of a very massive star. Stars convert mass to energy from nuclear fusion. This energy balances the force of gravity and prevents stars from becoming black holes. When stars runs out of nuclear fuel, gravity will dominate and a black hole may form.
 		</p>
 		<p>
-			At the center of most galaxies there is a <a href="https://www.youtube.com/watch?v=S_GVbuddri8">super massive black hole</a>. Even our galaxy, the Milky Way, has <a href="https://www.youtube.com/watch?v=TF8THY5spmo">one</a> with a mass of 4 million suns.</p>
+			At the center of most galaxies there is a <a href="https://www.youtube.com/watch?v=S_GVbuddri8">super massive black hole</a>. Even our galaxy, the Milky Way, has <a href="https://www.youtube.com/watch?v=TF8THY5spmo">one</a> with a mass of 4 million Suns.</p>
 		<p>
 			An accurate model of black holes probably needs a unified theory of physics that combines general relativity with quantum mechanics. A grand unified theory of physics doesn't exist yet, but many physicists are actively looking for one.
 		</p>

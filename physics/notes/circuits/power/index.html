@@ -60,15 +60,16 @@
 			$$\text{(kilo)(watt)(hour)}$$
 			$$(1000) \left(\mathrm{\frac{J}{s}}\right)(3600\, \mathrm{s})$$ $$3\,600\,000\, \left(\mathrm{\frac{J}{s}}\right)(\mathrm{s})$$
 			$$1\, \mathrm{kWh} = 3\,600\,000\, \mathrm{J}$$
-			<strong>Example:</strong> How many kilowatt hours of energy would I consume if I ran my 1500&nbsp;W electric heat at full power for 4&nbsp;weeks?
+			<strong>Example:</strong> How many kilowatt hours of energy would I consume if I ran my 1500&nbsp;W electric heater at full power for 4&nbsp;weeks?
 			<details>
 				<summary>solution</summary>
-				$$\Delta t = 4 \, {\color{#f54}\mathrm{week} } \left(\frac{7 {\color{#28b}\,\mathrm{day}} }{1 \, {\color{#f54}\mathrm{week}} }\right) \left(\frac{24 \, {\color{#f08}\mathrm{hour}}}{1 \, {\color{#28b}\mathrm{day}}}\right) \left(\frac{3600 \,\mathrm{s}}{1 \, {\color{#f08}\mathrm{hour}}}\right)$$
+				$$\Delta t = 4 \, {\color{deeppink}\mathrm{week} } \left(\frac{7 {\color{blue}\,\mathrm{day}} }{1 \, {\color{deeppink}\mathrm{week}} }\right) \left(\frac{24 \, {\color{teal}\mathrm{hour}}}{1 \, {\color{blue}\mathrm{day}}}\right) \left(\frac{3600 \,\mathrm{s}}{1 \, {\color{teal}\mathrm{hour}}}\right)$$
 				$$\Delta t = 2\,419\,200 \, \mathrm{s}$$
 				<br>
 				$$P = \frac{W}{\Delta t}$$
 				$$W = P\Delta t$$
 				$$W = (1500 \, \mathrm{\tfrac{J}{s}})(2\,419\,200\,\mathrm{s})$$
+				$$W = 3\,628\,800\,000 \, \mathrm{J} $$
 				$$W = 3\,628\,800\,000 \, \mathrm{J} \left( \frac{1\, \mathrm{kWh}}{3\,600\,000\, \mathrm{J}} \right) = 1008 \, \mathrm{kWh}$$
 			</details>
 			<br>
@@ -81,63 +82,63 @@
 		</div>
 
 		<div class='example'>
+			<p>
+				A friend of mine installed <a href="https://www.youtube.com/watch?v=xKxrkht7CpY">solar panels</a> on their roof in 2019.
+				The solar panels are connected to the shared power grid.
+				The power company reduces their bill by the amount of energy they add back into the grid.
+				I wrote down the data from the panel's readout below.
+			</p>
+			<table class="table-2d">
+				<tr>
+					<th>Time</th>
+					<th>Current Power</th>
+					<th>Energy Today</th>
+					<th>Energy Yesterday</th>
+				</tr>
+				<tr>
+					<td> 8:45 am</td>
+					<td> 583.36 W</td>
+					<td> 513 Wh </td>
+					<td> 20 kWh </td>
+				</tr>
+			</table>
+			<strong>Example:</strong>
+			Use the energy produced yesterday to estimate the total energy production in kWh for one year.
+			They used 5500 kWh of energy last year.
+			Will the energy produced by the solar panels be enough to reduce their power bill to zero?
+			<details>
+				<summary>solution</summary>
+				$$\mathrm{\frac{ 20 \, kwh}{day} \left( \frac{365.25 \, day}{1 \, year} \right) } = \mathrm{\frac{ 7305 \, kwh}{year}}$$
+				$$ 7305 \, \mathrm{kwh} > 5500 \, \mathrm{kwh}$$
 				<p>
-					A friend of mine installed <a href="https://www.youtube.com/watch?v=xKxrkht7CpY">solar panels</a> on their roof in 2019.
-					The solar panels are connected to the shared power grid.
-					The power company reduces their bill by the amount of energy they add back into the grid.
-					I wrote down the data from the panel's readout below.
+					They shouldn't have a bill.
+					Although the data we used was from a sunny summer day.
+					They might get behind in the winter.
 				</p>
-				<table class="table-2d">
-					<tr>
-						<th>Time</th>
-						<th>Current Power</th>
-						<th>Energy Today</th>
-						<th>Energy Yesterday</th>
-					</tr>
-					<tr>
-						<td> 8:45 am</td>
-						<td> 583.36 W</td>
-						<td> 513 Wh </td>
-						<td> 20 kWh </td>
-					</tr>
-				</table>
-				<strong>Example:</strong>				
-				Use the energy produced yesterday to estimate the total energy production in kWh for one year.
-				They used 5500 kWh of energy last year.
-				Will the energy produced by the solar panels be enough to reduce their power bill to zero?
-				<details>
-					<summary>solution</summary>
-					$$\mathrm{\frac{ 20 \, kwh}{day} \left( \frac{365.25 \, day}{1 \, year}  \right) } = \mathrm{\frac{ 7305  \, kwh}{year}}$$
-					$$ 7305  \, \mathrm{kwh} > 5500  \, \mathrm{kwh}$$
-					<p>
-						They shouldn't have a bill.
-						Although the data we used was from a sunny summer day.
-						They might get behind in the winter.
-					</p>
-				</details>
-				<br>
+			</details>
+			<br>
+			<p>
+				The rules in California let you use solar panels to reduce your power bill down to zero, but you can't reduce your bill below zero.
+			</p>
+			<strong>Example:</strong> How much money could they save each year?
+			Use the California rate of $0.25 per kilowatt hour and their yearly energy usage.
+			<details>
+				<summary>solution</summary>
+				$$5500 \, \mathrm{kWh} \left( \mathrm{\frac{\$ 0.25}{kWh}} \right) = \$ 1375$$
+			</details>
+			<br>
+			<strong>Example:</strong>
+			The solar panels were $14&nbsp;000, including installation.
+			How long will it take to pay back the cost through reduced power bills?
+			<details>
+				<summary>solution</summary>
+				$$ \$ 14\,000 \left( \frac{1 \, \mathrm{yr}}{ \$ 1375} \right) = 10.1 \, \mathrm{years}$$
 				<p>
-					The rules in California let you use solar panels to reduce your power bill down to zero, but you can't reduce your bill below zero.
+					They also received a tax break for 1/3 the price of the panels.
+					They hope to pay it off in 6.8 years based on the reduced price.
 				</p>
-				<strong>Example:</strong> How much money could they save each year?
-				Use the California rate of $0.25 per kilowatt hour and their yearly energy usage.
-				<details>
-					<summary>solution</summary>
-					$$5500 \, \mathrm{kWh}    \left( \mathrm{\frac{\$ 0.25}{kWh}}    \right) = \$ 1375$$
-				</details>
-				<br>
-				<strong>Example:</strong>
-				The solar panels were $14&nbsp;000, including installation.
-				How long will it take to pay back the cost through reduced power bills?
-				<details>
-					<summary>solution</summary>
-					$$ \$ 14\,000 \left( \frac{1 \, \mathrm{yr}}{ \$ 1375} \right) = 10.1 \, \mathrm{years}$$
-					<p>
-						They also received a tax break for 1/3 the price of the panels.
-						They hope to pay it off in 6.8 years based on the reduced price.
-					</p>
-				</details>
-			</div>
+			</details>
+		</div>
 
 
 		<h2 class='underlined'>DC Electric Power </h2>

@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#222" />
@@ -13,7 +12,7 @@
     <meta name="twitter:title" content="Physics Notes">
     <meta name="twitter:description" content="Interactive notes for algebra based physics.">
 
-    <title>Universal Gravitation</title>
+    <title>Gravity</title>
     <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
     <link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
@@ -76,12 +75,121 @@
         margin: 0.4em;
         font-size: 70px;
     }
+
+
+    th {
+        background: #fff;
+        border: 0px solid #000;
+        color: #000;
+    }
+
+    .black {
+        background-color: #000;
+        border: 0px solid #000;
+        padding: 7px;
+    }
+
+    .planet {
+        margin: auto;
+        border-radius: 50%;
+        padding: 0px;
+        border: 0px solid #000;
+    }
+
+    .sun {
+        width: 90px;
+        height: 90px;
+        background-color: #fff;
+        top: -25px;
+        left: -20px;
+        position: relative;
+    }
+
+    .sun-div {
+        /* margin: 0px; */
+        width: 50px;
+        height: 50px;
+    }
+
+    .mercury {
+        width: 6px;
+        height: 6px;
+        background-color: rgb(199, 195, 192);
+    }
+
+    .venus {
+        width: 11px;
+        height: 11px;
+        background-color: rgb(216, 209, 203);
+    }
+
+    .earth {
+        width: 11.5px;
+        height: 11.5px;
+        background-color: rgb(130, 137, 179);
+    }
+
+    .moon {
+        width: 4px;
+        height: 4px;
+        background-color: rgb(159, 155, 152);
+    }
+
+    .mars {
+        width: 8px;
+        height: 8px;
+        background-color: rgb(207, 187, 137);
+    }
+
+    .jupiter {
+        width: 35px;
+        height: 35px;
+        background-color: rgb(238, 236, 188);
+    }
+
+    .saturn {
+        width: 30px;
+        height: 30px;
+        background-color: rgb(223, 229, 181);
+    }
+
+    .uranus {
+        width: 18px;
+        height: 18px;
+        background-color: rgb(173, 200, 211);
+    }
+
+    .neptune {
+        width: 17px;
+        height: 17px;
+        background-color: rgb(160, 183, 214);
+    }
+
+    .saturn-ring {
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        position: relative;
+        top: -7px;
+        left: -7px;
+        border: 4px solid rgba(216, 218, 169, 0.7);
+    }
+
+    .uranus-ring {
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        position: relative;
+        top: -5px;
+        left: -5px;
+        border: 1px solid rgba(255, 255, 230, 0.2);
+    }
 </style>
 
 <body>
     <canvas id='grav0' height='250px' width='600px' style="position: absolute;top: 0px; left: 0px; padding: 0; margin:0; border-radius: 0px; box-shadow: none; z-index: 1;"> </canvas>
     <header id="myHeader">
-        <h1> <a href=" ../../../index.html">Universal Gravitation</a> </h1>
+        <h1> <a href=" ../../../index.html"> Gravity </a> </h1>
     </header>
     <article>
         <div class='center'>
@@ -90,25 +198,32 @@
             <input id='masses' type="number" step="1" value="10" min="0" max="999" style="width: 42px;">
         </div>
         <p>
-            Things fall. Pencils, buildings, people, everything falls. The Earth is falling towards the Sun, but luckily it is falling in a way that doesn't hit the Sun.
+            Things fall. Pencils, buildings, people, everything falls.
+            The Earth is falling towards the Sun, but luckily it is falling in a way that doesn't hit the Sun.
             <br>An orbit.
         </p>
-        <p class='underlined'>Early Theories of Gravity</p>
+
+        <h1 class='underlined'>Early Theories of Gravity</h1>
         <p>
             The history of gravity tells the story of humanity realizing we aren't the center of the universe.
         </p>
         <p>
             The Greek philosopher <a href="https://en.wikipedia.org/wiki/Aristotelian_physics">Aristotle</a> (384–322 BCE) believed that the
-            natural place for the element of earth and water was down. The natural place for the elements of air and fire was up. He also believed that heavier objects fell faster than light objects.
+            natural place for the element of earth and water was down.
+            The natural place for the elements of air and fire was up.
+            He also believed that heavier objects fell faster than light objects.
         </p>
         <p>
-            Like many early philosophers, Aristotle organized the sky into a geocentric model. Moving planetary spheres surrounded a stationary and spherical Earth.
+            Like many early philosophers, Aristotle organized the sky into a geocentric model.
+            Moving planetary spheres surrounded a stationary and spherical Earth.
         </p>
         <a href="https://en.wikipedia.org/wiki/Almagest#Ptolemy's_planetary_model">
             <img src="..\..\..\media\Ptolemaicsystem-small.png" title="Ptolemaic geocentric planetary spheres model" style='height: 100%; width: 100%; object-fit: contain'>
         </a>
         <p>
-            The geocentric models showed flaws. Planets would inexplicably change in speed and direction. To correct these flaws several small circles called epicycles were added to the path of the planets. As telescopes and data collection methods improved, the number of epicycles grew to correct for flaws in the geocentric model.
+            The geocentric models showed flaws. Planets would inexplicably change in speed and direction.
+            To correct these flaws several small circles called <a href="http://galileoandeinstein.phys.virginia.edu/more_stuff/Applets/PtolemyInner/ptolemys_model_inner_planets.html">epicycles</a> were added to the path of the planets.
+            As telescopes and data collection methods improved, the number of epicycles grew to correct for flaws in the geocentric model.
         </p>
         <p>
             In 1543, Polish astronomer, <a href="https://en.wikipedia.org/wiki/Nicolaus_Copernicus">Nicolaus Copernicus</a>
@@ -118,11 +233,6 @@
         <a href="https://en.wikipedia.org/wiki/Copernican_Revolution">
             <img src="..\..\..\media\Copernican_heliocentrism_theory_diagram.svg" title="Copernican heliocentric model">
         </a>
-        <p>
-            In 1609, German <a href="https://www.youtube.com/watch?v=-FYvy3_egHw">astronomer</a>, Johannes Kepler published 3 laws
-            of planetary motion based on the heliocentric theory. In his <a href="http://galileoandeinstein.physics.virginia.edu/more_stuff/Applets/Kepler/kepler.html">model</a>
-            orbits moved in an <a href="https://en.wikipedia.org/wiki/Ellipse">ellipse</a>, not a circle.
-        </p>
         <p>
             Italian natural philosopher, Galileo Galilei, discovered that falling objects all accelerate at the same rate as long as air resistance isn't a significant factor.
         </p>
@@ -143,6 +253,224 @@
                 </p>
             </details>
         </div>
+        <h2 class="underlined" id="kepler">Kepler's Laws of Planetary Motion</h2>
+        <p>
+            In 1609, German <a href="https://www.youtube.com/watch?v=-FYvy3_egHw">astronomer</a>,
+            Johannes Kepler published 3 laws of planetary motion based on the heliocentric theory.
+        </p>
+        <div class='definition'>
+            <a href="https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion">
+                <svg viewBox="-325 -405 1245 830" fill="#000" stroke="#000" stroke-width="4">
+                    <path stroke-width="2" stroke-dasharray="10" d="M300,-69V69 M-200,0 h1000" />
+                    <path fill="#fff" d="M0,0V320 A500,400 0 0,1 -170,136z  L600,320 A500,400 0 0,0  679,261z" />
+                    <ellipse fill="none" rx="500" ry="400" cx="300" />
+                    <g stroke="none">
+                        <circle r="10" cx="600" />
+                        <circle r="20" cy="320" fill="#9ab" stroke="#000" />
+                        <circle r="40" fill="#ff0" stroke="#000" />
+                    </g>
+                    <g stroke="none" font-size="50">
+                        <text x="-70" y="410">planet</text>
+                        <text x="585" y="-30">F
+                            <tspan dx="-10" dy="12" font-size="40">2</tspan>
+                        </text>
+                        <text x="-99" y="200">A
+                            <tspan dx="-10" dy="12" font-size="40">1</tspan>
+                        </text>
+                        <text x="510" y="260">A
+                            <tspan dx="-10" dy="12" font-size="40">2</tspan>
+                        </text>
+                        <text x="-10" y="-55">F
+                            <tspan dx="-10" dy="12" font-size="40">1</tspan>
+                        </text>
+                    </g>
+                </svg>
+            </a>
+            <ol>
+                <li>
+                    The orbit of a planet is an <a href="https://en.wikipedia.org/wiki/Ellipse">ellipse</a> with the Sun at one of the two foci. (F<sub>1</sub>, F<sub>2</sub>)
+                </li>
+                <li>
+                    A line segment joining a planet and the Sun sweeps out equal areas during equal intervals of time. (A<sub>1</sub> = A<sub>2</sub>)
+                </li>
+                <!-- <h2>$$A_1 = A_2 $$</h2> -->
+                <!-- <p>\(A\) = area swept out over a time interval [m², area]</p> -->
+                <li>
+                    The square of the orbital period of a planet is directly proportional to the cube of the semi-major axis of its orbit.
+                </li>
+            </ol>
+
+            <h2>
+                $$ T^2 = r^3$$
+            </h2>
+            <p>\(T\) = orbital period, total time for one orbit [yr, years]
+                <br>\(r\) = semi-major axis [AU, astronomical units, 1.5 × 10<sup>11</sup> metres]
+            </p>
+        </div>
+        <p>
+            Kepler's laws mostly agreed with the Copernican model, but with a few improvements.
+            In Kepler's <a href="http://galileoandeinstein.phys.virginia.edu/more_stuff/Applets/Kepler/kepler.html">model</a> orbits moved in an ellipse, not a circle.
+            The Sun wasn't the center of a planetary orbit, it was a foci of an elliptical orbit.
+            Also, the planets would speed up and slow down as they orbited.
+        </p>
+        <div class="example-small">
+            <p>
+                The semi-major axis of an ellipse is the distance from the center to the longest edge.
+                For the Earth that distance is 149&#8239;597&#8239;870&#8239;700 m, which is called 1 astronomical unit (AU).
+            </p>
+            <svg viewBox="-295 -100 600 200" stroke="#000" fill="#000" stroke-width="2">
+                <ellipse fill="#abc" stroke="none" rx="280" ry="80" />
+                <path d="M-280 0 h560 M0 -80 v 160" fill="none" stroke="#789" stroke-width="2" />
+                <circle r="3" cx="-134" stroke="none" fill="#123" />
+                <circle r="3" cx="134" stroke="none" fill="#123" />
+
+                <path d="M0 7.5 v16 m0 -8 h-280 m0 -8 v16" />
+                <text x="-200" y="40" font-size="19" stroke="none">semi-major axis</text>
+                <path d="M8.5 0 h16 m-8 0 v-79 m-8 0 h16" />
+                <text x="25" y="-30" font-size="19" stroke="none">semi-minor axis</text>
+
+                <text x="-260" y="-60" font-size="23" fill="#222" stroke="none">ellipse</text>
+                <!-- <text x="115" y="30" font-size="23" fill="#222" stroke="none">foci</text> -->
+            </svg>
+            The orbital period only equals the semi-major axis for units of years (yr) and
+            <a href="https://en.wikipedia.org/wiki/Astronomical_unit">astronomical units</a> (AU).
+            The relationship is more complex with other units.
+            <details>
+                <summary>modified equation for units of meters and seconds</summary>
+                $$T^2 = \frac{4 \pi}{GM} r^3$$
+                <p>\(T\) = orbital period, total time for one orbit [yr, years]
+                    <br>\(r\) = semi-major axis [AU, astronomical units, 1.5 × 10<sup>11</sup> metres]
+                    <br>\(M\) = Mass of central body [kg, kilograms]
+                    <br>\(G\) = 6.67408 × 10<sup>-11</sup> = universal gravitation constant [N m²/kg²]
+                </p>
+            </details>
+        </div>
+
+        <div class='example'>
+            <table>
+                <tr>
+                    <td class="black">
+                    </td>
+                    <th>planet</th>
+                    <th>semi-major axis</th>
+                    <th>orbital period</th>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Mercury_(planet)">
+                            <div class="planet mercury"></div>
+                        </a>
+                    </td>
+                    <td>Mercury</td>
+                    <td>0.387 AU</td>
+                    <td>0.240 yr</td>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Venus">
+                            <div class="planet venus"></div>
+                        </a>
+                    </td>
+                    <td>Venus</td>
+                    <td>0.723 AU</td>
+                    <td>0.615 yr</td>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Earth">
+                            <div class="planet earth"></div>
+                        </a>
+                    </td>
+                    <td>Earth</td>
+                    <td>1.000 AU</td>
+                    <td>1.000 yr</td>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Mars">
+                            <div class="planet mars"></div>
+                        </a>
+                    </td>
+                    <td>Mars</td>
+                    <td>1.524 AU</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Jupiter">
+                            <div class="planet jupiter"></div>
+                        </a>
+                    </td>
+                    <td>Jupiter</td>
+                    <td>5.204 AU</td>
+                    <td>11.86 yr</td>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Saturn">
+                            <div class="planet saturn">
+                                <div class="saturn-ring"></div>
+                            </div>
+                        </a>
+                    </td>
+                    <td>Saturn</td>
+                    <td>9.582 AU</td>
+                    <td>29.46 yr</td>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Uranus">
+                            <div class="planet uranus">
+                                <div class="uranus-ring"></div>
+                            </div>
+                        </a>
+                    </td>
+                    <td>Uranus</td>
+                    <td>19.22 AU</td>
+                    <td>84.02 yr</td>
+                </tr>
+                <tr>
+                    <td class="black">
+                        <a href="https://en.wikipedia.org/wiki/Neptune">
+                            <div class="planet neptune"></div>
+                        </a>
+                    </td>
+                    <td>Neptune</td>
+                    <td>30.11 AU</td>
+                    <td>164.8 yr</td>
+                </tr>
+            </table>
+            <strong>Example:</strong> Calculate the time it takes Mars to orbit the Sun in years.
+            <details>
+                <summary>solution</summary>
+                $$T^2 = r^3$$
+                $$T^2 = (1.524)^3$$
+                $$T^2 = 3.540$$
+                $$T = 1.88 \, \mathrm{yr}$$
+
+                <svg id="SVG-graph-5" viewBox="0 0 600 300">
+                    <circle r="7" cx="113" cy="205" stroke="none" fill="#f50" />
+                </svg>
+                <script defer>
+                    funGraphSVG("SVG-graph-5", x => Math.pow(x, 2 / 3), {
+                        x0: 20,
+                        y0: 280,
+                        fill: "rgba(0, 0, 0,0.2)",
+                        stroke: "none",
+                        strokeWidth: 2,
+                        scale: 50,
+                        positiveOnly: true,
+                        gridSize: 50,
+                        xLabel: "orbital period (yr)",
+                        yLabel: "semi-major axis (AU)",
+                        showMouseCoords: true,
+                    });
+                </script>
+                <p>
+                    Each planet in the solar system lands somewhere on this graph.
+                </p>
+            </details>
+        </div>
 
         <h2 class="underlined" id="universal-gravitation">Universal Gravitation</h2>
         <p>
@@ -160,7 +488,6 @@
             <svg class="center" width="330" height="165">
                 <circle cx="50" cy="100" r="40" fill='#fff' stroke-width="2" stroke="#222" />
                 <circle cx="250" cy="100" r="60" fill='var(--def-accent-color)' stroke-width="2" stroke="#222" />
-
                 <circle cx="50" cy="100" r="3" fill='#000' stroke="none" />
                 <circle cx="250" cy="100" r="3" fill='#000' stroke="none" />
 
@@ -171,7 +498,6 @@
 
                 <line x1="50" y1="100" x2="130" y2="100" style="stroke:#000;stroke-width:2" />
                 <polygon points="0,0 -8,5 -8,-5" transform="translate(135 100)" style="fill:#000;" />
-
                 <line x1="250" y1="100" x2="170" y2="100" style="stroke:#000;stroke-width:2" />
                 <polygon points="0,0 8,5 8,-5" transform="translate(165 100)" style="fill:#000;" />
 
@@ -182,6 +508,7 @@
                 <line x1="250" y1="25" x2="250" y2="35" style="stroke:#000;stroke-width:2" />
                 <text x="150" y="25" fill="black" text-anchor="middle" font-size="25 ">r</text>
             </svg>
+
             <h2>$$ F = \frac{GM_{1}M_{2}}{r^{2}} $$</h2>
             <p>\(F\) = force of gravity [N, newtons, kg m/s²]
                 <em>vector</em>
@@ -201,15 +528,17 @@
                 <line x1="250" y1="40" x2="250" y2="100" style="stroke:#000;stroke-width:2" />
                 <polygon points="0,0 -8,5 -8,-5" transform="translate(250 104) rotate(90)" style="fill:#000;" />
                 <text x="250" y="116" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25 ">F</text>
-                <!-- 
-                    <line x1="290" y1="35" x2="300" y2="35" style="stroke:#000;stroke-width:2" />
-                    <line x1="295" y1="35" x2="295" y2="500" style="stroke:#000;stroke-width:2" />
-                    <text x="310" y="130" fill="black" text-anchor="middle" font-size="25 ">r</text> -->
             </svg>
         </div>
         <p>
-            In 1915 universal gravitation was improved on by Einstein's <a href="../../relativity/general/index.html">general relativity</a>,
-            but universal gravitation is still a useful model of gravity for most situations.
+            Universal gravitation improved on Kepler's laws of planetary motion because it had a more universal application.
+            Kepler's laws only applied to the orbit of planets around the Sun, but Newton's gravitation applied to all matter.
+        </p>
+        <!-- General relativity views gravity as a consequence of warped spacetime -->
+        <p>
+            In 1915 universal gravitation was improved on by Einstein's <a href="../../relativity/general/index.html">general relativity</a>.
+            Although, even general relativity is an approximation.
+            No current theory perfectly describes reality.
         </p>
 
         <!-- <div class="example-small">
@@ -225,7 +554,7 @@
             </p>
             <strong>Question:</strong> Why don't we observe the Earth accelerating towards you?
             <details>
-                <summary>solution</summary>
+                <summary>answer</summary>
                 <p> The Earth and you both have the same force, but not the same acceleration.</p>
                 $$F=ma$$
                 $$a = \frac{F}{m}$$
@@ -234,115 +563,6 @@
         </div>
 
         <div class='example' id="data-table">
-            <style>
-                th {
-                    background: #fff;
-                    border: 0px solid #000;
-                    color: #000;
-                }
-
-                .black {
-                    background-color: #000;
-                    border: 0px solid #000;
-                    padding: 7px;
-                }
-
-                .planet {
-                    margin: auto;
-                    border-radius: 50%;
-                    padding: 0px;
-                    border: 0px solid #000;
-                }
-
-                .sun {
-                    width: 90px;
-                    height: 90px;
-                    background-color: #fff;
-                    top: -25px;
-                    left: -20px;
-                    position: relative;
-                }
-
-                .sun-div {
-                    /* margin: 0px; */
-                    width: 50px;
-                    height: 50px;
-                }
-
-                .mercury {
-                    width: 6px;
-                    height: 6px;
-                    background-color: rgb(199, 195, 192);
-                }
-
-                .venus {
-                    width: 11px;
-                    height: 11px;
-                    background-color: rgb(216, 209, 203);
-                }
-
-                .earth {
-                    width: 11.5px;
-                    height: 11.5px;
-                    background-color: rgb(130, 137, 179);
-                }
-
-                .moon {
-                    width: 4px;
-                    height: 4px;
-                    background-color: rgb(159, 155, 152);
-                }
-
-                .mars {
-                    width: 8px;
-                    height: 8px;
-                    background-color: rgb(207, 187, 137);
-                }
-
-                .jupiter {
-                    width: 35px;
-                    height: 35px;
-                    background-color: rgb(238, 236, 188);
-                }
-
-                .saturn {
-                    width: 30px;
-                    height: 30px;
-                    background-color: rgb(223, 229, 181);
-                }
-
-                .uranus {
-                    width: 18px;
-                    height: 18px;
-                    background-color: rgb(173, 200, 211);
-                }
-
-                .neptune {
-                    width: 17px;
-                    height: 17px;
-                    background-color: rgb(160, 183, 214);
-                }
-
-                .saturn-ring {
-                    border-radius: 50%;
-                    width: 44px;
-                    height: 44px;
-                    position: relative;
-                    top: -7px;
-                    left: -7px;
-                    border: 4px solid rgba(216, 218, 169, 0.7);
-                }
-
-                .uranus-ring {
-                    border-radius: 50%;
-                    width: 28px;
-                    height: 28px;
-                    position: relative;
-                    top: -5px;
-                    left: -5px;
-                    border: 1px solid rgba(255, 255, 230, 0.2);
-                }
-            </style>
             <table>
                 <tr>
                     <th class="black"></th>
@@ -561,7 +781,7 @@
             </details>
         </div>
 
-        <h2 class="underlined ">Gravitational Acceleration</h2>
+        <h2 class="underlined">Gravitational Acceleration</h2>
         <p>It is useful to adapt the universal gravitation equation to predict acceleration. To find acceleration we just need to divide an object's gravitational force by its mass.</p>
 
         <details class='derive'>
@@ -802,14 +1022,12 @@
             </details>
         </div>
 
-        <h2 class="underlined ">Inverse-Square Law (1/r²)</h2>
+        <h2 class="underlined">Inverse-Square Law (1/r²)</h2>
         <!-- <h1>$$\frac{1}{r^2}$$</h1> -->
         <p>
             All particles are attracted to each other, but the attraction is divided by the distance squared. Physical laws that diminish at 1/r² are common in nature because of how signals spread out in 3 dimensions. If you threw darts in random directions, the chance of hitting your target would obey this rule.
         </p>
-        <p>
-            As you can see in the graph below, a 1/r² function has some interesting results at radius = 0 and force = 0.
-        </p>
+
         <svg id="SVG-graph-0" viewBox="0 0 600 400"></svg>
         <script defer>
             funGraphSVG("SVG-graph-0", x => 1 / x / x, {
@@ -826,14 +1044,57 @@
                 showMouseCoords: true,
             });
         </script>
-        <p>What distance between masses produces a force of zero?</p>
-        <p>What happens to the force of gravity as the distance between masses approaches zero?</p>
-        <p>What else, besides gravity, might follow an inverse square law?</p>
+        <p>
+            As you can see in the graph below, a 1/r² function has some interesting results at radius = 0 and force = 0.
+        </p>
 
-        <div class='example'>
-            <strong>Question:</strong> If you triple the distance between two massive objects, what happens to their force of gravity? What about ten times the distance?
+        <div class='example-small'>
+            <strong>Question:</strong> What distance between masses produces a force of zero?
             <details>
                 <summary>answer</summary>
+                <p>
+                    As the distance approaches infinity, the force approaches zero.
+                </p>
+                <p>
+                    The effects of gravity can be felt at any real distance.
+                    Astronomers see gravitation between our galaxy, the Milky Way, and the Andromeda galaxy at a distance of 2.5 million light years (10<sup>22</sup>&nbsp;m)
+                </p>
+            </details>
+        </div>
+
+        <div class='example-small'>
+            <strong>Question:</strong> What happens to the force of gravity as the distance between masses approaches zero?
+            <details>
+                <summary>answer</summary>
+                <p>
+                    The force rises towards infinity as the distance approaches zero.
+                </p>
+                <p>
+                    When matter gets very dense, a black hole forms.
+                    Understanding gravity at distances near zero require using general relativity and quantum physics at the same time.
+                    Currently these two theories are compatible, but we know that some strange things would happen.
+                    Time would slow down, and it would become very difficult for anything to escape.
+                </p>
+            </details>
+        </div>
+
+        <div class='example'>
+            <strong>Question:</strong> What else, besides gravity, might follow an inverse square law?
+            <details>
+                <summary>answer</summary>
+                <p>
+                    Anything that spreads out in 3 dimensions will follow this law.
+                </p>
+                <li>Light</li>
+                <li>Sound</li>
+                <li>Randomly throwing things, like darts. </li>
+            </details>
+        </div>
+
+        <div class='example'>
+            <strong>Example:</strong> If you triple the distance between two massive objects, what happens to their force of gravity? What about ten times the distance?
+            <details>
+                <summary>solution</summary>
                 <p>This is easier to understand with some made up numbers. Set the masses and G to equal 1 since they aren't changing.
                 </p>
                 $$F = \frac{G M_1 M_2}{r^2} \quad \to \quad F = \frac{1}{r^2}$$

@@ -31,13 +31,19 @@
     </header>
     <article>
         <p>
-            Momentum is defined as the product of mass and velocity.
+            This is a simulation of a "Newton's cradle".
+            A real Newton's cradle is made of metal balls suspended by two strings.
+            Click and drag a ball to fling it.
+        </p>
+        <canvas id="newtons-cradle" width="600" height="100"> </canvas>
+        <p>
+            When two bodies collide, momentum is transferred.
+            Momentum is the velocity of a body multiplied by its mass.
+            Objects with a high momentum require more force to slow them down.
         </p>
         <p>
-            A rapidly moving truck has a large momentum.
-            It would take a large or prolonged force to speed up or slow down a truck.
-            A slow moving snail has a small momentum.
-            It would be easy to slow down or speed up a little snail.
+
+
         </p>
         <div class='definition'>
             <svg class="center" width="300" height="100">
@@ -67,13 +73,13 @@
             <br>Google a typical <a href="https://www.google.com/search?q=mass+of+bowling+ball+in+kg">mass</a> and <a href="https://www.google.com/search?q=speed+of+bowling+ball">velocity</a>.
             <details>
                 <summary>solution</summary>
-                $$ 18 \left( \mathrm{ \frac{\color{Purple}{mile}}{\color{Teal}{hour}}} \right)\left(\frac{1609\,\mathrm{m}}{1 \,\color{Purple}{\mathrm{mile} }}\right)\left(\frac{1\, \color{Teal}{ \mathrm{hour} }}{3600\,\mathrm{s}}\right) = 8.0 \mathrm{\tfrac{m}{s}} $$
+                $$ 18 \left( \mathrm{ \frac{\color{red}{mile}}{\color{Teal}{hour}}} \right)\left(\frac{1609\,\mathrm{m}}{1 \,\color{red}{\mathrm{mile} }}\right)\left(\frac{1\, \color{Teal}{ \mathrm{hour} }}{3600\,\mathrm{s}}\right) = 8.0 \mathrm{\tfrac{m}{s}} $$
                 <br> $$p=mv$$
                 $$p=(5.0 \, \mathrm{kg})(8.0 \, \mathrm{\tfrac{m}{s}})$$ $$p=40 \,\mathrm{kg\tfrac{m}{s}}$$
             </details>
         </div>
 
-        <p class='underlined' id="conservation">Conservation of Momentum</p>
+        <h1 class='underlined' id="conservation">Conservation of Momentum</h1>
         <p>
             Total momentum doesn't change over time, even if two objects <a href="https://www.youtube.com/watch?v=4IYDb6K5UF8">collide</a>. When a property doesn't change over time we say that the property is <strong>conserved</strong>.
         </p>
@@ -81,7 +87,7 @@
         <!-- <span class="center" style="font-size: 120%;"> mv + mv = total horizontal momentum</span> -->
         $$m_1v_1 + m_2v_2 = \text{total momentum}$$
         <canvas id="canvas0" width='580' height='270'> </canvas>
-        Click the simulation below a few times and watch the sum of the total momentum before and after the collision.
+        Click the simulation below a few times and watch the sum of the total horizontal momentum before and after the collision.
 
         <div class="example-small">
             <p>
@@ -301,19 +307,19 @@
     <footer>
         <a href="../../../index.html">Back</a>
     </footer>
+    <script>
+        renderMathInElement(document.body);
+    </script>
     <script src='../../../lib/matter.min.js'></script>
+    <script src="newtonsCradle.js"></script>
     <script src='../../../lib/randomColor.min.js'></script>
     <script src="collisionDemo(Matter.js).js"></script>
     <script src="collisionDemo2(Matter.js).js"></script>
     <script src="collisionEx1(Matter.js).js"></script>
     <script src="collisionEx3(Matter.js).js"></script>
-
     <script src="stickyCollision0.js"></script>
     <script src="stickyCollision1.js"></script>
     <script src="collision2D.js"></script>
-    <script>
-        renderMathInElement(document.body);
-    </script>
 </body>
 
 </html>

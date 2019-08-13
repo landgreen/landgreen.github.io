@@ -90,7 +90,7 @@
         restitution: rest,
         length: length,
         color: randomColor({
-          luminosity: "light"
+          luminosity: "bright"
         })
       });
       Body.setVelocity(mass[i], {

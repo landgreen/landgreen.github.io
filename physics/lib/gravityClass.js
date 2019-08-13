@@ -71,8 +71,7 @@ class Particle {
   // }
 
   // http://exploratoria.github.io/exhibits/astronomy/gravitating-system/
-  static integration(who, GravityConst = 0.05) {
-    const minDistance2 = 100;
+  static integration(who, GravityConst = 0.05, minDistance2 = 100) {
     //change position from velocity
     const len = who.length;
     for (let i = 0; i < len; ++i) {

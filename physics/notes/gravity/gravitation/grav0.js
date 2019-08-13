@@ -62,7 +62,9 @@
   function cycle() {
     if (window.pageYOffset < height) {
       ctx.clearRect(0, 0, width, height);
-      Particle.integration(q, 0.1);
+      Particle.integration(q, 0.2, 800);
+      // Particle.integration(q, 0.2, 800);
+      // Particle.integrationR1(q, 0.0005);
       Particle.drawAll(q, ctx);
       Particle.bounds(q, canvas);
       // Particle.mergeOnCollision(q);

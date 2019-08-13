@@ -2,8 +2,6 @@
 <html lang="en-US">
 
 <head>
-
-
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="theme-color" content="#222" />
@@ -16,9 +14,10 @@
 
 	<title>Orbits</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
-
-	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+	<script src="../../../lib/katex/katex.min.js"></script>
+	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 	<style>
 		.gear {
 			animation: 10s infinite linear rotation;
@@ -49,21 +48,22 @@
 			<a href="../../../index.html">Orbits</a>
 		</h1>
 	</header>
+
 	<article>
 		<div class="col-group">
 			<p>
-				In the <a href="http://joshworth.com/dev/pixelspace/pixelspace_solarsystem.html">vast</a>
-				frictionless environment of space, gravitational attraction can cause two massive bodies to <a href="https://www.youtube.com/watch?v=NM2wtte1JRE">orbit</a> each other.
+				In the <a href="http://joshworth.com/dev/pixelspace/pixelspace_solarsystem.html">vast</a> frictionless environment of space,
+				gravitational attraction can cause two massive bodies to <a href="https://www.youtube.com/watch?v=NM2wtte1JRE">orbit</a> each other.
 			</p>
 			<div>
 				<p>
 					If the relative velocity between two bodies is too low they will collide.
 					If the velocity is too high they will move away from each other.
-					In between these extremes exist a range of stable orbits that can repeat with almost no change over time.
+					In between these extremes exist a range of stable orbits that can repeat with almost no change.
 				</p>
 				<p>
-					Over enough time all orbits degrade as they lose energy.
-					The Moon's orbit gets 38 mm farther away every year because its kinetic energy changes into the tides.
+					Yet, over time orbits degrade.
+					The Moon's orbit gets 38 mm farther away every year because its kinetic energy changes into tidal friction.
 				</p>
 			</div>
 			<div>
@@ -72,63 +72,34 @@
 			</div>
 		</div>
 		<div class="example">
-			<p>You can get a feeling for orbits with this PhET gravitational orbit simulation.</p>
-			<div class="center" style="position: relative; width: 300px; height: 200px;">
-				<a href="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_en.html" style="text-decoration: none;">
-					<img src="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits-600.png" alt="Gravity And Orbits" style="border: none;" width="300" height="200" />
-					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.8; filter: alpha(opacity = 60);"></div>
-					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
-						<tr>
-							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
-						</tr>
-					</table>
-				</a>
-			</div>
-			<p>What happens to the path of a satellite when you turn off gravity?</p>
-			<p>How would you describe the direction of the velocity compared to the force?</p>
-			<p>How does the orbital path change as you increase the mass of either object?</p>
-		</div>
-
-		<div class='example'>
-			<svg viewBox="0 0 600 365">
-				<circle cx="300" cy="200" r="4" fill='#000' stroke="none" />
-				<circle cx="300" cy="200" r="140" fill='none' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
-				<g class="circle-motion">
-					<circle cx="200" cy="100" r="20" fill='#f04' stroke-width="1.5" stroke="#000" />
-				</g>
-			</svg>
-			<strong>Question:</strong> The ball above maintains a constant speed while moving in a circle. Is it accelerating?
-			<details>
-				<summary>answer</summary>
-				<p>Yes, the ball is accelerating towards the center of the circle.</p>
-			</details>
-		</div>
-
-		<p class='underlined' id="circular">Circular Motion</p>
-		<p>Any object moving in a circular path has a net force pointed at the center of the circle. The velocity of the object will always be perpendicular to the force.</p>
-		<div class='definition'>
-			<svg viewBox="-60 45 550 307">
-				<circle cx="200" cy="200" r="150" fill='rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
-				<g transform="translate(53 200)">
-					<line x1="0" y1="0" x2="150" y2="0" style="stroke:#000;stroke-width:2" />
-					<line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
-					<line x1="150" y1="-5" x2="150" y2="5" style="stroke:#000;stroke-width:2" />
-					<text x="75" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
-				</g>
-				<g transform="translate(350 200) rotate(0)">
-					<g transform="translate(0 -100) rotate(90)">
-						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+			<h1 class="underlined">Circular Motion</h1>
+			<p>
+				Any object moving in a circular path has a net force pointed at the center of the circle.
+				The velocity of the object will always be perpendicular to the force.
+			</p>
+			<div class='definition'>
+				<svg viewBox="-60 45 550 307">
+					<circle cx="200" cy="200" r="150" fill='rgba(0,0,0,0)' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
+					<g transform="translate(53 200)">
+						<line x1="0" y1="0" x2="150" y2="0" style="stroke:#000;stroke-width:2" />
+						<line x1="0" y1="-5" x2="0" y2="5" style="stroke:#000;stroke-width:2" />
+						<line x1="150" y1="-5" x2="150" y2="5" style="stroke:#000;stroke-width:2" />
+						<text x="75" y="25" fill="black" text-anchor="middle" font-size="25">r</text>
 					</g>
-					<text x="0" y="-115" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">v</text>
-					<g transform="translate(-75 0) rotate(0)">
-						<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
-						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+					<g transform="translate(350 200) rotate(0)">
+						<g transform="translate(0 -100) rotate(90)">
+							<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
+							<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+						</g>
+						<text x="0" y="-115" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">v</text>
+						<g transform="translate(-75 0) rotate(0)">
+							<line x1="5" y1="0" x2="75" y2="0" style="stroke:#000;stroke-width:2" />
+							<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
+						</g>
+						<text x="-85" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">F</text>
+						<circle cx="0" cy="0" r="20" fill='#fff' stroke-width="2" stroke="#222" />
 					</g>
-					<text x="-85" y="0" fill="black" text-anchor="middle" dominant-baseline="central" font-size="25">F</text>
-					<circle cx="0" cy="0" r="20" fill='#fff' stroke-width="2" stroke="#222" />
-				</g>
-				<!-- <g transform="translate(306 94) rotate(-45)" opacity=0.25>
+					<!-- <g transform="translate(306 94) rotate(-45)" opacity=0.25>
 					<g transform="translate(0 -100) rotate(90)">
 						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
 						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
@@ -150,41 +121,69 @@
 					</g>
 					<circle cx="0" cy="0" r="20" fill='#fff' stroke-width="2" stroke="#222" />
 				</g> -->
-			</svg>
-			<h2>$$F = \frac{mv^{2}}{r} \quad \quad a = \frac{v^{2}}{r} $$</h2>
+				</svg>
+
+				<h2>$$F = \frac{mv^{2}}{r} \quad \quad a = \frac{v^{2}}{r} $$</h2>
+				<p>
+					\(F\) = centripetal force [N]
+					<em>vector</em>
+					<br>\(a\) = centripetal acceleration [m/s²]
+					<em>vector</em>
+					<br>\(v\) = tangential velocity [m/s]
+					<em>vector</em>
+					<br>\(r\) = radius of the circular path [m]
+					<em>vector</em>
+					<br>\(m\) = mass [kg]
+				</p>
+			</div>
 			<p>
-				\(F\) = centripetal force [N]
-				<em>vector</em>
-				<br>\(a\) = centripetal acceleration [m/s²]
-				<em>vector</em>
-				<br>\(v\) = tangential velocity [m/s]
-				<em>vector</em>
-				<br>\(r\) = radius of the circular path [m]
-				<em>vector</em>
-				<br>\(m\) = mass [kg]
+				The term <strong>centripetal</strong> means pointing at the center.
+				In all circular motion force and acceleration always points at the center of the circle.
+				This is often confused with centrifugal, which means away from the center.
+			</p>
+			<p>
+				<strong>Tangential</strong> means touching at only one point.
+				Since the velocity is perpendicular to the centripetal force, it doesn't enter or exit the circle.</p>
+			<p>
+				Nearly circular motion can occur in many situations:
+				<li>swinging a rope attached to a mass</li>
+				<li>a rotating wheel or sphere, (like a fidget spinner)</li>
+				<li>many orbits are nearly circular, but technically elliptical</li>
+				<li>some roads have circular curves</li>
+				<li>merry go round</li>
+				<li>charged particles in a uniform magnetic field</li>
 			</p>
 		</div>
-		<p>
-			The term <strong>centripetal</strong> means pointing at the center. In all circular motion force and acceleration always points at the center of the circle. This is often confused with centrifugal, which means away from the center.
-		</p>
-		<p>
-			<strong>Tangential</strong> means touching at only one point. Since the velocity is perpendicular to the centripetal force, it doesn't enter or exit the circle.</p>
-		<p>
-			Nearly circular motion can occur in many situations:
-			<li>swinging a rope attached to a mass</li>
-			<li>a rotating wheel or sphere, (like a fidget spinner)</li>
-			<li>many orbits are nearly circular, but technically elliptical</li>
-			<li>some roads have circular curves</li>
-			<li>merry go round</li>
-			<li>charged particles in a uniform magnetic field</li>
-		</p>
+
 		<div class='example'>
-			<strong>Example:</strong> A 20 kg box is placed 5 m from the center of a rotating carousel. If the box has a 3 m/s tangential velocity, what magnitude and direction friction force will it have to exert to stay on the ride?
+			<strong>Example:</strong> A 20 kg box is placed 5 m from the center of a rotating carousel.
+			If the box has a 3 m/s tangential velocity, what magnitude and direction friction force will it have to exert to stay on the ride?
 			<details>
 				<summary>solution</summary>
-				$$F = \frac{mv^{2}}{r}$$ $$F = \frac{(20)(3)^{2}}{5}$$ $$F = 36\,\mathrm{N}$$ $$\text{towards the center of the carousel}$$
+				$$F = \frac{mv^{2}}{r}$$
+				$$F = \frac{(20)(3)^{2}}{5}$$
+				$$F = 36\,\mathrm{N}$$
+				$$\text{towards the center of the carousel}$$
 			</details>
 		</div>
+
+		<div class='example'>
+			<svg viewBox="0 0 600 365">
+				<circle cx="300" cy="200" r="4" fill='#000' stroke="none" />
+				<circle cx="300" cy="200" r="140" fill='none' stroke-width="2" stroke-dasharray="5, 5" stroke="#999" />
+				<g class="circle-motion">
+					<circle cx="200" cy="100" r="20" fill='#f04' stroke-width="1.5" stroke="#000" />
+				</g>
+			</svg>
+			<strong>Question:</strong> The ball above maintains a constant speed while moving in a circle. Is it accelerating?
+			<details>
+				<summary>answer</summary>
+				<p>
+					Yes, the ball is accelerating towards the center of the circle.
+				</p>
+			</details>
+		</div>
+
 		<div class='example'>
 			<p>
 				It's possible to produce an <a href="https://en.wikipedia.org/wiki/Artificial_gravity">acceleration</a> similar to gravity without a gravitational field. It's done by rotating a <a href="https://www.youtube.com/watch?v=A0H7TYzcMaY">room</a> to produce a centripetal acceleration.
@@ -284,17 +283,22 @@
 					document.getElementById('stars').appendChild(rect);
 				}
 			</script>
-			<p>Your 50 meter spaceship design was built. It produced the illusion of 9.8 m/s² of gravity, but people are complaining they feel strange when standing up.</p>
+			<p>
+				Your 50 meter spaceship design was built.
+				It produced the illusion of 9.8 m/s² of gravity, but people are complaining they feel strange when standing up.
+			</p>
 			<strong>Example:</strong> Use the circumference of a circle at a person's head and the time for one rotation to calculate the velocity at the top of a 2 meter tall person's head.
 			<details>
 				<summary>strategy</summary>
 				<p>
-					A person on the rotating spaceship will have their feet on the outer edge, and their heads pointed towards the center. This means the head will have a shorter radius and a slower speed.
+					A person on the rotating spaceship will have their feet on the outer edge, and their heads pointed towards the center.
+					This means the head will have a shorter radius and a slower speed.
 				</p>
 				$$d = 2r \quad d = 50 \, \mathrm{m}$$
 				$$r = 25-2 = 23\, \mathrm{m}$$
 				<p>
-					We also know that the total time for one rotation must be the same at any distance from the center. We calculated the time for one rotation in the previous example.
+					We also know that the total time for one rotation must be the same at any distance from the center.
+					We calculated the time for one rotation in the previous example.
 				</p>
 			</details>
 			<details>
@@ -308,7 +312,8 @@
 				$$v=\frac{2 \pi (23)}{(10)}$$
 				$$v=14.45\, \mathrm{\tfrac{m}{s}}$$
 			</details>
-			<br> <strong>Example:</strong> What acceleration would a 2 meter tall person feel at their head? Compare that to the acceleration felt at their feet.
+			<br> <strong>Example:</strong> What acceleration would a 2 meter tall person feel at their head?
+			Compare that to the acceleration felt at their feet.
 			<details>
 				<summary>solution</summary>
 				$$a = \frac{v^{2}}{r}$$ $$a = \frac{14.45^{2}}{23}$$
@@ -325,22 +330,27 @@
 				<p>The ship could produce a lower acceleration, maybe half of Earth's gravity.</p>
 			</details>
 		</div>
-		<p class='underlined' id="circular-orbits">Circular Orbits</p>
+
+		<h1 class='underlined' id="circular-orbits">Circular Orbits</h1>
 		<p>Each satellite below starts with a different velocity. Simulation speed =
 			<input class='number' id='speed' type="number" step="1" min='0' max='1000' value='1' style="width:40px;">
 			<canvas id='grav2' height='600' width='600' style="background-color: #000;"> </canvas>
 		</p>
 		<p>
-			<strong>The orbits of objects in space are elliptical. They are never perfectly circular,</strong> but many orbits come close enough to circular motion to make a rough approximation useful.</p>
+			<strong>The orbits of bodies in space are elliptical.</strong> They are never perfectly circular, but many orbits come close enough to circular motion to make a rough approximation useful.
+		</p>
 
 		<details class='derive'>
 			<summary>derivation of orbital velocity</summary>
-			<br>If we assume that the central mass is much larger and doesn't move, we can combine the equations for circular motion with the universal gravitation equations.
+			<p>
+				If we assume that the central mass is much larger and doesn't move, we can combine the equations for circular motion with the universal gravitation equations.
+			</p>
 			$$F = \frac{M_{1}v^{2}}{r} \quad F = \frac{GM_{1}M_{2}}{r^{2}} $$
 			$$\frac{M_{1}v^{2}}{r} = \frac{GM_{1}M_{2}}{r^{2}} $$
 			$$\frac{ {\color{blue}M_{1} }v^{2}}{\color{blue}r} = \frac{G{\color{blue}M_1} M_{2}}{{\color{blue}r}^2}$$
 			$$v^{2} = \frac{GM_{2}}{r} $$
 		</details>
+
 		<div class='definition'>
 			<svg viewBox="-60 45 550 307">
 				<circle cx="200" cy="200" r="50" fill='#fff' stroke-width="2" stroke="#222" />
@@ -360,20 +370,6 @@
 					<text x="0" y="-115" fill="black" text-anchor="middle" dominant-baseline="central" font-size="23">v</text>
 					<circle cx="0" cy="0" r="6" fill='#fff' stroke-width="2" stroke="#222" />
 				</g>
-				<!-- <g transform="translate(306 94) rotate(-45)" opacity=0.25>
-					<g transform="translate(0 -100) rotate(90)">
-						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
-					</g>
-					<circle cx="0" cy="0" r="6" fill='#fff' stroke-width="2" stroke="#222" />
-				</g>
-				<g transform="translate(200 50) rotate(-90)" opacity=0.07>
-					<g transform="translate(0 -100) rotate(90)">
-						<line x1="5" y1="0" x2="100" y2="0" style="stroke:#000;stroke-width:2" />
-						<polygon points="0,0 8,5 8,-5" style="fill:#000;" />
-					</g>
-					<circle cx="0" cy="0" r="6" fill='#fff' stroke-width="2" stroke="#222" />
-				</g> -->
 			</svg>
 			<h1>$$v^{2} = \frac{GM}{r} $$</h1>
 			<br>\(v\) = orbital tangential velocity [m/s]
@@ -384,7 +380,12 @@
 				<br>Only true for circular orbits!
 			</p>
 		</div>
-		<p>Situations where there is circular motion and a much larger central body include: planets orbiting the Sun, moons orbiting large planets, and satellites.</p>
+		<p>
+			Situations where there is circular motion and a much larger central body include:
+			planets orbiting the Sun, moons orbiting large planets, and satellites.
+		</p>
+
+
 		<!-- 
 		<div class="example-small">
 			Click and drag to move. Double click for full screen.
@@ -528,8 +529,7 @@
 						</a>
 					</td>
 					<td>Sun</td>
-					<td>2.00 × 10<sup>30</sup>
-					</td>
+					<td>2.00 × 10<sup>30</sup> </td>
 					<td>695&#8239;700</td>
 				</tr>
 				<tr>
@@ -539,8 +539,7 @@
 						</a>
 					</td>
 					<td>Mercury</td>
-					<td>3.301 × 10<sup>23</sup>
-					</td>
+					<td>3.301 × 10<sup>23</sup> </td>
 					<td>2440</td>
 				</tr>
 				<tr>
@@ -550,8 +549,7 @@
 						</a>
 					</td>
 					<td>Venus</td>
-					<td>4.867 × 10<sup>24</sup>
-					</td>
+					<td>4.867 × 10<sup>24</sup> </td>
 					<td>6052</td>
 				</tr>
 				<tr>
@@ -563,8 +561,7 @@
 						</a>
 					</td>
 					<td>Earth</td>
-					<td>5.972 × 10<sup>24</sup>
-					</td>
+					<td>5.972 × 10<sup>24</sup> </td>
 					<td>6371</td>
 				</tr>
 				<tr>
@@ -574,8 +571,7 @@
 						</a>
 					</td>
 					<td>Moon</td>
-					<td>7.346 × 10<sup>22</sup>
-					</td>
+					<td>7.346 × 10<sup>22</sup> </td>
 					<td>1737</td>
 				</tr>
 				<tr>
@@ -585,8 +581,7 @@
 						</a>
 					</td>
 					<td>Mars</td>
-					<td>6.417 × 10<sup>23</sup>
-					</td>
+					<td>6.417 × 10<sup>23</sup> </td>
 					<td>3390</td>
 				</tr>
 				<tr>
@@ -596,8 +591,7 @@
 						</a>
 					</td>
 					<td>Jupiter</td>
-					<td>1.899 × 10<sup>27</sup>
-					</td>
+					<td>1.899 × 10<sup>27</sup> </td>
 					<td>70&#8239;000</td>
 				</tr>
 				<tr>
@@ -642,9 +636,11 @@
 			<strong>Example:</strong> If a satellite is 800.0 km above the surface of the moon how fast must it move to travel in a circular orbit?
 			<details>
 				<summary>solution</summary>
-				$$r = 800\,000\,\mathrm{m} + 1\,737\,000\,\mathrm{m} = 2\,537\,000\,\mathrm{m}$$ $$v^{2} = \frac{GM}{r}$$
+				$$r = 800\,000\,\mathrm{m} + 1\,737\,000\,\mathrm{m} = 2\,537\,000\,\mathrm{m}$$
+				$$v^{2} = \frac{GM}{r}$$
 				$$v^{2} = \frac{(6.67 \times 10^{-11})(7.346 \times 10^{22})}{2\,537\,000}$$
-				$$\sqrt{v^{2}} = \sqrt{19.31 \times 10^5}$$ $$v = 1389.6 \,\mathrm{\tfrac{m}{s}}$$
+				$$\sqrt{v^{2}} = \sqrt{19.31 \times 10^5}$$
+				$$v = 1389.6 \,\mathrm{\tfrac{m}{s}}$$
 			</details>
 		</div>
 
@@ -652,13 +648,17 @@
 			<strong>Question:</strong> A 100 kg satellite and a 200 kg satellite are both in a circular <a href="https://www.youtube.com/watch?v=NM2wtte1JRE">orbit</a> around the Earth at an orbital radius of 10&#8239;000&#8239;000 m. Compare the velocities of the two satellites. Which is faster?
 			<details>
 				<summary>answer</summary>
-				<p>They both have the same velocity. The mass of the satellite doesn't matter, only the mass of the Earth.</p>
+				<p>
+					They both have the same velocity. The mass of the satellite doesn't matter, only the mass of the Earth.
+				</p>
 			</details>
 		</div>
 
 		<div class='example'>
-			<p class="center">Radius Vs. Orbital Velocity
-				<br>(for satellites in circular motion around Earth)</p>
+			<p class="center">
+				Radius Vs. Orbital Velocity
+				<br>(for satellites in circular motion around Earth)
+			</p>
 			<!-- <svg id="SVG-graph-0" viewBox="0 0 600 300">
 				<path d="M 25 -1 v 281 h 65 v -281" fill='rgba(100,50,0,0.2)' />
 				<path d="M 90 -1 v 281 h 18.5 v -281" fill='rgba(100,190,255,0.25)' />
@@ -703,7 +703,9 @@
 				<circle id="SVG-graph-0-circle" cx="593.7435913085938" cy="213.8183907872949" r="5" style="display: none; fill: rgb(0, 136, 255);"></circle><text id="SVG-graph-0-coords" x="598.7435913085938" y="203.8183907872949" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: start; display: none;">(56874.4,
 					2.6)</text>
 			</svg>
-			<strong>Example:</strong> A geosynchronous orbit can stay above the same point on the Earth. To be able to do this, the orbit must equal one Earth day, which requires a velocity of 3070 m/s. Calculate how far away a geosynchronous satellite needs to be from the center of the earth.
+			<strong>Example:</strong> A geosynchronous orbit can stay above the same point on the Earth.
+			To be able to do this, the orbit must equal one Earth day, which requires a velocity of 3070 m/s.
+			Calculate how far away a geosynchronous satellite needs to be from the center of the Earth.
 			<details>
 				<summary>solution</summary>
 				$$v^{2} = \frac{GM}{r}$$
@@ -715,18 +717,32 @@
 				$$\text{altitude} = 35\,829 \,\mathrm{km}$$
 			</details>
 		</div>
+
+		<div class="example">
+			<p>You can get a feeling for orbits with this PhET gravitational orbit simulation.</p>
+			<div class="center" style="position: relative; width: 300px; height: 200px;">
+				<a href="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_en.html" style="text-decoration: none;">
+					<img src="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits-600.png" alt="Gravity And Orbits" style="border: none;" width="300" height="200" />
+					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.8; filter: alpha(opacity = 60);"></div>
+					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
+						<tr>
+							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">Click to Run</td>
+						</tr>
+					</table>
+				</a>
+			</div>
+			<p>What happens to the path of a satellite when you turn off gravity?</p>
+			<p>How would you describe the direction of the velocity compared to the force?</p>
+			<p>How does the orbital path change as you increase the mass of either object?</p>
+		</div>
+
 	</article>
 	<footer>
 		<a href="../../../index.html">Back</a>
 	</footer>
-
-
-	<script src="../../../lib/katex/katex.min.js"></script>
-	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 	<script>
 		renderMathInElement(document.body);
 	</script>
-
 	<script src='../../../lib/randomColor.min.js'></script>
 	<script src='../../../lib/gravityClass.js'></script>
 	<script src="grav1.js"></script>

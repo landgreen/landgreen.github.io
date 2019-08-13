@@ -88,7 +88,7 @@
         angle: Math.random() * Math.PI,
         length: length,
         color: randomColor({
-          luminosity: "light"
+          luminosity: "bright"
         })
       });
       Matter.Body.setAngularVelocity(mass[i], 0.05 * (Math.random() - 0.5));
