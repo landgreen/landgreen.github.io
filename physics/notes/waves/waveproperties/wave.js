@@ -1,3 +1,5 @@
+const MARGIN = 20
+
 //adds a equalibirum line
 function centerLine(el) {
   const width = el.getAttribute("width");
@@ -19,7 +21,7 @@ function centerLine(el) {
 function drawSineWave(el, wavelength, amplitude, phase = 0, color = "#000", opacity = 1, autoWidth = true, widthSVG = "600") {
   let width;
   if (autoWidth) {
-    width = screen.width - 5; //window.innerWidth;
+    width = screen.width - MARGIN; //window.innerWidth;
     el.style.position = "relative";
     el.style.left = Math.min(-(width - 600) / 2, 0) + "px";
   } else {
@@ -63,7 +65,7 @@ function drawSineWaves(
   let width;
   if (autoWidth) {
     // width = window.innerWidth;
-    width = screen.width - 5;
+    width = screen.width - MARGIN;
     el.style.position = "relative";
     el.style.left = Math.min(-(width - 600) / 2, 0) + "px";
   } else {
@@ -104,7 +106,7 @@ function drawSineWaves(
 
 function AppendSinePath(el, wavelength, amplitude, phase = 0, color = "#000", opacity = 1) {
   // let width = window.innerWidth;
-  let width = screen.width - 5;
+  let width = screen.width - MARGIN;
   el.style.position = "relative";
   el.style.left = Math.min(-(width - 600) / 2, 0) + "px";
 
@@ -127,7 +129,7 @@ function AppendSinePath(el, wavelength, amplitude, phase = 0, color = "#000", op
 function drawSineWavesArray(el, waves, superposition = true, autoWidth = true, widthSVG = "600") {
   let width;
   if (autoWidth) {
-    width = screen.width - 5;
+    width = screen.width - MARGIN;
     // width = window.innerWidth;
     el.style.position = "relative";
     el.style.left = Math.min(-(width - 600) / 2, 0) + "px";

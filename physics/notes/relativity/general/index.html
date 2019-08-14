@@ -36,7 +36,7 @@
 			In 1907 Einstein published an important <a href="https://www.youtube.com/watch?v=jx3wcdCtL58">thought experiment</a>.
 			Imagine a person in a box with no way to look outside.
 			That person couldn't distinguish between the acceleration of gravity or the acceleration from a rocket.
-			If both situations look and feel the same maybe they are the same.
+			If both situations look and feel the same, maybe they are the same.
 			Maybe acceleration and gravity are <a href="https://www.youtube.com/watch?v=NblR01hHK6U">equivalent</a>.
 			<!-- That person wouldn't be able to distinguish between the acceleration of gravity or floating in space with no acceleration. -->
 			<!-- A free fall feels the same as not accelerating. -->
@@ -105,7 +105,7 @@
 			<circle r="5" cx="450" cy="70" fill="#f50" stroke="none" />
 
 			<g id="hide-on-click-11">
-				<rect x="444" y="75" rx="2" ry="2" width="12" height="4" fill="#555" stroke="none" />
+				<!-- <rect x="444" y="75" rx="2" ry="2" width="12" height="4" fill="#555" stroke="none" /> -->
 				<rect x="144" y="75" rx="2" ry="2" width="12" height="4" fill="#555" stroke="none" />
 			</g>
 		</svg>
@@ -159,12 +159,12 @@
 			<circle r="5" cx="450" cy="70" fill="#f50" stroke="none" />
 
 			<g id="hide-on-click-22">
-				<rect x="444" y="75" rx="2" ry="2" width="12" height="4" fill="#555" stroke="none" />
+				<!-- <rect x="444" y="75" rx="2" ry="2" width="12" height="4" fill="#555" stroke="none" /> -->
 				<rect x="144" y="75" rx="2" ry="2" width="12" height="4" fill="#555" stroke="none" />
 			</g>
 		</svg>
-		In both situations, the ball is at rest and the rocket is accelerating.
-		Treating gravity and acceleration as equivalent means that the 9.8 m/s² we feel is caused by the Earth accelerating upward!
+		Treating gravity and acceleration as equivalent means that both situations are the same.
+		The ball is at rest and the rocket is accelerating. The 9.8 m/s² we feel is caused by the Earth accelerating upward like a rocket!
 		<script>
 			window.addEventListener('load', () => {
 				equivalence()
@@ -297,7 +297,6 @@
 			}
 		</script>
 
-
 		<div class='example'>
 			<strong>Question:</strong> I'm sitting at my desk typing this question right now. Am I at rest? When is a person at rest on Earth?
 			<details>
@@ -306,11 +305,14 @@
 					I am not at rest. I am accelerating because my chair is pushing me upwards.
 				</p>
 				<p>
-					On Earth the only people at rest are the people that are free falling!
+					On Earth the only people at rest are the people that are free falling.
+				</p>
+				<p>
+					Air friction makes a true free fall rare.
+					A skydiver for the first few seconds is close to a a free fall, but air friction balances the acceleration from gravity at the terminal velocity.
 				</p>
 			</details>
 		</div>
-
 
 		<h2 class='underlined' id="general-relativity">General Relativity</h2>
 		<p>
@@ -319,7 +321,6 @@
 			In 1915 Einstein completed his theory of general relativity.
 			General relativity describes gravity as the curvature of space and time, or spacetime.
 			<!-- Energy curves the spacetime around it. -->
-
 		</p>
 		<h3 class="definition">
 			Spacetime is <a href="https://www.youtube.com/watch?v=DdC0QN6f3G4">curved</a> by energy.
@@ -342,8 +343,8 @@
 			</style>
 			<canvas id='three-fabric-load' width='600' height='100' onclick="fabric('three-fabric')"></canvas>
 			<canvas id='three-fabric' width='600' height='0'></canvas>
-			In the simulation above, gravitational potential energy is represented as warping a 2-D surface into a 3rd dimension.
-			This is analogous to how energy curves space.
+			In the simulation above, classical gravitational potential energy is represented as warping a 2-D surface into a 3rd dimension.
+			This is analogous to how energy curves space in general relativity.
 			<p>
 				As bodies travel through curved space they follow the shortest distance between two points, a straight line.
 				The pull of gravity is what a straight line through curved space looks like.
@@ -382,10 +383,23 @@
 			We hope that one day theoretical physicists will develop a "Grand Unified Theory" that combines both theories.
 		</p> -->
 
-		<h2 class='underlined' id="time">Gravitational Time Dilation</h2>
+		<h2 class='underlined' id="time">Acceleration Causes Time Dilation</h2>
 		<p>
-			General relativity predicts that the passage of time is slower in the curved spacetime around massive bodies.
-			Time will progress the fastest in the flat spacetime far from any massive bodies.
+			When a frame of reference experiences <strong>time dilation</strong> it seems normal from inside the frame.
+			Observers from outside the frame of reference would see everything inside as slower.
+			People would age slower, and move slower. They would talk slower, with deeper voices.
+			Light from the frame of reference would have a lower frequency and a different color.
+		</p>
+		<p>
+			General relativity predicts that an accelerating reference frame experiences time dilation.
+			This effect is related to how relative velocity dilates time in special relativity.
+			<!-- A big difference from special relativity is that acceleration based time dilation is consistent for all observers.
+			This makes the acceleration based time dilation less complex. -->
+		</p>
+		<p>
+			General relativity says that massive bodies curve the spacetime around them.
+			An object in curved spacetime must accelerate to stay in the same position.
+			This acceleration produces time dilation.
 		</p>
 		<div class="definition">
 			<h3>$$ \Delta t_0 = \Delta t_f \sqrt{1 - \left( \frac{2GM}{rc^2} \right) } $$ </h3>
@@ -396,14 +410,17 @@
 			<br>\(r\) = distance to the center of the mass [m, meters]
 			<br>\(c\) = speed of light, 3 × 10⁸ [m/s]
 		</div>
-		<p>
-			Time dilation from gravity is less complex than special relativity because both observers agree that time is slower deeper in a gravity well.
-		</p>
-		<p>
-			Didn't we learn that mass is a type of energy. Why does the time dilation not have an energy component?
-			Technically, it should include energy, but most of the energy in stars and planets is in the form of mass.
-			The contribution from other energy types is generally too small to be significant.
-		</p>
+
+		<div class='example'>
+			<strong>Question:</strong> Didn't we learn that mass is a type of energy. Why does the time dilation not have an energy component?
+			<details>
+				<summary>answer</summary>
+				<p>
+					Technically, it should include all energy, but most of the energy in stars and planets is in the form of mass.
+					The contribution from other energy types is normally too small to be significant.
+				</p>
+			</details>
+		</div>
 
 		<div class='example'>
 			<strong>Example:</strong> If one second passes outside the influence of the star's gravity, how much time passes on the surface of the star? Let's use the mass and radius of a super dense neutron star, like <a href="https://en.wikipedia.org/wiki/PSR_J0348%2B0432">PSR J0348+0432</a>.
@@ -803,10 +820,13 @@
 				$$ 1 = \Delta t_f \sqrt{1 - \left( \frac{2(6.67408 \times 10^{-11})(5.972 \times 10^{24})}{(6.371 \times 10^6)(3 \times 10^8)^2} \right) } $$
 				$$ 1 = \Delta t_f \sqrt{1 - \left( 1.39 \times 10 ^{-9} \right) } $$
 				$$ 1 = \Delta t_f (0.999999999 \dots ) $$
-				<p>The time dilation effect is too low for my calculator to display the result. To see the effect I subtracted one from the result in the calculator.</p>
+				<p>
+					The time dilation effect was too low for my calculator to display the result.
+					I was about to give up, but then I tried subtracting one from the result in the calculator.
+					I got a result. The number represents the difference between a year on Earth and a year with no time dilation.
+				</p>
 				$$\Delta t_f - \Delta t = 6.951 \times 10^{-10} \, \mathrm{year}$$
-				<p>The number above represents the difference between a year in Earth and time far from Earth's gravity.</p>
-				$$\Delta t_f - \Delta t = 21.923 \, \mathrm{ms}$$
+				$$\Delta t_f - \Delta t = 0.021923 \, \mathrm{s}$$
 			</details>
 		</div>
 

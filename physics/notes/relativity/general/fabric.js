@@ -105,7 +105,7 @@ const fabric = function (id) {
 
   const camera = new THREE.PerspectiveCamera(45, 600 / 400, 10, settings.cameraRange);
 
-  camera.position.set(0, -45, 30);
+  camera.position.set(0, -52, 40);
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableZoom = true;
