@@ -60,6 +60,20 @@ article {
   max-width: 605px;
 }
 
+/* nav {
+  margin: 0;
+  max-width: 100%;
+  position: fixed;
+  left: 10px;
+}
+
+
+@media screen and (max-width: 900px) {
+  nav {
+    display: none;
+  }
+} */
+
 h1,
 h2,
 h3 {

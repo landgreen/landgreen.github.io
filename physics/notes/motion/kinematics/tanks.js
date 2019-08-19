@@ -82,15 +82,29 @@ function tanks() {
             document.getElementById("bullet-x").innerHTML = "Δx = 0"
         }
     });
-
     SVG_PATH.addEventListener("mousedown", (event) => {
+        if (!isFiring && (p1.isAlive || p2.isAlive)) {
+            mouse.x = event.offsetX * WIDTH / SVG_PATH.clientWidth
+            mouse.y = event.offsetY * HEIGHT / SVG_PATH.clientHeight
+            getTrajectory();
+            document.getElementById("bullet-ux").innerHTML = "u = " + b.velocity.x.toPrecision(3) + " m/s"
+            document.getElementById("bullet-uy").innerHTML = "u = " + b.velocity.y.toPrecision(3) + " m/s"
+            document.getElementById("bullet-vx").innerHTML = "v = ";
+            document.getElementById("bullet-vy").innerHTML = "v = "
+            document.getElementById("bullet-t").innerHTML = "Δt = 0"
+            document.getElementById("bullet-y").innerHTML = "Δy = 0"
+            document.getElementById("bullet-x").innerHTML = "Δx = 0"
+        }
+    })
+
+    SVG_PATH.addEventListener("mouseup", (event) => {
         if (!isFiring && (p1.isAlive || p2.isAlive)) {
             isFiring = true;
             isPaused = false;
             time = 0;
             mouse.x = event.offsetX * WIDTH / SVG_PATH.clientWidth
             mouse.y = event.offsetY * HEIGHT / SVG_PATH.clientHeight
-            MOUSE_PATH.style.display = "none";
+            // MOUSE_PATH.style.display = "none";
 
             getTrajectory();
             if (whoseTurn === 1) {
@@ -255,7 +269,7 @@ function tanks() {
             if (isFiring && (p1.isAlive || p2.isAlive)) {
                 requestAnimationFrame(cycle);
             } else {
-                getTrajectory();
+                // getTrajectory();
             }
         }
     }

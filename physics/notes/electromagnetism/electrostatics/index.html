@@ -458,7 +458,19 @@
 		</p>
 		<canvas id='charge5' height='300' onclick="charges5(this)"> </canvas> -->
 
-		<p>We get the electric field equation by simply setting one q to +1 C in the electrostatic force equation.</p>
+		<details class="derive">
+			<summary>derivation of electric field equation</summary>
+			<p>
+				We get the electric field equation by dividing both sides of the electrostatic force equation by q and setting q equal to +1 C.
+			</p>
+			$$F = \frac{k_{e}q_1q_2}{r^{2}}$$
+			$$\frac{F}{q_1} = \frac{k_{e}q_2}{r^{2}}$$
+			<p>
+				The electric field is defined as the electrostatic force per Coulomb.
+			</p>
+			$$E=\frac{F}{+1\,\mathrm{C}}$$
+			$$E = \frac{k_{e}q}{r^{2}}$$
+		</details>
 		<div class='definition'>
 			<svg viewBox="0 50 400 110">
 				<line x1="100" y1="100" x2="177" y2="100" style="stroke:#000;stroke-width:2" />
@@ -475,7 +487,7 @@
 					<text x="100" y="20" fill="black" text-anchor="middle" font-size="25">r</text>
 				</g>
 			</svg>
-			<h2>$$ E = \frac{k_{e}q}{r^{2}}$$</h2>
+			<h2>$$E = \frac{k_{e}q}{r^{2}}$$</h2>
 			<p>\(E\) = electric field at a point [N/C, N·C<sup>-1</sup>]
 				<em>vector</em>
 				<br>\(k_e\) = 8.987 × 10<sup>9</sup> = Coulomb's constant [N m²/C²]

@@ -14,7 +14,7 @@ function matter() {
   };
   const SVGTarget = document.getElementById("matter-SVG");
 
-  let pause = true;
+  let pause = false;
   SVGTarget.addEventListener("mouseleave", () => {
     pause = true;
 
@@ -35,8 +35,10 @@ function matter() {
   });
 
   SVGTarget.addEventListener("mouseenter", () => {
-    pause = false;
-    if (!pause) requestAnimationFrame(cycle);
+    if (pause) {
+      pause = false;
+      requestAnimationFrame(cycle);
+    }
 
     //hide info
     // document.getElementById("matter-x-label").style.display = "none"

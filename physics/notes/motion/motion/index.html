@@ -32,6 +32,14 @@
 		</h1>
 	</header>
 	<article>
+		<!-- <nav>
+			<a href="#position">position</a>
+			<br><a href="#time">time</a>
+			<br><a href="#velocity">velocity</a>
+			<br><a href="#acceleration">acceleration</a>
+			<br><a href="#graphing">graphing</a>
+		</nav> -->
+
 		<!-- <p>
 			All of physics is approximations. Nothing currently known perfectly describes reality, but these approximations can very accurate.
 		</p> -->
@@ -63,14 +71,14 @@
 		<p>
 			This model of motion keeps track of a position and velocity for each object.
 			Every second, an object's velocity is added to its position.
-			Also, since this is a 2-D model the calculations are repeated for each dimension.
+			Also, since this is a 2-D model the calculations are repeated twice.
 		</p>
 		<p>
 			In order to model collisions, each object needs a mass.
 			When a collision occurs the masses are used to calculate the new velocities.
 			The rules for these calculations come from <a href="..\..\momentum\momentum\index.html">momentum</a>.
 		</p>
-		<h1 class='underlined'>Position</h1>
+		<h1 class='underlined' id="position">Position</h1>
 		<p>We use the symbol <strong>x</strong> for position with meters for units. You might be used to using <strong>x</strong> in other ways, but in physics it is reserved for position.</p>
 		<p>To represent a displacement we subtract the initial position from the final position. We use the Δ symbol to show change.</p>
 		<div class='definition'>
@@ -176,7 +184,7 @@
 		</div>
 
 
-		<h1 class='underlined'>Time</h1>
+		<h1 class='underlined' id="time">Time</h1>
 		<p> We keep track of time in the same way as position. We use t as the symbol with seconds as our main unit.</p>
 		<div class='definition'>
 			<h1>$$\Delta t = t_{f}-t_{i}$$</h1>
@@ -459,7 +467,7 @@
 			</details>
 		</div>
 
-		<h1 class='underlined' id="Graphing Motion">Graphing Motion</h1>
+		<h1 class='underlined' id="graphing">Graphing Motion</h1>
 		<p>
 			Velocity is the slope of the position vs. time graph.
 			<br>Acceleration is the slope of the velocity vs. time graph.
