@@ -10,7 +10,10 @@
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
 </head>
 
-<body>
+<body onclick="setup(this)">
+	<h1 id="instructions" style="text-align: center;">
+		Click to begin bells
+	</h1>
 	<!-- <canvas id="canvas" width='500' height='500'></canvas> -->
 	<svg viewBox="0 0 200 100">
 		<!-- <g id='analogClock' onclick="toggleMode()" fill='none' stroke='#333' stroke-width="0.3" stroke-linecap="round" transform="translate(100,32) scale(0.9)">
@@ -50,42 +53,24 @@
 		<g id="period-zone" transform="translate(0,77)" onclick="toggleZoom()" font-weight='300'>
 			<!-- translate changed with centering in js -->
 			<g class='period' stroke='#333' stroke-width='0.15'>
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="0" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="1" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="2" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="3" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="4" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="5" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="6" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="7" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="8" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="9" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="10" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="11" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="12" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="13" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="14" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="15" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="16" x="0" y="0" width="0"
-				 height="20" />
-				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="17" x="0" y="0" width="0"
-				 height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="0" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="1" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="2" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="3" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="4" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="5" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="6" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="7" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="8" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="9" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="10" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="11" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="12" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="13" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="14" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="15" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="16" x="0" y="0" width="0" height="20" />
+				<rect onmouseout="drawCurrentPeriod(schedule[schedule.current])" onmouseover="enterBlock(this)" id="17" x="0" y="0" width="0" height="20" />
 			</g>
 			<path id='now' fill='none' stroke='#f05' stroke-width='0.5' stroke-linecap="round" d="" />
 			<g transform="translate(0,10.5)" font-size='5px' text-anchor="middle">
@@ -111,8 +96,8 @@
 			<!-- <path id='focus' fill='none' stroke='#000' stroke-linejoin="round" stroke-linecap="round" stroke-width='0.2' d="" /> -->
 		</g>
 		<!-- target="_blank" href='http://newwestcharter.org/high-school-daily-bell-schedule/' -->
-		<text id="schedule" text-anchor="start" alignment-baseline="baseline" font-weight='300' font-size='3px' onclick='schedule.cycleCurrent()'
-		 x="0.3" y="99.5"></text>
+		<text id="schedule" text-anchor="start" alignment-baseline="baseline" font-weight='300' font-size='3px' onclick='schedule.cycleCurrent()' x="0.3" y="99.5"></text>
+		<text id="bell-toggle" text-anchor="end" alignment-baseline="baseline" font-weight='300' font-size='3px' onclick='bellToggle()' x="199.7" y="99.5"></text>
 	</svg>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/0.4.0/trianglify.min.js"></script>
 	<script src="index.js"></script>
