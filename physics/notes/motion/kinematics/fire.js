@@ -40,7 +40,6 @@ function challenge1(el) {
   canvas.style.cursor = "crosshair";
   document.getElementById("matter-mouse-1").style.display = "block"
   document.getElementById("matter-text-1-1").style.display = "block"
-  document.getElementById("matter-text-2-1").style.display = "none"
   canvas.scrollIntoView({
     behavior: "smooth",
     block: "center",
