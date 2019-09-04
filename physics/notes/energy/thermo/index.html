@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="theme-color" content="#222" />
@@ -15,7 +14,6 @@
 
 	<title>Thermodynamics</title>
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
-
 	<script defer src='../../../lib/randomColor.min.js'></script>
 	<script defer src="energy.js"></script>
 	<script defer src='../../../lib/matter.min.js'></script>
@@ -23,11 +21,9 @@
 	<script defer src="entropy1.js"></script>
 	<script defer src="temperature.js"></script>
 	<!-- <script src='../../../lib/function-graph-SVG.js'></script> -->
-
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 	<script src="../../../lib/katex/katex.min.js"></script>
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
-
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
 </head>
 
@@ -322,15 +318,54 @@
 		<p>
 			<strong>Entropy</strong> is hard to <a href="https://www.youtube.com/watch?v=RJ7H6bKbp24">define</a> because different fields use the term to describe slightly different ideas. The definitions of entropy are all loosely centered around disorder. A high entropy system of particles is not organized. A low entropy system is very orderly, but how do you measure order?
 		</p>
-		<p>
-			Well, order is whatever you decide. A common definition is a concentration of something measurable, like energy, temperature, or pressure. This would mean a concentration of energy would have lower entropy then an evenly spread out distribution.
-		</p>
+		<svg viewBox="0 0 600 145">
+			<g fill="#222" font-size="22px" text-anchor="middle">
+				<text x="150" y="25">low entropy</text>
+				<text x="450" y="25">high entropy</text>
+			</g>
+			<g fill="none" stroke="#8ab" stroke-width="9">
+				<rect x="50" y="40" width="200" height="100" rx="1" ry="1" />
+				<rect x="350" y="40" width="200" height="100" rx="1" ry="1" />
+			</g>
+			<g fill="#f04">
+				<circle cx="365" cy="65" r="6" />
+				<circle cx="385" cy="85" r="5" />
+				<circle cx="465" cy="95" r="6" />
+				<circle cx="460" cy="115" r="7" />
+				<circle cx="495" cy="125" r="6" />
+				<circle cx="510" cy="60" r="4" />
+				<circle cx="375" cy="128" r="6" />
+				<circle cx="410" cy="118" r="5" />
+				<circle cx="420" cy="70" r="6" />
+				<circle cx="535" cy="99" r="6" />
+				<circle cx="475" cy="70" r="4" />
+				<circle cx="435" cy="84" r="5" />
 
-		<div class="example-small">
+				<circle cx="65" cy="58" r="6" />
+				<circle cx="63" cy="82" r="5" />
+				<circle cx="66" cy="101" r="6" />
+				<circle cx="64" cy="115" r="4" />
+				<circle cx="80" cy="65" r="6" />
+				<circle cx="77" cy="80" r="7" />
+				<circle cx="82" cy="105" r="6" />
+				<circle cx="75" cy="125" r="5" />
+				<circle cx="93" cy="55" r="6" />
+				<circle cx="96" cy="75" r="5" />
+				<circle cx="89" cy="94" r="4" />
+				<circle cx="91" cy="120" r="6" />
+			</g>
+		</svg>
+		<p>
+			A common definition of order is a concentration of something measurable, like energy, temperature, or pressure.
+			This would mean a concentration of energy would have lower entropy then an evenly spread out distribution.
+		</p>
+		<div class="example">
 			<p>
-				An engine can be built to convert concentrations of energy into <a href="../../energy/energy/index.html#work">work</a>. In the simulation below, the work we want done is rotating the rotor. What state of the system would make the rotor turn?
+				Engines are designed to convert concentrations of energy into <a href="../../energy/energy/index.html#work">work</a>.
+				The simulation below shows a simple engine that is designed to turn a rotor.
+				What state of the system would make the rotor turn?
 			</p>
-			<canvas class='center' id='entropy1' height='300' width='600'> </canvas>
+			<canvas class='center' id='entropy1' height='300' width='600' style="box-shadow: none;"> </canvas>
 			<div class="col-group" style="padding: 5px;">
 				<div class="center">
 					time rate
@@ -346,12 +381,17 @@
 			Try to place the particles in a state that will turn the rotor.
 			<details>
 				<summary>results</summary>
-				<p>The rotor turns when you put a high concentration of particles on one side.</p>
+				<p>
+					The rotor turns when you put a high concentration of particles on one side.
+				</p>
+				<p>
+					Once the particles are evenly spread out, the rotor will stop turning.
+					If your system gets in this high entropy state, adjust the slider on the right to power the rotor from an external power source.
+					The powered rotor lowers entropy by reconcentrating the particles.
+				</p>
 			</details>
 		</div>
-		<p>
-			The system is in high entropy when the particles are evenly spread out. If your system gets in this state, adjust the slider to power the rotor from an external power source. The spinning rotor lowers entropy and puts the system back in a state that can do work.
-		</p>
+
 
 		<!-- <p>
 			<a href="https://en.wikipedia.org/wiki/Entropy">Entropy</a> plays an important role in thermochemistry, heat
@@ -387,12 +427,14 @@
 					Over time things even out and move towards a balanced equilibrium.
 				</p> -->
 			<p>
-				The thermodynamic system of a car <a href="http://www.animatedengines.com/">engine</a> takes in concentrated, low entropy, energy in the form of gasoline. When the gasoline's energy is released through combustion its energy spreads out. The spreading out energy is converted into kinetic energy, which moves the car.
+				We can view a car <a href="http://www.animatedengines.com/">engine</a> as a thermodynamic system.
+				An engine takes in concentrated, low entropy, energy in the form of gasoline.
+				An energy difference is produced when the gasoline goes through combustion.
+				That difference in energy concentration is then transformed in rotational energy, which makes the car move.
 			</p>
 			<br>
 			<strong>Question:</strong> You can think about a human body as a thermodynamic system.
-			As we do work the entropy in our body increases, making it harder to do more work.
-			What keeps our entropy low?
+			As we do work, the entropy in our body increases. What keeps our entropy low?
 			<details>
 				<summary>answer</summary>
 				<p>
@@ -745,10 +787,6 @@
 		<a href="../../../index.html">Back</a>
 	</footer>
 
-
-	<script>
-		renderMathInElement(document.body);
-	</script>
+	<script> renderMathInElement(document.body); </script>
 </body>
-
 </html>

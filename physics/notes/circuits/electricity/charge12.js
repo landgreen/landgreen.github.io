@@ -27,7 +27,7 @@ function charges12(el) {
   let lenY = 35;
   const offx = canvas.width / 2 - ((lenX - 1) * separation) / 2;
   const offy = canvas.height / 2 - ((lenY - 1) * separation) / 2;
-  const v = 1.8;
+  const v = 0;
 
   for (let i = 0; i < lenX; ++i) {
     q[q.length] = new Charge("p", {
