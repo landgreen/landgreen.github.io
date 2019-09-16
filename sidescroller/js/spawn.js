@@ -143,6 +143,93 @@ const spawn = {
       this.attraction();
     };
   },
+  healer(x, y, radius = 20) {
+    //easy mob for on level 1
+    mobs.spawn(x, y, 3, radius, "rgba(50,255,200,0.4)");
+    let me = mob[mob.length - 1];
+    me.frictionAir = 0.02;
+    me.accelMag = 0.0004;
+    if (map.length) me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
+    me.lookFrequency = 160 + Math.floor(57 * Math.random())
+    me.lockedOn = null;
+    Matter.Body.setDensity(me, 0.003) // normal density is 0.001
+
+    me.do = function () {
+      this.healthBar();
+
+      if (!(game.cycle % this.lookFrequency)) {
+        //slow self heal
+        this.health += 0.02;
+        if (this.health > 1) this.health = 1;
+
+        //target mobs with low health
+        let closeDist = Infinity;
+        for (let i = 0; i < mob.length; i++) {
+          if (mob[i] != this && Matter.Query.ray(map, this.position, mob[i].position).length === 0) {
+            const TARGET_VECTOR = Matter.Vector.sub(this.position, mob[i].position)
+            const DIST = Matter.Vector.magnitude(TARGET_VECTOR) * mob[i].health * mob[i].health * mob[i].health; //distance is multiplied by mob health to prioritize low health mobs
+            if (DIST < closeDist) {
+              closeDist = DIST;
+              this.lockedOn = mob[i]
+            }
+          }
+        }
+      }
+
+      //move away from player if too close
+      if (this.distanceToPlayer2() < 400000) {
+        const TARGET_VECTOR = Matter.Vector.sub(this.position, player.position)
+        this.force = Matter.Vector.mult(Matter.Vector.normalise(TARGET_VECTOR), this.mass * this.accelMag * 1.4)
+        if (this.lockedOn) this.lockedOn = null
+      } else if (this.lockedOn && this.lockedOn.alive) {
+        //move towards and heal locked on target
+        const TARGET_VECTOR = Matter.Vector.sub(this.position, this.lockedOn.position)
+        const DIST = Matter.Vector.magnitude(TARGET_VECTOR);
+        if (DIST > 250) {
+          this.force = Matter.Vector.mult(Matter.Vector.normalise(TARGET_VECTOR), -this.mass * this.accelMag)
+        } else {
+          if (this.lockedOn.health < 1) {
+            this.lockedOn.health += 0.002;
+            if (this.lockedOn.health > 1) this.lockedOn.health = 1;
+            //spin when healing
+            this.torque = 0.000005 * this.inertia;
+            //draw heal
+            ctx.beginPath();
+            ctx.moveTo(this.position.x, this.position.y);
+            ctx.lineTo(this.lockedOn.position.x, this.lockedOn.position.y);
+            ctx.lineWidth = 10
+            ctx.strokeStyle = "rgba(50,255,200,0.4)"
+            ctx.stroke();
+          }
+        }
+      } else {
+        //wander if no heal targets visible
+        //be sure to declare searchTarget in mob spawn
+        const newTarget = function (that) {
+          that.searchTarget = mob[Math.floor(Math.random() * (mob.length - 1))].position;
+        };
+
+        const sub = Matter.Vector.sub(this.searchTarget, this.position);
+        if (Matter.Vector.magnitude(sub) > this.radius * 2) {
+          ctx.beginPath();
+          ctx.strokeStyle = "#aaa";
+          ctx.moveTo(this.position.x, this.position.y);
+          ctx.lineTo(this.searchTarget.x, this.searchTarget.y);
+          ctx.stroke();
+          //accelerate at 0.6 of normal acceleration
+          this.force = Matter.Vector.mult(Matter.Vector.normalise(sub), this.accelMag * this.mass * 0.6);
+        } else {
+          //after reaching random target switch to new target
+          newTarget(this);
+        }
+        //switch to a new target after a while
+        if (!(game.cycle % (this.lookFrequency * 15))) {
+          newTarget(this);
+        }
+
+      }
+    };
+  },
   chaser(x, y, radius = 35 + Math.ceil(Math.random() * 40)) {
     mobs.spawn(x, y, 8, radius, "#2c9790");
     let me = mob[mob.length - 1];
@@ -771,9 +858,10 @@ const spawn = {
     let me = mob[mob.length - 1];
     me.stroke = "transparent";
     me.onHit = function () {
+      console.log(this.mass)
       this.explode();
     };
-    Matter.Body.setDensity(me, 0.002); //normal is 0.001
+    Matter.Body.setDensity(me, 0.001); //normal is 0.001
     me.timeLeft = 240;
     me.g = 0.001; //required if using 'gravity'
     me.frictionAir = 0;
