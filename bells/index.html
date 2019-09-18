@@ -10,10 +10,7 @@
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
 </head>
 
-<body onclick="setup(this)">
-	<h1 id="instructions" style="text-align: center;">
-		Click to begin bells
-	</h1>
+<body>
 	<!-- <canvas id="canvas" width='500' height='500'></canvas> -->
 	<svg viewBox="0 0 200 100">
 		<!-- <g id='analogClock' onclick="toggleMode()" fill='none' stroke='#333' stroke-width="0.3" stroke-linecap="round" transform="translate(100,32) scale(0.9)">
@@ -44,7 +41,7 @@
 			<text id="time" x="100" y="2" font-size='55px' text-anchor="middle" alignment-baseline="hanging" onclick="toggleMode()"></text>
 			<text id="week-day" x="1" y="61" font-size='11px' text-anchor="start" alignment-baseline="baseline"></text>
 			<text id="date" x="1" y="74" font-size='11px' text-anchor="start" alignment-baseline="baseline"></text>
-			<a href="https://www.google.com/search?q=weather" target="_blank" rel="noopener">
+			<a href="https://www.google.com/search?q=weather" rel="noopener" target="_blank">
 				<text id="weather" x="199" y="61" font-size='7px' text-anchor="end" alignment-baseline="baseline"></text>
 				<text id="temp" x="199" y="74" font-size='11px' text-anchor="end" alignment-baseline="baseline"></text>
 			</a>
@@ -95,9 +92,9 @@
 			</g>
 			<!-- <path id='focus' fill='none' stroke='#000' stroke-linejoin="round" stroke-linecap="round" stroke-width='0.2' d="" /> -->
 		</g>
-		<!-- target="_blank" rel="noopener" href='http://newwestcharter.org/high-school-daily-bell-schedule/' -->
+		<!-- target="_blank" rel="noopener"href='http://newwestcharter.org/high-school-daily-bell-schedule/' -->
 		<text id="schedule" text-anchor="start" alignment-baseline="baseline" font-weight='300' font-size='3px' onclick='schedule.cycleCurrent()' x="0.3" y="99.5"></text>
-		<text id="bell-toggle" text-anchor="end" alignment-baseline="baseline" font-weight='300' font-size='3px' onclick='bellToggle()' x="199.7" y="99.5"></text>
+		<!-- <text id="bell-toggle" text-anchor="end" alignment-baseline="baseline" font-weight='300' font-size='3px' onclick='bellToggle()' x="199.7" y="99.5"></text> -->
 	</svg>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/0.4.0/trianglify.min.js"></script>
 	<script src="index.js"></script>
