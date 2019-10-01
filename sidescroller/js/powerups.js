@@ -117,13 +117,13 @@ const powerUps = {
         if (b.inventory.length === 1) {
           game.makeTextLog(
             // "<div style='font-size:120%;' >new gun: " + b.guns[newGun].name + "</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>",
-            "<div style='font-size:150%;'><strong>" + b.guns[newGun].name + "</strong></div> (left click) <br> <p style='font-size:90%;'><strong>Q</strong>, <strong>E</strong>, and <strong>mouse wheel</strong> change weapons</p>",
+            "<div style='font-size:170%;'>" + b.guns[newGun].name + "</div> (left click) <br> <p style='font-size:90%;'><strong>Q</strong>, <strong>E</strong>, and <strong>mouse wheel</strong> change weapons</p>",
             500
           );
         } else {
           game.makeTextLog(
             // "<div style='font-size:120%;' >new gun: " + b.guns[newGun].name + "</div><span class = 'box'>E</span> / <span class = 'box'>Q</span>",
-            "<div style='font-size:150%;'><strong>" + b.guns[newGun].name + "</strong></div> (left click)",
+            "<div style='font-size:170%;'>" + b.guns[newGun].name + "</div> (left click)",
             400
           );
         }
@@ -146,15 +146,15 @@ const powerUps = {
       powerUps.spawn(x, y, "heal");
       return;
     }
-    if (Math.random() < 0.18) {
+    if (Math.random() < 0.19) {
       if (b.inventory.length > 0) powerUps.spawn(x, y, "ammo");
       return;
     }
-    if (Math.random() < 0.005 * (8 - b.inventory.length)) { //a new gun has a low chance for each not acquired gun to drop
+    if (Math.random() < 0.006 * (6 - b.inventory.length)) { //a new gun has a low chance for each not acquired gun to drop
       powerUps.spawn(x, y, "gun");
       return;
     }
-    if (Math.random() < 0.006) {
+    if (Math.random() < 0.005) {
       powerUps.spawn(x, y, "field");
       return;
     }

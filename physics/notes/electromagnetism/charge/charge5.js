@@ -29,8 +29,6 @@ function charges5(el) {
     }
   });
 
-  //spawn p before e to avoid a bug in the class method allPhysics
-
   //grouping of positive on left
   let rows = 9;
   let separation = 30;

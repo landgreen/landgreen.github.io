@@ -845,7 +845,7 @@
 			</details>
 		</div>
 
-		<h1 class='underlined'>2-D Motion</h1>
+		<h1 class='underlined'>2-D Motion (for constant acceleration)</h1>
 		<p>
 			Solving for 2-Dimensional motion can reuse the methods from 1-Dimension if we divide the problem up into 2 directions.
 			We also should set the two directions to be perpendicular so that they are independent from each other.
@@ -887,9 +887,180 @@
 		<p>
 			You can organize the variables in columns for x and y with shared time.
 		</p>
-
-
 		<div class='example'>
+			<svg viewBox="-550 0 2272 1080">
+				<g id="g4456">
+					<path d="m 600,935 0,-728" id="path4392" style="fill:none;stroke:#08a;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+				</g>
+				<use transform="matrix(0,1,-1,0,1171,-29)" id="use4474" x="0" y="0" width="1203" height="1106" xlink:href="#g4456" />
+				<path d="m 990,416 a 310,310 0 1 1 -620,0 310,310 0 1 1 620,0 z" transform="translate(-80,155)" id="path4628" style="opacity:0.6;fill:#ffffff;stroke:none;display:inline" />
+				<path d="M 600,206 C 398.41607,206 235,369.41607 235,571 235,772.58393 398.41607,936 600,936 801.58393,936 965,772.58393 965,571 965,369.41607 801.58393,206 600,206 z m 0.5,9.5 C 796.83723,215.5 956,374.66277 956,571 956,767.33723 796.83723,926.5 600.5,926.5 404.16277,926.5 245,767.33723 245,571 245,374.66277 404.16277,215.5 600.5,215.5 z" id="path2989" style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+				<use transform="matrix(0.98480775,0.17364818,-0.17364818,0.98480775,108.26846,-95.51413)" id="use3787" x="0" y="0" width="1203" height="1106" xlink:href="#g3783" />
+				<use transform="matrix(0.93969262,0.34202015,-0.34202015,0.93969262,231.47793,-170.77657)" id="use3789" x="0" y="0" width="1203" height="1106" xlink:href="#g3783" />
+				<use transform="matrix(0.8660254,0.50000001,-0.50000001,0.8660254,365.88476,-223.5005)" id="use3791" x="0" y="0" width="1203" height="1106" xlink:href="#g3783" />
+				<use transform="matrix(0.76604444,0.64278762,-0.64278762,0.76604444,507.40506,-252.08393)" id="use3793" x="0" y="0" width="1203" height="1106" xlink:href="#g3783" />
+				<use transform="matrix(0.6427876,0.76604445,-0.76604445,0.6427876,651.73881,-255.65839)" id="use3795" x="0" y="0" width="1203" height="1106" xlink:href="#g3783" />
+				<use transform="matrix(0.49999999,0.86602541,-0.86602541,0.49999999,794.5005,-234.11523)" id="use3797" x="0" y="0" width="1203" height="1106" xlink:href="#g3783" />
+				<use transform="matrix(0.34202013,0.93969263,-0.93969263,0.34202013,931.35239,-188.10907)" id="use3799" x="0" y="0" width="1203" height="1106" xlink:href="#g3783" />
+				<use transform="matrix(0.17364816,0.98480776,-0.98480776,0.17364816,1058.1363,-119.03775)" id="use3801" x="0" y="0" width="1203" height="1106" xlink:href="#g3783" />
+				<use transform="matrix(0,1,-1,0,1171.0001,-28.99996)" id="use3803" x="0" y="0" width="1203" height="1106" xlink:href="#g3783" />
+				<use transform="matrix(0,1,-1,0,1171.0001,-28.99996)" id="use3805" x="0" y="0" width="1203" height="1106" xlink:href="#use3787" />
+				<use transform="matrix(0,1,-1,0,1171.0001,-28.99996)" id="use3807" x="0" y="0" width="1203" height="1106" xlink:href="#use3789" />
+				<use transform="matrix(0,1,-1,0,1171.0001,-28.99996)" id="use3809" x="0" y="0" width="1203" height="1106" xlink:href="#use3791" />
+				<use transform="matrix(0,1,-1,0,1171.0001,-28.99996)" id="use3811" x="0" y="0" width="1203" height="1106" xlink:href="#use3793" />
+				<use transform="matrix(0,1,-1,0,1171,-28.99996)" id="use3813" x="0" y="0" width="1203" height="1106" xlink:href="#use3795" />
+				<use transform="matrix(0,1,-1,0,1171.0001,-28.99996)" id="use3815" x="0" y="0" width="1203" height="1106" xlink:href="#use3797" />
+				<use transform="matrix(0,1,-1,0,1171.0001,-28.99996)" id="use3817" x="0" y="0" width="1203" height="1106" xlink:href="#use3799" />
+				<use transform="matrix(0,1,-1,0,1171.0001,-28.99996)" id="use3819" x="0" y="0" width="1203" height="1106" xlink:href="#use3801" />
+				<g font-size="28" text-anchor="middle">
+					<text x="600" y="146" id="text3869">
+						<tspan x="600" y="146" id="tspan3871">0</tspan>
+					</text>
+					<text x="690.03815" y="33.140388" transform="matrix(0.98480775,0.17364818,-0.17364818,0.98480775,0,0)" id="text3879">
+						<tspan x="690.03815" y="33.140388" id="tspan3881">10</tspan>
+					</text>
+					<text x="759.11053" y="-93.639587" transform="matrix(0.93969262,0.34202015,-0.34202015,0.93969262,0,0)" id="text3883">
+						<tspan x="759.11053" y="-93.639587" id="tspan3885">20</tspan>
+					</text>
+					<text x="805.11841" y="-230.48779" transform="matrix(0.8660254,0.50000001,-0.50000001,0.8660254,0,0)" id="text3887">
+						<tspan x="805.11841" y="-230.48779" id="tspan3889">30</tspan>
+					</text>
+					<text x="826.66388" y="-373.24612" transform="matrix(0.76604444,0.64278762,-0.64278762,0.76604444,0,0)" id="text3891">
+						<tspan x="826.66388" y="-373.24612" id="tspan3893">40</tspan>
+					</text>
+					<text x="823.09235" y="-517.57697" transform="matrix(0.6427876,0.76604445,-0.76604445,0.6427876,0,0)" id="text3895">
+						<tspan x="823.09235" y="-517.57697" id="tspan3897">50</tspan>
+					</text>
+					<text x="794.51227" y="-659.09491" transform="matrix(0.49999999,0.86602541,-0.86602541,0.49999999,0,0)" id="text3899">
+						<tspan x="794.51227" y="-659.09491" id="tspan3901">60</tspan>
+					</text>
+					<text x="741.79205" y="-793.5" transform="matrix(0.34202013,0.93969262,-0.93969262,0.34202013,0,0)" id="text3903">
+						<tspan x="741.79205" y="-793.5" id="tspan3905">70</tspan>
+					</text>
+					<text x="666.53357" y="-916.70844" transform="matrix(0.17364817,0.98480775,-0.98480775,0.17364817,0,0)" id="text3907">
+						<tspan x="666.53357" y="-916.70844" id="tspan3909">80</tspan>
+					</text>
+					<text x="571.0235" y="-1024.9766" transform="matrix(0,1,-1,0,0,0)" id="text3911">
+						<tspan x="571.0235" y="-1024.9766" id="tspan3913">90</tspan>
+					</text>
+					<text x="491.7319" y="241.51007" transform="matrix(0.98480775,-0.17364818,0.17364818,0.98480775,0,0)" id="text3923">
+						<tspan x="491.7319" y="241.51007" id="tspan3925">350</tspan>
+					</text>
+					<text x="368.5235" y="316.76855" transform="matrix(0.93969262,-0.34202015,0.34202015,0.93969262,0,0)" id="text3927">
+						<tspan x="368.5235" y="316.76855" id="tspan3929">340</tspan>
+					</text>
+					<text x="234.11839" y="369.48877" transform="matrix(0.8660254,-0.50000001,0.50000001,0.8660254,0,0)" id="text3931">
+						<tspan x="234.11839" y="369.48877" id="tspan3933">330</tspan>
+					</text>
+					<text x="92.600433" y="398.06885" transform="matrix(0.76604444,-0.64278762,0.64278762,0.76604444,0,0)" id="text3935">
+						<tspan x="92.600433" y="398.06885" id="tspan3937">320</tspan>
+					</text>
+					<text x="-51.730431" y="401.64041" transform="matrix(0.6427876,-0.76604445,0.76604445,0.6427876,0,0)" id="text3939">
+						<tspan x="-51.730431" y="401.64041" id="tspan3941">310</tspan>
+					</text>
+					<text x="-194.48878" y="380.09491" transform="matrix(0.49999999,-0.86602541,0.86602541,0.49999999,0,0)" id="text3943">
+						<tspan x="-194.48878" y="380.09491" id="tspan3945">300</tspan>
+					</text>
+					<text x="-331.33698" y="334.08701" transform="matrix(0.34202013,-0.93969262,0.93969262,0.34202013,0,0)" id="text3947">
+						<tspan x="-331.33698" y="334.08701" id="tspan3949">290</tspan>
+					</text>
+					<text x="-458.11694" y="265.01462" transform="matrix(0.17364817,-0.98480775,0.98480775,0.17364817,0,0)" id="text3951">
+						<tspan x="-458.11694" y="265.01462" id="tspan3953">280</tspan>
+					</text>
+					<text x="-570.97656" y="174.9765" transform="matrix(0,-1,1,0,0,0)" id="text3955">
+						<tspan x="-570.97656" y="174.9765" id="tspan3957">270</tspan>
+					</text>
+					<text x="600" y="1018.0313" id="text3967">
+						<tspan x="600" y="1018.0313" id="tspan3969">180</tspan>
+					</text>
+					<text x="491.73154" y="1113.5454" transform="matrix(0.98480775,-0.17364818,0.17364818,0.98480775,0,0)" id="text3992">
+						<tspan x="491.73154" y="1113.5454" id="tspan3994">170</tspan>
+					</text>
+					<text x="368.52206" y="1188.8079" transform="matrix(0.93969262,-0.34202015,0.34202015,0.93969262,0,0)" id="text3996">
+						<tspan x="368.52206" y="1188.8079" id="tspan3998">160</tspan>
+					</text>
+					<text x="234.11523" y="1241.5317" transform="matrix(0.8660254,-0.50000001,0.50000001,0.8660254,0,0)" id="text4000">
+						<tspan x="234.11523" y="1241.5317" id="tspan4002">150</tspan>
+					</text>
+					<text x="92.594925" y="1270.1151" transform="matrix(0.76604444,-0.64278762,0.64278762,0.76604444,0,0)" id="text4004">
+						<tspan x="92.594925" y="1270.1151" id="tspan4006">140</tspan>
+					</text>
+					<text x="-51.738831" y="1273.6896" transform="matrix(0.6427876,-0.76604445,0.76604445,0.6427876,0,0)" id="text4008">
+						<tspan x="-51.738831" y="1273.6896" id="tspan4010">130</tspan>
+					</text>
+					<text x="-194.50053" y="1252.1464" transform="matrix(0.49999999,-0.86602541,0.86602541,0.49999999,0,0)" id="text4012">
+						<tspan x="-194.50053" y="1252.1464" id="tspan4014">120</tspan>
+					</text>
+					<text x="-331.35242" y="1206.1401" transform="matrix(0.34202013,-0.93969262,0.93969262,0.34202013,0,0)" id="text4016">
+						<tspan x="-331.35242" y="1206.1401" id="tspan4018">110</tspan>
+					</text>
+					<text x="-458.13632" y="1137.0688" transform="matrix(0.17364817,-0.98480775,0.98480775,0.17364817,0,0)" id="text4020">
+						<tspan x="-458.13632" y="1137.0688" id="tspan4022">100</tspan>
+					</text>
+					<text x="690.03778" y="905.1676" transform="matrix(0.98480775,0.17364818,-0.17364818,0.98480775,0,0)" id="text4024">
+						<tspan x="690.03778" y="905.1676" id="tspan4026">190</tspan>
+					</text>
+					<text x="759.10907" y="778.38367" transform="matrix(0.93969262,0.34202015,-0.34202015,0.93969262,0,0)" id="text4028">
+						<tspan x="759.10907" y="778.38367" id="tspan4030">200</tspan>
+					</text>
+					<text x="805.11523" y="641.5318" transform="matrix(0.8660254,0.50000001,-0.50000001,0.8660254,0,0)" id="text4032">
+						<tspan x="805.11523" y="641.5318" id="tspan4034">210</tspan>
+					</text>
+					<text x="826.65839" y="498.77014" transform="matrix(0.76604444,0.64278762,-0.64278762,0.76604444,0,0)" id="text4036">
+						<tspan x="826.65839" y="498.77014" id="tspan4038">220</tspan>
+					</text>
+					<text x="823.08392" y="354.43634" transform="matrix(0.6427876,0.76604445,-0.76604445,0.6427876,0,0)" id="text4040">
+						<tspan x="823.08392" y="354.43634" id="tspan4042">230</tspan>
+					</text>
+					<text x="794.50049" y="212.91605" transform="matrix(0.49999999,0.86602541,-0.86602541,0.49999999,0,0)" id="text4044">
+						<tspan x="794.50049" y="212.91605" id="tspan4046">240</tspan>
+					</text>
+					<text x="741.77655" y="78.509193" transform="matrix(0.34202013,0.93969262,-0.93969262,0.34202013,0,0)" id="text4048">
+						<tspan x="741.77655" y="78.509193" id="tspan4050">250</tspan>
+					</text>
+					<text x="666.5141" y="-44.700287" transform="matrix(0.17364817,0.98480775,-0.98480775,0.17364817,0,0)" id="text4052">
+						<tspan x="666.5141" y="-44.700287" id="tspan4054">260</tspan>
+					</text>
+				</g>
+				<g id="g3783" stroke="#aaa" fill="none" stroke-width="2">
+					<path d="m 600,935 0,46" stroke-width="4" stroke="#000" />
+					<path d="m 600,161 0,46" stroke-width="4" stroke="#000" />
+					<path d="m 587.26168,935.77765 -0.83758,23.98538" />
+					<path d="m 613.5759,182.23697 -0.83758,23.98538" />
+					<path d="m 574.54434,935.03293 -1.6796,24.01948" />
+					<path d="m 627.13526,182.94759 -1.6796,24.01947" />
+					<path d="m 561.85651,933.91114 -2.51807,23.95787" />
+					<path d="m 640.66156,184.13099 -2.51807,23.95787" />
+					<path d="m 549.19823,932.47346 -3.33655,23.74081" />
+					<path d="m 654.13832,185.78573 -3.33655,23.74081" />
+				</g>
+				<g font-size="48" text-anchor="middle">
+					<text x="600" y="46" id="text4732">
+						<tspan x="600" y="100" id="tspan4734">N</tspan>
+					</text>
+					<text x="60" y="586" id="text4752">
+						<tspan x="100" y="586" id="tspan4754">W</tspan>
+					</text>
+					<text x="1140" y="586" id="text4777">
+						<tspan x="1090" y="586" id="tspan4779">E</tspan>
+					</text>
+					<text x="600" y="1128.8284" id="text4802">
+						<tspan x="600" y="1080" id="tspan4804">S</tspan>
+					</text>
+					<text x="250" y="236" id="text4907">
+						<tspan x="230" y="236" id="tspan4909">NW</tspan>
+					</text>
+					<text x="230" y="926" id="text4919">
+						<tspan x="230" y="926" id="tspan4921">SW</tspan>
+					</text>
+					<text x="970" y="236" id="text3198">
+						<tspan x="970" y="236" id="tspan3200">NE</tspan>
+					</text>
+					<text x="970" y="926" id="text3210">
+						<tspan x="970" y="926" id="tspan3212">SE</tspan>
+					</text>
+				</g>
+			</svg>
 			<strong>Example:</strong> An object is moving at 3 m/s north, and it is accelerating at 1 m/s² north.
 			It is also moving at 5 m/s east, and accelerating at 2 m/s² west.
 			How far does the object move in 10 seconds?
@@ -1016,7 +1187,7 @@
 						<td>u = 0</td>
 					</tr>
 					<tr>
-						<td>v = 2 m/s </td>
+						<td>v = </td>
 						<td>v = </td>
 					</tr>
 					<tr>
@@ -1027,16 +1198,25 @@
 			</details>
 			<details>
 				<summary>solution</summary>
+				$$\Delta y = u\Delta t + \tfrac{1}{2}a \Delta t^2$$
+				$$-1.5 = 0\Delta t + \tfrac{1}{2}(-9.8)\Delta t^2$$
+				$$-1.5 = -4.9\Delta t^2$$
+				$$-4.9\Delta t^2 = -1.5$$
+				$$\sqrt{\Delta t^2} = \sqrt{0.31}$$
+				$$\Delta t = \pm 0.55$$
+				<p>The negative time answer is valid, but not what we are looking for.</p>
+				$$\Delta t = 0.55 \, \mathrm{s}$$
+				<!-- 
 				$$v^{2} = u^{2}+2a \Delta y$$
 				$$v^{2} = 0^{2}+2(-9.8)(-1.5)$$
 				$$v^{2} = 29.4$$
 				$$v = \sqrt{29.4}$$
 				$$v = \pm5.42 $$
 				$$v = -5.42 \, \mathrm{\tfrac{m}{s}}$$
-				<p>We know the final velocity is down so after the square root we choose the negative value. Lets plug final velocity back in and solve for time.</p>
-				<br> $$v = u + a \Delta t$$
+				<p>We know the final velocity is down so after the square root we choose the negative value. Lets plug final velocity back in and solve for time.</p> -->
+				<!-- <br> $$v = u + a \Delta t$$
 				$$-5.42 = 0+(-9.8)\Delta t$$
-				$$0.55 \, \mathrm{s} = \Delta t$$
+				$$0.55 \, \mathrm{s} = \Delta t$$ -->
 				<p> With this new information we can use time to solve on the horizontal side.</p>
 				<table class="table-2d">
 					<tr>
@@ -1145,23 +1325,22 @@
 			</details>
 		</div>
 
-
-
 		<div class='example'>
 			<svg class='center' width="220" height="180">
+				<line x1="0" y1="150" x2="180" y2="150" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
+				<line x1="181" y1="150" x2="181" y2="63" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
 				<g id="vector" transform='translate(0 150) rotate(-25)'>
 					<line x1="0" y1="0" x2="190" y2="0" style="stroke:#000;stroke-width:2" />
 					<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(198 0) rotate(-90)' />
 					<text x="100" y="-13" fill="black" text-anchor="middle" dominant-baseline="middle">V = 150 m/s</text>
 				</g>
-				<line x1="0" y1="150" x2="181" y2="150" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
-				<line x1="181" y1="150" x2="181" y2="63" stroke-dasharray="5,5" style="stroke:#999;stroke-width:2" />
+
 				<text x="100" y="165" fill="black" text-anchor="middle" dominant-baseline="middle">Vx</text>
 				<text x="205" y="105" fill="black" text-anchor="middle" dominant-baseline="middle">Vy</text>
-				<text x="67" y="141" fill="black" text-anchor="middle" dominant-baseline="middle">θ = 35°</text>
+				<text x="67" y="141" fill="black" text-anchor="middle" dominant-baseline="middle">θ = 30°</text>
 			</svg>
 			<strong>Example:</strong> A projectile has a velocity of 150 m/s.
-			It is fired at an angle of 35° above the horizon.
+			It is fired at an angle of 30° above the horizon.
 			Use <a href="../../review/vectors/index.html#trigonometry">trigonometry</a> to find the parts of the velocity in the horizontal and vertical directions.
 			<details>
 				<summary>solution</summary>
@@ -1184,8 +1363,6 @@
 			</details>
 		</div>
 
-
-
 		<div class='example'>
 			<svg viewBox='-25 -30 600 312'>
 				<path d="M2 200 Q 276 -250 551 230" fill='none' stroke="#999" stroke-width="4" stroke-linejoin="round" stroke-dasharray="0, 22.1" stroke-linecap="round" />
@@ -1202,14 +1379,52 @@
 				</g>
 				<circle cx="22" cy="170" r="10" fill="#e60" stroke="#000" stroke-width="2" />
 			</svg>
-			<strong>Example:</strong> A ball is thrown at an angle of 60° above the horizon and a speed of 10 m/s. If the ball is thrown from 2.0 meters above the ground how far does the ball go before it hits the ground.
+			<strong>Example:</strong> A ball is thrown at an angle of 60° above the horizon and a speed of 10 m/s.
+			If the ball is thrown from 2.0 meters above the ground how far does the ball travel in the horizontal direction before it hits the ground?
 			<details>
 				<summary>strategy</summary>
 				<p>
-					The ball travels vertically upward at first, but that doesn't affect Δy.
-					$$\Delta y = y_{f} - y_{i}$$
+					<strong>Warning: </strong>This is a long complicated example problem. Take your time. Get organized.
+					Some equations will be dead ends. Other equations will lead to the <a href="http://www.math.com/students/calculators/source/quadratic.htm">quadratic equation</a>.
+					You can avoid using the quadratic equation if you solve for the final vertical velocity before you solve for time.
+				</p>
+				<p>
+					Start with the 2 column structure. You already know the accelerations.
+					<table class="table-2d">
+						<tr>
+							<td colspan="2" style='text-align: center;'>Δt = </td>
+						</tr>
+						<!-- <tr>
+						<td>↔ horizontal</td>
+						<td>↕ vertical</td>
+					</tr> -->
+						<tr>
+							<td>Δx = </td>
+							<td>Δy = </td>
+						</tr>
+						<tr>
+							<td>u = </td>
+							<td>u = </td>
+						</tr>
+						<tr>
+							<td>v = </td>
+							<td>v = </td>
+						</tr>
+						<tr>
+							<td>a = <span style="color: #f07;">0</span></td>
+							<td>a = <span style="color: #f07;">-9.8 m/s²</span></td>
+						</tr>
+					</table>
+				</p>
+				<p>
+					You can find the x and y part of the initial velocity with <a href="../../review/vectors/index.html#trigonometry">trigonometry</a>.
+				</p>
+				<p>
+					You also know Δy. It's just the difference between the starting and ending point in the vertical direction.
+					The path of the ball doesn't matter, just look at the difference.
+					<!-- $$\Delta y = y_{f} - y_{i}$$
 					$$\Delta y = 0 - 2\, \mathrm{m}$$
-					$$\Delta y = - 2 \, \mathrm{m}$$
+					$$\Delta y = - 2 \, \mathrm{m}$$ -->
 				</p>
 			</details>
 			<details>

@@ -96,6 +96,23 @@
     </div>
 
     <div class='example'>
+      <strong>Example:</strong> Draw a free body diagram for a 83 kg person holding onto a rope in a game of "Tug of war". The rope is pulling them with a force of 520 N left. The person's feet are countering that with 540 N to the right.
+      <details>
+        <summary>solution</summary>
+        <svg class='center' width="300" height="120" viewBox="-15 0 285 120">
+          <g transform='translate(100 20) rotate(0)'>
+            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#f65" />
+            <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>83 kg</text>
+          </g>
+          <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
+          <text x="35" y="53" fill="black">520 N</text>
+          <use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
+          <text x="200" y="53" fill="black">540 N</text>
+        </svg>
+      </details>
+    </div>
+
+    <div class='example'>
       <svg class='center' width="300" height="120" viewBox="-15 0 285 120">
         <g transform='translate(100 20) rotate(0)'>
           <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="var(--def-accent-color)" />
@@ -143,23 +160,6 @@
         $$F_{N} - 0.34\, \mathrm{N} = (0.09\, \mathrm{kg})(0)$$
         $$F_{N} - 0.34\,\mathrm{N} = 0$$
         $$F_{N} = 0.34 \, \mathrm{N}$$
-      </details>
-    </div>
-
-    <div class='example'>
-      <strong>Example:</strong> Draw a free body diagram for a 83 kg person holding onto a rope in a game of "Tug of war". The rope is pulling them with a force of 520 N left. The person's feet are countering that with 540 N to the right.
-      <details>
-        <summary>solution</summary>
-        <svg class='center' width="300" height="120" viewBox="-15 0 285 120">
-          <g transform='translate(100 20) rotate(0)'>
-            <rect x="0" y="0" width="80" height="80" stroke='black' stroke-width='2' fill="#f65" />
-            <text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>83 kg</text>
-          </g>
-          <use xlink:href="#vector" transform='translate(100 60) rotate(90)' />
-          <text x="35" y="53" fill="black">520 N</text>
-          <use xlink:href="#vector" transform='translate(180 60) rotate(-90)' />
-          <text x="200" y="53" fill="black">540 N</text>
-        </svg>
       </details>
     </div>
 
@@ -251,7 +251,7 @@
     </div>
     <p>
       The force of gravity depends only on the mass of the object because on the surface of the Earth
-      <strong>acceleration from gravity is the same for all objects.</strong>. If you aren't on the surface of the Earth, there is a different way to calculate <a href="..\..\gravity\gravitation\index.html#universal-gravitation">gravity</a>.
+      <strong>acceleration from gravity is the same for all objects</strong>. If you aren't on the surface of the Earth, there is a different way to calculate <a href="..\..\gravity\gravitation\index.html#universal-gravitation">gravity</a>.
     </p>
 
     <div class="example">
@@ -485,8 +485,16 @@
           </tr>
         </table>
       </details>
-      <p>What is the force of gravity in Los Angeles?</p>
-      <p>Why would the acceleration of gravity seem lower near the equator? </p>
+      <br>
+      <strong>Question:</strong> What factors might explain why the measured acceleration of gravity changes in different locations on the surface of Earth?
+      <details>
+        <summary>solution</summary>
+        <p>
+          <li>Gravity is slightly weaker at higher elevation because you are farther from the center of the Earth.</li>
+          <br>
+          <li>Near the equator gravity feels weaker because the Earth's rotation adds a centrifugal force.</li>
+        </p>
+      </details>
     </div>
     <div class='example'>
       <a href="https://www.amazon.com/Three-Body-Problem-Cixin-Liu/dp/0765382032">
@@ -516,6 +524,7 @@
     <p>
       Another word for the force of gravity is <strong>weight</strong>. An object on the Moon would weigh less than it does on Earth because of the lower gravity, but it would still have the same mass.
     </p>
+    $$F_g = \mathrm{weight}$$
     <p>
       Earth's gravity does extend into space, but it decreases with distance. It is about ~90% for astronauts in orbit around the Earth, but they don't notice any gravity because they are in a freefall.
     </p>
@@ -526,9 +535,9 @@
       <a href="https://www.amazon.com/Name-Wind-Patrick-Rothfuss/dp/0756404746/">
         <img class="book-cover" src="thenameofthewind.jpg" alt="The Name of the Wind" width="150" height="221" />
       </a>
-      <strong>Example:</strong> The Name of the Wind by Patrick Rothfuss has a mass of 0.34 kg. How does its mass and weight change in a freefall on Earth?
+      <strong>Question:</strong> The Name of the Wind by Patrick Rothfuss has a mass of 0.34 kg. How does its mass and weight change in a freefall on Earth?
       <details>
-        <summary>solution</summary>
+        <summary>answer</summary>
         <p>An object's mass doesn't change when it is falling.</p>
         <p>Weight just means the force of gravity, which also doesn't change in a short freefall.</p>
         <!-- $$F_{g}=mg$$ $$F_{g}=(0.34)(9.8)$$ $$F_{g}=3.33 \, \mathrm{N}$$ -->
@@ -774,6 +783,15 @@
       </details>
     </div>
     <div class='example'>
+      <details class='derive'>
+        <summary>Converting kilograms (kg) into pounds (lbs) </summary>
+        $$1 \, \mathrm{kg} = 2.2\, \mathrm{lbs} \quad \scriptsize \text{(On Earth)}$$
+        $$1 \, \mathrm{N} = 0.2248\, \mathrm{lbs}$$
+        <p>
+          Pounds are a unit of force and and kilograms are a unit of mass.
+          You can't convert directly between them because they are different concepts, but you can use the force of gravity equation to find a conversion that works for only Earth's surface.
+        </p>
+      </details>
       <a href="https://www.amazon.com/Uprooted-Naomi-Novik/dp/0804179034">
         <img class="book-cover" src="uprooted.jpg" alt="Uprooted" width="150" height="228" />
       </a>
