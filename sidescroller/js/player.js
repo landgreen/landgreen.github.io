@@ -518,12 +518,7 @@ const mech = {
       ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
       ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, range, 10);
       ctx.fillStyle = "rgb(50,220,255)";
-      ctx.fillRect(
-        this.pos.x - this.radius,
-        this.pos.y - 50,
-        range * this.fieldMeter,
-        10
-      );
+      ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, range * this.fieldMeter, 10);
     } else {
       mech.fieldMeter = 1
     }
@@ -582,6 +577,7 @@ const mech = {
   },
   holding() {
     this.fieldMeter -= this.fieldRegen;
+    if (this.fieldMeter < 0) this.fieldMeter = 0;
     Matter.Body.setPosition(this.holdingTarget, {
       x: mech.pos.x + 70 * Math.cos(this.angle),
       y: mech.pos.y + 70 * Math.sin(this.angle)
@@ -716,6 +712,7 @@ const mech = {
         const fieldBlockCost = Math.max(0.02, mob[i].mass * 0.012) //0.012
         if (this.fieldMeter > fieldBlockCost) {
           this.fieldMeter -= fieldBlockCost * this.fieldShieldingScale;
+          if (this.fieldMeter < 0) this.fieldMeter = 0;
           if (this.fieldDamage) mob[i].damage(b.dmgScale * this.fieldDamage);
           mob[i].locatePlayer();
           this.drawHold(mob[i]);
@@ -852,7 +849,7 @@ const mech = {
       game.makeTextLog("<strong style='font-size:30px;'>Inertia Negation Field</strong><br> (right mouse or space bar)<p> field slows objects in range<br> <span style='color:#a00;'>decreased</span> field shielding efficiency</p>", 1200);
       // <br> field does <span style='color:#a00;'>not</span> shield player
       mech.setHoldDefaults();
-      mech.fieldShieldingScale = 7;
+      mech.fieldShieldingScale = 12;
       // mech.fieldArc = 1; //field covers full 360 degrees
       // mech.calculateFieldThreshold(); //run after setting fieldArc, used for powerUp grab and mobPush with lookingAt(mob)
 
@@ -862,7 +859,7 @@ const mech = {
           mech.holding();
           mech.throw();
         } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < game.cycle) {
-          const DRAIN = 0.002 //mech.fieldRegen = 0.0015
+          const DRAIN = 0.0015 //mech.fieldRegen = 0.0015
           if (mech.fieldMeter > DRAIN) {
             mech.fieldMeter -= DRAIN;
             mech.grabPowerUp();
@@ -873,11 +870,12 @@ const mech = {
             const range = 900;
             //draw slow field
             ctx.beginPath();
-            ctx.arc(mech.pos.x, mech.pos.y, range, 0, 2 * Math.PI);
-            ctx.fillStyle = "#f5f5ff";
-            ctx.globalCompositeOperation = "difference";
+            ctx.arc(mech.pos.x, mech.pos.y + 15, range, 0, 2 * Math.PI);
+            ctx.fillStyle = "rgba(255,255,255," + (0.45 + 0.16 * Math.random()) + ")";
             ctx.fill();
-            ctx.globalCompositeOperation = "source-over";
+            ctx.strokeStyle = "#000"
+            ctx.lineWidth = 2;
+            ctx.stroke();
 
             function slow(who, friction = 0) {
               for (let i = 0, len = who.length; i < len; ++i) {
@@ -970,17 +968,17 @@ const mech = {
     },
     () => {
       mech.fieldMode = 3;
-      game.makeTextLog("<strong style='font-size:30px;'>Negative Mass Field</strong><br> (right mouse or space bar)<p> field nullifies gravity<br> player can hold more massive objects<br> <span style='color:#a00;'>decreased</span> field shielding efficiency</p>", 1200);
+      game.makeTextLog("<strong style='font-size:30px;'>Negative Mass Field</strong><br> (right mouse or space bar)<p> field nullifies gravity<br> player can hold more massive objects</p>", 1200);
+      //<br> <span style='color:#a00;'>decreased</span> field shielding efficiency
       mech.setHoldDefaults();
       mech.holdingMassScale = 0.05; //can hold heavier blocks with lower cost to jumping
-      mech.fieldShieldingScale = 10;
+      mech.fieldShieldingScale = 2;
       // mech.fieldArc = 1; //field covers full 360 degrees
       // mech.grabRange = 150;
       // mech.fieldArc = 1 //0.08;
       // mech.calculateFieldThreshold(); //run after setting fieldArc, used for powerUp grab and mobPush with lookingAt(mob)
 
       mech.hold = function () {
-        const range = 500
         if (mech.isHolding) {
           mech.drawHold(mech.holdingTarget);
           mech.holding();
@@ -989,7 +987,7 @@ const mech = {
           const DRAIN = 0.001 //mech.fieldRegen = 0.0015
           if (mech.fieldMeter > DRAIN) {
             mech.fieldMeter -= DRAIN;
-            mech.pushMobs360();
+            mech.pushMobs360(200);
             mech.grabPowerUp();
             mech.lookForPickUp();
             //look for nearby objects to make zero-g
@@ -997,7 +995,7 @@ const mech = {
               for (let i = 0, len = who.length; i < len; ++i) {
                 sub = Matter.Vector.sub(who[i].position, mech.pos);
                 dist = Matter.Vector.magnitude(sub);
-                if (dist < range) {
+                if (dist < mech.grabRange) {
                   who[i].force.y -= who[i].mass * (game.g * 1.06); //add a bit more then standard gravity
                 }
               }
@@ -1007,66 +1005,67 @@ const mech = {
             // zeroG(bullet);  //works fine, but not that noticeable and maybe not worth the possible performance hit
             // zeroG(mob);  //mobs are too irregular to make this work?
 
-            player.force.y -= player.mass * mech.gravity; // + 0.005 * Math.sin(game.cycle / 10); //wobble
 
-            //allow player to fly up and down a bit
-            flyForce = 0.003;
+
+            player.force.y -= 0.0009 + player.mass * mech.gravity; //constant upward drift
+            Matter.Body.setVelocity(player, {
+              x: player.velocity.x,
+              y: player.velocity.y * 0.97
+            });
+
             if (keys[83] || keys[40]) { //down
-              player.force.y += flyForce
-              Matter.Body.setVelocity(player, { //friction, only when flying
-                x: player.velocity.x,
-                y: player.velocity.y * 0.97
-              });
-            } else if (keys[87] || keys[38]) { //up
-              player.force.y -= flyForce
-              Matter.Body.setVelocity(player, { //friction, only when flying
-                x: player.velocity.x,
-                y: player.velocity.y * 0.95
-              });
-              // mech.fieldMeter -= DRAIN; //extra energy used to fly upwards
+              player.force.y += 0.003
+              mech.grabRange = mech.grabRange * 0.97 + 350 * 0.03;
+            } else {
+              mech.grabRange = mech.grabRange * 0.97 + 650 * 0.03;
             }
 
             //add extra friction for horizontal motion
             if (keys[65] || keys[68] || keys[37] || keys[39]) {
               Matter.Body.setVelocity(player, {
-                x: player.velocity.x * 0.95,
+                x: player.velocity.x * 0.88,
                 y: player.velocity.y
               });
             }
 
             //draw zero-G range
             ctx.beginPath();
-            ctx.arc(mech.pos.x, mech.pos.y + 15, range, 0, 2 * Math.PI);
-            ctx.fillStyle = "rgba(150,160,180," + (0.3 + 0.1 * Math.random()) + ")";
+            ctx.arc(mech.pos.x, mech.pos.y, mech.grabRange, 0, 2 * Math.PI);
+            ctx.fillStyle = "#f5f5ff";
+            ctx.globalCompositeOperation = "difference";
+            // ctx.strokeStyle = "#888"
+            // ctx.stroke();
             ctx.fill();
-            ctx.strokeStyle = "#000"
-            ctx.lineWidth = 2;
-            ctx.stroke();
+            ctx.globalCompositeOperation = "source-over";
+
+
           } else {
             //trigger cool down
             mech.fieldCDcycle = game.cycle + 120;
           }
         } else if (mech.holdingTarget && mech.fireCDcycle < game.cycle && mech.fieldMeter > 0.05) { //holding, but field button is released
           mech.pickUp();
+          mech.grabRange = 0
         } else {
           mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
+          mech.grabRange = 0
         }
         mech.drawFieldMeter()
       }
     },
     () => {
       mech.fieldMode = 4;
-      game.makeTextLog("<strong style='font-size:30px;'>Zero-Point Energy Field</strong><br> (right mouse or space bar) <p>improved energy regeneration<br> oscillating shields surround player</p>", 1200);
+      game.makeTextLog("<strong style='font-size:30px;'>Standing Wave Harmonics</strong><br> (right mouse or space bar) <p>oscillating shields surround player<br>improved energy regeneration<br>improved field shielding efficiency</p>", 1200);
       mech.setHoldDefaults();
-      mech.fieldShieldingScale = 0.7;
+      mech.fieldShieldingScale = 0.3;
       mech.fieldRegen = 0.007; //0.0015
-      mech.fieldArc = 1; //field covers full 360 degrees
+      // mech.fieldArc = 1; //field covers full 360 degrees
       mech.calculateFieldThreshold(); //run after setting fieldArc, used for powerUp grab and mobPush with lookingAt(mob)
 
       mech.hold = function () {
-        grabRange1 = 60 + 60 * Math.sin(game.cycle / 23)
-        grabRange2 = 70 + 70 * Math.sin(game.cycle / 37)
-        grabRange3 = 80 + 80 * Math.sin(game.cycle / 47)
+        grabRange1 = 100 + 95 * Math.sin(game.cycle / 23)
+        grabRange2 = 105 + 85 * Math.sin(game.cycle / 37)
+        grabRange3 = 90 + 90 * Math.sin(game.cycle / 47)
         mech.grabRange = Math.max(grabRange1, grabRange2, grabRange3)
 
         if (mech.isHolding) {
@@ -1077,28 +1076,17 @@ const mech = {
 
           ctx.fillStyle = "rgba(110,170,200," + (0.15 + 0.15 * Math.random()) + ")";
           ctx.beginPath();
-          ctx.arc(mech.pos.x, mech.pos.y, grabRange1, mech.angle - Math.PI * mech.fieldArc, mech.angle + Math.PI * mech.fieldArc, false);
+          ctx.arc(mech.pos.x, mech.pos.y, grabRange1, 0, 2 * Math.PI);
           ctx.fill();
           ctx.beginPath();
-          ctx.arc(mech.pos.x, mech.pos.y, grabRange2, mech.angle - Math.PI * mech.fieldArc, mech.angle + Math.PI * mech.fieldArc, false);
+          ctx.arc(mech.pos.x, mech.pos.y, grabRange2, 0, 2 * Math.PI);
           ctx.fill();
           ctx.beginPath();
-          ctx.arc(mech.pos.x, mech.pos.y, grabRange3, mech.angle - Math.PI * mech.fieldArc, mech.angle + Math.PI * mech.fieldArc, false);
+          ctx.arc(mech.pos.x, mech.pos.y, grabRange3, 0, 2 * Math.PI);
           ctx.fill();
-
-          // //draw random lines in field for cool effect
-          // let offAngle = this.angle + 2 * Math.PI * this.fieldArc * (Math.random() - 0.5);
-          // ctx.beginPath();
-          // eye = 15;
-          // ctx.moveTo(mech.pos.x + eye * Math.cos(this.angle), mech.pos.y + eye * Math.sin(this.angle));
-          // ctx.lineTo(this.pos.x + range * Math.cos(offAngle), this.pos.y + range * Math.sin(offAngle));
-          // ctx.strokeStyle = "rgba(120,170,255,0.4)";
-          // ctx.stroke();
-
-
           mech.grabPowerUp();
-          mech.pushMobs360(mech.grabRange + 10);
-          mech.lookForPickUp();
+          mech.pushMobs360(mech.grabRange + 25);
+          mech.lookForPickUp(180);
         } else if (mech.holdingTarget && mech.fireCDcycle < game.cycle) { //holding, but field button is released
           mech.pickUp();
         } else {
@@ -1109,15 +1097,15 @@ const mech = {
     },
     () => {
       mech.fieldMode = 5;
-      game.makeTextLog("<strong style='font-size:30px;'>Nano-Scale Manufacturing</strong><br> (passive effect) <p>excess field energy builds drones<br> <span style='color:#a00;'>decreased</span> field shielding efficiency</p>", 1200);
+      game.makeTextLog("<strong style='font-size:30px;'>Nano-Scale Manufacturing</strong><br> (passive effect) <p>excess field energy used to build drones<br> <span style='color:#a00;'>decreased</span> field shielding efficiency</p>", 1200);
       mech.setHoldDefaults();
-      mech.fieldShieldingScale = 10;
+      mech.fieldShieldingScale = 15;
       mech.grabRange = 155;
       mech.fieldArc = 0.1; //0.2 is normal
       mech.calculateFieldThreshold(); //run after setting fieldArc, used for powerUp grab and mobPush with lookingAt(mob)
       mech.hold = function () {
         if (mech.fieldMeter === 1) {
-          mech.fieldMeter -= 0.21;
+          mech.fieldMeter -= 0.2;
           b.guns[12].fire() //spawn drone
         }
         if (mech.isHolding) {
@@ -1139,10 +1127,11 @@ const mech = {
     },
     () => {
       mech.fieldMode = 6;
-      game.makeTextLog("<strong style='font-size:30px;'>Metamaterial Refractive Optics</strong><br> (right mouse or space bar) <p>localized invisibility field<br> greatly <span style='color:#a00;'>decreased</span> field shielding efficiency</p>", 1200);
+      game.makeTextLog("<strong style='font-size:30px;'>Metamaterial Refractive Optics</strong><br> (right mouse or space bar) <p>player is invisible while field is active.<br> <span style='color:#a00;'>decreased</span> field shielding efficiency</p>", 1200);
+      // <br>player <span style='color:#a00;'>can't see</span> while field is active</p>", 1200);
       mech.setHoldDefaults();
-      mech.fieldShieldingScale = 10000;
-      mech.grabRange = 160;
+      mech.fieldShieldingScale = 3;
+      // mech.grabRange = 160;
 
       mech.hold = function () {
         mech.isStealth = false //isStealth is checked in mob foundPlayer()
@@ -1152,13 +1141,17 @@ const mech = {
           mech.holding();
           mech.throw();
         } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < game.cycle) {
-          const DRAIN = 0.0004 //mech.fieldRegen = 0.0015
+          const DRAIN = 0.0002 //mech.fieldRegen = 0.0015
           if (mech.fieldMeter > DRAIN) {
             mech.fieldMeter -= DRAIN;
             mech.isStealth = true //isStealth is checked in mob foundPlayer() 
 
-            //draw stealth field
-            // ctx.fill();
+            if (mech.crouch) {
+              mech.grabRange = mech.grabRange * 0.96 + 360 * 0.04;
+            } else {
+              mech.grabRange = mech.grabRange * 0.96 + 180 * 0.04;
+            }
+
             ctx.beginPath();
             ctx.arc(mech.pos.x, mech.pos.y, mech.grabRange, 0, 2 * Math.PI);
             ctx.globalCompositeOperation = "destination-in"; //in or atop
@@ -1168,7 +1161,8 @@ const mech = {
             ctx.fillStyle = `rgba(0,30,50,${0.5+0.07*Math.random()})` //"rgba(210,230," + HUE + ",0.5)";
             ctx.fill();
 
-            mech.pushMobs360();
+            // mech.isStealth = false //isStealth is checked in mob foundPlayer() 
+            mech.pushMobs360(150);
             mech.grabPowerUp();
             mech.lookForPickUp();
           } else {
