@@ -477,6 +477,96 @@ const spawn = {
       }
     }
   },
+  suckerBoss(x, y, radius = 20) {
+    mobs.spawn(x, y, 12, radius, "#000");
+    let me = mob[mob.length - 1];
+    me.stroke = "transparent"; //used for drawSneaker
+    me.eventHorizon = 900; //required for black hole
+    me.seeAtDistance2 = (me.eventHorizon + 1000) * (me.eventHorizon + 1000); //vision limit is event horizon
+    me.accelMag = 0.00006 * game.accelScale;
+    me.collisionFilter.mask = 0x001100
+    // me.frictionAir = 0.005;
+    me.memory = 1600;
+    Matter.Body.setDensity(me, 0.05); //extra dense //normal is 0.001 //makes effective life much larger
+    me.onDeath = function () {
+      //applying forces to player doesn't seem to work inside this method, not sure why
+      if (Math.random() < 0.35 || mech.fieldMode === 0) powerUps.spawn(this.position.x, this.position.y, "field"); //boss spawns field upgrades
+
+      if (game.levelsCleared > 6) {
+        for (let i = 0; i < (game.levelsCleared - 5); ++i) {
+          spawn.sucker(this.position.x + (Math.random() - 0.5) * radius * 2, this.position.y + (Math.random() - 0.5) * radius * 2, 20);
+          Matter.Body.setVelocity(mob[mob.length - 1], {
+            x: (Math.random() - 0.5) * 25,
+            y: (Math.random() - 0.5) * 25
+          });
+        }
+      }
+    };
+    me.do = function () {
+      //keep it slow, to stop issues from explosion knock backs
+      if (this.speed > 2) {
+        Matter.Body.setVelocity(this, {
+          x: this.velocity.x * 0.95,
+          y: this.velocity.y * 0.95
+        });
+      }
+      this.seePlayerByDistOrLOS();
+      if (this.seePlayer.recall) {
+        //accelerate towards the player
+        const forceMag = this.accelMag * this.mass;
+        const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x);
+        this.force.x += forceMag * Math.cos(angle);
+        this.force.y += forceMag * Math.sin(angle);
+
+        //eventHorizon waves in and out
+        eventHorizon = this.eventHorizon * (1 + 0.4 * Math.sin(game.cycle * 0.006))
+        //  zoom camera in and out with the event horizon
+
+        //draw darkness
+        ctx.beginPath();
+        ctx.arc(this.position.x, this.position.y, eventHorizon * 0.2, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(0,20,40,0.6)";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(this.position.x, this.position.y, eventHorizon * 0.4, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(0,20,40,0.4)";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(this.position.x, this.position.y, eventHorizon * 0.6, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(0,20,40,0.3)";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(this.position.x, this.position.y, eventHorizon * 0.8, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(0,20,40,0.2)";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(this.position.x, this.position.y, eventHorizon, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(0,20,40,0.05)";
+        ctx.fill();
+        //when player is inside event horizon
+        if (Matter.Vector.magnitude(Matter.Vector.sub(this.position, player.position)) < eventHorizon) {
+          mech.damage(0.00015 * game.dmgScale);
+          if (mech.fieldMeter > 0.1) mech.fieldMeter -= 0.01
+          const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
+          player.force.x -= 1.3 * Math.cos(angle) * player.mass * game.g * (mech.onGround ? 1.7 : 1);
+          player.force.y -= 1.2 * Math.sin(angle) * player.mass * game.g;
+          //draw line to player
+          ctx.beginPath();
+          ctx.moveTo(this.position.x, this.position.y);
+          ctx.lineTo(mech.pos.x, mech.pos.y);
+          ctx.lineWidth = Math.min(60, this.radius * 2);
+          ctx.strokeStyle = "rgba(0,0,0,0.5)";
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
+          ctx.fillStyle = "rgba(0,0,0,0.3)";
+          ctx.fill();
+        }
+        this.healthBar();
+        this.curl(eventHorizon);
+      }
+    }
+  },
   beamer(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
     mobs.spawn(x, y, 4, radius, "rgb(255,0,190)");
     let me = mob[mob.length - 1];
@@ -854,8 +944,7 @@ const spawn = {
     me.g = 0.0004; //required if using 'gravity'
     me.leaveBody = false;
     // me.dropPowerUp = false;
-    me.onDeath = function () {
-      //run this function on death
+    me.onDeath = function () { //run this function on death
       for (let i = 0; i < Math.ceil(this.mass * 0.2 + Math.random() * 3); ++i) {
         spawn.spawns(this.position.x + (Math.random() - 0.5) * radius * 2, this.position.y + (Math.random() - 0.5) * radius * 2);
         Matter.Body.setVelocity(mob[mob.length - 1], {
@@ -925,7 +1014,6 @@ const spawn = {
       this.seePlayerCheck();
       this.attraction();
       this.laserBeam();
-      // this.curl();
     };
 
     //snake tail
@@ -979,7 +1067,7 @@ const spawn = {
       me.stroke = "rgb(220,220,255)";
       Matter.Body.setDensity(me, 0.0001) //very low density to not mess with the original mob's motion
       me.shield = true;
-      me.collisionFilter.mask = 0x001100; //don't collide with bodies, map, player, and mobs, only bullets
+      me.collisionFilter.mask = 0x000100; //don't collide with bodies, map, player, and mobs, only bullets
       consBB[consBB.length] = Constraint.create({
         //attach shield to last spawned mob
         bodyA: me,
@@ -1006,7 +1094,7 @@ const spawn = {
     Matter.Body.setDensity(me, 0.00005) //very low density to not mess with the original mob's motion
     me.frictionAir = 0;
     me.shield = true;
-    me.collisionFilter.mask = 0x001100; //don't collide with bodies, map, and mobs, only bullets and player
+    me.collisionFilter.mask = 0x000100; //don't collide with bodies, map, and mobs, only bullets and player
     //constrain to all mob nodes in boss
     for (let i = 0; i < nodes; ++i) {
       consBB[consBB.length] = Constraint.create({
@@ -1194,7 +1282,7 @@ const spawn = {
     let me = mob[mob.length - 1];
     //touch nothing
     me.collisionFilter.category = 0x010000; //act like a body
-    me.collisionFilter.mask = 0x000001; //only collide with map
+    me.collisionFilter.mask = 0x000101; //only collide with map
     me.inertia = Infinity;
     me.g = 0.0004; //required for gravity
     me.restitution = 0;
@@ -1258,7 +1346,7 @@ const spawn = {
     let me = mob[mob.length - 1];
     //touch nothing
     me.collisionFilter.category = 0x010000; //act like a body
-    me.collisionFilter.mask = 0x000001; //only collide with map
+    me.collisionFilter.mask = 0x000101; //only collide with map
     me.g = 0.0003; //required for gravity
     // me.restitution = 0;
     me.stroke = "transparent"
@@ -1306,7 +1394,7 @@ const spawn = {
     let me = mob[mob.length - 1];
     //touch nothing
     me.collisionFilter.category = 0x010000; //act like a body
-    me.collisionFilter.mask = 0x000001; //only collide with map
+    me.collisionFilter.mask = 0x000101; //only collide with map
     me.g = 0.0003; //required for gravity
     // me.restitution = 0;
     me.stroke = "transparent"
@@ -1354,7 +1442,7 @@ const spawn = {
     let me = mob[mob.length - 1];
     //touch nothing
     me.collisionFilter.category = 0x010000; //act like a body
-    me.collisionFilter.mask = 0x000001; //only collide with map
+    me.collisionFilter.mask = 0x000101; //only collide with map
     me.g = 0.0003; //required for gravity
     me.restitution = 0;
     me.stroke = "transparent"
@@ -1401,7 +1489,7 @@ const spawn = {
     let me = mob[mob.length - 1];
     //touch nothing
     me.collisionFilter.category = 0x010000; //act like a body
-    me.collisionFilter.mask = 0x000001; //only collide with map
+    me.collisionFilter.mask = 0x000101; //only collide with map
     me.g = 0.0003; //required for gravity
     me.restitution = 0;
     me.stroke = "transparent"
@@ -1516,34 +1604,20 @@ const spawn = {
       }
     }
   },
-  bodyRect(
-    x,
-    y,
-    width,
-    height,
-    chance = 1,
-    properties = {
-      friction: 0.05,
-      frictionAir: 0.01
-    }
-  ) {
-    if (Math.random() < chance) {
-      body[body.length] = Bodies.rectangle(x + width / 2, y + height / 2, width, height, properties);
-    }
+  bodyRect(x, y, width, height, chance = 1, properties = {
+    friction: 0.05,
+    frictionAir: 0.01
+  }) {
+    if (Math.random() < chance) body[body.length] = Bodies.rectangle(x + width / 2, y + height / 2, width, height, properties);
   },
-  bodyVertex(x, y, vector, properties) {
-    //addes shape to body array
+  bodyVertex(x, y, vector, properties) { //adds shape to body array
     body[body.length] = Matter.Bodies.fromVertices(x, y, Vertices.fromPath(vector), properties);
   },
-  mapRect(x, y, width, height, properties) {
-    //addes reactangles to map array
-    var len = map.length;
-    map[len] = Bodies.rectangle(x + width / 2, y + height / 2, width, height, properties);
+  mapRect(x, y, width, height, properties) { //adds rectangle to map array
+    map[map.length] = Bodies.rectangle(x + width / 2, y + height / 2, width, height, properties);
   },
-  mapVertex(x, y, vector, properties) {
-    //addes shape to map array
-    var len = map.length;
-    map[len] = Matter.Bodies.fromVertices(x, y, Vertices.fromPath(vector), properties);
+  mapVertex(x, y, vector, properties) { //adds shape to map array
+    map[map.length] = Matter.Bodies.fromVertices(x, y, Vertices.fromPath(vector), properties);
   },
   //complex map templates
   spawnBuilding(x, y, w, h, leftDoor, rightDoor, walledSide) {
@@ -1578,7 +1652,7 @@ const spawn = {
       }
     }
   },
-  //premade property options*************************************************************************************
+  //pre-made property options*************************************************************************************
   //*************************************************************************************************************
   //Object.assign({}, propsHeavy, propsBouncy, propsNoRotation)      //will combine properties into a new object
   propsFriction: {

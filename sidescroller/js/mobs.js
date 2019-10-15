@@ -554,10 +554,8 @@ const mobs = {
       //   ctx.fillStyle = "rgba(0,0,0,0.1)";
       //   ctx.fill();
       // },
-      curl() {
+      curl(range = 1000, mag = -10) {
         //cause all mobs, and bodies to rotate in a circle
-        const range = 1000
-
         applyCurl = function (center, array) {
           for (let i = 0; i < array.length; ++i) {
             const sub = Matter.Vector.sub(center, array[i].position)
@@ -565,40 +563,37 @@ const mobs = {
 
             //if too close, like center mob or shield, don't curl   // if too far don't curl
             if (radius2 < range * range && radius2 > 10000) {
-              const curlVector = Matter.Vector.perp(Matter.Vector.normalise(sub))
-
+              const curlVector = Matter.Vector.mult(Matter.Vector.perp(Matter.Vector.normalise(sub)), mag)
               //apply curl force
-              const mag = Matter.Vector.mult(curlVector, 10)
               Matter.Body.setVelocity(array[i], {
-                x: array[i].velocity.x * 0.99 + mag.x * 0.01,
-                y: array[i].velocity.y * 0.99 + mag.y * 0.01
+                x: array[i].velocity.x * 0.94 + curlVector.x * 0.06,
+                y: array[i].velocity.y * 0.94 + curlVector.y * 0.06
               })
-
-              //draw curl
-              ctx.beginPath();
-              ctx.moveTo(array[i].position.x, array[i].position.y);
-              ctx.lineTo(array[i].position.x + curlVector.x * 100, array[i].position.y + curlVector.y * 100);
-              ctx.lineWidth = 2;
-              ctx.strokeStyle = "#000";
-              ctx.stroke();
+              // //draw curl
+              // ctx.beginPath();
+              // ctx.moveTo(array[i].position.x, array[i].position.y);
+              // ctx.lineTo(array[i].position.x + curlVector.x * 10, array[i].position.y + curlVector.y * 10);
+              // ctx.lineWidth = 2;
+              // ctx.strokeStyle = "#000";
+              // ctx.stroke();
             }
           }
         }
         applyCurl(this.position, mob);
         applyCurl(this.position, body);
-
-
+        applyCurl(this.position, powerUp);
+        // applyCurl(this.position, [player]);
         //draw limit
-        ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, range, 0, 2 * Math.PI);
-        ctx.fillStyle = "rgba(55,255,255, 0.1)";
-        ctx.fill();
+        // ctx.beginPath();
+        // ctx.arc(this.position.x, this.position.y, range, 0, 2 * Math.PI);
+        // ctx.fillStyle = "rgba(55,255,255, 0.1)";
+        // ctx.fill();
       },
       pullPlayer() {
         if (this.seePlayer.yes && Matter.Vector.magnitudeSquared(Matter.Vector.sub(this.position, player.position)) < 1000000) {
           const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
-          player.force.x -= 1.3 * Math.cos(angle) * (mech.onGround ? 2 * player.mass * game.g : player.mass * game.g);
-          player.force.y -= 0.97 * player.mass * game.g * Math.sin(angle);
+          player.force.x -= game.accelScale * 1.13 * Math.cos(angle) * (mech.onGround ? 2 * player.mass * game.g : player.mass * game.g);
+          player.force.y -= game.accelScale * 0.84 * player.mass * game.g * Math.sin(angle);
 
           ctx.beginPath();
           ctx.moveTo(this.position.x, this.position.y);

@@ -398,8 +398,130 @@ const b = {
           ctx.globalAlpha = 1;
         }
       }
-    },
-    {
+      // }, {
+      //   name: "entropic beam",
+      //   description: "steal entropy to heal<br>reflects off walls at 75% intensity<br>uses energy instead of ammunition",
+      //   ammo: 0,
+      //   // ammoPack: 350,
+      //   ammoPack: Infinity,
+      //   have: false,
+      //   fire() {
+      //     // mech.fireCDcycle = game.cycle + 1
+      //     //laser drains energy as well as bullets
+      //     const FIELD_DRAIN = 0.0001 //should be 0.001
+      //     if (mech.fieldMeter < FIELD_DRAIN) {
+      //       mech.fireCDcycle = game.cycle + 100; // cool down if out of energy
+      //     } else {
+      //       mech.fieldMeter -= mech.fieldRegen + FIELD_DRAIN
+      //       let best;
+      //       const color = "#a0a";
+      //       const range = 600;
+      //       const path = [{
+      //           x: mech.pos.x + 20 * Math.cos(mech.angle),
+      //           y: mech.pos.y + 20 * Math.sin(mech.angle)
+      //         },
+      //         {
+      //           x: mech.pos.x + range * Math.cos(mech.angle),
+      //           y: mech.pos.y + range * Math.sin(mech.angle)
+      //         }
+      //       ];
+      //       const vertexCollision = function (v1, v1End, domain) {
+      //         for (let i = 0; i < domain.length; ++i) {
+      //           let vertices = domain[i].vertices;
+      //           const len = vertices.length - 1;
+      //           for (let j = 0; j < len; j++) {
+      //             results = game.checkLineIntersection(v1, v1End, vertices[j], vertices[j + 1]);
+      //             if (results.onLine1 && results.onLine2) {
+      //               const dx = v1.x - results.x;
+      //               const dy = v1.y - results.y;
+      //               const dist2 = dx * dx + dy * dy;
+      //               if (dist2 < best.dist2 && (!domain[i].mob || domain[i].alive)) {
+      //                 best = {
+      //                   x: results.x,
+      //                   y: results.y,
+      //                   dist2: dist2,
+      //                   who: domain[i],
+      //                   v1: vertices[j],
+      //                   v2: vertices[j + 1]
+      //                 };
+      //               }
+      //             }
+      //           }
+      //           results = game.checkLineIntersection(v1, v1End, vertices[0], vertices[len]);
+      //           if (results.onLine1 && results.onLine2) {
+      //             const dx = v1.x - results.x;
+      //             const dy = v1.y - results.y;
+      //             const dist2 = dx * dx + dy * dy;
+      //             if (dist2 < best.dist2 && (!domain[i].mob || domain[i].alive)) {
+      //               best = {
+      //                 x: results.x,
+      //                 y: results.y,
+      //                 dist2: dist2,
+      //                 who: domain[i],
+      //                 v1: vertices[0],
+      //                 v2: vertices[len]
+      //               };
+      //             }
+      //           }
+      //         }
+      //       };
+      //       const checkforCollisions = function () {
+      //         best = {
+      //           x: null,
+      //           y: null,
+      //           dist2: Infinity,
+      //           who: null,
+      //           v1: null,
+      //           v2: null
+      //         };
+      //         vertexCollision(path[path.length - 2], path[path.length - 1], mob);
+      //         vertexCollision(path[path.length - 2], path[path.length - 1], map);
+      //         vertexCollision(path[path.length - 2], path[path.length - 1], body);
+      //       };
+      //       const laserHitMob = function (dmg) {
+      //         if (best.who.alive) {
+      //           dmg *= b.dmgScale * 0.02;
+      //           mech.addHealth(0.002)
+      //           best.who.damage(dmg);
+      //           best.who.locatePlayer();
+      //           //draw mob damage circle
+      //           ctx.fillStyle = color;
+      //           ctx.beginPath();
+      //           ctx.arc(path[path.length - 1].x, path[path.length - 1].y, Math.sqrt(dmg) * 100, 0, 2 * Math.PI);
+      //           ctx.fill();
+      //         }
+      //       };
+      //       checkforCollisions();
+      //       if (best.dist2 != Infinity) {
+      //         //if hitting something
+      //         path[path.length - 1] = {
+      //           x: best.x,
+      //           y: best.y
+      //         };
+      //         laserHitMob(1);
+      //       }
+      //       ctx.fillStyle = color;
+      //       ctx.strokeStyle = color;
+      //       ctx.lineWidth = 4;
+      //       for (let i = 1, len = path.length; i < len; ++i) {
+      //         d = {
+      //           x: path[i].x - path[i - 1].x,
+      //           y: path[i].y - path[i - 1].y
+      //         }
+      //         const a = game.cycle * 5
+      //         p1 = {
+      //           x: d.x / 2 * Math.cos(a) - d.y / 2 * Math.sin(a),
+      //           y: d.x / 2 * Math.sin(a) + d.y / 2 * Math.cos(a),
+      //         }
+      //         const wave = 300 / Math.sqrt(d.x * d.x + d.y * d.y)
+      //         ctx.beginPath();
+      //         ctx.moveTo(path[i - 1].x, path[i - 1].y);
+      //         ctx.bezierCurveTo(path[i - 1].x + p1.x * wave, path[i - 1].y + p1.y * wave, path[i].x + p1.x * wave, path[i].y + p1.y * wave, path[i].x, path[i].y);
+      //         ctx.stroke();
+      //       }
+      //     }
+      //   }
+    }, {
       name: "one shot",
       description: "fire a huge bullet with high recoil<br>effective at long distances",
       ammo: 0,
@@ -794,7 +916,7 @@ const b = {
     },
     {
       name: "spores",
-      description: "release an orb discharges spores after 2 seconds<br>spores seek out targets<br>spores can pass through blocks",
+      description: "release an orb that discharges spores after 2 seconds<br>spores seek out targets<br>spores can pass through blocks",
       ammo: 0,
       ammoPack: 6,
       have: false,
@@ -895,9 +1017,9 @@ const b = {
     },
     {
       name: "drones",
-      description: "release drones that seek out targets<br>waits at crosshairs if no targets are available",
+      description: "release drones that seek out targets<br>if no targets, drones move to mouse<br>",
       ammo: 0,
-      ammoPack: 23,
+      ammoPack: 21,
       have: false,
       fire() {
         const THRUST = 0.0015
@@ -929,31 +1051,48 @@ const b = {
             this.force.y += this.mass * 0.0002;
             //find mob targets
             if (!(game.cycle % this.lookFrequency)) {
-              // this.close = null;
               this.lockedOn = null;
-              this.isFollowMouse = true; //if no target is found default to follow mouse
               let closeDist = Infinity;
               for (let i = 0, len = mob.length; i < len; ++i) {
                 if (
-                  // mob[i].alive &&  
-                  // mob[i].dropPowerUp && //don't target mob bullets
                   Matter.Query.ray(map, this.position, mob[i].position).length === 0 &&
                   Matter.Query.ray(body, this.position, mob[i].position).length === 0
                 ) {
                   const TARGET_VECTOR = Matter.Vector.sub(this.position, mob[i].position)
                   const DIST = Matter.Vector.magnitude(TARGET_VECTOR);
                   if (DIST < closeDist) {
-                    // this.close = mob[i].position;
                     closeDist = DIST;
                     this.lockedOn = mob[i]
-                    this.isFollowMouse = false;
+                  }
+                }
+              }
+              if (!this.lockedOn) {
+                //grab a power up if it is (ammo) or (a heal when player is low)
+                let closeDist = Infinity;
+                for (let i = 0, len = powerUp.length; i < len; ++i) {
+                  if (
+                    (powerUp[i].name === "ammo" || powerUp[i].name === "gun" || (powerUp[i].name === "heal" && mech.health < 0.8)) &&
+                    Matter.Query.ray(map, this.position, powerUp[i].position).length === 0 &&
+                    Matter.Query.ray(body, this.position, powerUp[i].position).length === 0
+                  ) {
+                    const TARGET_VECTOR = Matter.Vector.sub(this.position, powerUp[i].position)
+                    const DIST = Matter.Vector.magnitude(TARGET_VECTOR);
+                    if (DIST < closeDist) {
+                      if (DIST < 50) { //eat the power up if close enough
+                        powerUp[i].effect();
+                        powerUp.splice(i, 1)
+                        break;
+                      }
+                      closeDist = DIST;
+                      this.lockedOn = powerUp[i]
+                    }
                   }
                 }
               }
             }
             if (this.lockedOn) { //accelerate towards mobs
               this.force = Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.position, this.lockedOn.position)), -this.mass * THRUST)
-            } else if (this.isFollowMouse) { //accelerate towards mouse
+            } else { //accelerate towards mouse
               this.force = Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.position, game.mouseInGame)), -this.mass * THRUST)
             }
             // speed cap instead of friction to give more agility
@@ -967,10 +1106,6 @@ const b = {
         })
         b.fireProps(mech.crouch ? 22 : 15, mech.crouch ? 26 : 1, dir, me); //cd , speed
         b.drawOneBullet(bullet[me].vertices);
-        // Matter.Body.setDensity(bullet[me], 0.000001);
-        // bullet[me].onDmg = function () {
-        // this.endCycle = 0; //bullet ends cycle after doing damage
-        // };
       }
     },
   ],

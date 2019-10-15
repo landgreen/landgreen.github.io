@@ -220,14 +220,6 @@ canvas,
   margin-right: -1em;
 }
 
-.highlight {
-  color: #fff;
-  background-color: var(--link-color);
-  border-radius: 5px;
-  margin: 0px 2px 0px 2px;
-  padding: 0px 2px 0px 2px;
-}
-
 .definition {
   color: #000;
   background-color: var(--def-color);
