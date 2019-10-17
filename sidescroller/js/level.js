@@ -6,6 +6,7 @@ let consBB = []; //all constraints between two bodies
 //main object for spawning levels
 const level = {
   maxJump: 390,
+  defaultZoom: 1400,
   boostScale: 0.000023,
   levels: ["skyscrapers", "rooftops", "warehouse", "highrise", "office", "aerie"],
   onLevel: 0,
@@ -16,7 +17,8 @@ const level = {
       // game.levelsCleared = 4; //for testing to simulate possible mobs spawns
       // b.giveGuns(1) // set a starting gun for testing
       // b.giveGuns("all", 1000)
-      // mech.fieldUpgrades[5]() //give a field power up for testing
+      // mech.fieldUpgrades[1]() //give a field power up for testing
+
       this.intro(); //starting level
       // this.testingMap();
       // this.bosses();
@@ -44,8 +46,9 @@ const level = {
   //******************************************************************************************************************
   //******************************************************************************************************************
   testingMap() {
+    //start with all guns
+    b.giveGuns("all", 1000)
     game.zoomScale = 1400 //1400 is normal
-    game.zoomTransition(1400)
     spawn.setSpawnList();
     game.levelsCleared = 3; //for testing to simulate all possible mobs spawns
     for (let i = 0; i < game.levelsCleared; i++) {
@@ -58,9 +61,9 @@ const level = {
     level.exit.x = 3500;
     level.exit.y = -870;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
+    document.body.style.backgroundColor = "#dcdcde";
 
-    //start with all guns
-    b.giveGuns("all", 1000)
+
 
 
     // this.addZone(250, -1000, 500, 1500, "laser");
@@ -68,13 +71,6 @@ const level = {
     // setTimeout(function() {
     //   document.body.style.backgroundColor = "#eee";
     // }, 1);
-    document.body.style.backgroundColor = "#fff";
-    // document.body.style.backgroundColor = "#fafcff";
-    // document.body.style.backgroundColor = "#bbb";
-    // document.body.style.backgroundColor = "#eee4e4";
-    // document.body.style.backgroundColor = "#dcdcde";
-    // document.body.style.backgroundColor = "#e0e5e0";
-
     // this.addQueryRegion(550, -25, 100, 50, "bounce", { Vx: 0, Vy: -25 });
     // level.fillBG.push({ x: 550, y: -25, width: 100, height: 50, color: "#ff0" });
 
@@ -123,27 +119,17 @@ const level = {
     // spawn.bodyRect(-45, -100, 40, 50);
     // spawn.focuser(800, -1150);
     // spawn.groupBoss(-600, -550);
-    // for (let i = 0; i < 1; ++i) {
-    spawn.shooter(800, -150, 10);
-    spawn.shooter(800, -150, 10);
-    spawn.shooter(800, -100, 10);
-    spawn.shooter(800, -50, 10);
-    spawn.shooter(800, -150, 10);
-    spawn.shooter(800, -150, 10);
-    spawn.shooter(800, -100, 10);
-    spawn.shooter(800, -50, 10);
-    spawn.shooter(800, -150, 10);
-    spawn.shooter(800, -150, 10);
-    spawn.shooter(800, -100, 10);
-    spawn.shooter(800, -50, 10);
-    // }
+    spawn.starter(800, -150, 100);
+    // spawn.grower(800, -250);
+    // spawn.blinker(800, -250, 40);
     // spawn.groupBoss(900, -1070);
     // for (let i = 0; i < 20; i++) {
     //   spawn.randomBoss(-100, -1470);
     // }
   },
   bosses() {
-    game.zoomTransition(1500)
+    level.defaultZoom = 1500
+    game.zoomTransition(level.defaultZoom)
 
     // spawn.setSpawnList();
     // spawn.setSpawnList();
@@ -153,15 +139,15 @@ const level = {
     //   b.dmgScale *= 0.9; //damage done by player decreases each level
     // }
 
-    document.body.style.backgroundColor = "#444";
+    document.body.style.backgroundColor = "#fff";
 
-    level.fillBG.push({
-      x: -150,
-      y: -1150,
-      width: 7000,
-      height: 1200,
-      color: "#eee"
-    });
+    // level.fillBG.push({
+    //   x: -150,
+    //   y: -1150,
+    //   width: 7000,
+    //   height: 1200,
+    //   color: "#eee"
+    // });
 
     level.fill.push({
       x: 6400,
@@ -178,9 +164,9 @@ const level = {
     level.exit.y = -230;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
 
-    spawn.mapRect(-250, 0, 7000, 200); //ground
-    spawn.mapRect(-350, -1200, 200, 1400); //left wall
-    spawn.mapRect(-250, -1200, 7000, 200); //roof
+    spawn.mapRect(-950, 0, 8200, 800); //ground
+    spawn.mapRect(-950, -1200, 800, 1400); //left wall
+    spawn.mapRect(-950, -1800, 8200, 800); //roof
     spawn.mapRect(-250, -700, 1000, 900); // shelf
     spawn.mapRect(-250, -1200, 1000, 250); // shelf roof
     powerUps.spawnStartingPowerUps(600, -800);
@@ -207,7 +193,7 @@ const level = {
     spawn.lineBoss(5000, -200, spawn.allowedBossList[Math.floor(Math.random() * spawn.allowedBossList.length)]);
     spawn.mapRect(6400, -1200, 400, 750); //right wall
     spawn.mapRect(6400, -200, 400, 300); //right wall
-    spawn.mapRect(6700, -1200, 200, 1400); //right wall
+    spawn.mapRect(6700, -1800, 800, 2600); //right wall
     spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 100); //exit bump
 
     for (let i = 0; i < 5; ++i) {
@@ -226,7 +212,8 @@ const level = {
   intro() {
     // b.giveGuns(0, 1000)
     game.zoomScale = 1000 //1400 is normal
-    game.zoomTransition(1600, 1)
+    level.defaultZoom = 1600
+    game.zoomTransition(level.defaultZoom, 1)
 
     mech.setPosToSpawn(460, -100); //normal spawn
     level.enter.x = -1000000; //offscreen
@@ -234,27 +221,7 @@ const level = {
     level.exit.x = 2800;
     level.exit.y = -335;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
-    document.body.style.backgroundColor = "#444";
-    //controls instructions
-    // game.makeTextLog(
-    //   "<br><br><div class='wrapper'> <div class = 'grid-box'> <span class = 'box'>W</span><br> <span class = 'box'>A</span> <span class = 'box'>S</span> <span class = 'box'>D</span></div> <div class = 'grid-box'> <span class = 'mouse'>️<span class='mouse-line'></span></span> </div></div>",
-    //   Infinity
-    // );
-    level.fill.push({
-      x: -150,
-      y: -1150,
-      width: 2750,
-      height: 1200,
-      color: "rgba(0,70,80,0.1)"
-    });
-
-    level.fillBG.push({
-      x: -150,
-      y: -1150,
-      width: 2900,
-      height: 1200,
-      color: "#fff"
-    });
+    document.body.style.backgroundColor = "#fff";
     level.fillBG.push({
       x: 2600,
       y: -600,
@@ -326,10 +293,10 @@ const level = {
       wallWire(-200 - i * 10, -215 + i * 10, 660, 5);
       wallWire(460 - i * 10, -215 + i * 10, 5, 300);
     }
-    spawn.mapRect(-250, 0, 3000, 200); //ground
-    spawn.mapRect(-350, -1200, 200, 1400); //left wall
-    spawn.mapRect(3000, -1200, 200, 1400); //right wall
-    spawn.mapRect(-250, -1200, 3000, 200); //roof
+    spawn.mapRect(-250, 0, 3600, 800); //ground
+    spawn.mapRect(-950, -1800, 800, 2600); //left wall
+    spawn.mapRect(3000, -1800, 800, 2600); //right wall
+    spawn.mapRect(-250, -1800, 3600, 800); //roof
     spawn.mapRect(2600, -300, 500, 500); //exit shelf
     spawn.mapRect(2600, -1200, 500, 600); //exit roof
     spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 100); //exit bump
@@ -375,8 +342,8 @@ const level = {
     // spawn.healer(1000, -400)
   },
   rooftops() {
-    game.zoomTransition(1700) //1400 is normal
-
+    level.defaultZoom = 1700
+    game.zoomTransition(level.defaultZoom)
     document.body.style.backgroundColor = "#dcdcde";
 
     if (Math.random() < 0.75) {
@@ -562,7 +529,8 @@ const level = {
   aerie() {
     // game.setZoom(3000);
     // game.levelsCleared = 4; //for testing to simulate possible mobs spawns
-    game.zoomTransition(2100) //1400 is normal
+    level.defaultZoom = 2100
+    game.zoomTransition(level.defaultZoom)
 
     const backwards = (Math.random() < 0.75) ? false : true;
     if (backwards) {
@@ -725,7 +693,8 @@ const level = {
     //add mini boss, giant hopper?   or a black hole that spawns hoppers?
   },
   skyscrapers() {
-    game.zoomTransition(2000) //1400 is normal
+    level.defaultZoom = 2000
+    game.zoomTransition(level.defaultZoom)
 
     mech.setPosToSpawn(-50, -50); //normal spawn
     //mech.setPosToSpawn(1550, -1200); //spawn left high
@@ -876,7 +845,9 @@ const level = {
     spawn.randomBoss(1700, -900, 0.4);
   },
   highrise() {
-    game.zoomTransition(1500) //1400 is normal
+    level.defaultZoom = 1500
+    game.zoomTransition(level.defaultZoom)
+
     document.body.style.backgroundColor = "#dcdcde" //"#fafcff";
     mech.setPosToSpawn(0, -700); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
@@ -1042,7 +1013,9 @@ const level = {
     spawn.randomBoss(-2450, -1100, 0);
   },
   warehouse() {
-    game.zoomTransition(1300)
+    level.defaultZoom = 1300
+    game.zoomTransition(level.defaultZoom)
+
     document.body.style.backgroundColor = "#f2f5f3";
     mech.setPosToSpawn(25, -60); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
@@ -1216,7 +1189,9 @@ const level = {
     if (game.levelsCleared > 2) spawn.snaker(-1300 + Math.random() * 2000, -2200); //boss snake with head
   },
   office() {
-    game.zoomTransition(1400)
+    level.defaultZoom = 1400
+    game.zoomTransition(level.defaultZoom)
+
     if (Math.random() < 0.75) {
       //normal direction start in top left
       mech.setPosToSpawn(1375, -1550); //normal spawn
