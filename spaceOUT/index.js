@@ -189,8 +189,13 @@ let isScored = 0
 
 function collision() { //get color of tile player in about to hit
     function crashCheck(who) {
-        const index = 4 * (Math.floor(who.position.x + 2 * who.velocity.x) + Math.floor(who.position.y + 2 * who.velocity.y) * canvas.width)
-        if (!(data[index] === 0 && data[index + 1] === 0 && data[index + 2] === 0) && (data[index] != undefined)) {
+        const x = Math.floor(who.position.x + 3 * who.velocity.x)
+        const y = Math.floor(who.position.y + 3 * who.velocity.y)
+        const index = 4 * (x + y * canvas.width)
+        if (
+            !(data[index] === 0 && data[index + 1] === 0 && data[index + 2] === 0) &&
+            (data[index] != undefined)
+        ) {
             if (who === p1) {
                 p2.score++
             } else if (who === p2) {
@@ -199,7 +204,7 @@ function collision() { //get color of tile player in about to hit
             //update scoreboard in tab title
             document.title = "spaceOUT \u205f " + p1.emoji + p1.score + "\u205f \u205f \u205f " + p2.emoji + p2.score
             isScored = 255
-            setSquareColor(who.position, 15, who.color[0], who.color[1], who.color[2])
+            // setSquareColor(who.position, 15, who.color[0], who.color[1], who.color[2])
         }
     }
 
