@@ -14,7 +14,6 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-
 //___________________get keyboard input___________________
 const keys = [];
 document.addEventListener("keydown", event => {
@@ -24,6 +23,7 @@ document.addEventListener("keydown", event => {
 document.addEventListener("keyup", event => {
     keys[event.keyCode] = false;
 });
+
 let time = 0
 const p1 = {
     score: 0,
@@ -34,7 +34,7 @@ const p1 = {
         y: canvas.height / 2
     },
     velocity: {
-        x: -0.5,
+        x: 0.5,
         y: 0
     }
 }
@@ -48,7 +48,7 @@ const p2 = {
         y: canvas.height / 2
     },
     velocity: {
-        x: 0.5,
+        x: -0.5,
         y: 0
     }
 }
@@ -189,12 +189,18 @@ let isScored = 0
 
 function collision() { //get color of tile player in about to hit
     function crashCheck(who) {
-        const x = Math.floor(who.position.x + 3 * who.velocity.x)
-        const y = Math.floor(who.position.y + 3 * who.velocity.y)
+        let edge = false
+
+        let x = Math.floor(who.position.x + 3 * who.velocity.x)
+        if (x < 0 || x > canvas.width) edge = true
+
+        let y = Math.floor(who.position.y + 3 * who.velocity.y)
+        if (y < 0 || y > canvas.height) edge = true
+
         const index = 4 * (x + y * canvas.width)
         if (
             !(data[index] === 0 && data[index + 1] === 0 && data[index + 2] === 0) &&
-            (data[index] != undefined)
+            data[index] != undefined && edge !== true
         ) {
             if (who === p1) {
                 p2.score++
@@ -207,11 +213,29 @@ function collision() { //get color of tile player in about to hit
             // setSquareColor(who.position, 15, who.color[0], who.color[1], who.color[2])
         }
     }
-
     crashCheck(p1)
     crashCheck(p2)
     // console.log(data[index], data[index + 1], data[index + 2])
 }
+// function collision() { //get color of tile player in about to hit
+//     function crashCheck(who) {
+//         const index = 4 * (Math.floor(who.position.x + 2 * who.velocity.x) + Math.floor(who.position.y + 2 * who.velocity.y) * canvas.width)
+//         if (!(data[index] === 0 && data[index + 1] === 0 && data[index + 2] === 0) && (data[index] != undefined)) {
+//             if (who === p1) {
+//                 p2.score++
+//             } else if (who === p2) {
+//                 p1.score++
+//             }
+//             //update scoreboard in tab title
+//             document.title = "spaceOUT \u205f " + p1.emoji + p1.score + "\u205f \u205f \u205f " + p2.emoji + p2.score
+//             isScored = 255
+//             setSquareColor(who.position, 15, who.color[0], who.color[1], who.color[2])
+//         }
+//     }
+//     crashCheck(p1)
+//     crashCheck(p2)
+//     // console.log(data[index], data[index + 1], data[index + 2])
+// }
 
 function addPixel(p, index) {
     data[index] = p.color[0]; // red
@@ -259,16 +283,16 @@ function fadeColor() {
 setBaseColor();
 
 function cycle() {
-    if (isScored) {
-        isScored--
-        if (isScored < 0) {
-            isScored = 0
-            setBaseColor()
-        }
-        fadeColor()
-        ctx.putImageData(imageData, 0, 0);
-    } else {
-        for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
+        if (isScored) {
+            isScored--
+            if (isScored < 0) {
+                isScored = 0
+                setBaseColor()
+            }
+            fadeColor()
+            ctx.putImageData(imageData, 0, 0);
+        } else {
             time++
             turn()
             move()
