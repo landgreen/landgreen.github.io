@@ -11,10 +11,8 @@ const level = {
   levels: ["skyscrapers", "rooftops", "warehouse", "highrise", "office", "aerie"],
   onLevel: 0,
   start() {
-    // game.zoomScale = 1400 //1400
     if (game.levelsCleared === 0) {
-      document.title = "n-gon";
-      // game.levelsCleared = 4; //for testing to simulate possible mobs spawns
+      // game.levelsCleared = 5; //for testing to simulate possible mobs spawns
       // b.giveGuns(1) // set a starting gun for testing
       // b.giveGuns("all", 1000)
       // mech.fieldUpgrades[1]() //give a field power up for testing
@@ -101,9 +99,9 @@ const level = {
     // spawn.bodyRect(-140, -200, 50, 50);
     // spawn.bodyRect(-95, -50, 40, 50);
     // spawn.bodyRect(-90, -100, 60, 50);
-    spawn.bodyRect(300, -150, 140, 50);
-    spawn.bodyRect(300, -150, 30, 30);
-    spawn.bodyRect(300, -150, 20, 20);
+    // spawn.bodyRect(300, -150, 140, 50);
+    // spawn.bodyRect(300, -150, 30, 30);
+    // spawn.bodyRect(300, -150, 20, 20);
     // spawn.bodyRect(300, -150, 40, 100);
     // spawn.bodyRect(300, -150, 40, 90);
     // spawn.bodyRect(300, -150, 30, 60);
@@ -114,8 +112,12 @@ const level = {
     // spawn.bodyRect(600, -150, 140, 100);
     // spawn.bodyRect(400, -150, 140, 160);
     // spawn.bodyRect(500, -150, 110, 110);
-    // powerUps.spawn(400, -400, "field", false, '4');
-    // powerUps.spawn(400, -400, "gun", false);
+    // powerUps.spawn(340, -400, "heal", false);
+    // powerUps.spawn(370, -400, "gun", false);
+    // powerUps.spawn(400, -400, "field", false, 2);
+    // powerUps.spawn(420, -400, "ammo", false);
+    powerUps.spawn(450, -400, "mod", false, 6);
+    // powerUps.spawn(450, -400, "mod", false);
     // spawn.bodyRect(-45, -100, 40, 50);
     // spawn.focuser(800, -1150);
     // spawn.groupBoss(-600, -550);
@@ -293,10 +295,10 @@ const level = {
       wallWire(-200 - i * 10, -215 + i * 10, 660, 5);
       wallWire(460 - i * 10, -215 + i * 10, 5, 300);
     }
-    spawn.mapRect(-250, 0, 3600, 800); //ground
-    spawn.mapRect(-950, -1800, 800, 2600); //left wall
-    spawn.mapRect(3000, -1800, 800, 2600); //right wall
-    spawn.mapRect(-250, -1800, 3600, 800); //roof
+    spawn.mapRect(-250, 0, 3600, 1800); //ground
+    spawn.mapRect(-2750, -2800, 2600, 4600); //left wall
+    spawn.mapRect(3000, -2800, 2600, 4600); //right wall
+    spawn.mapRect(-250, -2800, 3600, 1800); //roof
     spawn.mapRect(2600, -300, 500, 500); //exit shelf
     spawn.mapRect(2600, -1200, 500, 600); //exit roof
     spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 100); //exit bump
@@ -496,12 +498,12 @@ const level = {
     spawn.bodyRect(3925, -1400, 100, 150, 0.8);
     spawn.mapRect(3450, -1250, 1100, 50);
     spawn.mapRect(3450, -1225, 50, 75);
-    spawn.mapRect(4500, -1225, 50, 350);
+    spawn.mapRect(4500, -1225, 50, 390);
     spawn.mapRect(3450, -725, 1500, 50);
     spawn.mapRect(5100, -725, 400, 50);
-    spawn.mapRect(4500, -700, 50, 600);
+    spawn.mapRect(4500, -735, 50, 635);
     spawn.bodyRect(4510, -100, 30, 100, 0.8);
-    spawn.mapRect(4500, -925, 100, 50);
+    spawn.mapRect(4500, -885, 100, 50);
     spawn.spawnStairs(3800, 0, 3, 150, 206); //stairs top exit
     spawn.mapRect(3400, -275, 450, 275); //exit platform
 
@@ -549,10 +551,10 @@ const level = {
     level.enter.y = mech.spawnPos.y + 20;
     this.addZone(level.exit.x, level.exit.y, 100, 30, "nextLevel");
     powerUps.spawnStartingPowerUps(1075, -550);
-    spawn.debris(-250, 50, 1650, 3); //20 debris per level
-    spawn.debris(2475, 0, 750, 3); //20 debris per level
-    spawn.debris(3450, 0, 2000, 18); //20 debris per level
-    spawn.debris(3500, -2350, 1500, 3); //20 debris per level
+    spawn.debris(-250, 50, 1650, 2); //20 debris per level
+    spawn.debris(2475, 0, 750, 2); //20 debris per level
+    spawn.debris(3450, 0, 2000, 20); //20 debris per level
+    spawn.debris(3500, -2350, 1500, 2); //20 debris per level
     document.body.style.backgroundColor = "#dcdcde";
 
     //foreground
@@ -648,10 +650,13 @@ const level = {
     spawn.bodyRect(2450, 150, 150, 150, 0.4);
     spawn.mapRect(1550, 300, 4600, 200); //ground
     //floor below right tall tower
-    spawn.bodyRect(3000, 50, 150, 250, 0.8);
-    spawn.bodyRect(4000, 50, 200, 150, 0.8);
-    spawn.bodyRect(4500, 50, 300, 200, 0.8);
-    spawn.bodyRect(4900, -100, 300, 300, 0.4);
+    spawn.bodyRect(3000, 50, 150, 250, 0.9);
+    spawn.bodyRect(4500, -500, 300, 250, 0.7);
+    spawn.bodyRect(4000, 50, 200, 150, 0.9);
+    spawn.bodyRect(4500, 50, 300, 200, 0.9);
+    spawn.bodyRect(4200, -350, 200, 50, 0.9);
+    spawn.bodyRect(4700, -350, 50, 200, 0.9);
+    spawn.bodyRect(4900, -100, 300, 300, 0.7);
     spawn.boost(5350, 275, 2850);
     spawn.mapRect(6050, -700, 600, 1200);
     //right tall tower
@@ -688,7 +693,7 @@ const level = {
     spawn.randomBoss(350, -500, 1)
     spawn.randomBoss(4000, -350, 0.6);
     spawn.randomBoss(2750, -550, 0.1);
-    if (game.levelsCleared > 2) spawn.suckerBoss(3000 + 1000 * Math.random(), -500 * Math.random());
+    if (game.levelsCleared > 2) spawn.suckerBoss(4500, -400);
 
     //add mini boss, giant hopper?   or a black hole that spawns hoppers?
   },
@@ -863,7 +868,8 @@ const level = {
 
     // spawn.debris(-3950, -2575, 1050, 4); //20 debris per level
     spawn.debris(-2325, -1825, 2400); //20 debris per level
-    spawn.debris(-2625, -600, 925); //20 debris per level
+    spawn.debris(-2625, -600, 600, 6); //20 debris per level
+    spawn.debris(-2000, -60, 1200, 6); //20 debris per level
     // if (!game.levelsCleared) powerUps.spawn(2450, -1675, "gun", false);
     //background
     level.fillBG.push({
@@ -949,10 +955,16 @@ const level = {
 
     spawn.mapRect(-1850, -1150, 1050, 175);
     spawn.bodyRect(-1907, -1600, 550, 25);
-    spawn.bodyRect(-1400, -125, 125, 125);
-    spawn.bodyRect(-1100, -125, 150, 125);
-    spawn.bodyRect(-1360, -200, 75, 75);
-    spawn.bodyRect(-1200, -75, 75, 75);
+    if (game.levelsCleared < 4) {
+      spawn.bodyRect(-1600, -125, 125, 125);
+      spawn.bodyRect(-1560, -200, 75, 75);
+    } else {
+      spawn.bodyRect(-1200, -125, 125, 125);
+      spawn.bodyRect(-1160, -200, 75, 75);
+    }
+    // spawn.bodyRect(-1100, -125, 150, 125);
+
+    // spawn.bodyRect(-1200, -75, 75, 75);
 
     //building 2
     spawn.mapRect(-4450, -600, 2300, 750);
@@ -977,6 +989,9 @@ const level = {
     spawn.bodyRect(-3715, -2050, 50, 50);
     spawn.bodyRect(-3570, -1800, 50, 50);
     spawn.bodyRect(-2970, -2250, 50, 50);
+
+    if (game.levelsCleared < 4) spawn.bodyRect(-3760, -2400, 50, 50);
+
     spawn.bodyRect(-3080, -2250, 40, 40);
     spawn.bodyRect(-3420, -650, 50, 50);
 
@@ -1091,9 +1106,9 @@ const level = {
     // spawn.mapRect(-1900, 600, 2700, 100);
     spawn.mapRect(1100, 0, 150, 1500);
     spawn.mapRect(-2850, 1400, 4100, 100);
-    spawn.mapRect(-2375, 875, 1775, 100);
-    spawn.mapRect(-1450, 950, 75, 346);
-    spawn.mapRect(-1433, 662, 41, 111);
+    spawn.mapRect(-2375, 875, 1775, 75);
+    spawn.mapRect(-1450, 865, 75, 435);
+    spawn.mapRect(-1450, 662, 75, 100);
     spawn.bodyRect(-1418, 773, 11, 102, 1, spawn.propsFriction); //blocking path
     spawn.mapRect(-2950, 1250, 175, 250);
     spawn.mapRect(-3050, 1100, 150, 400);
@@ -1127,8 +1142,8 @@ const level = {
       length: 1
     });
 
-    spawn.bodyRect(-2775, 1150, 180, 160, 1, spawn.propsSlide); //weight
-    spawn.bodyRect(-2550, 1150, 200, 150, 1, spawn.propsSlide); //weight
+    spawn.bodyRect(-2700, 1150, 100, 160, 1, spawn.propsSlide); //weight
+    spawn.bodyRect(-2550, 1150, 200, 100, 1, spawn.propsSlide); //weight
 
     spawn.bodyRect(-2775, 1300, 400, 100, 1, spawn.propsHoist); //hoist
     cons[cons.length] = Constraint.create({
@@ -1149,7 +1164,7 @@ const level = {
     spawn.bodyRect(-165, -45, 30, 35, 1);
 
     spawn.bodyRect(-750, 400, 150, 150, 0.5);
-    spawn.bodyRect(-200, 1175, 250, 225, 1); //block to get to top path on bottom level
+    spawn.bodyRect(-400, 1175, 100, 250, 1); //block to get to top path on bottom level
     // spawn.bodyRect(-1450, 737, 75, 103, 0.5); //blocking path
 
     spawn.bodyRect(-2525, -50, 145, 100, 0.5);
