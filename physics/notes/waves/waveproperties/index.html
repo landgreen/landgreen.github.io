@@ -20,6 +20,7 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 	<script src="wave.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
+	<script defer src="harmony.js"></script>
 	<script defer src='beatssound.js'></script>
 	<script defer src='../../../lib/matter.min.js'></script>
 	<script defer src="resonance.js"></script>
@@ -123,46 +124,6 @@
 			</details>
 		</div>
 
-		<div id="microphone-zone" class="example-small">
-			Click to see the <strong>waveform</strong> recorded by your microphone.
-			<canvas class="center" width="600" height="100" id="analyzer-canvas" onclick="analyzer(this)"></canvas>
-			<div id="microphone-text" style="display: none;">
-				Click again to toggle pause the recording.
-				<br><br>Talk, sing, whistle, or play music in a different tab to see its waveform.
-				<br><strong>Microphone:</strong> What types of sounds have <strong>shorter</strong> wavelengths?
-				<details>
-					<summary>answer</summary>
-					<p>
-						High pitch, treble, and high frequency are terms for short wavelength sounds.
-					</p>
-				</details>
-				<br>
-				<strong>Microphone:</strong> What types of sounds have <strong>longer</strong> wavelengths?
-				<details>
-					<summary>answer</summary>
-					<p>
-						Low pitch, bass, and low frequency are terms for long wavelength sounds.
-					</p>
-				</details>
-			</div>
-		</div>
-
-		<div id="barGraph-zone" class="example-small">
-			Click to see the <strong>spectrum of frequencies</strong> recorded by your microphone.
-			<canvas class="center" width="600" height="100" id="barGraph-canvas" onclick="barGraph(this)"></canvas>
-			<div id="barGraph-text" style="display: none;">
-				Click again to toggle pause the recording.
-				<br><br><strong>Microphone:</strong> Which side of the spectrum is the <strong>treble</strong> and which is the <strong>bass</strong>?
-				<details>
-					<summary>answer</summary>
-					<p>
-						The low frequency, bass, sounds are on the left.
-						<br>The high frequency, treble, sounds are on the right.
-					</p>
-				</details>
-			</div>
-		</div>
-
 		<div class='example'>
 			<p>
 				Waves add <strong>constructively</strong> when both wave amplitudes are positive or both are negative.
@@ -243,63 +204,7 @@
 				});
 			</script>
 		</div>
-		<!-- <div class='example'>
-			<svg onload="drawSineWave(this, 200, 40, 50, '#f88'); drawSineWave(this,200, 40, 0, '#8f8'); centerLine(this)" height='85'></svg>
-			<strong>Example:</strong> Draw the superposition of these waves.
-			<details>
-				<summary>solution</summary>
-				<svg onload="drawSineWaves(this, 200, 40, 50, '#f88', 200, 40, 0, '#8f8'); centerLine(this)" height='125'></svg>
-			</details>
-		</div> -->
 
-		<div class='example'>
-			<svg onload="drawSineWavesArray(this, [
-				{ wavelength: 40, amplitude: 35, phase: 0,  color: '#39f', opacity: 0.4 },
-				{ wavelength: 44, amplitude: 35, phase: 0,  color: '#f37', opacity: 0.4 },
-				], false, true)" height='75'></svg>
-			<br><strong>Example:</strong> Draw the superposition of these waves. When waves have similar frequencies they produce a pattern called <strong>beats</strong>.
-			<details>
-				<summary>solution</summary>
-				<svg onload="drawSineWavesArray(this, [
-				{ wavelength: 40, amplitude: 35, phase: 0,  color: '#39f', opacity: 0.15 },
-				{ wavelength: 44, amplitude: 35, phase: 0,  color: '#f37', opacity: 0.15 },
-				], true, true)" height='150'></svg>
-			</details>
-			<p>
-				You can hear how horrible beats sound by clicking <button id="beats-play" style="width: 60px;">start</button>
-			</p>
-			<style>
-				#hide-beats {
-					display: none
-				}
-
-				.beats-slider {
-					width: 420px;
-				}
-
-				@media screen and (max-width: 650px) {
-					.beats-slider {
-						width: 150px;
-					}
-				}
-			</style>
-			<span id="hide-beats">
-				frequency = <input class="beats-slider" id='beats-f1-slider' type="range" step="1" value="372" min="350" max="400">
-				<input id='beats-f1' type="number" min="1" max="20000" value=372 step=1 style="width: 55px;">
-				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;volume = <input class="beats-slider" id='beats-vol-slider' type="range" step="0.01" value="0.2" min="0" max="1">
-				<input id='beats-vol' type="number" step="0.05" value="0.2" min="0" max="1" style="width: 55px;">
-				<br>
-				<br>frequency = <input class="beats-slider" id='beats-f2-slider' type="range" step="1" value="375" min="350" max="400">
-				<input id='beats-f2' type="number" min="1" max="20000" value=375 step=1 style="width: 55px;">
-				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;volume = <input class="beats-slider" id='beats-vol-slider-2' type="range" step="0.01" value="0.2" min="0" max="1">
-				<input id='beats-vol-2' type="number" step="0.05" value="0.2" min="0" max="1" style="width: 55px;">
-				<canvas id="beats-canvas" width="590" height="100" class="no-shadow"></canvas>
-				<br>&nbsp;&nbsp;&nbsp;analyser = <input class="beats-slider" id='beats-analyser-slider' type="range" step="1" value="3" min="1" max="8">
-				<p>
-					The pattern in the graph above is sent as an electrical wave into your speakers. In the speaker, magnets convert the electrical wave into vibrations. The vibrations spread through the air as an audible wave of pressure.
-				</p>
-			</span>
-		</div>
 		<div class="example">
 			<svg onload="drawSineWavesArray(this, [
 		{ wavelength: 400, amplitude: 128, phase: 0,  color: '#f08', opacity: 0.45 },
@@ -349,6 +254,120 @@
 			</p>
 		</div>
 
+		<h2 class='underlined'>Harmony</h2>
+		<p>
+			Some of what makes music sound good depends on the cultural background of the listener.
+			Listeners used to the western music tradition generally prefer sound waves that have a simple ratio between wavelengths.
+		</p>
+
+		<div class='example'>
+			<svg onload="drawSineWave(this, 150, 25, 37.5, '#39f'); drawSineWave(this,75, 25, 18.75, '#f37'); centerLine(this)" height='75'></svg>
+			<svg onload="drawSineWave(this, 127, 25, 31.75, '#39f'); drawSineWave(this,75, 25, 18.75, '#f37'); centerLine(this)" height='75'></svg>
+			<strong>Example:</strong> Which of these would sound better?
+			<details>
+				<summary>solution</summary>
+				<button class="center" id="sound-play-1" style="width: 60px;">listen</button>
+				<svg onload="drawSineWaves(this, 150, 25, 37.5, '#39f', 75, 25, 18.75, '#f37'); centerLine(this)" height='150'></svg>
+				<button class="center" id="sound-play-2" style="width: 60px;">listen</button>
+				<svg onload="drawSineWaves(this,127, 25, 31.75, '#39f',  75, 25, 18.75, '#f37'); centerLine(this)" height='150'></svg>
+
+			</details>
+		</div>
+
+
+		<div id="microphone-zone" class="example-small">
+			Click to see the <strong>waveform</strong> recorded by your microphone.
+			<canvas class="center" width="600" height="100" id="analyzer-canvas" onclick="analyzer(this)"></canvas>
+			<div id="microphone-text" style="display: none;">
+				Click again to toggle pause the recording.
+				<br><br>Talk, sing, whistle, or play music in a different tab to see its waveform.
+				<br><strong>Microphone:</strong> What types of sounds have <strong>shorter</strong> wavelengths?
+				<details>
+					<summary>answer</summary>
+					<p>
+						High pitch, treble, and high frequency are terms for short wavelength sounds.
+					</p>
+				</details>
+				<br>
+				<strong>Microphone:</strong> What types of sounds have <strong>longer</strong> wavelengths?
+				<details>
+					<summary>answer</summary>
+					<p>
+						Low pitch, bass, and low frequency are terms for long wavelength sounds.
+					</p>
+				</details>
+			</div>
+		</div>
+
+		<div id="barGraph-zone" class="example-small">
+			Click to see the <strong>spectrum of frequencies</strong> recorded by your microphone.
+			<canvas class="center" width="600" height="100" id="barGraph-canvas" onclick="barGraph(this)"></canvas>
+			<div id="barGraph-text" style="display: none;">
+				Click again to toggle pause the recording.
+				<br><br><strong>Microphone:</strong> Which side of the spectrum is the <strong>treble</strong> and which is the <strong>bass</strong>?
+				<details>
+					<summary>answer</summary>
+					<p>
+						The low frequency, bass, sounds are on the left.
+						<br>The high frequency, treble, sounds are on the right.
+					</p>
+				</details>
+			</div>
+		</div>
+
+		<div class='example'>
+			<svg onload="drawSineWavesArray(this, [
+				{ wavelength: 40, amplitude: 35, phase: 0,  color: '#39f', opacity: 0.4 },
+				{ wavelength: 44, amplitude: 35, phase: 0,  color: '#f37', opacity: 0.4 },
+				], false, true)" height='75'></svg>
+			<br><strong>Example:</strong> Draw the superposition of these waves. When waves have similar frequencies they produce a pattern called <strong>beats</strong>.
+			<details>
+				<summary>solution</summary>
+				<svg onload="drawSineWavesArray(this, [
+				{ wavelength: 40, amplitude: 35, phase: 0,  color: '#39f', opacity: 0.15 },
+				{ wavelength: 44, amplitude: 35, phase: 0,  color: '#f37', opacity: 0.15 },
+				], true, true)" height='150'></svg>
+			</details>
+			<p>
+				You can decided if you hate the beats sound by clicking <button id="beats-play" style="width: 60px;">listen</button>
+			</p>
+			<style>
+				#hide-beats {
+					display: none
+				}
+
+				.beats-slider {
+					width: 420px;
+				}
+
+				@media screen and (max-width: 650px) {
+					.beats-slider {
+						width: 150px;
+					}
+				}
+			</style>
+			<span id="hide-beats">
+				frequency = <input class="beats-slider" id='beats-f1-slider' type="range" step="1" value="372" min="350" max="400">
+				<input id='beats-f1' type="number" min="1" max="20000" value=372 step=1 style="width: 55px;">
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;volume = <input class="beats-slider" id='beats-vol-slider' type="range" step="0.01" value="0.2" min="0" max="1">
+				<input id='beats-vol' type="number" step="0.05" value="0.2" min="0" max="1" style="width: 55px;">
+				<br>
+				<br>frequency = <input class="beats-slider" id='beats-f2-slider' type="range" step="1" value="375" min="350" max="400">
+				<input id='beats-f2' type="number" min="1" max="20000" value=375 step=1 style="width: 55px;">
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;volume = <input class="beats-slider" id='beats-vol-slider-2' type="range" step="0.01" value="0.2" min="0" max="1">
+				<input id='beats-vol-2' type="number" step="0.05" value="0.2" min="0" max="1" style="width: 55px;">
+				<canvas id="beats-canvas" width="590" height="100" class="no-shadow"></canvas>
+				<br>&nbsp;&nbsp;&nbsp;analyser = <input class="beats-slider" id='beats-analyser-slider' type="range" step="1" value="3" min="1" max="8">
+				<p>
+					The pattern in the graph above is sent as an electrical wave into your speakers. In the speaker, magnets convert the electrical wave into vibrations. The vibrations spread through the air as an audible wave of pressure.
+				</p>
+			</span>
+		</div>
+		<p>
+			<a href="https://www.lightnote.co/">Music theory</a> explores what groups of notes sound best together.
+			I found it interesting how you can evoke emotion with different combinations of notes.
+			For example, the major scale sounds upbeat, but the minor scale sounds sad.
+		</p>
 		<h2 class='underlined'>Diffraction</h2>
 		<p>
 			Waves tend to spread out in every direction possible within their medium. <strong>Diffraction</strong> is when a wave spreads out after some of the wave hits a barrier. This explains how sound can be heard through an open door even when there is no line of sight.

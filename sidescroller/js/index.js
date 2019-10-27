@@ -2,6 +2,19 @@
 /* TODO:  *******************************************
 *****************************************************
 
+make player legs just slide if the player is above the normal speed
+  like when you fire the one shot
+
+make power ups keep moving to player if the field is turned off
+
+levels spawn by having the map aspects randomly fly into place
+
+new map with repeating endlessness
+  get ideas from Manifold Garden game
+  if falling, get teleported above the map
+    this can apply to blocks mobs, and power ups as well
+
+
 when paused show details on field, mods, guns?
 
 Find a diegetic way to see player damage  (and or field meter too)
@@ -36,7 +49,6 @@ field power up effects
 Move mods, to power up object
   mods can be about more than the gun, defensive, traversal mods
 gun mod power ups
-  can fire while field is active
   bullet on mob damage effects
     add to the array mob.do new mob behaviors
         add a damage over time
@@ -82,6 +94,13 @@ game mechanics
 
 track foot positions with velocity better as the player walks/crouch/runs
 
+Boss ideas
+  boss grows and spilt, if you don't kill it fast
+    sensor that locks you in after you enter the boss room
+  boss that eats other mobs and gains stats from them
+    chance to spawn on any level (past level 5)
+  boss that knows how to shoot (player) bullets that collide with player 
+    overwrite custom engine collision bullet mob function.
 
 
 

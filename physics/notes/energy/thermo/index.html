@@ -16,10 +16,11 @@
 	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 	<script defer src='../../../lib/randomColor.min.js'></script>
 	<script defer src="energy.js"></script>
+	<script defer src="gases.js"></script>
 	<script defer src='../../../lib/matter.min.js'></script>
+	<script defer src="temperature.js"></script>
 	<script defer src="entropy0.js"></script>
 	<script defer src="entropy1.js"></script>
-	<script defer src="temperature.js"></script>
 	<!-- <script src='../../../lib/function-graph-SVG.js'></script> -->
 	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
 	<script src="../../../lib/katex/katex.min.js"></script>
@@ -30,15 +31,19 @@
 <body>
 	<header>
 		<h1>
-			<a href="../../../index.html" style="font-size: 0.8em;">Thermodynamics</a>
+			<a href="../../../index.html">Thermodynamics</a>
 		</h1>
 	</header>
 	<article>
 		<p>
-			Thermodynamics looks for patterns in the statistical behavior in groups of particles. A group of particles are called a <strong>system</strong>. Systems have properties that single particles don't, like temperature, pressure, volume, density, and entropy.
+			Thermodynamics looks for statistical patterns in groups of particles.
+			A group of particles are called a <strong>system</strong>.
+			Systems have properties that single particles don't, like temperature, pressure, volume, density, and entropy.
 		</p>
 		<p>
-			It is easy to say that since thermodynamics is statistical it isn't always true. This is correct, but thermodynamic predictions become more accurate with more particles.
+			Unlike other physics topics we've learned, thermodynamics is statistical.
+			It's predictions only have a probability of being true. It is never 100% certain.
+			Yet, the accuracy increases with more particles, and there are a large number of particles in most systems.
 		</p>
 
 		<div class='example-small'>
@@ -64,13 +69,22 @@
 				$$\text{volume} = 10\,\mathrm{m} \times 10\,\mathrm{m} \times 4\,\mathrm{m}= 400 \, \mathrm{m^3}$$
 				$$ 400 \, \mathrm{m^3} \left( \frac{1 \, \mathrm{mol}}{0.0224 \, \mathrm{m^3}} \right) = 18\,000 \, \mathrm{mol}$$
 				$$ 18\,000 \, \mathrm{mol} \left( \frac{ 6.02 \times 10^{23}}{1 \, \mathrm{mol}} \right) = 1.08 \times 10^{28}$$
-				$$\small 10\,000\,000\,000\,000\,000\,000\,000\,000\,000\,\,\,\text{gas particles}$$
+				$$\small 10\,000\,000\,000\,000\,000\,000\,000\,000\,000\,\,\, \normalsize\text{gas particles}$$
 			</details>
 		</div>
 
-		<h1 class='underlined'>Temperature</h1>
-		<p>Temperature is proportional to the average kinetic energy of a system of particles. The kinetic energies that contribute to temperature can be stored in spin, vibrations between particles, and normal movement.</p>
-		<div>
+		<!-- <h1 class='underlined'>Temperature</h1> -->
+		<div class="example">
+			<p>
+				Temperature is a statistical property of a system of particles.
+				We can measure temperature by looking at the expansion of fluids.
+				At high temperatures fluids take up more space.
+				This increase the level of the alcohol in a thermometer.
+			</p>
+			<p>
+				<strong>Temperature</strong> is often defined as proportional to the average kinetic energy of a system of particles.
+				The kinetic energies that contribute to temperature can be stored in a particle's spin, vibrations, and motion.
+			</p>
 			<div id="kinetic-energy"></div>
 			<canvas class='center' id='temperature' height='150' width='600'> </canvas>
 			<!-- <canvas class='center' id='temperature-out' height='200' width='600'> </canvas> -->
@@ -82,6 +96,55 @@
 				The graph above shows the distribution of kinetics energy for particles at various temperatures. You can click on the simulation to add more particles. Notice that with more particles the distribution becomes more consistent and predictable.
 			</p> -->
 		</div>
+		<h1 class='underlined'>Ideal Gases</h1>
+		<p>
+			<strong>Ideal gases</strong> are a scientific model that simplifies gas as particles that collide without losing energy.
+			The model is actually very accurate, but it deviates from real gases at extreme temperatures and pressures.
+		</p>
+		<p>
+			The ideal gas model leads to a useful equation called the <strong>ideal gas law</strong>.
+			For a system of ideal gasses the product of pressure and volume equals the product of average kinetic energy and the number of particles in the system.
+		</p>
+		The simulation below calculates Pressure, Volume, and Temperature for N particles in a box.
+		The particles can't bounce off each other, but they can bounce off the walls without losing energy.
+	</article>
+	<div id="gas-mouse-range" class="center">
+		<canvas id="gases" width="600" height='100' onclick="gases(this)"></canvas>
+		<br>
+		<div id="gas-data" style="display:none;">
+			N = <input id='gas-n-slider' type="range" step="0.1" value="4" min="0" max="6" style="width: 140px;">
+			<input id='gas-n' type="number" step="1" value="10000" min="0" max="999999" style="width: 65px;">particles
+			<br> width = <input id='gas-width-slider' type="range" step="1" value="1000" min="200" max="" style="width: 140px;">
+			<input id='gas-width' type="number" step="1" value="1000" min="200" style="width: 58px;">m
+
+			<div id="gas-v">V</div>
+			<div id="gas-p">P</div>
+			<div id="gas-t">T</div>
+			<!-- <div id="gas-n">N</div> -->
+			<div id="gas-k">k</div>
+
+		</div>
+	</div>
+	<article>
+
+		<div class="example">
+			<div class='definition'>
+				<p>
+					Using metric units requires a constant, k to balance the sides of the equation.
+				</p>
+
+				<h1>$$PV=NkT$$</h1>
+				\( P \) = Pressure [N/m²]
+				<br>\( V \) = Volume [m³]
+				<br>\( N \) = number of ideal gas particles [no units]
+				<br>\( T \) = Temperature [K]
+				<br>\( k \) = 1.380649×10<sup>−23</sup> = Boltzmann constant [N m / K]
+			</div>
+			<p>
+				There is another popular version of the <a href="https://en.wikipedia.org/wiki/Ideal_gas_law">ideal gas law</a> the uses mols.
+			</p>
+		</div>
+
 		<h1 class='underlined'>Heat</h1>
 		<p>
 			<strong>Heat</strong> is energy transferred from one system to another as a result of thermal interactions.
@@ -121,53 +184,70 @@
 		<p>
 			The concept of heat is important in understanding machines, like engines and <a href="https://www.youtube.com/watch?v=EIP3pSio7-M">refrigerators</a>.
 		</p>
-		<h1 class='underlined'>Energy Loss and Gain in a System</h1>
-		<br>
-		<div class="col-group">
-			<div>
-				<div class="center">
-					<button id="pause" style="width: 60px;">play</button>&nbsp;&nbsp;&nbsp;
-					<button id="energy">friction: OFF</button>
-				</div>
-				<svg class="center" width="250" height="445" id="energy-SVG" style="border: 0.5px solid #000; background-color: #f8f8f8; ">
-					<g stroke="#000">
-						<rect id="KE-bar" x="200" y="400" height="1000" width="25" fill="#fa96a0" />
-						<rect id="Ug-bar" x="225" y="400" height="1000" width="24" fill="#abc" />
-						<rect id="heat-bar" x="200" y="0" height="0" width="49.5" fill="#ccc" />
-					</g>
-					<g stroke="none" transform="rotate(-90)">
-						<text id="KE-text" x="-440" y="218">KE = ½mv²</text>
-						<text id="Ug-text" x="-440" y="243">Ug = mgh</text>
-					</g>
-					<circle id="ball" cx="50" cy="50" r="20" fill="#abc" stroke-width="1.25" stroke="#000" />
-					<!-- <rect id="pause" x="5" y="5" rx="3" ry="3" width="60" height="25" fill="#eee" stroke="#000" />
-					<text id="pause-text" x="35" y="19" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text> -->
-				</svg>
-			</div>
-			<div>
-				As the ball in the simulation falls, energy transfers from gravitational to kinetic. As it rises, energy transfers from kinetic to gravitational.
+
+		<div class='example'>
+			<strong>Question:</strong> If a room is left at the same temperature for a while, all the materials in the room should reach the same temperature.
+			Yet if you touch metal it feels much colder than wood. Why?
+			<details>
+				<summary>answer</summary>
 				<p>
-					Energy is conserved. This means that if we add up the total energy of a system it will always be the same value, unless some energy enters or leaves the system we are tracking.
+					Metal is a conductor of both electricity and heat.
+					This means that if you are hotter than the metal, heat will flow out of your body into the metal at a very fast rate.
 				</p>
 				<p>
-					Turn friction on and observe what happens.
+					Wood is a poor conductor of heat so it doesn't pull as much heat from your body.
 				</p>
-				<p>
-					The kinetic energy gradually leaves the ball. We describe energy that leaves a system as <strong>heat</strong>. Heat can leave in many forms, often heat leaves a system as thermal energy. Thermal energy is the kinetic energy of many particles at a microscopic scale.
-				</p>
-			</div>
+			</details>
 		</div>
-		<p>
-			The internal energy of a system is always <a href="https://www.youtube.com/watch?v=4b8ZsFszE8I">conserved</a>, unless energy leaves or enters. Energy can leave or enter as work or heat.
-		</p>
-		<div class='definition'>
+
+
+		<div class="example">
+			<div class="col-group">
+				<div>
+					<div class="center">
+						<button id="pause" style="width: 60px;">play</button>&nbsp;&nbsp;&nbsp;
+						<button id="energy">friction: OFF</button>
+					</div>
+					<svg class="center" width="250" height="445" id="energy-SVG" style="border: 0.5px solid #000; background-color: #f8f8f8; ">
+						<g stroke="#000">
+							<rect id="KE-bar" x="200" y="400" height="1000" width="25" fill="#fa96a0" />
+							<rect id="Ug-bar" x="225" y="400" height="1000" width="24" fill="#abc" />
+							<rect id="heat-bar" x="200" y="0" height="0" width="49.5" fill="#ccc" />
+						</g>
+						<g stroke="none" transform="rotate(-90)">
+							<text id="KE-text" x="-440" y="218">KE = ½mv²</text>
+							<text id="Ug-text" x="-440" y="243">Ug = mgh</text>
+						</g>
+						<circle id="ball" cx="50" cy="50" r="20" fill="#abc" stroke-width="1.25" stroke="#000" />
+						<!-- <rect id="pause" x="5" y="5" rx="3" ry="3" width="60" height="25" fill="#eee" stroke="#000" />
+					<text id="pause-text" x="35" y="19" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text> -->
+					</svg>
+				</div>
+				<div>
+					As the ball in the simulation falls, energy transfers from gravitational to kinetic. As it rises, energy transfers from kinetic to gravitational.
+					<p>
+						Energy is conserved. This means that if we add up the total energy of a system it will always be the same value, unless some energy enters or leaves the system we are tracking.
+					</p>
+					<p>
+						Turn friction on and observe what happens.
+					</p>
+					<p>
+						The kinetic energy gradually leaves the ball. We describe energy that leaves a system as <strong>heat</strong>. Heat can leave in many forms, often heat leaves a system as thermal energy. Thermal energy is the kinetic energy of many particles at a microscopic scale.
+					</p>
+				</div>
+			</div>
 			<p>
-				The <strong>first law of thermodynamics</strong> says that the change in internal energy of a system is equal to heat flow into a system plus work done by the system.
+				The internal energy of a system is always <a href="https://www.youtube.com/watch?v=4b8ZsFszE8I">conserved</a>, unless energy leaves or enters. Energy can leave or enter as work or heat.
 			</p>
-			<h1>$$\Delta E = Q - W$$</h1>
-			\( E \) = total internal energy of a system [J]
-			<br>\( Q \) = Heat, thermal energy added(+) or removed(-) from system [J]
-			<br>\( W \) = work done by a system [J]
+			<div class='definition'>
+				<p>
+					The <strong>first law of thermodynamics</strong> says that the change in internal energy of a system is equal to heat flow into a system plus work done by the system.
+				</p>
+				<h1>$$\Delta E = Q - W$$</h1>
+				\( E \) = total internal energy of a system [J]
+				<br>\( Q \) = Heat, thermal energy added(+) or removed(-) from system [J]
+				<br>\( W \) = work done by a system [J]
+			</div>
 		</div>
 
 		<!-- <div class='example'>
@@ -316,7 +396,9 @@
 
 		<h1 class='underlined' id="entropy">Entropy</h1>
 		<p>
-			<strong>Entropy</strong> is hard to <a href="https://www.youtube.com/watch?v=RJ7H6bKbp24">define</a> because different fields use the term to describe slightly different ideas. The definitions of entropy are all loosely centered around disorder. A high entropy system of particles is not organized. A low entropy system is very orderly, but how do you measure order?
+			<strong>Entropy</strong> is hard to <a href="https://www.youtube.com/watch?v=RJ7H6bKbp24">define</a> because different fields use the term to describe slightly different ideas.
+			The definitions of entropy are all loosely centered around disorder. A high entropy system of particles is not organized.
+			A low entropy system is orderly, but how do you measure order?
 		</p>
 		<svg viewBox="0 0 600 145">
 			<g fill="#222" font-size="22px" text-anchor="middle">
@@ -420,12 +502,6 @@
 		</p> -->
 
 		<div class="example">
-			<!-- <p>
-					The second law is true for all the different formulations of entropy, not just the mixing of particles. As time moves forward, entropy either increases or stays the same. This applies to concentrations of energy, pressure, volume, density, temperature, ...
-				</p>
-				<p>
-					Over time things even out and move towards a balanced equilibrium.
-				</p> -->
 			<p>
 				We can view a car <a href="http://www.animatedengines.com/">engine</a> as a thermodynamic system.
 				An engine takes in concentrated, low entropy, energy in the form of gasoline.
@@ -445,7 +521,7 @@
 				</p>
 			</details>
 			<br><br>
-			<strong>Question:</strong> The planet Earth can be viewed as a thermodynamic system.
+			<strong>Question:</strong> The planet Earth and all it's <a href="https://www.youtube.com/watch?v=mkR9hMCOIhM">life</a> can be viewed as a thermodynamic system.
 			As time goes forward the energy density of Earth spreads out and loses the ability to do work.
 			What keeps the entropy of the Earth low?
 			<details>
@@ -458,15 +534,97 @@
 			</details>
 		</div>
 
-		<h1 class='underlined' id="arrow-of-time">The Arrow of Time</h1>
+		<div class="example">
+			<h1 class='underlined' id="arrow-of-time">The Arrow of Time</h1>
+			<p>
+				If you watched a <a href="https://www.youtube.com/watch?v=UBnI-oH0YtI">video</a> of a glass of water falling off a table you would know if the video was in <a href="https://www.youtube.com/watch?v=mjetkusDEA0">reverse</a>.
+				It would be strange to see broken glass and spilled water spontaneously come together and jump up onto a table.
+			</p>
+			<p>
+				Yet, sometimes the direction of time isn't clear.
+				A video of the Earth orbiting the Sun looks similar forwards and backwards.
+				It has no clear arrow of time.
+			</p>
+			<strong>Question:</strong> Imagine each of these situations happening in reverse. Which ones would look obviously backwards?
+			<div class="col-group">
+				<div style="padding:15px;">
+					<li>a dog eating food</li>
+					<li>a falling rock</li>
+					<li>a dog sneezing</li>
+					<li>a pendulum oscillating</li>
+					<li>a dog running</li>
+					<li>a tennis ball at rest</li>
+				</div>
+				<div style="padding:15px;">
+					<li>light reflecting off a mirror</li>
+					<li>a mirror shattering</li>
+					<li>a stick resting on the ground</li>
+					<li>a living cell dividing</li>
+					<li>the Earth orbiting the Sun</li>
+					<li>a dog barking</li>
+				</div>
+			</div>
+			<details>
+
+				<summary>answer</summary>
+				<style>
+					.highlight {
+						color: #d06;
+						font-weight: 900;
+						/* background-color: var(--link-color);
+						border-radius: 5px;
+						margin: 0px 2px 0px 2px;
+						padding: 0px 2px 0px 2px; */
+					}
+				</style>
+
+				<p>Situations with a clear arrow of time are in <span class="highlight">red</span>.</p>
+				<div class="col-group">
+					<div style="padding:15px;">
+						<li class="highlight">a dog eating food</li>
+						<li>a rock falling</li>
+						<li class="highlight">a dog sneezing</li>
+						<li>a pendulum oscillating</li>
+						<li class="highlight">a dog running</li>
+						<li>a tennis ball at rest</li>
+					</div>
+					<div style="padding:15px;">
+						<li>light reflecting off a mirror</li>
+						<li class="highlight">a mirror shattering</li>
+						<li>a stick resting on the ground</li>
+						<li class="highlight">a living cell dividing</li>
+						<li>the Earth orbiting the Sun</li>
+						<li class="highlight">a dog barking</li>
+					</div>
+				</div>
+				<br>
+				<br>
+				<strong>Question:</strong> What do the situations with a clear arrow of time have in common?
+				<details>
+					<summary>answer</summary>
+					<p>
+						The situations with a clear arrow of time are complex with many moving parts.
+						These might include systems with friction, or with living creatures.
+					</p>
+					<p>
+						The systems with no clear arrow of time are all simple with few moving parts.
+					</p>
+				</details>
+			</details>
+		</div>
+
+
 		<p>
-			The laws of physics are time reversible. Nature behaves the same moving forwards or backwards in time. The only exception is entropy.
+			The laws of physics are time reversible.
+			Nature behaves the same moving forwards or backwards in time.
+			At least, this is true for simple systems.
+			For complex systems, with many particles there is a clear direction of time.
+			This is because as time moves forward the entropy of a system increases.
+			Complex systems tend to get more chaotic over time.
 		</p>
 		<p>
-			If you were to watch a video of the Earth orbiting the Sun, it would be difficult to tell if the video was running forwards or backwards. Simple physical systems don't have a clear forwards or backwards.
-		</p>
-		<p>
-			Sometimes it is easy to tell the direction of time. A glass of water falling off a table has a clear direction in time. It would be very strange to see broken glass and spilled water spontaneously come together and jump up onto a table.
+			Entropy doesn't increase for simple systems, because simple systems don't have enough possible states to progress in a direction.
+			It's hard to make a mess out of 3 rocks, but it's easy to make a mess out of 10&nbsp;000&nbsp;000 grains of sand.
 		</p>
 		<div class="definition">
 			The <strong>second law of thermodynamics</strong> states that entropy of an isolated system doesn't decrease over time.
@@ -475,7 +633,9 @@
 			As time moves forward, a system will either stay the same or get messier but never more orderly.
 		</p>
 		<p>
-			Why is the second law of thermodynamics true? Because there are many ways for the energy of a system to be evenly distributed, but few ways to have energy concentrated. As a system randomly progresses forwards in time, the odds of evolving into a concentrated low entropy state is very low.
+			Why is the second law of thermodynamics true?
+			Because there are many ways for the energy of a system to be evenly distributed, but few ways to have energy concentrated.
+			As a system randomly progresses forwards in time, the probability of evolving into a concentrated low entropy state is low.
 		</p>
 
 		<!-- <svg id="SVG-graph-2" viewBox="0 0 600 220"></svg>
@@ -501,13 +661,17 @@
 			<path id="SVG-graph-2-fill" d="M 10 211.2343785768443 L 12 206.39101903074746 L 14 204.77668501886973 L 16 207.41890938389034 L 18 202.3212936861587 L 20 200.68560807128003 L 22 199.2706963668806 L 24 198.5602956509553 L 26 193.53360169784423 L 28 190.04744669315573 L 30 193.28720945634194 L 32 192.26893522515203 L 34 187.7765962740359 L 36 187.90577697496744 L 38 184.9355698046995 L 40 182.88874529040731 L 42 182.1393680532754 L 44 181.34352191380208 L 46 179.1152995276046 L 48 176.23968106871297 L 50 177.0641520446547 L 52 177.27507720533225 L 54 173.1257192928186 L 56 171.27699359392878 L 58 170.87135603222256 L 60 169.24965905293493 L 62 168.8709684153871 L 64 168.78085873028465 L 66 168.62328065051148 L 68 164.9026858883285 L 70 162.1845877936048 L 72 162.35542406365386 L 74 158.94543540637355 L 76 163.02356113457452 L 78 159.1771675211656 L 80 158.25585456407316 L 82 151.71142692795235 L 84 155.28525032719128 L 86 152.24852460755264 L 88 152.24463892550375 L 90 151.11884088011215 L 92 150.36595029616458 L 94 148.9171595829901 L 96 149.3428367485039 L 98 147.06953031359512 L 100 145.68186712569894 L 102 146.51457123908148 L 104 143.10225367506374 L 106 141.42029173495615 L 108 142.19859014175415 L 110 143.2260797052311 L 112 138.94546645634233 L 114 137.74955706251933 L 116 139.13658344653393 L 118 137.6457609453365 L 120 136.48185767614058 L 122 131.5837135026743 L 124 134.11398553377325 L 126 134.78113350995778 L 128 134.53306994221785 L 130 131.25784496885274 L 132 130.34419141278778 L 134 127.58735257951197 L 136 129.15001913003746 L 138 126.66055016404246 L 140 126.21080159582178 L 142 123.44172196194543 L 144 124.27846885241996 L 146 125.26412778209045 L 148 123.22152649440159 L 150 122.45082553185848 L 152 121.72337816915655 L 154 122.0428058233522 L 156 122.30064665616779 L 158 122.81002695086848 L 160 117.83206390273938 L 162 119.82854801394708 L 164 117.86303631884871 L 166 115.99816480429772 L 168 115.30147288420186 L 170 113.07094821645985 L 172 116.53356615068186 L 174 114.93762345433218 L 176 113.61652813864636 L 178 114.02365082088153 L 180 110.76370203817164 L 182 106.77316205862058 L 184 110.80628010159963 L 186 108.62667008031347 L 188 109.82098583473011 L 190 106.630350625094 L 192 107.38882636706303 L 194 108.39569245243676 L 196 105.72079069980748 L 198 105.59935140658722 L 200 102.97171174048091 L 202 105.35280599220444 L 204 105.56448287273558 L 206 101.48455333826817 L 208 98.06196420979258 L 210 98.6559309498654 L 212 98.6713594659717 L 214 94.8777978470106 L 216 97.7314357273326 L 218 95.23357242617851 L 220 96.53060617403447 L 222 95.69971908004032 L 224 96.09273572893589 L 226 93.59353030376757 L 228 91.7211342379438 L 230 93.32610259375488 L 232 92.68928204626518 L 234 92.46479423360125 L 236 91.85231715257093 L 238 91.74867688965308 L 240 91.07216106529718 L 242 86.70356678909893 L 244 89.52535281273731 L 246 88.58649157416993 L 248 85.39541580592713 L 250 89.1010944942294 L 252 87.14882622443258 L 254 83.40357572215326 L 256 87.73169376013176 L 258 82.75801555963608 L 260 83.8244727547873 L 262 84.61316677323455 L 264 85.020273228964 L 266 82.59683732247784 L 268 82.46313166114476 L 270 80.92483463070297 L 272 84.10197458943657 L 274 77.51878139588428 L 276 80.13316884243207 L 278 76.33310678685518 L 280 79.74963357196515 L 282 79.37136610321733 L 284 80.25037745029948 L 286 76.73332999198968 L 288 76.81872080515973 L 290 78.650204812993 L 292 80.80254380305473 L 294 77.23505458740198 L 296 74.80780283219721 L 298 75.1015113675648 L 300 73.74375618924674 L 302 71.87842047922882 L 304 72.17444561852187 L 306 72.37530057845348 L 308 72.3550845869708 L 310 70.84024148842309 L 312 68.81222295832987 L 314 70.84726855371298 L 316 66.94764004818865 L 318 69.42275448064228 L 320 71.47697538320585 L 322 70.24030677465481 L 324 68.19125763675765 L 326 67.2932922221647 L 328 68.30363949224031 L 330 66.47573397550104 L 332 65.85544253298474 L 334 64.68664070246342 L 336 64.6329328195946 L 338 63.99966906808885 L 340 65.3039850155769 L 342 64.79747992564288 L 344 63.084358657512894 L 346 63.579671841529375 L 348 60.73638228729948 L 350 62.410917289843695 L 352 61.11509331104253 L 354 62.27514136126169 L 356 58.56890824197416 L 358 59.63938020774194 L 360 60.946356598585794 L 362 59.073169853607425 L 364 58.67651061292284 L 366 56.828310973110746 L 368 57.83811805346343 L 370 59.68366444591982 L 372 57.83898335737041 L 374 54.78753162796818 L 376 55.61606215625579 L 378 55.557129668085395 L 380 53.19844231337805 L 382 56.6637686774601 L 384 56.178065088093206 L 386 53.42795070378597 L 388 53.56778656769558 L 390 53.40313826813366 L 392 56.93705270301257 L 394 53.1766113680942 L 396 50.63389298276559 L 398 50.69206707304099 L 400 49.1177116454505 L 402 50.12488875170271 L 404 52.2501304959919 L 406 52.09841237953012 L 408 48.42044610147718 L 410 49.500208465277154 L 412 52.759258008996454 L 414 47.96352903738648 L 416 47.988613697826565 L 418 48.34422821140652 L 420 48.64858248442863 L 422 45.85606437900097 L 424 45.95103641786949 L 426 46.12103066594307 L 428 47.84916910756175 L 430 45.3513903230494 L 432 44.855214507062584 L 434 42.595097087203726 L 436 44.77783715595149 L 438 41.45107815477678 L 440 43.63999644277072 L 442 38.40578576959658 L 444 40.20685528694895 L 446 44.355191704581614 L 448 44.307057876282954 L 450 42.01328155247131 L 452 43.2256085886475 L 454 42.18482175417111 L 456 37.99538033587345 L 458 43.88948084569856 L 460 40.85278150449574 L 462 39.28099014832085 L 464 38.19783456307664 L 466 34.728861067022336 L 468 36.137505384560626 L 470 38.501474696893126 L 472 36.011311158533516 L 474 39.545455387979615 L 476 36.1347995327568 L 478 36.319142116687885 L 480 35.98566922658526 L 482 34.64124278704446 L 484 34.28341481441666 L 486 36.23739732671285 L 488 30.761535812561192 L 490 36.793834402672076 L 492 36.889333691501804 L 494 32.32504766927724 L 496 33.260147763152474 L 498 33.33212763475697 L 500 33.68895933990345 L 502 30.69479853911119 L 504 30.49607966978354 L 506 31.72432971731044 L 508 31.155227158550815 L 510 33.27630394411639 L 512 31.7635675863836 L 514 29.96484251920444 L 516 29.03558549492476 L 518 29.55327187921202 L 520 27.982758976565236 L 522 27.14061267041481 L 524 28.696018636804695 L 526 27.587999754026498 L 528 27.361416977099395 L 530 27.638304967948613 L 532 25.412166267992973 L 534 25.007611106417272 L 536 25.527086156042543 L 538 27.018404806088625 L 540 25.559296411273948 L 542 26.28519267735649 L 544 25.663669940235394 L 546 25.064299416806023 L 548 24.25304130524958 L 550 25.04049120080859 L 552 24.551841824289454 L 554 23.934006959306345 L 556 25.97519730469415 L 558 23.44827920338537 L 560 22.183109389621734 L 562 21.931355817251017 L 564 21.60293984157019 L 566 22.16582811331773 L 568 21.752474497161785 L 570 21.011478144939076 L 572 20.581456038852764 L 574 20.054466138939574 L 576 21.116621514756844 L 578 20.52937584283916 L 580 19.66649932793581 L 582 19.217047550303135 L 584 18.221911638548562 L 586 17.730110633997015 L 588 21.858152657819744 L 590 19.917399748744316 L 592 17.971173745623844 L 594 20.91550694305846 L 596 17.87805676558989 L 598 17.47774084179767 L 600 18.781146134858943 L 600 18.781146134858943 L 600 210 L 10 210 L 10 211.07263791347907" style="stroke: none; fill: rgba(50, 120, 180, 0.2);"></path>
 		</svg>
 		<p>
-			The entropy of a system always evolves from low to high. Our universe has its lowest entropy point at the big bang. The far future is the highest entropy.
+			The entropy of a complex system always increases.
+			Our universe has its lowest entropy point at the big bang.
+			The far future is the highest entropy.
 		</p>
 
 		<div class="example">
 			<p>
-				<a href="https://en.wikipedia.org/wiki/Diffusion">Diffusion</a> is a good example of the second law of thermodynamics. The simulation below will become more evenly mixed as time progresses forward.
-				It would be very unlikely to see the reverse where the system separates as time progresses forward. This means there is a clear difference between directions in time.
+				<a href="https://en.wikipedia.org/wiki/Diffusion">Diffusion</a> is a good example of the second law of thermodynamics.
+				The simulation below will become more evenly mixed as time progresses forward.
+				It would be extremely unlikely to see the reverse where the system separates as time progresses forward.
+				This means there is a clear difference between directions in time.
 			</p>
 			<p>
 				The simulation below has 150 particles on each side. As time progresses forward, the particles will quickly mix together. Yet, the odds of 300 particles unmixing is so unlikely that it would take longer than the age of the universe.
@@ -673,8 +837,8 @@
 						<td>\(2 \times 2 \times 2 \times 2 \times 2 = 32\)</td>
 					</tr>
 					<tr>
-						<td>\(\text{\color{#f04}n}\)</td>
-						<td>\(2^{\color{#f04}n}\)</td>
+						<td>\(\text{\color{red}n}\)</td>
+						<td>\(2^{\color{red}n}\)</td>
 					</tr>
 					<tr>
 						<td>\(20\)</td>
@@ -687,7 +851,8 @@
 				<p>I wrote a program that counts how often a particle in the simulation switches states at the fastest time rate. For ten particles on each sides there are about 18.75 switches per second or one every 1/18.75 seconds. </p>
 				$$T_{avg} \approx \left(\frac{2^{20}}{2}\right) \left(\frac{1}{18.75}\right) \mathrm{s}$$
 				$$T_{avg} \approx 27\,960 \, \mathrm{s} = 7.767 \, \mathrm{hr}$$
-				<p>The graphs below assume that each particle switches states once a second. The time to separate increases very fast as the number of particles goes up.</p>
+				<p>The graphs below assume that each particle switches states once a second.
+					The time to separate increases quickly as the number of particles goes up.</p>
 				<!-- <svg id="SVG-graph-1" viewBox="0 0 580 210"> </svg>
 				<script defer>
 					(function () {
@@ -732,20 +897,81 @@
 					})()
 				</script> -->
 
-			<svg id="SVG-graph-1" viewBox="0 0 580 210" title="My new Alt"> <path d="M 90.5 0  v 190.5M 150.5 0  v 190.5M 210.5 0  v 190.5M 270.5 0  v 190.5M 330.5 0  v 190.5M 390.5 0  v 190.5M 450.5 0  v 190.5M 510.5 0  v 190.5M 570.5 0  v 190.5M 30.5 130.5  h 580M 30.5 70.5  h 580M 30.5 10.5  h 580" style="stroke: rgb(221, 221, 221); fill: none; stroke-width: 1;"></path><path d="M 30.5 0 L 30.5 210 M 0 190.5 L 580 190.5" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path><text x="90.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">2</text><text x="150.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">4</text><text x="210.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">6</text><text x="270.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">8</text><text x="330.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">10</text><text x="390.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">12</text><text x="450.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">14</text><text x="510.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">16</text><text x="570.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">18</text><text x="25.5" y="134.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">300</text><text x="25.5" y="74.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">600</text><text x="25.5" y="14.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">900</text><path d="M 90.5 190.5  v 3M 150.5 190.5  v 3M 210.5 190.5  v 3M 270.5 190.5  v 3M 330.5 190.5  v 3M 390.5 190.5  v 3M 450.5 190.5  v 3M 510.5 190.5  v 3M 570.5 190.5  v 3M 30.5 130.5  h -3M 30.5 70.5  h -3M 30.5 10.5  h -3" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path><text x="578" y="186" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">n-particles</text><text x="43" y="3" transform="rotate(-90, 43, 3)" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">time (s)</text><path id="SVG-graph-1-path" d="M 32 188.42905881576905 L 34 189.17738126522903 L 36 189.4256508225015 L 38 189.5488656114692 L 40 189.62202368503154 L 42 189.67012302230677 L 44 189.70387581143547 L 46 189.72863701797993 L 48 189.74738057224826 L 50 189.76188984220477 L 52 189.7732987555974 L 54 189.78236235917598 L 56 189.7896025026404 L 58 189.79539108487634 L 60 189.8 L 62 189.80363235197115 L 64 189.8064426506421 L 66 189.80855027416717 L 68 189.81004867851334 L 70 189.81101184251577 L 72 189.8114988698896 L 74 189.81155733454986 L 76 189.8112257516382 L 78 189.8105354291862 L 80 189.80951187376382 L 82 189.8081758701209 L 84 189.80654431926752 L 86 189.80463089530895 L 88 189.8024465647082 L 90 189.8 L 92 189.79729791171215 L 94 189.79434531630727 L 96 189.7911457536369 L 98 189.78770146422082 L 100 189.78401353430374 L 102 189.7800820148712 L 104 189.77590601946468 L 106 189.7714838046147 L 108 189.76681283592148 L 110 189.76188984220477 L 112 189.75671085966553 L 114 189.75127126762968 L 116 189.74556581714654 L 118 189.739588653479 L 120 189.73333333333332 L 122 189.72679283752507 L 124 189.71995957965242 L 126 189.71282541125075 L 128 189.70538162381663 L 130 189.69761894802522 L 132 189.68952755040638 L 134 189.68109702769974 L 136 189.6723163990701 L 138 189.66317409633103 L 140 189.65365795229783 L 142 189.6437551873674 L 144 189.63345239440164 L 146 189.6227355219759 L 148 189.61158985603643 L 150 189.6 L 152 189.58794985331647 L 154 189.57542258850532 L 156 189.5624006266678 L 158 189.5488656114692 L 160 189.53479838157727 L 162 189.52017894153713 L 164 189.50498643105632 L 166 189.48919909266812 L 168 189.4727942377355 L 170 189.45574821075377 L 172 189.43803635190346 L 174 189.41963295780258 L 176 189.40051124040008 L 178 189.38064328395 L 180 189.36 L 182 189.3385510803238 L 184 189.31626494772283 L 186 189.2931087046172 L 188 189.26904807934253 L 190 189.24404737006307 L 192 189.21806938620867 L 194 189.19107538733593 L 196 189.1630250193116 L 198 189.13387624770834 L 200 189.1035852883003 L 202 189.07210653453828 L 204 189.03939248188013 L 206 189.00539364884557 L 208 188.97005849465842 L 210 188.93333333333334 L 212 188.89516224405736 L 214 188.85548697770994 L 216 188.8142468593579 L 218 188.77137868655444 L 220 188.72681662326414 L 222 188.6804920892271 L 224 188.63233364456798 L 226 188.58226686944616 L 228 188.53021423853536 L 230 188.47609499011054 L 232 188.41982498951074 L 234 188.3613165867367 L 236 188.3004784679303 L 238 188.23721550047307 L 240 188.17142857142858 L 242 188.1030144190419 L 244 188.03186545699657 L 246 187.95786959111638 L 248 187.88091002818564 L 250 187.80086507654713 L 252 187.71760793812257 L 254 187.63100649148382 L 256 187.54092306558803 L 258 187.44721420377195 L 260 187.34973041758352 L 262 187.24831593001008 L 264 187.14280840764349 L 266 187.0330386813021 L 268 186.9188304546084 L 270 186.8 L 272 186.6763558416271 L 274 186.54769842456773 L 276 186.41381976976535 L 278 186.2745031140683 L 280 186.12952253472295 L 282 185.97864255764452 L 284 185.82161774875885 L 286 185.65819228767887 L 288 185.4880995229458 L 290 185.3110615080324 L 292 185.12678851726977 L 294 184.93497854082256 L 296 184.73531675779915 L 298 184.52747498654327 L 300 184.3111111111111 L 302 184.08586848289528 L 304 183.8513752963104 L 306 183.60724393740782 L 308 183.35307030423692 L 310 183.08843309771956 L 312 182.81289308174763 L 314 182.5259923111602 L 316 182.22725332619433 L 318 181.91617831194455 L 320 181.59224822129946 L 322 181.25492185975807 L 324 180.90363493045683 L 326 180.53779903766608 L 328 180.15680064693692 L 330 179.76 L 332 179.34672998243389 L 334 178.91629494203326 L 336 178.46796945571606 L 338 178.00099704271344 L 340 177.51458882168694 L 342 177.00792210931303 L 344 176.48013895776748 L 346 175.93034462842772 L 348 175.3576059989939 L 350 174.76094990110528 L 352 174.13936138539972 L 354 173.49178191082905 L 356 172.8171074549028 L 358 172.11418654138538 L 360 171.38181818181818 L 362 170.61874972707852 L 364 169.8236746250186 L 366 168.99523008005423 L 368 168.13199461038897 L 370 167.2324854983703 L 372 166.29515612927293 L 374 165.3183932135988 L 376 164.3005138877639 L 378 163.23976268781644 L 380 162.13430839059254 L 382 160.98224071646996 L 384 159.78156688761928 L 386 158.5302080353838 L 388 157.2259954501363 L 390 155.86666666666667 L 392 154.4498613778457 L 394 152.9731171689902 L 396 151.43386506501759 L 398 149.82942488212757 L 400 148.15700037538323 L 402 146.41367417317923 L 404 144.59640248918708 L 406 142.7020096019485 L 408 140.72718209185246 L 410 138.6684628247757 L 412 136.52224467119072 L 414 134.28476394904803 L 416 131.95209357822088 L 418 129.5201359337567 L 420 126.98461538461538 L 422 124.3410705039803 L 424 121.58484593661136 L 426 118.71108390806282 L 428 115.7147153599143 L 430 112.59045069445897 L 432 109.33277011155558 L 434 105.93591351958399 L 436 102.39387000163859 L 438 98.70036681725604 L 440 94.84885791909643 L 442 90.83251196308183 L 444 86.64419978953838 L 446 82.27648135189065 L 448 77.72159206840956 L 450 72.97142857142858 L 452 68.01753382729991 L 454 62.85108159917394 L 456 57.46286022344074 L 458 51.84325566937329 L 460 45.982233850156206 L 462 39.869322152061756 L 464 33.49359014705959 L 466 26.843629452592978 L 468 19.907532700641354 L 470 12.672871576497897 L 472 5.126673885926294 L 474 -2.7446003924825106 L 476 -10.955084114858693 L 478 -19.51952908662858 L 480 -28.453333333333347 L 482 -37.77256957911254 L 484 -47.494014986564935 L 486 -57.63518221409754 L 488 -68.21435184938093 L 490 -79.25060628014273 L 492 -90.7638650662741 L 494 -102.77492188006954 L 496 -115.30548308441826 L 498 -128.3782080218764 L 500 -142.01675109081248 L 502 -156.2458056882228 L 504 -171.09115010237224 L 506 -186.57969544213017 L 508 -202.73953569376408 L 510 -219.60000000000002 L 512 -237.19170726041023 L 514 -255.54662315661358 L 516 -274.6981197104053 L 518 -294.6810374877718 L 520 -315.53175056679805 L 522 -337.288234392758 L 524 -359.9901366491989 L 526 -383.6788512795931 L 528 -408.3975958001538 L 530 -434.191492050728 L 532 -461.1076505372165 L 534 -489.1952585258907 L 536 -518.5056720571303 L 538 -549.092512053619 L 540 -581.0117647058823 L 542 -614.3218863262413 L 544 -649.0839128708209 L 546 -685.3615743382052 L 548 -723.2214142626743 L 550 -762.7329145297349 L 552 -803.9686257518657 L 554 -847.0043034530697 L 556 -891.9190503219702 L 558 -938.7954648048358 L 560 -987.7197963221283 L 562 -1038.782107404822 L 564 -1092.0764430601084 L 566 -1147.701007689955 L 568 -1205.7583499005148 L 570 -1266.3555555555556 L 572 -1329.6044494429354 L 574 -1395.621805939713 L 576 -1464.5295690788055 L 578 -1536.4550824381943 L 580 -1611.5313292925894" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 2; stroke-linecap: round;"></path><path id="SVG-graph-1-fill" d="M 32 188.42905881576905 L 34 189.17738126522903 L 36 189.4256508225015 L 38 189.5488656114692 L 40 189.62202368503154 L 42 189.67012302230677 L 44 189.70387581143547 L 46 189.72863701797993 L 48 189.74738057224826 L 50 189.76188984220477 L 52 189.7732987555974 L 54 189.78236235917598 L 56 189.7896025026404 L 58 189.79539108487634 L 60 189.8 L 62 189.80363235197115 L 64 189.8064426506421 L 66 189.80855027416717 L 68 189.81004867851334 L 70 189.81101184251577 L 72 189.8114988698896 L 74 189.81155733454986 L 76 189.8112257516382 L 78 189.8105354291862 L 80 189.80951187376382 L 82 189.8081758701209 L 84 189.80654431926752 L 86 189.80463089530895 L 88 189.8024465647082 L 90 189.8 L 92 189.79729791171215 L 94 189.79434531630727 L 96 189.7911457536369 L 98 189.78770146422082 L 100 189.78401353430374 L 102 189.7800820148712 L 104 189.77590601946468 L 106 189.7714838046147 L 108 189.76681283592148 L 110 189.76188984220477 L 112 189.75671085966553 L 114 189.75127126762968 L 116 189.74556581714654 L 118 189.739588653479 L 120 189.73333333333332 L 122 189.72679283752507 L 124 189.71995957965242 L 126 189.71282541125075 L 128 189.70538162381663 L 130 189.69761894802522 L 132 189.68952755040638 L 134 189.68109702769974 L 136 189.6723163990701 L 138 189.66317409633103 L 140 189.65365795229783 L 142 189.6437551873674 L 144 189.63345239440164 L 146 189.6227355219759 L 148 189.61158985603643 L 150 189.6 L 152 189.58794985331647 L 154 189.57542258850532 L 156 189.5624006266678 L 158 189.5488656114692 L 160 189.53479838157727 L 162 189.52017894153713 L 164 189.50498643105632 L 166 189.48919909266812 L 168 189.4727942377355 L 170 189.45574821075377 L 172 189.43803635190346 L 174 189.41963295780258 L 176 189.40051124040008 L 178 189.38064328395 L 180 189.36 L 182 189.3385510803238 L 184 189.31626494772283 L 186 189.2931087046172 L 188 189.26904807934253 L 190 189.24404737006307 L 192 189.21806938620867 L 194 189.19107538733593 L 196 189.1630250193116 L 198 189.13387624770834 L 200 189.1035852883003 L 202 189.07210653453828 L 204 189.03939248188013 L 206 189.00539364884557 L 208 188.97005849465842 L 210 188.93333333333334 L 212 188.89516224405736 L 214 188.85548697770994 L 216 188.8142468593579 L 218 188.77137868655444 L 220 188.72681662326414 L 222 188.6804920892271 L 224 188.63233364456798 L 226 188.58226686944616 L 228 188.53021423853536 L 230 188.47609499011054 L 232 188.41982498951074 L 234 188.3613165867367 L 236 188.3004784679303 L 238 188.23721550047307 L 240 188.17142857142858 L 242 188.1030144190419 L 244 188.03186545699657 L 246 187.95786959111638 L 248 187.88091002818564 L 250 187.80086507654713 L 252 187.71760793812257 L 254 187.63100649148382 L 256 187.54092306558803 L 258 187.44721420377195 L 260 187.34973041758352 L 262 187.24831593001008 L 264 187.14280840764349 L 266 187.0330386813021 L 268 186.9188304546084 L 270 186.8 L 272 186.6763558416271 L 274 186.54769842456773 L 276 186.41381976976535 L 278 186.2745031140683 L 280 186.12952253472295 L 282 185.97864255764452 L 284 185.82161774875885 L 286 185.65819228767887 L 288 185.4880995229458 L 290 185.3110615080324 L 292 185.12678851726977 L 294 184.93497854082256 L 296 184.73531675779915 L 298 184.52747498654327 L 300 184.3111111111111 L 302 184.08586848289528 L 304 183.8513752963104 L 306 183.60724393740782 L 308 183.35307030423692 L 310 183.08843309771956 L 312 182.81289308174763 L 314 182.5259923111602 L 316 182.22725332619433 L 318 181.91617831194455 L 320 181.59224822129946 L 322 181.25492185975807 L 324 180.90363493045683 L 326 180.53779903766608 L 328 180.15680064693692 L 330 179.76 L 332 179.34672998243389 L 334 178.91629494203326 L 336 178.46796945571606 L 338 178.00099704271344 L 340 177.51458882168694 L 342 177.00792210931303 L 344 176.48013895776748 L 346 175.93034462842772 L 348 175.3576059989939 L 350 174.76094990110528 L 352 174.13936138539972 L 354 173.49178191082905 L 356 172.8171074549028 L 358 172.11418654138538 L 360 171.38181818181818 L 362 170.61874972707852 L 364 169.8236746250186 L 366 168.99523008005423 L 368 168.13199461038897 L 370 167.2324854983703 L 372 166.29515612927293 L 374 165.3183932135988 L 376 164.3005138877639 L 378 163.23976268781644 L 380 162.13430839059254 L 382 160.98224071646996 L 384 159.78156688761928 L 386 158.5302080353838 L 388 157.2259954501363 L 390 155.86666666666667 L 392 154.4498613778457 L 394 152.9731171689902 L 396 151.43386506501759 L 398 149.82942488212757 L 400 148.15700037538323 L 402 146.41367417317923 L 404 144.59640248918708 L 406 142.7020096019485 L 408 140.72718209185246 L 410 138.6684628247757 L 412 136.52224467119072 L 414 134.28476394904803 L 416 131.95209357822088 L 418 129.5201359337567 L 420 126.98461538461538 L 422 124.3410705039803 L 424 121.58484593661136 L 426 118.71108390806282 L 428 115.7147153599143 L 430 112.59045069445897 L 432 109.33277011155558 L 434 105.93591351958399 L 436 102.39387000163859 L 438 98.70036681725604 L 440 94.84885791909643 L 442 90.83251196308183 L 444 86.64419978953838 L 446 82.27648135189065 L 448 77.72159206840956 L 450 72.97142857142858 L 452 68.01753382729991 L 454 62.85108159917394 L 456 57.46286022344074 L 458 51.84325566937329 L 460 45.982233850156206 L 462 39.869322152061756 L 464 33.49359014705959 L 466 26.843629452592978 L 468 19.907532700641354 L 470 12.672871576497897 L 472 5.126673885926294 L 474 -2.7446003924825106 L 476 -10.955084114858693 L 478 -19.51952908662858 L 480 -28.453333333333347 L 482 -37.77256957911254 L 484 -47.494014986564935 L 486 -57.63518221409754 L 488 -68.21435184938093 L 490 -79.25060628014273 L 492 -90.7638650662741 L 494 -102.77492188006954 L 496 -115.30548308441826 L 498 -128.3782080218764 L 500 -142.01675109081248 L 502 -156.2458056882228 L 504 -171.09115010237224 L 506 -186.57969544213017 L 508 -202.73953569376408 L 510 -219.60000000000002 L 512 -237.19170726041023 L 514 -255.54662315661358 L 516 -274.6981197104053 L 518 -294.6810374877718 L 520 -315.53175056679805 L 522 -337.288234392758 L 524 -359.9901366491989 L 526 -383.6788512795931 L 528 -408.3975958001538 L 530 -434.191492050728 L 532 -461.1076505372165 L 534 -489.1952585258907 L 536 -518.5056720571303 L 538 -549.092512053619 L 540 -581.0117647058823 L 542 -614.3218863262413 L 544 -649.0839128708209 L 546 -685.3615743382052 L 548 -723.2214142626743 L 550 -762.7329145297349 L 552 -803.9686257518657 L 554 -847.0043034530697 L 556 -891.9190503219702 L 558 -938.7954648048358 L 560 -987.7197963221283 L 562 -1038.782107404822 L 564 -1092.0764430601084 L 566 -1147.701007689955 L 568 -1205.7583499005148 L 570 -1266.3555555555556 L 572 -1329.6044494429354 L 574 -1395.621805939713 L 576 -1464.5295690788055 L 578 -1536.4550824381943 L 580 -1611.5313292925894 L 580 -1611.5313292925894 L 580 190 L 30 190 L 30 0" style="stroke: none; fill: rgba(200, 50, 0, 0.3);"></path><circle id="SVG-graph-1-circle" cx="573.0631713867188" cy="-1364.3460271904805" r="4" style="display: none; fill: rgb(0, 0, 0);"></circle><text id="SVG-graph-1-coords" x="578.0631713867188" y="-1374.3460271904805" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: start; display: none;">(18.1, 
-		  7771.7)</text></svg>
-		  <svg id="SVG-graph-0" viewBox="0 0 580 210" title="My new Alt"> <path d="M 90.5 0  v 190.5M 150.5 0  v 190.5M 210.5 0  v 190.5M 270.5 0  v 190.5M 330.5 0  v 190.5M 390.5 0  v 190.5M 450.5 0  v 190.5M 510.5 0  v 190.5M 570.5 0  v 190.5M 30.5 130.5  h 580M 30.5 70.5  h 580M 30.5 10.5  h 580" style="stroke: rgb(221, 221, 221); fill: none; stroke-width: 1;"></path><path d="M 30.5 0 L 30.5 210 M 0 190.5 L 580 190.5" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path><text x="90.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">5</text><text x="150.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">10</text><text x="210.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">15</text><text x="270.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">20</text><text x="330.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">25</text><text x="390.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">30</text><text x="450.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">35</text><text x="510.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">40</text><text x="570.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">45</text><text x="25.5" y="134.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">10</text><text x="25.5" y="74.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">20</text><text x="25.5" y="14.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">30</text><path d="M 90.5 190.5  v 3M 150.5 190.5  v 3M 210.5 190.5  v 3M 270.5 190.5  v 3M 330.5 190.5  v 3M 390.5 190.5  v 3M 450.5 190.5  v 3M 510.5 190.5  v 3M 570.5 190.5  v 3M 30.5 130.5  h -3M 30.5 70.5  h -3M 30.5 10.5  h -3" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path><text x="578" y="186" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">n-particles</text><text x="43" y="3" transform="rotate(-90, 43, 3)" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">time (year)</text><path id="SVG-graph-0-path" d="M 32 189.9999993597463 L 34 189.99999964066976 L 36 189.9999997311103 L 38 189.99999977363615 L 40 189.9999997967321 L 42 189.99999980986627 L 44 189.99999981707037 L 46 189.9999998203349 L 48 189.9999998207402 L 50 189.99999981890892 L 52 189.99999981521103 L 54 189.99999980986627 L 56 189.99999980299887 L 58 189.99999979466844 L 60 189.99999978488825 L 62 189.99999977363615 L 64 189.99999976086133 L 66 189.99999974648836 L 68 189.9999997304195 L 70 189.9999997125358 L 72 189.9999996926975 L 74 189.99999967074348 L 76 189.99999964649064 L 78 189.99999961973253 L 80 189.99999959023762 L 82 189.9999995577474 L 84 189.99999952197385 L 86 189.99999948259688 L 88 189.99999943926102 L 90 189.99999939157206 L 92 189.99999933909297 L 94 189.9999992813395 L 96 189.9999992177754 L 98 189.99999914780662 L 100 189.9999990707754 L 102 189.99999898595343 L 104 189.99999889253414 L 106 189.99999878962447 L 108 189.99999867623532 L 110 189.99999855127126 L 112 189.999998413519 L 114 189.99999826163446 L 116 189.99999809412853 L 118 189.99999790935135 L 120 189.99999770547453 L 122 189.99999748047176 L 124 189.99999723209697 L 126 189.99999695786028 L 128 189.9999966550011 L 130 189.99999632045837 L 132 189.99999595083742 L 134 189.9999955423731 L 136 189.99999509088897 L 138 189.9999945917516 L 140 189.99999403982014 L 142 189.99999342938995 L 144 189.99999275413012 L 146 189.99999200701387 L 148 189.9999911802412 L 150 189.9999902651529 L 152 189.99998925213467 L 154 189.99998813051084 L 156 189.9999868884259 L 158 189.99998551271264 L 160 189.99998398874558 L 162 189.999982300278 L 164 189.99998042926015 L 166 189.99997835563744 L 168 189.99997605712556 L 170 189.99997350896024 L 172 189.9999706836187 L 174 189.99996755050967 L 176 189.9999640756282 L 178 189.9999602211715 L 180 189.99995594511105 L 182 189.99995120071623 L 184 189.99994593602406 L 186 189.9999400932486 L 188 189.99993360812303 L 190 189.9999264091673 L 192 189.9999184168723 L 194 189.99990954279104 L 196 189.9998996885266 L 198 189.99988874460456 L 200 189.9998765892169 L 202 189.9998630868229 L 204 189.9998480865898 L 206 189.99983142065602 L 208 189.99981290219569 L 210 189.99979232326183 L 212 189.99976945238328 L 214 189.9997440318863 L 216 189.99971577490996 L 218 189.99968436207936 L 220 189.9996494377982 L 222 189.9996106061159 L 224 189.9995674261212 L 226 189.99951940680694 L 228 189.99946600134595 L 230 189.99940660070922 L 232 189.9993405265511 L 234 189.999267023277 L 236 189.99918524919912 L 238 189.9990942666746 L 240 189.99899303110953 L 242 189.99888037869664 L 244 189.99875501274133 L 246 189.99861548841216 L 248 189.9984601957341 L 250 189.99828734062106 L 252 189.99809492372074 L 254 189.99788071681866 L 256 189.997642236519 L 258 189.99737671488617 L 260 189.99708106669596 L 262 189.99675185290204 L 264 189.99638523988037 L 266 189.99597695396085 L 268 189.99552223069992 L 270 189.99501575828376 L 272 189.99445161438072 L 274 189.99382319568255 L 276 189.99312313928462 L 278 189.99234323495776 L 280 189.99147432725266 L 282 189.99050620625476 L 284 189.98942748567038 L 286 189.98822546676988 L 288 189.98688598654275 L 290 189.98539324822713 L 292 189.98372963216156 L 294 189.98187548466817 L 296 189.97980888240807 L 298 189.97750536935138 L 300 189.97493766317058 L 302 189.97207532749303 L 304 189.96888440603158 L 306 189.9653270141478 L 308 189.96136088288165 L 310 189.95693884990123 L 312 189.95200829117772 L 314 189.9465104864655 L 316 189.9403799108577 L 318 189.9335434437833 L 320 189.92591948580068 L 322 189.9174169724133 L 324 189.90793427287156 L 326 189.89735796051488 L 328 189.88556143963288 L 330 189.8724034120639 L 332 189.85772616478275 L 334 189.84135365753082 L 336 189.82308938708653 L 338 189.8027140020286 L 340 189.77998263877805 L 342 189.75462194627676 L 344 189.72632676283052 L 346 189.6947564043631 L 348 189.65953051854387 L 350 189.62022445390505 L 352 189.57636408708817 L 354 189.52742004468115 L 356 189.47280124864284 L 358 189.4118477059679 L 360 189.3438224539209 L 362 189.26790256174468 L 364 189.18316907809813 L 366 189.0885958004565 L 368 188.98303672815126 L 370 188.8652120444557 L 372 188.7336924549351 L 374 188.58688168894903 L 376 188.4229969484669 L 378 188.24004706295048 L 380 188.03580808065786 L 382 187.80779599497123 L 384 187.55323626885763 L 386 187.2690297808903 L 388 186.95171477189692 L 390 186.59742432170424 L 392 186.20183883000138 L 394 185.76013291335096 L 396 185.26691606106883 L 398 184.71616631520078 L 400 184.1011561531843 L 402 183.41436965491144 L 404 182.64740992759624 L 406 181.79089564074334 L 408 180.83434538810155 L 410 179.7660484420731 L 412 178.57292029674446 L 414 177.24034120639092 L 416 175.75197571461658 L 418 174.0895709325747 L 420 172.23273106001224 L 422 170.15866534687643 L 424 167.8419063622151 L 426 165.25399506693998 L 428 162.36312877307537 L 430 159.1337676091949 L 432 155.5261945940536 L 434 151.4960238414632 L 436 146.99365077198397 L 438 141.96363748288348 L 440 136.34402561797074 L 442 130.06556817319398 L 444 123.05087066091566 L 446 115.21343092284198 L 448 106.456565614476 L 450 96.67220996674507 L 452 85.739575845346 L 454 73.52365135545249 L 456 59.87352325642763 L 458 44.62050123318815 L 460 27.576020590004504 L 462 8.529297157559853 L 464 -12.755294899834041 L 466 -36.54115516187227 L 468 -63.12273558338734 L 470 -92.8292066917976 L 472 -126.0285572230681 L 474 -163.13217850420784 L 476 -204.5999909709775 L 478 -250.94617701150128 L 480 -302.7455919356607 L 482 -360.64093338226076 L 484 -425.3507589982207 L 486 -497.6784528766152 L 488 -578.5222531574495 L 490 -668.8864665267505 L 492 -769.894010264274 L 494 -882.800439175784 L 496 -1009.009633412842 L 498 -1150.0913440672502 L 500 -1307.8008167919654 L 502 -1484.1007398402762 L 504 -1681.1857921607368 L 506 -1901.5100999057304 L 508 -2147.8179463196 L 510 -2423.178120931138 L 512 -2731.0223398017583 L 514 -3075.1882198537623 L 516 -3459.9673476715607 L 518 -3890.15904735708 L 520 -4371.130523839873 L 522 -4908.884138402221 L 524 -5510.13266309493 L 526 -6182.383461327503 L 528 -6934.032654491481 L 530 -7774.47046044102 L 532 -8714.199030603737 L 534 -9764.964270213859 L 536 -10939.903302643856 L 538 -12253.709436293078 L 540 -13722.816713477478 L 542 -15365.606368048866 L 544 -17202.637795187064 L 546 -19256.906946464285 L 548 -21554.13540979842 L 550 -24123.09382168032 L 552 -26995.96369300197 L 554 -30208.742215423743 L 556 -33801.69515865457 L 558 -37819.86357718019 L 560 -42313.63072556823 L 562 -47339.35634313447 L 564 -52960.08632114991 L 566 -59246.34671970911 L 568 -66277.03216896766 L 570 -74140.39988426349 L 572 -82935.1818618124 L 574 -92771.82931818946 L 576 -103773.90511169985 L 578 -116079.64175826305 L 580 -129843.68475238039" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 2; stroke-linecap: round;"></path><path id="SVG-graph-0-fill" d="M 32 189.9999993597463 L 34 189.99999964066976 L 36 189.9999997311103 L 38 189.99999977363615 L 40 189.9999997967321 L 42 189.99999980986627 L 44 189.99999981707037 L 46 189.9999998203349 L 48 189.9999998207402 L 50 189.99999981890892 L 52 189.99999981521103 L 54 189.99999980986627 L 56 189.99999980299887 L 58 189.99999979466844 L 60 189.99999978488825 L 62 189.99999977363615 L 64 189.99999976086133 L 66 189.99999974648836 L 68 189.9999997304195 L 70 189.9999997125358 L 72 189.9999996926975 L 74 189.99999967074348 L 76 189.99999964649064 L 78 189.99999961973253 L 80 189.99999959023762 L 82 189.9999995577474 L 84 189.99999952197385 L 86 189.99999948259688 L 88 189.99999943926102 L 90 189.99999939157206 L 92 189.99999933909297 L 94 189.9999992813395 L 96 189.9999992177754 L 98 189.99999914780662 L 100 189.9999990707754 L 102 189.99999898595343 L 104 189.99999889253414 L 106 189.99999878962447 L 108 189.99999867623532 L 110 189.99999855127126 L 112 189.999998413519 L 114 189.99999826163446 L 116 189.99999809412853 L 118 189.99999790935135 L 120 189.99999770547453 L 122 189.99999748047176 L 124 189.99999723209697 L 126 189.99999695786028 L 128 189.9999966550011 L 130 189.99999632045837 L 132 189.99999595083742 L 134 189.9999955423731 L 136 189.99999509088897 L 138 189.9999945917516 L 140 189.99999403982014 L 142 189.99999342938995 L 144 189.99999275413012 L 146 189.99999200701387 L 148 189.9999911802412 L 150 189.9999902651529 L 152 189.99998925213467 L 154 189.99998813051084 L 156 189.9999868884259 L 158 189.99998551271264 L 160 189.99998398874558 L 162 189.999982300278 L 164 189.99998042926015 L 166 189.99997835563744 L 168 189.99997605712556 L 170 189.99997350896024 L 172 189.9999706836187 L 174 189.99996755050967 L 176 189.9999640756282 L 178 189.9999602211715 L 180 189.99995594511105 L 182 189.99995120071623 L 184 189.99994593602406 L 186 189.9999400932486 L 188 189.99993360812303 L 190 189.9999264091673 L 192 189.9999184168723 L 194 189.99990954279104 L 196 189.9998996885266 L 198 189.99988874460456 L 200 189.9998765892169 L 202 189.9998630868229 L 204 189.9998480865898 L 206 189.99983142065602 L 208 189.99981290219569 L 210 189.99979232326183 L 212 189.99976945238328 L 214 189.9997440318863 L 216 189.99971577490996 L 218 189.99968436207936 L 220 189.9996494377982 L 222 189.9996106061159 L 224 189.9995674261212 L 226 189.99951940680694 L 228 189.99946600134595 L 230 189.99940660070922 L 232 189.9993405265511 L 234 189.999267023277 L 236 189.99918524919912 L 238 189.9990942666746 L 240 189.99899303110953 L 242 189.99888037869664 L 244 189.99875501274133 L 246 189.99861548841216 L 248 189.9984601957341 L 250 189.99828734062106 L 252 189.99809492372074 L 254 189.99788071681866 L 256 189.997642236519 L 258 189.99737671488617 L 260 189.99708106669596 L 262 189.99675185290204 L 264 189.99638523988037 L 266 189.99597695396085 L 268 189.99552223069992 L 270 189.99501575828376 L 272 189.99445161438072 L 274 189.99382319568255 L 276 189.99312313928462 L 278 189.99234323495776 L 280 189.99147432725266 L 282 189.99050620625476 L 284 189.98942748567038 L 286 189.98822546676988 L 288 189.98688598654275 L 290 189.98539324822713 L 292 189.98372963216156 L 294 189.98187548466817 L 296 189.97980888240807 L 298 189.97750536935138 L 300 189.97493766317058 L 302 189.97207532749303 L 304 189.96888440603158 L 306 189.9653270141478 L 308 189.96136088288165 L 310 189.95693884990123 L 312 189.95200829117772 L 314 189.9465104864655 L 316 189.9403799108577 L 318 189.9335434437833 L 320 189.92591948580068 L 322 189.9174169724133 L 324 189.90793427287156 L 326 189.89735796051488 L 328 189.88556143963288 L 330 189.8724034120639 L 332 189.85772616478275 L 334 189.84135365753082 L 336 189.82308938708653 L 338 189.8027140020286 L 340 189.77998263877805 L 342 189.75462194627676 L 344 189.72632676283052 L 346 189.6947564043631 L 348 189.65953051854387 L 350 189.62022445390505 L 352 189.57636408708817 L 354 189.52742004468115 L 356 189.47280124864284 L 358 189.4118477059679 L 360 189.3438224539209 L 362 189.26790256174468 L 364 189.18316907809813 L 366 189.0885958004565 L 368 188.98303672815126 L 370 188.8652120444557 L 372 188.7336924549351 L 374 188.58688168894903 L 376 188.4229969484669 L 378 188.24004706295048 L 380 188.03580808065786 L 382 187.80779599497123 L 384 187.55323626885763 L 386 187.2690297808903 L 388 186.95171477189692 L 390 186.59742432170424 L 392 186.20183883000138 L 394 185.76013291335096 L 396 185.26691606106883 L 398 184.71616631520078 L 400 184.1011561531843 L 402 183.41436965491144 L 404 182.64740992759624 L 406 181.79089564074334 L 408 180.83434538810155 L 410 179.7660484420731 L 412 178.57292029674446 L 414 177.24034120639092 L 416 175.75197571461658 L 418 174.0895709325747 L 420 172.23273106001224 L 422 170.15866534687643 L 424 167.8419063622151 L 426 165.25399506693998 L 428 162.36312877307537 L 430 159.1337676091949 L 432 155.5261945940536 L 434 151.4960238414632 L 436 146.99365077198397 L 438 141.96363748288348 L 440 136.34402561797074 L 442 130.06556817319398 L 444 123.05087066091566 L 446 115.21343092284198 L 448 106.456565614476 L 450 96.67220996674507 L 452 85.739575845346 L 454 73.52365135545249 L 456 59.87352325642763 L 458 44.62050123318815 L 460 27.576020590004504 L 462 8.529297157559853 L 464 -12.755294899834041 L 466 -36.54115516187227 L 468 -63.12273558338734 L 470 -92.8292066917976 L 472 -126.0285572230681 L 474 -163.13217850420784 L 476 -204.5999909709775 L 478 -250.94617701150128 L 480 -302.7455919356607 L 482 -360.64093338226076 L 484 -425.3507589982207 L 486 -497.6784528766152 L 488 -578.5222531574495 L 490 -668.8864665267505 L 492 -769.894010264274 L 494 -882.800439175784 L 496 -1009.009633412842 L 498 -1150.0913440672502 L 500 -1307.8008167919654 L 502 -1484.1007398402762 L 504 -1681.1857921607368 L 506 -1901.5100999057304 L 508 -2147.8179463196 L 510 -2423.178120931138 L 512 -2731.0223398017583 L 514 -3075.1882198537623 L 516 -3459.9673476715607 L 518 -3890.15904735708 L 520 -4371.130523839873 L 522 -4908.884138402221 L 524 -5510.13266309493 L 526 -6182.383461327503 L 528 -6934.032654491481 L 530 -7774.47046044102 L 532 -8714.199030603737 L 534 -9764.964270213859 L 536 -10939.903302643856 L 538 -12253.709436293078 L 540 -13722.816713477478 L 542 -15365.606368048866 L 544 -17202.637795187064 L 546 -19256.906946464285 L 548 -21554.13540979842 L 550 -24123.09382168032 L 552 -26995.96369300197 L 554 -30208.742215423743 L 556 -33801.69515865457 L 558 -37819.86357718019 L 560 -42313.63072556823 L 562 -47339.35634313447 L 564 -52960.08632114991 L 566 -59246.34671970911 L 568 -66277.03216896766 L 570 -74140.39988426349 L 572 -82935.1818618124 L 574 -92771.82931818946 L 576 -103773.90511169985 L 578 -116079.64175826305 L 580 -129843.68475238039 L 580 -129843.68475238039 L 580 190 L 30 190 L 30 0" style="stroke: none; fill: rgba(200, 50, 0, 0.3);"></path><circle id="SVG-graph-0-circle" cx="481.89251708984375" cy="-357.3630531429901" r="4" style="display: none; fill: rgb(0, 0, 0);"></circle><text id="SVG-graph-0-coords" x="486.89251708984375" y="-367.3630531429901" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: start; display: none;">(37.7, 
-          91.2)</text></svg>
+				<svg id="SVG-graph-1" viewBox="0 0 580 210" title="My new Alt">
+					<path d="M 90.5 0  v 190.5M 150.5 0  v 190.5M 210.5 0  v 190.5M 270.5 0  v 190.5M 330.5 0  v 190.5M 390.5 0  v 190.5M 450.5 0  v 190.5M 510.5 0  v 190.5M 570.5 0  v 190.5M 30.5 130.5  h 580M 30.5 70.5  h 580M 30.5 10.5  h 580" style="stroke: rgb(221, 221, 221); fill: none; stroke-width: 1;"></path>
+					<path d="M 30.5 0 L 30.5 210 M 0 190.5 L 580 190.5" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path><text x="90.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">2</text><text x="150.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">4</text><text x="210.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">6</text><text x="270.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">8</text><text x="330.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">10</text><text x="390.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">12</text><text x="450.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">14</text><text x="510.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">16</text><text x="570.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">18</text><text x="25.5" y="134.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">300</text><text x="25.5" y="74.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">600</text><text x="25.5" y="14.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">900</text>
+					<path d="M 90.5 190.5  v 3M 150.5 190.5  v 3M 210.5 190.5  v 3M 270.5 190.5  v 3M 330.5 190.5  v 3M 390.5 190.5  v 3M 450.5 190.5  v 3M 510.5 190.5  v 3M 570.5 190.5  v 3M 30.5 130.5  h -3M 30.5 70.5  h -3M 30.5 10.5  h -3" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path><text x="578" y="186" style="fill: rgb(0, 0, 0); font-size: 15px; text-anchor: end; font-family: monospace;">total particles</text><text x="43" y="6" transform="rotate(-90, 43, 3)" style="fill: rgb(0, 0, 0); font-size: 15px; text-anchor: end; font-family: monospace;">time (seconds)</text>
+					<path id="SVG-graph-1-path" d="M 32 188.42905881576905 L 34 189.17738126522903 L 36 189.4256508225015 L 38 189.5488656114692 L 40 189.62202368503154 L 42 189.67012302230677 L 44 189.70387581143547 L 46 189.72863701797993 L 48 189.74738057224826 L 50 189.76188984220477 L 52 189.7732987555974 L 54 189.78236235917598 L 56 189.7896025026404 L 58 189.79539108487634 L 60 189.8 L 62 189.80363235197115 L 64 189.8064426506421 L 66 189.80855027416717 L 68 189.81004867851334 L 70 189.81101184251577 L 72 189.8114988698896 L 74 189.81155733454986 L 76 189.8112257516382 L 78 189.8105354291862 L 80 189.80951187376382 L 82 189.8081758701209 L 84 189.80654431926752 L 86 189.80463089530895 L 88 189.8024465647082 L 90 189.8 L 92 189.79729791171215 L 94 189.79434531630727 L 96 189.7911457536369 L 98 189.78770146422082 L 100 189.78401353430374 L 102 189.7800820148712 L 104 189.77590601946468 L 106 189.7714838046147 L 108 189.76681283592148 L 110 189.76188984220477 L 112 189.75671085966553 L 114 189.75127126762968 L 116 189.74556581714654 L 118 189.739588653479 L 120 189.73333333333332 L 122 189.72679283752507 L 124 189.71995957965242 L 126 189.71282541125075 L 128 189.70538162381663 L 130 189.69761894802522 L 132 189.68952755040638 L 134 189.68109702769974 L 136 189.6723163990701 L 138 189.66317409633103 L 140 189.65365795229783 L 142 189.6437551873674 L 144 189.63345239440164 L 146 189.6227355219759 L 148 189.61158985603643 L 150 189.6 L 152 189.58794985331647 L 154 189.57542258850532 L 156 189.5624006266678 L 158 189.5488656114692 L 160 189.53479838157727 L 162 189.52017894153713 L 164 189.50498643105632 L 166 189.48919909266812 L 168 189.4727942377355 L 170 189.45574821075377 L 172 189.43803635190346 L 174 189.41963295780258 L 176 189.40051124040008 L 178 189.38064328395 L 180 189.36 L 182 189.3385510803238 L 184 189.31626494772283 L 186 189.2931087046172 L 188 189.26904807934253 L 190 189.24404737006307 L 192 189.21806938620867 L 194 189.19107538733593 L 196 189.1630250193116 L 198 189.13387624770834 L 200 189.1035852883003 L 202 189.07210653453828 L 204 189.03939248188013 L 206 189.00539364884557 L 208 188.97005849465842 L 210 188.93333333333334 L 212 188.89516224405736 L 214 188.85548697770994 L 216 188.8142468593579 L 218 188.77137868655444 L 220 188.72681662326414 L 222 188.6804920892271 L 224 188.63233364456798 L 226 188.58226686944616 L 228 188.53021423853536 L 230 188.47609499011054 L 232 188.41982498951074 L 234 188.3613165867367 L 236 188.3004784679303 L 238 188.23721550047307 L 240 188.17142857142858 L 242 188.1030144190419 L 244 188.03186545699657 L 246 187.95786959111638 L 248 187.88091002818564 L 250 187.80086507654713 L 252 187.71760793812257 L 254 187.63100649148382 L 256 187.54092306558803 L 258 187.44721420377195 L 260 187.34973041758352 L 262 187.24831593001008 L 264 187.14280840764349 L 266 187.0330386813021 L 268 186.9188304546084 L 270 186.8 L 272 186.6763558416271 L 274 186.54769842456773 L 276 186.41381976976535 L 278 186.2745031140683 L 280 186.12952253472295 L 282 185.97864255764452 L 284 185.82161774875885 L 286 185.65819228767887 L 288 185.4880995229458 L 290 185.3110615080324 L 292 185.12678851726977 L 294 184.93497854082256 L 296 184.73531675779915 L 298 184.52747498654327 L 300 184.3111111111111 L 302 184.08586848289528 L 304 183.8513752963104 L 306 183.60724393740782 L 308 183.35307030423692 L 310 183.08843309771956 L 312 182.81289308174763 L 314 182.5259923111602 L 316 182.22725332619433 L 318 181.91617831194455 L 320 181.59224822129946 L 322 181.25492185975807 L 324 180.90363493045683 L 326 180.53779903766608 L 328 180.15680064693692 L 330 179.76 L 332 179.34672998243389 L 334 178.91629494203326 L 336 178.46796945571606 L 338 178.00099704271344 L 340 177.51458882168694 L 342 177.00792210931303 L 344 176.48013895776748 L 346 175.93034462842772 L 348 175.3576059989939 L 350 174.76094990110528 L 352 174.13936138539972 L 354 173.49178191082905 L 356 172.8171074549028 L 358 172.11418654138538 L 360 171.38181818181818 L 362 170.61874972707852 L 364 169.8236746250186 L 366 168.99523008005423 L 368 168.13199461038897 L 370 167.2324854983703 L 372 166.29515612927293 L 374 165.3183932135988 L 376 164.3005138877639 L 378 163.23976268781644 L 380 162.13430839059254 L 382 160.98224071646996 L 384 159.78156688761928 L 386 158.5302080353838 L 388 157.2259954501363 L 390 155.86666666666667 L 392 154.4498613778457 L 394 152.9731171689902 L 396 151.43386506501759 L 398 149.82942488212757 L 400 148.15700037538323 L 402 146.41367417317923 L 404 144.59640248918708 L 406 142.7020096019485 L 408 140.72718209185246 L 410 138.6684628247757 L 412 136.52224467119072 L 414 134.28476394904803 L 416 131.95209357822088 L 418 129.5201359337567 L 420 126.98461538461538 L 422 124.3410705039803 L 424 121.58484593661136 L 426 118.71108390806282 L 428 115.7147153599143 L 430 112.59045069445897 L 432 109.33277011155558 L 434 105.93591351958399 L 436 102.39387000163859 L 438 98.70036681725604 L 440 94.84885791909643 L 442 90.83251196308183 L 444 86.64419978953838 L 446 82.27648135189065 L 448 77.72159206840956 L 450 72.97142857142858 L 452 68.01753382729991 L 454 62.85108159917394 L 456 57.46286022344074 L 458 51.84325566937329 L 460 45.982233850156206 L 462 39.869322152061756 L 464 33.49359014705959 L 466 26.843629452592978 L 468 19.907532700641354 L 470 12.672871576497897 L 472 5.126673885926294 L 474 -2.7446003924825106 L 476 -10.955084114858693 L 478 -19.51952908662858 L 480 -28.453333333333347 L 482 -37.77256957911254 L 484 -47.494014986564935 L 486 -57.63518221409754 L 488 -68.21435184938093 L 490 -79.25060628014273 L 492 -90.7638650662741 L 494 -102.77492188006954 L 496 -115.30548308441826 L 498 -128.3782080218764 L 500 -142.01675109081248 L 502 -156.2458056882228 L 504 -171.09115010237224 L 506 -186.57969544213017 L 508 -202.73953569376408 L 510 -219.60000000000002 L 512 -237.19170726041023 L 514 -255.54662315661358 L 516 -274.6981197104053 L 518 -294.6810374877718 L 520 -315.53175056679805 L 522 -337.288234392758 L 524 -359.9901366491989 L 526 -383.6788512795931 L 528 -408.3975958001538 L 530 -434.191492050728 L 532 -461.1076505372165 L 534 -489.1952585258907 L 536 -518.5056720571303 L 538 -549.092512053619 L 540 -581.0117647058823 L 542 -614.3218863262413 L 544 -649.0839128708209 L 546 -685.3615743382052 L 548 -723.2214142626743 L 550 -762.7329145297349 L 552 -803.9686257518657 L 554 -847.0043034530697 L 556 -891.9190503219702 L 558 -938.7954648048358 L 560 -987.7197963221283 L 562 -1038.782107404822 L 564 -1092.0764430601084 L 566 -1147.701007689955 L 568 -1205.7583499005148 L 570 -1266.3555555555556 L 572 -1329.6044494429354 L 574 -1395.621805939713 L 576 -1464.5295690788055 L 578 -1536.4550824381943 L 580 -1611.5313292925894" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 2; stroke-linecap: round;"></path>
+					<path id="SVG-graph-1-fill" d="M 32 188.42905881576905 L 34 189.17738126522903 L 36 189.4256508225015 L 38 189.5488656114692 L 40 189.62202368503154 L 42 189.67012302230677 L 44 189.70387581143547 L 46 189.72863701797993 L 48 189.74738057224826 L 50 189.76188984220477 L 52 189.7732987555974 L 54 189.78236235917598 L 56 189.7896025026404 L 58 189.79539108487634 L 60 189.8 L 62 189.80363235197115 L 64 189.8064426506421 L 66 189.80855027416717 L 68 189.81004867851334 L 70 189.81101184251577 L 72 189.8114988698896 L 74 189.81155733454986 L 76 189.8112257516382 L 78 189.8105354291862 L 80 189.80951187376382 L 82 189.8081758701209 L 84 189.80654431926752 L 86 189.80463089530895 L 88 189.8024465647082 L 90 189.8 L 92 189.79729791171215 L 94 189.79434531630727 L 96 189.7911457536369 L 98 189.78770146422082 L 100 189.78401353430374 L 102 189.7800820148712 L 104 189.77590601946468 L 106 189.7714838046147 L 108 189.76681283592148 L 110 189.76188984220477 L 112 189.75671085966553 L 114 189.75127126762968 L 116 189.74556581714654 L 118 189.739588653479 L 120 189.73333333333332 L 122 189.72679283752507 L 124 189.71995957965242 L 126 189.71282541125075 L 128 189.70538162381663 L 130 189.69761894802522 L 132 189.68952755040638 L 134 189.68109702769974 L 136 189.6723163990701 L 138 189.66317409633103 L 140 189.65365795229783 L 142 189.6437551873674 L 144 189.63345239440164 L 146 189.6227355219759 L 148 189.61158985603643 L 150 189.6 L 152 189.58794985331647 L 154 189.57542258850532 L 156 189.5624006266678 L 158 189.5488656114692 L 160 189.53479838157727 L 162 189.52017894153713 L 164 189.50498643105632 L 166 189.48919909266812 L 168 189.4727942377355 L 170 189.45574821075377 L 172 189.43803635190346 L 174 189.41963295780258 L 176 189.40051124040008 L 178 189.38064328395 L 180 189.36 L 182 189.3385510803238 L 184 189.31626494772283 L 186 189.2931087046172 L 188 189.26904807934253 L 190 189.24404737006307 L 192 189.21806938620867 L 194 189.19107538733593 L 196 189.1630250193116 L 198 189.13387624770834 L 200 189.1035852883003 L 202 189.07210653453828 L 204 189.03939248188013 L 206 189.00539364884557 L 208 188.97005849465842 L 210 188.93333333333334 L 212 188.89516224405736 L 214 188.85548697770994 L 216 188.8142468593579 L 218 188.77137868655444 L 220 188.72681662326414 L 222 188.6804920892271 L 224 188.63233364456798 L 226 188.58226686944616 L 228 188.53021423853536 L 230 188.47609499011054 L 232 188.41982498951074 L 234 188.3613165867367 L 236 188.3004784679303 L 238 188.23721550047307 L 240 188.17142857142858 L 242 188.1030144190419 L 244 188.03186545699657 L 246 187.95786959111638 L 248 187.88091002818564 L 250 187.80086507654713 L 252 187.71760793812257 L 254 187.63100649148382 L 256 187.54092306558803 L 258 187.44721420377195 L 260 187.34973041758352 L 262 187.24831593001008 L 264 187.14280840764349 L 266 187.0330386813021 L 268 186.9188304546084 L 270 186.8 L 272 186.6763558416271 L 274 186.54769842456773 L 276 186.41381976976535 L 278 186.2745031140683 L 280 186.12952253472295 L 282 185.97864255764452 L 284 185.82161774875885 L 286 185.65819228767887 L 288 185.4880995229458 L 290 185.3110615080324 L 292 185.12678851726977 L 294 184.93497854082256 L 296 184.73531675779915 L 298 184.52747498654327 L 300 184.3111111111111 L 302 184.08586848289528 L 304 183.8513752963104 L 306 183.60724393740782 L 308 183.35307030423692 L 310 183.08843309771956 L 312 182.81289308174763 L 314 182.5259923111602 L 316 182.22725332619433 L 318 181.91617831194455 L 320 181.59224822129946 L 322 181.25492185975807 L 324 180.90363493045683 L 326 180.53779903766608 L 328 180.15680064693692 L 330 179.76 L 332 179.34672998243389 L 334 178.91629494203326 L 336 178.46796945571606 L 338 178.00099704271344 L 340 177.51458882168694 L 342 177.00792210931303 L 344 176.48013895776748 L 346 175.93034462842772 L 348 175.3576059989939 L 350 174.76094990110528 L 352 174.13936138539972 L 354 173.49178191082905 L 356 172.8171074549028 L 358 172.11418654138538 L 360 171.38181818181818 L 362 170.61874972707852 L 364 169.8236746250186 L 366 168.99523008005423 L 368 168.13199461038897 L 370 167.2324854983703 L 372 166.29515612927293 L 374 165.3183932135988 L 376 164.3005138877639 L 378 163.23976268781644 L 380 162.13430839059254 L 382 160.98224071646996 L 384 159.78156688761928 L 386 158.5302080353838 L 388 157.2259954501363 L 390 155.86666666666667 L 392 154.4498613778457 L 394 152.9731171689902 L 396 151.43386506501759 L 398 149.82942488212757 L 400 148.15700037538323 L 402 146.41367417317923 L 404 144.59640248918708 L 406 142.7020096019485 L 408 140.72718209185246 L 410 138.6684628247757 L 412 136.52224467119072 L 414 134.28476394904803 L 416 131.95209357822088 L 418 129.5201359337567 L 420 126.98461538461538 L 422 124.3410705039803 L 424 121.58484593661136 L 426 118.71108390806282 L 428 115.7147153599143 L 430 112.59045069445897 L 432 109.33277011155558 L 434 105.93591351958399 L 436 102.39387000163859 L 438 98.70036681725604 L 440 94.84885791909643 L 442 90.83251196308183 L 444 86.64419978953838 L 446 82.27648135189065 L 448 77.72159206840956 L 450 72.97142857142858 L 452 68.01753382729991 L 454 62.85108159917394 L 456 57.46286022344074 L 458 51.84325566937329 L 460 45.982233850156206 L 462 39.869322152061756 L 464 33.49359014705959 L 466 26.843629452592978 L 468 19.907532700641354 L 470 12.672871576497897 L 472 5.126673885926294 L 474 -2.7446003924825106 L 476 -10.955084114858693 L 478 -19.51952908662858 L 480 -28.453333333333347 L 482 -37.77256957911254 L 484 -47.494014986564935 L 486 -57.63518221409754 L 488 -68.21435184938093 L 490 -79.25060628014273 L 492 -90.7638650662741 L 494 -102.77492188006954 L 496 -115.30548308441826 L 498 -128.3782080218764 L 500 -142.01675109081248 L 502 -156.2458056882228 L 504 -171.09115010237224 L 506 -186.57969544213017 L 508 -202.73953569376408 L 510 -219.60000000000002 L 512 -237.19170726041023 L 514 -255.54662315661358 L 516 -274.6981197104053 L 518 -294.6810374877718 L 520 -315.53175056679805 L 522 -337.288234392758 L 524 -359.9901366491989 L 526 -383.6788512795931 L 528 -408.3975958001538 L 530 -434.191492050728 L 532 -461.1076505372165 L 534 -489.1952585258907 L 536 -518.5056720571303 L 538 -549.092512053619 L 540 -581.0117647058823 L 542 -614.3218863262413 L 544 -649.0839128708209 L 546 -685.3615743382052 L 548 -723.2214142626743 L 550 -762.7329145297349 L 552 -803.9686257518657 L 554 -847.0043034530697 L 556 -891.9190503219702 L 558 -938.7954648048358 L 560 -987.7197963221283 L 562 -1038.782107404822 L 564 -1092.0764430601084 L 566 -1147.701007689955 L 568 -1205.7583499005148 L 570 -1266.3555555555556 L 572 -1329.6044494429354 L 574 -1395.621805939713 L 576 -1464.5295690788055 L 578 -1536.4550824381943 L 580 -1611.5313292925894 L 580 -1611.5313292925894 L 580 190 L 30 190 L 30 0" style="stroke: none; fill: rgba(200, 50, 0, 0.3);"></path>
+					<circle id="SVG-graph-1-circle" cx="573.0631713867188" cy="-1364.3460271904805" r="4" style="display: none; fill: rgb(0, 0, 0);"></circle><text id="SVG-graph-1-coords" x="578.0631713867188" y="-1374.3460271904805" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: start; display: none;">(18.1, 7771.7)</text>
+				</svg>
+				<svg id="SVG-graph-0" viewBox="0 0 580 210" title="My new Alt">
+					<path d="M 90.5 0  v 190.5M 150.5 0  v 190.5M 210.5 0  v 190.5M 270.5 0  v 190.5M 330.5 0  v 190.5M 390.5 0  v 190.5M 450.5 0  v 190.5M 510.5 0  v 190.5M 570.5 0  v 190.5M 30.5 130.5  h 580M 30.5 70.5  h 580M 30.5 10.5  h 580" style="stroke: rgb(221, 221, 221); fill: none; stroke-width: 1;"></path>
+					<path d="M 30.5 0 L 30.5 210 M 0 190.5 L 580 190.5" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path><text x="90.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">5</text><text x="150.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">10</text><text x="210.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">15</text><text x="270.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">20</text><text x="330.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">25</text><text x="390.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">30</text><text x="450.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">35</text><text x="510.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">40</text><text x="570.5" y="204.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">45</text><text x="25.5" y="134.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">10</text><text x="25.5" y="74.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">20</text><text x="25.5" y="14.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">30</text>
+					<path d="M 90.5 190.5  v 3M 150.5 190.5  v 3M 210.5 190.5  v 3M 270.5 190.5  v 3M 330.5 190.5  v 3M 390.5 190.5  v 3M 450.5 190.5  v 3M 510.5 190.5  v 3M 570.5 190.5  v 3M 30.5 130.5  h -3M 30.5 70.5  h -3M 30.5 10.5  h -3" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path><text x="578" y="186" style="fill: rgb(0, 0, 0); font-size: 15px; text-anchor: end; font-family: monospace;">total particles</text><text x="43" y="6" transform="rotate(-90, 43, 3)" style="fill: rgb(0, 0, 0); font-size: 15px; text-anchor: end; font-family: monospace;">time (years)</text>
+					<path id="SVG-graph-0-path" d="M 32 189.9999993597463 L 34 189.99999964066976 L 36 189.9999997311103 L 38 189.99999977363615 L 40 189.9999997967321 L 42 189.99999980986627 L 44 189.99999981707037 L 46 189.9999998203349 L 48 189.9999998207402 L 50 189.99999981890892 L 52 189.99999981521103 L 54 189.99999980986627 L 56 189.99999980299887 L 58 189.99999979466844 L 60 189.99999978488825 L 62 189.99999977363615 L 64 189.99999976086133 L 66 189.99999974648836 L 68 189.9999997304195 L 70 189.9999997125358 L 72 189.9999996926975 L 74 189.99999967074348 L 76 189.99999964649064 L 78 189.99999961973253 L 80 189.99999959023762 L 82 189.9999995577474 L 84 189.99999952197385 L 86 189.99999948259688 L 88 189.99999943926102 L 90 189.99999939157206 L 92 189.99999933909297 L 94 189.9999992813395 L 96 189.9999992177754 L 98 189.99999914780662 L 100 189.9999990707754 L 102 189.99999898595343 L 104 189.99999889253414 L 106 189.99999878962447 L 108 189.99999867623532 L 110 189.99999855127126 L 112 189.999998413519 L 114 189.99999826163446 L 116 189.99999809412853 L 118 189.99999790935135 L 120 189.99999770547453 L 122 189.99999748047176 L 124 189.99999723209697 L 126 189.99999695786028 L 128 189.9999966550011 L 130 189.99999632045837 L 132 189.99999595083742 L 134 189.9999955423731 L 136 189.99999509088897 L 138 189.9999945917516 L 140 189.99999403982014 L 142 189.99999342938995 L 144 189.99999275413012 L 146 189.99999200701387 L 148 189.9999911802412 L 150 189.9999902651529 L 152 189.99998925213467 L 154 189.99998813051084 L 156 189.9999868884259 L 158 189.99998551271264 L 160 189.99998398874558 L 162 189.999982300278 L 164 189.99998042926015 L 166 189.99997835563744 L 168 189.99997605712556 L 170 189.99997350896024 L 172 189.9999706836187 L 174 189.99996755050967 L 176 189.9999640756282 L 178 189.9999602211715 L 180 189.99995594511105 L 182 189.99995120071623 L 184 189.99994593602406 L 186 189.9999400932486 L 188 189.99993360812303 L 190 189.9999264091673 L 192 189.9999184168723 L 194 189.99990954279104 L 196 189.9998996885266 L 198 189.99988874460456 L 200 189.9998765892169 L 202 189.9998630868229 L 204 189.9998480865898 L 206 189.99983142065602 L 208 189.99981290219569 L 210 189.99979232326183 L 212 189.99976945238328 L 214 189.9997440318863 L 216 189.99971577490996 L 218 189.99968436207936 L 220 189.9996494377982 L 222 189.9996106061159 L 224 189.9995674261212 L 226 189.99951940680694 L 228 189.99946600134595 L 230 189.99940660070922 L 232 189.9993405265511 L 234 189.999267023277 L 236 189.99918524919912 L 238 189.9990942666746 L 240 189.99899303110953 L 242 189.99888037869664 L 244 189.99875501274133 L 246 189.99861548841216 L 248 189.9984601957341 L 250 189.99828734062106 L 252 189.99809492372074 L 254 189.99788071681866 L 256 189.997642236519 L 258 189.99737671488617 L 260 189.99708106669596 L 262 189.99675185290204 L 264 189.99638523988037 L 266 189.99597695396085 L 268 189.99552223069992 L 270 189.99501575828376 L 272 189.99445161438072 L 274 189.99382319568255 L 276 189.99312313928462 L 278 189.99234323495776 L 280 189.99147432725266 L 282 189.99050620625476 L 284 189.98942748567038 L 286 189.98822546676988 L 288 189.98688598654275 L 290 189.98539324822713 L 292 189.98372963216156 L 294 189.98187548466817 L 296 189.97980888240807 L 298 189.97750536935138 L 300 189.97493766317058 L 302 189.97207532749303 L 304 189.96888440603158 L 306 189.9653270141478 L 308 189.96136088288165 L 310 189.95693884990123 L 312 189.95200829117772 L 314 189.9465104864655 L 316 189.9403799108577 L 318 189.9335434437833 L 320 189.92591948580068 L 322 189.9174169724133 L 324 189.90793427287156 L 326 189.89735796051488 L 328 189.88556143963288 L 330 189.8724034120639 L 332 189.85772616478275 L 334 189.84135365753082 L 336 189.82308938708653 L 338 189.8027140020286 L 340 189.77998263877805 L 342 189.75462194627676 L 344 189.72632676283052 L 346 189.6947564043631 L 348 189.65953051854387 L 350 189.62022445390505 L 352 189.57636408708817 L 354 189.52742004468115 L 356 189.47280124864284 L 358 189.4118477059679 L 360 189.3438224539209 L 362 189.26790256174468 L 364 189.18316907809813 L 366 189.0885958004565 L 368 188.98303672815126 L 370 188.8652120444557 L 372 188.7336924549351 L 374 188.58688168894903 L 376 188.4229969484669 L 378 188.24004706295048 L 380 188.03580808065786 L 382 187.80779599497123 L 384 187.55323626885763 L 386 187.2690297808903 L 388 186.95171477189692 L 390 186.59742432170424 L 392 186.20183883000138 L 394 185.76013291335096 L 396 185.26691606106883 L 398 184.71616631520078 L 400 184.1011561531843 L 402 183.41436965491144 L 404 182.64740992759624 L 406 181.79089564074334 L 408 180.83434538810155 L 410 179.7660484420731 L 412 178.57292029674446 L 414 177.24034120639092 L 416 175.75197571461658 L 418 174.0895709325747 L 420 172.23273106001224 L 422 170.15866534687643 L 424 167.8419063622151 L 426 165.25399506693998 L 428 162.36312877307537 L 430 159.1337676091949 L 432 155.5261945940536 L 434 151.4960238414632 L 436 146.99365077198397 L 438 141.96363748288348 L 440 136.34402561797074 L 442 130.06556817319398 L 444 123.05087066091566 L 446 115.21343092284198 L 448 106.456565614476 L 450 96.67220996674507 L 452 85.739575845346 L 454 73.52365135545249 L 456 59.87352325642763 L 458 44.62050123318815 L 460 27.576020590004504 L 462 8.529297157559853 L 464 -12.755294899834041 L 466 -36.54115516187227 L 468 -63.12273558338734 L 470 -92.8292066917976 L 472 -126.0285572230681 L 474 -163.13217850420784 L 476 -204.5999909709775 L 478 -250.94617701150128 L 480 -302.7455919356607 L 482 -360.64093338226076 L 484 -425.3507589982207 L 486 -497.6784528766152 L 488 -578.5222531574495 L 490 -668.8864665267505 L 492 -769.894010264274 L 494 -882.800439175784 L 496 -1009.009633412842 L 498 -1150.0913440672502 L 500 -1307.8008167919654 L 502 -1484.1007398402762 L 504 -1681.1857921607368 L 506 -1901.5100999057304 L 508 -2147.8179463196 L 510 -2423.178120931138 L 512 -2731.0223398017583 L 514 -3075.1882198537623 L 516 -3459.9673476715607 L 518 -3890.15904735708 L 520 -4371.130523839873 L 522 -4908.884138402221 L 524 -5510.13266309493 L 526 -6182.383461327503 L 528 -6934.032654491481 L 530 -7774.47046044102 L 532 -8714.199030603737 L 534 -9764.964270213859 L 536 -10939.903302643856 L 538 -12253.709436293078 L 540 -13722.816713477478 L 542 -15365.606368048866 L 544 -17202.637795187064 L 546 -19256.906946464285 L 548 -21554.13540979842 L 550 -24123.09382168032 L 552 -26995.96369300197 L 554 -30208.742215423743 L 556 -33801.69515865457 L 558 -37819.86357718019 L 560 -42313.63072556823 L 562 -47339.35634313447 L 564 -52960.08632114991 L 566 -59246.34671970911 L 568 -66277.03216896766 L 570 -74140.39988426349 L 572 -82935.1818618124 L 574 -92771.82931818946 L 576 -103773.90511169985 L 578 -116079.64175826305 L 580 -129843.68475238039" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 2; stroke-linecap: round;"></path>
+					<path id="SVG-graph-0-fill" d="M 32 189.9999993597463 L 34 189.99999964066976 L 36 189.9999997311103 L 38 189.99999977363615 L 40 189.9999997967321 L 42 189.99999980986627 L 44 189.99999981707037 L 46 189.9999998203349 L 48 189.9999998207402 L 50 189.99999981890892 L 52 189.99999981521103 L 54 189.99999980986627 L 56 189.99999980299887 L 58 189.99999979466844 L 60 189.99999978488825 L 62 189.99999977363615 L 64 189.99999976086133 L 66 189.99999974648836 L 68 189.9999997304195 L 70 189.9999997125358 L 72 189.9999996926975 L 74 189.99999967074348 L 76 189.99999964649064 L 78 189.99999961973253 L 80 189.99999959023762 L 82 189.9999995577474 L 84 189.99999952197385 L 86 189.99999948259688 L 88 189.99999943926102 L 90 189.99999939157206 L 92 189.99999933909297 L 94 189.9999992813395 L 96 189.9999992177754 L 98 189.99999914780662 L 100 189.9999990707754 L 102 189.99999898595343 L 104 189.99999889253414 L 106 189.99999878962447 L 108 189.99999867623532 L 110 189.99999855127126 L 112 189.999998413519 L 114 189.99999826163446 L 116 189.99999809412853 L 118 189.99999790935135 L 120 189.99999770547453 L 122 189.99999748047176 L 124 189.99999723209697 L 126 189.99999695786028 L 128 189.9999966550011 L 130 189.99999632045837 L 132 189.99999595083742 L 134 189.9999955423731 L 136 189.99999509088897 L 138 189.9999945917516 L 140 189.99999403982014 L 142 189.99999342938995 L 144 189.99999275413012 L 146 189.99999200701387 L 148 189.9999911802412 L 150 189.9999902651529 L 152 189.99998925213467 L 154 189.99998813051084 L 156 189.9999868884259 L 158 189.99998551271264 L 160 189.99998398874558 L 162 189.999982300278 L 164 189.99998042926015 L 166 189.99997835563744 L 168 189.99997605712556 L 170 189.99997350896024 L 172 189.9999706836187 L 174 189.99996755050967 L 176 189.9999640756282 L 178 189.9999602211715 L 180 189.99995594511105 L 182 189.99995120071623 L 184 189.99994593602406 L 186 189.9999400932486 L 188 189.99993360812303 L 190 189.9999264091673 L 192 189.9999184168723 L 194 189.99990954279104 L 196 189.9998996885266 L 198 189.99988874460456 L 200 189.9998765892169 L 202 189.9998630868229 L 204 189.9998480865898 L 206 189.99983142065602 L 208 189.99981290219569 L 210 189.99979232326183 L 212 189.99976945238328 L 214 189.9997440318863 L 216 189.99971577490996 L 218 189.99968436207936 L 220 189.9996494377982 L 222 189.9996106061159 L 224 189.9995674261212 L 226 189.99951940680694 L 228 189.99946600134595 L 230 189.99940660070922 L 232 189.9993405265511 L 234 189.999267023277 L 236 189.99918524919912 L 238 189.9990942666746 L 240 189.99899303110953 L 242 189.99888037869664 L 244 189.99875501274133 L 246 189.99861548841216 L 248 189.9984601957341 L 250 189.99828734062106 L 252 189.99809492372074 L 254 189.99788071681866 L 256 189.997642236519 L 258 189.99737671488617 L 260 189.99708106669596 L 262 189.99675185290204 L 264 189.99638523988037 L 266 189.99597695396085 L 268 189.99552223069992 L 270 189.99501575828376 L 272 189.99445161438072 L 274 189.99382319568255 L 276 189.99312313928462 L 278 189.99234323495776 L 280 189.99147432725266 L 282 189.99050620625476 L 284 189.98942748567038 L 286 189.98822546676988 L 288 189.98688598654275 L 290 189.98539324822713 L 292 189.98372963216156 L 294 189.98187548466817 L 296 189.97980888240807 L 298 189.97750536935138 L 300 189.97493766317058 L 302 189.97207532749303 L 304 189.96888440603158 L 306 189.9653270141478 L 308 189.96136088288165 L 310 189.95693884990123 L 312 189.95200829117772 L 314 189.9465104864655 L 316 189.9403799108577 L 318 189.9335434437833 L 320 189.92591948580068 L 322 189.9174169724133 L 324 189.90793427287156 L 326 189.89735796051488 L 328 189.88556143963288 L 330 189.8724034120639 L 332 189.85772616478275 L 334 189.84135365753082 L 336 189.82308938708653 L 338 189.8027140020286 L 340 189.77998263877805 L 342 189.75462194627676 L 344 189.72632676283052 L 346 189.6947564043631 L 348 189.65953051854387 L 350 189.62022445390505 L 352 189.57636408708817 L 354 189.52742004468115 L 356 189.47280124864284 L 358 189.4118477059679 L 360 189.3438224539209 L 362 189.26790256174468 L 364 189.18316907809813 L 366 189.0885958004565 L 368 188.98303672815126 L 370 188.8652120444557 L 372 188.7336924549351 L 374 188.58688168894903 L 376 188.4229969484669 L 378 188.24004706295048 L 380 188.03580808065786 L 382 187.80779599497123 L 384 187.55323626885763 L 386 187.2690297808903 L 388 186.95171477189692 L 390 186.59742432170424 L 392 186.20183883000138 L 394 185.76013291335096 L 396 185.26691606106883 L 398 184.71616631520078 L 400 184.1011561531843 L 402 183.41436965491144 L 404 182.64740992759624 L 406 181.79089564074334 L 408 180.83434538810155 L 410 179.7660484420731 L 412 178.57292029674446 L 414 177.24034120639092 L 416 175.75197571461658 L 418 174.0895709325747 L 420 172.23273106001224 L 422 170.15866534687643 L 424 167.8419063622151 L 426 165.25399506693998 L 428 162.36312877307537 L 430 159.1337676091949 L 432 155.5261945940536 L 434 151.4960238414632 L 436 146.99365077198397 L 438 141.96363748288348 L 440 136.34402561797074 L 442 130.06556817319398 L 444 123.05087066091566 L 446 115.21343092284198 L 448 106.456565614476 L 450 96.67220996674507 L 452 85.739575845346 L 454 73.52365135545249 L 456 59.87352325642763 L 458 44.62050123318815 L 460 27.576020590004504 L 462 8.529297157559853 L 464 -12.755294899834041 L 466 -36.54115516187227 L 468 -63.12273558338734 L 470 -92.8292066917976 L 472 -126.0285572230681 L 474 -163.13217850420784 L 476 -204.5999909709775 L 478 -250.94617701150128 L 480 -302.7455919356607 L 482 -360.64093338226076 L 484 -425.3507589982207 L 486 -497.6784528766152 L 488 -578.5222531574495 L 490 -668.8864665267505 L 492 -769.894010264274 L 494 -882.800439175784 L 496 -1009.009633412842 L 498 -1150.0913440672502 L 500 -1307.8008167919654 L 502 -1484.1007398402762 L 504 -1681.1857921607368 L 506 -1901.5100999057304 L 508 -2147.8179463196 L 510 -2423.178120931138 L 512 -2731.0223398017583 L 514 -3075.1882198537623 L 516 -3459.9673476715607 L 518 -3890.15904735708 L 520 -4371.130523839873 L 522 -4908.884138402221 L 524 -5510.13266309493 L 526 -6182.383461327503 L 528 -6934.032654491481 L 530 -7774.47046044102 L 532 -8714.199030603737 L 534 -9764.964270213859 L 536 -10939.903302643856 L 538 -12253.709436293078 L 540 -13722.816713477478 L 542 -15365.606368048866 L 544 -17202.637795187064 L 546 -19256.906946464285 L 548 -21554.13540979842 L 550 -24123.09382168032 L 552 -26995.96369300197 L 554 -30208.742215423743 L 556 -33801.69515865457 L 558 -37819.86357718019 L 560 -42313.63072556823 L 562 -47339.35634313447 L 564 -52960.08632114991 L 566 -59246.34671970911 L 568 -66277.03216896766 L 570 -74140.39988426349 L 572 -82935.1818618124 L 574 -92771.82931818946 L 576 -103773.90511169985 L 578 -116079.64175826305 L 580 -129843.68475238039 L 580 -129843.68475238039 L 580 190 L 30 190 L 30 0" style="stroke: none; fill: rgba(200, 50, 0, 0.3);"></path>
+					<circle id="SVG-graph-0-circle" cx="481.89251708984375" cy="-357.3630531429901" r="4" style="display: none; fill: rgb(0, 0, 0);"></circle><text id="SVG-graph-0-coords x=" 486.89251708984375" y="-367.3630531429901" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: start; display: none;">(37.7, 91.2)</text>
+				</svg>
 
-				<p>For up to about n = 15 particles, the estimated time to separate takes seconds. Waiting for n = 35 particles to spontaneously separate takes years.</p>
+				<p>For up to about n = 14 particles, the estimated time to separate takes seconds. Waiting for n = 35 particles to spontaneously separate takes years.</p>
 				<p>How long would it take n = 300 particles to randomly separate?
-					<br> How long would it take all the air molecules in a typical room?
+					<br>How long would it take all the air molecules in a typical room?
 					<br>(n = 10&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000 air molecules)</p>
 			</details>
 		</div>
+		<div class="example">
+			<p>
+				Thinking about time is exciting, but confusing. Let's review.
+			</p>
+			<li>Time doesn't has an inherent forward direction, just like space doesn't.</li>
+			<li>The phenomenon of time's arrow occurs because our universe started out in an orderly state and it is progressing towards a disorderly state.</li>
+			<li>The trend towards disorder occurs because there are many ways to be disordered and few ways to be ordered.</li>
+			<li>The progress towards disorder is only a statistical probability.</li>
+			<li>For a large number of particles over a long time, the probability that a system will become ordered approaches the impossible.</li>
+		</div>
 
 
+		<!-- 
+			Note to Landgreen:  I'm not sure if any of this is accurate review this again later.
+			next time consider the quantum implications:
+			"Practically speaking, it is very hard to make a device that truly isolated from external contamination.
+			   This is actually one of the challenges involved in building a quantum computer."
+			
+			<details class="derive">
+			<summary>Why can I remember the past but not the the future?</summary>
+			<p>
+				How do we remember the past?
+				We store low entropy information in the past and remember it in the present by creating an isolated space where entropy stays constant.
+				This space could be memories stored in your brain, symbols written on paper, or magnetic patterns in a hard drive.
+			</p>
+			<p>
+				The reverse is to store information in the future and remember it in the present.
+				Complex systems have a clear arrow of time that scrambles any information sent back in time.
 
+				Very simple isolated systems don't have a clear arrow of time.
+				Can we can build a way for the future to send information to the present through an isolated system with very few moving parts?
+				Let's consider it:
+				
+			
+			</p>
+			<p>
+				In the present, we could make a very simple isolated space where entropy progresses very slowly.
+				The space could either have 
+				We could leave it untouched for 100 years.
+				Future people could then put a message in that space.
+				Here is the problem, when we go to looks at the message, the act of reading the message would make the space disorderly.
+				A disorderly space would no longer be simple. It would scramble the future people's message.
+				So yes you can store a memory from the future as long as you don't ever look at it.
+				<br>oh well...
+			</p>
+			<br>
+			<p>
+				Even without a memory, we can still make predictions about the past or the future.
+				Predictions can be very accurate for simple systems, but they fail for complex systems.
+				In a way, the goal of physics is to understand simple systems, improving our ability to make predictions of the past or future.
+			</p>
+		</details> -->
 
 		<!-- <p>
 				A low entropy state will evolve into a predictable higher entropy state, but a high entropy state could have come from countless different states.
@@ -787,6 +1013,9 @@
 		<a href="../../../index.html">Back</a>
 	</footer>
 
-	<script> renderMathInElement(document.body); </script>
+	<script>
+		renderMathInElement(document.body);
+	</script>
 </body>
+
 </html>

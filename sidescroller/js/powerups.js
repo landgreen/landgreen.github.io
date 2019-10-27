@@ -28,9 +28,9 @@ const powerUps = {
         while (mode === mech.fieldMode) {
           mode = Math.ceil(Math.random() * (mech.fieldUpgrades.length - 1))
         }
-        mech.fieldUpgrades[mode](); //choose random field upgrade that you don't already have
+        mech.fieldUpgrades[mode].effect(); //choose random field upgrade that you don't already have
       } else {
-        mech.fieldUpgrades[this.mode](); //set a predetermined power up
+        mech.fieldUpgrades[this.mode].effect(); //set a predetermined power up
       }
       //pop the old field out in case player wants to swap back
       if (previousMode !== 0) {
@@ -53,9 +53,9 @@ const powerUps = {
         while (mode === b.mod) {
           mode = Math.floor(Math.random() * b.mods.length)
         }
-        b.mods[mode](); //choose random upgrade that you don't already have
+        b.mods[mode].effect(); //choose random upgrade that you don't already have
       } else {
-        b.mods[this.mode](); //set a predetermined power up
+        b.mods[this.mode].effect(); //set a predetermined power up
       }
       if (previousMode != null) { //pop the old field out in case player wants to swap back
         mech.fieldCDcycle = mech.cycle + 40; //trigger fieldCD to stop power up grab automatic pick up of spawn
@@ -93,7 +93,7 @@ const powerUps = {
         if (!game.lastLogTime) game.makeTextLog("+energy", 180);
       } else {
         //ammo given scales as mobs take more hits to kill
-        const ammo = Math.ceil((target.ammoPack * (0.6 + 0.05 * Math.random())) / b.dmgScale);
+        const ammo = Math.ceil((target.ammoPack * (0.5 + 0.04 * Math.random())) / b.dmgScale);
         target.ammo += ammo;
         game.updateGunHUD();
         if (!game.lastLogTime) game.makeTextLog("+" + ammo + " ammo: " + target.name, 180);
@@ -109,8 +109,12 @@ const powerUps = {
     effect() {
       //find what guns I don't have
       let options = [];
-      for (let i = 0; i < b.guns.length; ++i) {
-        if (!b.guns[i].have) options.push(i);
+      if (b.activeGun === null) { //the first gun is good for the early game
+        options = [0, 1, 2, 3, 4, 5, 6, 8, 9, 12]
+      } else {
+        for (let i = 0; i < b.guns.length; ++i) {
+          if (!b.guns[i].have) options.push(i);
+        }
       }
       //give player a gun they don't already have if possible
       if (options.length > 0) {
@@ -125,9 +129,9 @@ const powerUps = {
           );
         }
         if (b.inventory.length === 1) { //on the second gun pick up tell player how to change guns
-          game.makeTextLog(`<strong style='font-size:30px;'>${b.guns[newGun].name}</strong><br>(left click)<br>(<strong>Q</strong>, <strong>E</strong>, and <strong>mouse wheel</strong> change weapons)<p>${b.guns[newGun].description}</p>`, 1000);
+          game.makeTextLog(`(<strong>Q</strong>, <strong>E</strong>, and <strong>mouse wheel</strong> change weapons)<br><br><strong style='font-size:30px;'>${b.guns[newGun].name}</strong><br><span class='faded'>(left click)</span><p>${b.guns[newGun].description}</p>`, 1000);
         } else {
-          game.makeTextLog(`<strong style='font-size:30px;'>${b.guns[newGun].name}</strong><br> (left click)<p>${b.guns[newGun].description}</p>`, 1000);
+          game.makeTextLog(`<strong style='font-size:30px;'>${b.guns[newGun].name}</strong><br><span class='faded'>(left click)</span><p>${b.guns[newGun].description}</p>`, 1000);
         }
         b.guns[newGun].have = true;
         b.inventory.push(newGun);
