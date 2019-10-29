@@ -359,46 +359,62 @@ const mech = {
   alive: true,
   death() {
     if (b.modIsImmortal) { //if player has the immortality buff, spawn on the same level with randomized stats
-      //remove mod
-      b.mod = null
+      //remove mods
       b.setModDefaults();
-      b.modText();
+      game.updateModHUD();
+      spawn.setSpawnList(); //new mob types
+      game.clearNow = true; //triggers a map reset
 
-      //randomize guns
-      b.activeGun = null;
-      b.inventory = []; //removes guns and ammo  
-      for (let i = 0, len = b.guns.length; i < len; ++i) {
-        b.guns[i].have = false;
-        if (b.guns[i].ammo != Infinity) b.guns[i].ammo = 0;
-      }
-      if (game.levelsCleared > 0) powerUps.gun.effect();
-      if (game.levelsCleared > 1) powerUps.gun.effect();
-      if (game.levelsCleared > 3) powerUps.gun.effect();
-      if (game.levelsCleared > 6) powerUps.gun.effect();
-      game.makeGunHUD();
-
-      //randomize field
-
-      if (game.levelsCleared > 5) {
-        mech.fieldUpgrades[Math.floor(Math.random() * (mech.fieldUpgrades.length))].effect();
-      } else {
-        mech.fieldUpgrades[0].effect();
+      function randomizeField() {
+        if (game.levelsCleared > 5 && Math.random() < 0.9) {
+          mech.fieldUpgrades[Math.floor(Math.random() * (mech.fieldUpgrades.length))].effect();
+        } else {
+          mech.fieldUpgrades[0].effect();
+        }
       }
 
-      mech.addHealth(1);
-      spawn.setSpawnList();
-      game.clearNow = true;
+      function randomizeHealth() {
+        mech.health = 0.5 + 0.5 * Math.random()
+        mech.displayHealth();
+      }
+
+      function randomizeGuns() {
+        b.activeGun = null;
+        b.inventory = []; //removes guns and ammo  
+        for (let i = 0, len = b.guns.length; i < len; ++i) {
+          b.guns[i].have = false;
+          if (b.guns[i].ammo !== Infinity) b.guns[i].ammo = 0;
+        }
+        if (game.levelsCleared > 0 && Math.random() < 0.95) powerUps.gun.effect();
+        if (game.levelsCleared > 1 && Math.random() < 0.89) powerUps.gun.effect();
+        if (game.levelsCleared > 3 && Math.random() < 0.6) powerUps.gun.effect();
+        if (game.levelsCleared > 5 && Math.random() < 0.5) powerUps.gun.effect();
+        if (game.levelsCleared > 7 && Math.random() < 0.4) powerUps.gun.effect();
+        //randomize ammo
+        for (let i = 0, len = b.inventory.length; i < len; i++) {
+          if (b.guns[b.inventory[i]].ammo !== Infinity) {
+            b.guns[b.inventory[i]].ammo = Math.max(0, Math.floor(2.2 * b.guns[b.inventory[i]].ammo * (Math.random() - 0.15)))
+          }
+        }
+        game.makeGunHUD(); //update gun HUD
+      }
 
       game.wipe = function () { //set wipe to have trails
-        ctx.fillStyle = "rgba(255,255,255,0.01)";
+        ctx.fillStyle = "rgba(255,255,255,0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
 
+      randomizeGuns()
+      randomizeField()
+      randomizeHealth()
       for (let i = 0; i < 7; i++) {
         setTimeout(function () {
-          game.makeTextLog(`<div style='opacity:0.3;'> probability amplitude will synchronize in ${7-i} seconds</div>`, 1000);
+          randomizeGuns()
+          randomizeField()
+          randomizeHealth()
+          game.makeTextLog(`probability amplitude will synchronize in ${7-i} seconds`, 1000);
           game.wipe = function () { //set wipe to have trails
-            ctx.fillStyle = `rgba(255,255,255,${(i+1)*0.04})`;
+            ctx.fillStyle = `rgba(255,255,255,${(i+1)*(i+1)*0.003})`;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
           }
         }, (i + 1) * 1000);
@@ -408,8 +424,8 @@ const mech = {
         game.wipe = function () { //set wipe to normal
           ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
-        game.makeTextLog("<div style='opacity:0.5;'><strong>Quantum Immortality</strong> has stabilized your probability amplitude<br>welcome to your new reality</div>", 1000);
-        document.title = "n-gon: L" + (game.levelsCleared) + " " + level.levels[level.onLevel] + " version 2";
+        game.makeTextLog("your quantum probability has stabilized", 1000);
+        document.title = "n-gon: L" + (game.levelsCleared) + " " + level.levels[level.onLevel];
       }, 8000);
 
     } else if (this.alive) { //normal death code here
@@ -724,33 +740,29 @@ const mech = {
   grabPowerUp() {
     //look for power ups to grab
     if (mech.fieldCDcycle < mech.cycle) {
-      const grabPowerUpRange2 = (this.grabRange + 200) * (this.grabRange + 200)
+      const grabPowerUpRange2 = (this.grabRange + 220) * (this.grabRange + 220)
       for (let i = 0, len = powerUp.length; i < len; ++i) {
         const dxP = mech.pos.x - powerUp[i].position.x;
         const dyP = mech.pos.y - powerUp[i].position.y;
         const dist2 = dxP * dxP + dyP * dyP;
-
-        // float towards player    if looking at and in range  or  if very close to player
-        if (dist2 < grabPowerUpRange2 && this.lookingAt(powerUp[i]) || dist2 < 14000) {
+        // float towards player  if looking at and in range  or  if very close to player
+        if (dist2 < grabPowerUpRange2 && this.lookingAt(powerUp[i]) || dist2 < 16000) {
+          if (dist2 < 5000) { //use power up if it is close enough
+            Matter.Body.setVelocity(player, { //player knock back, after grabbing power up
+              x: player.velocity.x + ((powerUp[i].velocity.x * powerUp[i].mass) / player.mass) * 0.3,
+              y: player.velocity.y + ((powerUp[i].velocity.y * powerUp[i].mass) / player.mass) * 0.3
+            });
+            mech.usePowerUp(i);
+            return;
+          }
           this.fieldMeter -= this.fieldRegen * 0.5;
           powerUp[i].force.x += 7 * (dxP / dist2) * powerUp[i].mass;
           powerUp[i].force.y += 7 * (dyP / dist2) * powerUp[i].mass - powerUp[i].mass * game.g; //negate gravity
           //extra friction
           Matter.Body.setVelocity(powerUp[i], {
-            x: powerUp[i].velocity.x * 0.4,
-            y: powerUp[i].velocity.y * 0.4
+            x: powerUp[i].velocity.x * 0.11,
+            y: powerUp[i].velocity.y * 0.11
           });
-          if (dist2 < 5000) { //use power up if it is close enough
-            //player knockback
-            Matter.Body.setVelocity(player, {
-              x: player.velocity.x + ((powerUp[i].velocity.x * powerUp[i].mass) / player.mass) * 0.2,
-              y: player.velocity.y + ((powerUp[i].velocity.y * powerUp[i].mass) / player.mass) * 0.2
-            });
-            mech.usePowerUp(i);
-            // this.fireCDcycle = mech.cycle + 10; //cool down
-            return;
-          }
-          // return;
         }
       }
     }
@@ -769,7 +781,6 @@ const mech = {
           //mob and player knock back
           const angle = Math.atan2(player.position.y - mob[i].position.y, player.position.x - mob[i].position.x);
           const mass = Math.min(Math.sqrt(mob[i].mass), 4);
-          // console.log(mob[i].mass, Math.sqrt(mob[i].mass), mass)
           Matter.Body.setVelocity(mob[i], {
             x: player.velocity.x - (15 * Math.cos(angle)) / mass,
             y: player.velocity.y - (15 * Math.sin(angle)) / mass
@@ -854,21 +865,21 @@ const mech = {
   pickUp() {
     //triggers when a hold target exits and field button is released
     this.isHolding = true;
-    if (this.holdingTarget) {
-      this.holdingTarget.collisionFilter.category = 0x010000;
-      this.holdingTarget.collisionFilter.mask = 0x011111;
-    }
-    //combine momentum
-    const px = player.velocity.x * player.mass + this.holdingTarget.velocity.x * this.holdingTarget.mass;
-    const py = player.velocity.y * player.mass + this.holdingTarget.velocity.y * this.holdingTarget.mass;
-    Matter.Body.setVelocity(player, {
-      x: px / (player.mass + this.holdingTarget.mass),
-      y: py / (player.mass + this.holdingTarget.mass)
-    });
     this.definePlayerMass(5 + this.holdingTarget.mass * this.holdingMassScale)
     //collide with nothing
     this.holdingTarget.collisionFilter.category = 0x000000;
     this.holdingTarget.collisionFilter.mask = 0x000000;
+    // if (this.holdingTarget) {
+    //   this.holdingTarget.collisionFilter.category = 0x010000;
+    //   this.holdingTarget.collisionFilter.mask = 0x011111;
+    // }
+    // combine momentum   // this doesn't feel right in game
+    // const px = player.velocity.x * player.mass + this.holdingTarget.velocity.x * this.holdingTarget.mass;
+    // const py = player.velocity.y * player.mass + this.holdingTarget.velocity.y * this.holdingTarget.mass;
+    // Matter.Body.setVelocity(player, {
+    //   x: px / (player.mass + this.holdingTarget.mass),
+    //   y: py / (player.mass + this.holdingTarget.mass)
+    // });
   },
   wakeCheck() {
     if (mech.isBodiesAsleep) {
@@ -900,7 +911,7 @@ const mech = {
   hold() {},
   fieldText() {
     game.makeTextLog(`<strong style='font-size:30px;'>${mech.fieldUpgrades[mech.fieldMode].name}</strong><br> <span class='faded'>(right click or space bar)</span><p>${mech.fieldUpgrades[mech.fieldMode].description}</p>`, 1200);
-    game.updateModHUD()
+    document.getElementById("field").innerHTML = mech.fieldUpgrades[mech.fieldMode].name //add field
   },
   fieldUpgrades: [{
       name: "Field Emitter",
@@ -1001,7 +1012,7 @@ const mech = {
       }
     },
     {
-      name: "Electrostatic Force Field",
+      name: "Electrostatic Field",
       description: "field does <strong>damage</strong> on contact<br> blocks are thrown at a higher velocity<br> increased field regeneration",
       effect: () => {
         mech.fieldMode = 2;
@@ -1010,7 +1021,7 @@ const mech = {
         //throw quicker and harder
         mech.grabRange = 225;
         mech.fieldShieldingScale = 2;
-        mech.fieldRegen *= 3;
+        mech.fieldRegen *= 2;
         mech.throwChargeRate = 3;
         mech.throwChargeMax = 140;
         mech.fieldDamage = 5; //passive field does extra damage
@@ -1097,17 +1108,15 @@ const mech = {
               mech.grabPowerUp();
               mech.lookForPickUp(170);
               //look for nearby objects to make zero-g
-              function zeroG(who) {
+              function zeroG(who, mag = 1.06) {
                 for (let i = 0, len = who.length; i < len; ++i) {
                   sub = Matter.Vector.sub(who[i].position, mech.pos);
                   dist = Matter.Vector.magnitude(sub);
                   if (dist < mech.grabRange) {
-                    who[i].force.y -= who[i].mass * (game.g * 1.06); //add a bit more then standard gravity
+                    who[i].force.y -= who[i].mass * (game.g * mag); //add a bit more then standard gravity
                   }
                 }
               }
-              zeroG(powerUp);
-              zeroG(body);
               // zeroG(bullet);  //works fine, but not that noticeable and maybe not worth the possible performance hit
               // zeroG(mob);  //mobs are too irregular to make this work?
 
@@ -1119,14 +1128,20 @@ const mech = {
               if (keys[83] || keys[40]) { //down
                 player.force.y -= 0.8 * player.mass * mech.gravity;
                 mech.grabRange = mech.grabRange * 0.97 + 400 * 0.03;
+                zeroG(powerUp, 0.85);
+                zeroG(body, 0.85);
               } else if (keys[87] || keys[38]) { //up
                 mech.fieldMeter -= 3 * DRAIN;
                 mech.grabRange = mech.grabRange * 0.97 + 750 * 0.03;
                 player.force.y -= 1.2 * player.mass * mech.gravity;
+                zeroG(powerUp, 1.13);
+                zeroG(body, 1.13);
               } else {
                 mech.fieldMeter -= DRAIN;
                 mech.grabRange = mech.grabRange * 0.97 + 650 * 0.03;
                 player.force.y -= 1.07 * player.mass * mech.gravity; // slow upward drift
+                zeroG(powerUp);
+                zeroG(body);
               }
 
               //add extra friction for horizontal motion
@@ -1391,9 +1406,7 @@ const mech = {
     this.hip.x = 12 + offset;
     this.hip.y = 24 + offset;
     //stepSize goes to zero if Vx is zero or not on ground (make this transition cleaner)
-    this.stepSize =
-      0.8 * this.stepSize +
-      0.2 * (7 * Math.sqrt(Math.abs(this.Vx)) * this.onGround);
+    this.stepSize = 0.8 * this.stepSize + 0.2 * (7 * Math.sqrt(Math.min(9, Math.abs(this.Vx))) * this.onGround);
     //changes to stepsize are smoothed by adding only a percent of the new value each cycle
     const stepAngle = 0.034 * this.walk_cycle + cycle_offset;
     this.foot.x = 2.2 * this.stepSize * Math.cos(stepAngle) + offset;

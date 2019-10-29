@@ -155,11 +155,11 @@ const game = {
   },
   updateModHUD() {
     let text = ""
-    if (mech.fieldMode !== 0) {
-      text += mech.fieldUpgrades[mech.fieldMode].name
-      if (b.mod !== null) text += "<br>" + b.mods[b.mod].name
-    } else if (b.mod !== null) {
-      text += b.mods[b.mod].name
+    for (let i = 0, len = b.mods.length; i < len; i++) { //add mods
+      if (b.mods[i].have) {
+        if (text) text += "<br>" //add a new line, but not on the first line
+        text += b.mods[i].name
+      }
     }
     document.getElementById("mods").innerHTML = text
   },
@@ -295,18 +295,20 @@ const game = {
       if (keys[72]) { // power ups with H
         powerUps.spawn(game.mouseInGame.x, game.mouseInGame.y, "gun");
         powerUps.spawn(game.mouseInGame.x, game.mouseInGame.y, "gun");
-        powerUps.spawn(game.mouseInGame.x, game.mouseInGame.y, "gun");
+        powerUps.spawn(game.mouseInGame.x, game.mouseInGame.y, "ammo");
         powerUps.spawn(game.mouseInGame.x, game.mouseInGame.y, "field");
         powerUps.spawn(game.mouseInGame.x, game.mouseInGame.y, "mod");
         powerUps.spawn(game.mouseInGame.x, game.mouseInGame.y, "heal");
         powerUps.spawn(game.mouseInGame.x, game.mouseInGame.y, "heal");
       }
-      if (keys[89]) { //cycle fields with F
-        if (b.mod === b.mods.length - 1) {
-          b.mods[0].effect()
-        } else {
-          b.mods[b.mod + 1].effect()
+      if (keys[89]) { //add all mods with y
+        for (let i = 0; i < b.mods.length; i++) {
+          if (!b.mods[i].have) {
+            b.mods[i].effect()
+            b.mods[i].have = true
+          }
         }
+        game.updateModHUD();
       }
       if (keys[82]) { // teleport to mouse with R
         Matter.Body.setPosition(player, this.mouseInGame);
@@ -603,9 +605,11 @@ const game = {
   testingOutput() {
     ctx.textAlign = "right";
     ctx.fillStyle = "#000";
-    let line = 100;
+    let line = 140;
     const x = canvas.width - 5;
     ctx.fillText("T: exit testing mode", x, line);
+    line += 20;
+    ctx.fillText("Y: give all mods", x, line);
     line += 20;
     ctx.fillText("R: teleport to mouse", x, line);
     line += 20;
@@ -641,8 +645,6 @@ const game = {
     ctx.fillText("crouch: " + mech.crouch, x, line);
     line += 20;
     ctx.fillText("isHeadClear: " + mech.isHeadClear, x, line);
-    line += 20;
-    ctx.fillText("HeadIsSensor: " + headSensor.isSensor, x, line);
     line += 20;
     ctx.fillText("frictionAir: " + player.frictionAir.toFixed(3), x, line);
     line += 20;

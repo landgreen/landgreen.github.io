@@ -4,7 +4,6 @@ const b = {
   dmgScale: null, //scales all gun damage from momentum, but not raw .dmg //this is reset in game.reset
   gravity: 0.0006, //most other bodies have   gravity = 0.001
   //variables use for gun mod upgrades
-  mod: null,
   modFireRate: null,
   modExplosionRadius: null,
   modBulletSize: null,
@@ -22,40 +21,16 @@ const b = {
     b.modNoAmmo = 0;
     b.modBulletsLastLonger = 1;
     b.modIsImmortal = false;
-  },
-  modText() {
-    if (b.mod !== null) game.makeTextLog(`<strong style='font-size:30px;'>${b.mods[b.mod].name}</strong><br> <p>${b.mods[b.mod].description}</p>`, 1200);
-    game.updateModHUD()
+    for (let i = 0; i < b.mods.length; i++) {
+      b.mods[i].have = false;
+    }
   },
   mods: [{
-      name: "Auto-Loading Heuristics",
-      description: "your <strong>rate of fire</strong> is 15% faster",
-      effect: () => {
-        b.mod = 0
-        b.modText();
-        b.setModDefaults(); //good for guns with extra ammo: needles, M80, rapid fire, flak, super balls
-        b.modFireRate = 0.85
-        //ADD: maybe add in something that changes game play
-      }
-    },
-    {
-      name: "Anti-Matter Cores",
-      description: "your <strong>explosions</strong> are larger and more dangerous",
-      effect: () => {
-        b.mod = 1
-        b.modText();
-        b.setModDefaults(); //at 1.4 gives a flat 40% increase, and increased range,  balanced by limited guns and self damage
-        //testing at 1.3: grenade(+0.3), missiles, flak, M80
-        b.modExplosionRadius = 2; //good for guns with explosions:
-      }
-    },
-    {
-      name: "High Caliber Bullets",
+      name: "Depleted Uranium Rounds",
       description: "your bullets are <strong>larger</strong> and do more physical damage",
+      have: false,
       effect: () => {
-        b.mod = 2
-        b.modText();
-        b.setModDefaults(); //good for guns that do mostly projectile damage:
+        //good for guns that do mostly projectile damage:
         //testing done at 1.15: one shot(+0.38), rapid fire(+0.25), spray, wave beam(+0.4 adds range and dmg), needles(+0.1)
         //testing at 1.08:  spray(point blank)(+0.25), one shot(+0.16), wave beam(point blank)(+0.14)
         b.modBulletSize = 1.07;
@@ -63,52 +38,67 @@ const b = {
       }
     },
     {
-      name: "Energy Siphon",
-      description: "regenerate <strong>energy</strong> proportional to your damage done",
+      name: "Auto-Loading Heuristics",
+      description: "your <strong>rate of fire</strong> is 15% faster",
+      have: false,
       effect: () => {
-        b.mod = 3
-        b.modText();
-        b.setModDefaults(); //good with laser, and all fields
-        b.modEnergySiphon = 0.2;
-      }
-    },
-    {
-      name: "Entropy Transfer",
-      description: "<strong>heal</strong> proportional to your damage done",
-      effect: () => {
-        b.mod = 4
-        b.modText();
-        b.setModDefaults(); //good with guns that overkill: one shot, grenade
-        b.modHealthDrain = 0.01;
+        //good for guns with extra ammo: needles, M80, rapid fire, flak, super balls
+        b.modFireRate = 0.85
+        //ADD: maybe add in something that changes game play
       }
     },
     {
       name: "Desublimated Ammunition",
       description: "use 50% less <strong>ammo</strong> when <strong>crouching</strong>",
+      have: false,
       effect: () => {
-        b.mod = 5
-        b.modText();
-        b.setModDefaults(); //good with guns that have less ammo: one shot, grenades, missiles, super balls, spray
+        //good with guns that have less ammo: one shot, grenades, missiles, super balls, spray
         b.modNoAmmo = 1
       }
     },
     {
-      name: "Decay Resistant Topology",
-      description: "your bullets <strong>last 30% longer</strong>",
+      name: "Corrosion Resistant Topology",
+      description: "your bullets <strong>last 40% longer</strong>",
+      have: false,
       effect: () => {
-        b.mod = 6
-        b.modText();
-        b.setModDefaults(); //good with: drones, super balls, spore, missiles, wave beam(range), rapid fire(range), flak(range)
-        b.modBulletsLastLonger = 1.30
+        //good with: drones, super balls, spore, missiles, wave beam(range), rapid fire(range), flak(range)
+        b.modBulletsLastLonger = 1.40
+      }
+    },
+    {
+      name: "Anti-Matter Cores",
+      description: "The radius of your <strong>explosions</strong> is doubled",
+      have: false,
+      effect: () => {
+        //at 1.4 gives a flat 40% increase, and increased range,  balanced by limited guns and self damage
+        //testing at 1.3: grenade(+0.3), missiles, flak, M80
+        b.modExplosionRadius = 2; //good for guns with explosions:
+      }
+    },
+    {
+      name: "Energy Siphon",
+      description: "regenerate <strong>energy</strong> proportional to your damage done",
+      have: false,
+      effect: () => {
+        //good with laser, and all fields
+        b.modEnergySiphon = 0.25;
+      }
+    },
+    {
+      name: "Entropy Transfer",
+      description: "<strong>heal</strong> proportional to your damage done",
+      have: false,
+      effect: () => {
+        //good with guns that overkill: one shot, grenade
+        b.modHealthDrain = 0.01;
       }
     },
     {
       name: "Quantum Immortality",
       description: "after you die continue in an alternate reality with randomized abilities<br>",
+      have: false,
       effect: () => {
-        b.mod = 7
-        b.modText();
-        b.setModDefaults(); //good with: drones, super balls, spore, missiles, wave beam(range), rapid fire(range), flak(range)
+        //good with: drones, super balls, spore, missiles, wave beam(range), rapid fire(range), flak(range)
         b.modIsImmortal = true;
       }
     },
@@ -828,11 +818,11 @@ const b = {
         const side = 11 * b.modBulletSize
         for (let i = 0; i < 9; i++) {
           const me = bullet.length;
-          const dir = mech.angle + (Math.random() - 0.5) * (mech.crouch ? 0.2 : 0.6)
+          const dir = mech.angle + (Math.random() - 0.5) * (mech.crouch ? 0.22 : 0.7)
           bullet[me] = Bodies.rectangle(mech.pos.x + 35 * Math.cos(mech.angle) + 15 * (Math.random() - 0.5), mech.pos.y + 35 * Math.sin(mech.angle) + 15 * (Math.random() - 0.5), side, side, b.fireAttributes(dir));
-          b.fireProps(mech.crouch ? 60 : 30, 36 + Math.random() * 11, dir, me); //cd , speed
-          bullet[me].endCycle = game.cycle + Math.floor(60 * b.modBulletsLastLonger);
-          bullet[me].frictionAir = 0.02;
+          b.fireProps(mech.crouch ? 60 : 30, 40 + Math.random() * 11, dir, me); //cd , speed
+          bullet[me].endCycle = game.cycle + Math.floor(55 * b.modBulletsLastLonger);
+          bullet[me].frictionAir = 0.03;
           bullet[me].do = function () {
             this.force.y += this.mass * 0.001;
           };
