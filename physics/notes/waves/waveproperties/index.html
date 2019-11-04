@@ -261,16 +261,24 @@
 		</p>
 
 		<div class='example'>
-			<svg onload="drawSineWave(this, 150, 25, 37.5, '#39f'); drawSineWave(this,75, 25, 18.75, '#f37'); centerLine(this)" height='75'></svg>
-			<svg onload="drawSineWave(this, 127, 25, 31.75, '#39f'); drawSineWave(this,75, 25, 18.75, '#f37'); centerLine(this)" height='75'></svg>
-			<strong>Example:</strong> Which of these would sound better?
+			<svg onload="drawSineWave(this, 75, 25, 18.75, '#39f'); drawSineWave(this,37.5, 25, 9.375, '#f37'); centerLine(this)" height='75'></svg>
+			<svg onload="drawSineWave(this, 75, 25, 18.75, '#39f'); drawSineWave(this,40, 25, 10, '#f37'); centerLine(this)" height='75'></svg>
+			<strong>Question:</strong> Guess which of these combinations would sound better in the western music tradition?
 			<details>
 				<summary>solution</summary>
-				<button class="center" id="sound-play-1" style="width: 60px;">listen</button>
-				<svg onload="drawSineWaves(this, 150, 25, 37.5, '#39f', 75, 25, 18.75, '#f37'); centerLine(this)" height='150'></svg>
-				<button class="center" id="sound-play-2" style="width: 60px;">listen</button>
-				<svg onload="drawSineWaves(this,127, 25, 31.75, '#39f',  75, 25, 18.75, '#f37'); centerLine(this)" height='150'></svg>
-
+				<p>The first pair of frequencies has a harmonious 1:2 ratio.</p>
+				<button id="sound-play-300" style="width: 70px;">300 Hz</button>
+				<button id="sound-play-150" style="width: 70px;">150 Hz</button>
+				<!-- <button id="sound-play-150-300" style="width: 120px;">300 + 150 Hz</button> -->
+				<svg onload="drawSineWaves(this, 75, 25, 18.75, '#39f', 37.5, 25, 9.375, '#f37'); centerLine(this)" height='150'></svg>
+				<br>
+				<button id="sound-play-300-2" style="width: 70px;">300 Hz</button>
+				<button id="sound-play-160" style="width: 70px;">160 Hz</button>
+				<!-- <button id="sound-play-2" style="width: 60px;">listen</button> -->
+				<svg onload="drawSineWaves(this,75, 25, 18.75, '#39f',  40, 25, 10, '#f37'); centerLine(this)" height='150'></svg>
+				<p>
+					I don't hate the second combination, but it does have a slight sour sound.
+				</p>
 			</details>
 		</div>
 
@@ -328,6 +336,8 @@
 				{ wavelength: 44, amplitude: 35, phase: 0,  color: '#f37', opacity: 0.15 },
 				], true, true)" height='150'></svg>
 			</details>
+		</div>
+		<div class="example-small">
 			<p>
 				You can decided if you hate the beats sound by clicking <button id="beats-play" style="width: 60px;">listen</button>
 			</p>
@@ -363,11 +373,11 @@
 				</p>
 			</span>
 		</div>
-		<p>
+		<div class="example">
 			<a href="https://www.lightnote.co/">Music theory</a> explores what groups of notes sound best together.
-			I found it interesting how you can evoke emotion with different combinations of notes.
+			It's interesting how you can evoke emotion with different combinations of notes.
 			For example, the major scale sounds upbeat, but the minor scale sounds sad.
-		</p>
+		</div>
 		<h2 class='underlined'>Diffraction</h2>
 		<p>
 			Waves tend to spread out in every direction possible within their medium. <strong>Diffraction</strong> is when a wave spreads out after some of the wave hits a barrier. This explains how sound can be heard through an open door even when there is no line of sight.
