@@ -374,26 +374,28 @@ const mech = {
       }
 
       function randomizeHealth() {
-        mech.health = 0.5 + 0.5 * Math.random()
+        mech.health = 0.5 + 1 * Math.random()
         mech.displayHealth();
       }
 
       function randomizeGuns() {
+        const length = b.inventory.length
+        //removes guns and ammo  
+        b.inventory = [];
         b.activeGun = null;
-        b.inventory = []; //removes guns and ammo  
+        b.inventoryGun = 0;
         for (let i = 0, len = b.guns.length; i < len; ++i) {
           b.guns[i].have = false;
           if (b.guns[i].ammo !== Infinity) b.guns[i].ammo = 0;
         }
-        if (game.levelsCleared > 0 && Math.random() < 0.95) powerUps.gun.effect();
-        if (game.levelsCleared > 1 && Math.random() < 0.89) powerUps.gun.effect();
-        if (game.levelsCleared > 3 && Math.random() < 0.6) powerUps.gun.effect();
-        if (game.levelsCleared > 5 && Math.random() < 0.5) powerUps.gun.effect();
-        if (game.levelsCleared > 7 && Math.random() < 0.4) powerUps.gun.effect();
+        for (let i = 0; i < length; i++) {
+          powerUps.gun.effect();
+        }
+
         //randomize ammo
         for (let i = 0, len = b.inventory.length; i < len; i++) {
           if (b.guns[b.inventory[i]].ammo !== Infinity) {
-            b.guns[b.inventory[i]].ammo = Math.max(0, Math.floor(2.2 * b.guns[b.inventory[i]].ammo * (Math.random() - 0.15)))
+            b.guns[b.inventory[i]].ammo = Math.max(0, Math.floor(5 * b.guns[b.inventory[i]].ammo * (Math.random() - 0.25)))
           }
         }
         game.makeGunHUD(); //update gun HUD
@@ -437,7 +439,7 @@ const mech = {
       document.getElementById("fade-out").style.opacity = 1; //slowly fades out
       setTimeout(function () {
         game.splashReturn();
-      }, 5000);
+      }, 3000);
     }
   },
   health: 0,
@@ -910,12 +912,12 @@ const mech = {
   },
   hold() {},
   fieldText() {
-    game.makeTextLog(`<strong style='font-size:30px;'>${mech.fieldUpgrades[mech.fieldMode].name}</strong><br> <span class='faded'>(right click or space bar)</span><p>${mech.fieldUpgrades[mech.fieldMode].description}</p>`, 1200);
+    game.makeTextLog(`<strong style='font-size:30px;'>${mech.fieldUpgrades[mech.fieldMode].name}</strong><br><span class='faded'>(right click or space bar)</span><br><br>${mech.fieldUpgrades[mech.fieldMode].description}`, 1000);
     document.getElementById("field").innerHTML = mech.fieldUpgrades[mech.fieldMode].name //add field
   },
   fieldUpgrades: [{
-      name: "Field Emitter",
-      description: "lets you <strong>pick up</strong> and throw objects<br><strong>shields</strong> you from damage",
+      name: "field emitter",
+      description: "<strong class='color-f'>shields</strong> you from <span class='color-d'>damage</span><br>lets you <strong>pick up</strong> and throw objects",
       effect: () => {
         mech.fieldMode = 0;
         mech.fieldText();
@@ -941,8 +943,8 @@ const mech = {
       }
     },
     {
-      name: "Time Dilation Field",
-      description: "<strong>stop time</strong> while field is active<br> can fire while field is active",
+      name: "time dilation field",
+      description: "<strong style='letter-spacing: 6px;'>stop time</strong>&nbsp; while field is active<br> <em>can fire while field is active</em>",
       effect: () => {
         mech.fieldMode = 1;
         mech.fieldText();
@@ -1012,8 +1014,8 @@ const mech = {
       }
     },
     {
-      name: "Electrostatic Field",
-      description: "field does <strong>damage</strong> on contact<br> blocks are thrown at a higher velocity<br> increased field regeneration",
+      name: "electrostatic field",
+      description: "field does <strong class='color-d'>damage</strong> on contact<br> blocks are thrown at a higher velocity<br> increased <span class='color-f'>field</span> regeneration",
       effect: () => {
         mech.fieldMode = 2;
         mech.fieldText();
@@ -1024,7 +1026,7 @@ const mech = {
         mech.fieldRegen *= 2;
         mech.throwChargeRate = 3;
         mech.throwChargeMax = 140;
-        mech.fieldDamage = 5; //passive field does extra damage
+        mech.fieldDamage = 4; //passive field does extra damage
         // mech.fieldArc = 0.11
         // mech.calculateFieldThreshold(); //run after setting fieldArc, used for powerUp grab and mobPush with lookingAt(mob)
 
@@ -1085,16 +1087,14 @@ const mech = {
       }
     },
     {
-      name: "Negative Mass Field",
-      description: "field nullifies <strong>gravity</strong><br> player can hold more massive objects<br>can fire while field is active",
+      name: "negative mass field",
+      description: "field nullifies &nbsp;<strong style='letter-spacing: 6px;'>gravity</strong><br> player can hold more massive objects<br><em>can fire while field is active</em>",
       effect: () => {
         mech.fieldMode = 3;
         mech.fieldText();
-        //<br> <span style='color:#a00;'>decreased</span> field shielding efficiency
         mech.setHoldDefaults();
         mech.fieldFire = true;
         mech.holdingMassScale = 0.05; //can hold heavier blocks with lower cost to jumping
-        mech.fieldShieldingScale = 2;
 
         mech.hold = function () {
           if (mech.isHolding) {
@@ -1102,7 +1102,7 @@ const mech = {
             mech.holding();
             mech.throw();
           } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) { //push away
-            const DRAIN = 0.0006
+            const DRAIN = 0.0004
             if (mech.fieldMeter > DRAIN) {
               mech.pushMobs360(170);
               mech.grabPowerUp();
@@ -1131,7 +1131,7 @@ const mech = {
                 zeroG(powerUp, 0.85);
                 zeroG(body, 0.85);
               } else if (keys[87] || keys[38]) { //up
-                mech.fieldMeter -= 3 * DRAIN;
+                mech.fieldMeter -= 5 * DRAIN;
                 mech.grabRange = mech.grabRange * 0.97 + 750 * 0.03;
                 player.force.y -= 1.2 * player.mass * mech.gravity;
                 zeroG(powerUp, 1.13);
@@ -1175,14 +1175,13 @@ const mech = {
       }
     },
     {
-      name: "Standing Wave Harmonics",
-      description: "oscillating shields always surround player<br> <span style='color:#a00;'>decreased</span> field regeneration",
+      name: "standing wave harmonics",
+      description: "you are surrounded by oscillating <strong style='color: #08f;'>shields</strong><br> <span style='color:#a00;'>decreased</span> field regeneration",
       effect: () => {
         mech.fieldMode = 4;
         mech.fieldText();
         mech.setHoldDefaults();
-        // mech.fieldShieldingScale = 0.5;
-        mech.fieldRegen *= 0.2;
+        mech.fieldRegen *= 0.3;
 
         mech.hold = function () {
           if (mech.isHolding) {
@@ -1219,8 +1218,8 @@ const mech = {
       }
     },
     {
-      name: "Nano-Scale Manufacturing",
-      description: "excess field energy used to build <strong>drones</strong><br> increased field regeneration",
+      name: "nano-scale manufacturing",
+      description: "excess field energy used to build <strong class='color-b'>drones</strong><br> increased <span class='color-f'>field</span> regeneration",
       effect: () => {
         mech.fieldMode = 5;
         mech.fieldText();
@@ -1250,8 +1249,8 @@ const mech = {
       }
     },
     {
-      name: "Phase Decoherence Field",
-      description: "<strong>intangible</strong> while field is active<br>can't see or be seen outside field",
+      name: "phase decoherence field",
+      description: "<strong>intangible</strong> while field is active<br><em style='opacity: 0.6;'>can't see or be seen outside field</em>",
       effect: () => {
         mech.fieldMode = 6;
         mech.fieldText();
@@ -1265,7 +1264,7 @@ const mech = {
             mech.holding();
             mech.throw();
           } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) {
-            const DRAIN = 0.002
+            const DRAIN = 0.0015
             if (mech.fieldMeter > DRAIN) {
               mech.fieldMeter -= DRAIN;
 

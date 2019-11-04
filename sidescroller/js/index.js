@@ -2,9 +2,20 @@
 /* TODO:  *******************************************
 *****************************************************
 
-anti gravity field (pressing up and down also effects the floating bodies)
+add Boss levels
+  
 
-make power ups keep moving to player if the field is turned off
+add modular difficulty settings
+  take reduced dmg
+  slower mob look / CD
+  more drops
+  fewer mobs
+    make a new var to scale number of mobs and stop using levels cleared var
+
+get text output to show multiple notifications at once by queuing them vertically
+
+make power ups keep moving to player if the pickup field is turned off before they get picked up
+  not sure how to do this without adding a constant check
 
 levels spawn by having the map aspects randomly fly into place
 
@@ -17,50 +28,14 @@ new map with repeating endlessness
 Find a diegetic way to see player damage  (and or field meter too)
   a health meter, like the field meter above player?  (doesn't work with the field meter)
 
-Add field upgrade, and mod to a permanent display
-  left side
-    separate box below guns
- 
-
-cap guns to 3
-  can up the drop rate on guns, and lower ammo amount or drop rate
-cap mods to 2
-  can up the drop rate a bit
-  check if there are any double mod compatibility issues
-cap field to 1
-
-what about no cap to mods?
-  mods without caps can't have major negatives
-  do I want to support a power ramping game play?
-  more upgrades are OK as long as they change game play
-    no flat damage, or flat defense buffs
-  This makes skipping content a bad idea for the player
-    Is that maybe good?  No need to nerf content skipping buffs
-      content skipping is a cool play style, but not core game play
-
-
 field power up effects
-  field produces a whirlpool effect of force around player
   field allows player to hold and throw living mobs
 
-Move mods, to power up object
-  mods can be about more than the gun, defensive, traversal mods
-gun mod power ups
+mod power ups ideas
   bullet on mob damage effects
     add to the array mob.do new mob behaviors
         add a damage over time
         add a freeze
-  fire a few smaller bullets
-  killing a mob triggers:  a spore bullet
-    maybe you could replace the power method with a new one to get this to work
-negative mods for balancing
-  self damage on fire
-  knock back
-  lower fire rate
-  smaller bullets
-  smaller explosions
-  shorter lasting bullets
-
 give mobs more animal-like behaviors
   like rainworld
   give mobs something to do when they don't see player
