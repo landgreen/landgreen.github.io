@@ -14,9 +14,9 @@ const level = {
     if (game.levelsCleared === 0) {
       // game.levelsCleared = 16; //for testing to simulate possible mobs spawns
       // b.giveGuns("all", 1000)
-      // b.giveGuns(9) // set a starting gun for testing
-      // mech.fieldUpgrades[2].effect(); //give a field power up for testing
-      // b.giveMod(8)
+      // b.giveGuns(11) // set a starting gun for testing
+      // mech.fieldUpgrades[6].effect(); //give a field power up for testing
+      // b.giveMod(6)
 
       this.intro(); //starting level
       // this.testingMap();
@@ -46,7 +46,6 @@ const level = {
   //******************************************************************************************************************
   testingMap() {
     //start with all guns
-    b.giveGuns("all", 1000)
     game.zoomScale = 1400 //1400 is normal
     spawn.setSpawnList();
     game.levelsCleared = 3; //for testing to simulate all possible mobs spawns
@@ -121,8 +120,8 @@ const level = {
     // powerUps.spawn(450, -400, "mod", false);
     // spawn.bodyRect(-45, -100, 40, 50);
     // spawn.focuser(800, -1150);
-    // spawn.groupBoss(-600, -550);
-    spawn.striker(800, -150);
+    spawn.groupBoss(-600, -550);
+    // spawn.hopper(800, -150);
     // spawn.beamer(800, -150);
     // spawn.grower(800, -250);
     // spawn.blinker(800, -250, 40);
@@ -934,7 +933,7 @@ const level = {
     // }); 
     powerUps.spawn(-4300, -700, "heal");
     powerUps.spawn(-4200, -700, "ammo");
-    powerUps.spawn(-4100, -700, "gun");
+    powerUps.spawn(-4000, -700, "ammo");
     spawn.mapRect(-4450, -1000, 100, 500);
     spawn.bodyRect(-3576, -750, 150, 150);
 

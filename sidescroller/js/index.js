@@ -2,10 +2,25 @@
 /* TODO:  *******************************************
 *****************************************************
 
-add a key that player picks up and needs to set on the exit door to open it
+diegetic field meter
+  show as the player head filling with teal color
 
-add Boss levels
+atmosphere levels
+  give the user a rest, between combat
+  low combat
+    nonaggressive mobs
+      one mob attacking the passive mobs
+  more graphics
   
+Boss levels
+  boss grows and spilt, if you don't kill it fast
+    sensor that locks you in after you enter the boss room
+  boss that eats other mobs and gains stats from them
+    chance to spawn on any level (past level 5)
+  boss that knows how to shoot (player) bullets that collide with player 
+    overwrite custom engine collision bullet mob function.
+
+add a key that player picks up and needs to set on the exit door to open it
 
 add modular difficulty settings
   take reduced dmg
@@ -13,8 +28,6 @@ add modular difficulty settings
   more drops
   fewer mobs
     make a new var to scale number of mobs and stop using levels cleared var
-
-get text output to show multiple notifications at once by queuing them vertically
 
 make power ups keep moving to player if the pickup field is turned off before they get picked up
   not sure how to do this without adding a constant check
@@ -27,17 +40,16 @@ new map with repeating endlessness
     I tried it, but had trouble getting the camera to adjust to the teleportation
     this can apply to blocks mobs, and power ups as well
     
-Find a diegetic way to see player damage  (and or field meter too)
-  a health meter, like the field meter above player?  (doesn't work with the field meter)
-
 field power up effects
   field allows player to hold and throw living mobs
 
 mod power ups ideas
+  double jump
   bullet on mob damage effects
     add to the array mob.do new mob behaviors
         add a damage over time
         add a freeze
+
 give mobs more animal-like behaviors
   like rainworld
   give mobs something to do when they don't see player
@@ -65,17 +77,6 @@ game mechanics
     water
     low friction ground
     bouncy ground
-
-track foot positions with velocity better as the player walks/crouch/runs
-
-Boss ideas
-  boss grows and spilt, if you don't kill it fast
-    sensor that locks you in after you enter the boss room
-  boss that eats other mobs and gains stats from them
-    chance to spawn on any level (past level 5)
-  boss that knows how to shoot (player) bullets that collide with player 
-    overwrite custom engine collision bullet mob function.
-
 
 
 // collision info:
