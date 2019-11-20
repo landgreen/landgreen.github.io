@@ -34,13 +34,13 @@ var springGravity = function () {
     this.draw = function () {
       document.getElementById("spring-ball-2").setAttribute("r", this.r);
       document.getElementById("spring-ball-2").setAttribute("cx", this.x);
-      document.getElementById("spring-ball-2").setAttribute("cy", this.y);
+      document.getElementById("spring-ball-2").setAttribute("cy", this.y + this.r);
     };
 
     this.drawSpring = function () {
-      let d = `M ${box.x} ${box.y-box.r}`;
+      let d = `M ${box.x} ${box.y}`;
       for (var i = 1; i < physics.turns + 1; i++) {
-        d += `L ${box.x + (i % 2 === 0 ? 10 : -10)} ${ (box.y - this.r) * (1 - i / physics.turns)}`;
+        d += `L ${box.x + (i % 2 === 0 ? 10 : -10)} ${ (box.y) * (1 - i / physics.turns)}`;
       }
       document.getElementById("spring-wire-2").setAttribute("d", d);
       document.getElementById("spring-wire-2").setAttribute("stroke-width", 0.7 + physics.k * 0.04);

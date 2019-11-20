@@ -29,13 +29,13 @@ var spring = function () {
     this.draw = function () {
       //SVG draw
       document.getElementById("spring-ball").setAttribute("r", this.r);
-      document.getElementById("spring-ball").setAttribute("cx", this.x);
+      document.getElementById("spring-ball").setAttribute("cx", this.x + this.r);
       document.getElementById("spring-ball").setAttribute("cy", this.y);
     };
     this.drawSpring = function () {
-      let d = `M ${box.x-this.r} ${physics.height/2}`;
+      let d = `M ${box.x} ${physics.height/2}`;
       for (var i = 1; i < physics.turns + 1; i++) {
-        d += `L ${(box.x - this.r) * (1 - i / physics.turns)} ${ box.y + (i % 2 === 0 ? 10 : -10)}`;
+        d += `L ${(box.x) * (1 - i / physics.turns)} ${ box.y + (i % 2 === 0 ? 10 : -10)}`;
       }
       document.getElementById("spring-wire").setAttribute("d", d);
       document.getElementById("spring-wire").setAttribute("stroke-width", 1 + physics.k * 0.5);
