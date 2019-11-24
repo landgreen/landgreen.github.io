@@ -1,7 +1,7 @@
 let bullet = [];
 
 const b = {
-  dmgScale: null, //scales all gun damage from momentum, but not raw .dmg //this is reset in game.reset
+  dmgScale: null, //scales all gun damage from momentum, but not raw .dmg //set in levels.setDifficulty
   gravity: 0.0006, //most other bodies have   gravity = 0.001
   //variables use for gun mod upgrades
   modCount: null,
@@ -35,6 +35,8 @@ const b = {
     b.extraDmg = 0;
     b.annihilation = false;
     b.fullHeal = false;
+    mech.throwChargeRate = 2;
+    mech.throwChargeMax = 50;
     for (let i = 0; i < b.mods.length; i++) {
       b.mods[i].have = false;
     }
@@ -133,7 +135,7 @@ const b = {
     },
     {
       name: "fluoroantimonic acid",
-      description: "Your bullets do extra chemical <span class='color-d'>damage</span> each time they make contact",
+      description: "your bullets do extra chemical <span class='color-d'>damage</span> each time they make contact",
       have: false, //11
       effect: () => { //good with guns that fire many bullets at low speeds, minigun, drones, junk-bots, shotgun, superballs, wavebeam
         b.extraDmg = 0.1
@@ -141,18 +143,28 @@ const b = {
     },
     {
       name: "annihilation",
-      description: "after you touch an enemy, they become <strong class='color-l'>light</strong><br><em>touching enemies still damages you</em>",
+      description: "after you touch any enemy, they are <strong class='color-l'>annihilated</strong><br><em>touching enemies damages you, but destroys them</em>",
       have: false, //12
       effect: () => { //good with mods that heal: superconductive healing, entropy transfer 
         b.annihilation = true
       }
     },
     {
-      name: "superconductive healing",
-      description: "<span class='color-h'>heals</span> have zero resistance, and maximum efficiency<br><span class='color-h'>heals</span> bring you to full health",
+      name: "recursive healing",
+      description: "<span class='color-h'>heals</span> bring you to full health",
       have: false, //13
       effect: () => { // good with ablative synthesis, electrostatic field
         b.fullHeal = true
+      }
+    },
+    {
+      name: "superconductive rail gun",
+      description: "throw blocks at very high speeds<br><em>to charge a throw, hold right click while holding a block<br>release right click to fire</em>",
+      have: false, //14
+      effect: () => { // good with ablative synthesis, electrostatic field
+        b.fullHeal = true
+        mech.throwChargeRate = 4;
+        mech.throwChargeMax = 150;
       }
     },
   ],
@@ -787,21 +799,20 @@ const b = {
     },
     {
       name: "fléchettes", //6
-      description: "fire accurate high speed needles<br>crouch to fire 6 needles at once",
+      description: "fire accurate high speed needles",
       ammo: 0,
-      ammoPack: 35,
+      ammoPack: 20,
       have: false,
       isStarterGun: true,
       fire() {
         function spawnFlechette(dir = mech.angle, speed, size = 1) {
           const me = bullet.length;
-          bullet[me] = Bodies.rectangle(mech.pos.x + 40 * Math.cos(dir), mech.pos.y + 40 * Math.sin(dir), 36 * size * b.modBulletSize, 2.5 * size * b.modBulletSize, b.fireAttributes(dir));
+          bullet[me] = Bodies.rectangle(mech.pos.x + 40 * Math.cos(dir), mech.pos.y + 40 * Math.sin(dir), 65 * size * b.modBulletSize, 1.5 * size * b.modBulletSize, b.fireAttributes(dir));
           bullet[me].endCycle = game.cycle + Math.floor(180 * b.modBulletsLastLonger);
-          bullet[me].dmg = 0.5 * size + b.extraDmg;
+          bullet[me].dmg = 0.25 * size + b.extraDmg;
           b.drawOneBullet(bullet[me].vertices);
           bullet[me].do = function () {
-            //low gravity
-            this.force.y += this.mass * 0.0002;
+            this.force.y += this.mass * 0.0002; //low gravity
           };
           Matter.Body.setVelocity(bullet[me], {
             x: mech.Vx / 2 + speed * Math.cos(dir),
@@ -811,15 +822,13 @@ const b = {
         }
 
         if (mech.crouch) {
-          mech.fireCDcycle = mech.cycle + Math.floor(60 * b.modFireRate); // cool down
-          // b.guns[6].ammo -= b.modNoAmmo ? Math.floor(COST / 2) : COST
-          for (let i = 0; i < 6; i++) {
-            spawnFlechette(mech.angle + 0.14 * (Math.random() - 0.5), 30 + 6 * Math.random(), 0.7)
-          }
+          spawnFlechette(mech.angle, 55, 1.2)
         } else {
-          mech.fireCDcycle = mech.cycle + Math.floor(30 * b.modFireRate); // cool down
-          spawnFlechette(mech.angle, 45)
+          for (let i = 0; i < 7; i++) {
+            spawnFlechette(mech.angle + 0.14 * (Math.random() - 0.5), 30 + 8 * Math.random(), 0.5)
+          }
         }
+        mech.fireCDcycle = mech.cycle + Math.floor(30 * b.modFireRate); // cool down
       }
     },
     {
