@@ -2,6 +2,34 @@
 /* TODO:  *******************************************
 *****************************************************
 
+gun: like drones, but fast moving and short lived
+  dies after doing damage
+
+gun:  Spirit Bomb (singularity)
+  use charge up like rail gun
+  electricity graphics like plasma torch
+  suck in nearby mobs, power ups?, blocks?
+    sucked in stuff increase size
+  uses energy
+
+left and right click mouse icons for text displays
+
+mod: auto pick up guns, heals, ammo
+  use the same rule for drones
+  maybe give some other bonus too?
+
+mod: + move speed and jump height
+  will leg animations look strange?
+    that's OK for a mod
+  this could just slow the mobs down instead?
+    how?
+
+rework junk bot
+  it's behavior is too unpredictable
+    range is unclear
+    having the bullets last long after doing dmg isn't fun
+  we want a fun gun that acts like a melee weapon
+
 mouse can get suck as clicked if the user clicks off the window
   can lead to gun lock up until player pressed mouse again
   should I really need to fix this?

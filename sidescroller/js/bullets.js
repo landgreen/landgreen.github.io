@@ -11,30 +11,34 @@ const b = {
   modEnergySiphon: null,
   modHealthDrain: null,
   modNoAmmo: null,
-  modBulletsLastLonger: null,
+  isModBulletsLastLonger: null,
   modIsImmortal: null,
   modSpores: null,
-  AoEImmunity: null,
-  makeDroneOnDamage: null,
-  extraDmg: null,
+  isModAoEImmunity: null,
+  isModDroneOnDamage: null,
+  modExtraDmg: null,
   annihilation: null,
   fullHeal: null,
+  modSquirrelFx: 1,
   setModDefaults() {
     b.modCount = 0;
     b.modFireRate = 1;
     b.modExplosionRadius = 1;
-    b.AoEImmunity = false;
+    b.isModAoEImmunity = false;
     b.modBulletSize = 1;
-    b.makeDroneOnDamage = false;
+    b.isModDroneOnDamage = false;
     b.modEnergySiphon = 0;
     b.modHealthDrain = 0;
     b.modNoAmmo = 0;
-    b.modBulletsLastLonger = 1;
+    b.isModBulletsLastLonger = 1;
     b.modIsImmortal = false;
     b.modSpores = 0;
-    b.extraDmg = 0;
-    b.annihilation = false;
-    b.fullHeal = false;
+    b.modExtraDmg = 0;
+    b.modAnnihilation = false;
+    b.isModFullHeal = false;
+    b.modSquirrelFx = 1;
+    mech.Fx = 0.015;
+    mech.jumpForce = 0.38;
     mech.throwChargeRate = 2;
     mech.throwChargeMax = 50;
     for (let i = 0; i < b.mods.length; i++) {
@@ -72,7 +76,7 @@ const b = {
       description: "your <strong class='color-b'>bullets</strong> last 40% longer",
       have: false, //3
       effect: () => { //good with: drones, super balls, spore, missiles, wave beam(range), rapid fire(range), flak(range)
-        b.modBulletsLastLonger = 1.40
+        b.isModBulletsLastLonger = 1.40
       }
     },
     {
@@ -89,7 +93,7 @@ const b = {
       description: "you take no damage from area effects<br>immune to <strong class='color-e'>explosions</strong> and enemy fields",
       have: false, //5
       effect: () => {
-        b.AoEImmunity = true; //good for guns with explosions
+        b.isModAoEImmunity = true; //good for guns with explosions
       }
     },
     {
@@ -97,7 +101,7 @@ const b = {
       description: "after taking <span class='color-d'>damage</span>, there is a chance that your damaged parts will be rebuilt as <strong class='color-b'>drones</strong>",
       have: false, //6
       effect: () => { //makes dangerous situations more survivable
-        b.makeDroneOnDamage = true;
+        b.isModDroneOnDamage = true;
       }
     },
     {
@@ -138,15 +142,15 @@ const b = {
       description: "your bullets do extra chemical <span class='color-d'>damage</span> each time they make contact",
       have: false, //11
       effect: () => { //good with guns that fire many bullets at low speeds, minigun, drones, junk-bots, shotgun, superballs, wavebeam
-        b.extraDmg = 0.1
+        b.modExtraDmg = 0.1
       }
     },
     {
       name: "annihilation",
-      description: "after you touch any enemy, they are <strong class='color-l'>annihilated</strong><br><em>touching enemies damages you, but destroys them</em>",
+      description: "after you touch any enemy, they are <strong class='color-l'>annihilated</strong><br><em>touching enemies <span class='color-d'>damages</span> you, but <span class='color-d'>destroys</span> them</em>",
       have: false, //12
       effect: () => { //good with mods that heal: superconductive healing, entropy transfer 
-        b.annihilation = true
+        b.modAnnihilation = true
       }
     },
     {
@@ -154,19 +158,31 @@ const b = {
       description: "<span class='color-h'>heals</span> bring you to full health",
       have: false, //13
       effect: () => { // good with ablative synthesis, electrostatic field
-        b.fullHeal = true
+        b.isModFullHeal = true
       }
     },
     {
-      name: "superconductive rail gun",
-      description: "throw blocks at very high speeds<br><em>to charge a throw, hold right click while holding a block<br>release right click to fire</em>",
+      name: "Gauss rifle",
+      description: "<span style='color:#f0f;'>magnetically</span> <strong>launch blocks</strong> at much higher speeds<br>carry more massive blocks<br><em>hold right click to charge up a throw and release to fire</em>",
       have: false, //14
       effect: () => { // good with ablative synthesis, electrostatic field
-        b.fullHeal = true
+        b.isModFullHeal = true
         mech.throwChargeRate = 4;
         mech.throwChargeMax = 150;
+        mech.holdingMassScale = 0.05; //can hold heavier blocks with lower cost to jumping
       }
     },
+    {
+      name: "squirrel-cage rotor",
+      description: "jump higher and move faster",
+      have: false, //15
+      effect: () => { // 
+        b.modSquirrelFx = 1.2;
+        mech.Fx = 0.015 * b.modSquirrelFx;
+        mech.jumpForce = 0.38 * 1.1;
+      }
+    },
+
   ],
   giveMod(i) {
     b.mods[i].effect(); //give specific mod
@@ -263,7 +279,7 @@ const b = {
         angle: dir,
         friction: 0.5,
         frictionAir: 0,
-        dmg: b.extraDmg, //damage done in addition to the damage from momentum
+        dmg: b.modExtraDmg, //damage done in addition to the damage from momentum
         classType: "bullet",
         collisionFilter: {
           category: 0x000100,
@@ -351,7 +367,7 @@ const b = {
     sub = Matter.Vector.sub(bullet[me].position, player.position);
     dist = Matter.Vector.magnitude(sub);
     if (dist < radius) {
-      if (!b.AoEImmunity) mech.damage(radius * 0.0002);
+      if (!b.isModAoEImmunity) mech.damage(radius * 0.0002);
       knock = Matter.Vector.mult(Matter.Vector.normalise(sub), -Math.sqrt(dmg) * player.mass / 30);
       player.force.x += knock.x;
       player.force.y += knock.y;
@@ -433,7 +449,7 @@ const b = {
         category: 0x000100,
         mask: 0x000011 //no collide with body
       },
-      endCycle: game.cycle + Math.floor((360 + Math.floor(Math.random() * 240)) * b.modBulletsLastLonger),
+      endCycle: game.cycle + Math.floor((360 + Math.floor(Math.random() * 240)) * b.isModBulletsLastLonger),
       minDmgSpeed: 0,
       onDmg() {
         this.endCycle = 0; //bullet ends cycle after doing damage 
@@ -547,7 +563,7 @@ const b = {
               }
             }
           };
-          const checkforCollisions = function () {
+          const checkForCollisions = function () {
             best = {
               x: null,
               y: null,
@@ -582,7 +598,7 @@ const b = {
             path[path.length] = Matter.Vector.add(Matter.Vector.mult(r, range), path[path.length - 1]);
           };
           //beam before reflection
-          checkforCollisions();
+          checkForCollisions();
           if (best.dist2 != Infinity) {
             //if hitting something
             path[path.length - 1] = {
@@ -595,7 +611,7 @@ const b = {
             reflection();
             //ugly bug fix: this stops the reflection on a bug where the beam gets trapped inside a body
             let who = best.who;
-            checkforCollisions();
+            checkForCollisions();
             if (best.dist2 != Infinity) {
               //if hitting something
               path[path.length - 1] = {
@@ -608,7 +624,7 @@ const b = {
               //ugly bug fix: this stops the reflection on a bug where the beam gets trapped inside a body
               if (who !== best.who) {
                 reflection();
-                checkforCollisions();
+                checkForCollisions();
                 if (best.dist2 != Infinity) {
                   //if hitting something
                   path[path.length - 1] = {
@@ -639,29 +655,221 @@ const b = {
           ctx.globalAlpha = 1;
         }
       }
-    }, {
-      name: "kinetic slugs", //1
-      description: "fire a large <strong>rod</strong> that does excessive physical <span class='color-d'>damage</span><br><em>high recoil</em>",
+    },
+    {
+      name: "rail gun", //1
+      description: "<strong>hold left mouse</strong> to charge and release to fire<br>charging repels small enemies<br><em>crouching charges quicker and reduces recoil</em>",
       ammo: 0,
-      ammoPack: 5,
+      ammoPack: 12,
       have: false,
-      isStarterGun: true,
+      isStarterGun: false,
       fire() {
-        b.muzzleFlash(45);
-        // mobs.alert(800);
         const me = bullet.length;
-        const dir = mech.angle;
-        bullet[me] = Bodies.rectangle(mech.pos.x + 50 * Math.cos(mech.angle), mech.pos.y + 50 * Math.sin(mech.angle), 70 * b.modBulletSize, 30 * b.modBulletSize, b.fireAttributes(dir));
-        b.fireProps(mech.crouch ? 55 : 40, 50, dir, me); //cd , speed
-        bullet[me].endCycle = game.cycle + Math.floor(180 * b.modBulletsLastLonger);
+        bullet[me] = Bodies.rectangle(9, -90, 0.01 * b.modBulletSize, 0.0017 * b.modBulletSize, {
+          // density: 0.0015,			//frictionAir: 0.01,			//restitution: 0,
+          angle: 0,
+          friction: 0.5,
+          frictionAir: 0,
+          dmg: 3 + b.modExtraDmg, //damage done in addition to the damage from momentum
+          classType: "bullet",
+          collisionFilter: {
+            category: 0x000000,
+            mask: 0x010011 //mask: 0x000101,  //for self collision
+          },
+          minDmgSpeed: 5,
+          onDmg() {}, //this.endCycle = 0  //triggers despawn
+          onEnd() {}
+        });
+        mech.fireCDcycle = Infinity; // cool down
+        World.add(engine.world, bullet[me]); //add bullet to world
+        bullet[me].endCycle = Infinity
+        bullet[me].isCharging = true;
+        bullet[me].charge = 0;
         bullet[me].do = function () {
-          this.force.y += this.mass * 0.0005;
-        };
+          if (this.isCharging) {
+            if ((!game.mouseDown && this.charge > 0.5)) { //fire on mouse release
+              this.isCharging = false
+              mech.fireCDcycle = mech.cycle + 2; // set fire cool down
+              Matter.Body.scale(this, 8000, 8000) // show the bullet by scaling it up  (don't judge me...  I know this is a bad way to do it)
+              this.endCycle = game.cycle + Math.floor(140 * b.isModBulletsLastLonger)
+              this.collisionFilter.category = 0x000100
+              Matter.Body.setPosition(this, {
+                x: mech.pos.x,
+                y: mech.pos.y
+              })
+              Matter.Body.setAngle(this, mech.angle)
+              const speed = 80
+              Matter.Body.setVelocity(this, {
+                x: mech.Vx / 2 + speed * this.charge * Math.cos(mech.angle),
+                y: mech.Vy / 2 + speed * this.charge * Math.sin(mech.angle)
+              });
 
-        //knock back
-        const KNOCK = ((mech.crouch) ? 0.025 : 0.25) * b.modBulletSize * b.modBulletSize
-        player.force.x -= KNOCK * Math.cos(dir)
-        player.force.y -= KNOCK * Math.sin(dir) * 0.4 //reduce knock back in vertical direction to stop super jumps
+              //knock back
+              const KNOCK = ((mech.crouch) ? 0.1 : 0.5) * b.modBulletSize * b.modBulletSize * this.charge * this.charge
+              player.force.x -= KNOCK * Math.cos(mech.angle)
+              player.force.y -= KNOCK * Math.sin(mech.angle) * 0.35 //reduce knock back in vertical direction to stop super jumps
+
+              //push away blocks when firing
+              const RANGE = 450 * this.charge
+              for (let i = 0, len = body.length; i < len; ++i) {
+                const SUB = Matter.Vector.sub(body[i].position, mech.pos)
+                const DISTANCE = Matter.Vector.magnitude(SUB)
+                if (DISTANCE < RANGE) {
+                  const DEPTH = Math.max(RANGE - DISTANCE, 100)
+                  const FORCE = Matter.Vector.mult(Matter.Vector.normalise(SUB), 0.005 * Math.sqrt(DEPTH) * Math.sqrt(body[i].mass))
+                  body[i].force.x += FORCE.x
+                  body[i].force.y += FORCE.y - body[i].mass * (game.g * 1.5); //kick up a bit to give them some arc
+                }
+              }
+              //push mobs around player when firing
+              // for (let i = 0, len = mob.length; i < len; ++i) {
+              //   const SUB = Matter.Vector.sub(mob[i].position, mech.pos)
+              //   const DISTANCE = Matter.Vector.magnitude(SUB)
+              //   if (DISTANCE < RANGE) {
+              //     const DEPTH = RANGE - DISTANCE
+              //     const FORCE = Matter.Vector.mult(Matter.Vector.normalise(SUB), 0.00000001 * DEPTH * DEPTH * DEPTH * Math.sqrt(mob[i].mass))
+              //     mob[i].force.x += FORCE.x
+              //     mob[i].force.y += FORCE.y
+              //   }
+              // }
+
+
+            } else { // charging on mouse down
+              mech.fireCDcycle = Infinity //can't fire until mouse is released
+              if (mech.crouch) {
+                this.charge = this.charge * 0.97 + 0.03 // this.charge converges to 1
+              } else {
+                this.charge = this.charge * 0.98 + 0.02 // this.charge converges to 1
+              }
+
+              //gently push away mobs while charging
+              const RANGE = 350 * this.charge
+              for (let i = 0, len = mob.length; i < len; ++i) {
+                const SUB = Matter.Vector.sub(mob[i].position, mech.pos)
+                const DISTANCE = Matter.Vector.magnitude(SUB)
+                // if (DISTANCE < RANGE) {
+                //   Matter.Body.setVelocity(mob[i], Matter.Vector.rotate(mob[i].velocity, 0.1))
+                // }
+                if (DISTANCE < RANGE) {
+                  const DEPTH = RANGE - DISTANCE
+                  const FORCE = Matter.Vector.mult(Matter.Vector.normalise(SUB), 0.000000001 * DEPTH * DEPTH * DEPTH * Math.sqrt(mob[i].mass))
+                  mob[i].force.x += FORCE.x
+                  mob[i].force.y += FORCE.y
+                }
+              }
+
+              // //draw laser targeting
+              // let best;
+              // let range = 3000
+              // const dir = mech.angle
+              // const path = [{
+              //     x: mech.pos.x + 20 * Math.cos(dir),
+              //     y: mech.pos.y + 20 * Math.sin(dir)
+              //   },
+              //   {
+              //     x: mech.pos.x + range * Math.cos(dir),
+              //     y: mech.pos.y + range * Math.sin(dir)
+              //   }
+              // ];
+              // const vertexCollision = function (v1, v1End, domain) {
+              //   for (let i = 0; i < domain.length; ++i) {
+              //     let vertices = domain[i].vertices;
+              //     const len = vertices.length - 1;
+              //     for (let j = 0; j < len; j++) {
+              //       results = game.checkLineIntersection(v1, v1End, vertices[j], vertices[j + 1]);
+              //       if (results.onLine1 && results.onLine2) {
+              //         const dx = v1.x - results.x;
+              //         const dy = v1.y - results.y;
+              //         const dist2 = dx * dx + dy * dy;
+              //         if (dist2 < best.dist2) {
+              //           best = {
+              //             x: results.x,
+              //             y: results.y,
+              //             dist2: dist2,
+              //             who: domain[i],
+              //             v1: vertices[j],
+              //             v2: vertices[j + 1]
+              //           };
+              //         }
+              //       }
+              //     }
+              //     results = game.checkLineIntersection(v1, v1End, vertices[0], vertices[len]);
+              //     if (results.onLine1 && results.onLine2) {
+              //       const dx = v1.x - results.x;
+              //       const dy = v1.y - results.y;
+              //       const dist2 = dx * dx + dy * dy;
+              //       if (dist2 < best.dist2) {
+              //         best = {
+              //           x: results.x,
+              //           y: results.y,
+              //           dist2: dist2,
+              //           who: domain[i],
+              //           v1: vertices[0],
+              //           v2: vertices[len]
+              //         };
+              //       }
+              //     }
+              //   }
+              // };
+
+              // //check for collisions
+              // best = {
+              //   x: null,
+              //   y: null,
+              //   dist2: Infinity,
+              //   who: null,
+              //   v1: null,
+              //   v2: null
+              // };
+              // vertexCollision(path[0], path[1], mob);
+              // vertexCollision(path[0], path[1], map);
+              // vertexCollision(path[0], path[1], body);
+              // if (best.dist2 != Infinity) { //if hitting something
+              //   path[path.length - 1] = {
+              //     x: best.x,
+              //     y: best.y
+              //   };
+              // }
+
+              // //draw laser beam
+              // ctx.beginPath();
+              // ctx.moveTo(path[0].x, path[0].y);
+              // ctx.lineTo(path[1].x, path[1].y);
+              // ctx.strokeStyle = `rgba(50,0,100,0.1)`;
+              // ctx.lineWidth = this.charge * 3
+              // ctx.stroke();
+
+              //draw magnetic field
+              const X = mech.pos.x
+              const Y = mech.pos.y
+              const unitVector = Matter.Vector.normalise(Matter.Vector.sub(game.mouseInGame, mech.pos))
+              const unitVectorPerp = Matter.Vector.perp(unitVector)
+
+              function magField(mag, arc) {
+                ctx.moveTo(X, Y);
+                ctx.bezierCurveTo(
+                  X + unitVector.x * mag, Y + unitVector.y * mag,
+                  X + unitVector.x * mag + unitVectorPerp.x * arc, Y + unitVector.y * mag + unitVectorPerp.y * arc,
+                  X + unitVectorPerp.x * arc, Y + unitVectorPerp.y * arc)
+                ctx.bezierCurveTo(
+                  X - unitVector.x * mag + unitVectorPerp.x * arc, Y - unitVector.y * mag + unitVectorPerp.y * arc,
+                  X - unitVector.x * mag, Y - unitVector.y * mag,
+                  X, Y)
+              }
+              ctx.fillStyle = `rgba(50,0,100,0.05)`;
+              for (let i = 3; i < 7; i++) {
+                const MAG = 8 * i * i * this.charge * (0.93 + 0.07 * Math.random())
+                const ARC = 6 * i * i * this.charge * (0.93 + 0.07 * Math.random())
+                ctx.beginPath();
+                magField(MAG, ARC)
+                magField(MAG, -ARC)
+                ctx.fill();
+              }
+            }
+          } else { //normal bullet behavior
+            this.force.y += this.mass * 0.00015 / this.charge; // low gravity that scales with charge
+          }
+        }
       }
     },
     {
@@ -678,14 +886,13 @@ const b = {
         const dir = mech.angle + (Math.random() - 0.5) * ((mech.crouch) ? 0.03 : 0.14);
         bullet[me] = Bodies.rectangle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 17 * b.modBulletSize, 5 * b.modBulletSize, b.fireAttributes(dir));
         b.fireProps(mech.crouch ? 11 : 5, mech.crouch ? 44 : 36, dir, me); //cd , speed
-        bullet[me].endCycle = game.cycle + Math.floor(65 * b.modBulletsLastLonger);
+        bullet[me].endCycle = game.cycle + Math.floor(65 * b.isModBulletsLastLonger);
         bullet[me].frictionAir = mech.crouch ? 0.007 : 0.01;
         bullet[me].do = function () {
           this.force.y += this.mass * 0.0005;
         };
       }
-    },
-    {
+    }, {
       name: "wave beam", //3
       description: "fire a stream of oscillating particles<br><strong style='opacity: 0.4;'>propagates through solids</strong>",
       ammo: 0,
@@ -700,11 +907,11 @@ const b = {
         bullet[me] = Bodies.circle(mech.pos.x + 25 * Math.cos(DIR), mech.pos.y + 25 * Math.sin(DIR), 10 * b.modBulletSize, {
           angle: DIR,
           cycle: -0.43, //adjust this number until the bullets line up with the cross hairs
-          endCycle: game.cycle + Math.floor((mech.crouch ? 155 : 120) * b.modBulletsLastLonger),
+          endCycle: game.cycle + Math.floor((mech.crouch ? 155 : 120) * b.isModBulletsLastLonger),
           inertia: Infinity,
           frictionAir: 0,
           minDmgSpeed: 0,
-          dmg: 0.13 + b.extraDmg, //damage done in addition to the damage from momentum
+          dmg: 0.13 + b.modExtraDmg, //damage done in addition to the damage from momentum
           classType: "bullet",
           collisionFilter: {
             category: 0x000100,
@@ -738,8 +945,7 @@ const b = {
 
         World.add(engine.world, bullet[me]); //add bullet to world
       }
-    },
-    {
+    }, {
       name: "super balls", //4
       description: "fire 3 very <strong>bouncy</strong> balls",
       ammo: 0,
@@ -756,8 +962,8 @@ const b = {
           bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 7 * b.modBulletSize, b.fireAttributes(dir, false));
           b.fireProps(mech.crouch ? 40 : 20, mech.crouch ? 34 : 26, dir, me); //cd , speed
           Matter.Body.setDensity(bullet[me], 0.0001);
-          bullet[me].endCycle = game.cycle + Math.floor(360 * b.modBulletsLastLonger);
-          bullet[me].dmg = 0.5 + b.extraDmg;
+          bullet[me].endCycle = game.cycle + Math.floor(360 * b.isModBulletsLastLonger);
+          bullet[me].dmg = 0.5 + b.modExtraDmg;
           bullet[me].minDmgSpeed = 0;
           bullet[me].restitution = 0.96;
           bullet[me].friction = 0;
@@ -767,10 +973,9 @@ const b = {
           dir += SPREAD;
         }
       }
-    },
-    {
+    }, {
       name: "shotgun", //5
-      description: "fire a <strong>burst</strong> of bullets<br><em>high recoil</em>",
+      description: "fire a <strong>burst</strong> of bullets<br><em>crouch to reduce recoil</em>",
       ammo: 0,
       ammoPack: 8,
       have: false,
@@ -784,7 +989,7 @@ const b = {
           const dir = mech.angle + (Math.random() - 0.5) * (mech.crouch ? 0.22 : 0.7)
           bullet[me] = Bodies.rectangle(mech.pos.x + 35 * Math.cos(mech.angle) + 15 * (Math.random() - 0.5), mech.pos.y + 35 * Math.sin(mech.angle) + 15 * (Math.random() - 0.5), side, side, b.fireAttributes(dir));
           b.fireProps(mech.crouch ? 60 : 30, 40 + Math.random() * 11, dir, me); //cd , speed
-          bullet[me].endCycle = game.cycle + Math.floor(55 * b.modBulletsLastLonger);
+          bullet[me].endCycle = game.cycle + Math.floor(55 * b.isModBulletsLastLonger);
           bullet[me].frictionAir = 0.03;
           bullet[me].do = function () {
             this.force.y += this.mass * 0.001;
@@ -794,22 +999,21 @@ const b = {
         //knock back
         const KNOCK = ((mech.crouch) ? 0.015 : 0.15) * b.modBulletSize * b.modBulletSize
         player.force.x -= KNOCK * Math.cos(mech.angle)
-        player.force.y -= KNOCK * Math.sin(mech.angle) * 0.4 //reduce knock back in vertical direction to stop super jumps
+        player.force.y -= KNOCK * Math.sin(mech.angle) * 0.3 //reduce knock back in vertical direction to stop super jumps
       }
-    },
-    {
+    }, {
       name: "fléchettes", //6
       description: "fire accurate high speed needles",
       ammo: 0,
-      ammoPack: 20,
+      ammoPack: 25,
       have: false,
       isStarterGun: true,
       fire() {
         function spawnFlechette(dir = mech.angle, speed, size = 1) {
           const me = bullet.length;
-          bullet[me] = Bodies.rectangle(mech.pos.x + 40 * Math.cos(dir), mech.pos.y + 40 * Math.sin(dir), 65 * size * b.modBulletSize, 1.5 * size * b.modBulletSize, b.fireAttributes(dir));
-          bullet[me].endCycle = game.cycle + Math.floor(180 * b.modBulletsLastLonger);
-          bullet[me].dmg = 0.25 * size + b.extraDmg;
+          bullet[me] = Bodies.rectangle(mech.pos.x + 40 * Math.cos(dir), mech.pos.y + 40 * Math.sin(dir), 32 * size * b.modBulletSize, 0.8 * size * b.modBulletSize, b.fireAttributes(dir));
+          bullet[me].endCycle = game.cycle + Math.floor(180 * b.isModBulletsLastLonger);
+          bullet[me].dmg = 0.15 * size + b.modExtraDmg;
           b.drawOneBullet(bullet[me].vertices);
           bullet[me].do = function () {
             this.force.y += this.mass * 0.0002; //low gravity
@@ -822,16 +1026,17 @@ const b = {
         }
 
         if (mech.crouch) {
-          spawnFlechette(mech.angle, 55, 1.2)
+          for (let i = 0; i < 3; i++) {
+            spawnFlechette(mech.angle + 0.02 * (Math.random() - 0.5), 35 + 4 * i, 1.55)
+          }
         } else {
-          for (let i = 0; i < 7; i++) {
-            spawnFlechette(mech.angle + 0.14 * (Math.random() - 0.5), 30 + 8 * Math.random(), 0.5)
+          for (let i = 0; i < 9; i++) {
+            spawnFlechette(mech.angle + 0.12 * (Math.random() - 0.5), 30 + 8 * Math.random())
           }
         }
-        mech.fireCDcycle = mech.cycle + Math.floor(30 * b.modFireRate); // cool down
+        mech.fireCDcycle = mech.cycle + Math.floor(40 * b.modFireRate); // cool down
       }
-    },
-    {
+    }, {
       name: "missiles", //7
       description: "fire a missile that accelerates towards nearby targets<br><span class='color-e'>explodes</span> when near target",
       ammo: 0,
@@ -851,7 +1056,7 @@ const b = {
         // Matter.Body.setDensity(bullet[me], 0.01)  //doesn't help with reducing explosion knock backs
         bullet[me].force.y += 0.00045; //a small push down at first to make it seem like the missile is briefly falling
         bullet[me].frictionAir = 0
-        bullet[me].endCycle = game.cycle + Math.floor((265 + Math.random() * 20) * b.modBulletsLastLonger);
+        bullet[me].endCycle = game.cycle + Math.floor((265 + Math.random() * 20) * b.isModBulletsLastLonger);
         bullet[me].explodeRad = 170 + 60 * Math.random();
         bullet[me].lookFrequency = Math.floor(8 + Math.random() * 7);
         bullet[me].onEnd = b.explode; //makes bullet do explosive damage at end
@@ -936,8 +1141,7 @@ const b = {
           }
         }
       }
-    },
-    {
+    }, {
       name: "flak", //8
       description: "fire a cluster of short range projectiles<br><span class='color-e'>explode</span> on contact or after half a second",
       ammo: 0,
@@ -950,7 +1154,7 @@ const b = {
         const angleStep = (mech.crouch ? 0.06 : 0.15) / totalBullets
         const SPEED = mech.crouch ? 30 : 25
         const CD = mech.crouch ? 45 : 11
-        const END = Math.floor((mech.crouch ? 30 : 18) * b.modBulletsLastLonger);
+        const END = Math.floor((mech.crouch ? 30 : 18) * b.isModBulletsLastLonger);
         let dir = mech.angle - angleStep * totalBullets / 2;
         const side1 = 17 * b.modBulletSize
         const side2 = 4 * b.modBulletSize
@@ -980,14 +1184,13 @@ const b = {
           }
         }
       }
-    },
-    {
+    }, {
       name: "grenades", //9
       description: "fire a projectile that <span class='color-e'>explodes</span> on contact or after one second",
       ammo: 0,
       ammoPack: 9,
       have: false,
-      isStarterGun: true,
+      isStarterGun: false,
       fire() {
         const me = bullet.length;
         const dir = mech.angle; // + Math.random() * 0.05;
@@ -996,7 +1199,7 @@ const b = {
         b.drawOneBullet(bullet[me].vertices);
         // Matter.Body.setDensity(bullet[me], 0.000001);
         bullet[me].totalCycles = 100;
-        bullet[me].endCycle = game.cycle + Math.floor((mech.crouch ? 120 : 60) * b.modBulletsLastLonger);
+        bullet[me].endCycle = game.cycle + Math.floor((mech.crouch ? 120 : 60) * b.isModBulletsLastLonger);
         bullet[me].restitution = 0.5;
         bullet[me].explodeRad = 210;
         bullet[me].onEnd = b.explode; //makes bullet do explosive damage before despawn
@@ -1009,12 +1212,11 @@ const b = {
           this.force.y += this.mass * 0.002;
         };
       }
-    },
-    {
+    }, {
       name: "vacuum bomb", //10
       description: "fire a huge <strong>bomb</strong> that sucks before it <span class='color-e'>explodes</span><br>click left mouse <strong>again</strong> to detonate",
       ammo: 0,
-      ammoPack: 4,
+      ammoPack: 5,
       have: false,
       isStarterGun: false,
       fire() {
@@ -1025,7 +1227,6 @@ const b = {
         b.fireProps(10, mech.crouch ? 42 : 26, dir, me); //cd , speed
 
         b.drawOneBullet(bullet[me].vertices);
-        bullet[me].endCycle = Infinity
         bullet[me].endCycle = Infinity
         // bullet[me].restitution = 0.3;
         // bullet[me].frictionAir = 0.01;
@@ -1120,8 +1321,7 @@ const b = {
           }
         }
       }
-    },
-    {
+    }, {
       name: "ferro frag", //11
       description: "fire a <strong>grenade</strong> that ejects <strong class='color-m'>magnetized</strong> nails<br>nails are <strong class='color-m'>attracted</strong> to enemy targets",
       ammo: 0,
@@ -1134,7 +1334,7 @@ const b = {
         bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 15 * b.modBulletSize, b.fireAttributes(dir, false));
         b.fireProps(mech.crouch ? 40 : 30, mech.crouch ? 34 : 22, dir, me); //cd , speed
         b.drawOneBullet(bullet[me].vertices);
-        bullet[me].endCycle = game.cycle + Math.floor(60 * b.modBulletsLastLonger);
+        bullet[me].endCycle = game.cycle + Math.floor(60 * b.isModBulletsLastLonger);
         bullet[me].restitution = 0.3;
         // bullet[me].frictionAir = 0.01;
         // bullet[me].friction = 0.15;
@@ -1180,7 +1380,7 @@ const b = {
                   Matter.Body.setVelocity(bullet[me], velocity);
                   World.add(engine.world, bullet[me]); //add bullet to world
                   bullet[me].endCycle = game.cycle + 60 + Math.floor(15 * Math.random());
-                  // bullet[me].dmg = 1.1+b.extraDmg;
+                  // bullet[me].dmg = 1.1+b.modExtraDmg;
                   bullet[me].do = function () {};
                 }
               }
@@ -1188,8 +1388,7 @@ const b = {
           }
         }
       }
-    },
-    {
+    }, {
       name: "spores", //12
       description: "release an orb that discharges <span class='color-s'>spores</span> after 2 seconds<br>seeks out targets<br>passes through blocks",
       ammo: 0,
@@ -1238,13 +1437,13 @@ const b = {
               angle: dir,
               friction: 0,
               frictionAir: 0.011,
-              dmg: 1.8 + b.extraDmg, //damage done in addition to the damage from momentum
+              dmg: 1.8 + b.modExtraDmg, //damage done in addition to the damage from momentum
               classType: "bullet",
               collisionFilter: {
                 category: 0x000100,
                 mask: 0x000011 //no collide with body
               },
-              endCycle: game.cycle + Math.floor((360 + Math.floor(Math.random() * 240)) * b.modBulletsLastLonger),
+              endCycle: game.cycle + Math.floor((360 + Math.floor(Math.random() * 240)) * b.isModBulletsLastLonger),
               minDmgSpeed: 0,
               onDmg() {
                 this.endCycle = 0; //bullet ends cycle after doing damage 
@@ -1292,8 +1491,7 @@ const b = {
         }
 
       }
-    },
-    {
+    }, {
       name: "drones", //13
       description: "release <strong>drones</strong> that seek out targets for 16 seconds<br>follows mouse if no targets are found",
       ammo: 0,
@@ -1308,12 +1506,12 @@ const b = {
         bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), RADIUS, {
           angle: dir,
           inertia: Infinity,
-          friction: 0,
+          friction: 0.05,
           frictionAir: 0.0005,
           restitution: 1,
-          dmg: 0.14 + b.extraDmg, //damage done in addition to the damage from momentum
+          dmg: 0.14 + b.modExtraDmg, //damage done in addition to the damage from momentum
           lookFrequency: 79 + Math.floor(37 * Math.random()),
-          endCycle: game.cycle + Math.floor((780 + 360 * Math.random()) * b.modBulletsLastLonger),
+          endCycle: game.cycle + Math.floor((960 + 360 * Math.random()) * b.isModBulletsLastLonger),
           classType: "bullet",
           collisionFilter: {
             category: 0x000100,
@@ -1327,60 +1525,65 @@ const b = {
           },
           onEnd() {},
           do() {
-            this.force.y += this.mass * 0.0002;
-            //find mob targets
-            if (!(game.cycle % this.lookFrequency)) {
-              this.lockedOn = null;
-              let closeDist = Infinity;
-              for (let i = 0, len = mob.length; i < len; ++i) {
-                if (
-                  Matter.Query.ray(map, this.position, mob[i].position).length === 0 &&
-                  Matter.Query.ray(body, this.position, mob[i].position).length === 0
-                ) {
-                  const TARGET_VECTOR = Matter.Vector.sub(this.position, mob[i].position)
-                  const DIST = Matter.Vector.magnitude(TARGET_VECTOR);
-                  if (DIST < closeDist) {
-                    closeDist = DIST;
-                    this.lockedOn = mob[i]
-                  }
-                }
-              }
-              if (!this.lockedOn) {
-                //grab a power up if it is (ammo) or (a heal when player is low)
+            if (game.cycle + 180 > this.endCycle) { //fall and die
+              this.force.y += this.mass * 0.0012;
+              this.restitution = 0.2;
+            } else {
+              this.force.y += this.mass * 0.0002;
+              //find mob targets
+              if (!(game.cycle % this.lookFrequency)) {
+                this.lockedOn = null;
                 let closeDist = Infinity;
-                for (let i = 0, len = powerUp.length; i < len; ++i) {
+                for (let i = 0, len = mob.length; i < len; ++i) {
                   if (
-                    ((powerUp[i].name !== "field" && powerUp[i].name !== "heal") || (powerUp[i].name === "heal" && mech.health < 0.8)) &&
-                    Matter.Query.ray(map, this.position, powerUp[i].position).length === 0 &&
-                    Matter.Query.ray(body, this.position, powerUp[i].position).length === 0
+                    Matter.Query.ray(map, this.position, mob[i].position).length === 0 &&
+                    Matter.Query.ray(body, this.position, mob[i].position).length === 0
                   ) {
-                    const TARGET_VECTOR = Matter.Vector.sub(this.position, powerUp[i].position)
+                    const TARGET_VECTOR = Matter.Vector.sub(this.position, mob[i].position)
                     const DIST = Matter.Vector.magnitude(TARGET_VECTOR);
                     if (DIST < closeDist) {
-                      if (DIST < 50) { //eat the power up if close enough
-                        powerUp[i].effect();
-                        Matter.World.remove(engine.world, powerUp[i]);
-                        powerUp.splice(i, 1);
-                        break;
-                      }
                       closeDist = DIST;
-                      this.lockedOn = powerUp[i]
+                      this.lockedOn = mob[i]
+                    }
+                  }
+                }
+                if (!this.lockedOn) {
+                  //grab a power up if it is (ammo) or (a heal when player is low)
+                  let closeDist = Infinity;
+                  for (let i = 0, len = powerUp.length; i < len; ++i) {
+                    if (
+                      ((powerUp[i].name !== "field" && powerUp[i].name !== "heal") || (powerUp[i].name === "heal" && mech.health < 0.8)) &&
+                      Matter.Query.ray(map, this.position, powerUp[i].position).length === 0 &&
+                      Matter.Query.ray(body, this.position, powerUp[i].position).length === 0
+                    ) {
+                      const TARGET_VECTOR = Matter.Vector.sub(this.position, powerUp[i].position)
+                      const DIST = Matter.Vector.magnitude(TARGET_VECTOR);
+                      if (DIST < closeDist) {
+                        if (DIST < 50) { //eat the power up if close enough
+                          powerUp[i].effect();
+                          Matter.World.remove(engine.world, powerUp[i]);
+                          powerUp.splice(i, 1);
+                          break;
+                        }
+                        closeDist = DIST;
+                        this.lockedOn = powerUp[i]
+                      }
                     }
                   }
                 }
               }
-            }
-            if (this.lockedOn) { //accelerate towards mobs
-              this.force = Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.position, this.lockedOn.position)), -this.mass * THRUST)
-            } else { //accelerate towards mouse
-              this.force = Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.position, game.mouseInGame)), -this.mass * THRUST)
-            }
-            // speed cap instead of friction to give more agility
-            if (this.speed > 6) {
-              Matter.Body.setVelocity(this, {
-                x: this.velocity.x * 0.97,
-                y: this.velocity.y * 0.97
-              });
+              if (this.lockedOn) { //accelerate towards mobs
+                this.force = Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.position, this.lockedOn.position)), -this.mass * THRUST)
+              } else { //accelerate towards mouse
+                this.force = Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.position, game.mouseInGame)), -this.mass * THRUST)
+              }
+              // speed cap instead of friction to give more agility
+              if (this.speed > 6) {
+                Matter.Body.setVelocity(this, {
+                  x: this.velocity.x * 0.97,
+                  y: this.velocity.y * 0.97
+                });
+              }
             }
           }
         })
@@ -1388,80 +1591,239 @@ const b = {
         b.drawOneBullet(bullet[me].vertices);
       }
     },
-    {
-      //draw a halo, since there will only be 1-3 balls
-      name: "junk-bots", //14
-      description: "release large <strong>drones</strong> that defend the space around the player<br>despawn after not doing <span class='color-d'>damage</span> for 3 seconds",
-      ammo: 0,
-      ammoPack: 20,
-      have: false,
-      isStarterGun: true,
-      fire() {
-        const THRUST = 0.004
-        const dir = mech.angle + 0.2 * (Math.random() - 0.5);
-        const me = bullet.length;
-        const RADIUS = (18 + 5 * Math.random()) * b.modBulletSize
-        const LENGTH = 0.6 + 0.8 * Math.random()
-        bullet[me] = Bodies.rectangle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), RADIUS * LENGTH, RADIUS / LENGTH, {
-          isOrb: true,
-          angle: dir,
-          // inertia: Infinity,
-          friction: 0,
-          frictionAir: 0.06,
-          restitution: 1,
-          dmg: b.extraDmg, // 0.14   //damage done in addition to the damage from momentum
-          minDmgSpeed: 2,
-          lookFrequency: 37 + Math.floor(37 * Math.random()),
-          endCycle: game.cycle + Math.floor((170 + 120 * Math.random()) * b.modBulletsLastLonger),
-          classType: "bullet",
-          collisionFilter: {
-            category: 0x000100,
-            mask: 0x010111 //self, mob,map,body collide
-          },
-          range: 500 + 150 * Math.random(),
-          lockedOn: null,
-          onDmg() {
-            // this.endCycle = 0;
-            this.lockedOn = null
-            this.endCycle = game.cycle + Math.floor(180 * b.modBulletsLastLonger)
-          },
-          onEnd() {},
-          do() {
-            if (!(game.cycle % this.lookFrequency)) {
-              this.lockedOn = null;
-              let closeDist = Infinity;
-              for (let i = 0, len = mob.length; i < len; ++i) {
-                const TARGET_VECTOR = Matter.Vector.sub(mech.pos, mob[i].position)
-                const DIST = Matter.Vector.magnitude(TARGET_VECTOR);
-                if (DIST < this.range && DIST < closeDist && Matter.Query.ray(map, this.position, mob[i].position).length === 0) {
-                  closeDist = DIST;
-                  this.lockedOn = mob[i]
-                }
-              }
-            }
+    // {
+    //   name: "dwarf star", //14
+    //   description: "drop a mine that gravitational pulls in matter",
+    //   ammo: 0,
+    //   ammoPack: 1000,
+    //   have: false,
+    //   isStarterGun: false,
+    //   fire() {
+    //     const me = bullet.length;
+    //     const dir = mech.angle
+    //     const TOTAL_CYCLES = 1020
+    //     bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(dir), mech.pos.y + 30 * Math.sin(dir), 3 * b.modBulletSize, {
+    //       density: 0.05,
+    //       //frictionAir: 0.01,			
+    //       restitution: 0,
+    //       angle: 0,
+    //       friction: 1,
+    //       // frictionAir: 1,
+    //       endCycle: game.cycle + TOTAL_CYCLES,
+    //       dmg: b.modExtraDmg, //damage done in addition to the damage from momentum
+    //       classType: "bullet",
+    //       collisionFilter: {
+    //         category: 0x000100,
+    //         mask: 0x010011 //mask: 0x000101,  //for self collision
+    //       },
+    //       minDmgSpeed: 5,
+    //       range: 0,
+    //       onDmg() {
+    //         this.endCycle = 0;
+    //       }, //this.endCycle = 0  //triggers despawn
+    //       onEnd() {},
+    //       do() {
+    //         this.force.y += this.mass * 0.005;
+    //         this.range += 0.5
 
-            const distanceToPlayer = Matter.Vector.magnitude(Matter.Vector.sub(this.position, mech.pos))
-            if (this.lockedOn) { //accelerate towards mobs
-              this.force = Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.position, this.lockedOn.position)), -this.mass * THRUST)
-              this.frictionAir = 0.06
-            } else if (distanceToPlayer > 0.2 * this.range) {
-              this.force = Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.position, mech.pos)), -this.mass * THRUST * 0.3)
-              this.frictionAir = 0.02
-              // // speed cap instead of friction to give more agility
-              // if (this.speed > 14) {
-              //   Matter.Body.setVelocity(this, {
-              //     x: this.velocity.x * 0.97,
-              //     y: this.velocity.y * 0.97
-              //   });
-              // }
-            } else { //must be close to player  //add some random motion
-              this.frictionAir = 0
-            }
-          }
-        })
-        b.fireProps(mech.crouch ? 40 : 10, mech.crouch ? 40 : 10, dir, me); //cd , speed
-        b.drawOneBullet(bullet[me].vertices);
-      }
-    },
+    //         //damage nearby mobs
+    //         const dmg = b.dmgScale * 0.02
+    //         for (let i = 0, len = mob.length; i < len; ++i) {
+    //           if (mob[i].alive) {
+    //             sub = Matter.Vector.sub(this.position, mob[i].position);
+    //             dist = Matter.Vector.magnitude(sub) - mob[i].radius;
+    //             if (dist < this.range) {
+    //               mob[i].damage(dmg);
+    //               mob[i].locatePlayer();
+    //             }
+    //           }
+    //         }
+
+    //         //pull in body, and power ups?, and bullets?
+    //         for (let i = 0, len = body.length; i < len; ++i) {
+    //           sub = Matter.Vector.sub(this.position, body[i].position);
+    //           dist = Matter.Vector.magnitude(sub)
+    //           if (dist < this.range) {
+    //             this.range += body[i].mass * 2
+    //             Matter.World.remove(engine.world, body[i]);
+    //             body.splice(i, 1);
+    //             break;
+    //           }
+    //         }
+
+    //         //draw
+    //         const opacity = (this.endCycle - game.cycle) / TOTAL_CYCLES
+    //         ctx.fillStyle = `rgba(170,220,255,${opacity})`;
+    //         ctx.beginPath();
+    //         ctx.arc(this.position.x, this.position.y, this.range, 0, 2 * Math.PI);
+    //         ctx.fill();
+    //       }
+    //     });
+    //     b.fireProps(60, 0, dir, me); //cd , speed
+    //   }
+    // },
+    // {
+    //   name: "kinetic slugs", //1
+    //   description: "fire a large <strong>rod</strong> that does excessive physical <span class='color-d'>damage</span><br><em>high recoil</em>",
+    //   ammo: 0,
+    //   ammoPack: 5,
+    //   have: false,
+    //   isStarterGun: true,
+    //   fire() {
+    //     b.muzzleFlash(45);
+    //     // mobs.alert(800);
+    //     const me = bullet.length;
+    //     const dir = mech.angle;
+    //     bullet[me] = Bodies.rectangle(mech.pos.x + 50 * Math.cos(mech.angle), mech.pos.y + 50 * Math.sin(mech.angle), 70 * b.modBulletSize, 30 * b.modBulletSize, b.fireAttributes(dir));
+    //     b.fireProps(mech.crouch ? 55 : 40, 50, dir, me); //cd , speed
+    //     bullet[me].endCycle = game.cycle + Math.floor(180 * b.isModBulletsLastLonger);
+    //     bullet[me].do = function () {
+    //       this.force.y += this.mass * 0.0005;
+    //     };
+
+    //     //knock back
+    //     const KNOCK = ((mech.crouch) ? 0.025 : 0.25) * b.modBulletSize * b.modBulletSize
+    //     player.force.x -= KNOCK * Math.cos(dir)
+    //     player.force.y -= KNOCK * Math.sin(dir) * 0.3 //reduce knock back in vertical direction to stop super jumps
+    //   },
+    //  {
+    //   name: "triboelectricty", //14
+    //   description: "release <strong>particles</strong> that quickly seek out targets",
+    //   ammo: 0,
+    //   ammoPack: 40,
+    //   have: false,
+    //   isStarterGun: true,
+    //   fire() {
+    //     const dir = mech.angle + 0.2 * (Math.random() - 0.5);
+    //     const me = bullet.length;
+    //     const RADIUS = 6 * b.modBulletSize
+    //     bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), RADIUS, {
+    //       angle: dir,
+    //       inertia: Infinity,
+    //       // friction: 0.05,
+    //       // frictionAir: 0.05,
+    //       restitution: 0.8,
+    //       dmg: 0.14 + b.modExtraDmg, //damage done in addition to the damage from momentum
+    //       lookFrequency: 3,
+    //       endCycle: game.cycle + Math.floor(120 * b.isModBulletsLastLonger),
+    //       classType: "bullet",
+    //       collisionFilter: {
+    //         category: 0x000100,
+    //         mask: 0x010111 //self collide
+    //       },
+    //       minDmgSpeed: 0,
+    //       lockedOn: null,
+    //       isFollowMouse: true,
+    //       onDmg() {
+    //         this.endCycle = 0;
+    //       },
+    //       onEnd() {},
+    //       do() {
+    //         if (this.lockedOn) { //accelerate towards mobs
+    //           this.force = Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.position, this.lockedOn.position)), -this.mass * 0.01)
+    //           Matter.Body.setVelocity(this, {
+    //             x: this.velocity.x * 0.93,
+    //             y: this.velocity.y * 0.93
+    //           });
+    //         } else {
+    //           this.force.y += this.mass * 0.0004;
+    //         }
+    //       }
+    //     })
+
+    //     b.fireProps(mech.crouch ? 19 : 15, mech.crouch ? 45 : 30, dir, me); //cd , speed
+    //     b.drawOneBullet(bullet[me].vertices);
+
+    //     //find mob targets
+    //     let closeDist = Infinity;
+    //     for (let i = 0, len = mob.length; i < len; ++i) {
+    //       if (
+    //         Matter.Query.ray(map, bullet[me].position, mob[i].position).length === 0 &&
+    //         Matter.Query.ray(body, bullet[me].position, mob[i].position).length === 0
+    //       ) {
+    //         const TARGET_VECTOR = Matter.Vector.sub(bullet[me].position, mob[i].position)
+    //         const DIST = Matter.Vector.magnitude(TARGET_VECTOR);
+    //         if (DIST < closeDist) {
+    //           closeDist = DIST;
+    //           bullet[me].lockedOn = mob[i]
+    //         }
+    //       }
+    //     }
+    //   }
+    // },
+    // {
+    //   //draw a halo, since there will only be 1-3 balls
+    //   name: "junk-bots", //14
+    //   description: "release unreliable <strong>drones</strong> that defend the space around the player<br><strong>collisions</strong> may cause <span class='color-d'>malfunction</span>",
+    //   ammo: 0,
+    //   ammoPack: 15,
+    //   have: false,
+    //   isStarterGun: false,
+    //   fire() {
+    //     const THRUST = 0.004
+    //     const dir = mech.angle + 0.2 * (Math.random() - 0.5);
+    //     const me = bullet.length;
+    //     const RADIUS = (15 + 8 * Math.random()) * b.modBulletSize
+    //     const LENGTH = 0.6 + 0.8 * Math.random()
+
+    //     bullet[me] = Bodies.rectangle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), RADIUS * LENGTH, RADIUS / LENGTH, {
+    //       isOrb: true,
+    //       angle: dir,
+    //       // inertia: Infinity,
+    //       // friction: 0,
+    //       density: 0.001, //normal is 0.001
+    //       frictionAir: 0.06,
+    //       restitution: 0.8,
+    //       dmg: b.modExtraDmg, // 0.14   //damage done in addition to the damage from momentum
+    //       minDmgSpeed: 2,
+    //       lookFrequency: 7 + Math.floor(17 * Math.random()),
+    //       endCycle: game.cycle + Math.floor((200 + 60 * Math.random()) * b.isModBulletsLastLonger),
+    //       classType: "bullet",
+    //       collisionFilter: {
+    //         category: 0x000100,
+    //         mask: 0x010111 //self, mob,map,body collide
+    //       },
+    //       range: 300,
+    //       lockedOn: null,
+    //       onDmg() {
+    //         this.lockedOn = null
+    //         // this.endCycle -= 120; //lose 2 seconds after damage is done
+    //       },
+    //       onEnd() {},
+    //       do() {
+    //         if (game.cycle + 120 > this.endCycle) { //fall and die
+    //           this.force.y += this.mass * 0.0012;
+    //         } else {
+    //           if (!(game.cycle % this.lookFrequency)) {
+    //             this.lockedOn = null;
+    //             let closeDist = Infinity;
+    //             for (let i = 0, len = mob.length; i < len; ++i) {
+    //               const TARGET_VECTOR = Matter.Vector.sub(mech.pos, mob[i].position)
+    //               const DIST = Matter.Vector.magnitude(TARGET_VECTOR);
+    //               // DIST - mob[i].radius < this.range &&
+    //               if (DIST < closeDist && Matter.Query.ray(map, this.position, mob[i].position).length === 0) {
+    //                 closeDist = DIST;
+    //                 this.lockedOn = mob[i]
+    //               }
+    //             }
+    //           }
+
+    //           const distanceToPlayer = Matter.Vector.magnitude(Matter.Vector.sub(this.position, mech.pos))
+    //           if (this.lockedOn) { //accelerate towards mobs
+    //             this.force = Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.position, this.lockedOn.position)), -this.mass * THRUST)
+    //             this.frictionAir = 0.06
+    //           } else if (distanceToPlayer > 100) {
+    //             this.force = Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.position, mech.pos)), -this.mass * THRUST * 0.3)
+    //             this.frictionAir = 0.02
+    //           } else { //must be close to player  //add some random motion
+    //             this.frictionAir = 0
+    //           }
+    //         }
+    //       }
+    //     })
+    //     b.fireProps(mech.crouch ? 5 : 10, 15, dir, me); //cd , speed
+    //     b.drawOneBullet(bullet[me].vertices);
+    //   }
+    // },
   ]
 };
