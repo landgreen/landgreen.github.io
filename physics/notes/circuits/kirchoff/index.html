@@ -125,7 +125,7 @@
 				<rect x="0" y="-10" width="35" height="100" fill="url(#fade-in-white)" stroke="none" />
 				<rect x="565" y="0" width="35" height="100" fill="url(#fade-out-white)" stroke="none" />
 			</svg>
-			<strong>Example:</strong> Calculate the resistance using the diagram above.
+			<strong>Example:</strong> Use Ohm's law to calculate the resistance in the diagram above.
 			<details>
 				<summary>solution</summary>
 				$$\Delta V = V_f-V_i $$
@@ -238,7 +238,7 @@
 				<rect x="0" y="0" width="25" height="330" fill="url(#fade-in-white)" stroke="none" />
 				<rect x="525" y="0" width="25" height="330" fill="url(#fade-out-white)" stroke="none" />
 			</svg>
-			<strong>Question:</strong> What direction is the current?
+			<strong>Question:</strong> What direction is the <a href="..\electricity\index.html#current">current</a>?
 			<details>
 				<summary>answer</summary>
 				<p>
@@ -247,7 +247,7 @@
 				</p>
 			</details>
 			<br>
-			<strong>Question:</strong> Which path do you think will have the highest current? Why?
+			<strong>Question:</strong> Which path has the highest current? Why?
 			<details>
 				<summary>answer</summary>
 				<p>The 100 Ω resistor has the highest current</p>
@@ -331,6 +331,11 @@
 						<text x="170" y="85" text-anchor="middle">-2.0 V</text>
 					</g>
 				</svg>
+				<p>
+					You might have noticed that the total voltage for either path the current could take adds up to zero.
+					This is an important principle.
+				</p>
+				$$+6 \, \mathrm{V} -4 \, \mathrm{V} -2 \, \mathrm{V} = 0$$
 		</div>
 
 		<h2 class='underlined' id="kirchhoff-voltage">Kirchhoff’s Law: Voltage</h2>
@@ -383,6 +388,11 @@
 				<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>V = ?</text>
 			</svg>
 			<strong>Example:</strong> What's the voltage drop across the resistor in the diagram?
+			<details>
+				<summary>hint</summary>
+				<p>The total voltage for any looping path must add up to zero.</p>
+				$$ V_1+V_2+V_3+V_4 = 0 $$
+			</details>
 			<details>
 				<summary>solution</summary>
 				$$ V_1+V_2+V_3+V_4 = 0 $$
@@ -813,23 +823,17 @@
 			\(R_{n}\) = A single resistor in parallel [ohms, Ω]
 			<br>\(R_{eq}\) = Equivalent resistance. The resistance of a single resistor that could replace several resistors [ohms, Ω]
 		</div>
-		<!-- <p>
-			Wiring more resistors in parallel lowers the equivalent resistance.
-		</p> -->
 		<div class="example-small">
 			<a href="https://www.tinkercad.com/things/lTq9lGsoz4f">
 				<img src="resistors_in_parallel3.png" alt="resistors_in_parallel.png" style="max-width:100%; max-height:100%;" />
 			</a>
 			Adding resistors in parallel lowers the total resistance.
 			This makes sense if you think of each parallel resistor as a possible path for current.
-			More paths allow more current and less resistance.
+			More paths allow more current and less total resistance.
 		</div>
 
-
-		<!-- <iframe class="hide-on-mobile" width="610" height="460" src="https://www.tinkercad.com/embed/lTq9lGsoz4f" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> -->
-
 		<div class='example'>
-			<strong>Example:</strong> What is the equivalent resistance for five 100 Ω resistors all in parallel?
+			<strong>Example:</strong> What is the equivalent resistance for five 100 Ω resistors all in parallel with each other?
 			<details>
 				<summary>solution</summary>
 				$$\frac{1}{R_{eq}} = \frac{1}{R_{1}} + \frac{1}{R_{2}} + \frac{1}{R_{3}} + \frac{1}{R_{4}} + \frac{1}{R_{5}}$$
