@@ -71,7 +71,7 @@ mod power ups ideas
         add a freeze
 
 give mobs more animal-like behaviors
-  like rainworld
+  like rain world
   give mobs something to do when they don't see player
     explore map
     eat power ups
@@ -116,35 +116,98 @@ map:        0x000001   0x111111
 */
 
 //build build grid display
-let isShowingBuilds = false
+const build = {
+  isShowingBuilds: false,
+  list: [],
+  choosePowerUp(who, index, type) {
+    //check if matching a current power up
+    for (let i = 0; i < build.list.length; i++) {
+      if (build.list[i].index === index && build.list[i].type === type) { //if already click, toggle off
+        build.list.splice(i, 1);
+        who.style.backgroundColor = "#fff"
+        return
+      }
+    }
+
+    //check if trying to get a second field
+    if (type === "field") {
+      for (let i = 0; i < build.list.length; i++) {
+        if (build.list[i].type === "field") { //if already click, toggle off
+          build.list[i].who.style.backgroundColor = "#fff"
+          build.list.splice(i, 1);
+        }
+      }
+    }
+
+    if (build.list.length < 5) { //add to build array
+      // who.style.border = "2px solid #333"
+      who.style.backgroundColor = "#919ba8" //"#868f9a"
+      build.list[build.list.length] = {
+        who: who,
+        index: index,
+        type: type
+      }
+    }
+  },
+  startBuildRun() {
+    spawn.setSpawnList();
+    spawn.setSpawnList();
+    game.startGame();
+    game.difficulty = 6;
+    level.isBuildRun = true;
+    for (let i = 0; i < build.list.length; i++) {
+      if (build.list[i].type === "field") {
+        mech.fieldUpgrades[build.list[i].index].effect();
+      } else if (build.list[i].type === "gun") {
+        b.giveGuns(build.list[i].index)
+      } else if (build.list[i].type === "mod") {
+        b.giveMod(build.list[i].index)
+      }
+    }
+  }
+}
+
 document.getElementById("build-button").addEventListener("click", () => {
+  document.getElementById("build-button").style.display = "none";
   const el = document.getElementById("build-grid")
-  if (isShowingBuilds) {
+  if (build.isShowingBuilds) {
     el.style.display = "none"
-    isShowingBuilds = false
+    build.isShowingBuilds = false
     document.body.style.overflow = "hidden"
     document.getElementById("controls").style.display = 'inline'
+    document.getElementById("settings").style.display = 'inline'
   } else {
-    let text = ""
-    for (let i = 0, len = mech.fieldUpgrades.length; i < len; i++) {
-      text += `<div class="build-grid-module "><div class="circle-grid field"></div> &nbsp; <strong style='font-size:1.3em;'>${mech.fieldUpgrades[i].name}</strong><br> ${mech.fieldUpgrades[i].description}</div>`
+    build.list = []
+    // let text = '<p>choose up to 5 powers<br>	<button type="button" id="build-begin-button" onclick="build.startBuildRun()">Begin Run</button></p>'
+    let text =
+      `<div style="display: flex; justify-content: center; align-items: center;">
+        <svg class="SVG-button" onclick="build.startBuildRun()" width="90" height="40">
+          <g stroke='none' fill='#333' stroke-width="2" font-size="30px" font-family="Ariel, sans-serif">
+            <text x="15" y="31">start</text>
+          </g>
+        </svg>
+      </div>
+      <div class="build-grid-module" style="font-size: 19px; line-height: 110%;">
+        Choose up to five power ups. Once you start, only health and ammo will drop, so pick carefully.
+      </div>`
+    for (let i = 1, len = mech.fieldUpgrades.length; i < len; i++) {
+      text += `<div class="build-grid-module" onclick="build.choosePowerUp(this,${i},'field')" ><div class="circle-grid field"></div> &nbsp; <strong style='font-size:1.3em;'>${mech.fieldUpgrades[i].name}</strong><br> ${mech.fieldUpgrades[i].description}</div>`
     }
     for (let i = 0, len = b.guns.length; i < len; i++) {
-      text += `<div class="build-grid-module "><div class="circle-grid gun"></div> &nbsp; <strong style='font-size:1.3em;'>${b.guns[i].name}</strong><br> ${b.guns[i].description}</div>`
+      text += `<div class="build-grid-module" onclick="build.choosePowerUp(this,${i},'gun')"><div class="circle-grid gun"></div> &nbsp; <strong style='font-size:1.3em;'>${b.guns[i].name}</strong><br> ${b.guns[i].description}</div>`
     }
     for (let i = 0, len = b.mods.length; i < len; i++) {
-      text += `<div class="build-grid-module "><div class="circle-grid mod"></div> &nbsp; <strong style='font-size:1.3em;'>${b.mods[i].name}</strong><br> ${b.mods[i].description}</div>`
+      text += `<div class="build-grid-module" onclick="build.choosePowerUp(this,${i},'mod')"><div class="circle-grid mod"></div> &nbsp; <strong style='font-size:1.3em;'>${b.mods[i].name}</strong><br> ${b.mods[i].description}</div>`
     }
     el.innerHTML = text
     el.style.display = "grid"
-    isShowingBuilds = true
+    build.isShowingBuilds = true
     document.body.style.overflowY = "scroll";
     document.body.style.overflowX = "hidden";
     document.getElementById("controls").style.display = 'none'
+    document.getElementById("settings").style.display = 'none'
   }
 });
-
-
 
 //set up canvas
 var canvas = document.getElementById("canvas");
@@ -182,7 +245,7 @@ document.body.addEventListener("mousemove", (e) => {
 
 document.body.addEventListener("mouseup", (e) => {
   // game.buildingUp(e); //uncomment when building levels
-  game.mouseDown = false;
+  // game.mouseDown = false;
   // console.log(e)
   if (e.which === 3) {
     game.mouseDownRight = false;

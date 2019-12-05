@@ -441,7 +441,6 @@ const mech = {
         dmg *= 0.93
       }
     }
-    console.log(dmg, "after")
     this.health -= dmg;
     if (this.health < 0) {
       this.health = 0;
@@ -1134,7 +1133,7 @@ const mech = {
     },
     {
       name: "plasma torch",
-      description: "use <strong class='color-f'>energy</strong> to emit <strong class='color-d'>damaging</strong> beam<br><strong>decreased</strong> <strong>shield</strong> range and efficiency",
+      description: "use <strong class='color-f'>energy</strong> to emit <strong class='color-d'>damaging</strong> plasma<br><strong>decreased</strong> <strong>shield</strong> range and efficiency",
       effect: () => {
         mech.fieldMode = 2;
         mech.fieldText();

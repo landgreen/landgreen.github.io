@@ -45,8 +45,8 @@ const powerUps = {
         if (!game.lastLogTime) game.makeTextLog("<span style='font-size:115%;'><span class='color-f'>+energy</span></span>", 300);
       } else {
         //ammo given scales as mobs take more hits to kill
-        let ammo = Math.ceil((target.ammoPack * (0.4 + 0.05 * Math.random())) / b.dmgScale);
-        if (level.isBuildRun) ammo *= 2
+        let ammo = Math.ceil((target.ammoPack * (0.45 + 0.06 * Math.random())) / Math.sqrt(b.dmgScale));
+        if (level.isBuildRun) ammo = Math.floor(ammo * 1.2)
         target.ammo += ammo;
         game.updateGunHUD();
         game.makeTextLog("<div class='circle gun'></div> &nbsp; <span style='font-size:110%;'>+" + ammo + " ammo for " + target.name + "</span>", 300);
@@ -152,12 +152,12 @@ const powerUps = {
       if (Math.random() < b.modMoreDrops) powerUps.spawn(x, y, "ammo");
       return;
     }
-    if (Math.random() < 0.004 * (5 - b.inventory.length)) { //a new gun has a low chance for each not acquired gun to drop
+    if (Math.random() < 0.004 * (4 - b.inventory.length)) { //a new gun has a low chance for each not acquired gun to drop
       powerUps.spawn(x, y, "gun");
       if (Math.random() < b.modMoreDrops) powerUps.spawn(x, y, "gun");
       return;
     }
-    if (Math.random() < 0.004 * (8 - b.modCount)) {
+    if (Math.random() < 0.004 * (7 - b.modCount)) {
       powerUps.spawn(x, y, "mod");
       if (Math.random() < b.modMoreDrops) powerUps.spawn(x, y, "mod");
       return;
@@ -172,13 +172,13 @@ const powerUps = {
     if (mech.fieldMode === 0) {
       powerUps.spawn(x, y, "field")
       if (Math.random() < b.modMoreDrops) powerUps.spawn(x, y, "field")
-    } else if (Math.random() < 0.042 * (b.mods.length - b.modCount)) {
+    } else if (Math.random() < 0.3) {
       powerUps.spawn(x, y, "mod")
       if (Math.random() < b.modMoreDrops) powerUps.spawn(x, y, "mod")
     } else if (Math.random() < 0.3) {
       powerUps.spawn(x, y, "field");
       if (Math.random() < b.modMoreDrops) powerUps.spawn(x, y, "field");
-    } else if (Math.random() < 0.05 * (7 - b.inventory.length)) { //a new gun has a low chance for each not acquired gun to drop
+    } else if (Math.random() < 0.3) {
       powerUps.spawn(x, y, "gun")
       if (Math.random() < b.modMoreDrops) powerUps.spawn(x, y, "gun")
     } else if (mech.health < 0.6) {
