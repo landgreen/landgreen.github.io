@@ -14,10 +14,9 @@ const level = {
   start() {
     if (level.levelsCleared === 0) {
       // game.difficulty = 6; //for testing to simulate possible mobs spawns
-      // level.startBuildRun(5)
       // b.giveGuns(1)
       // mech.fieldUpgrades[2].effect();
-      // b.giveMod(13)
+      // b.giveMod(5)
       // spawn.pickList = ["ghoster", "ghoster"]
 
       this.intro(); //starting level
@@ -38,95 +37,8 @@ const level = {
     game.draw.setPaths();
   },
   isBuildRun: false,
-  builds: [ // choose 5 total: guns, mods, and field
-    () => {
-      mech.fieldUpgrades[2].effect();
-      b.giveMod(5)
-      b.giveMod(12)
-      b.giveMod(15)
-      b.giveMod(18)
-      game.replaceTextLog = true;
-      game.makeTextLog("<h2>build: wild melee</h2>", 300);
-    },
-    () => {
-      b.giveGuns(13)
-      // mech.fieldUpgrades[5].effect();
-      b.giveMod(7)
-      b.giveMod(16)
-      b.giveMod(17)
-      game.replaceTextLog = true;
-      game.makeTextLog("<h2>build: hive master</h2><em>zoom in and out with +/-</em>", 300);
-    },
-    () => {
-      // b.giveGuns(13)
-      mech.fieldUpgrades[5].effect();
-      b.giveMod(6)
-      b.giveMod(8)
-      b.giveMod(9)
-      game.replaceTextLog = true;
-      game.makeTextLog("<h2>build: drone close range</h2>", 300);
-    },
-    () => {
-      b.giveGuns(8)
-      mech.fieldUpgrades[4].effect();
-      b.giveMod(4)
-      b.giveMod(5)
-      b.giveMod(19)
-      game.replaceTextLog = true;
-      game.makeTextLog("<h2>build: anti-air</h2>", 300);
-    },
-    () => {
-      b.giveMod(6)
-      b.giveMod(7)
-      b.giveMod(12)
-      b.giveMod(13)
-      b.giveMod(14)
-      game.replaceTextLog = true;
-      game.makeTextLog("<h2>build: fastball</h2>", 300);
-    },
-    () => {
-      b.giveGuns(5)
-      mech.fieldUpgrades[6].effect();
-      b.giveMod(1)
-      b.giveMod(8)
-      b.giveMod(15)
-      game.replaceTextLog = true;
-      game.makeTextLog("<h2>build: stealth</h2>", 300);
-    },
-    () => {
-      b.giveGuns(2)
-      mech.fieldUpgrades[1].effect();
-      b.giveMod(8)
-      b.giveMod(9)
-      b.giveMod(11)
-      game.replaceTextLog = true;
-      game.makeTextLog("<h2>build: time out</h2>", 300);
-    },
-    () => {
-      b.giveGuns(0)
-      mech.fieldUpgrades[5].effect();
-      b.giveMod(7)
-      b.giveMod(5)
-      b.giveMod(18)
-      game.replaceTextLog = true;
-      game.makeTextLog("<h2>build: laser tag</h2>", 300);
-    },
-    () => {
-      b.giveGuns(12)
-      mech.fieldUpgrades[6].effect();
-      b.giveMod(3)
-      b.giveMod(6)
-      b.giveMod(7)
-      game.replaceTextLog = true;
-      game.makeTextLog("<h2>build: phased spores</h2>", 300);
-    },
-  ],
-  startBuildRun(build) {
-    level.builds[build]()
-    game.difficulty = 6;
-    level.isBuildRun = true
-  },
   difficultyIncrease(num = 1) {
+    // if (level.isBuildRun) num++
     for (let i = 0; i < num; i++) {
       game.dmgScale += 0.2; //damage done by mobs increases each level
       b.dmgScale *= 0.95; //damage done by player decreases each level
@@ -138,6 +50,7 @@ const level = {
   difficultyDecrease(num = 1) { //used in easy mode for game.reset()
     for (let i = 0; i < num; i++) {
       game.dmgScale -= 0.2; //damage done by mobs increases each level
+      if (game.dmgScale < 0.1) game.dmgScale = 0.1;
       b.dmgScale /= 0.95; //damage done by player decreases each level
       game.accelScale /= 1.05 //mob acceleration increases each level
       game.lookFreqScale /= 0.95 //mob cycles between looks decreases each level
@@ -772,7 +685,10 @@ const level = {
     spawn.mapRect(4700, -2910, 100, 510);
     spawn.mapRect(3700, -2600, 300, 50);
     spawn.mapRect(4100, -2900, 900, 50);
-    spawn.mapRect(3450, -2300, 1650, 100);
+    spawn.mapRect(3450, -2300, 750, 100);
+    spawn.mapRect(4300, -2300, 750, 100);
+    spawn.mapRect(4150, -1600, 200, 25);
+    spawn.mapRect(4150, -700, 200, 25);
     //exit room on top of tower
     spawn.mapRect(3700, -3700, 600, 50);
     spawn.mapRect(3700, -3700, 50, 500);
@@ -1558,7 +1474,10 @@ const level = {
       //enter when player isn't falling
       if (player.velocity.y < 0.1) {
         game.difficulty++;
-        if (game.difficulty > 1) level.difficultyIncrease()
+        if (game.difficulty > 1) {
+          level.difficultyIncrease()
+          if (level.isBuildRun) level.difficultyIncrease()
+        }
         //cycles map to next level
         level.levelsCleared++;
         level.onLevel++;

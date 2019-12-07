@@ -231,22 +231,25 @@ const mobs = {
           // ctx.lineDashOffset = 6*(game.cycle % 215);
           if (this.distanceToPlayer() < this.laserRange) {
             //if (Math.random()>0.2 && this.seePlayer.yes && this.distanceToPlayer2()<800000) {
-            if (!b.isModAoEImmunity) {
+            if (b.isModTempResist) {
+              mech.damage(0.00006 * game.dmgScale);
+            } else {
               mech.damage(0.0003 * game.dmgScale);
-              if (mech.fieldMeter > 0.1) mech.fieldMeter -= 0.005
-              ctx.beginPath();
-              ctx.moveTo(this.position.x, this.position.y);
-              ctx.lineTo(mech.pos.x, mech.pos.y);
-              ctx.lineTo(mech.pos.x + (Math.random() - 0.5) * 3000, mech.pos.y + (Math.random() - 0.5) * 3000);
-              ctx.lineWidth = 2;
-              ctx.strokeStyle = "rgb(255,0,170)";
-              ctx.stroke();
-
-              ctx.beginPath();
-              ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
-              ctx.fillStyle = "rgba(255,0,170,0.15)";
-              ctx.fill();
             }
+            if (mech.fieldMeter > 0.1) mech.fieldMeter -= 0.004
+            ctx.beginPath();
+            ctx.moveTo(this.position.x, this.position.y);
+            ctx.lineTo(mech.pos.x, mech.pos.y);
+            ctx.lineTo(mech.pos.x + (Math.random() - 0.5) * 3000, mech.pos.y + (Math.random() - 0.5) * 3000);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "rgb(255,0,170)";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(mech.pos.x, mech.pos.y, 40, 0, 2 * Math.PI);
+            ctx.fillStyle = "rgba(255,0,170,0.15)";
+            ctx.fill();
+
           }
           ctx.beginPath();
           ctx.arc(this.position.x, this.position.y, this.laserRange * 0.9, 0, 2 * Math.PI);
@@ -320,7 +323,12 @@ const mobs = {
           vertexCollision(this.position, look, [player]);
           // hitting player
           if (best.who === player) {
-            dmg = 0.004 * game.dmgScale;
+            if (b.isModTempResist) {
+              dmg = 0.0008 * game.dmgScale;
+            } else {
+              dmg = 0.004 * game.dmgScale;
+            }
+
             mech.damage(dmg);
             //draw damage
             ctx.fillStyle = color;
@@ -898,9 +906,7 @@ const mobs = {
         }
       },
       damage(dmg) {
-        console.log(dmg, "before")
         dmg /= Math.sqrt(this.mass)
-        console.log(dmg, "after")
         if (b.isModLowHealthDmg) dmg *= (3 / (2 + mech.health)) //up to 50% dmg at zero player health
         if (b.isModFarAwayDmg) dmg *= 1 + Math.sqrt(Math.max(1000, Math.min(3500, this.distanceToPlayer())) - 1000) * 0.01 //up to 50% dmg at max range of 3500
         if (dmg !== Infinity) {
@@ -909,7 +915,7 @@ const mobs = {
         }
         this.health -= dmg
         //this.fill = this.color + this.health + ')';
-        if (this.health < 0.01) this.death();
+        if (this.health < 0.05) this.death();
         this.onDamage(this); //custom damage effects
       },
       onDamage() {
