@@ -29,6 +29,20 @@ const mobs = {
       ctx.stroke();
     }
   },
+  healthBar() {
+    for (let i = 0, len = mob.length; i < len; i++) {
+      if (mob[i].seePlayer.recall && mob[i].showHealthBar) {
+        const h = mob[i].radius * 0.3;
+        const w = mob[i].radius * 2;
+        const x = mob[i].position.x - w / 2;
+        const y = mob[i].position.y - w * 0.7;
+        ctx.fillStyle = "rgba(100, 100, 100, 0.3)";
+        ctx.fillRect(x, y, w, h);
+        ctx.fillStyle = "rgba(255,0,0,0.7)";
+        ctx.fillRect(x, y, w * mob[i].health, h);
+      }
+    }
+  },
   // alert(range) {
   //   range = range * range;
   //   for (let i = 0; i < mob.length; i++) {
@@ -64,6 +78,7 @@ const mobs = {
       alive: true,
       index: i,
       health: 1,
+      showHealthBar: true,
       accelMag: 0.001,
       cd: 0, //game cycle when cooldown will be over
       delay: 60, //static: time between cooldowns
@@ -696,7 +711,7 @@ const mobs = {
         // }
       },
       grow() {
-        if (!mech.isBodiesAsleep) {
+        if (!this.isSleeping) {
           if (this.seePlayer.recall) {
             if (this.radius < 80) {
               const scale = 1.01;
@@ -830,7 +845,7 @@ const mobs = {
         }
       },
       fire() {
-        if (!mech.isBodiesAsleep) {
+        if (!this.isSleeping) {
           const setNoseShape = () => {
             const mag = this.radius + this.radius * this.noseLength;
             this.vertices[1].x = this.position.x + Math.cos(this.angle) * mag;
@@ -906,7 +921,7 @@ const mobs = {
         this.death(); //death with no power up or body
       },
       timeLimit() {
-        if (!mech.isBodiesAsleep) {
+        if (!this.isSleeping) {
           this.timeLeft--;
           if (this.timeLeft < 0) {
             this.dropPowerUp = false;
@@ -914,10 +929,8 @@ const mobs = {
           }
         }
       },
-      healthBar() {
-        //draw health bar
+      healthBar() { //draw health by mob //most health bars are drawn in mobs.healthbar();
         if (this.seePlayer.recall) {
-          // && this.health < 1
           const h = this.radius * 0.3;
           const w = this.radius * 2;
           const x = this.position.x - w / 2;

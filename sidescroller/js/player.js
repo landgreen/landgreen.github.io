@@ -406,6 +406,7 @@ const mech = {
     }
   },
   health: 0,
+  maxHealth: 1,
   drawHealth() {
     if (this.health < 1) {
       ctx.fillStyle = "rgba(100, 100, 100, 0.5)";
@@ -431,7 +432,7 @@ const mech = {
   },
   addHealth(heal) {
     this.health += heal;
-    if (this.health > 1 || b.isModFullHeal) this.health = 1;
+    if (this.health > mech.maxHealth) this.health = mech.maxHealth;
     this.displayHealth();
   },
   defaultFPSCycle: 0, //tracks when to return to normal fps
@@ -518,7 +519,7 @@ const mech = {
     Matter.World.remove(engine.world, powerUp[i]);
     powerUp.splice(i, 1);
     if (b.isModMassEnergy) {
-      mech.fieldMeter = 1;
+      mech.fieldMeter = mech.fieldEnergyMax;
       mech.addHealth(0.03);
     }
   },
@@ -625,6 +626,7 @@ const mech = {
   fireCDcycle: 0,
   fieldCDcycle: 0,
   fieldMode: 0, //basic field mode before upgrades
+  fieldEnergyMax: 1, //can be increased by a mod
   // these values are set on reset by setHoldDefaults()
   fieldMeter: 0,
   fieldRegen: 0,
@@ -642,7 +644,7 @@ const mech = {
     this.fieldThreshold = Math.cos(this.fieldArc * Math.PI)
   },
   setHoldDefaults() {
-    this.fieldMeter = 1;
+    this.fieldMeter = this.fieldEnergyMax;
     this.fieldRegen = 0.001;
     this.fieldFire = false;
     this.fieldCDcycle = 0;
@@ -659,14 +661,14 @@ const mech = {
     // this.phaseBlocks(0x011111)
   },
   drawFieldMeter(range = 60) {
-    if (this.fieldMeter < 1) {
+    if (this.fieldMeter < this.fieldEnergyMax) {
       mech.fieldMeter += mech.fieldRegen;
       ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
       ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, range, 10);
       ctx.fillStyle = "#0cf";
       ctx.fillRect(this.pos.x - this.radius, this.pos.y - 50, range * this.fieldMeter, 10);
     } else {
-      mech.fieldMeter = 1
+      mech.fieldMeter = this.fieldEnergyMax
     }
   },
   lookingAt(who) {
@@ -882,7 +884,6 @@ const mech = {
       //knock backs
       const unit = Matter.Vector.normalise(Matter.Vector.sub(player.position, who.position))
       const mass = Math.min(Math.sqrt(who.mass), 3.5); //large masses above 4*4 can start to overcome the push back
-      console.log(Math.sqrt(who.mass), mass)
       Matter.Body.setVelocity(who, {
         x: player.velocity.x - (15 * unit.x) / mass,
         y: player.velocity.y - (15 * unit.y) / mass
@@ -1094,7 +1095,6 @@ const mech = {
               mech.fieldMeter -= DRAIN;
 
               //draw field everywhere
-
               ctx.globalCompositeOperation = "saturation"
               // ctx.fillStyle = "rgba(100,200,230," + (0.25 + 0.06 * Math.random()) + ")";
               ctx.fillStyle = "#ccc";
@@ -1138,11 +1138,7 @@ const mech = {
             mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
           }
           mech.drawFieldMeter()
-          if (mech.fieldMode !== 1) {
-            //wake up if this is no longer the current field mode, like after a new power up
-            mech.wakeCheck();
-
-          }
+          if (mech.fieldMode !== 1) mech.wakeCheck(); //wake up if this is no longer the current field mode, like after a new power up
         }
       }
     },
@@ -1456,7 +1452,7 @@ const mech = {
         mech.setHoldDefaults();
         mech.fieldRegen *= 3;
         mech.hold = function () {
-          if (mech.fieldMeter === 1) {
+          if (mech.fieldMeter === mech.fieldEnergyMax) {
             mech.fieldMeter -= 0.43;
             b.guns[gunIndex].fire() //spawn drone
             mech.fireCDcycle = mech.cycle + 25; // set fire cool down to prevent +energy from making huge numbers of drones
