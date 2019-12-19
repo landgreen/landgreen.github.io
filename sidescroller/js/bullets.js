@@ -360,8 +360,8 @@ const b = {
         dmg: b.modExtraDmg, //damage done in addition to the damage from momentum
         classType: "bullet",
         collisionFilter: {
-          category: 0x000100,
-          mask: 0x010011 //mask: 0x000101,  //for self collision
+          category: cat.bullet,
+          mask: cat.map | cat.body | cat.mob | cat.mobBullet | cat.mobShield
         },
         minDmgSpeed: 10,
         onDmg() {}, //this.endCycle = 0  //triggers despawn
@@ -377,8 +377,8 @@ const b = {
         dmg: 0, //damage done in addition to the damage from momentum
         classType: "bullet",
         collisionFilter: {
-          category: 0x000100,
-          mask: 0x010011 //mask: 0x000101,  //for self collision
+          category: cat.bullet,
+          mask: cat.map | cat.body | cat.mob | cat.mobBullet | cat.mobShield
         },
         minDmgSpeed: 10,
         onDmg() {}, //this.endCycle = 0  //triggers despawn
@@ -515,12 +515,12 @@ const b = {
       restitution: 0.5,
       angle: Math.random() * 2 * Math.PI,
       friction: 0,
-      frictionAir: 0.011,
+      frictionAir: 0.018,
       dmg: 1.8, //damage done in addition to the damage from momentum
       classType: "bullet",
       collisionFilter: {
-        category: 0x000100,
-        mask: 0x000011 //no collide with body
+        category: cat.bullet,
+        mask: cat.map | cat.mob | cat.mobBullet | cat.mobShield //no collide with body
       },
       endCycle: game.cycle + Math.floor((360 + Math.floor(Math.random() * 240)) * b.isModBulletsLastLonger),
       minDmgSpeed: 0,
@@ -528,7 +528,7 @@ const b = {
         this.endCycle = 0; //bullet ends cycle after doing damage 
       },
       onEnd() {},
-      lookFrequency: 67 + Math.floor(47 * Math.random()),
+      lookFrequency: 87 + Math.floor(47 * Math.random()),
       do() {
         //find mob targets
         if (!(game.cycle % this.lookFrequency)) {
@@ -550,7 +550,7 @@ const b = {
           }
         }
         //accelerate towards mobs
-        const THRUST = this.mass * 0.0009
+        const THRUST = this.mass * 0.001
         if (this.lockedOn) {
           this.force.x -= THRUST * this.lockedOn.x
           this.force.y -= THRUST * this.lockedOn.y
@@ -559,7 +559,7 @@ const b = {
         }
       },
     });
-    const SPEED = 9;
+    const SPEED = 19;
     const ANGLE = 2 * Math.PI * Math.random()
     Matter.Body.setVelocity(bullet[bIndex], {
       x: SPEED * Math.cos(ANGLE),
@@ -747,8 +747,8 @@ const b = {
           dmg: b.modExtraDmg, //damage done in addition to the damage from momentum
           classType: "bullet",
           collisionFilter: {
-            category: 0x000000,
-            mask: 0x010011 //mask: 0x000101,  //for self collision
+            category: 0,
+            mask: cat.map | cat.body | cat.mob | cat.mobBullet | cat.mobShield
           },
           minDmgSpeed: 5,
           onDmg() {}, //this.endCycle = 0  //triggers despawn
@@ -766,7 +766,7 @@ const b = {
               mech.fireCDcycle = mech.cycle + 2; // set fire cool down
               Matter.Body.scale(this, 8000, 8000) // show the bullet by scaling it up  (don't judge me...  I know this is a bad way to do it)
               this.endCycle = game.cycle + Math.floor(140 * b.isModBulletsLastLonger)
-              this.collisionFilter.category = 0x000100
+              this.collisionFilter.category = cat.bullet
               Matter.Body.setPosition(this, {
                 x: mech.pos.x,
                 y: mech.pos.y
@@ -1004,8 +1004,8 @@ const b = {
           dmg: 0.13 + b.modExtraDmg, //damage done in addition to the damage from momentum
           classType: "bullet",
           collisionFilter: {
-            category: 0x000100,
-            mask: 0x000010
+            category: cat.bullet,
+            mask: cat.mob | cat.mobBullet | cat.mobShield
           },
           onDmg() {},
           onEnd() {},
@@ -1039,7 +1039,7 @@ const b = {
       name: "super balls", //4
       description: "fire balls that <strong>bounce</strong> with no momentum loss",
       ammo: 0,
-      ammoPack: 11,
+      ammoPack: 14,
       have: false,
       isStarterGun: true,
       fire() {
@@ -1050,12 +1050,12 @@ const b = {
         for (let i = 0; i < 3; i++) {
           const me = bullet.length;
           bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 7 * b.modBulletSize, b.fireAttributes(dir, false));
-          b.fireProps(mech.crouch ? 40 : 20, mech.crouch ? 34 : 26, dir, me); //cd , speed
+          b.fireProps(mech.crouch ? 30 : 12, mech.crouch ? 38 : 30, dir, me); //cd , speed
           Matter.Body.setDensity(bullet[me], 0.0001);
-          bullet[me].endCycle = game.cycle + Math.floor(360 * b.isModBulletsLastLonger);
-          bullet[me].dmg = 0.5 + b.modExtraDmg;
+          bullet[me].endCycle = game.cycle + Math.floor(300 * b.isModBulletsLastLonger);
+          bullet[me].dmg = 0.25 + b.modExtraDmg;
           bullet[me].minDmgSpeed = 0;
-          bullet[me].restitution = 0.96;
+          bullet[me].restitution = 0.98;
           bullet[me].friction = 0;
           bullet[me].do = function () {
             this.force.y += this.mass * 0.001;
@@ -1420,7 +1420,7 @@ const b = {
         const me = bullet.length;
         const dir = mech.angle;
         bullet[me] = Bodies.circle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 15 * b.modBulletSize, b.fireAttributes(dir, false));
-        b.fireProps(mech.crouch ? 40 : 30, mech.crouch ? 34 : 22, dir, me); //cd , speed
+        b.fireProps(mech.crouch ? 60 : 40, mech.crouch ? 34 : 22, dir, me); //cd , speed
         bullet[me].endCycle = game.cycle + Math.floor(60 * b.isModBulletsLastLonger);
         bullet[me].restitution = 0.3;
         // bullet[me].frictionAir = 0.01;
@@ -1518,65 +1518,7 @@ const b = {
         bullet[me].onEnd = function () {
           const NUM = 9;
           for (let i = 0; i < NUM; i++) {
-            const bIndex = bullet.length;
-            const RADIUS = 3 * b.modBulletSize;
-            bullet[bIndex] = Bodies.circle(this.position.x, this.position.y, RADIUS, {
-              // density: 0.0015,			//frictionAir: 0.01,
-              inertia: Infinity,
-              restitution: 0.5,
-              angle: dir,
-              friction: 0,
-              frictionAir: 0.011,
-              dmg: 1.8 + b.modExtraDmg, //damage done in addition to the damage from momentum
-              classType: "bullet",
-              collisionFilter: {
-                category: 0x000100,
-                mask: 0x000011 //no collide with body
-              },
-              endCycle: game.cycle + Math.floor((360 + Math.floor(Math.random() * 240)) * b.isModBulletsLastLonger),
-              minDmgSpeed: 0,
-              onDmg() {
-                this.endCycle = 0; //bullet ends cycle after doing damage 
-              },
-              onEnd() {},
-              lookFrequency: 67 + Math.floor(47 * Math.random()),
-              do() {
-                //find mob targets
-                if (!(game.cycle % this.lookFrequency)) {
-                  this.closestTarget = null;
-                  this.lockedOn = null;
-                  let closeDist = Infinity;
-                  for (let i = 0, len = mob.length; i < len; ++i) {
-                    if (Matter.Query.ray(map, this.position, mob[i].position).length === 0) {
-                      // Matter.Query.ray(body, this.position, mob[i].position).length === 0
-                      const targetVector = Matter.Vector.sub(this.position, mob[i].position)
-                      const dist = Matter.Vector.magnitude(targetVector);
-                      if (dist < closeDist) {
-                        this.closestTarget = mob[i].position;
-                        closeDist = dist;
-                        this.lockedOn = Matter.Vector.normalise(targetVector);
-                        if (0.3 > Math.random()) break //doesn't always target the closest mob
-                      }
-                    }
-                  }
-                }
-                //accelerate towards mobs
-                const THRUST = this.mass * 0.0009
-                if (this.lockedOn) {
-                  this.force.x -= THRUST * this.lockedOn.x
-                  this.force.y -= THRUST * this.lockedOn.y
-                } else {
-                  this.force.y += this.mass * 0.00025; //gravity
-                }
-              },
-            });
-            const SPEED = 9;
-            const ANGLE = 2 * Math.PI * Math.random()
-            Matter.Body.setVelocity(bullet[bIndex], {
-              x: SPEED * Math.cos(ANGLE),
-              y: SPEED * Math.sin(ANGLE)
-            });
-            World.add(engine.world, bullet[bIndex]); //add bullet to world
+            b.spore(this)
           }
         }
 
@@ -1605,8 +1547,8 @@ const b = {
           endCycle: game.cycle + Math.floor((1080 + 360 * Math.random()) * b.isModBulletsLastLonger),
           classType: "bullet",
           collisionFilter: {
-            category: 0x000100,
-            mask: 0x010111 //self collide
+            category: cat.bullet,
+            mask: cat.map | cat.body | cat.bullet | cat.mob | cat.mobBullet | cat.mobShield //self collide
           },
           minDmgSpeed: 0,
           lockedOn: null,
@@ -1709,8 +1651,8 @@ const b = {
           endCycle: Infinity,
           classType: "bullet",
           collisionFilter: {
-            category: 0x000100,
-            mask: 0x010111 //self, mob,map,body collide
+            category: cat.bullet,
+            mask: cat.map | cat.body | cat.bullet | cat.mob | cat.mobBullet | cat.mobShield
           },
           lockedOn: null,
           onDmg() {
@@ -1795,7 +1737,7 @@ const b = {
       fire() {
         const me = bullet.length;
         const dir = mech.angle + 0.2 * (Math.random() - 0.5)
-        const RADIUS = (6 + 16 * Math.random()) * b.modBulletSize
+        const RADIUS = (8 + 16 * Math.random()) * b.modBulletSize
         bullet[me] = Bodies.polygon(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 25, RADIUS, {
           angle: dir,
           density: 0.000005, //  0.001 is normal density
@@ -1806,30 +1748,43 @@ const b = {
           dmg: b.modExtraDmg, //damage done in addition to the damage from momentum
           classType: "bullet",
           collisionFilter: {
-            category: 0x000100,
-            mask: 0x010011
+            category: cat.bullet,
+            mask: cat.map | cat.body | cat.mob | cat.mobShield
           },
           minDmgSpeed: 0,
           endCycle: Infinity, //game.cycle + Math.floor(265 * b.isModBulletsLastLonger),
           count: 0,
           radius: RADIUS,
           target: null,
+          targetVertex: null,
           onDmg(who) {
             if (!this.target && who.alive && who.dropPowerUp) {
               this.target = who;
-              this.collisionFilter.category = 0x000000;
+              this.collisionFilter.category = cat.body;
+              this.collisionFilter.mask = cat.player
+
+              let bestVertexDistance = Infinity
+              let bestVertex = null
+              for (let i = 0; i < this.target.vertices.length; i++) {
+                const dist = Matter.Vector.magnitude(Matter.Vector.sub(this.position, this.target.vertices[i]));
+                if (dist < bestVertexDistance) {
+                  bestVertex = i
+                  bestVertexDistance = dist
+                }
+              }
+              this.targetVertex = bestVertex
             }
           },
           onEnd() {},
           do() {
-            this.force.y += this.mass * 0.00006; //gravity
-            //draw white circle
-            ctx.beginPath()
+            ctx.beginPath() //draw white circle
             ctx.arc(this.position.x, this.position.y, this.radius * 0.97 - 1.6, 0, 2 * Math.PI);
             ctx.fillStyle = "#fff"
             ctx.fill()
 
             if (!mech.isBodiesAsleep) { //if time dilation isn't active
+              this.force.y += this.mass * 0.00006; //gravity
+
               if (this.count < 17) {
                 this.count++
                 //grow
@@ -1838,20 +1793,21 @@ const b = {
                 this.radius *= SCALE;
               } else {
                 //shrink
-                const SCALE = 1 - 0.007 / b.isModBulletsLastLonger
+                const SCALE = 1 - 0.006 / b.isModBulletsLastLonger
                 Matter.Body.scale(this, SCALE, SCALE);
                 this.radius *= SCALE;
                 if (this.radius < 11) this.endCycle = 0;
               }
 
               if (this.target && this.target.alive) { //if stuck to a target
-                Matter.Body.setPosition(this, this.target.position)
+                Matter.Body.setPosition(this, this.target.vertices[this.targetVertex])
                 Matter.Body.setVelocity(this.target, Matter.Vector.mult(this.target.velocity, 0.94))
                 Matter.Body.setAngularVelocity(this.target, this.target.angularVelocity * 0.94)
-                this.target.damage(b.dmgScale * 0.0045);
-              } else { //look for a new target
+                this.target.damage(b.dmgScale * 0.0025);
+              } else if (this.target !== null) { //look for a new target
                 this.target = null
-                this.collisionFilter.category = 0x000100;
+                this.collisionFilter.category = cat.bullet;
+                this.collisionFilter.mask = cat.map | cat.body | cat.mob | cat.mobBullet | cat.mobShield
               }
             }
           }
@@ -1863,7 +1819,6 @@ const b = {
           x: SPEED * Math.cos(dir),
           y: SPEED * Math.sin(dir)
         });
-        // bullet[me].direction = Matter.Vector.perp(bullet[me].velocity)
       }
     },
     // {
