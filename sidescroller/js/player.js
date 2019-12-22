@@ -301,7 +301,7 @@ const mech = {
       game.clearNow = true; //triggers a map reset
 
       //count mods
-      let totalMods = -2; //lose the immortality mod and one more, so -2 
+      let totalMods = -2; //lose 2 mods for balance reasons
       for (let i = 0; i < b.mods.length; i++) {
         if (b.mods[i].have) totalMods++
       }
@@ -311,9 +311,9 @@ const mech = {
         for (let i = 0; i < totalMods; i++) {
           //find what mods I don't have
           let options = [];
-          for (let i = 0; i < b.mods.length; i++) {
+          for (let i = 0, len = b.mods.length; i < len; i++) {
             //can't get quantum immortality again 
-            if (i !== 7 && !b.mods[i].have) options.push(i);
+            if (b.mods[i].name !== "quantum immortality" && !b.mods[i].have) options.push(i);
           }
           //add a new mod
           if (options.length > 0) {
@@ -458,7 +458,7 @@ const mech = {
     if (b.isModDroneOnDamage) {
       const len = (dmg - 0.08 + 0.05 * Math.random()) / 0.05
       for (let i = 0; i < len; i++) {
-        if (Math.random() < 0.6) b.guns[13].fire() //spawn drone
+        if (Math.random() < 0.6) b.drone() //spawn drone
       }
     }
 
@@ -522,7 +522,7 @@ const mech = {
     powerUp.splice(i, 1);
     if (b.isModMassEnergy) {
       mech.fieldMeter = mech.fieldEnergyMax;
-      mech.addHealth(0.03);
+      mech.addHealth(0.05);
     }
   },
   drawLeg(stroke) {
@@ -707,30 +707,32 @@ const mech = {
     if (this.onGround && !this.crouch) this.yOffGoal = this.yOffWhen.stand;
   },
   drawHold(target, stroke = true) {
-    const eye = 15;
-    const len = target.vertices.length - 1;
-    ctx.fillStyle = "rgba(110,170,200," + (0.2 + 0.4 * Math.random()) + ")";
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = "#000";
-    ctx.beginPath();
-    ctx.moveTo(
-      mech.pos.x + eye * Math.cos(this.angle),
-      mech.pos.y + eye * Math.sin(this.angle)
-    );
-    ctx.lineTo(target.vertices[len].x, target.vertices[len].y);
-    ctx.lineTo(target.vertices[0].x, target.vertices[0].y);
-    ctx.fill();
-    if (stroke) ctx.stroke();
-    for (let i = 0; i < len; i++) {
+    if (target) {
+      const eye = 15;
+      const len = target.vertices.length - 1;
+      ctx.fillStyle = "rgba(110,170,200," + (0.2 + 0.4 * Math.random()) + ")";
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "#000";
       ctx.beginPath();
       ctx.moveTo(
         mech.pos.x + eye * Math.cos(this.angle),
         mech.pos.y + eye * Math.sin(this.angle)
       );
-      ctx.lineTo(target.vertices[i].x, target.vertices[i].y);
-      ctx.lineTo(target.vertices[i + 1].x, target.vertices[i + 1].y);
+      ctx.lineTo(target.vertices[len].x, target.vertices[len].y);
+      ctx.lineTo(target.vertices[0].x, target.vertices[0].y);
       ctx.fill();
       if (stroke) ctx.stroke();
+      for (let i = 0; i < len; i++) {
+        ctx.beginPath();
+        ctx.moveTo(
+          mech.pos.x + eye * Math.cos(this.angle),
+          mech.pos.y + eye * Math.sin(this.angle)
+        );
+        ctx.lineTo(target.vertices[i].x, target.vertices[i].y);
+        ctx.lineTo(target.vertices[i + 1].x, target.vertices[i + 1].y);
+        ctx.fill();
+        if (stroke) ctx.stroke();
+      }
     }
   },
   holding() {
@@ -847,31 +849,29 @@ const mech = {
     ctx.stroke();
   },
   grabPowerUp() { //look for power ups to grab with field
-    if (mech.fieldCDcycle < mech.cycle) {
-      const grabPowerUpRange2 = (mech.grabRange + 220) * (mech.grabRange + 220)
-      for (let i = 0, len = powerUp.length; i < len; ++i) {
-        const dxP = mech.pos.x - powerUp[i].position.x;
-        const dyP = mech.pos.y - powerUp[i].position.y;
-        const dist2 = dxP * dxP + dyP * dyP;
-        // float towards player  if looking at and in range  or  if very close to player
-        if (dist2 < grabPowerUpRange2 && mech.lookingAt(powerUp[i]) || dist2 < 16000) {
-          if (dist2 < 5000) { //use power up if it is close enough
-            Matter.Body.setVelocity(player, { //player knock back, after grabbing power up
-              x: player.velocity.x + ((powerUp[i].velocity.x * powerUp[i].mass) / player.mass) * 0.3,
-              y: player.velocity.y + ((powerUp[i].velocity.y * powerUp[i].mass) / player.mass) * 0.3
-            });
-            mech.usePowerUp(i);
-            return;
-          }
-          mech.fieldMeter -= mech.fieldRegen * 0.5;
-          powerUp[i].force.x += 7 * (dxP / dist2) * powerUp[i].mass;
-          powerUp[i].force.y += 7 * (dyP / dist2) * powerUp[i].mass - powerUp[i].mass * game.g; //negate gravity
-          //extra friction
-          Matter.Body.setVelocity(powerUp[i], {
-            x: powerUp[i].velocity.x * 0.11,
-            y: powerUp[i].velocity.y * 0.11
+    const grabPowerUpRange2 = (mech.grabRange + 220) * (mech.grabRange + 220)
+    for (let i = 0, len = powerUp.length; i < len; ++i) {
+      const dxP = mech.pos.x - powerUp[i].position.x;
+      const dyP = mech.pos.y - powerUp[i].position.y;
+      const dist2 = dxP * dxP + dyP * dyP;
+      // float towards player  if looking at and in range  or  if very close to player
+      if (dist2 < grabPowerUpRange2 && mech.lookingAt(powerUp[i]) || dist2 < 16000) {
+        if (dist2 < 5000) { //use power up if it is close enough
+          Matter.Body.setVelocity(player, { //player knock back, after grabbing power up
+            x: player.velocity.x + ((powerUp[i].velocity.x * powerUp[i].mass) / player.mass) * 0.3,
+            y: player.velocity.y + ((powerUp[i].velocity.y * powerUp[i].mass) / player.mass) * 0.3
           });
+          mech.usePowerUp(i);
+          return;
         }
+        mech.fieldMeter -= mech.fieldRegen * 0.5;
+        powerUp[i].force.x += 7 * (dxP / dist2) * powerUp[i].mass;
+        powerUp[i].force.y += 7 * (dyP / dist2) * powerUp[i].mass - powerUp[i].mass * game.g; //negate gravity
+        //extra friction
+        Matter.Body.setVelocity(powerUp[i], {
+          x: powerUp[i].velocity.x * 0.11,
+          y: powerUp[i].velocity.y * 0.11
+        });
       }
     }
   },
@@ -886,20 +886,20 @@ const mech = {
       mech.holdingTarget = null
       //knock backs
       const unit = Matter.Vector.normalise(Matter.Vector.sub(player.position, who.position))
-      const mass = Math.min(Math.sqrt(who.mass), 3.5); //large masses above 4*4 can start to overcome the push back
+      const massRoot = Math.sqrt(Math.min(12, Math.max(0.15, who.mass))); // masses above 12 can start to overcome the push back
       Matter.Body.setVelocity(who, {
-        x: player.velocity.x - (15 * unit.x) / mass,
-        y: player.velocity.y - (15 * unit.y) / mass
+        x: player.velocity.x - (15 * unit.x) / massRoot,
+        y: player.velocity.y - (15 * unit.y) / massRoot
       });
       if (mech.crouch) {
         Matter.Body.setVelocity(player, {
-          x: player.velocity.x + 0.4 * unit.x * mass,
-          y: player.velocity.y + 0.4 * unit.y * mass
+          x: player.velocity.x + 0.4 * unit.x * massRoot,
+          y: player.velocity.y + 0.4 * unit.y * massRoot
         });
       } else {
         Matter.Body.setVelocity(player, {
-          x: player.velocity.x + 5 * unit.x * mass,
-          y: player.velocity.y + 5 * unit.y * mass
+          x: player.velocity.x + 5 * unit.x * massRoot,
+          y: player.velocity.y + 5 * unit.y * massRoot
         });
       }
 
@@ -1054,7 +1054,7 @@ const mech = {
             mech.drawHold(mech.holdingTarget);
             mech.holding();
             mech.throw();
-          } else if ((keys[32] || game.mouseDownRight && mech.fieldMeter > 0.1 && mech.fieldCDcycle < mech.cycle)) { //not hold but field button is pressed
+          } else if ((keys[32] || game.mouseDownRight && mech.fieldMeter > 0.05 && mech.fieldCDcycle < mech.cycle)) { //not hold but field button is pressed
             mech.drawField();
             mech.grabPowerUp();
             mech.lookForPickUp();
@@ -1086,7 +1086,7 @@ const mech = {
             mech.holding();
             mech.throw();
           } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) {
-            const DRAIN = 0.0027
+            const DRAIN = 0.0023
             if (mech.fieldMeter > DRAIN) {
               mech.fieldMeter -= DRAIN;
 
@@ -1140,7 +1140,7 @@ const mech = {
     },
     {
       name: "plasma torch",
-      description: "use <strong class='color-f'>energy</strong> to emit <strong class='color-d'>damaging</strong> plasma<br><strong>decreased</strong> <strong>shield</strong> range and efficiency",
+      description: "use <strong class='color-f'>energy</strong> to emit <strong class='color-d'>damaging</strong> plasma<br><em>effective at close range</em>",
       effect: () => {
         mech.fieldMode = 2;
         mech.fieldText();
@@ -1269,9 +1269,6 @@ const mech = {
               ctx.stroke();
               ctx.strokeStyle = "#f0f";
               ctx.lineWidth = 2
-              ctx.beginPath();
-              ctx.moveTo(path[0].x, path[0].y);
-              ctx.lineTo(path[1].x, path[1].y);
               ctx.stroke();
 
               //draw electricity
@@ -1289,10 +1286,15 @@ const mech = {
               }
               ctx.lineWidth = 2 * Math.random();
               ctx.stroke();
+              //draw shield around player
+              ctx.beginPath();
+              ctx.arc(mech.pos.x, mech.pos.y, 110, 0, 2 * Math.PI);
+              ctx.fillStyle = "rgba(255,0,255,0.05)"
+              ctx.fill();
 
               mech.grabPowerUp();
               mech.lookForPickUp();
-              mech.pushMobs360(110);
+              mech.pushMobs360(120);
               // mech.pushBody360(100); //disabled because doesn't work at short range
             } else {
               mech.fieldCDcycle = mech.cycle + 120; //if out of energy
@@ -1395,19 +1397,20 @@ const mech = {
     },
     {
       name: "standing wave harmonics",
-      description: "oscillating <strong>shields</strong> surround you <strong>constantly</strong><br> <strong>decreased</strong> <strong class='color-f'>energy</strong> regeneration",
+      description: "three oscillating <strong>shields</strong> are perminantly active<br><strong class='color-f'>energy</strong> regenerates while field is active",
       effect: () => {
         mech.fieldMode = 4;
         mech.fieldText();
         mech.setHoldDefaults();
-        mech.fieldRegen *= 0.3;
+        // mech.fieldRegen *= 0.6;
+        mech.fieldShieldingScale = 1.33;
 
         mech.hold = function () {
           if (mech.isHolding) {
             mech.drawHold(mech.holdingTarget);
             mech.holding();
             mech.throw();
-          } else if ((keys[32] || game.mouseDownRight && mech.fieldMeter > 0.1)) { //not hold but field button is pressed
+          } else if ((keys[32] || game.mouseDownRight && mech.fieldMeter > 0)) { //not hold but field button is pressed
             mech.grabPowerUp();
             mech.lookForPickUp(180);
           } else if (mech.holdingTarget && mech.fireCDcycle < mech.cycle) { //holding, but field button is released
@@ -1431,7 +1434,7 @@ const mech = {
             ctx.arc(mech.pos.x, mech.pos.y, grabRange3, 0, 2 * Math.PI);
             ctx.fill();
             mech.pushMobs360(netGrabRange);
-            mech.pushBody360(netGrabRange);
+            // mech.pushBody360(netGrabRange);  //can't throw block when pushhing blocks away
           }
           mech.drawFieldMeter()
         }
@@ -1439,17 +1442,16 @@ const mech = {
     },
     {
       name: "nano-scale manufacturing",
-      description: "excess <strong class='color-f'>energy</strong> used to build <strong>drones</strong><br><strong>3x</strong> <strong class='color-f'>energy</strong> regeneration",
+      description: "excess <strong class='color-f'>energy</strong> used to build <strong>drones</strong><br><strong>2x</strong> <strong class='color-f'>energy</strong> regeneration",
       effect: () => {
-        let gunIndex = 13 //Math.random() < 0.5 ? 13 : 14
         mech.fieldMode = 5;
         mech.fieldText();
         mech.setHoldDefaults();
-        mech.fieldRegen *= 3;
+        mech.fieldRegen *= 2;
         mech.hold = function () {
           if (mech.fieldMeter > mech.fieldEnergyMax - 0.02) {
-            mech.fieldMeter -= 0.43;
-            b.guns[gunIndex].fire() //spawn drone
+            mech.fieldMeter -= 0.32;
+            b.drone(1)
             mech.fireCDcycle = mech.cycle + 25; // set fire cool down to prevent +energy from making huge numbers of drones
           }
           if (mech.isHolding) {
