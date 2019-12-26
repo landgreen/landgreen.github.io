@@ -2,17 +2,15 @@
 /* TODO:  *******************************************
 *****************************************************
 
-add builds with combinations of gun, field and mobs
-  use the pull down menu
+new game loop structure: game loop is an object with named methods
+  when looping each method is called in order like an array
+  allows me to dynamically add and remove functions to the game
 
-dynamically generate html about fields, guns and mods
+mod: if you fire when out of ammo you gain 1 ammo pack at the cost of
+  10% max health
+  20% of your current health
 
-add grid check to improve queries over large body arrays
-  something about broad phase
-  having trouble with this, might give up
-
-gun: like drones, but fast moving and short lived
-  dies after doing damage
+mod: increase range of shield block
 
 gun:  Spirit Bomb (singularity)
   use charge up like rail gun
@@ -20,16 +18,6 @@ gun:  Spirit Bomb (singularity)
   suck in nearby mobs, power ups?, blocks?
     sucked in stuff increase size
   uses energy
-
-mod: auto pick up guns, heals, ammo
-  use the same rule for drones
-  maybe give some other bonus too?
-
-rework junk bot
-  it's behavior is too unpredictable
-    range is unclear
-    having the bullets last long after doing dmg isn't fun
-  we want a fun gun that acts like a melee weapon
 
 atmosphere levels
   large rotating fan that the player has to move through
@@ -62,13 +50,7 @@ new map with repeating endlessness
     
 field power up effects
   field allows player to hold and throw living mobs
-
-mod power ups ideas
-  double jump
-  bullet on mob damage effects
-    add to the array mob.do new mob behaviors
-        add a damage over time
-        add a freeze
+    of hack mobs
 
 give mobs more animal-like behaviors
   like rain world
@@ -99,6 +81,27 @@ game mechanics
     bouncy ground
 
 */
+
+//find what mods I don't have
+function doNotHave(who) {
+  let options = [];
+  for (let i = 0; i < who.length; i++) {
+    if (!who[i].have) options.push(i);
+  }
+  if (options.length > 0) return options[Math.floor(Math.random() * options.length)]
+}
+
+
+//give a random mod from the mods I don't have
+let newMod = doNotHave(b.mods)
+
+let t = ""
+for (let i = 0; i < 3; i++) {
+  t += `<div class="choose-grid-module" onclick="build.choosePowerUp(this,${i},'mod')"><div class="grid-title"><div class="circle-grid mod"></div> &nbsp; ${b.mods[i].name}</div> ${b.mods[i].description}</div>`
+}
+// document.getElementById("choose-grid").innerHTML = t
+
+
 //collision groups
 //   cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet | cat.mobShield
 const cat = {
@@ -312,33 +315,98 @@ document.getElementById("body-damage").addEventListener("input", () => {
 //   }
 // }
 
-function shuffle(array) {
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
-}
+// function stuff() {
+//   game.cycle++; //tracks game cycles
+//   mech.cycle++; //tracks player cycles  //used to alow time to stop for everything, but the player
+//   if (game.clearNow) {
+//     game.clearNow = false;
+//     game.clearMap();
+//     level.start();
+//   }
+//   Engine.update(engine, game.delta);
+// }
 
+// function theRest() {
+//   if (game.testing) {
+//     mech.draw();
+//     game.draw.wireFrame();
+//     game.draw.cons();
+//     game.draw.testing();
+//     game.drawCircle();
+//     ctx.restore();
+//     game.testingOutput();
+//   } else {
+//     level.drawFillBGs();
+//     level.exit.draw();
+//     level.enter.draw();
+//     game.draw.powerUp();
+//     mobs.draw();
+//     game.draw.cons();
+//     game.draw.body();
+//     mobs.loop();
+//     mech.draw();
+//     mech.hold();
+//     level.drawFills();
+//     game.draw.drawMapPath();
+//     b.fire();
+//     b.bulletActions();
+//     mobs.healthBar();
+//     game.drawCircle();
+//     ctx.restore();
+//   }
+// }
 
+// const loop = [
+//   stuff,
+//   game.gravity,
+//   game.wipe,
+//   game.wipe,
+//   game.textLog,
+//   mech.keyMove,
+//   level.checkZones,
+//   level.checkQuery,
+//   mech.move,
+//   mech.look,
+//   game.fallChecks,
+//   game.camera,
+
+//   level.drawFillBGs,
+//   level.exit.draw,
+//   level.enter.draw,
+//   game.draw.powerUp,
+//   mobs.draw,
+//   game.draw.cons,
+//   game.draw.body,
+//   mobs.loop,
+//   mech.draw,
+//   mech.hold,
+
+//   theRest,
+//   game.drawCursor
+// ]
 
 //main loop ************************************************************
 //**********************************************************************
+game.loop = game.normalLoop;
+
 function cycle() {
   if (!game.paused) requestAnimationFrame(cycle);
   const now = Date.now();
   const elapsed = now - game.then; // calc elapsed time since last loop
   if (elapsed > game.fpsInterval) { // if enough time has elapsed, draw the next frame
     game.then = now - (elapsed % game.fpsInterval); // Get ready for next frame by setting then=now.   Also, adjust for fpsInterval not being multiple of 16.67
+
+    game.cycle++; //tracks game cycles
+    mech.cycle++; //tracks player cycles  //used to alow time to stop for everything, but the player
+    if (game.clearNow) {
+      game.clearNow = false;
+      game.clearMap();
+      level.start();
+    }
+
     game.loop();
+    // for (let i = 0, len = loop.length; i < len; i++) {
+    //   loop[i]()
+    // }
   }
 }
