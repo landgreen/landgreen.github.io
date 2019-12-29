@@ -1033,21 +1033,17 @@ const mech = {
     }
   },
   hold() {},
-  fieldText() {
-    game.replaceTextLog = true;
-    game.makeTextLog(`${game.SVGrightMouse}<strong style='font-size:30px;'> ${mech.fieldUpgrades[mech.fieldMode].name}</strong><br><span class='faded'></span><br>${mech.fieldUpgrades[mech.fieldMode].description}`, 1000);
-    game.replaceTextLog = false;
-    document.getElementById("field").innerHTML = mech.fieldUpgrades[mech.fieldMode].name //add field
+  setField(index) {
+    mech.fieldMode = index;
+    document.getElementById("field").innerHTML = mech.fieldUpgrades[index].name
+    mech.setHoldDefaults();
+    mech.fieldUpgrades[index].effect();
   },
   fieldUpgrades: [{
       name: "field emitter",
       description: "use <strong class='color-f'>energy</strong> to <strong>shield</strong> yourself from <strong class='color-d'>damage</strong><br>lets you <strong>pick up</strong> and <strong>throw</strong> objects",
       effect: () => {
-        mech.fieldMode = 0;
-        mech.fieldText();
         game.replaceTextLog = true; //allow text over write
-        // game.makeTextLog("<strong style='font-size:30px;'></strong><br> <strong class='faded'>(right click or space bar)</strong><p></p>", 1200);
-        mech.setHoldDefaults();
         mech.hold = function () {
           if (mech.isHolding) {
             mech.drawHold(mech.holdingTarget);
@@ -1071,9 +1067,6 @@ const mech = {
       name: "time dilation field",
       description: "use <strong class='color-f'>energy</strong> to <strong style='letter-spacing: 1px;'>stop time</strong><br><em>can fire bullets while field is active</em>",
       effect: () => {
-        mech.fieldMode = 1;
-        mech.fieldText();
-        mech.setHoldDefaults();
         mech.fieldFire = true;
         mech.grabRange = 130
         mech.isBodiesAsleep = false;
@@ -1140,9 +1133,6 @@ const mech = {
       name: "plasma torch",
       description: "use <strong class='color-f'>energy</strong> to emit <strong class='color-d'>damaging</strong> plasma<br><em>effective at close range</em>",
       effect: () => {
-        mech.fieldMode = 2;
-        mech.fieldText();
-        mech.setHoldDefaults();
         // mech.fieldShieldingScale = 2;
         // mech.grabRange = 125;
         mech.fieldArc = 0.1 //run calculateFieldThreshold after setting fieldArc, used for powerUp grab and mobPush with lookingAt(mob)
@@ -1153,12 +1143,12 @@ const mech = {
             mech.holding();
             mech.throw();
           } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) { //not hold but field button is pressed
-            const DRAIN = 0.0006
+            const DRAIN = 0.0005
             if (mech.fieldMeter > DRAIN) {
               mech.fieldMeter -= DRAIN;
               mech.grabPowerUp();
               mech.lookForPickUp();
-              mech.pushMobs360(120);
+              mech.pushMobs360(130);
 
               //calculate laser collision
               let best;
@@ -1232,7 +1222,7 @@ const mech = {
                   y: best.y
                 };
                 if (best.who.alive) {
-                  const dmg = 0.35 * b.dmgScale; //********** SCALE DAMAGE HERE *********************
+                  const dmg = 0.4 * b.dmgScale; //********** SCALE DAMAGE HERE *********************
                   best.who.damage(dmg);
                   best.who.locatePlayer();
 
@@ -1309,9 +1299,6 @@ const mech = {
       name: "negative mass field",
       description: "use <strong class='color-f'>energy</strong> to nullify &nbsp; <strong style='letter-spacing: 10px;'>gravity</strong><br><em>can fire bullets while active</em>",
       effect: () => {
-        mech.fieldMode = 3;
-        mech.fieldText();
-        mech.setHoldDefaults();
         mech.fieldFire = true;
 
         mech.hold = function () {
@@ -1324,7 +1311,7 @@ const mech = {
             if (mech.fieldMeter > DRAIN) {
               mech.grabPowerUp();
               mech.lookForPickUp(170);
-              mech.pushMobs360(170);
+              mech.pushMobs360(200);
               //look for nearby objects to make zero-g
               function zeroG(who, mag = 1.06) {
                 for (let i = 0, len = who.length; i < len; ++i) {
@@ -1396,9 +1383,6 @@ const mech = {
       name: "standing wave harmonics",
       description: "three oscillating <strong>shields</strong> are permanently active<br><strong class='color-f'>energy</strong> regenerates while field is active",
       effect: () => {
-        mech.fieldMode = 4;
-        mech.fieldText();
-        mech.setHoldDefaults();
         // mech.fieldRegen *= 0.6;
         mech.fieldShieldingScale = 1.33;
 
@@ -1441,9 +1425,6 @@ const mech = {
       name: "nano-scale manufacturing",
       description: "excess <strong class='color-f'>energy</strong> used to build <strong>drones</strong><br><strong>2x</strong> <strong class='color-f'>energy</strong> regeneration",
       effect: () => {
-        mech.fieldMode = 5;
-        mech.fieldText();
-        mech.setHoldDefaults();
         mech.fieldRegen *= 2;
         mech.hold = function () {
           if (mech.fieldMeter > mech.fieldEnergyMax - 0.02) {
@@ -1473,9 +1454,6 @@ const mech = {
       name: "phase decoherence field",
       description: "use <strong class='color-f'>energy</strong> to to become <strong>intangible</strong><br><em style='opacity: 0.6;'>can't see or be seen outside field</em>",
       effect: () => {
-        mech.fieldMode = 6;
-        mech.fieldText();
-        mech.setHoldDefaults();
         // mech.grabRange = 230
         mech.hold = function () {
           mech.isStealth = false //isStealth is checked in mob foundPlayer()

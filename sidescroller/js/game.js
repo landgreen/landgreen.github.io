@@ -82,8 +82,9 @@ const game = {
   delta: 1000 / 60, //speed of game engine //looks like it has to be 16 to match player input
   buttonCD: 0,
   isBodyDamage: true,
-  isEasyMode: false,
-  difficulty: null,
+  difficultyMode: null,
+  difficulty: 0,
+  isDraftMode: false,
   // dropFPS(cap = 40, time = 15) {
   //   game.fpsCap = cap
   //   game.fpsInterval = 1000 / game.fpsCap;
@@ -308,7 +309,6 @@ const game = {
       } else if (keys[53]) { // 5
         powerUps.spawn(game.mouseInGame.x, game.mouseInGame.y, "mod");
       } else if (keys[54]) { // 6  spawn mob
-
         const pick = spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)];
         spawn.allowShields = false;
         spawn[pick](game.mouseInGame.x, game.mouseInGame.y);
@@ -321,19 +321,16 @@ const game = {
         body[index].classType = "body";
         World.add(engine.world, body[index]); //add to world
       } else if (keys[70]) { //cycle fields with F
-        if (mech.fieldMode === mech.fieldUpgrades.length - 1) {
-          mech.fieldUpgrades[0].effect()
-        } else {
-          mech.fieldUpgrades[mech.fieldMode + 1].effect()
-        }
+        const mode = (mech.fieldMode === mech.fieldUpgrades.length - 1) ? 0 : mech.fieldMode + 1
+        mech.setField(mode)
       } else if (keys[71]) { // give all guns with G
         // b.giveGuns("all", 1000)
         powerUps.gun.effect()
       } else if (keys[72]) { // heal with H
         mech.addHealth(Infinity)
         mech.fieldMeter = mech.fieldEnergyMax;
-      } else if (keys[89]) { //add all mods with y
-        powerUps.mod.effect()
+      } else if (keys[89]) { //add mods with y
+        b.giveMod()
       } else if (keys[82]) { // teleport to mouse with R
         Matter.Body.setPosition(player, game.mouseInGame);
         Matter.Body.setVelocity(player, {
@@ -456,9 +453,8 @@ const game = {
     b.activeGun = null;
     b.setModDefaults(); //remove mods
     game.updateModHUD();
-    mech.fieldEnergyMax = 1
     mech.maxHealth = 1
-    mech.fieldUpgrades[0].effect(); //set to default field
+    mech.fieldEnergyMax = 1
     game.paused = false;
     build.isShowingBuilds = false
     engine.timing.timeScale = 1;
@@ -477,20 +473,21 @@ const game = {
     game.accelScale = 1;
     game.lookFreqScale = 1;
     game.CDScale = 1;
-    if (document.getElementById("difficulty-select").value === 'easy') {
-      game.difficulty = 0;
-      game.isEasyMode = true;
+    game.difficultyMode = Number(document.getElementById("difficulty-select").value)
+    if (game.difficultyMode === 0) {
+      game.difficultyMode = 1
       level.difficultyDecrease(6);
-    } else {
-      game.difficulty = parseInt(document.getElementById("difficulty-select").value)
-      level.difficultyIncrease(game.difficulty)
     }
 
     game.clearNow = true;
     document.getElementById("text-log").style.opacity = 0;
     document.getElementById("fade-out").style.opacity = 0;
     document.title = "n-gon";
-    if (!mech.fieldMode) mech.fieldUpgrades[0].effect(); //reset to starting field?   or let them keep the field
+    //set to default field
+    mech.fieldMode = 0;
+    game.replaceTextLog = true;
+    game.makeTextLog(`${game.SVGrightMouse}<strong style='font-size:30px;'> ${mech.fieldUpgrades[mech.fieldMode].name}</strong><br><span class='faded'></span><br>${mech.fieldUpgrades[mech.fieldMode].description}`, 600);
+    mech.setField(mech.fieldMode)
   },
   firstRun: true,
   splashReturn() {
@@ -499,8 +496,10 @@ const game = {
     document.getElementById("splash").onclick = function () {
       game.startGame();
     };
+    document.getElementById("choose-grid").style.display = "none"
     document.getElementById("controls").style.display = "inline";
     document.getElementById("build-button").style.display = "inline"
+    document.getElementById("draft-button").style.display = "inline"
     isShowingBuilds = false
     document.getElementById("settings").style.display = "inline";
     document.getElementById("splash").style.display = "inline";
@@ -511,13 +510,15 @@ const game = {
   fpsInterval: 0, //set in startGame
   then: null,
   startGame() {
-    level.isBuildRun = false; //can get set back to true in buld.startBuildRun()
+    level.isBuildRun = false; //can get set back to true in build.startBuildRun()
     game.onTitlePage = false;
     document.body.style.overflow = "hidden"
+    document.getElementById("choose-grid").style.display = "none"
     document.getElementById("build-grid").style.display = "none"
     document.getElementById("controls").style.display = "none";
     document.getElementById("settings").style.display = "none";
     document.getElementById("build-button").style.display = "none";
+    document.getElementById("draft-button").style.display = "none"
     document.getElementById("splash").onclick = null; //removes the onclick effect so the function only runs once
     document.getElementById("splash").style.display = "none"; //hides the element that spawned the function
     document.getElementById("dmg").style.display = "inline";

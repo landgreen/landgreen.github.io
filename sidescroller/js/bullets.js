@@ -18,7 +18,7 @@ const b = {
   isModDroneOnDamage: null,
   modExtraDmg: null,
   annihilation: null,
-  isModFullHeal: null,
+  isModRecursiveHealing: null,
   modSquirrelFx: null,
   modIsCrit: null,
   modMoreDrops: null,
@@ -41,7 +41,7 @@ const b = {
     b.modSpores = 0;
     b.modExtraDmg = 0;
     b.modAnnihilation = false;
-    b.isModFullHeal = false;
+    b.isModRecursiveHealing = false;
     b.modSquirrelFx = 1;
     b.modIsCrit = false;
     b.modMoreDrops = 0;
@@ -199,10 +199,10 @@ const b = {
     },
     {
       name: "recursive healing",
-      description: "<strong class='color-h'>healing</strong> power ups bring you to <strong>max health</strong>",
+      description: "<strong class='color-h'>healing</strong> power ups are twice as effective",
       have: false, //18
       effect: () => { // good with ablative synthesis, melee builds
-        b.isModFullHeal = true
+        b.isModRecursiveHealing = true
       }
     },
     {
@@ -215,10 +215,10 @@ const b = {
     },
     {
       name: "Bayesian inference",
-      description: "<strong>20%</strong> chance for double <strong>power ups</strong> to drop",
+      description: "<strong>15%</strong> chance for double <strong>power ups</strong> to drop",
       have: false, //20
       effect: () => { // good with long term planning
-        b.modMoreDrops = 0.20;
+        b.modMoreDrops = 0.15;
       }
     },
     {
@@ -250,11 +250,24 @@ const b = {
       }
     },
   ],
-  giveMod(i) {
-    b.mods[i].effect(); //give specific mod
-    b.modCount++
-    b.mods[i].have = true
-    game.updateModHUD();
+  giveMod(index = 'random') {
+    if (index === 'random') {
+      let options = [];
+      for (let i = 0; i < b.mods.length; i++) {
+        if (!b.mods[i].have) options.push(i);
+      }
+
+      // give a random mod from the mods I don't have
+      if (options.length > 0) {
+        let newMod = options[Math.floor(Math.random() * options.length)]
+        b.giveMod(newMod)
+      }
+    } else {
+      b.mods[index].effect(); //give specific mod
+      b.modCount++
+      b.mods[index].have = true
+      game.updateModHUD();
+    }
   },
   activeGun: null, //current gun in use by player
   inventoryGun: 0,
@@ -481,8 +494,8 @@ const b = {
           knock = Vector.mult(Vector.normalise(sub), (-Math.sqrt(dmg * damageScale) * mob[i].mass) / 30);
           mob[i].force.x += knock.x;
           mob[i].force.y += knock.y;
-          radius *= 0.9 //reduced range for each additional explosion target
-          damageScale *= 0.75 //reduced damage for each additional explosion target 
+          radius *= 0.93 //reduced range for each additional explosion target
+          damageScale *= 0.8 //reduced damage for each additional explosion target 
         } else if (!mob[i].seePlayer.recall && dist < alertRange) {
           mob[i].locatePlayer();
           knock = Vector.mult(Vector.normalise(sub), (-Math.sqrt(dmg * damageScale) * mob[i].mass) / 50);
@@ -574,8 +587,8 @@ const b = {
           knock = Vector.mult(Vector.normalise(sub), (-Math.sqrt(dmg * damageScale) * mob[i].mass) / 30);
           mob[i].force.x += knock.x;
           mob[i].force.y += knock.y;
-          radius *= 0.9 //reduced range for each additional explosion target
-          damageScale *= 0.75 //reduced damage for each additional explosion target 
+          radius *= 0.93 //reduced range for each additional explosion target
+          damageScale *= 0.8 //reduced damage for each additional explosion target 
         } else if (!mob[i].seePlayer.recall && dist < alertRange) {
           mob[i].locatePlayer();
           knock = Vector.mult(Vector.normalise(sub), (-Math.sqrt(dmg * damageScale) * mob[i].mass) / 50);
@@ -596,7 +609,7 @@ const b = {
       restitution: 0.5,
       angle: Math.random() * 2 * Math.PI,
       friction: 0,
-      frictionAir: 0.018,
+      frictionAir: 0.02,
       dmg: 1.8, //damage done in addition to the damage from momentum
       classType: "bullet",
       collisionFilter: {
@@ -617,7 +630,7 @@ const b = {
           this.lockedOn = null;
           let closeDist = Infinity;
           for (let i = 0, len = mob.length; i < len; ++i) {
-            if (Matter.Query.ray(map, this.position, mob[i].position).length === 0) {
+            if (mob[i].dropPowerUp && Matter.Query.ray(map, this.position, mob[i].position).length === 0) {
               // Matter.Query.ray(body, this.position, mob[i].position).length === 0
               const targetVector = Vector.sub(this.position, mob[i].position)
               const dist = Vector.magnitude(targetVector);
@@ -690,6 +703,7 @@ const b = {
             let closeDist = Infinity;
             for (let i = 0, len = mob.length; i < len; ++i) {
               if (
+                mob[i].dropPowerUp &&
                 Matter.Query.ray(map, this.position, mob[i].position).length === 0 &&
                 Matter.Query.ray(body, this.position, mob[i].position).length === 0
               ) {
@@ -776,7 +790,7 @@ const b = {
       have: false,
       isStarterGun: true,
       fire() {
-        mech.fireCDcycle = mech.cycle + Math.floor((mech.crouch ? 65 : 45) * b.modFireRate); // cool down
+        mech.fireCDcycle = mech.cycle + Math.floor((mech.crouch ? 50 : 35) * b.modFireRate); // cool down
 
         b.muzzleFlash(35);
         // mobs.alert(650);
@@ -812,7 +826,7 @@ const b = {
       have: false,
       isStarterGun: true,
       fire() {
-        mech.fireCDcycle = mech.cycle + Math.floor((mech.crouch ? 25 : 18) * b.modFireRate); // cool down
+        mech.fireCDcycle = mech.cycle + Math.floor((mech.crouch ? 35 : 20) * b.modFireRate); // cool down
         b.muzzleFlash(20);
         // mobs.alert(450);
         const SPEED = mech.crouch ? 55 : 35
@@ -843,32 +857,32 @@ const b = {
       name: "fléchettes", //3
       description: "fire a volley of <strong>precise</strong> high velocity needles",
       ammo: 0,
-      ammoPack: 70,
+      ammoPack: 75,
       have: false,
       isStarterGun: true,
       count: 0, //used to track how many shots are in a volley before a big CD
       lastFireCycle: 0, //use to remember how longs its been since last fire, used to reset count
       fire() {
-        const CD = (mech.crouch) ? 35 : 25
+        const CD = (mech.crouch) ? 40 : 20
         if (this.lastFireCycle + CD < mech.cycle) this.count = 0 //reset count if it cycles past the CD
         this.lastFireCycle = mech.cycle
 
-        if (this.count > ((mech.crouch) ? 4 : 1)) {
+        if (this.count > ((mech.crouch) ? 6 : 1)) {
           this.count = 0
           mech.fireCDcycle = mech.cycle + Math.floor(CD * b.modFireRate); // cool down
         } else {
           this.count++
-          mech.fireCDcycle = mech.cycle + Math.floor(3 * b.modFireRate); // cool down
+          mech.fireCDcycle = mech.cycle + Math.floor(2 * b.modFireRate); // cool down
         }
 
         const me = bullet.length;
         bullet[me] = Bodies.rectangle(mech.pos.x + 40 * Math.cos(mech.angle), mech.pos.y + 40 * Math.sin(mech.angle), 45 * b.modBulletSize, 1.4 * b.modBulletSize, b.fireAttributes(mech.angle));
         bullet[me].endCycle = game.cycle + Math.floor(180 * b.isModBulletsLastLonger);
-        bullet[me].dmg = 0.9 + b.modExtraDmg;
+        bullet[me].dmg = 1 + b.modExtraDmg;
         bullet[me].do = function () {
-          this.force.y += this.mass * 0.0002; //low gravity
+          if (this.speed < 10) this.force.y += this.mass * 0.0003; //no gravity until it slows don to improve aiming
         };
-        const SPEED = 49
+        const SPEED = 50
         Matter.Body.setVelocity(bullet[me], {
           x: mech.Vx / 2 + SPEED * Math.cos(mech.angle),
           y: mech.Vy / 2 + SPEED * Math.sin(mech.angle)
@@ -1023,9 +1037,9 @@ const b = {
             } else { // charging on mouse down
               mech.fireCDcycle = Infinity //can't fire until mouse is released
               if (mech.crouch) {
-                this.charge = this.charge * 0.97 + 0.03 // this.charge converges to 1
+                this.charge = this.charge * 0.96 + 0.04 // this.charge converges to 1
               } else {
-                this.charge = this.charge * 0.987 + 0.013 // this.charge converges to 1
+                this.charge = this.charge * 0.98 + 0.02 // this.charge converges to 1
               }
 
               //gently push away mobs while charging
@@ -1665,7 +1679,7 @@ const b = {
     },
     {
       name: "laser", //14
-      description: "emit a beam of collimated coherent <strong>light</strong><br>uses <strong class='color-f'>energy</strong> instead of ammunition",
+      description: "emit a beam of collimated coherent <strong>light</strong><br>drains <strong class='color-f'>energy</strong> instead of ammunition",
       ammo: 0,
       ammoPack: Infinity,
       have: false,
@@ -1784,7 +1798,7 @@ const b = {
                 x: best.x,
                 y: best.y
               };
-              laserHitMob(0.75);
+              laserHitMob(0.8);
 
               //2nd reflection beam
               //ugly bug fix: this stops the reflection on a bug where the beam gets trapped inside a body
@@ -1797,7 +1811,19 @@ const b = {
                     x: best.x,
                     y: best.y
                   };
-                  laserHitMob(0.5);
+                  laserHitMob(0.63);
+
+
+                  reflection();
+                  checkForCollisions();
+                  if (best.dist2 != Infinity) {
+                    //if hitting something
+                    path[path.length - 1] = {
+                      x: best.x,
+                      y: best.y
+                    };
+                    laserHitMob(0.5);
+                  }
                 }
               }
             }
@@ -1814,7 +1840,7 @@ const b = {
             ctx.moveTo(path[i - 1].x, path[i - 1].y);
             ctx.lineTo(path[i].x, path[i].y);
             ctx.stroke();
-            ctx.globalAlpha *= 0.5; //reflections are less intense
+            ctx.globalAlpha *= 0.65; //reflections are less intense
             // ctx.globalAlpha -= 0.1; //reflections are less intense
           }
           ctx.setLineDash([0, 0]);
