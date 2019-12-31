@@ -14,9 +14,9 @@ const level = {
   start() {
     if (level.levelsCleared === 0) {
       // game.difficulty = 6; //for testing to simulate possible mobs spawns
-      // b.giveGuns(3)
+      // b.giveGuns(21)
       // mech.fieldUpgrades[2].effect();
-      // b.giveMod(21)
+      // b.giveMod(22)
 
       level.intro(); //starting level
       // level.testingMap();
@@ -67,6 +67,7 @@ const level = {
   //******************************************************************************************************************
   testingMap() {
     //start with all guns
+    level.difficultyIncrease(8)
     game.zoomScale = 1400 //1400 is normal
     spawn.setSpawnList();
     mech.setPosToSpawn(-75, -60); //normal spawn
@@ -117,11 +118,11 @@ const level = {
     // powerUps.spawn(450, -400, "mod", false, 6);
     // powerUps.spawn(450, -400, "mod", false);
     // spawn.bodyRect(-45, -100, 40, 50);
-    spawn.groupBoss(800, -1050);
-    spawn.shooter(400, -1050);
-    spawn.shooter(1200, -1050);
+    // spawn.groupBoss(800, -1050);
+    spawn.starter(400, -1050);
+    spawn.starter(1200, -1050);
     // spawn.groupBoss(-600, -550);
-    spawn.hopper(800, -150);
+    spawn.starter(800, -150);
     // spawn.beamer(800, -150);
     // spawn.grower(800, -250);
     // spawn.blinker(800, -250, 40);

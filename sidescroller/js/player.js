@@ -328,9 +328,9 @@ const mech = {
 
       function randomizeField() {
         if (game.difficulty * (Math.random() + 0.27) > 2) {
-          mech.fieldUpgrades[Math.floor(Math.random() * (mech.fieldUpgrades.length))].effect();
+          mech.setField(Math.floor(Math.random() * (mech.fieldUpgrades.length)))
         } else {
-          mech.fieldUpgrades[0].effect();
+          mech.setField(0)
         }
       }
 
@@ -350,8 +350,10 @@ const mech = {
           b.guns[i].have = false;
           if (b.guns[i].ammo !== Infinity) b.guns[i].ammo = 0;
         }
+
+        //give random guns
         for (let i = 0; i < length; i++) {
-          powerUps.gun.effect();
+          b.giveGuns()
         }
 
         //randomize ammo
@@ -439,7 +441,7 @@ const mech = {
   },
   defaultFPSCycle: 0, //tracks when to return to normal fps
   damage(dmg) {
-    if (b.isModMonogamy && b.inventory[0] === b.activeGun) {
+    if (b.isModEntanglement && b.inventory[0] === b.activeGun) {
       for (let i = 0, len = b.inventory.length; i < len; i++) {
         dmg *= 0.93
       }
@@ -687,7 +689,7 @@ const mech = {
     return false;
   },
   drop() {
-    if (mech.isHolding) {
+    if (mech.isHolding && mech.holdingTarget) {
       mech.isHolding = false;
       mech.definePlayerMass()
       mech.holdingTarget.collisionFilter.category = cat.body;
@@ -735,17 +737,19 @@ const mech = {
     }
   },
   holding() {
-    mech.fieldMeter -= mech.fieldRegen;
-    if (mech.fieldMeter < 0) mech.fieldMeter = 0;
-    Matter.Body.setPosition(mech.holdingTarget, {
-      x: mech.pos.x + 70 * Math.cos(mech.angle),
-      y: mech.pos.y + 70 * Math.sin(mech.angle)
-    });
-    Matter.Body.setVelocity(mech.holdingTarget, player.velocity);
-    Matter.Body.rotate(mech.holdingTarget, 0.01 / mech.holdingTarget.mass); //gently spin the block
+    if (mech.holdingTarget) {
+      mech.fieldMeter -= mech.fieldRegen;
+      if (mech.fieldMeter < 0) mech.fieldMeter = 0;
+      Matter.Body.setPosition(mech.holdingTarget, {
+        x: mech.pos.x + 70 * Math.cos(mech.angle),
+        y: mech.pos.y + 70 * Math.sin(mech.angle)
+      });
+      Matter.Body.setVelocity(mech.holdingTarget, player.velocity);
+      Matter.Body.rotate(mech.holdingTarget, 0.01 / mech.holdingTarget.mass); //gently spin the block
+    }
   },
-  throw () {
-    if ((keys[32] || game.mouseDownRight)) {
+  throwBlock() {
+    if (mech.holdingTarget && (keys[32] || game.mouseDownRight)) {
       if (mech.fieldMeter > 0.0007) {
         mech.fieldMeter -= 0.0007;
         mech.throwCharge += mech.throwChargeRate;;
@@ -1048,7 +1052,7 @@ const mech = {
           if (mech.isHolding) {
             mech.drawHold(mech.holdingTarget);
             mech.holding();
-            mech.throw();
+            mech.throwBlock();
           } else if ((keys[32] || game.mouseDownRight && mech.fieldMeter > 0.05 && mech.fieldCDcycle < mech.cycle)) { //not hold but field button is pressed
             mech.drawField();
             mech.grabPowerUp();
@@ -1075,7 +1079,7 @@ const mech = {
             mech.wakeCheck();
             mech.drawHold(mech.holdingTarget);
             mech.holding();
-            mech.throw();
+            mech.throwBlock();
           } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) {
             const DRAIN = 0.0023
             if (mech.fieldMeter > DRAIN) {
@@ -1141,7 +1145,7 @@ const mech = {
           if (mech.isHolding) {
             mech.drawHold(mech.holdingTarget);
             mech.holding();
-            mech.throw();
+            mech.throwBlock();
           } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) { //not hold but field button is pressed
             const DRAIN = 0.0005
             if (mech.fieldMeter > DRAIN) {
@@ -1305,7 +1309,7 @@ const mech = {
           if (mech.isHolding) {
             mech.drawHold(mech.holdingTarget);
             mech.holding();
-            mech.throw();
+            mech.throwBlock();
           } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) { //push away
             const DRAIN = 0.0004
             if (mech.fieldMeter > DRAIN) {
@@ -1390,7 +1394,7 @@ const mech = {
           if (mech.isHolding) {
             mech.drawHold(mech.holdingTarget);
             mech.holding();
-            mech.throw();
+            mech.throwBlock();
           } else if (((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle && mech.fieldMeter > 0)) { //not hold but field button is pressed
             mech.grabPowerUp();
             mech.lookForPickUp(180);
@@ -1427,15 +1431,15 @@ const mech = {
       effect: () => {
         mech.fieldRegen *= 2;
         mech.hold = function () {
-          if (mech.fieldMeter > mech.fieldEnergyMax - 0.02) {
+          if (mech.fieldMeter > mech.fieldEnergyMax - 0.02 && mech.fieldCDcycle < mech.cycle) {
+            mech.fieldCDcycle = mech.cycle + 17; // set cool down to prevent +energy from making huge numbers of drones
             mech.fieldMeter -= 0.32;
             b.drone(1)
-            mech.fireCDcycle = mech.cycle + 25; // set fire cool down to prevent +energy from making huge numbers of drones
           }
           if (mech.isHolding) {
             mech.drawHold(mech.holdingTarget);
             mech.holding();
-            mech.throw();
+            mech.throwBlock();
           } else if ((keys[32] || game.mouseDownRight && mech.fieldMeter > 0.1 && mech.fieldCDcycle < mech.cycle)) { //not hold but field button is pressed
             mech.drawField();
             mech.grabPowerUp();
@@ -1461,7 +1465,7 @@ const mech = {
           if (mech.isHolding) {
             mech.drawHold(mech.holdingTarget);
             mech.holding();
-            mech.throw();
+            mech.throwBlock();
           } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) {
             const DRAIN = 0.0015
             if (mech.fieldMeter > DRAIN) {
@@ -1510,7 +1514,7 @@ const mech = {
     //         mech.hackProgress = 0
     //         mech.drawHold(mech.holdingTarget);
     //         mech.holding();
-    //         mech.throw();
+    //         mech.throwBlock();
     //       } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) {
     //         const DRAIN = 0.0005
     //         if (mech.fieldMeter > DRAIN) {

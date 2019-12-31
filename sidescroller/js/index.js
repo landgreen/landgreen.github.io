@@ -2,7 +2,7 @@
 /* TODO:  *******************************************
 *****************************************************
 
-make draft mode default and add in negative mods
+use cookies to remember settings
 
 field: catch mobs in your field and make them into guardian bullets
 
@@ -10,6 +10,8 @@ negative mod effect ideas
   -max health
   -fire rate
   -slow life decay
+
+mod: gain an extra choice of power ups
 
 mod: if you fire when out of ammo you gain 1 ammo pack at the cost of
   10% max health
@@ -90,6 +92,37 @@ game mechanics
 
 */
 
+//  local storage
+let localSettings = JSON.parse(localStorage.getItem("localSettings"));
+// console.log(localSettings)
+if (localSettings) {
+  game.isBodyDamage = localSettings.isBodyDamage
+  document.getElementById("body-damage").checked = localSettings.isBodyDamage
+
+  game.difficultyMode = localSettings.difficultyMode
+  document.getElementById("difficulty-select").value = localSettings.difficultyMode
+
+  if (localSettings.fpsCapDefault === 'max') {
+    game.fpsCapDefault = 999999999;
+  } else {
+    game.fpsCapDefault = Number(localSettings.fpsCapDefault)
+  }
+  document.getElementById("fps-select").value = localSettings.fpsCapDefault
+} else {
+  localSettings = {
+    isBodyDamage: true,
+    difficultyMode: '1',
+    fpsCapDefault: '72',
+  };
+  localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+}
+
+
+
+
+
+
+
 //collision groups
 //   cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet | cat.mobShield
 const cat = {
@@ -102,12 +135,6 @@ const cat = {
   mobBullet: 0x1000000,
   mobShield: 0x10000000,
 }
-
-
-document.getElementById("draft-button").addEventListener("click", () => {
-  game.isDraftMode = true;
-  game.startGame();
-});
 
 
 //build build grid display
@@ -163,14 +190,12 @@ const build = {
 
 document.getElementById("build-button").addEventListener("click", () => {
   document.getElementById("build-button").style.display = "none";
-  document.getElementById("draft-button").style.display = "none";
   const el = document.getElementById("build-grid")
   if (build.isShowingBuilds) {
     el.style.display = "none"
     build.isShowingBuilds = false
     document.body.style.overflow = "hidden"
-    document.getElementById("controls").style.display = 'inline'
-    document.getElementById("settings").style.display = 'inline'
+    document.getElementById("info").style.display = 'inline'
   } else {
     build.list = []
     // let text = '<p>choose up to 5 powers<br>	<button type="button" id="build-begin-button" onclick="build.startBuildRun()">Begin Run</button></p>'
@@ -199,8 +224,7 @@ document.getElementById("build-button").addEventListener("click", () => {
     build.isShowingBuilds = true
     document.body.style.overflowY = "scroll";
     document.body.style.overflowX = "hidden";
-    document.getElementById("controls").style.display = 'none'
-    document.getElementById("settings").style.display = 'none'
+    document.getElementById("info").style.display = 'none'
   }
 });
 
@@ -282,21 +306,23 @@ document.getElementById("fps-select").addEventListener("input", () => {
   let value = document.getElementById("fps-select").value
   if (value === 'max') {
     game.fpsCapDefault = 999999999;
-  } else if (value === '72') {
-    game.fpsCapDefault = 72
-  } else if (value === '60') {
-    game.fpsCapDefault = 60
-  } else if (value === '45') {
-    game.fpsCapDefault = 45
-  } else if (value === '30') {
-    game.fpsCapDefault = 30
-  } else if (value === '15') {
-    game.fpsCapDefault = 15
+  } else {
+    game.fpsCapDefault = Number(value)
   }
+  localSettings.fpsCapDefault = value
+  localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
 });
 
 document.getElementById("body-damage").addEventListener("input", () => {
   game.isBodyDamage = document.getElementById("body-damage").checked
+  localSettings.isBodyDamage = game.isBodyDamage
+  localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+});
+
+document.getElementById("difficulty-select").addEventListener("input", () => {
+  game.difficultyMode = Number(document.getElementById("difficulty-select").value)
+  localSettings.difficultyMode = game.difficultyMode
+  localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
 });
 
 // function playSound(id) {

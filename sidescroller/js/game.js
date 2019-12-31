@@ -79,14 +79,13 @@ const game = {
   buttonCD: 0,
   isBodyDamage: true,
   levelsCleared: 0,
-  difficultyMode: null,
+  difficultyMode: 1,
   difficulty: 1,
   dmgScale: null, //set in levels.setDifficulty
   healScale: 1,
   accelScale: null, //set in levels.setDifficulty
   CDScale: null, //set in levels.setDifficulty
   lookFreqScale: null, //set in levels.setDifficulty
-  isDraftMode: false,
   // dropFPS(cap = 40, time = 15) {
   //   game.fpsCap = cap
   //   game.fpsInterval = 1000 / game.fpsCap;
@@ -326,8 +325,7 @@ const game = {
         const mode = (mech.fieldMode === mech.fieldUpgrades.length - 1) ? 0 : mech.fieldMode + 1
         mech.setField(mode)
       } else if (keys[71]) { // give all guns with G
-        // b.giveGuns("all", 1000)
-        powerUps.gun.effect()
+        b.giveGuns("all", 1000)
       } else if (keys[72]) { // heal with H
         mech.addHealth(Infinity)
         mech.fieldMeter = mech.fieldEnergyMax;
@@ -499,11 +497,9 @@ const game = {
       game.startGame();
     };
     document.getElementById("choose-grid").style.display = "none"
-    document.getElementById("controls").style.display = "inline";
+    document.getElementById("info").style.display = "inline";
     document.getElementById("build-button").style.display = "inline"
-    document.getElementById("draft-button").style.display = "inline"
     isShowingBuilds = false
-    document.getElementById("settings").style.display = "inline";
     document.getElementById("splash").style.display = "inline";
     document.getElementById("dmg").style.display = "none";
     document.getElementById("health-bg").style.display = "none";
@@ -517,10 +513,8 @@ const game = {
     document.body.style.overflow = "hidden"
     document.getElementById("choose-grid").style.display = "none"
     document.getElementById("build-grid").style.display = "none"
-    document.getElementById("controls").style.display = "none";
-    document.getElementById("settings").style.display = "none";
+    document.getElementById("info").style.display = "none";
     document.getElementById("build-button").style.display = "none";
-    document.getElementById("draft-button").style.display = "none"
     document.getElementById("splash").onclick = null; //removes the onclick effect so the function only runs once
     document.getElementById("splash").style.display = "none"; //hides the element that spawned the function
     document.getElementById("dmg").style.display = "inline";
@@ -541,7 +535,7 @@ const game = {
     //   // 	game.getCoords.pos1.y = Math.round(game.mouseInGame.y / 25) * 25;
     //   // }
 
-    //   // mech.throw();
+    //   // mech.throwBlock();
     // };
 
     document.body.style.cursor = "none";
