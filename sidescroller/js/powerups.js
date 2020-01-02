@@ -129,7 +129,7 @@ const powerUps = {
       function doNotHave(who, skip1 = -1, skip2 = -1, skip3 = -1) {
         let options = [];
         for (let i = 0; i < who.length; i++) {
-          if (!who[i].have && i !== skip1 && i !== skip2 && i !== skip3) options.push(i);
+          if (who[i].count < who[i].maxCount && i !== skip1 && i !== skip2 && i !== skip3) options.push(i);
         }
         if (options.length > 0) return options[Math.floor(Math.random() * options.length)]
       }
