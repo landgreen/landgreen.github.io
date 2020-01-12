@@ -49,10 +49,10 @@ const level = {
     // if (level.isBuildRun) num++
     for (let i = 0; i < num; i++) {
       game.difficulty++
-      game.dmgScale += 0.11; //damage done by mobs increases each level
-      b.dmgScale *= 0.94; //damage done by player decreases each level
-      game.accelScale *= 1.03 //mob acceleration increases each level
-      game.lookFreqScale *= 0.97 //mob cycles between looks decreases each level
+      game.dmgScale += 0.13; //damage done by mobs increases each level
+      b.dmgScale *= 0.93; //damage done by player decreases each level
+      game.accelScale *= 1.02 //mob acceleration increases each level
+      game.lookFreqScale *= 0.98 //mob cycles between looks decreases each level
       game.CDScale *= 0.97 //mob CD time decreases each level
     }
     game.healScale = 1 / (1 + game.difficulty * 0.065) //a higher denominator makes for lower heals // mech.health += heal * game.healScale;
@@ -60,11 +60,11 @@ const level = {
   difficultyDecrease(num = 1) { //used in easy mode for game.reset()
     for (let i = 0; i < num; i++) {
       game.difficulty--
-      game.dmgScale -= 0.11; //damage done by mobs increases each level
+      game.dmgScale -= 0.13; //damage done by mobs increases each level
       if (game.dmgScale < 0.1) game.dmgScale = 0.1;
-      b.dmgScale /= 0.94; //damage done by player decreases each level
-      game.accelScale /= 1.03 //mob acceleration increases each level
-      game.lookFreqScale /= 0.97 //mob cycles between looks decreases each level
+      b.dmgScale /= 0.93; //damage done by player decreases each level
+      game.accelScale /= 1.02 //mob acceleration increases each level
+      game.lookFreqScale /= 0.98 //mob cycles between looks decreases each level
       game.CDScale /= 0.97 //mob CD time decreases each level
     }
     if (game.difficulty < 1) game.difficulty = 1;
@@ -1569,7 +1569,17 @@ const level = {
     }
   },
   levelAnnounce() {
-    document.title = "n-gon: L" + (level.levelsCleared) + " " + level.levels[level.onLevel];
+    let mode = document.getElementById("difficulty-select").value
+    if (mode === "0") {
+      mode = "(easy)"
+    } else if (mode === "1") {
+      mode = "(normal)"
+    } else if (mode === "2") {
+      mode = "(hard)"
+    } else if (mode === "6") {
+      mode = "(why)"
+    }
+    document.title = "n-gon: L" + (level.levelsCleared) + " " + level.levels[level.onLevel] + " " + mode;
     // game.makeTextLog(`<div style='font-size: 25px;'>level ${game.difficulty} </div> <div style='font-size: 32px;'>${level.levels[level.onLevel]} </div>`, 300);
     // if (game.difficulty === 0) text = "";
     // text = "Level " + (game.difficulty + 1) + ": " + spawn.pickList[0] + "s + " + spawn.pickList[1] + "s";
