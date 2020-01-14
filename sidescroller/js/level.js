@@ -14,7 +14,7 @@ const level = {
   start() {
     if (level.levelsCleared === 0) {
       // game.difficulty = 6; //for testing to simulate possible mobs spawns
-      // b.giveGuns(10)
+      // b.giveGuns(9)
       // mech.setField(3)
       // b.giveMod(3);
 
@@ -38,7 +38,7 @@ const level = {
     level.addToWorld(); //add bodies to game engine
     game.draw.setPaths();
     for (let i = 0; i < b.modLaserBotCount; i++) {
-      b.guardian()
+      b.laserBot()
     }
     for (let i = 0; i < b.modNailBotCount; i++) {
       b.nailBot()
