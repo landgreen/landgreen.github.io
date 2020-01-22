@@ -49,9 +49,9 @@
       <summary>the particle model vs. the wave model</summary>
       <p>
         Particles are one of the basic models used by physics to simplify approximations.
-        Particle are point-like objects with no internal structure, just properties like mass and velocity.
-        They just bounce off things like <a href="../../motion/motion/index.html">billiard balls</a>.
-        The particle model helps to explain phenomena like:
+        Particles have a position in space and time, but they don't have any internal structure.
+        They have a mass and velocity, and they can collide like <a href="../../motion/motion/index.html">billiard balls</a>.
+        The particle model approximates phenomena like:
         collisions, temperature, pressure, friction, electricity, diffusion, and chemical reactions.
         <!-- The particle model is applied to things like: photons, electrons, protons, atoms, molecules, cells, dust, sand, tennis balls, and stars. -->
       </p>
@@ -59,7 +59,7 @@
         The wave model approximates how energy spreads through a medium.
         For example, a sound wave propagates through air when atoms collide.
         The wave model also applies to unexpected media, like traffic waves for cars.
-        Waves are used to explain phenomena like:
+        Waves are used to approximate phenomena like:
         color, diffraction, interference patterns, doppler shifting, standing waves, reflection, and refraction.
       </p>
       <p>
@@ -76,7 +76,7 @@
 
     <div class="example">
       <p>
-        The wave-particle duality found at the nanometer scale led to many more exciting experiments.
+        The overlap between the wave and particle models at the nanometer scale led to many more exciting experiments.
         Over time, physicists developed and refined a new model, called <strong>quantum mechanics</strong>.
         Predictions based on quantum mechanics can only give probabilities,
         but when applied to repeated experiments they have an unparalleled level of accuracy.
@@ -88,36 +88,30 @@
       <details class="derive">
         <summary>how quantum mechanics makes predictions</summary>
         <p>
-          A particle's state is represented by a mathematical concept called a <strong>wave function</strong>.
-          The wave function contains all the measurable information about the particle.
+          The state of a quantum mechanical system is described mathematically by it's <strong>wave function</strong>.
+          The wave function contains all the measurable information about the system.
           The evolution of the wave function over time can be calculated for simple situations.
         </p>
         <p>
           <!-- A particle's wave function also represents a superposition of all possible states for the particle.
           When a particle interacts with something, it's wave function will be measured in one of those possible states. -->
-          The probability of measuring a particle in a particular state can also be calculated.
-          This is done by adding the positive and negative amplitudes of every <a href="https://www.youtube.com/watch?v=vSFRN-ymfgE">possible</a> state the particle's wave function could have.
+          The probability of measuring a system in a particular state is a separate calculation.
+          It is done by adding the positive and negative amplitudes of every <a href="https://www.youtube.com/watch?v=vSFRN-ymfgE">possible</a> state the system's wave function could have.
           This produces a <a href="..\waveproperties\index.html#interference">superposition</a> of the possible states.
-          When squared, the amplitude of that superposition predicts the probabilities of measuring the particle in each possible <a href="http://toutestquantique.fr/en/superposition/">state</a>.
+          When squared, the amplitude of that superposition predicts the probabilities of measuring the system in each possible <a href="http://toutestquantique.fr/en/superposition/">state</a>.
         </p>
         <br>
         <p>
           In order to measure the results of an experiment, an observer must interact with the experiment.
-          Everything is a quantum object, including the observer.
+          Interacting is complex because everything is a quantum object, including the observer and the experiment.
           This means that the wave function of the observer interacts with the wave function of the experiment.
           The observer and experiment together form a superposition of all possible outcomes.
         </p>
         <p>
-          The observer can't directly see this superposition.
-          They only experience one outcome.
-          This is because waves in superposition can't effect each other, like how two sound waves pass through each other without any effect.
-          <!-- <strong>We only observe one experimental outcome, not a superposition of outcomes, because we become part of the quantum system we are measuring.</strong> -->
-        </p>
-        <br>
-        <p>
-          Quantum mechanics is currently the most accurate theory for how our universe works, but it is still limited.
-          Quantum mechanics doesn't explain gravitation, dark matter, or dark energy.
-          New theories that unite gravity with quantum mechanics are being developed, but so far nothing testable has emerged.
+          The observer can't directly see this superposition, like how sound waves in superposition can't directly effect each other.
+          The observer only experiences one experimental outcome chosen at random.
+          Why can't they see all the outcomes?
+          The answer to that question depends on how you interpret quantum mechanics.
         </p>
       </details>
       <br>
@@ -129,7 +123,7 @@
           Yet, each interpretation is just a different way to put math into words.
         </p>
         <p>
-          <strong>All valid interpretations of quantum mechanics should predict the same experimental outcomes.</strong>
+          All valid interpretations of quantum mechanics should predict the same experimental outcomes.
         </p>
 
         <h2 class='underlined-small'>The Many-Worlds Interpretations</h2>
@@ -154,13 +148,13 @@
           The unchosen outcomes are said to be <a href="https://www.youtube.com/watch?v=fjZXqdUZDZA">collapsed</a>.
         </p>
         <p>
-          Collapsing outcomes allows us to reject the idea of branching worlds, but it is unclear what collapse means.
+          Collapsing the wave function down to one outcome allows us to reject the idea of branching worlds at the cost of an extra step.
         </p>
 
         <h2 class='underlined-small'>Pilot Wave Theory</h2>
         <p>
           This interpretation is in some ways the closest to classical physics.
-          Particles are real, and there is only one reality, but there is also a wave function that determines how the particles move.
+          Particles are real, and there is only one reality, but there is also a wave function that determines how particle move.
           A particle's trajectory is guided away from regions where the wave function interference is destructive and towards regions of constructive interference.
         </p>
         <p>
@@ -221,6 +215,12 @@
           A particle's wavelength decreases as mass increases.
           Cats are much bigger then atoms, so they have a very short wavelength.
           The wavelength of human scale objects is so short they can't be measured by current technology.
+        </p>
+        <br>
+        <p>
+          Quantum mechanics is currently the most accurate theory for how our universe works, but it is still limited.
+          Quantum mechanics doesn't explain large scale phenomena, like gravitation, dark matter, or dark energy.
+          New theories that unite gravity with quantum mechanics are being developed, but so far nothing testable has emerged.
         </p>
       </details>
       <p>
@@ -1364,8 +1364,8 @@
       </g>
       <path d="M250 10 v60" stroke="#123" />
       <path d="M250 75 l-5 -12 h10 l-5 12" fill="#123" />
-      <circle cx="250" cy="10" r="7" stroke="#123" fill="#fff" />
-      <circle cx="250" cy="85" r="7" fill="#123" />
+      <circle cx="250" cy="10" r="7" fill="#123" />
+      <circle cx="250" cy="85" r="7" stroke="#123" fill="#fff" />
       <rect x="0" y="235" width="500" height="300" fill="#fff" opacity="0.5" />
     </svg>
     Photon <strong>emission</strong> occurs when electrons transition to <strong>lower</strong> energy levels within an atom.
