@@ -14,9 +14,9 @@ const level = {
   start() {
     if (level.levelsCleared === 0) {
       // level.difficultyIncrease(7)
-      // b.giveGuns(0)
-      // mech.setField(3)
-      // b.giveMod(0);
+      // b.giveGuns("flak")
+      // mech.setField("phase decoherence field")
+      // b.giveMod("ground stomp");
 
       level.intro(); //starting level
       // level.testingMap();
