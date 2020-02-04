@@ -78,7 +78,11 @@ const spawn = {
       }
     }
   },
-
+  randomLevelBoss(x, y) {
+    // suckerBoss, laserBoss, tetherBoss, snakeBoss   all need a particular level to work so they are not included
+    const options = ["shooterBoss", "cellBossCulture", "bomberBoss"]
+    spawn[options[Math.floor(Math.random() * options.length)]](x, y)
+  },
   //mob templates *********************************************************************************************
   //***********************************************************************************************************
   groupBoss(x, y, num = 3 + Math.random() * 8) {
@@ -127,10 +131,11 @@ const spawn = {
       }
     }
   },
-  starter(x, y, radius = 30) {
+  starter(x, y, radius = Math.floor(20 + 20 * Math.random())) {
     //easy mob for on level 1
     mobs.spawn(x, y, 8, radius, "#9ccdc6");
     let me = mob[mob.length - 1];
+    // console.log(`mass=${me.mass}, radius = ${radius}`)
     me.accelMag = 0.0005 * game.accelScale;
     me.memory = 60;
     me.seeAtDistance2 = 1400000 //1200 vision range
@@ -140,6 +145,77 @@ const spawn = {
       this.seePlayerByLookingAt();
       this.attraction();
     };
+  },
+  cellBossCulture(x, y, radius = 20, num = 5) {
+    for (let i = 0; i < num; i++) {
+      spawn.cellBoss(x, y, radius)
+    }
+  },
+  cellBoss(x, y, radius = 20) {
+    mobs.spawn(x + Math.random(), y + Math.random(), 20, radius * (1 + 1.2 * Math.random()), "rgba(0,150,155,0.7)");
+    let me = mob[mob.length - 1];
+    me.isCell = true;
+    me.accelMag = 0.00015 * game.accelScale;
+    me.memory = 40;
+    me.frictionAir = 0.012
+    me.seePlayerFreq = Math.floor(11 + 7 * Math.random())
+    me.seeAtDistance2 = 1400000;
+    me.cellMassMax = 80
+
+    me.collisionFilter.mask = cat.player | cat.bullet
+    Matter.Body.setDensity(me, 0.0005) // normal density is 0.001 // this reduces life by half and decreases knockback
+    // console.log(me.mass, me.radius)
+    const k = 642 //k=r^2/m
+    me.split = function () {
+      Matter.Body.scale(this, 0.4, 0.4);
+      this.radius = Math.sqrt(this.mass * k / Math.PI)
+      spawn.cellBoss(this.position.x, this.position.y, this.radius);
+    }
+    me.onHit = function () { //run this function on hitting player
+      this.split();
+    };
+    me.onDamage = function (dmg) {
+      if (Math.random() < 0.17 * dmg * Math.sqrt(this.mass) && this.health > dmg) this.split();
+    }
+    me.do = function () {
+      if (!mech.isBodiesAsleep) {
+        this.seePlayerByDistOrLOS();
+        this.attraction();
+
+        if (this.seePlayer.recall && this.mass < this.cellMassMax) { //grow cell radius
+          const scale = 1 + 0.0002 * this.cellMassMax / this.mass;
+          Matter.Body.scale(this, scale, scale);
+          this.radius = Math.sqrt(this.mass * k / Math.PI)
+        }
+        if (!(game.cycle % this.seePlayerFreq)) { //move away from other mobs
+          const repelRange = 200
+          const attractRange = 800
+          for (let i = 0, len = mob.length; i < len; i++) {
+            if (mob[i].isCell && mob[i].id !== this.id) {
+              const sub = Vector.sub(this.position, mob[i].position)
+              const dist = Vector.magnitude(sub)
+              if (dist < repelRange) {
+                this.force = Vector.mult(Vector.normalise(sub), this.mass * 0.006)
+              } else if (dist > attractRange) {
+                this.force = Vector.mult(Vector.normalise(sub), -this.mass * 0.004)
+              }
+            }
+          }
+        }
+      }
+    };
+    me.onDeath = function () {
+      let count = 0 //count other cells
+      for (let i = 0, len = mob.length; i < len; i++) {
+        if (mob[i].isCell) count++
+      }
+      if (count === 1) { //only drop a power up if this is the last cell
+        powerUps.spawnBossPowerUp(this.position.x, this.position.y)
+      } else {
+        this.leaveBody = false;
+        this.dropPowerUp = false;
+      }
+    }
   },
   // healer(x, y, radius = 20) {
   //   mobs.spawn(x, y, 3, radius, "rgba(50,255,200,0.4)");
@@ -476,31 +552,6 @@ const spawn = {
         toMe(body, this.position, this.eventHorizon)
         toMe(mob, this.position, this.eventHorizon)
         toMe(bullet, this.position, this.eventHorizon)
-
-        //push everything away
-        // function push(who, pos, range) {
-        //   for (let i = 0, len = who.length; i < len; ++i) {
-        //     const SUB = Vector.sub(who[i].position, pos)
-        //     const DISTANCE = Vector.magnitude(SUB)
-        //     if (DISTANCE < range) {
-        //       const depth = range - DISTANCE
-        //       const force = Vector.mult(Vector.normalise(SUB), 30 * who[i].mass / depth)
-        //       who[i].force.x += force.x;
-        //       who[i].force.y += force.y;
-        //     }
-        //   }
-        // }
-        // push(body, this.position, this.eventHorizon)
-        // push(mob, this.position, this.eventHorizon)
-        // push(bullet, this.position, this.eventHorizon)
-        // push([player], this.position, this.eventHorizon)
-        // for (let i = 0; i < (game.difficulty - 3); ++i) {
-        //   spawn.sucker(this.position.x + (Math.random() - 0.5) * radius * 2, this.position.y + (Math.random() - 0.5) * radius * 2, 70 * Math.random());
-        //   Matter.Body.setVelocity(mob[mob.length - 1], {
-        //     x: (Math.random() - 0.5) * 70,
-        //     y: (Math.random() - 0.5) * 70
-        //   });
-        // }
       }
     };
     me.do = function () {
@@ -548,8 +599,11 @@ const spawn = {
         ctx.fill();
         //when player is inside event horizon
         if (Vector.magnitude(Vector.sub(this.position, player.position)) < eventHorizon && !mech.isStealth) {
-          mech.damage(0.00015 * game.dmgScale);
-          if (mech.fieldMeter > 0.1) mech.fieldMeter -= 0.0045
+          if (mech.fieldMeter > 0.1) {
+            mech.fieldMeter -= 0.0055
+          } else {
+            mech.damage(0.0003 * game.dmgScale);
+          }
           const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
           player.force.x -= 1.3 * Math.cos(angle) * player.mass * game.g * (mech.onGround ? 1.7 : 1);
           player.force.y -= 1.2 * Math.sin(angle) * player.mass * game.g;
@@ -959,7 +1013,7 @@ const spawn = {
   //     }
   //   };
   // },
-  bomber(x, y, radius = 120 + Math.ceil(Math.random() * 70)) {
+  bomberBoss(x, y, radius = 90 + Math.ceil(Math.random() * 20)) {
     //boss that drops bombs from above and holds a set distance from player
     mobs.spawn(x, y, 3, radius, "transparent");
     let me = mob[mob.length - 1];
@@ -1017,24 +1071,31 @@ const spawn = {
     let me = mob[mob.length - 1];
     me.vertices = Matter.Vertices.rotate(me.vertices, Math.PI, me.position); //make the pointy side of triangle the front
     me.memory = 240;
+    me.homePosition = {
+      x: x,
+      y: y
+    };
     me.fireFreq = 0.025;
     me.noseLength = 0;
     me.fireAngle = 0;
     me.accelMag = 0.005 * game.accelScale;
-    me.frictionAir = 0.1;
+    me.frictionAir = 0.05;
     me.lookTorque = 0.000007 * (Math.random() > 0.5 ? -1 : 1);
     me.fireDir = {
       x: 0,
       y: 0
     };
-    Matter.Body.setDensity(me, 0.02 + 0.001 * Math.sqrt(game.difficulty)); //extra dense //normal is 0.001 //makes effective life much larger
-    // spawn.shield(me, x, y, 1);
+    Matter.Body.setDensity(me, 0.023 + 0.001 * Math.sqrt(game.difficulty)); //extra dense //normal is 0.001 //makes effective life much larger
     me.onDeath = function () {
       powerUps.spawnBossPowerUp(this.position.x, this.position.y)
     };
     me.do = function () {
       this.seePlayerByLookingAt();
       this.fire();
+      //gently return to starting location
+      const sub = Vector.sub(this.homePosition, this.position)
+      const dist = Vector.magnitude(sub)
+      if (dist > 50) this.force = Vector.mult(Vector.normalise(sub), this.mass * 0.0002)
     };
   },
   bullet(x, y, radius = 6, sides = 0) {
@@ -1115,7 +1176,7 @@ const spawn = {
       this.attraction();
     };
   },
-  snaker(x, y, radius = 80) {
+  snakeBoss(x, y, radius = 80) {
     //snake boss with a laser head
     mobs.spawn(x, y, 8, radius, "rgb(255,50,130)");
     let me = mob[mob.length - 1];
@@ -1154,7 +1215,7 @@ const spawn = {
     });
 
   },
-  tether(x, y, radius = 90) {
+  tetherBoss(x, y, radius = 90) {
     // constrained mob boss for the towers level
     // often has a ring of mobs around it
     mobs.spawn(x, y, 8, radius, "rgb(0,60,80)");

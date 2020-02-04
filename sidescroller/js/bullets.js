@@ -148,19 +148,19 @@ const b = {
     },
     {
       name: "high explosives",
-      description: "the radius of <strong class='color-e'>explosions</strong> are +25% <strong>larger</strong>",
+      description: "<strong class='color-e'>explosions</strong> do +20% more <strong class='color-d'>damage</strong><br><strong class='color-e'>explosive</strong> area is +44% <strong>larger</strong>",
       maxCount: 3,
       count: 0,
       allowed() {
         return true
       },
       effect: () => {
-        b.modExplosionRadius += 0.25;
+        b.modExplosionRadius += 0.2;
       }
     },
     {
       name: "electric reactive armour",
-      description: "<strong class='color-e'>explosions</strong> drain <strong class='color-f'>energy</strong> instead of doing <strong>harm</strong>",
+      description: "<strong class='color-e'>explosions</strong> do you no <strong>harm</strong>, but drain <strong class='color-f'>energy</strong>",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -276,7 +276,7 @@ const b = {
     },
     {
       name: "entanglement",
-      description: "using your first gun reduces <strong>harm</strong><br>scales by <strong>10%</strong> for each gun in your inventory",
+      description: "when your first gun is equipped<br>reduce <strong>harm</strong> by <strong>10%</strong> for each gun you have",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -377,28 +377,28 @@ const b = {
     },
     {
       name: "overcharge",
-      description: "charge <strong class='color-f'>energy</strong> <strong>+33%</strong> beyond your <strong>maximum</strong>",
+      description: "charge <strong class='color-f'>energy</strong> <strong>+50%</strong> beyond your <strong>maximum</strong>",
       maxCount: 9,
       count: 0,
       allowed() {
         return true
       },
       effect() {
-        mech.fieldEnergyMax += 0.33
-        mech.fieldMeter += 0.33
+        mech.fieldEnergyMax += 0.5
+        mech.fieldMeter += 0.5
       }
     },
     {
       name: "supersaturation",
-      description: "<strong class='color-h'>heal</strong> <strong>+33%</strong> beyond your <strong>max health</strong>",
+      description: "<strong class='color-h'>heal</strong> <strong>+50%</strong> beyond your <strong>max health</strong>",
       maxCount: 9,
       count: 0,
       allowed() {
         return true
       },
       effect() {
-        mech.maxHealth += 0.33
-        mech.addHealth(0.33)
+        mech.maxHealth += 0.50
+        mech.addHealth(0.50)
       }
     },
     {
@@ -480,7 +480,7 @@ const b = {
     },
     {
       name: "brushless motors",
-      description: "your <strong>drones</strong> accelerate 40% <strong>faster</strong>",
+      description: "your <strong>drones</strong> accelerate 33% <strong>faster</strong>",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -961,7 +961,7 @@ const b = {
   },
   drone(speed = 1) {
     const me = bullet.length;
-    const THRUST = b.isModFastDrones ? 0.0023 : 0.0015
+    const THRUST = b.isModFastDrones ? 0.002 : 0.0015
     const dir = mech.angle + 0.2 * (Math.random() - 0.5);
     const RADIUS = (4.5 + 3 * Math.random()) * b.modBulletSize
     bullet[me] = Bodies.polygon(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 8, RADIUS, {
