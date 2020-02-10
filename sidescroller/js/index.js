@@ -2,11 +2,26 @@
 /* TODO:  *******************************************
 *****************************************************
 
-mod: bullets neutralize forward mob velocity on hit
+speed up movement
+  higher gravity, larger jump force
+  faster horizontal acceleration
+  only increase top speed a bit
 
-boss: bacteria boss, duplicates when player is in range
+mod: if you fire when out of ammo you gain 1 ammo pack at the cost of
+  10% max health
+  20% of your current health
 
-mod: remove all guns from the game, but double health, shields, and damage
+mob: targeting laser, then a high speed, no gravity bullet
+
+add difficulty slider to custom?
+
+add recursive mod counts to pause screen
+
+key required to open the exit to some levels
+  must hold key like a block
+  could the key be any block?
+
+css transition for pause menu
 
 mod: like Born rule, but for guns
 
@@ -15,13 +30,7 @@ field that pushes everything back, and can destroy smaller blocks
 
 mod: make player invisible when...
   use the flag from phase field
-
-mod: ground stomp on enterLand()
-  immunity to falling damage
-  triggers when you press down
-    maybe rewrite the function to look for down key
-    with added down speed
-  spawn spores
+  when health is low?
 
 field: a larger radius that attracted enemies
   still deflected them near the robot
@@ -46,9 +55,6 @@ gun/field: portals
 missiles don't explode reliably enough
   they can bounce, which is cool, but they should still explode right after a bounce
 
-add mouse constraint in testing mode
-  https://github.com/liabru/matter-js/blob/master/examples/events.js
-
 weekly random challenge where everyone playing each week gets the same random setup.
   The randomness would be determined by the date so it would sync everyone.
   power ups still drop, but the drops are determined by a preset list that changes each week.
@@ -61,13 +67,6 @@ mod: do something at the end of each level
     how to track goals?
     take no damage
     don't shoot
-
-mod: if you fire when out of ammo you gain 1 ammo pack at the cost of
-  10% max health
-  20% of your current health
-
-mob: has 2 or 3 shields that can regenerate over time
-  could be just a boss
 
 gun:  Spirit Bomb (singularity)
   use charge up like rail gun
@@ -86,12 +85,9 @@ atmosphere levels
   more graphics
   
 Boss levels
-  boss grows and spilt, if you don't kill it fast
-    sensor that locks you in after you enter the boss room
+  sensor that locks you in after you enter the boss room
   boss that eats other mobs and gains stats from them
     chance to spawn on any level (past level 5)
-  boss that knows how to shoot (player) bullets that collide with player 
-    overwrite custom engine collision bullet mob function.
 
 add a key that player picks up and needs to set on the exit door to open it
 
@@ -241,7 +237,7 @@ const build = {
     <option value="0">easy</option>
     <option value="1" selected>normal</option>
     <option value="2">hard</option>
-    <option value="6">why...</option>
+    <option value="4">why...</option>
   </select>
     </div>`
     for (let i = 1, len = mech.fieldUpgrades.length; i < len; i++) {
@@ -251,7 +247,7 @@ const build = {
       text += `<div class="build-grid-module" onclick="build.choosePowerUp(this,${i},'gun')"><div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${b.guns[i].name}</div> ${b.guns[i].description}</div>`
     }
     for (let i = 0, len = b.mods.length; i < len; i++) {
-      if (b.mods[i].name === "Born rule" || b.mods[i].name === "+1 cardinality") {
+      if (b.mods[i].name === "Born rule" || b.mods[i].name === "+1 cardinality" || b.mods[i].name === "leveraged investment") {
         text += `<div class="build-grid-module" style="opacity:0.3;"><div class="grid-title"><div class="circle-grid mod"></div> &nbsp; ${b.mods[i].name}</div> ${b.mods[i].description}</div>`
       } else {
         text += `<div class="build-grid-module" onclick="build.choosePowerUp(this,${i},'mod')"><div class="grid-title"><div class="circle-grid mod"></div> &nbsp; ${b.mods[i].name}</div> ${b.mods[i].description}</div>`
@@ -322,11 +318,12 @@ const build = {
   calculateCustomDifficulty() {
     let difficulty = build.list.length * game.difficultyMode
     if (game.difficultyMode === 0) difficulty = build.list.length * 1 - 6
-    document.getElementById("starting-level").innerHTML = `starting level: <strong style="font-size:1.05em;">${difficulty}</strong>`
+    if (game.difficultyMode === 4) difficulty = build.list.length * 4 + 8
+    document.getElementById("starting-level").innerHTML = `starting difficulty: <strong style="font-size:1.05em;">${difficulty}</strong>`
   },
   startBuildRun() {
+    spawn.setSpawnList(); //gives random mobs,  not starter mobs
     spawn.setSpawnList();
-    spawn.setSpawnList(); //gives random mobs,  not starter
     game.startGame();
     let difficulty = build.list.length * game.difficultyMode - 1
     if (game.difficultyMode === 0) {
@@ -337,6 +334,9 @@ const build = {
     level.difficultyIncrease(difficulty)
 
     level.isBuildRun = true;
+    build.givePowerUps();
+  },
+  givePowerUps() {
     for (let i = 0; i < build.list.length; i++) {
       if (build.list[i].type === "field") {
         mech.setField(build.list[i].index)
