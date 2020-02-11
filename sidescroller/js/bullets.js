@@ -485,7 +485,7 @@ const b = {
       },
       effect: () => {
         b.isModNoAmmo = true;
-        for (let i = 0; i < 6; i++) { // spawn new mods
+        for (let i = 0; i < 6; i++) { //if you change the six also change it in Born rule
           powerUps.spawn(mech.pos.x, mech.pos.y, "mod");
           if (Math.random() < b.isModBayesian) powerUps.spawn(mech.pos.x, mech.pos.y, "mod");
         }
@@ -516,7 +516,9 @@ const b = {
         return (b.modCount > 6)
       },
       effect: () => {
-        for (let i = 0; i < b.modCount; i++) { // spawn new mods
+        let count = b.modCount
+        if (b.isModNoAmmo) count - 6 //remove the 6 bonus mods when getting rid of leveraged investment
+        for (let i = 0; i < count; i++) { // spawn new mods
           powerUps.spawn(mech.pos.x, mech.pos.y, "mod");
         }
         b.setModDefaults(); // remove all mods
@@ -1514,22 +1516,22 @@ const b = {
       name: "wave beam", //4
       description: "emit a <strong>sine wave</strong> of oscillating particles<br>particles propagate through <strong>walls</strong>",
       ammo: 0,
-      ammoPack: 35,
+      ammoPack: 40,
       have: false,
       isStarterGun: true,
       fire() {
         const me = bullet.length;
         const dir = mech.angle
-        const SCALE = (mech.crouch ? 0.967 : 0.955) + 0.03 * Math.min(1, 0.5 * (b.isModBulletsLastLonger - 1))
-        const wiggleMag = ((mech.crouch) ? 0.004 : 0.005) * ((mech.flipLegs === 1) ? 1 : -1)
-        bullet[me] = Bodies.polygon(mech.pos.x + 25 * Math.cos(dir), mech.pos.y + 25 * Math.sin(dir), 10, 10 * b.modBulletSize, {
+        const SCALE = 0.955 + 0.03 * Math.min(1, 0.5 * (b.isModBulletsLastLonger - 1))
+        const wiggleMag = ((mech.crouch) ? 0.01 : 0.024) * ((mech.flipLegs === 1) ? 1 : -1)
+        bullet[me] = Bodies.polygon(mech.pos.x + 25 * Math.cos(dir), mech.pos.y + 25 * Math.sin(dir), 10, 13 * b.modBulletSize, {
           angle: dir,
           cycle: -0.43, //adjust this number until the bullets line up with the cross hairs
-          endCycle: game.cycle + Math.floor((mech.crouch ? 170 : 130) * b.isModBulletsLastLonger),
+          endCycle: game.cycle + Math.floor(130 * b.isModBulletsLastLonger),
           inertia: Infinity,
           frictionAir: 0,
           minDmgSpeed: 0,
-          dmg: 0.4, //damage done in addition to the damage from momentum
+          dmg: 0.6, //damage done in addition to the damage from momentum
           classType: "bullet",
           collisionFilter: {
             category: cat.bullet,
@@ -1540,7 +1542,7 @@ const b = {
           do() {
             if (!mech.isBodiesAsleep) {
               this.cycle++
-              const THRUST = wiggleMag * Math.cos(this.cycle * 0.3)
+              const THRUST = wiggleMag * Math.cos(this.cycle * 0.35)
               this.force = Vector.mult(Vector.normalise(this.direction), this.mass * THRUST) //wiggle
 
               if (this.cycle > 0 && !(Math.floor(this.cycle) % 6)) Matter.Body.scale(this, SCALE, SCALE); //shrink
@@ -1548,20 +1550,13 @@ const b = {
           }
         });
         World.add(engine.world, bullet[me]); //add bullet to world
-        mech.fireCDcycle = mech.cycle + Math.floor((mech.crouch ? 8 : 4) * b.modFireRate); // cool down
-        const SPEED = mech.crouch ? 5.2 : 4.5;
+        mech.fireCDcycle = mech.cycle + Math.floor(4 * b.modFireRate); // cool down
+        const SPEED = 8;
         Matter.Body.setVelocity(bullet[me], {
           x: SPEED * Math.cos(dir),
           y: SPEED * Math.sin(dir)
         });
         bullet[me].direction = Vector.perp(bullet[me].velocity)
-        // if (mech.angle + Math.PI / 2 > 0) {
-        //   bullet[me].direction = Vector.perp(bullet[me].velocity, true)
-        // } else {
-        //   bullet[me].direction = Vector.perp(bullet[me].velocity)
-        // }
-
-        World.add(engine.world, bullet[me]); //add bullet to world
       }
     },
     {
@@ -1662,7 +1657,8 @@ const b = {
           }
         }
       }
-    }, {
+    },
+    {
       name: "flak",
       description: "fire a cluster of short range projectiles<br><strong class='color-e'>explodes</strong> on contact or after half a second",
       ammo: 0,
@@ -1706,7 +1702,8 @@ const b = {
           }
         }
       }
-    }, {
+    },
+    {
       name: "grenades", //7
       description: "lob a single bouncy projectile<br><strong class='color-e'>explodes</strong> on contact or after one second",
       ammo: 0,
@@ -1735,7 +1732,8 @@ const b = {
           this.force.y += this.mass * 0.0025;
         };
       }
-    }, {
+    },
+    {
       name: "vacuum bomb", //8
       description: "fire a bomb that <strong>sucks</strong> before <strong class='color-e'>exploding</strong><br>click left mouse again to <strong>detonate</strong>",
       ammo: 0,
@@ -1841,7 +1839,8 @@ const b = {
           }
         }
       }
-    }, {
+    },
+    {
       name: "mine", //9
       description: "toss a <strong>proximity</strong> mine that <strong>sticks</strong> to walls<br>fires <strong>nails</strong> at enemies within range",
       ammo: 0,
