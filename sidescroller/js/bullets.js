@@ -1551,7 +1551,7 @@ const b = {
                   x: this.position.x,
                   y: this.position.y,
                   radius: Math.log(2 * dmg + 1.1) * 40,
-                  color: game.playerDmgColor,
+                  color: 'rgba(0,0,0,0.4)',
                   time: game.drawTime
                 });
               }
@@ -1560,7 +1560,7 @@ const b = {
         });
         World.add(engine.world, bullet[me]); //add bullet to world
         mech.fireCDcycle = mech.cycle + Math.floor(3 * b.modFireRate); // cool down
-        const wiggleMag = bullet[me].mass * ((mech.crouch) ? 0.01 : 0.03) * ((mech.flipLegs === 1) ? 1 : -1)
+        const wiggleMag = bullet[me].mass * ((mech.crouch) ? 0.01 : 0.02) * ((mech.flipLegs === 1) ? 1 : -1)
         const SPEED = 8;
         Matter.Body.setVelocity(bullet[me], {
           x: SPEED * Math.cos(dir),
@@ -1977,10 +1977,10 @@ const b = {
           },
           onEnd() {},
           do() {
-            ctx.beginPath() //draw white circle
-            ctx.arc(this.position.x, this.position.y, this.radius * 0.97 - 1.6, 0, 2 * Math.PI);
-            ctx.fillStyle = "#fff"
-            ctx.fill()
+            // ctx.beginPath() //draw white circle
+            // ctx.arc(this.position.x, this.position.y, this.radius * 0.97 - 1.6, 0, 2 * Math.PI);
+            // ctx.fillStyle = "#fff"
+            // ctx.fill()
 
             if (!mech.isBodiesAsleep) { //if time dilation isn't active
               this.force.y += this.mass * 0.00006; //gravity
