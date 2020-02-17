@@ -523,57 +523,57 @@ const mobs = {
         //     time: game.drawTime
         // });
       },
-      zoom() {
-        this.zoomMode--;
-        if (this.zoomMode > 150) {
-          this.drawTrail();
-          if (this.seePlayer.recall) {
-            //attraction to player
-            const forceMag = this.accelMag * this.mass;
-            const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
-            this.force.x += forceMag * Math.cos(angle);
-            this.force.y += forceMag * Math.sin(angle);
-          }
-        } else if (this.zoomMode < 0) {
-          this.zoomMode = 300;
-          this.setupTrail();
-        }
-      },
-      setupTrail() {
-        this.trail = [];
-        for (let i = 0; i < this.trailLength; ++i) {
-          this.trail.push({
-            x: this.position.x,
-            y: this.position.y
-          });
-        }
-      },
-      drawTrail() {
-        //dont' forget to run setupTrail() after mob spawn
-        const t = this.trail;
-        const len = t.length;
-        t.pop();
-        t.unshift({
-          x: this.position.x,
-          y: this.position.y
-        });
-        //draw
-        ctx.strokeStyle = this.trailFill;
-        ctx.beginPath();
-        // ctx.moveTo(t[0].x, t[0].y);
-        // ctx.lineTo(t[0].x, t[0].y);
-        // ctx.globalAlpha = 0.2;
-        // ctx.lineWidth = this.radius * 3;
-        // ctx.stroke();
-        ctx.globalAlpha = 0.5 / len;
-        ctx.lineWidth = this.radius * 1.95;
-        for (let i = 0; i < len; ++i) {
-          // ctx.lineWidth *= 0.96;
-          ctx.lineTo(t[i].x, t[i].y);
-          ctx.stroke();
-        }
-        ctx.globalAlpha = 1;
-      },
+      // zoom() {
+      //   this.zoomMode--;
+      //   if (this.zoomMode > 150) {
+      //     this.drawTrail();
+      //     if (this.seePlayer.recall) {
+      //       //attraction to player
+      //       const forceMag = this.accelMag * this.mass;
+      //       const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
+      //       this.force.x += forceMag * Math.cos(angle);
+      //       this.force.y += forceMag * Math.sin(angle);
+      //     }
+      //   } else if (this.zoomMode < 0) {
+      //     this.zoomMode = 300;
+      //     this.setupTrail();
+      //   }
+      // },
+      // setupTrail() {
+      //   this.trail = [];
+      //   for (let i = 0; i < this.trailLength; ++i) {
+      //     this.trail.push({
+      //       x: this.position.x,
+      //       y: this.position.y
+      //     });
+      //   }
+      // },
+      // drawTrail() {
+      //   //dont' forget to run setupTrail() after mob spawn
+      //   const t = this.trail;
+      //   const len = t.length;
+      //   t.pop();
+      //   t.unshift({
+      //     x: this.position.x,
+      //     y: this.position.y
+      //   });
+      //   //draw
+      //   ctx.strokeStyle = this.trailFill;
+      //   ctx.beginPath();
+      //   // ctx.moveTo(t[0].x, t[0].y);
+      //   // ctx.lineTo(t[0].x, t[0].y);
+      //   // ctx.globalAlpha = 0.2;
+      //   // ctx.lineWidth = this.radius * 3;
+      //   // ctx.stroke();
+      //   ctx.globalAlpha = 0.5 / len;
+      //   ctx.lineWidth = this.radius * 1.95;
+      //   for (let i = 0; i < len; ++i) {
+      //     // ctx.lineWidth *= 0.96;
+      //     ctx.lineTo(t[i].x, t[i].y);
+      //     ctx.stroke();
+      //   }
+      //   ctx.globalAlpha = 1;
+      // },
       curl(range = 1000, mag = -10) {
         //cause all mobs, and bodies to rotate in a circle
         applyCurl = function (center, array) {
@@ -614,8 +614,8 @@ const mobs = {
       pullPlayer() {
         if (this.seePlayer.yes && Vector.magnitudeSquared(Vector.sub(this.position, player.position)) < 1000000) {
           const angle = Math.atan2(player.position.y - this.position.y, player.position.x - this.position.x);
-          player.force.x -= game.accelScale * 1.13 * Math.cos(angle) * (mech.onGround ? 2 * player.mass * game.g : player.mass * game.g);
-          player.force.y -= game.accelScale * 0.84 * player.mass * game.g * Math.sin(angle);
+          player.force.x -= game.accelScale * 0.00113 * player.mass * Math.cos(angle) * (mech.onGround ? 2 : 1);
+          player.force.y -= game.accelScale * 0.00084 * player.mass * Math.sin(angle);
 
           ctx.beginPath();
           ctx.moveTo(this.position.x, this.position.y);
@@ -940,13 +940,14 @@ const mobs = {
           if (b.isModLowHealthDmg) dmg *= (3 / (2 + mech.health)) //up to 50% dmg at zero player health
 
           // if (b.isModFarAwayDmg) dmg *= 1 + Math.sqrt(Math.max(1000, Math.min(3500, this.distanceToPlayer())) - 1000) * 0.01 //up to 50% dmg at max range of 3500
+          if (b.isModEnergyLoss) dmg *= 1.5;
           if (b.isModFarAwayDmg) dmg *= 1 + Math.sqrt(Math.max(500, Math.min(3000, this.distanceToPlayer())) - 500) * 0.0067 //up to 50% dmg at max range of 3500
           if (b.modEnergySiphon && dmg !== Infinity) mech.fieldMeter += Math.min(this.health, dmg) * b.modEnergySiphon
           if (b.modHealthDrain && dmg !== Infinity) mech.addHealth(Math.min(this.health, dmg) * b.modHealthDrain)
           this.health -= dmg
           //this.fill = this.color + this.health + ')';
           this.onDamage(dmg); //custom damage effects
-          if (this.health < 0.05 && this.alive) this.death();
+          if (this.health < b.modMobDieAtHealth && this.alive) this.death();
         }
       },
       onDamage() {
@@ -965,6 +966,7 @@ const mobs = {
         this.alive = false; //triggers mob removal in mob[i].replace(i)
         if (this.dropPowerUp) {
           powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
+          mech.lastKillCycle = mech.cycle; //tracks the last time a kill was made, mostly used in game.checks()
           if (Math.random() < b.modSpores) {
             const len = Math.min(30, Math.floor(4 + this.mass * Math.random()))
             for (let i = 0; i < len; i++) {

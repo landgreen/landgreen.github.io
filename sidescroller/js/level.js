@@ -14,10 +14,12 @@ const level = {
   start() {
     if (level.levelsCleared === 0) {
       // level.difficultyIncrease(5)
-      // b.giveGuns("foam")
-      // mech.setField("phase decoherence field")
+      // b.giveGuns("laser")
+      // mech.setField("negative mass field")
       // for (let i = 0; i < 9; i++) {
-      //   b.giveMod("auto-loading heuristics");
+      // b.giveMod("waste energy recovery");
+      // b.giveMod("scrap recycling");
+      // b.giveMod("acute stress response");
       // }
 
       level.intro(); //starting level
@@ -36,7 +38,6 @@ const level = {
       level[level.levels[level.onLevel]](); //picks the current map from the the levels array
       level.levelAnnounce();
     }
-    // if (level.isBuildRun) build.givePowerUps();
     game.noCameraScroll();
     game.setZoom();
     level.addToWorld(); //add bodies to game engine
@@ -71,7 +72,7 @@ const level = {
       game.lookFreqScale /= 0.98 //mob cycles between looks decreases each level
       game.CDScale /= 0.97 //mob CD time decreases each level
     }
-    if (game.difficulty < 1) game.difficulty = 1;
+    if (game.difficulty < 1) game.difficulty = 0;
     game.healScale = 1 / (1 + game.difficulty * 0.09)
   },
   levelAnnounce() {
@@ -1260,7 +1261,7 @@ const level = {
     level.defaultZoom = 1300
     game.zoomTransition(level.defaultZoom)
 
-    document.body.style.backgroundColor = "#f2f5f3";
+    document.body.style.backgroundColor = "#dcdcde" //"#f2f5f3";
     mech.setPosToSpawn(25, -60); //normal spawn
     //mech.setPosToSpawn(-2000, -1700); // left ledge spawn
     level.enter.x = mech.spawnPos.x - 50;
@@ -1755,16 +1756,24 @@ const level = {
       });
       target.torque = (Math.random() - 0.5) * 2 * target.mass;
     },
-    boost(target, info) {
+    boost(target, yVelocity) {
       // if (target.velocity.y < 0) {
       // mech.undoCrouch();
       // mech.enterAir();
       mech.buttonCD_jump = 0; // reset short jump counter to prevent short jumps on boosts
       mech.hardLandCD = 0 // disable hard landing
-      Matter.Body.setVelocity(target, {
-        x: target.velocity.x + (Math.random() - 0.5) * 2,
-        y: info
-      });
+      if (target.velocity.y > 30) {
+        Matter.Body.setVelocity(target, {
+          x: target.velocity.x + (Math.random() - 0.5) * 2,
+          y: -23 //gentle bounce if coming down super fast
+        });
+      } else {
+        Matter.Body.setVelocity(target, {
+          x: target.velocity.x + (Math.random() - 0.5) * 2,
+          y: yVelocity
+        });
+      }
+
     },
     force(target, info) {
       if (target.velocity.y < 0) {
