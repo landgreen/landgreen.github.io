@@ -13,7 +13,7 @@ const b = {
   modNoAmmo: null,
   isModBulletsLastLonger: null,
   isModImmortal: null,
-  modSpores: null,
+  modSporesOnDeath: null,
   isModImmuneExplosion: null,
   isModExplodeMob: null,
   isModDroneOnDamage: null,
@@ -52,6 +52,8 @@ const b = {
   isModDeathAvoidOnCD: null,
   modWaveSpeedMap: null,
   modWaveSpeedBody: null,
+  modFieldEfficiency: null,
+  isModSporeField: null,
   modOnHealthChange() { //used with acid mod
     if (b.isModAcidDmg && mech.health > 0.8) {
       game.playerDmgColor = "rgba(0,80,80,0.9)"
@@ -268,13 +270,13 @@ const b = {
       },
       requires: "",
       effect() {
-        b.modSpores += 0.11;
+        b.modSporesOnDeath += 0.11;
         for (let i = 0; i < 10; i++) {
           b.spore(player)
         }
       },
       remove() {
-        b.modSpores = 0;
+        b.modSporesOnDeath = 0;
       }
     },
     {
@@ -464,7 +466,7 @@ const b = {
     },
     {
       name: "Pauli exclusion",
-      description: `unable to <strong>collide</strong> with enemies for <strong>+2</strong> seconds<br>activates after being <strong>harmed</strong> from a collision`,
+      description: `unable to <strong>collide</strong> with enemies for <strong>+1</strong> second<br>activates after being <strong>harmed</strong> from a collision`,
       maxCount: 9,
       count: 0,
       allowed() {
@@ -472,7 +474,7 @@ const b = {
       },
       requires: "",
       effect() {
-        b.modCollisionImmuneCycles += 120;
+        b.modCollisionImmuneCycles += 60;
         mech.collisionImmune = mech.cycle + b.modCollisionImmuneCycles; //player is immune to collision damage for 30 cycles
       },
       remove() {
@@ -513,7 +515,7 @@ const b = {
     },
     {
       name: "weak anthropic principle",
-      description: "<strong>avoid harm</strong> that should be <strong>fatal</strong><br>can occur once every <strong>3</strong> seconds",
+      description: "<strong>fatal harm</strong> can't happen<br>saves you up to once every <strong>3</strong> seconds",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -540,7 +542,7 @@ const b = {
       requires: "",
       effect() {
         b.isModPiezo = true;
-        mech.fieldMeter = mech.fieldEnergyMax;
+        mech.energy = mech.fieldEnergyMax;
       },
       remove() {
         b.isModPiezo = false;
@@ -557,7 +559,7 @@ const b = {
       requires: "",
       effect() {
         b.modEnergySiphon += 0.15;
-        mech.fieldMeter = mech.fieldEnergyMax
+        mech.energy = mech.fieldEnergyMax
       },
       remove() {
         b.modEnergySiphon = 0;
@@ -590,7 +592,7 @@ const b = {
       requires: "",
       effect() {
         mech.fieldEnergyMax += 0.5
-        mech.fieldMeter += 0.5
+        mech.energy += 0.5
       },
       remove() {
         mech.fieldEnergyMax = 1;
@@ -640,7 +642,7 @@ const b = {
       requires: "",
       effect: () => {
         b.isModMassEnergy = true // used in mech.grabPowerUp
-        mech.fieldMeter = mech.fieldEnergyMax * 2
+        mech.energy = mech.fieldEnergyMax * 2
       },
       remove() {
         b.isModMassEnergy = false;
@@ -746,7 +748,7 @@ const b = {
       maxCount: 1,
       count: 0,
       allowed() {
-        return b.haveGunCheck("drones") || mech.fieldUpgrades[mech.fieldMode].name === "nano-scale manufacturing"
+        return b.haveGunCheck("drones") || (mech.fieldUpgrades[mech.fieldMode].name === "nano-scale manufacturing" && !b.isModSporeField)
       },
       requires: "drones",
       effect() {
@@ -762,7 +764,7 @@ const b = {
       maxCount: 1,
       count: 0,
       allowed() {
-        return b.haveGunCheck("spores") || b.modSpores > 0 || b.isModStomp
+        return b.haveGunCheck("spores") || b.modSporesOnDeath > 0 || b.isModStomp || b.isModSporeField
       },
       requires: "spores",
       effect() {
@@ -773,8 +775,8 @@ const b = {
       }
     },
     {
-      name: "ice crystal nucleation",
-      description: "fire <strong>ice crystals</strong> formed from water vapour<br>your <strong>minigun</strong> no longer requires <strong>ammo<strong>",
+      name: "crystal nucleation",
+      description: "fire <strong>crystals</strong> formed from the air<br>your <strong>minigun</strong> no longer requires <strong>ammo<strong>",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -892,6 +894,40 @@ const b = {
       remove() {
         b.modWaveSpeedMap = 0.08
         b.modWaveSpeedBody = 0.25
+      }
+    },
+    {
+      name: "perfect diamagnetism",
+      description: "when <strong>blocking</strong> with the basic <strong>field emitter</strong><br>gain <strong class='color-f'>energy</strong> instead losing it",
+      maxCount: 1,
+      count: 0,
+      allowed() {
+        return mech.fieldUpgrades[mech.fieldMode].name === "field emitter"
+      },
+      requires: "basic field emitter",
+      effect() {
+        b.modFieldEfficiency = -1
+        mech.fieldShieldingScale = b.modFieldEfficiency;
+      },
+      remove() {
+        b.modFieldEfficiency = 1;
+        if (mech.fieldUpgrades[mech.fieldMode].name === "field emitter") mech.fieldShieldingScale = b.modFieldEfficiency;
+      }
+    },
+    {
+      name: "mycelium manufacturing",
+      description: "<strong>nano-scale manufacturing</strong> is modified to<br>grow <strong style='letter-spacing: 2px;'>spores</strong> instead of drones",
+      maxCount: 1,
+      count: 0,
+      allowed() {
+        return mech.fieldUpgrades[mech.fieldMode].name === "nano-scale manufacturing"
+      },
+      requires: "nano-scale manufacturing",
+      effect() {
+        b.isModSporeField = true;
+      },
+      remove() {
+        b.isModSporeField = false;
       }
     },
 
@@ -1140,8 +1176,8 @@ const b = {
     if (dist < radius) {
       if (b.isModImmuneExplosion) {
         const drain = Math.max(radius * 0.0006, 0.2)
-        if (mech.fieldMeter > drain) {
-          mech.fieldMeter -= drain
+        if (mech.energy > drain) {
+          mech.energy -= drain
         } else {
           mech.damage(radius * 0.0001); //do half damage if have the mod, but out of mana
         }
@@ -1649,8 +1685,8 @@ const b = {
         }
 
         //hit target with laser
-        if (this.lockedOn && this.lockedOn.alive && mech.fieldMeter > 0.15) {
-          mech.fieldMeter -= 0.0014
+        if (this.lockedOn && this.lockedOn.alive && mech.energy > 0.15) {
+          mech.energy -= 0.0014
           //make sure you can still see vertex
           const DIST = Vector.magnitude(Vector.sub(this.vertices[0], this.lockedOn.position));
           if (DIST - this.lockedOn.radius < this.range + 150 &&
@@ -2482,13 +2518,13 @@ const b = {
                 mob[i].force.y += 1.5 * FORCE.y;
               }
             }
-          } else if (mech.fieldMeter > 0.005) { // charging on mouse down
+          } else if (mech.energy > 0.005) { // charging on mouse down
             mech.fireCDcycle = Infinity //can't fire until mouse is released
             const lastCharge = this.charge
             let chargeRate = (mech.crouch) ? 0.975 : 0.987
             chargeRate *= Math.pow(b.modFireRate, 0.04)
             this.charge = this.charge * chargeRate + (1 - chargeRate) // this.charge converges to 1
-            mech.fieldMeter -= (this.charge - lastCharge) * 0.28 //energy drain is proportional to charge gained, but doesn't stop normal mech.fieldRegen
+            mech.energy -= (this.charge - lastCharge) * 0.28 //energy drain is proportional to charge gained, but doesn't stop normal mech.fieldRegen
 
             //draw targeting
             let best;
@@ -2613,10 +2649,10 @@ const b = {
       fire() {
         const reflectivity = 1 - 1 / (b.modLaserReflections * 1.5)
         let damage = b.dmgScale * b.modLaserDamage
-        if (mech.fieldMeter < b.modLaserFieldDrain) {
+        if (mech.energy < b.modLaserFieldDrain) {
           mech.fireCDcycle = mech.cycle + 100; // cool down if out of energy
         } else {
-          mech.fieldMeter -= mech.fieldRegen + b.modLaserFieldDrain
+          mech.energy -= mech.fieldRegen + b.modLaserFieldDrain
           let best = {
             x: null,
             y: null,
@@ -2842,8 +2878,8 @@ const b = {
         }
 
         //use energy to explode
-        const energy = 0.3 * Math.min(mech.fieldMeter, 1.75)
-        mech.fieldMeter -= energy
+        const energy = 0.3 * Math.min(mech.energy, 1.75)
+        mech.energy -= energy
         if (best.who) b.explosion(path[1], 1000 * energy)
         mech.fireCDcycle = mech.cycle + Math.floor(60 * b.modFireRate); // cool down
 
