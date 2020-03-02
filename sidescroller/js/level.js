@@ -15,12 +15,9 @@ const level = {
     if (level.levelsCleared === 0) {
       // level.difficultyIncrease(9)
       // b.giveGuns("wave beam")
-      // mech.setField("nano-scale manufacturing")
-      // for (let i = 0; i < 9; i++) {
-      // b.giveMod("mycelium manufacturing");
-      // b.giveMod("anthropic principle");
-      // b.giveMod("acute stress response");
-      // }
+      // mech.setField("negative mass field")
+      // b.giveMod("wave phase velocity");
+      // b.giveMod("reflective cavity");
 
       level.intro(); //starting level
       // level.testingMap();
@@ -680,7 +677,7 @@ const level = {
     level.fill.push({
       x: 1760,
       y: -1550,
-      width: 1290,
+      width: 1390,
       height: 550,
       color: "rgba(0,0,0,0.1)"
     });
@@ -739,7 +736,7 @@ const level = {
     spawn.bodyRect(2710, -1250, 125, 125, 0.8);
     spawn.bodyRect(2705, -1350, 75, 100, 0.8);
     spawn.mapRect(3500, -1600, 350, 50);
-    spawn.mapRect(1750, -1600, 1310, 50);
+    spawn.mapRect(1750, -1600, 1410, 50);
     spawn.bodyRect(3100, -1015, 375, 15);
     spawn.bodyRect(3500, -850, 75, 125, 0.8);
     spawn.mapRect(3450, -1000, 50, 580); //left building wall
@@ -753,7 +750,7 @@ const level = {
     spawn.mapRect(3450, -725, 1500, 50);
     spawn.mapRect(5100, -725, 400, 50);
     spawn.mapRect(4500, -735, 50, 635);
-    spawn.bodyRect(4510, -100, 30, 100, 0.8);
+    spawn.bodyRect(4500, -100, 50, 100);
     spawn.mapRect(4500, -885, 100, 50);
     spawn.spawnStairs(3800, 0, 3, 150, 206); //stairs top exit
     spawn.mapRect(3400, -275, 450, 275); //exit platform

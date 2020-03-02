@@ -19,11 +19,7 @@ engine.world.gravity.scale = 0; //turn off gravity (it's added back in later)
 // engine.positionIterations = 100
 // engine.enableSleeping = true
 
-// matter events *********************************************************
-//************************************************************************
-//************************************************************************
-//************************************************************************
-
+// matter events
 function playerOnGroundCheck(event) {
   //runs on collisions events
   function enter() {
@@ -101,11 +97,15 @@ function collisionChecks(event) {
 
     function collidePlayer(obj, speedThreshold = 12, massThreshold = 2) {
       //player dmg from hitting a body
-      if (obj.classType === "body" && obj.speed > speedThreshold && obj.mass > massThreshold &&
-        (obj.velocity.y > 0 || player.velocity.y > 0)) {
+      if (
+        obj.classType === "body" &&
+        obj.speed > speedThreshold &&
+        obj.mass > massThreshold &&
+        (obj.velocity.y > 0 || player.velocity.y > 0)
+      ) {
         const v = Vector.magnitude(Vector.sub(player.velocity, obj.velocity));
-        if (v > speedThreshold && mech.collisionImmune < mech.cycle) {
-          mech.collisionImmune = mech.cycle + b.modCollisionImmuneCycles; //player is immune to collision damage for 30 cycles
+        if (v > speedThreshold && mech.collisionImmuneCycle < mech.cycle) {
+          mech.collisionImmuneCycle = mech.cycle + b.modCollisionImmuneCycles; //player is immune to collision damage for 30 cycles
           let dmg = Math.sqrt((v - speedThreshold + 0.1) * (obj.mass - massThreshold)) * 0.01;
           dmg = Math.min(Math.max(dmg, 0.02), 0.15);
           mech.damage(dmg);
@@ -134,8 +134,8 @@ function collisionChecks(event) {
 
         function collideMob(obj) {
           //player + mob collision
-          if (mech.collisionImmune < mech.cycle && (obj === playerBody || obj === playerHead)) {
-            mech.collisionImmune = mech.cycle + b.modCollisionImmuneCycles; //player is immune to collision damage for 30 cycles
+          if (mech.collisionImmuneCycle < mech.cycle && (obj === playerBody || obj === playerHead)) {
+            mech.collisionImmuneCycle = mech.cycle + b.modCollisionImmuneCycles; //player is immune to collision damage for 30 cycles
             mob[k].foundPlayer();
             let dmg = Math.min(Math.max(0.025 * Math.sqrt(mob[k].mass), 0.05), 0.3) * game.dmgScale; //player damage is capped at 0.3*dmgScale of 1.0
             mech.damage(dmg);
@@ -178,6 +178,7 @@ function collisionChecks(event) {
           if (obj.classType === "bullet" && obj.speed > obj.minDmgSpeed) {
             // const dmg = b.dmgScale * (obj.dmg + 0.15 * obj.mass * Vector.magnitude(Vector.sub(mob[k].velocity, obj.velocity)));
             let dmg = b.dmgScale * (obj.dmg + b.modAcidDmg + 0.15 * obj.mass * Vector.magnitude(Vector.sub(mob[k].velocity, obj.velocity)))
+            // console.log(obj.dmg / (0.15 * obj.mass * Vector.magnitude(Vector.sub(mob[k].velocity, obj.velocity))))
             if (b.isModCrit && !mob[k].seePlayer.recall && !mob[k].shield) dmg *= 5
             mob[k].foundPlayer();
             mob[k].damage(dmg);
@@ -195,7 +196,7 @@ function collisionChecks(event) {
           if (obj.classType === "body" && obj.speed > 5) {
             const v = Vector.magnitude(Vector.sub(mob[k].velocity, obj.velocity));
             if (v > 8) {
-              let dmg = b.dmgScale * (b.modAcidDmg + v * Math.sqrt(obj.mass) * 0.07);
+              let dmg = b.dmgScale * (v * Math.sqrt(obj.mass) * 0.07);
               mob[k].damage(dmg, true);
               if (mob[k].distanceToPlayer2() < 1000000) mob[k].foundPlayer();
               game.drawList.push({
