@@ -185,7 +185,22 @@ const b = {
         b.isModImmuneExplosion = false;
       }
     },
-
+    {
+      name: "thermal runaway",
+      description: "mobs <strong class='color-e'>explode</strong> when they <strong>die</strong>",
+      maxCount: 1,
+      count: 0,
+      allowed() {
+        return b.isModImmuneExplosion
+      },
+      requires: "electric reactive armour",
+      effect: () => {
+        b.isModExplodeMob = true;
+      },
+      remove() {
+        b.isModExplodeMob = false;
+      }
+    },
     {
       name: "auto-loading heuristics",
       description: "your <strong>delay</strong> after firing is <strong>+14% shorter</strong>",
@@ -324,22 +339,6 @@ const b = {
       }
     },
     {
-      name: "thermal runaway",
-      description: "mobs <strong class='color-e'>explode</strong> when they <strong>die</strong>",
-      maxCount: 1,
-      count: 0,
-      allowed() {
-        return b.modMobDieAtHealth > 0.05
-      },
-      requires: "reaction inhibitor",
-      effect: () => {
-        b.isModExplodeMob = true;
-      },
-      remove() {
-        b.isModExplodeMob = false;
-      }
-    },
-    {
       name: "waste energy recovery",
       description: "regen <strong>7%</strong> of max <strong class='color-f'>energy</strong> every second<br>active for <strong>5 seconds</strong> after a mob <strong>dies</strong>",
       maxCount: 1,
@@ -462,7 +461,7 @@ const b = {
       maxCount: 1,
       count: 0,
       allowed() {
-        return b.modCollisionImmuneCycles > 120
+        return b.modCollisionImmuneCycles > 30
       },
       requires: "Pauli exclusion",
       effect() {
@@ -745,7 +744,7 @@ const b = {
       },
       requires: "minigun",
       effect() {
-        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun is flak
+        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
           if (b.guns[i].name === "minigun") {
             b.guns[i].ammoPack = Infinity
             b.guns[i].recordedAmmo = b.guns[i].ammo
@@ -756,7 +755,7 @@ const b = {
         }
       },
       remove() {
-        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun is flak
+        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
           if (b.guns[i].name === "minigun") {
             b.guns[i].ammoPack = b.guns[i].defaultAmmoPack;
             b.guns[i].ammo = b.guns[i].recordedAmmo
@@ -810,21 +809,21 @@ const b = {
       effect() {
         b.isModFlechetteMultiShot = true;
         //cut current ammo by 1/3
-        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun is flak
+        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
           if (b.guns[i].name === "fléchettes") b.guns[i].ammo = Math.ceil(b.guns[i].ammo / 3);
         }
         //cut ammo packs by 1/3
-        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun is flak
+        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun
           if (b.guns[i].name === "fléchettes") b.guns[i].ammoPack = Math.ceil(b.guns[i].defaultAmmoPack / 3);
         }
         game.updateGunHUD();
       },
       remove() {
         b.isModFlechetteMultiShot = false;
-        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun is flak
+        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
           if (b.guns[i].name === "fléchettes") b.guns[i].ammo = Math.ceil(b.guns[i].ammo * 3);
         }
-        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun is flak
+        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
           if (b.guns[i].name === "fléchettes") b.guns[i].ammoPack = b.guns[i].defaultAmmoPack;
         }
         game.updateGunHUD();
@@ -890,12 +889,12 @@ const b = {
       },
       requires: "flak",
       effect() {
-        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun is flak
+        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
           if (b.guns[i].name === "flak") b.guns[i].ammoPack = b.guns[i].defaultAmmoPack * (2 + this.count);
         }
       },
       remove() {
-        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun is flak
+        for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
           if (b.guns[i].name === "flak") b.guns[i].ammoPack = b.guns[i].defaultAmmoPack;
         }
       }
@@ -1002,7 +1001,7 @@ const b = {
     },
     {
       name: "perfect diamagnetism",
-      description: "when <strong>blocking</strong> with the basic <strong>field emitter</strong><br>gain <strong class='color-f'>energy</strong> instead losing it",
+      description: "when <strong>blocking</strong> with the starting <strong>field emitter</strong><br>gain <strong class='color-f'>energy</strong> instead losing it",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -1051,19 +1050,21 @@ const b = {
       }
     },
     {
-      name: "field superposition",
-      description: "increase <strong>field radii</strong> by <strong>40%</strong>",
-      maxCount: 1,
+      name: "frequency resonance",
+      description: "<strong>standing wave harmonics</strong> shield is retuned<br>increase <strong>size</strong> and <strong>blocking</strong> efficiency by <strong>30%</strong>",
+      maxCount: 9,
       count: 0,
       allowed() {
         return mech.fieldUpgrades[mech.fieldMode].name === "standing wave harmonics"
       },
       requires: "standing wave harmonics",
       effect() {
-        mech.fieldRange = 175 * 1.4
+        mech.fieldRange += 175 * 0.2
+        mech.fieldShieldingScale *= 0.7
       },
       remove() {
         mech.fieldRange = 175;
+        mech.fieldShieldingScale = 1;
       }
     },
     {
@@ -1096,6 +1097,22 @@ const b = {
       },
       remove() {
         b.isModMissileField = false;
+      }
+    },
+    {
+      name: "quantum dissipation",
+      description: "<strong>phase decoherence field</strong> uses <strong class='color-f'>energy</strong> to <br><strong class='color-d'>damage</strong> unshielded <strong>mobs</strong> that you <strong>overlap</strong>",
+      maxCount: 1,
+      count: 0,
+      allowed() {
+        return mech.fieldUpgrades[mech.fieldMode].name === "phase decoherence field"
+      },
+      requires: "phase decoherence field",
+      effect() {
+        b.isModPhaseFieldDamage = true;
+      },
+      remove() {
+        b.isModPhaseFieldDamage = false;
       }
     },
   ],
@@ -1329,7 +1346,7 @@ const b = {
 
     if (dist < radius) {
       if (b.isModImmuneExplosion) {
-        const drain = Math.max(radius * 0.0006, 0.2)
+        const drain = Math.max(radius * 0.0004, 0.2)
         if (mech.energy > drain) {
           mech.energy -= drain
         } else {
@@ -2091,7 +2108,7 @@ const b = {
       name: "super balls", //2
       description: "fire <strong>four</strong> balls in a wide arc<br>balls <strong>bounce</strong> with no momentum loss",
       ammo: 0,
-      ammoPack: 9,
+      ammoPack: 10,
       have: false,
       num: 5,
       isStarterGun: true,
@@ -2105,7 +2122,7 @@ const b = {
         let dir = mech.angle - SPREAD * (b.modSuperBallNumber - 1) / 2;
         for (let i = 0; i < b.modSuperBallNumber; i++) {
           const me = bullet.length;
-          bullet[me] = Bodies.polygon(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 10, 7 * b.modBulletSize, b.fireAttributes(dir, false));
+          bullet[me] = Bodies.polygon(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 12, 7 * b.modBulletSize, b.fireAttributes(dir, false));
           World.add(engine.world, bullet[me]); //add bullet to world
           Matter.Body.setVelocity(bullet[me], {
             x: SPEED * Math.cos(dir),
@@ -2182,7 +2199,7 @@ const b = {
         const me = bullet.length;
         const dir = mech.angle
         const SPEED = 10
-        const wiggleMag = mech.crouch ? 4 : 11
+        const wiggleMag = mech.crouch ? 3 : 10
         bullet[me] = Bodies.polygon(mech.pos.x + 25 * Math.cos(dir), mech.pos.y + 25 * Math.sin(dir), 7, 5 * b.modBulletSize, {
           angle: dir,
           cycle: 0,
@@ -2319,7 +2336,7 @@ const b = {
         const END = Math.floor(mech.crouch ? 30 : 18);
         const side1 = 17 * b.modBulletSize
         const side2 = 4 * b.modBulletSize
-        const totalBullets = 5
+        const totalBullets = 6
         const angleStep = (mech.crouch ? 0.06 : 0.25) / totalBullets
         let dir = mech.angle - angleStep * totalBullets / 2;
 
@@ -2336,7 +2353,7 @@ const b = {
           bullet[me].endCycle = 2 * i + game.cycle + END
           bullet[me].restitution = 0;
           bullet[me].friction = 1;
-          bullet[me].explodeRad = (mech.crouch ? 95 : 70) + (Math.random() - 0.5) * 50;
+          bullet[me].explodeRad = (mech.crouch ? 95 : 75) + (Math.random() - 0.5) * 50;
           bullet[me].onEnd = function () {
             b.explosion(this.position, this.explodeRad); //makes bullet do explosive damage at end
           }
