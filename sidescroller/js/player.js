@@ -822,20 +822,20 @@ const mech = {
         mech.fieldCDcycle = mech.cycle + 15;
         mech.isHolding = false;
         //bullet-like collisions
-        mech.holdingTarget.collisionFilter.category = cat.bullet;
+        mech.holdingTarget.collisionFilter.category = cat.body; //cat.bullet;
         mech.holdingTarget.collisionFilter.mask = cat.map | cat.body | cat.bullet | cat.mob | cat.mobBullet | cat.mobShield;
         //check every second to see if player is away from thrown body, and make solid
         const solid = function (that) {
           const dx = that.position.x - player.position.x;
           const dy = that.position.y - player.position.y;
-          if (dx * dx + dy * dy > 10000 && that.speed < 3 && that !== mech.holdingTarget) {
-            that.collisionFilter.category = cat.body; //make solid
-            that.collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.mob | cat.mobBullet;
+          if (dx * dx + dy * dy > 10000 && that !== mech.holdingTarget) {
+            // that.collisionFilter.category = cat.body; //make solid
+            that.collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.mob | cat.mobBullet; //can hit player now
           } else {
-            setTimeout(solid, 50, that);
+            setTimeout(solid, 25, that);
           }
         };
-        setTimeout(solid, 200, mech.holdingTarget);
+        setTimeout(solid, 150, mech.holdingTarget);
         //throw speed scales a bit with mass
         const speed = Math.min(85, Math.min(54 / mech.holdingTarget.mass + 5, 48) * Math.min(mech.throwCharge, mech.throwChargeMax) / 50);
 
@@ -1111,7 +1111,6 @@ const mech = {
         if (index === mech.fieldUpgrades[i].name) index = i
       }
     }
-
     mech.fieldMode = index;
     document.getElementById("field").innerHTML = mech.fieldUpgrades[index].name
     mech.setHoldDefaults();
@@ -1122,7 +1121,6 @@ const mech = {
       description: "use <strong class='color-f'>energy</strong> to <strong>shield</strong> yourself from <strong class='color-d'>damage</strong><br>lets you <strong>pick up</strong> and <strong>throw</strong> objects",
       isEasyToAim: false,
       effect: () => {
-        mech.fieldShieldingScale = Number(b.modFieldEfficiency);
         game.replaceTextLog = true; //allow text over write
         mech.hold = function () {
           if (mech.isHolding) {
@@ -1535,6 +1533,7 @@ const mech = {
       isEasyToAim: true,
       effect: () => {
         mech.fieldRegen *= 2;
+        mech.fieldShieldingScale = b.modFieldEfficiency;
         mech.hold = function () {
           if (mech.energy > mech.fieldEnergyMax - 0.02 && mech.fieldCDcycle < mech.cycle) {
             mech.fieldCDcycle = mech.cycle + 17; // set cool down to prevent +energy from making huge numbers of drones
@@ -1579,7 +1578,7 @@ const mech = {
     },
     {
       name: "phase decoherence field",
-      description: "become <strong>intangible</strong> and <strong>invisible</strong><br>drains <strong class='color-f'>energy</strong> as you move",
+      description: "use <strong class='color-f'>energy</strong> to become <strong>intangible</strong><br><strong>moving</strong> and touching <strong>shields</strong> amplifies <strong>cost</strong>",
       isEasyToAim: true,
       effect: () => {
         mech.hold = function () {
@@ -1590,7 +1589,7 @@ const mech = {
             mech.holding();
             mech.throwBlock();
           } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) {
-            const DRAIN = 0.00015 + 0.00027 * player.speed
+            const DRAIN = 0.0001 + 0.00017 * player.speed
             if (mech.energy > DRAIN) {
               mech.energy -= DRAIN;
 
@@ -1610,15 +1609,37 @@ const mech = {
               mech.grabPowerUp();
               mech.lookForPickUp();
 
-              if (mech.energy > 0.006 && b.isModPhaseFieldDamage) { //damage mobs inside the player
-                let inPlayer = Matter.Query.region(mob, player.bounds)
-                if (inPlayer.length > 0) {
-                  for (let i = 0; i < inPlayer.length; i++) {
-                    if (inPlayer[i].dropPowerUp && !inPlayer[i].isShielded) {
-                      inPlayer[i].damage(0.2 * b.dmgScale);
-                      mech.energy -= 0.002;
-                      break;
+              let inPlayer = Matter.Query.region(mob, player.bounds)
+              if (inPlayer.length > 0) {
+                for (let i = 0; i < inPlayer.length; i++) {
+                  if (inPlayer[i].shield) {
+                    mech.energy -= 0.01; //shields drain player energy
+                    //draw outline of shield
+                    ctx.fillStyle = `rgba(0, 204, 255,0.6)`
+                    ctx.fill()
+                  } else if (b.isModPhaseFieldDamage && mech.energy > 0.006 && inPlayer[i].dropPowerUp && !inPlayer[i].isShielded) {
+                    inPlayer[i].damage(0.4 * b.dmgScale); //damage mobs inside the player
+                    mech.energy -= 0.002;
+
+                    //draw outline of mob in a few random locations to show blurriness
+                    const vertices = inPlayer[i].vertices;
+                    const off = 30
+                    for (let k = 0; k < 3; k++) {
+                      const xOff = off * (Math.random() - 0.5)
+                      const yOff = off * (Math.random() - 0.5)
+                      ctx.beginPath();
+                      ctx.moveTo(xOff + vertices[0].x, yOff + vertices[0].y);
+                      for (let j = 1, len = vertices.length; j < len; ++j) {
+                        ctx.lineTo(xOff + vertices[j].x, yOff + vertices[j].y);
+                      }
+                      ctx.lineTo(xOff + vertices[0].x, yOff + vertices[0].y);
+                      // ctx.strokeStyle = "#000"
+                      // ctx.lineWidth = 1
+                      // ctx.stroke()
+                      ctx.fillStyle = "rgba(0,0,0,0.3)"
+                      ctx.fill()
                     }
+                    break;
                   }
                 }
               }

@@ -1,34 +1,34 @@
 ************** TODO - n-gon **************
 
-bug getting stuck in crouch mode
+mod - status effects last 1 second longer
+  wait until you have more status effects written
+
+mod - time dilation - Quantum Recovery
+  Expending all your energy while using the field will
+    cause the player to go back in time to 3 seconds before the field was activated
+      resets ammo?, health, position, velocity
+      need to track player info in game.checks() in an array
+        put the array in the time field object
+    cause the player to go back in time when the field was first activated (easier then going back to 3 seconds before)
+
+bug - getting stuck in crouch mode
   press T to see it visually
-  happened twice
-    once right after selecting a mod  lots of blocks around
+  happened twice to me so far
+    once right after selecting a mod with lots of blocks around
       I don't think I was holding a block
       might have been standing on a block... not sure
 
 mobs - add in a function to the main loops that does injected code for each mob
   each mob would get an object with a game.cycle for ending and a method to run each cycle until the end is met
-  this could be a DOT, graphics, slow
-  mod - flechettes mod for poison damage
-
-mod - get your next recursive mod 3 times
-  are players aware of what a recursive mod is?
-  too much of a nova drift rip off?
-
-mod - vacuum bomb needs a mod
-mod - grenade needs a mod
-mod - time dilation field needs a mod
-mod - phase decoherence field needs a mod
-
-buff mod field radius for standing wave harmonics
-
+  this could be a DoT, graphics, slow, blind
+  stun - combine blind, slow
+    with increased gravity effects, but how
+  burn effect doesn't look right, too similar to poison
+  mod - grenade explosions stun enemies
+  mod - vacuum bomb does DoT damage after exploding
+  
 settings - auto aim at nearest mob
 settings - custom keys binding
-
-mod - rocket propelled grenades
-  grenades do +20% damage and move in an accelerating path
-  maybe explode on collision with map?
 
 gun - buff vacuum bomb
   its weak late game
@@ -41,13 +41,6 @@ gun - buff vacuum bomb
   
 mod - make bodies destroyable
   they drop ammo and heals
-
-mod - BIOS update
-  lose all mods other than BIOS update
-  deal +100% damage from all sources
-mod - Infrared Sensors
-  You can see invisible enemies
-  this seems weak, maybe add to one of the fields
 
 mod - mines - fire something instead of needles on activation
   foam?, flak?, vacuum bomb, super balls
@@ -78,28 +71,12 @@ atmosphere levels: change the pace, give the user a rest between combat
     in the final level you see your self at the starting level, with the wires
       you shoot your self to wake up?
 
-shotgun - even more short range effects
-
-mod: flechettes - each burst fires an extra flechettes
-mod: flechettes - stick into mobs and do poison damage, like foam
-
-mod: foam - does extra poison dmg  (to get past shields)
-
-mod: vacuum bomb - does a constant suck
-
-mod: shotgun - fire extra shot
-  but also increase spread?
-
 mob: targeting laser, then a high speed, no gravity bullet
 
 css transition for pause menu
 
 field that pushes everything back, and can destroy smaller blocks
   converts blocks into ammo power ups
-
-mod: chance to not die from fatal damage
-  also push mobs and bodies away?
-  also heal?
 
 mod: bot that fires minigun bullets
   only fires when your mouse is held down
