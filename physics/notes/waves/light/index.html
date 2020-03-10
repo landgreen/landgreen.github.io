@@ -1409,6 +1409,45 @@
 			</details>
 		</div>
 		<div class='example-small'>
+			<strong>Question:</strong> What combination of light sources make the color <strong style="color:#654321;">brown</strong>?
+			<details>
+				<summary>answer</summary>
+				<p>
+					Brown is tricky. Brown is a dark orange like grey is a dark white.
+					Orange is red plus a bit of green, and almost no blue.
+					Making orange look dark depends on <a href="https://www.youtube.com/watch?v=wh4aWZRtTwU">context</a>.
+					Dark orange only looks dark with a bright background.
+				</p>
+
+				<script>
+					function black() {
+						if (filter.c === 255) {
+							filter.c = 0
+							filter.m = 0
+							filter.y = 0
+						} else {
+							filter.c = 255
+							filter.m = 255
+							filter.y = 255
+						}
+
+						document.getElementById("cyan-slider").value = filter.c
+						document.getElementById("magenta-slider").value = filter.m
+						document.getElementById("yellow-slider").value = filter.y
+						setBGColor()
+					}
+				</script>
+				<div style="height:200px; width:200px; background-color:#654321;" onclick="black()"></div>
+				<p>
+					If you aren't convinced try this:
+					<li>Make your surroundings <strong>completely</strong> dark.</li>
+					<li>Click on the brown square to darken the background color of this page.</li>
+					<li>Wait at least ten seconds for your eyes to adjust.</li>
+					<li>Look at the brown box again.</li>
+				</p>
+			</details>
+		</div>
+		<div class='example-small'>
 			<strong>Question:</strong> A green filter removes red and blue light to leave just green light.
 			How else could filters turn white light into <strong style="color:#0f0;">green</strong> light?
 			<details>

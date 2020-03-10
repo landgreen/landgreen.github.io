@@ -13,7 +13,7 @@
   <meta name="twitter:title" content="Physics Notes">
   <meta name="twitter:description" content="Interactive notes for algebra based physics.">
 
-  <title>Photons</title>
+  <title>Quantum Mechanics</title>
   <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
 
   <link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
@@ -28,7 +28,7 @@
 <body>
   <header>
     <h1>
-      <a href="../../../index.html">Photons</a>
+      <a href="../../../index.html">Quantum Mechanics</a>
     </h1>
   </header>
   <article>
@@ -51,17 +51,23 @@
         Particles are one of the basic models used by physics to simplify approximations.
         Particles have a position in space and time, but they don't have any internal structure.
         They have a mass and velocity, and they can collide like <a href="../../motion/motion/index.html">billiard balls</a>.
+      </p>
+      <p>
         The particle model approximates phenomena like:
         collisions, temperature, pressure, friction, electricity, diffusion, and chemical reactions.
         <!-- The particle model is applied to things like: photons, electrons, protons, atoms, molecules, cells, dust, sand, tennis balls, and stars. -->
       </p>
+      <br>
       <p>
         The wave model approximates how energy spreads through a medium.
         For example, a sound wave propagates through air when atoms collide.
         The wave model also applies to unexpected media, like traffic waves for cars.
+      </p>
+      <p>
         Waves are used to approximate phenomena like:
         color, diffraction, interference patterns, doppler shifting, standing waves, reflection, and refraction.
       </p>
+      <br>
       <p>
         <li><strong>Particles</strong> are located at a single position.</li>
         <li><strong>Waves</strong> are spread out with negative and positive amplitudes.</li>
@@ -78,12 +84,13 @@
       <p>
         The overlap between the wave and particle models at the nanometer scale led to many more exciting experiments.
         Over time, physicists developed and refined a new model, called <strong>quantum mechanics</strong>.
-        Predictions based on quantum mechanics can only give probabilities,
+        Predictions based on <a href="https://www.youtube.com/watch?v=fjZXqdUZDZA">quantum mechanics</a> can only give probabilities,
         but when applied to repeated experiments they have an unparalleled level of accuracy.
       </p>
       <p>
         An understanding of <a href="https://www.youtube.com/playlist?list=PLsPUh22kYmNCGaVGuGfKfJl-6RdHiCjo1">quantum mechanics</a> is typically achieved after studying the underlying math.
-        Building an intuition without the math can be <a href="https://www.smbc-comics.com/comic/the-talk-3">confusing</a>, but here is a brief and inevitably flawed summary.
+        Building an intuition without the math can be <a href="https://www.smbc-comics.com/comic/the-talk-3">confusing</a>,
+        but here is a brief and inevitably flawed description.
       </p>
       <details class="derive">
         <summary>how quantum mechanics makes predictions</summary>
@@ -128,11 +135,25 @@
 
         <h2 class='underlined-small'>The Many-Worlds Interpretations</h2>
         <p>
-          If the mathematics of quantum mechanics is describing a "real" process, it means that every possible outcome of an interaction actually occurs.
-          All the outcomes are in a superposition, but after an interaction the outcomes decohere from each other.
-          This means that different outcomes are permanently isolated from each other in separate <a href="https://www.youtube.com/watch?v=dzKWfw68M5U">branching worlds</a>.
+          If the mathematics of quantum mechanics is interpreted literally,
+          it means that every possible outcome of an interaction actually <a href="https://www.youtube.com/watch?v=dzKWfw68M5U">occurs</a>.
+          These possible outcomes interfere with each other in a way that effects the probability of which outcomes are actually observed.
         </p>
         <p>
+          Right after an interaction the different outcomes haven't diverged from each other, so they are in similar phases of their wave cycle.
+          Being in similar phases allows constructive and destructive interference patterns to form.
+          Outcomes get out of phase with each other after interacting with different aspects of the environment.
+          Being out of phase disrupts the constructive and destructive interference patterns.
+          We say that the outcomes <a href="https://www.youtube.com/watch?v=GlOwJWJWPUs">decohere</a> from each other after interacting with the environment.
+        </p>
+        <p>
+          <a href="../waveproperties/index.html#standing-wave-sim">Standing waves</a> work in a similar way.
+          Waves form constructive and destructive patterns when the wavelength of reflections match the size of the space they are in.
+          When the space doesn't match the wavelength, the reflections just add up to background noise.
+        </p>
+        <p>
+          The many-worlds interpretation suggests that a version of you exists that observes each possible outcome of a quantum event.
+          You can't interact with those other versions because their phase is out of sync with your phase.
           No one has devised an experiment to test for these branching worlds. For now their existence is unknowable.
         </p>
 
@@ -140,26 +161,27 @@
         <p>
           The Copenhagen interpretation was the first popular explanation of the math behind quantum mechanics.
           It says that particles have no precise position or momentum.
-          They are just a wave of probability. Yet, after interacting with another particle they collapse into a single position and momentum.
+          They are just a waves of probability.
+          Yet, after interacting with another particle they collapse into a single outcome chosen at random.
         </p>
         <p>
-          The Copenhagen interpretation diverges from the many-worlds interpretation in an important way.
-          It says that after an interaction only one possible outcome is randomly selected to occur.
-          The unchosen outcomes are said to be <a href="https://www.youtube.com/watch?v=fjZXqdUZDZA">collapsed</a>.
+          The Copenhagen interpretation calculates the wave function by adding the amplitudes of every possible outcome.
+          It diverges from the many-worlds interpretation by randomly choosing just one possible outcome.
         </p>
         <p>
-          Collapsing the wave function down to one outcome allows us to reject the idea of branching worlds at the cost of an extra step.
+          The unchosen outcomes are said to be collapsed.
+          Collapsing the wave function down to one outcome allows us to remove the extra worlds at the cost of an extra step.
         </p>
 
         <h2 class='underlined-small'>Pilot Wave Theory</h2>
         <p>
           This interpretation is in some ways the closest to classical physics.
-          Particles are real, and there is only one reality, but there is also a wave function that determines how particle move.
-          A particle's trajectory is guided away from regions where the wave function interference is destructive and towards regions of constructive interference.
+          Particles are real, and there is only one reality, but there is also a wave function that determines how a particle moves.
+          A particle's trajectory is guided away from regions where the wave function's interference is destructive and towards regions of constructive interference.
         </p>
         <p>
-          Unlike other interpretations, the <a href="https://www.youtube.com/watch?v=RlXdsyctD50">pilot wave theory</a> allows us to view particles as real things in a single reality.
-          The downside is that it requires the wave function to act like a hidden variable.
+          Unlike other interpretations, the <a href="https://www.youtube.com/watch?v=RlXdsyctD50">pilot wave theory</a> allows us to view particles as real things.
+          The downside is that we also have to accept a hidden layer of reality that guides particles, but isn't directly observable.
         </p>
 
         <!-- <p>
@@ -183,20 +205,43 @@
       </details>
       <br>
       <details class="derive">
-        <summary>quantum phenomena at everyday sizes</summary>
+        <summary>wave-particle duality</summary>
+        <p>
+          Is reality made of particles that act like waves, or waves that act like particles?
+        </p>
+        <p>
+          Sometimes reality acts like a wave or particle, but fundamentally reality is its own thing.
+        </p>
+        <br>
+        <p>
+          Before quantum mechanics, physicists thought light was waves and atoms were particles.
+          This dual view arose because of differences in how light and atoms interact.
+          Atoms push other atoms away. This interaction makes their wave nature more fleeting.
+          Photons of light don't normally interact with each other, so they maintain their wave nature more predictably.
+        </p>
+        <p>
+          In particle physics, things that take up space are called <strong>fermions</strong>.
+          This includes atoms, electrons, protons, quarks, and most molecules.
+          Things that can be stacked up in the same location are called <strong>bosons</strong>.
+          This includes force carrier particles like light.
+          The reason for this differences in interaction has to do with a property called <a href="https://www.youtube.com/watch?v=_1S6KfMzOH8">spin</a>.
+        </p>
+        <br>
+        <p>
+          An advanced version of quantum mechanics, called <a href="https://www.youtube.com/watch?v=ATcrrzJFtBY&t=747s">quantum field theory</a> has a wave-centric view.
+          In this theory there is a field for each type of fundamental particle that is spread out across all of space and time.
+          Each individual particle is viewed as a localized excited state of its underlying field.
+          For example, a single electron is an excited state of the electron field.
+          The electron field exists everywhere, but electrons are more likely to be measured in areas that are excited.
+        </p>
+      </details>
+      <br>
+      <details class="derive">
+        <summary>observing quantum phenomena</summary>
         <p>
           Quantum mechanics explains almost all observable <a href="https://www.youtube.com/watch?v=xnWxtU2OUTE">phenomena</a>.
           It explains the color of materials, rigidity of solids, conductivity, <a href="https://www.youtube.com/watch?v=zPqEEZa2Gis">superconductivity</a>, magnetism, all of chemistry, and just about everything else in reality.
           <!-- Quantum mechanics helps engineers build technologies like computers, LEDs, lasers, MRIs, and GPS. -->
-        </p>
-        <p>
-          A <a href="http://toutestquantique.fr/en/bose-einstein-condensate/">Bose-Einstein condensate</a>
-          is one way to produce particles in superposition at the macroscopic scale.
-          They are made by cooling a class of particles to near absolute zero.
-          Cold particles move slower, and according to quantum mechanics slower particles have longer wavelengths.
-          As the temperature lowers, the wave functions of the particles begin to overlap.
-          This causes them to enter a shared quantum state.
-          A group of particles in this shared state behave as if they had a single wave function.
         </p>
         <br>
         <p>
@@ -218,18 +263,21 @@
         </p>
         <br>
         <p>
+          A <a href="http://toutestquantique.fr/en/bose-einstein-condensate/">Bose-Einstein condensate</a>
+          is one way to produce particles in superposition at the macroscopic scale.
+          They are made by cooling a class of particles to near absolute zero.
+          Cold particles move slower, and according to quantum mechanics slower particles have longer wavelengths.
+          As the temperature lowers, the wave functions of the particles begin to overlap.
+          This causes them to enter a shared quantum state.
+          A group of particles in this shared state behave as if they had a single wave function.
+        </p>
+        <br>
+        <p>
           Quantum mechanics is currently the most accurate theory for how our universe works, but it is still limited.
           Quantum mechanics doesn't explain large scale phenomena, like gravitation, dark matter, or dark energy.
           New theories that unite gravity with quantum mechanics are being developed, but so far nothing testable has emerged.
         </p>
       </details>
-      <p>
-        It's hard to directly observe quantum mechanics in atoms.
-        Yet, with photons of light we can see quantum effects with little effort.
-        This is possible because photons rarely interact with each other, and they can have longer wavelengths than matter.
-        We've already learned about the <a href="..\..\waves\waveproperties\index.html">wave</a> nature of <a href="..\..\waves\light\index.html">light</a>.
-        On this page we will explore light's particle based quantum effects.
-      </p>
     </div>
 
     <h2 class='underlined'>Photon Energy</h2>
@@ -1293,8 +1341,8 @@
       </p>
       <p>
         Quantum mechanics tells us that electrons can be described by a probability wave that represents the odds of finding an electron in a given state.
-        As an electron tries to orbit the nucleus in both clockwise and counterclockwise directions, the electron's probability wave destructively interferes with itself.
-        This limits the wavelengths to values that allow orbital <a href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
+        As an electron tries to orbit the nucleus, the electron's probability wave destructively interferes with itself.
+        This limits the wavelengths to values that allow constructive orbital <a href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
         We say that the allowed wavelengths are <a href="http://toutestquantique.fr/en/quantization/">quantized</a>.
         <strong>Quantizing</strong> means to restrict a variable to specific values.
       </p>

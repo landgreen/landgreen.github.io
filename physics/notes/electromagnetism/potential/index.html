@@ -31,10 +31,9 @@
 		<!-- <h2 class='underlined'>Electrostatic Potential Energy</h2> -->
 		<p>
 			Electrostatic potential energy has a similar form to <a href='../../gravity/gravitation/index.html#gpe'>gravitational potential energy</a>.
-			It is Coulomb's law, but the radius is not squared.
+			You can think of the electrostatic energy as the work to move two charges to a distance, r, from each other.
 		</p>
 		<div class='definition'>
-			<p>You can think of the electrostatic energy as the work to move two charges to a distance, r, from each other.</p>
 			<svg viewBox="0 0 400 110">
 				<defs>
 					<linearGradient id="hor_shadow" x1="0" x2="1" y1="0" y2="0">
@@ -63,7 +62,7 @@
 					<line x1="100" y1="-5" x2="100" y2="5" style="stroke:#000;stroke-width:2" />
 					<text x="50" y="20" fill="black" text-anchor="middle" font-size="20px">r</text>
 					<rect x="100" y="-1" width="300" height="2" fill='url(#hor_shadow)' />
-					<text x="350" y="20" fill="black" text-anchor="middle" font-size="25px" opacity='0.3'>∞</text>
+					<text x="352" y="20" fill="black" text-anchor="middle" font-size="25px" opacity='0.3'>∞</text>
 				</g>
 			</svg>
 			<h2>$$ U_{e} = \frac{k_{e}q_{1}q_{2}}{r} $$</h2>
@@ -239,10 +238,10 @@
 		<h2 class='underlined' id="potential">Electric Potential</h2>
 		<p>Electric potential is mathematically similar to electric fields. Electric fields are the force per unit charge, and electric potential is the energy per unit charge.</p>
 		$$ V = \frac{U_e}{q}$$
+		<p>
+			You can think of electric potential as the energy needed to bring a +1C test charge from very far away to a distance, r, from the other charge.
+		</p>
 		<div class='definition'>
-			<p>
-				You can think of electric potential as the energy needed to bring a +1C test charge from very far away to a distance, r, from the other charge.
-			</p>
 			<svg viewBox="0 0 400 110">
 				<defs>
 					<linearGradient id="hor_shadow" x1="0" x2="1" y1="0" y2="0">
@@ -268,7 +267,7 @@
 					<line x1="100" y1="-5" x2="100" y2="5" style="stroke:#000;stroke-width:2" />
 					<text x="50" y="20" fill="black" text-anchor="middle" font-size="20px">r</text>
 					<rect x="100" y="-1" width="300" height="2" fill='url(#hor_shadow)' />
-					<text x="350" y="20" fill="black" text-anchor="middle" font-size="25px" opacity='0.3'>∞</text>
+					<text x="352" y="20" fill="black" text-anchor="middle" font-size="25px" opacity='0.3'>∞</text>
 				</g>
 			</svg>
 			<h2>$$V = \frac{k_{e}q}{r} $$</h2>
@@ -276,8 +275,8 @@
 				<br>\(k_e\) = 8.987 × 10<sup>9</sup> = Coulomb's constant [N m²/C²]
 				<br>\(q\) = charge [C, Coulomb]
 				<br>\(r\) = distance between the center of each charge [m, meters]
+				<p>Electric potential has units of volts, a unit that shows up again when dealing with electric circuits.</p>
 		</div>
-		<p>Electric potential has units of volts, a unit that shows up again when dealing with electric circuits.</p>
 
 		<div class="example-small" id="three-potential-example">
 			<style>
@@ -312,14 +311,10 @@
 				<option value="clear">clear</option>
 			</select>
 			<canvas class='center' id='charge5' height='250' onclick="charges5(this)"></canvas>
-			<p>Click the simulations a few times to push the charges around. These simulations help develop a vague intuition for electric potential, but they don't capture the nuances of quantum mechanics.
+			<p>
+				Click the simulations a few times to push the charges around. These simulations help develop a vague intuition for electric potential, but they don't capture the nuances of quantum mechanics.
 			</p>
 		</div>
-		<!-- <p>These 2D simulations use color to show electric potential. </p>
-		<canvas class='center' id='charge6' height='300' onclick="charges6(this)"> </canvas>
-		<p>Click the simulations a few times to push the charges around. Right click adds positive charge, middle mouse adds negative charge.</p>
-		<canvas class='center' id='charge7' height='250' onclick="charges7(this)"> </canvas> -->
-
 		<div class='example'>
 			<strong>Example:</strong> A <a href="https://en.wikipedia.org/wiki/Scanning_electron_microscope">scanning electron microscope</a> can achieve resolution better than 1 nanometer. It produces <a href="https://www.youtube.com/watch?v=2bZoR3z-R6I">images</a> by scanning with a focused beam of electrons. The electrons are propelled at a sample target with a voltage between 5&nbsp;000 V and 25&nbsp;000 V. Generally the higher voltage gives better resolution.
 			<br>
@@ -330,7 +325,7 @@
 				$$ V = \frac{(8.987 \times 10^{9})(-1.6 \times 10^{-19})}{10^{-9}} $$
 				$$ V = -1.440\, \mathrm{volts}$$
 			</details>
-			<p>What is the potential at 0.001 nm from a single electron?</p>
+			<br>What is the potential at 0.001 nm from a single electron?
 			<details>
 				<summary>solution</summary>
 				$$ V = \frac{(8.987 \times 10^{9})(-1.6 \times 10^{-19})}{10^{-12}} $$
@@ -393,8 +388,10 @@
 				<br>\(V_i\) = initial voltage [V, volts]
 		</div>
 		<p>A voltage applied to a wire will cause the electrons to flow, possibly doing something useful.</p>
-		<p>Voltage increases can be produced by: batteries and electrical sockets.
-			<br>Voltage drops can be caused by: resistors, processors, lights, motors, speakers.</p>
+		<p>
+			Voltage increases can be produced by: batteries and electrical sockets.
+			<br>Voltage drops can be caused by: resistors, processors, lights, motors, speakers.
+		</p>
 		<div class='example'>
 			<strong>Example:</strong> What is the electric potential difference between 1 m and 4 m away from a 2 C charge?
 			<details>

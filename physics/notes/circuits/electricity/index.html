@@ -31,7 +31,7 @@
 	<article>
 		<p>
 			In 1799 Alessandro Volta is credited with building the first <a href="https://www.youtube.com/watch?v=GhbuhT1GDpI">electric battery</a>.
-			Volta's battery had the same structure as a modern battery, an electrolyte sandwiched between two different metals.
+			Volta's battery produced voltage with an electrolyte sandwiched between two different metals.
 			<!-- zinc and copper.
 			The copper draws electrons from the zinc. Charges flow from the electrolyte to equalize the built up charge. -->
 		</p>
@@ -40,7 +40,7 @@
 		</p>
 		<p>
 			Solar panels are growing in popularity as an alternative voltage source.
-			They use the <a href="../../waves/photons/index.html#photo-electric">photovoltaic effect</a> to convert light into electricity.
+			They use the <a href="../../waves/quantum/index.html#photo-electric">photovoltaic effect</a> to convert light into electricity.
 			Albert Einstein explained the photovoltaic effect in 1905, but it wasn't until the 1950s that Bell Laboratories developed the first solar panels.
 		</p>
 
@@ -52,7 +52,7 @@
 			They drift through the conductor in a random walk bouncing off other charges.
 		</p>
 		<p>
-			These simulations model electric current with Coulomb's law. They don't include the nuances of quantum mechanics.
+			These simulations model electric current with Coulomb's law. They don't include the nuances of <a href="https://youtu.be/KGJqykotjog?t=376">quantum mechanics</a>.
 		</p>
 		<canvas id='charge7' width="600" height='150' onclick="charges7(this)"> </canvas>
 		<p>A small imbalance in net charge produces an electric field. The electric field points in the same direction as the current.</p>
@@ -129,7 +129,7 @@
 		</svg>
 
 		<div class='example'>
-			<strong>Example:</strong> Every minute 1.2 coulombs of charge passes through a typical <a href="https://en.wikipedia.org/wiki/Light-emitting_diode">LED</a>. What is the current in the LED?
+			<strong>Example:</strong> 1.2 coulombs of charge passes through a typical <a href="https://en.wikipedia.org/wiki/Light-emitting_diode">LED</a> every minute. What is the current in the LED?
 			<details>
 				<summary>solution</summary>
 				$$I = \frac{q}{\Delta t}$$
@@ -414,87 +414,6 @@
 		<p>
 			The resistance of a material is the inverse of its conductivity. <a href="../../electromagnetism/charge/index.html#conductivity">Conductors</a> have nearly zero resistance and insulators have very high resistance.
 		</p>
-		<div class="example">
-			<div class="center">
-				resistance =
-				<input id='resistance-slider' type="range" min="0" max="3.17" step="0.01" value="1" style="width: 200px;">
-				<input id='resistance' type="number" step="0.01" value="1" min="0" style="width: 60px;"> Ω
-				<svg id="SVG-graph-0" viewBox="0 0 600 300">
-					<circle id="origin-0" cx="20" cy="280" r="6" fill="rgb(255,0,0)" />
-				</svg>
-			</div>
-			<script>
-				{
-					let settings = {
-						x0: 20,
-						y0: 280,
-						// stroke: "none",
-						stroke: "rgba(255,0,0,1)",
-						strokeWidth: 3,
-						fill: "rgba(255,0,0,0.2)",
-						positiveOnly: true,
-						gridSize: 50,
-						xLabel: "current (A)",
-						yLabel: "voltage (V)",
-						step: 10, //big steps because the function is linear
-						showMouseCoords: true,
-					}
-					funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, settings);
-					settings.updatePath = true
-
-					document.getElementById("resistance").addEventListener("input", event => {
-						document.getElementById("resistance-slider").value = Math.sqrt(document.getElementById("resistance").value);
-						funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, settings);
-					});
-
-					document.getElementById("resistance-slider").addEventListener("input", event => {
-						document.getElementById("resistance").value = document.getElementById("resistance-slider").value * document.getElementById("resistance-slider").value
-						funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, settings);
-					});
-					//bring circle at origin to front
-					const parent = document.getElementById("SVG-graph-0");
-					const shouldBeLast = document.getElementById("origin-0");
-					const last = document.getElementById("SVG-graph-0-path");
-					parent.insertBefore(parent.removeChild(shouldBeLast), last);
-				}
-			</script>
-			<p><strong>Question:</strong> What is the relationship between resistance, current, and voltage?</p>
-			<style>
-				.underlined-normal {
-					text-decoration: underline;
-				}
-			</style>
-			For constant resistance:
-			<br>When voltage is increased, the current is __________.
-			<br>When voltage is decreased, the current is __________.
-			<details>
-				<summary>answer</summary>
-				<p>
-					When voltage is increased, the current is <span class="underlined-normal">increased</span>.
-					<br>When voltage is decreased, the current is <span class="underlined-normal">decreased</span>.
-				</p>
-				<p>
-					Voltage and current are directly proportional.
-					<br>They increase and decrease together.
-				</p>
-			</details>
-			<br>
-			<br>
-			For constant voltage:
-			<br>When resistance is increased, the current is __________.
-			<br>When resistance is decreased, the current is __________.
-			<details>
-				<summary>answer</summary>
-				<p>
-					When resistance is increased, the current is <span class="underlined-normal">decreased</span>.
-					<br>When resistance is decreased, the current is <span class="underlined-normal">increased</span>.
-				</p>
-				<p>
-					Resistance and current are inversely proportional.
-					<br>When one increases the other decreases.
-				</p>
-			</details>
-		</div>
 		<div class='definition' id="ohms-law">
 			<h1>$$V = IR$$</h1>
 			\(V\) = voltage, a change in electric potential [V, volts]
@@ -636,6 +555,88 @@
 				$$ \text{V and I are directly proportional}$$
 				$${ \Uparrow \atop V} {\atop =} { \Uparrow \atop I} { \atop R}$$
 				$$ \text{doubling V will double I}$$ -->
+			</details>
+		</div>
+
+		<div class="example">
+			<div class="center">
+				resistance =
+				<input id='resistance-slider' type="range" min="0" max="3.17" step="0.01" value="1" style="width: 200px;">
+				<input id='resistance' type="number" step="0.01" value="1" min="0" style="width: 60px;"> Ω
+				<svg id="SVG-graph-0" viewBox="0 0 600 300">
+					<circle id="origin-0" cx="20" cy="280" r="6" fill="rgb(255,0,0)" />
+				</svg>
+			</div>
+			<script>
+				{
+					let settings = {
+						x0: 20,
+						y0: 280,
+						// stroke: "none",
+						stroke: "rgba(255,0,0,1)",
+						strokeWidth: 3,
+						fill: "rgba(255,0,0,0.2)",
+						positiveOnly: true,
+						gridSize: 50,
+						xLabel: "current (A)",
+						yLabel: "voltage (V)",
+						step: 10, //big steps because the function is linear
+						showMouseCoords: true,
+					}
+					funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, settings);
+					settings.updatePath = true
+
+					document.getElementById("resistance").addEventListener("input", event => {
+						document.getElementById("resistance-slider").value = Math.sqrt(document.getElementById("resistance").value);
+						funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, settings);
+					});
+
+					document.getElementById("resistance-slider").addEventListener("input", event => {
+						document.getElementById("resistance").value = document.getElementById("resistance-slider").value * document.getElementById("resistance-slider").value
+						funGraphSVG("SVG-graph-0", x => document.getElementById("resistance").value * x, settings);
+					});
+					//bring circle at origin to front
+					const parent = document.getElementById("SVG-graph-0");
+					const shouldBeLast = document.getElementById("origin-0");
+					const last = document.getElementById("SVG-graph-0-path");
+					parent.insertBefore(parent.removeChild(shouldBeLast), last);
+				}
+			</script>
+			<p><strong>Question:</strong> What is the relationship between resistance, current, and voltage?</p>
+			<style>
+				.underlined-normal {
+					text-decoration: underline;
+				}
+			</style>
+			For constant resistance:
+			<br>When voltage is increased, the current is __________.
+			<br>When voltage is decreased, the current is __________.
+			<details>
+				<summary>answer</summary>
+				<p>
+					When voltage is increased, the current is <span class="underlined-normal">increased</span>.
+					<br>When voltage is decreased, the current is <span class="underlined-normal">decreased</span>.
+				</p>
+				<p>
+					Voltage and current are directly proportional.
+					<br>They increase and decrease together.
+				</p>
+			</details>
+			<br>
+			<br>
+			For constant voltage:
+			<br>When resistance is increased, the current is __________.
+			<br>When resistance is decreased, the current is __________.
+			<details>
+				<summary>answer</summary>
+				<p>
+					When resistance is increased, the current is <span class="underlined-normal">decreased</span>.
+					<br>When resistance is decreased, the current is <span class="underlined-normal">increased</span>.
+				</p>
+				<p>
+					Resistance and current are inversely proportional.
+					<br>When one increases the other decreases.
+				</p>
 			</details>
 		</div>
 

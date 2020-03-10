@@ -31,18 +31,17 @@
 		<p>Kirchhoff’s Laws were published in 1845 by German physicist Gustav Kirchhoff. When Kirchhoff's laws are combined with Ohm's law we are able to calculate voltage and current for complex circuits.</p>
 		<h2 class='underlined'>Electric Potential in Circuits</h2>
 		<p>
-			<a href="..\electricity\index.html#voltage">Electric potential</a> roughly represents the concentration of electrical potential energy in a circuit.
-			<!-- Potential is analogous to water pressure. -->
-
-			We call a change in electric potential across a circuit element the electric potential difference or more commonly the <a href="https://www.youtube.com/watch?v=-Rb9guSEeVE">voltage</a>.
-		</p>
-		<p>
-			Electric potential quickly spreads to a uniform value throughout an uninterrupted section of wire. This is similar to how water in a cup stays at the same height because it spreads out against the force of gravity.
+			<a href="..\electricity\index.html#voltage">Electric potential</a> roughly represents the concentration of energy in a circuit.
+			The potential quickly spreads to a uniform value throughout an uninterrupted section of wire.
+			This is similar to how water in a cup stays at the same height because it spreads out against the force of gravity.
 		</p>
 		<p>
 			Electric potential is constant until it reaches a circuit element.
 			<br>Across a resistor the potential drops, so the voltage is negative.
 			<br>Across a battery the potential increases, so the voltage is positive.
+		</p>
+		<p>
+			Differences in electric potential are called <a href="https://www.youtube.com/watch?v=-Rb9guSEeVE">voltage</a>.
 		</p>
 		<div class='example'>
 			<svg viewBox="0 -5 600 70">
@@ -353,10 +352,12 @@
 				<text x="250" y="30" text-anchor="middle" font-size="20" fill='#333'>V2</text>
 				<text x="430" y="160" text-anchor="middle" font-size="20" fill='#333'>V3</text>
 				<text x="250" y="283" text-anchor="middle" font-size="20" fill='#333'>V4</text>
-				<path transform="translate(250 150)" d="M-70 4 A 70 70, 0, 1, 1, -25 65" stroke="#333" fill="none" stroke-width="3" stroke-miterlimit="1" stroke-linejoin="round" stroke-linecap="round" />
-				<polygon transform="translate(180 160)" points="0,0 8,-16 0,-15 -8,-16" fill="#333" />
+				<g opacity="0.5">
+					<path transform="translate(250 150)" d="M-70 4 A 70 70, 0, 1, 1, -25 65" stroke="#f00" fill="none" stroke-width="3" stroke-miterlimit="1" stroke-linejoin="round" stroke-linecap="round" />
+					<polygon transform="translate(180 160)" points="0,0 8,-16 0,-15 -8,-16" fill="#f00" />
+				</g>
 			</svg>
-			<p>For any closed circuit loop the sum of all potential differences equals zero.</p>
+			<p>For any closed circuit loop the sum of all voltages equals zero.</p>
 			<h1> $$ \sum V = 0 $$ $$ V_1+V_2+V_3+V_4 = 0 $$ </h1>
 			\(V\) = potential difference, voltage [V, volts]
 		</div>
@@ -1291,13 +1292,14 @@
 			<details>
 				<summary>strategy</summary>
 				<p>
-					Replace the three resistors in parallel with one equivalent resistor. The equivalent resistor will have the same voltage as each resistor in parallel.
+					Replace the three resistors in parallel with one equivalent resistor.
+					The equivalent resistor will have the same voltage as each resistor in parallel because of Kirchhoff's voltage law.
 				</p>
 				<p>
 					Use Ohm's law to find the current through the equivalent resistor. That will be the same current that flows through the 30 kΩ resistor. We will then be able to find the voltage in that resistor with Ohm's law.
 				</p>
 				<p>
-					The battery's voltage is equal to the sum of the voltages across each resistor because of Kirchoff's law.
+					The battery's voltage is equal to the sum of the voltages across each resistor because of Kirchoff's voltage law.
 				</p>
 			</details>
 			<details>
