@@ -38,6 +38,7 @@ const b = {
   isModFastSpores: null,
   isModStomp: null,
   modSuperBallNumber: null,
+  modOneSuperBall: null,
   modLaserReflections: null,
   modLaserDamage: null,
   modLaserFieldDrain: null,
@@ -89,7 +90,7 @@ const b = {
     },
     {
       name: "fluoroantimonic acid",
-      description: "each <strong>bullet</strong> does instant <strong class='color-d'>damage</strong><br><strong>active</strong> when you are above <strong>80%</strong> base health",
+      description: "each <strong>bullet</strong> does instant <strong class='color-p'>acid</strong> <strong class='color-d'>damage</strong><br><strong>active</strong> when you are above <strong>80%</strong> base health",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -188,13 +189,13 @@ const b = {
     },
     {
       name: "thermal runaway",
-      description: "mobs <strong class='color-e'>explode</strong> when they <strong>die</strong>",
+      description: "mobs <strong class='color-e'>explode</strong> when they <strong>die</strong><br><em>be careful</em>",
       maxCount: 1,
       count: 0,
       allowed() {
-        return b.isModImmuneExplosion
+        return true
       },
-      requires: "electric reactive armour",
+      requires: "",
       effect: () => {
         b.isModExplodeMob = true;
       },
@@ -765,7 +766,7 @@ const b = {
 
     {
       name: "ice crystal nucleation",
-      description: "your <strong>minigun</strong> condenses <strong>unlimited ammo</strong><br>ice bullets made from water vapor <strong>slow</strong> mobs",
+      description: "your <strong>minigun</strong> uses <strong class='color-f'>energy</strong> to condense<br><strong>bullets</strong> from water vapor that <strong>slow</strong> mobs",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -814,18 +815,34 @@ const b = {
     },
     {
       name: "super duper",
-      description: "fire <strong>+1</strong> additional <strong>super ball</strong>",
+      description: "fire <strong>+2</strong> additional <strong>super balls</strong>",
       maxCount: 9,
       count: 0,
       allowed() {
-        return b.haveGunCheck("super balls")
+        return b.haveGunCheck("super balls") && !b.modOneSuperBall
       },
       requires: "super balls",
       effect() {
-        b.modSuperBallNumber++
+        b.modSuperBallNumber += 2
       },
       remove() {
         b.modSuperBallNumber = 4;
+      }
+    },
+    {
+      name: "super ball",
+      description: "fire one <strong>large</strong> super <strong>ball</strong><br>that <strong>stuns</strong> mobs for <strong>2</strong> second",
+      maxCount: 1,
+      count: 0,
+      allowed() {
+        return b.haveGunCheck("super balls") && b.modSuperBallNumber === 4
+      },
+      requires: "super balls",
+      effect() {
+        b.modOneSuperBall = true;
+      },
+      remove() {
+        b.modOneSuperBall = false;
       }
     },
     {
@@ -1234,14 +1251,12 @@ const b = {
           game.updateGunHUD();
         }
       } else {
-
-        if (b.isModAmmoFromHealth && mech.health > b.isModAmmoFromHealth) {
-          mech.damage(b.isModAmmoFromHealth * mech.health);
+        if (b.isModAmmoFromHealth && mech.health > 0.05) {
+          mech.damage(Math.max(0.01, b.isModAmmoFromHealth * mech.health));
           powerUps.spawn(mech.pos.x, mech.pos.y, "ammo");
           if (Math.random() < b.isModBayesian) powerUps.spawn(mech.pos.x, mech.pos.y, "ammo");
         }
         mech.fireCDcycle = mech.cycle + 30; //fire cooldown
-        // game.makeTextLog("<div style='font-size:140%;'>NO AMMO</div><strong class = 'box'>E</strong> / <strong class = 'box'>Q</strong>", 200);
         game.replaceTextLog = true;
         game.makeTextLog("<div style='font-size:140%;'>NO AMMO</div> <p style='font-size:90%;'><strong>Q</strong>, <strong>E</strong>, and <strong>mouse wheel</strong> change weapons</p>", 200);
       }
@@ -1264,7 +1279,6 @@ const b = {
         }
       }
     }
-
     //draw
     ctx.beginPath();
     for (let i = 0, len = bullet.length; i < len; i++) {
@@ -1459,7 +1473,7 @@ const b = {
           mob[i].force.y += knock.y;
           radius *= 0.93 //reduced range for each additional explosion target
           damageScale *= 0.8 //reduced damage for each additional explosion target
-          // mobs.statusBlind(mob[i])
+          // mobs.statusStun(mob[i])
           // if (isBurn) mobs.statusBurn(mob[i], 0.4) // (2.2) * 1.3 * 30/180  // 6 ticks (3 seconds)
         } else if (!mob[i].seePlayer.recall && dist < alertRange) {
           mob[i].locatePlayer();
@@ -1720,7 +1734,7 @@ const b = {
       friction: 0,
       frictionAir: 0.025,
       thrust: b.isModFastSpores ? 0.0008 : 0.0004,
-      dmg: 0, //2.2, //damage done in addition to the damage from momentum
+      dmg: 2.2, //damage done in addition to the damage from momentum
       classType: "bullet",
       collisionFilter: {
         category: cat.bullet,
@@ -1728,8 +1742,8 @@ const b = {
       },
       endCycle: game.cycle + Math.floor((660 + Math.floor(Math.random() * 240)) * b.isModBulletsLastLonger),
       minDmgSpeed: 0,
-      onDmg(who) {
-        mobs.statusPoison(who, 0.5, 180) // (2.2) * 1.3 * 30/180  // 6 ticks (3 seconds)
+      onDmg() {
+        // mobs.statusPoison(who, 0.5, 180) // (2.2) * 1.3 * 30/180  // 6 ticks (3 seconds)
         this.endCycle = 0; //bullet ends cycle after doing damage 
       },
       onEnd() {},
@@ -2084,11 +2098,10 @@ const b = {
           if (gun === b.guns[i].name) gun = i
         }
       }
-
       if (!b.guns[gun].have) b.inventory.push(gun);
-      if (b.activeGun === null) b.activeGun = gun //if no active gun switch to new gun
       b.guns[gun].have = true;
       b.guns[gun].ammo = Math.floor(b.guns[gun].ammoPack * ammoPacks);
+      if (b.activeGun === null) b.activeGun = gun //if no active gun switch to new gun
     }
     game.makeGunHUD();
   },
@@ -2104,18 +2117,25 @@ const b = {
       isEasyToAim: false,
       fire() {
         const me = bullet.length;
-        b.muzzleFlash(15);
-        // if (Math.random() > 0.2) mobs.alert(500);
         const dir = mech.angle + (Math.random() - 0.5) * ((mech.crouch) ? 0.03 : 0.1);
         bullet[me] = Bodies.rectangle(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 20 * b.modBulletSize, 6 * b.modBulletSize, b.fireAttributes(dir));
         b.fireProps(mech.crouch ? 8 : 4, mech.crouch ? 52 : 38, dir, me); //cd , speed
         bullet[me].endCycle = game.cycle + 70;
         bullet[me].dmg = 0.07;
         bullet[me].frictionAir = mech.crouch ? 0.007 : 0.01;
-        if (b.isModIceCrystals) {
+        if (b.isModIceCrystals && mech.energy > 0.01) {
+          mech.energy -= mech.fieldRegen + 0.007
           bullet[me].onDmg = function (who) {
-            if (!who.shield) mobs.statusSlow(who, 60)
+            mobs.statusSlow(who, 60)
           };
+          //ice muzzleFlash
+          ctx.fillStyle = "rgb(0,100,255)";
+
+          ctx.beginPath();
+          ctx.arc(mech.pos.x + 35 * Math.cos(mech.angle), mech.pos.y + 35 * Math.sin(mech.angle), 15, 0, 2 * Math.PI);
+          ctx.fill();
+        } else {
+          b.muzzleFlash(15);
         }
         bullet[me].do = function () {
           this.force.y += this.mass * 0.0005;
@@ -2163,21 +2183,18 @@ const b = {
       name: "super balls", //2
       description: "fire <strong>four</strong> balls in a wide arc<br>balls <strong>bounce</strong> with no momentum loss",
       ammo: 0,
-      ammoPack: 10,
+      ammoPack: 13,
       have: false,
       num: 5,
       isStarterGun: true,
       isEasyToAim: true,
       fire() {
-        mech.fireCDcycle = mech.cycle + Math.floor((mech.crouch ? 25 : 20) * b.modFireRate); // cool down
-        b.muzzleFlash(20);
-        // mobs.alert(450);
         const SPEED = mech.crouch ? 40 : 30
-        const SPREAD = mech.crouch ? 0.08 : 0.15
-        let dir = mech.angle - SPREAD * (b.modSuperBallNumber - 1) / 2;
-        for (let i = 0; i < b.modSuperBallNumber; i++) {
+        mech.fireCDcycle = mech.cycle + Math.floor((mech.crouch ? 28 : 20) * b.modFireRate); // cool down
+        if (b.modOneSuperBall) {
+          let dir = mech.angle
           const me = bullet.length;
-          bullet[me] = Bodies.polygon(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 12, 7 * b.modBulletSize, b.fireAttributes(dir, false));
+          bullet[me] = Bodies.polygon(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 12, 20 * b.modBulletSize, b.fireAttributes(dir, false));
           World.add(engine.world, bullet[me]); //add bullet to world
           Matter.Body.setVelocity(bullet[me], {
             x: SPEED * Math.cos(dir),
@@ -2185,23 +2202,46 @@ const b = {
           });
           // Matter.Body.setDensity(bullet[me], 0.0001);
           bullet[me].endCycle = game.cycle + Math.floor((300 + 60 * Math.random()) * b.isModBulletsLastLonger);
-          bullet[me].dmg = 0;
           bullet[me].minDmgSpeed = 0;
-          bullet[me].restitution = 0.99;
+          bullet[me].restitution = 0.999;
           bullet[me].friction = 0;
           bullet[me].do = function () {
             this.force.y += this.mass * 0.001;
           };
-          dir += SPREAD;
+          bullet[me].onDmg = function (who) {
+            mobs.statusStun(who, 120) // (2.3) * 2 / 14 ticks (2x damage over 7 seconds)
+          };
+        } else {
+          b.muzzleFlash(20);
+          const SPREAD = mech.crouch ? 0.08 : 0.15
+          let dir = mech.angle - SPREAD * (b.modSuperBallNumber - 1) / 2;
+          for (let i = 0; i < b.modSuperBallNumber; i++) {
+            const me = bullet.length;
+            bullet[me] = Bodies.polygon(mech.pos.x + 30 * Math.cos(mech.angle), mech.pos.y + 30 * Math.sin(mech.angle), 12, 7 * b.modBulletSize, b.fireAttributes(dir, false));
+            World.add(engine.world, bullet[me]); //add bullet to world
+            Matter.Body.setVelocity(bullet[me], {
+              x: SPEED * Math.cos(dir),
+              y: SPEED * Math.sin(dir)
+            });
+            // Matter.Body.setDensity(bullet[me], 0.0001);
+            bullet[me].endCycle = game.cycle + Math.floor((300 + 60 * Math.random()) * b.isModBulletsLastLonger);
+            bullet[me].minDmgSpeed = 0;
+            bullet[me].restitution = 0.99;
+            bullet[me].friction = 0;
+            bullet[me].do = function () {
+              this.force.y += this.mass * 0.001;
+            };
+            dir += SPREAD;
+          }
         }
       }
     },
     {
       name: "fléchettes", //3
-      description: "fire a <strong>precise</strong> volley of <strong>high velocity</strong> needles<br>needles deliver <strong class='color-p'>chemical</strong> damage over 3 seconds",
+      description: "fire a <strong>precise</strong> volley of <strong>high velocity</strong> needles<br>needles deliver <strong class='color-p'>chemical</strong> <strong class='color-d'>damage</strong> over 3 seconds",
       ammo: 0,
-      ammoPack: 22,
-      defaultAmmoPack: 22,
+      ammoPack: 23,
+      defaultAmmoPack: 23,
       have: false,
       isStarterGun: true,
       isEasyToAim: false,
@@ -2222,14 +2262,14 @@ const b = {
         function makeFlechette(angle = mech.angle) {
           const me = bullet.length;
           bullet[me] = Bodies.rectangle(mech.pos.x + 40 * Math.cos(mech.angle), mech.pos.y + 40 * Math.sin(mech.angle), 45 * b.modBulletSize, 1.4 * b.modBulletSize, b.fireAttributes(angle));
-          Matter.Body.setDensity(bullet[me], 0.0001); //0.001 is normal
+          // Matter.Body.setDensity(bullet[me], 0.0001); //0.001 is normal
           bullet[me].endCycle = game.cycle + 180;
           bullet[me].dmg = 0;
           bullet[me].onDmg = function (who) {
             if (b.isModDotFlechette) {
-              mobs.statusPoison(who, 0.38, 360) // (2.3) * 2 / 14 ticks (2x damage over 7 seconds)
+              mobs.statusPoison(who, 0.33, 360) // (2.3) * 2 / 14 ticks (2x damage over 7 seconds)
             } else {
-              mobs.statusPoison(who, 0.38, 180) // (2.3) / 6 ticks (3 seconds)
+              mobs.statusPoison(who, 0.33, 180) // (2.3) / 6 ticks (3 seconds)
             }
           };
 
@@ -2590,7 +2630,7 @@ const b = {
     },
     {
       name: "spores", //10
-      description: "fire <strong>sporangiums</strong> that discharge <strong class='color-p' style='letter-spacing: 2px;'>spores</strong><br><strong class='color-p' style='letter-spacing: 2px;'>spores</strong> do <strong class='color-d'>damage</strong> over <strong>3</strong> seconds",
+      description: "fire a <strong>sporangium</strong> that discharges <strong class='color-p' style='letter-spacing: 2px;'>spores</strong>",
       ammo: 0,
       ammoPack: (game.difficultyMode > 3) ? 3 : 4,
       have: false,
