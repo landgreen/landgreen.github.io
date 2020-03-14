@@ -79,13 +79,13 @@ const mobs = {
       })
     }
   },
-  statusStun(who, cycles = 120) {
+  statusStun(who, cycles = 180) {
     if (!who.shield && !who.isShielded) {
       Matter.Body.setVelocity(who, {
-        x: who.velocity.x * 0.8,
-        y: who.velocity.y * 0.8
+        x: who.velocity.x * 0.5,
+        y: who.velocity.y * 0.5
       });
-      Matter.Body.setAngularVelocity(who, who.angularVelocity * 0.8);
+      Matter.Body.setAngularVelocity(who, who.angularVelocity * 0.5);
       //remove other "stun" effects on this mob
       let i = who.status.length
       while (i--) {
@@ -94,12 +94,12 @@ const mobs = {
       who.status.push({
         effect() {
           who.seePlayer.yes = false;
+          who.seePlayer.recall = 0;
           who.seePlayer.position = {
             x: who.position.x + 100 * (Math.random() - 0.5),
             y: who.position.y + 100 * (Math.random() - 0.5)
           }
-          who.force.y += who.mass * 0.001 //extra gravity
-
+          if (who.velocity.y < 2) who.force.y += who.mass * 0.0005 //extra gravity
           ctx.beginPath();
           ctx.moveTo(who.vertices[0].x, who.vertices[0].y);
           for (let j = 1, len = who.vertices.length; j < len; ++j) {
@@ -374,7 +374,7 @@ const mobs = {
           ctx.setLineDash([125 * Math.random(), 125 * Math.random()]);
           // ctx.lineDashOffset = 6*(game.cycle % 215);
           if (this.distanceToPlayer() < this.laserRange && !mech.isStealth) {
-            mech.damage(0.0003 * game.dmgScale);
+            if (mech.collisionImmuneCycle < mech.cycle) mech.damage(0.0003 * game.dmgScale);
             if (mech.energy > 0.1) mech.energy -= 0.003
             ctx.beginPath();
             ctx.moveTo(this.position.x, this.position.y);
@@ -462,7 +462,7 @@ const mobs = {
           if (!mech.isStealth) vertexCollision(this.position, look, [player]);
           // hitting player
           if (best.who === player) {
-            dmg = 0.0012 * game.dmgScale;
+            if (mech.collisionImmuneCycle < mech.cycle) dmg = 0.0012 * game.dmgScale;
             mech.damage(dmg);
             //draw damage
             ctx.fillStyle = "#f00";

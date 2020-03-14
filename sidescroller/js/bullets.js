@@ -63,6 +63,8 @@ const b = {
   isModHawking: null,
   modBabyMissiles: null,
   isModIceCrystals: null,
+  modThrowChargeRate: null,
+  isModBlockStun: null,
   modOnHealthChange() { //used with acid mod
     if (b.isModAcidDmg && mech.health > 0.8) {
       game.playerDmgColor = "rgba(0,80,80,0.9)"
@@ -233,6 +235,22 @@ const b = {
       },
       remove() {
         b.modNoAmmo = 0;
+      }
+    },
+    {
+      name: "mass driver",
+      description: "<strong>blocks</strong> do <strong>3x</strong> more <strong class='color-d'>damage</strong> to mobs<br>charge block <strong>throws</strong> in <strong>3x</strong> less time",
+      maxCount: 1,
+      count: 0,
+      allowed() {
+        return true
+      },
+      requires: "",
+      effect() {
+        b.modThrowChargeRate = 3
+      },
+      remove() {
+        b.modThrowChargeRate = 1
       }
     },
     {
@@ -475,7 +493,7 @@ const b = {
     },
     {
       name: "weak anthropic principle",
-      description: "<strong>fatal harm</strong> can't happen<br>saves you up to once every <strong>3</strong> seconds",
+      description: "<strong>fatal harm</strong> can't happen<br><strong>saves</strong> you up to once every <strong>3</strong> seconds",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -493,7 +511,7 @@ const b = {
     },
     {
       name: "entanglement",
-      description: "<strong>10%</strong> less <strong>harm</strong> for each gun in your <strong>inventory</strong><br> when your <strong>first gun</strong> is equipped",
+      description: "<strong>10%</strong> less <strong>harm</strong> for each gun in your <strong>inventory</strong><br> while your <strong>first gun</strong> is equipped",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -509,7 +527,7 @@ const b = {
     },
     {
       name: "piezoelectricity",
-      description: "<strong>colliding</strong> with mobs charges your <strong class='color-f'>energy</strong><br><strong>10%</strong> less <strong>harm</strong> from mob collisions",
+      description: "<strong>colliding</strong> with mobs fills your <strong class='color-f'>energy</strong><br><strong>10%</strong> less <strong>harm</strong> from mob collisions",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -522,22 +540,6 @@ const b = {
       },
       remove() {
         b.isModPiezo = false;
-      }
-    },
-    {
-      name: "bremsstrahlung radiation",
-      description: "when your <strong>field blocks</strong> it also does <strong class='color-d'>damage</strong>",
-      maxCount: 9,
-      count: 0,
-      allowed() {
-        return mech.fieldUpgrades[mech.fieldMode].name !== "time dilation field" && mech.fieldUpgrades[mech.fieldMode].name !== "phase decoherence field" && !(b.isModHawking && mech.fieldUpgrades[mech.fieldMode].name === "negative mass field")
-      },
-      requires: "not time dilation field<br><strong>requires</strong> not phase decoherence field",
-      effect() {
-        b.modBlockDmg += 0.7 //if you change this value also update the for loop in the electricity graphics in mech.pushMass
-      },
-      remove() {
-        b.modBlockDmg = 0;
       }
     },
     {
@@ -1093,6 +1095,22 @@ const b = {
       },
       remove() {
         b.isModHawking = 0;
+      }
+    },
+    {
+      name: "bremsstrahlung radiation",
+      description: "<strong>blocking</strong> with <strong>standing wave harmonics</strong><br><strong class='color-d'>damages</strong> the blocked mob ",
+      maxCount: 9,
+      count: 0,
+      allowed() {
+        return mech.fieldUpgrades[mech.fieldMode].name === "standing wave harmonics"
+      },
+      requires: "standing wave harmonics",
+      effect() {
+        b.modBlockDmg += 0.6 //if you change this value also update the for loop in the electricity graphics in mech.pushMass
+      },
+      remove() {
+        b.modBlockDmg = 0;
       }
     },
     {
