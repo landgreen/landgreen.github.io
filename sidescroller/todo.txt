@@ -1,15 +1,47 @@
+shotgun hits harder up close and weaker far away 
+swarm is now called ice IX and it freezes mobs
+mod - ablative mines
+acid and negative feedback now tell you when they are active
+
+
 ************** TODO - n-gon **************
 
-mod - status effects last 1 second longer
-  wait until you have more status effects written
+MOB stabber - extends one vector like the shooter, but quickly in order to stab
 
-mod - time dilation - Quantum Recovery
-  Expending all your energy while using the field will
-    cause the player to go back in time to 3 seconds before the field was activated
-      resets ammo?, health, position, velocity
-      need to track player info in game.checks() in an array
-        put the array in the time field object
-    cause the player to go back in time when the field was first activated (easier then going back to 3 seconds before)
+mod - frag grenades fire nails on explosion
+
+mod - drop a mine after taking damage
+
+work on burn status effect
+  graphics don't look right
+  how is it different from the chemical dot
+
+perfect diamagnetism should get larger as it blocks more, and then slowly fade back to the normal size
+
+gun - bullets that acts like drones but only last for 2 seconds and do more damage
+
+field - the basic field emitter, but no energy loss and no knock back on blocks
+  this field should make blocking a viable strategy
+  gain energy on blocking?
+  call it diamagnetic field and remove the diamagnetism mod?
+
+mod - nails do poison damage
+mod - increase laser bot range, and reduce energy drain
+
+mod - mines become a turret that fires nails
+  it could float to the mouse location on fire
+
+dash - mod  when pressing left or right on the ground, teleport to the right until you find an obstruction
+  do repeated horizontal zone queries until they hit map or block
+  up to a max range of like 10 player widths
+  this didn't work as a field, but maybe as a gun?
+
+mod - blocks stun mobs
+mod or field - turn blocks into spores or drones
+
+mod - robot that attack nearby mobs, and delivers a stun status effect
+  use laser bot code for the attack
+  large and 5 sided?
 
 bug - getting stuck in crouch mode
   press T to see it visually
@@ -17,34 +49,20 @@ bug - getting stuck in crouch mode
     once right after selecting a mod with lots of blocks around
       I don't think I was holding a block
       might have been standing on a block... not sure
+  running mech.definePlayerMass()  fixes it
 
-mobs - add in a function to the main loops that does injected code for each mob
-  each mob would get an object with a game.cycle for ending and a method to run each cycle until the end is met
-  this could be a DoT, graphics, slow, blind
-  stun - combine blind, slow
-    with increased gravity effects, but how
-  burn effect doesn't look right, too similar to poison
-  mod - grenade explosions stun enemies
-  mod - vacuum bomb does DoT damage after exploding
-  
 settings - auto aim at nearest mob
 settings - custom keys binding
 
 gun - buff vacuum bomb
-  its weak late game
+  it's weak late game
     can't spam it faster
     bad vs. shields
     doesn't scale up to huge groups
   buff collision damage?
   mod - double explosions?
   mod - doesn't suck player in?
-  
-mod - make bodies destroyable
-  they drop ammo and heals
-
-mod - mines - fire something instead of needles on activation
-  foam?, flak?, vacuum bomb, super balls
-  make a different mod for each type of bullet mine can fire
+  mod - DoT damage after exploding
 
 mod - energy recharges faster when not moving
 
@@ -56,6 +74,7 @@ lore - a robot (the player) gains self awareness
     final mod is "this is just a simulation"
       you get immortality and Infinity damage
       the next level is the final level
+  when you die with Quantum Immortality there is a chance of lore text
 
 atmosphere levels: change the pace, give the user a rest between combat
   low or no combat, but more graphics
@@ -71,7 +90,18 @@ atmosphere levels: change the pace, give the user a rest between combat
     in the final level you see your self at the starting level, with the wires
       you shoot your self to wake up?
 
-mob: targeting laser, then a high speed, no gravity bullet
+MOB sniper - targeting laser, then a high speed, no gravity bullet
+
+mod - status effects last 1 second longer
+  wait until you have more status effects written
+
+mod - time dilation - Quantum Recovery
+  Expending all your energy while using the field will
+    cause the player to go back in time to 3 seconds before the field was activated
+      resets ammo?, health, position, velocity
+      need to track player info in game.checks() in an array
+        put the array in the time field object
+    cause the player to go back in time when the field was first activated (easier then going back to 3 seconds before)
 
 css transition for pause menu
 
