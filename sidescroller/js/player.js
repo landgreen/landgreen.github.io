@@ -738,7 +738,7 @@ const mech = {
   },
   setHoldDefaults() {
     if (mech.energy < mech.fieldEnergyMax) mech.energy = mech.fieldEnergyMax;
-    mech.fieldRegen = b.modEnergyRegen;
+    mech.fieldRegen = b.modEnergyRegen; //0.001
     mech.fieldMeterColor = "#0cf"
     mech.fieldShieldingScale = 1;
     mech.fieldDamageResistance = 1;

@@ -598,7 +598,7 @@ const b = {
         mech.fieldRegen = b.modEnergyRegen;
       },
       remove() {
-        b.modEnergyRegen = 0.005;
+        b.modEnergyRegen = 0.001;
         mech.fieldRegen = b.modEnergyRegen;
       }
     },
