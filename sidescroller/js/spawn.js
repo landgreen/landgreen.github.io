@@ -636,6 +636,76 @@ const spawn = {
       this.checkStatus();
     }
   },
+  timeSkipBoss(x, y, radius = 80) {
+    mobs.spawn(x, y, 6, radius, '#000');
+    let me = mob[mob.length - 1];
+    // me.stroke = "transparent"; //used for drawSneaker
+    me.timeSkipLastCycle = 0
+    me.eventHorizon = 1300; //required for black hole
+    me.seeAtDistance2 = (me.eventHorizon + 1000) * (me.eventHorizon + 1000); //vision limit is event horizon
+    me.accelMag = 0.00013 * game.accelScale;
+    // me.collisionFilter.mask = cat.player | cat.bullet
+    // me.frictionAir = 0.005;
+    // me.memory = 1600;
+    Matter.Body.setDensity(me, 0.018); //extra dense //normal is 0.001 //makes effective life much larger
+    me.onDeath = function () {
+      //applying forces to player doesn't seem to work inside this method, not sure why
+      powerUps.spawnBossPowerUp(this.position.x, this.position.y)
+    };
+    me.do = function () {
+      //keep it slow, to stop issues from explosion knock backs
+      this.seePlayerCheck();
+      this.attraction()
+      if (!game.isTimeSkipping) {
+        const compress = 3
+        if (this.timeSkipLastCycle < game.cycle - compress &&
+          Vector.magnitude(Vector.sub(this.position, player.position)) < this.eventHorizon) {
+          this.timeSkipLastCycle = game.cycle
+          game.timeSkip(compress)
+
+          this.fill = `rgba(0,0,0,${0.1+0.1*Math.random()})`
+          this.stroke = "#000"
+          this.isShielded = false;
+          this.dropPowerUp = true;
+          ctx.beginPath();
+          ctx.arc(this.position.x, this.position.y, this.eventHorizon, 0, 2 * Math.PI);
+          ctx.fillStyle = `rgba(255,255,255,${mech.energy*0.5})`;
+          ctx.globalCompositeOperation = "destination-in"; //in or atop
+          ctx.fill();
+          ctx.globalCompositeOperation = "source-over";
+          ctx.beginPath();
+          ctx.arc(this.position.x, this.position.y, this.eventHorizon, 0, 2 * Math.PI);
+          ctx.clip();
+
+          // ctx.beginPath();
+          // ctx.arc(this.position.x, this.position.y, 9999, 0, 2 * Math.PI);
+          // ctx.fillStyle = "#000";
+          // ctx.fill();
+          // ctx.strokeStyle = "#000";
+          // ctx.stroke();
+
+          // ctx.beginPath();
+          // ctx.arc(this.position.x, this.position.y, this.eventHorizon, 0, 2 * Math.PI);
+          // ctx.fillStyle = `rgba(0,0,0,${0.05*Math.random()})`;
+          // ctx.fill();
+          // ctx.strokeStyle = "#000";
+          // ctx.stroke();
+        } else {
+          this.isShielded = true;
+          this.dropPowerUp = false;
+          this.seePlayer.recall = false
+          this.fill = "transparent"
+          this.stroke = "transparent"
+          ctx.beginPath();
+          ctx.arc(this.position.x, this.position.y, this.eventHorizon, 0, 2 * Math.PI);
+          ctx.fillStyle = `rgba(0,0,0,${0.1*Math.random()})`;
+          ctx.fill();
+        }
+      }
+
+      this.checkStatus();
+    }
+  },
   beamer(x, y, radius = 15 + Math.ceil(Math.random() * 15)) {
     mobs.spawn(x, y, 4, radius, "rgb(255,0,190)");
     let me = mob[mob.length - 1];
@@ -1670,7 +1740,7 @@ const spawn = {
         if (mech.pos.x > breakingPoint) {
           this.freeOfWires = true;
           this.force.x += -0.0006;
-          this.fill = "#222";
+          this.fill = "#111";
         }
         //move mob to player
         mech.calcLeg(0, 0);
@@ -1685,7 +1755,7 @@ const spawn = {
       ctx.quadraticCurveTo(wireX, 0, this.position.x, this.position.y);
       ctx.lineWidth = 5;
       ctx.lineCap = "butt";
-      ctx.strokeStyle = "#222";
+      ctx.strokeStyle = "#111";
       ctx.stroke();
       ctx.lineCap = "round";
     };
@@ -1719,7 +1789,7 @@ const spawn = {
         if (mech.pos.x > breakingPoint) {
           this.freeOfWires = true;
           this.force.x += -0.0005;
-          this.fill = "#333";
+          this.fill = "#222";
         }
         //move mob to player
         mech.calcLeg(Math.PI, -3);
@@ -1733,7 +1803,7 @@ const spawn = {
       ctx.moveTo(wireX, wireY);
       ctx.quadraticCurveTo(wireX, 0, this.position.x, this.position.y);
       ctx.lineWidth = 5;
-      ctx.strokeStyle = "#333";
+      ctx.strokeStyle = "#222";
       ctx.lineCap = "butt";
       ctx.stroke();
       ctx.lineCap = "round";
@@ -1802,6 +1872,13 @@ const spawn = {
       height: height,
       color: "#f0f0f3"
     });
+  },
+  blockDoor(x, y, blockSize = 58) {
+    spawn.mapRect(x, y - 290, 40, 60); // door lip
+    spawn.mapRect(x, y, 40, 50); // door lip
+    for (let i = 0; i < 4; ++i) {
+      spawn.bodyRect(x + 5, y - 260 + i * blockSize, 30, blockSize);
+    }
   },
   debris(x, y, width, number = Math.floor(2 + Math.random() * 9)) {
     for (let i = 0; i < number; ++i) {

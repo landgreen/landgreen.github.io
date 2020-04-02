@@ -56,6 +56,28 @@ const game = {
     ctx.restore();
     game.drawCursor();
   },
+  isTimeSkipping: false,
+  timeSkip(cycles = 60) {
+    game.isTimeSkipping = true;
+    for (let i = 0; i < cycles; i++) {
+      game.cycle++;
+      mech.cycle++;
+      game.gravity();
+      Engine.update(engine, game.delta);
+      level.checkZones();
+      level.checkQuery();
+      mech.move();
+      game.checks();
+      mobs.loop();
+      // mech.draw();
+      mech.walk_cycle += mech.flipLegs * mech.Vx;
+
+      mech.hold();
+      b.fire();
+      b.bulletActions();
+    }
+    game.isTimeSkipping = false;
+  },
   mouse: {
     x: canvas.width / 2,
     y: canvas.height / 2
@@ -89,6 +111,7 @@ const game = {
   accelScale: null, //set in levels.setDifficulty
   CDScale: null, //set in levels.setDifficulty
   lookFreqScale: null, //set in levels.setDifficulty
+  mouseDown: false,
   // dropFPS(cap = 40, time = 15) {
   //   game.fpsCap = cap
   //   game.fpsInterval = 1000 / game.fpsCap;
@@ -185,6 +208,7 @@ const game = {
       if (b.mods[i].count > 0) {
         if (text) text += "<br>" //add a new line, but not on the first line
         text += b.mods[i].name
+        if (b.mods[i].nameInfo) text += b.mods[i].nameInfo
         if (b.mods[i].count > 1) text += ` (${b.mods[i].count}x)`
       }
     }

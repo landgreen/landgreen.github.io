@@ -70,6 +70,7 @@ const b = {
   isModHarmDamage: null,
   isModAlphaRadiation: null,
   modEnergyRegen: null,
+  isModVacuumShield: null,
   modOnHealthChange() { //used with acid mod
     if (b.isModAcidDmg && mech.health > 0.8) {
       b.modAcidDmg = 0.7
@@ -93,6 +94,12 @@ const b = {
         }, 10);
       }
     }
+  },
+  resetModText() {
+    setTimeout(function () {
+      if (document.getElementById("mod-acid")) document.getElementById("mod-acid").innerHTML = "";
+      if (document.getElementById("mod-low-health-damage")) document.getElementById("mod-low-health-damage").innerHTML = "";
+    }, 10);
   },
   mods: [{
       name: "depleted uranium rounds",
@@ -143,7 +150,8 @@ const b = {
       }
     },
     {
-      name: "fluoroantimonic acid<span id='mod-acid'></span>",
+      name: "fluoroantimonic acid",
+      nameInfo: "<span id='mod-acid'></span>",
       description: "each <strong>bullet</strong> does instant <strong class='color-p'>acid</strong> <strong class='color-d'>damage</strong><br><strong>active</strong> when you are above <strong>80%</strong> base health",
       maxCount: 1,
       count: 0,
@@ -162,7 +170,8 @@ const b = {
       }
     },
     {
-      name: "negative feedback<span id='mod-low-health-damage'></span>",
+      name: "negative feedback",
+      nameInfo: "<span id='mod-low-health-damage'></span>",
       description: "do extra <strong class='color-d'>damage</strong> at low health<br><em>up to <strong>50%</strong> increase when near death</em>",
       maxCount: 1,
       count: 0,
@@ -569,7 +578,8 @@ const b = {
       }
     },
     {
-      name: "entanglement <span id = 'mod-entanglement'></span>",
+      name: "entanglement",
+      nameInfo: "<span id = 'mod-entanglement'></span>",
       description: "<strong>16%</strong> less <strong>harm</strong> for each gun in your <strong>inventory</strong><br> while your <strong>first gun</strong> is equipped",
       maxCount: 1,
       count: 0,
@@ -582,24 +592,6 @@ const b = {
       },
       remove() {
         b.isModEntanglement = false;
-      }
-    },
-    {
-      name: "ground state",
-      description: "reduce <strong>harm</strong> by <strong>67%</strong><br>you <strong>no longer</strong> passively regenerate <strong class='color-f'>energy</strong>",
-      maxCount: 1,
-      count: 0,
-      allowed() {
-        return true
-      },
-      requires: "",
-      effect: () => {
-        b.modEnergyRegen = 0;
-        mech.fieldRegen = b.modEnergyRegen;
-      },
-      remove() {
-        b.modEnergyRegen = 0.001;
-        mech.fieldRegen = b.modEnergyRegen;
       }
     },
     {
@@ -617,6 +609,24 @@ const b = {
       },
       remove() {
         b.isModPiezo = false;
+      }
+    },
+    {
+      name: "ground state",
+      description: "reduce <strong>harm</strong> by <strong>50%</strong><br>you <strong>no longer</strong> passively regenerate <strong class='color-f'>energy</strong>",
+      maxCount: 1,
+      count: 0,
+      allowed() {
+        return b.isModPiezo
+      },
+      requires: "piezoelectricity",
+      effect: () => {
+        b.modEnergyRegen = 0;
+        mech.fieldRegen = b.modEnergyRegen;
+      },
+      remove() {
+        b.modEnergyRegen = 0.001;
+        mech.fieldRegen = b.modEnergyRegen;
       }
     },
     {
@@ -1026,7 +1036,7 @@ const b = {
     },
     {
       name: "optimized shell packing",
-      description: "<strong>flak</strong> ammo drops contain <strong>2x</strong> more shells",
+      description: "<strong>flak</strong> ammo drops contain <strong>3x</strong> more shells",
       maxCount: 3,
       count: 0,
       allowed() {
@@ -1035,13 +1045,29 @@ const b = {
       requires: "flak",
       effect() {
         for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
-          if (b.guns[i].name === "flak") b.guns[i].ammoPack = b.guns[i].defaultAmmoPack * (2 + this.count);
+          if (b.guns[i].name === "flak") b.guns[i].ammoPack = b.guns[i].defaultAmmoPack * (3 + this.count);
         }
       },
       remove() {
         for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
           if (b.guns[i].name === "flak") b.guns[i].ammoPack = b.guns[i].defaultAmmoPack;
         }
+      }
+    },
+    {
+      name: "electromagnetic pulse",
+      description: "<strong>vacuum bomb's </strong> <strong class='color-e'>explosion</strong> destroys <strong>shields</strong><br>and does <strong>20%</strong> more <strong class='color-d'>damage</strong>",
+      maxCount: 1,
+      count: 0,
+      allowed() {
+        return b.haveGunCheck("vacuum bomb")
+      },
+      requires: "vacuum bomb",
+      effect() {
+        b.isModVacuumShield = true;
+      },
+      remove() {
+        b.isModVacuumShield = false;
       }
     },
     {
@@ -1994,7 +2020,7 @@ const b = {
       friction: 0.05,
       frictionAir: 0.0005,
       restitution: 1,
-      dmg: 0.13, //damage done in addition to the damage from momentum
+      dmg: 0.15, //damage done in addition to the damage from momentum
       lookFrequency: 83 + Math.floor(41 * Math.random()),
       endCycle: game.cycle + Math.floor((1200 + 420 * Math.random()) * b.isModBulletsLastLonger),
       classType: "bullet",
@@ -2378,8 +2404,10 @@ const b = {
           // bullet[me].dmg = 0.1
           bullet[me].frictionAir = 0.034;
           bullet[me].do = function () {
-            const scale = 1 - 0.035 / b.isModBulletsLastLonger
-            Matter.Body.scale(this, scale, scale);
+            if (!mech.isBodiesAsleep) {
+              const scale = 1 - 0.035 / b.isModBulletsLastLonger
+              Matter.Body.scale(this, scale, scale);
+            }
           };
         }
       }
@@ -2499,7 +2527,7 @@ const b = {
       name: "wave beam", //4
       description: "emit a <strong>sine wave</strong> of oscillating particles<br>particles <strong>slowly</strong> propagate through <strong>solids</strong>",
       ammo: 0,
-      ammoPack: 100,
+      ammoPack: 110,
       have: false,
       isStarterGun: true,
       isEasyToAim: false,
@@ -2540,7 +2568,7 @@ const b = {
                   for (let i = 0; i < q.length; i++) {
                     slowCheck = 0.3;
                     Matter.Body.setPosition(this, Vector.add(this.position, q[i].velocity)) //move with the medium
-                    let dmg = b.dmgScale * 0.6 / Math.sqrt(q[i].mass)
+                    let dmg = b.dmgScale * 0.45 / Math.sqrt(q[i].mass)
                     q[i].damage(dmg);
                     q[i].foundPlayer();
                     game.drawList.push({ //add dmg to draw queue
@@ -2709,7 +2737,7 @@ const b = {
       name: "vacuum bomb", //8
       description: "fire a bomb that <strong>sucks</strong> before <strong class='color-e'>exploding</strong><br><strong>click</strong> left mouse again to <strong>detonate</strong>",
       ammo: 0,
-      ammoPack: 2,
+      ammoPack: 3,
       have: false,
       isStarterGun: false,
       isEasyToAim: false,
@@ -2726,6 +2754,19 @@ const b = {
         bullet[me].explodeRad = 440 + Math.floor(Math.random() * 30);
         bullet[me].onEnd = function () {
           b.explosion(this.position, this.explodeRad); //makes bullet do explosive damage at end
+
+          //also damage all mobs
+          if (b.isModVacuumShield) {
+            for (let i = 0, len = mob.length; i < len; ++i) {
+              if (mob[i].shield) {
+                const dist = Vector.magnitude(Vector.sub(this.position, mob[i].position)) - mob[i].radius;
+                if (dist < this.explodeRad) mob[i].damage(Infinity);
+              } else if (mob[i].alive && !mob[i].isShielded) {
+                const dist = Vector.magnitude(Vector.sub(this.position, mob[i].position)) - mob[i].radius;
+                if (dist < this.explodeRad) mob[i].damage(0.8 * b.dmgScale);
+              }
+            }
+          }
         }
         bullet[me].onDmg = function () {
           // this.endCycle = 0; //bullet ends cycle after doing damage  //this triggers explosion
@@ -2736,14 +2777,13 @@ const b = {
         bullet[me].do = function () {
           //extra gravity for harder arcs
           this.force.y += this.mass * 0.0022;
-          mech.fireCDcycle = mech.cycle + 10 //can't fire until after the explosion
 
           //set armed and sucking status
           if (!this.isArmed && !game.mouseDown) {
             this.isArmed = true
           } else if (this.isArmed && game.mouseDown && !this.isSucking) {
             this.isSucking = true;
-            this.endCycle = game.cycle + 35;
+            this.endCycle = game.cycle + 50;
           }
 
           if (this.isSucking) {
@@ -2751,7 +2791,7 @@ const b = {
               const that = this
               let mag = 0.1
 
-              function suck(who, radius = that.explodeRad * 3) {
+              function suck(who, radius = that.explodeRad * 3.5) {
                 for (i = 0, len = who.length; i < len; i++) {
                   const sub = Vector.sub(that.position, who[i].position);
                   const dist = Vector.magnitude(sub);
@@ -2783,13 +2823,15 @@ const b = {
                 y: 0
               });
               //draw suck
-              const radius = 3 * this.explodeRad * (this.endCycle - game.cycle) / 35
+              const radius = 3 * this.explodeRad * (this.endCycle - game.cycle) / 50
               ctx.fillStyle = "rgba(0,0,0,0.1)";
               ctx.beginPath();
               ctx.arc(this.position.x, this.position.y, radius, 0, 2 * Math.PI);
               ctx.fill();
             }
           } else {
+            mech.fireCDcycle = mech.cycle + 10 //can't fire until after the explosion
+
             // flashing lights to show armed
             if (!(game.cycle % 10)) {
               if (this.isFlashOn) {

@@ -508,10 +508,10 @@ const mech = {
     if (b.isModDroneOnDamage) {
       const len = (dmg - 0.06 * Math.random()) * 40
       for (let i = 0; i < len; i++) {
-        if (Math.random() < 0.75) b.drone() //spawn drone
+        if (Math.random() < 0.5) b.drone() //spawn drone
       }
     }
-    if (b.isModMineOnDamage && dmg > 0.005 + 0.1 * Math.random()) {
+    if (b.isModMineOnDamage && dmg > 0.004 + 0.05 * Math.random()) {
       b.mine({
         x: mech.pos.x,
         y: mech.pos.y - 80
@@ -522,7 +522,7 @@ const mech = {
     }
 
     dmg *= mech.fieldDamageResistance
-    if (!b.modEnergyRegen) dmg *= 0.33 //0.22 + 0.78 * mech.energy //77% damage reduction at zero energy
+    if (!b.modEnergyRegen) dmg *= 0.5 //0.22 + 0.78 * mech.energy //77% damage reduction at zero energy
     if (b.isModEntanglement && b.inventory[0] === b.activeGun) {
       for (let i = 0, len = b.inventory.length; i < len; i++) {
         dmg *= 0.84 // 1 - 0.16
@@ -1305,8 +1305,8 @@ const mech = {
             const DRAIN = 0.0023
             if (mech.energy > DRAIN) {
               mech.energy -= DRAIN;
-              if (mech.energy < 0) {
-                mech.fieldCDcycle = mech.cycle + 60;
+              if (mech.energy < DRAIN) {
+                mech.fieldCDcycle = mech.cycle + 120;
                 mech.energy = 0;
                 mech.wakeCheck();
               }
@@ -1366,11 +1366,11 @@ const mech = {
           } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) { //not hold but field button is pressed
             mech.grabPowerUp();
             mech.lookForPickUp();
-            const DRAIN = 0.0005
+            const DRAIN = 0.00065
             if (mech.energy > DRAIN) {
               mech.energy -= DRAIN;
               if (mech.energy < 0) {
-                mech.fieldCDcycle = mech.cycle + 60;
+                mech.fieldCDcycle = mech.cycle + 120;
                 mech.energy = 0;
               }
               //calculate laser collision
@@ -1584,8 +1584,8 @@ const mech = {
                 zeroG(powerUp, this.fieldDrawRadius);
                 zeroG(body, this.fieldDrawRadius);
               }
-              if (mech.energy < 0) {
-                mech.fieldCDcycle = mech.cycle + 60;
+              if (mech.energy < 0.001) {
+                mech.fieldCDcycle = mech.cycle + 120;
                 mech.energy = 0;
               }
               //add extra friction for horizontal motion
@@ -1761,57 +1761,66 @@ const mech = {
             mech.grabPowerUp();
             mech.lookForPickUp();
 
-            const DRAIN = 0.0001 + 0.00017 * player.speed
+            const DRAIN = 0.00004 + 0.00009 * player.speed
             if (mech.energy > DRAIN) {
               mech.energy -= DRAIN;
-              if (mech.energy < 0) {
-                mech.fieldCDcycle = mech.cycle + 60;
+              if (mech.energy < 0.001) {
+                mech.fieldCDcycle = mech.cycle + 120;
                 mech.energy = 0;
               }
+
+
               mech.isStealth = true //isStealth disables most uses of foundPlayer() 
               player.collisionFilter.mask = cat.map
 
-              ctx.beginPath();
-              ctx.arc(mech.pos.x, mech.pos.y, mech.fieldRange, 0, 2 * Math.PI);
-              ctx.globalCompositeOperation = "destination-in"; //in or atop
-              ctx.fillStyle = `rgba(255,255,255,${mech.energy*0.5})`;
-              ctx.fill();
-              ctx.globalCompositeOperation = "source-over";
-              ctx.strokeStyle = "#000"
-              ctx.lineWidth = 2;
-              ctx.stroke();
+              if (!game.isTimeSkipping) {
+                // game.timeSkip(1)
+                const drawRadius = 125
+                ctx.beginPath();
+                ctx.arc(mech.pos.x, mech.pos.y, drawRadius, 0, 2 * Math.PI);
+                ctx.fillStyle = `rgba(255,255,255,${mech.energy*0.5})`;
+                ctx.globalCompositeOperation = "destination-in"; //in or atop
+                ctx.fill();
+                ctx.globalCompositeOperation = "source-over";
+                ctx.strokeStyle = "#000"
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(mech.pos.x, mech.pos.y, drawRadius, 0, 2 * Math.PI);
+                ctx.clip();
 
-              let inPlayer = Matter.Query.region(mob, player.bounds)
-              if (inPlayer.length > 0) {
-                for (let i = 0; i < inPlayer.length; i++) {
-                  if (inPlayer[i].shield) {
-                    mech.energy -= 0.005; //shields drain player energy
-                    //draw outline of shield
-                    ctx.fillStyle = `rgba(0, 204, 255,0.6)`
-                    ctx.fill()
-                  } else if (b.isModPhaseFieldDamage && mech.energy > 0.006 && inPlayer[i].dropPowerUp && !inPlayer[i].isShielded) {
-                    inPlayer[i].damage(0.4 * b.dmgScale); //damage mobs inside the player
-                    mech.energy -= 0.002;
-
-                    //draw outline of mob in a few random locations to show blurriness
-                    const vertices = inPlayer[i].vertices;
-                    const off = 30
-                    for (let k = 0; k < 3; k++) {
-                      const xOff = off * (Math.random() - 0.5)
-                      const yOff = off * (Math.random() - 0.5)
-                      ctx.beginPath();
-                      ctx.moveTo(xOff + vertices[0].x, yOff + vertices[0].y);
-                      for (let j = 1, len = vertices.length; j < len; ++j) {
-                        ctx.lineTo(xOff + vertices[j].x, yOff + vertices[j].y);
-                      }
-                      ctx.lineTo(xOff + vertices[0].x, yOff + vertices[0].y);
-                      // ctx.strokeStyle = "#000"
-                      // ctx.lineWidth = 1
-                      // ctx.stroke()
-                      ctx.fillStyle = "rgba(0,0,0,0.3)"
+                let inPlayer = Matter.Query.region(mob, player.bounds)
+                if (inPlayer.length > 0) {
+                  for (let i = 0; i < inPlayer.length; i++) {
+                    if (inPlayer[i].shield) {
+                      mech.energy -= 0.005; //shields drain player energy
+                      //draw outline of shield
+                      ctx.fillStyle = `rgba(0, 204, 255,0.6)`
                       ctx.fill()
+                    } else if (b.isModPhaseFieldDamage && mech.energy > 0.006 && inPlayer[i].dropPowerUp && !inPlayer[i].isShielded) {
+                      inPlayer[i].damage(0.4 * b.dmgScale); //damage mobs inside the player
+                      mech.energy -= 0.002;
+
+                      //draw outline of mob in a few random locations to show blurriness
+                      const vertices = inPlayer[i].vertices;
+                      const off = 30
+                      for (let k = 0; k < 3; k++) {
+                        const xOff = off * (Math.random() - 0.5)
+                        const yOff = off * (Math.random() - 0.5)
+                        ctx.beginPath();
+                        ctx.moveTo(xOff + vertices[0].x, yOff + vertices[0].y);
+                        for (let j = 1, len = vertices.length; j < len; ++j) {
+                          ctx.lineTo(xOff + vertices[j].x, yOff + vertices[j].y);
+                        }
+                        ctx.lineTo(xOff + vertices[0].x, yOff + vertices[0].y);
+                        // ctx.strokeStyle = "#000"
+                        // ctx.lineWidth = 1
+                        // ctx.stroke()
+                        ctx.fillStyle = "rgba(0,0,0,0.3)"
+                        ctx.fill()
+                      }
+                      break;
                     }
-                    break;
                   }
                 }
               }
