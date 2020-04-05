@@ -1,9 +1,18 @@
-mod - electromagnetic pulse - vacuum bomb removes shields and does 20% extra damage
-
-
 ************** TODO - n-gon **************
 
-mod - spores with no target hang out about player
+pulse and time dilation only ones left with no dedicated mod
+
+lore - a robot (the player) gains self awareness
+  each mod/gun/field is a new tech
+    all the technology leads to the singularity
+  each game run is actually the mech simulating a possible escape
+    this is why the graphics are so bad, its just a simulation
+    final mod is "this is just a simulation"
+      you get immortality and Infinity damage
+      the next level is the final level
+  when you die with Quantum Immortality there is a chance of lore text
+  make a global variable that goes up by one every time you play
+    show text at start, loading simulation #...
 
 mod - status effects last 1 second longer
   cryonics : a mod that increases the freezing time of mobs.
@@ -12,26 +21,11 @@ mod - status effects last 1 second longer
 mob Boss - time skipper: sends a pulse wave out that will cause time to jump forward 1 second.
   what about a series of short time skips forward 10 cycles at a time
 
-add a way to run player submitted maps.
-
 MOB stabber - extends one vector like the shooter, but quickly in order to stab
-
-mod - frag grenades fire nails on explosion
-
-mod - drop a mine after taking damage
 
 work on burn status effect
   graphics don't look right
   how is it different from the chemical dot
-
-perfect diamagnetism should get larger as it blocks more, and then slowly fade back to the normal size
-
-gun - bullets that acts like drones but only last for 2 seconds and do more damage
-
-field - the basic field emitter, but no energy loss and no knock back on blocks
-  this field should make blocking a viable strategy
-  gain energy on blocking?
-  call it diamagnetic field and remove the diamagnetism mod?
 
 mod - nails do poison damage
 
@@ -57,16 +51,6 @@ settings - auto aim at nearest mob
 settings - custom keys binding
 
 mod - energy recharges faster when not moving
-
-lore - a robot (the player) gains self awareness
-  each mod/gun/field is a new tech
-    all the technology leads to the singularity
-  each game run is actually the mech simulating a possible escape
-    this is why the graphics are so bad, its just a simulation
-    final mod is "this is just a simulation"
-      you get immortality and Infinity damage
-      the next level is the final level
-  when you die with Quantum Immortality there is a chance of lore text
 
 atmosphere levels: change the pace, give the user a rest between combat
   low or no combat, but more graphics
