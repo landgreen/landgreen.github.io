@@ -723,6 +723,7 @@ const mech = {
   fieldEnergyMax: 1, //can be increased by a mod
   holdingTarget: null,
   fieldShieldingScale: 1,
+  timeSkipLastCycle: 0,
   // these values are set on reset by setHoldDefaults()
   fieldRange: 155,
   energy: 0,
@@ -915,8 +916,8 @@ const mech = {
         //player recoil //stronger in x-dir to prevent jump hacking
 
         Matter.Body.setVelocity(player, {
-          x: player.velocity.x - Math.cos(mech.angle) * speed / (mech.crouch ? 30 : 5) * Math.sqrt(mech.holdingTarget.mass),
-          y: player.velocity.y - Math.sin(mech.angle) * speed / 40 * Math.sqrt(mech.holdingTarget.mass)
+          x: player.velocity.x - Math.cos(mech.angle) * speed / (mech.crouch ? 30 : 10) * Math.sqrt(mech.holdingTarget.mass),
+          y: player.velocity.y - Math.sin(mech.angle) * speed / 30 * Math.sqrt(mech.holdingTarget.mass)
         });
         mech.definePlayerMass() //return to normal player mass
       }
@@ -978,7 +979,7 @@ const mech = {
           y: powerUp[i].velocity.y * 0.11
         });
         if (dist2 < 5000) { //use power up if it is close enough
-          if (b.isModMassEnergy) mech.energy = mech.fieldEnergyMax * 1.5;
+          if (b.isModMassEnergy) mech.energy = mech.fieldEnergyMax * 2;
           Matter.Body.setVelocity(player, { //player knock back, after grabbing power up
             x: player.velocity.x + ((powerUp[i].velocity.x * powerUp[i].mass) / player.mass) * 0.3,
             y: player.velocity.y + ((powerUp[i].velocity.y * powerUp[i].mass) / player.mass) * 0.3
@@ -1339,7 +1340,32 @@ const mech = {
                   cons[i].stiffness = 0;
                 }
               }
+
               game.cycle--; //pause all functions that depend on game cycle increasing
+              if (b.isModTimeSkip) {
+                game.isTimeSkipping = true;
+                mech.cycle++;
+                game.gravity();
+                Engine.update(engine, game.delta);
+                // level.checkZones();
+                // level.checkQuery();
+                mech.move();
+                game.checks();
+                // mobs.loop();
+                // mech.draw();
+                mech.walk_cycle += mech.flipLegs * mech.Vx;
+                // mech.hold();
+                mech.energy += 0.5 * DRAIN; //x1 to undo the energy drain from time speed up, x1.5 to cut energy drain in half
+                b.fire();
+                // b.bulletRemove();
+                b.bulletDo();
+                game.isTimeSkipping = false;
+              }
+              // game.cycle--; //pause all functions that depend on game cycle increasing
+              // if (b.isModTimeSkip && !game.isTimeSkipping) { //speed up the rate of time
+              //   game.timeSkip(1)
+              //   mech.energy += 1.5 * DRAIN; //x1 to undo the energy drain from time speed up, x1.5 to cut energy drain in half
+              // }
             }
           } else if (mech.holdingTarget && mech.fieldCDcycle < mech.cycle) { //holding, but field button is released
             mech.wakeCheck();

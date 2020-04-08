@@ -51,7 +51,9 @@ const game = {
     level.drawFills();
     game.draw.drawMapPath();
     b.fire();
-    b.bulletActions();
+    b.bulletRemove();
+    b.bulletDraw();
+    b.bulletDo();
     game.drawCircle();
     ctx.restore();
     game.drawCursor();
@@ -74,7 +76,8 @@ const game = {
 
       mech.hold();
       b.fire();
-      b.bulletActions();
+      b.bulletRemove();
+      b.bulletDo();
     }
     game.isTimeSkipping = false;
   },
@@ -174,7 +177,7 @@ const game = {
       if (b.inventory[0] === b.activeGun) {
         let lessDamage = 1
         for (let i = 0, len = b.inventory.length; i < len; i++) {
-          lessDamage *= 0.87 // 1 - 0.13
+          lessDamage *= 0.84 // 1 - 0.16
         }
         document.getElementById("mod-entanglement").innerHTML = " " + ((1 - lessDamage) * 100).toFixed(0) + "%"
       } else {
@@ -709,6 +712,10 @@ const game = {
     }
 
     if (!(mech.cycle % 60)) { //once a second
+
+      if (b.isModEnergyDamage) {
+        document.getElementById("mod-capacitor").innerHTML = `(+${(mech.energy/0.05).toFixed(0)}%)`
+      }
 
       if (mech.lastKillCycle + 300 > mech.cycle) { //effects active for 5 seconds after killing a mob
         if (b.isModEnergyRecovery) {

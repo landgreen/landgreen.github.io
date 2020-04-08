@@ -73,6 +73,9 @@ const b = {
   isModVacuumShield: null,
   modRenormalization: null,
   modGrenadeFragments: null,
+  isModEnergyDamage: null,
+  isModBotSpawner: null,
+  modWaveHelix: null,
   modOnHealthChange() { //used with acid mod
     if (b.isModAcidDmg && mech.health > 0.8) {
       b.modAcidDmg = 0.7
@@ -117,6 +120,23 @@ const b = {
       },
       remove() {
         b.modBulletSize = 1;
+      }
+    },
+    {
+      name: "capacitor",
+      nameInfo: "<span id='mod-capacitor'></span>",
+      description: "increase <strong class='color-d'>damage</strong> based on stored <strong class='color-f'>energy</strong><br><strong>+1%</strong> <strong class='color-d'>damage</strong> for every <strong>5%</strong> <strong class='color-f'>energy</strong>",
+      maxCount: 1,
+      count: 0,
+      allowed() {
+        return true
+      },
+      requires: "",
+      effect: () => {
+        b.isModEnergyDamage = true // used in mech.grabPowerUp
+      },
+      remove() {
+        b.isModEnergyDamage = false;
       }
     },
     {
@@ -335,6 +355,22 @@ const b = {
       }
     },
     {
+      name: "scrap bots",
+      description: "<strong>+16%</strong> chance to build a <strong>bot</strong> after killing a mob<br>the bot will follow you until you <strong>exit</strong> the map",
+      maxCount: 6,
+      count: 0,
+      allowed() {
+        return true
+      },
+      requires: "",
+      effect() {
+        b.isModBotSpawner += 0.16;
+      },
+      remove() {
+        b.isModBotSpawner = 0;
+      }
+    },
+    {
       name: "ablative mines",
       description: "rebuild your broken parts as a <strong>mine</strong><br>chance to occur after being <strong>harmed</strong>",
       maxCount: 1,
@@ -514,7 +550,7 @@ const b = {
     },
     {
       name: "Pauli exclusion",
-      description: `unable to <strong>collide</strong> with mobs for <strong>+1</strong> second<br>activates after being <strong>harmed</strong> from a collision`,
+      description: `unable to <strong>collide</strong> with mobs for <strong>+2</strong> seconds<br>activates after being <strong>harmed</strong> from a collision`,
       maxCount: 9,
       count: 0,
       allowed() {
@@ -522,27 +558,11 @@ const b = {
       },
       requires: "",
       effect() {
-        b.modCollisionImmuneCycles += 60;
+        b.modCollisionImmuneCycles += 120;
         mech.collisionImmuneCycle = mech.cycle + b.modCollisionImmuneCycles; //player is immune to collision damage for 30 cycles
       },
       remove() {
         b.modCollisionImmuneCycles = 30;
-      }
-    },
-    {
-      name: "annihilation",
-      description: "after <strong>touching</strong> mobs, they are <strong>annihilated</strong>",
-      maxCount: 1,
-      count: 0,
-      allowed() {
-        return b.modCollisionImmuneCycles > 30
-      },
-      requires: "Pauli exclusion",
-      effect() {
-        b.isModAnnihilation = true
-      },
-      remove() {
-        b.isModAnnihilation = false;
       }
     },
     {
@@ -722,7 +742,7 @@ const b = {
     },
     {
       name: "mass-energy equivalence",
-      description: "<strong>power ups</strong> overfill your <strong class='color-f'>energy</strong><br>temporarily gain <strong>50%</strong> above your max",
+      description: "<strong>power ups</strong> overfill your <strong class='color-f'>energy</strong><br>temporarily gain <strong>twice</strong> your maximum",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -1011,6 +1031,23 @@ const b = {
       }
     },
     {
+      name: "double helix",
+      description: "<strong>wave beam</strong> emits <strong>two</strong> out of phase particles<br>wave particles do <strong>40%</strong> less <strong class='color-d'>damage</strong>",
+      maxCount: 1,
+      count: 0,
+      allowed() {
+        return b.haveGunCheck("wave beam")
+      },
+      requires: "wave beam",
+      effect() {
+        b.modWaveHelix = 2
+      },
+      remove() {
+        b.modWaveHelix = 1
+      }
+    },
+
+    {
       name: "pocket universe",
       description: "<strong>wave beam</strong> bullets last <strong>4</strong> times longer<br>bullets are <strong>confined</strong> to a <strong>region</strong> around player",
       maxCount: 1,
@@ -1112,7 +1149,7 @@ const b = {
     },
     {
       name: "tinsellated flagella",
-      description: "<strong class='color-p' style='letter-spacing: 2px;'>spores</strong> accelerate <strong>33% faster</strong>",
+      description: "<strong class='color-p' style='letter-spacing: 2px;'>spores</strong> accelerate <strong>50% faster</strong>",
       maxCount: 1,
       count: 0,
       allowed() {
@@ -1227,6 +1264,22 @@ const b = {
       }
     },
     {
+      name: "timelike world line",
+      description: "<strong>time dilation</strong> increases your time <strong>rate</strong> by <strong>2x</strong><br>while <strong class='color-f'>energy</strong> <strong>drain</strong> is decreased by <strong>2x</strong>",
+      maxCount: 9,
+      count: 0,
+      allowed() {
+        return mech.fieldUpgrades[mech.fieldMode].name === "time dilation field"
+      },
+      requires: "time dilation field",
+      effect() {
+        b.isModTimeSkip = true;
+      },
+      remove() {
+        b.isModTimeSkip = false;
+      }
+    },
+    {
       name: "plasma jet",
       description: "increase <strong>plasma torch's</strong> range by <strong>33%</strong>",
       maxCount: 9,
@@ -1240,6 +1293,22 @@ const b = {
       },
       remove() {
         b.isModPlasmaRange = 1;
+      }
+    },
+    {
+      name: "annihilation",
+      description: "after <strong>touching</strong> mobs, they are <strong>annihilated</strong>",
+      maxCount: 1,
+      count: 0,
+      allowed() {
+        return mech.fieldUpgrades[mech.fieldMode].name === "negative mass field"
+      },
+      requires: "negative mass field",
+      effect() {
+        b.isModAnnihilation = true
+      },
+      remove() {
+        b.isModAnnihilation = false;
       }
     },
     {
@@ -1459,7 +1528,7 @@ const b = {
       }
     }
   },
-  bulletActions() { //run in main loop
+  bulletRemove() { //run in main loop
     //remove bullet if at end cycle for that bullet
     let i = bullet.length;
     while (i--) {
@@ -1473,7 +1542,8 @@ const b = {
         }
       }
     }
-    //draw
+  },
+  bulletDraw() {
     ctx.beginPath();
     for (let i = 0, len = bullet.length; i < len; i++) {
       let vertices = bullet[i].vertices;
@@ -1485,8 +1555,8 @@ const b = {
     }
     ctx.fillStyle = "#000";
     ctx.fill();
-
-    //do bullet things
+  },
+  bulletDo() {
     for (let i = 0, len = bullet.length; i < len; i++) {
       bullet[i].do();
     }
@@ -1927,7 +1997,7 @@ const b = {
       angle: Math.random() * 2 * Math.PI,
       friction: 0,
       frictionAir: 0.025,
-      thrust: b.isModFastSpores ? 0.0008 : 0.0004,
+      thrust: b.isModFastSpores ? 0.001 : 0.0004,
       dmg: 2.4, //damage done in addition to the damage from momentum
       classType: "bullet",
       collisionFilter: {
@@ -1936,7 +2006,7 @@ const b = {
       },
       endCycle: game.cycle + Math.floor((660 + Math.floor(Math.random() * 240)) * b.isModBulletsLastLonger),
       minDmgSpeed: 0,
-      onDmg() {
+      onDmg(who) {
         // mobs.statusPoison(who, 0.5, 180) // (2.2) * 1.3 * 30/180  // 6 ticks (3 seconds)
         this.endCycle = 0; //bullet ends cycle after doing damage 
       },
@@ -2573,106 +2643,108 @@ const b = {
       isStarterGun: true,
       isEasyToAim: false,
       fire() {
-        const me = bullet.length;
+        mech.fireCDcycle = mech.cycle + Math.floor(3 * b.modFireRate); // cool down
         const dir = mech.angle
         const SPEED = 10
-        const wiggleMag = mech.crouch ? 3 : 10
-        bullet[me] = Bodies.polygon(mech.pos.x + 25 * Math.cos(dir), mech.pos.y + 25 * Math.sin(dir), 7, 5 * b.modBulletSize, {
-          angle: dir,
-          cycle: 0,
-          endCycle: game.cycle + Math.floor((b.isModWaveReflect ? 480 : 120) * b.isModBulletsLastLonger),
-          inertia: Infinity,
-          frictionAir: 0,
-          slow: 0,
-          minDmgSpeed: 0,
-          dmg: 0,
-          isJustReflected: false,
-          classType: "bullet",
-          collisionFilter: {
-            category: 0,
-            mask: 0, //cat.mob | cat.mobBullet | cat.mobShield
-          },
-          onDmg() {},
-          onEnd() {},
-          do() {
-            if (!mech.isBodiesAsleep) {
-              let slowCheck = 1;
-              if (Matter.Query.point(map, this.position).length) { //check if inside map
-                slowCheck = b.modWaveSpeedMap
-              } else { //check if inside a body
-                let q = Matter.Query.point(body, this.position)
-                if (q.length) {
-                  slowCheck = b.modWaveSpeedBody
-                  Matter.Body.setPosition(this, Vector.add(this.position, q[0].velocity)) //move with the medium
-                } else { // check if inside a mob
-                  q = Matter.Query.point(mob, this.position)
-                  for (let i = 0; i < q.length; i++) {
-                    slowCheck = 0.3;
-                    Matter.Body.setPosition(this, Vector.add(this.position, q[i].velocity)) //move with the medium
-                    let dmg = b.dmgScale * 0.45 / Math.sqrt(q[i].mass)
-                    q[i].damage(dmg);
-                    q[i].foundPlayer();
-                    game.drawList.push({ //add dmg to draw queue
-                      x: this.position.x,
-                      y: this.position.y,
-                      radius: Math.log(2 * dmg + 1.1) * 40,
-                      color: 'rgba(0,0,0,0.4)',
-                      time: game.drawTime
-                    });
+        const wiggleMag = mech.crouch ? 5 : 12
+        for (let i = 0; i < b.modWaveHelix; i++) {
+          const me = bullet.length;
+          bullet[me] = Bodies.polygon(mech.pos.x + 25 * Math.cos(dir), mech.pos.y + 25 * Math.sin(dir), 7, 5 * b.modBulletSize, {
+            angle: dir,
+            cycle: -0.5,
+            endCycle: game.cycle + Math.floor((b.isModWaveReflect ? 480 : 120) * b.isModBulletsLastLonger),
+            inertia: Infinity,
+            frictionAir: 0,
+            slow: 0,
+            minDmgSpeed: 0,
+            dmg: 0,
+            isJustReflected: false,
+            classType: "bullet",
+            collisionFilter: {
+              category: 0,
+              mask: 0, //cat.mob | cat.mobBullet | cat.mobShield
+            },
+            onDmg() {},
+            onEnd() {},
+            do() {
+              if (!mech.isBodiesAsleep) {
+                let slowCheck = 1;
+                if (Matter.Query.point(map, this.position).length) { //check if inside map
+                  slowCheck = b.modWaveSpeedMap
+                } else { //check if inside a body
+                  let q = Matter.Query.point(body, this.position)
+                  if (q.length) {
+                    slowCheck = b.modWaveSpeedBody
+                    Matter.Body.setPosition(this, Vector.add(this.position, q[0].velocity)) //move with the medium
+                  } else { // check if inside a mob
+                    q = Matter.Query.point(mob, this.position)
+                    for (let i = 0; i < q.length; i++) {
+                      slowCheck = 0.3;
+                      Matter.Body.setPosition(this, Vector.add(this.position, q[i].velocity)) //move with the medium
+                      let dmg = b.dmgScale * 0.43 / Math.sqrt(q[i].mass) * (b.modWaveHelix ? 0.6 : 1) //1 - 0.4 = 0.6 for helix mod 40% damage reduction
+                      q[i].damage(dmg);
+                      q[i].foundPlayer();
+                      game.drawList.push({ //add dmg to draw queue
+                        x: this.position.x,
+                        y: this.position.y,
+                        radius: Math.log(2 * dmg + 1.1) * 40,
+                        color: 'rgba(0,0,0,0.4)',
+                        time: game.drawTime
+                      });
+                    }
                   }
                 }
+                if (slowCheck !== this.slow) { //toggle velocity based on inside and outside status change
+                  this.slow = slowCheck
+                  Matter.Body.setVelocity(this, Vector.mult(Vector.normalise(this.velocity), SPEED * slowCheck));
+                }
+                this.cycle++
+                const wiggle = Vector.mult(transverse, wiggleMag * Math.cos(this.cycle * 0.35) * ((i % 2) ? -1 : 1))
+                Matter.Body.setPosition(this, Vector.add(this.position, wiggle))
               }
-              if (slowCheck !== this.slow) { //toggle velocity based on inside and outside status change
-                this.slow = slowCheck
-                Matter.Body.setVelocity(this, Vector.mult(Vector.normalise(this.velocity), SPEED * slowCheck));
+              // if (b.isModWaveReflect) { //single reflection
+              //   const sub = Vector.sub(this.position, mech.pos)
+              //   if (Vector.magnitude(sub) > 630) {
+              //     // Matter.Body.setPosition(this, Vector.add(this.position, Vector.mult(Vector.normalise(sub), -2 * POCKET_RANGE))) //teleport to opposite side
+              //     if (!this.isJustReflected) {
+              //       Matter.Body.setVelocity(this, Vector.mult(this.velocity, -1)); //reflect
+              //       this.isJustReflected = true;
+              //     }
+              //   }
+              // }
+
+              if (b.isModWaveReflect) {
+                Matter.Body.setPosition(this, Vector.add(this.position, player.velocity)) //bullets move with player
+                const sub = Vector.sub(this.position, mech.pos)
+                if (Vector.magnitude(sub) > 630) {
+                  Matter.Body.setPosition(this, Vector.add(this.position, Vector.mult(Vector.normalise(sub), -2 * 630))) //teleport to opposite side
+                }
               }
-              this.cycle++
-              const wiggle = Vector.mult(transverse, wiggleMag * Math.cos(this.cycle * 0.35))
-              Matter.Body.setPosition(this, Vector.add(this.position, wiggle))
+
+              // if (b.isModWaveReflect) {
+              //   Matter.Body.setPosition(this, Vector.add(this.position, player.velocity))  //bullets move with player
+
+              // Matter.Body.setPosition(this, Vector.add(this.position, Vector.mult(Vector.normalise(sub), -2 * POCKET_RANGE))) //teleport to opposite side
+
+              // const sub = Vector.sub(this.position, mech.pos)
+              // if (Vector.magnitude(sub) > 630) {  
+              //   if (!this.isJustReflected) {
+              //     Matter.Body.setVelocity(this, Vector.mult(this.velocity, -1)); //reflect
+              //     this.isJustReflected = true;
+              //   }
+              // } else {
+              //   this.isJustReflected = false
+              // }
+              // }
             }
-            // if (b.isModWaveReflect) { //single reflection
-            //   const sub = Vector.sub(this.position, mech.pos)
-            //   if (Vector.magnitude(sub) > 630) {
-            //     // Matter.Body.setPosition(this, Vector.add(this.position, Vector.mult(Vector.normalise(sub), -2 * POCKET_RANGE))) //teleport to opposite side
-            //     if (!this.isJustReflected) {
-            //       Matter.Body.setVelocity(this, Vector.mult(this.velocity, -1)); //reflect
-            //       this.isJustReflected = true;
-            //     }
-            //   }
-            // }
-
-            if (b.isModWaveReflect) {
-              Matter.Body.setPosition(this, Vector.add(this.position, player.velocity)) //bullets move with player
-              const sub = Vector.sub(this.position, mech.pos)
-              if (Vector.magnitude(sub) > 630) {
-                Matter.Body.setPosition(this, Vector.add(this.position, Vector.mult(Vector.normalise(sub), -2 * 630))) //teleport to opposite side
-              }
-            }
-
-            // if (b.isModWaveReflect) {
-            //   Matter.Body.setPosition(this, Vector.add(this.position, player.velocity))  //bullets move with player
-
-            // Matter.Body.setPosition(this, Vector.add(this.position, Vector.mult(Vector.normalise(sub), -2 * POCKET_RANGE))) //teleport to opposite side
-
-            // const sub = Vector.sub(this.position, mech.pos)
-            // if (Vector.magnitude(sub) > 630) {  
-            //   if (!this.isJustReflected) {
-            //     Matter.Body.setVelocity(this, Vector.mult(this.velocity, -1)); //reflect
-            //     this.isJustReflected = true;
-            //   }
-            // } else {
-            //   this.isJustReflected = false
-            // }
-            // }
-          }
-        });
-        World.add(engine.world, bullet[me]); //add bullet to world
-        mech.fireCDcycle = mech.cycle + Math.floor(3 * b.modFireRate); // cool down
-        Matter.Body.setVelocity(bullet[me], {
-          x: SPEED * Math.cos(dir),
-          y: SPEED * Math.sin(dir)
-        });
-        const transverse = Vector.normalise(Vector.perp(bullet[me].velocity))
+          });
+          World.add(engine.world, bullet[me]); //add bullet to world
+          Matter.Body.setVelocity(bullet[me], {
+            x: SPEED * Math.cos(dir),
+            y: SPEED * Math.sin(dir)
+          });
+          const transverse = Vector.normalise(Vector.perp(bullet[me].velocity))
+        }
       }
     },
     {
@@ -2997,7 +3069,7 @@ const b = {
       name: "drones", //11
       description: "deploy drones that <strong>crash</strong> into mobs<br>collisions reduce their <strong>lifespan</strong> by 1 second",
       ammo: 0,
-      ammoPack: 11,
+      ammoPack: 12,
       have: false,
       isStarterGun: true,
       isEasyToAim: true,
@@ -3150,12 +3222,21 @@ const b = {
           minDmgSpeed: 5,
           onDmg(who) {
             if (who.shield) {
+              for (let i = 0, len = mob.length; i < len; i++) {
+                if (mob[i].id === who.shieldTargetID) { //apply some knock back to shield mob before shield breaks
+                  const force = Matter.Vector.mult(this.velocity, 15 / mob[i].mass)
+                  Matter.Body.setVelocity(mob[i], {
+                    x: mob[i].velocity.x + force.x,
+                    y: mob[i].velocity.y + force.y
+                  });
+                  break
+                }
+              }
               Matter.Body.setVelocity(this, {
                 x: -0.1 * this.velocity.x,
                 y: -0.1 * this.velocity.y
               });
               Matter.Body.setDensity(this, 0.001);
-              // this.endCycle = 0;
             }
             if (b.isModRailNails && this.speed > 10) {
               const targets = [] //target nearby mobs
@@ -3187,9 +3268,9 @@ const b = {
                   })
                 }
               }
+              this.endCycle = 0 //triggers despawn
             }
-
-          }, //this.endCycle = 0  //triggers despawn
+          },
           onEnd() {}
         });
         mech.fireCDcycle = Infinity; // cool down
@@ -3200,7 +3281,7 @@ const b = {
           if ((!game.mouseDown && this.charge > 0.6)) { //fire on mouse release
             //normal bullet behavior occurs after firing, overwrite this function
             this.do = function () {
-              this.force.y += this.mass * 0.00015 / this.charge; // low gravity that scales with charge
+              this.force.y += this.mass * 0.0003 / this.charge; // low gravity that scales with charge
             }
 
             mech.fireCDcycle = mech.cycle + 2; // set fire cool down
