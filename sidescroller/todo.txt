@@ -1,10 +1,40 @@
-mod - your damage scales with current energy
-mod - 10% chance after killing a mob to gain a bot
-      that follows you until you exit the map
-mod - move extra fast with less energy cost in time dilation
-mod - double helix fire two wave bullets, but they do 40% less damage
+
+mod - spores follow player
+mod - nails do 66% extra damage over 6 seconds
+
 
 ************** TODO - n-gon **************
+
+field - pilot wave
+  while mouse is down blocks (and mobs?) are move with the mouse
+    players can do serious damage by flicking the mouse and firing blocks
+    on mouse down calculate relative position of block to mouse and maintain that as mouse moves
+      on mouse up give blocks the computed mouse velocity
+    use a gravity effect that pulls blocks in range towards the center of the mouse
+      maybe no force in the very center to prevent clumping
+  draw a ellipse around the mouse that wobbles like phase decoherence field, and changes color maybe like negative mass field
+
+make flurooantimonic acid mod a damage over time
+  rename to radiation damage?
+
+mod - radiation damage over time effects can spread to nearby mobs
+  do a check for nearby mobs on each tick
+
+try adding a subtile shift of color towards red, green or blue
+  block, map, background, text? color
+  could be random as each level loads
+
+player health becomes NaN
+occurred a few times at higher levels
+  game.dmgScale, game.healScale not corrupted
+
+  didn't occur:   shotgun / laser  with all mods that have no requirements
+
+mod - killing a stunned mob gives something 
+  ammo or heal power up?
+
+mod - scale squirrel cage rotor with current energy
+  is variable speed going to be hard to deal with?
 
 boss level for timeSkipBoss because of game instability for boss on normal levels
   boss level needs to be very simple (maybe no other mobs, or no random mobs)
