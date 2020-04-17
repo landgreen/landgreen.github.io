@@ -18,13 +18,14 @@ const schedule = {
   current: "regular",
   mouse: 0,
   setCurrentByDate: function () {
-    if (schedule.current != "rally" || date.getHours() > 22) {
-      if (date.getDay() === 5) {
-        schedule.current = "advisory";
-      } else {
-        schedule.current = "regular";
-      }
-    }
+    // if (schedule.current != "rally" || date.getHours() > 22) {
+    //   if (date.getDay() === 5) {
+    //     schedule.current = "advisory";
+    //   } else {
+    //     schedule.current = "regular";
+    //   }
+    // }
+    schedule.current = "regular";
   },
   cycleCurrent: function () {
     if (schedule.current === "regular") {
@@ -715,7 +716,7 @@ function setup() {
 
   setTimeout(function () {
     update();
-    window.setInterval(slowUpdate, 10 * 60 * 1000); //update weather every 10 min
+    window.setInterval(slowUpdate, 60 * 60 * 1000); //update weather every 60 min
     window.setInterval(update, 60 * 1000); //update every minute
   }, (60 - date.getSeconds()) * 1000);
 
