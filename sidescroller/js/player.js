@@ -886,8 +886,8 @@ const mech = {
   throwBlock() {
     if (mech.holdingTarget) {
       if (keys[32] || game.mouseDownRight) {
-        if (mech.energy > 0.0007) {
-          mech.energy -= 0.0007;
+        if (mech.energy > 0.001) {
+          mech.energy -= 0.001 / b.modThrowChargeRate;
           mech.throwCharge += 0.5 * b.modThrowChargeRate / mech.holdingTarget.mass
           //draw charge
           const x = mech.pos.x + 15 * Math.cos(mech.angle);
@@ -1225,9 +1225,15 @@ const mech = {
   hold() {},
   setField(index) {
     if (isNaN(index)) { //find index by name
+      let found = false
       for (let i = 0; i < mech.fieldUpgrades.length; i++) {
-        if (index === mech.fieldUpgrades[i].name) index = i
+        if (index === mech.fieldUpgrades[i].name) {
+          index = i;
+          found = true;
+          break;
+        }
       }
+      if (!found) return //if you can't find the field don't give a field to avoid game crash
     }
     mech.fieldMode = index;
     document.getElementById("field").innerHTML = mech.fieldUpgrades[index].name
@@ -1256,6 +1262,46 @@ const mech = {
             mech.pickUp();
           } else {
             mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
+          }
+          mech.drawFieldMeter()
+        }
+      }
+    },
+    {
+      name: "standing wave harmonics",
+      description: "three oscillating <strong>shields</strong> are permanently active<br><strong class='color-f'>energy</strong> regenerates while field is active",
+      isEasyToAim: true,
+      effect: () => {
+        mech.hold = function () {
+          if (mech.isHolding) {
+            mech.drawHold(mech.holdingTarget);
+            mech.holding();
+            mech.throwBlock();
+          } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) { //not hold but field button is pressed
+            mech.grabPowerUp();
+            mech.lookForPickUp();
+          } else if (mech.holdingTarget && mech.fieldCDcycle < mech.cycle) { //holding, but field button is released
+            mech.pickUp();
+          } else {
+            mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
+          }
+          if (mech.energy > 0.1 && mech.fieldCDcycle < mech.cycle) {
+            const fieldRange1 = (0.55 + 0.35 * Math.sin(mech.cycle / 23)) * mech.fieldRange
+            const fieldRange2 = (0.5 + 0.4 * Math.sin(mech.cycle / 37)) * mech.fieldRange
+            const fieldRange3 = (0.45 + 0.45 * Math.sin(mech.cycle / 47)) * mech.fieldRange
+            const netfieldRange = Math.max(fieldRange1, fieldRange2, fieldRange3)
+            ctx.fillStyle = "rgba(110,170,200," + (0.04 + mech.energy * (0.12 + 0.13 * Math.random())) + ")";
+            ctx.beginPath();
+            ctx.arc(mech.pos.x, mech.pos.y, fieldRange1, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(mech.pos.x, mech.pos.y, fieldRange2, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(mech.pos.x, mech.pos.y, fieldRange3, 0, 2 * Math.PI);
+            ctx.fill();
+            mech.pushMobs360(netfieldRange);
+            // mech.pushBody360(netfieldRange);  //can't throw block when pushhing blocks away
           }
           mech.drawFieldMeter()
         }
@@ -1320,94 +1366,189 @@ const mech = {
       }
     },
     {
-      name: "time dilation field",
-      description: "use <strong class='color-f'>energy</strong> to <strong style='letter-spacing: 1px;'>stop time</strong><br><em>you can move and fire while time is stopped</em>",
+      name: "nano-scale manufacturing",
+      description: "excess <strong class='color-f'>energy</strong> used to build <strong>drones</strong><br><strong>2x</strong> <strong class='color-f'>energy</strong> regeneration",
       isEasyToAim: true,
       effect: () => {
-        // mech.fieldMeterColor = "#000"
-        mech.fieldFire = true;
-        mech.isBodiesAsleep = false;
+        // mech.fieldRegen *= 2;
         mech.hold = function () {
+          if (mech.energy > mech.fieldEnergyMax - 0.02 && mech.fieldCDcycle < mech.cycle) {
+            if (b.isModSporeField) {
+              // mech.fieldCDcycle = mech.cycle + 10; // set cool down to prevent +energy from making huge numbers of drones
+              const len = Math.floor(6 + 4 * Math.random())
+              mech.energy -= len * 0.074;
+              for (let i = 0; i < len; i++) {
+                b.spore(player)
+              }
+            } else if (b.isModMissileField) {
+              // mech.fieldCDcycle = mech.cycle + 10; // set cool down to prevent +energy from making huge numbers of drones
+              mech.energy -= 0.6;
+              b.missile({
+                  x: mech.pos.x + 40 * Math.cos(mech.angle),
+                  y: mech.pos.y + 40 * Math.sin(mech.angle) - 3
+                },
+                mech.angle + (0.5 - Math.random()) * (mech.crouch ? 0 : 0.2),
+                -3 * (0.5 - Math.random()) + (mech.crouch ? 25 : -8) * b.modFireRate,
+                1, b.modBabyMissiles)
+            } else if (b.isModIceField) {
+              // mech.fieldCDcycle = mech.cycle + 17; // set cool down to prevent +energy from making huge numbers of drones
+              mech.energy -= 0.061;
+              b.iceIX(1)
+            } else {
+              // mech.fieldCDcycle = mech.cycle + 10; // set cool down to prevent +energy from making huge numbers of drones
+              mech.energy -= 0.33;
+              b.drone(1)
+            }
+
+          }
           if (mech.isHolding) {
-            mech.wakeCheck();
             mech.drawHold(mech.holdingTarget);
             mech.holding();
             mech.throwBlock();
-          } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) {
+          } else if ((keys[32] || game.mouseDownRight && mech.fieldCDcycle < mech.cycle)) { //not hold but field button is pressed
             mech.grabPowerUp();
-            mech.lookForPickUp(180);
-
-            const DRAIN = 0.0017
-            if (mech.energy > DRAIN) {
-              mech.energy -= DRAIN;
-              if (mech.energy < DRAIN) {
-                mech.fieldCDcycle = mech.cycle + 120;
-                mech.energy = 0;
-                mech.wakeCheck();
-              }
-              //draw field everywhere
-              ctx.globalCompositeOperation = "saturation"
-              // ctx.fillStyle = "rgba(100,200,230," + (0.25 + 0.06 * Math.random()) + ")";
-              ctx.fillStyle = "#ccc";
-              ctx.fillRect(-100000, -100000, 200000, 200000)
-              ctx.globalCompositeOperation = "source-over"
-              //stop time
-              mech.isBodiesAsleep = true;
-
-              function sleep(who) {
-                for (let i = 0, len = who.length; i < len; ++i) {
-                  if (!who[i].isSleeping) {
-                    who[i].storeVelocity = who[i].velocity
-                    who[i].storeAngularVelocity = who[i].angularVelocity
-                  }
-                  Matter.Sleeping.set(who[i], true)
-                }
-              }
-              sleep(mob);
-              sleep(body);
-              sleep(bullet);
-              //doesn't really work, just slows down constraints
-              for (let i = 0, len = cons.length; i < len; i++) {
-                if (cons[i].stiffness !== 0) {
-                  cons[i].storeStiffness = cons[i].stiffness;
-                  cons[i].stiffness = 0;
-                }
-              }
-
-              game.cycle--; //pause all functions that depend on game cycle increasing
-              if (b.isModTimeSkip) {
-                game.isTimeSkipping = true;
-                mech.cycle++;
-                game.gravity();
-                Engine.update(engine, game.delta);
-                // level.checkZones();
-                // level.checkQuery();
-                mech.move();
-                game.checks();
-                // mobs.loop();
-                // mech.draw();
-                mech.walk_cycle += mech.flipLegs * mech.Vx;
-                // mech.hold();
-                mech.energy += 0.5 * DRAIN; //x1 to undo the energy drain from time speed up, x1.5 to cut energy drain in half
-                b.fire();
-                // b.bulletRemove();
-                b.bulletDo();
-                game.isTimeSkipping = false;
-              }
-              // game.cycle--; //pause all functions that depend on game cycle increasing
-              // if (b.isModTimeSkip && !game.isTimeSkipping) { //speed up the rate of time
-              //   game.timeSkip(1)
-              //   mech.energy += 1.5 * DRAIN; //x1 to undo the energy drain from time speed up, x1.5 to cut energy drain in half
-              // }
+            mech.lookForPickUp();
+            if (mech.energy > 0.05) {
+              mech.drawField();
+              mech.pushMobsFacing();
             }
           } else if (mech.holdingTarget && mech.fieldCDcycle < mech.cycle) { //holding, but field button is released
-            mech.wakeCheck();
             mech.pickUp();
           } else {
-            mech.wakeCheck();
             mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
           }
+          mech.energy += mech.fieldRegen;
           mech.drawFieldMeter()
+        }
+      }
+    },
+    {
+      name: "negative mass field",
+      description: "use <strong class='color-f'>energy</strong> to nullify  &nbsp; <strong style='letter-spacing: 12px;'>gravity</strong><br>reduce <strong>harm</strong> by <strong>80%</strong> while field is active", //<br><strong>launch</strong> larger blocks at much higher speeds
+      fieldDrawRadius: 0,
+      isEasyToAim: true,
+      effect: () => {
+        mech.fieldFire = true;
+        mech.holdingMassScale = 0.03; //can hold heavier blocks with lower cost to jumping
+        mech.fieldMeterColor = "#000"
+
+        mech.hold = function () {
+          mech.fieldDamageResistance = 1;
+          if (mech.isHolding) {
+            mech.drawHold(mech.holdingTarget);
+            mech.holding();
+            mech.throwBlock();
+          } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) { //push away
+            mech.grabPowerUp();
+            mech.lookForPickUp();
+            const DRAIN = 0.00035
+            if (mech.energy > DRAIN) {
+              mech.fieldDamageResistance = 0.2; // 1 - 0.8
+              // mech.pushMobs360();
+
+              //repulse mobs
+              // for (let i = 0, len = mob.length; i < len; ++i) {
+              //   sub = Vector.sub(mob[i].position, mech.pos);
+              //   dist2 = Vector.magnitudeSquared(sub);
+              //   if (dist2 < this.fieldDrawRadius * this.fieldDrawRadius && mob[i].speed > 6) {
+              //     const force = Vector.mult(Vector.perp(Vector.normalise(sub)), 0.00004 * mob[i].speed * mob[i].mass)
+              //     mob[i].force.x = force.x
+              //     mob[i].force.y = force.y
+              //   }
+              // }
+
+
+              //look for nearby objects to make zero-g
+              function zeroG(who, range, mag = 1.06) {
+                for (let i = 0, len = who.length; i < len; ++i) {
+                  sub = Vector.sub(who[i].position, mech.pos);
+                  dist = Vector.magnitude(sub);
+                  if (dist < range) {
+                    who[i].force.y -= who[i].mass * (game.g * mag); //add a bit more then standard gravity
+                  }
+                }
+              }
+              // zeroG(bullet);  //works fine, but not that noticeable and maybe not worth the possible performance hit
+              // zeroG(mob);  //mobs are too irregular to make this work?
+
+              if (keys[83] || keys[40]) { //down
+                player.force.y -= 0.5 * player.mass * mech.gravity;
+                this.fieldDrawRadius = this.fieldDrawRadius * 0.97 + 400 * 0.03;
+                zeroG(powerUp, this.fieldDrawRadius, 0.7);
+                zeroG(body, this.fieldDrawRadius, 0.7);
+              } else if (keys[87] || keys[38]) { //up
+                mech.energy -= 5 * DRAIN;
+                this.fieldDrawRadius = this.fieldDrawRadius * 0.97 + 850 * 0.03;
+                player.force.y -= 1.45 * player.mass * mech.gravity;
+                zeroG(powerUp, this.fieldDrawRadius, 1.38);
+                zeroG(body, this.fieldDrawRadius, 1.38);
+              } else {
+                mech.energy -= DRAIN;
+                this.fieldDrawRadius = this.fieldDrawRadius * 0.97 + 650 * 0.03;
+                player.force.y -= 1.07 * player.mass * mech.gravity; // slow upward drift
+                zeroG(powerUp, this.fieldDrawRadius);
+                zeroG(body, this.fieldDrawRadius);
+              }
+              if (mech.energy < 0.001) {
+                mech.fieldCDcycle = mech.cycle + 120;
+                mech.energy = 0;
+              }
+              //add extra friction for horizontal motion
+              if (keys[65] || keys[68] || keys[37] || keys[39]) {
+                Matter.Body.setVelocity(player, {
+                  x: player.velocity.x * 0.99,
+                  y: player.velocity.y * 0.97
+                });
+              } else { //slow rise and fall
+                Matter.Body.setVelocity(player, {
+                  x: player.velocity.x,
+                  y: player.velocity.y * 0.97
+                });
+              }
+
+              //draw zero-G range
+              ctx.beginPath();
+              ctx.arc(mech.pos.x, mech.pos.y, this.fieldDrawRadius, 0, 2 * Math.PI);
+              ctx.fillStyle = "#f5f5ff";
+              ctx.globalCompositeOperation = "difference";
+              ctx.fill();
+              if (b.isModHawking) {
+                for (let i = 0, len = mob.length; i < len; i++) {
+                  if (mob[i].distanceToPlayer2() < this.fieldDrawRadius * this.fieldDrawRadius && Matter.Query.ray(map, mech.pos, mob[i].position).length === 0 && Matter.Query.ray(body, mech.pos, mob[i].position).length === 0) {
+                    mob[i].damage(b.dmgScale * 0.085);
+                    mob[i].locatePlayer();
+
+                    //draw electricity
+                    const sub = Vector.sub(mob[i].position, mech.pos)
+                    const unit = Vector.normalise(sub);
+                    const steps = 6
+                    const step = Vector.magnitude(sub) / steps;
+                    ctx.beginPath();
+                    let x = mech.pos.x + 30 * unit.x;
+                    let y = mech.pos.y + 30 * unit.y;
+                    ctx.moveTo(x, y);
+                    for (let i = 0; i < steps; i++) {
+                      x += step * (unit.x + 0.7 * (Math.random() - 0.5))
+                      y += step * (unit.y + 0.7 * (Math.random() - 0.5))
+                      ctx.lineTo(x, y);
+                    }
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = "rgba(0,255,0,0.5)" //"#fff";
+                    ctx.stroke();
+
+                  }
+                }
+              }
+              ctx.globalCompositeOperation = "source-over";
+            }
+          } else if (mech.holdingTarget && mech.fieldCDcycle < mech.cycle) { //holding, but field button is released
+            mech.pickUp();
+            this.fieldDrawRadius = 0
+          } else {
+            mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
+            this.fieldDrawRadius = 0
+          }
+          mech.drawFieldMeter("rgba(0,0,0,0.2)")
         }
       }
     },
@@ -1578,228 +1719,93 @@ const mech = {
       }
     },
     {
-      name: "negative mass field",
-      description: "use <strong class='color-f'>energy</strong> to nullify  &nbsp; <strong style='letter-spacing: 12px;'>gravity</strong><br>reduce <strong>harm</strong> by <strong>80%</strong> while field is active", //<br><strong>launch</strong> larger blocks at much higher speeds
-      fieldDrawRadius: 0,
+      name: "time dilation field",
+      description: "use <strong class='color-f'>energy</strong> to <strong style='letter-spacing: 1px;'>stop time</strong><br><em>you can move and fire while time is stopped</em>",
       isEasyToAim: true,
       effect: () => {
+        // mech.fieldMeterColor = "#000"
         mech.fieldFire = true;
-        mech.holdingMassScale = 0.03; //can hold heavier blocks with lower cost to jumping
-        mech.fieldMeterColor = "#000"
-
+        mech.isBodiesAsleep = false;
         mech.hold = function () {
-          mech.fieldDamageResistance = 1;
           if (mech.isHolding) {
+            mech.wakeCheck();
             mech.drawHold(mech.holdingTarget);
             mech.holding();
             mech.throwBlock();
-          } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) { //push away
+          } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) {
             mech.grabPowerUp();
-            mech.lookForPickUp();
-            const DRAIN = 0.00035
+            mech.lookForPickUp(180);
+
+            const DRAIN = 0.0017
             if (mech.energy > DRAIN) {
-              mech.fieldDamageResistance = 0.2; // 1 - 0.8
-              // mech.pushMobs360();
-
-              //repulse mobs
-              // for (let i = 0, len = mob.length; i < len; ++i) {
-              //   sub = Vector.sub(mob[i].position, mech.pos);
-              //   dist2 = Vector.magnitudeSquared(sub);
-              //   if (dist2 < this.fieldDrawRadius * this.fieldDrawRadius && mob[i].speed > 6) {
-              //     const force = Vector.mult(Vector.perp(Vector.normalise(sub)), 0.00004 * mob[i].speed * mob[i].mass)
-              //     mob[i].force.x = force.x
-              //     mob[i].force.y = force.y
-              //   }
-              // }
-
-
-              //look for nearby objects to make zero-g
-              function zeroG(who, range, mag = 1.06) {
-                for (let i = 0, len = who.length; i < len; ++i) {
-                  sub = Vector.sub(who[i].position, mech.pos);
-                  dist = Vector.magnitude(sub);
-                  if (dist < range) {
-                    who[i].force.y -= who[i].mass * (game.g * mag); //add a bit more then standard gravity
-                  }
-                }
-              }
-              // zeroG(bullet);  //works fine, but not that noticeable and maybe not worth the possible performance hit
-              // zeroG(mob);  //mobs are too irregular to make this work?
-
-              if (keys[83] || keys[40]) { //down
-                player.force.y -= 0.5 * player.mass * mech.gravity;
-                this.fieldDrawRadius = this.fieldDrawRadius * 0.97 + 400 * 0.03;
-                zeroG(powerUp, this.fieldDrawRadius, 0.7);
-                zeroG(body, this.fieldDrawRadius, 0.7);
-              } else if (keys[87] || keys[38]) { //up
-                mech.energy -= 5 * DRAIN;
-                this.fieldDrawRadius = this.fieldDrawRadius * 0.97 + 850 * 0.03;
-                player.force.y -= 1.45 * player.mass * mech.gravity;
-                zeroG(powerUp, this.fieldDrawRadius, 1.38);
-                zeroG(body, this.fieldDrawRadius, 1.38);
-              } else {
-                mech.energy -= DRAIN;
-                this.fieldDrawRadius = this.fieldDrawRadius * 0.97 + 650 * 0.03;
-                player.force.y -= 1.07 * player.mass * mech.gravity; // slow upward drift
-                zeroG(powerUp, this.fieldDrawRadius);
-                zeroG(body, this.fieldDrawRadius);
-              }
-              if (mech.energy < 0.001) {
+              mech.energy -= DRAIN;
+              if (mech.energy < DRAIN) {
                 mech.fieldCDcycle = mech.cycle + 120;
                 mech.energy = 0;
+                mech.wakeCheck();
               }
-              //add extra friction for horizontal motion
-              if (keys[65] || keys[68] || keys[37] || keys[39]) {
-                Matter.Body.setVelocity(player, {
-                  x: player.velocity.x * 0.99,
-                  y: player.velocity.y * 0.97
-                });
-              } else { //slow rise and fall
-                Matter.Body.setVelocity(player, {
-                  x: player.velocity.x,
-                  y: player.velocity.y * 0.97
-                });
-              }
+              //draw field everywhere
+              ctx.globalCompositeOperation = "saturation"
+              // ctx.fillStyle = "rgba(100,200,230," + (0.25 + 0.06 * Math.random()) + ")";
+              ctx.fillStyle = "#ccc";
+              ctx.fillRect(-100000, -100000, 200000, 200000)
+              ctx.globalCompositeOperation = "source-over"
+              //stop time
+              mech.isBodiesAsleep = true;
 
-              //draw zero-G range
-              ctx.beginPath();
-              ctx.arc(mech.pos.x, mech.pos.y, this.fieldDrawRadius, 0, 2 * Math.PI);
-              ctx.fillStyle = "#f5f5ff";
-              ctx.globalCompositeOperation = "difference";
-              ctx.fill();
-              if (b.isModHawking) {
-                for (let i = 0, len = mob.length; i < len; i++) {
-                  if (mob[i].distanceToPlayer2() < this.fieldDrawRadius * this.fieldDrawRadius && Matter.Query.ray(map, mech.pos, mob[i].position).length === 0 && Matter.Query.ray(body, mech.pos, mob[i].position).length === 0) {
-                    mob[i].damage(b.dmgScale * 0.085);
-                    mob[i].locatePlayer();
-
-                    //draw electricity
-                    const sub = Vector.sub(mob[i].position, mech.pos)
-                    const unit = Vector.normalise(sub);
-                    const steps = 6
-                    const step = Vector.magnitude(sub) / steps;
-                    ctx.beginPath();
-                    let x = mech.pos.x + 30 * unit.x;
-                    let y = mech.pos.y + 30 * unit.y;
-                    ctx.moveTo(x, y);
-                    for (let i = 0; i < steps; i++) {
-                      x += step * (unit.x + 0.7 * (Math.random() - 0.5))
-                      y += step * (unit.y + 0.7 * (Math.random() - 0.5))
-                      ctx.lineTo(x, y);
-                    }
-                    ctx.lineWidth = 1;
-                    ctx.strokeStyle = "rgba(0,255,0,0.5)" //"#fff";
-                    ctx.stroke();
-
+              function sleep(who) {
+                for (let i = 0, len = who.length; i < len; ++i) {
+                  if (!who[i].isSleeping) {
+                    who[i].storeVelocity = who[i].velocity
+                    who[i].storeAngularVelocity = who[i].angularVelocity
                   }
+                  Matter.Sleeping.set(who[i], true)
                 }
               }
-              ctx.globalCompositeOperation = "source-over";
-            }
-          } else if (mech.holdingTarget && mech.fieldCDcycle < mech.cycle) { //holding, but field button is released
-            mech.pickUp();
-            this.fieldDrawRadius = 0
-          } else {
-            mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
-            this.fieldDrawRadius = 0
-          }
-          mech.drawFieldMeter("rgba(0,0,0,0.2)")
-        }
-      }
-    },
-    {
-      name: "standing wave harmonics",
-      description: "three oscillating <strong>shields</strong> are permanently active<br><strong class='color-f'>energy</strong> regenerates while field is active",
-      isEasyToAim: true,
-      effect: () => {
-        mech.hold = function () {
-          if (mech.isHolding) {
-            mech.drawHold(mech.holdingTarget);
-            mech.holding();
-            mech.throwBlock();
-          } else if ((keys[32] || game.mouseDownRight) && mech.fieldCDcycle < mech.cycle) { //not hold but field button is pressed
-            mech.grabPowerUp();
-            mech.lookForPickUp();
-          } else if (mech.holdingTarget && mech.fieldCDcycle < mech.cycle) { //holding, but field button is released
-            mech.pickUp();
-          } else {
-            mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
-          }
-          if (mech.energy > 0.1 && mech.fieldCDcycle < mech.cycle) {
-            const fieldRange1 = (0.55 + 0.35 * Math.sin(mech.cycle / 23)) * mech.fieldRange
-            const fieldRange2 = (0.5 + 0.4 * Math.sin(mech.cycle / 37)) * mech.fieldRange
-            const fieldRange3 = (0.45 + 0.45 * Math.sin(mech.cycle / 47)) * mech.fieldRange
-            const netfieldRange = Math.max(fieldRange1, fieldRange2, fieldRange3)
-            ctx.fillStyle = "rgba(110,170,200," + (0.04 + mech.energy * (0.12 + 0.13 * Math.random())) + ")";
-            ctx.beginPath();
-            ctx.arc(mech.pos.x, mech.pos.y, fieldRange1, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(mech.pos.x, mech.pos.y, fieldRange2, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(mech.pos.x, mech.pos.y, fieldRange3, 0, 2 * Math.PI);
-            ctx.fill();
-            mech.pushMobs360(netfieldRange);
-            // mech.pushBody360(netfieldRange);  //can't throw block when pushhing blocks away
-          }
-          mech.drawFieldMeter()
-        }
-      }
-    },
-    {
-      name: "nano-scale manufacturing",
-      description: "excess <strong class='color-f'>energy</strong> used to build <strong>drones</strong><br><strong>2x</strong> <strong class='color-f'>energy</strong> regeneration",
-      isEasyToAim: true,
-      effect: () => {
-        // mech.fieldRegen *= 2;
-        mech.hold = function () {
-          if (mech.energy > mech.fieldEnergyMax - 0.02 && mech.fieldCDcycle < mech.cycle) {
-            if (b.isModSporeField) {
-              // mech.fieldCDcycle = mech.cycle + 10; // set cool down to prevent +energy from making huge numbers of drones
-              const len = Math.floor(6 + 4 * Math.random())
-              mech.energy -= len * 0.074;
-              for (let i = 0; i < len; i++) {
-                b.spore(player)
+              sleep(mob);
+              sleep(body);
+              sleep(bullet);
+              //doesn't really work, just slows down constraints
+              for (let i = 0, len = cons.length; i < len; i++) {
+                if (cons[i].stiffness !== 0) {
+                  cons[i].storeStiffness = cons[i].stiffness;
+                  cons[i].stiffness = 0;
+                }
               }
-            } else if (b.isModMissileField) {
-              // mech.fieldCDcycle = mech.cycle + 10; // set cool down to prevent +energy from making huge numbers of drones
-              mech.energy -= 0.5;
-              b.missile({
-                  x: mech.pos.x + 40 * Math.cos(mech.angle),
-                  y: mech.pos.y + 40 * Math.sin(mech.angle) - 3
-                },
-                mech.angle + (0.5 - Math.random()) * (mech.crouch ? 0 : 0.2),
-                -3 * (0.5 - Math.random()) + (mech.crouch ? 25 : -8) * b.modFireRate,
-                1, b.modBabyMissiles)
-            } else if (b.isModIceField) {
-              // mech.fieldCDcycle = mech.cycle + 17; // set cool down to prevent +energy from making huge numbers of drones
-              mech.energy -= 0.061;
-              b.iceIX(1)
-            } else {
-              // mech.fieldCDcycle = mech.cycle + 10; // set cool down to prevent +energy from making huge numbers of drones
-              mech.energy -= 0.33;
-              b.drone(1)
-            }
 
-          }
-          if (mech.isHolding) {
-            mech.drawHold(mech.holdingTarget);
-            mech.holding();
-            mech.throwBlock();
-          } else if ((keys[32] || game.mouseDownRight && mech.fieldCDcycle < mech.cycle)) { //not hold but field button is pressed
-            mech.grabPowerUp();
-            mech.lookForPickUp();
-            if (mech.energy > 0.05) {
-              mech.drawField();
-              mech.pushMobsFacing();
+              game.cycle--; //pause all functions that depend on game cycle increasing
+              if (b.isModTimeSkip) {
+                game.isTimeSkipping = true;
+                mech.cycle++;
+                game.gravity();
+                Engine.update(engine, game.delta);
+                // level.checkZones();
+                // level.checkQuery();
+                mech.move();
+                game.checks();
+                // mobs.loop();
+                // mech.draw();
+                mech.walk_cycle += mech.flipLegs * mech.Vx;
+                // mech.hold();
+                mech.energy += 0.5 * DRAIN; //x1 to undo the energy drain from time speed up, x1.5 to cut energy drain in half
+                b.fire();
+                // b.bulletRemove();
+                b.bulletDo();
+                game.isTimeSkipping = false;
+              }
+              // game.cycle--; //pause all functions that depend on game cycle increasing
+              // if (b.isModTimeSkip && !game.isTimeSkipping) { //speed up the rate of time
+              //   game.timeSkip(1)
+              //   mech.energy += 1.5 * DRAIN; //x1 to undo the energy drain from time speed up, x1.5 to cut energy drain in half
+              // }
             }
           } else if (mech.holdingTarget && mech.fieldCDcycle < mech.cycle) { //holding, but field button is released
+            mech.wakeCheck();
             mech.pickUp();
           } else {
+            mech.wakeCheck();
             mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
           }
-          mech.energy += mech.fieldRegen;
           mech.drawFieldMeter()
         }
       }
@@ -1927,7 +1933,7 @@ const mech = {
     },
     {
       name: "pilot wave",
-      description: "use <strong class='color-f'>energy</strong> to push <strong>blocks</strong> with your mouse<br>energy <strong>drain</strong> is increased out of <strong>line of sight</strong>",
+      description: "use <strong class='color-f'>energy</strong> to push <strong>blocks</strong> with your mouse<br>field <strong>radius</strong> decreases out of <strong>line of sight</strong>",
       isEasyToAim: false,
       effect: () => {
         game.replaceTextLog = true; //allow text over write
@@ -1944,16 +1950,22 @@ const mech = {
         mech.fieldRadius = 0;
         mech.drop();
         mech.hold = function () {
-          if ((keys[32] || game.mouseDownRight && mech.fieldCDcycle < mech.cycle)) { //not hold but field button is pressed
+          if ((keys[32] || game.mouseDownRight && mech.fieldCDcycle < mech.cycle)) {
+            const scale = 25
+            const bounds = {
+              min: {
+                x: mech.fieldPosition.x - scale,
+                y: mech.fieldPosition.y - scale
+              },
+              max: {
+                x: mech.fieldPosition.x + scale,
+                y: mech.fieldPosition.y + scale
+              }
+            }
+            const isInMap = Matter.Query.region(map, bounds).length
+            // const isInMap = Matter.Query.point(map, mech.fieldPosition).length
 
-
-            // if (Matter.Query.ray(map, game.mouseInGame, player.position).length === 0){
-
-            // } else {
-            //   mech.fieldOn = false;
-            // }
-
-            if (!mech.fieldOn) {
+            if (!mech.fieldOn) { // if field was off, and it starting up, teleport to new mouse location
               mech.fieldOn = true;
               mech.fieldPosition = { //smooth the mouse position
                 x: game.mouseInGame.x,
@@ -1963,61 +1975,58 @@ const mech = {
                 x: mech.fieldPosition.x,
                 y: mech.fieldPosition.y
               }
-            } else {
+            } else { //when field is on it smoothly moves towards the mouse
               mech.lastFieldPosition = { //used to find velocity of field changes
                 x: mech.fieldPosition.x,
                 y: mech.fieldPosition.y
               }
-              const smooth = 0.97
+              const smooth = isInMap ? 0.985 : 0.96;
               mech.fieldPosition = { //smooth the mouse position
                 x: mech.fieldPosition.x * smooth + game.mouseInGame.x * (1 - smooth),
                 y: mech.fieldPosition.y * smooth + game.mouseInGame.y * (1 - smooth),
               }
             }
-            // Matter.Query.ray(map, game.mouseInGame, player.position).length === 0
-            //make it so the field only works in line of sight
-            //  make the field not get stuck on map when there in no line of site
-            //    maybe track the last mouse position, and revert to smooting towards it when mouse leaves line of site
-            // if (Matter.Query.ray(map, mech.fieldPosition, player.position).length === 0)
-
-
-
             mech.grabPowerUp();
-            //disable if player is inside field
-
             if (mech.energy > 0.01) {
-              // && Vector.magnitude(Vector.sub(game.mouseInGame, player.position)) > radius * 1.5 //disable effect when near player
               //find mouse velocity
               const diff = Vector.sub(mech.fieldPosition, mech.lastFieldPosition)
               const speed = Vector.magnitude(diff)
-              const velocity = Vector.mult(Vector.normalise(diff), Math.min(speed, 60)) //limit velocity
-              let radius = Math.max(50, 250 - 1.5 * speed) //change radius proportional to mouse speed  //run a smoothing function?
-              let isVisible = true
-              if (Matter.Query.ray(map, mech.fieldPosition, player.position).length !== 0) {
-                isVisible = false
-                radius *= 0.2
+              const velocity = Vector.mult(Vector.normalise(diff), Math.min(speed, 45)) //limit velocity
+              let radius, radiusSmooth
+              if (Matter.Query.ray(map, mech.fieldPosition, player.position).length) { //is there something block the player's view of the field
+                radius = 0
+                radiusSmooth = Math.max(0, isInMap ? 0.96 - 0.02 * speed : 0.995); //0.99
+              } else {
+                radius = Math.max(50, 250 - 2 * speed)
+                radiusSmooth = 0.97
               }
-              smooth = 0.9
-              mech.fieldRadius = mech.fieldRadius * smooth + radius * (1 - smooth)
+              mech.fieldRadius = mech.fieldRadius * radiusSmooth + radius * (1 - radiusSmooth)
 
-              //find nearby blocks
               for (let i = 0, len = body.length; i < len; ++i) {
                 if (Vector.magnitude(Vector.sub(body[i].position, mech.fieldPosition)) < mech.fieldRadius) {
-                  // Matter.Query.collides(player, [body[i]]).length === 0) { //block is not touching player, for no flying
-                  // (Matter.Query.ray(map, game.mouseInGame, player.position).length === 0 ? 1 : 4)
-                  const DRAIN = speed * body[i].mass * 0.00002 * (isVisible ? 1 : 4)
+                  const DRAIN = speed * body[i].mass * 0.00002
                   if (mech.energy > DRAIN) {
                     mech.energy -= DRAIN;
                     Matter.Body.setVelocity(body[i], velocity); //give block mouse velocity
+                    Matter.Body.setAngularVelocity(body[i], body[i].angularVelocity * 0.8)
                     body[i].force.y -= body[i].mass * game.g; //remove gravity effects
                   } else {
-                    mech.fieldOn = false
                     mech.fieldCDcycle = mech.cycle + 120;
+                    mech.fieldOn = false
                     mech.fieldRadius = 0
                     break
                   }
                 }
               }
+
+              if (b.isModPilotFreeze) {
+                for (let i = 0, len = mob.length; i < len; ++i) {
+                  if (Vector.magnitude(Vector.sub(mob[i].position, mech.fieldPosition)) < mech.fieldRadius) {
+                    mobs.statusSlow(mob[i], 120)
+                  }
+                }
+              }
+
               ctx.beginPath();
               const rotate = mech.cycle * 0.008;
               mech.fieldPhase += 0.2 // - 0.5 * Math.sqrt(Math.min(mech.energy, 1));
@@ -2025,21 +2034,18 @@ const mech = {
               const off2 = 1 - 0.06 * Math.sin(mech.fieldPhase);
               ctx.beginPath();
               ctx.ellipse(mech.fieldPosition.x, mech.fieldPosition.y, 1.2 * mech.fieldRadius * off1, 1.2 * mech.fieldRadius * off2, rotate, 0, 2 * Math.PI);
-              // ctx.ellipse(game.mouseInGame.x, game.mouseInGame.y, radius * off1, radius * off2, -rotate, 0, 2 * Math.PI);
-              // ctx.arc(game.mouseInGame.x, game.mouseInGame.y, this.fieldRange, 0, 2 * Math.PI);
-              ctx.fillStyle = "#fff"; //"#eef";
               ctx.globalCompositeOperation = "exclusion"; //"exclusion" "difference";
+              ctx.fillStyle = "#fff"; //"#eef";
               ctx.fill();
               ctx.globalCompositeOperation = "source-over";
-
               ctx.beginPath();
               ctx.ellipse(mech.fieldPosition.x, mech.fieldPosition.y, 1.2 * mech.fieldRadius * off1, 1.2 * mech.fieldRadius * off2, rotate, 0, mech.energy * 2 * Math.PI);
               ctx.strokeStyle = "#000";
               ctx.lineWidth = 4;
               ctx.stroke();
             } else {
-              mech.fieldOn = false
               mech.fieldCDcycle = mech.cycle + 120;
+              mech.fieldOn = false
               mech.fieldRadius = 0
             }
           } else {

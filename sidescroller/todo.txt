@@ -3,32 +3,20 @@
 
 ************** TODO - n-gon **************
 
-mod - energy replaces your health, 
+mod pilot wave - nonlocality: works out of LOS
 
-field - pilot wave
-  while mouse is down blocks (and mobs?) are move with the mouse
-    players can do serious damage by flicking the mouse and firing blocks
-    on mouse down calculate relative position of block to mouse and maintain that as mouse moves
-      on mouse up give blocks the computed mouse velocity
-    use a gravity effect that pulls blocks in range towards the center of the mouse
-      maybe no force in the very center to prevent clumping
-  draw a ellipse around the mouse that wobbles like phase decoherence field, and changes color maybe like negative mass field
+an effect when canceling a power up
+  ammo? heals?
+  50% chance for a mod, 25% heal, 25% ammo
 
-make flurooantimonic acid mod a damage over time
-  rename to radiation damage?
+liquid nitrogen cooling
+  Mobs freeze on contact with the player
 
-mod - radiation damage over time effects can spread to nearby mobs
-  do a check for nearby mobs on each tick
+uranium reactor core
+  Mobs get irradiated on contact with the player
 
-try adding a subtile shift of color towards red, green or blue
-  block, map, background, text? color
-  could be random as each level loads
-
-player health becomes NaN
-occurred a few times at higher levels
-  game.dmgScale, game.healScale not corrupted
-
-  didn't occur:   shotgun / laser  with all mods that have no requirements
+add player Scent Trails for mob navigation
+  https://abitawake.com/news/articles/enemy-ai-chasing-a-player-without-navigation2d-or-a-star-pathfinding
 
 mod - killing a stunned mob gives something 
   ammo or heal power up?
@@ -46,15 +34,11 @@ boss mob - just a faster and larger version of a springer mob
   always shielded
   consider combining with time skipper field?
 
-pulse and time dilation only upgrades left with no dedicated mod
-
 mob - time skipper: sends a pulse wave out that will cause time to jump forward 1 second.
 
 mob stabber - extends one vector like the shooter, but quickly in order to stab
 
 mob sniper - targeting laser, then a high speed, no gravity bullet
-
-mod - nails do poison damage
 
 mod - increase laser bot range, and reduce energy drain
 
