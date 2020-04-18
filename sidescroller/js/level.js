@@ -15,12 +15,12 @@ const level = {
     if (build.isURLBuild && level.levelsCleared === 0) build.onLoadPowerUps();
     if (level.levelsCleared === 0) { //this code only runs on the first level
       // level.difficultyIncrease(9)
-      b.giveGuns("rail gun")
+      // b.giveGuns("rail gun")
       // mech.setField("pilot wave")
       // b.giveMod("nonlocality");
 
-      // level.intro(); //starting level
-      level.testing();
+      level.intro(); //starting level
+      // level.testing();
       // level.stronghold()
       // level.bosses();
       // level.satellite();
