@@ -15,9 +15,11 @@ const level = {
     if (build.isURLBuild && level.levelsCleared === 0) build.onLoadPowerUps();
     if (level.levelsCleared === 0) { //this code only runs on the first level
       // level.difficultyIncrease(9)
-      // b.giveGuns("rail gun")
-      // mech.setField("pilot wave")
-      // b.giveMod("nonlocality");
+      // b.giveGuns("wave beam")
+      // mech.setField("phase decoherence field")
+      // b.giveMod("renormalization");
+      // b.giveMod("pocket universe");
+      // b.giveMod("wave packet");
 
       level.intro(); //starting level
       // level.testing();
