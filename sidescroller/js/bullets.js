@@ -296,7 +296,7 @@ const b = {
     },
     {
       name: "scrap bots",
-      description: "<strong>+16%</strong> chance to build a <strong>bot</strong> after killing a mob<br>the bot will follow you until you <strong>exit</strong> the map",
+      description: "<strong>+15%</strong> chance to build a <strong>bot</strong> after killing a mob<br>the bot will follow you until you <strong>exit</strong> the map",
       maxCount: 6,
       count: 0,
       allowed() {
@@ -304,7 +304,7 @@ const b = {
       },
       requires: "",
       effect() {
-        b.isModBotSpawner += 0.16;
+        b.isModBotSpawner += 0.15;
       },
       remove() {
         b.isModBotSpawner = 0;
@@ -2797,7 +2797,7 @@ const b = {
                   if (Vector.magnitude(sub) > range) {
                     // Matter.Body.setPosition(this, Vector.sub(this.position, Vector.mult(Vector.normalise(sub), 2 * range))) //teleport to opposite side
                     Matter.Body.setVelocity(this, Vector.mult(this.velocity, -1));
-                    // Matter.Body.setPosition(this, Vector.add(mech.pos, Vector.mult(Vector.normalise(sub), range)))
+                    Matter.Body.setPosition(this, Vector.add(mech.pos, Vector.mult(Vector.normalise(sub), range))) //reflect
                   }
                 } else {
                   let slowCheck = 1
