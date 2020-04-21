@@ -441,9 +441,9 @@ const b = {
       maxCount: 1,
       count: 0,
       allowed() {
-        return true
+        return !b.isModEnergyHealth
       },
-      requires: "",
+      requires: "mass-energy equivalence",
       effect() {
         b.isModEnergyLoss = true;
       },
@@ -549,9 +549,9 @@ const b = {
       maxCount: 1,
       count: 0,
       allowed() {
-        return !b.isModPiezo
+        return !b.isModPiezo && !b.isModEnergyLoss
       },
-      requires: "not piezoelectricity",
+      requires: "not piezoelectricity<br>or acute stress response",
       effect: () => {
         mech.health = 0
         b.modOnHealthChange();
@@ -2148,7 +2148,7 @@ const b = {
       friction: 0,
       frictionAir: 0.10,
       restitution: 0.3,
-      dmg: 0.16, //damage done in addition to the damage from momentum
+      dmg: 0.15, //damage done in addition to the damage from momentum
       lookFrequency: 10 + Math.floor(7 * Math.random()),
       endCycle: game.cycle + 120 * b.isModBulletsLastLonger, //Math.floor((1200 + 420 * Math.random()) * b.isModBulletsLastLonger),
       classType: "bullet",
