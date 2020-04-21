@@ -202,7 +202,7 @@ const mech = {
     } else {
       //sets a hard land where player stays in a crouch for a bit and can't jump
       //crouch is forced in keyMove() on ground section below
-      const momentum = player.velocity.y * player.mass //player mass is 5 so this triggers at 20 down velocity, unless the player is holding something
+      const momentum = player.velocity.y * player.mass //player mass is 5 so this triggers at 26 down velocity, unless the player is holding something
       if (momentum > 130) {
         mech.doCrouch();
         mech.yOff = mech.yOffWhen.jump;
