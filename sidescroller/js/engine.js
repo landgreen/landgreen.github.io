@@ -97,7 +97,8 @@ function collisionChecks(event) {
 
     function collidePlayer(obj) {
       //player dmg from hitting a body
-      if (obj.classType === "body" && mech.collisionImmuneCycle < mech.cycle) {
+      // if ( mech.collisionImmuneCycle < mech.cycle) {
+      if (obj.classType === "body" && obj.speed > 10 && mech.collisionImmuneCycle < mech.cycle) {
         const velocityThreshold = 30 //keep this lines up with player.enterLand numbers  (130/5 = 26)
         if (player.position.y > obj.position.y) { //block is above the player look at total momentum difference
           const velocityDiffMag = Vector.magnitude(Vector.sub(player.velocity, obj.velocity))
