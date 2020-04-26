@@ -3435,7 +3435,7 @@ const b = {
                 Matter.Body.setPosition(this, this.target.vertices[this.targetVertex])
                 Matter.Body.setVelocity(this.target, Vector.mult(this.target.velocity, 0.9))
                 Matter.Body.setAngularVelocity(this.target, this.target.angularVelocity * 0.9)
-                if (b.isModFoamShieldSKip) {
+                if (b.isModFoamShieldSKip && this.target.isShielded) {
                   this.target.damage(b.dmgScale * 0.0025, true); //shield damage bypass
                 } else {
                   this.target.damage(b.dmgScale * 0.005);
