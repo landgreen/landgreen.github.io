@@ -83,6 +83,7 @@ const b = {
   isModRPG: null,
   isMod3Missiles: null,
   isModDeterminism: null,
+  isModHarmReduce: null,
   modOnHealthChange() { //used with acid mod
     if (b.isModAcidDmg && mech.health > 0.8) {
       b.modAcidDmg = 0.5
@@ -1403,6 +1404,22 @@ const b = {
       },
       remove() {
         b.isModPlasmaRange = 1;
+      }
+    },
+    {
+      name: "degenerate matter",
+      description: "<strong>triple</strong> <strong class='color-f'>energy</strong> drain for <strong>negative mass field</strong><br>increase <strong>harm</strong> reduction to <strong>90%</strong>",
+      maxCount: 1,
+      count: 0,
+      allowed() {
+        return mech.fieldUpgrades[mech.fieldMode].name === "negative mass field"
+      },
+      requires: "negative mass field",
+      effect() {
+        b.isModHarmReduce = true
+      },
+      remove() {
+        b.isModHarmReduce = false;
       }
     },
     {

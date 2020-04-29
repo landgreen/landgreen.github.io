@@ -987,8 +987,7 @@ const level = {
           stiffness: 0.00007
         });
         if (game.difficulty > 4) spawn.nodeBoss(4250, 0, "spawns", 8, 20, 105); //chance to spawn a ring of exploding mobs around this boss
-      }
-      if (Math.random() < 0.08) {
+      } else if (Math.random() < 0.08) {
         spawn.randomLevelBoss(4250, -250);
       } else {
         //floor below right tall tower
