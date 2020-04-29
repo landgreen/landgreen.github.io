@@ -24,8 +24,8 @@ const level = {
       // mech.setField("pilot wave")
       // mech.setField("perfect diamagnetism")
 
-      // level.intro(); //starting level
-      level.testing();
+      level.intro(); //starting level
+      // level.testing();
       // level.stronghold()
       // level.bosses();
       // level.satellite();
@@ -161,8 +161,8 @@ const level = {
     // spawn.shield(mob[mob.length - 1], 1200, -500, 1);
 
     // spawn.nodeBoss(1200, -500, "spiker")
-    spawn.spiderBoss(1200, -500)
-    // spawn.timeSkipBoss(2900, -500)
+    // spawn.spiderBoss(1200, -500)
+    spawn.timeSkipBoss(2900, -500)
     // spawn.randomMob(1600, -500)
   },
   bosses() {

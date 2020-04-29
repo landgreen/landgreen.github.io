@@ -714,18 +714,18 @@ const spawn = {
       });
     }
   },
-  timeSkipBoss(x, y, radius = 70) {
+  timeSkipBoss(x, y, radius = 55) {
     mobs.spawn(x, y, 6, radius, '#000');
     let me = mob[mob.length - 1];
     // me.stroke = "transparent"; //used for drawSneaker
     me.timeSkipLastCycle = 0
-    me.eventHorizon = 1600; //required for black hole
+    me.eventHorizon = 1800; //required for black hole
     me.seeAtDistance2 = (me.eventHorizon + 2000) * (me.eventHorizon + 2000); //vision limit is event horizon + 2000
     me.accelMag = 0.0004 * game.accelScale;
     // me.frictionAir = 0.005;
     // me.memory = 1600;
     // Matter.Body.setDensity(me, 0.02); //extra dense //normal is 0.001 //makes effective life much larger
-    Matter.Body.setDensity(me, 0.0025 + 0.0007 * Math.sqrt(game.difficulty)); //extra dense //normal is 0.001 //makes effective life much larger
+    Matter.Body.setDensity(me, 0.0015 + 0.0005 * Math.sqrt(game.difficulty)); //extra dense //normal is 0.001 //makes effective life much larger
     spawn.shield(me, x, y, 1);
 
 
