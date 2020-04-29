@@ -81,7 +81,7 @@ const spawn = {
   },
   randomLevelBoss(x, y) {
     // suckerBoss, laserBoss, tetherBoss, snakeBoss   all need a particular level to work so they are not included
-    const options = ["spiderBoss"] //, "timeSkipBoss"  //"shooterBoss", "cellBossCulture", "bomberBoss",
+    const options = ["shooterBoss", "cellBossCulture", "bomberBoss", "spiderBoss", "timeSkipBoss"] //
     // const options = ["timeSkipBoss"]
     spawn[options[Math.floor(Math.random() * options.length)]](x, y)
   },
