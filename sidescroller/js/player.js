@@ -1465,7 +1465,7 @@ const mech = {
             if (mech.energy > DRAIN) {
               if (b.isModHarmReduce) {
                 mech.fieldDamageResistance = 0.1; // 1 - 0.9
-                DRAIN = 0.00105
+                DRAIN = 0.0007 //2x energy drain
               } else {
                 mech.fieldDamageResistance = 0.2; // 1 - 0.8
                 DRAIN = 0.00035
