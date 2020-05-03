@@ -540,7 +540,7 @@ const b = {
         b.isModSlowFPS = true;
       },
       remove() {
-        b.isModSlowFPS = true;
+        b.isModSlowFPS = false;
       }
     },
     {
