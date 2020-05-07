@@ -624,8 +624,8 @@ const mech = {
     if (b.isModSlowFPS) { // slow game 
       game.fpsCap = 30 //new fps
       game.fpsInterval = 1000 / game.fpsCap;
-      mech.defaultFPSCycle = mech.cycle + 30 //how long to wait to return to normal fps
-      if (dmg > 0.1) mech.defaultFPSCycle += 30
+      //how long to wait to return to normal fps
+      mech.defaultFPSCycle = mech.cycle + 20 + Math.min(90, Math.floor(200 * dmg))
     } else {
       if (dmg > 0.05) { // freeze game for high damage hits
         game.fpsCap = 4 //40 - Math.min(25, 100 * dmg)
@@ -1871,8 +1871,8 @@ const mech = {
             mech.lookForPickUp();
 
             const DRAIN = 0.0004 + 0.0002 * player.speed + ((!b.modRenormalization && mech.fireCDcycle > mech.cycle) ? 0.005 : 0.0017)
-            mech.energy -= DRAIN;
             if (mech.energy > DRAIN) {
+              mech.energy -= DRAIN;
               // if (mech.energy < 0.001) {
               //   mech.fieldCDcycle = mech.cycle + 120;
               //   mech.energy = 0;

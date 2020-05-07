@@ -699,16 +699,6 @@ const mobs = {
           this.force.y -= 2 * forceMag * Math.sin(angle); // - 0.0007 * this.mass; //antigravity
         }
       },
-      hop() {
-        //accelerate towards the player after a delay
-        if (this.cd < game.cycle && this.seePlayer.recall && this.speed < 1) {
-          this.cd = game.cycle + this.delay;
-          const forceMag = (this.accelMag + this.accelMag * Math.random()) * this.mass;
-          const angle = Math.atan2(this.seePlayer.position.y - this.position.y, this.seePlayer.position.x - this.position.x);
-          this.force.x += forceMag * Math.cos(angle);
-          this.force.y += forceMag * Math.sin(angle) - 0.04 * this.mass; //antigravity
-        }
-      },
       hoverOverPlayer() {
         if (this.seePlayer.recall) {
           // vertical positioning
@@ -982,7 +972,7 @@ const mobs = {
         this.removeConsBB();
         this.alive = false; //triggers mob removal in mob[i].replace(i)
         if (this.dropPowerUp) {
-          if (b.isModEnergyLoss) mech.energy /= 2;
+          if (b.isModEnergyLoss) mech.energy /= 3;
           powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
           mech.lastKillCycle = mech.cycle; //tracks the last time a kill was made, mostly used in game.checks()
           if (Math.random() < b.modSporesOnDeath) {
@@ -1044,7 +1034,8 @@ const mobs = {
         //if there are too many bodies don't turn into blocks to help performance
         if (this.leaveBody && body.length < 60 && this.mass < 100) {
           const len = body.length;
-          body[len] = Matter.Bodies.fromVertices(this.position.x, this.position.y, this.vertices);
+          const v = Matter.Vertices.hull(Matter.Vertices.clockwiseSort(this.vertices)) //might help with vertex collision issue, not sure
+          body[len] = Matter.Bodies.fromVertices(this.position.x, this.position.y, v);
           Matter.Body.setVelocity(body[len], this.velocity);
           Matter.Body.setAngularVelocity(body[len], this.angularVelocity);
           body[len].collisionFilter.category = cat.body;
