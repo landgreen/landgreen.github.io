@@ -227,7 +227,7 @@ const mobs = {
       gravity() {
         this.force.y += this.mass * this.g;
       },
-      seePlayerFreq: Math.round((30 + 30 * Math.random()) * game.lookFreqScale), //how often NPC checks to see where player is, lower numbers have better vision
+      seePlayerFreq: Math.floor((30 + 30 * Math.random()) * game.lookFreqScale), //how often NPC checks to see where player is, lower numbers have better vision
       foundPlayer() {
         this.locatePlayer();
         if (!this.seePlayer.yes) {
@@ -244,7 +244,7 @@ const mobs = {
       locatePlayer() { // updates mob's memory of player location
         this.seePlayer.recall = this.memory + Math.round(this.memory * Math.random()); //seconds before mob falls a sleep
         this.seePlayer.position.x = player.position.x;
-        this.seePlayer.position.y = player.position.y
+        this.seePlayer.position.y = player.position.y;
       },
       // locatePlayerByDist() {
       //   if (this.distanceToPlayer2() < this.locateRange) {
@@ -886,52 +886,20 @@ const mobs = {
           // }
         }
       },
-      launch() {
-        if (!mech.isBodiesAsleep) {
-          const setNoseShape = () => {
-            const mag = this.radius + this.radius * this.noseLength;
-            this.vertices[1].x = this.position.x + Math.cos(this.angle) * mag;
-            this.vertices[1].y = this.position.y + Math.sin(this.angle) * mag;
-          };
-          //throw a mob/bullet at player
-          if (this.seePlayer.recall) {
-            //set direction to turn to fire
-            if (!(game.cycle % this.seePlayerFreq)) {
-              this.fireDir = Vector.normalise(Vector.sub(this.seePlayer.position, this.position));
-            }
-            //rotate towards fireAngle
-            const angle = this.angle + Math.PI / 2;
-            c = Math.cos(angle) * this.fireDir.x + Math.sin(angle) * this.fireDir.y;
-            const threshold = 0.1;
-            if (c > threshold) {
-              this.torque += 0.0000045 * this.inertia;
-            } else if (c < -threshold) {
-              this.torque -= 0.0000045 * this.inertia;
-            } else if (this.noseLength > 1.5) {
-              //fire
-              spawn.seeker(this.vertices[1].x, this.vertices[1].y, 5 + Math.ceil(this.radius / 15), 5);
-              const v = 15;
-              Matter.Body.setVelocity(mob[mob.length - 1], {
-                x: this.velocity.x + this.fireDir.x * v + Math.random(),
-                y: this.velocity.y + this.fireDir.y * v + Math.random()
-              });
-              this.noseLength = 0;
-              // recoil
-              this.force.x -= 0.005 * this.fireDir.x * this.mass;
-              this.force.y -= 0.005 * this.fireDir.y * this.mass;
-            }
-            if (this.noseLength < 1.5) this.noseLength += this.fireFreq;
-            setNoseShape();
-          } else if (this.noseLength > 0.1) {
-            this.noseLength -= this.fireFreq / 2;
-            setNoseShape();
-          }
-          // else if (this.noseLength < -0.1) {
-          //   this.noseLength += this.fireFreq / 4;
-          //   setNoseShape();
-          // }
-        }
-      },
+      // launch() {
+      //     if (this.seePlayer.recall) {
+      //       //fire
+      //       spawn.seeker(this.vertices[1].x, this.vertices[1].y, 5 + Math.ceil(this.radius / 15), 5);
+      //       const v = 15;
+      //       Matter.Body.setVelocity(mob[mob.length - 1], {
+      //         x: this.velocity.x + this.fireDir.x * v + Math.random(),
+      //         y: this.velocity.y + this.fireDir.y * v + Math.random()
+      //       });
+      //       // recoil
+      //       this.force.x -= 0.005 * this.fireDir.x * this.mass;
+      //       this.force.y -= 0.005 * this.fireDir.y * this.mass;
+      //     }
+      // },
       turnToFacePlayer() {
         //turn to face player
         const dx = player.position.x - this.position.x;
@@ -983,25 +951,25 @@ const mobs = {
       },
       damage(dmg, isBypassShield = false) {
         if (!this.isShielded || isBypassShield) {
-          dmg *= b.damageFromMods()
+          dmg *= mod.damageFromMods()
           //mobs specific damage changes
           dmg /= Math.sqrt(this.mass)
           if (this.shield) dmg *= 0.04
-          if (b.isModFarAwayDmg) dmg *= 1 + Math.sqrt(Math.max(500, Math.min(3000, this.distanceToPlayer())) - 500) * 0.0067 //up to 50% dmg at max range of 3500
+          if (mod.isFarAwayDmg) dmg *= 1 + Math.sqrt(Math.max(500, Math.min(3000, this.distanceToPlayer())) - 500) * 0.0067 //up to 50% dmg at max range of 3500
 
           //energy and heal drain should be calculated after damage boosts
-          if (b.modEnergySiphon && dmg !== Infinity) {
-            mech.energy += Math.min(this.health, dmg) * b.modEnergySiphon
+          if (mod.energySiphon && dmg !== Infinity) {
+            mech.energy += Math.min(this.health, dmg) * mod.energySiphon
             if (mech.energy > mech.maxEnergy) mech.energy = mech.maxEnergy
           }
-          if (b.modHealthDrain && dmg !== Infinity) {
-            mech.addHealth(Math.min(this.health, dmg) * b.modHealthDrain)
+          if (mod.healthDrain && dmg !== Infinity) {
+            mech.addHealth(Math.min(this.health, dmg) * mod.healthDrain)
             if (mech.health > mech.maxHealth) mech.health = mech.maxHealth
           }
           this.health -= dmg
           //this.fill = this.color + this.health + ')';
           this.onDamage(dmg); //custom damage effects
-          if (this.health < b.modMobDieAtHealth && this.alive) this.death();
+          if (this.health < mod.mobDieAtHealth && this.alive) this.death();
         }
       },
       onDamage() {
@@ -1019,16 +987,16 @@ const mobs = {
         this.removeConsBB();
         this.alive = false; //triggers mob removal in mob[i].replace(i)
         if (this.dropPowerUp) {
-          if (b.isModEnergyLoss) mech.energy *= 0.66;
+          if (mod.isEnergyLoss) mech.energy *= 0.66;
           powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
           mech.lastKillCycle = mech.cycle; //tracks the last time a kill was made, mostly used in game.checks()
-          if (Math.random() < b.modSporesOnDeath) {
+          if (Math.random() < mod.sporesOnDeath) {
             const len = Math.min(30, Math.floor(4 + this.mass * Math.random()))
             for (let i = 0; i < len; i++) {
               b.spore(this) //spawn drone
             }
           }
-          if (Math.random() < b.isModBotSpawner) {
+          if (Math.random() < mod.isBotSpawner) {
             if (Math.random() < 0.33) {
               b.nailBot(this.position)
             } else if (Math.random() < 0.5) {
@@ -1038,8 +1006,8 @@ const mobs = {
             }
             // if (mech.energy > 0.33) mech.energy -= 0.33
           }
-          if (b.isModExplodeMob) b.explosion(this.position, Math.min(450, Math.sqrt(this.mass + 3) * 80))
-          if (b.modNailsDeathMob) b.targetedNail(this.position, b.modNailsDeathMob)
+          if (mod.isExplodeMob) b.explosion(this.position, Math.min(450, Math.sqrt(this.mass + 3) * 80))
+          if (mod.nailsDeathMob) b.targetedNail(this.position, mod.nailsDeathMob)
         }
       },
       removeConsBB() {
