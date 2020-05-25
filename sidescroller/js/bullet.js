@@ -398,7 +398,7 @@ const b = {
                   const that = this
                   setTimeout(function () {
                     if (Matter.Query.collides(that, map).length === 0 || Matter.Query.point(map, that.position).length > 0) {
-                      console.log(that)
+                      // console.log(that)
                       that.endCycle = 0 // if not touching map explode
                       that.isArmed = false
                       b.mine(that.position, that.velocity, that.angle)
@@ -1203,27 +1203,43 @@ const b = {
         player.force.y -= knock * Math.sin(mech.angle) * 0.3 //reduce knock back in vertical direction to stop super jumps
         if (mod.isShotgunImmune) mech.immuneCycle = mech.cycle + 60; //player is immune to collision damage for 30 cycles
         b.muzzleFlash(35);
-        const side = 19 * mod.bulletSize
-        for (let i = 0; i < 15; i++) {
-          const me = bullet.length;
-          const dir = mech.angle + (Math.random() - 0.5) * spread
-          bullet[me] = Bodies.rectangle(mech.pos.x + 35 * Math.cos(mech.angle) + 15 * (Math.random() - 0.5), mech.pos.y + 35 * Math.sin(mech.angle) + 15 * (Math.random() - 0.5), side, side, b.fireAttributes(dir));
-          World.add(engine.world, bullet[me]); //add bullet to world
-          const SPEED = 50 + Math.random() * 10
-          Matter.Body.setVelocity(bullet[me], {
-            x: SPEED * Math.cos(dir),
-            y: SPEED * Math.sin(dir)
-          });
-          bullet[me].endCycle = game.cycle + 40
-          bullet[me].minDmgSpeed = 20
-          // bullet[me].dmg = 0.1
-          bullet[me].frictionAir = 0.034;
-          bullet[me].do = function () {
-            if (!mech.isBodiesAsleep) {
-              const scale = 1 - 0.035 / mod.isBulletsLastLonger
-              Matter.Body.scale(this, scale, scale);
+        if (mod.isNailShot) {
+          for (let i = 0; i < 15; i++) {
+            const dir = mech.angle + (Math.random() - 0.5) * spread * 0.2
+            const pos = {
+              x: mech.pos.x + 35 * Math.cos(mech.angle) + 15 * (Math.random() - 0.5),
+              y: mech.pos.y + 35 * Math.sin(mech.angle) + 15 * (Math.random() - 0.5)
             }
-          };
+            speed = 35 + 15 * Math.random()
+            const velocity = {
+              x: speed * Math.cos(dir),
+              y: speed * Math.sin(dir)
+            }
+            b.nail(pos, velocity, 0.6)
+          }
+        } else {
+          const side = 19 * mod.bulletSize
+          for (let i = 0; i < 15; i++) {
+            const me = bullet.length;
+            const dir = mech.angle + (Math.random() - 0.5) * spread
+            bullet[me] = Bodies.rectangle(mech.pos.x + 35 * Math.cos(mech.angle) + 15 * (Math.random() - 0.5), mech.pos.y + 35 * Math.sin(mech.angle) + 15 * (Math.random() - 0.5), side, side, b.fireAttributes(dir));
+            World.add(engine.world, bullet[me]); //add bullet to world
+            const SPEED = 50 + Math.random() * 10
+            Matter.Body.setVelocity(bullet[me], {
+              x: SPEED * Math.cos(dir),
+              y: SPEED * Math.sin(dir)
+            });
+            bullet[me].endCycle = game.cycle + 40
+            bullet[me].minDmgSpeed = 20
+            // bullet[me].dmg = 0.1
+            bullet[me].frictionAir = 0.034;
+            bullet[me].do = function () {
+              if (!mech.isBodiesAsleep) {
+                const scale = 1 - 0.035 / mod.isBulletsLastLonger
+                Matter.Body.scale(this, scale, scale);
+              }
+            };
+          }
         }
       }
     },
@@ -2077,7 +2093,7 @@ const b = {
       isEasyToAim: true,
       fire() {
         if (mech.crouch) {
-          b.iceIX(20, 0.3)
+          b.iceIX(10, 0.3)
           mech.fireCDcycle = mech.cycle + Math.floor(10 * mod.fireRate); // cool down
         } else {
           b.iceIX(2)
@@ -2160,13 +2176,23 @@ const b = {
         bullet[me].endCycle = Infinity
         bullet[me].charge = 0;
         bullet[me].do = function () {
-          if ((!game.mouseDown && this.charge > 0.6)) { //fire on mouse release
-            //normal bullet behavior occurs after firing, overwrite this function
-            this.do = function () {
-              this.force.y += this.mass * 0.0003 / this.charge; // low gravity that scales with charge
+          if ((!game.mouseDown && this.charge > 0.6) || mech.energy < 0.005) { //fire on mouse release
+            if (mech.energy < 0.005) {
+              this.charge = 0.1;
+              mech.fireCDcycle = mech.cycle + 120; // cool down if out of energy
+              //normal bullet behavior occurs after firing, overwrite this function
+              this.do = function () {
+                this.force.y += this.mass * 0.001; //normal gravity
+              }
+            } else {
+              mech.fireCDcycle = mech.cycle + 2; // set fire cool down
+              //normal bullet behavior occurs after firing, overwrite this function
+              this.do = function () {
+                this.force.y += this.mass * 0.0003 / this.charge; // low gravity that scales with charge
+              }
             }
 
-            mech.fireCDcycle = mech.cycle + 2; // set fire cool down
+
             Matter.Body.scale(this, 8000, 8000) // show the bullet by scaling it up  (don't judge me...  I know this is a bad way to do it)
             this.endCycle = game.cycle + 140
             this.collisionFilter.category = cat.bullet
