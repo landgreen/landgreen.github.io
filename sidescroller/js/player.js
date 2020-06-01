@@ -1747,7 +1747,7 @@ const mech = {
                 // mech.draw();
                 mech.walk_cycle += mech.flipLegs * mech.Vx;
                 // mech.hold();
-                mech.energy += DRAIN; // 1 to undo the energy drain from time speed up, 0.5 to cut energy drain in half
+                // mech.energy += DRAIN; // 1 to undo the energy drain from time speed up, 0.5 to cut energy drain in half
                 b.fire();
                 // b.bulletRemove();
                 b.bulletDo();
