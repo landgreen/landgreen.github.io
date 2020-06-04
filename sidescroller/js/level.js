@@ -20,7 +20,7 @@ const level = {
       // mod.giveMod("timelike world line");
       // mod.giveMod("Lorentz transformation");
 
-      b.giveGuns("minigun")
+      // b.giveGuns("minigun")
       // b.giveGuns("spores")
       // mech.setField("pilot wave")
       // mech.setField("phase decoherence field")
