@@ -31,9 +31,9 @@ function glassSlide() {
     World = Matter.World,
     Body = Matter.Body,
     Bodies = Matter.Bodies,
-    Vertices = Matter.Vertices,
-    Composites = Matter.Composites,
-    Composite = Matter.Composite;
+    Vertices = Matter.Vertices;
+  // Composites = Matter.Composites,
+  // Composite = Matter.Composite;
 
   // create an engine
   let engine = Engine.create();
@@ -45,7 +45,11 @@ function glassSlide() {
     width: 277,
     scaleBodyH: 0.95,
     scaleBodyW: 0.9,
-    friction: frictionElem.value
+    friction: frictionElem.value,
+    offset: {
+      x: 0,
+      y: 25
+    }
   };
 
   //adjust gravity to fit simulation
@@ -74,11 +78,19 @@ function glassSlide() {
       restitution: 0.5
     });
 
+
+
+    mass[i].position.x += glass.offset.x;
+    mass[i].position.y += glass.offset.y;
+    mass[i].positionPrev.x += glass.offset.x;
+    mass[i].positionPrev.y += glass.offset.y;
     Body.setVelocity(mass[i], {
       x: speedElem.value * 5,
       y: 0
     });
     World.add(engine.world, mass[i]);
+
+
   }
 
   //add walls flush with the edges of the canvas
@@ -125,7 +137,7 @@ function glassSlide() {
     ctx.save();
     ctx.translate(mass[0].position.x, mass[0].position.y); //move to center of body
     ctx.rotate(mass[0].angle); //rotate to same angle of body
-    ctx.drawImage(base_image, (-glass.width / 2) * glass.size, (-glass.height / 2) * glass.size, glass.width * glass.size, glass.height * glass.size); //draw image on center of body
+    ctx.drawImage(base_image, (-glass.width / 2) * glass.size, (-glass.height / 2) * glass.size - glass.offset.y, glass.width * glass.size, glass.height * glass.size); //draw image on center of body
     ctx.restore();
   }
 }
