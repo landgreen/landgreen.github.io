@@ -37,15 +37,181 @@
       They found that matter was made of particles called atoms.
       Inside each atom they found the <a href="https://www.youtube.com/watch?v=ehHoOYqAT_U">subatomic particles</a>: electrons, protons, and neutrons.
       They also found that light was made of particles that we now call photons.
+      The strangest result was that all these particles produced wave-like <a href="http://toutestquantique.fr/en/duality/">interference patterns</a>.
       <!-- Light waves are too big to resolve objects that small. -->
       <!-- Instead, physicists <a href="https://phet.colorado.edu/sims/html/rutherford-scattering/latest/rutherford-scattering_en.html">fired</a> subatomic particles, like electrons, at each other. -->
       <!-- They were also surprised to discover that particles could produce wave-like <a href="https://en.wikipedia.org/wiki/Double-slit_experiment">interference patterns</a>. -->
     </p>
+    <br>
     <p>
-      The strangest result was that these particles produced wave-like <a href="http://toutestquantique.fr/en/duality/">interference patterns</a>.
-      <strong>The separate wave and particle models weren't accurate.</strong>
+      The wave-like interference of particles can be seen in the <a href="https://www.youtube.com/watch?v=p-MNSLsjjdo">double slit experiment</a>.
+      When a wave passes through two small gaps it will <a href="../waveproperties/index.html#diffraction">diffract</a>.
+      The waves originating from each slit will travel different distances.
+      The superposition of the wave from each slit will alternate between constructive and destructive interference.
     </p>
-    <details class="derive">
+    <details>
+      <summary>single slit wave diffraction</summary>
+      <svg viewBox="100 0 600 400">
+        <g transform="translate(300, 200)" fill="none" stroke-width="20" stroke="#f08">
+          <circle r="40" opacity="0.8" />
+          <circle r="100" opacity="0.7" />
+          <circle r="160" opacity="0.6" />
+          <circle r="220" opacity="0.5" />
+          <circle r="280" opacity="0.41" />
+          <circle r="340" opacity="0.33" />
+          <!-- <circle r="400" opacity="0.25" /> -->
+        </g>
+        <g fill="none">
+          <rect x="-101" y="0" width="400" height="400" fill="#fff" stroke="none" />
+          <path d="M60 0 v400 M110 0 v400 M170 0 v400 M230 0 v400 M280 0 v400" stroke="#f08" opacity="1" stroke-width="20" />
+          <path d="M300 0 v195 M300 205 v200" stroke="#000" stroke-width="10" />
+        </g>
+      </svg>
+    </details>
+    <details>
+      <summary>double slit wave interference</summary>
+      <div>gap separation = <input id='slit-width-slider' type="range" step="1" value="100" min="5" max="290" style="width: 165px;"></div>
+      <svg viewBox="100 0 600 600">
+        <g stroke="#f08" stroke-width="20" fill="none">
+          <g id="slit-1" transform="translate(300, 200)">
+            <circle r="40" opacity="0.7" />
+            <circle r="100" opacity="0.63" />
+            <circle r="160" opacity="0.56" />
+            <circle r="220" opacity="0.49" />
+            <circle r="280" opacity="0.42" />
+            <circle r="340" opacity="0.35" />
+            <circle r="400" opacity="0.28" />
+            <circle r="460" opacity="0.21" />
+            <circle r="520" opacity="0.15" />
+            <circle r="580" opacity="0.1" />
+            <circle r="640" opacity="0.07" />
+            <circle r="700" opacity="0.04" />
+          </g>
+          <g id="slit-2" transform="translate(300, 400)">
+            <circle r="40" opacity="0.7" />
+            <circle r="100" opacity="0.63" />
+            <circle r="160" opacity="0.56" />
+            <circle r="220" opacity="0.49" />
+            <circle r="280" opacity="0.42" />
+            <circle r="340" opacity="0.35" />
+            <circle r="400" opacity="0.28" />
+            <circle r="460" opacity="0.21" />
+            <circle r="520" opacity="0.15" />
+            <circle r="580" opacity="0.1" />
+            <circle r="640" opacity="0.07" />
+            <circle r="700" opacity="0.04" />
+          </g>
+        </g>
+        <rect x="-101" y="0" width="406" height="600" fill="#fff" stroke="none" />
+        <path d="M60 0 v600 M110 0 v600 M170 0 v600 M230 0 v600 M280 0 v600" stroke="#f08" opacity="1" stroke-width="20" fill="none" />
+        <path id="wall" d="M300 0 v195 M300 205 v190 M300 405 v200" stroke="#000" stroke-width="10" fill="none" />
+      </svg>
+      <script>
+        (function twoSlit() {
+          const slit1 = document.getElementById("slit-1")
+          const slit2 = document.getElementById("slit-2")
+          const wall = document.getElementById("wall")
+
+          document.getElementById("slit-width-slider").addEventListener("input", () => {
+            slitSeparation = Number(document.getElementById("slit-width-slider").value);
+            const slit1Vertical = 300 - slitSeparation
+            const slit2Vertical = 300 + slitSeparation
+
+            slit1.setAttribute("transform", `translate(300, ${slit1Vertical})`)
+            slit2.setAttribute("transform", `translate(300, ${slit2Vertical})`)
+            wall.setAttribute("d", `M300 0 v${slit1Vertical-5} M300 ${slit1Vertical+5}
+                        v${Math.abs(slitSeparation*2 - 10)}
+                        M300 ${slit2Vertical-5} M300 ${slit2Vertical+5} v400`)
+          });
+        })()
+      </script>
+    </details>
+    <p>
+      Thomas Young in 1801 produced a double slit interference pattern with beams of red light.
+      In 1927 the experiment was repeated just a single photon at a time.
+      Each photon was measured at single location, but the distribution of hits still followed an interference pattern.
+    </p>
+    <p>
+      The double slit experiment isn't limited to photons.
+      It works with particles like electrons, atoms, or antimatter.
+      In 2019 an interference pattern was produced by particles made of 2000 atoms.
+    </p>
+  </article>
+  <!-- <g dominant-baseline="central" font-size="8" font-family="Times New Roman" stroke="none" fill="#abaeb3">
+    <text x="8.5" y="75" fill="#fff">e⁻</text>
+    <text x="2" y="87">electron</text>
+    <text x="2" y="95">emitter</text>
+    <text x="72" y="87">double</text>
+    <text x="72" y="95">slit</text>
+    <text x="163" y="95">measurement</text>
+    <text x="250" y="95">probability</text>
+    <text x="340" y="87">wave</text>
+    <text x="340" y="95">function</text>
+    <text x="253" y="4">|Ψ(x)|²</text>
+    <text x="343" y="4">Ψ(x)</text>
+  </g> -->
+  <svg viewBox="0 0 400 150" id="double-slit">
+    <g fill="#234" stroke="#234" stroke-width="0">
+      <rect width="140.5" height="148" x="1" y="1" rx="2" ry="2" fill="#eceef2" stroke="#234" stroke-width="1.5" />
+      <rect width="2" height="6" x="15" y="72" rx="0.5" ry="0.5" fill="#89a" />
+      <rect width="12" height="8" x="4" y="71" rx="1" ry="1" />
+      <path id="slit" d="M40 1 v70.5 m0 0.5 v5 m0 0.5 v70.5" stroke-width="1.5" />
+      <path id="double-slit-probability-function" d="M 200 0 v100" stroke-width="0" fill="#234" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    <g id="double-slit-hits"></g>
+  </svg>
+  <article>
+    <ul class="listing">
+      <li>
+        <div>
+          <button id="emit" style="margin:0; background-color: #eee;">emit</button>
+          <br>
+          <label for="slit-one-checkbox">
+            <input type="checkbox" id="slit-one-checkbox" name="slit-one-checkbox" style="width:14px;">
+            <span>emit one at a time</span>
+          </label>
+          <br>
+          <label for="slit-blocked-checkbox">
+            <input type="checkbox" id="slit-blocked-checkbox" name="slit-blocked-checkbox" style="width:14px;">
+            <span>slit blocked</span>
+          </label>
+        </div>
+      </li>
+      <li>
+        <div>
+          wavelength = <input id='slit-wavelength' type="number" value='0.5' min="0" step="0.0001" style="width:105px;">
+          <br>slit separation = <input id='slit-separation' type="number" value='2' min="0" step="0.001" style="width:85px;">
+          <br>slit width = <input id='slit-slitWidth' type="number" value='2' min="0" step="0.01" style="width:122px;">
+          <!-- <br>target distance = <input id='slit-distance' type="number" value='100' min="0" step="1" style="width:100px;"> -->
+        </div>
+      </li>
+    </ul>
+    <div class="example-small">
+      <strong>Question:</strong> What happens when one slit is blocked? Why?
+      <details>
+        <summary>answer</summary>
+        <p>
+          The interference pattern goes away, because the waves are all originating from the same point, so they have the same phase.
+        </p>
+        <p>
+          Although, there is still a diffraction pattern related to the width of the slit.
+        </p>
+      </details>
+    </div>
+    <div class="example-small">
+      <strong>Question:</strong> When a one particle at a time is fired, the distribution of hits still produces an interference pattern.
+      What could the single particle be interfering with?
+      <details>
+        <summary>answer</summary>
+        <p>
+          A single particle goes through both slits.
+          It interferes with it's self.
+        </p>
+      </details>
+    </div>
+    <br>
+    <br>
+    <!-- <details class="derive">
       <summary>the particle model vs. the wave model</summary>
       <p>
         Particles are one of the basic models used by physics to simplify approximations.
@@ -55,7 +221,6 @@
       <p>
         The particle model approximates phenomena like:
         collisions, temperature, pressure, friction, electricity, diffusion, and chemical reactions.
-        <!-- The particle model is applied to things like: photons, electrons, protons, atoms, molecules, cells, dust, sand, tennis balls, and stars. -->
       </p>
       <br>
       <p>
@@ -78,65 +243,61 @@
         <li><strong>Particles</strong> bounce off each other.</li>
         <li><strong>Waves</strong> don't interact with each other, but when they are in superposition they interfere constructively and destructively.</li>
       </p>
-    </details>
+    </details> -->
 
-    <div class="example">
+    <p>
+      The overlap between the wave and particle models at the nanometer scale led to many more exciting experiments.
+      Over time, physicists developed and refined a new model, called <strong>quantum mechanics</strong>.
+      Predictions based on <a href="https://www.youtube.com/watch?v=fjZXqdUZDZA">quantum mechanics</a> can only give probabilities,
+      but when applied to repeated experiments they have an unparalleled level of accuracy.
+    </p>
+    <p>
+      An understanding of <a href="https://www.youtube.com/playlist?list=PLsPUh22kYmNCGaVGuGfKfJl-6RdHiCjo1">quantum mechanics</a> is typically achieved after studying the underlying math.
+      Building an intuition without the math can be <a href="https://www.smbc-comics.com/comic/the-talk-3">confusing</a>,
+      but here is a brief and inevitably flawed description.
+    </p>
+
+    <details class="derive">
+      <summary>how quantum mechanics makes predictions</summary>
       <p>
-        The overlap between the wave and particle models at the nanometer scale led to many more exciting experiments.
-        Over time, physicists developed and refined a new model, called <strong>quantum mechanics</strong>.
-        Predictions based on <a href="https://www.youtube.com/watch?v=fjZXqdUZDZA">quantum mechanics</a> can only give probabilities,
-        but when applied to repeated experiments they have an unparalleled level of accuracy.
+        The state of a quantum mechanical system is described mathematically by it's <strong>wave function</strong>.
+        The wave function contains all the measurable information about the system.
+        The evolution of the wave function over time can be <a href="https://physics.weber.edu/schroeder/software/CollidingPackets.html">calculated</a> for simple situations with the <a href="https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation">Schrödinger equation</a>.
+        The Schrödinger equation can be applied to <a href="https://physics.weber.edu/schroeder/software/QuantumScattering2D.html">one</a> particle, atom, molecule, or possibly the entire universe.
       </p>
       <p>
-        An understanding of <a href="https://www.youtube.com/playlist?list=PLsPUh22kYmNCGaVGuGfKfJl-6RdHiCjo1">quantum mechanics</a> is typically achieved after studying the underlying math.
-        Building an intuition without the math can be <a href="https://www.smbc-comics.com/comic/the-talk-3">confusing</a>,
-        but here is a brief and inevitably flawed description.
+        The probability of measuring a system in a particular state is a separate calculation.
+        It's done by squaring the amplitude of the system's wave function.
+        This predicts the probabilities of measuring the system in each possible <a href="http://toutestquantique.fr/en/superposition/">state</a>.
       </p>
-      <details class="derive">
-        <summary>how quantum mechanics makes predictions</summary>
-        <p>
-          The state of a quantum mechanical system is described mathematically by it's <strong>wave function</strong>.
-          The wave function contains all the measurable information about the system.
-          The evolution of the wave function over time can be <a href="https://physics.weber.edu/schroeder/software/CollidingPackets.html">calculated</a> for simple situations with the <a href="https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation">Schrödinger equation</a>.
-          The Schrödinger equation can be applied to <a href="https://physics.weber.edu/schroeder/software/QuantumScattering2D.html">one</a> particle, atom, molecule, or possibly the entire universe.
-        </p>
-
-        <p>
-          <!-- A particle's wave function also represents a superposition of all possible states for the particle.
-          When a particle interacts with something, it's wave function will be measured in one of those possible states. -->
-          The probability of measuring a system in a particular state is a separate calculation.
-          It is done by adding the positive and negative amplitudes of every <a href="https://www.youtube.com/watch?v=vSFRN-ymfgE">possible</a> state the system's wave function could have.
-          This produces a <a href="..\waveproperties\index.html#interference">superposition</a> of the possible states.
-          When squared, the amplitude of that superposition predicts the probabilities of measuring the system in each possible <a href="http://toutestquantique.fr/en/superposition/">state</a>.
-        </p>
-        <br>
-        <p>
-          In order to measure the results of an experiment, an observer must interact with the experiment.
-          Interacting is complex because everything is a quantum object, including the observer and the experiment.
-          This means that the wave function of the observer interacts with the wave function of the experiment.
-          The observer and experiment together form a superposition of all possible outcomes.
-        </p>
-        <p>
-          The observer can't directly see this superposition, like how sound waves in superposition can't directly effect each other.
-          The observer only experiences one experimental outcome chosen at random.
-          Why can't they see all the outcomes?
-          The answer to that question depends on how you interpret quantum mechanics.
-        </p>
-      </details>
       <br>
-      <details class="derive">
-        <summary>interpretations of quantum mechanics</summary>
-        <p>
-          Different <a href="https://en.wikipedia.org/wiki/Interpretations_of_quantum_mechanics">interpretations</a>
-          of quantum mechanics suggest suggest strange and exciting things about the fundamental nature of our reality.
-          Yet, each interpretation is just a different way to put math into words.
-        </p>
-        <p>
-          All valid interpretations of quantum mechanics should predict the same experimental outcomes.
-        </p>
+      <p>
+        In order to measure the results of an experiment, an observer must interact with the experiment.
+        Interacting is complex because everything is a quantum object, including the observer and the experiment.
+        This means that the wave function of the observer interacts with the wave function of the experiment.
+        The observer and experiment together form a <a href="..\waveproperties\index.html#interference">superposition</a> of all possible outcomes.
+      </p>
+      <p>
+        The observer can't directly see this superposition, like how sound waves in superposition can't directly effect each other.
+        The observer only experiences one experimental outcome chosen at random.
+        Why can't they see all the outcomes?
+        The answer to that question depends on how you interpret quantum mechanics.
+      </p>
+    </details>
+    <br>
+    <details class="derive">
+      <summary>interpretations of quantum mechanics</summary>
+      <p>
+        Different <a href="https://en.wikipedia.org/wiki/Interpretations_of_quantum_mechanics">interpretations</a>
+        of quantum mechanics suggest suggest strange and exciting things about the fundamental nature of our reality.
+        Yet, each interpretation is just a different way to put math into words.
+      </p>
+      <p>
+        All valid interpretations of quantum mechanics should predict the same experimental outcomes.
+      </p>
 
-        <h2 class='underlined-small'>The Many-Worlds Interpretations</h2>
-        <!-- <p>
+      <h2 class='underlined-small'>The Many-Worlds Interpretations</h2>
+      <!-- <p>
           If the mathematics of quantum mechanics is interpreted literally, it would imply that the universe is made of only waves.
           The phase of these waves oscillate between negative and positive amplitudes.
           If two wave in superposition have a similar phase their amplitudes can form clear constructive interference patterns.
@@ -147,57 +308,56 @@
         </p> -->
 
 
-        <p>
-          If the mathematics of quantum mechanics is interpreted literally,
-          it means that every possible outcome of an interaction actually <a href="https://www.youtube.com/watch?v=dzKWfw68M5U">occurs</a>.
-          These possible outcomes interfere with each other in a way that effects the probability of which outcomes are actually observed.
-        </p>
-        <p>
-          Right after an interaction the different outcomes haven't diverged from each other, so they are in similar phases of their wave cycle.
-          Being in similar phases allows constructive and destructive interference patterns to form.
-          Outcomes get out of phase with each other after interacting with different aspects of the environment.
-          Being out of phase disrupts the constructive and destructive interference patterns.
-          We say that the outcomes <a href="https://www.youtube.com/watch?v=GlOwJWJWPUs">decohere</a> from each other after interacting with the environment.
-        </p>
-        <p>
-          <a href="../waveproperties/#standing-wave-sim">Standing waves</a> work in a similar way.
-          Waves form constructive and destructive patterns when the wavelength of reflections match the size of the space they are in.
-          When the space doesn't match the wavelength, the reflections just add up to background noise.
-        </p>
-        <p>
-          The many-worlds interpretation suggests that a version of you exists that observes each possible outcome of a quantum event.
-          You can't interact with those other versions because their phase is out of sync with your phase.
-          No one has devised an experiment to test for these branching worlds. For now their existence is unknowable.
-        </p>
+      <p>
+        If the mathematics of quantum mechanics is interpreted literally,
+        it means that every possible outcome of an interaction actually <a href="https://www.youtube.com/watch?v=dzKWfw68M5U">occurs</a>.
+        These possible outcomes interfere with each other in a way that effects the probability of which outcomes are actually observed.
+      </p>
+      <p>
+        Right after an interaction the different outcomes haven't diverged from each other, so they are in similar phases of their wave cycle.
+        Being in similar phases allows constructive and destructive interference patterns to form.
+        Outcomes get out of phase with each other after interacting with different aspects of the environment.
+        Being out of phase disrupts the constructive and destructive interference patterns.
+        We say that the outcomes <a href="https://www.youtube.com/watch?v=GlOwJWJWPUs">decohere</a> from each other after interacting with the environment.
+      </p>
+      <p>
+        <a href="../waveproperties/#standing-wave-sim">Standing waves</a> work in a similar way.
+        Waves form constructive and destructive patterns when the wavelength of reflections match the size of the space they are in.
+        When the space doesn't match the wavelength, the reflections just add up to background noise.
+      </p>
+      <p>
+        The many-worlds interpretation suggests that a version of you exists that observes each possible outcome of a quantum event.
+        You can't interact with those other versions because their phase is out of sync with your phase.
+        No one has devised an experiment to test for these branching worlds. For now their existence is unknowable.
+      </p>
 
-        <h2 class='underlined-small'>The Copenhagen Interpretation</h2>
-        <p>
-          The Copenhagen interpretation was the first popular explanation of the math behind quantum mechanics.
-          Like the many-worlds interpretation, the Copenhagen interpretation calculates the wave function by adding the amplitudes of every possible outcome.
-          It maintains a single reality by randomly choosing one possible outcome from every interaction.
-        </p>
-        <p>
-          The unchosen outcomes are said to be collapsed.
-          In this way, the Copenhagen interpretation retains the classical idea of a particle during measurement,
-          but treats the particle as a wave of possible outcomes when it is not measured.
-        </p>
+      <h2 class='underlined-small'>The Copenhagen Interpretation</h2>
+      <p>
+        The Copenhagen interpretation was the first popular explanation of the math behind quantum mechanics.
+        Like the many-worlds interpretation, the evolution of the wave function is still calculated with the Schrödinger equation.
+        It differs from many-worlds during interactions.
+        Instead of suggesting that all possible outcomes of an interaction occur, one outcome is randomly chosen to occur.
+      </p>
+      <p>
+        The unchosen outcomes are said to be collapsed.
+        In this way, the Copenhagen interpretation retains the classical idea of a particle during measurement,
+        but treats the particle as a wave of possible outcomes when it is not measured.
+      </p>
 
-        <h2 class='underlined-small'>Pilot Wave Theory</h2>
-        <p>
-          The <a href="https://www.youtube.com/watch?v=RlXdsyctD50">pilot wave theory</a> proposes an deterministic universe made of particles.
-          The theory also proposes a single wave function for the entire universe that guides all particles.
-          Like other interpretations, the evolution of the wave function is still calculated with the Schrödinger equation.
-          Also, the effect of the wave function on particles is still calculated by adding the amplitudes of all the possible ways an event could happen.
-          <!-- this is odd because this theory doesn't branch -->
-        </p>
-        <p>
-          The wave function guides particles down a single path.
-          The pilot wave theory says that the particle's position must be hidden until it is measured.
-          If we do try to measure the position of a particle it will no longer be guided by the wave function.
-          This is comparable to wave function collapse or branching worlds from the other interpretations.
-        </p>
+      <h2 class='underlined-small'>Pilot Wave Theory</h2>
+      <p>
+        The <a href="https://www.youtube.com/watch?v=RlXdsyctD50">pilot wave theory</a> proposes an deterministic universe made of particles.
+        Additionally there is a second level of reality made of a single wave function.
+        This wave function guides the motion of particles.
+        Like other interpretations, the evolution of the wave function is still calculated with the Schrödinger equation.
+      </p>
+      <p>
+        The wave function guides particles down a single path.
+        The pilot wave theory says that the particle's position must be hidden until it is measured.
+        If we do try to measure the position of a particle it will no longer be guided by the wave function.
+      </p>
 
-        <!-- <h2 class='underlined-small'>Bell's Theorem</h2>
+      <!-- <h2 class='underlined-small'>Bell's Theorem</h2>
         <p>
           <a href="https://en.wikipedia.org/wiki/Bell%27s_theorem#Original_Bell's_inequality">Bell's theorem</a>, published in 1964,
           proves mathematically that any theory of quantum mechanics must have meet certain conditions.
@@ -225,7 +385,7 @@
         </p> -->
 
 
-        <!-- <p>
+      <!-- <p>
           The Copenhagen interpretation sounds less exciting, but it's still very strange.
           After two particles interact, they become entangled.
           Entangled particles will both collapse when either one is measured.
@@ -233,8 +393,8 @@
           This collapse can occur instantly at any distance, but it doesn't allow meaningful information to travel faster than light.
         </p> -->
 
-        <!-- Bell's theorem -->
-        <!-- <p>
+      <!-- Bell's theorem -->
+      <!-- <p>
           It has been proven mathematically that no matter what interpretation of quantum mechanics you will still have to give up on some metaphysical ideas.
           Any valid theory must
         </p>
@@ -243,18 +403,18 @@
         Local realism
         Determinism -->
 
-      </details>
-      <br>
-      <details class="derive">
-        <summary>wave-particle duality</summary>
-        <!-- <p>
+    </details>
+    <br>
+    <details class="derive">
+      <summary>wave-particle duality</summary>
+      <!-- <p>
           Is reality made of particles that act like waves, or waves that act like particles?
         </p> -->
-        <p>
+      <!-- <p>
           Sometimes physics closely matches the wave model or the particle model,
           but at a fundamental level physics doesn't follow either one.
-        </p>
-        <br>
+        </p> -->
+      <!-- <br>
         <p>
           Before quantum mechanics, physicists thought light was waves and atoms were particles.
           This view arose because of differences in how light and atoms interact.
@@ -270,59 +430,63 @@
           Things that can be stacked up in the same location without interacting are called <strong>bosons</strong>.
           This includes force carrier particles like light.
           The reason for this differences in interaction has to do with a property called <a href="https://www.youtube.com/watch?v=_1S6KfMzOH8">spin</a>.
-        </p>
-        <br>
-        <p>
-          An advanced version of quantum mechanics, called <a href="https://www.youtube.com/watch?v=ATcrrzJFtBY&t=747s">quantum field theory</a> has a wave-centric view.
-          In this theory there is a field for each type of fundamental particle spread across all of space and time.
-          Each individual particle is viewed as a localized excited state of its underlying field.
-          For example, a single electron is a place in space and time where the electron field is vibrating.
-          The electron field exists everywhere, but electrons are more likely to be measured in areas that are excited.
-        </p>
-        <p>
-          So, a particle is a mathematical approximation of an isolated field excitation that forms localized standing waves.
-          Interactions between different particles can be approximated with perturbation theory using with feynman diagrams.
-          Fields that are interacting constantly in a bound state can't be approximated with perturbation theory.
-          Electrons model well as particles because their interactions are very weak so they don't have much of an effect.
-          Quarks, the particles inside protons and neutrons, interact with through the "strong force".
-          This force has frequent and complex interactions that aren't calculable through perturbation theory.
-        </p>
-      </details>
+        </p> -->
+      <!-- <br> -->
+      <p>
+        An advanced version of quantum mechanics, called <a href="https://www.youtube.com/watch?v=ATcrrzJFtBY&t=747s">quantum field theory</a>
+        views reality as being made of waves at the fundamental level.
+      </p>
+      <p>
+        In this theory there is a field spread across all of space and time for each type of fundamental particle.
+        Each individual particle is a localized excited state of its field.
+        For example, a single electron is a place in space and time where the electron field is vibrating.
+        The electron field exists everywhere, but electrons are more likely to be measured in areas that are excited.
+      </p>
+      <p>
+        So, a particle is a mathematical approximation of an isolated field excitation that forms localized <a href="..\waveproperties\index.html#standing-waves">standing waves</a>.
+        Interactions between different particles can be approximated with <a href="https://www.youtube.com/watch?v=fG52mXN-uWI">feynman diagrams</a>.
+      </p>
+      <p>
+        Electrons model well as particles because in most cases their interactions are weak enough to be mathematically canceled out.
+        Quarks, the particles inside protons and neutrons, interact through the "strong force".
+        This force has frequent and complex interactions that don't cancel out, making the particle model less useful.
+      </p>
+    </details>
+    <br>
+    <details class="derive">
+      <summary>quantum uncertainty</summary>
+      <p>
+        Quantum mechanics answers questions I never thought to ask.
+        Like, why do objects with no forces acting on them move in a straight line?
+      </p>
+      <p>
+        Calculating how something moves involves adding the amplitudes of every <a href="https://www.youtube.com/watch?v=vSFRN-ymfgE">possible</a> path of getting from one place to another.
+        The amplitudes of the possible paths cycle from positive to negative as time moves forward.
+        All the paths that travel quickly will have similar times, and therefore similar amplitudes that add constructively.
+      </p>
+      <p>
+        Some paths might take a very long time. They might zigzag or even go backwards.
+        These slow paths tend to have very different times and have dissimilar amplitudes.
+        The randomly dissimilar amplitudes mostly average to zero.
+      </p>
+      <p>
+        The square of the superposition of all the amplitudes predicts the probability of observing a possible outcome.
+        So we are more likely to see objects move in a straight line because the straight line amplitudes are constructive, not destructive.
+      </p>
       <br>
-      <details class="derive">
-        <summary>quantum uncertainty</summary>
-        <p>
-          Quantum mechanics answers questions I never thought to ask.
-          Like, why do objects with no forces acting on them move in a straight line?
-        </p>
-        <p>
-          Calculating how something moves involves adding the amplitudes of every <a href="https://www.youtube.com/watch?v=vSFRN-ymfgE">possible</a> path of getting from one place to another.
-          The amplitudes of the possible paths cycle from positive to negative as time moves forward.
-          All the paths that travel quickly will have similar times, and therefore similar amplitudes that add constructively.
-        </p>
-        <p>
-          Some paths might take a very long time. They might zigzag or even go backwards.
-          These slow paths tend to have very different times and have dissimilar amplitudes.
-          The randomly dissimilar amplitudes mostly average to zero.
-        </p>
-        <p>
-          The square of the superposition of all the amplitudes predicts the probability of observing a possible outcome.
-          So we are more likely to see objects move in a straight line because the straight line amplitudes are constructive, not destructive.
-        </p>
-        <br>
-        <p>
-          For very short periods of time, this bias towards straight line paths becomes reduced.
-          The less direct paths have less time to develop random phases.
-          This leads to particles moving in a less predictable way.
-        </p>
-        <p>
-          There is an uncertainty in the motion of a particle that increases as the total time decreases.
-          Even when a force should act as a barrier under the classical rules of physics, a particle might just <a href="https://www.youtube.com/watch?v=RF7dDt3tVmI">quantum</a> <a href="https://www.youtube.com/watch?v=cTodS8hkSDg">tunnel</a>
-          through that barrier if the time scales involved are very short.
-        </p>
-      </details>
-      <br>
-      <!-- <details class="derive">
+      <p>
+        For very short periods of time, this bias towards straight line paths becomes reduced.
+        The less direct paths have less time to develop random phases.
+        This leads to particles moving in a less predictable way.
+      </p>
+      <p>
+        There is an uncertainty in the motion of a particle that increases as the total time decreases.
+        Even when a force should act as a barrier under the classical rules of physics, a particle might just <a href="https://www.youtube.com/watch?v=RF7dDt3tVmI">quantum</a> <a href="https://www.youtube.com/watch?v=cTodS8hkSDg">tunnel</a>
+        through that barrier if the time scales involved are very short.
+      </p>
+    </details>
+    <br>
+    <!-- <details class="derive">
         <summary>entanglement</summary>
         <p>
           wave functions can be applied to more then one particle at a time.
@@ -330,57 +494,57 @@
         </p>
       </details>
       <br> -->
-      <details class="derive">
-        <summary>observing quantum phenomena</summary>
-        <p>
-          Quantum mechanics explains almost all observable <a href="https://www.youtube.com/watch?v=xnWxtU2OUTE">phenomena</a>.
-          It explains the color of materials, rigidity of solids, conductivity, <a href="https://www.youtube.com/watch?v=zPqEEZa2Gis">superconductivity</a>, magnetism, all of chemistry, and just about everything else in reality.
-          You are observing quantum mechanical phenomena in every moment.
-        </p>
-        <br>
-        <p>
-          Quantum mechanics says that small particles, like atoms, have a measurable wave nature.
-          <a href="https://www.youtube.com/watch?v=UjaAxUO6-Uw">Cats</a> are made of atoms.
-          Why don't we notice cats acting like waves?
-        </p>
-        <p>
-          It's because atoms are hard to isolate.
-          They are frequently interacting with their environment.
-          This causes <a href="https://www.youtube.com/watch?v=GlOwJWJWPUs">decoherence</a> between the relative phases of atoms.
-          When coherence is lost, destructive and constructive interference patterns between waves become messy and begin to look like a classical system.
-          For large groups of atoms, decoherence happens so frequently that measurable wave interference patterns don't have time to develop.
-        </p>
-        <!-- <p>
+    <details class="derive">
+      <summary>observing quantum phenomena</summary>
+      <p>
+        Quantum mechanics explains almost all observable <a href="https://www.youtube.com/watch?v=xnWxtU2OUTE">phenomena</a>.
+        It explains the color of materials, rigidity of solids, conductivity, superconductivity, magnetism, all of chemistry, and just about everything else in reality.
+        You are observing quantum mechanical phenomena in every moment.
+      </p>
+      <br>
+      <p>
+        Quantum mechanics says that small particles, like atoms, have a measurable wave nature.
+        <a href="https://www.youtube.com/watch?v=UjaAxUO6-Uw">Cats</a> are made of atoms.
+        Why don't we notice cats acting like waves?
+      </p>
+      <p>
+        It's because atoms are hard to isolate.
+        They are frequently interacting with their environment.
+        This causes <a href="https://www.youtube.com/watch?v=GlOwJWJWPUs">decoherence</a> between the relative phases of atoms.
+        When coherence is lost, destructive and constructive interference patterns between waves become messy and begin to look like a classical system.
+        For large groups of atoms, decoherence happens so frequently that measurable wave interference patterns don't have time to develop.
+      </p>
+      <!-- <p>
           2.
           A particle's wavelength decreases as mass increases.
           Cats are much bigger then atoms, so they have a very short wavelength.
           The wavelength of human scale objects is so short they can't be measured by current technology.
         </p> -->
-        <br>
-        <p>
-          A <a href="http://toutestquantique.fr/en/bose-einstein-condensate/">Bose-Einstein condensate</a>
-          is one way to produce particles in superposition at the macroscopic scale.
-          They are made by cooling a class of particles to near absolute zero.
-          Cold particles move slower, and according to quantum mechanics slower particles have longer wavelengths.
-          As the temperature lowers, the wave functions of the particles begin to overlap.
-          This causes them to enter a shared quantum state.
-          A group of particles in this shared state behave as if they had a single wave function.
-        </p>
-        <br>
-        <p>
-          Quantum mechanics is currently the most accurate theory for how our universe works, but it is still limited.
-          Quantum mechanics doesn't explain large scale phenomena, like gravitation, dark matter, or dark energy.
-          New theories that unite gravity with quantum mechanics are being developed, but so far nothing testable has emerged.
-        </p>
-      </details>
+      <br>
       <p>
-        Quantum mechanics seems strange from our perspective.
-        This feeling might come from the expectation that our everyday experience of reality is normal,
-        and quantum mechanics is for special cases involving very small particles.
-        But, it's the other way around.
-        Quantum mechanics describes fundamental rules of reality, and our everyday experience is a special case of these rules.
+        A <a href="http://toutestquantique.fr/en/bose-einstein-condensate/">Bose-Einstein condensate</a>
+        is one way to produce particles in superposition at the macroscopic scale.
+        They are made by cooling a class of particles to near absolute zero.
+        Cold particles move slower, and according to quantum mechanics slower particles have longer wavelengths.
+        As the temperature lowers, the wave functions of the particles begin to overlap.
+        This causes them to enter a shared quantum state.
+        A group of particles in this shared state behave as if they had a single wave function.
       </p>
-    </div>
+      <br>
+      <p>
+        Quantum mechanics is currently the most accurate theory for how our universe works, but it is still limited.
+        Quantum mechanics doesn't explain large scale phenomena, like gravitation, dark matter, or dark energy.
+        New theories that unite gravity with quantum mechanics are being developed, but so far nothing testable has emerged.
+      </p>
+    </details>
+    <p>
+      Quantum mechanics seems strange from our perspective.
+      This feeling might come from the expectation that our everyday experience of reality is normal,
+      and quantum mechanics is for special cases involving very small particles.
+      But, it's the other way around.
+      Quantum mechanics describes fundamental rules of reality, and our everyday experience is a special case of these rules.
+    </p>
+
 
 
     <h2 class='underlined'>Photon Energy</h2>
@@ -2320,6 +2484,7 @@
   <script>
     renderMathInElement(document.body);
   </script>
+  <script src="doubleSlit.js"></script>
 </body>
 
 </html>
