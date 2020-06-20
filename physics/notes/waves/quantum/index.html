@@ -26,7 +26,7 @@
 </head>
 
 <body>
-  <header>
+  <header style="background-color: #234;">
     <h1>
       <a href="../../../">Quantum Mechanics</a>
     </h1>
@@ -34,7 +34,7 @@
   <article>
     <p>
       In the early 1900s physicists performed experiments that probed reality at its fundamental level.
-      They found that matter was made of particles called atoms.
+      They found that matter was made of particles they named atoms.
       Inside each atom they found the <a href="https://www.youtube.com/watch?v=ehHoOYqAT_U">subatomic particles</a>: electrons, protons, and neutrons.
       They also found that light was made of particles that we now call photons.
       The strangest result was that all these particles produced wave-like <a href="http://toutestquantique.fr/en/duality/">interference patterns</a>.
@@ -44,10 +44,10 @@
     </p>
     <br>
     <p>
-      The wave-like interference of particles can be seen in the <a href="https://www.youtube.com/watch?v=p-MNSLsjjdo">double slit experiment</a>.
-      When a wave passes through two small gaps it will <a href="../waveproperties/index.html#diffraction">diffract</a>.
-      The waves originating from each slit will travel different distances.
-      The superposition of the wave from each slit will alternate between constructive and destructive interference.
+      Interference patterns can be seen in the <a href="https://www.youtube.com/watch?v=p-MNSLsjjdo">double slit experiment</a>.
+      A wave passing through a slit spreads out. It <a href="../waveproperties/index.html#diffraction">diffracts</a>.
+      Waves originating from two different slits travel different distances making them out of phase as they diffract.
+      In superposition these out of phase waves alternates between constructive and destructive interference.
     </p>
     <details>
       <summary>single slit wave diffraction</summary>
@@ -127,14 +127,15 @@
       </script>
     </details>
     <p>
-      Thomas Young in 1801 produced a double slit interference pattern with beams of red light.
-      In 1927 the experiment was repeated just a single photon at a time.
-      Each photon was measured at single location, but the distribution of hits still followed an interference pattern.
+      Thomas Young in 1801 produced a double slit interference pattern with beams of light.
+      In 1927 the experiment was repeated with a single photon at a time.
+      Each photon was measured at single location, but the distribution of hits still followed the same interference pattern.
     </p>
     <p>
       The double slit experiment isn't limited to photons.
       It works with particles like electrons, atoms, or antimatter.
-      In 2019 an interference pattern was produced by particles made of 2000 atoms.
+      In 2019 an interference pattern was produced by a 2000 atom molecule.
+      It seems like as long as you can isolate a particle from its environment, it can interfere like a wave.
     </p>
   </article>
   <!-- <g dominant-baseline="central" font-size="8" font-family="Times New Roman" stroke="none" fill="#abaeb3">
@@ -150,21 +151,21 @@
     <text x="253" y="4">|Ψ(x)|²</text>
     <text x="343" y="4">Ψ(x)</text>
   </g> -->
-  <svg viewBox="0 0 400 150" id="double-slit">
+  <svg viewBox="0 0 400 150" id="double-slit" style="background-color: #234;">
     <g fill="#234" stroke="#234" stroke-width="0">
-      <rect width="140.5" height="148" x="1" y="1" rx="2" ry="2" fill="#eceef2" stroke="#234" stroke-width="1.5" />
+      <rect width="140.5" height="148" x="1" y="1" rx="0" ry="0" fill="#f2f6f9" stroke="#234" stroke-width="1.5" />
       <rect width="2" height="6" x="15" y="72" rx="0.5" ry="0.5" fill="#89a" />
       <rect width="12" height="8" x="4" y="71" rx="1" ry="1" />
       <path id="slit" d="M40 1 v70.5 m0 0.5 v5 m0 0.5 v70.5" stroke-width="1.5" />
-      <path id="double-slit-probability-function" d="M 200 0 v100" stroke-width="0" fill="#234" stroke-linecap="round" stroke-linejoin="round" />
+      <path id="double-slit-probability-function" d="M 200 0 v100" stroke-width="0" fill="#abc" stroke-linecap="round" stroke-linejoin="round" />
     </g>
     <g id="double-slit-hits"></g>
   </svg>
   <article>
-    <ul class="listing">
+    <ul class="listing" style="background-color: #fff; border-radius: 15px; padding:10px; border: #234 solid 4px;">
       <li>
         <div>
-          <button id="emit" style="margin:0; background-color: #eee;">emit</button>
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <button id="emit" style="margin:0; background-color: #eee; float: 0;">emit</button>
           <br>
           <label for="slit-one-checkbox">
             <input type="checkbox" id="slit-one-checkbox" name="slit-one-checkbox" style="width:14px;">
@@ -179,15 +180,15 @@
       </li>
       <li>
         <div>
-          wavelength = <input id='slit-wavelength' type="number" value='0.5' min="0" step="0.0001" style="width:105px;">
-          <br>slit separation = <input id='slit-separation' type="number" value='2' min="0" step="0.001" style="width:85px;">
-          <br>slit width = <input id='slit-slitWidth' type="number" value='2' min="0" step="0.01" style="width:122px;">
+          wavelength = <input id='slit-wavelength' type="number" value='0.5' min="0" step="0.0001" style="width:100px;">
+          <br>slit separation = <input id='slit-separation' type="number" value='2' min="0" step="0.001" style="width:80px;">
+          <br>slit width = <input id='slit-slitWidth' type="number" value='2' min="0" step="0.01" style="width:117px;">
           <!-- <br>target distance = <input id='slit-distance' type="number" value='100' min="0" step="1" style="width:100px;"> -->
         </div>
       </li>
     </ul>
     <div class="example-small">
-      <strong>Question:</strong> What happens when one slit is blocked? Why?
+      <strong>Simulation:</strong> What happens when one slit is blocked? Why?
       <details>
         <summary>answer</summary>
         <p>
@@ -199,7 +200,7 @@
       </details>
     </div>
     <div class="example-small">
-      <strong>Question:</strong> When a one particle at a time is fired, the distribution of hits still produces an interference pattern.
+      <strong>Simulation:</strong> When a one particle at a time is fired, the distribution of hits still produces an interference pattern.
       What could the single particle be interfering with?
       <details>
         <summary>answer</summary>

@@ -12,7 +12,7 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
     const xMeasure = 130
     const height = 150
     const step = 0.5 //1, 0.5, 0.25, 0.125, 0.0625 work for electron stacks
-    const emissionTotal = 2000
+    const emissionTotal = 1600
 
     let isBlocked = false;
     let wavelength = 0.201 //checked
@@ -28,7 +28,7 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
             slitWidth = Math.max(0.01, Number(document.getElementById("slit-slitWidth").value))
             // distance = Math.max(1, Number(document.getElementById("slit-distance").value))
 
-            const edge = 73.5 - slitWidth - separation / 2
+            const edge = 74 - slitWidth - separation / 2
             if (isBlocked) {
                 // const slit = `M${130-Math.min(108,distance)} 1 v73.5 m0 ${slitWidth} v73.5`
                 const slit = `M${140-Math.min(108,distance)} 1 v${edge} h-1 v${slitWidth} h1 v${separation} m0 ${slitWidth} v${edge}`
@@ -45,7 +45,7 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
             wave.array = [];
 
 
-            for (let y = 1; y < height - 1; y += step) {
+            for (let y = 3; y < height - 3; y += step) {
                 // const hyp1 = Math.sqrt(distance * distance + yOff1 * yOff1)
                 // const wave1 = wave.isSlit1 * amplitude * Math.sin(hyp1 / wavelength + phase) / hyp1 / hyp1
                 // const wave2 =  wave.isSlit2 * amplitude * Math.sin(hyp2 / wavelength + phase) / hyp2 / hyp2
@@ -73,7 +73,7 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
                 // // const r2RuleDistance = (distance * distance) / (distance * distance + yOff * yOff)
                 // const superposition = amplitude * diffraction * (isBlocked ? 1 : interference)
 
-                const yOff = (height / 2 - y) + (isBlocked ? separation : 0)
+                const yOff = (height / 2 - y) + (isBlocked ? separation / 2 : 0)
                 let B = Math.PI * slitWidth / wavelength * Math.sin(yOff / distance)
                 if (B === 0) B = 0.001
                 const diffraction = Math.sin(B) / B * Math.sin(B) / B
@@ -120,9 +120,9 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
             for (let i = 0; i < wave.array.length; i++) {
                 const y = i * step
                 // wave.dWave += `L${x+wave.array[i]} ${y}`
-                wave.dMag += `L${xMag+Math.abs(wave.array[i])} ${y}`
+                wave.dMag += `L${xMag+Math.abs(wave.array[i])} ${y+2}`
             }
-            wave.dMag += `L${xMag}, ${height-1}`
+            wave.dMag += `L${xMag}, ${height+1}`
             // document.getElementById("double-slit-wave-function").setAttribute("d", wave.dWave);
             document.getElementById("double-slit-probability-function").setAttribute("d", wave.dMag);
         },
@@ -137,11 +137,11 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
 
             //random hits
             var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-            newElement.setAttribute("cx", xMeasure + 10 * Math.random());
+            newElement.setAttribute("cx", xMeasure + 5 + 20 * (Math.random() - 0.5) * (Math.random() - 0.5));
             newElement.setAttribute("cy", y + 0.1 * (Math.random() - 0.5));
             newElement.setAttribute("r", "0.6");
             newElement.setAttribute("opacity", "0.4");
-            newElement.style.fill = "#234";
+            newElement.style.fill = "#345";
             newElement.style.strokeWidth = "0px";
             HITS.appendChild(newElement);
             //stacked and organized hits
@@ -150,7 +150,7 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
             newElement2.setAttribute("y", Math.floor(y));
             newElement2.setAttribute("width", "0.7");
             newElement2.setAttribute("height", "0.7");
-            newElement2.style.fill = "#234";
+            newElement2.style.fill = "#def";
             newElement2.style.strokeWidth = "0px";
             HITS.appendChild(newElement2);
 
@@ -209,7 +209,7 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
 
     wave.calculate();
     HITS.innerHTML = "";
-    for (let i = 0; i < 1500; i++) {
+    for (let i = 0; i < emissionTotal; i++) {
         wave.emit()
     }
     // requestAnimationFrame(animate);
