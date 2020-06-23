@@ -45,6 +45,9 @@ const mobs = {
   },
   statusSlow(who, cycles = 60) {
     if (!who.shield && !who.isShielded && !mech.isBodiesAsleep) {
+      if (who.isBoss) {
+        cycles = Math.floor(cycles * 0.25)
+      }
       //remove other "slow" effects on this mob
       let i = who.status.length
       while (i--) {
@@ -988,12 +991,12 @@ const mobs = {
         this.alive = false; //triggers mob removal in mob[i].replace(i)
         if (this.dropPowerUp) {
           if (mod.isEnergyLoss) mech.energy *= 0.66;
-          powerUps.spawnRandomPowerUp(this.position.x, this.position.y, this.mass, radius);
+          powerUps.spawnRandomPowerUp(this.position.x, this.position.y);
           mech.lastKillCycle = mech.cycle; //tracks the last time a kill was made, mostly used in game.checks()
           if (Math.random() < mod.sporesOnDeath) {
             const len = Math.min(30, Math.floor(4 + this.mass * Math.random()))
             for (let i = 0; i < len; i++) {
-              b.spore(this) //spawn drone
+              b.spore(this.position)
             }
           }
           if (Math.random() < mod.isBotSpawner) {
@@ -1008,6 +1011,17 @@ const mobs = {
           }
           if (mod.isExplodeMob) b.explosion(this.position, Math.min(450, Math.sqrt(this.mass + 3) * 80))
           if (mod.nailsDeathMob) b.targetedNail(this.position, mod.nailsDeathMob)
+        } else if (mod.isShieldAmmo && this.shield) {
+          let type = "ammo"
+          if (Math.random() < 0.33 || mod.bayesian) {
+            type = "heal"
+          } else if (Math.random() < 0.5 && !mod.isSuperDeterminism) {
+            type = "reroll"
+          }
+          for (let i = 0; i < 3; i++) {
+            powerUps.spawn(this.position.x, this.position.y, type);
+            if (Math.random() < mod.bayesian) powerUps.spawn(this.position.x, this.position.y, type);
+          }
         }
       },
       removeConsBB() {
