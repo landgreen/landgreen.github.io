@@ -1,23 +1,24 @@
 
-damage immunity after a collisions is reduced from 1/2s to 1/4s
-freezing status effects only last 1/4 as long on boss mobs
-mod - shotgun 66% increased fire rate and recoil
-mod - slowly heal when below 25% health
-mod - superdeterminism spawn 4 mods, but rerolls, fields, and guns no longer spawn
-foam mod, necrophoresis now aims the foam bullets, which makes it more effective at groups
-flechettes mod, piercing needles now goes through blocks as well as mobs
-mod - spawn 3 ammo, rerolls, or heals after destroying a shield
+mod - boomBot: explodes on mobs in close range
+mod - plasma-bot:  bot that fires your plasma torch
+(limit 1 bot) (requires plasma torch)
+(you can get 2 plasma-bots with bot replication)
+(you can switch to a new field after getting plasma-bot)
 
 ************** TODO - n-gon **************
-physics question: why don't the bound states of fields spread out.  What is making them bound.
 
-mobs killed by _____ always drops ammo
-  issues getting the code to work
+mob that flashes the player (makes the graphics not update for a couple seconds)
 
-rework reaction inhibitor to spawn mobs with 12% less life, rather then killing them at 12%
+held blocks aren't moving to the next level
+  only issue is setting held block to not collide
 
-levels: make a function in the main game loop that runs level specific code
-  reset the level function as each new level loads
+mod do 50% more damage in close, but 50% less at a distance
+  code it like mod.isFarAwayDmg
+    have these mods disable each other
+
+phase field still isn't fun
+  rework renormalization mod as well
+  does phase field need the stealth flag?
 
 mod: use the stealth flag from the phase decoherence field
   maybe trigger it along with the damage immunity CD
@@ -29,9 +30,6 @@ mod: efficient shielding (requires standing wave harmonics field)
 
 mod harmonic shield: slow everything in range around shield (temporal shield)
   set max speed?
-
-need a mod that effects ice status
-  mod: ice status effect lasts twice as long
 
 mod: bot very slowly follows you and gives you a bonus when it's in range
   it moves through walls
