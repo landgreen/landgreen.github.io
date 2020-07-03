@@ -14,7 +14,7 @@ const level = {
       // level.difficultyIncrease(9)
       // mech.isStealth = true;
       // mod.giveMod("supply chain");
-      b.giveGuns("ice IX")
+      // b.giveGuns("ice IX")
       // mech.setField("plasma torch")
 
       level.intro(); //starting level
