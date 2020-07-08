@@ -1,25 +1,20 @@
 
-negentropy - heals player to 50% max health at the end of a level
-crystallized armor - give 5% (was 4%) max health for a power up
-mod - superfluidity: AoE freeze effect
-bomberBoss's bombs split into 3 bombs on later levels
-mod - pair production only works for nano-scale manufacturing, but gives 3x (up from 2x) max energy
-press Z+X in testing mode to trigger player death
 
 ************** TODO - n-gon **************
 
-plasma field gets longer as you hold it longer
+field that pushes blocks and mobs away
+  charges up on mouse down and triggers on mouse up
+    drain mana while charging up
+  maybe push effect should last 10 cycles to give a more gentle feeling
 
 mod - AoE radiation might work when the effect ends
     or maybe just anytime another mob is near
-
-wave beam: mod - longitudinal waves (bullets oscillate fast /slow not up/down)
-  trigger on crouch?
 
 medium caliber gun in between minigun and rail gun
   mod: electricity damages mobs that get near the bullet 
   get ammo back if it hits mobs
   ammo returns to you if it misses
+  bullets have a gentle arc?
 
 mob that flashes the player (makes the graphics not update for a couple seconds)
 
@@ -45,9 +40,6 @@ mod harmonic shield: slow everything in range around shield (temporal shield)
 mod: bot very slowly follows you and gives you a bonus when it's in range
   it moves through walls
   effect: damage bonus?, damage reduction?, push away mobs, limit top speed of mobs/blocks/player?
-
-pulse and laser can auto aim
-  can hit multiple targets if they are in range
 
 make a visual indication of max health
 

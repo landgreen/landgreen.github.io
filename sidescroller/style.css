@@ -459,6 +459,20 @@ em {
   letter-spacing: 1px;
 }
 
+.color-g {
+  color: hsl(218, 80%, 40%);
+  letter-spacing: 1px;
+}
+
+.color-harm {
+  /* color:  */
+  /* text-shadow: #FC0 1px 0 10px; */
+  background-color: hsla(325, 100%, 85%, 0.2);
+  padding: 3px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
 .color-r {
   color: #f7b;
   letter-spacing: 1px;
@@ -484,6 +498,20 @@ em {
   display: inline-block;
   margin-bottom: -5px;
 }
+
+.circle-gun-mod {
+  box-shadow: 0 0 0 3px #025;
+}
+
+/* .circle-grid-gun {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-bottom: 0px;
+  background: #025;
+  box-shadow: 0 0 0 8px hsl(253, 80%, 67%);
+} */
 
 .field {
   background: #0cf;
