@@ -606,7 +606,7 @@ const game = {
     if (game.firstRun) {
       mech.spawn(); //spawns the player
       mod.setupAllMods(); //doesn't run on reset so that gun mods carry over to new runs
-      // if (game.isCommunityMaps) level.levels.push("stronghold");
+      if (game.isCommunityMaps) level.levels.push("stronghold");
       level.levels = shuffle(level.levels); //shuffles order of maps
       level.levels.unshift("bosses"); //add bosses level to the end of the randomized levels list
     }
