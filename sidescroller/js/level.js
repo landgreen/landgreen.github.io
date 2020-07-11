@@ -2,6 +2,7 @@ let body = []; //non static bodies
 let map = []; //all static bodies
 let cons = []; //all constraints between a point and a body
 let consBB = []; //all constraints between two bodies
+let rotor = []
 const level = {
   defaultZoom: 1400,
   onLevel: 0,
@@ -78,7 +79,8 @@ const level = {
       density: density,
       isNotSticky: true
     });
-    const rotor = Body.create({ //combine rotor1 and rotor2
+    len = rotor.length
+    rotor[len] = Body.create({ //combine rotor1 and rotor2
       parts: [rotor1, rotor2],
       restitution: 0,
       collisionFilter: {
@@ -86,17 +88,17 @@ const level = {
         mask: cat.body | cat.mob | cat.mobBullet | cat.mobShield | cat.powerUp | cat.player | cat.bullet
       },
     });
-    Matter.Body.setPosition(rotor, {
+    Matter.Body.setPosition(rotor[len], {
       x: x,
       y: y
     });
-    World.add(engine.world, [rotor]);
+    World.add(engine.world, [rotor[len]]);
     body[body.length] = rotor1
     body[body.length] = rotor2
 
     setTimeout(function () {
-      rotor.collisionFilter.category = cat.body;
-      rotor.collisionFilter.mask = cat.body | cat.player | cat.bullet | cat.mob | cat.mobBullet //| cat.map
+      rotor[len].collisionFilter.category = cat.body;
+      rotor[len].collisionFilter.mask = cat.body | cat.player | cat.bullet | cat.mob | cat.mobBullet //| cat.map
     }, 1000);
 
     const constraint = Constraint.create({ //fix rotor in place, but allow rotation
@@ -104,27 +106,27 @@ const level = {
         x: x,
         y: y
       },
-      bodyB: rotor
+      bodyB: rotor[len]
     });
     World.add(engine.world, constraint);
 
     if (rotate) {
-      rotor.rotate = function () {
+      rotor[len].rotate = function () {
         if (!mech.isBodiesAsleep) {
-          Matter.Body.applyForce(rotor, {
-            x: rotor.position.x + 100,
-            y: rotor.position.y + 100
+          Matter.Body.applyForce(rotor[len], {
+            x: rotor[len].position.x + 100,
+            y: rotor[len].position.y + 100
           }, {
-            x: rotate * rotor.mass,
+            x: rotate * rotor[len].mass,
             y: 0
           })
         } else {
-          Matter.Body.setAngularVelocity(rotor, 0);
+          Matter.Body.setAngularVelocity(rotor[len], 0);
         }
       }
     }
 
-    return rotor
+    return rotor[len]
   },
   button(x, y, width = 70, height = 20) {
     spawn.mapVertex(x + 35, y + 27, "70 10 -70 10 -40 -10 40 -10");
