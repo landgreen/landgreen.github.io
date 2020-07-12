@@ -2,7 +2,7 @@ let body = []; //non static bodies
 let map = []; //all static bodies
 let cons = []; //all constraints between a point and a body
 let consBB = []; //all constraints between two bodies
-let rotor = []
+let composite = [] //rotors and other map elements that don't fit 
 const level = {
   defaultZoom: 1400,
   onLevel: 0,
@@ -79,8 +79,7 @@ const level = {
       density: density,
       isNotSticky: true
     });
-    len = rotor.length
-    rotor[len] = Body.create({ //combine rotor1 and rotor2
+    rotor = Body.create({ //combine rotor1 and rotor2
       parts: [rotor1, rotor2],
       restitution: 0,
       collisionFilter: {
@@ -88,17 +87,17 @@ const level = {
         mask: cat.body | cat.mob | cat.mobBullet | cat.mobShield | cat.powerUp | cat.player | cat.bullet
       },
     });
-    Matter.Body.setPosition(rotor[len], {
+    Matter.Body.setPosition(rotor, {
       x: x,
       y: y
     });
-    World.add(engine.world, [rotor[len]]);
+    World.add(engine.world, [rotor]);
     body[body.length] = rotor1
     body[body.length] = rotor2
 
     setTimeout(function () {
-      rotor[len].collisionFilter.category = cat.body;
-      rotor[len].collisionFilter.mask = cat.body | cat.player | cat.bullet | cat.mob | cat.mobBullet //| cat.map
+      rotor.collisionFilter.category = cat.body;
+      rotor.collisionFilter.mask = cat.body | cat.player | cat.bullet | cat.mob | cat.mobBullet //| cat.map
     }, 1000);
 
     const constraint = Constraint.create({ //fix rotor in place, but allow rotation
@@ -106,27 +105,27 @@ const level = {
         x: x,
         y: y
       },
-      bodyB: rotor[len]
+      bodyB: rotor
     });
     World.add(engine.world, constraint);
 
     if (rotate) {
-      rotor[len].rotate = function () {
+      rotor.rotate = function () {
         if (!mech.isBodiesAsleep) {
-          Matter.Body.applyForce(rotor[len], {
-            x: rotor[len].position.x + 100,
-            y: rotor[len].position.y + 100
+          Matter.Body.applyForce(rotor, {
+            x: rotor.position.x + 100,
+            y: rotor.position.y + 100
           }, {
-            x: rotate * rotor[len].mass,
+            x: rotate * rotor.mass,
             y: 0
           })
         } else {
-          Matter.Body.setAngularVelocity(rotor[len], 0);
+          Matter.Body.setAngularVelocity(rotor, 0);
         }
       }
     }
-
-    return rotor[len]
+    composite[composite.length] = rotor
+    return rotor
   },
   button(x, y, width = 70, height = 20) {
     spawn.mapVertex(x + 35, y + 27, "70 10 -70 10 -40 -10 40 -10");
@@ -301,22 +300,22 @@ const level = {
     spawn.mapRect(9300, 2590, 650, 25);
     spawn.mapRect(9700, 2580, 100, 50);
 
-    spawn.randomBoss(1300, 2100, 0.7);
-    spawn.randomMob(8300, 2225, 0.5);
-    spawn.randomSmallMob(2575, -75, 0.5); //entrance
-    spawn.randomMob(8125, 2450, 0.5);
-    spawn.randomSmallMob(3200, 250, 0.5);
-    spawn.randomMob(2425, 2150, 0.5);
-    spawn.randomSmallMob(3825, 300, 0.5);
+    spawn.randomBoss(1300, 2100, 0.6);
+    spawn.randomMob(8300, 2100, 0.3);
+    spawn.randomSmallMob(2575, -75, 0.3); //entrance
+    spawn.randomMob(8125, 2450, 0.3);
+    spawn.randomSmallMob(3200, 250, 0.4);
+    spawn.randomMob(2425, 2150, 0.4);
+    spawn.randomSmallMob(3825, 300, 0.4);
     spawn.randomMob(3800, 2175, 0.5);
     spawn.randomSmallMob(1100, -300, 0.5); //entrance
-    spawn.randomMob(4450, 2500, 0.5);
-    spawn.randomMob(6350, 2525, 0.5);
-    spawn.randomSmallMob(1900, -250, 0.5); //entrance
+    spawn.randomMob(4450, 2500, 0.6);
+    spawn.randomMob(6350, 2525, 0.6);
+    spawn.randomBoss(9200, 2400, 0.5);
+    spawn.randomSmallMob(1900, -250, 0.7); //entrance
     spawn.randomMob(1500, 2100, 0.8);
-    spawn.randomSmallMob(1700, -150, 0.5); //entrance
-    spawn.randomMob(8800, 2725, 0.5);
-    spawn.randomBoss(8650, 2275, 0.5);
+    spawn.randomSmallMob(1700, -150, 0.8); //entrance
+    spawn.randomMob(8800, 2725, 0.9);
     if (game.difficulty > 3) spawn.randomLevelBoss(6000, 2300, ["shooterBoss", "spiderBoss", "launcherBoss", "laserTargetingBoss"]);
   },
   template() {
