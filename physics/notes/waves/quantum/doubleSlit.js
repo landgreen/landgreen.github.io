@@ -146,7 +146,7 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
             HITS.appendChild(newElement);
             //stacked and organized hits
             var newElement2 = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
-            newElement2.setAttribute("x", xMeasure + 18 + wave.stacks[Math.floor(y)]);
+            newElement2.setAttribute("x", xMeasure + 15 + wave.stacks[Math.floor(y)]);
             newElement2.setAttribute("y", Math.floor(y));
             newElement2.setAttribute("width", "0.7");
             newElement2.setAttribute("height", "0.7");
@@ -157,6 +157,38 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
             wave.stacks[Math.floor(y)]++
             wave.emitIndex++
             if (wave.emitIndex > wave.emissionOrder.length) wave.emitIndex = 0 //restart cycling through the array if you get to the end
+        },
+        fire() {
+            if (isClearToEmit) {
+                isClearToEmit = false
+                wave.calculate();
+                HITS.innerHTML = "";
+                let count = 0;
+
+                const emitAtATime = (document.getElementById("slit-one-checkbox").checked) ? 1 : 15
+                document.getElementById("double-slit-emitter").style.fill = "#f05"
+                requestAnimationFrame(cycle);
+
+                function cycle() {
+                    if (count < emissionTotal) {
+                        for (let i = 0; i < emitAtATime; i++) {
+                            count++
+                            wave.emit()
+                        }
+                        if (isClearToEmit) {
+                            document.getElementById("double-slit-emitter").style.fill = "#89a"
+                        } else {
+                            document.getElementById("double-slit-emitter").style.fill = "hsl(" + (180 + 190 * Math.random()) + "," + "100%," + "50%)" //"#f05"
+                            requestAnimationFrame(cycle);
+                        }
+                    } else {
+                        isClearToEmit = true;
+                        document.getElementById("double-slit-emitter").style.fill = "#89a"
+                    }
+                }
+            } else {
+                isClearToEmit = true;
+            }
         }
     }
 
@@ -172,31 +204,12 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
 
     let isClearToEmit = true;
 
-    document.getElementById("emit").addEventListener("click", () => { //animate electron emission
-        wave.calculate();
-        HITS.innerHTML = "";
-        let count = 0;
-
-        const emitAtATime = (document.getElementById("slit-one-checkbox").checked) ? 1 : 30
-        isClearToEmit = false
-        setTimeout(function () {
-            isClearToEmit = true
-            requestAnimationFrame(cycle);
-        }, 200);
-
-
-
-        function cycle() {
-            if (count < emissionTotal) {
-                for (let i = 0; i < emitAtATime; i++) {
-                    count++
-                    wave.emit()
-                }
-                if (isClearToEmit) requestAnimationFrame(cycle);
-            }
-        }
+    document.getElementById("double-slit-button").addEventListener("click", () => { //animate electron emission
+        wave.fire();
     });
-
+    document.getElementById("double-slit").addEventListener("click", () => { //animate electron emission
+        wave.fire();
+    });
 
     // document.getElementById("slit-distance").value = distance
     document.getElementById("slit-separation").value = separation

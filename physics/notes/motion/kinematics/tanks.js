@@ -145,7 +145,7 @@ function tanks() {
                 x: TURRET_RADIUS * Math.cos(angle),
                 y: TURRET_RADIUS * Math.sin(angle)
             }
-            p1.path.setAttribute("d", `M0 0, L${p1.turretRelativePosition.x} ${p1.turretRelativePosition.y}`);
+            p1.path.setAttribute("d", `M 0 0 L${p1.turretRelativePosition.x} ${p1.turretRelativePosition.y}`);
 
             // get trajectory
             dx = p1.position.x + p1.turretRelativePosition.x - mouse.x
@@ -158,7 +158,7 @@ function tanks() {
                 x: TURRET_RADIUS * Math.cos(angle),
                 y: TURRET_RADIUS * Math.sin(angle)
             }
-            p2.path.setAttribute("d", `M0 0, L${p2.turretRelativePosition.x} ${p2.turretRelativePosition.y}`);
+            p2.path.setAttribute("d", `M 0 0 L${p2.turretRelativePosition.x} ${p2.turretRelativePosition.y}`);
 
             // get trajectory
             dx = p2.position.x + p2.turretRelativePosition.x - mouse.x
@@ -178,13 +178,13 @@ function tanks() {
             const Ty = HEIGHT + p1.turretRelativePosition.y
             const x = Tx + distance * Math.cos(angle)
             const y = Ty - distance * Math.sin(angle)
-            MOUSE_PATH.setAttribute("d", `M${Tx} ${Ty}, L${x} ${y}`);
+            MOUSE_PATH.setAttribute("d", `M${Tx} ${Ty} L${x} ${y}`);
         } else {
             const Tx = p2.position.x + p2.turretRelativePosition.x
             const Ty = HEIGHT + p2.turretRelativePosition.y
             const x = Tx + distance * Math.cos(angle)
             const y = Ty - distance * Math.sin(angle)
-            MOUSE_PATH.setAttribute("d", `M${Tx} ${Ty}, L${x} ${y}`);
+            MOUSE_PATH.setAttribute("d", `M${Tx} ${Ty} L${x} ${y}`);
         }
     }
 

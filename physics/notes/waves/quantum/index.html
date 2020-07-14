@@ -26,7 +26,7 @@
 </head>
 
 <body>
-  <header style="background-color: #234;">
+  <header>
     <h1>
       <a href="../../../">Quantum Mechanics</a>
     </h1>
@@ -44,10 +44,12 @@
     </p>
     <br>
     <p>
-      Interference patterns can be seen in the <a href="https://www.youtube.com/watch?v=p-MNSLsjjdo">double slit experiment</a>.
+      The <a href="https://www.youtube.com/watch?v=p-MNSLsjjdo">double slit experiment</a> is a good example of interference patterns.
       A wave passing through a slit spreads out. It <a href="../waveproperties/index.html#diffraction">diffracts</a>.
-      Waves originating from two different slits travel different distances making them out of phase as they diffract.
-      In superposition these out of phase waves alternates between constructive and destructive interference.
+      A wave that passes through two adjacent slits travel different distances.
+      This makes the wave coming from each slit out of phase.
+      Each wave's amplitude is no longer up and down at the same time.
+      In superposition, the amplitudes alternate between constructive and destructive interference.
     </p>
     <details>
       <summary>single slit wave diffraction</summary>
@@ -127,15 +129,9 @@
       </script>
     </details>
     <p>
-      Thomas Young in 1801 produced a double slit interference pattern with beams of light.
-      In 1927 the experiment was repeated with a single photon at a time.
-      Each photon was measured at single location, but the distribution of hits still followed the same interference pattern.
-    </p>
-    <p>
-      The double slit experiment isn't limited to photons.
-      It works with particles like electrons, atoms, or antimatter.
-      In 2019 an interference pattern was produced by a 2000 atom molecule.
-      It seems like as long as you can isolate a particle from its environment, it can interfere like a wave.
+      In 1801, Thomas Young produced a double slit interference pattern with beams of light.
+      In 1909, the experiment was repeated with a single photon at a time.
+      After passing through the double slit, each photon was measured at single location, but the distribution of measurements still produced an interference pattern.
     </p>
   </article>
   <!-- <g dominant-baseline="central" font-size="8" font-family="Times New Roman" stroke="none" fill="#abaeb3">
@@ -151,21 +147,21 @@
     <text x="253" y="4">|Ψ(x)|²</text>
     <text x="343" y="4">Ψ(x)</text>
   </g> -->
-  <svg viewBox="0 0 400 150" id="double-slit" style="background-color: #234;">
-    <g fill="#234" stroke="#234" stroke-width="0">
-      <rect width="140.5" height="148" x="1" y="1" rx="0" ry="0" fill="#f2f6f9" stroke="#234" stroke-width="1.5" />
-      <rect width="2" height="6" x="15" y="72" rx="0.5" ry="0.5" fill="#89a" />
-      <rect width="12" height="8" x="4" y="71" rx="1" ry="1" />
+  <svg viewBox="0 0 400 150" id="double-slit" style="background-color: #345;">
+    <g fill="#234" stroke="#345" stroke-width="0">
+      <rect width="140.5" height="148" x="1" y="1" rx="0" ry="0" fill="#f2f6f9" stroke="#345" stroke-width="1.5" />
+      <rect id="double-slit-emitter" width="2.5" height="8" x="15" y="71" rx="0.5" ry="0.5" fill="#89a" />
+      <rect width="12" height="10" x="4" y="70" rx="1" ry="1" />
       <path id="slit" d="M40 1 v70.5 m0 0.5 v5 m0 0.5 v70.5" stroke-width="1.5" />
-      <path id="double-slit-probability-function" d="M 200 0 v100" stroke-width="0" fill="#abc" stroke-linecap="round" stroke-linejoin="round" />
+      <path id="double-slit-probability-function" d="M 290 0 v100" stroke-width="0" fill="#abc" stroke-linecap="round" stroke-linejoin="round" />
     </g>
     <g id="double-slit-hits"></g>
   </svg>
   <article>
-    <ul class="listing" style="background-color: #fff; border-radius: 15px; padding:10px; border: #234 solid 4px;">
+    <ul class="listing" style="background-color: #fff; border-radius: 15px; padding:10px; border: #345 solid 4px;">
       <li>
         <div>
-          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <button id="emit" style="margin:0; background-color: #eee; float: 0;">emit</button>
+          &nbsp; &nbsp; &nbsp; &nbsp; <button id="double-slit-button" style="margin:0; background-color: #eee; float: 0; font-size: 1.5em;">emit</button>
           <br>
           <label for="slit-one-checkbox">
             <input type="checkbox" id="slit-one-checkbox" name="slit-one-checkbox" style="width:14px;">
@@ -187,6 +183,16 @@
         </div>
       </li>
     </ul>
+    <p>
+      The double slit experiment isn't limited to photons.
+      In 1927, the experiment was repeated with electrons.
+      In 2019, an interference pattern was produced by a 2000 atom molecule.
+    </p>
+    <p>
+      In order to produce a wave interference pattern, particles must be perfectly isolated from their environment.
+      That's why we still can't produce a double slit interference pattern for everyday sized objects, like cats.
+      It's just too hard to isolate large objects long enough to run the experiment.
+    </p>
     <div class="example-small">
       <strong>Simulation:</strong> What happens when one slit is blocked? Why?
       <details>
@@ -253,9 +259,10 @@
       but when applied to repeated experiments they have an unparalleled level of accuracy.
     </p>
     <p>
-      An understanding of <a href="https://www.youtube.com/playlist?list=PLsPUh22kYmNCGaVGuGfKfJl-6RdHiCjo1">quantum mechanics</a> is typically achieved after studying the underlying math.
-      Building an intuition without the math can be <a href="https://www.smbc-comics.com/comic/the-talk-3">confusing</a>,
-      but here is a brief and inevitably flawed description.
+      Learning <a href="https://www.youtube.com/playlist?list=PLsPUh22kYmNCGaVGuGfKfJl-6RdHiCjo1">quantum mechanics</a> is typically done by studying the underlying math.
+      Building an intuition without the math can be <a href="https://www.smbc-comics.com/comic/the-talk-3">confusing</a>.
+      The grey boxes below have a nonmathematical and inevitably flawed description of quantum mechanics.
+      You can skip them and still understand the rest of this page.
     </p>
 
     <details class="derive">
@@ -434,20 +441,21 @@
         </p> -->
       <!-- <br> -->
       <p>
-        An advanced version of quantum mechanics, called <a href="https://www.youtube.com/watch?v=ATcrrzJFtBY&t=747s">quantum field theory</a>
-        views reality as being made of waves at the fundamental level.
+        <a href="https://www.youtube.com/watch?v=ATcrrzJFtBY">Quantum field theory</a> describes reality as being made of waves at the fundamental level.
       </p>
       <p>
-        In this theory there is a field spread across all of space and time for each type of fundamental particle.
-        Each individual particle is a localized excited state of its field.
-        For example, a single electron is a place in space and time where the electron field is vibrating.
+        In this theory there is a field for each type of fundamental particle spread across all of space and time, but particles don't exist on their own.
+        They are a useful mathematical approximation of localized field excitations.
+        These localized field excitations form <a href="..\waveproperties\index.html#standing-waves">standing waves</a>.
+        The standing waves limit the possible energy values the field can have to discrete quantities.
+        This quantization makes the field act like it is made of particles.
+      </p>
+      <p>
+        For example, a single electron is a region in space and time where the electron field forms a standing wave.
         The electron field exists everywhere, but electrons are more likely to be measured in areas that are excited.
       </p>
       <p>
-        So, a particle is a mathematical approximation of an isolated field excitation that forms localized <a href="..\waveproperties\index.html#standing-waves">standing waves</a>.
         Interactions between different particles can be approximated with <a href="https://www.youtube.com/watch?v=fG52mXN-uWI">feynman diagrams</a>.
-      </p>
-      <p>
         Electrons model well as particles because in most cases their interactions are weak enough to be mathematically canceled out.
         Quarks, the particles inside protons and neutrons, interact through the "strong force".
         This force has frequent and complex interactions that don't cancel out, making the particle model less useful.
@@ -540,10 +548,11 @@
     </details>
     <p>
       Quantum mechanics seems strange from our perspective.
-      This feeling might come from the expectation that our everyday experience of reality is normal,
-      and quantum mechanics is for special cases involving very small particles.
-      But, it's the other way around.
-      Quantum mechanics describes fundamental rules of reality, and our everyday experience is a special case of these rules.
+      This feeling might come from the point of view that our everyday experience of reality is normal,
+      and quantum mechanics is a special case for very small particles.
+      Of course, it's the other way around.
+      Quantum mechanics describes the rules of reality in a fundamental way.
+      Our everyday experience is a special case of these rules.
     </p>
 
 
@@ -552,7 +561,7 @@
     <p>
       In 1899, after investigating the <a href="..\light\index.html#thermal">thermal radiation</a> spectrum,
       Maxwell Planck reluctantly hypothesized that the energy of light is only released in small quantities determined by its frequency.
-      This idea was the beginning of <a href="https://www.youtube.com/watch?v=tQSbms5MDvY">quantum mechanics</a>.
+      This idea was the <a href="https://www.youtube.com/watch?v=tQSbms5MDvY">beginning</a> of quantum mechanics.
     </p>
   </article>
   <style>
@@ -1440,7 +1449,7 @@
 
     </details>
     <p>
-      In 1924 Louis de Broglie proposed that particles with mass might have a wavelength similar to a photon's.
+      In 1924 Louis de Broglie proposed that particles with mass might have a wavelength.
       This turned out to be accurate. Electrons, atoms, even large molecules all have a measurable quantum wavelength based on their momentum.
     </p>
     $$\lambda = \frac{h}{p} \quad \quad \lambda = \frac{h}{mv}$$
@@ -1488,17 +1497,26 @@
         <td>≈ 10<sup>-12</sup> </td>
       </tr>
       <tr>
-        <td>cat</td>
+        <td>a cat?</td>
         <td>4</td>
         <td>1</td>
         <td>≈ 10<sup>-36</sup> </td>
       </tr>
     </table>
     <p>
-      Particles the size of a cat have extremely small wavelengths, but cats aren't exactly a single quantum particle.
-      The equation begins to lose meaning at the macroscopic scale.
+      Oxygen is made of smaller particles, so it's odd that it has a single wavelength.
+      Yet, particles made of smaller particles do behave as a single wave.
+      Wave patterns have been verified experimentally for molecules up to around 25,000 protons and neutrons in 2019.
+    </p>
+    <p>
+      A cat particle has an extremely small wavelength, but a cat isn't a single quantum particle in a practical sense.
+      The equation begins to lose meaning at the macroscopic scale as particles can no longer be isolated from their environment.
       This agrees with our everyday observations for cats. They don't have a measurable wave-nature, although they are very sneaky.
     </p>
+
+    <!-- <p>
+      How does the wavelength of a particle compare to the size of a particle?
+    </p> -->
 
     <div class='example'>
       <strong>Example:</strong> Find the wavelength of a proton moving at 30 m/s.
@@ -1608,8 +1626,8 @@
         This attraction can also lead to an orbit, but with some quantum mechanical restrictions.
       </p>
       <p>
-        Quantum mechanics tells us that electrons can be described by a probability wave that represents the odds of finding an electron in a given state.
-        As an electron tries to orbit the nucleus, the electron's probability wave destructively interferes with itself.
+        Quantum mechanics tells us that electrons are waves.
+        As the waves try to orbit the nucleus, they destructively interfere with themselves.
         This limits the wavelengths to values that allow constructive orbital <a href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
         We say that the allowed wavelengths are <a href="http://toutestquantique.fr/en/quantization/">quantized</a>.
         <strong>Quantizing</strong> means to restrict a variable to specific values.
@@ -1639,13 +1657,13 @@
         For most wavelengths these paths interfere destructively, but at resonant wavelengths the paths interfere constructively to produce a standing wave.
       </p> -->
       <p>
-        An analogy for atomic orbitals is the <a href="https://www.acs.psu.edu/drussell/Demos/MembraneCircle/Circle.html">vibrations of a drum</a>.
+        A 2-D analogy for atomic orbitals is the <a href="https://www.acs.psu.edu/drussell/Demos/MembraneCircle/Circle.html">vibrations of a drum</a>.
       </p>
       <br>
       <p>
         An electron in an atom can be described by 4 quantum numbers.
         Quantizing these numbers adds another restriction.
-        Two electrons can't form the exact same wave due to a quantum interaction called the Pauli exclusion principle.
+        Two electrons can't form the exact same wave due to a type of destructive interference called the Pauli exclusion principle.
         This means each electron in an atom must have a different combination of the 4 numbers.
       </p>
       <a href="https://en.wikipedia.org/wiki/Atomic_orbital"> <img src="Hydrogen_Density_Plots.png" width="100%"> </a>
@@ -1654,8 +1672,10 @@
         Each electron in an atom or molecule must occupy a different wave state. This state determines its wavelength, frequency and energy.
       </p>
       <p>
-        In general, light isn't required to be quantized.
-        It is allowed to have any possible frequency, but when electrons shift to a lower energy level they emit quantized light.
+        All quantum mechanical particles are not required to be quantized.
+        Particles outside an atom are free to have a wide range of values.
+        The quantization of particles comes from electrons in atoms forming standing waves only at specific values.
+        This quantization can spread to photons as they are emitted from electrons in atoms.
       </p>
     </details>
     <br>
