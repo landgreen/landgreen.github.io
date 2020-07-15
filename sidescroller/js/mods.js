@@ -468,10 +468,11 @@ const mod = {
             },
             requires: "at least 3 rerolls",
             effect() {
-                mob.isRerollBots = true;
+                mod.isRerollBots = true;
+                powerUps.reroll.changeRerolls(0)
             },
             remove() {
-                mob.isRerollBots = false;
+                mod.isRerollBots = false;
             }
         },
         {

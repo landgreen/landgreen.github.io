@@ -61,8 +61,6 @@ const powerUps = {
           b.randomBot()
         }
       }
-
-
       if (mod.isDeathAvoid && document.getElementById("mod-anthropic")) {
         document.getElementById("mod-anthropic").innerHTML = `(${powerUps.reroll.rerolls})`
       }
