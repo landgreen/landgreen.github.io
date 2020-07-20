@@ -407,7 +407,7 @@ function setupCanvas() {
   canvas.width2 = canvas.width / 2; //precalculated because I use this often (in mouse look)
   canvas.height2 = canvas.height / 2;
   canvas.diagonal = Math.sqrt(canvas.width2 * canvas.width2 + canvas.height2 * canvas.height2);
-  ctx.font = "15px Arial";
+  ctx.font = "18px Arial";
   ctx.lineJoin = "round";
   ctx.lineCap = "round";
   // ctx.lineCap='square';

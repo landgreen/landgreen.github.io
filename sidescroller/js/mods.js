@@ -2004,7 +2004,7 @@ const mod = {
         },
         {
             name: "Lorentz transformation",
-            description: "<strong>time dilation field</strong> has an effect while inactive<br><strong>move</strong>, <strong>jump</strong>, and <strong>shoot</strong> <strong>33%</strong> faster",
+            description: "<strong>move</strong>, <strong>jump</strong>, and <strong>shoot</strong> <strong>33%</strong> faster<br>while <strong>time dilation</strong> is active or inactive ",
             maxCount: 1,
             count: 0,
             allowed() {

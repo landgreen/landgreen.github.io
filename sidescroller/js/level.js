@@ -20,9 +20,9 @@ const level = {
       // b.giveGuns("ice IX")
       // mech.setField("plasma torch")
 
-      level.intro(); //starting level
+      // level.intro(); //starting level
       // level.testing();
-      // level.testChamber()
+      level.testChamber()
       // level.sewers();
       // level.satellite();
       // level.skyscrapers();
@@ -172,6 +172,30 @@ const level = {
     return [portalA, portalB, mapA, mapB]
   },
   testChamber() {
+    level.setPosToSpawn(0, -50); //lower start
+    level.exit.y = level.enter.y - 550;
+    spawn.mapRect(level.enter.x, level.enter.y + 20, 100, 20);
+    level.exit.x = level.enter.x;
+    spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 20);
+    level.defaultZoom = 2000
+    game.zoomTransition(level.defaultZoom)
+    document.body.style.backgroundColor = "#444";
+
+    level.fillBG.push({ //full map white
+      x: -375,
+      y: -3700,
+      width: 2975,
+      height: 3800,
+      color: "#ddd"
+    });
+
+    level.fillBG.push({ //exit room
+      x: -300,
+      y: -1000,
+      width: 650,
+      height: 500,
+      color: "#d4f4f4"
+    });
     const portal = level.portal({
       x: 2500,
       y: -75
@@ -188,19 +212,6 @@ const level = {
       y: -2150
     }, -Math.PI / 2) //up
 
-    const hazard = level.hazard(175, -2050, 1050, 10, 0.15, "hsl(0, 100%, 50%)") //laser
-    const hazard2 = level.hazard(1775, -2550, 150, 10, 0.15, "hsl(0, 100%, 50%)") //laser
-    const button = level.button(2100, -2600)
-
-    level.setPosToSpawn(0, -50); //lower start
-    level.exit.y = level.enter.y - 550;
-    level.fillBG.push({
-      x: -300,
-      y: -1000,
-      width: 650,
-      height: 500,
-      color: "#d4f4f4"
-    });
     const portal3 = level.portal({
       x: 1850,
       y: -550
@@ -208,6 +219,9 @@ const level = {
       x: 2425,
       y: -600
     }, -2 * Math.PI / 3) //up left
+    const hazard = level.hazard(175, -2050, 1050, 10, 0.15, "hsl(0, 100%, 50%)") //laser
+    const hazard2 = level.hazard(1775, -2550, 150, 10, 0.15, "hsl(0, 100%, 50%)") //laser
+    const button = level.button(2100, -2600)
 
     level.custom = () => {
       level.playerExitCheck();
@@ -245,13 +259,6 @@ const level = {
       portal3[2].draw();
       portal3[3].draw();
     };
-    spawn.mapRect(level.enter.x, level.enter.y + 20, 100, 20);
-    level.exit.x = level.enter.x;
-    spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 20);
-
-    level.defaultZoom = 2000
-    game.zoomTransition(level.defaultZoom)
-    document.body.style.backgroundColor = "#dcdcde";
     powerUps.spawnStartingPowerUps(1975, -3075);
 
     const powerUpPos = shuffle([{ //no debris on this level but 2 random spawn instead
@@ -332,30 +339,34 @@ const level = {
 
     spawn.mapRect(0, -1975, 175, 50);
     spawn.mapRect(1225, -1975, 175, 50);
-    spawn.mapRect(150, -2150, 50, 225);
-    spawn.mapRect(1200, -2150, 50, 225);
+    spawn.mapRect(150, -2150, 25, 225);
+    spawn.mapRect(1225, -2150, 25, 225);
 
-
+    //mobs
     spawn.randomMob(1075, -3500, 0.2);
     spawn.randomMob(-75, -3425, 0.2);
     spawn.randomMob(1475, -225, 0.3);
     spawn.randomMob(2075, -150, 0.5);
     spawn.randomMob(2175, -700, 0.5);
     if (game.difficulty > 40) {
-      spawn.randomMob(2300, -2775, 0.4);
+      spawn.randomMob(2300, -2775, 0);
       spawn.randomMob(600, -925, 0.1);
-      spawn.randomMob(1550, -2750, 0.3);
-      spawn.randomMob(1350, -1150, 0.4);
-      spawn.randomMob(-75, -1475, 0.6);
+      spawn.randomMob(1550, -2750, 0.2);
+      spawn.randomMob(1350, -1150, 0.3);
+      spawn.randomMob(-75, -1475, 0.3);
+      spawn.randomBoss(600, -2600, 0.3);
     }
-    if (game.difficulty > 24) spawn.randomBoss(600, -2600, 0.4);
-    if (game.difficulty > 12) {
-      spawn.randomLevelBoss(700, -1550, ["shooterBoss", "bomberBoss", "spiderBoss", "launcherBoss", "laserTargetingBoss"]);
-    } else {
-      // spawn.randomMob(700, -1650, 1);
-      spawn.randomMob(600, -3500, 1);
-      spawn.randomMob(-75, -1175, 1);
+    if (game.difficulty < 20) {
+      spawn.randomMob(700, -1650, 0);
+      spawn.randomMob(600, -3500, 0.2);
+      spawn.randomMob(-75, -1175, 0.2);
       powerUps.spawnBossPowerUp(-125, -1760);
+    } else {
+      if (Math.random() < 0.5) {
+        spawn.randomLevelBoss(700, -1550, ["shooterBoss", "launcherBoss", "laserTargetingBoss"]);
+      } else {
+        spawn.randomLevelBoss(675, -2775, ["shooterBoss", "launcherBoss", "laserTargetingBoss"]);
+      }
     }
     powerUps.addRerollToLevel() //needs to run after mobs are spawned
   },
