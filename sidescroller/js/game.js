@@ -33,6 +33,7 @@ const game = {
     mech.hold();
     // v.draw(); //working on visibility work in progress
     level.drawFills();
+    level.customTopLayer();
     game.draw.drawMapPath();
     b.fire();
     b.bulletRemove();
@@ -62,6 +63,7 @@ const game = {
     ctx.save();
     game.camera();
     mech.draw();
+    level.customTopLayer();
     game.draw.wireFrame();
     game.draw.cons();
     game.draw.testing();
@@ -548,6 +550,14 @@ const game = {
     game.replaceTextLog = true;
     game.makeTextLog(`${game.SVGrightMouse}<strong style='font-size:30px;'> ${mech.fieldUpgrades[mech.fieldMode].name}</strong><br><span class='faded'></span><br>${mech.fieldUpgrades[mech.fieldMode].description}`, 600);
     mech.setField(mech.fieldMode)
+    //exit testing
+    if (game.testing) {
+      game.testing = false;
+      game.loop = game.normalLoop
+      if (game.isConstructionMode) {
+        document.getElementById("construct").style.display = 'none'
+      }
+    }
   },
   firstRun: true,
   splashReturn() {
@@ -691,6 +701,9 @@ const game = {
       mech.holdingTarget.collisionFilter.category = 0;
       mech.holdingTarget.collisionFilter.mask = 0;
     }
+    //set fps back to default
+    game.fpsCap = game.fpsCapDefault
+    game.fpsInterval = 1000 / game.fpsCap;
   },
   getCoords: {
     //used when building maps, outputs a draw rect command to console, only works in testing mode
@@ -735,12 +748,16 @@ const game = {
             x: level.enter.x + 50,
             y: level.enter.y - 20
           });
-          // Matter.Body.setPosition(player, {
-          //   x: player.position.x,
-          //   y: -7000
-          // });
-          // game.noCameraScroll()
-
+          // move bots
+          for (let i = 0; i < bullet.length; i++) {
+            if (bullet[i].isBot) {
+              Matter.Body.setPosition(bullet[i], player.position);
+              Matter.Body.setVelocity(bullet[i], {
+                x: 0,
+                y: 0
+              });
+            }
+          }
           if (game.difficultyMode === 2) mech.damage(0.3);
           if (game.difficultyMode === 1) mech.damage(0.1);
           mech.energy = 0;

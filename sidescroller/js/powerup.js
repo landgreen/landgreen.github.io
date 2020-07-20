@@ -75,10 +75,12 @@ const powerUps = {
       }
     },
     diceText() {
+      const diceLimit = 5
       const r = powerUps.reroll.rerolls
-      const fullDice = Math.floor(r / 6)
+      const fullDice = Math.min(Math.floor(r / 6), diceLimit)
       const lastDice = r % 6
       let out = ''
+      if (Math.floor(r / 6) > diceLimit) out += "+"
       for (let i = 0; i < fullDice; i++) {
         out += '⚅'
       }
@@ -195,7 +197,9 @@ const powerUps = {
       let choice2 = -1
       let choice3 = -1
       if (choice1 > -1) {
-        let text = `<div class='cancel' onclick='powerUps.endDraft()'>✕</div><h3 style = 'color:#fff; text-align:left; margin: 0px;'>choose a field</h3>`
+        let text = ""
+        if (!mod.isDeterminism) text += `<div class='cancel' onclick='powerUps.endDraft()'>✕</div>`
+        text += `<h3 style = 'color:#fff; text-align:left; margin: 0px;'>choose a field</h3>`
         text += `<div class="choose-grid-module" onclick="powerUps.choose('field',${choice1})"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${mech.fieldUpgrades[choice1].name}</div> ${mech.fieldUpgrades[choice1].description}</div>`
         if (!mod.isDeterminism) {
           choice2 = pick(mech.fieldUpgrades, choice1)
@@ -263,7 +267,9 @@ const powerUps = {
         }
 
       }
-      let text = `<div class='cancel' onclick='powerUps.endDraft()'>✕</div><h3 style = 'color:#fff; text-align:left; margin: 0px;'>choose a mod</h3>`
+      let text = ""
+      if (!mod.isDeterminism) text += `<div class='cancel' onclick='powerUps.endDraft()'>✕</div>`
+      text += `<h3 style = 'color:#fff; text-align:left; margin: 0px;'>choose a mod</h3>`
       let choice1 = pick()
       let choice2 = -1
       let choice3 = -1
@@ -333,7 +339,9 @@ const powerUps = {
       let choice2 = -1
       let choice3 = -1
       if (choice1 > -1) {
-        let text = `<div class='cancel' onclick='powerUps.endDraft()'>✕</div><h3 style = 'color:#fff; text-align:left; margin: 0px;'>choose a gun</h3>`
+        let text = ""
+        if (!mod.isDeterminism) text += `<div class='cancel' onclick='powerUps.endDraft()'>✕</div>`
+        text += `<h3 style = 'color:#fff; text-align:left; margin: 0px;'>choose a gun</h3>`
         text += `<div class="choose-grid-module" onclick="powerUps.choose('gun',${choice1})"><div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${b.guns[choice1].name}</div> ${b.guns[choice1].description}</div>`
         if (!mod.isDeterminism) {
           choice2 = pick(b.guns, choice1)
@@ -365,6 +373,16 @@ const powerUps = {
       }
     }
   },
+  onPickUp() {
+    if (mod.isMassEnergy) mech.energy = mech.maxEnergy * 3;
+    if (mod.isMineDrop) b.mine({
+      x: mech.pos.x,
+      y: mech.pos.y
+    }, {
+      x: 0,
+      y: 0
+    }, 0, mod.isMineAmmoBack)
+  },
   giveRandomAmmo() {
     const ammoTarget = Math.floor(Math.random() * (b.guns.length));
     const ammo = Math.ceil(b.guns[ammoTarget].ammoPack * 6);
@@ -377,7 +395,7 @@ const powerUps = {
       game.makeTextLog("<span style='font-size:110%;'>+" + ammo + " ammo for " + b.guns[ammoTarget].name + "</span>", 300);
     }
   },
-  spawnRandomPowerUp(x, y) { //mostly used after mob dies 
+  spawnRandomPowerUp(x, y) { //mostly used after mob dies,  doesn't always return a power up
     if ((Math.random() * Math.random() - 0.3 > Math.sqrt(mech.health) && !mod.isEnergyHealth) || Math.random() < 0.035) { //spawn heal chance is higher at low health
       powerUps.spawn(x, y, "heal");
       if (Math.random() < mod.bayesian) powerUps.spawn(x, y, "heal");
