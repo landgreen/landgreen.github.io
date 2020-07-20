@@ -20,9 +20,9 @@ const level = {
       // b.giveGuns("ice IX")
       // mech.setField("plasma torch")
 
-      // level.intro(); //starting level
+      level.intro(); //starting level
       // level.testing();
-      level.testChamber()
+      // level.testChamber()
       // level.sewers();
       // level.satellite();
       // level.skyscrapers();
