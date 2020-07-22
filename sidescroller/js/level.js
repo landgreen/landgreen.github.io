@@ -16,12 +16,13 @@ const level = {
       // game.zoomScale = 1000;
       // game.setZoom();
       // mech.isStealth = true;
-      // mod.giveMod("nail-bot");
+      // mod.giveMod("bot upgrades");
+      // mod.nailBotCount += 10
       // b.giveGuns("ice IX")
       // mech.setField("plasma torch")
 
-      level.intro(); //starting level
       // level.testing();
+      level.intro(); //starting level
       // level.testChamber()
       // level.sewers();
       // level.satellite();
@@ -39,17 +40,12 @@ const level = {
       // spawn.pickList = ["focuser", "focuser"]
       level[level.levels[level.onLevel]](); //picks the current map from the the levels array
     }
-
     level.levelAnnounce();
     game.noCameraScroll();
     game.setZoom();
     level.addToWorld(); //add bodies to game engine
     game.draw.setPaths();
-    for (let i = 0; i < mod.laserBotCount; i++) b.laserBot()
-    for (let i = 0; i < mod.nailBotCount; i++) b.nailBot()
-    for (let i = 0; i < mod.foamBotCount; i++) b.foamBot()
-    for (let i = 0; i < mod.boomBotCount; i++) b.boomBot()
-    for (let i = 0; i < mod.plasmaBotCount; i++) b.plasmaBot()
+    b.respawnBots();
     if (mod.isArmorFromPowerUps) {
       mech.maxHealth += 0.05 * powerUps.totalPowerUps
       if (powerUps.totalPowerUps) game.makeTextLog("<span style='font-size:115%;'> max health increased by " + (0.05 * powerUps.totalPowerUps * 100).toFixed(0) + "%</span>", 300)
@@ -120,6 +116,19 @@ const level = {
             });
           }
         }
+      }
+      //remove block if touching
+      touching = Matter.Query.collides(this, body)
+      if (touching.length !== 0) {
+        if (body.length) {
+          for (let i = 0; i < body.length; i++) {
+            if (body[i] === touching[0].bodyB) {
+              body.splice(i, 1);
+              break;
+            }
+          }
+        }
+        Matter.World.remove(engine.world, touching[0].bodyB);
       }
     }
 
@@ -285,22 +294,24 @@ const level = {
     spawn.mapRect(-400, 0, 3100, 200); //floor
 
     //lower entrance /exit
-    spawn.mapRect(300, -550, 50, 350); //right entrance wall
-    spawn.mapRect(-400, -550, 1825, 50); //ceiling
-    spawn.bodyRect(312, -750, 25, 200);
-    spawn.mapRect(1075, -100, 575, 200);
-    spawn.bodyRect(1775, -75, 75, 75);
+    // spawn.mapRect(300, -550, 50, 350); //right entrance wall
+    // spawn.mapRect(-400, -550, 1825, 50); //ceiling
+    // spawn.mapRect(1075, -100, 575, 200);
+    // spawn.bodyRect(312, -200, 25, 200);
+    // spawn.bodyRect(1775, -75, 100, 100);
+    spawn.mapRect(1075, -375, 50, 225);
+    spawn.bodyRect(1087, -150, 25, 150);
 
     //upper entrance / exit
     spawn.mapRect(-400, -1050, 750, 50);
     spawn.mapRect(300, -1050, 50, 300);
-    spawn.bodyRect(312, -200, 25, 200);
+    spawn.bodyRect(312, -750, 25, 200);
     // spawn.mapRect(1400, -1025, 50, 300);
     // spawn.mapRect(1400, -1025, 50, 825);
     spawn.mapRect(600, -600, 275, 75);
     spawn.bodyRect(675, -725, 125, 125);
     spawn.mapRect(1075, -1050, 550, 400);
-    spawn.mapRect(300, -550, 1475, 250);
+    spawn.mapRect(-400, -550, 2175, 250);
     spawn.mapRect(-200, -1700, 150, 25); //platform above exit room
     spawn.mapRect(-200, -1325, 350, 25);
 
@@ -343,20 +354,23 @@ const level = {
     spawn.mapRect(1225, -2150, 25, 225);
 
     //mobs
-    spawn.randomMob(1075, -3500, 0.2);
-    spawn.randomMob(-75, -3425, 0.2);
-    spawn.randomMob(1475, -225, 0.3);
-    spawn.randomMob(2075, -150, 0.5);
-    spawn.randomMob(2175, -700, 0.5);
-    if (game.difficulty > 40) {
-      spawn.randomMob(2300, -2775, 0);
-      spawn.randomMob(600, -925, 0.1);
-      spawn.randomMob(1550, -2750, 0.2);
-      spawn.randomMob(1350, -1150, 0.3);
-      spawn.randomMob(-75, -1475, 0.3);
-      spawn.randomBoss(600, -2600, 0.3);
+    spawn.randomMob(1075, -3500, 0);
+    // spawn.randomMob(-75, -3425, 0.2);
+    spawn.randomMob(1475, -225, 0);
+    spawn.randomMob(2075, -150, 0);
+    spawn.randomMob(2175, -700, 0);
+    spawn.randomMob(-75, -850, 0.1);
+    spawn.randomMob(1300, -600, 0.1);
+    spawn.randomMob(550, -3400, 0.1);
+    if (game.difficulty > 50) {
+      spawn.randomMob(2300, -2775, -0.5);
+      spawn.randomMob(600, -925, -0.5);
+      spawn.randomMob(1550, -2750, -0.5);
+      spawn.randomMob(1350, -1150, -0.5);
+      spawn.randomMob(-75, -1475, 0);
+      spawn.randomBoss(600, -2600, 0);
     }
-    if (game.difficulty < 20) {
+    if (game.difficulty < 30) {
       spawn.randomMob(700, -1650, 0);
       spawn.randomMob(600, -3500, 0.2);
       spawn.randomMob(-75, -1175, 0.2);
@@ -2315,26 +2329,26 @@ const level = {
     // if (level.isBuildRun) num++
     for (let i = 0; i < num; i++) {
       game.difficulty++
-      game.dmgScale += 0.21; //damage done by mobs increases each level
-      b.dmgScale *= 0.91; //damage done by player decreases each level
+      game.dmgScale += 0.25; //damage done by mobs increases each level
+      b.dmgScale *= 0.92; //damage done by player decreases each level
       game.accelScale *= 1.027 //mob acceleration increases each level
-      game.lookFreqScale *= 0.974 //mob cycles between looks decreases each level
-      game.CDScale *= 0.964 //mob CD time decreases each level
+      game.lookFreqScale *= 0.975 //mob cycles between looks decreases each level
+      game.CDScale *= 0.966 //mob CD time decreases each level
     }
-    game.healScale = 1 / (1 + game.difficulty * 0.09) //a higher denominator makes for lower heals // mech.health += heal * game.healScale;
+    game.healScale = 1 / (1 + game.difficulty * 0.08) //a higher denominator makes for lower heals // mech.health += heal * game.healScale;
   },
   difficultyDecrease(num = 1) { //used in easy mode for game.reset()
     for (let i = 0; i < num; i++) {
       game.difficulty--
-      game.dmgScale -= 0.21; //damage done by mobs increases each level
+      game.dmgScale -= 0.25; //damage done by mobs increases each level
       if (game.dmgScale < 0.1) game.dmgScale = 0.1;
-      b.dmgScale /= 0.91; //damage done by player decreases each level
+      b.dmgScale /= 0.92; //damage done by player decreases each level
       game.accelScale /= 1.027 //mob acceleration increases each level
-      game.lookFreqScale /= 0.974 //mob cycles between looks decreases each level
-      game.CDScale /= 0.964 //mob CD time decreases each level
+      game.lookFreqScale /= 0.975 //mob cycles between looks decreases each level
+      game.CDScale /= 0.966 //mob CD time decreases each level
     }
     if (game.difficulty < 1) game.difficulty = 0;
-    game.healScale = 1 / (1 + game.difficulty * 0.09)
+    game.healScale = 1 / (1 + game.difficulty * 0.08)
   },
   difficultyText(mode = document.getElementById("difficulty-select").value) {
     if (mode === "0") {

@@ -200,7 +200,7 @@ const game = {
       if (b.inventory[0] === b.activeGun) {
         let lessDamage = 1
         for (let i = 0, len = b.inventory.length; i < len; i++) {
-          lessDamage *= 0.84 // 1 - 0.16
+          lessDamage *= 0.85 // 1 - 0.15
         }
         document.getElementById("mod-entanglement").innerHTML = " " + ((1 - lessDamage) * 100).toFixed(0) + "%"
       } else {
