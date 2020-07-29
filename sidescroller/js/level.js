@@ -16,9 +16,9 @@ const level = {
       // game.zoomScale = 1000;
       // game.setZoom();
       // mech.isStealth = true;
-      // mod.giveMod("bot upgrades");
+      // mod.giveMod("neutron");
       // mod.nailBotCount += 10
-      // b.giveGuns("maser")
+      // b.giveGuns("neutron bomb")
       // mech.setField("plasma torch")
 
       level.intro(); //starting level
@@ -1805,16 +1805,10 @@ const level = {
     powerUps.addRerollToLevel() //needs to run after mobs are spawned
   },
   office() {
-    level.custom = () => {
-      level.playerExitCheck();
-    };
-    level.customTopLayer = () => {};
-
-    level.defaultZoom = 1400
-    game.zoomTransition(level.defaultZoom)
-
-    if (Math.random() < 0.75) {
-      //normal direction start in top left
+    let button, door
+    if (Math.random() < 0.75) { //normal direction start in top left
+      button = level.button(525, 0)
+      door = level.door(1362, -200, 25, 200)
       level.setPosToSpawn(1375, -1550); //normal spawn
       level.exit.x = 3250;
       level.exit.y = -530;
@@ -1826,8 +1820,9 @@ const level = {
         height: 500,
         color: "#dff"
       });
-    } else {
-      //reverse direction, start in bottom right
+    } else { //reverse direction, start in bottom right
+      button = level.button(4300, 0)
+      door = level.door(3012, -200, 25, 200)
       level.setPosToSpawn(3250, -550); //normal spawn
       level.exit.x = 1375;
       level.exit.y = -1530;
@@ -1840,6 +1835,25 @@ const level = {
         color: "#dff"
       });
     }
+
+
+    level.custom = () => {
+      button.query();
+      button.draw();
+      if (button.isUp) {
+        door.isOpen = true
+      } else {
+        door.isOpen = false
+      }
+      door.openClose();
+      level.playerExitCheck();
+    };
+    level.customTopLayer = () => {
+      door.draw();
+    };
+
+    level.defaultZoom = 1400
+    game.zoomTransition(level.defaultZoom)
     spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 50); //ground bump wall
 
     spawn.mapRect(level.enter.x, level.enter.y + 20, 100, 20);
@@ -1921,7 +1935,7 @@ const level = {
     spawn.mapRect(-600, -1000, 1100, 50); //2nd floor
     spawn.mapRect(600, -1000, 500, 50); //2nd floor
     spawn.spawnStairs(-600, -1000, 4, 250, 350); //stairs 2nd
-    spawn.mapRect(350, -600, 350, 150); //center table
+    spawn.mapRect(375, -600, 350, 150); //center table
     spawn.mapRect(-600 + 300, -2000 * 0.25, 2000 - 300, 50); //1st floor
     spawn.spawnStairs(-600 + 2000 - 50, -500, 4, 250, 350, true); //stairs 1st
     spawn.spawnStairs(-600, 0, 4, 250, 350); //stairs ground
@@ -1932,7 +1946,7 @@ const level = {
     spawn.mapRect(2980, 13, 30, 20); //step right
     spawn.mapRect(3000, 0, 2000, 50); //ground
     spawn.bodyRect(4250, -700, 50, 100);
-    spawn.bodyRect(3000, -200, 50, 200); //door
+    // spawn.bodyRect(3000, -200, 50, 200); //door
     spawn.mapRect(3000, -1000, 50, 800); //left wall
     spawn.mapRect(3000 + 2000 - 50, -1300, 50, 1100); //right wall
     spawn.mapRect(4150, -600, 350, 150); //table
@@ -2562,8 +2576,8 @@ const level = {
     composite[composite.length] = rotor
     return rotor
   },
-  button(x, y, width = 66) {
-    spawn.mapVertex(x + 35, y + 2, "70 10 -70 10 -40 -10 40 -10");
+  button(x, y, width = 126) {
+    spawn.mapVertex(x + 65, y + 2, "100 10 -100 10 -70 -10 70 -10");
     map[map.length - 1].restitution = 0;
     map[map.length - 1].friction = 1;
     map[map.length - 1].frictionStatic = 1;
@@ -2618,6 +2632,61 @@ const level = {
         // ctx.fill();
       }
     }
+  },
+  door(x, y, width, height) {
+    x = x + width / 2
+    y = y + height / 2
+    const doorBlock = body[body.length] = Bodies.rectangle(x, y, width, height, {
+      collisionFilter: {
+        category: cat.body,
+        mask: cat.player | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet //cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet
+      },
+      inertia: Infinity, //prevents rotation
+      isNotSticky: true,
+      isNotHoldable: true,
+      friction: 1,
+      frictionStatic: 1,
+      restitution: 0,
+      isOpen: false,
+      openClose() {
+        if (!this.isOpen) {
+          if (this.position.y > y - height) { //try to open 
+            const position = {
+              x: this.position.x,
+              y: this.position.y - 1
+            }
+            Matter.Body.setPosition(this, position)
+          }
+        } else {
+          if (this.position.y < y) { //try to close
+            if (
+              Matter.Query.collides(this, [player]).length === 0 &&
+              Matter.Query.collides(this, body).length < 2 &&
+              Matter.Query.collides(this, mob).length === 0
+            ) {
+              const position = {
+                x: this.position.x,
+                y: this.position.y + 1
+              }
+              Matter.Body.setPosition(this, position)
+            }
+          }
+        }
+      },
+      draw() {
+        ctx.fillStyle = "#555"
+        ctx.beginPath();
+        const v = this.vertices;
+        ctx.moveTo(v[0].x, v[0].y);
+        for (let i = 1; i < v.length; ++i) {
+          ctx.lineTo(v[i].x, v[i].y);
+        }
+        ctx.lineTo(v[0].x, v[0].y);
+        ctx.fill();
+      }
+    });
+    Matter.Body.setStatic(doorBlock, true); //make static
+    return doorBlock
   },
   portal(centerA, angleA, centerB, angleB) {
     const width = 50
