@@ -410,7 +410,7 @@ const powerUps = {
       if (Math.random() < mod.bayesian) powerUps.spawn(x, y, "gun");
       return;
     }
-    if (Math.random() < 0.0027 * (15 - mod.totalCount)) { //a new mod has a low chance for each not acquired mod up to 15
+    if (Math.random() < 0.0027 * (22 - mod.totalCount)) { //a new mod has a low chance for each not acquired mod up to 15
       powerUps.spawn(x, y, "mod");
       if (Math.random() < mod.bayesian) powerUps.spawn(x, y, "mod");
       return;
