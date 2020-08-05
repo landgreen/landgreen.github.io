@@ -1,10 +1,8 @@
-power up level boss: adjustments
+
 
 ************** TODO - n-gon **************
 
 level concept:  several stationary platforms that are free to rotate, but with some air friction
-
-foam isFoamGrowOnDeath causes performance issues when too many mobs die fast
 
 give mobs more animal-like behaviors like rain world
   mobs play, look for food, explore

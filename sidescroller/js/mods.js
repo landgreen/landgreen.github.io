@@ -77,7 +77,7 @@ const mod = {
         if (mod.isAcidDmg && mech.health > 1) dmg *= 1.4;
         if (mod.isRest && player.speed < 1) dmg *= 1.20;
         if (mod.isEnergyDamage) dmg *= 1 + mech.energy / 5.5;
-        if (mod.isDamageFromBulletCount) dmg *= 1 + bullet.length * 0.006
+        if (mod.isDamageFromBulletCount) dmg *= 1 + bullet.length * 0.005
         if (mod.isRerollDamage) dmg *= 1 + 0.05 * powerUps.reroll.rerolls
         if (mod.isOneGun && b.inventory.length < 2) dmg *= 1.22
         return dmg * mod.slowFire
@@ -1315,7 +1315,7 @@ const mod = {
         },
         {
             name: "microstates",
-            description: "increase <strong class='color-d'>damage</strong> by <strong>6%</strong><br>for every <strong>10</strong> active <strong>bullets</strong>",
+            description: "increase <strong class='color-d'>damage</strong> by <strong>5%</strong><br>for every <strong>10</strong> active <strong>bullets</strong>",
             maxCount: 1,
             count: 0,
             allowed() {
@@ -1953,7 +1953,7 @@ const mod = {
             allowed() {
                 return game.fpsCapDefault > 45 && mod.haveGunCheck("rail gun") && !mod.isSlowFPS
             },
-            requires: "rail gun && FPS above 45",
+            requires: "rail gun and FPS above 45",
             effect() {
                 mod.isRailTimeSlow = true;
             },

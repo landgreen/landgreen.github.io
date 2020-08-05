@@ -2289,7 +2289,7 @@ const level = {
   basement() { // player made level  by    Francois 👑 from discord
     let button, door, buttonDoor, buttonPlateformEnd, doorPlateform
     let isLevelReversed = Math.random();
-    if (isLevelReversed < 0.1) {
+    if (isLevelReversed < 0.7) {
       isLevelReversed = false;
     } else {
       isLevelReversed = true;

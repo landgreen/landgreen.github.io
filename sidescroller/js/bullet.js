@@ -910,7 +910,8 @@ const b = {
             this.target = null
             this.collisionFilter.category = cat.bullet;
             this.collisionFilter.mask = cat.mob //| cat.mobShield //cat.map | cat.body | cat.mob | cat.mobBullet | cat.mobShield
-            if (mod.isFoamGrowOnDeath) {
+            if (mod.isFoamGrowOnDeath && bullet.length < 300) {
+              console.log(bullet.length)
               let targets = []
               for (let i = 0, len = mob.length; i < len; i++) {
                 const dist = Vector.magnitudeSquared(Vector.sub(this.position, mob[i].position));
@@ -933,6 +934,7 @@ const b = {
                 }
               }
             }
+
           }
         }
       }
@@ -1360,8 +1362,9 @@ const b = {
           const sub = Vector.sub(this.lockedOn.position, this.position)
           const DIST = Vector.magnitude(sub);
           const unit = Vector.normalise(sub)
-          const DRAIN = 0.0016 - 0.0008 * this.isUpgraded
-          if (DIST < mod.isPlasmaRange * 550 && mech.energy > DRAIN) {
+          const DRAIN = 0.002
+          if (DIST < mod.isPlasmaRange * 500 && mech.energy > DRAIN) {
+            console.log('fire')
             mech.energy -= DRAIN;
             if (mech.energy < 0) {
               mech.fieldCDcycle = mech.cycle + 120;
@@ -1369,7 +1372,7 @@ const b = {
             }
             //calculate laser collision
             let best;
-            let range = mod.isPlasmaRange * (140 + 300 * Math.sqrt(Math.random()))
+            let range = mod.isPlasmaRange * (120 + 300 * Math.sqrt(Math.random()))
             const path = [{
                 x: this.position.x,
                 y: this.position.y
