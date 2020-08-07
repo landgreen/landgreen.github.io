@@ -954,7 +954,7 @@ const mod = {
         },
         {
             name: "negentropy",
-            description: `at the start of each <strong>level</strong><br><strong class='color-h'>heal</strong> a percent of <strong>maximum health</strong>`,
+            description: `at the start of each <strong>level</strong><br>spawn a <strong class='color-h'>heal</strong> for every <strong>50%</strong> missing health`,
             maxCount: 1,
             count: 0,
             allowed() {
@@ -1622,11 +1622,11 @@ const mod = {
         },
         {
             name: "electric reactive armor",
-            description: "<strong class='color-e'>explosions</strong> give you <strong class='color-f'>energy</strong><br>instead of <strong>harming</strong> you",
+            description: "<strong class='color-e'>explosions</strong> do no <strong class='color-harm'>harm</strong><br> while your <strong class='color-f'>energy</strong> is above <strong>75%</strong>",
             maxCount: 1,
             count: 0,
             allowed() {
-                return mod.haveGunCheck("missiles") || mod.haveGunCheck("flak") || mod.haveGunCheck("grenades") || mod.haveGunCheck("vacuum bomb") || mod.haveGunCheck("pulse") || mod.isMissileField || mod.isExplodeMob
+                return mod.haveGunCheck("missiles") || mod.haveGunCheck("flak") || mod.haveGunCheck("grenades") || mod.haveGunCheck("vacuum bomb") || (mod.haveGunCheck("pulse") && mech.maxEnergy > 1) || mod.isMissileField || mod.isExplodeMob
             },
             requires: "an explosive gun",
             effect: () => {
