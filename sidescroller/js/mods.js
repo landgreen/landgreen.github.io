@@ -1075,7 +1075,7 @@ const mod = {
         },
         {
             name: "generalist",
-            description: "<strong>spawn</strong> 3 <strong class='color-g'>gun</strong>, but you can't <strong>switch</strong> <strong class='color-g'>guns</strong><br>automatically cycle <strong class='color-g'>guns</strong> with each new level",
+            description: "<strong>spawn</strong> 3 <strong class='color-g'>guns</strong>, but you can't <strong>switch</strong> <strong class='color-g'>guns</strong><br>automatically cycle <strong class='color-g'>guns</strong> with each new level",
             maxCount: 1,
             count: 0,
             isNonRefundable: true,
