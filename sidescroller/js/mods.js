@@ -63,6 +63,15 @@ const mod = {
 
     // },
     haveGunCheck(name) {
+        if (
+            !build.isCustomSelection &&
+            b.inventory.length > 2 &&
+            name !== b.guns[b.activeGun].name &&
+            Math.random() < -0.1 + 0.1 * (b.inventory.length + mod.isGunCycle * 2) //lower chance of mods specific to a gun if you have lots of guns
+        ) {
+            return false
+        }
+
         for (i = 0, len = b.inventory.length; i < len; i++) {
             if (b.guns[b.inventory[i]].name === name) return true
         }
