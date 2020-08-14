@@ -30,22 +30,9 @@
 		</h1>
 	</header>
 	<article>
-		<!-- <nav>
-			<a href="#position">position</a>
-			<br><a href="#time">time</a>
-			<br><a href="#velocity">velocity</a>
-			<br><a href="#acceleration">acceleration</a>
-			<br><a href="#graphing">graphing</a>
-		</nav> -->
-
-		<!-- <p>
-			All of physics is approximations. Nothing currently known perfectly describes reality, but these approximations can very accurate.
-		</p> -->
 		<p>
-			One of the aims of physics is to make predictions.
-			We do this by creating <strong>models</strong>.
-			A model is a way to approximate reality with math.
-			Physics models have made amazing progress, but so far there is no model that perfectly describes reality.
+			Physics makes <strong>models</strong> that approximate reality with math.
+			Physics models have made amazing progress, but so far no model perfectly matches reality.
 		</p>
 		<svg id="matter-SVG" viewBox="0 0 585 150">
 			<rect y="2.5" x="2.5" height="145" width="500" fill="none" stroke="#556" stroke-width="5" rx="5" />
@@ -91,7 +78,6 @@
 			<p>\(x_f\) = final position [m, meters] <em>vector</em>
 			</p>
 		</div>
-
 		<svg id="motion-1" class="SVG-shadow" viewBox="0 0 580 100">
 			<g font-size="16" stroke="none" fill="#444">
 				<text id="x-1" x="578" y="20" text-anchor="end">Δx=0</text>
@@ -104,7 +90,6 @@
 				<path id="distance-1" d="" stroke="#666" fill="none" />
 			</g>
 		</svg>
-
 		<div class='example'>
 			<strong>Example:</strong> Mount Everest is 8848 m above sea level. The base camp, where most mountain climbers begin their trek, is 5150 m above sea level. What is the vertical distance between the base camp and the peak?
 			<details>
@@ -116,7 +101,6 @@
 				$$ \Delta x = 3698\,\mathrm{m}$$
 			</details>
 		</div>
-
 		<div class='example'>
 			<strong>Example:</strong>
 			<a href="..\..\review\units\index.html">Convert</a> your answer from the previous problem into miles and kilometers. Which is easier to convert?
@@ -129,8 +113,6 @@
 				<br> $$3698\,\mathrm{m} = 3\overleftarrow{\undergroup{6}\undergroup{9}\undergroup{8}}. \, \mathrm{m}= 3.698 \,\mathrm{km}$$
 			</details>
 		</div>
-
-
 		<div class='example'>
 			<div class="definition">
 				<svg viewBox="0 0 580 36">
@@ -285,6 +267,49 @@
 			</details>
 		</div>
 		<div class='example'>
+			<strong>Question:</strong> Why are we solving for average velocity? Why not just velocity?
+			<details>
+				<summary>answer</summary>
+				<p>
+					The velocity might change over the journey.
+					What if someone speeds up or slows down?
+					There are many possible velocities that fit a given distance and time, but only one average velocity.
+				</p>
+
+				<svg viewBox="0 0 600 300" title="average velocity paths">
+					<path stroke="#f3f3f3" stroke-width="1" fill="none" d="M 70.5 0  v 300M 120.5 0  v 300M 170.5 0  v 300M 220.5 0  v 300M 270.5 0  v 300M 320.5 0  v 300M 370.5 0  v 300M 420.5 0  v 300M 470.5 0  v 300M 520.5 0  v 300M 570.5 0  v 300M 0 230.5  h 600M 0 180.5  h 600M 0 130.5  h 600M 0 80.5  h 600M 0 30.5  h 600"></path>
+					<g stroke-width="4" fill="none" opacity="0.5">
+						<!-- <path d="M70 230 C70 -100, 520 30, 520 30" stroke="#fc0"></path> -->
+						<path d="M70 230 C100 -70, 420 200, 520 30" stroke="#f92"></path>
+						<path d="M70 230 C100 50, 520 -20, 520 30" stroke="#f66"></path>
+						<path d="M70 230 Q 400 100, 520 30" stroke="#e0a"></path>
+						<path d="M70 230 C300 250, 320 0, 520 30" stroke="#a0f"></path>
+						<path d="M70 230 Q 480 300, 520 30" stroke="#33f"></path>
+						<!-- <path d="M70 230 C 300 350, 450 130, 490 30 C498 8, 520 8, 520 30" stroke="#07e"></path> -->
+						<path d="M70 230 Q 150 415, 520 30" stroke="#0bb"></path>
+					</g>
+					<g fill="#000" stroke="none">
+						<circle cx="70" cy="230" r="6"></circle>
+						<circle cx="520" cy="30" r="6"></circle>
+					</g>
+					<g font-size="20px" fill="#222" stroke="none">
+						<text x="47" y="237">A</text>
+						<text x="530" y="35">B</text>
+					</g>
+					<path d="M 20.5 0 L 20.5 300 M 0 280.5 L 600 280.5" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path>
+					<text x="70.5" y="294.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">5</text>
+					<text x="120.5" y="294.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">10</text>
+					<text x="170.5" y="294.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">15</text><text x="220.5" y="294.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">20</text><text x="270.5" y="294.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">25</text><text x="320.5" y="294.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">30</text><text x="370.5" y="294.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">35</text><text x="420.5" y="294.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">40</text><text x="470.5" y="294.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">45</text><text x="520.5" y="294.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">50</text><text x="570.5" y="294.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: middle; font-family: monospace;">55</text><text x="15.5" y="234.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">5</text><text x="15.5" y="184.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">10</text><text x="15.5" y="134.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">15</text><text x="15.5" y="84.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">20</text><text x="15.5" y="34.5" style="fill: rgb(0, 0, 0); font-size: 12px; text-anchor: end; font-family: monospace;">25</text>
+					<path d="M 70.5 280.5  v 3M 120.5 280.5  v 3M 170.5 280.5  v 3M 220.5 280.5  v 3M 270.5 280.5  v 3M 320.5 280.5  v 3M 370.5 280.5  v 3M 420.5 280.5  v 3M 470.5 280.5  v 3M 520.5 280.5  v 3M 570.5 280.5  v 3M 20.5 230.5  h -3M 20.5 180.5  h -3M 20.5 130.5  h -3M 20.5 80.5  h -3M 20.5 30.5  h -3" style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 1;"></path>
+					<text x="598" y="274" style="fill: rgb(0, 0, 0); font-size: 16px; text-anchor: end; font-family: monospace;">time (s)</text>
+					<text x="33" y="6" transform="rotate(-90, 33, 3)" style="fill: rgb(0, 0, 0); font-size: 16px; text-anchor: end; font-family: monospace;">position (m)</text>
+				</svg>
+				<p>
+					In the next <a href="../kinematics/index.html">unit</a> we will learn how to find the instantaneous velocity.
+				</p>
+			</details>
+		</div>
+		<div class='example'>
 			<strong>Example:</strong> Someone tells you they can run 10 km in about an hour. What velocity is that in m/s? Is that fast? (1 m/s is walking speed)
 			<details>
 				<summary>solution</summary>
@@ -316,7 +341,8 @@
 						You actually can't feel your own velocity. You could be falling towards the ground at 100 m/s and it would feel the same as staying at the same altitude.
 					</p>
 					<p>
-						You can feel acceleration, the change in velocity.  For me accelerating down feels like butterflies, and accelerating up feels like pressure.
+						You can feel acceleration, the change in velocity.
+						For me, accelerating down feels like butterflies, and accelerating up feels like pressure.
 					</p>
 				</details>
 			</div>

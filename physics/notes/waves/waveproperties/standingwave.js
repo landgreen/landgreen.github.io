@@ -105,15 +105,19 @@ const wave = function () {
 
 
     document.getElementById("wavelength").addEventListener("input", () => {
-        wavelength = Math.max(Number(document.getElementById("wavelength").value) * 100, 1);
-        document.getElementById("wavelength-slider").value = wavelength / 100
-        phase = phase % wavelength; //makes the switch smoother
+        if (!search) {
+            wavelength = Math.max(Number(document.getElementById("wavelength").value) * 100, 1);
+            document.getElementById("wavelength-slider").value = wavelength / 100
+            phase = phase % wavelength; //makes the switch smoother
+        }
     }, false);
 
     document.getElementById("wavelength-slider").addEventListener("input", () => {
-        wavelength = Math.max(Number(document.getElementById("wavelength-slider").value) * 100, 1);
-        document.getElementById("wavelength").value = wavelength / 100
-        phase = phase % wavelength; //makes the switch smoother
+        if (!search) {
+            wavelength = Math.max(Number(document.getElementById("wavelength-slider").value) * 100, 1);
+            document.getElementById("wavelength").value = wavelength / 100
+            phase = phase % wavelength; //makes the switch smoother
+        }
     }, false);
 
     // document.getElementById("reflections").addEventListener("input", () => {
