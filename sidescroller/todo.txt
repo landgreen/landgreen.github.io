@@ -1,12 +1,3 @@
-In the first 4 levels: added a much higher chance of getting a second gun
-  or extra ammo if you don't get a second gun
-
-mod - arsenal: +7% damage for each gun in your inventory
-
-mod- generalist: spawn 2 guns, but you can't switch guns
-  at the start of each level switch guns
-  requires arsenal
-
 ************** TODO - n-gon **************
 
 level Boss: fractal Sierpiński triangle
