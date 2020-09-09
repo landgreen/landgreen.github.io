@@ -560,7 +560,7 @@ const powerUps = {
       !(mod.isEnergyNoAmmo && target === 'ammo')
     ) {
       powerUps.directSpawn(x, y, target, moving, mode)
-      if (mod.isBayesian && Math.random() < 0.3) powerUps.directSpawn(x, y, target, moving, mode)
+      if (mod.isBayesian && Math.random() < 0.2) powerUps.directSpawn(x, y, target, moving, mode)
     }
   },
 };
