@@ -36,8 +36,7 @@
 	<article>
 		<p>
 			The law of conservation of energy states that the energy of a closed system is constant.
-			Like momentum, energy can't be reduced or increased, but as systems change, the energy changes form.
-			Since total energy is always the same value, we can build an equation that sets the total energy at one time equal to the total energy at any other time.
+			Like momentum, energy can't be reduced or increased, but energy does change form.
 		</p>
 		<div class='example'>
 			<style>
@@ -110,22 +109,31 @@
 		</div>
 
 		<!-- <h1 class='underlined'>Conservation of Energy</h1> -->
-
+		<p>
+			The total energy is always the same value.
+			This means we can build an equation that sets the total energy at one time equal to the total energy at any other time.
+		</p>
 		<div class='definition'>
 			Energy cannot be created or destroyed, but it can change forms.
 			<h1>
-				$$K_i + U_i = K_f + U_f$$
+				$$E_i = E_f$$
+				$$K + U_g + U_s = K + U_g + U_s$$
 			</h1>
 			\( K \) = kinetic energy [J]
-			<br>\( U \) = potential energy [J]
+			<br>\( U_g \) = gravitational potential energy [J]
+			<br>\( U_s \) = elastic potential energy [J]
 		</div>
-		<p>This equation is bare bones right now. We need to change it for each situation. We should only include energy types that are changed. For now we can calculate three types of energy.</p>
-
+		<p>
+			We've only covered 3 types of energy.
+			As we learn more types the equation can gain new terms.
+			We don't have to include every term in the equation.
+			Only include types of energy that change.
+		</p>
 		<li>If an object <strong>changes speed</strong>, include kinetic energy.</li>
 		<li>If an object <strong>moves vertically</strong>, include gravitational potential energy.</li>
 		<li>If a <strong>spring is compressed</strong>, include spring potential energy.</li>
 		<p>
-			For now we will assume no thermal energy loss, but we will explore it in the next section, thermodynamics.
+			For now, we will assume no thermal energy loss, but we will explore it in the next section, thermodynamics.
 		</p>
 
 		<div class='example'>
@@ -149,10 +157,15 @@
 			</svg>
 			<strong>Example:</strong> Build a conservation of energy equation for dropping a ball.
 			<details>
+				<summary>strategy</summary>
+				<p>
+					This equation only needs to include kinetic and gravitational potential energy.
+					Initial kinetic energy is zero because the ball starts at rest.
+					Choosing the final height to be zero will set the final gravitational potential energy to zero.
+				</p>
+			</details>
+			<details>
 				<summary>solution</summary>
-				<p>This equation only needs to include kinetic and gravitational potential energy.</p>
-				$$K_i + U_i = K_f + U_f$$
-				<p>Initial kinetic energy is zero because the ball starts at rest. Choosing the final height to be zero will set the final gravitational potential energy to zero.</p>
 				$$U_g = K$$
 				$$mgh = \frac{1}{2}mv^2$$
 				$$\cancel{m}gh = \frac{1}{2} \cancel{m}v^2$$
@@ -299,7 +312,9 @@
 				$$\frac{E_A}{m} = gh$$
 				$$\frac{E_A}{m} = (9.8)(100)$$
 				$$\frac{E_A}{m} = 980 \, \mathrm{\tfrac{J}{kg}}$$
-				<p>Now we can set the energy at point A equal to the energy at points B,C,D.</p>
+				<p>
+					Now we can set the energy / mass at point A equal to the energy / mass at points B,C,D.
+				</p>
 				$$\text{point B}$$
 				$$E_A = E_B$$
 				$$980 = gh + \tfrac{1}{2}v^2$$
