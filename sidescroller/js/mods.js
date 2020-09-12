@@ -439,12 +439,28 @@ const mod = {
             allowed() {
                 return mod.haveGunCheck("missiles") || mod.haveGunCheck("flak") || mod.haveGunCheck("grenades") || mod.haveGunCheck("vacuum bomb") || mod.isMissileField || mod.isExplodeMob
             },
-            requires: "an explosive gun",
+            requires: "an explosive damage source",
             effect: () => {
                 mod.isImmuneExplosion = true;
             },
             remove() {
                 mod.isImmuneExplosion = false;
+            }
+        },
+        {
+            name: "scrap bots",
+            description: "<strong>11%</strong> chance to build a <strong>bot</strong> after killing a mob<br>the bot only functions until the end of the level",
+            maxCount: 6,
+            count: 0,
+            allowed() {
+                return mod.totalBots() > 0
+            },
+            requires: "a bot",
+            effect() {
+                mod.isBotSpawner += 0.11;
+            },
+            remove() {
+                mod.isBotSpawner = 0;
             }
         },
         {
@@ -618,22 +634,6 @@ const mod = {
                 for (let i = 0; i < bullet.length; i++) {
                     if (bullet[i].botType = 'laser') bullet[i].isUpgraded = false
                 }
-            }
-        },
-        {
-            name: "scrap bots",
-            description: "<strong>11%</strong> chance to build a <strong>bot</strong> after killing a mob<br>the bot only functions until the end of the level",
-            maxCount: 6,
-            count: 0,
-            allowed() {
-                return mod.totalBots() > 0
-            },
-            requires: "a bot",
-            effect() {
-                mod.isBotSpawner += 0.11;
-            },
-            remove() {
-                mod.isBotSpawner = 0;
             }
         },
         {
@@ -2018,7 +2018,7 @@ const mod = {
         },
         {
             name: "harvester",
-            description: "after a <strong>drone</strong> picks up a <strong>power up</strong>,<br>it's <strong>bigger</strong>, <strong>faster</strong>, and infinitely <strong>durable</strong>",
+            description: "after a <strong>drone</strong> picks up a <strong>power up</strong>,<br>it's <strong>larger</strong>, <strong>faster</strong>, and infinitely <strong>durable</strong>",
             maxCount: 1,
             count: 0,
             allowed() {

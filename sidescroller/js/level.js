@@ -4356,7 +4356,7 @@ const level = {
         }
       },
       level(isFill) {
-        if (mech.isBodiesAsleep) {
+        if (!mech.isBodiesAsleep) {
           const growSpeed = 1
           if (isFill) {
             if (this.height < this.maxHeight) {
