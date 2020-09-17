@@ -77,9 +77,9 @@ function tanks() {
             document.getElementById("bullet-uy").innerHTML = "u = " + b.velocity.y.toPrecision(3) + " m/s"
             document.getElementById("bullet-vx").innerHTML = "v = ";
             document.getElementById("bullet-vy").innerHTML = "v = "
-            document.getElementById("bullet-t").innerHTML = "Δt = 0"
-            document.getElementById("bullet-y").innerHTML = "Δy = 0"
-            document.getElementById("bullet-x").innerHTML = "Δx = 0"
+            document.getElementById("bullet-t").innerHTML = "Δt = "
+            document.getElementById("bullet-y").innerHTML = "Δy = "
+            document.getElementById("bullet-x").innerHTML = "Δx = "
         }
     });
     SVG_PATH.addEventListener("mousedown", (event) => {
@@ -91,9 +91,9 @@ function tanks() {
             document.getElementById("bullet-uy").innerHTML = "u = " + b.velocity.y.toPrecision(3) + " m/s"
             document.getElementById("bullet-vx").innerHTML = "v = ";
             document.getElementById("bullet-vy").innerHTML = "v = "
-            document.getElementById("bullet-t").innerHTML = "Δt = 0"
-            document.getElementById("bullet-y").innerHTML = "Δy = 0"
-            document.getElementById("bullet-x").innerHTML = "Δx = 0"
+            document.getElementById("bullet-t").innerHTML = "Δt = "
+            document.getElementById("bullet-y").innerHTML = "Δy = "
+            document.getElementById("bullet-x").innerHTML = "Δx = "
         }
     })
 
@@ -265,12 +265,6 @@ function tanks() {
         physics(TIME_STEP);
         checkForCollision();
         draw();
-        if (!isPaused) {
-            if (isFiring && (p1.isAlive || p2.isAlive)) {
-                requestAnimationFrame(cycle);
-            } else {
-                // getTrajectory();
-            }
-        }
+        if (!isPaused && isFiring && (p1.isAlive || p2.isAlive)) requestAnimationFrame(cycle);
     }
 }
