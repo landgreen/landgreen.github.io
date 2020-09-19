@@ -1768,13 +1768,13 @@ const mech = {
     },
     {
       name: "metamaterial cloaking", //"weak photonic coupling" "electromagnetically induced transparency" "optical non-coupling" "slow light field" "electro-optic transparency"
-      description: "<strong class='color-cloaked'>cloak</strong> after not using your gun or field<br>while <strong class='color-cloaked'>cloaked</strong> mobs can't see you<br>increase <strong class='color-d'>damage</strong> by <strong>33%</strong>",
+      description: "<strong class='color-cloaked'>cloak</strong> after not using your gun or field<br>while <strong class='color-cloaked'>cloaked</strong> mobs can't see you<br>increase <strong class='color-d'>damage</strong> by <strong>50%</strong>",
       effect: () => {
         mech.fieldFire = true;
         mech.fieldMeterColor = "#fff";
         mech.fieldPhase = 0;
         mech.isCloak = false
-        mech.fieldDamage = 1.33
+        mech.fieldDamage = 1.5
 
         mech.hold = function () {
           if (mech.isHolding) {
