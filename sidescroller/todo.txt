@@ -1,13 +1,9 @@
 
-mod: waste heat recovery is removed
-mod - fracture analysis only applies to stunned mobs (not unaware mobs)
 
-phase field is removed
-new field: metamaterial cloaking
-mod: phase decoherence - intangible to mobs while cloaked, but passing through mobs drains energy
-mod: flashbang - stun mobs as you exit cloak
 
 ************** TODO - n-gon **************
+
+add some more computer / AI stuff to the level lore text
 
 mod - mines stun targets nearby when they explode
 
