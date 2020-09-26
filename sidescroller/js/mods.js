@@ -895,7 +895,7 @@ const mod = {
         },
         {
             name: "1st ionization energy",
-            description: "each <strong class='color-h'>heal</strong> <strong>power up</strong> you collect<br>increases your <strong>maximum</strong> <strong class='color-f'>energy</strong> by <strong>4%<strong>",
+            description: "each <strong class='color-h'>heal</strong> <strong>power up</strong> you collect<br>increases your <strong>maximum</strong> <strong class='color-f'>energy</strong> by <strong>4%</strong>",
             maxCount: 1,
             count: 0,
             allowed() {
