@@ -1,5 +1,20 @@
+mod: stimulated emission - 8% chance to duplicate power ups
+laser mod: diffuse beam - laser is wide but doesn't reflect, 150% damage and energy drain
 
 ************** TODO - n-gon **************
+
+write a function that returns collisions
+mod: laser gets increased damage with each reflection
+mod: laser is 3 thick beams that look like one, but can separate into three at corners
+
+mod set a max speed cap based on distance from player while field is active
+  mod for a field, or bot?
+  name: something about speed of light being the top speed
+
+vacuum bomb applies status effect to mobs that makes blocks attracted to them
+
+mod: take less harm if you are moving fast
+  require squirrel cage rotor
 
 getting stuck above a mob can immobilize player
   just allow player to jump on mobs again?
@@ -44,11 +59,6 @@ a bot that eats up health and ammo, but poops a reroll after picking up 2 power 
     the mods that do those effects could be required before you see this bot
   disable crystalized armor?
   could convert rerolls, ammo, and health into mods instead
-
-laser-bot orbits player
-bot that does AOE damage while it rotates around player
-  no physics / collisions
-  cap 3 ?
 
 mod: radiation effects can spread to nearby mobs
 
