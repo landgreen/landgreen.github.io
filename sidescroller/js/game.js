@@ -844,7 +844,7 @@ const game = {
     if (!(mech.cycle % 60)) { //once a second
 
       //every second energy above max energy loses 25%
-      if (mech.energy > mech.maxEnergy) mech.energy = 1 + (mech.maxEnergy - mech.energy) * 0.75
+      if (mech.energy > mech.maxEnergy) mech.energy = mech.maxEnergy + (mech.energy - mech.maxEnergy) * 0.75
 
       if (mech.pos.y > game.fallHeight) { // if 4000px deep
         if (game.difficultyMode > 2) {

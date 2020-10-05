@@ -2651,7 +2651,7 @@ const b = {
               //aoe damage to mobs
               for (let i = 0, len = mob.length; i < len; i++) {
                 if (Vector.magnitude(Vector.sub(mob[i].position, this.position)) < this.damageRadius) {
-                  let dmg = b.dmgScale * 0.023
+                  let dmg = b.dmgScale * 0.025
                   if (Matter.Query.ray(map, mob[i].position, this.position).length > 0) dmg *= 0.5 //reduce damage if a wall is in the way
                   if (mob[i].shield) dmg *= 4 //x5 to make up for the /5 that shields normally take
                   mob[i].damage(dmg);
@@ -2830,10 +2830,10 @@ const b = {
       fire() {
         if (mech.crouch) {
           b.drone(45)
-          mech.fireCDcycle = mech.cycle + Math.floor(17 * b.fireCD); // cool down
+          mech.fireCDcycle = mech.cycle + Math.floor(13 * b.fireCD); // cool down
         } else {
           b.drone(1)
-          mech.fireCDcycle = mech.cycle + Math.floor(10 * b.fireCD); // cool down
+          mech.fireCDcycle = mech.cycle + Math.floor(6 * b.fireCD); // cool down
         }
       }
     },
@@ -3239,7 +3239,7 @@ const b = {
           mech.energy -= mech.fieldRegen + mod.laserFieldDrain * mod.isLaserDiode
           if (mod.isWideLaser) {
             const off = 8
-            const dmg = 0.4 * mod.laserDamage //  5 * 0.4 = 200% more damage
+            const dmg = 0.5 * mod.laserDamage //  5 * 0.4 = 200% more damage
             const where = {
               x: mech.pos.x + 20 * Math.cos(mech.angle),
               y: mech.pos.y + 20 * Math.sin(mech.angle)
