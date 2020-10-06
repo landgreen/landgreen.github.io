@@ -659,7 +659,7 @@ const game = {
       game.difficultyMode = 1
       level.difficultyDecrease(6); //if this stops being -6  change in build.calculateCustomDifficulty()
     }
-    if (game.difficultyMode === 4) level.difficultyIncrease(3)
+    if (game.difficultyMode > 1) level.difficultyIncrease(3)
 
     game.clearNow = true;
     document.getElementById("text-log").style.opacity = 0;
