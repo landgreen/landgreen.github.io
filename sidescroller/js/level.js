@@ -23,8 +23,8 @@ const level = {
       // mod.giveMod("eddy current brake")
 
 
-      // level.intro(); //starting level
-      level.testing(); //not in rotation
+      level.intro(); //starting level
+      // level.testing(); //not in rotation
       // level.template() //not in rotation
       // level.testChamber() //less mobs, more puzzle
       // level.sewers();
