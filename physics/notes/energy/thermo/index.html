@@ -79,7 +79,7 @@
 				Temperature is a statistical property of a system of particles.
 				We can measure temperature by looking at the expansion of fluids.
 				At high temperatures fluids take up more space.
-				This increase the level of the alcohol in a thermometer.
+				This increases the level of the alcohol in a thermometer.
 			</p>
 			<p>
 				<strong>Temperature</strong> is often defined as proportional to the average kinetic energy of a system of particles.
@@ -451,21 +451,18 @@
 		</p>
 		<div class="example">
 			<p>
-				Engines are designed to convert concentrations of energy into <a href="../../energy/energy/#work">work</a>.
+				Entropy plays a role in how engines convert concentrations of energy into <a href="../../energy/energy/#work">work</a>.
 				The simulation below shows a simple engine that is designed to turn a rotor.
 				What state of the system would make the rotor turn?
 			</p>
-			<canvas class='center' id='entropy1' height='300' width='600' style="box-shadow: none;"> </canvas>
-			<div class="col-group" style="padding: 5px;">
-				<div class="center">
-					time rate
-					<br> <input type="range" id='time-rate-slider' min="0" max="5" step="1" value="0" style="width: 120px;">
-				</div>
-				<div class="center">
-					rotor external power
-					<br> <input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.1" value="0" style="width: 120px;">
-				</div>
+			<div class="center">
+				time rate <input type="range" id='time-rate-slider' min="0" max="5" step="1" value="0" style="width: 120px;">
 			</div>
+			<canvas class='center' id='entropy1' height='300' width='600' style="box-shadow: none;"> </canvas>
+			<!-- <div class="col-group" style="padding: 5px;"> -->
+			<br>
+
+			<!-- </div> -->
 			<strong>Simulation:</strong> First, click <button id="clear1" style="margin:0; background-color: #eee;">clear</button> to remove the particles.
 			Next, click inside the simulation a few times to add some particles.
 			Try to place the particles in a state that will turn the rotor.
@@ -481,6 +478,9 @@
 					If your system gets in this high entropy state, adjust the slider on the right to power the rotor from an external power source.
 					The powered rotor lowers entropy by reconcentrating the particles.
 				</p>
+				<div class="center">
+					rotor external power <input type="range" id='rotor-slider' min="-0.1" max="0.1" step="0.1" value="0" style="width: 120px;">
+				</div>
 			</details>
 		</div>
 

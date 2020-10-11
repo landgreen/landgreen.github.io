@@ -33,9 +33,8 @@
     <article>
         <p>
             The calculations for fluid friction are <a href="https://paveldogreat.github.io/WebGL-Fluid-Simulation/?play">beautiful</a>, but difficult.
-            Instead, we are going to focus on the two types of dry <a href="https://en.wikipedia.org/wiki/Friction">friction</a>: static and kinetic.
+            Instead, we are going to focus on the two types of dry <a href="https://www.youtube.com/watch?v=fCe6UyNyPTg">friction</a>: static and kinetic.
             Dry friction occurs when two solid surfaces are in contact.
-            Dry friction is a complex interaction, but we have models that are a good approximation for many situations.
         </p>
     </article>
     <canvas id="canvasGlass" width='600' height='170'></canvas>
@@ -74,7 +73,7 @@
         <div class="example">
             <p>
                 Even seemingly smooth surfaces are rough at the microscopic level.
-                Dry friction generally occurs because rough surfaces get caught on each other.
+                Dry friction can occur because rough surfaces get caught on each other.
                 Friction can also be caused by chemical bonding between surfaces.
             </p>
             <a href="https://en.wikipedia.org/wiki/File:Asperities.svg">
@@ -110,12 +109,17 @@
                 </svg>
             </a>
             <p>
-                Dry friction is difficult to model, but there are some loose rules.
+                Dry friction is difficult to model because surfaces can have a wide range of shapes and chemical compositions.
+                These 5 rules are broken as often as the are followed.
                 <li>The magnitude of friction is different for each pair of materials.</li>
                 <li>Friction scales with the normal force.</li>
                 <li>Friction is not affected by the area of contact between surfaces.</li>
                 <li>Stationary objects have more friction than sliding objects.</li>
                 <li>Sliding friction is not affected by sliding velocity.</li>
+                <p>
+                    The equations we will learn on this page come from these rules.
+                    The equations don't give precision or accuracy, but they are a "rough" approximation...
+                </p>
             </p>
         </div>
 
