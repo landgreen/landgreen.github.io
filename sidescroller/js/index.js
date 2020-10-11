@@ -883,15 +883,15 @@ if (localSettings) {
   }
   document.getElementById("fps-select").value = localSettings.fpsCapDefault
 } else {
-  input.setDefault()
   localSettings = {
     isCommunityMaps: false,
     difficultyMode: '1',
     fpsCapDefault: 'max',
     runCount: 0,
     levelsClearedLastGame: 0,
-    key: input.key
+    key: undefined
   };
+  input.setDefault()
   localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
   document.getElementById("community-maps").checked = localSettings.isCommunityMaps
   game.isCommunityMaps = localSettings.isCommunityMaps
