@@ -15,12 +15,12 @@ const level = {
       // game.zoomScale = 1000;
       // game.setZoom();
       // mech.isCloak = true;
-      mech.setField("wormhole")
+      // mech.setField("wormhole")
       // b.giveGuns("nail gun")
       // for (let i = 0; i < 10; i++) {
       // mod.giveMod("laser-bot");
       // }
-      mod.giveMod("cosmic string")
+      // mod.giveMod("cosmic string")
 
 
       level.intro(); //starting level
