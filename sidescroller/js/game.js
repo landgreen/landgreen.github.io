@@ -499,6 +499,7 @@ const game = {
 
         mech.spawn(); //spawns the player
 
+        level.levels = level.playableLevels.slice(0) //copy array, not by just by assignment
         if (game.isCommunityMaps) {
             level.levels.push("stronghold");
             level.levels.push("basement");

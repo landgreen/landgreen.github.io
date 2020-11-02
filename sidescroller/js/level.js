@@ -8,7 +8,8 @@ const level = {
     onLevel: -1,
     levelsCleared: 0,
     bossKilled: false,
-    levels: ["skyscrapers", "rooftops", "warehouse", "highrise", "office", "aerie", "satellite", "sewers", "testChamber"],
+    playableLevels: ["skyscrapers", "rooftops", "warehouse", "highrise", "office", "aerie", "satellite", "sewers", "testChamber"],
+    levels: [],
     start() {
         if (level.levelsCleared === 0) { //this code only runs on the first level
             // level.difficultyIncrease(8)
