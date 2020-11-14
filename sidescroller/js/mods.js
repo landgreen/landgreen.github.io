@@ -197,7 +197,7 @@ const mod = {
         },
         {
             name: "fluoroantimonic acid",
-            description: "increase <strong class='color-d'>damage</strong> by <strong>40%</strong><br>when your base <strong>health</strong> is above <strong>100%</strong>",
+            description: "increase <strong class='color-d'>damage</strong> by <strong>40%</strong><br>when your <strong>health</strong> is above <strong>100%</strong>",
             maxCount: 1,
             count: 0,
             allowed() {
@@ -408,7 +408,7 @@ const mod = {
             maxCount: 9,
             count: 0,
             allowed() {
-                return mod.haveGunCheck("missiles") || mod.haveGunCheck("flak") || mod.haveGunCheck("grenades") || mod.haveGunCheck("vacuum bomb") || mod.isPulseLaser || mod.isMissileField || mod.boomBotCount > 1 || mod.isFlechetteExplode
+                return mod.haveGunCheck("missiles") || mod.isIncendiary || mod.haveGunCheck("grenades") || mod.haveGunCheck("vacuum bomb") || mod.isPulseLaser || mod.isMissileField || mod.boomBotCount > 1 || mod.isFlechetteExplode
             },
             requires: "an explosive damage source",
             effect: () => {
@@ -424,7 +424,7 @@ const mod = {
             maxCount: 1,
             count: 0,
             allowed() {
-                return mod.haveGunCheck("missiles") || mod.haveGunCheck("flak") || mod.haveGunCheck("grenades") || mod.haveGunCheck("vacuum bomb") || mod.isPulseLaser || mod.isMissileField || mod.boomBotCount > 1 || mod.isFlechetteExplode
+                return mod.haveGunCheck("missiles") || mod.isIncendiary || mod.haveGunCheck("grenades") || mod.haveGunCheck("vacuum bomb") || mod.isPulseLaser || mod.isMissileField || mod.boomBotCount > 1 || mod.isFlechetteExplode
             },
             requires: "an explosive damage source",
             effect: () => {
@@ -440,7 +440,7 @@ const mod = {
             maxCount: 1,
             count: 0,
             allowed() {
-                return mod.haveGunCheck("missiles") || mod.haveGunCheck("flak") || mod.haveGunCheck("grenades") || mod.haveGunCheck("vacuum bomb") || mod.isPulseLaser || mod.isMissileField || mod.isFlechetteExplode
+                return mod.haveGunCheck("missiles") || mod.isIncendiary || mod.haveGunCheck("grenades") || mod.haveGunCheck("vacuum bomb") || mod.isPulseLaser || mod.isMissileField || mod.isFlechetteExplode
             },
             requires: "an explosive damage source",
             effect: () => {
@@ -457,7 +457,7 @@ const mod = {
             maxCount: 1,
             count: 0,
             allowed() {
-                return mod.haveGunCheck("missiles") || mod.haveGunCheck("flak") || mod.haveGunCheck("grenades") || mod.haveGunCheck("vacuum bomb") || mod.isMissileField || mod.isExplodeMob || mod.isFlechetteExplode || mod.isPulseLaser
+                return mod.haveGunCheck("missiles") || mod.isIncendiary || mod.haveGunCheck("grenades") || mod.haveGunCheck("vacuum bomb") || mod.isMissileField || mod.isExplodeMob || mod.isFlechetteExplode || mod.isPulseLaser
             },
             requires: "an explosive damage source",
             effect: () => {
@@ -469,7 +469,7 @@ const mod = {
         },
         {
             name: "scrap bots",
-            description: "<strong>20%</strong> chance to build a <strong>bot</strong> after killing a mob<br>the bot last for about <strong>20</strong> seconds",
+            description: "<strong>20%</strong> chance to build a <strong>bot</strong> after killing a mob<br>the bot lasts for about <strong>20</strong> seconds",
             maxCount: 3,
             count: 0,
             allowed() {
@@ -1575,8 +1575,24 @@ const mod = {
         //************************************************** mods
         //************************************************** 
         {
+            name: "incendiary ammunition",
+            description: "<strong>bullets</strong> are loaded with <strong class='color-e'>explosives</strong><br><span style = 'font-size: 90%'>nail gun, shotgun, super balls, drones</span>",
+            maxCount: 1,
+            count: 0,
+            allowed() {
+                return mod.haveGunCheck("drones") || mod.haveGunCheck("super balls") || (mod.haveGunCheck("nail gun") && !mod.isIceCrystals && !mod.isNailCrit) || (mod.haveGunCheck("shotgun") && !mod.isNailShot)
+            },
+            requires: "drones, super balls, nail gun, shotgun",
+            effect() {
+                mod.isIncendiary = true
+            },
+            remove() {
+                mod.isIncendiary = false;
+            }
+        },
+        {
             name: "Lorentzian topology",
-            description: "your <strong>bullets</strong> last <strong>33% longer</strong>",
+            description: "<strong>bullets</strong> last <strong>33% longer</strong><br><span style = 'font-size: 85%'>drones, spores, super balls, foam, wave, ice IX, neutron</span>",
             maxCount: 3,
             count: 0,
             allowed() {
@@ -1612,9 +1628,9 @@ const mod = {
             maxCount: 1,
             count: 0,
             allowed() {
-                return mod.haveGunCheck("nail gun") && !mod.nailInstantFireRate
+                return mod.haveGunCheck("nail gun") && !mod.nailInstantFireRate && !mod.isIncendiary
             },
-            requires: "nail gun",
+            requires: "nail gun, not incendiary, not powder-actuated",
             effect() {
                 mod.isIceCrystals = true;
                 for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
@@ -1645,9 +1661,9 @@ const mod = {
             maxCount: 1,
             count: 0,
             allowed() {
-                return mod.haveGunCheck("nail gun")
+                return mod.haveGunCheck("nail gun") && !mod.isIncendiary
             },
-            requires: "nail gun",
+            requires: "nail gun, not incendiary",
             effect() {
                 mod.isNailCrit = true
             },
@@ -1731,7 +1747,7 @@ const mod = {
             maxCount: 1,
             count: 0,
             allowed() {
-                return mod.haveGunCheck("shotgun")
+                return mod.haveGunCheck("shotgun") && !mod.isIncendiary
             },
             requires: "shotgun",
             effect() {
@@ -1759,15 +1775,15 @@ const mod = {
         },
         {
             name: "super duper",
-            description: "fire <strong>2</strong> additional <strong>super balls</strong>",
+            description: "fire <strong>1</strong> additional <strong>super ball</strong>",
             maxCount: 9,
             count: 0,
             allowed() {
                 return mod.haveGunCheck("super balls") && !mod.oneSuperBall
             },
-            requires: "super balls",
+            requires: "super balls, but not the mod super ball",
             effect() {
-                mod.superBallNumber += 2
+                mod.superBallNumber++
             },
             remove() {
                 mod.superBallNumber = 4;
@@ -1775,13 +1791,13 @@ const mod = {
         },
         {
             name: "super ball",
-            description: "fire one <strong>large</strong> super <strong>ball</strong><br>that <strong>stuns</strong> mobs for <strong>3</strong> second",
+            description: "fire just <strong>1 large</strong> super <strong>ball</strong><br>that <strong>stuns</strong> mobs for <strong>3</strong> second",
             maxCount: 1,
             count: 0,
             allowed() {
                 return mod.haveGunCheck("super balls") && mod.superBallNumber === 4
             },
-            requires: "super balls",
+            requires: "super balls, but not super duper",
             effect() {
                 mod.oneSuperBall = true;
             },
@@ -1791,7 +1807,7 @@ const mod = {
         },
         {
             name: "super sized",
-            description: `your <strong>super balls</strong> are <strong>22%</strong> larger<br>increases mass and physical <strong class='color-d'>damage</strong>`,
+            description: `your <strong>super balls</strong> are <strong>20%</strong> larger<br>increases mass and physical <strong class='color-d'>damage</strong>`,
             count: 0,
             maxCount: 9,
             allowed() {
@@ -1799,7 +1815,7 @@ const mod = {
             },
             requires: "super balls",
             effect() {
-                mod.bulletSize += 0.2
+                mod.bulletSize += 0.15
             },
             remove() {
                 mod.bulletSize = 1;
@@ -2000,26 +2016,6 @@ const mod = {
             }
         },
         {
-            name: "optimized shell packing",
-            description: "<strong>flak</strong> <strong class='color-g'>ammo</strong> drops contain <strong>2x</strong> more shells",
-            maxCount: 3,
-            count: 0,
-            allowed() {
-                return mod.haveGunCheck("flak")
-            },
-            requires: "flak",
-            effect() {
-                for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
-                    if (b.guns[i].name === "flak") b.guns[i].ammoPack = b.guns[i].defaultAmmoPack * (2 * (1 + this.count));
-                }
-            },
-            remove() {
-                for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
-                    if (b.guns[i].name === "flak") b.guns[i].ammoPack = b.guns[i].defaultAmmoPack;
-                }
-            }
-        },
-        {
             name: "fragmentation grenade",
             description: "<strong>grenades</strong> are loaded with <strong>5</strong> nails<br>on detonation <strong>nails</strong> are ejected towards mobs",
             maxCount: 9,
@@ -2143,7 +2139,7 @@ const mod = {
             maxCount: 1,
             count: 0,
             allowed() {
-                return mod.nailBotCount + mod.grenadeFragments + mod.nailsDeathMob / 2 + (mod.haveGunCheck("mine") + mod.isRailNails + mod.isNailShot + mod.haveGunCheck("nail gun")) * 2 > 1
+                return mod.nailBotCount + mod.grenadeFragments + mod.nailsDeathMob / 2 + (mod.haveGunCheck("mine") + mod.isRailNails + mod.isNailShot + (mod.haveGunCheck("nail gun") && !mod.isIncendiary)) * 2 > 1
             },
             requires: "nails",
             effect() {
@@ -2159,7 +2155,7 @@ const mod = {
             maxCount: 1,
             count: 0,
             allowed() {
-                return mod.nailBotCount + mod.grenadeFragments + mod.nailsDeathMob / 2 + (mod.haveGunCheck("mine") + mod.isRailNails + mod.isNailShot + mod.haveGunCheck("nail gun")) * 2 > 1
+                return mod.nailBotCount + mod.grenadeFragments + mod.nailsDeathMob / 2 + (mod.haveGunCheck("mine") + mod.isRailNails + mod.isNailShot + (mod.haveGunCheck("nail gun") && !mod.isIncendiary)) * 2 > 1
             },
             requires: "nails",
             effect() {
@@ -3259,5 +3255,6 @@ const mod = {
     timeEnergyRegen: null,
     isRadioactive: null,
     isRailEnergyGain: null,
-    isMineSentry: null
+    isMineSentry: null,
+    isIncendiary: null
 }
