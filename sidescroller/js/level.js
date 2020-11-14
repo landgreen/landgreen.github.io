@@ -12,7 +12,7 @@ const level = {
     levels: [],
     start() {
         if (level.levelsCleared === 0) { //this code only runs on the first level
-            level.difficultyIncrease(8)
+            // level.difficultyIncrease(8)
             // game.enableConstructMode() //used to build maps in testing mode
             // game.zoomScale = 1000;
             // game.setZoom();
