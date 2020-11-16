@@ -1,31 +1,57 @@
 *********** NEXT PATCH ***********
-you can view the patch notes for the last few commits from the game menu
-  this uses the github API, so it might have some delay
+mod - neutron bomb is a grenade mod, it's damage is 33% higher
+  direct hits also apply radiation damage over time
 
-overfill mods add energy instead of setting energy to a value 
-
-bug - blocks in vertical portals can get stuck inside the portals
-  fixed, but only for one portal... oh well
-
-mobs that make a scrap bot, don't leave a block body anymore
+missiles aim better, accelerate quicker, push blocks out of the way better
+  crouch fire mode rapidly launches missiles vertically 
 
 ************** BUGS **************
 
-bug - crouch and worm hole? -> crouch locked in
-bug - getting locked into crouch on community levels, but showing the player as still standing
+(4+ reports before potential fix) bug - crouch and worm hole? -> crouch locked in
+  players have extra gravity
+    might be from the short jump code
+      added a line to wormhole to reset possible short jump
 
-bug - capping the fps causes random slow downs, that can be fixed with pause
+(3 reports) bug - getting locked into crouch on community levels, but showing the player as still standing
+  maybe improper vertices for map bodies
 
-bug - mine spawned one new mine every second
+(intermittent, but almost every time) bug - capping the fps causes random slow downs, that can be fixed with pause
+
+(once) bug - mine spawned one new mine every second
   after sticking to the top right corner of a wall
   notes: had only gun mine, mod mine reclamation, field plasma,
-bug - mines spawn extra mines when fired at thin map wall while jumping
 
-************** MODS **************
+(repeatable almost everytime) bug - mines spawn extra mines when fired at thin map wall while jumping
 
-mod - neutron bomb needs a method to "catch" mobs in it's field
-  apply stun status effect
-  too similar to the stun effect?
+
+************** TODO **************
+
+rework missiles - move faster
+  target more accurately
+  don't get stuck thrusting into a wall
+  less delay right after firing
+  mods
+
+    recursive is kinda dumb
+
+new power up - increase damage and fire speed, for 15 seconds
+  named boost?
+  enabled by a mod?
+  power up color: ?
+  how to indicate effect duration
+  or just give the effect after picking up a reroll
+
+mod - overfilled energy decays slower
+
+mod - remove max health, but you take 60% more harm
+
+mod - taking damage fires your current weapon at the nearest mob
+  requires? some harm reduction
+
+mod - a 4th mod selection option that is always a bot
+
+mod - railgun's push effect is increased, and it does some damage to nearby mobs
+  maybe only triggers at max energy
 
 mod - nano scale field could be a mod
   excess energy is converted to bullets
@@ -35,13 +61,8 @@ mod - nano scale field could be a mod
     pair production - nerf and give it to anyone
     cloaking field - maybe just don't spawn bullets when cloaked
 
-mod - sentry fires other bullet types
-  laser or missile
-
-flak could be a mod for shotgun?
-
-mod - self destruct - drones explode when they die
-  drones lose extra time on collisions, so they often explode after a collision
+Mod: "Solar Power": Energy regeneration is doubled while standing still
+  run in the 1 second check
 
 mod - a bot that eats up health and ammo, but poops out a mod (10 power ups = 1 mod?)
   or it poops a reroll after picking up 2 heal/ammo
@@ -52,21 +73,14 @@ mod - a bot that eats up health and ammo, but poops out a mod (10 power ups = 1 
   moves slower then the player so you can get to it before the bot if you hurry
   disable crystalized armor?
 
-mod - rerolls give at least 1 mod that applies your field and gun if possible
-  give fields and guns a tag
-  also spawn a few rerolls for balance?
-
 mod: take less harm if you are in the air
   require squirrel cage rotor
 
-mod - explosions apply radiation damage over time
-  or spawn a neutron bomb with a short timer
+Laser mod: For each reflection of laser, damage increases by 10%
 
-mod - remove a random mod as a condition for picking up a really good mod
+mechanic - remove a random mod as a condition for picking up a really good mod
 
-mod - double the player's time rate (like you do with the time dilation mod)
-
-mod - do something for 2 seconds after firing
+mechanic - do something for 2 seconds after firing
   if (mech.fireCDcycle + 120)
 
 mod - do 50% more damage in close, but 50% less at a distance
@@ -85,23 +99,18 @@ mod - foam is attracted to mobs
   name - static cling
   could also do bremsstrahlung radiation like damage on attachment
 
-************** TODO **************
+field - one block orbits you, it can protect you a bit and do collision damage
+    use field to fire and press field again to pull it back
+    mod - more blocks
+    mod - attach a permanent neutron bomb to the block
+      lowers energy regen, but it can damage mobs
 
 wormholes need to give feedback on where a portal can go
   or automatically put portals in safe places
 
-field - You have a permanent neutron bomb oscillating on you. Energy regeneration and heal powerup effectiveness is halved.
-  neutron field could be a passive outwards push, replacing the defined, oscillating border of SWH with a less powerful, larger border
-
-find a way to automatically show patch information from github on n-gon main page
-
 repeat map in vertical and horizontal space
   or at least vertical space
   camera looks strange when you teleport player with a high velocity
-
-sucker mobs do something when they touch blocks
-  heal
-  remove the blocks from the map
 
 add an ending to the game
   maybe the game ending should ask you to open the console and type in some commands like in the end of doki doki
@@ -134,21 +143,9 @@ look for mods that could update description text with count and mod.is  informat
 
 mouse event e.which is deprecated
 
-add a flag to some bullets to indicate that mobs can't learn the player position from bullet damage in bullet-mob collisions
-  if isNotRevealPlayerLocation flag is true have the mob still know player location if nearby player
-  on hide if bullet age is above 4 seconds?
-  spores
-  mines
-  conditions to reveal player from damage?
-    1. bullet spawned from player
-    2. bullet is less than 4 seconds old
-    3. damage is nearby player or in line of sight of player
-
 add some more computer / AI stuff to the level lore text
 
-general idea: shrink mech.baseHealth in a mod or field
-
-change player color based on harm reduction
+mechanic - shrink mech.baseHealth in a mod or field
 
 standing wave harmonics mod - push things away
   push scales with mass up to about 4
