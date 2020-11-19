@@ -540,7 +540,6 @@ const spawn = {
         me.onDeath = function() {
             this.leaveBody = false;
             this.dropPowerUp = false;
-
             if (vertices > 3) {
                 spawn.powerUpBoss(this.position.x, this.position.y, vertices - 1)
                 Matter.Body.setVelocity(mob[mob.length - 1], {

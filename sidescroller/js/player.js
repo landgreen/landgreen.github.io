@@ -1342,7 +1342,7 @@ const mech = {
             description: "use <strong class='color-f'>energy</strong> to <strong>block</strong> mobs<br>excess <strong class='color-f'>energy</strong> used to build <strong>drones</strong><br><strong>double</strong> your default <strong class='color-f'>energy</strong> regeneration",
             effect: () => {
                 mech.hold = function() {
-                    if (mech.energy > mech.maxEnergy - 0.02 && mech.fieldCDcycle < mech.cycle && input.field) {
+                    if (mech.energy > mech.maxEnergy - 0.02 && mech.fieldCDcycle < mech.cycle) { //&& input.field
                         if (mod.isSporeField) {
                             // mech.fieldCDcycle = mech.cycle + 10; // set cool down to prevent +energy from making huge numbers of drones
                             const len = Math.floor(6 + 5 * Math.random())
