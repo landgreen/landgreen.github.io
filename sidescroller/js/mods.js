@@ -987,9 +987,9 @@ const mod = {
             maxCount: 1,
             count: 0,
             allowed() {
-                return mech.fieldUpgrades[mech.fieldMode].name !== "nano-scale manufacturing" && mech.fieldUpgrades[mech.fieldMode].name !== "standing wave harmonics" && !mod.isEnergyHealth && !mod.isEnergyLoss
+                return mech.fieldUpgrades[mech.fieldMode].name !== "nano-scale manufacturing" && mech.fieldUpgrades[mech.fieldMode].name !== "standing wave harmonics" && !mod.isEnergyHealth && !mod.isEnergyLoss && !mod.isPiezo
             },
-            requires: "not nano-scale manufacturing, not mass-energy equivalence, not standing wave harmonics, not acute stress response",
+            requires: "not nano-scale manufacturing, mass-energy equivalence, standing wave harmonics, acute stress response, piezoelectricity",
             effect() {
                 mod.isTimeAvoidDeath = true;
             },
@@ -1003,9 +1003,9 @@ const mod = {
             maxCount: 1,
             count: 0,
             allowed() {
-                return !mod.isEnergyHealth
+                return !mod.isEnergyHealth && !mod.isTimeAvoidDeath
             },
-            requires: "not mass-energy equivalence",
+            requires: "not mass-energy equivalence, CPT reversal",
             effect() {
                 mod.isPiezo = true;
                 mech.energy += mech.maxEnergy * 2;
@@ -1016,7 +1016,7 @@ const mod = {
         },
         {
             name: "ground state",
-            description: "reduce <strong class='color-harm'>harm</strong> by <strong>50%</strong><br>you <strong>no longer</strong> passively regenerate <strong class='color-f'>energy</strong>",
+            description: "reduce <strong class='color-harm'>harm</strong> by <strong>60%</strong><br>you <strong>no longer</strong> passively regenerate <strong class='color-f'>energy</strong>",
             maxCount: 1,
             count: 0,
             allowed() {
