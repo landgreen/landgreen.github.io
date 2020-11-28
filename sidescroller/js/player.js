@@ -1831,7 +1831,7 @@ const mech = {
                     }
 
                     //120 cycles after shooting (or using field) enable cloak
-                    if (mech.energy < 0.05 && mech.fireCDcycle < mech.cycle) mech.fireCDcycle = mech.cycle
+                    if (mech.energy < 0.05 && mech.fireCDcycle < mech.cycle && !input.fire) mech.fireCDcycle = mech.cycle
                     if (mech.fireCDcycle + 50 < mech.cycle) {
                         if (!mech.isCloak) {
                             mech.isCloak = true //enter cloak
