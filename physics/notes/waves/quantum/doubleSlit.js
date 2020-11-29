@@ -179,7 +179,14 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
                             document.getElementById("double-slit-emitter").style.fill = "#89a"
                         } else {
                             document.getElementById("double-slit-emitter").style.fill = "hsl(" + (180 + 190 * Math.random()) + "," + "100%," + "50%)" //"#f05"
-                            requestAnimationFrame(cycle);
+                            if (emitAtATime === 1) {
+                                setTimeout(function () {
+                                    requestAnimationFrame(cycle);
+                                }, 300);
+                            } else {
+                                requestAnimationFrame(cycle);
+                            }
+
                         }
                     } else {
                         isClearToEmit = true;
