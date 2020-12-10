@@ -426,14 +426,6 @@ const b = {
             bullet[me].stuckTo = null;
             bullet[me].stuckToRelativePosition = null;
             bullet[me].vacuumSlow = 0.97;
-            if (mod.isRewindGrenade && input.down) {
-                Matter.Body.setVelocity(bullet[me], {
-                    x: 0,
-                    y: 0
-                });
-                bullet[me].maxDamageRadius *= 1.3
-                mech.rewind(200, false)
-            }
             bullet[me].beforeDmg = function() {};
             bullet[me].stuck = function() {};
             bullet[me].do = function() {
@@ -2734,14 +2726,7 @@ const b = {
                 bullet[me].stuckTo = null;
                 bullet[me].stuckToRelativePosition = null;
                 bullet[me].vacuumSlow = 0.97;
-                if (mod.isRewindGrenade && input.down) {
-                    Matter.Body.setVelocity(bullet[me], {
-                        x: 0,
-                        y: 0
-                    });
-                    bullet[me].maxDamageRadius *= 1.3
-                    mech.rewind(200, false)
-                }
+
                 bullet[me].beforeDmg = function() {};
                 bullet[me].stuck = function() {};
                 bullet[me].do = function() {
