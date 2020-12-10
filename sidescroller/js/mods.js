@@ -374,7 +374,7 @@ const mod = {
         },
         {
             name: "fragmentation",
-            description: "detonation or collision ejects <strong>nails</strong><br><em>rail gun, grenades, shotgun slugs, blocks</em>",
+            description: "detonation or collisions with mobs eject <strong>nails</strong><br><em>blocks, rail gun, grenades, shotgun slugs</em>",
             maxCount: 9,
             count: 0,
             allowed() {
@@ -1113,7 +1113,7 @@ const mod = {
             requires: "not mass-energy equivalence",
             effect() {
                 mod.isPiezo = true;
-                mech.energy += 200;
+                mech.energy += 2;
             },
             remove() {
                 mod.isPiezo = false;
