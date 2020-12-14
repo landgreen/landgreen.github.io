@@ -1,8 +1,7 @@
 ******************************************************** NEXT PATCH ********************************************************
 
-extruder: leftovers still exist when field isn't active
-  range and damage are all slightly decreased
-  energy drain is greatly increased
+
+mods for guns and fields have an extra circle in selection menus
 
 ******************************************************** BUGS ********************************************************
 
@@ -39,14 +38,7 @@ mod and mob are too similar
 
 ******************************************************** TODO ********************************************************
 
-
-color/highlight field or gun mods in selection menu (or custom)
-  to show that they are special
-
 mechanic - Your energy regen is only active when field and gun have not been used for 5 seconds.
-
-divide supercapacitator into 2-3 stacks
-  smaller effect for stack 1, but overall bigger effect at 3
 
 be able to open up custom mode in the normal game
   might need to be rebuilt from scratch
