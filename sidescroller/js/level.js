@@ -18,7 +18,7 @@ const level = {
             // game.setZoom();
             // mech.setField("plasma torch")
             // b.giveGuns("wave beam")
-            // mod.giveMod("micro-extruder")
+            // mod.giveMod("transceiver chip")
             // mod.giveMod("piezoelectricity")
             // for (let i = 0; i < 15; i++) mod.giveMod("plasma jet")
 

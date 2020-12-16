@@ -596,7 +596,18 @@ const game = {
         }
 
         if (mod.isEndLevelPowerUp) {
-            for (let i = 0; i < powerUp.length; i++) powerUp[i].effect();
+            for (let i = 0; i < powerUp.length; i++) {
+                if (powerUp[i].name === "mod") {
+                    mod.giveMod()
+                } else if (powerUp[i].name === "gun") {
+                    b.giveGuns("random", 1000)
+                } else if (powerUp[i].name === "field") {
+                    const mode = (mech.fieldMode === mech.fieldUpgrades.length - 1) ? 0 : mech.fieldMode + 1
+                    mech.setField(mode)
+                } else {
+                    powerUp[i].effect();
+                }
+            }
         }
         powerUps.totalPowerUps = powerUp.length
 
