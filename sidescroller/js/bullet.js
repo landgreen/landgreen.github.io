@@ -3778,18 +3778,19 @@ const b = {
         isRewinding: false,
         lastFireCycle: 0,
         holdCount: 0,
+        activeGunIndex: null,
         fire() {
             if (this.lastFireCycle === mech.cycle - 1) { //button has been held down
                 this.rewindCount += 7;
                 const DRAIN = 0.01
-                if (this.rewindCount > 599 || mech.energy < DRAIN) {
+                let history = mech.history[(mech.cycle - this.rewindCount) % 600]
+                if (this.rewindCount > 599 || mech.energy < DRAIN || history.activeGun !== this.activeGunIndex) {
                     this.rewindCount = 0;
                     mech.resetHistory();
-                    mech.fireCDcycle = mech.cycle + Math.floor(60 * b.fireCD); // cool down
+                    mech.fireCDcycle = mech.cycle + Math.floor(120 * b.fireCD); // cool down
                 } else {
                     mech.energy -= DRAIN
-                    mech.immuneCycle = mech.cycle + 5; //player is immune to collision damage for 5 cycles
-                    let history = mech.history[(mech.cycle - this.rewindCount) % 600]
+                    mech.immuneCycle = mech.cycle + 15; //player is immune to collision damage for 5 cycles
                     Matter.Body.setPosition(player, history.position);
                     Matter.Body.setVelocity(player, { x: history.velocity.x, y: history.velocity.y });
                     if (mech.health !== history.health) {
@@ -3799,6 +3800,7 @@ const b = {
                 }
             } else { //button is held the first time
                 this.rewindCount = 0;
+                this.activeGunIndex = b.activeGun
             }
             this.lastFireCycle = mech.cycle;
         }

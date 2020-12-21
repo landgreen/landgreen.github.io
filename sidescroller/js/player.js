@@ -172,6 +172,7 @@ const mech = {
             angle: mech.angle,
             health: mech.health,
             energy: mech.energy,
+            activeGun: b.activeGun
         });
         // const back = 59  // 59 looks at 1 second ago //29 looks at 1/2 a second ago
         // historyIndex = (mech.cycle - back) % 60
