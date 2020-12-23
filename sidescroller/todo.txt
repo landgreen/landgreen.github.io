@@ -38,6 +38,7 @@ mod and mob are too similar
 ******************************************************** TODO ********************************************************
 
 CPT gun seems a bit weak right now.  How to buff the gun?
+  pause game, like time dilation when rewinding, and rewind much slower
 
 mob ability bombs/bullets that suck in player
 

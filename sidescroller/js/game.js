@@ -510,7 +510,15 @@ const game = {
         input.endKeySensing();
         b.removeAllGuns();
         game.isNoPowerUps = false;
+
         mod.setupAllMods(); //sets mods to default values
+        mod.laserBotCount = 0;
+        mod.orbitBotCount = 0;
+        mod.nailBotCount = 0;
+        mod.foamBotCount = 0;
+        mod.boomBotCount = 0;
+        mod.plasmaBotCount = 0;
+
         b.setFireCD();
         game.updateModHUD();
         powerUps.totalPowerUps = 0;

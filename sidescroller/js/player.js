@@ -532,12 +532,14 @@ const mech = {
         let history = mech.history[(mech.cycle - steps) % 600]
         Matter.Body.setPosition(player, history.position);
         Matter.Body.setVelocity(player, { x: history.velocity.x, y: history.velocity.y });
-        b.activeGun = history.activeGun
-        for (let i = 0; i < b.inventory.length; i++) {
-            if (b.inventory[i] === b.activeGun) b.inventoryGun = i
-        }
-        game.updateGunHUD();
-        game.boldActiveGunHUD();
+
+        // b.activeGun = history.activeGun
+        // for (let i = 0; i < b.inventory.length; i++) {
+        //     if (b.inventory[i] === b.activeGun) b.inventoryGun = i
+        // }
+        // game.updateGunHUD();
+        // game.boldActiveGunHUD();
+
         // move bots to follow player
         for (let i = 0; i < bullet.length; i++) {
             if (bullet[i].botType) {
