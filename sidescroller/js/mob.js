@@ -164,16 +164,16 @@ const mobs = {
                             time: simulation.drawTime
                         });
                     }
-                    if (true) {
-                        //check for nearby mobs
+                    // if (true) {
+                    //     //check for nearby mobs
 
-                    }
+                    // }
                 },
                 endEffect() {},
                 dmg: tickDamage,
                 type: "dot",
                 endCycle: simulation.cycle + cycles,
-                startCycle: simulation.cycle
+                startCycle: simulation.cycle + 29 //makes sure it doesn't tick on first application
             })
         }
     },
@@ -1005,10 +1005,8 @@ const mobs = {
                     if (this.shield) dmg *= 0.075
 
                     //energy and heal drain should be calculated after damage boosts
-                    if (tech.energySiphon && dmg !== Infinity && this.dropPowerUp) {
-                        mech.energy += Math.min(this.health, dmg) * tech.energySiphon
-                        // if (mech.energy > mech.maxEnergy) mech.energy = mech.maxEnergy
-                    }
+                    if (tech.energySiphon && dmg !== Infinity && this.dropPowerUp) mech.energy += Math.min(this.health, dmg) * tech.energySiphon
+
                     if (tech.healthDrain && dmg !== Infinity && this.dropPowerUp) {
                         mech.addHealth(Math.min(this.health, dmg) * tech.healthDrain)
                         if (mech.health > mech.maxHealth) mech.health = mech.maxHealth
