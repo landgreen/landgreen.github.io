@@ -952,6 +952,10 @@ if (localSettings) {
         input.setDefault()
     }
 
+    if (localSettings.loreCount === undefined) {
+        localSettings.loreCount = 0
+        localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+    }
 
     simulation.isCommunityMaps = localSettings.isCommunityMaps
     document.getElementById("community-maps").checked = localSettings.isCommunityMaps
