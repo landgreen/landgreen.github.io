@@ -363,7 +363,7 @@ const simulation = {
         simulation.updateGunHUD();
         simulation.boldActiveGunHUD();
         // mech.drop();
-        if (true && powerUps.research.count > 0) {
+        if (tech.isGunSwitchField && powerUps.research.count > 0) {
             powerUps.research.changeRerolls(-1)
             const energy = mech.energy
             mech.setField((mech.fieldMode === mech.fieldUpgrades.length - 1) ? 1 : mech.fieldMode + 1) //cycle to next field
