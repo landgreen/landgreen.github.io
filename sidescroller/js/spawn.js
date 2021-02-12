@@ -103,9 +103,8 @@ const spawn = {
                 level.levels.push("null")
                 level.exit.x = 5500;
                 level.exit.y = -330;
-                simulation.makeTextLog(`level.levels.push("null")`) // <br>${powerUps.research.count}
-
-                //remove block map element
+                simulation.makeTextLog(`<span class="lore-text">undecided</span> <span class='color-symbol'>=</span> ${lore.techCount}/10<br>level.levels.push("null")`);
+                //remove block map element so exit is clear
                 Matter.World.remove(engine.world, map[map.length - 1]);
                 map.splice(map.length - 1, 1);
                 simulation.draw.setPaths(); //redraw map draw path
@@ -121,13 +120,14 @@ const spawn = {
                         delay += 1000
                     }
                     setTimeout(function() {
-                        simulation.makeTextLog(`simulation.analysis <span class='color-symbol'>=</span> 1`);
+                        simulation.makeTextLog(`simulation.analysis <span class='color-symbol'>=</span> 1
+                        <br><br><span class="lore-text">undecided</span> <span class='color-symbol'>=</span> ${lore.techCount}/10`);
                     }, delay);
-                    delay += 2000
+                    delay += 3000
                     setTimeout(() => {
                         if (!simulation.paused && !simulation.testing) {
                             simulation.makeTextLog(`World.clear(engine.world)`);
-                            setTimeout(() => { m.death() }, 2000);
+                            setTimeout(() => { m.death() }, 4000);
                         }
                     }, delay);
                 }, 5000);

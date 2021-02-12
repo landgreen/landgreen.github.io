@@ -58,7 +58,7 @@ const m = {
     width: 50,
     radius: 30,
     fillColor: "#fff",
-    fillColorDark: "#ccc",
+    fillColorDark: "#bbb",
     color: {
         hue: 0,
         sat: 0,
