@@ -32,6 +32,7 @@ const level = {
             // tech.giveTech("nail-bot")
             // for (let i = 0; i < 15; i++) tech.giveTech("plasma jet")
             // tech.isBlockPowerUps = true;
+            // m.shipMode()
 
             level.intro(); //starting level
             // level.testing(); //not in rotation
@@ -57,8 +58,8 @@ const level = {
             // tech.giveTech("undefined")
             // lore.techCount = 10
             // localSettings.loreCount = 1;
-            // simulation.isCheating = true;
-            // localSettings.loreCount = undefined;
+            // simulation.isCheating = false //true;
+            // localSettings.loreCount = 1;
             // localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
             // level.null()
         } else {
@@ -1085,7 +1086,7 @@ const level = {
         // spawn.striker(1600, -500)
         // spawn.shooter(1700, -120)
         // spawn.bomberBoss(1400, -500)
-        spawn.sniper(1800, -120)
+        // spawn.sniper(1800, -120)
         // spawn.streamBoss(1600, -500)
         // spawn.cellBossCulture(1600, -500)
         // spawn.cellBossCulture(1600, -500)
@@ -1419,11 +1420,13 @@ const level = {
             powerUps.spawn(2050, -150, "heal", false); //starting gun
             // powerUps.spawn(2050, -150, "field", false); //starting gun
             if (localSettings.levelsClearedLastGame < 6) {
-                spawn.wireFoot();
-                spawn.wireFootLeft();
-                spawn.wireKnee();
-                spawn.wireKneeLeft();
-                spawn.wireHead();
+                if (!simulation.isCheating) {
+                    spawn.wireFoot();
+                    spawn.wireFootLeft();
+                    spawn.wireKnee();
+                    spawn.wireKneeLeft();
+                    spawn.wireHead();
+                }
             } else {
                 // const say = []
                 // if (localSettings.runCount > 200) { //experienced
