@@ -2626,8 +2626,7 @@ const m = {
                     player.position.x > level.exit.x &&
                     player.position.x < level.exit.x + 100 &&
                     player.position.y > level.exit.y - 150 &&
-                    player.position.y < level.exit.y - 40 &&
-                    player.speed < 4
+                    player.position.y < level.exit.y - 40
                 ) {
                     level.nextLevel()
                 }
