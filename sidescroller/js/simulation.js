@@ -492,7 +492,11 @@ const simulation = {
         document.getElementById("splash").style.display = "none"; //hides the element that spawned the function
         document.getElementById("dmg").style.display = "inline";
         document.getElementById("health-bg").style.display = "inline";
-        m.spawn(); //spawns the player
+        if (!m.isShipMode) {
+            m.spawn(); //spawns the player
+        } else {
+            World.add(engine.world, [player])
+        }
 
         level.levels = level.playableLevels.slice(0) //copy array, not by just by assignment
         if (simulation.isCommunityMaps) {

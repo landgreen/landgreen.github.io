@@ -40,17 +40,6 @@ const m = {
         });
         Matter.Body.setMass(player, m.mass);
         World.add(engine.world, [player]);
-
-        m.holdConstraint = Constraint.create({
-            //holding body constraint
-            pointA: {
-                x: 0,
-                y: 0
-            },
-            bodyB: jumpSensor, //setting constraint to jump sensor because it has to be on something until the player picks up things
-            stiffness: 0.4
-        });
-        World.add(engine.world, m.holdConstraint);
     },
     cycle: 600, //starts at 600 cycles instead of 0 to prevent bugs with m.history
     lastKillCycle: 0,
@@ -2611,7 +2600,8 @@ const m = {
             // Matter.Body.setDensity(player, 0.01); //extra dense //normal is 0.001 //makes effective life much larger
             m.defaultMass = 30
             Matter.Body.setMass(player, m.defaultMass);
-            player.friction = 0.07
+            player.friction = 0.05
+            player.restitution = 0.2
             // player.frictionStatic = 0.1
             // Matter.Body.setInertia(player, Infinity); //disable rotation
 
@@ -2693,6 +2683,34 @@ const m = {
                 ctx.translate(player.position.x, player.position.y);
                 ctx.rotate(player.angle);
 
+                //thrust
+                if (input.up) {
+                    var grd2 = ctx.createLinearGradient(0, 0, -150, 0);
+                    // grd2.addColorStop(0, 'rgba(255, 255, 155, 0.8)');
+                    // grd2.addColorStop(1, 'rgba(255, 200, 0, 0.1)');
+                    grd2.addColorStop(0, 'rgba(150, 200, 255, 0.7)');
+                    grd2.addColorStop(1, 'rgba(150, 200, 255, 0)');
+                    ctx.fillStyle = grd2;
+                    ctx.beginPath();
+                    ctx.moveTo(-18, -25);
+                    //10 * (Math.random() - 0.5), 10 * (Math.random() - 0.5)
+                    ctx.lineTo(-18, 25);
+                    ctx.lineTo(-50 - 100 * Math.random(), 0);
+                    ctx.fill();
+                } else if (input.down) {
+                    var grd2 = ctx.createLinearGradient(0, 0, 80, 0);
+                    grd2.addColorStop(0, 'rgba(150, 200, 255, 0.7)');
+                    grd2.addColorStop(1, 'rgba(150, 200, 255, 0)');
+                    ctx.fillStyle = grd2;
+                    ctx.beginPath();
+                    ctx.moveTo(20, -12);
+                    //10 * (Math.random() - 0.5), 10 * (Math.random() - 0.5)
+                    ctx.lineTo(20, 12);
+                    ctx.lineTo(35 + 43 * Math.random(), 0);
+                    ctx.fill();
+                }
+
+                //body
                 ctx.beginPath();
                 ctx.arc(0, 0, 30, 0, 2 * Math.PI);
                 let grd = ctx.createLinearGradient(-30, 0, 30, 0);
@@ -2704,6 +2722,7 @@ const m = {
                 ctx.strokeStyle = "#333";
                 ctx.lineWidth = 2;
                 ctx.stroke();
+
                 ctx.restore();
             }
             m.spin = 0
@@ -2733,21 +2752,18 @@ const m = {
                         y: friction * player.velocity.y
                     });
                 }
-                const spinChange = 1.1
+                const spinChange = 1.15
                 if (input.right) {
                     player.torque += spinChange
-                    // m.spin += spinChange
                 } else if (input.left) {
-                    // m.spin -= spinChange
                     player.torque -= spinChange
                 }
-                Matter.Body.setAngularVelocity(player, player.angularVelocity * 0.9)
+                Matter.Body.setAngularVelocity(player, player.angularVelocity * 0.92)
                 // m.spin *= 0.88 //spin friction
                 m.angle += m.spin //
                 m.angle = player.angle
             }
             //fix collisions
-
             collisionChecks = (event) => {
                 const pairs = event.pairs;
                 for (let i = 0, j = pairs.length; i != j; i++) {

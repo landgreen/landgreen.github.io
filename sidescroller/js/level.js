@@ -1420,7 +1420,7 @@ const level = {
             powerUps.spawn(2050, -150, "heal", false); //starting gun
             // powerUps.spawn(2050, -150, "field", false); //starting gun
             if (localSettings.levelsClearedLastGame < 6) {
-                if (!simulation.isCheating) {
+                if (!simulation.isCheating && !m.isShipMode) {
                     spawn.wireFoot();
                     spawn.wireFootLeft();
                     spawn.wireKnee();
