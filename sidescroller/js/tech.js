@@ -114,7 +114,7 @@
             if (tech.isLowEnergyDamage) dmg *= 1 + Math.max(0, 1 - m.energy) * 0.5
             if (tech.isMaxEnergyTech) dmg *= 1.4
             if (tech.isEnergyNoAmmo) dmg *= 1.5
-            if (tech.isDamageForGuns) dmg *= 1 + 0.15 * b.inventory.length
+            if (tech.isDamageForGuns) dmg *= 1 + 0.17 * b.inventory.length
             if (tech.isLowHealthDmg) dmg *= 1 + 0.6 * Math.max(0, 1 - m.health)
             if (tech.isHarmDamage && m.lastHarmCycle + 600 > m.cycle) dmg *= 3;
             if (tech.isEnergyLoss) dmg *= 1.5;
@@ -124,9 +124,9 @@
             if (tech.isDamageFromBulletCount) dmg *= 1 + bullet.length * 0.0038
             if (tech.isRerollDamage) dmg *= 1 + 0.039 * powerUps.research.count
             if (tech.isOneGun && b.inventory.length < 2) dmg *= 1.25
-            if (tech.isNoFireDamage && m.cycle > m.fireCDcycle + 120) dmg *= 1.66
+            if (tech.isNoFireDamage && m.cycle > m.fireCDcycle + 120) dmg *= 2
             if (tech.isSpeedDamage) dmg *= 1 + Math.min(0.4, player.speed * 0.013)
-            if (tech.isBotDamage) dmg *= 1 + 0.04 * tech.totalBots()
+            if (tech.isBotDamage) dmg *= 1 + 0.06 * tech.totalBots()
             return dmg * tech.slowFire * tech.aimDamage
         },
         duplicationChance() {
@@ -136,7 +136,7 @@
             if (tech.is100Duplicate && tech.duplicationChance() > 0.99) {
                 tech.is100Duplicate = false
                 const range = 1000
-                const bossOptions = ["historyBoss", "cellBossCulture", "bomberBoss", "powerUpBoss", "suckerBoss"]
+                const bossOptions = ["historyBoss", "cellBossCulture", "bomberBoss", "powerUpBoss", "orbitalBoss"]
                 spawn.randomLevelBoss(m.pos.x + range, m.pos.y, bossOptions);
                 spawn.randomLevelBoss(m.pos.x, m.pos.y + range, bossOptions);
                 spawn.randomLevelBoss(m.pos.x - range, m.pos.y, bossOptions);
@@ -161,7 +161,6 @@
                     for (let i = 0; i < tech.tech.length; i++) {
                         if (tech.tech[i].name === "CPT gun") tech.tech[i].description = `adds the <strong>CPT</strong> <strong class='color-g'>gun</strong> to your inventory<br>it <strong>rewinds</strong> your <strong class='color-h'>health</strong>, <strong>velocity</strong>, and <strong>position</strong><br><div style = 'color: #f24'>replaces your current gun</div>`
                     }
-
                 },
                 remove() {
                     tech.isOneGun = false;
@@ -198,7 +197,7 @@
             },
             {
                 name: "arsenal",
-                description: "increase <strong class='color-d'>damage</strong> by <strong>15%</strong><br>for each <strong class='color-g'>gun</strong> in your inventory",
+                description: "increase <strong class='color-d'>damage</strong> by <strong>17%</strong><br>for each <strong class='color-g'>gun</strong> in your inventory",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -214,7 +213,7 @@
             },
             {
                 name: "active cooling",
-                description: "<strong>15%</strong> decreased <strong><em>delay</em></strong> after firing<br>for each <strong class='color-g'>gun</strong> in your inventory",
+                description: "<strong>17%</strong> decreased <strong><em>delay</em></strong> after firing<br>for each <strong class='color-g'>gun</strong> in your inventory",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -254,11 +253,11 @@
                 maxCount: 1, //random power up
                 count: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
-                    return tech.isGunCycle
+                    return b.inventory.length > 2
                 },
-                requires: "generalist",
+                requires: "at least 3 guns",
                 effect() {
                     for (let i = 0; i < b.inventory.length; i++) {
                         if (Math.random() < 0.2) {
@@ -272,7 +271,6 @@
                         } else {
                             powerUps.spawn(m.pos.x + 10 * Math.random(), m.pos.y + 10 * Math.random(), "research");
                         }
-
                     }
                 },
                 remove() {}
@@ -707,7 +705,7 @@
             },
             {
                 name: "decorrelation",
-                description: "reduce <strong class='color-harm'>harm</strong> by <strong>40%</strong><br>after not using your <strong class='color-g'>gun</strong> or <strong class='color-f'>field</strong> for <strong>2</strong> seconds",
+                description: "reduce <strong class='color-harm'>harm</strong> by <strong>66%</strong><br>after not using your <strong class='color-g'>gun</strong> or <strong class='color-f'>field</strong> for <strong>2</strong> seconds",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -723,7 +721,7 @@
             },
             {
                 name: "anticorrelation",
-                description: "increase <strong class='color-d'>damage</strong> by <strong>66%</strong><br>after not using your <strong class='color-g'>gun</strong> or <strong class='color-f'>field</strong> for <strong>2</strong> seconds",
+                description: "increase <strong class='color-d'>damage</strong> by <strong>100%</strong><br>after not using your <strong class='color-g'>gun</strong> or <strong class='color-f'>field</strong> for <strong>2</strong> seconds",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -739,7 +737,7 @@
             },
             {
                 name: "scrap bots",
-                description: "<strong>20%</strong> chance to build a <strong>bot</strong> after killing a mob<br>the bot lasts for about <strong>20</strong> seconds",
+                description: "<strong>20%</strong> chance to build a <strong class='color-bot'>bot</strong> after killing a mob<br>the <strong class='color-bot'>bot</strong> lasts for about <strong>20</strong> seconds",
                 maxCount: 3,
                 count: 0,
                 allowed() {
@@ -755,7 +753,7 @@
             },
             {
                 name: "nail-bot",
-                description: "a bot fires <strong>nails</strong> at mobs in line of sight",
+                description: "a <strong class='color-bot'>bot</strong> fires <strong>nails</strong> at mobs in line of sight",
                 maxCount: 9,
                 count: 0,
                 allowed() {
@@ -772,7 +770,7 @@
             },
             {
                 name: "nail-bot upgrade",
-                description: "<strong>500%</strong> increased <strong> fire rate</strong><br><em>applies to all current and future nail-bots</em>",
+                description: "<strong>500%</strong> increased <strong> fire rate</strong><br><em>applies to all current and future <strong class='color-bot'>nail-bots</strong></em>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -794,7 +792,7 @@
             },
             {
                 name: "foam-bot",
-                description: "a bot fires <strong>foam</strong> at nearby mobs",
+                description: "a <strong class='color-bot'>bot</strong> fires <strong>foam</strong> at nearby mobs",
                 maxCount: 9,
                 count: 0,
                 allowed() {
@@ -811,7 +809,7 @@
             },
             {
                 name: "foam-bot upgrade",
-                description: "<strong>200%</strong> increased <strong>foam</strong> <strong>size</strong> and <strong>fire rate</strong><br><em>applies to all current and future foam-bots</em>",
+                description: "<strong>250%</strong> increased <strong>foam</strong> <strong>size</strong> and <strong>fire rate</strong><br><em>applies to all current and future <strong class='color-bot'>foam-bots</strong></em>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -833,7 +831,7 @@
             },
             {
                 name: "boom-bot",
-                description: "a bot <strong>defends</strong> the space around you<br>ignites an <strong class='color-e'>explosion</strong> after hitting a mob",
+                description: "a <strong class='color-bot'>bot</strong> <strong>defends</strong> the space around you<br>ignites an <strong class='color-e'>explosion</strong> after hitting a mob",
                 maxCount: 9,
                 count: 0,
                 allowed() {
@@ -850,7 +848,7 @@
             },
             {
                 name: "boom-bot upgrade",
-                description: "<strong>250%</strong> increased <strong class='color-e'>explosion</strong> <strong class='color-d'>damage</strong> and size<br><em>applies to all current and future boom-bots</em>",
+                description: "<strong>250%</strong> increased <strong class='color-e'>explosion</strong> <strong class='color-d'>damage</strong> and size<br><em>applies to all current and future <strong class='color-bot'>boom-bots</strong></em>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -872,7 +870,7 @@
             },
             {
                 name: "laser-bot",
-                description: "a bot uses <strong class='color-f'>energy</strong> to emit a <strong class='color-laser'>laser</strong> beam<br>that targets nearby mobs",
+                description: "a <strong class='color-bot'>bot</strong> uses <strong class='color-f'>energy</strong> to emit a <strong class='color-laser'>laser</strong> beam<br>that targets nearby mobs",
                 maxCount: 9,
                 count: 0,
                 allowed() {
@@ -889,7 +887,7 @@
             },
             {
                 name: "laser-bot upgrade",
-                description: "<strong>350%</strong> increased <strong class='color-laser'>laser</strong> <strong class='color-d'>damage</strong><br><em>applies to all current and future laser-bots</em>",
+                description: "<strong>400%</strong> increased <strong class='color-laser'>laser</strong> <strong class='color-d'>damage</strong><br><em>applies to all current and future <strong class='color-bot'>laser-bots</strong></em>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -911,7 +909,7 @@
             },
             {
                 name: "orbital-bot",
-                description: "a bot is locked in <strong>orbit</strong> around you<br><strong>stuns</strong> and <strong class='color-d'>damages</strong> mobs on <strong>contact</strong>",
+                description: "a <strong class='color-bot'>bot</strong> is locked in <strong>orbit</strong> around you<br><strong>stuns</strong> and <strong class='color-d'>damages</strong> mobs on <strong>contact</strong>",
                 maxCount: 9,
                 count: 0,
                 allowed() {
@@ -928,7 +926,7 @@
             },
             {
                 name: "orbital-bot upgrade",
-                description: "increase <strong class='color-d'>damage</strong> by <strong>150%</strong> and <strong>radius</strong> by <strong>30%</strong><br><em>applies to all current and future orbit-bots</em>",
+                description: "increase <strong class='color-d'>damage</strong> by <strong>200%</strong> and <strong>radius</strong> by <strong>30%</strong><br><em>applies to all current and future <strong class='color-bot'>orbit-bots</strong></em>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -960,7 +958,7 @@
             },
             {
                 name: "dynamo-bot",
-                description: "a bot <strong class='color-d'>damages</strong> mobs while it <strong>traces</strong> your path<br>regen <strong>4</strong> <strong class='color-f'>energy</strong> per second when it's near",
+                description: "a <strong class='color-bot'>bot</strong> <strong class='color-d'>damages</strong> mobs while it <strong>traces</strong> your path<br>regen <strong>6</strong> <strong class='color-f'>energy</strong> per second when it's near",
                 maxCount: 9,
                 count: 0,
                 allowed() {
@@ -977,7 +975,7 @@
             },
             {
                 name: "dynamo-bot upgrade",
-                description: "dynamo-bots <strong>regen</strong> <strong>12</strong> <strong class='color-f'>energy</strong> per second<br><em>applies to all current and future dynamo-bots</em>",
+                description: "<strong class='color-bot'>dynamo-bots</strong> <strong>regen</strong> <strong>24</strong> <strong class='color-f'>energy</strong> per second<br><em>applies to all current and future dynamo-bots</em>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -999,7 +997,7 @@
             },
             {
                 name: "bot fabrication",
-                description: "anytime you collect <strong>5</strong> <strong class='color-r'>research</strong><br>use them to build a <strong>random bot</strong>",
+                description: "anytime you collect <strong>4</strong> <strong class='color-r'>research</strong><br>use them to build a random <strong class='color-bot'>bot</strong>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -1016,14 +1014,34 @@
                 }
             },
             {
+                name: "electroactive polymers",
+                description: "build <strong>2</strong> random <strong class='color-bot'>bots</strong><br><strong>switching</strong> <strong>guns</strong> cycles <strong class='color-bot'>bots</strong> to the <strong>same</strong> type",
+                maxCount: 1,
+                isNonRefundable: true,
+                count: 0,
+                allowed() {
+                    return tech.totalBots() > 2 && b.inventory.length > 1
+                },
+                requires: "at least 3 bots and 2 guns",
+                effect() {
+                    tech.isBotSwap = true
+                    b.randomBot()
+                    b.randomBot()
+                },
+                remove() {
+                    tech.isBotSwap = false
+                    tech.botSwapCycleIndex = 0
+                }
+            },
+            {
                 name: "perimeter defense",
-                description: "reduce <strong class='color-harm'>harm</strong> by <strong>4%</strong><br>for each of your permanent <strong>bots</strong>",
+                description: "reduce <strong class='color-harm'>harm</strong> by <strong>6%</strong><br>for each of your permanent <strong class='color-bot'>bots</strong>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
-                    return tech.totalBots() > 5 && !tech.isEnergyHealth
+                    return tech.totalBots() > 3 && !tech.isEnergyHealth
                 },
-                requires: "5 or more bots",
+                requires: "at least 4 bots",
                 effect() {
                     tech.isBotArmor = true
                 },
@@ -1032,13 +1050,13 @@
                 }
             }, {
                 name: "network effect",
-                description: "increase <strong class='color-d'>damage</strong> by <strong>4%</strong><br>for each of your permanent <strong>bots</strong>",
+                description: "increase <strong class='color-d'>damage</strong> by <strong>6%</strong><br>for each of your permanent <strong class='color-bot'>bots</strong>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
-                    return tech.totalBots() > 6
+                    return tech.totalBots() > 3
                 },
-                requires: "6 or more bots",
+                requires: "at least 4 bots",
                 effect() {
                     tech.isBotDamage = true
                 },
@@ -1048,46 +1066,34 @@
             },
             {
                 name: "bot replication",
-                description: "<strong class='color-dup'>duplicate</strong> your permanent <strong>bots</strong><br>remove <strong>all</strong> of your <strong class='color-g'>guns</strong>",
+                description: "<strong class='color-dup'>duplicate</strong> your permanent <strong class='color-bot'>bots</strong><br>remove <strong>all</strong> of your <strong class='color-g'>guns</strong>",
                 maxCount: 1,
                 count: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
                     return tech.totalBots() > 3
                 },
-                requires: "at least 3 bots",
+                requires: "at least 4 bots",
                 effect() {
                     b.removeAllGuns();
                     simulation.makeGunHUD();
                     //double bots
-                    for (let i = 0; i < tech.nailBotCount; i++) {
-                        b.nailBot();
-                    }
+                    for (let i = 0; i < tech.nailBotCount; i++) b.nailBot();
                     tech.nailBotCount *= 2
-                    for (let i = 0; i < tech.laserBotCount; i++) {
-                        b.laserBot();
-                    }
+                    for (let i = 0; i < tech.laserBotCount; i++) b.laserBot();
                     tech.laserBotCount *= 2
-                    for (let i = 0; i < tech.foamBotCount; i++) {
-                        b.foamBot();
-                    }
+                    for (let i = 0; i < tech.foamBotCount; i++) b.foamBot();
                     tech.foamBotCount *= 2
-                    for (let i = 0; i < tech.boomBotCount; i++) {
-                        b.boomBot();
-                    }
+                    for (let i = 0; i < tech.boomBotCount; i++) b.boomBot();
                     tech.boomBotCount *= 2
-                    for (let i = 0; i < tech.orbitBotCount; i++) {
-                        b.orbitBot();
-                    }
+                    for (let i = 0; i < tech.orbitBotCount; i++) b.orbitBot();
                     tech.orbitBotCount *= 2
-                    for (let i = 0; i < tech.plasmaBotCount; i++) {
-                        b.plasmaBot();
-                    }
+                    for (let i = 0; i < tech.dynamoBotCount; i++) b.dynamoBot();
+                    tech.dynamoBotCount *= 2
+                    for (let i = 0; i < tech.plasmaBotCount; i++) b.plasmaBot();
                     tech.plasmaBotCount *= 2
-                    for (let i = 0; i < tech.missileBotCount; i++) {
-                        b.missileBot();
-                    }
+                    for (let i = 0; i < tech.missileBotCount; i++) b.missileBot();
                     tech.missileBotCount *= 2
                 },
                 remove() {}
@@ -1126,7 +1132,7 @@
             },
             {
                 name: "inelastic collision",
-                description: "while you are <strong>holding</strong> a <strong>block</strong><br>reduce <strong class='color-harm'>harm</strong> by <strong>75%</strong>",
+                description: "while you are <strong>holding</strong> a <strong>block</strong><br>reduce <strong class='color-harm'>harm</strong> by <strong>80%</strong>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -1306,7 +1312,7 @@
             },
             {
                 name: "causality bots",
-                description: "when you <strong class='color-rewind'>rewind</strong>, build several <strong>bots</strong><br>that protect you for about <strong>9</strong> seconds",
+                description: "when you <strong class='color-rewind'>rewind</strong>, build several <strong class='color-bot'>bots</strong><br>that protect you for about <strong>9</strong> seconds",
                 maxCount: 3,
                 count: 0,
                 allowed() {
@@ -1355,7 +1361,7 @@
             },
             {
                 name: "ground state",
-                description: "reduce <strong class='color-harm'>harm</strong> by <strong>60%</strong><br>you <strong>no longer</strong> passively regenerate <strong class='color-f'>energy</strong>",
+                description: "reduce <strong class='color-harm'>harm</strong> by <strong>66%</strong><br>you <strong>no longer</strong> passively regenerate <strong class='color-f'>energy</strong>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -1400,7 +1406,7 @@
             },
             {
                 name: "1st ionization energy",
-                description: "each <strong class='color-h'>heal</strong> <strong>power up</strong> you collect<br>increases your <strong>maximum</strong> <strong class='color-f'>energy</strong> by <strong>4</strong>",
+                description: "each <strong class='color-h'>heal</strong> <strong>power up</strong> you collect<br>increases your <strong>maximum</strong> <strong class='color-f'>energy</strong> by <strong>5</strong>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -1674,7 +1680,7 @@
             },
             {
                 name: "inductive coupling",
-                description: "for each unused <strong>power up</strong> at the end of a <strong>level</strong><br>add 3 <strong>max</strong> <strong class='color-h'>health</strong> <em>(up to 42 health per level)</em>",
+                description: "for each unused <strong>power up</strong> at the end of a <strong>level</strong><br>add 3 <strong>max</strong> <strong class='color-h'>health</strong> <em>(up to 51 health per level)</em>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -1931,6 +1937,7 @@
                 requires: "parthenogenesis",
                 effect() {
                     tech.is100Duplicate = true;
+                    tech.maxDuplicationEvent()
                 },
                 remove() {
                     tech.is100Duplicate = false;
@@ -1942,7 +1949,7 @@
                 maxCount: 1,
                 count: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
                     return (tech.totalCount > 3) && !tech.isSuperDeterminism
                 },
@@ -1972,7 +1979,7 @@
                 maxCount: 1,
                 count: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
                     return (tech.totalCount > 3) && !tech.isSuperDeterminism && tech.duplicationChance() > 0
                 },
@@ -1999,7 +2006,7 @@
                 maxCount: 1,
                 count: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
                     return !tech.isSuperDeterminism && tech.duplicationChance() > 0 && powerUps.research.count > 1
                 },
@@ -2034,7 +2041,7 @@
             },
             {
                 name: "unified field theory",
-                description: `in the pause menu, change your <strong class='color-f'>field</strong><br>by <strong>clicking</strong> on your <strong class='color-f'>field's</strong> box`,
+                description: `in the <strong>pause</strong> menu, change your <strong class='color-f'>field</strong><br>by <strong>clicking</strong> on your <strong class='color-f'>field's</strong> box`,
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -2053,7 +2060,7 @@
                 description: "reduce combat <strong>difficulty</strong> by <strong>1 level</strong><br>add <strong>16</strong> junk <strong class='color-m'>tech</strong> to the potential pool",
                 maxCount: 1,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 count: 0,
                 allowed() {
                     return powerUps.research.count === 0 && level.onLevel < 6
@@ -2214,7 +2221,7 @@
                 maxCount: 1,
                 count: 0,
                 // isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
                     return (tech.totalCount > 6)
                 },
@@ -2889,7 +2896,7 @@
             },
             {
                 name: "missile-bot",
-                description: "a bot fires <strong>missiles</strong> at far away mobs",
+                description: "a <strong class='color-bot'>bot</strong> fires <strong>missiles</strong> at far away mobs",
                 isGunTech: true,
                 maxCount: 1,
                 count: 0,
@@ -3653,12 +3660,12 @@
             },
             {
                 name: "bot manufacturing",
-                description: "use <strong>nano-scale manufacturing</strong><br>to build <strong>3</strong> random <strong>bots</strong>",
+                description: "use <strong>nano-scale manufacturing</strong><br>to build <strong>3</strong> random <strong class='color-bot'>bots</strong>",
                 isFieldTech: true,
                 maxCount: 1,
                 count: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
                     return m.fieldUpgrades[m.fieldMode].name === "nano-scale manufacturing"
                 },
@@ -3673,12 +3680,12 @@
             },
             {
                 name: "bot prototypes",
-                description: "use <strong>nano-scale manufacturing</strong> to <strong>upgrade</strong><br>all bots of a random type and <strong>build</strong> <strong>2</strong> of that <strong>bot</strong>",
+                description: "use <strong>nano-scale manufacturing</strong> to <strong>upgrade</strong><br>all <strong class='color-bot'>bots</strong> of a random type and <strong>build</strong> <strong>2</strong> of that <strong class='color-bot'>bot</strong>",
                 isFieldTech: true,
                 maxCount: 1,
                 count: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
                     return m.fieldUpgrades[m.fieldMode].name === "nano-scale manufacturing" && !(tech.isNailBotUpgrade && tech.isFoamBotUpgrade && tech.isBoomBotUpgrade && tech.isLaserBotUpgrade && tech.isOrbitBotUpgrade)
                 },
@@ -3826,7 +3833,7 @@
             },
             {
                 name: "degenerate matter",
-                description: "reduce <strong class='color-harm'>harm</strong> by <strong>40%</strong><br>while <strong>negative mass field</strong> is active",
+                description: "reduce <strong class='color-harm'>harm</strong> by <strong>50%</strong><br>while <strong>negative mass field</strong> is active",
                 isFieldTech: true,
                 maxCount: 1,
                 count: 0,
@@ -3911,7 +3918,7 @@
             },
             {
                 name: "plasma-bot",
-                description: "a bot uses <strong class='color-f'>energy</strong> to emit <strong class='color-plasma'>plasma</strong><br>that <strong class='color-d'>damages</strong> and <strong>pushes</strong> mobs",
+                description: "a <strong class='color-bot'>bot</strong> uses <strong class='color-f'>energy</strong> to emit <strong class='color-plasma'>plasma</strong><br>that <strong class='color-d'>damages</strong> and <strong>pushes</strong> mobs",
                 isFieldTech: true,
                 maxCount: 1,
                 count: 0,
@@ -4138,7 +4145,7 @@
                 maxCount: 9,
                 count: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
                     return true
                 },
@@ -4155,7 +4162,7 @@
                 maxCount: 9,
                 count: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
                     return !tech.isEnergyNoAmmo
                 },
@@ -4172,7 +4179,7 @@
                 maxCount: 9,
                 count: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
                     return !tech.isSuperDeterminism
                 },
@@ -4189,7 +4196,7 @@
                 maxCount: 9,
                 count: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
                     return !tech.isSuperDeterminism
                 },
@@ -4206,7 +4213,7 @@
                 maxCount: 9,
                 count: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 allowed() {
                     return !tech.isSuperDeterminism
                 },
@@ -4214,6 +4221,21 @@
                 effect() {
                     powerUps.spawn(m.pos.x, m.pos.y, "field");
                     this.count--
+                },
+                remove() {}
+            },
+            {
+                name: "ship",
+                description: "<strong>experimental mode:</strong> fly around with no legs",
+                maxCount: 1,
+                count: 0,
+                isNonRefundable: true,
+                allowed() {
+                    return !m.isShipMode && m.fieldUpgrades[m.fieldMode].name !== "negative mass field" && build.isExperimentSelection
+                },
+                requires: "",
+                effect() {
+                    m.shipMode()
                 },
                 remove() {}
             },
@@ -4227,7 +4249,7 @@
                     count: 0,
                     isLore: true,
                     isNonRefundable: true,
-                    isCustomHide: true,
+                    isExperimentHide: true,
                     allowed() {
                         return true
                     },
@@ -4257,7 +4279,7 @@
             //     count: 0,
             //     numberInPool: 0,
             //     isNonRefundable: true,
-            //     isCustomHide: true,
+            //     isExperimentHide: true,
             //     isJunk: true,
             //     allowed() {
             //         return true
@@ -4275,7 +4297,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4297,10 +4319,10 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
-                    return !m.isShipMode
+                    return !m.isShipMode && m.fieldUpgrades[m.fieldMode].name !== "negative mass field"
                 },
                 requires: "",
                 effect() {
@@ -4316,7 +4338,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4337,7 +4359,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4355,7 +4377,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4374,7 +4396,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return m.fieldUpgrades[m.fieldMode].name !== "negative mass field"
@@ -4392,7 +4414,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4412,7 +4434,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4442,7 +4464,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4460,7 +4482,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4479,7 +4501,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4505,7 +4527,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4531,7 +4553,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4558,7 +4580,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4582,7 +4604,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return !m.isShipMode
@@ -4631,7 +4653,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return !m.isShipMode
@@ -4675,7 +4697,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return !m.isShipMode
@@ -4747,7 +4769,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4768,12 +4790,12 @@
             },
             {
                 name: "assimilation",
-                description: "all your <strong>bots</strong> are converted to the <strong>same</strong> random model",
+                description: "all your <strong class='color-bot'>bots</strong> are converted to the <strong>same</strong> random model",
                 maxCount: 1,
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return tech.totalBots() > 2
@@ -4831,7 +4853,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4849,7 +4871,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4867,7 +4889,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return b.inventory.length > 0
@@ -4895,7 +4917,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return powerUps.research.count > 3
@@ -4914,7 +4936,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -4933,7 +4955,7 @@
                 count: 0,
                 numberInPool: 0,
                 isNonRefundable: true,
-                isCustomHide: true,
+                isExperimentHide: true,
                 isJunk: true,
                 allowed() {
                     return true
@@ -5151,5 +5173,7 @@
         isDynamoBotUpgrade: null,
         isBlockPowerUps: null,
         isBlockHarm: null,
-        foamFutureFire: null
+        foamFutureFire: null,
+        isBotSwap: null,
+        botSwapCycleIndex: null
     }
