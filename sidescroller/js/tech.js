@@ -433,7 +433,7 @@
             },
             {
                 name: "squirrel-cage rotor",
-                description: "<strong>move</strong> and <strong>jump</strong> about <strong>30%</strong> faster<br>but you take <strong>5%</strong> more <strong class='color-harm'>harm</strong>",
+                description: "<strong>move</strong> and <strong>jump</strong> about <strong>30%</strong> faster<br>take <strong>5%</strong> more <strong class='color-harm'>harm</strong>",
                 maxCount: 9,
                 count: 0,
                 allowed() {
@@ -1181,7 +1181,7 @@
             },
             {
                 name: "complex spin-statistics",
-                description: `become <strong>immune</strong> to <strong class='color-harm'>harm</strong> for <strong>+1</strong> second<br>once every <strong>7</strong> seconds`,
+                description: `become <strong>immune</strong> to <strong class='color-harm'>harm</strong> for <strong>1</strong> second<br>once every <strong>7</strong> seconds`,
                 maxCount: 3,
                 count: 0,
                 allowed() {
@@ -1628,7 +1628,7 @@
             },
             {
                 name: "entropy exchange",
-                description: "<strong class='color-h'>heal</strong> for <strong>1%</strong> of <strong class='color-d'>damage</strong> done",
+                description: "<strong class='color-h'>heal</strong> for <strong>3%</strong> of <strong class='color-d'>damage</strong> done<br>take <strong>6%</strong> more <strong class='color-harm'>harm</strong>",
                 maxCount: 9,
                 count: 0,
                 allowed() {
@@ -1636,7 +1636,7 @@
                 },
                 requires: "some increased damage, not mass-energy equivalence",
                 effect() {
-                    tech.healthDrain += 0.01;
+                    tech.healthDrain += 0.03;
                 },
                 remove() {
                     tech.healthDrain = 0;
@@ -3743,7 +3743,7 @@
                         tech.giveTech("dynamo-bot upgrade")
                         tech.setTechoNonRefundable("dynamo-bot upgrade")
                         for (let i = 0; i < 2; i++) {
-                            b.orbitBot()
+                            b.dynamoBot()
                             tech.dynamoBotCount++;
                         }
                         simulation.makeTextLog(`tech.isDynamoBotUpgrade = true`)
@@ -3753,7 +3753,7 @@
                         tech.giveTech("dynamo-bot upgrade")
                         tech.setTechoNonRefundable("dynamo-bot upgrade")
                         for (let i = 0; i < 2; i++) {
-                            b.orbitBot()
+                            b.dynamoBot()
                             tech.dynamoBotCount++;
                         }
                         simulation.makeTextLog(`tech.isDynamoBotUpgrade = true`)
@@ -4291,7 +4291,7 @@
             //     remove() {}
             // },
             {
-                name: "banish",
+                name: "defragment",
                 description: "<strong>erase</strong> all junk <strong class='color-m'>tech</strong> from the possible pool<br><em>probably...</em>",
                 maxCount: 1,
                 count: 0,
@@ -4496,7 +4496,7 @@
             },
             {
                 name: "energy investment",
-                description: "every 10 seconds drain your <strong class='color-f'>energy</strong> and return it doubled 10 seconds later<br>lasts 180 seconds",
+                description: "every 10 seconds drain your <strong class='color-f'>energy</strong><br>return it doubled 10 seconds later<br>lasts 180 seconds",
                 maxCount: 9,
                 count: 0,
                 numberInPool: 0,
@@ -4931,7 +4931,7 @@
             },
             {
                 name: "quantum black hole",
-                description: "use all your <strong class='color-f'>energy</strong> to <strong>spawn</strong> inside the event horizon of a huge <strong>black hole</strong>",
+                description: "use all your <strong class='color-f'>energy</strong> to<br><strong>spawn</strong> inside the event horizon of a huge <strong>black hole</strong>",
                 maxCount: 9,
                 count: 0,
                 numberInPool: 0,

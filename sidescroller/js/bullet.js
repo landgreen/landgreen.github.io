@@ -2549,10 +2549,10 @@ const b = {
             restitution: 0.5 * (1 + 0.5 * Math.random()),
             dmg: 0, // 0.14   //damage done in addition to the damage from momentum
             minDmgSpeed: 2,
-            lookFrequency: 40 + Math.floor(7 * Math.random()),
+            lookFrequency: 40 + Math.floor(7 * Math.random()) - 10 * tech.isLaserBotUpgrade,
             drainThreshold: tech.isEnergyHealth ? 0.6 : 0.4,
             acceleration: 0.0015 * (1 + 0.3 * Math.random()),
-            range: 700 * (1 + 0.1 * Math.random()) + 300 * tech.isLaserBotUpgrade,
+            range: 700 * (1 + 0.1 * Math.random()) + 500 * tech.isLaserBotUpgrade,
             playerRange: 150 + Math.floor(30 * Math.random()),
             offPlayer: {
                 x: 0,

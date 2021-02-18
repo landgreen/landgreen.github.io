@@ -50,33 +50,33 @@ const spawn = {
     randomGroup(x, y, chance = 1) {
         if (spawn.spawnChance(chance) && simulation.difficulty > 2 || chance == Infinity) {
             //choose from the possible picklist
-            let pick = this.pickList[Math.floor(Math.random() * this.pickList.length)];
+            let pick = spawn.pickList[Math.floor(Math.random() * spawn.pickList.length)];
             //is the pick able to be a group?
             let canBeGroup = false;
-            for (let i = 0, len = this.allowedGroupList.length; i < len; ++i) {
-                if (this.allowedGroupList[i] === pick) {
+            for (let i = 0, len = spawn.allowedGroupList.length; i < len; ++i) {
+                if (spawn.allowedGroupList[i] === pick) {
                     canBeGroup = true;
                     break;
                 }
             }
             if (canBeGroup) {
                 if (Math.random() < 0.55) {
-                    this.nodeGroup(x, y, pick);
+                    spawn.nodeGroup(x, y, pick);
                 } else {
-                    this.lineGroup(x, y, pick);
+                    spawn.lineGroup(x, y, pick);
                 }
             } else {
                 if (Math.random() < 0.07) {
-                    this[pick](x, y, 90 + Math.random() * 40); //one extra large mob
-                    spawn.spawnOrbitals(mob[mob.length - 1], radius + 50 + 200 * Math.random(), 1)
+                    spawn[pick](x, y, 90 + Math.random() * 40); //one extra large mob
+                    spawn.spawnOrbitals(mob[mob.length - 1], mob[mob.length - 1].radius + 50 + 200 * Math.random(), 1)
                 } else if (Math.random() < 0.35) {
-                    this.blockGroup(x, y) //hidden grouping blocks
+                    spawn.blockGroup(x, y) //hidden grouping blocks
                 } else {
                     pick = (Math.random() < 0.5) ? "randomList" : "random";
                     if (Math.random() < 0.55) {
-                        this.nodeGroup(x, y, pick);
+                        spawn.nodeGroup(x, y, pick);
                     } else {
-                        this.lineGroup(x, y, pick);
+                        spawn.lineGroup(x, y, pick);
                     }
                 }
             }
