@@ -2677,7 +2677,7 @@ const spawn = {
     },
     orbital(who, radius, phase, speed) {
         // for (let i = 0, len = 7; i < len; i++) spawn.orbital(me, radius + 250, 2 * Math.PI / len * i)
-        mobs.spawn(0, 0, 8, 12, "rgb(255,0,150)");
+        mobs.spawn(who.position.x, who.position.y, 8, 12, "rgb(255,0,150)");
         let me = mob[mob.length - 1];
         me.stroke = "transparent";
         // Matter.Body.setDensity(me, 0.00004); //normal is 0.001
@@ -2705,7 +2705,6 @@ const spawn = {
                 m.damage(0.1 * simulation.dmgScale);
                 this.death();
             }
-
         };
     },
     orbitalBoss(x, y, radius = 88) {

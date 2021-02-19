@@ -94,7 +94,7 @@ const powerUps = {
                 }
             }
             if (tech.isRerollBots) {
-                const limit = 5
+                const limit = 4
                 for (; powerUps.research.count > limit - 1; powerUps.research.count -= limit) {
                     b.randomBot()
                     if (tech.renormalization) {

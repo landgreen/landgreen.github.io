@@ -2096,9 +2096,9 @@
                 isExperimentHide: true,
                 count: 0,
                 allowed() {
-                    return powerUps.research.count === 0 && level.onLevel < 6
+                    return level.onLevel < 6
                 },
-                requires: "no research, and in the first 5 levels",
+                requires: "in the first 5 levels",
                 effect() {
                     level.difficultyDecrease(simulation.difficultyMode)
                     simulation.makeTextLog(`simulation.difficultyMode<span class='color-symbol'>--</span>`)
@@ -4323,6 +4323,26 @@
             //     },
             //     remove() {}
             // },
+            {
+                name: "pop-ups",
+                description: "sign up to learn endless easy ways to win n-gon instantly<br>that landgreen doesn't want you to know about!!!1!!",
+                maxCount: 1,
+                count: 0,
+                numberInPool: 0,
+                isNonRefundable: true,
+                isExperimentHide: true,
+                isJunk: true,
+                allowed() {
+                    return true
+                },
+                requires: "",
+                effect() {
+                    setInterval(() => {
+                        alert(`The best combo is <strong>${tech.tech[Math.floor(Math.random() * tech.tech.length)].name}</strong> with <strong>${tech.tech[Math.floor(Math.random() * tech.tech.length)].name}</strong>!`);
+                    }, 30000); //every 30 sections
+                },
+                remove() {}
+            },
             {
                 name: "music",
                 description: "add music to n-gon",

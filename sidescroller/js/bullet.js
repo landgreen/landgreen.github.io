@@ -2311,61 +2311,65 @@ const b = {
                 //     ctx.arc(this.position.x, this.position.y, 150, 0, 2 * Math.PI);
                 //     ctx.fill();
                 // }
-                if (!((m.cycle + this.phase) % 30)) { //twice a second
-                    if (Vector.magnitude(Vector.sub(this.position, player.position)) < 250) { //give energy
-                        Matter.Body.setAngularVelocity(this, this.spin)
-                        if (this.isUpgraded) {
-                            m.energy += 0.12
-                            simulation.drawList.push({ //add dmg to draw queue
-                                x: this.position.x,
-                                y: this.position.y,
-                                radius: 8,
-                                color: m.fieldMeterColor,
-                                time: simulation.drawTime
-                            });
-                        } else {
-                            m.energy += 0.03
-                            simulation.drawList.push({ //add dmg to draw queue
-                                x: this.position.x,
-                                y: this.position.y,
-                                radius: 5,
-                                color: m.fieldMeterColor,
-                                time: simulation.drawTime
-                            });
-                        }
-                    }
-                }
+
                 //check for damage
-                if (!m.isCloak && !m.isBodiesAsleep) { //if time dilation isn't active
-                    const size = 33
-                    q = Matter.Query.region(mob, {
-                        min: {
-                            x: this.position.x - size,
-                            y: this.position.y - size
-                        },
-                        max: {
-                            x: this.position.x + size,
-                            y: this.position.y + size
+                if (!m.isBodiesAsleep) {
+                    if (!((m.cycle + this.phase) % 30)) { //twice a second
+                        if (Vector.magnitude(Vector.sub(this.position, player.position)) < 250) { //give energy
+                            Matter.Body.setAngularVelocity(this, this.spin)
+                            if (this.isUpgraded) {
+                                m.energy += 0.12
+                                simulation.drawList.push({ //add dmg to draw queue
+                                    x: this.position.x,
+                                    y: this.position.y,
+                                    radius: 8,
+                                    color: m.fieldMeterColor,
+                                    time: simulation.drawTime
+                                });
+                            } else {
+                                m.energy += 0.03
+                                simulation.drawList.push({ //add dmg to draw queue
+                                    x: this.position.x,
+                                    y: this.position.y,
+                                    radius: 5,
+                                    color: m.fieldMeterColor,
+                                    time: simulation.drawTime
+                                });
+                            }
                         }
-                    })
-                    for (let i = 0; i < q.length; i++) {
-                        Matter.Body.setAngularVelocity(this, this.spin)
-                        // mobs.statusStun(q[i], 180)
-                        // const dmg = 0.5 * b.dmgScale * (this.isUpgraded ? 2.5 : 1)
-                        const dmg = 0.5 * b.dmgScale
-                        q[i].damage(dmg);
-                        q[i].foundPlayer();
-                        simulation.drawList.push({ //add dmg to draw queue
-                            x: this.position.x,
-                            y: this.position.y,
-                            radius: Math.log(2 * dmg + 1.1) * 40,
-                            color: 'rgba(0,0,0,0.4)',
-                            time: simulation.drawTime
-                        });
                     }
+
+                    if (!m.isCloak) { //if time dilation isn't active
+                        const size = 33
+                        q = Matter.Query.region(mob, {
+                            min: {
+                                x: this.position.x - size,
+                                y: this.position.y - size
+                            },
+                            max: {
+                                x: this.position.x + size,
+                                y: this.position.y + size
+                            }
+                        })
+                        for (let i = 0; i < q.length; i++) {
+                            Matter.Body.setAngularVelocity(this, this.spin)
+                            // mobs.statusStun(q[i], 180)
+                            // const dmg = 0.5 * b.dmgScale * (this.isUpgraded ? 2.5 : 1)
+                            const dmg = 0.5 * b.dmgScale
+                            q[i].damage(dmg);
+                            q[i].foundPlayer();
+                            simulation.drawList.push({ //add dmg to draw queue
+                                x: this.position.x,
+                                y: this.position.y,
+                                radius: Math.log(2 * dmg + 1.1) * 40,
+                                color: 'rgba(0,0,0,0.4)',
+                                time: simulation.drawTime
+                            });
+                        }
+                    }
+                    let history = m.history[(m.cycle - this.followDelay) % 600]
+                    Matter.Body.setPosition(this, { x: history.position.x, y: history.position.y - history.yOff + 24.2859 }) //bullets move with player
                 }
-                let history = m.history[(m.cycle - this.followDelay) % 600]
-                Matter.Body.setPosition(this, { x: history.position.x, y: history.position.y - history.yOff + 24.2859 }) //bullets move with player
             }
         })
         World.add(engine.world, bullet[me]); //add bullet to world
