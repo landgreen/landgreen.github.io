@@ -1355,7 +1355,7 @@ const spawn = {
         me.isBoss = true;
         me.vertices = Matter.Vertices.rotate(me.vertices, Math.PI, me.position); //make the pointy side of triangle the front
         Matter.Body.rotate(me, Math.random() * Math.PI * 2);
-        me.accelMag = 0.0002 * Math.sqrt(simulation.accelScale);
+        me.accelMag = 0.00022 * Math.sqrt(simulation.accelScale);
         me.seePlayerFreq = Math.floor(30 * simulation.lookFreqScale);
         me.memory = 420;
         me.restitution = 1;
@@ -1371,7 +1371,7 @@ const spawn = {
         }
         Matter.Body.setDensity(me, 0.023); //extra dense //normal is 0.001 //makes effective life much larger
         spawn.shield(me, x, y, 1);
-        spawn.spawnOrbitals(me, radius + 100 + 100 * Math.random())
+        spawn.spawnOrbitals(me, radius + 200 + 300 * Math.random())
         me.onHit = function() {
             //run this function on hitting player
             // this.explode();

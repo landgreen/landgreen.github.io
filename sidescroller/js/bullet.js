@@ -1732,7 +1732,7 @@ const b = {
             },
             beforeDmg(who) {
                 this.endCycle = 0; //bullet ends cycle after doing damage 
-                if (this.isFreeze) mobs.statusSlow(who, 60)
+                if (this.isFreeze) mobs.statusSlow(who, 90)
             },
             onEnd() {
                 if (tech.isMutualism && this.isMutualismActive && !tech.isEnergyHealth) {
@@ -1845,7 +1845,7 @@ const b = {
             lockedOn: null,
             isFollowMouse: true,
             beforeDmg(who) {
-                mobs.statusSlow(who, 120)
+                mobs.statusSlow(who, 180)
                 this.endCycle = simulation.cycle
                 // if (tech.isHeavyWater) mobs.statusDoT(who, 0.15, 300)
                 if (tech.iceEnergy && !who.shield && !who.isShielded && who.dropPowerUp && who.alive) {
@@ -3155,7 +3155,7 @@ const b = {
                 }, dmg) //position, velocity, damage
                 if (tech.isIceCrystals) {
                     bullet[bullet.length - 1].beforeDmg = function(who) {
-                        mobs.statusSlow(who, 30)
+                        mobs.statusSlow(who, 60)
                         if (tech.isNailCrit && !who.shield && Vector.dot(Vector.normalise(Vector.sub(who.position, this.position)), Vector.normalise(this.velocity)) > 0.975) {
                             b.explosion(this.position, 150 + 30 * Math.random()); //makes bullet do explosive damage at end
                         }

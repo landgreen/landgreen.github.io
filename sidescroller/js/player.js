@@ -474,7 +474,8 @@ const m = {
         let dmg = 1
         dmg *= m.fieldHarmReduction
 
-        if (tech.healthDrain) dmg *= 1 + 2 * tech.healthDrain //tech.healthDrain = 0.03 at one stack //cause more damage
+        if (tech.isHarmReduceAfterKill) dmg *= (m.lastKillCycle + 300 > m.cycle) ? 0.33 : 1.33
+        if (tech.healthDrain) dmg *= 1 + 2.667 * tech.healthDrain //tech.healthDrain = 0.03 at one stack //cause more damage
         if (tech.squirrelFx !== 1) dmg *= 1 + (tech.squirrelFx - 1) / 5 //cause more damage
         if (tech.isBlockHarm && m.isHolding) dmg *= 0.2
         if (tech.isSpeedHarm) dmg *= 1 - Math.min(player.speed * 0.0185, 0.55)
@@ -690,7 +691,7 @@ const m = {
             m.defaultFPSCycle = m.cycle + 20 + Math.min(90, Math.floor(200 * dmg))
             if (tech.isHarmFreeze) { //freeze all mobs
                 for (let i = 0, len = mob.length; i < len; i++) {
-                    mobs.statusSlow(mob[i], 300)
+                    mobs.statusSlow(mob[i], 450)
                 }
             }
         } else {
@@ -1313,7 +1314,7 @@ const m = {
             if (tech.isFreezeMobs) {
                 for (let i = 0, len = mob.length; i < len; ++i) {
                     Matter.Sleeping.set(mob[i], false)
-                    mobs.statusSlow(mob[i], 60)
+                    mobs.statusSlow(mob[i], 90)
                 }
             } else {
                 wake(mob);
@@ -1622,7 +1623,7 @@ const m = {
                                         if (m.energy > ICE_DRAIN * 2) {
                                             m.energy -= ICE_DRAIN;
                                             this.fieldDrawRadius -= 2;
-                                            mobs.statusSlow(mob[i], 45)
+                                            mobs.statusSlow(mob[i], 60)
                                         } else {
                                             break;
                                         }
@@ -2189,7 +2190,7 @@ const m = {
                                 if (tech.isFreezeMobs) {
                                     for (let i = 0, len = mob.length; i < len; ++i) {
                                         if (Vector.magnitude(Vector.sub(mob[i].position, m.fieldPosition)) < m.fieldRadius) {
-                                            mobs.statusSlow(mob[i], 120)
+                                            mobs.statusSlow(mob[i], 180)
                                         }
                                     }
                                 }
