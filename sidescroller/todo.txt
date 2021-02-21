@@ -1,10 +1,7 @@
 ******************************************************** NEXT PATCH ********************************************************
 
-tech: decoherence - switch realities after you research, spawn 9 research power ups
 
 ******************************************************** BUGS ********************************************************
-
-ship mode can old exit a level in the top part of the exit
 
 use the floor of portal sensor on the player? to unstuck player
 
@@ -31,6 +28,8 @@ use the floor of portal sensor on the player? to unstuck player
 (repeatable almost every time) bug - mines spawn extra mines when fired at thin map wall while jumping
 
 ******************************************************** TODO ********************************************************
+
+switching realities shouldn't randomize undefined tech
 
 decrease healing effects by 50%
 decrease level scaling healing reduction

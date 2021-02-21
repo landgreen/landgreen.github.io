@@ -304,7 +304,6 @@ const m = {
     },
     alive: false,
     switchWorlds() {
-        //count tech
         const totalGuns = b.inventory.length - tech.isRewindGun //count guns, but not CPT gun
         simulation.isTextLogOpen = false; //prevent console spam
         //remove all tech and count current tech total
@@ -312,6 +311,7 @@ const m = {
         for (let i = 0, len = tech.tech.length; i < len; i++) {
             if (
                 !tech.tech[i].isNonRefundable &&
+                !tech.tech[i].isLore &&
                 tech.tech[i].name !== "many-worlds" &&
                 tech.tech[i].name !== "perturbation theory"
             ) {
@@ -321,10 +321,10 @@ const m = {
                 tech.tech[i].count = 0
             }
         }
-        lore.techCount = 0;
+        // lore.techCount = 0;
+        // tech.removeLoreTechFromPool();
+        // tech.addLoreTechToPool();
         tech.removeJunkTechFromPool();
-        tech.removeLoreTechFromPool();
-        tech.addLoreTechToPool();
         tech.armorFromPowerUps = 0;
         tech.totalCount = 0;
         const randomBotCount = b.totalBots()
@@ -2664,7 +2664,7 @@ const m = {
                     player.position.x > level.exit.x &&
                     player.position.x < level.exit.x + 100 &&
                     player.position.y > level.exit.y - 150 &&
-                    player.position.y < level.exit.y - 40
+                    player.position.y < level.exit.y + 40
                 ) {
                     level.nextLevel()
                 }
@@ -2773,6 +2773,7 @@ const m = {
 
                 ctx.restore();
             }
+
             //fix collisions
             collisionChecks = (event) => {
                 const pairs = event.pairs;

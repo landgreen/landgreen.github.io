@@ -1843,7 +1843,7 @@
             },
             {
                 name: "decoherence",
-                description: "enter an <strong>alternate reality</strong> after you <strong class='color-r'>research</strong><br>spawn <strong>9</strong> <strong class='color-r'>research</strong> immediately",
+                description: "enter an <strong>alternate reality</strong> after you <strong class='color-r'>research</strong><br>spawn <strong>9</strong> <strong class='color-r'>research</strong>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
