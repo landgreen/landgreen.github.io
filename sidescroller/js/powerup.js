@@ -462,7 +462,7 @@ const powerUps = {
                 }
                 // console.log(powerUps.gun.choiceLog)
                 // console.log(choice1, choice2, choice3)
-                if (tech.isOneGun) text += `<div style = "color: #f24">replaces your current gun</div>`
+                if (tech.isOneGun && b.inventory.length > 0) text += `<div style = "color: #f24">replaces your current gun</div>`
                 document.getElementById("choose-grid").innerHTML = text
                 powerUps.showDraft();
             } else {

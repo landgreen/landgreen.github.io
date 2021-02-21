@@ -1089,18 +1089,18 @@ const b = {
                 m.energy = 0;
             }
             b.isExtruderOn = true
-            const SPEED = 10
+            const SPEED = 8
             const me = bullet.length;
             const where = Vector.add(m.pos, player.velocity)
             bullet[me] = Bodies.polygon(where.x + 20 * Math.cos(m.angle), where.y + 20 * Math.sin(m.angle), 4, 0.01, {
                 cycle: -0.5,
                 isWave: true,
-                endCycle: simulation.cycle + 10 + 40 * tech.isPlasmaRange,
+                endCycle: simulation.cycle + 35 + 45 * tech.isPlasmaRange,
                 inertia: Infinity,
                 frictionAir: 0,
                 isInHole: true, //this keeps the bullet from entering wormholes
                 minDmgSpeed: 0,
-                dmg: b.dmgScale * 1.35, //damage also changes when you divide by mob.mass on in .do()
+                dmg: b.dmgScale * 1.2, //damage also changes when you divide by mob.mass on in .do()
                 classType: "bullet",
                 isBranch: false,
                 restitution: 0,
@@ -1121,8 +1121,8 @@ const b = {
                             const q = Matter.Query.point(mob, this.position)
                             for (let i = 0; i < q.length; i++) {
                                 Matter.Body.setVelocity(q[i], {
-                                    x: q[i].velocity.x * 0.6,
-                                    y: q[i].velocity.y * 0.6
+                                    x: q[i].velocity.x * 0.2,
+                                    y: q[i].velocity.y * 0.2
                                 });
                                 Matter.Body.setPosition(this, Vector.add(this.position, q[i].velocity)) //move with the medium
                                 let dmg = this.dmg / Math.min(10, q[i].mass)
@@ -2226,6 +2226,55 @@ const b = {
     // ********************************         Bots        *********************************************
     // **************************************************************************************************
     // **************************************************************************************************
+    totalBots() {
+        return tech.dynamoBotCount + tech.foamBotCount + tech.nailBotCount + tech.laserBotCount + tech.boomBotCount + tech.orbitBotCount + tech.plasmaBotCount + tech.missileBotCount
+    },
+    hasBotUpgrade() {
+        return tech.isNailBotUpgrade + tech.isFoamBotUpgrade + tech.isBoomBotUpgrade + tech.isLaserBotUpgrade + tech.isOrbitBotUpgrade + tech.isDynamoBotUpgrade
+    },
+    convertBotsTo(type) { //type can be a string like "dynamoBotCount"
+        //count all bots
+        const totalBots = b.totalBots()
+        //remove all bots techs and convert them to the new type so that tech refunds work correctly
+        let totalTechToConvert = 0 //count how many tech need to be converted
+        for (let i = 0; i < tech.tech.length; i++) {
+            if (tech.tech[i].count && tech.tech[i].isBotTech) {
+                totalTechToConvert += tech.tech[i].count
+                tech.removeTech(i)
+            }
+        }
+        console.log(totalTechToConvert)
+
+        let name = ""
+        if (type === "nailBotCount") name = "nail-bot"
+        if (type === "orbitBotCount") name = "orbital-bot"
+        if (type === "boomBotCount") name = "boom-bot"
+        if (type === "laserBotCount") name = "laser-bot"
+        if (type === "foamBotCount") name = "foam-bot"
+        if (type === "dynamoBotCount") name = "dynamo-bot"
+        if (type === "plasmaBotCount") name = "plasma-bot"
+        if (type === "missileBotCount") name = "missile-bot"
+        //spawn tech for the correct bot type
+        for (let i = 0; i < totalTechToConvert; i++) tech.giveTech(name)
+
+        //remove all bots
+        b.zeroBotCount()
+        for (let i = 0; i < bullet.length; i++) {
+            if (bullet[i].botType && bullet[i].endCycle === Infinity) bullet[i].endCycle = 0 //don't remove temp bots
+        }
+        //set all bots to type
+        tech[type] = totalBots
+        //respawn all bots
+        b.respawnBots();
+    },
+    zeroBotCount() { //remove all bots
+        tech.dynamoBotCount = 0
+        tech.laserBotCount = 0
+        tech.nailBotCount = 0
+        tech.foamBotCount = 0
+        tech.boomBotCount = 0
+        tech.orbitBotCount = 0
+    },
     respawnBots() {
         for (let i = 0; i < tech.dynamoBotCount; i++) b.dynamoBot({ x: player.position.x + 50 * (Math.random() - 0.5), y: player.position.y + 50 * (Math.random() - 0.5) }, false)
         for (let i = 0; i < tech.laserBotCount; i++) b.laserBot({ x: player.position.x + 50 * (Math.random() - 0.5), y: player.position.y + 50 * (Math.random() - 0.5) }, false)
@@ -2609,7 +2658,7 @@ const b = {
                 }
                 //hit target with laser
                 if (this.lockedOn && this.lockedOn.alive && m.energy > this.drainThreshold) {
-                    m.energy -= tech.laserFieldDrain * tech.isLaserDiode
+                    m.energy -= tech.laserFieldDrain * tech.isLaserDiode * 0.7
                     b.laser(this.vertices[0], this.lockedOn.position, b.dmgScale * (0.38 * tech.laserDamage + this.isUpgraded * 0.25), tech.laserReflections, false, 0.4) //tech.laserDamage = 0.16
                     // laser(where = {
                     //     x: m.pos.x + 20 * Math.cos(m.angle),
