@@ -2331,9 +2331,9 @@
                 maxCount: 1,
                 count: 0,
                 allowed() {
-                    return (b.totalBots() > 5 || m.fieldUpgrades[m.fieldMode].name === "nano-scale manufacturing" || m.fieldUpgrades[m.fieldMode].name === "plasma torch" || m.fieldUpgrades[m.fieldMode].name === "pilot wave") && !tech.isEnergyHealth && !tech.isRewindAvoidDeath //build.isExperimentSelection ||
+                    return (b.totalBots() > 3 || m.fieldUpgrades[m.fieldMode].name === "nano-scale manufacturing" || m.fieldUpgrades[m.fieldMode].name === "plasma torch" || m.fieldUpgrades[m.fieldMode].name === "pilot wave") && !tech.isEnergyHealth && !tech.isRewindAvoidDeath //build.isExperimentSelection ||
                 },
-                requires: "bots > 5, plasma torch, nano-scale, pilot wave, not mass-energy equivalence, CPT",
+                requires: "bots > 3, plasma torch, nano-scale, pilot wave, not mass-energy equivalence, CPT",
                 effect() {
                     tech.isRewindGun = true
                     b.guns.push(b.gunRewind)
