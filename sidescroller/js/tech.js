@@ -1334,7 +1334,7 @@
             },
             {
                 name: "piezoelectricity",
-                description: "<strong>colliding</strong> with mobs gives you <strong>400</strong> <strong class='color-f'>energy</strong><br>reduce <strong class='color-harm'>harm</strong> by <strong>15%</strong>",
+                description: "<strong>colliding</strong> with mobs gives you <strong>1024</strong> <strong class='color-f'>energy</strong>", //<br>reduce <strong class='color-harm'>harm</strong> by <strong>15%</strong>
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -1343,7 +1343,7 @@
                 requires: "not mass-energy equivalence",
                 effect() {
                     tech.isPiezo = true;
-                    m.energy += 4;
+                    m.energy += 10.24;
                 },
                 remove() {
                     tech.isPiezo = false;

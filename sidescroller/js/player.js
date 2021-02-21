@@ -313,7 +313,7 @@ const m = {
                 !tech.tech[i].isNonRefundable &&
                 !tech.tech[i].isLore &&
                 tech.tech[i].name !== "many-worlds" &&
-                tech.tech[i].name !== "perturbation theory"
+                tech.tech[i].name !== "decoherence"
             ) {
                 totalTech += tech.tech[i].count
                 tech.tech[i].remove();
@@ -495,7 +495,7 @@ const m = {
         if (tech.isBlockHarm && m.isHolding) dmg *= 0.2
         if (tech.isSpeedHarm) dmg *= 1 - Math.min(player.speed * 0.0185, 0.55)
         if (tech.isSlowFPS) dmg *= 0.8
-        if (tech.isPiezo) dmg *= 0.85
+        // if (tech.isPiezo) dmg *= 0.85
         if (tech.isHarmReduce && m.fieldUpgrades[m.fieldMode].name === "negative mass field" && m.isFieldActive) dmg *= 0.5
         if (tech.isBotArmor) dmg *= 0.94 ** b.totalBots()
         if (tech.isHarmArmor && m.lastHarmCycle + 600 > m.cycle) dmg *= 0.33;
@@ -2804,7 +2804,7 @@ const m = {
                                         return
                                     }
                                     m.damage(dmg);
-                                    if (tech.isPiezo) m.energy += 4;
+                                    if (tech.isPiezo) m.energy += 10.24;
                                     if (tech.isBayesian) powerUps.ejectTech()
                                     if (mob[k].onHit) mob[k].onHit(k);
                                     m.immuneCycle = m.cycle + tech.collisionImmuneCycles; //player is immune to collision damage for 30 cycles
