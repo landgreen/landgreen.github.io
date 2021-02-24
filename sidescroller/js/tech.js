@@ -1860,7 +1860,7 @@
             },
             {
                 name: "decoherence",
-                description: "enter an <strong>alternate reality</strong> after you <strong class='color-r'>research</strong><br>spawn <strong>9</strong> <strong class='color-r'>research</strong>",
+                description: "enter an <strong>alternate reality</strong> after you <strong class='color-r'>research</strong><br>spawn <strong>11</strong> <strong class='color-r'>research</strong>",
                 maxCount: 1,
                 count: 0,
                 allowed() {
@@ -1869,7 +1869,7 @@
                 requires: "not quantum immortality, many-worlds",
                 effect() {
                     tech.isResearchReality = true;
-                    for (let i = 0; i < 9; i++) powerUps.spawn(m.pos.x + Math.random() * 10, m.pos.y + Math.random() * 10, "research", false);
+                    for (let i = 0; i < 11; i++) powerUps.spawn(m.pos.x + Math.random() * 10, m.pos.y + Math.random() * 10, "research", false);
                 },
                 remove() {
                     tech.isResearchReality = false;
@@ -4390,6 +4390,31 @@
             //     requires: "",
             //     effect() {
 
+            //     },
+            //     remove() {}
+            // },
+            // {
+            //     name: "shield",
+            //     description: "",
+            //     maxCount: 1,
+            //     count: 0,
+            //     numberInPool: 0,
+            //     isNonRefundable: true,
+            //     isExperimentHide: true,
+            //     isJunk: true,
+            //     allowed() {
+            //         return true
+            //     },
+            //     requires: "",
+            //     effect() {
+            //         setInterval(() => {
+
+            //             for (let i = 0; i < mob.length; i++) {
+            //                 if (!mob[i].isShielded && !mob[i].shield)
+            //             }
+
+
+            //         }, 20000); //every 30 sections
             //     },
             //     remove() {}
             // },
