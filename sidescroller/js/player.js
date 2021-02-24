@@ -334,7 +334,7 @@ const m = {
         bullet = [];
 
         //randomize health
-        m.health = 0.7 + Math.random()
+        m.health = m.health * (1 + 0.5 * (Math.random() - 0.5))
         if (m.health > 1) m.health = 1;
         m.displayHealth();
 
@@ -344,7 +344,11 @@ const m = {
         //track ammo/ ammoPack count
         let ammoCount = 0
         for (let i = 0, len = b.inventory.length; i < len; i++) {
-            if (b.guns[b.inventory[i]].ammo !== Infinity) ammoCount += b.guns[b.inventory[i]].ammo / b.guns[b.inventory[i]].ammoPack
+            if (b.guns[b.inventory[i]].ammo !== Infinity) {
+                ammoCount += b.guns[b.inventory[i]].ammo / b.guns[b.inventory[i]].ammoPack
+            } else {
+                ammoCount += 5
+            }
         }
         //removes guns and ammo  
         b.inventory = [];
@@ -490,7 +494,7 @@ const m = {
         let dmg = 1
         dmg *= m.fieldHarmReduction
         if (tech.isImmortal) dmg *= 0.84
-        if (tech.isHarmReduceAfterKill) dmg *= (m.lastKillCycle + 300 > m.cycle) ? 0.33 : 1.33
+        if (tech.isHarmReduceAfterKill) dmg *= (m.lastKillCycle + 300 > m.cycle) ? 0.25 : 1.25
         if (tech.healthDrain) dmg *= 1 + 2.667 * tech.healthDrain //tech.healthDrain = 0.03 at one stack //cause more damage
         if (tech.squirrelFx !== 1) dmg *= 1 + (tech.squirrelFx - 1) / 5 //cause more damage
         if (tech.isBlockHarm && m.isHolding) dmg *= 0.2
@@ -632,6 +636,7 @@ const m = {
             m.energy -= dmg;
             if (m.energy < 0 || isNaN(m.energy)) { //taking deadly damage
                 if (tech.isDeathAvoid && powerUps.research.count && !tech.isDeathAvoidedThisLevel) {
+
                     tech.isDeathAvoidedThisLevel = true
                     powerUps.research.changeRerolls(-1)
                     simulation.makeTextLog(`<span class='color-var'>m</span>.<span class='color-r'>research</span><span class='color-symbol'>--</span><br>${powerUps.research.count}`)
@@ -1506,7 +1511,7 @@ const m = {
             description: "use <strong class='color-f'>energy</strong> to <strong>block</strong> mobs<br>excess <strong class='color-f'>energy</strong> used to build <strong>drones</strong><br><strong>double</strong> your default <strong class='color-f'>energy</strong> regeneration",
             effect: () => {
                 m.hold = function() {
-                    if (m.energy > m.maxEnergy - 0.02 && m.fieldCDcycle < m.cycle && !input.field && bullet.length < 200) {
+                    if (m.energy > m.maxEnergy - 0.02 && m.fieldCDcycle < m.cycle && !input.field && bullet.length < 200 && (m.cycle % 2)) {
                         if (tech.isSporeField) {
                             // const len = Math.floor(5 + 4 * Math.random())
                             const len = Math.ceil(m.energy * 10)
@@ -2805,7 +2810,7 @@ const m = {
                                         return
                                     }
                                     m.damage(dmg);
-                                    if (tech.isPiezo) m.energy += 10.24;
+                                    if (tech.isPiezo) m.energy += 20.48;
                                     if (tech.isBayesian) powerUps.ejectTech()
                                     if (mob[k].onHit) mob[k].onHit(k);
                                     m.immuneCycle = m.cycle + tech.collisionImmuneCycles; //player is immune to collision damage for 30 cycles
