@@ -56,7 +56,7 @@ const level = {
             // level.basement(); //fan level
             // level.stronghold() //fan level
 
-            for (let i = 0; i < 150; i++) tech.addLoreTechToPool();
+            // for (let i = 0; i < 150; i++) tech.addLoreTechToPool();
             // powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "tech");
             // tech.giveTech("undefined")
             // lore.techCount = 7

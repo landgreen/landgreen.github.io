@@ -1188,8 +1188,8 @@
             },
             {
                 name: "flip-flop",
-                description: `collisions set <strong>flip-flop</strong> to <strong class="color-flop">OFF</strong> when <strong class="color-flop">ON</strong>
-                              <br>collisions set <strong>flip-flop</strong> to <strong class="color-flop">ON</strong> when <strong class="color-flop">OFF</strong>`,
+                description: `if <strong>flip-flop</strong> is <strong class="color-flop">ON</strong>, collisions set it to <strong class="color-flop">OFF</strong> 
+                              <br>if <strong>flip-flop</strong> is <strong class="color-flop">OFF</strong>, collisions set it to <strong class="color-flop">ON</strong>`,
                 // description: `<strong>collisions</strong> toggle flip-flop <strong>ON</strong> and <strong>OFF</strong>
                 //               <br><strong>ON</strong>: 0 collision <strong class='color-harm'>harm</strong>,  <strong>OFF</strong>: <strong>25%</strong> extra <strong class='color-harm'>harm</strong>`,
                 //   on your next <strong>collision</strong> take <strong>0</strong> <strong class='color-harm'>harm</strong>
@@ -1255,6 +1255,7 @@
                 remove() {
                     tech.isFlipFlop = false
                     tech.isFlipFlopOn = false
+                    m.eyeFillColor = 'transparent'
                 }
             },
             {
@@ -3409,7 +3410,7 @@
                 maxCount: 1,
                 count: 0,
                 allowed() {
-                    return tech.haveGunCheck("foam") || tech.foamBotCount > 2
+                    return tech.haveGunCheck("foam") || tech.foamBotCount > 1
                 },
                 requires: "foam",
                 effect() {
@@ -3438,7 +3439,7 @@
             },
             {
                 name: "quantum foam",
-                description: "<strong>foam</strong> gun fires <strong>0.3</strong> seconds into the <strong>future</strong><br>increase <strong>foam</strong> gun <strong class='color-d'>damage</strong> by <strong>153%</strong>",
+                description: "<strong>foam</strong> gun fires <strong>0.25</strong> seconds into the <strong>future</strong><br>increase <strong>foam</strong> gun <strong class='color-d'>damage</strong> by <strong>143%</strong>",
                 isGunTech: true,
                 maxCount: 9,
                 count: 0,
@@ -4518,7 +4519,10 @@
                         setTimeout(() => { //a short delay, I can't remember why
                             lore.techCount++
                             if (lore.techCount > lore.techGoal - 1) {
-                                tech.removeLoreTechFromPool();
+                                // tech.removeLoreTechFromPool();
+                                for (let i = tech.tech.length - 1; i > 0; i--) {
+                                    if (tech.tech[i].isLore && tech.tech[i].count === 0) tech.tech.splice(i, 1)
+                                }
                             } else {
                                 for (let i = 0; i < tech.tech.length; i++) { //set name for all unchosen copies of this tech
                                     if (tech.tech[i].isLore && tech.tech[i].count === 0) tech.tech[i].description = `${lore.techCount+1}/${lore.techGoal}<br><em>add copies of <strong class="lore-text">this</strong> to the potential <strong class='color-m'>tech</strong> pool</em>`
