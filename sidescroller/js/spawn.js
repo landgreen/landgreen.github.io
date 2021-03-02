@@ -105,7 +105,7 @@ const spawn = {
                 level.levels.push("null")
                 level.exit.x = 5500;
                 level.exit.y = -330;
-                simulation.makeTextLog(`<span class="lore-text">undefined</span> <span class='color-symbol'>=</span> ${lore.techCount}/${lore.techGoal}<br>level.levels.push("null")`);
+                simulation.makeTextLog(`<span class="lore-text">undefined</span> <span class='color-symbol'>=</span> ${lore.techCount}/${lore.techGoal}<br>level.levels.push("<span class='lore-text'>null</span>")`);
                 //remove block map element so exit is clear
                 Matter.World.remove(engine.world, map[map.length - 1]);
                 map.splice(map.length - 1, 1);
@@ -1224,8 +1224,8 @@ const spawn = {
             ctx.setLineDash([125 * Math.random(), 125 * Math.random()]);
             // ctx.lineDashOffset = 6*(simulation.cycle % 215);
             if (this.distanceToPlayer() < this.laserRange) {
-                if (m.energy > 0.003) m.energy -= 0.003
-                if (m.immuneCycle < m.cycle) m.damage(0.00015 * simulation.dmgScale);
+                if (m.energy > 0.002) m.energy -= 0.002
+                if (m.immuneCycle < m.cycle) m.damage(0.0001 * simulation.dmgScale);
                 ctx.beginPath();
                 ctx.moveTo(eye.x, eye.y);
                 ctx.lineTo(m.pos.x, m.pos.y);
