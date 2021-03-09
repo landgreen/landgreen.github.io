@@ -1089,7 +1089,7 @@ const level = {
 
         // simulation.difficulty = 30 
         // spawn.starter(1900, -500, 200) //big boy
-        // spawn.pulsar(1900, -500)
+        spawn.pulsar(1900, -500)
         spawn.pulsarBoss(1900, -500)
         // spawn.historyBoss(1900, -500)
         // spawn.ghoster(2900, -500)
@@ -4032,11 +4032,15 @@ const level = {
             for (let i = 0, len = mob.length; i < len; i++) {
                 if (mob[i].isBoss) me = mob[i]
             }
-            me.onDeath = function() {
-                this.removeCons(); //remove constraint
+            if (me) {
+                me.onDeath = function() {
+                    spawnCouloirEnHaut()
+                    doorSortieSalle.isOpen = false;
+                };
+            } else {
                 spawnCouloirEnHaut()
                 doorSortieSalle.isOpen = false;
-            };
+            }
             // }
         } else {
             spawn.randomLevelBoss(8000, 630, ["shooterBoss"]);
@@ -4044,10 +4048,15 @@ const level = {
             for (let i = 0, len = mob.length; i < len; i++) {
                 if (mob[i].isBoss) me = mob[i]
             }
-            me.onDeath = function() {
+            if (me) {
+                me.onDeath = function() {
+                    spawnCouloirEnHaut()
+                    doorSortieSalle.isOpen = false;
+                };
+            } else {
                 spawnCouloirEnHaut()
                 doorSortieSalle.isOpen = false;
-            };
+            }
         }
     },
     house() {
