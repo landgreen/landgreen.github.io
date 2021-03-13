@@ -46,9 +46,6 @@
     <p>
       The <a href="https://www.youtube.com/watch?v=p-MNSLsjjdo">double slit experiment</a> is a good example of wave interference.
       A wave passing through a slit spreads out. It <a href="../waveproperties/index.html#diffraction">diffracts</a>.
-      Two slits result in two different wave diffractions.
-      These separate waves become out phase because they have to travel different distances.
-      This means that the superposition alternates between constructive and destructive interference.
     </p>
     <details>
       <summary>single slit wave diffraction</summary>
@@ -69,6 +66,13 @@
         </g>
       </svg>
     </details>
+    <p>
+      2 slits produce 2 separate wave diffractions.
+      Once both waves get to their target, they have traveled different distances so they have different phases.
+      When both waves are in the same phase they add constructively.
+      When both waves are half a cycle out of phase they add destructively.
+      The phase differences lead to an alternating constructive and destructive interference pattern.
+    </p>
     <details>
       <summary>double slit wave interference</summary>
       <div>gap separation = <input id='slit-width-slider' type="range" step="1" value="100" min="5" max="290" style="width: 165px;"></div>
@@ -175,9 +179,9 @@
       </li>
       <li>
         <div>
-          wavelength = <input id='slit-wavelength' type="number" value='0.5' min="0" step="0.0001" style="width:100px;">
-          <br>slit separation = <input id='slit-separation' type="number" value='2' min="0" step="0.001" style="width:80px;">
-          <br>slit width = <input id='slit-slitWidth' type="number" value='2' min="0" step="0.01" style="width:117px;">
+          wavelength = <input id='slit-wavelength' type="number" value='0.201' min="0" step="0.0001" style="width:100px;">
+          <br>slit separation = <input id='slit-separation' type="number" value='5' min="0" step="0.001" style="width:80px;">
+          <br>slit width = <input id='slit-slitWidth' type="number" value='0.5' min="0" step="0.01" style="width:117px;">
           <!-- <br>target distance = <input id='slit-distance' type="number" value='100' min="0" step="1" style="width:100px;"> -->
         </div>
       </li>
@@ -1076,244 +1080,6 @@
       </details>
     </div>
 
-    <h2 class='underlined'>Wavelength and Momentum</h2>
-    <p>
-      We can calculate the quantum wavelength of a particle in terms of it's momentum with the equation below.
-    </p>
-    <details id="atomic-orbitals" class="derive">
-      <summary>derivation of particle wavelengths</summary>
-      <p>
-        Special relativity explains the relationship between energy and momentum.
-        We can use that relationship to find how wavelength and momentum relate.
-      </p>
-      $$E^2 = (pc)^2 +(mc^2)^2 $$
-      <p>Photons have no mass, so the equation simplifies.</p>
-      $$E^2 = (pc)^2$$
-      $$E = pc$$
-      <br>
-      $$E = hf$$
-      $$E = \frac{hc}{\lambda}$$
-      $$pc = \frac{hc}{\lambda}$$
-      $$p = \frac{h}{\lambda}$$
-      $$\lambda = \frac{h}{p}$$
-    </details>
-    <div class='definition'>
-      <h1> $$\lambda = \frac{h}{p}$$</h1>
-      \(\lambda\) = wavelength [m, meter]
-      <br>\(h\) = 6.626 × 10<sup>-34</sup> = Planck's constant [J s]
-      <br>\(p\) = momentum [kg m/s]
-    </div>
-    <p>
-      Photons have no mass, but they they still have momentum.
-      You can actually push a space ship like a sail boat, but with light instead of wind.
-      When photons collide with the <a href="http://www.planetary.org/explore/projects/lightsail-solar-sailing/">light sail</a>, they bounce off pushing the <a href="https://www.youtube.com/watch?v=oIuvIDhcs8E">sail</a> forward.
-    </p>
-
-    <div class='example'>
-      <strong>Example:</strong> What is the momentum of a photon of green light? (540 nm)
-      <details>
-        <summary>solution</summary>
-        $$\lambda = \frac{h}{p}$$
-        $$p = \frac{h}{\lambda}$$
-        $$p = \frac{6.626 \times 10^{-34}}{540 \times 10^{-9}}$$
-        $$p = 1.2 \times 10^{-27} \, \mathrm{kg \tfrac{m}{s}}$$
-        <br>
-        <p>
-          If we fired photons at a massive object the photons should transfer their momentum because of conservation of momentum.
-        </p>
-        <strong>Extra Credit:</strong> How many green photons would it take to accelerate a 1 kg body from rest to 1 m/s?
-        (assume the green photons reflect off the 1 kg object)
-        <details>
-          <summary>strategy</summary>
-          <p>Use conservation of momentum. </p>
-          $$p_{\mathrm{(initial)}} = p_{\mathrm{(final)}}$$
-          $$p_{\mathrm{(photons)}} + p_{\mathrm{(body)}} = p_{\mathrm{(photons)}} + p_{\mathrm{(body)}}$$
-          <p>The body is initially at rest. We can set it to zero.</p>
-          $$p_{\mathrm{(photons)}} = p_{\mathrm{(photons)}} + p_{\mathrm{(body)}}$$
-          <p>After the photons are reflected they will have the same momentum but in the opposite direction.</p>
-          $$p_{\mathrm{(photons)}} = -p_{\mathrm{(photons)}} + p_{\mathrm{(body)}}$$
-          $$2p_{\mathrm{(photons)}} = p_{\mathrm{(body)}}$$
-          <p>We can just add in a variable "n" to represent the number of total photons and scale "n" by the momentum of a single photon.</p>
-          $$2np_{\mathrm{(photon)}} = p_{\mathrm{(body)}}$$
-        </details>
-        <details>
-          <summary>solution</summary>
-          $$2np_{\mathrm{(photon)}} = p_{\mathrm{(body)}}$$
-          $$2np_{\mathrm{(photon)}} = mv$$
-          $$2np_{\mathrm{(photon)}} = (1)(1)$$
-          $$np_{\mathrm{(photon)}} = \tfrac{1}{2}$$
-          $$n = \frac{1}{2p_{\mathrm{(photon)}}}$$
-          <br>
-          $$p = 1.2 \times 10^{-27} \, \mathrm{kg \tfrac{m}{s}}$$
-          $$n = \frac{1}{(2)(1.2 \times 10^{-27})}$$
-          $$n= 4.16 \times 10^{26}\,\mathrm{photons}$$
-        </details>
-    </div>
-
-    </details>
-    <p>
-      In 1924 Louis de Broglie proposed that particles with mass might have a wavelength.
-      This turned out to be accurate. Electrons, atoms, even large molecules all have a measurable quantum wavelength based on their momentum.
-    </p>
-    $$\lambda = \frac{h}{p} \quad \quad \lambda = \frac{h}{mv}$$
-    <table>
-      <tr>
-        <th>particle</th>
-        <th>mass (kg)</th>
-        <th>speed (m/s)</th>
-        <th>wavelength (m)</th>
-      </tr>
-      <tr>
-        <td>radio photon</td>
-        <td>0</td>
-        <td>c</td>
-        <td>≈ 1 </td>
-      </tr>
-      <tr>
-        <td>electron</td>
-        <td>9.1 × 10<sup>-31</sup></td>
-        <td>1</td>
-        <td>≈ 10<sup>-4</sup> </td>
-      </tr>
-      <tr>
-        <td>visible photon</td>
-        <td>0</td>
-        <td>c</td>
-        <td>≈ 10<sup>-7</sup> </td>
-      </tr>
-      <tr>
-        <td>oxygen atom</td>
-        <td>2.7 × 10<sup>-26</sup></td>
-        <td>1</td>
-        <td>≈ 10<sup>-8</sup> </td>
-      </tr>
-      <tr>
-        <td>gamma ray</td>
-        <td>0</td>
-        <td>c</td>
-        <td>≈ 10<sup>-12</sup> </td>
-      </tr>
-      <tr>
-        <td>electron</td>
-        <td>9.1 × 10<sup>-31</sup></td>
-        <td>0.5c</td>
-        <td>≈ 10<sup>-12</sup> </td>
-      </tr>
-      <tr>
-        <td>a cat?</td>
-        <td>4</td>
-        <td>1</td>
-        <td>≈ 10<sup>-36</sup> </td>
-      </tr>
-    </table>
-    <p>
-      Oxygen is made of smaller particles, so it's odd that it has a single wavelength.
-      Yet, particles made of smaller particles do behave as a single wave.
-      Wave patterns have been verified experimentally for molecules up to around 25,000 protons and neutrons in 2019.
-    </p>
-    <p>
-      A cat particle has an extremely small wavelength, but a cat isn't a single quantum particle in a practical sense.
-      The equation begins to lose meaning at the macroscopic scale as particles can no longer be isolated from their environment.
-      This agrees with our everyday observations for cats. They don't have a measurable wave-nature, although they are very sneaky.
-    </p>
-
-    <!-- <p>
-      How does the wavelength of a particle compare to the size of a particle?
-    </p> -->
-
-    <div class='example'>
-      <strong>Example:</strong> Find the wavelength of a proton moving at 30 m/s.
-      <details>
-        <summary>Subatomic Particles Data Table</summary>
-        <table>
-          <tr>
-            <th>name</th>
-            <th>symbol</th>
-            <th>charge (e)</th>
-            <th>mass (kg)</th>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://en.wikipedia.org/wiki/Proton">proton</a>
-            </td>
-            <td> \(p^+\) </td>
-            <td>+1</td>
-            <td>1.6726 × 10<sup>-27</sup> </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://en.wikipedia.org/wiki/Electron">electron</a>
-            </td>
-            <td>\(e^-\) </td>
-            <td>−1</td>
-            <td>9.1094 × 10<sup>-31</sup> </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://en.wikipedia.org/wiki/Positron">positron</a>
-            </td>
-            <td>\(e^+\) </td>
-            <td>+1</td>
-            <td>9.1094 × 10<sup>-31</sup> </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://en.wikipedia.org/wiki/Neutron">neutron</a>
-            </td>
-            <td>\(n\) </td>
-            <!-- <td>0</td> -->
-            <td>0</td>
-            <td>‎1.6749 × 10<sup>-27</sup> </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://en.wikipedia.org/wiki/Neutrino">neutrino</a>
-            </td>
-            <td>\(v_e\) </td>
-            <!-- <td>0</td> -->
-            <td>0</td>
-            <td>1.78 × 10<sup>-36</sup> </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://en.wikipedia.org/wiki/Neutrino">antineutrino</a>
-            </td>
-            <td>\(\bar{v}_e\) </td>
-            <!-- <td>0</td> -->
-            <td>0</td>
-            <td>1.78 × 10<sup>-36</sup> </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://en.wikipedia.org/wiki/Muon">muon</a>
-            </td>
-            <td>\( \mu^-\) </td>
-            <!-- <td>−1.602 × 10<sup>-19</sup> </td> -->
-            <td>−1</td>
-            <td>1.8835 × 10<sup>-28</sup> </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://en.wikipedia.org/wiki/Alpha_particle">alpha</a>
-            </td>
-            <td>\( \small{}^4_2 \normalsize \alpha\) </td>
-            <!-- <td>+3.204 × 10<sup>-19</sup> </td> -->
-            <td>+2</td>
-            <td>6.6447 × 10<sup>-27</sup> </td>
-          </tr>
-        </table>
-      </details>
-
-      <details>
-        <summary>solution</summary>
-        $$\lambda = \frac{h}{mv}$$
-        $$\lambda = \frac{6.626 \times 10^{-34}}{(1.67 \times 10^{-27})(30)}$$
-        $$\lambda = 1.32 \times 10^{-8} \, \mathrm{m}$$
-      </details>
-    </div>
-
-
-
     <h2 class='underlined' id="emission">Emission and Absorption</h2>
     <p>
       Each electron in an atom can only have an energy that exactly matches an atomic orbital.
@@ -1366,7 +1132,7 @@
       <p>
         An electron in an atom can be described by 4 quantum numbers.
         Quantizing these numbers adds another restriction.
-        Two electrons can't form the exact same wave due to a type of destructive interference called the Pauli exclusion principle.
+        Two electrons can't form the exact same wave due to a type of destructive interference called the <a href="https://www.youtube.com/watch?v=Zlp2GQ3OLeE">Pauli exclusion principle</a>.
         This means each electron in an atom must have a different combination of the 4 numbers.
       </p>
       <a href="https://en.wikipedia.org/wiki/Atomic_orbital"> <img src="Hydrogen_Density_Plots.png" width="100%"> </a>
@@ -2200,6 +1966,244 @@
         </p>
       </details>
     </div>
+
+    <h2 class='underlined'>Wavelength and Momentum</h2>
+    <p>
+      We can calculate the quantum wavelength of a particle in terms of it's momentum with the equation below.
+    </p>
+    <details id="atomic-orbitals" class="derive">
+      <summary>derivation of particle wavelengths</summary>
+      <p>
+        Special relativity explains the relationship between energy and momentum.
+        We can use that relationship to find how wavelength and momentum relate.
+      </p>
+      $$E^2 = (pc)^2 +(mc^2)^2 $$
+      <p>Photons have no mass, so the equation simplifies.</p>
+      $$E^2 = (pc)^2$$
+      $$E = pc$$
+      <br>
+      $$E = hf$$
+      $$E = \frac{hc}{\lambda}$$
+      $$pc = \frac{hc}{\lambda}$$
+      $$p = \frac{h}{\lambda}$$
+      $$\lambda = \frac{h}{p}$$
+    </details>
+    <div class='definition'>
+      <h1> $$\lambda = \frac{h}{p}$$</h1>
+      \(\lambda\) = wavelength [m, meter]
+      <br>\(h\) = 6.626 × 10<sup>-34</sup> = Planck's constant [J s]
+      <br>\(p\) = momentum [kg m/s]
+    </div>
+    <p>
+      Photons have no mass, but they they still have momentum.
+      You can actually push a space ship like a sail boat, but with light instead of wind.
+      When photons collide with the <a href="http://www.planetary.org/explore/projects/lightsail-solar-sailing/">light sail</a>, they bounce off pushing the <a href="https://www.youtube.com/watch?v=oIuvIDhcs8E">sail</a> forward.
+    </p>
+
+    <div class='example'>
+      <strong>Example:</strong> What is the momentum of a photon of green light? (540 nm)
+      <details>
+        <summary>solution</summary>
+        $$\lambda = \frac{h}{p}$$
+        $$p = \frac{h}{\lambda}$$
+        $$p = \frac{6.626 \times 10^{-34}}{540 \times 10^{-9}}$$
+        $$p = 1.2 \times 10^{-27} \, \mathrm{kg \tfrac{m}{s}}$$
+        <br>
+        <p>
+          If we fired photons at a massive object the photons should transfer their momentum because of conservation of momentum.
+        </p>
+        <strong>Extra Credit:</strong> How many green photons would it take to accelerate a 1 kg body from rest to 1 m/s?
+        (assume the green photons reflect off the 1 kg object)
+        <details>
+          <summary>strategy</summary>
+          <p>Use conservation of momentum. </p>
+          $$p_{\mathrm{(initial)}} = p_{\mathrm{(final)}}$$
+          $$p_{\mathrm{(photons)}} + p_{\mathrm{(body)}} = p_{\mathrm{(photons)}} + p_{\mathrm{(body)}}$$
+          <p>The body is initially at rest. We can set it to zero.</p>
+          $$p_{\mathrm{(photons)}} = p_{\mathrm{(photons)}} + p_{\mathrm{(body)}}$$
+          <p>After the photons are reflected they will have the same momentum but in the opposite direction.</p>
+          $$p_{\mathrm{(photons)}} = -p_{\mathrm{(photons)}} + p_{\mathrm{(body)}}$$
+          $$2p_{\mathrm{(photons)}} = p_{\mathrm{(body)}}$$
+          <p>We can just add in a variable "n" to represent the number of total photons and scale "n" by the momentum of a single photon.</p>
+          $$2np_{\mathrm{(photon)}} = p_{\mathrm{(body)}}$$
+        </details>
+        <details>
+          <summary>solution</summary>
+          $$2np_{\mathrm{(photon)}} = p_{\mathrm{(body)}}$$
+          $$2np_{\mathrm{(photon)}} = mv$$
+          $$2np_{\mathrm{(photon)}} = (1)(1)$$
+          $$np_{\mathrm{(photon)}} = \tfrac{1}{2}$$
+          $$n = \frac{1}{2p_{\mathrm{(photon)}}}$$
+          <br>
+          $$p = 1.2 \times 10^{-27} \, \mathrm{kg \tfrac{m}{s}}$$
+          $$n = \frac{1}{(2)(1.2 \times 10^{-27})}$$
+          $$n= 4.16 \times 10^{26}\,\mathrm{photons}$$
+        </details>
+    </div>
+
+    </details>
+    <p>
+      In 1924 Louis de Broglie proposed that particles with mass might have a wavelength.
+      This turned out to be accurate. Electrons, atoms, even large molecules all have a measurable quantum wavelength based on their momentum.
+    </p>
+    $$\lambda = \frac{h}{p} \quad \quad \lambda = \frac{h}{mv}$$
+    <table>
+      <tr>
+        <th>particle</th>
+        <th>mass (kg)</th>
+        <th>speed (m/s)</th>
+        <th>wavelength (m)</th>
+      </tr>
+      <tr>
+        <td>radio photon</td>
+        <td>0</td>
+        <td>c</td>
+        <td>≈ 1 </td>
+      </tr>
+      <tr>
+        <td>electron</td>
+        <td>9.1 × 10<sup>-31</sup></td>
+        <td>1</td>
+        <td>≈ 10<sup>-4</sup> </td>
+      </tr>
+      <tr>
+        <td>visible photon</td>
+        <td>0</td>
+        <td>c</td>
+        <td>≈ 10<sup>-7</sup> </td>
+      </tr>
+      <tr>
+        <td>oxygen atom</td>
+        <td>2.7 × 10<sup>-26</sup></td>
+        <td>1</td>
+        <td>≈ 10<sup>-8</sup> </td>
+      </tr>
+      <tr>
+        <td>gamma ray</td>
+        <td>0</td>
+        <td>c</td>
+        <td>≈ 10<sup>-12</sup> </td>
+      </tr>
+      <tr>
+        <td>electron</td>
+        <td>9.1 × 10<sup>-31</sup></td>
+        <td>0.5c</td>
+        <td>≈ 10<sup>-12</sup> </td>
+      </tr>
+      <tr>
+        <td>a cat?</td>
+        <td>4</td>
+        <td>1</td>
+        <td>≈ 10<sup>-36</sup> </td>
+      </tr>
+    </table>
+    <p>
+      Oxygen is made of smaller particles, so it's odd that it has a single wavelength.
+      Yet, particles made of smaller particles do behave as a single wave.
+      Wave patterns have been verified experimentally for molecules up to around 25,000 protons and neutrons in 2019.
+    </p>
+    <p>
+      A cat particle has an extremely small wavelength, but a cat isn't a single quantum particle in a practical sense.
+      The equation begins to lose meaning at the macroscopic scale as particles can no longer be isolated from their environment.
+      This agrees with our everyday observations for cats. They don't have a measurable wave-nature, although they are very sneaky.
+    </p>
+
+    <!-- <p>
+      How does the wavelength of a particle compare to the size of a particle?
+    </p> -->
+
+    <div class='example'>
+      <strong>Example:</strong> Find the wavelength of a proton moving at 30 m/s.
+      <details>
+        <summary>Subatomic Particles Data Table</summary>
+        <table>
+          <tr>
+            <th>name</th>
+            <th>symbol</th>
+            <th>charge (e)</th>
+            <th>mass (kg)</th>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Proton">proton</a>
+            </td>
+            <td> \(p^+\) </td>
+            <td>+1</td>
+            <td>1.6726 × 10<sup>-27</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Electron">electron</a>
+            </td>
+            <td>\(e^-\) </td>
+            <td>−1</td>
+            <td>9.1094 × 10<sup>-31</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Positron">positron</a>
+            </td>
+            <td>\(e^+\) </td>
+            <td>+1</td>
+            <td>9.1094 × 10<sup>-31</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Neutron">neutron</a>
+            </td>
+            <td>\(n\) </td>
+            <!-- <td>0</td> -->
+            <td>0</td>
+            <td>‎1.6749 × 10<sup>-27</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Neutrino">neutrino</a>
+            </td>
+            <td>\(v_e\) </td>
+            <!-- <td>0</td> -->
+            <td>0</td>
+            <td>1.78 × 10<sup>-36</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Neutrino">antineutrino</a>
+            </td>
+            <td>\(\bar{v}_e\) </td>
+            <!-- <td>0</td> -->
+            <td>0</td>
+            <td>1.78 × 10<sup>-36</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Muon">muon</a>
+            </td>
+            <td>\( \mu^-\) </td>
+            <!-- <td>−1.602 × 10<sup>-19</sup> </td> -->
+            <td>−1</td>
+            <td>1.8835 × 10<sup>-28</sup> </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://en.wikipedia.org/wiki/Alpha_particle">alpha</a>
+            </td>
+            <td>\( \small{}^4_2 \normalsize \alpha\) </td>
+            <!-- <td>+3.204 × 10<sup>-19</sup> </td> -->
+            <td>+2</td>
+            <td>6.6447 × 10<sup>-27</sup> </td>
+          </tr>
+        </table>
+      </details>
+
+      <details>
+        <summary>solution</summary>
+        $$\lambda = \frac{h}{mv}$$
+        $$\lambda = \frac{6.626 \times 10^{-34}}{(1.67 \times 10^{-27})(30)}$$
+        $$\lambda = 1.32 \times 10^{-8} \, \mathrm{m}$$
+      </details>
+    </div>
+
+
     <h2 class='underlined'>Quantum Mechanics</h2>
     <p>
       Quantum mechanics seems strange.
@@ -2223,11 +2227,15 @@
         The Schrödinger equation can be applied to <a href="https://physics.weber.edu/schroeder/software/QuantumScattering2D.html">one</a> particle, atom, molecule, or possibly the entire universe.
       </p>
       <p>
-        The probability of measuring a system in a particular state is a separate calculation.
-        It's done by squaring the amplitude of the system's wave function.
-        This predicts the probabilities of measuring the system in each possible <a href="http://toutestquantique.fr/en/superposition/">state</a>.
+        As a wave function evolves with time it often looks like a field of positive and negative amplitudes oscillating back and forth like a sine wave.
+        It kinda looks like waves and ripples on surface of a pool of water.
       </p>
       <br>
+      <p>
+        The probability of measuring a system in a particular state doesn't use the Schrödinger equation.
+        It's done by squaring the amplitude of the system's wave function.
+        A larger squared amplitude has a higher probability of of being measured.
+      </p>
       <p>
         In order to measure the results of an experiment, an observer must interact with the experiment.
         Interacting is complex because everything is a quantum object, including the observer and the experiment.
@@ -2235,7 +2243,7 @@
         The observer and experiment together form a <a href="..\waveproperties\index.html#interference">superposition</a> of all possible outcomes.
       </p>
       <p>
-        The observer can't directly see this superposition, like how sound waves in superposition can't directly effect each other.
+        The observer can't directly see this <a href="http://toutestquantique.fr/en/superposition/">superposition</a>, like how sound waves in superposition can't directly effect each other.
         The observer only experiences one experimental outcome chosen at random.
         Why can't they see all the outcomes?
         The answer to that question depends on how you interpret quantum mechanics.
@@ -2310,7 +2318,7 @@
         https://www.mathematik.uni-muenchen.de/~bohmmech/BohmHome/files/Frequently_Asked_Questions_about_Bohmian_Mechanics.pdf
       -->
       <p>
-        The <a href="https://www.youtube.com/watch?v=RlXdsyctD50">pilot wave theory</a> proposes an deterministic universe made of particles.
+        The <a href="https://www.youtube.com/watch?v=RlXdsyctD50">pilot wave theory</a> proposes a deterministic universe made of particles.
         It also proposes a hidden level of reality for the wave function, which is still calculated with the Schrödinger equation.
       </p>
       <p>
@@ -2346,7 +2354,7 @@
       <summary>wave-particle duality</summary>
       <p>
         Is nature made of waves or particles?
-        The annoying answer is neither.
+        It depends on how detailed we want to be and how we interpret quantum mechanics.
         The wave model and the particle model are approximations of nature that are each accurate for different conditions.
       </p>
       <!-- <p>
@@ -2369,21 +2377,24 @@
       </p>
       <br> -->
       <p>
-        <a href="https://www.youtube.com/watch?v=ATcrrzJFtBY">Quantum field theory</a> describes reality as being made of waves at the fundamental level.
-        In this theory there is a field for each type of fundamental particle spread across all of space and time.
-        Regions of a field can evolve into a localized excited state.
+        <a href="https://www.youtube.com/watch?v=ATcrrzJFtBY">Quantum field theory</a> describes reality with wave functions.
+        In this theory there are several field types spread across all of space and time.
+        Regions of these fields can evolve into a localized excited state with consistently high amplitudes.
         Particles are a useful mathematical approximation of these excited states.
       </p>
       <p>
-        For example, an electron is a region in space and time where the electron field has more amplitude, or bigger ripples.
+        For example, an electron is a region where the electron field has more amplitude, or bigger ripples.
         The electron field exists everywhere, but electrons are more likely to be measured where the field amplitude is larger.
       </p>
       <p>
         Fields interact with other fields, and with themselves.
-        These interactions can be approximated with <a href="https://www.youtube.com/watch?v=fG52mXN-uWI">feynman diagrams</a>, which treats everything as particles.
-        Electron field interactions generally model well as particles, because the most complex electron interactions are weak enough to be mathematically canceled out.
+        These interactions can be approximated with a <a href="https://www.youtube.com/watch?v=fG52mXN-uWI">Feynman diagram</a>, which treats everything as particles.
+      </p>
+      <p>
+        Using Feynman diagrams electron field interactions generally model well as particles.
+        This is because the most complex electron interactions are weak enough to be mathematically canceled out.
         Quarks, the particles inside protons and neutrons, interact through the "strong force".
-        This force has frequent complex interactions that don't cancel out, making the particle model less useful.
+        This force has frequent complex interactions that don't cancel out, making the particle model less useful for calculations.
       </p>
     </details>
     <br>
