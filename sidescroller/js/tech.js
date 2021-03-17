@@ -3606,7 +3606,7 @@
                 }
             }, {
                 name: "reduced tolerances",
-                description: "reduce all <strong>drone</strong> production costs by <strong>66%</strong><br>reduce the average <strong>drone</strong> lifetime by <strong>45%</strong>",
+                description: "reduce all <strong>drone</strong> production costs by <strong>66%</strong><br>reduce the average <strong>drone</strong> lifetime by <strong>40%</strong>",
                 isGunTech: true,
                 maxCount: 3,
                 count: 0,
@@ -3616,7 +3616,7 @@
                 },
                 requires: "drones",
                 effect() {
-                    tech.droneCycleReduction = Math.pow(0.55, 1 + this.count)
+                    tech.droneCycleReduction = Math.pow(0.6, 1 + this.count)
                     tech.droneEnergyReduction = Math.pow(0.333, 1 + this.count)
                     for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
                         if (b.guns[i].name === "drones") b.guns[i].ammoPack = b.guns[i].defaultAmmoPack * Math.pow(3, this.count)
