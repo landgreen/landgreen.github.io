@@ -478,7 +478,7 @@ const m = {
         }
     },
     addHealth(heal) {
-        if (!tech.isEnergyHealth) {
+        if (!tech.isEnergyHealth && !tech.isNoHeals) {
             m.health += heal * simulation.healScale;
             if (m.health > m.maxHealth) m.health = m.maxHealth;
             m.displayHealth();
