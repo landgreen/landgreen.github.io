@@ -980,7 +980,7 @@ const mobs = {
             explode(mass = this.mass) {
                 if (m.immuneCycle < m.cycle) {
                     m.damage(Math.min(Math.max(0.02 * Math.sqrt(mass), 0.01), 0.35) * simulation.dmgScale);
-                    this.dropPowerUp = false;
+                    this.isDropPowerUp = false;
                     this.death(); //death with no power up or body
                 }
             },
@@ -988,7 +988,7 @@ const mobs = {
                 if (!m.isBodiesAsleep) {
                     this.timeLeft--;
                     if (this.timeLeft < 0) {
-                        this.dropPowerUp = false;
+                        this.isDropPowerUp = false;
                         this.death(); //death with no power up
                     }
                 }
@@ -1014,9 +1014,9 @@ const mobs = {
                     if (this.isBoss) dmg *= 0.25
 
                     //energy and heal drain should be calculated after damage boosts
-                    if (tech.energySiphon && dmg !== Infinity && this.dropPowerUp) m.energy += Math.min(this.health, dmg) * tech.energySiphon
+                    if (tech.energySiphon && dmg !== Infinity && this.isDropPowerUp) m.energy += Math.min(this.health, dmg) * tech.energySiphon
 
-                    if (tech.healthDrain && dmg !== Infinity && this.dropPowerUp) {
+                    if (tech.healthDrain && dmg !== Infinity && this.isDropPowerUp) {
                         m.addHealth(Math.min(this.health, dmg) * tech.healthDrain)
                         if (m.health > m.maxHealth) m.health = m.maxHealth
                     }
@@ -1036,12 +1036,22 @@ const mobs = {
                 // to use declare custom method in mob spawn
             },
             leaveBody: true,
-            dropPowerUp: true,
+            isDropPowerUp: true,
             death() {
                 this.onDeath(this); //custom death effects
                 this.removeConsBB();
                 this.alive = false; //triggers mob removal in mob[i].replace(i)
-                if (this.dropPowerUp) {
+                if (tech.deathSpawns && this.isDropPowerUp) {
+                    const len = tech.deathSpawns * Math.ceil(Math.random() * simulation.difficulty * tech.deathSpawns)
+                    for (let i = 0; i < len; i++) {
+                        spawn.spawns(this.position.x + (Math.random() - 0.5) * radius * 2.5, this.position.y + (Math.random() - 0.5) * radius * 2.5);
+                        Matter.Body.setVelocity(mob[mob.length - 1], {
+                            x: this.velocity.x + (Math.random() - 0.5) * 10,
+                            y: this.velocity.x + (Math.random() - 0.5) * 10
+                        });
+                    }
+                }
+                if (this.isDropPowerUp) {
                     if (tech.isEnergyLoss) m.energy *= 0.75;
                     powerUps.spawnRandomPowerUp(this.position.x, this.position.y);
                     m.lastKillCycle = m.cycle; //tracks the last time a kill was made, mostly used in simulation.checks()
@@ -1055,7 +1065,10 @@ const mobs = {
                     }
                     if (tech.isBotSpawnerReset) {
                         for (let i = 0, len = bullet.length; i < len; i++) {
-                            if (bullet[i].botType && !bullet[i].isKeep) bullet[i].endCycle = simulation.cycle + 660 //10 seconds and 1 extra second for fun
+                            if (bullet[i].botType && bullet[i].endCycle !== Infinity) {
+                                console.log(bullet[i].endCycle)
+                                bullet[i].endCycle = simulation.cycle + 660 //10 seconds and 1 extra second for fun
+                            }
                         }
                     }
                     if (Math.random() < tech.botSpawner) {

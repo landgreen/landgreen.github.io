@@ -472,7 +472,7 @@ const spawn = {
                 //tether to other blocks
                 ctx.beginPath();
                 for (let i = 0, len = mob.length; i < len; i++) {
-                    if (mob[i].isGrouper && mob[i] != this && mob[i].dropPowerUp) { //don't tether to self, bullets, shields, ...
+                    if (mob[i].isGrouper && mob[i] != this && mob[i].isDropPowerUp) { //don't tether to self, bullets, shields, ...
                         const distance2 = Vector.magnitudeSquared(Vector.sub(this.position, mob[i].position))
                         if (distance2 < this.groupingRangeMax) {
                             if (!mob[i].seePlayer.recall) mob[i].seePlayerCheck(); //wake up sleepy mobs
@@ -584,7 +584,7 @@ const spawn = {
                 powerUps.spawnBossPowerUp(this.position.x, this.position.y)
             } else {
                 this.leaveBody = false;
-                this.dropPowerUp = false;
+                this.isDropPowerUp = false;
             }
         }
     },
@@ -616,7 +616,7 @@ const spawn = {
         };
         me.onDeath = function() {
             this.leaveBody = false;
-            this.dropPowerUp = false;
+            this.isDropPowerUp = false;
             if (vertices > 3) {
                 spawn.powerUpBoss(this.position.x, this.position.y, vertices - 1)
                 Matter.Body.setVelocity(mob[mob.length - 1], {
@@ -1132,7 +1132,7 @@ const spawn = {
                     this.fill = `rgba(0,0,0,${0.4+0.6*Math.random()})`
                     this.stroke = "#014"
                     this.isShielded = false;
-                    this.dropPowerUp = true;
+                    this.isDropPowerUp = true;
                     this.collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.mob; //can't touch bullets
 
                     ctx.beginPath();
@@ -1160,7 +1160,7 @@ const spawn = {
                     // ctx.stroke();
                 } else {
                     this.isShielded = true;
-                    this.dropPowerUp = false;
+                    this.isDropPowerUp = false;
                     this.seePlayer.recall = false
                     this.fill = "transparent"
                     this.stroke = "transparent"
@@ -2271,7 +2271,7 @@ const spawn = {
         me.frictionAir = 0;
         me.restitution = 0.8;
         me.leaveBody = false;
-        me.dropPowerUp = false;
+        me.isDropPowerUp = false;
 
         me.showHealthBar = false;
         me.collisionFilter.category = cat.mobBullet;
@@ -2322,7 +2322,7 @@ const spawn = {
         me.frictionAir = 0;
         me.restitution = 1;
         me.leaveBody = false;
-        me.dropPowerUp = false;
+        me.isDropPowerUp = false;
         me.showHealthBar = false;
         me.collisionFilter.category = cat.mobBullet;
         me.collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet;
@@ -2460,14 +2460,14 @@ const spawn = {
         me.frictionAir = 0;
         me.restitution = 0;
         me.leaveBody = false;
-        me.dropPowerUp = false;
+        me.isDropPowerUp = false;
         me.showHealthBar = false;
         me.collisionFilter.category = cat.mobBullet;
         me.collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet;
         me.do = function() {
             this.timeLimit();
             if (Matter.Query.collides(this, map).length > 0 || Matter.Query.collides(this, body).length > 0 && this.speed < 3) {
-                this.dropPowerUp = false;
+                this.isDropPowerUp = false;
                 this.death(); //death with no power up
             }
         };
@@ -2552,6 +2552,7 @@ const spawn = {
         me.frictionStatic = 0;
         me.friction = 0;
         me.frictionAir = 0.5;
+        me.homePosition = { x: x, y: y };
         spawn.shield(me, x, y, 1);
         spawn.spawnOrbitals(me, radius + 50 + 200 * Math.random())
 
@@ -2582,10 +2583,9 @@ const spawn = {
                     this.cycle = 0
                     ctx.beginPath();
                     for (let i = 0; i < mob.length; i++) {
-                        if (!mob[i].isShielded && !mob[i].shield && mob[i].dropPowerUp && mob[i].alive) {
+                        if (!mob[i].isShielded && !mob[i].shield && mob[i].isDropPowerUp && mob[i].alive) {
                             ctx.moveTo(this.position.x, this.position.y)
                             ctx.lineTo(mob[i].position.x, mob[i].position.y)
-
                             spawn.shield(mob[i], mob[i].position.x, mob[i].position.y, 1, true);
                         }
                     }
@@ -2593,6 +2593,10 @@ const spawn = {
                     // ctx.lineCap = "round";
                     ctx.strokeStyle = "rgba(200,200,255,0.9)"
                     ctx.stroke();
+                    //return to starting location
+                    const sub = Vector.sub(this.homePosition, this.position)
+                    const dist = Vector.magnitude(sub)
+                    if (dist > 350) this.force = Vector.mult(Vector.normalise(sub), this.mass * 0.05)
                 }
             }
         };
@@ -2690,7 +2694,7 @@ const spawn = {
         me.frictionAir = 0.01 //* (0.8 + 0.4 * Math.random());
         me.restitution = 0.5;
         me.leaveBody = false;
-        me.dropPowerUp = false;
+        me.isDropPowerUp = false;
         me.showHealthBar = false;
         me.collisionFilter.category = cat.mobBullet;
         me.collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet;
@@ -2706,7 +2710,7 @@ const spawn = {
         let me = mob[mob.length - 1];
         me.g = 0.0004; //required if using 'gravity'
         me.leaveBody = false;
-        // me.dropPowerUp = false;
+        // me.isDropPowerUp = false;
         me.onDeath = function() { //run this function on death
             for (let i = 0; i < Math.ceil(this.mass * 0.15 + Math.random() * 2.5); ++i) {
                 spawn.spawns(this.position.x + (Math.random() - 0.5) * radius * 2.5, this.position.y + (Math.random() - 0.5) * radius * 2.5);
@@ -2736,6 +2740,7 @@ const spawn = {
         me.accelMag = 0.0003 * simulation.accelScale;
         me.memory = 30;
         me.leaveBody = false;
+        me.isDropPowerUp = false;
         me.seePlayerFreq = Math.round((80 + 50 * Math.random()) * simulation.lookFreqScale);
         me.frictionAir = 0.002;
         me.do = function() {
@@ -2943,7 +2948,7 @@ const spawn = {
                 this.fill = `rgba(220,220,255,${0.3 + 0.6 *this.health})`
             };
             me.leaveBody = false;
-            me.dropPowerUp = false;
+            me.isDropPowerUp = false;
             me.showHealthBar = false;
 
             me.shieldTargetID = target.id
@@ -3000,7 +3005,7 @@ const spawn = {
             }
         };
         me.leaveBody = false;
-        me.dropPowerUp = false;
+        me.isDropPowerUp = false;
         me.showHealthBar = false;
         mob[mob.length - 1] = mob[mob.length - 1 - nodes];
         mob[mob.length - 1 - nodes] = me;
@@ -3023,7 +3028,7 @@ const spawn = {
         me.stroke = "transparent";
         Matter.Body.setDensity(me, 0.1); //normal is 0.001
         me.leaveBody = false;
-        me.dropPowerUp = false;
+        me.isDropPowerUp = false;
         me.showHealthBar = false;
         // me.isShielded = true
         me.collisionFilter.category = cat.mobBullet;
@@ -3240,7 +3245,7 @@ const spawn = {
         me.frictionStatic = 1;
         me.friction = 1;
         me.frictionAir = 0.01;
-        me.dropPowerUp = false;
+        me.isDropPowerUp = false;
         me.showHealthBar = false;
 
         me.do = function() {
@@ -3307,7 +3312,7 @@ const spawn = {
         me.frictionStatic = 1;
         me.friction = 1;
         me.frictionAir = 0.01;
-        me.dropPowerUp = false;
+        me.isDropPowerUp = false;
         me.showHealthBar = false;
 
         me.do = function() {
@@ -3357,7 +3362,7 @@ const spawn = {
         me.frictionStatic = 1;
         me.friction = 1;
         me.frictionAir = 0.01;
-        me.dropPowerUp = false;
+        me.isDropPowerUp = false;
         me.showHealthBar = false;
 
         me.do = function() {
@@ -3406,7 +3411,7 @@ const spawn = {
         // me.frictionStatic = 1;
         // me.friction = 1;
         me.frictionAir = 0.01;
-        me.dropPowerUp = false;
+        me.isDropPowerUp = false;
         me.showHealthBar = false;
 
         me.do = function() {
@@ -3455,7 +3460,7 @@ const spawn = {
         // me.frictionStatic = 1;
         // me.friction = 1;
         me.frictionAir = 0.01;
-        me.dropPowerUp = false;
+        me.isDropPowerUp = false;
         me.showHealthBar = false;
 
         me.do = function() {

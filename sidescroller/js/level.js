@@ -1093,11 +1093,11 @@ const level = {
         // spawn.streamBoss(1600, -500)
         // spawn.orbitalBoss(1600, -500)
         // spawn.cellBossCulture(1600, -500)
-        // spawn.shieldingBoss(1600, -500)
+        spawn.shieldingBoss(1600, -500)
         // spawn.beamer(1200, -500)
         // spawn.shield(mob[mob.length - 1], 1800, -120, 1);
 
-        spawn.nodeGroup(1200, -500, "pulsar")
+        // spawn.nodeGroup(1200, -500, "pulsar")
         // spawn.snakeBoss(1200, -500)
         // spawn.powerUpBoss(2900, -500)
         // spawn.randomMob(1600, -500)
