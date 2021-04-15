@@ -1881,6 +1881,14 @@ const m = {
                                 simulation.isTimeSkipping = true;
                                 m.cycle++;
                                 simulation.gravity();
+                                if (tech.isFireMoveLock && input.fire) {
+                                    // Matter.Body.setVelocity(player, {
+                                    //     x: 0,
+                                    //     y: -55 * player.mass * simulation.g //undo gravity before it is added
+                                    // });
+                                    player.force.x = 0
+                                    player.force.y = 0
+                                }
                                 Engine.update(engine, simulation.delta);
                                 // level.checkZones();
                                 // level.checkQuery();

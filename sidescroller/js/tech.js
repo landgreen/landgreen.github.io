@@ -154,7 +154,7 @@
             if (tech.is100Duplicate && tech.duplicationChance() > 0.99) {
                 tech.is100Duplicate = false
                 const range = 1000
-                const bossOptions = ["historyBoss", "cellBossCulture", "bomberBoss", "powerUpBoss", "orbitalBoss"]
+                const bossOptions = ["historyBoss", "cellBossCulture", "bomberBoss", "powerUpBoss", "orbitalBoss", "spawnerBossCulture"]
                 spawn.randomLevelBoss(m.pos.x + range, m.pos.y, bossOptions);
                 spawn.randomLevelBoss(m.pos.x, m.pos.y + range, bossOptions);
                 spawn.randomLevelBoss(m.pos.x - range, m.pos.y, bossOptions);
@@ -230,7 +230,7 @@
             },
             {
                 name: "active cooling",
-                description: "<strong>17%</strong> decreased <strong><em>delay</em></strong> after firing<br>for each <strong class='color-g'>gun</strong> in your inventory",
+                description: "<strong>14%</strong> decreased <strong><em>delay</em></strong> after firing<br>for each <strong class='color-g'>gun</strong> in your inventory",
                 maxCount: 1,
                 count: 0,
                 frequency: 2,

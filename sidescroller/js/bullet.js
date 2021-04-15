@@ -208,7 +208,7 @@ const b = {
     fireCD: 1,
     setFireCD() {
         b.fireCD = tech.fireRate * tech.slowFire * tech.researchHaste * tech.aimDamage / tech.fastTime
-        if (tech.isFireRateForGuns) b.fireCD *= Math.pow(0.83, b.inventory.length)
+        if (tech.isFireRateForGuns) b.fireCD *= Math.pow(0.86, b.inventory.length)
         if (tech.isFireNotMove) b.fireCD *= 0.33
     },
     fireAttributes(dir, rotate = true) {
@@ -1771,7 +1771,7 @@ const b = {
                             if (!(simulation.cycle % this.lookFrequency)) { //find mob targets
                                 for (let i = 0, len = mob.length; i < len; ++i) {
                                     if (Vector.magnitudeSquared(Vector.sub(this.position, mob[i].position)) < 500000 &&
-                                        mob[i].isDropPowerUp &&
+                                        // mob[i].isDropPowerUp &&
                                         Matter.Query.ray(map, this.position, mob[i].position).length === 0 &&
                                         Matter.Query.ray(body, this.position, mob[i].position).length === 0) {
                                         this.endCycle = 0 //end life if mob is near and visible
@@ -1847,7 +1847,7 @@ const b = {
                             this.lockedOn = null;
                             let closeDist = Infinity;
                             for (let i = 0, len = mob.length; i < len; ++i) {
-                                if (mob[i].isDropPowerUp && Matter.Query.ray(map, this.position, mob[i].position).length === 0) {
+                                if (Matter.Query.ray(map, this.position, mob[i].position).length === 0) {
                                     const targetVector = Vector.sub(this.position, mob[i].position)
                                     const dist = Vector.magnitude(targetVector) * (Math.random() + 0.5);
                                     if (dist < closeDist) {
@@ -2304,14 +2304,14 @@ const b = {
     targetedNail(position, num = 1, speed = 40 + 10 * Math.random(), range = 1200, isRandomAim = true) {
         const targets = [] //target nearby mobs
         for (let i = 0, len = mob.length; i < len; i++) {
-            if (mob[i].isDropPowerUp) {
-                const dist = Vector.magnitude(Vector.sub(position, mob[i].position));
-                if (dist < range &&
-                    Matter.Query.ray(map, position, mob[i].position).length === 0 &&
-                    Matter.Query.ray(body, position, mob[i].position).length === 0) {
-                    targets.push(Vector.add(mob[i].position, Vector.mult(mob[i].velocity, dist / 60))) //predict where the mob will be in a few cycles
-                }
+            // if (mob[i].isDropPowerUp) {
+            const dist = Vector.magnitude(Vector.sub(position, mob[i].position));
+            if (dist < range &&
+                Matter.Query.ray(map, position, mob[i].position).length === 0 &&
+                Matter.Query.ray(body, position, mob[i].position).length === 0) {
+                targets.push(Vector.add(mob[i].position, Vector.mult(mob[i].velocity, dist / 60))) //predict where the mob will be in a few cycles
             }
+            // }
         }
         for (let i = 0; i < num; i++) {
             if (targets.length > 0) { // aim near a random target in array

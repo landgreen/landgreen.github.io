@@ -307,6 +307,12 @@ const mobs = {
                     this.seePlayer.position.y = player.position.y;
                 }
             },
+            // alwaysSeePlayerIfRemember() {
+            //     if (!m.isCloak && this.seePlayer.recall) {
+            //         this.seePlayer.position.x = player.position.x;
+            //         this.seePlayer.position.y = player.position.y;
+            //     }
+            // },
             seePlayerCheck() {
                 if (!(simulation.cycle % this.seePlayerFreq)) {
                     if (
@@ -1041,17 +1047,19 @@ const mobs = {
                 this.onDeath(this); //custom death effects
                 this.removeConsBB();
                 this.alive = false; //triggers mob removal in mob[i].replace(i)
-                if (tech.deathSpawns && this.isDropPowerUp) {
-                    const len = tech.deathSpawns * Math.ceil(Math.random() * simulation.difficulty * tech.deathSpawns)
-                    for (let i = 0; i < len; i++) {
-                        spawn.spawns(this.position.x + (Math.random() - 0.5) * radius * 2.5, this.position.y + (Math.random() - 0.5) * radius * 2.5);
-                        Matter.Body.setVelocity(mob[mob.length - 1], {
-                            x: this.velocity.x + (Math.random() - 0.5) * 10,
-                            y: this.velocity.x + (Math.random() - 0.5) * 10
-                        });
-                    }
-                }
+
                 if (this.isDropPowerUp) {
+                    if (tech.deathSpawnsFromBoss || (tech.deathSpawns && this.isDropPowerUp)) {
+                        const spawns = tech.deathSpawns + tech.deathSpawnsFromBoss
+                        const len = Math.min(12, spawns * Math.ceil(Math.random() * simulation.difficulty * spawns))
+                        for (let i = 0; i < len; i++) {
+                            spawn.spawns(this.position.x + (Math.random() - 0.5) * radius * 2.5, this.position.y + (Math.random() - 0.5) * radius * 2.5);
+                            Matter.Body.setVelocity(mob[mob.length - 1], {
+                                x: this.velocity.x + (Math.random() - 0.5) * 10,
+                                y: this.velocity.x + (Math.random() - 0.5) * 10
+                            });
+                        }
+                    }
                     if (tech.isEnergyLoss) m.energy *= 0.75;
                     powerUps.spawnRandomPowerUp(this.position.x, this.position.y);
                     m.lastKillCycle = m.cycle; //tracks the last time a kill was made, mostly used in simulation.checks()
