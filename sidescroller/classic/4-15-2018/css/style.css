@@ -1,0 +1,127 @@
+body {
+  font-family: "Helvetica", "Arial", sans-serif;
+  margin: 0;
+  overflow: hidden;
+  background-color: #fff;
+  user-select: none;
+  /*cursor: crosshair;*/
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+svg {
+  user-select: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#dmg {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: none;
+  background-color: #f67;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+#health-bg {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  height: 20px;
+  width: 300px;
+  background-color: #000;
+  opacity: 0.1;
+  z-index: 1;
+  pointer-events: none;
+  display: none;
+}
+
+#health {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  height: 20px;
+  width: 0px;
+  transition: width 1s ease-out;
+  opacity: 0.6;
+  z-index: 2;
+  pointer-events: none;
+  background-color: #f00;
+}
+
+.low-health {
+  animation: blink 250ms infinite alternate;
+}
+
+@keyframes blink {
+  from {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 0.2;
+  }
+}
+
+#fade-out {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0;
+  transition: opacity 7s;
+  pointer-events: none;
+}
+
+#guns {
+  position: absolute;
+  top: 55px;
+  left: 40px;
+  z-index: 2;
+  font-size: 25px;
+  color: #111;
+  background-color: rgba(255, 255, 255, 0.4);
+  user-select: none;
+  pointer-events: none;
+  padding: 0px 5px 0px 5px;
+  border-radius: 5px;
+  /*border: 2px solid rgba(0, 0, 0, 0.4);*/
+}
+
+#text-log {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  line-height: 180%;
+  text-align: center;
+  z-index: 2;
+  font-size: 1.3em;
+  color: #000;
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  user-select: none;
+}
+
+.box {
+  padding: 3px 8px 3px 8px;
+  /*margin: 0px 5px 0px 5px;*/
+  border: 2px solid #444;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.intro {
+  z-index: 2;
+}
