@@ -2317,8 +2317,8 @@ const b = {
             const velocity = Vector.mult(Vector.normalise(Vector.sub(where, who.position)), speed)
             velocity.y -= Math.abs(who.position.x - closestMob.position.x) / 150; //gives an arc, but not a good one
             Matter.Body.setVelocity(who, velocity);
-            if (isSpin) Matter.Body.setAngularVelocity(who, 2 + 2 * Math.random() * (Math.random() < 0.5 ? -1 : 1));
         }
+        if (isSpin) Matter.Body.setAngularVelocity(who, (0.5 + 0.2 * Math.random()) * (Math.random() < 0.5 ? -1 : 1));
     },
     targetedNail(position, num = 1, speed = 40 + 10 * Math.random(), range = 1200, isRandomAim = true) {
         const targets = [] //target nearby mobs
