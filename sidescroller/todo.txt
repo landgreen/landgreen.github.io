@@ -1,11 +1,5 @@
 ******************************************************** NEXT PATCH ********************************************************
 
-pulse laser now charges up with energy before you fire, but it fires 3 overlapping explosions
-  please give feedback on balance (too strong, too weak?)
-
-tech shockwave: now applies to all explosions
-
-foam gun now gets 20% less ammo
 
 ******************************************************** BUGS ********************************************************
 
