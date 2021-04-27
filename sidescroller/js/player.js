@@ -1145,7 +1145,7 @@ const m = {
                 m.fieldCDcycle = m.cycle + 15;
                 m.isHolding = false;
                 //bullet-like collisions
-                // m.holdingTarget.collisionFilter.category = cat.bullet; //cat.body;
+                m.holdingTarget.collisionFilter.category = cat.body;
                 m.holdingTarget.collisionFilter.mask = cat.map | cat.body | cat.bullet | cat.mob | cat.mobBullet | cat.mobShield;
                 //check every second to see if player is away from thrown body, and make solid
                 const solid = function(that) {
