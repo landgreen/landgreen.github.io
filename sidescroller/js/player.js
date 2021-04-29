@@ -1911,6 +1911,8 @@ const m = {
                             //   simulation.timeSkip(1)
                             //   m.energy += 1.5 * DRAIN; //x1 to undo the energy drain from time speed up, x1.5 to cut energy drain in half
                             // }
+                        } else { //holding, but field button is released
+                            m.wakeCheck();
                         }
                     } else if (m.holdingTarget && m.fieldCDcycle < m.cycle) { //holding, but field button is released
                         m.wakeCheck();
