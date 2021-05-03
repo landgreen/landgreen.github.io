@@ -3689,8 +3689,8 @@
                 }
             },
             {
-                name: "least action",
-                description: "<strong>wavelets</strong> propagation speed is <strong>25%</strong> slower<br>wave <strong class='color-d'>damage</strong> is increased by <strong>50%</strong>",
+                name: "propagation",
+                description: "<strong>wavelet</strong> propagation speed is <strong>25%</strong> slower<br>wave <strong class='color-d'>damage</strong> is increased by <strong>50%</strong>",
                 isGunTech: true,
                 maxCount: 3,
                 count: 0,
@@ -3701,31 +3701,31 @@
                 requires: "wave beam",
                 effect() {
                     tech.waveBeamSpeed -= 2.5;
-                    tech.waveBeamDamage += 0.7 * 0.5
+                    tech.waveBeamDamage += 0.55 * 0.5
                 },
                 remove() {
                     tech.waveBeamSpeed = 10;
-                    tech.waveBeamDamage = 0.7
+                    tech.waveBeamDamage = 0.55 //this sets base wave beam damage
                 }
             },
-            {
-                name: "imaginary",
-                description: "the <strong>wavelet</strong> is limited to a <strong>single</strong> strand<br>wave <strong class='color-d'>damage</strong> is increased by <strong>300%</strong>",
-                isGunTech: true,
-                maxCount: 1,
-                count: 0,
-                frequency: 2,
-                allowed() {
-                    return tech.haveGunCheck("wave beam")
-                },
-                requires: "wave beam",
-                effect() {
-                    tech.isImaginaryWave = true
-                },
-                remove() {
-                    tech.isImaginaryWave = false
-                }
-            },
+            // {
+            //     name: "imaginary",
+            //     description: "the <strong>wavelet</strong> is limited to a <strong>single</strong> strand<br>wave <strong class='color-d'>damage</strong> is increased by <strong>300%</strong>",
+            //     isGunTech: true,
+            //     maxCount: 1,
+            //     count: 0,
+            //     frequency: 2,
+            //     allowed() {
+            //         return tech.haveGunCheck("wave beam")
+            //     },
+            //     requires: "wave beam",
+            //     effect() {
+            //         tech.isImaginaryWave = true
+            //     },
+            //     remove() {
+            //         tech.isImaginaryWave = false
+            //     }
+            // },
             {
                 name: "cruise missile",
                 description: "<strong>missiles</strong> travel <strong>63%</strong> slower,<br>but have a <strong>50%</strong> larger <strong class='color-e'>explosive</strong> payload",
@@ -4431,7 +4431,7 @@
                 }
             },
             {
-                name: "slow light propagation",
+                name: "slow light",
                 description: "<strong class='color-laser'>laser</strong> beam is <strong>spread</strong> into your recent <strong>past</strong><br>increase total beam <strong class='color-d'>damage</strong> by <strong>300%</strong>",
                 isGunTech: true,
                 maxCount: 9,

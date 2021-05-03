@@ -3639,9 +3639,9 @@ const b = {
                         inertia: Infinity,
                         frictionAir: 0,
                         slow: 0,
-                        amplitude: (m.crouch ? 10 : 20) * tech.waveAmplitude * Math.sin(this.packetCounter * tech.wavePacketFrequency) * ((i % 2) ? (tech.isImaginaryWave ? 1 : -1) : 1),
+                        amplitude: (m.crouch ? 10 : 20) * tech.waveAmplitude * Math.sin(this.packetCounter * tech.wavePacketFrequency) * ((i % 2) ? -1 : 1), //(tech.isImaginaryWave ? 1 : -1)
                         minDmgSpeed: 0,
-                        dmg: b.dmgScale * tech.waveBeamDamage * (tech.isImaginaryWave ? 3 : 1) * tech.waveAmplitude * tech.wavePacketLength / 36, //control damage also when you divide by mob.mass
+                        dmg: b.dmgScale * tech.waveBeamDamage * tech.waveAmplitude * tech.wavePacketLength / 36, //control damage also when you divide by mob.mass  //* (tech.isImaginaryWave ? 3 : 1)
                         classType: "bullet",
                         collisionFilter: {
                             category: 0,
