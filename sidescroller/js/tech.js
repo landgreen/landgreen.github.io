@@ -3614,7 +3614,7 @@
             },
             {
                 name: "phase velocity",
-                description: "<strong>wavelets</strong> propagates faster in solids",
+                description: "wavelets <strong>propagate</strong> faster in solids",
                 isGunTech: true,
                 maxCount: 1,
                 count: 0,
@@ -3632,7 +3632,7 @@
             },
             {
                 name: "bound state",
-                description: "instead of dissipating normally<br><strong>wavelets</strong> <strong>reflect</strong> backwards <strong>2</strong> times",
+                description: "instead of dissipating normally<br>wavelets <strong>reflect</strong> backwards <strong>2</strong> times",
                 isGunTech: true,
                 maxCount: 9,
                 count: 0,
@@ -3650,7 +3650,7 @@
             },
             {
                 name: "wavelength",
-                description: "<strong>wavelet</strong> length is <strong>25%</strong> longer<br>wave <strong class='color-d'>damage</strong> is increased by <strong>25%</strong>", //    description: "holding fire allows the <strong>wave beam</strong> to emits a second <strong>packet</strong><br>at zero ammo cost",
+                description: "wavelet <strong>length</strong> and <strong>duration</strong><br>is increased by <strong>33%</strong>", //    description: "holding fire allows the <strong>wave beam</strong> to emits a second <strong>packet</strong><br>at zero ammo cost",
                 isGunTech: true,
                 maxCount: 9,
                 count: 0,
@@ -3660,8 +3660,8 @@
                 },
                 requires: "wave beam",
                 effect() {
-                    tech.wavePacketLength *= 1.25 //if you change this to not be 36 update /36 in wave .dmg
-                    tech.wavePacketFrequency *= 0.7995
+                    tech.wavePacketLength *= 1.33 //if you change this to not be 36 update /36 in wave .dmg
+                    tech.wavePacketFrequency *= 0.752
                     tech.waveFrequency *= 0.9
                 },
                 remove() {
@@ -3672,7 +3672,7 @@
             },
             {
                 name: "amplitude",
-                description: "<strong>wavelet</strong> amplitude is <strong>33%</strong> higher<br>wave <strong class='color-d'>damage</strong> is increased by <strong>33%</strong>",
+                description: "wavelet <strong>amplitude</strong> is <strong>33%</strong> higher<br>wave <strong class='color-d'>damage</strong> is increased by <strong>33%</strong>",
                 isGunTech: true,
                 maxCount: 3,
                 count: 0,
@@ -3690,7 +3690,7 @@
             },
             {
                 name: "propagation",
-                description: "<strong>wavelet</strong> propagation speed is <strong>25%</strong> slower<br>wave <strong class='color-d'>damage</strong> is increased by <strong>50%</strong>",
+                description: "wavelet <strong>propagation speed</strong> is <strong>25%</strong> slower<br>wave <strong class='color-d'>damage</strong> is increased by <strong>50%</strong>",
                 isGunTech: true,
                 maxCount: 3,
                 count: 0,

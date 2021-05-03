@@ -3609,9 +3609,9 @@ const b = {
             }
         }, {
             name: "wave beam",
-            description: "emit a wavelet of <strong>oscillating</strong> particles<br>that propagate through <strong>solids</strong>",
+            description: "emit a <strong>wavelet</strong> of <strong>oscillating</strong> particles<br>that propagate through <strong>solids</strong>",
             ammo: 0,
-            ammoPack: 80,
+            ammoPack: 82,
             have: false,
             packetCounter: 0,
             delay: 44,
@@ -3623,10 +3623,6 @@ const b = {
                         this.packetCounter = 0;
                     }
                 }
-                //draw cooldown ?
-            },
-            calculateDamage() {
-
             },
             damage: 1,
             fire() {
@@ -3635,7 +3631,7 @@ const b = {
                     bullet[me] = Bodies.polygon(m.pos.x + 25 * Math.cos(m.angle), m.pos.y + 25 * Math.sin(m.angle), 7, 3.5, {
                         angle: m.angle,
                         cycle: -0.5,
-                        endCycle: simulation.cycle + Math.floor((tech.waveReflections ? Infinity : 160) * tech.isBulletsLastLonger), // - this.packetCounter + tech.wavePacketLength, //- this.packetCounter + this.packetLength   makes the entire packet go away at the same time
+                        endCycle: simulation.cycle + Math.floor((tech.waveReflections ? Infinity : 160 * tech.wavePacketLength) * tech.isBulletsLastLonger), // - this.packetCounter + tech.wavePacketLength, //- this.packetCounter + this.packetLength   makes the entire packet go away at the same time
                         inertia: Infinity,
                         frictionAir: 0,
                         slow: 0,
@@ -3698,7 +3694,7 @@ const b = {
                         waveSpeedBody = 1.9
                     }
                     if (tech.waveReflections) {
-                        const range = 100
+                        const range = 100 / Math.sqrt(tech.waveFrequency)
                         bullet[me].reflectCycle = range
                         bullet[me].do = function() {
                             if (!m.isBodiesAsleep) {
