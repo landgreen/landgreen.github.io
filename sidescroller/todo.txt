@@ -1,8 +1,10 @@
 ******************************************************** NEXT PATCH ********************************************************
 
-tech: wavelength - wavelets are longer and have more range
+several small wave beam tech adjustments
 
 ******************************************************** BUGS ********************************************************
+
+power ups don't float up in acid anymore?
 
 increase the width on the grid by a few pixels so that very small screens or people with odd fonts don't goto a new line
 
@@ -34,14 +36,13 @@ is there a way to check if the player is stuck inside the map or block
 
 ******************************************************** TODO ********************************************************
 
-wavelength should do no damage, but give much more length
-
+wave tech: delay similar to foam
 wave tech: dispersion - add noise and damage to waves
-wave tech: chirp - amplitude increases with time
+wave tech: chirp - amplitude and damage increases towards the end of the wavePacket
+wave tech: wave bullets are removed after doing damage, but they do something
+  more damage, explode, freeze, stun radiation
 
-make a system to show current gun damage in pause menu?
-
-mobs that die while frozen produce ice-IX bullets
+tech: mobs that die while frozen produce ice-IX bullets
 
 tech: picking up heal power ups when at full health does harm equal to the heal values
   benefit on pick up:
