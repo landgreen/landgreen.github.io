@@ -84,6 +84,8 @@
                 if (options.length > 0) {
                     let newTech = options[Math.floor(Math.random() * options.length)]
                     tech.giveTech(newTech)
+                    simulation.makeTextLog(`<span class='color-var'>tech</span>.giveTech("<span class='color-text'>${tech.tech[newTech].name}</span>")<em> //random tech</em>`);
+
                 }
             } else {
                 if (isNaN(index)) { //find index by name
@@ -98,6 +100,7 @@
                     if (!found) return //if name not found don't give any tech
                 }
                 if (tech.isMetaAnalysis && tech.tech[index].isJunk) {
+                    simulation.makeTextLog(`//tech: meta-analysis replaced junk tech with random tech`);
                     tech.giveTech('random')
                     for (let i = 0; i < 2; i++) powerUps.spawn(m.pos.x + 10 * Math.random(), m.pos.y + 10 * Math.random(), "research");
                     return
@@ -3115,7 +3118,7 @@
                         const index = powerUps.tech.choiceLog[powerUps.tech.choiceLog.length - i - 1]
                         if (index !== powerUps.lastTechIndex && tech.tech[index].count < tech.tech[index].maxCount && tech.tech[index].allowed() && tech.tech[index].name !== "backward induction") {
                             tech.giveTech(index)
-                            simulation.makeTextLog(`<span class='color-var'>tech</span>.giveTech("<span class='color-text'>${tech.tech[index].name}</span>") <em>// backward induction</em>`);
+                            simulation.makeTextLog(`<span class='color-var'>tech</span>.giveTech("<span class='color-text'>${tech.tech[index].name}</span>") <em> //backward induction</em>`);
                         }
                     }
                 },
