@@ -1483,7 +1483,7 @@
             },
             {
                 name: "restitution",
-                description: "mobs killed by collisions with <strong>blocks</strong><br>spawn a <strong class='color-h'>heal</strong>, <strong class='color-g'>ammo</strong>, or <strong class='color-r'>research</strong>",
+                description: "if a <strong>block</strong> you threw kills a mob<br>spawn a <strong class='color-h'>heal</strong>, <strong class='color-g'>ammo</strong>, or <strong class='color-r'>research</strong>",
                 maxCount: 1,
                 count: 0,
                 frequency: 4,
@@ -3925,7 +3925,7 @@
             },
             {
                 name: "water shielding",
-                description: "increase <strong>neutron bomb's</strong> range by <strong>20%</strong><br>player is <strong>immune</strong> to its harmful effects",
+                description: "increase <strong>neutron bomb's</strong> range by <strong>20%</strong><br>you are <strong>immune</strong> to its harmful effects",
                 isGunTech: true,
                 maxCount: 1,
                 count: 0,
@@ -4070,7 +4070,7 @@
             },
             {
                 name: "diplochory",
-                description: "<strong class='color-p' style='letter-spacing: 2px;'>spores</strong> use the player for <strong>dispersal</strong><br>until they <strong>locate</strong> a viable host",
+                description: "<strong class='color-p' style='letter-spacing: 2px;'>spores</strong> use you for <strong>dispersal</strong><br>until they <strong>locate</strong> a viable host",
                 isGunTech: true,
                 maxCount: 1,
                 count: 0,
