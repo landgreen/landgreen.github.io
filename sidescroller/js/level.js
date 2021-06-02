@@ -1816,8 +1816,6 @@ const level = {
         const hazard = level.hazard(4550, 2750, 4550, 150)
         let balance1, balance2, balance3, balance4, rotor
 
-
-
         const drip1 = level.drip(6100, 1900, 2900, 100) // drip(x, yMin, yMax, period = 100, color = "hsla(160, 100%, 35%, 0.5)") {
         const drip2 = level.drip(7300, 1900, 2900, 150)
         const drip3 = level.drip(8750, 1900, 2900, 70)
@@ -1955,7 +1953,7 @@ const level = {
 
         if (simulation.isHorizontalFlipped) { //flip the map horizontally
             level.flipHorizontal(); //only flips map,body,mob,powerUp,cons,consBB, exit
-            rotor = level.rotor(-5100, 2475, -0.001)
+            rotor = level.rotor(-5100, 2475, 0.001) //rotates other direction because flipped
             balance1 = level.spinner(-300 - 25, -395, 25, 390, 0.001) //entrance
             balance2 = level.spinner(-2605 - 390, 500, 390, 25, 0.001) //falling
             balance3 = level.spinner(-2608 - 584, 1900, 584, 25, 0.001) //falling
