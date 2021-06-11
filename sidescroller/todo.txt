@@ -1,10 +1,13 @@
 ******************************************************** NEXT PATCH ********************************************************
 
-tech: tokamak - instead of throwing a block convert it into energy and a pulse explosion
-  requires plasma
+historyBoss has a much smaller damage radius, but it does 2x more damage
+  also history boss has updated graphics
+  no the dotted lines on the player isn't a bug
 
-standing wave field no longer gives 25% harm reduction
-standing wave field can now block through walls
+inertial mass - negative mass field is larger and you accelerate faster
+  also moves blocks horizontally while the field is active    
+
+junk tech - hide your health bar, spawn 30 health
 
 bug fixes
 
@@ -34,10 +37,19 @@ is there a way to check if the player is stuck inside the map or block
 
 ******************************************************** TODO ********************************************************
 
-throwing a block removes the block and fires a pulse with a size that scales with the size of the block
-  must have a charge above some threshold
-  plasma field tech
-    gain 100 energy?
+have throw charge scale with fire delay
+
+in testing mode console log the body you click on
+
+default negative mass field- move block horizontally?
+  should this be a tech?
+
+negative mass field tech - increase flight speed
+  use the sphere ellipse graphic?
+  move block horizontally and vertically with player
+
+throwing a block removes the block and rewinds time 10 seconds (including health and energy)
+  requires CPT, CPT gun, time dilation field?
 
 tech plasma : plasma length increases then decreases as you hold down the field button (like stabbing with a spear)
   grows to 1.5 longer after 0.3 seconds, then returns to normal length over 1 second, until field is pressed again
