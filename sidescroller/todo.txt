@@ -1,31 +1,40 @@
 ******************************************************** NEXT PATCH ********************************************************
 
-"gamma-ray laser" renamed "free-electron laser" to make more scientific sense
-  since gamma rays would go right through walls
-laser diode now makes lasers blue
-free-electron laser can no longer work with laser diode
+tech: Noether violation - shotgun and railgun recoil is increased and it's direction is reversed, +60% damage for shot/rail gun
 
-pressure wave has a bit more damage
-  crouch mode works different (much higher fire rate, low arc)
+each field now has a tech that uses research to give a simple bonus
+  wormhole: virtual particles - 3 research for 19% duplication chance
+  cloaking field, pilot wave: dynamical systems - 2 research for 35% damage
+  standing wave harmonics, pilot wave: zero point energy - 2 research for 74% max energy
+  perfect diamagnetism or negative mass field: tessellation - 50% harm reduction for 4 research cost
+  time dilation field - Lorentz transformation now uses 4 research for a 50% speed increase  (was 40% for no research)
+  plasma-bot - now also requires 1 research
+  nano-scale already has several research deals
 
-integrated armament gives 35% dmg (was 22%)
-  but I fixed a bug where it gave an extra 33% ammo
-
-mine gun gets 25% less ammo
-all mines do 30% more damage
-
-trying to make shotgun better at close range and worse at distance
-  shotgun slug is much slower, but does 60% more damage
-  nail shot has a 20% wider spread, and is 20% slower, but does 20% more damage
-
-finalBoss has 15% less health
-
-to balance all the buffs
-  ammo power ups give 15% less ammo
-  damage done by mobs now scales up a bit faster each level
-  damage done by you now scales down a bit faster each level
+added a research to the intro level
+Newton's 1st law reduces harm by up to 66% (was 60%) when moving at up to 30 
+Newton's 2nd law increases damage by up to 66% (was 43%) when moving at up to 30 
+  also they both have no requirements anymore
+super ball tech supertemporal now fires with much less delay
+  and it syncs with frame rate much cleaner
+metamaterial cloaking
+  now gets the damage buff after 3 seconds of no kills (was 4s)
+  recloaks 1/2 second faster
+  cloaked vision has a 10% larger radius
+6 situational tech can now show up in situations where they are only "OK", but not "great" choices
 
 ******************************************************** TODO ********************************************************
+
+undo the research lost when you refund researched tech???
+  this only really matters for many worlds type runs,  would yield an general research drain?
+
+consider executables:
+  press F to do things
+  ideas:
+
+at the start of the null level use speech API to say something short,
+  if the on end event runs set the lore.isVoiceWorking flag to be true
+  if lore.isVoiceWorking is false, skip voice and just move through each sentence with a short delay
 
 make the player get a buff after using wormhole
   while energy lasts: drain energy and give damage buff
@@ -345,16 +354,13 @@ possible names for tech
   stochastic optimization
   electrostatic discharge
   Gödel's incompleteness
-  dynamical systems
   quantum zeno effect  (perturbation of a system prevents some systems from evolving because it scrambles coherence)  (apply to lasers, fields)
   counterfactual - something false
   axion - maybe a 3rd dark matter type tech
   Pigeonhole principle - if there are several things that are matched up
   regression to the mean
-  tessellation = tiling of a flat surface is the covering of a plane using one or more geometric shapes, called tiles, with no overlaps and no gaps.
   phlogiston theory is a superseded scientific theory that postulated the existence of a fire-like element called phlogiston
   Laplace's demon was a notable published articulation of causal determinism on a scientific basis by Pierre-Simon Laplace in 1814.[1] According to determinism, if someone (the demon) knows the precise location and momentum of every atom in the universe, their past and future values for any given time are entailed; they can be calculated from the laws of classical mechanics.
-  Degenerate matter is a highly dense state of fermionic matter in which the Pauli exclusion principle exerts significant pressure in addition to, or in lieu of thermal pressure.
   evolutionary cosmology
   eternal inflation
 
