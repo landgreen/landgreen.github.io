@@ -1,15 +1,22 @@
 ******************************************************** NEXT PATCH ********************************************************
 
-shotgun balance
-  ice-shot: less spread, higher damage, more crystals
-  needle-shot: more needles, higher damage, less spread
-  foam-shot: 1 more bubble
+blinkBoss - teleports after you, drops grenades after each teleport
+sneaker (the stealthy black pentagons) - decloaks slower, moves slower, is smaller, has more health
 
-power up selection and pause menu elements scroll individually now
-  it looks great on my computer, but different operating systems and browsers are unpredictable
-  let me know if text is hidden or if it doesn't scroll for you and what OS and browser you're on
+some mobs can now sense you by "smelling" where you were
+  they check for a clear line of sight with your last 10 seconds of history
+  snakeBoss, blinkBoss, sneaker
+
+extra bosses no longer spawn on final level
+beating the final boss clears mobs that spawn after a mob dies, like powerUpBoss
+
+phonon and isotropic radiator range reduced about 10%
 
 ******************************************************** TODO ********************************************************
+
+block shattering
+ get code from planetesimals
+  https://codepen.io/lilgreenland/pen/jrMvaB?editors=0010
 
 mob that grows or gets a shield when player is near
   and charges when player is near
@@ -174,10 +181,6 @@ movement fluidity
     wall grab?
   maybe remove falling damage and block damage?
 
-redblobgames.com/articles/visibility
-  https://github.com/Silverwolf90/2d-visibility/tree/master/src
-  could apply to explosions, neutron bomb, player LOS
-
 have a mob apply a positive status effect on other mobs,
   heal?
   make it yellow
@@ -198,6 +201,7 @@ n-gon outreach ideas
 
 blocks on buttons teleport into the button endlessly if they are being slowly floated away
   maybe add a cooldown?
+  can't reproduce
 
 ants marching outline doesn't sync right on safari anymore.
 
@@ -339,13 +343,6 @@ mob: molecule shapes - 2 separate mobs joined by a bond
     low friction so they can spin around
     spin when attacking player?
       increase constraint length when attacking
-
-mob vision: look at player history
-    build a new type of attraction for mobs
-      if mobs can't see player, they check to see if they can see where the player was in the history
-    if mobs can't see player, they could check to see if they can find player in the past
-    https://abitawake.com/news/articles/enemy-ai-chasing-a-player-without-navigation2d-or-a-star-pathfinding
-    write find in spawn undo exploder, but commented out
 
 Mob: "Tentacle": Sits on wall. Is a black blob. When you get near it, reaches out and grabs you, similar to wires. Does not deal damage.
   maybe it could be immune to damage? but it is spawned by an actual mob
