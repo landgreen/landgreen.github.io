@@ -56,7 +56,7 @@ const level = {
             // for (let i = 0; i < 30; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "tech", false);
             // for (let i = 0; i < 7; i++) tech.giveTech("undefined")
             // lore.techCount = 6
-            simulation.enableConstructMode() //used to build maps in testing mode
+            // simulation.enableConstructMode() //used to build maps in testing mode
 
             // simulation.isCheating = false //true;
             // localSettings.loreCount = 3; //this sets what conversation is heard
