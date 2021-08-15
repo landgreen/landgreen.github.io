@@ -1722,7 +1722,7 @@ const m = {
                         m.pickUp();
                     } else {
                         m.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
-                        if (!input.field) { //tech.isFieldFre
+                        if (!input.field && tech.isFieldFree) { //
                             //draw field free of player
                             ctx.fillStyle = "rgba(110,170,200," + (0.27 + 0.2 * Math.random() - 0.1 * wave) + ")";
                             ctx.strokeStyle = "rgba(110, 200, 235, " + (0.4 + 0.5 * Math.random()) + ")"
