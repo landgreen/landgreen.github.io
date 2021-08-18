@@ -14,12 +14,11 @@ const level = {
             // localSettings.levelsClearedLastGame = 10
             // level.difficultyIncrease(30) //30 is near max on hard  //60 is near max on why
             // simulation.isHorizontalFlipped = true
-            // tech.isFieldFree = true
-            // m.setField("time dilation")
             // b.giveGuns("mine")
-            // tech.giveTech("laser-mines")
             // b.giveGuns("nail gun")
-            // tech.giveTech("Lenz's law")
+            // m.setField("wormhole")
+            // tech.giveTech("booby trap")
+            // tech.giveTech("sentry")
             // for (let i = 0; i < 9; i++) tech.giveTech("MIRV")
 
             level.intro(); //starting level

@@ -4455,7 +4455,7 @@
             },
             {
                 name: "sentry",
-                description: "instead of detonating, <strong>mines</strong> <strong>target</strong> mobs<br>with a stream of nails for about <strong>14</strong> seconds",
+                description: "instead of detonating, <strong>mines</strong> <strong>target</strong> mobs<br>with a stream of nails for about <strong>15</strong> seconds",
                 isGunTech: true,
                 maxCount: 1,
                 count: 0,
@@ -4474,7 +4474,7 @@
             },
             {
                 name: "blast mines",
-                description: "when a <strong>mine</strong> <strong>activates</strong><br>it <strong>stuns</strong> nearby mobs for up to <strong>3</strong> seconds",
+                description: "when a <strong>mine</strong> <strong>activates</strong><br>it <strong>stuns</strong> nearby mobs for <strong>2-4</strong> seconds",
                 isGunTech: true,
                 maxCount: 1,
                 count: 0,
@@ -4494,6 +4494,7 @@
             {
                 name: "booby trap",
                 description: "drop a <strong>mine</strong> after picking up a <strong>power up</strong><br><strong>+30</strong> <strong class='color-j'>JUNK</strong> to the potential <strong class='color-m'>tech</strong> pool",
+                isGunTech: true,
                 maxCount: 1,
                 count: 0,
                 frequency: 2,

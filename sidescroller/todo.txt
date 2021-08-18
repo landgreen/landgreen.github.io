@@ -1,16 +1,5 @@
 ******************************************************** NEXT PATCH **************************************************
-tech: blast mines - mines stun when they activate
 
-laser mines only fire if crouching  (so you can fire normal mines when energy is low)
-mines now includes the radius of the mob when calculating mobs in range
-  so it will detonate from the final boss from farther away
-mines have a small random chance to detonate from targets up to 40% father away
-
-time dilation field drains less energy for the first few seconds, but linearly ramps up energy drain as you stay frozen in time
-  unfreezing time returns you the normal drain rate in half the time to ramp up
-  this should be a buff for all situations, except someone who has a huge external source of energy
-
-360 wave beam has reduced mob slow effect
 
 ******************************************************** TODO ********************************************************
 

@@ -1587,7 +1587,7 @@ const b = {
             ctx.globalAlpha = 1;
         }
     },
-    AoEStunEffect(where, range, cycles = 100 + 80 * Math.random()) {
+    AoEStunEffect(where, range, cycles = 150 + 120 * Math.random()) {
         for (let i = 0, len = mob.length; i < len; ++i) {
             if (mob[i].alive && !mob[i].isShielded && !mob[i].shield && !mob[i].isBadTarget) {
                 if (Vector.magnitude(Vector.sub(where, mob[i].position)) - mob[i].radius < range) mobs.statusStun(mob[i], cycles)
@@ -1643,7 +1643,7 @@ const b = {
                             Matter.Query.ray(map, this.position, mob[i].position).length === 0 &&
                             Matter.Query.ray(body, this.position, mob[i].position).length === 0
                         ) {
-                            b.AoEStunEffect(this.position, 1300);
+                            if (tech.isMineStun) b.AoEStunEffect(this.position, 1300);
                             this.do = this.laserSpin
                             this.endCycle = simulation.cycle + 360
                             // if (this.angularSpeed < 0.01) this.torque += this.inertia * this.torqueMagnitude * 5 //spin
@@ -1678,7 +1678,7 @@ const b = {
         Matter.Body.setVelocity(bullet[me], velocity);
         Composite.add(engine.world, bullet[me]); //add bullet to world
     },
-    mine(where, velocity, angle = 0, isAmmoBack = false) {
+    mine(where, velocity, angle = 0) {
         const bIndex = bullet.length;
         bullet[bIndex] = Bodies.rectangle(where.x, where.y, 45, 16, {
             angle: angle,
@@ -1744,9 +1744,7 @@ const b = {
                         }
                     }
                 } else {
-                    if (this.speed < 1 && this.angularSpeed < 0.01 && !m.isBodiesAsleep) {
-                        this.stillCount++
-                    }
+                    if (this.speed < 1 && this.angularSpeed < 0.01 && !m.isBodiesAsleep) this.stillCount++
                 }
                 if (this.stillCount > 25) this.arm();
             },
@@ -1815,10 +1813,10 @@ const b = {
                                         Matter.Query.ray(map, this.position, mob[i].position).length === 0 &&
                                         Matter.Query.ray(body, this.position, mob[i].position).length === 0
                                     ) {
-                                        b.AoEStunEffect(this.position, 700 + mob[i].radius + random);
+                                        if (tech.isMineStun) b.AoEStunEffect(this.position, 700 + mob[i].radius + random);
                                         if (tech.isMineSentry) {
                                             this.lookFrequency = 8 + Math.floor(3 * Math.random())
-                                            this.endCycle = simulation.cycle + 900
+                                            this.endCycle = simulation.cycle + 960
                                             this.do = function() { //overwrite the do method for this bullet
                                                 this.force.y += this.mass * 0.002; //extra gravity
                                                 if (!(simulation.cycle % this.lookFrequency) && !m.isBodiesAsleep) { //find mob targets
