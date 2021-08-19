@@ -178,7 +178,7 @@
             if (tech.isMaxEnergyTech) dmg *= 1.5
             if (tech.isEnergyNoAmmo) dmg *= 1.6
             if (tech.isDamageForGuns) dmg *= 1 + 0.14 * b.inventory.length
-            if (tech.isLowHealthDmg) dmg *= 1 + 0.5 * Math.max(0, 1 - m.health)
+            if (tech.isLowHealthDmg) dmg *= 1 + Math.max(0, 1 - m.health) * 0.5
             if (tech.isHarmDamage && m.lastHarmCycle + 600 > m.cycle) dmg *= 3;
             if (tech.isEnergyLoss) dmg *= 1.55;
             if (tech.isAcidDmg && m.health > 1) dmg *= 1.35;
