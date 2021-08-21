@@ -470,7 +470,7 @@
             },
             {
                 name: "desublimated ammunition",
-                description: "use <strong>50%</strong> less <strong class='color-g'>ammo</strong> when <strong>crouching</strong><<br>strong>+6</strong> <strong class='color-j'>JUNK</strong> to the potential <strong class='color-m'>tech</strong> pool",
+                description: "use <strong>50%</strong> less <strong class='color-g'>ammo</strong> when <strong>crouching</strong><br><strong>+6</strong> <strong class='color-j'>JUNK</strong> to the potential <strong class='color-m'>tech</strong> pool",
                 maxCount: 1,
                 count: 0,
                 frequency: 2,
