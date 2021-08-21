@@ -254,35 +254,6 @@
 			</p>
 		</div>
 
-		<h2 class='underlined' id='harmony'>Harmony</h2>
-		<p>
-			Some of what makes music sound good depends on the cultural background of the listener.
-			Listeners used to the western music tradition generally prefer sound waves that have a simple ratio between wavelengths.
-		</p>
-
-		<div class='example'>
-			<svg onload="drawSineWave(this, 75, 25, 18.75, '#39f'); drawSineWave(this,37.5, 25, 9.375, '#f37'); centerLine(this)" height='75'></svg>
-			<svg onload="drawSineWave(this, 75, 25, 18.75, '#39f'); drawSineWave(this,40, 25, 10, '#f37'); centerLine(this)" height='75'></svg>
-			<strong>Question:</strong> Guess which of these combinations would sound better in the western music tradition?
-			<details>
-				<summary>solution</summary>
-				<p>The first pair of frequencies has a harmonious 1:2 ratio.</p>
-				<button id="sound-play-300" style="width: 70px;">300 Hz</button>
-				<button id="sound-play-150" style="width: 70px;">150 Hz</button>
-				<!-- <button id="sound-play-150-300" style="width: 120px;">300 + 150 Hz</button> -->
-				<svg onload="drawSineWaves(this, 75, 25, 18.75, '#39f', 37.5, 25, 9.375, '#f37'); centerLine(this)" height='150'></svg>
-				<br>
-				<button id="sound-play-300-2" style="width: 70px;">300 Hz</button>
-				<button id="sound-play-160" style="width: 70px;">160 Hz</button>
-				<!-- <button id="sound-play-2" style="width: 60px;">listen</button> -->
-				<svg onload="drawSineWaves(this,75, 25, 18.75, '#39f',  40, 25, 10, '#f37'); centerLine(this)" height='150'></svg>
-				<p>
-					I don't hate the second combination, but it does have a slight sour sound.
-				</p>
-			</details>
-		</div>
-
-
 		<div id="microphone-zone" class="example-small">
 			Click to see the <strong>waveform</strong> recorded by your microphone.
 			<canvas class="center" width="600" height="100" id="analyzer-canvas" onclick="analyzer(this)"></canvas>
@@ -321,6 +292,35 @@
 					</p>
 				</details>
 			</div>
+		</div>
+
+		<h2 class='underlined' id='harmony'>Consonance and Dissonance</h2>
+		<p>
+			Some of what makes music sound good depends on the cultural background of the listener.
+			Listeners used to the western music tradition generally prefer sound waves that have a simple ratio between wavelengths.
+		</p>
+
+		<div class='example'>
+			<svg onload="drawSineWave(this, 75, 25, 18.75, '#39f'); drawSineWave(this,37.5, 25, 9.375, '#f37'); centerLine(this)" height='75'></svg>
+			<svg onload="drawSineWave(this, 75, 25, 18.75, '#39f'); drawSineWave(this,40, 25, 10, '#f37'); centerLine(this)" height='75'></svg>
+			<strong>Question:</strong> Guess which of these combinations of sound waves will sound better to your ears?
+			<details>
+				<summary>solution</summary>
+				<p>The first pair of frequencies has a harmonious 1:2 ratio.</p>
+				<button id="sound-play-300" style="width: 70px;">300 Hz</button>
+				<button id="sound-play-150" style="width: 70px;">150 Hz</button>
+				<!-- <button id="sound-play-150-300" style="width: 120px;">300 + 150 Hz</button> -->
+				<svg onload="drawSineWaves(this, 75, 25, 18.75, '#39f', 37.5, 25, 9.375, '#f37'); centerLine(this)" height='150'></svg>
+				<br>
+				<button id="sound-play-300-2" style="width: 70px;">300 Hz</button>
+				<button id="sound-play-160" style="width: 70px;">160 Hz</button>
+				<!-- <button id="sound-play-2" style="width: 60px;">listen</button> -->
+				<svg onload="drawSineWaves(this,75, 25, 18.75, '#39f',  40, 25, 10, '#f37'); centerLine(this)" height='150'></svg>
+				<p>
+					I don't hate the second combination, but it does have a slight sour, tense, or sad sound to me.
+					Of course, good music might find a place for that feeling.
+				</p>
+			</details>
 		</div>
 
 		<div class='example'>
@@ -369,15 +369,32 @@
 				<canvas id="beats-canvas" width="590" height="100" class="no-shadow"></canvas>
 				<br>&nbsp;&nbsp;&nbsp;analyser = <input class="beats-slider" id='beats-analyser-slider' type="range" step="1" value="3" min="1" max="8">
 				<p>
-					The pattern in the graph above is sent as an electrical wave into your speakers. In the speaker, magnets convert the electrical wave into vibrations. The vibrations spread through the air as an audible wave of pressure.
+					The pattern in the graph above is sent as an electrical wave into your speakers.
+					In the speaker, magnets convert the electrical wave into vibrations.
+					The vibrations spread through the air as an audible wave of pressure.
+				</p>
+				<p>
+
 				</p>
 			</span>
 		</div>
 		<div class="example">
 			<a href="https://www.lightnote.co/">Music theory</a> explores what groups of notes sound best together.
-			It's interesting how you can evoke emotion with different combinations of notes.
-			For example, the major scale sounds upbeat, but the minor scale sounds sad.
+			It's interesting that you can evoke emotions by adjusting the ratio of paired note frequencies.
+			<p>
+				For example, the major scale is a collection of notes that can sound nice together partly because they have a simple ratio between frequencies.
+				Minor chords are collections of notes that might feel sad or tense partly because of the <a href="https://www.youtube.com/watch?v=jNY_ZCUBmcA">ratio</a> between frequencies.
+			</p>
+			<!-- <p>
+				Notes that have close together frequencies can feel sad, tense, or unresolved.
+				This isn't always bad.
+				It's often used in the same way that tension is used in a story.
+				Some tension is fun and exciting, as long as it is resolved in the end.
+				In this way one might follow up notes that are a bit too close together with notes that have a more simple ratio.
+				This resolves the tension and often makes you happy.
+			</p> -->
 		</div>
+
 		<h2 class='underlined' id="diffraction">Diffraction</h2>
 		<p>
 			Waves tend to spread out in every direction possible within their medium. <strong>Diffraction</strong> is when a wave spreads out after some of the wave hits a barrier. This explains how sound can be heard through an open door even when there is no line of sight.
