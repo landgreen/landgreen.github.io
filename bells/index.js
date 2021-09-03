@@ -471,7 +471,7 @@ function drawCurrentPeriod(b) {
   // document.getElementById("period-time").textContent = startTime + " - " + endTime;
   document.getElementById(schedule.mouse).setAttribute("fill", schedule[schedule.current][schedule.mouse].fill);
   //color now line
-  if (period.showName && (todayMinutes - period.start < 10 || todayMinutes - period.start > period.long - 10)) {
+  if (period.showName && (todayMinutes - period.start < 15 || todayMinutes - period.start > period.long - 15)) {
     document.getElementById("now").setAttribute("stroke", "#f05");
   } else {
     document.getElementById("now").setAttribute("stroke", "#000");
