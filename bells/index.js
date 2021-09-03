@@ -1,5 +1,5 @@
 //http://newwestcharter.org/high-school-daily-bell-schedule/
-let playBells = false
+
 let todayMinutes = 0;
 let startMinutes = 440;
 let timeMode = 0;
@@ -18,14 +18,13 @@ const schedule = {
   current: "regular",
   mouse: 0,
   setCurrentByDate: function () {
-    // if (schedule.current != "rally" || date.getHours() > 22) {
-    //   if (date.getDay() === 5) {
-    //     schedule.current = "advisory";
-    //   } else {
-    //     schedule.current = "regular";
-    //   }
-    // }
-    schedule.current = "regular";
+    if (schedule.current != "rally" || date.getHours() > 22) {
+      if (date.getDay() === 5) {
+        schedule.current = "advisory";
+      } else {
+        schedule.current = "regular";
+      }
+    }
   },
   cycleCurrent: function () {
     if (schedule.current === "regular") {
@@ -35,7 +34,7 @@ const schedule = {
     } else if (schedule.current === "rally") {
       schedule.current = "regular";
     }
-    update(false);
+    update();
   },
   regular: [{
       start: 0,
@@ -387,7 +386,6 @@ function toggleMode() {
   }
 }
 
-
 function drawDigitalClock() {
   date = new Date();
   document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`;
@@ -446,7 +444,7 @@ function nameOfSeasonAsString(MonthIndex) {
 }
 
 function findCurrentPeriod(b) {
-  // let period = 0;
+  let period = 0;
   for (let i = 0, len = b.length; i < len; ++i) {
     if (todayMinutes >= b[i].start && todayMinutes < b[i].start + b[i].long) {
       return i;
@@ -637,36 +635,6 @@ function noWeather() {
   document.getElementById("weather").textContent = nameOfSeasonAsString(Math.floor(date.getMonth() / 4));
 }
 
-
-function bellSound(time = 2000, frequency = 650, volume = 1) {
-  let audioCtx, oscillator1, gainNode
-  audioCtx = new(window.AudioContext)();
-  oscillator1 = audioCtx.createOscillator();
-  gainNode = audioCtx.createGain();
-  gainNode.gain.value = volume; //controls volume
-  oscillator1.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  oscillator1.frequency.value = frequency; // value in hertz
-  oscillator1.start();
-  document.body.style.backgroundColor = "#0ff";
-
-  setTimeout(function () {
-    audioCtx.suspend()
-    document.body.style.backgroundColor = "#fff";
-  }, time);
-}
-
-function bellToggle() {
-  if (playBells) {
-    playBells = false
-    document.getElementById("bell-toggle").textContent = "no bells";
-  } else {
-    playBells = true
-    document.getElementById("bell-toggle").textContent = "bells on";
-  }
-}
-
-
 //**************************************************
 //main repeating loop
 function update() {
@@ -678,55 +646,52 @@ function update() {
   drawCurrentPeriod(schedule[schedule.current]);
   moveSVGPeriods(schedule[schedule.current]);
 
-  // bellSound();
+
   //ring bell on new period
   // for (let i = 0, len = schedule[schedule.current].length; i < len; ++i) {
-  //   // console.log(todayMinutes, schedule[schedule.current][i].start)
-  //   if (schedule[schedule.current][i].start = todayMinutes) {
-  //     if (bell && playBells) bellSound();
+  //   if (schedule[schedule.current][i].start === todayMinutes) {
+  //     var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+
+  //     var oscillator1 = audioCtx.createOscillator();
+  //     var gainNode1 = audioCtx.createGain();
+  //     gainNode1.gain.value = 1; //controls volume
+  //     oscillator1.connect(gainNode1);
+  //     gainNode1.connect(audioCtx.destination);
+
+  //     oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
+  //     oscillator1.frequency.value = 300; // value in hertz
+  //     oscillator1.start();
+
+  //     setTimeout(() => {
+  //       gainNode1.gain.value = 0;
+  //       oscillator1.stop();
+  //     }, 2000);
   //   }
   // }
 }
 
-// let audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+//run once at start, then run when the next minute begins, then run every minute.
+schedule.setCurrentByDate();
+update();
+noWeather();
+slowUpdate();
+drawDigitalClock();
 
-// let oscillator1 = audioCtx.createOscillator();
-// let gainNode1 = audioCtx.createGain();
-// gainNode1.gain.value = 1; //controls volume
-// oscillator1.connect(gainNode1);
-// gainNode1.connect(audioCtx.destination);
-// oscillator1.frequency.value = 650; // value in hertz
-// oscillator1.start();
-// setTimeout(() => {
-//   oscillator1.stop();
-// }, 2000);
+// window.setInterval(drawDigitalClock, 100); //update every 1/10 of second
+// window.setInterval(slowUpdate, 10 * 60 * 1000); //update weather every 10 min
 
-setup();
-
-function setup() {
-  //run once at start, then run when the next minute begins, then run every minute.
-  schedule.setCurrentByDate();
+setTimeout(function () {
   update();
-  noWeather();
-  slowUpdate();
+  window.setInterval(slowUpdate, 10 * 60 * 1000); //update weather every 10 min
+  window.setInterval(update, 60 * 1000); //update every minute
+}, (60 - date.getSeconds()) * 1000);
+
+window.addEventListener("focus", function () {
+  update();
+});
+
+const cycle = function () {
   drawDigitalClock();
-
-  // window.setInterval(drawDigitalClock, 100); //update every 1/10 of second
-  // window.setInterval(slowUpdate, 10 * 60 * 1000); //update weather every 10 min
-
-  setTimeout(function () {
-    update();
-    window.setInterval(slowUpdate, 60 * 60 * 1000); //update weather every 60 min
-    window.setInterval(update, 60 * 1000); //update every minute
-  }, (60 - date.getSeconds()) * 1000);
-
-  window.addEventListener("focus", function () {
-    update();
-  });
-
-  const cycle = function () {
-    drawDigitalClock();
-    window.requestAnimationFrame(cycle);
-  };
   window.requestAnimationFrame(cycle);
-}
+};
+window.requestAnimationFrame(cycle);
