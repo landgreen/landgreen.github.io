@@ -1560,7 +1560,7 @@ const b = {
                         } else { //check if inside a body
                             for (let i = 0, len = mob.length; i < len; i++) {
                                 const dist = Vector.magnitudeSquared(Vector.sub(this.position, mob[i].position))
-                                const radius = mob[i].radius + tech.extruderRange
+                                const radius = mob[i].radius + tech.extruderRange / 2
                                 if (dist < radius * radius) {
                                     Matter.Body.setVelocity(mob[i], { x: mob[i].velocity.x * 0.25, y: mob[i].velocity.y * 0.25 });
                                     Matter.Body.setPosition(this, Vector.add(this.position, mob[i].velocity)) //move with the medium

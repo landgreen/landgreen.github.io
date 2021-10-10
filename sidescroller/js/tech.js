@@ -5999,7 +5999,7 @@
                 description: `use ${powerUps.orb.research(1)} to increase <strong class='color-plasma'>plasma</strong> <strong>torch</strong> range <strong>50%</strong>`,
                 // description: "use <strong>1</strong> <strong class='color-r'>research</strong> to <br>increase <strong class='color-plasma'>plasma</strong> <strong>torch's</strong> range by <strong>50%</strong>",
                 isFieldTech: true,
-                maxCount: 9,
+                maxCount: 1,
                 count: 0,
                 frequency: 2,
                 frequencyDefault: 2,

@@ -18,7 +18,7 @@ const level = {
             // b.giveGuns("harpoon")
             // m.setField("plasma torch")
             // tech.giveTech("extruder")
-            // for (let i = 0; i < 1; i++) tech.giveTech("refractory metal")
+            // for (let i = 0; i < 2; i++) tech.giveTech("refractory metal")
             // tech.giveTech("mouth")
             // tech.giveTech("all-stars")
             // for (let i = 0; i < 3; i++) tech.giveTech("overcharge")
