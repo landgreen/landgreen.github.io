@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#222" />
+    <meta name="description" content="Interactive notes for algebra based physics.">
+    <meta name="author" content="Ross Landgreen">
+    <meta property="og:description" content="Interactive notes for algebra based physics.">
+    <meta property="og:title" content="Physics Notes">
+    <meta name="twitter:title" content="Physics Notes">
+    <meta name="twitter:description" content="Interactive notes for algebra based physics.">
+
+    <title>Momentum</title>
+    <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+
+    <link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+    <script src="../../../lib/katex/katex.min.js"></script>
+    <script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+</head>
+
+<body>
+    <header>
+        <h1>
+            <a href="../../../">Conservation of Momentum</a>
+        </h1>
+    </header>
+    <article>
+        
+        <p>
+            The law of conservation of momentum states that total momentum doesn't change over time, even if two objects <a href="https://www.youtube.com/watch?v=4IYDb6K5UF8">collide</a>. When a property doesn't change over time we say that the property is <strong>conserved</strong>.
+        </p>
+
+        <!-- <span class="center" style="font-size: 120%;"> mv + mv = total horizontal momentum</span> -->
+        $$m_1v_1 + m_2v_2 = \text{total momentum}$$
+        <canvas id="canvas0" width='580' height='270'> </canvas>
+        Click the simulation below a few times and watch the sum of the total horizontal momentum before and after the collision.
+
+        <div class="example-small">
+            <p>
+                Conservation of momentum means we can set the total momentums at two points in time equal to each other. (as long as there are no outside forces)
+            </p>
+            <details class='derive'>
+                <summary>derivation of conservation of momentum</summary>
+                <p>
+                    First we are going to rewrite force in terms of a change in velocity.
+                </p>
+                $$F = ma $$ $$a = \frac{\Delta v}{\Delta t}$$
+                $$F = m \frac{\Delta v}{\Delta t}$$
+                $$F = m \frac{(v-u)}{\Delta t}$$
+                <p>
+                    When two bodies collide they each experience an equal but opposite force for an equal period of time as explained by Newton's third law.
+                </p>
+                <svg viewBox="-60 0 400 100">
+                    <defs>
+                        <g id="vector">
+                            <line x1="0" y1="0" x2="0" y2="45" style="stroke:#000;stroke-width:2" />
+                            <polygon points="0,50 -5,42 0,43 5,42" style="fill:#000;" />
+                        </g>
+                    </defs>
+                    <rect x="40" y="1" width="100" height="98" stroke='#000' style="stroke-width:1;fill:#fff;" />
+                    <rect x="140" y="15" width="70" height="70" stroke='#000' style="stroke-width:1;fill:#fff;" />
+                    <use xlink:href="#vector" transform='translate(192.5 50) rotate(90)' />
+                    <use xlink:href="#vector" transform='translate(87.5 50) rotate(-90)' />
+                    <text x="110" y="35" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>F
+                        <tspan font-size="0.7em" dy="5" dx="-5">1</tspan>
+                    </text>
+                    <text x="172" y="37" fill="black" text-anchor="middle" dominant-baseline="middle" font-size='20px'>F
+                        <tspan font-size="0.7em" dy="5" dx="-5">2</tspan>
+                    </text>
+                </svg>
+                $$ F_1 \Delta t = -F_2 \Delta t $$
+                $$m_1 \frac{(v_1-u_1)}{\Delta t} \Delta t= -m_2 \frac{(v_2-u_2)}{\Delta t}\Delta t$$
+                $$m_1 (v_1-u_1) = -m_2 (v_2-u_2)$$
+                $$m_1 v_1- m_1 u_1 = -m_2 v_2 + m_2 u_2$$
+                $$ m_1 u_1 + m_2 u_2= m_2 v_2 + m_1 v_1$$
+            </details>
+
+            <div class='definition'>
+                <svg viewBox="-25 0 500 70">
+                    <g transform="translate(75.5 15.5)" stroke="#000" stroke-width="1" fill="none">
+                        <rect x="0.5" y="0.5" width="50" height="50" fill="#fff" stroke-width="1" />
+                        <text x="25" y="25" fill="#000" stroke="none" text-anchor="middle" dominant-baseline="middle">m</text>
+                        <line x1="0" y1="5" x2="-35" y2="5" />
+                        <line x1="0" y1="15" x2="-65" y2="15" />
+                        <line x1="0" y1="25" x2="-35" y2="25" />
+                        <line x1="0" y1="35" x2="-75" y2="35" />
+                        <line x1="0" y1="45" x2="-40" y2="45" />
+                    </g>
+                    <g transform="translate(375.5 15.5)" stroke="#000" stroke-width="1" fill="none">
+                        <rect x="-50.5" y="0.5" width="50" height="50" fill="#fff" stroke-width="1" />
+                        <text x="-25" y="25" fill="#000" stroke="none" text-anchor="middle" dominant-baseline="middle">m</text>
+                        <line x1="0" y1="5" x2="35" y2="5" />
+                        <line x1="0" y1="15" x2="45" y2="15" />
+                        <line x1="0" y1="25" x2="85" y2="25" />
+                        <line x1="0" y1="35" x2="55" y2="35" />
+                        <line x1="0" y1="45" x2="30" y2="45" />
+                    </g>
+                </svg>
+                $$ \sum p_i = \sum p_f$$ $$m_1 u_1 + m_2u_2 = m_1v_1 + m_2v_2$$ \(p\) = momentum [kg m/s]
+                <em>vector</em>
+                <br> \(u\) = initial velocity [m/s]
+                <em>vector</em>
+                <br>\(v\) = final velocity [m/s]
+                <em>vector</em>
+                <br>\(m\) = mass [kg]
+            </div>
+            <!-- <p>
+                The conservation of momentum can be thought of as a consequence of spacial translation symmetry.
+            </p> -->
+        </div>
+        <div class='example'>
+            <canvas id="canvas2" width='580' height='200'> </canvas>
+            <strong>Example:</strong> A <span style='color:#0f0'> <strong>green</strong> </span>box and a <span style='color: white;background-color: lightgrey;'> <strong>&nbsp;white</strong> </span>&nbsp;box collide. The green box has a mass of 2&nbsp;kg and is moving to the right at 3&nbsp;m/s. The white box is moving to the left at 1&nbsp;m/s and has a mass of 10&nbsp;kg. If the white box has stopped after the collision what is the velocity of the green box?
+            <details>
+                <summary>solution</summary>
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$\text{green + white = green + white}$$
+                $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$
+                $$(2)(3)+(10)(-1)=(2)v_{1}+(10)(0)$$ $$6-10=(2)v_{1}$$
+                $$-4=(2)v_{1}$$ $$-2 \mathrm{\tfrac{m}{s}} =v_{1}$$
+            </details>
+        </div>
+
+        <div class="example">
+            <canvas id="canvas1" width='580' height='200'> </canvas>
+            <strong>Question:</strong> When does the total momentum change in this simulation?
+            <details>
+                <summary>answer</summary>
+                <p>
+                    The total momentum changes when one of the objects collides with the walls.
+                </p>
+            </details>
+            <br> <strong>Question:</strong> Why does the total momentum change? Is this a violation of conservation of momentum?
+            <details>
+                <summary>answer</summary>
+                <p>
+                    The total momentum is conserved, but we aren't including the walls in our calculations.
+                    It can be very difficult to measure the change in velocity for very massive objects, like the ground or a wall.
+                </p>
+            </details>
+        </div>
+
+        <div class='example'>
+            <canvas id="canvas3" width='580' height='180'> </canvas>
+            <table class='data'>
+                <tr>
+                    <th>
+                        <a style='color: lime'>green box</a>
+                    </th>
+                    <th>
+                        <a style='color: #00AEFF'>blue box</a>
+                    </th>
+                    <th>
+                        <a style='color: orange'>orange box</a>
+                    </th>
+                </tr>
+                <tr>
+                    <td>m = 1.60 kg</td>
+                    <td>m = 4.90 kg</td>
+                    <td>m = 3.60 kg</td>
+                </tr>
+                <tr>
+                    <td>u = 3.0 m/s</td>
+                    <td>u = 2.0 m/s</td>
+                    <td>u = -1.0 m/s</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>v = ???</strong>
+                    </td>
+                    <td>v = 1.18 m/s</td>
+                    <td>v = 1.58 m/s</td>
+                </tr>
+            </table>
+            <strong>Example:</strong> Three boxes collide. Use the table to find the final velocity of the <span style='color:lime'> <strong>green</strong> </span> box.
+            <details>
+                <summary>solution</summary>
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$
+                $$ {\color{Lime} \blacksquare} \quad +\quad {\color{Blue} \blacksquare} \quad+\quad {\color{orange} \blacksquare} \quad = \quad {\color{Lime} \blacksquare} \quad+\quad {\color{Blue} \blacksquare} \quad+\quad {\color{orange} \blacksquare}$$
+                $$m_{1}u_{1} + m_{2}u_{2} + m_{3}u_{3} = m_{1}v_{1}+m_{2}v_{2}+m_{3}v_{3}$$
+                $$(1.6)(3)+(4.9)(2)+(3.6)(-1)=(1.6)v_{1}+(4.9)(1.18)+(3.6)(1.58)$$
+                $$11=1.6v_{1}+11.47$$ $$-0.29 \mathrm{\tfrac{m}{s}} = v_{1}$$
+            </details>
+        </div>
+
+        <h1 class='underlined'>Perfectly Inelastic Collisions</h1>
+        <p>
+            When two objects collide and stick together we say the collision is <strong>perfectly inelastic</strong>. In those situations the equations for conservation of momentum simplify a bit.
+        </p>
+        $$m_1u_1 + m_2u_2 = m_1v_1+m_2v_2$$
+        $$m_1u_1 + m_2u_2 = \left(m_1+m_2\right)v$$
+
+        <div class='example'>
+            <canvas id="canvas4" width='580' height='200'> </canvas>
+            <div id='ex0-question'>
+                <strong>Click to Randomize Problem:</strong> Click above to generate a random problem.
+            </div>
+            <details id="ex0-details">
+                <summary>solution</summary>
+                <div id='ex0-math'></div>
+            </details>
+        </div>
+
+        <div class='example'>
+            <p>
+                Objects can also start as one mass and separate, like in an explosion.
+            </p>
+            $$\left(m_1+m_2\right)u = m_1v_1 + m_2v_2$$
+            <canvas id="canvas5" width='580' height='200'> </canvas>
+            <div id='ex1-question'>
+                <strong>Click to Randomize Problem:</strong> Click above to generate a random problem.
+            </div>
+            <details id="ex1-details">
+                <summary>solution</summary>
+                <div id='ex1-math'></div>
+            </details>
+        </div>
+
+        <div class='example'>
+            <strong>Example:</strong> A 100.0 kg goalie throws a 1.1 kg soccer ball while jumping forward at 3.2 m/s. If the ball flies out of the goalie's hands at 10.0 m/s what speed is the goalie?
+            <details>
+                <summary>solution</summary>
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$
+                $$\text{goalie holding ball = goalie + ball}$$
+                $$(m_{1}+m_{2})u=m_{1}v_{1}+m_{2}v_{2}$$
+                $$(100.0+1.1)(3.2)=(100.0)v_{1}+(1.1)(10.0)$$
+                $$323.52=(100.0)v_{1}+11$$ $$3.13 \, \mathrm{\tfrac{m}{s}} = v_{1}$$
+            </details>
+        </div>
+
+        <h1 class='underlined'>2-D Conservation of Momentum</h1>
+        <p>
+            Momentum is a vector. It has a direction and a magnitude. We can solve for the horizontal and vertical components separately just like how we solved 2-D Motion problems. Although in this case there isn't a time variable to link up the vertical and horizontal equations.
+        </p>
+
+        <div class='example'>
+            <canvas id="canvas6" width='580' height='300'> </canvas>
+            <strong>Horizontal:</strong> A <span style='color: pink'> <strong>pink</strong> </span> hexagon and a <span style='color: cyan'> <strong>cyan</strong> </span> triangle collide. Before the collision the hexagon has a mass of 5.20 kg and is moving to the right at 2 m/s. The cyan triangle is moving to the left at 1 m/s and has a mass of 1.17 kg. If the triangle bounces off the hexagon at 2.72 m/s to the right what is the horizontal velocity of the hexagon? (ignore the vertical information)
+            <details>
+                <summary>solution</summary>
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$ $$\text{hexagon + triangle = hexagon + triangle}$$
+                $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$
+                $$(5.20)(2)+(1.17)(-1)=(5.20)v_{1}+(1.17)(2.72)$$
+                $$10.40-1.17=(5.20)v_{1}+3.18$$
+                $$6.05=(5.20)v_{1}$$
+                $$1.16 \, \mathrm{\tfrac{m}{s}}= v_{1}$$
+            </details>
+            <br>
+            <strong>Vertical:</strong> Lets take a look at the vertical aspect of the <span style='color: pink'> <strong>pink</strong> </span> hexagon and <span style='color: cyan'> <strong>cyan</strong> </span> triangle collision. Before the collision the hexagon has a mass of 5.20 kg and is not moving up or down. The final vertical velocity of the hexagon is 0.23 m/s down. The final vertical velocity of the triangle is 0.67 m/s up. What is the triangle's initial vertical velocity?
+            <details>
+                <summary>solution</summary>
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$
+                $$\text{hexagon + triangle = hexagon + triangle}$$
+                $$m_{1}u_{1}+m_{2}u_{2}=m_{1}v_{1}+m_{2}v_{2}$$
+                $$(5.20)(0)+(1.17)(u_{2})=(5.20)(-0.23)+(1.17)(0.67)$$
+                $$(1.17)(u_{2})=-0.41$$ $$u_{2}=-0.35 \, \mathrm{\tfrac{m}{s}}$$
+        </div>
+        </details>
+        </div>
+    </article>
+    <footer>
+        <a href="../../../">Back</a>
+    </footer>
+    <script>
+        renderMathInElement(document.body);
+    </script>
+    <script src='../../../lib/matter.min.js'></script>
+    <script src='../../../lib/randomColor.min.js'></script>
+    <script src="collisionDemo(Matter.js).js"></script>
+    <script src="collisionDemo2(Matter.js).js"></script>
+    <script src="collisionEx1(Matter.js).js"></script>
+    <script src="collisionEx3(Matter.js).js"></script>
+    <script src="stickyCollision0.js"></script>
+    <script src="stickyCollision1.js"></script>
+    <script src="collision2D.js"></script>
+</body>
+
+</html>
