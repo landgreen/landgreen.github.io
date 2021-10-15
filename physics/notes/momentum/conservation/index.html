@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#222" />
@@ -12,14 +11,11 @@
     <meta property="og:title" content="Physics Notes">
     <meta name="twitter:title" content="Physics Notes">
     <meta name="twitter:description" content="Interactive notes for algebra based physics.">
-
     <title>Momentum</title>
     <link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
-
     <link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
     <script src="../../../lib/katex/katex.min.js"></script>
     <script src="../../../lib/katex/contrib/auto-render.min.js"></script>
-
     <link rel="stylesheet" type="text/css" href="../../../style.css">
 </head>
 
@@ -30,9 +26,9 @@
         </h1>
     </header>
     <article>
-        
         <p>
-            The law of conservation of momentum states that total momentum doesn't change over time, even if two objects <a href="https://www.youtube.com/watch?v=4IYDb6K5UF8">collide</a>. When a property doesn't change over time we say that the property is <strong>conserved</strong>.
+            The law of conservation of momentum states that total momentum doesn't change over time, even if two objects <a href="https://www.youtube.com/watch?v=4IYDb6K5UF8">collide</a>.
+            When a property doesn't change over time we say that the property is <strong>conserved</strong>.
         </p>
 
         <!-- <span class="center" style="font-size: 120%;"> mv + mv = total horizontal momentum</span> -->
@@ -79,7 +75,33 @@
                 $$m_1 v_1- m_1 u_1 = -m_2 v_2 + m_2 u_2$$
                 $$ m_1 u_1 + m_2 u_2= m_2 v_2 + m_1 v_1$$
             </details>
-
+            <br>
+            <details class='derive'>
+                <summary>symmetry and conservation laws</summary>
+                <p>
+                    Conservation of momentum is a law.
+                    It's a pattern we see when we collect data.
+                    We didn't have a explanation for why until 1915 when Emmy Noether published a mathematical proof that conservation can be understood as a consequence of symmetry.
+                    So, momentum is conserved because space is symmetrical.
+                </p>
+                <p>
+                    Symmetry is a property that doesn't change after a transformation.
+                    If you translate (move) your location in space the total momentum of a system of particles doesn't change.
+                    So we say that momentum is conserved.
+                </p>
+                <p>
+                    There are a few different conservation laws in classical physics:
+                </p>
+                <li>Conservation of energy occurs because of time symmetry.  The laws of physics work the same at any time.</li>
+                <li>Conservation of momentum occurs because of translational symmetry.  The laws of physics work the same anywhere in space.</li>
+                <li>Conservation of angular momentum occurs because of rotational symmetry. The laws of physics work the same at any angle.</li>
+                <li>Conservation of electric charge occurs because of gauge invariance. This is a quantum mechanical principle related to magnitude and phase of a wave function.</li>
+                <li>There are also a few more conservation laws in quantum mechanics: parity, lepton number, baryon number</li>
+                <p>
+                    You might have heard of conservation of mass, but mass isn't always conserved.
+                    You can destroy or produce mass because mass is a type of energy.
+                </p>
+            </details>
             <div class='definition'>
                 <svg viewBox="-25 0 500 70">
                     <g transform="translate(75.5 15.5)" stroke="#000" stroke-width="1" fill="none">
@@ -184,6 +206,31 @@
                 $$m_{1}u_{1} + m_{2}u_{2} + m_{3}u_{3} = m_{1}v_{1}+m_{2}v_{2}+m_{3}v_{3}$$
                 $$(1.6)(3)+(4.9)(2)+(3.6)(-1)=(1.6)v_{1}+(4.9)(1.18)+(3.6)(1.58)$$
                 $$11=1.6v_{1}+11.47$$ $$-0.29 \mathrm{\tfrac{m}{s}} = v_{1}$$
+            </details>
+        </div>
+
+
+        <div class='example'>
+            <strong>Example:</strong> A photon of red light has a <a href="https://www.youtube.com/watch?v=oIuvIDhcs8E">momentum</a> of 9.45 × 10<sup>-28</sup> kg m/s.
+            How many photons have to collide with a 100 kg spaceship to get it to speed up from rest to 5 m/s?
+            Assume the photons reflect off the ship after they collide.
+            <details>
+                <summary>solution</summary>
+                <p>
+                    I'll start by solving for the total momentum needed, so I will not use the momentum per red photon yet.
+                </p>
+                $$\sum p_{\mathrm{initial}} = \sum p_{\mathrm{final}}$$
+                $$p_{\mathrm{photons}} + p_\mathrm{{ship}} = p_\mathrm{{photons}} + p_\mathrm{{ship}}$$
+                $$p + (100)(0) = -p + (100)(5)$$
+                $$p = -p + 500$$
+                $$2p = 500$$
+                $$p = 250 \space \mathrm{ kg \tfrac{m}{s}}$$
+                <p>
+                    Light with 250 kg m/s of momentum will accelerate the ship to 5 m/s.
+                    In order to count the number of red photons that make up the light we need to divide that number by the momentum of one red photon.
+                </p>
+                $$n = \frac{250 \space \mathrm{ kg \tfrac{m}{s}}}{9.45 \times 10^{-28} \space \mathrm{ kg \tfrac{m}{s}}} $$
+                $$n = 2.77 \times 10^{29} \space \mathrm{photons} $$
             </details>
         </div>
 
