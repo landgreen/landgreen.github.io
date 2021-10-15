@@ -1504,7 +1504,7 @@
             },
             {
                 name: "robotics",
-                description: `spawn a random <strong>bot</strong><br><strong>quadruple</strong> the <strong class='flicker'>frequency</strong> of finding <strong>bot</strong> <strong class='color-m'>tech</strong>`,
+                description: `spawn <strong>2</strong> random <strong>bots</strong><br><strong>quadruple</strong> the <strong class='flicker'>frequency</strong> of finding <strong>bot</strong> <strong class='color-m'>tech</strong>`,
                 maxCount: 1,
                 count: 0,
                 frequency: 1,
@@ -1516,14 +1516,19 @@
                 requires: "at least 2 bots",
                 effect: () => {
                     b.randomBot()
+                    b.randomBot()
                     for (let i = 0, len = tech.tech.length; i < len; i++) {
                         if (tech.tech[i].isBotTech) tech.tech[i].frequency *= 4
                     }
                 },
                 remove() {
                     if (this.count > 0) {
+                        b.removeBot()
+                        b.removeBot()
+                        b.clearPermanentBots();
+                        b.respawnBots();
                         for (let i = 0, len = tech.tech.length; i < len; i++) {
-                            if (tech.tech[i].isBotTech) tech.tech[i].frequency /= 4
+                            if (tech.tech[i].isBotTech) tech.tech[i].frequency = Math.ceil(tech.tech[i].frequency / 4)
                         }
                     }
                 }
@@ -4819,8 +4824,7 @@
                 }
             },
             {
-                name: "torque bursts",
-                link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Electric_motor#Torque_motor' class="link">torque bursts</a>`,
+                name: "brushless motor",
                 description: "<strong>drones</strong> rapidly <strong>rush</strong> towards their target<br>increase <strong>drone</strong> collision <strong class='color-d'>damage</strong> by <strong>33%</strong>",
                 isGunTech: true,
                 maxCount: 1,
@@ -4839,7 +4843,7 @@
                 }
             },
             {
-                name: "brushless motor",
+                name: "axial flux motor",
                 description: "<strong>drones</strong> can <strong>rush</strong> <strong>66%</strong> more often<br>increase <strong>drone</strong> collision <strong class='color-d'>damage</strong> by <strong>44%</strong>",
                 isGunTech: true,
                 maxCount: 1,
@@ -5971,9 +5975,9 @@
                 isBot: true,
                 isBotTech: true,
                 allowed() {
-                    return !tech.isExtruder && m.fieldUpgrades[m.fieldMode].name === "plasma torch" && (build.isExperimentSelection || powerUps.research.count > 0)
+                    return m.fieldUpgrades[m.fieldMode].name === "plasma torch" && (build.isExperimentSelection || powerUps.research.count > 0)
                 },
-                requires: "plasma torch, not extruder",
+                requires: "plasma torch",
                 effect() {
                     tech.plasmaBotCount++;
                     b.plasmaBot();
@@ -6030,9 +6034,9 @@
                 frequency: 2,
                 frequencyDefault: 2,
                 allowed() {
-                    return m.fieldUpgrades[m.fieldMode].name === "plasma torch" && tech.plasmaBotCount === 0
+                    return m.fieldUpgrades[m.fieldMode].name === "plasma torch"
                 },
-                requires: "plasma torch, not  plasma-bot",
+                requires: "plasma torch",
                 effect() {
                     tech.isExtruder = true;
                     m.fieldUpgrades[m.fieldMode].set()

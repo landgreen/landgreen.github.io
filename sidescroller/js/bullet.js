@@ -3154,6 +3154,40 @@ const b = {
             if (bullet[i].botType && bullet[i].endCycle === Infinity) bullet[i].endCycle = 0 //remove active bots, but don't remove temp bots
         }
     },
+    removeBot() {
+        if (tech.nailBotCount > 1) {
+            tech.nailBotCount--
+            return
+        }
+        if (tech.laserBotCount > 1) {
+            tech.laserBotCount--
+            return
+        }
+        if (tech.foamBotCount > 1) {
+            tech.foamBotCount--
+            return
+        }
+        if (tech.boomBotCount > 1) {
+            tech.boomBotCount--
+            return
+        }
+        if (tech.orbitBotCount > 1) {
+            tech.orbitBotCount--
+            return
+        }
+        if (tech.dynamoBotCount > 1) {
+            tech.dynamoBotCount--
+            return
+        }
+        if (tech.missileBotCount > 1) {
+            tech.missileBotCount--
+            return
+        }
+        if (tech.plasmaBotCount > 1) {
+            tech.plasmaBotCount--
+            return
+        }
+    },
     zeroBotCount() { //remove all bots
         tech.dynamoBotCount = 0
         tech.laserBotCount = 0

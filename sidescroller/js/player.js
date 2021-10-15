@@ -438,7 +438,7 @@ const m = {
             m.health = 0;
             m.displayHealth();
             document.getElementById("text-log").style.opacity = 0; //fade out any active text logs
-            document.getElementById("fade-out").style.opacity = 0.8; //1; //slowly fade to white
+            document.getElementById("fade-out").style.opacity = 0.92; //1; //slowly fade to white
             // build.shareURL(false)
             setTimeout(function() {
                 Composite.clear(engine.world);

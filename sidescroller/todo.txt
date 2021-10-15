@@ -1,10 +1,10 @@
 ******************************************************** NEXT PATCH **************************************************
 
-after you die your canvas sticks around at 10% opacity
-add a mouse over underline effect to hint that names are links
-molecular assembler: all 3 manufacturing tech cost 3 -> 1 research
+
 
 ******************************************************** TODO ********************************************************
+
+fade out red smoothly when you die
 
 death animation ideas:
   redraw game in strange ways, to show that it's a simulation (for example the testing mode is a strange redraw of map)
@@ -453,6 +453,7 @@ possible names for tech
   nonlocal
   fine-tuned universe
   eternalism https://en.wikipedia.org/wiki/Eternalism_(philosophy_of_time)
+  axial motor
  
 a tutorial / lore intro
   needs to be optional so it doesn't slow experienced players
