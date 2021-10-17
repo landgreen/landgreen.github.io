@@ -5221,25 +5221,25 @@
                     tech.isRailAreaDamage = false;
                 }
             },
-            {
-                name: "aerodynamic heating",
-                description: "<strong>railgun</strong> rod <strong class='color-d'>damage</strong> nearby mobs",
-                isGunTech: true,
-                maxCount: 1,
-                count: 0,
-                frequency: 2,
-                frequencyDefault: 2,
-                allowed() {
-                    return tech.haveGunCheck("railgun")
-                },
-                requires: "railgun",
-                effect() {
-                    tech.isRodAreaDamage = true;
-                },
-                remove() {
-                    tech.isRodAreaDamage = false;
-                }
-            },
+            // {
+            //     name: "aerodynamic heating",
+            //     description: "<strong>railgun</strong> rod <strong class='color-d'>damage</strong> nearby mobs",
+            //     isGunTech: true,
+            //     maxCount: 1,
+            //     count: 0,
+            //     frequency: 2,
+            //     frequencyDefault: 2,
+            //     allowed() {
+            //         return tech.haveGunCheck("railgun")
+            //     },
+            //     requires: "railgun",
+            //     effect() {
+            //         tech.isRodAreaDamage = true;
+            //     },
+            //     remove() {
+            //         tech.isRodAreaDamage = false;
+            //     }
+            // },
             {
                 name: "capacitor bank",
                 description: "the <strong>railgun</strong> no longer takes time to <strong>charge</strong><br><strong>railgun</strong> rods are <strong>66%</strong> less massive",
