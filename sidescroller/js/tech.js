@@ -934,7 +934,7 @@
                 frequency: 1,
                 frequencyDefault: 1,
                 allowed() {
-                    return ((m.fieldUpgrades[m.fieldMode].name === "molecular assembler" && !(tech.isDroneTeleport || tech.isDroneRadioactive || tech.isSporeField || tech.isMissileField || tech.isIceField)) || (tech.haveGunCheck("drones") && !tech.isDroneRadioactive && !tech.isDroneTeleport) || tech.haveGunCheck("super balls") || tech.haveGunCheck("shotgun")) && !tech.isNailShot && !tech.isIceShot && !tech.isFoamShot && !tech.isWormShot && !tech.isNeedleShot
+                    return ((m.fieldUpgrades[m.fieldMode].name === "molecular assembler" && !(tech.isDroneTeleport || tech.isDroneRadioactive || tech.isSporeField || tech.isMissileField || tech.isIceField)) || (tech.haveGunCheck("drones") && !tech.isForeverDrones && !tech.isDroneRadioactive && !tech.isDroneTeleport) || tech.haveGunCheck("super balls") || tech.haveGunCheck("shotgun")) && !tech.isNailShot && !tech.isIceShot && !tech.isFoamShot && !tech.isWormShot && !tech.isNeedleShot
                 },
                 requires: "super balls, basic or slug shotgun, drones, not irradiated drones or burst drones",
                 effect() {
@@ -4389,7 +4389,7 @@
             {
                 name: "missile-bot",
                 link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Robot' class="link">missile-bot</a>`,
-                description: "remove your <strong>missile gun</strong><br>gain a <strong class='color-bot'>bot</strong> that fires <strong>missiles</strong> at mobs",
+                description: "gain a <strong class='color-bot'>bot</strong> that fires <strong>missiles</strong> at mobs<br>remove your <strong>missile gun</strong>",
                 isGunTech: true,
                 maxCount: 1,
                 count: 0,
@@ -4753,9 +4753,43 @@
                 }
             },
             {
+                name: "fault tolerance",
+                description: "spawn <strong>9</strong> <strong>drones</strong> that last <strong>forever</strong><br>remove your <strong>drone gun</strong>",
+                isGunTech: true,
+                maxCount: 3,
+                count: 0,
+                frequency: 2,
+                frequencyDefault: 2,
+                allowed() {
+                    return tech.haveGunCheck("drones") || tech.isForeverDrones
+                },
+                requires: "drone gun",
+                effect() {
+                    const num = 9
+                    tech.isForeverDrones += num
+                    if (tech.haveGunCheck("drones")) b.removeGun("drones")
+                    //spawn drones
+                    if (tech.isDroneRadioactive) {
+                        for (let i = 0; i < num * 0.25; i++) {
+                            b.droneRadioactive({ x: m.pos.x + 30 * (Math.random() - 0.5), y: m.pos.y + 30 * (Math.random() - 0.5) }, 5)
+                            bullet[bullet.length - 1].endCycle = Infinity
+                        }
+                    } else {
+                        for (let i = 0; i < num; i++) {
+                            b.drone({ x: m.pos.x + 30 * (Math.random() - 0.5), y: m.pos.y + 30 * (Math.random() - 0.5) }, 5)
+                            bullet[bullet.length - 1].endCycle = Infinity
+                        }
+                    }
+                },
+                remove() {
+                    tech.isForeverDrones = 0
+                    if (this.count && !tech.haveGunCheck("drones")) b.giveGuns("drones")
+                }
+            },
+            {
                 name: "reduced tolerances",
                 link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Engineering_tolerance' class="link">reduced tolerances</a>`,
-                description: `increase <strong>drones</strong> per ${powerUps.orb.ammo()} or <strong class='color-f'>energy</strong> <strong>66%</strong><br>reduce the average <strong>drone</strong> lifetime by <strong>40%</strong>`,
+                description: `increase <strong>drones</strong> per ${powerUps.orb.ammo()} or <strong class='color-f'>energy</strong> by <strong>66%</strong><br>reduce the average <strong>drone</strong> lifetime by <strong>40%</strong>`,
                 isGunTech: true,
                 maxCount: 3,
                 count: 0,
@@ -4792,7 +4826,7 @@
                 frequency: 2,
                 frequencyDefault: 2,
                 allowed() {
-                    return !tech.isExtraMaxEnergy && (tech.haveGunCheck("drones") || (m.fieldUpgrades[m.fieldMode].name === "molecular assembler" && !(tech.isSporeField || tech.isMissileField || tech.isIceField)))
+                    return !tech.isExtraMaxEnergy && (tech.haveGunCheck("drones") || tech.isForeverDrones || (m.fieldUpgrades[m.fieldMode].name === "molecular assembler" && !(tech.isSporeField || tech.isMissileField || tech.isIceField)))
                 },
                 requires: "drones, not inductive coupling",
                 effect() {
@@ -4805,7 +4839,7 @@
             {
                 name: "drone repair",
                 link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Unmanned_aerial_vehicle' class="link">drone repair</a>`,
-                description: "after a <strong>drone</strong> ends it <strong>redeploys</strong><br>for a <strong>25%</strong> chance to use <strong>1</strong> <strong>drone</strong> <strong class='color-ammo'>ammo</strong>",
+                description: "after a <strong>drone</strong> expires it <strong>redeploys</strong><br>for a <strong>25%</strong> chance to use <strong>1</strong> <strong>drone</strong> <strong class='color-ammo'>ammo</strong>",
                 // description: "broken <strong>drones</strong> <strong>repair</strong> if the drone <strong class='color-g'>gun</strong> is active<br><strong>repairing</strong> has a <strong>25%</strong> chance to use <strong>1</strong> <strong>drone</strong>",
                 isGunTech: true,
                 maxCount: 1,
@@ -4832,7 +4866,7 @@
                 frequency: 3,
                 frequencyDefault: 3,
                 allowed() {
-                    return tech.haveGunCheck("drones") && !tech.isDroneRadioactive && !tech.isIncendiary
+                    return (tech.haveGunCheck("drones") || tech.isForeverDrones) && !tech.isDroneRadioactive && !tech.isIncendiary
                 },
                 requires: "drone gun, not irradiated drones, incendiary",
                 effect() {
@@ -4871,7 +4905,7 @@
                 frequency: 2,
                 frequencyDefault: 2,
                 allowed() {
-                    return tech.droneCycleReduction === 1 && !tech.isIncendiary && !tech.isDroneTeleport && (tech.haveGunCheck("drones") || (m.fieldUpgrades[m.fieldMode].name === "molecular assembler" && !(tech.isSporeField || tech.isMissileField || tech.isIceField)))
+                    return tech.droneCycleReduction === 1 && !tech.isIncendiary && !tech.isDroneTeleport && (tech.haveGunCheck("drones") || tech.isForeverDrones || (m.fieldUpgrades[m.fieldMode].name === "molecular assembler" && !(tech.isSporeField || tech.isMissileField || tech.isIceField)))
                 },
                 requires: "drones, not reduced tolerances, incendiary, torque bursts",
                 effect() {
@@ -5185,6 +5219,25 @@
                 },
                 remove() {
                     tech.isRailAreaDamage = false;
+                }
+            },
+            {
+                name: "aerodynamic heating",
+                description: "<strong>railgun</strong> rod <strong class='color-d'>damage</strong> nearby mobs",
+                isGunTech: true,
+                maxCount: 1,
+                count: 0,
+                frequency: 2,
+                frequencyDefault: 2,
+                allowed() {
+                    return tech.haveGunCheck("railgun")
+                },
+                requires: "railgun",
+                effect() {
+                    tech.isRodAreaDamage = true;
+                },
+                remove() {
+                    tech.isRodAreaDamage = false;
                 }
             },
             {
@@ -8490,5 +8543,7 @@
         removeMaxHealthOnKill: null,
         isSpawnExitTech: null,
         cloakDuplication: null,
-        extruderRange: null
+        extruderRange: null,
+        isRodAreaDamage: null,
+        isForeverDrones: null
     }
