@@ -1216,7 +1216,7 @@ const b = {
                     this.endCycle = 0;
                     if (m.cycle + 25 * b.fireCDscale < m.fireCDcycle) m.fireCDcycle = m.cycle + 35 * b.fireCDscale //lower cd to 25 if it is above 25
                     //recoil on catching
-                    const momentum = Vector.mult(Vector.sub(this.velocity, player.velocity), this.mass * (input.down ? 0.0001 : 0.0002))
+                    const momentum = Vector.mult(Vector.sub(this.velocity, player.velocity), (input.down ? 0.00015 : 0.0003))
                     player.force.x += momentum.x
                     player.force.y += momentum.y
                     // refund ammo
