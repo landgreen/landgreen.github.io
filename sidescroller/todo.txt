@@ -1,10 +1,6 @@
 ******************************************************** NEXT PATCH **************************************************
 
-several duplication tech give slightly lower duplication chance
-strange attractor now properly includes all your tech in duplication chance (it wasn't updated for recent duplication tech)
 
-grenades display their trajectory, to help you aim
-  I'm might get rid of it, but for now we'll try it out
 
 ******************************************************** TODO ********************************************************
 

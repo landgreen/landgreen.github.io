@@ -1536,12 +1536,12 @@ const m = {
                 }
                 m.harmonicRadius = 1 //for smoothing function when player holds mouse (for harmonicAtomic)
                 m.harmonicAtomic = () => { //several ellipses spinning about different axises
-                    const rotation = simulation.cycle * 0.002
-                    const phase = simulation.cycle * 0.03
+                    const rotation = simulation.cycle * 0.0031
+                    const phase = simulation.cycle * 0.023
                     const radius = m.fieldRange * m.harmonicRadius
                     ctx.lineWidth = 1;
-                    ctx.strokeStyle = "rgba(110,170,200,0.9)"
-                    ctx.fillStyle = "rgba(110,170,200," + Math.min(0.7, m.energy * (0.13 + 0.15 * Math.random()) * (3 / tech.harmonics)) + ")";
+                    ctx.strokeStyle = "rgba(110,170,200,0.8)"
+                    ctx.fillStyle = "rgba(110,170,200," + Math.min(0.7, m.energy * (0.13 + 0.1 * Math.random()) * (3 / tech.harmonics)) + ")";
                     // ctx.fillStyle = "rgba(110,170,200," + Math.min(0.7, m.energy * (0.22 - 0.01 * tech.harmonics) * (0.5 + 0.5 * Math.random())) + ")";
                     for (let i = 0; i < tech.harmonics; i++) {
                         ctx.beginPath();

@@ -15,9 +15,9 @@ const level = {
             // localSettings.levelsClearedLastGame = 10
             // level.difficultyIncrease(30) //30 is near max on hard  //60 is near max on why
             // simulation.isHorizontalFlipped = true
-            // m.setField("time dilation")
+            // m.setField("standing wave")
             // b.giveGuns("grenades")
-            // tech.giveTech("neutron bomb")
+            // tech.giveTech("spherical harmonics")
             // tech.giveTech("vacuum bomb")
             // tech.giveTech("causality bombs")
             // for (let i = 0; i < 2; i++) tech.giveTech("refractory metal")

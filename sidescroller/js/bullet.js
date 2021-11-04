@@ -1115,7 +1115,7 @@ const b = {
                     const cycles = 80
                     const speed = input.down ? 35 : 20 //input.down ? 43 : 32
                     const g = input.down ? 0.137 : 0.135
-                    const v = { x: m.Vx / 2 + speed * Math.cos(m.angle), y: m.Vy / 2 + speed * Math.sin(m.angle) }
+                    const v = { x: speed * Math.cos(m.angle), y: speed * Math.sin(m.angle) }
                     ctx.strokeStyle = "rgba(68, 68, 68, 0.2)" //color.map
                     ctx.lineWidth = 2
                     ctx.beginPath()
@@ -1138,7 +1138,7 @@ const b = {
             if (gunIndex) b.guns[gunIndex].do = function() {
                 const cycles = Math.floor(input.down ? 50 : 30) //30
                 const speed = input.down ? 44 : 35
-                const v = { x: m.Vx / 2 + speed * Math.cos(m.angle), y: m.Vy / 2 + speed * Math.sin(m.angle) }
+                const v = { x: speed * Math.cos(m.angle), y: speed * Math.sin(m.angle) }
                 ctx.strokeStyle = "rgba(68, 68, 68, 0.2)" //color.map
                 ctx.lineWidth = 2
                 ctx.beginPath()
@@ -1153,7 +1153,7 @@ const b = {
             if (gunIndex) b.guns[gunIndex].do = function() {
                 const cycles = Math.floor(input.down ? 120 : 80) //30
                 const speed = input.down ? 43 : 32
-                const v = { x: m.Vx / 2 + speed * Math.cos(m.angle), y: m.Vy / 2 + speed * Math.sin(m.angle) }
+                const v = { x: speed * Math.cos(m.angle), y: speed * Math.sin(m.angle) } //m.Vy / 2 + removed to make the path less jerky
                 ctx.strokeStyle = "rgba(68, 68, 68, 0.2)" //color.map
                 ctx.lineWidth = 2
                 ctx.beginPath()
