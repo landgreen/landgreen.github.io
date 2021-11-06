@@ -22,6 +22,7 @@ bc.isActive = false
 bc.onmessage = function (ev) {
   if (ev.data === 'activate') bc.isActive = true
 }
+bc.postMessage("ready")
 
 
 

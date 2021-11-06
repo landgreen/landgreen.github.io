@@ -6999,10 +6999,8 @@
                     bc.onmessage = function(ev) {
                         if (ev.data === 'tech') powerUps.directSpawn(m.pos.x, m.pos.y, "tech");
                         if (ev.data === 'death') m.death()
+                        if (ev.data === 'ready') bc.postMessage("activate");
                     }
-
-                    bc.postMessage("activate"); //
-
                 },
                 remove() {}
             },
