@@ -20,7 +20,10 @@ fix new mass spawn so that it will pick a new location if the first spawn locati
 const bc = new BroadcastChannel('planetesimals');
 bc.isActive = false
 bc.onmessage = function (ev) {
-  if (ev.data === 'activate') bc.isActive = true
+  if (ev.data === 'activate' && !bc.isActive) {
+    bc.isActive = true
+    document.title = "n-gon -> planetesimals";
+  }
 }
 bc.postMessage("ready")
 
@@ -398,8 +401,10 @@ function planetesimals() {
       if (mass[0].durability < 0 && mass[0].alive) { //player dead?
         mass[0].alive = false;
         if (bc.isActive) bc.postMessage("death"); //this is used if this planetesimals tab is produced from my other game n-gon
-        bc.isActive = false //disables connection to broadcast channel for communicating with my other game n-gon
-
+        if (bc.isActive) {
+          bc.isActive = false //disables connection to broadcast channel for communicating with my other game n-gon
+          document.title = "planetesimals (matter.js)";
+        }
 
         //spawn player explosion debris
         for (var j = 0; j < 10; j++) { //addMass(x, y, r, sides, Vx, Vy)

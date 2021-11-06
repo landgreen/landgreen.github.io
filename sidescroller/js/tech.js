@@ -6996,10 +6996,15 @@
                     // for communicating to other tabs, like planetesimals
                     // Connection to a broadcast channel
                     const bc = new BroadcastChannel('planetesimals');
+                    bc.activated = false
+
                     bc.onmessage = function(ev) {
                         if (ev.data === 'tech') powerUps.directSpawn(m.pos.x, m.pos.y, "tech");
                         if (ev.data === 'death') m.death()
-                        if (ev.data === 'ready') bc.postMessage("activate");
+                        if (ev.data === 'ready' && !bc.activated) {
+                            bc.activated = true
+                            bc.postMessage("activate");
+                        }
                     }
                 },
                 remove() {}
