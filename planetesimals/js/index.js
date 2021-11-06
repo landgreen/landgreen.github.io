@@ -400,9 +400,10 @@ function planetesimals() {
       mass[0].durability -= Math.sqrt(dV2 - limit2) * 0.02; //player takes damage
       if (mass[0].durability < 0 && mass[0].alive) { //player dead?
         mass[0].alive = false;
-        if (bc.isActive) bc.postMessage("death"); //this is used if this planetesimals tab is produced from my other game n-gon
         if (bc.isActive) {
+          bc.postMessage("death"); //this is used if this planetesimals tab is produced from my other game n-gon
           bc.isActive = false //disables connection to broadcast channel for communicating with my other game n-gon
+          bc.close(); //end session
           document.title = "planetesimals (matter.js)";
         }
 

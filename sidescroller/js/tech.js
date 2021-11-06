@@ -7000,9 +7000,12 @@
 
                     bc.onmessage = function(ev) {
                         if (ev.data === 'tech') powerUps.directSpawn(m.pos.x, m.pos.y, "tech");
-                        if (ev.data === 'death') m.death()
+                        if (ev.data === 'death') {
+                            m.death()
+                            bc.close(); //end session
+                        }
                         if (ev.data === 'ready' && !bc.activated) {
-                            bc.activated = true
+                            bc.activated = true //prevents n-gon from activating multiple copies of planetesimals
                             bc.postMessage("activate");
                         }
                     }
