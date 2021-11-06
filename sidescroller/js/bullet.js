@@ -3457,10 +3457,13 @@ const b = {
                         this.lastLookCycle = simulation.cycle + (this.isUpgraded ? 21 : 110)
                         for (let i = 0, len = mob.length; i < len; i++) {
                             const dist = Vector.magnitudeSquared(Vector.sub(this.position, mob[i].position));
-                            if (dist < 3000000 && //1400*1400
+                            if (
+                                !mob[i].isBadTarget &&
+                                dist < 3000000 &&
                                 Matter.Query.ray(map, this.position, mob[i].position).length === 0 &&
                                 Matter.Query.ray(body, this.position, mob[i].position).length === 0 &&
-                                !mob[i].isShielded) {
+                                !mob[i].isShielded
+                            ) {
                                 const SPEED = 35
                                 const unit = Vector.normalise(Vector.sub(Vector.add(mob[i].position, Vector.mult(mob[i].velocity, Math.sqrt(dist) / 60)), this.position))
                                 b.nail(this.position, Vector.mult(unit, SPEED))

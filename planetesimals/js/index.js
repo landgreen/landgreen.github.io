@@ -14,8 +14,20 @@ maybe add durability regeneration
 fix new mass spawn so that it will pick a new location if the first spawn location already has a mass
 
  */
+
+//this is used if this planetesimals tab is produced from my other game n-gon
+// Connection to a broadcast channel
+const bc = new BroadcastChannel('planetesimals');
+bc.isActive = false
+bc.onmessage = function (ev) {
+  if (ev.data === 'activate') bc.isActive = true
+}
+
+
+
 function planetesimals() {
   "use strict"; //strict mode to catch errors
+
   //game objects values
   var game = {
     cycle: 0,
@@ -138,7 +150,7 @@ function planetesimals() {
   }
 
   function addMassVector(x, y, Vx, Vy, size) {
-    var verticies = [];
+    // var verticies = [];
     var vector = Vertices.fromPath(randomConvexPolygon(size));
     var i = mass.length;
     mass.push();
@@ -228,6 +240,9 @@ function planetesimals() {
       game.level++;
       spawnSetup();
       mass[0].durability = 1;
+
+      //broadcast channel
+      if (bc.isActive) bc.postMessage("tech"); //this is used if this planetesimals tab is produced from my other game n-gon
     }
   }
 
@@ -381,6 +396,10 @@ function planetesimals() {
       mass[0].durability -= Math.sqrt(dV2 - limit2) * 0.02; //player takes damage
       if (mass[0].durability < 0 && mass[0].alive) { //player dead?
         mass[0].alive = false;
+        if (bc.isActive) bc.postMessage("death"); //this is used if this planetesimals tab is produced from my other game n-gon
+        bc.isActive = false //disables connection to broadcast channel for communicating with my other game n-gon
+
+
         //spawn player explosion debris
         for (var j = 0; j < 10; j++) { //addMass(x, y, r, sides, Vx, Vy)
           addMass(mass[0].position.x + 10 * (0.5 - Math.random()),
