@@ -17,7 +17,8 @@ const level = {
             // simulation.isHorizontalFlipped = true
             // m.setField("molecular assembler")
             // b.giveGuns("harpoon")
-            // tech.giveTech("railgun")
+            // b.giveGuns("shotgun")
+            // tech.giveTech("darts")
             // tech.giveTech("capacitor bank")
             // tech.giveTech("half-wave rectifier")
             // for (let i = 0; i < 2; i++) tech.giveTech("refractory metal")

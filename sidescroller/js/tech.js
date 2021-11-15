@@ -463,22 +463,33 @@
                 },
                 requires: "NOT EXPERIMENT MODE, at least 2 guns",
                 effect() {
+                    const originalActiveGunIndex = b.activeGun
                     for (let i = 0; i < b.inventory.length; i++) {
                         //spawn a research for each gun
                         powerUps.spawn(m.pos.x + 40 * (Math.random() - 0.5), m.pos.y + 40 * (Math.random() - 0.5), "research", false);
                         //find a gun tech for this gun
                         const gunTechPool = []
-                        for (let j = 0; j < tech.tech.length; j++) {
+                        for (let j = 0, len = tech.tech.length; j < len; j++) {
+                            // console.log(j, tech.tech[j].isGunTech, tech.tech[j].allowed(), !tech.tech[j].isJunk, !tech.tech[j].isBadRandomOption, tech.tech[j].count < tech.tech[j].maxCount)
+                            //set current gun to active so allowed works
+                            b.activeGun = i
                             if (tech.tech[j].isGunTech && tech.tech[j].allowed() && !tech.tech[j].isJunk && !tech.tech[j].isBadRandomOption && tech.tech[j].count < tech.tech[j].maxCount) {
                                 const regex = tech.tech[j].requires.search(b.guns[b.inventory[i]].name) //get string index of gun name
                                 const not = tech.tech[j].requires.search(' not ') //get string index of ' not '
                                 //look for the gun name in the requirements, but the gun name needs to show up before the word ' not '
-                                if (regex !== -1 && (not === -1 || not > regex)) gunTechPool.push(j)
-                                // console.log(gunName, regex, not, tech.tech[j].name)
+                                if (regex !== -1 && (not === -1 || not > regex)) {
+                                    gunTechPool.push(j)
+                                }
                             }
                         }
-                        if (gunTechPool.length) tech.giveTech(gunTechPool[Math.floor(Math.random() * gunTechPool.length)]) // choose from the gun pool
+                        if (gunTechPool.length) {
+                            const index = Math.floor(Math.random() * gunTechPool.length)
+                            tech.giveTech(gunTechPool[index]) // choose from the gun pool
+                            simulation.makeTextLog(`<span class='color-var'>tech</span>.giveTech("<span class='color-text'>${tech.tech[gunTechPool[index]].name}</span>")`)
+                        }
                     }
+                    b.activeGun = originalActiveGunIndex
+                    simulation.boldActiveGunHUD();
                 },
                 remove() {}
             },
@@ -2380,6 +2391,7 @@
                         simulation.mobDmgColor = "rgba(255,0,0,0.7)"
                         m.displayHealth();
                     }
+                    tech.isEnergyHealth = false;
                 }
             },
             {
@@ -3808,10 +3820,10 @@
                 },
                 requires: "nail gun, needle gun, needle-shot, harpoon",
                 effect() {
-                    tech.isNeedleShieldPierce = true
+                    tech.isShieldPierce = true
                 },
                 remove() {
-                    tech.isNeedleShieldPierce = false
+                    tech.isShieldPierce = false
                 }
             },
             {
@@ -4027,7 +4039,7 @@
                 frequency: 2,
                 frequencyDefault: 2,
                 allowed() {
-                    return tech.isMineDrop + tech.nailBotCount + tech.fragments + tech.nailsDeathMob / 2 + ((tech.haveGunCheck("mine") && !tech.isLaserMine) + (tech.haveGunCheck("nail gun") && !tech.isNeedleShieldPierce) + tech.isNeedleShot + tech.isNailShot) * 2 > 1
+                    return tech.isMineDrop + tech.nailBotCount + tech.fragments + tech.nailsDeathMob / 2 + ((tech.haveGunCheck("mine") && !tech.isLaserMine) + (tech.haveGunCheck("nail gun") && !tech.isShieldPierce) + tech.isNeedleShot + tech.isNailShot) * 2 > 1
                 },
                 requires: "nail gun, nails, rivets, not ceramic needles",
                 effect() {
@@ -5334,6 +5346,25 @@
                     tech.extraHarpoons = 0;
                 }
             },
+            // {
+            //     name: "darts",
+            //     description: "firing the <strong>harpoon</strong> while crouched launches<br>several small <strong>self-steering</strong> darts",
+            //     isGunTech: true,
+            //     maxCount: 1,
+            //     count: 0,
+            //     frequency: 2,
+            //     frequencyDefault: 2,
+            //     allowed() {
+            //         return tech.haveGunCheck("harpoon") && !tech.isRailGun
+            //     },
+            //     requires: "railgun",
+            //     effect() {
+            //         tech.isDarts = true;
+            //     },
+            //     remove() {
+            //         tech.isDarts = false;
+            //     }
+            // },
             {
                 name: "railgun",
                 description: "firing the <strong>harpoon</strong> while crouched launches<br>a rod that is <strong>faster</strong>, <strong>larger</strong>, and more <strong>dense</strong>",
@@ -8857,7 +8888,7 @@
         isNeedles: null,
         isExplodeRadio: null,
         isGunSwitchField: null,
-        isNeedleShieldPierce: null,
+        isShieldPierce: null,
         isDuplicateBoss: null,
         is111Duplicate: null,
         isDynamoBotUpgrade: null,
@@ -8946,7 +8977,6 @@
         isSpawnExitTech: null,
         cloakDuplication: null,
         extruderRange: null,
-        // isRodAreaDamage: null,
         isForeverDrones: null,
         isMoreMobs: null,
         nailRecoil: null,
@@ -8955,5 +8985,6 @@
         isNeutronium: null,
         isFreeWormHole: null,
         isRewindField: null,
-        isCrouchRegen: null
+        isCrouchRegen: null,
+        isDarts: null,
     }

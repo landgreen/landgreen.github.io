@@ -1188,13 +1188,13 @@ const b = {
             endCycle: simulation.cycle + totalCycles * 2.5 + 15,
             collisionFilter: {
                 category: cat.bullet,
-                mask: tech.isNeedleShieldPierce ? cat.map | cat.body | cat.mob | cat.mobBullet : cat.map | cat.body | cat.mob | cat.mobBullet | cat.mobShield,
+                mask: tech.isShieldPierce ? cat.map | cat.body | cat.mob | cat.mobBullet : cat.map | cat.body | cat.mob | cat.mobBullet | cat.mobShield,
             },
             minDmgSpeed: 0,
             lookFrequency: Math.floor(7 + Math.random() * 3),
             density: tech.harpoonDensity, //0.001 is normal for blocks,  0.005 is normal for harpoon,  0.035 when buffed
             beforeDmg(who) {
-                if (tech.isNeedleShieldPierce && who.isShielded) { //disable shields
+                if (tech.isShieldPierce && who.isShielded) { //disable shields
                     who.isShielded = false
                     requestAnimationFrame(() => { who.isShielded = true });
                 }
@@ -3123,7 +3123,7 @@ const b = {
     needle(angle = m.angle) {
         const me = bullet.length;
         bullet[me] = Bodies.rectangle(m.pos.x + 40 * Math.cos(m.angle), m.pos.y + 40 * Math.sin(m.angle), 75, 0.75, b.fireAttributes(angle));
-        bullet[me].collisionFilter.mask = tech.isNeedleShieldPierce ? cat.body : cat.body | cat.mobShield
+        bullet[me].collisionFilter.mask = tech.isShieldPierce ? cat.body : cat.body | cat.mobShield
         Matter.Body.setDensity(bullet[me], 0.00001); //0.001 is normal
         bullet[me].endCycle = simulation.cycle + 100;
         bullet[me].immuneList = []
@@ -3151,7 +3151,7 @@ const b = {
                                 dmg *= 0.25
                             }
                             if (tech.isCrit && who.isStunned) dmg *= 4
-                            who.damage(dmg, tech.isNeedleShieldPierce);
+                            who.damage(dmg, tech.isShieldPierce);
                             if (who.alive) who.foundPlayer();
                             simulation.drawList.push({ //add dmg to draw queue
                                 x: this.position.x,
@@ -5415,7 +5415,48 @@ const b = {
                 const harpoonSize = tech.isLargeHarpoon ? 1 + 0.1 * Math.sqrt(this.ammo) : 1
                 const totalCycles = 7 * (tech.isFilament ? 1 + 0.01 * Math.min(110, this.ammo) : 1) * Math.sqrt(harpoonSize)
                 if (input.down) {
-                    if (tech.isRailGun) {
+
+                    if (tech.isDarts) {
+                        const totalCycles = 30
+                        const dartSize = harpoonSize * 0.6
+                        m.fireCDcycle = m.cycle + totalCycles * b.fireCDscale; // cool down
+
+                        function dart() {
+                            const separation = 40 * Math.random()
+                            const here = {
+                                x: m.pos.x + separation * Math.cos(m.angle),
+                                y: m.pos.y + separation * Math.sin(m.angle)
+                            }
+                            const angle = m.angle + 0.9 * (Math.random() - 0.5)
+
+                            for (let i = 0, len = mob.length; i < len; ++i) {
+                                if (mob[i].alive && !mob[i].isBadTarget && Matter.Query.ray(map, m.pos, mob[i].position).length === 0) {
+                                    const dot = Vector.dot({ x: Math.cos(angle), y: Math.sin(angle) }, Vector.normalise(Vector.sub(mob[i].position, m.pos))) //the dot product of diff and dir will return how much over lap between the vectors
+                                    const dist = Vector.magnitude(Vector.sub(here, mob[i].position))
+                                    if (dist < closest.distance && dot > 0.5 && dist * dot * dot * dot * dot > 380) { //target closest mob that player is looking at and isn't too close to target
+                                        closest.distance = dist
+                                        closest.target = mob[i]
+                                    }
+                                }
+                            }
+                            b.harpoon(here, closest.target, angle, dartSize, false, 15)
+                        }
+
+                        function cycle() {
+                            if (simulation.paused || m.isBodiesAsleep) {
+                                requestAnimationFrame(cycle)
+                            } else {
+                                dart()
+                                count++
+                                if (count < totalCycles && m.alive) requestAnimationFrame(cycle);
+                            }
+                        }
+                        let count = -1
+                        requestAnimationFrame(cycle);
+                        dart()
+
+
+                    } else if (tech.isRailGun) {
                         function pushAway(range) { //push away blocks when firing
                             for (let i = 0, len = mob.length; i < len; ++i) {
                                 const SUB = Vector.sub(mob[i].position, m.pos)
@@ -5443,7 +5484,7 @@ const b = {
                         const size = 3 + tech.isLargeHarpoon * 0.1 * Math.sqrt(this.ammo)
                         bullet[me] = Bodies.rectangle(0, 0, 0.015, 0.0015, { //start as a small shape that can't even be seen
                             vertexGoal: [{ x: -40 * size, y: 2 * size, index: 0, isInternal: false }, { x: -40 * size, y: -2 * size, index: 1, isInternal: false }, { x: 50 * size, y: -3 * size, index: 3, isInternal: false }, { x: 30 * size, y: 2 * size, index: 4, isInternal: false }],
-                            density: 0.008, //0.001 is normal
+                            density: 0.015, //0.001 is normal
                             restitution: 0,
                             frictionAir: 0,
                             dmg: 0, //damage done in addition to the damage from momentum
@@ -5454,17 +5495,18 @@ const b = {
                             },
                             minDmgSpeed: 5,
                             beforeDmg(who) {
-                                if (who.shield) {
+                                if (tech.isShieldPierce && who.isShielded) { //disable shields
+                                    who.isShielded = false
+                                    requestAnimationFrame(() => { who.isShielded = true });
+                                }
+                                if (who.shield && !tech.isShieldPierce) {
                                     for (let i = 0, len = mob.length; i < len; i++) {
                                         if (mob[i].id === who.shieldTargetID) { //apply some knock back to shield mob before shield breaks
                                             Matter.Body.setVelocity(mob[i], Vector.mult(Vector.normalise(this.velocity), 10));
                                             break
                                         }
                                     }
-                                    Matter.Body.setVelocity(this, {
-                                        x: -0.4 * this.velocity.x,
-                                        y: -0.4 * this.velocity.y
-                                    });
+                                    Matter.Body.setVelocity(this, { x: -0.4 * this.velocity.x, y: -0.4 * this.velocity.y });
                                 } else {
                                     if (tech.fragments && this.speed > 10) {
                                         b.targetedNail(this.position, tech.fragments * 17)
@@ -5623,7 +5665,7 @@ const b = {
                         }
                     } else {
 
-                        // if (true) {
+                        // if (true) { //grappling hook,  not working really
                         //     if (m.immuneCycle < m.cycle + 60) m.immuneCycle = m.cycle + tech.collisionImmuneCycles; //player is immune to damage for 30 cycles
                         //     b.harpoon(where, closest.target, m.angle, harpoonSize, false, 15)
                         //     m.fireCDcycle = m.cycle + 50 * b.fireCDscale; // cool down
@@ -5645,7 +5687,6 @@ const b = {
                         }
                         b.harpoon(where, closest.target, m.angle, harpoonSize, false, 15)
                         m.fireCDcycle = m.cycle + 50 * b.fireCDscale; // cool down
-                        // }
                     }
                 } else if (tech.extraHarpoons) {
                     const range = 450 * (tech.isFilament ? 1 + 0.005 * Math.min(110, this.ammo) : 1)
