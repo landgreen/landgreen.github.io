@@ -51,6 +51,7 @@
                 }
                 if (!found) return 0 //if name not found don't remove any tech
             }
+            if (tech.tech[index].count === 0) return 0
             const totalRemoved = tech.tech[index].count
             simulation.makeTextLog(`<span class='color-var'>tech</span>.removeTech("<span class='color-text'>${tech.tech[index].name}</span>")`)
             tech.tech[index].remove();
@@ -156,14 +157,14 @@
                 simulation.updateTechHUD();
             }
         },
-        setTechoNonRefundable(name) {
-            for (let i = 0; i < tech.tech.length; i++) {
-                if (tech.tech.name === name) {
-                    tech.tech[i].isNonRefundable = true;
-                    return
-                }
-            }
-        },
+        // setTechoNonRefundable(name) {
+        //     for (let i = 0; i < tech.tech.length; i++) {
+        //         if (tech.tech.name === name) {
+        //             tech.tech[i].isNonRefundable = true;
+        //             return
+        //         }
+        //     }
+        // },
         setCheating() {
             if (!simulation.isCheating) {
                 simulation.isCheating = true;
@@ -463,8 +464,7 @@
                 },
                 requires: "NOT EXPERIMENT MODE, at least 2 guns",
                 effect() {
-                    const originalActiveGunIndex = b.activeGun
-                    for (let i = 0; i < b.inventory.length; i++) {
+                    for (let i = b.inventory.length - 1; i > -1; i--) {
                         //spawn a research for each gun
                         powerUps.spawn(m.pos.x + 40 * (Math.random() - 0.5), m.pos.y + 40 * (Math.random() - 0.5), "research", false);
                         //find a gun tech for this gun
@@ -472,7 +472,8 @@
                         for (let j = 0, len = tech.tech.length; j < len; j++) {
                             // console.log(j, tech.tech[j].isGunTech, tech.tech[j].allowed(), !tech.tech[j].isJunk, !tech.tech[j].isBadRandomOption, tech.tech[j].count < tech.tech[j].maxCount)
                             //set current gun to active so allowed works
-                            b.activeGun = i
+                            const originalActiveGunIndex = b.activeGun
+                            b.activeGun = b.inventory[i] //to make the .allowed work for guns that aren't active
                             if (tech.tech[j].isGunTech && tech.tech[j].allowed() && !tech.tech[j].isJunk && !tech.tech[j].isBadRandomOption && tech.tech[j].count < tech.tech[j].maxCount) {
                                 const regex = tech.tech[j].requires.search(b.guns[b.inventory[i]].name) //get string index of gun name
                                 const not = tech.tech[j].requires.search(' not ') //get string index of ' not '
@@ -481,6 +482,7 @@
                                     gunTechPool.push(j)
                                 }
                             }
+                            b.activeGun = originalActiveGunIndex
                         }
                         if (gunTechPool.length) {
                             const index = Math.floor(Math.random() * gunTechPool.length)
@@ -488,7 +490,6 @@
                             simulation.makeTextLog(`<span class='color-var'>tech</span>.giveTech("<span class='color-text'>${tech.tech[gunTechPool[index]].name}</span>")`)
                         }
                     }
-                    b.activeGun = originalActiveGunIndex
                     simulation.boldActiveGunHUD();
                 },
                 remove() {}
@@ -3630,7 +3631,7 @@
                 frequency: 1,
                 frequencyDefault: 1,
                 isBadRandomOption: true,
-                // isNonRefundable: true,
+                isNonRefundable: true,
                 allowed() {
                     return !tech.isExtraChoice && !tech.isCancelDuplication && !tech.isCancelRerolls
                 },
@@ -3642,20 +3643,21 @@
                 },
                 remove() {
                     tech.isDeterminism = false;
-                    if (this.count > 0) {
-                        for (let i = 0; i < 5; i++) {
-                            const numberRemoved = tech.removeTech()
-                            if (numberRemoved === 0) { //if the player didn't remove a power up then remove 1 tech for the map
-                                for (let j = 0; j < powerUp.length; j++) {
-                                    if (powerUp[j].name === "tech") {
-                                        Matter.Composite.remove(engine.world, powerUp[j]);
-                                        powerUp.splice(j, 1);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    // if (this.count > 0) {
+                    //     for (let i = 0; i < 5; i++) {
+                    //         const numberRemoved = tech.removeTech()
+                    //         console.log(numberRemoved)
+                    //         if (numberRemoved === 0) { //if the player didn't remove a power up then remove 1 tech for the map
+                    //             for (let j = powerUp.length - 1; j > -1; j--) {
+                    //                 if (powerUp[j].name === "tech") {
+                    //                     Matter.Composite.remove(engine.world, powerUp[j]);
+                    //                     powerUp.splice(j, 1);
+                    //                     break;
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+                    // }
                 }
             },
             {
@@ -3663,9 +3665,10 @@
                 description: `spawn <strong>5</strong> <strong class='color-m'>tech</strong><br>${powerUps.orb.research(1)}, <strong class='color-g'>guns</strong>, and <strong class='color-f'>fields</strong> no longer <strong>spawn</strong>`,
                 maxCount: 1,
                 count: 0,
-                frequency: 5,
-                frequencyDefault: 5,
+                frequency: 3,
+                frequencyDefault: 3,
                 isBadRandomOption: true,
+                isNonRefundable: true,
                 allowed() {
                     return tech.isDeterminism && !tech.isAnsatz && !tech.isGunSwitchField
                 },
@@ -3677,9 +3680,10 @@
                 },
                 remove() {
                     tech.isSuperDeterminism = false;
-                    if (this.count) {
-                        for (let i = 0; i < 5; i++) tech.removeTech()
-                    }
+                    // tech.isSuperDeterminism = false;
+                    // if (this.count) {
+                    //     for (let i = 0; i < 5; i++) tech.removeTech()
+                    // }
                 }
             },
             {
@@ -7046,7 +7050,7 @@
                 maxCount: 1,
                 count: 0,
                 frequency: 0,
-                isNonRefundable: true,
+                // isNonRefundable: true,
                 isExperimentHide: true,
                 isJunk: true,
                 allowed() {
@@ -7078,7 +7082,7 @@
                 maxCount: 1,
                 count: 0,
                 frequency: 0,
-                isNonRefundable: true,
+                // isNonRefundable: true,
                 isExperimentHide: true,
                 isJunk: true,
                 allowed() {

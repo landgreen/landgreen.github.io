@@ -2942,9 +2942,9 @@ const spawn = {
         Matter.Body.rotate(me, 2 * Math.PI * Math.random());
         me.accelMag = 0.00038 * Math.sqrt(simulation.accelScale);
         me.frictionAir = 0.01;
-        me.swordRadiusMax = 450 + 7 * simulation.difficulty;
+        me.swordRadiusMax = 500 + 8 * simulation.difficulty;
         me.laserAngle = 0;
-        me.swordDamage = 0.0015 * simulation.dmgScale
+        me.swordDamage = 0.002 * simulation.dmgScale
 
         spawn.shield(me, x, y, 1);
         Matter.Body.setDensity(me, 0.005); //extra dense //normal is 0.001 //makes effective life much larger
