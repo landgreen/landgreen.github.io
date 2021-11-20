@@ -1,22 +1,39 @@
 ******************************************************** NEXT PATCH **************************************************
 
-experimental modes, like -quantum leap- no longer get 7/7 undefinded tech
-bug fixes (applied science, determinism, superdeterminism, -quantum leap-)
+tech: Occam's razor - remove 50% of your tech and guns; `for each removed get 36% damage
+
+tech dormancy removed
+tech: predator - if you have killed a mob in the last 5 seconds increase damage by 50% and disable energy regen
+tech: torpor - gives the opposite of it's previous effect
+  if you have NOT killed a mob in the last 5 seconds reduce harm by 72%, else increase it by 10%
+
+relativistic momentum - pushes blocks in addition to mobs
+  not much benefit, but it's fun
+supply chain:  still doubles ammo, but now also adds 5% JUNK (yay)
+  it no longer has any tech requirements
+inductive coupling: 600% -> 700% regen while crouched
+
+JUNK tech: density - blocks are 100x times less dense
+
+tech descriptions can change their text dynamically now
+  only a few tech are using this option so far
 
 ******************************************************** TODO ********************************************************
+
+if a mob has died in the last 5 seconds 100% damage and no energy regen
+
 dart: a new bullet type for string-less harpoons
   can turn harder
   can get new targets?
 
+convert tech descriptions into a method()
+  this means the text would generate when you: press pause, or display options, or open experiment mode
+  this would allow the description to reference variables inside it, like this.count
+  who could use this: 
+    Occam's razor
+    
 tech: dart - alt fire several small harpoons, with guidance
   requires not railgun
-
-tech: Occam's razor - remove 66% of your tech and guns;   for each removed get 20% damage
-  remove first half of guns and tech,  it's not random
-    this is going to leave field and gun tech, but also remove the first gun, which is probably the main one
-  make 20% damage additive, so it's worse with more tech
-  remove upto 66% of guns and tech
-    and 10% harm reduction?
 
 tech: after bullets hit a mob, the mob takes 1% more damage
   this.damageReduction *= 1.01
@@ -443,6 +460,7 @@ level boss: fires a line intersection in a random direction every few seconds.
 possible names for tech
   astrophage
   strange loop
+  homeostasis
   holonomy -  parallel transport of a vector leads to movement (applies to curved space)
   hypergolic - A hypergolic propellant combination used in a rocket engine is one whose components spontaneously ignite when they come into contact with each other.
   swarm intelligence - for a drone tech

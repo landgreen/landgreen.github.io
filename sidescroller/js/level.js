@@ -12,16 +12,17 @@ const level = {
     start() {
         if (level.levelsCleared === 0) { //this code only runs on the first level
             // simulation.enableConstructMode() //used to build maps in testing mode
+            // m.immuneCycle = Infinity //you can't take damage
             // localSettings.levelsClearedLastGame = 10
             // level.difficultyIncrease(30) //30 is near max on hard  //60 is near max on why
             // simulation.isHorizontalFlipped = true
             // m.setField("molecular assembler")
-            // b.giveGuns("foam")
+            // b.giveGuns("laser")
             // b.giveGuns("nail gun")
             // b.giveGuns("harpoon")
             // tech.giveTech("darts")
-            // tech.giveTech("determinism")
-            // tech.giveTech("half-wave rectifier")
+            // tech.giveTech("incendiary ammunition")
+            // tech.giveTech("relativistic momentum")
             // for (let i = 0; i < 2; i++) tech.giveTech("refractory metal")
             // tech.giveTech("antiscience")
             // for (let i = 0; i < 1; i++) tech.giveTech("reticulum")
@@ -2337,7 +2338,7 @@ const level = {
         spawn.mapRect(4850, -275, 50, 175);
 
         //???
-        // level.difficultyIncrease(40) //30 is near max on hard  //60 is near max on why
+        level.difficultyIncrease(40) //30 is near max on hard  //60 is near max on why
         // spawn.starter(1900, -500, 200) //big boy
 
         // spawn.spiderBoss(1700, -500)
@@ -2356,7 +2357,7 @@ const level = {
         // spawn.launcherBoss(3200, -500)
         // spawn.blockBoss(1700, -500)
         // spawn.slashBoss(3200, -500)
-        spawn.spiderBoss(3200, -500)
+        // spawn.spiderBoss(3200, -500)
         // spawn.tetherBoss(1700, -500) //go to actual level?
 
         // for (let i = 0; i < 10; ++i) spawn.bodyRect(1600 + 5, -500, 30, 40);
@@ -2370,7 +2371,7 @@ const level = {
         // spawn.blinkBoss(1600, -500)
         // spawn.laserTargetingBoss(1700, -120)
         // spawn.bomberBoss(1400, -500)
-        // spawn.laser(1800, -120)
+        spawn.laser(1800, -320)
         // spawn.laserBombingBoss(1600, -500)
         // spawn.laserTargetingBoss(1600, -500)
         // spawn.laserBoss(1600, -500)
@@ -2379,7 +2380,7 @@ const level = {
         // spawn.nodeGroup(1800, -500, "grenadier")
         // spawn.nodeGroup(1200, 0, "grenadier")
         // spawn.blinkBoss(1200, -500)
-        spawn.suckerBoss(2900, -500)
+        // spawn.suckerBoss(2900, -500)
         // spawn.randomMob(1600, -500)
     },
     template() {
