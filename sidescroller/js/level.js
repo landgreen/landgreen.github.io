@@ -16,18 +16,17 @@ const level = {
             // localSettings.levelsClearedLastGame = 10
             // level.difficultyIncrease(30) //30 is near max on hard  //60 is near max on why
             // simulation.isHorizontalFlipped = true
-            // m.setField("molecular assembler")
+            // m.setField("wormhole")
             // b.giveGuns("laser")
             // b.giveGuns("nail gun")
-            // b.giveGuns("harpoon")
-            // tech.giveTech("darts")
-            // tech.giveTech("incendiary ammunition")
+            // b.giveGuns("harpoon") 
+            // tech.giveTech("affine connection")
+            // tech.giveTech("regression")
             // tech.giveTech("relativistic momentum")
             // for (let i = 0; i < 2; i++) tech.giveTech("refractory metal")
             // tech.giveTech("antiscience")
             // for (let i = 0; i < 1; i++) tech.giveTech("reticulum")
             // for (let i = 0; i < 2; i++) tech.giveTech("laser-bot")
-            // tech.isCancelDuplication = true
 
             level.intro(); //starting level
             // level.testing(); //not in rotation, used for testing
@@ -998,7 +997,7 @@ const level = {
             opticalQuery() {
                 if (this.isOn) {
                     //draw
-                    ctx.fillStyle = `hsla(0, 100%, 50%,${0.6+0.4*Math.random()})`
+                    ctx.fillStyle = `hsla(0, 100%, 50%,${0.6 + 0.4 * Math.random()})`
                     ctx.fillRect(this.min.x, this.min.y, this.width, this.height)
                     //collision with player
                     if (this.height > 0 && Matter.Query.region([player], this).length && !(m.isCloak)) {
@@ -1569,7 +1568,7 @@ const level = {
                                         y: -5
                                     });
                                 }
-                                ctx.fillStyle = `rgba(255,0,255,${0.2+0.7*Math.random()})`
+                                ctx.fillStyle = `rgba(255,0,255,${0.2 + 0.7 * Math.random()})`
                                 ctx.fillRect(bounds.min.x, y - 185, 38, 70);
                             }
                         }
@@ -1636,7 +1635,7 @@ const level = {
                                         y: -5
                                     });
                                 }
-                                ctx.fillStyle = `rgba(255,0,255,${0.2+0.7*Math.random()})`
+                                ctx.fillStyle = `rgba(255,0,255,${0.2 + 0.7 * Math.random()})`
                                 ctx.fillRect(bounds.min.x, y - 185, 38, 70);
                             }
                         }
@@ -1888,7 +1887,7 @@ const level = {
                                 Composite.add(engine.world, who); //add to world
                             }
                             let r = 150
-                            let hexagon = `${r} 0   ${r*Math.cos(5.236)} ${r*Math.sin(5.236)}    ${r*Math.cos(4.189)} ${r*Math.sin(4.189)}     ${-r} 0     ${r*Math.cos(2.0944)} ${r*Math.sin(2.0944)}      ${r*Math.cos(1.0472)} ${r*Math.sin(1.0472)}  `
+                            let hexagon = `${r} 0   ${r * Math.cos(5.236)} ${r * Math.sin(5.236)}    ${r * Math.cos(4.189)} ${r * Math.sin(4.189)}     ${-r} 0     ${r * Math.cos(2.0944)} ${r * Math.sin(2.0944)}      ${r * Math.cos(1.0472)} ${r * Math.sin(1.0472)}  `
                             //450 horizontal spread //  -130-130-130 = 390 vertical
                             if (Math.random() < 0.5) {
                                 spawn.mapVertex(x + 775, y + -260, hexagon);
@@ -1977,13 +1976,13 @@ const level = {
                             }
                             //right side hexagons
                             let r = 300
-                            let hexagon = `${r} 0   ${r*Math.cos(5.236)} ${r*Math.sin(5.236)}    ${r*Math.cos(4.189)} ${r*Math.sin(4.189)}     ${-r} 0     ${r*Math.cos(2.0944)} ${r*Math.sin(2.0944)}      ${r*Math.cos(1.0472)} ${r*Math.sin(1.0472)}  `
+                            let hexagon = `${r} 0   ${r * Math.cos(5.236)} ${r * Math.sin(5.236)}    ${r * Math.cos(4.189)} ${r * Math.sin(4.189)}     ${-r} 0     ${r * Math.cos(2.0944)} ${r * Math.sin(2.0944)}      ${r * Math.cos(1.0472)} ${r * Math.sin(1.0472)}  `
                             spawn.mapVertex(x + 1640, y + -365, hexagon);
                             // r = 275
                             // let hexagonHalf = `${r} 0   ${r*Math.cos(5.236)} ${r*Math.sin(5.236)}    ${r*Math.cos(4.189)} ${r*Math.sin(4.189)}     ${-r} 0 `
                             // spawn.mapVertex(x + 2300, y + -75, hexagonHalf);
                             r = 150
-                            const hexagon150 = `${r} 0   ${r*Math.cos(5.236)} ${r*Math.sin(5.236)}    ${r*Math.cos(4.189)} ${r*Math.sin(4.189)}     ${-r} 0     ${r*Math.cos(2.0944)} ${r*Math.sin(2.0944)}      ${r*Math.cos(1.0472)} ${r*Math.sin(1.0472)}  `
+                            const hexagon150 = `${r} 0   ${r * Math.cos(5.236)} ${r * Math.sin(5.236)}    ${r * Math.cos(4.189)} ${r * Math.sin(4.189)}     ${-r} 0     ${r * Math.cos(2.0944)} ${r * Math.sin(2.0944)}      ${r * Math.cos(1.0472)} ${r * Math.sin(1.0472)}  `
                             // spawn.mapVertex(x + 1750, y + -550, hexagon150);
                             spawn.mapVertex(x + 1750, y + -1100, hexagon150);
                             spawn.mapVertex(x + 1750, y + -1650, hexagon150);
@@ -1991,7 +1990,7 @@ const level = {
 
                             //left side
                             r = 350
-                            let hexagonHalf = `${r} 0   ${r*Math.cos(5.236)} ${r*Math.sin(5.236)}    ${r*Math.cos(4.189)} ${r*Math.sin(4.189)}     ${-r} 0 `
+                            let hexagonHalf = `${r} 0   ${r * Math.cos(5.236)} ${r * Math.sin(5.236)}    ${r * Math.cos(4.189)} ${r * Math.sin(4.189)}     ${-r} 0 `
                             spawn.mapVertex(x + 425, y + -90, hexagonHalf);
 
                             spawn.mapVertex(x + 850, y + -500, hexagon150);
@@ -2338,10 +2337,10 @@ const level = {
         spawn.mapRect(4850, -275, 50, 175);
 
         //???
-        level.difficultyIncrease(40) //30 is near max on hard  //60 is near max on why
-        // spawn.starter(1900, -500, 200) //big boy
+        level.difficultyIncrease(30) //30 is near max on hard  //60 is near max on why
+        spawn.starter(1900, -500, 200) //big boy
 
-        // spawn.spiderBoss(1700, -500)
+        // spawn.launcherOne(1700, -500)
         // spawn.launcherBoss(3200, -500)
         // spawn.laserTargetingBoss(1700, -500)
         // spawn.powerUpBoss(3200, -500)
@@ -2371,7 +2370,7 @@ const level = {
         // spawn.blinkBoss(1600, -500)
         // spawn.laserTargetingBoss(1700, -120)
         // spawn.bomberBoss(1400, -500)
-        spawn.laser(1800, -320)
+        // spawn.laser(1800, -320)
         // spawn.laserBombingBoss(1600, -500)
         // spawn.laserTargetingBoss(1600, -500)
         // spawn.laserBoss(1600, -500)

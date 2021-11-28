@@ -3508,7 +3508,7 @@ const b = {
                 //     ctx.fill();
                 // }
 
-                //check for damage
+                //check for damage 
                 if (!m.isBodiesAsleep) {
                     if (m.immuneCycle < m.cycle && !((m.cycle + this.phase) % 30)) { //twice a second
                         if (Vector.magnitude(Vector.sub(this.position, player.position)) < 250 && m.immuneCycle < m.cycle) { //give energy

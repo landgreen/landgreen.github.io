@@ -128,7 +128,7 @@ const mobs = {
                     const y = who.position.y - w * 0.7;
                     ctx.fillStyle = "rgba(100, 100, 100, 0.3)";
                     ctx.fillRect(x, y, w, h);
-                    ctx.fillStyle = `rgba(${Math.floor(255*Math.random())},${Math.floor(255*Math.random())},${Math.floor(255*Math.random())},0.5)`
+                    ctx.fillStyle = `rgba(${Math.floor(255 * Math.random())},${Math.floor(255 * Math.random())},${Math.floor(255 * Math.random())},0.5)`
                     ctx.fillRect(x, y, w * who.health, h);
 
                     //draw fill inside mob
@@ -686,10 +686,17 @@ const mobs = {
                             if (radius2 < range * range && radius2 > 10000) {
                                 const curlVector = Vector.mult(Vector.perp(Vector.normalise(sub)), mag)
                                 //apply curl force
-                                Matter.Body.setVelocity(array[i], {
-                                    x: array[i].velocity.x * 0.94 + curlVector.x * 0.06,
-                                    y: array[i].velocity.y * 0.94 + curlVector.y * 0.06
-                                })
+                                if (array[i].isMobBullet) {
+                                    Matter.Body.setVelocity(array[i], {
+                                        x: array[i].velocity.x * 0.97 + curlVector.x * 0.06,
+                                        y: array[i].velocity.y * 0.97 + curlVector.y * 0.06
+                                    })
+                                } else {
+                                    Matter.Body.setVelocity(array[i], {
+                                        x: array[i].velocity.x * 0.94 + curlVector.x * 0.06,
+                                        y: array[i].velocity.y * 0.94 + curlVector.y * 0.06
+                                    })
+                                }
                                 if (isAntiGravity) array[i].force.y -= 0.8 * simulation.g * array[i].mass
                                 // //draw curl, for debugging
                                 // ctx.beginPath();

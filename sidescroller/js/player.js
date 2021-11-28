@@ -57,7 +57,7 @@ const m = {
     },
     setFillColors() {
         this.fillColor = `hsl(${m.color.hue},${m.color.sat}%,${m.color.light}%)`
-        this.fillColorDark = `hsl(${m.color.hue},${m.color.sat}%,${m.color.light-25}%)`
+        this.fillColorDark = `hsl(${m.color.hue},${m.color.sat}%,${m.color.light - 25}%)`
         let grd = ctx.createLinearGradient(-30, 0, 30, 0);
         grd.addColorStop(0, m.fillColorDark);
         grd.addColorStop(1, m.fillColor);
@@ -424,10 +424,10 @@ const m = {
                     simulation.clearNow = true; //triggers a map reset
                     m.switchWorlds()
                     simulation.isTextLogOpen = true;
-                    simulation.makeTextLog(`simulation.amplitude <span class='color-symbol'>=</span> 0.${len-i-1}`, swapPeriod);
+                    simulation.makeTextLog(`simulation.amplitude <span class='color-symbol'>=</span> 0.${len - i - 1}`, swapPeriod);
                     simulation.isTextLogOpen = false;
                     simulation.wipe = function() { //set wipe to have trails
-                        ctx.fillStyle = `rgba(255,255,255,${(i+1)*(i+1)*0.006})`;
+                        ctx.fillStyle = `rgba(255,255,255,${(i + 1) * (i + 1) * 0.006})`;
                         ctx.fillRect(0, 0, canvas.width, canvas.height);
                     }
                 }, (i + 1) * swapPeriod);
@@ -491,7 +491,7 @@ const m = {
     baseHealth: 1,
     setMaxHealth() {
         m.maxHealth = m.baseHealth + tech.extraMaxHealth + tech.isFallingDamage //+ tech.bonusHealth
-        document.getElementById("health-bg").style.width = `${Math.floor(300*m.maxHealth)}px`
+        document.getElementById("health-bg").style.width = `${Math.floor(300 * m.maxHealth)}px`
         simulation.makeTextLog(`<span class='color-var'>m</span>.<span class='color-h'>maxHealth</span> <span class='color-symbol'>=</span> ${m.maxHealth.toFixed(2)}`)
         if (m.health > m.maxHealth) m.health = m.maxHealth;
         m.displayHealth();
@@ -808,38 +808,7 @@ const m = {
         m.knee.x = (l / d) * (m.foot.x - m.hip.x) - (h / d) * (m.foot.y - m.hip.y) + m.hip.x + offset;
         m.knee.y = (l / d) * (m.foot.y - m.hip.y) + (h / d) * (m.foot.x - m.hip.x) + m.hip.y;
     },
-    draw() {
-        ctx.fillStyle = m.fillColor;
-        m.walk_cycle += m.flipLegs * m.Vx;
-
-        //draw body
-        ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.5
-        ctx.translate(m.pos.x, m.pos.y);
-
-        m.calcLeg(Math.PI, -3);
-        m.drawLeg("#4a4a4a");
-        m.calcLeg(0, 0);
-        m.drawLeg("#333");
-
-        ctx.rotate(m.angle);
-        ctx.beginPath();
-        ctx.arc(0, 0, 30, 0, 2 * Math.PI);
-        ctx.fillStyle = this.bodyGradient;
-        ctx.fill();
-        ctx.arc(15, 0, 4, 0, 2 * Math.PI);
-        ctx.strokeStyle = "#333";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        // draw eye;  used in flip-flop
-        // ctx.beginPath();
-        // ctx.arc(15, 0, 3.5, 0, 2 * Math.PI);
-        // ctx.fillStyle = m.eyeFillColor;
-        // ctx.fill()
-
-        ctx.restore();
-        m.yOff = m.yOff * 0.85 + m.yOffGoal * 0.15; //smoothly move leg height towards height goal
-    },
+    draw() {},
     drawFlipFlop() {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
@@ -875,17 +844,13 @@ const m = {
     drawDefault() {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
-
-        //draw body
         ctx.save();
         ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.5
         ctx.translate(m.pos.x, m.pos.y);
-
         m.calcLeg(Math.PI, -3);
         m.drawLeg("#4a4a4a");
         m.calcLeg(0, 0);
         m.drawLeg("#333");
-
         ctx.rotate(m.angle);
         ctx.beginPath();
         ctx.arc(0, 0, 30, 0, 2 * Math.PI);
@@ -895,12 +860,6 @@ const m = {
         ctx.strokeStyle = "#333";
         ctx.lineWidth = 2;
         ctx.stroke();
-        // draw eye;  used in flip-flop
-        // ctx.beginPath();
-        // ctx.arc(15, 0, 3.5, 0, 2 * Math.PI);
-        // ctx.fillStyle = m.eyeFillColor;
-        // ctx.fill()
-
         ctx.restore();
         m.yOff = m.yOff * 0.85 + m.yOffGoal * 0.15; //smoothly move leg height towards height goal
     },
@@ -2897,6 +2856,7 @@ const m = {
         {
             name: "wormhole",
             description: "use <strong class='color-f'>energy</strong> to <strong>tunnel</strong> through a <strong class='color-worm'>wormhole</strong><br><strong class='color-worm'>wormholes</strong> attract <strong class='color-block'>blocks</strong> and power ups<br><strong>7%</strong> chance to <strong class='color-dup'>duplicate</strong> spawned <strong>power ups</strong>", //<br>bullets may also traverse <strong class='color-worm'>wormholes</strong>
+            drain: 0,
             effect: function() {
                 m.duplicateChance = 0.07
                 m.fieldRange = 0
@@ -3098,57 +3058,28 @@ const m = {
                         const justPastMouse = Vector.add(Vector.mult(Vector.normalise(Vector.sub(simulation.mouseInGame, m.pos)), 50), simulation.mouseInGame)
                         const sub = Vector.sub(simulation.mouseInGame, m.pos)
                         const mag = Vector.magnitude(sub)
-                        const drain = tech.isFreeWormHole ? 0 : 0.06 + 0.006 * Math.sqrt(mag)
+
                         if (input.field) {
                             m.grabPowerUp();
-
                             //draw possible wormhole
-                            if (mag > 250 && m.energy > drain) {
-                                const unit = Vector.perp(Vector.normalise(sub))
-                                const where = { x: m.pos.x + 30 * Math.cos(m.angle), y: m.pos.y + 30 * Math.sin(m.angle) }
-                                m.fieldRange = 0.97 * m.fieldRange + 0.03 * (50 + 10 * Math.sin(simulation.cycle * 0.025))
-                                const edge2a = Vector.add(Vector.mult(unit, 1.5 * m.fieldRange), simulation.mouseInGame)
-                                const edge2b = Vector.add(Vector.mult(unit, -1.5 * m.fieldRange), simulation.mouseInGame)
-                                ctx.beginPath();
-                                ctx.moveTo(where.x, where.y)
-                                ctx.bezierCurveTo(where.x, where.y, simulation.mouseInGame.x, simulation.mouseInGame.y, edge2a.x, edge2a.y);
-                                ctx.moveTo(where.x, where.y)
-                                ctx.bezierCurveTo(where.x, where.y, simulation.mouseInGame.x, simulation.mouseInGame.y, edge2b.x, edge2b.y);
-                                if (
-                                    Matter.Query.region(map, {
-                                        min: {
-                                            x: simulation.mouseInGame.x - scale,
-                                            y: simulation.mouseInGame.y - scale
-                                        },
-                                        max: {
-                                            x: simulation.mouseInGame.x + scale,
-                                            y: simulation.mouseInGame.y + scale
-                                        }
-                                    }).length === 0 &&
-                                    Matter.Query.ray(map, m.pos, justPastMouse).length === 0
-                                ) {
-                                    m.hole.isReady = true;
-                                    // ctx.fillStyle = "rgba(255,255,255,0.5)"
-                                    // ctx.fill();
-                                    ctx.lineWidth = 1
-                                    ctx.strokeStyle = "#000"
-                                    ctx.stroke();
-                                } else {
-                                    m.hole.isReady = false;
-                                    ctx.lineWidth = 1
-                                    ctx.strokeStyle = "#000"
-                                    ctx.lineDashOffset = 30 * Math.random()
-                                    ctx.setLineDash([20, 40]);
-                                    ctx.stroke();
-                                    ctx.setLineDash([]);
-                                }
+                            if (tech.isWormholeMapIgnore && Matter.Query.ray(map, m.pos, justPastMouse).length !== 0) {
+                                this.drain = (0.06 + 0.006 * Math.sqrt(mag)) * 2
                             } else {
-                                m.hole.isReady = false;
+                                this.drain = tech.isFreeWormHole ? 0 : 0.06 + 0.006 * Math.sqrt(mag)
                             }
-                        } else {
-                            //make new wormhole
+                            const unit = Vector.perp(Vector.normalise(sub))
+                            const where = { x: m.pos.x + 30 * Math.cos(m.angle), y: m.pos.y + 30 * Math.sin(m.angle) }
+                            m.fieldRange = 0.97 * m.fieldRange + 0.03 * (50 + 10 * Math.sin(simulation.cycle * 0.025))
+                            const edge2a = Vector.add(Vector.mult(unit, 1.5 * m.fieldRange), simulation.mouseInGame)
+                            const edge2b = Vector.add(Vector.mult(unit, -1.5 * m.fieldRange), simulation.mouseInGame)
+                            ctx.beginPath();
+                            ctx.moveTo(where.x, where.y)
+                            ctx.bezierCurveTo(where.x, where.y, simulation.mouseInGame.x, simulation.mouseInGame.y, edge2a.x, edge2a.y);
+                            ctx.moveTo(where.x, where.y)
+                            ctx.bezierCurveTo(where.x, where.y, simulation.mouseInGame.x, simulation.mouseInGame.y, edge2b.x, edge2b.y);
                             if (
-                                m.hole.isReady && mag > 250 && m.energy > drain &&
+                                mag > 250 && m.energy > this.drain &&
+                                (tech.isWormholeMapIgnore || Matter.Query.ray(map, m.pos, justPastMouse).length === 0) &&
                                 Matter.Query.region(map, {
                                     min: {
                                         x: simulation.mouseInGame.x - scale,
@@ -3158,10 +3089,40 @@ const m = {
                                         x: simulation.mouseInGame.x + scale,
                                         y: simulation.mouseInGame.y + scale
                                     }
-                                }).length === 0 &&
-                                Matter.Query.ray(map, m.pos, justPastMouse).length === 0
+                                }).length === 0
                             ) {
-                                m.energy -= drain
+                                m.hole.isReady = true;
+                                // ctx.fillStyle = "rgba(255,255,255,0.5)"
+                                // ctx.fill();
+                                ctx.lineWidth = 1
+                                ctx.strokeStyle = "#000"
+                                ctx.stroke();
+                            } else {
+                                m.hole.isReady = false;
+                                ctx.lineWidth = 1
+                                ctx.strokeStyle = "#000"
+                                ctx.lineDashOffset = 30 * Math.random()
+                                ctx.setLineDash([20, 40]);
+                                ctx.stroke();
+                                ctx.setLineDash([]);
+                            }
+                        } else {
+                            //make new wormhole
+                            if (
+                                m.hole.isReady && mag > 250 && m.energy > this.drain &&
+                                (tech.isWormholeMapIgnore || Matter.Query.ray(map, m.pos, justPastMouse).length === 0) &&
+                                Matter.Query.region(map, {
+                                    min: {
+                                        x: simulation.mouseInGame.x - scale,
+                                        y: simulation.mouseInGame.y - scale
+                                    },
+                                    max: {
+                                        x: simulation.mouseInGame.x + scale,
+                                        y: simulation.mouseInGame.y + scale
+                                    }
+                                }).length === 0
+                            ) {
+                                m.energy -= this.drain
                                 m.hole.isReady = false;
                                 m.fieldRange = 0
                                 Matter.Body.setPosition(player, simulation.mouseInGame);
@@ -3207,7 +3168,6 @@ const m = {
                             }
                         }
                     }
-
                     // if (input.field && m.fieldCDcycle < m.cycle) { //not hold but field button is pressed
                     //     const justPastMouse = Vector.add(Vector.mult(Vector.normalise(Vector.sub(simulation.mouseInGame, m.pos)), 50), simulation.mouseInGame)
                     //     const scale = 60
