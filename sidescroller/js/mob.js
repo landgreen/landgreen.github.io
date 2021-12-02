@@ -1149,7 +1149,7 @@ const mobs = {
                             powerUps.spawn(this.position.x, this.position.y, "tech", false)
                             // if (0.5 < Math.random()) powerUps.spawn(this.position.x, this.position.y, "tech", false)
                         } else {
-                            const amount = 0.01
+                            const amount = 0.005
                             if (tech.isEnergyHealth) {
                                 if (m.maxEnergy > amount) {
                                     tech.healMaxEnergyBonus -= amount

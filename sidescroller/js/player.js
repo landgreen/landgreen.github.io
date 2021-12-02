@@ -133,7 +133,7 @@ const m = {
     transX: 0,
     transY: 0,
     history: [], //tracks the last second of player position
-    rewindCount: 0, //used with CPT gun
+    rewindCount: 0, //used with CPT
     resetHistory() {
         for (let i = 0; i < 600; i++) { //reset history
             m.history[i] = {

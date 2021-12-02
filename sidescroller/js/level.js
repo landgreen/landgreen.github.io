@@ -17,10 +17,10 @@ const level = {
             // level.difficultyIncrease(30) //30 is near max on hard  //60 is near max on why
             // simulation.isHorizontalFlipped = true
             // m.setField("wormhole")
-            // b.giveGuns("laser")
+            // b.giveGuns("shotgun")
             // b.giveGuns("nail gun")
             // b.giveGuns("harpoon") 
-            // tech.giveTech("affine connection")
+            // tech.giveTech("slug")
             // tech.giveTech("regression")
             // tech.giveTech("relativistic momentum")
             // for (let i = 0; i < 2; i++) tech.giveTech("refractory metal")
@@ -58,7 +58,6 @@ const level = {
             // for (let i = 0; i < 30; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "tech", false);
             // for (let i = 0; i < 3; i++) tech.giveTech("undefined")
             // lore.techCount = 3
-
             // simulation.isCheating = false //true;
             // localSettings.loreCount = 3; //this sets what conversation is heard
             // localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
