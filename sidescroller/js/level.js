@@ -33,6 +33,7 @@ const level = {
             // simulation.enableConstructMode() //used to build maps in testing mode
             // level.reservoir();
             // level.testing(); //not in rotation, used for testing
+
             if (simulation.isTraining) { level.walk(); } else { level.intro(); }
 
             // powerUps.research.changeRerolls(3000)
@@ -3092,18 +3093,20 @@ const level = {
             if (isWaterfallFilling) {
                 if (slime.height < 5500) {
                     //draw slime fill
-                    waterFallWidth = 0.98 * waterFallWidth + 4.7 * Math.random()
-                    waterFallSmoothX = 0.98 * waterFallSmoothX + 3.5 * Math.random()
-                    waterFallX = waterFallSmoothX - 1985
                     ctx.fillStyle = `hsla(160, 100%, 43%,${0.3+0.07*Math.random()})`
                     ctx.fillRect(waterFallX, -5050, waterFallWidth, 6175 - slime.height)
-                    ctx.fillRect(waterFallX + waterFallWidth * Math.random(), -5050, 4, 6175 - slime.height)
-                    //push player down if they go under waterfall
-                    if (player.position.x > waterFallX && player.position.x < waterFallX + waterFallWidth && player.position.y < slime.height) {
-                        Matter.Body.setVelocity(player, {
-                            x: player.velocity.x,
-                            y: player.velocity.y + 2
-                        });
+                    if (!m.isBodiesAsleep) {
+                        waterFallWidth = 0.98 * waterFallWidth + 4.7 * Math.random()
+                        waterFallSmoothX = 0.98 * waterFallSmoothX + 3.5 * Math.random()
+                        waterFallX = waterFallSmoothX - 1985
+                        ctx.fillRect(waterFallX + waterFallWidth * Math.random(), -5050, 4, 6175 - slime.height)
+                        //push player down if they go under waterfall
+                        if (player.position.x > waterFallX && player.position.x < waterFallX + waterFallWidth && player.position.y < slime.height) {
+                            Matter.Body.setVelocity(player, {
+                                x: player.velocity.x,
+                                y: player.velocity.y + 2
+                            });
+                        }
                     }
                     slime.levelRise(riseRate)
                 }
