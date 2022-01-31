@@ -299,10 +299,8 @@ function planetesimals() {
         mass[0].force.y += mass[0].thrust * Math.sin(mass[0].angle + Math.PI * 0.5);
         thrustGraphic();
       } else if (keys[40] || keys[83]) { //reverse thrust
-        mass[0].force = {
-          x: -mass[0].thrust * 0.5 * Math.cos(mass[0].angle + Math.PI * 0.5),
-          y: -mass[0].thrust * 0.5 * Math.sin(mass[0].angle + Math.PI * 0.5)
-        };
+        mass[0].force.x += -mass[0].thrust * 0.5 * Math.cos(mass[0].angle + Math.PI * 0.5)
+        mass[0].force.y += -mass[0].thrust * 0.5 * Math.sin(mass[0].angle + Math.PI * 0.5)
         torqueGraphic(-1);
         torqueGraphic(1);
       }
