@@ -532,7 +532,7 @@ const schedule = {
   },
   {
     start: 10 * 60 + 11,
-    long: 3,
+    long: 4,
     name: "",
     showName: false,
     fill: color.passing
