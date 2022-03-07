@@ -1111,6 +1111,11 @@ window.addEventListener("keydown", function(event) {
                 setTimeout(() => { for (let i = 0, len = mob.length; i < len; ++i) mob[i].damage(Infinity, true) }, 100);
                 setTimeout(() => { for (let i = 0, len = mob.length; i < len; ++i) mob[i].damage(Infinity, true) }, 200);
                 break
+            case "l":
+                document.getElementById("field").style.display = "none"
+                document.getElementById("guns").style.display = "none"
+                document.getElementById("tech").style.display = "none"
+                break
         }
     }
 });
