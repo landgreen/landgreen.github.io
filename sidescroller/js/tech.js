@@ -58,6 +58,7 @@ const tech = {
         simulation.makeTextLog(`<span class='color-var'>tech</span>.removeTech("<span class='color-text'>${tech.tech[index].name}</span>")`)
         tech.tech[index].remove();
         tech.tech[index].count = 0;
+        tech.totalCount -= totalRemoved
         simulation.updateTechHUD();
         tech.tech[index].isLost = true
         simulation.updateTechHUD();
@@ -211,7 +212,7 @@ const tech = {
     },
     damageFromTech() {
         let dmg = 1 //m.fieldDamage
-        if (tech.isTechDebt) dmg *= 4 - 0.1 * tech.totalCount
+        if (tech.isTechDebt) dmg *= 4 - 0.08 * tech.totalCount
         if (tech.isAxion && tech.isHarmMACHO) dmg *= 1 + 0.75 * (1 - m.harmReduction())
         if (tech.OccamDamage) dmg *= tech.OccamDamage
         if (tech.isCloakingDamage) dmg *= 1.35
@@ -3088,7 +3089,7 @@ const tech = {
             // description: `increase <strong class='color-d'>damage</strong> by <strong>300%</strong> minus <strong>10%</strong> for <strong class='color-m'>tech</strong> you have learned(${4 - 0.1 * tech.totalCount})`,
             // description: `increase <strong class='color-d'>damage</strong> by <strong>300%</strong>, but reduce <strong class='color-d'>damage</strong><br>by <strong>10%</strong> for <strong class='color-m'>tech</strong> you have learned`,
             descriptionFunction() {
-                return `increase <strong class='color-d'>damage</strong> by <strong>300%</strong> minus <strong>10%</strong><br>for <strong class='color-m'>tech</strong> you have learned <em>(${Math.floor(100*(4 - 0.1 * tech.totalCount))-100}%)</em>`
+                return `increase <strong class='color-d'>damage</strong> by <strong>300%</strong> minus <strong>8%</strong><br>for <strong class='color-m'>tech</strong> you have learned <em>(${Math.floor(100*(4 - 0.08 * tech.totalCount))-100}%)</em>`
             },
             maxCount: 1,
             count: 0,
