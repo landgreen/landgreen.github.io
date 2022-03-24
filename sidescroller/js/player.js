@@ -2229,8 +2229,8 @@ const m = {
                                 }
                             } else if (m.energy > m.plasmaBall.drain) { //charge up when attached
                                 if (tech.isCapacitor) {
-                                    m.energy -= m.plasmaBall.drain * 4;
-                                    const scale = 1 + 5 * 16 * Math.pow(Math.max(1, m.plasmaBall.circleRadius), -1.8)
+                                    m.energy -= m.plasmaBall.drain * 2;
+                                    const scale = 1 + 3 * 16 * Math.pow(Math.max(1, m.plasmaBall.circleRadius), -1.8)
                                     Matter.Body.scale(m.plasmaBall, scale, scale); //grow
 
                                 } else {
