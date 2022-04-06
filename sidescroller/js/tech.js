@@ -705,6 +705,34 @@ const tech = {
                 m.setMovement()
             }
         },
+        // {
+        //     name: "coyote",
+        //     description: "",
+        //     maxCount: 1,
+        //     count: 0,
+        //     frequency: 1,
+        //     frequencyDefault: 1,
+        //     allowed() { return true },
+        //     requires: "",
+        //     effect() { // good with melee builds, content skipping builds
+        //         tech.coyoteTime = 120
+        //         // simulation.gravity = function() {
+        //         //     function addGravity(bodies, magnitude) {
+        //         //         for (var i = 0; i < bodies.length; i++) {
+        //         //             bodies[i].force.y += bodies[i].mass * magnitude;
+        //         //         }
+        //         //     }
+        //         //     if (!m.isBodiesAsleep) {
+        //         //         addGravity(powerUp, simulation.g);
+        //         //         addGravity(body, simulation.g);
+        //         //     }
+        //         //     player.force.y += player.mass * simulation.g
+        //         // }
+        //     },
+        //     remove() {
+        //         tech.coyoteTime = 5
+        //     }
+        // },
         {
             name: "Newton's 1st law",
             description: "moving at high <strong>speeds</strong><br>reduces <strong class='color-harm'>harm</strong> by up to <strong>66%</strong>",
@@ -1816,7 +1844,7 @@ const tech = {
         },
         {
             name: "lithium-ion",
-            description: "if <strong>relay switch</strong> is in the <strong class='color-flop'>ON</strong> state<br>increase your <strong>maximum</strong> <strong class='color-f'>energy</strong> by <strong>200</strong>",
+            description: "if <strong>relay switch</strong> is in the <strong class='color-flop'>ON</strong> state<br>increase your <strong>maximum</strong> <strong class='color-f'>energy</strong> by <strong>300</strong>",
             maxCount: 1,
             count: 0,
             frequency: 4,
@@ -7492,25 +7520,6 @@ const tech = {
         //     remove() {}
         // },
         {
-            name: "tinker",
-            description: "<strong>permanently</strong> unlock <strong class='color-j'>JUNK</strong> <strong class='color-m'>tech</strong> in experiment mode<br><em>this effect is stored for future visits</em>",
-            maxCount: 1,
-            count: 0,
-            frequency: 0,
-            frequencyDefault: 0,
-            isJunk: true,
-            isNonRefundable: true,
-            allowed() {
-                return !localSettings.isJunkExperiment
-            },
-            requires: "",
-            effect() {
-                localSettings.isJunkExperiment = true
-                if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-            },
-            remove() {}
-        },
-        {
             name: "discount",
             description: "get 3 random <strong class='color-j'>JUNK</strong> <strong class='color-m'>tech</strong> for the price of 1!",
             maxCount: 1,
@@ -7572,7 +7581,7 @@ const tech = {
         },
         {
             name: "Higgs phase transition",
-            description: "instantly spawn 3 <strong class='color-m'>tech</strong>, but add a chance to<br>remove everything with a 5 minute <strong>half-life</strong>",
+            description: "instantly spawn 5 <strong class='color-m'>tech</strong>, but add a chance to<br>remove everything with a 5 minute <strong>half-life</strong>",
             maxCount: 1,
             count: 0,
             frequency: 0,
@@ -7585,8 +7594,10 @@ const tech = {
             requires: "",
             effect() {
                 powerUps.spawn(m.pos.x, m.pos.y, "tech");
-                powerUps.spawn(m.pos.x + 20, m.pos.y, "tech");
-                powerUps.spawn(m.pos.x + 40, m.pos.y, "tech");
+                powerUps.spawn(m.pos.x + 30, m.pos.y, "tech");
+                powerUps.spawn(m.pos.x + 60, m.pos.y, "tech");
+                powerUps.spawn(m.pos.x, m.pos.y - 30, "tech");
+                powerUps.spawn(m.pos.x + 30, m.pos.y - 60, "tech");
 
                 function loop() {
                     // (1-X)^cycles = chance to be removed //Math.random() < 0.000019  10 min
@@ -9293,6 +9304,25 @@ const tech = {
             remove() {}
         },
         {
+            name: "tinker",
+            description: "<strong>permanently</strong> unlock <strong class='color-j'>JUNK</strong> <strong class='color-m'>tech</strong> in experiment mode<br><em>this effect is stored for future visits</em>",
+            maxCount: 1,
+            count: 0,
+            frequency: 0,
+            frequencyDefault: 0,
+            isJunk: true,
+            isNonRefundable: true,
+            allowed() {
+                return !localSettings.isJunkExperiment
+            },
+            requires: "",
+            effect() {
+                localSettings.isJunkExperiment = true
+                if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+            },
+            remove() {}
+        },
+        {
             name: "NFT",
             descriptionFunction() { return `buy your current game seed: <strong style = 'font-size:130%;'>${Math.initialSeed}</strong><br><em>no one is allow to use your seeds<br>if they use them they are gonna get in trouble</em><br>your seeds: <span style = 'font-size:70%;'>${localSettings.personalSeeds.join()}</span>` },
             maxCount: 1,
@@ -9687,4 +9717,5 @@ const tech = {
     plasmaDischarge: null,
     isFlipFlopHealth: null,
     isRelayEnergy: null,
+    coyoteTime: null
 }

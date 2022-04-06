@@ -14,16 +14,14 @@ const simulation = {
         }
         m.move();
         m.look();
+        simulation.checks();
         simulation.camera();
         level.custom();
         powerUps.do();
         mobs.draw();
         simulation.draw.cons();
         simulation.draw.body();
-        if (!m.isBodiesAsleep) {
-            simulation.checks();
-            mobs.loop();
-        }
+        mobs.loop();
         mobs.healthBar();
         m.draw();
         m.hold();
@@ -33,7 +31,7 @@ const simulation = {
         b.fire();
         b.bulletRemove();
         b.bulletDraw();
-        if (!m.isBodiesAsleep) b.bulletDo();
+        b.bulletDo();
         simulation.drawCircle();
         // simulation.clip();
         ctx.restore();
@@ -56,17 +54,8 @@ const simulation = {
         simulation.camera();
         level.custom();
         m.draw();
-        m.hold();
         level.customTopLayer();
         simulation.draw.wireFrame();
-        if (input.fire && m.fireCDcycle < m.cycle) {
-            m.fireCDcycle = m.cycle + 15; //fire cooldown       
-            for (let i = 0, len = mob.length; i < len; i++) {
-                if (Vector.magnitudeSquared(Vector.sub(mob[i].position, simulation.mouseInGame)) < mob[i].radius * mob[i].radius) {
-                    console.log(mob[i])
-                }
-            }
-        }
         simulation.draw.cons();
         simulation.draw.testing();
         simulation.drawCircle();
@@ -112,7 +101,6 @@ const simulation = {
     g: 0.0024, // applies to player, bodies, and power ups  (not mobs)
     onTitlePage: true,
     isCheating: false,
-    isTraining: false,
     paused: false,
     isChoosing: false,
     testing: false, //testing mode: shows wire frame and some variables
@@ -121,7 +109,7 @@ const simulation = {
     fpsCapDefault: 72, //use to change fpsCap back to normal after a hit from a mob
     isCommunityMaps: false,
     cyclePaused: 0,
-    fallHeight: 6000, //below this y position the player dies
+    fallHeight: 3000, //below this y position the player dies
     lastTimeStamp: 0, //tracks time stamps for measuring delta
     delta: 1000 / 60, //speed of game engine //looks like it has to be 16 to match player input
     buttonCD: 0,
@@ -133,6 +121,7 @@ const simulation = {
     healScale: 1,
     accelScale: null, //set in levels.setDifficulty
     CDScale: null, //set in levels.setDifficulty
+    lookFreqScale: null, //set in levels.setDifficulty
     isNoPowerUps: false,
     // dropFPS(cap = 40, time = 15) {
     //   simulation.fpsCap = cap
@@ -259,41 +248,7 @@ const simulation = {
             }
         }
     },
-    circleFlare(dup, loops = 100) {
-        boltNum = dup * 300
-        const bolts = []
-        colors = [powerUps.research.color, powerUps.ammo.color, powerUps.heal.color, powerUps.tech.color, powerUps.field.color, powerUps.gun.color]
-        for (let i = 0; i < boltNum; ++i) {
-            const mag = 6 + 20 * Math.random()
-            const angle = 2 * Math.PI * Math.random()
-            bolts.push({
-                x: m.pos.x,
-                y: m.pos.y,
-                Vx: mag * Math.cos(angle),
-                Vy: mag * Math.sin(angle),
-                color: colors[Math.floor(Math.random() * colors.length)]
-            })
-        }
-        let count = 0
-        loop = () => { //draw electricity
-            if (count++ < loops) requestAnimationFrame(loop)
-            for (let i = 0, len = bolts.length; i < len; ++i) {
-                bolts[i].x += bolts[i].Vx
-                bolts[i].y += bolts[i].Vy
-                if (Math.random() < 0.2) {
-                    simulation.drawList.push({
-                        x: bolts[i].x,
-                        y: bolts[i].y,
-                        radius: 1.5 + 5 * Math.random(),
-                        // color: "rgba(0,155,155,0.7)",
-                        color: bolts[i].color,
-                        time: Math.floor(9 + 25 * Math.random() * Math.random())
-                    });
-                }
-            }
-        }
-        requestAnimationFrame(loop)
-    },
+    lastLogTime: 0,
     // lastLogTimeBig: 0,
     boldActiveGunHUD() {
         if (b.inventory.length > 0) {
@@ -351,13 +306,12 @@ const simulation = {
         }
         document.getElementById("tech").innerHTML = text
     },
-    lastLogTime: 0,
     isTextLogOpen: true,
     // <!-- <path d="M832.41,106.64 V323.55 H651.57 V256.64 c0-82.5,67.5-150,150-150 Z" fill="#789" stroke="none" />
     // <path d="M827,112 h30 a140,140,0,0,1,140,140 v68 h-167 z" fill="#7ce" stroke="none" /> -->
     // SVGleftMouse: '<svg viewBox="750 0 200 765" class="mouse-icon" width="40px" height = "60px" stroke-linecap="round" stroke-linejoin="round" stroke-width="25px" stroke="#000" fill="none">  <path fill="#fff" stroke="none" d="M827,112 h30 a140,140,0,0,1,140,140 v268 a140,140,0,0,1-140,140 h-60 a140,140,0,0,1-140-140v-268 a140,140,0,0,1,140-140h60" />  <path d="M832.41,106.64 V323.55 H651.57 V256.64 c0-82.5,67.5-150,150-150 Z" fill="#149" stroke="none" />  <path fill="none" d="M827,112 h30 a140,140,0,0,1,140,140 v268 a140,140,0,0,1-140,140 h-60 a140,140,0,0,1-140-140v-268 a140,140,0,0,1,140-140h60" />  <path d="M657 317 h 340 h-170 v-207" />  <ellipse fill="#fff" cx="827.57" cy="218.64" rx="29" ry="68" />  </svg>',
     // SVGrightMouse: '<svg viewBox="750 0 200 765" class="mouse-icon" width="40px" height = "60px" stroke-linecap="round" stroke-linejoin="round" stroke-width="25px" stroke="#000" fill="none">  <path fill="#fff" stroke="none" d="M827,112 h30 a140,140,0,0,1,140,140 v268 a140,140,0,0,1-140,140 h-60 a140,140,0,0,1-140-140v-268 a140,140,0,0,1,140-140h60" />  <path d="M827,112 h30 a140,140,0,0,1,140,140 v68 h-167 z" fill="#0cf" stroke="none" />  <path fill="none" d="M827,112 h30 a140,140,0,0,1,140,140 v268 a140,140,0,0,1-140,140 h-60 a140,140,0,0,1-140-140v-268 a140,140,0,0,1,140-140h60" />  <path d="M657 317 h 340 h-170 v-207" />  <ellipse fill="#fff" cx="827.57" cy="218.64" rx="29" ry="68" />  </svg>',
-    makeTextLog(text, time = 240) {
+    makeTextLog(text, time = 180) {
         if (simulation.isTextLogOpen && !build.isExperimentSelection) {
             if (simulation.lastLogTime > m.cycle) { //if there is an older message
                 document.getElementById("text-log").innerHTML = document.getElementById("text-log").innerHTML + '<br>' + text;
@@ -377,30 +331,21 @@ const simulation = {
         }
     },
     nextGun() {
-        if (b.inventory.length > 1 && !tech.isGunCycle) {
+        if (b.inventory.length > 0 && !tech.isGunCycle) {
             b.inventoryGun++;
             if (b.inventoryGun > b.inventory.length - 1) b.inventoryGun = 0;
             simulation.switchGun();
         }
     },
     previousGun() {
-        if (b.inventory.length > 1 && !tech.isGunCycle) {
+        if (b.inventory.length > 0 && !tech.isGunCycle) {
             b.inventoryGun--;
             if (b.inventoryGun < 0) b.inventoryGun = b.inventory.length - 1;
             simulation.switchGun();
         }
     },
     switchGun() {
-        if (tech.isLongitudinal && b.guns[b.activeGun].name === "matter wave") {
-            for (i = 0, len = b.guns.length; i < len; i++) { //find which gun
-                if (b.guns[i].name === "matter wave") {
-                    b.guns[i].waves = []; //empty array of wave bullets
-                    break;
-                }
-            }
-        }
-        if (tech.crouchAmmoCount) tech.crouchAmmoCount = 1 //this prevents hacking the tech by switching guns
-
+        if (tech.isCrouchAmmo) tech.isCrouchAmmo = 1 //this prevents hacking the tech by switching guns
         b.activeGun = b.inventory[b.inventoryGun];
         if (b.guns[b.activeGun].charge) b.guns[b.activeGun].charge = 0; //if switching into foam set charge to 0
         simulation.updateGunHUD();
@@ -513,120 +458,41 @@ const simulation = {
                 bodies[i].force.y += bodies[i].mass * magnitude;
             }
         }
-        if (!m.isBodiesAsleep) {
-            addGravity(powerUp, simulation.g);
-            addGravity(body, simulation.g);
-        }
+        addGravity(powerUp, simulation.g);
+        addGravity(body, simulation.g);
         player.force.y += player.mass * simulation.g;
     },
     firstRun: true,
     splashReturn() {
-
-        document.getElementById("previous-seed").innerHTML = `previous seed: <span style="font-size:80%;">${Math.initialSeed}</span><br>`
-        document.getElementById("seed").value = Math.initialSeed = Math.seed //randomize initial seed
-
-        //String(document.getElementById("seed").value)
-        // Math.seed = Math.abs(Math.hash(Math.initialSeed)) //update randomizer seed in case the player changed it
-
-
         simulation.clearTimeouts();
         simulation.onTitlePage = true;
         document.getElementById("splash").onclick = function() {
             simulation.startGame();
         };
-        // document.getElementById("choose-grid").style.display = "none"
-        document.getElementById("choose-grid").style.visibility = "hidden"
-        document.getElementById("choose-grid").style.opacity = "0"
-        document.getElementById("choose-background").style.visibility = "hidden"
-        document.getElementById("choose-background").style.opacity = "0"
+        document.getElementById("choose-grid").style.display = "none"
         document.getElementById("info").style.display = "inline";
-        document.getElementById("info").style.opacity = "0";
         document.getElementById("experiment-button").style.display = "inline"
-        document.getElementById("experiment-button").style.opacity = "0";
-        document.getElementById("training-button").style.display = "inline"
-        document.getElementById("training-button").style.opacity = "0";
         document.getElementById("experiment-grid").style.display = "none"
         document.getElementById("pause-grid-left").style.display = "none"
         document.getElementById("pause-grid-right").style.display = "none"
         document.getElementById("splash").style.display = "inline";
-        document.getElementById("splash").style.opacity = "0";
         document.getElementById("dmg").style.display = "none";
         document.getElementById("health-bg").style.display = "none";
         document.body.style.cursor = "auto";
-        setTimeout(() => {
-            document.getElementById("experiment-button").style.opacity = "1";
-            document.getElementById("training-button").style.opacity = "1";
-            document.getElementById("info").style.opacity = "1";
-            document.getElementById("splash").style.opacity = "1";
-        }, 200);
     },
     fpsInterval: 0, //set in startGame
     then: null,
-    introPlayer() { //not work, but trying to show player in the intro screen
-        setTimeout(() => {
-            document.getElementById("info").style.display = "none";
-            document.getElementById("splash").style.display = "none"; //hides the element that spawned the function
-
-            simulation.clearMap()
-            m.draw = m.drawDefault //set the play draw to normal, undoing some junk tech
-            m.spawn(); //spawns the player
-            m.look = m.lookDefault
-
-
-            //level
-
-            level.testing(); //not in rotation, used for testing
-
-
-            //load level
-            simulation.setZoom();
-            level.addToWorld(); //add bodies to game engine
-            simulation.draw.setPaths();
-
-            function cycle() {
-                simulation.gravity();
-                Engine.update(engine, simulation.delta);
-                simulation.wipe();
-                if (m.onGround) {
-                    m.groundControl()
-                } else {
-                    m.airControl()
-                }
-                m.move();
-                // m.look();
-                // simulation.camera();
-                m.draw();
-                m.hold();
-                simulation.draw.drawMapPath();
-                ctx.restore();
-                if (simulation.onTitlePage) requestAnimationFrame(cycle);
-            }
-            requestAnimationFrame(cycle)
-        }, 1000);
-    },
-    startGame(isBuildRun = false, isTrainingRun = false) {
-        simulation.isTextLogOpen = true
+    startGame(isBuildRun = false) {
         simulation.clearMap()
         if (!isBuildRun) { //if a build run logic flow returns to "experiment-button").addEventListener
             document.body.style.cursor = "none";
             document.body.style.overflow = "hidden"
         }
-        if (isTrainingRun) {
-            simulation.isTraining = true
-            simulation.isNoPowerUps = true
-        } else {
-            simulation.isTraining = false
-            simulation.isNoPowerUps = false;
-        }
         simulation.onTitlePage = false;
-        // document.getElementById("choose-grid").style.display = "none"
-        document.getElementById("choose-grid").style.visibility = "hidden"
-        document.getElementById("choose-grid").style.opacity = "0"
+        document.getElementById("choose-grid").style.display = "none"
         document.getElementById("experiment-grid").style.display = "none"
         document.getElementById("info").style.display = "none";
         document.getElementById("experiment-button").style.display = "none";
-        document.getElementById("training-button").style.display = "none";
-        // document.getElementById("experiment-button").style.opacity = "0";
         document.getElementById("splash").onclick = null; //removes the onclick effect so the function only runs once
         document.getElementById("splash").style.display = "none"; //hides the element that spawned the function
         document.getElementById("dmg").style.display = "inline";
@@ -639,21 +505,40 @@ const simulation = {
             m.spawn(); //spawns the player
             m.look = m.lookDefault
         } else {
-            Composite.add(engine.world, [player])
+            World.add(engine.world, [player])
         }
-        level.populateLevels()
+
+        simulation.isHorizontalFlipped = (Math.random() < 0.5) ? true : false //if true, some maps are flipped horizontally
+        level.levels = level.playableLevels.slice(0) //copy array, not by just by assignment
+        if (simulation.isCommunityMaps) {
+            level.levels.push("stronghold");
+            level.levels.push("basement");
+            level.levels.push("crossfire");
+            level.levels.push("vats")
+            level.levels.push("n-gon")
+            level.levels.push("house");
+            level.levels.push("perplex");
+            level.levels.push("coliseum");
+            level.levels.push("tunnel");
+            level.levels = shuffle(level.levels); //shuffles order of maps
+            level.levels.splice(0, 9); //remove some random levels to make up for adding the community levels
+        } else {
+            level.levels = shuffle(level.levels); //shuffles order of maps
+        }
+        level.levels.unshift("intro"); //add level to the start of the randomized levels list
+        level.levels.push("labs"); //add level to the end of the randomized levels list
+        level.levels.push("gauntlet"); //add level to the end of the randomized levels list
+        level.levels.push("final"); //add level to the end of the randomized levels list
 
         input.endKeySensing();
         b.removeAllGuns();
-
+        simulation.isNoPowerUps = false;
         tech.setupAllTech(); //sets tech to default values
         tech.cancelCount = 0;
         for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
             if (b.guns[i].name === "laser") b.guns[i].chooseFireMethod()
             if (b.guns[i].name === "nail gun") b.guns[i].chooseFireMethod()
             if (b.guns[i].name === "super balls") b.guns[i].chooseFireMethod()
-            if (b.guns[i].name === "harpoon") b.guns[i].chooseFireMethod()
-            if (b.guns[i].name === "foam") b.guns[i].chooseFireMethod()
         }
         tech.dynamoBotCount = 0;
         tech.nailBotCount = 0;
@@ -664,13 +549,10 @@ const simulation = {
         tech.plasmaBotCount = 0;
         tech.missileBotCount = 0;
 
-        simulation.isChoosing = false;
         b.setFireMethod()
         b.setFireCD();
         // simulation.updateTechHUD();
-        powerUps.tech.choiceLog = [];
-        powerUps.gun.choiceLog = [];
-        powerUps.field.choiceLog = [];
+        powerUps.tech.choiceLog = []
         powerUps.totalPowerUps = 0;
         powerUps.research.count = 0;
         m.setFillColors();
@@ -692,28 +574,21 @@ const simulation = {
         level.onLevel = 0;
         level.levelsCleared = 0;
         //resetting difficulty
-        // simulation.difficulty = 0;
-        level.setDifficulty()
+        simulation.dmgScale = 0; //increases in level.difficultyIncrease
+        b.dmgScale = 1; //decreases in level.difficultyIncrease
+        simulation.accelScale = 1;
+        simulation.lookFreqScale = 1;
+        simulation.CDScale = 1;
+        simulation.difficulty = 0;
         simulation.difficultyMode = Number(document.getElementById("difficulty-select").value)
+        build.isExperimentSelection = false;
 
         simulation.clearNow = true;
         document.getElementById("text-log").style.opacity = 0;
         document.getElementById("fade-out").style.opacity = 0;
         document.title = "n-gon";
-        // simulation.makeTextLog(`input.key.up<span class='color-symbol'>:</span> ["<span class='color-text'>${input.key.up}</span>", "<span class='color-text'>ArrowUp</span>"]`);
-        // simulation.makeTextLog(`input.key.left<span class='color-symbol'>:</span> ["<span class='color-text'>${input.key.left}</span>", "<span class='color-text'>ArrowLeft</span>"]`);
-        // simulation.makeTextLog(`input.key.down<span class='color-symbol'>:</span> ["<span class='color-text'>${input.key.down}</span>", "<span class='color-text'>ArrowDown</span>"]`);
-        // simulation.makeTextLog(`input.key.right<span class='color-symbol'>:</span> ["<span class='color-text'>${input.key.right}</span>", "<span class='color-text'>ArrowRight</span>"]`);
-        simulation.makeTextLog(`Math.seed <span class='color-symbol'>=</span> ${Math.initialSeed}`);
-        simulation.makeTextLog(`<span class='color-var'>const</span> engine <span class='color-symbol'>=</span> Engine.create(); <em>//simulation begin</em>`);
-        simulation.makeTextLog(`engine.timing.timeScale <span class='color-symbol'>=</span> 1`);
-        // simulation.makeTextLog(`input.key.field<span class='color-symbol'>:</span> ["<span class='color-text'>${input.key.field}</span>", "<span class='color-text'>MouseRight</span>"]`);
 
-        document.getElementById("health").style.display = "inline"
-        document.getElementById("health-bg").style.display = "inline"
         m.alive = true;
-        m.onGround = false
-        m.lastOnGroundCycle = 0
         m.setMaxHealth()
         m.health = 0;
         m.addHealth(0.25)
@@ -723,8 +598,7 @@ const simulation = {
         //set to default field
         tech.healMaxEnergyBonus = 0
         m.setMaxEnergy();
-        m.energy = 0
-        m.immuneCycle = 0;
+        m.fieldMode = 0;
         // simulation.makeTextLog(`${simulation.SVGrightMouse}<strong style='font-size:30px;'> ${m.fieldUpgrades[m.fieldMode].name}</strong><br><span class='faded'></span><br>${m.fieldUpgrades[m.fieldMode].description}`, 600);
         // simulation.makeTextLog(`
         // input.key.up <span class='color-symbol'>=</span> ["<span class='color-text'>${input.key.up}</span>", "<span class='color-text'>ArrowUp</span>"]
@@ -737,7 +611,29 @@ const simulation = {
         // <br><span class='color-var'>m</span>.field.description <span class='color-symbol'>=</span> "<span class='color-text'>${m.fieldUpgrades[m.fieldMode].description}</span>"
         // `, 800);
 
-        m.setField(0)
+
+        let delay = 500
+        const step = 150
+        setTimeout(function() {
+            simulation.makeTextLog(`input.key.up<span class='color-symbol'>:</span> ["<span class='color-text'>${input.key.up}</span>", "<span class='color-text'>ArrowUp</span>"]`);
+        }, delay += step);
+        setTimeout(function() {
+            simulation.makeTextLog(`input.key.left<span class='color-symbol'>:</span> ["<span class='color-text'>${input.key.left}</span>", "<span class='color-text'>ArrowLeft</span>"]`);
+        }, delay += step);
+        setTimeout(function() {
+            simulation.makeTextLog(`input.key.down<span class='color-symbol'>:</span> ["<span class='color-text'>${input.key.down}</span>", "<span class='color-text'>ArrowDown</span>"]`);
+        }, delay += step);
+        setTimeout(function() {
+            simulation.makeTextLog(`input.key.right<span class='color-symbol'>:</span> ["<span class='color-text'>${input.key.right}</span>", "<span class='color-text'>ArrowRight</span>"]`);
+        }, delay += step);
+        setTimeout(function() {
+            simulation.makeTextLog(`<br><span class='color-var'>m</span>.fieldMode <span class='color-symbol'>=</span> "<span class='color-text'>${m.fieldUpgrades[m.fieldMode].name}</span>"`);
+        }, delay += step);
+        setTimeout(function() {
+            simulation.makeTextLog(`input.key.field<span class='color-symbol'>:</span> ["<span class='color-text'>${input.key.field}</span>", "<span class='color-text'>MouseRight</span>"]`);
+        }, delay += step);
+
+        m.setField(m.fieldMode)
         // m.energy = 0;
         //exit testing
         if (simulation.testing) {
@@ -747,14 +643,12 @@ const simulation = {
         }
         simulation.isCheating = false
         simulation.firstRun = false;
-        build.hasExperimentalMode = false
-        build.isExperimentSelection = false;
-        build.isExperimentRun = false;
 
         //setup FPS cap
         simulation.fpsInterval = 1000 / simulation.fpsCap;
         simulation.then = Date.now();
         requestAnimationFrame(cycle); //starts game loop
+
     },
     clearTimeouts() {
         let id = window.setTimeout(function() {}, 0);
@@ -764,56 +658,49 @@ const simulation = {
     },
     clearNow: false,
     clearMap() {
-        if (m.alive) {
-            if (tech.isLongitudinal) {
-                for (i = 0, len = b.guns.length; i < len; i++) { //find which gun
-                    if (b.guns[i].name === "matter wave") {
-                        b.guns[i].waves = []; //empty array of wave bullets
-                        break;
-                    }
-                }
-            }
-
+        if (tech.isMineAmmoBack) {
             let count = 0;
             for (i = 0, len = bullet.length; i < len; i++) { //count mines left on map
-                if (bullet[i].bulletType === "mine" || bullet[i].bulletType === "laser mine") count++
+                if (bullet[i].bulletType === "mine") count++
             }
             for (i = 0, len = b.guns.length; i < len; i++) { //find which gun is mine
                 if (b.guns[i].name === "mine") {
-                    if (tech.crouchAmmoCount) count = Math.ceil(count / 2)
+                    if (tech.isCrouchAmmo) count = Math.ceil(count / 2)
                     b.guns[i].ammo += count
-                    if (tech.ammoCap) b.guns[i].ammo = Math.min(tech.ammoCap, b.guns[i].ammo)
                     simulation.updateGunHUD();
                     break;
                 }
             }
+        }
 
-            if (tech.isMutualism && !tech.isEnergyHealth) {
-                for (let i = 0; i < bullet.length; i++) {
-                    if (bullet[i].isMutualismActive) {
-                        m.health += 0.005 + 0.005 * tech.isSporeWorm
-                        if (m.health > m.maxHealth) m.health = m.maxHealth;
-                        m.displayHealth();
-                    }
-                }
-            }
-            if (tech.isEndLevelPowerUp) {
-                for (let i = 0; i < powerUp.length; i++) {
-                    if (powerUp[i].name === "tech") {
-                        tech.giveTech()
-                    } else if (powerUp[i].name === "gun") {
-                        if (!tech.isOneGun) b.giveGuns("random")
-                    } else if (powerUp[i].name === "field") {
-                        if (m.fieldMode === 0) m.setField(Math.ceil(Math.random() * (m.fieldUpgrades.length - 1))) //pick a random field, but not field 0
-                    } else {
-                        powerUp[i].effect();
-                    }
+        if (tech.isMutualism && !tech.isEnergyHealth) {
+            for (let i = 0; i < bullet.length; i++) {
+                if (bullet[i].isMutualismActive) {
+                    m.health += 0.005
+                    if (m.health > m.maxHealth) m.health = m.maxHealth;
+                    m.displayHealth();
                 }
             }
         }
-        simulation.lastLogTime = 0; //clear previous messages
+
+        if (tech.isEndLevelPowerUp) {
+            for (let i = 0; i < powerUp.length; i++) {
+                if (powerUp[i].name === "tech") {
+                    tech.giveTech()
+                } else if (powerUp[i].name === "gun") {
+                    if (!tech.isOneGun) b.giveGuns("random")
+                } else if (powerUp[i].name === "field") {
+                    if (m.fieldMode === 0) m.setField(Math.ceil(Math.random() * (m.fieldUpgrades.length - 1))) //pick a random field, but not field 0
+                } else {
+                    powerUp[i].effect();
+                }
+            }
+        }
         powerUps.totalPowerUps = powerUp.length
-        let holdTarget = (m.holdingTarget) ? m.holdingTarget : undefined //if player is holding something this remembers it before it gets deleted
+
+        let holdTarget; //if player is holding something this remembers it before it gets deleted
+        if (m.holdingTarget) holdTarget = m.holdingTarget;
+
         tech.deathSpawnsFromBoss = 0;
         simulation.fallHeight = 3000;
         m.fireCDcycle = 0
@@ -822,47 +709,8 @@ const simulation = {
         level.zones = [];
         simulation.drawList = [];
 
-        if (tech.isDronesTravel && player.alive) {
-            //count drones
-            let count = 0
-            let deliveryCount = 0
-            for (let i = 0; i < bullet.length; ++i) {
-                if (bullet[i].isDrone) {
-                    count++
-                    if (bullet[i].isImproved) deliveryCount++
-                }
-            }
-            // count *= 2
-            //respawn drones in animation frame
-            let respawnDrones = () => {
-                if (count > 0) {
-                    requestAnimationFrame(respawnDrones);
-                    if (!simulation.paused && !simulation.isChoosing) {
-                        count--
-                        const where = { x: level.enter.x + 50, y: level.enter.y - 60 }
-                        if (tech.isDroneRadioactive) {
-                            b.droneRadioactive({ x: where.x + 100 * (Math.random() - 0.5), y: where.y + 100 * (Math.random() - 0.5) }, 0)
-                        } else {
-                            b.drone({ x: where.x + 100 * (Math.random() - 0.5), y: where.y + 120 * (Math.random() - 0.5) }, 0)
-                            if (tech.isDroneGrab && deliveryCount > 0) {
-                                const who = bullet[bullet.length - 1]
-                                who.isImproved = true;
-                                const SCALE = 2.25
-                                Matter.Body.scale(who, SCALE, SCALE);
-                                who.lookFrequency = 30 + Math.floor(11 * Math.random());
-                                who.endCycle += 3000 * tech.droneCycleReduction * tech.isBulletsLastLonger
-                                deliveryCount--
-                            }
-                        }
-                    }
-                }
-            }
-            requestAnimationFrame(respawnDrones);
-        }
-
         function removeAll(array) {
-            // for (let i = 0; i < array.length; ++i) Matter.Composite.remove(engine.world, array[i]);
-            for (let i = 0; i < array.length; ++i) Matter.Composite.remove(engine.world, array[i]);
+            for (let i = 0; i < array.length; ++i) Matter.World.remove(engine.world, array[i]);
         }
         removeAll(map);
         map = [];
@@ -881,7 +729,7 @@ const simulation = {
         removeAll(composite);
         composite = [];
         // if player was holding something this makes a new copy to hold
-        if (holdTarget && m.alive) {
+        if (holdTarget) {
             len = body.length;
             body[len] = Matter.Bodies.fromVertices(0, 0, holdTarget.vertices, {
                 friction: holdTarget.friction,
@@ -929,20 +777,20 @@ const simulation = {
     //   }
     // },
     checks() {
-        if (!(m.cycle % 60)) { //once a second
+        if (!(simulation.cycle % 60) && !m.isBodiesAsleep) { //once a second
             //energy overfill 
             if (m.energy > m.maxEnergy) m.energy = m.maxEnergy + (m.energy - m.maxEnergy) * tech.overfillDrain //every second energy above max energy loses 25%
             if (tech.isFlipFlopEnergy && m.immuneCycle < m.cycle) {
                 if (tech.isFlipFlopOn) {
-                    if (m.immuneCycle < m.cycle) m.energy += 0.2;
+                    m.energy += 0.22;
                 } else {
-                    m.energy -= 0.01;
+                    m.energy -= 0.041;
                     if (m.energy < 0) m.energy = 0
                 }
             }
             if (tech.relayIce && tech.isFlipFlopOn) {
                 for (let j = 0; j < tech.relayIce; j++) {
-                    for (let i = 0, len = 3 + Math.ceil(9 * Math.random()); i < len; i++) b.iceIX(2)
+                    for (let i = 0, len = Math.ceil(8 * Math.random()); i < len; i++) b.iceIX(2)
                 }
             }
 
@@ -971,7 +819,6 @@ const simulation = {
                 m.damage(0.1 * simulation.difficultyMode);
                 m.energy -= 0.1 * simulation.difficultyMode
             }
-            if (isNaN(player.position.x)) m.death();
 
             // if (tech.isEnergyDamage) {
             //   document.getElementById("tech-capacitor").innerHTML = `(+${(m.energy/0.05).toFixed(0)}%)`
@@ -984,16 +831,13 @@ const simulation = {
             //   }
             // }
 
-            if (m.lastKillCycle + 300 > m.cycle) { //effects active for 5 seconds after killing a mob
-                if (tech.isEnergyRecovery && m.immuneCycle < m.cycle) m.energy += m.maxEnergy * 0.05
+            if (m.lastKillCycle + 300 > simulation.cycle) { //effects active for 5 seconds after killing a mob
+                if (tech.isEnergyRecovery) m.energy += m.maxEnergy * 0.05
                 if (tech.isHealthRecovery) m.addHealth(0.01 * m.maxHealth)
             }
 
-            if (!(m.cycle % 420)) { //once every 7 seconds
-                if (tech.isZeno) {
-                    m.health *= 0.93 //remove 7%
-                    m.displayHealth();
-                }
+            if (!(simulation.cycle % 420)) { //once every 7 seconds
+
                 if (tech.cyclicImmunity && m.immuneCycle < m.cycle + tech.cyclicImmunity) m.immuneCycle = m.cycle + tech.cyclicImmunity; //player is immune to damage for 60 cycles
 
                 fallCheck = function(who, save = false) {
@@ -1010,7 +854,7 @@ const simulation = {
                                     y: level.exit.y + 30 * (Math.random() - 0.5)
                                 });
                             } else {
-                                Matter.Composite.remove(engine.world, who[i]);
+                                Matter.World.remove(engine.world, who[i]);
                                 who.splice(i, 1);
                             }
                         }
@@ -1126,8 +970,11 @@ const simulation = {
                 simulation.draw.mapPath.lineTo(vertices[0].x, vertices[0].y);
             }
         },
+        mapFill: "#444",
+        bodyFill: "rgba(140,140,140,0.85)", //"#999",
+        bodyStroke: "#222",
         drawMapPath() {
-            ctx.fillStyle = color.map;
+            ctx.fillStyle = simulation.draw.mapFill;
             ctx.fill(simulation.draw.mapPath);
         },
         body() {
@@ -1141,9 +988,9 @@ const simulation = {
                 ctx.lineTo(vertices[0].x, vertices[0].y);
             }
             ctx.lineWidth = 2;
-            ctx.fillStyle = color.block;
+            ctx.fillStyle = simulation.draw.bodyFill;
             ctx.fill();
-            ctx.strokeStyle = color.blockS;
+            ctx.strokeStyle = simulation.draw.bodyStroke;
             ctx.stroke();
         },
         cons() {
@@ -1300,9 +1147,9 @@ const simulation = {
 
                 if (e.which === 2) {
                     if (level.isProcedural) {
-                        simulation.outputMapString(`spawn.randomMob(x+${x}, y+${y}, 0);`);
+                        simulation.outputMapString(`spawn.randomMob(x+${x}, y+${y},0.5);`);
                     } else {
-                        simulation.outputMapString(`spawn.randomMob(${x}, ${y}, 0);`);
+                        simulation.outputMapString(`spawn.randomMob(${x}, ${y},0.5);`);
                     }
 
                 } else if (simulation.mouseInGame.x > simulation.constructMouseDownPosition.x && simulation.mouseInGame.y > simulation.constructMouseDownPosition.y) { //make sure that the width and height are positive
@@ -1319,7 +1166,7 @@ const simulation = {
                         map[len].collisionFilter.category = cat.map;
                         map[len].collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet;
                         Matter.Body.setStatic(map[len], true); //make static
-                        Composite.add(engine.world, map[len]); //add to world
+                        World.add(engine.world, map[len]); //add to world
                         simulation.draw.setPaths() //update map graphics
 
                     } else if (e.which === 3) { //add body
@@ -1334,7 +1181,7 @@ const simulation = {
                         len = body.length - 1
                         body[len].collisionFilter.category = cat.body;
                         body[len].collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.mob | cat.mobBullet
-                        Composite.add(engine.world, body[len]); //add to world
+                        World.add(engine.world, body[len]); //add to world
                         body[len].classType = "body"
                     }
                 }
@@ -1355,12 +1202,12 @@ const simulation = {
             if (simulation.testing && e.keyCode === 90 && simulation.constructMapString.length) {
                 if (simulation.constructMapString[simulation.constructMapString.length - 1][6] === 'm') { //remove map from current level
                     const index = map.length - 1
-                    Matter.Composite.remove(engine.world, map[index]);
+                    Matter.World.remove(engine.world, map[index]);
                     map.splice(index, 1);
                     simulation.draw.setPaths() //update map graphics  
                 } else if (simulation.constructMapString[simulation.constructMapString.length - 1][6] === 'b') { //remove body from current level
                     const index = body.length - 1
-                    Matter.Composite.remove(engine.world, body[index]);
+                    Matter.World.remove(engine.world, body[index]);
                     body.splice(index, 1);
                 }
                 simulation.constructMapString.pop();
