@@ -17,12 +17,12 @@ const level = {
         if (level.levelsCleared === 0) { //this code only runs on the first level
             // simulation.isHorizontalFlipped = true
             // m.setField("metamaterial cloaking")
-            b.giveGuns("harpoon")
-            tech.giveTech("desublimated ammunition")
-            tech.giveTech("smelting")
-            tech.giveTech("smelting")
-            tech.giveTech("smelting")
-            tech.giveTech("grappling hook")
+            // b.giveGuns("harpoon")
+            // tech.giveTech("desublimated ammunition")
+            // tech.giveTech("smelting")
+            // tech.giveTech("smelting")
+            // tech.giveTech("smelting")
+            // tech.giveTech("grappling hook")
             // tech.giveTech("coyote")
             // for (let i = 0; i < 2; i++) powerUps.directSpawn(0, 0, "tech");
             // for (let i = 0; i < 2; i++) tech.giveTech("corona discharge")
