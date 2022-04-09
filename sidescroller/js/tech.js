@@ -9297,7 +9297,7 @@ const tech = {
                     setTimeout(() => { powerUps.spawn(m.pos.x + 50, m.pos.y - 50, "heal"); }, 750);
                     setTimeout(() => { powerUps.spawn(m.pos.x - 50, m.pos.y, "tech"); }, 1000);
                     setTimeout(() => { powerUps.spawn(m.pos.x - 50, m.pos.y - 50, "research"); }, 1250);
-                }, 1000 * 5);
+                }, 1000 * 5 * 60);
             },
             remove() {}
         },
