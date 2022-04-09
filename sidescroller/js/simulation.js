@@ -822,7 +822,8 @@ const simulation = {
         level.zones = [];
         simulation.drawList = [];
 
-        if (tech.isDronesTravel && player.alive) {
+        if (tech.isDronesTravel && m.alive) {
+            console.log('hi')
             //count drones
             let count = 0
             let deliveryCount = 0

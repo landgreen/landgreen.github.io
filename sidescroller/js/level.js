@@ -17,11 +17,11 @@ const level = {
         if (level.levelsCleared === 0) { //this code only runs on the first level
             // simulation.isHorizontalFlipped = true
             // m.setField("metamaterial cloaking")
-            // b.giveGuns("harpoon")
+            // b.giveGuns("drones")
             // tech.giveTech("desublimated ammunition")
             // tech.giveTech("smelting")
             // tech.giveTech("smelting")
-            // tech.giveTech("smelting")
+            // tech.giveTech("616")
             // tech.giveTech("grappling hook")
             // tech.giveTech("coyote")
             // for (let i = 0; i < 2; i++) powerUps.directSpawn(0, 0, "tech");

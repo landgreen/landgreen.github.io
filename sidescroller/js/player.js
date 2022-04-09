@@ -1560,7 +1560,7 @@ const m = {
                                 m.pushMass(mob[i]);
                                 this.drainCD = m.cycle + 10
                             }
-                            if (mob[i].isShielded) m.fieldCDcycle = m.cycle + 45
+                            if (mob[i].isShielded || mob[i].shield) m.fieldCDcycle = m.cycle + 30
                         }
                     }
                 }
@@ -1589,7 +1589,7 @@ const m = {
                                 m.pushMass(mob[i]);
                                 this.drainCD = m.cycle + 10
                             }
-                            if (mob[i].isShielded) m.fieldCDcycle = m.cycle + 45
+                            if (mob[i].isShielded || mob[i].shield) m.fieldCDcycle = m.cycle + 30
                         }
                     }
                 }
