@@ -3946,10 +3946,10 @@
                 },
                 requires: "missiles",
                 effect() {
-                    tech.missileSize = true
+                    tech.isMissileBig = true
                 },
                 remove() {
-                    tech.missileSize = false
+                    tech.isMissileBig = false
                 }
             },
             {
@@ -7146,7 +7146,7 @@
         isExtruder: null,
         isEndLevelPowerUp: null,
         isRewindGun: null,
-        missileSize: null,
+        isMissileBig: null,
         isLaserMine: null,
         isAmmoFoamSize: null,
         isIceIX: null,

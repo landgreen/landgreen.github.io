@@ -1196,7 +1196,7 @@ const b = {
                 }
             },
         });
-        const thrust = 0.0066 * bullet[me].mass * (tech.missileSize ? 0.6 : 1);
+        const thrust = 0.0066 * bullet[me].mass * (tech.isMissileBig ? 0.6 : 1);
         Matter.Body.setVelocity(bullet[me], {
             x: m.Vx / 2 + speed * Math.cos(angle),
             y: m.Vy / 2 + speed * Math.sin(angle)
@@ -2731,7 +2731,7 @@ const b = {
                                 // Matter.Body.setAngularVelocity(this, 0.025)
                                 this.torque += this.inertia * 0.00004 * (Math.round(Math.random()) ? 1 : -1)
                                 this.force = Vector.mult(Vector.normalise(Vector.sub(this.position, mob[i].position)), this.mass * 0.02)
-                                b.missile(this.position, angle, -8, 0.7 * (tech.missileSize ? 1.5 : 1))
+                                b.missile(this.position, angle, -8, 0.7 * (tech.isMissileBig ? 1.5 : 1))
                                 break;
                             }
                         }
@@ -3929,7 +3929,7 @@ const b = {
                 //             b.missile({
                 //                 x: m.pos.x,
                 //                 y: m.pos.y - 40
-                //             }, -Math.PI / 2 + 0.08 * (1 - i) + 0.3 * (Math.random() - 0.5), 0, 0.6 * (tech.missileSize ? 1.5 : 1))
+                //             }, -Math.PI / 2 + 0.08 * (1 - i) + 0.3 * (Math.random() - 0.5), 0, 0.6 * (tech.isMissileBig ? 1.5 : 1))
                 //             bullet[bullet.length - 1].force.x -= 0.015 * (i - 1);
                 //         }
                 //     } else {
@@ -3943,7 +3943,7 @@ const b = {
                 //             b.missile({
                 //                 x: m.pos.x + 40 * direction.x,
                 //                 y: m.pos.y + 40 * direction.y
-                //             }, m.angle + 0.06 * (Math.random() - 0.5), 5, 0.7 * (tech.missileSize ? 1.5 : 1))
+                //             }, m.angle + 0.06 * (Math.random() - 0.5), 5, 0.7 * (tech.isMissileBig ? 1.5 : 1))
                 //             bullet[bullet.length - 1].force.x += push.x * (i - 1);
                 //             bullet[bullet.length - 1].force.y += push.y * (i - 1);
                 //         }
@@ -3956,7 +3956,7 @@ const b = {
                 //                 x: m.pos.x,
                 //                 y: m.pos.y - 40
                 //             },
-                //             -Math.PI / 2 + 0.15 * off, 0, 0.83 * (tech.missileSize ? 1.5 : 1))
+                //             -Math.PI / 2 + 0.15 * off, 0, 0.83 * (tech.isMissileBig ? 1.5 : 1))
                 //         bullet[bullet.length - 1].force.x += off * 0.03;
                 //         // bullet[bullet.length - 1].force.y += push.y * (i - 1);
                 //     } else {
