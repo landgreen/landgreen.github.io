@@ -1099,7 +1099,7 @@ const b = {
                         }
                     }
                     //aoe damage to mobs
-                    const dmg = m.dmgScale * 0.11 * tech.radioactiveDamage
+                    let dmg = m.dmgScale * 0.11 * tech.radioactiveDamage
                     for (let i = 0, len = mob.length; i < len; i++) {
                         if (Vector.magnitude(Vector.sub(mob[i].position, this.position)) < this.damageRadius + mob[i].radius) {
                             if (Matter.Query.ray(map, mob[i].position, this.position).length > 0) dmg *= 0.25 //reduce damage if a wall is in the way
