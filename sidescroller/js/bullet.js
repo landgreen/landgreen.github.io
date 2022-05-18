@@ -501,12 +501,10 @@ const b = {
                         if (Matter.Query.ray(map, mob[i].position, where).length > 0) dmg *= 0.5 //reduce damage if a wall is in the way
                         mob[i].damage(dmg * damageScale * m.dmgScale);
                         mob[i].locatePlayer();
+                        knock = Vector.mult(Vector.normalise(sub), Math.sqrt(dmg * damageScale) * mob[i].mass * (mob[i].isBoss ? 0.005 : 0.01) * tech.implosion);
                         if (tech.isExplosionStun) {
                             mobs.statusStun(mob[i], 120)
-                            knock *= 0.1
-                        }
-                        knock = Vector.mult(Vector.normalise(sub), Math.sqrt(dmg * damageScale) * mob[i].mass * (mob[i].isBoss ? 0.005 : 0.01) * tech.implosion);
-                        if (!mob[i].isInvulnerable) {
+                        } else if (!mob[i].isInvulnerable) {
                             mob[i].force.x += knock.x;
                             mob[i].force.y += knock.y;
                         }
@@ -517,9 +515,7 @@ const b = {
                         knock = Vector.mult(Vector.normalise(sub), Math.sqrt(dmg * damageScale) * mob[i].mass * (mob[i].isBoss ? 0.002 : 0.006) * tech.implosion);
                         if (tech.isExplosionStun) {
                             mobs.statusStun(mob[i], 60)
-                            knock *= 0.1
-                        }
-                        if (!mob[i].isInvulnerable) {
+                        } else if (!mob[i].isInvulnerable) {
                             mob[i].force.x += knock.x;
                             mob[i].force.y += knock.y;
                         }

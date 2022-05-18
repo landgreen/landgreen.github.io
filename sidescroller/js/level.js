@@ -18,13 +18,13 @@ const level = {
             // simulation.isHorizontalFlipped = true
             // m.setField("perfect diamagnetism")
             // b.giveGuns("grenades")
-            // tech.giveTech("rule 30")
-            // tech.giveTech("cherenkov radiation")
+            // tech.giveTech("chain reaction")
+            // tech.giveTech("implosion")
             // tech.giveTech("flame test")
             // tech.giveTech("pyrotechnics")
             // for (let i = 0; i < 10; i++) tech.giveTech("replication")
-            // tech.giveTech("decoherence")
-            // tech.giveTech("pneumatic actuator")
+            // tech.giveTech("shock wave")
+            // tech.giveTech("vacuum bomb")
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "research");
             // for (let i = 0; i < 15; i++) tech.giveTech()
@@ -2663,10 +2663,10 @@ const level = {
         // spawn.blinkBoss(1700, -500)
         // spawn.snakeSpitBoss(3200, -500)
         // spawn.laserBombingBoss(1700, -500)
-        spawn.launcherBoss(3200, -500)
+        // spawn.launcherBoss(3200, -500)
         // spawn.blockBoss(1700, -500)
         // spawn.blinkBoss(3200, -500)
-        // spawn.spiderBoss(1700, -500)
+        spawn.spiderBoss(1700, -500)
         // spawn.tetherBoss(1700, -500) //go to actual level?
         // spawn.revolutionBoss(1900, -500)
         // spawn.bomberBoss(1400, -500)
