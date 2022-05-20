@@ -1,30 +1,22 @@
 ******************************************************** NEXT PATCH **************************************************
 
+grenade now has 3 fireworks options, you can only have 1 at a time
+  flame test, fireworks, pyrotechnics
+implosion has been removed
+controlled explosion 3->4 research
 
+base matter wave moves 20% faster
+gun science renamed ordnance
 
+bug fixes
 
 ******************************************************** TODO ********************************************************
-
-rename gun sciences
-
-some grenade tech made all the bosses go away and not drop anything
-  check: fireworks, vacuum, stun, chain reaction, implosion
-  check video on discord and reproduce
-
-look into in game console you can type into
-  maybe only when paused?
-  find old code for it
 
 buff early matter wave without phonon
 
 more fireworks themed grenade tech
-  shotting star - fire a series of explosions higher and higher up, also increase radius with height
-  star burst - 5 explosions in star shape
-  delay - explosion in same place
-  pulse
-  30s of lasers
+  shooting star - fire a series of explosions higher and higher up, also increase radius with height
 
-merge mines and grenades?
 tech - neutron bombs deal 100% more damage, but finishes detonating much faster
 tech - neutron bombs will explode into a small iridum explosion after it expires
 
