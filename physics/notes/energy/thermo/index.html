@@ -389,7 +389,7 @@
 				$$E_{\mathrm{point \, A}} = E_{\mathrm{point \, C}}$$
 				$$ U_g = K + U_g + Q $$
 				$$ mgh = \tfrac{1}{2}mv^2 + mgh + Q$$
-				$$ (1000)(9.8)(100) = \tfrac{1}{2}(1000)v^2 + (1000)(9.8)(47) + 16000 $$
+				$$ (1000)(9.8)(100) = \tfrac{1}{2}(1000)v^2 + (1000)(9.8)(47) + 57000 $$
 				$$ 980000 = 500v^2 + 460600 + 57000 $$
 				$$ 503400 = 500v^2$$
 				$$ 30.4\, \mathrm{\tfrac{m}{s}} = v$$
@@ -399,7 +399,8 @@
 		<h1 class='underlined' id="entropy">Entropy</h1>
 		<p>
 			<strong>Entropy</strong> is hard to define because different fields of study use the term to describe slightly different ideas.
-			The definitions of entropy are all loosely centered around disorder. A high entropy system of particles is not organized.
+			The definitions of entropy are all loosely centered around disorder.
+			A high entropy system of particles is not organized.
 			A low entropy system is orderly, but how do you measure order?
 		</p>
 		<svg viewBox="0 0 600 145">
@@ -440,18 +441,33 @@
 			</g>
 		</svg>
 		<p>
-			A common definition of order is a concentration of something measurable, like energy, temperature, or pressure.
+			A common definition of order is a concentration of energy.
 			This means a concentration of energy has lower entropy than an evenly spread out distribution.
 		</p>
-		<p>
-			We can also define entropy as <a href="https://www.youtube.com/watch?v=8Uilw9t-syQ">information</a>.
-			Computer memory can record the information about a system's state.
-			A high entropy system would require more memory to store the extra information.
-			This extra memory is less concentrated, so it loosely fits with the other definitions of entropy.
-		</p>
+		<details class='derive'>
+			<summary>macrostates vs. microstates</summary>
+			<p>
+				In statistical mechanics entropy is defined as <a href="https://www.youtube.com/watch?v=8Uilw9t-syQ">information</a>.
+				It's calculated by counting the number of microstates that could produce a macrostate.
+				A macrostate is a collection of measurable properties for a system of particles, like their temperature, pressure, or volume.
+				A microstate is a possible configuration of particles that could produce those measurable properties.
+
+			</p>
+			<p>
+				The macrostate of a disorderly system could arise from many possible microstates.
+				In other words there are many ways things could be arranged and still be disorderly.
+				On the other hand the macrostate of an orderly system has fewer possible microstates.
+			</p>
+		</details>
+
 		<div class="example">
 			<p>
-				Entropy plays a role in how engines convert concentrations of energy into <a href="../../energy/energy/#work">work</a>.
+				Not all energy can make an engine do <a href="../../energy/energy/#work">work</a>.
+				Just making an engine hot adds energy to the engine, but we the energy to be concentrated in the right place.
+				Engines need energy that is in a specific orderly state.
+				Entropy allows us to measure useable energy, and make a model of how engines do work.
+			</p>
+			<p>
 				The simulation below shows a simple engine that is designed to turn a rotor.
 				What state of the system would make the rotor turn?
 			</p>
@@ -580,9 +596,9 @@
 					<li>light reflecting off a mirror</li>
 					<li>a mirror shattering</li>
 					<li>a stick resting on the ground</li>
-					<li>a living cell dividing</li>
+					<li>a living cell <a href="https://www.youtube.com/watch?v=N97cgUqV0Cg">dividing</a></li>
 					<li>the Earth orbiting the Sun</li>
-					<li>a dog barking</li>
+					<li>a dog <a href="https://www.youtube.com/watch?v=VxR8TJH9oB4">barking</a></li>
 				</div>
 			</div>
 			<details>
@@ -638,30 +654,28 @@
 			The laws of physics are <a href="https://www.youtube.com/watch?v=QkWT-xMTm1M">time</a> <a href="https://www.youtube.com/watch?v=F0b8b_ykPQk">reversible</a>.
 			Nature behaves the same moving forwards or backwards in <a href="https://www.youtube.com/watch?v=yKbJ9leUNDE&list=PLoaVOjvkzQtyZF-2VpJrxPz7bxK_p1Dd2">time</a>.
 			The past doesn't produce the future.
-			There is no cause and effect, just patterns.
+			A cause and effect could be equally thought of as an effect producing a cause.
 		</p>
 		<p>
-			At least, this is true for simple systems.
-			For systems with many particles there can be a clear direction of time.
+			This is clear for systems with just a few parts.
+			Low complexity systems don't have enough possible states to progress in a direction.
+			Yet, for systems with many parts a direction of time seems to emerge.
 			This is because as complex systems change they tend to get more chaotic.
-			The entropy of a complex system increases over time.
-			This is true for all the various definitions of entropy.
+
 		</p>
 		<p>
-			So, why doesn't entropy have to increase for simple systems?
-			This is because simple systems don't have enough possible states to progress in a direction.
-			It is easy to clean up 3 misplaced socks, but it is harder to clean up 10&nbsp;000&nbsp;000 grains of sand.
+			The entropy of a system increases over time.
+			This holds for all the various definitions of entropy.
+			As time moves forward, a system will almost always stay the same or get messier.
 		</p>
 		<div class="definition">
 			The <strong>second law of thermodynamics</strong> states that entropy of an isolated system doesn't decrease over time.
 		</div>
 		<p>
-			As time moves forward, a system will either stay the same or get messier but never more orderly.
-		</p>
-		<p>
 			Why is the second law of thermodynamics true?
-			Because there are many ways for the energy of a system to be evenly distributed, but few ways to have energy concentrated.
-			As a system randomly progresses forwards in time, the probability of evolving into a concentrated low entropy state is low.
+			It's because there are many ways for the energy of a system to be evenly distributed, but few ways to have energy concentrated.
+			As a system progresses forwards in time, there is a nonzero probability of evolving into low entropy state, but it's very low.
+			Most of the time the system will increase in entropy.
 		</p>
 
 		<!-- <svg id="SVG-graph-2" viewBox="0 0 600 220"></svg>
@@ -687,14 +701,109 @@
 			<path id="SVG-graph-2-fill" d="M 10 211.2343785768443 L 12 206.39101903074746 L 14 204.77668501886973 L 16 207.41890938389034 L 18 202.3212936861587 L 20 200.68560807128003 L 22 199.2706963668806 L 24 198.5602956509553 L 26 193.53360169784423 L 28 190.04744669315573 L 30 193.28720945634194 L 32 192.26893522515203 L 34 187.7765962740359 L 36 187.90577697496744 L 38 184.9355698046995 L 40 182.88874529040731 L 42 182.1393680532754 L 44 181.34352191380208 L 46 179.1152995276046 L 48 176.23968106871297 L 50 177.0641520446547 L 52 177.27507720533225 L 54 173.1257192928186 L 56 171.27699359392878 L 58 170.87135603222256 L 60 169.24965905293493 L 62 168.8709684153871 L 64 168.78085873028465 L 66 168.62328065051148 L 68 164.9026858883285 L 70 162.1845877936048 L 72 162.35542406365386 L 74 158.94543540637355 L 76 163.02356113457452 L 78 159.1771675211656 L 80 158.25585456407316 L 82 151.71142692795235 L 84 155.28525032719128 L 86 152.24852460755264 L 88 152.24463892550375 L 90 151.11884088011215 L 92 150.36595029616458 L 94 148.9171595829901 L 96 149.3428367485039 L 98 147.06953031359512 L 100 145.68186712569894 L 102 146.51457123908148 L 104 143.10225367506374 L 106 141.42029173495615 L 108 142.19859014175415 L 110 143.2260797052311 L 112 138.94546645634233 L 114 137.74955706251933 L 116 139.13658344653393 L 118 137.6457609453365 L 120 136.48185767614058 L 122 131.5837135026743 L 124 134.11398553377325 L 126 134.78113350995778 L 128 134.53306994221785 L 130 131.25784496885274 L 132 130.34419141278778 L 134 127.58735257951197 L 136 129.15001913003746 L 138 126.66055016404246 L 140 126.21080159582178 L 142 123.44172196194543 L 144 124.27846885241996 L 146 125.26412778209045 L 148 123.22152649440159 L 150 122.45082553185848 L 152 121.72337816915655 L 154 122.0428058233522 L 156 122.30064665616779 L 158 122.81002695086848 L 160 117.83206390273938 L 162 119.82854801394708 L 164 117.86303631884871 L 166 115.99816480429772 L 168 115.30147288420186 L 170 113.07094821645985 L 172 116.53356615068186 L 174 114.93762345433218 L 176 113.61652813864636 L 178 114.02365082088153 L 180 110.76370203817164 L 182 106.77316205862058 L 184 110.80628010159963 L 186 108.62667008031347 L 188 109.82098583473011 L 190 106.630350625094 L 192 107.38882636706303 L 194 108.39569245243676 L 196 105.72079069980748 L 198 105.59935140658722 L 200 102.97171174048091 L 202 105.35280599220444 L 204 105.56448287273558 L 206 101.48455333826817 L 208 98.06196420979258 L 210 98.6559309498654 L 212 98.6713594659717 L 214 94.8777978470106 L 216 97.7314357273326 L 218 95.23357242617851 L 220 96.53060617403447 L 222 95.69971908004032 L 224 96.09273572893589 L 226 93.59353030376757 L 228 91.7211342379438 L 230 93.32610259375488 L 232 92.68928204626518 L 234 92.46479423360125 L 236 91.85231715257093 L 238 91.74867688965308 L 240 91.07216106529718 L 242 86.70356678909893 L 244 89.52535281273731 L 246 88.58649157416993 L 248 85.39541580592713 L 250 89.1010944942294 L 252 87.14882622443258 L 254 83.40357572215326 L 256 87.73169376013176 L 258 82.75801555963608 L 260 83.8244727547873 L 262 84.61316677323455 L 264 85.020273228964 L 266 82.59683732247784 L 268 82.46313166114476 L 270 80.92483463070297 L 272 84.10197458943657 L 274 77.51878139588428 L 276 80.13316884243207 L 278 76.33310678685518 L 280 79.74963357196515 L 282 79.37136610321733 L 284 80.25037745029948 L 286 76.73332999198968 L 288 76.81872080515973 L 290 78.650204812993 L 292 80.80254380305473 L 294 77.23505458740198 L 296 74.80780283219721 L 298 75.1015113675648 L 300 73.74375618924674 L 302 71.87842047922882 L 304 72.17444561852187 L 306 72.37530057845348 L 308 72.3550845869708 L 310 70.84024148842309 L 312 68.81222295832987 L 314 70.84726855371298 L 316 66.94764004818865 L 318 69.42275448064228 L 320 71.47697538320585 L 322 70.24030677465481 L 324 68.19125763675765 L 326 67.2932922221647 L 328 68.30363949224031 L 330 66.47573397550104 L 332 65.85544253298474 L 334 64.68664070246342 L 336 64.6329328195946 L 338 63.99966906808885 L 340 65.3039850155769 L 342 64.79747992564288 L 344 63.084358657512894 L 346 63.579671841529375 L 348 60.73638228729948 L 350 62.410917289843695 L 352 61.11509331104253 L 354 62.27514136126169 L 356 58.56890824197416 L 358 59.63938020774194 L 360 60.946356598585794 L 362 59.073169853607425 L 364 58.67651061292284 L 366 56.828310973110746 L 368 57.83811805346343 L 370 59.68366444591982 L 372 57.83898335737041 L 374 54.78753162796818 L 376 55.61606215625579 L 378 55.557129668085395 L 380 53.19844231337805 L 382 56.6637686774601 L 384 56.178065088093206 L 386 53.42795070378597 L 388 53.56778656769558 L 390 53.40313826813366 L 392 56.93705270301257 L 394 53.1766113680942 L 396 50.63389298276559 L 398 50.69206707304099 L 400 49.1177116454505 L 402 50.12488875170271 L 404 52.2501304959919 L 406 52.09841237953012 L 408 48.42044610147718 L 410 49.500208465277154 L 412 52.759258008996454 L 414 47.96352903738648 L 416 47.988613697826565 L 418 48.34422821140652 L 420 48.64858248442863 L 422 45.85606437900097 L 424 45.95103641786949 L 426 46.12103066594307 L 428 47.84916910756175 L 430 45.3513903230494 L 432 44.855214507062584 L 434 42.595097087203726 L 436 44.77783715595149 L 438 41.45107815477678 L 440 43.63999644277072 L 442 38.40578576959658 L 444 40.20685528694895 L 446 44.355191704581614 L 448 44.307057876282954 L 450 42.01328155247131 L 452 43.2256085886475 L 454 42.18482175417111 L 456 37.99538033587345 L 458 43.88948084569856 L 460 40.85278150449574 L 462 39.28099014832085 L 464 38.19783456307664 L 466 34.728861067022336 L 468 36.137505384560626 L 470 38.501474696893126 L 472 36.011311158533516 L 474 39.545455387979615 L 476 36.1347995327568 L 478 36.319142116687885 L 480 35.98566922658526 L 482 34.64124278704446 L 484 34.28341481441666 L 486 36.23739732671285 L 488 30.761535812561192 L 490 36.793834402672076 L 492 36.889333691501804 L 494 32.32504766927724 L 496 33.260147763152474 L 498 33.33212763475697 L 500 33.68895933990345 L 502 30.69479853911119 L 504 30.49607966978354 L 506 31.72432971731044 L 508 31.155227158550815 L 510 33.27630394411639 L 512 31.7635675863836 L 514 29.96484251920444 L 516 29.03558549492476 L 518 29.55327187921202 L 520 27.982758976565236 L 522 27.14061267041481 L 524 28.696018636804695 L 526 27.587999754026498 L 528 27.361416977099395 L 530 27.638304967948613 L 532 25.412166267992973 L 534 25.007611106417272 L 536 25.527086156042543 L 538 27.018404806088625 L 540 25.559296411273948 L 542 26.28519267735649 L 544 25.663669940235394 L 546 25.064299416806023 L 548 24.25304130524958 L 550 25.04049120080859 L 552 24.551841824289454 L 554 23.934006959306345 L 556 25.97519730469415 L 558 23.44827920338537 L 560 22.183109389621734 L 562 21.931355817251017 L 564 21.60293984157019 L 566 22.16582811331773 L 568 21.752474497161785 L 570 21.011478144939076 L 572 20.581456038852764 L 574 20.054466138939574 L 576 21.116621514756844 L 578 20.52937584283916 L 580 19.66649932793581 L 582 19.217047550303135 L 584 18.221911638548562 L 586 17.730110633997015 L 588 21.858152657819744 L 590 19.917399748744316 L 592 17.971173745623844 L 594 20.91550694305846 L 596 17.87805676558989 L 598 17.47774084179767 L 600 18.781146134858943 L 600 18.781146134858943 L 600 210 L 10 210 L 10 211.07263791347907" style="stroke: none; fill: rgba(50, 120, 180, 0.2);"></path>
 		</svg>
 		<p>
-			The entropy of a complex system always increases.
+			The entropy of a complex system almost always increases.
 			Our universe <a href="https://www.youtube.com/watch?v=TBikbn5XJhg">began</a> at its lowest entropy.
 			The <a href="https://www.youtube.com/watch?v=uD4izuDMUQA">far future</a> is the highest entropy.
 		</p>
+		<!-- <details class='derive'>
+			<summary>why do we remember that past and not the future?</summary>
+			<p>
+				Remembering the past and predicting the future are similar problems.
+				<li>To remember the past, we use data from the past to construct a prediction of what happened.
+				<li>To predict the future, we use data from the past to construct a prediction of what will happen.
+			</p>
+			<p>
+				So how is predicting the past and future different?
+				The difference is that as time goes forward entropy increases or stays the same.
+				There are more possible futures, and fewer possible pasts.
+				This makes it easier to construct predictions of the past.
+			</p>
+			Examples:
+
+
+		</details> -->
+		<!-- <p>
+			Only systems with low complexity can be predicted in both the past and the future.
+			Physics focuses on predicting these simple systems.
+			Similarly, our brains can also make accurate short term predictions of simple systems.
+		</p> -->
+		<!-- 
+			Note to Landgreen:  I'm not sure if any of this is accurate review this again later.
+			next time consider the quantum implications:
+			"Practically speaking, it is very hard to make a device that truly isolated from external contamination.
+			   This is actually one of the challenges involved in building a quantum computer."
+			
+			<details class="derive">
+			<summary>Why can I remember the past but not the the future?</summary>
+			<p>
+				How do we remember the past?
+				We store low entropy information in the past and remember it in the present by creating an isolated space where entropy stays constant.
+				This space could be memories stored in your brain, symbols written on paper, or magnetic patterns in a hard drive.
+			</p>
+			<p>
+				The reverse is to store information in the future and remember it in the present.
+				Complex systems have a clear arrow of time that scrambles any information sent back in time.
+
+				Very simple isolated systems don't have a clear arrow of time.
+				Can we can build a way for the future to send information to the present through an isolated system with very few moving parts?
+				Let's consider it:
+			</p>
+			<p>
+				In the present, we could make a very simple isolated space where entropy progresses very slowly.
+				The space could either have 
+				We could leave it untouched for 100 years.
+				Future people could then put a message in that space.
+				Here is the problem, when we go to looks at the message, the act of reading the message would make the space disorderly.
+				A disorderly space would no longer be simple. It would scramble the future people's message.
+				So yes you can store a memory from the future as long as you don't ever look at it.
+				<br>oh well...
+			</p>
+			<br>
+			<p>
+				Even without a memory, we can still make predictions about the past or the future.
+				Predictions can be very accurate for simple systems, but they fail for complex systems.
+				In a way, the goal of physics is to understand simple systems, improving our ability to make predictions of the past or future.
+			</p>
+		</details> -->
+
+		<!-- <p>
+				A low entropy state will evolve into a predictable higher entropy state, but a high entropy state could have come from countless different states.
+			</p> -->
+		<!-- <p>
+				The predictability allows machines that harness that flow of entropy to function. It wouldn't be possible for a machine to do work backwards in time because the flow of entropy from high to low isn't predictable.
+			</p>
+			<p>
+				A machine can store low entropy information in the past and remember it in the present by creating a space where entropy stays constant. A memory.
+			</p>
+			<p>
+				We can't store information in the future and remember it in the present because from the point of view of the future the past isn't predictable.
+			</p> -->
+
+		<!-- This section needs work:   -->
+		<!-- <h1 class='underlined'>Why can't we remember the future?</h1> -->
+
+		<!-- <p>
+				We call states with high predictive ability <strong>information</strong>.
+				Low entropy states predictably evolve into higher entropy states.
+				Because they have predictive ability, low entropy states have information about the higher entropy states they will evolve into.
+			</p>
+			<p>
+				High entropy states don't predictably evolve into lower entropy states.
+				There is no information in a high entropy state about the low entropy state it evolved from.
+			</p>
+			<p>
+				We can store low entropy information in the past and remember it in the present by creating a space where entropy stays constant. A memory.
+			</p>
+			<p>
+				We can't store information in the future and remember it in the present because the future has higher entropy and therefore it no information about the present.
+			</p>
+			<p>
+				The past has information about the future, but the future has very little information about the past.
+			</p> -->
 
 		<div class="example">
 			<p>
-				<a href="https://en.wikipedia.org/wiki/Diffusion">Diffusion</a> is a good example of the second law of thermodynamics.
+				<a href="https://www.youtube.com/watch?v=2OOvMiKCp8A">Diffusion</a> is a good example of the second law of thermodynamics.
 				The simulation below will become more evenly mixed as time progresses forward.
 				It would be extremely unlikely to see the reverse where the system separates as time progresses forward.
 				This means there is a clear difference between directions in time.
@@ -958,84 +1067,6 @@
 			<li>The progress towards disorder is only a statistical probability.</li>
 			<!-- <li>For a large number of particles over a long time, the probability that a system will become ordered approaches the impossible.</li> -->
 		</div>
-
-
-		<!-- 
-			Note to Landgreen:  I'm not sure if any of this is accurate review this again later.
-			next time consider the quantum implications:
-			"Practically speaking, it is very hard to make a device that truly isolated from external contamination.
-			   This is actually one of the challenges involved in building a quantum computer."
-			
-			<details class="derive">
-			<summary>Why can I remember the past but not the the future?</summary>
-			<p>
-				How do we remember the past?
-				We store low entropy information in the past and remember it in the present by creating an isolated space where entropy stays constant.
-				This space could be memories stored in your brain, symbols written on paper, or magnetic patterns in a hard drive.
-			</p>
-			<p>
-				The reverse is to store information in the future and remember it in the present.
-				Complex systems have a clear arrow of time that scrambles any information sent back in time.
-
-				Very simple isolated systems don't have a clear arrow of time.
-				Can we can build a way for the future to send information to the present through an isolated system with very few moving parts?
-				Let's consider it:
-				
-			
-			</p>
-			<p>
-				In the present, we could make a very simple isolated space where entropy progresses very slowly.
-				The space could either have 
-				We could leave it untouched for 100 years.
-				Future people could then put a message in that space.
-				Here is the problem, when we go to looks at the message, the act of reading the message would make the space disorderly.
-				A disorderly space would no longer be simple. It would scramble the future people's message.
-				So yes you can store a memory from the future as long as you don't ever look at it.
-				<br>oh well...
-			</p>
-			<br>
-			<p>
-				Even without a memory, we can still make predictions about the past or the future.
-				Predictions can be very accurate for simple systems, but they fail for complex systems.
-				In a way, the goal of physics is to understand simple systems, improving our ability to make predictions of the past or future.
-			</p>
-		</details> -->
-
-		<!-- <p>
-				A low entropy state will evolve into a predictable higher entropy state, but a high entropy state could have come from countless different states.
-			</p> -->
-		<!-- <p>
-				The predictability allows machines that harness that flow of entropy to function. It wouldn't be possible for a machine to do work backwards in time because the flow of entropy from high to low isn't predictable.
-			</p>
-			<p>
-				A machine can store low entropy information in the past and remember it in the present by creating a space where entropy stays constant. A memory.
-			</p>
-			<p>
-				We can't store information in the future and remember it in the present because from the point of view of the future the past isn't predictable.
-			</p> -->
-
-		<!-- This section needs work:   -->
-		<!-- <h1 class='underlined'>Why can't we remember the future?</h1> -->
-
-		<!-- <p>
-				We call states with high predictive ability <strong>information</strong>.
-				Low entropy states predictably evolve into higher entropy states.
-				Because they have predictive ability, low entropy states have information about the higher entropy states they will evolve into.
-			</p>
-			<p>
-				High entropy states don't predictably evolve into lower entropy states.
-				There is no information in a high entropy state about the low entropy state it evolved from.
-			</p>
-			<p>
-				We can store low entropy information in the past and remember it in the present by creating a space where entropy stays constant. A memory.
-			</p>
-			<p>
-				We can't store information in the future and remember it in the present because the future has higher entropy and therefore it no information about the present.
-			</p>
-			<p>
-				The past has information about the future, but the future has very little information about the past.
-			</p> -->
-
 	</article>
 	<footer>
 		<a href="../../../">Back</a>
