@@ -20,7 +20,7 @@ const level = {
             // m.setField("time dilation")
             // b.giveGuns("laser")
             // tech.giveTech("closed timelike curve")
-            // tech.giveTech("retrocausality")
+            // tech.giveTech("translucent")
             // tech.giveTech("clock gating")
             // tech.giveTech("6s half-life")
             // for (let i = 0; i < 10; i++) tech.giveTech("replication")
@@ -38,7 +38,8 @@ const level = {
             // level.difficultyIncrease(20) //30 is near max on hard  //60 is near max on why
             // simulation.enableConstructMode() //used to build maps in testing mode
             // level.testing();
-            // spawn.starter(1900, -500, 200)
+            // spawn.cellBossCulture(1900, -500)
+            // spawn.launcherBoss(1900, -500)
             // level.reactor(); //not in rotation, used for testing
 
             if (simulation.isTraining) { level.walk(); } else { level.intro(); } //normal starting level ************************************************
@@ -2683,7 +2684,7 @@ const level = {
         // spawn.shieldingBoss(1700, -500)
 
         // for (let i = 0; i < 10; ++i) spawn.bodyRect(1600 + 5, -500, 30, 40);
-        for (let i = 0; i < 4; i++) spawn.starter(1900, -500)
+        // for (let i = 0; i < 4; i++) spawn.starter(1900, -500)
         // spawn.pulsar(1900, -500)
         // spawn.shield(mob[mob.length - 1], 1900, -500, 1);
         // mob[mob.length - 1].isShielded = true
