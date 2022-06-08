@@ -2463,7 +2463,6 @@ const spawn = {
                 ctx.stroke();
             }
 
-
             // ctx.beginPath();
             // ctx.arc(this.position.x, this.position.y, this.laserRange * 0.9, 0, 2 * Math.PI);
             // ctx.strokeStyle = "rgba(150,0,255,0.5)";
