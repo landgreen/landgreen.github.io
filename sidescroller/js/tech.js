@@ -6109,7 +6109,7 @@ const tech = {
         },
         {
             name: "laser diode",
-            description: "<strong>+30%</strong> <strong class='color-laser'>laser</strong> <strong class='color-f'>energy</strong> efficiency<br><em>affects laser-gun, laser-bot, laser-mines, pulse</em>",
+            description: "<strong>+30%</strong> <strong class='color-laser'>laser</strong> <strong class='color-f'>energy</strong> efficiency",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -6177,7 +6177,7 @@ const tech = {
         {
             name: "iridescence",
             // description: "if a <strong class='color-laser'>laser</strong> hits a mob at a low angle of illumination<br><strong>+66%</strong> <strong class='color-laser'>laser</strong> <strong class='color-d'>damage</strong>",
-            description: "if mobs are struck near their <strong>center</strong><br><strong>+88%</strong> <strong class='color-laser'>laser</strong> <strong class='color-d'>damage</strong>",
+            description: "if <strong class='color-laser'>laser</strong> beams hit mobs near their <strong>center</strong><br><strong>+88%</strong> <strong class='color-laser'>laser</strong> <strong class='color-d'>damage</strong>",
             isGunTech: true,
             maxCount: 3,
             count: 0,
@@ -6196,7 +6196,7 @@ const tech = {
         },
         {
             name: "lens",
-            description: "if directed through a revolving <strong>+<span style='font-size: 125%;'>π</span> / 4</strong> circular arc<br><strong>+150%</strong> <strong class='color-laser'>laser</strong> gun <strong class='color-d'>damage</strong>",
+            description: "<strong>+150%</strong> <strong class='color-laser'>laser</strong> gun <strong class='color-d'>damage</strong> if it passes<br>through a revolving <strong>+<span style='font-size: 125%;'>π</span> / 4</strong> circular arc lens",
             isGunTech: true,
             maxCount: 3,
             count: 0,

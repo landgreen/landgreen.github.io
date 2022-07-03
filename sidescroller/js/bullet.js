@@ -7066,7 +7066,11 @@ const b = {
             fire() {},
             chooseFireMethod() {
                 this.lensDamage = 1
-                if (tech.isLaserLens) this.do = this.lens
+                if (tech.isLaserLens) {
+                    this.do = this.lens
+                } else {
+                    this.do = this.stuckOn
+                }
                 if (tech.isPulseLaser) {
                     this.fire = () => {
                         const drain = 0.01 * tech.isLaserDiode * (tech.isCapacitor ? 10 : 1)
