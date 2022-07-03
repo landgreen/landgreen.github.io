@@ -1,8 +1,8 @@
 ******************************************************** NEXT PATCH **************************************************
 
+tech: iridescence - laser does 100% damage to mobs hit near their center
 tech: lens - laser does extra damage if you fire through a lens that revolves around you
   tech: arc length - increase the size of the lens
-tech: iridescence - laser does 100% damage to mobs hit near their center
 
 virtual particles costs 4->6 research for 11% duplication
 quantum eraser has less duplication chance at higher difficulty modes
