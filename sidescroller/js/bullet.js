@@ -583,7 +583,7 @@ const b = {
             v1: null,
             v2: null
         };
-        if (tech.isPulseAim && input.down) { //find mobs in line of sight
+        if (tech.isPulseAim && !input.down) { //find mobs in line of sight
             let dist = 2200
             for (let i = 0, len = mob.length; i < len; i++) {
                 const newDist = Vector.magnitude(Vector.sub(path[0], mob[i].position))
@@ -6721,7 +6721,7 @@ const b = {
                                     }
                                 }
                             }
-                            b.harpoon(where, input.down ? closest.target : null, m.angle, harpoonSize, false)
+                            b.harpoon(where, input.down ? null : closest.target, m.angle, harpoonSize, false)
                         }
 
                         this.charge = 0;
