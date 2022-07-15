@@ -3087,26 +3087,11 @@ const tech = {
             },
             remove() {
                 tech.isDeterminism = false;
-                // if (this.count > 0) {
-                //     for (let i = 0; i < 5; i++) {
-                //         const numberRemoved = tech.removeTech()
-                //         console.log(numberRemoved)
-                //         if (numberRemoved === 0) { //if the player didn't remove a power up then remove 1 tech for the map
-                //             for (let j = powerUp.length - 1; j > -1; j--) {
-                //                 if (powerUp[j].name === "tech") {
-                //                     Matter.Composite.remove(engine.world, powerUp[j]);
-                //                     powerUp.splice(j, 1);
-                //                     break;
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
             }
         },
         {
             name: "superdeterminism",
-            description: `spawn <strong>5</strong> <strong class='color-m'>tech</strong><br>you have <strong>no cancel</strong> and ${powerUps.orb.research(1)}, no longer <strong>spawn</strong>`,
+            description: `spawn <strong>5</strong> <strong class='color-m'>tech</strong><br>you have <strong>no cancel</strong> and ${powerUps.orb.research(1)} no longer <strong>spawn</strong>`,
             maxCount: 1,
             count: 0,
             frequency: 4,
@@ -3124,10 +3109,6 @@ const tech = {
             },
             remove() {
                 tech.isSuperDeterminism = false;
-                // tech.isSuperDeterminism = false;
-                // if (this.count) {
-                //     for (let i = 0; i < 5; i++) tech.removeTech()
-                // }
             }
         },
         {
@@ -3156,22 +3137,6 @@ const tech = {
                 }
             }
         },
-
-
-        //         for (let i = 0, len = tech.tech.length; i < len; i++) {
-        //             if (tech.tech[i].isFieldTech) tech.tech[i].frequency *= 3
-        //         }
-        //     },
-        //     remove() {
-        //         // powerUps.research.changeRerolls(-6)
-        //         // if (this.count > 1) {
-        //         //     for (let i = 0, len = tech.tech.length; i < len; i++) {
-        //         //         if (tech.tech[i].isFieldTech) tech.tech[i].frequency /= 3
-        //         //     }
-        //         // }
-
-
-
         {
             name: "paradigm shift",
             description: `<strong>clicking</strong> <strong class='color-m'>tech</strong> while paused <strong>ejects</strong> them<br><strong>16%</strong> chance to fail`,
@@ -3211,10 +3176,7 @@ const tech = {
         },
         {
             name: "technical debt", // overengineering
-            // description: `increase <strong class='color-d'>damage</strong> by <strong>300%</strong> minus <strong>10%</strong> for <strong class='color-m'>tech</strong> you have learned(${4 - 0.1 * tech.totalCount})`,
-            // description: `increase <strong class='color-d'>damage</strong> by <strong>300%</strong>, but reduce <strong class='color-d'>damage</strong><br>by <strong>10%</strong> for <strong class='color-m'>tech</strong> you have learned`,
             descriptionFunction() {
-                // return `increase <strong class='color-d'>damage</strong> by <strong>300%</strong> minus <strong>15%</strong><br>for each <strong class='color-m'>tech</strong> you have learned <em>(${Math.floor(100*(4 - 0.14 * tech.totalCount))-100}%)</em>`
                 return `<strong>+300%</strong> <strong class='color-d'>damage</strong> <strong>–15%</strong> <strong class='color-d'>damage</strong><br>for each <strong class='color-m'>tech</strong> you have learned <em>(${Math.floor(100*(Math.max(41 / (tech.totalCount + 21), 4 - 0.15 * tech.totalCount) ))-100}%)</em>`
             },
             maxCount: 1,
@@ -7348,7 +7310,7 @@ const tech = {
             frequency: 3,
             frequencyDefault: 3,
             allowed() {
-                return (m.fieldUpgrades[m.fieldMode].name === "pilot wave" || m.fieldUpgrades[m.fieldMode].name === "negative mass" || m.fieldUpgrades[m.fieldMode].name === "time dilation" || m.fieldUpgrades[m.fieldMode].name === "wormhole") && (build.isExperimentSelection || powerUps.research.count > 3)
+                return (m.fieldUpgrades[m.fieldMode].name === "pilot wave" || m.fieldUpgrades[m.fieldMode].name === "negative mass" || m.fieldUpgrades[m.fieldMode].name === "time dilation" || m.fieldUpgrades[m.fieldMode].name === "wormhole") && (build.isExperimentSelection || powerUps.research.count > 6)
             },
             requires: "wormhole, time dilation, negative mass, pilot wave",
             effect() {

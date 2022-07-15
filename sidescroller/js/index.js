@@ -1125,18 +1125,18 @@ document.body.addEventListener("mousemove", (e) => {
 document.body.addEventListener("mouseup", (e) => {
     // input.fire = false;
     // console.log(e)
-    if (e.which === 3) {
-        input.field = false;
-    } else {
+    if (e.button === 0) {
         input.fire = false;
+    } else if (e.button === 2) {
+        input.field = false;
     }
 });
 
 document.body.addEventListener("mousedown", (e) => {
-    if (e.which === 3) {
-        input.field = true;
-    } else {
+    if (e.button === 0) {
         input.fire = true;
+    } else if (e.button === 2) {
+        input.field = true;
     }
 });
 
