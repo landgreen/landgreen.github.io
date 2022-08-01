@@ -15,8 +15,8 @@ const level = {
     levels: [],
     start() {
         if (level.levelsCleared === 0) { //this code only runs on the first level
-            simulation.enableConstructMode() //used to build maps in testing mode
-            level.difficultyIncrease(2 * 4) //30 is near max on hard  //60 is near max on why
+            // simulation.enableConstructMode() //used to build maps in testing mode
+            // level.difficultyIncrease(2 * 4) //30 is near max on hard  //60 is near max on why
             // simulation.isHorizontalFlipped = true
             // m.maxHealth = m.health = 100
             // powerUps.research.changeRerolls(100000)
@@ -25,10 +25,10 @@ const level = {
             // tech.tech[297].frequency = 100
             // b.guns[0].ammo = 10000
 
-            m.setField("time dilation") //molecular assembler  time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass
-            b.giveGuns("shotgun") //0 nail gun  1 shotgun  2 super balls 3 matter wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // m.setField("time dilation") //molecular assembler  time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass
+            // b.giveGuns("shotgun") //0 nail gun  1 shotgun  2 super balls 3 matter wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // tech.giveTech("infrared diode");
-            tech.giveTech("active cooling");
+            // tech.giveTech("active cooling");
             // tech.giveTech("pulse")
             // for (let i = 0; i < 1; ++i) tech.giveTech("slow light")
             // for (let i = 0; i < 1; ++i) tech.giveTech("free-electron laser")
@@ -40,13 +40,13 @@ const level = {
             // spawn.starter(1900, -500, 200)
             // spawn.starter(1900, -500, 50)
             // spawn.dragonFlyBoss(1900, -400)
-            spawn.beetleBoss(1900, -400)
+            // spawn.beetleBoss(1900, -400)
             // for (let i = 0; i < 2; ++i) spawn.flutter(1900 + 300 * Math.random(), -500 + 300 * Math.random())
-            level.testing(); //not in rotation, used for testing
+            // level.testing(); //not in rotation, used for testing
             // for (let i = 0; i < 7; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "research");
             // for (let i = 0; i < 4; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "tech");
 
-            // if (simulation.isTraining) { level.walk(); } else { level.intro(); } //normal starting level ************************************************
+            if (simulation.isTraining) { level.walk(); } else { level.intro(); } //normal starting level ************************************************
             // powerUps.research.changeRerolls(3000)
             // for (let i = 0; i < 30; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "tech", false);
             // for (let i = 0; i < 3; i++) tech.giveTech("undefined")
