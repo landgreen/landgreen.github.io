@@ -1,18 +1,3 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else {
-		var a = factory();
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
-})((typeof self !== 'undefined' ? self : this), function() {
-return /******/ (function() { // webpackBootstrap
-/******/ 	"use strict";
-var __webpack_exports__ = {};
-
-;// CONCATENATED MODULE: ./contrib/copy-tex/katex2tex.js
 // Set these to how you want inline and display math to be delimited.
 var defaultCopyDelimiters = {
   inline: ['$', '$'],
@@ -72,9 +57,6 @@ function katexReplaceWithTex(fragment, copyDelimiters) {
 
   return fragment;
 }
-/* harmony default export */ var katex2tex = (katexReplaceWithTex);
-;// CONCATENATED MODULE: ./contrib/copy-tex/copy-tex.js
- // Return <div class="katex"> element containing node, or null if not found.
 
 function closestKatex(node) {
   // If node is a Text Node, for example, go up to containing Element,
@@ -113,18 +95,11 @@ document.addEventListener('copy', function (event) {
     return; // default action OK if no .katex-mathml elements
   }
 
-  var htmlContents = Array.prototype.map.call(fragment.childNodes, function (el) {
-    return el instanceof Text ? el.textContent : el.outerHTML;
-  }).join(''); // Preserve usual HTML copy/paste behavior.
+  var htmlContents = Array.prototype.map.call(fragment.childNodes, el => el instanceof Text ? el.textContent : el.outerHTML).join(''); // Preserve usual HTML copy/paste behavior.
 
   clipboardData.setData('text/html', htmlContents); // Rewrite plain-text version.
 
-  clipboardData.setData('text/plain', katex2tex(fragment).textContent); // Prevent normal copy handling.
+  clipboardData.setData('text/plain', katexReplaceWithTex(fragment).textContent); // Prevent normal copy handling.
 
   event.preventDefault();
-});
-__webpack_exports__ = __webpack_exports__["default"];
-/******/ 	return __webpack_exports__;
-/******/ })()
-;
 });
