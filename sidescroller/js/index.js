@@ -1281,6 +1281,7 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
     }
     document.getElementById("fps-select").value = localSettings.fpsCapDefault
 
+    if (!localSettings.banList) localSettings.banList = ""
     if (localSettings.banList.length === 0 || localSettings.banList === "undefined") {
         localSettings.banList = ""
         localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
