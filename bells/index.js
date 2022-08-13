@@ -18,15 +18,15 @@ const schedule = {
   current: "regular",
   mouse: 0,
   setCurrentByDate: function () {
-    if (schedule.current !== "rally" || date.getHours() > 22) {
-      if (date.getDay() === 5) {
-        schedule.current = "advisory";
-      } else {
-        schedule.current = "regular";
-      }
+    // if (schedule.current !== "rally" || date.getHours() > 22) {
+    if (date.getDay() === 5) {
+      schedule.current = "advisory";
+    } else {
+      schedule.current = "regular";
     }
+    // }
   },
-  cycleCurrent: function () {
+  cycleCurrent: function () { //called in html with onclick
     if (schedule.current === "regular") {
       schedule.current = "advisory";
     } else if (schedule.current === "advisory") {
@@ -862,9 +862,9 @@ function toggleZoom() {
 
 function slowUpdate() {
   //check if a new day and schedule
-  schedule.setCurrentByDate();
   //output day and month
   date = new Date();
+  if (date.getHours() === 0) schedule.setCurrentByDate(); //at the end of the day check and see if it's Friday and you need to switch to advisory
   document.getElementById("week-day").textContent = dayOfWeekAsString(date.getDay());
   document.getElementById("date").textContent = nameOfMonthAsString(date.getMonth()) + " " + date.getDate();
 
@@ -969,9 +969,6 @@ function bellToggle() {
 function update() {
   date = new Date();
   todayMinutes = date.getHours() * 60 + date.getMinutes();
-  // todayMinutes = Math.round(450 + Math.random() * 420); //set to random time during class
-  // todayMinutes = 7.5 * 60 + 60 - 2;
-  // todayMinutes = 14.5 * 60;
   drawCurrentPeriod(schedule[schedule.current]);
   moveSVGPeriods(schedule[schedule.current]);
 
@@ -998,32 +995,24 @@ function update() {
 //   oscillator1.stop();
 // }, 2000);
 
-setup();
+schedule.setCurrentByDate(); //check and see if it's Friday and you need to switch to advisory
+update();
+noWeather();
+slowUpdate();
+drawDigitalClock();
 
-function setup() {
-  //run once at start, then run when the next minute begins, then run every minute.
-  schedule.setCurrentByDate();
+setTimeout(function () {
   update();
-  noWeather();
-  slowUpdate();
+  window.setInterval(slowUpdate, 10 * 60 * 1000); //update weather every 10 min
+  window.setInterval(update, 60 * 1000); //update every minute
+}, (60 - date.getSeconds()) * 1000);
+
+window.addEventListener("focus", function () {
+  update();
+});
+
+const cycle = function () {
   drawDigitalClock();
-
-  // window.setInterval(drawDigitalClock, 100); //update every 1/10 of second
-  // window.setInterval(slowUpdate, 10 * 60 * 1000); //update weather every 10 min
-
-  setTimeout(function () {
-    update();
-    window.setInterval(slowUpdate, 10 * 60 * 1000); //update weather every 10 min
-    window.setInterval(update, 60 * 1000); //update every minute
-  }, (60 - date.getSeconds()) * 1000);
-
-  window.addEventListener("focus", function () {
-    update();
-  });
-
-  const cycle = function () {
-    drawDigitalClock();
-    window.requestAnimationFrame(cycle);
-  };
   window.requestAnimationFrame(cycle);
-}
+};
+window.requestAnimationFrame(cycle);
