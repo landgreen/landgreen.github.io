@@ -720,7 +720,7 @@ const mech = {
     mech.wakeCheck();
   },
   fieldMeterColor: "#0cf",
-  drawFieldMeter(bgColor = "rgba(0, 0, 0, 0.4)", range = 60) {
+  drawRegenEnergy(bgColor = "rgba(0, 0, 0, 0.4)", range = 60) {
     if (mech.energy < mech.maxEnergy) {
       mech.energy += mech.fieldRegen;
       ctx.fillStyle = bgColor;
@@ -1205,7 +1205,7 @@ const mech = {
           } else {
             mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
           }
-          mech.drawFieldMeter()
+          mech.drawRegenEnergy()
         }
       }
     },
@@ -1247,7 +1247,7 @@ const mech = {
             mech.pushMobs360(netfieldRange);
             // mech.pushBody360(netfieldRange);  //can't throw block when pushhing blocks away
           }
-          mech.drawFieldMeter()
+          mech.drawRegenEnergy()
         }
       }
     },
@@ -1305,7 +1305,7 @@ const mech = {
           } else {
             mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
           }
-          mech.drawFieldMeter()
+          mech.drawRegenEnergy()
         }
       }
     },
@@ -1362,7 +1362,7 @@ const mech = {
             mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
           }
           mech.energy += mech.fieldRegen;
-          mech.drawFieldMeter()
+          mech.drawRegenEnergy()
         }
       }
     },
@@ -1485,7 +1485,7 @@ const mech = {
             mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
             this.fieldDrawRadius = 0
           }
-          mech.drawFieldMeter("rgba(0,0,0,0.2)")
+          mech.drawRegenEnergy("rgba(0,0,0,0.2)")
         }
       }
     },
@@ -1640,7 +1640,7 @@ const mech = {
           } else {
             mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
           }
-          mech.drawFieldMeter("rgba(0, 0, 0, 0.2)")
+          mech.drawRegenEnergy("rgba(0, 0, 0, 0.2)")
 
         }
       }
@@ -1734,7 +1734,7 @@ const mech = {
             mech.wakeCheck();
             mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
           }
-          mech.drawFieldMeter()
+          mech.drawRegenEnergy()
         }
       }
     },
@@ -2040,7 +2040,7 @@ const mech = {
             mech.fieldOn = false
             mech.fieldRadius = 0
           }
-          mech.drawFieldMeter()
+          mech.drawRegenEnergy()
         }
       }
     },

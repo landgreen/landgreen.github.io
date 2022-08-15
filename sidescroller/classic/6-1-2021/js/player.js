@@ -565,7 +565,7 @@ const m = {
             }
         }
         m.energy = Math.max(m.energy - steps / 136, 0.01)
-        if (m.immuneCycle < m.cycle + tech.collisionImmuneCycles) m.immuneCycle = m.cycle + tech.collisionImmuneCycles; //player is immune to damage for 30 cycles
+        if (m.immuneCycle < m.cycle + m.collisionImmuneCycles) m.immuneCycle = m.cycle + m.collisionImmuneCycles; //player is immune to damage for 30 cycles
 
         let isDrawPlayer = true
         const shortPause = function() {
@@ -983,7 +983,7 @@ const m = {
         simulation.makeTextLog(`<span class='color-var'>m</span>.<span class='color-f'>maxEnergy</span> <span class='color-symbol'>=</span> ${(m.maxEnergy.toFixed(2))}`)
     },
     fieldMeterColor: "#0cf",
-    drawFieldMeter(bgColor = "rgba(0, 0, 0, 0.4)", range = 60) {
+    drawRegenEnergy(bgColor = "rgba(0, 0, 0, 0.4)", range = 60) {
         if (m.energy < m.maxEnergy) {
             m.energy += m.fieldRegen;
             if (m.energy < 0) m.energy = 0
@@ -1483,7 +1483,7 @@ const m = {
                     } else {
                         m.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
                     }
-                    m.drawFieldMeter()
+                    m.drawRegenEnergy()
                 }
             }
         },
@@ -1583,7 +1583,7 @@ const m = {
                         }
                         m.harmonicShield()
                     }
-                    m.drawFieldMeter()
+                    m.drawRegenEnergy()
                 }
             }
         },
@@ -1637,7 +1637,7 @@ const m = {
                     } else {
                         m.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
                     }
-                    m.drawFieldMeter()
+                    m.drawRegenEnergy()
 
                     if (tech.isPerfectBrake) { //cap mob speed around player
                         const range = 160 + 140 * wave + 200 * m.energy
@@ -1705,7 +1705,7 @@ const m = {
                         m.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
                     }
                     m.energy += m.fieldRegen;
-                    m.drawFieldMeter()
+                    m.drawRegenEnergy()
                 }
             }
         },
@@ -1855,7 +1855,7 @@ const m = {
                         m.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
                         this.fieldDrawRadius = 0
                     }
-                    m.drawFieldMeter("rgba(0,0,0,0.2)")
+                    m.drawRegenEnergy("rgba(0,0,0,0.2)")
                 }
             }
         },
@@ -1884,7 +1884,7 @@ const m = {
                     } else {
                         m.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
                     }
-                    m.drawFieldMeter("rgba(0, 0, 0, 0.2)")
+                    m.drawRegenEnergy("rgba(0, 0, 0, 0.2)")
 
                     if (tech.isExtruder) {
                         if (input.field) {
@@ -2008,7 +2008,7 @@ const m = {
                         m.wakeCheck();
                         m.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
                     }
-                    m.drawFieldMeter()
+                    m.drawRegenEnergy()
                 }
             }
         },
@@ -2138,7 +2138,7 @@ const m = {
                         }
                     }
 
-                    if (m.energy < m.maxEnergy) { // replaces m.drawFieldMeter() with custom code
+                    if (m.energy < m.maxEnergy) { // replaces m.drawRegenEnergy() with custom code
                         m.energy += m.fieldRegen;
                         if (m.energy < 0) m.energy = 0
                         const xOff = m.pos.x - m.radius * m.maxEnergy
@@ -2477,7 +2477,7 @@ const m = {
                         m.fieldOn = false
                         m.fieldRadius = 0
                     }
-                    m.drawFieldMeter()
+                    m.drawRegenEnergy()
                 }
             }
         },
@@ -2679,7 +2679,7 @@ const m = {
                                     x: velocity.x,
                                     y: velocity.y - 4 //an extra vertical kick so the player hangs in place longer
                                 });
-                                if (m.immuneCycle < m.cycle + tech.collisionImmuneCycles) m.immuneCycle = m.cycle + tech.collisionImmuneCycles; //player is immune to damage 
+                                if (m.immuneCycle < m.cycle + m.collisionImmuneCycles) m.immuneCycle = m.cycle + m.collisionImmuneCycles; //player is immune to damage 
                                 // move bots to player
                                 for (let i = 0; i < bullet.length; i++) {
                                     if (bullet[i].botType) {
@@ -2723,7 +2723,7 @@ const m = {
                     } else {
                         m.hole.isReady = true;
                     }
-                    m.drawFieldMeter()
+                    m.drawRegenEnergy()
                 }
             },
             rewindCount: 0,
@@ -2809,7 +2809,7 @@ const m = {
             //             m.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
             //         }
             //     }
-            //     m.drawFieldMeter()
+            //     m.drawRegenEnergy()
             // },
         },
     ],
@@ -3033,7 +3033,7 @@ const m = {
                                     if (tech.isPiezo) m.energy += 20.48;
                                     if (tech.isStimulatedEmission) powerUps.ejectTech()
                                     if (mob[k].onHit) mob[k].onHit(k);
-                                    if (m.immuneCycle < m.cycle + tech.collisionImmuneCycles) m.immuneCycle = m.cycle + tech.collisionImmuneCycles; //player is immune to damage for 30 cycles
+                                    if (m.immuneCycle < m.cycle + m.collisionImmuneCycles) m.immuneCycle = m.cycle + m.collisionImmuneCycles; //player is immune to damage for 30 cycles
                                     //extra kick between player and mob              //this section would be better with forces but they don't work...
                                     let angle = Math.atan2(player.position.y - mob[k].position.y, player.position.x - mob[k].position.x);
                                     Matter.Body.setVelocity(player, {

@@ -193,7 +193,7 @@ const powerUps = {
         document.body.style.overflow = "hidden"
         simulation.paused = false;
         simulation.isChoosing = false; //stops p from un pausing on key down
-        if (m.immuneCycle < m.cycle + tech.collisionImmuneCycles) m.immuneCycle = m.cycle + tech.collisionImmuneCycles; //player is immune to damage for 30 cycles
+        if (m.immuneCycle < m.cycle + m.collisionImmuneCycles) m.immuneCycle = m.cycle + m.collisionImmuneCycles; //player is immune to damage for 30 cycles
         build.unPauseGrid()
         requestAnimationFrame(cycle);
         if (m.holdingTarget) m.drop();

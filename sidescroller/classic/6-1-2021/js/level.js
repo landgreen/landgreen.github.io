@@ -943,7 +943,7 @@ const level = {
                     //collision with player
                     if (this.height > 0 && Matter.Query.region([player], this).length && !(m.isCloak)) {
                         if (m.immuneCycle < m.cycle) {
-                            m.immuneCycle = m.cycle + tech.collisionImmuneCycles;
+                            m.immuneCycle = m.cycle + m.collisionImmuneCycles;
                             m.damage(damage)
                             simulation.drawList.push({ //add dmg to draw queue
                                 x: player.position.x,
@@ -970,7 +970,7 @@ const level = {
                             if (damage < 0.02) {
                                 m.damage(damage)
                             } else if (m.immuneCycle < m.cycle) {
-                                m.immuneCycle = m.cycle + tech.collisionImmuneCycles;
+                                m.immuneCycle = m.cycle + m.collisionImmuneCycles;
                                 m.damage(damage)
                                 simulation.drawList.push({ //add dmg to draw queue
                                     x: player.position.x,

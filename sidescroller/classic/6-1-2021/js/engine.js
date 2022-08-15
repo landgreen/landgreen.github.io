@@ -43,7 +43,7 @@ function playerOnGroundCheck(event) {
                     //falling damage
                     if (tech.isFallingDamage && m.immuneCycle < m.cycle && momentum > 150) {
                         m.damage(Math.min(Math.sqrt(momentum - 133) * 0.01, 0.25));
-                        m.immuneCycle = m.cycle + tech.collisionImmuneCycles; //player is immune to damage for 30 cycles
+                        m.immuneCycle = m.cycle + m.collisionImmuneCycles; //player is immune to damage for 30 cycles
                     }
                 } else {
                     m.yOffGoal = m.yOffWhen.stand;
@@ -137,7 +137,7 @@ function collisionChecks(event) {
                         if (tech.isPiezo) m.energy += 20.48;
                         if (tech.isStimulatedEmission) powerUps.ejectTech()
                         if (mob[k].onHit) mob[k].onHit(k);
-                        m.immuneCycle = m.cycle + tech.collisionImmuneCycles; //player is immune to damage for 30 cycles
+                        m.immuneCycle = m.cycle + m.collisionImmuneCycles; //player is immune to damage for 30 cycles
                         //extra kick between player and mob              //this section would be better with forces but they don't work...
                         let angle = Math.atan2(player.position.y - mob[k].position.y, player.position.x - mob[k].position.x);
                         Matter.Body.setVelocity(player, {

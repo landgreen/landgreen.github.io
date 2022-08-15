@@ -504,7 +504,7 @@ const mech = {
     this.gravity = 0.0019;
     // this.phaseBlocks(0x011111)
   },
-  drawFieldMeter() {
+  drawRegenEnergy() {
     if (this.fieldMeter < 1) {
       mech.fieldMeter += mech.fieldRegen;
       ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
@@ -808,7 +808,7 @@ const mech = {
         } else {
           mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
-        mech.drawFieldMeter()
+        mech.drawRegenEnergy()
       }
     },
     () => {
@@ -861,7 +861,7 @@ const mech = {
         } else {
           mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
-        mech.drawFieldMeter()
+        mech.drawRegenEnergy()
       }
     },
     () => {
@@ -912,7 +912,7 @@ const mech = {
         } else {
           mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
-        mech.drawFieldMeter()
+        mech.drawRegenEnergy()
       }
     },
     () => {
@@ -978,7 +978,7 @@ const mech = {
         } else {
           mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
-        mech.drawFieldMeter()
+        mech.drawRegenEnergy()
       }
     },
     () => {
@@ -1043,7 +1043,7 @@ const mech = {
         } else {
           mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
         }
-        mech.drawFieldMeter()
+        mech.drawRegenEnergy()
       }
     },
   ],
@@ -1105,7 +1105,7 @@ const mech = {
   //       } else {
   //         mech.holdingTarget = null; //clears holding target (this is so you only pick up right after the field button is released and a hold target exists)
   //       }
-  //       mech.drawFieldMeter()
+  //       mech.drawRegenEnergy()
   //     }
   //   },
   // ],

@@ -1586,11 +1586,11 @@
                 },
                 requires: "",
                 effect() {
-                    tech.collisionImmuneCycles += 45;
-                    if (m.immuneCycle < m.cycle + tech.collisionImmuneCycles) m.immuneCycle = m.cycle + tech.collisionImmuneCycles; //player is immune to damage for 30 cycles
+                    m.collisionImmuneCycles += 45;
+                    if (m.immuneCycle < m.cycle + m.collisionImmuneCycles) m.immuneCycle = m.cycle + m.collisionImmuneCycles; //player is immune to damage for 30 cycles
                 },
                 remove() {
-                    tech.collisionImmuneCycles = 30;
+                    m.collisionImmuneCycles = 30;
                 }
             },
             {
@@ -1601,7 +1601,7 @@
                 frequency: 2,
                 frequencyDefault: 2,
                 allowed() {
-                    return true //tech.collisionImmuneCycles > 30
+                    return true //m.collisionImmuneCycles > 30
                 },
                 requires: "",
                 effect() {
