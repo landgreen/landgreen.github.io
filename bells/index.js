@@ -66,7 +66,7 @@ const schedule = {
     },
     {
       start: 10 * 60 + 33,
-      long: 21,
+      long: 18,
       name: "snack",
       showName: false,
       fill: color.lunch
