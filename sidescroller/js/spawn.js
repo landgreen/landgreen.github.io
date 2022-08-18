@@ -1639,7 +1639,7 @@ const spawn = {
         me.collisionFilter.category = cat.mobBullet;
         me.collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet;
         me.onHit = function() {
-            this.explode(this.mass * 2);
+            this.explode(this.mass);
         };
         me.do = function() {
             this.gravity();
