@@ -158,17 +158,17 @@ const schedule = {
     },
     {
       start: 10 * 60 + 23,
-      long: 18,
-      name: "snack",
-      showName: false,
-      fill: color.lunch
-    },
-    {
-      start: 10 * 60 + 41,
       long: 26,
       name: "A",
       showName: true,
       fill: color.period
+    },
+    {
+      start: 10 * 60 + 49,
+      long: 18,
+      name: "snack",
+      showName: false,
+      fill: color.lunch
     },
     {
       start: 11 * 60 + 07,
