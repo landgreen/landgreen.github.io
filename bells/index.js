@@ -32,6 +32,8 @@ const schedule = {
     } else if (schedule.current === "advisory") {
       schedule.current = "rally";
     } else if (schedule.current === "rally") {
+      schedule.current = "earlyRelease";
+    } else if (schedule.current === "earlyRelease") {
       schedule.current = "regular";
     }
     update(false);
@@ -332,7 +334,99 @@ const schedule = {
       showName: false,
       fill: color.passing
     }
-  ]
+  ],
+  earlyRelease: [{
+    start: 0,
+    long: 9 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 8 * 60 + 30,
+    long: 42,
+    name: "P1",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 9 * 60 + 12,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 9 * 60 + 15,
+    long: 42,
+    name: "P2",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 9 * 60 + 57,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 10 * 60,
+    long: 42,
+    name: "P3",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 42,
+    long: 35,
+    name: "lunch",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 11 * 60 + 17,
+    long: 43,
+    name: "P4",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 12 * 60 + 3,
+    long: 42,
+    name: "P5",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 45,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 12 * 60 + 48,
+    long: 42,
+    name: "P6",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 13 * 60 + 30,
+    long: 10 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  }
+]
 };
 //   regular: [{
 //       start: 0,
