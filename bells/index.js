@@ -238,7 +238,7 @@ const schedule = {
   ],
   rally: [{
       start: 0,
-      long: 9 * 60 + 30,
+      long: 8 * 60 + 30,
       name: "",
       showName: false,
       fill: color.passing
@@ -337,7 +337,7 @@ const schedule = {
   ],
   earlyRelease: [{
     start: 0,
-    long: 9 * 60 + 30,
+    long: 8 * 60 + 30,
     name: "",
     showName: false,
     fill: color.passing
