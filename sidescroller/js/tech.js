@@ -3497,7 +3497,7 @@ const tech = {
             maxCount: 1,
             count: 0,
             frequency: 1,
-            frequencyDefault: 100,
+            frequencyDefault: 1,
             allowed() {
                 return powerUps.research.count > 3
             },
@@ -3549,7 +3549,7 @@ const tech = {
             maxCount: 1,
             count: 0,
             frequency: 1,
-            frequencyDefault: 100,
+            frequencyDefault: 1,
             isNonRefundable: true,
             allowed: () => true,
             value: 60,
