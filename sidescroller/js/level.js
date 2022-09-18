@@ -54,8 +54,8 @@ const level = {
             // for (let i = 0; i < 3; i++) tech.giveTech("undefined")
             // lore.techCount = 3
             // simulation.isCheating = false //true;
-            localSettings.loreCount = 6; //this sets what conversation is heard
-            if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+            // localSettings.loreCount = 6; //this sets what conversation is heard
+            // if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
             // level.onLevel = -1 //this sets level.levels[level.onLevel] = undefined which is required to run the conversation
             // level.null()
             // localSettings.isHuman = true
@@ -3158,7 +3158,7 @@ const level = {
         spawn.mapRect(5425, -650, 375, 450); //blocking exit
         // spawn.secondaryBossChance(4800, -500) //no bonus bosses on final level
 
-        if (mobs.mobDeaths < level.levelsCleared) { //pacifist run
+        if (mobs.mobDeaths < level.levelsCleared && !simulation.isCheating) { //pacifist run
             for (let i = 0; i < 250; i++) spawn.starter(1000 + 4000 * Math.random(), -1500 * Math.random())
         } else {
             spawn.finalBoss(3000, -750)
@@ -3288,7 +3288,7 @@ const level = {
             //power ups don't spawn in experiment mode, so they don't get removed at the start of experiment mode
             function cycle() {
                 if (simulation.cycle > 10) {
-                    if (localSettings.loreCount === 6) {
+                    if (localSettings.loreCount === 7) {
                         powerUps.spawn(2095 + 15 * (Math.random() - 0.5), -2170, "field", false);
                     } else {
                         powerUps.spawnStartingPowerUps(2095 + 15 * (Math.random() - 0.5), -2070 - 125);
