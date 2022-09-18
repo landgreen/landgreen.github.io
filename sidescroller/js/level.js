@@ -52,8 +52,9 @@ const level = {
 
             //lore testing
             // for (let i = 0; i < 3; i++) tech.giveTech("undefined")
-            // lore.techCount = 3
+            // lore.techCount = 2
             // simulation.isCheating = false //true;
+            // level.levelsCleared = 10
             // localSettings.loreCount = 6; //this sets what conversation is heard
             // if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
             // level.onLevel = -1 //this sets level.levels[level.onLevel] = undefined which is required to run the conversation
