@@ -32,6 +32,8 @@ const schedule = {
     } else if (schedule.current === "advisory") {
       schedule.current = "rally";
     } else if (schedule.current === "rally") {
+      schedule.current = "rallyLunch";
+    } else if (schedule.current === "rallyLunch") {
       schedule.current = "earlyRelease";
     } else if (schedule.current === "earlyRelease") {
       schedule.current = "regular";
@@ -52,7 +54,7 @@ const schedule = {
       showName: true,
       fill: color.period
     },
-    {
+    {  
       start: 9 * 60 + 30,
       long: 3,
       name: "",
@@ -335,6 +337,105 @@ const schedule = {
       fill: color.passing
     }
   ],
+  rallyLunch: [{
+    start: 0,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 8 * 60 + 30,
+    long: 50,
+    name: "P1",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 9 * 60 + 20,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 9 * 60 + 23,
+    long: 50,
+    name: "P2",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 13,
+    long: 18,
+    name: "snack",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 10 * 60 + 31,
+    long: 50,
+    name: "P3",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 11 * 60 + 21,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 11 * 60 + 24,
+    long: 50,
+    name: "P4",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 14,
+    long: 60,
+    name: "Rally",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 13 * 60 + 14,
+    long: 33,
+    name: "lunch",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 13 * 60 + 47,
+    long: 50,
+    name: "P5",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 14 * 60 + 37,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 14 * 60 + 40,
+    long: 50,
+    name: "P6",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 15 * 60 + 30,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  }
+],
   earlyRelease: [{
     start: 0,
     long: 8 * 60 + 30,
