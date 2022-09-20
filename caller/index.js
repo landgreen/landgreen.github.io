@@ -129,7 +129,7 @@ let p = new Vue({
       let dataUri = "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
       let linkElement = document.createElement("a");
       linkElement.setAttribute("href", dataUri);
-      linkElement.setAttribute("download", "data.json");
+      linkElement.setAttribute("download", "caller_backup.json");
       linkElement.click();
     },
     movedEvent: function (i, newX, newY) {
