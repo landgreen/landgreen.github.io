@@ -2659,8 +2659,8 @@ const level = {
         // level.onLevel--
         // console.log(level.onLevel, level.levels)
         //start a conversation based on the number of conversations seen
-        if (localSettings.loreCount > lore.conversation.length - 1) localSettings.loreCount = lore.conversation.length - 1; //repeat final conversation if they are at the final chapter
-        if (!simulation.isCheating) {
+        if (localSettings.loreCount > lore.conversation.length - 1) localSettings.loreCount = lore.conversation.length - 1; //repeat final conversation if lore count is too high
+        if (!simulation.isCheating && localSettings.loreCount < lore.conversation.length) {
             tech.isNoDraftPause = true //disable pause
             lore.testSpeechAPI() //see if speech is working
             lore.chapter = localSettings.loreCount //set the chapter to listen to to be the lore level (you can't use the lore level because it changes during conversations)
