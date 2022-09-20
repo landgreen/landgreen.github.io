@@ -1,23 +1,26 @@
 ******************************************************** NEXT PATCH **************************************************
 
-matter wave renamed wave
-  tech: frequency - wave has unlimited ammo, but -50% wave firerate
-  tech: sympathetic resonance - when phonon waves hit a mob they make a new resonance wave
-    effect cooldown grows +5s with each chained resonance
-  uncertainty principle works with phonon wave
-  phase velocity works with all other wave tech, 40->35% damage
-  boundstate reduces wave range by 25->15%
 
-non-renewables 88% -> 67% damage
-improved fine-structure constant graphic for when you lose coupling
-laser mobs pulse a laser 50% of the time for 2x damage
+slow fall while perfect diamagnetism is active
 
-a bunch of bug fixes
-caliber does a bit more damage at 1 stack, but does less damage at 3+ stacks
-  it grew mass and damage at an exponential rate before
-  now it's closer to the +30% damage description
+bug fixes
 
 *********************************************************** TODO *****************************************************
+
+deflecting coupling effect should be not fun
+  make ice IX more fun
+    faster speed, shorter duration
+  trade bremstralung for iceIX?
+
+make duplication less effective on why difficulty
+  scale the numbers in the tech
+
+tech - buff MACHO range, effect, move speed?
+
+PWA?
+  https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps
+  https://codeburst.io/how-to-easily-turn-your-static-website-to-a-progressive-web-app-pwa-b0af08da9693
+  https://github.com/landgreen/n-gon/pull/32/files
 
 bug blocks and power ups falling through map
   always foam gun  (4-5 times)
@@ -732,11 +735,6 @@ n-gon outreach ideas
 
 ******************************************************** BUGS ********************************************************
 
-timeskip flickers with tech: clock gating, and game pause after large hit
-  probably not related to timeskip, related to graphics effect
-  not a big problem, actually it's kinda neat effect
-    only fix if there is a clear solution
-
 bug: maybe I can put in an event listener to reset inputs to false when you tab out to prevent key sticking
 
 bug - url sharing still broken sometimes
@@ -950,6 +948,8 @@ possible names for tech
   https://en.wikipedia.org/wiki/High-entropy_alloys
   https://en.wikipedia.org/wiki/Refractory_metals
   https://en.wikipedia.org/wiki/Upper-atmospheric_lightning#Elves
+  entanglement
+  prion quine
 
 
 plot script:
