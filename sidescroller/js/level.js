@@ -23,12 +23,12 @@ const level = {
             // powerUps.research.changeRerolls(100000)
             // m.immuneCycle = Infinity //you can't take damage
             // tech.tech[297].frequency = 100
-            // m.setField("negative mass") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass
+            // m.setField("perfect diamagnetism") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass
             // m.damage(0.1);
             // b.giveGuns("nail gun") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
-            // b.guns[3].ammo = 1000000
+            // b.guns[0].ammo = 1000000
 
-            // tech.giveTech("phonon")
+            // tech.giveTech("Meissner effect")
             // for (let i = 0; i < 4; ++i) tech.giveTech("bound state")
             // for (let i = 0; i < 1; ++i) tech.giveTech("isotropic")
             // tech.giveTech("sympathetic resonance")
@@ -51,11 +51,12 @@ const level = {
             // for (let i = 0; i < 30; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "tech", false);
 
             //lore testing
-            // for (let i = 0; i < 3; i++) tech.giveTech("undefined")
+            // for (let i = 0; i < 5; i++) tech.giveTech("undefined")
             // lore.techCount = 2
             // simulation.isCheating = false //true;
             // level.levelsCleared = 10
-            // localSettings.loreCount = 6; //this sets what conversation is heard
+            // mobs.mobDeaths = 200
+            // localSettings.loreCount = 0; //this sets what conversation is heard
             // if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
             // level.onLevel = -1 //this sets level.levels[level.onLevel] = undefined which is required to run the conversation
             // level.null()
