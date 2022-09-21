@@ -703,6 +703,7 @@ const lore = {
             () => { lore.anand.text("but I'm also pretty hungry, wanna go get some food?") },
             () => { lore.miriam.text("Sounds great.") },
             () => { lore.miriam.text("See ya later whoever you are, thanks again!") },
+            () => { lore.anand.text("Bye!") },
             () => { lore.talkingColor = "#dff" },
         ],
     ],

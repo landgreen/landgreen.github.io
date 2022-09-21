@@ -23,7 +23,9 @@ const level = {
             // powerUps.research.changeRerolls(100000)
             // m.immuneCycle = Infinity //you can't take damage
             // tech.tech[297].frequency = 100
-            // m.setField("perfect diamagnetism") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass
+            // m.couplingChange(5)
+            // m.setField("molecular assembler") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass
+            // simulation.molecularMode = 2
             // m.damage(0.1);
             // b.giveGuns("nail gun") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[0].ammo = 1000000
@@ -37,12 +39,12 @@ const level = {
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");
 
+            // level.testing();
             // spawn.starter(1900, -500)
             // spawn.beetleBoss(2538, -1950)
-            // for (let i = 0; i < 33; ++i) spawn.shooter(1000 + 5000 * Math.random(), -500 + 300 * Math.random())
+            // for (let i = 0; i < 33; ++i) spawn.starter(1000 + 5000 * Math.random(), -500 + 300 * Math.random())
             // tech.addJunkTechToPool(2)
             // tech.tech[322].frequency = 100
-            // level.testing();
             // spawn.tetherBoss(1900, -500, { x: 1900, y: -500 })
             // for (let i = 0; i < 13; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "research");
             // for (let i = 0; i < 4; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "tech");
@@ -56,7 +58,7 @@ const level = {
             // simulation.isCheating = false //true;
             // level.levelsCleared = 10
             // mobs.mobDeaths = 200
-            // localSettings.loreCount = 0; //this sets what conversation is heard
+            // localSettings.loreCount = 6; //this sets what conversation is heard
             // if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
             // level.onLevel = -1 //this sets level.levels[level.onLevel] = undefined which is required to run the conversation
             // level.null()
@@ -3290,7 +3292,7 @@ const level = {
             //power ups don't spawn in experiment mode, so they don't get removed at the start of experiment mode
             function cycle() {
                 if (simulation.cycle > 10) {
-                    if (localSettings.loreCount === 7) {
+                    if (localSettings.loreCount === 6) {
                         powerUps.spawn(2095 + 15 * (Math.random() - 0.5), -2170, "field", false);
                     } else {
                         powerUps.spawnStartingPowerUps(2095 + 15 * (Math.random() - 0.5), -2070 - 125);

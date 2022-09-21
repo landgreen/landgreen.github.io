@@ -1,11 +1,16 @@
 ******************************************************** NEXT PATCH **************************************************
 
+IceIX is faster, but doesn't last as long
+  effective range and damage should be about the same
 
 slow fall while perfect diamagnetism is active
 
 bug fixes
 
 *********************************************************** TODO *****************************************************
+
+bug? i'm pretty sure the quest is given at 6 but the field spawns at 7
+
 
 deflecting coupling effect should be not fun
   make ice IX more fun
@@ -16,6 +21,9 @@ make duplication less effective on why difficulty
   scale the numbers in the tech
 
 tech - buff MACHO range, effect, move speed?
+
+tech - iceIX freeze effect lasts much longer, spawn 10 coupling
+  for perfect diamagnatism
 
 PWA?
   https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps
