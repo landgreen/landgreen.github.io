@@ -24,7 +24,7 @@ const level = {
             // m.immuneCycle = Infinity //you can't take damage
             // tech.tech[297].frequency = 100
             // m.couplingChange(5)
-            // m.setField("metamaterial cloaking") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass
+            // m.setField("negative mass") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass
             // simulation.molecularMode = 2
             // m.damage(0.1);
             // b.giveGuns("nail gun") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
@@ -32,14 +32,14 @@ const level = {
 
             // for (let i = 0; i < 1; ++i) tech.giveTech("mass-energy equivalence")
             // tech.giveTech("Zeno's paradox")
-            // tech.giveTech("homeostasis")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("1st ionization energy")
-            // for (let i = 0; i < 1; i++) tech.giveTech("negative feedback")
+            // tech.giveTech("paradigm shift")
+            // for (let i = 0; i < 9; ++i) tech.giveTech("emergence")
+            // for (let i = 0; i < 1; i++) tech.giveTech("decoherence")
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");
 
-            // level.testing();
+            // level.final();
             // spawn.starter(1900, -500)
             // spawn.beetleBoss(2538, -1950)
             // for (let i = 0; i < 33; ++i) spawn.sniper(1000 + 5000 * Math.random(), -500 + 300 * Math.random())
