@@ -1102,7 +1102,7 @@ const powerUps = {
         let cycle = () => {
             if (count > 0) {
                 requestAnimationFrame(cycle);
-                if (!simulation.paused && !simulation.isChoosing) { //&& !(simulation.cycle % 2)
+                if (!simulation.paused && !simulation.isChoosing && m.alive) { //&& !(simulation.cycle % 2)
                     count--
                     const where = { x: m.pos.x + 50 * (Math.random() - 0.5), y: m.pos.y + 50 * (Math.random() - 0.5) }
                     powerUps.spawn(where.x, where.y, type);
@@ -1262,11 +1262,11 @@ const powerUps = {
                 for (let i = 0; i < tech.tech.length; i++) {
                     if (tech.tech[i].count > 0 && !tech.tech[i].isNonRefundable) have.push(i)
                 }
-                if (have.length === 0) {
-                    for (let i = 0; i < tech.tech.length; i++) {
-                        if (tech.tech[i].count > 0) have.push(i)
-                    }
-                }
+                // if (have.length === 0) {
+                //     for (let i = 0; i < tech.tech.length; i++) {
+                //         if (tech.tech[i].count > 0) have.push(i)
+                //     }
+                // }
 
                 if (have.length) {
                     choose = have[Math.floor(Math.random() * have.length)]
