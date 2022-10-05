@@ -483,7 +483,7 @@ const tech = {
         {
             name: "supply chain",
             junk: 0.05,
-            descriptionFunction() { return `for each <strong class='color-g'>gun</strong> in your inventory<br>double your current <strong class='color-ammo'>ammo</strong>` },
+            descriptionFunction() { return `for each <strong class='color-g'>gun</strong> in your inventory<br>double its <strong class='color-ammo'>ammo</strong>` },
             maxCount: 9,
             count: 0,
             frequency: 1,
@@ -3509,7 +3509,7 @@ const tech = {
             couplingToResearch: 0.25,
             effect() {
                 let count = 0
-                while (powerUps.research.count > 0) {
+                while (powerUps.research.count > 0 && powerUps.research.count !== Infinity) {
                     powerUps.research.changeRerolls(-1)
                     count += 2.5
                     this.researchUsed++
