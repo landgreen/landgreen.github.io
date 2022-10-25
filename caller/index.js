@@ -633,28 +633,28 @@ let p = new Vue({
         const n = this.layout[PICK].name; //focus student's name
         const sayThis = [
           `${n} is morbing`,
-  `${n} tell me about the rabbits`
-  `${n} I know where you live`
-  `${n} was born July of 2006`
-  `${n}'s social security number 478-67-9163`
-  `${n} do you know da way?`
-  `${n} solos Goku in a fight`
-  `${n} October 5th 2036 5:48 pm be there or be square`
-  `${n} is the heir to all the denny's in` + countryList[Math.floor(Math.random() * countryList.length)]
-  `${n} know's Mr. Landgreen's big secret`
-  `${n} what did you do to get banned from` + countryList[Math.floor(Math.random() * countryList.length)] + `?`
-  `${n} was kidnapped by a` + animals[Math.floor(Math.random() * animals.length)] + `from` + countryList[Math.floor(Math.random() * countryList.length)]
-  `${n} do you know a place Where the grass is really greener? Where it's Warm, wet n' wild and where, there must be something in the water`
-  `${n} why? Just why?`
-  `${n} Did you know that the ratio of sheep to people in New Zealand is 6 to 1`
-  `${n} stayed up all night watching top 10 best among us imposter plays of 2022`
-  `${n} I challenge you to a duel!!! Meet me at Tombstone, Arizona on October 7th at 4:36 am. canon Yugioh Cards only`
-  `${n} did you know that 85.9% of Nevada is owned by the government and that 95.8% of Alaska is owned by the government`
-  `${n} You are looking mad goofy today. Like how does someone look that goofy`
-  `${n} knows that the fox says`
-  `${n} doesn't like le epic troll face`
-  `${n} do you have 6 fingers on your right hand?`
-  `Le oui oui oui oui baguette ${n}`
+          `${n} tell me about the rabbits`,
+          `${n} I know where you live`,
+          `${n} was born July of 2006`,
+          `${n}'s social security number 478-67-9163`,
+          `${n} do you know da way?`,
+          `${n} solos Goku in a fight`,
+          `${n} October 5th 2036 5:48 pm be there or be square`,
+          `${n} is the heir to all the denny's in` + countryList[Math.floor(Math.random() * countryList.length)],
+          `${n} know's Mr. Landgreen's big secret`,
+          `${n} what did you do to get banned from` + countryList[Math.floor(Math.random() * countryList.length)] + `?`,
+          `${n} was kidnapped by a` + animals[Math.floor(Math.random() * animals.length)] + `from` + countryList[Math.floor(Math.random() * countryList.length)],
+          `${n} do you know a place Where the grass is really greener? Where it's Warm, wet n' wild and where, there must be something in the water`,
+          `${n} why? Just why?`,
+          `${n} Did you know that the ratio of sheep to people in New Zealand is 6 to 1`,
+          `${n} stayed up all night watching top 10 best among us imposter plays of 2022`,
+          `${n} I challenge you to a duel!!! Meet me at Tombstone, Arizona on October 7th at 4:36 am. canon Yugioh Cards only`,
+          `${n} did you know that 85.9% of Nevada is owned by the government and that 95.8% of Alaska is owned by the government`,
+          `${n} You are looking mad goofy today. Like how does someone look that goofy`,
+          `${n} knows that the fox says`,
+          `${n} doesn't like le epic troll face`,
+          `${n} do you have 6 fingers on your right hand?`,
+          `Le oui oui oui oui baguette ${n}`,
           `${n} and ${nextTo} play Rock paper scissors.`,
           `${n} secretly visits Ohio.`,
           `${n} has a stain on their shirt.`,
@@ -713,8 +713,8 @@ let p = new Vue({
           n + " ... hey " + n + " ... " + n + " ... hey ... hello " + n + " ... " + n,
           "I choose you ... " + n
         ];
-        // say = sayThis[Math.floor(Math.random() * sayThis.length)]; //pick a random array index to say
-        say = sayThis[0]; //says the first command in array for testing
+        say = sayThis[Math.floor(Math.random() * sayThis.length)]; //pick a random array index to say
+        // say = sayThis[0]; //says the first command in array for testing
       } else {
         //non verbose mode
         say = this.layout[PICK].name;
