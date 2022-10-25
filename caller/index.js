@@ -1,20 +1,18 @@
-// to edit a name use: p._data.allPeriods[0][0].name
-
 let defaultPeriods = [
   [
-    // { x: 0, y: 0, w: 3, h: 1, i: "0", name: "Ln0", num: 0, focus: false },
-    // { x: 3, y: 0, w: 3, h: 1, i: "1", name: "Lan1", num: 0, focus: false },
-    // { x: 6, y: 0, w: 3, h: 1, i: "2", name: "Lan2", num: 0, focus: false },
-    // { x: 0, y: 1, w: 3, h: 1, i: "3", name: "Lan3", num: 0, focus: false },
-    // { x: 3, y: 1, w: 3, h: 1, i: "4", name: "Lan4", num: 0, focus: false },
-    // { x: 6, y: 1, w: 3, h: 1, i: "5", name: "Lan5", num: 0, focus: false },
-    // { x: 0, y: 2, w: 2, h: 1, i: "6", name: "Lan6", num: 0, focus: false },
-    // { x: 2, y: 2, w: 4, h: 1, i: "7", name: "Lan7", num: 0, focus: false },
-    // { x: 0, y: 3, w: 3, h: 1, i: "8", name: "Lan8", num: 0, focus: false },
-    // { x: 3, y: 3, w: 3, h: 1, i: "9", name: "Lan9", num: 0, focus: false },
-    // { x: 6, y: 2, w: 3, h: 2, i: "10", name: "Lan10", num: 0, focus: false }
+    { x: 0, y: 0, w: 3, h: 1, i: "0", name: "Ln0", num: 0, focus: false },
+    { x: 3, y: 0, w: 3, h: 1, i: "1", name: "Lan1", num: 0, focus: false },
+    { x: 6, y: 0, w: 3, h: 1, i: "2", name: "Lan2", num: 0, focus: false },
+    { x: 0, y: 1, w: 3, h: 1, i: "3", name: "Lan3", num: 0, focus: false },
+    { x: 3, y: 1, w: 3, h: 1, i: "4", name: "Lan4", num: 0, focus: false },
+    { x: 6, y: 1, w: 3, h: 1, i: "5", name: "Lan5", num: 0, focus: false },
+    { x: 0, y: 2, w: 2, h: 1, i: "6", name: "Lan6", num: 0, focus: false },
+    { x: 2, y: 2, w: 4, h: 1, i: "7", name: "Lan7", num: 0, focus: false },
+    { x: 0, y: 3, w: 3, h: 1, i: "8", name: "Lan8", num: 0, focus: false },
+    { x: 3, y: 3, w: 3, h: 1, i: "9", name: "Lan9", num: 0, focus: false },
+    { x: 6, y: 2, w: 3, h: 2, i: "10", name: "Lan10", num: 0, focus: false }
   ],
-  [],
+  [{ x: 0, y: 0, w: 2, h: 1, i: "0", name: "Ln0", num: 3, focus: false }, { x: 2, y: 0, w: 2, h: 1, i: "1", name: "Lan1", num: 4, focus: false }],
   [],
   [],
   [],
@@ -44,20 +42,13 @@ if (!localSettings) {
 } else {
   document.getElementById("language").selectedIndex = localSettings.selectedIndex;
 }
-document.getElementById("language").addEventListener("change", function () {
+document.getElementById("language").addEventListener("change", function() {
   p.saveToLocalSettings();
 });
 let local = JSON.parse(localStorage.getItem("allPeriods"));
 if (!local) {
   console.log("No local period rosters found. Resetting to empty classes.");
-  local = [
-    [],
-    [],
-    [],
-    [],
-    [],
-    []
-  ];
+  local = [[], [], [], [], [], []];
   document.getElementById("add").classList.add("blue");
   document.getElementById("first-time").innerHTML = "Click add to fill up your period.";
 } else {
@@ -110,7 +101,7 @@ let p = new Vue({
     //   };
     //   fr.readAsText(files.item(0));
     // },
-    importIn: function () {
+    importIn: function() {
       var files = document.getElementById("selectFiles").files;
       if (files.length <= 0) {
         return false;
@@ -124,21 +115,21 @@ let p = new Vue({
       };
       fr.readAsText(files.item(0));
     },
-    exportOut: function () {
+    exportOut: function() {
       let dataStr = JSON.stringify(localStorage.getItem("allPeriods"));
       let dataUri = "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
       let linkElement = document.createElement("a");
       linkElement.setAttribute("href", dataUri);
-      linkElement.setAttribute("download", "caller_backup.json");
+      linkElement.setAttribute("download", "data.json");
       linkElement.click();
     },
-    movedEvent: function (i, newX, newY) {
+    movedEvent: function(i, newX, newY) {
       this.saveToLocal();
     },
-    resizedEvent: function (i, newX, newY) {
+    resizedEvent: function(i, newX, newY) {
       this.saveToLocal();
     },
-    undoLastedCalled: function () {
+    undoLastedCalled: function() {
       for (let i = 0, len = this.layout.length; i < len; ++i) {
         if (this.layout[i].focus) {
           this.layout[i].focus = false;
@@ -148,14 +139,14 @@ let p = new Vue({
         }
       }
     },
-    reset: function () {
-      if (prompt("WARNING THIS WILL REMOVE ALL NAMES FROM ALL PERIODS.  Type yes to remove all names", "no") === "yes") {
+    reset: function() {
+      if (prompt("To reset all names in all periods type yes", "no") === "yes") {
         this.allPeriods = defaultPeriods;
         this.layout = this.allPeriods[this.period - 1];
         this.saveToLocal();
       }
     },
-    resetCount: function () {
+    resetCount: function() {
       if (prompt("To reset all counts for only this period type yes", "no") === "yes") {
         for (let i = 0, len = this.layout.length; i < len; ++i) {
           this.layout[i].num = 0;
@@ -163,7 +154,7 @@ let p = new Vue({
         this.saveToLocal();
       }
     },
-    tidy: function () {
+    tidy: function() {
       // for (let i = 0, len = this.layout.length; i < len; ++i) {
       //   this.layout[i].x = (i % 4) * 3;
       //   this.layout[i].y = 0;
@@ -184,10 +175,9 @@ let p = new Vue({
       this.saveToLocal();
       location.reload();
     },
-    shrink: function () {
+    shrink: function() {
       var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
       var context = canvas.getContext("2d");
-
       function getTextWidth(text, font) {
         context.font = font;
         var metrics = context.measureText(text);
@@ -200,11 +190,11 @@ let p = new Vue({
 
       this.saveToLocal();
     },
-    saveToLocal: function () {
+    saveToLocal: function() {
       this.allPeriods[this.period - 1] = this.layout;
       localStorage.setItem("allPeriods", JSON.stringify(this.allPeriods)); //update classes to local storage
     },
-    saveToLocalSettings: function () {
+    saveToLocalSettings: function() {
       const localSettings = {
         draggable: this.draggable,
         resizable: this.resizable,
@@ -214,7 +204,7 @@ let p = new Vue({
       };
       localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update classes to local storage
     },
-    showSettings: function () {
+    showSettings: function() {
       if (this.isSettingsSeen) {
         this.isSettingsSeen = false;
       } else {
@@ -222,7 +212,7 @@ let p = new Vue({
       }
       this.saveToLocalSettings();
     },
-    nextPeriod: function () {
+    nextPeriod: function() {
       this.unFocusAll();
       this.saveToLocal();
       if (this.period > this.allPeriods.length - 1) {
@@ -231,70 +221,13 @@ let p = new Vue({
         this.period++;
       }
       this.layout = this.allPeriods[this.period - 1];
-      document.getElementById("speech").innerHTML = "";
     },
-    unFocusAll: function () {
+    unFocusAll: function() {
       for (let i = 0, len = this.layout.length; i < len; ++i) {
         this.layout[i].focus = false;
       }
     },
-    editCount: function () {
-      //ask user who to edit
-      let editName = prompt("enter name to edit", this.layout[0].name);
-      let newCount
-      if (editName) newCount = prompt("enter their new times called on");
-      //find the name and update it
-      if (newCount) {
-        for (let i = 0, len = this.layout.length; i < len; ++i) {
-          if (this.layout[i].name === editName) {
-            this.layout[i].num = newCount;
-            this.reIndex();
-            this.unFocusAll();
-            this.saveToLocal();
-            break;
-          }
-        }
-      }
-    },
-    editStudentName: function () {
-      //who is focused
-      let focusName
-      for (let i = 0, len = this.layout.length; i < len; ++i) {
-        if (this.layout[i].focus) {
-          focusName = this.layout[i].name;
-          break;
-        }
-      }
-      //ask user who to edit
-
-      let editName
-      if (focusName) {
-        editName = prompt("enter name to edit", focusName);
-      } else {
-        editName = prompt("enter name to edit", this.layout[0].name);
-      }
-
-      const emojiList = "🗑 💵 💎 🔬 🚲 🎼 🎹 🥁 🎷 🎺 🎸 🎻 🎲 🧩 ♟ 🎯 🎳 🎮 🎰 ⚽ 🎬 🎤 🎧️ 🏀 🏈 ⚾️ 🥎 🏐 🏉 🎾 🥏 🎱 🏓 🏸 🥅 🏒 🏑 🥍 🏏 ⛳️ 🏹 🎣 🥊 🥋 🎽 ⛸ 🥌 🛷 🛹🧨🏴‍☠️🏳️🔪 🗡 ⚔️🃏💍 💄 💋 👄 👅 👂 👃 👣 👁 👀 🧠 🦴 🦷 🗣 👤 👥🥰 🥵 🥶 🦵 🦶 🦴 🦷 🥽 🥼 🥾 🥿 🦝 🦙 🦛 🦘 🦡 🦢 🦚 🦜 🦞 🦟 🦠 🥭 🥬 🥯 🧂 🥮 🧁 🧭 🧱 🛹 🧳 🧨 🧧 🥎 🥏 🥍 🧿 🧩 🧸 ♟ 🧮 🧾 🧰 🧲 🧪 🧫 🧬 🧯 🧴 🧵 🧶 🧷 🧹 🧺 🧻 🧼 🧽 ♾ 🏴‍☠️ 🧥 👚 👕 👖 👔 👗 👙 👘 👠 👡 👢 👞 👟 🥾 🥿 🧦 🧤 🧣 🎩 🧢 👒 🎓 ⛑ 👑 👝 👛 👜 💼 🎒 👓 🕶 🥽 🥼 🌂 🧵 🧶🐶 🐱 🐭 🐹 🐰 🦊 🦝 🐻 🐼 🦘 🦡 🐨 🐯 🦁 🐮 🐷 🐽 🐸 🐵 🙈 🙉 🙊 🐒 🐔 🐧 🐦 🐤 🐣 🐥 🦆 🦢 🦅 🦉 🦚 🦜 🦇 🐺 🐗 🐴 🦄 🐝 🐛 🦋 🐌 🐚 🐞 🐜 🦗 🕷 🕸 🦂 🦟 🦠 🐢 🐍 🦎 🦖 🦕 🐙 🦑 🦐 🦀 🐡 🐠 🐟 🐬 🐳 🐋 🦈 🐊 🐅 🐆 🦓 🦍 🐘 🦏 🦛 🐪 🐫 🦙 🦒 🐃 🐂 🐄 🐎 🐖 🐏 🐑 🐐 🦌 🐕 🐩 🐈 🐓 🦃 🕊 🐇 🐁 🐀 🐿 🦔 🐾 🐉 🐲 🌵 🎄 🌲 🌳 🌴 🌱 🌿 ☘️ 🍀 🎍 🎋 🍃 🍂 🍁 🍄 🌾 💐 🌷 🌹 🥀 🌺 🌸 🌼 🌻 🌞 🌝 🌛 🌜 🌚 🌕 🌖 🌗 🌘 🌑 🌒 🌓 🌔 🌙 🌎 🌍 🌏 💫 ⭐️ 🌟 ✨ ⚡️ ☄️ 💥 🔥 🌪 🌈 ☀️ 🌤 ⛅️ 🌥 ☁️ 🌦 🌧 ⛈ 🌩 🌨 ❄️ ☃️ ⛄️ 🌬 💨 💧 💦 ☔️ ☂️ 🌊 🌫 🍏 🍎 🍐 🍊 🍋 🍌 🍉 🍇 🍓 🍈 🍒 🍍 🥭 🥥 🥝 🍅 🥑 🥦 🥒 🥬 🌶 🌽 🥕 🥔 🍠 🥐 🍞 🥖 🥨 🥯 🧀 🥚 🍳 🥞 🥓 🥩 🍗 🍖 🌭 🍔 🍟 🍕 🥪 🥙 🌮 🌯 🥗 🥘 🥫 🍝 🍜 🍲 🍛 🍣 🍱 🥟 🍤 🍙 🍚 🍘 🍥 🥮 🥠 🍢 🍡 🍧 🍨 🍦 🥧 🍰 🎂 🍮 🍭 🍬 🍫 🍿 🧂 🍩 🍪 🌰 🥜 🍯 🥛 🍼 ☕️ 🍵 🥤 🍶 🍺 🍻 🥂 🍷 🥃 🍸 🍹 🍾 🥄 🍴 🍽 🥣 🥡 🥢🅱️"
-      let newName
-      if (editName) newName = prompt("enter new name " + emojiList, editName);
-      //find the name and update it
-      if (newName) {
-        for (let i = 0, len = this.layout.length; i < len; ++i) {
-          if (this.layout[i].name === editName) {
-            this.layout[i].name = newName;
-            this.reIndex();
-            this.unFocusAll();
-            this.saveToLocal();
-            const out = editName + " is now " + newName
-            console.log(out);
-            speech(out);
-            document.getElementById("speech").innerHTML = out;
-            break;
-          }
-        }
-      }
-    },
-    removeItem: function (item) {
+    removeItem: function(item) {
       let removeName = prompt("enter name of student to remove", this.layout[0].name);
       for (let i = 0, len = this.layout.length; i < len; ++i) {
         if (this.layout[i].name === removeName) {
@@ -310,13 +243,13 @@ let p = new Vue({
       // document.body.style.userSelect = "auto";
       // document.body.style.userSelect = "none";
     },
-    reIndex: function () {
+    reIndex: function() {
       for (let j = 0, len = this.layout.length; j < len; ++j) {
         // console.log(this.layout[j].i);
         this.layout[j].i = j.toString();
       }
     },
-    addItem: function () {
+    addItem: function() {
       this.unFocusAll();
       let name = prompt("name");
       if (name) {
@@ -334,22 +267,14 @@ let p = new Vue({
         this.saveToLocal();
       }
     },
-    callRandom: function () {
+    callRandom: function() {
       this.unFocusAll();
       let say = "";
       let pool = [];
       let totalCalled = 0;
-      this.layout.forEach(function (element) {
+      this.layout.forEach(function(element) {
         totalCalled += element.num;
       });
-
-      // function cycle(who) {
-      //   this.layout[Math.floor(Math.random() * this.layout.length)].focus = true;
-      //   requestAnimationFrame(cycle);
-      // }
-      // requestAnimationFrame(cycle);
-
-
       const AVGCALLED = totalCalled / this.layout.length;
       for (let i = 0, len = this.layout.length; i < len; ++i) {
         if (this.layout[i].num > AVGCALLED) {
@@ -362,11 +287,320 @@ let p = new Vue({
       }
       const PICK = pool[Math.floor(Math.random() * pool.length)];
       const callOn = this.layout[PICK];
-
       callOn.focus = true;
       callOn.num++;
 
       if (this.verbose) {
+        const countryList = [
+          "Afghanistan",
+          "Albania",
+          "Algeria",
+          "American Samoa",
+          "Andorra",
+          "Angola",
+          "Anguilla",
+          "Antarctica",
+          "Antigua and Barbuda",
+          "Argentina",
+          "Armenia",
+          "Aruba",
+          "Australia",
+          "Austria",
+          "Azerbaijan",
+          "Bahamas (the)",
+          "Bahrain",
+          "Bangladesh",
+          "Barbados",
+          "Belarus",
+          "Belgium",
+          "Belize",
+          "Benin",
+          "Bermuda",
+          "Bhutan",
+          "Bolivia (Plurinational State of)",
+          "Bonaire, Sint Eustatius and Saba",
+          "Bosnia and Herzegovina",
+          "Botswana",
+          "Bouvet Island",
+          "Brazil",
+          "British Indian Ocean Territory (the)",
+          "Brunei Darussalam",
+          "Bulgaria",
+          "Burkina Faso",
+          "Burundi",
+          "Cabo Verde",
+          "Cambodia",
+          "Cameroon",
+          "Canada",
+          "Cayman Islands (the)",
+          "Central African Republic (the)",
+          "Chad",
+          "Chile",
+          "China",
+          "Christmas Island",
+          "Cocos (Keeling) Islands (the)",
+          "Colombia",
+          "Comoros (the)",
+          "Congo (the Democratic Republic of the)",
+          "Congo (the)",
+          "Cook Islands (the)",
+          "Costa Rica",
+          "Croatia",
+          "Cuba",
+          "Curaçao",
+          "Cyprus",
+          "Czechia",
+          "Côte d'Ivoire",
+          "Denmark",
+          "Djibouti",
+          "Dominica",
+          "Dominican Republic (the)",
+          "Ecuador",
+          "Egypt",
+          "El Salvador",
+          "Equatorial Guinea",
+          "Eritrea",
+          "Estonia",
+          "Eswatini",
+          "Ethiopia",
+          "Falkland Islands (the) [Malvinas]",
+          "Faroe Islands (the)",
+          "Fiji",
+          "Finland",
+          "France",
+          "French Guiana",
+          "French Polynesia",
+          "French Southern Territories (the)",
+          "Gabon",
+          "Gambia (the)",
+          "Georgia",
+          "Germany",
+          "Ghana",
+          "Gibraltar",
+          "Greece",
+          "Greenland",
+          "Grenada",
+          "Guadeloupe",
+          "Guam",
+          "Guatemala",
+          "Guernsey",
+          "Guinea",
+          "Guinea-Bissau",
+          "Guyana",
+          "Haiti",
+          "Heard Island and McDonald Islands",
+          "Holy See (the)",
+          "Honduras",
+          "Hong Kong",
+          "Hungary",
+          "Iceland",
+          "India",
+          "Indonesia",
+          "Iran (Islamic Republic of)",
+          "Iraq",
+          "Ireland",
+          "Isle of Man",
+          "Israel",
+          "Italy",
+          "Jamaica",
+          "Japan",
+          "Jersey",
+          "Jordan",
+          "Kazakhstan",
+          "Kenya",
+          "Kiribati",
+          "Korea (the Democratic People's Republic of)",
+          "Korea (the Republic of)",
+          "Kuwait",
+          "Kyrgyzstan",
+          "Lao People's Democratic Republic (the)",
+          "Latvia",
+          "Lebanon",
+          "Lesotho",
+          "Liberia",
+          "Libya",
+          "Liechtenstein",
+          "Lithuania",
+          "Luxembourg",
+          "Macao",
+          "Madagascar",
+          "Malawi",
+          "Malaysia",
+          "Maldives",
+          "Mali",
+          "Malta",
+          "Marshall Islands (the)",
+          "Martinique",
+          "Mauritania",
+          "Mauritius",
+          "Mayotte",
+          "Mexico",
+          "Micronesia (Federated States of)",
+          "Moldova (the Republic of)",
+          "Monaco",
+          "Mongolia",
+          "Montenegro",
+          "Montserrat",
+          "Morocco",
+          "Mozambique",
+          "Myanmar",
+          "Namibia",
+          "Nauru",
+          "Nepal",
+          "Netherlands (the)",
+          "New Caledonia",
+          "New Zealand",
+          "Nicaragua",
+          "Niger (the)",
+          "Nigeria",
+          "Niue",
+          "Norfolk Island",
+          "Northern Mariana Islands (the)",
+          "Norway",
+          "Oman",
+          "Pakistan",
+          "Palau",
+          "Palestine, State of",
+          "Panama",
+          "Papua New Guinea",
+          "Paraguay",
+          "Peru",
+          "Philippines (the)",
+          "Pitcairn",
+          "Poland",
+          "Portugal",
+          "Puerto Rico",
+          "Qatar",
+          "Republic of North Macedonia",
+          "Romania",
+          "Russian Federation (the)",
+          "Rwanda",
+          "Réunion",
+          "Saint Barthélemy",
+          "Saint Helena, Ascension and Tristan da Cunha",
+          "Saint Kitts and Nevis",
+          "Saint Lucia",
+          "Saint Martin (French part)",
+          "Saint Pierre and Miquelon",
+          "Saint Vincent and the Grenadines",
+          "Samoa",
+          "San Marino",
+          "Sao Tome and Principe",
+          "Saudi Arabia",
+          "Senegal",
+          "Serbia",
+          "Seychelles",
+          "Sierra Leone",
+          "Singapore",
+          "Sint Maarten (Dutch part)",
+          "Slovakia",
+          "Slovenia",
+          "Solomon Islands",
+          "Somalia",
+          "South Africa",
+          "South Georgia and the South Sandwich Islands",
+          "South Sudan",
+          "Spain",
+          "Sri Lanka",
+          "Sudan (the)",
+          "Suriname",
+          "Svalbard and Jan Mayen",
+          "Sweden",
+          "Switzerland",
+          "Syrian Arab Republic",
+          "Taiwan",
+          "Tajikistan",
+          "Tanzania, United Republic of",
+          "Thailand",
+          "Timor-Leste",
+          "Togo",
+          "Tokelau",
+          "Tonga",
+          "Trinidad and Tobago",
+          "Tunisia",
+          "Turkey",
+          "Turkmenistan",
+          "Turks and Caicos Islands (the)",
+          "Tuvalu",
+          "Uganda",
+          "Ukraine",
+          "United Arab Emirates (the)",
+          "United Kingdom of Great Britain and Northern Ireland (the)",
+          "United States Minor Outlying Islands (the)",
+          "United States of America (the)",
+          "Uruguay",
+          "Uzbekistan",
+          "Vanuatu",
+          "Venezuela (Bolivarian Republic of)",
+          "Viet Nam",
+          "Virgin Islands (British)",
+          "Virgin Islands (U.S.)",
+          "Wallis and Futuna",
+          "Western Sahara",
+          "Yemen",
+          "Zambia",
+          "Zimbabwe",
+          "Åland Islands"
+        ];
+        const emotions = [
+          'scared',
+          'happy',
+          'sad',
+          'angry',
+          'nervous',
+          'annoyed',
+          'worried about answering this question',
+          'depressed :(',
+          'embarassed',
+          'perplexed',
+          'confused',
+          'loving',
+          'delighted',
+          'amused',
+          'optimistic',
+          'fed up',
+          'irritated',
+          'dejected',
+          'delighted',
+          'indecisive',
+          'unique',
+          'empowered',
+          'bold',
+          'goofy',
+          'creative',
+          'focused',
+          'lost',
+          'renewed',
+          'vibrant',
+          'energized',
+          'healthy',
+          'bored'
+        
+        ];
+        const senses = [
+          "looks like",
+          "smells like",
+          "sounds like",
+        ]
+        
+        const celebrity = [
+          "The Rock",
+          'Tom Cruise',
+          'Kim Kardashian',
+          'Beyoncé',
+          'Ryan Reynolds',
+          'Kanye',
+          'Ed Sheeran',
+          'Cristiano Ronaldo',
+          'Neymar',
+          "Lebron James",
+          'Ariana Grande',
+          'Gordon Ramsey',
+          "J.Lo",
+          'Rihanna',
+          "Lady Gaga",
+          "Drake"
+        ]
         var d = new Date();
         var time = {
           min: d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes(),
@@ -392,32 +626,56 @@ let p = new Vue({
           "is in charge for the next 30 seconds",
           "is super cool"
         ];
-        const colors = ["red", "pink", "purple", "deep-purple", "indigo", "blue", "light-blue", "cyan", "teal", "green", "light-green", "lime", "yellow", "amber", "orange", "deep-orange", "brown", "grey", "blue-grey"]
         const oh = ["oh", "hey", "what?", "oh wow"];
         const great = ["good news", "good news everyone", "great", "wow!", "amazing! ", "fantastic", "superb", "excellent", "magnificent"];
         const nextTo = PICK === this.layout.length - 1 ? this.layout[0].name : this.layout[PICK + 1].name; //name of another student
 
         const n = this.layout[PICK].name; //focus student's name
         const sayThis = [
-          `${n} just caught a ` + pokemon[Math.floor(Math.random() * pokemon.length)] + ". You gotta catch them all!",
-          `${n}'s favorite pokemon is ` + pokemon[Math.floor(Math.random() * pokemon.length)],
-          `${n} thinks that a ` + pokemon[Math.floor(Math.random() * pokemon.length)] + " would beat a " + pokemon[Math.floor(Math.random() * pokemon.length)] + " in a pokemon battle.",
-          `${n} is just a city boy. Born and raised in South Detroit.`,
-          `${n} is just a small town girl, living in a lonely world.`,
-          `${n} eats tide pods...`,
-          `${n} is trapped in the Quantum Realm`,
-          `${n} is burnin' through the sky... yeah... Two hundred degrees, that's why they call ${n} Mister Fahrenheit`,
-          `SWEEEET... ${n}... Bum, Bum, Bum...  Good times never felt so good!`,
-          `${n} has ascended to New West Plus.`,
-          `${n} is never gonna give you up. Never gonna let you down. Never gonna run around and desert you. Never gonna make you cry. Never gonna say goodbye. Never gonna tell a lie and hurt you.`,
-          `${n} blessed the rains down in Africa.`,
-          `${n} went sicko mode.`,
-          `${n} has doodoo bref.`,
-          `${n}, Do you remember... the 21st night of September?`,
+          `${n} is morbing`,
+  `${n} tell me about the rabbits`
+  `${n} I know where you live`
+  `${n} was born July of 2006`
+  `${n}'s social security number 478-67-9163`
+  `${n} do you know da way?`
+  `${n} solos Goku in a fight`
+  `${n} October 5th 2036 5:48 pm be there or be square`
+  `${n} is the heir to all the denny's in` + countryList[Math.floor(Math.random() * countryList.length)]
+  `${n} know's Mr. Landgreen's big secret`
+  `${n} what did you do to get banned from` + countryList[Math.floor(Math.random() * countryList.length)] + `?`
+  `${n} was kidnapped by a` + animals[Math.floor(Math.random() * animals.length)] + `from` + countryList[Math.floor(Math.random() * countryList.length)]
+  `${n} do you know a place Where the grass is really greener? Where it's Warm, wet n' wild and where, there must be something in the water`
+  `${n} why? Just why?`
+  `${n} Did you know that the ratio of sheep to people in New Zealand is 6 to 1`
+  `${n} stayed up all night watching top 10 best among us imposter plays of 2022`
+  `${n} I challenge you to a duel!!! Meet me at Tombstone, Arizona on October 7th at 4:36 am. canon Yugioh Cards only`
+  `${n} did you know that 85.9% of Nevada is owned by the government and that 95.8% of Alaska is owned by the government`
+  `${n} You are looking mad goofy today. Like how does someone look that goofy`
+  `${n} knows that the fox says`
+  `${n} doesn't like le epic troll face`
+  `${n} do you have 6 fingers on your right hand?`
+  `Le oui oui oui oui baguette ${n}`
+          `${n} and ${nextTo} play Rock paper scissors.`,
+          `${n} secretly visits Ohio.`,
+          `${n} has a stain on their shirt.`,
+          `${n}'s shoes are untied.'`,
+          `${n} thinks Chick-fil-A sucks.`,
+          `¿Habla usted español ${n}?`,
+          `What's crackalackin, ${n}?`,
+          `What's your favorite bug, ${n}?`,
+          `What's 91 divided by 13, ${n}?`,
+          `Do you like snakes, ${n}? `,
+          `What color snake would look the best, ${n}?`,
+          `${n}, name an s-tier food.`,
+          `${n}, what's the best fast food chain? (Chick-fil-A and In-N-Out aren't options.)`,
+          `${n}, what's a talent you have?`,
+          `${n} ` + senses[Math.floor(Math.random() * senses.length)] + " " + celebrity[Math.floor(Math.random() * celebrity.length)],
+          `${n} is feeling ` + emotions[Math.floor(Math.random() * emotions.length)],
+          `${n} has committed multiple atrocities in ` + countryList[Math.floor(Math.random() * countryList.length)],
           `${n} secretly loves fidget spinners`,
           `Everyone make eye contact with ${n} for 5 seconds.`,
           `${n} is the type of student to remind the teacher to collect the homework.`,
-          // `I'm thinking of a name that starts with the letter ${n[0]}... It's ${n}`,
+          `I'm thinking of a name that starts with the letter ${n[0]}... It's ${n}`,
           `The name’s ${n}... James ${n}.`,
           `${n} doesn't look like they're paying attention.`,
           `I know what you did ${n}. You can't hide it forever.`,
@@ -427,7 +685,6 @@ let p = new Vue({
           oh[Math.floor(Math.random() * oh.length)] + " " + n + " ... hi!",
           "This " + animals[Math.floor(Math.random() * animals.length)] + " thinks " + n + " is really cool.",
           n + " tell me your favorite color.",
-          n + "  is your favorite color " + colors[Math.floor(Math.random() * colors.length)] + "?",
           n + " has a pet " + animals[Math.floor(Math.random() * animals.length)],
           oh[Math.floor(Math.random() * oh.length)] + ", The time is " + time.hour + ":" + time.min + " " + time.noon + ", also I pick " + n,
           n + " " + thing[Math.floor(Math.random() * thing.length)],
@@ -456,8 +713,8 @@ let p = new Vue({
           n + " ... hey " + n + " ... " + n + " ... hey ... hello " + n + " ... " + n,
           "I choose you ... " + n
         ];
-        say = sayThis[Math.floor(Math.random() * sayThis.length)]; //pick a random array index to say
-        //const say = sayThis[0]; //says the first command in array for testing
+        // say = sayThis[Math.floor(Math.random() * sayThis.length)]; //pick a random array index to say
+        say = sayThis[0]; //says the first command in array for testing
       } else {
         //non verbose mode
         say = this.layout[PICK].name;
@@ -469,19 +726,13 @@ let p = new Vue({
   }
 });
 p.unFocusAll(); //clear all after load
-
 function speech(say) {
   if ("speechSynthesis" in window) {
     let utterance = new SpeechSynthesisUtterance(say);
     //msg.voice = voices[10]; // Note: some voices don't support altering params
     //msg.voiceURI = 'native';
     //utterance.volume = 1; // 0 to 1
-    if (say.length > 75) {
-      utterance.rate = Math.min(1.35, 1 + (say.length - 75) * 0.007); // 0.1 to 10
-    } else {
-      utterance.rate = 1; // 0.1 to 10
-    }
-
+    utterance.rate = 1; // 0.1 to 10
     //utterance.pitch = 0.8; //0 to 2
     //utterance.text = 'Hello World';
     // utterance.lang = "en-GB";
@@ -492,7 +743,6 @@ function speech(say) {
     //   for(var i = 0; i < voices.length; i++ ) {
     //     console.log("Voice " + i.toString() + ' ' + voices[i].name + ' ' + voices[i].uri);
     //   }
-    // console.log(utterance)
     speechSynthesis.speak(utterance);
   }
 }
