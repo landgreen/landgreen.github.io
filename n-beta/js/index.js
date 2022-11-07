@@ -433,7 +433,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
             if (m.fieldMode !== index) {
                 document.getElementById("field-" + m.fieldMode).classList.remove("build-field-selected");
                 m.setField(index)
-                who.classList.add("build-field-selected");
+                document.getElementById("field-" + index).classList.add("build-field-selected");
             } else if (m.fieldMode === 4) {
                 const i = 4 //update experiment text
                 simulation.molecularMode++
@@ -594,23 +594,11 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
             //original
             // text += `<div id ="field-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'field')"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}</div>`
 
-            //img > title > description
-
-            // let link = "img/molecular assembler.png"
-            const link = `img/${m.fieldUpgrades[i].name}.png`
-            text += `<div class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'field')" style="background-image: url('${link}'); height:340px; width:288; background-repeat: no-repeat;  display: flex; justify-content: flex-end;flex-direction: column; padding:0px;" >
-<div class="card-text" id ="field-${i}" onclick="build.choosePowerUp(this,${i},'field')">
-<div class="grid-title" style = " "><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
-${m.fieldUpgrades[i].description}</div></div>`
-
-
-            // //img > title > description
-            // const link = "img/molecular assembler.png"
-            // text += `<div id ="field-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'field')" style="background-image: url('${link}'); height: 256px; background-size: 100%; display: flex; justify-content: flex-end;flex-direction: column" >
-            // <div style = "background-color: rgba(255,255,255,0.9); border-radius: 10px; padding:5px;">
-            // <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
-            // ${m.fieldUpgrades[i].description}</div></div>`
-
+            text += `<div class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'field')" style="background-image: url('img/${m.fieldUpgrades[i].name}.png');" >
+                    <div class="card-text" id ="field-${i}" >
+                    <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
+                    ${m.fieldUpgrades[i].description}</div>
+                    </div>`
 
         }
         for (let i = 0, len = b.guns.length; i < len; i++) {

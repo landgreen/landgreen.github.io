@@ -763,9 +763,22 @@ const powerUps = {
         },
         effect() {
             if (m.alive) {
-                let text = ""
-                if (!tech.isSuperDeterminism) text += `<div class='cancel' onclick='powerUps.endDraft("field",true)'>${tech.isCancelTech ? "?":"✕"}</div>`
-                text += `<h3 style = 'color:#fff; text-align:left; margin: 0px;'>field</h3>`
+                let text = "<div class='choose-grid-module'>"
+                // if (!tech.isSuperDeterminism) text += `<div class='cancel' onclick='powerUps.endDraft("field",true)'>${tech.isCancelTech ? "?":"✕"}</div>`
+                // text += `<h3 style = 'color:#fff; text-align:left; margin: 0px;'>field</h3>`
+                if (!tech.isSuperDeterminism) text += `<div class='' onclick='powerUps.endDraft("field",true)'>field ${tech.isCancelTech ? "?":"✕"}</div>`
+
+                if (tech.isJunkResearch && powerUps.research.currentRerollCount < 3) {
+                    tech.junkResearchNumber = Math.ceil(4 * Math.random())
+                    text += `<div  onclick="powerUps.research.use('field')"><div class="grid-title"> <span style="position:relative;">`
+                    for (let i = 0; i < tech.junkResearchNumber; i++) text += `<div class="circle-grid junk" style="position:absolute; top:0; left:${15*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
+                    text += `</span>&nbsp; <span class='research-select'>pseudoscience</span></div></div>`
+                } else if (powerUps.research.count) {
+                    text += `<div  onclick="powerUps.research.use('field')"><div class="grid-title"> <span style="position:relative;">`
+                    for (let i = 0, len = Math.min(powerUps.research.count, 30); i < len; i++) text += `<div class="circle-grid research" style="position:absolute; top:0; left:${(18 - len*0.3)*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
+                    text += `</span>&nbsp; <span class='research-select'>${tech.isResearchReality?"<span class='alt'>alternate reality</span>": "research"}</span></div></div>`
+                }
+                text += '</div>'
 
                 let options = [];
                 for (let i = 1; i < m.fieldUpgrades.length; i++) { //skip field emitter
@@ -792,7 +805,26 @@ const powerUps = {
                 if (options.length > 0 || tech.isExtraBotOption) {
                     for (let i = 0; i < totalChoices; i++) {
                         const choose = options[Math.floor(Math.seededRandom(0, options.length))] //pick an element from the array of options
-                        text += `<div class="choose-grid-module" onclick="powerUps.choose('field',${choose})"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[choose].name}</div> ${m.fieldUpgrades[choose].description}</div>`
+
+
+
+                        //default
+                        //text += `<div class="choose-grid-module" onclick="powerUps.choose('field',${choose})"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[choose].name}</div> ${m.fieldUpgrades[choose].description}</div>`
+                        text += `<div class="choose-grid-module card-background" onclick="powerUps.choose('field',${choose})" style="background-image: url('img/${m.fieldUpgrades[choose].name}.png');">
+                                <div class="card-text">
+                                <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[choose].name}</div>
+                                ${m.fieldUpgrades[choose].description}</div>
+                                </div>`
+
+
+                        //from experiment mode
+                        // text += `<div class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'field')" style="background-image: url('img/${m.fieldUpgrades[i].name}.png');" >
+                        //         <div class="card-text" id ="field-${i}">
+                        //         <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
+                        //         ${m.fieldUpgrades[i].description}</div>
+                        //         </div>`
+
+
                         m.fieldUpgrades[choose].isRecentlyShown = true
                         removeOption(choose)
                         if (options.length < 1) break
@@ -808,16 +840,7 @@ const powerUps = {
                             text += `<div class="choose-grid-module" onclick="powerUps.choose('tech',${choose})"><div class="grid-title"> <span id = "cellular-rule-id${this.id}" style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span>  &nbsp; ${tech.tech[choose].name} ${isCount}</div>${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div>`
                         }
                     }
-                    if (tech.isJunkResearch && powerUps.research.currentRerollCount < 3) {
-                        tech.junkResearchNumber = Math.ceil(4 * Math.random())
-                        text += `<div class="choose-grid-module" onclick="powerUps.research.use('field')"><div class="grid-title"> <span style="position:relative;">`
-                        for (let i = 0; i < tech.junkResearchNumber; i++) text += `<div class="circle-grid junk" style="position:absolute; top:0; left:${15*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
-                        text += `</span>&nbsp; <span class='research-select'>pseudoscience</span></div></div>`
-                    } else if (powerUps.research.count) {
-                        text += `<div class="choose-grid-module" onclick="powerUps.research.use('field')"><div class="grid-title"> <span style="position:relative;">`
-                        for (let i = 0, len = Math.min(powerUps.research.count, 30); i < len; i++) text += `<div class="circle-grid research" style="position:absolute; top:0; left:${(18 - len*0.3)*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
-                        text += `</span>&nbsp; <span class='research-select'>${tech.isResearchReality?"<span class='alt'>alternate reality</span>": "research"}</span></div></div>`
-                    }
+
                     document.getElementById("choose-grid").innerHTML = text
                     powerUps.showDraft();
                 }

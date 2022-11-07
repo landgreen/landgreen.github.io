@@ -1,5 +1,5 @@
 :root {
-    --build-bg-color: #a4afbe;
+    --build-bg-color: #b5bfce;
 }
 
 body {
@@ -188,15 +188,20 @@ summary {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 10px;
-    grid-gap: 10px;
+
+    padding: 10px 1px;
+    grid-gap: 20px;
     margin: 0px;
-    border-radius: 8px;
+    border: 0px;
     z-index: 12;
-    background-color: #444;
-    grid-template-columns: repeat(auto-fit, 400px);
+    /* background-color: #444; */
+    /* background-color: var(--build-bg-color); */
+    grid-template-columns: repeat(auto-fit, 384px);
+    grid-auto-rows: auto;
+    /* grid-auto-flow: column; */
+    /* grid-template-columns: repeat(auto-fit, 400px); */
     /* grid-template-columns: repeat(auto-fit, minmax(360px, 450px));     */
-    /* grid-auto-rows: minmax(auto, auto); */
+    /* grid-auto-rows: minmax(auto, 384px); */
     /* grid-auto-rows: 1; */
     font-size: 1.3em;
     /* box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25); */
@@ -205,7 +210,7 @@ summary {
     opacity: 0;
     transition: opacity 0.25s linear;
     align-content: start;
-    max-height: 100vh;
+    max-height: 99vh;
     overflow: auto;
 
 }
@@ -213,9 +218,12 @@ summary {
 .choose-grid-module {
     padding: 10px;
     line-height: 170%;
-    border-radius: 6px;
-    background-color: #fff;
-    font-size: 0.8em;
+    border-radius: 8px;
+    background-color: #fafcfd;
+    font-size: 0.65em;
+
+    border: 2px #444 solid;
+
 }
 
 .choose-grid-module:hover {
@@ -299,10 +307,11 @@ summary {
 
 .experiment-grid-module {
     margin: -0.5px;
+    
     padding: 10px;
     line-height: 170%;
     border-radius: 8px;
-    border: 2px #17263b solid;
+    border: 2px #444 solid;
     background-color: #fafcfd;
 
     line-height: 170%;
@@ -337,11 +346,21 @@ summary {
     background-color: #efeff5;
 }
 
+.card-background {
+    height:340px; 
+    width:288; 
+    background-repeat: no-repeat; 
+    display: flex; 
+    justify-content:flex-end;
+    flex-direction: column; 
+    padding:0px;
+}
+
 .card-text {
     background-color: rgba(255,255,255,1); 
     border-radius: 8px;
-     padding:5px; 
-     border: 2px solid #17263b; 
+     padding: 10px; 
+     border: 2px solid #444; 
      margin: -2px;
 }
 .card-text:hover {

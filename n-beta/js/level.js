@@ -21,7 +21,7 @@ const level = {
             // level.difficultyIncrease(15 * 4) //30 is near max on hard  //60 is near max on why
             // m.maxHealth = m.health = 100
             // tech.isRerollDamage = true
-            // powerUps.research.changeRerolls(1000)
+            powerUps.research.changeRerolls(1000)
             // m.immuneCycle = Infinity //you can't take damage
             // tech.tech[297].frequency = 100
             // m.couplingChange(5)
@@ -33,8 +33,8 @@ const level = {
             // b.guns[0].ammo = 10000
             // tech.giveTech("plasma ball")
             // tech.giveTech("dye laser")
+            for (let i = 0; i < 30; ++i) tech.giveTech("emergence")
             // for (let i = 0; i < 1; ++i) tech.giveTech("railgun")
-            // for (let i = 0; i < 3; ++i) tech.giveTech("Bitter electromagnet")
             // for (let i = 0; i < 1; i++) tech.giveTech("capacitor bank")
             // for (let i = 0; i < 9; i++) tech.giveTech("heuristics")
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
