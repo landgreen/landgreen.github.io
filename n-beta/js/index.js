@@ -1,7 +1,10 @@
 "use strict";
 
 //convert text into numbers for seed
-Math.hash = s => { for (var i = 0, h = 9; i < s.length;) h = Math.imul(h ^ s.charCodeAt(i++), 9 ** 9); return h ^ h >>> 9 }
+Math.hash = s => {
+    for (var i = 0, h = 9; i < s.length;) h = Math.imul(h ^ s.charCodeAt(i++), 9 ** 9);
+    return h ^ h >>> 9
+}
 
 // const date1 = new Date()
 // console.log(date1.getUTCHours())
@@ -11,7 +14,7 @@ Math.hash = s => { for (var i = 0, h = 9; i < s.length;) h = Math.imul(h ^ s.cha
 
 document.getElementById("seed").placeholder = Math.initialSeed = String(Math.floor(Date.now() % 100000))
 Math.seed = Math.abs(Math.hash(Math.initialSeed)) //update randomizer seed in case the player changed it
-Math.seededRandom = function(min = 0, max = 1) { // in order to work 'Math.seed' must NOT be undefined
+Math.seededRandom = function (min = 0, max = 1) { // in order to work 'Math.seed' must NOT be undefined
     Math.seed = (Math.seed * 9301 + 49297) % 233280;
     return min + Math.seed / 233280 * (max - min);
 }
@@ -97,7 +100,7 @@ const color = { //light
 //difficulty is 0 easy, 1 normal, 2 hard, 4 why
 function getUrlVars() {
     let vars = {};
-    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, k, v) {
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, k, v) {
         vars[k] = v;
     });
     return vars;
@@ -198,7 +201,7 @@ const ctx = canvas.getContext("2d");
 document.body.style.backgroundColor = "#fff";
 
 //disable pop up menu on right click
-document.oncontextmenu = function() {
+document.oncontextmenu = function () {
     return false;
 }
 
@@ -282,9 +285,6 @@ const build = {
     },
     pauseGrid() {
         // build.pixelDraw();
-
-
-
 
 
         //used for junk estimation
@@ -702,15 +702,19 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
         }
         console.log('n-gon build URL copied to clipboard.\nPaste into browser address bar.')
         console.log(url)
-        navigator.clipboard.writeText(url).then(function() {
+        navigator.clipboard.writeText(url).then(function () {
             /* clipboard successfully set */
             if (isCustom) {
-                setTimeout(function() { alert('n-gon build URL copied to clipboard.\nPaste into browser address bar.') }, 300);
+                setTimeout(function () {
+                    alert('n-gon build URL copied to clipboard.\nPaste into browser address bar.')
+                }, 300);
             }
-        }, function() {
+        }, function () {
             /* clipboard write failed */
             if (isCustom) {
-                setTimeout(function() { alert('copy failed') }, 300);
+                setTimeout(function () {
+                    alert('copy failed')
+                }, 300);
             }
             console.log('copy failed')
         });
@@ -950,14 +954,14 @@ document.getElementById("control-table").addEventListener('click', (event) => {
         window.addEventListener("keydown", input.setKeys);
     }
 });
-document.getElementById("control-details").addEventListener("toggle", function() {
+document.getElementById("control-details").addEventListener("toggle", function () {
     input.controlTextUpdate()
     input.endKeySensing();
 })
 
 document.getElementById("control-reset").addEventListener('click', input.setDefault);
 
-window.addEventListener("keyup", function(event) {
+window.addEventListener("keyup", function (event) {
     switch (event.code) {
         case input.key.right:
         case "ArrowRight":
@@ -984,7 +988,7 @@ window.addEventListener("keyup", function(event) {
     }
 });
 
-window.addEventListener("keydown", function(event) {
+window.addEventListener("keydown", function (event) {
     // console.log(event.code)
     switch (event.code) {
         case input.key.right:
@@ -1021,7 +1025,7 @@ window.addEventListener("keydown", function(event) {
         case input.key.pause:
             if (!simulation.isChoosing && input.isPauseKeyReady && m.alive) {
                 input.isPauseKeyReady = false
-                setTimeout(function() {
+                setTimeout(function () {
                     input.isPauseKeyReady = true
                 }, 300);
                 if (simulation.paused) {
@@ -1232,8 +1236,12 @@ window.addEventListener("keydown", function(event) {
                 break
             case "j":
                 for (let i = 0, len = mob.length; i < len; ++i) mob[i].damage(Infinity, true)
-                setTimeout(() => { for (let i = 0, len = mob.length; i < len; ++i) mob[i].damage(Infinity, true) }, 100);
-                setTimeout(() => { for (let i = 0, len = mob.length; i < len; ++i) mob[i].damage(Infinity, true) }, 200);
+                setTimeout(() => {
+                    for (let i = 0, len = mob.length; i < len; ++i) mob[i].damage(Infinity, true)
+                }, 100);
+                setTimeout(() => {
+                    for (let i = 0, len = mob.length; i < len; ++i) mob[i].damage(Infinity, true)
+                }, 200);
                 break
             case "l":
                 document.getElementById("field").style.display = "none"
@@ -1334,7 +1342,9 @@ if (localstorageCheck()) {
     }
 } else {
     console.log("localStorage is disabled")
-    localSettings = { isAllowed: false }
+    localSettings = {
+        isAllowed: false
+    }
 }
 
 if (localSettings.isAllowed && !localSettings.isEmpty) {
@@ -1449,10 +1459,10 @@ document.getElementById("difficulty-select").addEventListener("input", () => {
 });
 
 
-document.getElementById("updates").addEventListener("toggle", function() {
+document.getElementById("updates").addEventListener("toggle", function () {
     function loadJSON(path, success, error) { //generic function to get JSON
         var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     if (success)
@@ -1471,7 +1481,7 @@ document.getElementById("updates").addEventListener("toggle", function() {
 
     ///  https://api.github.com/repos/landgreen/n-gon/stats/commit_activity
     loadJSON('https://api.github.com/repos/landgreen/n-gon/commits',
-        function(data) {
+        function (data) {
             // console.log(data)
             for (let i = 0, len = 20; i < len; i++) {
                 text += "<strong>" + data[i].commit.author.date.substr(0, 10) + "</strong> - "; //+ "<br>"
@@ -1480,7 +1490,7 @@ document.getElementById("updates").addEventListener("toggle", function() {
             }
             document.getElementById("updates-div").innerHTML = text.replace(/\n/g, "<br />")
         },
-        function(xhr) {
+        function (xhr) {
             console.error(xhr);
         }
     );

@@ -184,35 +184,44 @@ summary {
 }
 
 #choose-grid {
+    /* background-color: #444; */
+    /* background-color: var(--build-bg-color); */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
+    
     padding: 10px 1px;
     grid-gap: 20px;
     margin: 0px;
     border: 0px;
     z-index: 12;
-    /* background-color: #444; */
-    /* background-color: var(--build-bg-color); */
-    grid-template-columns: repeat(auto-fit, 384px);
-    grid-auto-rows: auto;
-    /* grid-auto-flow: column; */
+    max-height: 99vh;
+    font-size: 1.3em;
+
+    display: grid;
+    /* grid-template-columns: repeat(3, 384px); */
+    grid-template-columns: 384px 384px 384px;
+    
+    /* grid-template-rows: repeat(auto-fit, 384px); */
+    /* grid-column-start: 1; */
+    /* grid-template-columns: repeat(auto-fit, 384px); */
     /* grid-template-columns: repeat(auto-fit, 400px); */
     /* grid-template-columns: repeat(auto-fit, minmax(360px, 450px));     */
-    /* grid-auto-rows: minmax(auto, 384px); */
-    /* grid-auto-rows: 1; */
-    font-size: 1.3em;
-    /* box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25); */
-    display: grid;
+    /* grid-auto-rows: auto; */
+    align-items: stretch;
+    /* align-content: start; */
+    
+    /* grid-auto-rows: minmax(auto, 140px); */
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.25s linear;
-    align-content: start;
-    max-height: 99vh;
     overflow: auto;
-
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+#choose-grid::-webkit-scrollbar {
+    display: none;
 }
 
 .choose-grid-module {
@@ -221,9 +230,8 @@ summary {
     border-radius: 8px;
     background-color: #fafcfd;
     font-size: 0.65em;
-
     border: 2px #444 solid;
-
+    /* box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25); */
 }
 
 .choose-grid-module:hover {
@@ -262,12 +270,24 @@ summary {
     position: relative;
     overflow: auto;
     max-height: 100vh;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#pause-grid-right::-webkit-scrollbar {
+    display: none;
 }
 
 #pause-grid-left {
     position: relative;
     overflow: auto;
     max-height: 100vh;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#pause-grid-left::-webkit-scrollbar {
+    display: none;
 }
 
 .pause-grid-module {
@@ -303,6 +323,11 @@ summary {
     bottom: 0px;
     z-index: 10;
     font-size: 1.3em;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+#experiment-grid::-webkit-scrollbar {
+    display: none;
 }
 
 .experiment-grid-module {

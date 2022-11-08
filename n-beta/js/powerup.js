@@ -325,10 +325,10 @@ const powerUps = {
                 ctx.fillStyle = `rgba(221,221,221,0.6)`;
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             });
-            document.getElementById("pause-grid-right").style.opacity = "0.7"
-            document.getElementById("pause-grid-left").style.opacity = "0.7"
+            // document.getElementById("pause-grid-right").style.opacity = "0.7"
+            // document.getElementById("pause-grid-left").style.opacity = "0.7"
         }
-        build.pauseGrid()
+        // build.pauseGrid()
     },
     endDraft(type, isCanceled = false) { //type should be a gun, tech, or field
         if (isCanceled) {
@@ -763,11 +763,10 @@ const powerUps = {
         },
         effect() {
             if (m.alive) {
-                let text = "<div class='choose-grid-module'>"
-                // if (!tech.isSuperDeterminism) text += `<div class='cancel' onclick='powerUps.endDraft("field",true)'>${tech.isCancelTech ? "?":"✕"}</div>`
-                // text += `<h3 style = 'color:#fff; text-align:left; margin: 0px;'>field</h3>`
-                if (!tech.isSuperDeterminism) text += `<div class='' onclick='powerUps.endDraft("field",true)'>field ${tech.isCancelTech ? "?":"✕"}</div>`
-
+                let text = "<div class='choose-grid-module'>field</div>"
+                // text += `<h3 style = 'color:#fff; text-align:left; margin: 0px;'>field</h3>` //title, not really needed though
+                //research and cancel
+                text += "<div class='choose-grid-module'>"
                 if (tech.isJunkResearch && powerUps.research.currentRerollCount < 3) {
                     tech.junkResearchNumber = Math.ceil(4 * Math.random())
                     text += `<div  onclick="powerUps.research.use('field')"><div class="grid-title"> <span style="position:relative;">`
@@ -779,6 +778,13 @@ const powerUps = {
                     text += `</span>&nbsp; <span class='research-select'>${tech.isResearchReality?"<span class='alt'>alternate reality</span>": "research"}</span></div></div>`
                 }
                 text += '</div>'
+                //cancel
+                // if (!tech.isSuperDeterminism) text += `<div class='cancel' onclick='powerUps.endDraft("field",true)'>${tech.isCancelTech ? "?":"✕"}</div>`
+                if (!tech.isSuperDeterminism) {
+                    text += `<div class='choose-grid-module' onclick='powerUps.endDraft("field",true)' style = "align-self: start;">${tech.isCancelTech ? "?":"✕"}</div>`
+                } else {
+                    text += `<div class='choose-grid-module'  style = "align-self: start;">no</div>`
+                }
 
                 let options = [];
                 for (let i = 1; i < m.fieldUpgrades.length; i++) { //skip field emitter
@@ -1117,7 +1123,9 @@ const powerUps = {
     entanglement: {
         name: "entanglement",
         color: "#fff", //"hsl(248,100%,65%)",
-        size() { return 40 },
+        size() {
+            return 40
+        },
         effect() {
             if (m.alive && localSettings.entanglement) {
                 let text = ""
@@ -1175,7 +1183,10 @@ const powerUps = {
                 if (m.alive) requestAnimationFrame(cycle);
                 if (!simulation.paused && !simulation.isChoosing) { //&& !(simulation.cycle % 2)
                     count--
-                    const where = { x: m.pos.x + 50 * (Math.random() - 0.5), y: m.pos.y + 50 * (Math.random() - 0.5) }
+                    const where = {
+                        x: m.pos.x + 50 * (Math.random() - 0.5),
+                        y: m.pos.y + 50 * (Math.random() - 0.5)
+                    }
                     powerUps.spawn(where.x, where.y, type);
                 }
             }
@@ -1190,7 +1201,10 @@ const powerUps = {
             if (tech.isLaserMine && input.down) {
                 b.laserMine(who.position)
             } else {
-                b.mine(who.position, { x: 0, y: 0 }, 0)
+                b.mine(who.position, {
+                    x: 0,
+                    y: 0
+                }, 0)
             }
         }
         if (tech.isRelay) {
