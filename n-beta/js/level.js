@@ -21,7 +21,7 @@ const level = {
             // level.difficultyIncrease(15 * 4) //30 is near max on hard  //60 is near max on why
             // m.maxHealth = m.health = 100
             // tech.isRerollDamage = true
-            powerUps.research.changeRerolls(1000)
+            powerUps.research.changeRerolls(3)
             // m.immuneCycle = Infinity //you can't take damage
             // tech.tech[297].frequency = 100
             // m.couplingChange(5)
@@ -33,10 +33,10 @@ const level = {
             // b.guns[0].ammo = 10000
             // tech.giveTech("plasma ball")
             // tech.giveTech("dye laser")
-            for (let i = 0; i < 3; ++i) tech.giveTech("emergence")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("railgun")
-            // for (let i = 0; i < 1; i++) tech.giveTech("capacitor bank")
-            // for (let i = 0; i < 9; i++) tech.giveTech("heuristics")
+            // for (let i = 0; i < 4; ++i) tech.giveTech("emergence")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("pseudoscience")
+            // for (let i = 0; i < 1; i++) tech.giveTech("determinism")
+            // for (let i = 0; i < 9; i++) tech.giveTech("superdeterminism")
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");
@@ -53,10 +53,11 @@ const level = {
             // for (let i = 0; i < 13; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "research");
 
             if (simulation.isTraining) {
-                level.walk();
+                level.walk()
             } else {
-                level.intro();
+                level.intro()
             } //normal starting level ************************************************
+
             for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "field");
             // for (let i = 0; i < 30; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "tech", false);
 
@@ -199,7 +200,7 @@ const level = {
         m.dmgScale = 1; //damage done by player decreases each level
         simulation.accelScale = 1 //mob acceleration increases each level
         simulation.CDScale = 1 //mob CD time decreases each level
-        simulation.dmgScale = Math.max(0.1, 0.33 * simulation.difficulty) //damage done by mobs scales with total levels
+        simulation.dmgScale = Math.max(0.1, 0.32 * simulation.difficulty) //damage done by mobs scales with total levels
         simulation.healScale = 1 / (1 + simulation.difficulty * 0.05) //a higher denominator makes for lower heals // m.health += heal * simulation.healScale;
     },
     difficultyIncrease(num = 1) {
@@ -209,7 +210,7 @@ const level = {
             if (simulation.accelScale < 6) simulation.accelScale *= 1.024 //mob acceleration increases each level
             if (simulation.CDScale > 0.15) simulation.CDScale *= 0.964 //mob CD time decreases each level
         }
-        simulation.dmgScale = Math.max(0.1, 0.33 * simulation.difficulty) //damage done by mobs scales with total levels
+        simulation.dmgScale = Math.max(0.1, 0.32 * simulation.difficulty) //damage done by mobs scales with total levels
         simulation.healScale = 1 / (1 + simulation.difficulty * 0.05) //a higher denominator makes for lower heals // m.health += heal * simulation.healScale;
         // console.log(`CD = ${simulation.CDScale}`)
     },
@@ -221,7 +222,7 @@ const level = {
             if (simulation.CDScale < 1) simulation.CDScale /= 0.964 //mob CD time decreases each level
         }
         if (simulation.difficulty < 1) simulation.difficulty = 0;
-        simulation.dmgScale = Math.max(0.1, 0.33 * simulation.difficulty) //damage done by mobs scales with total levels
+        simulation.dmgScale = Math.max(0.1, 0.32 * simulation.difficulty) //damage done by mobs scales with total levels
         simulation.healScale = 1 / (1 + simulation.difficulty * 0.05)
     },
     difficultyText() {
