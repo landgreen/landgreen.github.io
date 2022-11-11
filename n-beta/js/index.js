@@ -550,8 +550,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
     },
     populateGrid() { //background-color:var(--build-bg-color);
         let text = `
-  <div class="experiment-grid-module" style="align-items: center; text-align:center; font-size: 1.00em; line-height: 180%; background-color: #fafcfd;">  
-<br>
+  <div class="experiment-grid-module" style="font-size: 1.00em; line-height: 180%; background-color: #fafcfd;display: flex; flex-direction: column; justify-content: center; align-items: center;">  
 <div>
     <svg class="SVG-button" onclick="build.startExperiment()" width="150" height="68">
         <g stroke='none' fill='#333' stroke-width="2" font-size="60px" font-family="Ariel, sans-serif">
@@ -559,7 +558,6 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
         </g>
     </svg>
 </div>
-<br>
 <div>
     <svg class="SVG-button" onclick="build.reset()" width="50" height="25">
         <g stroke='none' fill='#333' stroke-width="2" font-size="17px" font-family="Ariel, sans-serif">
@@ -594,7 +592,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
             //original
             // text += `<div id ="field-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'field')"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}</div>`
 
-            text += `<div class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'field')" style="background-image: url('img/${m.fieldUpgrades[i].name}.png');" >
+            text += `<div class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'field')" style="background-image: url('img/field/${m.fieldUpgrades[i].name}.png');" >
                     <div class="card-text" id ="field-${i}" >
                     <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
                     ${m.fieldUpgrades[i].description}</div>

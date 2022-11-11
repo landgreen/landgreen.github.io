@@ -5853,7 +5853,7 @@ const b = {
         },
         {
             name: "shotgun", //1
-            description: "fire a wide <strong>burst</strong> of short range <strong> bullets</strong>",
+            description: "fire a wide <strong>burst</strong> of short range <strong> bullets</strong><br>with a low <strong><em>fire rate</em></strong>",
             ammo: 0,
             ammoPack: 3.5,
             defaultAmmoPack: 3.5,
@@ -6698,7 +6698,7 @@ const b = {
         },
         {
             name: "missiles", //6
-            description: "launch <strong>homing</strong> missiles that <strong class='color-e'>explode</strong>",
+            description: "launch <strong>homing</strong> missiles that target mobs<br>missiles <strong class='color-e'>explode</strong> on contact with mobs",
             ammo: 0,
             ammoPack: 5,
             have: false,

@@ -619,6 +619,33 @@ const powerUps = {
             }
         }
     },
+    cancelText(type) {
+        if (tech.isSuperDeterminism) {
+            return `<div></div>`
+        } else if (tech.isCancelTech) {
+            return `<div class='choose-grid-module' onclick='powerUps.endDraft("${type}",true)' style="width: 92px; text-align: center;font-size: 1.1em;font-weight: 600;justify-self: end;">randomize</div>`
+        } else {
+            return `<div class='choose-grid-module' onclick='powerUps.endDraft("${type}",true)' style="width: 82px; text-align: center;font-size: 1.1em;font-weight: 600;justify-self: end;">cancel</div>`
+        }
+    },
+    researchText(type) {
+        let text = ""
+        if (tech.isJunkResearch && powerUps.research.currentRerollCount < 3) {
+            text += `<div onclick="powerUps.research.use('${type}')" class='choose-grid-module' style="font-size: 1.1em;font-weight: 600;">` // style = "margin-left: 192px; margin-right: -192px;"
+            tech.junkResearchNumber = Math.ceil(4 * Math.random())
+            text += `<div><div> <span style="position:relative;">`
+            for (let i = 0; i < tech.junkResearchNumber; i++) text += `<div class="circle-grid junk" style="position:absolute; top:0; left:${15*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
+            text += `</span>&nbsp; <span class='research-select'>pseudoscience</span></div></div></div>`
+        } else if (powerUps.research.count > 0) {
+            text += `<div onclick="powerUps.research.use('${type}')" class='choose-grid-module' style="font-size: 1.1em;font-weight: 600;">` // style = "margin-left: 192px; margin-right: -192px;"
+            text += `<div><div><span style="position:relative;">`
+            for (let i = 0, len = Math.min(powerUps.research.count, 30); i < len; i++) text += `<div class="circle-grid research" style="position:absolute; top:0; left:${(18 - len*0.3)*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
+            text += `</span>&nbsp; <span class='research-select'>${tech.isResearchReality?"<span class='alt'>alternate reality</span>": "research"}</span></div></div></div>`
+        } else {
+            text += `<div></div>`
+        }
+        return text
+    },
     gun: {
         name: "gun",
         color: "#26a",
@@ -627,15 +654,11 @@ const powerUps = {
         },
         effect() {
             if (m.alive) {
-                let text = ""
-                if (!tech.isSuperDeterminism) text += `<div class='cancel' onclick='powerUps.endDraft("gun",true)'>${tech.isCancelTech ? "?":"✕"}</div>`
-                text += `<h3 style = 'color:#fff; text-align:left; margin: 0px;'>gun</h3>`
                 let options = [];
                 for (let i = 0; i < b.guns.length; i++) {
                     if (!b.guns[i].have) options.push(i);
                 }
                 let totalChoices = Math.min(options.length, (tech.isDeterminism ? 1 : 2 + tech.extraChoices + (m.fieldUpgrades[m.fieldMode].name === "pilot wave")))
-                if (totalChoices === 1) text += "<div></div>"
                 if (tech.isFlipFlopChoices) totalChoices += tech.isRelay ? (tech.isFlipFlopOn ? -1 : 7) : (tech.isFlipFlopOn ? 7 : -1) //flip the order for relay
                 function removeOption(index) {
                     for (let i = 0; i < options.length; i++) {
@@ -652,13 +675,34 @@ const powerUps = {
                 }
                 for (let i = 0; i < b.guns.length; i++) b.guns[i].isRecentlyShown = false //reset recently shown back to zero
                 if (options.length > 0) {
+                    let text = ""
+                    if (totalChoices === 2) {
+                        document.getElementById("choose-grid").style.gridTemplateColumns = "384px 384px"
+                        text += powerUps.researchText('gun')
+                        text += powerUps.cancelText('gun')
+                    } else if (totalChoices === 1) {
+                        document.getElementById("choose-grid").style.gridTemplateColumns = "384px"
+                        text += powerUps.cancelText('gun')
+                        text += powerUps.researchText('gun')
+                    } else {
+                        text += "<div></div>"
+                        text += powerUps.researchText('gun')
+                        text += powerUps.cancelText('gun')
+                    }
                     for (let i = 0; i < totalChoices; i++) {
-                        const choose = options[Math.floor(Math.seededRandom(0, options.length))] //pick an element from the array of options
-                        text += `<div class="choose-grid-module" onclick="powerUps.choose('gun',${choose})"><div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${b.guns[choose].name}</div> ${b.guns[choose].description}</div>`
+                        const choose = options[Math.floor(Math.seededRandom(0, options.length))] //pick an element from the array of options                        
+                        // text += `<div class="choose-grid-module" onclick="powerUps.choose('gun',${choose})"><div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${b.guns[choose].name}</div> ${b.guns[choose].description}</div>`
+                        text += `<div class="choose-grid-module card-background" onclick="powerUps.choose('gun',${choose})" style="background-image: url('img/gun/${b.guns[choose].name}.png');">
+                        <div class="card-text">
+                        <div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${b.guns[choose].name}</div>
+                        ${b.guns[choose].description}</div>
+                        </div>`
+
                         b.guns[choose].isRecentlyShown = true
                         removeOption(choose)
                         if (options.length < 1) break
                     }
+
                     if (tech.isExtraBotOption) {
                         const botTech = [] //make an array of bot options
                         for (let i = 0, len = tech.tech.length; i < len; i++) {
@@ -669,16 +713,6 @@ const powerUps = {
                             const isCount = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count+1}x)` : "";
                             text += `<div class="choose-grid-module" onclick="powerUps.choose('tech',${choose})"><div class="grid-title"> <span id = "cellular-rule-id${this.id}" style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span>  &nbsp; ${tech.tech[choose].name} ${isCount}</div>${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div>`
                         }
-                    }
-                    if (tech.isJunkResearch && powerUps.research.currentRerollCount < 3) {
-                        tech.junkResearchNumber = Math.ceil(4 * Math.random())
-                        text += `<div class="choose-grid-module" onclick="powerUps.research.use('gun')"><div class="grid-title"> <span style="position:relative;">`
-                        for (let i = 0; i < tech.junkResearchNumber; i++) text += `<div class="circle-grid junk" style="position:absolute; top:0; left:${15*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
-                        text += `</span>&nbsp; <span class='research-select'>pseudoscience</span></div></div>`
-                    } else if (powerUps.research.count) {
-                        text += `<div class="choose-grid-module" onclick="powerUps.research.use('gun')"><div class="grid-title"> <span style="position:relative;">`
-                        for (let i = 0, len = Math.min(powerUps.research.count, 30); i < len; i++) text += `<div class="circle-grid research" style="position:absolute; top:0; left:${(18 - len*0.3)*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
-                        text += `</span>&nbsp; <span class='research-select'>${tech.isResearchReality?"<span class='alt'>alternate reality</span>": "research"}</span></div></div>`
                     }
                     if (tech.isOneGun && b.inventory.length > 0) text += `<div style = "color: #f24">replaces your current gun</div>`
                     document.getElementById("choose-grid").innerHTML = text
@@ -756,33 +790,6 @@ const powerUps = {
         //     }
         // }
     },
-    cancelText(type) {
-        if (tech.isSuperDeterminism) {
-            return `<div></div>`
-        } else if (tech.isCancelTech) {
-            return `<div class='choose-grid-module' onclick='powerUps.endDraft("${type}",true)' style="width: 92px; text-align: center;font-size: 1.1em;font-weight: 600;justify-self: end;">randomize</div>`
-        } else {
-            return `<div class='choose-grid-module' onclick='powerUps.endDraft("${type}",true)' style="width: 82px; text-align: center;font-size: 1.1em;font-weight: 600;justify-self: end;">cancel</div>`
-        }
-    },
-    researchText(type) {
-        let text = ""
-        if (tech.isJunkResearch && powerUps.research.currentRerollCount < 3) {
-            text += `<div onclick="powerUps.research.use('${type}')" class='choose-grid-module' style="font-size: 1.1em;font-weight: 600;">` // style = "margin-left: 192px; margin-right: -192px;"
-            tech.junkResearchNumber = Math.ceil(4 * Math.random())
-            text += `<div><div> <span style="position:relative;">`
-            for (let i = 0; i < tech.junkResearchNumber; i++) text += `<div class="circle-grid junk" style="position:absolute; top:0; left:${15*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
-            text += `</span>&nbsp; <span class='research-select'>pseudoscience</span></div></div></div>`
-        } else if (powerUps.research.count > 0) {
-            text += `<div onclick="powerUps.research.use('${type}')" class='choose-grid-module' style="font-size: 1.1em;font-weight: 600;">` // style = "margin-left: 192px; margin-right: -192px;"
-            text += `<div><div><span style="position:relative;">`
-            for (let i = 0, len = Math.min(powerUps.research.count, 30); i < len; i++) text += `<div class="circle-grid research" style="position:absolute; top:0; left:${(18 - len*0.3)*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
-            text += `</span>&nbsp; <span class='research-select'>${tech.isResearchReality?"<span class='alt'>alternate reality</span>": "research"}</span></div></div></div>`
-        } else {
-            text += `<div></div>`
-        }
-        return text
-    },
     field: {
         name: "field",
         color: "#0cf",
@@ -798,7 +805,6 @@ const powerUps = {
                 }
                 let totalChoices = Math.min(options.length, (tech.isDeterminism ? 1 : 2 + tech.extraChoices + (m.fieldUpgrades[m.fieldMode].name === "pilot wave")))
                 if (tech.isFlipFlopChoices) totalChoices += tech.isRelay ? (tech.isFlipFlopOn ? -1 : 7) : (tech.isFlipFlopOn ? 7 : -1) //flip the order for relay
-
                 function removeOption(index) {
                     for (let i = 0; i < options.length; i++) {
                         if (options[i] === index) {
@@ -832,7 +838,7 @@ const powerUps = {
                     for (let i = 0; i < totalChoices; i++) {
                         const choose = options[Math.floor(Math.seededRandom(0, options.length))] //pick an element from the array of options
                         //text += `<div class="choose-grid-module" onclick="powerUps.choose('field',${choose})"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[choose].name}</div> ${m.fieldUpgrades[choose].description}</div>`                         //default
-                        text += `<div class="choose-grid-module card-background" onclick="powerUps.choose('field',${choose})" style="background-image: url('img/${m.fieldUpgrades[choose].name}.png');">
+                        text += `<div class="choose-grid-module card-background" onclick="powerUps.choose('field',${choose})" style="background-image: url('img/field/${m.fieldUpgrades[choose].name}.png');">
                                 <div class="card-text">
                                 <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[choose].name}</div>
                                 ${m.fieldUpgrades[choose].description}</div>
