@@ -6930,7 +6930,7 @@ const tech = {
             maxCount: 1,
             count: 0,
             frequency: 2,
-            frequencyDefault: 200,
+            frequencyDefault: 2,
             allowed() {
                 return tech.haveGunCheck("laser") && tech.laserReflections < 3 && !tech.isWideLaser && tech.laserDrain === 0.0018 && !tech.isStuckOn
             },

@@ -623,7 +623,7 @@ const powerUps = {
         if (tech.isSuperDeterminism) {
             return `<div></div>`
         } else if (tech.isCancelTech) {
-            return `<div class='choose-grid-module' onclick='powerUps.endDraft("${type}",true)' style="width: 92px; text-align: center;font-size: 1.1em;font-weight: 600;justify-self: end;">randomize</div>`
+            return `<div class='choose-grid-module' onclick='powerUps.endDraft("${type}",true)' style="width: 115px; text-align: center;font-size: 1.1em;font-weight: 600;justify-self: end;">randomize</div>`
         } else {
             return `<div class='choose-grid-module' onclick='powerUps.endDraft("${type}",true)' style="width: 82px; text-align: center;font-size: 1.1em;font-weight: 600;justify-self: end;">cancel</div>`
         }

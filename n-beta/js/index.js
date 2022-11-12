@@ -414,7 +414,8 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
             for (let i = 0, len = b.inventory.length; i < len; i++) { //look for selection in inventory
                 if (b.guns[b.inventory[i]].name === b.guns[index].name) { //if already clicked, remove gun
                     isDeselect = true
-                    who.classList.remove("build-gun-selected");
+                    document.getElementById("gun-" + b.inventory[i]).classList.remove("build-gun-selected");
+                    // who.classList.remove("build-gun-selected");
                     //remove gun
                     b.inventory.splice(i, 1)
                     b.guns[index].count = 0;
@@ -426,7 +427,8 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                 }
             }
             if (!isDeselect) { //add gun
-                who.classList.add("build-gun-selected");
+                // who.classList.add("build-gun-selected");
+                document.getElementById("gun-" + index).classList.add("build-gun-selected");
                 b.giveGuns(index)
             }
         } else if (type === "field") {
@@ -591,16 +593,18 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
         for (let i = 0, len = m.fieldUpgrades.length; i < len; i++) {
             //original
             // text += `<div id ="field-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'field')"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}</div>`
-
             text += `<div class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'field')" style="background-image: url('img/field/${m.fieldUpgrades[i].name}.png');" >
-                    <div class="card-text" id ="field-${i}" >
+                    <div class="card-text" id="field-${i}">
                     <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
-                    ${m.fieldUpgrades[i].description}</div>
-                    </div>`
-
+                    ${m.fieldUpgrades[i].description}</div> </div>`
         }
         for (let i = 0, len = b.guns.length; i < len; i++) {
-            text += `<div id = "gun-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'gun')"><div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${build.nameLink(b.guns[i].name)}</div> ${b.guns[i].description}</div>`
+            text += `<div class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'gun')" style="background-image: url('img/gun/${b.guns[i].name}.png');" >
+                    <div class="card-text" id="gun-${i}">
+                    <div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${build.nameLink(b.guns[i].name)}</div>
+                    ${b.guns[i].description}</div> </div>`
+            //original
+            // text += `<div id = "gun-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'gun')"><div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${build.nameLink(b.guns[i].name)}</div> ${b.guns[i].description}</div>`
         }
         for (let i = 0, len = tech.tech.length; i < len; i++) {
             if (!tech.tech[i].isJunk || localSettings.isJunkExperiment) {

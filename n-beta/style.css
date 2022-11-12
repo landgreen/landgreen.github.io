@@ -350,6 +350,10 @@ summary {
     line-height: 170%;
     font-size: 0.65em;
 }
+/* .experiment-grid-module .card-text {
+    background-color: #efeff5;
+} */
+
 .experiment-grid-module:hover .card-text:not(.build-tech-selected, .build-field-selected, .build-gun-selected) {
     background-color: #efeff5;
 }

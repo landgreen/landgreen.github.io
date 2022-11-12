@@ -40,7 +40,6 @@ const level = {
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");
-
             // level.testing();
             // spawn.shooter(1900, -500, 200)
             // spawn.starter(1900, -500)
@@ -58,6 +57,7 @@ const level = {
                 level.intro()
             } //normal starting level ************************************************
 
+            for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "tech");
             for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "gun");
             for (let i = 0; i < 2; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "field", false);
 
