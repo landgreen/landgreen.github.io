@@ -1,5 +1,5 @@
 :root {
-    --build-bg-color: #b5bfce;
+    --build-bg-color: #c4ccd8;
 }
 
 body {
@@ -184,38 +184,28 @@ summary {
 }
 
 #choose-grid {
-    /* background-color: #444; */
-    /* background-color: var(--build-bg-color); */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
-    padding: 10px 1px;
-    grid-gap: 20px;
+    padding: 10px;
+    grid-gap: 10px;
     margin: 0px;
-    border: 0px;
+    border-radius: 8px;
     z-index: 12;
-    max-height: 99vh;
-    font-size: 1.3em;
-
-    display: grid;
-    grid-template-columns: repeat(3, 384px);
-    /* grid-template-columns: 384px 384px 384px; */
-    
-    /* grid-template-rows: repeat(auto-fit, 384px); */
-    /* grid-column-start: 1; */
-    /* grid-template-columns: repeat(auto-fit, 384px); */
-    /* grid-template-columns: repeat(auto-fit, 400px); */
+    background-color: #444;
+    grid-template-columns: repeat(auto-fit, 400px);
     /* grid-template-columns: repeat(auto-fit, minmax(360px, 450px));     */
-    /* grid-auto-rows: auto; */
-    align-items: stretch;
-    /* align-content: start; */
-    
-    /* grid-auto-rows: minmax(auto, 140px); */
+    /* grid-auto-rows: minmax(auto, auto); */
+    /* grid-auto-rows: 1; */
+    font-size: 1.3em;
+    /* box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25); */
+    display: grid;
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.25s linear;
+    align-content: start;
+    max-height: 100vh;
     overflow: auto;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
@@ -225,25 +215,15 @@ summary {
 }
 
 .choose-grid-module {
-    padding: 5px;
+    padding: 10px;
     line-height: 170%;
-    border-radius: 8px;
-    background-color: #fafcfd;
-    font-size: 0.75em;
-    border: 2px #444 solid;
-    /* box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25); */
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 0.8em;
 }
 
 .choose-grid-module:hover {
     background-color: #efeff5;
-}
-.choose-grid-module:hover .card-text {
-    background-color: #efeff5;
-}
-
-.research-select {
-    float: right;
-    margin-right:10px;
 }
 
 .cancel {
@@ -309,22 +289,18 @@ summary {
 }
 
 #experiment-grid {
-    display: flex;
-    justify-content: center;
     /* align-content: space-between; */
-    /* padding-top: 10px; */
+    padding: 1px;
     /* padding: 16px; */
-    padding: 10px 1px;
     margin: 0px;
     border: 0px;
     background-color: var(--build-bg-color);
 
     display: none;
-    /* grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); */
-    grid-template-columns: repeat(auto-fit, 384px);
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     grid-auto-flow: row;
     grid-auto-rows: minmax(auto, auto);
-    grid-gap: 20px;
+    grid-gap: 0px;
     /* grid-gap: 16px; */
 
     position: relative;
@@ -340,18 +316,14 @@ summary {
 
 .experiment-grid-module {
     margin: -0.5px;
-    
     padding: 10px;
     line-height: 170%;
-    border-radius: 8px;
-    border: 2px #444 solid;
+    /* border-radius: 6px; */
+    border: 1px #17263b solid;
     background-color: #fafcfd;
 
     line-height: 170%;
     font-size: 0.65em;
-}
-.experiment-grid-module:hover .card-text:not(.build-tech-selected, .build-field-selected, .build-gun-selected) {
-    background-color: #efeff5;
 }
 
 /* .experiment-grid-module-field {
@@ -376,31 +348,9 @@ summary {
     font-weight: 600;
 }
 
-.experiment-grid-module:hover:not(.build-tech-selected, .build-field-selected, .build-gun-selected) {
+.experiment-grid-module:hover {
     background-color: #efeff5;
 }
-
-.card-background {
-    height:340px; 
-    width:288; 
-    background-repeat: no-repeat; 
-    display: flex; 
-    justify-content:flex-end;
-    flex-direction: column; 
-    padding:0px;
-}
-
-.card-text {
-    background-color: rgba(255,255,255,1); 
-    border-radius: 8px;
-    padding: 5px; 
-    border: 2px solid #444; 
-    margin: -2px;
-}
-/* .card-text:hover {
-    background-color: #efeff5;
-} */
-
 
 .build-field-selected {
     background-color: hsl(193, 100%, 75%);
@@ -989,6 +939,10 @@ summary {
 .research {
     /* #f84  #f99*/
     background-color: #f7b;
+}
+
+.research-select {
+    float: right;
 }
 
 .alt {
