@@ -652,11 +652,45 @@ const powerUps = {
         <div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${b.guns[choose].name}</div>
         ${b.guns[choose].description}</div></div>`
     },
-    fieldText(choose) {
-        return `<div class="choose-grid-module card-background" onclick="powerUps.choose('field',${choose})" style="background-image: url('img/field/${m.fieldUpgrades[choose].name}.png');">
+    fieldText(choose, click) {
+        return `<div class="choose-grid-module card-background" onclick="${click}" style="background-image: url('img/field/${m.fieldUpgrades[choose].name}.png');">
         <div class="card-text">
         <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[choose].name}</div>
         ${m.fieldUpgrades[choose].description}</div></div>`
+    },
+    techText(choose) {
+        return `<div class="choose-grid-module card-background" onclick="powerUps.choose('tech',${choose})" style="background-image: url('img/${tech.tech[choose].name}.png');">
+                <div class="card-text">
+                <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[choose].name}</div>
+                ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
+    },
+    fieldTechText(choose) {
+        return `<div class="choose-grid-module card-background" onclick="powerUps.choose('tech',${choose})" style="background-image: url('img/${tech.tech[choose].name}.png');">
+                <div class="card-text">
+                <div class="grid-title">
+                <span style="position:relative;">
+                    <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
+                    <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
+                </span>
+                &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${tech.tech[choose].name}</div>
+                ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
+    },
+    gunTechText(choose) {
+        return `<div class="choose-grid-module card-background" onclick="powerUps.choose('tech',${choose})" style="background-image: url('img/${tech.tech[choose].name}.png');">
+                <div class="card-text">
+                <div class="grid-title">         
+                <span style="position:relative;">
+                    <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
+                    <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
+                </span>
+                &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${tech.tech[choose].name}</div>
+                ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
+    },
+    junkTechText(choose) {
+        return `<div class="choose-grid-module card-background" onclick="powerUps.choose('tech',${choose})">
+                <div class="card-text">
+                <div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[choose].name}</div>
+                ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
     },
     gun: {
         name: "gun",
@@ -778,7 +812,7 @@ const powerUps = {
                     for (let i = 0; i < totalChoices; i++) {
                         const choose = options[Math.floor(Math.seededRandom(0, options.length))] //pick an element from the array of options
                         //text += `<div class="choose-grid-module" onclick="powerUps.choose('field',${choose})"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[choose].name}</div> ${m.fieldUpgrades[choose].description}</div>`                         //default
-                        text += powerUps.fieldText(choose)
+                        text += powerUps.fieldText(choose, `powerUps.choose('field',${choose})`)
                         m.fieldUpgrades[choose].isRecentlyShown = true
                         removeOption(choose)
                         if (options.length < 1) break
@@ -882,41 +916,18 @@ const powerUps = {
                             if (i === 0) simulation.makeTextLog(`options.length = ${optionLengthNoDuplicates}`)
                         }
                         removeOption(choose) //move from future options pool to avoid repeats on this selection
-                        tech.tech[choose].isRecentlyShown = true //this flag prevents this option from being shown the next time you pick up a tech power up 
-                        const description = tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description
+                        tech.tech[choose].isRecentlyShown = true //this flag prevents this option from being shown the next time you pick up a tech power up                         
                         const isCount = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count+1}x)` : "";
                         if (tech.tech[choose].isFieldTech) {
-                            text += `<div class="choose-grid-module card-background" onclick="powerUps.choose('tech',${choose})" style="background-image: url('img/${tech.tech[choose].name}.png');">
-                            <div class="card-text">
-                            <div class="grid-title">
-                            <span style="position:relative;">
-                                <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
-                                <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
-                            </span>
-                            &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${tech.tech[choose].name}</div>
-                            ${description}</div></div>`
+                            text += powerUps.fieldTechText(choose)
                         } else if (tech.tech[choose].isGunTech) {
-                            text += `<div class="choose-grid-module card-background" onclick="powerUps.choose('tech',${choose})" style="background-image: url('img/${tech.tech[choose].name}.png');">
-                            <div class="card-text">
-                            <div class="grid-title">         
-                            <span style="position:relative;">
-                                <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
-                                <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
-                            </span>
-                            &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${tech.tech[choose].name}</div>
-                            ${description}</div></div>`
+                            text += powerUps.gunTechText(choose)
                         } else if (tech.tech[choose].isLore) {
                             text += `<div class="choose-grid-module" onclick="powerUps.choose('tech',${choose})"><div class="grid-title lore-text"><div class="circle-grid lore"></div> &nbsp; ${tech.tech[choose].name} ${isCount}</div>${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div>`
                         } else if (tech.tech[choose].isJunk) {
-                            text += `<div class="choose-grid-module card-background" onclick="powerUps.choose('tech',${choose})">
-                            <div class="card-text">
-                            <div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[choose].name}</div>
-                            ${description}</div></div>`
+                            text += powerUps.junkTechText(choose)
                         } else { //normal tech
-                            text += `<div class="choose-grid-module card-background" onclick="powerUps.choose('tech',${choose})" style="background-image: url('img/${tech.tech[choose].name}.png');">
-                            <div class="card-text">
-                            <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[choose].name}</div>
-                            ${description}</div></div>`
+                            text += powerUps.techText(choose)
                         }
                         if (options.length < 1) break
                     }
@@ -948,7 +959,7 @@ const powerUps = {
                             }
                             const pick = fieldOptions[Math.floor(Math.seededRandom(0, fieldOptions.length))] //pick an element from the array of options
                             // text += `<div class="choose-grid-module" onclick="powerUps.choose('field',${pick})"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[pick].name}</div> ${m.fieldUpgrades[pick].description}</div>`
-                            text += powerUps.fieldText(pick)
+                            text += powerUps.fieldText(pick, `powerUps.choose('field',${choose})`)
                         }
                     }
                     if (tech.isMicroTransactions && powerUps.research.count > 0) {

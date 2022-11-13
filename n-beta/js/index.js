@@ -443,53 +443,23 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                 m.fieldUpgrades[i].description = m.fieldUpgrades[i].setDescription()
                 document.getElementById(`field-${i}`).innerHTML = `<div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}`
             }
-
-            // if (m.fieldMode === 4 && simulation.molecularMode < 3) {
-            //     simulation.molecularMode++
-            //     m.fieldUpgrades[4].description = m.fieldUpgrades[4].setDescription()
-            // } else {
-            //     m.setField((m.fieldMode === m.fieldUpgrades.length - 1) ? 1 : m.fieldMode + 1) //cycle to next field
-
-            //     if (m.fieldMode === 4) {
-            //         simulation.molecularMode = 0
-            //         m.fieldUpgrades[4].description = m.fieldUpgrades[4].setDescription()
-            //     }
-            // }
-
-
         } else if (type === "tech") {
             if (tech.tech[index].count < tech.tech[index].maxCount) {
                 // if (!tech.tech[index].isLore && !tech.tech[index].isNonRefundable && !who.classList.contains("build-tech-selected")) who.classList.add("build-tech-selected");
-                if (!who.classList.contains("build-tech-selected")) who.classList.add("build-tech-selected");
+                if (!document.getElementById("tech-" + index).classList.contains("build-tech-selected")) document.getElementById("tech-" + index).classList.add("build-tech-selected");
                 tech.giveTech(index)
             } else if (!tech.tech[index].isNonRefundable) {
                 // tech.totalCount -= tech.tech[index].count
                 tech.removeTech(index);
-                who.classList.remove("build-tech-selected");
+                document.getElementById("tech-" + index).classList.remove("build-tech-selected");
             } else {
                 // for non refundable tech this makes it flash off for a second, but return to on to show that it can't be set off
-                who.classList.remove("build-tech-selected")
+                document.getElementById("tech-" + index).classList.remove("build-tech-selected")
                 setTimeout(() => {
-                    who.classList.add("build-tech-selected")
+                    document.getElementById("tech-" + index).classList.add("build-tech-selected")
                 }, 50);
             }
         }
-
-        // } else if (type === "tech") { //remove tech if you have too many
-        //     if (tech.tech[index].count < tech.tech[index].maxCount) {
-        //         if (!who.classList.contains("build-tech-selected")) who.classList.add("build-tech-selected");
-        //         tech.giveTech(index)
-        //     } else if (!tech.tech[index].isNonRefundable) {
-        //         tech.totalCount -= tech.tech[index].count
-        //         tech.removeTech(index);
-        //         who.classList.remove("build-tech-selected");
-        //     } else {
-        //         who.classList.remove("build-tech-selected")
-        //         setTimeout(() => { //return energy
-        //             who.classList.add("build-tech-selected")
-        //         }, 50);
-        //     }
-        // }
 
         //update tech text //disable not allowed tech
         for (let i = 0, len = tech.tech.length; i < len; i++) {
@@ -592,6 +562,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
 </div>`
         for (let i = 0, len = m.fieldUpgrades.length; i < len; i++) {
             //original
+            // text += powerUps.fieldText(i, `build.choosePowerUp(this,${i},'field')`)
             // text += `<div id ="field-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'field')"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}</div>`
             text += `<div class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'field')" style="background-image: url('img/field/${m.fieldUpgrades[i].name}.png');" >
                     <div class="card-text" id="field-${i}">
@@ -612,18 +583,18 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                     if (tech.tech[i].isJunk) {
                         text += `<div id="tech-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'tech')"><div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[i].link}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
                     } else {
-                        text += `<div id="tech-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'tech')"><div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[i].link}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
-
-                        // const link = "img/quantum immortality.png"
-                        // text += `<div id="tech-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'tech')" style="background-image: url('${link}'); height: 256px; width: 384px; display: flex; justify-content: flex-end;flex-direction: column" >
-                        // <div style = "background-color: rgba(255,255,255,0.9); border-radius: 10px; padding:5px;"><div class="grid-title">
-                        // <div class="circle-grid tech"></div> &nbsp; ${tech.tech[i].link}</div>
-                        // ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}
-                        // </div></div>`
+                        // text += `<div id="tech-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'tech')"><div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[i].link}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
+                        text += `<div class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'gun')" style="background-image: url('img/${tech.tech[i].name}.png');" >
+                        <div class="card-text" id="tech-${i}">
+                        <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${build.nameLink(tech.tech[i].name)}</div>
+                        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div> </div>`
                     }
-                } else {
-                    text += `<div id="tech-${i}" class="experiment-grid-module experiment-grid-disabled"><div class="grid-title"> ${tech.tech[i].name}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
+                } else { //disabled
                     // text += `<div id="tech-${i}" class="experiment-grid-module experiment-grid-disabled"><div class="grid-title"> ${tech.tech[i].name}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
+                    text += `<div class="experiment-grid-module card-background experiment-grid-disabled" onclick="build.choosePowerUp(this,${i},'gun')" style="background-image: url('img/${tech.tech[i].name}.png');" >
+                    <div class="card-text" id="tech-${i}">
+                    <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${build.nameLink(tech.tech[i].name)}</div>
+                    ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div> </div>`
                 }
             }
         }
