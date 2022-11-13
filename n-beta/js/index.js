@@ -487,7 +487,6 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                 }, 50);
             }
         }
-
         //update tech text //disable not allowed tech
         for (let i = 0, len = tech.tech.length; i < len; i++) {
             const techID = document.getElementById("tech-" + i)
@@ -527,6 +526,16 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                     }
                     if (tech.tech[i].count > 0) tech.removeTech(i)
                     if (techID.classList.contains("build-tech-selected")) techID.classList.remove("build-tech-selected");
+
+                    if (tech.tech[i].isFieldTech) {
+                        techID.innerHTML = build.fieldTechText(i)
+                    } else if (tech.tech[i].isGunTech) {
+                        techID.innerHTML = build.gunTechText(i)
+                    } else if (tech.tech[i].isJunk) {
+                        techID.innerHTML = build.junkTechText(i)
+                    } else {
+                        techID.innerHTML = build.techText(i)
+                    }
                 }
             }
         }

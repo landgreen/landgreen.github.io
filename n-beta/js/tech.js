@@ -5491,7 +5491,7 @@ const tech = {
         },
         {
             name: "nuclear transmutation",
-            description: "<strong>+47%</strong> <strong class='color-p'>radiation</strong> <strong class='color-d'>damage</strong><br><em>nail, drone, neutron bomb, iridium, string, deflect</em>",
+            description: "<strong>+47%</strong> <strong class='color-p'>radiation</strong> <strong class='color-d'>damage</strong><br><em style = 'font-size:93%;'>nail, drone, neutron bomb, iridium, cosmic string, deflect</em>",
             isGunTech: true,
             maxCount: 9,
             count: 0,
