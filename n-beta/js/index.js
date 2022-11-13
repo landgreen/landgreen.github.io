@@ -408,6 +408,33 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
     },
     isExperimentSelection: false,
     isExperimentRun: false,
+    techText(i) {
+        return `<div class="card-text">
+        <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${build.nameLink(tech.tech[i].name)}</div>
+        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
+    },
+    junkTechText(i) {
+        return `<div class="card-text">
+        <div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${build.nameLink(tech.tech[i].name)}</div>
+        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
+    },
+    gunTechText(i) {
+        return `<div class="card-text"> <div class="grid-title">
+        <span style="position:relative;">
+            <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
+            <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
+        </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)}</div>
+        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
+
+    },
+    fieldTechText(i) {
+        return `<div class="card-text"><div class="grid-title">
+        <span style="position:relative;">
+                <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
+                <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
+        </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)}</div>
+        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
+    },
     choosePowerUp(who, index, type, isAllowed = false) {
         if (type === "gun") {
             let isDeselect = false
@@ -467,35 +494,19 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
             if ((!tech.tech[i].isJunk || localSettings.isJunkExperiment)) { //!tech.tech[i].isNonRefundable && //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  does removing this cause problems????
                 if (tech.tech[i].allowed() || isAllowed || tech.tech[i].count > 0) {
                     const techCountText = tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : "";
-                    // <div class="circle-grid-small research" style="position:absolute; top:13px; left:30px;opacity:0.85;"></div>
                     if (tech.tech[i].isFieldTech) {
                         techID.classList.remove('experiment-grid-hide');
-                        techID.innerHTML = `
-                        <div class="grid-title">
-                            <span style="position:relative;">
-                                <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
-                                <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
-                            </span>
-                            &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}
-                        </div>`
-                        // <div class="circle-grid gun" style="position:absolute; top:-3px; left:-3px; opacity:1; height: 33px; width:33px;"></div>
-                        // <div class="circle-grid tech" style="position:absolute; top:5px; left:5px;opacity:1;height: 20px; width:20px;border: #fff solid 2px;"></div>
-                        // border: #fff solid 0px;
+                        techID.innerHTML = build.fieldTechText(i)
                     } else if (tech.tech[i].isGunTech) {
                         techID.classList.remove('experiment-grid-hide');
-                        techID.innerHTML = `
-                        <div class="grid-title">
-                            <span style="position:relative;">
-                                <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
-                                <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
-                            </span>
-                            &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}
-                        </div>`
+                        techID.innerHTML = build.gunTechText(i)
                     } else if (tech.tech[i].isJunk) {
-                        techID.innerHTML = `<div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+                        techID.innerHTML = build.junkTechText(i)
+                        // `<div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
                     } else {
-                        techID.innerHTML = `<div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+                        techID.innerHTML = build.techText(i)
                     }
+
                     //deselect selected tech options if you don't have the tech any more // for example: when bot techs are converted after a bot upgrade tech is taken
                     if (tech.tech[i].count === 0 && techID.classList.contains("build-tech-selected")) techID.classList.remove("build-tech-selected");
 
@@ -580,22 +591,20 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
         for (let i = 0, len = tech.tech.length; i < len; i++) {
             if (!tech.tech[i].isJunk || localSettings.isJunkExperiment) {
                 if (tech.tech[i].allowed() && (!tech.tech[i].isNonRefundable || localSettings.isJunkExperiment)) { // || tech.tech[i].name === "+1 cardinality") { //|| tech.tech[i].name === "leveraged investment"
-                    if (tech.tech[i].isJunk) {
-                        text += `<div id="tech-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'tech')"><div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[i].link}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
-                    } else {
-                        // text += `<div id="tech-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'tech')"><div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[i].link}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
-                        text += `<div class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'gun')" style="background-image: url('img/${tech.tech[i].name}.png');" >
-                        <div class="card-text" id="tech-${i}">
-                        <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${build.nameLink(tech.tech[i].name)}</div>
-                        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div> </div>`
-                    }
+                    text += `<div id="tech-${i}" class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'tech')" style="background-image: url('img/${tech.tech[i].name}.png');" >`
                 } else { //disabled
-                    // text += `<div id="tech-${i}" class="experiment-grid-module experiment-grid-disabled"><div class="grid-title"> ${tech.tech[i].name}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
-                    text += `<div class="experiment-grid-module card-background experiment-grid-disabled" onclick="build.choosePowerUp(this,${i},'gun')" style="background-image: url('img/${tech.tech[i].name}.png');" >
-                    <div class="card-text" id="tech-${i}">
-                    <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${build.nameLink(tech.tech[i].name)}</div>
-                    ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div> </div>`
+                    text += `<div id="tech-${i}" class="experiment-grid-module card-background experiment-grid-disabled" onclick="build.choosePowerUp(this,${i},'tech')" style="background-image: url('img/${tech.tech[i].name}.png');" >`
                 }
+                if (tech.tech[i].isJunk) {
+                    text += build.junkTechText(i)
+                } else if (tech.tech[i].isGunTech) {
+                    text += build.gunTechText(i)
+                } else if (tech.tech[i].isFieldTech) {
+                    text += build.fieldTechText(i)
+                } else {
+                    text += build.techText(i)
+                }
+                text += '</div>'
             }
         }
         document.getElementById("experiment-grid").innerHTML = text
