@@ -21,7 +21,7 @@ const level = {
             // level.difficultyIncrease(15 * 4) //30 is near max on hard  //60 is near max on why
             // m.maxHealth = m.health = 100
             // tech.isRerollDamage = true
-            powerUps.research.changeRerolls(30)
+            // powerUps.research.changeRerolls(30)
             // m.immuneCycle = Infinity //you can't take damage
             // tech.tech[297].frequency = 100
             // m.couplingChange(5)
@@ -57,9 +57,9 @@ const level = {
                 level.intro()
             } //normal starting level ************************************************
 
-            for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "tech");
-            for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "gun");
-            for (let i = 0; i < 2; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "field", false);
+            // for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "tech");
+            // for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "gun");
+            // for (let i = 0; i < 2; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "field", false);
 
             //lore testing
             // for (let i = 0; i < 5; i++) tech.giveTech("undefined")

@@ -2894,7 +2894,7 @@ const b = {
                 thrust: (tech.isSporeFollow ? 0.0012 : 0.00055) * (1 + 0.5 * (Math.random() - 0.5)),
                 wormSize: wormSize,
                 wormTail: 1 + Math.max(4, Math.min(wormSize - 2 * tech.wormSize, 30)),
-                dmg: (tech.isMutualism ? 8 : 3.2) * wormSize * (tech.isJunkDNA ? 1 + 0.53 * tech.junkCount : 1), //bonus damage from tech.isMutualism //2.5 is extra damage as worm
+                dmg: (tech.isMutualism ? 9.5 : 3.2) * wormSize * (tech.isJunkDNA ? 1 + 0.53 * tech.junkCount : 1),
                 lookFrequency: 100 + Math.floor(37 * Math.random()),
                 classType: "bullet",
                 collisionFilter: {
@@ -2925,7 +2925,7 @@ const b = {
                 },
                 onEnd() {
                     if (tech.isMutualism && this.isMutualismActive && !tech.isEnergyHealth) {
-                        m.health += 0.01
+                        m.health += 0.02
                         if (m.health > m.maxHealth) m.health = m.maxHealth;
                         m.displayHealth();
                     }
@@ -2990,8 +2990,8 @@ const b = {
                 y: SPEED * Math.sin(ANGLE)
             });
             Composite.add(engine.world, bullet[bIndex]); //add bullet to world
-            if (tech.isMutualism && m.health > 0.02) {
-                m.health -= 0.01
+            if (tech.isMutualism && m.health > 0.04) {
+                m.health -= 0.02
                 m.displayHealth();
                 bullet[bIndex].isMutualismActive = true
             }
@@ -3010,7 +3010,7 @@ const b = {
                 friction: 0,
                 frictionAir: 0.025,
                 thrust: (tech.isSporeFollow ? 0.0011 : 0.0005) * (1 + 0.3 * (Math.random() - 0.5)),
-                dmg: (tech.isMutualism ? 16.8 : 7) * (tech.isJunkDNA ? 1 + 0.53 * tech.junkCount : 1), //bonus damage from tech.isMutualism
+                dmg: (tech.isMutualism ? 20 : 7) * (tech.isJunkDNA ? 1 + 0.53 * tech.junkCount : 1), //bonus damage from tech.isMutualism
                 lookFrequency: 100 + Math.floor(117 * Math.random()),
                 classType: "bullet",
                 isSpore: true,
@@ -3030,7 +3030,7 @@ const b = {
                 },
                 onEnd() {
                     if (tech.isMutualism && this.isMutualismActive && !tech.isEnergyHealth) {
-                        m.health += 0.005
+                        m.health += 0.01
                         if (m.health > m.maxHealth) m.health = m.maxHealth;
                         m.displayHealth();
                     }
@@ -3122,7 +3122,7 @@ const b = {
             Composite.add(engine.world, bullet[bIndex]); //add bullet to world
 
             if (tech.isMutualism && m.health > 0.01) {
-                m.health -= 0.005
+                m.health -= 0.01
                 m.displayHealth();
                 bullet[bIndex].isMutualismActive = true
             }
@@ -3230,9 +3230,9 @@ const b = {
             lockedOn: null,
             delay: 50,
             cd: simulation.cycle + 10,
-            dmg: 0, //radius * (tech.isMutualism ? 2.5 : 1),
+            dmg: 0,
             setDamage() { //dmg is set to zero after doing damage once, and set back to normal after jumping
-                this.dmg = radius * (tech.isMutualism ? 2.5 : 1) * (tech.isJunkDNA ? 1 + 0.53 * tech.junkCount : 1) //damage done in addition to the damage from momentum  //spores do 7 dmg, worms do 18
+                this.dmg = radius * (tech.isMutualism ? 2.9 : 1) * (tech.isJunkDNA ? 1 + 0.53 * tech.junkCount : 1) //damage done in addition to the damage from momentum  //spores do 7 dmg, worms do 18
             },
             beforeDmg(who) {
                 Matter.Body.setVelocity(this, Vector.mult(Vector.normalise(Vector.sub(this.position, who.position)), 10 + 10 * Math.random())); //push away from target
@@ -3260,7 +3260,7 @@ const b = {
             },
             onEnd() {
                 if (tech.isMutualism && this.isMutualismActive && !tech.isEnergyHealth) {
-                    m.health += 0.01
+                    m.health += 0.02
                     if (m.health > m.maxHealth) m.health = m.maxHealth;
                     m.displayHealth();
                 }
@@ -3329,7 +3329,7 @@ const b = {
         Composite.add(engine.world, bullet[me]); //add bullet to world
         Matter.Body.setVelocity(bullet[me], velocity);
         if (tech.isMutualism && m.health > 0.01) {
-            m.health -= 0.005
+            m.health -= 0.01
             m.displayHealth();
             bullet[bullet.length - 1].isMutualismActive = true
         }

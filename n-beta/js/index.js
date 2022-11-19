@@ -285,8 +285,6 @@ const build = {
     },
     pauseGrid() {
         // build.pixelDraw();
-
-
         //used for junk estimation
         let junkCount = 0
         let totalCount = 1 //start at one to avoid NaN issues
@@ -409,13 +407,8 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
     isExperimentSelection: false,
     isExperimentRun: false,
     techText(i) {
-        return `<div class="card-text">
-        <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${build.nameLink(tech.tech[i].name)}</div>
-        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
-    },
-    junkTechText(i) {
-        return `<div class="card-text">
-        <div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${build.nameLink(tech.tech[i].name)}</div>
+        return `<div class="card-text" >
+        <div class="grid-title" ><div class="circle-grid tech"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
         ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
     },
     gunTechText(i) {
@@ -423,16 +416,20 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
         <span style="position:relative;">
             <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
             <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
-        </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)}</div>
+        </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
         ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
-
     },
     fieldTechText(i) {
         return `<div class="card-text"><div class="grid-title">
         <span style="position:relative;">
                 <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
                 <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
-        </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)}</div>
+        </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
+    },
+    junkTechText(i) {
+        return `<div class="card-text">
+        <div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
         ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
     },
     choosePowerUp(who, index, type, isAllowed = false) {
@@ -492,7 +489,6 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
             const techID = document.getElementById("tech-" + i)
             if ((!tech.tech[i].isJunk || localSettings.isJunkExperiment)) { //!tech.tech[i].isNonRefundable && //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  does removing this cause problems????
                 if (tech.tech[i].allowed() || isAllowed || tech.tech[i].count > 0) {
-                    const techCountText = tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : "";
                     if (tech.tech[i].isFieldTech) {
                         techID.classList.remove('experiment-grid-hide');
                         techID.innerHTML = build.fieldTechText(i)
@@ -584,14 +580,14 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
             //original
             // text += powerUps.fieldText(i, `build.choosePowerUp(this,${i},'field')`)
             // text += `<div id ="field-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'field')"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}</div>`
-            text += `<div class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'field')" style="background-image: url('img/field/${m.fieldUpgrades[i].name}.png');" >
-                    <div class="card-text" id="field-${i}">
+            text += `<div id="field-${i}" class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'field')" style="background-image: url('img/field/${m.fieldUpgrades[i].name}.png');" >
+                    <div class="card-text">
                     <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
                     ${m.fieldUpgrades[i].description}</div> </div>`
         }
         for (let i = 0, len = b.guns.length; i < len; i++) {
-            text += `<div class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'gun')" style="background-image: url('img/gun/${b.guns[i].name}.png');" >
-                    <div class="card-text" id="gun-${i}">
+            text += `<div id="gun-${i}" class="experiment-grid-module card-background" onclick="build.choosePowerUp(this,${i},'gun')" style="background-image: url('img/gun/${b.guns[i].name}.png');" >
+                    <div class="card-text">
                     <div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${build.nameLink(b.guns[i].name)}</div>
                     ${b.guns[i].description}</div> </div>`
             //original

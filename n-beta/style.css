@@ -354,9 +354,7 @@ summary {
     background-color: #efeff5;
 } */
 
-.experiment-grid-module:hover .card-text:not(.build-tech-selected, .build-field-selected, .build-gun-selected) {
-    background-color: #efeff5;
-}
+
 
 /* .experiment-grid-module-field {
     background-color: #eff;
@@ -406,7 +404,7 @@ summary {
 } */
 
 
-.build-field-selected {
+/* .build-field-selected {
     background-color: hsl(193, 100%, 75%);
 }
 
@@ -422,17 +420,39 @@ summary {
     background-color: hsl(218, 100%, 76%);
 }
 
-.build-tech-selected {
+.build-tech-selected .card-text{
     background-color: hsl(253, 100%, 84%);
 }
 
-.build-tech-selected:hover {
+.build-tech-selected:hover .card-text{
+    background-color: hsl(253, 100%, 81%);
+} */
+
+/* .experiment-grid-module:hover .card-text:not(.build-tech-selected, .build-field-selected, .build-gun-selected) {
+    background-color: #efeff5;
+} */
+
+.experiment-grid-module:hover .card-text {
+    background-color: #efeff5;
+}
+.build-tech-selected .card-text{
+    background-color: hsl(253, 100%, 84%);
+}
+.build-tech-selected.experiment-grid-module:hover .card-text {
     background-color: hsl(253, 100%, 81%);
 }
-
-/* .experiment-grid-show {
-    display: inline;
-} */
+.build-gun-selected .card-text{
+    background-color: hsl(218, 100%, 81%);
+}
+.build-gun-selected.experiment-grid-module:hover .card-text {
+    background-color: hsl(218, 100%, 76%);
+}
+.build-field-selected .card-text{
+    background-color: hsl(193, 100%, 75%);
+}
+.build-field-selected.experiment-grid-module:hover .card-text {
+    background-color: hsl(193, 100%, 68%);
+}
 
 .experiment-grid-disabled {
     /* opacity: 0.5; */

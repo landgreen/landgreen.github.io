@@ -396,7 +396,7 @@ const tech = {
         {
             name: "arsenal",
             descriptionFunction() {
-                return `<strong>+22%</strong> <strong class='color-d'>damage</strong> per unequipped <strong class='color-g'>gun</strong> <em>(${(22 * Math.max(0, b.inventory.length-1)).toFixed(0)}%)</em>`
+                return `<strong>+22%</strong> <strong class='color-d'>damage</strong> per unequipped <strong class='color-g'>gun</strong> <em>(${(22 * Math.max(0, b.inventory.length-1)).toFixed(0)}%)</em><br>&nbsp;`
             },
             maxCount: 1,
             count: 0,
@@ -414,7 +414,7 @@ const tech = {
         {
             name: "active cooling",
             descriptionFunction() {
-                return `<strong>+28%</strong> <em>fire rate</em> per unequipped <strong class='color-g'>gun</strong> <em>(${(28 * Math.max(0, b.inventory.length-1)).toFixed(0)}%)</em>`
+                return `<strong>+28%</strong> <em>fire rate</em> per unequipped <strong class='color-g'>gun</strong> <em>(${(28 * Math.max(0, b.inventory.length-1)).toFixed(0)}%)</em><br>&nbsp;`
             }, //<br>but not including your equipped <strong class='color-g'>gun</strong>` },
             maxCount: 1,
             count: 0,
@@ -903,7 +903,23 @@ const tech = {
                 b.setFireCD();
             }
         },
-
+        {
+            name: "anti-shear topology",
+            link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Topology' class="link">anti-shear topology</a>`,
+            description: "<strong>+30%</strong> projectile <strong>duration</strong><br>&nbsp;", //<br><em style = 'font-size: 83%'>drone spore worm flea missile foam wave neutron ice</em>",
+            maxCount: 3,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            allowed: () => true,
+            requires: "",
+            effect() {
+                tech.isBulletsLastLonger += 0.3
+            },
+            remove() {
+                tech.isBulletsLastLonger = 1;
+            }
+        },
         {
             name: "fracture analysis",
             description: "if a mob is <strong>stunned</strong> it takes<br><strong>+400%</strong> <strong class='color-d'>damage</strong> from bullet impacts",
@@ -923,20 +939,21 @@ const tech = {
             }
         },
         {
-            name: "anti-shear topology",
-            link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Topology' class="link">anti-shear topology</a>`,
-            description: "<strong>+30%</strong> projectile <strong>duration</strong>", //<br><em style = 'font-size: 83%'>drone spore worm flea missile foam wave neutron ice</em>",
-            maxCount: 3,
+            name: "shear stress",
+            description: "after mobs <strong>die</strong><br>they release a <strong>nail</strong> that targets nearby mobs",
+            maxCount: 9,
             count: 0,
             frequency: 1,
             frequencyDefault: 1,
-            allowed: () => true,
-            requires: "",
+            allowed() {
+                return !tech.sporesOnDeath && !tech.isExplodeMob && !tech.botSpawner && !tech.isMobBlockFling && !tech.iceIXOnDeath
+            },
+            requires: "no other mob death tech",
             effect() {
-                tech.isBulletsLastLonger += 0.3
+                tech.nailsDeathMob++
             },
             remove() {
-                tech.isBulletsLastLonger = 1;
+                tech.nailsDeathMob = 0;
             }
         },
         {
@@ -955,24 +972,6 @@ const tech = {
             },
             remove() {
                 tech.isExplodeMob = false;
-            }
-        },
-        {
-            name: "shear stress",
-            description: "after mobs <strong>die</strong><br>they release a <strong>nail</strong> that targets nearby mobs",
-            maxCount: 9,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            allowed() {
-                return !tech.sporesOnDeath && !tech.isExplodeMob && !tech.botSpawner && !tech.isMobBlockFling && !tech.iceIXOnDeath
-            },
-            requires: "no other mob death tech",
-            effect() {
-                tech.nailsDeathMob++
-            },
-            remove() {
-                tech.nailsDeathMob = 0;
             }
         },
         {
@@ -1024,7 +1023,7 @@ const tech = {
         },
         {
             name: "reaction inhibitor",
-            description: "<strong>-12%</strong> maximum mob <strong>health</strong><br>", //<strong class='color-h'>health</strong>
+            description: "<strong>-12%</strong> maximum mob <strong>health</strong><br>&nbsp;", //<strong class='color-h'>health</strong>
             maxCount: 3,
             count: 0,
             frequency: 1,
@@ -1141,7 +1140,7 @@ const tech = {
         {
             name: "nail-bot",
             link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Robot' class="link">nail-bot</a>`,
-            description: "a <strong class='color-bot'>bot</strong> fires <strong>nails</strong> at mobs in line of sight",
+            description: "a <strong class='color-bot'>bot</strong> fires <strong>nails</strong> at mobs in line of sight<br>&nbsp;",
             maxCount: 9,
             count: 0,
             frequency: 1,
@@ -1199,7 +1198,7 @@ const tech = {
         {
             name: "foam-bot",
             link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Robot' class="link">foam-bot</a>`,
-            description: "a <strong class='color-bot'>bot</strong> fires <strong>foam</strong> at nearby mobs",
+            description: "a <strong class='color-bot'>bot</strong> fires <strong>foam</strong> at nearby mobs<br>&nbsp;",
             maxCount: 9,
             count: 0,
             frequency: 1,
@@ -1704,7 +1703,7 @@ const tech = {
         },
         {
             name: "mass driver",
-            description: "<strong>+300%</strong> <strong class='color-block'>block</strong> collision <strong class='color-d'>damage</strong>",
+            description: "<strong>+300%</strong> <strong class='color-block'>block</strong> collision <strong class='color-d'>damage</strong><br>&nbsp;",
             maxCount: 1,
             count: 0,
             frequency: 1,
@@ -2572,7 +2571,7 @@ const tech = {
             }
         },
         {
-            name: "Maxwell's demon",
+            name: "Maxwells demon",
             description: "<strong class='color-f'>energy</strong> above your max decays <strong>95%</strong> slower<br><strong>+5%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
             maxCount: 1,
             count: 0,
@@ -2620,7 +2619,7 @@ const tech = {
         },
         {
             name: "energy conservation",
-            description: "<strong>5%</strong> of <strong class='color-d'>damage</strong> done recovered as <strong class='color-f'>energy</strong>",
+            description: "<strong>5%</strong> of <strong class='color-d'>damage</strong> done recovered as <strong class='color-f'>energy</strong><br>&nbsp;",
             maxCount: 9,
             count: 0,
             frequency: 1,
@@ -3867,7 +3866,7 @@ const tech = {
         },
         {
             name: "correlated damage",
-            description: "<strong class='color-dup'>duplication</strong> increases <strong class='color-d'>damage</strong><br>",
+            description: "<strong class='color-dup'>duplication</strong> increases <strong class='color-d'>damage</strong><br>&nbsp;",
             maxCount: 1,
             count: 0,
             frequency: 1,
@@ -4175,7 +4174,7 @@ const tech = {
         },
         {
             name: "needle gun",
-            description: "<strong>nail gun</strong> and <strong>shotgun</strong> fire mob piercing <strong>needles</strong><br>",
+            description: "<strong>nail gun</strong> and <strong>shotgun</strong> fire mob piercing <strong>needles</strong><br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -4213,8 +4212,27 @@ const tech = {
             }
         },
         {
+            name: "stress concentration",
+            description: "mobs below <strong>50%</strong> durability <strong>die</strong> after you shoot<br>them near their <strong>center</strong> with <strong>needles</strong> or <strong>rivets</strong>",
+            isGunTech: true,
+            maxCount: 1,
+            count: 0,
+            frequency: 2,
+            frequencyDefault: 2,
+            allowed() {
+                return (tech.isNeedles || tech.isRivets) && !tech.isNailCrit && !tech.isIncendiary
+            },
+            requires: "needles, rivets, not incendiary, supercritical fission",
+            effect() {
+                tech.isCritKill = true
+            },
+            remove() {
+                tech.isCritKill = false
+            }
+        },
+        {
             name: "rivet gun",
-            description: "<strong>nail gun</strong> and <strong>shotgun</strong> slowly lob a heavy <strong>rivet</strong><br>",
+            description: "<strong>nail gun</strong> and <strong>shotgun</strong> slowly lob a heavy <strong>rivet</strong><br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -4244,46 +4262,6 @@ const tech = {
                     }
                 }
                 tech.isRivets = false
-            }
-        },
-        {
-            name: "caliber",
-            description: `<strong>rivets</strong>, <strong>needles</strong>, <strong>super balls</strong>, and <strong>nails</strong><br>have <strong>+30%</strong> mass and physical <strong class='color-d'>damage</strong>`,
-            isGunTech: true,
-            maxCount: 9,
-            count: 0,
-            frequency: 2,
-            frequencyDefault: 2,
-            allowed() {
-                return tech.isMineDrop + tech.isNailBotUpgrade + tech.fragments + tech.nailsDeathMob + (tech.haveGunCheck("super balls") + (tech.haveGunCheck("mine") && !(tech.isLaserMine || tech.isFoamMine)) + (tech.haveGunCheck("nail gun")) + tech.isNeedles + tech.isNailShot + tech.isRivets) * 2 > 1
-            },
-            requires: "nails, nail gun, rivets, shotgun, super balls, mine",
-            effect() {
-                tech.bulletSize = 1 + 0.25 * Math.pow(this.count + 1, 0.5)
-            },
-            remove() {
-                tech.bulletSize = 1;
-            }
-        },
-        {
-            name: "ricochet",
-            description: "after <strong>nails</strong> hit a mob they <strong>rebound</strong> towards<br>a new mob with <strong>+180%</strong> <strong class='color-d'>damage</strong> per bounce",
-            isGunTech: true,
-            maxCount: 1,
-            count: 0,
-            frequency: 2,
-            frequencyDefault: 2,
-            allowed() {
-                // return (tech.haveGunCheck("nail gun") && !tech.isRivets && !tech.isNeedles) || (tech.haveGunCheck("mines"))
-                return tech.isMineDrop || tech.isNailBotUpgrade || tech.fragments || tech.nailsDeathMob || (tech.haveGunCheck("mine") && !(tech.isLaserMine || tech.isFoamMine)) || (tech.haveGunCheck("nail gun") && !tech.isRivets && !tech.isNeedles) || (tech.haveGunCheck("shotgun") && (tech.isNeedles || tech.isNailShot) && !tech.isRivets && !tech.isNeedles)
-            },
-            //
-            requires: "nail gun, not rotary cannon, rivets, or needles",
-            effect() {
-                tech.isRicochet = true
-            },
-            remove() {
-                tech.isRicochet = false
             }
         },
         {
@@ -4380,22 +4358,43 @@ const tech = {
             }
         },
         {
-            name: "stress concentration",
-            description: "mobs below <strong>50%</strong> durability <strong>die</strong> after you shoot<br>them near their <strong>center</strong> with <strong>needles</strong> or <strong>rivets</strong>",
+            name: "gauge",
+            description: `<strong>rivets</strong>, <strong>needles</strong>, <strong>super balls</strong>, and <strong>nails</strong><br>have <strong>+30%</strong> mass and physical <strong class='color-d'>damage</strong>`,
+            isGunTech: true,
+            maxCount: 9,
+            count: 0,
+            frequency: 2,
+            frequencyDefault: 2,
+            allowed() {
+                return tech.isMineDrop + tech.isNailBotUpgrade + tech.fragments + tech.nailsDeathMob + (tech.haveGunCheck("super balls") + (tech.haveGunCheck("mine") && !(tech.isLaserMine || tech.isFoamMine)) + (tech.haveGunCheck("nail gun")) + tech.isNeedles + tech.isNailShot + tech.isRivets) * 2 > 1
+            },
+            requires: "nails, nail gun, rivets, shotgun, super balls, mine",
+            effect() {
+                tech.bulletSize = 1 + 0.25 * Math.pow(this.count + 1, 0.5)
+            },
+            remove() {
+                tech.bulletSize = 1;
+            }
+        },
+        {
+            name: "ricochet",
+            description: "after <strong>nails</strong> hit a mob they <strong>rebound</strong> towards<br>a new mob with <strong>+180%</strong> <strong class='color-d'>damage</strong> per bounce",
             isGunTech: true,
             maxCount: 1,
             count: 0,
             frequency: 2,
             frequencyDefault: 2,
             allowed() {
-                return (tech.isNeedles || tech.isRivets) && !tech.isNailCrit && !tech.isIncendiary
+                // return (tech.haveGunCheck("nail gun") && !tech.isRivets && !tech.isNeedles) || (tech.haveGunCheck("mines"))
+                return tech.isMineDrop || tech.isNailBotUpgrade || tech.fragments || tech.nailsDeathMob || (tech.haveGunCheck("mine") && !(tech.isLaserMine || tech.isFoamMine)) || (tech.haveGunCheck("nail gun") && !tech.isRivets && !tech.isNeedles) || (tech.haveGunCheck("shotgun") && (tech.isNeedles || tech.isNailShot) && !tech.isRivets && !tech.isNeedles)
             },
-            requires: "needles, rivets, not incendiary, supercritical fission",
+            //
+            requires: "nail gun, not rotary cannon, rivets, or needles",
             effect() {
-                tech.isCritKill = true
+                tech.isRicochet = true
             },
             remove() {
-                tech.isCritKill = false
+                tech.isRicochet = false
             }
         },
         {
@@ -4519,7 +4518,7 @@ const tech = {
         },
         {
             name: "Newton's 3rd law",
-            description: "<strong>+66%</strong> <strong>shotgun</strong> <strong><em>fire rate</em></strong> and <strong>recoil</strong><br>",
+            description: "<strong>+66%</strong> <strong>shotgun</strong> <strong><em>fire rate</em></strong> and <strong>recoil</strong><br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -4559,7 +4558,7 @@ const tech = {
         {
             name: "nail-shot",
             link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Nail_(fastener)' class="link">nail-shot</a>`,
-            description: "<strong>shotgun</strong> drives a long clip of <strong>nails</strong><br>",
+            description: "<strong>shotgun</strong> drives a long clip of <strong>nails</strong><br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -4579,7 +4578,7 @@ const tech = {
         {
             name: "foam-shot",
             link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Foam' class="link">foam-shot</a>`,
-            description: "<strong>shotgun</strong> sprays sticky <strong>foam</strong> bubbles<br>",
+            description: "<strong>shotgun</strong> sprays sticky <strong>foam</strong> bubbles<br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -4599,7 +4598,7 @@ const tech = {
         {
             name: "ice-shot",
             link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Ice-nine_(disambiguation)' class="link">ice-shot</a>`,
-            description: "<strong>shotgun</strong> grows freezing <strong class='color-s'>ice IX</strong> crystals<br>",
+            description: "<strong>shotgun</strong> grows freezing <strong class='color-s'>ice IX</strong> crystals<br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -4618,7 +4617,7 @@ const tech = {
         },
         {
             name: "freezer burn",
-            description: "mobs <strong class='color-s'>frozen</strong> while below <strong>33%</strong> durability <strong>die</strong><br>",
+            description: "mobs <strong class='color-s'>frozen</strong> while below <strong>33%</strong> durability <strong>die</strong><br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -4759,7 +4758,7 @@ const tech = {
         },
         {
             name: "super duper",
-            description: `randomly fire <strong>+0</strong>, <strong>+1</strong>, or <strong>+2</strong> extra <strong>super balls</strong><br>`,
+            description: `randomly fire <strong>+0</strong>, <strong>+1</strong>, or <strong>+2</strong> extra <strong>super balls</strong><br>&nbsp;`,
             isGunTech: true,
             maxCount: 9,
             count: 0,
@@ -4924,6 +4923,8 @@ const tech = {
                 if (this.count > 0 && b.guns[3].savedAmmo !== undefined) {
                     b.guns[3].ammo = b.guns[3].savedAmmo
                     simulation.updateGunHUD();
+                } else if (b.guns[3].ammo === Infinity) {
+                    b.guns[3].ammo = 0
                 }
             }
         },
@@ -5175,7 +5176,7 @@ const tech = {
         },
         {
             name: "ammonium nitrate",
-            description: "<strong>+24%</strong> <strong class='color-e'>explosive</strong> <strong class='color-d'>damage</strong>, radius<br>",
+            description: "<strong>+24%</strong> <strong class='color-e'>explosive</strong> <strong class='color-d'>damage</strong>, radius<br>&nbsp;",
             isGunTech: true,
             maxCount: 9,
             count: 0,
@@ -5755,7 +5756,7 @@ const tech = {
         {
             name: "mutualism",
             descriptionFunction() {
-                return `<strong>+150%</strong> ${b.guns[6].nameString()} <strong class='color-d'>damage</strong><br>${b.guns[6].nameString('s')} borrow <strong>0.5</strong> <strong class='color-h'>health</strong> until they <strong>die</strong>`
+                return `<strong>+200%</strong> ${b.guns[6].nameString()} <strong class='color-d'>damage</strong><br>${b.guns[6].nameString('s')} borrow <strong>1</strong> <strong class='color-h'>health</strong> until they <strong>die</strong>`
             },
             // description: `<strong>+150%</strong> ${b.guns[6].name()} <strong class='color-d'>damage</strong><br><strong class='color-p' style='letter-spacing: 2px;'>spores</strong> borrow <strong>0.5</strong> <strong class='color-h'>health</strong> until they <strong>die</strong>`,
             isGunTech: true,
@@ -5775,8 +5776,27 @@ const tech = {
             }
         },
         {
+            name: "necrophage",
+            description: "if <strong>foam</strong>, <strong class='color-p' style='letter-spacing: -0.8px;'>fleas</strong>, or <strong class='color-p' style='letter-spacing: -0.8px;'>worms</strong> <strong>kill</strong> their target<br>they grow 3 <strong>copies</strong>",
+            isGunTech: true,
+            maxCount: 1,
+            count: 0,
+            frequency: 2,
+            frequencyDefault: 2,
+            allowed() {
+                return tech.haveGunCheck("foam") || tech.isFoamBall || tech.isFoamBotUpgrade || tech.isFoamShot || tech.isSporeWorm || tech.isSporeFlea || tech.isFoamMine
+            },
+            requires: "foam, spores, worms, fleas",
+            effect() {
+                tech.isSpawnBulletsOnDeath = true
+            },
+            remove() {
+                tech.isSpawnBulletsOnDeath = false;
+            }
+        },
+        {
             name: "siphonaptera",
-            description: "<strong class='color-p' style='letter-spacing: 2px;'>sporangium</strong> and <strong>shotgun</strong> hatch <strong class='color-p' style='letter-spacing: -0.8px;'>fleas</strong><br>",
+            description: "<strong class='color-p' style='letter-spacing: 2px;'>sporangium</strong> and <strong>shotgun</strong> hatch <strong class='color-p' style='letter-spacing: -0.8px;'>fleas</strong><br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -5796,7 +5816,7 @@ const tech = {
         },
         {
             name: "nematodes",
-            description: "<strong>shotgun</strong> and <strong class='color-p' style='letter-spacing: 2px;'>sporangium</strong> hatch <strong class='color-p' style='letter-spacing: -0.8px;'>worms</strong><br>",
+            description: "<strong>shotgun</strong> and <strong class='color-p' style='letter-spacing: 2px;'>sporangium</strong> hatch <strong class='color-p' style='letter-spacing: -0.8px;'>worms</strong><br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -6156,25 +6176,6 @@ const tech = {
             }
         },
         {
-            name: "necrophage",
-            description: "if <strong>foam</strong>, <strong class='color-p' style='letter-spacing: -0.8px;'>fleas</strong>, or <strong class='color-p' style='letter-spacing: -0.8px;'>worms</strong> <strong>kill</strong> their target<br>they grow 3 <strong>copies</strong>",
-            isGunTech: true,
-            maxCount: 1,
-            count: 0,
-            frequency: 2,
-            frequencyDefault: 2,
-            allowed() {
-                return tech.haveGunCheck("foam") || tech.isFoamBall || tech.isFoamBotUpgrade || tech.isFoamShot || tech.isSporeWorm || tech.isSporeFlea || tech.isFoamMine
-            },
-            requires: "foam, spores, worms, fleas",
-            effect() {
-                tech.isSpawnBulletsOnDeath = true
-            },
-            remove() {
-                tech.isSpawnBulletsOnDeath = false;
-            }
-        },
-        {
             name: "aerogel",
             description: "<strong>–50%</strong> <strong>foam</strong> duration and <strong>foam</strong> bubbles <strong>float</strong><br><strong>+180%</strong> <strong>foam</strong> <strong class='color-d'>damage</strong>",
             isGunTech: true,
@@ -6197,7 +6198,7 @@ const tech = {
         },
         {
             name: "surface tension",
-            description: "<strong>+43%</strong> <strong>foam</strong> <strong class='color-d'>damage</strong><br>",
+            description: "<strong>+43%</strong> <strong>foam</strong> <strong class='color-d'>damage</strong><br>&nbsp;",
             isGunTech: true,
             maxCount: 9,
             count: 0,
@@ -6415,7 +6416,7 @@ const tech = {
         },
         {
             name: "alternator",
-            description: "<strong>+80%</strong> <strong>harpoon</strong> <strong class='color-f'>energy</strong> efficiency<br>",
+            description: "<strong>+80%</strong> <strong>harpoon</strong> <strong class='color-f'>energy</strong> efficiency<br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -6650,7 +6651,7 @@ const tech = {
         },
         {
             name: "relativistic momentum",
-            description: "<strong class='color-laser'>lasers</strong> push <strong>mobs</strong> and <strong class='color-block'>blocks</strong><br>",
+            description: "<strong class='color-laser'>lasers</strong> push <strong>mobs</strong> and <strong class='color-block'>blocks</strong><br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -6735,7 +6736,7 @@ const tech = {
         },
         {
             name: "specular reflection",
-            description: "<strong>+2</strong> <strong class='color-laser'>laser</strong> beam reflections<br>",
+            description: "<strong>+2</strong> <strong class='color-laser'>laser</strong> beam reflections<br>&nbsp;",
             isGunTech: true,
             maxCount: 3,
             count: 0,
@@ -6754,7 +6755,7 @@ const tech = {
         },
         {
             name: "diffraction grating",
-            description: `<strong>+1</strong> diverging <strong class='color-laser'>laser</strong> <strong class='color-g'>gun</strong> beam<br>`,
+            description: `<strong>+1</strong> diverging <strong class='color-laser'>laser</strong> <strong class='color-g'>gun</strong> beam<br>&nbsp;`,
             isGunTech: true,
             maxCount: 9,
             count: 0,
@@ -6948,7 +6949,7 @@ const tech = {
         },
         {
             name: "neocognitron",
-            description: "<strong class='color-laser'>pulse</strong> automatically <strong>aims</strong> at a nearby mob<br>",
+            description: "<strong class='color-laser'>pulse</strong> automatically <strong>aims</strong> at a nearby mob<br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -7787,7 +7788,7 @@ const tech = {
         },
         {
             name: "time crystals",
-            description: "<strong>+200%</strong> passive <strong class='color-f'>energy</strong> generation<br>",
+            description: "<strong>+200%</strong> passive <strong class='color-f'>energy</strong> generation<br>&nbsp;",
             isFieldTech: true,
             maxCount: 1,
             count: 0,
@@ -8191,7 +8192,7 @@ const tech = {
         },
         {
             name: "affine connection",
-            description: "<strong class='color-worm'>wormholes</strong> can tunnel through the <strong>map</strong><br>for <strong>+200%</strong> <strong class='color-f'>energy</strong> drain",
+            description: "<strong class='color-worm'>wormholes</strong> can tunnel through <strong>anything</strong><br>for <strong>+200%</strong> <strong class='color-f'>energy</strong> drain",
             isFieldTech: true,
             maxCount: 1,
             count: 0,
@@ -8487,7 +8488,7 @@ const tech = {
         },
         {
             name: "placebo",
-            description: "<strong>+777%</strong> <strong class='color-d'>damage</strong><br><strong>+777%</strong> <strong class='color-defense'>defense</strong><br>",
+            description: "<strong>+777%</strong> <strong class='color-d'>damage</strong><br><strong>+777%</strong> <strong class='color-defense'>defense</strong><br>&nbsp;",
             maxCount: 1,
             count: 0,
             frequency: 0,
