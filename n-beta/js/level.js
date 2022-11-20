@@ -32,11 +32,11 @@ const level = {
             // b.giveGuns("wave") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[0].ammo = 10000
             // tech.giveTech("plasma ball")
-            // tech.giveTech("dye laser")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("emergence")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("pseudoscience")
-            // for (let i = 0; i < 1; i++) tech.giveTech("determinism")
-            // for (let i = 0; i < 9; i++) tech.giveTech("superdeterminism")
+            // tech.giveTech("unified field theory")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("uncertainty principle")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("determinism")
+            // for (let i = 0; i < 3; i++) tech.giveTech("overcharge")
+            // for (let i = 0; i < 9; i++) tech.giveTech("paradigm shift")
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");

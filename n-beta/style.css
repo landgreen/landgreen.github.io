@@ -201,17 +201,8 @@ summary {
 
     display: grid;
     grid-template-columns: repeat(3, 384px);
-    /* grid-template-columns: 384px 384px 384px; */
-    
-    /* grid-template-rows: repeat(auto-fit, 384px); */
-    /* grid-column-start: 1; */
-    /* grid-template-columns: repeat(auto-fit, 384px); */
-    /* grid-template-columns: repeat(auto-fit, 400px); */
-    /* grid-template-columns: repeat(auto-fit, minmax(360px, 450px));     */
-    /* grid-auto-rows: auto; */
     align-items: stretch;
     /* align-content: start; */
-    
     /* grid-auto-rows: minmax(auto, 140px); */
     visibility: hidden;
     opacity: 0;
@@ -269,9 +260,12 @@ summary {
     grid-gap: 0px;
     align-content: start;
     /* align-content: space-between; */
+    grid-gap: 10px;
 
     z-index: 2;
     font-size: 1.3em;
+    border-radius: 8px;
+
 }
 
 #pause-grid-right {
@@ -304,8 +298,14 @@ summary {
     line-height: 170%;
     /* border-radius: 6px; */
     border: 1px #333 solid;
+    border-radius: 8px;
     background-color: #fff;
     font-size: 0.65em;
+
+}
+
+.pause-eject .card-text {
+    animation: techColorCycle 1s linear infinite alternate;
 }
 
 #experiment-grid {

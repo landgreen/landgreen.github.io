@@ -2636,24 +2636,6 @@ const tech = {
             }
         },
         {
-            name: "waste heat recovery",
-            description: "if a mob has <strong>died</strong> in the last <strong>5 seconds</strong><br>generate <strong>5%</strong> of max <strong class='color-f'>energy</strong> per second",
-            maxCount: 1,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            allowed() {
-                return true
-            },
-            requires: "",
-            effect() {
-                tech.isEnergyRecovery = true;
-            },
-            remove() {
-                tech.isEnergyRecovery = false;
-            }
-        },
-        {
             name: "parasitism",
             description: "if a mob has <strong>died</strong> in the last <strong>5 seconds</strong><br><strong>+60%</strong> <strong class='color-d'>damage</strong>, inhibit <strong class='color-f'>energy</strong> generation",
             maxCount: 1,
@@ -2674,6 +2656,24 @@ const tech = {
             remove() {
                 if (this.count) m.regenEnergy = m.regenEnergyDefault
                 tech.isDamageAfterKillNoRegen = false;
+            }
+        },
+        {
+            name: "waste heat recovery",
+            description: "if a mob has <strong>died</strong> in the last <strong>5 seconds</strong><br>generate <strong>5%</strong> of max <strong class='color-f'>energy</strong> per second",
+            maxCount: 1,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            allowed() {
+                return true
+            },
+            requires: "",
+            effect() {
+                tech.isEnergyRecovery = true;
+            },
+            remove() {
+                tech.isEnergyRecovery = false;
             }
         },
         {

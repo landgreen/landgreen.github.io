@@ -646,26 +646,35 @@ const powerUps = {
         }
         return text
     },
+    hideStyle: `style="height:auto; border: none; background-color: transparent;"`,
     gunText(choose, click) {
-        return `<div class="choose-grid-module card-background" onclick="${click}" style="background-image: url('img/gun/${b.guns[choose].name}.png');">
+        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/gun/${b.guns[choose].name}.png');"`
+
+        return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
         <div class="card-text">
         <div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${b.guns[choose].name}</div>
         ${b.guns[choose].description}</div></div>`
     },
     fieldText(choose, click) {
-        return `<div class="choose-grid-module card-background" onclick="${click}" style="background-image: url('img/field/${m.fieldUpgrades[choose].name}.png');">
+        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/field/${m.fieldUpgrades[choose].name}.png');"`
+
+        return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
         <div class="card-text">
         <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[choose].name}</div>
         ${m.fieldUpgrades[choose].description}</div></div>`
     },
     techText(choose, click) {
-        return `<div class="choose-grid-module card-background" onclick="${click}" style="background-image: url('img/${tech.tech[choose].name}.png');">
+        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.png');"`
+
+        return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
                 <div class="card-text">
                 <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[choose].name}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
     },
     fieldTechText(choose, click) {
-        return `<div class="choose-grid-module card-background" onclick="${click}" style="background-image: url('img/${tech.tech[choose].name}.png');">
+        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.png');"`
+
+        return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
                 <div class="card-text">
                 <div class="grid-title">
                 <span style="position:relative;">
@@ -676,7 +685,9 @@ const powerUps = {
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
     },
     gunTechText(choose, click) {
-        return `<div class="choose-grid-module card-background" onclick="${click}" style="background-image: url('img/${tech.tech[choose].name}.png');">
+        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.png');"`
+
+        return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
                 <div class="card-text">
                 <div class="grid-title">         
                 <span style="position:relative;">
@@ -687,7 +698,9 @@ const powerUps = {
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
     },
     junkTechText(choose, click) {
-        return `<div class="choose-grid-module card-background" onclick="${click}">
+        const style = localSettings.isHideImages ? powerUps.hideStyle : ``
+
+        return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
                 <div class="card-text">
                 <div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[choose].name}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
