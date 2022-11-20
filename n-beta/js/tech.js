@@ -7532,6 +7532,30 @@ const tech = {
             }
         },
         {
+            name: "combinatorial optimization",
+            description: "<strong>+35%</strong> <strong class='color-d'>damage</strong><br><strong>–35%</strong> <strong><em>fire rate</em></strong>",
+            isFieldTech: true,
+            maxCount: 1,
+            count: 0,
+            frequency: 2,
+            frequencyDefault: 2,
+            allowed() {
+                return m.fieldUpgrades[m.fieldMode].name === "plasma torch" || m.fieldUpgrades[m.fieldMode].name === "time dilation" || m.fieldUpgrades[m.fieldMode].name === "metamaterial cloaking" || m.fieldUpgrades[m.fieldMode].name === "pilot wave" || m.fieldUpgrades[m.fieldMode].name === "molecular assembler"
+            },
+            requires: "cloaking, molecular assembler, plasma torch, pilot wave",
+            damage: 1.35,
+            effect() {
+                tech.damage *= this.damage
+                tech.aimDamage = 1.35
+                b.setFireCD();
+            },
+            remove() {
+                if (this.count) tech.damage /= this.damage
+                tech.aimDamage = 1
+                b.setFireCD();
+            }
+        },
+        {
             name: "tokamak",
             description: "throwing a <strong class='color-block'>block</strong> converts it into <strong class='color-f'>energy</strong><br>and a pulsed fusion <strong class='color-e'>explosion</strong>",
             isFieldTech: true,
@@ -7985,30 +8009,6 @@ const tech = {
                     tech.damage /= this.damage
                     powerUps.research.changeRerolls(2)
                 }
-            }
-        },
-        {
-            name: "combinatorial optimization",
-            description: "<strong>+35%</strong> <strong class='color-d'>damage</strong><br><strong>–35%</strong> <strong><em>fire rate</em></strong>",
-            isFieldTech: true,
-            maxCount: 1,
-            count: 0,
-            frequency: 2,
-            frequencyDefault: 2,
-            allowed() {
-                return m.fieldUpgrades[m.fieldMode].name === "plasma torch" || m.fieldUpgrades[m.fieldMode].name === "time dilation" || m.fieldUpgrades[m.fieldMode].name === "metamaterial cloaking" || m.fieldUpgrades[m.fieldMode].name === "pilot wave" || m.fieldUpgrades[m.fieldMode].name === "molecular assembler"
-            },
-            requires: "cloaking, molecular assembler, plasma torch, pilot wave",
-            damage: 1.35,
-            effect() {
-                tech.damage *= this.damage
-                tech.aimDamage = 1.35
-                b.setFireCD();
-            },
-            remove() {
-                if (this.count) tech.damage /= this.damage
-                tech.aimDamage = 1
-                b.setFireCD();
             }
         },
         {

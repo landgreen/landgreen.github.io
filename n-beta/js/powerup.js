@@ -1352,8 +1352,7 @@ const powerUps = {
     spawn(x, y, target, moving = true, mode = null, size = powerUps[target].size()) {
         if (
             (!tech.isSuperDeterminism || (target !== 'research')) &&
-            !(tech.isEnergyNoAmmo && target === 'ammo') &&
-            (!simulation.isNoPowerUps)
+            !(tech.isEnergyNoAmmo && target === 'ammo')
         ) {
             if (tech.isBoostReplaceAmmo && target === 'ammo') target = 'boost'
             powerUps.directSpawn(x, y, target, moving, mode, size)

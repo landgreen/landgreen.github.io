@@ -190,7 +190,6 @@ const simulation = {
     healScale: 1,
     accelScale: null, //set in levels.setDifficulty
     CDScale: null, //set in levels.setDifficulty
-    isNoPowerUps: false,
     molecularMode: Math.floor(4 * Math.random()), //0 spores, 1 missile, 2 ice IX, 3 drones //randomize molecular assembler field type
     // dropFPS(cap = 40, time = 15) {
     //   simulation.fpsCap = cap
@@ -699,10 +698,8 @@ const simulation = {
         }
         if (isTrainingRun) {
             simulation.isTraining = true
-            simulation.isNoPowerUps = true
         } else {
             simulation.isTraining = false
-            simulation.isNoPowerUps = false;
         }
         simulation.onTitlePage = false;
         // document.getElementById("choose-grid").style.display = "none"

@@ -769,23 +769,6 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
         }
         for (let i = 0; i < bullet.length; ++i) Matter.Composite.remove(engine.world, bullet[i]);
         bullet = []; //remove any bullets that might have spawned from tech
-        // const levelsCleared = 0 //Math.abs(Number(document.getElementById("starting-level").value) - 1)
-        // console.log(levelsCleared)
-        // level.difficultyIncrease(Math.min(99, levelsCleared * simulation.difficultyMode)) //increase difficulty based on modes
-        // level.levelsCleared += levelsCleared;
-        if (simulation.isNoPowerUps) { //remove tech, guns, and fields
-            function removeOne() { //recursive remove one at a time to avoid array problems
-                for (let i = 0; i < powerUp.length; i++) {
-                    if (powerUp[i].name === "tech" || powerUp[i].name === "gun" || powerUp[i].name === "field") {
-                        Matter.Composite.remove(engine.world, powerUp[i]);
-                        powerUp.splice(i, 1);
-                        removeOne();
-                        break
-                    }
-                }
-            }
-            removeOne();
-        }
         build.hasExperimentalMode = false
         if (!simulation.isCheating) {
             for (let i = 0, len = tech.tech.length; i < len; i++) {
