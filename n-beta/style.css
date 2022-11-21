@@ -192,7 +192,7 @@ summary {
     transform: translate(-50%, -50%);
     
     padding: 10px 1px;
-    grid-gap: 20px;
+    grid-gap: 10px;
     margin: 0px;
     border: 0px;
     z-index: 12;
@@ -324,7 +324,7 @@ summary {
     grid-template-columns: repeat(auto-fit, 384px);
     grid-auto-flow: row;
     grid-auto-rows: minmax(auto, auto);
-    grid-gap: 20px;
+    grid-gap: 10px;
     /* grid-gap: 16px; */
 
     position: relative;

@@ -2044,12 +2044,14 @@ const tech = {
             },
             remove() {
                 tech.isFlipFlopCoupling = false;
-                if (tech.isFlipFlop || tech.isRelay) {
-                    if (tech.isFlipFlopOn) {
-                        m.couplingChange(-this.bonus)
-                    } else {
-                        for (let i = 0; i < mob.length; i++) {
-                            if (mob[i].isDecoupling) mob[i].alive = false //remove WIMP
+                if (this.count) {
+                    if (tech.isFlipFlop || tech.isRelay) {
+                        if (tech.isFlipFlopOn) {
+                            m.couplingChange(-this.bonus)
+                        } else {
+                            for (let i = 0; i < mob.length; i++) {
+                                if (mob[i].isDecoupling) mob[i].alive = false //remove WIMP
+                            }
                         }
                     }
                 }
@@ -4306,28 +4308,20 @@ const tech = {
             requires: "nail gun, not rivets, needles",
             effect() {
                 tech.isIceCrystals = true;
-                for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
-                    if (b.guns[i].name === "nail gun") {
-                        b.guns[i].ammoPack = Infinity
-                        b.guns[i].recordedAmmo = b.guns[i].ammo
-                        b.guns[i].ammo = Infinity
-                        simulation.updateGunHUD();
-                        break;
-                    }
-                }
+                b.guns[0].ammoPack = Infinity
+                b.guns[0].recordedAmmo = b.guns[i].ammo
+                b.guns[0].ammo = Infinity
+                simulation.updateGunHUD();
             },
             remove() {
                 if (tech.isIceCrystals) {
                     tech.isIceCrystals = false;
-                    for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
-                        if (b.guns[i].name === "nail gun") {
-                            b.guns[i].ammoPack = b.guns[i].defaultAmmoPack;
-                            if (b.guns[i].recordedAmmo) b.guns[i].ammo = b.guns[i].recordedAmmo
-                            simulation.updateGunHUD();
-                            break;
-                        }
-                    }
+                    b.guns[0].ammoPack = b.guns[0].defaultAmmoPack;
+                    if (b.guns[0].recordedAmmo) b.guns[0].ammo = b.guns[0].recordedAmmo
+                    simulation.updateGunHUD();
                 }
+                tech.isIceCrystals = false;
+                if (b.guns[0].ammo === Infinity) b.guns[0].ammo = 0
             }
         },
         {

@@ -650,7 +650,8 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                 if (tech.tech[i].allowed() && (!tech.tech[i].isNonRefundable || localSettings.isJunkExperiment)) { // || tech.tech[i].name === "+1 cardinality") { //|| tech.tech[i].name === "leveraged investment"
                     text += `<div id="tech-${i}" class="experiment-grid-module card-background" onclick="build.choosePowerUp(${i},'tech')" ${style}>`
                 } else { //disabled
-                    text += `<div id="tech-${i}" class="experiment-grid-module card-background experiment-grid-disabled" onclick="build.choosePowerUp(${i},'tech')" ${style}>`
+                    text += `<div id="tech-${i}" class="experiment-grid-module card-background experiment-grid-disabled" ${style}>`
+                    // text += `<div id="tech-${i}" class="experiment-grid-module card-background experiment-grid-disabled" onclick="build.choosePowerUp(${i},'tech')" ${style}>`
                 }
                 if (tech.tech[i].isJunk) {
                     text += build.junkTechText(i)
