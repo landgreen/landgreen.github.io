@@ -964,7 +964,7 @@ const powerUps = {
                             }
                             const pick = gunOptions[Math.floor(Math.seededRandom(0, gunOptions.length))] //pick an element from the array of options
                             // text += `<div class="choose-grid-module" onclick="powerUps.choose('gun',${pick})"><div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${b.guns[pick].name}</div> ${b.guns[pick].description}</div>`
-                            text += powerUps.gunText(pick)
+                            text += powerUps.gunText(pick, `powerUps.choose('gun',${pick})`)
                         } else {
                             let fieldOptions = [];
                             for (let i = 1; i < m.fieldUpgrades.length; i++) { //skip field emitter
@@ -972,7 +972,7 @@ const powerUps = {
                             }
                             const pick = fieldOptions[Math.floor(Math.seededRandom(0, fieldOptions.length))] //pick an element from the array of options
                             // text += `<div class="choose-grid-module" onclick="powerUps.choose('field',${pick})"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[pick].name}</div> ${m.fieldUpgrades[pick].description}</div>`
-                            text += powerUps.fieldText(pick, `powerUps.choose('field',${choose})`)
+                            text += powerUps.fieldText(pick, `powerUps.choose('field',${pick})`)
                         }
                     }
                     if (tech.isMicroTransactions && powerUps.research.count > 0) {

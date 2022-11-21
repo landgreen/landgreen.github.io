@@ -37,7 +37,7 @@ const level = {
             // for (let i = 0; i < 1; ++i) tech.giveTech("determinism")
             // for (let i = 0; i < 3; i++) tech.giveTech("overcharge")
             // for (let i = 0; i < 9; i++) tech.giveTech("paradigm shift")
-            // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
+            for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");
             // level.testing();

@@ -8028,28 +8028,28 @@ const tech = {
         },
         {
             name: "vacuum fluctuation",
-            description: `use ${powerUps.orb.research(6)}to exploit your <strong class='color-f'>field</strong> for a<br><strong>+11%</strong> chance to <strong class='color-dup'>duplicate</strong> spawned <strong>power ups</strong>`,
+            description: `use ${powerUps.orb.research(5)}to exploit your <strong class='color-f'>field</strong> for a<br><strong>+11%</strong> chance to <strong class='color-dup'>duplicate</strong> spawned <strong>power ups</strong>`,
             isFieldTech: true,
             maxCount: 1,
             count: 0,
             frequency: 3,
             frequencyDefault: 3,
             allowed() {
-                return (m.fieldUpgrades[m.fieldMode].name === "pilot wave" || m.fieldUpgrades[m.fieldMode].name === "negative mass" || m.fieldUpgrades[m.fieldMode].name === "time dilation" || m.fieldUpgrades[m.fieldMode].name === "wormhole") && (build.isExperimentSelection || powerUps.research.count > 6)
+                return (m.fieldUpgrades[m.fieldMode].name === "pilot wave" || m.fieldUpgrades[m.fieldMode].name === "negative mass" || m.fieldUpgrades[m.fieldMode].name === "time dilation" || m.fieldUpgrades[m.fieldMode].name === "wormhole") && (build.isExperimentSelection || powerUps.research.count > 4)
             },
             requires: "wormhole, time dilation, negative mass, pilot wave",
             effect() {
                 tech.fieldDuplicate = 0.11
                 powerUps.setDupChance(); //needed after adjusting duplication chance
-                if (!build.isExperimentSelection && !simulation.isTextLogOpen) simulation.circleFlare(0.13);
-                for (let i = 0; i < 6; i++) {
+                if (!build.isExperimentSelection && !simulation.isTextLogOpen) simulation.circleFlare(0.11);
+                for (let i = 0; i < 5; i++) {
                     if (powerUps.research.count > 0) powerUps.research.changeRerolls(-1)
                 }
             },
             remove() {
                 tech.fieldDuplicate = 0
                 powerUps.setDupChance(); //needed after adjusting duplication chance
-                if (this.count > 0) powerUps.research.changeRerolls(6)
+                if (this.count > 0) powerUps.research.changeRerolls(5)
             }
         },
         // {
