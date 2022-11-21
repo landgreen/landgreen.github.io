@@ -331,8 +331,8 @@ const build = {
 <input onclick="build.showImages('pause')" type="checkbox" id="hide-images-pause" name="hide-images-pause" ${localSettings.isHideImages? "checked": ""}>
 <span style="float: right;">press ${input.key.pause} to resume</span> 
 <br>
-<br><strong class='color-d'>damage</strong>: ${((tech.damageFromTech())).toPrecision(3)} &nbsp; &nbsp; difficulty: ${((m.dmgScale)).toPrecision(3)}
-<br><strong class='color-defense'>defense</strong>: ${tech.isEnergyHealth  ? (1-Math.pow(m.harmReduction(), 0.1)).toPrecision(3) : (1-m.harmReduction()).toPrecision(3) } &nbsp; &nbsp; difficulty: ${(1/simulation.dmgScale).toPrecision(3)}
+<br><strong class='color-d'>damage</strong>: ${((tech.damageFromTech())).toPrecision(4)} &nbsp; &nbsp; difficulty: ${((m.dmgScale)).toPrecision(4)}
+<br><strong class='color-defense'>defense</strong>: ${tech.isEnergyHealth  ? (1-Math.pow(m.harmReduction(), 0.1)).toPrecision(5) : (1-m.harmReduction()).toPrecision(5) } &nbsp; &nbsp; difficulty: ${(1/simulation.dmgScale).toPrecision(4)}
 <br><strong><em>fire rate</em></strong>: ${((1-b.fireCDscale)*100).toFixed(b.fireCDscale < 0.1 ? 2 : 0)}%
 ${tech.duplicationChance() ?  `<br><strong class='color-dup'>duplication</strong>: ${(tech.duplicationChance()*100).toFixed(0)}%`: ""}
 ${m.coupling ? `<br><strong class='color-coupling'>coupling</strong>: ${(m.coupling).toFixed(2)} &nbsp; <span style = 'font-size:90%;'>`+m.couplingDescription()+"</span>": ""}
