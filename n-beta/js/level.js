@@ -21,7 +21,7 @@ const level = {
             // level.difficultyIncrease(15 * 4) //30 is near max on hard  //60 is near max on why
             // m.maxHealth = m.health = 100
             // tech.isRerollDamage = true
-            // powerUps.research.changeRerolls(30)
+            powerUps.research.changeRerolls(30000)
             // m.immuneCycle = Infinity //you can't take damage
             // tech.tech[297].frequency = 100
             // m.couplingChange(5)
@@ -34,7 +34,7 @@ const level = {
             // tech.giveTech("plasma ball")
             // tech.giveTech("unified field theory")
             // for (let i = 0; i < 1; ++i) tech.giveTech("uncertainty principle")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("determinism")
+            for (let i = 0; i < 1; ++i) tech.giveTech("renormalization")
             // for (let i = 0; i < 3; i++) tech.giveTech("overcharge")
             // for (let i = 0; i < 9; i++) tech.giveTech("paradigm shift")
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");

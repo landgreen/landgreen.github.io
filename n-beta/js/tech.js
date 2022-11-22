@@ -2716,25 +2716,23 @@ const tech = {
             }
         },
         {
-            name: "Zeno's paradox",
+            name: "homeostasis",
             descriptionFunction() {
-                return `<strong>+85%</strong> <strong class='color-defense'>defense</strong><br><strong>–5%</strong> of current ${tech.isEnergyHealth ? "<strong class='color-f'>energy</strong>": "<strong class='color-h'>health</strong>"} every <strong>5</strong> seconds`
+                return `for each <strong class='color-h'>health</strong> below <strong>100</strong><br><strong>+0.8%</strong> <strong class='color-defense'>defense</strong> <em>(${(100*(Math.max(0, 1 - m.health) * 0.8)).toFixed(0)}%)</em>`
             },
-            // description: "<strong>+85%</strong> <strong class='color-defense'>defense</strong><br><strong>–5%</strong> of current <strong class='color-h'>health</strong> every <strong>5</strong> seconds",
-            // description: "every <strong>5</strong> seconds remove <strong>1/10</strong> of your <strong class='color-h'>health</strong><br>reduce <strong class='color-defense'>defense</strong> by <strong>90%</strong>",
             maxCount: 1,
             count: 0,
             frequency: 1,
             frequencyDefault: 1,
             allowed() {
-                return true
+                return m.health < 0.6 || build.isExperimentSelection
             },
-            requires: "",
+            requires: "health below 60",
             effect() {
-                tech.isZeno = true;
+                tech.isLowHealthDefense = true;
             },
             remove() {
-                tech.isZeno = false;
+                tech.isLowHealthDefense = false;
             }
         },
         {
@@ -2758,23 +2756,25 @@ const tech = {
             }
         },
         {
-            name: "homeostasis",
+            name: "Zeno's paradox",
             descriptionFunction() {
-                return `for each <strong class='color-h'>health</strong> below <strong>100</strong><br><strong>+0.8%</strong> <strong class='color-defense'>defense</strong> <em>(${(100*(Math.max(0, 1 - m.health) * 0.8)).toFixed(0)}%)</em>`
+                return `<strong>+85%</strong> <strong class='color-defense'>defense</strong><br><strong>–5%</strong> of current ${tech.isEnergyHealth ? "<strong class='color-f'>energy</strong>": "<strong class='color-h'>health</strong>"} every <strong>5</strong> seconds`
             },
+            // description: "<strong>+85%</strong> <strong class='color-defense'>defense</strong><br><strong>–5%</strong> of current <strong class='color-h'>health</strong> every <strong>5</strong> seconds",
+            // description: "every <strong>5</strong> seconds remove <strong>1/10</strong> of your <strong class='color-h'>health</strong><br>reduce <strong class='color-defense'>defense</strong> by <strong>90%</strong>",
             maxCount: 1,
             count: 0,
             frequency: 1,
             frequencyDefault: 1,
             allowed() {
-                return m.health < 0.6 || build.isExperimentSelection
+                return true
             },
-            requires: "health below 60",
+            requires: "",
             effect() {
-                tech.isLowHealthDefense = true;
+                tech.isZeno = true;
             },
             remove() {
-                tech.isLowHealthDefense = false;
+                tech.isZeno = false;
             }
         },
         {
@@ -3657,13 +3657,26 @@ const tech = {
             researchUsed: 0,
             couplingToResearch: 0.25,
             effect() {
-                let count = 0
-                while (powerUps.research.count > 0 && powerUps.research.count !== Infinity) {
-                    powerUps.research.changeRerolls(-1)
-                    count += 2.5
-                    this.researchUsed++
+                // let count = 0
+                // while (powerUps.research.count > 0 && powerUps.research.count !== Infinity) {
+                //     powerUps.research.changeRerolls(-1)
+                //     count += 2.5
+                //     this.researchUsed++
+                // }
+                // powerUps.spawnDelay("coupling", Math.floor(count))
+
+                let cycle = () => {
+                    if (powerUps.research.count > 0 && powerUps.research.count !== Infinity) {
+                        if (m.alive) requestAnimationFrame(cycle);
+                        if (!simulation.paused && !simulation.isChoosing) { //&& !(simulation.cycle % 2)
+                            powerUps.research.changeRerolls(-1)
+                            this.researchUsed++
+                            powerUps.spawn(m.pos.x + 50 * (Math.random() - 0.5), m.pos.y + 50 * (Math.random() - 0.5), "coupling");
+                        }
+                    } else { //exit delay loop
+                    }
                 }
-                powerUps.spawnDelay("coupling", Math.floor(count))
+                requestAnimationFrame(cycle);
             },
             remove() {
                 if (this.count) {
@@ -8482,7 +8495,7 @@ const tech = {
         },
         {
             name: "placebo",
-            description: "<strong>+777%</strong> <strong class='color-d'>damage</strong><br><strong>+777%</strong> <strong class='color-defense'>defense</strong><br>&nbsp;",
+            description: "<strong>+777%</strong> <strong class='color-d'>damage</strong><br><strong>+777%</strong> <strong class='color-defense'>defense</strong>",
             maxCount: 1,
             count: 0,
             frequency: 0,
