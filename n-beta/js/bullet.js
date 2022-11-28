@@ -1535,14 +1535,15 @@ const b = {
                     b.targetedNail(this.vertices[2], tech.fragments * Math.floor(2 + Math.random()))
                 }
                 if (tech.isFoamBall) {
-                    const radius = 5 + 8 * Math.random()
-                    const velocity = {
-                        x: Math.max(0.5, 2 - radius * 0.1),
-                        y: 0
-                    }
-                    for (let i = 0, len = 2 * this.mass; i < len; i++) {
+                    for (let i = 0, len = 4 * this.mass; i < len; i++) {
+                        const radius = 5 + 8 * Math.random()
+                        const velocity = {
+                            x: Math.max(0.5, 2 - radius * 0.1),
+                            y: 0
+                        }
                         b.foam(this.position, Vector.rotate(velocity, 6.28 * Math.random()), radius)
                     }
+                    // this.endCycle = 0;
                 }
             },
             caughtPowerUp: null,
@@ -1606,8 +1607,8 @@ const b = {
                     this.endCycle = 0;
                     if (m.energy < 0.05) {
                         m.fireCDcycle = m.cycle + 120; //fire cooldown
-                    } else if (m.cycle + 25 * b.fireCDscale < m.fireCDcycle) {
-                        m.fireCDcycle = m.cycle + 35 * b.fireCDscale //lower cd to 25 if it is above 25
+                    } else if (m.cycle + 15 * b.fireCDscale < m.fireCDcycle) {
+                        m.fireCDcycle = m.cycle + 15 * b.fireCDscale //lower cd to 25 if it is above 25
                     }
 
                     if (m.energy < 0.05) this.dropCaughtPowerUp()
@@ -1857,14 +1858,15 @@ const b = {
                 }
 
                 if (tech.isFoamBall) {
-                    const radius = 5 + 8 * Math.random()
-                    const velocity = {
-                        x: Math.max(0.5, 2 - radius * 0.1),
-                        y: 0
-                    }
-                    for (let i = 0, len = 2 * this.mass; i < len; i++) {
+                    for (let i = 0, len = 4 * this.mass; i < len; i++) {
+                        const radius = 5 + 8 * Math.random()
+                        const velocity = {
+                            x: Math.max(0.5, 2 - radius * 0.1),
+                            y: 0
+                        }
                         b.foam(this.position, Vector.rotate(velocity, 6.28 * Math.random()), radius)
                     }
+                    // this.endCycle = 0;
                 }
             },
             caughtPowerUp: null,
@@ -1934,8 +1936,8 @@ const b = {
                     this.endCycle = 0;
                     if (m.energy < 0.05) {
                         m.fireCDcycle = m.cycle + 120; //fire cooldown
-                    } else if (m.cycle + 25 * b.fireCDscale < m.fireCDcycle) {
-                        m.fireCDcycle = m.cycle + 25 * b.fireCDscale //lower cd to 25 if it is above 25
+                    } else if (m.cycle + 20 * b.fireCDscale < m.fireCDcycle) {
+                        m.fireCDcycle = m.cycle + 20 * b.fireCDscale //lower cd to 25 if it is above 25
                     }
                     //recoil on catching
                     const momentum = Vector.mult(Vector.sub(this.velocity, player.velocity), (input.down ? 0.0001 : 0.0002))
@@ -6142,13 +6144,13 @@ const b = {
                         this.endCycle = 0
                     }
                     if (tech.isFoamBall) {
-                        const radius = 5 + 8 * Math.random()
-                        // const velocity = { x: Math.max(2, 10 - radius * 0.25), y: 0 }
-                        const velocity = {
-                            x: Math.max(0.5, 2 - radius * 0.1),
-                            y: 0
-                        }
                         for (let i = 0, len = 6 * this.mass; i < len; i++) {
+                            const radius = 5 + 8 * Math.random()
+                            // const velocity = { x: Math.max(2, 10 - radius * 0.25), y: 0 }
+                            const velocity = {
+                                x: Math.max(0.5, 2 - radius * 0.1),
+                                y: 0
+                            }
                             b.foam(this.position, Vector.rotate(velocity, 6.28 * Math.random()), radius)
                         }
                         this.endCycle = 0
@@ -6194,12 +6196,12 @@ const b = {
                             this.endCycle = 0
                         }
                         if (tech.isFoamBall) {
-                            const radius = 5 + 8 * Math.random()
-                            const velocity = {
-                                x: Math.max(0.5, 2 - radius * 0.1),
-                                y: 0
-                            }
                             for (let i = 0, len = 6 * this.mass; i < len; i++) {
+                                const radius = 5 + 8 * Math.random()
+                                const velocity = {
+                                    x: Math.max(0.5, 2 - radius * 0.1),
+                                    y: 0
+                                }
                                 b.foam(this.position, Vector.rotate(velocity, 6.28 * Math.random()), radius)
                             }
                             this.endCycle = 0
@@ -6249,12 +6251,12 @@ const b = {
                             this.endCycle = 0
                         }
                         if (tech.isFoamBall) {
-                            const radius = 5 + 8 * Math.random()
-                            const velocity = {
-                                x: Math.max(0.5, 2 - radius * 0.1),
-                                y: 0
-                            }
                             for (let i = 0, len = 6 * this.mass; i < len; i++) {
+                                const radius = 5 + 8 * Math.random()
+                                const velocity = {
+                                    x: Math.max(0.5, 2 - radius * 0.1),
+                                    y: 0
+                                }
                                 b.foam(this.position, Vector.rotate(velocity, 6.28 * Math.random()), radius)
                             }
                             this.endCycle = 0

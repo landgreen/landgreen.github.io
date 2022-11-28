@@ -21,21 +21,22 @@ const level = {
             // level.difficultyIncrease(15 * 4) //30 is near max on hard  //60 is near max on why
             // m.maxHealth = m.health = 100
             // tech.isRerollDamage = true
-            powerUps.research.changeRerolls(30000)
+            // powerUps.research.changeRerolls(30000)
             // m.immuneCycle = Infinity //you can't take damage
             // tech.tech[297].frequency = 100
             // m.couplingChange(5)
             // m.setField("plasma torch") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass    pilot wave   plasma torch
             // simulation.molecularMode = 2
             // m.damage(0.1);
-            // b.giveGuns("laser") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns("harpoon") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.giveGuns("wave") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[0].ammo = 10000
             // tech.giveTech("plasma ball")
             // tech.giveTech("unified field theory")
             // for (let i = 0; i < 1; ++i) tech.giveTech("uncertainty principle")
-            for (let i = 0; i < 1; ++i) tech.giveTech("renormalization")
-            // for (let i = 0; i < 3; i++) tech.giveTech("overcharge")
+            // tech.isFoamBall = true
+            // for (let i = 0; i < 1; ++i) tech.giveTech("renormalization")
+            // for (let i = 0; i < 1; i++) tech.giveTech("grappling hook")
             // for (let i = 0; i < 9; i++) tech.giveTech("paradigm shift")
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
@@ -51,11 +52,7 @@ const level = {
             // for (let i = 0; i < 40; ++i) tech.giveTech()
             // for (let i = 0; i < 13; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "research");
 
-            if (simulation.isTraining) {
-                level.walk()
-            } else {
-                level.intro()
-            } //normal starting level ************************************************
+            if (simulation.isTraining) {                level.walk()            } else {                level.intro()} //normal starting level ************************************************
 
             // for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "tech");
             // for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "gun");
@@ -1954,6 +1951,7 @@ const level = {
                                     body[index].collisionFilter.category = cat.body;
                                     body[index].collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.mob | cat.mobBullet
                                     body[index].classType = "body";
+                                    body[index].isAboutToBeRemoved = true;
                                     Composite.add(engine.world, body[index]); //add to world
                                     setTimeout(() => { //remove block
                                         for (let i = 0; i < body.length; i++) {

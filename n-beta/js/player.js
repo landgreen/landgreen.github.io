@@ -2266,9 +2266,9 @@ const m = {
                                     });
                                 }
                             } else {
-                                const drain = 0.1 + (Math.max(bullet.length, 130) - 130) * 0.01
+                                const drain = 0.095 + (Math.max(bullet.length, 130) - 130) * 0.01
                                 for (let i = 0, len = Math.random() * 20; i < len; i++) {
-                                    if (m.energy > drain) {
+                                    if (m.energy > 3*drain) {
                                         m.energy -= drain
                                         b.spore(m.pos)
                                     } else {
@@ -2289,7 +2289,6 @@ const m = {
                             }, m.angle, -15)
                             bullet[bullet.length - 1].force.x += push.x * (Math.random() - 0.5)
                             bullet[bullet.length - 1].force.y += 0.005 + push.y * (Math.random() - 0.5)
-
                             // b.missile({ x: m.pos.x, y: m.pos.y - 40 }, -Math.PI / 2 + 0.5 * (Math.random() - 0.5), 0, 1)
                         } else if (simulation.molecularMode === 2) {
                             m.energy -= 0.045;

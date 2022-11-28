@@ -348,7 +348,8 @@ ${botText}
 <span style="float: right;">velocity: (${player.velocity.x.toFixed(3)}, ${player.velocity.y.toFixed(3)})</span> 
 ${junkCount ?  `<br><strong class='color-j'>JUNK</strong>: ${(junkCount / totalCount * 100).toFixed(1)}%  `: ""}
 <br>
-<br>level: ${level.levels[level.onLevel]} (${level.difficultyText()}) &nbsp; seed: ${Math.initialSeed} &nbsp; ${m.cycle} cycles
+<br>level: ${level.levelsCleared} ${level.levels[level.onLevel]} (${level.difficultyText()})
+<br>seed: ${Math.initialSeed} &nbsp; ${m.cycle} cycles
 <br>mobs: ${mob.length} &nbsp; blocks: ${body.length} &nbsp; bullets: ${bullet.length} &nbsp; power ups: ${powerUp.length} 
 ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
 </div>`;

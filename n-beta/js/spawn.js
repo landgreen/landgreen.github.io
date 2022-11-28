@@ -411,7 +411,7 @@ const spawn = {
             }
         }
         me.damageReductionDecay = function() { //slowly make the boss take more damage over time  //damageReduction resets with each invulnerability phase
-            if (!(me.cycle % 60) && this.lastDamageCycle + 240 > this.cycle) this.damageReduction *= 1.017 //only decay once a second   //only decay if the player has done damage in the last 4 seconds
+            if (!(me.cycle % 60) && this.lastDamageCycle + 240 > this.cycle) this.damageReduction *= 1.02 //only decay once a second   //only decay if the player has done damage in the last 4 seconds
         }
         me.mobType = spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]
         me.spawnMobs = function(index = 0) {
@@ -976,6 +976,7 @@ const spawn = {
                                 // build.shareURL(false)
                                 setTimeout(function() {
                                     if (!simulation.onTitlePage) {
+                                        m.alive = false
                                         simulation.paused = true;
                                         // simulation.clearMap();
                                         // Matter.Composite.clear(composite, keepStatic, [deep = false])
@@ -6769,7 +6770,7 @@ const spawn = {
             this.seePlayerByHistory(60);
             this.attraction();
             this.checkStatus();
-            this.eventHorizon = 900 + 200 * Math.sin(simulation.cycle * 0.005)
+            this.eventHorizon = 950 + 250 * Math.sin(simulation.cycle * 0.005)
             if (!simulation.isTimeSkipping) {
                 if (Vector.magnitude(Vector.sub(this.position, m.pos)) < this.eventHorizon) {
                     this.attraction();
