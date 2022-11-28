@@ -2756,7 +2756,7 @@ const tech = {
             }
         },
         {
-            name: "Zeno's paradox",
+            name: "Zenos paradox",
             descriptionFunction() {
                 return `<strong>+85%</strong> <strong class='color-defense'>defense</strong><br><strong>–5%</strong> of current ${tech.isEnergyHealth ? "<strong class='color-f'>energy</strong>": "<strong class='color-h'>health</strong>"} every <strong>5</strong> seconds`
             },
