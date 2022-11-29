@@ -770,7 +770,7 @@ const tech = {
         //     }
         // },
         {
-            name: "Newton's 1st law",
+            name: "Newtons 1st law",
             description: "<strong class='color-defense'>defense</strong> is proportional to your <strong>speed</strong><br>up to <strong>+66%</strong> <strong class='color-defense'>defense</strong> at <strong>40 speed</strong>",
             maxCount: 1,
             count: 0,
@@ -788,7 +788,7 @@ const tech = {
             }
         },
         {
-            name: "Newton's 2nd law",
+            name: "Newtons 2nd law",
             description: "<strong class='color-d'>damage</strong> is proportional to your <strong>speed</strong><br>up to <strong>+66%</strong> <strong class='color-d'>damage</strong> at <strong>40 speed</strong>",
             maxCount: 1,
             count: 0,
@@ -4524,7 +4524,7 @@ const tech = {
             }
         },
         {
-            name: "Newton's 3rd law",
+            name: "Newtons 3rd law",
             description: "<strong>+66%</strong> <strong>shotgun</strong> <strong><em>fire rate</em></strong> and <strong>recoil</strong><br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
@@ -4554,7 +4554,7 @@ const tech = {
             allowed() {
                 return (tech.haveGunCheck("shotgun")) && !tech.isShotgunRecoil
             },
-            requires: "shotgun, not Newton's 3rd law",
+            requires: "shotgun, not Newtons 3rd law",
             effect() {
                 tech.isShotgunReversed = true;
             },

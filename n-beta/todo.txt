@@ -18,6 +18,8 @@ bug fixes
 
 *********************************************************** TODO *****************************************************
 
+tech super balls - super ball can damage you
+
 add to todo: make it so each phase of the final boss works like a new level (call new level code on each new phase)
 
 bug reactor boss + harpoon foam production seems to make too much foam
@@ -49,6 +51,7 @@ arrow of time - why can't we remember the future?
 
 
 card images
+  review images that look too cropped, and retry prompts from discord with --ar 3:2
   hide images setting
     experiment mode resets your tech, but it would be better if it didn't
   if pause is pressed while selecting power ups, display pause menu on top of selection menu
@@ -114,6 +117,7 @@ card images
     defensive - Paper cutout
     ice IX - microscope images of ice crystals
     all tech that spawns health - glowing green balls by Enki Bilal
+    guns, ammo - isometric clean pixel art image cutaway of _______, style of tekkonkinkreet
 
     
 
