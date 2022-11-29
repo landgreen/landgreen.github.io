@@ -372,7 +372,7 @@ const powerUps = {
             //     simulation.makeTextLog(`powerUps.tech.length: ${Math.max(0,powerUps.tech.lastTotalChoices - banishLength)}`)
             // }
         }
-        if (tech.isAnsatz && powerUps.research.count === 0) {
+        if (tech.isAnsatz && powerUps.research.count < 1) {
             for (let i = 0; i < 2; i++) powerUps.spawn(m.pos.x + 40 * (Math.random() - 0.5), m.pos.y + 40 * (Math.random() - 0.5), "research", false);
         }
         // document.getElementById("choose-grid").style.display = "none"

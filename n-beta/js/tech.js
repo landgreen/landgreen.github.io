@@ -3232,7 +3232,7 @@ const tech = {
             frequency: 1,
             frequencyDefault: 1,
             allowed() {
-                return powerUps.research.count === 0 && !tech.isSuperDeterminism && !tech.isRerollHaste && !tech.isResearchReality
+                return powerUps.research.count < 1 && !tech.isSuperDeterminism && !tech.isRerollHaste && !tech.isResearchReality
             },
             requires: "no research, not superdeterminism, Ψ(t) collapse, perturbation theory",
             effect() {
