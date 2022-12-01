@@ -696,6 +696,24 @@ const tech = {
             }
         },
         {
+            name: "kinetic bombardment",
+            description: "<strong class='color-d'>damage</strong> is proportional to mob <strong>distance</strong><br>up to <strong>+33%</strong> <strong class='color-d'>damage</strong> at <strong>3000</strong> displacement",
+            maxCount: 1,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            allowed() {
+                return true
+            },
+            requires: "",
+            effect() {
+                tech.isFarAwayDmg = true; //used in mob.damage()
+            },
+            remove() {
+                tech.isFarAwayDmg = false;
+            }
+        },
+        {
             name: "Higgs mechanism",
             description: "<strong>+45%</strong> <strong><em>fire rate</em></strong><br>while <strong>firing</strong> your <strong>position</strong> is fixed",
             maxCount: 1,
@@ -803,24 +821,6 @@ const tech = {
             },
             remove() {
                 tech.isSpeedDamage = false
-            }
-        },
-        {
-            name: "kinetic bombardment",
-            description: "<strong class='color-d'>damage</strong> is proportional to mob <strong>distance</strong><br>up to <strong>+33%</strong> <strong class='color-d'>damage</strong> at <strong>3000</strong> displacement",
-            maxCount: 1,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            allowed() {
-                return true
-            },
-            requires: "",
-            effect() {
-                tech.isFarAwayDmg = true; //used in mob.damage()
-            },
-            remove() {
-                tech.isFarAwayDmg = false;
             }
         },
         {
