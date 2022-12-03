@@ -664,14 +664,16 @@ const powerUps = {
         ${m.fieldUpgrades[choose].description}</div></div>`
     },
     techText(choose, click) {
+        const techCountText = tech.tech[choose].count > 1 ? `(${tech.tech[choose].count}x)` : "";
         const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.png');"`
 
         return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
                 <div class="card-text">
-                <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[choose].name}</div>
+                <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
     },
     fieldTechText(choose, click) {
+        const techCountText = tech.tech[choose].count > 1 ? `(${tech.tech[choose].count}x)` : "";
         const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.png');"`
 
         return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
@@ -681,10 +683,11 @@ const powerUps = {
                     <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
                     <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
                 </span>
-                &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${tech.tech[choose].name}</div>
+                &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
     },
     gunTechText(choose, click) {
+        const techCountText = tech.tech[choose].count > 1 ? `(${tech.tech[choose].count}x)` : "";
         const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.png');"`
 
         return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
@@ -694,15 +697,16 @@ const powerUps = {
                     <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
                     <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
                 </span>
-                &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${tech.tech[choose].name}</div>
+                &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
     },
     junkTechText(choose, click) {
+        const techCountText = tech.tech[choose].count > 1 ? `(${tech.tech[choose].count}x)` : "";
         const style = localSettings.isHideImages ? powerUps.hideStyle : ``
 
         return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
                 <div class="card-text">
-                <div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[choose].name}</div>
+                <div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
     },
     gun: {

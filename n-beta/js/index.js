@@ -371,7 +371,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
         //     text += `<div class="pause-grid-module"><div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${build.nameLink(b.guns[b.inventory[i]].name)} - <span style="font-size:100%;font-weight: 100;">${b.guns[b.inventory[i]].ammo}</span></div> ${b.guns[b.inventory[i]].description}</div>`
         // }
         for (let i = 0, len = b.inventory.length; i < len; i++) {
-            const style = localSettings.isHideImages ? `style="height:auto;"` : `style="background-image: url('img/gun/${m.fieldUpgrades[m.fieldMode].name}.png');"`
+            const style = localSettings.isHideImages ? `style="height:auto;"` : `style="background-image: url('img/gun/${b.guns[b.inventory[i]].name}.png');"`
             text += `<div class="pause-grid-module card-background" ${style} >
                     <div class="card-text">
                     <div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${build.nameLink(b.guns[b.inventory[i]].name)} - <span style="font-size:100%;font-weight: 100;">${b.guns[b.inventory[i]].ammo}</span></div>

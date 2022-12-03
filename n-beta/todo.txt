@@ -63,30 +63,40 @@ card images
     I'm feeling lucky google image search?
       can you set image size and type?
   ***styles***
-    try --- Pastel drawing, blueprints, Psychedelic art, Quilling (rolled up paper), Pixel drawing
+    try --- Pastel drawing, blueprints, Psychedelic art, Quilling (rolled up paper), Pixel drawing,  Arabesque (cool patterns)
     try taking screen shots of fields graphics and feeding them into midJourney V4
     science stuff --- Physautotype print, Scientific photography
-    general technology stuff --- Dan Matutina (cute complex technology),  Dan McPharlin (spacey buildings and technology),
+    technology stuff --- Dan Matutina (cute complex technology),  Dan McPharlin (spacey buildings and technology),
       Katsuhiro Otomo (intricate space technology), Tsutomu Nihei (black and white detailed future tech)
       infographics of all know multiverses. 1980s Japanese graphic design, dimensional astrolabe,
       Japanese poster graphics, Ralph McQuarrie (looks like star wars), Simon Stålenhag (retro-futuristic), Yoshiyuki Tomino (detailed anime future technology)
-    quantum tech -- Hypertorus, Glowing Opal Pearlescent, Physics, Hydro-Dipping	Hydrodipped, Vija Celmins, Matt Molloy (photo of golden waves in the sky)
-    radioactivity tech -- Autoradiography, x-ray, Ultraviolet photography, 
-    non-collide, Pauli, boson tech - Nick Veasey (photos that look like x-rays)
-    gun inventory tech: Wheatpaste
-    bots: WAIT UNTIL ALL GUNS ARE DONE, pixel art, blueprints, Enki Bilal, Jean Giraud (Moebius), Dan Matutina (fun simple tech shapes)
-    mines: Jakub Rózalski, gond painting
-    shotgun: LEGO style, copy nailgun style?
-    wave: pointillism, sine wave, graph, Sandpainting
-    missiles: Comic strip style, anime?, more Victo Ngai?
-    explosions: more Victo Ngai?
-    molecular assembler: Blueprint, Chromolithography, Halftone print, scanning electron microscope images
-    CPT, Retrocausality:  Light painting, Luminogram
-    switch, relay  ON OFF - ASCII art, schematics, circuit diagrams
-    defensive - Paper cutout, Ivan Marchuk, Carving
-    many worlds - Vitreous enamel, 
-    economics tech - Andreas Gursky (endless rows of supermarkets)
-    math (dynamical systems, wave gun) - 
+      isometric:  low-poly, box cutout, made in blender, Materials: matte clay
+    quantum stuff -- Hypertorus, Glowing Opal Pearlescent, Physics, Hydro-Dipping	Hydrodipped, Vija Celmins, Matt Molloy (photo of golden waves in the sky)
+
+    ***major themes missing***
+      CPT, slow time, revert time - Light painting, Luminogram (very abstract)
+      bots - WAIT UNTIL ALL GUNS ARE DONE, 
+        blueprints, Enki Bilal, Jean Giraud (Moebius), Dan Matutina (fun simple tech shapes)
+        pixel art,
+          8 bit pixel art / 16 bit pixel art / 32 bit pixel art   Game boy style / SNES style / PlayStation style    Isometric
+      ON/OFF - ASCII art, schematics, circuit diagrams
+      health -  Needlepoint,  Mosaic,  Quilling
+      duplication, power ups - patterns: turkish, chinese, repeating, William Morris     Vector graphics
+      many worlds - Vitreous enamel
+      tech choice, determinism - movie poster?
+      coupling  (redo it with better images)
+      radioactivity - Autoradiography, x-ray, Ultraviolet photography
+      cancel - Andreas Gursky (endless rows of supermarkets)
+      guns
+        shotgun - use preexisting styles, LEGO style, copy nailgun style?
+        wave - pointillism, sine wave, graph, Sandpainting
+        laser -  Thermograph
+        mines - Jakub Rózalski, gond painting
+      field
+        standing wave, perfect diamagnetism
+        molecular assembler: Blueprint, Chromolithography, Halftone print, scanning electron microscope images
+      JUNK
+        mascot super cute 2d
 
   ***past style themes***
     time dilation - graphic of a hyperbolic equation Luminogram
@@ -95,7 +105,7 @@ card images
     metamaterial cloaking - Scientific photography by Miki Asai
     wormhole - by Tim White
     nail gun - Screenprint
-    grenades - by Victo Ngai
+    grenades, missiles, explosions - by Victo Ngai
     spores - by Ernst Haeckel
     drones - tilt-shift photography
     super balls - By Akari Toriyama
@@ -109,6 +119,7 @@ card images
     ice IX - microscope images of ice crystals
     all tech that spawns health - glowing green balls by Enki Bilal
     guns, ammo - isometric clean pixel art image cutaway of _______, style of tekkonkinkreet
+    invulnerable - by Nick Veasey (photos that look like x-rays)
 
     
 

@@ -831,6 +831,15 @@ summary {
     padding: 0.5px;
     font-weight: 100;
 }
+.color-cancel {
+    background-color: #fafcfd;
+    border: 2px #444 solid;
+    padding: 4px;
+    border-radius: 4px;
+    font-weight: 800;
+    line-height: 170%;
+    font-size: 1em;
+}
 
 .color-j {
     letter-spacing: 1px;

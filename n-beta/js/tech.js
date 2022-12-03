@@ -488,26 +488,6 @@ const tech = {
             }
         },
         {
-            name: "first derivative",
-            descriptionFunction() {
-                return `while your <strong>first</strong> <strong class='color-g'>gun</strong> is equipped<br><strong>+15%</strong> <strong class='color-defense'>defense</strong> per <strong class='color-g'>gun</strong> <em>(${(100*(1-0.85 ** b.inventory.length)).toFixed(0)}%)</em>`
-            },
-            maxCount: 1,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            allowed() {
-                return true
-            },
-            requires: "",
-            effect() {
-                tech.isFirstDer = true
-            },
-            remove() {
-                tech.isFirstDer = false;
-            }
-        },
-        {
             name: "integrated armament",
             link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Weapon' class="link">integrated armament</a>`,
             description: `<span style = 'font-size:95%;'>+<strong>25%</strong> <strong class='color-d'>damage</strong>, but new <strong class='color-g'>guns</strong><br>replace your current <strong class='color-g'>gun</strong> and convert <strong class='color-g'>gun</strong><strong class='color-m'>tech</strong></span>`,
@@ -824,24 +804,6 @@ const tech = {
             }
         },
         {
-            name: "regression",
-            description: "bullet <strong>collisions</strong> increase <strong>vulnerability</strong> to<br><strong class='color-d'>damage</strong> by <strong>+5%</strong> for mobs <em>(+0.25% for bosses)</em>",
-            maxCount: 1,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            allowed() {
-                return true
-            },
-            requires: "",
-            effect() {
-                tech.isLessDamageReduction = true
-            },
-            remove() {
-                tech.isLessDamageReduction = false
-            }
-        },
-        {
             name: "microstates",
             link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Microstate_(statistical_mechanics)' class="link">microstates</a>`,
             description: "for each active <strong>bullet / bot</strong><br><strong>+0.7%</strong> <strong class='color-d'>damage</strong>",
@@ -858,6 +820,24 @@ const tech = {
             },
             remove() {
                 tech.isDamageFromBulletCount = false
+            }
+        },
+        {
+            name: "regression",
+            description: "bullet <strong>collisions</strong> increase <strong>vulnerability</strong> to<br><strong class='color-d'>damage</strong> by <strong>+5%</strong> for mobs <em>(+0.25% for bosses)</em>",
+            maxCount: 1,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            allowed() {
+                return true
+            },
+            requires: "",
+            effect() {
+                tech.isLessDamageReduction = true
+            },
+            remove() {
+                tech.isLessDamageReduction = false
             }
         },
         {
@@ -1002,6 +982,22 @@ const tech = {
             }
         },
         {
+            name: "propagator",
+            description: "after mobs <strong>die</strong> advance time <strong>0.5</strong> seconds<br><strong>+60%</strong> <strong class='color-d'>damage</strong>",
+            maxCount: 3,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            allowed: () => true,
+            requires: "",
+            effect() {
+                tech.deathSkipTime++
+            },
+            remove() {
+                tech.deathSkipTime = 0
+            }
+        },
+        {
             name: "bubble fusion",
             descriptionFunction() {
                 return `after destroying a mob's natural <strong>shield</strong><br>spawn <strong>1-2</strong> ${powerUps.orb.heal()}, ${powerUps.orb.ammo()}, or ${powerUps.orb.research(1)}`
@@ -1043,58 +1039,6 @@ const tech = {
             remove() {
                 tech.mobSpawnWithHealth = 0
                 mobs.setMobSpawnHealth()
-            }
-        },
-        {
-            name: "propagator",
-            description: "after mobs <strong>die</strong> advance time <strong>0.5</strong> seconds<br><strong>+60%</strong> <strong class='color-d'>damage</strong>",
-            maxCount: 3,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            allowed: () => true,
-            requires: "",
-            effect() {
-                tech.deathSkipTime++
-            },
-            remove() {
-                tech.deathSkipTime = 0
-            }
-        },
-        {
-            name: "decorrelation",
-            description: "if your <strong class='color-g'>gun</strong> or <strong class='color-f'>field</strong> are unused for <strong>2</strong> seconds<br><strong>+70%</strong> <strong class='color-defense'>defense</strong>",
-            maxCount: 1,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            allowed() {
-                return !tech.isRewindField
-            },
-            requires: "not retrocausality",
-            effect() {
-                tech.isNoFireDefense = true
-            },
-            remove() {
-                tech.isNoFireDefense = false
-            }
-        },
-        {
-            name: "anticorrelation",
-            description: "if your <strong class='color-g'>gun</strong> or <strong class='color-f'>field</strong> are unused for <strong>2</strong> seconds<br><strong>+100%</strong> <strong class='color-d'>damage</strong>",
-            maxCount: 1,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            allowed() {
-                return !tech.isRewindField
-            },
-            requires: "not retrocausality",
-            effect() {
-                tech.isNoFireDamage = true
-            },
-            remove() {
-                tech.isNoFireDamage = false
             }
         },
         {
@@ -1702,6 +1646,42 @@ const tech = {
             }
         },
         {
+            name: "decorrelation",
+            description: "if your <strong class='color-g'>gun</strong> or <strong class='color-f'>field</strong> are unused for <strong>2</strong> seconds<br><strong>+70%</strong> <strong class='color-defense'>defense</strong>",
+            maxCount: 1,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            allowed() {
+                return !tech.isRewindField
+            },
+            requires: "not retrocausality",
+            effect() {
+                tech.isNoFireDefense = true
+            },
+            remove() {
+                tech.isNoFireDefense = false
+            }
+        },
+        {
+            name: "anticorrelation",
+            description: "if your <strong class='color-g'>gun</strong> or <strong class='color-f'>field</strong> are unused for <strong>2</strong> seconds<br><strong>+100%</strong> <strong class='color-d'>damage</strong>",
+            maxCount: 1,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            allowed() {
+                return !tech.isRewindField
+            },
+            requires: "not retrocausality",
+            effect() {
+                tech.isNoFireDamage = true
+            },
+            remove() {
+                tech.isNoFireDamage = false
+            }
+        },
+        {
             name: "mass driver",
             description: "<strong>+300%</strong> <strong class='color-block'>block</strong> collision <strong class='color-d'>damage</strong><br>&nbsp;",
             maxCount: 1,
@@ -1810,43 +1790,6 @@ const tech = {
             },
             remove() {
                 tech.isBlockPowerUps = false
-            }
-        },
-        {
-            name: "Pauli exclusion",
-            description: `after mob collisions<br>become <strong>invulnerable</strong> for <strong>+3</strong> seconds`,
-            maxCount: 9,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            allowed() {
-                return true
-            },
-            requires: "",
-            effect() {
-                m.collisionImmuneCycles += 180;
-                if (m.immuneCycle < m.cycle + m.collisionImmuneCycles) m.immuneCycle = m.cycle + m.collisionImmuneCycles; //player is immune to damage
-            },
-            remove() {
-                m.collisionImmuneCycles = 30;
-            }
-        },
-        {
-            name: "spin–statistics theorem",
-            description: `every <strong>7</strong> seconds<br>become <strong>invulnerable</strong> for <strong>+1.8</strong> seconds`,
-            maxCount: 3,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            allowed() {
-                return true //m.collisionImmuneCycles > 30
-            },
-            requires: "",
-            effect() {
-                tech.cyclicImmunity += 108;
-            },
-            remove() {
-                tech.cyclicImmunity = 0;
             }
         },
         {
@@ -2150,39 +2093,23 @@ const tech = {
             }
         },
         {
-            name: "liquid cooling",
-            description: `after losing <strong class='color-h'>health</strong><br><strong class='color-s'>freeze</strong> all mobs for <strong>7</strong> seconds`,
-            maxCount: 1,
-            count: 0,
-            frequency: 2,
-            frequencyDefault: 2,
-            allowed() {
-                return tech.isSlowFPS
+            name: "first derivative",
+            descriptionFunction() {
+                return `while your <strong>first</strong> <strong class='color-g'>gun</strong> is equipped<br><strong>+15%</strong> <strong class='color-defense'>defense</strong> per <strong class='color-g'>gun</strong> <em>(${(100*(1-0.85 ** b.inventory.length)).toFixed(0)}%)</em>`
             },
-            requires: "clock gating",
-            effect() {
-                tech.isHarmFreeze = true;
-            },
-            remove() {
-                tech.isHarmFreeze = false;
-            }
-        },
-        {
-            name: "clock gating",
-            description: `after losing <strong class='color-h'>health</strong> <strong>slow</strong> <strong>time</strong> by <strong>50%</strong><br><strong>+20%</strong> <strong class='color-defense'>defense</strong>`,
             maxCount: 1,
             count: 0,
             frequency: 1,
             frequencyDefault: 1,
             allowed() {
-                return simulation.fpsCapDefault > 45
+                return true
             },
-            requires: "FPS above 45",
+            requires: "",
             effect() {
-                tech.isSlowFPS = true;
+                tech.isFirstDer = true
             },
             remove() {
-                tech.isSlowFPS = false;
+                tech.isFirstDer = false;
             }
         },
         {
@@ -2260,6 +2187,79 @@ const tech = {
             },
             remove() {
                 tech.isHarmArmor = false;
+            }
+        },
+        {
+            name: "liquid cooling",
+            description: `after losing <strong class='color-h'>health</strong><br><strong class='color-s'>freeze</strong> all mobs for <strong>7</strong> seconds`,
+            maxCount: 1,
+            count: 0,
+            frequency: 2,
+            frequencyDefault: 2,
+            allowed() {
+                return tech.isSlowFPS
+            },
+            requires: "clock gating",
+            effect() {
+                tech.isHarmFreeze = true;
+            },
+            remove() {
+                tech.isHarmFreeze = false;
+            }
+        },
+        {
+            name: "clock gating",
+            description: `after losing <strong class='color-h'>health</strong> <strong>slow</strong> <strong>time</strong> by <strong>50%</strong><br><strong>+20%</strong> <strong class='color-defense'>defense</strong>`,
+            maxCount: 1,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            allowed() {
+                return simulation.fpsCapDefault > 45
+            },
+            requires: "FPS above 45",
+            effect() {
+                tech.isSlowFPS = true;
+            },
+            remove() {
+                tech.isSlowFPS = false;
+            }
+        },
+        {
+            name: "Pauli exclusion",
+            description: `after mob collisions<br>become <strong>invulnerable</strong> for <strong>+3</strong> seconds`,
+            maxCount: 9,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            allowed() {
+                return true
+            },
+            requires: "",
+            effect() {
+                m.collisionImmuneCycles += 180;
+                if (m.immuneCycle < m.cycle + m.collisionImmuneCycles) m.immuneCycle = m.cycle + m.collisionImmuneCycles; //player is immune to damage
+            },
+            remove() {
+                m.collisionImmuneCycles = 30;
+            }
+        },
+        {
+            name: "spin–statistics theorem",
+            description: `every <strong>7</strong> seconds<br>become <strong>invulnerable</strong> for <strong>+1.8</strong> seconds`,
+            maxCount: 3,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            allowed() {
+                return true //m.collisionImmuneCycles > 30
+            },
+            requires: "",
+            effect() {
+                tech.cyclicImmunity += 108;
+            },
+            remove() {
+                tech.cyclicImmunity = 0;
             }
         },
         {
@@ -2574,7 +2574,7 @@ const tech = {
         },
         {
             name: "Maxwells demon",
-            description: "<strong class='color-f'>energy</strong> above your max decays <strong>95%</strong> slower<br><strong>+5%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
+            description: "<strong class='color-f'>energy</strong> above your max decays <strong>96%</strong> slower<br><strong>+5%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
             maxCount: 1,
             count: 0,
             frequency: 2,
@@ -2584,7 +2584,7 @@ const tech = {
             },
             requires: "energy above your max",
             effect() {
-                tech.overfillDrain = 0.92 //70% = 1-(1-0.75)/(1-0.15) //92% = 1-(1-0.75)/(1-0.87)
+                tech.overfillDrain = 0.94 //70% = 1-(1-0.75)/(1-0.15) //92% = 1-(1-0.75)/(1-0.87)
                 this.refundAmount += tech.addJunkTechToPool(0.05)
             },
             refundAmount: 0,
@@ -3404,7 +3404,7 @@ const tech = {
         },
         {
             name: "superdeterminism",
-            description: `spawn <strong>5</strong> <strong class='color-m'>tech</strong><br>you have <strong>no cancel</strong> and ${powerUps.orb.research(1)} no longer <strong>spawn</strong>`,
+            description: `spawn <strong>5</strong> <strong class='color-m'>tech</strong><br>you can't <strong class='color-cancel'>cancel</strong> and ${powerUps.orb.research(1)} no longer <strong>spawn</strong>`,
             maxCount: 1,
             count: 0,
             frequency: 3,
@@ -3731,7 +3731,7 @@ const tech = {
         {
             name: "residual dipolar coupling",
             descriptionFunction() {
-                return `clicking <strong style = 'font-size:150%;'>×</strong> to <strong>cancel</strong> a <strong class='color-f'>field</strong>, <strong class='color-m'>tech</strong>, or <strong class='color-g'>gun</strong><br>spawns ${powerUps.orb.coupling(5)}that each give <strong>+0.1</strong> <strong class='color-coupling'>coupling</strong><br>${ m.couplingDescription(1)} ${m.fieldMode === 0 ? "" : "per <strong class='color-coupling'>coupling</strong>"}`
+                return `clicking <strong class='color-cancel'>cancel</strong> for a <strong class='color-f'>field</strong>, <strong class='color-m'>tech</strong>, or <strong class='color-g'>gun</strong><br>spawns ${powerUps.orb.coupling(5)}that each give <strong>+0.1</strong> <strong class='color-coupling'>coupling</strong><br>${ m.couplingDescription(1)} ${m.fieldMode === 0 ? "" : "per <strong class='color-coupling'>coupling</strong>"}`
             },
             maxCount: 1,
             count: 0,
@@ -3751,7 +3751,7 @@ const tech = {
         {
             name: "commodities exchange",
             descriptionFunction() {
-                return `clicking <strong style = 'font-size:150%;'>×</strong> to <strong>cancel</strong> a <strong class='color-f'>field</strong>, <strong class='color-m'>tech</strong>, or <strong class='color-g'>gun</strong><br>spawns <strong>5-10</strong> ${powerUps.orb.heal()}, ${powerUps.orb.ammo()}, or ${powerUps.orb.research(1)}`
+                return `clicking <strong class='color-cancel'>cancel</strong> for a <strong class='color-f'>field</strong>, <strong class='color-m'>tech</strong>, or <strong class='color-g'>gun</strong><br>spawns <strong>5-10</strong> ${powerUps.orb.heal()}, ${powerUps.orb.ammo()}, or ${powerUps.orb.research(1)}`
             },
             maxCount: 1,
             count: 0,
@@ -3771,7 +3771,7 @@ const tech = {
         {
             name: "options exchange",
             link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Option_(finance)' class="link">options exchange</a>`,
-            description: `clicking <strong style = 'font-size:150%;'>×</strong> for a <strong class='color-f'>field</strong>, <strong class='color-m'>tech</strong>, or <strong class='color-g'>gun</strong> has a <strong>85%</strong><br>chance to randomize <strong>choices</strong> and not <strong>cancel</strong>`,
+            description: `clicking <strong class='color-cancel'>cancel</strong> for a <strong class='color-f'>field</strong>, <strong class='color-m'>tech</strong>, or <strong class='color-g'>gun</strong> has a <strong>85%</strong><br>chance to randomize <strong>choices</strong> and not <strong>cancel</strong>`,
             maxCount: 1,
             count: 0,
             frequency: 1,
@@ -3789,7 +3789,7 @@ const tech = {
         },
         {
             name: "futures exchange",
-            description: "clicking <strong style = 'font-size:150%;'>×</strong> to <strong>cancel</strong> a <strong class='color-f'>field</strong>, <strong class='color-m'>tech</strong>, or <strong class='color-g'>gun</strong><br>gives <strong>+4.3%</strong> power up <strong class='color-dup'>duplication</strong> chance",
+            description: "clicking <strong class='color-cancel'>cancel</strong> for a <strong class='color-f'>field</strong>, <strong class='color-m'>tech</strong>, or <strong class='color-g'>gun</strong><br>gives <strong>+4.3%</strong> power up <strong class='color-dup'>duplication</strong> chance",
             // descriptionFunction() {
             //     return `clicking <strong style = 'font-size:150%;'>×</strong> to <strong>cancel</strong> a <strong class='color-f'>field</strong>, <strong class='color-m'>tech</strong>, or <strong class='color-g'>gun</strong><br>gives <strong>+${4.9 - 0.15*simulation.difficultyMode}%</strong> power up <strong class='color-dup'>duplication</strong> chance`
             // },
