@@ -45,6 +45,8 @@ arrow of time - why can't we remember the future?
 
 
 card images
+  bug: URL builds break on molecular assembler with image cards
+    also breaks on repeated clicks in experiment to cycle mode
   review images that look too cropped, and retry prompts from discord with --ar 3:2
   hide images setting in experiment mode resets your tech, but it would be better if it didn't
   if pause is pressed while selecting power ups, display pause menu on top of selection menu
@@ -111,6 +113,7 @@ card images
     super balls - By Akari Toriyama
     foam - black blobs Ink doodle
     harpoon - by Eiichiro Oda
+    laser - complex optical scientific equipment --stylize 1000
     anti-shear topology, fracture analysis, shear stress - Chemigram
     generic energy tech - by Laurie Greasley
     block throwing - Bauhaus style

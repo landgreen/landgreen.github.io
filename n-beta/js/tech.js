@@ -6769,9 +6769,9 @@ const tech = {
             frequency: 1,
             frequencyDefault: 1,
             allowed() {
-                return tech.haveGunCheck("laser") && !tech.isWideLaser && !tech.isPulseAim && !tech.historyLaser
+                return tech.haveGunCheck("laser") && !tech.isWideLaser && !tech.historyLaser
             },
-            requires: "laser gun, not neocognitron, diffuse beam, or slow light",
+            requires: "laser gun, diffuse beam, or slow light",
             effect() {
                 tech.beamSplitter++
                 b.guns[11].chooseFireMethod()
@@ -6952,25 +6952,6 @@ const tech = {
                     tech.isPulseLaser = false;
                     b.guns[11].chooseFireMethod()
                 }
-            }
-        },
-        {
-            name: "neocognitron",
-            description: "<strong class='color-laser'>pulse</strong> automatically <strong>aims</strong> at a nearby mob<br>&nbsp;",
-            isGunTech: true,
-            maxCount: 1,
-            count: 0,
-            frequency: 2,
-            frequencyDefault: 2,
-            allowed() {
-                return tech.haveGunCheck("laser") && tech.isPulseLaser && !tech.beamSplitter
-            },
-            requires: "laser gun, pulse, not diffraction grating",
-            effect() {
-                tech.isPulseAim = true;
-            },
-            remove() {
-                tech.isPulseAim = false;
             }
         },
         //************************************************** 
@@ -11061,7 +11042,6 @@ const tech = {
     isExtraMaxEnergy: null,
     isAmmoForGun: null,
     isRapidPulse: null,
-    isPulseAim: null,
     isSporeFreeze: null,
     isShotgunRecoil: null,
     isHealLowHealth: null,

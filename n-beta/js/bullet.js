@@ -596,24 +596,24 @@ const b = {
             v1: null,
             v2: null
         };
-        if (tech.isPulseAim && !input.down) { //find mobs in line of sight
-            let dist = 2200
-            for (let i = 0, len = mob.length; i < len; i++) {
-                const newDist = Vector.magnitude(Vector.sub(path[0], mob[i].position))
-                if (
-                    explosionRadius < newDist &&
-                    newDist < dist &&
-                    !mob[i].isBadTarget &&
-                    Matter.Query.ray(map, path[0], mob[i].position).length === 0 &&
-                    Matter.Query.ray(body, path[0], mob[i].position).length === 0 &&
-                    !mob[i].isInvulnerable
-                ) {
-                    dist = newDist
-                    best.who = mob[i]
-                    path[path.length - 1] = mob[i].position
-                }
-            }
-        }
+        // if (tech.isPulseAim && !input.down) { //find mobs in line of sight
+        //     let dist = 2200
+        //     for (let i = 0, len = mob.length; i < len; i++) {
+        //         const newDist = Vector.magnitude(Vector.sub(path[0], mob[i].position))
+        //         if (
+        //             explosionRadius < newDist &&
+        //             newDist < dist &&
+        //             !mob[i].isBadTarget &&
+        //             Matter.Query.ray(map, path[0], mob[i].position).length === 0 &&
+        //             Matter.Query.ray(body, path[0], mob[i].position).length === 0 &&
+        //             !mob[i].isInvulnerable
+        //         ) {
+        //             dist = newDist
+        //             best.who = mob[i]
+        //             path[path.length - 1] = mob[i].position
+        //         }
+        //     }
+        // }
         if (!best.who) {
             vertexCollision(path[0], path[1], mob);
             vertexCollision(path[0], path[1], map);
@@ -7709,10 +7709,6 @@ const b = {
                 }
                 // this.fire = this.firePhoton
             },
-            // firePhoton() {
-            //     m.fireCDcycle = m.cycle + Math.floor((tech.isPulseAim ? 25 : 50) * b.fireCDscale); // cool down
-            //     b.photon({ x: m.pos.x + 23 * Math.cos(m.angle), y: m.pos.y + 23 * Math.sin(m.angle) }, m.angle)
-            // },
             fireLaser() {
                 const drain = 0.001 + tech.laserDrain / b.fireCDscale
                 if (m.energy < drain) {
