@@ -416,13 +416,13 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                 } else if (tech.tech[i].isLore) {
                     text += `<div class="pause-grid-module"><div class="grid-title lore-text"><div class="circle-grid lore"></div> &nbsp; ${tech.tech[i].name} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
                 } else if (tech.tech[i].isFieldTech) {
-                    text += `<div id="${i}-pause-tech" class="experiment-grid-module card-background ${ejectClass}" onclick="powerUps.pauseEjectTech(${i})" ${style}>`
+                    text += `<div id="${i}-pause-tech" class="pause-grid-module card-background ${ejectClass}" onclick="powerUps.pauseEjectTech(${i})" ${style}>`
                     text += build.fieldTechText(i) + "</div>"
                 } else if (tech.tech[i].isGunTech) {
-                    text += `<div id="${i}-pause-tech" class="experiment-grid-module card-background ${ejectClass}" onclick="powerUps.pauseEjectTech(${i})" ${style}>`
+                    text += `<div id="${i}-pause-tech" class="pause-grid-module card-background ${ejectClass}" onclick="powerUps.pauseEjectTech(${i})" ${style}>`
                     text += build.gunTechText(i) + "</div>"
                 } else {
-                    text += `<div id="${i}-pause-tech" class="experiment-grid-module card-background ${ejectClass}" onclick="powerUps.pauseEjectTech(${i})" ${style}>`
+                    text += `<div id="${i}-pause-tech" class="pause-grid-module card-background ${ejectClass}" onclick="powerUps.pauseEjectTech(${i})" ${style}>`
                     text += build.techText(i) + "</div>"
                 }
             } else if (tech.tech[i].isLost) {

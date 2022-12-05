@@ -1,5 +1,5 @@
 :root {
-    --build-bg-color: #b5bfce;
+    --build-bg-color: #aeb6c2;
 }
 
 body {
@@ -257,7 +257,6 @@ summary {
     grid-template-columns: 345px;
     /* grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); */
     grid-auto-rows: minmax(auto, auto);
-    grid-gap: 0px;
     align-content: start;
     /* align-content: space-between; */
     grid-gap: 10px;
@@ -293,14 +292,20 @@ summary {
 }
 
 .pause-grid-module {
-    margin: -1px;
+    /* margin: -1px;
     padding: 10px;
     line-height: 170%;
-    /* border-radius: 6px; */
     border: 1px #333 solid;
     border-radius: 8px;
     background-color: #fff;
-    font-size: 0.65em;
+    font-size: 0.65em; */
+
+    padding: 5px;
+    line-height: 170%;
+    border-radius: 8px;
+    background-color: #fafcfd;
+    font-size: 0.75em;
+    border: 2px #444 solid;
 
 }
 
@@ -339,34 +344,14 @@ summary {
 }
 
 .experiment-grid-module {
-    margin: -0.5px;
-    
-    padding: 10px;
+    padding: 5px;
     line-height: 170%;
     border-radius: 8px;
-    border: 2px #444 solid;
     background-color: #fafcfd;
-
-    line-height: 170%;
-    font-size: 0.65em;
+    font-size: 0.75em;
+    border: 2px #444 solid;
+    /* margin: -0.5px; */
 }
-/* .experiment-grid-module .card-text {
-    background-color: #efeff5;
-} */
-
-
-
-/* .experiment-grid-module-field {
-    background-color: #eff;
-    opacity: 1;
-    transition: opacity 0.5s ease;
-}
-
-.experiment-grid-module-gun {
-    background-color: #eef;
-    opacity: 1;
-    transition: opacity 0.5s ease;
-} */
 
 .experiment-grid-hide {
     display: none;

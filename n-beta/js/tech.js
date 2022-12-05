@@ -1439,32 +1439,6 @@ const tech = {
             }
         },
         {
-            name: "bot fabrication",
-            link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Robot' class="link">bot fabrication</a>`,
-            descriptionFunction() {
-                return `after you collect ${powerUps.orb.research(2 + Math.floor(0.1666 * b.totalBots()))}use them to build a<br>random <strong class='color-bot'>bot</strong> <em>(+1 cost every 5 bots)</em>`
-            },
-            // description: `if you collect ${powerUps.orb.research(2)}use them to build a<br>random <strong class='color-bot'>bot</strong> <em>(+1 cost every 5 bots)</em>`,
-            maxCount: 1,
-            count: 0,
-            frequency: 2,
-            frequencyDefault: 2,
-            isBotTech: true,
-            allowed() {
-                return powerUps.research.count > 1 || build.isExperimentSelection
-            },
-            requires: "at least 2 research",
-            effect() {
-                tech.isRerollBots = true;
-                powerUps.research.changeRerolls(0)
-                simulation.makeTextLog(`<span class='color-var'>m</span>.<span class='color-r'>research</span> <span class='color-symbol'>=</span> 0`)
-            },
-            remove() {
-                tech.isRerollBots = false;
-                // this.description = `if you collect ${powerUps.orb.research(2 + Math.floor(0.2 * b.totalBots()))}use them to build a<br>random <strong class='color-bot'>bot</strong>  <em>(+1 cost every 5 bots)</em>`
-            }
-        },
-        {
             name: "perimeter defense",
             description: "for each permanent <strong class='color-bot'>bot</strong><br><strong>+6%</strong> <strong class='color-defense'>defense</strong>",
             maxCount: 1,
@@ -1500,6 +1474,32 @@ const tech = {
             },
             remove() {
                 tech.isBotDamage = false
+            }
+        },
+        {
+            name: "bot fabrication",
+            link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Robot' class="link">bot fabrication</a>`,
+            descriptionFunction() {
+                return `after you collect ${powerUps.orb.research(2 + Math.floor(0.1666 * b.totalBots()))}use them to build a<br>random <strong class='color-bot'>bot</strong> <em>(+1 cost every 5 bots)</em>`
+            },
+            // description: `if you collect ${powerUps.orb.research(2)}use them to build a<br>random <strong class='color-bot'>bot</strong> <em>(+1 cost every 5 bots)</em>`,
+            maxCount: 1,
+            count: 0,
+            frequency: 2,
+            frequencyDefault: 2,
+            isBotTech: true,
+            allowed() {
+                return powerUps.research.count > 1 || build.isExperimentSelection
+            },
+            requires: "at least 2 research",
+            effect() {
+                tech.isRerollBots = true;
+                powerUps.research.changeRerolls(0)
+                simulation.makeTextLog(`<span class='color-var'>m</span>.<span class='color-r'>research</span> <span class='color-symbol'>=</span> 0`)
+            },
+            remove() {
+                tech.isRerollBots = false;
+                // this.description = `if you collect ${powerUps.orb.research(2 + Math.floor(0.2 * b.totalBots()))}use them to build a<br>random <strong class='color-bot'>bot</strong>  <em>(+1 cost every 5 bots)</em>`
             }
         },
         {
@@ -3771,7 +3771,7 @@ const tech = {
         {
             name: "options exchange",
             link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Option_(finance)' class="link">options exchange</a>`,
-            description: `clicking <strong class='color-cancel'>cancel</strong> for a <strong class='color-f'>field</strong>, <strong class='color-m'>tech</strong>, or <strong class='color-g'>gun</strong> has a <strong>85%</strong><br>chance to randomize <strong>choices</strong> and not <strong>cancel</strong>`,
+            description: `clicking <strong class='color-cancel'>cancel</strong> for a <strong class='color-f'>field</strong>, <strong class='color-m'>tech</strong>, or <strong class='color-g'>gun</strong><br>has a <strong>85%</strong> chance to randomize <strong>choices</strong>`,
             maxCount: 1,
             count: 0,
             frequency: 1,

@@ -45,6 +45,7 @@ arrow of time - why can't we remember the future?
 
 
 card images
+  process:  discord midjourney prompts -> https://www.photopea.com/ to match 384x256 PNG -> webP? -> place in /img folder
   bug: URL builds break on molecular assembler with image cards
     also breaks on repeated clicks in experiment to cycle mode
   review images that look too cropped, and retry prompts from discord with --ar 3:2
@@ -77,10 +78,6 @@ card images
 
     ***major themes missing***
       CPT, slow time, revert time - Light painting, Luminogram (very abstract)
-      bots - WAIT UNTIL ALL GUNS ARE DONE, 
-        blueprints, Enki Bilal, Jean Giraud (Moebius), Dan Matutina (fun simple tech shapes)
-        pixel art,
-          8 bit pixel art / 16 bit pixel art / 32 bit pixel art   Game boy style / SNES style / PlayStation style    Isometric
       ON/OFF - ASCII art, schematics, circuit diagrams
       health -  Needlepoint,  Mosaic,  Quilling
       duplication, power ups - patterns: turkish, chinese, repeating, William Morris     Vector graphics
@@ -123,6 +120,7 @@ card images
     all tech that spawns health - glowing green balls by Enki Bilal
     guns, ammo - isometric clean pixel art image cutaway of _______, style of tekkonkinkreet
     invulnerable - by Nick Veasey (photos that look like x-rays)
+    bots - hovering drone ______ by Laurie Greasley 16-bit Isometric --ar 3:2 --stylize 1000
 
     
 
