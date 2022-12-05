@@ -380,7 +380,7 @@ summary {
 .card-text {
     background-color: rgba(255,255,255,1); 
     border-radius: 8px;
-    padding: 5px; 
+    padding: 8px; 
     border: 2px solid #444; 
     margin: -2px;
 }

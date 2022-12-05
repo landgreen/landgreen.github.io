@@ -7301,7 +7301,32 @@ const tech = {
         // },
         {
             name: "bot manufacturing",
-            description: `use ${powerUps.orb.research(2)} to build<br><strong>3</strong> random <strong class='color-bot'>bots</strong>`,
+            description: `use ${powerUps.orb.research(1)} to build<br><strong>3</strong> random <strong class='color-bot'>bots</strong>`,
+            isFieldTech: true,
+            maxCount: 1,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            isBotTech: true,
+            isNonRefundable: true,
+            allowed() {
+                return powerUps.research.count > 0 && (m.fieldUpgrades[m.fieldMode].name === "molecular assembler" || m.fieldUpgrades[m.fieldMode].name === "pilot wave")
+            },
+            requires: "molecular assembler, pilot wave",
+            effect() {
+                for (let i = 0; i < 1; i++) {
+                    if (powerUps.research.count > 0) powerUps.research.changeRerolls(-1)
+                }
+                m.energy = 0.01;
+                b.randomBot()
+                b.randomBot()
+                b.randomBot()
+            },
+            remove() {}
+        },
+        {
+            name: "bot prototypes",
+            description: `use ${powerUps.orb.research(2)}to build <strong>2</strong> random <strong class='color-bot'>bots</strong><br>and <strong>upgrade</strong> all <strong class='color-bot'>bots</strong> to that type`,
             isFieldTech: true,
             maxCount: 1,
             count: 0,
@@ -7315,31 +7340,6 @@ const tech = {
             requires: "molecular assembler, pilot wave",
             effect() {
                 for (let i = 0; i < 2; i++) {
-                    if (powerUps.research.count > 0) powerUps.research.changeRerolls(-1)
-                }
-                m.energy = 0.01;
-                b.randomBot()
-                b.randomBot()
-                b.randomBot()
-            },
-            remove() {}
-        },
-        {
-            name: "bot prototypes",
-            description: `use ${powerUps.orb.research(3)}to build <strong>2</strong> random <strong class='color-bot'>bots</strong><br>and <strong>upgrade</strong> all <strong class='color-bot'>bots</strong> to that type`,
-            isFieldTech: true,
-            maxCount: 1,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            isBotTech: true,
-            isNonRefundable: true,
-            allowed() {
-                return powerUps.research.count > 2 && (m.fieldUpgrades[m.fieldMode].name === "molecular assembler" || m.fieldUpgrades[m.fieldMode].name === "pilot wave")
-            },
-            requires: "molecular assembler, pilot wave",
-            effect() {
-                for (let i = 0; i < 3; i++) {
                     if (powerUps.research.count > 0) powerUps.research.changeRerolls(-1)
                 }
                 //fill array of available bots

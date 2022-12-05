@@ -51,6 +51,12 @@ card images
   review images that look too cropped, and retry prompts from discord with --ar 3:2
   hide images setting in experiment mode resets your tech, but it would be better if it didn't
   if pause is pressed while selecting power ups, display pause menu on top of selection menu
+  improve look for hide image settings
+    how to apply that css to all cards without checking every single card in the loop?
+      make different classes and helper writeText functions that use them?
+    reduce stroke intensity
+    grid gap: 0
+    border-radius: 0
   make an image for:
     undefined?
     the entanglement power up needs to render images
@@ -93,7 +99,6 @@ card images
         mines - Jakub Rózalski, gond painting
       field
         standing wave, perfect diamagnetism
-        molecular assembler: Blueprint, Chromolithography, Halftone print, scanning electron microscope images
       JUNK
         mascot super cute 2d
 
@@ -102,6 +107,7 @@ card images
     negative mass - Blacklight painting by Moebius
     plasma torch - by Dan Mumford
     metamaterial cloaking - Scientific photography by Miki Asai
+    molecular assembler - _____ by Laurie Greasley 16-bit Isometric --ar 3:2 --stylize 1000
     wormhole - by Tim White
     nail gun - Screenprint
     grenades, missiles, explosions - by Victo Ngai
