@@ -7030,6 +7030,31 @@ const tech = {
             }
         },
         {
+            name: "triple point",
+            descriptionFunction() {
+                return `<strong>+1.5</strong> second <strong class='color-s'>ice IX</strong> freeze effect<br>spawn ${powerUps.orb.coupling(10)} that each give <strong>+0.1</strong> <strong class='color-coupling'>coupling</strong><br>${ m.couplingDescription(1)} ${m.fieldMode === 0 ? "" : "per <strong class='color-coupling'>coupling</strong>"}`
+            },
+            isFieldTech: true,
+            maxCount: 3,
+            count: 0,
+            frequency: 2,
+            frequencyDefault: 2,
+            allowed() {
+                return m.fieldUpgrades[m.fieldMode].name === "standing wave" || m.fieldUpgrades[m.fieldMode].name === "perfect diamagnetism"
+            },
+            requires: "standing wave, perfect diamagnetism",
+            effect() {
+                tech.iceIXFreezeTime += 90
+                powerUps.spawnDelay("coupling", 10)
+            },
+            remove() {
+                tech.iceIXFreezeTime = 150
+                if (this.count) {
+                    m.couplingChange(-this.count)
+                }
+            }
+        },
+        {
             name: "bremsstrahlung",
             description: "<strong>deflecting</strong> and thrown <strong class='color-block'>blocks</strong><br>do braking <strong class='color-d'>damage</strong> to mobs",
             isFieldTech: true,
@@ -7065,31 +7090,6 @@ const tech = {
             },
             remove() {
                 tech.isBlockRadiation = false;
-            }
-        },
-        {
-            name: "triple point",
-            descriptionFunction() {
-                return `<strong>+1.5</strong> second <strong class='color-s'>ice IX</strong> freeze effect<br>spawn ${powerUps.orb.coupling(10)} that each give <strong>+0.1</strong> <strong class='color-coupling'>coupling</strong><br>${ m.couplingDescription(1)} ${m.fieldMode === 0 ? "" : "per <strong class='color-coupling'>coupling</strong>"}`
-            },
-            isFieldTech: true,
-            maxCount: 3,
-            count: 0,
-            frequency: 2,
-            frequencyDefault: 2,
-            allowed() {
-                return m.fieldUpgrades[m.fieldMode].name === "standing wave" || m.fieldUpgrades[m.fieldMode].name === "perfect diamagnetism"
-            },
-            requires: "standing wave, perfect diamagnetism",
-            effect() {
-                tech.iceIXFreezeTime += 90
-                powerUps.spawnDelay("coupling", 10)
-            },
-            remove() {
-                tech.iceIXFreezeTime = 150
-                if (this.count) {
-                    m.couplingChange(-this.count)
-                }
             }
         },
         {

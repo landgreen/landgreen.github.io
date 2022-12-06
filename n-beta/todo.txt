@@ -68,9 +68,10 @@ card images
     1/8 smaller file size
     down sides?  maybe it takes time to render?
     https://developers.google.com/speed/webp/docs/using
-  JUNK tech could be a random image
-    I'm feeling lucky google image search?
-      can you set image size and type?
+  JUNK should default to the no image setting
+    JUNK tech could load a random image
+      I'm feeling lucky google image search?
+        can you set image size and type?
   ***styles***
     try --- Pastel drawing, blueprints, Psychedelic art, Quilling (rolled up paper), Pixel drawing,  Arabesque (cool patterns)
     try taking screen shots of fields graphics and feeding them into midJourney V4
@@ -97,12 +98,12 @@ card images
         wave - pointillism, sine wave, graph, Sandpainting
         laser -  Thermograph
         mines - Jakub Rózalski, gond painting
-      field
-        standing wave, perfect diamagnetism
       JUNK
         mascot super cute 2d
 
   ***past style themes***
+    standing wave - concentric transparent blue geometric circles science --ar 3:2 --stylize 1000 
+    perfect diamagnetism - physics magnetic field chalk diagram --ar 3:2 --stylize 1000
     time dilation - graphic of a hyperbolic equation Luminogram
     negative mass - Blacklight painting by Moebius
     plasma torch - by Dan Mumford
