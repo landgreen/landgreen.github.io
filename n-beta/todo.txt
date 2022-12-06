@@ -90,13 +90,12 @@ card images
       duplication, power ups - patterns: turkish, chinese, repeating, William Morris     Vector graphics
       many worlds - Vitreous enamel
       tech choice, determinism - movie poster?
-      coupling  (redo it with better images)
+      coupling  (redo it with better images) - 
       radioactivity - Autoradiography, x-ray, Ultraviolet photography
       cancel - Andreas Gursky (endless rows of supermarkets)
       guns
         shotgun - use preexisting styles, LEGO style, copy nailgun style?
         wave - pointillism, sine wave, graph, Sandpainting
-        laser -  Thermograph
         mines - Jakub Rózalski, gond painting
       JUNK
         mascot super cute 2d
@@ -128,6 +127,7 @@ card images
     guns, ammo - isometric clean pixel art image cutaway of _______, style of tekkonkinkreet
     invulnerable - by Nick Veasey (photos that look like x-rays)
     bots - hovering drone ______ by Laurie Greasley 16-bit Isometric --ar 3:2 --stylize 1000
+    alternate reality - _____ Fractal art --ar 3:2 --stylize 1000
 
     
 
