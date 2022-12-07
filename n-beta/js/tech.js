@@ -3308,7 +3308,7 @@ const tech = {
             }
         },
         {
-            name: "cross disciplinary",
+            name: "cross-disciplinary",
             description: "<strong class='color-m'>tech</strong> have an extra <strong class='color-f'>field</strong> or <strong class='color-g'>gun</strong> <strong>choice</strong><br><strong>+5%</strong> chance to <strong class='color-dup'>duplicate</strong> spawned <strong>power ups</strong>",
             maxCount: 1,
             count: 0,
@@ -3392,7 +3392,7 @@ const tech = {
             allowed() {
                 return !tech.extraChoices && !tech.isExtraGunField && !tech.isFlipFlopChoices
             },
-            requires: "not emergence, cross disciplinary, integrated circuit",
+            requires: "not emergence, cross-disciplinary, integrated circuit",
             effect() {
                 tech.isDeterminism = true;
                 //if you change the number spawned also change it in Born rule
