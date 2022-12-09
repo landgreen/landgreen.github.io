@@ -1696,8 +1696,7 @@ const m = {
     fieldUpgrades: [{
             name: "field emitter",
             description: `use <strong class='color-f'>energy</strong> to <strong>deflect</strong> mobs
-            <br><strong>100</strong> max <strong class='color-f'>energy</strong>
-            <br>generate <strong>6</strong> <strong class='color-f'>energy</strong> per second`,
+            <br>generate <strong>6</strong> <strong class='color-f'>energy</strong> per second`, //            <br><strong>100</strong> max <strong class='color-f'>energy</strong>
             effect: () => {
                 m.hold = function () {
                     if (m.isHolding) {
@@ -2268,7 +2267,7 @@ const m = {
                             } else {
                                 const drain = 0.095 + (Math.max(bullet.length, 130) - 130) * 0.01
                                 for (let i = 0, len = Math.random() * 20; i < len; i++) {
-                                    if (m.energy > 3*drain) {
+                                    if (m.energy > 3 * drain) {
                                         m.energy -= drain
                                         b.spore(m.pos)
                                     } else {

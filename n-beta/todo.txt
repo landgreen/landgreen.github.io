@@ -43,13 +43,10 @@ arrow of time - why can't we remember the future?
   But for these complex systems we can make predictions using the 2nd law of thermodynamics.  We can say that the system's entropy will stay the same or increase.
   These predictions are only useful for the future because entropy is very unlikely to decrease.
 
-
 card images
+  wave function collapse opens the pause menu after it triggers
+    this is actually good, maybe reuse this code to get pause menu to open at any time
   process:  discord midjourney prompts -> https://www.photopea.com/ to match 384x256 PNG -> webP? -> place in /img folder
-  bug: URL builds break on molecular assembler with image cards
-    also breaks on repeated clicks in experiment to cycle mode
-  review images that look too cropped, and retry prompts from discord with --ar 3:2
-  hide images setting in experiment mode resets your tech, but it would be better if it didn't
   if pause is pressed while selecting power ups, display pause menu on top of selection menu
   improve look for hide image settings
     how to apply that css to all cards without checking every single card in the loop?
@@ -57,11 +54,8 @@ card images
     reduce stroke intensity
     grid gap: 0
     border-radius: 0
-  make an image for:
-    undefined?
-    the entanglement power up needs to render images
-    the card that tech: "robotics" produces in the power up selection menu
-      use the same images as robotics
+  make an image for undefined?
+  the entanglement power up needs to render images
   webP?
     test code: change extension to webp
     batch convert current .png into webP?
@@ -82,24 +76,20 @@ card images
       Japanese poster graphics, Ralph McQuarrie (looks like star wars), Simon Stålenhag (retro-futuristic), Yoshiyuki Tomino (detailed anime future technology)
       isometric:  low-poly, box cutout, made in blender, Materials: matte clay
     quantum stuff -- Hypertorus, Glowing Opal Pearlescent, Physics, Hydro-Dipping	Hydrodipped, Vija Celmins, Matt Molloy (photo of golden waves in the sky)
-
-    ***major themes missing***
-      CPT, slow time, revert time - Light painting, Luminogram (very abstract)
-      ON/OFF - ASCII art, schematics, circuit diagrams
-      health -  Needlepoint,  Mosaic,  Quilling
-      duplication, power ups - patterns: turkish, chinese, repeating, William Morris     Vector graphics
-      many worlds - Vitreous enamel
-      tech choice, determinism - movie poster?
-      coupling  (redo it with better images) - 
-      radioactivity - Autoradiography, x-ray, Ultraviolet photography
-      cancel - Andreas Gursky (endless rows of supermarkets)
-      guns
-        shotgun - use preexisting styles, LEGO style, copy nailgun style?
-        wave - pointillism, sine wave, graph, Sandpainting
-        mines - Jakub Rózalski, gond painting
-      JUNK
-        mascot super cute 2d
-
+  ***major themes missing***
+    CPT, slow time, revert time - Light painting, Luminogram (very abstract),  Double exposure
+    ON/OFF - ASCII art, schematics, circuit diagrams
+    health -  Needlepoint,  Mosaic,  Quilling
+    duplication, power ups - patterns: turkish, chinese, repeating, William Morris     Vector graphics
+    coupling  (redo it with better images) - 
+    radioactivity - Autoradiography, x-ray, Ultraviolet photography
+    cancel - Andreas Gursky (endless rows of supermarkets)
+    guns
+      shotgun - use preexisting styles, LEGO style, copy nailgun style?
+      wave - pointillism, sine wave, graph, Sandpainting
+      mines - Jakub Rózalski, gond painting
+    JUNK
+      mascot super cute 2d
   ***past style themes***
     standing wave - concentric transparent blue geometric circles science --ar 3:2 --stylize 1000 
     perfect diamagnetism - physics magnetic field chalk diagram --ar 3:2 --stylize 1000
@@ -128,7 +118,8 @@ card images
     invulnerable - by Nick Veasey (photos that look like x-rays)
     bots - hovering drone ______ by Laurie Greasley 16-bit Isometric --ar 3:2 --stylize 1000
     alternate reality - _____ Fractal art --ar 3:2 --stylize 1000
-
+    tech choice - ______ mandala tile Mosaic --ar 3:2 --stylize 1000
+    tech that spawns heal power ups - _____ green Quilling --ar 3:2 --stylize 1000
     
 
 

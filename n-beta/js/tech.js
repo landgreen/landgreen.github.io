@@ -2802,6 +2802,45 @@ const tech = {
             }
         },
         {
+            name: "ergodicity",
+            descriptionFunction() {
+                return `${powerUps.orb.heal()} have <strong>-50%</strong> effect<br><strong>+66%</strong> <strong class='color-d'>damage</strong>`
+            },
+            maxCount: 1,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            allowed() {
+                return true
+            },
+            requires: "",
+            damage: 1.66,
+            effect() {
+                tech.damage *= this.damage
+                tech.isHalfHeals = true;
+                for (let i = 0; i < powerUp.length; i++) {
+                    if (powerUp[i].name === "heal") {
+                        const scale = Math.sqrt(0.5)
+                        powerUp[i].size *= scale
+                        Matter.Body.scale(powerUp[i], scale, scale); //grow    
+                    }
+                }
+            },
+            remove() {
+                if (this.count) {
+                    tech.damage /= this.damage
+                    for (let i = 0; i < powerUp.length; i++) {
+                        if (powerUp[i].name === "heal") {
+                            const scale = 1 / Math.sqrt(0.5)
+                            powerUp[i].size *= scale
+                            Matter.Body.scale(powerUp[i], scale, scale); //grow    
+                        }
+                    }
+                }
+                tech.isHalfHeals = false;
+            }
+        },
+        {
             name: "fluoroantimonic acid",
             description: "if your <strong class='color-h'>health</strong> is above <strong>100</strong><br><strong>+35%</strong> <strong class='color-d'>damage</strong>",
             maxCount: 1,
@@ -2838,47 +2877,6 @@ const tech = {
             remove() {
                 tech.isFallingDamage = false;
                 m.setMaxHealth();
-            }
-        },
-        {
-            name: "quenching",
-            descriptionFunction() {
-                return `after over healing from ${powerUps.orb.heal()}<br>gain max <strong class='color-h'>health</strong> and lose current <strong class='color-h'>health</strong>`
-            },
-            maxCount: 1,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            allowed() {
-                return true
-            },
-            requires: "",
-            effect() {
-                tech.isOverHeal = true;
-            },
-            remove() {
-                tech.isOverHeal = false;
-            }
-        },
-        {
-            name: "negative entropy",
-            descriptionFunction() {
-                return `at the start of each <strong>level</strong><br>for every <strong>33%</strong> missing ${tech.isEnergyHealth ? "<strong class='color-f'>energy</strong>": "<strong class='color-h'>health</strong>"} spawn ${powerUps.orb.heal()}`
-            },
-            maxCount: 1,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            isHealTech: true,
-            allowed() {
-                return true
-            },
-            requires: "",
-            effect() {
-                tech.isHealLowHealth = true;
-            },
-            remove() {
-                tech.isHealLowHealth = false;
             }
         },
         {
@@ -2925,9 +2923,9 @@ const tech = {
             }
         },
         {
-            name: "ergodicity",
+            name: "quenching",
             descriptionFunction() {
-                return `${powerUps.orb.heal()} have <strong>-50%</strong> effect<br><strong>+66%</strong> <strong class='color-d'>damage</strong>`
+                return `after over healing from ${powerUps.orb.heal()}<br>gain max <strong class='color-h'>health</strong> and lose current <strong class='color-h'>health</strong>`
             },
             maxCount: 1,
             count: 0,
@@ -2937,30 +2935,32 @@ const tech = {
                 return true
             },
             requires: "",
-            damage: 1.66,
             effect() {
-                tech.damage *= this.damage
-                tech.isHalfHeals = true;
-                for (let i = 0; i < powerUp.length; i++) {
-                    if (powerUp[i].name === "heal") {
-                        const scale = Math.sqrt(0.5)
-                        powerUp[i].size *= scale
-                        Matter.Body.scale(powerUp[i], scale, scale); //grow    
-                    }
-                }
+                tech.isOverHeal = true;
             },
             remove() {
-                if (this.count) {
-                    tech.damage /= this.damage
-                    for (let i = 0; i < powerUp.length; i++) {
-                        if (powerUp[i].name === "heal") {
-                            const scale = 1 / Math.sqrt(0.5)
-                            powerUp[i].size *= scale
-                            Matter.Body.scale(powerUp[i], scale, scale); //grow    
-                        }
-                    }
-                }
-                tech.isHalfHeals = false;
+                tech.isOverHeal = false;
+            }
+        },
+        {
+            name: "negative entropy",
+            descriptionFunction() {
+                return `at the start of each <strong>level</strong><br>for every <strong>33%</strong> missing ${tech.isEnergyHealth ? "<strong class='color-f'>energy</strong>": "<strong class='color-h'>health</strong>"} spawn ${powerUps.orb.heal()}`
+            },
+            maxCount: 1,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            isHealTech: true,
+            allowed() {
+                return true
+            },
+            requires: "",
+            effect() {
+                tech.isHealLowHealth = true;
+            },
+            remove() {
+                tech.isHealLowHealth = false;
             }
         },
         {

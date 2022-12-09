@@ -157,7 +157,10 @@ window.addEventListener('load', () => {
                 simulation.molecularMode = Number(set[property])
                 const i = 4 //update experiment text
                 m.fieldUpgrades[i].description = m.fieldUpgrades[i].setDescription()
-                document.getElementById(`field-${i}`).innerHTML = `<div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}`
+                // document.getElementById(`field-${i}`).innerHTML = `<div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}`
+                document.getElementById(`field-${i}`).innerHTML = `<div class="card-text">
+                <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
+                ${m.fieldUpgrades[i].description}</div>`
             }
             // if (property === "seed") {
             //     document.getElementById("seed").placeholder = Math.initialSeed = String(set[property])
@@ -355,13 +358,13 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
 </div>`;
         // deaths: ${mobs.mobDeaths} &nbsp;
         if (tech.isPauseSwitchField && !simulation.isChoosing) {
-            const style = localSettings.isHideImages ? `style="height:auto;"` : `style="background-image: url('img/field/${m.fieldUpgrades[m.fieldMode].name}.png');"`
+            const style = localSettings.isHideImages ? `style="height:auto;"` : `style="background-image: url('img/field/${m.fieldUpgrades[m.fieldMode].name}${m.fieldMode === 0 ? Math.floor(Math.random()*10) : ""}.png');"`
             text += `<div class="pause-grid-module card-background" id ="pause-field" ${style} >
                     <div class="card-text" style = "animation: fieldColorCycle 1s linear infinite alternate;">
                     <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>
                     ${m.fieldUpgrades[m.fieldMode].description}</div> </div>`
         } else {
-            const style = localSettings.isHideImages ? `style="height:auto;"` : `style="background-image: url('img/field/${m.fieldUpgrades[m.fieldMode].name}.png');"`
+            const style = localSettings.isHideImages ? `style="height:auto;"` : `style="background-image: url('img/field/${m.fieldUpgrades[m.fieldMode].name}${m.fieldMode === 0 ? Math.floor(Math.random()*10) : ""}.png');"`
             text += `<div class="pause-grid-module card-background" id ="pause-field" ${style} >
                     <div class="card-text">
                     <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>
@@ -516,7 +519,11 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                 simulation.molecularMode++
                 if (simulation.molecularMode > i - 1) simulation.molecularMode = 0
                 m.fieldUpgrades[i].description = m.fieldUpgrades[i].setDescription()
-                document.getElementById(`field-${i}`).innerHTML = `<div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}`
+                // document.getElementById(`field-${i}`).innerHTML = `<div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}`
+
+                document.getElementById(`field-${i}`).innerHTML = `<div class="card-text">
+                <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
+                ${m.fieldUpgrades[i].description}</div>`
             }
         } else if (type === "tech") {
             if (tech.tech[index].count < tech.tech[index].maxCount) {
@@ -626,7 +633,8 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
 </div>`
         const hideStyle = `style="height:auto; border: none; background-color: transparent;"`
         for (let i = 0, len = m.fieldUpgrades.length; i < len; i++) {
-            const style = localSettings.isHideImages ? hideStyle : `style="background-image: url('img/field/${m.fieldUpgrades[i].name}.png');"`
+            const style = localSettings.isHideImages ? hideStyle : `style="background-image: url('img/field/${m.fieldUpgrades[i].name}${i === 0 ? Math.floor(Math.random()*10) : ""}.png');"`
+            console.log(style)
             //original
             // text += powerUps.fieldText(i, `build.choosePowerUp(this,${i},'field')`)
             // text += `<div id ="field-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'field')"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}</div>`
@@ -1077,7 +1085,7 @@ window.addEventListener("keydown", function (event) {
                             }
                             m.energy = energy //return to current energy
                             // document.getElementById("pause-field").innerHTML = `<div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[m.fieldMode].name}</div> ${m.fieldUpgrades[m.fieldMode].description}`
-                            document.getElementById("pause-field").style.backgroundImage = `url('img/field/${m.fieldUpgrades[m.fieldMode].name}.png')`
+                            document.getElementById("pause-field").style.backgroundImage = `url('img/field/${m.fieldUpgrades[m.fieldMode].name}${m.fieldMode === 0 ? Math.floor(Math.random()*10) : ""}.png')`
                             document.getElementById("pause-field").innerHTML = `
                             <div class="card-text" style = "animation: fieldColorCycle 1s linear infinite alternate;">
                             <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>
