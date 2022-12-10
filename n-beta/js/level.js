@@ -18,27 +18,27 @@ const level = {
             // simulation.enableConstructMode() //used to build maps in testing mode
             // simulation.isHorizontalFlipped = true
             // tech.giveTech("performance")
-            // level.difficultyIncrease(15 * 4) //30 is near max on hard  //60 is near max on why
+            // level.difficultyIncrease(30 * 4) //30 is near max on hard  //60 is near max on why
             // m.maxHealth = m.health = 100
             // tech.isRerollDamage = true
             // powerUps.research.changeRerolls(30000)
             // m.immuneCycle = Infinity //you can't take damage
             // tech.tech[297].frequency = 100
             // m.couplingChange(5)
-            // m.setField("molecular assembler") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass    pilot wave   plasma torch
+            // m.setField("time dilation") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass    pilot wave   plasma torch
             // simulation.molecularMode = 2
             // m.damage(0.1);
             // b.giveGuns("nail gun") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.giveGuns("wave") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[0].ammo = 10000
-            // tech.giveTech("phonon")
+            // tech.giveTech("pocket dimension")
             // tech.giveTech("bound state")
             // for (let i = 0; i < 1; ++i) tech.giveTech("uncertainty principle")
             // tech.isFoamBall = true
             // for (let i = 0; i < 1; ++i) tech.giveTech("renormalization")
             // for (let i = 0; i < 10; i++) tech.giveTech("replication")
             // for (let i = 0; i < 9; i++) tech.giveTech("paradigm shift")
-            // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
+            // for (let i = 0; i < 1; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");
             // level.testing();
@@ -75,13 +75,11 @@ const level = {
             // tech.isNoDraftPause = false //disable pause
             // mobs.mobDeaths = 200 //to prevent pacifist mode
             // for (let i = 0; i < 13; i++) level.nextLevel(); //jump to final boss
-
             // lore.unlockTesting();
             // tech.giveTech("tinker"); //show junk tech in experiment mode
             // simulation.isCheating = false
             // m.storeTech()
             // powerUps.spawn(m.pos.x, m.pos.y, "entanglement", false);
-
         } else {
             spawn.setSpawnList(); //picks a couple mobs types for a themed random mob spawns
             // spawn.pickList = ["focuser", "focuser"]

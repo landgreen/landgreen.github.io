@@ -44,10 +44,10 @@ arrow of time - why can't we remember the future?
   These predictions are only useful for the future because entropy is very unlikely to decrease.
 
 card images
-  wave function collapse opens the pause menu after it triggers
-    this is actually good, maybe reuse this code to get pause menu to open at any time
   process:  discord midjourney prompts -> https://www.photopea.com/ to match 384x256 PNG -> webP? -> place in /img folder
     https://anywebp.com/convert-to-webp.html convert png to webp batch
+  wave function collapse opens the pause menu after it triggers
+    this is actually good, maybe reuse this code to get pause menu to open at any time
   if pause is pressed while selecting power ups, display pause menu on top of selection menu
   improve look for hide image settings
     how to apply that css to all cards without checking every single card in the loop?
@@ -56,23 +56,6 @@ card images
     grid gap: 0
     border-radius: 0
   make an image for undefined?
-  the entanglement power up needs to render images
-  preload images so they load cleaner
-    MDN Scripting and preloads - https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload
-
-      //run this for every image in a for loop?
-      const preloadLink = document.createElement("link");
-      preloadLink.href = "imageName.webp";
-      preloadLink.rel = "preload";
-      preloadLink.as = "image";
-      document.head.appendChild(preloadLink);
-
-  webP?
-    test code: change extension to webp
-    batch convert current .webp into webP?
-    1/8 smaller file size
-    down sides?  maybe it takes time to render?
-    https://developers.google.com/speed/webp/docs/using
   JUNK should default to the no image setting
     JUNK tech could load a random image
       I'm feeling lucky google image search?
@@ -86,17 +69,20 @@ card images
       infographics of all know multiverses. 1980s Japanese graphic design, dimensional astrolabe,
       Japanese poster graphics, Ralph McQuarrie (looks like star wars), Simon Stålenhag (retro-futuristic), Yoshiyuki Tomino (detailed anime future technology)
       isometric:  low-poly, box cutout, made in blender, Materials: matte clay
+      subtractive sculpture
+      kinetic sculpture
     quantum stuff -- Hypertorus, Glowing Opal Pearlescent, Physics, Hydro-Dipping	Hydrodipped, Vija Celmins, Matt Molloy (photo of golden waves in the sky)
   ***major themes missing***
     CPT, slow time, revert time - Light painting, Luminogram (very abstract),  Double exposure
-    duplication, power ups - patterns: turkish, chinese, repeating, William Morris     Vector graphics
+      sun by Bruce Munro --v 4   abstract geometrical composition by Bruce Munro --v 4
+    duplication, power ups - Kazumasa Nagai  patterns: turkish, chinese, repeating, William Morris     Vector graphics
     coupling  (redo it with better images) - 
     radioactivity - Autoradiography, x-ray, Ultraviolet photography
-    cancel - Andreas Gursky (endless rows of supermarkets)
+    cancel - Andreas Gursky (endless rows of supermarkets) conceptual installation, inflatable sculpture
     guns
-      shotgun - use preexisting styles, LEGO style, copy nailgun style?
+      nails - 
       wave - pointillism, sine wave, graph, Sandpainting
-      mines - Jakub Rózalski, gond painting
+      mines - Jakub Rózalski, gond painting, invention of gunpowder. Conceptual installation --v 4
     JUNK
       mascot super cute 2d
   ***past style themes***
@@ -131,6 +117,7 @@ card images
     tech choice - ______ mandala tile Mosaic --ar 3:2 --stylize 1000
     tech that spawns heal power ups - _____ green Quilling --ar 3:2 --stylize 1000
     ON/OFF - ASCII art --ar 3:2 --stylize 1000
+    duplication - by Kazumasa Nagai --ar 3:2 --stylize 1000
     
 
 

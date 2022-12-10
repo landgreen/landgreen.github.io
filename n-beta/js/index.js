@@ -1571,6 +1571,36 @@ const sound = {
         // return audioCtx
     }
 }
+
+// preload images so they load cleaner
+// MDN Scripting and preloads - https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload
+if (!localSettings.isHideImages) {
+    for (let i = 0, len = b.guns.length; i < len; i++) {
+        const preloadLink = document.createElement("link");
+        preloadLink.href = "img/gun/" + b.guns[i].name + ".webp";
+        preloadLink.rel = "preload";
+        preloadLink.as = "image";
+        document.head.appendChild(preloadLink);
+    }
+    for (let i = 1, len = m.fieldUpgrades.length; i < len; i++) {
+        const preloadLink = document.createElement("link");
+        preloadLink.href = "img/field/" + m.fieldUpgrades[i].name + ".webp";
+        preloadLink.rel = "preload";
+        preloadLink.as = "image";
+        document.head.appendChild(preloadLink);
+    }
+    for (let i = 0, len = tech.tech.length; i < len; i++) {
+        if (!tech.tech[i].isJunk) {
+            const preloadLink = document.createElement("link");
+            preloadLink.href = "img/" + tech.tech[i].name + ".webp";
+            preloadLink.rel = "preload";
+            preloadLink.as = "image";
+            document.head.appendChild(preloadLink);
+        }
+    }
+}
+
+
 //**********************************************************************
 // main loop 
 //**********************************************************************

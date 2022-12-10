@@ -182,7 +182,12 @@ summary {
     transition: opacity 0.25s linear;
     
 }
-
+#flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
 #choose-grid {
     /* background-color: #444; */
     /* background-color: var(--build-bg-color); */
@@ -1104,6 +1109,31 @@ summary {
 .lore-text {
     animation: textColor 3s linear infinite;
 }
+
+.entanglement {
+    /* color: #456; */
+    font-size: 1.1em;
+    font-weight: 100;
+    text-align: center;
+    letter-spacing: 10px;
+    border: none;
+    /* border-radius: 50%; */
+    background-color: #efeff5;
+}
+.flipX {
+    animation: 14s anim-flipX linear infinite;
+}
+@keyframes anim-flipX {
+    0% {
+      transform: rotateX(0.5turn);
+    }
+    50% {
+      transform: rotateX(1turn);
+    }
+    100% {
+      transform: rotateX(0.5turn);
+    }
+  }
 
 @keyframes fieldColorCycle {
     0% {

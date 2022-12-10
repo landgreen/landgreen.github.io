@@ -623,23 +623,23 @@ const powerUps = {
         if (tech.isSuperDeterminism) {
             return `<div></div>`
         } else if (tech.isCancelTech) {
-            return `<div class='choose-grid-module' onclick='powerUps.endDraft("${type}",true)' style="width: 115px; text-align: center;font-size: 1.1em;font-weight: 600;justify-self: end;">randomize</div>`
+            return `<div class='choose-grid-module' onclick='powerUps.endDraft("${type}",true)' style="width: 115px; text-align: center;font-size: 1.1em;font-weight: 100;justify-self: end;">randomize</div>`
         } else {
-            return `<div class='choose-grid-module' onclick='powerUps.endDraft("${type}",true)' style="width: 82px; text-align: center;font-size: 1.1em;font-weight: 600;justify-self: end;">cancel</div>`
+            return `<div class='choose-grid-module' onclick='powerUps.endDraft("${type}",true)' style="width: 82px; text-align: center;font-size: 1.1em;font-weight: 100;justify-self: end;">cancel</div>`
         }
     },
     researchText(type) {
         let text = ""
         if (tech.isJunkResearch && powerUps.research.currentRerollCount < 3) {
-            text += `<div onclick="powerUps.research.use('${type}')" class='choose-grid-module' style="font-size: 1.1em;font-weight: 600;">` // style = "margin-left: 192px; margin-right: -192px;"
+            text += `<div onclick="powerUps.research.use('${type}')" class='choose-grid-module' style="font-size: 1.1em;font-weight: 100;">` // style = "margin-left: 192px; margin-right: -192px;"
             tech.junkResearchNumber = Math.ceil(4 * Math.random())
             text += `<div><div> <span style="position:relative;">`
             for (let i = 0; i < tech.junkResearchNumber; i++) text += `<div class="circle-grid junk" style="position:absolute; top:0; left:${15*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
             text += `</span>&nbsp; <span class='research-select'>pseudoscience</span></div></div></div>`
         } else if (powerUps.research.count > 0) {
-            text += `<div onclick="powerUps.research.use('${type}')" class='choose-grid-module' style="font-size: 1.1em;font-weight: 600;">` // style = "margin-left: 192px; margin-right: -192px;"
+            text += `<div onclick="powerUps.research.use('${type}')" class='choose-grid-module' style="font-size: 1.1em;font-weight: 100;">` // style = "margin-left: 192px; margin-right: -192px;"
             text += `<div><div><span style="position:relative;">`
-            for (let i = 0, len = Math.min(powerUps.research.count, 30); i < len; i++) text += `<div class="circle-grid research" style="position:absolute; top:0; left:${(18 - len*0.3)*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
+            for (let i = 0, len = Math.min(powerUps.research.count, 30); i < len; i++) text += `<div class="circle-grid research" style="position:absolute; top:0; left:${(18 - len*0.21)*i}px ;opacity:0.8; border: 1px #fff solid;"></div>`
             text += `</span>&nbsp; <span class='research-select'>${tech.isResearchReality?"<span class='alt'>alternate reality</span>": "research"}</span></div></div></div>`
         } else {
             text += `<div></div>`
@@ -672,6 +672,7 @@ const powerUps = {
                 <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
     },
+
     fieldTechText(choose, click) {
         const techCountText = tech.tech[choose].count > 1 ? `(${tech.tech[choose].count}x)` : "";
         const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
@@ -708,6 +709,15 @@ const powerUps = {
                 <div class="card-text">
                 <div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
+    },
+    incoherentTechText(choose, click) {
+        // text += `<div class="choose-grid-module" style = "background-color: #efeff5; border: 0px; opacity:0.5; font-size: 60%; line-height: 130%; margin: 1px; padding-top: 6px; padding-bottom: 6px;"><div class="grid-title">${tech.tech[choose].name} <span style = "color: #aaa;font-weight: normal;font-size:80%;">- incoherent</span></div></div>`
+        const techCountText = tech.tech[choose].count > 1 ? `(${tech.tech[choose].count}x)` : "";
+        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
+        return `<div class="choose-grid-module card-background" ${style}>
+                <div class="card-text" style = "background-color: #efeff5;">
+                <div class="grid-title" style = "color: #ddd;font-weight: normal;">incoherent</div> <br> <br>
+                </div></div>`
     },
     gun: {
         name: "gun",
@@ -1054,48 +1064,44 @@ const powerUps = {
         effect() {
             if (m.alive && localSettings.entanglement) {
                 let text = ""
-                text += `<div class='cancel' onclick='powerUps.endDraft("tech")'>✕</div>`
-                text += `<h3 style = 'color:#fff; text-align:left; margin: 0px;'>entanglement</h3>`
+                document.getElementById("choose-grid").style.gridTemplateColumns = "384px 384px 384px"
+                // text += powerUps.researchText('tech')
+                text += "<div></div>"
+                text += "<div class='choose-grid-module entanglement flipX'>entanglement</div>"
+                text += `<div class='choose-grid-module' onclick='powerUps.endDraft("tech",true)' style="width: 82px; text-align: center;font-size: 1.1em;font-weight: 100;justify-self: end;">cancel</div>` //powerUps.cancelText('tech')
                 if (localSettings.entanglement.fieldIndex) {
-                    const field = localSettings.entanglement.fieldIndex //add field
-                    text += `<div class="choose-grid-module" onclick="powerUps.choose('field',${field})"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[field].name}</div> ${m.fieldUpgrades[field].description}</div>`
+                    const choose = localSettings.entanglement.fieldIndex //add field
+                    text += powerUps.fieldText(choose, `powerUps.choose('field',${choose})`)
                 }
                 for (let i = 0; i < localSettings.entanglement.gunIndexes.length; i++) { //add guns
-                    const gun = localSettings.entanglement.gunIndexes[i]
-                    text += `<div class="choose-grid-module" onclick="powerUps.choose('gun',${gun})"><div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${b.guns[gun].name}</div> ${b.guns[gun].description}</div>`
+                    const choose = localSettings.entanglement.gunIndexes[i]
+                    // text += `<div class="choose-grid-module" onclick="powerUps.choose('gun',${gun})"><div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${b.guns[gun].name}</div> ${b.guns[gun].description}</div>`
+                    text += powerUps.gunText(choose, `powerUps.choose('gun',${choose})`)
                 }
                 for (let i = 0; i < localSettings.entanglement.techIndexes.length; i++) { //add tech
                     let choose = localSettings.entanglement.techIndexes[i]
                     const isCount = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count+1}x)` : "";
+
                     if (choose === null || tech.tech[choose].count + 1 > tech.tech[choose].maxCount || !tech.tech[choose].allowed()) {
-                        text += `<div class="choose-grid-module" style = "background-color: #efeff5; border: 0px; opacity:0.5; font-size: 60%; line-height: 130%; margin: 1px; padding-top: 6px; padding-bottom: 6px;"><div class="grid-title">${tech.tech[choose].name} <span style = "color: #aaa;font-weight: normal;font-size:80%;">- incompatible</span></div></div>`
+                        // text += `<div class="choose-grid-module" style = "background-color: #efeff5; border: 0px; opacity:0.5; font-size: 60%; line-height: 130%; margin: 1px; padding-top: 6px; padding-bottom: 6px;"><div class="grid-title">${tech.tech[choose].name} <span style = "color: #aaa;font-weight: normal;font-size:80%;">- incoherent</span></div></div>`
+                        text += powerUps.incoherentTechText(choose)
                     } else {
                         if (tech.tech[choose].isFieldTech) {
-                            text += `<div class="choose-grid-module" onclick="powerUps.choose('tech',${choose})"><div class="grid-title">
-                            <span style="position:relative;">
-                            <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
-                            <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
-                            </span>
-                            &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[choose].name} ${isCount}</div>${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() :tech.tech[choose].description}</div></div>`
+                            text += powerUps.fieldTechText(choose, `powerUps.choose('tech',${choose})`)
                         } else if (tech.tech[choose].isGunTech) {
-                            text += `<div class="choose-grid-module" onclick="powerUps.choose('tech',${choose})"><div class="grid-title">
-                            <span style="position:relative;">
-                            <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
-                            <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
-                            </span>
-                            &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[choose].name} ${isCount}</div>${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() :tech.tech[choose].description}</div></div>`
+                            text += powerUps.gunTechText(choose, `powerUps.choose('tech',${choose})`)
                         } else if (tech.tech[choose].isLore) {
                             text += `<div class="choose-grid-module" onclick="powerUps.choose('tech',${choose})"><div class="grid-title lore-text"><div class="circle-grid lore"></div> &nbsp; ${tech.tech[choose].name} ${isCount}</div>${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div>`
                         } else if (tech.tech[choose].isJunk) {
-                            text += `<div class="choose-grid-module" onclick="powerUps.choose('tech',${choose})"><div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[choose].name} ${isCount}</div>${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div>`
-                        } else {
-                            text += `<div class="choose-grid-module" onclick="powerUps.choose('tech',${choose})"><div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[choose].name} ${isCount}</div>${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div>`
+                            text += powerUps.junkTechText(choose, `powerUps.choose('tech',${choose})`)
+                        } else { //normal tech
+                            text += powerUps.techText(choose, `powerUps.choose('tech',${choose})`)
                         }
                     }
                 }
+                // document.getElementById("choose-grid").classList.add("flipX");
                 document.getElementById("choose-grid").innerHTML = text
                 powerUps.showDraft();
-
                 localSettings.entanglement = undefined
                 if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
             }

@@ -3970,7 +3970,7 @@ const tech = {
         },
 
         {
-            name: "Occam's razor",
+            name: "Occams razor",
             descriptionFunction() {
                 return `randomly remove <strong>half</strong> your <strong class='color-m'>tech</strong><br>for each removed <strong>+${this.damagePerRemoved * 100 }%</strong> <strong class='color-d'>damage</strong> <em>(~${(this.count === 0) ? this.damagePerRemoved * 50 * tech.totalCount : this.damage*100}%)</em>`
             },
@@ -4035,7 +4035,7 @@ const tech = {
             remove() {}
         },
         {
-            name: "monte carlo experiment",
+            name: "Monte Carlo method",
             description: "remove <strong>1</strong> random <strong class='color-m'>tech</strong><br>spawn <strong>2</strong> <strong class='color-m'>tech</strong>",
             maxCount: 1,
             count: 0,
@@ -8395,6 +8395,23 @@ const tech = {
             },
             remove() {}
         },
+        // {
+        //     name: "pocket dimension",
+        //     description: "rotate tech descriptions into a higher spacial dimension",
+        //     maxCount: 1,
+        //     count: 0,
+        //     frequency: 0,
+        //     isJunk: true,
+        //     isNonRefundable: true,
+        //     allowed() {
+        //         return true
+        //     },
+        //     requires: "",
+        //     effect() {
+        // document.getElementById("choose-grid").classList.add("flipX");
+        //     },
+        //     remove() {}
+        // },
         {
             name: "random",
             link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Special:Random' class="link">random</a>`,
