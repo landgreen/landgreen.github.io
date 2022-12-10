@@ -47,6 +47,7 @@ card images
   wave function collapse opens the pause menu after it triggers
     this is actually good, maybe reuse this code to get pause menu to open at any time
   process:  discord midjourney prompts -> https://www.photopea.com/ to match 384x256 PNG -> webP? -> place in /img folder
+    https://anywebp.com/convert-to-webp.html convert png to webp batch
   if pause is pressed while selecting power ups, display pause menu on top of selection menu
   improve look for hide image settings
     how to apply that css to all cards without checking every single card in the loop?
@@ -56,9 +57,19 @@ card images
     border-radius: 0
   make an image for undefined?
   the entanglement power up needs to render images
+  preload images so they load cleaner
+    MDN Scripting and preloads - https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload
+
+      //run this for every image in a for loop?
+      const preloadLink = document.createElement("link");
+      preloadLink.href = "imageName.webp";
+      preloadLink.rel = "preload";
+      preloadLink.as = "image";
+      document.head.appendChild(preloadLink);
+
   webP?
     test code: change extension to webp
-    batch convert current .png into webP?
+    batch convert current .webp into webP?
     1/8 smaller file size
     down sides?  maybe it takes time to render?
     https://developers.google.com/speed/webp/docs/using
@@ -78,8 +89,6 @@ card images
     quantum stuff -- Hypertorus, Glowing Opal Pearlescent, Physics, Hydro-Dipping	Hydrodipped, Vija Celmins, Matt Molloy (photo of golden waves in the sky)
   ***major themes missing***
     CPT, slow time, revert time - Light painting, Luminogram (very abstract),  Double exposure
-    ON/OFF - ASCII art, schematics, circuit diagrams
-    health -  Needlepoint,  Mosaic,  Quilling
     duplication, power ups - patterns: turkish, chinese, repeating, William Morris     Vector graphics
     coupling  (redo it with better images) - 
     radioactivity - Autoradiography, x-ray, Ultraviolet photography
@@ -91,6 +100,7 @@ card images
     JUNK
       mascot super cute 2d
   ***past style themes***
+    field emitter - isometric, clean white robot spherical gun turret on bird legs, blender 3d, style of artstation and behance, Disney Pixar, cute --ar 3:2 --stylize 1000
     standing wave - concentric transparent blue geometric circles science --ar 3:2 --stylize 1000 
     perfect diamagnetism - physics magnetic field chalk diagram --ar 3:2 --stylize 1000
     time dilation - graphic of a hyperbolic equation Luminogram
@@ -113,13 +123,14 @@ card images
     tech that adds JUNK - by Choi Jeong-hwa
     defensive - Paper cutout
     ice IX - microscope images of ice crystals
-    all tech that spawns health - glowing green balls by Enki Bilal
+    tech that spawns health - glowing green balls by Enki Bilal
     guns, ammo - isometric clean pixel art image cutaway of _______, style of tekkonkinkreet
     invulnerable - by Nick Veasey (photos that look like x-rays)
     bots - hovering drone ______ by Laurie Greasley 16-bit Isometric --ar 3:2 --stylize 1000
     alternate reality - _____ Fractal art --ar 3:2 --stylize 1000
     tech choice - ______ mandala tile Mosaic --ar 3:2 --stylize 1000
     tech that spawns heal power ups - _____ green Quilling --ar 3:2 --stylize 1000
+    ON/OFF - ASCII art --ar 3:2 --stylize 1000
     
 
 
