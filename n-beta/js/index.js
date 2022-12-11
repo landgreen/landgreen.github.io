@@ -416,8 +416,8 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                 const techCountText = tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : "";
                 if (tech.tech[i].isNonRefundable) {
                     text += `<div class="pause-grid-module" id ="${i}-pause-tech"  style = "border: 0px; opacity:0.5; font-size: 60%; line-height: 130%; margin: 1px; padding-top: 6px; padding-bottom: 6px;"><div class="grid-title">${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
-                } else if (tech.tech[i].isLore) {
-                    text += `<div class="pause-grid-module"><div class="grid-title lore-text"><div class="circle-grid lore"></div> &nbsp; ${tech.tech[i].name} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
+                    // } else if (tech.tech[i].isLore) {
+                    //     text += `<div class="pause-grid-module"><div class="grid-title lore-text"><div class="circle-grid lore"></div> &nbsp; ${tech.tech[i].name} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
                 } else if (tech.tech[i].isFieldTech) {
                     text += `<div id="${i}-pause-tech" class="pause-grid-module card-background ${ejectClass}" onclick="powerUps.pauseEjectTech(${i})" ${style}>`
                     text += build.fieldTechText(i) + "</div>"
@@ -1426,7 +1426,7 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
         localSettings.loreCount = 0; //this sets what conversation is heard
         if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
     }
-    if (localSettings.isHideImages === undefined) localSettings.isHideImages = true //default to hide images
+    if (localSettings.isHideImages === undefined) localSettings.isHideImages = false //default to show images
     document.getElementById("hide-images").checked = localSettings.isHideImages
 
 
@@ -1448,7 +1448,7 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
         isLoreDoesNotNeedReset: false,
         isHuman: false,
         key: undefined,
-        isHideImages: true, //default to hide images
+        isHideImages: false, //default to show images
     };
     input.setDefault()
     if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
@@ -1603,7 +1603,7 @@ const sound = {
 
 //preload images early
 if (!localSettings.isHideImages) {
-    addEventListener("load", (event) => {
+    addEventListener("load", () => {
         let urls = new Array()
         for (let i = 0, len = b.guns.length; i < len; i++) urls.push("img/gun/" + b.guns[i].name + ".webp")
         for (let i = 1, len = m.fieldUpgrades.length; i < len; i++) urls.push("img/field/" + m.fieldUpgrades[i].name + ".webp")
@@ -1615,7 +1615,7 @@ if (!localSettings.isHideImages) {
             images[i] = new Image()
             images[i].src = urls[i]
         }
-        console.log(urls, images)
+        // console.log(urls, images)
     });
 }
 

@@ -963,8 +963,8 @@ const powerUps = {
                             text += powerUps.fieldTechText(choose, `powerUps.choose('tech',${choose})`)
                         } else if (tech.tech[choose].isGunTech) {
                             text += powerUps.gunTechText(choose, `powerUps.choose('tech',${choose})`)
-                        } else if (tech.tech[choose].isLore) {
-                            text += `<div class="choose-grid-module" onclick="powerUps.choose('tech',${choose})"><div class="grid-title lore-text"><div class="circle-grid lore"></div> &nbsp; ${tech.tech[choose].name} ${isCount}</div>${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div>`
+                            // } else if (tech.tech[choose].isLore) {
+                            //     text += `<div class="choose-grid-module" onclick="powerUps.choose('tech',${choose})"><div class="grid-title lore-text"><div class="circle-grid lore"></div> &nbsp; ${tech.tech[choose].name} ${isCount}</div>${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div>`
                         } else if (tech.tech[choose].isJunk) {
                             text += powerUps.junkTechText(choose, `powerUps.choose('tech',${choose})`)
                         } else { //normal tech

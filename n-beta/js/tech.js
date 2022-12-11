@@ -5566,7 +5566,7 @@ const tech = {
             }
         },
         {
-            name: "elephant's toothpaste",
+            name: "elephants toothpaste",
             description: "<strong>mines</strong> catalyze a reaction<br>that yields <strong>foam</strong> bubbles",
             isGunTech: true,
             maxCount: 1,
@@ -5615,7 +5615,7 @@ const tech = {
             allowed() {
                 return tech.haveGunCheck("mine") && !tech.isFoamMine
             },
-            requires: "mines, not elephant's toothpaste",
+            requires: "mines, not elephants toothpaste",
             effect() {
                 tech.isMineSentry = true;
             },
@@ -8068,7 +8068,7 @@ const tech = {
         {
             name: "transdimensional worms",
             link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Dimension' class="link">transdimensional worms</a>`,
-            description: "after <strong class='color-block'>blocks</strong> fall into a <strong class='color-worm'>wormhole</strong><br>spawn a <strong class='color-p' style='letter-spacing: 2px;'>worm</strong>",
+            description: "after a <strong class='color-block'>block</strong> falls into a <strong class='color-worm'>wormhole</strong><br>spawn a <strong class='color-p' style='letter-spacing: 2px;'>worm</strong>",
             isFieldTech: true,
             maxCount: 1,
             count: 0,
@@ -8113,7 +8113,7 @@ const tech = {
         },
         {
             name: "cosmic string",
-            description: "after <strong>tunneling</strong> through mobs with a <strong class='color-worm'>wormhole</strong><br><strong>stun</strong> then and do <strong class='color-p'>radioactive</strong> <strong class='color-d'>damage</strong>",
+            description: "after <strong>tunneling</strong> through mobs with a <strong class='color-worm'>wormhole</strong><br><strong>stun</strong> them and do <strong class='color-p'>radioactive</strong> <strong class='color-d'>damage</strong>",
             isFieldTech: true,
             maxCount: 1,
             count: 0,
@@ -10877,7 +10877,7 @@ const tech = {
         //************************************************** 
         {
             name: `undefined`,
-            description: `<strong class="lore-text">this</strong>`,
+            description: `<strong class="lore-text">this</strong><br> &nbsp;`,
             maxCount: 1,
             count: 0,
             frequency: 2,
@@ -10919,7 +10919,7 @@ const tech = {
                     if (lore.techCount === lore.techGoal) {
                         // tech.removeLoreTechFromPool();
                         this.frequency = 0;
-                        this.description = `<strong class="lore-text">null</strong> is open at level.final()`
+                        this.description = `<strong class="lore-text">null</strong> is open at level.final() <br> &nbsp;`
                     } else {
                         this.frequency += lore.techGoal * 2
                         // for (let i = 0; i < tech.tech.length; i++) { //set name for all unchosen copies of this tech
@@ -10933,7 +10933,7 @@ const tech = {
             remove() {
                 lore.techCount = 0;
                 this.maxCount = lore.techGoal;
-                this.description = `<strong class="lore-text">this</strong>`
+                this.description = `<strong class="lore-text">this</strong> <br> &nbsp;`
             }
         }
     ],

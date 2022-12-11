@@ -7019,7 +7019,7 @@ const b = {
             }
         }, {
             name: "drones", //7
-            description: "deploy drones that <strong>crash</strong> into mobs<br>crashes reduce their <strong>lifespan</strong> by 1 second",
+            description: "deploy drones that <strong>crash</strong> into mobs<br>or <strong>collect</strong> nearby power ups", //crashes reduce their <strong>lifespan</strong> by 1 second
             ammo: 0,
             ammoPack: 16,
             defaultAmmoPack: 16,

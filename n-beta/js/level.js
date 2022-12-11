@@ -38,7 +38,7 @@ const level = {
             // for (let i = 0; i < 1; ++i) tech.giveTech("renormalization")
             // for (let i = 0; i < 10; i++) tech.giveTech("replication")
             // for (let i = 0; i < 9; i++) tech.giveTech("paradigm shift")
-            // for (let i = 0; i < 1; i++) powerUps.directSpawn(450, -50, "tech");
+            // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");
             // level.testing();
@@ -3290,6 +3290,7 @@ const level = {
         powerUps.addResearchToLevel() //needs to run after mobs are spawned
     },
     final() {
+        // color.map = "rgba(0,0,0,0.8)"
         const slime = level.hazard(simulation.isHorizontalFlipped ? 150 - 860 : -150, -360, 880, 259) //x, y, width, height, damage = 0.002) {
         slime.height -= slime.maxHeight - 150 //start slime at zero
         slime.min.y += slime.maxHeight
@@ -3684,6 +3685,8 @@ const level = {
             ctx.fillStyle = "rgba(68, 68, 68,0.95)"
             ctx.fillRect(2030, 0, 150, 1800);
         };
+
+
 
         level.setPosToSpawn(460, -100); //normal spawn
         // level.enter.x = -1000000; //hide enter graphic for first level by moving to the far left

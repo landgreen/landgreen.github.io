@@ -29,24 +29,11 @@ physics notes: add link to double slit content
 seekers after taking damage if seekers are below 1/2 life they teleport to a random point on the player history and sneak attack again
   make sure they don't teleport on top of the player
 
-Add to notes?
-arrow of time - why can't we remember the future?
-  storing a memory requires cell to do some work on a chemical level.
-  Any process that does work, biological or mechanical, uses a thermodynamic system that is progressing from low entropy to high entropy
-    (see my motor simulation)
-  To store a memory our biological system harness the work done by low entropy chemicals converting into high entropy chemicals.  In this case the chemicals are ATP, and ...
-  This work produces a lasting chemical change in our brain that acts as a memory.
-  We can't remember future events in the past because entropy is progressing in the wrong direction and our biological systems won't function that way.
-
-  We can also make predictions.  Our predictions of the future and the past have the same accuracy for simple systems, like the ones we work on in physics.
-  When a system gets complex we many parts and states it can be in it's hard to make predictions that track the motion of every part.
-  But for these complex systems we can make predictions using the 2nd law of thermodynamics.  We can say that the system's entropy will stay the same or increase.
-  These predictions are only useful for the future because entropy is very unlikely to decrease.
-
 card images
-  process:  discord midjourney prompts -> https://www.photopea.com/ to match 384x256 PNG -> webP? -> place in /img folder
-    https://anywebp.com/convert-to-webp.html convert png to webp batch
-  wave function collapse opens the pause menu after it triggers
+  process:  discord midjourney prompts -> "pixelmator pro" -> scale to 384x256 -> export PNG -> webP? -> place in /img folder
+    https://anywebp.com/convert-to-webp.html convert png to webp batch 50 at a time
+  make n-gon a progressive web app to manage image downloads, cache
+  wave function collapse opens the pause menu after it triggers alternate reality
     this is actually good, maybe reuse this code to get pause menu to open at any time
   if pause is pressed while selecting power ups, display pause menu on top of selection menu
   improve look for hide image settings
@@ -55,12 +42,14 @@ card images
     reduce stroke intensity
     grid gap: 0
     border-radius: 0
-  make an image for undefined?
-    animated webP?
   JUNK should default to the no image setting
     JUNK tech could load a random image
       I'm feeling lucky google image search?
         can you set image size and type?
+      access google image search API
+        https://stackoverflow.com/questions/32615926/use-javascript-to-get-a-random-image-from-google-images
+        or flickr?
+      https://codepen.io/lilgreenland/pen/EWGoQK?editors=0010
   ***styles***
     try --- Pastel drawing, blueprints, Psychedelic art, Quilling (rolled up paper), Pixel drawing,  Arabesque (cool patterns)
     try taking screen shots of fields graphics and feeding them into midJourney V4
@@ -87,22 +76,24 @@ card images
     JUNK
       mascot super cute 2d
   ***past style themes***
-    field emitter - isometric, clean white robot spherical gun turret on bird legs, blender 3d, style of artstation and behance, Disney Pixar, cute --ar 3:2 --stylize 1000
-    standing wave - concentric transparent blue geometric circles science --ar 3:2 --stylize 1000 
-    perfect diamagnetism - physics magnetic field chalk diagram --ar 3:2 --stylize 1000
+    field emitter - isometric, clean white robot spherical gun turret on bird legs, blender 3d, style of artstation and behance, Disney Pixar, cute 
+    standing wave - concentric transparent blue geometric circles science  
+    perfect diamagnetism - physics magnetic field chalk diagram 
     time dilation - graphic of a hyperbolic equation Luminogram
     negative mass - Blacklight painting by Moebius
     plasma torch - by Dan Mumford
     metamaterial cloaking - Scientific photography by Miki Asai
-    molecular assembler - _____ by Laurie Greasley 16-bit Isometric --ar 3:2 --stylize 1000
+    molecular assembler - _____ by Laurie Greasley 16-bit Isometric 
     wormhole - by Tim White
     nail gun - Screenprint
+    shotgun - blueprint by Dan McPharlin
     grenades, missiles, explosions - by Victo Ngai
     spores - by Ernst Haeckel
     drones - tilt-shift photography
     super balls - By Akari Toriyama
     foam - black blobs Ink doodle
     harpoon - by Eiichiro Oda
+    mine - by Dan McPharlin
     laser - complex optical scientific equipment --stylize 1000
     anti-shear topology, fracture analysis, shear stress - Chemigram
     generic energy tech - by Laurie Greasley
@@ -113,12 +104,12 @@ card images
     tech that spawns health - glowing green balls by Enki Bilal
     guns, ammo - isometric clean pixel art image cutaway of _______, style of tekkonkinkreet
     invulnerable - by Nick Veasey (photos that look like x-rays)
-    bots - hovering drone ______ by Laurie Greasley 16-bit Isometric --ar 3:2 --stylize 1000
-    alternate reality - _____ Fractal art --ar 3:2 --stylize 1000
-    tech choice - ______ mandala tile Mosaic --ar 3:2 --stylize 1000
-    tech that spawns heal power ups - _____ green Quilling --ar 3:2 --stylize 1000
-    ON/OFF - ASCII art --ar 3:2 --stylize 1000
-    duplication - by Kazumasa Nagai --ar 3:2 --stylize 1000
+    bots - hovering drone ______ by Laurie Greasley 16-bit Isometric 
+    alternate reality - _____ Fractal art 
+    tech choice - ______ mandala tile Mosaic 
+    tech that spawns heal power ups - _____ green Quilling 
+    ON/OFF - ASCII art 
+    duplication - by Kazumasa Nagai 
     
 
 

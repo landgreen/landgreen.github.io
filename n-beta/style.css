@@ -7,7 +7,7 @@ body {
     margin: 0;
     overflow: hidden;
     /* background-color: #eee; */
-    user-select: none;
+    
     cursor: auto;
 }
 
@@ -16,6 +16,7 @@ canvas {
     top: 0;
     left: 0;
     z-index: 0;
+    user-select: none;
 }
 
 select {
