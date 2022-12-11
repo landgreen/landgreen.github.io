@@ -56,6 +56,7 @@ card images
     grid gap: 0
     border-radius: 0
   make an image for undefined?
+    animated webP?
   JUNK should default to the no image setting
     JUNK tech could load a random image
       I'm feeling lucky google image search?

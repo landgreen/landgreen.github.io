@@ -1574,30 +1574,49 @@ const sound = {
 
 // preload images so they load cleaner
 // MDN Scripting and preloads - https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload
+// if (!localSettings.isHideImages) {
+//     for (let i = 0, len = b.guns.length; i < len; i++) {
+//         const preloadLink = document.createElement("link");
+//         preloadLink.href = "img/gun/" + b.guns[i].name + ".webp";
+//         preloadLink.rel = "preload";
+//         preloadLink.as = "image";
+//         document.head.appendChild(preloadLink);
+//     }
+//     for (let i = 1, len = m.fieldUpgrades.length; i < len; i++) {
+//         const preloadLink = document.createElement("link");
+//         preloadLink.href = "img/field/" + m.fieldUpgrades[i].name + ".webp";
+//         preloadLink.rel = "preload";
+//         preloadLink.as = "image";
+//         document.head.appendChild(preloadLink);
+//     }
+//     for (let i = 0, len = tech.tech.length; i < len; i++) {
+//         if (!tech.tech[i].isJunk) {
+//             const preloadLink = document.createElement("link");
+//             preloadLink.href = "img/" + tech.tech[i].name + ".webp";
+//             preloadLink.rel = "preload";
+//             preloadLink.as = "image";
+//             document.head.appendChild(preloadLink);
+//         }
+//     }
+// }
+
+
+//preload images early
 if (!localSettings.isHideImages) {
-    for (let i = 0, len = b.guns.length; i < len; i++) {
-        const preloadLink = document.createElement("link");
-        preloadLink.href = "img/gun/" + b.guns[i].name + ".webp";
-        preloadLink.rel = "preload";
-        preloadLink.as = "image";
-        document.head.appendChild(preloadLink);
-    }
-    for (let i = 1, len = m.fieldUpgrades.length; i < len; i++) {
-        const preloadLink = document.createElement("link");
-        preloadLink.href = "img/field/" + m.fieldUpgrades[i].name + ".webp";
-        preloadLink.rel = "preload";
-        preloadLink.as = "image";
-        document.head.appendChild(preloadLink);
-    }
-    for (let i = 0, len = tech.tech.length; i < len; i++) {
-        if (!tech.tech[i].isJunk) {
-            const preloadLink = document.createElement("link");
-            preloadLink.href = "img/" + tech.tech[i].name + ".webp";
-            preloadLink.rel = "preload";
-            preloadLink.as = "image";
-            document.head.appendChild(preloadLink);
+    addEventListener("load", (event) => {
+        let urls = new Array()
+        for (let i = 0, len = b.guns.length; i < len; i++) urls.push("img/gun/" + b.guns[i].name + ".webp")
+        for (let i = 1, len = m.fieldUpgrades.length; i < len; i++) urls.push("img/field/" + m.fieldUpgrades[i].name + ".webp")
+        for (let i = 0, len = tech.tech.length; i < len; i++) {
+            if (!tech.tech[i].isJunk) urls.push("img/" + tech.tech[i].name + ".webp")
         }
-    }
+        let images = new Array()
+        for (let i = 0; i < urls.length; i++) {
+            images[i] = new Image()
+            images[i].src = urls[i]
+        }
+        console.log(urls, images)
+    });
 }
 
 
