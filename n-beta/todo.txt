@@ -33,6 +33,8 @@ card images
   process:  discord midjourney prompts -> "pixelmator pro" -> scale to 384x256 -> export PNG -> webP? -> place in /img folder
     https://anywebp.com/convert-to-webp.html convert png to webp batch 50 at a time
   make n-gon a progressive web app to manage image downloads, cache
+  bitter electromagnet isn't showing up on live version
+    it's on github, and the local version
   wave function collapse opens the pause menu after it triggers alternate reality
     this is actually good, maybe reuse this code to get pause menu to open at any time
   if pause is pressed while selecting power ups, display pause menu on top of selection menu
@@ -51,10 +53,9 @@ card images
         or flickr?
       https://codepen.io/lilgreenland/pen/EWGoQK?editors=0010
   ***styles***
-    try --- Pastel drawing, blueprints, Psychedelic art, Quilling (rolled up paper), Pixel drawing,  Arabesque (cool patterns)
+    try --- Pastel drawing, Psychedelic art, Arabesque (cool patterns), knolling (everything spread out and placed on a flat mat)
     try taking screen shots of fields graphics and feeding them into midJourney V4
-    science stuff --- Physautotype print, Scientific photography
-    technology stuff --- Dan Matutina (cute complex technology),  Dan McPharlin (spacey buildings and technology),
+    technology stuff --- Dan Matutina (cute complex technology),
       Katsuhiro Otomo (intricate space technology), Tsutomu Nihei (black and white detailed future tech)
       infographics of all know multiverses. 1980s Japanese graphic design, dimensional astrolabe,
       Japanese poster graphics, Ralph McQuarrie (looks like star wars), Simon Stålenhag (retro-futuristic), Yoshiyuki Tomino (detailed anime future technology)
@@ -65,16 +66,13 @@ card images
   ***major themes missing***
     CPT, slow time, revert time - Light painting, Luminogram (very abstract),  Double exposure
       sun by Bruce Munro --v 4   abstract geometrical composition by Bruce Munro --v 4
-    duplication, power ups - Kazumasa Nagai  patterns: turkish, chinese, repeating, William Morris     Vector graphics
-    coupling  (redo it with better images) - 
     radioactivity - Autoradiography, x-ray, Ultraviolet photography
-    cancel - Andreas Gursky (endless rows of supermarkets) conceptual installation, inflatable sculpture
     guns
       nails - 
       wave - pointillism, sine wave, graph, Sandpainting
-      mines - Jakub Rózalski, gond painting, invention of gunpowder. Conceptual installation --v 4
-    JUNK
-      mascot super cute 2d
+  ***maybe redo***
+    coupling 
+    diffuse beam
   ***past style themes***
     field emitter - isometric, clean white robot spherical gun turret on bird legs, blender 3d, style of artstation and behance, Disney Pixar, cute 
     standing wave - concentric transparent blue geometric circles science  
@@ -94,7 +92,7 @@ card images
     foam - black blobs Ink doodle
     harpoon - by Eiichiro Oda
     mine - by Dan McPharlin
-    laser - complex optical scientific equipment --stylize 1000
+    laser - complex optical scientific equipment
     anti-shear topology, fracture analysis, shear stress - Chemigram
     generic energy tech - by Laurie Greasley
     block throwing - Bauhaus style
@@ -109,7 +107,7 @@ card images
     tech choice - ______ mandala tile Mosaic 
     tech that spawns heal power ups - _____ green Quilling 
     ON/OFF - ASCII art 
-    duplication - by Kazumasa Nagai 
+    duplication, cancel - by Kazumasa Nagai 
     
 
 
