@@ -72,7 +72,10 @@ card images
       wave - pointillism, sine wave, graph, Sandpainting
   ***maybe redo***
     coupling 
-    diffuse beam
+    dynamical systems
+    harpoon
+    mine (retouch)
+    nail-bot
   ***past style themes***
     field emitter - isometric, clean white robot spherical gun turret on bird legs, blender 3d, style of artstation and behance, Disney Pixar, cute 
     standing wave - concentric transparent blue geometric circles science  
@@ -81,7 +84,7 @@ card images
     negative mass - Blacklight painting by Moebius
     plasma torch - by Dan Mumford
     metamaterial cloaking - Scientific photography by Miki Asai
-    molecular assembler - _____ by Laurie Greasley 16-bit Isometric 
+    molecular assembler - by Laurie Greasley 16-bit Isometric 
     wormhole - by Tim White
     nail gun - Screenprint
     shotgun - blueprint by Dan McPharlin
@@ -100,14 +103,15 @@ card images
     defensive - Paper cutout
     ice IX - microscope images of ice crystals
     tech that spawns health - glowing green balls by Enki Bilal
-    guns, ammo - isometric clean pixel art image cutaway of _______, style of tekkonkinkreet
+    guns, ammo - isometric clean pixel art image cutaway of , style of tekkonkinkreet
     invulnerable - by Nick Veasey (photos that look like x-rays)
-    bots - hovering drone ______ by Laurie Greasley 16-bit Isometric 
-    alternate reality - _____ Fractal art 
-    tech choice - ______ mandala tile Mosaic 
-    tech that spawns heal power ups - _____ green Quilling 
+    bots - hovering drone  by Laurie Greasley 16-bit Isometric 
+    alternate reality -  Fractal art 
+    tech choice -  mandala tile Mosaic 
+    tech that spawns heal power ups -  green Quilling 
     ON/OFF - ASCII art 
-    duplication, cancel - by Kazumasa Nagai 
+    duplication, cancel -  by Kazumasa Nagai
+    time, CPT, pause -  by Lee Bontecou
     
 
 

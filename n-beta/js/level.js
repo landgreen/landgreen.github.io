@@ -15,7 +15,7 @@ const level = {
     levels: [],
     start() {
         if (level.levelsCleared === 0) { //this code only runs on the first level
-            // simulation.enableConstructMode() //used to build maps in testing mode
+            // simulation.enableConstructMode() //tech.giveTech('motion sickness')  //used to build maps in testing mode
             // simulation.isHorizontalFlipped = true
             // tech.giveTech("performance")
             // level.difficultyIncrease(30 * 4) //30 is near max on hard  //60 is near max on why
@@ -3465,10 +3465,12 @@ const level = {
         }
     },
     intro() {
+        // console.log(level.levelsCleared)
         if (level.levelsCleared === 0) { //if this is the 1st level of the game
             //wait to spawn power ups until unpaused
             //power ups don't spawn in experiment mode, so they don't get removed at the start of experiment mode
             function cycle() {
+                // console.log('hi', simulation.cycle)
                 if (simulation.cycle > 10) {
                     if (localSettings.loreCount === 6) {
                         powerUps.spawn(2095 + 15 * (Math.random() - 0.5), -2170, "field", false);
@@ -3485,6 +3487,11 @@ const level = {
                 }
             }
             requestAnimationFrame(cycle);
+
+            // if (build.isExperimentRun){
+
+            // }
+
 
             if (localSettings.levelsClearedLastGame < 3) {
                 if (!simulation.isCheating && !m.isShipMode && !build.isExperimentRun) {

@@ -3012,7 +3012,7 @@ const m = {
                     //not shooting (or using field) enable cloak
                     if (m.energy < 0.05 && m.fireCDcycle < m.cycle && !input.fire) m.fireCDcycle = m.cycle
                     if (m.fireCDcycle + 30 < m.cycle && !input.fire) { //automatically cloak if not firing
-                        const drain = 0.1
+                        const drain = 0.05
                         if (!m.isCloak && m.energy > drain + 0.05) {
                             m.energy -= drain
                             m.isCloak = true //enter cloak

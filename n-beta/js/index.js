@@ -634,7 +634,6 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
         const hideStyle = `style="height:auto; border: none; background-color: transparent;"`
         for (let i = 0, len = m.fieldUpgrades.length; i < len; i++) {
             const style = localSettings.isHideImages ? hideStyle : `style="background-image: url('img/field/${m.fieldUpgrades[i].name}${i === 0 ? Math.floor(Math.random()*10) : ""}.webp');"`
-            console.log(style)
             //original
             // text += powerUps.fieldText(i, `build.choosePowerUp(this,${i},'field')`)
             // text += `<div id ="field-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'field')"><div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}</div>`

@@ -2190,42 +2190,6 @@ const tech = {
             }
         },
         {
-            name: "liquid cooling",
-            description: `after losing <strong class='color-h'>health</strong><br><strong class='color-s'>freeze</strong> all mobs for <strong>7</strong> seconds`,
-            maxCount: 1,
-            count: 0,
-            frequency: 2,
-            frequencyDefault: 2,
-            allowed() {
-                return tech.isSlowFPS
-            },
-            requires: "clock gating",
-            effect() {
-                tech.isHarmFreeze = true;
-            },
-            remove() {
-                tech.isHarmFreeze = false;
-            }
-        },
-        {
-            name: "clock gating",
-            description: `after losing <strong class='color-h'>health</strong> <strong>slow</strong> <strong>time</strong> by <strong>50%</strong><br><strong>+20%</strong> <strong class='color-defense'>defense</strong>`,
-            maxCount: 1,
-            count: 0,
-            frequency: 1,
-            frequencyDefault: 1,
-            allowed() {
-                return simulation.fpsCapDefault > 45
-            },
-            requires: "FPS above 45",
-            effect() {
-                tech.isSlowFPS = true;
-            },
-            remove() {
-                tech.isSlowFPS = false;
-            }
-        },
-        {
             name: "Pauli exclusion",
             description: `after mob collisions<br>become <strong>invulnerable</strong> for <strong>+3</strong> seconds`,
             maxCount: 9,
@@ -2260,6 +2224,42 @@ const tech = {
             },
             remove() {
                 tech.cyclicImmunity = 0;
+            }
+        },
+        {
+            name: "liquid cooling",
+            description: `after losing <strong class='color-h'>health</strong><br><strong class='color-s'>freeze</strong> all mobs for <strong>7</strong> seconds`,
+            maxCount: 1,
+            count: 0,
+            frequency: 2,
+            frequencyDefault: 2,
+            allowed() {
+                return tech.isSlowFPS
+            },
+            requires: "clock gating",
+            effect() {
+                tech.isHarmFreeze = true;
+            },
+            remove() {
+                tech.isHarmFreeze = false;
+            }
+        },
+        {
+            name: "clock gating",
+            description: `after losing <strong class='color-h'>health</strong> <strong>slow</strong> <strong>time</strong> by <strong>50%</strong><br><strong>+20%</strong> <strong class='color-defense'>defense</strong>`,
+            maxCount: 1,
+            count: 0,
+            frequency: 1,
+            frequencyDefault: 1,
+            allowed() {
+                return simulation.fpsCapDefault > 45
+            },
+            requires: "FPS above 45",
+            effect() {
+                tech.isSlowFPS = true;
+            },
+            remove() {
+                tech.isSlowFPS = false;
             }
         },
         {
