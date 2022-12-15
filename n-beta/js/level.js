@@ -35,7 +35,7 @@ const level = {
             // tech.giveTech("bound state")
             // for (let i = 0; i < 1; ++i) tech.giveTech("uncertainty principle")
             // tech.isFoamBall = true
-            // for (let i = 0; i < 1; ++i) tech.giveTech("renormalization")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("dark patterns")
             // for (let i = 0; i < 10; i++) tech.giveTech("replication")
             // for (let i = 0; i < 9; i++) tech.giveTech("paradigm shift")
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
@@ -46,7 +46,7 @@ const level = {
             // spawn.starter(1900, -500)
             // spawn.hopper(2538, -950)
             // for (let i = 0; i < 2; ++i) spawn.starter(1000 + 1000 * Math.random(), -500 + 300 * Math.random())
-            // tech.addJunkTechToPool(0.5)
+            // tech.addJunkTechToPool(2)
             // tech.tech[322].frequency = 100
             // spawn.tetherBoss(1900, -500, { x: 1900, y: -500 })
             // for (let i = 0; i < 40; ++i) tech.giveTech()

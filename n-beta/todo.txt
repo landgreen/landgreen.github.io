@@ -12,6 +12,12 @@ bug fixes
 
 *********************************************************** TODO *****************************************************
 
+set media rules for smaller screens
+  smaller card size
+
+
+If you play at least one game and die (or win the boss fight), then play in experiment mode, no power ups will spawn on intro
+
 tech super balls - super ball can damage you
 
 add to todo: make it so each phase of the final boss works like a new level (call new level code on each new phase)
@@ -64,18 +70,15 @@ card images
       kinetic sculpture
     quantum stuff -- Hypertorus, Glowing Opal Pearlescent, Physics, Hydro-Dipping	Hydrodipped, Vija Celmins, Matt Molloy (photo of golden waves in the sky)
   ***major themes missing***
-    CPT, slow time, revert time - Light painting, Luminogram (very abstract),  Double exposure
-      sun by Bruce Munro --v 4   abstract geometrical composition by Bruce Munro --v 4
     radioactivity - Autoradiography, x-ray, Ultraviolet photography
     guns
       nails - 
       wave - pointillism, sine wave, graph, Sandpainting
   ***maybe redo***
-    coupling 
     dynamical systems
-    harpoon
-    mine (retouch)
+    harpoon gun
     nail-bot
+    homeostasis
   ***past style themes***
     field emitter - isometric, clean white robot spherical gun turret on bird legs, blender 3d, style of artstation and behance, Disney Pixar, cute 
     standing wave - concentric transparent blue geometric circles science  
@@ -112,7 +115,7 @@ card images
     ON/OFF - ASCII art 
     duplication, cancel -  by Kazumasa Nagai
     time, CPT, pause -  by Lee Bontecou
-    
+    boost, coupling power ups tech - cyan electron orbiting a black nucleus electric field as bas-relief   //(by Kazumasa Nagai)
 
 
 

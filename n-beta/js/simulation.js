@@ -787,8 +787,8 @@ const simulation = {
         }
         m.hole.isOn = false
         simulation.paused = false;
-        simulation.cycle = 0
-        m.cycle = 0
+        // simulation.cycle = 0
+        // m.cycle = 0
         engine.timing.timeScale = 1;
         simulation.fpsCap = simulation.fpsCapDefault;
         simulation.isAutoZoom = true;
