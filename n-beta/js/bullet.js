@@ -1523,7 +1523,7 @@ const b = {
             minDmgSpeed: 4,
             lookFrequency: Math.floor(7 + Math.random() * 3),
             density: tech.harpoonDensity, //0.001 is normal for blocks,  0.004 is normal for harpoon,  0.004*6 when buffed
-            drain: tech.isRailEnergy ? 0.001 : 0.006,
+            drain: tech.isRailEnergy ? 0.0006 : 0.006,
             beforeDmg(who) {
                 if (tech.isShieldPierce && who.isShielded) { //disable shields
                     who.isShielded = false
@@ -1605,11 +1605,11 @@ const b = {
             returnToPlayer() {
                 if (Vector.magnitude(Vector.sub(this.position, m.pos)) < returnRadius) { //near player
                     this.endCycle = 0;
-                    if (m.energy < 0.05) {
-                        m.fireCDcycle = m.cycle + 120; //fire cooldown
-                    } else if (m.cycle + 15 * b.fireCDscale < m.fireCDcycle) {
-                        m.fireCDcycle = m.cycle + 15 * b.fireCDscale //lower cd to 25 if it is above 25
-                    }
+                    // if (m.energy < 0.05) {
+                    //     m.fireCDcycle = m.cycle + 120; //fire cooldown
+                    // } else if (m.cycle + 15 * b.fireCDscale < m.fireCDcycle) {
+                    //     m.fireCDcycle = m.cycle + 15 * b.fireCDscale //lower cd to 25 if it is above 25
+                    // }
 
                     if (m.energy < 0.05) this.dropCaughtPowerUp()
 
@@ -1669,7 +1669,7 @@ const b = {
                     this.grabPowerUp()
                     if (this.endCycle < simulation.cycle + 1) { //if at end of lifespan, but player is holding down fire, force retraction
                         this.endCycle = simulation.cycle + 60
-                        m.fireCDcycle = m.cycle + 120 // cool down
+                        // m.fireCDcycle = m.cycle + 120 // cool down
                         this.do = this.returnToPlayer
                         Matter.Body.setDensity(this, 0.0005); //reduce density on return
                         if (this.angularSpeed < 0.5) this.torque += this.inertia * 0.001 * (Math.random() - 0.5) //(Math.round(Math.random()) ? 1 : -1)
@@ -1721,7 +1721,8 @@ const b = {
                             })
                             let dist = Vector.magnitude(sub)
                             if (input.fire) {
-                                m.fireCDcycle = m.cycle + 30; // cool down if out of energy
+                                // m.fireCDcycle = m.cycle + 30; // cool down if out of energy
+                                m.fireCDcycle = m.cycle + 5 + 40 * b.fireCDscale + 60 * (m.energy < 0.05)
                                 this.endCycle = simulation.cycle + 10
                                 if (input.down) { //down
                                     dist = 0
@@ -1820,13 +1821,13 @@ const b = {
             friction: 1,
             frictionAir: 0.4,
             // thrustMag: 0.1,
-            drain: tech.isRailEnergy ? 0.001 : 0.006,
+            drain: tech.isRailEnergy ? 0.0006 : 0.006,
             turnRate: isReturn ? 0.1 : 0.03, //0.015
             drawStringControlMagnitude: 3000 + 5000 * Math.random(),
             drawStringFlip: (Math.round(Math.random()) ? 1 : -1),
             dmg: 6, //damage done in addition to the damage from momentum
             classType: "bullet",
-            endCycle: simulation.cycle + totalCycles * 2.5 + 15,
+            endCycle: simulation.cycle + totalCycles * 2.5 + 40,
             collisionFilter: {
                 category: cat.bullet,
                 mask: tech.isShieldPierce ? cat.map | cat.body | cat.mob | cat.mobBullet : cat.map | cat.body | cat.mob | cat.mobBullet | cat.mobShield,
@@ -1934,11 +1935,11 @@ const b = {
             returnToPlayer() {
                 if (Vector.magnitude(Vector.sub(this.position, m.pos)) < returnRadius) { //near player
                     this.endCycle = 0;
-                    if (m.energy < 0.05) {
-                        m.fireCDcycle = m.cycle + 120; //fire cooldown
-                    } else if (m.cycle + 20 * b.fireCDscale < m.fireCDcycle) {
-                        m.fireCDcycle = m.cycle + 20 * b.fireCDscale //lower cd to 25 if it is above 25
-                    }
+                    // if (m.energy < 0.05) {
+                    //     m.fireCDcycle = m.cycle + 80 * b.fireCDscale; //fire cooldown is much longer when out of energy
+                    // } else if (m.cycle + 20 * b.fireCDscale < m.fireCDcycle) {
+                    // if (m.energy > 0.05) m.fireCDcycle = m.cycle + 20 * b.fireCDscale //lower cd to 25 if it is above 25
+                    // }
                     //recoil on catching
                     const momentum = Vector.mult(Vector.sub(this.velocity, player.velocity), (input.down ? 0.0001 : 0.0002))
                     player.force.x += momentum.x
@@ -1954,12 +1955,17 @@ const b = {
                         }
                     }
                 } else {
-                    if (m.energy > this.drain) m.energy -= this.drain
                     const sub = Vector.sub(this.position, m.pos)
                     const rangeScale = 1 + 0.000001 * Vector.magnitude(sub) * Vector.magnitude(sub) //return faster when far from player
                     const returnForce = Vector.mult(Vector.normalise(sub), rangeScale * thrust * this.mass)
-                    this.force.x -= returnForce.x
-                    this.force.y -= returnForce.y
+                    if (m.energy > this.drain) m.energy -= this.drain
+                    if (m.energy < 0.05) {
+                        this.force.x -= returnForce.x * 0.15
+                        this.force.y -= returnForce.y * 0.15
+                    } else { //if (m.cycle + 20 * b.fireCDscale < m.fireCDcycle)
+                        this.force.x -= returnForce.x
+                        this.force.y -= returnForce.y
+                    }
                     this.grabPowerUp()
                 }
                 this.draw();
@@ -1997,11 +2003,11 @@ const b = {
                 this.cycle++
                 if (isReturn || target) {
                     if (isReturn) {
-                        if (this.cycle > totalCycles || m.energy < 0.05 || !input.fire) { //return to player
+                        if (this.cycle > totalCycles || !input.fire) { //return to player
                             this.do = this.returnToPlayer
                             if (this.angularSpeed < 0.5) this.torque += this.inertia * 0.001 * (Math.random() - 0.5) //(Math.round(Math.random()) ? 1 : -1)
                             Matter.Sleeping.set(this, false)
-                            this.endCycle = simulation.cycle + 60
+                            this.endCycle = simulation.cycle + 240
                             const momentum = Vector.mult(Vector.sub(this.velocity, player.velocity), (input.down ? 0.00015 : 0.0003)) //recoil on jerking line
                             player.force.x += momentum.x
                             player.force.y += momentum.y
@@ -7186,7 +7192,7 @@ const b = {
             charge: 0,
             railDo() {
                 if (this.charge > 0) {
-                    const DRAIN = (tech.isRailEnergy ? 0.00025 : 0.002)
+                    const DRAIN = (tech.isRailEnergy ? 0.0002 : 0.002)
                     //exit railgun charging without firing
                     if (m.energy < DRAIN) {
                         // m.energy += 0.025 + this.charge * 22 * this.drain
@@ -7349,9 +7355,6 @@ const b = {
                         this.charge = 1 - smoothRate + this.charge * smoothRate
                         if (m.energy > DRAIN) m.energy -= DRAIN
 
-                        // console.log((this.charge).toFixed(2))
-                        // m.energy += (this.charge - previousCharge) * ((tech.isRailEnergy ? 0.5 : -0.3)) //energy drain is proportional to charge gained, but doesn't stop normal m.fieldRegen
-
                         //draw magnetic field
                         const X = m.pos.x
                         const Y = m.pos.y
@@ -7416,7 +7419,9 @@ const b = {
                     if (tech.crouchAmmoCount) tech.crouchAmmoCount = 1
                     b.grapple(where, m.angle, harpoonSize)
                 }
-                m.fireCDcycle = m.cycle + Math.floor(75 * b.fireCDscale) // cool down
+                // m.fireCDcycle = m.cycle + Math.floor(75 * b.fireCDscale) // cool down
+                m.fireCDcycle = m.cycle + 5 + 40 * b.fireCDscale + 60 * (m.energy < 0.05)
+
             },
             harpoonFire() {
                 const where = {
@@ -7480,7 +7485,7 @@ const b = {
                     }
                     this.ammo++ //make up for the ammo used up in fire()
                     simulation.updateGunHUD();
-                    m.fireCDcycle = m.cycle + 90 // cool down is set when harpoon bullet returns to player
+
                 } else { //input.down makes a single harpoon with longer range
                     const dir = {
                         x: Math.cos(m.angle),
@@ -7501,9 +7506,9 @@ const b = {
                     } else {
                         b.harpoon(where, closest.target, m.angle, harpoonSize, true, totalCycles)
                     }
-                    m.fireCDcycle = m.cycle + 45 // cool down is set when harpoon bullet returns to player
                     tech.harpoonDensity = 0.004 //0.001 is normal for blocks,  0.004 is normal for harpoon,  0.004*6 when buffed
                 }
+                m.fireCDcycle = m.cycle + 5 + 35 * b.fireCDscale + 60 * (m.energy < 0.05) // cool down is set when harpoon bullet returns to player
                 const recoil = Vector.mult(Vector.normalise(Vector.sub(where, m.pos)), input.down ? 0.015 : 0.035)
                 player.force.x -= recoil.x
                 player.force.y -= recoil.y

@@ -6423,7 +6423,7 @@ const tech = {
         },
         {
             name: "alternator",
-            description: "<strong>+80%</strong> <strong>harpoon</strong> <strong class='color-f'>energy</strong> efficiency<br>&nbsp;",
+            description: "<strong>+90%</strong> <strong>harpoon</strong> <strong class='color-f'>energy</strong> efficiency<br>&nbsp;",
             isGunTech: true,
             maxCount: 1,
             count: 0,

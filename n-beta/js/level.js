@@ -28,15 +28,15 @@ const level = {
             // m.setField("time dilation") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass    pilot wave   plasma torch
             // simulation.molecularMode = 2
             // m.damage(0.1);
-            // b.giveGuns("nail gun") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns("harpoon") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.giveGuns("wave") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[0].ammo = 10000
-            // tech.giveTech("pocket dimension")
-            // tech.giveTech("bound state")
+            // tech.giveTech("alternator")
+            // tech.giveTech("grappling hook")
             // for (let i = 0; i < 1; ++i) tech.giveTech("uncertainty principle")
             // tech.isFoamBall = true
             // for (let i = 0; i < 1; ++i) tech.giveTech("dark patterns")
-            // for (let i = 0; i < 10; i++) tech.giveTech("replication")
+            // for (let i = 0; i < 9; i++) tech.giveTech("heuristics")
             // for (let i = 0; i < 9; i++) tech.giveTech("paradigm shift")
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
@@ -52,11 +52,12 @@ const level = {
             // for (let i = 0; i < 40; ++i) tech.giveTech()
             // for (let i = 0; i < 13; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "research");
 
+            //normal starting level ************************************************
             if (simulation.isTraining) {
                 level.walk()
             } else {
                 level.intro()
-            } //normal starting level ************************************************
+            }
 
             // for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "tech");
             // for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "gun");
@@ -3008,7 +3009,7 @@ const level = {
 
         // spawn.starter(1900, -500, 200) //big boy
         // for (let i = 0; i < 10; ++i) spawn.launcher(1900, -500)
-        // spawn.slashBoss(1900, -500)
+        spawn.suckerBoss(1900, -500)
         // spawn.launcherBoss(3200, -500)
         // spawn.laserTargetingBoss(1700, -500)
         // spawn.powerUpBoss(1900, -500)
@@ -3469,9 +3470,10 @@ const level = {
         if (level.levelsCleared === 0) { //if this is the 1st level of the game
             //wait to spawn power ups until unpaused
             //power ups don't spawn in experiment mode, so they don't get removed at the start of experiment mode
+            const goal = simulation.cycle + 10
+
             function cycle() {
-                // console.log('hi', simulation.cycle)
-                if (simulation.cycle > 10) {
+                if (simulation.cycle > goal) {
                     if (localSettings.loreCount === 6) {
                         powerUps.spawn(2095 + 15 * (Math.random() - 0.5), -2170, "field", false);
                     } else {
@@ -3487,11 +3489,6 @@ const level = {
                 }
             }
             requestAnimationFrame(cycle);
-
-            // if (build.isExperimentRun){
-
-            // }
-
 
             if (localSettings.levelsClearedLastGame < 3) {
                 if (!simulation.isCheating && !m.isShipMode && !build.isExperimentRun) {

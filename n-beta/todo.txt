@@ -8,7 +8,13 @@ random research power ups are 20% more common per level
 global difficulty balance: player takes a bit less damage
 mutualism: 0.5->1 borrowed health for 250->300% more spore damage
 
-bug fixes
+harpoon can still fire when out of energy, but slower
+harpoon fire cooldown no longer triggers when the harpoon returns
+  it's just a flat 2/3 of a second after you Fire
+  improved fire rate now allows you to fire many harpoons at once until you run out of energy
+
+
+several bug fixes and undocumented changes I forgot to list
 
 *********************************************************** TODO *****************************************************
 
