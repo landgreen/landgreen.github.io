@@ -703,26 +703,26 @@ const powerUps = {
     },
     junkTechText(choose, click) {
         const techCountText = tech.tech[choose].count > 1 ? `(${tech.tech[choose].count}x)` : "";
-        const style = localSettings.isHideImages ? hideStyle : `style="background-size: contain;background-repeat: no-repeat;"`
-        powerUps
-        //pull image from web search if no url
-        setTimeout(() => {
-            if (tech.tech[choose].url === undefined) {
-                const url = "https://images.search.yahoo.com/search/images?p=" + tech.tech[choose].name;
-                fetch(url)
-                    .then((response) => response.text())
-                    .then((html) => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, "text/html");
-                        const elements = doc.getElementsByClassName("ld");
-                        // console.log(JSON.parse(elements[i].getAttribute("data")).iurl)
-                        tech.tech[choose].url = JSON.parse(elements[i].getAttribute("data")).iurl
-                        document.getElementById(`junk-${choose}`).style.backgroundImage = `url('${tech.tech[choose].url}')`
-                    });
-            } else {
-                document.getElementById(`junk-${choose}`).style.backgroundImage = `url('${tech.tech[choose].url}')`
-            }
-        }, 100);
+        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-size: contain;background-repeat: no-repeat;"`
+        if (!localSettings.isHideImages) {
+            setTimeout(() => { //pull image from web search if no url
+                if (tech.tech[choose].url === undefined) {
+                    const url = "https://images.search.yahoo.com/search/images?p=" + tech.tech[choose].name;
+                    fetch(url)
+                        .then((response) => response.text())
+                        .then((html) => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, "text/html");
+                            const elements = doc.getElementsByClassName("ld");
+                            // console.log(JSON.parse(elements[i].getAttribute("data")).iurl)
+                            tech.tech[choose].url = JSON.parse(elements[i].getAttribute("data")).iurl
+                            document.getElementById(`junk-${choose}`).style.backgroundImage = `url('${tech.tech[choose].url}')`
+                        });
+                } else {
+                    document.getElementById(`junk-${choose}`).style.backgroundImage = `url('${tech.tech[choose].url}')`
+                }
+            }, 100);
+        }
 
         return `<div id = "junk-${choose}" class="choose-grid-module card-background" onclick="${click}" ${style}>
                 <div class="card-text">
