@@ -21,7 +21,7 @@ const level = {
             // level.difficultyIncrease(30 * 4) //30 is near max on hard  //60 is near max on why
             // m.maxHealth = m.health = 100
             // tech.isRerollDamage = true
-            // powerUps.research.changeRerolls(30000)
+            // powerUps.research.changeRerolls(5)
             // m.immuneCycle = Infinity //you can't take damage
             // tech.tech[297].frequency = 100
             // m.couplingChange(5)
@@ -32,11 +32,11 @@ const level = {
             // b.giveGuns("wave") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[0].ammo = 10000
             // tech.giveTech("alternator")
-            // tech.giveTech("grappling hook")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("uncertainty principle")
+            // tech.giveTech("posture")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("Sleipnir")
             // tech.isFoamBall = true
-            // for (let i = 0; i < 1; ++i) tech.giveTech("dark patterns")
-            // for (let i = 0; i < 9; i++) tech.giveTech("heuristics")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("emergence")
+            // for (let i = 0; i < 2; i++) tech.giveTech("unified field theory")
             // for (let i = 0; i < 9; i++) tech.giveTech("paradigm shift")
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");

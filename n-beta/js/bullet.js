@@ -2003,7 +2003,7 @@ const b = {
                 this.cycle++
                 if (isReturn || target) {
                     if (isReturn) {
-                        if (this.cycle > totalCycles || !input.fire) { //return to player
+                        if (this.cycle > totalCycles) { //return to player  //|| !input.fire
                             this.do = this.returnToPlayer
                             if (this.angularSpeed < 0.5) this.torque += this.inertia * 0.001 * (Math.random() - 0.5) //(Math.round(Math.random()) ? 1 : -1)
                             Matter.Sleeping.set(this, false)
@@ -7434,10 +7434,10 @@ const b = {
                 }
                 //look for closest mob in player's LoS
                 const harpoonSize = (tech.isLargeHarpoon ? 1 + 0.1 * Math.sqrt(this.ammo) : 1) //* (input.down ? 0.7 : 1)
-                const totalCycles = 6 * (tech.isFilament ? 1 + 0.012 * Math.min(110, this.ammo) : 1) * Math.sqrt(harpoonSize)
+                const totalCycles = 6.5 * (tech.isFilament ? 1 + 0.013 * Math.min(110, this.ammo) : 1) * Math.sqrt(harpoonSize)
 
                 if (tech.extraHarpoons && !input.down) { //multiple harpoons
-                    const SPREAD = 0.1
+                    const SPREAD = 0.2
                     let angle = m.angle - SPREAD * tech.extraHarpoons / 2;
                     const dir = {
                         x: Math.cos(angle),
@@ -7463,7 +7463,8 @@ const b = {
                     //if more harpoons and no targets left
                     if (targetCount < tech.extraHarpoons + 1) {
                         const num = tech.extraHarpoons - targetCount
-                        const delay = 7 //Math.floor(Math.max(4, 8 - 0.5 * tech.extraHarpoons))
+                        const delay = 1 //Math.floor(Math.max(4, 8 - 0.5 * tech.extraHarpoons))
+                        let angle = m.angle - SPREAD * tech.extraHarpoons / 2;
                         let count = -1
                         let harpoonDelay = () => {
                             if (simulation.paused) {
@@ -7475,7 +7476,8 @@ const b = {
                                     b.harpoon({
                                         x: m.pos.x + 30 * Math.cos(m.angle),
                                         y: m.pos.y + 30 * Math.sin(m.angle)
-                                    }, null, m.angle, harpoonSize, true, totalCycles)
+                                    }, null, angle, harpoonSize, true, totalCycles)
+                                    angle += SPREAD
                                     tech.harpoonDensity = 0.004 //0.001 is normal for blocks,  0.004 is normal for harpoon,  0.004*6 when buffed
                                 }
                                 if (count < num * delay && m.alive) requestAnimationFrame(harpoonDelay);
@@ -7502,13 +7504,13 @@ const b = {
                         }
                     }
                     if (input.down && m.onGround) {
-                        b.harpoon(where, null, m.angle, harpoonSize, true, 1.5 * totalCycles, (input.down && tech.crouchAmmoCount && (tech.crouchAmmoCount - 1) % 2) ? false : true) //    harpoon(where, target, angle = m.angle, harpoonSize = 1, isReturn = false, totalCycles = 35, isReturnAmmo = true) {
+                        b.harpoon(where, null, m.angle, harpoonSize, true, 1.6 * totalCycles, (input.down && tech.crouchAmmoCount && (tech.crouchAmmoCount - 1) % 2) ? false : true) //    harpoon(where, target, angle = m.angle, harpoonSize = 1, isReturn = false, totalCycles = 35, isReturnAmmo = true) {
                     } else {
                         b.harpoon(where, closest.target, m.angle, harpoonSize, true, totalCycles)
                     }
                     tech.harpoonDensity = 0.004 //0.001 is normal for blocks,  0.004 is normal for harpoon,  0.004*6 when buffed
                 }
-                m.fireCDcycle = m.cycle + 5 + 35 * b.fireCDscale + 60 * (m.energy < 0.05) // cool down is set when harpoon bullet returns to player
+                m.fireCDcycle = m.cycle + 5 + 35 * b.fireCDscale + 60 * (m.energy < 0.05) + tech.extraHarpoons // cool down is set when harpoon bullet returns to player
                 const recoil = Vector.mult(Vector.normalise(Vector.sub(where, m.pos)), input.down ? 0.015 : 0.035)
                 player.force.x -= recoil.x
                 player.force.y -= recoil.y

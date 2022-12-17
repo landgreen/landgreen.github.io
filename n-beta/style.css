@@ -190,15 +190,13 @@ summary {
     height: 100%;
 }
 #choose-grid {
-    /* background-color: #444; */
-    /* background-color: var(--build-bg-color); */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     
     padding: 10px 1px;
-    grid-gap: 10px;
+    /* gap: 1px; */
     margin: 0px;
     border: 0px;
     z-index: 12;
@@ -224,10 +222,10 @@ summary {
 .choose-grid-module {
     padding: 5px;
     line-height: 170%;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     background-color: #fafcfd;
     font-size: 0.75em;
-    border: 2px #444 solid;
+    /* border: 1px #444 solid; */
     /* box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25); */
 }
 
@@ -256,7 +254,7 @@ summary {
 }
 
 .pause-grid {
-    padding: 1px;
+    padding: 2px;
     margin: 0px;
 
     display: none;
@@ -265,17 +263,20 @@ summary {
     grid-auto-rows: minmax(auto, auto);
     align-content: start;
     /* align-content: space-between; */
-    grid-gap: 10px;
+    /* gap: 10px; */
     z-index: 2;
     font-size: 1.3em;
 }
 
 #pause-grid-right {
-    position: relative;
+    position: absolute;
+    top:-2px;
+    right:-4px;
     overflow: auto;
     max-height: 100vh;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    padding: 1px;
 }
 
 #pause-grid-right::-webkit-scrollbar {
@@ -283,7 +284,9 @@ summary {
 }
 
 #pause-grid-left {
-    position: relative;
+    position: absolute;
+    top:-2px;
+    left:-4px;
     overflow: auto;
     max-height: 100vh;
     -ms-overflow-style: none;  /* IE and Edge */
@@ -304,10 +307,10 @@ summary {
     font-size: 0.65em; */
     padding: 5px;
     line-height: 170%;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     background-color: #fafcfd;
     font-size: 0.75em;
-    border: 2px #444 solid;
+    /* border: 2px #444 solid; */
 }
 
 .pause-eject .card-text {
@@ -324,14 +327,14 @@ summary {
     margin: 0px;
     border: 0px;
     background-color: var(--build-bg-color);
+    /* background-color: #444; */
 
     display: none;
     /* grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); */
     grid-template-columns: repeat(auto-fit, 384px);
     grid-auto-flow: row;
     grid-auto-rows: minmax(auto, auto);
-    grid-gap: 10px;
-    /* grid-gap: 16px; */
+    /* gap: 1px; */
 
     position: relative;
     bottom: 0px;
@@ -347,10 +350,10 @@ summary {
 .experiment-grid-module {
     padding: 5px;
     line-height: 170%;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     background-color: #fafcfd;
     font-size: 0.75em;
-    border: 2px #444 solid;
+    /* border: 1px #444 solid; */
     /* margin: -0.5px; */
 }
 
@@ -380,11 +383,17 @@ summary {
 
 .card-text {
     background-color: rgba(255,255,255,1); 
-    border-radius: 8px;
+    /* border-radius: 8px; */
     padding: 8px; 
-    border: 2px solid #444; 
-    margin: -2px;
+    /* border-top: 1px solid var(--build-bg-color); */
+    border: 1px solid #444;
+    margin-top: -1px;
+    margin-right: -1px;
 }
+
+/* .no-image-cards{
+    border: 1px solid #444; 
+} */
 /* .card-text:hover {
     background-color: #efeff5;
 } */
