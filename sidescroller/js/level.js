@@ -25,11 +25,11 @@ const level = {
             // m.immuneCycle = Infinity //you can't take damage
             // tech.tech[297].frequency = 100
             // m.couplingChange(5)
-            // m.setField("time dilation") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass    pilot wave   plasma torch
+            // m.setField("perfect diamagnetism") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass    pilot wave   plasma torch
             // simulation.molecularMode = 2
             // m.damage(0.1);
-            // b.giveGuns("harpoon") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
-            // b.giveGuns("wave") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns("nail gun") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns("spores") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[0].ammo = 10000
             // tech.giveTech("alternator")
             // tech.giveTech("posture")
@@ -100,19 +100,6 @@ const level = {
         m.resetHistory();
         spawn.quantumEraserCheck(); //remove mobs from tech: quantum eraser
 
-        //used for generalist and pigeonhole principle
-        tech.buffedGun++
-        if (tech.buffedGun > b.inventory.length - 1) tech.buffedGun = 0;
-        if (tech.isGunCycle) {
-            b.inventoryGun = tech.buffedGun;
-            simulation.switchGun();
-        }
-        if (tech.isGunChoice && Number.isInteger(tech.buffedGun) && b.inventory.length) {
-            var gun = b.guns[b.inventory[tech.buffedGun]].name
-            simulation.makeTextLog(`pigeonhole principle: <strong>+${(31 * Math.max(0, b.inventory.length)).toFixed(0)}%</strong> <strong class='color-d'>damage</strong> for <strong class="highlight">${gun}</strong>`, 600);
-        }
-
-
         if (tech.isForeverDrones) {
             if (tech.isDroneRadioactive) {
                 for (let i = 0; i < tech.isForeverDrones * 0.25; i++) {
@@ -132,29 +119,7 @@ const level = {
                 }
             }
         }
-        if (tech.isExtraMaxEnergy) {
-            tech.healMaxEnergyBonus += 0.1 * powerUps.totalPowerUps //Math.min(0.02 * powerUps.totalPowerUps, 0.51)
-            m.setMaxEnergy();
-        }
-        if (tech.isSwitchReality) {
-            simulation.makeTextLog(`simulation.amplitude <span class='color-symbol'>=</span> ${Math.random()}`);
-            m.switchWorlds()
-            simulation.trails()
-            powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "tech", false);
-        }
-        if (tech.isHealLowHealth) {
-            // if (tech.isEnergyHealth) {
-            //     var len = Math.ceil((m.maxEnergy - m.energy) / 0.33)
-            // } else {
-            //     var len = Math.ceil((m.maxHealth - m.health) / 0.33)
-            // }
-            if (tech.isEnergyHealth) {
-                var len = 3 * (1 - m.energy / m.maxEnergy) //as a percent
-            } else {
-                var len = 3 * (1 - m.health / m.maxHealth) //as a percent
-            }
-            for (let i = 0; i < len; i++) powerUps.spawn(player.position.x + 90 * (Math.random() - 0.5), player.position.y + 90 * (Math.random() - 0.5), "heal", false);
-        }
+
         if (tech.isMACHO) spawn.MACHO()
         for (let i = 0; i < tech.wimpCount; i++) {
             spawn.WIMP()
@@ -175,14 +140,39 @@ const level = {
             m.eyeFillColor = m.fieldMeterColor
             simulation.makeTextLog(`tech.isFlipFlopOn <span class='color-symbol'>=</span> true`);
         }
-        if (tech.isSpawnExitTech) {
-            for (let i = 0; i < 2; i++) powerUps.spawn(level.exit.x + 10 * (Math.random() - 0.5), level.exit.y - 100 + 10 * (Math.random() - 0.5), "tech", false) //exit
-        }
         // if (m.plasmaBall) m.plasmaBall.reset()
         if (m.plasmaBall) m.plasmaBall.fire()
         if (localSettings.entanglement && localSettings.entanglement.levelName === level.levels[level.onLevel]) {
             const flip = localSettings.entanglement.isHorizontalFlipped === simulation.isHorizontalFlipped ? 1 : -1
             powerUps.directSpawn(flip * localSettings.entanglement.position.x, localSettings.entanglement.position.y, "entanglement", false);
+        }
+        level.newLevelOrPhase()
+    },
+    newLevelOrPhase() { //runs on each new level but also on final boss phases
+        //used for generalist and pigeonhole principle
+        tech.buffedGun++
+        if (tech.buffedGun > b.inventory.length - 1) tech.buffedGun = 0;
+        if (tech.isGunCycle) {
+            b.inventoryGun = tech.buffedGun;
+            simulation.switchGun();
+        }
+        if (tech.isGunChoice && Number.isInteger(tech.buffedGun) && b.inventory.length) {
+            var gun = b.guns[b.inventory[tech.buffedGun]].name
+            simulation.makeTextLog(`pigeonhole principle: <strong>+${(31 * Math.max(0, b.inventory.length)).toFixed(0)}%</strong> <strong class='color-d'>damage</strong> for <strong class="highlight">${gun}</strong>`, 600);
+        }
+        if (tech.isSwitchReality) {
+            simulation.makeTextLog(`simulation.amplitude <span class='color-symbol'>=</span> ${Math.random()}`);
+            m.switchWorlds()
+            simulation.trails()
+            powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "tech", false);
+        }
+        if (tech.isHealLowHealth) {
+            if (tech.isEnergyHealth) {
+                var len = 3 * (1 - m.energy / m.maxEnergy) //as a percent
+            } else {
+                var len = 3 * (1 - m.health / m.maxHealth) //as a percent
+            }
+            for (let i = 0; i < len; i++) powerUps.spawn(player.position.x + 90 * (Math.random() - 0.5), player.position.y + 90 * (Math.random() - 0.5), "heal", false);
         }
     },
     trainingText(say) {
@@ -3009,7 +2999,7 @@ const level = {
 
         // spawn.starter(1900, -500, 200) //big boy
         // for (let i = 0; i < 10; ++i) spawn.launcher(1900, -500)
-        spawn.suckerBoss(1900, -500)
+        // spawn.suckerBoss(1900, -500)
         // spawn.launcherBoss(3200, -500)
         // spawn.laserTargetingBoss(1700, -500)
         // spawn.powerUpBoss(1900, -500)

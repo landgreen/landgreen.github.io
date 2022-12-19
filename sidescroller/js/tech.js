@@ -2408,42 +2408,6 @@ const tech = {
                 }
             }
         },
-        // {
-        //     name: "weak interaction",
-        //     description: "for each unused <strong>power up</strong> at the end of a <strong>level</strong><br><strong>+10</strong> maximum <strong class='color-f'>energy</strong>", // <em>(up to 51 health per level)</em>",
-        //     maxCount: 1,
-        //     count: 0,
-        //     frequency: 1,
-        //     frequencyDefault: 1,
-        //     allowed() {
-        //         return !tech.isDroneGrab
-        //     },
-        //     requires: "not delivery drone",
-        //     effect() {
-        //         tech.isExtraMaxEnergy = true; //tracked by  tech.extraMaxHealth
-        //     },
-        //     remove() {
-        //         tech.isExtraMaxEnergy = false;
-        //     }
-        // },
-        // {
-        //     name: "electroweak interaction",
-        //     description: "unused <strong>power ups</strong> at the end of a <strong>level</strong><br>are still activated <em>(selections are random)</em>",
-        //     maxCount: 1,
-        //     count: 0,
-        //     frequency: 2,
-        //     frequencyDefault: 2,
-        //     allowed() {
-        //         return tech.isExtraMaxEnergy
-        //     },
-        //     requires: "weak interaction",
-        //     effect() {
-        //         tech.isEndLevelPowerUp = true;
-        //     },
-        //     remove() {
-        //         tech.isEndLevelPowerUp = false;
-        //     }
-        // },
         {
             name: "electronegativity",
             descriptionFunction() {
@@ -11043,7 +11007,6 @@ const tech = {
     fastTime: null,
     squirrelJump: null,
     isFastRadiation: null,
-    isExtraMaxEnergy: null,
     isAmmoForGun: null,
     isRapidPulse: null,
     isSporeFreeze: null,
@@ -11226,7 +11189,6 @@ const tech = {
     isHarpoonPowerUp: null,
     harpoonDensity: null,
     isAddRemoveMaxHealth: null,
-    isSpawnExitTech: null,
     cloakDuplication: null,
     extruderRange: null,
     isForeverDrones: null,
@@ -11237,11 +11199,9 @@ const tech = {
     isFreeWormHole: null,
     isRewindField: null,
     isCrouchRegen: null,
-    // OccamDamage: null,
     isAxion: null,
     isWormholeMapIgnore: null,
     isLessDamageReduction: null,
-    // bulletSize: null,
     needleTunnel: null,
     isBrainstorm: null,
     isBrainstormActive: null,

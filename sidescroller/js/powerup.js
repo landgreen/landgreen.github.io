@@ -322,7 +322,7 @@ const powerUps = {
             document.getElementById("choose-grid").style.visibility = "visible"
 
             requestAnimationFrame(() => {
-                ctx.fillStyle = `rgba(221,221,221,0.6)`;
+                ctx.fillStyle = `rgba(150,150,150,0.6)`; //`rgba(221,221,221,0.6)`;
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             });
             // document.getElementById("pause-grid-right").style.opacity = "0.7"
@@ -378,9 +378,6 @@ const powerUps = {
         // document.getElementById("choose-grid").style.display = "none"
         document.getElementById("choose-grid").style.visibility = "hidden"
         document.getElementById("choose-grid").style.opacity = "0"
-        // document.getElementById("choose-background").style.display = "none"
-        document.getElementById("choose-background").style.visibility = "hidden"
-        document.getElementById("choose-background").style.opacity = "0"
 
         document.body.style.cursor = "none";
         // document.body.style.overflow = "hidden"
