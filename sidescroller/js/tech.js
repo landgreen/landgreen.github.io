@@ -299,7 +299,7 @@ const tech = {
     },
     tech: [{
             name: "ordnance",
-            description: "</strong>double</strong> the <strong class='flicker'>frequency</strong> of finding <strong class='color-g'>gun</strong><strong class='color-m'>tech</strong><br>spawn a <strong class='color-g'>gun</strong> and <strong>+7%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
+            description: "<strong>double</strong> the <strong class='flicker'>frequency</strong> of finding <strong class='color-g'>gun</strong><strong class='color-m'>tech</strong><br>spawn a <strong class='color-g'>gun</strong> and <strong>+7%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
             maxCount: 1,
             count: 0,
             frequency: 1,
@@ -509,7 +509,7 @@ const tech = {
         {
             name: "supply chain",
             descriptionFunction() {
-                return `double your current <strong class='color-ammo'>ammo</strong><br><strong>+4%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool`
+                return `double your current <strong class='color-ammo'>ammo</strong><br><strong>+4%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool`
             },
             maxCount: 9,
             count: 0,
@@ -2512,7 +2512,7 @@ const tech = {
         },
         {
             name: "overcharge",
-            description: "<strong>+66</strong> maximum <strong class='color-f'>energy</strong><br><strong>+6%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
+            description: "<strong>+66</strong> maximum <strong class='color-f'>energy</strong><br><strong>+6%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
             maxCount: 9,
             count: 0,
             frequency: 1,
@@ -2538,7 +2538,7 @@ const tech = {
         },
         {
             name: "Maxwells demon",
-            description: "<strong class='color-f'>energy</strong> above your max decays <strong>96%</strong> slower<br><strong>+5%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
+            description: "<strong class='color-f'>energy</strong> above your max decays <strong>96%</strong> slower<br><strong>+5%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
             maxCount: 1,
             count: 0,
             frequency: 2,
@@ -2846,7 +2846,7 @@ const tech = {
         {
             name: "adiabatic healing",
             descriptionFunction() {
-                return `${powerUps.orb.heal()} have <strong>+100%</strong> effect<br><strong>+5%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool`
+                return `${powerUps.orb.heal()} have <strong>+100%</strong> effect<br><strong>+5%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool`
             },
             maxCount: 3,
             count: 0,
@@ -3234,7 +3234,7 @@ const tech = {
         },
         {
             name: "pseudoscience",
-            description: "<span style = 'font-size:94%;'>when <strong>selecting</strong> a power up, <strong class='color-r'>research</strong> <strong>3</strong> times</span><br>for <strong>free</strong>, but add <strong>1-4%</strong> <strong class='color-j'>JUNK</strong> to the <strong class='color-m'>tech</strong> pool",
+            description: "<span style = 'font-size:94%;'>when <strong>selecting</strong> a power up, <strong class='color-r'>research</strong> <strong>3</strong> times</span><br>for <strong>free</strong>, but add <strong>1-4%</strong> <strong class='color-junk'>JUNK</strong> to the <strong class='color-m'>tech</strong> pool",
             maxCount: 1,
             count: 0,
             frequency: 1,
@@ -3292,7 +3292,7 @@ const tech = {
         {
             name: "emergence",
             description: "<strong class='color-m'>tech</strong>, <strong class='color-f'>fields</strong>, and <strong class='color-g'>guns</strong> have <strong>+1</strong> <strong>choice</strong><br><strong>+8%</strong> <strong class='color-d'>damage</strong>",
-            // description: "<strong class='color-m'>tech</strong>, <strong class='color-f'>fields</strong>, and <strong class='color-g'>guns</strong> have <strong>+2</strong> <strong>choices</strong><br><strong>+3%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
+            // description: "<strong class='color-m'>tech</strong>, <strong class='color-f'>fields</strong>, and <strong class='color-g'>guns</strong> have <strong>+2</strong> <strong>choices</strong><br><strong>+3%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
             maxCount: 9,
             count: 0,
             frequency: 1,
@@ -3319,7 +3319,7 @@ const tech = {
         {
             name: "path integral",
             link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Path_integral_formulation' class="link">path integral</a>`,
-            description: "your next <strong class='color-m'>tech</strong> choice has all possible <strong>options</strong><br><strong>+5%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
+            description: "your next <strong class='color-m'>tech</strong> choice has all possible <strong>options</strong><br><strong>+5%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
             maxCount: 1,
             count: 0,
             frequency: 1,
@@ -3410,8 +3410,8 @@ const tech = {
         },
         {
             name: "abiogenesis",
-            // description: `use ${powerUps.orb.research(4)}(or <strong>49%</strong> <strong class='color-j'>JUNK</strong> to the <strong class='color-m'>tech</strong> pool if you can't) to add a 2nd <strong>boss</strong> to each level`,
-            description: `<span style = 'font-size:94%;'>as a level begins spawn a 2nd <strong>boss</strong> using ${powerUps.orb.research(4)}<br>(<strong>+49%</strong> <strong class='color-j'>JUNK</strong> to the <strong class='color-m'>tech</strong> pool if you can't pay)</span>`,
+            // description: `use ${powerUps.orb.research(4)}(or <strong>49%</strong> <strong class='color-junk'>JUNK</strong> to the <strong class='color-m'>tech</strong> pool if you can't) to add a 2nd <strong>boss</strong> to each level`,
+            description: `<span style = 'font-size:94%;'>as a level begins spawn a 2nd <strong>boss</strong> using ${powerUps.orb.research(4)}<br>(<strong>+49%</strong> <strong class='color-junk'>JUNK</strong> to the <strong class='color-m'>tech</strong> pool if you can't pay)</span>`,
             maxCount: 1,
             count: 0,
             frequency: 2,
@@ -3429,7 +3429,7 @@ const tech = {
         },
         {
             name: "meta-analysis",
-            description: `if you choose a <strong class='color-j'>JUNK</strong><strong class='color-m'>tech</strong> you instead get a<br>random normal <strong class='color-m'>tech</strong> and spawn ${powerUps.orb.research(2)}`,
+            description: `if you choose a <strong class='color-junk'>JUNK</strong><strong class='color-m'>tech</strong> you instead get a<br>random normal <strong class='color-m'>tech</strong> and spawn ${powerUps.orb.research(2)}`,
             maxCount: 1,
             count: 0,
             frequency: 1,
@@ -3447,7 +3447,7 @@ const tech = {
         },
         {
             name: "dark patterns",
-            description: "<strong>+38%</strong> <strong class='color-d'>damage</strong><br><strong>+53%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
+            description: "<strong>+38%</strong> <strong class='color-d'>damage</strong><br><strong>+53%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
             maxCount: 1,
             count: 0,
             frequency: 1,
@@ -3776,7 +3776,7 @@ const tech = {
         },
         {
             name: "replication",
-            description: "<strong>+10%</strong> chance to <strong class='color-dup'>duplicate</strong> spawned <strong>power ups</strong><br><strong>+33%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
+            description: "<strong>+10%</strong> chance to <strong class='color-dup'>duplicate</strong> spawned <strong>power ups</strong><br><strong>+33%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
             maxCount: 9,
             count: 0,
             frequency: 1,
@@ -4669,9 +4669,9 @@ const tech = {
             frequency: 1,
             frequencyDefault: 1,
             allowed() {
-                return (tech.haveGunCheck("shotgun") && !tech.isNailShot && !tech.isIceShot && !tech.isRivets && !tech.isFoamShot && !tech.isSporeWorm && !tech.isSporeFlea && !tech.isNeedles) || (tech.haveGunCheck("super balls") && !tech.isFoamBall) || (tech.isRivets && !tech.isNailCrit) || (m.fieldUpgrades[m.fieldMode].name === "molecular assembler" && simulation.molecularMode === 3) || (tech.haveGunCheck("drones") && !tech.isForeverDrones && !tech.isDroneRadioactive && !tech.isDroneTeleport)
+                return (tech.haveGunCheck("shotgun") && !tech.isNailShot && !tech.isIceShot && !tech.isRivets && !tech.isFoamShot && !tech.isSporeWorm && !tech.isSporeFlea && !tech.isNeedles) || (tech.haveGunCheck("super balls") && !tech.isFoamBall && !tech.superHarm) || (tech.isRivets && !tech.isNailCrit) || (m.fieldUpgrades[m.fieldMode].name === "molecular assembler" && simulation.molecularMode === 3) || (tech.haveGunCheck("drones") && !tech.isForeverDrones && !tech.isDroneRadioactive && !tech.isDroneTeleport)
             },
-            requires: "shotgun, super balls, rivets, drones, not irradiated drones, burst drones, polyurethane",
+            requires: "shotgun, super balls, rivets, drones, not irradiated drones, burst drones, polyurethane, Zectron",
             effect() {
                 tech.isIncendiary = true
             },
@@ -4704,6 +4704,25 @@ const tech = {
                         if (b.guns[i].name === "super balls") b.guns[i].chooseFireMethod()
                     }
                 }
+            }
+        },
+        {
+            name: "Zectron",
+            description: `<strong>+80%</strong> <strong>super ball</strong> density and <strong class='color-d'>damage</strong>, but<br>after colliding with <strong>super balls</strong> <strong>lose</strong> <strong class='color-h'>health</strong>`,
+            isGunTech: true,
+            maxCount: 9,
+            count: 0,
+            frequency: 2,
+            frequencyDefault: 2,
+            allowed() {
+                return tech.haveGunCheck("super balls") && !tech.isIncendiary
+            },
+            requires: "super balls not incendiary ammunition",
+            effect() {
+                tech.superHarm++
+            },
+            remove() {
+                tech.superHarm = 0
             }
         },
         {
@@ -5016,7 +5035,7 @@ const tech = {
         },
         {
             name: "launch system",
-            description: `<strong>+500%</strong> <strong>missile</strong> <strong><em>fire rate</em></strong><br><strong>+20%</strong> missile <strong class='color-ammo'>ammo</strong> per ${powerUps.orb.ammo(1)}`,
+            description: `<strong>+500%</strong> <strong>missile</strong> <strong class='color-g'>gun</strong> <strong><em>fire rate</em></strong><br><strong>+20%</strong> missile <strong class='color-ammo'>ammo</strong> per ${powerUps.orb.ammo(1)}`,
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -5502,7 +5521,7 @@ const tech = {
         },
         {
             name: "booby trap",
-            description: "<strong>60%</strong> chance to drop a <strong>mine</strong> from <strong>power ups</strong><br><strong>+46%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
+            description: "<strong>60%</strong> chance to drop a <strong>mine</strong> from <strong>power ups</strong><br><strong>+46%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -5607,6 +5626,25 @@ const tech = {
                 tech.isSporeGrowth = false
             }
         },
+        // {
+        //     name: "cordyceps",
+        //     description: "mobs infected by <strong class='color-p' style='letter-spacing: 2px;'>sporangium</strong><br><strong>resurrect</strong> and attack other mobs",
+        //     isGunTech: true,
+        //     maxCount: 1,
+        //     count: 0,
+        //     frequency: 2,
+        //     frequencyDefault: 2,
+        //     allowed() {
+        //         return tech.haveGunCheck("spores")
+        //     },
+        //     requires: "spores",
+        //     effect() {
+        //         tech.isZombieMobs = true
+        //     },
+        //     remove() {
+        //         tech.isZombieMobs = false
+        //     }
+        // },
         {
             name: "colony",
             description: "<strong>+50%</strong> <strong class='color-p' style='letter-spacing: 2px;'>sporangium</strong> discharge<br><strong>40%</strong> chance to discharge something different",
@@ -5674,7 +5712,7 @@ const tech = {
         {
             name: "junk DNA",
             descriptionFunction() {
-                return `<strong>+53%</strong> ${b.guns[6].nameString()} <strong class='color-d'>damage</strong> per <strong class='color-j'>JUNK</strong><strong class='color-m'>tech</strong> <em>(${(53*tech.junkCount).toFixed(0)}%)</em><br><strong>+50%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool`
+                return `<strong>+53%</strong> ${b.guns[6].nameString()} <strong class='color-d'>damage</strong> per <strong class='color-junk'>JUNK</strong><strong class='color-m'>tech</strong> <em>(${(53*tech.junkCount).toFixed(0)}%)</em><br><strong>+50%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool`
             },
             isGunTech: true,
             maxCount: 1,
@@ -5701,7 +5739,7 @@ const tech = {
         // {
         //     name: "junk DNA",
         //     //increase damage by 10% for each JUNK tech percent in the tech pool, remove all JUNK tech,
-        //     descriptionFunction() { return `<strong>+50%</strong> ${b.guns[6].nameString()} <strong class='color-d'>damage</strong><br><strong>+15%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool` },
+        //     descriptionFunction() { return `<strong>+50%</strong> ${b.guns[6].nameString()} <strong class='color-d'>damage</strong><br><strong>+15%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool` },
         //     isGunTech: true,
         //     maxCount: 1,
         //     count: 0,
@@ -5825,7 +5863,9 @@ const tech = {
         },
         {
             name: "path integration",
-            description: "<strong>drones</strong>, <strong class='color-p' style='letter-spacing: 2px;'>spores</strong>, <strong class='color-p' style='letter-spacing: -0.8px;'>fleas</strong>, and <strong class='color-p' style='letter-spacing: -0.8px;'>worms</strong><br>travel with you through <strong>levels</strong>",
+            descriptionFunction() {
+                return `<strong>drones</strong> and ${b.guns[6].nameString("s")}<br>travel with you through <strong>levels</strong>`
+            },
             isGunTech: true,
             maxCount: 1,
             count: 0,
@@ -6314,28 +6354,18 @@ const tech = {
             ammoBonus: 9,
             effect() {
                 tech.isRailGun = true;
-                for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
-                    if (b.guns[i].name === "harpoon") {
-                        b.guns[i].chooseFireMethod()
-                        b.guns[i].ammoPack = 5;
-                        b.guns[i].ammo = b.guns[i].ammo * 6;
-                        simulation.updateGunHUD();
-                        break
-                    }
-                }
+                b.guns[9].chooseFireMethod()
+                b.guns[9].ammoPack = 5;
+                b.guns[9].ammo = b.guns[9].ammo * 6;
+                simulation.updateGunHUD();
             },
             remove() {
                 if (tech.isRailGun) {
                     tech.isRailGun = false;
-                    for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
-                        if (b.guns[i].name === "harpoon") {
-                            b.guns[i].chooseFireMethod()
-                            b.guns[i].ammoPack = 1.7;
-                            b.guns[i].ammo = Math.ceil(b.guns[i].ammo / 6);
-                            simulation.updateGunHUD();
-                            break
-                        }
-                    }
+                    b.guns[9].chooseFireMethod()
+                    b.guns[9].ammoPack = 1.7;
+                    b.guns[9].ammo = Math.ceil(b.guns[9].ammo / 6);
+                    simulation.updateGunHUD();
                 }
             }
         },
@@ -6492,7 +6522,7 @@ const tech = {
         {
             name: "UHMWPE",
             descriptionFunction() {
-                return `+${(b.guns[9].ammo).toFixed(0)}% <strong>harpoon</strong> <strong>rope</strong> <strong>length</strong><br><em>(1/80 of harpoon <strong class='color-ammo'>ammo</strong>)</em>`
+                return `+${(b.guns[9].ammo*1.25).toFixed(0)}% <strong>harpoon</strong> <strong>rope</strong> <strong>length</strong><br><em>(1/80 of harpoon <strong class='color-ammo'>ammo</strong>)</em>`
             },
             isGunTech: true,
             maxCount: 1,
@@ -8335,7 +8365,7 @@ const tech = {
         // },
         {
             name: "swap meet",
-            description: "normal <strong class='color-m'>tech</strong> become <strong class='color-j'>JUNK</strong><br>and <strong class='color-j'>JUNK</strong> become normal <strong class='color-m'>tech</strong>",
+            description: "normal <strong class='color-m'>tech</strong> become <strong class='color-junk'>JUNK</strong><br>and <strong class='color-junk'>JUNK</strong> become normal <strong class='color-m'>tech</strong>",
             maxCount: 1,
             count: 0,
             frequency: 0,
@@ -8384,7 +8414,7 @@ const tech = {
                 const delay = 333
                 const loop = () => {
                     if ((simulation.isChoosing) && m.alive && !build.isExperimentSelection) {
-                        const dmg = Math.floor(33 * Math.random()) * 0.01
+                        const dmg = Math.floor(27 * Math.random()) * 0.01
                         this.text = `<strong style = "font-family: 'Courier New', monospace;">+${(dmg*100).toFixed(0).padStart(2, '0')}%</strong> <strong class='color-d'>damage</strong><br>&nbsp;`
                         this.damage = 1 + dmg
                         if (document.getElementById(`damage-JUNK-id${this.id}`)) document.getElementById(`damage-JUNK-id${this.id}`).innerHTML = this.text
@@ -8658,7 +8688,7 @@ const tech = {
         // },
         {
             name: "discount",
-            description: "get 3 random <strong class='color-j'>JUNK</strong><strong class='color-m'>tech</strong> for the price of 1!<br>&nbsp;",
+            description: "get 3 random <strong class='color-junk'>JUNK</strong><strong class='color-m'>tech</strong> for the price of 1!<br>&nbsp;",
             maxCount: 1,
             count: 0,
             frequency: 0,
@@ -9289,6 +9319,28 @@ const tech = {
             }
         },
         {
+            name: "p-zombie",
+            description: "set your <strong class='color-h'>health</strong> to <strong>1</strong><br>all mobs die and <strong>resurrect</strong> as zombies",
+            maxCount: 1,
+            count: 0,
+            frequency: 0,
+            isNonRefundable: true,
+            isJunk: true,
+            allowed() { return true },
+            requires: "",
+            effect() {
+                m.health = 0.01 //set health to 1
+                m.displayHealth();
+                for (let i = mob.length - 1; i > -1; i--) { //replace mobs with zombies
+                    if (mob[i].isDropPowerUp && !mob[i].isBoss && mob[i].alive) {
+                        mob[i].isSoonZombie = true
+                        mob[i].death()
+                    }
+                }
+            },
+            remove() {}
+        },
+        {
             name: "decomposers",
             description: "after they die <strong>mobs</strong> leave behind <strong>spawns</strong><br>&nbsp;",
             maxCount: 1,
@@ -9380,6 +9432,20 @@ const tech = {
             remove() {
                 if (this.count) m.look = m.lookDefault
             }
+        },
+        {
+            name: "iFrames",
+            description: "you are <strong>invulnerable</strong><br>when you aren't taking damage",
+            maxCount: 1,
+            count: 0,
+            frequency: 0,
+            isJunk: true,
+            allowed() {
+                return true
+            },
+            requires: "",
+            effect() {},
+            remove() {}
         },
         {
             name: "disintegrated armament",
@@ -9595,7 +9661,7 @@ const tech = {
         },
         {
             name: "defragment",
-            description: "set the <strong class='flicker'>frequency</strong> of finding <strong class='color-j'>JUNK</strong><strong class='color-m'>tech</strong> to zero<br>&nbsp;",
+            description: "set the <strong class='flicker'>frequency</strong> of finding <strong class='color-junk'>JUNK</strong><strong class='color-m'>tech</strong> to zero<br>&nbsp;",
             maxCount: 1,
             count: 0,
             frequency: 0,
@@ -9807,7 +9873,7 @@ const tech = {
         },
         {
             name: "expert system",
-            description: "spawn a <strong class='color-m'>tech</strong> power up<br><strong>+64%</strong> <strong class='color-j'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
+            description: "spawn a <strong class='color-m'>tech</strong> power up<br><strong>+64%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool",
             maxCount: 9,
             count: 0,
             frequency: 0,
@@ -10722,7 +10788,7 @@ const tech = {
         },
         {
             name: "tinker",
-            description: "<strong>permanently</strong> unlock <strong class='color-j'>JUNK</strong><strong class='color-m'>tech</strong> in experiment mode<br><em>this effect is stored for future visits</em>",
+            description: "<strong>permanently</strong> unlock <strong class='color-junk'>JUNK</strong><strong class='color-m'>tech</strong> in experiment mode<br><em>this effect is stored for future visits</em>",
             maxCount: 1,
             count: 0,
             frequency: 0,
@@ -11256,4 +11322,6 @@ const tech = {
     buffedGun: 0,
     isGunChoice: null,
     railChargeRate: null,
+    superHarm: null,
+    isZombieMobs: null
 }
