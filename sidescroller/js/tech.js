@@ -2345,7 +2345,7 @@ const tech = {
         {
             name: "mass-energy equivalence",
             // description: "<strong class='color-f'>energy</strong> protects you instead of <strong class='color-h'>health</strong><br>√ of <strong class='color-defense'>defense</strong> <strong>reduction</strong> reduces max <strong class='color-f'>energy</strong>",
-            description: "<strong class='color-f'>energy</strong> protects you instead of <strong class='color-h'>health</strong><br>exponentially <strong>reduced</strong> <strong class='color-defense'>defense</strong> <em>(x^0.1)</em>",
+            description: "<strong class='color-f'>energy</strong> protects you instead of <strong class='color-h'>health</strong><br>exponentially <strong>reduced</strong> <strong class='color-defense'>defense</strong> <em>(~ x^0.1)</em>",
             maxCount: 1,
             count: 0,
             frequency: 1,
@@ -9432,20 +9432,6 @@ const tech = {
             remove() {
                 if (this.count) m.look = m.lookDefault
             }
-        },
-        {
-            name: "iFrames",
-            description: "you are <strong>invulnerable</strong><br>when you aren't taking damage",
-            maxCount: 1,
-            count: 0,
-            frequency: 0,
-            isJunk: true,
-            allowed() {
-                return true
-            },
-            requires: "",
-            effect() {},
-            remove() {}
         },
         {
             name: "disintegrated armament",

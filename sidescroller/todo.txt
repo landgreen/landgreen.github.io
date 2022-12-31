@@ -1,12 +1,5 @@
 ******************************************************** NEXT PATCH **************************************************
 
-card images and text scale based on browser width for smaller screens
-
-tech Zectron - super ball can damage you, but they do more damage to mobs
-  superBall bullets are converted to run off generic b.superBall()
-
-sneakers - after taking damage if sneakers are low on life they teleport to a random point from the player's history and they sneak attack again
-sneakBoss - a large sneaker that can hide several times before it dies
 
 bug fixes
 
@@ -19,11 +12,13 @@ tech: cordyceps - sporangium infect mobs, making them fight for you
   !! still needs testing for balance
     it's targeting player even when there are mobs
 tech - all mobs return as zombies?
+test JUNK p-zombie
 
 Now that super balls are generic maybe something else should produce them
+  mine
   super-bot 
-  molecular fabricator - how to aim?
-  shotgun - too similar to super ball gun
+
+make super balls with Zectron deflectable with field
 
 set mob health bar colors based on status effects?
   make mob damage immunity a mob status effect?
@@ -1136,7 +1131,7 @@ possible names for tech
 
 ******************************************************** CARS IMAGES ********************************************************
 
-process:  discord midjourney prompts -> "pixelmator pro" -> adjust color, repair, scale to 384x256, export PNG -> webP? -> place in /img folder
+process:  discord midjourney prompts -> "pixelmator pro" adjust color, repair, scale to 384x256, export PNG -> webP? -> place in /img folder
 make n-gon a progressive web app to manage image downloads, cache
 wave function collapse opens the pause menu after it triggers alternate reality
   this is actually good, maybe reuse this code to get pause menu to open at any time
@@ -1155,16 +1150,12 @@ if pause is pressed while selecting power ups, display pause menu on top of sele
 ***major themes missing***
 ***maybe redo***
   dynamical systems
-  harpoon gun
-    Eiichiro Oda --niji
   nail-bot
   homeostasis
   heuristics
   thermal runaway - infrared maybe?
   redo the energy tech images with by Laurie Greasley
     now that you can use --ar 3:2 --stylize 1000 and photo repair
-  in general too many black background
-    redo fractal tech with white background
 ***past style themes***
   field emitter - isometric, clean white robot spherical gun turret on bird legs, blender 3d, style of artstation and behance, Disney Pixar, cute 
   standing wave - concentric transparent blue geometric circles science  

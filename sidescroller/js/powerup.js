@@ -645,13 +645,20 @@ const powerUps = {
     },
     buildColumns(totalChoices, type) {
         let width
-        if (canvas.width < 1500) {
-            width = "340px"
+        if (canvas.width < 1710) {
+            width = "285px"
         } else if (canvas.width < 1950) {
-            width = "360px"
+            width = "340px"
         } else {
             width = "384px"
         }
+        // if (canvas.width < 1500) {
+        //     width = "340px"
+        // } else if (canvas.width < 1950) {
+        //     width = "360px"
+        // } else {
+        //     width = "384px"
+        // }
         let text = ""
         if (localSettings.isHideImages || canvas.width < 1200) {
             document.getElementById("choose-grid").style.gridTemplateColumns = width

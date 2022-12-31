@@ -3769,7 +3769,7 @@ const b = {
         bullet[me] = Bodies.polygon(where.x, where.y, 12, radius, b.fireAttributes(dir, false));
         Composite.add(engine.world, bullet[me]); //add bullet to world
         Matter.Body.setVelocity(bullet[me], velocity);
-        Matter.Body.setDensity(bullet[me], 0.0001 + 0.001 * tech.superHarm);
+        Matter.Body.setDensity(bullet[me], 0.001 + 0.001 * tech.superHarm);
         bullet[me].endCycle = simulation.cycle + Math.floor(300 + 90 * Math.random());
         bullet[me].minDmgSpeed = 0;
         bullet[me].restitution = 1;
@@ -3786,7 +3786,7 @@ const b = {
             bullet[me].collidePlayerDo = function() {
                 if (Matter.Query.collides(this, [player]).length) {
                     this.endCycle = 0
-                    let dmg = 0.03 * this.mass * tech.superHarm
+                    let dmg = 0.02 * this.mass * tech.superHarm
                     m.damage(dmg);
                     simulation.drawList.push({ //add dmg to draw queue
                         x: this.position.x,
@@ -3811,18 +3811,10 @@ const b = {
         }
         bullet[me].beforeDmg = function(who) {
             if (tech.oneSuperBall) mobs.statusStun(who, 120) // (2.3) * 2 / 14 ticks (2x damage over 7 seconds)
-            // if (tech.isIncendiary) {
-            //     b.explosion(this.position, this.mass * (240+70 * Math.random()) ); //makes bullet do explosive damage at end
-            //     this.endCycle = 0
-            // }
             if (tech.isFoamBall) {
                 for (let i = 0, len = 6 * this.mass; i < len; i++) {
                     const radius = 5 + 8 * Math.random()
-                    // const velocity = { x: Math.max(2, 10 - radius * 0.25), y: 0 }
-                    const velocity = {
-                        x: Math.max(0.5, 2 - radius * 0.1),
-                        y: 0
-                    }
+                    const velocity = { x: Math.max(0.5, 2 - radius * 0.1), y: 0 }
                     b.foam(this.position, Vector.rotate(velocity, 6.28 * Math.random()), radius)
                 }
                 this.endCycle = 0
