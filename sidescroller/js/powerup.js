@@ -1157,7 +1157,7 @@ const powerUps = {
         powerUps.research.currentRerollCount = 0
         if (tech.isTechDamage && who.name === "tech") m.damage(0.1)
         if (tech.isMassEnergy) m.energy += 2;
-        if (tech.isMineDrop && bullet.length < 150 && Math.random() < 0.6) {
+        if (tech.isMineDrop && bullet.length < 150 && Math.random() < 0.5) {
             if (tech.isLaserMine && input.down) {
                 b.laserMine(who.position)
             } else {

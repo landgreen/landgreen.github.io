@@ -1169,18 +1169,6 @@ const simulation = {
                 m.energy -= 0.1 * simulation.difficultyMode
             }
             if (isNaN(player.position.x)) m.death();
-
-            // if (tech.isEnergyDamage) {
-            //   document.getElementById("tech-capacitor").innerHTML = `(+${(m.energy/0.05).toFixed(0)}%)`
-            // }
-            // if (tech.restDamage) {
-            //   if (player.speed < 1) {
-            //     document.getElementById("tech-rest").innerHTML = `(+20%)`
-            //   } else {
-            //     document.getElementById("tech-rest").innerHTML = `(+0%)`
-            //   }
-            // }
-
             if (m.lastKillCycle + 300 > m.cycle) { //effects active for 5 seconds after killing a mob
                 if (tech.isEnergyRecovery && m.immuneCycle < m.cycle) m.energy += m.maxEnergy * 0.05
                 if (tech.isHealthRecovery) m.addHealth(0.005 * m.maxHealth)

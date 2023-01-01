@@ -1,24 +1,29 @@
 ******************************************************** NEXT PATCH **************************************************
 
+tech: cordyceps - sporangium infect mobs, making them fight for you as zombies
+
+tech: blast ball - mines fire super balls
+tech: extended magazine - sentry fires 50% more shots
+  sentry works with foam, nails, or super balls
+
+dark patterns - stacks to 9
+  38->15% damage, 53->15% JUNK
+electronegativity - stacks to 9
+  0.12->0.1% damage per energy
 
 bug fixes
 
 *********************************************************** TODO *****************************************************
 
-tech: cordyceps - sporangium infect mobs, making them fight for you
-  zombies might attack player if there are no mob targets
-  !! needs to explore when there are no targets
-  !! mechanics are confusing
-  !! still needs testing for balance
-    it's targeting player even when there are mobs
-tech - all mobs return as zombies?
-test JUNK p-zombie
+super-bot
 
-Now that super balls are generic maybe something else should produce them
-  mine
-  super-bot 
+tech - shotgun triple shot, but a bit longer of a delay
+
+tech - after standing wave runs out of energy from blocking, gain a buff
+  buff: defense, damage?
 
 make super balls with Zectron deflectable with field
+  but is there a simple way to do this?
 
 set mob health bar colors based on status effects?
   make mob damage immunity a mob status effect?
@@ -82,6 +87,8 @@ hookBoss fires a hook that pulls player towards it
 finalBoss
   add synergies between modes:
   new modes:
+    something that needs to be killed quickly
+      if you don't kill it boss gets a shield
     rotating quadrant immunity shield, can't take damage from that quadrant
       maybe also attack player near that quadrant
       but how to tell the angle of incoming damage
