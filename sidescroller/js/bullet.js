@@ -237,6 +237,7 @@ const b = {
             b.guns[i].have = false;
             if (b.guns[i].ammo != Infinity) b.guns[i].ammo = 0;
         }
+        tech.buffedGun = 0
         b.activeGun = null;
         simulation.drawCursor = simulation.drawCursorBasic //set cross hairs
     },

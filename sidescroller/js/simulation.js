@@ -476,8 +476,8 @@ const simulation = {
         if (tech.crouchAmmoCount) tech.crouchAmmoCount = 1 //this prevents hacking the tech by switching guns
         if (b.inventory.length > 0) {
             b.activeGun = b.inventory[b.inventoryGun];
-            if (b.guns[b.activeGun].charge) b.guns[b.activeGun].charge = 0; //if switching into foam set charge to 0
         }
+        b.guns[8].charge = 0; // foam charge to 0
         simulation.updateGunHUD();
         simulation.boldActiveGunHUD();
         //set crosshairs
