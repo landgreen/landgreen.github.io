@@ -4356,7 +4356,7 @@ const tech = {
             frequency: 2,
             frequencyDefault: 2,
             allowed() {
-                return tech.isMineDrop + tech.isNailBotUpgrade + tech.fragments + tech.nailsDeathMob + (tech.haveGunCheck("super balls") + (tech.haveGunCheck("mine") && !(tech.isFoamMine || tech.isSuperMine)) + (tech.haveGunCheck("nail gun")) + tech.isNeedles + tech.isNailShot + tech.isRivets) * 2 > 1
+                return tech.isMineDrop + tech.isNailBotUpgrade + tech.fragments + tech.nailsDeathMob + (tech.haveGunCheck("super balls") + (tech.haveGunCheck("mine") && !tech.isFoamMine) + (tech.haveGunCheck("nail gun")) + tech.isNeedles + tech.isNailShot + tech.isRivets) * 2 > 1
             },
             requires: "nails, nail gun, rivets, shotgun, super balls, mine",
             effect() {
@@ -5646,7 +5646,7 @@ const tech = {
             }
         },
         {
-            name: "sentry gun",
+            name: "sentry",
             descriptionFunction() {
                 return `<strong>mines</strong> fire one ${b.guns[10].nameString()} at a time<br><strong>mines</strong> fire <strong>50%</strong> more ${b.guns[10].nameString('s')}`
             },

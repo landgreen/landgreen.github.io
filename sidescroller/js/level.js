@@ -32,7 +32,7 @@ const level = {
             // b.giveGuns("wave") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[0].ammo = 10000
             // tech.giveTech("needle gun")
-            // tech.giveTech("repeater")
+            // tech.giveTech("eternalism")
             // tech.giveTech("ice-shot")
             // for (let i = 0; i < 1; ++i) tech.giveTech("super ball")
             // tech.isFoamBall = true
@@ -42,7 +42,7 @@ const level = {
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");
-            // level.testing();
+            // level.testChamber2();
             // spawn.blinkBoss(1900, -500)
             // spawn.sneakBoss(1900, -500)
             // spawn.starter(1900, -500, 200)
@@ -56,12 +56,7 @@ const level = {
             // for (let i = 0; i < 40; ++i) tech.giveTech()
             // for (let i = 0; i < 13; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "research");
 
-            //normal starting level ************************************************
-            if (simulation.isTraining) {
-                level.walk()
-            } else {
-                level.intro()
-            }
+            level[simulation.isTraining ? "walk" : "intro"]() //normal starting level ************************************************
 
             // for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "tech");
             // for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "gun");
@@ -156,7 +151,7 @@ const level = {
         //used for generalist and pigeonhole principle
         tech.buffedGun++
         if (tech.buffedGun > b.inventory.length - 1) tech.buffedGun = 0;
-        if (tech.isGunCycle) {
+        if (tech.isGunCycle && b.activeGun !== null && b.inventory.length) {
             b.inventoryGun = tech.buffedGun;
             simulation.switchGun();
         }
@@ -4473,68 +4468,38 @@ const level = {
         simulation.zoomTransition(level.defaultZoom)
         document.body.style.backgroundColor = "#d0d5d5";
         color.map = "#444"
-        spawn.mapRect(0, -1955, 175, 30);
-        const removeIndex1 = map.length - 1 //so much work to catch blocks caught at the bottom of the vertical portals
-        spawn.mapRect(1225, -1955, 175, 30);
-        const removeIndex2 = map.length - 1 //so much work to catch blocks caught at the bottom of the vertical portals
-        let portal, portal2, portal3
-        const hazard = level.hazard((simulation.isHorizontalFlipped ? -350 - 700 : 350), -2025, 700, 10, 0.4) //laser
-        spawn.mapRect(340, -2032.5, 20, 25); //laser nose
-        const hazard2 = level.hazard((simulation.isHorizontalFlipped ? -1775 - 150 : 1775), -2550, 150, 10, 0.4) //laser
-        spawn.mapRect(1920, -2557.5, 20, 25); //laser nose
-        const button = level.button(2100, -2600)
-        const buttonDoor = level.button(600, -550)
-        const door = level.door(312, -750, 25, 190, 185)
+        // spawn.mapRect(0, -1955, 175, 30);
+        // const removeIndex1 = map.length - 1 //so much work to catch blocks caught at the bottom of the vertical portals
+        // spawn.mapRect(1225, -1955, 175, 30);
+        // const removeIndex2 = map.length - 1 //so much work to catch blocks caught at the bottom of the vertical portals
+        let portal
 
         level.custom = () => {
-            if (!(m.cycle % 60)) { //so much work to catch blocks caught at the bottom of the vertical portals
-                let touching = Matter.Query.collides(map[removeIndex1], body)
-                if (touching.length) {
-                    Matter.Composite.remove(engine.world, touching[0].bodyB);
-                    for (let i = 0, len = body.length; i < len; i++) {
-                        if (body[i].id === touching[0].bodyB.id) {
-                            body.splice(i, 1);
-                            break
-                        }
-                    }
-                }
-                touching = Matter.Query.collides(map[removeIndex2], body)
-                if (touching.length) {
-                    Matter.Composite.remove(engine.world, touching[0].bodyB);
-                    for (let i = 0, len = body.length; i < len; i++) {
-                        if (body[i].id === touching[0].bodyB.id) {
-                            body.splice(i, 1);
-                            break
-                        }
-                    }
-                }
-            }
-
-            buttonDoor.query();
-            buttonDoor.draw();
-            if (buttonDoor.isUp) {
-                door.isClosing = true
-            } else {
-                door.isClosing = false
-            }
-            door.openClose();
+            // if (!(m.cycle % 60)) { //so much work to catch blocks caught at the bottom of the vertical portals
+            //     let touching = Matter.Query.collides(map[removeIndex1], body)
+            //     if (touching.length) {
+            //         Matter.Composite.remove(engine.world, touching[0].bodyB);
+            //         for (let i = 0, len = body.length; i < len; i++) {
+            //             if (body[i].id === touching[0].bodyB.id) {
+            //                 body.splice(i, 1);
+            //                 break
+            //             }
+            //         }
+            //     }
+            //     touching = Matter.Query.collides(map[removeIndex2], body)
+            //     if (touching.length) {
+            //         Matter.Composite.remove(engine.world, touching[0].bodyB);
+            //         for (let i = 0, len = body.length; i < len; i++) {
+            //             if (body[i].id === touching[0].bodyB.id) {
+            //                 body.splice(i, 1);
+            //                 break
+            //             }
+            //         }
+            //     }
+            // }
 
             portal[2].query()
             portal[3].query()
-            portal2[2].query()
-            portal2[3].query()
-            portal3[2].query()
-            portal3[3].query()
-
-            if (button.isUp) {
-                hazard.isOn = false;
-                hazard2.isOn = false;
-            } else {
-                hazard.isOn = true;
-                hazard2.isOn = true;
-            }
-            button.query();
-            button.draw();
 
             ctx.fillStyle = "#d4f4f4"
             ctx.fillRect(-300, -1000, 650, 500)
@@ -4543,182 +4508,36 @@ const level = {
             level.enter.draw();
         };
         level.customTopLayer = () => {
-            door.draw();
-            hazard.opticalQuery();
-            hazard2.opticalQuery();
             portal[0].draw();
             portal[1].draw();
             portal[2].draw();
             portal[3].draw();
-            portal2[0].draw();
-            portal2[1].draw();
-            portal2[2].draw();
-            portal2[3].draw();
-            portal3[0].draw();
-            portal3[1].draw();
-            portal3[2].draw();
-            portal3[3].draw();
         };
         powerUps.spawnStartingPowerUps(1875, -3075);
 
-        const powerUpPos = shuffle([{ //no debris on this level but 2 random spawn instead
-            x: -150,
-            y: -1775
-        }, {
-            x: 2400,
-            y: -2650
-        }, {
-            x: -175,
-            y: -1375
-        }, {
-            x: 1325,
-            y: -150
-        }]);
-        powerUps.chooseRandomPowerUp(powerUpPos[0].x, powerUpPos[0].y);
-        powerUps.chooseRandomPowerUp(powerUpPos[1].x, powerUpPos[1].y);
         //outer wall
-        spawn.mapRect(2500, -3700, 1200, 3800); //right map wall
-        spawn.mapRect(-1400, -3800, 1100, 3900); //left map wall
-        spawn.mapRect(-1400, -4800, 5100, 1200); //map ceiling
+        // spawn.mapRect(2500, -3700, 1200, 3800); //right map wall
+        // spawn.mapRect(-1400, -3800, 1100, 3900); //left map wall
+        // spawn.mapRect(-1400, -4800, 5100, 1200); //map ceiling
         spawn.mapRect(-1400, 0, 5100, 1200); //floor
         //lower entrance /exit
-        spawn.mapRect(300, -375, 50, 225);
-        spawn.bodyRect(312, -150, 25, 140);
-        spawn.mapRect(300, -10, 50, 50);
-        spawn.mapVertex(1555, 0, "625 0   75 0   200 -100   500 -100"); //entrance ramp
+        // spawn.mapRect(300, -375, 50, 225);
+        // spawn.bodyRect(312, -150, 25, 140);
+        // spawn.mapRect(300, -10, 50, 50);
+        // spawn.mapVertex(1555, 0, "625 0   75 0   200 -100   500 -100"); //entrance ramp
         //upper entrance / exit
-        spawn.mapRect(-400, -1050, 750, 50);
-        spawn.mapRect(300, -1050, 50, 300);
+        // spawn.mapRect(-400, -1050, 750, 50);
+        // spawn.mapRect(300, -1050, 50, 300);
         // spawn.bodyRect(312, -750, 25, 190);
-        spawn.mapRect(300, -560, 50, 50);
-        spawn.bodyRect(750, -725, 125, 125);
-        spawn.mapRect(1150, -1050, 250, 575);
-        spawn.mapRect(1725, -550, 50, 200); //walls around portal 3
-        spawn.mapRect(1925, -550, 500, 200);
-        spawn.mapRect(1750, -390, 200, 40);
-        spawn.mapRect(-400, -550, 1800, 200);
-        spawn.mapRect(-200, -1700, 150, 25); //platform above exit room
-        spawn.mapRect(-200, -1325, 350, 25);
-        //portal 3 angled
-        spawn.mapRect(2425, -450, 100, 100);
-        //portal 1 bottom
-        spawn.mapRect(2290, -12, 375, 100);
-        spawn.mapRect(2350, -24, 375, 100);
-        spawn.mapRect(2410, -36, 375, 100);
-        //portal 1 top
-        spawn.mapRect(2290, -3012, 375, 50);
-        spawn.mapRect(2350, -3024, 375, 50);
-        spawn.mapRect(2410, -3036, 375, 50);
-        spawn.mapRect(1400, -3000, 1300, 50); //floor
-        spawn.mapRect(1750, -3050, 250, 75);
-        spawn.mapRect(1400, -3625, 50, 200);
-        spawn.mapRect(350, -3625, 50, 225);
-        spawn.mapRect(350, -3260, 50, 60);
-        spawn.mapRect(200, -3250, 1240, 50);
-        spawn.mapRect(1400, -3260, 50, 310);
-        spawn.bodyRect(1412, -3425, 25, 165);
-        spawn.mapRect(-150, -2925, 150, 25);
-        //portal 2
-        spawn.mapRect(-300, -2600, 300, 675); //left platform
-        spawn.mapRect(1400, -2600, 375, 675); //right platform
-        spawn.mapRect(1925, -2600, 775, 675); //far right platform
-        spawn.bodyRect(2130, -2660, 50, 50); //button's block
-        spawn.mapRect(150, -2100, 200, 175);
-        spawn.mapRect(1050, -2100, 200, 175);
-        //mobs
-        spawn.randomMob(1075, -3500, -0.3);
-        spawn.randomMob(2175, -700, -0.2);
-        spawn.randomMob(-75, -850, -0.1);
-        spawn.randomMob(550, -3400, 0);
-        spawn.randomMob(0, -1175, 0.5);
-        spawn.randomMob(-75, -1150, 0.5);
-        spawn.randomMob(1075, -625, 0.5);
-        spawn.randomMob(800, -3400, -0.3);
-        spawn.randomMob(1225, -3375, -0.2);
-        spawn.randomMob(1200, -1125, -0.1);
-        spawn.randomMob(2050, -950, 0.5);
-        if (simulation.difficulty > 40) {
-            spawn.randomMob(2300, -2775, -0.5);
-            spawn.randomMob(600, -925, -0.5);
-            spawn.randomMob(1550, -2750, -0.5);
-            spawn.randomMob(1350, -1150, -0.5);
-            spawn.randomMob(-75, -1475, 0);
-            spawn.randomGroup(600, -2600, 0);
-        }
-        if (simulation.difficulty > 1) {
-            if (Math.random() < 0.5) {
-                spawn.randomLevelBoss(700, -1550);
-            } else {
-                spawn.randomLevelBoss(675, -2775); //["shooterBoss", "launcherBoss", "laserTargetingBoss", "streamBoss", "shieldingBoss", "pulsarBoss", "grenadierBoss"]
-            }
-        }
-        powerUps.addResearchToLevel() //needs to run after mobs are spawned
-        spawn.secondaryBossChance(1925, -1250)
 
-        if (simulation.isHorizontalFlipped) { //flip the map horizontally
-            level.flipHorizontal(); //only flips map,body,mob,powerUp,cons,consBB, exit
-            // level.setPosToSpawn(0, -50); //-x  // no need since 0
-            button.min.x = -button.min.x - 126 // flip the button horizontally
-            button.max.x = -button.max.x + 126 // flip the button horizontally
-            buttonDoor.min.x = -buttonDoor.min.x - 126 // flip the button horizontally
-            buttonDoor.max.x = -buttonDoor.max.x + 126 // flip the button horizontally
 
-            //this makes the hazard draw, but not collide for reasons I don't understand
-            //so don't use it, instead just call the hazard differently based on this flip flag
-            // hazard.min.x = -hazard.min.x - hazard.width //-x-width
-            // hazard.max.x = -hazard.max.x - hazard.width //-x-width
-            // hazard2.min.x = -hazard2.min.x - hazard2.width //-x-width
-            // hazard2.max.x = -hazard2.max.x - hazard2.width //-x-width
-            portal = level.portal({
-                x: -2475,
-                y: -140
-            }, 2 * Math.PI, { //right
-                x: -2475,
-                y: -3140
-            }, 2 * Math.PI) //right
-
-            portal2 = level.portal({
-                x: -75,
-                y: -2150
-            }, -Math.PI / 2, { //up
-                x: -1325,
-                y: -2150
-            }, -Math.PI / 2) //up
-
-            portal3 = level.portal({
-                x: -1850,
-                y: -585
-            }, -Math.PI / 2, { //up
-                x: -2425,
-                y: -600
-            }, -1 * Math.PI / 3) //up left
-
-            // level.custom = () => { };
-            // level.customTopLayer = () => {};
-
-        } else {
-            portal = level.portal({
-                x: 2475,
-                y: -140
-            }, Math.PI, { //left
-                x: 2475,
-                y: -3140
-            }, Math.PI) //left
-            portal2 = level.portal({
-                x: 75,
-                y: -2150
-            }, -Math.PI / 2, { //up
-                x: 1325,
-                y: -2150
-            }, -Math.PI / 2) //up
-            portal3 = level.portal({
-                x: 1850,
-                y: -585
-            }, -Math.PI / 2, { //up
-                x: 2425,
-                y: -600
-            }, -2 * Math.PI / 3) //up left
-        }
+        portal = level.portal({
+            x: 2475,
+            y: -140
+        }, Math.PI, { //left
+            x: 2475,
+            y: -3140
+        }, Math.PI) //left
 
     },
     sewers() {

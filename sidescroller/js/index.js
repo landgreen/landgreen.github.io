@@ -382,7 +382,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
         }
 
         let el = document.getElementById("pause-grid-left")
-        el.style.display = tech.isNoDraftPause ? "none" : "grid" //disabled for eternalism because eternalism lets the player play while this menu is up but the menu doesn't update
+        el.style.display = "grid"
         el.innerHTML = text
         //right side
         text = "";
@@ -433,7 +433,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
             }
         }
         el = document.getElementById("pause-grid-right")
-        el.style.display = tech.isNoDraftPause ? "none" : "grid" //disabled for eternalism because eternalism lets the player play while this menu is up but the menu doesn't update
+        el.style.display = "grid"
         el.innerHTML = text
 
         document.getElementById("tech").style.display = "none"

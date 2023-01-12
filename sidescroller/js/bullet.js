@@ -238,6 +238,7 @@ const b = {
             if (b.guns[i].ammo != Infinity) b.guns[i].ammo = 0;
         }
         b.activeGun = null;
+        simulation.drawCursor = simulation.drawCursorBasic //set cross hairs
     },
     bulletRemove() { //run in main loop
         //remove bullet if at end cycle for that bullet
@@ -2759,26 +2760,17 @@ const b = {
                 if (collide.length > 0) {
                     for (let i = 0; i < collide.length; i++) {
                         if (collide[i].bodyA.collisionFilter.category === cat.map) { // || collide[i].bodyB.collisionFilter.category === cat.map) {
-                            const angle = Vector.angle(collide[i].normal, {
-                                x: 1,
-                                y: 0
-                            })
+                            const angle = Vector.angle(collide[i].normal, { x: 1, y: 0 })
                             Matter.Body.setAngle(this, Math.atan2(collide[i].tangent.y, collide[i].tangent.x))
                             for (let j = 0; j < 10; j++) { //move until touching map again after rotation
                                 if (Matter.Query.collides(this, map).length > 0) { //touching map
                                     if (angle > -0.2 || angle < -1.5) { //don't stick to level ground
-                                        Matter.Body.setVelocity(this, {
-                                            x: 0,
-                                            y: 0
-                                        });
+                                        Matter.Body.setVelocity(this, { x: 0, y: 0 });
                                         Matter.Body.setStatic(this, true) //don't set to static if not touching map
                                         this.collisionFilter.category = 0
                                         this.collisionFilter.mask = 0 //cat.map | cat.bullet
                                     } else {
-                                        Matter.Body.setVelocity(this, {
-                                            x: 0,
-                                            y: 0
-                                        });
+                                        Matter.Body.setVelocity(this, { x: 0, y: 0 });
                                         Matter.Body.setAngularVelocity(this, 0)
                                     }
                                     this.arm();
@@ -3764,6 +3756,7 @@ const b = {
         bullet[me].friction = 0;
         if (tech.superHarm) {
             bullet[me].collidePlayerDo = function() {
+                this.force.y += this.mass * 0.0012;
                 if (Matter.Query.collides(this, [player]).length) {
                     this.endCycle = 0
                     let dmg = 0.02 * this.mass * tech.superHarm
@@ -3779,7 +3772,8 @@ const b = {
             }
             bullet[me].cycle = 0
             bullet[me].do = function() {
-                if (this.cycle > 6) this.do = this.collidePlayerDo
+                this.cycle++
+                if (this.cycle > 2) this.do = this.collidePlayerDo
                 this.force.y += this.mass * 0.0012;
             };
         } else {

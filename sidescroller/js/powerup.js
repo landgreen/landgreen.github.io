@@ -305,7 +305,8 @@ const powerUps = {
         document.getElementById("choose-grid").style.pointerEvents = "none";
         document.body.style.cursor = "none";
         setTimeout(() => {
-            if (!tech.isNoDraftPause) document.body.style.cursor = "auto";
+            // if (!tech.isNoDraftPause) 
+            document.body.style.cursor = "auto";
             document.getElementById("choose-grid").style.pointerEvents = "auto";
             document.getElementById("choose-grid").style.transitionDuration = "0s";
         }, 400);
@@ -313,7 +314,7 @@ const powerUps = {
 
         if (!simulation.paused) {
             if (tech.isNoDraftPause) {
-                document.getElementById("choose-grid").style.opacity = "0.92"
+                document.getElementById("choose-grid").style.opacity = "1"
             } else {
                 simulation.paused = true;
                 document.getElementById("choose-grid").style.opacity = "1"
@@ -1164,10 +1165,7 @@ const powerUps = {
             if (tech.isLaserMine && input.down) {
                 b.laserMine(who.position)
             } else {
-                b.mine(who.position, {
-                    x: 0,
-                    y: 0
-                }, 0)
+                b.mine(who.position, { x: 0, y: 0 }, 0)
             }
         }
         if (tech.isRelay) {
