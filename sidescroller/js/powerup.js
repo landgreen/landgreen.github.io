@@ -702,14 +702,14 @@ const powerUps = {
     hideStyle: `style="height:auto; border: none; background-color: transparent;"`,
     gunText(choose, click) {
         const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/gun/${b.guns[choose].name}.webp');"`
-        return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
+        return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}" ${style}>
         <div class="card-text">
         <div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${b.guns[choose].name}</div>
         ${b.guns[choose].description}</div></div>`
     },
     fieldText(choose, click) {
         const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/field/${m.fieldUpgrades[choose].name}${choose === 0 ? Math.floor(Math.random()*10) : ""}.webp');"`
-        return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
+        return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}"${style}>
         <div class="card-text">
         <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[choose].name}</div>
         ${m.fieldUpgrades[choose].description}</div></div>`
@@ -717,7 +717,7 @@ const powerUps = {
     techText(choose, click) {
         const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count+1}x)` : "";
         const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
-        return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
+        return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}"${style}>
                 <div class="card-text">
                 <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
@@ -726,7 +726,7 @@ const powerUps = {
     fieldTechText(choose, click) {
         const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count+1}x)` : "";
         const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
-        return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
+        return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}"${style}>
                 <div class="card-text">
                 <div class="grid-title">
                 <span style="position:relative;">
@@ -739,7 +739,7 @@ const powerUps = {
     gunTechText(choose, click) {
         const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count+1}x)` : "";
         const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
-        return `<div class="choose-grid-module card-background" onclick="${click}" ${style}>
+        return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}"${style}>
                 <div class="card-text">
                 <div class="grid-title">         
                 <span style="position:relative;">
@@ -780,7 +780,7 @@ const powerUps = {
                 }
             }, 1);
         }
-        return `<div id = "junk-${choose}" class="choose-grid-module card-background" onclick="${click}" ${style}>
+        return `<div id = "junk-${choose}" class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}"${style}>
                 <div class="card-text">
                 <div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`

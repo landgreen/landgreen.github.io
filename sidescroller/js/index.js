@@ -517,6 +517,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                 document.getElementById("field-" + m.fieldMode).classList.remove("build-field-selected");
                 m.setField(index)
                 document.getElementById("field-" + index).classList.add("build-field-selected");
+                document.getElementById("tech-150").focus();
             } else if (m.fieldMode === 4) {
                 const i = 4 //update experiment text
                 simulation.molecularMode++

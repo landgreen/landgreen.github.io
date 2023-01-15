@@ -3399,7 +3399,7 @@ const tech = {
         {
             name: "technical debt", // overengineering
             descriptionFunction() {
-                return `<strong>+300%</strong> <strong class='color-d'>damage</strong> <strong>–15%</strong> <strong class='color-d'>damage</strong><br>for each <strong class='color-m'>tech</strong> you have learned <em>(${Math.floor(100*(Math.max(41 / (tech.totalCount + 21), 4 - 0.15 * tech.totalCount) ))-100}%)</em>`
+                return `<strong>+300%</strong> <strong class='color-d'>damage</strong> <strong>–15%</strong> <strong class='color-d'>damage</strong><br>for each <strong class='color-m'>tech</strong> you have learned <em>(-${Math.floor(100*(Math.max(41 / (tech.totalCount + 21), 4 - 0.15 * tech.totalCount) ))-100}%)</em>`
             },
             maxCount: 1,
             count: 0,

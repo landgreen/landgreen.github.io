@@ -28,11 +28,11 @@ const level = {
             // m.setField("metamaterial cloaking") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass    pilot wave   plasma torch
             // simulation.molecularMode = 2
             // m.damage(0.1);
-            // b.giveGuns("shotgun") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns("grenades") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.giveGuns("wave") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[0].ammo = 10000
-            // tech.giveTech("needle gun")
-            // tech.giveTech("eternalism")
+            // tech.giveTech("vacuum bomb")
+            // tech.giveTech("rocket-propelled grenade")
             // tech.giveTech("ice-shot")
             // for (let i = 0; i < 1; ++i) tech.giveTech("super ball")
             // tech.isFoamBall = true
@@ -42,7 +42,7 @@ const level = {
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");
-            // level.testChamber2();
+            // level.cistern();
             // spawn.nodeGroup(1200, 0, "slasher")
             // spawn.blinkBoss(1900, -500)
             // spawn.sneakBoss(1900, -500)
@@ -4447,7 +4447,7 @@ const level = {
         }
 
     },
-    testChamber2() {
+    cistern() {
         level.setPosToSpawn(0, -65); //lower start
         level.exit.y = -1550;
         spawn.mapRect(level.enter.x, level.enter.y + 20, 100, 20);
@@ -4482,7 +4482,8 @@ const level = {
             for (let i = 0, len = vanish.length; i < len; i++) vanish[i].query()
         };
         //outer wall
-        // spawn.mapRect(-1400, 0, 1800, 1200); //floor
+        // spawn.mapRect(-1400, 0, 1800, 1200);
+
         spawn.mapRect(-1400, 0, 1800, 2675);
         spawn.mapRect(-1400, -1025, 1225, 1500);
         spawn.mapRect(-325, -15, 525, 225);
@@ -4500,16 +4501,18 @@ const level = {
         // spawn.mapRect(3550, -1850, 1200, 600);
 
         spawn.mapRect(3825, -1425, 975, 175);
-        spawn.mapRect(625, 2050, 4300, 625);
+        spawn.mapRect(625, 2050, 4300, 625); //floor
         spawn.mapRect(4450, -3525, 1400, 6200);
+        spawn.mapRect(-1400, -4425, 7250, 1000); //ceiling
+
         //the pit
         const vanish = []
         vanish.push(level.vanish(400, -1512, 150, 50))
-        vanish.push(level.vanish(2625, -675, 300, 175))
-        vanish.push(level.vanish(1775, -675, 325, 150))
+        vanish.push(level.vanish(825, -625, 100, 325))
+        // vanish.push(level.vanish(1775, -675, 325, 150))
         //blocks at entrance
         spawn.bodyRect(150, -175, 50, 165);
-        spawn.bodyRect(825, -425, 155, 75, 0.5);
+        // spawn.bodyRect(825, -425, 155, 75, 0.5);
 
 
 
@@ -4589,8 +4592,6 @@ const level = {
         spawn.mapRect(3050, -600, 200, 800); //right down tube wall
         spawn.mapRect(3100, 0, 1200, 200); //tube right exit ceiling
         spawn.mapRect(4200, 0, 200, 1900);
-
-
         spawn.mapVertex(3500, 1000, "-500 -500  -400 -600   400 -600 500 -500   500 500 400 600  -400 600 -500 500");
         spawn.mapVertex(3600, 1940, "-400 -40  -350 -90   350 -90 400 -40   400 40 350 90  -350 90 -400 40");
         spawn.mapRect(3925, 2288, 310, 50);

@@ -1,14 +1,6 @@
 ******************************************************** NEXT PATCH **************************************************
 
-tech: RPG - gains the rocket jumping effects from electric armor
-
-eternalism no longer makes tech options have 50% opacity when choosing
-
-some new images for cloaking tech
-and some images were made brighter
-
-bug fixes
-  safari media rules css fixed
+working on PWA manifest
 
 *********************************************************** TODO *****************************************************
 
@@ -21,6 +13,8 @@ tech: sticky grenades
 
 testChamber2
   mechanics
+    button that swaps locations for pairs of portals
+      this unlocks some cool 
     cover exit with slime, press button to lower slime and exit
     companion cube
       bring cube to the end and use it to unlock research
@@ -1168,7 +1162,6 @@ if pause is pressed while selecting power ups, display pause menu on top of sele
 ***major themes missing***
 ***maybe redo***
   heuristics
-  negative feedback - too dark
   supercritical fission
 ***past style themes***
   field emitter - isometric, clean white robot spherical gun turret on bird legs, blender 3d, style of artstation and behance, Disney Pixar, cute 
