@@ -3075,11 +3075,11 @@ const m = {
                         }
                     }
                     if (m.isCloak) {
-                        m.fieldRange = m.fieldRange * 0.9 + 80
-                        m.fieldDrawRadius = m.fieldRange * 0.88 //* Math.min(1, 0.3 + 0.5 * Math.min(1, energy * energy));
+                        m.fieldRange = m.fieldRange * 0.85 + 115
+                        m.fieldDrawRadius = m.fieldRange * 1.1 //* 0.88 //* Math.min(1, 0.3 + 0.5 * Math.min(1, energy * energy));
                         m.drawCloak()
                     } else if (m.fieldRange < 4000) {
-                        m.fieldRange += 50
+                        m.fieldRange += 90
                         m.fieldDrawRadius = m.fieldRange //* Math.min(1, 0.3 + 0.5 * Math.min(1, energy * energy));
                         m.drawCloak()
                     }

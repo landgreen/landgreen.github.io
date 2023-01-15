@@ -566,7 +566,7 @@ const powerUps = {
         },
         effect() {
             if (b.inventory.length > 0) {
-                if (tech.isAmmoForGun && b.activeGun) { //give extra ammo to one gun only with tech logistics
+                if (tech.isAmmoForGun && b.activeGun !== null) { //give extra ammo to one gun only with tech logistics
                     const target = b.guns[b.activeGun]
                     if (target.ammo !== Infinity) {
                         if (tech.ammoCap) {

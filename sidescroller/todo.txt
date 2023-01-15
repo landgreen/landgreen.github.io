@@ -1,11 +1,23 @@
 ******************************************************** NEXT PATCH **************************************************
 
+tech: RPG - gains the rocket jumping effects from electric armor
 
-eternalism no longer fades out tech when choosing, and not paused
+eternalism no longer makes tech options have 50% opacity when choosing
+
+some new images for cloaking tech
+and some images were made brighter
 
 bug fixes
+  safari media rules css fixed
 
 *********************************************************** TODO *****************************************************
+
+
+ tech:  maybe missiles explode when they hit walls, but explosions only drain energy
+
+tech: sticky grenades
+  needs another effect to be good enough
+  stick to mobs?
 
 testChamber2
   mechanics
@@ -38,6 +50,8 @@ testChamber2
         or the cube is resting on a button, and when you take the cube off the button the laser fires
 
 
+make a mob similar to slasher
+  because it's just a very well made mob.
 
 
 tech - only allow 1,2 turrets at time?
@@ -1153,9 +1167,9 @@ if pause is pressed while selecting power ups, display pause menu on top of sele
   quantum stuff -- Hypertorus, Glowing Opal Pearlescent, Physics, Hydro-Dipping	Hydrodipped, Vija Celmins, Matt Molloy (photo of golden waves in the sky)
 ***major themes missing***
 ***maybe redo***
-  dynamical systems
   heuristics
   negative feedback - too dark
+  supercritical fission
 ***past style themes***
   field emitter - isometric, clean white robot spherical gun turret on bird legs, blender 3d, style of artstation and behance, Disney Pixar, cute 
   standing wave - concentric transparent blue geometric circles science  
@@ -1163,7 +1177,7 @@ if pause is pressed while selecting power ups, display pause menu on top of sele
   time dilation - graphic of a hyperbolic equation Luminogram
   negative mass - Blacklight painting by Moebius
   plasma torch - by Dan Mumford
-  metamaterial cloaking - Scientific photography by Miki Asai
+  metamaterial cloaking - Scientific photography by Miki Asai,   by Bruce Munro
   molecular assembler - by Laurie Greasley 16-bit Isometric 
   wormhole - by Tim White
 

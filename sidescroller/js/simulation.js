@@ -474,9 +474,7 @@ const simulation = {
     switchGun() {
         if (tech.isLongitudinal && b.activeGun === 3) b.guns[3].waves = []; //empty array of wave bullets
         if (tech.crouchAmmoCount) tech.crouchAmmoCount = 1 //this prevents hacking the tech by switching guns
-        if (b.inventory.length > 0) {
-            b.activeGun = b.inventory[b.inventoryGun];
-        }
+        if (b.inventory.length > 0) b.activeGun = b.inventory[b.inventoryGun];
         b.guns[8].charge = 0; // foam charge to 0
         simulation.updateGunHUD();
         simulation.boldActiveGunHUD();
@@ -774,7 +772,6 @@ const simulation = {
 
         input.endKeySensing();
         b.removeAllGuns();
-
         tech.setupAllTech(); //sets tech to default values
         tech.cancelCount = 0;
         for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 

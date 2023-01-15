@@ -370,7 +370,7 @@ summary {
 
 
 /* keeps 5 columns at 1440px */
-@media (1710px <= width < 1950px) {
+@media (min-width: 1710px) and (max-width: 1950px) {
     .experiment-grid-module, .choose-grid-module, .pause-grid-module {
         line-height: 143%;
         font-size: 0.68em;
@@ -385,7 +385,8 @@ summary {
         min-height: 75px;
     }
 }
-@media (width < 1710px) {
+/* (min-width: 30em) and (max-width: 80em) */
+@media (max-width: 1709px) {
     .experiment-grid-module, .choose-grid-module, .pause-grid-module {
         line-height: 139%;
         font-size: 0.58em;
