@@ -1,61 +1,47 @@
-const CACHE_NAME = 'n-gon-cache';
-const PRECACHE_ASSETS = [
-    "/",
-    "/index.html",
-    "/style.css",
-    'lib/matter.min.js',
-    'lib/decomp.min.js',
-    "js/simulation.js",
-    "js/player.js",
-    "js/powerup.js",
-    "js/tech.js",
-    "js/bullet.js",
-    "js/mob.js",
-    "js/spawn.js",
-    "js/level.js",
-    "js/lore.js",
-    "js/engine.js",
-    "js/index.js",
-]
+// This is the "Offline page" service worker
 
-// if (!localSettings.isHideImages) {
-//     addEventListener("load", () => {
-//         let urls = new Array()
-//         for (let i = 0, len = b.guns.length; i < len; i++) urls.push("img/gun/" + b.guns[i].name + ".webp")
-//         for (let i = 1, len = m.fieldUpgrades.length; i < len; i++) urls.push("img/field/" + m.fieldUpgrades[i].name + ".webp")
-//         for (let i = 0, len = tech.tech.length; i < len; i++) {
-//             if (!tech.tech[i].isJunk) urls.push("img/" + tech.tech[i].name + ".webp")
-//         }
-//         let images = new Array()
-//         for (let i = 0; i < urls.length; i++) {
-//             images[i] = new Image()
-//             images[i].src = urls[i]
-//         }
-//         // console.log(urls, images)
-//     });
-// }
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
+const CACHE = "pwabuilder-page";
 
-// Listener for the install event - precaches our assets list on service worker install.
-self.addEventListener('install', event => {
-    event.waitUntil((async () => {
-        const cache = await caches.open(CACHE_NAME);
-        cache.addAll(PRECACHE_ASSETS);
-    })());
+// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
+const offlineFallbackPage = "ToDo-replace-this-name.html";
+
+self.addEventListener("message", (event) => {
+    if (event.data && event.data.type === "SKIP_WAITING") {
+        self.skipWaiting();
+    }
 });
 
-self.addEventListener('activate', event => {
-    event.waitUntil(clients.claim());
+self.addEventListener('install', async (event) => {
+    event.waitUntil(
+        caches.open(CACHE)
+        .then((cache) => cache.add(offlineFallbackPage))
+    );
 });
 
-self.addEventListener('fetch', event => {
-    event.respondWith(async () => {
-        const cache = await caches.open(CACHE_NAME);
-        const cachedResponse = await cache.match(event.request); // match the request to our cache
-        if (cachedResponse !== undefined) { // check if we got a valid response
-            return cachedResponse; // Cache hit, return the resource
-        } else {
-            return fetch(event.request) // Otherwise, go to the network
-        };
-    });
+if (workbox.navigationPreload.isSupported()) {
+    workbox.navigationPreload.enable();
+}
+
+self.addEventListener('fetch', (event) => {
+    if (event.request.mode === 'navigate') {
+        event.respondWith((async () => {
+            try {
+                const preloadResp = await event.preloadResponse;
+
+                if (preloadResp) {
+                    return preloadResp;
+                }
+
+                const networkResp = await fetch(event.request);
+                return networkResp;
+            } catch (error) {
+
+                const cache = await caches.open(CACHE);
+                const cachedResp = await cache.match(offlineFallbackPage);
+                return cachedResp;
+            }
+        })());
+    }
 });
