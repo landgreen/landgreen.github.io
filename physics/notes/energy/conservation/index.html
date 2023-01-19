@@ -69,7 +69,7 @@
 				}
 			</style>
 			k = <input id='spring-k-slider' type="range" step="0.1" value="0.1" min="0" max="10" style="width: 175px;">
-			<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 50px;"><span class="hide-on-mobile">&nbsp;kg/s²</span>
+			<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 50px;"><span class="hide-on-mobile">&nbsp;N/m</span>
 			<button style="float: right; width: 60px; margin-top: 20px; text-align: center; padding: 0px;" id="pause1">play</button>
 			<br>
 			m = <input id='spring-m-slider' type="range" step="1" value="13" min="1" max="75" style="width: 175px;">
@@ -432,7 +432,7 @@
 				<circle cx="160" cy="132" r="15" fill="none" stroke-width="1" stroke="#000" stroke-dasharray="4" />
 				<use xlink:href="#vector" transform='translate(160 132) rotate(-180)' />
 			</svg>
-			<strong>Example:</strong> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your spring has a spring constant of 200.0 kg/s².
+			<strong>Example:</strong> A 0.20 kg ball is placed on a spring compressed down 0.15 m. The internet says that your spring has a spring constant of 200.0 N/m.
 			<br><br>How fast should the ball be moving right after it leaves the spring?
 			<details>
 				<summary>solution</summary>
@@ -619,53 +619,79 @@
 				</div>
 			</details>
 		</div>
-
-		<!-- 
-		<h1 class='underlined' id="elastic-collisions">Elastic Collisions</h1>
+		<h1 class='underlined' id="elastic-collisions">Perfectly Elastic Collisions</h1>
 		<p>
-			When objects collide the total <a href="..\..\momentum\momentum\index.html#conservation">momentum</a> is conserved.
-			A collision that doesn't lose any kinetic energy is called an <strong>elastic collision</strong>.
+			When objects collide the total <a href="..\..\momentum\conservation\index.html#inelastic-collisions">momentum</a> is conserved.
+			Normally some of the kinetic energy of the objects will be converted into thermal or rotational energy, but in some situations the energy stays kinetic.
+			A collision that doesn't lose any kinetic energy is called <strong>perfectly elastic</strong>.
 			This means that for perfectly bouncy collisions we can use two conservation equations.
 		</p>
 		$$m_1u_1 + m_2u = m_1v_1 + m_2v_2$$
 		$$\frac{1}{2}m_1u_1^2 + \frac{1}{2}m_2u_2^2 = \frac{1}{2}m_1v_1^2 + \frac{1}{2}m_2v_2^2$$
-
-		<details class='derive'>
-			<summary>derivation of elastic of collisions</summary>
-
-		</details>
-		<div class='definition'>
-			<svg viewBox="-25 0 500 70">
-				<g transform="translate(75.5 15.5)" stroke="#000" stroke-width="1" fill="none">
-					<rect x="0.5" y="0.5" width="50" height="50" fill="#fff" stroke-width="1" />
-					<text x="25" y="25" fill="#000" stroke="none" text-anchor="middle" dominant-baseline="middle">m</text>
-					<line x1="0" y1="5" x2="-35" y2="5" />
-					<line x1="0" y1="15" x2="-65" y2="15" />
-					<line x1="0" y1="25" x2="-35" y2="25" />
-					<line x1="0" y1="35" x2="-75" y2="35" />
-					<line x1="0" y1="45" x2="-40" y2="45" />
-				</g>
-				<g transform="translate(375.5 15.5)" stroke="#000" stroke-width="1" fill="none">
-					<rect x="-50.5" y="0.5" width="50" height="50" fill="#fff" stroke-width="1" />
-					<text x="-25" y="25" fill="#000" stroke="none" text-anchor="middle" dominant-baseline="middle">m</text>
-					<line x1="0" y1="5" x2="35" y2="5" />
-					<line x1="0" y1="15" x2="45" y2="15" />
-					<line x1="0" y1="25" x2="85" y2="25" />
-					<line x1="0" y1="35" x2="55" y2="35" />
-					<line x1="0" y1="45" x2="30" y2="45" />
-				</g>
-			</svg>
-			\( m \) = mass [kg]
-			<br>\( u \) = initial velocity [m/s]
-			<br>\( v \) = final velocity [m/s]
-		</div>
-		<div class='example'><strong>Example:</strong>
+		<p>
+			With two equations we can solve for two unknowns.
+			We get these equations if we substitute one equation into the other and solve for the final velocities.
+		</p>
+		$$v_1 = \frac{m_1-m_2}{m_1+m_2}u_1 + \frac{2m_2}{m_1+m_2}u_2$$
+		$$v_2 = \frac{2m_1}{m_1+m_2}u_1 + \frac{m_2-m_1}{m_1+m_2}u_2$$
+		<p>
+			These equations are only approximations at our human scale,
+			but at the atomic scale perfectly elastic collisions aren't unusual.
+			So you'd get very accurate results for gas or liquid atoms colliding.
+		</p>
+		<div class='example'><strong>Example:</strong> A <strong>2</strong> kg ball moving at 2 m/s to the right collides with a <strong>7</strong> kg ball at rest.
+			Approximate the final velocities of each ball assuming that no kinetic energy is lost.
 			<details>
 				<summary>solution</summary>
-
+				$$2\, \mathrm{kg \, ball}$$
+				$$v_1 = \frac{m_1-m_2}{m_1+m_2}u_1 + \frac{2m_2}{m_1+m_2}u_2$$
+				$$v_1 = \left(\frac{2-7}{2+7} \right)2 + \left(\frac{2(7)}{2+7} \right)0$$
+				<!-- $$v_1 = \left(\frac{-5}{9} \right)2 $$ -->
+				$$v_1 = 1.\overline{1} \, \mathrm{\tfrac{m}{s}} $$
+				<br>
+				$$7\, \mathrm{kg \, ball}$$
+				$$v_2 = \frac{2m_1}{m_1+m_2}u_1 + \frac{m_2-m_1}{m_1+m_2}u_2$$
+				$$v_2 = \left(\frac{2(2)}{2+7}\right)2 + \left(\frac{7-2}{2+7}\right)0$$
+				<!-- $$v_2 = \left(\frac{4}{9}\right)2 $$ -->
+				$$v_2 = 0.\overline{8} \, \mathrm{\tfrac{m}{s}} $$
 			</details>
-		</div> -->
+		</div>
 
+		<div class='example'>
+			<style>
+				.pool{
+					height: 25px;
+					width: 25px;
+					border-radius: 50%;
+					display: inline-block;
+					text-align: center;
+				}
+				.eight{
+					background-color: #000;
+					color: #fff;
+				}
+				.three{
+					background-color: #f00;
+					color: #fff;
+				}
+			</style>
+		<p>
+			If the 2 colliding objects have the same mass we can simplify the equations.
+		</p>
+		$$v_1=u_2 \quad \quad u_1=v_2  $$
+		<p>After an elastic collision objects with the same mass trade velocities.</p>
+		<strong>Example:</strong> A billiards ball is typically 0.16 kg. Although the cue ball is normally a bit heavier.
+		The <strong class="pool eight">8</strong> ball moving at 12 m/s collides with the <strong class="pool three">3</strong> ball at rest.
+		Approximate the final velocities of each ball assuming no kinetic energy loss.
+		<details>
+				<summary>solution</summary>
+				<p>Not much math here.  They just trade velocities.
+					<br>The <strong class="pool eight">8</strong> ball is now at rest and the <strong class="pool three">3</strong> ball is moving at 12 m/s.
+				</p>
+				<p></p>
+			</details>
+		</div>
+<!-- example of molecules colliding -->
 
 	</article>
 	<footer>
