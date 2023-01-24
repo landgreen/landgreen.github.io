@@ -333,7 +333,7 @@ const powerUps = {
     },
     endDraft(type, isCanceled = false) { //type should be a gun, tech, or field
         if (isCanceled) {
-            if (tech.isCancelTech && Math.random() < 0.85) {
+            if (tech.isCancelTech && Math.random() < 0.85 && type !== "entanglement") {
                 // powerUps.research.use('tech')
                 powerUps[type].effect();
                 return
@@ -628,7 +628,9 @@ const powerUps = {
     },
     researchText(type) {
         let text = ""
-        if (tech.isJunkResearch && powerUps.research.currentRerollCount < 3) {
+        if (type === "entanglement") {
+            text += `<div class='choose-grid-module entanglement flipX'>entanglement</div>`
+        } else if (tech.isJunkResearch && powerUps.research.currentRerollCount < 3) {
             text += `<div onclick="powerUps.research.use('${type}')" class='research-card'>` // style = "margin-left: 192px; margin-right: -192px;"
             tech.junkResearchNumber = Math.ceil(4 * Math.random())
             text += `<div><div> <span style="position:relative;">`
@@ -1096,12 +1098,14 @@ const powerUps = {
         },
         effect() {
             if (m.alive && localSettings.entanglement) {
-                let text = ""
-                document.getElementById("choose-grid").style.gridTemplateColumns = "384px 384px 384px"
+                // let text = ""
+                // document.getElementById("choose-grid").style.gridTemplateColumns = "384px 384px 384px"
+                let text = powerUps.buildColumns(3, "entanglement")
+
                 // text += powerUps.researchText('tech')
-                text += "<div></div>"
-                text += "<div class='choose-grid-module entanglement flipX'>entanglement</div>"
-                text += `<div class='choose-grid-module' onclick='powerUps.endDraft("tech",true)' style="width: 82px; text-align: center;font-size: 1.1em;font-weight: 100;justify-self: end;">cancel</div>` //powerUps.cancelText('tech')
+                // text += "<div></div>"
+                // text += "<div class='choose-grid-module entanglement flipX'>entanglement</div>"
+                // text += `<div class='choose-grid-module' onclick='powerUps.endDraft("tech",true)' style="width: 82px; text-align: center;font-size: 1.1em;font-weight: 100;justify-self: end;">cancel</div>` //powerUps.cancelText('tech')
                 if (localSettings.entanglement.fieldIndex) {
                     const choose = localSettings.entanglement.fieldIndex //add field
                     text += powerUps.fieldText(choose, `powerUps.choose('field',${choose})`)

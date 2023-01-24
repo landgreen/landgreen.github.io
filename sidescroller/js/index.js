@@ -1462,10 +1462,8 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
         localSettings.loreCount = 0; //this sets what conversation is heard
         if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
     }
-    if (localSettings.isHideImages === undefined) localSettings.isHideImages = false //default to show images
+    if (localSettings.isHideImages === undefined) localSettings.isHideImages = true //default to hide images
     document.getElementById("hide-images").checked = localSettings.isHideImages
-
-
 } else {
     console.log('setting default localSettings')
     const isAllowed = localSettings.isAllowed //don't overwrite isAllowed value
@@ -1484,7 +1482,7 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
         isLoreDoesNotNeedReset: false,
         isHuman: false,
         key: undefined,
-        isHideImages: false, //default to show images
+        isHideImages: true, //default to hide images
     };
     input.setDefault()
     if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage

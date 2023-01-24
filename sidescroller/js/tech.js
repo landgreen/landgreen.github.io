@@ -5276,7 +5276,7 @@ const tech = {
             allowed() {
                 return !tech.isImmuneExplosion && (build.isExperimentSelection || powerUps.research.count > 2) && (tech.haveGunCheck("missiles") || (m.fieldUpgrades[m.fieldMode].name === "molecular assembler" && simulation.molecularMode === 1) || tech.missileBotCount > 0 || tech.isIncendiary || tech.isPulseLaser || tech.isTokamak || (tech.haveGunCheck("grenades") && !tech.isNeutronBomb))
             },
-            requires: "an explosive damage source, not electric reactive armor",
+            requires: "an explosive damage source, not rocket propelled grenade",
             effect() {
                 tech.isSmartRadius = true;
                 for (let i = 0; i < 3; i++) {
@@ -5345,7 +5345,7 @@ const tech = {
                 b.setGrenadeMode()
             },
             remove() {
-                tech.isImmuneExplosion = true;
+                tech.isImmuneExplosion = false;
                 tech.isRPG = false;
                 b.setGrenadeMode()
             }
