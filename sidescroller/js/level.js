@@ -14703,7 +14703,7 @@ const level = {
         spawn.mapRect(133875, -1475, 475, 1775);
         spawn.mapRect(132025, -1925, 2325, 475);
 
-        simulation.enableConstructMode() //also remove when done
+        // simulation.enableConstructMode() //also remove when done
         coin(50165.9, -1090)
         coin(78725.4, -600)
         coin(103830.0, -1473)
