@@ -422,7 +422,7 @@ const level = {
                 player.velocity.y < 0.15
             ) {
                 // level.exitCount += input.down ? 8 : 2
-                level.exitCount++
+                level.exitCount += 2
             } else if (level.exitCount > 0) {
                 level.exitCount -= 2
             }
