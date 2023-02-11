@@ -1,24 +1,23 @@
 ******************************************************** NEXT PATCH **************************************************
 
-tech: elasticity - skin, does "crouch landings" a tiny bit more
-  jump and move faster, +15% defense
-  (replaces squirrel cage rotor)
-
-tech: diaphragm -  skin, defense cycles between -33% and +100%
-  requires aperture
-
-tungsten carbide 150->200 maximum health
-  but now does "crouch landings" a more
-Zectron damage 80->100% and it does a bit less harm to player
-flip-flop, relay switch are no longer skins
-
-pause brings up the most recent in game console message 
-  in game console no longer fades out it just instantly goes on and off
+tetherBoss now has beetle babies, and immunity
+skins have a unique orb for their description card
+  and some new images
 
 bug fixes
 
-
 *********************************************************** TODO *****************************************************
+
+map element - conveyor belt
+  for blocks, player, power ups touching map element apply vector force
+
+redraw CPT and mass-energy images to match other skins
+
+perfect diamagnatism could bounce on mobs, or even map elements?
+  could work like a rocket jump?
+
+tech: do 60% damage when not touching ground
+tech: 50% defense when not touching ground
 
 Tech: Von Neuman probes - Drones will consume blocks to replicate themselves
   it's a little too similar to the drone repair tech, but I kinda like it better.  drones that eat blocks and spit out more drones is cool 

@@ -691,7 +691,7 @@ const m = {
     },
     collisionImmuneCycles: 30,
     damage(dmg) {
-        if (tech.isRewindAvoidDeath && (m.energy + 0.05) > Math.min(1, m.maxEnergy) && dmg > 0.01) {
+        if (tech.isRewindAvoidDeath && (m.energy + 0.05) > Math.min(0.95, m.maxEnergy) && dmg > 0.01) {
             const steps = Math.floor(Math.min(299, 150 * m.energy))
             simulation.makeTextLog(`<span class='color-var'>m</span>.rewind(${steps})`)
             m.rewind(steps)
@@ -708,7 +708,7 @@ const m = {
             }
         }
         if (tech.isEnergyHealth) {
-            dmg *= Math.pow(m.harmReduction(), 0.12) //defense has less effect
+            dmg *= Math.pow(m.harmReduction(), 0.13) //defense has less effect
             m.energy -= 0.9 * dmg / Math.sqrt(simulation.healScale) //scale damage with heal reduction difficulty
             if (m.energy < 0 || isNaN(m.energy)) { //taking deadly damage
                 if (tech.isDeathAvoid && powerUps.research.count && !tech.isDeathAvoidedThisLevel) {
@@ -1020,9 +1020,9 @@ const m = {
                 ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.5 //|| (m.cycle % 40 > 20)
                 ctx.translate(m.pos.x, m.pos.y);
                 m.calcLeg(Math.PI, -3);
-                m.drawLeg("#4a4a4a");
+                m.drawLeg("#456");
                 m.calcLeg(0, 0);
-                m.drawLeg("#333");
+                m.drawLeg("#345");
                 ctx.rotate(m.angle);
                 ctx.beginPath();
                 ctx.arc(0, 0, 30, 0, 2 * Math.PI);
@@ -1034,13 +1034,9 @@ const m = {
 
                 ctx.beginPath();
                 ctx.arc(17, 0, 5.5, 0, 2 * Math.PI);
-                ctx.fillStyle = "#333"
+                ctx.fillStyle = "#357"
                 ctx.fill();
 
-                ctx.beginPath();
-                ctx.strokeStyle = "#333";
-                ctx.lineWidth = 2;
-                ctx.stroke();
                 ctx.restore();
                 m.yOff = m.yOff * 0.85 + m.yOffGoal * 0.15; //smoothly move leg height towards height goal
                 powerUps.boost.draw()
@@ -1099,14 +1095,14 @@ const m = {
             m.fillColor = `hsl(${m.color.hue},${m.color.sat}%,${m.color.light}%)`
             m.fillColorDark = `hsl(${m.color.hue},${m.color.sat}%,${m.color.light - 50}%)`
             const grd = ctx.createLinearGradient(-30, -5, 30, 10);
-            grd.addColorStop(0, `#eee`);
+            grd.addColorStop(0, `#e0e0e0`);
             grd.addColorStop(0.3, `#bbb`);
-            grd.addColorStop(0.4, `#aaa`);
-            grd.addColorStop(0.5, `#ccc`);
+            grd.addColorStop(0.4, `#b3b3b3`);
+            grd.addColorStop(0.5, `#c5c5c5`);
             grd.addColorStop(0.65, `#bbb`);
-            grd.addColorStop(0.7, `#aaa`);
+            grd.addColorStop(0.7, `#b3b3b3`);
             grd.addColorStop(0.75, `#bbb`);
-            grd.addColorStop(1, `#eee`);
+            grd.addColorStop(1, `#e0e0e0`);
             // const grdRad = ctx.createRadialGradient(0, 0, 0, 0, 0, 30);
             // grdRad.addColorStop(0, `rgba(0,0,0,0.3)`);
             // grdRad.addColorStop(0.5, `rgba(210,210,210,0)`);
@@ -1417,10 +1413,11 @@ const m = {
             }
             // m.setFillColors();
             m.fillColor = `hsl(${m.color.hue},${m.color.sat}%,${m.color.light}%)`
-            m.fillColorDark = `hsl(${m.color.hue},${m.color.sat}%,${m.color.light - 45}%)`
+            m.fillColorDark = `hsl(${m.color.hue},${m.color.sat}%,${m.color.light - 35}%)`
             let grd = ctx.createLinearGradient(-30, 0, 30, 0);
             grd.addColorStop(0, m.fillColorDark);
-            grd.addColorStop(1, m.fillColor);
+            grd.addColorStop(0.7, m.fillColor);
+            // grd.addColorStop(1, m.fillColor);
             m.bodyGradient = grd
 
             m.draw = function() {
@@ -1430,10 +1427,10 @@ const m = {
                 ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.5 //|| (m.cycle % 40 > 20)
                 ctx.translate(m.pos.x, m.pos.y);
                 m.calcLeg(Math.PI, -3);
-                m.drawLeg("#3a3a3a");
+                m.drawLeg("#eee");
                 m.calcLeg(0, 0);
-                m.drawLeg("#222");
-                ctx.rotate(0.013 * simulation.cycle);
+                m.drawLeg("#fff");
+                ctx.rotate(0.017 * simulation.cycle);
                 ctx.beginPath();
                 ctx.arc(0, 0, 30, 0, 2 * Math.PI);
                 ctx.fillStyle = m.bodyGradient
@@ -1442,7 +1439,7 @@ const m = {
 
                 ctx.beginPath();
                 ctx.arc(m.pos.x + 15 * Math.cos(m.angle), m.pos.y + 15 * Math.sin(m.angle), 5, 0, 2 * Math.PI);
-                ctx.fillStyle = "#222"
+                ctx.fillStyle = "#000"
                 ctx.fill();
                 m.yOff = m.yOff * 0.85 + m.yOffGoal * 0.15; //smoothly move leg height towards height goal
                 powerUps.boost.draw()
@@ -1461,7 +1458,7 @@ const m = {
                 ctx.lineTo(m.knee.x, m.knee.y);
                 ctx.lineTo(m.foot.x, m.foot.y);
                 ctx.strokeStyle = stroke;
-                ctx.lineWidth = 7;
+                ctx.lineWidth = 6;
                 ctx.stroke();
 
                 //toe lines
@@ -1470,19 +1467,19 @@ const m = {
                 ctx.lineTo(m.foot.x - 15, m.foot.y + 5);
                 ctx.moveTo(m.foot.x, m.foot.y);
                 ctx.lineTo(m.foot.x + 15, m.foot.y + 5);
-                ctx.lineWidth = 4;
+                ctx.lineWidth = 3;
                 ctx.stroke();
 
                 //hip joint
                 ctx.beginPath();
                 ctx.arc(m.hip.x, m.hip.y, 11, 0, 2 * Math.PI);
                 //knee joint
-                ctx.moveTo(m.knee.x + 7, m.knee.y);
-                ctx.arc(m.knee.x, m.knee.y, 7, 0, 2 * Math.PI);
+                ctx.moveTo(m.knee.x + 5, m.knee.y);
+                ctx.arc(m.knee.x, m.knee.y, 5, 0, 2 * Math.PI);
                 //foot joint
-                ctx.moveTo(m.foot.x + 6, m.foot.y);
-                ctx.arc(m.foot.x, m.foot.y, 6, 0, 2 * Math.PI);
-                ctx.fillStyle = m.fillColor;
+                ctx.moveTo(m.foot.x + 5, m.foot.y);
+                ctx.arc(m.foot.x, m.foot.y, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = "#000";
                 ctx.fill();
                 // ctx.lineWidth = 2;
                 // ctx.stroke();
@@ -2438,7 +2435,7 @@ const m = {
             case 5: //plasma
                 return `<strong>+${(15*couple).toFixed(0)}%</strong> <strong class='color-d'>damage</strong>`
             case 6: //time dilation
-                return `<strong>+${(30*couple).toFixed(0)}%</strong> longer <strong style='letter-spacing: 2px;'>stopped time</strong>` //<strong>movement</strong>, <strong>jumping</strong>, and 
+                return `<strong>+${(50*couple).toFixed(0)}%</strong> longer <strong style='letter-spacing: 2px;'>stopped time</strong>` //<strong>movement</strong>, <strong>jumping</strong>, and 
             case 7: //cloaking
                 return `<strong>+${(33*couple).toFixed(0)}%</strong> ambush <strong class='color-d'>damage</strong>`
             case 8: //pilot wave
@@ -2517,7 +2514,7 @@ const m = {
     },
     fieldUpgrades: [{
             name: "field emitter",
-            imageNumber: Math.floor(Math.random() * 17),
+            imageNumber: Math.floor(Math.random() * 20),
             description: `use <strong class='color-f'>energy</strong> to <strong>deflect</strong> mobs
             <br>generate <strong>6</strong> <strong class='color-f'>energy</strong> per second`, //            <br><strong>100</strong> max <strong class='color-f'>energy</strong>
             effect: () => {
@@ -2811,7 +2808,7 @@ const m = {
                     } else if (input.field) { //not hold but field button is pressed
                         //float while field is on
                         const angleReduction = 0.5 + 0.7 * (Math.PI / 2 - Math.min(Math.PI / 2, Math.abs(m.angle + Math.PI / 2)))
-                        console.log(angleReduction)
+                        // console.log(angleReduction)
                         if (player.velocity.y > 1) {
                             player.force.y -= angleReduction * (tech.isBigField ? 0.95 : 0.5) * player.mass * simulation.g;
                             Matter.Body.setVelocity(player, {
@@ -3606,16 +3603,16 @@ const m = {
         },
         {
             name: "time dilation",
-            description: "use <strong class='color-f'>energy</strong> to <strong style='letter-spacing: 2px;'>stop time</strong><br><strong>+25%</strong> movement and <strong><em>fire rate</em></strong><br>generate <strong>14</strong> <strong class='color-f'>energy</strong> per second",
+            description: "use <strong class='color-f'>energy</strong> to <strong style='letter-spacing: 2px;'>stop time</strong><br><strong>+20%</strong> movement and <strong><em>fire rate</em></strong><br>generate <strong>14</strong> <strong class='color-f'>energy</strong> per second",
             set() {
                 // m.fieldMeterColor = "#0fc"
                 // m.fieldMeterColor = "#ff0"
                 m.fieldMeterColor = "#3fe"
                 m.eyeFillColor = m.fieldMeterColor
-                m.fieldFx = 1.3
+                m.fieldFx = 1.25
                 // m.fieldJump = 1.09
                 m.setMovement();
-
+                b.setFireCD()
                 const timeStop = () => {
                     m.immuneCycle = m.cycle + 10; //immune to harm while time is stopped,  this also disables regen
                     //draw field everywhere
@@ -3666,7 +3663,7 @@ const m = {
                             m.throwBlock();
                             m.wakeCheck();
                         } else if (input.field && m.fieldCDcycle < m.cycle) { //not hold but field button is pressed
-                            const drain = 0.002 / (1 + 0.3 * m.coupling)
+                            const drain = 0.002 / (1 + 0.5 * m.coupling)
                             if (m.energy > drain) m.energy -= drain
 
                             m.grabPowerUp();
@@ -4467,7 +4464,7 @@ const m = {
 
                         if (input.field) {
                             if (tech.isWormHolePause) {
-                                const drain = m.fieldRegen + 0.0004
+                                const drain = m.fieldRegen + 0.0002
                                 if (m.energy > drain) {
                                     m.energy -= drain
                                     if (m.immuneCycle < m.cycle + 1) m.immuneCycle = m.cycle + 1; //player is immune to damage for 1 cycle
@@ -5067,7 +5064,7 @@ const m = {
                                 ) {
                                     mob[k].foundPlayer();
                                     let dmg = Math.min(Math.max(0.025 * Math.sqrt(mob[k].mass), 0.05), 0.3) * simulation.dmgScale; //player damage is capped at 0.3*dmgScale of 1.0
-                                    if (tech.isRewindAvoidDeath && (m.energy + 0.05) > Math.min(1, m.maxEnergy) && dmg > 0.01) { //CPT reversal runs in m.damage, but it stops the rest of the collision code here too
+                                    if (tech.isRewindAvoidDeath && (m.energy + 0.05) > Math.min(0.95, m.maxEnergy) && dmg > 0.01) { //CPT reversal runs in m.damage, but it stops the rest of the collision code here too
                                         m.damage(dmg);
                                         return
                                     }

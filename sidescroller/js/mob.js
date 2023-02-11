@@ -1279,6 +1279,9 @@ const mobs = {
                             powerUps.spawn(this.position.x - 20, this.position.y, "ammo", false)
                             powerUps.spawn(this.position.x, this.position.y + 20, "research", false)
                             powerUps.spawn(this.position.x, this.position.y - 20, "heal", false)
+                            powerUps.spawn(this.position.x - 40, this.position.y, "ammo", false)
+                            powerUps.spawn(this.position.x, this.position.y + 40, "research", false)
+                            powerUps.spawn(this.position.x, this.position.y - 40, "heal", false)
                         } else {
                             const amount = 0.005
                             if (tech.isEnergyHealth) {
