@@ -27,14 +27,14 @@ const level = {
             // m.immuneCycle = Infinity //you can't take damage
             // tech.tech[297].frequency = 100
             // m.couplingChange(5)
-            // m.setField("perfect diamagnetism") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass    pilot wave   plasma torch
+            // m.setField("metamaterial cloaking") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass    pilot wave   plasma torch
             // simulation.molecularMode = 2
             // m.damage(0.1);
-            // b.giveGuns("nail gun") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns("foam") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.giveGuns("wave") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
-            // b.guns[0].ammo = 10000
+            // b.guns[8].ammo = 10000
             // tech.giveTech("aperture")
-            // tech.giveTech("diaphragm")
+            // tech.giveTech("CPT symmetry")
             // for (let i = 0; i < 1; ++i) tech.giveTech("mass-energy equivalence")
             // for (let i = 0; i < 1; ++i) tech.giveTech("tungsten carbide")
             // for (let i = 0; i < 1; i++) tech.giveTech("CPT symmetry")
@@ -42,7 +42,7 @@ const level = {
             // for (let i = 0; i < 3; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");
-            // level.lock();
+            // level.yingYang();
             // spawn.nodeGroup(1200, 0, "slasher")
             // spawn.blinkBoss(1900, -500)
             // spawn.sneakBoss(1900, -500)
@@ -4396,7 +4396,7 @@ const level = {
         spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 20);
         level.defaultZoom = 2200
         simulation.zoomTransition(level.defaultZoom)
-        document.body.style.backgroundColor = "hsl(138, 3%, 74%)";
+        document.body.style.backgroundColor = "hsl(138, 5%, 82%)";
         color.map = "#444"
         powerUps.spawnStartingPowerUps(1768, 870); //on left side
         const portal = level.portal({ x: 1070, y: -1485 }, -0.9, { x: 475, y: 50 }, -Math.PI / 2)
@@ -14937,8 +14937,9 @@ const level = {
             ctx.stroke(); */
             ctx.beginPath();
             ctx.moveTo(m.pos.x, m.pos.y)
-            ctx.arc(m.pos.x, m.pos.y, 100, m.angle + Math.PI / 2.5, m.angle - Math.PI / 2.5)
-            ctx.arc(m.pos.x, m.pos.y, 700, m.angle - Math.PI / 2.5, m.angle + Math.PI / 2.5)
+            const arc = Math.PI / 4
+            ctx.arc(m.pos.x, m.pos.y, 100, m.angle + arc, m.angle - arc)
+            ctx.arc(m.pos.x, m.pos.y, 4000, m.angle - arc, m.angle + arc)
             ctx.fillStyle = "rgba(255,255,255,0.7)";
             ctx.globalCompositeOperation = "destination-in";
             ctx.fill();

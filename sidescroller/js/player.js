@@ -547,7 +547,7 @@ const m = {
         dmg *= m.fieldHarmReduction
         // if (!tech.isFlipFlopOn && tech.isFlipFlopHealth) dmg *= 0.5
         // 1.25 + Math.sin(m.cycle * 0.01)
-        if (tech.isDiaphragm) dmg *= 0.66 + 0.66 * Math.sin(m.cycle * 0.01);
+        if (tech.isDiaphragm) dmg *= 0.66 + 0.66 * Math.sin(m.cycle * 0.0075);
         if (tech.isZeno) dmg *= 0.15
         if (tech.isFieldHarmReduction) dmg *= 0.5
         if (tech.isHarmMACHO) dmg *= 0.4
@@ -640,7 +640,7 @@ const m = {
                 });
             }
         }
-        m.energy = Math.max(m.energy - steps / 200, 0.01)
+        m.energy = Math.max(m.energy - steps / 250, 0.01)
         if (m.immuneCycle < m.cycle + m.collisionImmuneCycles) m.immuneCycle = m.cycle + m.collisionImmuneCycles; //player is immune to damage for 30 cycles
 
         let isDrawPlayer = true
@@ -1304,28 +1304,29 @@ const m = {
         dilate() {
             m.isAltSkin = true
             m.draw = function() {
+                const amplitude = 8 + 4 * Math.sin(m.cycle * 0.0075)
                 ctx.fillStyle = m.fillColor;
                 m.walk_cycle += m.flipLegs * m.Vx;
                 ctx.save();
                 ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.5 //|| (m.cycle % 40 > 20)
                 ctx.translate(m.pos.x, m.pos.y);
                 m.calcLeg(Math.PI, -3);
-                m.drawLeg("#4a4a4a");
+                m.drawLeg("#456");
                 m.calcLeg(0, 0);
-                m.drawLeg("#333");
+                m.drawLeg("#345");
                 ctx.rotate(m.angle);
                 ctx.beginPath();
                 ctx.arc(0, 0, 30, 0, 2 * Math.PI);
                 ctx.fillStyle = m.bodyGradient
                 ctx.fill();
-                ctx.strokeStyle = "#333";
+                ctx.strokeStyle = "#345";
                 ctx.lineWidth = 2;
-                ctx.arc(12, 0, 8 + 4 * Math.sin(m.cycle * 0.01), 0, 2 * Math.PI); //big eye
+                ctx.arc(12, 0, amplitude, 0, 2 * Math.PI); //big eye
                 ctx.stroke();
                 ctx.beginPath();
-                ctx.arc(12, 0, 8 + 4 * Math.sin(m.cycle * 0.01), 0, 2 * Math.PI); //big eye
-                ctx.fillStyle = `hsl(${150+100*Math.sin(m.cycle * 0.01)},100%,50%)`
-                ctx.fill();
+                ctx.arc(12, 0, amplitude, 0, 2 * Math.PI); //big eye
+                // ctx.fillStyle = `hsl(0,0%,${50+50*Math.sin(m.cycle * 0.0075+Math.PI)}%)` //`hsl(${150+50*Math.sin(m.cycle * 0.0075)},100%,50%)`
+                // ctx.fill();
                 ctx.stroke();
                 ctx.restore();
                 m.yOff = m.yOff * 0.85 + m.yOffGoal * 0.15; //smoothly move leg height towards height goal
@@ -1335,29 +1336,33 @@ const m = {
         dilate2() {
             m.isAltSkin = true
             m.draw = function() {
+                const amplitude = Math.sin(m.cycle * 0.0075)
+
                 ctx.fillStyle = m.fillColor;
                 m.walk_cycle += m.flipLegs * m.Vx;
                 ctx.save();
                 ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.5 //|| (m.cycle % 40 > 20)
                 ctx.translate(m.pos.x, m.pos.y);
                 m.calcLeg(Math.PI, -3);
-                m.drawLeg("#5f5f5f");
+                m.drawLeg("#456");
                 m.calcLeg(0, 0);
-                m.drawLeg("#444");
+                m.drawLeg("#345");
                 ctx.rotate(m.angle);
                 ctx.beginPath();
                 ctx.arc(0, 0, 30, 0, 2 * Math.PI);
                 ctx.fillStyle = m.bodyGradient
                 ctx.fill();
-                ctx.strokeStyle = "#444";
-                ctx.lineWidth = 3 + 3 * Math.sin(m.cycle * 0.01 + Math.PI);
-                ctx.arc(12, 0, 6 + 3 * Math.sin(m.cycle * 0.01), 0, 2 * Math.PI); //big eye
+                ctx.strokeStyle = "#345";
+                ctx.lineWidth = 3 + 3 * Math.sin(m.cycle * 0.0075 + Math.PI);
                 ctx.stroke();
+                // ctx.arc(12, 0, 8 + 4 * amplitude, 0, 2 * Math.PI); //big eye
                 ctx.beginPath();
-                ctx.arc(12, 0, 6 + 3 * Math.sin(m.cycle * 0.01), 0, 2 * Math.PI); //big eye
-                ctx.fillStyle = `hsl(${150+100*Math.sin(m.cycle * 0.01)},100%,50%)`
+                ctx.arc(12, 0, 8 + 4 * amplitude, 0, 2 * Math.PI); //big eye
+                ctx.fillStyle = "#345"
+                // ctx.fillStyle = //`hsl(0,0%,${50+50*Math.sin(m.cycle * 0.0075+Math.PI)}%)` //`hsl(${150+50*Math.sin(m.cycle * 0.0075)},100%,50%)`
+                // ctx.fillStyle = `hsl(${150 + 100 * amplitude},100%,50%)`
                 ctx.fill();
-                ctx.stroke();
+                // ctx.stroke();
                 ctx.restore();
                 m.yOff = m.yOff * 0.85 + m.yOffGoal * 0.15; //smoothly move leg height towards height goal
                 powerUps.boost.draw()
@@ -1376,7 +1381,7 @@ const m = {
                 ctx.lineTo(m.knee.x, m.knee.y);
                 ctx.lineTo(m.foot.x, m.foot.y);
                 ctx.strokeStyle = stroke;
-                ctx.lineWidth = 7;
+                ctx.lineWidth = 6 + 2 * Math.sin(m.cycle * 0.0075 + Math.PI);
                 ctx.stroke();
 
                 //toe lines
@@ -1397,9 +1402,9 @@ const m = {
                 //foot joint
                 ctx.moveTo(m.foot.x + 6, m.foot.y);
                 ctx.arc(m.foot.x, m.foot.y, 6, 0, 2 * Math.PI);
-                ctx.fillStyle = m.fillColor;
+                ctx.fillStyle = "#345";
                 ctx.fill();
-                ctx.lineWidth = 3 + 3 * Math.sin(m.cycle * 0.01 + Math.PI);
+                ctx.lineWidth = 3 + 3 * Math.sin(m.cycle * 0.0075 + Math.PI);
                 ctx.stroke();
                 ctx.restore();
             }
@@ -3811,7 +3816,7 @@ const m = {
                     ctx.fillStyle = "#fff"
                     ctx.lineWidth = 2;
                     ctx.strokeStyle = "#000"
-                    ctx.stroke()
+                    // ctx.stroke()
                     ctx.globalCompositeOperation = "destination-in";
                     ctx.fill();
                     ctx.globalCompositeOperation = "source-over";
@@ -3922,11 +3927,36 @@ const m = {
                     // if (m.cycle > m.lastKillCycle + 240) {
                     // if (m.sneakAttackCharge > 0) {
                     if (m.sneakAttackCycle + Math.min(120, 0.7 * (m.cycle - m.enterCloakCycle)) > m.cycle) {
+
+
+
+
+                        // ctx.strokeStyle = "rgba(0,0,0,0.2)"
+                        // ctx.lineWidth = 1
+                        // ctx.fillStyle = "rgba(0,0,0,0.02)"
+                        // for (let i = 0; i < 4; i++) {
+                        //     ctx.beginPath();
+                        //     ctx.ellipse(m.pos.x, m.pos.y, 50, 30, 0.2 * m.cycle + i * Math.PI / 4, 0, 2 * Math.PI);
+                        //     ctx.stroke()
+                        //     // ctx.fill();
+                        // }
                         ctx.strokeStyle = "rgba(0,0,0,0.5)" //m.fieldMeterColor; //"rgba(255,255,0,0.2)" //ctx.strokeStyle = `rgba(0,0,255,${0.5+0.5*Math.random()})`
                         ctx.beginPath();
-                        ctx.arc(m.pos.x, m.pos.y, 28, 0, 2 * Math.PI);
-                        ctx.lineWidth = 3
-                        ctx.stroke();
+                        ctx.arc(simulation.mouseInGame.x, simulation.mouseInGame.y, 16, 0, 2 * Math.PI);
+                        // ctx.lineWidth = 3
+                        ctx.fillStyle = "rgba(0,0,0,0.2)"
+                        ctx.fill();
+
+
+                        // const unit = Vector.add(m.pos, Vector.rotate({ x: 45, y: 0 }, 2 * Math.PI * Math.random()))
+                        // simulation.drawList.push({ //add dmg to draw queue
+                        //     x: unit.x,
+                        //     y: unit.y,
+                        //     radius: 4 + 10 * Math.random(),
+                        //     color: 'rgba(0, 0, 0, 0.1)',
+                        //     time: 15
+                        // });
+
                     }
                 }
             }
@@ -4385,10 +4415,7 @@ const m = {
                                                 m.fieldRange *= 0.8
                                                 if ((m.fieldMode === 0 || m.fieldMode === 9) && m.immuneCycle < m.cycle) m.energy += 0.2 * m.coupling
                                                 if (tech.isWormholeWorms) { //pandimensional spermia
-                                                    b.worm(Vector.add(m.hole.pos2, Vector.rotate({
-                                                        x: m.fieldRange * 0.4,
-                                                        y: 0
-                                                    }, 2 * Math.PI * Math.random())))
+                                                    b.worm(Vector.add(m.hole.pos2, Vector.rotate({ x: m.fieldRange * 0.4, y: 0 }, 2 * Math.PI * Math.random())))
                                                     Matter.Body.setVelocity(bullet[bullet.length - 1], Vector.mult(Vector.rotate(m.hole.unit, Math.PI / 2), -10));
                                                     // for (let i = 0, len = Math.ceil(1.25 * Math.random()); i < len; i++) {
                                                     // }

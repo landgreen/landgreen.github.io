@@ -820,25 +820,25 @@ const mobs = {
                 }
             },
             repelBullets() {
-                if (this.seePlayer.yes) {
-                    ctx.lineWidth = "8";
-                    ctx.strokeStyle = this.fill;
-                    ctx.beginPath();
-                    for (let i = 0, len = bullet.length; i < len; ++i) {
-                        const dx = bullet[i].position.x - this.position.x;
-                        const dy = bullet[i].position.y - this.position.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 500) {
-                            ctx.moveTo(this.position.x, this.position.y);
-                            ctx.lineTo(bullet[i].position.x, bullet[i].position.y);
-                            const angle = Math.atan2(dy, dx);
-                            const mag = (1500 * bullet[i].mass * simulation.g) / dist;
-                            bullet[i].force.x += mag * Math.cos(angle);
-                            bullet[i].force.y += mag * Math.sin(angle);
-                        }
+                // if (this.seePlayer.yes) {
+                // ctx.lineWidth = "8";
+                // ctx.strokeStyle = this.fill;
+                // ctx.beginPath();
+                for (let i = 0, len = bullet.length; i < len; ++i) {
+                    const dx = bullet[i].position.x - this.position.x;
+                    const dy = bullet[i].position.y - this.position.y;
+                    const dist = Math.max(300, Math.sqrt(dx * dx + dy * dy))
+                    if (dist < 700) {
+                        ctx.moveTo(this.position.x, this.position.y);
+                        ctx.lineTo(bullet[i].position.x, bullet[i].position.y);
+                        const angle = Math.atan2(dy, dx);
+                        const mag = (500 * bullet[i].mass * simulation.g) / dist;
+                        bullet[i].force.x += mag * Math.cos(angle);
+                        bullet[i].force.y += mag * Math.sin(angle);
                     }
-                    ctx.stroke();
                 }
+                // ctx.stroke();
+                // }
             },
             attraction() {
                 //accelerate towards the player

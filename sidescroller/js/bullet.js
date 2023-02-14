@@ -7110,7 +7110,10 @@ const b = {
             },
             doStream() {},
             fireStream() {
-                const spread = (input.down ? 0.04 : 0.3) * (Math.random() - 0.5)
+                const spread = (input.down ?
+                    0.04 * (Math.random() - 0.5) + 0.09 * Math.sin(m.cycle * 0.12) :
+                    0.23 * (Math.random() - 0.5) + 0.15 * Math.sin(m.cycle * 0.12)
+                )
                 const radius = 5 + 8 * Math.random() + (tech.isAmmoFoamSize && this.ammo < 300) * 12
                 const SPEED = (input.down ? 1.2 : 1) * Math.max(2, 14 - radius * 0.25)
                 const dir = m.angle + 0.15 * (Math.random() - 0.5)
@@ -7162,7 +7165,10 @@ const b = {
                 }
             },
             fireCharges() {
-                const spread = (input.down ? 0.04 : 0.3) * (Math.random() - 0.5)
+                const spread = (input.down ?
+                    0.04 * (Math.random() - 0.5) + 0.09 * Math.sin(m.cycle * 0.12) :
+                    0.23 * (Math.random() - 0.5) + 0.15 * Math.sin(m.cycle * 0.12)
+                )
                 const radius = 5 + 8 * Math.random() + (tech.isAmmoFoamSize && this.ammo < 300) * 12
                 const SPEED = (input.down ? 1.2 : 1) * Math.max(2, 14 - radius * 0.25)
                 const dir = m.angle + 0.15 * (Math.random() - 0.5)

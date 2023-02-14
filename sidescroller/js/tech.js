@@ -220,7 +220,8 @@ const tech = {
     damage: 1, //used for tech changes to player damage that don't have complex conditions
     damageFromTech() {
         let dmg = tech.damage //m.fieldDamage
-        if (tech.isDilate) dmg *= 1.25 + Math.sin(m.cycle * 0.01)
+        if (tech.isNoGroundDamage) dmg *= m.onGround ? 0.78 : 1.88
+        if (tech.isDilate) dmg *= 1.5 + Math.sin(m.cycle * 0.0075)
         if (tech.isGunChoice && tech.buffedGun === b.inventoryGun) dmg *= 1 + 0.31 * b.inventory.length
         if (powerUps.boost.endCycle > m.cycle) dmg *= 1 + powerUps.boost.damage
         if (m.coupling && (m.fieldMode === 0 || m.fieldMode === 5)) dmg *= 1 + 0.15 * m.coupling
@@ -353,7 +354,7 @@ const tech = {
         },
         {
             name: "aperture",
-            description: "your <strong class='color-d'>damage</strong> cycles every <strong>6</strong> seconds<br>between <strong>-75%</strong> and <strong>+125%</strong> <strong class='color-d'>damage</strong>",
+            description: "every <strong>6</strong> seconds your <strong class='color-d'>damage</strong> cycles<br>between <strong>-50%</strong> and <strong>+150%</strong> <strong class='color-d'>damage</strong>",
             maxCount: 1,
             count: 0,
             frequency: 1,
@@ -374,7 +375,7 @@ const tech = {
         },
         {
             name: "diaphragm",
-            description: "your <strong class='color-defense'>defense</strong> cycles every <strong>6</strong> seconds<br>between <strong>+100%</strong> and <strong>-33%</strong> <strong class='color-defense'>defense</strong>",
+            description: "every <strong>6</strong> seconds your <strong class='color-defense'>defense</strong> cycles<br>between <strong>+100%</strong> and <strong>-33%</strong> <strong class='color-defense'>defense</strong>",
             maxCount: 1,
             count: 0,
             frequency: 2,
@@ -7396,6 +7397,25 @@ const tech = {
             }
         },
         {
+            name: "aerostat",
+            description: `<strong>+88%</strong> <strong class='color-d'>damage</strong> while <strong>off</strong> the <strong>ground</strong><br><strong>-22%</strong> <strong class='color-d'>damage</strong> while <strong>on</strong> the <strong>ground</strong>`,
+            isFieldTech: true,
+            maxCount: 1,
+            count: 0,
+            frequency: 2,
+            frequencyDefault: 2,
+            allowed() {
+                return m.fieldUpgrades[m.fieldMode].name === "negative mass"
+            },
+            requires: "negative mass",
+            effect() {
+                tech.isNoGroundDamage = true
+            },
+            remove() {
+                tech.isNoGroundDamage = false
+            }
+        },
+        {
             name: "annihilation",
             description: "after <strong>colliding</strong> with non-boss mobs<br>they are <strong>annihilated</strong> and <strong>–33%</strong> <strong class='color-f'>energy</strong>",
             isFieldTech: true,
@@ -11324,4 +11344,5 @@ const tech = {
     isDilate: null,
     isDiaphragm: null,
     hardLanding: null,
+    isNoGroundDamage: null,
 }
