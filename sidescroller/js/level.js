@@ -42,7 +42,7 @@ const level = {
             // for (let i = 0; i < 3; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");
-            // level.factory();
+            // level.labs();
             // spawn.nodeGroup(1200, 0, "starter")
             // spawn.mantisBoss(1900, -500)
             // spawn.sneakBoss(1900, -500)
@@ -2350,38 +2350,44 @@ const level = {
                                 }
                                 //map elements go here
                                 //box around portals
-                                spawn.mapRect(x + -50, y + -2700, 150, 100);
-                                spawn.mapRect(x + -50, y + -2450, 150, 25);
-                                spawn.mapRect(x + 1900, y + -2725, 150, 550);
-                                spawn.mapRect(x + 1900, y + -2025, 150, 50);
-                                spawn.mapRect(x + 1900, y + -1125, 150, 150);
-                                spawn.mapRect(x + 1900, y + -825, 150, 50);
-                                spawn.mapRect(x + -50, y + -350, 150, 50);
-                                spawn.mapRect(x + -50, y + -650, 150, 150);
-                                spawn.mapRect(x + 1975, y - 1025, 50, 225);
-                                spawn.mapRect(x + 1975, y - 2200, 50, 200);
-                                spawn.mapRect(x + -25, y - 2625, 50, 200);
-                                spawn.mapRect(x + -25, y - 525, 75, 200);
+                                spawn.mapRect(x + -50, y + -2700, 150, 110);
+                                spawn.mapRect(x + -50, y + -2440, 150, 25);
+                                spawn.mapRect(x + 1900, y + -2715, 150, 550);
+                                spawn.mapRect(x + 1900, y + -2015, 150, 50);
+                                spawn.mapRect(x + 1900, y + -1115, 150, 150);
+                                spawn.mapRect(x + 1900, y + -815, 150, 50);
+                                spawn.mapRect(x + -50, y + -340, 150, 50);
+                                // spawn.mapRect(x + -50, y + -640, 150, 150);
+                                spawn.mapRect(x + 1975, y - 1015, 50, 225);
+                                spawn.mapRect(x + 1975, y - 2190, 50, 200);
+                                spawn.mapRect(x + -25, y - 2615, 50, 200);
+                                spawn.mapRect(x + -25, y - 515, 75, 200);
 
-                                const rampSpeed = 4 + Math.floor(9 * Math.random())
+                                //ledge to get to upper left door
+                                // spawn.mapRect(x + -50, y - 1400, 100, 25);
+                                spawn.mapRect(x + -25, y - 1075, 250, 25);
+                                spawn.mapRect(x + -50, y - 1075, 150, 590);
+
+
+                                const rampSpeed = 8 //+ Math.floor(4 * Math.random())
                                 const mover4 = level.mover(x, y + -2425, 1000, 50, rampSpeed)
                                 const mover3 = level.mover(x + 1000, y + -2000, 1000, 50, rampSpeed)
                                 const mover2 = level.mover(x + 1000, y + -800, 1000, 50, -rampSpeed)
                                 const mover1 = level.mover(x, y + -325, 1000, 50, -rampSpeed)
                                 const portal1 = level.portal({
                                     x: x + 125,
-                                    y: y - 425
+                                    y: y - 415
                                 }, 2 * Math.PI, { //right
                                     x: x + 125,
-                                    y: y - 2525
+                                    y: y - 2515
                                 }, 2 * Math.PI) //right
 
                                 const portal2 = level.portal({
                                     x: x + 1875,
-                                    y: y - 900
+                                    y: y - 890
                                 }, Math.PI, { //left
                                     x: x + 1875,
-                                    y: y - 2100
+                                    y: y - 2090
                                 }, Math.PI) //left
 
                                 doCustom.push(() => {
@@ -2442,183 +2448,6 @@ const level = {
                     }
                 )
             },
-            // (x = offset.x, y = offset.y) => {
-            //     // spawn.mapVertex(x + 5, y + -1318, "0 0  0 -250  125 -250"); //left ledges
-            //     // spawn.mapVertex(x + 1995, y + -1318, "0 0  0 -250  -125 -250"); // right ledges
-
-            //     let r = 150
-            //     const hexagon = `${r} 0   ${r*Math.cos(5.236)} ${r*Math.sin(5.236)}    ${r*Math.cos(4.189)} ${r*Math.sin(4.189)}     ${-r} 0     ${r*Math.cos(2.0944)} ${r*Math.sin(2.0944)}      ${r*Math.cos(1.0472)} ${r*Math.sin(1.0472)}  `
-            //     //450 horizontal spread //  -130-130-130 = 390 vertical
-
-
-            //     let xOff = 100 + 225
-            //     spawn.mapVertex(x + xOff + 0 * 450, y + -260 - 0 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 1 * 450, y + -260 - 0 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 2 * 450, y + -260 - 0 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 3 * 450, y + -260 - 0 * 390, hexagon);
-
-            //     xOff = 100
-            //     // spawn.mapVertex(x + xOff + 0 * 450, y + 1 * -260 - 1 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 1 * 450, y + -260 - 1 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 2 * 450, y + -260 - 1 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 3 * 450, y + -260 - 1 * 390, hexagon);
-            //     // spawn.mapVertex(x + xOff + 4 * 450, y + 1 * -260 - 1 * 390, hexagon);
-
-            //     xOff = 100 + 225
-            //     spawn.mapVertex(x + xOff + 0 * 450, y + -260 - 2 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 1 * 450, y + -260 - 2 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 2 * 450, y + -260 - 2 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 3 * 450, y + -260 - 2 * 390, hexagon);
-
-            //     xOff = 100
-            //     // spawn.mapVertex(x + xOff + 0 * 450, y + 1 * -260 - 1 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 1 * 450, y + -260 - 3 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 2 * 450, y + -260 - 3 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 3 * 450, y + -260 - 3 * 390, hexagon);
-            //     // spawn.mapVertex(x + xOff + 4 * 450, y + 1 * -260 - 1 * 390, hexagon);
-
-            //     xOff = 100 + 225
-            //     spawn.mapVertex(x + xOff + 0 * 450, y + -260 - 4 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 1 * 450, y + -260 - 4 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 2 * 450, y + -260 - 4 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 3 * 450, y + -260 - 4 * 390, hexagon);
-
-
-            //     //phase 2
-            //     xOff = 100
-            //     spawn.mapVertex(x + xOff + 1 * 450, y + -130 - 0 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 2 * 450, y + -130 - 0 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 3 * 450, y + -130 - 0 * 390, hexagon);
-
-            //     xOff = 100 + 225
-            //     spawn.mapVertex(x + xOff + 0 * 450, y + -130 - 1 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 1 * 450, y + -130 - 1 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 2 * 450, y + -130 - 1 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 3 * 450, y + -130 - 1 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 4 * 450, y + -130 - 1 * 390, hexagon);
-            //     xOff = 100
-            //     spawn.mapVertex(x + xOff + 1 * 450, y + -130 - 2 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 2 * 450, y + -130 - 2 * 390, hexagon);
-            //     spawn.mapVertex(x + xOff + 3 * 450, y + -130 - 2 * 390, hexagon);
-
-            //     // spawn.mapVertex(x + 550, y + 1 * -260, hexagon);
-            //     // spawn.mapVertex(x + 550, y + 2 * -260, hexagon);
-            //     // spawn.mapVertex(x + 550, y + 3 * -260, hexagon);
-            //     // spawn.mapVertex(x + 550, y + 5 * -260, hexagon);
-            //     // spawn.mapVertex(x + 550, y + 4 * -260, hexagon);
-
-            //     // spawn.mapVertex(x + 775, y + -260, hexagon);
-            //     // spawn.mapVertex(x + 1225, y + -260, hexagon);
-
-            //     // spawn.mapVertex(x + 550, y + -650, hexagon);
-            //     // spawn.mapVertex(x + 1000, y + -650, hexagon);
-            //     // spawn.mapVertex(x + 1450, y + -650, hexagon);
-
-            //     // spawn.mapVertex(x + 775, y + -1040, hexagon);
-            //     // spawn.mapVertex(x + 1225, y + -1040, hexagon);
-
-            //     // spawn.mapVertex(x + 550, y + -1430, hexagon);
-            //     // spawn.mapVertex(x + 1000, y + -1430, hexagon);
-            //     // spawn.mapVertex(x + 1450, y + -1430, hexagon);
-
-            //     // spawn.mapVertex(x + 775, y + -1820, hexagon);
-            //     // spawn.mapVertex(x + 1225, y + -1820, hexagon);
-
-            //     let count = 0
-            //     doCustomTopLayer.push(
-            //         () => {
-
-
-
-            //             if (!(count % 60)) {
-            //                 addMapToLevelInProgress = (who) => { //adds new map elements to the level while the level is already running  //don't forget to run simulation.draw.setPaths() after you all the the elements so they show up visually
-            //                     who.collisionFilter.category = cat.map;
-            //                     who.collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet;
-            //                     Matter.Body.setStatic(who, true); //make static
-            //                     Composite.add(engine.world, who); //add to world
-            //                 }
-            //                 const numberOfMapElementsAdded = 0
-            //                 for (let i = 0; i < numberOfMapElementsAdded; i++) addMapToLevelInProgress(map[map.length - 1 - i])
-
-            //                 simulation.draw.setPaths() //update map graphics
-            //             }
-            //         })
-            //     spawn.randomMob(x + 225, y + -1025, mobSpawnChance);
-            //     spawn.randomMob(x + 200, y + -675, mobSpawnChance);
-            //     spawn.randomMob(x + 225, y + -200, mobSpawnChance);
-            //     spawn.randomMob(x + 1750, y + -1075, mobSpawnChance);
-            //     spawn.randomMob(x + 1700, y + -650, mobSpawnChance);
-            //     spawn.randomMob(x + 1675, y + -175, mobSpawnChance);
-
-            //     spawn.randomGroup(x + 300, y + -2200);
-            //     spawn.randomGroup(x + 1625, y + -2200);
-            //     spawn.randomLevelBoss(x + 950, y + -2200);
-
-            // },
-            // (x = offset.x, y = offset.y) => { //hopBoss1
-            //     const button = level.button(x + 935, y + 0)
-            //     button.isUp = true
-            //     // spawn.mapVertex(x + 5, y + -1318, "0 0  0 -250  125 -250"); //left ledges
-            //     // spawn.mapVertex(x + 1995, y + -1318, "0 0  0 -250  -125 -250"); // right ledges
-            //     doCustomTopLayer.push(
-            //         () => {
-            //             button.draw();
-            //             if (button.isUp) {
-            //                 button.query();
-            //                 if (!button.isUp) {
-            //                     // doCustomTopLayer.push(() => {
-            //                     //     ctx.fillStyle = "rgba(150,255,220,0.15)"
-            //                     //     ctx.fillRect(x + 250, y + -2725, 625, 725)
-            //                     // })
-            //                     const mapStartingLength = map.length //track this so you know how many you added when running addMapToLevelInProgress
-            //                     addMapToLevelInProgress = (who) => { //adds new map elements to the level while the level is already running  //don't forget to run simulation.draw.setPaths() after you all the the elements so they show up visually
-            //                         who.collisionFilter.category = cat.map;
-            //                         who.collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet;
-            //                         Matter.Body.setStatic(who, true); //make static
-            //                         Composite.add(engine.world, who); //add to world
-            //                     }
-            //                     //map elements go here
-            //                     // spawn.mapRect(x + -50, y + -1875, 875, 200);
-            //                     // spawn.mapRect(x + 650, y + -2700, 125, 625);
-            //                     // spawn.mapRect(x + 1200, y + -2250, 250, 25);
-
-            //                     spawn.mapRect(x + -25, y + -1875, 1250, 200);
-            //                     // spawn.mapRect(x + 1075, y + -2700, 100, 650);
-            //                     spawn.mapRect(x + 1325, y + -1875, 475, 200);
-            //                     // spawn.mapRect(x + 1900, y + -1600, 125, 25);
-            //                     // spawn.mapRect(x + 900, y + -1875, 325, 25);
-            //                     // spawn.mapRect(x + 1375, y + -1875, 350, 25);
-
-            //                     // spawn.mapRect(x + 675, y + -2725, 50, 650);
-            //                     spawn.mapRect(x + 1900, y + -1675, 125, 25);
-            //                     spawn.mapRect(x + 1700, y + -1400, 325, 25);
-            //                     spawn.mapRect(x + -50, y + -1400, 325, 25);
-
-
-            //                     spawn.mapRect(x + -25, y + -700, 500, 25);
-            //                     spawn.mapRect(x + 675, y + -700, 600, 25);
-            //                     spawn.mapRect(x + 1475, y + -700, 500, 25);
-
-            //                     spawn.mapRect(x + 475, y + -1025, 200, 25);
-            //                     spawn.mapRect(x + 1275, y + -1025, 200, 25);
-            //                     spawn.mapRect(x + 475, y + -300, 200, 25);
-            //                     spawn.mapRect(x + 1275, y + -300, 200, 25);
-
-
-            //                     for (let i = 0, numberOfMapElementsAdded = map.length - mapStartingLength; i < numberOfMapElementsAdded; i++) addMapToLevelInProgress(map[map.length - 1 - i])
-            //                     simulation.draw.setPaths() //update map graphics
-            //                     //mobs go here
-            //                     powerUps.directSpawn(x + 50, y - 1525, "ammo");
-            //                     powerUps.directSpawn(x + 1950, y - 1525, "ammo");
-            //                     spawn.hopMomBoss(x + 550, y + -2325)
-            //                     for (let i = 0; i < 20; ++i) spawn.hopBullet(x + 50 + 1900 * Math.random(), y + -2325)
-            //                     // spawn.hopper(x + 1500, y + -775);
-            //                     // spawn.hopper(x + 525, y + -775);
-            //                 }
-            //             }
-            //         }
-            //     )
-            // },
             (x = offset.x, y = offset.y) => { //hopBoss2
                 const button = level.button(x + 935, y + 0)
                 button.isUp = true
@@ -2658,11 +2487,16 @@ const level = {
                                 //mobs go here
                                 powerUps.directSpawn(x + 50, y - 1525, "ammo");
                                 powerUps.directSpawn(x + 1950, y - 1525, "ammo");
+                                powerUps.directSpawn(x + 1900, y - 1525, "ammo");
                                 spawn.hopMomBoss(x + 800, y + -2200)
-                                for (let i = 0; i < 10; ++i) spawn.hopBullet(x + 150 + 750 * Math.random(), y + -1600)
-                                for (let i = 0; i < 10; ++i) spawn.hopBullet(x + 1100 + 750 * Math.random(), y + -1600)
-                                spawn.hopper(x + 1500, y + -775);
-                                spawn.hopper(x + 525, y + -775);
+                                for (let i = 0; i < 6; ++i) spawn.hopBullet(x + 150 + 750 * Math.random(), y + -1600)
+                                for (let i = 0; i < 6; ++i) spawn.hopBullet(x + 1100 + 750 * Math.random(), y + -1600)
+                                spawn.hopper(x + 1550, y + -775);
+                                spawn.hopper(x + 500, y + -775);
+                                spawn.hopper(x + 1400, y + -775);
+                                spawn.hopper(x + 550, y + -775);
+                                spawn.hopper(x + 525, y + -1475);
+                                spawn.hopper(x + 1550, y + -1500);
                             }
                         }
                     }
@@ -2740,10 +2574,12 @@ const level = {
                                     for (let i = 0; i < numberOfMapElementsAdded; i++) addMapToLevelInProgress(map[map.length - 1 - i])
 
                                     spawn.randomMob(x + 225, y + -1025, mobSpawnChance);
+                                    spawn.randomMob(x + 250, y + -1025, mobSpawnChance);
                                     spawn.randomMob(x + 200, y + -675, mobSpawnChance);
                                     spawn.randomMob(x + 225, y + -200, mobSpawnChance);
                                     spawn.randomMob(x + 1750, y + -1075, mobSpawnChance);
                                     spawn.randomMob(x + 1700, y + -650, mobSpawnChance);
+                                    spawn.randomMob(x + 1725, y + -650, mobSpawnChance);
                                     spawn.randomMob(x + 1675, y + -175, mobSpawnChance);
                                 }
                                 simulation.draw.setPaths() //update map graphics
@@ -2814,15 +2650,18 @@ const level = {
                                 const numberOfMapElementsAdded = 11
                                 for (let i = 0; i < numberOfMapElementsAdded; i++) addMapToLevelInProgress(map[map.length - 1 - i])
 
+                                spawn.randomMob(x + 1050, y + -1500, mobSpawnChance);
                                 spawn.randomMob(x + 1075, y + -1500, mobSpawnChance);
                                 spawn.randomMob(x + 325, y + -550, mobSpawnChance);
                                 spawn.randomMob(x + 800, y + -925, mobSpawnChance);
                                 spawn.randomMob(x + 1400, y + -1250, mobSpawnChance);
+                                spawn.randomMob(x + 1325, y + -1725, mobSpawnChance);
                                 spawn.randomMob(x + 1350, y + -1725, mobSpawnChance);
                                 spawn.randomMob(x + 575, y + -1375, mobSpawnChance);
                                 spawn.randomMob(x + 225, y + -2275, mobSpawnChance);
                                 spawn.randomMob(x + 875, y + -2450, mobSpawnChance);
                                 spawn.randomMob(x + 1550, y + -2525, mobSpawnChance);
+                                spawn.randomMob(x + 1525, y + -2525, mobSpawnChance);
                                 spawn.randomLevelBoss(x + 1075, y + -1500);
                                 spawn.secondaryBossChance(x + 1200, y + -1000)
                                 simulation.draw.setPaths() //update map graphics

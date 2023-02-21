@@ -2528,7 +2528,7 @@ const spawn = {
         me.friction = 1
         me.frictionStatic = 1
         me.restitution = 0;
-        me.delay = 100 + 40 * simulation.CDScale;
+        me.delay = 120 + 40 * simulation.CDScale;
         Matter.Body.rotate(me, Math.random() * Math.PI);
         spawn.shield(me, x, y, 1);
         me.onDeath = function() {
