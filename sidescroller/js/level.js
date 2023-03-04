@@ -9,7 +9,7 @@ const level = {
     levelsCleared: 0,
     // playableLevels: ["pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion", "pavilion"],
     //see level.populateLevels:   (intro, ... , reservoir, reactor, ... , gauntlet, final)    added later
-    playableLevels: ["labs", "rooftops", "skyscrapers", "warehouse", "highrise", "office", "aerie", "satellite", "sewers", "testChamber", "pavilion", "lock"],
+    playableLevels: ["labs", "rooftops", "skyscrapers", "warehouse", "highrise", "office", "aerie", "satellite", "sewers", "testChamber", "pavilion", "lock", "factory"],
     communityLevels: ["stronghold", "basement", "crossfire", "vats", "run", "n-gon", "house", "perplex", "coliseum", "tunnel", "islands", "temple", "dripp", "biohazard", "stereoMadness", "yingYang", "staircase", "fortress"],
     trainingLevels: ["walk", "crouch", "jump", "hold", "throw", "throwAt", "deflect", "heal", "fire", "nailGun", "shotGun", "superBall", "matterWave", "missile", "stack", "mine", "grenades", "harpoon"],
     levels: [],
@@ -30,11 +30,11 @@ const level = {
             // m.setField("metamaterial cloaking") //molecular assembler  standing wave   time dilation   perfect diamagnetism   metamaterial cloaking   wormhole   negative mass    pilot wave   plasma torch
             // simulation.molecularMode = 2
             // m.damage(0.1);
-            // b.giveGuns("super balls") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns("nail gun") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.giveGuns("wave") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[8].ammo = 10000
-            // tech.giveTech("aperture")
-            // tech.giveTech("rebound")
+            // tech.giveTech("inductive charging")
+            // tech.giveTech("laser-bot")
             // for (let i = 0; i < 1; ++i) tech.giveTech("mass-energy equivalence")
             // for (let i = 0; i < 1; ++i) tech.giveTech("Zectron")
             // for (let i = 0; i < 1; i++) tech.giveTech("CPT symmetry")
@@ -42,7 +42,8 @@ const level = {
             // for (let i = 0; i < 3; i++) powerUps.directSpawn(450, -50, "tech");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "boost");
             // for (let i = 0; i < 10; i++) powerUps.directSpawn(1750, -500, "coupling");
-            // level.labs();
+            // level.factory();
+            // level.testing();
             // spawn.nodeGroup(1200, 0, "starter")
             // spawn.mantisBoss(1900, -500)
             // spawn.sneakBoss(1900, -500)
@@ -1593,7 +1594,7 @@ const level = {
                             }
                             const stoppingFriction = 0.5
                             Matter.Body.setVelocity(who, { x: this.VxGoal * (1 - stoppingFriction) + who.velocity.x * stoppingFriction, y: who.velocity.y });
-                            Matter.Body.setAngularVelocity(who, who.angularVelocity * 0.8)
+                            Matter.Body.setAngularVelocity(who, who.angularVelocity * 0.9)
                         }
                     }
                     const blocks = Matter.Query.collides(this, body)
@@ -1601,6 +1602,14 @@ const level = {
                         pushBlock(blocks[i].bodyA)
                         pushBlock(blocks[i].bodyB)
                     }
+
+                    const mobTargets = Matter.Query.collides(this, mob)
+                    for (let i = 0; i < mobTargets.length; i++) {
+                        pushBlock(mobTargets[i].bodyA)
+                        pushBlock(mobTargets[i].bodyB)
+                    }
+
+
 
                     let pushPowerUp = (who) => {
                         if (!who.isMover) {
@@ -1630,6 +1639,79 @@ const level = {
                 ctx.lineDashOffset = (-simulation.cycle * this.VxGoal) % 80;
                 ctx.stroke();
                 ctx.setLineDash([0, 0]);
+            }
+        });
+        Matter.Body.setStatic(rect, true); //make static
+        return rect
+    },
+    transport(x, y, width, height, VxGoal = -6, force = VxGoal > 0 ? 0.0005 : -0.0005) {
+        //horizontal moving platform
+        //VxGoal below 3 don't move well, maybe try adjusting the force
+        x = x + width / 2
+        y = y + height / 2
+        const rect = body[body.length] = Bodies.rectangle(x, y, width, height, {
+            collisionFilter: {
+                category: cat.body,
+                mask: cat.player | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet //cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet
+            },
+            isNoSetCollision: true,
+            inertia: Infinity, //prevents rotation
+            isNotHoldable: true,
+            friction: 0,
+            frictionStatic: 0,
+            restitution: 0,
+            isClosing: false,
+            isMover: true,
+            VxGoal: VxGoal,
+            force: force,
+            changeDirection(isRight) {
+                if (isRight) {
+                    this.VxGoal = Math.abs(this.VxGoal)
+                    this.force = Math.abs(this.force)
+                    if (Matter.Query.collides(this, [jumpSensor]).length) player.force.x += 12 * Math.abs(this.VxGoal) * this.force * player.mass
+                } else {
+                    this.VxGoal = -Math.abs(this.VxGoal)
+                    this.force = -Math.abs(this.force)
+                    if (Matter.Query.collides(this, [jumpSensor]).length) player.force.x += 12 * Math.abs(this.VxGoal) * this.force * player.mass
+                }
+            },
+            move() {
+                if (!m.isBodiesAsleep) {
+                    Matter.Body.setPosition(this, { x: this.position.x + this.VxGoal, y: this.position.y }); //horizontal movement
+
+                    const touchingPlayer = Matter.Query.collides(this, [jumpSensor])
+                    if (touchingPlayer.length) {
+                        m.moverX = this.VxGoal
+                        if ((this.VxGoal > 0 && player.velocity.x < this.VxGoal) || (this.VxGoal < 0 && player.velocity.x > this.VxGoal)) {
+                            player.force.x += this.force * player.mass
+                        }
+                        m.Vx = player.velocity.x - this.VxGoal
+                    }
+                    let pushBlock = (who) => {
+                        if (!who.isMover) {
+                            if ((this.VxGoal > 0 && who.velocity.x < this.VxGoal) || (this.VxGoal < 0 && who.velocity.x > this.VxGoal)) {
+                                who.force.x += this.force * who.mass
+                            }
+                            const stoppingFriction = 0.5
+                            Matter.Body.setVelocity(who, { x: this.VxGoal * (1 - stoppingFriction) + who.velocity.x * stoppingFriction, y: who.velocity.y });
+                            Matter.Body.setAngularVelocity(who, who.angularVelocity * 0.8)
+                        }
+                    }
+                    const blocks = Matter.Query.collides(this, body)
+                    for (let i = 0; i < blocks.length; i++) {
+                        pushBlock(blocks[i].bodyA)
+                        pushBlock(blocks[i].bodyB)
+                    }
+                }
+            },
+            draw() {
+                ctx.beginPath();
+                const v = this.vertices;
+                ctx.moveTo(v[0].x, v[0].y);
+                for (let i = 1; i < v.length; ++i) ctx.lineTo(v[i].x, v[i].y);
+                ctx.lineTo(v[0].x, v[0].y);
+                ctx.fillStyle = "#586370"
+                ctx.fill();
             }
         });
         Matter.Body.setStatic(rect, true); //make static
@@ -2926,18 +3008,23 @@ const level = {
     },
     testing() {
 
+        const mover = level.mover(800, -300, 3000, 25); //x,y,width.height,VxGoal,force
 
-        const mover = level.mover(800, -300, 3000, 25); //x,y,width.height,goal,force
-        spawn.bodyRect(600, -475, 50, 50);
-
-
-
-
-        // const hazard = level.hazard(6000, -1000, 5, 1000, 0.4) //laser
-        const button = level.button(1000, 0)
-        spawn.bodyRect(1000, -50, 50, 50);
+        const train = level.transport(600, -500, 500, 25, 8); //x,y,width.height,VxGoal,force
+        spawn.bodyRect(1900, -550, 50, 50);
+        const button = level.button(350, -400)
+        spawn.bodyRect(250, -450, 50, 50); //block on button
 
         level.custom = () => {
+
+            //oscillate back and forth
+            if (train.position.x < 800) {
+                train.changeDirection(true) //go right
+            } else if (train.position.x > 2000) {
+                train.changeDirection(false) //go left
+            }
+            if (!button.isUp) train.move();
+
             mover.push();
             ctx.fillStyle = "#d4d4d4"
             ctx.fillRect(2500, -475, 200, 300)
@@ -2948,6 +3035,7 @@ const level = {
             level.enter.draw();
         };
         level.customTopLayer = () => {
+            train.draw()
             mover.draw();
             // hazard.opticalQuery();
             button.query();
@@ -3150,7 +3238,7 @@ const level = {
                 } else if (!isFightOver && !(simulation.cycle % 180)) {
                     let isFoundBoss = false
                     for (let i = 0; i < mob.length; i++) {
-                        if (mob[i].isBoss) {
+                        if (mob[i].isReactorBoss) {
                             isFoundBoss = true
                             break
                         }
@@ -3298,34 +3386,269 @@ const level = {
         powerUps.addResearchToLevel() //needs to run after mobs are spawned
     },
     factory() {
-        simulation.enableConstructMode()
-        level.setPosToSpawn(0, -50); //normal spawn
+        // simulation.enableConstructMode() //remove this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // level.difficultyIncrease(10 * 4) //30 is near max on hard  //60 is near max on why
+
+        level.setPosToSpawn(2235, -1375); //normal spawn
         spawn.mapRect(level.enter.x, level.enter.y + 20, 100, 20); //bump for level entrance
-        level.exit.x = 1500;
-        level.exit.y = -1875;
+        level.exit.x = 5150;
+        level.exit.y = -2705;
         spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 20); //bump for level exit
         level.defaultZoom = 1800
         simulation.zoomTransition(level.defaultZoom)
-        document.body.style.backgroundColor = "#d8dadf";
-        color.map = "#222629"
+        document.body.style.backgroundColor = "#d8d9dc";
+        color.map = "#262a2f"
+
+        let isPowerLeft = true
+
+        const movers = []
+        const moveSpeed = -5
+        movers.push(level.mover(125, -140, 925, 35, moveSpeed))
+        movers.push(level.mover(1100, -437, 1100, 35, moveSpeed))
+        movers.push(level.mover(2000, -600, 850, 35, moveSpeed))
+        const moveSpeedStopGo = 7
+        movers.push(level.mover(2700, -200, 3600, 35, 0))
+        const leftMoverSpeed = 6
+        movers.push(level.mover(6750, -450, 425, 350, leftMoverSpeed))
+        movers.push(level.mover(7675, -725, 500, 410, -leftMoverSpeed))
+        movers.push(level.mover(6750, -1075, 425, 50, -leftMoverSpeed))
+        movers.push(level.mover(5525, -1075, 450, 50, leftMoverSpeed))
+        movers.push(level.mover(7175, -215, 2275, 50, 3))
+
+        const trains = []
+        trains.push(level.transport(6275, -2100, 600, 50, 8 + simulation.difficultyMode))
+        trains.push(level.transport(6275, -2425, 600, 50, -8 - simulation.difficultyMode))
+
+        const lasers = []
+        const laserX = 3317 //3882 - 1130 / 2
+        const laserGap = 1130
+        lasers.push(level.hazard(laserX, -500, 6, 300, 0.4))
+        lasers.push(level.hazard(laserX + laserGap, -500, 6, 300, 0.4))
+        lasers.push(level.hazard(laserX + laserGap * 2, -500, 6, 300, 0.4))
+        for (let i = 0; i < lasers.length; i++) {
+            lasers[i].isOn = false;
+            spawn.mapRect(lasers[i].min.x - 55, -550, 110, 50);
+            spawn.mapRect(lasers[i].min.x - 10, -500, 25, 20);
+        }
+        const button1 = level.button(2235, -200)
+        button1.isUp = true
+        let bonusAmmoCount = 0
+        spawnBlock = (x, y) => {
+            const index = body.length
+            spawn.bodyRect(x, y, 50, 50); // spawn.bodyRect(x, y, 40 + Math.floor(30 * Math.random()), 40 + Math.floor(30 * Math.random()));
+            body[index].collisionFilter.category = cat.body;
+            body[index].collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.mob | cat.mobBullet
+            body[index].classType = "body";
+            Composite.add(engine.world, body[index]); //add to world
+        }
 
         level.custom = () => {
+            if (isPowerLeft) {
+                if (!(simulation.cycle % 90)) spawnBlock(2730, -1600);
+            } else {
+                for (let i = 0; i < trains.length; i++) {
+                    //oscillate back and forth
+                    if (trains[i].position.x < 5275) {
+                        trains[i].changeDirection(true) //go right
+                    } else if (trains[i].position.x > 7875) {
+                        trains[i].changeDirection(false) //go left
+                    }
+                    trains[i].move();
+                }
+
+                const rate = 160 //multiples of 32!
+                if ((simulation.cycle % rate) === 80) {
+                    for (let i = 0; i < lasers.length; i++) lasers[i].isOn = false;
+                    movers[3].VxGoal = moveSpeedStopGo;
+                    movers[3].force = 0.0005
+                    movers[2].VxGoal = moveSpeedStopGo;
+                    movers[2].force = 0.0005
+                } else if ((simulation.cycle % rate) === 0) {
+                    movers[3].VxGoal = 0;
+                    movers[3].force = 0
+                    movers[2].VxGoal = 0;
+                    movers[2].force = 0
+                    spawnBlock(2730, -1600); //3315, -1600);
+                    if ((simulation.cycle % (rate * 3)) === 0) {
+                        if (bonusAmmoCount < 6 && Math.random() < 0.6) { //some extra ammo because of all the extra mobs that don't drop ammo
+                            bonusAmmoCount++
+                            powerUps.spawn(2760, -1550, Math.random() < 0.5 ? "heal" : "ammo", false);
+                        }
+
+                        for (let i = 0; i < lasers.length; i++) lasers[i].isOn = true;
+                        const block2Mob = (laserIndex) => { //convert block into mob
+                            const laserHit = Matter.Query.ray(body, lasers[laserIndex].min, lasers[laserIndex].max) //check for collisions with 3rd laser
+                            if (laserHit.length) {
+                                for (let i = 0; i < body.length; i++) {
+                                    if (laserHit[0].body.id === body[i].id) { //need to find the block id so it can be removed
+                                        const list = ["flutter", "flutter", "flutter", "hopper", "slasher", "slasher", "slasher", "stabber", "springer", "striker", "sneaker", "launcher", "launcherOne", "exploder", "sucker", "spinner", "grower", "beamer", "spawner", "ghoster"]
+                                        const pick = list[Math.floor(Math.random() * list.length)]
+                                        spawn[pick](lasers[laserIndex].max.x, lasers[laserIndex].max.y - 20);
+                                        const who = mob[mob.length - 1]
+                                        Matter.Body.setVelocity(who, { x: (8 + 5 * Math.random()), y: -(14 + 10 * Math.random()) });
+                                        who.locatePlayer()
+                                        who.leaveBody = false;
+                                        who.isDropPowerUp = false
+                                        //remove block
+                                        Matter.Composite.remove(engine.world, body[i]);
+                                        body.splice(i, 1);
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                        if (mob.length < 100 && !m.isBodiesAsleep) {
+                            block2Mob(0)
+                            block2Mob(1)
+                            block2Mob(2)
+                        }
+                    }
+                }
+            }
+
+            if (button1.isUp) {
+                button1.query();
+                if (!button1.isUp) {
+                    isPowerLeft = false
+                    for (let i = 0; i < 3; i++) {
+                        movers[i].VxGoal = 0;
+                        movers[i].force = movers[i].VxGoal > 0 ? 0.0005 : -0.0005
+                    }
+                    powerUps.spawnStartingPowerUps(2760, -1550);
+                    spawn.randomMob(2700, -350, 0.2);
+                    spawn.randomMob(6975, -650, 0.2);
+                    spawn.randomMob(6550, -325, 0.3);
+                    spawn.randomMob(7350, -350, 0.3);
+                    spawn.randomMob(7925, -975, 0.5);
+                    spawn.randomMob(7950, -1725, 0.5);
+                    spawn.randomMob(7000, -1375, 0.3);
+                    spawn.randomMob(5700, -1350, 0.5);
+                    spawn.randomMob(5250, -1575, 0.5);
+                    spawn.randomMob(6325, -75, 0.3);
+                    spawn.randomMob(7900, -1925, 0.1);
+                    spawn.randomMob(5300, -1975, 0.3);
+                    spawn.randomMob(7875, -1900, 0.3);
+                    spawn.randomMob(5325, -1975, 0.4);
+
+                    spawn.randomGroup(3900, -725, 0.4);
+                    if (simulation.difficulty > 1) spawn.randomLevelBoss(6501, -1771);
+                    spawn.secondaryBossChance(6063, -661)
+                    powerUps.addResearchToLevel() //needs to run after mobs are spawned
+                }
+            }
+            button1.draw();
+            for (let i = 0; i < movers.length; i++) movers[i].push();
             level.exit.drawAndCheck();
-
             level.enter.draw();
-        };
-        level.customTopLayer = () => {};
+            ctx.fillStyle = "rgba(0,0,0,0.1)"
+            ctx.fillRect(6937, -1050, 50, 675);
+            ctx.fillStyle = "rgba(0,255,255,0.15)" //            ctx.fillStyle = "#f2f2f2"
+            ctx.fillRect(4975, -3050, 475, 375); //exit room
 
-        spawn.mapRect(-100, 0, 1000, 100);
-        // powerUps.spawnStartingPowerUps(1475, -1175);
-        // spawn.debris(750, -2200, 3700, 16); //16 debris per level
-        // spawn.bodyRect(1540, -1110, 300, 25, 0.9); 
-        // spawn.randomSmallMob(1300, -70);
-        // spawn.randomMob(2650, -975, 0.8);
-        // spawn.randomGroup(1700, -900, 0.4);
-        // if (simulation.difficulty > 1) spawn.randomLevelBoss(2200, -1300);
-        // spawn.secondaryBossChance(100, -1500)
-        powerUps.addResearchToLevel() //needs to run after mobs are spawned
+        };
+        level.customTopLayer = () => {
+            if (isPowerLeft) {
+                ctx.fillStyle = "rgba(0,0,0,0.1)"
+                ctx.fillRect(2400, -1650, 7050, 2750) //right side
+                ctx.fillRect(4950, -3075, 3225, 1425);
+                ctx.fillStyle = "rgba(0,0,0,0.1)"
+                ctx.beginPath()
+                ctx.moveTo(2407, -576);
+                ctx.lineTo(2000, -573)
+                ctx.lineTo(1950, -439)
+                ctx.lineTo(1100, -432)
+                ctx.lineTo(1020, -143)
+                ctx.lineTo(125, -137)
+                ctx.lineTo(-109, 300)
+                ctx.lineTo(-125, 1089)
+                ctx.lineTo(2372, 1081)
+                ctx.lineTo(2452, 65)
+                ctx.fill();
+            } else {
+                for (let i = 0; i < trains.length; i++) {
+                    trains[i].draw()
+                }
+                ctx.beginPath()
+                ctx.moveTo(2526, -589);
+                ctx.lineTo(2531, -597)
+                ctx.lineTo(2506, -594)
+                ctx.lineTo(2850, -600)
+                ctx.lineTo(2890, -193)
+                ctx.lineTo(6300, -200)
+                ctx.lineTo(6618, 857)
+                ctx.lineTo(6622, 1100)
+                ctx.lineTo(2521, 1100)
+                ctx.fillStyle = "rgba(0,0,0,0.1)"
+                ctx.fill();
+                ctx.fillStyle = "rgba(0,0,0,0.1)"
+                ctx.fillRect(-100, -1650, 2625, 2750) //left side
+                for (let i = 0; i < lasers.length; i++) lasers[i].opticalQuery()
+            }
+            ctx.fillStyle = "rgba(0,0,0,0.07)"
+            ctx.fillRect(7675, -1825, 1775, 1650);
+            ctx.fillRect(4975, -1900, 475, 825);
+            ctx.fillRect(2050, -1650, 350, 325) //entrance room
+            for (let i = 0; i < movers.length; i++) movers[i].draw();
+        };
+        spawn.mapRect(-1550, -3050, 1450, 4150); //left wall
+        spawn.mapRect(-1550, -3050, 6525, 1400); //ceiling
+        spawn.mapRect(-1550, -3050, 6525, 1400);
+        spawn.mapRect(3000, -1700, 1975, 675); //ceiling center
+
+
+        spawn.mapRect(3800, -4000, 5650, 950);
+        spawn.mapRect(3800, -4000, 1175, 2975);
+        spawn.mapRect(8175, -4000, 1275, 3685); //right wall
+        spawn.mapRect(8175, -200, 1275, 1300); //right wall
+
+        spawn.mapRect(75, 0, 6275, 1100); //ground
+        spawn.mapRect(6475, -200, 2750, 1300);
+        spawn.mapRect(4975, -1087, 550, 62);
+        spawn.mapRect(4975, -1100, 500, 75);
+
+        spawn.mapRect(7875, -1100, 175, 25); //right 3 hop stairs
+        spawn.mapRect(8075, -1450, 200, 25);
+        spawn.mapRect(7675, -1825, 375, 25);
+        spawn.mapRect(7675, -1800, 250, 725);
+
+        spawn.mapRect(5125, -1275, 200, 25); //left 3 hop stairs
+        spawn.mapRect(4900, -1575, 175, 25);
+        spawn.mapRect(5125, -1900, 325, 25);
+        spawn.mapRect(5225, -1875, 225, 625);
+
+        spawn.mapRect(5400, -3100, 50, 250); //exit
+        spawn.mapRect(4875, -2675, 675, 50); //exit
+
+        spawn.mapRect(1925, -1325, 550, 50); //entrance
+        spawn.mapRect(2050, -1675, 50, 175); //entrance
+        spawn.mapRect(1700, -200, 750, 275); //button shelf
+        if (Math.random() < 0.5) { //left side
+            spawn.mapRect(625, -1100, 425, 300);
+            spawn.mapRect(1375, -1100, 425, 300);
+            spawn.mapRect(1750, -835, 100, 35);
+            spawn.mapRect(-200, -525, 150, 35);
+        } else {
+            spawn.mapRect(800, -1125, 925, 400);
+            spawn.mapRect(75, -775, 400, 50);
+            spawn.mapRect(1700, -760, 75, 35);
+            spawn.mapRect(-200, -425, 150, 35);
+
+        }
+
+        spawn.mapRect(2400, -600, 125, 675);
+        spawn.mapRect(2400, -1750, 125, 1050);
+        spawn.mapRect(2700, -1700, 125, 85);
+
+        spawn.randomMob(350, -325, 0.5);
+        spawn.randomMob(875, -375, 0.5);
+        spawn.randomMob(1250, -575, 0.5);
+        spawn.randomMob(1550, -600, 0.5);
+
+        spawn.randomSmallMob(1250, -175);
+        spawn.randomSmallMob(1500, -229);
+        spawn.randomSmallMob(1850, -300);
+        powerUps.spawn(5200, -1300, "ammo");
+
     },
     final() {
         // color.map = "rgba(0,0,0,0.8)"
@@ -13160,7 +13483,6 @@ const level = {
         platformShadow(1275, -2150, 250, 100, shadows)
         cage(1400, -2050, 500, cages, 'starter', true)
         map[map.length] = Bodies.trapezoid(1400, -2193, 250, 100, 0.5)
-
         //DEBRIS
         //idk just put the debris wherever you want
         spawn.debris(-550, -225, 100)
@@ -13168,18 +13490,12 @@ const level = {
         spawn.debris(-275, -1400, 50)
         spawn.debris(2850, -2075, 150)
         spawn.debris(4250, -2250, 150)
-
         //BOSS
         // geneticBoss(1400, -3800)
         anotherBoss(0, 0) //will only spawn historyBoss if there is an additional boss
-
-        //POWERUPS
-
     },
     stereoMadness() {
-
         simulation.makeTextLog(`<strong>stereoMadness</strong> by <span class='color-var'>Richard0820</span>`);
-
         let totalCoin = 0;
         const hunter = function(x, y, radius = 30) { //doesn't stop chasing until past 105000
             mobs.spawn(x, y, 6, radius, "black");
