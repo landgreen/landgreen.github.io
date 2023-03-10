@@ -3384,7 +3384,7 @@ const tech = {
             effect() {
                 tech.isBrainstorm = true
                 tech.isBrainstormActive = false
-                tech.brainStormDelay = 150 - simulation.difficultyMode * 7
+                tech.brainStormDelay = 2000 - simulation.difficultyMode * 100
             },
             remove() {
                 tech.isBrainstorm = false
@@ -5021,11 +5021,11 @@ const tech = {
             requires: "wave",
             effect() {
                 tech.waveBeamSpeed *= 0.75;
-                tech.waveBeamDamage += 0.33 * 0.41 //this sets base  wave damage
+                tech.waveBeamDamage += 0.36 * 0.41 //this sets base  wave damage
             },
             remove() {
                 tech.waveBeamSpeed = 11;
-                tech.waveBeamDamage = 0.33 //this sets base  wave damage
+                tech.waveBeamDamage = 0.36 //this sets base  wave damage
             }
         },
         {
@@ -7197,18 +7197,18 @@ const tech = {
             requires: "standing wave",
             effect() {
                 tech.harmonics++
-                m.fieldShieldingScale = (tech.isStandingWaveExpand ? 0.9 : 1.3) * Math.pow(0.6, (tech.harmonics - 2))
+                m.fieldShieldingScale = (tech.isStandingWaveExpand ? 0.9 : 1.6) * Math.pow(0.6, (tech.harmonics - 2))
                 m.harmonicShield = m.harmonicAtomic
             },
             remove() {
                 tech.harmonics = 2
-                m.fieldShieldingScale = (tech.isStandingWaveExpand ? 0.9 : 1.3) * Math.pow(0.6, (tech.harmonics - 2))
+                m.fieldShieldingScale = (tech.isStandingWaveExpand ? 0.9 : 1.6) * Math.pow(0.6, (tech.harmonics - 2))
                 m.harmonicShield = m.harmonic3Phase
             }
         },
         {
             name: "expansion",
-            description: "<strong>+40%</strong> <strong>standing wave</strong> deflection efficiency<br>using <strong>standing wave</strong> field <strong>expands</strong> its <strong>radius</strong>",
+            description: "<strong>+50%</strong> <strong>standing wave</strong> deflection efficiency<br>using <strong>standing wave</strong> field <strong>expands</strong> its <strong>radius</strong>",
             // description: "use <strong class='color-f'>energy</strong> to <strong>expand</strong> <strong>standing wave</strong><br>the field slowly <strong>contracts</strong> when not used",
             isFieldTech: true,
             maxCount: 1,
@@ -9050,7 +9050,7 @@ const tech = {
             effect() {
                 tech.isBrainstorm = true
                 tech.isBrainstormActive = false
-                tech.brainStormDelay = 30
+                tech.brainStormDelay = 500
             },
             remove() {
                 tech.isBrainstorm = false

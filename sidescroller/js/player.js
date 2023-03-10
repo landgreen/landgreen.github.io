@@ -1847,7 +1847,7 @@ const m = {
     },
     setMaxEnergy() {
         // (m.fieldMode === 0 || m.fieldMode === 1) * 0.4 * m.coupling +
-        m.maxEnergy = (tech.isMaxEnergyTech ? 0.5 : 1) + tech.bonusEnergy + tech.healMaxEnergyBonus + tech.harmonicEnergy + 2 * tech.isGroundState + 3 * tech.isRelay * tech.isFlipFlopOn * tech.isRelayEnergy + 0.6 * (m.fieldUpgrades[m.fieldMode].name === "standing wave")
+        m.maxEnergy = (tech.isMaxEnergyTech ? 0.5 : 1) + tech.bonusEnergy + tech.healMaxEnergyBonus + tech.harmonicEnergy + 2 * tech.isGroundState + 3 * tech.isRelay * tech.isFlipFlopOn * tech.isRelayEnergy + 0.66 * (m.fieldUpgrades[m.fieldMode].name === "standing wave")
         // if (tech.isEnergyHealth) m.maxEnergy *= Math.sqrt(m.harmReduction())
         simulation.makeTextLog(`<span class='color-var'>m</span>.<span class='color-f'>maxEnergy</span> <span class='color-symbol'>=</span> ${(m.maxEnergy.toFixed(2))}`)
     },
@@ -2542,14 +2542,14 @@ const m = {
             name: "standing wave",
             //<strong>deflecting</strong> protects you in every <strong>direction</strong>
             description: `<strong>3</strong> oscillating <strong>shields</strong> are permanently active
-            <br><strong>+60</strong> max <strong class='color-f'>energy</strong>
+            <br><strong>+66</strong> max <strong class='color-f'>energy</strong>
             <br>generate <strong>6</strong> <strong class='color-f'>energy</strong> per second`,
             drainCD: 0,
             effect: () => {
                 m.fieldBlockCD = 0;
                 m.blockingRecoil = 2 //4 is normal
-                m.fieldRange = 175
-                m.fieldShieldingScale = (tech.isStandingWaveExpand ? 0.9 : 1.3) * Math.pow(0.6, (tech.harmonics - 2))
+                m.fieldRange = 185
+                m.fieldShieldingScale = (tech.isStandingWaveExpand ? 0.9 : 1.6) * Math.pow(0.6, (tech.harmonics - 2))
                 // m.fieldHarmReduction = 0.66; //33% reduction
 
                 m.harmonic3Phase = () => { //normal standard 3 different 2-d circles

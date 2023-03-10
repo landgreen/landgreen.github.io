@@ -1084,21 +1084,37 @@ const powerUps = {
                     // }
                     if (tech.isBrainstorm && !tech.isBrainstormActive && !simulation.isChoosing) {
                         tech.isBrainstormActive = true
-                        let count = 0
 
-                        function cycle() {
-                            count++
-                            if (count < tech.brainStormDelay * 5 && simulation.isChoosing) {
-                                if (!(count % tech.brainStormDelay)) {
-                                    powerUps.tech.effect();
-                                    document.getElementById("choose-grid").style.pointerEvents = "auto"; //turn off the normal 500ms delay
-                                    document.body.style.cursor = "auto";
-                                    document.getElementById("choose-grid").style.transitionDuration = "0s";
-                                }
+                        let count = 1
+                        let timeStart //= performance.timeOrigin
+                        const cycle = (timestamp) => {
+                            if (timeStart === undefined) timeStart = timestamp
+                            console.log(timestamp, timeStart)
+                            if (timestamp - timeStart > tech.brainStormDelay * count) {
+                                count++
+                                powerUps.tech.effect();
+                                document.getElementById("choose-grid").style.pointerEvents = "auto"; //turn off the normal 500ms delay
+                                document.body.style.cursor = "auto";
+                                document.getElementById("choose-grid").style.transitionDuration = "0s";
+                            }
+                            if (count < 5 && simulation.isChoosing) {
                                 requestAnimationFrame(cycle);
                             } else {
                                 tech.isBrainstormActive = false
                             }
+
+                            //     count++
+                            // if (count < tech.brainStormDelay * 5 && simulation.isChoosing) {
+                            //     if (!(count % tech.brainStormDelay)) {
+                            //         powerUps.tech.effect();
+                            //         document.getElementById("choose-grid").style.pointerEvents = "auto"; //turn off the normal 500ms delay
+                            //         document.body.style.cursor = "auto";
+                            //         document.getElementById("choose-grid").style.transitionDuration = "0s";
+                            //     }
+                            //     requestAnimationFrame(cycle);
+                            // } else {
+                            //     tech.isBrainstormActive = false
+                            // }
                         }
                         requestAnimationFrame(cycle);
                     }
