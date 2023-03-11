@@ -1,18 +1,17 @@
 ******************************************************** NEXT PATCH **************************************************
 
+added defense bar to HUD
+new community map commandeer by Desboot
 
+bug fixes
 
 *********************************************************** TODO *****************************************************
 
+switch to prettier formatter or remove beautify
 
-cloak rework
-  change vision size based on movement
-  hold field button to highlight mobs
-
-
-switch isBrainstorm to set time out, not animation
-  for high fps monitors
-  anything else needs to not be animation?
+extend brainstorming animation timers to fps cap?
+  will it be smoother or choppier?
+  anything else needs to hit limited fps on a high fps monitor?
 
 level element - mover, transport
   test effect of changing m.Vx on things like:  shooting bullets?

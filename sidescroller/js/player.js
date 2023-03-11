@@ -455,6 +455,7 @@ const m = {
             m.alive = false;
             simulation.paused = true;
             m.health = 0;
+            document.getElementById("defense").style.display = "none"; //hide defense
             m.displayHealth();
             document.getElementById("text-log").style.display = "none"
             document.getElementById("fade-out").style.opacity = 0.9; //slowly fade to 90% white on top of canvas
@@ -534,7 +535,8 @@ const m = {
 
     defaultFPSCycle: 0, //tracks when to return to normal fps
     immuneCycle: 0, //used in engine
-    harmReduction() {
+    lastCalculatedDefense: 0, //used to decided if defense bar needs to be redrawn  (in simulation.checks)
+    defense() {
         let dmg = 1
         dmg *= m.fieldHarmReduction
         // if (!tech.isFlipFlopOn && tech.isFlipFlopHealth) dmg *= 0.5
@@ -546,7 +548,7 @@ const m = {
         if (tech.isImmortal) dmg *= 0.67
         if (tech.isSlowFPS) dmg *= 0.8
         if (tech.energyRegen === 0) dmg *= 0.34
-        if (tech.healthDrain) dmg *= 1 + 3.33 * tech.healthDrain //tech.healthDrain = 0.03 at one stack //cause more damage
+        // if (tech.healthDrain) dmg *= 1 + 3.33 * tech.healthDrain //tech.healthDrain = 0.03 at one stack //cause more damage
         if (m.fieldMode === 0 || m.fieldMode === 3) dmg *= 0.73 ** m.coupling
         if (tech.isLowHealthDefense) dmg *= 1 - Math.max(0, 1 - m.health) * 0.8
         if (tech.isHarmReduceNoKill && m.lastKillCycle + 300 < m.cycle) dmg *= 0.33
@@ -560,7 +562,11 @@ const m = {
         if (tech.isNoFireDefense && m.cycle > m.fireCDcycle + 120) dmg *= 0.3
         if (tech.isTurret && m.crouch) dmg *= 0.34;
         if (tech.isFirstDer && b.inventory[0] === b.activeGun) dmg *= 0.85 ** b.inventory.length
-        return dmg
+        if (tech.isEnergyHealth) {
+            return Math.pow(dmg, 0.13) //defense has less effect
+        } else {
+            return dmg
+        }
     },
     rewind(steps) { // m.rewind(Math.floor(Math.min(599, 137 * m.energy)))
         if (tech.isRewindGrenade) {
@@ -700,7 +706,6 @@ const m = {
             }
         }
         if (tech.isEnergyHealth) {
-            dmg *= Math.pow(m.harmReduction(), 0.13) //defense has less effect
             m.energy -= 0.9 * dmg / Math.sqrt(simulation.healScale) //scale damage with heal reduction difficulty
             if (m.energy < 0 || isNaN(m.energy)) { //taking deadly damage
                 if (tech.isDeathAvoid && powerUps.research.count && !tech.isDeathAvoidedThisLevel) {
@@ -728,7 +733,7 @@ const m = {
                 return;
             }
         } else {
-            dmg *= m.harmReduction()
+            dmg *= m.defense()
             m.health -= dmg;
             if (m.health < 0 || isNaN(m.health)) {
                 if (tech.isDeathAvoid && powerUps.research.count > 0 && !tech.isDeathAvoidedThisLevel) { //&& Math.random() < 0.5
@@ -1848,7 +1853,7 @@ const m = {
     setMaxEnergy() {
         // (m.fieldMode === 0 || m.fieldMode === 1) * 0.4 * m.coupling +
         m.maxEnergy = (tech.isMaxEnergyTech ? 0.5 : 1) + tech.bonusEnergy + tech.healMaxEnergyBonus + tech.harmonicEnergy + 2 * tech.isGroundState + 3 * tech.isRelay * tech.isFlipFlopOn * tech.isRelayEnergy + 0.66 * (m.fieldUpgrades[m.fieldMode].name === "standing wave")
-        // if (tech.isEnergyHealth) m.maxEnergy *= Math.sqrt(m.harmReduction())
+        // if (tech.isEnergyHealth) m.maxEnergy *= Math.sqrt(m.defense())
         simulation.makeTextLog(`<span class='color-var'>m</span>.<span class='color-f'>maxEnergy</span> <span class='color-symbol'>=</span> ${(m.maxEnergy.toFixed(2))}`)
     },
     fieldMeterColor: "#0cf",
