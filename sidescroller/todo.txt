@@ -1,13 +1,17 @@
 ******************************************************** NEXT PATCH **************************************************
 
-added defense bar to HUD
-new community map commandeer by Desboot
+added a damage bar
+  health bar is now green
+  (I'll probably add a setting to disable this next patch)
 
-bug fixes
+community map clock by Cornbread 2100
+
+wave gun has -15% ammo
+tech phonon has +25% ammo, and +10% damage
+
+JUNK tech stubs can now wall climb
 
 *********************************************************** TODO *****************************************************
-
-switch to prettier formatter or remove beautify
 
 extend brainstorming animation timers to fps cap?
   will it be smoother or choppier?
