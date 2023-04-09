@@ -1,20 +1,56 @@
 ******************************************************** NEXT PATCH **************************************************
 
-some new images
+retrocausality drains 30% less energy as time rewinds, but each time you start to rewind you drain 30 energy
+  no longer provides immunity for 1 second after exiting rewind
+  spawns 20% fewer bots
 
-bug fixes
+deflecting changes
+  shielded mobs take 50% more energy to deflect
+  deflecting shielded mobs now only disables your shield for perfect diamagnetism and not for very long
+  you can deflect any mob if you have at least 5% energy, but if deflecting brings you below that your shield is disabled for 1 second
+    also you can't passively regen energy while shield is disabled
 
+standing wave rework
+  coupling gives iceIX -> max energy
+  expansion gives deflection efficiency -> +50 max energy
+  spherical harmonics gives 40 -> 50% deflection efficiency
+  electronegativity is a fieldTech for standing wave, wormhole, and pilot wave
+    also  0.15 -> 0.22% damage per energy
+  dynamic equilibrium is no longer unlocked by standing wave
+
+tech: surface plasmons - after deflecting drains all your energy, shoot lasers in every direction
+
+added a generic system to add code that loops for a set time
+Example code:
+simulation.ephemera.push({
+    name: "uniqueName",
+    count: 60, //cycles before it self removes
+    do() {
+        this.count--
+        if (this.count < 0) simulation.removeEphemera(this.name)
+        //run code here
+    },
+})
+
+some bug fixes
+also new bugs probably
 
 *********************************************************** TODO *****************************************************
 
-tech: using research spawns a heal and ammo
+use ephemera to replace things
+  JUNK?
+  request animation stuff
+
+tech: choose next map by name after exiting current map
+  use modified tech selection code?
+  this might be too much work without much reward
+  JUNK only? or maybe combine with other buff
 
 Tech: relativity
   Simulation speed scales with movement speed. When still, time moves at 0.4 speed, at full walking speed it’s 1. (So if you’re falling or something and you move faster the simulation will be faster than usual)
   Also a damage and/or defense boost to make it worth using
 
 Tech: Turbine - Energy generation is proportional to your speed up to +X% energy generation at 40 speed 
-Tech: "Electric Reactive Armor": Defense increases by 2% for each 1 energy generation you have
 
 wormhole tech - teleport away mobs with mass below 3 when they get too near the player
     short CD, small energy cost, only mobs below a mass
@@ -1155,6 +1191,10 @@ possible names for tech
   nuclear pasta - hard matter in neutron star
   nonlocal
   fine-tuned universe
+  nonperturbative
+  D-branes
+  instanton or pseudoparticle
+  soliton  (wave packet)
   hall effect thrusters
   spaghettification
   particle accelerator
@@ -1239,4 +1279,6 @@ if pause is pressed while selecting power ups, display pause menu on top of sele
   time, CPT, pause -  by Lee Bontecou
   boost, coupling power ups tech - cyan electron orbiting a black nucleus electric field as bas-relief   //(by Kazumasa Nagai)
   radioactive - volumetric atomic nucleus diagram by Paul Catherall
+
+
 

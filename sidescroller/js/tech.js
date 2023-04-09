@@ -246,7 +246,7 @@ const tech = {
         if (tech.isBotDamage) dmg *= 1 + 0.06 * b.totalBots()
         if (tech.restDamage > 1 && player.speed < 1) dmg *= tech.restDamage
         if (tech.isLowEnergyDamage) dmg *= 1 + 0.7 * Math.max(0, 1 - m.energy)
-        if (tech.energyDamage) dmg *= 1 + m.energy * 0.15 * tech.energyDamage;
+        if (tech.energyDamage) dmg *= 1 + m.energy * 0.22 * tech.energyDamage;
         if (tech.isDamageFromBulletCount) dmg *= 1 + bullet.length * 0.007
         if (tech.isNoFireDamage && m.cycle > m.fireCDcycle + 120) dmg *= 2
         if (tech.isSpeedDamage) dmg *= 1 + Math.min(0.66, player.speed * 0.0165)
@@ -258,7 +258,7 @@ const tech = {
         return dmg
     },
     duplicationChance() {
-        return Math.max(0, (tech.isPowerUpsVanish ? 0.12 : 0) + (tech.isStimulatedEmission ? 0.15 : 0) + tech.cancelCount * 0.043 + tech.duplicateChance + 0.05 * tech.isExtraGunField + m.duplicateChance + tech.fieldDuplicate + tech.cloakDuplication + (tech.isAnthropicTech && tech.isDeathAvoidedThisLevel ? 0.5 : 0) + tech.isQuantumEraserDuplication * (1 - 0.016 * (simulation.difficultyMode ** 2))) // + (m.fieldMode === 0 || m.fieldMode === 9) * 0.03 * m.coupling)
+        return Math.min(1, Math.max(0, (tech.isPowerUpsVanish ? 0.12 : 0) + (tech.isStimulatedEmission ? 0.15 : 0) + tech.cancelCount * 0.043 + tech.duplicateChance + 0.05 * tech.isExtraGunField + m.duplicateChance + tech.fieldDuplicate + tech.cloakDuplication + (tech.isAnthropicTech && tech.isDeathAvoidedThisLevel ? 0.5 : 0) + tech.isQuantumEraserDuplication * (1 - 0.016 * (simulation.difficultyMode ** 2)))) // + (m.fieldMode === 0 || m.fieldMode === 9) * 0.03 * m.coupling)
     },
     isScaleMobsWithDuplication: false,
     maxDuplicationEvent() {
@@ -1247,8 +1247,10 @@ const tech = {
     {
         name: "collider",
         descriptionFunction() {
-            return `after mobs <strong>die</strong> there is a <strong>+33%</strong> chance <br>to smash <strong>power ups</strong> into a different <strong>flavor</strong>`
+            return `after mobs <strong>die</strong> there is a <strong>+33%</strong> chance to<br>collide <strong>power ups</strong> to form different <strong>power ups</strong>`
+            // return `after mobs <strong>die</strong> there is a <strong>+33%</strong> chance to convert<br>${powerUps.orb.heal()}, ${powerUps.orb.ammo()}, ${powerUps.orb.research(1)}, <strong class='color-m'>tech</strong>, <strong class='color-f'>field</strong>, <strong class='color-g'>gun</strong> into other types`
         },
+
         maxCount: 3,
         count: 0,
         frequency: 1,
@@ -2552,27 +2554,6 @@ const tech = {
         }
     },
     {
-        name: "electronegativity",
-        descriptionFunction() {
-            return `<strong>+0.15%</strong> <strong class='color-d'>damage</strong> per current stored <strong class='color-f'>energy</strong><br><em>(+${(15 * m.energy).toFixed(0)}%)</em>`
-        },
-        // description: "<strong>+1%</strong> <strong class='color-d'>damage</strong> per <strong>8</strong> stored <strong class='color-f'>energy</strong>",
-        maxCount: 9,
-        count: 0,
-        frequency: 1,
-        frequencyDefault: 1,
-        allowed() {
-            return true
-        },
-        requires: "",
-        effect() {
-            tech.energyDamage++
-        },
-        remove() {
-            tech.energyDamage = 0;
-        }
-    },
-    {
         name: "ground state",
         description: "<strong>+200</strong> maximum <strong class='color-f'>energy</strong><br><strong>–40%</strong> passive <strong class='color-f'>energy</strong> generation",
         // description: "reduce <strong class='color-defense'>defense</strong> by <strong>66%</strong><br>you <strong>no longer</strong> passively regenerate <strong class='color-f'>energy</strong>",
@@ -2717,7 +2698,7 @@ const tech = {
         effect() {
             tech.isCrouchRegen = true; //only used to check for requirements
             m.regenEnergy = function () {
-                if (m.immuneCycle < m.cycle && m.crouch) m.energy += 7 * m.fieldRegen;
+                if (m.immuneCycle < m.cycle && m.crouch && m.fieldCDcycle < m.cycle) m.energy += 7 * m.fieldRegen;
                 if (m.energy < 0) m.energy = 0
             }
         },
@@ -2758,7 +2739,7 @@ const tech = {
         effect() {
             tech.isDamageAfterKillNoRegen = true;
             m.regenEnergy = function () {
-                if (m.immuneCycle < m.cycle && (m.lastKillCycle + 300 < m.cycle)) m.energy += m.fieldRegen;
+                if (m.immuneCycle < m.cycle && (m.lastKillCycle + 300 < m.cycle) && m.fieldCDcycle < m.cycle) m.energy += m.fieldRegen;
                 if (m.energy < 0) m.energy = 0
             }
         },
@@ -2887,7 +2868,7 @@ const tech = {
     {
         name: "antiscience",
         descriptionFunction() {
-            return `<strong>+66%</strong> <strong class='color-d'>damage</strong><br><strong>–10</strong> ${tech.isEnergyHealth ? "<strong class='color-f'>energy</strong>" : "<strong class='color-h'>health</strong>"} after picking up a <strong class='color-m'>tech</strong>`
+            return `<strong>–10</strong> ${tech.isEnergyHealth ? "<strong class='color-f'>energy</strong>" : "<strong class='color-h'>health</strong>"} after picking up a <strong class='color-m'>tech</strong><br><strong>+66%</strong> <strong class='color-d'>damage</strong>`
         },
         // description: "<strong>+66%</strong> <strong class='color-d'>damage</strong><br><strong>–10</strong> <strong class='color-h'>health</strong> after picking up a <strong class='color-m'>tech</strong>",
         maxCount: 1,
@@ -3020,9 +3001,9 @@ const tech = {
         frequencyDefault: 1,
         isHealTech: true,
         allowed() {
-            return !tech.isHealAttract
+            return true
         },
-        requires: "not accretion",
+        requires: "",
         effect() {
             tech.isOverHeal = true;
         },
@@ -3032,20 +3013,20 @@ const tech = {
     },
     {
         name: "accretion",
-        description: `${powerUps.orb.heal(1)} follow you, even between levels<br>spawn ${powerUps.orb.heal(3)}`,
+        description: `${powerUps.orb.heal(1)} follow you, even between levels<br>spawn ${powerUps.orb.heal(5)}`,
         maxCount: 1,
         count: 0,
         frequency: 1,
         frequencyDefault: 1,
         isHealTech: true,
         allowed() {
-            return m.fieldMode !== 9 && !tech.isOverHeal
+            return m.fieldMode !== 9
         },
-        requires: "not wormhole, quenching",
+        requires: "not wormhole",
         effect() {
             tech.isHealAttract = true
             powerUps.setPowerUpMode();
-            for (let i = 0; i < 3; i++) powerUps.spawn(m.pos.x + 100 * (Math.random() - 0.5), m.pos.y + 100 * (Math.random() - 0.5), "heal");
+            for (let i = 0; i < 5; i++) powerUps.spawn(m.pos.x + 100 * (Math.random() - 0.5), m.pos.y + 100 * (Math.random() - 0.5), "heal");
         },
         remove() {
             tech.isHealAttract = false
@@ -3315,7 +3296,7 @@ const tech = {
     },
     {
         name: "perturbation theory",
-        description: `if you have no ${powerUps.orb.research(1)} in your inventory<br><strong>+60%</strong> <strong><em>fire rate</em></strong>`,
+        description: `if you have no ${powerUps.orb.research(1)} in your inventory<br><strong>+70%</strong> <strong><em>fire rate</em></strong>`,
         maxCount: 1,
         count: 0,
         frequency: 1,
@@ -3326,7 +3307,7 @@ const tech = {
         requires: "no research",
         effect() {
             tech.isRerollHaste = true;
-            tech.researchHaste = 0.4;
+            tech.researchHaste = 0.3;
             b.setFireCD();
         },
         remove() {
@@ -3399,7 +3380,7 @@ const tech = {
     },
     {
         name: "brainstorming",
-        description: "<strong class='color-m'>tech</strong> choices <strong>randomize</strong><br>every <strong>2</strong> seconds for <strong>10</strong> seconds",
+        description: "<strong class='color-m'>tech</strong> choices <strong>randomize</strong><br>every <strong>1.5</strong> seconds for <strong>10</strong> seconds",
         maxCount: 1,
         count: 0,
         frequency: 1,
@@ -3411,7 +3392,7 @@ const tech = {
         effect() {
             tech.isBrainstorm = true
             tech.isBrainstormActive = false
-            tech.brainStormDelay = 2000 - simulation.difficultyMode * 100
+            tech.brainStormDelay = 1800 - simulation.difficultyMode * 100
         },
         remove() {
             tech.isBrainstorm = false
@@ -4759,7 +4740,7 @@ const tech = {
         frequency: 2,
         frequencyDefault: 2,
         allowed() {
-            return tech.isIceCrystals || tech.isSporeFreeze || (m.fieldMode === 4 && simulation.molecularMode === 2) || tech.isIceShot || tech.relayIce || tech.isNeedleIce || (m.coupling && m.fieldMode < 3)
+            return tech.isIceCrystals || tech.isSporeFreeze || (m.fieldMode === 4 && simulation.molecularMode === 2) || tech.isIceShot || tech.relayIce || tech.isNeedleIce || (m.coupling && (m.fieldMode === 3 || m.fieldMode === 0))
         },
         requires: "a freeze effect",
         effect() {
@@ -4778,7 +4759,7 @@ const tech = {
         frequency: 2,
         frequencyDefault: 2,
         allowed() {
-            return tech.isIceCrystals || tech.isSporeFreeze || (m.fieldMode === 4 && simulation.molecularMode === 2) || tech.isIceShot || tech.relayIce || tech.isNeedleIce || (m.coupling && m.fieldMode < 3)
+            return tech.isIceCrystals || tech.isSporeFreeze || (m.fieldMode === 4 && simulation.molecularMode === 2) || tech.isIceShot || tech.relayIce || tech.isNeedleIce || (m.coupling && (m.fieldMode === 3 || m.fieldMode === 0))
         },
         requires: "a freeze effect",
         effect() {
@@ -4797,7 +4778,7 @@ const tech = {
         frequency: 2,
         frequencyDefault: 2,
         allowed() {
-            return (tech.isIceCrystals || tech.isSporeFreeze || (m.fieldMode === 4 && simulation.molecularMode === 2) || tech.isIceShot || tech.relayIce || tech.isNeedleIce || (m.coupling && m.fieldMode < 3)) && !tech.sporesOnDeath && !tech.isExplodeMob && !tech.botSpawner && !tech.isMobBlockFling && !tech.nailsDeathMob
+            return (tech.isIceCrystals || tech.isSporeFreeze || (m.fieldMode === 4 && simulation.molecularMode === 2) || tech.isIceShot || tech.relayIce || tech.isNeedleIce || (m.coupling && (m.fieldMode === 3 || m.fieldMode === 0))) && !tech.sporesOnDeath && !tech.isExplodeMob && !tech.botSpawner && !tech.isMobBlockFling && !tech.nailsDeathMob
         },
         requires: "a localized freeze effect, no other mob death tech",
         effect() {
@@ -4816,7 +4797,7 @@ const tech = {
         frequency: 2,
         frequencyDefault: 2,
         allowed() {
-            return (m.fieldMode === 4 && simulation.molecularMode === 2) || tech.relayIce || tech.isNeedleIce || (m.coupling && m.fieldMode < 3) || tech.iceIXOnDeath || tech.isIceShot
+            return (m.fieldMode === 4 && simulation.molecularMode === 2) || tech.relayIce || tech.isNeedleIce || (m.coupling && (m.fieldMode === 3 || m.fieldMode === 0)) || tech.iceIXOnDeath || tech.isIceShot
         },
         requires: "ice IX",
         effect() {
@@ -4835,7 +4816,7 @@ const tech = {
         frequency: 2,
         frequencyDefault: 2,
         allowed() {
-            return tech.isIceCrystals || tech.isSporeFreeze || (m.fieldMode === 4 && simulation.molecularMode === 2) || tech.relayIce || tech.isNeedleIce || (m.coupling && m.fieldMode < 3) || tech.iceIXOnDeath || tech.isIceShot
+            return tech.isIceCrystals || tech.isSporeFreeze || (m.fieldMode === 4 && simulation.molecularMode === 2) || tech.relayIce || tech.isNeedleIce || (m.coupling && (m.fieldMode === 3 || m.fieldMode === 0)) || tech.iceIXOnDeath || tech.isIceShot
         },
         requires: "a localized freeze effect",
         effect() {
@@ -6913,7 +6894,7 @@ const tech = {
         frequency: 2,
         frequencyDefault: 2,
         allowed() {
-            return (tech.haveGunCheck("laser") && !tech.isPulseLaser) || tech.isLaserBotUpgrade
+            return (tech.haveGunCheck("laser") && !tech.isPulseLaser) || tech.isLaserBotUpgrade || tech.isLaserField
         },
         requires: "laser, not pulse",
         effect() {
@@ -6998,7 +6979,7 @@ const tech = {
         frequency: 1,
         frequencyDefault: 1,
         allowed() {
-            return (tech.haveGunCheck("laser") || tech.isLaserMine || tech.isLaserBotUpgrade) && !tech.isWideLaser && !tech.isPulseLaser && !tech.historyLaser
+            return (tech.haveGunCheck("laser") || tech.isLaserMine || tech.isLaserBotUpgrade || tech.isLaserField) && !tech.isWideLaser && !tech.isPulseLaser && !tech.historyLaser
         },
         requires: "laser, not diffuse beam, pulse, or slow light",
         effect() {
@@ -7115,7 +7096,7 @@ const tech = {
         frequency: 1,
         frequencyDefault: 1,
         allowed() {
-            return (tech.haveGunCheck("laser") || tech.isLaserBotUpgrade || tech.isLaserMine) && !tech.isPulseLaser && tech.laserDrain === 0.0018
+            return (tech.haveGunCheck("laser") || tech.isLaserBotUpgrade || tech.isLaserMine || tech.isLaserField) && !tech.isPulseLaser && tech.laserDrain === 0.0018
         },
         requires: "laser, not free-electron, pulse",
         effect() {
@@ -7138,7 +7119,7 @@ const tech = {
         frequency: 1,
         frequencyDefault: 1,
         allowed() {
-            return (tech.haveGunCheck("laser") || tech.isLaserMine || tech.isLaserBotUpgrade) && !tech.isPulseLaser && tech.laserDrain === 0.0018
+            return (tech.haveGunCheck("laser") || tech.isLaserMine || tech.isLaserBotUpgrade || tech.isLaserField) && !tech.isPulseLaser && tech.laserDrain === 0.0018
         },
         requires: "laser, not pulse, infrared diode",
         effect() {
@@ -7163,7 +7144,7 @@ const tech = {
         frequency: 1,
         frequencyDefault: 1,
         allowed() {
-            return (tech.haveGunCheck("laser") || tech.isLaserMine || tech.isLaserBotUpgrade) && !tech.isPulseLaser && tech.laserDrain === 0.0018
+            return (tech.haveGunCheck("laser") || tech.isLaserMine || tech.isLaserBotUpgrade || tech.isLaserField) && !tech.isPulseLaser && tech.laserDrain === 0.0018
         },
         requires: "laser, not pulse, infrared diode",
         effect() {
@@ -7207,6 +7188,48 @@ const tech = {
     //************************************************** tech
     //**************************************************
     {
+        name: "spherical harmonics",
+        description: "<strong>+50%</strong> <strong>standing wave</strong> deflection efficiency", //<strong>standing wave</strong> oscillates in a 3rd dimension<br>
+        isFieldTech: true,
+        maxCount: 9,
+        count: 0,
+        frequency: 2,
+        frequencyDefault: 2,
+        allowed() {
+            return m.fieldMode === 1 && !tech.isLaserField
+        },
+        requires: "standing wave, not surface plasmons",
+        effect() {
+            tech.harmonics++
+            m.fieldShieldingScale = 1.6 * Math.pow(0.5, (tech.harmonics - 2))
+            m.harmonicShield = m.harmonicAtomic
+        },
+        remove() {
+            tech.harmonics = 2
+            m.fieldShieldingScale = 1.6 * Math.pow(0.5, (tech.harmonics - 2))
+            m.harmonicShield = m.harmonic3Phase
+        }
+    },
+    {
+        name: "surface plasmons",
+        description: "if <strong>deflecting</strong> drains all your <strong class='color-f'>energy</strong><br>emit <strong class='color-laser'>laser</strong> beams that scale with max <strong class='color-f'>energy</strong>",
+        isFieldTech: true,
+        maxCount: 1,
+        count: 0,
+        frequency: 2,
+        frequencyDefault: 2,
+        allowed() {
+            return (m.fieldMode === 4 && tech.deflectEnergy === 0) || (m.fieldMode === 1 && tech.harmonics === 2) || m.fieldMode === 0
+        },
+        requires: "molecular assembler, standing wave, field emitter, not electric generator",
+        effect() {
+            tech.isLaserField = true
+        },
+        remove() {
+            tech.isLaserField = false
+        }
+    },
+    {
         name: "zero point energy",
         description: `use ${powerUps.orb.research(2)}<br><strong>+100</strong> maximum <strong class='color-f'>energy</strong>`,
         isFieldTech: true,
@@ -7232,32 +7255,8 @@ const tech = {
         }
     },
     {
-        name: "spherical harmonics",
-        description: "<strong>+40%</strong> <strong>standing wave</strong> deflection efficiency<br>no longer deactivates on mob <strong>shields</strong>", //<strong>standing wave</strong> oscillates in a 3rd dimension<br>
-        isFieldTech: true,
-        maxCount: 9,
-        count: 0,
-        frequency: 3,
-        frequencyDefault: 3,
-        allowed() {
-            return m.fieldMode === 1
-        },
-        requires: "standing wave",
-        effect() {
-            tech.harmonics++
-            m.fieldShieldingScale = (tech.isStandingWaveExpand ? 0.9 : 1.6) * Math.pow(0.6, (tech.harmonics - 2))
-            m.harmonicShield = m.harmonicAtomic
-        },
-        remove() {
-            tech.harmonics = 2
-            m.fieldShieldingScale = (tech.isStandingWaveExpand ? 0.9 : 1.6) * Math.pow(0.6, (tech.harmonics - 2))
-            m.harmonicShield = m.harmonic3Phase
-        }
-    },
-    {
         name: "expansion",
-        description: "<strong>+50%</strong> <strong>standing wave</strong> deflection efficiency<br>using <strong>standing wave</strong> field <strong>expands</strong> its <strong>radius</strong>",
-        // description: "use <strong class='color-f'>energy</strong> to <strong>expand</strong> <strong>standing wave</strong><br>the field slowly <strong>contracts</strong> when not used",
+        description: "using <strong>standing wave</strong> field <strong>expands</strong> its <strong>radius</strong><br><strong>+40</strong> maximum <strong class='color-f'>energy</strong>",
         isFieldTech: true,
         maxCount: 1,
         count: 0,
@@ -7269,37 +7268,36 @@ const tech = {
         requires: "standing wave",
         effect() {
             tech.isStandingWaveExpand = true
-            m.fieldShieldingScale = (tech.isStandingWaveExpand ? 0.9 : 1.3) * Math.pow(0.6, (tech.harmonics - 2))
+            m.setMaxEnergy()
+            // m.fieldShieldingScale = (tech.isStandingWaveExpand ? 0.9 : 1.6) * Math.pow(0.6, (tech.harmonics - 2))
         },
         remove() {
             tech.isStandingWaveExpand = false
-            m.fieldShieldingScale = (tech.isStandingWaveExpand ? 0.9 : 1.3) * Math.pow(0.6, (tech.harmonics - 2))
+            m.setMaxEnergy()
+            // m.fieldShieldingScale = (tech.isStandingWaveExpand ? 0.9 : 1.6) * Math.pow(0.6, (tech.harmonics - 2))
             m.harmonicRadius = 1
         }
     },
     {
-        name: "triple point",
+        name: "electronegativity",
         descriptionFunction() {
-            return `<strong>+1.5</strong> second <strong class='color-s'>ice IX</strong> freeze effect<br>spawn ${powerUps.orb.coupling(10)} that each give <strong>+0.1</strong> <strong class='color-coupling'>coupling</strong>` //<br>${m.couplingDescription(1)} ${m.fieldMode === 0 ? "" : "per <strong class='color-coupling'>coupling</strong>"}
+            return `<strong>+0.22%</strong> <strong class='color-d'>damage</strong> per current stored <strong class='color-f'>energy</strong><br><em>(up to +${(22 * m.maxEnergy).toFixed(0)}% damage at max energy)</em>`
         },
+        // description: "<strong>+1%</strong> <strong class='color-d'>damage</strong> per <strong>8</strong> stored <strong class='color-f'>energy</strong>",
         isFieldTech: true,
-        maxCount: 3,
+        maxCount: 9,
         count: 0,
         frequency: 2,
         frequencyDefault: 2,
         allowed() {
-            return m.fieldMode === 1 || m.fieldMode === 2
+            return m.fieldMode === 1 || m.fieldMode === 9 || m.fieldMode === 8
         },
-        requires: "standing wave, perfect diamagnetism",
+        requires: "standing wave, wormhole, pilot wave",
         effect() {
-            tech.iceIXFreezeTime += 90
-            powerUps.spawnDelay("coupling", 10)
+            tech.energyDamage++
         },
         remove() {
-            tech.iceIXFreezeTime = 150
-            if (this.count) {
-                m.couplingChange(-this.count)
-            }
+            tech.energyDamage = 0;
         }
     },
     {
@@ -7357,6 +7355,29 @@ const tech = {
         },
         remove() {
             tech.isStunField = 0;
+        }
+    },
+    {
+        name: "triple point",
+        descriptionFunction() {
+            return `<strong>+1.5</strong> second <strong class='color-s'>ice IX</strong> freeze effect<br>spawn ${powerUps.orb.coupling(10)} that each give <strong>+0.1</strong> <strong class='color-coupling'>coupling</strong>` //<br>${m.couplingDescription(1)} ${m.fieldMode === 0 ? "" : "per <strong class='color-coupling'>coupling</strong>"}
+        },
+        isFieldTech: true,
+        maxCount: 3,
+        count: 0,
+        frequency: 2,
+        frequencyDefault: 2,
+        allowed() {
+            return m.fieldMode === 2
+        },
+        requires: "perfect diamagnetism",
+        effect() {
+            tech.iceIXFreezeTime += 90
+            powerUps.spawnDelay("coupling", 10)
+        },
+        remove() {
+            tech.iceIXFreezeTime = 150
+            if (this.count) m.couplingChange(-this.count)
         }
     },
     {
@@ -7452,9 +7473,9 @@ const tech = {
         frequency: 2,
         frequencyDefault: 2,
         allowed() {
-            return (m.fieldMode === 8 || m.fieldMode === 3 || m.fieldMode === 1) && !tech.isCloakHealLastHit
+            return (m.fieldMode === 8 || m.fieldMode === 3) && !tech.isCloakHealLastHit
         },
-        requires: "negative mass, pilot wave, standing wave, not patch",
+        requires: "negative mass, pilot wave, not patch",
         effect() {
             tech.lastHitDamage += 5;
         },
@@ -7776,9 +7797,9 @@ const tech = {
         frequency: 2,
         frequencyDefault: 2,
         allowed() {
-            return m.fieldMode === 4
+            return m.fieldMode === 4 && !tech.isLaserField
         },
-        requires: "molecular assembler",
+        requires: "molecular assembler, not surface plasmon",
         effect() {
             tech.deflectEnergy += 0.5;
         },
@@ -11462,4 +11483,5 @@ const tech = {
     isDivisor: null,
     isFoamCavitation: null,
     isHealAttract: null,
+    isLaserField: null,
 }
