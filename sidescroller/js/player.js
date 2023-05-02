@@ -2235,16 +2235,14 @@ const m = {
             // float towards player  if looking at and in range  or  if very close to player
             if (
                 dist2 < m.grabPowerUpRange2 &&
-                (m.lookingAt(powerUp[i]) || dist2 < 1000) &&
+                (m.lookingAt(powerUp[i]) || dist2 < 10000) &&
                 Matter.Query.ray(map, powerUp[i].position, m.pos).length === 0
             ) {
-                powerUp[i].force.x += 0.04 * (dxP / Math.sqrt(dist2)) * powerUp[i].mass;
-                powerUp[i].force.y += 0.04 * (dyP / Math.sqrt(dist2)) * powerUp[i].mass - powerUp[i].mass * simulation.g; //negate gravity
-                //extra friction
-                Matter.Body.setVelocity(powerUp[i], {
-                    x: powerUp[i].velocity.x * 0.11,
-                    y: powerUp[i].velocity.y * 0.11
-                });
+                if (!tech.isHealAttract || powerUp[i].name !== "heal") { //if you have accretion heals are already pulled in a different way
+                    powerUp[i].force.x += 0.04 * (dxP / Math.sqrt(dist2)) * powerUp[i].mass;
+                    powerUp[i].force.y += 0.04 * (dyP / Math.sqrt(dist2)) * powerUp[i].mass - powerUp[i].mass * simulation.g; //negate gravity
+                    Matter.Body.setVelocity(powerUp[i], { x: powerUp[i].velocity.x * 0.11, y: powerUp[i].velocity.y * 0.11 }); //extra friction
+                }
                 if ( //use power up if it is close enough
                     dist2 < 5000 &&
                     !simulation.isChoosing &&
