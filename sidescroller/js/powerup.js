@@ -1312,7 +1312,7 @@ const powerUps = {
             powerUps.spawn(x, y, "coupling");
             return;
         }
-        if (tech.isBoostPowerUps && Math.random() < 0.16) {
+        if (tech.isBoostPowerUps && Math.random() < 0.14) {
             powerUps.spawn(x, y, "boost");
             return;
         }
