@@ -2629,8 +2629,7 @@ const level = {
     subway() {
         // simulation.enableConstructMode() //tech.giveTech('motion sickness')  //used to build maps in testing mode
         // level.difficultyIncrease(10 * 4);
-        // spawn.setSpawnList(); //picks a couple mobs types for a themed random mob spawns
-        m.maxHealth = m.health = 100
+        // m.maxHealth = m.health = 100
 
         const mobSpawnCap = mobs.mobDeaths + 100
         level.isProcedural = true //used in generating text for the level builder
