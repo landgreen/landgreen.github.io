@@ -77,18 +77,18 @@
       </details>
   </div>
 
-  <h1 class='underlined' id="impulse">Momentum and Force</h1>
-    <p>
-      Newton's 2nd law was originally written in terms of momentum, not mass and acceleration.
-      We can rearrange F=ma a bit to see how they are equivalent.
-    </p>
-    $$a = \color{red}\frac{\Delta v}{\Delta t}$$
-    <br>$$F = ma$$
-    $$F = m \color{red}\frac{\Delta v}{\Delta t}$$
-    $$F \Delta t = m \Delta v$$
-    <br> $$F \Delta t = m(v_f - v_i)$$
-    $$F \Delta t = mv_f - mv_i$$
-    $$F \Delta t = p_f - p_i$$ $$F \Delta t = \Delta p$$
+  <div class='example'>
+    <strong>Example:</strong> Which has more momentum?  A 10 kg bicycle moving at 8 m/s or a 15 kg bicycle moving at 6 m/s?
+    <details>
+        <summary>solution</summary>
+        $$p=mv \quad \quad \quad \quad p=mv$$
+        $$p=(10)(15) \quad \quad p=(15)(6)$$
+        $$p=150 \,\mathrm{kg\tfrac{m}{s}} \quad \quad p=90 \,\mathrm{kg\tfrac{m}{s}}$$
+        <p>The 10 kg bike moving at 8 m/s has more momentum.</p>
+    
+    </details>
+</div>
+
 
   <h1 class='underlined' id="impulse">Impulse</h1>
     <p>
@@ -114,9 +114,13 @@
     <div class="example">
       <details class='derive'>
         <summary>derivation of impulse</summary>
-        $$a = \color{red}\frac{\Delta v}{\Delta t}$$
+        <p>
+          Newton's 2nd law (F=ma) was originally written in terms of momentum, not mass and acceleration.
+          We can rearrange F=ma to see it in terms of momentum.
+        </p>
+        $$a = \color{green}\frac{\Delta v}{\Delta t}$$
         <br>$$F = ma$$
-        $$F = m \color{red}\frac{\Delta v}{\Delta t}$$
+        $$F = m \color{green}\frac{\Delta v}{\Delta t}$$
         $$F \Delta t = m \Delta v$$
         <br> $$F \Delta t = m(v_f - v_i)$$
         $$F \Delta t = mv_f - mv_i$$
@@ -126,15 +130,10 @@
         <h1>
           $$J = \Delta p$$ $$F \Delta t = \Delta p $$
         </h1>
-        \(J\) = impulse [Ns, kg m/s]
-        <em>vector</em>
-        <br>\(F\) = force [N, kg m/s²]
-        <em>vector</em>
+        \(J\) = impulse [Ns, kg m/s] <em>vector</em>
+        <br>\(F\) = force [N, kg m/s²] <em>vector</em>
         <br>\(\Delta t\) = time period [s]
-        <br>\(\Delta p\) = change in momentum [kg m/s]
-        <em>vector</em>
-        <!-- <br>\(m\) = mass [kg] -->
-        <!-- <br>\(v\) = velocity[m/s] <em>vector</em> -->
+        <br>\(\Delta p\) = change in momentum [kg m/s] <em>vector</em>
       </div>
       <p>
         When using impulse in solving problems you might want to unpack momentum into mass and velocity.

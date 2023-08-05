@@ -29,106 +29,7 @@
 			<a href="../../../">Magnetism</a>
 		</h1>
 	</header>
-	<article>
-		<p>
-			<a href="https://www.youtube.com/watch?v=400xfGmSlqQ">Cloud chambers</a> are a simple method of detecting high energy charged particles. In order to detect the particles, the <a href="https://www.youtube.com/watch?v=NyKZlFPYNAg">chamber</a> is filled with a supersaturated vapor of water or alcohol. High speed particles disrupt the vapor and leave a trail.
-		</p>
-		<p>
-			As <a href="https://www.nuledo.com/en/cloud-chambers/#alfa-castice">radiation</a> passes through the chamber only charged particles are visible. This is because neutral particles don't disrupt the vapor. When a powerful magnetic field is applied to the cloud chamber the charged particles curve. The arc of their curve indicates charge and mass.
-		</p>
-		<form id="settings" style="display:none">
-			<style>
-				.checkboxes label {
-					padding: 20px;
-				}
-
-				.checkboxes input {
-					vertical-align: middle;
-					width: 30px;
-				}
-
-				.checkboxes label span {
-					vertical-align: middle;
-				}
-			</style>
-			<div class="flex-grid-thirds center">
-				<div class="col">
-					<label>time rate</label> =
-					<span id="cloud-timerate-text">1</span>
-					<br>
-					<input type="range" id='cloud-timerate-slider' min="0" max="10" step="1" value="1">
-				</div>
-				<div class="col">
-					<label>radiation rate</label> =
-					<span id="cloud-radiation-text">3</span>
-					<br>
-					<input type="range" id='cloud-radiation-slider' min="0" max="30" step="1" value="3">
-				</div>
-				<div class="col">
-					<label>magnetic field</label> =
-					<span id="cloud-magfield-text">0.06</span>
-					<br>
-					<input type="range" id='cloud-magfield-slider' min="-0.2" max="0.2" step="0.01" value="0.06">
-				</div>
-			</div>
-			<br>
-			<div class="checkboxes">
-				<label for="cloud-alpha-checkbox">
-					<span>alpha</span>
-					<input type="checkbox" id="cloud-alpha-checkbox" name="alpha" checked>
-				</label>
-				<label for="cloud-beta-checkbox">
-					<span>beta</span>
-					<input type="checkbox" id="cloud-beta-checkbox" name="beta" style="margin:-4px;" checked>
-				</label>
-
-				<label for="cloud-gamma-checkbox">
-					<span>gamma</span>
-					<input class="check-box" type="checkbox" id="cloud-gamma-checkbox" name="gamma" style="margin:-4px;" checked>
-				</label>
-
-				<label for="cloud-proton-checkbox">
-					<span>proton</span>
-					<input class="check-box" type="checkbox" id="cloud-proton-checkbox" name="proton" style="margin:-4px;" checked>
-				</label>
-
-				<label for="cloud-muon-checkbox">
-					<span> muon</span>
-					<input class="check-box" type="checkbox" id="cloud-muon-checkbox" name="muon" style="margin:-4px;" checked>
-				</label>
-			</div>
-		</form>
-		<canvas class="cloud" id='cloud-chamber' height='100' width='600' onclick="charges15(this)" style="background: #000;"></canvas>
-		<div id="observations" style="display:none">
-			<strong>Simulation:</strong> Select the radiation type beta and adjust the strength of the magnetic field. Beta radiation is high speed electrons. What do you observe?
-			<details>
-				<summary>observations</summary>
-				<p>
-					<li>A stronger magnetic field makes the circles smaller and faster.</li>
-					<li>A negative magnetic field changes the direction of circular motion.</li>
-				</p>
-			</details>
-			<br><strong>Simulation:</strong> Select the radiation type gamma. Gamma radiation is high energy photons. They can't be seen in the cloud chamber, but when they collide with matter they produce pairs of electrons and positrons. What do you observe?
-			<details>
-				<summary>observations</summary>
-				<p>
-					<li> The particles almost move in a <a href="../../gravity/circular/#circular">circle</a>, but they are slowing down. </li>
-					<li> The electrons and positrons travel in opposite directions around the circle. </li>
-				</p>
-			</details>
-			<br><strong>Question:</strong> The magnetic field causes charged particles to curve. Protons are charged, yet they are moving in a straight line. What property of a particle could affect how it curves in response to the magnetic force?
-			<details>
-				<summary>answer</summary>
-				<p>
-					The muons and protons are much more massive than the electrons. They accelerate less because the force is divided by their mass. They still curve slightly, but it isn't noticeable.
-				</p>
-				<p>
-					Neutrally charged particles, like neutrons, don't curve in a magnetic field either, but they can't be seen in a cloud chamber.
-				</p>
-			</details>
-		</div>
-
-		<h1 class='underlined'>Magnetic Fields</h1>
+	<article>		
 		<p>
 			Magnetic fields are a modification to electric fields that comes from <a href="../../relativity/special/#specialrelativity">special relativity</a>.
 			Like electric fields, <a href='https://www.youtube.com/watch?v=1TKSfAkWWN0'>magnetic fields</a> are produced by charged particles, but only when the charged particle is moving.
@@ -158,7 +59,7 @@
 			For example, a moving electron produces a magnetic field. This field applies a force on other moving electrons.
 		</p>
 		<p>
-			Strong magnetic forces are produced through <a href="#electromagnetism">electromagnetism</a> and <a href="#ferromagnetism">ferromagnetism</a>. Weaker forms of magnetism also exist, like <a href="https://en.wikipedia.org/wiki/Diamagnetism">diamagnetism</a> and <a href="https://en.wikipedia.org/wiki/Paramagnetism">paramagnetism</a>.
+			<a href="https://www.youtube.com/watch?v=g0amdIcZt5I">Strong</a> magnetic forces are produced through <a href="#electromagnetism">electromagnetism</a> and <a href="#ferromagnetism">ferromagnetism</a>. Weaker forms of magnetism also exist, like <a href="https://en.wikipedia.org/wiki/Diamagnetism">diamagnetism</a> and <a href="https://en.wikipedia.org/wiki/Paramagnetism">paramagnetism</a>.
 		</p>
 
 		<h2 class='underlined'>Magnetic Force on a Particle</h2>
@@ -481,6 +382,106 @@
 				$$ F = 0.00265 \, \text{N west}$$
 			</details>
 		</div>
+
+
+		<p>
+			<a href="https://www.youtube.com/watch?v=400xfGmSlqQ">Cloud chambers</a> are a simple method of detecting high energy charged particles. In order to detect the particles, the <a href="https://www.youtube.com/watch?v=NyKZlFPYNAg">chamber</a> is filled with a supersaturated vapor of water or alcohol. High speed particles disrupt the vapor and leave a trail.
+		</p>
+		<p>
+			As <a href="https://www.nuledo.com/en/cloud-chambers/#alfa-castice">radiation</a> passes through the chamber only charged particles are visible. This is because neutral particles don't disrupt the vapor. When a powerful magnetic field is applied to the cloud chamber the charged particles curve. The arc of their curve indicates charge and mass.
+		</p>
+		<form id="settings" style="display:none">
+			<style>
+				.checkboxes label {
+					padding: 20px;
+				}
+
+				.checkboxes input {
+					vertical-align: middle;
+					width: 30px;
+				}
+
+				.checkboxes label span {
+					vertical-align: middle;
+				}
+			</style>
+			<div class="flex-grid-thirds center">
+				<div class="col">
+					<label>time rate</label> =
+					<span id="cloud-timerate-text">1</span>
+					<br>
+					<input type="range" id='cloud-timerate-slider' min="0" max="10" step="1" value="1">
+				</div>
+				<div class="col">
+					<label>radiation rate</label> =
+					<span id="cloud-radiation-text">3</span>
+					<br>
+					<input type="range" id='cloud-radiation-slider' min="0" max="30" step="1" value="3">
+				</div>
+				<div class="col">
+					<label>magnetic field</label> =
+					<span id="cloud-magfield-text">0.06</span>
+					<br>
+					<input type="range" id='cloud-magfield-slider' min="-0.2" max="0.2" step="0.01" value="0.06">
+				</div>
+			</div>
+			<br>
+			<div class="checkboxes">
+				<label for="cloud-alpha-checkbox">
+					<span>alpha</span>
+					<input type="checkbox" id="cloud-alpha-checkbox" name="alpha" checked>
+				</label>
+				<label for="cloud-beta-checkbox">
+					<span>beta</span>
+					<input type="checkbox" id="cloud-beta-checkbox" name="beta" style="margin:-4px;" checked>
+				</label>
+
+				<label for="cloud-gamma-checkbox">
+					<span>gamma</span>
+					<input class="check-box" type="checkbox" id="cloud-gamma-checkbox" name="gamma" style="margin:-4px;" checked>
+				</label>
+
+				<label for="cloud-proton-checkbox">
+					<span>proton</span>
+					<input class="check-box" type="checkbox" id="cloud-proton-checkbox" name="proton" style="margin:-4px;" checked>
+				</label>
+
+				<label for="cloud-muon-checkbox">
+					<span> muon</span>
+					<input class="check-box" type="checkbox" id="cloud-muon-checkbox" name="muon" style="margin:-4px;" checked>
+				</label>
+			</div>
+		</form>
+		<canvas class="cloud" id='cloud-chamber' height='100' width='600' onclick="charges15(this)" style="background: #000;"></canvas>
+		<div id="observations" style="display:none">
+			<strong>Simulation:</strong> Select the radiation type beta and adjust the strength of the magnetic field. Beta radiation is high speed electrons. What do you observe?
+			<details>
+				<summary>observations</summary>
+				<p>
+					<li>A stronger magnetic field makes the circles smaller and faster.</li>
+					<li>A negative magnetic field changes the direction of circular motion.</li>
+				</p>
+			</details>
+			<br><strong>Simulation:</strong> Select the radiation type gamma. Gamma radiation is high energy photons. They can't be seen in the cloud chamber, but when they collide with matter they produce pairs of electrons and positrons. What do you observe?
+			<details>
+				<summary>observations</summary>
+				<p>
+					<li> The particles almost move in a <a href="../../gravity/circular/#circular">circle</a>, but they are slowing down. </li>
+					<li> The electrons and positrons travel in opposite directions around the circle. </li>
+				</p>
+			</details>
+			<br><strong>Question:</strong> The magnetic field causes charged particles to curve. Protons are charged, yet they are moving in a straight line. What property of a particle could affect how it curves in response to the magnetic force?
+			<details>
+				<summary>answer</summary>
+				<p>
+					The muons and protons are much more massive than the electrons. They accelerate less because the force is divided by their mass. They still curve slightly, but it isn't noticeable.
+				</p>
+				<p>
+					Neutrally charged particles, like neutrons, don't curve in a magnetic field either, but they can't be seen in a cloud chamber.
+				</p>
+			</details>
+		</div>
+
 
 		<h2 class='underlined' id="wire">Magnetic Force on a Wire</h2>
 		<p>
