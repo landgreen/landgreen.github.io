@@ -68,6 +68,33 @@
 			When a collision occurs the masses are used to calculate the new velocities.
 			The rules for these calculations come from <a href="..\..\momentum\momentum\index.html">momentum</a>.
 		</p> -->
+
+		<div class='example'>
+			<strong>Question:</strong>
+			Imagine this is a simulation of billiards or pool. What does this simulation need to be more realistic?
+			<details>
+				<summary>answer</summary>
+				<p>
+					<li>there could be pockets
+					<li>balls that are the same size
+					<li>balls that can roll
+					<li>air friction
+					<li>rolling friction
+					<li>when the balls collide they make a sound
+					<li>collisions that lose energy
+					<li>a 3rd dimension, so the balls can bounce
+					<li>gravity
+					<li>walls that aren't perfectly rigid rectangles
+
+					<br><br>At the extremes we'd also need things like:
+					<li>slightly bumpy shaped balls, not perfect spheres
+					<li>quantum effects, like tunneling
+					<li>effects of relativity, like time dilation
+				</p>
+			</details>
+		</div>
+
+
 		<h1 class='underlined' id="position">Position</h1>
 		<p>We use the symbol <strong>x</strong> for position with meters for units. You might be used to using
 			<strong>x</strong> in other ways, but in physics it is reserved for position.</p>
@@ -389,7 +416,7 @@
 		</div>
 
 		<div class='example'>
-			<strong>Question:</strong> Imagine you are in a plane with your eyes closed.
+			<strong>Question:</strong> Imagine you are in a <a href="https://www.flightradar24.com/">plane</a> with your eyes closed.
 			Can you feel when the plane is increasing or decreasing altitude?
 			What does it feel like?
 			<details>
@@ -517,6 +544,22 @@
 		</div>
 
 		<div class='example'>
+			<strong>Question:</strong> People often get velocity and acceleration confused.  Explain the difference between them without math.
+			<details>
+				<summary>answer</summary>
+				<p>
+					Velocity is how fast you are going. It's how quick you change your position.
+					Velocity doesn't feel like anything, but it looks like stuff going past you.
+				</p>
+				<p>
+					Acceleration is how fast your speed changes. It's your change in velocity.
+					You can feel acceleration in your body.  It feels like being pushed. If you are falling it feels like butterflies.
+				</p>
+				</div>
+			</details>
+		</div>
+
+		<div class='example'>
 			<strong>Example:</strong> I start a velocity of 1 m/s. I speed up to 3 m/s over 10 seconds. What is my
 			acceleration?
 			<details>
@@ -535,6 +578,7 @@
 				</div>
 			</details>
 		</div>
+
 		<div class='example'>
 			<svg class='center' id="SVG-graph-3" viewBox="0 0 600 290"></svg>
 			<script defer>

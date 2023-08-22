@@ -225,7 +225,7 @@ function matter() {
     //update measure
     const x = atom[settings.highlightIndex].position.x;
     const y = atom[settings.highlightIndex].position.y;
-    document.getElementById("matter-measure").setAttribute("d", `M8 ${y} h${x - 8}  M${x} ${settings.height-8} V${y}`);
+    document.getElementById("matter-measure").setAttribute("d", `M8 ${y} h${x - 8}  M${x} ${settings.height - 8} V${y}`);
   };
 
 
