@@ -1,20 +1,40 @@
 ******************************************************** NEXT PATCH **************************************************
-community map ace by Richard0820
 
-field tech: additive manufacturing - crouch while activating your field to print a throwable block
-  blocks 80% faster and 80% more dense/more damage
-  molecular assembler, pilot wave
+missile Bot: +10% bigger explosions, +10% damage, +7% fire rate
+plasma Bot: +40% damage, and drains 2% less energy
+1st ionization energy: 8->11 energy per heal
+mass-energy: defense reduction factor 0.13->0.33
+neutron bomb: +25% damage
+non-renewables: 78->88% damage
+junk DNA: applies to all damage, not just spores
+pseudoscience: adds (1-4)->(1-3) JUNK to tech pool per free research
+futures exchange: 4.1->4.3 duplication per cancel
 
-inflation: 85->90% defense, 300->200% larger blocks
-buckling: can spawn boosts or coupling in addition to heals, ammo, and research
+default skin has slightly more narrow legs
+
+added ammo to gun descriptions
+  calculate the ammo drop rate for each gun live based on ammo tech?
+    need to make a generic function 
+
 
 *********************************************************** TODO *****************************************************
 
-add a player to the load screen
-  static SVG image of player
-  canvas image
-    interactable?
-    full matter.js level?
+more (all) bosses need to be made of parts
+  good examples: spiderBoss, dragonFlyBoss, beetleBoss
+  methods:
+    spawn adds in phases, like beetle and tether
+    constraints, like spider
+      be nice if each constrained part does something different
+    constrained mobs that regen after phases
+    flock, like cellBoss, blockBoss
+  Bosses that could be converted to more parts
+    "orbitalBoss", "shooterBoss", "bomberBoss", "launcherBoss", "laserTargetingBoss", "streamBoss", "pulsarBoss", "grenadierBoss", "blinkBoss", "laserBombingBoss", "blockBoss", "revolutionBoss", "slashBoss", "timeSkipBoss", "sneakBoss"
+    "sneakBoss" could get sneaker adds after each hide phase
+    "laserTargetingBoss" could have close range stabbers constrained, a few long range shooters, and a few laser shooters
+
+defense power up - a short term defense boost, like the ones for damage.
+  Or maybe it would last until you take one hit.
+  Or last until you lost a total of 20 health.
 
 use cross product rotation for other mobs?
   snipers, shooters?
@@ -1097,7 +1117,8 @@ possible names for tech
   memetics
   magnetorquers - produce spin by pushing on earth's magnetic field
   Josephson junction - superconducting junction
-  
+  Pyroelectricity - voltage from temp changes - upgrade from piezoelectricity
+  dark star - upgrade to WIMPs
 
 ******************************************************** CARS IMAGES ********************************************************
 
