@@ -30084,9 +30084,6 @@ const level = {
     },
     unchartedCave() {
         simulation.makeTextLog(`<strong>unchartedCave</strong> by <span class='color-var'>3xionDev</span>`);
-        //lore.unlockTesting();
-        //simulation.enableConstructMode();
-        level.difficultyIncrease(15);
         level.setPosToSpawn(0, -50); //normal spawn
         level.exit.x = 20985;
         level.exit.y = 2816;
@@ -30095,7 +30092,6 @@ const level = {
         level.defaultZoom = 1900
         simulation.zoomTransition(level.defaultZoom)
         document.body.style.backgroundColor = "#979797";
-        // color.map = "#444" //custom map color
 
         spawn.randomMob(1000, -975, 0);
         spawn.randomMob(2550, -575, 0);
@@ -30490,9 +30486,6 @@ const level = {
         spawn.randomGroup(5835, -532, 0.4);
         if (simulation.difficulty > 1) spawn.randomLevelBoss(18823, 2191);
         spawn.secondaryBossChance(20217, 1913)
-
-
-
         level.custom = () => {
             level.exit.drawAndCheck();
 
