@@ -1440,12 +1440,12 @@
     </a>
     Iron's nucleus has more protons so it has more possible energy transitions.
     <p>
-      Photon emission is the working principle behind <a
-        href="https://en.wikipedia.org/wiki/Gas-discharge_lamp#Color">fluorescent lights</a>. To make light, a tube is
-      filled with various gases. The gases are electrically charged up
-      which brings the electrons to a higher energy level. The electrons are unstable in the higher energy levels. They
-      eventually fall back down to their ground state and emit light. Try looking at fluorescent light reflected off a
-      CD to see the separate <a href="https://photos.app.goo.gl/kAB78NooguuwEKx62">bands of color</a>.
+      Photon emission is the working principle behind <a href="https://en.wikipedia.org/wiki/Gas-discharge_lamp#Color">fluorescent lights</a>.
+      To make light, a tube is filled with various gases.
+      The gases are electrically charged up which brings the electrons to a higher energy level.
+      The electrons are unstable in the higher energy levels.
+      They eventually fall back down to their ground state and emit light.
+      Try looking at fluorescent light reflected off an old <a href="https://www.cs.cmu.edu/~zhuxj/astro/html/spectrometer.html">CD</a> to see the separate <a href="https://photos.app.goo.gl/kAB78NooguuwEKx62">bands of color</a>.
     </p>
 
     <div class='example'>
@@ -2478,39 +2478,89 @@
       <p>
         The state of a quantum mechanical system is described mathematically by it's <strong>wave function</strong>.
         The wave function contains all the measurable information about the system.
-        The evolution of the wave function over time can be <a
-          href="https://physics.weber.edu/schroeder/software/CollidingPackets.html">calculated</a> for simple situations
+        For simple situations the evolution of the wave function over time can be <a href="https://physics.weber.edu/schroeder/software/CollidingPackets.html">calculated</a>
         with the <a href="https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation">Schrödinger equation</a>.
-        The Schrödinger equation can be applied to <a
-          href="https://physics.weber.edu/schroeder/software/QuantumScattering2D.html">one</a> particle, atom, molecule,
-        or possibly the entire universe.
+        The Schrödinger equation can be applied to <a href="https://physics.weber.edu/schroeder/software/QuantumScattering2D.html">one</a> particle, atom, molecule, or possibly the entire universe.
+      </p>
+      $$\Psi(x,t) = \text{wave function} $$
+      <p>
+        As a <a href="https://www.reddit.com/r/Physics/comments/m8s64c/simulation_of_particles_in_a_quantum_harmonic/">wave function</a>
+        evolves with time it often looks like a field of positive and negative amplitudes oscillating back and forth like a sine wave.
+        It kinda looks like waves and ripples on surface of a pool of water.
       </p>
       <p>
-        As a <a
-          href="https://www.reddit.com/r/Physics/comments/m8s64c/simulation_of_particles_in_a_quantum_harmonic/">wave
-          function</a> evolves with time it often looks like a field of positive and negative amplitudes oscillating
-        back and forth like a sine wave.
-        It kinda looks like waves and ripples on surface of a pool of water.
+        These waves are modeled as complex numbers.  This means they have a part made of real numbers and a part made of imaginary numbers.
+        This means the wave wiggle back and forth in the 3 spacial dimensions, but also in some other direction perpendicular to all the spacial dimensions.
+      </p>
+    </details>
+    <br>
+    <details class="derive">
+      <summary>measurement and decoherence</summary>
+      <p>
+        In quantum mechanics, the likelihood of finding a system in a particular state is intricately linked to the system's wave function.
+        This probability is calculated not directly by the Schrödinger equation, which finds the wave function's time evolution, but by squaring the wave function's amplitude.
+        For instance, the probability of locating a particle in a specific position increases if the square of its wave function's amplitude is greater at that position.
+      </p>
+      <!-- <p>
+        Schrödinger equation is used to calculate how the wave function of a quantum system evolves over time.  How it changes.
+        Calculating the probability of finding the wave function in a possible state is done by squaring the amplitude of the system's wave function.
+        For example the probability of measuring a particle in a position is higher if the squared amplitude of it's wave function is higher at that position.
+      </p> -->
+      $$\Psi(x,t) = \text{wave function} $$
+      $$|\Psi(x,t)|^2 = \text{probability}$$
+      <p>
+        The wave function doesn't have a single location. It is spread out.
+        Yet, when an observer measures the results of quantum experiments they get results at precise locations.
+        The wave function only seems to predict the probability of where a measurement might be.
+        <!-- Understanding how a single result comes from wave is confusing. -->
+        This was a surprise to the physicists doing early quantum mechanical experiments.
+        Why does a spread out wave give measurements at random locations?
+        How does it choose where on the wave to show up?
+        Is it random?
+      </p>
+      <p>
+        Everything is a quantum object, including the observer and the experiment.
+        In order to measure a result the wave function of the observer has to interact with the wave function of the experiment.
+        The observer and experiment together form a <a href="..\waveproperties\index.html#interference">superposition</a> of all possible experimental outcomes.
+      </p>
+      <!-- <p>
+        Went an observer is a part of a <a href="http://toutestquantique.fr/en/superposition/">superposition</a>,
+        but they can't see the entire superposition of the wave function.
+        It's like how two different sound waves in superposition can't directly effect each other.
+        So why do we experience a single outcome when every experiment generates a superposition of many possible outcomes?
+      </p> -->
+      <p>
+        So why do we experience a single outcome if we are in a superposition of all possible outcomes?
+        This happens as the particles in an experiment interact with external particles outside the experiment.
+        These external particles might be stray air molecules, a random photon, or part of a detector that measures the results of the experiment.
+        Each interaction make the superposition messier.
+        Differences between the parts of the wave function increase and the the total wave function becomes less coherent.
+        Eventually each outcome that forms the wave function's superposition sees the total of the other outcomes as almost random noise.
+        When compared to any single outcome the total superposition of all other outcomes mostly cancels out destructively.
+        This leaves each outcome increasingly more isolated from each other with each external interaction.
+        This process is called <strong>decoherence</strong>.
+      </p>
+      <p>
+        When you measure the results of an experiment you become part of the experiment's superposition.
+        You become a superposition of different versions of yourself that have each seen separate outcomes of the experiment.
+        After decoherence each version of you that saw each outcome are no longer coherent with each other.
+        The superposition of all the wave functions from your other selfs cancel out destructively.
+        Each of yourselves has an nearly zero probability of interacting with other selves.
+        From the point of view of each self they measure only one coherent outcome.
+      </p>
+      <p>
+        Decoherence helps explain how we experience distinct, singular events out of calculations that imply numerous possibilities.
+        It bridges the gap between the probabilistic nature of quantum systems and the definite outcomes we observe in the macroscopic world.
       </p>
       <br>
       <p>
-        The probability of measuring a system in a particular state doesn't use the Schrödinger equation.
-        It's done by squaring the amplitude of the system's wave function.
-        A larger squared amplitude has a higher probability of of being measured.
-      </p>
-      <p>
-        In order to measure the results of an experiment, an observer must interact with the experiment.
-        Interacting is complex because everything is a quantum object, including the observer and the experiment.
-        This means that the wave function of the observer interacts with the wave function of the experiment.
-        The observer and experiment together form a <a
-          href="..\waveproperties\index.html#interference">superposition</a> of all possible outcomes.
-      </p>
-      <p>
-        The observer can't directly see this <a href="http://toutestquantique.fr/en/superposition/">superposition</a>,
-        like how sound waves in superposition can't directly effect each other.
-        The observer only experiences one experimental outcome chosen at random.
-        Why can't they see all the outcomes?
-        The answer to that question depends on how you interpret quantum mechanics.
+        It's pretty confusing how multiple outcomes produce a single outcome.
+        Not all physicists would explain measurement in the same way I did.
+        There are some philosophical disagreements.
+        Do outcomes you don't measure actually occur?
+        Are measurements truly random or just really complicated?
+        Is reality made of particles or waves?
+        These question are potentially answered by the different interpretations of quantum mechanics.
       </p>
     </details>
     <br>
@@ -2707,7 +2757,7 @@
         What we think of as particles are a simplification of these localized excited wave states.
       </p>
       <p>
-        For example, an electron is a region where the electron field has more amplitude, or bigger ripples.
+        For example, an electron is a region where the electron field has more amplitude, bigger ripples, higher probability.
         The electron field exists everywhere, but electrons are more likely to be measured where the field amplitude is
         larger.
       </p>
@@ -2717,16 +2767,16 @@
           href="https://www.youtube.com/watch?v=fG52mXN-uWI">diagrams</a>, which treat everything as particles.
       </p>
       <p>
-        In Feynman diagrams electron field interactions generally model well as particles.
+        In Feynman diagrams electron field interactions are generally modeled well as particles.
         This is because the most complex electron interactions are weak enough to be mathematically canceled out.
+        But Feynman diagrams don't work for all interactions.
         Quarks, the particles inside protons and neutrons, interact through the "strong force".
-        This force has frequent complex interactions that don't cancel out, making the particle model less useful for
-        calculations.
+        This force has frequent complex interactions that don't cancel out, making the particle model less useful for calculations.
       </p>
     </details>
     <br>
     <details class="derive">
-      <summary>quantum uncertainty</summary>
+      <summary>how a quantum particle moves</summary>
       <p>
         Quantum mechanics answers questions I never thought to ask.
         Like, why do objects with no forces acting on them move in a straight line?
@@ -2771,12 +2821,10 @@
       </details>
       <br> -->
     <details class="derive">
-      <summary>observing quantum phenomena</summary>
+      <summary>observing quantum physics</summary>
       <p>
-        Quantum mechanics explains almost all observable <a
-          href="https://www.youtube.com/watch?v=xnWxtU2OUTE">phenomena</a>.
-        It explains the color of materials, rigidity of solids, conductivity, superconductivity, magnetism, all of
-        chemistry, and just about everything else in reality.
+        Quantum mechanics explains almost all observable <a href="https://www.youtube.com/watch?v=xnWxtU2OUTE">phenomena</a>.
+        It explains the color of materials, rigidity of solids, conductivity, superconductivity, magnetism, all of chemistry, and just about everything else in reality.
         You are observing quantum mechanical phenomena in every moment.
       </p>
       <br>
@@ -2788,19 +2836,10 @@
       <p>
         It's because atoms are hard to isolate.
         They are frequently interacting with their environment.
-        This causes <a href="https://www.youtube.com/watch?v=GlOwJWJWPUs">decoherence</a> between the relative phases of
-        atoms.
-        When coherence is lost, destructive and constructive interference patterns between waves become messy and begin
-        to look like a classical system.
-        For large groups of atoms, decoherence happens so frequently that measurable wave interference patterns don't
-        have time to develop.
+        This causes <a href="https://www.youtube.com/watch?v=GlOwJWJWPUs">decoherence</a> between the relative phases of atoms.
+        When coherence is lost, destructive and constructive interference patterns between waves become messy and begin to look like a classical system.
+        For large groups of atoms, decoherence happens so frequently that measurable wave interference patterns don't have time to develop.
       </p>
-      <!-- <p>
-          2.
-          A particle's wavelength decreases as mass increases.
-          Cats are much bigger then atoms, so they have a very short wavelength.
-          The wavelength of human scale objects is so short they can't be measured by current technology.
-        </p> -->
       <br>
       <p>
         A <a href="http://toutestquantique.fr/en/bose-einstein-condensate/">Bose-Einstein condensate</a>
