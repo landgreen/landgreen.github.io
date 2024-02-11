@@ -1,20 +1,25 @@
 ******************************************************** NEXT PATCH **************************************************
 
-electronegativity: +26->23% damage
+tech: hyperpolarization - reduce the CD on depolarization by 1 second
 
-gun cancel button doesn't show up on the initial level if you haven't done the training yet and you didn't choose a gun
-after exiting initial level players are prompted to start the training levels
-  only if they haven't done the training and they didn't pick up a gun, and a few other conditions
-community training levels only are added when community maps setting is on and player clicks on training
+metamaterial absorber 22->25% chance to get power up for mobs not killed
+symbiosis -0.5 -> 0.25 max health after killing a mob
+dazzler -15->10 energy after decloaking and stunning mobs
+Hilbert space 142->300% damage
 
-if you die after clearing fewer than 4 levels the difficulty settings automatically opens
-improved text formatting on updates
+fixed bug with 1000x more frequent enthalpy
 
 *********************************************************** TODO *****************************************************
 
 improve new player experience
   training is too long to be a tutorial
     before nail gun level offer player option to continue or switch to normal game
+
++40% foam size
++40% foam damage
+-40% foam ammo gain
+When foam is in an explosion it also explodes with size proportional to the size of the foam bubble
+Requires foam, explosion source, not aerogel
 
 Cosmological natural selection:  do something with black holes
   spawn black hole mobs
@@ -37,6 +42,9 @@ Foam slow down mobs twice as much and slowly pulls them towards the ground
   Requires a source of foam and not aerogel
   https://en.m.wikipedia.org/wiki/Tungsten_hexafluoride
 
+if needles touch map and mob at the same time pin mob to map
+  this might be better as a railgun tech, or a railgun rework
+  name rebar
 
 make grappling hook of different shapes
   shapes
@@ -58,6 +66,9 @@ on sucker mob death trigger radiation damage AoE and a graphic  (Hawking radiati
 
 tech prismatic laser - cycles between different laser colors every 1-2 seconds
 
+
+When you destroy an enemy’s shield it causes a large explosion. Requires not bubble fusion
+
 sword slash for plasma torch  (giving up on this for now,  had trouble making graphics look good)
   activates when mouse is close to player
     gradual activation
@@ -67,6 +78,8 @@ sword slash for plasma torch  (giving up on this for now,  had trouble making gr
   what about upgrades to extruder,plasma ball
     give them their own version of a slash?
     make a tech that buffs the slash, but it disables extruder,plasma ball
+
+
 
 more (all) bosses need to be made of parts
   good examples: spiderBoss, dragonFlyBoss, beetleBoss
