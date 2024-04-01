@@ -2,7 +2,6 @@ const tech = {
     totalCount: null,
     removeCount: 0,
     setupAllTech() {
-        tech.damage = 1
         for (let i = 0, len = tech.tech.length; i < len; i++) {
             tech.tech[i].isLost = false
             tech.tech[i].isBanished = false
@@ -29,9 +28,8 @@ const tech = {
                 }
             }
         }
-        // tech.removeJunkTechFromPool();
-        // tech.removeLoreTechFromPool();
-        // tech.addLoreTechToPool();
+
+        tech.damage = 1
         tech.junkChance = 0;
         tech.extraMaxHealth = 0;
         tech.totalCount = 0;
@@ -255,7 +253,7 @@ const tech = {
         return dmg
     },
     duplicationChance() {
-        return Math.min(1, Math.max(0, (tech.isPowerUpsVanish ? 0.13 : 0) + (tech.isStimulatedEmission ? 0.17 : 0) + tech.duplication + tech.duplicateChance + 0.05 * tech.isExtraGunField + m.duplicateChance + tech.fieldDuplicate + 0.08 * tech.isDuplicateMobs + tech.cloakDuplication + (tech.isAnthropicTech && tech.isDeathAvoidedThisLevel ? 0.6 : 0)))
+        return Math.min(1, Math.max(0, (tech.isPowerUpsVanish ? 0.13 : 0) + (tech.isStimulatedEmission ? 0.2 : 0) + tech.duplication + tech.duplicateChance + 0.05 * tech.isExtraGunField + m.duplicateChance + tech.fieldDuplicate + 0.08 * tech.isDuplicateMobs + tech.cloakDuplication + (tech.isAnthropicTech && tech.isDeathAvoidedThisLevel ? 0.6 : 0)))
     },
     isScaleMobsWithDuplication: false,
     maxDuplicationEvent() {
@@ -404,7 +402,7 @@ const tech = {
             tech.isCollisionRealitySwitch = true;
         },
         remove() {
-            if (this.count) tech.damage /= this.damage
+            if (this.count && m.alive) tech.damage /= this.damage
             tech.isCollisionRealitySwitch = false;
         }
     },
@@ -1020,7 +1018,7 @@ const tech = {
             tech.isEnergyNoAmmo = true;
         },
         remove() {
-            if (this.count) tech.damage /= this.damage
+            if (this.count && m.alive) tech.damage /= this.damage
             tech.isEnergyNoAmmo = false;
         }
     },
@@ -1136,7 +1134,7 @@ const tech = {
             this.damageSoFar.push(damage)
         },
         remove() {
-            for (let i = 0; i < this.damageSoFar.length; i++) tech.damage /= this.damageSoFar[i]
+            if (this.count && m.alive) for (let i = 0; i < this.damageSoFar.length; i++) tech.damage /= this.damageSoFar[i]
             this.damageSoFar.length = 0
         }
     },
@@ -1271,7 +1269,7 @@ const tech = {
             b.setFireCD();
         },
         remove() {
-            if (this.count) tech.damage /= this.damage
+            if (this.count && m.alive) tech.damage /= this.damage
             tech.slowFire = 1;
             b.setFireCD();
         }
@@ -1302,7 +1300,7 @@ const tech = {
         },
         remove() {
             tech.isCloakingDamage = false
-            if (this.count > 0) {
+            if (this.count && m.alive) {
                 tech.damage /= this.damage
                 powerUps.research.changeRerolls(2)
             }
@@ -2851,7 +2849,7 @@ const tech = {
             m.setMaxEnergy()
         },
         remove() {
-            if (this.count) tech.damage /= this.damage
+            if (this.count && m.alive) tech.damage /= this.damage
             tech.isMaxEnergyTech = false;
             m.setMaxEnergy()
         }
@@ -2873,7 +2871,7 @@ const tech = {
             tech.isEnergyLoss = true;
         },
         remove() {
-            if (this.count) tech.damage /= this.damage
+            if (this.count && m.alive) tech.damage /= this.damage
             tech.isEnergyLoss = false;
         }
     },
@@ -3154,7 +3152,7 @@ const tech = {
             tech.isTechDamage = true;
         },
         remove() {
-            if (this.count) tech.damage /= this.damage
+            if (this.count && m.alive) tech.damage /= this.damage
             tech.isTechDamage = false;
         }
     },
@@ -3184,7 +3182,7 @@ const tech = {
             }
         },
         remove() {
-            if (this.count) {
+            if (this.count && m.alive) {
                 tech.damage /= this.damage
                 for (let i = 0; i < powerUp.length; i++) {
                     if (powerUp[i].name === "heal") {
@@ -3745,7 +3743,7 @@ const tech = {
             tech.isNoDraftPause = true
         },
         remove() {
-            if (this.count) tech.damage /= this.damage
+            if (this.count && m.alive) tech.damage /= this.damage
             tech.isNoDraftPause = false
         }
     },
@@ -3807,9 +3805,7 @@ const tech = {
         refundAmount: 0,
         remove() {
             tech.extraChoices = 0;
-            if (this.count > 0) {
-                tech.damage /= this.damage
-            }
+            if (this.count && m.alive) tech.damage /= this.damage
         }
     },
     {
@@ -3940,7 +3936,7 @@ const tech = {
         },
         refundAmount: 0,
         remove() {
-            if (this.count > 0) {
+            if (this.count && m.alive) {
                 tech.damage /= this.damage
                 if (this.refundAmount > 0) tech.removeJunkTechFromPool(this.refundAmount)
             }
@@ -4410,7 +4406,7 @@ const tech = {
     },
     {
         name: "stimulated emission",
-        description: "<strong>+19%</strong> chance to <strong class='color-dup'>duplicate</strong> spawned <strong>power ups</strong>,<br><strong>collisions</strong> <span class='color-remove'>eject</span> a random <strong class='color-m'>tech</strong>",
+        description: "<strong>+20%</strong> chance to <strong class='color-dup'>duplicate</strong> spawned <strong>power ups</strong>,<br><strong>collisions</strong> <span class='color-remove'>eject</span> a random <strong class='color-m'>tech</strong>",
         maxCount: 1,
         count: 0,
         frequency: 1,
@@ -4682,7 +4678,7 @@ const tech = {
             tech.damage *= (1 + this.damage)
         },
         remove() {
-            if (this.count) tech.damage /= (1 + this.damage)
+            if (this.count && m.alive) tech.damage /= (1 + this.damage)
         }
     },
     {
@@ -8247,7 +8243,7 @@ const tech = {
             b.setFireCD();
         },
         remove() {
-            if (this.count) tech.damage /= this.damage
+            if (this.count && m.alive) tech.damage /= this.damage
             tech.aimDamage = 1
             b.setFireCD();
         }
@@ -9229,7 +9225,7 @@ const tech = {
             tech.damage *= this.damage
         },
         remove() {
-            if (this.count > 0) tech.damage /= this.damage
+            if (this.count && m.alive) tech.damage /= this.damage
         }
     },
     {
