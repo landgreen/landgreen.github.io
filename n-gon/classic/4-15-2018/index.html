@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="2-d platoformer game">
+	<meta name="keywords" content="physics, game engine, game, side scroller, side scroll, sidescroller, sidescroll, Landgreen, n-gon">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Canvas based side scrolling video game with the matter.js physics engine.">
+	<meta property="og:title" content="n-gon">
+	<meta name="twitter:title" content="n-gon">
+
+	<title>n-gon</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
+</head>
+
+<body>
+	<div id='guns'></div>
+	<div id="text-log"></div>
+	<div id="fade-out"></div>
+	<div id="health-bg"></div>
+	<div id="health"></div>
+	<div id="dmg"></div>
+
+	<!-- guns -->
+	<!-- <audio id="snare2" src="sounds\guns\snare2.ogg" preload="auto"></audio>
+	<audio id="airgun" src="sounds\guns\airgun.ogg" preload="auto"></audio>
+	<audio id="basssnaredrum" src="sounds\guns\basssnaredrum.ogg" preload="auto"></audio>
+	<audio id="sniper" src="sounds\guns\sniper.ogg" preload="auto"></audio>
+	<audio id="glock" src="sounds\guns\glock.ogg" preload="auto"></audio>
+	<audio id="launcher" src="sounds\guns\launcher2.ogg" preload="auto"></audio> -->
+
+	<!-- player walk -->
+	<!-- <audio id="walk1" src="sounds\mech\walk1.ogg" preload="auto"></audio>
+	<audio id="walk2" src="sounds\mech\walk2.ogg" preload="auto"></audio>
+	<audio id="walk3" src="sounds\mech\walk3.ogg" preload="auto"></audio>
+	<audio id="walk4" src="sounds\mech\walk4.ogg" preload="auto"></audio>
+	<audio id="walk5" src="sounds\mech\walk5.ogg" preload="auto"></audio>
+	<audio id="walk6" src="sounds\mech\walk6.ogg" preload="auto"></audio>
+	<audio id="walk7" src="sounds\mech\walk7.ogg" preload="auto"></audio>
+	<audio id="walk8" src="sounds\mech\walk8.ogg" preload="auto"></audio>
+	<audio id="walk9" src="sounds\mech\walk9.ogg" preload="auto"></audio>
+	<audio id="walk10" src="sounds\mech\walk10.ogg" preload="auto"></audio> -->
+
+	<!-- player dmg -->
+	<!-- <audio id="dmg0" src="sounds\dmg\dmg0.ogg" preload="auto"></audio>
+	<audio id="dmg1" src="sounds\dmg\dmg1.ogg" preload="auto"></audio>
+	<audio id="dmg2" src="sounds\dmg\dmg2.ogg" preload="auto"></audio>
+	<audio id="dmg3" src="sounds\dmg\dmg3.ogg" preload="auto"></audio> -->
+
+	<!-- other -->
+	<!-- <audio id="boom" src="sounds\boom.ogg" preload="auto"></audio>
+	<audio id="powerup" src="sounds\powerup4.ogg" preload="auto"></audio>
+	<audio id="no" src="sounds\no.ogg" preload="auto"></audio>
+	<audio id="click" src="sounds\click.ogg" preload="auto"></audio>
+	<audio id="ammo" src="sounds\ammo.ogg" preload="auto"></audio> -->
+
+	<canvas id="canvas"></canvas>
+	<!-- **********  intro page ***********************************************
+******************************************************************************* -->
+	<style>
+		.fade-in {
+			opacity: 0;
+			animation: 4s ease 3s normal forwards 1 fadein;
+		}
+
+		@keyframes fadein {
+			0% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+		.draw-lines {
+			stroke-dasharray: 20;
+			stroke-dashoffset: 20;
+			animation: dash 5s ease-in forwards;
+		}
+
+		.draw-lines2 {
+			stroke-dasharray: 1000;
+			stroke-dashoffset: 1000;
+			animation: dash 5s ease-in forwards;
+		}
+
+		.draw-lines3 {
+			stroke-dasharray: 3000;
+			stroke-dashoffset: 3000;
+			animation: dash 5s ease-in forwards;
+		}
+
+		.draw-lines4 {
+			stroke-dasharray: 300;
+			stroke-dashoffset: 300;
+			animation: dash 5s ease-in forwards;
+		}
+
+		@keyframes dash {
+			to {
+				stroke-dashoffset: 0;
+			}
+		}
+	</style>
+	<svg id='splash' class='intro' viewBox="0 0 800 800" onclick="game.startGame()">
+		<!-- title -->
+		<!-- <g class="fade-in" transform="translate(100,210) scale(34)" fill='#bbb' stroke='none'>
+			<path d="M0 0  h1  v0.2  h1.7  l0.3 0.3  v2.6  h-1  v-1.7  h-1  v1.7  h-1 z" fill="rgb(0,255,255)" />
+			<rect x="4" y="1.25" width="1" height="0.5" rx='0.03' />
+			<path transform="translate(6.9,0) scale(1.25)" d="M0 0  h1  l 0.7 0.7  v2.3  l-0.2 0.2 h-1.8 v-0.5 h1.4   L 1.1 2.4   h-1.1  l -0.7 -0.7  v-1  l 0.7 -0.7 Z"
+			 fill='rgb(255,70,140)' />
+			<path transform="translate(10.9,0) scale(1.25)" d="M0 0  h1  l 0.7 0.7  v1  l -0.7 0.7  h-1  l -0.7 -0.7  v-1  l 0.7 -0.7 Z"
+			 fill="none" />
+			<path transform="translate(14,0)" d="M0 0  h1  v0.2  h1.7  l0.3 0.3  v2.6  h-1  v-1.7  h-1  v1.7  h-1 z" fill='rgb(10,220,190)'
+			/>
+		</g> -->
+		<g class="fade-in" transform="translate(100,210) scale(34)" fill='#bbb' stroke='none'>
+			<path d="M0 0  h1  v0.2  h1.7  l0.3 0.3  v2.6  h-1  v-1.7  h-1  v1.7  h-1 z" />
+			<rect x="4" y="1.25" width="1" height="0.5" rx='0.03' />
+			<path transform="translate(6.9,0) scale(1.25)" d="M0 0  h1  l 0.7 0.7  v2.3  l-0.2 0.2 h-1.8 v-0.5 h1.4   L 1.1 2.4   h-1.1  l -0.7 -0.7  v-1  l 0.7 -0.7 Z" />
+			<path transform="translate(10.9,0) scale(1.25)" d="M0 0  h1  l 0.7 0.7  v1  l -0.7 0.7  h-1  l -0.7 -0.7  v-1  l 0.7 -0.7 Z" />
+			<path transform="translate(14,0)" d="M0 0  h1  v0.2  h1.7  l0.3 0.3  v2.6  h-1  v-1.7  h-1  v1.7  h-1 z" />
+		</g>
+		<g class="draw-lines" transform="translate(100,210) scale(34)" fill='none' stroke='#222' stroke-linejoin="round" stroke-linecap="round">
+			<path d="M0 0  h1  v0.2  h1.7  l0.3 0.3  v2.6  h-1  v-1.7  h-1  v1.7  h-1 z" stroke-width='0.0875' />
+			<rect x="4" y="1.25" width="1" height="0.5" stroke-width='0.0875' rx='0.03' />
+			<path transform="translate(6.9,0) scale(1.25)" d="M0 0  h1  l 0.7 0.7  v2.3  l-0.2 0.2 h-1.8 v-0.5 h1.4   L 1.1 2.4   h-1.1  l -0.7 -0.7  v-1  l 0.7 -0.7 Z" stroke-width='0.07' />
+			<path transform="translate(10.9,0) scale(1.25)" d="M0 0  h1  l 0.7 0.7  v1  l -0.7 0.7  h-1  l -0.7 -0.7  v-1  l 0.7 -0.7 Z" stroke-width='0.07' />
+			<path transform="translate(14,0)" d="M0 0  h1  v0.2  h1.7  l0.3 0.3  v2.6  h-1  v-1.7  h-1  v1.7  h-1 z" stroke-width='0.0875' />
+		</g>
+		<!-- mouse -->
+		<g class="draw-lines3" transform="translate(290,430) scale(0.28)" stroke-linecap="round" stroke-linejoin="round" stroke-width="10px" stroke="#222" fill="none">
+			<path class="fade-in" d="M832.41,106.64V323.55H651.57V256.64c0-82.5,67.5-150,150-150Z" fill="rgb(0, 200, 255)" stroke="none" />
+			<path d="M827,112 h30 a140,140,0,0,1,140,140 v268 a140,140,0,0,1-140,140 h-60 a140,140,0,0,1-140-140v-268 a140,140,0,0,1,140-140h60" />
+			<path d="M 657 317 h 340 h-170 v-207 s 21 -59, -5 -59 S 807 7, 807 7" />
+			<ellipse fill="#fff" cx="827.57" cy="218.64" rx="29" ry="68" />
+		</g>
+		<!-- keys -->
+		<g transform="translate(195,480) scale(0.8)">
+			<g class="draw-lines2" fill='none' stroke='#222' stroke-width="3.5">
+				<rect x="0" y="0" width="60" height="60" rx='3' />
+				<rect x="140" y="0" width="60" height="60" rx='3' />
+				<rect x="0" y="70" width="60" height="60" rx='3' />
+				<rect x="70" y="0" width="60" height="60" rx='3' />
+				<rect x="70" y="70" width="60" height="60" rx='3' />
+				<rect x="140" y="70" width="60" height="60" rx='3' />
+			</g>
+			<g class="draw-lines4" text-anchor="middle" stroke='#000' fill='none' stroke-width="2" font-size="38px" font-family="Arial Black, Gadget, sans-serif">
+				<text x="30" y="45">Q</text>
+				<text x="170" y="45">E</text>
+				<text x="100" y="45">W</text>
+				<text x="100" y="113">S</text>
+				<text x="170" y="113">D</text>
+				<text x="30" y="113">A</text>
+			</g>
+		</g>
+	</svg>
+
+	<script src='js/lib/matter.min.js'></script>
+	<script src='js/lib/randomColor.js'></script>
+	<script src="js/game.js"></script>
+	<script src="js/player.js"></script>
+	<script src="js/powerups.js"></script>
+	<script src="js/bullets.js"></script>
+	<script src="js/mobs.js"></script>
+	<script src="js/spawn.js"></script>
+	<script src="js/level.js"></script>
+	<script src="js/engine.js"></script>
+	<script src="js/index.js"></script>
+</body>
+
+</html>
