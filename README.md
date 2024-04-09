@@ -3,4 +3,4 @@
 
 [physics:](https://landgreen.github.io/physics/) course notes for high school physics, with JavaScript simulations
 
-[n-gon:](https://landgreen.github.io/sidescroller/) 2-d physics sidescroller shooter
+[n-gon:](https://landgreen.github.io/n-gon/) 2-d physics shooter

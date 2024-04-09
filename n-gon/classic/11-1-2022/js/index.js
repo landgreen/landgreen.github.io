@@ -11,7 +11,7 @@ Math.hash = s => { for (var i = 0, h = 9; i < s.length;) h = Math.imul(h ^ s.cha
 
 document.getElementById("seed").placeholder = Math.initialSeed = String(Math.floor(Date.now() % 100000))
 Math.seed = Math.abs(Math.hash(Math.initialSeed)) //update randomizer seed in case the player changed it
-Math.seededRandom = function(min = 0, max = 1) { // in order to work 'Math.seed' must NOT be undefined
+Math.seededRandom = function (min = 0, max = 1) { // in order to work 'Math.seed' must NOT be undefined
     Math.seed = (Math.seed * 9301 + 49297) % 233280;
     return min + Math.seed / 233280 * (max - min);
 }
@@ -85,7 +85,7 @@ const color = { //light
 // check for URL parameters to load an experimental game
 //**********************************************************************
 
-//example  https://landgreen.github.io/sidescroller/index.html?
+//example  https://landgreen.github.io/n-gon/index.html?
 //          &gun1=minigun&gun2=laser
 //          &tech1=laser-bot&tech2=mass%20driver&tech3=overcharge&tech4=laser-bot&tech5=laser-bot&field=phase%20decoherence%20field&difficulty=2
 //add ? to end of url then for each power up add
@@ -97,7 +97,7 @@ const color = { //light
 //difficulty is 0 easy, 1 normal, 2 hard, 4 why
 function getUrlVars() {
     let vars = {};
-    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, k, v) {
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, k, v) {
         vars[k] = v;
     });
     return vars;
@@ -198,7 +198,7 @@ const ctx = canvas.getContext("2d");
 document.body.style.backgroundColor = "#fff";
 
 //disable pop up menu on right click
-document.oncontextmenu = function() {
+document.oncontextmenu = function () {
     return false;
 }
 
@@ -314,17 +314,17 @@ const build = {
 </svg><br>`
         text += `
 <br><strong class='color-d'>damage</strong>: ${((tech.damageFromTech())).toPrecision(3)} &nbsp; &nbsp; difficulty: ${((m.dmgScale)).toPrecision(3)}
-<br><strong class='color-defense'>defense</strong>: ${tech.isEnergyHealth  ? (1-Math.pow(m.harmReduction(), 0.1)).toPrecision(3) : (1-m.harmReduction()).toPrecision(3) } &nbsp; &nbsp; difficulty: ${(1/simulation.dmgScale).toPrecision(3)}
-<br><strong><em>fire rate</em></strong>: ${((1-b.fireCDscale)*100).toFixed(b.fireCDscale < 0.1 ? 2 : 0)}%
-${tech.duplicationChance() ?  `<br><strong class='color-dup'>duplication</strong>: ${(tech.duplicationChance()*100).toFixed(0)}%`: ""}
-${m.coupling ? `<br><strong class='color-coupling'>coupling</strong>: ${(m.coupling).toFixed(2)} &nbsp; <span style = 'font-size:90%;'>`+m.couplingDescription()+"</span>": ""}
+<br><strong class='color-defense'>defense</strong>: ${tech.isEnergyHealth ? (1 - Math.pow(m.harmReduction(), 0.1)).toPrecision(3) : (1 - m.harmReduction()).toPrecision(3)} &nbsp; &nbsp; difficulty: ${(1 / simulation.dmgScale).toPrecision(3)}
+<br><strong><em>fire rate</em></strong>: ${((1 - b.fireCDscale) * 100).toFixed(b.fireCDscale < 0.1 ? 2 : 0)}%
+${tech.duplicationChance() ? `<br><strong class='color-dup'>duplication</strong>: ${(tech.duplicationChance() * 100).toFixed(0)}%` : ""}
+${m.coupling ? `<br><strong class='color-coupling'>coupling</strong>: ${(m.coupling).toFixed(2)} &nbsp; <span style = 'font-size:90%;'>` + m.couplingDescription() + "</span>" : ""}
 ${botText}
 <br>
-<br><strong class='color-h'>health</strong>: (${(m.health*100).toFixed(0)} / ${(m.maxHealth*100).toFixed(0)})
-<br><strong class='color-f'>energy</strong>: (${(m.energy*100).toFixed(0)} / ${(m.maxEnergy*100).toFixed(0)}) +(${(m.fieldRegen*6000).toFixed(0)}/s)
-<br><strong class='color-g'>gun</strong>: ${b.activeGun === null || b.activeGun === undefined ? "undefined":b.guns[b.activeGun].name} &nbsp; <strong class='color-g'>ammo</strong>: ${b.activeGun === null || b.activeGun === undefined ? "0":b.guns[b.activeGun].ammo}
+<br><strong class='color-h'>health</strong>: (${(m.health * 100).toFixed(0)} / ${(m.maxHealth * 100).toFixed(0)})
+<br><strong class='color-f'>energy</strong>: (${(m.energy * 100).toFixed(0)} / ${(m.maxEnergy * 100).toFixed(0)}) +(${(m.fieldRegen * 6000).toFixed(0)}/s)
+<br><strong class='color-g'>gun</strong>: ${b.activeGun === null || b.activeGun === undefined ? "undefined" : b.guns[b.activeGun].name} &nbsp; <strong class='color-g'>ammo</strong>: ${b.activeGun === null || b.activeGun === undefined ? "0" : b.guns[b.activeGun].ammo}
 <br><strong class='color-m'>tech</strong>: ${tech.totalCount}  &nbsp; <strong class='color-r'>research</strong>: ${powerUps.research.count}  
-${junkCount ?  `<br><strong class='color-j'>JUNK</strong>: ${(junkCount / totalCount * 100).toFixed(1)}%  `: ""}
+${junkCount ? `<br><strong class='color-j'>JUNK</strong>: ${(junkCount / totalCount * 100).toFixed(1)}%  ` : ""}
  
 <br>
 <br>seed: ${Math.initialSeed}
@@ -333,7 +333,7 @@ ${junkCount ?  `<br><strong class='color-j'>JUNK</strong>: ${(junkCount / totalC
 <br>blocks: ${body.length} &nbsp; bullets: ${bullet.length} &nbsp; power ups: ${powerUp.length} 
 <br>position: (${player.position.x.toFixed(1)}, ${player.position.y.toFixed(1)}) &nbsp; velocity: (${player.velocity.x.toFixed(1)}, ${player.velocity.y.toFixed(1)})
 <br>mouse: (${simulation.mouseInGame.x.toFixed(1)}, ${simulation.mouseInGame.y.toFixed(1)}) &nbsp; mass: ${player.mass.toFixed(1)}   
-${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
+${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
 </div>`;
         for (let i = 0, len = b.inventory.length; i < len; i++) {
             text += `<div class="pause-grid-module"><div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${build.nameLink(b.guns[b.inventory[i]].name)} - <span style="font-size:100%;font-weight: 100;">${b.guns[b.inventory[i]].ammo}</span></div> ${b.guns[b.inventory[i]].description}</div>`
@@ -354,28 +354,28 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
             if (tech.tech[i].count > 0) {
                 const techCountText = tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : "";
                 if (tech.tech[i].isNonRefundable) {
-                    text += `<div class="pause-grid-module" id ="${i}-pause-tech" onclick="powerUps.pauseEjectTech(${i})" style = "border: 0px; opacity:0.5; font-size: 60%; line-height: 130%; margin: 1px; padding-top: 6px; padding-bottom: 6px;"><div class="grid-title">${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
+                    text += `<div class="pause-grid-module" id ="${i}-pause-tech" onclick="powerUps.pauseEjectTech(${i})" style = "border: 0px; opacity:0.5; font-size: 60%; line-height: 130%; margin: 1px; padding-top: 6px; padding-bottom: 6px;"><div class="grid-title">${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div></div>`
                 } else if (tech.tech[i].isFieldTech) {
                     text += `<div class="pause-grid-module" id ="${i}-pause-tech" onclick="powerUps.pauseEjectTech(${i})" ${style}><div class="grid-title">
                                             <span style="position:relative;">
                                                 <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
                                               <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
                                             </span>
-                                            &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
+                                            &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div></div>`
                 } else if (tech.tech[i].isGunTech) {
                     text += `<div class="pause-grid-module" id ="${i}-pause-tech" onclick="powerUps.pauseEjectTech(${i})" ${style}><div class="grid-title">
                                             <span style="position:relative;">
                                                 <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
                                                 <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
                                             </span>
-                                            &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
+                                            &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div></div>`
                 } else if (tech.tech[i].isLore) {
-                    text += `<div class="pause-grid-module"><div class="grid-title lore-text"><div class="circle-grid lore"></div> &nbsp; ${tech.tech[i].name} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
+                    text += `<div class="pause-grid-module"><div class="grid-title lore-text"><div class="circle-grid lore"></div> &nbsp; ${tech.tech[i].name} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div></div>`
                 } else {
-                    text += `<div class="pause-grid-module" id ="${i}-pause-tech" onclick="powerUps.pauseEjectTech(${i})" ${style}><div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
+                    text += `<div class="pause-grid-module" id ="${i}-pause-tech" onclick="powerUps.pauseEjectTech(${i})" ${style}><div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div></div>`
                 }
             } else if (tech.tech[i].isLost) {
-                text += `<div class="pause-grid-module" style="text-decoration: line-through;"><div class="grid-title">${tech.tech[i].link}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
+                text += `<div class="pause-grid-module" style="text-decoration: line-through;"><div class="grid-title">${tech.tech[i].link}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div></div>`
             }
         }
         el = document.getElementById("pause-grid-right")
@@ -504,7 +504,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                                 <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
                                 <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
                             </span>
-                            &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}
+                            &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}
                         </div>`
                         // <div class="circle-grid gun" style="position:absolute; top:-3px; left:-3px; opacity:1; height: 33px; width:33px;"></div>
                         // <div class="circle-grid tech" style="position:absolute; top:5px; left:5px;opacity:1;height: 20px; width:20px;border: #fff solid 2px;"></div>
@@ -517,7 +517,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                                 <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
                                 <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
                             </span>
-                            &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}
+                            &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}
                         </div>`
                     } else if (tech.tech[i].isJunk) {
                         techID.innerHTML = `<div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
@@ -536,7 +536,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
                 } else { //disabled color
                     // techID.innerHTML = `<div class="grid-title"> ${tech.tech[i].name}</div><span style="color:#666;">requires: ${tech.tech[i].requires}</span></div>`
                     // techID.innerHTML = `<div class="grid-title"> ${tech.tech[i].name}</div><span style="color:#666;">requires: ${tech.tech[i].requires}</span></div>`
-                    techID.innerHTML = `<div class="grid-title">${tech.tech[i].name}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
+                    techID.innerHTML = `<div class="grid-title">${tech.tech[i].name}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
                     // console.log(techID)
                     if (!techID.classList.contains("experiment-grid-disabled")) {
                         techID.classList.add("experiment-grid-disabled");
@@ -593,12 +593,12 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
             if (!tech.tech[i].isJunk || localSettings.isJunkExperiment) {
                 if (tech.tech[i].allowed() && (!tech.tech[i].isNonRefundable || localSettings.isJunkExperiment)) { // || tech.tech[i].name === "+1 cardinality") { //|| tech.tech[i].name === "leveraged investment"
                     if (tech.tech[i].isJunk) {
-                        text += `<div id="tech-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'tech')"><div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[i].link}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
+                        text += `<div id="tech-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'tech')"><div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${tech.tech[i].link}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
                     } else {
-                        text += `<div id="tech-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'tech')"><div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[i].link}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
+                        text += `<div id="tech-${i}" class="experiment-grid-module" onclick="build.choosePowerUp(this,${i},'tech')"><div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[i].link}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
                     }
                 } else {
-                    text += `<div id="tech-${i}" class="experiment-grid-module experiment-grid-disabled"><div class="grid-title"> ${tech.tech[i].name}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
+                    text += `<div id="tech-${i}" class="experiment-grid-module experiment-grid-disabled"><div class="grid-title"> ${tech.tech[i].name}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
                     // text += `<div id="tech-${i}" class="experiment-grid-module experiment-grid-disabled"><div class="grid-title"> ${tech.tech[i].name}</div> ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div>`
                 }
             }
@@ -644,7 +644,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
         document.getElementById("experiment-grid").style.display = "grid"
     },
     shareURL(isCustom = false) {
-        let url = "https://landgreen.github.io/sidescroller/index.html?"
+        let url = "https://landgreen.github.io/n-gon/index.html?"
         url += `&seed=${Math.initialSeed}`
         let count = 0;
         for (let i = 0; i < b.inventory.length; i++) {
@@ -680,15 +680,15 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>": ""}
         }
         console.log('n-gon build URL copied to clipboard.\nPaste into browser address bar.')
         console.log(url)
-        navigator.clipboard.writeText(url).then(function() {
+        navigator.clipboard.writeText(url).then(function () {
             /* clipboard successfully set */
             if (isCustom) {
-                setTimeout(function() { alert('n-gon build URL copied to clipboard.\nPaste into browser address bar.') }, 300);
+                setTimeout(function () { alert('n-gon build URL copied to clipboard.\nPaste into browser address bar.') }, 300);
             }
-        }, function() {
+        }, function () {
             /* clipboard write failed */
             if (isCustom) {
-                setTimeout(function() { alert('copy failed') }, 300);
+                setTimeout(function () { alert('copy failed') }, 300);
             }
             console.log('copy failed')
         });
@@ -862,22 +862,22 @@ const input = {
     setKeys(event) {
         //check for duplicate keys
         if (event.code && !(
-                event.code === "ArrowRight" ||
-                event.code === "ArrowLeft" ||
-                event.code === "ArrowUp" ||
-                event.code === "ArrowDown" ||
-                event.code === input.key.fire ||
-                event.code === input.key.field ||
-                event.code === input.key.up ||
-                event.code === input.key.down ||
-                event.code === input.key.left ||
-                event.code === input.key.right ||
-                event.code === input.key.pause ||
-                // event.code === "Escape" ||
-                event.code === input.key.nextGun ||
-                event.code === input.key.previousGun ||
-                event.code === input.key.testing
-            )) {
+            event.code === "ArrowRight" ||
+            event.code === "ArrowLeft" ||
+            event.code === "ArrowUp" ||
+            event.code === "ArrowDown" ||
+            event.code === input.key.fire ||
+            event.code === input.key.field ||
+            event.code === input.key.up ||
+            event.code === input.key.down ||
+            event.code === input.key.left ||
+            event.code === input.key.right ||
+            event.code === input.key.pause ||
+            // event.code === "Escape" ||
+            event.code === input.key.nextGun ||
+            event.code === input.key.previousGun ||
+            event.code === input.key.testing
+        )) {
             switch (input.focus.id) {
                 case "key-fire":
                     input.key.fire = event.code
@@ -928,14 +928,14 @@ document.getElementById("control-table").addEventListener('click', (event) => {
         window.addEventListener("keydown", input.setKeys);
     }
 });
-document.getElementById("control-details").addEventListener("toggle", function() {
+document.getElementById("control-details").addEventListener("toggle", function () {
     input.controlTextUpdate()
     input.endKeySensing();
 })
 
 document.getElementById("control-reset").addEventListener('click', input.setDefault);
 
-window.addEventListener("keyup", function(event) {
+window.addEventListener("keyup", function (event) {
     switch (event.code) {
         case input.key.right:
         case "ArrowRight":
@@ -962,7 +962,7 @@ window.addEventListener("keyup", function(event) {
     }
 });
 
-window.addEventListener("keydown", function(event) {
+window.addEventListener("keydown", function (event) {
     // console.log(event.code)
     switch (event.code) {
         case input.key.right:
@@ -995,11 +995,11 @@ window.addEventListener("keydown", function(event) {
         case input.key.previousGun:
             simulation.previousGun();
             break
-            // case "Escape":
+        // case "Escape":
         case input.key.pause:
             if (!simulation.isChoosing && input.isPauseKeyReady && m.alive) {
                 input.isPauseKeyReady = false
-                setTimeout(function() {
+                setTimeout(function () {
                     input.isPauseKeyReady = true
                 }, 300);
                 if (simulation.paused) {
@@ -1427,10 +1427,10 @@ document.getElementById("difficulty-select").addEventListener("input", () => {
 });
 
 
-document.getElementById("updates").addEventListener("toggle", function() {
+document.getElementById("updates").addEventListener("toggle", function () {
     function loadJSON(path, success, error) { //generic function to get JSON
         var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     if (success)
@@ -1449,7 +1449,7 @@ document.getElementById("updates").addEventListener("toggle", function() {
 
     ///  https://api.github.com/repos/landgreen/n-gon/stats/commit_activity
     loadJSON('https://api.github.com/repos/landgreen/n-gon/commits',
-        function(data) {
+        function (data) {
             // console.log(data)
             for (let i = 0, len = 20; i < len; i++) {
                 text += "<strong>" + data[i].commit.author.date.substr(0, 10) + "</strong> - "; //+ "<br>"
@@ -1458,14 +1458,14 @@ document.getElementById("updates").addEventListener("toggle", function() {
             }
             document.getElementById("updates-div").innerHTML = text.replace(/\n/g, "<br />")
         },
-        function(xhr) {
+        function (xhr) {
             console.error(xhr);
         }
     );
 })
 const sound = {
     tone(frequency, end = 1000, gain = 0.05) {
-        const audioCtx = new(window.AudioContext || window.webkitAudioContext)(); //setup audio context
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); //setup audio context
         const oscillator = audioCtx.createOscillator();
         const gainNode = audioCtx.createGain();
         gainNode.gain.value = gain; //controls volume
@@ -1481,7 +1481,7 @@ const sound = {
         // return audioCtx
     },
     portamento(frequency, end = 1000, shiftRate = 10, gain = 0.05) {
-        const audioCtx = new(window.AudioContext || window.webkitAudioContext)(); //setup audio context
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); //setup audio context
         const oscillator = audioCtx.createOscillator();
         const gainNode = audioCtx.createGain();
         gainNode.gain.value = gain; //controls volume

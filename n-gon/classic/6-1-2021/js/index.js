@@ -88,24 +88,24 @@ const build = {
         if (!simulation.isChoosing) text += `<div class="pause-grid-module">
       <span style="font-size:1.5em;font-weight: 600;">PAUSED</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; press P to resume</div>`
         text += `<div class="pause-grid-module" style = "font-size: 13px;line-height: 120%;padding: 5px;">
-        ${simulation.isCheating? "<em>lore disabled</em><br><br>": ""}
-      <strong class='color-d'>damage</strong> increase: ${((tech.damageFromTech()-1)*100).toFixed(0)}%
+        ${simulation.isCheating ? "<em>lore disabled</em><br><br>" : ""}
+      <strong class='color-d'>damage</strong> increase: ${((tech.damageFromTech() - 1) * 100).toFixed(0)}%
       <br><strong class='color-harm'>harm</strong> reduction: ${harm.toFixed(harm > 90 ? 2 : 0)}%
-      <br><strong><em>fire delay</em></strong> decrease: ${((1-b.fireCD)*100).toFixed(b.fireCD < 0.1 ? 2 : 0)}%
-      <br><strong class='color-dup'>duplication</strong> chance: ${(Math.min(1,tech.duplicationChance())*100).toFixed(0)}%
+      <br><strong><em>fire delay</em></strong> decrease: ${((1 - b.fireCD) * 100).toFixed(b.fireCD < 0.1 ? 2 : 0)}%
+      <br><strong class='color-dup'>duplication</strong> chance: ${(Math.min(1, tech.duplicationChance()) * 100).toFixed(0)}%
       ${botText}
       <br>
       <br><strong class='color-m'>tech</strong>: ${tech.totalCount}  &nbsp; <strong class='color-r'>research</strong>: ${powerUps.research.count}  
-      <br><strong class='color-h'>health</strong>: (${(m.health*100).toFixed(0)} / ${(m.maxHealth*100).toFixed(0)}) &nbsp; <strong class='color-f'>energy</strong>: (${(m.energy*100).toFixed(0)} / ${(m.maxEnergy*100).toFixed(0)})
+      <br><strong class='color-h'>health</strong>: (${(m.health * 100).toFixed(0)} / ${(m.maxHealth * 100).toFixed(0)}) &nbsp; <strong class='color-f'>energy</strong>: (${(m.energy * 100).toFixed(0)} / ${(m.maxEnergy * 100).toFixed(0)})
       <br>position: (${player.position.x.toFixed(1)}, ${player.position.y.toFixed(1)}) &nbsp; velocity: (${player.velocity.x.toFixed(1)}, ${player.velocity.y.toFixed(1)})
       <br>mouse: (${simulation.mouseInGame.x.toFixed(1)}, ${simulation.mouseInGame.y.toFixed(1)}) &nbsp; mass: ${player.mass.toFixed(1)}      
       <br>
       <br>level: ${level.levels[level.onLevel]} (${level.difficultyText()}) &nbsp; ${m.cycle} cycles
       <br>${mob.length} mobs, &nbsp; ${body.length} blocks, &nbsp; ${bullet.length} bullets, &nbsp; ${powerUp.length} power ups
 
-      <br>damage difficulty scale: ${(b.dmgScale*100).toFixed(2) }%
-      <br>harm difficulty scale: ${(simulation.dmgScale*100).toFixed(0)}%
-      <br>heal difficulty scale: ${(simulation.healScale*100).toFixed(1)}%
+      <br>damage difficulty scale: ${(b.dmgScale * 100).toFixed(2)}%
+      <br>harm difficulty scale: ${(simulation.dmgScale * 100).toFixed(0)}%
+      <br>heal difficulty scale: ${(simulation.healScale * 100).toFixed(1)}%
       <br><svg class="SVG-button" onclick="build.shareURL(false)" width="110" height="25" style="padding:2px; margin: 10px;">
       <g stroke='none' fill='#333' stroke-width="2" font-size="17px" font-family="Ariel, sans-serif">
           <text x="5" y="18">copy build url</text>
@@ -377,7 +377,7 @@ const build = {
         document.getElementById("experiment-grid").style.display = "grid"
     },
     shareURL(isCustom = false) {
-        let url = "https://landgreen.github.io/sidescroller/index.html?"
+        let url = "https://landgreen.github.io/n-gon/index.html?"
         let count = 0;
 
         for (let i = 0; i < b.inventory.length; i++) {
@@ -566,20 +566,20 @@ const input = {
     setKeys(event) {
         //check for duplicate keys
         if (event.code && !(
-                event.code === "ArrowRight" ||
-                event.code === "ArrowLeft" ||
-                event.code === "ArrowUp" ||
-                event.code === "ArrowDown" ||
-                event.code === input.key.field ||
-                event.code === input.key.up ||
-                event.code === input.key.down ||
-                event.code === input.key.left ||
-                event.code === input.key.right ||
-                event.code === input.key.pause ||
-                event.code === input.key.nextGun ||
-                event.code === input.key.previousGun ||
-                event.code === input.key.testing
-            )) {
+            event.code === "ArrowRight" ||
+            event.code === "ArrowLeft" ||
+            event.code === "ArrowUp" ||
+            event.code === "ArrowDown" ||
+            event.code === input.key.field ||
+            event.code === input.key.up ||
+            event.code === input.key.down ||
+            event.code === input.key.left ||
+            event.code === input.key.right ||
+            event.code === input.key.pause ||
+            event.code === input.key.nextGun ||
+            event.code === input.key.previousGun ||
+            event.code === input.key.testing
+        )) {
             switch (input.focus.id) {
                 case "key-field":
                     input.key.field = event.code
