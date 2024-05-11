@@ -2651,7 +2651,7 @@ const tech = {
         }
     },
     {
-        name: "Abelian group",
+        name: "abelian group",
         description: `<strong>4x</strong> <strong class='color-d'>damage</strong> while <strong class="color-invulnerable">invulnerable</strong>`,
         maxCount: 1,
         count: 0,

@@ -567,7 +567,7 @@ const m = {
         if (tech.isHarmReduceNoKill && m.lastKillCycle + 300 < m.cycle) dmg *= 0.3
         if (tech.squirrelFx !== 1) dmg *= 0.8//Math.pow(0.78, (tech.squirrelFx - 1) / 0.4)
         if (tech.isAddBlockMass && m.isHolding) dmg *= 0.1
-        if (tech.isSpeedHarm && player.speed > 0.1) dmg *= 1 - Math.min((tech.speedAdded + player.speed) * 0.0193, 0.8) //capped at speed of 55
+        if (tech.isSpeedHarm && (tech.speedAdded + player.speed) > 0.1) dmg *= 1 - Math.min((tech.speedAdded + player.speed) * 0.0193, 0.8) //capped at speed of 55
         if (tech.isHarmReduce && input.field) dmg *= 0.1
         if (tech.isNeutronium && input.field && m.fieldCDcycle < m.cycle) dmg *= 0.05
         if (tech.isBotArmor) dmg *= 0.95 ** b.totalBots()
@@ -4415,7 +4415,7 @@ const m = {
         //<br><strong class='color-block'>blocks</strong> can't <strong>collide</strong> with <strong>intangible</strong> mobs
         //field <strong>radius</strong> decreases out of <strong>line of sight</strong>
         //<strong>unlock</strong> <strong class='color-m'>tech</strong> from other <strong class='color-f'>fields</strong>
-        description: "use <strong class='color-f'>energy</strong> to guide <strong class='color-block'>blocks</strong><br><strong class='color-m'>tech</strong>, <strong class='color-f'>fields</strong>, and <strong class='color-g'>guns</strong> have <strong>+2</strong> <strong>choices</strong><br><strong>10</strong> <strong class='color-f'>energy</strong> per second",
+        description: "use <strong class='color-f'>energy</strong> to guide <strong class='color-block'>blocks</strong><br><strong class='color-m'>tech</strong>, <strong class='color-f'>fields</strong>, and <strong class='color-g'>guns</strong> have <strong>+2</strong> <strong class='color-choice'><span>ch</span><span>oi</span><span>ces</span></strong><br><strong>10</strong> <strong class='color-f'>energy</strong> per second",
         effect: () => {
             m.fieldMeterColor = "#333"
             m.eyeFillColor = m.fieldMeterColor

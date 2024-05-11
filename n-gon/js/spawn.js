@@ -178,7 +178,7 @@ const spawn = {
                 //     }
                 // }
 
-                if (tech.isMoveMACHO && m.crouch) {
+                if (tech.isMoveMACHO && m.crouch && input.down) {
                     Matter.Body.setVelocity(this, Vector.add(Vector.mult(this.velocity, 0.97), Vector.mult(player.velocity, 0.03)))
                     Matter.Body.setPosition(this, Vector.add(Vector.mult(this.position, 0.95), Vector.mult(player.position, 0.05)))
                 }
