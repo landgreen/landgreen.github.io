@@ -1842,49 +1842,142 @@
 			Another implication of relativity is that space and time are unified to form a single four-dimensional
 			continuum called <strong>spacetime</strong>.
 		</p>
-		$$ \Delta s^2 = c^2 \Delta t^2 - \Delta x^2 - \Delta y^2 - \Delta z^2$$
+		<div class="definition">
+			$$ \Delta s^2 = c^2 \Delta t^2 - \Delta x^2 - \Delta y^2 - \Delta z^2$$
+			\( \Delta s^2\) = spacetime interval [light-years², ly²]
+			<br>\( \Delta t \) = time [years, yrs]
+			<br>\( \Delta x \) = distance [light-years, ly]
+			<br>\(c\) = speed of light, 3 × 10⁸ [m/s]
+		</div>
 		<p>
-			\( \Delta s^2 \) is the <strong>spacetime interval</strong>. Not \( \Delta s \). Observers at different
-			relative velocities disagree about the position of events in space and time, but they will agree on the
-			value of the interval.
+			\( \Delta s^2 \) is the <strong>spacetime interval</strong>. Not \( \Delta s \).
 		</p>
 		<p>
-			An event can cause another event to occur, but the speed of light puts a limit on causality.
-			There are places in space and time that could never interact with each other, because nothing can move fast
-			enough to connect them.
-			A light cone divides space and time into separate regions to help visualize the limits of causality.
+			Observers at different relative velocities will disagree about ∆t and ∆x, but they will always agree on the value of ∆s².
 		</p>
-		<a href="https://en.wikipedia.org/wiki/Light_cone" class="center">
-			<img src="worldline.svg" alt="worldline" style="width: 100%; height: auto;" />
-		</a>
-
-		<p>The value of the spacetime interval tells us about the possible causal relationship between two events.</p>
-		<ul class="listing">
-			<li>
-				<p>$$ \Delta s^2 = \mathrm{interval} $$ $$ \Delta s^2 = c^2 \Delta t^2 - \Delta x^2 $$
-					When only a single space dimension is needed we can use a shorter equation for the spacetime
-					interval.</p>
-			</li>
-			<li>
+		<div class='example'>
+			<strong>Example:</strong>
+			What is the spacetime interval for an event 7 years in the future and 8 light-years away?
+			<details>
+				<summary>light-years</summary>
 				<p>
-					$$ \Delta s^2 = 0 $$ $$ c^2 \Delta t^2 = \Delta x^2 $$
-					A <strong>light-like</strong> interval is zero. This means that two events could be connected by a
-					photon of light.
+					A <strong>light-year [ly]</strong> is a unit of distance. It's the distance that light travels in one year.
+					Light-years are a great unit for the spacetime interval because they can be used as a unit of distance or time when moving at the speed of light.
 				</p>
-			</li>
-			<li>
-				<p>$$ \Delta s^2> 0$$ $$ c^2 \Delta t^2> \Delta x^2 $$
-					A <strong>time-like</strong> interval is positive. This means that there <strong>could</strong> be a
-					causal relationship between two events.
+				<p>
+					Multiplying years by the speed of light converts the units into light-year.
+					$$ c = \frac{\Delta x}{\Delta t} $$
+					$$ c \Delta t = \Delta x$$
+					$$ (\tfrac{\mathrm{m}}{\mathrm{s}}) (\mathrm{yrs}) = \mathrm{ly} $$
+					So years times the speed of light can be added to light years with out the need for conversions.
 				</p>
-			</li>
-			<li>
-				<p>$$ \Delta s^2 < 0$$ $$ c^2 \Delta t^2 < \Delta x^2 $$ A <strong>space-like</strong> interval is
-						negative. This means that there could <strong>not</strong> be a causal relationship between two
-						events.
+			</details>
+			<details>
+				<summary>solution</summary>
+				$$ \Delta s^2 = c^2 \Delta t^2 - \Delta x^2 $$
+				$$ \Delta s^2 = c^2 (7 \, \mathrm{yr})^2 - (8 \, \mathrm{ly})^2 $$
+				$$ \Delta s^2 = (7 \, \mathrm{ly})^2 - (8 \, \mathrm{ly})^2 $$
+				$$ \Delta s^2 = 49 \, \mathrm{ly}^2 - 64 \, \mathrm{ly}^2 $$
+				$$ \Delta s^2 = -15 \, \mathrm{ly}^2 $$
+				<p>
+					Remember, \( \Delta s^2 \) is the <strong>spacetime interval</strong>. Not \( \Delta s \). So we can stop here.
 				</p>
-			</li>
-		</ul>
+			</details>
+		</div>
+		<div class='example'>
+			<p>
+				The spacetime interval's sign tells us about the possible causal relationship between two events.
+				In other words we can tell if two events in spacetime could communicate.
+			</p>
+			<ul class="listing">
+				<li>
+					<p>
+						$$ \Delta s^2 = \mathrm{interval} $$ 
+						$$ \Delta s^2 = c^2 \Delta t^2 - \Delta x^2 $$
+						When only a single space dimension is needed we can use a shorter equation for the spacetime interval.
+					</p>
+				</li>
+				<li>
+					<p>
+						$$ \Delta s^2 = 0 $$ $$ c^2 \Delta t^2 = \Delta x^2 $$
+						A <strong>light-like</strong> interval is zero. This means that two events could be connected by a
+						photon of light.
+					</p>
+				</li>
+				<li>
+					<p>
+						$$ \Delta s^2> 0$$ 
+						$$ c^2 \Delta t^2> \Delta x^2 $$
+						A <strong>time-like</strong> interval is positive.
+						This means that there <strong>could</strong> be a causal relationship between two events.
+					</p>
+				</li>
+				<li>
+					<p>
+						$$ \Delta s^2 < 0$$ 
+						$$ c^2 \Delta t^2 < \Delta x^2 $$
+						A <strong>space-like</strong> interval is	negative.
+						This means that there could <strong>not</strong> be a causal relationship between two events.
+					</p>
+				</li>
+			</ul>
+			<a href="https://en.wikipedia.org/wiki/Light_cone" class="center">
+				<img src="worldline.svg" alt="worldline" style="width: 100%; height: auto;" />
+			</a>
+			<p>
+				An event can cause another event to occur, but the speed of light puts a limit on causality.
+				There are places in space and time that could never interact with each other, because nothing can move fast
+				enough to connect them.
+				A light cone divides space and time into separate regions to help visualize the limits of causality.
+			</p>
+		</div>
+
+
+		<div class='example'>
+			<strong>Example:</strong>
+			What is the spacetime interval for an event 3 years in the future and 2 light-years away?
+			Is the interval space-like, time-like, or light-like?
+			<details>
+				<summary>solution</summary>
+				$$ \Delta s^2 = c^2 \Delta t^2 - \Delta x^2 $$
+				$$ \Delta s^2 = c^2 (3 \, \mathrm{yr})^2 - (2 \, \mathrm{ly})^2 $$
+				$$ \Delta s^2 = (3 \, \mathrm{ly})^2 - (2 \, \mathrm{ly})^2 $$
+				$$ \Delta s^2 = 9 \, \mathrm{ly}^2 - 4 \, \mathrm{ly}^2 $$
+				$$ \Delta s^2 = 5 \, \mathrm{ly}^2 $$
+				<p>
+					The interval is greater than zero, so it is time-like.
+					One could potentially effect events 3 years in the future and 2 light-years away.
+				</p>
+				<!-- <br>
+				<div><strong>Challenge:</strong>
+					A reference frame moving at 0.9c should see the same space-time interval.  Do they?
+					Prove that they see the same space-time interval that you saw as 3 years in the future and 2 light-years away.
+					<p>first we need to calculate the ∆t and ∆x at 0.9c</p> $$\gamma = 2.294$$
+					$$\Delta t = \gamma \Delta t_0 $$
+					$$\Delta t = 2.294(3 \, \mathrm{yr} - 0.9 \times 2 \, \mathrm{yr})$$
+					$$\Delta t = 2.753 \, \mathrm{yr}$$
+					
+					<details>
+						<summary>solution</summary>
+
+						add math to get DT and Dx
+						https://chatgpt.com/g/g-4EdkRyUj7-physics/c/acc433bf-7b5f-4a45-8807-01198f036d13
+
+						$$ \Delta s^2 = c^2 \Delta t^2 - \Delta x^2 $$
+						$$ \Delta s^2 = c^2 (2.753 \, \mathrm{yr})^2 - (−1.606 \, \mathrm{ly})^2 $$
+						$$ \Delta s^2 = 7.579 \, \mathrm{ly}^2 - 2.579 \, \mathrm{ly}^2 $$
+						$$ \Delta s^2 = 5 \, \mathrm{ly}^2 $$
+						<p>
+							We did get the same interval.
+						</p>
+					</details>
+				</div> -->
+			</details>
+		</div>
+
+		<!-- <div class='example'>
+
+		</div> -->
 
 		<div class='example'>
 			<p>
@@ -1905,9 +1998,9 @@
 				$$ \Delta s^2 = (3 \, \mathrm{ly})^2 - (4.22 \, \mathrm{ly})^2 $$
 				$$ \Delta s^2 = 9 \, \mathrm{ly}^2 - 17.8 \, \mathrm{ly}^2 $$
 				$$ \Delta s^2 = -8.8 \, \mathrm{ly}^2 $$
-				<p>
+				<!-- <p>
 					\( \Delta s^2 \) is the <strong>spacetime interval</strong>. Not \( \Delta s \).
-				</p>
+				</p> -->
 				<p>
 					The spacetime interval between Earth in 2049 and Proxima Centauri in 2052 is negative.
 					The interval is space-like.
@@ -1924,38 +2017,29 @@
 		<ul class="listing">
 			<li>
 				<div>Relative Velocity
-					<br>v = <input id='velocity' type="number" value='0.9' min="0" max="1" step="0.01"
-						style="width:80px;"> c
-					<br>v = <input id='velocity2' type="number" value='2.7' min="0" max="3" step="0.1"
-						style="width:80px;"> × 10<sup>8</sup> m/s
+					<br>v = <input id='velocity' type="number" value='0.9' min="0" max="1" step="0.01" style="width:80px;"> c
+					<br>v = <input id='velocity2' type="number" value='2.7' min="0" max="3" step="0.1" style="width:80px;"> × 10<sup>8</sup> m/s
 				</div>
 			</li>
 			<li>
 				<div>Lorentz Factor
-					<br>γ = <input id='gamma' type="number" value='2.2942' min="1" step="0.1" max="9999999"
-						style="width:80px;">
+					<br>γ = <input id='gamma' type="number" value='2.2942' min="1" step="0.1" max="9999999" style="width:80px;">
 				</div>
 			</li>
 			<li>
 				<div>
 					<strong>MOVING RELATIVE TO SPACESHIP</strong>
-					<br>time = <input id='v_time' type="number" value='22.94' min="0" max="1000.0" style="width:80px;">
-					s
-					<br>energy = <input id='v_mass' type="number" value='22.94' min="0" min="-1000.0" max="1000.0"
-						style="width:80px;"> J
-					<br>length = <input id='v_length' type="number" value='4.36' min="0" min="-1000.0" max="1000.0"
-						style="width:80px;"> m
+					<br>time = <input id='v_time' type="number" value='22.94' min="0" max="1000.0" style="width:80px;"> s
+					<br>energy = <input id='v_mass' type="number" value='22.94' min="0" min="-1000.0" max="1000.0" style="width:80px;"> J
+					<br>length = <input id='v_length' type="number" value='4.36' min="0" min="-1000.0" max="1000.0" style="width:80px;"> m
 				</div>
 			</li>
 			<li>
 				<div>
 					<strong>AT REST RELATIVE TO SPACESHIP</strong>
-					<br>proper time = <input id='time' type="number" value='10' min="0" max="1000.0"
-						style="width:80px;"> s
-					<br>rest energy = <input id='mass' type="number" value='10' min="0" min="-1000.0" max="1000.0"
-						style="width:80px;"> J
-					<br>rest length = <input id='length' type="number" value='10' min="0" min="-1000.0" max="1000.0"
-						style="width:80px;"> m
+					<br>proper time = <input id='time' type="number" value='10' min="0" max="1000.0" style="width:80px;"> s
+					<br>rest energy = <input id='mass' type="number" value='10' min="0" min="-1000.0" max="1000.0" style="width:80px;"> J
+					<br>rest length = <input id='length' type="number" value='10' min="0" min="-1000.0" max="1000.0" style="width:80px;"> m
 				</div>
 			</li>
 		</ul>
