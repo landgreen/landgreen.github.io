@@ -1112,7 +1112,7 @@ const tech = {
     //     }
     // },
     {
-        name: "Newtons 1st law",
+        name: "inertia",
         descriptionFunction() {
             return `<strong class='color-defense'>damage taken</strong> is proportional to your <strong class="color-speed">speed</strong><br>up to <strong>0.2x</strong> <strong class='color-defense'>damage taken</strong> at <strong>55</strong> <strong class="color-speed">speed</strong> <em>(${(1 - Math.min((tech.speedAdded + player.speed) * 0.0193, 0.8)).toFixed(2)}x)</em>`
         },
