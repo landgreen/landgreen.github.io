@@ -5231,13 +5231,13 @@ const m = {
     },
     {
         name: "grappling hook",
-        description: `use <strong class='color-f'>energy</strong> to fire a hook that <strong>pulls</strong> you<br><strong>0.6x</strong> <strong class='color-defense'>damage taken</strong><br><strong>9</strong> <strong class='color-f'>energy</strong> per second`,
+        description: `use <strong class='color-f'>energy</strong> to fire a hook that <strong>pulls</strong> you<br><strong>0.5x</strong> <strong class='color-defense'>damage taken</strong><br><strong>9</strong> <strong class='color-f'>energy</strong> per second`,
         effect: () => {
             m.fieldFire = true;
             // m.holdingMassScale = 0.01; //can hold heavier blocks with lower cost to jumping
             // m.fieldMeterColor = "#789"//"#456"
             m.eyeFillColor = m.fieldMeterColor
-            m.fieldHarmReduction = 0.6; //40% reduction
+            m.fieldHarmReduction = 0.5; //40% reduction
             m.grabPowerUpRange2 = 300000 //m.grabPowerUpRange2 = 200000;
 
             m.hold = function () {
