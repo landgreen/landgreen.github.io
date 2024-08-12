@@ -107,7 +107,7 @@
 			<tr>
 				<td>string</td>
 				<td>strings, ropes</td>
-				<td><a href="https://www.youtube.com/watch?v=AnaASTBn_K4">whip</a>, guitar string</td>
+				<td><a href="https://www.youtube.com/watch?v=AnaASTBn_K4">whip</a>, <a href="https://string.spiel.com/">guitar string</a></td>
 			</tr>
 			<tr>
 				<td>seismic</td>
@@ -241,7 +241,7 @@
 			</tr>
 		</table>
 		<p>
-			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo">Sound</a> travels faster in dense media because the atoms are <a href='https://www.youtube.com/watch?v=w6Q15GZpSUY'>closer</a> together. This means the atoms don't have to move as far to collide.
+			<a href="https://www.youtube.com/watch?v=px3oVGXr4mo">Sound</a> <a href="https://www.youtube.com/watch?v=1kjAkuwYx2M">travels</a> faster in dense media because the atoms are <a href='https://www.youtube.com/watch?v=w6Q15GZpSUY'>closer</a> together. This means the atoms don't have to move as far to collide.
 		</p>
 		<p>
 			A light wave is slower in dense media because as the light wave propagates through a medium it produces ripples that interfere in a way that slows the group velocity of the light wave.
@@ -288,7 +288,7 @@
 			A medium at rest is in <strong>equilibrium</strong>; the forces are in balance. A disruption spreads through a medium bringing it out of equilibrium.
 		</p>
 		<p>
-			<a href="https://waveforms.surge.sh/waveforms-intro ">Sound waves</a> are vibrations that propagate through matter. They are produced by changes in pressure and velocity. Your <a href="https://www.youtube.com/watch?v=qgdqp-oPb1Q">ear</a> <a href="https://www.reddit.com/r/Scienc3_Tech/comments/11tfh3c/how_we_hear_sound/">senses</a> the <a href="https://www.youtube.com/watch?v=Is_wu0VRIqQ">amplitude</a> and frequency of the vibrations.
+			<a href="https://waveforms.surge.sh/waveforms-intro ">Sound</a>  <a href="https://www.youtube.com/watch?v=24yESm63tSY">waves</a> are vibrations that propagate through matter. They are produced by changes in pressure and velocity. Your <a href="https://www.youtube.com/watch?v=qgdqp-oPb1Q">ear</a> <a href="https://www.reddit.com/r/Scienc3_Tech/comments/11tfh3c/how_we_hear_sound/">senses</a> the <a href="https://www.youtube.com/watch?v=Is_wu0VRIqQ">amplitude</a> and frequency of the vibrations.
 		</p>
 		<br><br>
 		<!-- <p>
@@ -345,6 +345,8 @@
 			<strong>Frequency, f</strong> = number of cycles that pass per second [Hz, 1/s]
 			<br>
 			<strong>Wavelength, λ</strong> = distance over which a wave's shape repeats [m]
+			<br>
+			<strong>Phase, ϕ</strong> = fraction of a repeating cycle for point on the wave [0,2π] or [0,360]
 		</p>
 		<p>Waves can have different shapes. The waveform below is a
 			<select id="waveform-select">
@@ -358,7 +360,7 @@
 	<div id="sine-wave-zone">
 		<div class="flex-grid-thirds">
 			<div class="col">
-				<span class='center'>amplitude =
+				<span class='center'>max amplitude =
 					<input id='amplitude' type="number" step="0.05" value="0.6" min="-2" max="2" style="width:50px;">m
 					<br><input id='amplitude-slider' type="range" step="0.01" value="0.6" min="-2" max="2" style="width: 160px;">
 				</span>
@@ -390,6 +392,7 @@
 					<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;' />
 					<text x="50" y="391" text-anchor="middle" font-size="15" fill='#000'>1.0 m</text>
 				</g>
+					<circle id="phase-dot" cx="-10000" cy="0" r="5" fill="#89a" />
 			</svg>
 		</div>
 		<div class="flex-grid-thirds">
@@ -397,7 +400,7 @@
 				<span id='frequency' class='center'></span>
 			</div>
 			<div class="col">
-				<span id='time' class='center'></span>
+				<span id='time' class='center' style = "color:#678;"></span>
 			</div>
 			<div class="col">
 				<span id='period' class='center'></span>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#222" />
+	<meta name="description" content="Interactive notes for algebra based physics.">
+	<meta name="author" content="Ross Landgreen">
+	<meta property="og:description" content="Interactive notes for algebra based physics.">
+	<meta property="og:title" content="Physics Notes">
+	<meta name="twitter:title" content="Physics Notes">
+	<meta name="twitter:description" content="Interactive notes for algebra based physics.">
+	<title>Atoms</title>
+	<link rel='shortcut icon' href='../../../media/favicon.ico' type='image/x-icon' />
+	<link rel="stylesheet" type="text/css" href="../../../lib/katex/katex.min.css">
+	<script src="../../../lib/katex/katex.min.js"></script>
+	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../../style.css">
+</head>
+<body>
+	<header>
+		<h1>
+			<a href="../../../">Atoms</a>
+		</h1>
+	</header>		
+<pre>
+	https://openstax.org/books/college-physics-2e/pages/31-introduction-to-radioactivity-and-nuclear-physics
+	check NEXT GEN science standards for areas to highlight
+	what about connections previous units to light, quantum, e-mc2?
+	quantum unit before or after atoms
+		maybe they should trade sections
+	
+	
+	outline:
+		atomic structure
+			discovery/history of different models of the atom
+			parts of atom
+			electron, proton, neutron
+			electron cloud
+				orbitals from quantum?
+				standing waves cause quantization (copy from quantum?)
+				chemical bonds
+					metallic, covalent, ionic, hydrogen, ...
+			periodic table review
+				electrons and proton match to neutralize charge
+				neutrons and protons keep the nucleus together
+		nucleus
+			isotopes and radioactive decay
+				alpha, beta, gamma
+				half life
+					isotope
+					dating (carbon, ...), radioisotope
+		particle physics (some of these topics could go in other sections?)
+			basic particle physics?
+				baryons
+				quarks
+				hadrons
+				leptons
+			4 fundamental forces?
+			Pauli exclusion principle
+			tunneling (maybe just an example problem and an SVG graph)
+		particle reactions
+			conservation Laws
+				energy, charge, baryon number?
+			fission particle reactions
+				Uranium, ...
+			fusion
+				fusion particle reactions
+				stars
+					stellar nucleosynthesis
+		chain reactions
+			nuclear bombs
+				history
+					cold war, testing
+					https://www.youtube.com/watch?v=LLCF7vPanrY   "A Time-Lapse Map of Every Nuclear Explosion Since 1945 - by Isao Hashimoto"	
+				atomic - fission
+				hydrogen - fusion
+				neutron, MIRV, ICBM
+			nuclear power
+				fission
+				breeder?
+				fusion?
+				environmental effects and safety
+		radiation
+			(maybe combine this with my light as radiation section)
+			types
+				Alpha, Beta, Gamma
+			health
+			practical uses
+				irradiation of food
+				cancer treatment
+				medical imaging
+					radioisotope
+			shielding/penetration
+			methods of detection
+	</pre>	
+
+
+<article>			
+	
+<p>
+	Introduction:
+</p>
+		
+
+<h2 class='underlined'>atomic structure</h2>
+	
+	<p>discovery/history of different models of the atom</p>
+
+	<p>parts of the atom</p>
+	<table>
+		<tr>
+			<th>name</th>
+			<th>symbol</th>
+			<!-- <th>charge (C)</th> -->
+			<th>charge (C)</th>
+			<th>mass (kg)</th>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://en.wikipedia.org/wiki/Proton">proton</a>
+			</td>
+			<td>p<sup>+</sup></td>
+			<!-- <td>+1.602 × 10<sup>-19</sup> </td> -->
+			<td>+1.6× 10<sup>-19</sup></td>
+			<td>1.6726 × 10<sup>-27</sup> </td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://en.wikipedia.org/wiki/Electron">electron</a>
+			</td>
+			<td>e<sup>-</sup></td>
+			<!-- <td>−1.602 × 10<sup>-19</sup> </td> -->
+			<td>−1.6× 10<sup>-19</sup> </td>
+			<td>9.1094 × 10<sup>-31</sup> </td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://en.wikipedia.org/wiki/Neutron">neutron</a>
+			</td>
+			<td>n</td>
+			<!-- <td>0</td> -->
+			<td>0</td>
+			<td>‎1.6749 × 10<sup>-27</sup> </td>
+		</tr>
+	</table>
+	<p>periodic table review</p>
+</article>			
+	<iframe class="pubchem-widget center" src="https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&embed=true" style="width: 1300px; height: 1000px;"></iframe>
+<article>			
+
+	<p>
+		electrons and proton match to neutralize charge
+		neutrons and protons keep the nucleus together
+	</p>
+	<p>
+		bonds
+			metallic, covalent, ionic, hydrogen, ...
+	</p>
+	<p>
+		atoms and quantum
+		standing waves cause quantization (copy from quantum?)
+	</p>
+
+
+<h2 class='underlined'>particle physics</h2>
+fission
+<p>
+	$$\text{}^{235}_{92}\text{U} + \text{}^{1}_{0}\text{n} \to \text{}^{92}_{36}\text{Kr} +  \text{}^{56}_{142}\text{Ba} + 2^{1}_{0}\text{n} + \text{energy}$$
+</p>
+
+<details>
+	<summary>Subatomic Particles Data Table</summary>
+	<table>
+		<tr>
+			<th>name</th>
+			<th>symbol</th>
+			<!-- <th>charge (C)</th> -->
+			<th>charge (e)</th>
+			<th>mass (kg)</th>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://en.wikipedia.org/wiki/Proton">proton</a>
+			</td>
+			<td> \(p^+\) </td>
+			<!-- <td>+1.602 × 10<sup>-19</sup> </td> -->
+			<td>+1</td>
+			<td>1.6726 × 10<sup>-27</sup> </td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://en.wikipedia.org/wiki/Electron">electron</a>
+			</td>
+			<td>\(e^-\) </td>
+			<!-- <td>−1.602 × 10<sup>-19</sup> </td> -->
+			<td>−1</td>
+			<td>9.1094 × 10<sup>-31</sup> </td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://en.wikipedia.org/wiki/Positron">positron</a>
+			</td>
+			<td>\(e^+\) </td>
+			<!-- <td>+1.602 × 10<sup>-19</sup> </td> -->
+			<td>+1</td>
+			<td>9.1094 × 10<sup>-31</sup> </td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://en.wikipedia.org/wiki/Neutron">neutron</a>
+			</td>
+			<td>\(n\) </td>
+			<!-- <td>0</td> -->
+			<td>0</td>
+			<td>‎1.6749 × 10<sup>-27</sup> </td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://en.wikipedia.org/wiki/Neutrino">neutrino</a>
+			</td>
+			<td>\(v_e\) </td>
+			<!-- <td>0</td> -->
+			<td>0</td>
+			<td>1.78 × 10<sup>-36</sup> </td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://en.wikipedia.org/wiki/Neutrino">antineutrino</a>
+			</td>
+			<td>\(\bar{v}_e\) </td>
+			<!-- <td>0</td> -->
+			<td>0</td>
+			<td>1.78 × 10<sup>-36</sup> </td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://en.wikipedia.org/wiki/Muon">muon</a>
+			</td>
+			<td>\( \mu^-\) </td>
+			<!-- <td>−1.602 × 10<sup>-19</sup> </td> -->
+			<td>−1</td>
+			<td>1.8835 × 10<sup>-28</sup> </td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://en.wikipedia.org/wiki/Alpha_particle">alpha</a>
+			</td>
+			<td>\( \small{}^4_2 \normalsize \alpha\) </td>
+			<!-- <td>+3.204 × 10<sup>-19</sup> </td> -->
+			<td>+2</td>
+			<td>6.6447 × 10<sup>-27</sup> </td>
+		</tr>
+	</table>
+</details>
+<h2 class='underlined'>chain reactions</h2>
+<h2 class='underlined'>radiation</h2>
+		
+
+		<div class='example'>
+			<strong>Example:</strong> example.
+			<details>
+				<summary>solution</summary>
+				$$\text{1 = air} \quad \quad \text{ 2 = mystery A}$$
+				$$\theta_1 = 39.0^{\circ} \quad \quad \quad n_1 = 1.0$$
+				$$\theta_2 = 15.0^{\circ} \quad \quad \quad n_2 = \ ?$$
+				$$\frac{\mathrm{sin} \theta_1}{\mathrm{sin} \theta_2} =\frac{n_2}{n_1} $$
+				$$n_2 = \frac{n_1 \mathrm{sin} \theta_1}{\mathrm{sin} \theta_2} $$
+				$$n_2 = \frac{(1.0) \mathrm{sin} (39.0)}{\mathrm{sin} (15.0)} $$
+				$$ n_2 = 2.43 $$
+			</details>
+		</div>
+
+
+	</article>
+	<footer>
+		<a href="../../../">Back</a>
+	</footer>
+
+
+	<script>
+		renderMathInElement(document.body);
+	</script>
+</body>
+
+</html>

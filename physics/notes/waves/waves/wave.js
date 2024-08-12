@@ -36,6 +36,7 @@ const wave = function () {
   document.getElementById("wavelength").value = settings.wavelength / 100;
   document.getElementById("frequency").innerHTML = "frequency = " + settings.frequency.toFixed(3) + " Hz";
   document.getElementById("period").innerHTML = "period = " + settings.period.toFixed(3) + " s";
+  document.getElementById("time").innerHTML = "phase = " + ((360 * settings.phase / settings.wavelength) % 360).toFixed(0) + "°"
   settings.phase = settings.phase % settings.wavelength; //makes the switch smoother
 
   function waveEquation() {
@@ -105,6 +106,7 @@ const wave = function () {
   draw()
 
   document.getElementById("waveform-select").addEventListener("input", () => {
+    document.getElementById("time").innerHTML = ""
     const form = document.getElementById("waveform-select").value
     if (form === "sine") {
       draw = drawSineWave
@@ -113,12 +115,15 @@ const wave = function () {
     } else if (form === "square") {
       draw = drawSquareWave
       sineWaveTarget.style.strokeLinejoin = "round"
+      document.getElementById("phase-dot").setAttribute('cx', -10); //hide phase dot
     } else if (form === "triangle") {
       draw = drawTriangleWave
       sineWaveTarget.style.strokeLinejoin = "round"
+      document.getElementById("phase-dot").setAttribute('cx', -10); //hide phase dot
     } else if (form === "sawtooth") {
       draw = drawSawtoothWave
       sineWaveTarget.style.strokeLinejoin = "round"
+      document.getElementById("phase-dot").setAttribute('cx', -10); //hide phase dot
     }
     draw()
   }, false);
@@ -130,6 +135,14 @@ const wave = function () {
     }
     d += "h20 V500 L-100 500";
     sineWaveTarget.setAttribute("d", d);
+    //move phase dot into position
+    document.getElementById("phase-dot").setAttribute('cx', 0.5 * settings.width);
+    document.getElementById("phase-dot").setAttribute('cy', Math.sin(((2 * Math.PI) / settings.wavelength) * (0.5 * settings.width - settings.phase)) * settings.amplitude + origin.y);
+
+    const phase = Math.abs((360 / settings.wavelength) * (0.5 * settings.width - settings.phase) % 360)//((360 * settings.phase / settings.wavelength) % 360)
+    //Math.sin(((2 * Math.PI) / settings.wavelength) * (0.5 * settings.width - settings.phase)) * settings.amplitude + origin.y
+    //((2 * Math.PI) / settings.wavelength) * (0.5 * settings.width - settings.phase)
+    document.getElementById("time").innerHTML = "phase = " + phase.toFixed(0) + "°" + " " + "amplitude = " + (-0.01 * (Math.sin(((2 * Math.PI) / settings.wavelength) * (0.5 * settings.width - settings.phase)) * settings.amplitude)).toFixed(2)
   }
 
   function drawSquareWave() {
@@ -137,12 +150,12 @@ const wave = function () {
     const len = 2 * settings.width / settings.wavelength + 2
     let d = `M ${phase} ${origin.y + settings.amplitude} `;
     for (let i = 0; i < len; i++) {
-      d += `h ${settings.wavelength/2} `;
+      d += `h ${settings.wavelength / 2} `;
 
       if (i % 2) {
-        d += `v ${settings.amplitude*2} `;
+        d += `v ${settings.amplitude * 2} `;
       } else {
-        d += `v ${-settings.amplitude*2} `;
+        d += `v ${-settings.amplitude * 2} `;
       }
     }
     sineWaveTarget.setAttribute("d", d);
@@ -153,8 +166,8 @@ const wave = function () {
     const len = settings.width / settings.wavelength + 1
     let d = `M ${phase} ${origin.y - settings.amplitude} `;
     for (let i = 0; i < len; i++) {
-      d += `l ${settings.wavelength/2} ${settings.amplitude*2} `
-      d += `l ${settings.wavelength/2} ${-settings.amplitude*2} `
+      d += `l ${settings.wavelength / 2} ${settings.amplitude * 2} `
+      d += `l ${settings.wavelength / 2} ${-settings.amplitude * 2} `
     }
     sineWaveTarget.setAttribute("d", d);
   }
@@ -164,8 +177,8 @@ const wave = function () {
     const len = settings.width / settings.wavelength + 1
     let d = `M ${phase} ${origin.y + settings.amplitude} `;
     for (let i = 0; i < len; i++) {
-      d += `l ${settings.wavelength} ${-settings.amplitude*2} `
-      d += `v ${settings.amplitude*2} `
+      d += `l ${settings.wavelength} ${-settings.amplitude * 2} `
+      d += `v ${settings.amplitude * 2} `
     }
     sineWaveTarget.setAttribute("d", d);
   }
@@ -184,7 +197,7 @@ const wave = function () {
       //frame capped code here
       settings.phase += settings.velocity / 60;
       settings.time += 1 / 60;
-      document.getElementById("time").innerHTML = settings.time.toFixed(1) + " s";
+      // document.getElementById("time").innerHTML = settings.time.toFixed(1) + " s";
       draw();
     }
   }
