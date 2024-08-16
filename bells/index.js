@@ -20,7 +20,7 @@ const schedule = {
   setCurrentByDate: function () {
     // if (schedule.current !== "rally" || date.getHours() > 22) {
     if (date.getDay() === 5) {
-      schedule.current = "advisory";
+      schedule.current = "friday";
     } else {
       schedule.current = "regular";
     }
@@ -32,10 +32,8 @@ const schedule = {
     } else if (schedule.current === "advisory") {
       schedule.current = "rally";
     } else if (schedule.current === "rally") {
-      schedule.current = "rallyLunch";
-    } else if (schedule.current === "rallyLunch") {
-      schedule.current = "rally5th";
-    } else if (schedule.current === "rally5th") {
+      schedule.current = "friday";
+    } else if (schedule.current === "friday") {
       schedule.current = "earlyRelease";
     } else if (schedule.current === "earlyRelease") {
       schedule.current = "regular";
@@ -43,301 +41,400 @@ const schedule = {
     update(false);
   },
   regular: [{
-      start: 0,
-      long: 8 * 60 + 30,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 8 * 60 + 30,
-      long: 60,
-      name: "P1",
-      showName: true,
-      fill: color.period
-    },
-    {  
-      start: 9 * 60 + 30,
-      long: 3,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 9 * 60 + 33,
-      long: 60,
-      name: "P2",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 10 * 60 + 33,
-      long: 18,
-      name: "snack",
-      showName: false,
-      fill: color.lunch
-    },
-    {
-      start: 10 * 60 + 51,
-      long: 60,
-      name: "P3",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 11 * 60 + 51,
-      long: 3,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 11 * 60 + 54,
-      long: 60,
-      name: "P4",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 12 * 60 + 54,
-      long: 30,
-      name: "lunch",
-      showName: false,
-      fill: color.lunch
-    },
-    {
-      start: 12 * 60 + 1 * 60 + 24,
-      long: 63, //don't forget this period is 3 minutes longer
-      name: "P5",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 12 * 60 + 2 * 60 + 27,
-      long: 3,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 12 * 60 + 2 * 60 + 30,
-      long: 60,
-      name: "P6",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 12 * 60 + 3 * 60 + 30,
-      long: 8 * 60 + 30,
-      name: "",
-      showName: false,
-      fill: color.passing
-    }
+    start: 0,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 8 * 60 + 30,
+    long: 60,
+    name: "P1",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 9 * 60 + 30,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 9 * 60 + 33,
+    long: 60,
+    name: "P2",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 33,
+    long: 18,
+    name: "snack",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 10 * 60 + 51,
+    long: 60,
+    name: "P3",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 11 * 60 + 51,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 11 * 60 + 54,
+    long: 60,
+    name: "P4",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 54,
+    long: 30,
+    name: "lunch",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 12 * 60 + 1 * 60 + 24,
+    long: 63, //don't forget this period is 3 minutes longer
+    name: "P5",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 2 * 60 + 27,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 12 * 60 + 2 * 60 + 30,
+    long: 60,
+    name: "P6",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 3 * 60 + 30,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  }
+  ],
+  friday: [{
+    start: 0,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 8 * 60 + 30,
+    long: 50,
+    name: "P1",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 9 * 60 + 20,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 9 * 60 + 23,
+    long: 50,
+    name: "P2",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 13,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 10 * 60 + 16,
+    long: 50,
+    name: "P3",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 11 * 60 + 6,
+    long: 18,
+    name: "snack",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 11 * 60 + 24,
+    long: 50,
+    name: "P4",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 14,
+    long: 60,
+    name: "Rally",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 13 * 60 + 14,
+    long: 33,
+    name: "lunch",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 13 * 60 + 47,
+    long: 50,
+    name: "P5",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 14 * 60 + 37,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 14 * 60 + 40,
+    long: 50,
+    name: "P6",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 15 * 60 + 30,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  }
   ],
   advisory: [{
-      start: 0,
-      long: 8 * 60 + 30,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 8 * 60 + 30,
-      long: 55,
-      name: "P1",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 9 * 60 + 25,
-      long: 3,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 9 * 60 + 28,
-      long: 55,
-      name: "P2",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 10 * 60 + 23,
-      long: 26,
-      name: "A",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 10 * 60 + 49,
-      long: 18,
-      name: "snack",
-      showName: false,
-      fill: color.lunch
-    },
-    {
-      start: 11 * 60 + 07,
-      long: 3,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 11 * 60 + 10,
-      long: 55,
-      name: "P3",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 12 * 60 + 5,
-      long: 3,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 12 * 60 + 8,
-      long: 55,
-      name: "P4",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 12 * 60 + 1 * 60 + 03,
-      long: 30,
-      name: "lunch",
-      showName: false,
-      fill: color.lunch
-    },
-    {
-      start: 12 * 60 + 1 * 60 + 33,
-      long: 58,
-      name: "P5",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 12 * 60 + 2 * 60 + 31,
-      long: 3,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 12 * 60 + 2 * 60 + 34,
-      long: 56,
-      name: "P6",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 12 * 60 + 3 * 60 + 30,
-      long: 8 * 60 + 30,
-      name: "",
-      showName: false,
-      fill: color.passing
-    }
+    start: 0,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 8 * 60 + 30,
+    long: 55,
+    name: "P1",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 9 * 60 + 25,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 9 * 60 + 28,
+    long: 55,
+    name: "P2",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 23,
+    long: 26,
+    name: "A",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 49,
+    long: 18,
+    name: "snack",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 11 * 60 + 07,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 11 * 60 + 10,
+    long: 55,
+    name: "P3",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 5,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 12 * 60 + 8,
+    long: 55,
+    name: "P4",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 1 * 60 + 03,
+    long: 30,
+    name: "lunch",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 12 * 60 + 1 * 60 + 33,
+    long: 58,
+    name: "P5",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 2 * 60 + 31,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 12 * 60 + 2 * 60 + 34,
+    long: 56,
+    name: "P6",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 3 * 60 + 30,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  }
   ],
   rally: [{
-      start: 0,
-      long: 8 * 60 + 30,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 8 * 60 + 30,
-      long: 50,
-      name: "P1",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 9 * 60 + 20,
-      long: 3,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 9 * 60 + 23,
-      long: 50,
-      name: "P2",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 10 * 60 + 13,
-      long: 18,
-      name: "snack",
-      showName: false,
-      fill: color.lunch
-    },
-    {
-      start: 10 * 60 + 31,
-      long: 50,
-      name: "P3",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 11 * 60 + 21,
-      long: 3,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 11 * 60 + 24,
-      long: 50,
-      name: "P4",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 12 * 60 + 14,
-      long: 33,
-      name: "lunch",
-      showName: false,
-      fill: color.lunch
-    },
-    {
-      start: 12 * 60 + 47,
-      long: 50,
-      name: "P5",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 13 * 60 + 37,
-      long: 3,
-      name: "",
-      showName: false,
-      fill: color.passing
-    },
-    {
-      start: 13 * 60 + 40,
-      long: 50,
-      name: "P6",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 14 * 60 + 30,
-      long: 60,
-      name: "Rally",
-      showName: true,
-      fill: color.period
-    },
-    {
-      start: 15 * 60 + 30,
-      long: 8 * 60 + 30,
-      name: "",
-      showName: false,
-      fill: color.passing
-    }
+    start: 0,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 8 * 60 + 30,
+    long: 50,
+    name: "P1",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 9 * 60 + 20,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 9 * 60 + 23,
+    long: 50,
+    name: "P2",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 13,
+    long: 18,
+    name: "snack",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 10 * 60 + 31,
+    long: 50,
+    name: "P3",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 11 * 60 + 21,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 11 * 60 + 24,
+    long: 50,
+    name: "P4",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 14,
+    long: 33,
+    name: "lunch",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 12 * 60 + 47,
+    long: 50,
+    name: "P5",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 13 * 60 + 37,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 13 * 60 + 40,
+    long: 50,
+    name: "P6",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 14 * 60 + 30,
+    long: 60,
+    name: "Rally",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 15 * 60 + 30,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  }
   ],
   rallyLunch: [{
     start: 0,
@@ -437,7 +534,7 @@ const schedule = {
     showName: false,
     fill: color.passing
   }
-],
+  ],
   earlyRelease: [{
     start: 0,
     long: 8 * 60 + 30,
@@ -529,205 +626,7 @@ const schedule = {
     showName: false,
     fill: color.passing
   }
-],
-rally5th: [{
-  start: 0,
-  long: 8 * 60 + 30,
-  name: "",
-  showName: false,
-  fill: color.passing
-},
-{
-  start: 8 * 60 + 30,
-  long: 50,
-  name: "P1",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 9 * 60 + 20,
-  long: 3,
-  name: "",
-  showName: false,
-  fill: color.passing
-},
-{
-  start: 9 * 60 + 23,
-  long: 50,
-  name: "P2",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 10 * 60 + 13,
-  long: 18,
-  name: "snack",
-  showName: false,
-  fill: color.lunch
-},
-{
-  start: 10 * 60 + 31,
-  long: 50,
-  name: "P3",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 11 * 60 + 21,
-  long: 3,
-  name: "",
-  showName: false,
-  fill: color.passing
-},
-{
-  start: 11 * 60 + 24,
-  long: 50,
-  name: "P4",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 12 * 60 + 14,
-  long: 3,
-  name: "",
-  showName: false,
-  fill: color.passing
-},
-{
-  start: 12 * 60 + 17,
-  long: 57,
-  name: "P5",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 13 * 60 + 14,
-  long: 33,
-  name: "lunch",
-  showName: false,
-  fill: color.lunch
-},
-{
-  start: 13 * 60 + 47,
-  long: 50,
-  name: "Rally",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 14 * 60 + 37,
-  long: 3,
-  name: "",
-  showName: false,
-  fill: color.passing
-},
-{
-  start: 14 * 60 + 40,
-  long: 50,
-  name: "P6",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 15 * 60 + 30,
-  long: 8 * 60 + 30,
-  name: "",
-  showName: false,
-  fill: color.passing
-}
-],
-earlyRelease: [{
-  start: 0,
-  long: 8 * 60 + 30,
-  name: "",
-  showName: false,
-  fill: color.passing
-},
-{
-  start: 8 * 60 + 30,
-  long: 42,
-  name: "P1",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 9 * 60 + 12,
-  long: 3,
-  name: "",
-  showName: false,
-  fill: color.passing
-},
-{
-  start: 9 * 60 + 15,
-  long: 42,
-  name: "P2",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 9 * 60 + 57,
-  long: 3,
-  name: "",
-  showName: false,
-  fill: color.lunch
-},
-{
-  start: 10 * 60,
-  long: 42,
-  name: "P3",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 10 * 60 + 42,
-  long: 35,
-  name: "lunch",
-  showName: false,
-  fill: color.lunch
-},
-{
-  start: 11 * 60 + 17,
-  long: 43,
-  name: "P4",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 12 * 60,
-  long: 3,
-  name: "",
-  showName: false,
-  fill: color.passing
-},
-{
-  start: 12 * 60 + 3,
-  long: 42,
-  name: "P5",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 12 * 60 + 45,
-  long: 3,
-  name: "",
-  showName: false,
-  fill: color.passing
-},
-{
-  start: 12 * 60 + 48,
-  long: 42,
-  name: "P6",
-  showName: true,
-  fill: color.period
-},
-{
-  start: 13 * 60 + 30,
-  long: 10 * 60 + 30,
-  name: "",
-  showName: false,
-  fill: color.passing
-}
-]
+  ]
 };
 //   regular: [{
 //       start: 0,
@@ -1332,7 +1231,7 @@ function noWeather() {
 
 function bellSound(time = 2000, frequency = 650, volume = 1) {
   let audioCtx, oscillator1, gainNode
-  audioCtx = new(window.AudioContext)();
+  audioCtx = new (window.AudioContext)();
   oscillator1 = audioCtx.createOscillator();
   gainNode = audioCtx.createGain();
   gainNode.gain.value = volume; //controls volume
