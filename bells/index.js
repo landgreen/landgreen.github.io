@@ -190,22 +190,29 @@ const schedule = {
   },
   {
     start: 12 * 60 + 14,
-    long: 60,
-    name: "Rally",
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 12 * 60 + 17,
+    long: 50,
+    name: "P5",
     showName: true,
     fill: color.period
   },
   {
-    start: 13 * 60 + 14,
-    long: 33,
+    start: 13 * 60 + 7,
+    long: 30,
     name: "lunch",
     showName: false,
     fill: color.lunch
   },
   {
-    start: 13 * 60 + 47,
-    long: 50,
-    name: "P5",
+    start: 13 * 60 + 37,
+    long: 60,
+    name: "A",
     showName: true,
     fill: color.period
   },
@@ -214,7 +221,7 @@ const schedule = {
     long: 3,
     name: "",
     showName: false,
-    fill: color.passing
+    fill: color.lunch
   },
   {
     start: 14 * 60 + 40,
