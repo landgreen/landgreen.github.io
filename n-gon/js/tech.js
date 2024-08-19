@@ -1497,7 +1497,7 @@ const tech = {
         descriptionFunction() {
             return `${powerUps.orb.boost(1)} also give <strong>0.3x</strong> <strong class='color-defense'>damage taken</strong><br>for <strong>${(powerUps.boost.duration / 60).toFixed(0)}</strong> seconds</span>`
         },
-        maxCount: 9,
+        maxCount: 1,
         count: 1,
         frequency: 2,
         frequencyDefault: 2,
