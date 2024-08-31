@@ -1822,7 +1822,8 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
         localSettings.loreCount = 0; //this sets what conversation is heard
         if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
     }
-    if (localSettings.isHideImages === undefined) localSettings.isHideImages = true //default to hide images
+    // if (localSettings.isHideImages === undefined)
+    localSettings.isHideImages = true //default to hide images
     // document.getElementById("hide-images").checked = localSettings.isHideImages
 
     if (localSettings.isHideHUD === undefined) localSettings.isHideHUD = true
