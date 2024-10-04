@@ -98,14 +98,14 @@ const schedule = {
   },
   {
     start: 12 * 60 + 54,
-    long: 30,
+    long: 33,
     name: "lunch",
     showName: false,
     fill: color.lunch
   },
   {
-    start: 12 * 60 + 1 * 60 + 24,
-    long: 63, //don't forget this period is 3 minutes longer
+    start: 12 * 60 + 1 * 60 + 27,
+    long: 60, //don't forget this period is 3 minutes longer
     name: "P5",
     showName: true,
     fill: color.period
