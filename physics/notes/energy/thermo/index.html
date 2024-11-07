@@ -43,8 +43,9 @@
 		</p>
 		<p>
 			Unlike other physics topics we've learned, thermodynamics is statistical.
-			It's predictions only have a probability of being true. It is never 100% certain.
-			Yet, the accuracy increases with more particles, and there are a large number of particles in most systems.
+			It's predictions only have a probability of being true.
+			It is never 100% certain.
+			But, the accuracy increases with more particles, and there are a very large number of particles in most systems.
 		</p>
 
 		<div class='example-small'>
@@ -152,9 +153,9 @@
 		<h1 class='underlined'>Heat</h1>
 		<p>
 			<strong>Heat</strong> is energy transferred from one system to another.
-			This is often done through thermal energy.
-			A system doesn't "have" heat, it has internal energy, which is called heat only when it transfers between
-			systems.
+			This is often done through thermal energy, but it also travel in other forms, like radiation, conduction, or convection.
+			A system doesn't "have" heat, it has internal energy.
+			Heat is only heat when it transfers between systems.
 		</p>
 		<style>
 			.fade {
@@ -191,13 +192,11 @@
 			The ball's kinetic energy converts into the thermal energy of the air.
 		</p>
 		<p>
-			The concept of heat is important in understanding machines, like engines and <a
-				href="https://www.youtube.com/watch?v=EIP3pSio7-M">refrigerators</a>.
+			The concept of heat plays a role in all machines like computers, engines, and <a href="https://www.youtube.com/watch?v=EIP3pSio7-M">refrigerators</a>.
 		</p>
 
 		<div class='example'>
-			<strong>Question:</strong> If a room is left at the same temperature for a while, all the materials in the
-			room should reach the same temperature.
+			<strong>Question:</strong> If a room is left at the same temperature for a while, all the materials in the room should reach the same temperature.
 			Yet if you touch metal it feels much colder than wood. Why?
 			<details>
 				<summary>answer</summary>
@@ -247,29 +246,29 @@
 						Turn friction on and observe what happens.
 					</p>
 					<p>
-						The kinetic energy gradually leaves the ball. We describe energy that leaves a system as
-						<strong>heat</strong>. Heat can leave in many forms, often heat leaves a system as thermal
-						energy. Thermal energy is the kinetic energy of many particles at a microscopic scale.
+						You should notice that the kinetic energy leaves the ball.
+						We call energy that leaves a system <strong>heat</strong>.
+						Heat energy can take many forms, but generally it's thermal energy, the kinetic energy of many microscopic particles.
 					</p>
 				</div>
 			</div>
 			<p>
-				The internal energy of a system is always <a
-					href="https://www.youtube.com/watch?v=4b8ZsFszE8I">conserved</a>, unless energy leaves or enters.
-				Energy can leave or enter as work or heat.
+				The total energy of an isolated system is <a href="https://www.youtube.com/watch?v=4b8ZsFszE8I">conserved</a>, but it's not when energy leaves or enters that system.
+				The <strong>first law of thermodynamics</strong> says that the change in internal energy of a system is equal to the total heat and work entering and exiting the system. 
+				$$\Delta E = Q - W$$
+				We can make it look more like our familiar conservation of energy equation by unpacking the ΔE into final and initial energy.
 			</p>
 			<div class='definition'>
-				<p>
-					The <strong>first law of thermodynamics</strong> says that the change in internal energy of a system
-					is equal to heat flow into a system plus work done by the system.
-				</p>
-				<h1>$$\Delta E = Q - W$$</h1>
+				<h1>$$E_i = E_f + Q - W$$</h1>
+				<!-- <h1>$$K_i + U_i = K_f + U_f + Q - W$$</h1> -->
 				\( E \) = total internal energy of a system [J]
-				<br>\( Q \) = Heat, energy added(+) or removed(-) from system [J]
-				<br>\( W \) = work done by a system [J]
+				<br>\( Q \) = energy <strong>added(+)</strong> or <strong>removed(-)</strong> from system as heat[J]
+				<br>\( W \) = Work done <strong>on(+)</strong> or <strong>by(-)</strong> the system[J]
 			</div>
+			<p>
+				Heat is mostly used to represent thermal energy, and work is mostly used to represent various mechanical energies like: kinetic, gravitational, and elastic.
+			</p>
 		</div>
-
 		<!-- <div class='example'>
 			<strong>Example:</strong> Compressing a volume of gas does 100 J of work, but at the same time the gas
 			<strong>loses</strong> 200 J of heat to the surroundings. What is the change in the internal energy of the gas?
@@ -282,20 +281,16 @@
 		</div> -->
 
 		<div class='example'>
-			<p>
-				We can apply the concept of heat to our conservation of energy equations. If heat is leaving our system,
-				we
-				put Q on the right to track the loss.
-			</p>
-			$$K_i + U_i = K_f + U_f + Q_f$$
+			<p>In this example use the conservation of energy equation, but add Q on the final side to represent heat exiting the system as friction.</p>
+			$$K_i + U_i = K_f + U_f + Q$$
 			<strong>Example:</strong> A 0.43 kg soccer ball, kicked at 10 m/s, rolls down a 30 m tall hill. If there was
 			no energy loss, the ball would have a final velocity of 26.2 m/s.
 			<br>
-			<br>When actually performing the experiment we found the ball only has a speed of 20.0 m/s at the bottom.
+			<br>When performing the experiment we found the ball only has a speed of 20.0 m/s at the bottom.
 			Calculate the heat that left the ball as it rolled down the hill.
 			<details>
 				<summary>solution</summary>
-				$$K_i + U_i = K_f + Q_f$$
+				$$K_i + U_i = K_f + Q$$
 				$$\tfrac{1}{2}mu^2 + mgh_i = \tfrac{1}{2}mv^2 + Q$$
 				$$\tfrac{1}{2}(0.43)(10.0)^2 + (0.43)(9.8)(30) = \tfrac{1}{2}(0.43)(20)^2 + Q$$
 				$$61.9 \,\mathrm{J} = Q$$
@@ -347,26 +342,39 @@
 			How much heat left the car's system?
 			<details>
 				<summary>solution</summary>
-				$$K_i + U_i = K_f + U_f + Q_f$$
+				$$K_i + U_i = K_f + U_f + Q$$
 				$$K = Q$$
 				$$\tfrac{1}{2}mv^2 = Q$$
 				$$\tfrac{1}{2}(2000)(30)^2 = Q$$
 				$$900\,000 \, \mathrm{J} = Q$$
 			</details>
 			<br>
-			<!-- 
-				removed because inaccurate
-				<strong>Example:</strong> If the coefficient of kinetic friction is 0.7, how far did the car skid? Think of the heat as <a href="..\energy\index.html#work">work</a> done by the <a href="..\..\force\friction\index.html#kinetic">friction force</a>.
+			<strong>Example:</strong> If the coefficient of kinetic friction is 0.7, how far did the car skid?
+			<details>
+				<summary>hint</summary>
+				Instead of energy leaving as heat, think of the car slowing down because the car did <a href="..\energy\index.html#work">work</a> through the <a href="..\..\force\friction\index.html#kinetic">friction force</a>.
+				$$E_i = E_f + Q - W$$
+				$$K_i + U_i = K_f + U_f + Q - W$$
+				$$K = W$$
+				<p>
+					In case you forgot, here are the work and friction equations.
+					Also, remember for a flat surface the normal force will equal the force of gravity.
+				</p>
+				$$ W=F\Delta x \quad \quad F_k=F_N\mu_k \quad \quad F_N=F_g=mg$$
+			</details>
 			<details>
 				<summary>solution</summary>
+				$$E_i = E_f + Q - W$$
+				$$K_i + U_i = K_f + U_f - W$$
+				$$K = W$$
 				$$W=F\Delta x$$
-				$$Q=F_k\Delta x$$
-				$$Q=F_N\mu_k\Delta x$$
-				$$Q=mg\mu_k\Delta x$$
-				$$\Delta x = \frac{Q}{mg\mu_k}$$
+				$$W=F_k\Delta x$$
+				$$W=F_N\mu_k\Delta x$$
+				$$W=mg\mu_k\Delta x$$
+				$$\Delta x = \frac{W}{mg\mu_k}$$
 				$$\Delta x = \frac{900000}{(2000)(9.8)(0.7)}$$
 				$$\Delta x = 65.6\,\mathrm{m}$$
-			</details> -->
+			</details>
 		</div>
 
 		<div class='example'>
@@ -593,8 +601,7 @@
 				</p>
 			</details>
 			<br><br>
-			<strong>Question:</strong> The planet Earth and all it's <a
-				href="https://www.youtube.com/watch?v=mkR9hMCOIhM">life</a> can be viewed as a thermodynamic system.
+			<strong>Question:</strong> The planet Earth and all it's <a href="https://www.youtube.com/watch?v=QImCld9YubE">life</a> can be <a href="https://www.youtube.com/watch?v=mkR9hMCOIhM">viewed</a> as a thermodynamic system.
 			As time goes forward the energy density of Earth spreads out and loses the ability to do work.
 			What keeps the entropy of the Earth low?
 			<details>
@@ -700,10 +707,8 @@
 		</div>
 
 		<p>
-			The laws of physics are <a href="https://www.youtube.com/watch?v=QkWT-xMTm1M">time</a> <a
-				href="https://www.youtube.com/watch?v=F0b8b_ykPQk">reversible</a>.
-			Nature behaves the same moving forwards or backwards in <a
-				href="https://www.youtube.com/watch?v=yKbJ9leUNDE&list=PLoaVOjvkzQtyZF-2VpJrxPz7bxK_p1Dd2">time</a>.
+			The laws of physics are <a href="https://www.youtube.com/watch?v=QkWT-xMTm1M">time</a> <a href="https://www.youtube.com/watch?v=F0b8b_ykPQk">reversible</a>.
+			Nature behaves the same moving forwards or backwards in <a href="https://www.youtube.com/watch?v=yKbJ9leUNDE&list=PLoaVOjvkzQtyZF-2VpJrxPz7bxK_p1Dd2">time</a>.
 			The past doesn't produce the future.
 			A cause and effect could be equally thought of as an effect producing a cause.
 		</p>
@@ -712,7 +717,6 @@
 			Low complexity systems don't have enough possible states to progress in a direction.
 			Yet, for systems with many parts a direction of time seems to emerge.
 			This is because as complex systems change they tend to get more chaotic.
-
 		</p>
 		<p>
 			The entropy of a system increases over time.
@@ -720,8 +724,7 @@
 			As time moves forward, a system will almost always stay the same or get messier.
 		</p>
 		<div class="definition">
-			The <strong>second law of thermodynamics</strong> states that entropy of an isolated system doesn't decrease
-			over time.
+			The <strong>second law of thermodynamics</strong> states that entropy of an isolated system doesn't decrease over time.
 		</div>
 		<p>
 			Why is the second law of thermodynamics true?
