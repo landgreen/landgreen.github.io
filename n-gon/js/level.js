@@ -33,7 +33,7 @@ const level = {
             // tech.tech[297].frequency = 100
             // tech.addJunkTechToPool(0.5)
             // m.couplingChange(10)
-            m.setField("wormhole") //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
+            // m.setField("wormhole") //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
             // m.energy = 0
             // powerUps.research.count = 3
             // tech.isHookWire = true
@@ -60,14 +60,14 @@ const level = {
             // m.lastKillCycle = m.cycle
             // for (let i = 0; i < 7; i++) powerUps.directSpawn(450, -50, "field");
             // for (let i = 0; i < 7; i++) powerUps.directSpawn(m.pos.x + 200, m.pos.y - 250, "research", false);
-            spawn.bodyRect(575, -700, 150, 150);  //block mob line of site on testing
-            level.testing();
+            // spawn.bodyRect(575, -700, 150, 150);  //block mob line of site on testing
+            // level.testing();
 
-            // level[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
+            level[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
 
 
             // for (let i = 0; i < 10; ++i) spawn.starter(1900, -500)
-            for (let i = 0; i < 1; i++) spawn.mantisBoss(1900, -500)
+            // for (let i = 0; i < 1; i++) spawn.mantisBoss(1900, -500)
             // for (let i = 0; i < 1; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "entanglement");
             // for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 450, m.pos.y + 50 * Math.random(), "gun");
             // for (let i = 0; i < 100; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "ammo");
