@@ -44,9 +44,9 @@
 		<h2 class='underlined' id="interference">Interference</h2> -->
 		<p>Multiple waves can be in the same position at the same time. Unlike particles, waves pass through each other without interacting.
 
-			<div class="center">wave speed = <input id='super-slider' type="range" step="0.01" value="0" min="0" max="3" style="width: 250px;"></div>
-			<svg id="SVG1" height='120'></svg>
-			<svg id="SVG2" width="100" height='160'></svg>
+		<div class="center">wave speed = <input id='super-slider' type="range" step="0.01" value="0" min="0" max="3" style="width: 250px;"></div>
+		<svg id="SVG1" height='120'></svg>
+		<svg id="SVG2" width="100" height='160'></svg>
 		</p>
 		<script>
 			function checkVisible(elm) {
@@ -294,27 +294,553 @@
 				</details>
 			</div>
 		</div>
-
-		<h2 class='underlined' id='harmony'>Consonance and Dissonance</h2>
+		<a href="https://www.youtube.com/watch?v=drnBMAEA3AM">
+			<h2 class='underlined' id='harmony'>The Sound of Music</h2>
+		</a>
 		<p>
-			Some of what makes music sound good depends on the cultural background of the listener.
-			Listeners used to the western music tradition generally prefer sound waves that have a simple ratio between wavelengths.
+			Part of what makes music sound good depends on the background of the listener.
+			Not everyone likes the same music, but some parts of music are universal.
+			Western classical music is organized around 12 notes called the chromatic scale.
+			Each note represents a specific frequency.
+			In superposition the frequencies of these notes can form ratios that fit together nicely.
 		</p>
+		<p>
+			<a href="https://www.lightnote.co/">Music theory</a> explores how to craft groups and sequences of notes.
+			It's interesting that you can evoke emotions by adjusting the ratio between note frequencies.
+		</p>
+		<p>
+			For example, the major scale is a collection of 7 notes that can sound bright and stable together partly because they have a simple ratio between frequencies.
+			Minor chords are collections of notes that might feel sad or tense partly because of the complex <a href="https://www.youtube.com/watch?v=jNY_ZCUBmcA">ratio</a> between frequencies.
+		</p>
+		<!-- <p>
+				Notes that have close together frequencies can feel sad, tense, or unresolved.
+				This isn't always bad.
+				It's often used in the same way that tension is used in a story.
+				Some tension is fun and exciting, as long as it is resolved in the end.
+				In this way one might follow up notes that are a bit too close together with notes that have a more simple ratio.
+				This resolves the tension and often makes you happy.
+			</p> -->
+		<!-- <p>
+			Western music is built around seven primary notes labeled A, B, C, D, E, F, G.
+			These notes represents natural pitches before the introduction of accidentals like sharps and flats.
+			Musical scales, such as the major and minor scales, arrange these notes in specific patterns of whole and half steps.
+			Each pattern creates distinct moods and tonal characteristics.
+			For example, the C major scale uses only natural notes and is often considered a simple starting point.
+			Musicians combine these notes to create melodies, harmonies, and chords that define a piece of music.
+		</p> -->
+
+		<!-- <p>
+			Pitch refers to how high or low a sound seems, while frequency measures the vibrations per second.
+			Higher frequencies produce higher pitches, and lower frequencies produce lower pitches.
+			Musical scales divide each octave into 12 evenly spaced notes based on frequency ratios.
+			This equal division is known as equal temperament, where each note is separated by the 12th root of 2.
+			Equal temperament ensures notes sound evenly spaced to our ears.
+		</p>	 -->
+		<!-- <p>
+			An octave specifically describes the relationship between frequencies: each octave doubles the previous frequency.
+			For example, a note at 220 Hz doubles to 440 Hz in the next octave.
+			Similarly, lowering an octave halves the frequency to 110 Hz, creating a clear, recognizable musical pattern.
+		</p> -->
 
 		<div class='example'>
-			<svg onload="drawSineWave(this, 75, 25, 18.75, '#39f'); drawSineWave(this,37.5, 25, 9.375, '#f37'); centerLine(this)" height='75'></svg>
+			<p>
+				At my school we play the note <strong>F5</strong> over the loud speakers to announce the start and end of class.
+				Historically, many bell systems used F5 because it has a high <a href="https://en.wikipedia.org/wiki/Piano_key_frequencies">frequency</a> that is easy to hear over background noise.
+			</p>
+			<strong>Example:</strong> If I wanted to trick my students into thinking class was over what frequency would I play?
+			<details>
+				<summary>chromatic scale frequencies</summary>
+				<table border="1" cellspacing="0" cellpadding="5">
+					<thead>
+						<tr>
+							<th>scientific pitch</th>
+							<th>frequency (Hz)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>C8 Eighth octave</td>
+							<td>4186.009</td>
+						</tr>
+						<tr>
+							<td>B7</td>
+							<td>3951.066</td>
+						</tr>
+						<tr>
+							<td>A♯7/B♭7</td>
+							<td>3729.31</td>
+						</tr>
+						<tr style="background-color: #ffd6d6;">
+							<td>A7</td>
+							<td>3520</td>
+						</tr>
+						<tr>
+							<td>G♯7/A♭7</td>
+							<td>3322.438</td>
+						</tr>
+						<tr>
+							<td>G7</td>
+							<td>3135.963</td>
+						</tr>
+						<tr>
+							<td>F♯7/G♭7</td>
+							<td>2959.955</td>
+						</tr>
+						<tr>
+							<td>F7</td>
+							<td>2793.826</td>
+						</tr>
+						<tr>
+							<td>E7</td>
+							<td>2637.02</td>
+						</tr>
+						<tr>
+							<td>D♯7/E♭7</td>
+							<td>2489.016</td>
+						</tr>
+						<tr>
+							<td>D7</td>
+							<td>2349.318</td>
+						</tr>
+						<tr>
+							<td>C♯7/D♭7</td>
+							<td>2217.461</td>
+						</tr>
+						<tr>
+							<td>C7 Double high C</td>
+							<td>2093.005</td>
+						</tr>
+						<tr>
+							<td>B6</td>
+							<td>1975.533</td>
+						</tr>
+						<tr>
+							<td>A♯6/B♭6</td>
+							<td>1864.655</td>
+						</tr>
+						<tr style="background-color: #ffe6cc;">
+							<td>A6</td>
+							<td>1760</td>
+						</tr>
+						<tr>
+							<td>G♯6/A♭6</td>
+							<td>1661.219</td>
+						</tr>
+						<tr>
+							<td>G6</td>
+							<td>1567.982</td>
+						</tr>
+						<tr>
+							<td>F♯6/G♭6</td>
+							<td>1479.978</td>
+						</tr>
+						<tr>
+							<td>F6</td>
+							<td>1396.913</td>
+						</tr>
+						<tr>
+							<td>E6</td>
+							<td>1318.51</td>
+						</tr>
+						<tr>
+							<td>D♯6/E♭6</td>
+							<td>1244.508</td>
+						</tr>
+						<tr>
+							<td>D6</td>
+							<td>1174.659</td>
+						</tr>
+						<tr>
+							<td>C♯6/D♭6</td>
+							<td>1108.731</td>
+						</tr>
+						<tr>
+							<td>C6 Soprano C (High C)</td>
+							<td>1046.502</td>
+						</tr>
+						<tr>
+							<td>B5</td>
+							<td>987.7666</td>
+						</tr>
+						<tr>
+							<td>A♯5/B♭5</td>
+							<td>932.3275</td>
+						</tr>
+						<tr style="background-color: #ffffcc;">
+							<td>A5</td>
+							<td>880</td>
+						</tr>
+						<tr>
+							<td>G♯5/A♭5</td>
+							<td>830.6094</td>
+						</tr>
+						<tr>
+							<td>G5</td>
+							<td>783.9909</td>
+						</tr>
+						<tr>
+							<td>F♯5/G♭5</td>
+							<td>739.9888</td>
+						</tr>
+						<tr>
+							<td>F5</td>
+							<td>698.4565</td>
+						</tr>
+						<tr>
+							<td>E5</td>
+							<td>659.2551</td>
+						</tr>
+						<tr>
+							<td>D♯5/E♭5</td>
+							<td>622.254</td>
+						</tr>
+						<tr>
+							<td>D5</td>
+							<td>587.3295</td>
+						</tr>
+						<tr>
+							<td>C♯5/D♭5</td>
+							<td>554.3653</td>
+						</tr>
+						<tr>
+							<td>C5 Tenor C</td>
+							<td>523.2511</td>
+						</tr>
+						<tr>
+							<td>B4</td>
+							<td>493.8833</td>
+						</tr>
+						<tr>
+							<td>A♯4/B♭4</td>
+							<td>466.1638</td>
+						</tr>
+						<tr style="background-color: #d6ffd6;">
+							<td>A4</td>
+							<td>440</td>
+						</tr>
+						<tr>
+							<td>G♯4/A♭4</td>
+							<td>415.3047</td>
+						</tr>
+						<tr>
+							<td>G4</td>
+							<td>391.9954</td>
+						</tr>
+						<tr>
+							<td>F♯4/G♭4</td>
+							<td>369.9944</td>
+						</tr>
+						<tr>
+							<td>F4</td>
+							<td>349.2282</td>
+						</tr>
+						<tr>
+							<td>E4</td>
+							<td>329.6276</td>
+						</tr>
+						<tr>
+							<td>D♯4/E♭4</td>
+							<td>311.127</td>
+						</tr>
+						<tr>
+							<td>D4</td>
+							<td>293.6648</td>
+						</tr>
+						<tr>
+							<td>C♯4/D♭4</td>
+							<td>277.1826</td>
+						</tr>
+						<tr>
+							<td>C4 Middle C</td>
+							<td>261.6256</td>
+						</tr>
+						<tr>
+							<td>B3</td>
+							<td>246.9417</td>
+						</tr>
+						<tr>
+							<td>A♯3/B♭3</td>
+							<td>233.0819</td>
+						</tr>
+						<tr style="background-color: #cce5ff;">
+							<td>A3</td>
+							<td>220</td>
+						</tr>
+						<tr>
+							<td>G♯3/A♭3</td>
+							<td>207.6523</td>
+						</tr>
+						<tr>
+							<td>G3</td>
+							<td>195.9977</td>
+						</tr>
+						<tr>
+							<td>F♯3/G♭3</td>
+							<td>184.9972</td>
+						</tr>
+						<tr>
+							<td>F3</td>
+							<td>174.6141</td>
+						</tr>
+						<tr>
+							<td>E3</td>
+							<td>164.8138</td>
+						</tr>
+						<tr>
+							<td>D♯3/E♭3</td>
+							<td>155.5635</td>
+						</tr>
+						<tr>
+							<td>D3</td>
+							<td>146.8324</td>
+						</tr>
+						<tr>
+							<td>C♯3/D♭3</td>
+							<td>138.5913</td>
+						</tr>
+						<tr>
+							<td>C3</td>
+							<td>130.8128</td>
+						</tr>
+						<tr>
+							<td>B2</td>
+							<td>123.4708</td>
+						</tr>
+						<tr>
+							<td>A♯2/B♭2</td>
+							<td>116.5409</td>
+						</tr>
+						<tr style="background-color: #d6ccff;">
+							<td>A2</td>
+							<td>110</td>
+						</tr>
+						<tr>
+							<td>G♯2/A♭2</td>
+							<td>103.8262</td>
+						</tr>
+						<tr>
+							<td>G2</td>
+							<td>97.99886</td>
+						</tr>
+						<tr>
+							<td>F♯2/G♭2</td>
+							<td>92.49861</td>
+						</tr>
+						<tr>
+							<td>F2</td>
+							<td>87.30706</td>
+						</tr>
+						<tr>
+							<td>E2</td>
+							<td>82.40689</td>
+						</tr>
+						<tr>
+							<td>D♯2/E♭2</td>
+							<td>77.78175</td>
+						</tr>
+						<tr>
+							<td>D2</td>
+							<td>73.41619</td>
+						</tr>
+						<tr>
+							<td>C♯2/D♭2</td>
+							<td>69.29566</td>
+						</tr>
+						<tr>
+							<td>C2 Deep C</td>
+							<td>65.40639</td>
+						</tr>
+						<tr>
+							<td>B1</td>
+							<td>61.73541</td>
+						</tr>
+						<tr>
+							<td>A♯1/B♭1</td>
+							<td>58.27047</td>
+						</tr>
+						<tr style="background-color: #ffd6ff;">
+							<td>A1</td>
+							<td>55</td>
+						</tr>
+						<tr>
+							<td>G♯1/A♭1</td>
+							<td>51.91309</td>
+						</tr>
+						<tr>
+							<td>G1</td>
+							<td>48.99943</td>
+						</tr>
+						<tr>
+							<td>F♯1/G♭1</td>
+							<td>46.2493</td>
+						</tr>
+						<tr>
+							<td>F1</td>
+							<td>43.65353</td>
+						</tr>
+						<tr>
+							<td>E1</td>
+							<td>41.20344</td>
+						</tr>
+						<tr>
+							<td>D♯1/E♭1</td>
+							<td>38.89087</td>
+						</tr>
+						<tr>
+							<td>D1</td>
+							<td>36.7081</td>
+						</tr>
+						<tr>
+							<td>C♯1/D♭1</td>
+							<td>34.64783</td>
+						</tr>
+						<tr>
+							<td>C1 Pedal C</td>
+							<td>32.7032</td>
+						</tr>
+						<tr>
+							<td>B0</td>
+							<td>30.86771</td>
+						</tr>
+						<tr>
+							<td>A♯0/B♭0</td>
+							<td>29.13524</td>
+						</tr>
+						<tr style="background-color: #ddd;">
+							<td>A0</td>
+							<td>27.5</td>
+						</tr>
+					</tbody>
+				</table>
+
+
+			</details>
+			<details>
+				<summary>solution</summary>
+				The note F5 has a frequency of 698.4565 Hz.
+				<button id="sound-play-2" style="width: 115px;">play (F5)</button><br>
+				<canvas id="horn-canvas" class="no-shadow" width="590" height="100" style="display: none;"></canvas>
+			</details>
+			<script>
+				(() => {
+					const buttonEl = document.getElementById("sound-play-2")
+					let audioCtx, oscillator1, gainNode1, oscillator2, gainNode2
+					let started = false;
+					let paused = false;
+					const analOut = 2048 //4096 //8192 //16384 //32768;
+					const freq = 698.4565
+
+					// start -> play/pause  button events
+					buttonEl.addEventListener("click", function () {
+						if (!started) {
+							started = true
+							paused = false
+							buttonEl.textContent = 'class is over!';
+							//setup audio context
+							audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+							oscillator1 = audioCtx.createOscillator();
+							gainNode1 = audioCtx.createGain();
+							gainNode1.gain.value = 0.5; //controls volume
+							oscillator1.connect(gainNode1);
+							gainNode1.connect(audioCtx.destination);
+							oscillator1.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
+							oscillator1.frequency.value = freq; // value in hertz
+							oscillator1.start();
+
+							document.getElementById("horn-canvas").style.display = "inline"; //show canvas element
+							beatsCanvas();
+						} else {
+							if (audioCtx.state === 'suspended') {
+								audioCtx.resume().then(function () {
+									buttonEl.textContent = 'class is over!';
+									beatsCanvas()
+								});
+							} else if (audioCtx.state === 'running') {
+								audioCtx.suspend().then(function () {
+									buttonEl.textContent = 'play (F5)';
+									paused = true
+									// beatsCanvas()
+								});
+							}
+						}
+					});
+
+					function beatsCanvas() {
+						const canvas = document.getElementById("horn-canvas");
+						const ctx = canvas.getContext("2d");
+						const width = 600
+						const height = 100
+
+						function setupCanvas() {
+							if (document.body.clientWidth > width) {
+								canvas.style.width = width + "px";
+								canvas.style.height = height + "px";
+
+								const scale = window.devicePixelRatio;
+								canvas.width = width * scale;
+								canvas.height = height * scale;
+								ctx.scale(scale, scale);
+							}
+							ctx.lineWidth = 2;
+							ctx.strokeStyle = "#123";
+							ctx.lineJoin = 'bevel'; //miter
+							ctx.miterLimit = 1;
+						}
+						setupCanvas();
+						window.onresize = function () {
+							setupCanvas();
+						};
+
+						const analyser1 = audioCtx.createAnalyser();
+						gainNode1.connect(analyser1);
+						analyser1.fftSize = analOut;
+						const bufferLength = analyser1.frequencyBinCount;
+						const dataArray1 = new Uint8Array(bufferLength);
+
+						paused = false
+						draw();
+
+						function draw() {
+							if (!paused) {
+								drawVisual = requestAnimationFrame(draw);
+								analyser1.getByteTimeDomainData(dataArray1);
+								ctx.clearRect(0, 0, width, height);
+								ctx.beginPath();
+								const sliceWidth = width / bufferLength;
+								let x = 0;
+								for (let i = 0; i < bufferLength; i++) {
+									const v = dataArray1[i] / 256.0;
+									const y = v * height;
+									if (i === 0) {
+										ctx.moveTo(x, y);
+									} else {
+										ctx.lineTo(x, y);
+									}
+									x += sliceWidth;
+								}
+								ctx.stroke();
+							}
+						}
+					}
+				})()
+			</script>
+		</div>
+
+		<div class='example'>
+			<svg onload="drawSineWave(this, 75, 25, 18.75, '#39f'); drawSineWave(this, 37.5, 25, 9.375, '#f37'); centerLine(this)" height='75'></svg>
 			<svg onload="drawSineWave(this, 75, 25, 18.75, '#39f'); drawSineWave(this,40, 25, 10, '#f37'); centerLine(this)" height='75'></svg>
 			<strong>Question:</strong> Guess which of these combinations of sound waves will sound better to your ears?
 			<details>
 				<summary>solution</summary>
 				<p>The first pair of frequencies has a harmonious 1:2 ratio.</p>
-				<button id="sound-play-300" style="width: 70px;">300 Hz</button>
-				<button id="sound-play-150" style="width: 70px;">150 Hz</button>
+				<button id="sound-play-440" style="width: 70px;">440 Hz</button>
+				<button id="sound-play-220" style="width: 70px;">220 Hz</button>
 				<!-- <button id="sound-play-150-300" style="width: 120px;">300 + 150 Hz</button> -->
 				<svg onload="drawSineWaves(this, 75, 25, 18.75, '#39f', 37.5, 25, 9.375, '#f37'); centerLine(this)" height='150'></svg>
 				<br>
-				<button id="sound-play-300-2" style="width: 70px;">300 Hz</button>
-				<button id="sound-play-160" style="width: 70px;">160 Hz</button>
+				<button id="sound-play-440-2" style="width: 70px;">440 Hz</button>
+				<button id="sound-play-230" style="width: 70px;">230 Hz</button>
 				<!-- <button id="sound-play-2" style="width: 60px;">listen</button> -->
 				<svg onload="drawSineWaves(this,75, 25, 18.75, '#39f',  40, 25, 10, '#f37'); centerLine(this)" height='150'></svg>
 				<p>
@@ -379,26 +905,12 @@
 				</p>
 			</span>
 		</div>
-		<div class="example">
-			<a href="https://www.lightnote.co/">Music theory</a> explores what groups of notes sound best together.
-			It's interesting that you can evoke emotions by adjusting the ratio of paired note frequencies.
-			<p>
-				For example, the major scale is a collection of notes that can sound nice together partly because they have a simple ratio between frequencies.
-				Minor chords are collections of notes that might feel sad or tense partly because of the <a href="https://www.youtube.com/watch?v=jNY_ZCUBmcA">ratio</a> between frequencies.
-			</p>
-			<!-- <p>
-				Notes that have close together frequencies can feel sad, tense, or unresolved.
-				This isn't always bad.
-				It's often used in the same way that tension is used in a story.
-				Some tension is fun and exciting, as long as it is resolved in the end.
-				In this way one might follow up notes that are a bit too close together with notes that have a more simple ratio.
-				This resolves the tension and often makes you happy.
-			</p> -->
-		</div>
 
 		<h2 class='underlined' id="diffraction">Diffraction</h2>
 		<p>
-			Waves tend to spread out in every direction possible within their medium. <strong>Diffraction</strong> is when a wave spreads out after some of the wave hits a barrier. This explains how sound can be heard through an open door even when there is no line of sight.
+			Waves tend to spread out in every direction possible within their medium.
+			<strong>Diffraction</strong> is when a wave spreads out after some of the wave hits a barrier.
+			This explains how sound can be heard around a corner even when there is no direct path.
 		</p>
 
 		<svg viewBox="0 0 500 320">
@@ -647,23 +1159,23 @@
 					<path id="wall" d="M300 0 v195 M300 205 v190 M300 405 v200" stroke="#000" stroke-width="10" fill="none" />
 				</svg>
 				<script>
-					(function twoSlit() {
-						const slit1 = document.getElementById("slit-1")
-						const slit2 = document.getElementById("slit-2")
-						const wall = document.getElementById("wall")
+						(function twoSlit() {
+							const slit1 = document.getElementById("slit-1")
+							const slit2 = document.getElementById("slit-2")
+							const wall = document.getElementById("wall")
 
-						document.getElementById("slit-width-slider").addEventListener("input", () => {
-							slitSeparation = Number(document.getElementById("slit-width-slider").value);
-							const slit1Vertical = 300 - slitSeparation
-							const slit2Vertical = 300 + slitSeparation
+							document.getElementById("slit-width-slider").addEventListener("input", () => {
+								slitSeparation = Number(document.getElementById("slit-width-slider").value);
+								const slit1Vertical = 300 - slitSeparation
+								const slit2Vertical = 300 + slitSeparation
 
-							slit1.setAttribute("transform", `translate(300, ${slit1Vertical})`)
-							slit2.setAttribute("transform", `translate(300, ${slit2Vertical})`)
-							wall.setAttribute("d", `M300 0 v${slit1Vertical-5} M300 ${slit1Vertical+5}
-													v${Math.abs(slitSeparation*2 - 10)}
-													M300 ${slit2Vertical-5} M300 ${slit2Vertical+5} v400`)
-						});
-					})()
+								slit1.setAttribute("transform", `translate(300, ${slit1Vertical})`)
+								slit2.setAttribute("transform", `translate(300, ${slit2Vertical})`)
+								wall.setAttribute("d", `M300 0 v${slit1Vertical - 5} M300 ${slit1Vertical + 5}
+													v${Math.abs(slitSeparation * 2 - 10)}
+													M300 ${slit2Vertical - 5} M300 ${slit2Vertical + 5} v400`)
+							});
+						})()
 				</script>
 			</details>
 		</div>
@@ -707,13 +1219,15 @@
 
 		<div class="example">
 			<p>
-				Light can also be Doppler shifted, but it is harder to notice because light moves so fast. A light source near the speed of light will noticeably shift in color.
+				Light can also be Doppler shifted, but it is harder to notice because light moves so fast.
+				A light source near the speed of light will noticeably shift in color.
 			</p>
 			<p>
 				The convention is to say that light is <strong>blueshifted</strong> as it moves towards you and <strong>redshifted</strong> as it moves away.
 			</p>
 			<p>
-				Astronomers use this color shifting to calculate the relative motion of far away objects. In 1929 Edwin Hubble published the observation that almost all galaxies are <strong>redshifted</strong>. This was the initial evidence that the universe is expanding.
+				Astronomers use this color shifting to calculate the relative motion of far away objects.
+				In 1929 Edwin Hubble published the observation that almost all galaxies are <strong>redshifted</strong>. This was the initial evidence that the universe is expanding.
 			</p>
 			<p>
 				Redshifted light from stars expanding away from us is actually the main reason why the sky is <a href="https://www.youtube.com/watch?v=gxJ4M7tyLRE">dark at night</a>.
@@ -723,33 +1237,53 @@
 			</p>
 		</div>
 		<div class='example'>
-			Radar guns use the Doppler effect to measure relative speed. They bounce radio waves off moving objects to measure the frequency shift of the reflected waves. The frequency shift indicates the relative speed.
+			Radar guns use the Doppler effect to measure relative speed.
+			They bounce radio waves off moving objects to measure the frequency shift of the reflected waves.
+			The frequency shift indicates the relative speed.
 			<br>
 			<br>
-			<strong>Question:</strong> Imagine you are driving towards a cop with a radar gun. How will your motion affect how they see your reflected radio waves?
+			<strong>Question:</strong> Imagine you are driving towards a cop with a radar gun.
+			How will your motion affect how they see your reflected radio waves?
 			<details>
 				<summary>answer</summary>
 				<p>The cop will observe your light at a higher frequency and a shorter wavelength.</p>
+			</details>
+		</div>
+		<div class='example'>
+			<strong>Question:</strong> If you looked in a telescope and saw an extra red star what might be the cause?
+			<details>
+				<summary>answer</summary>
+				<p>
+					Star color is complex and could be caused by several different things.
+				</p>
+				<p>
+					<li>The star could be moving away from you and the doppler shift could be making it more red.</li>
+					<li>It's also possible the star is in the <a href="https://www.youtube.com/watch?v=E2DjWk9X5Hg">red giant</a> phase of its stellar life cycle</li>
+					<li>Maybe it's a brown dwarf.</li>
+					<li>Maybe there is some gas or dust between you and the star <a href="https://www.youtube.com/watch?v=R5P6O0pDyMU">scattering</a> some of the blue light.</li>
+				</p>
+				<p>
+					An astronomer might use <a href="../quantum/index.html#emission">spectroscopy</a> to figure out what's going on.
+				</p>
 			</details>
 		</div>
 
 
 		<h2 class='underlined'>Resonance</h2>
 		<p>
-			Rigid solids oscillate. They swing back and forth at a consistent rhythm.
+			Rigid solids oscillate. They move back and forth at a consistent rhythm.
 			<a href="../../energy/conservation/">Springs</a>, <a href="https://www.youtube.com/watch?v=3mclp9QmCGs">bridges</a>, buildings, <a href="https://www.youtube.com/watch?v=Oc27GxSD_bI">wine glasses</a>, and musical instruments all oscillate.
 			We also see oscillation in lasers, atoms, electric circuits, orbits, swing sets, and pendulums.
 		</p>
-
 		<p>
-			Systems that oscillate have a <a href="https://www.youtube.com/watch?v=F64xcPKKES8">natural</a> <a href="https://www.youtube.com/watch?v=waKx4RVl_u0">frequency</a> for their vibrations.
-			When no external forces are applied they will always oscillate at the same frequency.
+			Systems that oscillate have a <strong>natural frequency</strong> for their vibrations determined by properties like density, length, and rigidity.
+			This is the frequency they most easily oscillate at.
 		</p>
 		<p>
-			An applied force that matches the natural frequency can lead to larger oscillations more easily.
+			An applied force that matches the <a href="https://www.youtube.com/watch?v=F64xcPKKES8">natural</a> <a href="https://www.youtube.com/watch?v=waKx4RVl_u0">frequency</a> produce unusually high amplitude oscillations.
 			This applied force is said to be <strong>resonant</strong> with the natural frequency of the system.
-			The force pushes left as the system moves left, and right as the system moves right.
-			This way it doesn't fight the natural motion of the system.
+			This means the force pushes left as the system moves left, and right as the system moves right.
+			It doesn't fight the natural motion of the system.
 		</p>
 		<div id="resonance-zone">
 			<p class="center" style="margin-top: 0.5em;">
@@ -821,14 +1355,24 @@
 			This often occurs with reflected waves in a cavity, like a pipe. You can see a standing wave clearly in a <a href="https://www.youtube.com/watch?v=HpovwbPGEoo">Rubens'</a> <a href="https://www.youtube.com/watch?v=pWekXMZJ2zM&t=82s">Tube</a>.
 		</p>
 		<p>
-			In a bounded region the waves reflect off the walls.
-			For most wavelengths the numerous reflected waves interfere destructively to produce a superposition of zero.
-			When the wavelength fits evenly into a closed region the reflected waves resonate with each other to produce a standing wave.
-			The wave looks like an alternating constructive then destructive interference pattern.
+			The trick to a standing wave is that they only work at specific wavelengths in a medium with a reflective boundary.
+			At most wavelengths the reflected waves interfere with themselves destructively to produce a superposition of nearly zero.
+			It's like adding hundreds of random numbers between -1 and 1.
+			Most of the time all the numbers cancel out and produce a result close to zero.
+		</p>
+		<p>
+			But, when a wavelength fits evenly into a closed region the reflected waves align.
+			The superposition of all the reflected waves then produces alternating constructive and destructive interference patterns, a standing wave.
+			This is another example of <strong>resonance</strong>.
+			<!-- the reflected waves resonate with each other to produce a standing wave. -->
 		</p>
 		<p id='standing-wave-sim'>
-			This simulation calculates the superposition of 64 reflections in a bounded region.
-			Only certain wavelengths resonate to produce a standing wave.
+			<!-- This simulation calculates the superposition of 64 reflections in a bounded region.
+			Only certain wavelengths resonate to produce a standing wave. The red/blue waves are moving left/right.
+			The black wave is the superposition of the red and blue waves. -->
+			This simulation calculates 64 reflections in a bounded region.
+			Red waves are moving left. Blue waves are moving right.
+			The black wave is the superposition of the reflections.
 		</p>
 	</article>
 	<div id="standing-wave-zone">
@@ -896,7 +1440,8 @@
 		</div>
 		<br>
 		<div style="max-width: 600px; margin: 0 auto; padding: 10px;">
-			<strong>Simulation:</strong> <button id="wave-search">Search</button> for at least 5 wavelengths that resonate to produce standing waves.
+			<strong>Simulation:</strong> <button id="wave-search" style="padding:0px 5px;">Search</button> for wavelengths that resonate to produce standing waves.
+			The red and blue waves will align and the black wave will get much higher when you find a resonance.
 			<details>
 				<summary>results</summary>
 				<h3 id="list-standing"></h3>

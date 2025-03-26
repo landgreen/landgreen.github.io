@@ -1,8 +1,8 @@
-sound(document.getElementById("sound-play-150"), 150, 0.4)
-sound(document.getElementById("sound-play-300"), 300, 0.4)
+sound(document.getElementById("sound-play-220"), 220, 0.4)
+sound(document.getElementById("sound-play-440"), 440, 0.4)
 
-sound(document.getElementById("sound-play-300-2"), 300, 0.4)
-sound(document.getElementById("sound-play-160"), 160, 0.4)
+sound(document.getElementById("sound-play-440-2"), 440, 0.4)
+sound(document.getElementById("sound-play-230"), 230, 0.4)
 // harmony(document.getElementById("sound-play-150-300"), 300, 150, 0.4)
 // harmony(document.getElementById("sound-play-2"), 294, 190)
 //
@@ -17,7 +17,7 @@ function sound(el, freq, gain = 0.5) {
             paused = false
             el.textContent = freq + ' Hz pause';
             //setup audio context
-            audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
             oscillator1 = audioCtx.createOscillator();
             gainNode1 = audioCtx.createGain();
@@ -52,7 +52,7 @@ function harmony(el, freq1, freq2, gain = 0.5) {
             paused = false
             el.textContent = 'pause';
             //setup audio context
-            audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
             oscillator1 = audioCtx.createOscillator();
             gainNode1 = audioCtx.createGain();
