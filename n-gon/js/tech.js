@@ -8650,7 +8650,7 @@ const tech = {
     {
         name: "dielectric",
         descriptionFunction() {
-            return `use ${powerUps.orb.research(3)}<em style ="float: right;">(${(1 + powerUps.boost.damage).toFixed(2)}x</strong> <strong class='color-d'>damage</strong>)</em><br>activate ${powerUps.orb.boost(1)} while <strong class='color-plasma'>plasma</strong> ${powerUps.orb.field()} is active`
+            return `use ${powerUps.orb.research(2)}<em style ="float: right;">(${(1 + powerUps.boost.damage).toFixed(2)}x</strong> <strong class='color-d'>damage</strong>)</em><br>activate ${powerUps.orb.boost(1)} while <strong class='color-plasma'>plasma</strong> ${powerUps.orb.field()} is active`
         },
         isFieldTech: true,
         maxCount: 1,
@@ -8658,18 +8658,18 @@ const tech = {
         frequency: 3,
         frequencyDefault: 3,
         allowed() {
-            return (m.fieldMode === 5) && (build.isExperimentSelection || powerUps.research.count > 2)
+            return (m.fieldMode === 5) && (build.isExperimentSelection || powerUps.research.count > 1)
         },
         requires: "plasma torch",
         effect() {
             tech.isPlasmaBoost = true;
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < 2; i++) {
                 if (powerUps.research.count > 0) powerUps.research.changeRerolls(-1)
             }
         },
         remove() {
             tech.isPlasmaBoost = false;
-            if (this.count > 0) powerUps.research.changeRerolls(3)
+            if (this.count > 0) powerUps.research.changeRerolls(2)
         }
     },
     {

@@ -3951,8 +3951,9 @@ const m = {
                         // console.log(angleReduction)
                         if (player.velocity.y > 1) {
                             player.force.y -= angleReduction * (tech.isBigField ? 0.95 : 0.5) * player.mass * simulation.g;
+                            capX = 25
                             Matter.Body.setVelocity(player, {
-                                x: player.velocity.x,
+                                x: Math.abs(player.velocity.x) < capX ? Math.max(-capX, Math.min(1.014 * player.velocity.x, capX)) : player.velocity.x,
                                 y: 0.98 * player.velocity.y
                             }); //set velocity to cap, but keep the direction
                         }

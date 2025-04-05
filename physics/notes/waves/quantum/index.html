@@ -38,16 +38,14 @@
       Inside each atom they found the <a href="https://www.youtube.com/watch?v=ehHoOYqAT_U">subatomic particles</a>:
       electrons, protons, and neutrons.
       They also found that light was made of particles that we now call photons.
-      The strangest result was that all these particles produced wave-like <a
-        href="http://toutestquantique.fr/en/duality/">interference patterns</a>.
+      The strangest result was that all these particles produced wave-like <a href="http://toutestquantique.fr/en/duality/">interference patterns</a>.
       <!-- Light waves are too big to resolve objects that small. -->
       <!-- Instead, physicists <a href="https://phet.colorado.edu/sims/html/rutherford-scattering/latest/rutherford-scattering_en.html">fired</a> subatomic particles, like electrons, at each other. -->
       <!-- They were also surprised to discover that particles could produce wave-like <a href="https://en.wikipedia.org/wiki/Double-slit_experiment">interference patterns</a>. -->
     </p>
     <br>
     <p>
-      The <a href="https://www.youtube.com/watch?v=p-MNSLsjjdo">double slit</a> <a
-        href="https://www.youtube.com/watch?v=uOrqGVr9CeY">experiment</a> is a good example of wave interference.
+      The <a href="https://www.youtube.com/watch?v=p-MNSLsjjdo">double slit</a> <a href="https://www.youtube.com/watch?v=uOrqGVr9CeY">experiment</a> is a good example of wave interference.
       A wave passing through a slit spreads out. It <a href="../waveproperties/index.html#diffraction">diffracts</a>.
     </p>
     <details>
@@ -64,8 +62,7 @@
         </g>
         <g fill="none">
           <rect x="-101" y="0" width="400" height="400" fill="#fff" stroke="none" />
-          <path d="M60 0 v400 M110 0 v400 M170 0 v400 M230 0 v400 M280 0 v400" stroke="#f08" opacity="1"
-            stroke-width="20" />
+          <path d="M60 0 v400 M110 0 v400 M170 0 v400 M230 0 v400 M280 0 v400" stroke="#f08" opacity="1" stroke-width="20" />
           <path d="M300 0 v195 M300 205 v200" stroke="#000" stroke-width="10" />
         </g>
       </svg>
@@ -79,8 +76,7 @@
     </p>
     <details>
       <summary>double slit wave interference</summary>
-      <div>gap separation = <input id='slit-width-slider' type="range" step="1" value="100" min="5" max="290"
-          style="width: 165px;"></div>
+      <div>gap separation = <input id='slit-width-slider' type="range" step="1" value="100" min="5" max="290" style="width: 165px;"></div>
       <svg viewBox="100 0 600 600">
         <g stroke="#f08" stroke-width="20" fill="none">
           <g id="slit-1" transform="translate(300, 200)">
@@ -113,8 +109,7 @@
           </g>
         </g>
         <rect x="-101" y="0" width="406" height="600" fill="#fff" stroke="none" />
-        <path d="M60 0 v600 M110 0 v600 M170 0 v600 M230 0 v600 M280 0 v600" stroke="#f08" opacity="1" stroke-width="20"
-          fill="none" />
+        <path d="M60 0 v600 M110 0 v600 M170 0 v600 M230 0 v600 M280 0 v600" stroke="#f08" opacity="1" stroke-width="20" fill="none" />
         <path id="wall" d="M300 0 v195 M300 205 v190 M300 405 v200" stroke="#000" stroke-width="10" fill="none" />
       </svg>
       <script>
@@ -138,8 +133,7 @@
       </script>
     </details>
     <p>
-      In 1801, Thomas Young produced a double slit interference <a
-        href="https://www.youtube.com/watch?v=G4_4vcNqc-k">pattern</a> with beams of light.
+      In 1801, Thomas Young produced a double slit interference <a href="https://www.youtube.com/watch?v=G4_4vcNqc-k">pattern</a> with beams of light.
       In 1909, the experiment was repeated with a single photon at a time.
       After passing through the double slit, each photon was measured at single location, but the distribution of
       measurements still produced an interference pattern.
@@ -164,8 +158,7 @@
       <rect id="double-slit-emitter" width="2.5" height="8" x="15" y="71" rx="0.5" ry="0.5" fill="#89a" />
       <rect width="12" height="10" x="4" y="70" rx="1" ry="1" />
       <path id="slit" d="M40 1 v70.5 m0 0.5 v5 m0 0.5 v70.5" stroke-width="1.5" />
-      <path id="double-slit-probability-function" d="M 290 0 v100" stroke-width="0" fill="#abc" stroke-linecap="round"
-        stroke-linejoin="round" />
+      <path id="double-slit-probability-function" d="M 290 0 v100" stroke-width="0" fill="#abc" stroke-linecap="round" stroke-linejoin="round" />
     </g>
     <g id="double-slit-hits"></g>
   </svg>
@@ -173,8 +166,7 @@
     <ul class="listing" style="background-color: #fff; border-radius: 15px; padding:10px; border: #345 solid 4px;">
       <li>
         <div>
-          &nbsp; &nbsp; &nbsp; &nbsp; <button id="double-slit-button"
-            style="margin:0; background-color: #eee; float: 0; font-size: 1.5em;">emit</button>
+          &nbsp; &nbsp; &nbsp; &nbsp; <button id="double-slit-button" style="margin:0; background-color: #eee; float: 0; font-size: 1.5em;">emit</button>
           <br>
           <label for="slit-one-checkbox">
             <input type="checkbox" id="slit-one-checkbox" name="slit-one-checkbox" style="width:14px;">
@@ -189,12 +181,9 @@
       </li>
       <li>
         <div>
-          wavelength = <input id='slit-wavelength' type="number" value='0.201' min="0" step="0.0001"
-            style="width:100px;">
-          <br>slit separation = <input id='slit-separation' type="number" value='5' min="0" step="0.001"
-            style="width:80px;">
-          <br>slit width = <input id='slit-slitWidth' type="number" value='0.5' min="0" step="0.01"
-            style="width:117px;">
+          wavelength = <input id='slit-wavelength' type="number" value='0.201' min="0" step="0.0001" style="width:100px;">
+          <br>slit separation = <input id='slit-separation' type="number" value='5' min="0" step="0.001" style="width:80px;">
+          <br>slit width = <input id='slit-slitWidth' type="number" value='0.5' min="0" step="0.01" style="width:117px;">
           <!-- <br>target distance = <input id='slit-distance' type="number" value='100' min="0" step="1" style="width:100px;"> -->
         </div>
       </li>
@@ -231,7 +220,7 @@
         <summary>answer</summary>
         <p>
           A single particle goes through both slits.
-          It interferes with itself.  Probably...
+          It interferes with itself. Probably...
         </p>
         <p>
           This experiment shows that we can't think of particles as simple balls.
@@ -302,36 +291,25 @@
       }
     }
   </style>
-  <svg class='center display-over-1100' width="1100" viewBox="0 0 720 500"
-    style="margin-top: -350px;margin-bottom: -370px;">
+  <svg class='center display-over-1100' width="1100" viewBox="0 0 720 500" style="margin-top: -350px;margin-bottom: -370px;">
     <g stroke="#eee" fill="#eee">
       <g transform="translate(-14.82002,-13.154438)">
-        <path
-          style="fill:none;fill-rule:evenodd;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-          d="M 155.55136,257.80438 C 160.26762,249.96805 174.38652,251.05392 178.24912,257.80438 C 182.13963,264.60356 193.38109,264.59371 198.49848,257.80438 C 203.65714,250.96031 213.47459,250.22404 218.34286,257.80438 M 469.31975,255.83925 C 472.91753,263.59856 485.26676,263.65957 489.56911,255.83925 C 493.89772,247.97118 507.28069,249.10183 511.79877,255.83925 C 516.28093,262.5232 527.29611,263.77849 532.07431,255.83925 C 536.79056,248.00292 550.90946,249.08879 554.77205,255.83925 C 558.66257,262.63843 569.90404,262.62858 575.02142,255.83925 C 580.18009,248.99518 589.99752,248.25891 594.86579,255.83925 M 343.2366,255.81491 C 346.83439,263.57422 359.18361,263.63523 363.48597,255.81491 C 367.81457,247.94684 381.19755,249.0775 385.71562,255.81491 C 390.19779,262.49887 401.21296,263.75416 405.99116,255.81491 C 410.70742,247.97858 424.82631,249.06445 428.68891,255.81491 C 432.57942,262.61409 443.82089,262.60424 448.93828,255.81491 C 454.09694,248.97084 463.91438,248.23457 468.78265,255.81491 M 218.26291,256.79748 C 221.86069,264.55679 234.20991,264.6178 238.51228,256.79748 C 242.84087,248.92941 256.22386,250.06006 260.74192,256.79748 C 265.2241,263.48144 276.23926,264.73673 281.01746,256.79748 C 285.73372,248.96115 299.85261,250.04701 303.71522,256.79748 C 307.60572,263.59665 318.84719,263.5868 323.96457,256.79748 C 329.12324,249.9534 338.94068,249.21713 343.80895,256.79748" />
+        <path style="fill:none;fill-rule:evenodd;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 155.55136,257.80438 C 160.26762,249.96805 174.38652,251.05392 178.24912,257.80438 C 182.13963,264.60356 193.38109,264.59371 198.49848,257.80438 C 203.65714,250.96031 213.47459,250.22404 218.34286,257.80438 M 469.31975,255.83925 C 472.91753,263.59856 485.26676,263.65957 489.56911,255.83925 C 493.89772,247.97118 507.28069,249.10183 511.79877,255.83925 C 516.28093,262.5232 527.29611,263.77849 532.07431,255.83925 C 536.79056,248.00292 550.90946,249.08879 554.77205,255.83925 C 558.66257,262.63843 569.90404,262.62858 575.02142,255.83925 C 580.18009,248.99518 589.99752,248.25891 594.86579,255.83925 M 343.2366,255.81491 C 346.83439,263.57422 359.18361,263.63523 363.48597,255.81491 C 367.81457,247.94684 381.19755,249.0775 385.71562,255.81491 C 390.19779,262.49887 401.21296,263.75416 405.99116,255.81491 C 410.70742,247.97858 424.82631,249.06445 428.68891,255.81491 C 432.57942,262.61409 443.82089,262.60424 448.93828,255.81491 C 454.09694,248.97084 463.91438,248.23457 468.78265,255.81491 M 218.26291,256.79748 C 221.86069,264.55679 234.20991,264.6178 238.51228,256.79748 C 242.84087,248.92941 256.22386,250.06006 260.74192,256.79748 C 265.2241,263.48144 276.23926,264.73673 281.01746,256.79748 C 285.73372,248.96115 299.85261,250.04701 303.71522,256.79748 C 307.60572,263.59665 318.84719,263.5868 323.96457,256.79748 C 329.12324,249.9534 338.94068,249.21713 343.80895,256.79748" />
         <g transform="matrix(1.56715,0,0,1.60001,-187.197,-253.245)">
-          <path d="M 219.11593,317.84898 L 131.42649,186.93236"
-            style="fill:none;fill-rule:evenodd;stroke-width:3.7890873;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path style="stroke: none;font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
-            d="M 162.31875,251.27971 L 153.88353,220.52513 L 180.01448,238.80546 C 172.02958,238.57099 164.89845,243.63171 162.31875,251.27971 z" />
+          <path d="M 219.11593,317.84898 L 131.42649,186.93236" style="fill:none;fill-rule:evenodd;stroke-width:3.7890873;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path style="stroke: none;font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="M 162.31875,251.27971 L 153.88353,220.52513 L 180.01448,238.80546 C 172.02958,238.57099 164.89845,243.63171 162.31875,251.27971 z" />
         </g>
         <g transform="matrix(-1.56715,0,0,1.60001,361.20755,-43.264192)">
-          <path d="M 219.11593,317.84898 L 131.42649,186.93236"
-            style="fill:none;fill-rule:evenodd;stroke-width:3.7890873;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path style="stroke: none;font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
-            d="M 162.31875,251.27971 L 153.88353,220.52513 L 180.01448,238.80546 C 172.02958,238.57099 164.89845,243.63171 162.31875,251.27971 z" />
+          <path d="M 219.11593,317.84898 L 131.42649,186.93236" style="fill:none;fill-rule:evenodd;stroke-width:3.7890873;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path style="stroke: none;font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="M 162.31875,251.27971 L 153.88353,220.52513 L 180.01448,238.80546 C 172.02958,238.57099 164.89845,243.63171 162.31875,251.27971 z" />
         </g>
         <g transform="matrix(-1.56715,0,0,1.60001,937.30966,-255.131)">
-          <path d="M 219.11593,317.84898 L 131.42649,186.93236"
-            style="fill:none;fill-rule:evenodd;stroke-width:3.7890873;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path style="stroke: none;font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
-            d="M 162.31875,251.27971 L 153.88353,220.52513 L 180.01448,238.80546 C 172.02958,238.57099 164.89845,243.63171 162.31875,251.27971 z" />
+          <path d="M 219.11593,317.84898 L 131.42649,186.93236" style="fill:none;fill-rule:evenodd;stroke-width:3.7890873;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path style="stroke: none;font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="M 162.31875,251.27971 L 153.88353,220.52513 L 180.01448,238.80546 C 172.02958,238.57099 164.89845,243.63171 162.31875,251.27971 z" />
         </g>
         <g transform="matrix(1.56715,0,0,1.60001,388.90511,-45.150195)">
-          <path d="M 219.11593,317.84898 L 131.42649,186.93236"
-            style="fill:none;fill-rule:evenodd;stroke-width:3.7890873;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path style="stroke: none;font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
-            d="M 162.31875,251.27971 L 153.88353,220.52513 L 180.01448,238.80546 C 172.02958,238.57099 164.89845,243.63171 162.31875,251.27971 z" />
+          <path d="M 219.11593,317.84898 L 131.42649,186.93236" style="fill:none;fill-rule:evenodd;stroke-width:3.7890873;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path style="stroke: none;font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="M 162.31875,251.27971 L 153.88353,220.52513 L 180.01448,238.80546 C 172.02958,238.57099 164.89845,243.63171 162.31875,251.27971 z" />
         </g>
         <g style="stroke: none;font-size:24px;font-family:Verdana">
           <g transform="matrix(1.56715,0,0,1.60001,-187.197,-253.245)">
@@ -388,8 +366,7 @@
 
 
     <div class='example'>
-      <div class="col-group"
-        style="background-color: #000000; border-radius:20px; margin:50px; padding:15px; color: white; font-size: 2em; font-weight: 900;">
+      <div class="col-group" style="background-color: #000000; border-radius:20px; margin:50px; padding:15px; color: white; font-size: 2em; font-weight: 900;">
         <div class='center'>
           <h3 style="border-bottom: 2px solid #fff;">f (THz)</h3>
           <span style="color:#90f">668 – 789</span>
@@ -711,8 +688,7 @@
       Only high frequency light releases electrons because it has enough energy per packet.
     </p>
     <p>
-      Einstein published an equation that describes the photoelectric effect using <a
-        href="..\..\energy\conservation\index.html">conservation of energy</a>. The kinetic energy of a released
+      Einstein published an equation that describes the photoelectric effect using <a href="..\..\energy\conservation\index.html">conservation of energy</a>. The kinetic energy of a released
       electron can't exceed the difference between the energy of an incoming photon and the energy needed to dislodge
       the electron.
       If the maximum kinetic energy is below zero, an electron is not released.
@@ -768,16 +744,12 @@
         <use xlink:href="#electron" transform='translate(93 51)' />
 
         <g fill="none" stroke="#60f" stroke-width="1">
-          <path
-            d="M -15.416727,2.9721617 C -15.416727,2.9721617 -21.780688,12.16455 -11.881193,6.5076957 C -1.9816978,0.8508416 -8.3456588,10.04323 -8.3456588,10.04323 L -4.8101248,13.578763" />
+          <path d="M -15.416727,2.9721617 C -15.416727,2.9721617 -21.780688,12.16455 -11.881193,6.5076957 C -1.9816978,0.8508416 -8.3456588,10.04323 -8.3456588,10.04323 L -4.8101248,13.578763" />
           <path d="M -7.6385528,13.578763 L -4.8101248,13.578763 L -4.8101248,10.750337" />
-          <path
-            d="M -15.416727,2.9721617 C -15.416727,2.9721617 -8.6992126,-6.5737792 -18.952261,-0.56337217 C -29.205309,5.4470357 -22.487795,-4.0989062 -22.487795,-4.0989062 C -22.487795,-4.0989062 -15.77028,-13.644848 -26.023329,-7.6344392 C -36.276378,-1.6240322 -29.558863,-11.169975 -29.558863,-11.169975" />
-          <path
-            d="M -20.221258,21.310545 C -20.221258,21.310545 -26.585219,30.502934 -16.685724,24.846079 C -6.7862282,19.189225 -13.15019,28.381613 -13.15019,28.381613 L -9.6146556,31.917147" />
+          <path d="M -15.416727,2.9721617 C -15.416727,2.9721617 -8.6992126,-6.5737792 -18.952261,-0.56337217 C -29.205309,5.4470357 -22.487795,-4.0989062 -22.487795,-4.0989062 C -22.487795,-4.0989062 -15.77028,-13.644848 -26.023329,-7.6344392 C -36.276378,-1.6240322 -29.558863,-11.169975 -29.558863,-11.169975" />
+          <path d="M -20.221258,21.310545 C -20.221258,21.310545 -26.585219,30.502934 -16.685724,24.846079 C -6.7862282,19.189225 -13.15019,28.381613 -13.15019,28.381613 L -9.6146556,31.917147" />
           <path d="M -12.443084,31.917147 L -9.6146556,31.917147 L -9.6146556,29.08872" />
-          <path
-            d="M -20.221258,21.310545 C -20.221258,21.310545 -13.503744,11.764604 -23.756792,17.775011 C -34.009839,23.785419 -27.292326,14.239477 -27.292326,14.239477 C -27.292326,14.239477 -20.574811,4.6935364 -30.827859,10.703944 C -41.080908,16.714351 -34.363393,7.1684094 -34.363393,7.1684094" />
+          <path d="M -20.221258,21.310545 C -20.221258,21.310545 -13.503744,11.764604 -23.756792,17.775011 C -34.009839,23.785419 -27.292326,14.239477 -27.292326,14.239477 C -27.292326,14.239477 -20.574811,4.6935364 -30.827859,10.703944 C -41.080908,16.714351 -34.363393,7.1684094 -34.363393,7.1684094" />
         </g>
       </svg>
       <h1>$$K_{max}=hf - \Phi$$</h1>
@@ -847,8 +819,7 @@
 
     <div class='example'>
       <strong>Example:</strong> Find the max kinetic energy of a magnesium electron after being hit by a photon with a
-      frequency of 600 THz. Look up the <a
-        href='https://en.wikipedia.org/wiki/Work_function#Work_functions_of_elements.5B11.5D'>work function</a> for
+      frequency of 600 THz. Look up the <a href='https://en.wikipedia.org/wiki/Work_function#Work_functions_of_elements.5B11.5D'>work function</a> for
       magnesium and convert it into joules.
       <details class="hide-on-mobile">
         <summary>metric prefixes</summary>
@@ -968,8 +939,7 @@
     </div>
 
     <div class='example'>
-      <strong>Example:</strong> Use the <a
-        href='https://en.wikipedia.org/wiki/Work_function#Work_functions_of_elements.5B11.5D'>work function</a> table to
+      <strong>Example:</strong> Use the <a href='https://en.wikipedia.org/wiki/Work_function#Work_functions_of_elements.5B11.5D'>work function</a> table to
       decide which elements would release electrons from 427 nm wavelength light.
       <details>
         <summary>strategy</summary>
@@ -1096,12 +1066,9 @@
 
     <div class='example'>
       <div class='center' style="position: relative; width: 300px; height: 200px;">
-        <a href="https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light_en.html"
-          style="text-decoration: none;">
-          <img src="https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light-600.png"
-            alt="Molecules and Light" style="border: none;" width="300" height="200" />
-          <div
-            style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.9; filter: alpha(opacity = 60);">
+        <a href="https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light_en.html" style="text-decoration: none;">
+          <img src="https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light-600.png" alt="Molecules and Light" style="border: none;" width="300" height="200" />
+          <div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px; background-color: #FFF; opacity: 0.9; filter: alpha(opacity = 60);">
           </div>
           <table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 55px;">
             <tr>
@@ -1201,10 +1168,9 @@
         This attraction can also lead to an orbit, but with some quantum mechanical restrictions.
       </p>
       <p>
-        Quantum mechanics tells us that electrons are waves.
-        As the waves try to orbit the nucleus, they destructively interfere with themselves.
-        This limits the wavelengths to values that allow constructive orbital <a
-          href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
+        Quantum mechanics tells us that electrons act like a wave.
+        As the electrons try to <a href="https://www.youtube.com/watch?v=M--6_0F62pQ">orbit</a> the nucleus, they destructively interfere with themselves.
+        This limits the wavelengths to values that allow constructive orbital <a href="..\waveproperties\index.html#standing-waves">standing waves</a> to form.
         We say that the allowed wavelengths are <a href="http://toutestquantique.fr/en/quantization/">quantized</a>.
         <strong>Quantizing</strong> means to restrict a variable to specific values.
       </p>
@@ -1233,15 +1199,35 @@
         For most wavelengths these paths interfere destructively, but at resonant wavelengths the paths interfere constructively to produce a standing wave.
       </p> -->
       <p>
-        A 2-D analogy for atomic orbitals is the <a
-          href="https://www.acs.psu.edu/drussell/Demos/MembraneCircle/Circle.html">vibrations of a drum</a>.
+        A 2-D analogy for atomic orbitals is the <a href="https://www.acs.psu.edu/drussell/Demos/MembraneCircle/Circle.html">vibrations of a drum</a>.
       </p>
       <br>
+      An electron in an atom can be described by 4 quantum numbers.
+      <table>
+        <tr>
+          <th>principal (n)</th>
+          <td>1,2,3, ...</td>
+          <td>energy or number of standing wave nodes</th>
+        </tr>
+        <tr>
+          <th>azimuthal (ℓ)</th>
+          <td>0,1,2, ...</td>
+          <td>shape or number of angular nodes (s,p,d)</td>
+        </tr>
+        <tr>
+          <th>magnetic (mℓ)</th>
+          <td>-ℓ to ℓ</td>
+          <td>spatial orientation of the standing wave</td>
+        </tr>
+        <tr>
+          <th>spin (ms)</th>
+          <td>+½ or −½</td>
+          <td>electron’s possible internal spin states</td>
+        </tr>
+      </table>
       <p>
-        An electron in an atom can be described by 4 quantum numbers.
         Quantizing these numbers adds another restriction.
-        Two electrons can't form the exact same wave due to a type of destructive interference called the <a
-          href="https://www.youtube.com/watch?v=Zlp2GQ3OLeE">Pauli exclusion principle</a>.
+        Two electrons can't form the exact same wave due to a type of destructive interference called the <a href="https://www.youtube.com/watch?v=Zlp2GQ3OLeE">Pauli exclusion principle</a>.
         This means each electron in an atom must have a different combination of the 4 numbers.
       </p>
       <a href="https://en.wikipedia.org/wiki/Atomic_orbital"> <img src="Hydrogen_Density_Plots.png" width="100%"> </a>
@@ -1254,14 +1240,13 @@
       <br>
       <p>
         Particles outside an atom don't normally form standing waves so they aren't quantized.
-        It's mostly just electrons in atoms that are quantized because they form standing waves.
         Although, photons can inherit quantization when they are emitted from electrons in atoms.
       </p>
       <p>
-        A useful analogy is the behavior of a guitar string.
-        Sound waves in air can have any frequency, analogous free electrons that are not quantized.
-        Guitars strings form standing waves that limit the frequency to specific notes, like quantized electrons in atoms.
-        Sound waves leaving a plucked guitar string inherit the quantization of the string like photon emitted form an atom.
+        Electron and photon quantization is similar to guitar strings and musical notes.
+        Sound waves in air can have any frequency.
+        Guitar strings only have quantized frequencies because the strings form standing waves.
+        Sound waves leaving a plucked guitar string will inherit this quantization, so a guitar only makes specific notes.
       </p>
     </details>
     <br>
@@ -1285,9 +1270,7 @@
       <g transform="translate(-30 -123) scale(1.5)" fill="#00f" stroke="#00f" stroke-width="2" stroke-linecap="round">
         <path d="M290 111.5 l-12 -5 v10 l12 -5" stroke="none" stroke-linejoin="round" />
         <!-- <path d="M291.4,109.41c-3.308-1-5.457-1.92-8.1-2.983v10.09c0.947-0.451,4.802-1.985,8.107-2.983 c3.539-1.069,6.748-1.801,8.828-2.062C298.14,111.21,294.931,110.479,291.392,109.41z" stroke="none" /> -->
-        <path
-          d="M262,111.46c0,0-4.001,17-8.334,0s-8.334,0-8.334,0s-4.001,17-8.334,0 s-8.334,0-8.334,0s-4.001,17-8.334,0s-8.334,0-8.334,0s-4.001,17-8.334,0s-8.334,0-8.334,0"
-          fill="none" />
+        <path d="M262,111.46c0,0-4.001,17-8.334,0s-8.334,0-8.334,0s-4.001,17-8.334,0 s-8.334,0-8.334,0s-4.001,17-8.334,0s-8.334,0-8.334,0s-4.001,17-8.334,0s-8.334,0-8.334,0" fill="none" />
         <!-- <line x1="278" y1="111.5" x2="286.7" y2="111.5" fill="none" /> -->
         <path d="M277.999,111.46h-7.66c-4.333-17-8.334,0-8.334,0" fill="none" />
       </g>
@@ -1499,9 +1482,7 @@
         <g transform="translate(-30 -110) scale(1.5)" fill="#00f" stroke="#00f" stroke-width="2" stroke-linecap="round">
           <path d="M200 111.5 l12 -5 v10 l-12 -5" stroke="none" />
           <path d="M210 111.5 h8" fill="none" />
-          <path
-            d="M302,111.5c0,0-4.001,17-8.334,0s-8.334,0-8.334,0s-4.001,17-8.334,0 s-8.334,0-8.334,0s-4.001,17-8.334,0s-8.334,0-8.334,0s-4.001,17-8.334,0s-8.334,0-8.334,0s-4.001,17-8.334,0s-8.334,0-8.334,0"
-            fill="none" />
+          <path d="M302,111.5c0,0-4.001,17-8.334,0s-8.334,0-8.334,0s-4.001,17-8.334,0 s-8.334,0-8.334,0s-4.001,17-8.334,0s-8.334,0-8.334,0s-4.001,17-8.334,0s-8.334,0-8.334,0s-4.001,17-8.334,0s-8.334,0-8.334,0" fill="none" />
         </g>
         <path d="M250 85 v-60" stroke="#123" />
         <path d="M250 20 l-5 12 h10 l-5 -12" fill="#123" />
@@ -1514,8 +1495,7 @@
       single atom.
       This causes the electron to transition to <strong>higher</strong> energy levels.
       <p>
-        If there isn't an energy difference that matches the energy of the colliding photon, the material is <a
-          href='https://www.youtube.com/watch?v=VwRLIt6jgdM'>transparent</a> to that frequency. A substance may be clear
+        If there isn't an energy difference that matches the energy of the colliding photon, the material is <a href='https://www.youtube.com/watch?v=VwRLIt6jgdM'>transparent</a> to that frequency. A substance may be clear
         in one range of the spectrum but not in others. For example: glass is mostly transparent to visible light, but
         it has many absorption frequencies in the infrared and UV.
       </p>
@@ -1559,8 +1539,7 @@
       <br>
       <p>
         <a href='https://www.youtube.com/watch?v=pxC6F7bK8CU'>Analyzing the spectrum</a> of emission or absorption can
-        actually be used like a <a
-          href="https://en.wikipedia.org/wiki/Spectral_line#Spectral_lines_of_chemical_elements">fingerprint</a> to
+        actually be used like a <a href="https://en.wikipedia.org/wiki/Spectral_line#Spectral_lines_of_chemical_elements">fingerprint</a> to
         identify the elements or molecules being observed. This technique is used in fields like forensics and
         astronomy.
       </p>
@@ -1572,8 +1551,7 @@
       </p>
       <svg viewbox='25 0 800 600'>
         <g transform="translate(66.009356,-172.95341)">
-          <g
-            style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
+          <g style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
             <text x="37.170357" y="712.49231">
               <tspan x="37.170357" y="712.49231">250</tspan>
             </text>
@@ -1605,19 +1583,15 @@
               <tspan x="672.74646" y="712.49231">2500</tspan>
             </text>
           </g>
-          <text y="750" x="380"
-            style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:middle;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">
+          <text y="750" x="380" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:middle;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">
             <tspan y="750" x="380">Wavelength (nm)</tspan>
           </text>
         </g>
-        <text
-          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36px;line-height:125%;font-family: 'Arial';-inkscape-font-specification: 'Arial';text-align:middle;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
-          x="443" y="50">
+        <text style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36px;line-height:125%;font-family: 'Arial';-inkscape-font-specification: 'Arial';text-align:middle;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none" x="443" y="50">
           <tspan x="443" y="50">Spectrum of Solar Radiation (Earth)</tspan>
         </text>
         <g transform="translate(38.009356,-192.95341)">
-          <g transform="translate(28,20)"
-            style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
+          <g transform="translate(28,20)" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
             <text x="19.722553" y="694.72571"> 0 </text>
             <text x="2.4178658" y="607.20966">0.5 </text>
             <text x="22.798725" y="519.88892"> 1 </text>
@@ -1626,8 +1600,7 @@
             <text x="2.4178658" y="257.14554"> 2.5 </text>
           </g>
           <g>
-            <text transform="matrix(0,-1,1,0,0,0)" sodipodi:linespacing="-5.7583923e+029%" y="16" x="-495"
-              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28px;line-height:-575839229844696810000000000000%;font-family: 'Arial';-inkscape-font-specification: 'Arial';text-align:middle;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none">
+            <text transform="matrix(0,-1,1,0,0,0)" sodipodi:linespacing="-5.7583923e+029%" y="16" x="-495" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28px;line-height:-575839229844696810000000000000%;font-family: 'Arial';-inkscape-font-specification: 'Arial';text-align:middle;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none">
               <tspan y="16" x="-495">Irradiance (W/m²/nm)</tspan>
             </text>
           </g>
@@ -1772,203 +1745,127 @@
           842,4506C868,4399 895,4293 928,4188C954,4104 983,4021 1022,3943C1045,3896 1072,3849 1107,3810C1129,3786 1154,3765
           1184,3754C1261,3725 1335,3775 1389,3825C1444,3877 1491,3937 1534,3999C1589,4076 1639,4155 1688,4236C1841,4486 1986,4742
           2149,4987C2375,5325 2634,5643 2952,5899C3141,6051 3348,6178 3567,6281C3971,6471 4409,6578 4848,6651C5213,6711 5582,6748
-          5950,6776C6368,6808 6787,6827 7206,6842" transform="scale(0.1)"
-                style="stroke:#000;stroke-width:20;fill:none" />
+          5950,6776C6368,6808 6787,6827 7206,6842" transform="scale(0.1)" style="stroke:#000;stroke-width:20;fill:none" />
             </g>
             <g>
-              <path d="m 94.484367,252.30052 0,438.10662"
-                style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:7;stroke-dashoffset:0" />
-              <path d="m 180.03738,252.53556 0,438.81173"
-                style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:7;stroke-dashoffset:0" />
-              <rect ry="1.528919" y="253.89284" x="37.56905" height="437.90384" width="681.57623"
-                style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
-              <path d="m 37.034718,603.26099 -5.745243,0.0884"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 37.476659,515.2262 -5.391689,0"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 37.565048,427.63334 -5.39169,0"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="M 37.034718,339.33338 32.350135,339.245"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 38.272154,254.03863 -5.656854,0.0884"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 38.183766,691.64934 0,0 -5.391689,0.0884 0,0"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 51.530407,692.17967 0,3.53553"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 123.12497,692.09128 0,3.71231"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 194.27759,692.09128 0,3.71231"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 264.98827,692.17967 0,3.27037"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 336.31766,692.00289 0,3.0052"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 407.55867,692.26806 0,3.53553"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 478.71129,692.26806 0,3.35875"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 549.9523,692.53322 0,3.18198"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 620.83975,692.62161 0,2.82843"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-              <path d="m 692.08076,692.71 0,2.91681"
-                style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 94.484367,252.30052 0,438.10662" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:7;stroke-dashoffset:0" />
+              <path d="m 180.03738,252.53556 0,438.81173" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:7;stroke-dashoffset:0" />
+              <rect ry="1.528919" y="253.89284" x="37.56905" height="437.90384" width="681.57623" style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+              <path d="m 37.034718,603.26099 -5.745243,0.0884" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 37.476659,515.2262 -5.391689,0" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 37.565048,427.63334 -5.39169,0" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="M 37.034718,339.33338 32.350135,339.245" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 38.272154,254.03863 -5.656854,0.0884" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 38.183766,691.64934 0,0 -5.391689,0.0884 0,0" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 51.530407,692.17967 0,3.53553" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 123.12497,692.09128 0,3.71231" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 194.27759,692.09128 0,3.71231" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 264.98827,692.17967 0,3.27037" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 336.31766,692.00289 0,3.0052" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 407.55867,692.26806 0,3.53553" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 478.71129,692.26806 0,3.35875" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 549.9523,692.53322 0,3.18198" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 620.83975,692.62161 0,2.82843" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path d="m 692.08076,692.71 0,2.91681" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
             </g>
           </g>
           <g>
-            <text
-              style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-              x="706.53387" y="701.68475">
-              <tspan x="706.53387" y="701.68475"
-                style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="706.53387" y="701.68475">
+              <tspan x="706.53387" y="701.68475" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial">
                 2</tspan>
             </text>
-            <text
-              style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-              x="693.87659" y="694.45203">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="693.87659" y="694.45203">
               <tspan x="693.87659" y="694.45203">H O</tspan>
             </text>
           </g>
-          <text y="621.43933" x="531.90747"
-            style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
+          <text y="621.43933" x="531.90747" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
             <tspan style="fill:#000;fill-opacity:1" y="621.43933" x="531.90747">Atmospheric</tspan>
             <tspan style="fill:#000;fill-opacity:1" y="646.43933" x="531.90747">absorption bands</tspan>
           </text>
           <g transform="translate(-443.93562,-59.560028)">
-            <text
-              style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-              x="831.40668" y="690.77325">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
               <tspan x="831.40668" y="690.77325">H O</tspan>
             </text>
-            <text
-              style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-              x="845" y="698.00598">
-              <tspan x="846" y="698.00598"
-                style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="845" y="698.00598">
+              <tspan x="846" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial">
                 2</tspan>
             </text>
           </g>
           <g transform="translate(-575.93291,3.726346)">
-            <text
-              style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-              x="831.40668" y="690.77325">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
               <tspan x="831.40668" y="690.77325">H O</tspan>
             </text>
-            <text
-              style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-              x="845" y="698.00598">
-              <tspan x="845" y="698.00598"
-                style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="845" y="698.00598">
+              <tspan x="845" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial">
                 2</tspan>
             </text>
           </g>
           <g transform="translate(-523.49562,-110.18915)">
-            <text
-              style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-              x="831.40668" y="690.77325">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
               <tspan x="831.40668" y="690.77325">H O</tspan>
             </text>
-            <text
-              style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-              x="845" y="698.00598">
-              <tspan x="845" y="698.00598"
-                style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="845" y="698.00598">
+              <tspan x="845" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial">
                 2</tspan>
             </text>
           </g>
           <g transform="translate(-316.40373,-14.163664)">
-            <text
-              style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-              x="831.40668" y="690.77325">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="831.40668" y="690.77325">
               <tspan x="831.40668" y="690.77325">H O</tspan>
             </text>
-            <text
-              style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-              x="845" y="698.00598">
-              <tspan x="845" y="698.00598"
-                style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial">
+            <text style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="845" y="698.00598">
+              <tspan x="845" y="698.00598" style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial">
                 2</tspan>
             </text>
           </g>
           <g transform="translate(-247.22733,-7.122752)">
-            <text y="690.77325" x="819.40668"
-              style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
+            <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
               <tspan y="690.77325" x="819.40668">CO</tspan>
             </text>
-            <text y="698.00598" x="845"
-              style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
-              <tspan
-                style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial"
-                y="698.00598" x="849">2</tspan>
+            <text y="698.00598" x="845" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
+              <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial" y="698.00598" x="849">2</tspan>
             </text>
           </g>
           <g transform="translate(-604.68495,-32.437307)">
-            <text y="690.77325" x="819.40668"
-              style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
+            <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
               <tspan y="690.77325" x="819.40668">O</tspan>
             </text>
-            <text y="698.00598" x="832.06396"
-              style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
-              <tspan
-                style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial"
-                y="698.00598" x="832.06396">2</tspan>
+            <text y="698.00598" x="832.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
+              <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial" y="698.00598" x="832.06396">2</tspan>
             </text>
           </g>
           <g transform="translate(-745.14773,7.342707)">
-            <text y="690.77325" x="819.40668"
-              style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
+            <text y="690.77325" x="819.40668" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
               <tspan y="690.77325" x="819.40668">O</tspan>
             </text>
-            <text y="698.00598" x="832.06396"
-              style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
-              <tspan
-                style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial"
-                y="698.00598" x="832.06396">3</tspan>
+            <text y="698.00598" x="832.06396" style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;fill:#000;fill-opacity:1;stroke:none;font-family:Arial">
+              <tspan style="font-size:13px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial" y="698.00598" x="832.06396">3</tspan>
             </text>
           </g>
-          <text y="300.26828" x="78.820923"
-            style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
+          <text y="300.26828" x="78.820923" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
             <tspan y="300.26828" x="78.820923">UV</tspan>
           </text>
-          <text y="300.70773" x="133.53186"
-            style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
+          <text y="300.70773" x="133.53186" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
             <tspan y="300.70773" x="133.53186">Visible</tspan>
           </text>
-          <text y="300.70773" x="227.36552"
-            style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
+          <text y="300.70773" x="227.36552" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial">
             <tspan y="300.70773" x="227.36552">Infrared</tspan>
           </text>
-          <path
-            style="fill:#000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none"
-            d="m 237.74916,405.14286 -68.71093,41.5882" />
-          <text
-            style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-            x="226.98189" y="400.6774">
+          <path style="fill:#000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 237.74916,405.14286 -68.71093,41.5882" />
+          <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="226.98189" y="400.6774">
             <tspan x="226.98189" y="400.6774">Sunlight without atmospheric absorption</tspan>
           </text>
-          <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
-            d="m 177.76248,451.05923 -17.0798,1.5096 6.0758,-16.07286 c 1.39873,5.70355 5.85373,11.57734 11.004,14.56326 z" />
-          <path
-            style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none"
-            d="m 319.11741,504.92164 -47.01278,32.21854" />
-          <text
-            style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-            x="320" y="500">
+          <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="m 177.76248,451.05923 -17.0798,1.5096 6.0758,-16.07286 c 1.39873,5.70355 5.85373,11.57734 11.004,14.56326 z" />
+          <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 319.11741,504.92164 -47.01278,32.21854" />
+          <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="320" y="500">
             <tspan x="320" y="500">5778K blackbody</tspan>
           </text>
-          <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
-            d="m 285.28487,539.26218 -17.10355,1.21115 6.35551,-15.96433 c 1.29893,5.72711 5.65069,11.67779 10.74804,14.75318 z" />
-          <path
-            style="fill:none;stroke:#000000;stroke-width:1.54598403px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none"
-            d="m 479.1968,579.65061 0.92684,106.19219" />
-          <text
-            style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial"
-            x="394.15558" y="569.68744">
+          <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="m 285.28487,539.26218 -17.10355,1.21115 6.35551,-15.96433 c 1.29893,5.72711 5.65069,11.67779 10.74804,14.75318 z" />
+          <path style="fill:none;stroke:#000000;stroke-width:1.54598403px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:none" d="m 479.1968,579.65061 0.92684,106.19219" />
+          <text style="font-size:20px;font-style:normal;font-weight:normal;fill:#000;fill-opacity:1;stroke:none;font-family:Arial" x="394.15558" y="569.68744">
             <tspan x="394.15558" y="569.68744">Sunlight at sea level</tspan>
           </text>
-          <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
-            d="m 489.11884,683.21578 -8.96271,14.6174 -9.28969,-14.45523 c 5.41423,2.27443 12.78595,2.19556 18.2524,-0.16217 z" />
+          <path style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="m 489.11884,683.21578 -8.96271,14.6174 -9.28969,-14.45523 c 5.41423,2.27443 12.78595,2.19556 18.2524,-0.16217 z" />
         </g>
       </svg>
 
@@ -1976,8 +1873,7 @@
       <details>
         <summary>answer</summary>
         <p>H₂O, CO₂ and O₂ absorb infrared light and then re-emit the light in a random direction.</p>
-        <p>High H₂O and CO₂ concentrations lead to a <a
-            href="https://en.wikipedia.org/wiki/File:Mauna_Loa_CO2_monthly_mean_concentration.svg">warmer</a> Earth.
+        <p>High H₂O and CO₂ concentrations lead to a <a href="https://en.wikipedia.org/wiki/File:Mauna_Loa_CO2_monthly_mean_concentration.svg">warmer</a> Earth.
           This happens because incoming sunlight is mostly visible and is not absorbed by these gases, but light leaving
           the Earth is mostly infrared and is absorbed.</p>
       </details>
@@ -1997,54 +1893,30 @@
       <svg viewBox="0 0 600 450">
         <g transform="translate(-47.689941,-20.119128)" id="layer1" style="display:inline">
           <path d="M 144.45181,198.78328 A 20.203051,20.203051 0 1 1 104.04571,198.78328 A 20.203051,20.203051 0 1 1 144.45181,198.78328
-              z" transform="translate(43.436569,35.355349)"
-            style="fill:none;fill-opacity:1;stroke:#999;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 91.336155,148.0861 A 59.598999,59.598999 0 1 1 91.526055,247.58544"
-            transform="translate(43.436569,36.365496)"
-            style="fill:none;fill-opacity:1;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 92.599403,89.452523 A 113.13708,113.13708 0 1 1 92.879967,306.17794"
-            transform="translate(42.426407,36.365496)"
-            style="fill:none;fill-opacity:1;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 93.785149,27.054704 A 175.76654,175.76654 0 1 1 93.570428,372.49166"
-            transform="translate(41.416252,34.345187)"
-            style="fill:none;fill-opacity:1;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 295.63955,20.678086 A 246.47722,246.47722 0 0 1 282.61464,388.4941"
-            transform="translate(42.426407,35.355349)"
-            style="fill:none;fill-opacity:1;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 400.6788,21.119128 A 328.29959,328.29959 0 0 1 392.84936,389.99327"
-            transform="translate(42.426407,34.345187)"
-            style="fill:none;fill-opacity:1;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+              z" transform="translate(43.436569,35.355349)" style="fill:none;fill-opacity:1;stroke:#999;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 91.336155,148.0861 A 59.598999,59.598999 0 1 1 91.526055,247.58544" transform="translate(43.436569,36.365496)" style="fill:none;fill-opacity:1;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 92.599403,89.452523 A 113.13708,113.13708 0 1 1 92.879967,306.17794" transform="translate(42.426407,36.365496)" style="fill:none;fill-opacity:1;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 93.785149,27.054704 A 175.76654,175.76654 0 1 1 93.570428,372.49166" transform="translate(41.416252,34.345187)" style="fill:none;fill-opacity:1;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 295.63955,20.678086 A 246.47722,246.47722 0 0 1 282.61464,388.4941" transform="translate(42.426407,35.355349)" style="fill:none;fill-opacity:1;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 400.6788,21.119128 A 328.29959,328.29959 0 0 1 392.84936,389.99327" transform="translate(42.426407,34.345187)" style="fill:none;fill-opacity:1;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         </g>
         <g transform="translate(-47.689941,-20.119128)">
-          <path d="M 184.60538,223.53202 L 446.73996,61.528805"
-            style="fill:none;fill-rule:evenodd;stroke:#d59;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
-          <path d="M 183.72149,221.89052 L 365.04387,86.277542"
-            style="fill:none;fill-rule:evenodd;stroke:#d59;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 182.45881,220.3753 L 297.6162,115.31943"
-            style="fill:none;fill-rule:evenodd;stroke:#d59;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 180.81731,218.35499 L 241.679,148.27566"
-            style="fill:none;fill-rule:evenodd;stroke:#d59;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 177.28177,216.33469 L 196.09587,181.73696"
-            style="fill:none;fill-rule:evenodd;stroke:#d59;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 225.6407,220.10023 L 278.1407,208.85023"
-            style="fill:none;fill-rule:evenodd;stroke:#0b9;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
-          <path d="M 227.06927,227.42166 L 342.06927,217.24309"
-            style="fill:none;fill-rule:evenodd;stroke:#0b9;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
-          <path d="M 414.56927,232.42166 L 226.71212,232.42166"
-            style="fill:none;fill-rule:evenodd;stroke:#0b9;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
-          <path d="M 226.89069,237.95737 L 495.81926,261.88594"
-            style="fill:none;fill-rule:evenodd;stroke:#0b9;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
-          <path d="M 272.42641,274.56451 L 332.06927,296.35023"
-            style="fill:none;fill-rule:evenodd;stroke:#08f;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 268.85498,283.13594 L 388.1407,345.99309"
-            style="fill:none;fill-rule:evenodd;stroke:#08f;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path d="M 263.1407,293.13594 L 445.28355,408.13594"
-            style="fill:none;fill-rule:evenodd;stroke:#08f;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 184.60538,223.53202 L 446.73996,61.528805" style="fill:none;fill-rule:evenodd;stroke:#d59;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
+          <path d="M 183.72149,221.89052 L 365.04387,86.277542" style="fill:none;fill-rule:evenodd;stroke:#d59;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 182.45881,220.3753 L 297.6162,115.31943" style="fill:none;fill-rule:evenodd;stroke:#d59;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 180.81731,218.35499 L 241.679,148.27566" style="fill:none;fill-rule:evenodd;stroke:#d59;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 177.28177,216.33469 L 196.09587,181.73696" style="fill:none;fill-rule:evenodd;stroke:#d59;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 225.6407,220.10023 L 278.1407,208.85023" style="fill:none;fill-rule:evenodd;stroke:#0b9;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
+          <path d="M 227.06927,227.42166 L 342.06927,217.24309" style="fill:none;fill-rule:evenodd;stroke:#0b9;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
+          <path d="M 414.56927,232.42166 L 226.71212,232.42166" style="fill:none;fill-rule:evenodd;stroke:#0b9;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
+          <path d="M 226.89069,237.95737 L 495.81926,261.88594" style="fill:none;fill-rule:evenodd;stroke:#0b9;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
+          <path d="M 272.42641,274.56451 L 332.06927,296.35023" style="fill:none;fill-rule:evenodd;stroke:#08f;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 268.85498,283.13594 L 388.1407,345.99309" style="fill:none;fill-rule:evenodd;stroke:#08f;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path d="M 263.1407,293.13594 L 445.28355,408.13594" style="fill:none;fill-rule:evenodd;stroke:#08f;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         </g>
 
         <g id="layer2" style="display:inline">
-          <text x="-17.793283" y="224.92747" transform="matrix(0.658191,-0.752851,0.752851,0.658191,0,0)" id="text2460"
-            style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times New Roman;-inkscape-font-specification:Times New Roman">
+          <text x="-17.793283" y="224.92747" transform="matrix(0.658191,-0.752851,0.752851,0.658191,0,0)" id="text2460" style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Times New Roman;-inkscape-font-specification:Times New Roman">
             <tspan>103 nm</tspan>
           </text>
           <text x="89.773575" y="242.42165" transform="translate(-47.689941,-20.119128)" xml:space="preserve
@@ -2118,18 +1990,15 @@
             <tspan x="-103.10676" y="252.18472">122 nm</tspan>
           </text>
           <text x="475.99783" y="83.850227" transform="translate(-47.689941,-20.119128)" xml:space="preserve
-         "
-            style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#d59;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Arial;-inkscape-font-specification:Arial">
+         " style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#d59;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Arial;-inkscape-font-specification:Arial">
             <tspan x="475.99783" y="83.850227">Lyman series</tspan>
           </text>
           <text x="508.14072" y="244.56451" transform="translate(-47.689941,-20.119128)" xml:space="preserve
-         "
-            style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#0b9;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Arial;-inkscape-font-specification:Arial">
+         " style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#0b9;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Arial;-inkscape-font-specification:Arial">
             <tspan x="508.14072" y="244.56451">Balmer series</tspan>
           </text>
           <text x="483.14072" y="387.42166" transform="translate(-47.689941,-20.119128)" xml:space="preserve
-         "
-            style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#08f;fill-opacity:0.78039216;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Arial;-inkscape-font-specification:Arial">
+         " style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#08f;fill-opacity:0.78039216;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Arial;-inkscape-font-specification:Arial">
             <tspan x="483.14072" y="387.42166">Paschen series</tspan>
           </text>
           <text x="254.30499" y="237.96738" transform="matrix(0.8517118,-0.5240106,0.5240106,0.8517118,0,0)" id="text2546
@@ -2486,10 +2355,8 @@
     <p>
       Learning <a href="https://www.youtube.com/playlist?list=PLsPUh22kYmNCGaVGuGfKfJl-6RdHiCjo1">quantum mechanics</a>
       is typically done by studying the underlying math.
-      Building an intuition without the math can be <a
-        href="https://www.smbc-comics.com/comic/the-talk-3">confusing</a>.
-      The grey boxes below have a nonmathematical and inevitably flawed <a
-        href="http://www.damtp.cam.ac.uk/user/tong/particle.html">description of quantum mechanics</a>.
+      Building an intuition without the math can be <a href="https://www.smbc-comics.com/comic/the-talk-3">confusing</a>.
+      The grey boxes below have a nonmathematical and inevitably flawed <a href="http://www.damtp.cam.ac.uk/user/tong/particle.html">description of quantum mechanics</a>.
       You may want to skip them.
     </p>
     <details class="derive">
@@ -2508,7 +2375,7 @@
         It kinda looks like waves and ripples on surface of a pool of water.
       </p>
       <p>
-        These waves are modeled as complex numbers.  This means they have a part made of real numbers and a part made of imaginary numbers.
+        These waves are modeled as complex numbers. This means they have a part made of real numbers and a part made of imaginary numbers.
         This means the wave wiggle back and forth in the 3 spacial dimensions, but also in some other direction perpendicular to all the spacial dimensions.
       </p>
     </details>
@@ -2782,8 +2649,7 @@
       </p>
       <p>
         Fields interact with other fields, and with themselves.
-        These interactions can be approximated with <a href="https://www.youtube.com/watch?v=qe7atm1x6Mg">Feynman</a> <a
-          href="https://www.youtube.com/watch?v=fG52mXN-uWI">diagrams</a>, which treat everything as particles.
+        These interactions can be approximated with <a href="https://www.youtube.com/watch?v=qe7atm1x6Mg">Feynman</a> <a href="https://www.youtube.com/watch?v=fG52mXN-uWI">diagrams</a>, which treat everything as particles.
       </p>
       <p>
         In Feynman diagrams electron field interactions are generally modeled well as particles.
@@ -2801,8 +2667,7 @@
         Like, why do objects with no forces acting on them move in a straight line?
       </p>
       <p>
-        Calculating how something moves involves adding the amplitudes of every <a
-          href="https://www.youtube.com/watch?v=vSFRN-ymfgE">possible</a> path of getting from one place to another.
+        Calculating how something moves involves adding the amplitudes of every <a href="https://www.youtube.com/watch?v=vSFRN-ymfgE">possible</a> path of getting from one place to another.
         The amplitudes of the possible paths cycle from positive to negative as time moves forward.
       </p>
       <p>
@@ -2824,9 +2689,7 @@
       </p>
       <p>
         There is an uncertainty in the motion of a particle that increases as the total time decreases.
-        Even when a force should act as a barrier under the classical rules of physics, a particle might just <a
-          href="https://www.youtube.com/watch?v=RF7dDt3tVmI">quantum</a> <a
-          href="https://www.youtube.com/watch?v=cTodS8hkSDg">tunnel</a>
+        Even when a force should act as a barrier under the classical rules of physics, a particle might just <a href="https://www.youtube.com/watch?v=RF7dDt3tVmI">quantum</a> <a href="https://www.youtube.com/watch?v=cTodS8hkSDg">tunnel</a>
         through that barrier if the time scales involved are very short.
       </p>
     </details>

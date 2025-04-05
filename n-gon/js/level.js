@@ -34,7 +34,7 @@ const level = {
             // tech.tech[297].frequency = 100
             // tech.addJunkTechToPool(0.5)
             // m.couplingChange(10)
-            // m.setField(8) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
+            // m.setField(2) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
             // m.energy = 0
 
             // m.energy = 0
@@ -478,16 +478,15 @@ const level = {
                 if (level.isReducedHealth) {
                     level.isReducedHealth = false
                     m.setMaxHealth()
-                    m.addHealth(level.reducedHealthLost);
+                    m.addHealth(level.reducedHealthLost / simulation.healScale);
                     level.reducedHealthLost = 0
                 } else {
                     level.isReducedHealth = false
                 }
-
             }
         },
         {
-            description: "after 40 seconds spawn WIMPs",
+            description: "after 50 seconds spawn WIMPs",
             effect() {
                 simulation.ephemera.push({
                     name: "WIMPS",
@@ -496,7 +495,7 @@ const level = {
                     do() {
                         this.time++
                         if (level.levels[level.onLevel] === this.levelName) {
-                            if (this.time > 2400 && !(this.time % 420)) spawn.WIMP(level.enter.x, level.enter.y)
+                            if (this.time > 3000 && !(this.time % 540)) spawn.WIMP(level.enter.x, level.enter.y)
                         } else {
                             simulation.removeEphemera(this.name);
                         }
