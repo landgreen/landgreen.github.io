@@ -1,9 +1,19 @@
 ******************************************************** NEXT PATCH **************************************************
 
-perfect diamagnetism field float will now give a slight acceleration in the horizontal
-dielectric 3->2 cost
+tech: wear - 2x harpoon fire rate, 10% chance for rope to snap after hitting a mob (losing ammo)
+tech: spalling - after harpoon breaks get 2 research and 1 boost
+
+perfect diamagnetism field float also accelerates horizontally
 constraint balance: after 40->50 seconds spawn WIMPs  (then spawn one every 7->9 seconds)
 constraint balance: 0.5x max health now no longer considers difficulty based heal reduction when returning lost health
+plasma dielectric 3->2 cost
+WIMPs 6->7 research per level
+mine tech sentry fires ~1.2x faster
+mass-energy equivalence 1.3 ->1.5 damage
+
+added button in settings to load gamepad code: https://github.com/kgurchiek/n-gon-controller
+
+fixed bug with wormhole crashing after eating very small power ups
 
 ******************************************************** BUGS ********************************************************
 
@@ -11,12 +21,14 @@ graphical bug - player can become crouched while not touching the ground if they
 
 *********************************************************** TODO *****************************************************
 
-
 mob tiers
   replaces damage taken and damage done effects
     higher tier mobs have more health and do more damage
     assign mob tier in spawn random mob method
+  should the number of mobs increase as you get deeper into each tier?
   edge cases
+    what about slime, lasers, .... environmental effects do they scale up in difficulty to match tiers or do they follow the old system
+      need to keep the old system of player damage taken and heal reduction, but separate it from the mob tier system
     remove the random linked up groups of mobs
     some level specific bosses will need to have different versions for each tier
     testing mode button to spawn a mob needs a tier (maybe T4, which just scales with the current levels cleared)
@@ -47,32 +59,32 @@ base mob tier progression
   level 1: (T0,T1)
   level 2: (T1,T1)
   level 3: (T1,T1)
-  level 4: (T1,T1) reactor
-  level 5: (T1,T1)
-  level 6: (T1,T2)
+  level 4: (     ) reactor
+  level 5: (T1,T2)
+  level 6: (T2,T2)
   level 7: (T2,T2)
-  level 8: (T2,T2) interferometer, factory, reservoir
-  level 9: (T2,T2)
-  level 10 (T2,T3)
-  level 11 (T3,T3)
-  level 12 (T3,T3)  subway
-  level 13 (T3,T3)  final Boss
+  level 8: (T2,T3) interferometer, factory, reservoir
+  level 9: (T3,T3)
+  level 10 (T3,T3)
+  level 11 (T3,T4)
+  level 12 (T4,T4) subway
+  level 13 (T4,T4) final Boss
 
 Higher difficulty progression  (also spawn 1 mob at +2 tier each level)
   level 0: (T1)    initial
   level 1: (T1,T1)
   level 2: (T1,T1)
-  level 3: (T1,T1) 
-  level 4: (T1,T2) reactor
+  level 3: (T1,T2) 
+  level 4: (     ) reactor
   level 5: (T2,T2)
   level 6: (T2,T2) 
-  level 7: (T2,T2)
-  level 8: (T2,T3) interferometer, factory, reservoir
+  level 7: (T2,T3)
+  level 8: (T3,T3) interferometer, factory, reservoir
   level 9: (T3,T3)
-  level 10 (T3,T3) 
-  level 11 (T3,T3)
-  level 12 (T3,T4)  subway
-  level 13 (T4,T4)  final Boss
+  level 10 (T3,T4) 
+  level 11 (T4,T4)
+  level 12 (T4,T4) subway
+  level 13 (T4,T4) final Boss
 
 mob balance:
   T1 mobs balance with old difficulty 4 on level 2
@@ -116,6 +128,10 @@ mob: weepers - bullet
   maybe use hopper movement?
   maybe use slasher laser code
 
+guntech:  - 0.5x damage taken while ____  gun is equipped
+  wave or shotgun?
+  thematic issues? (how is a gun going to protect you)
+
 make guns do different things if  tap or hold fire
   effects have some overlap with crouch
   guns
@@ -145,10 +161,6 @@ option for numerical HUD
 hold jump to jump higher
   field tech?  or skin tech?
     maybe require nitinol first?
-
-increase interest percent, but make it focused on one type:
-  this lets the player make more strategic choices
-  research, coupling, ammo?
 
 wormhole fieldtech:   - gain 1% duplication for this level each time the wormhole eats a block
   add a limit to the number of blocks that can be duplicated?
