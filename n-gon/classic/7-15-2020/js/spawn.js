@@ -770,7 +770,7 @@ const spawn = {
           this.timeSkipLastCycle = game.cycle
           game.timeSkip(compress)
 
-          this.fill = `rgba(0,0,0,${0.4+0.6*Math.random()})`
+          this.fill = `rgba(0,0,0,${0.4 + 0.6 * Math.random()})`
           this.stroke = "#014"
           this.isShielded = false;
           this.dropPowerUp = true;
@@ -808,7 +808,7 @@ const spawn = {
           this.collisionFilter.mask = cat.player | cat.map | cat.body | cat.mob; //can't touch bullets
           ctx.beginPath();
           ctx.arc(this.position.x, this.position.y, this.eventHorizon, 0, 2 * Math.PI);
-          ctx.fillStyle = `rgba(0,0,0,${0.05*Math.random()})`;
+          ctx.fillStyle = `rgba(0,0,0,${0.05 * Math.random()})`;
           ctx.fill();
         }
       }
@@ -887,7 +887,7 @@ const spawn = {
             sub = Vector.normalise(Vector.sub(laserOffL, this.position));
             laserOffL = Vector.add(laserOffL, Vector.mult(sub, rangeWidth));
             ctx.lineTo(laserOffL.x, laserOffL.y);
-            ctx.fillStyle = `rgba(0,0,255,${Math.max(0,0.3*r/targetDist)})`
+            ctx.fillStyle = `rgba(0,0,255,${Math.max(0, 0.3 * r / targetDist)})`
             ctx.fill();
           }
         } else {
@@ -1371,9 +1371,9 @@ const spawn = {
     me.accelMag = 0.00012 * game.accelScale;
     if (map.length) me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
     Matter.Body.setDensity(me, 0.00065); //normal is 0.001 //makes effective life much lower
-    me.stroke = "transparent"; //used for drawGhost
-    me.alpha = 1; //used in drawGhost
-    me.canTouchPlayer = false; //used in drawGhost
+    me.stroke = "transparent";
+    me.alpha = 1;
+    me.canTouchPlayer = false;
     // me.leaveBody = false;
     me.collisionFilter.mask = cat.bullet
     me.showHealthBar = false;
@@ -1425,7 +1425,7 @@ const spawn = {
   //   mobs.spawn(x, y, 6, radius, "transparent");
   //   let me = mob[mob.length - 1];
   //   Matter.Body.setDensity(me, 0.0005); //normal is 0.001 //makes effective life much lower
-  //   me.stroke = "rgb(0,200,255)"; //used for drawGhost
+  //   me.stroke = "rgb(0,200,255)"; 
   //   Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
   //   me.blinkRate = 40 + Math.round(Math.random() * 60); //required for blink
   //   me.blinkLength = 150 + Math.round(Math.random() * 200); //required for blink
@@ -1472,7 +1472,7 @@ const spawn = {
     me.isBoss = true;
     Matter.Body.setDensity(me, 0.0014 + 0.0003 * Math.sqrt(game.difficulty)); //extra dense //normal is 0.001 //makes effective life much larger
 
-    me.stroke = "rgba(255,0,200)"; //used for drawGhost
+    me.stroke = "rgba(255,0,200)";
     me.seeAtDistance2 = 1500000;
     me.fireFreq = Math.ceil(60 + 3000 / radius);
     me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
@@ -1794,7 +1794,7 @@ const spawn = {
     me.friction = 0;
     me.frictionAir = 0.02;
     spawn.shield(me, x, y);
-    me.onDamage = function () {};
+    me.onDamage = function () { };
     me.do = function () {
       this.seePlayerCheck();
       this.checkStatus();
@@ -1831,7 +1831,7 @@ const spawn = {
       powerUps.spawnBossPowerUp(this.position.x, this.position.y)
       // this.vertices = Matter.Vertices.hull(Matter.Vertices.clockwiseSort(this.vertices)) //helps collisions functions work better after vertex have been changed
     };
-    me.onDamage = function () {};
+    me.onDamage = function () { };
     me.do = function () {
       this.seePlayerCheck();
       this.checkStatus();
@@ -2019,7 +2019,7 @@ const spawn = {
       me.onDamage = function () {
         //make sure the mob that owns the shield can tell when damage is done
         this.alertNearByMobs();
-        this.fill = `rgba(220,220,255,${0.3 + 0.6 *this.health})`
+        this.fill = `rgba(220,220,255,${0.3 + 0.6 * this.health})`
       };
       me.leaveBody = false;
       me.dropPowerUp = false;
@@ -2063,7 +2063,7 @@ const spawn = {
     }
     me.onDamage = function () {
       this.alertNearByMobs(); //makes sure the mob that owns the shield can tell when damage is done
-      this.fill = `rgba(220,220,255,${0.3 + 0.6 *this.health})`
+      this.fill = `rgba(220,220,255,${0.3 + 0.6 * this.health})`
     };
     me.onDeath = function () {
       //clear isShielded status from target

@@ -341,9 +341,9 @@ const spawn = {
     me.seeAtDistance2 = 1500000;
     me.accelMag = 0.0002;
     me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
-    me.stroke = "transparent"; //used for drawGhost
-    me.alpha = 1; //used in drawGhost
-    me.canTouchPlayer = false; //used in drawGhost
+    me.stroke = "transparent";
+    me.alpha = 1;
+    me.canTouchPlayer = false;
     me.collisionFilter.mask = 0x000100; //move through walls and player
     me.memory = 420;
     me.do = function () {
@@ -562,7 +562,7 @@ const spawn = {
       //swap order of shield and mob, so that mob is behind shield graphically
       mob[mob.length - 1] = mob[mob.length - 2];
       mob[mob.length - 2] = me;
-      me.do = function () {};
+      me.do = function () { };
     }
   },
   //complex constrained mob templates**********************************************************************

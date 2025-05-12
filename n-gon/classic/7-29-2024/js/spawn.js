@@ -2958,7 +2958,7 @@ const spawn = {
         me.showHealthBar = false; //drawn in this.awake
         me.delayLimit = 60 + Math.floor(30 * Math.random());
         me.followDelay = 600 - Math.floor(90 * Math.random())
-        me.stroke = "transparent"; //used for drawGhost
+        me.stroke = "transparent";
         me.collisionFilter.mask = cat.bullet | cat.body
         me.memory = Infinity
         me.onDeath = function () {
@@ -3828,7 +3828,7 @@ const spawn = {
     snakeBoss(x, y) {
         mobs.spawn(x, y, 0, 25, `rgba(255,0,200)`); //"rgb(221,102,119)"
         let me = mob[mob.length - 1];
-        me.stroke = "transparent"; //used for drawGhost
+        me.stroke = "transparent";
         me.isUnblockable = true;
         Matter.Body.setDensity(me, 0.033); //extra dense //normal is 0.001 //makes effective life much larger
         me.isBoss = true;
@@ -6106,9 +6106,9 @@ const spawn = {
         if (map.length) me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
         Matter.Body.setDensity(me, 0.0002); //normal is 0.001
         me.damageReduction = 0.1
-        me.stroke = "transparent"; //used for drawGhost
-        me.alpha = 1; //used in drawGhost
-        me.isNotCloaked = false; //used in drawGhost
+        me.stroke = "transparent";
+        me.alpha = 1;
+        me.isNotCloaked = false;
         me.isBadTarget = true;
         me.collisionFilter.mask = cat.bullet | cat.body
         me.showHealthBar = false;
@@ -6184,7 +6184,7 @@ const spawn = {
     //   mobs.spawn(x, y, 6, radius, "transparent");
     //   let me = mob[mob.length - 1];
     //   Matter.Body.setDensity(me, 0.0005); //normal is 0.001 //makes effective life much lower
-    //   me.stroke = "rgb(0,200,255)"; //used for drawGhost
+    //   me.stroke = "rgb(0,200,255)"; 
     //   Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
     //   me.blinkRate = 40 + Math.round(Math.random() * 60); //required for blink
     //   me.blinkLength = 150 + Math.round(Math.random() * 200); //required for blink
@@ -6232,7 +6232,7 @@ const spawn = {
 
         Matter.Body.setDensity(me, 0.0025 + 0.00009 * Math.sqrt(simulation.difficulty)); //extra dense //normal is 0.001 //makes effective life much larger
 
-        me.stroke = "transparent"; //used for drawGhost
+        me.stroke = "transparent";
         me.seeAtDistance2 = 1500000;
         me.fireFreq = 10 + Math.floor(70 * simulation.CDScale);
         me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
@@ -6724,9 +6724,9 @@ const spawn = {
     //     me.accelMag = 0.0003 * simulation.accelScale;
     //     if (map.length) me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
     //     // Matter.Body.setDensity(me, 0.001); //normal is 0.001 //makes effective life much lower
-    //     me.stroke = "transparent"; //used for drawGhost
-    //     me.alpha = 1; //used in drawGhost
-    //     me.isNotCloaked = false; //used in drawGhost
+    //     me.stroke = "transparent"; 
+    //     me.alpha = 1;  
+    //     me.isNotCloaked = false;  
     //     me.isBadTarget = true;
     //     // me.leaveBody = false;
     //     me.collisionFilter.mask = cat.bullet //| cat.body
@@ -7885,7 +7885,7 @@ const spawn = {
         Matter.Body.setDensity(me, 0.0018 + 0.00015 * Math.sqrt(simulation.difficulty)); //extra dense //normal is 0.001 //makes effective life much larger
         me.damageReduction = 0.11
 
-        me.stroke = "transparent"; //used for drawGhost
+        me.stroke = "transparent";
         me.seeAtDistance2 = 2000000;
         me.collisionFilter.mask = cat.bullet | cat.player | cat.body | cat.map
         me.memory = Infinity;

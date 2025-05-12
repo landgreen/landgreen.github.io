@@ -29163,9 +29163,9 @@ const level = {
             if (map.length) me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
             // Matter.Body.setDensity(me, 0.0015); //normal is 0.001
             me.damageReduction = 0.5
-            me.stroke = "transparent"; //used for drawGhost
-            me.alpha = 1; //used in drawGhost
-            me.isNotCloaked = false; //used in drawGhost
+            me.stroke = "transparent";
+            me.alpha = 1;
+            me.isNotCloaked = false;
             me.isBadTarget = true;
             // me.leaveBody = false;
             me.collisionFilter.mask = cat.bullet //| cat.body

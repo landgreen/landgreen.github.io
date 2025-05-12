@@ -577,9 +577,9 @@ const spawn = {
     me.accelMag = 0.00014;
     if (map.length) me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
     Matter.Body.setDensity(me, 0.00065); //normal is 0.001 //makes effective life much lower
-    me.stroke = "transparent"; //used for drawGhost
-    me.alpha = 1; //used in drawGhost
-    me.canTouchPlayer = false; //used in drawGhost
+    me.stroke = "transparent";
+    me.alpha = 1;
+    me.canTouchPlayer = false;
     // me.leaveBody = false;
     me.collisionFilter.mask = 0x000100; //move through walls and player
     me.memory = 480;
@@ -629,7 +629,7 @@ const spawn = {
     mobs.spawn(x, y, 6, radius, "transparent");
     let me = mob[mob.length - 1];
     Matter.Body.setDensity(me, 0.0005); //normal is 0.001 //makes effective life much lower
-    me.stroke = "rgb(0,200,255)"; //used for drawGhost
+    me.stroke = "rgb(0,200,255)";
     Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
     me.blinkRate = 40 + Math.round(Math.random() * 60); //required for blink
     me.blinkLength = 150 + Math.round(Math.random() * 200); //required for blink
@@ -670,7 +670,7 @@ const spawn = {
   // drifter(x, y, radius = 15 + Math.ceil(Math.random() * 40)) {
   //   mobs.spawn(x, y, 4.5, radius, "transparent");
   //   let me = mob[mob.length - 1];
-  //   me.stroke = "rgb(0,200,255)"; //used for drawGhost
+  //   me.stroke = "rgb(0,200,255)"; 
   //   Matter.Body.rotate(me, Math.random() * 2 * Math.PI);
   //   me.blinkRate = 30 + Math.round(Math.random() * 30); //required for blink/drift
   //   me.blinkLength = 160; //required for blink/drift
@@ -690,7 +690,7 @@ const spawn = {
     let me = mob[mob.length - 1];
     Matter.Body.setDensity(me, 0.0015 + 0.0005 * Math.sqrt(game.levelsCleared)); //extra dense //normal is 0.001 //makes effective life much larger
 
-    me.stroke = "rgba(255,0,200)"; //used for drawGhost
+    me.stroke = "rgba(255,0,200)";
     me.seeAtDistance2 = 2000000;
     me.fireFreq = Math.ceil(30 + 2000 / radius);
     me.searchTarget = map[Math.floor(Math.random() * (map.length - 1))].position; //required for search
@@ -935,7 +935,7 @@ const spawn = {
       //swap order of shield and mob, so that mob is behind shield graphically
       mob[mob.length - 1] = mob[mob.length - 2];
       mob[mob.length - 2] = me;
-      me.do = function () {};
+      me.do = function () { };
     }
   },
   bossShield(nodes, x, y, radius) {
@@ -963,7 +963,7 @@ const spawn = {
     me.dropPowerUp = false;
     mob[mob.length - 1] = mob[mob.length - 1 - nodes];
     mob[mob.length - 1 - nodes] = me;
-    me.do = function () {};
+    me.do = function () { };
   },
   //complex constrained mob templates**********************************************************************
   //*******************************************************************************************************
