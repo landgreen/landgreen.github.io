@@ -255,7 +255,17 @@
             <details>
                 <summary>solution</summary>
                 <p>
-                    The heliocentric model was able to predict the locations of planets more accurately than the geocentric model. The heliocentric model also didn't have any epicycles to calculate.
+                    At the time it wasn't clear what model was the best one, but the heliocentric model explained the world in a more elegant and simple way.
+                    Issues like retrograde motion of planets was explained naturally in the heliocentric model without the need for epicycles.
+                </p>
+                <p>
+                    One of the reasons Galileo like the heliocentric model was that he had observed the Venus went through phases, just like the moon.
+                    In the Ptolemaic model, where Venus orbits the Earth, it wouldn't go through the full cycle of phases.
+                </p>
+                <p>
+                    The heliocentric model was actually less accurate than the geocentric model.
+                    This is because the geocentric model was using a series of epicycles to improve on the circular paths both models used.
+                    Eventually, Kepler's Laws showed that with elliptical paths the heliocentric model was more accurate.
                 </p>
             </details>
         </div>
@@ -1331,52 +1341,52 @@
                 <h1 id="random-mass-name-2" class="center"></h1>
             </details>
             <script defer>
-                (function () {
-                    const GConst = 6.674e-11;
-                    const masses = [{
-                        mass: 1.899e27,
-                        name: "Jupiter"
-                    }, {
-                        mass: 5.685e26,
-                        name: "Saturn"
-                    }, {
-                        mass: 8.68e25,
-                        name: "Uranus"
-                    }, {
-                        mass: 1.024e26,
-                        name: "Neptune"
-                    }]
-                    let currentPlanet = Math.floor(masses.length * Math.random())
-                    let Mass = masses[currentPlanet].mass;
-                    document.getElementById("random-mass-name-2").innerHTML = masses[currentPlanet].name;
-                    let settings = {
-                        x0: 20,
-                        y0: 280,
-                        stroke: "none",
-                        fill: "rgba(0,100,120,0.3)",
-                        positiveOnly: true,
-                        strokeWidth: 4,
-                        xScale: 0.005,
-                        yScale: 5,
-                        gridSize: 100,
-                        xLabel: "distance (km)",
-                        yLabel: "gravity (m/s²)",
-                        showMouseCoords: true,
-                    }
-                    funGraphSVG("SVG-graph-2", x => GConst * Mass / x / x / 1000000, settings);
-                    document.getElementById("random-mass-2").addEventListener("click", event => {
-                        let newPlanet = Math.floor(masses.length * Math.random())
-                        while (newPlanet === currentPlanet) {
-                            newPlanet = Math.floor(masses.length * Math.random())
-                        }
-                        currentPlanet = newPlanet
-                        Mass = masses[currentPlanet].mass;
+                    (function () {
+                        const GConst = 6.674e-11;
+                        const masses = [{
+                            mass: 1.899e27,
+                            name: "Jupiter"
+                        }, {
+                            mass: 5.685e26,
+                            name: "Saturn"
+                        }, {
+                            mass: 8.68e25,
+                            name: "Uranus"
+                        }, {
+                            mass: 1.024e26,
+                            name: "Neptune"
+                        }]
+                        let currentPlanet = Math.floor(masses.length * Math.random())
+                        let Mass = masses[currentPlanet].mass;
                         document.getElementById("random-mass-name-2").innerHTML = masses[currentPlanet].name;
-                        settings.updatePath = true
+                        let settings = {
+                            x0: 20,
+                            y0: 280,
+                            stroke: "none",
+                            fill: "rgba(0,100,120,0.3)",
+                            positiveOnly: true,
+                            strokeWidth: 4,
+                            xScale: 0.005,
+                            yScale: 5,
+                            gridSize: 100,
+                            xLabel: "distance (km)",
+                            yLabel: "gravity (m/s²)",
+                            showMouseCoords: true,
+                        }
                         funGraphSVG("SVG-graph-2", x => GConst * Mass / x / x / 1000000, settings);
-                        document.getElementById("details-2").open = false;
-                    });
-                })()
+                        document.getElementById("random-mass-2").addEventListener("click", event => {
+                            let newPlanet = Math.floor(masses.length * Math.random())
+                            while (newPlanet === currentPlanet) {
+                                newPlanet = Math.floor(masses.length * Math.random())
+                            }
+                            currentPlanet = newPlanet
+                            Mass = masses[currentPlanet].mass;
+                            document.getElementById("random-mass-name-2").innerHTML = masses[currentPlanet].name;
+                            settings.updatePath = true
+                            funGraphSVG("SVG-graph-2", x => GConst * Mass / x / x / 1000000, settings);
+                            document.getElementById("details-2").open = false;
+                        });
+                    })()
             </script>
         </div>
         <div class='example'>

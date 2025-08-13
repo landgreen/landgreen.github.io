@@ -288,7 +288,7 @@
 			A medium at rest is in <strong>equilibrium</strong>; the forces are in balance. A disruption spreads through a medium bringing it out of equilibrium.
 		</p>
 		<p>
-			<a href="https://waveforms.surge.sh/waveforms-intro ">Sound</a>  <a href="https://www.youtube.com/watch?v=24yESm63tSY">waves</a> are vibrations that propagate through matter. They are produced by changes in pressure and velocity. Your <a href="https://www.youtube.com/watch?v=qgdqp-oPb1Q">ear</a> <a href="https://www.reddit.com/r/Scienc3_Tech/comments/11tfh3c/how_we_hear_sound/">senses</a> the <a href="https://www.youtube.com/watch?v=Is_wu0VRIqQ">amplitude</a> and frequency of the vibrations.
+			<a href="https://waveforms.surge.sh/waveforms-intro ">Sound</a> <a href="https://www.youtube.com/watch?v=24yESm63tSY">waves</a> are vibrations that propagate through matter. They are produced by changes in pressure and velocity. Your <a href="https://www.youtube.com/watch?v=qgdqp-oPb1Q">ear</a> <a href="https://www.reddit.com/r/Scienc3_Tech/comments/11tfh3c/how_we_hear_sound/">senses</a> the <a href="https://www.youtube.com/watch?v=Is_wu0VRIqQ">amplitude</a> and frequency of the <a href="https://www.youtube.com/watch?v=DBxJs5CXazA">vibrations</a>.
 		</p>
 		<br><br>
 		<!-- <p>
@@ -392,7 +392,7 @@
 					<path d='M3 390 v10 m0 -5 h94 m0 -5 v10' stroke-width='1.5' fill='none' stroke='#000' style='position:absolute;left: 0;right: 0;margin: 0 auto;' />
 					<text x="50" y="391" text-anchor="middle" font-size="15" fill='#000'>1.0 m</text>
 				</g>
-					<circle id="phase-dot" cx="-10000" cy="0" r="5" fill="#89a" />
+				<circle id="phase-dot" cx="-10000" cy="0" r="5" fill="#89a" />
 			</svg>
 		</div>
 		<div class="flex-grid-thirds">
@@ -400,7 +400,7 @@
 				<span id='frequency' class='center'></span>
 			</div>
 			<div class="col">
-				<span id='time' class='center' style = "color:#678;"></span>
+				<span id='time' class='center' style="color:#678;"></span>
 			</div>
 			<div class="col">
 				<span id='period' class='center'></span>
@@ -476,7 +476,7 @@
 							paused = false
 							buttonEl.textContent = 'pause';
 							//setup audio context
-							audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+							audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 							oscillator1 = audioCtx.createOscillator();
 							gainNode1 = audioCtx.createGain();
@@ -884,11 +884,11 @@
 
 					function renderMath() {
 						katex.render(
-							String.raw `\begin{gathered} \lambda = \frac{340}{${freq.toFixed(0)}}  \\ \lambda = ${(340 / freq).toPrecision(3)}\, \mathrm{m} \end{gathered}`,
+							String.raw`\begin{gathered} \lambda = \frac{340}{${freq.toFixed(0)}}  \\ \lambda = ${(340 / freq).toPrecision(3)}\, \mathrm{m} \end{gathered}`,
 							document.getElementById("ex0-math-air")
 						);
 						katex.render(
-							String.raw `\begin{gathered} \lambda = \frac{1484}{${freq.toFixed(0)}}  \\ \lambda = ${(1484 / freq).toPrecision(3)}\, \mathrm{m} \end{gathered}`,
+							String.raw`\begin{gathered} \lambda = \frac{1484}{${freq.toFixed(0)}}  \\ \lambda = ${(1484 / freq).toPrecision(3)}\, \mathrm{m} \end{gathered}`,
 							document.getElementById("ex0-math-water")
 						);
 					}
@@ -900,7 +900,7 @@
 							paused = false
 							buttonEl.textContent = 'pause';
 							//setup audio context
-							audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+							audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 							oscillator1 = audioCtx.createOscillator();
 							gainNode1 = audioCtx.createGain();
@@ -1125,7 +1125,8 @@
 			<strong>Refraction</strong> = After entering a new medium, a wave will change its direction of propagation. This occurs because different media have different speeds.
 		</p>
 		<p>When slowing down, the wave will bend towards the normal.
-			<br> When speeding up, the wave will bend away from the normal.</p>
+			<br> When speeding up, the wave will bend away from the normal.
+		</p>
 		<p>
 			<strong>Reflection</strong> = When hitting a new medium, part of a wave stays in the original medium. The angle between the incident ray and the normal line equals the angle between the reflected ray and the normal.
 			$$\theta_i = \theta_r$$
