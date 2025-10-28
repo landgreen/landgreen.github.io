@@ -1,20 +1,15 @@
 ******************************************************** NEXT PATCH **************************************************
 
-nitinol skin tech: ledge grab upgraded to full wall grab and wall jump
-  wall grab will hold hold the player in place with left and right keys
-  nitinol no longer has higher jumps
-  nitinol can no long get acoustic levitation
+nitinol wall grab tweaks
+  wall grab no longer triggers when the player is moving up at high speeding
+    this prevents wall grab interrupting normal jumps
+  wall jumps when the player's head isn't touching the wall will no longer jump away from wall
+    this makes vaulting over ledges smoother
+  add nitinol leg animation graphic when wall grabbing
+    and fixed a bug where it triggered the animation from small ramps
 
-Higgs mechanism gets 1.3x jumps, but 4->3x fire rate
-mass-energy equivalence has 1.2 movement
-quenching gives 0.5->0.6x overheal to max health
-
-alternate trainBoss2 on corridor level with yellow beams
-the moving platform on towers level comes consistently after 2-3 seconds to reduce the wait
-
-bug fixes
-  Cordyceps no longer eats dark matter
-  shotgun laser graphical glitch with laser lens
+bugs fixes
+  paradigm shift no longer works while you are invulnerable
 
 *********************************************************** TODO *****************************************************
 
