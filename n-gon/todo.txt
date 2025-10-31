@@ -1,17 +1,17 @@
 ******************************************************** NEXT PATCH **************************************************
 
-nitinol wall grab tweaks
-  wall grab no longer triggers when the player is moving up at high speeding
-    this prevents wall grab interrupting normal jumps
-  wall jumps when the player's head isn't touching the wall will no longer jump away from wall
-    this makes vaulting over ledges smoother
-  add nitinol leg animation graphic when wall grabbing
-    and fixed a bug where it triggered the animation from small ramps
+JUNK tech: tamagotchi - a digital pet
 
-bugs fixes
-  paradigm shift no longer works while you are invulnerable
+spiderBoss has 0.8x lower density and health
+removed caps on total drone/flea/spore/worms from 300->Infinity
+  but generally it caps around 500-1000 due to limited game cycles
 
 *********************************************************** TODO *****************************************************
+
+tech that unlocks 100%+ duplication
+  you can see it above 50% duplication?
+  does the spawn 11 bosses still exists?
+    it's a JUNK tech
 
 should blocks block mobs and bullets?
   is this too easy to cheese by holding a huge block
