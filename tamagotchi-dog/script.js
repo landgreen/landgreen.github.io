@@ -429,7 +429,7 @@ function cycle() {
   }
 
   ctx.fillStyle = "grey";
-  ctx.font = "250px serif";
+  ctx.font = "350px serif";
   ctx.fillText(sky, canvas.width / 2 - 80, canvas.height / 2);
 
   ctx.fillStyle = "#72ede5";
