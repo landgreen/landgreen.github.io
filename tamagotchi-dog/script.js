@@ -536,12 +536,6 @@ function cycle() {
         tint = "rgba(144, 42, 24," + transTint + ")";
       }
       if (energy["xPos"] <= 0 && hunger["xPos"] <= 0) {
-
-        document.title = "tamagotchi :(";
-        bc.postMessage("death"); //this is used if this  tab is produced from my other game n-gon
-        bc.isActive = false //disables connection to broadcast channel for communicating with my other game n-gon
-        bc.close(); //end session
-
         mood["emotion"] = "💀";
         mood["color"] = "black";
         mood["dead"] = true;
@@ -557,6 +551,13 @@ function cycle() {
         cleanliness["xPos"] = 0;
         finalDirt = "transparent";
         tint = "transparent";
+
+        setTimeout(() => {
+          document.title = "tamagotchi :(";
+          bc.postMessage("death"); //this is used if this  tab is produced from my other game n-gon
+          bc.isActive = false //disables connection to broadcast channel for communicating with my other game n-gon
+          bc.close(); //end session
+        }, 100);
       }
     }
   }
