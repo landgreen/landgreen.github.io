@@ -12469,47 +12469,45 @@ const tech = {
                 hunger: 340,
                 energy: 340,
                 cleanliness: 340,
+                report() {
+                    const message = {
+                        hunger: Math.max(1, this.hunger),
+                        energy: Math.max(1, this.energy),
+                        cleanliness: Math.max(1, this.cleanliness),
+                    };
+                    bc.postMessage(message);
+                },
                 do() {
                     if (this.hunger <= 0 && this.energy <= 0) {
                         simulation.inGameConsole(`your digital pet died!`, 360)
                         m.death()
-                        const message = {
-                            hunger: this.hunger,
-                            energy: this.energy,
-                            cleanliness: this.cleanliness,
-                        };
-                        bc.postMessage(message);
+                        this.report()
                         bc.activated = false
                         bc.close(); //end session
+                        simulation.removeEphemera("tamagotchi", true)
                     }
                     this.hunger -= 0.06
                     this.energy -= 0.06
                     this.cleanliness -= 0.06
-                    if (!(simulation.cycle % 120)) {
-                        const message = {
-                            hunger: this.hunger,
-                            energy: this.energy,
-                            cleanliness: this.cleanliness,
-                        };
-                        bc.postMessage(message);
+                    if (!(simulation.cycle % 30)) {
+                        this.report()
                     }
-                    // bc.postMessage('status');
                 },
             })
 
-            window.addEventListener('blur', () => {
-                for (let i = 0, len = simulation.ephemera.length; i < len; i++) {
-                    if (simulation.ephemera[i].name === 'tamagotchi') {
-                        const message = {
-                            hunger: simulation.ephemera[i].hunger,
-                            energy: simulation.ephemera[i].energy,
-                            cleanliness: simulation.ephemera[i].cleanliness,
-                        };
-                        bc.postMessage(message);
-                        break;
-                    }
-                }
-            });
+            // window.addEventListener('blur', () => {
+            //     for (let i = 0, len = simulation.ephemera.length; i < len; i++) {
+            //         if (simulation.ephemera[i].name === 'tamagotchi') {
+            //             const message = {
+            //                 hunger: simulation.ephemera[i].hunger,
+            //                 energy: simulation.ephemera[i].energy,
+            //                 cleanliness: simulation.ephemera[i].cleanliness,
+            //             };
+            //             bc.postMessage(message);
+            //             break;
+            //         }
+            //     }
+            // });
 
         },
         remove() {
