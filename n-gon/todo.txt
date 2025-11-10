@@ -1,25 +1,38 @@
 ******************************************************** NEXT PATCH **************************************************
 
-JUNK tech: tamagotchi - a digital pet
+new bosses:
+  spiderBoss2
+  spiderBoss3
+  spiderBoss4
+  tendrilBoss
+  tendrilBoss3
+  hydraBoss
+  hydraBoss2
+  hydraBoss3
 
-spiderBoss has 0.8x lower density and health
-removed caps on total drone/flea/spore/worms from 300->Infinity
-  but generally it caps around 500-1000 due to limited game cycles
+new constraint - hallucinations
+
+pair production will advance time 0.3s after picking up power ups
+foam recoil is reduce while standing on the ground or crouching
+when you have accretion, heals will now go to the next level even if they aren't nearby
+clarified counterfactual conditional text
+mob wings push 30% less and do 30% less damage
+pyrotechnics grenades explode about 0.05 seconds slower and a 1 fewer explosion
+
+bug fixes
+  adjusted interest wording to match 6% coupling spawn
+  assignment to const var on laserTargetingBoss
 
 *********************************************************** TODO *****************************************************
 
-tech that unlocks 100%+ duplication
-  you can see it above 50% duplication?
-  does the spawn 11 bosses still exists?
-    it's a JUNK tech
 
-should blocks block mobs and bullets?
-  is this too easy to cheese by holding a huge block
-    maybe drain energy when the block you hold hits a mob...
+tech: advance time 1 second after eating a power up
+  skin tech Verlet integration unlocks
 
-rework martingale?
-  it's really strong, but people may not understand how to use it.
-  how to be true to the name (where you gamble by doubling your bet)
+
+drain energy when the block you hold hits a mob
+  set held block to collide with mob and mob bullets
+  in player code check for collisions between block and mobs
 
 performance issue with experiment mode
   causes my computer fan to turn on when I leave it on for a few minutes
@@ -30,16 +43,6 @@ performance issue with experiment mode
       choices
     find a way to not draw things off screen?
     something might be changing size and forcing a redraw of everything
-
-new constraint - see hallucinations
-  draw shapes that don't exists that look like
-    mobs
-    map
-    power ups?
-    blocks?
-  shapes end
-    fade over time?
-    fade when player gets close?
 
 perfect diamagnetism tech:   - using field while crouching will pull in blocks
   releasing field will fire the blocks  (like control)
