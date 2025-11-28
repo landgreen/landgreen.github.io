@@ -72,7 +72,7 @@ const level = {
             // powerUps.spawn(m.pos.x, m.pos.y, "difficulty", false);
             // spawn.randomGroup(1300, -200, Infinity);
             // for (let i = 0; i < 1; i++) spawn.centipedeBoss(1300 + 200 * i, -200)
-            for (let i = 0; i < 10; i++) spawn.stingWinger(1300 + 200 * i, -200)
+            // for (let i = 0; i < 10; i++) spawn.stingWinger(1300 + 200 * i, -200)
             // for (let i = 0; i < 2; i++) spawn.beamer(1300 + 200 * i, -200)
             // for (let i = 0; i < 1; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "entanglement");
             // for (let i = 0; i < 7; ++i) powerUps.directSpawn(m.pos.x + 450, m.pos.y + 50 * Math.random(), "tech");
