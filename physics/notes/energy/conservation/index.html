@@ -70,15 +70,12 @@
 				}
 			</style>
 			k = <input id='spring-k-slider' type="range" step="0.1" value="0.1" min="0" max="10" style="width: 175px;">
-			<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 50px;"><span
-				class="hide-on-mobile">&nbsp;N/m</span>
-			<button style="float: right; width: 60px; margin-top: 20px; text-align: center; padding: 0px;"
-				id="pause1">play</button>
+			<input id="spring-k" type="number" min="0" max="10" value=0.1 step=0.1 style="width: 50px;"><span class="hide-on-mobile">&nbsp;N/m</span>
+			<button style="float: right; width: 60px; margin-top: 20px; text-align: center; padding: 0px;" id="pause1">play</button>
 			<br>
 			m = <input id='spring-m-slider' type="range" step="1" value="13" min="1" max="75" style="width: 175px;">
 			<input id='spring-m' type="number" min="1" max="75" value=13 step=1 style="width: 45px;">
-			<span
-				class="hide-on-mobile">kg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<span class="hide-on-mobile">kg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 			<span id="spring-x" class="hide-on-mobile" style="text-align: right;"></span>
 
 			<svg viewBox="0 0 590 120" id="spring-SVG">
@@ -122,10 +119,10 @@
 		</p>
 		<div class='definition'>
 			Energy cannot be created or destroyed, but it can change forms.
-			<h1>
-				$$E_i = E_f$$
-				$$K + U_g + U_s = K + U_g + U_s$$
-			</h1>
+			<h1> $$E_i = E_f$$</h1>
+			\( E_i \) = initial energy [J]
+			<br>\( E_f \) = final energy [J]
+			<h2>$$K + U_g + U_s = K + U_g + U_s$$</h2>
 			\( K \) = kinetic energy [J]
 			<br>\( U_g \) = gravitational potential energy [J]
 			<br>\( U_s \) = elastic potential energy [J]
@@ -303,10 +300,8 @@
 					<line x1="500" y1="0" x2="500" y2="1000" />
 				</g>
 				<!-- https://codepen.io/anthonydugois/pen/mewdyZ -->
-				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z"
-					fill="#fff" stroke-width="4" stroke="#000" />
-				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z"
-					fill="rgba(0,0,0,0)" class="roller-coaster" stroke-width="7" stroke="none" />
+				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="#fff" stroke-width="4" stroke="#000" />
+				<path d="M 0 50 Q 250 50 250 150 Q 250 350 350 250 C 500 100 450 250 650 250 h100 v-300 h -900 v50 z" fill="rgba(0,0,0,0)" class="roller-coaster" stroke-width="7" stroke="none" />
 				<g fill="#f04" stroke="none">
 					<circle cx="25" cy="50" r="8" />
 					<circle cx="291" cy="283" r="8" />
@@ -445,9 +440,7 @@
 					<text x="185" y="17">x = ?</text>
 					<text x="185" y="0">v = 0</text>
 				</g>
-				<path
-					d="M 150 203 l20 0 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 2 l-20 1"
-					stroke="#000" fill="none" stroke-linejoin="bevel" />
+				<path d="M 150 203 l20 0 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 3 l -20 3 l20 2 l-20 1" stroke="#000" fill="none" stroke-linejoin="bevel" />
 				<circle cx="160" cy="187" r="15" fill="#9ab" stroke-width="1.5" stroke="#000" />
 				<circle cx="160" cy="0" r="15" fill="none" stroke-width="1" stroke="#000" stroke-dasharray="4" />
 				<circle cx="160" cy="132" r="15" fill="none" stroke-width="1" stroke="#000" stroke-dasharray="4" />
@@ -479,15 +472,13 @@
 		</div>
 
 		<div class="example" id="spring-mass-gravity">
-			<div class="center"> dampening:&nbsp;&nbsp; none <input id='spring-d-slider2' type="range" step="0.001"
-					value="0" min="0" max="0.03" style="width: 40px;"> full </div>
+			<div class="center"> dampening:&nbsp;&nbsp; none <input id='spring-d-slider2' type="range" step="0.001" value="0" min="0" max="0.03" style="width: 40px;"> full </div>
 			<style>
 				#pause2:hover {
 					fill: rgba(0, 0, 0, 0.2);
 				}
 			</style>
-			<svg class="center" width="330" height="400" id="spring-SVG-2"
-				style="border: 0.5px solid #000; background-color: #fff;">
+			<svg class="center" width="330" height="400" id="spring-SVG-2" style="border: 0.5px solid #000; background-color: #fff;">
 				<g stroke="none">
 					<rect id="background" x="255" y="0" height="400" width="150" fill="#f2f2f2" />
 					<rect id="spring-KE-bar2" x="255" y="400" height="1000" width="25.5" fill="#fa96a0" />
@@ -506,20 +497,14 @@
 				<text id="x-2" x="10" y="195" stroke="none" text-anchor="left">0 m</text>
 				<circle id="spring-ball-2" cx="100" cy="50" r="20" fill="#bbb" stroke-width="1.5" stroke="#000" />
 				<path id="spring-wire-2" d="M 0 0" stroke="#000" fill="none" stroke-linejoin="bevel" />
-				<text id="pause2-text" x="40" y="22.5" stroke="none" text-anchor="middle" dominant-baseline="middle"
-					style="user-select: none;pointer-events: non">play</text>
-				<rect id="pause2" x="10" y="10" rx="3" ry="3" width="60" height="25.5" fill="rgba(0,0,0,0.1)"
-					stroke="#000" />
+				<text id="pause2-text" x="40" y="22.5" stroke="none" text-anchor="middle" dominant-baseline="middle" style="user-select: none;pointer-events: non">play</text>
+				<rect id="pause2" x="10" y="10" rx="3" ry="3" width="60" height="25.5" fill="rgba(0,0,0,0.1)" stroke="#000" />
 			</svg>
 
 			<div class="center">
-				k = <input id='spring-k-slider2' type="range" step="1" value="10" min="0" max="99"
-					style="width: 157px;"> <input id='spring-k2' type="number" min="0" max="99" value=10 step=1
-					style="width: 50px;">&nbsp;kg/s²
+				k = <input id='spring-k-slider2' type="range" step="1" value="10" min="0" max="99" style="width: 157px;"> <input id='spring-k2' type="number" min="0" max="99" value=10 step=1 style="width: 50px;">&nbsp;kg/s²
 				<br>
-				m = <input id='spring-m-slider2' type="range" step="0.001" value="1.1139" min="0" max="2.699"
-					style="width: 175px;"> <input id='spring-m2' type="number" min="1" max="500" value=13 step=1
-					style="width: 50px;">&nbsp;kg
+				m = <input id='spring-m-slider2' type="range" step="0.001" value="1.1139" min="0" max="2.699" style="width: 175px;"> <input id='spring-m2' type="number" min="1" max="500" value=13 step=1 style="width: 50px;">&nbsp;kg
 			</div>
 			<br>
 			<strong>Example:</strong> How fast is the mass moving at the spring equilibrium (x = 0)?
@@ -566,16 +551,12 @@
 									<polygon points="0,0 -6,-12 0,-10 6,-12" transform='translate(0 50)' />
 								</g>
 								<g id="box">
-									<rect x="0" y="0" width="80" height="80"
-										style="stroke:black;stroke-width:2;fill:#abc " />
-									<text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle"
-										font-size="23px">m</text>
+									<rect x="0" y="0" width="80" height="80" style="stroke:black;stroke-width:2;fill:#abc " />
+									<text x="40" y="40" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="23px">m</text>
 								</g>
 							</defs>
-							<circle id="spring-ball" cx="150" cy="110" r="40" fill="#bbb" stroke-width="2"
-								stroke="#000" />
-							<text x="150" y="110" fill="black" text-anchor="middle" dominant-baseline="middle"
-								font-size="23px">m</text>
+							<circle id="spring-ball" cx="150" cy="110" r="40" fill="#bbb" stroke-width="2" stroke="#000" />
+							<text x="150" y="110" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="23px">m</text>
 							<use xlink:href="#vector" transform='translate(150 70) rotate(-180)' />
 							<text x="150" y="13" text-anchor="middle" fill="#000" font-size="21px">F
 								<tspan font-size="0.7em" dy="5" dx="-5">s</tspan>
@@ -592,18 +573,12 @@
 		</div>
 
 		<div class='example'>
-			<div class="center" style="position: relative; width: 300px; height: 200px;"><a
-					href="https://phet.colorado.edu/sims/html/masses-and-springs/latest/masses-and-springs_en.html"
-					style="text-decoration: none;"><img
-						src="https://phet.colorado.edu/sims/html/masses-and-springs/latest/masses-and-springs-600.png"
-						alt="Masses and Springs" style="border: none;" width="300" height="200" />
-					<div
-						style="position: absolute; width: 200px; height: 80px; left: 50px; top: 65px; background-color: #FFF; opacity: 0.8; filter: alpha(opacity = 80);">
+			<div class="center" style="position: relative; width: 300px; height: 200px;"><a href="https://phet.colorado.edu/sims/html/masses-and-springs/latest/masses-and-springs_en.html" style="text-decoration: none;"><img src="https://phet.colorado.edu/sims/html/masses-and-springs/latest/masses-and-springs-600.png" alt="Masses and Springs" style="border: none;" width="300" height="200" />
+					<div style="position: absolute; width: 200px; height: 80px; left: 50px; top: 65px; background-color: #FFF; opacity: 0.8; filter: alpha(opacity = 80);">
 					</div>
 					<table style="position: absolute; width: 200px; height: 80px; left: 50px; top: 60px;">
 						<tr>
-							<td
-								style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">
+							<td style="text-align: center; color: #000; font-size: 24px; font-family: Arial,sans-serif;">
 								Click to Run</td>
 						</tr>
 					</table>
@@ -677,14 +652,13 @@
 		</div>
 		<h1 class='underlined' id="elastic-collisions">Perfectly Elastic Collisions</h1>
 		<p>
-			When objects collide the total <a
-				href="..\..\momentum\conservation\index.html#inelastic-collisions">momentum</a> is conserved.
+			When objects collide the total <a href="..\..\momentum\conservation\index.html#inelastic-collisions">momentum</a> is conserved.
 			Normally some of the kinetic energy of the objects will be converted into thermal or rotational energy, but
 			in some situations the energy stays kinetic.
 			A collision that doesn't lose any kinetic energy is called <strong>perfectly elastic</strong>.
 			This means that for perfectly bouncy collisions we can use two conservation equations.
 		</p>
-		$$m_1u_1 + m_2u = m_1v_1 + m_2v_2$$
+		$$m_1u_1 + m_2u_1 = m_1v_1 + m_2v_2$$
 		$$\frac{1}{2}m_1u_1^2 + \frac{1}{2}m_2u_2^2 = \frac{1}{2}m_1v_1^2 + \frac{1}{2}m_2v_2^2$$
 		<p>
 			With two equations we can solve for two unknowns.
@@ -743,14 +717,12 @@
 			<p>After an elastic collision objects with the same mass trade velocities.</p>
 			<strong>Example:</strong> A billiards ball is typically 0.16 kg. Although the cue ball is normally a bit
 			heavier.
-			The <strong class="pool eight">8</strong> ball moving at 12 m/s collides with the <strong
-				class="pool three">3</strong> ball at rest.
+			The <strong class="pool eight">8</strong> ball moving at 12 m/s collides with the <strong class="pool three">3</strong> ball at rest.
 			Approximate the final velocities of each ball assuming no kinetic energy loss.
 			<details>
 				<summary>solution</summary>
 				<p>Not much math here. They just trade velocities.
-					<br>The <strong class="pool eight">8</strong> ball is now at rest and the <strong
-						class="pool three">3</strong> ball is moving at 12 m/s.
+					<br>The <strong class="pool eight">8</strong> ball is now at rest and the <strong class="pool three">3</strong> ball is moving at 12 m/s.
 				</p>
 				<p></p>
 			</details>
