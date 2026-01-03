@@ -478,12 +478,13 @@ const b = {
                         if (tech.isBlockExplode) {
                             if (body[i] === m.holdingTarget) m.drop()
                             const size = 20 + 300 * Math.pow(body[i].mass, 0.25)
-                            const where = body[i].position
+                            const x = body[i].position.x
+                            const y = body[i].position.y
                             const onLevel = level.onLevel //prevent explosions in the next level
                             Matter.Composite.remove(engine.world, body[i]);
                             body.splice(i, 1);
                             setTimeout(() => {
-                                if (onLevel === level.onLevel) b.explosion(where, size);
+                                if (onLevel === level.onLevel) b.explosion({ x: x, y: y }, size);
                             }, 250 + 300 * Math.random());
                         }
                     } else if (dist < alertRange) {
