@@ -1,8 +1,19 @@
 ******************************************************** NEXT PATCH **************************************************
 
+scale invariance
+  adjusted going from small to large to not clip map above or below
+  adjusted side to side positioning to not allow easy wall jumps
+  fixed issues with portals on tower level
+  bijection no longer gets extra small, just extra big
+
 skin tech icon has a slightly darker background color
+mass-energy skin vibrates horizontally a bit
+precision bombing gets 1.4x grenade ammo
+  greatly improved targeting, it just teleports to the target
+control theory text predicts 1x or 2x damage
 
 bug fixes
+  dark matter is no longer moved by moving sidewalks, boosts, vacuum bombs 
   draw lines on office level for bouncy square
   exploding blocks
     was exploding blocks that shouldn't explode, like switches and platforms
