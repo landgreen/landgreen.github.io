@@ -1,28 +1,45 @@
 ******************************************************** NEXT PATCH **************************************************
 
-scale invariance
-  adjusted going from small to large to not clip map above or below
-  adjusted side to side positioning to not allow easy wall jumps
-  fixed issues with portals on tower level
-  bijection no longer gets extra small, just extra big
+removed the option to show images from n-gon
 
-skin tech icon has a slightly darker background color
-mass-energy skin vibrates horizontally a bit
-precision bombing gets 1.4x grenade ammo
-  greatly improved targeting, it just teleports to the target
-control theory text predicts 1x or 2x damage
+added a growth animation for new power ups
+power ups are uncollectable for about 0.5 seconds after spawning
+wormhole sucks less hard for very close power ups
+first ionization energy renamed ionization energy
+mob mines have a slightly longer delay before exploding
+bremsstrahlung no longer buffs block damage
+long text will no longer spill over to a new line for tech/gun/field descriptions
+  long text will clip when it reaches the edge of the text box
+  some very long text sections were edited to be shorter
+  this should only affect people with unusual fonts/browsers/OS
 
 bug fixes
-  dark matter is no longer moved by moving sidewalks, boosts, vacuum bombs 
-  draw lines on office level for bouncy square
-  exploding blocks
-    was exploding blocks that shouldn't explode, like switches and platforms
-    fixed a bad interaction with chain reaction
+  molecular assembler coupling
+    fixed a bug where coupling gave 5 instead of 0.5 energy per second
+    buffed 0.5->1 energy per second per coupling
+  harpoon tech wear no longer triggers on invulnerable mobs
+  harpoon tech spalling no longer drops ammo on mob bullets
+  tendrilBoss will now slowly attack when it loses it's arms (instead of just difting away)
 
 *********************************************************** TODO *****************************************************
 
+new level - ducts
+  wind effect
+    push player in a direction
+      push less if on ground or crouching or holding block
+    graphics?
+      draw a line and move it in the direction of wind
+  tunnels with wind
+    change wind direction with button?
+      maybe two buttons that alternate the direction like on the map corridor
+  maybe some spinners that look like fans
+
+
+use the horizontal vibration effect on a mob or gun or level effect
+  ctx.translate((simulation.cycle % 2) * 8, 0);
+
 add a setting to say the name of each tech/field/guns
-  is the built in voice good enough accuracy? (yep)
+  is the built in browser voice good enough accuracy? (yep)
   when to generate audio?
     click on the orb while paused?
     add new icon to click on to the right align of the title

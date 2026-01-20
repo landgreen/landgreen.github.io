@@ -389,7 +389,6 @@ const b = {
 
         if (tech.isExplodeRadio) { //radiation explosion
             radius *= 1.25; //alert range
-            // if (tech.isSmartRadius) radius = Math.max(Math.min(radius, Vector.magnitude(Vector.sub(where, player.position)) - 25), 1)
             color = "rgba(25,139,170,0.25)"
             simulation.drawList.push({ //add dmg to draw queue
                 x: where.x,
@@ -426,7 +425,6 @@ const b = {
                 }
             }
         } else { //normal explosions
-            // if (tech.isSmartRadius) radius = Math.max(Math.min(radius, Vector.magnitude(Vector.sub(where, player.position)) - 25), 1)
             simulation.drawList.push({ //add dmg to draw queue
                 x: where.x,
                 y: where.y,
@@ -606,7 +604,8 @@ const b = {
         //draw little dots along the laser path
         const sub = Vector.sub(path[1], path[0])
         const mag = Vector.magnitude(sub)
-        for (let i = 0, len = Math.floor(mag * 0.0005 * charge); i < len; i++) {
+        for (let i = 0, len = Math.floor(mag * 0.0005 * Math.min(200, charge)); i < len; i++) {
+            console.log(charge)
             const dist = Math.random()
             simulation.drawList.push({
                 x: path[0].x + sub.x * dist + 10 * (Math.random() - 0.5),
@@ -1908,8 +1907,8 @@ const b = {
                         },
                     })
                 }
-                if (tech.isBreakHarpoon && Math.random() < 0.1) {
-                    if (tech.isBreakHarpoonGain) {
+                if (tech.isBreakHarpoon && Math.random() < 0.1 && !who.isInvulnerable) {
+                    if (tech.isBreakHarpoonGain && !who.isDropPowerUp) {
                         powerUps.spawn(m.pos.x, m.pos.y - 50, "research");
                         powerUps.spawn(m.pos.x - 20, m.pos.y + 15, "research");
                         powerUps.spawn(m.pos.x + 20, m.pos.y + 15, "boost");
@@ -2538,7 +2537,7 @@ const b = {
                 bestPowerUp = vertexCollision(path[path.length - 2], path[path.length - 1], [mob, map, body, powerUp]);
                 if (bestPowerUp.who) {
                     for (let i = 0, len = powerUp.length; i < len; ++i) {
-                        if (powerUp[i] === bestPowerUp.who && !simulation.isChoosing && (powerUp[i].name !== "heal" || m.maxHealth - m.health > 0.01 || tech.isOverHeal) && !(tech.isEnergyNoAmmo && powerUp[i].name === "ammo")) {
+                        if (powerUp[i] === bestPowerUp.who && !simulation.isChoosing && (powerUp[i].name !== "heal" || m.maxHealth - m.health > 0.01 || tech.isOverHeal) && !(tech.isEnergyNoAmmo && powerUp[i].name === "ammo") && powerUp[i].cycle > 30) {
                             m.energy += 0.8
                             powerUps.onPickUp(powerUp[i]);
                             powerUp[i].effect();
@@ -3567,6 +3566,7 @@ const b = {
                                         (tech.isSuperDeterminism && powerUp[i].name === "field") ||
                                         (((tech.isEnergyNoAmmo || b.inventory.length === 0) || (tech.ammoCap !== 0 && b.guns[b.activeGun].ammo > 20)) && powerUp[i].name === "ammo")
                                     )
+                                    && powerUp[i].cycle > 30
                                 ) {
                                     this.eatPowerUp(i)
                                     break;
@@ -3581,7 +3581,7 @@ const b = {
                                     (tech.isSuperDeterminism && powerUp[i].name === "field") ||
                                     (((tech.isEnergyNoAmmo || b.inventory.length === 0) || (tech.ammoCap !== 0 && b.guns[b.activeGun].ammo > 20)) && powerUp[i].name === "ammo")
                                 )) {
-                                    if (Vector.magnitudeSquared(Vector.sub(this.position, powerUp[i].position)) < 20000 && !simulation.isChoosing) {
+                                    if (Vector.magnitudeSquared(Vector.sub(this.position, powerUp[i].position)) < 20000 && !simulation.isChoosing && powerUp[i].cycle > 30) {
                                         this.eatPowerUp(i)
                                         break;
                                     }
@@ -3774,6 +3774,7 @@ const b = {
                                             (tech.isSuperDeterminism && powerUp[i].name === "field") ||
                                             (((tech.isEnergyNoAmmo || b.inventory.length === 0) || (tech.ammoCap !== 0 && b.guns[b.activeGun].ammo > 20)) && powerUp[i].name === "ammo")
                                         )
+                                        && powerUp[i].cycle > 30
                                     ) {
                                         //draw pickup for a single cycle
                                         ctx.beginPath();
@@ -3808,7 +3809,7 @@ const b = {
                                         (tech.isSuperDeterminism && powerUp[i].name === "field") ||
                                         (((tech.isEnergyNoAmmo || b.inventory.length === 0) || (tech.ammoCap !== 0 && b.guns[b.activeGun].ammo > 20)) && powerUp[i].name === "ammo")
                                     )) {
-                                        if (Vector.magnitudeSquared(Vector.sub(this.position, powerUp[i].position)) < 20000 && !simulation.isChoosing) {
+                                        if (Vector.magnitudeSquared(Vector.sub(this.position, powerUp[i].position)) < 20000 && !simulation.isChoosing && powerUp[i].cycle > 30) {
                                             //draw pickup for a single cycle
                                             ctx.beginPath();
                                             ctx.moveTo(this.position.x, this.position.y);
@@ -6364,7 +6365,7 @@ const b = {
         }, {
             name: "super balls", //2
             descriptionFunction() {
-                return `fire <strong>3</strong> balls that retain<br><strong>momentum</strong> and <strong>kinetic energy</strong> after <strong>collisions</strong><br><strong>${this.ammoPack.toFixed(0)}</strong> balls per ${powerUps.orb.ammo()}`
+                return `fire <strong>3</strong> balls that retain<br><strong>momentum</strong>, <strong>kinetic energy</strong> after <strong>collisions</strong><br><strong>${this.ammoPack.toFixed(0)}</strong> balls per ${powerUps.orb.ammo()}`
             },
             ammo: 0,
             ammoPack: 4.05,
@@ -6450,7 +6451,7 @@ const b = {
             name: "wave", //3
             // description: `emit <strong>wave packets</strong> that propagate through <strong>solids</strong><br>waves <strong class='color-s'>slow</strong> mobs<br><strong>115</strong> packets per ${powerUps.orb.ammo()}`,
             descriptionFunction() {
-                return `emit <strong>wave packets</strong> that propagate through <strong>solids</strong><br>waves <strong class='color-s'>slow</strong> mobs<br><strong>${this.ammoPack.toFixed(0)}</strong> wave packets per ${powerUps.orb.ammo()}`
+                return `emit <strong>wave packets</strong> that propagate in <strong>solids</strong><br>waves <strong class='color-s'>slow</strong> mobs<br><strong>${this.ammoPack.toFixed(0)}</strong> wave packets per ${powerUps.orb.ammo()}`
             },
             ammo: 0,
             ammoPack: 60,
@@ -6937,7 +6938,7 @@ const b = {
             name: "spores", //6
             // description: `toss a <strong class='color-p' style='letter-spacing: 2px;'>sporangium</strong> that discharges <strong class='color-p' style='letter-spacing: 2px;'>spores</strong><br><strong class='color-p' style='letter-spacing: 2px;'>spores</strong> seek out nearby mobs<br><strong>2-3</strong> sporangium per ${powerUps.orb.ammo()}`,
             descriptionFunction() {
-                return `toss a <strong class='color-p' style='letter-spacing: 2px;'>sporangium</strong> that discharges ${b.guns[6].nameString("s")}<br>${b.guns[6].nameString("s")} seek out nearby mobs<br><strong>${this.ammoPack.toFixed(1)}</strong> sporangium per ${powerUps.orb.ammo()}`
+                return `toss <strong class='color-p' style='letter-spacing: 2px;'>sporangium</strong> that discharges ${b.guns[6].nameString("s")}<br>${b.guns[6].nameString("s")} seek out nearby mobs<br><strong>${this.ammoPack.toFixed(1)}</strong> sporangium per ${powerUps.orb.ammo()}`
             },
             ammo: 0,
             ammoPack: 1.22,
@@ -7152,7 +7153,7 @@ const b = {
         }, {
             name: "drones", //7
             descriptionFunction() {
-                return `deploy <strong>autonomous</strong> <strong>drones</strong> that smash into mobs<br>drones <strong>collect</strong> nearby power ups<br><strong>${this.ammoPack.toFixed(0)}</strong> drones per ${powerUps.orb.ammo()}`
+                return `deploy <strong>drones</strong> that smash into mobs<br>drones <strong>collect</strong> nearby power ups<br><strong>${this.ammoPack.toFixed(0)}</strong> drones per ${powerUps.orb.ammo()}`
             },
             ammo: 0,
             ammoPack: 7.8,
@@ -7626,7 +7627,7 @@ const b = {
             name: "mine", //10
             // description: `toss a <strong>proximity</strong> mine that <strong>sticks</strong> to walls<br>refund <strong>undetonated</strong> mines on <strong>exiting</strong> a level<br><strong>1-2</strong> mines per ${powerUps.orb.ammo()}`,
             descriptionFunction() {
-                return `toss a <strong>proximity</strong> mine that <strong>sticks</strong> to walls<br>refund <strong>undetonated</strong> mines on <strong>exiting</strong> a level<br><strong>${this.ammoPack.toFixed(1)}</strong> mines per ${powerUps.orb.ammo()}`
+                return `toss a <strong>proximity</strong> mine that <strong>sticks</strong> to walls<br>refund <strong>undetonated</strong> mines on <strong>exiting</strong> level<br><strong>${this.ammoPack.toFixed(1)}</strong> mines per ${powerUps.orb.ammo()}`
             },
             ammo: 0,
             ammoPack: 0.77,

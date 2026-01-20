@@ -258,6 +258,8 @@ summary {
     line-height: 160%;
     background-color: var(--card-color);
     font-size: 0.75em;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .choose-grid-module:hover {
@@ -318,6 +320,8 @@ summary {
     line-height: 160%;
     background-color: var(--card-color);
     font-size: 0.75em;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .sort {
@@ -374,6 +378,8 @@ summary {
     line-height: 160%;
     background-color: var(--card-color);
     font-size: 0.75em;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .experiment-grid-hide {

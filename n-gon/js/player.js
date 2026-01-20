@@ -1958,7 +1958,7 @@ const m = {
                 m.walk_cycle += m.flipLegs * m.Vx;
                 ctx.save();
                 ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
-                ctx.translate(m.pos.x + (simulation.cycle % 2) * 4, m.pos.y);
+                ctx.translate(m.pos.x, m.pos.y);
                 // ctx.translate(m.pos.x, m.pos.y);
                 // if (m.immuneCycle < m.cycle) {
                 //     ctx.translate(m.pos.x, m.pos.y);
@@ -3155,8 +3155,8 @@ const m = {
         } else {
             m.fieldRegen = 0.001 //6 energy per second
         }
-        if (m.fieldMode === 4) m.fieldRegen += 0.00083 * m.coupling
-        if (m.fieldMode === 0) m.fieldRegen += 0.000083 * m.coupling
+        if (m.fieldMode === 4) m.fieldRegen += 0.001667 * m.coupling
+        if (m.fieldMode === 0) m.fieldRegen += 0.0008 * m.coupling
         if (tech.isTimeCrystals) {
             m.fieldRegen *= 2.5
         } else if (tech.isGroundState) {
@@ -3252,24 +3252,24 @@ const m = {
 
                     who.locatePlayer();
                     const unit = Vector.normalise(Vector.sub(player.position, who.position))
-                    // if (tech.blockDmg) {
+                    // if (tech.deflectDmg) {
                     //     Matter.Body.setVelocity(who, { x: 0.5 * who.velocity.x, y: 0.5 * who.velocity.y });
                     //     if (who.isShielded) {
                     //         for (let i = 0, len = mob.length; i < len; i++) {
-                    //             if (mob[i].id === who.shieldID) mob[i].damage(tech.blockDmg * (tech.isBlockRadiation ? 6 : 2), true)
+                    //             if (mob[i].id === who.shieldID) mob[i].damage(tech.deflectDmg * (tech.isBlockRadiation ? 6 : 2), true)
                     //         }
                     //     } else if (tech.isBlockRadiation) {
                     //         if (who.isMobBullet) {
-                    //             who.damage(tech.blockDmg * 3, true)
+                    //             who.damage(tech.deflectDmg * 3, true)
                     //         } else {
-                    //             mobs.statusDoT(who, tech.blockDmg * 0.42, 180) //200% increase -> x (1+2) //over 7s -> 360/30 = 12 half seconds -> 3/12
+                    //             mobs.statusDoT(who, tech.deflectDmg * 0.42, 180) //200% increase -> x (1+2) //over 7s -> 360/30 = 12 half seconds -> 3/12
                     //         }
                     //     } else {
-                    //         who.damage(tech.blockDmg, true)
+                    //         who.damage(tech.deflectDmg, true)
                     //     }
                     //     const step = 40
                     //     ctx.beginPath(); //draw electricity
-                    //     for (let i = 0, len = 0.5 * tech.blockDmg; i < len; i++) {
+                    //     for (let i = 0, len = 0.5 * tech.deflectDmg; i < len; i++) {
                     //         let x = m.pos.x - 20 * unit.x;
                     //         let y = m.pos.y - 20 * unit.y;
                     //         ctx.moveTo(x, y);
@@ -3687,7 +3687,7 @@ const m = {
     grabPowerUp() { //look for power ups to grab with field
         if (m.fireCDcycle < m.cycle) m.fireCDcycle = m.cycle - 1
         for (let i = 0, len = powerUp.length; i < len; ++i) {
-            if (tech.isEnergyNoAmmo && powerUp[i].name === "ammo") continue
+            if (powerUp[i].cycle < 10 || (tech.isEnergyNoAmmo && powerUp[i].name === "ammo")) continue
             const dxP = m.pos.x - powerUp[i].position.x;
             const dyP = m.pos.y - powerUp[i].position.y;
             const dist2 = dxP * dxP + dyP * dyP + 10;
@@ -3707,6 +3707,14 @@ const m = {
                     !simulation.isChoosing &&
                     (powerUp[i].name !== "heal" || m.maxHealth - m.health > 0.01 || tech.isOverHeal)
                 ) {
+                    //eject over heals
+                    // if (powerUp[i].name === "heal" && m.maxHealth - m.health > 0.01 && !tech.isOverHeal) {
+                    //     powerUp[i].cycle = 5//powerUp[i].size * 0.5
+                    //     const mag = 0.1 * powerUp[i].mass
+                    //     powerUp[i].force.x += mag * Math.cos(m.angle)
+                    //     powerUp[i].force.y += mag * Math.sin(m.angle)// - 3 * powerUp[i].mass * simulation.g; //negate gravity
+                    //     continue
+                    // }
                     powerUps.onPickUp(powerUp[i]);
                     Matter.Body.setVelocity(player, { //player knock back, after grabbing power up
                         x: player.velocity.x + powerUp[i].velocity.x / player.mass * 4 * powerUp[i].mass,
@@ -3722,7 +3730,7 @@ const m = {
     },
     grabPowerUpEasy() { //look for power ups to grab with field
         for (let i = 0, len = powerUp.length; i < len; ++i) {
-            if (tech.isEnergyNoAmmo && powerUp[i].name === "ammo") continue
+            if (powerUp[i].cycle < 10 || (tech.isEnergyNoAmmo && powerUp[i].name === "ammo")) continue
             const dxP = m.pos.x - powerUp[i].position.x;
             const dyP = m.pos.y - powerUp[i].position.y;
             const dist2 = dxP * dxP + dyP * dyP + 10;
@@ -3837,24 +3845,24 @@ const m = {
             }
             m.bulletsToBlocks(who)
             const unit = Vector.normalise(Vector.sub(player.position, who.position))
-            if (tech.blockDmg) {
+            if (tech.deflectDmg) {
                 Matter.Body.setVelocity(who, { x: 0.5 * who.velocity.x, y: 0.5 * who.velocity.y });
                 if (who.isShielded) {
                     for (let i = 0, len = mob.length; i < len; i++) {
-                        if (mob[i].id === who.shieldID) mob[i].damage(tech.blockDmg * (tech.isBlockRadiation ? 6 : 2), true)
+                        if (mob[i].id === who.shieldID) mob[i].damage(tech.deflectDmg * (tech.isBlockRadiation ? 6 : 2), true)
                     }
                 } else if (tech.isBlockRadiation) {
                     if (who.isMobBullet) {
-                        who.damage(tech.blockDmg * 3, true)
+                        who.damage(tech.deflectDmg * 3, true)
                     } else {
-                        mobs.statusDoT(who, tech.blockDmg * 0.42, 180) //200% increase -> x (1+2) //over 7s -> 360/30 = 12 half seconds -> 3/12
+                        mobs.statusDoT(who, tech.deflectDmg * 0.42, 180) //200% increase -> x (1+2) //over 7s -> 360/30 = 12 half seconds -> 3/12
                     }
                 } else {
-                    who.damage(tech.blockDmg, true)
+                    who.damage(tech.deflectDmg, true)
                 }
                 const step = 40
                 ctx.beginPath(); //draw electricity
-                for (let i = 0, len = 0.5 * tech.blockDmg; i < len; i++) {
+                for (let i = 0, len = 0.5 * tech.deflectDmg; i < len; i++) {
                     let x = m.pos.x - 20 * unit.x;
                     let y = m.pos.y - 20 * unit.y;
                     ctx.moveTo(x, y);
@@ -4001,7 +4009,7 @@ const m = {
             case 3: //negative mass
                 return `<strong>${(0.976 ** couple).toFixed(3)}x</strong> <strong class='color-defense'>damage taken</strong>`
             case 4: //assembler
-                return `<strong>+${(0.5 * couple).toFixed(1)}</strong> <strong class='color-f'>energy</strong> per second`
+                return `<strong>+${(1 * couple).toFixed(1)}</strong> <strong class='color-f'>energy</strong> per second`
             case 5: //plasma
                 return `<strong>${(1 + 0.025 * couple).toFixed(3)}x</strong> <strong class='color-d'>damage</strong>`
             case 6: //time dilation
@@ -4079,7 +4087,6 @@ const m = {
     fieldUpgrades: [
         {
             name: "field emitter",
-            imageNumber: Math.floor(Math.random() * 26), //pick one of the 25 field emitter image files at random
             description: `<em>initial field</em><br>use <strong class='color-f'>energy</strong> to <strong>deflect</strong> mobs and <strong>throw</strong> <strong class='color-block'>blocks</strong>
         <br><strong>6</strong> <strong class='color-f'>energy</strong> per second`, //            <br><strong>100</strong> max <strong class='color-f'>energy</strong>
             effect: () => {
@@ -4244,7 +4251,7 @@ const m = {
         },
         {
             name: "perfect diamagnetism",
-            description: `<strong>deflecting</strong> does not drain <strong class='color-f'>energy</strong><br><strong>shield</strong> maintains <strong>functionality</strong> while inactive<br><strong>5</strong> <strong class='color-f'>energy</strong> per second<em style ="float: right; font-family: monospace;font-size:1rem;color:#fff;">← → ← → ↧</em>`,
+            description: `<strong>deflecting</strong> does not drain <strong class='color-f'>energy</strong><br><strong>shield</strong> persists while inactive<br><strong>5</strong> <strong class='color-f'>energy</strong> per second<em style ="float: right; font-family: monospace;font-size:1rem;color:#fff;">← → ← → ↧</em>`,
             keyLog: [null, null, null, null, null],
             effect: () => {
                 //store event function so it can be found and removed in m.setField()
@@ -4317,24 +4324,24 @@ const m = {
                                         }
                                     }
                                 }
-                                if (tech.blockDmg) { //electricity
+                                if (tech.deflectDmg) { //electricity
                                     Matter.Body.setVelocity(mob[i], { x: 0.5 * mob[i].velocity.x, y: 0.5 * mob[i].velocity.y });
                                     if (mob[i].isShielded) {
                                         for (let j = 0, len = mob.length; j < len; j++) {
-                                            if (mob[j].id === mob[i].shieldID) mob[j].damage(tech.blockDmg * (tech.isBlockRadiation ? 6 : 2), true)
+                                            if (mob[j].id === mob[i].shieldID) mob[j].damage(tech.deflectDmg * (tech.isBlockRadiation ? 6 : 2), true)
                                         }
                                     } else if (tech.isBlockRadiation) {
                                         if (mob[i].isMobBullet) {
-                                            mob[i].damage(tech.blockDmg * 3, true)
+                                            mob[i].damage(tech.deflectDmg * 3, true)
                                         } else {
-                                            mobs.statusDoT(mob[i], tech.blockDmg * 0.42, 180) //200% increase -> x (1+2) //over 7s -> 360/30 = 12 half seconds -> 3/12
+                                            mobs.statusDoT(mob[i], tech.deflectDmg * 0.42, 180) //200% increase -> x (1+2) //over 7s -> 360/30 = 12 half seconds -> 3/12
                                         }
                                     } else {
-                                        mob[i].damage(tech.blockDmg, true)
+                                        mob[i].damage(tech.deflectDmg, true)
                                     }
                                     const step = 40
                                     ctx.beginPath();
-                                    for (let i = 0, len = 0.5 * tech.blockDmg; i < len; i++) {
+                                    for (let i = 0, len = 0.5 * tech.deflectDmg; i < len; i++) {
                                         let x = m.fieldPosition.x - 20 * unit.x;
                                         let y = m.fieldPosition.y - 20 * unit.y;
                                         ctx.moveTo(x, y);
@@ -5933,7 +5940,8 @@ const m = {
 
                             //grab power ups into the field
                             for (let i = 0, len = powerUp.length; i < len; ++i) {
-                                if (tech.isEnergyNoAmmo && powerUp[i].name === "ammo") continue
+                                if (powerUp[i].cycle < 10 || (tech.isEnergyNoAmmo && powerUp[i].name === "ammo")) continue
+
 
                                 const dxP = m.fieldPosition.x - powerUp[i].position.x;
                                 const dyP = m.fieldPosition.y - powerUp[i].position.y;
@@ -6105,7 +6113,7 @@ const m = {
         },
         {
             name: "wormhole",
-            description: `use <strong>16</strong> <strong class='color-f'>energy</strong> to <strong>tunnel</strong> through a <strong class='color-worm'>wormhole</strong><br><strong>+8%</strong> chance to <strong class='color-dup'>duplicate</strong> <strong>power ups</strong><br><strong>8</strong> <strong class='color-f'>energy</strong> per second<em style ="float: right; font-family: monospace;font-size:1rem;color:#fff;">↓↓↓↑↓</em>`,
+            description: `use <strong>16</strong> <strong class='color-f'>energy</strong> to enter a <strong class='color-worm'>wormhole</strong><br><strong>+8%</strong> chance to <strong class='color-dup'>duplicate</strong> <strong>power ups</strong><br><strong>8</strong> <strong class='color-f'>energy</strong> per second<em style ="float: right; font-family: monospace;font-size:1rem;color:#fff;">↓↓↓↑↓</em>`,
             keyLog: [null, null, null, null, null],
             drain: 0,
             effect: function () {
@@ -6214,7 +6222,6 @@ const m = {
 
                         //suck power ups
                         for (let i = 0, len = powerUp.length; i < len; ++i) {
-                            if (tech.isEnergyNoAmmo && powerUp[i].name === "ammo") continue
                             //which hole is closer
                             const dxP1 = m.hole.pos1.x - powerUp[i].position.x;
                             const dyP1 = m.hole.pos1.y - powerUp[i].position.y;
@@ -6230,11 +6237,11 @@ const m = {
                             }
                             dist2 = dxP * dxP + dyP * dyP;
                             if (dist2 < 600000) { //&& !(m.health === m.maxHealth && powerUp[i].name === "heal")
-                                powerUp[i].force.x += 4 * (dxP / dist2) * powerUp[i].mass; // float towards hole
-                                powerUp[i].force.y += 4 * (dyP / dist2) * powerUp[i].mass - powerUp[i].mass * simulation.g; //negate gravity
+                                powerUp[i].force.x += 4 * (dxP / (dist2 + 200)) * powerUp[i].mass; // float towards hole
+                                powerUp[i].force.y += 4 * (dyP / (dist2 + 200)) * powerUp[i].mass - powerUp[i].mass * simulation.g; //negate gravity
                                 Matter.Body.setVelocity(powerUp[i], { x: powerUp[i].velocity.x * 0.05, y: powerUp[i].velocity.y * 0.05 });
                                 if (dist2 < 1000 && !simulation.isChoosing) { //use power up if it is close enough
-
+                                    // if (powerUp[i].cycle < 10 || (tech.isEnergyNoAmmo && powerUp[i].name === "ammo")) continue
                                     simulation.ephemera.push({
                                         count: 5, //cycles before it self removes
                                         PposX: powerUp[i].position.x,

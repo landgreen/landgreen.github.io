@@ -5311,9 +5311,9 @@ const spawn = {
         const angle = 2 * Math.PI / nodes
 
         spawn.allowShields = false; //don't want shields on individual mobs
-
         for (let i = 0; i < nodes; ++i) {
             spawn.sliceSpiderLeg(x + sideLength * Math.sin(i * angle), y + sideLength * Math.cos(i * angle), radius, 12);
+            mob[mob.length - 1].isBoss = false
             targets.push(mob[mob.length - 1].id) //track who is in the node boss, for shields
         }
 
@@ -5412,6 +5412,8 @@ const spawn = {
             } else {
                 spawn.sniperSpiderLeg(x + sideLength * Math.sin(i * angle), y + sideLength * Math.cos(i * angle), radius);
             }
+            mob[mob.length - 1].isDropPowerUp = false
+            mob[mob.length - 1].isBoss = false
             targets.push(mob[mob.length - 1].id) //track who is in the node boss, for shields
         }
 
@@ -5546,6 +5548,8 @@ const spawn = {
                     spawn.slasherSpiderLeg(where.x + sideLength * Math.sin(i * angle), where.y + sideLength * Math.cos(i * angle), mobRadius);
                     mob[mob.length - 1].tier = 4
                 }
+                mob[mob.length - 1].isDropPowerUp = false
+                mob[mob.length - 1].isBoss = false
                 targets.push(mob[mob.length - 1].id) //track who is in the node boss, for shields
             }
             const attachmentStiffness = 0.02
@@ -5597,15 +5601,15 @@ const spawn = {
         me.frictionAir = 0.0012;
         me.lookTorque = 0.0000008; //controls spin while looking for player
         me.g = 0.0002; //required if using this.gravity
+        me.accelMag = 0.0001
         // me.seePlayerFreq = Math.floor((30 + 20 * Math.random()));
         me.seePlayerFreq = 70
 
         me.do = function () {
             if (this.seePlayer.recall) this.healthBar2()
             // this.gravity();
-            // this.searchSpring();
+            this.attraction();
             this.checkStatus();
-            // this.springAttack();
             if (this.isInvulnerable) {
                 this.invulnerableCount--
                 if (this.invulnerableCount < 0) {
@@ -6368,7 +6372,7 @@ const spawn = {
         me.onDeath = function () { //helps collisions functions work better after vertex have been changed
             // this.vertices = Matter.Vertices.hull(Matter.Vertices.clockwiseSort(this.vertices))
         }
-        spawn.shield(me, x, y);
+        // spawn.shield(me, x, y);
         me.do = function () {
             this.seePlayerCheck();
             this.checkStatus();
@@ -10611,7 +10615,7 @@ const spawn = {
         me.isUnstable = true; //dies when blocked
         me.explodeRange = 210 + 140 * Math.random()
         me.isExploding = false
-        me.countDown = Math.ceil(4 * Math.random())
+        me.countDown = 3 + Math.ceil(4 * Math.random())
         me.isInvulnerable = true //not actually invulnerable, just prevents block + ice-9 interaction
 
         // me.onHit = function() {

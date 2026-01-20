@@ -234,21 +234,21 @@ function collisionChecks(event) {
                         if (obj.classType === "body" && obj.speed > 9) {
                             const v = Vector.magnitude(Vector.sub(mob[k].velocity, obj.velocity));
                             if (v > 11) {
-                                if (tech.blockDmg) { //electricity
-                                    Matter.Body.setVelocity(mob[k], { x: 0.5 * mob[k].velocity.x, y: 0.5 * mob[k].velocity.y });
-                                    if (tech.isBlockRadiation && !mob[k].isShielded && !mob[k].isMobBullet) {
-                                        mobs.statusDoT(mob[k], tech.blockDmg * 0.42, 180) //200% increase -> x (1+2) //over 7s -> 360/30 = 12 half seconds -> 3/12
-                                    } else {
-                                        mob[k].damage(tech.blockDmg)
-                                        simulation.drawList.push({
-                                            x: pairs[i].activeContacts[0].vertex.x,
-                                            y: pairs[i].activeContacts[0].vertex.y,
-                                            radius: 28 * mob[k].damageReduction + 3,
-                                            color: "rgba(255,0,255,0.8)",
-                                            time: 4
-                                        });
-                                    }
-                                }
+                                // if (tech.deflectDmg) { //electricity
+                                //     Matter.Body.setVelocity(mob[k], { x: 0.5 * mob[k].velocity.x, y: 0.5 * mob[k].velocity.y });
+                                //     if (tech.isBlockRadiation && !mob[k].isShielded && !mob[k].isMobBullet) {
+                                //         mobs.statusDoT(mob[k], tech.deflectDmg * 0.42, 180) //200% increase -> x (1+2) //over 7s -> 360/30 = 12 half seconds -> 3/12
+                                //     } else {
+                                //         mob[k].damage(tech.deflectDmg)
+                                //         simulation.drawList.push({
+                                //             x: pairs[i].activeContacts[0].vertex.x,
+                                //             y: pairs[i].activeContacts[0].vertex.y,
+                                //             radius: 28 * mob[k].damageReduction + 3,
+                                //             color: "rgba(255,0,255,0.8)",
+                                //             time: 4
+                                //         });
+                                //     }
+                                // }
 
                                 let dmg = tech.blockDamage * v * obj.mass * (tech.isMobBlockFling ? 2.5 : 1) * (tech.isBlockRestitution ? 2.5 : 1) * ((m.fieldMode === 0 || m.fieldMode === 8) ? 1 + 0.05 * m.coupling : 1);
                                 if (mob[k].isShielded) dmg *= 0.7

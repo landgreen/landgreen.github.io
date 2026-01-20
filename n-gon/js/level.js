@@ -35,7 +35,7 @@ const level = {
             // tech.addJunkTechToPool(0.5)
             // m.couplingChange(100)
 
-            // m.setField(1) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
+            // m.setField(9) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
             // m.energy = m.maxEnergy = 12.2
             // m.energy += 1
             // m.couplingChange(1000)
@@ -45,7 +45,7 @@ const level = {
             // m.wakeCheck();
             // m.damageDone *= 5
 
-            // m.maxHealth = m.health = 1000000
+            // m.maxHealth = m.health = 100000000
             // m.displayHealth();
             // m.immuneCycle = Infinity //you can't take damage
             // m.maxEnergy = m.energy = 10000000
@@ -55,14 +55,14 @@ const level = {
             // simulation.molecularMode = 2
             // m.takeDamage(0.01);
 
-            // b.giveGuns(5) //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns(0) //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[b.inventory[0]].ammo = 100000000000
             // tech.giveTech("neutron bomb")
-            // tech.giveTech("vacuum bomb")
+            // tech.giveTech("pulse")
             // tech.addJunkTechToPool(0.5)
-            // for (let i = 0; i < 1; i++) tech.giveTech("pair production")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("scale invariance")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("bijection")
+            // for (let i = 0; i < 1; i++) tech.giveTech("path integral")
+            // for (let i = 0; i < 2; ++i) tech.giveTech("rule 30")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("mass-energy equivalence")
             // spawn.bodyRect(575, -700, 150, 150);  //block mob line of site on testing
             // level.levelsCleared = 7
             // simulation.isHorizontalFlipped = true
@@ -74,12 +74,13 @@ const level = {
             // powerUps.spawn(m.pos.x, m.pos.y, "difficulty", false);
             // spawn.randomGroup(1300, -200, Infinity);
             // spawn.nodeGroup(1300, -200, 'grower');
-            // for (let i = 0; i < 10; i++) spawn.starter(1300 + 300 * i, -200)
+            // for (let i = 0; i < 1; i++) spawn.tendrilBoss(1300 + 300 * i, -200)
             // for (let i = 0; i < 10; i++) spawn.zombie(1300 + 200 * i, -200)
             // Matter.Body.setPosition(player, { x: -27000, y: -400 });
+            // requestAnimationFrame(() => { powerUps.spawnDelay("coupling", 2000); });
             // m.storeTech() //sets entanglement
             // for (let i = 0; i < 1; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "entanglement");
-            // for (let i = 0; i < 25; ++i) powerUps.directSpawn(m.pos.x + 450, m.pos.y + 50 * Math.random(), "ammo");
+            // for (let i = 0; i < 10; ++i) powerUps.directSpawn(m.pos.x + 450, m.pos.y + 50 * Math.random(), "coupling");
             // for (let i = 0; i < 100; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "coupling", false);
             // level.constraint[0].effect()  // turn this off first ->  seededShuffle(level.constraint)
 
@@ -376,14 +377,9 @@ const level = {
         document.getElementById("choose-unPause").addEventListener("click", () => {
             level.unPause()
             document.body.style.cursor = "none";
-            //reset hide image style
-            if (localSettings.isHideImages) {
-                document.getElementById("choose-grid").classList.add('choose-grid-no-images');
-                document.getElementById("choose-grid").classList.remove('choose-grid');
-            } else {
-                document.getElementById("choose-grid").classList.add('choose-grid');
-                document.getElementById("choose-grid").classList.remove('choose-grid-no-images');
-            }
+            document.getElementById("choose-grid").classList.add('choose-grid-no-images');
+            document.getElementById("choose-grid").classList.remove('choose-grid');
+
         });
         requestAnimationFrame(() => {
             ctx.fillStyle = `rgba(150,150,150,0.9)`; //`rgba(221,221,221,0.6)`;
@@ -1249,26 +1245,16 @@ const level = {
                             level.levels = level.trainingLevels.slice(0) //copy array, not by just by assignment
                             level.nextLevel()
                             //reset hide image style
-                            if (localSettings.isHideImages) {
-                                document.getElementById("choose-grid").classList.add('choose-grid-no-images');
-                                document.getElementById("choose-grid").classList.remove('choose-grid');
-                            } else {
-                                document.getElementById("choose-grid").classList.add('choose-grid');
-                                document.getElementById("choose-grid").classList.remove('choose-grid-no-images');
-                            }
+                            document.getElementById("choose-grid").classList.add('choose-grid-no-images');
+                            document.getElementById("choose-grid").classList.remove('choose-grid');
                         });
                         document.getElementById("choose-unPause").addEventListener("click", () => {
                             level.unPause()
                             document.body.style.cursor = "none";
                             level.nextLevel()
                             //reset hide image style
-                            if (localSettings.isHideImages) {
-                                document.getElementById("choose-grid").classList.add('choose-grid-no-images');
-                                document.getElementById("choose-grid").classList.remove('choose-grid');
-                            } else {
-                                document.getElementById("choose-grid").classList.add('choose-grid');
-                                document.getElementById("choose-grid").classList.remove('choose-grid-no-images');
-                            }
+                            document.getElementById("choose-grid").classList.add('choose-grid-no-images');
+                            document.getElementById("choose-grid").classList.remove('choose-grid');
                         });
                         requestAnimationFrame(() => {
                             ctx.fillStyle = `rgba(150,150,150,0.9)`; //`rgba(221,221,221,0.6)`;
@@ -2488,6 +2474,76 @@ const level = {
             }
         }
     },
+    //consider switching coordinate system to starting and ending points to make angled wind easier
+    wind(x, y, width, height, velocity = { x: 10, y: 0 }) {
+        return {
+            x: x,
+            y: y,
+            height: height,
+            width: width,
+            velocity: velocity,
+            a: { x: x, y: y + height / 2 },
+            b: { x: x + width, y: y + height / 2 },
+            do() {
+                //draw wind lines
+                //generate # of lines that scales with width*height
+
+
+
+                // ctx.beginPath();
+                // ctx.moveTo(this.a.x, this.a.y)
+                // ctx.lineTo(this.b.x, this.b.y)
+                // ctx.lineWidth = height
+                // ctx.strokeStyle = "#0f04"
+                // ctx.stroke();
+
+                //draw background of zone
+                ctx.fillStyle = "rgba(0,0,255,0.1)"
+                ctx.fillRect(this.x, this.y, this.width, this.height)
+
+                //push player
+
+                //push blocks, bullets, power ups, mobs
+                let hit = Matter.Query.ray([player], this.a, this.b, height)
+                if (hit.length) {
+                    //5 is normal player mass, so if player has more mass they are gonna go slower
+                    player.force.x += this.velocity.x * 5 * (m.crouch ? 0.3 : 1) * (m.onGround ? 0.5 : 1)
+                    player.force.y += this.velocity.y * 5 * (m.crouch ? 0.4 : 1)
+                }
+                hit = Matter.Query.ray(body, this.a, this.b, height)
+                for (let i = 0; i < hit.length; i++) {
+                    hit[i].body.force.x += this.velocity.x * hit[i].body.mass
+                    hit[i].body.force.y += this.velocity.y * hit[i].body.mass
+                }
+                hit = Matter.Query.ray(bullet, this.a, this.b, height)
+                for (let i = 0; i < hit.length; i++) {
+                    hit[i].body.force.x += this.velocity.x * hit[i].body.mass * 0.5
+                    hit[i].body.force.y += this.velocity.y * hit[i].body.mass * 0.5
+                }
+                hit = Matter.Query.ray(mob, this.a, this.b, height)
+                for (let i = 0; i < hit.length; i++) {
+                    hit[i].body.force.x += this.velocity.x * hit[i].body.mass * 0.5
+                    hit[i].body.force.y += this.velocity.y * hit[i].body.mass * 0.5
+                }
+                hit = Matter.Query.ray(powerUp, this.a, this.b, height)
+                for (let i = 0; i < hit.length; i++) {
+                    hit[i].body.force.x += this.velocity.x * hit[i].body.mass * 0.5
+                    hit[i].body.force.y += this.velocity.y * hit[i].body.mass * 0.5
+                }
+
+                // if (!m.isTimeDilated) {
+                //     if (this.dropCycle < simulation.cycle) { //reset
+                //         this.dropCycle = simulation.cycle + this.period + Math.floor(40 * Math.random())
+                //         this.y = yMin
+                //         this.speed = 1
+                //     } else { //fall
+                //         this.speed += 0.35 //acceleration from gravity
+                //         this.y += this.speed
+                //     }
+                // }                
+            }
+        }
+    },
     laser(p1, p2, damage = 0.12, color = "#f00") {
         return {
             isOn: true,
@@ -3092,6 +3148,11 @@ const level = {
         const button = level.button(2535, -200)
         // spawn.bodyRect(250, -450, 50, 50); //block on button
 
+        const wind = []
+        wind.push(level.wind(975, -160, 600, 150, { x: 0.01, y: 0 }))
+        wind.push(level.wind(1750, -475, 75, 475, { x: 0, y: -0.01 }))
+        wind.push(level.wind(975, -825, 475, 75, { x: 0, y: -0.01 }))
+
         level.custom = () => {
 
             //oscillate back and forth
@@ -3120,6 +3181,8 @@ const level = {
             button.draw();
             ctx.fillStyle = "rgba(0,0,0,0.1)"
             ctx.fillRect(-150, -650, 900, 250)
+
+            for (let i = 0; i < wind.length; i++) wind[i].do()
         };
         level.setPosToSpawn(0, -450); //normal spawn
         spawn.mapRect(level.enter.x, level.enter.y + 20, 100, 20);
@@ -3178,6 +3241,7 @@ const level = {
         spawn.mapRect(4875, -3625, 725, 2225);
         spawn.mapRect(5525, -4350, 1725, 2925);
         spawn.mapRect(7200, -5125, 300, 3900);
+        spawn.mapRect(-1150, -9175, 700, 5750); ///wall to climb
 
 
         //???
@@ -25862,12 +25926,12 @@ const level = {
             }
             me.pushM = function () {
                 const unit = Vector.normalise(Vector.sub(this.position, player.position))
-                if (tech.blockDmg) {
+                if (tech.deflectDmg) {
                     Matter.Body.setVelocity(player, { x: 0.5 * player.velocity.x, y: 0.5 * player.velocity.y });
                     //draw electricity
                     const step = 40
                     ctx.beginPath();
-                    for (let i = 0, len = 0.8 * tech.blockDmg; i < len; i++) {
+                    for (let i = 0, len = 0.8 * tech.deflectDmg; i < len; i++) {
                         let x = this.position.x - 20 * unit.x;
                         let y = this.position.y - 20 * unit.y;
                         ctx.moveTo(x, y);
@@ -28921,12 +28985,12 @@ const level = {
             }
             me.pushM = function () {
                 const unit = Vector.normalise(Vector.sub(this.position, player.position))
-                if (tech.blockDmg) {
+                if (tech.deflectDmg) {
                     Matter.Body.setVelocity(player, { x: 0.5 * player.velocity.x, y: 0.5 * player.velocity.y });
                     //draw electricity
                     const step = 40
                     ctx.beginPath();
-                    for (let i = 0, len = 0.8 * tech.blockDmg; i < len; i++) {
+                    for (let i = 0, len = 0.8 * tech.deflectDmg; i < len; i++) {
                         let x = this.position.x - 20 * unit.x;
                         let y = this.position.y - 20 * unit.y;
                         ctx.moveTo(x, y);

@@ -173,8 +173,9 @@ const powerUps = {
     drawCircle() {
         ctx.globalAlpha = 0.4 * Math.sin(simulation.cycle * 0.15) + 0.6;
         for (let i = 0, len = powerUp.length; i < len; ++i) {
+            powerUp[i].cycle++
             ctx.beginPath();
-            ctx.arc(powerUp[i].position.x, powerUp[i].position.y, powerUp[i].size, 0, 2 * Math.PI);
+            ctx.arc(powerUp[i].position.x, powerUp[i].position.y, Math.min(powerUp[i].cycle, powerUp[i].size), 0, 2 * Math.PI);
             ctx.fillStyle = powerUp[i].color;
             ctx.fill();
         }
@@ -183,6 +184,7 @@ const powerUps = {
     drawDup() {
         ctx.globalAlpha = 0.4 * Math.sin(simulation.cycle * 0.15) + 0.6;
         for (let i = 0, len = powerUp.length; i < len; ++i) {
+            powerUp[i].cycle++
             ctx.beginPath();
             if (powerUp[i].isDuplicated) {
                 let vertices = powerUp[i].vertices;
@@ -483,13 +485,8 @@ const powerUps = {
                 level.unPause()
                 document.body.style.cursor = "none";
                 //reset hide image style
-                if (localSettings.isHideImages) {
-                    document.getElementById("choose-grid").classList.add('choose-grid-no-images');
-                    document.getElementById("choose-grid").classList.remove('choose-grid');
-                } else {
-                    document.getElementById("choose-grid").classList.add('choose-grid');
-                    document.getElementById("choose-grid").classList.remove('choose-grid-no-images');
-                }
+                document.getElementById("choose-grid").classList.add('choose-grid-no-images');
+                document.getElementById("choose-grid").classList.remove('choose-grid');
                 // if (document.fullscreenElement) mouseMove.isLockPointer = true//this interacts with the mousedown event listener to exit pointer lock
             });
             if (document.fullscreenElement) {
@@ -519,13 +516,8 @@ const powerUps = {
             level.unPause()
             document.body.style.cursor = "none";
             //reset hide image style
-            if (localSettings.isHideImages) {
-                document.getElementById("choose-grid").classList.add('choose-grid-no-images');
-                document.getElementById("choose-grid").classList.remove('choose-grid');
-            } else {
-                document.getElementById("choose-grid").classList.add('choose-grid');
-                document.getElementById("choose-grid").classList.remove('choose-grid-no-images');
-            }
+            document.getElementById("choose-grid").classList.add('choose-grid-no-images');
+            document.getElementById("choose-grid").classList.remove('choose-grid');
         },
         effect() {
             requestAnimationFrame(() => { //add a background behind the power up menu
@@ -669,13 +661,8 @@ const powerUps = {
                 level.unPause()
                 document.body.style.cursor = "none";
                 //reset hide image style
-                if (localSettings.isHideImages) {
-                    document.getElementById("choose-grid").classList.add('choose-grid-no-images');
-                    document.getElementById("choose-grid").classList.remove('choose-grid');
-                } else {
-                    document.getElementById("choose-grid").classList.add('choose-grid');
-                    document.getElementById("choose-grid").classList.remove('choose-grid-no-images');
-                }
+                document.getElementById("choose-grid").classList.add('choose-grid-no-images');
+                document.getElementById("choose-grid").classList.remove('choose-grid');
                 if (level.levelsCleared === 0 && initialDifficultyMode !== simulation.difficultyMode) {
                     powerUps.difficulty.setDamageAndDefense()
                     //remove and respawn all power ups if difficulty mode was changed
@@ -1085,30 +1072,9 @@ const powerUps = {
         } else {
             width = "384px"
         }
-
         let text = ""
-        if (localSettings.isHideImages) {
-            document.getElementById("choose-grid").style.gridTemplateColumns = width
-            text += powerUps.researchAndCancelText(type)
-        } else if (totalChoices === 0) {
-            document.getElementById("choose-grid").style.gridTemplateColumns = width
-            text += powerUps.researchAndCancelText(type)
-        } else if (totalChoices === 1 || canvas.width < 1200) {
-            document.getElementById("choose-grid").style.gridTemplateColumns = width
-            text += powerUps.researchAndCancelText(type)
-            // console.log('hi')
-            // text += powerUps.cancelText(type)
-            // text += powerUps.researchText(type)
-        } else if (totalChoices === 2) {
-            document.getElementById("choose-grid").style.gridTemplateColumns = `repeat(2, ${width})`
-            text += powerUps.researchText(type)
-            text += powerUps.cancelText(type)
-        } else {
-            document.getElementById("choose-grid").style.gridTemplateColumns = `repeat(3, ${width})`
-            text += "<div></div>"
-            text += powerUps.researchText(type)
-            text += powerUps.cancelText(type)
-        }
+        document.getElementById("choose-grid").style.gridTemplateColumns = width
+        text += powerUps.researchAndCancelText(type)
         return text
     },
     hideStyle: `style="height:auto; border: none; background-color: transparent;"`,
@@ -1119,39 +1085,34 @@ const powerUps = {
         ${m.fieldUpgrades[choose].description}</div></div>`
     },
     gunText(choose, click) {
-        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/gun/${b.guns[choose].name}.webp');"`
-        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}" ${style}>
+        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}" ${powerUps.hideStyle}>
             <div class="card-text">
             <div class="grid-title"><div class="circle-grid-title gun"></div> &nbsp; ${b.guns[choose].name}</div>
             ${b.guns[choose].descriptionFunction()}</div></div>`
     },
     fieldText(choose, click) {
-        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/field/${m.fieldUpgrades[choose].name}${choose === 0 ? Math.floor(Math.random() * 10) : ""}.webp');"`
-        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${style}>
+        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${powerUps.hideStyle}>
         <div class="card-text">
         <div class="grid-title"><div class="circle-grid-title field"></div> &nbsp; ${m.fieldUpgrades[choose].name}</div>
         ${m.fieldUpgrades[choose].description}</div></div>`
     },
     techText(choose, click) {
         const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
-        const style = localSettings.isHideImages || tech.tech[choose].isLore ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
-        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${style}>
+        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${powerUps.hideStyle}>
                 <div class="card-text">
                 <div class="grid-title"><div class="circle-grid-title tech"></div> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
     },
     instantTechText(choose, click) {
         const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
-        const style = localSettings.isHideImages || tech.tech[choose].isLore ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
-        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${style}>
+        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${powerUps.hideStyle}>
                 <div class="card-text">
                 <div class="grid-title"> <div class="circle-grid-instant"></div> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
     },
     skinTechText(choose, click) {
         const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
-        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
-        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${style}>
+        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${powerUps.hideStyle}>
                 <div class="card-text">
                 <div class="grid-title">         
                 <span style="position:relative;">
@@ -1163,8 +1124,7 @@ const powerUps = {
     },
     fieldTechText(choose, click) {
         const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
-        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
-        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${style}>
+        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${powerUps.hideStyle}>
                 <div class="card-text">
                 <div class="grid-title">
                 <span style="position:relative;">
@@ -1176,8 +1136,7 @@ const powerUps = {
     },
     gunTechText(choose, click) {
         const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
-        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
-        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${style}>
+        return `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${powerUps.hideStyle}>
                 <div class="card-text">
                 <div class="grid-title">         
                 <span style="position:relative;">
@@ -1189,37 +1148,14 @@ const powerUps = {
     },
     junkTechText(choose, click) {
         const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
-        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-size: contain;background-repeat: no-repeat;background-image: url('img/junk.webp');"`
-        // if (!localSettings.isHideImages) {
-        // setTimeout(() => { //delay so that the html element exists
-        //     if (tech.tech[choose].url === undefined) { //if on url has been set yet
-        //         const url = `https://api.openverse.engineering/v1/images/?q=${tech.tech[choose].name}`;
-        //         fetch(url, { signal: AbortSignal.timeout(1000) }) //give up if it takes over 1 second
-        //             .then((response) => response.json())
-        //             .then((responseJson) => {
-        //                 if (responseJson.results.length > 0) {
-        //                     const index = Math.floor(Math.random() * responseJson.results.length) //randomly choose from the images
-        //                     tech.tech[choose].url = responseJson.results[index].url //store the url
-        //                     document.getElementById(`junk-${choose}`).style.backgroundImage = `url('${tech.tech[choose].url}')` //make the url the background image
-        //                 }
-        //             });
-        //     } else {
-        //         document.getElementById(`junk-${choose}`).style.backgroundImage = `url('${tech.tech[choose].url}')`
-        //     }
-        // }, 1);
-        // setTimeout(() => { //delay so that the html element exists
-        //     document.getElementById(`junk-${choose}`).style.backgroundImage = `url('${tech.tech[choose].url}')`
-        // }, 1);
-        // }
-        return `<div id = "junk-${choose}" class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${style}>
+        return `<div id = "junk-${choose}" class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="${click}" onauxclick="${click}"${powerUps.hideStyle}>
                 <div class="card-text">
                 <div class="grid-title"><div class="circle-grid-title junk"></div> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
     },
     incoherentTechText(choose, click) {
         // text += `<div class="choose-grid-module" style = "background-color: #efeff5; border: 0px; opacity:0.5; font-size: 60%; line-height: 130%; margin: 1px; padding-top: 6px; padding-bottom: 6px;"><div class="grid-title">${tech.tech[choose].name} <span style = "color: #aaa;font-weight: normal;font-size:80%;">- incoherent</span></div></div>`
-        const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
-        return `<div class="choose-grid-module card-background" ${style}>
+        return `<div class="choose-grid-module card-background" ${powerUps.hideStyle}>
                 <div class="card-text" style = "background-color: #efeff5;">
                 <div class="grid-title" style = "color: #ddd;font-weight: normal;">incoherent</div> <br> <br>
                 </div></div>`
@@ -1278,8 +1214,7 @@ const powerUps = {
                         if (botTech.length > 0) { //pick random bot tech
                             const choose = botTech[Math.floor(Math.random() * botTech.length)];
                             const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
-                            const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
-                            text += `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="powerUps.choose('tech',${choose})" ${style}>
+                            text += `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="powerUps.choose('tech',${choose})" ${powerUps.hideStyle}>
                                     <div class="card-text">
                                     <div class="grid-title"><span  style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                                     ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
@@ -1345,8 +1280,7 @@ const powerUps = {
                         if (botTech.length > 0) { //pick random bot tech
                             const choose = botTech[Math.floor(Math.random() * botTech.length)];
                             const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
-                            const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
-                            text += `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="powerUps.choose('tech',${choose})" ${style}>
+                            text += `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="powerUps.choose('tech',${choose})" ${powerUps.hideStyle}>
                                     <div class="card-text">
                                     <div class="grid-title"><span  style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                                     ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
@@ -1480,8 +1414,7 @@ const powerUps = {
                             // text += `<div class="choose-grid-module" onclick="powerUps.choose('tech',${choose})"><div class="grid-title">          <span  style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span>  &nbsp; ${tech.tech[choose].name} ${isCount}</div>          ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div>`
                             const choose = botTech[Math.floor(Math.random() * botTech.length)];
                             const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
-                            const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[choose].name}.webp');"`
-                            text += `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="powerUps.choose('tech',${choose})" ${style}>
+                            text += `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="powerUps.choose('tech',${choose})" ${powerUps.hideStyle}>
                                     <div class="card-text">
                                     <div class="grid-title"><span  style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
                                     ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
@@ -1490,8 +1423,7 @@ const powerUps = {
                     if (tech.isMassProduction) {
                         for (let i = 0, len = tech.tech.length; i < len; i++) {
                             if (tech.tech[i].isMassProduction) {
-                                const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/${tech.tech[i].name}.webp');"`
-                                text += `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="powerUps.choose('tech',${i})" ${style}>
+                                text += `<div class="choose-grid-module card-background ${level.blurryChoices && Math.random() < 0.6 ? "blurry-text" : ""}" onclick="powerUps.choose('tech',${i})" ${powerUps.hideStyle}>
                                         <div class="card-text">
                                         <div class="grid-title">${tech.tech[i].name}</div>
                                         ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div></div>`
@@ -1867,9 +1799,10 @@ const powerUps = {
         //put 10 power ups close together
         const len = Math.min(10, powerUp.length)
         for (let i = 0; i < len; i++) { //collide the first 10 power ups
+            powerUp[i].cycle = 1
             const unit = Vector.rotate({ x: 1, y: 0 }, 6.28 * Math.random())
-            Matter.Body.setPosition(powerUp[i], Vector.add(where, Vector.mult(unit, 20 + 25 * Math.random())));
-            Matter.Body.setVelocity(powerUp[i], Vector.mult(unit, 20));
+            Matter.Body.setPosition(powerUp[i], Vector.add(where, Vector.mult(unit, 20 + 45 * Math.random())));
+            Matter.Body.setVelocity(powerUp[i], Vector.mult(unit, 17));
         }
 
         //count big power ups and small power ups
@@ -1935,6 +1868,7 @@ const powerUps = {
         }
         let index = powerUp.length;
         let properties = {
+            cycle: 0,
             density: 0.001,
             frictionAir: 0.03,
             restitution: 0.85,
