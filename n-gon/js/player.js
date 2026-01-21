@@ -3155,7 +3155,7 @@ const m = {
         } else {
             m.fieldRegen = 0.001 //6 energy per second
         }
-        if (m.fieldMode === 4) m.fieldRegen += 0.001667 * m.coupling
+        if (m.fieldMode === 4) m.fieldRegen += 0.0001667 * m.coupling
         if (m.fieldMode === 0) m.fieldRegen += 0.0008 * m.coupling
         if (tech.isTimeCrystals) {
             m.fieldRegen *= 2.5
