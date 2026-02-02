@@ -34,8 +34,8 @@ const level = {
             // tech.tech[297].frequency = 100
             // tech.addJunkTechToPool(0.5)
             // m.couplingChange(100)
-
-            // m.setField(9) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
+            // requestAnimationFrame(() => { m.setField(9) });
+            // m.setField(3) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
             // m.energy = m.maxEnergy = 12.2
             // m.energy += 1
             // m.couplingChange(1000)
@@ -55,18 +55,18 @@ const level = {
             // simulation.molecularMode = 2
             // m.takeDamage(0.01);
 
-            // b.giveGuns(0) //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns(11) //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[b.inventory[0]].ammo = 100000000000
-            // tech.giveTech("neutron bomb")
-            // tech.giveTech("pulse")
             // tech.addJunkTechToPool(0.5)
-            // for (let i = 0; i < 1; i++) tech.giveTech("path integral")
-            // for (let i = 0; i < 2; ++i) tech.giveTech("rule 30")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("mass-energy equivalence")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("filament")
+            // tech.giveTech("mycelium")
+            // for (let i = 0; i < 1; i++) tech.giveTech("world line")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("chitin")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("fiber optics")
             // spawn.bodyRect(575, -700, 150, 150);  //block mob line of site on testing
             // level.levelsCleared = 7
             // simulation.isHorizontalFlipped = true
-            // level.towers()
+            // level.testChamber()
             // level.testing()
 
             level[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
@@ -74,13 +74,13 @@ const level = {
             // powerUps.spawn(m.pos.x, m.pos.y, "difficulty", false);
             // spawn.randomGroup(1300, -200, Infinity);
             // spawn.nodeGroup(1300, -200, 'grower');
-            // for (let i = 0; i < 1; i++) spawn.tendrilBoss(1300 + 300 * i, -200)
-            // for (let i = 0; i < 10; i++) spawn.zombie(1300 + 200 * i, -200)
+            // for (let i = 0; i < 2; i++) spawn.springer(1300 + 300 * i, -200)
+            // for (let i = 0; i < 1; i++) spawn.tubeWormBoss(2300 + 200 * i, -200)
             // Matter.Body.setPosition(player, { x: -27000, y: -400 });
-            // requestAnimationFrame(() => { powerUps.spawnDelay("coupling", 2000); });
+            // requestAnimationFrame(() => { powerUps.spawnDelay("coupling", 100); });
             // m.storeTech() //sets entanglement
             // for (let i = 0; i < 1; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "entanglement");
-            // for (let i = 0; i < 10; ++i) powerUps.directSpawn(m.pos.x + 450, m.pos.y + 50 * Math.random(), "coupling");
+            // for (let i = 0; i < 30; ++i) powerUps.directSpawn(m.pos.x + 450 + 150 * Math.random(), m.pos.y + 150 * Math.random(), "coupling");
             // for (let i = 0; i < 100; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "coupling", false);
             // level.constraint[0].effect()  // turn this off first ->  seededShuffle(level.constraint)
 
@@ -187,6 +187,21 @@ const level = {
             tech.blockDupCount = 0
             simulation.inGameConsole(`<span class='color-var'>duplicationChance</span> <span class='color-symbol'>=</span> 0 //for anyon`);
         }
+        //translate wire
+        if (tech.wire && tech.wire.segments.length) {
+            const radius = 80 + 60 * Math.random()
+            const angleStep = 0.1 + 0.2 * Math.random()
+            let angle = 0
+            for (let i = 0; i < tech.wire.segments.length; i++) {
+                angle += angleStep
+                tech.wire.segments[i].x = m.pos.x + radius * Math.cos(angle)
+                tech.wire.segments[i].y = m.pos.y + radius * Math.sin(angle)
+                tech.wire.segments[i].oldX = m.pos.x + radius * Math.cos(angle)
+                tech.wire.segments[i].oldY = m.pos.y + radius * Math.sin(angle)
+
+            }
+        }
+
         level.newLevelOrPhase()
         if (tech.isDigitalPet) {
 
@@ -989,9 +1004,7 @@ const level = {
                         simulation.isChoosing = false; //stops p from un pausing on key down
                         build.unPauseGrid()
                         document.getElementById("choose-grid").style.opacity = "0"
-                        setTimeout(() => {
-                            document.getElementById("choose-grid").style.visibility = "hidden"
-                        }, 1000);
+                        document.getElementById("choose-grid").style.visibility = "hidden"
                     }
                     //draw
                     simulation.wipe();
@@ -3149,9 +3162,9 @@ const level = {
         // spawn.bodyRect(250, -450, 50, 50); //block on button
 
         const wind = []
-        wind.push(level.wind(975, -160, 600, 150, { x: 0.01, y: 0 }))
-        wind.push(level.wind(1750, -475, 75, 475, { x: 0, y: -0.01 }))
-        wind.push(level.wind(975, -825, 475, 75, { x: 0, y: -0.01 }))
+        // wind.push(level.wind(975, -160, 600, 150, { x: 0.01, y: 0 }))
+        // wind.push(level.wind(1750, -475, 75, 475, { x: 0, y: -0.01 }))
+        // wind.push(level.wind(975, -825, 475, 75, { x: 0, y: -0.01 }))
 
         level.custom = () => {
 
@@ -3948,7 +3961,6 @@ const level = {
                 //remove any powerUp that is too far from player
                 for (let i = 0; i < powerUp.length; ++i) {
                     if (Vector.magnitudeSquared(Vector.sub(player.position, powerUp[i].position)) > 9000000 && (!tech.isHealAttract || powerUp[i].name !== "heal")) { //remove any powerUp farther then 3000 pixels from player
-                        console.log(powerUp[i].name)
                         Matter.Composite.remove(engine.world, powerUp[i]);
                         powerUp.splice(i--, 1)
                     }
@@ -8489,6 +8501,12 @@ const level = {
                 if (mob[i].springTarget2) {
                     mob[i].springTarget.y *= -1
                     mob[i].springTarget2.y *= -1
+                }
+            }
+            if (tech.wire && tech.wire.segments.length) {
+                for (let i = 0; i < tech.wire.segments.length; i++) {
+                    tech.wire.segments[i].y *= -1
+                    tech.wire.segments[i].oldY *= -1
                 }
             }
         }

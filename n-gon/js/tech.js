@@ -270,6 +270,7 @@ const tech = {
     },
     damageAdjustments() {
         let dmg = m.damageDone * m.fieldDamage * powerUps.difficulty.damageDone
+        if (tech.isLaserWire && tech.wire && tech.wire.segments.length) dmg *= 1 + 0.01 * tech.wire.segments.length
         if (level.isNoDamage && (m.cycle - 180 < level.noDamageCycle)) dmg *= 0.3
         if (tech.isMaxHealthDamage && (m.health === m.maxHealth || (tech.isEnergyHealth && m.energy > m.maxEnergy - 0.01))) dmg *= 2
         if (tech.isNoDeath && m.health < 0) dmg *= 3
@@ -282,7 +283,7 @@ const tech = {
         if (tech.isDilate) dmg *= 1.9 + 1.1 * Math.sin(m.cycle * 0.01)
         if (tech.isGunChoice) dmg *= 1 + 0.4 * b.inventory.length
         if (powerUps.boost.endCycle > simulation.cycle) dmg *= 1 + powerUps.boost.damage
-        if (m.coupling && (m.fieldMode === 0 || m.fieldMode === 5)) dmg *= 1 + m.coupling * (m.fieldMode === 0 ? 0.015 : 0.025)
+        if (m.coupling && (m.fieldMode === 0 || m.fieldMode === 5)) dmg *= 1 + m.coupling * (m.fieldMode === 0 ? 0.002 : 0.02)
         if (tech.isVerlet) dmg *= 3
         if (tech.isTechDebt) dmg *= tech.totalCount > 20 ? Math.pow(0.85, tech.totalCount - 20) : 4 - 0.15 * tech.totalCount
         if (tech.isAnthropicDamage && tech.isDeathAvoidedThisLevel) dmg *= 2.71828
@@ -316,7 +317,7 @@ const tech = {
     },
     duplicationChance() {
         if (level.isNoDuplicate) return 0
-        return Math.min(1, Math.max(0, (tech.isPowerUpsVanish ? 0.13 : 0) + (tech.isStimulatedEmission ? 0.2 : 0) + tech.duplication + tech.duplicateChance + 0.05 * tech.isExtraGunField + m.duplicateChance + tech.fieldDuplicate + 0.08 * tech.isDuplicateMobs + 0.03 * tech.isMassProduction + 0.04 * tech.isHealAttract + tech.cloakDuplication + (tech.isAnthropicTech && tech.isDeathAvoidedThisLevel ? 0.6 : 0) + 0.06 * tech.isDupEnergy + tech.blockDupCount))
+        return Math.min(1, Math.max(0, (tech.isPowerUpsVanish ? 0.13 : 0) + (tech.isStimulatedEmission ? 0.2 : 0) + tech.duplication + tech.duplicateChance + 0.05 * tech.isExtraGunField + m.duplicateChance + tech.fieldDuplicate + 0.08 * tech.isDuplicateMobs + 0.03 * tech.isMassProduction + 0.04 * tech.isHealAttract + tech.cloakDuplication + (tech.isAnthropicTech && tech.isDeathAvoidedThisLevel ? 0.6 : 0) + 0.06 * tech.isDupEnergy + tech.blockDupCount + ((tech.wire && tech.wire.segments.length) ? 0.01 * tech.wire.segments.length : 0)))
     },
     setTechFrequency(name, frequency) {
         for (let i = 0, len = tech.tech.length; i < len; i++) {
@@ -2809,9 +2810,8 @@ const tech = {
     },
     {
         name: "dark matter",
-        //a MAssive Compact Halo Object follows you<br>
         descriptionFunction() {
-            return `<strong class='color-dark-matter'>dark matter</strong> slowly gravitates <strong>towards</strong> you<br><strong>0.4x</strong> <strong class='color-defense'>damage taken</strong> <strong>${tech.isNotDarkMatter ? "outside" : "inside"}</strong> <strong class='color-dark-matter'>dark matter</strong>`
+            return `<strong class='color-dark-matter'>dark matter</strong> slowly gravitates <strong>towards</strong> you<br><strong>0.3x</strong> <strong class='color-defense'>damage taken</strong> <strong>${tech.isNotDarkMatter ? "outside" : "inside"}</strong> <strong class='color-dark-matter'>dark matter</strong>`
         },
         maxCount: 1,
         count: 0,
@@ -4902,6 +4902,442 @@ const tech = {
         }
     },
     {
+        name: "filament",
+        descriptionFunction() {
+            // return `<span style = 'font-size:93%;'><strong>+1</strong> segment from <strong>power ups</strong>, hitting mobs removes them<br><strong>+1%</strong> chance to <strong class='color-dup'>duplicate</strong> <strong>power ups</strong> per segment</span>`
+            // return `<strong>power ups</strong> give <strong>+1</strong> <strong class='color-dup'>duplication</strong> / <strong class="color-wire">wire</strong> length<br>mobs <strong>cut</strong> <strong class="color-wire">wire</strong> / <strong class='color-dup'>duplication</strong>`
+            return `<strong>power ups</strong> grow <strong class="color-wire">filament</strong> by <strong>+1</strong>, mobs <strong>cut</strong> it<br><strong>+1%</strong> <strong class='color-dup'>duplication</strong> per segment <em style ='float: right;'>(${tech.wire ? Math.min(100, tech.wire.segments.length).toFixed(0) : 10}%)</em>`
+        },
+        maxCount: 1,
+        count: 0,
+        frequency: 1,
+        frequencyDefault: 1,
+        allowed() {
+            return true
+        },
+        requires: "",
+        effect() {
+
+            // class Scarf {
+            //     constructor(length = 10, spacing = 20) {
+            //         this.segments = [];
+            //         this.spacing = spacing; // Distance between segments
+            //         this.friction = 0.3;   // 0 to 1 (lower is "thicker" air)
+            //         this.gravity = 6;     // Downward pull
+            //         this.stiffness = 0.6;   // How fast it snaps back
+
+            //         // Initialize segments at (0,0)
+            //         for (let i = 0; i < length; i++) {
+            //             this.segments.push({ x: 0, y: 0, vx: 0, vy: 0 });
+            //         }
+            //     }
+
+            //     update(anchorX, anchorY) {
+            //         // 1. PIN the head: The first segment IS the player's position
+            //         this.segments[0].x = anchorX;
+            //         this.segments[0].y = anchorY;
+
+            //         // 2. Update the rest: Start the loop at index 1
+            //         for (let i = 1; i < this.segments.length; i++) {
+            //             let seg = this.segments[i];
+            //             let prev = this.segments[i - 1];
+
+            //             // Add this inside the loop if the scarf feels too stretchy:
+            //             let dx = seg.x - prev.x;
+            //             let dy = seg.y - prev.y;
+            //             let distance = Math.sqrt(dx * dx + dy * dy);
+            //             if (distance > this.spacing) {
+            //                 let angle = Math.atan2(dy, dx);
+            //                 seg.x = prev.x + Math.cos(angle) * this.spacing;
+            //                 seg.y = prev.y + Math.sin(angle) * this.spacing;
+            //             }
+
+            //             // Physics: Each segment follows the one before it
+            //             seg.vx += (prev.x - seg.x) * this.stiffness;
+            //             seg.vy += (prev.y - seg.y) * this.stiffness;
+
+            //             seg.vy += this.gravity;
+            //             seg.vx *= this.friction;
+            //             seg.vy *= this.friction;
+
+            //             seg.x += seg.vx;
+            //             seg.y += seg.vy;
+            //         }
+            //     }
+
+            //     draw(ctx) {
+            //         ctx.beginPath();
+            //         ctx.lineWidth = 5;
+            //         ctx.lineJoin = "round";
+            //         ctx.lineCap = "round";
+            //         ctx.strokeStyle = "#ff0095";
+
+            //         // Start exactly at the player's head (the first segment)
+            //         ctx.moveTo(this.segments[0].x, this.segments[0].y);
+
+            //         for (let i = 1; i < this.segments.length - 1; i++) {
+            //             // Calculate control points for a smooth curve
+            //             const xc = (this.segments[i].x + this.segments[i + 1].x) / 2;
+            //             const yc = (this.segments[i].y + this.segments[i + 1].y) / 2;
+            //             ctx.quadraticCurveTo(this.segments[i].x, this.segments[i].y, xc, yc);
+            //         }
+
+            //         // Draw the final segment
+            //         const last = this.segments[this.segments.length - 1];
+            //         ctx.lineTo(last.x, last.y);
+
+            //         ctx.stroke();
+            //     }
+            // }
+            class Wire {
+                constructor(length = 10, spacing = 30, startX = 0, startY = 0) {
+                    this.totalPowerUpsUsed = powerUps.totalUsed //used to track if the player has picked up a power up
+                    this.segments = [];
+                    this.spacing = spacing;
+                    this.bendFactor = 2
+                    this.friction = 0.5;
+                    this.color = "#000"
+                    this.gravity = 0.6;
+                    this.setPhysics()
+
+                    for (let i = 0; i < length; i++) {
+                        // Initialize everything at the start position to prevent the "velocity explosion"
+                        this.segments.push({ x: startX, y: startY, oldX: startX, oldY: startY });
+                    }
+                }
+                setPhysics() {
+                    this.friction = 0.5;
+                    this.color = "#000"
+                    this.gravity = 0.6;
+                    // this.spacing = 30
+
+                    if (tech.isLaserWire) {
+                        this.gravity = 0
+                        this.color = "rgba(255,0,0,1)"
+                    }
+                    if (tech.isMycelium) {
+                        this.gravity = -0.1
+                    }
+                    if (tech.isChitin) {
+                        this.friction = 0.66 //makes it move aggressively
+                        this.bendFactor = 1.88 //adds a wiggle to the wire
+                    }
+                    // if (tech.isCutTimeStop) { }
+                }
+                grow() {
+                    // let last2 = this.segments[this.segments.length - 2];
+                    // const unit = Vector.normalise(Vector.sub(last, last2))
+                    // const space = Vector.rotate(Vector.mult(unit, 0.5 * this.spacing), 0 + 1 * Math.random())
+                    let last = this.segments[this.segments.length - 1];
+                    this.segments.push({ x: last.x, y: last.y, oldX: last.x, oldY: last.y });
+                    if (tech.isMycelium && Matter.Query.point(map, this.segments[this.segments.length - 1]).length === 0) b.spore(this.segments[this.segments.length - 1])
+                }
+                update(anchorX, anchorY) {
+                    if (powerUps.totalUsed > this.totalPowerUpsUsed) {
+                        this.totalPowerUpsUsed++
+                        if (this.segments.length < 200) { //cap max length at 200 for performance
+                            this.grow()
+                            if (tech.isCutTimeStop) this.grow()
+                        }
+                    }
+                    if (tech.isMycelium && this.segments.length < 10 && simulation.cycle % 60 === 0 && !m.isTimeDilated && m.fieldCDcycle < m.cycle) this.grow() //
+                    for (let i = 0; i < this.segments.length; i++) {
+                        let p = this.segments[i];
+
+                        if (i === 0) {
+                            p.x = anchorX;
+                            p.y = anchorY;
+                        } else {
+
+                            let vx = (p.x - p.oldX) * this.friction;
+                            let vy = (p.y - p.oldY) * this.friction;
+                            p.oldX = p.x;
+                            p.oldY = p.y;
+
+                            p.x += vx;
+                            p.y += vy + this.gravity;
+                        }
+                    }
+
+                    // Constraints logic, keeps length constant
+                    for (let i = 1; i < this.segments.length; i++) {
+                        let p = this.segments[i];
+                        let prev = this.segments[i - 1];
+
+                        let dx = p.x - prev.x;
+                        let dy = p.y - prev.y;
+                        let distance = Math.sqrt(dx * dx + dy * dy) + 0.01;
+                        let difference = (this.spacing - distance) / distance;
+
+                        // We only move the "child" segment, not the "parent" 
+                        // This keeps the chain moving downward from the head
+                        p.x += dx * difference;
+                        p.y += dy * difference;
+
+                        // Centripetal Pull: Each segment tries to stay slightly closer to the anchor
+                        // const pullStrength = 0.05 * (i / this.segments.length);
+                        // p.x += (anchorX - p.x) * pullStrength * (1 - i / this.segments.length);
+                        // p.y += (anchorY - p.y) * pullStrength * (1 - i / this.segments.length);
+                    }
+
+                    //prevent sharp bends
+                    // if (!tech.isCutTimeStop) {
+                    const rigidity = 0.5; // 0 (loose) to 1 (stiff rod), at 2 it looks cool, like electric, also - numbers are fun
+                    const bendDist = this.spacing * this.bendFactor;
+                    for (let i = 2; i < this.segments.length; i++) {
+                        let p = this.segments[i];
+                        let pPrev2 = this.segments[i - 2];
+
+                        let dx = p.x - pPrev2.x;
+                        let dy = p.y - pPrev2.y;
+                        let distance = Math.sqrt(dx * dx + dy * dy) || 1;
+
+                        //how far it is from being a straight line
+                        let difference = (bendDist - distance) / distance;
+                        p.x += dx * difference * rigidity;
+                        p.y += dy * difference * rigidity;
+                    }
+                    // }
+
+                    this.draw()
+
+                    //fiber optic
+                    if (tech.isLaserWire && this.segments.length > 4) {
+                        const ultimate = this.segments[this.segments.length - 1]
+                        const penultimate = this.segments[this.segments.length - 2]
+                        const unit = Vector.normalise(Vector.sub(ultimate, penultimate))
+                        const exit = {
+                            x: ultimate.x - 10 * unit.x,
+                            y: ultimate.y - 10 * unit.y
+                        }
+                        //if exit in inside map or blocks dont' fire
+                        if (Matter.Query.ray([...map, ...body], exit, ultimate).length === 0) {
+                            b.laser(exit, {
+                                x: ultimate.x + 5000 * unit.x,
+                                y: ultimate.y + 5000 * unit.y
+                            }, tech.laserDamage, tech.laserReflections, false, 1, "#f00");
+
+                            // laser(where, whereEnd, damage = tech.laserDamage, reflections = tech.laserReflections, isThickBeam = false, push = 1, laserColor = tech.laserColor) {
+                        }
+                    }
+
+                    // check for collisions with mobs
+                    if (!m.isTimeDilated) {
+                        for (let i = 1; i < this.segments.length - 1; i++) {
+                            let hit = Matter.Query.ray(mob, this.segments[i], this.segments[i + 1])
+                            if (hit.length && !hit[0].body.isUnblockable) {
+                                if (tech.isChitin) { //tail segments past the collisions point are made into worms
+                                    hit = hit[0].body
+                                    for (let j = Math.max(1, i); j < this.segments.length - 1; j++) {
+                                        b.worm({ x: this.segments[j].x, y: this.segments[j].y })
+                                    }
+                                }
+                                if (tech.isCutTimeStop) { //pause time
+                                    m.isTimeDilated = true
+                                    const cutIndex = Math.min(Math.max(2, i), this.segments.length - 1)
+                                    const long = this.segments.length - cutIndex
+                                    simulation.ephemera.push({
+                                        wireArray: tech.wire.segments.slice(cutIndex), //this should be the part of the wire that is recently cut
+                                        cycle: 10 + 2 * Math.min(100, long),
+                                        do() {
+                                            m.immuneCycle = m.cycle + 10;
+                                            m.isTimeDilated = true;
+
+                                            // Draw the background time-stop effect
+                                            ctx.globalCompositeOperation = "saturation";
+                                            ctx.fillStyle = "#ccc";
+                                            ctx.fillRect(-50000, -50000, 100000, 100000);
+                                            ctx.globalCompositeOperation = "source-over";
+
+                                            function sleep(who) {
+                                                for (let i = 0, len = who.length; i < len; ++i) {
+                                                    if (!who[i].isSleeping) {
+                                                        who[i].storeVelocity = who[i].velocity;
+                                                        who[i].storeAngularVelocity = who[i].angularVelocity;
+                                                    }
+                                                    Matter.Sleeping.set(who[i], true);
+                                                }
+                                            }
+                                            sleep(mob);
+                                            sleep(body);
+                                            sleep(bullet);
+                                            simulation.cycle--;
+
+
+                                            //draw the wire timer
+                                            ctx.beginPath()
+                                            ctx.strokeStyle = "#ff0";
+                                            ctx.lineWidth = 6;
+                                            ctx.lineCap = "round";
+                                            ctx.lineJoin = "round";
+                                            ctx.moveTo(this.wireArray[0].x, this.wireArray[0].y);
+                                            for (let i = 1; i < this.wireArray.length - 1; i++) {
+                                                const xc = (this.wireArray[i].x + this.wireArray[i + 1].x) / 2;
+                                                const yc = (this.wireArray[i].y + this.wireArray[i + 1].y) / 2;
+                                                ctx.quadraticCurveTo(this.wireArray[i].x, this.wireArray[i].y, xc, yc);
+                                            }
+                                            ctx.lineTo(this.wireArray[this.wireArray.length - 1].x, this.wireArray[this.wireArray.length - 1].y);
+                                            ctx.stroke();
+
+                                            //shorten the length of the array
+                                            this.cycle--
+                                            if (this.cycle < 1 && (this.cycle % 2 === 0)) {
+                                                this.wireArray.pop()
+                                                if (this.wireArray.length <= 0) {
+                                                    simulation.removeEphemera(this);
+                                                    m.wakeCheck();
+                                                }
+                                            }
+                                        },
+                                    });
+                                } else if (!tech.isChitin && tech.wire.segments.length > 3) { //fade out lost tail segments
+                                    simulation.ephemera.push({
+                                        wireArray: tech.wire.segments.slice(i), //this should be the part of the wire that is recently cut
+                                        cycle: 60,
+                                        do() {
+                                            //draw the wire timer
+                                            ctx.beginPath()
+                                            ctx.strokeStyle = `rgba(0,0,0,${this.cycle / 60})`;
+                                            ctx.lineWidth = 3;
+                                            ctx.lineCap = "round";
+                                            ctx.lineJoin = "round";
+                                            ctx.moveTo(this.wireArray[0].x, this.wireArray[0].y);
+                                            for (let i = 1; i < this.wireArray.length - 1; i++) {
+                                                const xc = (this.wireArray[i].x + this.wireArray[i + 1].x) / 2;
+                                                const yc = (this.wireArray[i].y + this.wireArray[i + 1].y) / 2;
+                                                ctx.quadraticCurveTo(this.wireArray[i].x, this.wireArray[i].y, xc, yc);
+                                            }
+                                            ctx.lineTo(this.wireArray[this.wireArray.length - 1].x, this.wireArray[this.wireArray.length - 1].y);
+                                            ctx.stroke();
+
+                                            //shorten the length of the array
+                                            this.cycle--
+                                            if (this.cycle < 1) simulation.removeEphemera(this);
+                                        },
+                                    });
+
+
+                                }
+                                this.segments.length = Math.max(2, i - 1)
+                            }
+                        }
+                    }
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.moveTo(this.segments[0].x, this.segments[0].y);
+                    for (let i = 1; i < this.segments.length - 1; i++) {
+                        const xc = (this.segments[i].x + this.segments[i + 1].x) / 2;
+                        const yc = (this.segments[i].y + this.segments[i + 1].y) / 2;
+                        ctx.quadraticCurveTo(this.segments[i].x, this.segments[i].y, xc, yc);
+                    }
+                    ctx.lineWidth = 6;
+                    ctx.strokeStyle = this.color
+                    ctx.stroke();
+                }
+            }
+            tech.wire = new Wire()
+            powerUps.setPowerUpMode();
+            simulation.ephemera.push({
+                name: "filament",
+                playerTail: new Wire(),
+                do() {
+                    const r = 32 * player.scale
+                    const a = m.angle + Math.PI
+                    tech.wire.update(m.pos.x + (r * Math.cos(a)), m.pos.y + (r * Math.sin(a)));
+                },
+            })
+        },
+        remove() {
+            tech.wire = null
+            if (this.count) simulation.removeEphemera("filament", true)
+        }
+    },
+    {
+        name: "chitin",
+        description: `after mobs <strong>die</strong> grow <strong class="color-wire">filament</strong> by <strong>+3</strong> segments<br>if <strong class="color-wire">filament</strong> is cut, hatch a <strong class='color-p' style='letter-spacing: -0.8px;'>worm</strong> from lost segments`,
+        maxCount: 1,
+        count: 0,
+        frequency: 3,
+        frequencyDefault: 3,
+        allowed() {
+            return tech.wire
+        },
+        requires: "filament",
+        effect() {
+            tech.isChitin = true
+            if (tech.wire) tech.wire.setPhysics()
+        },
+        remove() {
+            tech.isChitin = false
+            if (tech.wire) tech.wire.setPhysics()
+        }
+    },
+    {
+        name: "mycelium",
+        description: `regrow <strong class="color-wire">filament</strong> if it has fewer than <strong>10</strong> segments<br>when <strong class="color-wire">filament</strong> gets longer release a <strong class='color-p' style='letter-spacing: 2px;'>spore</strong>`,
+        maxCount: 1,
+        count: 0,
+        frequency: 3,
+        frequencyDefault: 3,
+        allowed() {
+            return tech.wire
+        },
+        requires: "filament",
+        effect() {
+            tech.isMycelium = true
+            if (tech.wire) tech.wire.setPhysics()
+        },
+        remove() {
+            tech.isMycelium = false
+            if (tech.wire) tech.wire.setPhysics()
+        }
+    },
+    {
+        name: "fiber optics",
+        // description: `if <strong class="color-wire">filament</strong> is at least <strong>5</strong> segments long<br>it transmits a red <strong class='color-laser'>laser</strong> beam for <strong>0</strong> <strong class='color-f'>energy</strong>`,
+        descriptionFunction() {
+            return `<strong class="color-wire">filament</strong> emits a <strong class='color-laser'>laser</strong> for <strong>0</strong> <strong class='color-f'>energy</strong><br><strong>1.01x</strong> <strong class='color-d'>damage</strong> per <strong class="color-wire">filament</strong> segment<em style ='float: right;'>(${tech.wire ? (1 + 0.01 * tech.wire.segments.length).toFixed(2) : 0}x)</em>`
+        },
+        maxCount: 1,
+        count: 0,
+        frequency: 3,
+        frequencyDefault: 3,
+        allowed() {
+            return tech.wire
+        },
+        requires: "filament",
+        effect() {
+            tech.isLaserWire = true
+            if (tech.wire) tech.wire.setPhysics()
+        },
+        remove() {
+            tech.isLaserWire = false
+            if (tech.wire) tech.wire.setPhysics()
+        }
+    },
+    {
+        name: "world line",
+        description: `if <strong class="color-wire">filament</strong> is cut <strong style='letter-spacing: 2px;'>stop time</strong> for a moment<br><strong>power ups</strong> grow <strong class="color-wire">filament</strong> by an additional <strong>+1</strong>`,
+        maxCount: 1,
+        count: 0,
+        frequency: 3,
+        frequencyDefault: 3,
+        allowed() {
+            return tech.wire
+        },
+        requires: "filament",
+        effect() {
+            tech.isCutTimeStop = true
+            if (tech.wire) tech.wire.setPhysics()
+        },
+        remove() {
+            tech.isCutTimeStop = false
+            if (tech.wire) tech.wire.setPhysics()
+        }
+    },
+    {
         name: "stimulated emission",
         description: `<strong>+20%</strong> chance to <strong class='color-dup'>duplicate</strong> new <strong>power ups</strong>,<br><strong>collisions</strong> <span class='color-remove'>eject</span> a random ${powerUps.orb.tech()}`,
         maxCount: 1,
@@ -6783,7 +7219,7 @@ const tech = {
     },
     {
         name: "flame test",
-        description: "<strong>grenades</strong> detonate in a random <strong>cluster</strong> of<br><strong>sixteen</strong> 0.65x <strong class='color-e'>explosions</strong> over <strong>2.7</strong> seconds",
+        description: "<strong>grenades</strong> detonate in a random <strong>cluster</strong> of<br><strong>sixteen</strong> 0.7x <strong class='color-e'>explosions</strong> over <strong>2.7</strong> seconds",
         isGunTech: true,
         maxCount: 1,
         count: 0,
@@ -6821,7 +7257,7 @@ const tech = {
     },
     {
         name: "fireworks",
-        description: "<strong>grenades</strong> detonate as <strong>flower petal</strong> of<br><strong class='color-e'>explosions</strong> (<strong>one</strong> 0.9x, <strong>six</strong> 0.65x, <strong>ten</strong> 0.5x)",
+        description: "<strong>grenades</strong> detonate as <strong>flower petal</strong> of<br><strong class='color-e'>explosions</strong> (<strong>one</strong> 1x, <strong>six</strong> 0.65x, <strong>ten</strong> 0.5x)",
         // description: "after <strong>grenades</strong> detonate they trigger<br> of <strong class='color-e'>explosions</strong>",
         isGunTech: true,
         maxCount: 1,
@@ -10485,24 +10921,6 @@ const tech = {
         },
         remove() { }
     },
-    // {
-    //     name: "hi",
-    //     description: `spawn to seed <strong>616</strong> `,
-    //     maxCount: 1,
-    //     count: 0,
-    //     frequency: 0,
-    //     isInstant: true,
-    //     isJunk: true,
-    //     allowed() {
-    //         return true
-    //     },
-    //     requires: "",
-    //     effect() {
-    //         document.getElementById("seed").placeholder = Math.initialSeed = String(616)
-    //         Math.seed = Math.abs(Math.hash(Math.initialSeed)) //update randomizer seed in case the player changed it
-    //     },
-    //     remove() {}
-    // },
     {
         name: "Higgs phase transition",
         description: `instantly spawn ${powerUps.orb.tech()}${powerUps.orb.tech()}${powerUps.orb.tech()}${powerUps.orb.tech()}${powerUps.orb.tech()}, but add a chance to<br>remove everything with a 5 minute <strong>half-life</strong>`,
@@ -11925,9 +12343,10 @@ const tech = {
         isJunk: true,
         isInstant: true,
         allowed() {
-            return !m.isShipMode
+            return !m.isShipMode && !m.isAltSkin
         },
         requires: "",
+        requires: "not skinned",
         effect() {
             m.skin.stubs()
             jumpSensor.vertices[0].x += -22
@@ -11945,7 +12364,7 @@ const tech = {
         frequency: 0,
         isJunk: true,
         allowed() {
-            return !m.isShipMode
+            return !m.isShipMode && !m.isAltSkin
         },
         requires: "",
         effect() {
@@ -11963,7 +12382,7 @@ const tech = {
         frequency: 0,
         isJunk: true,
         allowed() {
-            return !m.isShipMode
+            return !m.isShipMode && !m.isAltSkin
         },
         requires: "",
         effect() {
@@ -11981,7 +12400,7 @@ const tech = {
         frequency: 0,
         isJunk: true,
         allowed() {
-            return !m.isShipMode
+            return !m.isShipMode && !m.isAltSkin
         },
         requires: "",
         effect() {
@@ -11999,7 +12418,7 @@ const tech = {
         frequency: 0,
         isJunk: true,
         allowed() {
-            return true
+            return !m.isAltSkin
         },
         requires: "",
         effect() {
@@ -12018,7 +12437,7 @@ const tech = {
         isInstant: true,
         isJunk: true,
         allowed() {
-            return !m.isShipMode
+            return !m.isShipMode && !m.isAltSkin
         },
         requires: "",
         effect() {
@@ -12055,7 +12474,7 @@ const tech = {
         isJunk: true,
         isInstant: true,
         allowed() {
-            return !m.isShipMode
+            return !m.isShipMode && !m.isAltSkin
         },
         requires: "",
         effect() {
@@ -12196,34 +12615,6 @@ const tech = {
         },
         remove() { }
     },
-    // {
-    //     name: "miniaturization",
-    //     descriptionFunction() {
-    //         return `you are tiny!<br>shrink by ${this.scale}x`
-    //     },
-    //     maxCount: 9,
-    //     count: 0,
-    //     frequency: 1,
-    //     frequencyDefault: 1,
-    //     // isSkin: true,
-    //     isJunk: true,
-    //     allowed() {
-    //         return !m.isAltSkin
-    //     },
-    //     requires: "not skinned",
-    //     scale: 0.6,
-    //     effect() {
-    //         player.scale *= this.scale
-    //         m.skin.small(this.scale);
-    //     },
-    //     remove() {
-    //         if (this.count) {
-    //             m.skin.small(1 / player.scale);
-    //             m.resetSkin();
-    //         }
-    //         player.scale = 1
-    //     }
-    // },
     {
         name: "pet bots",
         description: "pet your <strong class='color-bot'>bots</strong>",
@@ -13429,4 +13820,9 @@ const tech = {
     isChatter: null,
     isLaserGrabPowerUp: null,
     isBijection: null,
+    wire: null,
+    isChitin: null,
+    isCutTimeStop: null,
+    isLaserWire: null,
+    isMycelium: null,
 }

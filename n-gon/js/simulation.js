@@ -573,6 +573,17 @@ const simulation = {
                     }
                 }
             }
+
+            if (tech.wire && tech.wire.segments.length) {
+                requestAnimationFrame(() => {
+                    const r = 32 * player.scale
+                    const a = m.angle + Math.PI
+                    for (let i = 0; i < tech.wire.segments.length; i++) {
+                        tech.wire.segments[i].y = tech.wire.segments[i].oldY = m.pos.y + (r * Math.sin(a))
+                        tech.wire.segments[i].x = tech.wire.segments[i].oldX = m.pos.x + (r * Math.cos(a))
+                    }
+                })
+            }
         }
     },
     setupCamera() { //makes the camera not scroll after changing locations

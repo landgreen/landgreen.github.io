@@ -1,6 +1,7 @@
 let powerUp = [];
 
 const powerUps = {
+    totalUsed: 0,
     ejectGraphic(color = "68, 102, 119") {
         simulation.drawList.push({
             x: m.pos.x,
@@ -1570,6 +1571,7 @@ const powerUps = {
         requestAnimationFrame(cycle);
     },
     onPickUp(who) {
+        powerUps.totalUsed++
         powerUps.research.currentRerollCount = 0
         if (tech.isTechDamage && who.name === "tech") m.takeDamage(0.1)
         if (tech.isMassEnergy) {

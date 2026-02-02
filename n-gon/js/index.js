@@ -969,6 +969,7 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
         build.isExperimentSelection = true;
         build.isExperimentRun = true;
         simulation.paused = true;
+        powerUps.totalUsed = 0
         b.inventory = []; //removes guns and ammo
         for (let i = 0, len = b.guns.length; i < len; ++i) {
             b.guns[i].count = 0;

@@ -980,6 +980,19 @@ summary {
     text-shadow: 0px 0px 7px #246;
 }
 
+.color-wire {
+    /* font-family: 'Century Gothic', AppleGothic, 'URW Gothic L', sans-serif; */
+    /* color: rgba(0, 0, 0, 0.05);
+    -webkit-text-stroke: 1px #000;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    letter-spacing: 0px; */
+
+
+    text-decoration: #000 wavy underline 2px;
+    text-decoration-skip-ink: none;
+}
+
 .color-tokamak {
     color: #5c3ab8;
     font-weight: 100;

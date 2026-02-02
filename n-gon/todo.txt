@@ -1,27 +1,74 @@
 ******************************************************** NEXT PATCH **************************************************
 
-removed the option to show images from n-gon
+tech: filament - a filament attached to your head gets longer as you use power ups (up to 300)
+  mobs can cut filament, longer filament gives duplication
+tech: chitin - +3 length after mobs die
+  filament turns into worms after hitting mobs
+tech: mycelium -  grow segments if below 10 segments
+  spawn a spore each time filament gets longer
+tech: world line - if the filament is cut stop time for 2s + 0.05 for each segment lost
+  filament gets +1 longer when you use power ups
+tech: fiber optic - laser comes out the end of your filament if you have at least 5 segments
+  also +1.01x damage per filament segment
 
-added a growth animation for new power ups
-power ups are uncollectable for about 0.5 seconds after spawning
-wormhole sucks less hard for very close power ups
-first ionization energy renamed ionization energy
-mob mines have a slightly longer delay before exploding
-bremsstrahlung no longer buffs block damage
-long text will no longer spill over to a new line for tech/gun/field descriptions
-  long text will clip when it reaches the edge of the text box
-  some very long text sections were edited to be shorter
-  this should only affect people with unusual fonts/browsers/OS
+tubeWormBoss - it's like snake boss with improved physics
+
+dark matter 0.4->0.3 damage reduction
+gaining coupling past 50 no longer logs to the in game console, to help with performance
+when you go full health the dark green line on the right of the health bar hides
 
 bug fixes
-  molecular assembler coupling
-    fixed a bug where coupling gave 5 instead of 0.5 energy per second
-    buffed 0.5->1 energy per second per coupling
-  harpoon tech wear no longer triggers on invulnerable mobs
-  harpoon tech spalling no longer drops ammo on mob bullets
-  tendrilBoss will now slowly attack when it loses it's arms (instead of just difting away)
+  ghoster mobs now have infinite memory, so they will return to you even if you bounce them far away
+  molecular assembler coupling regen was accidentally 10 instead of 1
+  fixed issue with hiding power ups choosing menu on reactor and final level
+  fixed rare issue where losing negative mass slows mid air horizontal control
+  historyBoss no longer has 2 health bars, and it doesn't flash for 1 frame before it triggers
 
 *********************************************************** TODO *****************************************************
+
+tubeWormBoss T4 or T5
+
+tech: filament - gets longer as you eat power ups (up to a max length), mobs can cut wire, wire length gives duplication
+  long tails looks strange in vertical flip?
+  improve with additional tech
+    
+    coaxial, ductile - wire length increases damage
+    aura around wire (to kill bullets)
+    aura around wire (or just tip) that freezes
+      
+      tip spawns ice-IX
+    change wire physics, color, draw style with upgrades
+      const rigidity = 1; // 0 (loose) to 1 (crinkles), -0.6 has wiggly knots
+      this.gravity = 0.6;
+      this.friction = 0.5;
+      spacing = 20//40 has bigger loops and a whole different feel
+
+zoom in/out when choosing power ups
+  interactions with other zoom actions
+    zoom at start of level  (this could be instant)
+    zoom from dilation skin
+      this skin's zoom is annoying, maybe if could be reworked
+
+make orbital bots have an elliptical orbit that precesses
+
+do something with verlet wire system and elastic thread system      https://gemini.google.com/app/d4459990774e555d?utm_source=app_launcher&utm_medium=owned&utm_campaign=base_all
+  skin with wires attached
+    upgrades increase wire length
+  boss mob with tail? - done
+  JUNK tech with several wires as hair
+  wire length is diegetic energy bar/health bar
+  snake boss?
+    maybe use the simple elastic tail code?
+
+
+do something with powerUps.totalUsed
+  give dmg for each power up used this game?
+
+make a new power up that is small and white
+  unlock with a tech
+  effect?
+    temporary buff, like boost
+    something that you collect and build up and effect, like coupling
 
 new level - ducts
   wind effect

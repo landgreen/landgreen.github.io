@@ -515,6 +515,9 @@ const m = {
         id.style.width = Math.floor(300 * m.maxHealth * Math.pow(Math.max(0, m.health) / m.maxHealth, 1.4)) + "px";
         if (m.health < 0) {
             id.style.borderRightColor = "#f00"
+        } else if (m.health === m.maxHealth) {
+            id.style.borderRightColor = "rgb(9, 245, 166)"
+            // id.style.borderRightColor = "pink"
         } else {
             id.style.borderRightColor = "rgb(51, 162, 125)"
         }
@@ -560,9 +563,10 @@ const m = {
         if (powerUps.boost.isDefense && powerUps.boost.endCycle > simulation.cycle) dmg *= 0.3
         if (tech.isMaxHealthDefense && (m.health === m.maxHealth || (tech.isEnergyHealth && m.energy > m.maxEnergy - 0.01))) dmg *= 0.1
         if (tech.isDiaphragm) dmg *= 0.55 + 0.35 * Math.sin(m.cycle * 0.01);
-        if (tech.isHarmDarkMatter) dmg *= (tech.isMoveDarkMatter || tech.isNotDarkMatter) ? 0.25 : 0.4
+        if (tech.isHarmDarkMatter) dmg *= (tech.isMoveDarkMatter || tech.isNotDarkMatter) ? 0.1875 : 0.3
         if (tech.isImmortal) dmg *= 0.7
-        if (m.fieldMode === 0 || m.fieldMode === 3) dmg *= 0.976 ** m.coupling
+        if (m.fieldMode === 0) dmg *= 0.99 ** m.coupling
+        if (m.fieldMode === 3) dmg *= 0.977 ** m.coupling
         if (tech.isHarmReduceNoKill && m.lastKillCycle + 300 < m.cycle) dmg *= 0.3
         if (tech.isAddBlockMass && m.isHolding) dmg *= 0.1
         if (tech.isSpeedHarm && (tech.speedAdded + player.speed) > 0.1) dmg *= 1 - Math.min((tech.speedAdded + player.speed) * 0.01583, 0.95) //capped at speed of 55
@@ -910,27 +914,6 @@ const m = {
         m.knee.x = (l / d) * (m.foot.x - m.hip.x) - (h / d) * (m.foot.y - m.hip.y) + m.hip.x + offset;
         m.knee.y = (l / d) * (m.foot.y - m.hip.y) + (h / d) * (m.foot.x - m.hip.x) + m.hip.y;
     },
-    // calcLeg(cycle_offset, offset) {
-    //     m.hip.x = 12 + offset;
-    //     m.hip.y = 24 + offset;
-    //     //stepSize goes to zero if Vx is zero or not on ground (make m transition cleaner)
-    //     m.stepSize = 0.8 * m.stepSize + 0.2 * (7 * Math.sqrt(Math.min(9, Math.abs(m.Vx))) * m.onGround);
-    //     //changes to stepSize are smoothed by adding only a percent of the new value each cycle
-    //     const stepAngle = 0.034 * m.walk_cycle + cycle_offset;
-    //     m.foot.x = 2.2 * m.stepSize * Math.cos(stepAngle) + offset;
-
-    //     const scaleOff = 0
-    //     m.foot.y = offset + 1.2 * m.stepSize * Math.sin(stepAngle) + m.yOff + m.height + scaleOff;
-    //     const Ymax = m.yOff + m.height + scaleOff;
-    //     if (m.foot.y > Ymax) m.foot.y = Ymax;
-
-    //     //calculate knee position as intersection of circle from hip and foot
-    //     const d = Math.sqrt((m.hip.x - m.foot.x) * (m.hip.x - m.foot.x) + (m.hip.y - m.foot.y) * (m.hip.y - m.foot.y));
-    //     const l = (m.legLength1 * m.legLength1 - m.legLength2 * m.legLength2 + d * d) / (2 * d);
-    //     const h = Math.sqrt(m.legLength1 * m.legLength1 - l * l);
-    //     m.knee.x = (l / d) * (m.foot.x - m.hip.x) - (h / d) * (m.foot.y - m.hip.y) + m.hip.x + offset;
-    //     m.knee.y = (l / d) * (m.foot.y - m.hip.y) + (h / d) * (m.foot.x - m.hip.x) + m.hip.y;
-    // },
     draw() { },
     isAltSkin: false,
     drawBoost() { },
@@ -1793,9 +1776,10 @@ const m = {
             m.squirrelJump = 1.15;
             m.squirrelFx = 1.28;
             m.setMovement()
-            // m.speedSmooth = 0
-            // m.smoothAngle = 0
+
+
             m.draw = function () {
+
                 if (powerUps.boost.endCycle > simulation.cycle) {
                     //gel that acts as if the wind is blowing it when player moves
                     ctx.save();
@@ -1847,15 +1831,6 @@ const m = {
                 ctx.lineWidth = 2;
                 ctx.stroke();
 
-                //fire outline directed opposite player look direction
-                // ctx.beginPath();
-                // const radius = 40
-                // const extend = -50
-                // ctx.arc(0, 0, radius, -Math.PI / 2, Math.PI / 2);
-                // ctx.bezierCurveTo(extend, radius, extend, 0, -100, 0); // bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)
-                // ctx.bezierCurveTo(extend, 0, extend, -radius, 0, -radius);
-                // ctx.fillStyle = "rgba(255,0,255,0.3)";
-                // ctx.fill()
                 ctx.beginPath();
                 ctx.moveTo(13, 0)
                 ctx.lineTo(20, 0)
@@ -3033,6 +3008,7 @@ const m = {
         player.collisionFilter.mask = cat.body | cat.map | cat.mob | cat.mobBullet | cat.mobShield
         m.airSpeedLimit = 125
         m.fieldFx = 1
+        m.FxAir = 0.005
         m.fieldJump = 1
         m.setFieldRegen();
         m.setMovement();
@@ -3138,12 +3114,14 @@ const m = {
     setFieldRegen() {
         if (m.fieldMode === 0) {
             m.fieldRegen = 0.001  //6 energy per second for field emitter
+            m.fieldRegen += 0.00003 * m.coupling
         } else if (m.fieldMode === 6) {
             m.fieldRegen = 0.002  //12 energy per second for time dilation
         } else if (m.fieldMode === 2) {
             m.fieldRegen = 0.000833 //5 energy per second perfect dia
         } else if (m.fieldMode === 4) {
             m.fieldRegen = 0.002 //12 energy per second molecular assembler
+            m.fieldRegen += 0.0001667 * m.coupling
         } else if (m.fieldMode === 5) {
             m.fieldRegen = 0.001667 //10 energy per second  plasma torch
         } else if (m.fieldMode === 8) {
@@ -3155,8 +3133,6 @@ const m = {
         } else {
             m.fieldRegen = 0.001 //6 energy per second
         }
-        if (m.fieldMode === 4) m.fieldRegen += 0.0001667 * m.coupling
-        if (m.fieldMode === 0) m.fieldRegen += 0.0008 * m.coupling
         if (tech.isTimeCrystals) {
             m.fieldRegen *= 2.5
         } else if (tech.isGroundState) {
@@ -3843,7 +3819,7 @@ const m = {
                     }
                 }
             }
-            m.bulletsToBlocks(who)
+            m.bulletsToBlocks(who)//if deflecting a mob bullet, convert the bullet to a short lived block and fire it
             const unit = Vector.normalise(Vector.sub(player.position, who.position))
             if (tech.deflectDmg) {
                 Matter.Body.setVelocity(who, { x: 0.5 * who.velocity.x, y: 0.5 * who.velocity.y });
@@ -4007,11 +3983,11 @@ const m = {
                 return `<span style = 'font-size:95%;'><strong>deflecting</strong> condenses ${(0.1 * couple).toFixed(2)} <strong class='color-s'>ice IX</strong></span>`
             // return `<span style = 'font-size:89%;'><strong>invulnerable</strong> <strong>+${2*couple}</strong> seconds post collision</span>`
             case 3: //negative mass
-                return `<strong>${(0.976 ** couple).toFixed(3)}x</strong> <strong class='color-defense'>damage taken</strong>`
+                return `<strong>${(0.977 ** couple).toFixed(3)}x</strong> <strong class='color-defense'>damage taken</strong>`
             case 4: //assembler
                 return `<strong>+${(1 * couple).toFixed(1)}</strong> <strong class='color-f'>energy</strong> per second`
             case 5: //plasma
-                return `<strong>${(1 + 0.025 * couple).toFixed(3)}x</strong> <strong class='color-d'>damage</strong>`
+                return `<strong>${(1 + 0.02 * couple).toFixed(3)}x</strong> <strong class='color-d'>damage</strong>`
             case 6: //time dilation
                 return `<strong>+${(1 + 0.05 * couple).toFixed(2)}x</strong> longer <strong style='letter-spacing: 2px;'>stopped time</strong>` //<strong>movement</strong>, <strong>jumping</strong>, and 
             case 7: //cloaking
@@ -4026,7 +4002,7 @@ const m = {
         }
     },
     couplingChange(change = 0) {
-        if (change > 0 && level.onLevel !== -1) simulation.inGameConsole(`<div class="coupling-circle"></div> m.coupling <span class='color-symbol'>+=</span> ${change}`, 60); //level.onLevel !== -1  means not on lore level
+        if (change > 0 && level.onLevel !== -1 && m.coupling < 50) simulation.inGameConsole(`<div class="coupling-circle"></div> m.coupling <span class='color-symbol'>+=</span> ${change}`, 60); //level.onLevel !== -1  means not on lore level
         m.coupling += change
         if (m.coupling < 0) {
             //look for coupling power ups on this level and remove them to prevent exploiting tech ejections
