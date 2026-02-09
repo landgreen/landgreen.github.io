@@ -1,30 +1,43 @@
 ******************************************************** NEXT PATCH **************************************************
 
-tech: filament - a filament attached to your head gets longer as you use power ups (up to 300)
-  mobs can cut filament, longer filament gives duplication
-tech: chitin - +3 length after mobs die
-  filament turns into worms after hitting mobs
-tech: mycelium -  grow segments if below 10 segments
-  spawn a spore each time filament gets longer
-tech: world line - if the filament is cut stop time for 2s + 0.05 for each segment lost
-  filament gets +1 longer when you use power ups
-tech: fiber optic - laser comes out the end of your filament if you have at least 5 segments
-  also +1.01x damage per filament segment
+finalBoss health display is a Sierpinski hexagon
 
-tubeWormBoss - it's like snake boss with improved physics
-
-dark matter 0.4->0.3 damage reduction
-gaining coupling past 50 no longer logs to the in game console, to help with performance
-when you go full health the dark green line on the right of the health bar hides
+added unique graphics and physics for filament techs
+chitin 3->2 segments per mob death
+in testing press 9 to spawn warp power up
+  warp no longer spawns when you enter testing on initial level
 
 bug fixes
-  ghoster mobs now have infinite memory, so they will return to you even if you bounce them far away
-  molecular assembler coupling regen was accidentally 10 instead of 1
-  fixed issue with hiding power ups choosing menu on reactor and final level
-  fixed rare issue where losing negative mass slows mid air horizontal control
-  historyBoss no longer has 2 health bars, and it doesn't flash for 1 frame before it triggers
+  last patch FxAir was accidentally set to 0.05 instead of 0.016
+    so you can move in air again
+  fixed another issue with safari browser,  related to lineDash
+  mass energy text on anthropic principle
 
 *********************************************************** TODO *****************************************************
+
+new level - ducts
+  wind effect
+    push player in a direction
+      push less if on ground or crouching or holding block
+    graphics?
+      draw a line and move it in the direction of wind
+  tunnels with wind
+    change wind direction with button?
+      maybe two buttons that alternate the direction like on the map corridor
+    fire from furnace level fills some of the tunnels and some of the zones
+      player needs to press buttons to switch the furnace off
+        but it only stays off for a short time
+  maybe some spinners that look like fans
+
+filament
+  tech: - filament tip is drawn towards blocks?, power ups?, mobs?
+    and does something good when it touches them
+?world line - give energy when cut?
+  stop giving extra length from power ups?
+tech filament attacks mobs with the tip
+  gravitate every segment, maybe with less weigh to the shorter parts
+
+try flocking behavior for mobs
 
 tubeWormBoss T4 or T5
 
@@ -69,18 +82,6 @@ make a new power up that is small and white
   effect?
     temporary buff, like boost
     something that you collect and build up and effect, like coupling
-
-new level - ducts
-  wind effect
-    push player in a direction
-      push less if on ground or crouching or holding block
-    graphics?
-      draw a line and move it in the direction of wind
-  tunnels with wind
-    change wind direction with button?
-      maybe two buttons that alternate the direction like on the map corridor
-  maybe some spinners that look like fans
-
 
 use the horizontal vibration effect on a mob or gun or level effect
   ctx.translate((simulation.cycle % 2) * 8, 0);
@@ -1584,6 +1585,7 @@ possible names for tech
   tuple - a finite list
   Navier–Stokes - equations for the movement of fluids
   renormalization
+  fractal dimension - maybe for surface area?
 
 
 

@@ -1322,7 +1322,7 @@ const mobs = {
                     }
                     if (tech.isChitin) {
                         // add new segment where the current tip is
-                        for (let i = 0; i < 3; i++) {
+                        for (let i = 0; i < 2; i++) {
                             if (tech.wire.segments.length < 200) { //cap max length at 200 for performance
                                 const last = tech.wire.segments[tech.wire.segments.length - 1];
                                 tech.wire.segments.push({ x: last.x, y: last.y, oldX: last.x, oldY: last.y });

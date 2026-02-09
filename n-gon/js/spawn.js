@@ -484,6 +484,7 @@ const spawn = {
     finalBoss(x, y, radius = 300) {
         mobs.spawn(x, y, 6, radius, "rgb(150,150,255)");
         let me = mob[mob.length - 1];
+        me.stroke = "transparent"
         setTimeout(() => { //fix mob in place, but allow rotation
             me.constraint = Constraint.create({
                 pointA: { x: me.position.x, y: me.position.y },
@@ -1019,37 +1020,37 @@ const spawn = {
             // },
         ]
         me.mode.sort(() => Math.random() - 0.5);
-        // me.mode[me.totalModes].enter() //force boss to enter new mode for testing
-        // me.totalModes++
-
         me.healthBarFinal = function () {
-            const size = this.radius * 0.2;
-            // const h = this.radius * 0.43;
-            // const w = this.radius * 2;
-            const x = this.position.x
-            const y = this.position.y - 0.6 * this.radius;
-            ctx.fillStyle = `hsla(${360 * Math.sin(this.cycle * 0.011 + 30)},${80 + 20 * Math.sin(this.cycle * 0.004 + 30)}%,${60 + 20 * Math.sin(this.cycle * 0.009 + 30)}%,0.3)`//"rgba(100, 100, 100, 0.3)" //"#000";
-            for (let j = 0; j < 4; j++) {
-                if (this.health > j * 0.25) {
-                    ctx.beginPath();
-                    for (let i = 0; i < 6; i++) {
-                        const angle = (Math.PI / 3) * i - Math.PI / 2;
-                        const pointX = x + size * Math.cos(angle);
-                        const pointY = y + size * Math.sin(angle) + (j * 0.4) * this.radius;
-                        if (i === 0) {
-                            ctx.moveTo(pointX, pointY);
-                        } else {
-                            ctx.lineTo(pointX, pointY);
-                        }
-                    }
-                    ctx.closePath();
-                    ctx.fill();
+            const HEX_DIRS = [{ x: 0, y: -1 }, { x: 0.8660254, y: -0.5 }, { x: 0.8660254, y: 0.5 }, { x: 0, y: 1 }, { x: -0.8660254, y: 0.5 }, { x: -0.8660254, y: -0.5 }];
 
+            function drawSierpinskiHex(ctx, x, y, radius, depth, num, scale) {
+                if (depth === 0) {
+                    //draw hexagon
+                    ctx.beginPath();
+                    for (let i = 0; i < 6; i++) ctx.lineTo(x + radius * HEX_DIRS[i].x, y + radius * HEX_DIRS[i].y);
+                    ctx.fill();
+                    return;
+                }
+                const r2 = radius * scale;
+                const offset = radius - r2;
+                for (let i = 0; i < num; i++) {
+                    const d = HEX_DIRS[i];
+                    const subNum = 6 //scale this with me.health so that as health lowers fewer hexagons are drawn
+                    drawSierpinskiHex(ctx, x + offset * d.x, y + offset * d.y, r2, depth - 1, subNum, scale);
                 }
             }
+
+            const scale = 0.47 + 0.05 * Math.sin(simulation.cycle * 0.0037);
+            const num = 1 + Math.min(6, Math.floor((this.health % 0.25) * 24));
+            ctx.fillStyle = `hsla(${360 * Math.sin(this.cycle * 0.011 + Math.PI)},${50 + 20 * Math.sin(this.cycle * 0.004 + Math.PI)}%,${65 + 20 * Math.sin(this.cycle * 0.009 + Math.PI)}%,0.25)`;
+            ctx.save();
+            ctx.translate(this.position.x, this.position.y);
+            ctx.rotate(this.angle);
+            drawSierpinskiHex(ctx, 0, 0, this.radius, 1 + Math.floor(this.health * 4), num, scale);
+            ctx.restore();
         }
         me.do = function () {
-            this.fill = `hsl(${360 * Math.sin(this.cycle * 0.011)},${80 + 20 * Math.sin(this.cycle * 0.004)}%,${60 + 20 * Math.sin(this.cycle * 0.009)}%)`
+            this.fill = `hsl(${360 * Math.sin(this.cycle * 0.011)},${50 + 20 * Math.sin(this.cycle * 0.004)}%,${30 + 20 * Math.sin(this.cycle * 0.009)}%)`
             if (this.health < 1) {
                 if (this.seePlayer.recall) this.healthBarFinal()
                 this.cycle++;
@@ -3911,40 +3912,24 @@ const spawn = {
         me.invulnerabilityCountDown = 0
         me.do = function () {
             if (this.seePlayer.recall) this.healthBar2()
-            // if (this.isInvulnerable) {
-            //     if (this.invulnerabilityCountDown > 0) {
-            //         this.invulnerabilityCountDown--
-            //         ctx.beginPath();
-            //         let vertices = this.vertices;
-            //         ctx.moveTo(vertices[0].x, vertices[0].y);
-            //         for (let j = 1; j < vertices.length; j++) ctx.lineTo(vertices[j].x, vertices[j].y);
-            //         ctx.lineTo(vertices[0].x, vertices[0].y);
-            //         ctx.lineWidth = 20;
-            //         ctx.strokeStyle = "rgba(255,255,255,0.7)";
-            //         ctx.stroke();
-            //     } else {
-            //         this.isInvulnerable = false
-            //         this.damageReduction = this.startingDamageReduction
-            //     }
-            // }
             this.alwaysSeePlayer();
             this.checkStatus();
             this.attraction();
-            // if (!(simulation.cycle % this.seePlayerFreq)) { //move away from other mobs
-            //     const repelRange = 100 + 4 * this.radius
-            //     const attractRange = 240
-            //     for (let i = 0, len = mob.length; i < len; i++) {
-            //         if (mob[i].isBuffBoss && mob[i].id !== this.id) {
-            //             const sub = Vector.sub(this.position, mob[i].position)
-            //             const dist = Vector.magnitude(sub)
-            //             if (dist < repelRange) {
-            //                 this.force = Vector.mult(Vector.normalise(sub), this.mass * 0.002)
-            //             } else if (dist > attractRange) {
-            //                 this.force = Vector.mult(Vector.normalise(sub), -this.mass * 0.002)
-            //             }
-            //         }
-            //     }
-            // }
+            if (!(simulation.cycle % this.seePlayerFreq)) { //move away from other mobs
+                const repelRange = 100 + 4 * this.radius
+                const attractRange = 240
+                for (let i = 0, len = mob.length; i < len; i++) {
+                    if (mob[i].isBuffBoss && mob[i].id !== this.id) {
+                        const sub = Vector.sub(this.position, mob[i].position)
+                        const dist = Vector.magnitude(sub)
+                        if (dist < repelRange) {
+                            this.force = Vector.mult(Vector.normalise(sub), this.mass * 0.002)
+                        } else if (dist > attractRange) {
+                            this.force = Vector.mult(Vector.normalise(sub), -this.mass * 0.002)
+                        }
+                    }
+                }
+            }
         }
     },
     powerUpBossBaby(x, y, vertices = 9, radius = 60) {
@@ -10262,9 +10247,6 @@ const spawn = {
             if (this.speed < 0.01) {
                 const unit = Vector.sub(player.position, this.position)
                 Matter.Body.setVelocity(this, Vector.mult(Vector.normalise(unit), 0.1));
-                // this.fireCount = 10 + simulation.difficulty * 0.5
-                // this.isInvulnerable = true
-                // this.damageReduction = 0
             } else {
                 if (Math.abs(this.velocity.y) < 15) Matter.Body.setVelocity(this, { x: this.velocity.x, y: this.velocity.y * 1.03 });
                 if (Math.abs(this.velocity.x) < 11) Matter.Body.setVelocity(this, { x: this.velocity.x * 1.03, y: this.velocity.y });
@@ -10570,9 +10552,6 @@ const spawn = {
             if (this.speed < 0.01) {
                 const unit = Vector.sub(player.position, this.position)
                 Matter.Body.setVelocity(this, Vector.mult(Vector.normalise(unit), 0.1));
-                // this.invulnerableCount = 10 + simulation.difficulty * 0.5
-                // this.isInvulnerable = true
-                // this.damageReduction = 0
             } else {
                 if (Math.abs(this.velocity.y) < 10) {
                     Matter.Body.setVelocity(this, { x: this.velocity.x, y: this.velocity.y * 1.03 });

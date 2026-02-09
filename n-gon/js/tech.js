@@ -3777,8 +3777,7 @@ const tech = {
         //     }, 1000);
         // },
         descriptionFunction() {
-            return `if <strong class='color-h'>health</strong> < <strong>0</strong> <span class="underline">expend</span> ${powerUps.orb.research(1)} to heal <span style ="float: right;">(once per level)</span><br>and spawn ${powerUps.orb.heal(22)}<em style ="float: right;">(${(!tech.isDeathAvoidedThisLevel && powerUps.research.count > 0) ? "on" : "off"})</em>`
-
+            return `if ${tech.isEnergyHealth ? "<strong class='color-f'>energy</strong>" : "<strong class='color-h'>health</strong>"} < <strong>0</strong> <span class="underline">expend</span> ${powerUps.orb.research(1)} to heal <span style ="float: right;">(once per level)</span><br>and spawn ${powerUps.orb.heal(22)}<em style ="float: right;">(${(!tech.isDeathAvoidedThisLevel && powerUps.research.count > 0) ? "on" : "off"})</em>`
         },
         maxCount: 1,
         count: 0,
@@ -4997,6 +4996,7 @@ const tech = {
                     this.bendFactor = 2
                     this.friction = 0.5;
                     this.color = "#000"
+                    this.lineWidth = 6
                     this.gravity = 0.6;
                     this.setPhysics()
 
@@ -5006,17 +5006,24 @@ const tech = {
                     }
                 }
                 setPhysics() {
+                    // this.spacing = 30
                     this.friction = 0.5;
                     this.color = "#000"
+                    this.lineWidth = 6
                     this.gravity = 0.6;
-                    // this.spacing = 30
+                    this.bendFactor = 2 //adds a wiggle to the wire
+
 
                     if (tech.isLaserWire) {
                         this.gravity = 0
-                        this.color = "rgba(255,0,0,1)"
+                        // this.color = "rgba(255,0,0,1)"
+                        this.color = "rgb(255,255,255)"
+                        this.lineWidth = 3
                     }
                     if (tech.isMycelium) {
                         this.gravity = -0.1
+                        this.color = "rgb(236, 230, 202)"
+                        this.lineWidth = 10
                     }
                     if (tech.isChitin) {
                         this.friction = 0.66 //makes it move aggressively
@@ -5031,6 +5038,56 @@ const tech = {
                     let last = this.segments[this.segments.length - 1];
                     this.segments.push({ x: last.x, y: last.y, oldX: last.x, oldY: last.y });
                     if (tech.isMycelium && Matter.Query.point(map, this.segments[this.segments.length - 1]).length === 0) b.spore(this.segments[this.segments.length - 1])
+
+
+
+
+                    const len = this.segments.length;
+
+                    // We need at least 4 points to have two full "midpoint-to-midpoint" segments
+                    if (len >= 4) {
+                        const p1 = this.segments[len - 4];
+                        const p2 = this.segments[len - 3];
+                        const p3 = this.segments[len - 2];
+                        const p4 = this.segments[len - 1];
+
+                        // Calculate midpoints
+                        const m1 = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
+                        const m2 = { x: (p2.x + p3.x) / 2, y: (p2.y + p3.y) / 2 };
+                        const m3 = { x: (p3.x + p4.x) / 2, y: (p3.y + p4.y) / 2 };
+
+                        this.lastTwoSegments = new Path2D();
+
+                        // Move to the start of the first segment
+                        this.lastTwoSegments.moveTo(m1.x, m1.y);
+
+                        // Segment 1
+                        this.lastTwoSegments.quadraticCurveTo(p2.x, p2.y, m2.x, m2.y);
+
+                        // Segment 2
+                        this.lastTwoSegments.quadraticCurveTo(p3.x, p3.y, m3.x, m3.y);
+                    }
+
+                    const unit = Vector.mult(Vector.sub(tech.wire.segments[this.segments.length - 1], tech.wire.segments[this.segments.length - 2]), 0.5)
+                    const mid = Vector.add(unit, tech.wire.segments[this.segments.length - 2])
+                    simulation.ephemera.push({
+                        // path2D: this.lastTwoSegments,
+                        cycle: 10,
+                        where: mid,//tech.wire.segments[this.segments.length - 1],
+                        do() {
+                            this.cycle--
+                            if (this.cycle < 1) {
+                                simulation.removeEphemera(this);
+                            } else {
+                                ctx.fillStyle = `rgba(0,255,255,${this.cycle / 10})`
+                                ctx.beginPath()
+                                ctx.arc(this.where.x, this.where.y, 10, 0, 2 * Math.PI);
+                                ctx.fill()
+                            }
+                        },
+                    });
+
+
                 }
                 update(anchorX, anchorY) {
                     if (powerUps.totalUsed > this.totalPowerUpsUsed) {
@@ -5074,10 +5131,18 @@ const tech = {
                         p.x += dx * difference;
                         p.y += dy * difference;
 
+
                         // Centripetal Pull: Each segment tries to stay slightly closer to the anchor
-                        // const pullStrength = 0.05 * (i / this.segments.length);
-                        // p.x += (anchorX - p.x) * pullStrength * (1 - i / this.segments.length);
-                        // p.y += (anchorY - p.y) * pullStrength * (1 - i / this.segments.length);
+                        // const pullStrength = 40 * (i / this.segments.length / this.segments.length / this.segments.length);
+                        // p.x += (anchorX - p.x) * pullStrength
+                        // p.y += (anchorY - p.y) * pullStrength
+
+                        // if (tech.isCutTimeStop) {
+                        //     let p = this.segments[this.segments.length - 1];
+                        //     const pullStrength = 0.05 * this.segments.length;
+                        //     p.x += (anchorX - p.x) * pullStrength
+                        //     p.y += (anchorY - p.y) * pullStrength
+                        // }
                     }
 
                     //prevent sharp bends
@@ -5115,7 +5180,7 @@ const tech = {
                             b.laser(exit, {
                                 x: ultimate.x + 5000 * unit.x,
                                 y: ultimate.y + 5000 * unit.y
-                            }, tech.laserDamage, tech.laserReflections, false, 1, "#f00");
+                            }, tech.laserDamage, tech.laserReflections, false, 1, "#f00", false);
 
                             // laser(where, whereEnd, damage = tech.laserDamage, reflections = tech.laserReflections, isThickBeam = false, push = 1, laserColor = tech.laserColor) {
                         }
@@ -5232,8 +5297,9 @@ const tech = {
                         const yc = (this.segments[i].y + this.segments[i + 1].y) / 2;
                         ctx.quadraticCurveTo(this.segments[i].x, this.segments[i].y, xc, yc);
                     }
-                    ctx.lineWidth = 6;
+                    ctx.lineWidth = this.lineWidth;
                     ctx.strokeStyle = this.color
+                    // ctx.lineCap = tech.isLaserWire ? "butt" : "round"
                     ctx.stroke();
                 }
             }
@@ -5256,7 +5322,7 @@ const tech = {
     },
     {
         name: "chitin",
-        description: `after mobs <strong>die</strong> grow <strong class="color-wire">filament</strong> by <strong>+3</strong> segments<br>if <strong class="color-wire">filament</strong> is cut, hatch a <strong class='color-p' style='letter-spacing: -0.8px;'>worm</strong> from lost segments`,
+        description: `after mobs <strong>die</strong> grow <strong class="color-wire">filament</strong> by <strong>+2</strong> segments<br>if <strong class="color-wire">filament</strong> is cut, hatch a <strong class='color-p' style='letter-spacing: -0.8px;'>worm</strong> from lost segments`,
         maxCount: 1,
         count: 0,
         frequency: 3,
@@ -5276,7 +5342,7 @@ const tech = {
     },
     {
         name: "mycelium",
-        description: `regrow <strong class="color-wire">filament</strong> if it has fewer than <strong>10</strong> segments<br>when <strong class="color-wire">filament</strong> gets longer release a <strong class='color-p' style='letter-spacing: 2px;'>spore</strong>`,
+        description: `regrow <strong class="color-wire">filament</strong> if it has fewer than <strong>10</strong> segments<br>release a <strong class='color-p' style='letter-spacing: 2px;'>spore</strong> when <strong class="color-wire">filament</strong> grows longer`,
         maxCount: 1,
         count: 0,
         frequency: 3,

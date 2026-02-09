@@ -453,6 +453,10 @@ const m = {
                 tech.isImmortal = false //disable future immortality
             }, 6 * swapPeriod);
         } else if (m.alive) { //normal death code here            
+            if (!simulation.isCheating && localSettings.isAllowed) {
+                localSettings.levelsClearedLastGame = level.levelsCleared
+                localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+            }
             m.storeTech()
             m.alive = false;
             simulation.paused = true;
@@ -3008,7 +3012,7 @@ const m = {
         player.collisionFilter.mask = cat.body | cat.map | cat.mob | cat.mobBullet | cat.mobShield
         m.airSpeedLimit = 125
         m.fieldFx = 1
-        m.FxAir = 0.005
+        // m.FxAir = 0.005
         m.fieldJump = 1
         m.setFieldRegen();
         m.setMovement();
@@ -3987,7 +3991,7 @@ const m = {
             case 4: //assembler
                 return `<strong>+${(1 * couple).toFixed(1)}</strong> <strong class='color-f'>energy</strong> per second`
             case 5: //plasma
-                return `<strong>${(1 + 0.02 * couple).toFixed(3)}x</strong> <strong class='color-d'>damage</strong>`
+                return `<strong>${(1 + 0.02 * couple).toFixed(2)}x</strong> <strong class='color-d'>damage</strong>`
             case 6: //time dilation
                 return `<strong>+${(1 + 0.05 * couple).toFixed(2)}x</strong> longer <strong style='letter-spacing: 2px;'>stopped time</strong>` //<strong>movement</strong>, <strong>jumping</strong>, and 
             case 7: //cloaking

@@ -29,13 +29,12 @@ const level = {
 
             // tech.giveTech("performance")
             // m.coyoteCycles = 120
-            // tech.isRerollDamage = true
-            // powerUps.research.changeRerolls(190000)
+            // powerUps.research.changeRerolls(100000)
             // tech.tech[297].frequency = 100
             // tech.addJunkTechToPool(0.5)
             // m.couplingChange(100)
             // requestAnimationFrame(() => { m.setField(9) });
-            // m.setField(3) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
+            // m.setField(2) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
             // m.energy = m.maxEnergy = 12.2
             // m.energy += 1
             // m.couplingChange(1000)
@@ -43,7 +42,7 @@ const level = {
             // window.removeEventListener("keydown", m.fieldEvent);
             // m.fieldUpgrades[6].set()
             // m.wakeCheck();
-            // m.damageDone *= 5
+            // m.damageDone *= 900
 
             // m.maxHealth = m.health = 100000000
             // m.displayHealth();
@@ -55,18 +54,19 @@ const level = {
             // simulation.molecularMode = 2
             // m.takeDamage(0.01);
 
-            // b.giveGuns(11) //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns(0) //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[b.inventory[0]].ammo = 100000000000
             // tech.addJunkTechToPool(0.5)
             // for (let i = 0; i < 1; ++i) tech.giveTech("filament")
-            // tech.giveTech("mycelium")
+            // tech.giveTech("lens")
             // for (let i = 0; i < 1; i++) tech.giveTech("world line")
             // for (let i = 0; i < 1; ++i) tech.giveTech("chitin")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("mycelium")
             // for (let i = 0; i < 1; ++i) tech.giveTech("fiber optics")
             // spawn.bodyRect(575, -700, 150, 150);  //block mob line of site on testing
             // level.levelsCleared = 7
             // simulation.isHorizontalFlipped = true
-            // level.testChamber()
+            // level.final()
             // level.testing()
 
             level[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
@@ -75,16 +75,16 @@ const level = {
             // spawn.randomGroup(1300, -200, Infinity);
             // spawn.nodeGroup(1300, -200, 'grower');
             // for (let i = 0; i < 2; i++) spawn.springer(1300 + 300 * i, -200)
-            // for (let i = 0; i < 1; i++) spawn.tubeWormBoss(2300 + 200 * i, -200)
+            // for (let i = 0; i < 1; i++) spawn.motherFlockerBoss(2300 + 200 * i, -200)
             // Matter.Body.setPosition(player, { x: -27000, y: -400 });
-            // requestAnimationFrame(() => { powerUps.spawnDelay("coupling", 100); });
+            // requestAnimationFrame(() => { powerUps.spawnDelay("coupling", 400); });
             // m.storeTech() //sets entanglement
             // for (let i = 0; i < 1; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "entanglement");
             // for (let i = 0; i < 30; ++i) powerUps.directSpawn(m.pos.x + 450 + 150 * Math.random(), m.pos.y + 150 * Math.random(), "coupling");
             // for (let i = 0; i < 100; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "coupling", false);
             // level.constraint[0].effect()  // turn this off first ->  seededShuffle(level.constraint)
 
-            // level.defaultZoom = 600
+            // level.defaultZoom = 2600
             // simulation.zoomTransition(level.defaultZoom)
 
             //lore testing
@@ -114,7 +114,6 @@ const level = {
             level[level.levels[level.onLevel]](); //picks the current map from the levels array
             if (!simulation.isCheating && !build.isExperimentRun && !simulation.isTraining) {
                 localSettings.runCount += level.levelsCleared //track the number of total runs locally
-                localSettings.levelsClearedLastGame = level.levelsCleared
                 if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
             }
         }
@@ -353,8 +352,6 @@ const level = {
         if (simulation.isTraining) {
             simulation.difficulty = 1
             simulation.difficultyMode = 1
-        } else {
-            const scale = simulation.difficultyMode > 3 ? 2 : 1
         }
         simulation.healScale = 1 / (1 + simulation.difficulty * 0.043) //a higher denominator makes for lower heals // m.health += heal * simulation.healScale;
         if (simulation.difficultyMode === 1) {
@@ -1214,7 +1211,7 @@ const level = {
                     ctx.lineWidth = 2
                 }
                 ctx.stroke();
-                ctx.setLineDash([0, 0]);
+                ctx.setLineDash([]);
 
                 if (level.exitCount > 100) {
                     level.exitCount = 0
@@ -2923,7 +2920,7 @@ const level = {
                 ctx.setLineDash([40, 40]);
                 ctx.lineDashOffset = (-simulation.cycle * this.VxGoal) % 80;
                 ctx.stroke();
-                ctx.setLineDash([0, 0]);
+                ctx.setLineDash([]);
             },
             drawFast() {
                 ctx.beginPath();
@@ -2936,7 +2933,7 @@ const level = {
                 ctx.setLineDash([60, 60]);
                 ctx.lineDashOffset = (-simulation.cycle * this.VxGoal) % 120;
                 ctx.stroke();
-                ctx.setLineDash([0, 0]);
+                ctx.setLineDash([]);
             }
         });
         Matter.Body.setStatic(rect, true); //make static
@@ -3585,13 +3582,13 @@ const level = {
         wires.lineTo(2355, -690)
         wires.lineTo(2600, -690)
 
-        let isSpawnedWarp = false
+        // let isSpawnedWarp = false
         level.custom = () => {
-            if (!isSpawnedWarp && simulation.testing) {
-                isSpawnedWarp = true
-                powerUps.directSpawn(m.pos.x, -900, "warp")
-                // powerUps.directSpawn(2100, -1200, "warp")
-            }
+            // if (!isSpawnedWarp && simulation.testing) {
+            //     isSpawnedWarp = true
+            //     powerUps.directSpawn(m.pos.x, -900, "warp")
+            //     // powerUps.directSpawn(2100, -1200, "warp")
+            // }
             //working on a message using text
             // ctx.font = "50px Arial";
             // ctx.fillStyle = "rgba(0,0,0,0.3)"
@@ -5052,7 +5049,7 @@ const level = {
                             ctx.lineDashOffset = (-simulation.cycle * movers[i].VxGoal) % 80;
                             ctx.stroke();
                         }
-                        ctx.setLineDash([0, 0]);
+                        ctx.setLineDash([]);
                         // checkGate(gate, gateButton)
                     }
                 },
@@ -10946,12 +10943,26 @@ const level = {
             ctx.stroke();
 
 
-            const rate = 0.015
             //combination of a horizontal force on the block and changing the length of constraints keeps the block form rotating as it swings
             //these parameters need fine tuning, mostly amplitude
+            const rate = 0.015
             blocks[0].force.x = 0.002 * Math.sin(simulation.cycle * rate + 0.2) * blocks[0].mass
             constraint1.length = 1300 + 450 * Math.sin(simulation.cycle * rate)
             constraint2.length = 1300 + 450 * Math.sin(simulation.cycle * rate + Math.PI)
+
+
+            //scale friciton with velocity
+            //normal max speed is 15ish
+            // const drag = (blocks[0].velocity.x > 15) ? 15 * blocks[0].velocity.x : 1
+            // console.log(blocks[0].velocity.x)
+            //the setVelocity is acting strang, making the blocks[0] fall?  no clue why
+            //why does laser push move the block[0] down when pushing up?
+            // Matter.Body.setVelocity(blocks[0], {
+            //     x: blocks[0].velocity.x,
+            //     y: blocks[0].velocity.y
+            // });
+
+
             //draw
             ctx.beginPath();
             ctx.moveTo(constraint1.pointA.x, constraint1.pointA.y);
@@ -32752,7 +32763,7 @@ const level = {
             ctx.lineTo(q.vertices[0].x, q.vertices[0].y);
             ctx.closePath();
             ctx.stroke();
-            ctx.setLineDash([0, 0]);
+            ctx.setLineDash([]);
         };
         function drawSeats(x, y, w, h, num = 20, c = "gray") {
             const seatWidth = w / num;

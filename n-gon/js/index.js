@@ -1561,7 +1561,7 @@ window.addEventListener("keydown", function (event) {
                     <td class='key-used'>zoom out / in</td>
                 </tr>
                 <tr>
-                    <td class='key-input-pause'>1-8</td>
+                    <td class='key-input-pause'>1-9</td>
                     <td class='key-used'>spawn things</td>
                 </tr>
                 <tr>
@@ -1655,6 +1655,9 @@ window.addEventListener("keydown", function (event) {
                 break
             case "8":
                 spawn.randomLevelBoss(simulation.mouseInGame.x, simulation.mouseInGame.y);
+                break
+            case "9":
+                powerUps.warp.effect()
                 break
             case "f":
                 const mode = (m.fieldMode === m.fieldUpgrades.length - 1) ? 0 : m.fieldMode + 1
