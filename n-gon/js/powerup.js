@@ -325,11 +325,11 @@ const powerUps = {
 
         if (!simulation.paused) {
             if (tech.isNoDraftPause || level.isNoPause) {
-                document.getElementById("choose-grid").style.opacity = "1"
+
             } else {
                 simulation.paused = true;
-                document.getElementById("choose-grid").style.opacity = "1"
             }
+            document.getElementById("choose-grid").style.opacity = "1"
             document.getElementById("choose-grid").style.transitionDuration = "0.5s"; //how long is the fade in on
             document.getElementById("choose-grid").style.visibility = "visible"
 

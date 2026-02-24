@@ -270,6 +270,7 @@ const tech = {
     },
     damageAdjustments() {
         let dmg = m.damageDone * m.fieldDamage * powerUps.difficulty.damageDone
+        if (tech.isEigenstate && m.eigen.cycle < m.eigen.cycleLimit) dmg *= 3
         if (tech.isLaserWire && tech.wire && tech.wire.segments.length) dmg *= 1 + 0.01 * tech.wire.segments.length
         if (level.isNoDamage && (m.cycle - 180 < level.noDamageCycle)) dmg *= 0.3
         if (tech.isMaxHealthDamage && (m.health === m.maxHealth || (tech.isEnergyHealth && m.energy > m.maxEnergy - 0.01))) dmg *= 2
@@ -280,7 +281,7 @@ const tech = {
         if (tech.isDamageCooldown) dmg *= m.lastKillCycle + tech.isDamageCooldownTime > m.cycle ? 0.4 : 4
         if (tech.isDivisor && b.activeGun !== undefined && b.activeGun !== null && b.guns[b.activeGun].ammo % 3 === 0) dmg *= 2
         if (tech.isOffGroundDamage && !m.onGround && m.cycle - m.lastOnGroundCycle > 65) dmg *= 2.5
-        if (tech.isDilate) dmg *= 1.9 + 1.1 * Math.sin(m.cycle * 0.01)
+        if (tech.isDilate) dmg *= 1.75 + 1.25 * Math.sin(m.cycle * 0.01)
         if (tech.isGunChoice) dmg *= 1 + 0.4 * b.inventory.length
         if (powerUps.boost.endCycle > simulation.cycle) dmg *= 1 + powerUps.boost.damage
         if (m.coupling && (m.fieldMode === 0 || m.fieldMode === 5)) dmg *= 1 + m.coupling * (m.fieldMode === 0 ? 0.002 : 0.02)
@@ -551,58 +552,6 @@ const tech = {
         }
     },
     {
-        name: "aperture",
-        description: `<strong class='color-d'>damage</strong> oscillates between <strong>0.8x</strong> and <strong>3x</strong><br><strong>1.2x</strong> <strong class="color-speed">movement</strong>`,
-        maxCount: 1,
-        count: 0,
-        frequency: 1,
-        frequencyDefault: 1,
-        isSkin: true,
-        allowed() {
-            return !m.isAltSkin
-        },
-        requires: "not skinned",
-        effect() {
-            tech.isDilate = true
-            m.skin.dilate()
-            m.setMovement()
-
-        },
-        remove() {
-            tech.isDilate = false
-            if (this.count) {
-                m.resetSkin();
-                if (tech.isDiaphragm) m.skin.dilate2()
-            }
-        }
-    },
-    {
-        name: "diaphragm",
-        description: "<strong class='color-defense'>damage taken</strong> oscillates between <strong>0.2x</strong> and <strong>0.9x</strong>",
-        maxCount: 1,
-        count: 0,
-        frequency: 2,
-        frequencyDefault: 2,
-        // isSkin: true,
-        allowed() {
-            return tech.isDilate
-        },
-        requires: "aperture",
-        effect() {
-            //dmg *= 0.55 + 0.35 * Math.sin(m.cycle * 0.01);
-            tech.isDiaphragm = true
-            m.resetSkin();
-            m.skin.dilate2()
-        },
-        remove() {
-            tech.isDiaphragm = false
-            if (this.count) {
-                m.resetSkin();
-                if (tech.isDilate) m.skin.dilate()
-            }
-        }
-    },
-    {
         name: "Verlet integration",
         description: "<strong>3x</strong> <strong class='color-d'>damage</strong><br>after mobs <strong>die</strong> advance <strong>time</strong> <strong>0.5</strong> seconds",
         maxCount: 1,
@@ -767,6 +716,32 @@ const tech = {
         },
         remove() {
             tech.isDamageCooldownTime = 240
+        }
+    },
+    {
+        name: "eigenstate",
+        descriptionFunction() {
+            return `quickly tap <strong>down</strong> <strong>3</strong> times to swap <strong>states</strong><br>and gain <strong>3x</strong> <strong class='color-d'>damage</strong> for <strong>10</strong> seconds`
+        },
+        maxCount: 1,
+        count: 0,
+        frequency: 1,
+        frequencyDefault: 1,
+        isSkin: true,
+        allowed() {
+            return !m.isAltSkin
+        },
+        requires: "not skinned",
+        effect() {
+            tech.isEigenstate = true;
+            m.skin.eigenstate()
+        },
+        remove() {
+            tech.isEigenstate = false;
+            if (this.count) {
+                window.removeEventListener("keydown", m.eigen.keyListener);
+                m.resetSkin();
+            }
         }
     },
     {
@@ -1530,6 +1505,99 @@ const tech = {
         remove() {
             if (this.count && m.alive) for (let i = 0; i < this.damageSoFar.length; i++) m.damageDone /= this.damageSoFar[i]
             this.damageSoFar.length = 0
+        }
+    },
+    {
+        name: "aperture",
+        descriptionFunction() {
+            return `<strong class='color-d'>damage</strong> oscillates between <strong>0.5x</strong> and <strong>3x</strong><br><em style ="float: right;">(${(1.75 + 1.25 * Math.sin(m.cycle * 0.01)).toFixed(1)}x)</em>`
+        },
+        maxCount: 1,
+        count: 0,
+        frequency: 1,
+        frequencyDefault: 1,
+        allowed() {
+            return true
+        },
+        requires: "",
+        effect() {
+            tech.isDilate = true
+            simulation.ephemera.push({
+                HEX_DIRS: [{ x: 0, y: -1 }, { x: 0.8660254, y: -0.5 }, { x: 0.8660254, y: 0.5 }, { x: 0, y: 1 }, { x: -0.8660254, y: 0.5 }, { x: -0.8660254, y: -0.5 }],
+                do() {
+                    if (tech.isDilate) {
+                        const outerRadius = 30;
+                        const radius = 8 * (1.9 + 1.1 * Math.sin(m.cycle * 0.01));
+                        ctx.save();
+                        ctx.translate(m.pos.x, m.pos.y - 90);
+                        // ctx.translate(simulation.mouseInGame.x, simulation.mouseInGame.y);
+
+                        //white background circle
+                        ctx.beginPath();
+                        ctx.arc(0, 0, outerRadius, 0, 2 * Math.PI);
+                        ctx.clip(); //to cap the blade extensions
+                        ctx.fillStyle = `#111`;
+                        ctx.fill();
+
+                        // the inner hexagon
+                        ctx.beginPath();
+                        for (let i = 0; i < 6; i++) {
+                            ctx.lineTo(radius * this.HEX_DIRS[i].x, radius * this.HEX_DIRS[i].y);
+                        }
+                        ctx.closePath();
+                        ctx.fillStyle = `rgb(255, 55, 95)`
+                        ctx.fill();
+
+                        // blade extensions
+                        ctx.beginPath();
+                        for (let i = 0; i < 6; i++) {
+                            const curr = this.HEX_DIRS[i];
+                            const prev = this.HEX_DIRS[(i + 5) % 6];
+                            const xStart = radius * prev.x;
+                            const yStart = radius * prev.y;
+                            const dx = (curr.x - prev.x);
+                            const dy = (curr.y - prev.y);
+                            const xEnd = xStart + dx * 200;
+                            const yEnd = yStart + dy * 200;
+                            ctx.moveTo(xStart, yStart);
+                            ctx.lineTo(xEnd, yEnd);
+                        }
+                        ctx.strokeStyle = `rgb(255, 55, 95)`;
+                        ctx.lineWidth = 2;
+                        // ctx.lineCap = "butt";
+                        ctx.stroke();
+
+                        ctx.restore();
+                        return;
+                    } else {
+                        simulation.removeEphemera(this);
+                    }
+                },
+            });
+        },
+        remove() {
+            tech.isDilate = false
+        }
+    },
+    {
+        name: "diaphragm",
+        descriptionFunction() {
+            return `<strong class='color-defense'>damage taken</strong> oscillates between <strong>0.2x</strong> and <strong>1x</strong><br><em style ="float: right;">(${(0.6 + 0.4 * Math.sin(m.cycle * 0.01)).toFixed(2)}x)</em>`
+        },
+        description: "",
+        maxCount: 1,
+        count: 0,
+        frequency: 2,
+        frequencyDefault: 2,
+        allowed() {
+            return tech.isDilate
+        },
+        requires: "aperture",
+        effect() {
+            tech.isDiaphragm = true
+        },
+        remove() {
+            tech.isDiaphragm = false
         }
     },
     {
@@ -13891,4 +13959,5 @@ const tech = {
     isCutTimeStop: null,
     isLaserWire: null,
     isMycelium: null,
+    isEigenstate: null,
 }

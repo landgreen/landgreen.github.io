@@ -517,7 +517,6 @@ const spawn = {
                 if (this.health === 1) me.cycle = 1; //reset fight
                 this.health = this.nextHealthThreshold - 0.01
                 this.nextHealthThreshold = Math.floor(this.health * 4) / 4 //0.75,0.5,0.25
-                // this.invulnerableCount = 220 + 10 * simulation.difficultyMode //how long does invulnerable time last
                 this.invulnerableCount = 0
                 this.isInvulnerable = true
                 this.damageReduction = 0
@@ -1020,6 +1019,41 @@ const spawn = {
             // },
         ]
         me.mode.sort(() => Math.random() - 0.5);
+        // me.healthBarFinal = function () {
+        //     const HEX_DIRS = [{ x: 0, y: -1 }, { x: 0.8660254, y: -0.5 }, { x: 0.8660254, y: 0.5 }, { x: 0, y: 1 }, { x: -0.8660254, y: 0.5 }, { x: -0.8660254, y: -0.5 }];
+        //     let threshold = 1
+        //     function drawSierpinskiHex(ctx, x, y, radius, depth, num, scale) {
+        //         const thresholdStep = 0.03
+        //         console.log(threshold, me.health, thresholdStep, me.health > threshold)
+        //         if (depth === 0) {
+        //             //draw hexagon
+        //             if (threshold > me.health) {
+        //                 threshold -= thresholdStep
+        //                 ctx.beginPath();
+        //                 for (let i = 0; i < 6; i++) ctx.lineTo(x + radius * HEX_DIRS[i].x, y + radius * HEX_DIRS[i].y);
+        //                 ctx.fill();
+        //             }
+        //             return;
+        //         }
+        //         const r2 = radius * scale;
+        //         const offset = radius - r2;
+        //         for (let i = 0; i < num; i++) {
+        //             const d = HEX_DIRS[i];
+        //             const subNum = 6 //scale this with me.health so that as health lowers fewer hexagons are drawn
+        //             drawSierpinskiHex(ctx, x + offset * d.x, y + offset * d.y, r2, depth - 1, subNum, scale);
+        //         }
+        //     }
+
+        //     const scale = 0.47 + 0.05 * Math.sin(simulation.cycle * 0.0037);
+        //     const num = 1 + Math.min(6, Math.floor((this.health % 0.25) * 24));
+        //     ctx.fillStyle = `hsla(${360 * Math.sin(this.cycle * 0.011 + Math.PI)},${50 + 20 * Math.sin(this.cycle * 0.004 + Math.PI)}%,${65 + 20 * Math.sin(this.cycle * 0.009 + Math.PI)}%,0.25)`;
+        //     ctx.save();
+        //     ctx.translate(this.position.x, this.position.y);
+        //     ctx.rotate(this.angle);
+        //     const depth = 1 + Math.floor(this.health * 4)
+        //     drawSierpinskiHex(ctx, 0, 0, this.radius, depth, num, scale);
+        //     ctx.restore();
+        // }
         me.healthBarFinal = function () {
             const HEX_DIRS = [{ x: 0, y: -1 }, { x: 0.8660254, y: -0.5 }, { x: 0.8660254, y: 0.5 }, { x: 0, y: 1 }, { x: -0.8660254, y: 0.5 }, { x: -0.8660254, y: -0.5 }];
 
@@ -1676,7 +1710,7 @@ const spawn = {
             if (!(simulation.cycle % 30)) {
                 //find blocks to turn into mobs
                 for (let i = 0; i < body.length; i++) {
-                    if (Vector.magnitude(Vector.sub(this.position, body[i].position)) < 700 && !body[i].isNotHoldable) { // check distance for each block
+                    if (Vector.magnitude(Vector.sub(this.position, body[i].position)) < 700 && !body[i].isNotHoldable && !body[i].isInvulnerable) { // check distance for each block
                         Matter.Composite.remove(engine.world, body[i]);
                         this.target = null //player;
                         spawn.blockMob(body[i].position.x, body[i].position.y, body[i], 0);
@@ -1863,7 +1897,7 @@ const spawn = {
                 }
                 //find blocks to turn into mobs
                 for (let i = 0; i < body.length; i++) {
-                    if (Vector.magnitude(Vector.sub(this.position, body[i].position)) < 700 && !body[i].isNotHoldable) { // check distance for each block
+                    if (Vector.magnitude(Vector.sub(this.position, body[i].position)) < 700 && !body[i].isNotHoldable && !body[i].isInvulnerable) { // check distance for each block
                         Matter.Composite.remove(engine.world, body[i]);
                         this.target = null //player;
                         spawn.blockMob(body[i].position.x, body[i].position.y, body[i], 0, true);

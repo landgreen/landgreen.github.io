@@ -1,19 +1,89 @@
 ******************************************************** NEXT PATCH **************************************************
 
-finalBoss health display is a Sierpinski hexagon
+skin tech: eigenstate - press down to swap with another copy of you and get 3x damage for 10 seconds
 
-added unique graphics and physics for filament techs
-chitin 3->2 segments per mob death
-in testing press 9 to spawn warp power up
-  warp no longer spawns when you enter testing on initial level
+pause/experiment menus tech,guns,field orbs produce text to speech of it's name when clicked
+improved clarity of text to speech voices
+
+aperture is no longer a skin tech
+  no longer has +10% movement
+  damage oscillates between 0.5x and 3x
+  added new animation showing oscillation state
+diaphragm oscillates between 0.2x and 1x
 
 bug fixes
-  last patch FxAir was accidentally set to 0.05 instead of 0.016
-    so you can move in air again
-  fixed another issue with safari browser,  related to lineDash
-  mass energy text on anthropic principle
+  tokamak and Halbach array work together
+  fixed lore text timing issues for when the n-gon tab is muted
+  path integration is sending your bullets to the correct location again
+  it's possible I fixed the press pause while picking up a tech at the same time bug
+  removed input text sort in pause menu, it's just buttons now.
 
 *********************************************************** TODO *****************************************************
+
+in the pause/experiment menus clicking on tech,guns,field orbs with produce text to speech of it's name
+  !a second click will read the description?
+    how to convert html to readable text??
+
+sort text input is broken in pause menu
+  does nothing on clicking sort or pressing enter
+  pressing P, O  breaks it
+  add more buttons
+    duplication
+    research, coupling
+    bot tech
+    JUNK
+  
+eigenstate - additional tech
+  do something after swap for a few seconds
+    damage?
+    faster move speed 6s after swap??
+  general damage reduction
+  3x block damage?
+  2 different bonus effects for each state
+    damage, damage reduction, movement and jump
+  the damage you do after swapping states lasts longer?
+  tech.field,guns, ammo, coupling, research, max health, max energy, duplication, ... will swap
+
+
+replace damage side bar with a number?
+  where: red text above tech list
+  changing numbers might get distracting?
+replace damage reduction with a number?
+  I actually like this bar, so maybe don't replace
+  where
+    white text above health bar?
+    inside health bar?
+
+tech: - at the end of each level get 40% of current gun's ammo
+  requires interest
+
+tech:  - at the end of each level if you have no guns....
+  get a bot? 
+  1.2x damage
+
+tech:  - if you have no field get....
+
+try to also allow players to unpause in choosing menu
+
+
+
+
+add an HTML input in the tech description(slider or checkbox, dropdown menu,  other inputs)
+  put html slider in tech description, adjust when paused
+  it will control some property that is sometimes better at different values
+    convert all bots to a type with dropdown menu
+      or change what bots are upgraded to
+    cost benefit trades with slider
+      bot AI behaviors
+        range - frequency
+      health - energy
+      dmg - dmg reduction
+
+consider making pause menu a grid, like experiment mode
+  this could be an setting to toggle off/on
+
+ngon means tasty in vietnamese
+  make a JUNK tech around this?
 
 new level - ducts
   wind effect
@@ -37,18 +107,14 @@ filament
 tech filament attacks mobs with the tip
   gravitate every segment, maybe with less weigh to the shorter parts
 
-try flocking behavior for mobs
-
 tubeWormBoss T4 or T5
 
 tech: filament - gets longer as you eat power ups (up to a max length), mobs can cut wire, wire length gives duplication
   long tails looks strange in vertical flip?
   improve with additional tech
-    
     coaxial, ductile - wire length increases damage
     aura around wire (to kill bullets)
     aura around wire (or just tip) that freezes
-      
       tip spawns ice-IX
     change wire physics, color, draw style with upgrades
       const rigidity = 1; // 0 (loose) to 1 (crinkles), -0.6 has wiggly knots
@@ -59,8 +125,6 @@ tech: filament - gets longer as you eat power ups (up to a max length), mobs can
 zoom in/out when choosing power ups
   interactions with other zoom actions
     zoom at start of level  (this could be instant)
-    zoom from dilation skin
-      this skin's zoom is annoying, maybe if could be reworked
 
 make orbital bots have an elliptical orbit that precesses
 

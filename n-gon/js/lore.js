@@ -1,3 +1,51 @@
+const speechHandler = {
+    voices: [],
+    init: function () {
+        const load = () => { this.voices = window.speechSynthesis.getVoices(); };
+        window.speechSynthesis.onvoiceschanged = load;
+        load();
+    },
+    /**
+     * @param {string} say - The text to speak
+     * @param {string} type - us, uk, au, in, ca, ie
+     */
+    // if (true) {
+    //     speechHandler.speech(tech.tech[index].name)
+    // }
+    speech: function (say, type = 'uk') {
+        if (this.voices.length === 0) this.voices = window.speechSynthesis.getVoices();
+        const utterance = new SpeechSynthesisUtterance(say);
+        utterance.rate = 0.95;
+        utterance.volume = 0.5;
+        const library = {
+            'us': { lang: 'en-US', names: ['Jenny', 'Aria', 'Guy', 'Google US English', 'Samantha'] },
+            'uk': { lang: 'en-GB', names: ['Sonia', 'Libby', 'Ryan', 'Google UK English', 'Serena'] },
+            'au': { lang: 'en-AU', names: ['Natasha', 'William', 'Google Australian English', 'Karen'] },
+            'in': { lang: 'en-IN', names: ['Neerja', 'Prabhat', 'Google India English', 'Rishi', 'Veena'] },
+            'ca': { lang: 'en-CA', names: ['Clara', 'Liam', 'Google Canada English', 'Linda', 'Moira'] },
+        };
+        const config = library[type] || library['uk'];
+
+        // It looks for names in order of quality
+        let selectedVoice = null;
+        for (let name of config.names) {
+            selectedVoice = this.voices.find(v => v.name.includes(name));
+            if (selectedVoice) break;
+        }
+
+        // Fallback: If no premium name is found, take ANY voice matching the language code
+        utterance.voice = selectedVoice || this.voices.find(v => v.lang.startsWith(config.lang));
+        // if (utterance.voice) {
+        //     console.log(`%c[Speech] Using Voice: ${utterance.voice.name} (${utterance.voice.lang})`, "color: #00ff00; font-weight: bold;");
+        // } else {
+        //     console.log("%c[Speech] No specific voice found, using system default.", "color: #ff9900;");
+        // }
+
+        window.speechSynthesis.speak(utterance);
+    }
+};
+speechHandler.init();
+
 const lore = {
     techCount: 0,
     techGoal: 7,
@@ -44,18 +92,30 @@ const lore = {
         sound.portamento(83.333)
         sound.portamento(166.666)
     },
-    trainer: {
-        color: "#f20",
-        voice: undefined,
-        text: function (say) {
-            simulation.inGameConsole(`input.audio(<span style="color:#888; font-size: 70%;">${(Date.now() / 1000).toFixed(0)} s</span>)<span class='color-symbol'>:</span> "<span style="color:${this.color};">${say}</span>"`, Infinity);
-            lore.talkingColor = this.color
-            const utterance = new SpeechSynthesisUtterance(say);
-            utterance.lang = "en-AU" //"en-IN"; //de-DE  en-GB  fr-FR  en-US en-AU
-            utterance.volume = 0.2; // 0 to 1
-            speechSynthesis.speak(utterance);
-        },
-    },
+    // trainer: {
+    //     color: "#f20",
+    //     voice: undefined,
+    //     text: function (say) {
+    //         simulation.inGameConsole(`input.audio(<span style="color:#888; font-size: 70%;">${(Date.now() / 1000).toFixed(0)} s</span>)<span class='color-symbol'>:</span> "<span style="color:${this.color};">${say}</span>"`, Infinity);
+    //         lore.talkingColor = this.color
+    //         const utterance = new SpeechSynthesisUtterance(say);
+    //         utterance.lang = "en-AU" //"en-IN"; //de-DE  en-GB  fr-FR  en-US en-AU
+    //         utterance.volume = 0.2; // 0 to 1
+    //         speechSynthesis.speak(utterance);
+    //     },
+    // },
+    // speech: function (say) {
+    //     const utterance = new SpeechSynthesisUtterance();
+    //     utterance.text = say;
+    //     utterance.rate = 0.9; // Slightly slower helps with clarity
+    //     utterance.pitch = 1;
+    //     utterance.lang = "en-GB" //"en-IN"; //de-DE  en-GB  fr-FR  en-US en-AU
+    //     utterance.volume = 0.2; // 0 to 1
+    //     const voices = window.speechSynthesis.getVoices();
+    //     utterance.voice = voices.find(v => v.name.includes('Google US English')) || voices[0];
+
+    //     window.speechSynthesis.speak(utterance);
+    // },
     anand: {
         color: "#e0c",
         voice: undefined,
@@ -66,27 +126,55 @@ const lore = {
                 if (lore.isSpeech) {
                     const utterance = new SpeechSynthesisUtterance(say);
                     // utterance.voice = lore.anand.voice
-                    utterance.lang = "en-GB" //"en-IN"; //de-DE  en-GB  fr-FR  en-US en-AU
-                    utterance.volume = 0.2; // 0 to 1
-                    // if (lore.rate !== 1) utterance.rate = lore.rate
+                    // utterance.lang = "en-GB" //"en-IN"; //de-DE  en-GB  fr-FR  en-US en-AU
+                    utterance.volume = 0.8; // 0 to 1
+
+                    const library = {
+                        // 'us': { lang: 'en-US', names: ['Jenny', 'Aria', 'Guy', 'Google US English', 'Samantha'] },
+                        // 'uk': { lang: 'en-GB', names: ['Sonia', 'Libby', 'Ryan', 'Google UK English', 'Serena'] },
+                        // 'au': { lang: 'en-AU', names: ['Natasha', 'William', 'Google Australian English', 'Karen'] },
+                        'in': { lang: 'en-IN', names: ['Neerja', 'Prabhat', 'Google India English', 'Rishi', 'Veena'] },
+                        // 'ca': { lang: 'en-CA', names: ['Clara', 'Liam', 'Google Canada English', 'Linda', 'Moira'] },
+                    };
+                    const config = library['in'];
+
+                    let selectedVoice = null;
+                    for (let name of config.names) {
+                        selectedVoice = speechHandler.voices.find(v => v.name.includes(name));
+                        if (selectedVoice) break;
+                    }
+                    utterance.voice = selectedVoice || speechHandler.voices.find(v => v.lang.startsWith(config.lang));
+
+                    const startTime = Date.now(); // Track when speech starts
                     speechSynthesis.speak(utterance);
                     utterance.onerror = () => { //if speech doesn't work
                         lore.isSpeech = false
-                        lore.nextSentence()
+                        setTimeout(() => { lore.nextSentence(); }, 2000);
                     }
-                    speechFrozen = setTimeout(() => { // speech frozen after 10 seconds of no end
+                    speechFrozen = setTimeout(() => { // speech frozen after 20 seconds of no end
                         console.log('speech frozen')
                         lore.isSpeech = false
                         lore.nextSentence()
                     }, 20000);
                     utterance.onend = () => {
                         clearTimeout(speechFrozen);
-                        lore.nextSentence()
-                    }
+
+                        const elapsed = Date.now() - startTime;
+                        // If the speech "finished" in less than 100ms, it was likely skipped/muted.
+                        if (elapsed < 100) {
+                            setTimeout(() => {
+                                lore.nextSentence();
+                            }, 2000);
+                        } else {
+                            lore.nextSentence();
+                        }
+                    };
+                    // utterance.onend = () => {
+                    //     clearTimeout(speechFrozen);
+                    //     lore.nextSentence()
+                    // }
                 } else {
-                    setTimeout(() => {
-                        lore.nextSentence()
-                    }, 3000);
+                    setTimeout(() => { lore.nextSentence() }, 2000);
                 }
             }
         },
@@ -98,25 +186,51 @@ const lore = {
                 simulation.inGameConsole(`input.audio(<span style="color:#888; font-size: 70%;">${(Date.now() / 1000).toFixed(0)} s</span>)<span class='color-symbol'>:</span> "<span style="color:${this.color};">${say}</span>"`, Infinity);
                 lore.talkingColor = this.color
                 if (lore.isSpeech) {
-                    utterance = new SpeechSynthesisUtterance(say);
+                    const utterance = new SpeechSynthesisUtterance(say);
                     // utterance.voice = lore.anand.voice
-                    utterance.lang = "en-AU";
-                    utterance.volume = 0.2; // 0 to 1
-                    // if (lore.rate !== 1) utterance.rate = lore.rate
+                    // utterance.lang = "en-GB" //"en-IN"; //de-DE  en-GB  fr-FR  en-US en-AU
+                    utterance.volume = 0.8; // 0 to 1
+
+                    const library = {
+                        // 'us': { lang: 'en-US', names: ['Jenny', 'Aria', 'Guy', 'Google US English', 'Samantha'] },
+                        'uk': { lang: 'en-GB', names: ['Sonia', 'Libby', 'Ryan', 'Google UK English', 'Serena'] },
+                        // 'au': { lang: 'en-AU', names: ['Natasha', 'William', 'Google Australian English', 'Karen'] },
+                        // 'in': { lang: 'en-IN', names: ['Neerja', 'Prabhat', 'Google India English', 'Rishi', 'Veena'] },
+                        // 'ca': { lang: 'en-CA', names: ['Clara', 'Liam', 'Google Canada English', 'Linda', 'Moira'] },
+                    };
+                    const config = library['uk'];
+
+                    let selectedVoice = null;
+                    for (let name of config.names) {
+                        selectedVoice = speechHandler.voices.find(v => v.name.includes(name));
+                        if (selectedVoice) break;
+                    }
+                    utterance.voice = selectedVoice || speechHandler.voices.find(v => v.lang.startsWith(config.lang));
+
+                    const startTime = Date.now(); // Track when speech starts
                     speechSynthesis.speak(utterance);
                     utterance.onerror = () => { //if speech doesn't work
                         lore.isSpeech = false
-                        lore.nextSentence()
+                        setTimeout(() => { lore.nextSentence(); }, 2000);
                     }
-                    speechFrozen = setTimeout(function () { // speech frozen after 10 seconds of no end
+                    speechFrozen = setTimeout(() => { // speech frozen after 20 seconds of no end
                         console.log('speech frozen')
                         lore.isSpeech = false
                         lore.nextSentence()
                     }, 20000);
                     utterance.onend = () => {
                         clearTimeout(speechFrozen);
-                        lore.nextSentence()
-                    }
+
+                        const elapsed = Date.now() - startTime;
+                        // If the speech "finished" in less than 100ms, it was likely skipped/muted.
+                        if (elapsed < 100) {
+                            setTimeout(() => {
+                                lore.nextSentence();
+                            }, 2000);
+                        } else {
+                            lore.nextSentence();
+                        }
+                    };
                 } else {
                     setTimeout(() => {
                         lore.nextSentence()
@@ -1188,52 +1302,3 @@ const lore = {
     // () => { lore.miriam.text("When you clear the final boss a positive amplitude is added.") },
     // () => { lore.miriam.text("Each branch is independently researching new technology.") },
 }
-
-
-// How to get to the console in chrome:
-// Press either CTRL + SHIFT + I or F12   or   Option + ⌘ + J on a Mac
-// Press ESC (or click on “Show console” in the bottom right corner) to slide the console up.
-
-// How to get to the console in firefox:
-// from the keyboard: press Ctrl+Shift+J (or ⌘+Shift+J on a Mac).
-
-// How to get to the console in safari:
-// Option + ⌘ + C
-// http://xahlee.info/comp/unicode_computing_symbols.html
-
-
-// speech: function(say) {
-//   var utterance = new SpeechSynthesisUtterance(say);
-//   //msg.voice = voices[10]; // Note: some voices don't support altering params
-//   //msg.voiceURI = 'native';
-//   //utterance.volume = 1; // 0 to 1
-//   //utterance.rate = 1; // 0.1 to 10
-//   //utterance.pitch = 1; //0 to 2
-//   //utterance.text = 'Hello World';
-//   //http://stackoverflow.com/questions/14257598/what-are-language-codes-for-voice-recognition-languages-in-chromes-implementati
-//   //de-DE  en-GB  fr-FR  en-US en-AU
-//   utterance.lang = "en-GB";
-//   speechSynthesis.speak(utterance);
-// }
-
-/* <option value="en-GB">GB</option>
-<option value="en-US">US</option>
-<option value="en-AU">AU</option>
-<option value="fr-FR">FR</option>
-<option value="de-DE">DE</option>
-<option value="en-IN">IN</option>
-<option value="zh-CN">CN</option>
-<option value="pl">PL</option>
-<option value="ru">RU</option>
-<option value="sv-SE">SE</option>
-<option value="en-ZA">ZA</option> */
-
-
-// The API also allows you to get a list of voice the engine supports:
-// speechSynthesis.getVoices().forEach(function(voice) {
-//   console.log(voice.name, voice.default ? voice.default :'');
-// });
-// Then set a different voice, by setting .voice on the utterance object:
-// var msg = new SpeechSynthesisUtterance('I see dead people!');
-// msg.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Whisper'; })[0];
-// speechSynthesis.speak(msg);

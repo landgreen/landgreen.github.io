@@ -42,7 +42,7 @@ const level = {
             // window.removeEventListener("keydown", m.fieldEvent);
             // m.fieldUpgrades[6].set()
             // m.wakeCheck();
-            // m.damageDone *= 900
+            // m.damageDone *= 1000
 
             // m.maxHealth = m.health = 100000000
             // m.displayHealth();
@@ -54,19 +54,19 @@ const level = {
             // simulation.molecularMode = 2
             // m.takeDamage(0.01);
 
-            // b.giveGuns(0) //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns(7) //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[b.inventory[0]].ammo = 100000000000
             // tech.addJunkTechToPool(0.5)
-            // for (let i = 0; i < 1; ++i) tech.giveTech("filament")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("microstates")
             // tech.giveTech("lens")
-            // for (let i = 0; i < 1; i++) tech.giveTech("world line")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("chitin")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("mycelium")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("fiber optics")
+            // for (let i = 0; i < 1; i++) tech.giveTech("anthropic principle")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("tokamak")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("nail-bot")
+            // requestAnimationFrame(() => { for (let i = 0; i < 1; ++i) tech.giveTech("eigenstate") });
             // spawn.bodyRect(575, -700, 150, 150);  //block mob line of site on testing
             // level.levelsCleared = 7
             // simulation.isHorizontalFlipped = true
-            // level.final()
+            // level.satellite()
             // level.testing()
 
             level[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
@@ -74,12 +74,12 @@ const level = {
             // powerUps.spawn(m.pos.x, m.pos.y, "difficulty", false);
             // spawn.randomGroup(1300, -200, Infinity);
             // spawn.nodeGroup(1300, -200, 'grower');
-            // for (let i = 0; i < 2; i++) spawn.springer(1300 + 300 * i, -200)
-            // for (let i = 0; i < 1; i++) spawn.motherFlockerBoss(2300 + 200 * i, -200)
+            // for (let i = 0; i < 2; i++) spawn.sniper(1300 + 300 * i, -200)
+            // for (let i = 0; i < 1; i++) spawn.blockBoss(2300 + 200 * i, -200)
             // Matter.Body.setPosition(player, { x: -27000, y: -400 });
             // requestAnimationFrame(() => { powerUps.spawnDelay("coupling", 400); });
             // m.storeTech() //sets entanglement
-            // for (let i = 0; i < 1; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "entanglement");
+            // for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "tech");
             // for (let i = 0; i < 30; ++i) powerUps.directSpawn(m.pos.x + 450 + 150 * Math.random(), m.pos.y + 150 * Math.random(), "coupling");
             // for (let i = 0; i < 100; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "coupling", false);
             // level.constraint[0].effect()  // turn this off first ->  seededShuffle(level.constraint)
@@ -200,7 +200,7 @@ const level = {
 
             }
         }
-
+        if (tech.isEigenstate) m.eigen.reset()
         level.newLevelOrPhase()
         if (tech.isDigitalPet) {
 
@@ -578,11 +578,11 @@ const level = {
                             for (let i = 0; i < hits.length; i++) {
                                 //hits[i].bodyA.inertia !== Infinity checks if it's not the player
                                 let who = hits[i].bodyA
-                                if (who.inertia !== Infinity && !who.isNotHoldable && !who.isExplodingConstraintTimer) {
+                                if (who.inertia !== Infinity && !who.isNotHoldable && !who.isInvulnerable && !who.isExplodingConstraintTimer) {
                                     who.isExplodingConstraintTimer = 90
                                 }
                                 who = hits[i].bodyB
-                                if (who.inertia !== Infinity && !who.isNotHoldable && !who.isExplodingConstraintTimer) {
+                                if (who.inertia !== Infinity && !who.isNotHoldable && !who.isInvulnerable && !who.isExplodingConstraintTimer) {
                                     who.isExplodingConstraintTimer = 90
                                 }
                             }
@@ -2647,17 +2647,19 @@ const level = {
 
                     const hits = Matter.Query.ray(body, this.position, this.look, 25)
                     for (let i = hits.length - 1; i > -1; i--) {
-                        // console.log(what)
                         const what = hits[i].bodyA
-                        simulation.drawList.push({ x: what.position.x, y: what.position.y, radius: 11, color: "rgba(0,160,255,0.7)", time: 10 });
-                        if (what === m.holdingTarget) m.drop()
-                        for (let i = 0; i < body.length; i++) {
-                            if (body[i] === what) {
-                                body.splice(i, 1);
-                                break
+                        if (!what.isInvulnerable && !what.isNotHoldable) {
+                            // console.log(what)
+                            simulation.drawList.push({ x: what.position.x, y: what.position.y, radius: 11, color: "rgba(0,160,255,0.7)", time: 10 });
+                            if (what === m.holdingTarget) m.drop()
+                            for (let i = 0; i < body.length; i++) {
+                                if (body[i] === what) {
+                                    body.splice(i, 1);
+                                    break
+                                }
                             }
+                            Matter.Composite.remove(engine.world, what);
                         }
-                        Matter.Composite.remove(engine.world, what);
                     }
                     //draw
                     ctx.beginPath();

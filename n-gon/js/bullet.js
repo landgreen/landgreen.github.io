@@ -473,7 +473,7 @@ const b = {
                         knock = Vector.mult(Vector.normalise(sub), -Math.sqrt(dmg) * body[i].mass * 0.022);
                         body[i].force.x += knock.x;
                         body[i].force.y += knock.y;
-                        if (tech.isBlockExplode) {
+                        if (tech.isBlockExplode && !body[i].isInvulnerable) {
                             if (body[i] === m.holdingTarget) m.drop()
                             const size = 20 + 300 * Math.pow(body[i].mass, 0.25)
                             const x = body[i].position.x
@@ -1524,7 +1524,7 @@ const b = {
                         for (let i = 0, len = powerUp.length; i < len; ++i) {
                             if (powerUp[i] === this.caughtPowerUp) index = i
                         }
-                        if (index !== null) {
+                        if (index !== null && !simulation.paused) {
                             powerUps.onPickUp(this.caughtPowerUp);
                             this.caughtPowerUp.effect();
                             Matter.Composite.remove(engine.world, this.caughtPowerUp);
@@ -1639,7 +1639,7 @@ const b = {
                             for (let i = 0; i < blocks.length; i++) {
                                 if (blocks[i].bodyA.classType === "body" && !blocks[i].bodyA.isNotHoldable && blocks[0].bodyA.mass < 40) {
                                     this.retract()
-                                    if (tech.hookNails) {
+                                    if (tech.hookNails && !blocks[i].bodyA.isInvulnerable) {
                                         b.targetedNail(this.position, 3 * tech.hookNails)
                                         const ANGLE = 2 * Math.PI * Math.random() //make a few random ones
                                         for (let i = 0; i < 13; i++) b.nail(this.position, { x: 10.5 * Math.cos(ANGLE), y: 10.5 * Math.sin(ANGLE) }, 1.2)
@@ -1940,7 +1940,7 @@ const b = {
                     for (let i = 0, len = powerUp.length; i < len; ++i) {
                         if (powerUp[i] === this.caughtPowerUp) index = i
                     }
-                    if (index !== null) {
+                    if (index !== null && !simulation.paused) {
                         powerUps.onPickUp(this.caughtPowerUp);
                         this.caughtPowerUp.effect();
                         Matter.Composite.remove(engine.world, this.caughtPowerUp);
@@ -2536,7 +2536,7 @@ const b = {
                 bestPowerUp = vertexCollision(path[path.length - 2], path[path.length - 1], [mob, map, body, powerUp]);
                 if (bestPowerUp.who) {
                     for (let i = 0, len = powerUp.length; i < len; ++i) {
-                        if (powerUp[i] === bestPowerUp.who && !simulation.isChoosing && (powerUp[i].name !== "heal" || m.maxHealth - m.health > 0.01 || tech.isOverHeal) && !(tech.isEnergyNoAmmo && powerUp[i].name === "ammo") && powerUp[i].cycle > 30) {
+                        if (powerUp[i] === bestPowerUp.who && !simulation.isChoosing && (powerUp[i].name !== "heal" || m.maxHealth - m.health > 0.01 || tech.isOverHeal) && !(tech.isEnergyNoAmmo && powerUp[i].name === "ammo") && powerUp[i].cycle > 30 && !simulation.paused) {
                             m.energy += 0.8
                             powerUps.onPickUp(powerUp[i]);
                             powerUp[i].effect();
@@ -3394,7 +3394,7 @@ const b = {
                             const distB = Vector.magnitude(Vector.sub(this.position, b.position))
                             return distA < distB ? a : b
                         })
-                        if (found && m.energy > 0.041) {
+                        if (found && m.energy > 0.041 && !found.isInvulnerable) {
                             m.energy -= 0.04
                             m.fieldUpgrades[4].endoThermic(0.4)
                             //remove the body and spawn a new drone
@@ -3501,7 +3501,7 @@ const b = {
                                 const distB = Vector.magnitude(Vector.sub(this.position, b.position))
                                 return distA < distB ? a : b
                             })
-                            if (found) this.bodyTarget = found
+                            if (found && !found.isInvulnerable) this.bodyTarget = found
                         }
                     } else {
                         this.do = this.doDying
@@ -3565,7 +3565,7 @@ const b = {
                                         (tech.isSuperDeterminism && powerUp[i].name === "field") ||
                                         (((tech.isEnergyNoAmmo || b.inventory.length === 0) || (tech.ammoCap !== 0 && b.guns[b.activeGun].ammo > 20)) && powerUp[i].name === "ammo")
                                     )
-                                    && powerUp[i].cycle > 30
+                                    && powerUp[i].cycle > 30 && !simulation.paused
                                 ) {
                                     this.eatPowerUp(i)
                                     break;
@@ -3580,7 +3580,7 @@ const b = {
                                     (tech.isSuperDeterminism && powerUp[i].name === "field") ||
                                     (((tech.isEnergyNoAmmo || b.inventory.length === 0) || (tech.ammoCap !== 0 && b.guns[b.activeGun].ammo > 20)) && powerUp[i].name === "ammo")
                                 )) {
-                                    if (Vector.magnitudeSquared(Vector.sub(this.position, powerUp[i].position)) < 20000 && !simulation.isChoosing && powerUp[i].cycle > 30) {
+                                    if (Vector.magnitudeSquared(Vector.sub(this.position, powerUp[i].position)) < 20000 && !simulation.isChoosing && powerUp[i].cycle > 30 && !simulation.paused) {
                                         this.eatPowerUp(i)
                                         break;
                                     }
@@ -3656,7 +3656,7 @@ const b = {
                             const distB = Vector.magnitude(Vector.sub(this.position, b.position))
                             return distA < distB ? a : b
                         })
-                        if (found && m.energy > 0.091) {
+                        if (found && m.energy > 0.091 && !found.isInvulnerable) {
                             m.energy -= 0.09
                             m.fieldUpgrades[4].endoThermic(0.7)
                             //remove the body and spawn a new drone
@@ -3773,7 +3773,7 @@ const b = {
                                             (tech.isSuperDeterminism && powerUp[i].name === "field") ||
                                             (((tech.isEnergyNoAmmo || b.inventory.length === 0) || (tech.ammoCap !== 0 && b.guns[b.activeGun].ammo > 20)) && powerUp[i].name === "ammo")
                                         )
-                                        && powerUp[i].cycle > 30
+                                        && powerUp[i].cycle > 30 && !simulation.paused
                                     ) {
                                         //draw pickup for a single cycle
                                         ctx.beginPath();
@@ -3808,7 +3808,7 @@ const b = {
                                         (tech.isSuperDeterminism && powerUp[i].name === "field") ||
                                         (((tech.isEnergyNoAmmo || b.inventory.length === 0) || (tech.ammoCap !== 0 && b.guns[b.activeGun].ammo > 20)) && powerUp[i].name === "ammo")
                                     )) {
-                                        if (Vector.magnitudeSquared(Vector.sub(this.position, powerUp[i].position)) < 20000 && !simulation.isChoosing && powerUp[i].cycle > 30) {
+                                        if (Vector.magnitudeSquared(Vector.sub(this.position, powerUp[i].position)) < 20000 && !simulation.isChoosing && powerUp[i].cycle > 30 && !simulation.paused) {
                                             //draw pickup for a single cycle
                                             ctx.beginPath();
                                             ctx.moveTo(this.position.x, this.position.y);

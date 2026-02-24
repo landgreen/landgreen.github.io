@@ -484,31 +484,32 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
             // const fieldNameN = m.fieldUpgrades[m.fieldMode === m.fieldUpgrades.length - 2 ? 1 : m.fieldMode + 1].name
             //button above for previous
             text += `<div class="pause-grid-module" id ="pause-field-previous" style="animation: fieldColorCycle 3s linear infinite alternate; border-top: 1px solid #000;border-bottom: 1px solid #000;">
-                           <div class="grid-title" style="text-align: center;">↑ <div class="circle-grid field"></div> ↑</div></div>`
+<div class="grid-title" style="text-align: center;">↑ <div class="circle-grid field"></div> ↑</div></div>`
             //button for current
             const style = `style="height:auto;"`
             text += `<div class="pause-grid-module card-background" id="pause-field" ${style} >
-                                                    <div class="card-text">
-                                                        <div class="grid-title"><div class="circle-grid-title field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>
-                                                        ${m.fieldUpgrades[m.fieldMode].description}</div> </div>`
+<div class="card-text">
+<div class="grid-title"><div class="circle-grid-title field" onclick="speechHandler.speech('${m.fieldUpgrades[m.fieldMode].name}')"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>
+${m.fieldUpgrades[m.fieldMode].description}</div> </div>`
             //button below for next
             text += `<div class="pause-grid-module" id="pause-field-next" style="animation: fieldColorCycle 3s linear infinite alternate;border-bottom: 1px solid #000;">
-                                                    <div class="grid-title" style="text-align: center;">↓ <div class="circle-grid field"></div> ↓</div></div>`
+<div class="grid-title" style="text-align: center;">↓ <div class="circle-grid field"></div> ↓</div></div>`
 
 
         } else {
             const style = `style="height:auto;"`
-            text += `<div class="pause-grid-module card-background" id="pause-field" ${style} >
-                                                    <div class="card-text">
-                                                        <div class="grid-title"><div class="circle-grid-title field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>
-                                                        ${m.fieldUpgrades[m.fieldMode].description}</div> </div>`
+            text += `<div class="pause-grid-module card-background" id="pause-field" ${style}>
+<div class="card-text">
+<div class="grid-title"><div class="circle-grid-title field" onclick="speechHandler.speech('${m.fieldUpgrades[m.fieldMode].name}')"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>
+${m.fieldUpgrades[m.fieldMode].description}</div> </div>`
         }
         for (let i = 0, len = b.inventory.length; i < len; i++) {
             const style = `style="height:auto;"`
+            //onclick="speechHandler.speech('${tech.tech[i].name}')"
             text += `<div class="pause-grid-module card-background" ${style} >
-                                                    <div class="card-text">
-                                                        <div class="grid-title"><div class="circle-grid-title gun"></div> &nbsp; ${build.nameLink(b.guns[b.inventory[i]].name)} - <span style="font-size:100%;font-weight: 100;">${b.guns[b.inventory[i]].ammo}</span></div>
-                                                        ${b.guns[b.inventory[i]].descriptionFunction()}</div> </div>`
+<div class="card-text">
+<div class="grid-title"><div class="circle-grid-title gun" onclick="speechHandler.speech('${b.guns[b.inventory[i]].name}')"></div> &nbsp; ${build.nameLink(b.guns[b.inventory[i]].name)} - <span style="font-size:100%;font-weight: 100;">${b.guns[b.inventory[i]].ammo}</span></div>
+${b.guns[b.inventory[i]].descriptionFunction()}</div> </div>`
         }
         let el = document.getElementById("pause-grid-left")
         el.style.display = "grid"
@@ -530,9 +531,9 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
     <button onclick="build.sortTech('damage taken')" class='sort-button'><strong style="letter-spacing: 1px;font-weight: 100;">dmg taken</strong></button>
     <button onclick="build.sortTech('heal')" class='sort-button'><strong class='color-h'>heal</strong></button>
     <button onclick="build.sortTech('energy')" class='sort-button'><strong class='color-f'>energy</strong></button>
-    <input type="search" id="sort-input" style="width: 8em;font-size: 0.6em;color:#000;" placeholder="sort by" />
-    <button onclick="build.sortTech('input')" class='sort-button' style="border-radius: 0em;border: 1.5px #000 solid;font-size: 0.6em;" value="damage">sort</button>
 </div>`;
+        // <input type="search" id="sort-input" style="width: 8em;font-size: 0.6em;color:#000;" placeholder="sort by" />
+        // <button onclick="build.sortTech('input')" class='sort-button' style="border-radius: 0em;border: 1.5px #000 solid;font-size: 0.6em;" value="damage">sort</button>
         const ejectClass = (tech.isPauseEjectTech && !simulation.isChoosing && m.immuneCycle < m.cycle) ? 'pause-eject' : ''
         for (let i = 0, len = tech.tech.length; i < len; i++) {
             if (tech.tech[i].count > 0) {
@@ -565,14 +566,14 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
         el.innerHTML = text
 
         //add event listener for pressing enter key when in sort
-        function pressEnterSort(event) {
-            if (event.key === 'Enter') {
-                requestAnimationFrame(() => { document.getElementById("sort-input").focus(); });
-                // event.preventDefault(); // Prevent the default action to avoid form submission or any other default action
-                build.sortTech('input')
-            }
-        }
-        document.getElementById("sort-input").addEventListener('keydown', pressEnterSort);
+        // function pressEnterSort(event) {
+        //     if (event.key === 'Enter') {
+        //         requestAnimationFrame(() => { document.getElementById("sort-input").focus(); });
+        //         // event.preventDefault(); // Prevent the default action to avoid form submission or any other default action
+        //         build.sortTech('input')
+        //     }
+        // }
+        // document.getElementById("sort-input").addEventListener('keydown', pressEnterSort);
         // requestAnimationFrame(() => { document.getElementById("sort-input").focus(); });
     },
     sortTech(find, isExperiment = false) {
@@ -642,21 +643,21 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
                 if (!a.isBotTech && b.isBotTech) return 1; //sort to the bottom
                 return 0;
             });
-        } else if (document.getElementById("sort-input").value === 'skin') {
-            tech.tech.sort((a, b) => {
-                if (a.isSkin && b.isSkin) {
-                    return (a.allowed() === b.allowed()) ? 0 : a.allowed() ? -1 : 1;
-                }
-                if (a.isSkin && !b.isSkin) return -1; //sort to the top
-                if (!a.isSkin && b.isSkin) return 1; //sort to the bottom
-                return 0;
-            });
-        } else if (document.getElementById("sort-input").value === 'junk') {
-            tech.tech.sort((a, b) => {
-                if (a.isJunk && !b.isJunk) return -1; //sort to the top
-                if (!a.isJunk && b.isJunk) return 1; //sort to the bottom
-                return 0;
-            });
+            // } else if (document.getElementById("sort-input").value === 'skin') {
+            //     tech.tech.sort((a, b) => {
+            //         if (a.isSkin && b.isSkin) {
+            //             return (a.allowed() === b.allowed()) ? 0 : a.allowed() ? -1 : 1;
+            //         }
+            //         if (a.isSkin && !b.isSkin) return -1; //sort to the top
+            //         if (!a.isSkin && b.isSkin) return 1; //sort to the bottom
+            //         return 0;
+            //     });
+            // } else if (document.getElementById("sort-input").value === 'junk') {
+            //     tech.tech.sort((a, b) => {
+            //         if (a.isJunk && !b.isJunk) return -1; //sort to the top
+            //         if (!a.isJunk && b.isJunk) return 1; //sort to the bottom
+            //         return 0;
+            //     });
         } else if (find === 'damage') {
             tech.tech.sort(sortKeyword);
         } else if (find === 'damage taken') {
@@ -676,7 +677,7 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
         } else {
             build.generatePauseRight() //makes the right side of the pause menu with the tech            
         }
-        document.getElementById("sort-input").value = find; //make the sorted string display in the keyword search input field
+        if (isExperiment) document.getElementById("sort-input").value = find; //make the sorted string display in the keyword search input field
         simulation.updateTechHUD();
     },
     unPauseGrid() {
@@ -713,44 +714,45 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
     isExperimentSelection: false,
     isExperimentRun: false,
     techText(i) {
-        return `<div class="card-text" >
-                                <div class="grid-title" ><div class="circle-grid-title tech"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
-                                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+        return `<div class="card-text">
+                <div class="grid-title" ><div class="circle-grid-title tech" onclick="speechHandler.speech('${tech.tech[i].name}')"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
     },
     instantTechText(i) {
         // 
-        return `<div class="card-text" >
-                                <div class="grid-title" > <div class="circle-grid-instant"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
-                                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+        return `<div class="card-text">
+                <div class="grid-title" > <div class="circle-grid-instant" onclick="speechHandler.speech('${tech.tech[i].name}')"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
     },
     skinTechText(i) {
         return `<div class="card-text"> <div class="grid-title">
-                                <span style="position:relative;">
-                                    <div class="circle-grid-skin"></div>
-                                    <div class="circle-grid-skin-eye"></div>
-                                </span> &nbsp; &nbsp; &nbsp; &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
-                                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+                <span style="position:relative;" onclick="speechHandler.speech('${tech.tech[i].name}')">
+                    <div class="circle-grid-skin"></div>
+                    <div class="circle-grid-skin-eye"></div>
+                </span> &nbsp; &nbsp; &nbsp; &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
     },
+    // speechHandler.speech(tech.tech[index].name)
     gunTechText(i) {
         return `<div class="card-text"> <div class="grid-title">
-                                <span style="position:relative;">
-                                    <div class="circle-grid-title tech" style="position:absolute; top:0.12em; left:0;opacity:0.8;"></div>
-                                    <div class="circle-grid-title gun" style="position:absolute; top:0.12em; left:10px; opacity:0.65;"></div>
-                                </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
-                                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+                <span style="position:relative;" onclick="speechHandler.speech('${tech.tech[i].name}')">
+                    <div class="circle-grid-title tech" style="position:absolute; top:0.12em; left:0;opacity:0.8;"></div>
+                    <div class="circle-grid-title gun" style="position:absolute; top:0.12em; left:10px; opacity:0.65;"></div>
+                </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
     },
     fieldTechText(i) {
         return `<div class="card-text"><div class="grid-title">
-                                <span style="position:relative;">
-                                    <div class="circle-grid-title tech" style="position:absolute; top:0.12em; left:0;opacity:0.8;"></div>
-                                    <div class="circle-grid-title field" style="position:absolute; top:0.12em; left:10px;opacity:0.65;"></div>
-                                </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
-                                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+                <span style="position:relative;" onclick="speechHandler.speech('${tech.tech[i].name}')">
+                    <div class="circle-grid-title tech" style="position:absolute; top:0.12em; left:0;opacity:0.8;"></div>
+                    <div class="circle-grid-title field" style="position:absolute; top:0.12em; left:10px;opacity:0.65;"></div>
+                </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
     },
     junkTechText(i) {
         return `<div class="card-text">
-                                <div class="grid-title"><div class="circle-grid-title junk"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
-                                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+                <div class="grid-title"><div class="circle-grid-title junk" onclick="speechHandler.speech('${tech.tech[i].name}')"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
     },
     choosePowerUp(index, type, isAllowed = false) {
         if (type === "gun") {
@@ -902,15 +904,15 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
 </div>`
         const hideStyle = `style="height:auto; border: none; background-color: transparent;"`
         for (let i = 0, len = m.fieldUpgrades.length; i < len; i++) {
-            text += `<div id="field-${i}" class="experiment-grid-module card-background ${m.fieldMode === i ? " build-field-selected" : ""}" onclick="build.choosePowerUp(${i},'field')" ${hideStyle} >
+            text += `<div id="field-${i}" class="experiment-grid-module card-background ${m.fieldMode === i ? " build-field-selected" : ""}" onclick="build.choosePowerUp(${i},'field');" ${hideStyle} >
                             <div class="card-text">
-                                <div class="grid-title"><div class="circle-grid-title field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
+                                <div class="grid-title"><div class="circle-grid-title field" onclick="speechHandler.speech('${m.fieldUpgrades[i].name}')"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
                                 ${m.fieldUpgrades[i].description}</div> </div>`
         }
         for (let i = 0, len = b.guns.length; i < len; i++) {
             text += `<div id="gun-${i}" class="experiment-grid-module card-background ${b.guns[i].have ? " build-gun-selected" : ""}" onclick="build.choosePowerUp(${i},'gun')" ${hideStyle} >
                         <div class="card-text">
-                            <div class="grid-title"><div class="circle-grid-title gun"></div> &nbsp; ${build.nameLink(b.guns[i].name)}</div>
+                            <div class="grid-title"><div class="circle-grid-title gun" onclick="speechHandler.speech('${b.guns[i].name}')"></div> &nbsp; ${build.nameLink(b.guns[i].name)}</div>
                             ${b.guns[i].descriptionFunction()}</div> </div>`
         }
         for (let i = 0, len = tech.tech.length; i < len; i++) {
@@ -920,7 +922,6 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
                 } else { //disabled
                     text += `<div id="tech-${i}" class="experiment-grid-module card-background experiment-grid-disabled" ${hideStyle}>`
                 }
-
                 if (tech.tech[i].isFieldTech) {
                     text += build.fieldTechText(i)
                 } else if (tech.tech[i].isGunTech) {
