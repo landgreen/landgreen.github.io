@@ -1,19 +1,17 @@
 ******************************************************** NEXT PATCH **************************************************
 
-undoing low performance settings
-  keeping: engine.constraintIterations = 1; //default is 2
-  reverting back to 6: engine.positionIterations = 4; //default is 6
-  reverting back to 2: engine.velocityIterations = 2; //default is 4
+dark matter 0.3->0.25x damage reduction
+dark energy 1->15 energy/s
+dark star 1.3->1.4 radius
 
-training difficulty is now locked at level 2 (the normal starting level)
-paradigm shift starts at 1->2 health cost
+removed the last 3 training levels
+  //"mine","grenades", "harpoon"
+
+boson composite also affects filament
 
 bug fixes
-  queued removal
-    added queued removal when exiting level for powerUp and body
-    harpoon ammo on return was double triggering because of the delay in removal
-  held blocks no longer push dark matter
-  vacuum bomb explosion can't get below 0 and crash any more
+  neutron bomb wall colliding with dark matter
+  fixed delayed removal bug on pacifist final level
 
 *********************************************************** TODO *****************************************************
 
