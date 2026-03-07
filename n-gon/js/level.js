@@ -24,7 +24,7 @@ const level = {
             // tech.duplicateChance += 1
             // powerUps.setPowerUpMode(); //needed after adjusting duplication chance
             // simulation.isHorizontalFlipped = true
-            // level.levelsCleared = 7
+            // level.levelsCleared = 12
             // level.updateDifficulty()
             // simulation.isCheating = true
 
@@ -35,7 +35,7 @@ const level = {
             // tech.addJunkTechToPool(0.5)
             // m.couplingChange(100)
             // requestAnimationFrame(() => { m.setField(9) });
-            // m.setField(7) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
+            // m.setField(2) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
             // m.energy = m.maxEnergy = 12.2
             // m.energy += 1
             // m.couplingChange(1000)
@@ -68,7 +68,7 @@ const level = {
             // level.levelsCleared = 7
             // simulation.isHorizontalFlipped = true
             // localSettings.levelsClearedLastGame = 5 //triggers tech to spawn on initial level
-            // level.office()
+            // level.subway()
             // level.testing()
 
             level[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
@@ -77,7 +77,7 @@ const level = {
             // spawn.randomGroup(1300, -200, Infinity);
             // spawn.nodeGroup(1300, -200, 'grower');
             // for (let i = 0; i < 2; i++) spawn.starter(1300 + 3 * i, -200)
-            // for (let i = 0; i < 1; i++) spawn.laserTargetingBoss(2300 + 200 * i, -200)
+            // for (let i = 0; i < 1; i++) spawn.shieldingBoss(2300 + 200 * i, -200)
             // Matter.Body.setPosition(player, { x: -27000, y: -400 });
             // requestAnimationFrame(() => { powerUps.spawnDelay("coupling", 100); });
             // m.storeTech() //sets entanglement
@@ -3980,11 +3980,11 @@ const level = {
                         mob[i].removeConsBB()
                         mob[i].removeCons()
                         mob[i].leaveBody = false
-                        // mob[i].alive = false
-                        queueRemoval('mob', i)
+                        mob[i].alive = false
+                        // queueRemoval('mob', i) //maybe bug here
 
-                        // Matter.Composite.remove(engine.world, mob[i]);
-                        // powerUp.splice(i, 1);
+                        Matter.Composite.remove(engine.world, mob[i]);
+                        powerUp.splice(i, 1);
                     }
                 }
             }
