@@ -1059,7 +1059,7 @@ const b = {
                         //keep bomb in place
                         Matter.Body.setVelocity(this, { x: 0, y: 0 });
                         //draw suck
-                        const radius = 2.75 * this.explodeRad * (this.endCycle - simulation.cycle) / suckCycles
+                        const radius = Math.max(1, 2.75 * this.explodeRad * (this.endCycle - simulation.cycle) / suckCycles)
                         ctx.fillStyle = "rgba(0,0,0,0.1)";
                         ctx.beginPath();
                         ctx.arc(this.position.x, this.position.y, radius, 0, 2 * Math.PI);
