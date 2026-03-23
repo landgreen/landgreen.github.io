@@ -4152,7 +4152,8 @@ const b = {
                     x: targets[index].x + SPREAD * (Math.random() - 0.5),
                     y: targets[index].y + SPREAD * (Math.random() - 0.5)
                 }
-                b.superBall(position, Vector.mult(Vector.normalise(Vector.sub(WHERE, position)), speed), radius)
+                const dir = Vector.mult(Vector.normalise(Vector.sub(WHERE, position)), speed)
+                b.superBall(position, dir, radius)
                 shotsFired++
             } else if (isRandomAim) { // aim in random direction
                 const ANGLE = 2 * Math.PI * Math.random()

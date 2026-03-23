@@ -18,6 +18,7 @@ const tech = {
         }
         m.resetSkin();
         tech.removeCount = 0;
+        tech.beamSplitter = 0
         tech.pauseEjectTech = 2; //used in paradigm shift
         powerUps.retainList = [] //used in coherence
         lore.techCount = 0;
@@ -905,12 +906,7 @@ const tech = {
             this.refundAmount += tech.addJunkTechToPool(0.06)
         },
         refundAmount: 0,
-        remove() {
-            if (this.count > 0 && this.refundAmount > 0) {
-                tech.removeJunkTechFromPool(this.refundAmount)
-                this.refundAmount = 0
-            }
-        }
+        remove() { }
     },
     {
         name: "arsenal",
@@ -4879,7 +4875,7 @@ const tech = {
         }
     },
     {
-        name: "van der Waals force",
+        name: "van der Waals",
         descriptionFunction() {
             return `${powerUps.orb.Casimir(1)} will also give <strong>10</strong> maximum <strong class='color-h'>health</strong><br><em>${powerUps.Casimir.descriptionFunction()}</em>`
         },
@@ -6845,8 +6841,8 @@ const tech = {
             }
         },
         remove() {
+            tech.oneSuperBall = false;
             if (tech.oneSuperBall) {
-                tech.oneSuperBall = false;
                 for (i = 0, len = b.guns.length; i < len; i++) { //find which gun 
                     if (b.guns[i].name === "super balls") b.guns[i].chooseFireMethod()
                 }
@@ -9124,9 +9120,10 @@ const tech = {
         },
         remove() {
             if (tech.beamSplitter !== 0) {
-                tech.beamSplitter = 0
+                tech.beamSplitter -= this.count
                 b.guns[11].chooseFireMethod()
             }
+
         }
     },
     {
@@ -9172,10 +9169,10 @@ const tech = {
         },
         remove() {
             if (tech.isWideLaser) {
-                // tech.wideLaser = 0
                 tech.isWideLaser = false;
                 b.guns[11].chooseFireMethod()
             }
+            tech.isWideLaser = false;
         }
     },
     {
@@ -9220,10 +9217,11 @@ const tech = {
             b.guns[11].chooseFireMethod()
         },
         remove() {
-            if (tech.historyLaser) {
+            if (tech.historyLaser !== 0) {
                 tech.historyLaser = 0
                 b.guns[11].chooseFireMethod()
             }
+            tech.historyLaser = 0
         }
     },
     {
@@ -9320,6 +9318,7 @@ const tech = {
                 tech.isPulseLaser = false;
                 b.guns[11].chooseFireMethod()
             }
+            tech.isPulseLaser = false;
         }
     },
     //************************************************** 
@@ -10364,9 +10363,9 @@ const tech = {
         },
         remove() {
             if (tech.isIntangible) {
-                tech.isIntangible = false;
                 player.collisionFilter.mask = cat.body | cat.map | cat.mob | cat.mobBullet | cat.mobShield //normal collisions
             }
+            tech.isIntangible = false;
         }
     },
     {
