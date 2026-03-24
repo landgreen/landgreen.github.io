@@ -4850,6 +4850,42 @@ const tech = {
         }
     },
     {
+        name: "van der Waals",
+        descriptionFunction() {
+            return `${powerUps.orb.Casimir(1)} will also give <strong>10</strong> maximum <strong class='color-h'>health</strong><br><em>${powerUps.Casimir.descriptionFunction()}</em>`
+        },
+        maxCount: 1,
+        count: 0,
+        frequency: 3,
+        frequencyDefault: 3,
+        allowed: () => tech.isCasimir,
+        requires: "Casimir effect",
+        effect() {
+            tech.isCasimirHealth = true //about 20-30 mobs per level so at 17% that's about 4*5 max energy per level 
+        },
+        remove() {
+            tech.isCasimirHealth = false
+        }
+    },
+    {
+        name: "vacuum energy",
+        descriptionFunction() {
+            return `after using ${powerUps.orb.coupling(1)},&nbsp; ${powerUps.orb.ammo(1)},&nbsp; ${powerUps.orb.boost(1)},&nbsp; ${powerUps.orb.heal(1)}, &nbsp;${powerUps.orb.Casimir(1)}, &nbsp;or&nbsp; ${powerUps.orb.research(1)}<br>randomly set your <strong class='color-f'>energy</strong> to <strong>0</strong> or <strong>${(100 * m.maxEnergy).toFixed(0)}`
+        },
+        maxCount: 1,
+        count: 0,
+        frequency: 3,
+        frequencyDefault: 3,
+        allowed: () => tech.isCasimir,
+        requires: "Casimir effect",
+        effect() {
+            tech.isCasimirRandom = true //about 20-30 mobs per level so at 17% that's about 4*5 max energy per level 
+        },
+        remove() {
+            tech.isCasimirRandom = false
+        }
+    },
+    {
         name: "Lie group",
         descriptionFunction() {
             const resultsArray = tech.mergedList.map(item => powerUps.orb[item](1));
@@ -4872,42 +4908,7 @@ const tech = {
         },
         remove() {
             tech.mergedList = []
-        }
-    },
-    {
-        name: "van der Waals",
-        descriptionFunction() {
-            return `${powerUps.orb.Casimir(1)} will also give <strong>10</strong> maximum <strong class='color-h'>health</strong><br><em>${powerUps.Casimir.descriptionFunction()}</em>`
-        },
-        maxCount: 1,
-        count: 0,
-        frequency: 3,
-        frequencyDefault: 3,
-        allowed: () => tech.isCasimir,
-        requires: "Casimir effect",
-        effect() {
-            tech.isCasimirHealth = true //about 20-30 mobs per level so at 17% that's about 4*5 max energy per level 
-        },
-        remove() {
-            tech.isCasimirHealth = false
-        }
-    },
-    {
-        name: "vacuum energy",
-        descriptionFunction() {
-            return `after using ${powerUps.orb.coupling(1)},&nbsp; ${powerUps.orb.ammo(1)},&nbsp; ${powerUps.orb.heal(1)}, &nbsp;${powerUps.orb.Casimir(1)}, &nbsp;or&nbsp; ${powerUps.orb.research(1)}<br>randomly set your <strong class='color-f'>energy</strong> to <strong>0</strong> or <strong>${(100 * m.maxEnergy).toFixed(0)}`
-        },
-        maxCount: 1,
-        count: 0,
-        frequency: 3,
-        frequencyDefault: 3,
-        allowed: () => tech.isCasimir,
-        requires: "Casimir effect",
-        effect() {
-            tech.isCasimirRandom = true //about 20-30 mobs per level so at 17% that's about 4*5 max energy per level 
-        },
-        remove() {
-            tech.isCasimirRandom = false
+            this.list = ["coupling", "boost", "research", "ammo"]
         }
     },
     {
@@ -6686,7 +6687,11 @@ const tech = {
         frequency: 1,
         frequencyDefault: 1,
         allowed() {
-            return (tech.haveGunCheck("shotgun") && !tech.isNailShot && !tech.isIceShot && !tech.isLaserShot && !tech.isRivets && !tech.isFoamShot && !tech.isSporeWorm && !tech.isSporeFlea && !tech.isNeedles) || ((tech.haveGunCheck("super balls") || tech.isSuperMine) && !tech.isSuperBounce && !tech.isFoamBall && !tech.isSlime) || (tech.isRivets && !tech.isNailCrit) || (m.fieldMode === 4 && simulation.molecularMode === 3) || (tech.haveGunCheck("drones") && !tech.isForeverDrones && !tech.isDroneRadioactive && !tech.isDroneTeleport)
+            return (tech.haveGunCheck("shotgun") && !tech.isNailShot && !tech.isIceShot && !tech.isLaserShot && !tech.isRivets && !tech.isFoamShot && !tech.isSporeWorm && !tech.isSporeFlea && !tech.isNeedles)
+                || ((tech.haveGunCheck("super balls") || tech.isSuperMine) && !tech.isSuperBounce && !tech.isSlime)
+                || (tech.isRivets && !tech.isNailCrit)
+                || (m.fieldMode === 4 && simulation.molecularMode === 3)
+                || (tech.haveGunCheck("drones") && !tech.isForeverDrones && !tech.isDroneRadioactive && !tech.isDroneTeleport)
         },
         requires: "shotgun, super balls, rivets, drones, not irradiated drones, burst drones, polyurethane, slime, photonic crystal",
         effect() {

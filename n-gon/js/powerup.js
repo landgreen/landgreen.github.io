@@ -796,6 +796,7 @@ const powerUps = {
             powerUps.animatePowerUpGrab('rgba(0, 170, 238,0.3)')
             m.couplingChange(1)
             powerUps.Casimir.random()
+            powerUps.Casimir.random()
         },
     },
     boost: {
