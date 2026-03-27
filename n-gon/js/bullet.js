@@ -5803,10 +5803,19 @@ const b = {
                         }
                     }
                 }
-                //orbit player
+
+
+
                 const time = simulation.cycle * this.orbitalSpeed + this.phase
-                const orbit = { x: Math.cos(time), y: Math.sin(time) }
+                // if (this.isUpgraded) {
+                //     const baseOrbit = { x: 1.5 * Math.cos(time), y: 0.8 * Math.sin(time) };
+                //     const precessionAngle = simulation.cycle * 0.03;
+                //     const orbit = Vector.rotate(baseOrbit, precessionAngle);
+                //     Matter.Body.setPosition(this, Vector.add(m.pos, Vector.mult(orbit, this.range))) //bullets move with player
+                // } else {
+                const orbit = { x: Math.cos(time), y: Math.sin(time) };
                 Matter.Body.setPosition(this, Vector.add(m.pos, Vector.mult(orbit, this.range))) //bullets move with player
+                // }
             }
         })
         // bullet[me].orbitalSpeed = Math.sqrt(0.7 / bullet[me].range)

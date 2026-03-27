@@ -34,7 +34,7 @@ const level = {
             // tech.addJunkTechToPool(0.5)
             // m.couplingChange(100)
             // requestAnimationFrame(() => { m.setField(9) });
-            // m.setField(10) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
+            // m.setField(5) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
             // m.energy = m.maxEnergy = 12.2
             // m.energy += 1
             // m.couplingChange(1000)
@@ -54,21 +54,21 @@ const level = {
             // simulation.molecularMode = 2
             // m.takeDamage(0.01);
 
-            // b.giveGuns(2) //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns(0) //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[b.inventory[0]].ammo = 100000000000
             // tech.addJunkTechToPool(0.5)
-            // for (let i = 0; i < 1; ++i) tech.giveTech("ergodicity")
-            // tech.giveTech("reel")
-            // for (let i = 0; i < 1; i++) tech.giveTech("vacuum energy")
-            // for (let i = 0; i < 4; ++i) tech.giveTech("incendiary ammunition")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("polyurethane foam")
+            // for (let i = 0; i < 2; ++i) tech.giveTech("orbital-bot upgrade")
+            // for (let i = 0; i < 20; ++i) tech.giveTech("orbital-bot")
+            // for (let i = 0; i < 1; i++) tech.giveTech("electronegativity")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("surfactant")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("nitinol")
             // requestAnimationFrame(() => { for (let i = 0; i < 1; ++i) tech.giveTech("van der Waals force") });
             // spawn.bodyRect(575, -700, 150, 150);  //block mob line of site on testing
             // level.levelsCleared = 7
             // simulation.isHorizontalFlipped = true
             // localSettings.levelsClearedLastGame = 5 //triggers tech to spawn on initial level
             // level.flocculation()
-            // level.labs()
+            // level.testing()
 
             level[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
 

@@ -2124,8 +2124,8 @@ const tech = {
             for (let i = 0; i < bullet.length; i++) {
                 if (bullet[i].botType === 'foam') bullet[i].isUpgraded = true
             }
-            tech.setBotTechFrequency()
-            tech.setTechFrequency("foam-bot", 5)
+            tech.setBotTechFrequency() //set all bots to zero frequency
+            tech.setTechFrequency("foam-bot", 5) //set foam bot to 5x frequency
         },
         remove() {
             if (this.count) {
@@ -4888,9 +4888,13 @@ const tech = {
     {
         name: "Lie group",
         descriptionFunction() {
-            const resultsArray = tech.mergedList.map(item => powerUps.orb[item](1));
-            const resultString = resultsArray.join(", ");
-            return `randomly merge future ${powerUps.orb.coupling(1)},&nbsp; ${powerUps.orb.ammo(1)}, ${powerUps.orb.boost(1)}, &nbsp;or&nbsp; ${powerUps.orb.research(1)} into ${powerUps.orb.Casimir(1)}<br>${powerUps.orb.Casimir(1)} gain their effect <em style ="float: right;">(merged: ${resultString})</em>`
+            let mergedText = ""
+            if (tech.mergedList.length) {
+                const resultsArray = tech.mergedList.map(item => powerUps.orb[item](1));
+                const resultString = resultsArray.join(", ");
+                mergedText = `<em style ="float: right;">(merged: ${resultString})</em>`
+            }
+            return `randomly <strong>merge</strong> future ${powerUps.orb.coupling(1)},&nbsp; ${powerUps.orb.ammo(1)}, ${powerUps.orb.boost(1)}, &nbsp;or&nbsp; ${powerUps.orb.research(1)} into ${powerUps.orb.Casimir(1)}<br>${powerUps.orb.Casimir(1)} gain their effect ${mergedText}`
         },
         maxCount: 4,
         count: 0,
@@ -8367,12 +8371,14 @@ const tech = {
             return tech.haveGunCheck("foam", false) && !b.hasBotUpgrade() && !tech.isAmmoFoamSize && !tech.isFoamPressure && (build.isExperimentSelection || powerUps.research.count > 1)
         },
         effect() {
-
-            requestAnimationFrame(() => { tech.giveTech("foam-bot upgrade") })
-            for (let i = 0; i < 2; i++) {
-                b.foamBot()
-                tech.foamBotCount++;
-            }
+            tech.giveTech("foam-bot upgrade")
+            tech.giveTech("foam-bot")
+            tech.giveTech("foam-bot")
+            // requestAnimationFrame(() => {  })
+            // for (let i = 0; i < 1; i++) {
+            //     b.foamBot()
+            //     tech.foamBotCount++;
+            // }
             simulation.inGameConsole(`tech.isFoamBotUpgrade = true`)
             if (tech.haveGunCheck("foam", false)) b.removeGun("foam")
             powerUps.research.expend(2)
