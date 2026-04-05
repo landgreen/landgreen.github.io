@@ -1,26 +1,9 @@
 ******************************************************** NEXT PATCH **************************************************
 
-new community level vents by Destiny
-
-tech: superelasticity - if you are wall grabbing with nitinol 3x fire rate
-tech: shape-memory - if you are wall grabbing generate 30 energy per second
-tech: sintering - remove 1 gun and gain 1.3x damage and 0.8x damage reduction
-tech: amalgamation - at the start of each level remove 1 gun and gain 3 bots
-tech: austerity - if you don't have a gun at the start of each level gain 1.5x damage
-fieldtech: technical intelligence - 1.5x damage when you take a guntech
-
-new constraint: 0.5x fire rate
-
-Vacuum energy now sets energy to 1x->3x your max energy, with a 50%->33% chance to set energy to 0
-nitinol 0.6->0.5 damage reduction
-repolarization reduces cooldown by 1.25->1.33
-active cooling 1.25->1.35x fire rate, but switched to additive stacking, not multiplicative
-removed bot from several tech names (ersatz bot -> ersatz)
-added simulation.energyGenGraphic() to various energy generation effects
-
+inGameConsole will wipe after 100 messages to reduce lag
 
 bug fixes
-  added mob out of bounds check to reactor
+  0.5x -> half fire rate for text constraint  (since text can't do numbers)
 
 *********************************************************** TODO *****************************************************
 

@@ -60,8 +60,8 @@ const level = {
             // b.guns[b.inventory[0]].ammo = 100000000000
             // tech.addJunkTechToPool(0.5)
             // for (let i = 0; i < 1; ++i) tech.giveTech("thermoelectric effect")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("Penrose process")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("amalgamation")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("vacuum energy")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("energy conservation")
             // for (let i = 0; i < 1; i++) tech.giveTech("conformal infinity")
             // for (let i = 0; i < 1; ++i) tech.giveTech("piezoelectricity")
             // requestAnimationFrame(() => { for (let i = 0; i < 1; ++i) tech.giveTech("sintering") });
@@ -75,7 +75,7 @@ const level = {
             level[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
 
             // powerUps.spawn(m.pos.x, m.pos.y, "heal", false);
-            // requestAnimationFrame(() => { powerUps.spawnDelay("coupling", 30); });
+            // requestAnimationFrame(() => { powerUps.spawnDelay("Casimir", 100); });
             // spawn.randomGroup(1300, -200, Infinity);
             // spawn.nodeGroup(1300, -200, 'grower');
             // for (let i = 0; i < 100; i++) spawn.starter(1300 + 10 * i, -200)
@@ -579,7 +579,7 @@ const level = {
     constraintDescription2: "",
     constraint: [
         {
-            description: "0.5x fire rate",
+            description: "half fire rate",
             effect() {
                 level.isSlowFireRate = true
                 b.setFireCD()
