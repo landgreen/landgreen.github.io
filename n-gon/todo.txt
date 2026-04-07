@@ -1,9 +1,16 @@
 ******************************************************** NEXT PATCH **************************************************
 
+tech: seismic wave -  after hard landings generate isotropic waves that stun and damage mobs
+acoustic levitation no longer gives 0.7x damage reduction
+  but it has isotropic waves coming form your feet
+
 inGameConsole will wipe after 100 messages to reduce lag
+superelasticity renamed pseudoelasticity
 
 bug fixes
-  0.5x -> half fire rate for text constraint  (since text can't do numbers)
+  0.5x -> half fire rate for constraint text
+    in level text can't do numbers
+  added vents to custom map list
 
 *********************************************************** TODO *****************************************************
 
@@ -13,6 +20,15 @@ bug fixes
 
 !tech:   - rip in spacetime - using wormhole leaves behind a zone of radiation, like neutron bomb  ( grenadeNeutron )
   !unwritten
+
+
+!switch normal mode to something not involving 360 waves
+  each "head" has a different effect
+    line - laser
+      reflections?
+    dot - neutron bomb-like AoE
+  remove requirements for wave upgrades from normal mode
+  maybe just add another eigen tech and don't remove normal mode
 
 
 
@@ -94,6 +110,10 @@ new level - ducts
       player needs to press buttons to switch the furnace off
         but it only stays off for a short time
   maybe some spinners that look like fans
+  a very large number of buttons
+    pressing all the buttons unlocks something?
+    buttons are scatter around on wall, ceiling, floor
+      rewrite button code to have any angle?
 
 filament
   tech: - filament tip is pulled towards blocks?, power ups?, mobs?
