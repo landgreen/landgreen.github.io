@@ -5058,7 +5058,6 @@ const m = {
                                 const mag = 30
                                 const add = { x: mag * Math.cos(m.fieldAngle), y: mag * Math.sin(m.fieldAngle) }
                                 const v = Vector.mult(Vector.normalise(Vector.add(add, player.velocity)), Math.max(40, player.speed))
-                                // const v = Vector.mult(Vector.normalise(add), Math.max(40, player.speed))
                                 Matter.Body.setVelocity(player, v);
                             }
 
@@ -5169,7 +5168,7 @@ const m = {
                                 ) {
                                     const dist = Vector.magnitude(Vector.sub(body[i].position, m.pos))
                                     //if block is close hold it
-                                    if (dist < m.fieldRange + 300 || body[i] === m.eigen.block) {
+                                    if (dist < (m.fieldRange + m.onGround * 300) || (m.eigen && body[i] === m.eigen.block)) {
                                         m.holdingTarget = body[i];
                                         m.pickUp();
                                         m.throwCharge = 4//pre charge so player can throw immediately

@@ -97,11 +97,11 @@ const level = {
     start() {
         level.setConstraints()
         if (level.levelsCleared === 0) { //this code only runs on the first level
-            // if (false) {
-            if (true) {
+            if (false) {
+                // if (true) {
                 level[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
             } else {
-                simulation.enableConstructMode()  //used to build maps in testing mode
+                // simulation.enableConstructMode()  //used to build maps in testing mode
                 // simulation.difficultyMode = 1
                 // build.isExperimentRun = true
                 // tech.duplicateChance += 1
@@ -118,7 +118,7 @@ const level = {
                 // tech.addJunkTechToPool(0.5)
                 // m.couplingChange(100)
                 // requestAnimationFrame(() => { m.setField(9) });
-                // m.setField(2) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
+                m.setField(2) //1 standing wave  2 perfect diamagnetism  3 negative mass  4 molecular assembler  5 plasma torch  6 time dilation  7 metamaterial cloaking  8 pilot wave  9 wormhole 10 grappling hook
                 // m.energy = m.maxEnergy = 12.2
                 // m.energy += 1
                 // m.couplingChange(1000)
@@ -149,9 +149,9 @@ const level = {
                 // requestAnimationFrame(() => { for (let i = 0; i < 1; ++i) tech.giveTech("eigenstate") });
                 // for (let i = 0; i < 1; ++i) tech.giveTech("logistics")
                 // for (let i = 0; i < 1; ++i) tech.giveTech("perturbation theory")
-                // for (let i = 0; i < 1; ++i) tech.giveTech("entanglement")
-                for (let i = 0; i < 1; i++) tech.giveTech("quantum Zeno effect")
-                for (let i = 0; i < 1; i++) tech.giveTech("eigenstate")
+                for (let i = 0; i < 1; ++i) tech.giveTech("paramagnetism")
+                // for (let i = 0; i < 1; i++) tech.giveTech("quantum Zeno effect")
+                for (let i = 0; i < 1; i++) tech.giveTech("eddy current")
                 // for (let i = 0; i < 1; i++) tech.giveTech("quantum immortality")
                 // for (let i = 0; i < 1; i++) tech.giveTech("preserve")
                 // spawn.bodyRect(575, -700, 150, 150);  //block mob line of site on testing
@@ -160,13 +160,13 @@ const level = {
                 // localSettings.levelsClearedLastGame = 5 //triggers tech to spawn on initial level
                 level.testing()
                 // level.HVAC()
-                // level.office()
+                // level.initial()
 
                 // powerUps.spawn(m.pos.x, m.pos.y, "heal", false);
                 // requestAnimationFrame(() => { powerUps.spawnDelay("ammo", 10); });
                 // spawn.randomGroup(1300, -200, Infinity);
                 // spawn.nodeGroup(1300, -200, 'grower');
-                for (let i = 0; i < 5; i++) spawn.starter(1300 + 10 * i, -200)
+                // for (let i = 0; i < 5; i++) spawn.starter(1300 + 10 * i, -200)
                 // for (let i = 0; i < 1; i++) spawn.mantisBoss(2300 + 200 * i, -200)
                 // Matter.Body.setPosition(player, { x: -27000, y: -400 });
                 // m.storeTech() //sets entanglement
