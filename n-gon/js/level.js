@@ -97,8 +97,8 @@ const level = {
     start() {
         level.setConstraints()
         if (level.levelsCleared === 0) { //this code only runs on the first level
-            if (false) {
-                // if (true) {
+            // if (false) {
+            if (true) {
                 level[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
             } else {
                 // simulation.enableConstructMode()  //used to build maps in testing mode
