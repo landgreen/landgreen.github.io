@@ -19,6 +19,7 @@
 	<script src="../../../lib/katex/contrib/auto-render.min.js"></script>
 	<script defer src='../../../lib/gravityClass.js'></script>
 	<script defer src='https://cdnjs.cloudflare.com/ajax/libs/three.js/98/three.min.js'></script>
+	<!-- <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r124/three.min.js"></script> -->
 	<script defer src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/464612/orbitcontrols.js'></script>
 	<script defer src="fabric.js "></script>
 	<link rel="stylesheet" type="text/css" href="../../../style.css">
@@ -855,12 +856,15 @@
 			<p>The behavior of spacetime at distances below r is undefined.</p>
 		</div>
 		<p>
-			Objects that achieve the high density needed to reach this point are called <strong>black holes</strong>. We can only speculate how black holes might behave, but the time dilation equation suggests very extreme outcomes.
+			Objects that achieve the high density needed to reach this point are called <strong>black holes</strong>.
+			We can only speculate how black holes might behave, but the time dilation equation suggests very extreme outcomes.
 			As a body approaches the event horizon, the passage of time approaches zero. From an outsider's perspective, objects fall into black holes and never get out, frozen in time.
 		</p>
 		<p>
 			<a href="http://rantonels.github.io/starless/">Black holes</a> are a possible outcome at the end of the <a href="https://en.wikipedia.org/wiki/Stellar_evolution">life</a> of a very massive star.
-			Stars convert mass into energy through nuclear fusion. This energy balances the force of gravity and prevents stars from becoming black holes. When stars runs out of nuclear fuel, gravity will dominate and a black hole may form.
+			Stars convert mass into energy through nuclear fusion.
+			This energy balances the force of gravity and prevents stars from becoming black holes.
+			When stars run out of nuclear fuel, gravity will dominate and a black hole may form.
 		</p>
 		<p>
 			At the center of most galaxies there is a <a href="https://www.youtube.com/watch?v=S_GVbuddri8">super massive black hole</a>. Even our galaxy, the Milky Way, has <a href="https://www.youtube.com/watch?v=TF8THY5spmo">one</a> with a mass of 4 million Suns.</p>
@@ -899,6 +903,196 @@
 			</details>
 		</div>
 
+	</article>
+	<article>
+		<h1 class='underlined'>More Practice</h1>
+		<p>
+			These general relativity problems are mostly about what strong gravity does to clocks, light, and the meaning of an event horizon. Start by deciding whether the question is conceptual or whether it needs the gravitational time dilation equation or the Schwarzschild radius equation. For the math problems, assume the objects are non-rotating and roughly spherical unless the problem says otherwise.
+		</p>
+
+		<div class='example'>
+			<strong>Question:</strong> In the rocket thought experiment, why does Einstein connect gravity with acceleration?
+			<details>
+				<summary>solution</summary>
+				<p>A person sealed inside the box cannot tell whether the floor pushes upward because the box is sitting on Earth or because a rocket is accelerating through space.</p>
+				<p>That equivalence suggests that gravity can be understood as something deeper than a normal force pulling objects through space. General relativity describes it as motion through curved spacetime.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A neutron star has mass 2.8 solar masses and radius 12 km. Use 1 solar mass = 2.0 × 10<sup>30</sup> kg. If 30 s pass far from the neutron star, how much time passes on the surface?
+			<details>
+				<summary>solution</summary>
+				<p>Convert the mass and radius first.</p>
+				$$M = 2.8(2.0 \times 10^{30}\,\mathrm{kg})$$
+				$$M = 5.6 \times 10^{30}\,\mathrm{kg}$$
+				$$r = 12\,\mathrm{km}\left(\frac{1000\,\mathrm{m}}{1\,\mathrm{km}}\right)$$
+				$$r = 1.2 \times 10^4\,\mathrm{m}$$
+				<p>Use gravitational time dilation.</p>
+				$$\Delta t_0 = \Delta t_f \sqrt{1 - \left(\frac{2GM}{rc^2}\right)}$$
+				$$\Delta t_0 = (30\,\mathrm{s})\sqrt{1 - \left(\frac{2(6.674 \times 10^{-11})(5.6 \times 10^{30})}{(1.2 \times 10^4)(3.00 \times 10^8)^2}\right)}$$
+				$$\Delta t_0 = 16.6\,\mathrm{s}$$
+				<p>Only about <strong>16.6 s</strong> pass on the neutron star surface.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A clock on Earth's surface runs slightly slow because of Earth's gravity. Use Earth mass 5.97 × 10<sup>24</sup> kg and Earth radius 6.37 × 10<sup>6</sup> m. If 1.00 year passes far from Earth's gravity, how many fewer seconds pass on Earth's surface?
+			<details>
+				<summary>solution</summary>
+				<p>Use 1.00 year = 31,536,000 s.</p>
+				$$\Delta t_f = 31536000\,\mathrm{s}$$
+				$$\Delta t_0 = \Delta t_f \sqrt{1 - \left(\frac{2GM}{rc^2}\right)}$$
+				$$\Delta t_0 = (31536000\,\mathrm{s})\sqrt{1 - \left(\frac{2(6.674 \times 10^{-11})(5.97 \times 10^{24})}{(6.37 \times 10^6)(3.00 \times 10^8)^2}\right)}$$
+				$$\Delta t_0 = 31535999.978\,\mathrm{s}$$
+				<p>Find the difference.</p>
+				$$\Delta t_f - \Delta t_0 = 0.022\,\mathrm{s}$$
+				<p>Earth's surface clock loses about <strong>0.022 s</strong> compared with a far-away clock over one year.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> Why does gravity bends the path of light if photons have no rest mass?
+			<details>
+				<summary>solution</summary>
+				<p>In general relativity, gravity is not treated as a normal force pulling only on mass.</p>
+				<p>Mass and energy curve spacetime. Light travels through that curved spacetime, so its path can bend even though photons have no rest mass.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Earth has mass 5.97 × 10<sup>24</sup> kg. If Earth were compressed until it became a black hole, what would its Schwarzschild radius be?
+			<details>
+				<summary>solution</summary>
+				<p>Use the Schwarzschild radius equation.</p>
+				$$r = \frac{2GM}{c^2}$$
+				$$r = \frac{2(6.674 \times 10^{-11})(5.97 \times 10^{24}\,\mathrm{kg})}{(3.00 \times 10^8\,\mathrm{m/s})^2}$$
+				$$r = 8.85 \times 10^{-3}\,\mathrm{m}$$
+				<p>Earth's Schwarzschild radius would be about <strong>0.00885 m</strong>, or <strong>8.85 mm</strong>.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A collapsed star has mass 6.0 solar masses. Use 1 solar mass = 2.0 × 10<sup>30</sup> kg. What is its Schwarzschild radius?
+			<details>
+				<summary>solution</summary>
+				<p>Convert solar masses to kilograms.</p>
+				$$M = 6.0(2.0 \times 10^{30}\,\mathrm{kg})$$
+				$$M = 1.2 \times 10^{31}\,\mathrm{kg}$$
+				<p>Find the Schwarzschild radius.</p>
+				$$r = \frac{2GM}{c^2}$$
+				$$r = \frac{2(6.674 \times 10^{-11})(1.2 \times 10^{31}\,\mathrm{kg})}{(3.00 \times 10^8\,\mathrm{m/s})^2}$$
+				$$r = 1.78 \times 10^4\,\mathrm{m}$$
+				<p>The event horizon radius is about <strong>17.8 km</strong>.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A 6.0 solar mass collapsed star has physical radius 15 km. From the previous example, its Schwarzschild radius is 17.8 km. Is the surface inside or outside the event horizon?
+			<details>
+				<summary>solution</summary>
+				<p>Compare the physical radius with the Schwarzschild radius.</p>
+				$$R = 15\,\mathrm{km}$$
+				$$r_s = 17.8\,\mathrm{km}$$
+				$$R < r_s$$ <p>The surface is inside the event horizon, so this object would be a <strong>black hole</strong> in this simplified model.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> The event horizon is sometimes drawn as a dark surface. Is it a solid surface that an astronaut would hit?
+			<details>
+				<summary>solution</summary>
+				<p>No. The event horizon is not a solid surface.</p>
+				<p>It is a boundary in spacetime. Outside it, light can still escape. Inside it, our simple model says no signal can escape to far-away observers, although spin makes real black holes more complicated.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Astronomers estimate a black hole event horizon radius of 45 km. Assuming it is non-rotating, what mass does the Schwarzschild radius equation give?
+			<details>
+				<summary>solution</summary>
+				<p>Rearrange the Schwarzschild radius equation.</p>
+				$$r = \frac{2GM}{c^2}$$
+				$$M = \frac{rc^2}{2G}$$
+				$$M = \frac{(45000\,\mathrm{m})(3.00 \times 10^8\,\mathrm{m/s})^2}{2(6.674 \times 10^{-11})}$$
+				$$M = 3.03 \times 10^{31}\,\mathrm{kg}$$
+				<p>The mass is about <strong>3.03 × 10<sup>31</sup> kg</strong>, or about <strong>15 solar masses</strong>.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A clock hovers 60 km from the center of a non-rotating 10 solar mass black hole. Use 1 solar mass = 2.0 × 10<sup>30</sup> kg. If 2.0 s pass far from the black hole, how much time passes on the hovering clock?
+			<details>
+				<summary>solution</summary>
+				<p>Convert mass and radius.</p>
+				$$M = 10(2.0 \times 10^{30}\,\mathrm{kg})$$
+				$$M = 2.0 \times 10^{31}\,\mathrm{kg}$$
+				$$r = 60\,\mathrm{km}\left(\frac{1000\,\mathrm{m}}{1\,\mathrm{km}}\right)$$
+				$$r = 6.0 \times 10^4\,\mathrm{m}$$
+				<p>Use gravitational time dilation.</p>
+				$$\Delta t_0 = \Delta t_f \sqrt{1 - \left(\frac{2GM}{rc^2}\right)}$$
+				$$\Delta t_0 = (2.0\,\mathrm{s})\sqrt{1 - \left(\frac{2(6.674 \times 10^{-11})(2.0 \times 10^{31})}{(6.0 \times 10^4)(3.00 \times 10^8)^2}\right)}$$
+				$$\Delta t_0 = 1.42\,\mathrm{s}$$
+				<p>The hovering clock records about <strong>1.42 s</strong>.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> Why does general relativity predict gravitational waves?
+			<details>
+				<summary>solution</summary>
+				<p>General relativity treats gravity as curvature of spacetime.</p>
+				<p>If massive objects move in a way that changes that curvature, the change can travel outward as a wave in spacetime. This is why orbiting or merging black holes can produce gravitational waves.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A non-rotating black hole has mass 10 solar masses. How far from its center would a hovering clock need to be for its time to run at half the far-away rate?
+			<details>
+				<summary>solution</summary>
+				<p>A clock running at half the far-away rate means this factor is 0.50.</p>
+				$$\sqrt{1 - \left(\frac{2GM}{rc^2}\right)} = 0.50$$
+				$$1 - \left(\frac{2GM}{rc^2}\right) = 0.25$$
+				$$\frac{2GM}{rc^2} = 0.75$$
+				$$r = \frac{2GM}{0.75c^2}$$
+				<p>Use 10 solar masses.</p>
+				$$M = 2.0 \times 10^{31}\,\mathrm{kg}$$
+				$$r = \frac{2(6.674 \times 10^{-11})(2.0 \times 10^{31}\,\mathrm{kg})}{0.75(3.00 \times 10^8\,\mathrm{m/s})^2}$$
+				$$r = 3.96 \times 10^4\,\mathrm{m}$$
+				<p>The clock would need to hover about <strong>39.6 km</strong> from the center.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> The Milky Way's central black hole has mass about 4.0 million solar masses. Use 1 solar mass = 2.0 × 10<sup>30</sup> kg. What is its Schwarzschild radius in meters and in million kilometers?
+			<details>
+				<summary>solution</summary>
+				<p>Convert solar masses to kilograms.</p>
+				$$M = (4.0 \times 10^6)(2.0 \times 10^{30}\,\mathrm{kg})$$
+				$$M = 8.0 \times 10^{36}\,\mathrm{kg}$$
+				<p>Find the Schwarzschild radius.</p>
+				$$r = \frac{2GM}{c^2}$$
+				$$r = \frac{2(6.674 \times 10^{-11})(8.0 \times 10^{36}\,\mathrm{kg})}{(3.00 \times 10^8\,\mathrm{m/s})^2}$$
+				$$r = 1.19 \times 10^{10}\,\mathrm{m}$$
+				<p>Convert meters to kilometers.</p>
+				$$r = 1.19 \times 10^{10}\,\mathrm{m}\left(\frac{1\,\mathrm{km}}{1000\,\mathrm{m}}\right)$$
+				$$r = 1.19 \times 10^7\,\mathrm{km}$$
+				<p>The event horizon radius is about <strong>1.19 × 10<sup>10</sup> m</strong>, or <strong>11.9 million km</strong>.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> Why does a full black hole model probably needs both general relativity and quantum mechanics?
+			<details>
+				<summary>solution</summary>
+				<p>General relativity describes gravity and spacetime very well at large scales and strong gravitational fields.</p>
+				<p>
+					Quantum mechanics describes very small systems.
+					A black hole is both extremely massive and extremely compact, so it pushes into a region where both theories matter.
+					A complete unified theory does not exist yet.
+				</p>
+			</details>
+		</div>
 	</article>
 	<footer>
 		<a href="../../../">Back</a>

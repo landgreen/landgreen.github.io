@@ -1810,6 +1810,362 @@
         </div>
 
     </article>
+	<article>
+		<h1 class='underlined'>More Practice</h1>
+		<p>
+			Use these problems to practice choosing the model before choosing the equation. In gravity, most mistakes come from using the wrong distance, forgetting that distance is measured from centers of mass, or treating an inverse-square relationship like a linear one. Start each problem by writing what the distance means and what assumption you are making.
+		</p>
+
+		<div class='example'>
+			<strong>Example:</strong> An asteroid in the main belt has an average orbital distance of 2.25 AU from the Sun. Using Kepler's simple relation, find its orbital period in years.
+			<details>
+				<summary>solution</summary>
+				<p>Kepler's simple relation works when distance is in AU and period is in years.</p>
+				$$T^2 = r^3$$
+				$$T = \sqrt{r^3}$$
+				$$T = \sqrt{(2.25)^3}$$
+				$$T = 3.38\,\mathrm{years}$$
+				<p>The period is longer than Earth's because the asteroid is farther from the Sun.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A comet takes 8 years to orbit the Sun. Using Kepler's simple relation, find its average orbital distance in AU.
+			<details>
+				<summary>solution</summary>
+				$$T^2 = r^3$$
+				$$8^2 = r^3$$
+				$$64 = r^3$$
+				$$r = \sqrt[3]{64}$$
+				$$r = 4\,\mathrm{AU}$$
+				<p>This is a rearranged Kepler problem. The distance is not 8 AU because the relationship is not linear.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Planet A orbits at 1 AU and planet B orbits at 4 AU. How many times longer is planet B's orbital period?
+			<details>
+				<summary>solution</summary>
+				<p>Use Kepler's relation for each planet.</p>
+				$$T_A^2 = (1)^3$$
+				$$T_A = 1\,\mathrm{year}$$
+				$$T_B^2 = (4)^3$$
+				$$T_B = \sqrt{64}$$
+				$$T_B = 8\,\mathrm{years}$$
+				<p>Planet B's orbital period is 8 times longer, not 4 times longer.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Two 100 000 kg pieces of mining equipment are parked 20 m apart, measured from center to center. Each machine is much taller than a person, but model them as point masses. What is the gravitational force between them?
+			<details>
+				<summary>solution</summary>
+				$$F = \frac{GM_1M_2}{r^2}$$
+				$$F = \frac{(6.67 \times 10^{-11})(100\,000)(100\,000)}{(20)^2}$$
+				$$F = 1.67 \times 10^{-3}\,\mathrm{N}$$
+				<p>This is tiny, even though the masses are large by everyday standards.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A 1200 kg satellite is 400 km above Earth's surface, about the altitude of some low Earth orbit spacecraft. Find the force of gravity on the satellite. Use Earth's mass as 5.97 × 10<sup>24</sup> kg and Earth's radius as 6.37 × 10<sup>6</sup> m.
+			<details>
+				<summary>solution</summary>
+				<p>The distance in the gravity equation is measured from Earth's center, not from the surface.</p>
+				$$r = 6.37 \times 10^6 + 400\,000$$
+				$$r = 6.77 \times 10^6\,\mathrm{m}$$
+				$$F = \frac{GM_1M_2}{r^2}$$
+				$$F = \frac{(6.67 \times 10^{-11})(5.97 \times 10^{24})(1200)}{(6.77 \times 10^6)^2}$$
+				$$F = 1.04 \times 10^4\,\mathrm{N}$$
+				<p>The satellite is above the atmosphere, but gravity is still strong there.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A 75 kg astronaut feels a 300 N gravitational force from Earth. How far is the astronaut from Earth's center? Use Earth's mass as 5.97 × 10<sup>24</sup> kg.
+			<details>
+				<summary>solution</summary>
+				$$F = \frac{GM_1M_2}{r^2}$$
+				$$r^2 = \frac{GM_1M_2}{F}$$
+				$$r = \sqrt{\frac{GM_1M_2}{F}}$$
+				$$r = \sqrt{\frac{(6.67 \times 10^{-11})(5.97 \times 10^{24})(75)}{300}}$$
+				$$r = 9.98 \times 10^6\,\mathrm{m}$$
+				<p>This is distance from Earth's center. The altitude above the surface would be smaller.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A 75 kg person stands on Earth. Earth pulls on the person, and the person pulls on Earth with the same size force. Find the person's acceleration and Earth's acceleration from this gravitational force. Use Earth's mass as 5.97 × 10<sup>24</sup> kg and Earth's radius as 6.37 × 10<sup>6</sup> m.
+			<details>
+				<summary>solution</summary>
+				<p>First find the force. Then use Newton's second law from the force unit.</p>
+				$$F = \frac{GM_1M_2}{r^2}$$
+				$$F = \frac{(6.67 \times 10^{-11})(5.97 \times 10^{24})(75)}{(6.37 \times 10^6)^2}$$
+				$$F = 736\,\mathrm{N}$$
+				$$a_p = \frac{F}{m}$$
+				$$a_p = \frac{736}{75}$$
+				$$a_p = 9.81\,\mathrm{m/s^2}$$
+				$$a_E = \frac{F}{M}$$
+				$$a_E = \frac{736}{5.97 \times 10^{24}}$$
+				$$a_E = 1.23 \times 10^{-22}\,\mathrm{m/s^2}$$
+				<p>The forces are equal in size, but the accelerations are very different because the masses are very different.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Mars has mass 6.42 × 10<sup>23</sup> kg and radius 3.39 × 10<sup>6</sup> m. Its sky often looks dusty orange, but the surface gravity comes from mass and radius. Find the gravitational acceleration at the surface of Mars.
+			<details>
+				<summary>solution</summary>
+				$$g = \frac{GM}{r^2}$$
+				$$g = \frac{(6.67 \times 10^{-11})(6.42 \times 10^{23})}{(3.39 \times 10^6)^2}$$
+				$$g = 3.73\,\mathrm{m/s^2}$$
+				<p>Mars has less surface gravity than Earth because it has much less mass.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Find the gravitational acceleration 400 km above Earth's surface. Use Earth's mass as 5.97 × 10<sup>24</sup> kg and Earth's radius as 6.37 × 10<sup>6</sup> m.
+			<details>
+				<summary>solution</summary>
+				$$r = 6.37 \times 10^6 + 400\,000$$
+				$$r = 6.77 \times 10^6\,\mathrm{m}$$
+				$$g = \frac{GM}{r^2}$$
+				$$g = \frac{(6.67 \times 10^{-11})(5.97 \times 10^{24})}{(6.77 \times 10^6)^2}$$
+				$$g = 8.69\,\mathrm{m/s^2}$$
+				<p>This explains why orbiting astronauts are not away from gravity. They are falling around Earth.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> At what altitude above Earth's surface is gravitational acceleration one-fourth of its surface value? Use Earth's radius as 6.37 × 10<sup>6</sup> m.
+			<details>
+				<summary>solution</summary>
+				<p>Gravity follows an inverse-square pattern. To make gravity one-fourth as large, the distance from Earth's center must double.</p>
+				$$g \propto \frac{1}{r^2}$$
+				$$\frac{g_{new}}{g_{old}} = \frac{1}{2^2}$$
+				$$\frac{g_{new}}{g_{old}} = \frac{1}{4}$$
+				$$r_{new} = 2R_E$$
+				$$altitude = 2R_E - R_E$$
+				$$altitude = R_E$$
+				$$altitude = 6.37 \times 10^6\,\mathrm{m}$$
+				<p>The altitude is one Earth radius above the surface, not twice Earth's radius above the surface.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A spacecraft moves from a distance of 3 Earth radii from Earth's center to 6 Earth radii from Earth's center. What happens to the gravitational force from Earth?
+			<details>
+				<summary>solution</summary>
+				<p>The distance doubled because it went from 3 Earth radii to 6 Earth radii.</p>
+				$$F \propto \frac{1}{r^2}$$
+				$$\frac{F_{new}}{F_{old}} = \frac{1}{(2)^2}$$
+				$$\frac{F_{new}}{F_{old}} = \frac{1}{4}$$
+				<p>The force becomes one-fourth as large.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Two 5.0 × 10<sup>4</sup> kg asteroids are 30 m apart. What is the gravitational force between them?
+			<details>
+				<summary>answer</summary>
+				This cannot be solved from the information given. Newton's law of gravitation needs the distance between the centers of the objects. The prompt only says they are 30 m apart, which could mean edge-to-edge distance.
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A 70 kg rover part is weighed on Mars. Use the surface gravity you found for Mars, 3.73 m/s². What is its weight on Mars?
+			<details>
+				<summary>solution</summary>
+				<p>Weight is the force of gravity on an object.</p>
+				$$F = mg$$
+				$$F = (70)(3.73)$$
+				$$F = 261\,\mathrm{N}$$
+				<p>The mass is still 70 kg. The weight changes because the gravitational acceleration is different.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A rock is dropped from rest near the surface of Mars. Assume the gravitational acceleration stays constant at 3.73 m/s² for the short fall. How fast is the rock moving after 6 s?
+			<details>
+				<summary>solution</summary>
+				<p>This uses the motion equation for constant acceleration. The constant acceleration assumption is reasonable for a short fall near the surface.</p>
+				$$v = v_0 + at$$
+				$$v = 0 + (3.73)(6)$$
+				$$v = 22.4\,\mathrm{m/s}$$
+				<p>The rock speeds up more slowly than it would on Earth.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Two asteroids have masses of 100 000 kg and 200 000 kg. Their centers are 5 m apart. What is their gravitational potential energy?
+			<details>
+				<summary>solution</summary>
+				$$U_g = -\frac{GM_1M_2}{r}$$
+				$$U_g = -\frac{(6.67 \times 10^{-11})(100\,000)(200\,000)}{5}$$
+				$$U_g = -0.267\,\mathrm{J}$$
+				<p>The negative sign means the objects are in a bound gravitational system compared with being infinitely far apart.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> The two asteroids from the last problem are slowly pulled from 5 m apart to 20 m apart. How much work must be done to separate them that far?
+			<details>
+				<summary>solution</summary>
+				<p>The work done slowly equals the change in gravitational potential energy.</p>
+				$$U_i = -\frac{(6.67 \times 10^{-11})(100\,000)(200\,000)}{5}$$
+				$$U_i = -0.267\,\mathrm{J}$$
+				$$U_f = -\frac{(6.67 \times 10^{-11})(100\,000)(200\,000)}{20}$$
+				$$U_f = -0.0667\,\mathrm{J}$$
+				$$W = \Delta U$$
+				$$W = U_f - U_i$$
+				$$W = (-0.0667) - (-0.267)$$
+				$$W = 0.200\,\mathrm{J}$$
+				<p>The work is positive because energy must be added to pull the asteroids farther apart.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A 500 kg probe starts at rest 20 000 km above Earth's surface and falls to 10 000 km above Earth's surface. Ignoring air resistance and engines, how much kinetic energy does it gain? Use Earth's mass as 5.97 × 10<sup>24</sup> kg and Earth's radius as 6.37 × 10<sup>6</sup> m.
+			<details>
+				<summary>solution</summary>
+				<p>Use conservation of energy. The distance in gravitational potential energy is measured from Earth's center.</p>
+				$$r_i = 6.37 \times 10^6 + 20\,000\,000$$
+				$$r_i = 2.637 \times 10^7\,\mathrm{m}$$
+				$$r_f = 6.37 \times 10^6 + 10\,000\,000$$
+				$$r_f = 1.637 \times 10^7\,\mathrm{m}$$
+				$$K = GMm\left(\frac{1}{r_f} - \frac{1}{r_i}\right)$$
+				$$K = (6.67 \times 10^{-11})(5.97 \times 10^{24})(500)\left(\frac{1}{1.637 \times 10^7} - \frac{1}{2.637 \times 10^7}\right)$$
+				$$K = 4.61 \times 10^9\,\mathrm{J}$$
+				<p>The kinetic energy increases because the gravitational potential energy becomes more negative.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> In the last problem, what is the probe's speed after falling to 10 000 km above Earth's surface?
+			<details>
+				<summary>solution</summary>
+				<p>Use the kinetic energy from the last problem and the energy equation from the energy unit.</p>
+				$$K = \frac{1}{2}mv^2$$
+				$$v = \sqrt{\frac{2K}{m}}$$
+				$$v = \sqrt{\frac{2(4.61 \times 10^9)}{500}}$$
+				$$v = 4.30 \times 10^3\,\mathrm{m/s}$$
+				<p>That is about 4.30 km/s.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A 1000 kg payload is lifted from Earth's surface to a circular-orbit altitude of 400 km. Ignoring the rocket's wasted energy, how much work is needed just to increase the payload's gravitational potential energy? Use Earth's mass as 5.97 × 10<sup>24</sup> kg and Earth's radius as 6.37 × 10<sup>6</sup> m.
+			<details>
+				<summary>solution</summary>
+				<p>This only counts the change in gravitational potential energy. It does not include the kinetic energy needed for orbit.</p>
+				$$r_i = 6.37 \times 10^6\,\mathrm{m}$$
+				$$r_f = 6.37 \times 10^6 + 400\,000$$
+				$$r_f = 6.77 \times 10^6\,\mathrm{m}$$
+				$$W = \Delta U$$
+				$$W = GMm\left(\frac{1}{r_i} - \frac{1}{r_f}\right)$$
+				$$W = (6.67 \times 10^{-11})(5.97 \times 10^{24})(1000)\left(\frac{1}{6.37 \times 10^6} - \frac{1}{6.77 \times 10^6}\right)$$
+				$$W = 3.69 \times 10^9\,\mathrm{J}$$
+				<p>This is already a huge amount of energy, and it is still only part of what a launch requires.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Find the minimum escape speed from Earth. Use Earth's mass as 5.97 × 10<sup>24</sup> kg and Earth's radius as 6.37 × 10<sup>6</sup> m.
+			<details>
+				<summary>solution</summary>
+				$$v = \sqrt{\frac{2GM}{r}}$$
+				$$v = \sqrt{\frac{2(6.67 \times 10^{-11})(5.97 \times 10^{24})}{6.37 \times 10^6}}$$
+				$$v = 1.12 \times 10^4\,\mathrm{m/s}$$
+				<p>The mass of the escaping object cancels out, so this speed is the same for a baseball and a spacecraft if air resistance is ignored.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Find the minimum escape speed from the Moon. Use the Moon's mass as 7.35 × 10<sup>22</sup> kg and its radius as 1.74 × 10<sup>6</sup> m.
+			<details>
+				<summary>solution</summary>
+				$$v = \sqrt{\frac{2GM}{r}}$$
+				$$v = \sqrt{\frac{2(6.67 \times 10^{-11})(7.35 \times 10^{22})}{1.74 \times 10^6}}$$
+				$$v = 2.37 \times 10^3\,\mathrm{m/s}$$
+				<p>The Moon's escape speed is much lower than Earth's, mostly because the Moon has much less mass.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A small asteroid has mass 8.0 × 10<sup>15</sup> kg and radius 500 m. Find its surface gravity and escape speed.
+			<details>
+				<summary>solution</summary>
+				<p>Use the same distance, the asteroid's radius, for both surface calculations.</p>
+				$$g = \frac{GM}{r^2}$$
+				$$g = \frac{(6.67 \times 10^{-11})(8.0 \times 10^{15})}{(500)^2}$$
+				$$g = 2.13\,\mathrm{m/s^2}$$
+				$$v = \sqrt{\frac{2GM}{r}}$$
+				$$v = \sqrt{\frac{2(6.67 \times 10^{-11})(8.0 \times 10^{15})}{500}}$$
+				$$v = 46.2\,\mathrm{m/s}$$
+				<p>The surface gravity is lower than Earth's, but not zero. A fast throw could escape.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A probe starts from rest at a distance of 2 Earth radii from Earth's center and falls to Earth's surface. Ignoring atmosphere and Earth's rotation, how fast is it moving when it reaches the surface? Use Earth's mass as 5.97 × 10<sup>24</sup> kg and Earth's radius as 6.37 × 10<sup>6</sup> m.
+			<details>
+				<summary>solution</summary>
+				<p>Use conservation of energy. The probe loses gravitational potential energy and gains kinetic energy.</p>
+				$$K = GMm\left(\frac{1}{r_f} - \frac{1}{r_i}\right)$$
+				$$\frac{1}{2}mv^2 = GMm\left(\frac{1}{R_E} - \frac{1}{2R_E}\right)$$
+				<p>The probe's mass cancels out.</p>
+				$$v = \sqrt{2GM\left(\frac{1}{R_E} - \frac{1}{2R_E}\right)}$$
+				$$v = \sqrt{2(6.67 \times 10^{-11})(5.97 \times 10^{24})\left(\frac{1}{6.37 \times 10^6} - \frac{1}{2(6.37 \times 10^6)}\right)}$$
+				$$v = 7.91 \times 10^3\,\mathrm{m/s}$$
+				<p>This is a large speed because the probe falls through a large change in gravitational potential energy.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A 900 kg spacecraft is at a distance of 2 Earth radii from Earth's center. Find the gravitational acceleration there and the gravitational force on the spacecraft. Use Earth's mass as 5.97 × 10<sup>24</sup> kg and Earth's radius as 6.37 × 10<sup>6</sup> m.
+			<details>
+				<summary>solution</summary>
+				<p>First find the field strength, then multiply by the spacecraft's mass.</p>
+				$$r = 2(6.37 \times 10^6)$$
+				$$r = 1.274 \times 10^7\,\mathrm{m}$$
+				$$g = \frac{GM}{r^2}$$
+				$$g = \frac{(6.67 \times 10^{-11})(5.97 \times 10^{24})}{(1.274 \times 10^7)^2}$$
+				$$g = 2.45\,\mathrm{m/s^2}$$
+				$$F = mg$$
+				$$F = (900)(2.45)$$
+				$$F = 2.21 \times 10^3\,\mathrm{N}$$
+				<p>This is one-fourth of surface gravity because the spacecraft is twice as far from Earth's center.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Halley's Comet has an orbital period of about 75 years. If Kepler's simple relation is used as an average model for its orbit around the Sun, what is its average distance from the Sun in AU?
+			<details>
+				<summary>solution</summary>
+				<p>This gives an average orbital distance, not the closest or farthest distance, because Halley's orbit is very stretched out.</p>
+				$$T^2 = r^3$$
+				$$75^2 = r^3$$
+				$$5625 = r^3$$
+				$$r = \sqrt[3]{5625}$$
+				$$r = 17.8\,\mathrm{AU}$$
+				<p>The average distance is far beyond Saturn's orbit.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Earth is 1.496 × 10<sup>11</sup> m from the Sun. Use the Sun's mass as 2.00 × 10<sup>30</sup> kg and Earth's mass as 5.97 × 10<sup>24</sup> kg. Find the gravitational force on Earth from the Sun, then find Earth's acceleration toward the Sun.
+			<details>
+				<summary>solution</summary>
+				$$F = \frac{GM_1M_2}{r^2}$$
+				$$F = \frac{(6.67 \times 10^{-11})(2.00 \times 10^{30})(5.97 \times 10^{24})}{(1.496 \times 10^{11})^2}$$
+				$$F = 3.56 \times 10^{22}\,\mathrm{N}$$
+				$$a = \frac{F}{m}$$
+				$$a = \frac{3.56 \times 10^{22}}{5.97 \times 10^{24}}$$
+				$$a = 5.96 \times 10^{-3}\,\mathrm{m/s^2}$$
+				<p>The acceleration is small compared with surface gravity, but it acts continuously and keeps Earth in orbit.</p>
+			</details>
+		</div>
+	</article>
     <footer>
         <a href="../../../">Back</a>
     </footer>

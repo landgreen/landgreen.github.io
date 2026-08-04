@@ -1924,6 +1924,457 @@ https://vuejs.org/v2/guide/components.html
 	</div> -->
 
 	</article>
+	<article>
+		<h1 class='underlined'>More Practice</h1>
+		<p>
+			Practice kinematics by first deciding what kind of motion is happening, then writing the known values with signs. A good solution usually starts before the equation: decide whether the motion is horizontal, vertical, or both, and keep time as the link between directions. If a problem feels long, split it into smaller one-dimensional pieces and solve only one unknown at a time.
+		</p>
+		<p>
+			Unless a problem says otherwise, assume Earth gravity and zero air friction.
+		</p>
+
+		<div class='example'>
+			<strong>Example:</strong> A dynamics cart rolls along a straight track in a classroom. It moves 0.120 km to the right in 15 s while a motion sensor samples its position 50 times each second. What is its average velocity?
+			<details>
+				<summary>solution</summary>
+				$$0.120\,\mathrm{km}=120\,\mathrm{m}$$
+				$$v_{\mathrm{avg}} = \frac{\Delta x}{\Delta t}$$
+				$$v_{\mathrm{avg}} = \frac{120\,\mathrm{m}}{15\,\mathrm{s}}$$
+				$$v_{\mathrm{avg}} = 8.0\,\mathrm{\tfrac{m}{s}}$$
+				The positive answer means the average velocity is to the right.
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A runner leaves the starting line and speeds up from 3 m/s to 21 m/s in 6 s. The track is 400 m around, but only this short interval matters. What is the runner's average acceleration?
+			<details>
+				<summary>solution</summary>
+				$$a_{\mathrm{avg}} = \frac{\Delta v}{\Delta t}$$
+				$$a_{\mathrm{avg}} = \frac{21\,\mathrm{\tfrac{m}{s}} - 3\,\mathrm{\tfrac{m}{s}}}{6\,\mathrm{s}}$$
+				$$a_{\mathrm{avg}} = 3.0\,\mathrm{\tfrac{m}{s^2}}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A skateboard starts at 14.4 km/h and accelerates at 2.5 m/s² for 8 s. What is its final velocity?
+			<details>
+				<summary>solution</summary>
+				$$14.4\,\mathrm{km/h}=4.0\,\mathrm{\tfrac{m}{s}}$$
+				$$v = u + a\Delta t$$
+				$$v = 4.0\,\mathrm{\tfrac{m}{s}} + (2.5\,\mathrm{\tfrac{m}{s^2}})(8\,\mathrm{s})$$
+				$$v = 24\,\mathrm{\tfrac{m}{s}}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A bike is moving at 30 m/s and brakes with an acceleration of -4 m/s² for 5 s. What is its final velocity?
+			<details>
+				<summary>solution</summary>
+				$$v = u + a\Delta t$$
+				$$v = 30\,\mathrm{\tfrac{m}{s}} + (-4\,\mathrm{\tfrac{m}{s^2}})(5\,\mathrm{s})$$
+				$$v = 10\,\mathrm{\tfrac{m}{s}}$$
+				The bike is still moving forward, but more slowly.
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A sled starts at 21.6 km/h on a packed snow path and accelerates at 1.5 m/s² for 10 s. The rider has a 4 kg backpack, but the motion information is enough. How far does it move?
+			<details>
+				<summary>solution</summary>
+				$$21.6\,\mathrm{km/h}=6.0\,\mathrm{\tfrac{m}{s}}$$
+				$$\Delta x = u\Delta t + \tfrac{1}{2}a\Delta t^2$$
+				$$\Delta x = (6)(10) + \tfrac{1}{2}(1.5)(10)^2$$
+				$$\Delta x = 60 + 75$$
+				$$\Delta x = 135\,\mathrm{m}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A toy car goes from 5 m/s to 29 m/s in 8 s with constant acceleration. What is its acceleration?
+			<details>
+				<summary>solution</summary>
+				$$v = u + a\Delta t$$
+				$$a\Delta t = v - u$$
+				$$a = \frac{v-u}{\Delta t}$$
+				$$a = \frac{29 - 5}{8}$$
+				$$a = 3.0\,\mathrm{\tfrac{m}{s^2}}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A cart starts at 2 m/s and reaches 20 m/s while accelerating at 3 m/s². How long does this take?
+			<details>
+				<summary>solution</summary>
+				$$v = u + a\Delta t$$
+				$$a\Delta t = v-u$$
+				$$\Delta t = \frac{v-u}{a}$$
+				$$\Delta t = \frac{20-2}{3}$$
+				$$\Delta t = 6.0\,\mathrm{s}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A cart is already moving at 12 m/s. It accelerates at 2 m/s² over a 50 m track. What is its speed at the end of the track?
+			<details>
+				<summary>solution</summary>
+				Time is not given, so use the equation without time.
+				$$v^2 = u^2 + 2a\Delta x$$
+				$$v^2 = (12)^2 + 2(2)(50)$$
+				$$v^2 = 344$$
+				$$v = 18.5\,\mathrm{\tfrac{m}{s}}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A car moving at 100.8 km/h brakes at -7 m/s² until it stops. How much distance does it need to stop?
+			<details>
+				<summary>solution</summary>
+				The final velocity is zero because the car stops.
+				$$100.8\,\mathrm{km/h}=28\,\mathrm{\tfrac{m}{s}}$$
+				$$v^2 = u^2 + 2a\Delta x$$
+				$$(0)^2 = (28)^2 + 2(-7)\Delta x$$
+				$$0 = 784 - 14\Delta x$$
+				$$14\Delta x = 784$$
+				$$\Delta x = 56\,\mathrm{m}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A ball is thrown straight upward and is in the air for 4.0 s. Its mass is 0.20 kg. How high does it go above the launch point?
+			<details>
+				<summary>answer</summary>
+				This cannot be solved from the information given as written. The mass is not useful for this kinematics problem, and the total time in the air only gives the height if the ball lands at the same height it was launched from.
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A cart moves 90 m in 6 s while accelerating uniformly. Its final velocity is 18 m/s. What was its initial velocity?
+			<details>
+				<summary>solution</summary>
+				Use the equation with average velocity because displacement, time, and final velocity are known.
+				$$\Delta x = \tfrac{1}{2}(v+u)\Delta t$$
+				$$90 = \tfrac{1}{2}(18+u)(6)$$
+				$$90 = 3(18+u)$$
+				$$30 = 18+u$$
+				$$u = 12\,\mathrm{\tfrac{m}{s}}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A ball is dropped from rest. How far does it fall in 3 s?
+			<details>
+				<summary>solution</summary>
+				Let upward be positive. The ball starts from rest, so u = 0.
+				$$\Delta y = u\Delta t + \tfrac{1}{2}a\Delta t^2$$
+				$$\Delta y = (0)(3) + \tfrac{1}{2}(-9.8)(3)^2$$
+				$$\Delta y = -44.1\,\mathrm{m}$$
+				The ball falls 44.1 m downward.
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A ball is thrown upward at 18 m/s. What is its velocity after 2 s?
+			<details>
+				<summary>solution</summary>
+				$$v = u + a\Delta t$$
+				$$v = 18 + (-9.8)(2)$$
+				$$v = -1.6\,\mathrm{\tfrac{m}{s}}$$
+				The negative sign means the ball is moving downward after 2 s.
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A ball is thrown straight upward at 16 m/s. How high above the release point does it rise?
+			<details>
+				<summary>solution</summary>
+				At the highest point, the vertical velocity is zero.
+				$$v^2 = u^2 + 2a\Delta y$$
+				$$(0)^2 = (16)^2 + 2(-9.8)\Delta y$$
+				$$0 = 256 - 19.6\Delta y$$
+				$$\Delta y = 13.1\,\mathrm{m}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A tennis ball is hit straight upward at 24 m/s. How long does it take to reach its highest point?
+			<details>
+				<summary>solution</summary>
+				At the top, the vertical velocity is zero.
+				$$v = u + a\Delta t$$
+				$$0 = 24 + (-9.8)\Delta t$$
+				$$9.8\Delta t = 24$$
+				$$\Delta t = 2.45\,\mathrm{s}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A stone is dropped from a bridge 20 m above the water. What is its velocity just before it hits the water?
+			<details>
+				<summary>solution</summary>
+				Let upward be positive. The displacement is -20 m, and the stone starts from rest.
+				$$v^2 = u^2 + 2a\Delta y$$
+				$$v^2 = (0)^2 + 2(-9.8)(-20)$$
+				$$v^2 = 392$$
+				$$v = -19.8\,\mathrm{\tfrac{m}{s}}$$
+				The negative sign means the stone is moving downward.
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A rock is dropped from rest from a height of 45 m. How long does it take to hit the ground?
+			<details>
+				<summary>solution</summary>
+				Let upward be positive, so the displacement is -45 m.
+				$$\Delta y = u\Delta t + \tfrac{1}{2}a\Delta t^2$$
+				$$-45 = (0)\Delta t + \tfrac{1}{2}(-9.8)\Delta t^2$$
+				$$-45 = -4.9\Delta t^2$$
+				$$\Delta t^2 = 9.18$$
+				$$\Delta t = 3.03\,\mathrm{s}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A stone is thrown downward at 5 m/s from a 30 m cliff. What are its impact velocity and fall time?
+			<details>
+				<summary>solution</summary>
+				Let upward be positive. The starting velocity and displacement are both negative.
+				$$u = -5\,\mathrm{\tfrac{m}{s}}$$
+				$$a = -9.8\,\mathrm{\tfrac{m}{s^2}}$$
+				$$\Delta y = -30\,\mathrm{m}$$
+				$$v^2 = u^2 + 2a\Delta y$$
+				$$v^2 = (-5)^2 + 2(-9.8)(-30)$$
+				$$v^2 = 613$$
+				$$v = -24.8\,\mathrm{\tfrac{m}{s}}$$
+				Now use the velocity equation.
+				$$-24.8 = -5 + (-9.8)\Delta t$$
+				$$\Delta t = 2.02\,\mathrm{s}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A ball rolls horizontally off an 1800 cm tall ledge at 12 m/s. How long is it in the air, and how far from the base of the ledge does it land?
+			<details>
+				<summary>solution</summary>
+				Split the motion. The vertical motion gives the time, then the horizontal motion gives the range.
+				$$1800\,\mathrm{cm}=18\,\mathrm{m}$$
+				<table class="table-2d" style="width: 520px;">
+					<tr><th>horizontal</th><th>vertical</th></tr>
+					<tr><td>u<sub>x</sub> = 12 m/s</td><td>u<sub>y</sub> = 0 m/s</td></tr>
+					<tr><td>a<sub>x</sub> = 0</td><td>a<sub>y</sub> = -9.8 m/s²</td></tr>
+					<tr><td>Δx = ?</td><td>Δy = -18 m</td></tr>
+				</table>
+				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
+				$$-18 = (0)\Delta t + \tfrac{1}{2}(-9.8)\Delta t^2$$
+				$$\Delta t = 1.92\,\mathrm{s}$$
+				$$\Delta x = u_x\Delta t$$
+				$$\Delta x = (12)(1.92)$$
+				$$\Delta x = 23.0\,\mathrm{m}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A marble leaves a tabletop horizontally at 15 m/s. The tabletop is 20 m above the floor. How far from the table does the marble land?
+			<details>
+				<summary>solution</summary>
+				The marble has no initial vertical velocity because it leaves horizontally.
+				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
+				$$-20 = (0)\Delta t + \tfrac{1}{2}(-9.8)\Delta t^2$$
+				$$-20 = -4.9\Delta t^2$$
+				$$\Delta t = 2.02\,\mathrm{s}$$
+				Now use the same time horizontally.
+				$$\Delta x = u_x\Delta t$$
+				$$\Delta x = (15)(2.02)$$
+				$$\Delta x = 30.3\,\mathrm{m}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A ball is launched at 25 m/s at an angle of 37° above horizontal. What are its initial horizontal and vertical velocity components?
+			<details>
+				<summary>solution</summary>
+				Horizontal uses cosine, and vertical uses sine.
+				$$u_x = u\cos\theta$$
+				$$u_x = (25)\cos(37^\circ)$$
+				$$u_x = 20.0\,\mathrm{\tfrac{m}{s}}$$
+				$$u_y = u\sin\theta$$
+				$$u_y = (25)\sin(37^\circ)$$
+				$$u_y = 15.0\,\mathrm{\tfrac{m}{s}}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A projectile starts with horizontal velocity 20 m/s and vertical velocity 15 m/s. Where is it after 2 s?
+			<details>
+				<summary>solution</summary>
+				Use the same time for both directions.
+				$$\Delta x = u_x\Delta t$$
+				$$\Delta x = (20)(2)$$
+				$$\Delta x = 40\,\mathrm{m}$$
+				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
+				$$\Delta y = (15)(2) + \tfrac{1}{2}(-9.8)(2)^2$$
+				$$\Delta y = 10.4\,\mathrm{m}$$
+				After 2 s, the projectile is 40 m forward and 10.4 m above its launch height.
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A ball is launched from the ground at 72 km/h and 30° above horizontal. How long is it in the air, and what is its range?
+			<details>
+				<summary>solution</summary>
+				First convert the launch speed, then split it into components.
+				$$72\,\mathrm{km/h}=20\,\mathrm{\tfrac{m}{s}}$$
+				$$u_x = u\cos\theta$$
+				$$u_x = (20)\cos(30^\circ)$$
+				$$u_x = 17.3\,\mathrm{\tfrac{m}{s}}$$
+				$$u_y = u\sin\theta$$
+				$$u_y = (20)\sin(30^\circ)$$
+				$$u_y = 10.0\,\mathrm{\tfrac{m}{s}}$$
+				Because it lands at the same height it was launched from, Δy = 0.
+				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
+				$$0 = (10.0)\Delta t + \tfrac{1}{2}(-9.8)\Delta t^2$$
+				$$0 = \Delta t(10.0 - 4.9\Delta t)$$
+				$$\Delta t = 2.04\,\mathrm{s}$$
+				Now use horizontal motion.
+				$$\Delta x = u_x\Delta t$$
+				$$\Delta x = (17.3)(2.04)$$
+				$$\Delta x = 35.3\,\mathrm{m}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> The same ball is launched from the ground at 20 m/s and 30° above horizontal. What is its maximum height above the launch point?
+			<details>
+				<summary>solution</summary>
+				Only vertical motion matters for maximum height. From the previous example:
+				$$u_y = 10.0\,\mathrm{\tfrac{m}{s}}$$
+				At the highest point, vertical velocity is zero.
+				$$v_y^2 = u_y^2 + 2a_y\Delta y$$
+				$$(0)^2 = (10.0)^2 + 2(-9.8)\Delta y$$
+				$$0 = 100 - 19.6\Delta y$$
+				$$\Delta y = 5.10\,\mathrm{m}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A soccer ball is kicked from 150 cm above the ground at 43.2 km/h and 40° above horizontal. How long is it in the air, and how far forward does it travel?
+			<details>
+				<summary>solution</summary>
+				Start by converting the given values and splitting the launch velocity.
+				$$150\,\mathrm{cm}=1.5\,\mathrm{m}$$
+				$$43.2\,\mathrm{km/h}=12\,\mathrm{\tfrac{m}{s}}$$
+				$$u_x = (12)\cos(40^\circ)$$
+				$$u_x = 9.19\,\mathrm{\tfrac{m}{s}}$$
+				$$u_y = (12)\sin(40^\circ)$$
+				$$u_y = 7.71\,\mathrm{\tfrac{m}{s}}$$
+				The ball lands 1.5 m below where it was kicked, so Δy = -1.5 m.
+				Use vertical motion to find the final vertical velocity first.
+				$$v_y^2 = u_y^2 + 2a_y\Delta y$$
+				$$v_y^2 = (7.71)^2 + 2(-9.8)(-1.5)$$
+				$$v_y^2 = 88.9$$
+				$$v_y = -9.43\,\mathrm{\tfrac{m}{s}}$$
+				The final vertical velocity is negative because the ball is moving downward when it lands.
+				$$v_y = u_y + a_y\Delta t$$
+				$$-9.43 = 7.71 + (-9.8)\Delta t$$
+				$$\Delta t = 1.75\,\mathrm{s}$$
+				Now use horizontal motion.
+				$$\Delta x = u_x\Delta t$$
+				$$\Delta x = (9.19)(1.75)$$
+				$$\Delta x = 16.1\,\mathrm{m}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A water balloon is thrown from a balcony 2.0 m above the ground at 18 m/s and 25° above horizontal. How far from the balcony does it land?
+			<details>
+				<summary>solution</summary>
+				Split the velocity first.
+				$$u_x = (18)\cos(25^\circ)$$
+				$$u_x = 16.3\,\mathrm{\tfrac{m}{s}}$$
+				$$u_y = (18)\sin(25^\circ)$$
+				$$u_y = 7.61\,\mathrm{\tfrac{m}{s}}$$
+				The balloon lands 2.0 m below launch height, so Δy = -2.0 m.
+				Find the final vertical velocity.
+				$$v_y^2 = u_y^2 + 2a_y\Delta y$$
+				$$v_y^2 = (7.61)^2 + 2(-9.8)(-2.0)$$
+				$$v_y^2 = 97.1$$
+				$$v_y = -9.85\,\mathrm{\tfrac{m}{s}}$$
+				Then find the time.
+				$$v_y = u_y + a_y\Delta t$$
+				$$-9.85 = 7.61 + (-9.8)\Delta t$$
+				$$\Delta t = 1.78\,\mathrm{s}$$
+				Now use horizontal motion.
+				$$\Delta x = u_x\Delta t$$
+				$$\Delta x = (16.3)(1.78)$$
+				$$\Delta x = 29.1\,\mathrm{m}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A ball has horizontal velocity 14 m/s and initial vertical velocity 9 m/s. A wall is 21 m away. How high above launch height is the ball when it reaches the wall?
+			<details>
+				<summary>solution</summary>
+				The wall distance is horizontal, so use it to find the time.
+				$$\Delta x = u_x\Delta t$$
+				$$21 = (14)\Delta t$$
+				$$\Delta t = 1.50\,\mathrm{s}$$
+				Now use that same time in the vertical motion.
+				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
+				$$\Delta y = (9)(1.50) + \tfrac{1}{2}(-9.8)(1.50)^2$$
+				$$\Delta y = 13.5 - 11.0$$
+				$$\Delta y = 2.48\,\mathrm{m}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A launcher gives a ball horizontal velocity 12 m/s. A target opening is 18 m away and 4.0 m above launch height. What initial vertical velocity is needed to pass through the opening?
+			<details>
+				<summary>solution</summary>
+				Use horizontal motion first because it gives the time to reach the opening.
+				$$\Delta x = u_x\Delta t$$
+				$$18 = (12)\Delta t$$
+				$$\Delta t = 1.50\,\mathrm{s}$$
+				Now solve the vertical displacement equation for the needed initial vertical velocity.
+				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
+				$$4.0 = u_y(1.50) + \tfrac{1}{2}(-9.8)(1.50)^2$$
+				$$4.0 = 1.50u_y - 11.0$$
+				$$15.0 = 1.50u_y$$
+				$$u_y = 10.0\,\mathrm{\tfrac{m}{s}}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A ball is launched with horizontal velocity 16 m/s and vertical velocity 12 m/s. A 6.0 m tall wall is 24 m away. Does the ball clear the wall?
+			<details>
+				<summary>solution</summary>
+				Find the time to reach the wall using horizontal motion.
+				$$\Delta x = u_x\Delta t$$
+				$$24 = (16)\Delta t$$
+				$$\Delta t = 1.50\,\mathrm{s}$$
+				Find the height at that time.
+				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
+				$$\Delta y = (12)(1.50) + \tfrac{1}{2}(-9.8)(1.50)^2$$
+				$$\Delta y = 18.0 - 11.0$$
+				$$\Delta y = 6.98\,\mathrm{m}$$
+				The ball clears the 6.0 m wall by about 0.98 m.
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A small launcher fires a ball from level ground with horizontal velocity 18 m/s and vertical velocity 24 m/s. The launch stand is 0.80 m wide, but take the launch and landing heights as the same. How far away does it land?
+			<details>
+				<summary>solution</summary>
+				Since it lands at the same height it starts, use vertical motion to find the nonzero time in the air.
+				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
+				$$0 = (24)\Delta t + \tfrac{1}{2}(-9.8)\Delta t^2$$
+				$$0 = \Delta t(24 - 4.9\Delta t)$$
+				$$\Delta t = 4.90\,\mathrm{s}$$
+				Now use horizontal motion.
+				$$\Delta x = u_x\Delta t$$
+				$$\Delta x = (18)(4.90)$$
+				$$\Delta x = 88.2\,\mathrm{m}$$
+			</details>
+		</div>
+	</article>
 	<footer>
 		<a href="../../../">Back</a>
 	</footer>

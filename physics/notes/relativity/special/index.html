@@ -941,7 +941,7 @@
 
 			<br>\( \gamma \) = Lorentz factor, gamma [no units]
 		</div>
-		<p>An object will look contracted from a moving reference frame, so the rest length is always longer. L₀ > L. </p>
+		<p>An object will be <a href="https://www.desmos.com/notebook/qq6cjzpykh/view">contracted</a> as seen by a moving reference frame, so the rest length is always longer. L₀ > L. </p>
 
 		<div class='example'>
 			<strong>Example:</strong> When you are holding a meter stick it looks like it is 1 meter long. How long
@@ -1860,6 +1860,270 @@
 		<br><br><br><br><br><br>
 	</article>
 
+	<article>
+		<h1 class='underlined'>More Practice</h1>
+		<p>
+			Relativity problems usually go wrong when the observer is vague. Before calculating, decide who is at rest with the event or object, who sees it moving, and whether the question is about time, length, energy, or spacetime interval. The math is short, but the point of view matters every time.
+		</p>
+
+		<div class='example'>
+			<strong>Question:</strong> Two observers move at constant velocity relative to each other. Each observer says the other observer's clock runs slow. Why is that not a contradiction?
+			<details>
+				<summary>solution</summary>
+				<p>Each observer is using their own reference frame as the frame at rest.</p>
+				<p>Special relativity is symmetric for inertial observers. Each observer sees the other's moving clock as slow, and the disagreement is tied to how each frame measures time and simultaneity.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A research probe passes Earth at 0.60c. Earth is the observer frame, and the probe is moving relative to Earth. What Lorentz factor does Earth use for the probe?
+			<details>
+				<summary>solution</summary>
+				<p>The relative speed is already written as a fraction of c.</p>
+				$$\gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}$$
+				$$\gamma = \frac{1}{\sqrt{1-(0.60)^2}}$$
+				$$\gamma = 1.25$$
+				<p>Earth uses <strong>gamma = 1.25</strong> for this probe.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A particle beam moves at 2.40 × 10<sup>8</sup> m/s relative to a laboratory detector on Earth. What fraction of c is that, and what Lorentz factor does the laboratory observer use?
+			<details>
+				<summary>solution</summary>
+				<p>First compare the speed to the speed of light.</p>
+				$$\frac{v}{c} = \frac{2.40 \times 10^8\,\mathrm{m/s}}{3.00 \times 10^8\,\mathrm{m/s}}$$
+				$$\frac{v}{c} = 0.80$$
+				<p>Now calculate gamma.</p>
+				$$\gamma = \frac{1}{\sqrt{1-(0.80)^2}}$$
+				$$\gamma = 1.67$$
+				<p>The beam speed is <strong>0.80c</strong>, and the laboratory observer uses <strong>gamma = 1.67</strong>.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A clock inside a spacecraft records an 8.0 minute engine burn. Earth observers see the spacecraft moving at 0.80c. According to Earth, how long does the burn last?
+			<details>
+				<summary>solution</summary>
+				<p>The burn starts and ends at the same place in the spacecraft frame, so the spacecraft clock measures proper time.</p>
+				$$\Delta t_0 = 8.0\,\mathrm{min}$$
+				$$\gamma = 1.67$$
+				$$\Delta t = \gamma \Delta t_0$$
+				$$\Delta t = (1.67)(8.0\,\mathrm{min})$$
+				$$\Delta t = 13.4\,\mathrm{min}$$
+				<p>Earth observers measure the moving burn lasting about <strong>13.4 minutes</strong>.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Earth observers measure a high-speed trip lasting 30 years. The spacecraft moves at 0.95c relative to Earth. How much time passes for an astronaut riding with the spacecraft?
+			<details>
+				<summary>solution</summary>
+				<p>Earth sees the spacecraft moving, so Earth measures the dilated time. The astronaut is at rest with the spacecraft clock, so the astronaut measures proper time.</p>
+				$$\gamma = \frac{1}{\sqrt{1-(0.95)^2}}$$
+				$$\gamma = 3.20$$
+				$$\Delta t = \gamma \Delta t_0$$
+				$$\Delta t_0 = \frac{\Delta t}{\gamma}$$
+				$$\Delta t_0 = \frac{30\,\mathrm{yr}}{3.20}$$
+				$$\Delta t_0 = 9.4\,\mathrm{yr}$$
+				<p>The astronaut ages about <strong>9.4 years</strong> during the trip.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> A student says, "Time dilation just means the moving clock looks slow because the light from it takes longer to reach us." What is missing from that explanation?
+			<details>
+				<summary>solution</summary>
+				<p>Signal delay is real, but it is not the whole effect.</p>
+				<p>Time dilation is about what observers calculate after accounting for light travel time. It is not just an optical delay. A moving clock actually measures less proper time between the same pair of events than another inertial frame measures for those events.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Muons created high in the atmosphere have a rest-frame half-life of 2.2 microseconds. Earth observers see the muons moving at 0.98c. What half-life do Earth observers measure?
+			<details>
+				<summary>solution</summary>
+				<p>The muon is at rest with its own decay process, so the muon half-life is proper time.</p>
+				$$\gamma = \frac{1}{\sqrt{1-(0.98)^2}}$$
+				$$\gamma = 5.03$$
+				$$\Delta t = \gamma \Delta t_0$$
+				$$\Delta t = (5.03)(2.2\,\mu\mathrm{s})$$
+				$$\Delta t = 11.1\,\mu\mathrm{s}$$
+				<p>Earth observers measure a half-life of about <strong>11.1 microseconds</strong>.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A moving clock ticks once every 5.0 s in its own frame. A lab observer measures 9.0 s between those ticks. How fast is the clock moving relative to the lab, as a fraction of c?
+			<details>
+				<summary>solution</summary>
+				<p>The moving clock is at rest with the two ticks, so 5.0 s is proper time.</p>
+				$$\Delta t = \gamma \Delta t_0$$
+				$$9.0\,\mathrm{s} = \gamma(5.0\,\mathrm{s})$$
+				$$\gamma = 1.80$$
+				<p>Use gamma to solve for speed.</p>
+				$$\gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}$$
+				$$1.80 = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}$$
+				$$0.556 = \sqrt{1-\frac{v^2}{c^2}}$$
+				$$0.309 = 1-\frac{v^2}{c^2}$$
+				$$\frac{v^2}{c^2} = 0.691$$
+				$$\frac{v}{c} = 0.831$$
+				<p>The clock moves at about <strong>0.83c</strong> relative to the lab.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A survey ship is 120 m long in its own rest frame. It passes Earth lengthwise at 0.75c. What length does an Earth observer measure for the moving ship?
+			<details>
+				<summary>solution</summary>
+				<p>The ship's own frame measures rest length. Earth sees the ship moving, so Earth measures contracted length.</p>
+				$$\gamma = \frac{1}{\sqrt{1-(0.75)^2}}$$
+				$$\gamma = 1.51$$
+				$$L = \frac{L_0}{\gamma}$$
+				$$L = \frac{120\,\mathrm{m}}{1.51}$$
+				$$L = 79.5\,\mathrm{m}$$
+				<p>Earth measures the ship length as about <strong>79.5 m</strong>.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> A spacecraft is moving horizontally across your screen. Does special relativity make its height contract?
+			<details>
+				<summary>solution</summary>
+				<p>No. Length contraction only occurs along the direction of relative motion.</p>
+				<p>If the spacecraft moves horizontally, its horizontal length contracts. Its vertical height does not contract from this effect.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> Earth observers measure a passing experimental railcar as 72 m long while it moves at 0.88c relative to Earth. The railcar has 12 windows, but that does not matter here. What is the railcar's rest length according to an observer riding with it?
+			<details>
+				<summary>solution</summary>
+				<p>Earth measures contracted length. The rider measures rest length.</p>
+				$$\gamma = \frac{1}{\sqrt{1-(0.88)^2}}$$
+				$$\gamma = 2.11$$
+				$$L = \frac{L_0}{\gamma}$$
+				$$L_0 = \gamma L$$
+				$$L_0 = (2.11)(72\,\mathrm{m})$$
+				$$L_0 = 152\,\mathrm{m}$$
+				<p>The railcar's rest length is about <strong>152 m</strong>.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A spacecraft moving at 0.90c relative to Earth flashes a nose light and a tail light. The lights are 40 m apart in the spacecraft frame, and the ship clock says the flashes happen 3.0 ns apart. What time interval does Earth measure between the flashes?
+			<details>
+				<summary>solution</summary>
+				<p>This cannot be solved with the equations on this page.</p>
+				<p>The two flashes happen at different locations, so the simple time dilation equation does not apply. The page's time dilation equation needs events that occur in the same location in one frame.</p>
+				<p>To solve this fully, you would need a Lorentz transformation equation for events separated in space and time. That equation is not taught in this practice section, so the problem is intentionally <strong>not solvable</strong> from the given tools.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A sealed 4.0 g sample sits at rest on a lab bench. The lab observer wants its rest energy. What is the sample's rest energy in joules?
+			<details>
+				<summary>solution</summary>
+				<p>Convert grams to kilograms first.</p>
+				$$m = 4.0\,\mathrm{g}\left(\frac{1\,\mathrm{kg}}{1000\,\mathrm{g}}\right)$$
+				$$m = 0.0040\,\mathrm{kg}$$
+				<p>At rest, gamma is 1, so use rest energy.</p>
+				$$E = mc^2$$
+				$$E = (0.0040\,\mathrm{kg})(3.00 \times 10^8\,\mathrm{m/s})^2$$
+				$$E = 3.6 \times 10^{14}\,\mathrm{J}$$
+				<p>The sample has <strong>3.6 × 10<sup>14</sup> J</strong> of rest energy.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> If a stationary object has rest energy, why does it not explode or release that energy just by sitting there?
+			<details>
+				<summary>solution</summary>
+				<p>Rest energy is not automatically available energy.</p>
+				<p>The energy is part of the object's mass. It only changes into other forms of energy during processes such as nuclear reactions, particle annihilation, or other interactions where mass changes.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A proton has mass 1.67 × 10<sup>-27</sup> kg and moves at 0.80c relative to a detector. What total relativistic energy does the detector observer assign to the proton?
+			<details>
+				<summary>solution</summary>
+				<p>The detector sees the proton moving, so use total relativistic energy.</p>
+				$$\gamma = 1.67$$
+				$$E = \gamma mc^2$$
+				$$E = (1.67)(1.67 \times 10^{-27}\,\mathrm{kg})(3.00 \times 10^8\,\mathrm{m/s})^2$$
+				$$E = 2.51 \times 10^{-10}\,\mathrm{J}$$
+				<p>The detector observer assigns the proton about <strong>2.51 × 10<sup>-10</sup> J</strong> of total energy.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A 1200 kg spacecraft moves at 0.20c relative to Earth. Earth observers use the relativistic kinetic energy equation from the page. How much kinetic energy do they assign to the spacecraft?
+			<details>
+				<summary>solution</summary>
+				<p>First calculate gamma for the Earth observer.</p>
+				$$\gamma = \frac{1}{\sqrt{1-(0.20)^2}}$$
+				$$\gamma = 1.021$$
+				<p>Use relativistic kinetic energy.</p>
+				$$K = (\gamma - 1)mc^2$$
+				$$K = (1.021 - 1)(1200\,\mathrm{kg})(3.00 \times 10^8\,\mathrm{m/s})^2$$
+				$$K = 2.3 \times 10^{18}\,\mathrm{J}$$
+				<p>Earth observers assign the spacecraft about <strong>2.3 × 10<sup>18</sup> J</strong> of kinetic energy.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Question:</strong> Why should a relativity solution say which observer measures the time or length?
+			<details>
+				<summary>solution</summary>
+				<p>Different inertial observers can measure different times and lengths for the same physical situation.</p>
+				<p>The equations use different symbols for different observers. Proper time belongs to the observer at rest with the events. Rest length belongs to the observer at rest with the object. If the observer is not named, the problem can become ambiguous.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A space station observer measures two events separated by 6.0 years and 4.0 light-years in the x direction. There is no y or z separation. What spacetime interval squared does that observer calculate?
+			<details>
+				<summary>solution</summary>
+				<p>When time is in years and distance is in light-years, c is 1 light-year per year.</p>
+				$$\Delta s^2 = c^2\Delta t^2 - \Delta x^2$$
+				$$\Delta s^2 = (1)^2(6.0\,\mathrm{yr})^2 - (4.0\,\mathrm{ly})^2$$
+				$$\Delta s^2 = 20\,\mathrm{ly^2}$$
+				<p>The spacetime interval squared is <strong>20 ly<sup>2</sup></strong>.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> An electron and positron are nearly at rest before they annihilate. Use electron mass 9.11 × 10<sup>-31</sup> kg. If the annihilation makes two identical photons, what energy does each photon have in joules?
+			<details>
+				<summary>solution</summary>
+				<p>Each particle's rest energy becomes photon energy. Since there are two equal-mass particles and two identical photons, each photon gets one electron's rest energy.</p>
+				$$E = mc^2$$
+				$$E = (9.11 \times 10^{-31}\,\mathrm{kg})(3.00 \times 10^8\,\mathrm{m/s})^2$$
+				$$E = 8.20 \times 10^{-14}\,\mathrm{J}$$
+				<p>Each photon has about <strong>8.20 × 10<sup>-14</sup> J</strong>.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<strong>Example:</strong> A spacecraft moves at 0.92c relative to Earth. An astronaut at rest inside the spacecraft measures a repair taking 3.0 hours, and the spacecraft's rest length is 80 m. What repair time and ship length do Earth observers measure?
+			<details>
+				<summary>solution</summary>
+				<p>The astronaut measures proper time because the repair happens at rest in the spacecraft frame. The astronaut also measures the ship's rest length.</p>
+				$$\gamma = \frac{1}{\sqrt{1-(0.92)^2}}$$
+				$$\gamma = 2.55$$
+				<p>Find the Earth-observer time.</p>
+				$$\Delta t = \gamma \Delta t_0$$
+				$$\Delta t = (2.55)(3.0\,\mathrm{h})$$
+				$$\Delta t = 7.7\,\mathrm{h}$$
+				<p>Find the Earth-observer length.</p>
+				$$L = \frac{L_0}{\gamma}$$
+				$$L = \frac{80\,\mathrm{m}}{2.55}$$
+				$$L = 31\,\mathrm{m}$$
+				<p>Earth observers measure the repair taking about <strong>7.7 h</strong> and the ship length as about <strong>31 m</strong>.</p>
+			</details>
+		</div>
+	</article>
 	<footer>
 		<a href="../../../">Back</a>
 	</footer>

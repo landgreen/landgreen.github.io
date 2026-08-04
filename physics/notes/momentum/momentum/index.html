@@ -32,6 +32,13 @@
   </header>
   <article>
     <p>
+      The idea of momentum developed slowly. <a href="https://en.wikipedia.org/wiki/Aristotle">Aristotle</a> (384-322 BCE) described motion as something that needed a continuing cause, which seems reasonable when you watch carts, rocks, and people eventually stop. Around 1020 CE, <a href="https://en.wikipedia.org/wiki/Avicenna">Ibn Sina</a> offered a different idea: a thrown object carries an impressed tendency of motion, while outside effects like air resistance gradually reduce that motion. In the early 1600s, <a href="https://en.wikipedia.org/wiki/Galileo_Galilei">Galileo</a> pushed the idea further by arguing that objects can keep moving without a constant push, especially when friction is reduced.
+    </p>
+    <p>
+      In 1687, <a href="https://en.wikipedia.org/wiki/Isaac_Newton">Newton</a> put these ideas into a mathematical theory in the <a href="https://en.wikipedia.org/wiki/Philosophi%C3%A6_Naturalis_Principia_Mathematica">Principia</a>. Newton called momentum the <strong>quantity of motion</strong>: how much matter an object has multiplied by how fast it is moving. That is the idea behind the equation on this page.
+    </p>
+
+    <p>
       This is a simulation of a "Newton's cradle".
       A <a href="https://www.youtube.com/watch?v=8dgyPRA86K0">real</a> Newton's cradle is made of metal balls suspended by two strings.
       Click and drag a ball to fling it.
@@ -73,7 +80,8 @@
         <summary>solution</summary>
         $$ 18 \left( \mathrm{ \frac{\color{red}{mile}}{\color{Teal}{hour}}} \right)\left(\frac{1609\,\mathrm{m}}{1 \,\color{red}{\mathrm{mile} }}\right)\left(\frac{1\, \color{Teal}{ \mathrm{hour} }}{3600\,\mathrm{s}}\right) = 8.0 \mathrm{\tfrac{m}{s}} $$
         <br> $$p=mv$$
-        $$p=(5.0 \, \mathrm{kg})(8.0 \, \mathrm{\tfrac{m}{s}})$$ $$p=40 \,\mathrm{kg\tfrac{m}{s}}$$
+        $$p=(5.0 \, \mathrm{kg})(8.0 \, \mathrm{\tfrac{m}{s}})$$
+        $$p=40 \,\mathrm{kg\tfrac{m}{s}}$$
       </details>
     </div>
 
@@ -81,14 +89,70 @@
       <strong>Example:</strong> Which has more momentum? A 10 kg bicycle moving at 8 m/s or a 15 kg bicycle moving at 6 m/s?
       <details>
         <summary>solution</summary>
-        $$p=mv \quad \quad \quad \quad p=mv$$
-        $$p=(10)(8) \quad \quad p=(15)(6)$$
-        $$p=80 \,\mathrm{kg\tfrac{m}{s}} \quad \quad p=90 \,\mathrm{kg\tfrac{m}{s}}$$
+        $$p_1=mv$$
+        $$p_1=(10)(8)$$
+        $$p_1=80 \,\mathrm{kg\tfrac{m}{s}}$$
+        $$p_2=mv$$
+        $$p_2=(15)(6)$$
+        $$p_2=90 \,\mathrm{kg\tfrac{m}{s}}$$
         <p>The 15 kg bike moving at 6 m/s has more momentum.</p>
       </details>
     </div>
 
+    <h1 class='underlined' id="newtons-law-and-momentum">Newton's Law and Momentum</h1>
+    <p>
+      Newton's second law can be written as a change in momentum with time.
+      Force changes an object's momentum.
+    </p>
+    <details class='derive'>
+      <summary>derivation</summary>
+      <p>
+        If the mass stays constant, the change in momentum comes from the change in velocity.
+      </p>
+      $$\sum F = \frac{\Delta p}{\Delta t}$$
+      $$\Delta p = m\Delta v$$
+      $$\sum F = \frac{m\Delta v}{\Delta t}$$
+      $$a = \frac{\Delta v}{\Delta t}$$
+      $$\sum F = ma$$
+      <p>
+        So force equals mass times acceleration is a special case of the momentum version of Newton's second law.
+      </p>
+    </details>
+    <div class='definition'>
+      <h1>$$\sum F = \frac{\Delta p}{\Delta t}$$</h1>
+      \(\sum F\) = net force [N]
+      <br>\(\Delta p\) = change in momentum [kg m/s]
+      <br>\(\Delta t\) = time interval [s]
+    </div>
+    <div class='example'>
+      <strong>Example:</strong> A 1200 kg car speeds up from 5 m/s to 25 m/s in 8.0 s. What is the car's change in momentum, and what average net force acted on it?
+      <details>
+        <summary>solution</summary>
+        $$\Delta p=m\Delta v$$
+        $$\Delta p=m(v_f-v_i)$$
+        $$\Delta p=(1200)(25-5)$$
+        $$\Delta p=24000\,\mathrm{kg\,m/s}$$
+        $$\sum F=\frac{\Delta p}{\Delta t}$$
+        $$\sum F=\frac{24000}{8.0}$$
+        $$\sum F=3000\,\mathrm{N}$$
+        <p>The car's momentum increases by 24000 kg m/s, so the average net force is 3000 N forward.</p>
+      </details>
+    </div>
 
+    <div class='example'>
+      <strong>Example:</strong> A 0.145 kg baseball is moving 40 m/s toward a bat. After the hit, it moves 30 m/s in the opposite direction. If the bat touches the ball for 0.010 s, what is the average net force on the ball?
+      <details>
+        <summary>solution</summary>
+        <p>Let the ball's original direction be positive. The final velocity is negative because the ball reverses direction.</p>
+        $$\Delta p=m(v_f-v_i)$$
+        $$\Delta p=(0.145)(-30-40)$$
+        $$\Delta p=-10.15\,\mathrm{kg\,m/s}$$
+        $$\sum F=\frac{\Delta p}{\Delta t}$$
+        $$\sum F=\frac{-10.15}{0.010}$$
+        $$\sum F=-1015\,\mathrm{N}$$
+        <p>The negative sign means the force is opposite the ball's original motion.</p>
+      </details>
+    </div>
     <h1 class='underlined' id="impulse">Impulse</h1>
     <p>
       An impulse is defined as a force applied over a period of time.
@@ -123,11 +187,13 @@
         $$F \Delta t = m \Delta v$$
         <br> $$F \Delta t = m(v_f - v_i)$$
         $$F \Delta t = mv_f - mv_i$$
-        $$F \Delta t = p_f - p_i$$ $$F \Delta t = \Delta p$$
+        $$F \Delta t = p_f - p_i$$
+        $$F \Delta t = \Delta p$$
       </details>
       <div class='definition'>
         <h1>
-          $$J = \Delta p$$ $$F \Delta t = \Delta p $$
+          $$J = \Delta p$$
+          $$F \Delta t = \Delta p $$
         </h1>
         \(J\) = impulse [Ns, kg m/s] <em>vector</em>
         <br>\(F\) = force [N, kg m/s²] <em>vector</em>
@@ -160,7 +226,8 @@
         $$F \Delta t = m\Delta v$$
         $$\frac{F \Delta t}{\Delta v} = m$$
         $$\frac{(-100)(0.1)}{14-15} = m$$
-        $$\frac{(-100)(0.1)}{-1} = m$$ $$10 \, \mathrm{kg} = m$$
+        $$\frac{(-100)(0.1)}{-1} = m$$
+        $$10 \, \mathrm{kg} = m$$
       </details>
     </div>
     <div class='example'>
@@ -278,6 +345,193 @@
           Like hitting an airbag instead of a steering wheel.
           Modern cars also lengthen the time of a collision with crumple zones.
         </p>
+      </details>
+    </div>
+  </article>
+  <article>
+    <h1 class='underlined'>More Practice</h1>
+    <p>
+      Momentum practice works best when you keep track of direction. Start with the basic momentum equation, then use impulse and average force when a force acts over time.
+    </p>
+    <p>
+      The last few problems connect back to motion, force, and unit conversion. Read those slowly and decide which earlier idea is being used before calculating.
+    </p>
+
+    <div class='example'>
+      <strong>Example:</strong> A 6000 g backpack slides across the floor at 3 m/s after being nudged in a hallway. What is its momentum?
+      <details>
+        <summary>solution</summary>
+        $$6000\,\mathrm{g}=6\,\mathrm{kg}$$
+        $$p=mv$$
+        $$p=(6\,\mathrm{kg})(3\,\mathrm{m/s})$$
+        $$p=18\,\mathrm{kg\,m/s}$$
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> A 0.060 kg tennis ball is moving left at 25 m/s just after leaving a racket. The court is 24 m long, but the momentum only depends on mass and velocity. What is the ball's momentum?
+      <details>
+        <summary>solution</summary>
+        <p>Left is the negative direction, so the velocity is -25 m/s.</p>
+        $$p=mv$$
+        $$p=(0.060\,\mathrm{kg})(-25\,\mathrm{m/s})$$
+        $$p=-1.5\,\mathrm{kg\,m/s}$$
+        <p>The negative sign tells us the momentum points left.</p>
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> Which has more momentum: a 45 kg skateboarder moving at 4 m/s or a 12 kg scooter moving at 14 m/s?
+      <details>
+        <summary>solution</summary>
+        $$p_1=mv$$
+        $$p_1=(45)(4)$$
+        $$p_1=180\,\mathrm{kg\,m/s}$$
+        $$p_2=mv$$
+        $$p_2=(12)(14)$$
+        $$p_2=168\,\mathrm{kg\,m/s}$$
+        <p>The skateboarder has slightly more momentum.</p>
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> A 70 kg runner has 420 kg m/s of momentum. How fast is the runner moving?
+      <details>
+        <summary>solution</summary>
+        $$p=mv$$
+        $$v=\frac{p}{m}$$
+        $$v=\frac{420}{70}$$
+        $$v=6\,\mathrm{m/s}$$
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> A 2 kg cart speeds up from 1 m/s to 5 m/s. What impulse acted on the cart?
+      <details>
+        <summary>solution</summary>
+        $$J=\Delta p$$
+        $$\Delta p=m(v_f-v_i)$$
+        $$\Delta p=(2)(5-1)$$
+        $$\Delta p=8\,\mathrm{kg\,m/s}$$
+        $$J=8\,\mathrm{N\,s}$$
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> A cart has 18 kg m/s of momentum and moves at 3.0 m/s. What force is acting on it?
+      <details>
+        <summary>answer</summary>
+        This cannot be solved from the information given. Momentum and velocity can tell you the mass, but force needs information about how the momentum changes over time.
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> A 75 N force acts on a box for 0.20 s. What impulse is delivered?
+      <details>
+        <summary>solution</summary>
+        $$J=F\Delta t$$
+        $$J=(75\,\mathrm{N})(0.20\,\mathrm{s})$$
+        $$J=15\,\mathrm{N\,s}$$
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> A 0.50 kg ball is moving right at 12 m/s. It bounces off a wall and leaves moving left at 8 m/s. If the contact time is 0.050 s, what average force acted on the ball? Let right be positive.
+      <details>
+        <summary>solution</summary>
+        <p>The final velocity is negative because the ball leaves moving left.</p>
+        $$\Delta p=m(v_f-v_i)$$
+        $$\Delta p=(0.50)(-8-12)$$
+        $$\Delta p=-10\,\mathrm{kg\,m/s}$$
+        $$\sum F=\frac{\Delta p}{\Delta t}$$
+        $$\sum F=\frac{-10}{0.050}$$
+        $$\sum F=-200\,\mathrm{N}$$
+        <p>The average force is 200 N to the left.</p>
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> A 1200 kg car slows from 72 km/h to rest on a dry road. The average braking force is 6000 N opposite the motion, and the car has four passengers. How long does it take to stop?
+      <details>
+        <summary>solution</summary>
+        <p>Let the original direction of the car be positive, so the braking force is negative.</p>
+        $$72\,\mathrm{km/h}=20\,\mathrm{m/s}$$
+        $$\Delta p=m(v_f-v_i)$$
+        $$\Delta p=(1200)(0-20)$$
+        $$\Delta p=-24000\,\mathrm{kg\,m/s}$$
+        $$\sum F=\frac{\Delta p}{\Delta t}$$
+        $$\Delta t=\frac{\Delta p}{\sum F}$$
+        $$\Delta t=\frac{-24000}{-6000}$$
+        $$\Delta t=4.0\,\mathrm{s}$$
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> A 0.145 kg baseball is thrown at 90 miles/hour. Convert its speed to m/s, then find its momentum.
+      <details>
+        <summary>solution</summary>
+        $$90\left(\frac{1609\,\mathrm{m}}{1\,\mathrm{mile}}\right)\left(\frac{1\,\mathrm{hour}}{3600\,\mathrm{s}}\right)=40.2\,\mathrm{m/s}$$
+        $$p=mv$$
+        $$p=(0.145\,\mathrm{kg})(40.2\,\mathrm{m/s})$$
+        $$p=5.83\,\mathrm{kg\,m/s}$$
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> A 5 kg cart starts from rest. A steady 10 N net force pushes it for 3.0 s. What is the cart's final velocity?
+      <details>
+        <summary>solution</summary>
+        $$J=F\Delta t$$
+        $$J=(10)(3.0)$$
+        $$J=30\,\mathrm{N\,s}$$
+        $$J=\Delta p$$
+        $$\Delta p=m(v_f-v_i)$$
+        $$30=(5)(v_f-0)$$
+        $$v_f=6.0\,\mathrm{m/s}$$
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> A 3 kg object starts from rest and accelerates at 2 m/s² for 4 s. What is its momentum after 4 s?
+      <details>
+        <summary>solution</summary>
+        <p>First use motion to find the final velocity.</p>
+        $$v_f=v_i+at$$
+        $$v_f=0+(2)(4)$$
+        $$v_f=8\,\mathrm{m/s}$$
+        $$p=mv$$
+        $$p=(3)(8)$$
+        $$p=24\,\mathrm{kg\,m/s}$$
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> An 8 kg sled speeds up from 2 m/s to 11 m/s over 6 s. What average net force acted on it?
+      <details>
+        <summary>solution</summary>
+        $$\Delta p=m(v_f-v_i)$$
+        $$\Delta p=(8)(11-2)$$
+        $$\Delta p=72\,\mathrm{kg\,m/s}$$
+        $$\sum F=\frac{\Delta p}{\Delta t}$$
+        $$\sum F=\frac{72}{6}$$
+        $$\sum F=12\,\mathrm{N}$$
+      </details>
+    </div>
+
+    <div class='example'>
+      <strong>Example:</strong> A 75 kg driver slows from 64.8 km/h to rest during a crash test. Compare the average force if the stopping time is 0.10 s with the average force if an airbag and crumple zone stretch the stopping time to 0.60 s.
+      <details>
+        <summary>solution</summary>
+        $$64.8\,\mathrm{km/h}=18\,\mathrm{m/s}$$
+        $$\Delta p=m(v_f-v_i)$$
+        $$\Delta p=(75)(0-18)$$
+        $$\Delta p=-1350\,\mathrm{kg\,m/s}$$
+        $$\sum F=\frac{\Delta p}{\Delta t}$$
+        $$\sum F_1=\frac{-1350}{0.10}$$
+        $$\sum F_1=-13500\,\mathrm{N}$$
+        $$\sum F_2=\frac{-1350}{0.60}$$
+        $$\sum F_2=-2250\,\mathrm{N}$$
+        <p>The longer stopping time produces a much smaller average force.</p>
       </details>
     </div>
   </article>
