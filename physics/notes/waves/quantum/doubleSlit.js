@@ -13,10 +13,12 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
     const height = 150
     const step = 0.5 //1, 0.5, 0.25, 0.125, 0.0625 work for electron stacks
     const emissionTotal = 1600
+    const randomEmitterColor = () => "hsl(" + (180 + 190 * Math.random()) + ",100%,50%)"
+    const markerFlashCycles = () => document.getElementById("slit-one-checkbox").checked ? 1 : 3
 
     let isBlocked = false;
-    let wavelength = 0.201 //checked
-    let separation = 5; //checked
+    let wavelength = 0.2 //checked
+    let separation = 2; //checked
     let slitWidth = 0.5; //checked
     let distance = 100;
 
@@ -24,106 +26,53 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
         array: [],
         calculate() { //fill an array for each point on the wave function
             wavelength = Math.max(0.01, Number(document.getElementById("slit-wavelength").value))
-            separation = Math.max(0.01, Number(document.getElementById("slit-separation").value))
             slitWidth = Math.max(0.01, Number(document.getElementById("slit-slitWidth").value))
+            separation = Math.max(slitWidth, Number(document.getElementById("slit-separation").value))
+            document.getElementById("slit-separation").value = separation
             // distance = Math.max(1, Number(document.getElementById("slit-distance").value))
 
-            const edge = 74 - slitWidth - separation / 2
+            const edge = 74 - slitWidth / 2 - separation / 2
+            const slitGap = separation - slitWidth
             if (isBlocked) {
                 // const slit = `M${130-Math.min(108,distance)} 1 v73.5 m0 ${slitWidth} v73.5`
-                const slit = `M${140-Math.min(108,distance)} 1 v${edge} h-1 v${slitWidth} h1 v${separation} m0 ${slitWidth} v${edge}`
+                const slit = `M${140 - Math.min(108, distance)} 1 v${edge} h-1 v${slitWidth} h1 v${slitGap} m0 ${slitWidth} v${edge}`
                 document.getElementById("slit").setAttribute("d", slit);
             } else {
-                const slit = `M${140-Math.min(108,distance)} 1 v${edge} m0 ${slitWidth} v${separation} m0 ${slitWidth} v${edge}`
+                const slit = `M${140 - Math.min(108, distance)} 1 v${edge} m0 ${slitWidth} v${slitGap} m0 ${slitWidth} v${edge}`
                 document.getElementById("slit").setAttribute("d", slit);
             }
 
 
             wave.emitIndex = 0;
-            wave.stacks = [];
+            wave.stacks = Array(height).fill(0);
             wave.emissionOrder = [];
             wave.array = [];
 
 
             for (let y = 3; y < height - 3; y += step) {
-                // const hyp1 = Math.sqrt(distance * distance + yOff1 * yOff1)
-                // const wave1 = wave.isSlit1 * amplitude * Math.sin(hyp1 / wavelength + phase) / hyp1 / hyp1
-                // const wave2 =  wave.isSlit2 * amplitude * Math.sin(hyp2 / wavelength + phase) / hyp2 / hyp2
-                // const hyp2 = Math.sqrt(distance * distance + yOff2 * yOff2)
-
-                // const y1 = height / 2 - y - separation
-                // let B1 = amplitude * Math.PI * slitWidth / wavelength * Math.sin(y1 / distance)
-                // if (B1 === 0) B1 = 0.001
-                // const diffraction1 = 20 * Math.sin(B1) / B1 * Math.sin(B1) / B1
-                // const wave1 = diffraction1
-
-                // const y2 = height / 2 - y + separation
-                // let B2 = amplitude * Math.PI * slitWidth / wavelength * Math.sin(y2 / distance)
-                // if (B2 === 0) B2 = 0.001
-                // const diffraction2 = 20 * Math.sin(B1) / B1 * Math.sin(B1) / B1
-                // const wave2 = diffraction2
-                // const superposition = (wave1 + wave2) * Math.cos(height / 2 - y)
-                // wave.array.push(superposition)
-
-                // const yOff = (height / 2 - y)
-                // let B = Math.PI * slitWidth / wavelength * Math.sin(yOff / distance)
-                // if (B === 0) B = 0.001
-                // const diffraction = Math.sin(B) / B * Math.sin(B) / B
-                // const interference = separation / wavelength * Math.sin(yOff)
-                // // const r2RuleDistance = (distance * distance) / (distance * distance + yOff * yOff)
-                // const superposition = amplitude * diffraction * (isBlocked ? 1 : interference)
-
                 const yOff = (height / 2 - y) + (isBlocked ? separation / 2 : 0)
-                let B = Math.PI * slitWidth / wavelength * Math.sin(yOff / distance)
-                if (B === 0) B = 0.001
-                const diffraction = Math.sin(B) / B * Math.sin(B) / B
-                const interference = Math.cos(yOff * separation / wavelength)
-                const superposition = 50 * diffraction * (isBlocked ? 1 : interference)
+                const sinTheta = yOff / Math.hypot(distance, yOff)
+                const beta = Math.PI * slitWidth * sinTheta / wavelength
+                const diffraction = beta === 0 ? 1 : Math.pow(Math.sin(beta) / beta, 2)
+                const alpha = Math.PI * separation * sinTheta / wavelength
+                const interference = Math.pow(Math.cos(alpha), 2)
+                const probabilityDensity = 50 * diffraction * (isBlocked ? 1 : interference)
 
-                wave.array.push(superposition)
-                let mag = Math.abs(superposition)
-                for (let i = 0; i < mag; i++) {
-                    if (Math.random() < mag) {
-                        wave.emissionOrder.push(y)
-                        wave.stacks.push(0)
-                    }
+                wave.array.push(probabilityDensity)
+                const wholeHits = Math.floor(probabilityDensity)
+                const hitCount = wholeHits + (Math.random() < probabilityDensity - wholeHits ? 1 : 0)
+                for (let i = 0; i < hitCount; i++) {
+                    wave.emissionOrder.push(y)
                 }
             }
-            // for (let y = 1; y < height - 1; y += step) {
-            //     // phase = 2 * Math.PI * Math.random()
-            //     const yOff1 = height / 2 - y - separation
-            //     // const hyp1 = Math.sqrt(distance * distance + yOff1 * yOff1)
-            //     // const wave1 = wave.isSlit1 * amplitude * Math.sin(hyp1 / wavelength + phase) / hyp1 / hyp1
-
-            //     const yOff2 = height / 2 - y + separation
-            //     // const hyp2 = Math.sqrt(distance * distance + yOff2 * yOff2)
-            //     // const wave2 = wave.isSlit2 * amplitude * Math.sin(hyp2 / wavelength + phase) / hyp2 / hyp2
-            //     // const superPosition = wave1 + wave2
-
-            //     let B = Math.PI * 10 / wavelength * Math.sin(yOff1 * 0.01)
-            //     if (B === 0) B = 0.001
-            //     const wave1 = Math.sin(B) / B * Math.sin(B) / B
-            //     const superPosition = wave1
-
-            //     wave.array.push(superPosition)
-            //     // console.log(hyp1 === hyp2, hyp1, hyp2, yOff1, yOff2)
-            //     const mag = Math.abs(superPosition)
-            //     for (let i = 0; i < mag; i++) {
-            //         wave.emissionOrder.push(y)
-            //         wave.stacks.push(0)
-            //     }
-            // }
             wave.emissionOrder = shuffle(wave.emissionOrder)
             //render
-            // wave.dWave = `M ${x} -1`
             wave.dMag = `M ${xMag} -1`
             for (let i = 0; i < wave.array.length; i++) {
                 const y = i * step
-                // wave.dWave += `L${x+wave.array[i]} ${y}`
-                wave.dMag += `L${xMag+Math.abs(wave.array[i])} ${y+2}`
+                wave.dMag += `L${xMag + wave.array[i]} ${y + 2}`
             }
-            wave.dMag += `L${xMag}, ${height+1}`
-            // document.getElementById("double-slit-wave-function").setAttribute("d", wave.dWave);
+            wave.dMag += `L${xMag}, ${height + 1}`
             document.getElementById("double-slit-probability-function").setAttribute("d", wave.dMag);
         },
         dWave: "",
@@ -131,7 +80,34 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
         emitIndex: 0,
         emissionOrder: [],
         stacks: [],
-        emit() { //draw an electron dot at a random 
+        flashingMarkers: [],
+        advanceMarkerFlashes() {
+            for (let i = wave.flashingMarkers.length - 1; i >= 0; i--) {
+                const marker = wave.flashingMarkers[i]
+                marker.cyclesRemaining--
+                if (marker.cyclesRemaining <= 0) {
+                    marker.element.style.fill = marker.normalColor
+                    wave.flashingMarkers.splice(i, 1)
+                }
+            }
+        },
+        finishMarkerFlashes() {
+            for (const marker of wave.flashingMarkers) {
+                marker.element.style.fill = marker.normalColor
+            }
+            wave.flashingMarkers = []
+        },
+        flashMarker(element, normalColor, flashColor) {
+            element.style.fill = flashColor || normalColor
+            if (flashColor) {
+                wave.flashingMarkers.push({
+                    element,
+                    normalColor,
+                    cyclesRemaining: markerFlashCycles()
+                })
+            }
+        },
+        emit(flashColor = randomEmitterColor()) { //draw an electron dot at a random
             // const index = Math.floor(Math.random() * wave.emissionOrder.length)
             const y = wave.emissionOrder[wave.emitIndex]
 
@@ -141,7 +117,7 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
             newElement.setAttribute("cy", y + 0.1 * (Math.random() - 0.5));
             newElement.setAttribute("r", "0.6");
             newElement.setAttribute("opacity", "0.4");
-            newElement.style.fill = "#345";
+            wave.flashMarker(newElement, "#345", flashColor);
             newElement.style.strokeWidth = "0px";
             HITS.appendChild(newElement);
             //stacked and organized hits
@@ -150,13 +126,13 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
             newElement2.setAttribute("y", Math.floor(y));
             newElement2.setAttribute("width", "0.7");
             newElement2.setAttribute("height", "0.7");
-            newElement2.style.fill = "#def";
+            wave.flashMarker(newElement2, "#def", flashColor);
             newElement2.style.strokeWidth = "0px";
             HITS.appendChild(newElement2);
 
             wave.stacks[Math.floor(y)]++
             wave.emitIndex++
-            if (wave.emitIndex > wave.emissionOrder.length) wave.emitIndex = 0 //restart cycling through the array if you get to the end
+            if (wave.emitIndex >= wave.emissionOrder.length) wave.emitIndex = 0 //restart cycling through the array if you get to the end
         },
         fire() {
             if (isClearToEmit) {
@@ -165,29 +141,34 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
                 HITS.innerHTML = "";
                 let count = 0;
 
-                const emitAtATime = (document.getElementById("slit-one-checkbox").checked) ? 1 : 15
+                const emitAtATime = (document.getElementById("slit-one-checkbox").checked) ? 1 : 5
                 document.getElementById("double-slit-emitter").style.fill = "#f05"
                 requestAnimationFrame(cycle);
 
                 function cycle() {
+                    wave.advanceMarkerFlashes()
                     if (count < emissionTotal) {
+                        const cycleColor = randomEmitterColor()
                         for (let i = 0; i < emitAtATime; i++) {
                             count++
-                            wave.emit()
+                            wave.emit(cycleColor)
                         }
                         if (isClearToEmit) {
+                            wave.finishMarkerFlashes()
                             document.getElementById("double-slit-emitter").style.fill = "#89a"
                         } else {
-                            document.getElementById("double-slit-emitter").style.fill = "hsl(" + (180 + 190 * Math.random()) + "," + "100%," + "50%)" //"#f05"
+                            document.getElementById("double-slit-emitter").style.fill = cycleColor
                             if (emitAtATime === 1) {
                                 setTimeout(function () {
                                     requestAnimationFrame(cycle);
-                                }, 300);
+                                }, 500);
                             } else {
                                 requestAnimationFrame(cycle);
                             }
 
                         }
+                    } else if (wave.flashingMarkers.length) {
+                        requestAnimationFrame(cycle)
                     } else {
                         isClearToEmit = true;
                         document.getElementById("double-slit-emitter").style.fill = "#89a"
@@ -230,7 +211,7 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_University_Ph
     wave.calculate();
     HITS.innerHTML = "";
     for (let i = 0; i < emissionTotal; i++) {
-        wave.emit()
+        wave.emit(null)
     }
     // requestAnimationFrame(animate);
     // function animate() {

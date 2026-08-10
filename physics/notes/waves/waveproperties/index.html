@@ -841,7 +841,7 @@
 			<svg onload="drawSineWave(this, 75, 25, 18.75, '#39f'); drawSineWave(this,40, 25, 10, '#f37'); centerLine(this)" height='75'></svg>
 			<strong>Question:</strong> Guess which of these combinations of sound waves will sound better to your ears?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>The first pair of frequencies has a harmonious 1:2 ratio.</p>
 				<button id="sound-play-440" style="width: 70px;">440 Hz</button>
 				<button id="sound-play-220" style="width: 70px;">220 Hz</button>
@@ -1133,8 +1133,13 @@
 				</p>
 				<div>gap separation = <input id='slit-width-slider' type="range" step="1" value="100" min="5" max="290" style="width: 165px;"></div>
 				<svg viewBox="100 0 600 600">
+					<defs>
+						<clipPath id="incoming-wave-region" clipPathUnits="userSpaceOnUse">
+							<rect x="-101" y="0" width="411.1" height="600" />
+						</clipPath>
+					</defs>
 					<g stroke="#f08" stroke-width="20" fill="none">
-						<g id="slit-1" transform="translate(300, 200)">
+						<g id="slit-1" transform="translate(307, 200)">
 							<circle r="40" opacity="0.7" />
 							<circle r="100" opacity="0.63" />
 							<circle r="160" opacity="0.56" />
@@ -1148,7 +1153,7 @@
 							<circle r="640" opacity="0.07" />
 							<circle r="700" opacity="0.04" />
 						</g>
-						<g id="slit-2" transform="translate(300, 400)">
+						<g id="slit-2" transform="translate(307, 400)">
 							<circle r="40" opacity="0.7" />
 							<circle r="100" opacity="0.63" />
 							<circle r="160" opacity="0.56" />
@@ -1163,26 +1168,84 @@
 							<circle r="700" opacity="0.04" />
 						</g>
 					</g>
-					<rect x="-101" y="0" width="406" height="600" fill="#fff" stroke="none" />
-					<path d="M60 0 v600 M110 0 v600 M170 0 v600 M230 0 v600 M280 0 v600" stroke="#f08" opacity="1" stroke-width="20" fill="none" />
-					<path id="wall" d="M300 0 v195 M300 205 v190 M300 405 v200" stroke="#000" stroke-width="10" fill="none" />
+					<rect x="-101" y="0" width="411" height="600" fill="#fff" stroke="none" />
+					<g clip-path="url(#incoming-wave-region)">
+						<path id="incoming-wavefronts" d="M80 0 v600 M140 0 v600 M200 0 v600 M260 0 v600" stroke="#f08" opacity="1" stroke-width="20" fill="none" />
+					</g>
+					<path id="wall" d="M300 0 v195 M300 205 v190 M300 405 v200" stroke="#000" stroke-width="20" fill="none" />
 				</svg>
 				<script>
 						(function twoSlit() {
 							const slit1 = document.getElementById("slit-1")
 							const slit2 = document.getElementById("slit-2")
 							const wall = document.getElementById("wall")
+							const incomingWavefronts = document.getElementById("incoming-wavefronts")
+							const details = slit1.closest("details")
+							const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+							const wavefronts = [...slit1.querySelectorAll("circle"), ...slit2.querySelectorAll("circle")]
+								.map(circle => ({
+									circle,
+									startingRadius: Number(circle.getAttribute("r"))
+								}))
+							const waveCycleRadius = 720
+							const minimumWavefrontRadius = 0
+							const maximumWavefrontRadius = waveCycleRadius + minimumWavefrontRadius
+							const wavefrontStrokeWidth = 20
+							const incomingWavefrontHalfWidth = 10
+							const incomingWaveExtension = 20
+							const wallCenterX = 300
+							const outgoingWaveOriginX = 310
+							const outgoingWaveOriginOffset = outgoingWaveOriginX - wallCenterX
+							const slitTransitionOverlap = incomingWavefrontHalfWidth - minimumWavefrontRadius
+							const outerWavefrontRadius = Math.max(...wavefronts.map(wavefront => wavefront.startingRadius))
+							const outgoingWaveOffset = waveCycleRadius - outerWavefrontRadius + slitTransitionOverlap + incomingWaveExtension - outgoingWaveOriginOffset
+
+							let animationFrame = null
+
+							function animateWavefronts(time) {
+								const travel = (time * 0.04) % 60
+								incomingWavefronts.setAttribute("transform", `translate(${travel.toFixed(2)} 0)`)
+
+								for (const wavefront of wavefronts) {
+									const wrappedRadius = (wavefront.startingRadius + outgoingWaveOffset + travel) % waveCycleRadius
+									const frontRadius = minimumWavefrontRadius + wrappedRadius
+									const strokeWidth = Math.min(wavefrontStrokeWidth, frontRadius - minimumWavefrontRadius)
+									const radius = frontRadius - strokeWidth / 2
+									const opacity = frontRadius < 40
+										? 1 - 0.3 * (frontRadius - minimumWavefrontRadius) / (40 - minimumWavefrontRadius)
+										: 0.7 * Math.pow((maximumWavefrontRadius - frontRadius) / (maximumWavefrontRadius - 40), 1.15)
+
+									wavefront.circle.setAttribute("r", radius.toFixed(2))
+									wavefront.circle.setAttribute("stroke-width", strokeWidth.toFixed(2))
+									wavefront.circle.setAttribute("opacity", opacity.toFixed(3))
+								}
+
+								animationFrame = requestAnimationFrame(animateWavefronts)
+							}
+
+							function updateWaveAnimation() {
+								if (details.open && !reducedMotion.matches && animationFrame === null) {
+									animationFrame = requestAnimationFrame(animateWavefronts)
+								} else if ((!details.open || reducedMotion.matches) && animationFrame !== null) {
+									cancelAnimationFrame(animationFrame)
+									animationFrame = null
+								}
+							}
+
+							details.addEventListener("toggle", updateWaveAnimation)
+							reducedMotion.addEventListener("change", updateWaveAnimation)
+							updateWaveAnimation()
 
 							document.getElementById("slit-width-slider").addEventListener("input", () => {
 								slitSeparation = Number(document.getElementById("slit-width-slider").value);
 								const slit1Vertical = 300 - slitSeparation
 								const slit2Vertical = 300 + slitSeparation
 
-								slit1.setAttribute("transform", `translate(300, ${slit1Vertical})`)
-								slit2.setAttribute("transform", `translate(300, ${slit2Vertical})`)
-								wall.setAttribute("d", `M300 0 v${slit1Vertical - 5} M300 ${slit1Vertical + 5}
-													v${Math.abs(slitSeparation * 2 - 10)}
-													M300 ${slit2Vertical - 5} M300 ${slit2Vertical + 5} v400`)
+								slit1.setAttribute("transform", `translate(${outgoingWaveOriginX}, ${slit1Vertical})`)
+								slit2.setAttribute("transform", `translate(${outgoingWaveOriginX}, ${slit2Vertical})`)
+								wall.setAttribute("d", `M${wallCenterX} 0 v${slit1Vertical - 5} M${wallCenterX} ${slit1Vertical + 5}
+										v${Math.abs(slitSeparation * 2 - 10)}
+										M${wallCenterX} ${slit2Vertical - 5} M${wallCenterX} ${slit2Vertical + 5} v400`)
 							});
 						})()
 				</script>
@@ -1533,14 +1596,14 @@
 	</article>
 
 	<article>
-		<h1 class='underlined'>More Practice</h1>
+		<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/waveproperties-practice-questions.pdf">printout.pdf</a></h1>
 		<p>
-			Interference practice is mostly about recognizing patterns, not reaching for a formula. Ask what waves are overlapping, whether their displacements point the same way or opposite ways, and whether a boundary or source motion is changing the pattern. A good explanation should use the vocabulary clearly enough that someone could sketch the situation from your words.
+			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
 		</p>
 
 		<div class='example'><strong>Question:</strong> Two small pulses travel toward each other on the same rope. For a moment they occupy the same section of rope, and then each pulse continues on. Why is this different from two carts colliding on a track?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>Waves can be in superposition. While the pulses overlap, the rope's observed displacement is the sum of the displacements from both pulses.</p>
 				<p>After the overlap, the pulses continue through each other. They do not bounce away like carts because the waves are not separate objects made of matter; they are disturbances moving through the medium.</p>
 			</details>
@@ -1548,7 +1611,7 @@
 
 		<div class='example'><strong>Question:</strong> At a crowded surf spot, an incoming ocean wave reflects from a wall and overlaps with the next incoming wave. In one place the water suddenly rises higher than either wave by itself. What kind of interference is happening there?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>This is constructive interference.</p>
 				<p>The two waves have displacements in the same direction at that location, so their amplitudes add. In water, that can make a higher crest or a deeper trough than either individual wave would make alone.</p>
 			</details>
@@ -1556,7 +1619,7 @@
 
 		<div class='example'><strong>Question:</strong> Noise-canceling headphones play a sound wave that is carefully timed against the outside noise. What has to be true about the headphone wave near your ear for the outside sound to get quieter?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>The headphone wave needs to be out of phase with the outside sound at your ear.</p>
 				<p>When a compression from the outside sound lines up with an opposite displacement from the headphone speaker, the waves add destructively. The superposition has a smaller amplitude, so the sound is quieter.</p>
 			</details>
@@ -1564,7 +1627,7 @@
 
 		<div class='example'><strong>Question:</strong> A piano plays several notes at the same time. Your ear receives one combined pressure wave, but you can still hear separate pitches inside the chord. How does this connect to superposition?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>The air near your ear is in superposition from many sound waves at once. The observed pressure pattern is the sum of the different notes.</p>
 				<p>Your ear and brain can respond to the different frequencies inside that combined waveform. That is why a chord can be one physical wave pattern in the air but still be heard as multiple notes.</p>
 			</details>
@@ -1572,7 +1635,7 @@
 
 		<div class='example'><strong>Question:</strong> Two musicians are tuning together. Their notes are close but not exactly the same, and they hear the loudness slowly pulse louder and softer. What wave pattern are they hearing, and what should happen as the tuning improves?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>They are hearing beats. Beats happen when two similar frequencies interfere and the superposition alternates between more constructive and more destructive interference.</p>
 				<p>As the notes get closer to the same frequency, the beats slow down. When the notes match, the slow pulsing disappears.</p>
 			</details>
@@ -1580,7 +1643,7 @@
 
 		<div class='example'><strong>Question:</strong> You can hear someone talking around a hallway corner even when you cannot see them. Which wave property makes this possible, and why does it work better for sound than for a narrow beam of light?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>This is diffraction. Waves spread after passing an edge or opening, so some sound bends into the region around the corner.</p>
 				<p>Sound has wavelengths that are large enough for everyday openings and corners to cause noticeable spreading. Visible light has much smaller wavelengths, so it usually does not spread around hallway corners in a way you can easily notice.</p>
 			</details>
@@ -1588,7 +1651,7 @@
 
 		<div class='example'><strong>Question:</strong> In a double-slit experiment, two openings act like two wave sources. Why does the screen show alternating bright and dark bands instead of just two bright spots behind the openings?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>Each opening sends out waves that spread by diffraction. Those waves overlap on the screen.</p>
 				<p>Bright bands happen where the waves arrive in phase and interfere constructively. Dark bands happen where the waves arrive out of phase and interfere destructively.</p>
 			</details>
@@ -1596,7 +1659,7 @@
 
 		<div class='example'><strong>Question:</strong> An ambulance siren sounds higher pitched as it drives toward you and lower pitched after it passes you. What is changing at your ear, and what is the name of this effect?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>This is the Doppler effect.</p>
 				<p>When the ambulance moves toward you, wave crests reach you more often, so the frequency you hear is higher and the wavelength is shorter. When it moves away, crests reach you less often, so the frequency is lower and the wavelength is longer.</p>
 			</details>
@@ -1604,7 +1667,7 @@
 
 		<div class='example'><strong>Question:</strong> A distant galaxy has spectral lines shifted toward the red side of the spectrum. What does that redshift suggest about the galaxy's motion relative to us?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>Redshift suggests the galaxy is moving away from us.</p>
 				<p>For light, a longer observed wavelength is described as redshift. The page connects this idea to Hubble's observation that most galaxies are redshifted, which is evidence for an expanding universe.</p>
 			</details>
@@ -1612,7 +1675,7 @@
 
 		<div class='example'><strong>Question:</strong> A child on a swing moves much higher when pushed at just the right time, even if each push is gentle. Why is this an example of resonance?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>The swing has a natural frequency. If the pushes match that timing, each push adds energy in a way that increases the amplitude of the motion.</p>
 				<p>That matching of the driving frequency to the natural frequency is resonance. The size of the oscillation grows because the pushes keep reinforcing the motion instead of fighting it.</p>
 			</details>
@@ -1620,9 +1683,40 @@
 
 		<div class='example'><strong>Question:</strong> A guitar string is fixed at both ends. When it is played at certain frequencies, some points on the string barely move while other points move a lot. What are those two kinds of points called, and why do they appear?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>The points that barely move are nodes. The points that move the most are antinodes.</p>
 				<p>They appear because waves reflect from the fixed ends and interfere with themselves. At the resonant frequencies, the superposition forms a standing wave instead of a wave pattern that simply travels down the string.</p>
+			</details>
+		</div>
+
+		<div class='example'>
+			<p><strong>Reading (10 minutes):</strong> Read <a href="why-do-ducklings-swim-in-a-line.pdf">Why Do Ducklings Swim in a Line Behind Their Mother?</a> from Science Journal for Kids. Then answer these questions.</p>
+
+			Figure 1 uses CDR to describe how the formation changes wave drag. What does a positive CDR mean, and what is special about a CDR of 100% or more?
+			<details>
+				<summary>answer</summary>
+				<p>A positive CDR means the duckling experiences less wave drag than it would while swimming alone. At 100% or more, the wave drag has been reduced enough that the resulting wave force propels the duckling forward.</p>
+			</details>
+			<br>
+
+			The article says useful positions occur only at specific distances and when the ducklings match their mother's speed. Explain why both conditions matter to the interference pattern.
+			<details>
+				<summary>answer</summary>
+				<p>The spacing determines where each duckling sits within the combined waves. At the useful distance, the front of the duckling stays in a trough that produces a forward push. Matching the mother's speed keeps that position from drifting. With the wrong spacing or speed, the duckling moves out of the helpful part of the interference pattern and loses the boost.</p>
+			</details>
+			<br>
+
+			How is wave riding different from wave passing, and how does each one help the line of ducklings?
+			<details>
+				<summary>answer</summary>
+				<p>During wave riding, interference between the mother's wave and a duckling's wave creates a force that propels the first ducklings forward. During wave passing, each duckling gathers wave energy and concentrates it behind itself, making that energy available to the next duckling. Wave passing helps the benefit continue even after the mother's own wave becomes smaller farther down the line.</p>
+			</details>
+			<br>
+
+			The authors suggest that cargo boats might save energy by traveling in a line. What evidence from the model supports this idea, and what additional evidence would you want before applying it to real ships?
+			<details>
+				<summary>answer</summary>
+				<p>The model predicts reduced wave drag for every duckling behind the mother, so it gives a physical reason that a line of boats might require less energy. However, it does not prove that full-size ships will receive the same benefit. Tests with realistic hull shapes, ship spacing, speeds, waves, and fuel use would be needed before reaching that conclusion.</p>
 			</details>
 		</div>
 	</article>

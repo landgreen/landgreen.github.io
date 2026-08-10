@@ -35,245 +35,60 @@
     <p>
       In the early 1900s physicists performed experiments that probed reality at the nanometer scale.
       They found that matter was made of particles they named atoms.
-      Inside each atom they found the <a href="https://www.youtube.com/watch?v=ehHoOYqAT_U">subatomic particles</a>: electrons, protons, and neutrons.
+      Inside each atom they found the <a href="https://www.youtube.com/watch?v=ehHoOYqAT_U">subatomic</a> <a href="https://www.youtube.com/watch?v=Unl1jXFnzgo">particles</a>: electrons, protons, and neutrons.
       They also found that light was made of particles that we now call photons.
       Strangely they found that all particles produced wave-like <a href="http://toutestquantique.fr/en/duality/">interference patterns</a>, not just light.
       <!-- Light waves are too big to resolve objects that small. -->
       <!-- Instead, physicists <a href="https://phet.colorado.edu/sims/html/rutherford-scattering/latest/rutherford-scattering_en.html">fired</a> subatomic particles, like electrons, at each other. -->
       <!-- They were also surprised to discover that particles could produce wave-like <a href="https://en.wikipedia.org/wiki/Double-slit_experiment">interference patterns</a>. -->
     </p>
-    <br>
-    <p>
-      The <a href="https://www.youtube.com/watch?v=p-MNSLsjjdo">double slit</a> <a href="https://www.youtube.com/watch?v=uOrqGVr9CeY">experiment</a> is a good example of wave interference.
-      A wave passing through a slit spreads out. It <a href="../waveproperties/index.html#diffraction">diffracts</a>.
-    </p>
-    <details>
-      <summary>single slit wave diffraction</summary>
-      <svg viewBox="100 0 600 400">
-        <g transform="translate(300, 200)" fill="none" stroke-width="20" stroke="#f08">
-          <circle r="40" opacity="0.8" />
-          <circle r="100" opacity="0.7" />
-          <circle r="160" opacity="0.6" />
-          <circle r="220" opacity="0.5" />
-          <circle r="280" opacity="0.41" />
-          <circle r="340" opacity="0.33" />
-          <!-- <circle r="400" opacity="0.25" /> -->
-        </g>
-        <g fill="none">
-          <rect x="-101" y="0" width="400" height="400" fill="#fff" stroke="none" />
-          <path d="M60 0 v400 M110 0 v400 M170 0 v400 M230 0 v400 M280 0 v400" stroke="#f08" opacity="1" stroke-width="20" />
-          <path d="M300 0 v195 M300 205 v200" stroke="#000" stroke-width="10" />
-        </g>
-      </svg>
+    <details class="derive">
+      <summary>wave and particle models of reality</summary>
+      <p>
+        In physics a <strong>model</strong> is a mathematical simplification of reality.
+      </p>
+      <p>
+        <strong>Particles</strong> model reality as a point-like object with no internal structure, just properties like position, velocity, mass, and momentum.
+        When particles collide they bounce off each other. Imagine a sports ball.
+      </p>
+      <p>
+        <strong>Wave</strong> model reality in a less intuitive way.
+        They don't exist at a point. They spread out in every direction at a constant speed.
+        They can overlap with each other in superposition to form interference patterns.
+        Imagine sound waves.
+      </p>
     </details>
-    <p>
-      2 slits produce 2 separate wave diffractions.
-      Once both waves get to their target, they have traveled different distances so they have different phases.
-      When both waves are in the same phase they add constructively.
-      When both waves are half a cycle out of phase they add destructively.
-      The phase differences lead to an alternating constructive and destructive interference pattern.
-    </p>
-    <details>
-      <summary>double slit wave interference</summary>
-      <div>gap separation = <input id='slit-width-slider' type="range" step="1" value="100" min="5" max="290" style="width: 165px;"></div>
-      <svg viewBox="100 0 600 600">
-        <g stroke="#f08" stroke-width="20" fill="none">
-          <g id="slit-1" transform="translate(300, 200)">
-            <circle r="40" opacity="0.7" />
-            <circle r="100" opacity="0.63" />
-            <circle r="160" opacity="0.56" />
-            <circle r="220" opacity="0.49" />
-            <circle r="280" opacity="0.42" />
-            <circle r="340" opacity="0.35" />
-            <circle r="400" opacity="0.28" />
-            <circle r="460" opacity="0.21" />
-            <circle r="520" opacity="0.15" />
-            <circle r="580" opacity="0.1" />
-            <circle r="640" opacity="0.07" />
-            <circle r="700" opacity="0.04" />
-          </g>
-          <g id="slit-2" transform="translate(300, 400)">
-            <circle r="40" opacity="0.7" />
-            <circle r="100" opacity="0.63" />
-            <circle r="160" opacity="0.56" />
-            <circle r="220" opacity="0.49" />
-            <circle r="280" opacity="0.42" />
-            <circle r="340" opacity="0.35" />
-            <circle r="400" opacity="0.28" />
-            <circle r="460" opacity="0.21" />
-            <circle r="520" opacity="0.15" />
-            <circle r="580" opacity="0.1" />
-            <circle r="640" opacity="0.07" />
-            <circle r="700" opacity="0.04" />
-          </g>
-        </g>
-        <rect x="-101" y="0" width="406" height="600" fill="#fff" stroke="none" />
-        <path d="M60 0 v600 M110 0 v600 M170 0 v600 M230 0 v600 M280 0 v600" stroke="#f08" opacity="1" stroke-width="20" fill="none" />
-        <path id="wall" d="M300 0 v195 M300 205 v190 M300 405 v200" stroke="#000" stroke-width="10" fill="none" />
-      </svg>
-      <script>
-        (function twoSlit() {
-          const slit1 = document.getElementById("slit-1")
-          const slit2 = document.getElementById("slit-2")
-          const wall = document.getElementById("wall")
-
-          document.getElementById("slit-width-slider").addEventListener("input", () => {
-            slitSeparation = Number(document.getElementById("slit-width-slider").value);
-            const slit1Vertical = 300 - slitSeparation
-            const slit2Vertical = 300 + slitSeparation
-
-            slit1.setAttribute("transform", `translate(300, ${slit1Vertical})`)
-            slit2.setAttribute("transform", `translate(300, ${slit2Vertical})`)
-            wall.setAttribute("d", `M300 0 v${slit1Vertical - 5} M300 ${slit1Vertical + 5}
-                        v${Math.abs(slitSeparation * 2 - 10)}
-                        M300 ${slit2Vertical - 5} M300 ${slit2Vertical + 5} v400`)
-          });
-        })()
-      </script>
+    <br>
+    <details class="derive">
+      <summary>waves or particles as fundamental</summary>
+      <!-- <summary>Is matter fundamentally waves or particles or both?</summary> -->
+      <p>
+        When I studied physics I was originally taught the mystery of wave particle duality.
+        Things like electrons were sometimes wave-like and sometimes particle-like according to rules that seems to bend reality.
+        Wave-particle duality is nice because you mostly imagine simple particles and you only think about waves in special cases.
+      </p>
+      <p>
+        These days there is an growing consensus among physicists that fundamentally stuff is just waves, not particles.
+        The various particle-like properties have been found to naturally emerge out of the math of waves.
+        We don't need special rules anymore to explain particle-like behavior.
+      </p>
+      <p>
+        How particle-like behavior emerges from quantum waves is explained in detail in advanced physics topics like quantum field theory, decoherence, and the many-worlds interpretation.
+        Those are some <a href="#wave-particle-duality">big ideas</a>, and they take time to fully digest.
+      </p>
+      <p>
+        So the big picture is that everything is just waves, but particles are a helpful simplification.
+        (in my opinion)
+      </p>
     </details>
-    <p>
-      In 1801, Thomas Young produced a double slit interference <a href="https://www.youtube.com/watch?v=G4_4vcNqc-k">pattern</a> with beams of light.
-      In 1909, the <a href="https://pubs.aip.org/aapt/ajp/article/84/9/671/1057864/Video-recording-true-single-photon-double-slit">experiment</a> was repeated with a single photon at a time.
-      After passing through the double slit, each photon was measured at a single location,
-      but the sum of repeated experiments produced a wave interference pattern.
-    </p>
-  </article>
-  <!-- <g dominant-baseline="central" font-size="8" font-family="Times New Roman" stroke="none" fill="#abaeb3">
-    <text x="8.5" y="75" fill="#fff">e⁻</text>
-    <text x="2" y="87">electron</text>
-    <text x="2" y="95">emitter</text>
-    <text x="72" y="87">double</text>
-    <text x="72" y="95">slit</text>
-    <text x="163" y="95">measurement</text>
-    <text x="250" y="95">probability</text>
-    <text x="340" y="87">wave</text>
-    <text x="340" y="95">function</text>
-    <text x="253" y="4">|Ψ(x)|²</text>
-    <text x="343" y="4">Ψ(x)</text>
-  </g> -->
-  <svg viewBox="0 0 400 150" id="double-slit" style="background-color: #345;">
-    <g fill="#234" stroke="#345" stroke-width="0">
-      <rect width="140.5" height="148" x="1" y="1" rx="0" ry="0" fill="#f2f6f9" stroke="#345" stroke-width="1.5" />
-      <rect id="double-slit-emitter" width="2.5" height="8" x="15" y="71" rx="0.5" ry="0.5" fill="#89a" />
-      <rect width="12" height="10" x="4" y="70" rx="1" ry="1" />
-      <path id="slit" d="M40 1 v70.5 m0 0.5 v5 m0 0.5 v70.5" stroke-width="1.5" />
-      <path id="double-slit-probability-function" d="M 290 0 v100" stroke-width="0" fill="#abc" stroke-linecap="round" stroke-linejoin="round" />
-    </g>
-    <g id="double-slit-hits"></g>
-  </svg>
-  <article>
-    <ul class="listing" style="background-color: #fff; border-radius: 15px; padding:10px; border: #345 solid 4px;">
-      <li>
-        <div>
-          &nbsp; &nbsp; &nbsp; &nbsp; <button id="double-slit-button" style="margin:0; background-color: #eee; float: 0; font-size: 1.5em;">emit</button>
-          <br>
-          <label for="slit-one-checkbox">
-            <input type="checkbox" id="slit-one-checkbox" name="slit-one-checkbox" style="width:14px;">
-            <span>emit one at a time</span>
-          </label>
-          <br>
-          <label for="slit-blocked-checkbox">
-            <input type="checkbox" id="slit-blocked-checkbox" name="slit-blocked-checkbox" style="width:14px;">
-            <span>slit blocked</span>
-          </label>
-        </div>
-      </li>
-      <li>
-        <div>
-          wavelength = <input id='slit-wavelength' type="number" value='0.201' min="0" step="0.0001" style="width:100px;">
-          <br>slit separation = <input id='slit-separation' type="number" value='5' min="0" step="0.001" style="width:80px;">
-          <br>slit width = <input id='slit-slitWidth' type="number" value='0.5' min="0" step="0.01" style="width:117px;">
-          <!-- <br>target distance = <input id='slit-distance' type="number" value='100' min="0" step="1" style="width:100px;"> -->
-        </div>
-      </li>
-    </ul>
-    <p>
-      The <a href="https://physics.weber.edu/schroeder/software/QuantumScattering2D.html">double slit</a> experiment isn't limited to photons.
-      In 1927, the experiment was repeated with one electron at a time.
-      In 2019, an interference pattern was produced by a 2000 atom molecule.
-    </p>
-    <p>
-      To produce a wave interference pattern, particles must be perfectly isolated from their environment.
-      That's why we still can't produce a double slit interference pattern for everyday sized objects, like cats.
-      It's just too hard to isolate large objects long enough to run the experiment.
-      Also, you might notice if you play with the simulation, the size of the slit needs to be similar to the size of the wave, and larger objects have smaller wavelength.
-    </p>
-    <div class="example-small">
-      <strong>Simulation:</strong> What happens when one slit is blocked? Why?
-      <details>
-        <summary>answer</summary>
-        <p>
-          The interference pattern goes away, because the waves are all originating from the same point, so they have
-          the same phase.
-        </p>
-        <p>
-          Although, there is still a diffraction pattern related to the width of the slit.
-        </p>
-      </details>
-    </div>
-    <div class="example-small">
-      <strong>Simulation:</strong> Even when one particle at a time is fired, the distribution of hits produces an wave-like interference pattern.
-      What could the single particle be interfering with? What's going on?
-      <details>
-        <summary>answer</summary>
-        <p>
-          A single particle goes through both slits.
-          It interferes with itself. Probably...
-        </p>
-        <p>
-          This experiment shows that we can't think of particles as simple balls.
-          Even a single particle has wave-like properties.
-          Explaining why is still unsolved, but there are a few options.
-          At the bottom of this web page I go into more detail on the various interpretations of quantum mechanics.
-          Each interpretation has a wildly different explanation of the double slit experiment.
-        </p>
-      </details>
-    </div>
-    <br>
-    <br>
-    <!-- <details class="derive">
-      <summary>the particle model vs. the wave model</summary>
-      <p>
-        Particles are one of the basic models used by physics to simplify approximations.
-        Particles have a position in space and time, but they don't have any internal structure.
-        They have a mass and velocity, and they can collide like <a href="../../motion/motion/">billiard balls</a>.
-      </p>
-      <p>
-        The particle model approximates phenomena like:
-        collisions, temperature, pressure, friction, electricity, diffusion, and chemical reactions.
-      </p>
-      <br>
-      <p>
-        The wave model approximates how energy spreads through a medium.
-        For example, a sound wave propagates through air when atoms collide.
-        The wave model also applies to unexpected media, like traffic waves for cars.
-      </p>
-      <p>
-        Waves are used to approximate phenomena like:
-        color, diffraction, interference patterns, doppler shifting, standing waves, reflection, and refraction.
-      </p>
-      <br>
-      <p>
-        <li><strong>Particles</strong> are located at a single position.</li>
-        <li><strong>Waves</strong> are spread out with negative and positive amplitudes.</li>
-        <br>
-        <li><strong>Particles</strong> move in a single direction.</li>
-        <li><strong>Waves</strong> propagate in all possible directions.</li>
-        <br>
-        <li><strong>Particles</strong> bounce off each other.</li>
-        <li><strong>Waves</strong> don't interact with each other, but when they are in superposition they interfere constructively and destructively.</li>
-      </p>
-    </details> -->
 
     <p>
-      The overlap between the wave and particle models at the nanometer scale led to many more exciting experiments.
-      Over time, physicists developed and refined a new model, called <strong>quantum mechanics</strong>.
+      The overlap between the wave and particle models at the nanometer scale led to some exciting experiments.
+      Based on these results, physicists developed and refined a new model, called <strong>quantum mechanics</strong>.
       Predictions based on quantum mechanics can only give
       probabilities, but when applied to repeated experiments they are very accurate.
     </p>
-    <!-- <p>
-      Quantum mechanics is could be described as What makes these probabilities unusual is that they can be both negative and positive.
-    </p> -->
+
 
     <h2 class='underlined'>Photon Energy</h2>
     <p>
@@ -419,7 +234,7 @@
           </tr>
           <tr>
             <td>giga</td>
-            <td>G</td>
+            <td>G,B</td>
             <td style="text-align: right;"> 1 000 000 000 </td>
             <td></td>
             <td>10<sup>9</sup> </td>
@@ -838,7 +653,7 @@
           </tr>
           <tr>
             <td>giga</td>
-            <td>G</td>
+            <td>G,B</td>
             <td style="text-align: right;"> 1 000 000 000 </td>
             <td></td>
             <td>10<sup>9</sup> </td>
@@ -969,7 +784,7 @@
     <p>
       Radiation from particles with very high energy per particle can harm living things in a more subtle way.
       High energy particles can ionize atoms, breaking chemical bonds.
-      This can lead to cell death and an increased risk of cancer.
+      This can lead to cell death and an increased <a href="https://www.youtube.com/watch?v=Xe-83tBcxhs">risk</a> of cancer.
     </p>
     <p>
       <strong>Non-ionizing radiation is generally below 1.60 × 10<sup>-18</sup> J</strong>&nbsp;(10 eV).
@@ -1150,7 +965,7 @@
     <h2 class='underlined' id="emission">Emission and Absorption</h2>
     <p>
       Each electron in an <a href="https://www.youtube.com/watch?v=W2Xb2GFK2yc">atom</a> can only have an energy that
-      exactly matches an atomic orbital.
+      exactly <a href="https://www.youtube.com/watch?v=bChNhy1prD4">matches</a> an atomic orbital.
     </p>
     <details id="atomic-orbitals" class="derive">
       <summary>quantum mechanics and atomic orbitals</summary>
@@ -2095,6 +1910,411 @@
       </details>
     </div>
 
+    <h2 class='underlined' id="photo-electric">The Double Slit Experiment</h2>
+    <p>
+      The <a href="https://www.youtube.com/watch?v=p-MNSLsjjdo">double slit</a> <a href="https://www.youtube.com/watch?v=uOrqGVr9CeY">experiment</a> is a good example of wave interference.
+      A wave passing through a slit spreads out. It <a href="../waveproperties/index.html#diffraction">diffracts</a>.
+      This pattern had been seen in water waves, but in 1801, Thomas Young produced a double slit interference <a href="https://www.youtube.com/watch?v=G4_4vcNqc-k">pattern</a> with beams of light.
+      At the time this was interpreted as evidence that light was a wave...
+    </p>
+    <details>
+      <summary>single slit wave diffraction</summary>
+      <svg viewBox="100 0 600 400">
+        <g transform="translate(300, 200)" fill="none" stroke-width="20" stroke="#f08">
+          <circle r="40" opacity="0.8" />
+          <circle r="100" opacity="0.7" />
+          <circle r="160" opacity="0.6" />
+          <circle r="220" opacity="0.5" />
+          <circle r="280" opacity="0.41" />
+          <circle r="340" opacity="0.33" />
+          <!-- <circle r="400" opacity="0.25" /> -->
+        </g>
+        <g fill="none">
+          <rect x="-101" y="0" width="400" height="400" fill="#fff" stroke="none" />
+          <path d="M60 0 v400 M110 0 v400 M170 0 v400 M230 0 v400 M280 0 v400" stroke="#f08" opacity="1" stroke-width="20" />
+          <path d="M300 0 v195 M300 205 v200" stroke="#000" stroke-width="10" />
+        </g>
+      </svg>
+    </details>
+    <details>
+      <summary>double slit wave interference</summary>
+      <p>
+        2 slits produce 2 separate wave diffractions.
+        Once both waves get to their target, they have traveled different distances so they have different phases.
+        When both waves are in the same phase they add constructively.
+        When both waves are half a cycle out of phase they add destructively.
+        The phase differences lead to an alternating constructive and destructive interference pattern.
+      </p>
+      <!-- <p>
+        The classic, sharp double-slit interference pattern is easiest to see when the light source is <strong>monochromatic</strong> (a single frequency) and <strong>coherent</strong>. Standard incandescent bulbs, LEDs, and sunlight are made of many overlapping frequencies. Because of this mix of colors, their interference patterns overlap and blur together, making the distinct light and dark bands almost impossible to see.
+      </p>
+      <p>
+        Fluorescent tubes do produce distinct, individual frequencies, but they still struggle to create a clear pattern because the light they emit is not perfectly coherent. Coherent means that all the light waves "sync up" and go up and down together in a constant relationship. If the waves are emitted randomly, the interference pattern washes out.
+      </p>
+      <p>
+        Today, the best source for single-frequency, perfectly coherent light is a <strong>laser</strong>. (Note: While ocean waves are not light, they are an excellent mechanical example of how coherent waves interact and form interference patterns in water!)
+      </p> -->
+      <!-- <p>
+        This double slit pattern only occurs when the source is a single frequency coherent wave.
+        Sun light is made of many overlapping frequencies, so it doesn't work.
+        The same is true of light sources like LED or incandescent light bulbs.
+        Florescent tubes do produce a few single frequencies but it still doesn't work because the waves aren't coherent.
+        Coherent means all the waves go up and down together.
+      </p>
+      <p>
+        Ocean waves and lasers are good sources of single frequency coherent waves.
+      </p> -->
+      <svg viewBox="100 0 600 600">
+        <defs>
+          <clipPath id="incoming-wave-region" clipPathUnits="userSpaceOnUse">
+            <rect x="-101" y="0" width="411.1" height="600" />
+          </clipPath>
+          <linearGradient id="interference-amplitude-gradient" gradientUnits="userSpaceOnUse" x1="691" y1="0" x2="691" y2="600"></linearGradient>
+        </defs>
+        <g stroke="#f08" stroke-width="20" fill="none">
+          <g id="slit-1" transform="translate(307, 185)">
+            <circle r="40" opacity="0.7" />
+            <circle r="100" opacity="0.63" />
+            <circle r="160" opacity="0.56" />
+            <circle r="220" opacity="0.49" />
+            <circle r="280" opacity="0.42" />
+            <circle r="340" opacity="0.35" />
+            <circle r="400" opacity="0.28" />
+            <circle r="460" opacity="0.21" />
+            <circle r="520" opacity="0.15" />
+            <circle r="580" opacity="0.1" />
+            <circle r="640" opacity="0.07" />
+            <circle r="700" opacity="0.04" />
+          </g>
+          <g id="slit-2" transform="translate(307, 415)">
+            <circle r="40" opacity="0.7" />
+            <circle r="100" opacity="0.63" />
+            <circle r="160" opacity="0.56" />
+            <circle r="220" opacity="0.49" />
+            <circle r="280" opacity="0.42" />
+            <circle r="340" opacity="0.35" />
+            <circle r="400" opacity="0.28" />
+            <circle r="460" opacity="0.21" />
+            <circle r="520" opacity="0.15" />
+            <circle r="580" opacity="0.1" />
+            <circle r="640" opacity="0.07" />
+            <circle r="700" opacity="0.04" />
+          </g>
+        </g>
+        <rect x="-101" y="0" width="411" height="600" fill="#fff" stroke="none" />
+        <g clip-path="url(#incoming-wave-region)">
+          <path id="incoming-wavefronts" d="M80 0 v600 M140 0 v600 M200 0 v600 M260 0 v600" stroke="#f08" opacity="1" stroke-width="20" fill="none" />
+        </g>
+        <path id="wall" d="M300 0 v180 M300 190 v220 M300 420 v180" stroke="#000" stroke-width="20" fill="none" />
+        <g id="wave-amplitude-display">
+          <line x1="697" y1="0" x2="697" y2="600" stroke="#fff" stroke-width="28" />
+          <line id="wave-amplitude-indicator" x1="691" y1="0" x2="691" y2="600" stroke="url(#interference-amplitude-gradient)" stroke-width="18">
+            <title>Relative wave amplitude at the edge of the diagram</title>
+          </line>
+        </g>
+      </svg>
+      <div class="center">separation = <input id='slit-width-slider' type="range" step="1" value="115" min="5" max="290" style="width: 165px;"> &nbsp; &nbsp; &nbsp; &nbsp; <label><input id="amplitude-display-toggle" type="checkbox" style="width:14px;">show interference</label></div>
+
+      <br>
+      <strong>Question:</strong> How many constructive interference peaks are on the far right edge of this diagram?
+      <details>
+        <summary>answer</summary>
+        <p id="constructive-peak-answer">
+          There are 5 constructive interference peaks.
+        </p>
+        <p>
+          In the constructive interference section both waves are high and low at the same time.
+          In the destructive regions the waves are out of phase by half a wavelength so that one wave is up while the other wave is down.
+        </p>
+      </details>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <script>
+        (function twoSlit() {
+          const slit1 = document.getElementById("slit-1")
+          const slit2 = document.getElementById("slit-2")
+          const wall = document.getElementById("wall")
+          const incomingWavefronts = document.getElementById("incoming-wavefronts")
+          const amplitudeGradient = document.getElementById("interference-amplitude-gradient")
+          const amplitudeDisplay = document.getElementById("wave-amplitude-display")
+          const amplitudeDisplayToggle = document.getElementById("amplitude-display-toggle")
+          const constructivePeakAnswer = document.getElementById("constructive-peak-answer")
+          const details = slit1.closest("details")
+          const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+          const wavefronts = [...slit1.querySelectorAll("circle"), ...slit2.querySelectorAll("circle")]
+            .map(circle => ({
+              circle,
+              startingRadius: Number(circle.getAttribute("r"))
+            }))
+          const waveCycleRadius = 720
+          const minimumWavefrontRadius = 0
+          const maximumWavefrontRadius = waveCycleRadius + minimumWavefrontRadius
+          const wavefrontStrokeWidth = 20
+          const incomingWavefrontHalfWidth = 10
+          const incomingWaveExtension = 20
+          const wallCenterX = 300
+          const outgoingWaveOriginX = 310
+          const amplitudeIndicatorX = 691
+          const diagramHeight = 600
+          const wavelength = 60
+          const outgoingWaveOriginOffset = outgoingWaveOriginX - wallCenterX
+          const slitTransitionOverlap = incomingWavefrontHalfWidth - minimumWavefrontRadius
+          const outerWavefrontRadius = Math.max(...wavefronts.map(wavefront => wavefront.startingRadius))
+          const outgoingWaveOffset = waveCycleRadius - outerWavefrontRadius + slitTransitionOverlap + incomingWaveExtension - outgoingWaveOriginOffset
+
+          let animationFrame = null
+
+          function updateAmplitudeIndicator(slit1Vertical, slit2Vertical) {
+            amplitudeGradient.replaceChildren()
+            const centerY = (slit1Vertical + slit2Vertical) / 2
+            const centerDistance = Math.hypot(amplitudeIndicatorX - outgoingWaveOriginX, centerY - slit1Vertical)
+            const centerIntensity = 4 / centerDistance
+
+            for (let y = 0; y <= diagramHeight; y += 3) {
+              const distanceFromSlit1 = Math.hypot(amplitudeIndicatorX - outgoingWaveOriginX, y - slit1Vertical)
+              const distanceFromSlit2 = Math.hypot(amplitudeIndicatorX - outgoingWaveOriginX, y - slit2Vertical)
+              const pathDifference = distanceFromSlit1 - distanceFromSlit2
+              const amplitudeFromSlit1 = 1 / Math.sqrt(distanceFromSlit1)
+              const amplitudeFromSlit2 = 1 / Math.sqrt(distanceFromSlit2)
+              const phaseDifference = 2 * Math.PI * pathDifference / wavelength
+              const intensity = amplitudeFromSlit1 ** 2 + amplitudeFromSlit2 ** 2
+                + 2 * amplitudeFromSlit1 * amplitudeFromSlit2 * Math.cos(phaseDifference)
+              const relativeIntensity = Math.max(0, Math.min(1, intensity / centerIntensity))
+              const interferenceOrder = Math.abs(pathDifference / wavelength)
+              const successivePeakFalloff = 0.8 ** interferenceOrder
+              const displayedIntensity = relativeIntensity * successivePeakFalloff
+              const stop = document.createElementNS("http://www.w3.org/2000/svg", "stop")
+
+              stop.setAttribute("offset", `${y / diagramHeight}`)
+              stop.setAttribute("stop-color", "#099")
+              stop.setAttribute("stop-opacity", `${0.05 + 0.95 * displayedIntensity}`)
+              amplitudeGradient.appendChild(stop)
+            }
+
+            const pathDifferenceAtTop = Math.hypot(amplitudeIndicatorX - outgoingWaveOriginX, slit1Vertical)
+              - Math.hypot(amplitudeIndicatorX - outgoingWaveOriginX, slit2Vertical)
+            const pathDifferenceAtBottom = Math.hypot(amplitudeIndicatorX - outgoingWaveOriginX, diagramHeight - slit1Vertical)
+              - Math.hypot(amplitudeIndicatorX - outgoingWaveOriginX, diagramHeight - slit2Vertical)
+            const firstConstructiveOrder = Math.ceil(Math.min(pathDifferenceAtTop, pathDifferenceAtBottom) / wavelength - 1e-10)
+            const lastConstructiveOrder = Math.floor(Math.max(pathDifferenceAtTop, pathDifferenceAtBottom) / wavelength + 1e-10)
+            const constructivePeakCount = lastConstructiveOrder - firstConstructiveOrder + 1
+            const peakLabel = constructivePeakCount === 1 ? "peak" : "peaks"
+
+            constructivePeakAnswer.textContent = `There ${constructivePeakCount === 1 ? "is" : "are"} ${constructivePeakCount} constructive interference ${peakLabel}.`
+          }
+
+          function animateWavefronts(time) {
+            const travel = (time * 0.04) % 60
+            incomingWavefronts.setAttribute("transform", `translate(${travel.toFixed(2)} 0)`)
+
+            for (const wavefront of wavefronts) {
+              const wrappedRadius = (wavefront.startingRadius + outgoingWaveOffset + travel) % waveCycleRadius
+              const frontRadius = minimumWavefrontRadius + wrappedRadius
+              const strokeWidth = Math.min(wavefrontStrokeWidth, frontRadius - minimumWavefrontRadius)
+              const radius = frontRadius - strokeWidth / 2
+              const opacity = frontRadius < 40
+                ? 1 - 0.3 * (frontRadius - minimumWavefrontRadius) / (40 - minimumWavefrontRadius)
+                : 0.7 * Math.pow((maximumWavefrontRadius - frontRadius) / (maximumWavefrontRadius - 40), 1.15)
+
+              wavefront.circle.setAttribute("r", radius.toFixed(2))
+              wavefront.circle.setAttribute("stroke-width", strokeWidth.toFixed(2))
+              wavefront.circle.setAttribute("opacity", opacity.toFixed(3))
+            }
+
+            animationFrame = requestAnimationFrame(animateWavefronts)
+          }
+
+          function updateWaveAnimation() {
+            if (details.open && !reducedMotion.matches && animationFrame === null) {
+              animationFrame = requestAnimationFrame(animateWavefronts)
+            } else if ((!details.open || reducedMotion.matches) && animationFrame !== null) {
+              cancelAnimationFrame(animationFrame)
+              animationFrame = null
+            }
+          }
+
+          details.addEventListener("toggle", updateWaveAnimation)
+          reducedMotion.addEventListener("change", updateWaveAnimation)
+          updateWaveAnimation()
+          updateAmplitudeIndicator(185, 415)
+
+          function updateAmplitudeDisplay() {
+            amplitudeDisplay.setAttribute("display", amplitudeDisplayToggle.checked ? "inline" : "none")
+          }
+
+          amplitudeDisplayToggle.addEventListener("change", updateAmplitudeDisplay)
+          updateAmplitudeDisplay()
+
+          document.getElementById("slit-width-slider").addEventListener("input", () => {
+            const slitSeparation = Number(document.getElementById("slit-width-slider").value)
+            // console.log(slitSeparation)
+            const slit1Vertical = 300 - slitSeparation
+            const slit2Vertical = 300 + slitSeparation
+
+            slit1.setAttribute("transform", `translate(${outgoingWaveOriginX}, ${slit1Vertical})`)
+            slit2.setAttribute("transform", `translate(${outgoingWaveOriginX}, ${slit2Vertical})`)
+            wall.setAttribute("d", `M${wallCenterX} 0 v${slit1Vertical - 5} M${wallCenterX} ${slit1Vertical + 5}
+                        v${Math.abs(slitSeparation * 2 - 10)}
+                        M${wallCenterX} ${slit2Vertical - 5} M${wallCenterX} ${slit2Vertical + 5} v400`)
+            updateAmplitudeIndicator(slit1Vertical, slit2Vertical)
+          });
+        })()
+      </script>
+    </details>
+    <br>
+    <br>
+    <br>
+    <br>
+    <p>
+      In 1909, the <a href="https://pubs.aip.org/aapt/ajp/article/84/9/671/1057864/Video-recording-true-single-photon-double-slit">experiment</a> was repeated with a single photon at a time.
+      After passing through the double slit, each photon was measured at a single location,
+      but the sum of repeated experiments produced a wave interference <a href="https://www.youtube.com/watch?v=995uiiudmiI">pattern</a>.
+    </p>
+  </article>
+  <!-- <g dominant-baseline="central" font-size="8" font-family="Times New Roman" stroke="none" fill="#abaeb3">
+    <text x="8.5" y="75" fill="#fff">e⁻</text>
+    <text x="2" y="87">electron</text>
+    <text x="2" y="95">emitter</text>
+    <text x="72" y="87">double</text>
+    <text x="72" y="95">slit</text>
+    <text x="163" y="95">measurement</text>
+    <text x="250" y="95">probability</text>
+    <text x="340" y="87">wave</text>
+    <text x="340" y="95">function</text>
+    <text x="253" y="4">|Ψ(x)|²</text>
+    <text x="343" y="4">Ψ(x)</text>
+  </g> -->
+  <svg viewBox="0 0 400 150" id="double-slit" style="background-color: #345;">
+    <g fill="#234" stroke="#345" stroke-width="0">
+      <rect width="140.5" height="148" x="1" y="1" rx="0" ry="0" fill="#f2f6f9" stroke="#345" stroke-width="1.5" />
+      <rect id="double-slit-emitter" width="2.5" height="8" x="15" y="71" rx="0.5" ry="0.5" fill="#89a" />
+      <rect width="12" height="10" x="4" y="70" rx="1" ry="1" />
+      <path id="slit" d="M40 1 v70.5 m0 0.5 v5 m0 0.5 v70.5" stroke-width="1.5" />
+      <path id="double-slit-probability-function" d="M 290 0 v100" stroke-width="0" fill="#abc" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    <g id="double-slit-hits"></g>
+    <g font-family="Arial, sans-serif" font-size="3.7" text-anchor="middle">
+      <text x="9" y="147.5" fill="#345">emitter</text>
+      <text x="120" y="147.5" fill="#345">detector</text>
+      <text x="160" y="147.5" fill="#abc">counts</text>
+      <text x="345" y="147.5" fill="#abc">wave interference pattern</text>
+    </g>
+  </svg>
+  <article>
+    <ul class="listing" style="background-color: #fff; border-radius: 15px; padding:10px; border: #345 solid 4px;">
+      <li>
+        <div>
+          &nbsp; &nbsp; &nbsp; &nbsp; <button id="double-slit-button" style="margin:0; background-color: #eee; float: 0; font-size: 1.5em;">emit</button>
+          <br>
+          <label for="slit-one-checkbox">
+            <input type="checkbox" id="slit-one-checkbox" name="slit-one-checkbox" style="width:14px;">
+            <span>emit one at a time</span>
+          </label>
+          <br>
+          <label for="slit-blocked-checkbox">
+            <input type="checkbox" id="slit-blocked-checkbox" name="slit-blocked-checkbox" style="width:14px;">
+            <span>slit blocked</span>
+          </label>
+        </div>
+      </li>
+      <li>
+        <div>
+          source wavelength = <input id='slit-wavelength' type="number" value='0.2' min="0" step="0.01" style="width:70px;">
+          <br>slit separation = <input id='slit-separation' type="number" value='2' min="0" step="0.05" style="width:80px;">
+          <br>slit width = <input id='slit-slitWidth' type="number" value='0.5' min="0" step="0.02" style="width:117px;">
+          <!-- <br>target distance = <input id='slit-distance' type="number" value='100' min="0" step="1" style="width:100px;"> -->
+        </div>
+      </li>
+    </ul>
+    <div class="example-small">
+      <strong>Simulation:</strong> What happens when one slit is blocked? Why?
+      <details>
+        <summary>answer</summary>
+        <p>
+          The interference pattern goes away, because the waves are all originating from the same point, so they have
+          the same phase.
+        </p>
+        <p>
+          Although, there is still a diffraction pattern related to the width of the slit.
+        </p>
+      </details>
+    </div>
+    <div class="example-small">
+      <strong>Simulation:</strong> Even when one particle at a time is fired, the distribution of hits produces an wave-like interference pattern.
+      What could the single particle be interfering with? What's going on?
+      <details>
+        <summary>answer</summary>
+        <p>
+          A single particle goes through both slits.
+          It interferes with itself. Probably...
+        </p>
+        <p>
+          This experiment shows that we can't think of particles as simple balls.
+          Even a single particle has wave-like properties.
+          Explaining why is still unsolved, but there are a few options.
+          At the bottom of this web page I go into more detail on the various interpretations of quantum mechanics.
+          Each interpretation has a wildly different explanation of the double slit experiment.
+        </p>
+      </details>
+    </div>
+    <p>
+      The <a href="https://physics.weber.edu/schroeder/software/QuantumScattering2D.html">double slit</a> experiment isn't limited to photons.
+      In 1927, the experiment was repeated with one electron at a time.
+      In 2019, an interference pattern was produced by a 2000 atom molecule.
+    </p>
+    <p>
+      To produce a <a href="https://www.youtube.com/watch?v=DfQH3o6dKss">wave</a> interference pattern, particles must be perfectly isolated from their environment.
+      That's why we still can't produce a double slit interference pattern for everyday sized objects, like cats.
+      It's just too hard to isolate large objects long enough to run the experiment.
+      Also, you might notice if you play with the simulation, the size of the slit needs to be similar to the size of the wave, and larger objects have smaller wavelength.
+    </p>
+    <br>
+    <br>
+    <!-- <details class="derive">
+      <summary>the particle model vs. the wave model</summary>
+      <p>
+        Particles are one of the basic models used by physics to simplify approximations.
+        Particles have a position in space and time, but they don't have any internal structure.
+        They have a mass and velocity, and they can collide like <a href="../../motion/motion/">billiard balls</a>.
+      </p>
+      <p>
+        The particle model approximates phenomena like:
+        collisions, temperature, pressure, friction, electricity, diffusion, and chemical reactions.
+      </p>
+      <br>
+      <p>
+        The wave model approximates how energy spreads through a medium.
+        For example, a sound wave propagates through air when atoms collide.
+        The wave model also applies to unexpected media, like traffic waves for cars.
+      </p>
+      <p>
+        Waves are used to approximate phenomena like:
+        color, diffraction, interference patterns, doppler shifting, standing waves, reflection, and refraction.
+      </p>
+      <br>
+      <p>
+        <li><strong>Particles</strong> are located at a single position.</li>
+        <li><strong>Waves</strong> are spread out with negative and positive amplitudes.</li>
+        <br>
+        <li><strong>Particles</strong> move in a single direction.</li>
+        <li><strong>Waves</strong> propagate in all possible directions.</li>
+        <br>
+        <li><strong>Particles</strong> bounce off each other.</li>
+        <li><strong>Waves</strong> don't interact with each other, but when they are in superposition they interfere constructively and destructively.</li>
+      </p>
+    </details> -->
+
+
+    <!-- <p>
+      Quantum mechanics is could be described as What makes these probabilities unusual is that they can be both negative and positive.
+    </p> -->
+
+
+
     <h2 class='underlined'>Wavelength and Momentum</h2>
     <p>
       We can calculate the quantum wavelength of a particle in terms of it's momentum with the equation below.
@@ -2453,7 +2673,7 @@
     </details>
     <br>
     <details class="derive">
-      <summary>interpretations of quantum mechanics</summary>
+      <summary>foundations of quantum mechanics</summary>
       <p>
         Different <a href="https://en.wikipedia.org/wiki/Interpretations_of_quantum_mechanics">interpretations</a>
         of quantum mechanics suggest suggest strange and exciting things about the fundamental nature of our reality.
@@ -2608,7 +2828,7 @@
       </p> -->
     </details>
     <br>
-    <details class="derive">
+    <details class="derive" id="wave-particle-duality">
       <summary>wave-particle duality</summary>
       <p>
         Is <a href="https://www.youtube.com/watch?v=Unl1jXFnzgo">nature</a> made of waves or particles?
@@ -2740,14 +2960,14 @@
     </p>
   </article>
   <article>
-    <h1 class='underlined'>More Practice</h1>
+    <h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/quantum-practice-questions.pdf">printout.pdf</a></h1>
     <p>
-      Photon practice is mostly about tracking one packet of light at a time. Decide whether the prompt is asking for energy, frequency, wavelength, electron kinetic energy, work function, photon count, or momentum. The equations are short, but the unit conversions are where most mistakes happen.
+      In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
     </p>
 
     <div class='example'><strong>Question:</strong> A double slit experiment sends one photon at a time toward the slits. Each photon is measured at one spot on the screen, but after many photons the hits form an interference pattern. What does that tell us about using only the particle model for light?
       <details>
-        <summary>solution</summary>
+        <summary>answer</summary>
         <p>The particle model is not enough by itself. Each photon is detected like a particle at one location, but the overall pattern is wave-like.</p>
         <p>This is why the page treats photons as quantum objects. They are measured as packets, but their probability pattern can behave like a wave.</p>
       </details>
@@ -2849,7 +3069,7 @@
 
     <div class='example'><strong>Question:</strong> Why can dim ultraviolet light release electrons from some metals, while very bright red light usually cannot?
       <details>
-        <summary>solution</summary>
+        <summary>answer</summary>
         <p>The photoelectric effect depends on energy per photon, not just total brightness.</p>
         <p>Ultraviolet photons have higher frequency and enough energy per photon to dislodge electrons. Red photons have lower energy per photon. Adding more red photons usually means more low-energy packets, not one packet with enough energy to release an electron.</p>
       </details>
@@ -2951,7 +3171,7 @@
 
     <div class='example'><strong>Question:</strong> A greenhouse gas molecule absorbs infrared photons strongly, but it lets most visible photons pass through. Why does the photon energy matter for this kind of absorption?
       <details>
-        <summary>solution</summary>
+        <summary>answer</summary>
         <p>Molecules only absorb photons well when the photon energy matches an allowed change in the molecule.</p>
         <p>Infrared photons can match changes in molecular vibration and rotation. Visible photons usually have different energies, so many greenhouse gases do not absorb them strongly.</p>
       </details>
@@ -3002,14 +3222,14 @@
 
     <div class='example'><strong>Question:</strong> Why is ionizing radiation described using energy per particle instead of only total power?
       <details>
-        <summary>solution</summary>
+        <summary>answer</summary>
         <p>Ionization depends on whether a single particle has enough energy to break a chemical bond or remove an electron.</p>
         <p>A large number of low-energy photons can heat a material, but each photon may still be non-ionizing. A single high-energy ultraviolet, x-ray, or gamma photon can be dangerous in a different way because it can disrupt atoms or molecules directly.</p>
       </details>
     </div>
 
-    <div class='example'><strong>Example:</strong> The table shows two hydrogen energy levels. If an electron drops from n = 3 to n = 2, what photon energy is emitted, and what wavelength does that photon have?
-      <table>
+    <div class='example'><strong>Example:</strong> In hydrogen, the n = 3 energy level is -1.51 eV and the n = 2 energy level is -3.40 eV. If an electron drops from n = 3 to n = 2, what photon energy is emitted, and what wavelength does that photon have?
+      <table class="printout-ignore">
         <tr>
           <th>level</th>
           <th>energy</th>
@@ -3060,7 +3280,7 @@
 
     <div class='example'><strong>Question:</strong> If an electron in an atom drops from a higher energy level to a lower energy level, is a photon emitted or absorbed?
       <details>
-        <summary>solution</summary>
+        <summary>answer</summary>
         <p>A photon is emitted.</p>
         <p>The electron loses energy when it moves to a lower energy level. That lost energy leaves the atom as a photon with a frequency and wavelength set by the size of the energy difference.</p>
       </details>
@@ -3107,6 +3327,29 @@
         $$\lambda = \frac{6.626 \times 10^{-34}\,\mathrm{J\,s}}{2.51 \times 10^{-24}\,\mathrm{kg\,m/s}}$$
         $$\lambda = 2.64 \times 10^{-10}\,\mathrm{m}$$
         <p>The proton's wavelength is about <strong>2.64 × 10<sup>-10</sup> m</strong>.</p>
+      </details>
+    </div>
+    <div class='example'>
+      <p><strong>Reading (15 minutes):</strong> Read <a href="https://www.wired.com/story/how-solar-sails-can-work-to-propel-spacecraft/">Solar Sails and Comet Tails: How Sunlight Pushes Stuff Around</a> by Rhett Allain from WIRED. Then answer these questions.</p>
+
+      Why can sunlight push a solar sail even though light has no material medium like air or water?
+      <details>
+        <summary>answer</summary>
+        <p>Light is an electromagnetic wave with electric and magnetic fields that interact with charged particles in matter. Those interactions transfer momentum and create a small forward force.</p>
+      </details>
+      <br>
+
+      The force on a solar sail is tiny. Why can it still change a spacecraft's path by a meaningful amount?
+      <details>
+        <summary>answer</summary>
+        <p>Sunlight can keep applying the force for a very long time. In space there is little resistance, so the continuing small acceleration can build a large change in velocity.</p>
+      </details>
+      <br>
+
+      How is a reflective solar sail different from an ordinary photovoltaic panel on a spacecraft?
+      <details>
+        <summary>answer</summary>
+        <p>A photovoltaic panel converts light into electrical energy. A solar sail is a large reflective surface designed to receive radiation pressure and provide thrust.</p>
       </details>
     </div>
   </article>

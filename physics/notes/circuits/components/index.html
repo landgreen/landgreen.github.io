@@ -1152,9 +1152,13 @@
 		<h2 class='underlined'>Motor / Generator / Electromagnets</h2> -->
 	</article>
 	<article>
-		<h1 class='underlined'>More Practice</h1>
-		<p>For this page, useful practice is a mix of circuit math and component recognition. Work slowly enough to decide what the component is doing before calculating anything.</p>
-		<p>For LED questions, use Kirchhoff's voltage idea to find the resistor's voltage drop, then use Ohm's law or power. For logic gates, treat high as 1 and low as 0 unless a voltage value is given.</p>
+<h1 class='underlined'>Practice <a class="printout-link" href="../../../output/pdf/components-practice-questions.pdf">printout.pdf</a></h1>
+		<p>
+			In case you wanted more practice I used AI to make some more problems. The rest of the site I made by hand, but generating endless problems seemed safe. I did find mistakes in the AI generated problems, and there are probably some I didn't find. Let me know if something could be fixed. I also added a practice problem on each page with no solution. That's intentional. Have fun!
+		</p>
+		<p>
+			For LED questions, use Kirchhoff's voltage idea to find the resistor's voltage drop, then use Ohm's law or power. For logic gates, treat high as 1 and low as 0 unless a voltage value is given.
+		</p>
 
 		<div class='example'>
 			<svg viewBox="-20 -50 600 340">
@@ -1197,7 +1201,7 @@
 		<div class='example'>
 			<strong>Question:</strong> Why does an LED need to be placed in the correct direction in a circuit?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>An LED is a diode, so it only allows current to flow in one direction. If it is reversed, the current is blocked and the LED will not light.</p>
 			</details>
 		</div>
@@ -1219,7 +1223,7 @@
 		<div class='example'>
 			<strong>Question:</strong> Why can thermal runaway be a problem for an LED?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>As an LED warms up, its resistance can decrease. Lower resistance can allow more current, and more current can make the LED warmer, which can continue the cycle.</p>
 			</details>
 		</div>
@@ -1266,7 +1270,7 @@
 		<div class='example'>
 			<strong>Question:</strong> Why is a transistor useful as a switch in a logic circuit?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>A transistor can use the voltage at a control terminal to turn current on or off. That switching behavior can represent the high and low states used by logic gates.</p>
 			</details>
 		</div>
@@ -1304,7 +1308,7 @@
 		<div class='example'>
 			<strong>Question:</strong> How is an OR gate different from an AND gate?
 			<details>
-				<summary>solution</summary>
+				<summary>answer</summary>
 				<p>An OR gate outputs high if either input is high. An AND gate only outputs high when both inputs are high.</p>
 			</details>
 		</div>
@@ -1328,6 +1332,30 @@
 				$$A = 1$$
 				$$B = 1$$
 				$$\mathrm{output} = 0\,\mathrm{V}$$
+			</details>
+		</div>
+
+		<div class='example'>
+			<p><strong>Reading (6 minutes):</strong> Read <a href="https://www.snexplores.org/article/explainer-batteries-capacitors">Explainer: How batteries and capacitors differ</a> from Science News Explores. Then answer these questions.</p>
+
+			How does a battery store energy differently from a capacitor?
+			<details>
+				<summary>answer</summary>
+				<p>A battery stores energy through chemical changes. A capacitor stores energy in an electric field between separated charges.</p>
+			</details>
+			<br>
+
+			Why might a circuit use a capacitor when it needs a quick burst of energy?
+			<details>
+				<summary>answer</summary>
+				<p>A capacitor can charge and discharge very quickly. That makes it useful when a circuit needs to release energy in a short time.</p>
+			</details>
+			<br>
+
+			What does electric potential, or voltage, allow charges to do in a circuit?
+			<details>
+				<summary>answer</summary>
+				<p>Electric potential provides energy per unit charge. A potential difference can drive charges through a circuit as an electric current.</p>
 			</details>
 		</div>
 
