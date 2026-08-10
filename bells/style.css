@@ -10,6 +10,7 @@ body {
   user-select: none;
   /*cursor: crosshair;*/
 }
+
 svg {
   /* background-color: #fee; */
   /* user-select: none; */
@@ -21,6 +22,49 @@ svg {
   z-index: -1;
 }
 
-a {
-  fill: #000;
+.schedule-picker {
+  position: fixed;
+  bottom: 0.35vh;
+  left: 0.3vw;
+  z-index: 1;
+}
+
+.schedule-picker-arrow {
+  position: absolute;
+  top: 50%;
+  right: 0.35em;
+  pointer-events: none;
+  transform: translateY(-55%);
+}
+
+#schedule-selector {
+  appearance: none;
+  border: 1px solid #bbb;
+  border-radius: 0.25em;
+  padding: 0.2em 1.5em 0.2em 0.35em;
+  background: rgba(255, 255, 255, 0.85);
+  color: #000;
+  font: inherit;
+  font-size: clamp(12px, 1.5vw, 28px);
+  font-weight: 300;
+  cursor: pointer;
+}
+
+#schedule-selector:hover,
+#schedule-selector:focus-visible {
+  background: #fff;
+  border-color: #777;
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

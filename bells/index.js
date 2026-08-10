@@ -1,4 +1,7 @@
-//http://newwestcharter.org/high-school-daily-bell-schedule/
+// http://newwestcharter.org/high-school-daily-bell-schedule/
+
+
+
 let playBells = false
 let todayMinutes = 0;
 let startMinutes = 440;
@@ -14,6 +17,9 @@ const color = {
   passing: "#ddd",
   lunch: "#ddd"
 };
+
+// Schedule data policy: keep lunch, brunch, and snack blocks separate from an
+// immediately following passing period, even though both render in gray.
 const schedule = {
   current: "regular",
   mouse: 0,
@@ -26,19 +32,10 @@ const schedule = {
     }
     // }
   },
-  cycleCurrent: function () { //called in html with onclick
-    if (schedule.current === "regular") {
-      schedule.current = "advisory";
-    } else if (schedule.current === "advisory") {
-      schedule.current = "rally";
-    } else if (schedule.current === "rally") {
-      schedule.current = "friday";
-    } else if (schedule.current === "friday") {
-      schedule.current = "earlyRelease";
-    } else if (schedule.current === "earlyRelease") {
-      schedule.current = "regular";
-    }
-    update(false);
+  setCurrent: function (name) {
+    if (!Array.isArray(schedule[name])) return;
+    schedule.current = name;
+    update();
   },
   regular: [{
     start: 0,
@@ -70,10 +67,17 @@ const schedule = {
   },
   {
     start: 10 * 60 + 33,
-    long: 18,
+    long: 15,
     name: "snack",
     showName: false,
     fill: color.lunch
+  },
+  {
+    start: 10 * 60 + 48,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
   },
   {
     start: 10 * 60 + 51,
@@ -98,10 +102,17 @@ const schedule = {
   },
   {
     start: 12 * 60 + 54,
-    long: 33,
+    long: 30,
     name: "lunch",
     showName: false,
     fill: color.lunch
+  },
+  {
+    start: 13 * 60 + 24,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
   },
   {
     start: 12 * 60 + 1 * 60 + 27,
@@ -176,8 +187,15 @@ const schedule = {
   },
   {
     start: 11 * 60 + 6,
-    long: 18,
+    long: 15,
     name: "snack",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 11 * 60 + 21,
+    long: 3,
+    name: "",
     showName: false,
     fill: color.passing
   },
@@ -211,7 +229,14 @@ const schedule = {
   },
   {
     start: 13 * 60 + 37,
-    long: 60,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 13 * 60 + 40,
+    long: 57,
     name: "A",
     showName: true,
     fill: color.period
@@ -310,10 +335,17 @@ const schedule = {
   },
   {
     start: 12 * 60 + 1 * 60 + 03,
-    long: 30,
+    long: 27,
     name: "lunch",
     showName: false,
     fill: color.lunch
+  },
+  {
+    start: 13 * 60 + 30,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
   },
   {
     start: 12 * 60 + 1 * 60 + 33,
@@ -374,10 +406,17 @@ const schedule = {
   },
   {
     start: 10 * 60 + 13,
-    long: 18,
+    long: 15,
     name: "snack",
     showName: false,
     fill: color.lunch
+  },
+  {
+    start: 10 * 60 + 28,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
   },
   {
     start: 10 * 60 + 31,
@@ -402,10 +441,17 @@ const schedule = {
   },
   {
     start: 12 * 60 + 14,
-    long: 33,
+    long: 30,
     name: "lunch",
     showName: false,
     fill: color.lunch
+  },
+  {
+    start: 12 * 60 + 44,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
   },
   {
     start: 12 * 60 + 47,
@@ -432,6 +478,133 @@ const schedule = {
     start: 14 * 60 + 30,
     long: 60,
     name: "Rally",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 15 * 60 + 30,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  }
+  ],
+  rally2pm: [{
+    start: 0,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 8 * 60 + 30,
+    long: 50,
+    name: "P1",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 9 * 60 + 20,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 9 * 60 + 23,
+    long: 50,
+    name: "P2",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 13,
+    long: 15,
+    name: "brunch",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 10 * 60 + 28,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 10 * 60 + 31,
+    long: 50,
+    name: "P3",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 11 * 60 + 21,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 11 * 60 + 24,
+    long: 50,
+    name: "P4",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 14,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 12 * 60 + 17,
+    long: 50,
+    name: "P5",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 13 * 60 + 7,
+    long: 30,
+    name: "lunch",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 13 * 60 + 37,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 13 * 60 + 40,
+    long: 20,
+    name: "A",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 14 * 60,
+    long: 37,
+    name: "Rally",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 14 * 60 + 37,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 14 * 60 + 40,
+    long: 50,
+    name: "P6",
     showName: true,
     fill: color.period
   },
@@ -473,10 +646,17 @@ const schedule = {
   },
   {
     start: 10 * 60 + 13,
-    long: 18,
+    long: 15,
     name: "snack",
     showName: false,
     fill: color.lunch
+  },
+  {
+    start: 10 * 60 + 28,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
   },
   {
     start: 10 * 60 + 31,
@@ -508,10 +688,17 @@ const schedule = {
   },
   {
     start: 13 * 60 + 14,
-    long: 33,
+    long: 30,
     name: "lunch",
     showName: false,
     fill: color.lunch
+  },
+  {
+    start: 13 * 60 + 44,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
   },
   {
     start: 13 * 60 + 47,
@@ -537,6 +724,112 @@ const schedule = {
   {
     start: 15 * 60 + 30,
     long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  }
+  ],
+  noonDismissal: [{
+    start: 0,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 8 * 60 + 30,
+    long: 20,
+    name: "P1",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 8 * 60 + 50,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 8 * 60 + 53,
+    long: 20,
+    name: "P2",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 9 * 60 + 13,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 9 * 60 + 16,
+    long: 20,
+    name: "P3",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 9 * 60 + 36,
+    long: 15,
+    name: "brunch",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 9 * 60 + 51,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 9 * 60 + 54,
+    long: 20,
+    name: "P4",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 14,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 10 * 60 + 17,
+    long: 20,
+    name: "P5",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 37,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 10 * 60 + 40,
+    long: 20,
+    name: "P6",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 11 * 60,
+    long: 60,
+    name: "A",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60,
+    long: 12 * 60,
     name: "",
     showName: false,
     fill: color.passing
@@ -586,10 +879,24 @@ const schedule = {
   },
   {
     start: 10 * 60 + 42,
-    long: 35,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 10 * 60 + 45,
+    long: 29,
     name: "lunch",
     showName: false,
     fill: color.lunch
+  },
+  {
+    start: 11 * 60 + 14,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
   },
   {
     start: 11 * 60 + 17,
@@ -633,7 +940,127 @@ const schedule = {
     showName: false,
     fill: color.passing
   }
-  ]
+  ],
+  assembly: [{
+    start: 0,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 8 * 60 + 30,
+    long: 45,
+    name: "P1",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 9 * 60 + 15,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 9 * 60 + 18,
+    long: 45,
+    name: "P2",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 10 * 60 + 03,
+    long: 15,
+    name: "snack",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 10 * 60 + 18,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 10 * 60 + 21,
+    long: 45,
+    name: "P3",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 11 * 60 + 06,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 11 * 60 + 09,
+    long: 77,
+    name: "Assembly",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 12 * 60 + 26,
+    long: 40,
+    name: "lunch",
+    showName: false,
+    fill: color.lunch
+  },
+  {
+    start: 13 * 60 + 06,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 13 * 60 + 09,
+    long: 45,
+    name: "P4",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 13 * 60 + 54,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 13 * 60 + 57,
+    long: 45,
+    name: "P5",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 14 * 60 + 42,
+    long: 3,
+    name: "",
+    showName: false,
+    fill: color.passing
+  },
+  {
+    start: 14 * 60 + 45,
+    long: 45,
+
+    name: "P6",
+    showName: true,
+    fill: color.period
+  },
+  {
+    start: 15 * 60 + 30,
+    long: 8 * 60 + 30,
+    name: "",
+    showName: false,
+    fill: color.passing
+  }]
 };
 //   regular: [{
 //       start: 0,
@@ -1039,9 +1466,9 @@ function nameOfMonthAsString(MonthIndex) {
   return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][MonthIndex];
 }
 
-function nameOfSeasonAsString(MonthIndex) {
-  return ["spring", "summer", "fall", "winter"][MonthIndex];
-}
+// function nameOfSeasonAsString(monthIndex) {
+//   return ["winter", "winter", "spring", "spring", "spring", "summer", "summer", "summer", "fall", "fall", "fall", "winter"][monthIndex];
+// }
 
 function findCurrentPeriod(b) {
   // let period = 0;
@@ -1106,10 +1533,10 @@ function moveSVGPeriods(b) {
   } else {
     document.getElementById("period-zone").setAttribute("transform", "translate(-27,77)");
   }
-  //schedule title
-  document.getElementById("schedule").textContent = schedule.current + " schedule";
+  // Keep the menu in sync when the schedule changes automatically for a new day.
+  document.getElementById("schedule-selector").value = schedule.current;
   // hide all periods
-  for (let i = 0, len = 17; i < len; ++i) {
+  for (let i = 0, len = 18; i < len; ++i) {
     document.getElementById(i).setAttribute("width", 0);
     document.getElementById("n" + i).textContent = "  ";
   }
@@ -1158,81 +1585,15 @@ function toggleZoom() {
   moveSVGPeriods(schedule[schedule.current]);
 }
 
-//**************************************************
-//weather
-
-function slowUpdate() {
+function updateDateDisplay() {
   //check if a new day and schedule
   //output day and month
   date = new Date();
   if (date.getHours() === 0) schedule.setCurrentByDate(); //at the end of the day check and see if it's Friday and you need to switch to advisory
   document.getElementById("week-day").textContent = dayOfWeekAsString(date.getDay());
   document.getElementById("date").textContent = nameOfMonthAsString(date.getMonth()) + " " + date.getDate();
-
-  //get position
-  function success(position) {
-    getWeather(position.coords.latitude, position.coords.longitude);
-    localStorage.setItem("latitude", position.coords.latitude);
-    localStorage.setItem("longitude", position.coords.longitude);
-  }
-
-  function error() {
-    console.log("Unable to retrieve your location");
-  }
-
-  if (localStorage.getItem("latitude") === null) {
-    console.log("get new local");
-    navigator.geolocation.getCurrentPosition(success, error);
-  } else {
-    getWeather(localStorage.latitude, localStorage.longitude);
-  }
-
-  //generic function to get JSON
-  function loadJSON(path, success, error) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          if (success) success(JSON.parse(xhr.responseText));
-        } else {
-          if (error) error(xhr);
-        }
-      }
-    };
-    xhr.open("GET", path, true);
-    xhr.send();
-  }
-  //https://home.openweathermap.org/api_keys
-  //https://openweathermap.org/api
-  //https://api.openweathermap.org/data/2.5/weather?q=LosAngeles&APPID=
-  //https://api.openweathermap.org/data/2.5/forecast?q=LosAngeles&APPID=
-  function getWeather(lat, long) {
-    const APPID = "258f642b3c9947c0eeae26f4a1ef22a3";
-    loadJSON(
-      "https://api.openweathermap.org/data/2.5/weather?&units=imperial&lat=" + lat + "&lon=" + long + "&APPID=" + APPID,
-      function (data) {
-        // console.log(data);
-        setWeather(data.main.temp, data.weather[0].description);
-      },
-      function (xhr) {
-        console.error(xhr);
-      }
-    );
-  }
-
-  function setWeather(temp, weather) {
-    document.getElementById("temp").textContent = Math.round(temp) + "° F";
-
-    document.getElementById("weather").textContent = weather;
-    let size = 70 / weather.length;
-    size = Math.min(11, Math.max(size, 4));
-    document.getElementById("weather").setAttribute("font-size", size + "px");
-  }
-}
-
-function noWeather() {
-  document.getElementById("temp").textContent = "20" + date.getYear() % 100;
-  document.getElementById("weather").textContent = nameOfSeasonAsString(Math.floor(date.getMonth() / 4));
+  // document.getElementById("season").textContent = nameOfSeasonAsString(date.getMonth());
+  // document.getElementById("year").textContent = date.getFullYear();
 }
 
 
@@ -1298,13 +1659,12 @@ function update() {
 
 schedule.setCurrentByDate(); //check and see if it's Friday and you need to switch to advisory
 update();
-noWeather();
-slowUpdate();
+updateDateDisplay();
 drawDigitalClock();
 
 setTimeout(function () {
   update();
-  window.setInterval(slowUpdate, 10 * 60 * 1000); //update weather every 10 min
+  window.setInterval(updateDateDisplay, 10 * 60 * 1000); //update the date, season, and year every 10 min
   window.setInterval(update, 60 * 1000); //update every minute
 }, (60 - date.getSeconds()) * 1000);
 
