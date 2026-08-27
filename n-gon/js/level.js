@@ -21,8 +21,8 @@ const level = {
         spawn.randomMobPositions.length = 0
         level.setConstraints()
         if (level.levelsCleared === 0) { //this code only runs on the first level
-            // if (false) {
-            if (true) {
+            if (false) {
+                // if (true) {
                 level.load(simulation.isTraining ? "walk" : "initial") //normal starting level **************************************************
             } else {
                 simulation.enableConstructMode()  //used to build maps in testing mode
@@ -80,8 +80,8 @@ const level = {
                 // level.levelsCleared = 2
                 // simulation.isHorizontalFlipped = true
                 // localSettings.levelsClearedLastGame = 5 //triggers tech to spawn on initial level
-                level.load("final")
-                // level.load("initial")
+                // level.load("final")
+                level.load("reactor")
                 // level.maps.testing()
 
                 // powerUps.spawn(m.pos.x, m.pos.y, "heal", false);
@@ -5861,7 +5861,7 @@ const level = {
             color.map = "#303639";
             // powerUps.spawnStartingPowerUps(1475, -1175);
             // spawn.debris(750, -2200, 3700, 16); //16 debris per level
-            const isCenter = 0.2 > Math.random() //20% chance to span the flock boss, which doesn't like the center block
+            const isCenter = Math.random() > 0.2  //20% chance to span the flock boss, which doesn't like the center block
             spawn.bodyRect(250, -70, 100, 70, 1);
             spawn.mapRect(-425, 0, 4500, 2100);
             spawn.mapRect(-475, -2825, 4500, 1025);
