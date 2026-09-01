@@ -208,7 +208,7 @@ const tech = {
     setCheating() {
         if (!simulation.isCheating) {
             simulation.isCheating = true;
-            document.title = "n-gon:" + level.levelAnnounce();
+            document.title = "n-gon: " + level.levelAnnounce();
             lore.techCount = 0;
             for (let i = 0, len = tech.tech.length; i < len; i++) {
                 if (tech.tech[i].isLore) {
