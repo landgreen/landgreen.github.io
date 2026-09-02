@@ -1413,9 +1413,33 @@ function toggleMode() {
 }
 
 
+function getClockDisplay(currentDate, scheduleName = schedule.current) {
+  const currentSchedule = schedule[scheduleName];
+  const currentMinutes = currentDate.getHours() * 60 + currentDate.getMinutes();
+  const currentPeriod = currentSchedule[findCurrentPeriod(currentSchedule, currentMinutes)];
+  const secondsRemaining = (currentPeriod.start + currentPeriod.long) * 60
+    - (currentMinutes * 60 + currentDate.getSeconds());
+  const isCountdownPeriod = currentPeriod.long > 30
+    && /^(P[1-6]|A)$/.test(currentPeriod.name);
+  const showSeconds = isCountdownPeriod
+    && secondsRemaining > 0
+    && secondsRemaining <= 60;
+  const hours = (currentDate.getHours() - 1) % 12 + 1;
+  const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+  const seconds = String(currentDate.getSeconds()).padStart(2, "0");
+
+  return {
+    text: `${hours}:${minutes}${showSeconds ? `:${seconds}` : ""}`,
+    showSeconds
+  };
+}
+
 function drawDigitalClock() {
   date = new Date();
-  document.getElementById("time").textContent = `${(date.getHours() - 1) % 12 + 1}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`;
+  const clockDisplay = getClockDisplay(date);
+  const clock = document.getElementById("time");
+  clock.textContent = clockDisplay.text;
+  clock.setAttribute("font-size", clockDisplay.showSeconds ? "43px" : "55px");
   // document.getElementById("week-day").textContent = dayOfWeekAsString(date.getDay());
   // document.getElementById("date").textContent = nameOfMonthAsString(date.getMonth()) + " " + date.getDate();
   // if (timeMode === 0) {
@@ -1470,10 +1494,10 @@ function nameOfMonthAsString(MonthIndex) {
 //   return ["winter", "winter", "spring", "spring", "spring", "summer", "summer", "summer", "fall", "fall", "fall", "winter"][monthIndex];
 // }
 
-function findCurrentPeriod(b) {
+function findCurrentPeriod(b, minutes = todayMinutes) {
   // let period = 0;
   for (let i = 0, len = b.length; i < len; ++i) {
-    if (todayMinutes >= b[i].start && todayMinutes < b[i].start + b[i].long) {
+    if (minutes >= b[i].start && minutes < b[i].start + b[i].long) {
       return i;
     }
   }
@@ -1624,6 +1648,43 @@ function bellToggle() {
     document.getElementById("bell-toggle").textContent = "bells on";
   }
 }
+
+const fullscreenToggle = document.getElementById("fullscreen-toggle");
+
+function isFullscreen() {
+  return Boolean(document.fullscreenElement || document.webkitFullscreenElement);
+}
+
+function updateFullscreenToggle() {
+  const fullscreen = isFullscreen();
+  const label = fullscreen ? "Exit fullscreen" : "Enter fullscreen";
+  fullscreenToggle.setAttribute("aria-pressed", fullscreen);
+  fullscreenToggle.setAttribute("aria-label", label);
+  fullscreenToggle.title = label;
+}
+
+async function toggleFullscreen() {
+  try {
+    if (isFullscreen()) {
+      if (document.exitFullscreen) {
+        await document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    } else if (document.documentElement.requestFullscreen) {
+      await document.documentElement.requestFullscreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen();
+    }
+  } catch (error) {
+    console.error("Unable to toggle fullscreen mode.", error);
+  }
+}
+
+fullscreenToggle.addEventListener("click", toggleFullscreen);
+document.addEventListener("fullscreenchange", updateFullscreenToggle);
+document.addEventListener("webkitfullscreenchange", updateFullscreenToggle);
+updateFullscreenToggle();
 
 
 //**************************************************

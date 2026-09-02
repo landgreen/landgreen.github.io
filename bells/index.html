@@ -12,7 +12,7 @@
 
 <body>
 	<!-- <canvas id="canvas" width='500' height='500'></canvas> -->
-	<svg viewBox="0 0 200 100">
+	<svg class="clock-display" viewBox="0 0 200 100">
 		<!-- <g id='analogClock' onclick="toggleMode()" fill='none' stroke='#333' stroke-width="0.3" stroke-linecap="round" transform="translate(100,32) scale(0.9)">
 			<circle cx="0" cy="0" r="32" fill='f6f6f6' />
 			<line id="clock-hours" x1="0" y1="0" x2="50" y2="0" stroke-width="1" stroke='#333' />
@@ -107,6 +107,14 @@
 		</select>
 		<span class="schedule-picker-arrow" aria-hidden="true">&#8964;</span>
 	</label>
+	<button id="fullscreen-toggle" type="button" aria-label="Enter fullscreen" title="Enter fullscreen">
+		<svg class="fullscreen-icon fullscreen-icon-enter" viewBox="0 0 24 24" aria-hidden="true">
+			<path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" />
+		</svg>
+		<svg class="fullscreen-icon fullscreen-icon-exit" viewBox="0 0 24 24" aria-hidden="true">
+			<path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5" />
+		</svg>
+	</button>
 	<script src="index.js"></script>
 </body>
 

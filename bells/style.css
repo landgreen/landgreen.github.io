@@ -11,7 +11,7 @@ body {
   /*cursor: crosshair;*/
 }
 
-svg {
+.clock-display {
   /* background-color: #fee; */
   /* user-select: none; */
   position: absolute;
@@ -55,6 +55,54 @@ svg {
   background: #fff;
   border-color: #777;
   outline: none;
+}
+
+#fullscreen-toggle {
+  position: fixed;
+  right: max(0.6rem, env(safe-area-inset-right));
+  bottom: max(0.6rem, env(safe-area-inset-bottom));
+  z-index: 1;
+  display: grid;
+  width: clamp(1.5625rem, 2.5vw, 2.03125rem);
+  height: clamp(1.5625rem, 2.5vw, 2.03125rem);
+  padding: 0.3125rem;
+  place-items: center;
+  border: 1px solid #bbb;
+  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.85);
+  color: #333;
+  cursor: pointer;
+}
+
+#fullscreen-toggle:hover,
+#fullscreen-toggle:focus-visible {
+  background: #fff;
+  border-color: #777;
+}
+
+#fullscreen-toggle:focus-visible {
+  outline: 2px solid #333;
+  outline-offset: 2px;
+}
+
+.fullscreen-icon {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fullscreen-icon-exit,
+#fullscreen-toggle[aria-pressed="false"] .fullscreen-icon-exit,
+#fullscreen-toggle[aria-pressed="true"] .fullscreen-icon-enter {
+  display: none;
+}
+
+#fullscreen-toggle[aria-pressed="true"] .fullscreen-icon-exit {
+  display: block;
 }
 
 .visually-hidden {
