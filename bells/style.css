@@ -59,10 +59,14 @@ body {
 
 #fullscreen-toggle {
   position: fixed;
+  right: 0.6rem;
+  bottom: 0.6rem;
   right: max(0.6rem, env(safe-area-inset-right));
   bottom: max(0.6rem, env(safe-area-inset-bottom));
   z-index: 1;
   display: grid;
+  width: 2rem;
+  height: 2rem;
   width: clamp(1.5625rem, 2.5vw, 2.03125rem);
   height: clamp(1.5625rem, 2.5vw, 2.03125rem);
   padding: 0.3125rem;
