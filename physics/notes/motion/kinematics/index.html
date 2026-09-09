@@ -433,10 +433,10 @@
 					Choose an equation with only one unknown variable.
 				</li>
 				<li>
-					Use algebra to isolate the unknown variable on one side of the equation.
+					Plug the known numbers into the equation.
 				</li>
 				<li>
-					Plug the knowns into the equation and simplify.
+					Simplify the numbers, then use algebra to isolate the unknown variable.
 				</li>
 				<li>
 					Check if your answer agrees with your intuition and expected units.
@@ -454,12 +454,12 @@
 				$$a =\, ?$$
 				<p>identify a matching equation</p>
 				$$v^{2} = u^{2}+2a \Delta x$$
-				<p>solve for unknown</p>
-				$$v^{2} - u^{2}=2a \Delta x$$
-				$$\frac{v^{2} - u^{2}}{2 \Delta x}=a$$
 				<p>plug in values</p>
-				$$\frac{0^{2} - (30 \, \tfrac{m}{s})^{2}}{2 (10 \, \mathrm{m})}=a$$
-				$$\frac{-900 \, \mathrm{\tfrac{m^2}{s^2}} }{20 \, \mathrm{m}}=a$$
+				$$0^2 = 30^2 + 2a(10)$$
+				<p>solve for the unknown</p>
+				$$0 = 900 + 20a$$
+				$$-900 = 20a$$
+				$$\frac{-900}{20} = a$$
 				$$-45 \mathrm{\tfrac{m}{s^{2}}}=a$$
 				<p>check intuition and units</p>
 				<p>
@@ -471,6 +471,10 @@
 		</div>
 
 		<div class='example'>
+			<p>
+				You can tell what variable a number is referencing from the units.
+				So 21 <strong>s</strong> is a time period, 21 <strong>m/s</strong> is velocity, and 21 <strong>m/s²</strong> is acceleration.
+			</p>
 			<strong>Example:</strong> A bullet aimed straight up leaves the barrel of a gun at 400 m/s. It accelerates
 			down at 9.8 m/s². If the bullet travels for 40.8 s before stopping how far up did it go? Ignore air
 			friction.
@@ -524,9 +528,8 @@
 				0 \\ \Delta &x = 6000\,\mathrm{ft}\scriptsize \left(\frac{1 \, \mathrm{m}}{3.3 \, \mathrm{ft}
 				}\right)\normalsize = 1818 \, \mathrm{m} \\ a &= \,? \end{aligned}$$
 				<br>
-				$$v^{2} = u^{2}+2a \Delta x$$ $$v^{2} - u^{2}=2a \Delta x$$
-				$$\frac{v^{2} - u^{2}}{2 \Delta x}=a$$
-				$$\frac{76^{2} - (0^{2})}{2 (1818)}=a$$
+				$$v^{2} = u^{2}+2a \Delta x$$ $$76^2=0^2+2a(1818)$$
+				$$5776=3636a$$
 				$$\frac{5776}{3636}=a$$ $$1.589 \, \mathrm{\tfrac{m}{s^{2}} }=a$$
 			</details>
 		</div>
@@ -557,8 +560,8 @@
 					</li>
 					<li>
 						<div>
-							$$v = u+a \Delta t$$ $$\frac{v - u}{a} = \Delta t $$ $$\frac{-6\, \mathrm{\tfrac{m}{s} }
-							-0}{-9.8 \, \mathrm{\tfrac{m}{s^{2}}}}= \Delta t $$ $$0.61\,\mathrm{s} = \Delta t$$
+							$$v = u+a \Delta t$$ $$-6=0+(-9.8)\Delta t$$
+							$$\frac{-6}{-9.8}=\Delta t$$ $$0.61\,\mathrm{s} = \Delta t$$
 						</div>
 					</li>
 				</div>
@@ -821,12 +824,19 @@
 					</li>
 				</div>
 				<br> $$v = u+a \Delta t$$
-				$$\frac{v - u}{a} = \Delta t$$
-				$$ \frac{-113 - 0}{-1.6} = \Delta t $$
+				$$-113=0+(-1.6)\Delta t$$
+				$$\frac{-113}{-1.6}=\Delta t$$
 				$$70.6\, \mathrm{s} = \Delta t $$
 			</details>
 		</div>
 		<div class='example'>
+			<p>
+				It seems like we could set the final velocity to 0 when an object hits the ground,
+				but colliding with the ground changes the acceleration of the object and it breaks our equations of motion.
+			</p>
+			<p class="definition">
+				We have to end problems before they collide with the ground to keep acceleration constant at 9.8 m/s².
+			</p>
 			<strong>Example:</strong> You drop a rock from 2.0 meters above the ground. It hits the ground after 1.03
 			seconds. What planet, moon, or asteroid are you on?
 			<details>
@@ -854,6 +864,76 @@
 				</div>
 			</details>
 		</div>
+
+		<div class='example'>
+			<p>
+				People often use words to communicate numbers.
+				Words like <strong>"rest"</strong> or <strong>"stop"</strong> tell you velocity is equal to <strong>0</strong>.
+			</p>
+			<p>
+				Also, if you throw an object up and gravity slows it down the velocity will be <strong>0</strong> at the peak of it's path, at the <strong>maximum height</strong>.
+			</p>
+			<svg id="throw-position-graph" viewBox="0 0 600 300" role="img" aria-label="Vertical position versus time: rises to 19.6 meters at 2 seconds, returns to the ground at 4 seconds, then stays at zero."></svg>
+			<svg id="throw-velocity-graph" viewBox="0 0 600 340" role="img" aria-label="Vertical velocity versus time: decreases from positive 19.6 meters per second through zero at 2 seconds to negative 19.6 at landing, then jumps to zero and stays there."></svg>
+			<script>
+				(() => {
+					const initialVelocity = 19.6
+					const gravity = 9.8
+					const landingTime = 4
+					const settings = {
+						x0: 50,
+						xScale: 100,
+						gridSize: 50,
+						xDecimals: 1,
+						strokeWidth: 3,
+						xLabel: "time (s)"
+					}
+					funGraphSVG("throw-position-graph", t => t < 0 || t > 5 ? NaN
+						: t < landingTime ? initialVelocity * t - gravity * t * t / 2 : 0, {
+						...settings, y0: 250, yScale: 10, yLabel: "vertical position (m)"
+					})
+					funGraphSVG("throw-velocity-graph", t => t < 0 || t > landingTime ? NaN
+						: initialVelocity - gravity * t, {
+						...settings, y0: 170, yScale: 5, yLabel: "vertical velocity (m/s)"
+					})
+					// Draw the resting segment separately so the graph does not connect across impact.
+					document.getElementById("throw-velocity-graph-path").id = "throw-velocity-flight-path"
+					funGraphSVG("throw-velocity-graph", t => t < landingTime || t > 5 ? NaN : 0, {
+						...settings, y0: 170, yScale: 5, showAxis: false
+					})
+					const addMarks = (id, markup) => document.getElementById(id).insertAdjacentHTML("beforeend", markup)
+					addMarks("throw-position-graph", `
+					<circle cx="250" cy="54" r="4" fill="#07b" />
+					<text x="250" y="39" text-anchor="middle" font-size="15">peak: v = 0</text>
+					<text x="465" y="232" font-size="15">on ground</text>
+				`)
+					addMarks("throw-velocity-graph", `
+					<circle cx="250" cy="170" r="4" fill="#07b" />
+					<text x="250" y="150" text-anchor="middle" font-size="15">peak height</text>
+					<path d="M450 268 V170" fill="none" stroke="#07b" stroke-width="2" stroke-dasharray="4 4" />
+					<circle cx="450" cy="268" r="4" fill="white" stroke="#07b" stroke-width="2" />
+					<circle cx="450" cy="170" r="4" fill="#07b" />
+					<text x="462" y="225" font-size="15">landing</text>
+				`)
+				})()
+			</script>
+
+			<strong>Example:</strong> An object is thrown straight up from ground level at 19.6 m/s.
+			Calculate its maximum height.
+			<details>
+				<summary>solution</summary>
+				$$u = +19.6\,\mathrm{m/s}$$
+				$$v = 0\,\mathrm{m/s}$$
+				$$a = -9.8\,\mathrm{m/s^2}$$
+				$$v^2 = u^2 + 2a\Delta x$$
+				$$0^2=19.6^2+2(-9.8)\Delta x$$
+				$$0=384.16-19.6\Delta x$$
+				$$19.6\Delta x=384.16$$
+				$$\Delta x=\frac{384.16}{19.6}$$
+				$$\Delta x = 19.6\,\mathrm{m}$$
+			</details>
+		</div>
+
 		<!-- <div class='example'>
 			<strong>Example:</strong> A flea can jump 18 cm high on Earth.
 			Estimate how high they could jump on Mars?
@@ -1637,9 +1717,10 @@
 					We don't need to use any horizontal information.
 				</p>
 				$$v^2 = u^2 + 2 a \Delta y$$
-				$$v^2 - u^2 = 2 a \Delta y$$
-				$$\Delta y = \frac{v^2 - u^2}{2a}$$
-				$$\Delta y = \frac{(0)^2 - (8.7)^2}{2(-9.8)}$$
+				$$0^2=8.7^2+2(-9.8)\Delta y$$
+				$$0=75.69-19.6\Delta y$$
+				$$19.6\Delta y=75.69$$
+				$$\Delta y=\frac{75.69}{19.6}$$
 				$$\Delta y = 3.86 \, \mathrm{m}$$
 			</details>
 		</div>
@@ -1940,9 +2021,9 @@ https://vuejs.org/v2/guide/components.html
 			<strong>Example:</strong> A dynamics cart rolls along a straight track in a classroom. It moves 0.120 km to the right in 15 s while a motion sensor samples its position 50 times each second. What is its average velocity?
 			<details>
 				<summary>solution</summary>
-				$$0.120\,\mathrm{km}=120\,\mathrm{m}$$
+				$$0.120=120$$
 				$$v_{\mathrm{avg}} = \frac{\Delta x}{\Delta t}$$
-				$$v_{\mathrm{avg}} = \frac{120\,\mathrm{m}}{15\,\mathrm{s}}$$
+				$$v_{\mathrm{avg}} = \frac{120}{15}$$
 				$$v_{\mathrm{avg}} = 8.0\,\mathrm{\tfrac{m}{s}}$$
 				The positive answer means the average velocity is to the right.
 			</details>
@@ -1953,7 +2034,7 @@ https://vuejs.org/v2/guide/components.html
 			<details>
 				<summary>solution</summary>
 				$$a_{\mathrm{avg}} = \frac{\Delta v}{\Delta t}$$
-				$$a_{\mathrm{avg}} = \frac{21\,\mathrm{\tfrac{m}{s}} - 3\,\mathrm{\tfrac{m}{s}}}{6\,\mathrm{s}}$$
+				$$a_{\mathrm{avg}} = \frac{21 - 3}{6}$$
 				$$a_{\mathrm{avg}} = 3.0\,\mathrm{\tfrac{m}{s^2}}$$
 			</details>
 		</div>
@@ -1962,9 +2043,9 @@ https://vuejs.org/v2/guide/components.html
 			<strong>Example:</strong> A skateboard starts at 14.4 km/h and accelerates at 2.5 m/s² for 8 s. What is its final velocity?
 			<details>
 				<summary>solution</summary>
-				$$14.4\,\mathrm{km/h}=4.0\,\mathrm{\tfrac{m}{s}}$$
+				$$14.4=4.0$$
 				$$v = u + a\Delta t$$
-				$$v = 4.0\,\mathrm{\tfrac{m}{s}} + (2.5\,\mathrm{\tfrac{m}{s^2}})(8\,\mathrm{s})$$
+				$$v = 4.0 + (2.5)(8)$$
 				$$v = 24\,\mathrm{\tfrac{m}{s}}$$
 			</details>
 		</div>
@@ -1974,7 +2055,7 @@ https://vuejs.org/v2/guide/components.html
 			<details>
 				<summary>solution</summary>
 				$$v = u + a\Delta t$$
-				$$v = 30\,\mathrm{\tfrac{m}{s}} + (-4\,\mathrm{\tfrac{m}{s^2}})(5\,\mathrm{s})$$
+				$$v = 30 + (-4)(5)$$
 				$$v = 10\,\mathrm{\tfrac{m}{s}}$$
 				The bike is still moving forward, but more slowly.
 			</details>
@@ -1984,7 +2065,7 @@ https://vuejs.org/v2/guide/components.html
 			<strong>Example:</strong> A sled starts at 21.6 km/h on a packed snow path and accelerates at 1.5 m/s² for 10 s. The rider has a 4 kg backpack, but the motion information is enough. How far does it move?
 			<details>
 				<summary>solution</summary>
-				$$21.6\,\mathrm{km/h}=6.0\,\mathrm{\tfrac{m}{s}}$$
+				$$21.6=6.0$$
 				$$\Delta x = u\Delta t + \tfrac{1}{2}a\Delta t^2$$
 				$$\Delta x = (6)(10) + \tfrac{1}{2}(1.5)(10)^2$$
 				$$\Delta x = 60 + 75$$
@@ -1997,9 +2078,9 @@ https://vuejs.org/v2/guide/components.html
 			<details>
 				<summary>solution</summary>
 				$$v = u + a\Delta t$$
-				$$a\Delta t = v - u$$
-				$$a = \frac{v-u}{\Delta t}$$
-				$$a = \frac{29 - 5}{8}$$
+				$$29=5+a(8)$$
+				$$24=8a$$
+				$$a=\frac{24}{8}$$
 				$$a = 3.0\,\mathrm{\tfrac{m}{s^2}}$$
 			</details>
 		</div>
@@ -2009,9 +2090,9 @@ https://vuejs.org/v2/guide/components.html
 			<details>
 				<summary>solution</summary>
 				$$v = u + a\Delta t$$
-				$$a\Delta t = v-u$$
-				$$\Delta t = \frac{v-u}{a}$$
-				$$\Delta t = \frac{20-2}{3}$$
+				$$20=2+3\Delta t$$
+				$$18=3\Delta t$$
+				$$\Delta t=\frac{18}{3}$$
 				$$\Delta t = 6.0\,\mathrm{s}$$
 			</details>
 		</div>
@@ -2033,7 +2114,7 @@ https://vuejs.org/v2/guide/components.html
 			<details>
 				<summary>solution</summary>
 				The final velocity is zero because the car stops.
-				$$100.8\,\mathrm{km/h}=28\,\mathrm{\tfrac{m}{s}}$$
+				$$100.8=28$$
 				$$v^2 = u^2 + 2a\Delta x$$
 				$$(0)^2 = (28)^2 + 2(-7)\Delta x$$
 				$$0 = 784 - 14\Delta x$$
@@ -2141,9 +2222,9 @@ https://vuejs.org/v2/guide/components.html
 			<details>
 				<summary>solution</summary>
 				Let upward be positive. The starting velocity and displacement are both negative.
-				$$u = -5\,\mathrm{\tfrac{m}{s}}$$
-				$$a = -9.8\,\mathrm{\tfrac{m}{s^2}}$$
-				$$\Delta y = -30\,\mathrm{m}$$
+				$$u = -5$$
+				$$a = -9.8$$
+				$$\Delta y = -30$$
 				$$v^2 = u^2 + 2a\Delta y$$
 				$$v^2 = (-5)^2 + 2(-9.8)(-30)$$
 				$$v^2 = 613$$
@@ -2159,7 +2240,7 @@ https://vuejs.org/v2/guide/components.html
 			<details>
 				<summary>solution</summary>
 				Split the motion. The vertical motion gives the time, then the horizontal motion gives the range.
-				$$1800\,\mathrm{cm}=18\,\mathrm{m}$$
+				$$1800=18$$
 				<table class="table-2d" style="width: 520px;">
 					<tr>
 						<th>horizontal</th>
@@ -2195,7 +2276,7 @@ https://vuejs.org/v2/guide/components.html
 				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
 				$$-20 = (0)\Delta t + \tfrac{1}{2}(-9.8)\Delta t^2$$
 				$$-20 = -4.9\Delta t^2$$
-				$$\Delta t = 2.02\,\mathrm{s}$$
+				$$\Delta t = 2.02$$
 				Now use the same time horizontally.
 				$$\Delta x = u_x\Delta t$$
 				$$\Delta x = (15)(2.02)$$
@@ -2209,10 +2290,10 @@ https://vuejs.org/v2/guide/components.html
 				<summary>solution</summary>
 				Horizontal uses cosine, and vertical uses sine.
 				$$u_x = u\cos\theta$$
-				$$u_x = (25)\cos(37^\circ)$$
+				$$u_x = (25)\cos(37)$$
 				$$u_x = 20.0\,\mathrm{\tfrac{m}{s}}$$
 				$$u_y = u\sin\theta$$
-				$$u_y = (25)\sin(37^\circ)$$
+				$$u_y = (25)\sin(37)$$
 				$$u_y = 15.0\,\mathrm{\tfrac{m}{s}}$$
 			</details>
 		</div>
@@ -2237,13 +2318,13 @@ https://vuejs.org/v2/guide/components.html
 			<details>
 				<summary>solution</summary>
 				First convert the launch speed, then split it into components.
-				$$72\,\mathrm{km/h}=20\,\mathrm{\tfrac{m}{s}}$$
+				$$72=20$$
 				$$u_x = u\cos\theta$$
-				$$u_x = (20)\cos(30^\circ)$$
-				$$u_x = 17.3\,\mathrm{\tfrac{m}{s}}$$
+				$$u_x = (20)\cos(30)$$
+				$$u_x = 17.3$$
 				$$u_y = u\sin\theta$$
-				$$u_y = (20)\sin(30^\circ)$$
-				$$u_y = 10.0\,\mathrm{\tfrac{m}{s}}$$
+				$$u_y = (20)\sin(30)$$
+				$$u_y = 10.0$$
 				Because it lands at the same height it was launched from, Δy = 0.
 				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
 				$$0 = (10.0)\Delta t + \tfrac{1}{2}(-9.8)\Delta t^2$$
@@ -2261,7 +2342,7 @@ https://vuejs.org/v2/guide/components.html
 			<details>
 				<summary>solution</summary>
 				Only vertical motion matters for maximum height. From the previous example:
-				$$u_y = 10.0\,\mathrm{\tfrac{m}{s}}$$
+				$$u_y = 10.0$$
 				At the highest point, vertical velocity is zero.
 				$$v_y^2 = u_y^2 + 2a_y\Delta y$$
 				$$(0)^2 = (10.0)^2 + 2(-9.8)\Delta y$$
@@ -2275,18 +2356,18 @@ https://vuejs.org/v2/guide/components.html
 			<details>
 				<summary>solution</summary>
 				Start by converting the given values and splitting the launch velocity.
-				$$150\,\mathrm{cm}=1.5\,\mathrm{m}$$
-				$$43.2\,\mathrm{km/h}=12\,\mathrm{\tfrac{m}{s}}$$
-				$$u_x = (12)\cos(40^\circ)$$
-				$$u_x = 9.19\,\mathrm{\tfrac{m}{s}}$$
-				$$u_y = (12)\sin(40^\circ)$$
-				$$u_y = 7.71\,\mathrm{\tfrac{m}{s}}$$
+				$$150=1.5$$
+				$$43.2=12$$
+				$$u_x = (12)\cos(40)$$
+				$$u_x = 9.19$$
+				$$u_y = (12)\sin(40)$$
+				$$u_y = 7.71$$
 				The ball lands 1.5 m below where it was kicked, so Δy = -1.5 m.
 				Use vertical motion to find the final vertical velocity first.
 				$$v_y^2 = u_y^2 + 2a_y\Delta y$$
 				$$v_y^2 = (7.71)^2 + 2(-9.8)(-1.5)$$
 				$$v_y^2 = 88.9$$
-				$$v_y = -9.43\,\mathrm{\tfrac{m}{s}}$$
+				$$v_y = -9.43$$
 				The final vertical velocity is negative because the ball is moving downward when it lands.
 				$$v_y = u_y + a_y\Delta t$$
 				$$-9.43 = 7.71 + (-9.8)\Delta t$$
@@ -2303,20 +2384,20 @@ https://vuejs.org/v2/guide/components.html
 			<details>
 				<summary>solution</summary>
 				Split the velocity first.
-				$$u_x = (18)\cos(25^\circ)$$
-				$$u_x = 16.3\,\mathrm{\tfrac{m}{s}}$$
-				$$u_y = (18)\sin(25^\circ)$$
-				$$u_y = 7.61\,\mathrm{\tfrac{m}{s}}$$
+				$$u_x = (18)\cos(25)$$
+				$$u_x = 16.3$$
+				$$u_y = (18)\sin(25)$$
+				$$u_y = 7.61$$
 				The balloon lands 2.0 m below launch height, so Δy = -2.0 m.
 				Find the final vertical velocity.
 				$$v_y^2 = u_y^2 + 2a_y\Delta y$$
 				$$v_y^2 = (7.61)^2 + 2(-9.8)(-2.0)$$
 				$$v_y^2 = 97.1$$
-				$$v_y = -9.85\,\mathrm{\tfrac{m}{s}}$$
+				$$v_y = -9.85$$
 				Then find the time.
 				$$v_y = u_y + a_y\Delta t$$
 				$$-9.85 = 7.61 + (-9.8)\Delta t$$
-				$$\Delta t = 1.78\,\mathrm{s}$$
+				$$\Delta t = 1.78$$
 				Now use horizontal motion.
 				$$\Delta x = u_x\Delta t$$
 				$$\Delta x = (16.3)(1.78)$$
@@ -2331,7 +2412,7 @@ https://vuejs.org/v2/guide/components.html
 				The wall distance is horizontal, so use it to find the time.
 				$$\Delta x = u_x\Delta t$$
 				$$21 = (14)\Delta t$$
-				$$\Delta t = 1.50\,\mathrm{s}$$
+				$$\Delta t = 1.50$$
 				Now use that same time in the vertical motion.
 				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
 				$$\Delta y = (9)(1.50) + \tfrac{1}{2}(-9.8)(1.50)^2$$
@@ -2347,7 +2428,7 @@ https://vuejs.org/v2/guide/components.html
 				Use horizontal motion first because it gives the time to reach the opening.
 				$$\Delta x = u_x\Delta t$$
 				$$18 = (12)\Delta t$$
-				$$\Delta t = 1.50\,\mathrm{s}$$
+				$$\Delta t = 1.50$$
 				Now solve the vertical displacement equation for the needed initial vertical velocity.
 				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
 				$$4.0 = u_y(1.50) + \tfrac{1}{2}(-9.8)(1.50)^2$$
@@ -2364,7 +2445,7 @@ https://vuejs.org/v2/guide/components.html
 				Find the time to reach the wall using horizontal motion.
 				$$\Delta x = u_x\Delta t$$
 				$$24 = (16)\Delta t$$
-				$$\Delta t = 1.50\,\mathrm{s}$$
+				$$\Delta t = 1.50$$
 				Find the height at that time.
 				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
 				$$\Delta y = (12)(1.50) + \tfrac{1}{2}(-9.8)(1.50)^2$$
@@ -2382,7 +2463,7 @@ https://vuejs.org/v2/guide/components.html
 				$$\Delta y = u_y\Delta t + \tfrac{1}{2}a_y\Delta t^2$$
 				$$0 = (24)\Delta t + \tfrac{1}{2}(-9.8)\Delta t^2$$
 				$$0 = \Delta t(24 - 4.9\Delta t)$$
-				$$\Delta t = 4.90\,\mathrm{s}$$
+				$$\Delta t = 4.90$$
 				Now use horizontal motion.
 				$$\Delta x = u_x\Delta t$$
 				$$\Delta x = (18)(4.90)$$
