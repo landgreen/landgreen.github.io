@@ -73,7 +73,7 @@ const level = {
                 // for (let i = 0; i < 1; ++i) tech.giveTech("plasma ball")
                 // for (let i = 0; i < 1; ++i) tech.giveTech("additive manufacturing")
                 // for (let i = 0; i < 100; ++i) tech.giveTech("anti-shear topology")
-                // for (let i = 0; i < 1; i++) tech.giveTech("exchange operator")
+                for (let i = 0; i < 1; i++) tech.giveTech("contact explosive")
                 // for (let i = 0; i < 1; i++) tech.giveTech("scale invariance")
                 // for (let i = 0; i < 1; i++) tech.giveTech("uncertainty principle")
                 // spawn.bodyRect(575, -700, 150, 150);  //block mob line of site on testing
@@ -1797,7 +1797,7 @@ const level = {
         reflection: null,
         mirrorOpacity: 1,
         bottomOffset: 20, // Distance below exit.y to the drawn bottom edge.
-        chargeThreshold: 132,
+        chargeThreshold: 176,
         fill: "rgba(0,180,180,0.2)",
         drawAndCheck(isFinalPass = false, isInverted = false) {
             // Level scripts request the exit early; render it after the world is drawn.
@@ -1821,6 +1821,15 @@ const level = {
                 level.exitCount += m.health < 0 ? 0.5 : 2
             } else if (level.exitCount > 0) {
                 level.exitCount -= 2
+            }
+
+            // Separate grounded slowdown zone: outer quarters ramp down to a stopped center half.
+            if (m.onGround && !level.exit.isInverted && !level.isFlipping &&
+                player.position.x > x && player.position.x < x + 100 &&
+                player.position.y > y - 250 && player.position.y < y + 35) {
+                const slowdown = Math.max(0, (Math.abs(player.position.x - (x + 50)) - 25) / 25);
+                Matter.Body.setVelocity(player, { x: player.velocity.x * slowdown, y: player.velocity.y * slowdown });
+                if (slowdown === 0) player.force.x += (x + 50 - player.position.x) * player.mass * 0.0005;
             }
 
             ctx.beginPath();

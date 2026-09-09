@@ -1,28 +1,26 @@
-added mirrors to exit doors
+
+exit mirror holds you in place as you enter
+  unless you jump
 
 bug fixes
-  
-
+  contact explosive somehow got erased
+  wording on time dilation move speed
 
 *********************************************************** TODO *****************************************************
 
+
+
+
 mirror exits and entrances
-  could exits/entrances be on the floors like the way it currently is
-    maybe the mirror rises up as you stand on it
-  exit
-    walk into mirror to exit level
-    instant exit, with no delay like doors
-    maybe only draw if player is nearby? (within 1000)
+  exit mirror could keep floor aligned as it zooms?
+    or maybe it could focus on player?
+  what about slowing/stopping player speed when they are on the ground but inside mirror with exitCount
+    it would make it feel more sticky when you can't see the player
   entrance
     no mirror to show you can't go back?
     a mirror, but you are outside the mirror
       maybe black/remove entrance mirror after a few seconds
       since all levels will have mirror exits and entrances this could be added to the game loop, that might improve performance over ephemera
-  keep backward compatibility for community maps, and other stuff
-  todo      
-    build a demo on the testing level
-    80% of levels have a wall in exit and entrance room
-      some levels will need a redesign
 
 
 

@@ -6126,7 +6126,7 @@ const m = {
         },
         {
             name: "time dilation",
-            description: `use <strong class='energy' data-help='energy'>energy</strong> to <strong style='letter-spacing: 2px;'>stop time</strong><br><strong>1.2x</strong> <strong class="color-speed" data-help="movement">movement</strong> and <strong><span class='color-fire-rate' data-help='fire-rate'>fire rate</span></strong><br><strong>12</strong> <strong class='energy' data-help='energy'>energy</strong> per second<em style ="float: right; font-family: monospace;font-size:0.8rem;color:#fff;">←↓→↑←↓→↑</em>`,
+            description: `use <strong class='energy' data-help='energy'>energy</strong> to <strong style='letter-spacing: 2px;'>stop time</strong><br><strong>1.25x</strong> <strong class="color-speed" data-help="movement">movement</strong> and <strong><span class='color-fire-rate' data-help='fire-rate'>fire rate</span></strong><br><strong>12</strong> <strong class='energy' data-help='energy'>energy</strong> per second<em style ="float: right; font-family: monospace;font-size:0.8rem;color:#fff;">←↓→↑←↓→↑</em>`,
             keyLog: [null, null, null, null, null, null, null, null],
             isRewindMode: false, //m.fieldUpgrades[6].isRewindMode
             isRewinding: false,
@@ -7747,6 +7747,7 @@ const m = {
                                     if (tech.isStimulatedEmission) powerUps.ejectTech()
                                     if (mob[k].onHit) mob[k].onHit();
                                     if (m.immuneCycle < m.cycle + m.collisionImmuneCycles) m.immuneCycle = m.cycle + m.collisionImmuneCycles; //player is immune to damage for 30 cycles
+                                    if (tech.isExplodeContact) b.explosion(player.position, 300);
                                     //extra kick between player and mob              //this section would be better with forces but they don't work...
                                     let angle = Math.atan2(player.position.y - mob[k].position.y, player.position.x - mob[k].position.x);
                                     Matter.Body.setVelocity(player, {
