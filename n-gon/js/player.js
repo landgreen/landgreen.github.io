@@ -599,7 +599,7 @@ const m = {
     },
     addHealth(heal) {
         if (!tech.isEnergyHealth) {
-            heal *= simulation.healScale * (level.isLowHeal ? 0.5 : 1);
+            heal *= simulation.healScale * (level.isLowHeal ? (simulation.difficultyOptions.isStrongerConstraints ? 0.5 : 0.3) : 1);
             heal = Math.min(heal, m.maxHealth - m.health)
             m.health += heal
             // if (m.health > m.maxHealth) m.health = m.maxHealth;
@@ -612,8 +612,9 @@ const m = {
         m.maxHealth = m.baseHealth + tech.extraMaxHealth + 6 * tech.isFallingDamage
         m.maxHealth /= m.fieldUpgrades[1].energyHealthRatio
         if (level.isReducedHealth) {
-            level.reducedHealthLost = Math.max(0, m.health - m.maxHealth * 0.5)
-            m.maxHealth *= 0.5
+            const scale = (simulation.difficultyOptions.isStrongerConstraints) ? 0.3 : 0.6
+            level.reducedHealthLost = Math.max(0, m.health - m.maxHealth * scale)
+            m.maxHealth *= scale
         }
 
         document.getElementById("health-bg").style.width = `${Math.floor(300 * m.maxHealth)}px`
@@ -650,7 +651,6 @@ const m = {
         if (tech.isNoFireDefense && m.cycle > m.fireCDcycle + 120) dmg *= 0.3
         if (tech.isTurret && m.crouch) dmg *= 0.3;
         if (tech.isFirstDer && b.inventory[0] === b.activeGun) dmg *= 0.85 ** b.inventory.length
-        // if (tech.isLowHealthDefense) dmg *= Math.pow(0.3, Math.max(0, (tech.isEnergyHealth ? m.maxEnergy - m.energy : m.maxHealth - m.health)))
         if (tech.isLowHealthDefense) dmg *= Math.pow(0.2, Math.max(0, 1 - (tech.isEnergyHealth ? m.energy / m.maxEnergy : m.health / m.maxHealth)))
         if (tech.isRemineralize) {
             //reduce mineral percent based on time since last check
@@ -979,7 +979,7 @@ const m = {
                         color: "rgba(0,255,100,0.5)",
                         time: 10
                     });
-                    mob[i].health += dmg * 7
+                    mob[i].health += dmg * (simulation.difficultyOptions.isStrongerConstraints ? 10 : 5)
                     if (mob[i].health > 1) mob[i].health = 1
                 }
             }
@@ -3529,7 +3529,7 @@ const m = {
         player.collisionFilter.mask = cat.body | cat.map | cat.mob | cat.mobBullet | cat.mobShield
         m.airSpeedLimit = 125
         m.fieldFx = 1
-        // m.FxAir = 0.005
+        m.FxAir = 0.016
         m.fieldJump = 1
         m.setFieldRegen();
         m.setMovement();
@@ -3552,7 +3552,7 @@ const m = {
     setMaxEnergy(isMessage = true) {
         m.maxEnergy = (tech.isMaxEnergyTech ? 0.5 : 1) + tech.bonusEnergy + tech.healMaxEnergyBonus + tech.harmonicEnergy + 3 * tech.isGroundState + 1.5 * (m.fieldMode === 1) + (m.fieldMode === 0) * 0.01 * m.coupling + (m.fieldMode === 1) * 0.05 * m.coupling + tech.isStandingWaveExpand
         m.maxEnergy *= m.fieldUpgrades[1].energyHealthRatio / tech.inverseFireRate
-        if (level.isReducedEnergy) m.maxEnergy *= 0.5
+        if (level.isReducedEnergy) m.maxEnergy *= (simulation.difficultyOptions.isStrongerConstraints) ? 0.3 : 0.55
         if (isMessage) simulation.inGameConsole(`<span class='color-var'>m</span>.<span class='energy' data-help='energy'>maxEnergy</span> <span class='color-symbol'>=</span> ${(m.maxEnergy.toFixed(2))}`)
     },
     fieldMeterColor: "#0cf",

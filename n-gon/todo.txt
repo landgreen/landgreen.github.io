@@ -1,28 +1,43 @@
 
-exit mirror holds you in place as you enter
-  unless you jump
+difficulty options after the first 4 is now a la carte
+  pick any combination you want
+
+exit mirror holds you in place as you enter unless you jump
+extended reactor mirrors on doors to match wall mirrors
+grappling hook weapon does 1.4x more dmg
 
 bug fixes
   contact explosive somehow got erased
   wording on time dilation move speed
+  exchange operator word on energy regen added and longer CD
+  wormhole was picking up ammo with non-renewables
+  the details menus at the start were blocking clicking on the background to start
+  removing negative mass while flying left a lasting reduced ability to move in the air
 
 *********************************************************** TODO *****************************************************
 
+  add more stronger constraints
+    slow bots
+    is2xAmmo
+      3x ammo?
+    isNoDuplicate
+      maybe the duplication chance becomes chance to spawn nothing?
+      maybe it's the chance to spawn the wrong thing?
 
 
-
-mirror exits and entrances
-  exit mirror could keep floor aligned as it zooms?
-    or maybe it could focus on player?
-  what about slowing/stopping player speed when they are on the ground but inside mirror with exitCount
-    it would make it feel more sticky when you can't see the player
-  entrance
-    no mirror to show you can't go back?
-    a mirror, but you are outside the mirror
-      maybe black/remove entrance mirror after a few seconds
-      since all levels will have mirror exits and entrances this could be added to the game loop, that might improve performance over ephemera
-
-
+new difficulty ideas
+  much fewer tech spawn
+  field never spawns
+    wording to mean that they can still spawn from tech
+      (field) don't normally spawn
+  1 higher TIER mob
+    make a few mobs at T5
+  randomly disable 10% of your tech each level
+    better as a constraint?
+  mobs and bosses take no damage from your first attack
+    better as a constraint?
+  fewer choices
+    if chosen, remove it's constraint
 
 new level element - color keys and keyButtons    
 !new map vault - 
@@ -34,7 +49,10 @@ new level element - color keys and keyButtons
 
 
 
-
+tech: second derivative - 0.85x damage taken after switching fields, and fields get switched randomly at the start of a level and converts fieldtech. your field and fieldtech are not randomised when going into an alternate reality. (needs first derivative, no unified field theory)
+  rename
+tech: third derivative - 0.8x damage taken after collecting a skin, have your skin get switched to a random one and convert skintech upon starting a level. your skin and skintech are not randomised when going into an alternate reality. (needs first derivative and a skin)
+  rename
 
 
 make one face of a mob take 4x damage
