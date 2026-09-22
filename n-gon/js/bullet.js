@@ -554,7 +554,11 @@ const b = {
     explosionRange() {
         return tech.explosiveRadius * (tech.isExplosionHarm ? 1.7 : 1) * (tech.isSmallExplosion ? 0.7 : 1) * (tech.isExplodeRadio ? 1.25 : 1)
     },
-    explosion(where, radius, color = "rgba(255,25,0,0.6)", reducedKnock = 1) { // typically explode is used for some bullets with .onEnd
+    explosionKnockback(where, radius, color = "rgba(255,25,0,0.6)", reducedKnock = 1) {
+        // Reuse explosion visuals and forces without damage or damaging tech effects.
+        b.explosion(where, radius, color, reducedKnock, true);
+    },
+    explosion(where, radius, color = "rgba(255,25,0,0.6)", reducedKnock = 1, isKnockbackOnly = false) { // typically explode is used for some bullets with .onEnd
         radius *= tech.explosiveRadius
 
         let knock;
@@ -569,7 +573,7 @@ const b = {
         let dist = Vector.magnitude(sub);
         if (tech.isSmartRadius && (radius > dist - 50) && m.immuneCycle < m.cycle) radius = Math.max(dist - 50, 1)
 
-        if (tech.isExplodeRadio) { //radiation explosion
+        if (tech.isExplodeRadio && !isKnockbackOnly) { //radiation explosion
             radius *= 1.25; //alert range
             color = "rgba(25,139,170,0.25)"
             simulation.drawList.push({ //add dmg to draw queue
@@ -607,7 +611,7 @@ const b = {
                 }
             }
         } else { //normal explosions
-            simulation.drawList.push({ //add dmg to draw queue
+            if (!isKnockbackOnly) simulation.drawList.push({ //damage circle only for damaging explosions
                 x: where.x,
                 y: where.y,
                 radius: radius,
@@ -629,12 +633,12 @@ const b = {
                     const harm = tech.isExplosionHarm ? 0.067 : 0.05
                     if (tech.isImmuneExplosion && m.energy > 0.05) {
                         // const mitigate = Math.min(1, Math.max(1 - m.energy * 0.5, 0))
-                        m.energy -= 0.05
+                        if (!isKnockbackOnly) m.energy -= 0.05
                         knock = Vector.mult(Vector.normalise(sub), -0.6 * player.mass * Math.max(0, Math.min(0.15 - 0.002 * player.speed, 0.15)));
                         player.force.x = knock.x; // not +=  so crazy forces can't build up with MIRV
                         player.force.y = knock.y - 0.3; //some extra vertical kick
                     } else {
-                        m.takeDamage(harm * (tech.isLaserPush ? 0.1 : 1) * spawn.dmgToPlayerByLevelsCleared());
+                        if (!isKnockbackOnly) m.takeDamage(harm * (tech.isLaserPush ? 0.1 : 1) * spawn.dmgToPlayerByLevelsCleared());
                         knock = Vector.mult(Vector.normalise(sub), -Math.sqrt(dmg) * player.mass * 0.013);
                         player.force.x += knock.x;
                         player.force.y += knock.y;
@@ -655,7 +659,7 @@ const b = {
                         knock = Vector.mult(Vector.normalise(sub), -Math.sqrt(dmg) * body[i].mass * 0.022);
                         body[i].force.x += knock.x;
                         body[i].force.y += knock.y;
-                        if (tech.isBlockExplode && !body[i].isInvulnerable && !body[i].isImmutable) {
+                        if (!isKnockbackOnly && tech.isBlockExplode && !body[i].isInvulnerable && !body[i].isImmutable) {
                             if (body[i] === m.holdingTarget) m.drop()
                             const size = 20 + 300 * Math.pow(body[i].mass, 0.25)
                             const x = body[i].position.x
@@ -699,10 +703,10 @@ const b = {
                     if (dist < radius) {
                         if (mob[i].shield) dmg *= 1.8 //balancing explosion dmg to shields
                         if (Matter.Query.rayAny(map, mob[i].position, where)) dmg *= 0.5 //reduce damage if a wall is in the way
-                        mob[i].damage(dmg * damageScaler);
+                        if (!isKnockbackOnly) mob[i].damage(dmg * damageScaler);
                         mob[i].locatePlayer();
                         knock = Vector.mult(Vector.normalise(sub), -Math.sqrt(dmg * damageScaler) * mob[i].mass * (mob[i].isBoss ? 0.003 : 0.01) * reducedKnock);
-                        if (tech.isStun) {
+                        if (tech.isStun && !isKnockbackOnly) {
                             mobs.statusStun(mob[i], 30)
                         } else if (!mob[i].isInvulnerable) {
                             mob[i].force.x += knock.x;
@@ -713,7 +717,7 @@ const b = {
                     } else if (!mob[i].seePlayer.recall && dist < alertRange) {
                         mob[i].locatePlayer();
                         knock = Vector.mult(Vector.normalise(sub), -Math.sqrt(dmg * damageScaler) * mob[i].mass * (mob[i].isBoss ? 0 : 0.006 * reducedKnock));
-                        if (tech.isStun) {
+                        if (tech.isStun && !isKnockbackOnly) {
                             mobs.statusStun(mob[i], 30)
                         } else if (!mob[i].isInvulnerable) {
                             mob[i].force.x += knock.x;
@@ -2380,7 +2384,10 @@ const b = {
             },
             onEnd() {
                 // Impacts/proximity set endCycle to zero; only natural expiry needs a live target.
-                if (this.endCycle !== 0 && !this.lockedOn?.alive) return;
+                if (this.endCycle !== 0 && !this.lockedOn?.alive) {
+                    b.explosionKnockback(this.position, this.explodeRad * size);
+                    return;
+                }
                 b.explosion(this.position, this.explodeRad * size); //makes bullet do explosive damage at end
                 if (tech.fragments) b.targetedNail(this.position, tech.fragments * Math.floor(2 + 1.5 * Math.random()))
                 if (tech.isMissileFast) {
@@ -7514,7 +7521,7 @@ const b = {
             name: "missiles", //6
             // description: `launch <strong>homing</strong> missiles that target mobs<br>missiles <strong class='explode' data-help='explode'>explode</strong> on contact with mobs<br><strong>5</strong> missiles per ${powerUps.orb.ammo()}`,
             descriptionFunction() {
-                return `launch <strong>homing</strong> missiles that target mobs<br>missiles <strong class='explode' data-help='explode'>explode</strong> on contact with mobs<br><strong>${0.5 * this.ammoPack.toFixed(1)}</strong> missiles per ${powerUps.orb.ammo()}`
+                return `launch <strong>homing</strong> missiles that target mobs<br>missiles can <strong class='explode' data-help='explode'>explode</strong> after targeting<br><strong>${0.5 * this.ammoPack.toFixed(1)}</strong> missiles per ${powerUps.orb.ammo()}`
             },
             ammo: 0,
             ammoPack: 2.3,

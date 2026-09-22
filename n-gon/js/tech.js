@@ -19,6 +19,7 @@ const tech = {
             if (tech.tech[i].name === "heals" || tech.tech[i].name === "ammo" || tech.tech[i].name === "research") tech.tech[i].value = tech.tech[i].defaultValue
         }
         m.resetSkin();
+        tech.aperiodicTiling = 0;
         tech.removeCount = 0;
         tech.beamSplitter = 0
         tech.pauseEjectTech = 2; //used in paradigm shift
@@ -1933,9 +1934,9 @@ const tech = {
             this.trackCycles += 10
         },
         remove() {
+            tech.aperiodicTiling -= this.trackCycles
             this.trackCycles = 0
             if (this.count && m.alive) {
-                tech.aperiodicTiling -= this.trackCycles
                 m.damageDone /= this.damage ** this.count
             }
         }

@@ -1,27 +1,9 @@
 
-molecular assembler option: needles - float above your head and fire at nearby mobs
-new constraint - "blocks attack"
-moved a few starting power ups to a bit later in each level
-missiles don't explode at their end of life if they never found a target
 
-tech: qubit - 10% chance to spawn a power up that gives 0.97x dmg taken
-tech: interference - qubit also gives 1.03x dmg
-tech: spaghettification - tunneling through mobs with a wormhole deals instant damage proportional to its length
-tech: tunable laser - when paused pick a laser type
-pulse has compatibility with more laser tech
-  reflection,  iridescence, diffuse, relativistic momentum grants 0.1x explosion damage
-tech: Brownian ratchet - heals trigger a zone that will heal anything inside to full health after 4s
-  and 6% JUNK
-tech: adhesive - foam makes mobs stick together and foam lasts 2x longer
-tech: semi-automatic - 2x shotgun dmg if you fire just after cooldown
+
+
 
 bug fixes
-  entering experiment mode from testing mode exits testing to prevent stray key presses
-  training pop up option was clipping the text
-  new m.addEnergy checks properly for player immunity before allowing energy regen
-  mutualism only takes player health if above 50,
-    also fixed issue with not returning health on new level
-  pressing P now toggles the pause menus in choosing menu
 
 
 *********************************************************** TODO *****************************************************
@@ -29,6 +11,8 @@ bug fixes
 
 another tech that makes followNeedles?
 
+tech:  - small purple power ups
+  gather 10 to get a tech choice?
 
 gun tech upgrade that rewards pressing fire with a precise rhythm
   press fire every 2-3 seconds and each time you get a "perfect" rhythm
